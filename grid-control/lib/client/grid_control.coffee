@@ -65,6 +65,7 @@ _.extend GridControl.prototype,
         if cell_editor_value != @getCellStoredValue active_cell.row, active_cell.cell
           # keep current editor state if it's different from the stored value
           maintain_value = cell_editor_value
+        @_grid.resetActiveCell()
 
       # post rebuild
       Meteor.defer =>
