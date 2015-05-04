@@ -1,6 +1,6 @@
 _.extend GridData.prototype,
-  before_edit_hook: (name, hook) ->
-    # before_edit_hook(hook_name, hook(userId, doc, fieldNames, modifier, options))
+  before_db_commit_hook: (name, hook) ->
+    # before_db_commit_hook(hook_name, hook(userId, doc, fieldNames, modifier, options))
 
     # Fires before edits
 
@@ -24,11 +24,11 @@ _.extend GridData.prototype,
 
     # Example 1, block all edits (Coffee):
 
-    #   grid_data.before_edit_hook "Block all edits", -> return false
+    #   grid_data.before_db_commit_hook "Block all edits", -> return false
 
     # Example 2, block edits that attempts to a non empty title to empty (Coffee):
 
-    #   grid_data.before_edit_hook "Title can't be cleared", (userId, doc, fieldNames, modifier, options) ->
+    #   grid_data.before_db_commit_hook "Title can't be cleared", (userId, doc, fieldNames, modifier, options) ->
     #     if doc.title? and doc.title != "" and modifier?.$set?.title? and modifier.$set.title is ""
     #        return false
 
