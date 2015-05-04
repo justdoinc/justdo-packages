@@ -7,6 +7,7 @@ GridControl = (collection, container, operations_container) ->
 
   @_initialized = false
   @_destroyed = false
+  @_ready = false
 
   @_grid_data = null
   @_grid = null
@@ -92,10 +93,20 @@ _.extend GridControl.prototype,
               if maintain_value?
                 @_grid.getCellEditor().setValue(maintain_value)
 
+        if not @_ready
+          @_ready = true
+          @emit "ready"
+
+        # tree_change, full_invalidation=true
+        @emit "tree_change", true
+
     @_grid_data.on "grid-item-changed", (row, fields) =>
       col_id_to_row = _.invert(_.map @_grid.getColumns(), (cell) -> cell.id)
       for field in fields
         @_grid.updateCell(row, parseInt(col_id_to_row[field], 10))
+
+        # tree_change, full_invalidation=false
+        @emit "tree_change", false
 
     @_grid_data.on "edit-failed", (err) =>
       console.log "edit-failed", err
