@@ -37,6 +37,8 @@ GridData = (collection) ->
 
   return @
 
+GridData.helpers = helpers # Expose helpers to other packages throw GridData
+
 Util.inherits GridData, EventEmitter
 
 _.extend GridData.prototype,
