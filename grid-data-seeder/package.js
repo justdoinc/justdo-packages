@@ -9,7 +9,7 @@ server = 'server';
 client = 'client';
 
 Package.onUse(function (api) {
-  api.versionsFrom('0.9.4');
+  api.versionsFrom('1.1.0.2');
 
   api.use('coffeescript', both);
   api.use('underscore', both);
@@ -24,7 +24,7 @@ Package.onUse(function (api) {
 });
 
 Package.onTest(function(api) {
-  api.versionsFrom('METEOR@0.9.4');
+  api.versionsFrom('1.1.0.2');
 
   api.use('tinytest', both);
   api.use('coffeescript', both);
