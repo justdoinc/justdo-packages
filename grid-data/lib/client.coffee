@@ -258,28 +258,62 @@ _.extend GridData.prototype,
 
     @emit "destroyed"
 
-  expandPath: (path) ->
-    if not(path of @_expanded_paths)
-      @_expanded_paths[path] = true
-      @_path_state_changed = true
-      @_set_need_flush()
+  # ** Tree info **
+  pathExist: (path) ->
+    # return true if path exists false otherwise
+    path = helpers.normalizePath path
 
-  collapsePath: (path) ->
-    if path of @_expanded_paths
-      delete @_expanded_paths[path]
-      @_path_state_changed = true
-      @_set_need_flush()
+    path_array = helpers.getPathArray(path)
+    current_node = @tree_structure[0]
+    while path_array.length > 0
+      cur_id = path_array.shift()
 
+      next_node = null
+      for order, item_id of current_node
+        if item_id == cur_id
+          next_node = @tree_structure[cur_id]
+
+          break
+
+      if next_node?
+        current_node = next_node
+      else if not(next_node is null) and path_array.length == 0
+        # Do nothing, path is a leaf, while loop is done here
+      else
+        return false
+
+    return true
+
+  pathHasChildren: (path) ->
+    # return true if path exists and have children
+    if @pathExist path
+      item_id = helpers.getPathItemId path
+
+      if item_id of @tree_structure
+        return true
+
+    return false
+
+  pathExpandable: (path) -> @pathHasChildren path # alias to pathHasChildren
+
+  # ** Grid tree info **
+  # Reminder: Grid tree is the single dimensional representation of the tree
+  # stored in @grid_tree. The word Item follows slick grid terminology (that
+  # requires us to provide it with getItem() method in the data source object).
+  # Do not confuse item below with the tree items that stored in the collection.
   getItem: (id) -> @grid_tree[id][0]
 
   getItemId: (id) -> @getItem(id)._id
 
-  getItemPath: (id) -> @grid_tree[id][2]
+  getItemPath: (id) ->
+    @grid_tree[id][2]
 
   getItemRowByPath: (path) ->
-    path_arr = path.split("/")
-    path_arr.pop() # remove redundant ""
-    item_id = _.last path_arr
+    # Return the index of path in @grid_tree note: if parent not expanded or if path not exist will return false
+    path = helpers.normalizePath path
+
+    item_id = helpers.getPathItemId path
+
     item_rows_in_tree = @_items_ids_map_to_grid_tree_indices[item_id]
     item_paths = _.map item_rows_in_tree, (row) => @getItemPath(row)
     item_paths_to_rows_in_tree =_.object item_paths, item_rows_in_tree
@@ -289,13 +323,38 @@ _.extend GridData.prototype,
     else
       return null
 
-  getItemIsExpand: (id) -> @getItemPath(id) of @_expanded_paths
-
   getItemHasChild: (id) -> @getItemId(id) of @tree_structure
 
   getItemLevel: (id) -> @grid_tree[id][1]
 
   getLength: -> @grid_tree.length
+
+  # ** Tree view ops on paths **
+  getPathIsExpand: (path) -> helpers.normalizePath(path) of @_expanded_paths
+
+  expandPath: (path) ->
+    path = helpers.normalizePath path
+
+    if helpers.isRootPath path
+      # root always expanded
+      return
+
+    for ancestor_path in helpers.getAllAncestorPaths(path)
+      if not(@getPathIsExpand(ancestor_path)) and @pathExpandable(ancestor_path)
+        @_expanded_paths[ancestor_path] = true
+        @_path_state_changed = true
+        @_set_need_flush()
+
+  collapsePath: (path) ->
+    path = helpers.normalizePath(path)
+
+    if @getPathIsExpand(path)
+      delete @_expanded_paths[path]
+      @_path_state_changed = true
+      @_set_need_flush()
+
+  # ** Tree view ops on items **
+  getItemIsExpand: (id) -> @getItemPath(id) of @_expanded_paths
 
   toggleItem: (id) ->
     if @getItemIsExpand id
@@ -311,6 +370,7 @@ _.extend GridData.prototype,
     if @getItemHasChild id
       @collapsePath(@getItemPath id)
 
+  # ** Tree ops **
   edit: (edit_req) ->
     [row, cell, grid, item] = [edit_req.row, edit_req.cell, edit_req.grid, edit_req.item]
     col_field = grid.getColumns()[cell].id
@@ -326,8 +386,6 @@ _.extend GridData.prototype,
         @_set_need_flush()
 
         @emit "edit-failed", err
-
-  getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
 
   addChild: (path, cb) ->
     # If cb provided, cb will be called with the following args when excution
@@ -361,6 +419,9 @@ _.extend GridData.prototype,
     path = helpers.normalizePath(path)
 
     Meteor.call @getCollectionMethodName("removeParent"), path
+
+  # ** Misc. **
+  getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
 
 subscribeDefaultGridSubscription = (collection) ->
   Meteor.subscribe helpers.getCollectionPubSubName(collection), Meteor.userId() # userId for reactivity

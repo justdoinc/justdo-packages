@@ -158,6 +158,31 @@ _.extend GridControl.prototype,
     else
       return null
 
+  activatePath: (path) ->
+    # Activate path, expand its parent if it isn't expanded.
+    # Logs an error if path doesn't exist.
+    path = GridData.helpers.normalizePath path
+
+    path_parent = GridData.helpers.getParentPath path
+
+    if @_grid_data.pathExist path
+      # Expand parent path, if it isn't
+      if not @_grid_data.getPathIsExpand(path_parent)     
+        @_grid_data.expandPath(path_parent)
+        @_grid_data._flush()
+
+        Meteor.defer =>
+          # post slick grid rebuild
+          row = @_grid_data.getItemRowByPath(path)
+          
+          @_grid.setActiveCell(row, 0)
+      else
+        row = @_grid_data.getItemRowByPath(path)
+
+        @_grid.setActiveCell(row, 0)
+    else
+      @logger.error("Path `#{path}` doesn't exist")
+
   destroy: ->
     if @_destroyed
       return
