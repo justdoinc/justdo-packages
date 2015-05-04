@@ -73,7 +73,7 @@ Package.onTest(function(api) {
   api.use('coffeescript', both);
   api.use('mongo', both);
   api.use('tracker', both);
-  api.use('meteorspark:test-helpers@0.1.0', both);
+  api.use('meteorspark:test-helpers@0.2.0', both);
 
   api.use('stem-capital:slick-grid', client);
   api.use('stem-capital:grid-data-seeder', server);

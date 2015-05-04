@@ -1,6 +1,9 @@
 TestCol = share.TestCol
 initData = share.initData
 
+users = ("user#{id}@gmail.com" for id in [0...10])
+password = "123456"
+
 th = new TestHelpers
   timeout: 20000
 
@@ -206,3 +209,60 @@ Tinytest.addAsync 'GridData - edit - flush called as expected, events emits as e
             if isEditableId id
               TestCol.update(id, $set: {field_b: getNewFieldContent(id), field_c: getNewFieldContent(id)})
   ]
+
+Tinytest.addAsync 'GridData - operations - addChild', (test, onComplete) ->
+  subscription = null
+  onCompleteOnce = null
+  th.getOnCompleteOnceOrTimeoutWithUser test, onComplete, users[0], password, [
+    ->
+      subscription = Meteor.subscribe "testCol"
+    ,
+    ->
+      if subscription.ready()
+        gd = new GridData TestCol
+
+        gd.on "init", ->
+          gd.addChild "/not-existing-item/", (err, item_id, path) ->
+            test.equal err.error, "unkown-path"
+
+            gd.addChild "/1/", (err, item_id, path) -> # /1/ doesn't belong to user0
+              test.equal err.error, "unkown-path"
+
+              gd.addChild "/10/", (err, item_id, path) ->
+                test.equal path, "/10/#{item_id}/"
+
+                gd.addChild "/10", (err, item_id, path) ->
+                  test.equal path, "/10/#{item_id}/"
+
+                  onCompleteOnce()
+  ], (cb) ->
+    onCompleteOnce = cb
+
+Tinytest.addAsync 'GridData - operations - addSibling', (test, onComplete) ->
+  subscription = null
+  onCompleteOnce = null
+  th.getOnCompleteOnceOrTimeoutWithUser test, onComplete, users[0], password, [
+    ->
+      subscription = Meteor.subscribe "testCol"
+    ,
+    ->
+      if subscription.ready()
+        gd = new GridData TestCol
+
+        gd.on "init", ->
+          gd.addSibling "/not-existing-item/", (err, item_id, path) ->
+            console.log err
+            test.equal err.error, "unkown-path"
+
+            gd.addSibling "/1/", (err, item_id, path) -> # /1/ doesn't belong to user0
+              test.equal err.error, "unkown-path"
+
+              gd.addSibling "/10/", (err, item_id, path) ->
+                test.equal path, "/#{item_id}/"
+
+                gd.addSibling "/10", (err, item_id, path) ->
+                  test.equal path, "/#{item_id}/"
+
+                  onCompleteOnce()
+  ], (cb) ->
+    onCompleteOnce = cb

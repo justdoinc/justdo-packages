@@ -21,6 +21,7 @@ Package.onUse(function (api) {
 
   api.add_files('lib/globals.js', both);
   api.add_files('lib/helpers.coffee', both);
+  api.add_files('lib/exceptions.coffee', both);
   api.add_files('lib/client.coffee', client, {bare: true});
   api.add_files('lib/server.coffee', server);
 
@@ -37,7 +38,7 @@ Package.onTest(function(api) {
   api.use('mongo', both);
   api.use('minimongo', both);
   api.use('tracker', both);
-  api.use('meteorspark:test-helpers@0.1.0', both);
+  api.use('meteorspark:test-helpers@0.2.0', both);
 
   api.use('stem-capital:grid-data', both);
   api.use('stem-capital:grid-data-seeder', server);

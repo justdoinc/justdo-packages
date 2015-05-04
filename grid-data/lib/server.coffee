@@ -1,15 +1,17 @@
 helpers = share.helpers
+exceptions = share.exceptions
 
 initDefaultGridMethods = (collection) ->
   methods = {}
 
   methods[helpers.getCollectionMethodName(collection, "addChild")] = (path) ->
+    # returns child_id or null if failed
     if (item = collection.getItemByPathIfUserBelong path, @userId)?
       new_item = {parents: {}, users: item.users}
       new_item.parents[item._id] = {order: collection.getNewChildOrder(item._id)}
-      collection.insert new_item
+      return collection.insert new_item
     else
-      return null
+      throw exceptions.unkownPath()
 
   methods[helpers.getCollectionMethodName(collection, "addSibling")] = (path) ->
     if (item = collection.getItemByPathIfUserBelong path, @userId)?
@@ -20,9 +22,9 @@ initDefaultGridMethods = (collection) ->
 
       new_item = {parents: {}, users: item.users}
       new_item.parents[parent_id] = {order: sibling_order}
-      collection.insert new_item
+      return collection.insert new_item
     else
-      return null
+      throw exceptions.unkownPath()
 
   methods[helpers.getCollectionMethodName(collection, "removeParent")] = (path) ->
     if (item = collection.getItemByPathIfUserBelong path, @userId)?
@@ -38,7 +40,7 @@ initDefaultGridMethods = (collection) ->
         update_op.$unset["parents.#{parent_id}"] = ""
         collection.update item._id, update_op
     else
-      return null
+      throw exceptions.unkownPath()
 
   Meteor.methods methods
 

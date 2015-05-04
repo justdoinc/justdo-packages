@@ -325,13 +325,37 @@ _.extend GridData.prototype,
 
   getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
 
-  addChild: (path) ->
-    Meteor.call @getCollectionMethodName("addChild"), path
+  addChild: (path, cb) ->
+    # If cb provided, cb will be called with the following args when excution
+    # completed:
+    # cb(err, child_id, child_path)
 
-  addSibling: (path) ->
-    Meteor.call @getCollectionMethodName("addSibling"), path
+    path = helpers.normalizePath(path)
+
+    Meteor.call @getCollectionMethodName("addChild"), path, (err, child_id) ->
+      if cb?
+        if err?
+          cb err
+        else
+          cb err, child_id, path + child_id + "/"
+
+  addSibling: (path, cb) ->
+    # If cb provided, cb will be called with the following args when excution
+    # completed:
+    # cb(err, sibling_id, sibling_path)
+
+    path = helpers.normalizePath(path)
+
+    Meteor.call @getCollectionMethodName("addSibling"), path, (err, sibling_id) ->
+      if cb?
+        if err?
+          cb err
+        else
+          cb err, sibling_id, helpers.getParentPath(path) + sibling_id + "/"
 
   removeParent: (path) ->
+    path = helpers.normalizePath(path)
+
     Meteor.call @getCollectionMethodName("removeParent"), path
 
 subscribeDefaultGridSubscription = (collection) ->

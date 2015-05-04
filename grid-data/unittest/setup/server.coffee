@@ -21,3 +21,4 @@ TestCol.allow
   update: allow_rule
   remove: allow_rule
   
+initDefaultGridServerSideConf TestCol
