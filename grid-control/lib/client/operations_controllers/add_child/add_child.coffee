@@ -34,7 +34,11 @@ _.extend AddChild.prototype,
 
   _operation: ->
     if not(@_container.prop "disabled")
-      @_grid_control._grid_data.addChild(@_grid_control.getActiveCellPath())
+      @_grid_control._grid_data.addChild @_grid_control.getActiveCellPath(), (err, child_id, child_path) =>
+
+        @_grid_control._grid_data.once "rebuild", =>
+          Meteor.defer =>
+            @_grid_control.activatePath child_path
 
   destroy: ->
     @_container.remove()
