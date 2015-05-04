@@ -28,6 +28,8 @@ GridData = (collection) ->
   # note if users changed the subscription should remove the doc if user lose access
   @_ignore_change_in_fields = ["users"]
 
+  @logger = Logger.get("grid-data")
+
   Meteor.defer =>
     @_init()
 

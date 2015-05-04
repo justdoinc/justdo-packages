@@ -11,6 +11,8 @@ GridControl = (collection, container, operations_container) ->
   @_grid_data = null
   @_grid = null
 
+  @logger = Logger.get("grid-control")
+
   Meteor.defer =>
     @_init()
 

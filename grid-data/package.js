@@ -18,6 +18,7 @@ Package.onUse(function (api) {
 
   api.use('raix:eventemitter@0.1.1', both);
   api.use('meteorspark:util@0.1.0', both);
+  api.use('meteorspark:logger@0.3.0', both);
 
   api.add_files('lib/globals.js', both);
   api.add_files('lib/helpers.coffee', both);
