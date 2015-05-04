@@ -17,6 +17,7 @@ Package.onUse(function (api) {
   api.use('reactive-var', both);
 
   api.use('raix:eventemitter@0.1.1', both);
+  api.use('matb33:collection-hooks@0.7.13', both);
   api.use('meteorspark:util@0.1.0', both);
   api.use('meteorspark:logger@0.3.0', both);
 
@@ -24,6 +25,7 @@ Package.onUse(function (api) {
   api.add_files('lib/helpers.coffee', both);
   api.add_files('lib/exceptions.coffee', both);
   api.add_files('lib/client.coffee', client, {bare: true});
+  api.add_files('lib/hooks.coffee', client);
   api.add_files('lib/server.coffee', server);
 
   api.export('GridData');

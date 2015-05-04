@@ -379,13 +379,21 @@ _.extend GridData.prototype,
     update = {$set: {}}
     update["$set"][col_field] = item[col_field]
 
-    @collection.update item._id, update, (err) =>
+    edit_failed = (err) =>
+      @_items_needs_update.push [item_id, [col_field]]
+      @_set_need_flush()
+
+      @emit "edit-failed", err
+
+    executed = @collection.update item._id, update, (err) =>
       if err
         # observeChanges doesn't revert failed edits
-        @_items_needs_update.push [item_id, [col_field]]
-        @_set_need_flush()
+        # See: https://github.com/meteor/meteor/issues/4282
+        edit_failed(err)
 
-        @emit "edit-failed", err
+    if executed is false
+      # executed is false if edit blocked by events hooks
+      edit_failed(new Meteor.Error "edit-blocked-by-hook", "Edit blocked by hook")
 
   addChild: (path, cb) ->
     # If cb provided, cb will be called with the following args when excution
