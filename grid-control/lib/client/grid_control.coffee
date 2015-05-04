@@ -25,6 +25,11 @@ GridControl = (collection, container, operations_container) ->
 Util.inherits GridControl, EventEmitter
 
 _.extend GridControl.prototype,
+  # init hooks can be added by packages that extends grid-control features keys should
+  # be the hooks human-readable names and the values functions that will be called with
+  # the grid_control instance as this upon successful init (just before "init" event emittion).
+  _init_hooks: {}
+
   _init: ->
     if @_initialized or @_destroyed
       return
@@ -97,6 +102,11 @@ _.extend GridControl.prototype,
 
     @_grid.onCellChange.subscribe (e, edit_req) =>
       @_grid_data.edit(edit_req)
+
+    for name, hook of @_init_hooks
+      hook.call(@)
+
+      @logger.debug("Init hook `#{name}` called")
 
     @emit "init"
 
