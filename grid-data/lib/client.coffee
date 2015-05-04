@@ -454,6 +454,48 @@ _.extend GridData.prototype,
 
     return true
 
+  # ** Search **
+  search: (term, fields=null) ->
+    # term should be a regex
+    # fields should be array of fields names or null.
+    # If fields is null we'll look for term in all fields.
+    paths = []
+
+    if not _.isRegExp(term)
+      throw new Meteor.Error "wrong-input", "search() supports only regular expressions as term argument"
+
+    if fields? and not _.isArray(fields)
+      throw new Meteor.Error "wrong-input", "search() `fields` argument must be array or null"
+
+    _search = (node, path) ->
+      # Recursively find paths with fields matching term
+
+      keys = _.keys(node).sort(numSort) # search in right order to have result paths array in right order
+      for order in keys
+        child_id = node[order]
+        child_path = "#{path}#{child_id}/"
+        child = grid_control._grid_data.items_by_id[child_id]
+
+        if fields?
+          for field in fields
+            if child[field]? and term.test(child[field])
+              paths.push child_path
+
+              break
+        else
+          for field, value of child
+            if term.test(value)
+              paths.push child_path
+
+              break
+
+        if @tree_structure[child_id]?
+          _search.call @, @tree_structure[child_id], child_path
+
+    _search.call @, @tree_structure[0], "/"
+
+    return paths
+
   # ** Tree view ops on paths **
   getPathIsExpand: (path) -> helpers.normalizePath(path) of @_expanded_paths
 
