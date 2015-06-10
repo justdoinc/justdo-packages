@@ -4,6 +4,7 @@ numSort = (a, b) -> a - b
 GridData = (collection) ->
   EventEmitter.call this
 
+  @subscription = null # this will store the handle for the subscription, so we could reset it when needed.
   @collection = collection
 
   @_initialized = false
@@ -562,37 +563,48 @@ _.extend GridData.prototype,
       # executed is false if edit blocked by events hooks
       edit_failed(new Meteor.Error "edit-blocked-by-hook", "Edit blocked by hook")
 
-  addChild: (path, cb) ->
+  addChild: (path,fieldsDefaults, cb) ->
     # If cb provided, cb will be called with the following args when excution
     # completed:
     # cb(err, child_id, child_path)
 
     path = helpers.normalizePath(path)
 
-    Meteor.call @getCollectionMethodName("addChild"), path, (err, child_id) ->
+    Meteor.call @getCollectionMethodName("addChild"), path, fieldsDefaults, (err, child_id) ->
       if cb?
         if err?
           cb err
         else
           cb err, child_id, path + child_id + "/"
 
-  addSibling: (path, cb) ->
+  addSibling: (path, fieldsDefaults, cb) ->
     # If cb provided, cb will be called with the following args when excution
     # completed:
     # cb(err, sibling_id, sibling_path)
 
     path = helpers.normalizePath(path)
 
-    Meteor.call @getCollectionMethodName("addSibling"), path, (err, sibling_id) ->
+    Meteor.call @getCollectionMethodName("addSibling"), path, fieldsDefaults, (err, sibling_id) ->
       if cb?
         if err?
           cb err
         else
           cb err, sibling_id, helpers.getParentPath(path) + sibling_id + "/"
 
+  addTopLevelNode: (fieldsDefaults,cb) ->
+    # If cb provided, cb will be called with the following args when excution
+    # completed:
+    # cb(err, sibling_id)
+
+    Meteor.call @getCollectionMethodName("addTopLevelNode"), fieldsDefaults, (err, node_id) ->
+      if cb?
+        if err?
+          cb err
+        else
+          cb err, node_id
+
   removeParent: (path) ->
     path = helpers.normalizePath(path)
-
     Meteor.call @getCollectionMethodName("removeParent"), path
 
   movePath: (path, new_location, cb) ->
@@ -606,8 +618,21 @@ _.extend GridData.prototype,
       if cb?
         cb err
 
+  subscribeForSpecificData: (condition) ->
+    if @subscription
+      @subscription.stop()
+
+    @subscription = Meteor.subscribe helpers.getCollectionPubSubName(@collection) , condition
+
+
   # ** Misc. **
   getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
 
 subscribeDefaultGridSubscription = (collection) ->
-  Meteor.subscribe helpers.getCollectionPubSubName(collection), Meteor.userId() # userId for reactivity
+  console.log 'who is calling this?'
+  #todo: question for Daniel - isn't it that getting the userID from the client side
+  # is a security breach?
+  Meteor.subscribe helpers.getCollectionPubSubName(collection) #, Meteor.userId() # userId for reactivity
+
+
+
