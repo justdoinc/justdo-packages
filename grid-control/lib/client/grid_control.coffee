@@ -45,8 +45,6 @@ _.extend GridControl.prototype,
       return
     @_initialized = true
 
-    @_init_plugins()
-
     @_load_formatters()
     @_load_editors()
 
@@ -63,6 +61,7 @@ _.extend GridControl.prototype,
 
     #@_grid.setSelectionModel(new Slick.RowSelectionModel())
 
+    @_init_plugins()
     @_init_formatters()
     @_init_jquery_events()
     @_init_operation_controllers()
@@ -220,6 +219,7 @@ _.extend GridControl.prototype,
           def.grid_column_formatter = null
           def.grid_column_editor = null
           def.grid_default_grid_view = false
+          def.grid_effects_metadata_rendering = false
         else
           # Set default formatter/editor according to field type
           if def.type is String
@@ -368,6 +368,8 @@ _.extend GridControl.prototype,
       @_init_view = columns
     else
       @_grid.setColumns columns
+      @emit "columns-headers-dom-rebuilt"
+      @emit "grid-view-change"
 
   getView: () ->
     columns = @_grid.getColumns()
