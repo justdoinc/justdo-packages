@@ -35,6 +35,9 @@ Package.onUse(function (api) {
 
   api.add_files('lib/client/media/cell-handle.png', client);
 
+  // Plugins
+  api.add_files('lib/client/plugins/init.coffee', client);
+
   // jquery_events
   api.add_files('lib/client/jquery_events/init.coffee', client, {bare: true});
   api.add_files('lib/client/jquery_events/destroy_editor_on_blur.coffee', client);

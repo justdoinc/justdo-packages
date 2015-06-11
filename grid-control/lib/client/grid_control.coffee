@@ -36,6 +36,8 @@ _.extend GridControl.prototype,
       return
     @_initialized = true
 
+    @_init_plugins()
+
     @_load_formatters()
     @_load_editors()
 
@@ -212,6 +214,8 @@ _.extend GridControl.prototype,
     if @_destroyed
       return
     @_destroyed = true
+
+    @_destroy_plugins()
 
     if @_grid_data?
       @_grid_data.destroy()
