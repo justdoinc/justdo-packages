@@ -225,6 +225,9 @@ _.extend GridControl.prototype,
           if def.type is String
             set_default_formatter(def, "textWithTreeControls", "defaultFormatter")
             set_default_editor(def, "TextWithTreeControlsEditor", "TextEditor")
+          if def.type is Date
+            set_default_formatter(def, "textWithTreeControls", "unicodeDateFormatter")
+            set_default_editor(def, "TextWithTreeControlsEditor", "UnicodeDateEditor")
           else
             # For other types, same as String
             set_default_formatter(def, "textWithTreeControls", "defaultFormatter")

@@ -56,11 +56,19 @@ SimpleSchema.extendOptions
   # Defaults by type:
   # String:
   #   If first column:
-  #     grid_column_formatter: "TextWithTreeControls"
+  #     grid_column_formatter: "textWithTreeControls"
   #     grid_column_editor: "TextWithTreeControlsEditor"
   #   Else:
   #     grid_column_formatter: "defaultFormatter" # slick grid default.
   #     grid_column_editor: "TextEditor"
+  #
+  # Date:
+  #   If first column:
+  #     grid_column_formatter: "textWithTreeControls"
+  #     grid_column_editor: "TextWithTreeControlsEditor"
+  #   Else:
+  #     grid_column_formatter: "unicodeDateFormatter" # slick grid default.
+  #     grid_column_editor: "UnicodeDateEditor"
 
   # grid_column_formatter:
   #
