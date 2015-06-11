@@ -47,7 +47,7 @@ SimpleSchema.extendOptions
   # Default grid_column_formatter is set only for visible fields
   # and default grid_column_editor is set only for editable fields.
   #
-  # Defaults are currently defined for fields of type: String
+  # Defaults are currently defined for fields of type: String, Date, Boolean
   #
   # Fields of types that default editor/formatter weren't set for
   # will be treated as: String
@@ -67,8 +67,16 @@ SimpleSchema.extendOptions
   #     grid_column_formatter: "textWithTreeControls"
   #     grid_column_editor: "TextWithTreeControlsEditor"
   #   Else:
-  #     grid_column_formatter: "unicodeDateFormatter" # slick grid default.
+  #     grid_column_formatter: "unicodeDateFormatter"
   #     grid_column_editor: "UnicodeDateEditor"
+  #
+  # Boolean:
+  #   If first column:
+  #     grid_column_formatter: "textWithTreeControls"
+  #     grid_column_editor: "TextWithTreeControlsEditor"
+  #   Else:
+  #     grid_column_formatter: "checkboxFormatter"
+  #     grid_column_editor: "checkboxEditor"
 
   # grid_column_formatter:
   #
