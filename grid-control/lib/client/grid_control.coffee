@@ -180,6 +180,9 @@ _.extend GridControl.prototype,
     else
       return null
 
+  activateRow: (row) ->
+    @_grid.setActiveCell(row, 0)
+
   activatePath: (path) ->
     # Activate path, expand its parent if it isn't expanded.
     # Logs an error if path doesn't exist.
@@ -197,11 +200,11 @@ _.extend GridControl.prototype,
           # post slick grid rebuild
           row = @_grid_data.getItemRowByPath(path)
           
-          @_grid.setActiveCell(row, 0)
+          @activateRow(row)
       else
         row = @_grid_data.getItemRowByPath(path)
 
-        @_grid.setActiveCell(row, 0)
+        @activateRow(row)
     else
       @logger.error("Path `#{path}` doesn't exist")
 
