@@ -1,4 +1,5 @@
-TestCol = share.TestCol
+TestCollections = share.TestCollections
+TestInvalidCollections = share.TestInvalidCollections
 
 th = new TestHelpers
   timeout: 5000
@@ -9,7 +10,7 @@ Tinytest.add 'GridControl - basics - defined, and is object', (test) ->
 Tinytest.addAsync 'GridControl - init/destroy/reactivity - init event is called on time', (test, onComplete) ->
   onCompleteOnce = th.getOnCompleteOnceOrTimeout test, onComplete
 
-  gc = new GridControl TestCol, document.createElement("div")
+  gc = new GridControl TestCollections.default, document.createElement("div")
 
   gc.on "init", ->
     onCompleteOnce ->
@@ -21,7 +22,7 @@ Tinytest.addAsync 'GridControl - init/destroy/reactivity - init event is called 
 Tinytest.addAsync 'GridControl - init/destroy/reactivity - destroy method works as expected after initialization', (test, onComplete) ->
   onCompleteOnce = th.getOnCompleteOnceOrTimeout test, onComplete
 
-  gc = new GridControl TestCol, document.createElement("div")
+  gc = new GridControl TestCollections.default, document.createElement("div")
 
   gc.on "init", ->
     gc.destroy()
@@ -36,7 +37,7 @@ Tinytest.addAsync 'GridControl - init/destroy/reactivity - destroy method works 
 Tinytest.addAsync 'GridControl - init/destroy/reactivity - don\'t initialize if destoryed before init', (test, onComplete) ->
   onCompleteOnce = th.getOnCompleteOnceOrTimeout test, onComplete
 
-  gc = new GridControl TestCol, document.createElement("div")
+  gc = new GridControl TestCollections.default, document.createElement("div")
 
   gc.on "destroyed", ->
     onCompleteOnce ->
@@ -52,7 +53,7 @@ Tinytest.addAsync 'GridControl - init/destroy/reactivity - destroy if containing
 
   gc = null
   comp = Tracker.autorun ->
-    gc = new GridControl TestCol, document.createElement("div")
+    gc = new GridControl TestCollections.default, document.createElement("div")
 
   gc.on "init", ->
     comp.stop()
@@ -68,7 +69,7 @@ Tinytest.addAsync 'GridControl - init/destroy/reactivity - don\'t initialize and
   onCompleteOnce = th.getOnCompleteOnceOrTimeout test, onComplete
 
   comp = Tracker.autorun ->
-    gc = new GridControl TestCol, document.createElement("div")
+    gc = new GridControl TestCollections.default, document.createElement("div")
 
     gc.on "destroyed", ->
       onCompleteOnce ->
@@ -78,3 +79,32 @@ Tinytest.addAsync 'GridControl - init/destroy/reactivity - don\'t initialize and
         test.isNull gc._grid
 
   comp.stop()
+
+Tinytest.addAsync 'GridControl - schema validation - don\'t initialize for invalid schemas', (test, onComplete) ->
+  onCompleteOnce = th.getOnCompleteOnceOrTimeout test, onComplete
+
+  for collection_name, collection of TestInvalidCollections
+    test.throws ->
+      gc = new GridControl collection, document.createElement("div")
+    , Meteor.Error
+
+  onCompleteOnce()
+
+Tinytest.addAsync 'GridControl - schema validation - correct defaults set', (test, onComplete) ->
+  onCompleteOnce = th.getOnCompleteOnceOrTimeout test, onComplete
+
+  gc = new GridControl TestCollections.correct_defaults_set_for_visible_columns_of_type_string, document.createElement("div")
+
+  test.equal gc.schema.f1.grid_column_formatter, "textWithTreeControls"
+  test.equal gc.schema.f1.grid_column_editor, "TextWithTreeControlsEditor"
+
+  test.equal gc.schema.f2.grid_column_formatter, "defaultFormatter"
+  test.equal gc.schema.f2.grid_column_editor, "TextEditor"
+
+  test.equal gc.schema.f3.grid_column_formatter, "defaultFormatter"
+  test.equal gc.schema.f3.grid_column_editor, null
+
+  test.equal gc.schema.f4.grid_column_formatter, null
+  test.equal gc.schema.f4.grid_column_editor, null
+
+  onCompleteOnce()

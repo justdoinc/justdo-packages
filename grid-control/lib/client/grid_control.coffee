@@ -14,6 +14,15 @@ GridControl = (collection, container, operations_container) ->
 
   @logger = Logger.get("grid-control")
 
+  @schema = null
+  @grid_control_field = null
+  @_loadSchema() # loads @schema and @grid_control_field
+
+  # _init_view is the view we use when building slick grid for the
+  # first time.
+  # Calling @setView before init complete will change @_init_view value
+  @_init_view = @_getDefaultView() # set @_init_view to the default view
+
   Meteor.defer =>
     @_init()
 
@@ -41,7 +50,7 @@ _.extend GridControl.prototype,
     @_load_formatters()
     @_load_editors()
 
-    columns = @_buildColumns()
+    columns = @_getColumnsStructureFromView(@_init_view)
 
     options =
       enableColumnReorder: false
@@ -123,7 +132,166 @@ _.extend GridControl.prototype,
 
     @emit "init"
 
-  _buildColumns: ->
+  _error: (type, message) ->
+    @logger.error(message)
+
+    throw new Meteor.Error(type, message)
+
+  _loadSchema: ->
+    schema = {}
+    parents_found = false
+    users_found = false
+    first_visible_field_found = false
+
+    err = (message) =>
+      @_error "grid-control-schema-error", message
+
+    set_default_formatter = (field_def, first_visible_field_formatter, other_visible_fields_formatter) =>
+      if not field_def.grid_visible_column
+        field_def.grid_column_formatter = null
+
+        return
+
+      if not field_def.grid_column_formatter?
+        # If grid_column_formatter defined in the schema, do nothing
+        if not first_visible_field_found
+          # If this is the first field
+          field_def.grid_column_formatter = first_visible_field_formatter
+        else
+          field_def.grid_column_formatter = other_visible_fields_formatter
+
+    set_default_editor = (field_def, first_visible_field_editor, other_visible_fields_editor) =>
+      if not field_def.grid_editable_column
+        field_def.grid_column_editor = null
+
+        return
+
+      if not field_def.grid_column_editor?
+        if not first_visible_field_found
+          # If this is the first field
+          field_def.grid_column_editor = first_visible_field_editor
+        else
+          field_def.grid_column_editor = other_visible_fields_editor
+
+    if not @collection.simpleSchema()?
+      err "GridControl called for a collection with no simpleSchema definition"
+
+    for field_name, def of @collection.simpleSchema()._schema
+      def = _.extend {}, def # Shallow copy definition
+
+      if not def.label?
+        def.label = field_name
+
+      if field_name == "parents"
+        # validate parents field
+        if def.type != Object
+          err("`parents` field must be of type Object")
+
+        if not def.blackbox
+          err("`parents` field must be blackboxed")
+
+        if def.grid_visible_column
+          err("`parents` field can't be visible")
+
+        parents_found = true
+
+      else if field_name == "users"
+        if def.grid_visible_column
+          err("`users` field can't be visible")
+
+        users_found = true
+
+      else
+        if not def.grid_visible_column
+          # When grid isn't visible, init relevant options values accordingly
+          def.grid_editable_column = false
+          def.grid_column_formatter = null
+          def.grid_column_editor = null
+          def.grid_default_grid_view = false
+        else
+          # Set default formatter/editor according to field type
+          if def.type is String
+            set_default_formatter(def, "textWithTreeControls", "defaultFormatter")
+            set_default_editor(def, "TextWithTreeControlsEditor", "TextEditor")
+          else
+            # For other types, same as String
+            set_default_formatter(def, "textWithTreeControls", "defaultFormatter")
+            set_default_editor(def, "TextWithTreeControlsEditor", "TextEditor")
+
+          # Validate formatter/editor
+          if not first_visible_field_found
+            first_visible_field_found = true
+
+            @grid_control_field = field_name
+
+            # First visible field must be default field
+            if not def.grid_default_grid_view
+              err "As the first visible field, `#{field_name}` must have grid_default_grid_view option set to true"
+            
+            if not(def.grid_column_formatter in PACK.TreeControlFormatters)
+              err "As the first visible field, `#{field_name}` must have grid_column_formatter option set to one of the grid-control formatter as set in PACK.TreeControlFormatters"
+          else
+            if def.grid_column_formatter in PACK.TreeControlFormatters
+              err "`#{field_name}` is not the first visible field, it can't use `#{def.grid_column_formatter}` as its formatter as it's a grid-control formatter, as defined in PACK.TreeControlFormatters"
+
+          if not(def.grid_column_formatter of PACK.Formatters)
+            err "Field `#{field_name}` use an unknown formatter `#{def.grid_column_formatter}`"
+
+          if def.grid_editable_column and not(def.grid_column_editor of PACK.Editors)
+            err "Field `#{field_name}` use an unknown editor `#{def.grid_column_editor}`"
+
+      schema[field_name] = def
+
+    if not parents_found
+      err "`parents` field is not defined in grid's schema"
+
+    if not users_found
+      err "`users` field is not defined in grid's schema"
+
+    if not first_visible_field_found
+      err "You need to set at least one visible field"
+
+    @schema = schema
+
+    return schema
+
+  _validateView: (view) ->
+    # Returns true if valid view, throws a "grid-control-invalid-view" error otherwise
+    err = (message) =>
+      @_error "grid-control-invalid-view", message
+
+    if view.length == 0
+      err "Provided view can't be empty, you must define at least one column"
+
+    found_fields = {}
+    first = true
+    for column in view
+      field_name = column.field
+
+      if field_name of found_fields
+        err "Provided view specified more than one column for the same field `#{field_name}`"
+      found_fields[field_name] = true
+
+      if not(field_name of @schema)
+        err "Provided view has a column for an unknown field `#{field_name}`"
+
+      field_def = @schema[field_name]
+      if first
+        if not (field_def.grid_column_formatter in PACK.TreeControlFormatters)
+          err "Provided view must have as its first column a field with a tree-control formatter as defined in `PACK.TreeControlFormatters`"
+
+        first = false
+      else
+        if field_def.grid_column_formatter in PACK.TreeControlFormatters
+          err "Provided view can't have columns, other than the first one, for fields with a tree-control formatter as defined in `PACK.TreeControlFormatters`, see column for field `#{field_name}`"
+
+      if not field_def.grid_visible_column
+        err "Provided view has a column for non-visible field `#{field_name}`"        
+
+    return true
+
+  _getColumnsStructureFromView: (view) ->
+    # This method assumes that the view passed to it passed @_validateView
     columns = []
 
     columns.push
@@ -135,31 +303,73 @@ _.extend GridControl.prototype,
       cssClass: "cell-handle"
       focusable: false
 
-    if @collection.simpleSchema?
-      for field_id, definition of @collection.simpleSchema()._schema
-        if not definition.grid_visible_column
-          continue
+    for column_def in view
+      field = column_def.field
+      field_def = @schema[field]
 
-        column = {id: field_id, field: field_id, name: definition.label}
+      column =
+        id: field,
+        field: field,
+        name: field_def.label
+        # We know for sure that formatter exist for a column of view that passed validation
+        # (only visible columns allowed, and formatter is assigned to them on @schema init
+        # if they don't have on)
+        formatter: @_formatters[field_def.grid_column_formatter]
 
-        if definition.grid_insert_tree_controls
-          column.formatter = @_formatters.TextWithTreeControls
-          column.editor = @_editors.TextWithTreeControlsEditor
+      if field_def.grid_column_editor?
+        column.editor = @_editors[field_def.grid_column_editor]
+      else
+        column.focusable = false
 
-        if definition.grid_editable_column
-          if not column.editor? # if not defined already
-            column.editor = Slick.Editors.Text
-        else
-          column.focusable = false
+      if column_def.width?
+        column.width = column_def.width
+      else if field_def.grid_default_width?
+        column.width = field_def.grid_default_width
 
-        if definition.grid_default_width?
-          column.width = definition.grid_default_width
-
-        columns.push column
-    else
-      console.log "Warning: GridControl called for collection with no simpleSchema definition, can't init columns"
+      columns.push column
 
     columns
+
+  _getDefaultView: ->
+    view = []
+
+    for field_name, field_def of @schema # We assume @schema passed validation
+      if field_def.grid_default_grid_view
+        field_view =
+          field: field_name,
+
+        if field_def.grid_default_width?
+          field_view.width = field_def.grid_default_width
+
+        view.push field_view
+
+    return view
+
+  setView: (view) ->
+    @_validateView(view)
+
+    columns = @_getColumnsStructureFromView view
+    if not @_initialized
+      @_init_view = columns
+    else
+      @_grid.setColumns columns
+
+  getView: () ->
+    columns = @_grid.getColumns()
+
+    view = _.map columns, (column) ->
+      # If a column has no field we regard it as a misc column like the row handler
+      if column.field?
+        return {
+          field: column.field
+          width: column.width
+        }
+
+      return false
+
+    view = _.filter view, (column) -> not(column is false)
+
+    return view
 
   getCellField: (cell_id) -> @_grid.getColumns()[cell_id].field
 
@@ -216,6 +426,7 @@ _.extend GridControl.prototype,
     @_destroyed = true
 
     @_destroy_plugins()
+    @_destroy_jquery_events()
 
     if @_grid_data?
       @_grid_data.destroy()

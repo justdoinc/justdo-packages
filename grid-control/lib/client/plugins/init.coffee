@@ -18,8 +18,10 @@ _.extend GridControl.prototype,
         plugin.init.call(@)
 
   _destroy_plugins: ->
-    for plugin_name in @_loaded_plugins
-      plugin = PACK.Plugins[plugin_name]
+    if @_loaded_plugins?
+      # if initiated
+      for plugin_name in @_loaded_plugins
+        plugin = PACK.Plugins[plugin_name]
 
-      if plugin.destroy?
-        plugin.destroy.call(@)
+        if plugin.destroy?
+          plugin.destroy.call(@)

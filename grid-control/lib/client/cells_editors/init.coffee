@@ -7,10 +7,11 @@ _.extend GridControl.prototype,
     @_editors = {}
 
     for editor_name, editor of PACK.Editors
-      @_editors[editor_name] = (args) =>
-        args.grid_control = @
+      do (editor) =>
+        @_editors[editor_name] = (args) =>
+          args.grid_control = @
 
-        return new editor(args)
+          return new editor(args)
 
 #  _init_editors: ->
 #    for editor_name, editor of @_editors

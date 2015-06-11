@@ -7,8 +7,9 @@ _.extend GridControl.prototype,
     @_formatters = {}
 
     for formatter_name, formatter of PACK.Formatters
-      @_formatters[formatter_name] = =>
-        formatter.apply(@, arguments)
+      do (formatter) =>
+        @_formatters[formatter_name] = =>
+          formatter.apply(@, arguments)
 
   _init_formatters: ->
     for formatter_name, formatter of @_formatters

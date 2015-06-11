@@ -1,10 +1,7 @@
-TestCol = share.TestCol
-
-Meteor.publish "testCol", ->
-  TestCol.find()
+TestCollections = share.TestCollections
 
 Meteor.methods
-  gridDataSeeder: (users, items) ->
+  gridDataSeeder: (collection_name, users, items) ->
     options = {}
 
     if users?
@@ -13,11 +10,4 @@ Meteor.methods
     if items?
       options.items_count = items
 
-    gridDataSeeder TestCol, options
-
-allow_rule = (uid, post) -> parseInt(post._id, 10) % 2 == 0 # can edit even numbers
-TestCol.allow
-  insert: allow_rule
-  update: allow_rule
-  remove: allow_rule
-  
+    gridDataSeeder TestCollections[collection_name], options

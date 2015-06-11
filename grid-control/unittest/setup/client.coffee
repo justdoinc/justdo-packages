@@ -1,4 +1,4 @@
 initData = (users, items) ->
-  Meteor.call "gridDataSeeder", users, items
+  Meteor.call "gridDataSeeder", "default", users, items
 
 initData()

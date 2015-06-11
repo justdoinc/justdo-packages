@@ -1,5 +1,5 @@
 PACK.Editors.TextWithTreeControlsEditor = function (args) {
-  active_cell = args.grid.getActiveCell();
+  var active_cell = args.grid.getActiveCell();
   
   var $input;
   var defaultValue;
@@ -8,7 +8,7 @@ PACK.Editors.TextWithTreeControlsEditor = function (args) {
   var grid_control = args.grid_control
 
   this.init = function () {
-    var tree_control = grid_control._formatters.TextWithTreeControls(active_cell.row, active_cell.cell, "");
+    var tree_control = grid_control._formatters.textWithTreeControls(active_cell.row, active_cell.cell, "");
     $(args.container).html(tree_control);
     $(args.container).removeClass("editable");//.html(editor_html);
     $input = $("<INPUT type=text class='tree-control-editor-input' />")

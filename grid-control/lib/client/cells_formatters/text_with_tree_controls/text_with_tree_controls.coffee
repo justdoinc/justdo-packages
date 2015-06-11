@@ -1,7 +1,7 @@
 getSpacer = (level) -> "<span class='grid-tree-control-spacer' style='width: #{15 * level}px'></span>"
 
 _.extend PACK.Formatters,
-  TextWithTreeControls: (row, cell, value, columnDef, item) ->
+  textWithTreeControls: (row, cell, value, columnDef, item) ->
     output = PACK.Formatters.defaultFormatter(row, cell, value, columnDef, item)
 
     level = @_grid_data.getItemLevel(row)

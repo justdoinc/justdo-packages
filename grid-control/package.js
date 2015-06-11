@@ -37,6 +37,7 @@ Package.onUse(function (api) {
 
   // Plugins
   api.add_files('lib/client/plugins/init.coffee', client);
+  api.add_files('lib/client/plugins/grid_views/grid_views.coffee', client);
 
   // jquery_events
   api.add_files('lib/client/jquery_events/init.coffee', client, {bare: true});
@@ -44,6 +45,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/jquery_events/activate_row_on_click_on_row_handle.coffee', client);
 
   // Formatters
+  api.add_files('lib/client/cells_formatters/tree_control_formatter.coffee', client, {bare: true});
   api.add_files('lib/client/cells_formatters/init.coffee', client, {bare: true});
   api.add_files('lib/client/cells_formatters/default.coffee', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls.sass', client);
@@ -54,6 +56,7 @@ Package.onUse(function (api) {
 
   // Editors 
   api.add_files('lib/client/cells_editors/init.coffee', client, {bare: true});
+  api.add_files('lib/client/cells_editors/text_editor/text_editor.js', client);
   api.add_files('lib/client/cells_editors/text_with_tree_controls_editor/text_with_tree_controls_editor.sass', client);
   api.add_files('lib/client/cells_editors/text_with_tree_controls_editor/text_with_tree_controls_editor.js', client);
   api.add_files('lib/client/cells_editors/text_with_tree_controls_editor/text_with_tree_controls_editor-jquery_events.coffee', client);
@@ -78,6 +81,10 @@ Package.onTest(function(api) {
   api.use('mongo', both);
   api.use('tracker', both);
   api.use('meteorspark:test-helpers@0.2.0', both);
+  api.use('meteorspark:logger@0.3.0', both);
+
+  api.use('aldeed:simple-schema@1.3.1', both);
+  api.use('aldeed:collection2@2.3.2', both);
 
   api.use('stem-capital:slick-grid', client);
   api.use('stem-capital:grid-data-seeder', server);
