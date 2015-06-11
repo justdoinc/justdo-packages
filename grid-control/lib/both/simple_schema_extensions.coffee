@@ -87,3 +87,11 @@ SimpleSchema.extendOptions
   #
   # If undefined in visible and editable field will be set according to type option as defined above.
   grid_column_editor: Match.Optional(String)
+
+  # grid_effects_metadata_rendering:
+  #
+  # If true, changes made to that field will trigger re-rendering of the entire row
+  # that holds it.
+  #
+  # If undefined considered as false
+  grid_effects_metadata_rendering: Match.Optional(Boolean) # if set and is true, edits specific to this cell will trigger re-rendering of the entire row

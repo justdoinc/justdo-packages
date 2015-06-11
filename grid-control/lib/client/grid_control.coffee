@@ -113,11 +113,23 @@ _.extend GridControl.prototype,
 
     @_grid_data.on "grid-item-changed", (row, fields) =>
       col_id_to_row = _.invert(_.map @_grid.getColumns(), (cell) -> cell.id)
-      for field in fields
-        @_grid.updateCell(row, parseInt(col_id_to_row[field], 10))
 
-        # tree_change, full_invalidation=false
-        @emit "tree_change", false
+      for field in fields
+        cell_id = parseInt(col_id_to_row[field], 10)
+        column_def = @_grid.getColumns()[cell_id]
+
+        if column_def? and column_def.grid_effects_metadata_rendering
+          @_grid.invalidateRow(row)
+          @_grid.render()
+
+          # no need to continue updating the rest of the cells, as we redraw
+          # the entire row
+          break
+
+        @_grid.updateCell(row, cell_id)
+
+      # tree_change, full_invalidation=false
+      @emit "tree_change", false
 
     @_grid_data.on "edit-failed", (err) =>
       console.log "edit-failed", err
@@ -325,6 +337,9 @@ _.extend GridControl.prototype,
         column.width = column_def.width
       else if field_def.grid_default_width?
         column.width = field_def.grid_default_width
+
+      if column_def.grid_effects_metadata_rendering
+        column.grid_effects_metadata_rendering = true
 
       columns.push column
 
