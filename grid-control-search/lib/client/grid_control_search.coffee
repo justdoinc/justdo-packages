@@ -30,6 +30,9 @@ GridControlSearch = (grid_control) ->
   @grid_control._grid_data.on "rebuild", =>
     @_search()
 
+  @grid_control.on "grid-view-change", =>
+    @_search()
+
   @grid_control._grid.onActiveCellChanged.subscribe () =>
     @_update_location()
 
@@ -148,8 +151,10 @@ _.extend GridControlSearch.prototype,
 
   _search: () ->
     # actual search logic
+    fields = _.map @grid_control.getView(), (x) -> x.field
+
     if @current_term != ""
-      @paths = @grid_control._grid_data.search(new RegExp(@current_term))
+      @paths = @grid_control._grid_data.search(new RegExp(@current_term), fields)
 
       if @paths.length > 0
         @_setHaveResults(@paths)
