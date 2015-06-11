@@ -6,6 +6,15 @@ initDefaultGridMethods = (collection) ->
 
   methods[helpers.getCollectionMethodName(collection, "addChild")] = (path) ->
     # returns child_id or null if failed
+    if path == "/" and @userId?
+      new_item =
+        parents:
+          "0":
+            order:
+              collection.getNewChildOrder("0")
+        users: [@userId]
+
+      return collection.insert new_item
     if (item = collection.getItemByPathIfUserBelong path, @userId)?
       new_item = {parents: {}, users: item.users}
       new_item.parents[item._id] = {order: collection.getNewChildOrder(item._id)}
