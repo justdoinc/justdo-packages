@@ -1,6 +1,8 @@
 TestCol = share.TestCol
 initData = share.initData
 
+helpers = share.helpers
+
 users = ("user#{id}@gmail.com" for id in [0...10])
 password = "123456"
 
@@ -264,5 +266,79 @@ Tinytest.addAsync 'GridData - operations - addSibling', (test, onComplete) ->
                   test.equal path, "/#{item_id}/"
 
                   onCompleteOnce()
+  ], (cb) ->
+    onCompleteOnce = cb
+
+Tinytest.addAsync 'GridData - operations - movePath', (test, onComplete) ->
+  subscription = null
+  onCompleteOnce = null
+  th.getOnCompleteOnceOrTimeoutWithUser test, onComplete, users[0], password, [
+    ->
+      subscription = Meteor.subscribe "testCol"
+    ,
+    ->
+      if subscription.ready()
+        gd = new GridData TestCol
+
+        gd.on "init", ->
+          gd.movePath "/not-existing-item/", {order: 0}, (err) ->
+            test.equal err.error, "unkown-path"
+
+            gd.movePath "/1/", {order: 0}, (err) -> # /1/ doesn't belong to user0
+              test.equal err.error, "unkown-path"
+
+              # Move order same parent path
+              path = "/10/"
+              gd.movePath path, {order: 0}, (err) ->
+                gd.once "rebuild", ->
+                  item_id = helpers.getPathItemId(path)
+
+                  test.equal gd.items_by_id[item_id].parents[0].order, 0
+
+                  # Don't allow moving to a parent not under our permission
+                  path = "/10/"
+                  gd.movePath path, {parent: "1", order: 3}, (err) ->
+                    test.equal err.error, "unkown-path"
+                    # Don't allow moving to unknown parent
+                    path = "/10/"
+                    gd.movePath path, {parent: "100"}, (err) ->
+                      test.equal err.error, "unkown-path"
+
+                      # Add a new child to "/" to which we will move /10/
+                      gd.addChild "/", (err, new_parent_id, new_parent_path) ->
+
+                        path = "/10/"
+                        gd.movePath path, {parent: new_parent_id, order: 3}, (err) ->
+                          gd.once "rebuild", ->
+                            item_id = helpers.getPathItemId(path)
+
+                            test.isTrue not("0" of gd.items_by_id[item_id].parents)
+                            test.equal gd.items_by_id[item_id].parents[new_parent_id].order, 3
+
+                            # Move to end of current parent (order not specified)
+                            path = "#{new_parent_path}10/"
+                            gd.movePath path, {parent: new_parent_id}, (err) ->
+                              gd.once "rebuild", ->
+                                item_id = helpers.getPathItemId(path)
+
+                                test.equal gd.items_by_id[item_id].parents[new_parent_id].order, 4
+
+                                # Move to same location order all should remain the same
+                                path = "#{new_parent_path}10/"
+                                gd.movePath path, {parent: new_parent_id, order: 4}, (err) ->
+                                  # gd.once "rebuild", -> No rebuild should happen since we don't change the db in this case
+                                  item_id = helpers.getPathItemId(path)
+
+                                  test.equal gd.items_by_id[item_id].parents[new_parent_id].order, 4
+
+                                  # replacing increments order of item existing in location
+                                  gd.addChild "/", (err, replacing_child_id, replacing_child_path) ->
+                                    gd.movePath replacing_child_path, {parent: new_parent_id, order: 4}, (err) ->
+                                    gd.once "rebuild", ->
+                                      test.equal gd.items_by_id[replacing_child_id].parents[new_parent_id].order, 4
+                                      test.equal gd.items_by_id[item_id].parents[new_parent_id].order, 5
+                                      onCompleteOnce()
+
+
   ], (cb) ->
     onCompleteOnce = cb

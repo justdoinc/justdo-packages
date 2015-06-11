@@ -46,6 +46,8 @@ Package.onTest(function(api) {
   api.use('stem-capital:grid-data', both);
   api.use('stem-capital:grid-data-seeder', server);
 
+  api.add_files('lib/helpers.coffee', both);
+
   api.addFiles('unittest/setup/both.coffee', client, {bare: true});
   api.addFiles('unittest/setup/both.coffee', server);
   api.addFiles('unittest/setup/server.coffee', server);

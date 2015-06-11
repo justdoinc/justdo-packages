@@ -51,6 +51,50 @@ initDefaultGridMethods = (collection) ->
     else
       throw exceptions.unkownPath()
 
+  methods[helpers.getCollectionMethodName(collection, "movePath")] = (path, new_location) ->
+    if (not _.isObject(new_location)) or
+       (not (("order" of new_location) or ("parent" of new_location)))
+        # if new_location doens't have information for new location
+        throw new Meteor.Error("missing-argument", 'Error: Can\'t move path: new_location argument lack information for new location')
+
+    if (item = collection.getItemByPathIfUserBelong path, @userId)?
+      parent_id = helpers.getPathParentId(path)
+
+      if not ("parent" of new_location)
+        # If parent is not provided in new_location we assume change of order under same item
+        new_location.parent = parent_id
+
+      new_parent_item = collection.findOne(new_location.parent)
+      if new_location.parent != "0" and not(new_parent_item? and collection.isUserBelongToItem(new_parent_item, @userId))
+        throw new Meteor.Error("unkown-path", 'Error: Can\'t move path: new parent doesn\'t exist') # we don't indicate existance in case no permission
+
+      if not ("order" of new_location)
+        new_location.order = collection.getNewChildOrder new_location.parent
+
+      # Check if an item exist already in new_location order
+      item_in_new_location = collection.getChildreOfOrder(new_location.parent, new_location.order)
+
+      if item_in_new_location?
+        # if there's an item in new location already.
+        if item_in_new_location._id == item._id
+          # if same item, do nothing
+          return
+        else
+          # Make space for the move
+          collection.incrementChildsOrderGte new_location.parent, new_location.order
+
+      # Remove current parent
+      update_op = {$unset: {}}
+      update_op.$unset["parents.#{parent_id}"] = ""
+      collection.update item._id, update_op
+
+      # Add to new parent
+      update_op = {$set: {}}
+      update_op.$set["parents.#{new_location.parent}"] = {order: new_location.order}
+      collection.update item._id, update_op
+    else
+      throw exceptions.unkownPath()
+
   Meteor.methods methods
 
 initDefaultGridAllowDenyRules = (collection) ->
@@ -102,6 +146,11 @@ initDefaultCollectionMethods = (collection) ->
       update_op = {$inc: {}}
       update_op["$inc"]["parents.#{parent_id}.order"] = 1
       collection.update query, update_op, {multi: true}
+
+    getChildreOfOrder: (item_id, order) ->
+      query = {}
+      query["parents.#{item_id}.order"] = order
+      collection.findOne(query)
 
 initDefaultGridServerSideConf = (collection) ->
   initDefaultGridMethods collection

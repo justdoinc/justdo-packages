@@ -595,6 +595,17 @@ _.extend GridData.prototype,
 
     Meteor.call @getCollectionMethodName("removeParent"), path
 
+  movePath: (path, new_location, cb) ->
+    # If cb provided, cb will be called with the following args when excution
+    # completed:
+    # cb(err)
+
+    path = helpers.normalizePath(path)
+
+    Meteor.call @getCollectionMethodName("movePath"), path, new_location, (err) ->
+      if cb?
+        cb err
+
   # ** Misc. **
   getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
 
