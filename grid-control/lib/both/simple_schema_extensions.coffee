@@ -111,3 +111,16 @@ SimpleSchema.extendOptions
   #
   # If undefined considered as false
   grid_effects_metadata_rendering: Match.Optional(Boolean) # if set and is true, edits specific to this cell will trigger re-rendering of the entire row
+
+  # grid_selector_possible_values:
+  #
+  # Relevant only to editors where the user can select a value out of a specific list of possible values
+  # Have no effect otherwise
+  #
+  # If relevant to current field editor and is undefined considered as an empty Object
+  #
+  # Object structure:
+  # {
+  #   value: "Label"
+  # }
+  grid_selector_possible_values: Match.Optional(Object)
