@@ -26,6 +26,9 @@ _.extend PACK.Plugins,
 
           @setView(new_view)
 
+      @_grid.onColumnsResized.subscribe (e,args) =>
+        @emit "grid-view-change", @getView()
+
     destroy: ->
 
 _.extend GridControl.prototype,

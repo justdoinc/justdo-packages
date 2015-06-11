@@ -368,8 +368,10 @@ _.extend GridControl.prototype,
       @_init_view = columns
     else
       @_grid.setColumns columns
-      @emit "columns-headers-dom-rebuilt"
-      @emit "grid-view-change"
+
+      new_view = @getView()
+      @emit "columns-headers-dom-rebuilt", new_view
+      @emit "grid-view-change", new_view
 
   getView: () ->
     columns = @_grid.getColumns()
