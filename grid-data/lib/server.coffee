@@ -64,6 +64,10 @@ initDefaultGridMethods = (collection) ->
         # If parent is not provided in new_location we assume change of order under same item
         new_location.parent = parent_id
 
+      if parent_id != new_location.parent
+        if collection.isAncestor(new_location.parent, item._id)
+          throw new Meteor.Error("infinite-loop", "Error: Can\'t move path: #{new_location.parent} ancestor of #{parent_id}")
+
       new_parent_item = collection.findOne(new_location.parent)
       if new_location.parent != "0" and not(new_parent_item? and collection.isUserBelongToItem(new_parent_item, @userId))
         throw new Meteor.Error("unkown-path", 'Error: Can\'t move path: new parent doesn\'t exist') # we don't indicate existance in case no permission
@@ -117,6 +121,8 @@ initDefaultCollectionMethods = (collection) ->
   _.extend collection,
     getItemByPath: (path) -> collection.findOne helpers.getPathItemId path
 
+    getItemById: (item_id) -> collection.findOne item_id
+
     isUserBelongToItem: (item, userId) -> userId in item.users
 
     getItemByPathIfUserBelong: (path, userId) -> if (item = collection.getItemByPath(path))? and collection.isUserBelongToItem(item, userId) then item else null
@@ -151,6 +157,27 @@ initDefaultCollectionMethods = (collection) ->
       query = {}
       query["parents.#{item_id}.order"] = order
       collection.findOne(query)
+
+    isAncestor: (item_id, potential_ancestor_id) ->
+      # Returns true if potential_ancestor_id is ancesotr of item_id or the same item
+      if potential_ancestor_id == item_id
+        return true
+
+      if item_id == "0"
+        # Root reached
+        return false
+
+      item = collection.getItemById(item_id)
+
+      if not item?
+        # XXX We avoid dealing with broken chains for now
+        return false
+
+      parents_situation = false
+      for parent_id, parent_info of item.parents
+        parents_situation ||= collection.isAncestor(parent_id, potential_ancestor_id)
+
+      return parents_situation
 
 initDefaultGridServerSideConf = (collection) ->
   initDefaultGridMethods collection

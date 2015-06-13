@@ -334,10 +334,21 @@ Tinytest.addAsync 'GridData - operations - movePath', (test, onComplete) ->
                                   # replacing increments order of item existing in location
                                   gd.addChild "/", (err, replacing_child_id, replacing_child_path) ->
                                     gd.movePath replacing_child_path, {parent: new_parent_id, order: 4}, (err) ->
-                                    gd.once "rebuild", ->
-                                      test.equal gd.items_by_id[replacing_child_id].parents[new_parent_id].order, 4
-                                      test.equal gd.items_by_id[item_id].parents[new_parent_id].order, 5
-                                      onCompleteOnce()
+                                      gd.once "rebuild", ->
+                                        test.equal gd.items_by_id[replacing_child_id].parents[new_parent_id].order, 4
+                                        test.equal gd.items_by_id[item_id].parents[new_parent_id].order, 5
+
+                                        path = "/#{new_parent_id}/10/"
+                                        gd.movePath path, {parent: "0", order: 4}, (err) ->
+                                          gd.once "rebuild", ->
+                                            item_id = helpers.getPathItemId(path)
+                                            test.equal gd.items_by_id[item_id].parents["0"].order, 4
+
+                                            gd.addChild "/10/", (err, new_parent_id, new_parent_path) ->
+                                              gd.movePath "/10/", {parent: new_parent_id}, (err) ->
+                                                test.equal err.error, "infinite-loop"
+
+                                                onCompleteOnce()
 
 
   ], (cb) ->
