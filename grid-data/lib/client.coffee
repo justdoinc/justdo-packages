@@ -629,10 +629,8 @@ _.extend GridData.prototype,
   getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
 
 subscribeDefaultGridSubscription = (collection) ->
-  console.log 'who is calling this?'
-  #todo: question for Daniel - isn't it that getting the userID from the client side
-  # is a security breach?
-  Meteor.subscribe helpers.getCollectionPubSubName(collection) #, Meteor.userId() # userId for reactivity
-
-
-
+  # Note: we call Meteor.userId() as last argument.
+  # Meteor.userId() is not part of the publication args, used here only to
+  # trigger reactivity (re-running this func if called in a computation) when
+  # the user changes and make Meteor recognise that the subscription changed.
+  Meteor.subscribe helpers.getCollectionPubSubName(collection), null, Meteor.userId()

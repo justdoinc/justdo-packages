@@ -4,10 +4,10 @@ exceptions = share.exceptions
 initDefaultGridMethods = (collection) ->
   methods = {}
 
-  methods[helpers.getCollectionMethodName(collection, "addChild")] = (path,fieldsDefaults) ->
+  methods[helpers.getCollectionMethodName(collection, "addChild")] = (path, fields = {}) ->
     # returns child_id or null if failed
     if path == "/" and @userId?
-      new_item= fieldsDefaults
+      new_item= fields
       new_item.parents=
           "0":
             order:
@@ -16,36 +16,28 @@ initDefaultGridMethods = (collection) ->
 
       return collection.insert new_item
     if (item = collection.getItemByPathIfUserBelong path, @userId)?
-      #new_item = {parents: {}, users: item.users}
-      new_item=fieldsDefaults
-      new_item.parents={}
-      new_item.users=item.users
+      new_item = _.extend {}, fields, {parents: {}, users: item.users}
       new_item.parents[item._id] = {order: collection.getNewChildOrder(item._id)}
       return collection.insert new_item
     else
       throw exceptions.unkownPath()
 
-  methods[helpers.getCollectionMethodName(collection, "addSibling")] = (path, fieldsDefaults) ->
+  methods[helpers.getCollectionMethodName(collection, "addSibling")] = (path, fields = {}) ->
     if (item = collection.getItemByPathIfUserBelong path, @userId)?
       parent_id = helpers.getPathParentId(path)
       sibling_order = item.parents[parent_id].order + 1
       
       collection.incrementChildsOrderGte parent_id, sibling_order
 
-      new_item = fieldsDefaults
-      new_item.parents={}
-      new_item.users=item.users
+      new_item = _.extend {}, fields, {parents: {}, users: item.users}
       new_item.parents[parent_id] = {order: sibling_order}
-      ret= collection.insert new_item
-      console.log ret
+      ret = collection.insert new_item
       return ret
     else
       throw exceptions.unkownPath()
 
-  methods[helpers.getCollectionMethodName(collection, "addTopLevelNode")] = (fieldsDefaults) ->
-    new_item = fieldsDefaults
-    new_item.parents={}
-    new_item.users=[@userId]
+  methods[helpers.getCollectionMethodName(collection, "addTopLevelNode")] = (fields = {}) ->
+    new_item = _.extend {}, fields, {parents: {}, users: [@userId]}
     new_item.parents[0] = {order: 0}
     collection.insert new_item
 
@@ -120,7 +112,7 @@ initDefaultGridAllowDenyRules = (collection) ->
     update: (userId, doc, fieldNames, modifier) -> collection.isUserBelongToItem(doc, userId)
 
 initDefaultGridPubSub = (collection) ->
-  Meteor.publish helpers.getCollectionPubSubName(collection), (condition) ->
+  Meteor.publish helpers.getCollectionPubSubName(collection), (condition = {}) ->
     if not @userId?
       @ready()
       return
