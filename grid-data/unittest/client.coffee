@@ -224,16 +224,16 @@ Tinytest.addAsync 'GridData - operations - addChild', (test, onComplete) ->
         gd = new GridData TestCol
 
         gd.on "init", ->
-          gd.addChild "/not-existing-item/", (err, item_id, path) ->
+          gd.addChild "/not-existing-item/", {}, (err, item_id, path) ->
             test.equal err.error, "unkown-path"
 
-            gd.addChild "/1/", (err, item_id, path) -> # /1/ doesn't belong to user0
+            gd.addChild "/1/", {}, (err, item_id, path) -> # /1/ doesn't belong to user0
               test.equal err.error, "unkown-path"
 
-              gd.addChild "/10/", (err, item_id, path) ->
+              gd.addChild "/10/", {}, (err, item_id, path) ->
                 test.equal path, "/10/#{item_id}/"
 
-                gd.addChild "/10", (err, item_id, path) ->
+                gd.addChild "/10", {}, (err, item_id, path) ->
                   test.equal path, "/10/#{item_id}/"
 
                   onCompleteOnce()
@@ -252,17 +252,17 @@ Tinytest.addAsync 'GridData - operations - addSibling', (test, onComplete) ->
         gd = new GridData TestCol
 
         gd.on "init", ->
-          gd.addSibling "/not-existing-item/", (err, item_id, path) ->
+          gd.addSibling "/not-existing-item/", {}, (err, item_id, path) ->
             console.log err
             test.equal err.error, "unkown-path"
 
-            gd.addSibling "/1/", (err, item_id, path) -> # /1/ doesn't belong to user0
+            gd.addSibling "/1/", {}, (err, item_id, path) -> # /1/ doesn't belong to user0
               test.equal err.error, "unkown-path"
 
-              gd.addSibling "/10/", (err, item_id, path) ->
+              gd.addSibling "/10/", {}, (err, item_id, path) ->
                 test.equal path, "/#{item_id}/"
 
-                gd.addSibling "/10", (err, item_id, path) ->
+                gd.addSibling "/10", {}, (err, item_id, path) ->
                   test.equal path, "/#{item_id}/"
 
                   onCompleteOnce()
@@ -305,7 +305,7 @@ Tinytest.addAsync 'GridData - operations - movePath', (test, onComplete) ->
                       test.equal err.error, "unkown-path"
 
                       # Add a new child to "/" to which we will move /10/
-                      gd.addChild "/", (err, new_parent_id, new_parent_path) ->
+                      gd.addChild "/", {}, (err, new_parent_id, new_parent_path) ->
 
                         path = "/10/"
                         gd.movePath path, {parent: new_parent_id, order: 3}, (err) ->
@@ -332,7 +332,7 @@ Tinytest.addAsync 'GridData - operations - movePath', (test, onComplete) ->
                                   test.equal gd.items_by_id[item_id].parents[new_parent_id].order, 4
 
                                   # replacing increments order of item existing in location
-                                  gd.addChild "/", (err, replacing_child_id, replacing_child_path) ->
+                                  gd.addChild "/", {}, (err, replacing_child_id, replacing_child_path) ->
                                     gd.movePath replacing_child_path, {parent: new_parent_id, order: 4}, (err) ->
                                       gd.once "rebuild", ->
                                         test.equal gd.items_by_id[replacing_child_id].parents[new_parent_id].order, 4
@@ -344,7 +344,7 @@ Tinytest.addAsync 'GridData - operations - movePath', (test, onComplete) ->
                                             item_id = helpers.getPathItemId(path)
                                             test.equal gd.items_by_id[item_id].parents["0"].order, 4
 
-                                            gd.addChild "/10/", (err, new_parent_id, new_parent_path) ->
+                                            gd.addChild "/10/", {}, (err, new_parent_id, new_parent_path) ->
                                               gd.movePath "/10/", {parent: new_parent_id}, (err) ->
                                                 test.equal err.error, "infinite-loop"
 
