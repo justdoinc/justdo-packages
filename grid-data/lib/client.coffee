@@ -563,45 +563,33 @@ _.extend GridData.prototype,
       # executed is false if edit blocked by events hooks
       edit_failed(new Meteor.Error "edit-blocked-by-hook", "Edit blocked by hook")
 
-  addChild: (path,fieldsDefaults, cb) ->
+  addChild: (path, fields, cb) ->
     # If cb provided, cb will be called with the following args when excution
     # completed:
     # cb(err, child_id, child_path)
 
     path = helpers.normalizePath(path)
 
-    Meteor.call @getCollectionMethodName("addChild"), path, fieldsDefaults, (err, child_id) ->
+    Meteor.call @getCollectionMethodName("addChild"), path, fields, (err, child_id) ->
       if cb?
         if err?
           cb err
         else
           cb err, child_id, path + child_id + "/"
 
-  addSibling: (path, fieldsDefaults, cb) ->
+  addSibling: (path, fields, cb) ->
     # If cb provided, cb will be called with the following args when excution
     # completed:
     # cb(err, sibling_id, sibling_path)
 
     path = helpers.normalizePath(path)
 
-    Meteor.call @getCollectionMethodName("addSibling"), path, fieldsDefaults, (err, sibling_id) ->
+    Meteor.call @getCollectionMethodName("addSibling"), path, fields, (err, sibling_id) ->
       if cb?
         if err?
           cb err
         else
           cb err, sibling_id, helpers.getParentPath(path) + sibling_id + "/"
-
-  addTopLevelNode: (fieldsDefaults,cb) ->
-    # If cb provided, cb will be called with the following args when excution
-    # completed:
-    # cb(err, sibling_id)
-
-    Meteor.call @getCollectionMethodName("addTopLevelNode"), fieldsDefaults, (err, node_id) ->
-      if cb?
-        if err?
-          cb err
-        else
-          cb err, node_id
 
   removeParent: (path) ->
     path = helpers.normalizePath(path)

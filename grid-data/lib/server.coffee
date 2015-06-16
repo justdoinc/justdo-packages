@@ -5,16 +5,19 @@ initDefaultGridMethods = (collection) ->
   methods = {}
 
   methods[helpers.getCollectionMethodName(collection, "addChild")] = (path, fields = {}) ->
-    # returns child_id or null if failed
-    if path == "/" and @userId?
-      new_item= fields
-      new_item.parents=
-          "0":
-            order:
-              collection.getNewChildOrder("0")
-      new_item.users [@userId]
+    if @userId?
+      if path == "/"
+        new_item = _.extend {}, fields,
+          parents:
+            "0":
+              order:
+                collection.getNewChildOrder("0")
+          users: [@userId]
 
-      return collection.insert new_item
+        return collection.insert new_item
+    else
+      throw exceptions.loginRequired()
+
     if (item = collection.getItemByPathIfUserBelong path, @userId)?
       new_item = _.extend {}, fields, {parents: {}, users: item.users}
       new_item.parents[item._id] = {order: collection.getNewChildOrder(item._id)}
@@ -35,11 +38,6 @@ initDefaultGridMethods = (collection) ->
       return ret
     else
       throw exceptions.unkownPath()
-
-  methods[helpers.getCollectionMethodName(collection, "addTopLevelNode")] = (fields = {}) ->
-    new_item = _.extend {}, fields, {parents: {}, users: [@userId]}
-    new_item.parents[0] = {order: 0}
-    collection.insert new_item
 
   methods[helpers.getCollectionMethodName(collection, "removeParent")] = (path) ->
     if (item = collection.getItemByPathIfUserBelong path, @userId)?
@@ -119,18 +117,6 @@ initDefaultGridPubSub = (collection) ->
 
     condition.users={$elemMatch: {$eq: @userId}}
     collection.find condition
-
-#Daniel's version:
-# initDefaultGridPubSub = (collection) ->
-#  Meteor.publish helpers.getCollectionPubSubName(collection), ->
-#    if not @userId?
-#      @ready()
-#
-#      return
-#
-#    collection.find {users: {$elemMatch: {$eq: @userId}}}
-
-
 
 initDefaultIndeices = (collection) ->
   collection._ensureIndex {users: 1}
