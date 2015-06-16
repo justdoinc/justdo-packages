@@ -4,7 +4,6 @@ numSort = (a, b) -> a - b
 GridData = (collection) ->
   EventEmitter.call this
 
-  @subscription = null # this will store the handle for the subscription, so we could reset it when needed.
   @collection = collection
 
   @_initialized = false
@@ -606,19 +605,12 @@ _.extend GridData.prototype,
       if cb?
         cb err
 
-  subscribeForSpecificData: (condition) ->
-    if @subscription
-      @subscription.stop()
-
-    @subscription = Meteor.subscribe helpers.getCollectionPubSubName(@collection) , condition
-
-
   # ** Misc. **
   getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
 
-subscribeDefaultGridSubscription = (collection) ->
+subscribeDefaultGridSubscription = (collection, condition=null) ->
   # Note: we call Meteor.userId() as last argument.
   # Meteor.userId() is not part of the publication args, used here only to
   # trigger reactivity (re-running this func if called in a computation) when
   # the user changes and make Meteor recognise that the subscription changed.
-  Meteor.subscribe helpers.getCollectionPubSubName(collection), null, Meteor.userId()
+  Meteor.subscribe helpers.getCollectionPubSubName(collection), condition, Meteor.userId()
