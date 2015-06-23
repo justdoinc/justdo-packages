@@ -51,6 +51,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/cells_formatters/tree_control_formatter.coffee', client, {bare: true});
   api.add_files('lib/client/cells_formatters/init.coffee', client, {bare: true});
   api.add_files('lib/client/cells_formatters/default.coffee', client);
+  api.add_files('lib/client/cells_formatters/key_value/key_value.coffee', client);
   api.add_files('lib/client/cells_formatters/checkbox/checkbox.coffee', client);
   api.add_files('lib/client/cells_formatters/checkbox/checkbox-jquery_events.coffee', client);
   api.add_files('lib/client/cells_formatters/unicode_date.coffee', client);
