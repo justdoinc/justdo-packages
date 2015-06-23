@@ -344,10 +344,10 @@ _.extend GridControl.prototype,
       else if field_def.grid_default_width?
         column.width = field_def.grid_default_width
 
-      if field_def.grid_selector_possible_values?
-        column.possible_values = field_def.grid_selector_possible_values
+      if field_def.grid_values?
+        column.values = field_def.grid_values
       else
-        column.possible_values = null
+        column.values = null
 
       if column_def.grid_effects_metadata_rendering
         column.grid_effects_metadata_rendering = true

@@ -7,8 +7,11 @@ PACK.Editors.SelectorEditor = function (args) {
     this.init = function () {
       var value, label, options, output = "";
 
-      if (args.column.possible_values !== null) {
-        options = args.column.possible_values;
+      if (args.column.values !== null) {
+        options = args.column.values;
+        if (_.isFunction(options)) {
+          options = options(args.grid_control);
+        }
       } else {
         options = {};
       }

@@ -112,15 +112,27 @@ SimpleSchema.extendOptions
   # If undefined considered as false
   grid_effects_metadata_rendering: Match.Optional(Boolean) # if set and is true, edits specific to this cell will trigger re-rendering of the entire row
 
-  # grid_selector_possible_values:
+  # grid_values:
   #
-  # Relevant only to editors where the user can select a value out of a specific list of possible values
-  # Have no effect otherwise
+  # Specify possible values and their labels (Used by some formatters/editors).
   #
-  # If relevant to current field editor and is undefined considered as an empty Object
-  #
-  # Object structure:
+  # Format:
   # {
   #   value: "Label"
   # }
-  grid_selector_possible_values: Match.Optional(Object)
+  #
+  # Alternatively you can specify a function that get the current grid_control as
+  # its fisrt argument parameter and returns an object of the above format.
+  #
+  # function (grid_control) {
+  #   return {value: "Label"};
+  # }
+  #
+  # XXX not implemented
+  # XXX If the function is a reactive resource editors/formatters that uses it should react
+  # XXX to changes upon invalidation.
+  #
+  # Note: this option is in use by some of the editors/formatters it has no effect otherwise.
+  #
+  # If relevant to the current field editor/formatter and is undefined considered as an empty object.
+  grid_values: Match.Optional(Match.OneOf(Function, Object))
