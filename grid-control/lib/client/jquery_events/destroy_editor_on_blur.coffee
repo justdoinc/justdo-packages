@@ -22,9 +22,19 @@ PACK.jquery_events.push(
 
         # Destroy date editor only if blur isn't a result of opening the datepicker
         if (e.currentTarget == $('input.editor-unicode-date', @container).get(0))
+          original_active_cell = @_grid.getActiveCell()
           setTimeout =>
-            if not $(".ui-datepicker").is(":visible")
+            active_cell = @_grid.getActiveCell()
+
+            if original_active_cell.row == active_cell.row and
+               original_active_cell.cell == active_cell.cell and
+               not $(".ui-datepicker").is(":visible") and
+               not $(e.currentTarget).is(":focus")
+               # If after blur active cell remains the same (means we blurred
+               # out of the grid control) and the datepicker isn't visible (the
+               # blur wasn't a result of opening the date picker) and we aren't
+               # focused (no reason to close) commit changes and exit editor 
               @_grid.getEditorLock().commitCurrentEdit()
-          , 50
+          , 250
   }
 )

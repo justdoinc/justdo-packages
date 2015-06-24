@@ -16,8 +16,12 @@ PACK.Editors.UnicodeDateEditor = function (args) {
       showOn: "button",
       buttonImageOnly: true,
       buttonImage: "/packages/stem-capital_grid-control/lib/client/cells_editors/unicode_date/media/calendar.gif",
+      showAnim: "",
       beforeShow: function () {
         calendarOpen = true;
+      },
+      onSelect: function () {
+        $input.focus();
       },
       onClose: function () {
         calendarOpen = false;
