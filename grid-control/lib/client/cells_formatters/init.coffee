@@ -14,4 +14,5 @@ _.extend GridControl.prototype,
   _init_formatters: ->
     for formatter_name, formatter of @_formatters
       if formatter_name of PACK.FormattersInit
-        PACK.FormattersInit[formatter_name].call(@)
+        if PACK.FormattersInit[formatter_name]?
+          PACK.FormattersInit[formatter_name].call(@)
