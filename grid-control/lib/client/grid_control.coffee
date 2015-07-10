@@ -1,7 +1,10 @@
-GridControl = (collection, container, operations_container) ->
+GridControl = (options, container, operations_container) ->
   EventEmitter.call this
 
-  @collection = collection
+  @options = _.extend {}, options,
+    allow_variable_row_height: false
+
+  @collection = options.items_collection
   @container = container
   @operations_container = $(operations_container)
 
