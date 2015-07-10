@@ -1,8 +1,11 @@
 GridControl = (options, container, operations_container) ->
   EventEmitter.call this
 
-  @options = _.extend {}, options,
-    allow_variable_row_height: false
+  default_options =
+    allow_dynamic_row_height: false
+
+  @options = _.extend {}, default_options, options
+
 
   @collection = options.items_collection
   @container = container
@@ -53,14 +56,17 @@ _.extend GridControl.prototype,
 
     columns = @_getColumnsStructureFromView(@_init_view)
 
-    options =
+    slick_options =
       enableColumnReorder: false
       editable: true
       autoEdit: true
       enableCellNavigation: true
 
+    if @options.allow_dynamic_row_height
+      slick_options.autoHeight = true
+
     @_grid_data = new GridData @collection
-    @_grid = new Slick.Grid @container, @_grid_data, columns, options
+    @_grid = new Slick.Grid @container, @_grid_data, columns, slick_options
 
     #@_grid.setSelectionModel(new Slick.RowSelectionModel())
 
