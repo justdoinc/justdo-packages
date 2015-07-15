@@ -12,8 +12,9 @@ Package.onUse(function (api) {
   api.versionsFrom('1.1.0.2');
 
   api.use('mizzao:jquery-ui', client);
+  api.use('fourseven:scss@=0.9.6', client);
 
-  api.add_files('slick.grid.css', client);
+  api.add_files('slick.grid.scss', client);
   api.add_files('lib/jquery.event.drag-2.2.js', client);
   api.add_files('slick.core.js', client);
   api.add_files('plugins/slick.cellrangedecorator.js', client);

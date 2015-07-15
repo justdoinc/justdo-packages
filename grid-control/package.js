@@ -18,6 +18,8 @@ Package.onUse(function (api) {
 
   api.use('aldeed:simple-schema@1.3.1', both);
 
+  api.use('copleykj:jquery-autosize@1.17.8', client);
+
   api.use('momentjs:moment@2.10.3', both);
 
   api.use('stem-capital:slick-grid', client);
@@ -58,6 +60,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls.sass', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls.coffee', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls_init.coffee', client);
+  api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls-jquery_events.coffee', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/media/collapse.gif', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/media/expand.gif', client);
 
@@ -69,7 +72,10 @@ Package.onUse(function (api) {
   api.add_files('lib/client/cells_editors/selector_editor/selector_editor.js', client);
   api.add_files('lib/client/cells_editors/text_with_tree_controls_editor/text_with_tree_controls_editor.sass', client);
   api.add_files('lib/client/cells_editors/text_with_tree_controls_editor/text_with_tree_controls_editor.js', client);
-  api.add_files('lib/client/cells_editors/text_with_tree_controls_editor/text_with_tree_controls_editor-jquery_events.coffee', client);
+
+  api.add_files('lib/client/cells_editors/textarea_with_tree_controls_editor/textarea_with_tree_controls_editor.sass', client);
+  api.add_files('lib/client/cells_editors/textarea_with_tree_controls_editor/textarea_with_tree_controls_editor.js', client);
+
   api.add_files('lib/client/cells_editors/unicode_date/unicode_date.sass', client);
   api.add_files('lib/client/cells_editors/unicode_date/unicode_date.js', client);
   api.add_files('lib/client/cells_editors/unicode_date/media/calendar.gif', client);

@@ -6,7 +6,6 @@ GridControl = (options, container, operations_container) ->
 
   @options = _.extend {}, default_options, options
 
-
   @collection = options.items_collection
   @container = container
   @operations_container = $(operations_container)
@@ -63,7 +62,7 @@ _.extend GridControl.prototype,
       enableCellNavigation: true
 
     if @options.allow_dynamic_row_height
-      slick_options.autoHeight = true
+      slick_options.dynamicRowHeight = true
 
     @_grid_data = new GridData @collection
     @_grid = new Slick.Grid @container, @_grid_data, columns, slick_options

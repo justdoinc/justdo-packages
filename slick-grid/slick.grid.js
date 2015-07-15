@@ -70,6 +70,7 @@ if (typeof Slick === "undefined") {
       enableAsyncPostRender: false,
       asyncPostRenderDelay: 50,
       autoHeight: false,
+      dynamicRowHeight: false, // if true autoHeight will be set to true also, relative positioning will be used instead of absolute
       editorLock: Slick.GlobalEditorLock,
       showHeaderRow: false,
       headerRowHeight: 25,
@@ -224,10 +225,15 @@ if (typeof Slick === "undefined") {
 
       $container
           .empty()
-          .css("overflow", "hidden")
           .css("outline", 0)
           .addClass(uid)
           .addClass("ui-widget");
+
+      if (options.autoHeight) {
+        $container.css("overflow", "auto");
+      } else {
+        $container.css("overflow", "hidden");
+      }
 
       // set up a positioning container if needed
       if (!/relative|absolute|fixed/.test($container.css("position"))) {
@@ -259,6 +265,12 @@ if (typeof Slick === "undefined") {
 
       $viewport = $("<div class='slick-viewport' style='width:100%;overflow:auto;outline:0;position:relative;;'>").appendTo($container);
       $viewport.css("overflow-y", options.autoHeight ? "hidden" : "auto");
+
+      if (options.autoHeight) {
+        $viewport.css({
+          height: "auto"
+        });
+      }
 
       $canvas = $("<div class='grid-canvas' />").appendTo($viewport);
 
@@ -917,6 +929,7 @@ if (typeof Slick === "undefined") {
       absoluteColumnMinWidth = Math.max(headerColumnWidthDiff, cellWidthDiff);
     }
 
+    var css_rules_created = false;
     function createCssRules() {
       $style = $("<style type='text/css' rel='stylesheet' />").appendTo($("head"));
       var rowHeight = (options.rowHeight - cellHeightDiff);
@@ -925,7 +938,9 @@ if (typeof Slick === "undefined") {
         "." + uid + " .slick-top-panel { height:" + options.topPanelHeight + "px; }",
         "." + uid + " .slick-headerrow-columns { height:" + options.headerRowHeight + "px; }",
         "." + uid + " .slick-cell { height:" + rowHeight + "px; }",
-        "." + uid + " .slick-row { height:" + options.rowHeight + "px; }"
+        "." + uid + ".slick-dynamic-row-height .slick-cell { height: auto; min-height:" + rowHeight + "px; }",
+        "." + uid + " .slick-row { height:" + options.rowHeight + "px; }",
+        "." + uid + ".slick-dynamic-row-height .slick-row { height:auto; }"
       ];
 
       for (var i = 0; i < columns.length; i++) {
@@ -938,9 +953,15 @@ if (typeof Slick === "undefined") {
       } else {
         $style[0].appendChild(document.createTextNode(rules.join(" ")));
       }
+
+      css_rules_created = true;
     }
 
     function getColumnCssRules(idx) {
+      if (!css_rules_created) {
+        return;
+      }
+
       if (!stylesheet) {
         var sheets = document.styleSheets;
         for (var i = 0; i < sheets.length; i++) {
@@ -1121,14 +1142,26 @@ if (typeof Slick === "undefined") {
 
     function applyColumnWidths() {
       var x = 0, w, rule;
+
       for (var i = 0; i < columns.length; i++) {
         w = columns[i].width;
 
         rule = getColumnCssRules(i);
-        rule.left.style.left = x + "px";
-        rule.right.style.right = (canvasWidth - x - w) + "px";
+        if (typeof rule !== "undefined") {
+          if (!options.dynamicRowHeight) {
+            rule.left.style.left = x + "px";
+            rule.right.style.right = (canvasWidth - x - w) + "px";
+            rule.left.style.width = "auto";
+            rule.left.style.maxWidth = "auto";
+          } else {
+            rule.left.style.left = "auto";
+            rule.right.style.right = "auto";
+            rule.left.style.width = w + "px";
+            rule.left.style.maxWidth = w + "px";
+          }
+        }
 
-        x += columns[i].width;
+        x += w;
       }
     }
 
@@ -1251,9 +1284,51 @@ if (typeof Slick === "undefined") {
       render();
     }
 
+    var previous_autoHeight_state = null,
+        previous_dynamicRowHeight_state = null;
     function validateAndEnforceOptions() {
-      if (options.autoHeight) {
-        options.leaveSpaceForNewRows = false;
+      if (previous_dynamicRowHeight_state != options.dynamicRowHeight) {
+        // Since we want changes in dynamicRowHeight to affect autoHeight, we
+        // need to know when it was actually changed, to avoid override changes
+        // in autoHeight intended by the user
+
+        previous_dynamicRowHeight_state = options.dynamicRowHeight;
+
+        if (options.dynamicRowHeight) {
+          options.autoHeight = true;
+
+          $container.addClass("slick-dynamic-row-height");
+        } else {
+          options.autoHeight = false;
+
+          $container.removeClass("slick-dynamic-row-height");
+        }
+
+        applyColumnWidths();
+      }
+
+      if (previous_autoHeight_state != options.autoHeight) {
+        // As the process is a bit expensive, do it only if needed
+        previous_autoHeight_state = options.autoHeight;
+
+        if (options.autoHeight) {
+          options.leaveSpaceForNewRows = false;
+
+          $container.css({overflow: "auto"});
+
+          if ($viewport) {
+            $viewport.css({
+              height: "auto"
+            });
+          }
+        } else {
+          $container.css({overflow: "hidden"});
+
+          invalidate();
+        }
+
+        // Resize canvas to load/unload rows according to autoHeight new state
+        resizeCanvas();
       }
     }
 
@@ -1418,7 +1493,12 @@ if (typeof Slick === "undefined") {
         rowCss += " " + metadata.cssClasses;
       }
 
-      stringArray.push("<div class='ui-widget-content " + rowCss + "' style='top:" + getRowTop(row) + "px'>");
+      var rowStyle = "";
+      if (!options.dynamicRowHeight) {
+        rowStyle += " style='top:" + getRowTop(row) + "px'";
+      }
+
+      stringArray.push("<div class='ui-widget-content " + rowCss + "'" + rowStyle + ">");
 
       var colspan, m;
       for (var i = 0, ii = columns.length; i < ii; i++) {

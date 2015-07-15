@@ -155,3 +155,36 @@ classes should alter those!
   position: absolute;
   border: 2px dashed black;
 }
+
+.slick-dynamic-row-height {
+  .slick-row.ui-widget-content, .slick-row.ui-state-active {
+    position: static;
+  }
+
+  .slick-header {
+    overflow: visible !important;
+  }
+
+  .slick-viewport {
+    overflow-x: visible;
+    overflow-y: visible;
+    overflow: visible !important;
+  }
+
+  .grid-canvas {
+    height: auto !important;
+  }
+
+  .slick-cell {
+    position: static;
+    display: table-cell;
+
+    overflow: visible;
+    white-space: normal;
+    -o-text-overflow: clip;
+    text-overflow: clip;
+
+    vertical-align: middle;
+    z-index: 1;
+  }
+}
