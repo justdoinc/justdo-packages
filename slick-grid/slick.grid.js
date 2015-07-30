@@ -283,8 +283,12 @@ if (typeof Slick === "undefined") {
     }
 
     function finishInitialization() {
+      logger.debug("call: finishInitialization()");
+
       if (!initialized) {
         initialized = true;
+
+        logger.debug("finishInitialization: initialized set to true");
 
         viewportW = parseFloat($.css($container[0], "width", true));
 
@@ -1562,6 +1566,9 @@ if (typeof Slick === "undefined") {
 
 
     function cleanupRows(rangeToKeep) {
+      // Remove rows out of range.
+      logger.debug("Call: cleanupRows(" + JSON.stringify(rangeToKeep) + ");");
+
       for (var i in rowsCache) {
         if (((i = parseInt(i, 10)) !== activeRow) && (i < rangeToKeep.top || i > rangeToKeep.bottom)) {
           removeRowFromCache(i);
@@ -1679,6 +1686,8 @@ if (typeof Slick === "undefined") {
     }
 
     function resizeCanvas() {
+      logger.debug("Call: resizeCanvas()");
+
       if (!initialized) { return; }
       if (options.autoHeight) {
         viewportH = options.rowHeight * getDataLengthIncludingAddNew();
@@ -1791,6 +1800,8 @@ if (typeof Slick === "undefined") {
         range.bottom = getDataLength() + 1;
       }
 
+      logger.debug("getVisibleRange: Visible range: " + JSON.stringify(range));
+
       return range;
     }
 
@@ -1828,6 +1839,8 @@ if (typeof Slick === "undefined") {
 
       range.leftPx = Math.max(0, range.leftPx);
       range.rightPx = Math.min(canvasWidth, range.rightPx);
+
+      logger.debug("getRenderedRange: Rendered range: " + JSON.stringify(range));
 
       return range;
     }
@@ -2040,6 +2053,7 @@ if (typeof Slick === "undefined") {
     }
 
     function render() {
+      logger.debug("Call: render()");
       if (!initialized) { return; }
       var visible = getVisibleRange();
       var rendered = getRenderedRange();
