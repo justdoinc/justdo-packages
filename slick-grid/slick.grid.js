@@ -1324,9 +1324,9 @@ if (typeof Slick === "undefined") {
           }
         } else {
           $container.css({overflow: "hidden"});
-
-          invalidate();
         }
+
+        invalidate();
 
         // Resize canvas to load/unload rows according to autoHeight new state
         resizeCanvas();
