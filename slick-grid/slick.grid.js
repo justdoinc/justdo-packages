@@ -1779,12 +1779,19 @@ if (typeof Slick === "undefined") {
         viewportLeft = scrollLeft;
       }
 
-      return {
+      var range = {
         top: getRowFromPosition(viewportTop),
         bottom: getRowFromPosition(viewportTop + viewportH) + 1,
         leftPx: viewportLeft,
         rightPx: viewportLeft + viewportW
       };
+
+      if (options.autoHeight) {
+        range.top = 0;
+        range.bottom = getDataLength() + 1;
+      }
+
+      return range;
     }
 
     function getRenderedRange(viewportTop, viewportLeft) {
