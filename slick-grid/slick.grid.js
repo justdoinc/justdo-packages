@@ -1796,6 +1796,16 @@ if (typeof Slick === "undefined") {
 
     function getRenderedRange(viewportTop, viewportLeft) {
       var range = getVisibleRange(viewportTop, viewportLeft);
+      // viewportH is set in resizeCanvas to be:
+      //
+      // ```
+      // options.rowHeight * getDataLengthIncludingAddNew();
+      // ```
+      //
+      // when autoheight option is true.
+      //
+      // So buffer is exactly the full data set length when
+      // autoheight option is true
       var buffer = Math.round(viewportH / options.rowHeight);
       var minBuffer = 3;
 
