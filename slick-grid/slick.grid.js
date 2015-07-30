@@ -39,6 +39,7 @@ if (typeof Slick === "undefined") {
   // shared across all grids on the page
   var scrollbarDimensions;
   var maxSupportedCssHeight;  // browser's breaking point
+  var logger = Logger.get("SlickGrid");
 
   //////////////////////////////////////////////////////////////////////////////////////////////
   // SlickGrid class implementation (available as Slick.Grid)
