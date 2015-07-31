@@ -161,20 +161,6 @@ classes should alter those!
     position: static;
   }
 
-  .slick-header {
-    overflow: visible !important;
-  }
-
-  .slick-viewport {
-    overflow-x: visible;
-    overflow-y: visible;
-    overflow: visible !important;
-  }
-
-  .grid-canvas {
-    height: auto !important;
-  }
-
   .slick-cell {
     position: static;
     display: table-cell;
