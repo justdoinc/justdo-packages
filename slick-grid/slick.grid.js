@@ -1699,7 +1699,6 @@ if (typeof Slick === "undefined") {
           (options.leaveSpaceForNewRows ? numVisibleRows - 1 : 0);
 
       var oldViewportHasVScroll = viewportHasVScroll;
-      // with autoHeight, we do not need to accommodate the vertical scroll bar
       viewportHasVScroll = (numberOfRows * options.rowHeight > viewportH);
 
       makeActiveCellNormal();
