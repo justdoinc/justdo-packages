@@ -230,12 +230,6 @@ if (typeof Slick === "undefined") {
           .addClass(uid)
           .addClass("ui-widget");
 
-      if (options.autoHeight) {
-        $container.css("overflow", "auto");
-      } else {
-        $container.css("overflow", "hidden");
-      }
-
       // set up a positioning container if needed
       if (!/relative|absolute|fixed/.test($container.css("position"))) {
         $container.css("position", "relative");
@@ -264,14 +258,13 @@ if (typeof Slick === "undefined") {
         $headerRowScroller.hide();
       }
 
-      $viewport = $("<div class='slick-viewport' style='width:100%;overflow:auto;outline:0;position:relative;;'>").appendTo($container);
-      $viewport.css("overflow-y", options.autoHeight ? "hidden" : "auto");
+      $viewport = $("<div class='slick-viewport' style='width:100%;overflow:auto;overflow-y:auto;outline:0;position:relative;;'>").appendTo($container);
 
-      if (options.autoHeight) {
-        $viewport.css({
-          height: "auto"
-        });
-      }
+      // if (options.autoHeight) {
+      //   $viewport.css({
+      //     height: getViewportHeight()
+      //   });
+      // }
 
       $canvas = $("<div class='grid-canvas' />").appendTo($viewport);
 
@@ -1285,7 +1278,6 @@ if (typeof Slick === "undefined") {
       options = $.extend(options, args);
       validateAndEnforceOptions();
 
-      $viewport.css("overflow-y", options.autoHeight ? "hidden" : "auto");
       render();
     }
 
@@ -1319,15 +1311,11 @@ if (typeof Slick === "undefined") {
         if (options.autoHeight) {
           options.leaveSpaceForNewRows = false;
 
-          $container.css({overflow: "auto"});
-
-          if ($viewport) {
-            $viewport.css({
-              height: "auto"
-            });
-          }
-        } else {
-          $container.css({overflow: "hidden"});
+          // if ($viewport) {
+          //   $viewport.css({
+          //     height: getViewportHeight()
+          //   });
+          // }
         }
 
         invalidate();
@@ -1413,7 +1401,10 @@ if (typeof Slick === "undefined") {
 
     function scrollTo(y) {
       y = Math.max(y, 0);
-      y = Math.min(y, th - viewportH + (viewportHasHScroll ? scrollbarDimensions.height : 0));
+
+      if (!options.autoHeight) {
+        y = Math.min(y, th - viewportH + (viewportHasHScroll ? scrollbarDimensions.height : 0));
+      }
 
       var oldOffset = offset;
 
@@ -1721,7 +1712,7 @@ if (typeof Slick === "undefined") {
 
       var oldViewportHasVScroll = viewportHasVScroll;
       // with autoHeight, we do not need to accommodate the vertical scroll bar
-      viewportHasVScroll = !options.autoHeight && (numberOfRows * options.rowHeight > viewportH);
+      viewportHasVScroll = (numberOfRows * options.rowHeight > viewportH);
 
       makeActiveCellNormal();
 
@@ -2086,10 +2077,14 @@ if (typeof Slick === "undefined") {
     }
 
     function handleScroll() {
+      logger.debug("Call: handleScroll()");
+
       scrollTop = $viewport[0].scrollTop;
       scrollLeft = $viewport[0].scrollLeft;
       var vScrollDist = Math.abs(scrollTop - prevScrollTop);
       var hScrollDist = Math.abs(scrollLeft - prevScrollLeft);
+
+      logger.debug("handleScroll: vScrollDist = " + vScrollDist + "; hScrollDist = " + hScrollDist);
 
       if (hScrollDist) {
         prevScrollLeft = scrollLeft;
@@ -2138,7 +2133,11 @@ if (typeof Slick === "undefined") {
         }
       }
 
-      trigger(self.onScroll, {scrollLeft: scrollLeft, scrollTop: scrollTop});
+      var target = {scrollLeft: scrollLeft, scrollTop: scrollTop};
+
+      logger.debug("handleScroll: trigger onScroll event; params: " + JSON.stringify(target));
+
+      trigger(self.onScroll, target);
     }
 
     function asyncPostProcessRows() {
@@ -2268,6 +2267,7 @@ if (typeof Slick === "undefined") {
     // Interactivity
 
     function handleMouseWheel(e) {
+      logger.debug("call: handleMouseWheel()");
       var rowNode = $(e.target).closest(".slick-row")[0];
       if (rowNode != rowNodeFromLastMouseWheelEvent) {
         if (zombieRowNodeFromLastMouseWheelEvent && zombieRowNodeFromLastMouseWheelEvent != rowNode) {
