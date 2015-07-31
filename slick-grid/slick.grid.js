@@ -260,12 +260,6 @@ if (typeof Slick === "undefined") {
 
       $viewport = $("<div class='slick-viewport' style='width:100%;overflow:auto;overflow-y:auto;outline:0;position:relative;;'>").appendTo($container);
 
-      // if (options.autoHeight) {
-      //   $viewport.css({
-      //     height: getViewportHeight()
-      //   });
-      // }
-
       $canvas = $("<div class='grid-canvas' />").appendTo($viewport);
 
       $focusSink2 = $focusSink.clone().appendTo($container);
@@ -1310,12 +1304,6 @@ if (typeof Slick === "undefined") {
 
         if (options.autoHeight) {
           options.leaveSpaceForNewRows = false;
-
-          // if ($viewport) {
-          //   $viewport.css({
-          //     height: getViewportHeight()
-          //   });
-          // }
         }
 
         invalidate();
