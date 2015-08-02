@@ -1699,6 +1699,10 @@ if (typeof Slick === "undefined") {
           (options.leaveSpaceForNewRows ? numVisibleRows - 1 : 0);
 
       var oldViewportHasVScroll = viewportHasVScroll;
+
+      // XXX this calc is wrong when options.dynamicRowHeight is true; will affect the call
+      // to autosizeColumns later. Need work if options.forceFitColumns is needed when
+      // options.dynamicRowHeight is true
       viewportHasVScroll = (numberOfRows * options.rowHeight > viewportH);
 
       makeActiveCellNormal();
