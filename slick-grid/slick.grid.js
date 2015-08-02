@@ -1390,9 +1390,7 @@ if (typeof Slick === "undefined") {
     function scrollTo(y) {
       y = Math.max(y, 0);
 
-      if (!options.autoHeight) {
-        y = Math.min(y, th - viewportH + (viewportHasHScroll ? scrollbarDimensions.height : 0));
-      }
+      y = Math.min(y, th - viewportH + (viewportHasHScroll ? scrollbarDimensions.height : 0));
 
       var oldOffset = offset;
 
@@ -1671,11 +1669,7 @@ if (typeof Slick === "undefined") {
 
       $viewport.height(getViewportHeight());
 
-      if (options.autoHeight) {
-        viewportH = options.rowHeight * getDataLengthIncludingAddNew();
-      } else {
-        viewportH = getViewportHeight();
-      }
+      viewportH = getViewportHeight();
 
       numVisibleRows = Math.ceil(viewportH / options.rowHeight);
       viewportW = parseFloat($.css($container[0], "width", true));
@@ -1692,6 +1686,22 @@ if (typeof Slick === "undefined") {
     }
 
     function updateRowCount() {
+      /*
+      Reminder:
+      viewportH: The viewport height
+      th: virtual height, the theoretical height of the canvas if all rows were rendered
+          calculated as the maximum of: options.rowHeight * numberOfRows and
+            viewportH - scrollbarDimensions.height
+          ! IMPORTANT -> this value is unknown if options.dynamicRowHeight is true
+      h: real scrollable height
+      ph: page height
+      n: number of pages
+      cj: "jumpiness" coefficient
+
+      If th < maxSupportedCssHeight: th = h = ph; cj = 0; page = offset = 0
+      */
+      logger.debug("Call: updateRowCount()");
+
       if (!initialized) { return; }
 
       var dataLengthIncludingAddNew = getDataLengthIncludingAddNew();
@@ -1727,6 +1737,13 @@ if (typeof Slick === "undefined") {
         h = ph = th;
         n = 1;
         cj = 0;
+      } else if (options.autoHeight) {
+        logger.warning("Rendering of more than " + (maxSupportedCssHeight / options.rowHeight) + " rows if options.autoHeight is set to true might fail in certain browsers.");
+
+        // just one page, can't break to more when options.autoHeight set to true with current implementation.
+        h = ph = th;
+        n = 1;
+        cj = 0;
       } else {
         // break into pages
         h = maxSupportedCssHeight;
@@ -1744,16 +1761,19 @@ if (typeof Slick === "undefined") {
         $canvas.css("height", "auto");
       }
 
-      var oldScrollTopInRange = (scrollTop + offset <= th - viewportH);
 
       if (th == 0 || scrollTop == 0) {
         page = offset = 0;
-      } else if (oldScrollTopInRange) {
-        // maintain virtual position
-        scrollTo(scrollTop + offset);
-      } else {
-        // scroll to bottom
-        scrollTo(th - viewportH);
+      } else if (!options.dynamicRowHeight) {
+        var oldScrollTopInRange = (scrollTop + offset <= th - viewportH);
+
+        if (oldScrollTopInRange) {
+          // maintain virtual position
+          scrollTo(scrollTop + offset);
+        } else {
+          // scroll to bottom
+          scrollTo(th - viewportH);
+        }
       }
 
       if (h != oldH && options.autoHeight) {
@@ -1793,17 +1813,14 @@ if (typeof Slick === "undefined") {
 
     function getRenderedRange(viewportTop, viewportLeft) {
       var range = getVisibleRange(viewportTop, viewportLeft);
-      // viewportH is set in resizeCanvas to be:
-      //
-      // ```
-      // options.rowHeight * getDataLengthIncludingAddNew();
-      // ```
-      //
-      // when autoheight option is true.
-      //
-      // So buffer is exactly the full data set length when
-      // autoheight option is true
-      var buffer = Math.round(viewportH / options.rowHeight);
+
+      var buffer;
+      if (!options.autoHeight) {
+        buffer = Math.round(viewportH / options.rowHeight);
+      } else {
+        buffer = getDataLengthIncludingAddNew();
+      }
+
       var minBuffer = 3;
 
       if (vScrollDir == -1) {
