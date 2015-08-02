@@ -1668,6 +1668,9 @@ if (typeof Slick === "undefined") {
       logger.debug("Call: resizeCanvas()");
 
       if (!initialized) { return; }
+
+      $viewport.height(getViewportHeight());
+
       if (options.autoHeight) {
         viewportH = options.rowHeight * getDataLengthIncludingAddNew();
       } else {
@@ -1676,9 +1679,6 @@ if (typeof Slick === "undefined") {
 
       numVisibleRows = Math.ceil(viewportH / options.rowHeight);
       viewportW = parseFloat($.css($container[0], "width", true));
-      if (!options.autoHeight) {
-        $viewport.height(viewportH);
-      }
 
       if (options.forceFitColumns) {
         autosizeColumns();
