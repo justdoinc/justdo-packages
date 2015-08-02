@@ -1731,9 +1731,13 @@ if (typeof Slick === "undefined") {
         cj = (th - h) / (n - 1);
       }
 
-      if (h !== oldH) {
-        $canvas.css("height", h);
-        scrollTop = $viewport[0].scrollTop;
+      if (!options.autoHeight) {
+        if (h !== oldH) {
+          $canvas.css("height", h);
+          scrollTop = $viewport[0].scrollTop;
+        }
+      } else {
+        $canvas.css("height", "auto");
       }
 
       var oldScrollTopInRange = (scrollTop + offset <= th - viewportH);
