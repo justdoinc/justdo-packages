@@ -1384,7 +1384,13 @@ if (typeof Slick === "undefined") {
     }
 
     function getRowFromPosition(y) {
-      return Math.floor((y + offset) / options.rowHeight);
+      if (!options.dynamicRowHeight) {
+        return Math.floor((y + offset) / options.rowHeight);
+      } else {
+        // XXX The following is actually incorrect, if it'll turn out that we need getRowFromPosition
+        // We'll have to implement it correctly.
+        return Math.floor((y + offset) / options.rowHeight);
+      }
     }
 
     function scrollTo(y) {
