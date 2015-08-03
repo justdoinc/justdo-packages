@@ -2557,6 +2557,13 @@ if (typeof Slick === "undefined") {
 
       var y1 = getRowTop(row);
       var y2 = y1 + options.rowHeight - 1;
+      if (options.dynamicRowHeight) {
+        var $row = getRowJqueryObj(row);
+
+        if ($row) {
+          y2 = y1 + $row.outerHeight(true);
+        }
+      }
       var x1 = 0;
       for (var i = 0; i < cell; i++) {
         x1 += columns[i].width;
@@ -2870,16 +2877,26 @@ if (typeof Slick === "undefined") {
       return activeCellNode;
     }
 
+    function getRowJqueryObj(row) {
+      // This function should be in use only if dynamicRowHeight option is true
+      // return null if row doesn't exist
+
+      if (!options.dynamicRowHeight) {
+        logger.warning("getRowJqueryObj should be used only if options.dynamicRowHeight is true");
+      }
+
+      var $row = $($canvas.get(0).children[row]);
+
+      return ($row.length > 0) ? $row : null;
+    }
+
     function getRowTopPosition(row) {
       if (!options.dynamicRowHeight) {
         return row * options.rowHeight;
       } else {
-        var $row = $($canvas.get(0).children[row]);
-        if ($row.length > 0) {
-          return $row.position().top;
-        }
+        $row = getRowJqueryObj(row);
 
-        return 0;
+        return $row ? $row.position().top : 0;
       }
     }
 
@@ -2900,7 +2917,7 @@ if (typeof Slick === "undefined") {
           render();
         }
       } else {
-        var $row = $($canvas.get(0).children[row]);
+        var $row = getRowJqueryObj(row);
         var rowTop = getRowTopPosition(row);
         var rowBottom = rowTop + $row.outerHeight(true);
         var rowAtTop = rowTop;
