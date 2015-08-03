@@ -1406,7 +1406,7 @@ if (typeof Slick === "undefined") {
       offset = Math.round(page * cj);
       var newScrollTop = y - offset;
 
-      if (offset != oldOffset) {
+      if (offset != oldOffset) { // Won't affect autoHeight = true as offset is always 0
         var range = getVisibleRange(newScrollTop);
         cleanupRows(range);
         updateRowPositions();
