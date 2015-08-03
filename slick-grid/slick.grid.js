@@ -2864,25 +2864,38 @@ if (typeof Slick === "undefined") {
       return activeCellNode;
     }
 
+    function getRowTopPosition(row) {
+      if (!options.dynamicRowHeight) {
+        return row * options.rowHeight;
+      } else {
+        var $row = $($canvas.get(0).children[row]);
+        if ($row.length > 0) {
+          return $row.position().top;
+        }
+
+        return 0;
+      }
+    }
+
     function scrollRowIntoView(row, doPaging) {
 
       if (!options.dynamicRowHeight) {
-        var rowAtTop = row * options.rowHeight;
-        var rowAtBottom = (row + 1) * options.rowHeight - viewportH + (viewportHasHScroll ? scrollbarDimensions.height : 0);
+        var rowAtTop = getRowTopPosition(row);
+        var rowAtBottom = getRowTopPosition(row + 1) - viewportH + (viewportHasHScroll ? scrollbarDimensions.height : 0);
 
         // need to page down?
-        if ((row + 1) * options.rowHeight > scrollTop + viewportH + offset) {
+        if (getRowTopPosition(row + 1) > scrollTop + viewportH + offset) {
           scrollTo(doPaging ? rowAtTop : rowAtBottom);
           render();
         }
         // or page up?
-        else if (row * options.rowHeight < scrollTop + offset) {
+        else if (getRowTopPosition(row) < scrollTop + offset) {
           scrollTo(doPaging ? rowAtBottom : rowAtTop);
           render();
         }
       } else {
         var $row = $($canvas.get(0).children[row]);
-        var rowTop = $row.position().top;
+        var rowTop = getRowTopPosition(row);
         var rowBottom = rowTop + $row.outerHeight(true);
         var rowAtTop = rowTop;
         var rowAtBottom = rowBottom - viewportH + (viewportHasHScroll ? scrollbarDimensions.height : 0);
@@ -2899,8 +2912,13 @@ if (typeof Slick === "undefined") {
     }
 
     function scrollRowToTop(row) {
-      scrollTo(row * options.rowHeight);
-      render();
+
+      scrollTo(getRowTopPosition(row));
+
+      if (!options.autoHeight) {
+        // All items are already rendered when autoHeight is true
+        render();
+      }
     }
 
     function scrollPage(dir) {
@@ -3519,6 +3537,7 @@ if (typeof Slick === "undefined") {
       "updateRowCount": updateRowCount,
       "scrollRowIntoView": scrollRowIntoView,
       "scrollRowToTop": scrollRowToTop,
+      "getRowTopPosition": getRowTopPosition,
       "scrollCellIntoView": scrollCellIntoView,
       "getCanvasNode": getCanvasNode,
       "focus": setFocus,
