@@ -2755,6 +2755,10 @@ if (typeof Slick === "undefined") {
       if (currentEditor.position) {
         handleActiveCellPositionChange();
       }
+
+      if (options.dynamicRowHeight) {
+        scrollRowIntoView(activeRow, false);
+      }
     }
 
     function commitEditAndSetFocus() {
