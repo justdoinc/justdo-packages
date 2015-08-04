@@ -1784,10 +1784,6 @@ if (typeof Slick === "undefined") {
         }
       }
 
-      if (h != oldH && options.autoHeight) {
-        resizeCanvas();
-      }
-
       if (options.forceFitColumns && oldViewportHasVScroll != viewportHasVScroll) {
         autosizeColumns();
       }
