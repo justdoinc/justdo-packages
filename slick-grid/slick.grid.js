@@ -2881,9 +2881,7 @@ if (typeof Slick === "undefined") {
         logger.warning("getRowJqueryObj should be used only if options.dynamicRowHeight is true");
       }
 
-      var $row = $($canvas.get(0).children[row]);
-
-      return ($row.length > 0) ? $row : null;
+      return rowsCache[row] ? $(rowsCache[row].rowNode) : null;
     }
 
     function getRowTopPosition(row) {
