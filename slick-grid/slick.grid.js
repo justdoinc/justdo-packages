@@ -2896,14 +2896,20 @@ if (typeof Slick === "undefined") {
       }
     }
 
+    function getHScrollHeight() {
+      return viewportHasHScroll ? scrollbarDimensions.height : 0;
+    }
+
     function scrollRowIntoView(row, doPaging) {
+
+      var scrollTop = $viewport.scrollTop();
 
       if (!options.dynamicRowHeight) {
         var rowAtTop = getRowTopPosition(row);
-        var rowAtBottom = getRowTopPosition(row + 1) - viewportH + (viewportHasHScroll ? scrollbarDimensions.height : 0);
+        var rowAtBottom = getRowTopPosition(row + 1) - viewportH + getHScrollHeight();
 
         // need to page down?
-        if (getRowTopPosition(row + 1) > scrollTop + viewportH + offset) {
+        if (getRowTopPosition(row + 1) > (scrollTop + viewportH + offset)) {
           scrollTo(doPaging ? rowAtTop : rowAtBottom);
           render();
         }
@@ -2917,14 +2923,14 @@ if (typeof Slick === "undefined") {
         var rowTop = getRowTopPosition(row);
         var rowBottom = rowTop + $row.outerHeight(true);
         var rowAtTop = rowTop;
-        var rowAtBottom = rowBottom - viewportH + (viewportHasHScroll ? scrollbarDimensions.height : 0);
+        var rowAtBottom = rowBottom - viewportH + getHScrollHeight();
 
         // need to page down?
-        if (rowBottom > scrollTop + viewportH + offset) {
+        if (scrollTop < rowAtBottom) {
           scrollTo(doPaging ? rowAtTop : rowAtBottom);
         }
         // or page up?
-        else if (rowTop < scrollTop + offset) {
+        else if (scrollTop > rowAtTop) {
           scrollTo(doPaging ? rowAtBottom : rowAtTop);
         }
       }
