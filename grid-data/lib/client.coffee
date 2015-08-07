@@ -17,7 +17,7 @@ GridData = (collection) ->
   @_items_with_changed_parents = []
   @_new_items = []
   @_removed_items = []
-  @_path_state_changed = false # changed to true after a path gets expand/collapse
+  @_paths_needs_state_change = {} # keys holds the paths which their collapse/expand state needs to be toggled false value will collapse the path true value will expand it
   @_filter_changed = false
 
   @items_by_id = {}
@@ -158,12 +158,20 @@ _.extend GridData.prototype,
       non_optimized_update()
       rebuild_needed = true
 
-    if @_path_state_changed and not non_optimized_updated
+    if not(_.isEmpty(@_paths_needs_state_change)) and not non_optimized_updated
       # if non_optimized_updated the internal strucutres got rebuilt already
       # with all needed updates
 
-      # no need to build internal data structure for _path_state_changed hance
+      # no need to build internal data structure for _paths_needs_state_change hance
       # we don't call @non_optimized_updated()
+
+      for path, new_state of @_paths_needs_state_change
+        if new_state == false and path of @_expanded_paths
+          delete @_expanded_paths[path]
+
+        if new_state == true and not(path of @_expanded_paths)
+          @_expanded_paths[path] = true
+
       rebuild_needed = true
 
     if @_items_needs_update.length != 0 and not non_optimized_updated
@@ -196,7 +204,7 @@ _.extend GridData.prototype,
     @_items_with_changed_parents = []
     @_new_items = []
     @_removed_items = []
-    @_path_state_changed = false
+    @_paths_needs_state_change = {}
     @_filter_changed = false
 
     if rebuild_needed
@@ -508,16 +516,14 @@ _.extend GridData.prototype,
 
     for ancestor_path in helpers.getAllAncestorPaths(path)
       if not(@getPathIsExpand(ancestor_path)) and @pathExpandable(ancestor_path)
-        @_expanded_paths[ancestor_path] = true
-        @_path_state_changed = true
+        @_paths_needs_state_change[ancestor_path] = true
         @_set_need_flush()
 
   collapsePath: (path) ->
     path = helpers.normalizePath(path)
 
     if @getPathIsExpand(path)
-      delete @_expanded_paths[path]
-      @_path_state_changed = true
+      @_paths_needs_state_change[path] = false
       @_set_need_flush()
 
   # ** Tree view ops on items **
