@@ -120,36 +120,202 @@ _.extend GridData.prototype,
     non_optimized_updated = false
     non_optimized_update = _.once =>
       # every op can be optimized by manipulating the existing data-structure instead of rebuilding it
-      @_initDataStructure()
+      # @_initDataStructure()
       non_optimized_updated = true
 
     getItemById = (item_id) => @collection.findOne(item_id)
 
-    if @_removed_items.length != 0
-      #console.log "Removed Item"
-      #for item in @_removed_items
-      #  [item_id, changes] = item
-      #  console.log "Removed Item", item_id, doc, getItemById(item_id)
-
-      non_optimized_update()
-      rebuild_needed = true
-    
-    if @_new_items.length != 0
-      #console.log "New Item"
-      #for item in @_new_items
-      #  [item_id, changes] = item
-      #  console.log "New Item", item_id, doc, getItemById(item_id)
-
-      non_optimized_update()
-      rebuild_needed = true
-
+    edited_parents_of_new_items = {} # XXX
     if @_items_with_changed_parents.length != 0
       #console.log "Parents changed"
       #for item in @_items_with_changed_parents
       #  [item_id, changes] = item
       #  console.log "Parents changed", item_id, changes, getItemById(item_id)
 
-      non_optimized_update()
+      console.log "Items with changed parents", @_items_with_changed_parents
+
+      intra_parent_order_change = {} # {parent_id: [[item_id, prev_order, new_order], [item_id, new_order]...]...}
+      new_to_parent = {} # {parent_id: [[item_id, order], [item_id, order]...]...}
+      removed_from_parent = {} # {parent_id: [[item_id, prev_order], [item_id, prev_order],...]}
+      for item in @_items_with_changed_parents
+        [item_id, new_parents_obj] = item
+        prev_item_obj = @items_by_id[item_id]
+
+        # If we don't know this item yet
+        if not prev_item_obj?
+          edited_parents_of_new_items[item_id] = new_parents_obj
+          continue
+
+        prev_parents_obj = prev_item_obj.parents
+
+        for parent_id, new_parent_data of new_parents_obj
+          if parent_id of prev_parents_obj
+            # existed already under this parent
+            if new_parent_data.order == prev_parents_obj[parent_id].order
+              # No changes to this parent
+              continue
+            else
+              # intra-parent order change
+              if not intra_parent_order_change[parent_id]?
+                intra_parent_order_change[parent_id] = []
+              intra_parent_order_change[parent_id].push [item_id, prev_parents_obj[parent_id].order, new_parent_data.order]
+          else
+            # new to this parent
+            if not new_to_parent[parent_id]?
+              new_to_parent[parent_id] = []
+            new_to_parent[parent_id].push [item_id, new_parent_data.order]
+
+            # # Save a copy of the pre flush parent children order to original_node_order, if we haven't did so already
+            # if not original_node_order[parent_id]?
+            #   original_node_order[parent_id] = _.extend {}, @tree_structure[parent_id]
+
+            # # Update @items_by_id
+            # prev_parents_obj[parent_id].order = new_parent_data[parent_id].order
+
+            # # Update tree structure
+            # @tree_structure[parent_id][parent_metadata.order] = new_parent_data[parent_id].order
+
+        for parent_id, prev_parent_obj of prev_parents_obj
+          if not(parent_id of new_parents_obj)
+            # removed item
+            if not removed_from_parent[parent_id]?
+              removed_from_parent[parent_id] = []
+            removed_from_parent[parent_id].push [item_id, prev_parent_obj.order]
+
+        # console.log new_parent_data, new_parents_obj
+
+        console.log item_id, new_parents_obj, prev_parents_obj
+
+      console.log "INTRA PARENT ORDER CHANGE", intra_parent_order_change
+      console.log "NEW TO PARENT", new_to_parent
+      console.log "REMOVED FROM PARENT", removed_from_parent
+      # intra_parent_order_change = {} # [parent_id, item_id, new_order]
+      # new_to_parent = {} # [parent_id, item_id, order]
+      # removed_from_parent = {} # [parent_id, item_id]
+
+      # XXX original_node_order = {}
+      for parent_id, changed_children_order of intra_parent_order_change
+        # XXX Save a copy of the pre flush parent children order to original_node_order
+        # original_node_order[parent_id] = _.extend {}, @tree_structure[parent_id]
+
+        for child_new_order in changed_children_order
+          [child_id, prev_order, new_order] = child_new_order
+
+          # Update @items_by_id
+          @items_by_id[child_id].parents[parent_id].order = new_order
+
+          # Update tree structure
+          @tree_structure[parent_id][new_order] = child_id
+
+          # If still attached to old order under @tree_structure delete it (during the update it might no longer be true in some circumctences)
+          if @tree_structure[parent_id][prev_order] == child_id
+            delete @tree_structure[parent_id][prev_order]
+
+      for parent_id, new_children of new_to_parent
+        for child_new_order in changed_children_order
+          [child_id, order] = child_new_order
+
+          # Update @items_by_id
+          @items_by_id[child_id].parents[parent_id].order = order
+
+          # Update tree structure
+          if not @tree_structure[parent_id]?
+            @tree_structure[parent_id] = {}
+          @tree_structure[parent_id][order] = child_id
+
+      for parent_id, new_children of new_to_parent
+        for new_child in new_children
+          [child_id, order] = new_child
+
+          # Update @items_by_id
+          @items_by_id[child_id].parents[parent_id].order = order
+
+          # Update tree structure
+          if not @tree_structure[parent_id]?
+            @tree_structure[parent_id] = {}
+          @tree_structure[parent_id][order] = child_id
+
+      for parent_id, removed_children of removed_from_parent
+        for removed_child in removed_children
+          [child_id, prev_order] = removed_child
+
+          # Update @items_by_id
+          delete @items_by_id[child_id].parents[parent_id]
+
+          # Update tree structure
+          # Make sure no other item moved to removed position already
+          if @tree_structure[parent_id][prev_order] == child_id
+            delete @tree_structure[parent_id][prev_order]
+
+          if _.size(@tree_structure[parent_id]) == 0
+            delete @tree_structure[parent_id]
+
+      # compare old node order with new order
+      # for node_parent, original_children_order of original_node_order
+      #   current_children_order = @tree_structure[node_parent]
+
+      #   current_size = _.size(current_children_order)
+      #   original_size = _.size(original_children_order)
+
+      #   console.log current_size, original_size
+      #   if current_size == original_size
+      #     if _.isEqual(_.values(current_children_order), _.values(original_children_order))
+      #       console.log "Same order, nothing to do"
+      #     else
+      #       console.log "Different order, update grid_tree"
+      #   else
+      #     # Logically, current_size can be only smaller.
+      #     console.log "Some items removed"
+        
+      #   console.log current_children_order, original_children_order
+
+      # non_optimized_update()
+      rebuild_needed = true
+
+    if @_removed_items.length != 0
+      #console.log "Removed Item"
+      for item_id in @_removed_items
+        # Update @items_by_id
+        item_obj = @items_by_id[item_id]
+
+        delete @items_by_id[item_id]
+
+        # Remove from tree_structure
+        delete @tree_structure[item_id]
+
+        # Remove from tree structure any pointer to item
+        for parent_id, parent_metadata of item_obj.parents
+          # Make sure still pointing to item
+          if @tree_structure[parent_id][parent_metadata.order] == item_id
+            delete @tree_structure[parent_id][parent_metadata.order]
+
+
+      console.log "REMOVED ITEMS", @_removed_items
+
+      # non_optimized_update()
+      rebuild_needed = true
+    
+    if @_new_items.length != 0
+      #console.log "New Item"
+      # console.log "New Items", @_new_items
+
+      # for item in @_new_items
+      for item in @_new_items
+        [item_id, item_obj] = item
+
+        # If parents object changed during this flush
+        if edited_parents_of_new_items[item_id]?
+          item_obj.parents = edited_parents_of_new_items[item_id]
+
+        # Update @items_by_id
+        @items_by_id[item_id] = item_obj
+
+        # Update tree structure
+        for parent_id, parent_metadata of item_obj.parents
+          if not @tree_structure[parent_id]?
+            @tree_structure[parent_id] = {}
+          @tree_structure[parent_id][parent_metadata.order] = item_id
+
       rebuild_needed = true
 
     if @_filter_changed is true
@@ -169,8 +335,12 @@ _.extend GridData.prototype,
         if new_state == false and path of @_expanded_paths
           delete @_expanded_paths[path]
 
+          # @_invalidateGridTreePath(path)
+
         if new_state == true and not(path of @_expanded_paths)
           @_expanded_paths[path] = true
+
+          # @_invalidateGridTreePath(path)
 
       rebuild_needed = true
 
