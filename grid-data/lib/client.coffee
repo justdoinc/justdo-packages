@@ -335,12 +335,8 @@ _.extend GridData.prototype,
         if new_state == false and path of @_expanded_paths
           delete @_expanded_paths[path]
 
-          # @_invalidateGridTreePath(path)
-
         if new_state == true and not(path of @_expanded_paths)
           @_expanded_paths[path] = true
-
-          # @_invalidateGridTreePath(path)
 
       rebuild_needed = true
 
