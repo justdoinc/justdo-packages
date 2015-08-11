@@ -1576,6 +1576,56 @@ if (typeof Slick === "undefined") {
       }
     }
 
+    function spliceInvalidate(index, remove, add) {
+      if (!options.dynamicRowHeight) {
+        logger.error("spliceInvalidate() was designed to use only with options.dynamicRowHeight == true");
+        return;
+      }
+
+      // update rowsCache
+      var current_rows_cache_size = _.size(rowsCache);
+
+      invalidateRows(_.range(index, index + remove));
+
+      if (remove > add) {
+        // Move all the rows starting from the first one we haven't removed backward according to removed gap
+        var removed_gap = remove - add;
+
+        for (var i = index + add; i < current_rows_cache_size - removed_gap; i++) {
+          rowsCache[i] = rowsCache[i + removed_gap];
+        }
+
+        for (var i = current_rows_cache_size - removed_gap; i < current_rows_cache_size; i++) {
+          delete rowsCache[i];
+        }
+      } else if (remove < add) {
+        // Move all the rows starting from the last one to the first row we haven't removed forward according to added gap
+        var added_gap = add - remove;
+
+        for (var i = current_rows_cache_size - 1; i >= index + remove; i--) {
+          rowsCache[i + added_gap] = rowsCache[i];
+        }
+      }
+
+      // Delete out-dated cached row info for the rows we are about to add
+      for (var i = index; i < index + add; i++) {
+        delete rowsCache[i];
+      }
+
+      // add new rows
+      if (add > 0) {
+        var range_to_render = getRenderedRange();
+        range_to_render.top = index;
+        range_to_render.bottom = index + add - 1;
+
+        renderRows(range_to_render);
+      }
+
+      // Time to update row count
+      updateRowCount();
+    }
+
+
     function removeRowFromCache(row) {
       var cacheEntry = rowsCache[row];
       if (!cacheEntry) {
@@ -3555,6 +3605,7 @@ if (typeof Slick === "undefined") {
       "invalidateRow": invalidateRow,
       "invalidateRows": invalidateRows,
       "invalidateAllRows": invalidateAllRows,
+      "spliceInvalidate": spliceInvalidate,
       "updateCell": updateCell,
       "updateRow": updateRow,
       "getViewport": getVisibleRange,
