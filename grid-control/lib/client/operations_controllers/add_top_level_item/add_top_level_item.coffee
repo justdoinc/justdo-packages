@@ -28,9 +28,8 @@ _.extend AddTopLevelItem.prototype,
 
   _operation: ->
     @_grid_control._grid_data.addChild "/", {}, (err, child_id, child_path) =>
-      @_grid_control._grid_data.once "rebuild", =>
-        Meteor.defer =>
-          @_grid_control.activatePath child_path
+      @_grid_control.once "rebuild_ready", =>
+        @_grid_control.activatePath child_path
 
   destroy: ->
     @_container.remove()

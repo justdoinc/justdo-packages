@@ -35,9 +35,8 @@ _.extend AddSibling.prototype,
   _operation: ->
     if not(@_container.prop "disabled")
       @_grid_control._grid_data.addSibling @_grid_control.getActiveCellPath(), {}, (err, sibling_id, sibling_path) =>
-        @_grid_control._grid_data.once "rebuild", =>
-          Meteor.defer =>
-            @_grid_control.activatePath sibling_path
+        @_grid_control.once "rebuild_ready", =>
+          @_grid_control.activatePath sibling_path
 
   destroy: ->
     @_container.remove()

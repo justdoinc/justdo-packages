@@ -130,6 +130,7 @@ _.extend GridControl.prototype,
             @emit "ready"
 
           # tree_change, full_invalidation=true
+          @emit "rebuild_ready"
           @emit "tree_change", true
 
     @_grid_data.on "grid-item-changed", (row, fields) =>
