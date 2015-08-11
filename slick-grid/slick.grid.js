@@ -1807,6 +1807,9 @@ if (typeof Slick === "undefined") {
       if (options.autoHeight) {
         range.top = 0;
         range.bottom = getDataLength() + 1;
+        // When autoHeight, we might load thousands of rows -> hiding cells is not opimization but a burden (every scroll needs to update all the rows)
+        range.leftPx = 0;
+        range.rightPx = 99999999;
       }
 
       logger.debug("getVisibleRange: Visible range: " + JSON.stringify(range));
@@ -2068,7 +2071,8 @@ if (typeof Slick === "undefined") {
       cleanupRows(rendered);
 
       // add new rows & missing cells in existing rows
-      if (lastRenderedScrollLeft != scrollLeft) {
+      // Too expensive when autoHeight is on, so we render all the cells in that case (see what's done in getVisibleRange)
+      if (!options.autoHeight && lastRenderedScrollLeft != scrollLeft) {
         cleanUpAndRenderCells(rendered);
       }
 
