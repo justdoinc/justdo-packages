@@ -404,7 +404,16 @@ _.extend GridData.prototype,
       for child_order in child_orders
         child_id = node[child_order]
         child = @items_by_id[child_id]
-        index = @grid_tree.push([child, level, node_path + child_id + "/"]) - 1
+        expandable = (child_id of @tree_structure) and _.size(@tree_structure[child_id]) > 0
+        path = node_path + child_id + "/"
+        expand_state = -1
+        if expandable
+          if path of @_expanded_paths
+            expand_state = 1
+          else
+            expand_state = 0
+        
+        index = @grid_tree.push([child, level, path, expand_state]) - 1
 
         if not @_items_ids_map_to_grid_tree_indices[child_id]?
           @_items_ids_map_to_grid_tree_indices[child_id] = []
