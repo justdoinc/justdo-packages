@@ -2082,7 +2082,20 @@ if (typeof Slick === "undefined") {
       x.innerHTML = stringArray.join("");
 
       for (var i = 0, ii = rows.length; i < ii; i++) {
-        rowsCache[rows[i]].rowNode = parentNode.appendChild(x.firstChild);
+        var row_id = rows[i];
+        if (!options.dynamicRowHeight) {
+          rowsCache[row_id].rowNode = parentNode.appendChild(x.firstChild);
+        } else {
+          // when dynamicRowHeight option is on, rows are statically positioned, so their order in the dom is important.
+          rowsCache[row_id].rowNode = x.firstChild;
+
+          if (row_id === 0) {
+            $(parentNode).prepend(x.firstChild).get(0);
+          } else {
+            // We assume rowsCache[row_id - 1].rowNode exists.
+            $(rowsCache[row_id - 1].rowNode).after(x.firstChild);
+          }
+        }
       }
 
       if (needToReselectCell) {
