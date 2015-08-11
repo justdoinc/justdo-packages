@@ -1727,14 +1727,13 @@ if (typeof Slick === "undefined") {
 
       // remove the rows that are now outside of the data range
       // this helps avoid redundant calls to .removeRow() when the size of the data decreased by thousands of rows
-      var l = dataLengthIncludingAddNew - 1;
       for (var i in rowsCache) {
-        if (i >= l) {
+        if (i > dataLengthIncludingAddNew - 1) {
           removeRowFromCache(i);
         }
       }
 
-      if (activeCellNode && activeRow > l) {
+      if (activeCellNode && activeRow > dataLengthIncludingAddNew - 1) {
         resetActiveCell();
       }
 
