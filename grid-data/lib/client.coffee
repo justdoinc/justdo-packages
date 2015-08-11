@@ -386,8 +386,12 @@ _.extend GridData.prototype,
 
     return found_matching_descendant
 
+  _getGridTreeSignature: -> (_.map @grid_tree, (item) -> item[2] + "." + item[3]).join("\n")
+
   _rebuildGridTree: () ->
     @emit "pre_rebuild"
+
+    previous_signature = @_getGridTreeSignature()
 
     @grid_tree = []
     @_items_ids_map_to_grid_tree_indices = {}
@@ -395,7 +399,38 @@ _.extend GridData.prototype,
     if @tree_structure[0]?
       @_buildNode @tree_structure[0], 0, "/"
 
-    @emit "rebuild"
+    current_signature = @_getGridTreeSignature()
+
+    raw_diff = JsDiff.diffLines(previous_signature, current_signature)
+
+    last_change_type = 0 # 0 same, 1 removed, 2 added
+
+    # Produce a normalized diff array of structure
+    # [["same", same_rows_count], ["changed", removed_rows_count, added_rows_count], ["same", same_rows_count], ["changed", removed_rows_count, added_rows_count], ...]
+    diff = []
+    last_change_type = 0
+    for change in raw_diff
+      if change.added
+        current_change_type = 2
+      else if change.removed
+        current_change_type = 1
+      else
+        current_change_type = 0
+
+      if current_change_type == 0
+        diff.push ["same", change.count]
+      else if current_change_type == 1
+        diff.push ["diff", change.count, 0]
+      else if current_change_type == 2 # don't use else for readability
+        if last_change_type == 1
+          # update last pushed diff
+          diff[diff.length - 1][2] = change.count
+        else
+          diff.push ["diff", 0, change.count]
+
+      last_change_type = current_change_type
+
+    @emit "rebuild", diff
 
   _buildNode: (node, level, node_path) ->
     child_orders = (_.keys node).sort(numSort)
