@@ -270,12 +270,8 @@ if (typeof Slick === "undefined") {
     }
 
     function finishInitialization() {
-      logger.debug("call: finishInitialization()");
-
       if (!initialized) {
         initialized = true;
-
-        logger.debug("finishInitialization: initialized set to true");
 
         viewportW = parseFloat($.css($container[0], "width", true));
 
@@ -1552,8 +1548,6 @@ if (typeof Slick === "undefined") {
 
     function cleanupRows(rangeToKeep) {
       // Remove rows out of range.
-      logger.debug("Call: cleanupRows(" + JSON.stringify(rangeToKeep) + ");");
-
       for (var i in rowsCache) {
         if (((i = parseInt(i, 10)) !== activeRow) && (i < rangeToKeep.top || i > rangeToKeep.bottom)) {
           removeRowFromCache(i);
@@ -1721,8 +1715,6 @@ if (typeof Slick === "undefined") {
     }
 
     function resizeCanvas() {
-      logger.debug("Call: resizeCanvas()");
-
       if (!initialized) { return; }
 
       $viewport.height(getViewportHeight());
@@ -1758,8 +1750,6 @@ if (typeof Slick === "undefined") {
 
       If th < maxSupportedCssHeight: th = h = ph; cj = 0; page = offset = 0
       */
-      logger.debug("Call: updateRowCount()");
-
       if (!initialized) { return; }
 
       var dataLengthIncludingAddNew = getDataLengthIncludingAddNew();
@@ -1818,7 +1808,6 @@ if (typeof Slick === "undefined") {
         $canvas.css("height", "auto");
       }
 
-
       if (th == 0 || scrollTop == 0) {
         page = offset = 0;
       } else if (!options.dynamicRowHeight) {
@@ -1862,8 +1851,6 @@ if (typeof Slick === "undefined") {
         range.rightPx = 99999999;
       }
 
-      logger.debug("getVisibleRange: Visible range: " + JSON.stringify(range));
-
       return range;
     }
 
@@ -1898,8 +1885,6 @@ if (typeof Slick === "undefined") {
 
       range.leftPx = Math.max(0, range.leftPx);
       range.rightPx = Math.min(canvasWidth, range.rightPx);
-
-      logger.debug("getRenderedRange: Rendered range: " + JSON.stringify(range));
 
       return range;
     }
@@ -2125,7 +2110,6 @@ if (typeof Slick === "undefined") {
     }
 
     function render() {
-      logger.debug("Call: render()");
       if (!initialized) { return; }
       var visible = getVisibleRange();
       var rendered = getRenderedRange();
@@ -2159,14 +2143,10 @@ if (typeof Slick === "undefined") {
     }
 
     function handleScroll() {
-      logger.debug("Call: handleScroll()");
-
       scrollTop = $viewport[0].scrollTop;
       scrollLeft = $viewport[0].scrollLeft;
       var vScrollDist = Math.abs(scrollTop - prevScrollTop);
       var hScrollDist = Math.abs(scrollLeft - prevScrollLeft);
-
-      logger.debug("handleScroll: vScrollDist = " + vScrollDist + "; hScrollDist = " + hScrollDist);
 
       if (hScrollDist) {
         prevScrollLeft = scrollLeft;
@@ -2216,8 +2196,6 @@ if (typeof Slick === "undefined") {
       }
 
       var target = {scrollLeft: scrollLeft, scrollTop: scrollTop};
-
-      logger.debug("handleScroll: trigger onScroll event; params: " + JSON.stringify(target));
 
       trigger(self.onScroll, target);
     }
@@ -2349,7 +2327,6 @@ if (typeof Slick === "undefined") {
     // Interactivity
 
     function handleMouseWheel(e) {
-      logger.debug("call: handleMouseWheel()");
       var rowNode = $(e.target).closest(".slick-row")[0];
       if (rowNode != rowNodeFromLastMouseWheelEvent) {
         if (zombieRowNodeFromLastMouseWheelEvent && zombieRowNodeFromLastMouseWheelEvent != rowNode) {
@@ -2965,7 +2942,6 @@ if (typeof Slick === "undefined") {
     }
 
     function scrollRowIntoView(row, doPaging) {
-
       var scrollTop = $viewport.scrollTop();
 
       if (!options.dynamicRowHeight) {
@@ -3001,7 +2977,6 @@ if (typeof Slick === "undefined") {
     }
 
     function scrollRowToTop(row) {
-
       scrollTo(getRowTopPosition(row));
 
       if (!options.autoHeight) {
