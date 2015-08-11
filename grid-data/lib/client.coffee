@@ -120,7 +120,7 @@ _.extend GridData.prototype,
     non_optimized_updated = false
     non_optimized_update = _.once =>
       # every op can be optimized by manipulating the existing data-structure instead of rebuilding it
-      # @_initDataStructure()
+      @_initDataStructure()
       non_optimized_updated = true
 
     getItemById = (item_id) => @collection.findOne(item_id)
