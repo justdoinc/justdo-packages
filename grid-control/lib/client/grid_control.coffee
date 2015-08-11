@@ -91,32 +91,46 @@ _.extend GridControl.prototype,
           maintain_value = cell_editor_value
         @_grid.resetActiveCell()
 
-      # post rebuild
-      Meteor.defer =>
-        # Reload visible portion of the grid
-        @_grid.invalidate()
-
-        # Restore cell state
-        if active_cell_path?
-          new_row = @_grid_data.getItemRowByPath active_cell_path
-
-          if new_row == null
-            @_grid.resetActiveCell()
+      @_grid_data.once "rebuild", (diff) =>
+        # post rebuild
+        Meteor.defer =>
+          # If first build, or if fixed row height is used, we can use @_grid.invalidate
+          if not(@options.allow_dynamic_row_height) or not(@_ready)
+            # Reload visible portion of the grid
+            @_grid.invalidate()
           else
-            @_grid.setActiveCell(new_row, active_cell.cell)
+            current_row_offset = 0
+            for change in diff
+              [type, removed, added] = change
 
-            if cell_editor?
-              @_grid.editActiveCell()
+              if type == "same"
+                current_row_offset += change[1] # we don't use "removed" to avoid confusion
+              else
+                @_grid.spliceInvalidate(current_row_offset, removed, added)
 
-              if maintain_value?
-                @_grid.getCellEditor().setValue(maintain_value)
+                current_row_offset += added
 
-        if not @_ready
-          @_ready = true
-          @emit "ready"
+          # Restore cell state
+          if active_cell_path?
+            new_row = @_grid_data.getItemRowByPath active_cell_path
 
-        # tree_change, full_invalidation=true
-        @emit "tree_change", true
+            if new_row == null
+              @_grid.resetActiveCell()
+            else
+              @_grid.setActiveCell(new_row, active_cell.cell)
+
+              if cell_editor?
+                @_grid.editActiveCell()
+
+                if maintain_value?
+                  @_grid.getCellEditor().setValue(maintain_value)
+
+          if not @_ready
+            @_ready = true
+            @emit "ready"
+
+          # tree_change, full_invalidation=true
+          @emit "tree_change", true
 
     @_grid_data.on "grid-item-changed", (row, fields) =>
       col_id_to_row = _.invert(_.map @_grid.getColumns(), (cell) -> cell.id)
