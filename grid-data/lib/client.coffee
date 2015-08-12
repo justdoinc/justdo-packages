@@ -124,8 +124,6 @@ _.extend GridData.prototype,
   _flush: () ->
     # perform pending required updates to the internal data structures
 
-    rebuild_needed = false
-
     non_optimized_updated = false
     non_optimized_update = _.once =>
       # every op can be optimized by manipulating the existing data-structure instead of rebuilding it
@@ -230,8 +228,6 @@ _.extend GridData.prototype,
           if _.size(@tree_structure[parent_id]) == 0
             delete @tree_structure[parent_id]
 
-      rebuild_needed = true
-
     if @_removed_items.length != 0
       #console.log "Removed Item"
       for item_id in @_removed_items
@@ -248,8 +244,6 @@ _.extend GridData.prototype,
           # Make sure still pointing to item
           if @tree_structure[parent_id][parent_metadata.order] == item_id
             delete @tree_structure[parent_id][parent_metadata.order]
-
-      rebuild_needed = true
     
     if @_new_items.length != 0
       #console.log "New Item"
@@ -271,13 +265,10 @@ _.extend GridData.prototype,
             @tree_structure[parent_id] = {}
           @tree_structure[parent_id][parent_metadata.order] = item_id
 
-      rebuild_needed = true
-
     if @_filter_changed is true
       # console.log "Filter Changed", @_current_filter
 
       non_optimized_update()
-      rebuild_needed = true
 
     if not(_.isEmpty(@_paths_needs_state_change)) and not non_optimized_updated
       # if non_optimized_updated the internal strucutres got rebuilt already
@@ -292,8 +283,6 @@ _.extend GridData.prototype,
 
         if new_state == true and not(path of @_expanded_paths)
           @_expanded_paths[path] = true
-
-      rebuild_needed = true
 
     if @_items_needs_update.length != 0 and not non_optimized_updated
       # if non_optimized_updated the internal strucutres got rebuilt already
@@ -310,8 +299,7 @@ _.extend GridData.prototype,
     @_paths_needs_state_change = {}
     @_filter_changed = false
 
-    if rebuild_needed
-      @_rebuildGridTree()
+    @_rebuildGridTree()
 
     # we use this even for unittesting
     @emit "_flush"
