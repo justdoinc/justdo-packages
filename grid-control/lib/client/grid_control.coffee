@@ -28,6 +28,8 @@ GridControl = (options, container, operations_container) ->
   # Calling @setView before init complete will change @_init_view value
   @_init_view = @_getDefaultView() # set @_init_view to the default view
 
+  @editor_init_interrupted = false
+
   Meteor.defer =>
     @_init()
 
@@ -119,7 +121,9 @@ _.extend GridControl.prototype,
             else
               @_grid.setActiveCell(new_row, active_cell.cell)
 
-              if cell_editor?
+              if cell_editor? or @editor_init_interrupted
+                @editor_init_interrupted = false
+
                 @_grid.editActiveCell()
 
                 if maintain_value?
@@ -158,6 +162,29 @@ _.extend GridControl.prototype,
 
     @_grid.onCellChange.subscribe (e, edit_req) =>
       @_grid_data.edit(edit_req)
+
+    @_grid.onBeforeEditCell.subscribe () =>
+      # If the flush is not locked _perform_temporal_flush_lock_release won't do anything
+      @_grid_data._lock_flush()
+
+      # Release waiting flushes
+      # When using the keyboard to move between rows, there's no chance for grid-data
+      # to perform flush as its flush released and immediately gets locked again
+      # we do the following to release awaiting operations
+      flush_performed = @_grid_data._perform_temporal_flush_lock_release()
+
+      if flush_performed
+        @editor_init_interrupted = true
+
+        # cb returns false means don't init editor
+        return false
+
+      return true
+
+    @_grid.onCellEditorDestroy.subscribe () =>
+      @_grid_data._release_flush()
+
+      return true
 
     for name, hook of @_init_hooks
       hook.call(@)
