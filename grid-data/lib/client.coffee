@@ -82,13 +82,22 @@ _.extend GridData.prototype,
           # Take care of parents changes
           if "parents" in fields
             @_items_with_changed_parents.push [id, fields_changes.parents]
+
+            @_set_need_flush()
+
             fields = _.difference(_.keys(fields), ["parents"]) # remove parents field
 
           # Regular changes
           if fields.length != 0
-            @_items_needs_update.push [id, fields]
+            item = @items_by_id[id]
 
-          @_set_need_flush()
+            if item?
+              # If item is in the internal data structure, update immediately don't wait for flush
+              @_updateRowFields(id, fields)
+            else
+              # If item is not in the internal data structure, we can't tell why, have to wait for flush
+              @_items_needs_update.push [id, fields]
+              @_set_need_flush()
 
         removed: (id) =>
           @_removed_items.push id
@@ -122,8 +131,6 @@ _.extend GridData.prototype,
       # every op can be optimized by manipulating the existing data-structure instead of rebuilding it
       @_initDataStructure()
       non_optimized_updated = true
-
-    getItemById = (item_id) => @collection.findOne(item_id)
 
     edited_parents_of_new_items = {} # XXX
     if @_items_with_changed_parents.length != 0
@@ -294,25 +301,7 @@ _.extend GridData.prototype,
       for item in @_items_needs_update
         [item_id, fields] = item
 
-        # update internal data structure
-        item = getItemById(item_id)
-
-        item_pass_filter = @_item_pass_filter item # check whether before update item passed the filter
-
-        if item? # if false, item removed already, expect rebuild later
-          if @_item_pass_filter(@items_by_id[item_id]) != @_item_pass_filter(item)
-            # if filtering state of item changed - we must rebuild the tree (changes the tree structure)
-            non_optimized_update()
-            rebuild_needed = true
-          else
-            _.extend @items_by_id[item_id], item
-
-            for removed_field in _.difference(_.keys(@items_by_id[item_id]), _.keys(item))
-              delete @items_by_id[item_id][removed_field]
-
-        if @_items_ids_map_to_grid_tree_indices[item_id]?
-          for row in @_items_ids_map_to_grid_tree_indices[item_id]
-            @emit "grid-item-changed", row, fields
+        @_updateRowFields(item_id, fields)
 
     @_items_needs_update = []
     @_items_with_changed_parents = []
@@ -431,6 +420,28 @@ _.extend GridData.prototype,
       last_change_type = current_change_type
 
     @emit "rebuild", diff
+
+  _updateRowFields: (item_id, fields) ->
+    # update internal data structure
+    old_item = @items_by_id[item_id]
+    item = @collection.findOne(item_id)
+
+    if old_item? and item?
+      # item_pass_filter = @_item_pass_filter item # check whether before update item passed the filter
+
+      # if @_item_pass_filter(@items_by_id[item_id]) != @_item_pass_filter(item)
+      #   # if filtering state of item changed - we must rebuild the tree (changes the tree structure)
+      #   non_optimized_update()
+      # else
+      for field in fields
+        @items_by_id[item_id][field] = item[field]
+
+      for removed_field in _.difference(_.keys(@items_by_id[item_id]), _.keys(item))
+        delete @items_by_id[item_id][removed_field]
+
+      if @_items_ids_map_to_grid_tree_indices[item_id]?
+        for row in @_items_ids_map_to_grid_tree_indices[item_id]
+          @emit "grid-item-changed", row, fields
 
   _buildNode: (node, level, node_path) ->
     child_orders = (_.keys node).sort(numSort)
