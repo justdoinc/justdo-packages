@@ -1,7 +1,7 @@
 PACK.jquery_events.push(
   {
     # destroy current cell editor if blurred out and value didn't change
-    args: ['blur', 'input.editor-text,input.editor-unicode-date,input.tree-control-editor-input']
+    args: ['blur', 'input.editor-text,input.editor-unicode-date,input.tree-control-editor-input,.textarea-with-tree-control']
     handler: (e) ->
       if not @__reedit_cell_after_blur_patch_applied?
         @__reedit_cell_after_blur_patch_applied = true
@@ -17,7 +17,8 @@ PACK.jquery_events.push(
 
       Meteor.defer =>
         if (e.currentTarget == $('input.editor-text', @container).get(0)) or
-           (e.currentTarget == $('input.tree-control-editor-input', @container).get(0))
+           (e.currentTarget == $('input.tree-control-editor-input', @container).get(0)) or
+           (e.currentTarget == $('.textarea-with-tree-control', @container).get(0))
             @_grid.getEditorLock().commitCurrentEdit()
 
         # Destroy date editor only if blur isn't a result of opening the datepicker
