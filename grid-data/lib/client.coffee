@@ -53,13 +53,57 @@ _.extend GridData.prototype,
   # don't flush until the batch is ready
   _idle_time_ms_before_set_need_flush: 30
   _set_need_flush_timeout: null
+  _flush_lock: false
+  _flush_blocked_by_lock: false
   _set_need_flush: ->
+    if @_flush_lock
+      @_flush_blocked_by_lock = true
+
+      return
+
     if @_set_need_flush_timeout?
       clearTimeout @_set_need_flush_timeout
 
     @_set_need_flush_timeout = setTimeout =>
+      @_set_need_flush_timeout = null
       @_need_flush.set(++@_need_flush_count)
     , @_idle_time_ms_before_set_need_flush
+
+  _lock_flush: ->
+    # Lock
+    @_flush_lock = true
+
+    # Remove flush that's about to happen
+    if @_set_need_flush_timeout?
+      clearTimeout @_set_need_flush_timeout
+      @_set_need_flush_timeout = null
+
+      # Mark that a flush is needed upon release
+      @_flush_blocked_by_lock = true
+
+  _perform_temporal_flush_lock_release: ->
+    # If flush is locked and a needed flush already blocked, perform it immediately
+
+    # Returns true if flush performed flase otherwise.
+    if @_flush_lock and @_flush_blocked_by_lock
+      Tracker.nonreactive =>
+        @_flush()
+
+      @_flush_blocked_by_lock = false
+
+      return true
+
+    return false
+
+  _release_flush: ->
+    # Release lock
+    @_flush_lock = false
+
+    # If flush was blocked, set need flush
+    if @_flush_blocked_by_lock
+      @_flush_blocked_by_lock = false
+
+      @_set_need_flush()
 
   _get_need_flush: ->
     @_need_flush.get()
