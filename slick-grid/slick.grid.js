@@ -2754,6 +2754,7 @@ if (typeof Slick === "undefined") {
       }
 
       getEditorLock().deactivate(editController);
+      trigger(self.onCellEditorDestroy);
     }
 
     function makeActiveCellEditable(editor) {
@@ -3555,6 +3556,7 @@ if (typeof Slick === "undefined") {
       "onCellChange": new Slick.Event(),
       "onBeforeEditCell": new Slick.Event(),
       "onBeforeCellEditorDestroy": new Slick.Event(),
+      "onCellEditorDestroy": new Slick.Event(),
       "onBeforeDestroy": new Slick.Event(),
       "onActiveCellChanged": new Slick.Event(),
       "onActiveCellPositionChanged": new Slick.Event(),
