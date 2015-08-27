@@ -12,7 +12,7 @@ Package.onUse(function (api) {
   api.versionsFrom('1.1.0.2');
 
   api.use('mizzao:jquery-ui', client);
-  api.use('fourseven:scss@=0.9.6', client);
+  api.use('fourseven:scss@3.2.0', client);
   api.use('meteorspark:logger@0.3.0', both);
   api.use('underscore', both);
 
