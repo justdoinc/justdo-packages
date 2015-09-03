@@ -102,13 +102,21 @@ _.extend GridControl.prototype,
             @_grid.invalidate()
           else
             current_row_offset = 0
-            for change in diff
+            for change, i in diff
               [type, removed, added] = change
 
               if type == "same"
                 current_row_offset += change[1] # we don't use "removed" to avoid confusion
               else
-                @_grid.spliceInvalidate(current_row_offset, removed, added)
+                callUpdateRowCount = false
+                if i == diff.length - 1 or i == diff.length - 2
+                  # if this diff item is one before the last one, the next one
+                  # must be of type "same", therefore, we regard it as the last
+                  # update and callUpdateRowCount, read a comment in @_grid.spliceInvalidate
+                  # code for more details
+                  callUpdateRowCount = true
+
+                @_grid.spliceInvalidate(current_row_offset, removed, added, callUpdateRowCount)
 
                 current_row_offset += added
 

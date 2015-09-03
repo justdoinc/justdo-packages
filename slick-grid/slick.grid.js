@@ -1570,10 +1570,24 @@ if (typeof Slick === "undefined") {
       }
     }
 
-    function spliceInvalidate(index, remove, add) {
+    function spliceInvalidate(index, remove, add, callUpdateRowCount/* = true*/) {
+      // callUpdateRowCount: When performing multiple spliceInvalidate() on a batch of
+      // changes (diff) that are already done on the underlying `data` object
+      // you must call spliceInvalidate with the callUpdateRowCount arg set to false,
+      // for all the calls but the last one.
+      // As updateRowCount updates the row count and perform changes to the grid structure
+      // in accordance with the current state of the underlying data object that already
+      // represents all the changes that the calls to spliceInvalidate should take care to
+      // sync correctly. Calling updateRowCount before all the syncs done by following
+      // spliceInvalidate will change the grid in a way that is inconsistent with
+      // the actual changes made to the data and will break following calls to spliceInvalidate.
       if (!options.dynamicRowHeight) {
         logger.error("spliceInvalidate() was designed to use only with options.dynamicRowHeight == true");
         return;
+      }
+
+      if (typeof callUpdateRowCount === "undefined") {
+        callUpdateRowCount = true;
       }
 
       // update rowsCache
@@ -1615,8 +1629,10 @@ if (typeof Slick === "undefined") {
         renderRows(range_to_render);
       }
 
-      // Time to update row count
-      updateRowCount();
+      if (callUpdateRowCount === true) {
+        // Time to update row count
+        updateRowCount();
+      } 
     }
 
 
