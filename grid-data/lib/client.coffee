@@ -441,8 +441,15 @@ _.extend GridData.prototype,
       if current_change_type == 0
         diff.push ["same", change.count]
       else if current_change_type == 1
+        if diff.length == 0 and (not change.count?)
+          # On complete remove we don't get the count of all the rows removed
+          change.count = previous_signature.split("\n").length
         diff.push ["diff", change.count, 0]
       else if current_change_type == 2 # don't use else for readability
+        if diff.length == 0 and (not change.count?)
+          # When diffing with previous empty signatire we don't get the count of all the rows added
+          change.count = current_signature.split("\n").length
+
         if last_change_type == 1
           # update last pushed diff
           diff[diff.length - 1][2] = change.count
