@@ -285,9 +285,11 @@ _.extend GridData.prototype,
 
         # Remove from tree structure any pointer to item
         for parent_id, parent_metadata of item_obj.parents
-          # Make sure still pointing to item
-          if @tree_structure[parent_id][parent_metadata.order] == item_id
-            delete @tree_structure[parent_id][parent_metadata.order]
+          # Make sure parent still exist
+          if @tree_structure[parent_id]?
+            # Make sure still pointing to item
+            if @tree_structure[parent_id][parent_metadata.order] == item_id
+              delete @tree_structure[parent_id][parent_metadata.order]
     
     if @_new_items.length != 0
       #console.log "New Item"
