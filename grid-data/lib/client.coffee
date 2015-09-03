@@ -824,9 +824,27 @@ _.extend GridData.prototype,
   # ** Misc. **
   getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
 
-subscribeDefaultGridSubscription = (collection, condition=null) ->
-  # Note: we call Meteor.userId() as last argument.
-  # Meteor.userId() is not part of the publication args, used here only to
-  # trigger reactivity (re-running this func if called in a computation) when
-  # the user changes and make Meteor recognise that the subscription changed.
-  Meteor.subscribe helpers.getCollectionPubSubName(collection), condition, Meteor.userId()
+# The communication layer between the server and the client
+GridDataCom = (collection) ->
+  EventEmitter.call this
+
+  @collection = collection
+
+  @
+
+Util.inherits GridDataCom, EventEmitter
+
+_.extend GridDataCom.prototype,
+  subscribeDefaultGridSubscription:  ->
+    # subscribeDefaultGridSubscription: (collection, arg1, arg2, ...)
+    #
+    # Subscribes to the subscription created by GridDataCom.setGridPublication
+    # as long as the `name` option didn't change.
+    #
+    # Arguments that follows the collection argument will be used as the subscription
+    # args.
+    args = _.toArray(arguments).slice(1)
+
+    args.unshift helpers.getCollectionPubSubName(@collection)
+
+    Meteor.subscribe.apply @, args

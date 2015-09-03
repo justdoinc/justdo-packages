@@ -109,15 +109,6 @@ initDefaultGridAllowDenyRules = (collection) ->
   collection.allow
     update: (userId, doc, fieldNames, modifier) -> collection.isUserBelongToItem(doc, userId)
 
-initDefaultGridPubSub = (collection) ->
-  Meteor.publish helpers.getCollectionPubSubName(collection), (condition = {}) ->
-    if not @userId?
-      @ready()
-      return
-
-    condition.users={$elemMatch: {$eq: @userId}}
-    collection.find condition
-
 initDefaultIndeices = (collection) ->
   collection._ensureIndex {users: 1}
 
@@ -186,6 +177,84 @@ initDefaultCollectionMethods = (collection) ->
 initDefaultGridServerSideConf = (collection) ->
   initDefaultGridMethods collection
   initDefaultGridAllowDenyRules collection
-  initDefaultGridPubSub collection
   initDefaultIndeices collection
   initDefaultCollectionMethods collection
+
+# The communication layer between the server and the client
+GridDataCom = (collection) ->
+  EventEmitter.call this
+
+  @collection = collection
+
+  @
+
+Util.inherits GridDataCom, EventEmitter
+
+_.extend GridDataCom.prototype,
+  setupGridPublication: (options = {}) ->
+    self = this
+
+    default_options =
+      name: helpers.getCollectionPubSubName(@collection)
+      require_login: true
+      exposed_to_guests: false
+      # If true, logged in users will see items that don't have them in the users field.
+      # If require_login is true exposed_to_guest option will be ignored and regarded as true.
+      middleware_incharge: false # Have no effect if middleware is null, see docs for middleware option
+      middleware: null
+      # A method that gets the collection and options provied to setGridPublication
+      # along subscription arguments and references (copy or create a new before changing)
+      # to the current query and condition.
+      #
+      # Should return an array of the form [query, condition] with the new query and
+      # condition to use for the provided cursor.
+      #
+      # If returns false, we regard it as a blocked request for subscription,
+      # we will return an empty publication. 
+      #
+      # `this` context is same as the Meteor.publish's
+      #
+      # Example:
+      # middleware: (collection, options, sub_args, query, projection) -> [query, projection]
+      #
+      # If middleware_incharge option is true, we will just return the returned value
+      # of the middleware to the main publication, which means that the middleware
+      # is in charge of the final cursor provided to the subscription (if you chose to
+      # return one...)
+      #
+      # Example:
+      # middleware: (collection, options, sub_args, query, projection) -> collection.find query, projection
+
+    options = _.extend default_options, options
+
+    Meteor.publish options.name, () ->
+      # `this` is the Publication context, use self for GridData instance 
+      if options.require_login
+        if not @userId?
+          @ready()
+
+          return
+
+      query = {}
+      projection = {}
+
+      if options.require_login and not options.exposed_to_guests
+        query.users = @userId
+
+      middleware = options.middleware
+      if middleware?
+        if options.middleware_incharge
+          return middleware.call @, self.collection, options, _.toArray(arguments), query, projection
+        else
+          result = middleware.call @, self.collection, options, _.toArray(arguments), query, projection
+
+          if not result
+            @ready()
+
+            return
+          else
+            [query, projection] = result
+
+            return self.collection.find query, projection
+      else
+        return self.collection.find query, projection

@@ -18,7 +18,7 @@ Package.onUse(function (api) {
 
   api.use('raix:eventemitter@0.1.1', both);
   api.use('matb33:collection-hooks@0.7.13', both);
-  api.use('meteorspark:util@0.1.0', both);
+  api.use('meteorspark:util@0.2.0', both);
   api.use('meteorspark:logger@0.3.0', both);
   api.use('ovcharik:jsdiff@2.0.1', both);
 
@@ -30,8 +30,7 @@ Package.onUse(function (api) {
   api.add_files('lib/server.coffee', server);
 
   api.export('GridData');
-  api.export('initDefaultGridServerSideConf');
-  api.export('subscribeDefaultGridSubscription');
+  api.export('GridDataCom');
 });
 
 Package.onTest(function(api) {
@@ -57,5 +56,6 @@ Package.onTest(function(api) {
 
   // Just so we can use it from the console for debugging...
   api.export('GridData');
+  api.export('GridDataCom');
   api.export('TestCol');
 });
