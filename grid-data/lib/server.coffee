@@ -18,6 +18,8 @@ GridDataCom = (collection) ->
   # rules on init
   # @initDefaultGridAllowDenyRules()
 
+  @_grid_methods_middlewares = {}
+
   @
 
 Util.inherits GridDataCom, EventEmitter
@@ -164,6 +166,86 @@ _.extend GridDataCom.prototype,
 
         return parents_situation
 
+  setGridMethodMiddleware: (method_name, middleware) ->
+    # Assigned middlewares are called just before the default execution of the method
+    # with the calling Meteor Method `this` variable as their `this`, and with some
+    # additional arguments.
+    #
+    # Middleware allows rejecting the execution and can be used to perform additional
+    # operations.
+    #
+    # There can be more than one middleware for a given grid method, middlewares will
+    # run by the order in which they were defined.
+    #
+    # Any value other than `true` returned from a middleware will be regarded as a block
+    # message. If the message is an instance of Error we will throw it. If it isn't we will
+    # use it as the message for a new Meteor.Error of type "grid-method-blocked" and throw
+    # it.
+    #
+    # Each grid method provides different arguments to its middlewares as follows:
+    #
+    # Note: for all the grid methods the `this` var will be the same as the Meteor
+    # Method's this.
+    #
+    # addChild: (path, new_item_fields)
+    # path is the path to which the new item is about to be added.
+    #
+    # new_item_fields reference to the original object and is not a copy for the purpose of
+    # allowing it to be customized by the middlewares.
+    #
+    # addSibling: (path, new_item_fields)
+    # path is the path to which the new item is going to be sibling of.
+    #
+    # new_item_fields reference to the original object and is not a copy for the purpose of
+    # allowing it to be customized by the middlewares.
+    #
+    # removeParent: (path, item, parent_id, no_more_parents, update_op)
+    # path is the path we are going to remove.
+    #
+    # item is the document of the item we're about to remove -> do not change this object
+    # without cloning it to avoid bugs in following middlewares.
+    #
+    # parent_id is provided to ease getting it.
+    # 
+    # if no_more_parents is true, it means that the item is about to be completely removed.
+    # if no_more_parents is false, there are more parents to the item, and we will just
+    # remove the requested parent with an update command.
+    #
+    # update_op reference to the original object and is not a copy for the purpose of
+    # allowing it to be customized by the middlewares. update_op will be provided only
+    # when no_more_parents is false, will be undefined otherwise.
+    #
+
+    methods_names = ["addChild", "addSibling", "removeParent", "movePath"]
+
+    if method_name not in methods_names
+      throw new Meteor.Error("unknown-method-name", "Unknown method name: #{method_name}, use one of: #{methods_names.join(", ")}")
+
+    if not _.isFunction middleware
+      throw new Meteor.Error("wrong-type", "Middleware has to be a function")
+
+    if not @_grid_methods_middlewares[method_name]?
+      @_grid_methods_middlewares[method_name] = []
+
+    @_grid_methods_middlewares[method_name].push middleware
+
+  _getGridMethodMiddleware: (method_name) -> @_grid_methods_middlewares[method_name] or []
+
+  _runGridMethodMiddlewares: (method_this, method_name) ->
+    # _runGridMethodMiddlewares: (method_this, method_name, middleware_arg1, middleware_arg2, ...)
+    # Method this should be the this variable of the calling grid method. Limitation of the js
+    # lang don't allow this API to be nicer.
+    method_args = _.toArray(arguments).slice(2)
+
+    for middleware in @_getGridMethodMiddleware(method_name)
+      message = middleware.apply method_this, method_args
+
+      if message == true
+        # no issue continue to run the next middleware
+        continue
+      if message instanceof Error
+        throw message
+      throw new Meteor.Error("grid-method-blocked", message)
 
   initDefaultGridMethods: ->
     self = @
@@ -182,6 +264,8 @@ _.extend GridDataCom.prototype,
                   collection.getNewChildOrder("0")
             users: [@userId]
 
+          self._runGridMethodMiddlewares @, "addChild", path, new_item
+
           return collection.insert new_item
       else
         throw exceptions.loginRequired()
@@ -189,6 +273,8 @@ _.extend GridDataCom.prototype,
       if (item = collection.getItemByPathIfUserBelong path, @userId)?
         new_item = _.extend {}, fields, {parents: {}, users: item.users}
         new_item.parents[item._id] = {order: collection.getNewChildOrder(item._id)}
+
+        self._runGridMethodMiddlewares @, "addChild", path, new_item
 
         return collection.insert new_item
       else
@@ -198,11 +284,13 @@ _.extend GridDataCom.prototype,
       if (item = collection.getItemByPathIfUserBelong path, @userId)?
         parent_id = helpers.getPathParentId(path)
         sibling_order = item.parents[parent_id].order + 1
-        
-        collection.incrementChildsOrderGte parent_id, sibling_order
 
         new_item = _.extend {}, fields, {parents: {}, users: item.users}
         new_item.parents[parent_id] = {order: sibling_order}
+
+        self._runGridMethodMiddlewares @, "addSibling", path, new_item
+
+        collection.incrementChildsOrderGte parent_id, sibling_order
         ret = collection.insert new_item
         return ret
       else
@@ -216,10 +304,15 @@ _.extend GridDataCom.prototype,
           throw new Meteor.Error(500, 'Error: Can\'t remove: Item have childrens (you might not have the permission to see all childrens)')
 
         if (_.size item.parents) == 1
-          collection.remove item._id, update_op
+          self._runGridMethodMiddlewares @, "removeParent", path, item, parent_id, true # true means no_more_parents = true
+
+          collection.remove item._id
         else
           update_op = {$unset: {}}
           update_op.$unset["parents.#{parent_id}"] = ""
+
+          self._runGridMethodMiddlewares @, "removeParent", path, item, parent_id, false, update_op # false means no_more_parents = false
+
           collection.update item._id, update_op
       else
         throw exceptions.unkownPath()
