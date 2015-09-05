@@ -11,7 +11,7 @@ PACK.jquery_events.push(
           clicked_cell = args
 
           # If active cell clicked again, get into edit mode (won't happen without this fix)
-          if active_cell.row == clicked_cell.row and
+          if active_cell? and active_cell.row == clicked_cell.row and
              active_cell.cell == clicked_cell.cell
               @_grid.editActiveCell()
 
