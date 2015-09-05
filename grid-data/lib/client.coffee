@@ -183,13 +183,14 @@ _.extend GridData.prototype,
       for item in @_items_with_changed_parents
         [item_id, new_parents_obj] = item
         prev_item_obj = @items_by_id[item_id]
+        prev_parents_obj = prev_item_obj.parents
 
         # If we don't know this item yet
         if not prev_item_obj?
           edited_parents_of_new_items[item_id] = new_parents_obj
           continue
-
-        prev_parents_obj = prev_item_obj.parents
+        else
+          @items_by_id[item_id].parents = new_parents_obj 
 
         for parent_id, new_parent_data of new_parents_obj
           if parent_id of prev_parents_obj
@@ -223,9 +224,6 @@ _.extend GridData.prototype,
         for child_new_order in changed_children_order
           [child_id, prev_order, new_order] = child_new_order
 
-          # Update @items_by_id
-          @items_by_id[child_id].parents[parent_id].order = new_order
-
           # Update tree structure
           @tree_structure[parent_id][new_order] = child_id
 
@@ -237,9 +235,6 @@ _.extend GridData.prototype,
         for new_child in new_children
           [child_id, order] = new_child
 
-          # Update @items_by_id
-          @items_by_id[child_id].parents[parent_id].order = order
-
           # Update tree structure
           if not @tree_structure[parent_id]?
             @tree_structure[parent_id] = {}
@@ -248,9 +243,6 @@ _.extend GridData.prototype,
       for parent_id, removed_children of removed_from_parent
         for removed_child in removed_children
           [child_id, prev_order] = removed_child
-
-          # Update @items_by_id
-          delete @items_by_id[child_id].parents[parent_id]
 
           # Update tree structure
           # Make sure no other item moved to removed position already
