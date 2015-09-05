@@ -199,22 +199,39 @@ _.extend GridDataCom.prototype,
     # new_item_fields reference to the original object and is not a copy for the purpose of
     # allowing it to be customized by the middlewares.
     #
-    # removeParent: (path, item, parent_id, no_more_parents, update_op)
+    # removeParent: (path, etc)
     # path is the path we are going to remove.
     #
-    # item is the document of the item we're about to remove -> do not change this object
-    # without cloning it to avoid bugs in following middlewares.
+    # etc is an object that contains the following keys:
     #
-    # parent_id is provided to ease getting it.
+    #   etc.item is the document of the item we're about to remove -> do not change this object
+    #   without cloning it to avoid bugs in following middlewares.
+    #
+    #   etc.parent_id is provided to ease getting it.
     # 
-    # if no_more_parents is true, it means that the item is about to be completely removed.
-    # if no_more_parents is false, there are more parents to the item, and we will just
-    # remove the requested parent with an update command.
+    #   etc.no_more_parents, if etc.no_more_parents is true, it means that the item is about to be completely removed.
+    #   if no_more_parents is false, there are more parents to the item, and we will just
+    #   remove the requested parent with an update command.
     #
-    # update_op reference to the original object and is not a copy for the purpose of
-    # allowing it to be customized by the middlewares. update_op will be provided only
-    # when no_more_parents is false, will be undefined otherwise.
+    #   etc.update_op, reference to the original object and is not a copy for the purpose of
+    #   allowing it to be customized by the middlewares. update_op will be provided only
+    #   when no_more_parents is false, will be undefined otherwise.
     #
+    # movePath: (path, etc)
+    # path is the path we are going to move.
+    #
+    # etc is an object that contains the following keys:
+    #
+    #   etc.new_location is a *copy* of the computed new_location target based on
+    #   the argument provided and defaults applied. Do not change this object. Changing it
+    #   will have no effect on movePath execution and might result in bugs in following
+    #   middlewares.
+    #
+    #   etc.item is the document of the item we are moving
+    #
+    #   etc.current_parent_id, the id of the parent we are moving this item from
+    #
+    #   etc.new_parent_item, the document of the new parent
 
     methods_names = ["addChild", "addSibling", "removeParent", "movePath"]
 
@@ -304,14 +321,24 @@ _.extend GridDataCom.prototype,
           throw new Meteor.Error(500, 'Error: Can\'t remove: Item have childrens (you might not have the permission to see all childrens)')
 
         if (_.size item.parents) == 1
-          self._runGridMethodMiddlewares @, "removeParent", path, item, parent_id, true # true means no_more_parents = true
+          self._runGridMethodMiddlewares @, "removeParent", path,
+            # the etc obj
+            item: item 
+            parent_id: parent_id,
+            no_more_parents: true
+            update_op: undefined
 
           collection.remove item._id
         else
           update_op = {$unset: {}}
           update_op.$unset["parents.#{parent_id}"] = ""
 
-          self._runGridMethodMiddlewares @, "removeParent", path, item, parent_id, false, update_op # false means no_more_parents = false
+          self._runGridMethodMiddlewares @, "removeParent", path,
+            # the etc obj
+            item: item 
+            parent_id: parent_id,
+            no_more_parents: false
+            update_op: update_op
 
           collection.update item._id, update_op
       else
@@ -341,27 +368,39 @@ _.extend GridDataCom.prototype,
         if not ("order" of new_location)
           new_location.order = collection.getNewChildOrder new_location.parent
 
+        # Remove current parent op prepeation
+        remove_current_parent_update_op = {$unset: {}}
+        remove_current_parent_update_op.$unset["parents.#{parent_id}"] = ""
+
+        # Add to new parent op prepeation
+        set_new_parent_update_op = {$set: {}}
+        set_new_parent_update_op.$set["parents.#{new_location.parent}"] = {order: new_location.order}
+
         # Check if an item exist already in new_location order
         item_in_new_location = collection.getChildreOfOrder(new_location.parent, new_location.order)
+        if item_in_new_location? and item_in_new_location._id == item._id
+          # There's already an item in the new location, the same item..., nothing to do.
+          return
+
+        self._runGridMethodMiddlewares @, "movePath", path,
+          # the etc obj
+          new_location: _.extend {}, new_location
+          item: item
+          current_parent_id: parent_id
+          new_parent_item: new_parent_item
 
         if item_in_new_location?
-          # if there's an item in new location already.
-          if item_in_new_location._id == item._id
-            # if same item, do nothing
-            return
-          else
-            # Make space for the move
-            collection.incrementChildsOrderGte new_location.parent, new_location.order
+          # if there's an item in the new location.
+          # Note we check above that it isn't the same item. We don't use sub if since
+          # we want to run the middlewares only when we are sure the operation is ready
+          # to be performed. 
+          collection.incrementChildsOrderGte new_location.parent, new_location.order
 
         # Remove current parent
-        update_op = {$unset: {}}
-        update_op.$unset["parents.#{parent_id}"] = ""
-        collection.update item._id, update_op
+        collection.update item._id, remove_current_parent_update_op
 
         # Add to new parent
-        update_op = {$set: {}}
-        update_op.$set["parents.#{new_location.parent}"] = {order: new_location.order}
-        collection.update item._id, update_op
+        collection.update item._id, set_new_parent_update_op
       else
         throw exceptions.unkownPath()
 
