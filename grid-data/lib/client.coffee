@@ -234,18 +234,6 @@ _.extend GridData.prototype,
             delete @tree_structure[parent_id][prev_order]
 
       for parent_id, new_children of new_to_parent
-        for child_new_order in changed_children_order
-          [child_id, order] = child_new_order
-
-          # Update @items_by_id
-          @items_by_id[child_id].parents[parent_id].order = order
-
-          # Update tree structure
-          if not @tree_structure[parent_id]?
-            @tree_structure[parent_id] = {}
-          @tree_structure[parent_id][order] = child_id
-
-      for parent_id, new_children of new_to_parent
         for new_child in new_children
           [child_id, order] = new_child
 
