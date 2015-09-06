@@ -20,5 +20,9 @@ TestCol.allow
   insert: allow_rule
   update: allow_rule
   remove: allow_rule
-  
-initDefaultGridServerSideConf TestCol
+
+grid_data_com = new GridDataCom TestCol
+
+grid_data_com.initDefaultGridAllowDenyRules()
+
+grid_data_com.setupGridPublication()
