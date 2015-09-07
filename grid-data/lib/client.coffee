@@ -144,6 +144,15 @@ _.extend GridData.prototype,
               @_set_need_flush()
 
         removed: (id) =>
+          # Check if id added during current flush cycle, if so remove it from
+          # @_new_items and don't add to @_removed_items
+          for item, i in @_new_items
+            if item[0] == id
+              # remove from @_new_items
+              @_new_items.splice(i, 1)
+
+              return
+          
           @_removed_items.push id
 
           @_set_need_flush()
@@ -253,7 +262,7 @@ _.extend GridData.prototype,
             delete @tree_structure[parent_id]
 
     if @_removed_items.length != 0
-      #console.log "Removed Item"
+      # console.log "Removed Item", @_removed_items
       for item_id in @_removed_items
         # Update @items_by_id
         item_obj = @items_by_id[item_id]
