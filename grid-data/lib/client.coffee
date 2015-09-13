@@ -681,7 +681,7 @@ _.extend GridData.prototype,
       for order in keys
         child_id = node[order]
         child_path = "#{path}#{child_id}/"
-        child = grid_control._grid_data.items_by_id[child_id]
+        child = @items_by_id[child_id]
 
         if fields?
           for field in fields
