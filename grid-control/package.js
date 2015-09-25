@@ -72,6 +72,8 @@ Package.onUse(function (api) {
   api.add_files('lib/client/cells_editors/selector_editor/selector_editor.js', client);
   api.add_files('lib/client/cells_editors/text_with_tree_controls_editor/text_with_tree_controls_editor.sass', client);
   api.add_files('lib/client/cells_editors/text_with_tree_controls_editor/text_with_tree_controls_editor.js', client);
+  api.add_files('lib/client/cells_editors/textarea_editor/textarea_editor.sass', client);
+  api.add_files('lib/client/cells_editors/textarea_editor/textarea_editor.js', client);
 
   api.add_files('lib/client/cells_editors/textarea_with_tree_controls_editor/textarea_with_tree_controls_editor.sass', client);
   api.add_files('lib/client/cells_editors/textarea_with_tree_controls_editor/textarea_with_tree_controls_editor.js', client);
