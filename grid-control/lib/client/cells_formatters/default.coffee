@@ -3,4 +3,7 @@ _.extend PACK.Formatters,
     if not value?
       return ""
     else
-      return (value + "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+      value = (value + "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+
+      if @options.allow_dynamic_row_height
+        value = value.replace(/\n/g, "<br>")

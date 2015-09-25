@@ -2,8 +2,7 @@ getSpacer = (level) -> "<span class='grid-tree-control-spacer' style='width: #{1
 
 _.extend PACK.Formatters,
   textWithTreeControls: (row, cell, value, columnDef, item) ->
-    output = PACK.Formatters.defaultFormatter(row, cell, value, columnDef, item)
-    output = output.replace(/\n/g, "<br>");
+    output = PACK.Formatters.defaultFormatter.call(@, row, cell, value, columnDef, item)
 
     level = @_grid_data.getItemLevel(row)
     has_childs = @_grid_data.getItemHasChild row
