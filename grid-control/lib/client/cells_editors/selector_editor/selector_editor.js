@@ -51,9 +51,6 @@ PACK.Editors.SelectorEditor = function (args) {
  
     this.destroy = function () {
       $select.selectpicker("destroy");
-      $select.remove();
-      $select_picker.remove();
-      $("body > .selector-editor").remove();
     };
 
     this.focus = function () {
