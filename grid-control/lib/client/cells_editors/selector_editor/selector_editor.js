@@ -1,6 +1,8 @@
 PACK.Editors.SelectorEditor = function (args) {
     var $select;
     var $select_picker;
+    var $grid_view_port;
+    var grid_view_port_scroll_handler;
     var currentValue;
     var scope = this;
     var grid = args.grid;
@@ -41,6 +43,14 @@ PACK.Editors.SelectorEditor = function (args) {
           self.focus();
         }, 0);
       }, 0);
+
+      $grid_view_port = $(grid.getCanvasNode()).parent();
+
+      grid_view_port_scroll_handler = function () {
+        $select.selectpicker("resizeHandler");
+      };
+
+      $grid_view_port.on("scroll", grid_view_port_scroll_handler);
     };
 
     this.showOptions = function () {
@@ -51,6 +61,7 @@ PACK.Editors.SelectorEditor = function (args) {
  
     this.destroy = function () {
       $select.selectpicker("destroy");
+      $grid_view_port.off("scroll", grid_view_port_scroll_handler);
     };
 
     this.focus = function () {
