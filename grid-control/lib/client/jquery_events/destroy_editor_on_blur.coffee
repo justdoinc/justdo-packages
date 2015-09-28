@@ -1,7 +1,7 @@
 PACK.jquery_events.push(
   {
     # destroy current cell editor if blurred out and value didn't change
-    args: ['blur', 'input.editor-text,input.editor-unicode-date,input.tree-control-editor-input,.textarea-with-tree-control,.textarea-editor']
+    args: ['blur', 'input.editor-text,input.editor-unicode-date,input.tree-control-editor-input,.textarea-with-tree-control,.textarea-editor,div.selector-editor']
     handler: (e) ->
       if not @__reedit_cell_after_blur_patch_applied?
         @__reedit_cell_after_blur_patch_applied = true
@@ -21,6 +21,23 @@ PACK.jquery_events.push(
            (e.currentTarget == $('.textarea-with-tree-control', @container).get(0)) or
            (e.currentTarget == $('.textarea-editor', @container).get(0))
             @_grid.getEditorLock().commitCurrentEdit()
+
+        # Destroy selector editor only if blur isn't a result of expanding options
+        if (e.currentTarget == $('div.selector-editor', @container).get(0))
+          original_active_cell = @_grid.getActiveCell()
+          setTimeout =>
+            active_cell = @_grid.getActiveCell()
+
+            if original_active_cell.row == active_cell.row and
+               original_active_cell.cell == active_cell.cell and
+               not $("div.selector-editor .dropdown-menu").is(":visible") and
+               not $(e.currentTarget).is(":focus")
+               # If after blur active cell remains the same (means we blurred
+               # out of the grid control) and the datepicker isn't visible (the
+               # blur wasn't a result of opening the date picker) and we aren't
+               # focused (no reason to close) commit changes and exit editor 
+              @_grid.getEditorLock().commitCurrentEdit()
+          , 250
 
         # Destroy date editor only if blur isn't a result of opening the datepicker
         if (e.currentTarget == $('input.editor-unicode-date', @container).get(0))

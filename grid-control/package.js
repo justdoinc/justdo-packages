@@ -16,6 +16,9 @@ Package.onUse(function (api) {
   api.use('check', both);
   api.use('meteor', both);
 
+  api.use('twbs:bootstrap@3.3.5', both);
+  api.use('veto44:bootstrap-select@1.0.0', both);
+
   api.use('aldeed:simple-schema@1.3.1', both);
 
   api.use('copleykj:jquery-autosize@1.17.8', client);
@@ -70,6 +73,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/cells_editors/text_editor/text_editor.sass', client);
   api.add_files('lib/client/cells_editors/checkbox_editor/checkbox_editor.js', client);
   api.add_files('lib/client/cells_editors/selector_editor/selector_editor.js', client);
+  api.add_files('lib/client/cells_editors/selector_editor/selector_editor.sass', client);
   api.add_files('lib/client/cells_editors/text_with_tree_controls_editor/text_with_tree_controls_editor.sass', client);
   api.add_files('lib/client/cells_editors/text_with_tree_controls_editor/text_with_tree_controls_editor.js', client);
   api.add_files('lib/client/cells_editors/textarea_editor/textarea_editor.sass', client);

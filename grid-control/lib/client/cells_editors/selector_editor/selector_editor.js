@@ -1,10 +1,13 @@
 PACK.Editors.SelectorEditor = function (args) {
     var $select;
+    var $select_picker;
     var currentValue;
     var scope = this;
     var grid = args.grid;
 
     this.init = function () {
+      var self = this;
+
       var value, label, options, output = "";
 
       if (args.column.values !== null) {
@@ -19,16 +22,25 @@ PACK.Editors.SelectorEditor = function (args) {
       for (value in options) {
         label = options[value];
 
-        output += '<option value="' + value + '">' + label + '</option>';
+        output += '<option value="' + value + '" data-content="' + label + '">' + label + '</option>';
       }
 
-      $select = $("<select>" + output + "</select>");
+      $select = $("<select class='selector-editor'>" + output + "</select>");
       $select.appendTo(args.container);
-      $select.focus();
-      this.showOptions();
-      $select.click(function () {
-        grid.getEditorLock().commitCurrentEdit();
+      $select.selectpicker({
+        container: "body",
+        dropupAuto: true,
+        size: false,
+        width: "100%"
       });
+      $select_picker = $select.next();
+      setTimeout(function () {
+        $("button", $select_picker).click();
+
+        setTimeout(function () {
+          self.focus();
+        }, 0);
+      }, 0);
     };
 
     this.showOptions = function () {
@@ -38,17 +50,20 @@ PACK.Editors.SelectorEditor = function (args) {
     };
  
     this.destroy = function () {
+      $select.selectpicker("destroy");
       $select.remove();
+      $select_picker.remove();
+      $("body > .selector-editor").remove();
     };
 
     this.focus = function () {
-      $select.focus();
+      $("button", $select_picker).focus();
     };
 
     this.loadValue = function (item) {
       currentValue = item[args.column.field];
 
-      $select.val(currentValue);
+      $select.selectpicker("val", currentValue);
     };
 
     this.serializeValue = function () {
