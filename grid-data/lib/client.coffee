@@ -18,15 +18,12 @@ GridData = (collection) ->
   @_new_items = []
   @_removed_items = []
   @_paths_needs_state_change = {} # keys holds the paths which their collapse/expand state needs to be toggled false value will collapse the path true value will expand it
-  @_filter_changed = false
 
   @items_by_id = {}
   @tree_structure = {}
   @grid_tree = [] # [[item, tree_level, parent_path], ...]
   @_items_ids_map_to_grid_tree_indices = {} # {item_id: [indices in @grid_tree]}
   @_expanded_paths = {} # if path is a key of @_expanded_paths it is expanded regardless of its value
-
-  @_current_filter = null
 
   # note if users changed the subscription should remove the doc if user lose access
   @_ignore_change_in_fields = ["users"]
@@ -178,10 +175,6 @@ _.extend GridData.prototype,
     # perform pending required updates to the internal data structures
 
     non_optimized_updated = false
-    non_optimized_update = _.once =>
-      # every op can be optimized by manipulating the existing data-structure instead of rebuilding it
-      @_initDataStructure()
-      non_optimized_updated = true
 
     edited_parents_of_new_items = {} # XXX
     if @_items_with_changed_parents.length != 0
@@ -300,18 +293,7 @@ _.extend GridData.prototype,
             @tree_structure[parent_id] = {}
           @tree_structure[parent_id][parent_metadata.order] = item_id
 
-    if @_filter_changed is true
-      # console.log "Filter Changed", @_current_filter
-
-      non_optimized_update()
-
-    if not(_.isEmpty(@_paths_needs_state_change)) and not non_optimized_updated
-      # if non_optimized_updated the internal strucutres got rebuilt already
-      # with all needed updates
-
-      # no need to build internal data structure for _paths_needs_state_change hance
-      # we don't call @non_optimized_updated()
-
+    if not(_.isEmpty(@_paths_needs_state_change))
       for path, new_state of @_paths_needs_state_change
         if new_state == false and path of @_expanded_paths
           delete @_expanded_paths[path]
@@ -319,9 +301,7 @@ _.extend GridData.prototype,
         if new_state == true and not(path of @_expanded_paths)
           @_expanded_paths[path] = true
 
-    if @_items_needs_update.length != 0 and not non_optimized_updated
-      # if non_optimized_updated the internal strucutres got rebuilt already
-      # with all needed updates
+    if @_items_needs_update.length != 0
       for item in @_items_needs_update
         [item_id, fields] = item
 
@@ -332,7 +312,6 @@ _.extend GridData.prototype,
     @_new_items = []
     @_removed_items = []
     @_paths_needs_state_change = {}
-    @_filter_changed = false
 
     @_rebuildGridTree()
 
@@ -352,51 +331,6 @@ _.extend GridData.prototype,
 
         if parent_metadata.order? and _.isNumber parent_metadata.order
           @tree_structure[parent_id][parent_metadata.order] = item._id
-
-    if @_current_filter?
-      @_filterNodeItems @tree_structure[0]
-
-  _item_pass_filter: (item) ->
-    # item can be either string or object
-    # will be interepreted as item_id in case of string
-    if @_current_filter?
-      if _.isString(item)
-        item = @items_by_id[item]
-
-      field_val = item[@_current_filter.field]
-
-      if not field_val?
-        return false
-      
-      for valid_val in @_current_filter.values
-        if field_val is valid_val
-          return true
-
-      return false
-
-    # if no filter defined return true
-    return true
-
-  _filterNodeItems: (node) ->
-    # Recursively removes @tree_structure items that don't pass @_current_filter
-    # and don't have descendants that match the filter.
-    found_matching_descendant = false
-
-    for order, child_id of node
-      pass_filter = @_item_pass_filter child_id
-      if @tree_structure[child_id]?
-        # it won't exist if we filtered it already
-        descendant_pass_filter = @_filterNodeItems @tree_structure[child_id]
-      else
-        descendant_pass_filter = false
-
-      if pass_filter or descendant_pass_filter
-        found_matching_descendant = true
-      else
-        delete node[order]
-        delete @tree_structure[child_id]
-
-    return found_matching_descendant
 
   _getGridTreeSignature: -> (_.map @grid_tree, (item) -> item[2] + "." + item[3]).join("\n")
 
@@ -457,12 +391,6 @@ _.extend GridData.prototype,
     item = @collection.findOne(item_id)
 
     if old_item? and item?
-      # item_pass_filter = @_item_pass_filter item # check whether before update item passed the filter
-
-      # if @_item_pass_filter(@items_by_id[item_id]) != @_item_pass_filter(item)
-      #   # if filtering state of item changed - we must rebuild the tree (changes the tree structure)
-      #   non_optimized_update()
-      # else
       for field in fields
         @items_by_id[item_id][field] = item[field]
 
@@ -530,7 +458,6 @@ _.extend GridData.prototype,
 
   # ** Tree info **
   itemIdHasChildern: (item_id) ->
-    # size will be 0 if filter applied and as a result all childrens of node got filtered
     (item_id of @tree_structure) and (_.size(@tree_structure[item_id]) > 0)
 
   pathExist: (path) ->
@@ -601,65 +528,6 @@ _.extend GridData.prototype,
   getItemLevel: (id) -> @grid_tree[id][1]
 
   getLength: -> @grid_tree.length
-
-  # ** filters **
-  _filter: (field, values) ->
-    @_current_filter =
-      field: field
-      values: values
-
-    @_filter_changed = true
-
-    @_set_need_flush()
-
-  clearFilter: () ->
-    @_current_filter = null
-
-    @_filter_changed = true
-
-    @_set_need_flush()
-
-  filter: (filter) ->
-    # Filter presented tree items
-    #
-    # Item pass the filter if it or one of its descendants pass the the filter
-    # test.
-    #
-    # filter format: { field: { $in: [<value1>, <value2>, ... <valueN> ] } }
-    #
-    # Note:
-    #  * Only one field supported at the moment
-    #  * Value should be an exact match of one of the filters values
-
-    if filter? and _.isObject filter
-      fields = _.keys(filter)
-      if fields.length == 1
-        field = fields[0]
-        if field of @collection.simpleSchema()._schema
-          if filter[field].$in?
-            values = filter[field].$in
-            if _.isArray(values) and values.length > 0
-              @_filter(field, values)
-            else
-              @logger.error "$in parameter should be non-empty array"
-              throw new Meteor.Error "wrong-input", "$in parameter should be non-empty array"
-          else
-            @logger.error "No values specified for field"
-            throw new Meteor.Error "wrong-input", "No values specified for field"
-        else
-          @logger.error "Field `#{field}` doesn't exist"
-          throw new Meteor.Error "wrong-input", "Field `#{field}` doesn't exist"
-      else if fields.length > 1
-        @logger.error "At the moment, only single field filters are supported"
-        throw new Meteor.Error "wrong-input", "At the moment, only single field filters are supported"
-      else if fields.length == 0
-        @logger.error "No field provided for the filter"
-        throw new Meteor.Error "wrong-input", "No field provided for the filter"
-    else
-      @logger.error "filter is not an object"
-      throw new Meteor.Error "wrong-input", "filter is not an object"
-
-    return true
 
   # ** Search **
   search: (term, fields=null) ->
