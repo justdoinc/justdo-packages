@@ -137,13 +137,13 @@ _.extend GridControl.prototype,
                 if maintain_value?
                   @_grid.getCellEditor().setValue(maintain_value)
 
-          if not @_ready
-            @_ready = true
-            @emit "ready"
-
           # tree_change, full_invalidation=true
           @emit "rebuild_ready"
           @emit "tree_change", true
+
+          if not @_ready
+            @_ready = true
+            @emit "ready"
 
     @_grid_data.on "grid-item-changed", (row, fields) =>
       col_id_to_row = _.invert(_.map @_grid.getColumns(), (cell) -> cell.id)
