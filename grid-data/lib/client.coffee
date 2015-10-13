@@ -572,7 +572,10 @@ _.extend GridData.prototype,
     return paths
 
   # ** Tree view ops on paths **
-  getPathIsExpand: (path) -> helpers.normalizePath(path) of @_expanded_paths
+  getPathIsExpand: (path) ->
+    path = helpers.normalizePath(path)
+
+    path == "/" or path of @_expanded_paths
 
   expandPath: (path) ->
     path = helpers.normalizePath path
