@@ -3198,6 +3198,10 @@ if (typeof Slick === "undefined") {
       var firstFocusableCell = null;
       var dataLengthIncludingAddNew = getDataLengthIncludingAddNew();
       while (++row < dataLengthIncludingAddNew) {
+        if (!isRowVisible(row)) {
+          continue;
+        }
+
         firstFocusableCell = findFirstFocusableCell(row);
         if (firstFocusableCell !== null) {
           return {
@@ -3234,6 +3238,10 @@ if (typeof Slick === "undefined") {
           return null;
         }
 
+        if (!isRowVisible(row)) {
+          continue;
+        }
+
         cell = 0;
         lastSelectableCell = findLastFocusableCell(row);
         if (lastSelectableCell !== null) {
@@ -3245,6 +3253,19 @@ if (typeof Slick === "undefined") {
         }
       }
       return pos;
+    }
+
+    function isRowVisible(row) {
+      // Return false if row doesn't exist or not visible
+      if (typeof row === "undefined" || typeof rowsCache[row] === "undefined") {
+        return false;
+      }
+
+      if ($(rowsCache[row].rowNode).is(':visible')) {
+        return true;
+      }
+
+      return false;
     }
 
     function navigateRight() {
@@ -3335,6 +3356,12 @@ if (typeof Slick === "undefined") {
         return;
       }
 
+      if (!isRowVisible(row)) {
+        logger.debug("Can't activate cell of row " + row + "; row is hidden");
+
+        return;
+      }
+
       if (!options.enableCellNavigation) {
         return;
       }
@@ -3346,6 +3373,10 @@ if (typeof Slick === "undefined") {
     function canCellBeActive(row, cell) {
       if (!options.enableCellNavigation || row >= getDataLengthIncludingAddNew() ||
           row < 0 || cell >= columns.length || cell < 0) {
+        return false;
+      }
+
+      if (!isRowVisible(row)) {
         return false;
       }
 
