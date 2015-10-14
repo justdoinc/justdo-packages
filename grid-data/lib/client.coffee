@@ -178,21 +178,23 @@ _.extend GridData.prototype,
 
     edited_parents_of_new_items = {} # XXX
     if @_items_with_changed_parents.length != 0
-      #console.log "Parents changed"
+      # console.log "Parents changed", @_items_with_changed_parents
+
       intra_parent_order_change = {} # {parent_id: [[item_id, prev_order, new_order], [item_id, new_order]...]...}
       new_to_parent = {} # {parent_id: [[item_id, order], [item_id, order]...]...}
       removed_from_parent = {} # {parent_id: [[item_id, prev_order], [item_id, prev_order],...]}
       for item in @_items_with_changed_parents
         [item_id, new_parents_obj] = item
         prev_item_obj = @items_by_id[item_id]
-        prev_parents_obj = prev_item_obj.parents
 
         # If we don't know this item yet
         if not prev_item_obj?
           edited_parents_of_new_items[item_id] = new_parents_obj
           continue
         else
-          @items_by_id[item_id].parents = new_parents_obj 
+          prev_parents_obj = prev_item_obj.parents
+
+          @items_by_id[item_id].parents = new_parents_obj
 
         for parent_id, new_parent_data of new_parents_obj
           if parent_id of prev_parents_obj
