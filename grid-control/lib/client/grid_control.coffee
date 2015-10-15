@@ -316,6 +316,17 @@ _.extend GridControl.prototype,
           if def.grid_editable_column and not(def.grid_column_editor of PACK.Editors)
             err "Field `#{field_name}` use an unknown editor `#{def.grid_column_editor}`"
 
+      # Init grid_values
+      if def.grid_values?
+        if _.isFunction(def.grid_values)
+          def.grid_values = def.grid_values(@)
+        else
+          def.grid_values = _.extend({}, def.grid_values)
+
+        for option_id, option of def.grid_values
+          if not option.txt?
+            err "Each value of grid_values must have a txt property"
+
       schema[field_name] = def
 
     if not parents_found

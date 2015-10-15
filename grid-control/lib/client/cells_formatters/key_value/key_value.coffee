@@ -4,10 +4,13 @@ _.extend PACK.Formatters,
     if columnDef.values != null
       options = columnDef.values;
 
-      if _.isFunction options
-        options = options(@)
-
     if not value?
       value = ""
 
-    return if options[value]? then options[value] else value
+    if not options[value]?
+      return value
+
+    if options[value].html?
+      return options[value].html
+
+    return options[value].txt

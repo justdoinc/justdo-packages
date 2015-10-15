@@ -10,19 +10,22 @@ PACK.Editors.SelectorEditor = function (args) {
     this.init = function () {
       var self = this;
 
-      var value, label, options, output = "";
+      var value, label, options, option, output = "";
 
       if (args.column.values !== null) {
         options = args.column.values;
-        if (_.isFunction(options)) {
-          options = options(args.grid_control);
-        }
       } else {
         options = {};
       }
 
       for (value in options) {
-        label = options[value];
+        option = options[value];
+
+        if (typeof option.html !== "undefined") {
+          label = option.html;
+        } else {
+          label = option.txt;
+        }
 
         output += '<option value="' + value + '" data-content="' + label + '">' + label + '</option>';
       }
