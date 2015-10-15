@@ -3356,12 +3356,6 @@ if (typeof Slick === "undefined") {
         return;
       }
 
-      if (!isRowVisible(row)) {
-        logger.debug("Can't activate cell of row " + row + "; row is hidden");
-
-        return;
-      }
-
       if (!options.enableCellNavigation) {
         return;
       }
