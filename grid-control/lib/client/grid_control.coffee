@@ -505,9 +505,8 @@ _.extend GridControl.prototype,
       # Expand parent path, if it isn't
       if not @_grid_data.getPathIsExpand(path_parent)     
         @_grid_data.expandPath(path_parent)
-        @_grid_data._flush()
 
-        Meteor.defer =>
+        @once "rebuild_ready", =>
           # post slick grid rebuild
           row = @_grid_data.getItemRowByPath(path)
           
