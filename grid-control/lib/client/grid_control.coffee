@@ -421,6 +421,14 @@ _.extend GridControl.prototype,
       if column_def.grid_effects_metadata_rendering
         column.grid_effects_metadata_rendering = true
 
+      if field_def.grid_column_filter_settings?
+        column.filter_settings = field_def.grid_column_filter_settings
+
+        if column_def.filter?
+          column.filter_state = column_def.filter
+        else
+          column.filter_state = null
+
       columns.push column
 
     columns
@@ -436,6 +444,10 @@ _.extend GridControl.prototype,
         if field_def.grid_default_width?
           field_view.width = field_def.grid_default_width
 
+        # Uncomment for testing purpose to have filters active on load
+        # if field_def.grid_column_filter_settings?
+        #   field_view.filter = ["done"]
+
         view.push field_view
 
     return view
@@ -447,10 +459,16 @@ _.extend GridControl.prototype,
     if not @_initialized
       @_init_view = columns
     else
-      @_grid.setColumns columns
+      update_type = @_grid.setColumns columns
+
+      if not update_type? # null means nothing changed
+        return
 
       new_view = @getView()
-      @emit "columns-headers-dom-rebuilt", new_view
+
+      if update_type # true means dom rebuilt
+        @emit "columns-headers-dom-rebuilt", new_view
+
       @emit "grid-view-change", new_view
 
   getView: () ->
@@ -462,6 +480,7 @@ _.extend GridControl.prototype,
         return {
           field: column.field
           width: column.width
+          filter: column.filter_state
         }
 
       return false
@@ -517,6 +536,8 @@ _.extend GridControl.prototype,
         @activateRow(row)
     else
       @logger.error("Path `#{path}` doesn't exist")
+
+  resetActivePath: (path) -> @_grid.resetActiveCell()
 
   destroy: ->
     if @_destroyed

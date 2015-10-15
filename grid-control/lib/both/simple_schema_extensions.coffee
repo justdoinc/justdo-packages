@@ -136,3 +136,16 @@ SimpleSchema.extendOptions
   #
   # If relevant to the current field editor/formatter and is undefined considered as an empty object.
   grid_values: Match.Optional(Match.OneOf(Function, Object))
+
+  # grid_column_filter_settings:
+  #
+  # Enable filtering grid content based on this column.
+  #
+  # Format:
+  # {
+  #   type: "whitelist", # example of potential future types: threshold, range, etc...
+  #   options: {} # example of potential options: for the range type: min, max.
+  # }
+  #
+  # or undefined/null for no filter
+  grid_column_filter_settings: Match.Optional(Object)

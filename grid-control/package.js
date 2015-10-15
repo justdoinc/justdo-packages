@@ -45,7 +45,15 @@ Package.onUse(function (api) {
 
   // Plugins
   api.add_files('lib/client/plugins/init.coffee', client);
-  api.add_files('lib/client/plugins/grid_views/grid_views.coffee', client);
+  api.add_files('lib/client/plugins/grid_views/main.coffee', client);
+  api.add_files('lib/client/plugins/grid_views/filters/filters.coffee', client);
+  api.add_files('lib/client/plugins/grid_views/filters/filters.sass', client);
+  api.add_files('lib/client/plugins/grid_views/filters/filters_dom.coffee', client);
+  api.add_files('lib/client/plugins/grid_views/filters/filters_dom.sass', client);
+  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/whitelist.coffee', client);
+  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/whitelist.sass', client);
+  api.add_files('lib/client/plugins/grid_views/columns_reordering.coffee', client);
+  api.add_files('lib/client/plugins/grid_views/columns_context_menu.coffee', client);
 
   // jquery_events
   api.add_files('lib/client/jquery_events/init.coffee', client, {bare: true});

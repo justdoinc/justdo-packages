@@ -1222,19 +1222,56 @@ if (typeof Slick === "undefined") {
       }
     }
 
-    function setColumns(columnDefinitions) {
-      columns = columnDefinitions;
+    function setColumns(columns_definition) {
+      // Just to improve readability
+      // Returns
+      // null: nothing changed.
+      // true: header DOM had to be rebuilt
+      // false: No DOM change
+      var current_columns_definition = columns;
 
-      columnsById = {};
-      for (var i = 0; i < columns.length; i++) {
-        var m = columns[i] = $.extend({}, columnDefaults, columns[i]);
-        columnsById[m.id] = i;
+      // Apply defaults
+      for (var i = 0; i < columns_definition.length; i++) {
+        var m = columns_definition[i] = $.extend({}, columnDefaults, columns_definition[i]);
         if (m.minWidth && m.width < m.minWidth) {
           m.width = m.minWidth;
         }
         if (m.maxWidth && m.width > m.maxWidth) {
           m.width = m.maxWidth;
         }
+      }
+
+      // Check whether anything changed
+      if (JSON.sortify(current_columns_definition) == JSON.sortify(columns_definition)) {
+        logger.debug("setColumn: Nothing changed");
+
+        return null;
+      }
+
+      // Check whether only filters states changed
+      var current_ex_filters, new_ex_filters;
+      _.each(current_ex_filters = _.map(current_columns_definition, _.clone), function(col) {delete col.filter_state});
+      _.each(new_ex_filters = _.map(columns_definition, _.clone), function(col) {delete col.filter_state});
+
+      var only_filters_update = false;
+      if (JSON.sortify(current_ex_filters) == JSON.sortify(new_ex_filters)) {
+        logger.debug("setColumn: Only filters states changed");
+
+        only_filters_update = true;
+      }
+
+      // update columns
+      columns = columns_definition;
+
+      // Update columnsById
+      columnsById = {};
+      for (var i = 0; i < columns.length; i++) {
+        columnsById[columns[i].id] = i;
+      }
+
+      // No need to rerender the DOM if we are only updating the filters
+      if (only_filters_update) {
+        return false;
       }
 
       updateColumnCaches();
@@ -1248,6 +1285,8 @@ if (typeof Slick === "undefined") {
         applyColumnWidths();
         handleScroll();
       }
+
+      return true;
     }
 
     function getOptions() {
@@ -3678,6 +3717,7 @@ if (typeof Slick === "undefined") {
       "getHeaderRow": getHeaderRow,
       "getHeaderRowColumn": getHeaderRowColumn,
       "getGridPosition": getGridPosition,
+      "getRowJqueryObj": getRowJqueryObj,
       "flashCell": flashCell,
       "addCellCssStyles": addCellCssStyles,
       "setCellCssStyles": setCellCssStyles,

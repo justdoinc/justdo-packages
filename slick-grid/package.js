@@ -14,6 +14,7 @@ Package.onUse(function (api) {
   api.use('mizzao:jquery-ui', client);
   api.use('fourseven:scss@3.2.0', client);
   api.use('meteorspark:logger@0.3.0', both);
+  api.use('meteorspark:json-sortify@0.1.0', both);
   api.use('underscore', both);
 
   api.add_files('slick.grid.scss', client);

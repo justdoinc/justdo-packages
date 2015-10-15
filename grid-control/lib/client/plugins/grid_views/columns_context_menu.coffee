@@ -1,35 +1,5 @@
-_.extend PACK.Plugins,
-  grid_views:
-    init: ->
-      context.init({})
-
-      @_setupColumnsManagerContextMenu()
-
-      @on "columns-headers-dom-rebuilt", =>
-        @_setupColumnsManagerContextMenu()
-
-      # Implement columns reordering
-      header_columns_container = $('.slick-header-columns', @container)
-      header_columns_container.sortable
-        items: '> :not(:first,:nth-child(2))'
-        update: =>
-          view = @getView()
-
-          new_columns_order = []
-          $('> :not(:first)', header_columns_container).each (index, item) =>
-            new_columns_order.push $(item).data().column.field
-
-          new_view = _.map new_columns_order, (field) ->
-            for column_def in view
-              if column_def.field == field
-                return column_def
-
-          @setView(new_view)
-
-      @_grid.onColumnsResized.subscribe (e,args) =>
-        @emit "grid-view-change", @getView()
-
-    destroy: ->
+init_context_menu = _.once ->
+  context.init({})
 
 _.extend GridControl.prototype,
   _hideFieldColumn: (field) ->
@@ -39,6 +9,8 @@ _.extend GridControl.prototype,
     @setView(_.filter(@getView(), (col) -> col.field != field))
 
   _setupColumnsManagerContextMenu: () ->
+    init_context_menu()
+
     column_index_of_last_opened_cmenu = null # excludes the handle from the count
 
     # Disable cell handle context-menu
