@@ -316,9 +316,7 @@ _.extend GridData.prototype,
     @_paths_needs_state_change = {}
 
     @_rebuildGridTree()
-
-    # we use this even for unittesting
-    @emit "_flush"
+    @emit "flush"
 
   _initDataStructure: () ->
     @items_by_id = {}

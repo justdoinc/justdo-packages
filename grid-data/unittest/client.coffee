@@ -181,7 +181,7 @@ Tinytest.addAsync 'GridData - edit - flush called as expected, events emits as e
               if row == 9 and fields.length == 1 and fields[0] == "field_a"
                 expected_events_emitted_after_failure[4] = 1
 
-            gd.on "_flush", ->
+            gd.on "flush", ->
               for item in TestCol.find().fetch()
                 if isEditableId item._id
                   test.equal item.field_a, getNewFieldContent(item._id)
