@@ -61,7 +61,7 @@ _.extend GridDataCom.prototype,
 
     options = _.extend default_options, options
 
-    Meteor.publish options.name, () ->
+    Meteor.publish options.name, (subscription_options) ->
       # `this` is the Publication context, use self for GridData instance 
       if options.require_login
         if not @userId?
