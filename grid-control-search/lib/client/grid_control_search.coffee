@@ -1,9 +1,5 @@
 _ = lodash
 
-_.extend GridControl.prototype._init_hooks,
-  "grid-control-search": ->
-    new GridControlSearch @
-
 GridControlSearch = (grid_control) ->
   EventEmitter.call this
 

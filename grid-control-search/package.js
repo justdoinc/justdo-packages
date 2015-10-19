@@ -30,4 +30,6 @@ Package.onUse(function (api) {
   api.add_files('lib/client/media/clear_button.png', client);
   api.add_files('lib/client/media/next_result.png', client);
   api.add_files('lib/client/media/prev_result.png', client);
+
+  api.export('GridControlSearch');
 });
