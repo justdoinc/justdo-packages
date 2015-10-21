@@ -11,6 +11,7 @@ GridControl = (options, container, operations_container) ->
   @operations_container = $(operations_container)
 
   @_initialized = false
+  @_init_dfd = new $.Deferred() # resolved after init event emition; rejected if destroyed before init
   @_destroyed = false
   @_ready = false
 
@@ -200,6 +201,8 @@ _.extend GridControl.prototype,
       @logger.debug("Init hook `#{name}` called")
 
     @emit "init"
+
+    @_init_dfd.resolve()
 
   _error: (type, message) ->
     @logger.error(message)
@@ -543,6 +546,9 @@ _.extend GridControl.prototype,
     if @_destroyed
       return
     @_destroyed = true
+
+    # In case init_dfd isn't resolved already, reject it
+    @_init_dfd.reject()
 
     @_destroy_plugins()
     @_destroy_jquery_events()
