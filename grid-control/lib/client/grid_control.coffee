@@ -566,3 +566,5 @@ _.extend GridControl.prototype,
         op_controller.destroy()
 
     @emit "destroyed"
+
+    @logger.debug "Destroyed"
