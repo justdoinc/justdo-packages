@@ -30,6 +30,12 @@ GridControlSearch = (grid_control, container) ->
     @grid_control._grid_data.on "rebuild", =>
       @_search()
 
+    @grid_control._grid_data.on "filter-paths-cleared", =>
+      @_search()
+
+    @grid_control._grid_data.on "filter-paths-update", =>
+      @_search()
+
     @grid_control.on "grid-view-change", =>
       @_search()
 
@@ -112,7 +118,9 @@ _.extend GridControlSearch.prototype,
     fields = _.map @grid_control.getView(), (x) -> x.field
 
     if @current_term != ""
-      @paths = @grid_control._grid_data.search(new RegExp(@current_term), fields)
+      @logger.debug "Refresh search results"
+
+      @paths = @grid_control._grid_data.search(new RegExp(@current_term, "i"), fields, true)
 
       if @paths.length > 0
         @_setHaveResults(@paths)

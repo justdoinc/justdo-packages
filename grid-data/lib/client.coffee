@@ -758,7 +758,7 @@ _.extend GridData.prototype,
   getLength: -> @grid_tree.length
 
   # ** Search **
-  search: (term, fields=null) ->
+  search: (term, fields=null, exclude_filtered_paths=false) ->
     # term should be a regex
     # fields should be array of fields names or null.
     # If fields is null we'll look for term in all fields.
@@ -776,6 +776,11 @@ _.extend GridData.prototype,
       keys = _.keys(node).sort(numSort) # search in right order to have result paths array in right order
       for order in keys
         child_id = node[order]
+
+        if exclude_filtered_paths and @_filter_items_ids?
+          if not (child_id of @_filter_items_ids or @_hasPassingFilterDecendents(child_id))
+            continue
+
         child_path = "#{path}#{child_id}/"
         child = @items_by_id[child_id]
 
