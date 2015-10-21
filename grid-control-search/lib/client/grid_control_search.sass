@@ -1,90 +1,46 @@
-.search-box
-  width: 235px
-  height: 58px
-  background: url(/packages/stem-capital_grid-control-search/lib/client/media/search_ui_component.png)
-  background-size: 235px 58px
-  color: #999
-  display: none
-  z-index: 999
-  position: absolute
-  right: 20px
+.grid-control-search
+  .form-control
+    padding-left: 7px
 
-.search-info
-  position: relative
-  font-size: 15px
-  color: #777
-  top: 9px
-  left: 12px
+  input
+    width: 100%
+    outline: 0
+    border: 0 none
 
-.search-close
-  width: 18px
-  height: 18px
-  position: absolute
-  top: 10px
-  right: 0px
-  cursor: pointer
+  /* .input-group-btn This one is needed in order to override bootstrap rules that were set with 3 levels of classes */
+  .input-group-btn
+    .clear-button
+      position: absolute
+      left: -17px
 
-.search-form
-  position: relative
-  top: 6px
-  left: 15px
+      color: #CCC
+      text-decoration: none
+      background-color: transparent
+      box-shadow: none
+      display: none
 
-.search-input
-  font-size: 15px;
-  width: 122px
-  height: 24px
-  background: transparent
-  border: none
-  outline: none
-  color: #777
+      margin-right: 0
+      padding-top: 5px
+      padding-left: 1px
+      padding-right: 6px
 
-.clear-button
-  width: 13px
-  height: 13px
-  position: absolute
-  top: 7px
-  right: 95px
-  display: none
-  background: url(/packages/stem-capital_grid-control-search/lib/client/media/clear_button.png)
-  background-size: 13px 13px
-  cursor: pointer
+    .search-info-container
+      position: absolute
 
-.input-not-empty
-  .clear-button
-    display: block
+      background-color: transparent
+      box-shadow: none
 
-.search-prev
-  width: 29px
-  height: 26px
-  position: absolute
-  background-image: url(/packages/stem-capital_grid-control-search/lib/client/media/prev_result.png)
-  background-size: 29px 26px
-  top: 6px
-  right: 19px
-  cursor: pointer
-  display: none
+      padding-right: 0
+      padding-left: 0
 
-.search-next
-  width: 29px
-  height: 26px
-  position: absolute
-  background-image: url(/packages/stem-capital_grid-control-search/lib/client/media/next_result.png)
-  background-size: 29px 26px
-  top: 6px
-  right: 47px
-  cursor: pointer
-  display: none
+      cursor: default
 
-.results-found
-  .search-prev
-    display: block
+    .search-prev, .search-next
+      cursor: default
 
-  .search-next
-    display: block
+  .input-not-empty &
+    .clear-button
+      display: block
 
-.no-results-both
-  background-image: none
-  cursor: none
-
-.show
-  display: block
+    .form-control
+      padding-right: 22px
