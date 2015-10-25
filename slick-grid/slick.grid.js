@@ -3017,7 +3017,8 @@ if (typeof Slick === "undefined") {
       } else {
         var $row = getRowJqueryObj(row);
         if ($row === null) {
-          logger.warn("scrollRowIntoView: Unknown row: " + row)
+          logger.warn("scrollRowIntoView: Unknown row: " + row);
+          return;
         }
 
         var rowTop = getRowTopPosition(row);
