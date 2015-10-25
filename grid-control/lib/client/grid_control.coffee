@@ -95,56 +95,56 @@ _.extend GridControl.prototype,
         @_grid.resetActiveCell()
 
       @_grid_data.once "rebuild", (diff) =>
-        # post rebuild
-        Meteor.defer =>
-          # If first build, or if fixed row height is used, we can use @_grid.invalidate
-          if not(@options.allow_dynamic_row_height) or not(@_ready)
-            # Reload visible portion of the grid
-            @_grid.invalidate()
-          else
-            current_row_offset = 0
-            for change, i in diff
-              [type, removed, added] = change
+        # If first build, or if fixed row height is used, we can use @_grid.invalidate
+        if not(@options.allow_dynamic_row_height) or not(@_ready)
+          # Reload visible portion of the grid
+          @_grid.invalidate()
+        else
+          current_row_offset = 0
+          for change, i in diff
+            [type, removed, added] = change
 
-              if type == "same"
-                current_row_offset += change[1] # we don't use "removed" to avoid confusion
-              else
-                callUpdateRowCount = false
-                if i == diff.length - 1 or i == diff.length - 2
-                  # if this diff item is one before the last one, the next one
-                  # must be of type "same", therefore, we regard it as the last
-                  # update and callUpdateRowCount, read a comment in @_grid.spliceInvalidate
-                  # code for more details
-                  callUpdateRowCount = true
-
-                @_grid.spliceInvalidate(current_row_offset, removed, added, callUpdateRowCount)
-
-                current_row_offset += added
-
-          # Restore cell state
-          if active_cell_path?
-            new_row = @_grid_data.getItemRowByPath active_cell_path
-
-            if new_row == null
-              @_grid.resetActiveCell()
+            if type == "same"
+              current_row_offset += change[1] # we don't use "removed" to avoid confusion
             else
-              @_grid.setActiveCell(new_row, active_cell.cell)
+              callUpdateRowCount = false
+              if i == diff.length - 1 or i == diff.length - 2
+                # if this diff item is one before the last one, the next one
+                # must be of type "same", therefore, we regard it as the last
+                # update and callUpdateRowCount, read a comment in @_grid.spliceInvalidate
+                # code for more details
+                callUpdateRowCount = true
 
-              if cell_editor? or @editor_init_interrupted
-                @editor_init_interrupted = false
+              @_grid.spliceInvalidate(current_row_offset, removed, added, callUpdateRowCount)
 
-                @_grid.editActiveCell()
+              current_row_offset += added
 
-                if maintain_value?
-                  @_grid.getCellEditor().setValue(maintain_value)
+        # Restore cell state
+        if active_cell_path?
+          new_row = @_grid_data.getItemRowByPath active_cell_path
 
-          # tree_change, full_invalidation=true
-          @emit "rebuild_ready"
-          @emit "tree_change", true
+          if new_row == null
+            @_grid.resetActiveCell()
+          else
+            @_grid.setActiveCell(new_row, active_cell.cell)
 
-          if not @_ready
-            @_ready = true
-            @emit "ready"
+            if cell_editor? or @editor_init_interrupted
+              @editor_init_interrupted = false
+
+              @_grid.editActiveCell()
+
+              if maintain_value?
+                @_grid.getCellEditor().setValue(maintain_value)
+
+        # tree_change, full_invalidation=true
+        @logger.debug "Rebuild ready"
+        @emit "rebuild_ready"
+        @emit "tree_change", true
+
+        if not @_ready
+          @_ready = true
+          @logger.debug "Ready"
+          @emit "ready"
 
     @_grid_data.on "grid-item-changed", (row, fields) =>
       col_id_to_row = _.invert(_.map @_grid.getColumns(), (cell) -> cell.id)
