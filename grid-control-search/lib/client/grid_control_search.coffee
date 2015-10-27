@@ -27,13 +27,13 @@ GridControlSearch = (grid_control, container) ->
     @grid_control._grid_data.on "grid-item-changed", =>
       @_search()
 
-    @grid_control._grid_data.on "rebuild", =>
-      @_search()
-
     @grid_control._grid_data.on "filter-paths-cleared", =>
       @_search()
 
     @grid_control._grid_data.on "filter-paths-update", =>
+      @_search()
+
+    @grid_control.on "rebuild_ready", =>
       @_search()
 
     @grid_control.on "grid-view-change", =>
