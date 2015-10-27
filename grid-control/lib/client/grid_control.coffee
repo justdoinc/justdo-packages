@@ -92,6 +92,17 @@ _.extend GridControl.prototype,
         if cell_editor_value != @getCellStoredValue active_cell.row, active_cell.cell
           # keep current editor state if it's different from the stored value
           maintain_value = cell_editor_value
+
+      # Reset the active cell
+      #
+      # This is important since during the build and until we finish the post
+      # rebuild process below. The _grid_data.grid_tree will be in-consistent with
+      # the slick grid structure.
+      #
+      # One example of buggy behavior that can be resulted from that: attempts to
+      # get path for current active row using @_grid_data.getActiveCellPath
+      # will result in wrong output
+      if active_cell_path?
         @_grid.resetActiveCell()
 
       @_grid_data.once "rebuild", (diff) =>
