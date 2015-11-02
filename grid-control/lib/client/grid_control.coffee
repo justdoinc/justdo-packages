@@ -77,6 +77,35 @@ _.extend GridControl.prototype,
     @_init_jquery_events()
     @_init_operation_controllers()
 
+    # emit path-changed only as a result of a real change.
+    @current_path = @getActiveCellPath()
+    current_path_update_required = false
+    @_grid.onActiveCellChanged.subscribe =>
+      if not current_path_update_required
+        current_path_update_required = true
+
+        Meteor.defer =>
+          # In the next tick, check whether @current_path really changed.
+          # If it did, update @current_path and emit "path-changed"
+          # Note that this process is required since during the grid rebuild
+          # process we need to reset the active path and then set it in its
+          # new position in the single dimention grid.
+
+          current_path_update_required = false
+
+          new_path = @getActiveCellPath()
+          if new_path == @current_path
+            # Nothing changed
+            return 
+
+          @current_path = new_path
+
+          item_id = if @current_path? then GridData.helpers.getPathItemId(@current_path) else null
+
+          @logger.debug "Path changed", @current_path
+
+          @emit "path-changed", @current_path, item_id
+
     @_grid_data.on "pre_rebuild", =>
       # Keep information about active cell and whether or not in edit mode and
       # if yes editor value compared to stored value
