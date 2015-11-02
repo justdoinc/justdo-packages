@@ -149,3 +149,9 @@ SimpleSchema.extendOptions
   #
   # or undefined/null for no filter
   grid_column_filter_settings: Match.Optional(Object)
+
+  # grid_search_when_out_of_view
+  #
+  # If true, the default search behavior will look for results
+  # in this field even if it is not part of the current view
+  grid_search_when_out_of_view: Match.Optional(Boolean)

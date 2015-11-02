@@ -115,7 +115,14 @@ _.extend GridControlSearch.prototype,
 
   _search: () ->
     # actual search logic
-    fields = _.map @grid_control.getView(), (x) -> x.field
+    view_fields = _.map @grid_control.getView(), (x) -> x.field
+    forced_fields = _.map @grid_control.schema, (def, field) ->
+      if def.grid_search_when_out_of_view == true
+        return field
+
+      return false
+    forced_fields = _.filter forced_fields, (x) -> x != false
+    fields = _.union forced_fields, view_fields
 
     if @current_term != ""
       @logger.debug "Refresh search results"
