@@ -168,10 +168,11 @@ _.extend GridControl.prototype,
             element = details.element
 
             # If filter button hidden close dropdown
-            if (target.left + target.width >= window.innerWidth)
-              @_closeFiltersDropdown()
+            # XXX this calculation is wrong more work required in the future here
+            # if (target.left + target.width >= window.innerWidth)
+            #   @_closeFiltersDropdown()
 
-              return
+            #   return
 
             element.element.css
               top: new_position.top
