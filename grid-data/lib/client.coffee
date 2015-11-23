@@ -943,13 +943,19 @@ _.extend GridData.prototype,
     # of item meta data.
     # Important! must return an object, if no metadata for item,
     # return empty object.
+
+    # Returns true if cb added, false otherwise
     if _.isFunction cb
       if not(cb in @_metadataGenerators)
         @_metadataGenerators.push cb
+
+        return true
       else
         @logger.warn "registerMetadataGenerator provided an already registered generator"
     else
       @logger.warn "registerMetadataGenerator was called with no callback"
+
+    return false
 
   unregisterMetadataGenerator: (cb) ->
     @_metadataGenerators = _.without @_metadataGenerators, cb

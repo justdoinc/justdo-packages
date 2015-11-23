@@ -588,6 +588,18 @@ _.extend GridControl.prototype,
 
   resetActivePath: (path) -> @_grid.resetActiveCell()
 
+  registerMetadataGenerator: (cb) ->
+    @_init_dfd.done =>
+      # We need to wait for init to complete before we can call @_grid_data
+      if @_grid_data.registerMetadataGenerator(cb)
+        # if cb added successfully
+        @_grid.invalidate()
+
+  unregisterMetadataGenerator: (cb) ->
+    @_init_dfd.done =>
+      @_grid_data.unregisterMetadataGenerator(cb)
+      @_grid.invalidate()
+
   destroy: ->
     if @_destroyed
       return
