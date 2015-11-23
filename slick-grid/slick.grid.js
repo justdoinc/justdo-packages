@@ -1518,9 +1518,23 @@ if (typeof Slick === "undefined") {
         rowCss += " " + metadata.cssClasses;
       }
 
-      var rowStyle = "";
+      var rowStyle = [];
+
       if (!options.dynamicRowHeight) {
-        rowStyle += " style='top:" + getRowTop(row) + "px'";
+        rowStyle.push("top:" + getRowTop(row) + "px");
+      }
+
+      if (metadata && metadata.style) {
+        metadata_style = 
+          _.map(metadata.style, function(value, key) {return key + ": " + value;});
+
+        rowStyle = rowStyle.concat(metadata_style);
+      }
+
+      if (!_.isEmpty(rowStyle)) {
+        rowStyle = " style='" + rowStyle.join(";") + "'";
+      } else {
+        rowStyle = "";
       }
 
       stringArray.push("<div class='ui-widget-content " + rowCss + "'" + rowStyle + ">");
