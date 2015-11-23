@@ -327,7 +327,6 @@ _.extend GridControl.prototype,
           def.grid_column_formatter = null
           def.grid_column_editor = null
           def.grid_default_grid_view = false
-          def.grid_effects_metadata_rendering = false
         else
           # Set default formatter/editor according to field type
           if def.type is String
