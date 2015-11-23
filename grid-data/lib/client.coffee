@@ -919,7 +919,8 @@ _.extend GridData.prototype,
   getItemMetadata: (index) ->
     # Get the metadata from each one of the generators
     generators_metadata =
-      _.map @_metadataGenerators, (generator) -> generator(index)
+      _.map @_metadataGenerators, (generator) =>
+        generator(@grid_tree[index][0], @grid_tree[index], index)
 
     # Merge metadata, give recent registered generators priority
     if not _.isEmpty generators_metadata
@@ -938,11 +939,11 @@ _.extend GridData.prototype,
     return metadata
 
   registerMetadataGenerator: (cb) ->
-    # Register metadata function of the form cb(index), that will
-    # be called with the item index, and should return an object
+    # Register metadata function of the form cb(item, item_meta_details, index),
+    # that will be called with the item index, and should return an object
     # of item meta data.
-    # Important! must return an object, if no metadata for item,
-    # return empty object.
+    # Important! must return an object, if no metadata for item, return empty
+    # object.
 
     # Returns true if cb added, false otherwise
     if _.isFunction cb
