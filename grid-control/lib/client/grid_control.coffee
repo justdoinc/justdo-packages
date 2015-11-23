@@ -68,6 +68,13 @@ _.extend GridControl.prototype,
       slick_options.dynamicRowHeight = true
 
     @_grid_data = new GridData @collection
+
+    # proxy grid_data methods we want to be able to call from the
+    # grid control level
+    for method_name in PACK.grid_data_proxied_methods # defined in globals.js
+      do (method_name) =>
+        @[method_name] = -> @_grid_data[method_name].apply(@_grid_data, arguments)
+
     @_grid = new Slick.Grid @container, @_grid_data, columns, slick_options
 
     #@_grid.setSelectionModel(new Slick.RowSelectionModel())
