@@ -961,7 +961,14 @@ _.extend GridData.prototype,
   unregisterMetadataGenerator: (cb) ->
     @_metadataGenerators = _.without @_metadataGenerators, cb
 
-  # ** Misc. **
+  sortChildren: (path, field, ascDesc) ->
+    path = helpers.normalizePath(path)
+
+    Meteor.call @getCollectionMethodName("sortChildren"), path, field, ascDesc, (err) ->
+      if cb?
+        cb err
+
+# ** Misc. **
   getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
 
 # The communication layer between the server and the client

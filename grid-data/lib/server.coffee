@@ -1,6 +1,8 @@
 helpers = share.helpers
 exceptions = share.exceptions
 
+logger = Logger.get("grid-data")
+
 # The communication layer between the server and the client
 GridDataCom = (collection) ->
   EventEmitter.call this
@@ -233,7 +235,7 @@ _.extend GridDataCom.prototype,
     #
     #   etc.new_parent_item, the document of the new parent
 
-    methods_names = ["addChild", "addSibling", "removeParent", "movePath"]
+    methods_names = ["addChild", "addSibling", "removeParent", "movePath", "sortChildren"]
 
     if method_name not in methods_names
       throw new Meteor.Error("unknown-method-name", "Unknown method name: #{method_name}, use one of: #{methods_names.join(", ")}")
@@ -401,6 +403,30 @@ _.extend GridDataCom.prototype,
 
         # Add to new parent
         collection.update item._id, set_new_parent_update_op
+      else
+        throw exceptions.unkownPath()
+
+    methods[helpers.getCollectionMethodName(collection, "sortChildren")] = (path, field, sort_order) ->
+      if path == "/"
+        throw exceptions.cantPerformOnRoot()
+
+      if (parent = collection.getItemByPathIfUserBelong path, @userId)?
+        query = {}
+        query["parents.#{parent._id}"] = {$exists: true}
+
+        sort = {}
+        sort[field] = 1
+        if sort_order != 1
+          sort[field] = -1
+
+        order = 0
+        collection.find(query, {sort: sort}).forEach (child) ->
+          set = {$set: {}}
+          set.$set["parents.#{parent._id}.order"] = order
+          collection.update child._id, set, (err) ->
+            if err?
+              logger.error "sortChildren: failed to change item order #{JSON.stringify(err)}"
+          order += 1
       else
         throw exceptions.unkownPath()
 
