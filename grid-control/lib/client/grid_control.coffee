@@ -198,9 +198,9 @@ _.extend GridControl.prototype,
 
       for field in fields
         cell_id = parseInt(col_id_to_row[field], 10)
-        column_def = @_grid.getColumns()[cell_id]
 
-        if column_def? and column_def.grid_effects_metadata_rendering
+        field_def = @schema[field]
+        if field_def? and field_def.grid_effects_metadata_rendering
           @_grid.invalidateRow(row)
           @_grid.render()
 
