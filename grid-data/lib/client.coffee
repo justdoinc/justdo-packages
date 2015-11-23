@@ -31,6 +31,8 @@ GridData = (collection) ->
   # note if users changed the subscription should remove the doc if user lose access
   @_ignore_change_in_fields = ["users"]
 
+  @_metadataGenerators = []
+
   @logger = Logger.get("grid-data")
 
   @filter = new ReactiveVar(null, (a, b) -> JSON.sortify(a) == JSON.sortify(b))
@@ -913,6 +915,44 @@ _.extend GridData.prototype,
     Meteor.call @getCollectionMethodName("movePath"), path, new_location, (err) ->
       if cb?
         cb err
+
+  getItemMetadata: (index) ->
+    # Get the metadata from each one of the generators
+    generators_metadata =
+      _.map @_metadataGenerators, (generator) -> generator(index)
+
+    # Merge metadata, give recent registered generators priority
+    if not _.isEmpty generators_metadata
+      # the receiver obj, new one is required, since we do later deep merge of style
+      # (otherwise last one will become the first one)
+      generators_metadata.unshift {}
+      metadata = _.extend.apply(_, generators_metadata)
+
+    # the `style` metadata is the only case we do deep merge
+    styles = _.map generators_metadata, (metadata) -> metadata.style
+    styles = _.without styles, undefined
+    if not _.isEmpty styles
+      styles.unshift {} # receiver obj
+      metadata.style = _.extend.apply(_, styles)
+
+    return metadata
+
+  registerMetadataGenerator: (cb) ->
+    # Register metadata function of the form cb(index), that will
+    # be called with the item index, and should return an object
+    # of item meta data.
+    # Important! must return an object, if no metadata for item,
+    # return empty object.
+    if _.isFunction cb
+      if not(cb in @_metadataGenerators)
+        @_metadataGenerators.push cb
+      else
+        @logger.warn "registerMetadataGenerator provided an already registered generator"
+    else
+      @logger.warn "registerMetadataGenerator was called with no callback"
+
+  unregisterMetadataGenerator: (cb) ->
+    @_metadataGenerators = _.without @_metadataGenerators, cb
 
   # ** Misc. **
   getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
