@@ -929,12 +929,22 @@ _.extend GridData.prototype,
       generators_metadata.unshift {}
       metadata = _.extend.apply(_, generators_metadata)
 
-    # the `style` metadata is the only case we do deep merge
+    # deep merge the `style` metadata
     styles = _.map generators_metadata, (metadata) -> metadata.style
     styles = _.without styles, undefined
     if not _.isEmpty styles
       styles.unshift {} # receiver obj
       metadata.style = _.extend.apply(_, styles)
+    else
+      delete metadata.style
+
+    # union all `cssClasses` metadata
+    cssClasses = _.map generators_metadata, (metadata) -> metadata.cssClasses
+    cssClasses = _.without cssClasses, undefined
+    if not _.isEmpty cssClasses
+      metadata.cssClasses = _.union.apply(_, cssClasses)
+    else
+      delete metadata.cssClasses
 
     return metadata
 
