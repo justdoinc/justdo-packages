@@ -1,3 +1,5 @@
+row_filter_state_classes = ["f-passed", "f-leaf", "f-inner-node"]
+
 _.extend GridControl.prototype,
   _initFilters: ->
     @_filters_state = null
@@ -23,6 +25,19 @@ _.extend GridControl.prototype,
       if active_path?
         if not @_grid_data.pathPassFilter(active_path)
           @resetActivePath()
+
+    @registerMetadataGenerator (item, ext, index) =>
+      # Since we add and remove the filter related classes to the
+      # row elements without passing through slick.grid, in case
+      # of row invalidation, we need to let slick grid know the
+      # row classes according to their filtered state
+      filter_paths = @_grid_data.getFilterPaths()
+
+      if not filter_paths? or not filter_paths[index]?
+        # If no filter active filter
+        return {}
+
+      return {cssClasses: @_getFilterStateClasses(filter_paths[index])}
 
     waiting_rebuild = false
     filter_update_waiting = false
@@ -52,31 +67,18 @@ _.extend GridControl.prototype,
           $row = @_grid.getRowJqueryObj(item_id)
 
           if $row?
-            add_classes = ""
-            remove_classes = ""
+            filter_state_classes =
+              @_getFilterStateClasses(filter_state)
 
-            if filter_state == 2 or filter_state == 3
-              add_classes += "f-passed "
-            else
-              remove_classes += "f-passed "
+            non_filter_state_classes =
+              _.difference row_filter_state_classes, filter_state_classes 
 
-            if filter_state == 0
-              remove_classes += "f-leaf f-inner-node " 
+            if not _.isEmpty filter_state_classes
+              $row.addClass(filter_state_classes.join " ")
+            if not _.isEmpty non_filter_state_classes
+              $row.removeClass(non_filter_state_classes.join " ")
 
-            if filter_state == 1 or filter_state == 2
-              add_classes += "f-inner-node "
-              remove_classes += "f-leaf "
-
-            if filter_state == 3
-              add_classes += "f-leaf "
-              remove_classes += "f-inner-node "
-
-            if add_classes != ""
-              $row.addClass(add_classes)
-            if remove_classes != ""
-              $row.removeClass(remove_classes)
-
-          # console.log filter_state, item_id, $row
+          # console.log filter_state, item_id, filter_state_classes, non_filter_state_classes, $row
 
         @container.addClass("filter-active")
 
@@ -102,6 +104,20 @@ _.extend GridControl.prototype,
       update_filtered_paths()
 
     @_initFiltersDom() # Implemented in filters_dom.coffee
+
+  _getFilterStateClasses: (filter_state) ->
+    classes = []
+
+    if filter_state == 2 or filter_state == 3
+      classes.push "f-passed"
+
+    if filter_state == 1 or filter_state == 2
+      classes.push "f-inner-node"
+
+    if filter_state == 3
+      classes.push "f-leaf"
+
+    return classes
 
   forceItemsPassCurrentFilter: () ->
     # Items called as this method's args will pass the current filter
