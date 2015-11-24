@@ -1464,16 +1464,7 @@ if (typeof Slick === "undefined") {
     }
 
     function getFormatter(row, column) {
-      var rowMetadata = data.getItemMetadata && data.getItemMetadata(row);
-
-      // look up by id, then index
-      var columnOverrides = rowMetadata &&
-          rowMetadata.columns &&
-          (rowMetadata.columns[column.id] || rowMetadata.columns[getColumnIndex(column.id)]);
-
-      return (columnOverrides && columnOverrides.formatter) ||
-          (rowMetadata && rowMetadata.formatter) ||
-          column.formatter ||
+      return column.formatter ||
           (options.formatterFactory && options.formatterFactory.getFormatter(column)) ||
           options.defaultFormatter;
     }
