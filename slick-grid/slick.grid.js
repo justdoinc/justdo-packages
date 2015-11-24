@@ -1494,19 +1494,19 @@ if (typeof Slick === "undefined") {
     function appendRowHtml(stringArray, row, range, dataLength) {
       var d = getDataItem(row);
       var dataLoading = row < dataLength && !d;
-      var rowCss = "slick-row" +
+      var cssClasses = "slick-row" +
           (dataLoading ? " loading" : "") +
           (row === activeRow ? " active" : "") +
           (row % 2 == 1 ? " odd" : " even");
 
       if (!d) {
-        rowCss += " " + options.addNewRowCssClass;
+        cssClasses += " " + options.addNewRowCssClass;
       }
 
       var metadata = data.getItemMetadata && data.getItemMetadata(row);
 
       if (metadata && metadata.cssClasses) {
-        rowCss += " " + metadata.cssClasses;
+        cssClasses += " " + metadata.cssClasses.join(" ");
       }
 
       var rowStyle = [];
@@ -1528,7 +1528,7 @@ if (typeof Slick === "undefined") {
         rowStyle = "";
       }
 
-      stringArray.push("<div class='ui-widget-content " + rowCss + "'" + rowStyle + ">");
+      stringArray.push("<div class='ui-widget-content " + cssClasses + "'" + rowStyle + ">");
 
       var colspan, m;
       for (var i = 0, ii = columns.length; i < ii; i++) {
