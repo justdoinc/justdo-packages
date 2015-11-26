@@ -61,13 +61,13 @@ Package.onUse(function (api) {
   api.add_files('lib/client/jquery_events/activate_row_on_click_on_row_handle.coffee', client);
 
   // Formatters
-  api.add_files('lib/client/cells_formatters/tree_control_formatter.coffee', client, {bare: true});
+  api.add_files('lib/client/cells_formatters/tree_control_formatters.coffee', client, {bare: true});
   api.add_files('lib/client/cells_formatters/init.coffee', client, {bare: true});
-  api.add_files('lib/client/cells_formatters/default.coffee', client);
+  api.add_files('lib/client/cells_formatters/default/default.coffee', client);
   api.add_files('lib/client/cells_formatters/key_value/key_value.coffee', client);
   api.add_files('lib/client/cells_formatters/checkbox/checkbox.coffee', client);
   api.add_files('lib/client/cells_formatters/checkbox/checkbox-jquery_events.coffee', client);
-  api.add_files('lib/client/cells_formatters/unicode_date.coffee', client);
+  api.add_files('lib/client/cells_formatters/unicode_date/unicode_date.coffee', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls.sass', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls.coffee', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls_init.coffee', client);
