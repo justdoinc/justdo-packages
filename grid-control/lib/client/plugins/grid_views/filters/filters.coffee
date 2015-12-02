@@ -1,4 +1,4 @@
-row_filter_state_classes = ["f-passed", "f-leaf", "f-inner-node"]
+row_filter_state_classes = ["f-first", "f-last", "f-passed", "f-leaf", "f-inner-node"]
 
 _.extend GridControl.prototype,
   _initFilters: ->
@@ -107,6 +107,13 @@ _.extend GridControl.prototype,
 
   _getFilterStateClasses: (filter_state) ->
     classes = []
+
+    [filter_state, special_position] = filter_state
+
+    if special_position == 1 or special_position == 3
+      classes.push "f-first"
+    if special_position == 2 or special_position == 3
+      classes.push "f-last"
 
     if filter_state == 2 or filter_state == 3
       classes.push "f-passed"

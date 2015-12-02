@@ -63,6 +63,7 @@ Package.onUse(function (api) {
   // Formatters
   api.add_files('lib/client/cells_formatters/tree_control_formatters.coffee', client, {bare: true});
   api.add_files('lib/client/cells_formatters/init.coffee', client, {bare: true});
+  api.add_files('lib/client/cells_formatters/helpers.coffee', client);
   api.add_files('lib/client/cells_formatters/default/default.coffee', client);
   api.add_files('lib/client/cells_formatters/key_value/key_value.coffee', client);
   api.add_files('lib/client/cells_formatters/checkbox/checkbox.coffee', client);

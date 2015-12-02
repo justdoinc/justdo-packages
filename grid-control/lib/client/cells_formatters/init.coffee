@@ -1,5 +1,6 @@
 PACK.Formatters = {}
 PACK.FormattersInit = {}
+PACK.FormattersHelpers = {}
 
 _.extend GridControl.prototype,
   _formatters: null

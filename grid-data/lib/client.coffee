@@ -167,10 +167,19 @@ _.extend GridData.prototype,
         return
 
       # calculate filter paths
-      # 0: didn't pass filter
-      # 1: decendent pass filter, inner node in filtered tree
-      # 2: pass filter and decendent pass filter, inner node in filtered tree
-      # 3: pass filter, a leaf in the filtered tree
+      # [item_filter_state, special_position]
+      #
+      # item_filter_state:
+      #   0: didn't pass filter
+      #   1: decendent pass filter, inner node in filtered tree
+      #   2: pass filter and decendent pass filter, inner node in filtered tree
+      #   3: pass filter, a leaf in the filtered tree
+      #
+      # special_position
+      #   0: not special
+      #   1: first passing item
+      #   2: last passing item
+      #   3: only passing item
 
       @_filter_items_ids = {}
 
@@ -186,11 +195,13 @@ _.extend GridData.prototype,
         # inner_node is true when we find an inner node
         inner_node = false
         
+        last_visible_found = false
+        first_visible_index = null
         for i in [(@getLength() - 1)..0]
           [child, level, path, expand_state] = @grid_tree[i]
           item_id = child._id
 
-          @_filter_paths[i] = 0
+          @_filter_paths[i] = [0, 0]
 
           inner_node = false
           if parent_level?
@@ -216,16 +227,28 @@ _.extend GridData.prototype,
 
           if inner_node
             # at the minimum it's 1, might turn out to be 2 later
-            @_filter_paths[i] = 1
+            @_filter_paths[i][0] = 1
 
           if item_id of @_filter_items_ids
             if level > 0
               parent_level = level - 1
 
             if inner_node
-              @_filter_paths[i] = 2
+              @_filter_paths[i][0] = 2
             else
-              @_filter_paths[i] = 3
+              @_filter_paths[i][0] = 3
+
+          if @_filter_paths[i][0] > 0
+            first_visible_index = i
+            if not last_visible_found
+              @_filter_paths[i][1] = 2
+              last_visible_found = true
+
+        if first_visible_index?
+          if @_filter_paths[first_visible_index][1] == 2
+            @_filter_paths[first_visible_index][1] = 3
+          else
+            @_filter_paths[first_visible_index][1] = 1
 
       @emit "filter-paths-update"
 

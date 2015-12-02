@@ -1,16 +1,27 @@
+helpers = PACK.FormattersHelpers
+
 _.extend PACK.Formatters,
-  keyValueFormatter: (row, cell, value, columnDef, dataContext) ->
+  keyValueFormatter: (row, cell, key, columnDef, dataContext) ->
     options = {}
     if columnDef.values != null
-      options = columnDef.values;
+      options = columnDef.values
 
-    if not value?
-      value = ""
+    if not key?
+      key = ""
 
-    if not options[value]?
-      return value
+    value = ""
+    if not options[key]?
+      value = key
+    else if options[key].html?
+      value = options[key].html
+    else
+      value = options[key].txt
 
-    if options[value].html?
-      return options[value].html
+    # XXX IMPORTANT: No XSS protection, if values can be modified
+    # by user XSS protection must be added.
 
-    return options[value].txt
+    formatter = """
+      <div class="grid-formatter key-val-formatter">#{value}</div>
+    """
+
+    return formatter

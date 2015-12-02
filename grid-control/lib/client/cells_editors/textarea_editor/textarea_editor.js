@@ -8,15 +8,20 @@ PACK.Editors.TextareaEditor = function (args) {
   var grid_control = args.grid_control
 
   this.init = function () {
-    $input = $("<textarea class='textarea-editor' rows='1' />")
-        .appendTo(args.container)
-        .bind("keydown.nav", function (e) {
-          if (e.keyCode === $.ui.keyCode.LEFT || e.keyCode === $.ui.keyCode.RIGHT) {
-            e.stopImmediatePropagation();
-          }
-        })
-        .focus()
-        .select();
+    var $editor = $("<div class='grid-editor textarea-editor' />");
+
+    $input = $("<textarea class='textarea-editor' rows='1' />");
+
+    $editor
+      .html($input)
+      .appendTo(args.container);
+
+    $input
+      .bind("keydown.nav", function (e) {
+        if (e.keyCode === $.ui.keyCode.LEFT || e.keyCode === $.ui.keyCode.RIGHT) {
+          e.stopImmediatePropagation();
+        }
+      });
   };
 
   this.destroy = function () {
@@ -44,8 +49,11 @@ PACK.Editors.TextareaEditor = function (args) {
   this.loadValue = function (item) {
     defaultValue = item[args.column.field] || "";
     this.setInputValue(defaultValue);
+    $input
+      .val(defaultValue)
+      .focus();
+    $input[0].setSelectionRange(defaultValue.length, defaultValue.length);
     $input[0].defaultValue = defaultValue;
-    $input.select();
   };
 
   this.serializeValue = function () {

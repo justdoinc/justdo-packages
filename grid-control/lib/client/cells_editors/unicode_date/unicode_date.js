@@ -8,9 +8,13 @@ PACK.Editors.UnicodeDateEditor = function (args) {
   var calendarOpen = false;
 
   this.init = function () {
+    var $editor = $("<div class='grid-editor unicode-date-editor' />");
+
     $input = $("<INPUT type=text class='editor-unicode-date' />");
-    $input.appendTo(args.container);
-    $input.focus().select();
+    $editor
+      .html($input)
+      .appendTo(args.container);
+
     $input.datepicker({
       dateFormat: datepickerFormat,
       showOn: "button",
@@ -67,7 +71,9 @@ PACK.Editors.UnicodeDateEditor = function (args) {
   this.loadValue = function (item) {
     currentValue = item[args.column.field];
     $input.datepicker("setDate", currentValue);
-    $input.select();
+
+    $input.focus();
+    $input[0].setSelectionRange(10, 10);
   };
 
   this.serializeValue = function () {

@@ -8,25 +8,29 @@ PACK.Editors.TextareaWithTreeControlsEditor = function (args) {
   var grid_control = args.grid_control
 
   this.init = function () {
+    var tree_control =
+      grid_control._formatters.textWithTreeControls(active_cell.row, active_cell.cell, "");
+
+    var $tree_control = $(tree_control);
+
+    $tree_control
+      .removeClass("grid-formatter")
+      .addClass("grid-editor")
+      .find(".grid-tree-control-text")
+      .html("<textarea class='tree-control-textarea' rows='1' />");
+
+    $(args.container).html($tree_control);
+
     var tree_control = grid_control._formatters.textWithTreeControls(active_cell.row, active_cell.cell, "");
-    $(args.container).html(tree_control);
-    $(args.container).removeClass("editable");//.html(editor_html);
-    $input = $("<textarea class='textarea-with-tree-control' rows='1' />")
-        .appendTo(args.container)
+
+    $input = $tree_control.find(".tree-control-textarea");
+
+    $input
         .bind("keydown.nav", function (e) {
           if (e.keyCode === $.ui.keyCode.LEFT || e.keyCode === $.ui.keyCode.RIGHT) {
             e.stopImmediatePropagation();
           }
-        })
-        .focus()
-        .select();
-
-    var spacer_width = $(".grid-tree-control-spacer", args.container).width();
-    var toggle_width = $(".grid-tree-control-toggle", args.container).width();
-    var container_width = $(args.container).width();
-
-    // Set input_width
-    $input.width(container_width - spacer_width - toggle_width - 7);
+        });
   };
 
   this.destroy = function () {
@@ -54,8 +58,11 @@ PACK.Editors.TextareaWithTreeControlsEditor = function (args) {
   this.loadValue = function (item) {
     defaultValue = item[args.column.field] || "";
     this.setInputValue(defaultValue);
+    $input
+      .val(defaultValue)
+      .focus();
+    $input[0].setSelectionRange(defaultValue.length, defaultValue.length);
     $input[0].defaultValue = defaultValue;
-    $input.select();
   };
 
   this.serializeValue = function () {
