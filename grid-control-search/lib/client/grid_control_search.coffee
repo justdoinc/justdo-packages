@@ -140,7 +140,7 @@ _.extend GridControlSearch.prototype,
     @search_info.addClass('label-primary')
     @search_info.removeClass('label-warning')
     @loc_buttons.removeClass('disabled')
-    @_setMessage "<span class='location'></span>#{paths.length}"
+    @_setMessage "<span class='location'>#{paths.length}</span>"
     @_update_location()
 
   _unsetHaveResults: () ->
