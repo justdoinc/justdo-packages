@@ -21,20 +21,55 @@ _.extend PACK.Formatters,
     if @options.allow_dynamic_row_height
       value = helpers.nl2br value
 
-    horizontal_padding = 2
+    horizontal_padding = 4
+    toggle_margin_left = -2
+
     toggle_width = 20
     level_indent = 15
-    toggle_indentation = horizontal_padding + (level_indent * level)
-    text_indentation = toggle_indentation + toggle_width
-    # we need to horizonal padding only for the left property that ignore it (position: absolute)
-    text_indentation -= horizontal_padding
+    indentation_margin = (level_indent * level)
+    toggle_indentation = horizontal_padding + toggle_margin_left + indentation_margin
+    text_left_margin = indentation_margin + toggle_width + toggle_margin_left
+
+    getRandomArbitrary = (min, max) -> Math.floor(Math.random() * (max - min) + min)
+
+    index = null
+    if item.seqId?
+      index = item.seqId # Note we don't worry about reactivity -> seqId considered static.
+    # else
+    #   index = getRandomArbitrary(0, 10000)
+
+    if not index?
+      text_indent = 0
+    else
+      index_width_per_char = 8.2
+      index_chars = ("" + index).length
+      index_width = Math.ceil(index_chars * index_width_per_char)
+      index_horizontal_paddings = 6 * 2
+      # Note: index label is box-sizing: content-box
+      index_outer_width = index_width + index_horizontal_paddings
+      index_margin_right = 5
+      index_left = horizontal_padding + text_left_margin
+      text_indent = index_outer_width + index_margin_right
 
     tree_control = """
       <div class="grid-formatter text-tree-control">
         <div class="grid-tree-control-toggle #{state}"
               style="left: #{toggle_indentation}px;"></div>
+    """
+
+    if index?
+      tree_control += """
+          <span class="label label-primary task-id"
+                 style="left: #{index_left}px;
+                        width: #{index_width}px;">
+            #{index}
+          </span>
+      """
+
+    tree_control += """
         <div class="grid-tree-control-text"
-              style="margin-left: #{text_indentation}px;">#{value}</div>
+              style="margin-left: #{text_left_margin}px;
+                      text-indent: #{text_indent}px;">#{value}</div>
       </div>
     """
 

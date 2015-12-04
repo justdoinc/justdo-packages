@@ -1,3 +1,5 @@
+helpers = PACK.EditorsHelpers
+
 PACK.Editors.TextareaWithTreeControlsEditor = function (args) {
   var active_cell = args.grid.getActiveCell();
   
@@ -5,11 +7,8 @@ PACK.Editors.TextareaWithTreeControlsEditor = function (args) {
   var defaultValue;
   var scope = this;
 
-  var grid_control = args.grid_control
-
   this.init = function () {
-    var tree_control =
-      grid_control._formatters.textWithTreeControls(active_cell.row, active_cell.cell, "");
+    var tree_control = helpers.callFormatter("textWithTreeControls", args);
 
     var $tree_control = $(tree_control);
 
@@ -20,8 +19,6 @@ PACK.Editors.TextareaWithTreeControlsEditor = function (args) {
       .html("<textarea class='tree-control-textarea' rows='1' />");
 
     $(args.container).html($tree_control);
-
-    var tree_control = grid_control._formatters.textWithTreeControls(active_cell.row, active_cell.cell, "");
 
     $input = $tree_control.find(".tree-control-textarea");
 

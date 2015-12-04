@@ -1,4 +1,5 @@
 PACK.Editors = {}
+PACK.EditorsHelpers = {}
 #PACK.EditorsInit = {}
 
 _.extend GridControl.prototype,
