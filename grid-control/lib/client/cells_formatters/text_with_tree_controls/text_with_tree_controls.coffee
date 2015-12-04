@@ -42,7 +42,7 @@ _.extend PACK.Formatters,
       text_indent = 0
     else
       index_width_per_char = 8.2
-      index_chars = ("" + index).length
+      index_chars = Math.max(("" + index).length, 3) # minimum 3 to avoid too many indent differences
       index_width = Math.ceil(index_chars * index_width_per_char)
       index_horizontal_paddings = 6 * 2
       # Note: index label is box-sizing: content-box
