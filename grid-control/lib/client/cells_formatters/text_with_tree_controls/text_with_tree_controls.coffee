@@ -47,7 +47,7 @@ _.extend PACK.Formatters,
       index_horizontal_paddings = 6 * 2
       # Note: index label is box-sizing: content-box
       index_outer_width = index_width + index_horizontal_paddings
-      index_margin_right = 5
+      index_margin_right = 3
       index_left = horizontal_padding + text_left_margin
       text_indent = index_outer_width + index_margin_right
 
