@@ -1491,6 +1491,14 @@ if (typeof Slick === "undefined") {
       return item[columnDef.field];
     }
 
+    function getRowHtml(row) {
+      var output = [];
+
+      appendRowHtml(output, row, {leftPx: 0, rightPx: 99999}, getDataLength());
+
+      return output.join("");
+    }
+
     function appendRowHtml(stringArray, row, range, dataLength) {
       var d = getDataItem(row);
       var dataLoading = row < dataLength && !d;
@@ -3694,12 +3702,14 @@ if (typeof Slick === "undefined") {
       "updateRowCount": updateRowCount,
       "scrollRowIntoView": scrollRowIntoView,
       "scrollRowToTop": scrollRowToTop,
+      "getRowHtml": getRowHtml,
       "getRowTopPosition": getRowTopPosition,
       "scrollCellIntoView": scrollCellIntoView,
       "getCanvasNode": getCanvasNode,
       "focus": setFocus,
 
       "getCellFromPoint": getCellFromPoint,
+      "getRowFromNode": getRowFromNode,
       "getCellFromEvent": getCellFromEvent,
       "getActiveCell": getActiveCell,
       "setActiveCell": setActiveCell,
