@@ -24,7 +24,7 @@ GridData = (collection) ->
 
   @items_by_id = {}
   @tree_structure = {}
-  @grid_tree = [] # [[item, tree_level, parent_path], ...]
+  @grid_tree = [] # [[item, tree_level, path, expand_state], ...]
   @_items_ids_map_to_grid_tree_indices = {} # {item_id: [indices in @grid_tree]}
   @_expanded_paths = {} # if path is a key of @_expanded_paths it is expanded regardless of its value
 
