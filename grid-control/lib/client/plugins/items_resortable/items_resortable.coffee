@@ -8,7 +8,7 @@ _.extend PACK.Plugins,
         long_hover_threshold: 2 * 1000
 
       dragged_row_index = 0
-      dragged_row_grid_tree_item = null
+      dragged_row_extended_details = null
 
       sort_state = {}
       initSortState = -> _.extend sort_state,
@@ -105,7 +105,7 @@ _.extend PACK.Plugins,
         return ext
 
       @rows_sort_state_updated_event_handler = (ui, sort_state) =>
-        console.log "rows-sort-state-updated", ui, sort_state
+        # console.log "rows-sort-state-updated", ui, sort_state
 
         updatePlaceholderPosition = (parent, order, level) =>
           if placeholder_position.parent != parent or
@@ -149,67 +149,103 @@ _.extend PACK.Plugins,
         ext =
           prev: getRowExtendedDetails previous_item_index
           next: getRowExtendedDetails next_item_index
-          dragged: getRowExtendedDetails dragged_row_index
+          dragged: dragged_row_extended_details
 
         # Determine whether the previous or next item should be placeholder sibling
         determine_position_by_prev = null
         if sort_state.sort_direction == 0
+          # console.log "CASE 1: Sort direction: 0 (sort just began)"
           # If sort_direction == 0, sort had just began and the user hasn't
           # moved the placeholder yet.
-          if sort_state.mouse_vs_placeholder == 0
-            # As long as cursor doesn't touch prev/next item - keep item in
-            # its original place
-            return updatePlaceholderPosition(ext.dragged.parent, ext.dragged.order, ext.dragged.level)
+          if sort_state.mouse_vs_placeholder == 0 or
+                (not next_item_index? and sort_state.mouse_vs_placeholder == 1)
+            # If cursor doesn't touch prev/next item - or...
+            # If mouse is outside the place holder from the bottom, but there's
+            # no next item - keep item in its original place
+            # console.log "CASE 1.1: DETERMINE BY ORIGINAL STATE, due to cursor on placeholder or outside from bottom"
 
-          if not next_item_index? or sort_state.mouse_vs_placeholder == -1
-            # If there's no next item, or mouse on prev item
+            return updatePlaceholderPosition(ext.dragged.parent, ext.dragged.order, ext.dragged.level)
+          else if sort_state.mouse_vs_placeholder == -1
+            # If mouse on prev item
+            # console.log "CASE 1.2: ORIGINAL POSITION, MOUSE ON PREV ITEM - DETERMINE BY PREV"
+
             determine_position_by_prev = true
-          else # there's next item cursor is hovering on it (sort_state.mouse_vs_placeholder == 1)
+          else if sort_state.mouse_vs_placeholder == 1 # else if used for readability
+            # If mouse on next item. Note: we know for sure next item exist due to a check above.
+            # console.log "CASE 1.3: ORIGINAL POSITION, MOUSE ON PREV ITEM - DETERMINE BY PREV"
+
             determine_position_by_prev = false
         else if not next_item_index?
           # If no next item, previous determines
+          # console.log "CASE 2: No next item - determine by previous"
+
           determine_position_by_prev = true
         else if sort_state.sort_direction == 1
           # If placeholder is being moved downwards
+          # console.log "CASE 3: Placeholder moving down - next item exists"
 
           # Determine position based on previous item, unless cursor
           # placed on next item
-          determine_position_by_prev = true
-          if sort_state.mouse_vs_placeholder == 1
+          if sort_state.mouse_vs_placeholder != 1
+            # console.log "CASE 3.1: Mouse isn't on next - determine by previous"
+
+            determine_position_by_prev = true
+          else
+            # console.log "CASE 3.2: Mouse is on next - determine by next"
+
             determine_position_by_prev = false
         else if sort_state.sort_direction == -1
           # If placeholder is being moved upwards
+          # console.log "CASE 4: Placeholder moving up - next item exists"
 
           # Determine position based on next item, unless cursor
           # placed on prev item
-          determine_position_by_prev = false
-          if sort_state.mouse_vs_placeholder == -1
+          if sort_state.mouse_vs_placeholder != -1
+            # console.log "CASE 4.1: Mouse isn't on prev - determine by next"
+
+            determine_position_by_prev = false
+          else
+            # console.log "CASE 4.2: Mouse is on prev - determine by prev"
+
             determine_position_by_prev = true
 
+        parent = null
+        order = null
+        level = null
         if determine_position_by_prev
           # Determine placeholder position by previous parent
-          parent_by_previous = null
-          order_by_previous = null
-          level_by_previous = null
+
           if ext.prev.expand_state == 1
             # Expand state of 1, means previous item is a collapsed item
             # placeholder should be a child of that item -> hance level + 1
-            parent_by_previous = ext.prev.doc._id
-            order_by_previous = 0
-            level_by_previous = ext.prev.level + 1
+            parent = ext.prev.doc._id
+            order = 0
+            level = ext.prev.level + 1
           else
-            parent_by_previous = ext.prev.parent
-            order_by_previous = ext.prev.order + 1
-            level_by_previous = ext.prev.level
-
-          return updatePlaceholderPosition(parent_by_previous, order_by_previous, level_by_previous)
+            parent = ext.prev.parent
+            order = ext.prev.order + 1
+            level = ext.prev.level
         else
           # Determine placeholder position by next parent
-          parent_by_next = ext.next.doc._id
-          order_by_next = ext.next.order
-          level_by_next = ext.next.level
+          parent = ext.next.parent
+          order = ext.next.order
+          level = ext.next.level
 
-          return updatePlaceholderPosition(parent_by_next, order_by_next, level_by_next)
+          # Note! new order must be equal to next item and not (next item -1).
+          # Equal order means we push all elements starting from next by 1 and
+          # placing placeholder where next was, -1 will put placeholder before
+          # previous item.
+
+        # Special case: if new position is equal to current dragged item with
+        # new order == previous order + 1: use previous order. As both will
+        # lead to the same result but the other option will cause redundant
+        # update in the server.
+        if parent == ext.dragged.parent and
+            order == ext.dragged.order + 1
+          console.log "HAPPENED"
+          order = ext.dragged.order
+
+        return updatePlaceholderPosition parent, order, level
 
       @on "rows-sort-state-updated", @rows_sort_state_updated_event_handler
 
@@ -257,7 +293,7 @@ _.extend PACK.Plugins,
           initPlaceholderPosition()
 
           dragged_row_index = ui.item.index()
-          dragged_row_grid_tree_item = @_grid_data.grid_tree[dragged_row_index]
+          dragged_row_extended_details = getRowExtendedDetails dragged_row_index
 
           # Update the placeholder -> we are required to do it also here
           # (and not just in placeholder element code below) due to a
@@ -297,9 +333,20 @@ _.extend PACK.Plugins,
             mouse_vs_placeholder: mouse_vs_placeholder
 
         stop: (event, ui) =>
+          if dragged_row_extended_details.parent != placeholder_position.parent or
+                dragged_row_extended_details.order != placeholder_position.order
+
+            # If position changed
+            dragged_row_path = dragged_row_extended_details.path
+
+            new_position = _.extend {}, placeholder_position
+            delete new_position.level
+
+            @_grid_data.movePath dragged_row_path, new_position
+
           @clearLongHoverMonitorInterval()
           # clear reference to grid item to let gc get rid of it if needed.
-          dragged_row_grid_tree_item = null
+          dragged_row_extended_details = null
 
     destroy: ->
       @rows_sort_placeholder_position_updated 
