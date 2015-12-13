@@ -25,6 +25,15 @@ _.extend PACK.Plugins,
         level: null
 
       #
+      # Sortable helper
+      #
+      sortable = =>
+        # Returns jQuery ui sortable method for grid-canvas
+        $obj = $(".grid-canvas", @container)
+
+        return $obj.sortable.apply $obj, arguments 
+
+      #
       # Manage sort_state
       #
       updateSortState = (new_state) =>
@@ -62,7 +71,7 @@ _.extend PACK.Plugins,
           # Return here if nothing changed to avoid emitting the event
           return
 
-        ui = $(".grid-canvas", @container).sortable("instance")
+        ui = sortable("instance")
         @emit "rows-sort-state-updated", ui, sort_state
 
       longHoverMonitor = =>
@@ -242,7 +251,6 @@ _.extend PACK.Plugins,
         # update in the server.
         if parent == ext.dragged.parent and
             order == ext.dragged.order + 1
-          console.log "HAPPENED"
           order = ext.dragged.order
 
         return updatePlaceholderPosition parent, order, level
@@ -283,7 +291,7 @@ _.extend PACK.Plugins,
       #
       # Sortable
       #
-      $(".grid-canvas", @container).sortable
+      sortable
         handle: ".cell-handle"
         cursor: "move"
         axis: "y"
@@ -294,6 +302,30 @@ _.extend PACK.Plugins,
 
           dragged_row_index = ui.item.index()
           dragged_row_extended_details = getRowExtendedDetails dragged_row_index
+
+          # If dragging an expanded item - collapse it
+          if dragged_row_extended_details.expand_state == 1
+            @_grid_data.collapsePath dragged_row_extended_details.path
+            @_grid_data._flush() # Flush to collapse immediately and have
+                                 # the expanded state item replaced with the
+                                 # collapsed state one - which will be used
+                                 # as sortable's active and helper item
+                                 # instead of the original one.
+
+            # Once grid_control finish updating dom with collapsed state
+            # The original item is removed and the collapsed state item is
+            # created instead of it.
+            $dragged_row = @_grid.getRowJqueryObj(dragged_row_index)
+
+            # Trick jQuery ui to regard the collapsed state item
+            # as both the originaly dragged item and the helper.
+            $dragged_row.addClass("ui-sortable-helper")
+            sortable("instance").currentItem = $dragged_row
+            sortable("instance").helper = $dragged_row
+
+            # refresh sortable
+            sortable("refresh")
+            sortable("refreshPositions")
 
           # Update the placeholder -> we are required to do it also here
           # (and not just in placeholder element code below) due to a
@@ -342,6 +374,7 @@ _.extend PACK.Plugins,
             new_position = _.extend {}, placeholder_position
             delete new_position.level
 
+
             @_grid_data.movePath dragged_row_path, new_position
 
           @clearLongHoverMonitorInterval()
@@ -358,5 +391,5 @@ _.extend PACK.Plugins,
 
       @clearLongHoverMonitorInterval()
 
-      if $(".grid-canvas", @container).sortable("instance")?
-        $(".grid-canvas", @container).sortable("destroy")
+      if sortable("instance")?
+        sortable("destroy")
