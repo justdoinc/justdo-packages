@@ -297,6 +297,11 @@ _.extend PACK.Plugins,
         axis: "y"
         distance: 5
         start: (e, ui) =>
+          # Don't allow grid data updates while sorting to avoid getting
+          # dragged item, its information, and actual DOM element to
+          # get out of-sync with the grid.
+          @_grid_data._lock_flush()
+
           initSortState()
           initPlaceholderPosition()
 
@@ -374,8 +379,14 @@ _.extend PACK.Plugins,
             new_position = _.extend {}, placeholder_position
             delete new_position.level
 
-
-            @_grid_data.movePath dragged_row_path, new_position
+            # Disable sortable while waiting for server until we update the tree
+            # to its new structure.
+            sortable("disable")
+            @_grid_data.movePath dragged_row_path, new_position, (err) =>
+              # Release flush and flush right-away before re-enabling sortable
+              @_grid_data._release_flush()
+              @_grid_data._flush()
+              sortable("enable")
 
           @clearLongHoverMonitorInterval()
           # clear reference to grid item to let gc get rid of it if needed.
