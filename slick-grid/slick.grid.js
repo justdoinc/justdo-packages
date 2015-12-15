@@ -1494,12 +1494,22 @@ if (typeof Slick === "undefined") {
     function getRowHtml(row) {
       var output = [];
 
-      appendRowHtml(output, row, {leftPx: 0, rightPx: 99999}, getDataLength());
+      appendRowHtml(output, row, {leftPx: 0, rightPx: 99999}, getDataLength(), /* fake = */true);
 
       return output.join("");
     }
 
-    function appendRowHtml(stringArray, row, range, dataLength) {
+    function appendRowHtml(stringArray, row, range, dataLength, fake/* = false*/) {
+      if (typeof fake === "undefined") {
+        // If fake is true we assume the rendered data is not going
+        // to serve as a real row, therefore we don't edit rowsCache
+        // which should keep cache only on real, regular rows.
+        //
+        // One use case for fake rows is placeholder generation when
+        // sorting rows with jQueryUI's Sortable.
+        fake = false;
+      }
+
       var d = getDataItem(row);
       var dataLoading = row < dataLength && !d;
       var cssClasses = "slick-row" +
@@ -1557,7 +1567,7 @@ if (typeof Slick === "undefined") {
             break;
           }
 
-          appendCellHtml(stringArray, row, i, colspan, d);
+          appendCellHtml(stringArray, row, i, colspan, d, fake);
         }
 
         if (colspan > 1) {
@@ -1568,7 +1578,12 @@ if (typeof Slick === "undefined") {
       stringArray.push("</div>");
     }
 
-    function appendCellHtml(stringArray, row, cell, colspan, item) {
+    function appendCellHtml(stringArray, row, cell, colspan, item, fake/* = false*/) {
+      if (typeof fake === "undefined") {
+        // Read comment about cache in appendRowHtml()
+        fake = false;
+      }
+
       var m = columns[cell];
       var cellCss = "slick-cell l" + cell + " r" + Math.min(columns.length - 1, cell + colspan - 1) +
           (m.cssClass ? " " + m.cssClass : "");
@@ -1593,8 +1608,10 @@ if (typeof Slick === "undefined") {
 
       stringArray.push("</div>");
 
-      rowsCache[row].cellRenderQueue.push(cell);
-      rowsCache[row].cellColSpans[cell] = colspan;
+      if (fake === false) {
+        rowsCache[row].cellRenderQueue.push(cell);
+        rowsCache[row].cellColSpans[cell] = colspan;
+      }
     }
 
 
