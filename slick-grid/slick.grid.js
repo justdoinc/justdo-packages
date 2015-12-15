@@ -2100,7 +2100,7 @@ if (typeof Slick === "undefined") {
         cacheEntry = rowsCache[processedRow];
         var columnIdx;
         while ((columnIdx = cacheEntry.cellRenderQueue.pop()) != null) {
-          node = x.lastChild;
+          node = x.firstChild;
           cacheEntry.rowNode.appendChild(node);
           cacheEntry.cellNodesByColumnIdx[columnIdx] = node;
         }
