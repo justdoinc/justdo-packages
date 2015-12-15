@@ -270,14 +270,41 @@ _.extend PACK.Plugins,
       #
       # Placeholder html generators
       #
-      getCustomLevelRowHtml = (row_id, level) =>
-        # A hack to force the rendering of row_id in a specific level
+      manipulatedGridRender = (customizations, renderOp) =>
+        # Perform render operations specified in the renderOp
+        # function where the grid data is manipulated according
+        # to customizations object
+
+        # Once renderOp is done running, remove all data
+        # customizations.
+
+        # Reutrns renderOp output
+
         realGetItemLevel = @_grid_data.getItemLevel
-        @_grid_data.getItemLevel = -> level
-        html = @_grid.getRowHtml(row_id)
+
+        # Apply customizations
+
+        # Manipulated levels
+        if customizations.items_levels?
+          @_grid_data.getItemLevel = (index) -> customizations.items_levels[index]
+
+        # call renderOp
+        output = renderOp()
+
+        # Bring back original methods
         @_grid_data.getItemLevel = realGetItemLevel
 
-        return html
+        return output
+
+      getCustomLevelRowHtml = (row_id, level) =>
+        data_customizations =
+          items_levels: {}
+        data_customizations.items_levels[row_id] = level
+
+        row_html = manipulatedGridRender data_customizations, =>
+          @_grid.getRowHtml(row_id)
+
+        return row_html
 
       getDraggedRowHtml = (force_level) =>
         if force_level?
@@ -287,6 +314,25 @@ _.extend PACK.Plugins,
 
       setPlaceholderHtml = (ui, force_level) =>
         ui.placeholder.html(getDraggedRowHtml(force_level))
+
+      forceCustomLevelRowCellsInvalidation = (row_id, level) =>
+        console.log "Here"
+        data_customizations =
+          items_levels: {}
+        data_customizations.items_levels[row_id] = level
+
+        manipulatedGridRender data_customizations, =>
+          @_grid.cleanUpAndRenderCells
+            top: row_id
+            bottom: row_id
+            leftPx: 0
+            rightPx: -1
+
+          @_grid.cleanUpAndRenderCells
+            top: row_id
+            bottom: row_id
+            leftPx: 0
+            rightPx: 99999
 
       #
       # Sortable
@@ -372,8 +418,12 @@ _.extend PACK.Plugins,
         stop: (event, ui) =>
           if dragged_row_extended_details.parent != placeholder_position.parent or
                 dragged_row_extended_details.order != placeholder_position.order
-
             # If position changed
+
+            # Render the original dragged item dom so its rendered level will be
+            # the new level
+            forceCustomLevelRowCellsInvalidation(dragged_row_index, placeholder_position.level)
+
             dragged_row_path = dragged_row_extended_details.path
 
             new_position = _.extend {}, placeholder_position

@@ -2097,6 +2097,7 @@ if (typeof Slick === "undefined") {
       var processedRow;
       var node;
       while ((processedRow = processedRows.pop()) != null) {
+        // TODO Why doesn't use ensureCellNodesInRowsCache(row);
         cacheEntry = rowsCache[processedRow];
         var columnIdx;
         while ((columnIdx = cacheEntry.cellRenderQueue.pop()) != null) {
@@ -3706,6 +3707,7 @@ if (typeof Slick === "undefined") {
       "getContainerNode": getContainerNode,
 
       "render": render,
+      "cleanUpAndRenderCells": cleanUpAndRenderCells,
       "invalidate": invalidate,
       "invalidateRow": invalidateRow,
       "invalidateRows": invalidateRows,
