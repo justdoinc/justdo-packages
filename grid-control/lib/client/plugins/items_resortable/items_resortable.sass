@@ -1,3 +1,11 @@
 .grid-canvas
+  &.ui-sortable
+    .cell-handle
+      cursor: grab
+
+    &.ui-sortable-disabled
+      .cell-handle
+        cursor: wait
+
   .ui-sortable-helper
     display: none !important

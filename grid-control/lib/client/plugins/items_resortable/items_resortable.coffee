@@ -339,7 +339,7 @@ _.extend PACK.Plugins,
       #
       sortable
         handle: ".cell-handle"
-        cursor: "move"
+        cursor: "grabbing"
         axis: "y"
         distance: 5
         start: (e, ui) =>
