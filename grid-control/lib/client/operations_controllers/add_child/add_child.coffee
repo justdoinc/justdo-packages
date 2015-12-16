@@ -33,6 +33,8 @@ _.extend AddChild.prototype,
       @_container.attr "disabled", true
 
   _operation: ->
+    # XXX This code needs update, use flush instead of waiting to rebuild
+    # See the way the justdo app add child operation button is implemented
     if not(@_container.prop "disabled")
       @_grid_control._grid_data.addChild @_grid_control.getActiveCellPath(), {}, (err, child_id, child_path) =>
         @_grid_control.once "rebuild_ready", =>
