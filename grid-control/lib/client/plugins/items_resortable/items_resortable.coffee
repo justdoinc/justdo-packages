@@ -1,3 +1,12 @@
+#
+# Sortable helper
+#
+sortable = =>
+  # Returns jQuery ui sortable method for grid-canvas
+  $obj = $(".grid-canvas", @container)
+
+  return $obj.sortable.apply $obj, arguments 
+
 _.extend PACK.Plugins,
   items_resortable:
     init: ->
@@ -23,15 +32,6 @@ _.extend PACK.Plugins,
         parent: null
         order: null
         level: null
-
-      #
-      # Sortable helper
-      #
-      sortable = =>
-        # Returns jQuery ui sortable method for grid-canvas
-        $obj = $(".grid-canvas", @container)
-
-        return $obj.sortable.apply $obj, arguments 
 
       #
       # Manage sort_state
