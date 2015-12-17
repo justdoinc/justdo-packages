@@ -96,5 +96,9 @@ PACK.Editors.SelectorEditor = function (args) {
       };
     };
 
+    this.getValue = function () {
+      return this.serializeValue();
+    };
+
     this.init();
 };
