@@ -9,19 +9,35 @@ GridData = (collection) ->
   @_initialized = false
   @_destroyed = false
 
+  #
+  # Flush managemnt
+  #
+
   @_items_tracker = null
   @_flush_orchestrator = null
   @_need_flush = new ReactiveVar(0)
 
-  @_items_needs_update = [] # an array of array of the form: [item_id, [list of changed fields]]
-  @_items_with_changed_parents = []
-  @_new_items = []
-  @_removed_items = []
-  @_paths_needs_state_change = {} # keys holds the paths which their collapse/expand state needs to be toggled false value will collapse the path true value will expand it
+  #
+  # Flush queues/flags
+  #
+
+  # @_data_changes_queue stores the data changes that will be applied in the
+  # next flush.
+  # Items are in the form: ["type", update]
+  @_data_changes_queue = [] 
+
+  # @_structure_changes_queue stores the tree structure changes that will be applied in the
+  # next flush (such as expand/collapse path).
+  # Items are in the form: ["type", update]
+  @_structure_changes_queue = []
+
   # @_filter_paths_needs_update will set to true if tree structure changed or @_filter_items changed
   # will trigger recalc of @_filter_path at the end of the flush or at the end of tree rebuild (whichever comes first)
   @_filter_paths_needs_update = false
 
+  #
+  # Grid representation
+  #
   @items_by_id = {}
   @tree_structure = {}
   @grid_tree = [] # [[item, tree_level, path, expand_state], ...]
@@ -308,19 +324,23 @@ _.extend GridData.prototype,
       # build grid tree for first time
       tracker_init = true
       @_items_tracker = @collection.find().observeChanges
-        added: (id, fields) =>
+        added: (id, doc) =>
+          # @logger.debug "Tracker: Item added #{id}"
+
           if not tracker_init
-            fields._id = id
-            @_new_items.push [id, fields]
+            doc._id = id
+            @_data_changes_queue.push ["add", [id, doc]]
 
             @_set_need_flush()
 
         changed: (id, fields_changes) =>
+          # @logger.debug "Tracker: Item changed #{id}"
+
           fields = _.difference(_.keys(fields_changes), @_ignore_change_in_fields) # remove ignored fields
 
           # Take care of parents changes
           if "parents" in fields
-            @_items_with_changed_parents.push [id, fields_changes.parents]
+            @_data_changes_queue.push ["parent_update", [id, fields_changes.parents]]
 
             @_set_need_flush()
 
@@ -335,20 +355,14 @@ _.extend GridData.prototype,
               @_updateRowFields(id, fields)
             else
               # If item is not in the internal data structure, we can't tell why, have to wait for flush
-              @_items_needs_update.push [id, fields]
+              @_data_changes_queue.push ["update", [id, fields]]
+
               @_set_need_flush()
 
         removed: (id) =>
-          # Check if id added during current flush cycle, if so remove it from
-          # @_new_items and don't add to @_removed_items
-          for item, i in @_new_items
-            if item[0] == id
-              # remove from @_new_items
-              @_new_items.splice(i, 1)
+          # @logger.debug "Tracker: Item removed #{id}"
 
-              return
-          
-          @_removed_items.push id
+          @_data_changes_queue.push ["remove", [id]]
 
           @_set_need_flush()
 
@@ -369,172 +383,199 @@ _.extend GridData.prototype,
           Tracker.nonreactive =>
             @_flush()
 
-  _flush: () ->
-    # perform pending required updates to the internal data structures
+  _structure_changes_handlers:
+    expand_path: (path) ->
+      rebuild_tree = false
 
-    rebuild_tree = false
+      if not(path of @_expanded_paths)
+        @_expanded_paths[path] = true
 
-    edited_parents_of_new_items = {} # XXX
-    if @_items_with_changed_parents.length != 0
-      # console.log "Parents changed", @_items_with_changed_parents
+        rebuild_tree = true
+
+        @_filter_paths_needs_update = true
+
+      return rebuild_tree
+
+    collapse_path: (path) ->
+      rebuild_tree = false
 
       @_filter_paths_needs_update = true
+
+      if path of @_expanded_paths
+        delete @_expanded_paths[path]
+
+        rebuild_tree = true
+
+        @_filter_paths_needs_update = true
+
+      return rebuild_tree
+
+  _data_changes_handlers:
+    add: (id, doc) ->
+      # console.log "add", id, doc
+
+      # Rebuild tree always required after adding a new item
       rebuild_tree = true
 
-      intra_parent_order_change = {} # {parent_id: [[item_id, prev_order, new_order], [item_id, new_order]...]...}
-      new_to_parent = {} # {parent_id: [[item_id, order], [item_id, order]...]...}
-      removed_from_parent = {} # {parent_id: [[item_id, prev_order], [item_id, prev_order],...]}
-      for item in @_items_with_changed_parents
-        [item_id, new_parents_obj] = item
-        prev_item_obj = @items_by_id[item_id]
+      # Filters needs to be updated after adding a new item
+      @_filter_paths_needs_update = true
 
-        # If we don't know this item yet
-        if not prev_item_obj?
-          edited_parents_of_new_items[item_id] = new_parents_obj
-          continue
-        else
-          prev_parents_obj = prev_item_obj.parents
+      # Update @items_by_id
+      @items_by_id[id] = doc
 
-          @items_by_id[item_id].parents = new_parents_obj
+      # Update tree structure
+      for parent_id, parent_metadata of doc.parents
+        if not @tree_structure[parent_id]?
+          @tree_structure[parent_id] = {}
+        @tree_structure[parent_id][parent_metadata.order] = id
 
-        for parent_id, new_parent_data of new_parents_obj
-          if parent_id of prev_parents_obj
-            # existed already under this parent
-            if new_parent_data.order == prev_parents_obj[parent_id].order
-              # No changes to this parent
-              continue
-            else
-              # intra-parent order change
-              if not intra_parent_order_change[parent_id]?
-                intra_parent_order_change[parent_id] = []
-              intra_parent_order_change[parent_id].push [item_id, prev_parents_obj[parent_id].order, new_parent_data.order]
+      return rebuild_tree
+
+    update: (id, fields) ->
+      # console.log "update", id, fields
+
+      rebuild_tree = false
+
+      @_updateRowFields(id, fields)
+
+      return rebuild_tree
+
+    remove: (id) ->
+      # console.log "remove", id
+
+      # Rebuild tree always required after removing an item
+      rebuild_tree = true
+
+      # Note: no need for filter udpate.
+
+      # Update @items_by_id
+      item_obj = @items_by_id[id]
+
+      delete @items_by_id[id]
+
+      # Remove from tree_structure
+      delete @tree_structure[id]
+
+      # Remove from tree structure any pointer to item
+      for parent_id, parent_metadata of item_obj.parents
+        # Make sure parent still exist
+        if @tree_structure[parent_id]?
+          # Make sure still pointing to item
+          if @tree_structure[parent_id][parent_metadata.order] == id
+            delete @tree_structure[parent_id][parent_metadata.order]
+
+          if _.isEmpty @tree_structure[parent_id]
+            delete @tree_structure[parent_id]
+
+      return rebuild_tree
+
+    parent_update: (item_id, new_parents_field) ->
+      # console.log "parent_update", item_id, new_parents_field
+
+      rebuild_tree = false
+
+      # XXX Is there any situation in which we won't find the item?
+      prev_item_obj = @items_by_id[item_id]
+      prev_parents_obj = prev_item_obj.parents
+
+      # Update parents
+      @items_by_id[item_id].parents = new_parents_field
+
+      for parent_id, new_parent_data of new_parents_field
+        new_order = new_parent_data.order
+        if parent_id of prev_parents_obj
+          prev_order = prev_parents_obj[parent_id].order
+          # existed already under this parent
+          if new_order == prev_order
+            # console.log "Case 1 - item haven't moved" 
+            # No changes to this parent
+            continue
           else
-            # new to this parent
-            if not new_to_parent[parent_id]?
-              new_to_parent[parent_id] = []
-            new_to_parent[parent_id].push [item_id, new_parent_data.order]
+            # Intra parent order change - update tree structure
+            # console.log "Case 2 - Intra parent order change", item_id, parent_id, prev_order, new_order
 
-        for parent_id, prev_parent_obj of prev_parents_obj
-          if not(parent_id of new_parents_obj)
-            # removed item
-            if not removed_from_parent[parent_id]?
-              removed_from_parent[parent_id] = []
-            removed_from_parent[parent_id].push [item_id, prev_parent_obj.order]
+            rebuild_tree = true
 
+            @tree_structure[parent_id][new_order] = item_id
+            # XXX Is it possible that the following won't be true?
+            if @tree_structure[parent_id][prev_order] == item_id
+              delete @tree_structure[parent_id][prev_order]
+        else
+          # New parent - update tree structure
+          # console.log "Case 3 - New parent", item_id, parent_id
 
-      # console.log "INTRA PARENT ORDER CHANGE", intra_parent_order_change
-      # console.log "NEW TO PARENT", new_to_parent
-      # console.log "REMOVED FROM PARENT", removed_from_parent
-      for parent_id, changed_children_order of intra_parent_order_change
-        for child_new_order in changed_children_order
-          [child_id, prev_order, new_order] = child_new_order
+          rebuild_tree = true
 
-          # Update tree structure
-          @tree_structure[parent_id][new_order] = child_id
-
-          # If still attached to old order under @tree_structure delete it (during the update it might no longer be true in some circumctences)
-          if @tree_structure[parent_id][prev_order] == child_id
-            delete @tree_structure[parent_id][prev_order]
-
-      for parent_id, new_children of new_to_parent
-        for new_child in new_children
-          [child_id, order] = new_child
-
-          # Update tree structure
           if not @tree_structure[parent_id]?
             @tree_structure[parent_id] = {}
-          @tree_structure[parent_id][order] = child_id
+          @tree_structure[parent_id][new_order] = item_id
 
-      for parent_id, removed_children of removed_from_parent
-        for removed_child in removed_children
-          [child_id, prev_order] = removed_child
+      for parent_id, prev_parent_obj of prev_parents_obj
+        prev_order = prev_parent_obj.order
+
+        if not(parent_id of new_parents_field)
+          # Removed from parent - update tree structure
+          # console.log "Case 4 - Remove parent", item_id, parent_id
+
+          rebuild_tree = true
 
           # Update tree structure
           # Make sure no other item moved to removed position already
-          if @tree_structure[parent_id][prev_order] == child_id
+          # XXX can this situation happen?
+          if @tree_structure[parent_id][prev_order] == item_id
             delete @tree_structure[parent_id][prev_order]
 
-          if _.size(@tree_structure[parent_id]) == 0
+          if _.isEmpty @tree_structure[parent_id]
             delete @tree_structure[parent_id]
 
-    if @_removed_items.length != 0
-      # console.log "Removed Item", @_removed_items
+      return rebuild_tree
 
-      @_filter_paths_needs_update = true
-      rebuild_tree = true
+  _flush: () ->
+    # Perform pending updates to the internal data structures
 
-      for item_id in @_removed_items
-        # Update @items_by_id
-        item_obj = @items_by_id[item_id]
+    # XXX Implement tree_structure_only argument
+    # If tree_structure_only is true we will skip the updates listed in
+    # @_data_changes_queue, setNeedFlush 
 
-        delete @items_by_id[item_id]
+    @logger.debug "Flush: start"
 
-        # Remove from tree_structure
-        delete @tree_structure[item_id]
+    rebuild_tree = false
 
-        # Remove from tree structure any pointer to item
-        for parent_id, parent_metadata of item_obj.parents
-          # Make sure parent still exist
-          if @tree_structure[parent_id]?
-            # Make sure still pointing to item
-            if @tree_structure[parent_id][parent_metadata.order] == item_id
-              delete @tree_structure[parent_id][parent_metadata.order]
-    
-    if @_new_items.length != 0
-      # console.log "New Items", @_new_items
+    # Preform all required structure changes, structure changes funcs return true
+    # if tree rebuild is required.
+    for change in @_structure_changes_queue
+      @logger.debug "Flush: process structure changes"
+      [type, args] = change
+      @logger.debug "Flush: Process #{type}: #{JSON.stringify args}"
+      require_tree_rebuild = @_structure_changes_handlers[type].apply @, args
+      rebuild_tree = rebuild_tree || require_tree_rebuild
+      @logger.debug "Flush: process structure changes - done; rebuild_tree = #{rebuild_tree}"
 
-      @_filter_paths_needs_update = true
-      rebuild_tree = true
-
-      # for item in @_new_items
-      for item in @_new_items
-        [item_id, item_obj] = item
-
-        # If parents object changed during this flush
-        if edited_parents_of_new_items[item_id]?
-          item_obj.parents = edited_parents_of_new_items[item_id]
-
-        # Update @items_by_id
-        @items_by_id[item_id] = item_obj
-
-        # Update tree structure
-        for parent_id, parent_metadata of item_obj.parents
-          if not @tree_structure[parent_id]?
-            @tree_structure[parent_id] = {}
-          @tree_structure[parent_id][parent_metadata.order] = item_id
-
-    if not(_.isEmpty(@_paths_needs_state_change))
-      # console.log "Paths needs state change", @_paths_needs_state_change
-      @_filter_paths_needs_update = true
-      rebuild_tree = true
-
-      for path, new_state of @_paths_needs_state_change
-        if new_state == false and path of @_expanded_paths
-          delete @_expanded_paths[path]
-
-        if new_state == true and not(path of @_expanded_paths)
-          @_expanded_paths[path] = true
-
-    if @_items_needs_update.length != 0
-      for item in @_items_needs_update
-        [item_id, fields] = item
-
-        @_updateRowFields(item_id, fields)
+    # Preform all required data changes, data changes funcs return true
+    # if tree rebuild is required.
+    for change in @_data_changes_queue
+      @logger.debug "Flush: process data changes"
+      [type, args] = change
+      @logger.debug "Flush: Process #{type}: #{JSON.stringify args}"
+      require_tree_rebuild = @_data_changes_handlers[type].apply @, args
+      rebuild_tree = rebuild_tree || require_tree_rebuild
+      @logger.debug "Flush: process data changes - done; rebuild_tree = #{rebuild_tree}"
 
     if rebuild_tree
+      @logger.debug "Flush: rebuild tree"
       @_rebuildGridTree()
 
     # Note: @_update_filter_paths() is also called in @_rebuildGridTree()
     # we do it since we want the filter to be ready when rebuild event is
     # emitted called. (@_update_filter_paths use the @_filter_paths_needs_update
     # to operate only when needed).
+    #
+    # XXX so why not put else after the above if?
     @_update_filter_paths()
 
-    @_items_needs_update = []
-    @_items_with_changed_parents = []
-    @_new_items = []
-    @_removed_items = []
-    @_paths_needs_state_change = {}
+    @_data_changes_queue = []
+    @_structure_changes_queue = []
+
     # @_filter_paths_needs_update = false - @_update_filter_paths() takes care of managing this flag
 
     @emit "flush"
@@ -844,14 +885,14 @@ _.extend GridData.prototype,
 
     for ancestor_path in helpers.getAllAncestorPaths(path)
       if not(@getPathIsExpand(ancestor_path)) and @pathExpandable(ancestor_path)
-        @_paths_needs_state_change[ancestor_path] = true
+        @_structure_changes_queue.push ["expand_path", [ancestor_path]]
         @_set_need_flush()
 
   collapsePath: (path) ->
     path = helpers.normalizePath(path)
 
     if @getPathIsExpand(path)
-      @_paths_needs_state_change[path] = false
+      @_structure_changes_queue.push ["collapse_path", [path]]
       @_set_need_flush()
 
   # ** Tree view ops on items **
@@ -881,7 +922,8 @@ _.extend GridData.prototype,
     update["$set"][col_field] = item[col_field]
 
     edit_failed = (err) =>
-      @_items_needs_update.push [item_id, [col_field]]
+      @_data_changes_queue.push ["update", [item_id, [col_field]]]
+
       @_set_need_flush()
 
       @emit "edit-failed", err
