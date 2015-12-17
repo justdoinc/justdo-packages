@@ -2006,7 +2006,9 @@ if (typeof Slick === "undefined") {
         var colspan = cacheEntry.cellColSpans[i];
         if (columnPosLeft[i] > range.rightPx ||
           columnPosRight[Math.min(columns.length - 1, i + colspan - 1)] < range.leftPx) {
-          if (!(row == activeRow && i == activeCell)) {
+          if (options.dynamicRowHeight) {
+            cellsToRemove.push(i);
+          } else if (!(row == activeRow && i == activeCell)) {
             cellsToRemove.push(i);
           }
         }
