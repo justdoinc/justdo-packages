@@ -342,6 +342,14 @@ _.extend PACK.Plugins,
         cursor: "grabbing"
         axis: "y"
         distance: 5
+
+        beforeStart: (e, ui) =>
+          # Attempt to commit current active editor changes if false is
+          # returned (op failed), prevent sorting.
+          can_start = @saveAndExitActiveEditor()
+
+          return can_start
+
         start: (e, ui) =>
           # Don't allow grid data updates while sorting to avoid getting
           # dragged item, its information, and actual DOM element to

@@ -20,7 +20,7 @@ PACK.jquery_events.push(
            (e.currentTarget == $('.tree-control-input', @container).get(0)) or
            (e.currentTarget == $('.tree-control-textarea', @container).get(0)) or
            (e.currentTarget == $('.textarea-editor', @container).get(0))
-            @_grid.getEditorLock().commitCurrentEdit()
+            @saveAndExitActiveEditor()
 
         # Destroy selector editor only if blur isn't a result of expanding options
         if (e.currentTarget == $('div.selector-editor', @container).get(0))
@@ -36,7 +36,7 @@ PACK.jquery_events.push(
                # out of the grid control) and the datepicker isn't visible (the
                # blur wasn't a result of opening the date picker) and we aren't
                # focused (no reason to close) commit changes and exit editor 
-              @_grid.getEditorLock().commitCurrentEdit()
+              @saveAndExitActiveEditor()
           , 250
 
         # Destroy date editor only if blur isn't a result of opening the datepicker
@@ -53,7 +53,7 @@ PACK.jquery_events.push(
                # out of the grid control) and the datepicker isn't visible (the
                # blur wasn't a result of opening the date picker) and we aren't
                # focused (no reason to close) commit changes and exit editor 
-              @_grid.getEditorLock().commitCurrentEdit()
+              @saveAndExitActiveEditor()
           , 250
   }
 )

@@ -600,6 +600,29 @@ _.extend GridControl.prototype,
       @_grid_data.unregisterMetadataGenerator(cb)
       @_grid.invalidate()
 
+  #
+  # Operations on active editor
+  #
+  saveAndExitActiveEditor: ->
+    # Save current active editor and exit edit-mode
+    # Does nothing if there's no active editor.
+
+    # Returns true if commit succeed, false otherwise
+    # (in the case of invalid content, for example).
+    # If there is no active editor will return true.
+
+    # If false returned - the editor is still active
+    # and operations should continue accordingly. 
+    return @_grid.getEditorLock().commitCurrentEdit()
+
+  cancelAndExitActiveEditor: ->
+    # Cancel current active editor and exit edit-mode
+    # Does nothing if there's no active editor
+
+    # Returns true always
+
+    return @_grid.getEditorLock().cancelCurrentEdit()
+
   destroy: ->
     if @_destroyed
       return
