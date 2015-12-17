@@ -344,6 +344,11 @@ _.extend PACK.Plugins,
         distance: 5
 
         beforeStart: (e, ui) =>
+          # Note: Must find dragged_row_index beforeStart and not in start
+          # since the placeholder method will be called before start (!)
+          dragged_row_index = ui.item.index()
+          dragged_row_extended_details = getRowExtendedDetails dragged_row_index
+
           # Attempt to commit current active editor changes if false is
           # returned (op failed), prevent sorting.
           can_start = @saveAndExitActiveEditor()
@@ -358,9 +363,6 @@ _.extend PACK.Plugins,
 
           initSortState()
           initPlaceholderPosition()
-
-          dragged_row_index = ui.item.index()
-          dragged_row_extended_details = getRowExtendedDetails dragged_row_index
 
           # If dragging an expanded item - collapse it
           if dragged_row_extended_details.expand_state == 1
