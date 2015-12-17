@@ -17,6 +17,7 @@ Package.onUse(function (api) {
   api.use('meteor', both);
 
   api.use('twbs:bootstrap@3.3.5', both);
+  api.use('mizzao:jquery-ui@1.11.4', both);
   api.use('stemcapital:bootstrap3-select@1.1.0', both);
 
   api.use('aldeed:simple-schema@1.3.1', both);
