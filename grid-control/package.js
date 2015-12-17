@@ -46,9 +46,9 @@ Package.onUse(function (api) {
 
   // Plugins
   api.add_files('lib/client/plugins/init.coffee', client);
-  api.add_files('lib/client/plugins/items_resortable/items_resortable.sass', client);
-  api.add_files('lib/client/plugins/items_resortable/sortable_ext.coffee', client);
-  api.add_files('lib/client/plugins/items_resortable/items_resortable.coffee', client);
+  api.add_files('lib/client/plugins/items_sortable/items_sortable.sass', client);
+  api.add_files('lib/client/plugins/items_sortable/sortable_ext.coffee', client);
+  api.add_files('lib/client/plugins/items_sortable/items_sortable.coffee', client);
   api.add_files('lib/client/plugins/grid_views/main.coffee', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters.coffee', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters.sass', client);
