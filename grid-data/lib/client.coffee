@@ -544,22 +544,22 @@ _.extend GridData.prototype,
     # Preform all required structure changes, structure changes funcs return true
     # if tree rebuild is required.
     for change in @_structure_changes_queue
-      @logger.debug "Flush: process structure changes"
+      # @logger.debug "Flush: process structure changes"
       [type, args] = change
-      @logger.debug "Flush: Process #{type}: #{JSON.stringify args}"
+      # @logger.debug "Flush: Process #{type}: #{JSON.stringify args}"
       require_tree_rebuild = @_structure_changes_handlers[type].apply @, args
       rebuild_tree = rebuild_tree || require_tree_rebuild
-      @logger.debug "Flush: process structure changes - done; rebuild_tree = #{rebuild_tree}"
+      # @logger.debug "Flush: process structure changes - done; rebuild_tree = #{rebuild_tree}"
 
     # Preform all required data changes, data changes funcs return true
     # if tree rebuild is required.
     for change in @_data_changes_queue
-      @logger.debug "Flush: process data changes"
+      # @logger.debug "Flush: process data changes"
       [type, args] = change
-      @logger.debug "Flush: Process #{type}: #{JSON.stringify args}"
+      # @logger.debug "Flush: Process #{type}: #{JSON.stringify args}"
       require_tree_rebuild = @_data_changes_handlers[type].apply @, args
       rebuild_tree = rebuild_tree || require_tree_rebuild
-      @logger.debug "Flush: process data changes - done; rebuild_tree = #{rebuild_tree}"
+      # @logger.debug "Flush: process data changes - done; rebuild_tree = #{rebuild_tree}"
 
     if rebuild_tree
       @logger.debug "Flush: rebuild tree"
@@ -578,6 +578,7 @@ _.extend GridData.prototype,
 
     # @_filter_paths_needs_update = false - @_update_filter_paths() takes care of managing this flag
 
+    @logger.debug "Flush: done"
     @emit "flush"
 
   _initDataStructure: () ->
