@@ -264,7 +264,6 @@ _.extend PACK.Plugins,
         # Update placeholder html with its current position level
         setPlaceholderHtml(ui, placeholder_position.level)
 
-        console.log "PLACEHOLDER POSITION CHANGED", placeholder_position
       @on "rows-sort-placeholder-position-updated", @rows_sort_placeholder_position_updated
 
       #
