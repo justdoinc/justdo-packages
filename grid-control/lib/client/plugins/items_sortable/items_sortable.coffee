@@ -296,6 +296,8 @@ _.extend PACK.Plugins,
 
         return output
 
+      getDraggedRowJqueryObj = => @_grid.getRowJqueryObj dragged_row_index
+
       getCustomLevelRowHtml = (row_id, level) =>
         data_customizations =
           items_levels: {}
@@ -316,7 +318,6 @@ _.extend PACK.Plugins,
         ui.placeholder.html(getDraggedRowHtml(force_level))
 
       forceCustomLevelRowCellsInvalidation = (row_id, level) =>
-        console.log "Here"
         data_customizations =
           items_levels: {}
         data_customizations.items_levels[row_id] = level
@@ -333,6 +334,18 @@ _.extend PACK.Plugins,
             bottom: row_id
             leftPx: 0
             rightPx: 99999
+
+      disableDraggedRowEditing = =>
+        getDraggedRowJqueryObj().addClass("slick-edit-disabled")
+
+      enableDraggedRowEditing = =>
+        getDraggedRowJqueryObj().removeClass("slick-edit-disabled")
+
+      markDraggedRowWaitingForServer = =>
+        getDraggedRowJqueryObj().addClass("sortable-waiting-server")
+
+      unmarkDraggedRowWaitingForServer = =>
+        getDraggedRowJqueryObj().removeClass("sortable-waiting-server")
 
       #
       # Sortable
@@ -434,6 +447,8 @@ _.extend PACK.Plugins,
             # the new level
             forceCustomLevelRowCellsInvalidation(dragged_row_index, placeholder_position.level)
 
+            disableDraggedRowEditing()
+
             dragged_row_path = dragged_row_extended_details.path
 
             new_position = _.extend {}, placeholder_position
@@ -441,8 +456,14 @@ _.extend PACK.Plugins,
 
             # Disable sortable while waiting for server until we update the tree
             # to its new structure.
+            markDraggedRowWaitingForServer()
             sortable("disable")
             @_grid_data.movePath dragged_row_path, new_position, (err) =>
+              # XXX flush won't replace original row if the actual position hasn't
+              # changed
+              unmarkDraggedRowWaitingForServer()
+              enableDraggedRowEditing()
+
               # Release flush and flush right-away before re-enabling sortable
               @_grid_data._release_flush()
               @_grid_data._flush()
