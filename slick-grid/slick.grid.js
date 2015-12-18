@@ -2860,6 +2860,12 @@ if (typeof Slick === "undefined") {
         return;
       }
 
+      if ($(activeCellNode).closest(".slick-edit-disabled").length > 0) {
+        logger.debug("Edit blocked: node or ancestor has the .slick-edit-disabled class");
+
+        return;
+      }
+
       var columnDef = columns[activeCell];
       var item = getDataItem(activeRow);
 
