@@ -2099,14 +2099,20 @@ if (typeof Slick === "undefined") {
       var processedRow;
       var node;
       while ((processedRow = processedRows.pop()) != null) {
-        // TODO Why doesn't use ensureCellNodesInRowsCache(row);
-        cacheEntry = rowsCache[processedRow];
-        var columnIdx;
-        while ((columnIdx = cacheEntry.cellRenderQueue.pop()) != null) {
+        // Note we don't use ensureCellNodesInRowsCache(row);
+        // since it relies on the cells order to be the natural order
+        // (in a non multi line grid, it isn't necessery true after
+        // the row creation)
+
+        var colIndex, i, len, ref;
+        ref = cacheEntry.cellRenderQueue;
+        for (i = 0, len = ref.length; i < len; i++) {
+          colIndex = ref[i];
           node = x.firstChild;
           cacheEntry.rowNode.appendChild(node);
-          cacheEntry.cellNodesByColumnIdx[columnIdx] = node;
+          cacheEntry.cellNodesByColumnIdx[colIndex] = node;
         }
+        cacheEntry.cellRenderQueue = [];
       }
     }
 
