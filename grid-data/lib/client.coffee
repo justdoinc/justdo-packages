@@ -57,7 +57,7 @@ GridData = (collection) ->
   @_filter_tracker = null
   @_filter_items = null
   @_filter_items_ids = null
-  @_filter_paths = null
+  @_filter_paths = null # XXX confusing name, keys are grid_tree indexes value is accordance to presence due to active filter 
 
   Meteor.defer =>
     @_init()
@@ -133,6 +133,8 @@ _.extend GridData.prototype,
 
   _get_need_flush: ->
     @_need_flush.get()
+
+  isActiveFilter: -> @filter.get()? # True if there's an active filter, false otherwise
 
   getFilterPaths: -> @_filter_paths
 
