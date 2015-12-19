@@ -438,8 +438,13 @@ _.extend PACK.Plugins,
             mouse_vs_placeholder: mouse_vs_placeholder
 
         stop: (event, ui) =>
-          if dragged_row_extended_details.parent != placeholder_position.parent or
-                dragged_row_extended_details.order != placeholder_position.order
+          if dragged_row_extended_details.parent == placeholder_position.parent and
+                dragged_row_extended_details.order == placeholder_position.order
+            # If position didn't change
+
+            # Just release flush
+            @_grid_data._release_flush()
+          else
             # If position changed
 
             # Render the original dragged item dom so its rendered level will be
