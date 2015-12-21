@@ -16,6 +16,7 @@ GridData = (collection) ->
   @_items_tracker = null
   @_flush_orchestrator = null
   @_need_flush = new ReactiveVar(0)
+  @_flushing = false # Will be true during flush process
 
   #
   # Flush queues/flags
@@ -87,6 +88,11 @@ _.extend GridData.prototype,
 
       return
 
+    if @_flushing
+      # @logger.debug("_set_need_flush: called during flush, ignoring")
+
+      return
+
     if @_set_need_flush_timeout?
       clearTimeout @_set_need_flush_timeout
 
@@ -138,6 +144,10 @@ _.extend GridData.prototype,
 
   getFilterPaths: -> @_filter_paths
 
+  _setFilterPathsNeedsUpdate: ->
+    @_filter_paths_needs_update = true
+    @_set_need_flush()
+
   _hasPassingFilterDecendents: (item_id, tested_item = true) ->
     if not tested_item
       # We don't want to test the first item_id _hasPassingFilterDecendents
@@ -166,7 +176,7 @@ _.extend GridData.prototype,
       return
     else
       @logger.debug "Update filter paths"
-  
+
     @_filter_paths_needs_update = false
 
     filter = @filter.get()
@@ -277,7 +287,7 @@ _.extend GridData.prototype,
         filter = @filter.get()
 
         if not filter?
-          # If filter cleared, init @_filter_items and return
+          # If filter cleared, init @_filter_items
           @_filter_items = null
         else
           @_filter_items = @collection.find(@filter.get(), {fields: {_id: 1}}).fetch()
@@ -288,8 +298,7 @@ _.extend GridData.prototype,
             for item_id in filter_independent_items
               @_filter_items.push {_id: item_id}
 
-        @_filter_paths_needs_update = true
-        @_set_need_flush()
+        @_setFilterPathsNeedsUpdate()
 
         @logger.debug "@_filter_items updated"
 
@@ -394,21 +403,19 @@ _.extend GridData.prototype,
 
         rebuild_tree = true
 
-        @_filter_paths_needs_update = true
+        @_setFilterPathsNeedsUpdate()
 
       return rebuild_tree
 
     collapse_path: (path) ->
       rebuild_tree = false
 
-      @_filter_paths_needs_update = true
-
       if path of @_expanded_paths
         delete @_expanded_paths[path]
 
         rebuild_tree = true
 
-        @_filter_paths_needs_update = true
+        @_setFilterPathsNeedsUpdate()
 
       return rebuild_tree
 
@@ -419,9 +426,6 @@ _.extend GridData.prototype,
       # Rebuild tree always required after adding a new item
       rebuild_tree = true
 
-      # Filters needs to be updated after adding a new item
-      @_filter_paths_needs_update = true
-
       # Update @items_by_id
       @items_by_id[id] = doc
 
@@ -431,10 +435,16 @@ _.extend GridData.prototype,
           @tree_structure[parent_id] = {}
         @tree_structure[parent_id][parent_metadata.order] = id
 
+      @_setFilterPathsNeedsUpdate()
+
       return rebuild_tree
 
     update: (id, fields) ->
       # console.log "update", id, fields
+
+      # No need to update filters on update, since if the update affect
+      # the filter the filter tracker will recognize it and trigger
+      # its update
 
       rebuild_tree = false
 
@@ -447,8 +457,6 @@ _.extend GridData.prototype,
 
       # Rebuild tree always required after removing an item
       rebuild_tree = true
-
-      # Note: no need for filter udpate.
 
       # Update @items_by_id
       item_obj = @items_by_id[id]
@@ -468,6 +476,8 @@ _.extend GridData.prototype,
 
           if _.isEmpty @tree_structure[parent_id]
             delete @tree_structure[parent_id]
+
+      @_setFilterPathsNeedsUpdate()
 
       return rebuild_tree
 
@@ -530,6 +540,8 @@ _.extend GridData.prototype,
           if _.isEmpty @tree_structure[parent_id]
             delete @tree_structure[parent_id]
 
+      @_setFilterPathsNeedsUpdate()
+
       return rebuild_tree
 
   _flush: () ->
@@ -537,9 +549,11 @@ _.extend GridData.prototype,
 
     # XXX Implement tree_structure_only argument
     # If tree_structure_only is true we will skip the updates listed in
-    # @_data_changes_queue, setNeedFlush 
+    # @_data_changes_queue, _set_need_flush 
 
     @logger.debug "Flush: start"
+
+    @_flushing = true
 
     rebuild_tree = false
 
@@ -566,14 +580,12 @@ _.extend GridData.prototype,
     if rebuild_tree
       @logger.debug "Flush: rebuild tree"
       @_rebuildGridTree()
-
-    # Note: @_update_filter_paths() is also called in @_rebuildGridTree()
-    # we do it since we want the filter to be ready when rebuild event is
-    # emitted called. (@_update_filter_paths use the @_filter_paths_needs_update
-    # to operate only when needed).
-    #
-    # XXX so why not put else after the above if?
-    @_update_filter_paths()
+    else
+      # Note: @_update_filter_paths() is called in @_rebuildGridTree() we do
+      # it since we want the filter to be ready when rebuild event is emitted
+      # called. (@_update_filter_paths use the @_filter_paths_needs_update to
+      # operate only when needed).
+      @_update_filter_paths()
 
     @_data_changes_queue = []
     @_structure_changes_queue = []
@@ -581,6 +593,9 @@ _.extend GridData.prototype,
     # @_filter_paths_needs_update = false - @_update_filter_paths() takes care of managing this flag
 
     @logger.debug "Flush: done"
+
+    @_flushing = false
+
     @emit "flush"
 
   _initDataStructure: () ->
