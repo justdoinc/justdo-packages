@@ -133,9 +133,6 @@ _.extend PACK.Plugins,
             # Condition above, makes sure we emit only when something changed
             @emit "rows-sort-placeholder-position-updated", ui, placeholder_position
 
-        if sort_state.placeholder_index == 0
-          # First item
-          return updatePlaceholderPosition("0", 0, 0)
 
         # Find the correct index of the items before and
         # after the placeholder - this is needed since the
@@ -143,32 +140,26 @@ _.extend PACK.Plugins,
         # rows.
         placeholder_index = sort_state.placeholder_index # just alias
         if placeholder_index == dragged_row_index
-          # No need to worry about first item taken care of above
           previous_item_index = placeholder_index - 1
           next_item_index = placeholder_index + 1
         else if placeholder_index < dragged_row_index
           previous_item_index = placeholder_index - 1
-          next_item_index = placeholder_index # The placeholder occupy the original position of the next item
+          next_item_index = placeholder_index
         else if placeholder_index > dragged_row_index
           # We don't use `else` for readability
-          previous_item_index = placeholder_index # The placeholder occupy the original position of the next item
+          previous_item_index = placeholder_index
           next_item_index = placeholder_index + 1
 
         if @_grid_data.isActiveFilter()
           # If there's an active filter, look for visible prev/next items indexes
           filter_paths = @_grid_data.getFilterPaths()
 
-          original_previous_item = previous_item_index
+          if previous_item_index?
+            while previous_item_index >= 0
+              if filter_paths[previous_item_index][0] > 0 # means passing filter
+                break
 
-          while previous_item_index > 0
-            if filter_paths[previous_item_index][0] > 0 # means passing filter
-              break
-
-            previous_item_index -= 1
-
-          if previous_item_index == 0
-            console.log "Dropped as first when filter is active, using previous hidden item as previous"
-            previous_item_index = original_previous_item
+              previous_item_index -= 1
 
           while next_item_index < @_grid_data.getLength()
             if filter_paths[next_item_index][0] > 0 # means passing filter
@@ -176,8 +167,11 @@ _.extend PACK.Plugins,
 
             next_item_index += 1        
 
+        if previous_item_index < 0
+          previous_item_index = null
+
         if next_item_index > @_grid_data.getLength() - 1
-          # No next item (note: relevant both when there's a filter and when there isn't)
+          # No next item
           next_item_index = null
 
         # ext stands for extended details
@@ -186,35 +180,44 @@ _.extend PACK.Plugins,
           next: getRowExtendedDetails next_item_index
           dragged: dragged_row_extended_details
 
-        # Determine whether the previous or next item should be placeholder sibling
-        determine_position_by_prev = null
-        if sort_state.sort_direction == 0
+        # Determine which sibling should be used as the placeholder sibling when determining new position
+        determine_position_by = null # -1: previous item, 0: keep in original position; 1: next item
+        if not ext.prev and not ext.next
+          # console.log "CASE 0: Determine by original - no next or prev items"
+
+          determine_position_by = 0
+        else if sort_state.sort_direction == 0
           # console.log "CASE 1: Sort direction: 0 (sort just began)"
           # If sort_direction == 0, sort had just began and the user hasn't
           # moved the placeholder yet.
           if sort_state.mouse_vs_placeholder == 0 or
-                (not next_item_index? and sort_state.mouse_vs_placeholder == 1)
-            # If cursor doesn't touch prev/next item - or...
-            # If mouse is outside the place holder from the bottom, but there's
-            # no next item - keep item in its original place
-            # console.log "CASE 1.1: DETERMINE BY ORIGINAL STATE, due to cursor on placeholder or outside from bottom"
+                (not ext.prev? and sort_state.mouse_vs_placeholder == -1) or
+                (not ext.next? and sort_state.mouse_vs_placeholder == 1)
+            # If cursor is inside the placeholder, or outside but there's no item outside
+            # keep item in its original place
+            # console.log "CASE 1.1: Original postion :: Use original; Cursor is inside the placeholder, or outside but there's no item outside"
 
-            return updatePlaceholderPosition(ext.dragged.parent, ext.dragged.order, ext.dragged.level)
+            determine_position_by = 0
           else if sort_state.mouse_vs_placeholder == -1
             # If mouse on prev item
-            # console.log "CASE 1.2: ORIGINAL POSITION, MOUSE ON PREV ITEM - DETERMINE BY PREV"
+            # console.log "CASE 1.2: Original postion :: Use previous; Cursor on previous item"
 
-            determine_position_by_prev = true
+            determine_position_by = -1
           else if sort_state.mouse_vs_placeholder == 1 # else if used for readability
             # If mouse on next item. Note: we know for sure next item exist due to a check above.
-            # console.log "CASE 1.3: ORIGINAL POSITION, MOUSE ON PREV ITEM - DETERMINE BY PREV"
+            # console.log "CASE 1.3: Original postion :: Use previous; Cursor on next item"
 
-            determine_position_by_prev = false
-        else if not next_item_index?
+            determine_position_by = 1
+        else if not ext.next?
           # If no next item, previous determines
-          # console.log "CASE 2: No next item - determine by previous"
+          # console.log "CASE 2.1: No next item - determine by previous"
 
-          determine_position_by_prev = true
+          determine_position_by = -1
+        else if not ext.prev?
+          # If no next item, previous determines
+          # console.log "CASE 2.2: No prev item - determine by next"
+
+          determine_position_by = 1
         else if sort_state.sort_direction == 1
           # If placeholder is being moved downwards
           # console.log "CASE 3: Placeholder moving down - next item exists"
@@ -224,11 +227,11 @@ _.extend PACK.Plugins,
           if sort_state.mouse_vs_placeholder != 1
             # console.log "CASE 3.1: Mouse isn't on next - determine by previous"
 
-            determine_position_by_prev = true
+            determine_position_by = -1
           else
             # console.log "CASE 3.2: Mouse is on next - determine by next"
 
-            determine_position_by_prev = false
+            determine_position_by = 1
         else if sort_state.sort_direction == -1
           # If placeholder is being moved upwards
           # console.log "CASE 4: Placeholder moving up - next item exists"
@@ -238,16 +241,20 @@ _.extend PACK.Plugins,
           if sort_state.mouse_vs_placeholder != -1
             # console.log "CASE 4.1: Mouse isn't on prev - determine by next"
 
-            determine_position_by_prev = false
+            determine_position_by = 1
           else
             # console.log "CASE 4.2: Mouse is on prev - determine by prev"
 
-            determine_position_by_prev = true
+            determine_position_by = -1
 
         parent = null
         order = null
         level = null
-        if determine_position_by_prev
+        if determine_position_by == 0
+          parent = ext.dragged.parent
+          order = ext.dragged.order
+          level = ext.dragged.level
+        else if determine_position_by == -1
           # Determine placeholder position by previous parent
 
           if ext.prev.expand_state == 1
@@ -260,7 +267,7 @@ _.extend PACK.Plugins,
             parent = ext.prev.parent
             order = ext.prev.order + 1
             level = ext.prev.level
-        else
+        else if determine_position_by == 1
           # Determine placeholder position by next parent
           parent = ext.next.parent
           order = ext.next.order
