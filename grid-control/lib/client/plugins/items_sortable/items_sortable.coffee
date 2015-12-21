@@ -150,8 +150,30 @@ _.extend PACK.Plugins,
           previous_item_index = placeholder_index # The placeholder occupy the original position of the next item
           next_item_index = placeholder_index + 1
 
+        if @_grid_data.isActiveFilter()
+          # If there's an active filter, look for visible prev/next items indexes
+          filter_paths = @_grid_data.getFilterPaths()
+
+          original_previous_item = previous_item_index
+
+          while previous_item_index > 0
+            if filter_paths[previous_item_index][0] > 0 # means passing filter
+              break
+
+            previous_item_index -= 1
+
+          if previous_item_index == 0
+            console.log "Dropped as first when filter is active, using previous hidden item as previous"
+            previous_item_index = original_previous_item
+
+          while next_item_index < @_grid_data.getLength()
+            if filter_paths[next_item_index][0] > 0 # means passing filter
+              break
+
+            next_item_index += 1        
+
         if next_item_index > @_grid_data.getLength() - 1
-          # No next item
+          # No next item (note: relevant both when there's a filter and when there isn't)
           next_item_index = null
 
         # ext stands for extended details
