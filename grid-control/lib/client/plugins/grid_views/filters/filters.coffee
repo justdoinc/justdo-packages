@@ -62,6 +62,8 @@ _.extend GridControl.prototype,
 
       if not filter_paths?
         @container.removeClass("filter-active")
+        all_row_filter_state_classes_string = row_filter_state_classes.join " "
+        @container.find(".slick-row").removeClass(all_row_filter_state_classes_string)
       else
         for filter_state, item_id in filter_paths
           $row = @_grid.getRowJqueryObj(item_id)
