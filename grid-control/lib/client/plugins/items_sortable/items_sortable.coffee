@@ -472,6 +472,13 @@ _.extend PACK.Plugins,
                 dragged_row_extended_details.order == placeholder_position.order
             # If position didn't change
 
+            # In the case where filters are applied, there might be situations in
+            # which item's position remains the same from the filtered prespective
+            # but the dom actually changed, in which case, we won't have a tree flush
+            # since nothing changed. But next drag will have corrupted value for the
+            # dragged item index. 
+            sortable("cancel")
+
             # Just release flush
             @_grid_data._release_flush()
           else
