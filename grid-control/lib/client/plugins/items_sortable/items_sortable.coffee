@@ -26,6 +26,7 @@ _.extend PACK.Plugins,
         mouse_vs_placeholder: null # 0 means mouse on placeholder, -1 prev, 1 next
         long_hover: null
         sort_direction: 0 # 0 means we don't have direction yet, -1 up, 1 down
+        copy_mode: null
 
       placeholder_position = {}
       initPlaceholderPosition = -> _.extend placeholder_position,
@@ -40,8 +41,10 @@ _.extend PACK.Plugins,
         if (new_state.placeholder_index? and
             new_state.placeholder_index != sort_state.placeholder_index) or
            (new_state.mouse_vs_placeholder? and
-            new_state.mouse_vs_placeholder != sort_state.mouse_vs_placeholder)
-          # Position update
+            new_state.mouse_vs_placeholder != sort_state.mouse_vs_placeholder) or
+           (new_state.copy_mode? and
+            new_state.copy_mode != sort_state.copy_mode)
+          # Copy mode/Position update
 
           # find sort direction
           if sort_state.placeholder_index?
@@ -62,6 +65,7 @@ _.extend PACK.Plugins,
             last_changed: new Date()
             long_hover: false
             sort_direction: sort_direction
+            copy_mode: new_state.copy_mode
         else if new_state.long_hover? and
                   new_state.long_hover != sort_state.long_hover
           # Long hover change
@@ -368,6 +372,8 @@ _.extend PACK.Plugins,
       unmarkDraggedRowWaitingForServer = =>
         getDraggedRowJqueryObj().removeClass("sortable-waiting-server")
 
+      isCopyModeEvent = (event) => event.altKey || event.ctrlKey # alt is for Mac, ctrl is for pc
+
       #
       # Sortable
       #
@@ -377,7 +383,7 @@ _.extend PACK.Plugins,
         axis: "y"
         distance: 5
 
-        beforeStart: (e, ui) =>
+        beforeStart: (event, ui) =>
           # Note: Must find dragged_row_index beforeStart and not in start
           # since the placeholder method will be called before start (!)
           dragged_row_index = ui.item.index()
@@ -389,7 +395,7 @@ _.extend PACK.Plugins,
 
           return can_start
 
-        start: (e, ui) =>
+        start: (event, ui) =>
           # Don't allow grid data updates while sorting to avoid getting
           # dragged item, its information, and actual DOM element to
           # get out of-sync with the grid.
@@ -430,6 +436,7 @@ _.extend PACK.Plugins,
           updateSortState
             placeholder_index: dragged_row_index
             mouse_vs_placeholder: 0
+            copy_mode: isCopyModeEvent(event)
 
           setLongHoverMonitorInterval()
 
@@ -458,6 +465,7 @@ _.extend PACK.Plugins,
           updateSortState
             placeholder_index: placeholder_index
             mouse_vs_placeholder: mouse_vs_placeholder
+            copy_mode: isCopyModeEvent(event)
 
         stop: (event, ui) =>
           if dragged_row_extended_details.parent == placeholder_position.parent and
