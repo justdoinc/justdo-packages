@@ -7,6 +7,10 @@ sortable = =>
 
   return $obj.sortable.apply $obj, arguments 
 
+refresh_sortable = =>
+  sortable("refresh")
+  sortable("refreshPositions")
+
 _.extend PACK.Plugins,
   items_resortable:
     init: ->
@@ -14,7 +18,7 @@ _.extend PACK.Plugins,
 
       options =
         # The minimal time in ms before we regard sort state as a long hover
-        long_hover_threshold: 2 * 1000
+        long_hover_threshold: .5 * 1000
 
       dragged_row_index = 0
       dragged_row_extended_details = null
@@ -132,7 +136,6 @@ _.extend PACK.Plugins,
 
             # Condition above, makes sure we emit only when something changed
             @emit "rows-sort-placeholder-position-updated", ui, placeholder_position
-
 
         # Find the correct index of the items before and
         # after the placeholder - this is needed since the
@@ -286,6 +289,22 @@ _.extend PACK.Plugins,
             order == ext.dragged.order + 1
           order = ext.dragged.order
 
+        if sort_state.long_hover and sort_state.mouse_vs_placeholder != 0
+          # If long hover
+          item_under_cursor =
+            if sort_state.mouse_vs_placeholder == -1 then ext.prev else ext.next
+
+          if item_under_cursor? and item_under_cursor.expand_state == 0
+            # If there's an item under the cursor expand it
+            @_grid_data.expandPath item_under_cursor.path
+
+            @_grid_data._perform_temporal_strucutral_flush_lock_release()
+
+            # Update dragged_row_index
+            dragged_row_index = @_grid_data.getItemRowByPath(dragged_row_extended_details.path)
+
+            refresh_sortable()
+
         return updatePlaceholderPosition parent, order, level
 
       @on "rows-sort-state-updated", @rows_sort_state_updated_event_handler
@@ -431,9 +450,7 @@ _.extend PACK.Plugins,
             sortable("instance").currentItem = $dragged_row
             sortable("instance").helper = $dragged_row
 
-            # refresh sortable
-            sortable("refresh")
-            sortable("refreshPositions")
+            refresh_sortable()
 
           # Update the placeholder -> we are required to do it also here
           # (and not just in placeholder element code below) due to a
