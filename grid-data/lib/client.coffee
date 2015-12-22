@@ -113,10 +113,28 @@ _.extend GridData.prototype,
       # Mark that a flush is needed upon release
       @_flush_blocked_by_lock = true
 
+  _perform_temporal_strucutral_flush_lock_release: ->
+    # If flush is locked and a needed flush already blocked, perform it immediately
+
+    # IMPORTANT! Unlike @_perform_temporal_flush_lock_release this will
+    # perform only structural flushes - no data updates
+
+    # Returns true if flush performed; flase otherwise.
+    if @_flush_lock and @_flush_blocked_by_lock
+      Tracker.nonreactive =>
+        @_flush true # passing true as first arg means structure_only 
+
+      # Note, we keep @_flush_blocked_by_lock as is as there might be data changes
+      # waiting
+
+      return true
+
+    return false
+
   _perform_temporal_flush_lock_release: ->
     # If flush is locked and a needed flush already blocked, perform it immediately
 
-    # Returns true if flush performed flase otherwise.
+    # Returns true if flush performed; flase otherwise.
     if @_flush_lock and @_flush_blocked_by_lock
       Tracker.nonreactive =>
         @_flush()
@@ -362,10 +380,16 @@ _.extend GridData.prototype,
             item = @items_by_id[id]
 
             if item?
-              # If item is in the internal data structure, update immediately don't wait for flush
-              @_updateRowFields(id, fields)
+              # If item is in the internal data structure, update immediately don't wait
+              # for flush.
+              # This is very important due to the fact that when there's an active filter,
+              # the filter tracker will update the filtered items even when flush is locked
+              # as a result, if a structural release will occur
+              # (@_perform_temporal_strucutral_flush_lock_release) if data for existing items
+              # won't update, it will seems as if items is out of sync with the filter.
+              @_updateRowFields id, fields
             else
-              # If item is not in the internal data structure, we can't tell why, have to wait for flush
+              #If item is not in the internal data structure yet (added during current flush cycle)
               @_data_changes_queue.push ["update", [id, fields]]
 
               @_set_need_flush()
@@ -544,12 +568,11 @@ _.extend GridData.prototype,
 
       return rebuild_tree
 
-  _flush: () ->
+  _flush: (structure_only = false) ->
     # Perform pending updates to the internal data structures
 
-    # XXX Implement tree_structure_only argument
-    # If tree_structure_only is true we will skip the updates listed in
-    # @_data_changes_queue, _set_need_flush 
+    # If structure_only is true, only structure updates will be performed
+    # data updates will be ignored.
 
     @logger.debug "Flush: start"
 
@@ -567,30 +590,30 @@ _.extend GridData.prototype,
       rebuild_tree = rebuild_tree || require_tree_rebuild
       # @logger.debug "Flush: process structure changes - done; rebuild_tree = #{rebuild_tree}"
 
-    # Preform all required data changes, data changes funcs return true
-    # if tree rebuild is required.
-    for change in @_data_changes_queue
-      # @logger.debug "Flush: process data changes"
-      [type, args] = change
-      # @logger.debug "Flush: Process #{type}: #{JSON.stringify args}"
-      require_tree_rebuild = @_data_changes_handlers[type].apply @, args
-      rebuild_tree = rebuild_tree || require_tree_rebuild
-      # @logger.debug "Flush: process data changes - done; rebuild_tree = #{rebuild_tree}"
+      @_structure_changes_queue = []
+
+    if not structure_only
+      # Preform all required data changes, data changes funcs return true
+      # if tree rebuild is required.
+      for change in @_data_changes_queue
+        # @logger.debug "Flush: process data changes"
+        [type, args] = change
+        # @logger.debug "Flush: Process #{type}: #{JSON.stringify args}"
+        require_tree_rebuild = @_data_changes_handlers[type].apply @, args
+        rebuild_tree = rebuild_tree || require_tree_rebuild
+        # @logger.debug "Flush: process data changes - done; rebuild_tree = #{rebuild_tree}"
+
+      @_data_changes_queue = []
 
     if rebuild_tree
       @logger.debug "Flush: rebuild tree"
       @_rebuildGridTree()
     else
-      # Note: @_update_filter_paths() is called in @_rebuildGridTree() we do
-      # it since we want the filter to be ready when rebuild event is emitted
-      # called. (@_update_filter_paths use the @_filter_paths_needs_update to
-      # operate only when needed).
+      # @_update_filter_paths() is called in @_rebuildGridTree() so
+      # there's no need to call it again if rebuild performed.
+      # We call @_update_filter_paths() on @_rebuildGridTree() since we want the
+      # filter to be ready when the `rebuild` event is emitted.
       @_update_filter_paths()
-
-    @_data_changes_queue = []
-    @_structure_changes_queue = []
-
-    # @_filter_paths_needs_update = false - @_update_filter_paths() takes care of managing this flag
 
     @logger.debug "Flush: done"
 
