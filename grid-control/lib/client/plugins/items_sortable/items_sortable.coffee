@@ -11,6 +11,16 @@ refresh_sortable = =>
   sortable("refresh")
   sortable("refreshPositions")
 
+getPlaceholderIndex = (ui) =>
+  placeholder_index = ui.placeholder.index()
+  helper_index = ui.helper.index()
+
+  if helper_index < placeholder_index
+    # Cancel the shift to index resulted from the hidden placeholder
+    placeholder_index -= 1
+
+  return placeholder_index
+
 _.extend PACK.Plugins,
   items_resortable:
     init: ->
@@ -111,12 +121,14 @@ _.extend PACK.Plugins,
         order = doc.parents[parent].order
 
         ext = {
+          _id: doc._id
           doc: doc
           level: level
           path: path
           expand_state: expand_state
           parent: parent
-          order: order
+          order: order,
+          node: @_grid.getRowNode(row_index).rowNode
         }
 
         return ext
@@ -260,10 +272,12 @@ _.extend PACK.Plugins,
         else if determine_position_by == -1
           # Determine placeholder position by previous parent
 
-          if ext.prev.expand_state == 1
+          if ext.prev.expand_state == 1 or isNewLevelMode()
             # Expand state of 1, means previous item is a collapsed item
             # placeholder should be a child of that item -> hance level + 1
-            parent = ext.prev.doc._id
+            # If we are in new-level-mode it means previous item serves
+            # as our parent, even though it has no children.
+            parent = ext.prev._id
             order = 0
             level = ext.prev.level + 1
           else
@@ -290,20 +304,43 @@ _.extend PACK.Plugins,
           order = ext.dragged.order
 
         if sort_state.long_hover and sort_state.mouse_vs_placeholder != 0
-          # If long hover
+          # If long hover outside of placeholder
           item_under_cursor =
             if sort_state.mouse_vs_placeholder == -1 then ext.prev else ext.next
 
-          if item_under_cursor? and item_under_cursor.expand_state == 0
-            # If there's an item under the cursor expand it
-            @_grid_data.expandPath item_under_cursor.path
+          if item_under_cursor?
+            # If there's an item under the cursor
+            if item_under_cursor.expand_state == 0
+              # If there's a collapsed item with children under the cursor expand it
+              @_grid_data.expandPath item_under_cursor.path
 
-            @_grid_data._perform_temporal_strucutral_flush_lock_release()
+              @_grid_data._perform_temporal_strucutral_flush_lock_release()
 
-            # Update dragged_row_index
-            dragged_row_index = @_grid_data.getItemRowByPath(dragged_row_extended_details.path)
+              # Update dragged_row_index
+              dragged_row_index = @_grid_data.getItemRowByPath(dragged_row_extended_details.path)
 
-            refresh_sortable()
+              refresh_sortable()
+            if item_under_cursor.expand_state == -1
+              # If item under cursor has no children, add placeholder as a new child
+              parent = item_under_cursor._id
+              order = 0
+              level = item_under_cursor.level + 1
+
+              if item_under_cursor == ext.next
+                # Move placeholder to be the first child of next item
+                ui.placeholder.insertAfter item_under_cursor.node
+
+                # Update sort state to match new forced position
+                _.extend sort_state,
+                  placeholder_index: getPlaceholderIndex(ui)
+                  mouse_vs_placeholder: 0
+                  sort_direction: 1 # down to make previous item the significant
+
+                refresh_sortable()
+
+              setNewLevelMode(item_under_cursor.node)
+
+        updateNewLevelMode()
 
         return updatePlaceholderPosition parent, order, level
 
@@ -401,6 +438,31 @@ _.extend PACK.Plugins,
       isCopyModeEvent = (event) => event.altKey || event.ctrlKey # alt is for Mac, ctrl is for pc
 
       #
+      # New level mode (When placeholder demonstrates result of adding an item as a child of another item)
+      #
+      # holds the placeholder position for the new-level-mode, or null if not in
+      # new-level-mode
+      _new_level_mode = null
+      _new_level_mode_parent_class = "sortable-new-level-mode-parent"
+      setNewLevelMode = (new_parent_node) =>
+        # Enter into new-level-mode with current placeholder position.
+        # Mode will exit as soon as updateNewLevelMode() will be called when
+        # placeholder isn't in a different position.
+        # new_parent_node is needed only for style purposes, we don't record it for
+        # later use
+        _new_level_mode = sort_state.placeholder_index
+
+        $(new_parent_node).addClass _new_level_mode_parent_class
+        
+      isNewLevelMode = => _new_level_mode?
+
+      updateNewLevelMode = (force_exit=false) =>
+        if _new_level_mode != sort_state.placeholder_index or force_exit
+          _new_level_mode = null
+
+          $(".#{_new_level_mode_parent_class}", @container).removeClass(_new_level_mode_parent_class)
+
+      #
       # Sortable
       #
       sortable
@@ -469,12 +531,7 @@ _.extend PACK.Plugins,
           update: -> return undefined
 
         sort: (event, ui) =>
-          placeholder_index = ui.placeholder.index()
-          helper_index = ui.helper.index()
-
-          if helper_index < placeholder_index
-            # Cancel the shift to index resulted from the hidden placeholder
-            placeholder_index -= 1
+          placeholder_index = getPlaceholderIndex(ui)
 
           # Find mouse position relative to placeholder
           placeholder_offset_top = ui.placeholder.offset().top
@@ -528,6 +585,14 @@ _.extend PACK.Plugins,
               # changed
               unmarkDraggedRowWaitingForServer()
               enableDraggedRowEditing()
+
+              if isNewLevelMode()
+                parent_details =
+                  getRowExtendedDetails @_grid.getRowFromNode($(".#{_new_level_mode_parent_class}", @container).get(0))
+
+                @_grid_data.expandPath parent_details.path, true # true means force expansion (item have no children before flush released, so it's required)
+
+                updateNewLevelMode(true) # force exit from new-level-mode
 
               # Release flush and flush right-away before re-enabling sortable
               @_grid_data._release_flush()

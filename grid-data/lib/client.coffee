@@ -917,7 +917,10 @@ _.extend GridData.prototype,
 
     path == "/" or path of @_expanded_paths
 
-  expandPath: (path) ->
+  expandPath: (path, force=false) ->
+    # if force is true we will trigger path expansion even if it isn't
+    # yet expandable (useful, when flush lock is on, and we know the
+    # item is going to be expandable)
     path = helpers.normalizePath path
 
     if helpers.isRootPath path
@@ -925,7 +928,7 @@ _.extend GridData.prototype,
       return
 
     for ancestor_path in helpers.getAllAncestorPaths(path)
-      if not(@getPathIsExpand(ancestor_path)) and @pathExpandable(ancestor_path)
+      if not(@getPathIsExpand(ancestor_path)) and (@pathExpandable(ancestor_path) or force)
         @_structure_changes_queue.push ["expand_path", [ancestor_path]]
         @_set_need_flush()
 

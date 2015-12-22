@@ -3439,6 +3439,13 @@ if (typeof Slick === "undefined") {
       return null;
     }
 
+    function getRowNode(row) {
+      if (rowsCache[row]) {
+        return rowsCache[row];
+      }
+      return null;
+    }
+
     function setActiveCell(row, cell) {
       if (!initialized) { return; }
       if (row > getDataLength() || row < 0 || cell >= columns.length || cell < 0) {
@@ -3752,6 +3759,7 @@ if (typeof Slick === "undefined") {
       "editActiveCell": makeActiveCellEditable,
       "getCellEditor": getCellEditor,
       "getCellNode": getCellNode,
+      "getRowNode": getRowNode,
       "getCellNodeBox": getCellNodeBox,
       "canCellBeSelected": canCellBeSelected,
       "canCellBeActive": canCellBeActive,
