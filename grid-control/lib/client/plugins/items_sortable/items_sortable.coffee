@@ -28,7 +28,7 @@ _.extend PACK.Plugins,
 
       options =
         # The minimal time in ms before we regard sort state as a long hover
-        long_hover_threshold: .85 * 1000
+        long_hover_threshold: .50 * 1000
 
       dragged_row_index = 0
       dragged_row_extended_details = null
