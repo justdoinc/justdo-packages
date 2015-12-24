@@ -348,6 +348,11 @@ _.extend PACK.Plugins,
 
                 refresh_sortable()
 
+              # Call updateNewLevelMode to clear any existing new-level-mode before
+              # setting this one (otherwise we can have some style leftovers on prev
+              # parent)
+              updateNewLevelMode()
+
               setNewLevelMode(item_under_cursor.node)
 
         updateNewLevelMode()
