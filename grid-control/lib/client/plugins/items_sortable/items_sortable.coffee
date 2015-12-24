@@ -41,6 +41,7 @@ _.extend PACK.Plugins,
         long_hover: null
         sort_direction: 0 # 0 means we don't have direction yet, -1 up, 1 down
         copy_mode: null
+        cursor_outside_grid: false
 
       placeholder_position = {}
       initPlaceholderPosition = -> _.extend placeholder_position,
@@ -52,13 +53,20 @@ _.extend PACK.Plugins,
       # Manage sort_state
       #
       updateSortState = (new_state) =>
+        updated = false
+
+        if (new_state.cursor_outside_grid? and
+            new_state.cursor_outside_grid != sort_state.cursor_outside_grid)
+          updated = true
+          sort_state.cursor_outside_grid = new_state.cursor_outside_grid
+
         if (new_state.placeholder_index? and
             new_state.placeholder_index != sort_state.placeholder_index) or
            (new_state.mouse_vs_placeholder? and
             new_state.mouse_vs_placeholder != sort_state.mouse_vs_placeholder) or
            (new_state.copy_mode? and
             new_state.copy_mode != sort_state.copy_mode)
-          # Copy mode/Position update
+          updated = true
 
           # find sort direction
           if sort_state.placeholder_index?
@@ -82,10 +90,12 @@ _.extend PACK.Plugins,
             copy_mode: new_state.copy_mode
         else if new_state.long_hover? and
                   new_state.long_hover != sort_state.long_hover
+          updated = true
           # Long hover change
           _.extend sort_state, new_state,
             last_changed: new Date()
-        else
+
+        if not updated
           # Return here if nothing changed to avoid emitting the event
           return
 
@@ -450,7 +460,7 @@ _.extend PACK.Plugins,
       setNewLevelMode = (new_parent_node) =>
         # Enter into new-level-mode with current placeholder position.
         # Mode will exit as soon as updateNewLevelMode() will be called when
-        # placeholder isn't in a different position.
+        # placeholder is in a different position.
         # new_parent_node is needed only for style purposes, we don't record it for
         # later use
         _new_level_mode = sort_state.placeholder_index
@@ -464,6 +474,85 @@ _.extend PACK.Plugins,
           _new_level_mode = null
 
           $(".#{_new_level_mode_parent_class}", @container).removeClass(_new_level_mode_parent_class)
+
+      #
+      # Cancel mode (When cursor is outside of grid or esc is pressed)
+      #
+      _cancel_mode = false
+      _cancel_mode_class = "sortable-cancel-mode"
+      _setCancelMode = =>
+        if not isCancelMode()
+          # Enter into cancel-mode.
+          _cancel_mode = true
+
+          @container.addClass _cancel_mode_class
+        
+      isCancelMode = => _cancel_mode
+
+      _unsetCancelMode = =>
+        if isCancelMode()
+          # Exit cancel-mode.
+          _cancel_mode = false
+
+          @container.removeClass _cancel_mode_class
+
+      _refreshCancelMode = =>
+        if _esc_key_down or not _cursor_within_grid
+          _setCancelMode()
+        else
+          _unsetCancelMode()
+
+      _esc_key_down = false
+      _escKeyDownHandler = (e) ->
+        if e.keyCode == 27
+          if _esc_key_down != true
+            _esc_key_down = true
+
+            _refreshCancelMode()
+
+      _escKeyUpHandler = (e) ->
+        if e.keyCode == 27
+          if _esc_key_down != false
+            _esc_key_down = false
+
+            _refreshCancelMode()
+
+      _cursor_within_grid = true
+      _sortHandlerCancelDetection = (e) =>
+        container_offset = @container.offset()
+        container_top = container_offset.top
+        container_bottom = container_top + @container.outerHeight()
+        container_left = container_offset.left
+        container_right = container_left + @container.outerWidth()
+
+        within_grid = null
+        if container_top <= e.pageY <= container_bottom and
+              container_left <= e.pageX <= container_right
+          within_grid = true
+        else
+          within_grid = false
+
+        if _cursor_within_grid != within_grid
+          # If changed
+          _cursor_within_grid = within_grid
+
+          _refreshCancelMode()
+
+      initCancelTracker = =>
+        $(document).on 'keydown', _escKeyDownHandler
+        $(document).on 'keyup', _escKeyUpHandler
+        @container.on 'sort', _sortHandlerCancelDetection
+
+        _esc_key_down = false
+        _cursor_within_grid = true
+        _cancel_mode = false
+
+      clearCancelTracker = =>
+        $(document).off 'keydown', _escKeyDownHandler
+        $(document).off 'keyup', _escKeyUpHandler
+        @container.off 'sort', _sortHandlerCancelDetection
+
+        _unsetCancelMode()
 
       #
       # Sortable
@@ -493,6 +582,7 @@ _.extend PACK.Plugins,
           @_grid_data._lock_flush()
 
           initSortState()
+          initCancelTracker()
           initPlaceholderPosition()
 
           # If dragging an expanded item - collapse it
@@ -516,6 +606,9 @@ _.extend PACK.Plugins,
             sortable("instance").helper = $dragged_row
 
             refresh_sortable()
+
+          # Add a mark to the placeholder
+          ui.placeholder.addClass("sortable-placeholder")
 
           # Update the placeholder -> we are required to do it also here
           # (and not just in placeholder element code below) due to a
@@ -552,7 +645,17 @@ _.extend PACK.Plugins,
             copy_mode: isCopyModeEvent(event)
 
         stop: (event, ui) =>
-          if dragged_row_extended_details.parent == placeholder_position.parent and
+          # Save cancel state before clearing it
+          is_cancel_mode = isCancelMode()
+
+          clearCancelTracker()
+
+          if is_cancel_mode
+            # Cancel and release flush
+            sortable("cancel")
+
+            @_grid_data._release_flush()
+          else if dragged_row_extended_details.parent == placeholder_position.parent and
                 dragged_row_extended_details.order == placeholder_position.order
             # If position didn't change
 
