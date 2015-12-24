@@ -405,23 +405,26 @@ _.extend PACK.Plugins,
       setPlaceholderHtml = (ui, force_level) =>
         ui.placeholder.html(getDraggedRowHtml(force_level))
 
+      invalidateRowCells = (row_id) =>
+        @_grid.cleanUpAndRenderCells
+          top: row_id
+          bottom: row_id
+          leftPx: 0
+          rightPx: -1
+
+        @_grid.cleanUpAndRenderCells
+          top: row_id
+          bottom: row_id
+          leftPx: 0
+          rightPx: 99999
+
       forceCustomLevelRowCellsInvalidation = (row_id, level) =>
         data_customizations =
           items_levels: {}
         data_customizations.items_levels[row_id] = level
 
         manipulatedGridRender data_customizations, =>
-          @_grid.cleanUpAndRenderCells
-            top: row_id
-            bottom: row_id
-            leftPx: 0
-            rightPx: -1
-
-          @_grid.cleanUpAndRenderCells
-            top: row_id
-            bottom: row_id
-            leftPx: 0
-            rightPx: 99999
+          invalidateRowCells(row_id)
 
       disableDraggedRowEditing = =>
         getDraggedRowJqueryObj().addClass("slick-edit-disabled")
@@ -581,18 +584,27 @@ _.extend PACK.Plugins,
             markDraggedRowWaitingForServer()
             sortable("disable")
             @_grid_data.movePath dragged_row_path, new_position, (err) =>
+              if err
+                sortable("cancel")
+
+                invalidateRowCells(dragged_row_index)
+
+                @logger.debug "Items-sortable: Move operation failed - grid state reverted"
+              else
+                # If succeed and dropped into a new level - expand parent
+                if isNewLevelMode()
+                  parent_details =
+                    getRowExtendedDetails @_grid.getRowFromNode($(".#{_new_level_mode_parent_class}", @container).get(0))
+
+                  @_grid_data.expandPath parent_details.path, true # true means force expansion (item have no children before flush released, so it's required)
+
+              # force exit from new-level-mode (will do nothing if we're not in new-level-mode)
+              updateNewLevelMode(true)
+
               # XXX flush won't replace original row if the actual position hasn't
               # changed
               unmarkDraggedRowWaitingForServer()
               enableDraggedRowEditing()
-
-              if isNewLevelMode()
-                parent_details =
-                  getRowExtendedDetails @_grid.getRowFromNode($(".#{_new_level_mode_parent_class}", @container).get(0))
-
-                @_grid_data.expandPath parent_details.path, true # true means force expansion (item have no children before flush released, so it's required)
-
-                updateNewLevelMode(true) # force exit from new-level-mode
 
               # Release flush and flush right-away before re-enabling sortable
               @_grid_data._release_flush()
