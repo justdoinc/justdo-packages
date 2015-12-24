@@ -329,6 +329,9 @@ _.extend PACK.Plugins,
               # Update dragged_row_index
               dragged_row_index = @_grid_data.getItemRowByPath(dragged_row_extended_details.path)
 
+              # Update placeholder index to its correct post-expansion index
+              sort_state.placeholder_index = getPlaceholderIndex(ui)
+
               refresh_sortable()
             if item_under_cursor.expand_state == -1
               # If item under cursor has no children, add placeholder as a new child
