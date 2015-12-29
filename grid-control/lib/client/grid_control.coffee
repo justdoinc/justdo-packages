@@ -82,7 +82,6 @@ _.extend GridControl.prototype,
     @_init_plugins()
     @_init_formatters()
     @_init_jquery_events()
-    @_init_operation_controllers()
 
     # emit path-changed only as a result of a real change.
     @current_path = @getActiveCellPath()

@@ -100,17 +100,6 @@ Package.onUse(function (api) {
   api.add_files('lib/client/cells_editors/unicode_date/unicode_date.js', client);
   api.add_files('lib/client/cells_editors/unicode_date/media/calendar.gif', client);
 
-  // Operations Controllers 
-  api.add_files('lib/client/operations_controllers/init.coffee', client, {bare: true});
-  api.add_files('lib/client/operations_controllers/add_child/add_child.coffee', client);
-  api.add_files('lib/client/operations_controllers/add_child/add_child.sass', client);
-  api.add_files('lib/client/operations_controllers/add_top_level_item/add_top_level_item.coffee', client);
-  api.add_files('lib/client/operations_controllers/add_top_level_item/add_top_level_item.sass', client);
-  api.add_files('lib/client/operations_controllers/add_sibling/add_sibling.coffee', client);
-  api.add_files('lib/client/operations_controllers/add_sibling/add_sibling.sass', client);
-  api.add_files('lib/client/operations_controllers/remove_parent/remove_parent.coffee', client);
-  api.add_files('lib/client/operations_controllers/remove_parent/remove_parent.sass', client);
-
   api.export('GridControl');
 });
 
