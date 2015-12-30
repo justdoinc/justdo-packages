@@ -4,7 +4,7 @@ init_context_menu = _.once ->
 _.extend GridControl.prototype,
   _hideFieldColumn: (field) ->
     if field == @grid_control_field
-      @_error "attribute-error", "Can't hide grid control field"
+      throw @_error "wrong-argument", "Can't hide grid control field"
 
     @setView(_.filter(@getView(), (col) -> col.field != field))
 

@@ -40,6 +40,7 @@ Package.onUse(function (api) {
   api.add_files('lib/both/simple_schema_extensions.coffee', both);
 
   api.add_files('lib/client/grid_control.coffee', client, {bare: true});
+  api.add_files('lib/client/errors_types.coffee', client);
   api.add_files('lib/client/grid_control.sass', client);
 
   api.add_files('lib/client/media/cell-handle.png', client);

@@ -216,7 +216,7 @@ _.extend GridControl.prototype,
       @emit "tree_change", false
 
     @_grid_data.on "edit-failed", (err) =>
-      @_error "edit-failed", err
+      throw @_error "edit-failed", err
 
     @_grid.onCellChange.subscribe (e, edit_req) =>
       @_grid_data.edit(edit_req)
@@ -254,9 +254,17 @@ _.extend GridControl.prototype,
     @_init_dfd.resolve()
 
   _error: (type, message) ->
-    @logger.error(message)
+    # XXX DRY, also appears in justdo-projects
+    if not(type of @_errors_types)
+      @logger.warn("Unknown error type: #{type}")
+    else
+      # Use default if type is known and no message provided
+      if not message? or _.isEmpty(message)
+        message = @_errors_types[type]
 
-    throw new Meteor.Error(type, message)
+    @logger.error("[#{type}] #{message}")
+
+    new Meteor.Error(type, message)
 
   _loadSchema: ->
     schema = {}
@@ -265,7 +273,7 @@ _.extend GridControl.prototype,
     first_visible_field_found = false
 
     err = (message) =>
-      @_error "grid-control-schema-error", message
+      throw @_error "grid-control-schema-error", message
 
     set_default_formatter = (field_def, first_visible_field_formatter, other_visible_fields_formatter) =>
       if not field_def.grid_visible_column
@@ -396,7 +404,7 @@ _.extend GridControl.prototype,
   _validateView: (view) ->
     # Returns true if valid view, throws a "grid-control-invalid-view" error otherwise
     err = (message) =>
-      @_error "grid-control-invalid-view", message
+      throw @_error "grid-control-invalid-view", message
 
     if view.length == 0
       err "Provided view can't be empty, you must define at least one column"
