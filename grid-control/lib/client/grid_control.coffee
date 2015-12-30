@@ -253,7 +253,7 @@ _.extend GridControl.prototype,
 
     @_init_dfd.resolve()
 
-  _error: (type, message) ->
+  _error: (type, message, details) ->
     # XXX DRY, also appears in justdo-projects
     if not(type of @_errors_types)
       @logger.warn("Unknown error type: #{type}")
@@ -262,9 +262,13 @@ _.extend GridControl.prototype,
       if not message? or _.isEmpty(message)
         message = @_errors_types[type]
 
-    @logger.error("[#{type}] #{message}")
+    log_message = "[#{type}] #{message}"
+    if details?
+      log_message += " #{JSON.stringify details}"
 
-    new Meteor.Error(type, message)
+    @logger.error(log_message)
+
+    new Meteor.Error(type, message, details)
 
   _loadSchema: ->
     schema = {}
