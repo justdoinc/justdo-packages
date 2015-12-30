@@ -99,7 +99,7 @@ _.extend GridControl.prototype,
 
           current_path_update_required = false
 
-          current_path = Tracker.nonreactive -> @current_path.get()
+          current_path = Tracker.nonreactive => @current_path.get()
 
           new_path = @getActiveCellPath()
           if new_path == current_path
