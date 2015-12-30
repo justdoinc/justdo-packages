@@ -255,6 +255,10 @@ _.extend GridControl.prototype,
 
   _error: (type, message, details) ->
     # XXX DRY, also appears in justdo-projects
+    if _.isObject message
+      details = message
+      message = undefined 
+
     if not(type of @_errors_types)
       @logger.warn("Unknown error type: #{type}")
     else
