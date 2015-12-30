@@ -84,7 +84,7 @@ _.extend GridControl.prototype,
     @_init_jquery_events()
 
     # emit path-changed only as a result of a real change.
-    @current_path = @getActiveCellPath()
+    @current_path = new ReactiveVar @getActiveCellPath()
     current_path_update_required = false
     @_grid.onActiveCellChanged.subscribe =>
       if not current_path_update_required
@@ -99,18 +99,21 @@ _.extend GridControl.prototype,
 
           current_path_update_required = false
 
+          current_path = Tracker.nonreactive -> @current_path.get()
+
           new_path = @getActiveCellPath()
-          if new_path == @current_path
+          if new_path == current_path
             # Nothing changed
-            return 
+            return
 
-          @current_path = new_path
+          current_path = new_path
+          @current_path.set(current_path)
 
-          item_id = if @current_path? then GridData.helpers.getPathItemId(@current_path) else null
+          item_id = if current_path? then GridData.helpers.getPathItemId(current_path) else null
 
-          @logger.debug "Path changed", @current_path
+          @logger.debug "Path changed", current_path
 
-          @emit "path-changed", @current_path, item_id
+          @emit "path-changed", current_path, item_id
 
     @_grid_data.on "pre_rebuild", =>
       # Keep information about active cell and whether or not in edit mode and
