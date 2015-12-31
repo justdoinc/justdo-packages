@@ -31,6 +31,9 @@ GridControl = (options, container, operations_container) ->
 
   @editor_init_interrupted = false
 
+  @_operations_lock = new ReactiveVar false # Check /client/grid_operations/operations_lock.coffee
+  @_operations_lock_timedout = new ReactiveVar false
+
   Meteor.defer =>
     @_init()
 
@@ -55,6 +58,7 @@ _.extend GridControl.prototype,
 
     @_load_formatters()
     @_load_editors()
+    @_load_grid_operations()
 
     columns = @_getColumnsStructureFromView(@_init_view)
 

@@ -1,0 +1,52 @@
+# Note: @ will be assigned as the grid_control object for both op and prereq
+
+callCb = ->
+  cb = arguments[0]
+  args = _.toArray(arguments).slice(1)
+
+  if cb? and _.isFunction(cb)
+    cb.apply(@, args)
+
+_.extend PACK.GridOperations,
+  addItem:
+    op: (path, fields, add_as_child = false, cb) ->
+      if not fields?
+        fields = {}
+
+      op = "addSibling"
+      if add_as_child
+        op = "addChild"
+
+      @_performLockingOperation (releaseOpsLock, timedout) =>
+        @_grid_data[op] path, fields, (err, child_id, child_path) =>
+          if err?
+            @logger.error "addChild failed: #{err}"
+
+            callCb cb, err
+
+          @forceItemsPassCurrentFilter child_id
+
+          # Flush to make sure the item is in the tree DOM
+          @_grid_data._flush()
+          @activatePath child_path
+
+          # Release lock only after activation of new path to
+          # avoid any chance of refering to previous path in
+          # following operations
+          releaseOpsLock()
+
+          callCb cb, err, child_id, child_path
+
+    prereq: -> @_opreqUnlocked()
+
+  newTopLevelItem:
+    op: (fields, cb) -> @addItem "/", fields, false, cb
+    prereq: -> @addItem.prereq()
+
+  addSubItem:
+    op: (fields, cb) -> @addItem @getActiveCellPath(), fields, true, cb
+    prereq: -> @_opreqActivePath(@addItem.prereq())
+
+  addSiblingTask:
+    op: (fields, cb) -> @addItem @getActiveCellPath(), fields, false, cb
+    prereq: -> @_opreqActivePath(@addItem.prereq())
