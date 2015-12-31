@@ -26,6 +26,16 @@ _.extend PACK.GridOperations,
 
           @forceItemsPassCurrentFilter child_id
 
+          if add_as_child
+            # Mark parent as expanded (in case it isn't yet) before adding the child
+            # to the tree - this will allow to show the result in one flush
+            # instead of two (one for add, one for expand), and as a result
+            # the UX will be much faster and smooth.
+
+            # true means force expansion (path might have no children before flush,
+            # so it's required)
+            @_grid_data.expandPath path, true
+
           # Flush to make sure the item is in the tree DOM
           @_grid_data._flush()
           @activatePath child_path
