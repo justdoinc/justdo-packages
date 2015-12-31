@@ -89,35 +89,23 @@ _.extend GridControl.prototype,
 
     # emit path-changed only as a result of a real change.
     @current_path = new ReactiveVar @getActiveCellPath()
-    current_path_update_required = false
+
     @_grid.onActiveCellChanged.subscribe =>
-      if not current_path_update_required
-        current_path_update_required = true
+      current_path = Tracker.nonreactive => @current_path.get()
 
-        Meteor.defer =>
-          # In the next tick, check whether @current_path really changed.
-          # If it did, update @current_path and emit "path-changed"
-          # Note that this process is required since during the grid rebuild
-          # process we need to reset the active path and then set it in its
-          # new position in the single dimention grid.
+      new_path = @getActiveCellPath()
+      if new_path == current_path
+        # Nothing changed
+        return
 
-          current_path_update_required = false
+      current_path = new_path
+      @current_path.set(current_path)
 
-          current_path = Tracker.nonreactive => @current_path.get()
+      item_id = if current_path? then GridData.helpers.getPathItemId(current_path) else null
 
-          new_path = @getActiveCellPath()
-          if new_path == current_path
-            # Nothing changed
-            return
+      @logger.debug "Path changed", current_path
 
-          current_path = new_path
-          @current_path.set(current_path)
-
-          item_id = if current_path? then GridData.helpers.getPathItemId(current_path) else null
-
-          @logger.debug "Path changed", current_path
-
-          @emit "path-changed", current_path, item_id
+      @emit "path-changed", current_path, item_id
 
     @_grid_data.on "pre_rebuild", =>
       # Keep information about active cell and whether or not in edit mode and
@@ -135,6 +123,11 @@ _.extend GridControl.prototype,
           # keep current editor state if it's different from the stored value
           maintain_value = cell_editor_value
 
+      # XXX This was needed when the pre and post rebuild
+      # operations weren't done on the same tick. Now that
+      # they are (events in EventEmitter are actually synchronous)
+      # there is nothing to protect from.
+      # 
       # Reset the active cell
       #
       # This is important since during the build and until we finish the post
@@ -144,8 +137,8 @@ _.extend GridControl.prototype,
       # One example of buggy behavior that can be resulted from that: attempts to
       # get path for current active row using @_grid_data.getActiveCellPath
       # will result in wrong output
-      if active_cell_path?
-        @_grid.resetActiveCell()
+      # if active_cell_path?
+      #   @_grid.resetActiveCell()
 
       @_grid_data.once "rebuild", (diff) =>
         # If first build, or if fixed row height is used, we can use @_grid.invalidate
@@ -176,7 +169,7 @@ _.extend GridControl.prototype,
         if active_cell_path?
           new_row = @_grid_data.getItemRowByPath active_cell_path
 
-          if new_row == null
+          if not new_row?
             @_grid.resetActiveCell()
           else
             @_grid.setActiveCell(new_row, active_cell.cell)
