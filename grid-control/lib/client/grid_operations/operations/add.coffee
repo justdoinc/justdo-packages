@@ -38,7 +38,7 @@ _.extend PACK.GridOperations,
 
           # Flush to make sure the item is in the tree DOM
           @_grid_data._flush()
-          @activatePath child_path
+          @editPathCell child_path, 1
 
           # Release lock only after activation of new path to
           # avoid any chance of refering to previous path in
