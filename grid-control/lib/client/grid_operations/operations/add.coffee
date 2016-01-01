@@ -18,13 +18,13 @@ _.extend PACK.GridOperations,
         op = "addChild"
 
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        @_grid_data[op] path, fields, (err, child_id, child_path) =>
+        @_grid_data[op] path, fields, (err, new_item_id, new_item_path) =>
           if err?
             @logger.error "addChild failed: #{err}"
 
             callCb cb, err
 
-          @forceItemsPassCurrentFilter child_id
+          @forceItemsPassCurrentFilter new_item_id
 
           if add_as_child
             # Mark parent as expanded (in case it isn't yet) before adding the child
@@ -38,14 +38,14 @@ _.extend PACK.GridOperations,
 
           # Flush to make sure the item is in the tree DOM
           @_grid_data._flush()
-          @editPathCell child_path, 1
+          @editPathCell new_item_path, 1
 
           # Release lock only after activation of new path to
           # avoid any chance of refering to previous path in
           # following operations
           releaseOpsLock()
 
-          callCb cb, err, child_id, child_path
+          callCb cb, err, new_item_id, new_item_path
 
     prereq: -> @_opreqUnlocked()
 
