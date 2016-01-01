@@ -718,8 +718,8 @@ _.extend PACK.Plugins,
               enableDraggedRowEditing()
 
               # Release flush and flush right-away before re-enabling sortable
-              @_grid_data._release_flush()
-              @_grid_data._flush()
+              @_grid_data._release_flush true # true means flush right-away
+
               sortable("enable")
 
           @clearLongHoverMonitorInterval()

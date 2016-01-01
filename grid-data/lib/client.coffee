@@ -145,7 +145,11 @@ _.extend GridData.prototype,
 
     return false
 
-  _release_flush: ->
+  _release_flush: (immediate_flush = false) ->
+    # If immediate_flush is true and flush was blocked
+    # a flush will be performed right away and not in the next
+    # tick
+
     # Release lock
     @_flush_lock = false
 
@@ -153,7 +157,10 @@ _.extend GridData.prototype,
     if @_flush_blocked_by_lock
       @_flush_blocked_by_lock = false
 
-      @_set_need_flush()
+      if immediate_flush
+        @_flush()
+      else
+        @_set_need_flush()
 
   _get_need_flush: ->
     @_need_flush.get()
