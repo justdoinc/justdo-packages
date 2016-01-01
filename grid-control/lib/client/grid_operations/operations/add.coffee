@@ -57,6 +57,6 @@ _.extend PACK.GridOperations,
     op: (fields, cb) -> @addItem @getActiveCellPath(), fields, true, cb
     prereq: -> @_opreqActivePath(@addItem.prereq())
 
-  addSiblingTask:
+  addSiblingItem:
     op: (fields, cb) -> @addItem @getActiveCellPath(), fields, false, cb
     prereq: -> @_opreqActivePath(@addItem.prereq())
