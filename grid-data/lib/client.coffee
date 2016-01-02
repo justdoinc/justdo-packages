@@ -919,7 +919,15 @@ _.extend GridData.prototype,
     return paths
 
   # ** Tree view ops on paths **
+  isPathVisible: (path) ->
+    # Returns true if item is in the visible tree
+    @getItemRowByPath(path)?
+
   getPathIsExpand: (path) ->
+    # IMPORTANT! be careful when using, as path can be expanded
+    # but not visible (if one of its ancesors isn't expanded)
+    # therefore, if you want to check whether a path is shown
+    # use isPathVisible and not this method.
     path = helpers.normalizePath(path)
 
     path == "/" or path of @_expanded_paths
