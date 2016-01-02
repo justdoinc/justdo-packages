@@ -3446,7 +3446,11 @@ if (typeof Slick === "undefined") {
       return null;
     }
 
-    function setActiveCell(row, cell) {
+    function setActiveCell(row, cell, scroll_into_view) {
+      if (typeof scroll_into_view === "undefined") {
+        scroll_into_view = true; // Backward compatible
+      }
+
       if (!initialized) { return; }
       if (row > getDataLength() || row < 0 || cell >= columns.length || cell < 0) {
         return;
@@ -3456,7 +3460,10 @@ if (typeof Slick === "undefined") {
         return;
       }
 
-      scrollCellIntoView(row, cell, false);
+      if (scroll_into_view) {
+        scrollCellIntoView(row, cell, false);
+      }
+
       setActiveCellInternal(getCellNode(row, cell), false);
     }
 
