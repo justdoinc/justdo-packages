@@ -50,7 +50,7 @@ _.extend PACK.GridOperations,
     prereq: -> @_opreqUnlocked()
 
   newTopLevelItem:
-    op: (fields, cb) -> @addItem "/", fields, false, cb
+    op: (fields, cb) -> @addItem "/", fields, true, cb
     prereq: -> @addItem.prereq()
 
   addSubItem:
