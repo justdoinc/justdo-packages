@@ -1,4 +1,4 @@
-lock_timeout = 3000
+lock_timeout = 5000
 
 _.extend GridControl.prototype,
   # Note, operations locks are defined here and not in grid_data
