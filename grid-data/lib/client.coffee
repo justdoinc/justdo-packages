@@ -851,7 +851,7 @@ _.extend GridData.prototype,
     @grid_tree[id][2]
 
   getItemRowByPath: (path) ->
-    # Return the index of path in @grid_tree note: if parent not expanded or if path not exist will return false
+    # Return the index of path in @grid_tree note: if parent not expanded or if path not exist will return null
     path = helpers.normalizePath path
 
     item_id = helpers.getPathItemId path
