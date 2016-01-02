@@ -78,7 +78,7 @@ _.extend GridData.prototype,
   # we use _idle_time_ms_before_set_need_flush to give priority to
   # @_items_tracker over the flush. If many items arrive at the same time, we
   # don't flush until the batch is ready
-  _idle_time_ms_before_set_need_flush: 30
+  _idle_time_ms_before_set_need_flush: 100
   _set_need_flush_timeout: null
   _flush_lock: false
   _flush_blocked_by_lock: false
