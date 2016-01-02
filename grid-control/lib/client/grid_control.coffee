@@ -168,12 +168,17 @@ _.extend GridControl.prototype,
           # If path doesn't exist any longer @activatePath will take
           # care of issuing a debug message.
           if cell_editor?
-            @editPathCell(active_cell_path, active_cell.cell)
+            # XXX note that since we lock flush when entering edit mode
+            # this code will actually never happen.
+            # (we lock flush to avoid the difficulty of bringing the editor
+            # to the exact state it been in before flush, think of input pointer
+            # etc.)
+            entered_edit_mode = @editPathCell(active_cell_path, active_cell.cell, false)
 
-            if maintain_value?
+            if entered_edit_mode and maintain_value?
               @_grid.getCellEditor().setValue(maintain_value)
           else
-            @activatePath(active_cell_path, active_cell.cell)
+            @activatePath(active_cell_path, active_cell.cell, false)
 
         # tree_change, full_invalidation=true
         @logger.debug "Rebuild ready"
@@ -558,37 +563,51 @@ _.extend GridControl.prototype,
   activateRow: (row, cell = 0) ->
     @_grid.setActiveCell(row, cell)
 
-  activatePath: (path, cell = 0) ->
-    # Activate path, expand its parent if it isn't expanded.
-    # Logs an error if path doesn't exist.
+  activatePath: (path, cell = 0, expand = true) ->
+    # If expand is set to false, don't expand path ancestors
+    # in case path isn't visible due to collapsed ancestor/s,
+    # in which case we'll avoid activation.
+
+    # Return true if path activated successfuly, false otherwise
     path = GridData.helpers.normalizePath path
 
     path_parent = GridData.helpers.getParentPath path
 
     if @_grid_data.pathExist path
       # Expand parent path, if it isn't
-      if not @_grid_data.getPathIsExpand(path_parent)     
-        @_grid_data.expandPath(path_parent)
+      if not @_grid_data.isPathVisible(path)
+        if not expand
+          @logger.debug "activatePath: expand=false and path #{path} isn't visible due to collapsed ancestor - don't activate"
 
-        @once "rebuild_ready", =>
-          # post slick grid rebuild
-          row = @_grid_data.getItemRowByPath(path)
-          
-          @activateRow(row, cell)
+          return false
+        else
+          @_grid_data.expandPath(path_parent)
+
+          @once "rebuild_ready", =>
+            # post slick grid rebuild
+            row = @_grid_data.getItemRowByPath(path)
+            
+            @activateRow(row, cell)
       else
         row = @_grid_data.getItemRowByPath(path)
 
         @activateRow(row, cell)
     else
-      @logger.debug("Path `#{path}` doesn't exist")
+      @logger.debug "activatePath: path `#{path}` doesn't exist"
 
-  editActivePathCell: (cell) ->
-    @activatePath(@getActiveCellPath(), cell)
-    @editActiveCell()
+      return false
 
-  editPathCell: (path, cell) ->
-    @activatePath(path, cell)
+    return true
+
+  editPathCell: (path, cell, expand) ->
+    # Return true if entered into edit mode, false if failed
+    activated = @activatePath(path, cell, expand)
+
+    if not activated
+      return false
+
     @editActiveCell()
+    return true
 
   editActiveCell: ->
     @_grid.editActiveCell()
