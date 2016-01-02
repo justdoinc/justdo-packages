@@ -560,11 +560,16 @@ _.extend GridControl.prototype,
     else
       return null
 
-  activateRow: (row, cell = 0) ->
-    @_grid.setActiveCell(row, cell)
+  activateRow: (row, cell = 0, scroll_into_view = true) ->
+    @_grid.setActiveCell(row, cell, scroll_into_view)
 
-  activatePath: (path, cell = 0, expand = true) ->
-    # If expand is set to false, don't expand path ancestors
+  activatePath: (path, cell = 0, options) ->
+    if not options?
+      options = {}
+
+    options = _.extend {expand: true, scroll_into_view: true}, options
+
+    # If options.expand is set to false, don't expand path ancestors
     # in case path isn't visible due to collapsed ancestor/s,
     # in which case we'll avoid activation.
 
@@ -576,8 +581,8 @@ _.extend GridControl.prototype,
     if @_grid_data.pathExist path
       # Expand parent path, if it isn't
       if not @_grid_data.isPathVisible(path)
-        if not expand
-          @logger.debug "activatePath: expand=false and path #{path} isn't visible due to collapsed ancestor - don't activate"
+        if not options.expand
+          @logger.debug "activatePath: options.expand=false and path #{path} isn't visible due to collapsed ancestor - don't activate"
 
           return false
         else
@@ -587,11 +592,11 @@ _.extend GridControl.prototype,
             # post slick grid rebuild
             row = @_grid_data.getItemRowByPath(path)
             
-            @activateRow(row, cell)
+            @activateRow(row, cell, options.scroll_into_view)
       else
         row = @_grid_data.getItemRowByPath(path)
 
-        @activateRow(row, cell)
+        @activateRow(row, cell, options.scroll_into_view)
     else
       @logger.debug "activatePath: path `#{path}` doesn't exist"
 
@@ -599,9 +604,9 @@ _.extend GridControl.prototype,
 
     return true
 
-  editPathCell: (path, cell, expand) ->
+  editPathCell: (path, cell, options) ->
     # Return true if entered into edit mode, false if failed
-    activated = @activatePath(path, cell, expand)
+    activated = @activatePath(path, cell, options)
 
     if not activated
       return false
