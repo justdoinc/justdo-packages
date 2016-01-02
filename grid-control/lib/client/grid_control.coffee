@@ -178,7 +178,9 @@ _.extend GridControl.prototype,
             if entered_edit_mode and maintain_value?
               @_grid.getCellEditor().setValue(maintain_value)
           else
-            @activatePath(active_cell_path, active_cell.cell, false)
+            @activatePath active_cell_path, active_cell.cell,
+              expand: false
+              scroll_into_view: false
 
         # tree_change, full_invalidation=true
         @logger.debug "Rebuild ready"
