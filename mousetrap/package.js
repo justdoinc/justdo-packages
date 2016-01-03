@@ -17,5 +17,5 @@ Package.onUse(function (api) {
 
   api.add_files('mousetrap-v' + version + '/mousetrap.js', client);
 
-  api.export('Mousetrap');
+  api.export('Mousetrap', client);
 });
