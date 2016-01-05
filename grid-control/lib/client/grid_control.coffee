@@ -440,7 +440,8 @@ _.extend GridControl.prototype,
     columns.push
       id: "#",
       name: "",
-      width: 10,
+      minWidth: 0
+      width: 19,
       selectable: false,
       resizable: false,
       cssClass: "cell-handle"
