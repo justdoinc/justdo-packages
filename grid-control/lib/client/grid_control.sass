@@ -11,3 +11,15 @@
 
 .slick-cell.cell-handle
   background: url('/packages/stem-capital_grid-control/lib/client/media/cell-handle.png') no-repeat center center
+
+.slick-loading-indicator
+  display: none
+  position: absolute
+  font-size: 14px
+  width: 14px
+  left: 2px
+  top: 5px
+  color: #777
+
+  .slick-state-not-ready &, .slick-state-ops-lock &
+    display: block

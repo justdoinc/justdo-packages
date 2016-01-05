@@ -34,6 +34,8 @@ GridControl = (options, container, operations_container) ->
   @_operations_lock = new ReactiveVar false # Check /client/grid_operations/operations_lock.coffee
   @_operations_lock_timedout = new ReactiveVar false
 
+  @_states_classes_computations = null
+
   Meteor.defer =>
     @_init()
 
@@ -81,6 +83,8 @@ _.extend GridControl.prototype,
         @[method_name] = -> @_grid_data[method_name].apply(@_grid_data, arguments)
 
     @_grid = new Slick.Grid @container, @_grid_data, columns, slick_options
+
+    @_initStatesClassesComputations()
 
     #@_grid.setSelectionModel(new Slick.RowSelectionModel())
 
@@ -263,6 +267,34 @@ _.extend GridControl.prototype,
 
     new Meteor.Error(type, message, details)
 
+  _initStatesClassesComputations: ->
+    @_states_classes_computations = []
+
+    addPrefix = (state_name) -> "slick-state-#{state_name}"
+
+    # grid not-ready state
+    @_states_classes_computations.push Tracker.autorun =>
+      state_name = addPrefix("not-ready")
+
+      if not @ready.get()
+        @container.addClass state_name
+      else
+        @container.removeClass state_name
+
+    # operations lock active
+    @_states_classes_computations.push Tracker.autorun =>
+      state_name = addPrefix("ops-lock")
+
+      if @operationsLocked()
+        @container.addClass state_name
+      else
+        @container.removeClass state_name
+
+  _destroyStatesClassesComputations: ->
+    if @_states_classes_computations?    
+      for comp in @_states_classes_computations
+        comp.stop()
+
   _loadSchema: ->
     schema = {}
     parents_found = false
@@ -439,7 +471,7 @@ _.extend GridControl.prototype,
 
     columns.push
       id: "#",
-      name: "",
+      name: '<i class="fa fa-circle-o-notch fa-spin slick-loading-indicator"></i>',
       minWidth: 0
       width: 19,
       selectable: false,
@@ -671,6 +703,7 @@ _.extend GridControl.prototype,
     @initialized.set false
     @ready.set false
 
+    @_destroyStatesClassesComputations()
     @_destroy_plugins()
     @_destroy_jquery_events()
 
