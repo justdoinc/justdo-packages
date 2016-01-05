@@ -12,8 +12,10 @@ GridControl = (options, container, operations_container) ->
 
   @_initialized = false
   @_init_dfd = new $.Deferred() # resolved after init event emition; rejected if destroyed before init
+  @initialized = new ReactiveVar false
   @_destroyed = false
   @_ready = false
+  @ready = new ReactiveVar false
 
   @_grid_data = null
   @_grid = null
@@ -53,6 +55,7 @@ _.extend GridControl.prototype,
     if @_initialized or @_destroyed
       return
     @_initialized = true
+    @initialized.set true
 
     @_load_formatters()
     @_load_editors()
@@ -189,6 +192,7 @@ _.extend GridControl.prototype,
 
         if not @_ready
           @_ready = true
+          @ready.set true
           @logger.debug "Ready"
           @emit "ready"
 
@@ -663,6 +667,8 @@ _.extend GridControl.prototype,
 
     # In case init_dfd isn't resolved already, reject it
     @_init_dfd.reject()
+    @initialized.set false
+    @ready.set false
 
     @_destroy_plugins()
     @_destroy_jquery_events()
