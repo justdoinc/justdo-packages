@@ -24,6 +24,10 @@ _.extend PACK.GridOperations,
 
             callCb cb, err
 
+            releaseOpsLock()
+
+            return
+
           @forceItemsPassCurrentFilter new_item_id
 
           if add_as_child
@@ -40,12 +44,12 @@ _.extend PACK.GridOperations,
           @_grid_data._flush()
           @editPathCell new_item_path, 1
 
+          callCb cb, err, new_item_id, new_item_path
+
           # Release lock only after activation of new path to
           # avoid any chance of refering to previous path in
           # following operations
           releaseOpsLock()
-
-          callCb cb, err, new_item_id, new_item_path
 
     prereq: -> @_opreqUnlocked()
 
