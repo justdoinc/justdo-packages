@@ -473,7 +473,7 @@ _.extend GridControl.prototype,
       id: "#",
       name: '<i class="fa fa-circle-o-notch fa-spin slick-loading-indicator"></i>',
       minWidth: 0
-      width: 19,
+      width: 24,
       selectable: false,
       resizable: false,
       cssClass: "cell-handle"
