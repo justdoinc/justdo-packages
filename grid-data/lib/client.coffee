@@ -78,7 +78,7 @@ _.extend GridData.prototype,
   # we use _idle_time_ms_before_set_need_flush to give priority to
   # @_items_tracker over the flush. If many items arrive at the same time, we
   # don't flush until the batch is ready
-  _idle_time_ms_before_set_need_flush: 100
+  _idle_time_ms_before_set_need_flush: 80
   _set_need_flush_timeout: null
   _flush_lock: false
   _flush_blocked_by_lock: false
@@ -323,7 +323,13 @@ _.extend GridData.prototype,
             for item_id in filter_independent_items
               @_filter_items.push {_id: item_id}
 
-        @_setFilterPathsNeedsUpdate()
+        # If init is undergoing, we don't want to call @_setFilterPathsNeedsUpdate()
+        # yet since it will trigger a flush and we want the first flush to be a result
+        # of the initial items data load.
+        # Once data will start to load the items observer will request filter update
+        # anyway.
+        if @_initialized
+          @_setFilterPathsNeedsUpdate()
 
         @logger.debug "@_filter_items updated"
 
@@ -741,7 +747,6 @@ _.extend GridData.prototype,
   _init: ->
     if @_initialized or @_destroyed
       return
-    @_initialized = true
 
     # Init filter tracker before the data structure and the tree
     # so in the end of _rebuildGridTree we will build the filter
@@ -749,10 +754,25 @@ _.extend GridData.prototype,
     @_init_filter_tracker()
 
     @_initDataStructure()
-    @_rebuildGridTree() # build tree based on the data structure for the first time
 
     @_init_items_tracker()
     @_init_flush_orchestrator()
+
+    @_initialized = true
+
+    Meteor.setTimeout =>
+      Tracker.nonreactive =>
+        if not @_destroyed and @_get_need_flush() == 0
+          # We call _set_need_flush here to make sure the first flush will
+          # occur even if we have no data for the grid (if @_get_need_flush() != 0
+          # data exist, and either flushed already or waiting to be flushed).
+          # This is important since grid_control rely on the first `flush`
+          # event to triggers its `ready` event/state.
+
+          # Note: Data is considered ready by grid_control the first time
+          # @_init_flush_orchestrator triggers flush.
+          @_set_need_flush()
+    , 1000
 
     @emit "init"
 

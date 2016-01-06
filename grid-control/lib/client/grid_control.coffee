@@ -194,11 +194,12 @@ _.extend GridControl.prototype,
         @emit "rebuild_ready"
         @emit "tree_change", true
 
-        if not @_ready
-          @_ready = true
-          @ready.set true
-          @logger.debug "Ready"
-          @emit "ready"
+    @_grid_data.once "flush", =>
+      if not @_ready
+        @_ready = true
+        @ready.set true
+        @logger.debug "Ready"
+        @emit "ready"
 
     @_grid_data.on "grid-item-changed", (row, fields) =>
       col_id_to_row = _.invert(_.map @_grid.getColumns(), (cell) -> cell.id)
