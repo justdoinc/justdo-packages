@@ -60,7 +60,7 @@ _.extend PACK.Formatters,
 
     if index?
       tree_control += """
-          <span class="label label-primary task-id"
+          <span class="label label-primary grid-tree-control-task-id"
                  style="left: #{index_left}px;
                         width: #{index_width}px;">
             #{index}
