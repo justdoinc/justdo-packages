@@ -764,16 +764,31 @@ _.extend GridData.prototype,
     Meteor.setTimeout =>
       Tracker.nonreactive =>
         if not @_destroyed and @_get_need_flush() == 0
+          # No needed flush for the given time after init can mean 2 things:
+          #
+          # 1. No items exist for this grid
+          # 2. All data from subscriptions was ready before observer (@_init_items_tracker)
+          #    was set, as a result, no flush data related flush was required, and
+          #    grid wasn't built for initial payload. (In this case all data
+          #    loaded by @_initDataStructure).
+
+          if not _.isEmpty @items_by_id
+            # If we have data already, build the tree accordingly
+
+            # Set filter paths needs update so the @_update_filter_paths call at the end of
+            # _rebuildGridTree will update the paths (otherwise it'll skip) 
+            @_setFilterPathsNeedsUpdate()
+            @_rebuildGridTree()
+
           # We call _set_need_flush here to make sure the first flush will
-          # occur even if we have no data for the grid (if @_get_need_flush() != 0
-          # data exist, and either flushed already or waiting to be flushed).
+          # occur even if we have no data for the grid.
           # This is important since grid_control rely on the first `flush`
           # event to triggers its `ready` event/state.
 
           # Note: Data is considered ready by grid_control the first time
           # @_init_flush_orchestrator triggers flush.
           @_set_need_flush()
-    , 1000
+    , 250
 
     @emit "init"
 
