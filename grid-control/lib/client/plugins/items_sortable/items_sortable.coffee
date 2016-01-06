@@ -693,38 +693,44 @@ _.extend PACK.Plugins,
             # Disable sortable while waiting for server until we update the tree
             # to its new structure.
             markDraggedRowWaitingForServer()
-            sortable("disable")
-            @_grid_data.movePath dragged_row_path, new_position, (err) =>
-              if err
-                sortable("cancel")
+            @_performLockingOperation (releaseOpsLock, timedout) =>
+              @_grid_data.movePath dragged_row_path, new_position, (err) =>
+                if err
+                  sortable("cancel")
 
-                invalidateRowCells(dragged_row_index)
+                  invalidateRowCells(dragged_row_index)
 
-                @logger.debug "Items-sortable: Move operation failed - grid state reverted"
-              else
-                # If succeed and dropped into a new level - expand parent
-                if isNewLevelMode()
-                  parent_details =
-                    getRowExtendedDetails @_grid.getRowFromNode($(".#{_new_level_mode_parent_class}", @container).get(0))
+                  @logger.debug "Items-sortable: Move operation failed - grid state reverted"
+                else
+                  # If succeed and dropped into a new level - expand parent
+                  if isNewLevelMode()
+                    parent_details =
+                      getRowExtendedDetails @_grid.getRowFromNode($(".#{_new_level_mode_parent_class}", @container).get(0))
 
-                  @_grid_data.expandPath parent_details.path, true # true means force expansion (item have no children before flush released, so it's required)
+                    @_grid_data.expandPath parent_details.path, true # true means force expansion (item have no children before flush released, so it's required)
 
-              # force exit from new-level-mode (will do nothing if we're not in new-level-mode)
-              updateNewLevelMode(true)
+                # force exit from new-level-mode (will do nothing if we're not in new-level-mode)
+                updateNewLevelMode(true)
 
-              # XXX flush won't replace original row if the actual position hasn't
-              # changed
-              unmarkDraggedRowWaitingForServer()
-              enableDraggedRowEditing()
+                # XXX flush won't replace original row if the actual position hasn't
+                # changed
+                unmarkDraggedRowWaitingForServer()
+                enableDraggedRowEditing()
 
-              # Release flush and flush right-away before re-enabling sortable
-              @_grid_data._release_flush true # true means flush right-away
+                # Release flush and flush right-away before re-enabling sortable
+                @_grid_data._release_flush true # true means flush right-away
 
-              sortable("enable")
+                releaseOpsLock()
 
           @clearLongHoverMonitorInterval()
           # clear reference to grid item to let gc get rid of it if needed.
           dragged_row_extended_details = null
+
+      @_items_sortable_operations_lock_computation = Tracker.autorun =>
+        if @operationsLocked()
+          sortable("disable")
+        else
+          sortable("enable")
 
     destroy: ->
       @rows_sort_placeholder_position_updated 
@@ -735,6 +741,9 @@ _.extend PACK.Plugins,
         @off "rows-sort-placeholder-position-updated", @rows_sort_placeholder_position_updated
 
       @clearLongHoverMonitorInterval()
+
+      if @_items_sortable_operations_lock_computation?
+        @_items_sortable_operations_lock_computation.stop()
 
       if sortable("instance")?
         sortable("destroy")
