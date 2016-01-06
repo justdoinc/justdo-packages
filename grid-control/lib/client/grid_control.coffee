@@ -95,23 +95,6 @@ _.extend GridControl.prototype,
     # emit path-changed only as a result of a real change.
     @current_path = new ReactiveVar @getActiveCellPath()
 
-    @_grid.onActiveCellChanged.subscribe =>
-      current_path = Tracker.nonreactive => @current_path.get()
-
-      new_path = @getActiveCellPath()
-      if new_path == current_path
-        # Nothing changed
-        return
-
-      current_path = new_path
-      @current_path.set(current_path)
-
-      item_id = if current_path? then GridData.helpers.getPathItemId(current_path) else null
-
-      @logger.debug "Path changed", current_path
-
-      @emit "path-changed", current_path, item_id
-
     @_grid_data.on "pre_rebuild", =>
       # Keep information about active cell and whether or not in edit mode and
       # if yes editor value compared to stored value
@@ -237,6 +220,23 @@ _.extend GridControl.prototype,
       @_grid_data._release_flush true
 
       return true
+
+    @_grid.onActiveCellChanged.subscribe =>
+      current_path = Tracker.nonreactive => @current_path.get()
+
+      new_path = @getActiveCellPath()
+      if new_path == current_path
+        # Nothing changed
+        return
+
+      current_path = new_path
+      @current_path.set(current_path)
+
+      item_id = if current_path? then GridData.helpers.getPathItemId(current_path) else null
+
+      @logger.debug "Path changed", current_path
+
+      @emit "path-changed", current_path, item_id
 
     for name, hook of @_init_hooks
       hook.call(@)
