@@ -49,7 +49,8 @@ _.extend PACK.Formatters,
       index_outer_width = index_width + index_horizontal_paddings
       index_margin_right = 3
       index_left = horizontal_padding + text_left_margin
-      text_indent = index_outer_width + index_margin_right
+      text_indent = 0 # index_outer_width + index_margin_right
+      text_left_margin += index_outer_width + index_margin_right
 
     tree_control = """
       <div class="grid-formatter text-tree-control">
