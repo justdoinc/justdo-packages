@@ -51,7 +51,7 @@ _.extend PACK.GridOperations,
           # following operations
           releaseOpsLock()
 
-    prereq: -> @_opreqUnlocked()
+    prereq: -> @_opreqUnlocked(@_opreqGridReady())
 
   newTopLevelItem:
     op: (fields, cb) -> @addItem "/", fields, true, cb

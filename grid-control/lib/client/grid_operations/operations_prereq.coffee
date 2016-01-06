@@ -28,6 +28,14 @@ _.extend GridControl.prototype,
   # * As a standard prefix all prereq generators with _opreq (stands for
   # operation requires).
 
+  _opreqGridReady: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    if not @ready.get()
+      prereq.grid_not_ready = "Waiting for grid to become ready"
+
+    return prereq
+
   _opreqUnlocked: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
