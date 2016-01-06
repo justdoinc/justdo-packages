@@ -3,18 +3,6 @@ PACK.jquery_events.push(
     # destroy current cell editor if blurred out and value didn't change
     args: ['blur', '.editor-text,input.editor-unicode-date,.tree-control-input,.tree-control-textarea,.textarea-editor,div.selector-editor']
     handler: (e) ->
-      if not @__reedit_cell_after_blur_patch_applied?
-        @__reedit_cell_after_blur_patch_applied = true
-
-        @_grid.onClick.subscribe (e, args) =>
-          active_cell = @_grid.getActiveCell()
-          clicked_cell = args
-
-          # If active cell clicked again, get into edit mode (won't happen without this fix)
-          if active_cell? and active_cell.row == clicked_cell.row and
-             active_cell.cell == clicked_cell.cell
-              @_grid.editActiveCell()
-
       Meteor.defer =>
         if (e.currentTarget == $('.editor-text', @container).get(0)) or
            (e.currentTarget == $('.tree-control-input', @container).get(0)) or

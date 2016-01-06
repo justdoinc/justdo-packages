@@ -2552,10 +2552,26 @@ if (typeof Slick === "undefined") {
         return;
       }
 
-      if ((activeCell != cell.cell || activeRow != cell.row) && canCellBeActive(cell.row, cell.cell)) {
-        if (!getEditorLock().isActive() || getEditorLock().commitCurrentEdit()) {
+      var enter_edit_mode = true;
+      if ($(e.target).hasClass("slick-prevent-edit")) {
+        enter_edit_mode = false;
+      }
+
+      var clicked_on_current_active_cell =
+            activeCell == cell.cell && activeRow == cell.row;
+      var is_edit_mode = getEditorLock().isActive();
+      var can_cell_be_active =
+            canCellBeActive(cell.row, cell.cell) && // if cell is activable and
+            (!clicked_on_current_active_cell || !is_edit_mode); // is not the current one, unless, not edit mode already
+
+      if (can_cell_be_active) {
+        var could_exit_current_editor =
+              !getEditorLock().isActive() ||
+              getEditorLock().commitCurrentEdit();
+
+        if (could_exit_current_editor) {
           scrollRowIntoView(cell.row, false);
-          setActiveCellInternal(getCellNode(cell.row, cell.cell));
+          setActiveCellInternal(getCellNode(cell.row, cell.cell), enter_edit_mode);
         }
       }
     }
