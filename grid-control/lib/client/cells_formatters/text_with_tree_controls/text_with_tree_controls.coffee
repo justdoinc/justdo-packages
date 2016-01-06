@@ -56,13 +56,13 @@ _.extend PACK.Formatters,
 
     tree_control = """
       <div class="grid-formatter text-tree-control">
-        <div class="grid-tree-control-toggle #{state}"
+        <div class="grid-tree-control-toggle slick-prevent-edit #{state}"
               style="left: #{toggle_indentation}px;"></div>
     """
 
     if index?
       tree_control += """
-          <span class="label label-primary grid-tree-control-task-id"
+          <span class="label label-primary grid-tree-control-task-id slick-prevent-edit"
                  style="left: #{index_left}px;
                         width: #{index_width}px;">
             #{index}
