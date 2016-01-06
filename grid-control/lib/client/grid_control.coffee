@@ -56,8 +56,6 @@ _.extend GridControl.prototype,
   _init: ->
     if @_initialized or @_destroyed
       return
-    @_initialized = true
-    @initialized.set true
 
     @_load_formatters()
     @_load_editors()
@@ -243,6 +241,8 @@ _.extend GridControl.prototype,
 
       @logger.debug("Init hook `#{name}` called")
 
+    @_initialized = true
+    @initialized.set true
     @emit "init"
 
     @_init_dfd.resolve()
