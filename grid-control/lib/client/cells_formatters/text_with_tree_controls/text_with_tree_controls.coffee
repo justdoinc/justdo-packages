@@ -22,13 +22,15 @@ _.extend PACK.Formatters,
       value = helpers.nl2br value
 
     horizontal_padding = 4
-    toggle_margin_left = -2
 
-    toggle_width = 20
+    toggle_margin_left = -3
+    toggle_width = 21
+    toggle_margin_right = 0
+
     level_indent = 15
     indentation_margin = (level_indent * level)
     toggle_indentation = horizontal_padding + toggle_margin_left + indentation_margin
-    text_left_margin = indentation_margin + toggle_width + toggle_margin_left
+    text_left_margin = indentation_margin + toggle_margin_left + toggle_width + toggle_margin_right
 
     getRandomArbitrary = (min, max) -> Math.floor(Math.random() * (max - min) + min)
 
