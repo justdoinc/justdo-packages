@@ -2585,9 +2585,9 @@ if (typeof Slick === "undefined") {
         return;
       }
 
-      if (options.editable) {
-        gotoCell(cell.row, cell.cell, true);
-      }
+      // if (options.editable) {
+      //   gotoCell(cell.row, cell.cell, true);
+      // }
     }
 
     function handleHeaderMouseEnter(e) {
