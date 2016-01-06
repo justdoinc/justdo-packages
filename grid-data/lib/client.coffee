@@ -15,6 +15,7 @@ GridData = (collection) ->
 
   @_items_tracker = null
   @_flush_orchestrator = null
+  @_need_flush_count = 0
   @_need_flush = new ReactiveVar(0)
   @_flushing = false # Will be true during flush process
 
@@ -74,7 +75,7 @@ GridData.helpers = helpers # Expose helpers to other packages throw GridData
 Util.inherits GridData, EventEmitter
 
 _.extend GridData.prototype,
-  _need_flush_count: 0
+  
   # we use _idle_time_ms_before_set_need_flush to give priority to
   # @_items_tracker over the flush. If many items arrive at the same time, we
   # don't flush until the batch is ready
