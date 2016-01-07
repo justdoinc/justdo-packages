@@ -1115,11 +1115,10 @@ _.extend GridData.prototype,
     path = helpers.normalizePath(path)
 
     Meteor.call @getCollectionMethodName("addChild"), path, fields, (err, child_id) ->
-      if cb?
-        if err?
-          cb err
-        else
-          cb err, child_id, path + child_id + "/"
+      if err?
+        helpers.callCb cb, err
+      else
+        helpers.callCb cb, err, child_id, path + child_id + "/"
 
   addSibling: (path, fields, cb) ->
     # If cb provided, cb will be called with the following args when excution
@@ -1129,11 +1128,10 @@ _.extend GridData.prototype,
     path = helpers.normalizePath(path)
 
     Meteor.call @getCollectionMethodName("addSibling"), path, fields, (err, sibling_id) ->
-      if cb?
-        if err?
-          cb err
-        else
-          cb err, sibling_id, helpers.getParentPath(path) + sibling_id + "/"
+      if err?
+        helpers.callCb cb, err
+      else
+        helpers.callCb cb, err, sibling_id, helpers.getParentPath(path) + sibling_id + "/"
 
   removeParent: (path) ->
     path = helpers.normalizePath(path)
