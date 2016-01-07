@@ -37,6 +37,7 @@ Package.onUse(function (api) {
 
   api.add_files('lib/globals.js', both);
 
+  api.add_files('lib/both/helpers.coffee', both);
   api.add_files('lib/both/simple_schema_extensions.coffee', both);
 
   api.add_files('lib/client/grid_control.coffee', client, {bare: true});

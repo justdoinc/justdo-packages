@@ -1,11 +1,6 @@
 # Note: @ will be assigned as the grid_control object for both op and prereq
 
-callCb = ->
-  cb = arguments[0]
-  args = _.toArray(arguments).slice(1)
-
-  if cb? and _.isFunction(cb)
-    cb.apply(@, args)
+callCb = PACK.helpers.callCb
 
 _.extend PACK.GridOperations,
   addItem:
