@@ -1133,9 +1133,13 @@ _.extend GridData.prototype,
       else
         helpers.callCb cb, err, sibling_id, helpers.getParentPath(path) + sibling_id + "/"
 
-  removeParent: (path) ->
+  removeParent: (path, cb) ->
+    # If cb provided, cb will be called with the following args when excution
+    # completed:
+    # cb(err)
     path = helpers.normalizePath(path)
-    Meteor.call @getCollectionMethodName("removeParent"), path
+    Meteor.call @getCollectionMethodName("removeParent"), path, (err) ->
+      helpers.callCb cb, err
 
   movePath: (path, new_location, cb) ->
     # If cb provided, cb will be called with the following args when excution
