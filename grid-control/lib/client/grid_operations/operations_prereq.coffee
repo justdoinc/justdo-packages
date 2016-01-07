@@ -48,7 +48,6 @@ _.extend GridControl.prototype,
     prereq = prepareOpreqArgs(prereq)
 
     if not @current_path.get()?
-      prereq.current_path = "Select an item to perform this operation"
+      prereq.no_active_path = "Select an item to perform this operation"
 
     return prereq
-
