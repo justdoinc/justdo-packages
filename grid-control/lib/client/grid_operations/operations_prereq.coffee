@@ -51,3 +51,18 @@ _.extend GridControl.prototype,
       prereq.no_active_path = "Select an item to perform this operation"
 
     return prereq
+
+  _opreqActivePathIsLeaf: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    active_path_prereq = @_opreqActivePath()
+
+    # If there's no active path - just return the 
+    if not _.isEmpty active_path_prereq
+      _.extend(prereq, active_path_prereq)
+      return prereq
+
+    if @_grid_data.pathHasChildren(@current_path.get())
+      prereq.active_path_is_not_leaf = "Can't remove an item with sub-items"
+
+    return prereq
