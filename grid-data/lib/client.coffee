@@ -907,6 +907,54 @@ _.extend GridData.prototype,
 
   getLength: -> @grid_tree.length
 
+  getNextItem: (id) ->
+    # Returns null if id is the last item (last visible item if filters enabled)
+    # Filter aware
+
+    next_item_row = id + 1
+
+    Tracker.nonreactive =>
+      if @isActiveFilter()
+        # If there's an active filter, look for visible prev item
+        filter_paths = @getFilterPaths()
+
+        # XXX Note that we have in filter_paths info that can be used to optimize
+        # this (info about which is first/last visible)
+        while next_item_row < @getLength()
+          if filter_paths[next_item_row][0] > 0 # means passing filter
+            break
+
+          next_item_row += 1     
+
+    if next_item_row >= @getLength()
+      return null
+
+    return next_item_row
+
+  getPreviousItem: (id) ->
+    # Returns null if id is the first item (first visible item if filters enabled)
+    # Filter aware
+
+    previous_item_row = id - 1
+
+    Tracker.nonreactive =>
+      if @isActiveFilter()
+        # If there's an active filter, look for visible prev item
+        filter_paths = @getFilterPaths()
+
+        # XXX Note that we have in filter_paths info that can be used to optimize
+        # this (info about which is first/last visible)
+        while previous_item_row >= 0
+          if filter_paths[previous_item_row][0] > 0 # means passing filter
+            break
+
+          previous_item_row -= 1
+
+    if previous_item_row < 0
+      return null
+
+    return previous_item_row
+
   # ** Search **
   search: (term, fields=null, exclude_filtered_paths=false) ->
     # term should be a regex
@@ -989,6 +1037,32 @@ _.extend GridData.prototype,
     if @getPathIsExpand(path)
       @_structure_changes_queue.push ["collapse_path", [path]]
       @_set_need_flush()
+
+  _getSiblingPath: (path, prev) ->
+    # returns the prev path if prev = true; the next path
+    # otherwise.
+    # Return null if there's no such path or if provided path is unknown
+
+        # Return null if there's no next path or unknown path
+    # Filters aware
+    row_id = @getItemRowByPath(path)
+
+    if not row_id?
+      return null
+
+    if prev
+      item = @getPreviousItem row_id
+    else
+      item = @getNextItem row_id
+
+    if not item?
+      return null
+
+    return @getItemPath item
+
+  getNextPath: (path) -> @_getSiblingPath(path, false)
+
+  getPreviousPath: (path) -> @_getSiblingPath(path, true)
 
   # ** Tree view ops on items **
   getItemIsExpand: (id) -> @getItemPath(id) of @_expanded_paths
