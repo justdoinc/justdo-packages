@@ -17,7 +17,7 @@ _.extend GridControl.prototype,
       # Clear items that were forced to pass the previous filter
       @_grid_data.clearFilterIndependentItems()
 
-      @_grid_data.filter.set filter_query
+      @_grid_data.setFilter filter_query
 
     @on "filtered-paths-updated", =>
       active_path = @getActiveCellPath()

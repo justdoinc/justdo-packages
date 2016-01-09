@@ -192,6 +192,16 @@ _.extend GridData.prototype,
 
     return false
 
+  setFilter: (filter_query) ->
+    @filter.set(filter_query)
+    # Update @_filter_items immediately so computations that
+    # tracks @filter changes will have the up-to-date @_filter_items
+    # available 
+    @_updateFilterItems()
+    # @_updateFilterItems() will call @_setFilterPathsNeedsUpdate so
+    # @_update_filter_paths will update @_filter_paths
+    @_update_filter_paths()
+
   _update_filter_paths: ->
     # Filter paths against current @_filter_items, set result to @_filter_paths
     # Also maintains the @_filter_items_ids used for optimized filtered items lookup
@@ -306,33 +316,37 @@ _.extend GridData.prototype,
 
       @emit "filter-paths-update"
 
+  _updateFilterItems: ->
+    # Update @_filter_items based on current @filter
+
+    filter = @filter.get()
+
+    if not filter?
+      # If filter cleared, init @_filter_items
+      @_filter_items = null
+    else
+      @_filter_items = @collection.find(@filter.get(), {fields: {_id: 1}}).fetch()
+
+      filter_independent_items = @filter_independent_items.get()
+
+      if filter_independent_items?
+        for item_id in filter_independent_items
+          @_filter_items.push {_id: item_id}
+
+    # If init is undergoing, we don't want to call @_setFilterPathsNeedsUpdate()
+    # yet since it will trigger a flush and we want the first flush to be a result
+    # of the initial items data load.
+    # Once data will start to load the items observer will request filter update
+    # anyway.
+    if @_initialized
+      @_setFilterPathsNeedsUpdate()
+
+    @logger.debug "@_filter_items updated"
+
   _init_filter_tracker: ->
     # Track changes to current filter query and @_filter_items (the query result set)
     if not @_destroyed and not @_filter_tracker?
-      @_filter_tracker = Tracker.autorun =>
-        filter = @filter.get()
-
-        if not filter?
-          # If filter cleared, init @_filter_items
-          @_filter_items = null
-        else
-          @_filter_items = @collection.find(@filter.get(), {fields: {_id: 1}}).fetch()
-
-          filter_independent_items = @filter_independent_items.get()
-
-          if filter_independent_items?
-            for item_id in filter_independent_items
-              @_filter_items.push {_id: item_id}
-
-        # If init is undergoing, we don't want to call @_setFilterPathsNeedsUpdate()
-        # yet since it will trigger a flush and we want the first flush to be a result
-        # of the initial items data load.
-        # Once data will start to load the items observer will request filter update
-        # anyway.
-        if @_initialized
-          @_setFilterPathsNeedsUpdate()
-
-        @logger.debug "@_filter_items updated"
+      @_filter_tracker = Tracker.autorun => @_updateFilterItems()
 
   clearFilterIndependentItems: ->
     @filter_independent_items.set(null)
