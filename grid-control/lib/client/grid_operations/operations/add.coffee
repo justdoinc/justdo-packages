@@ -24,6 +24,12 @@ _.extend PACK.GridOperations,
             return
 
           @forceItemsPassCurrentFilter new_item_id
+          Tracker.flush() # Needed so the filter tracker computation
+                          # which depends on grid_data.filter_independent_items
+                          # as a reactive resource, will immediately update 
+                          # @_filter_items and @_filter_paths so they'll
+                          # be available for the grid_data.flush before
+                          # entering edit mode (which block all grid_data.flush)
 
           if add_as_child
             # Mark parent as expanded (in case it isn't yet) before adding the child
