@@ -63,6 +63,6 @@ _.extend GridControl.prototype,
       return prereq
 
     if @_grid_data.pathHasChildren(@current_path.get())
-      prereq.active_path_is_not_leaf = "Can't remove an item with sub-items"
+      prereq.active_path_is_not_leaf = "Can't perform operation on an item with sub-items"
 
     return prereq
