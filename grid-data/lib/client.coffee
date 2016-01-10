@@ -1062,12 +1062,11 @@ _.extend GridData.prototype,
       @_structure_changes_queue.push ["collapse_path", [path]]
       @_set_need_flush()
 
-  _getSiblingPath: (path, prev) ->
+  _getNeighboringPath: (path, prev) ->
     # returns the prev path if prev = true; the next path
     # otherwise.
     # Return null if there's no such path or if provided path is unknown
 
-        # Return null if there's no next path or unknown path
     # Filters aware
     row_id = @getItemRowByPath(path)
 
@@ -1084,9 +1083,10 @@ _.extend GridData.prototype,
 
     return @getItemPath item
 
-  getNextPath: (path) -> @_getSiblingPath(path, false)
+  getNextPath: (path) -> @_getNeighboringPath(path, false)
 
-  getPreviousPath: (path) -> @_getSiblingPath(path, true)
+  getPreviousPath: (path) -> @_getNeighboringPath(path, true)
+
 
   # ** Tree view ops on items **
   getItemIsExpand: (id) -> @getItemPath(id) of @_expanded_paths
