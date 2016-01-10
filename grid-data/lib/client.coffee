@@ -1055,9 +1055,32 @@ _.extend GridData.prototype,
     # but not visible (if one of its ancesors isn't expanded)
     # therefore, if you want to check whether a path is shown
     # use isPathVisible and not this method.
+
+    # Reactive resource
+
+    # Filters aware
+
+    @invalidateOnFlush()
+
+    active_filter = @isActiveFilter()
+    filter_paths = @getFilterPaths()
+
     path = helpers.normalizePath(path)
 
-    path == "/" or path of @_expanded_paths
+    expanded = path == "/" or path of @_expanded_paths
+
+    if not expanded or not active_filter
+      return expanded
+    # else: Expanded and filter is active
+
+    item_row = @getItemRowByPath path
+
+    if filter_paths[item_row][0] in [1, 2]
+      # 1 or 2 this path and/or its decendents pass the filter - therefore, even
+      # with filter active it's shown as expanded
+      return true
+
+    return false
 
   expandPath: (path, force=false) ->
     # if force is true we will trigger path expansion even if it isn't
