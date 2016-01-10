@@ -169,7 +169,11 @@ _.extend GridData.prototype,
   _get_need_flush: ->
     @_need_flush.get()
 
-  isActiveFilter: -> @filter.get()? # True if there's an active filter, false otherwise
+   # True if there's an active filter, false otherwise; note that for
+   # reactivity purposes an invalidation will occur on every filter change
+   # (which is desired - don't change this behavior as some parts of the code
+   # depend on it)
+  isActiveFilter: -> @filter.get()?
 
   getFilterPaths: -> @_filter_paths
 
