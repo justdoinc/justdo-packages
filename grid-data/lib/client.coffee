@@ -1181,16 +1181,43 @@ _.extend GridData.prototype,
     Meteor.call @getCollectionMethodName("removeParent"), path, (err) ->
       helpers.callCb cb, err
 
-  movePath: (path, new_location, cb) ->
+  movePath: (path, new_location, place_after = false, cb) ->
+    # Put path in the position provided in new_location - pushing
+    # the order of all the existing siblings after.
+    #
+    # If place_after is true path will be placed after new_location
+    # and not in it (order + 1).
+
+    # new_location arg: New location can be either an object of the form: 
+    #
+    # {
+    #   parent: "parent_id",
+    #   order: order_int
+    # }
+    #
+    # or a path.
+    # If new_location is a path we will use the given path parent and order
+    # as the new_location object.
+    #
     # If cb provided, cb will be called with the following args when excution
     # completed:
     # cb(err)
 
     path = helpers.normalizePath(path)
 
+    if _.isString new_location
+      # Assume a path was given
+      new_loc_path_details = @getPathDetails new_location
+
+      new_location =
+        parent: new_loc_path_details.parent_id
+        order: new_loc_path_details.order
+
+    if place_after and new_location.order?
+      new_location.order += 1    
+
     Meteor.call @getCollectionMethodName("movePath"), path, new_location, (err) ->
-      if cb?
-        cb err
+      helpers.callCb cb, err
 
   getItemMetadata: (index) ->
     # Get the metadata from each one of the generators
