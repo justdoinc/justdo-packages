@@ -22,7 +22,7 @@ GridDataCom = (collection) ->
 
   @_grid_methods_middlewares = {}
 
-  @
+  return @
 
 Util.inherits GridDataCom, EventEmitter
 
