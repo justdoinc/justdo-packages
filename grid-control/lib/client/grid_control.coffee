@@ -657,7 +657,7 @@ _.extend GridControl.prototype,
   editActiveCell: ->
     @_grid.editActiveCell()
 
-  resetActivePath: (path) -> @_grid.resetActiveCell()
+  resetActivePath: -> @_grid.resetActiveCell()
 
   registerMetadataGenerator: (cb) ->
     @_init_dfd.done =>
