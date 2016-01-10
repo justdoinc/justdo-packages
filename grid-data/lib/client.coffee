@@ -18,9 +18,10 @@ GridData = (collection) ->
   @_need_flush_count = 0
   @_need_flush = new ReactiveVar(0)
   @_flushing = false # Will be true during flush process
-  # @flush_counter Counts the amount of performed flushes. Can be used to
-  # @create reactive resources that gets invalidated upon tree changes
-  @flush_counter = new ReactiveVar(0)
+  # @_flush_counter Counts the amount of performed flushes. Can be used to
+  # create reactive resources that gets invalidated upon tree changes.
+  # For clearity, use @invalidateOnFlush() instead of directly
+  @_flush_counter = new ReactiveVar(0)
 
   #
   # Flush queues/flags
@@ -603,6 +604,11 @@ _.extend GridData.prototype,
 
       return rebuild_tree
 
+  invalidateOnFlush: ->
+    # Call this method on methods that should gets recompute on flush (if ran
+    # inside a computation)
+    return @_flush_counter.get()
+
   _flush: (structure_only = false) ->
     # Perform pending updates to the internal data structures
 
@@ -655,7 +661,7 @@ _.extend GridData.prototype,
     @_flushing = false
 
     Tracker.nonreactive =>
-      @flush_counter.set(@flush_counter.get() + 1)
+      @_flush_counter.set(@_flush_counter.get() + 1)
 
     @emit "flush"
 
