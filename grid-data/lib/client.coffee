@@ -935,20 +935,21 @@ _.extend GridData.prototype,
     # Returns null if id is the last item (last visible item if filters enabled)
     # Filter aware
 
+    # Reactive resource
+
     next_item_row = id + 1
 
-    Tracker.nonreactive =>
-      if @isActiveFilter()
-        # If there's an active filter, look for visible prev item
-        filter_paths = @getFilterPaths()
+    if @isActiveFilter()
+      # If there's an active filter, look for visible prev item
+      filter_paths = @getFilterPaths()
 
-        # XXX Note that we have in filter_paths info that can be used to optimize
-        # this (info about which is first/last visible)
-        while next_item_row < @getLength()
-          if filter_paths[next_item_row][0] > 0 # means passing filter
-            break
+      # XXX Note that we have in filter_paths info that can be used to optimize
+      # this (info about which is first/last visible)
+      while next_item_row < @getLength()
+        if filter_paths[next_item_row][0] > 0 # means passing filter
+          break
 
-          next_item_row += 1     
+        next_item_row += 1     
 
     if next_item_row >= @getLength()
       return null
@@ -959,20 +960,21 @@ _.extend GridData.prototype,
     # Returns null if id is the first item (first visible item if filters enabled)
     # Filter aware
 
+    # Reactive resource
+
     previous_item_row = id - 1
 
-    Tracker.nonreactive =>
-      if @isActiveFilter()
-        # If there's an active filter, look for visible prev item
-        filter_paths = @getFilterPaths()
+    if @isActiveFilter()
+      # If there's an active filter, look for visible next item
+      filter_paths = @getFilterPaths()
 
-        # XXX Note that we have in filter_paths info that can be used to optimize
-        # this (info about which is first/last visible)
-        while previous_item_row >= 0
-          if filter_paths[previous_item_row][0] > 0 # means passing filter
-            break
+      # XXX Note that we have in filter_paths info that can be used to optimize
+      # this (info about which is first/last visible)
+      while previous_item_row >= 0
+        if filter_paths[previous_item_row][0] > 0 # means passing filter
+          break
 
-          previous_item_row -= 1
+        previous_item_row -= 1
 
     if previous_item_row < 0
       return null
