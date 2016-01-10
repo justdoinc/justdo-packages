@@ -18,6 +18,9 @@ GridData = (collection) ->
   @_need_flush_count = 0
   @_need_flush = new ReactiveVar(0)
   @_flushing = false # Will be true during flush process
+  # @flush_counter Counts the amount of performed flushes. Can be used to
+  # @create reactive resources that gets invalidated upon tree changes
+  @flush_counter = new ReactiveVar(0)
 
   #
   # Flush queues/flags
@@ -646,6 +649,9 @@ _.extend GridData.prototype,
     @logger.debug "Flush: done"
 
     @_flushing = false
+
+    Tracker.nonreactive =>
+      @flush_counter.set(@flush_counter.get() + 1)
 
     @emit "flush"
 
