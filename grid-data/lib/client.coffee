@@ -943,6 +943,10 @@ _.extend GridData.prototype,
 
     # Reactive resource
 
+    # If inside a computation, should invalidate when grid
+    # changes
+    @invalidateOnFlush()
+
     next_item_row = id + 1
 
     if @isActiveFilter()
@@ -967,6 +971,10 @@ _.extend GridData.prototype,
     # Filter aware
 
     # Reactive resource
+
+    # If inside a computation, should invalidate when grid
+    # changes
+    @invalidateOnFlush()
 
     previous_item_row = id - 1
 
