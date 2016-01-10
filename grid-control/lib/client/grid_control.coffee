@@ -234,8 +234,6 @@ _.extend GridControl.prototype,
 
       @logger.debug "Path changed", current_path
 
-      @emit "path-changed", current_path, item_id
-
     for name, hook of @_init_hooks
       hook.call(@)
 
