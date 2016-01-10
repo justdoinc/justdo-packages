@@ -1050,6 +1050,8 @@ _.extend GridData.prototype,
     # Returns true if item is in the visible tree
     @getItemRowByPath(path)?
 
+  getPathLevel: (path) -> @getItemLevel @getItemRowByPath path
+
   getPathIsExpand: (path) ->
     # IMPORTANT! be careful when using, as path can be expanded
     # but not visible (if one of its ancesors isn't expanded)
