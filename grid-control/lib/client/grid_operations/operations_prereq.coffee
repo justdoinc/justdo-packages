@@ -57,7 +57,7 @@ _.extend GridControl.prototype,
 
     active_path_prereq = @_opreqActivePath()
 
-    # If there's no active path - just return the 
+    # If there's no active path - just return the active prereq message
     if not _.isEmpty active_path_prereq
       _.extend(prereq, active_path_prereq)
       return prereq
