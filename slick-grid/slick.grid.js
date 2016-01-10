@@ -1659,6 +1659,16 @@ if (typeof Slick === "undefined") {
         callUpdateRowCount = true;
       }
 
+      var current_active_cell = getActiveCell();
+      if (current_active_cell !== null) {
+        if (current_active_cell.row >= index) {
+          // If active row comes after the range we change
+          // we must reset it, as we don't have information
+          // to maintain it
+          resetActiveCell();
+        }
+      }
+
       // update rowsCache
       var current_rows_cache_size = _.size(rowsCache);
 
