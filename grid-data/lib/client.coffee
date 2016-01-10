@@ -605,9 +605,12 @@ _.extend GridData.prototype,
       return rebuild_tree
 
   invalidateOnFlush: ->
-    # Call this method on methods that should gets recompute on flush (if ran
-    # inside a computation)
-    return @_flush_counter.get()
+    if Tracker.currentComputation?
+      # If there's no computation - do nothing
+
+      # Call this method on methods that should gets recompute on flush (if ran
+      # inside a computation)
+      return @_flush_counter.get()
 
   _flush: (structure_only = false) ->
     # Perform pending updates to the internal data structures
