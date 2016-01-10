@@ -1131,7 +1131,7 @@ _.extend GridData.prototype,
 
 
   # ** Tree view ops on items **
-  getItemIsExpand: (id) -> @getItemPath(id) of @_expanded_paths
+  getItemIsExpand: (id) -> @getPathIsExpand(@getItemPath(id))
 
   toggleItem: (id) ->
     if @getItemIsExpand id
