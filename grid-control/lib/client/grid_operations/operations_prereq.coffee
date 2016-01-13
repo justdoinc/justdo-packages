@@ -62,8 +62,12 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    if @_grid_data.pathHasChildren(@current_path.get())
+    path_has_children = @_grid_data.pathHasChildren(@current_path.get())
+    if path_has_children == 1
       prereq.active_path_is_not_leaf = "Can't perform operation on an item with sub-items"
+
+    if path_has_children == 2
+      prereq.active_path_is_not_leaf_all_child_filtered = "Can't perform operation on an item with sub-items (has filtered children)"
 
     return prereq
 

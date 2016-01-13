@@ -916,16 +916,30 @@ _.extend GridData.prototype,
     return false
 
   pathHasChildren: (path) ->
-    # return true if path exists and have children
+    # Returns 0 if path is a leaf, hidden by filter or doesn't exist
+    #         1 if path has children
+    #         2 if path has children - but all are hidden by active filter
+    # Returns null if path doesn't exists
+
+    # Reactive resource
+
+    # Filters aware (filters reactivity results from @getItemRowByPath())
+
+    # If inside a computation, should invalidate when grid
+    # changes
+    @invalidateOnFlush()
+
     if @pathExist path
-      item_id = helpers.getPathItemId path
+      return @getItemHasChildren @getItemRowByPath path
 
-      return @itemIdHasChildren item_id
+    return 0
 
+  pathExpandable: (path) ->
+    # Reactive resource
 
-    return false
+    # Filters aware
 
-  pathExpandable: (path) -> @pathHasChildren path # alias to pathHasChildren
+    @pathHasChildren(path) == 1
 
   # ** Grid tree info **
   # Reminder: Grid tree is the single dimensional representation of the tree
