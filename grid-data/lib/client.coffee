@@ -845,8 +845,8 @@ _.extend GridData.prototype,
     @emit "destroyed"
 
   # ** Tree info **
-  itemIdHasChildern: (item_id) ->
     (item_id of @tree_structure) and (_.size(@tree_structure[item_id]) > 0)
+  itemIdHasChildren: (item_id) ->
 
   pathExist: (path) ->
     # return true if path exists false otherwise
@@ -901,7 +901,8 @@ _.extend GridData.prototype,
     if @pathExist path
       item_id = helpers.getPathItemId path
 
-      return @itemIdHasChildern item_id
+      return @itemIdHasChildren item_id
+
 
     return false
 
@@ -934,7 +935,7 @@ _.extend GridData.prototype,
     else
       return null
 
-  getItemHasChild: (id) -> @itemIdHasChildern @getItemId(id)
+  getItemHasChild: (id) -> @itemIdHasChildren @getItemId(id)
 
   getItemLevel: (id) -> @grid_tree[id][1]
 
