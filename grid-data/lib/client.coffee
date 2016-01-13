@@ -1106,6 +1106,23 @@ _.extend GridData.prototype,
       @_structure_changes_queue.push ["collapse_path", [path]]
       @_set_need_flush()
 
+  getPathDetails: (path) ->
+    path = helpers.normalizePath(path)
+
+    # Avoid non O(1) details unless really necessary
+
+    item_id = helpers.getPathItemId(path)
+    parent_id = helpers.getPathParentId path
+    item = @items_by_id[item_id]
+    order = item.parents[parent_id].order
+
+    details =
+      item_id: item_id
+      parent_id: parent_id
+      order: order
+
+    return details
+
   _getNeighboringPath: (path, prev) ->
     # returns the prev path if prev = true; the next path
     # otherwise.
@@ -1131,6 +1148,48 @@ _.extend GridData.prototype,
 
   getPreviousPath: (path) -> @_getNeighboringPath(path, true)
 
+  getNextLteLevelPath: (path) ->
+    # Gets a path and returns the next path in the tree
+    # that is positioned in either the same level or in
+    # a lower level.
+
+    # Returns null if there's no such path or if provided
+    # path doesn't exist.
+
+    # Filters aware
+
+    # If inside a computation, should invalidate when grid
+    # changes
+    @invalidateOnFlush()
+
+    row_id = @getItemRowByPath(path)
+
+    if not row_id?
+      return null
+
+    item_level = @getItemLevel(row_id)
+
+    active_filter = @isActiveFilter()
+    filter_paths = @getFilterPaths()
+
+    next_item_row = row_id + 1
+    while next_item_row < @getLength()
+      if active_filter
+        # Check if item passed the filter
+
+        # XXX Note that we have in filter_paths info that can be used to optimize
+        # this (info about which is first/last visible)
+        if filter_paths[next_item_row][0] == 0 # means not passing filter
+          next_item_row += 1
+          continue
+
+      if @getItemLevel(next_item_row) <= item_level
+        return @getItemPath(next_item_row)
+
+      next_item_row += 1
+
+    # None found
+    return null
 
   # ** Tree view ops on items **
   getItemIsExpand: (id) -> @getPathIsExpand(@getItemPath(id))

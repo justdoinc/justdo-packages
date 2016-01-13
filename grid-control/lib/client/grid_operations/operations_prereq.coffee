@@ -66,3 +66,18 @@ _.extend GridControl.prototype,
       prereq.active_path_is_not_leaf = "Can't perform operation on an item with sub-items"
 
     return prereq
+
+  _opreqItemInLteLevelExistFollwingActive: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    active_path_prereq = @_opreqActivePath()
+
+    # If there's no active path - just return the active prereq message 
+    if not _.isEmpty active_path_prereq
+      _.extend(prereq, active_path_prereq)
+      return prereq
+
+    if not @_grid_data.getNextLteLevelPath(@current_path.get())?
+      prereq.no_lte_level_path_follows_active = "No item follows the item in lower level"
+
+    return prereq
