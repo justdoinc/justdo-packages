@@ -694,7 +694,7 @@ _.extend PACK.Plugins,
             # to its new structure.
             markDraggedRowWaitingForServer()
             @_performLockingOperation (releaseOpsLock, timedout) =>
-              @_grid_data.movePath dragged_row_path, new_position, false, (err) =>
+              @_grid_data.movePath dragged_row_path, new_position, (err) =>
                 if err
                   sortable("cancel")
 

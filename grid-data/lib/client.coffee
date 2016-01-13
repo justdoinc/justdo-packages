@@ -1209,43 +1209,78 @@ _.extend GridData.prototype,
     Meteor.call @getCollectionMethodName("removeParent"), path, (err) ->
       helpers.callCb cb, err
 
-  movePath: (path, new_location, place_after = false, cb) ->
-    # Put path in the position provided in new_location - pushing
-    # the order of all the existing siblings after.
-    #
-    # If place_after is true path will be placed after new_location
-    # and not in it (order + 1).
+  movePath: (path, new_location, cb) ->
+    # Put path in the position provided in new_location.
 
-    # new_location arg: New location can be either an object of the form: 
-    #
+    # new_location can be either object of the form:
     # {
     #   parent: "parent_id",
     #   order: order_int
     # }
     #
-    # or a path.
-    # If new_location is a path we will use the given path parent and order
-    # as the new_location object.
-    #
-    # If cb provided, cb will be called with the following args when excution
-    # completed:
-    # cb(err)
+    # or an array of the form: [new_position_path, relation] where
+    # new_position_path is a path and relation is one of -1, 0, 1
+    # If relation is:
+    #   0:  path will be placed as the first child of new_position_path
+    #   -1: path will be placed before new_position_path
+    #    1: path will be placed after new_position_path
+
+    # If new_location is array
+
+    # If cb provided, cb will be called when excution completed:
+    # cb args will be determined by new_location type:
+    # if new_location is an array: cb(err, new_path)
+    #   new_path we will determine new_location based on new_position_path and relation.
+    # if new_location is an object: cb(err)
 
     path = helpers.normalizePath(path)
 
-    if _.isString new_location
-      # Assume a path was given
-      new_loc_path_details = @getPathDetails new_location
+    new_location_type = null
+    new_location_obj = null
+    new_path = null
+    if not _.isArray new_location
+      new_location_type = "object"
+      new_location_obj = new_location
+    else
+      new_location_type = "array"
 
-      new_location =
-        parent: new_loc_path_details.parent_id
-        order: new_loc_path_details.order
+      path_details = @getPathDetails path
 
-    if place_after and new_location.order?
-      new_location.order += 1    
+      [position_path, relation] = new_location
+      position_path = helpers.normalizePath(position_path)
 
-    Meteor.call @getCollectionMethodName("movePath"), path, new_location, (err) ->
-      helpers.callCb cb, err
+      position_path_details = @getPathDetails position_path
+      if position_path == "/"
+        # edge case position_path == "/", ignore relation
+        new_location_obj =
+          parent: "0"
+          order: 0
+
+        new_path = "#{path_details.item_id}/"
+      else if relation == 0
+        new_location_obj =
+          parent: position_path_details.item_id
+          order: 0
+
+        new_path = "#{position_path}#{path_details.item_id}/"
+      else # relation -1 or 1
+        new_location_obj =
+          parent: position_path_details.parent_id
+          order: position_path_details.order
+
+        if relation == 1
+          new_location_obj.order += 1
+
+        new_path = "#{helpers.getParentPath(position_path)}#{path_details.item_id}/"
+
+    Meteor.call @getCollectionMethodName("movePath"), path, new_location_obj, (err) ->
+      if new_location_type == "object"
+        helpers.callCb cb, err
+      else
+        if not err?
+          helpers.callCb cb, err, new_path
+        else
+          helpers.callCb cb, err
 
   getItemMetadata: (index) ->
     # Get the metadata from each one of the generators
