@@ -616,6 +616,9 @@ _.extend GridControl.prototype,
 
     path_parent = GridData.helpers.getParentPath path
 
+    # XXX at the moment pathExist isn't filters aware,
+    # therefore we might open the path ancestor even though
+    # the path is actually filtered - will look weird
     if @_grid_data.pathExist path
       # Expand parent path, if it isn't
       if not @_grid_data.isPathVisible(path)
@@ -629,8 +632,9 @@ _.extend GridControl.prototype,
           @once "rebuild_ready", =>
             # post slick grid rebuild
             row = @_grid_data.getItemRowByPath(path)
-            
-            @activateRow(row, cell, options.scroll_into_view)
+
+            if row?
+              @activateRow(row, cell, options.scroll_into_view)
       else
         row = @_grid_data.getItemRowByPath(path)
 
