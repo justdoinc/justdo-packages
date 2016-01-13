@@ -1217,13 +1217,9 @@ _.extend GridData.prototype,
     else
       @expandItem id
 
-  expandItem: (id) ->
-    if @getItemHasChild id
-      @expandPath(@getItemPath id)
+  expandItem: (id) -> @expandPath(@getItemPath id)
 
-  collapseItem: (id) ->
-    if @getItemHasChild id
-      @collapsePath(@getItemPath id)
+  collapseItem: (id) -> @collapsePath(@getItemPath id)
 
   # ** Tree ops **
   edit: (edit_req) ->
