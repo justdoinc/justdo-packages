@@ -866,6 +866,8 @@ _.extend GridData.prototype,
     return false
 
   pathExist: (path) ->
+    # Note: not filters aware, not reactive
+
     # return true if path exists false otherwise
     path = helpers.normalizePath path
 
