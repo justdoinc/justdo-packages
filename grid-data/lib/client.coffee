@@ -916,10 +916,11 @@ _.extend GridData.prototype,
     return false
 
   pathHasChildren: (path) ->
-    # Returns 0 if path is a leaf, hidden by filter or doesn't exist
+    # !important: works only on visible paths
+
+    # Returns 0 if path is a leaf, hidden, hidden by filter or doesn't exist
     #         1 if path has children
     #         2 if path has children - but all are hidden by active filter
-    # Returns null if path doesn't exists
 
     # Reactive resource
 
@@ -929,8 +930,9 @@ _.extend GridData.prototype,
     # changes
     @invalidateOnFlush()
 
-    if @pathExist path
-      return @getItemHasChildren @getItemRowByPath path
+    item_row = @getItemRowByPath path
+    if item_row?
+      return @getItemHasChildren item_row
 
     return 0
 
@@ -1116,23 +1118,21 @@ _.extend GridData.prototype,
   getPathLevel: (path) -> @getItemLevel @getItemRowByPath path
 
   getPathIsExpand: (path) ->
-    # IMPORTANT! be careful when using, as path can be expanded
-    # but not visible (if one of its ancesors isn't expanded)
-    # therefore, if you want to check whether a path is shown
-    # use isPathVisible and not this method.
-
     # Reactive resource
 
     # Filters aware
+
+    path = helpers.normalizePath(path)
+
+    if helpers.isRootPath path
+      return true
 
     @invalidateOnFlush()
 
     active_filter = @isActiveFilter()
     filter_paths = @getFilterPaths()
 
-    path = helpers.normalizePath(path)
-
-    expanded = path == "/" or path of @_expanded_paths
+    expanded = path of @_expanded_paths
 
     if not expanded or not active_filter
       return expanded
