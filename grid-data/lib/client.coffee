@@ -845,8 +845,24 @@ _.extend GridData.prototype,
     @emit "destroyed"
 
   # ** Tree info **
-    (item_id of @tree_structure) and (_.size(@tree_structure[item_id]) > 0)
   itemIdHasChildren: (item_id) ->
+    # Reactive resource
+
+    # Not filters aware, calculating whether an item
+    # that **isn't on the grid** has filtered decendents
+    # is too expensive and we don't have use cases
+    # that requires this information.
+
+    # To check whether items that are on the grid has
+    # children in a filters aware mode use: pathHasChildren()
+
+    # Note: if item doesn't exist we return false here.
+    @invalidateOnFlush()
+
+    if (item_id of @tree_structure) and (_.size(@tree_structure[item_id]) > 0)
+      return true
+
+    return false
 
   pathExist: (path) ->
     # return true if path exists false otherwise
