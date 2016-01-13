@@ -855,6 +855,7 @@ _.extend GridData.prototype,
 
     # To check whether items that are on the grid has
     # children in a filters aware mode use: pathHasChildren()
+    # or getItemHasChildren()
 
     # Note: if item doesn't exist we return false here.
     @invalidateOnFlush()
@@ -951,7 +952,36 @@ _.extend GridData.prototype,
     else
       return null
 
-  getItemHasChild: (id) -> @itemIdHasChildren @getItemId(id)
+  getItemHasChildren: (id) ->
+    # Reactive resource
+
+    # Returns 0 if item is a leaf or hidden by filter
+    #         1 if item has children
+    #         2 if item has children - but all are hidden by active filter
+
+    # Filters aware
+
+    # Taken care by @itemIdHasChildren()
+    # @invalidateOnFlush()
+
+    has_children = @itemIdHasChildren @getItemId(id)
+
+    active_filter = @isActiveFilter()
+    filter_paths = @getFilterPaths()
+
+    path = helpers.normalizePath(path)
+
+    if not has_children
+      return 0
+
+    if not active_filter
+      return 1
+
+    if filter_paths[id][0] in [1, 2] # has passing filter decendents
+      return 1
+
+    # appears as leaf, but has children - all filtered
+    return 2
 
   getItemLevel: (id) -> @grid_tree[id][1]
 

@@ -3,7 +3,9 @@ helpers = PACK.FormattersHelpers
 _.extend PACK.Formatters,
   textWithTreeControls: (row, cell, value, columnDef, item) ->
     level = @_grid_data.getItemLevel row
-    has_childs = @_grid_data.getItemHasChild row
+    # has_childs note: we print the toggle button for filtered item (result ==
+    # 2) being hidden in the css level
+    has_childs = @_grid_data.getItemHasChildren(row) > 0
     expand = @_grid_data.getItemIsExpand row
 
     state = ""
