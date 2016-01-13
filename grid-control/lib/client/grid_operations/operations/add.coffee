@@ -39,7 +39,7 @@ _.extend PACK.GridOperations,
 
             # true means force expansion (path might have no children before flush,
             # so it's required)
-            @_grid_data.expandPath path, true
+            @_grid_data.expandPath path
 
           # Flush to make sure the item is in the tree DOM
           @_grid_data._flush()

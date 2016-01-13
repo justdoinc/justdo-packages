@@ -624,7 +624,7 @@ _.extend GridControl.prototype,
 
           return false
         else
-          @_grid_data.expandPath(path_parent)
+          @_grid_data.expandPath path_parent
 
           @once "rebuild_ready", =>
             # post slick grid rebuild

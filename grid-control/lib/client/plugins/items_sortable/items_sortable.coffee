@@ -707,7 +707,7 @@ _.extend PACK.Plugins,
                     parent_details =
                       getRowExtendedDetails @_grid.getRowFromNode($(".#{_new_level_mode_parent_class}", @container).get(0))
 
-                    @_grid_data.expandPath parent_details.path, true # true means force expansion (item have no children before flush released, so it's required)
+                    @_grid_data.expandPath parent_details.path
 
                 # force exit from new-level-mode (will do nothing if we're not in new-level-mode)
                 updateNewLevelMode(true)

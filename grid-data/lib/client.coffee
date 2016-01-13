@@ -1147,25 +1147,29 @@ _.extend GridData.prototype,
 
     return false
 
-  expandPath: (path, force=false) ->
-    # if force is true we will trigger path expansion even if it isn't
-    # yet expandable (useful, when flush lock is on, and we know the
-    # item is going to be expandable)
+  expandPath: (path) ->
     path = helpers.normalizePath path
 
     if helpers.isRootPath path
       # root always expanded
       return
 
-    for ancestor_path in helpers.getAllAncestorPaths(path)
-      if not(@getPathIsExpand(ancestor_path)) and (@pathExpandable(ancestor_path) or force)
-        @_structure_changes_queue.push ["expand_path", [ancestor_path]]
-        @_set_need_flush()
+    if @pathExist path
+      for ancestor_path in helpers.getAllAncestorPaths(path)
+        if not(path of @_expanded_paths)
+          @_structure_changes_queue.push ["expand_path", [ancestor_path]]
+          @_set_need_flush()
+    else
+      @error "Can't expnad unknown path: #{path}"
 
   collapsePath: (path) ->
     path = helpers.normalizePath(path)
 
-    if @getPathIsExpand(path)
+    if helpers.isRootPath path
+      # root always expanded
+      return
+
+    if path of @_expanded_paths
       @_structure_changes_queue.push ["collapse_path", [path]]
       @_set_need_flush()
 
