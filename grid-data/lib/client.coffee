@@ -1115,7 +1115,11 @@ _.extend GridData.prototype,
     # Returns true if item is in the visible tree
     @getItemRowByPath(path)?
 
-  getPathLevel: (path) -> @getItemLevel @getItemRowByPath path
+  getPathLevel: (path) ->
+    # XXX Can be optimized...
+    path = helpers.normalizePath path
+
+    return @getItemLevel @getItemRowByPath path
 
   getPathIsExpand: (path) ->
     # Reactive resource
