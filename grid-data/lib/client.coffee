@@ -1176,7 +1176,8 @@ _.extend GridData.prototype,
   getPathDetails: (path) ->
     path = helpers.normalizePath(path)
 
-    # Avoid non O(1) details unless really necessary
+    # Avoid non O(1) details unless really necessary.
+    # Avoid reactive resources.
 
     item_id = helpers.getPathItemId(path)
     parent_id = helpers.getPathParentId path
