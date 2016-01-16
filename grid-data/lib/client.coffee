@@ -1351,6 +1351,7 @@ _.extend GridData.prototype,
     #   0:  path will be placed as the first child of new_position_path
     #   -1: path will be placed before new_position_path
     #    1: path will be placed after new_position_path
+    #   2:  path will be placed as the last child of new_position_path
 
     # If new_location is array
 
@@ -1378,16 +1379,21 @@ _.extend GridData.prototype,
 
       position_path_details = @getPathDetails position_path
       if position_path == "/"
-        # edge case position_path == "/", ignore relation
+        # edge case position_path == "/" parent is "0"
         new_location_obj =
           parent: "0"
-          order: 0
 
-        new_path = "#{path_details.item_id}/"
-      else if relation == 0
+        # ignore -1/1 relations (assume only 0/2 are possible)
+        if relation == 0
+          new_location_obj.order = 0
+
+        new_path = "/#{path_details.item_id}/"
+      else if relation in [0, 2]
         new_location_obj =
           parent: position_path_details.item_id
-          order: 0
+
+        if relation == 0
+          new_location_obj.order = 0
 
         new_path = "#{position_path}#{path_details.item_id}/"
       else # relation -1 or 1
