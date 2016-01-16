@@ -71,7 +71,7 @@ _.extend GridControl.prototype,
 
     return prereq
 
-  _opreqItemInLteLevelExistFollwingActive: (prereq) ->
+  _opreqActiveItemInLteLevelExistFollwingActive: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
     active_path_prereq = @_opreqActivePath()

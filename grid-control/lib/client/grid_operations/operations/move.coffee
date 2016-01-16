@@ -43,7 +43,7 @@ _.extend PACK.GridOperations,
           # following operations
           releaseOpsLock()
 
-    prereq: -> @_opreqItemInLteLevelExistFollwingActive(@_opreqUnlocked(@_opreqGridReady()))
+    prereq: -> @_opreqActiveItemInLteLevelExistFollwingActive(@_opreqUnlocked(@_opreqGridReady()))
 
   moveActivePathUp:
     op: (cb) ->
