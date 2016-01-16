@@ -97,6 +97,6 @@ _.extend GridControl.prototype,
       return prereq
 
     if not @_grid_data.getPreviousPath(@current_path.get())?
-      prereq.no_lte_level_path_follows_active = "Can't perform this operation on the first item"
+      prereq.active_item_is_first = "Can't perform this operation on the first item"
 
     return prereq
