@@ -100,3 +100,40 @@ _.extend GridControl.prototype,
       prereq.active_item_is_first = "Can't perform this operation on the first item"
 
     return prereq
+
+  _opreqActiveItemIsntUnderRoot: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    active_path_prereq = @_opreqActivePath()
+
+    # If there's no active path - just return the active prereq message 
+    if not _.isEmpty active_path_prereq
+      _.extend(prereq, active_path_prereq)
+      return prereq
+
+    parent_path = GridData.helpers.getParentPath(@current_path.get())
+
+    if parent_path == "/"
+      prereq.first_level_item = "Can't perform this operation on first level items"
+
+    return prereq
+
+  _opreqActiveItemPrevSiblingInGteLevel: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    active_path_item_isnt_first_prereq = @_opreqActiveItemIsntFirst()
+    # If there's no prev path - just return the active_path_item_isnt_first_prereq message
+    # note @_opreqActiveItemIsntFirst also takes care of making sure there's
+    # an active path
+    if not _.isEmpty active_path_item_isnt_first_prereq
+      _.extend(prereq, active_path_item_isnt_first_prereq)
+      return prereq
+
+    current_path = @current_path.get()
+    curr_path_level = @_grid_data.getPathLevel current_path
+    prev_path_level = @_grid_data.getPathLevel @_grid_data.getPreviousPath(current_path)
+
+    if curr_path_level > prev_path_level
+      prereq.prev_item_not_deeper = "Can't perform this operation when previous item isn't in a deeper level"
+
+    return prereq
