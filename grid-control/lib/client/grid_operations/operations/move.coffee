@@ -44,3 +44,43 @@ _.extend PACK.GridOperations,
           releaseOpsLock()
 
     prereq: -> @_opreqItemInLteLevelExistFollwingActive(@_opreqUnlocked(@_opreqGridReady()))
+
+  moveActivePathUp:
+    op: (cb) ->
+      @_performLockingOperation (releaseOpsLock, timedout) =>
+        active_path = @getActiveCellPath()
+
+        prev_path = @_grid_data.getPreviousPath(active_path)
+
+        relation_to_prev_path = -1
+        if @_grid_data.getPathLevel(active_path) < @_grid_data.getPathLevel(prev_path)
+          relation_to_prev_path = 1
+
+        @_grid_data._lock_flush()
+        @_grid_data.movePath active_path, [prev_path, relation_to_prev_path], (err, new_path) =>
+          @_grid_data._release_flush()
+          if err?
+            @logger.error "moveActivePath failed: #{err}"
+
+            callCb cb, err
+
+            releaseOpsLock()
+
+            return
+
+          if @_grid_data.getPathIsExpand active_path
+            @_grid_data.collapsePath active_path
+
+          # Flush to make sure DOM is up-to-date before the call to cb
+          @_grid_data._flush()
+
+          @activatePath new_path
+
+          callCb cb, err
+
+          # Release lock only after activation of prev path to
+          # avoid any chance of refering to removed path in
+          # following operations
+          releaseOpsLock()
+
+    prereq: -> @_opreqActiveItemIsntFirst(@_opreqUnlocked(@_opreqGridReady()))
