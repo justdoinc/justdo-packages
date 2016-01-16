@@ -63,5 +63,12 @@ _.extend PACK.GridOperations,
     prereq: -> @_opreqActivePath(@addItem.prereq())
 
   addSiblingItem:
-    op: (fields, cb) -> @addItem @getActiveCellPath(), fields, false, cb
-    prereq: -> @_opreqActivePath(@addItem.prereq())
+    op: (fields, cb) ->
+      active_path = @getActiveCellPath()
+
+      if active_path?
+        @addItem @getActiveCellPath(), fields, false, cb
+      else
+        @addItem "/", fields, true, cb
+
+    prereq: -> @addItem.prereq()
