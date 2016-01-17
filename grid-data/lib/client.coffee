@@ -50,8 +50,7 @@ GridData = (collection) ->
   @_items_ids_map_to_grid_tree_indices = {} # {item_id: [indices in @grid_tree]}
   @_expanded_paths = {} # if path is a key of @_expanded_paths it is expanded regardless of its value
 
-  # note if users changed the subscription should remove the doc if user lose access
-  @_ignore_change_in_fields = ["users"]
+  @_ignore_change_in_fields = []
 
   @_metadataGenerators = []
 
