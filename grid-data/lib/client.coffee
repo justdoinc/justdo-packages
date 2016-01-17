@@ -1137,18 +1137,11 @@ _.extend GridData.prototype,
 
     expanded = path of @_expanded_paths
 
-    if not expanded or not active_filter
-      return expanded
-    # else: Expanded and filter is active
+    if not expanded
+      return false
 
-    item_row = @getItemRowByPath path
-
-    if filter_paths[item_row][0] in [1, 2]
-      # 1 or 2 this path and/or its decendents pass the filter - therefore, even
-      # with filter active it's shown as expanded
-      return true
-
-    return false
+    # If marked as expanded, it is expanded if it actually has children
+    return @pathHasChildren path
 
   expandPath: (path) ->
     path = helpers.normalizePath path
