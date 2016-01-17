@@ -17,7 +17,7 @@ _.extend PACK.GridOperations,
           next_path = @_grid_data.getNextPath(next_path)
 
         @_grid_data._lock_flush()
-        @_grid_data.movePath active_path, [next_path, relation_to_next_path], (err, new_path) =>
+        @movePath active_path, [next_path, relation_to_next_path], (err, new_path) =>
           @_grid_data._release_flush()
           if err?
             @logger.error "moveActivePath failed: #{err}"
@@ -57,7 +57,7 @@ _.extend PACK.GridOperations,
           relation_to_prev_path = 1
 
         @_grid_data._lock_flush()
-        @_grid_data.movePath active_path, [prev_path, relation_to_prev_path], (err, new_path) =>
+        @movePath active_path, [prev_path, relation_to_prev_path], (err, new_path) =>
           @_grid_data._release_flush()
           if err?
             @logger.error "moveActivePath failed: #{err}"
@@ -93,7 +93,7 @@ _.extend PACK.GridOperations,
         parent_path = GridData.helpers.getParentPath(active_path)
 
         @_grid_data._lock_flush()
-        @_grid_data.movePath active_path, [parent_path, 1], (err, new_path) =>
+        @movePath active_path, [parent_path, 1], (err, new_path) =>
           @_grid_data._release_flush()
           if err?
             @logger.error "moveActivePath failed: #{err}"
@@ -146,7 +146,7 @@ _.extend PACK.GridOperations,
         console.log target_path, relation
 
         @_grid_data._lock_flush()
-        @_grid_data.movePath active_path, [target_path, relation], (err, new_path) =>
+        @movePath active_path, [target_path, relation], (err, new_path) =>
           @_grid_data._release_flush()
           if err?
             @logger.error "moveActivePath failed: #{err}"

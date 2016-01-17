@@ -1335,7 +1335,7 @@ _.extend GridData.prototype,
     Meteor.call @getCollectionMethodName("removeParent"), path, (err) ->
       helpers.callCb cb, err
 
-  movePath: (path, new_location, cb) ->
+  movePath: (path, new_location, cb, usersDiffConfirmationCb) ->
     # Put path in the position provided in new_location.
 
     # new_location can be either object of the form:
@@ -1360,6 +1360,21 @@ _.extend GridData.prototype,
     #   new_path we will determine new_location based on new_position_path and relation.
     # if new_location is an object: cb(err)
 
+    # if usersDiffConfirmationCb is provided, if users of path and
+    # provided new_location aren't the same the move operation will be
+    # suspended and usersDiffConfirmationCb will be called with the following
+    # args:
+    #   usersDiffConfirmationCb(diff, proceed, cancel)
+    #   diff: will be null if users are equal otherwise it'll be of the form:
+    #         {
+    #           absent: [uid, uid, ...] # can be empty
+    #           alien: [uid, uid, ...] # can be empty
+    #         }
+    #         absent lists users that exists in path but don't in new_location
+    #         alien lists users that don't exist in path but do in new_location
+    #   proceed: a callback, if called, move operation will continue
+    #   cancel: a callback, if called, move operation will cancel
+    # if new location is the root we ignore usersDiffConfirmationCb
     path = helpers.normalizePath(path)
 
     new_location_type = null
@@ -1405,14 +1420,55 @@ _.extend GridData.prototype,
 
         new_path = "#{helpers.getParentPath(position_path)}#{path_details.item_id}/"
 
-    Meteor.call @getCollectionMethodName("movePath"), path, new_location_obj, (err) ->
-      if new_location_type == "object"
-        helpers.callCb cb, err
-      else
-        if not err?
-          helpers.callCb cb, err, new_path
-        else
+    performOp = =>
+      Meteor.call @getCollectionMethodName("movePath"), path, new_location_obj, (err) ->
+        if new_location_type == "object"
           helpers.callCb cb, err
+        else
+          if not err?
+            helpers.callCb cb, err, new_path
+          else
+            helpers.callCb cb, err
+
+    if not(usersDiffConfirmationCb? and _.isFunction usersDiffConfirmationCb)
+      # Perform operation right away.
+      performOp()
+    else
+      path_item_id = helpers.getPathItemId(path)
+      new_parent_item_id = new_location_obj.parent
+
+      if new_parent_item_id == "0"
+        # moving to root, no diff as root isn't a real item
+        # perform op right away
+
+        @logger.debug "usersDiffConfirmationCb skipped, moving item to root"
+
+        return performOp()
+
+      path_item_users = @items_by_id[path_item_id].users
+      new_parent_item_users = @items_by_id[new_parent_item_id].users
+
+      diff =
+        absent: _.difference path_item_users, new_parent_item_users
+        alien: _.difference new_parent_item_users, path_item_users
+
+      if _.isEmpty(diff.absent) and _.isEmpty(diff.alien)
+        # no diff perform op right away
+
+        @logger.debug "usersDiffConfirmationCb skipped, no diff"
+
+        return performOp()
+
+      proceed = ->
+        performOp()
+
+      cancel = =>
+        @logger.debug "movePath cancelled by usersDiffConfirmationCb"
+
+        # call cb with error
+        helpers.callCb cb, new Meteor.Error "operation-cancelled", "movePath operation cancelled by usersDiffConfirmationCb"
+
+      usersDiffConfirmationCb(diff, proceed, cancel)
 
   getItemMetadata: (index) ->
     # Get the metadata from each one of the generators

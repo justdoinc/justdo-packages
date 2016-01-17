@@ -3,6 +3,7 @@ GridControl = (options, container, operations_container) ->
 
   default_options =
     allow_dynamic_row_height: false
+    usersDiffConfirmationCb: null
 
   @options = _.extend {}, default_options, options
 
@@ -645,6 +646,35 @@ _.extend GridControl.prototype,
       return false
 
     return true
+
+  movePath: (path, new_location, cb, usersDiffConfirmationCb) ->
+    # A proxy to grid-data's movePath that takes care of using
+    # options.usersDiffConfirmationCb if no custom
+    # usersDiffConfirmationCb provided above
+
+    if not usersDiffConfirmationCb?
+      usersDiffConfirmationCb = @options.usersDiffConfirmationCb
+
+    if _.isFunction usersDiffConfirmationCb
+      # if there's usersDiffConfirmationCb prevent operations lock
+      # expiration timeout while waiting for confirm/cancel.
+      # We do that since the provided usersDiffConfirmationCb
+      # might wait for user input.
+      wrappedUsersDiffConfirmationCb = (diff, confirm, cancel) =>
+        @_preventOperationsLockExpiration (releaseExpirationLock) =>
+          wrappedConfirm = =>
+            releaseExpirationLock()
+
+            confirm()
+
+          wrappedCancel = =>
+            releaseExpirationLock()
+
+            cancel()
+
+          usersDiffConfirmationCb diff, wrappedConfirm, wrappedCancel
+
+    return @_grid_data.movePath(path, new_location, cb, wrappedUsersDiffConfirmationCb)
 
   editPathCell: (path, cell, options) ->
     # Return true if entered into edit mode, false if failed
