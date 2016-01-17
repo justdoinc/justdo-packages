@@ -51,7 +51,6 @@ Package.onUse(function (api) {
   api.add_files('lib/client/grid_operations/operations_lock.coffee', client);
   api.add_files('lib/client/grid_operations/operations_prereq.coffee', client);
   api.add_files('lib/client/grid_operations/operations/add.coffee', client);
-  api.add_files('lib/client/grid_operations/operations/indent.coffee', client);
   api.add_files('lib/client/grid_operations/operations/move.coffee', client);
   api.add_files('lib/client/grid_operations/operations/remove.coffee', client);
 
