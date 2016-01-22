@@ -1357,7 +1357,9 @@ _.extend GridData.prototype,
     # provided new_location aren't the same the move operation will be
     # suspended and usersDiffConfirmationCb will be called with the following
     # args:
-    #   usersDiffConfirmationCb(diff, proceed, cancel)
+    #   usersDiffConfirmationCb(item_id, target_id, diff, proceed, cancel)
+    #   item_id: the id of the item we move
+    #   target_id: the id of the new parent
     #   diff: will be null if users are equal otherwise it'll be of the form:
     #         {
     #           absent: [uid, uid, ...] # can be empty
@@ -1461,7 +1463,7 @@ _.extend GridData.prototype,
         # call cb with error
         helpers.callCb cb, new Meteor.Error "operation-cancelled", "movePath operation cancelled by usersDiffConfirmationCb"
 
-      usersDiffConfirmationCb(diff, proceed, cancel)
+      usersDiffConfirmationCb(path_item_id, new_parent_item_id, diff, proceed, cancel)
 
   getItemMetadata: (index) ->
     # Get the metadata from each one of the generators

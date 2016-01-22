@@ -660,7 +660,7 @@ _.extend GridControl.prototype,
       # expiration timeout while waiting for confirm/cancel.
       # We do that since the provided usersDiffConfirmationCb
       # might wait for user input.
-      wrappedUsersDiffConfirmationCb = (diff, confirm, cancel) =>
+      wrappedUsersDiffConfirmationCb = (item_id, target_id, diff, confirm, cancel) =>
         @_preventOperationsLockExpiration (releaseExpirationLock) =>
           wrappedConfirm = =>
             releaseExpirationLock()
@@ -672,7 +672,7 @@ _.extend GridControl.prototype,
 
             cancel()
 
-          usersDiffConfirmationCb diff, wrappedConfirm, wrappedCancel
+          usersDiffConfirmationCb item_id, target_id, diff, wrappedConfirm, wrappedCancel
 
     return @_grid_data.movePath(path, new_location, cb, wrappedUsersDiffConfirmationCb)
 
