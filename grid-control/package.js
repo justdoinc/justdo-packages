@@ -53,6 +53,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/grid_operations/operations/add.coffee', client);
   api.add_files('lib/client/grid_operations/operations/move.coffee', client);
   api.add_files('lib/client/grid_operations/operations/remove.coffee', client);
+  api.add_files('lib/client/grid_operations/operations/sort.coffee', client);
 
   // Plugins
   api.add_files('lib/client/plugins/init.coffee', client);
