@@ -1465,6 +1465,12 @@ _.extend GridData.prototype,
 
       usersDiffConfirmationCb(path_item_id, new_parent_item_id, diff, proceed, cancel)
 
+  sortChildren: (path, field, asc_desc, cb) ->
+    path = helpers.normalizePath(path)
+
+    Meteor.call @getCollectionMethodName("sortChildren"), path, field, asc_desc, (err) ->
+      helpers.callCb cb, err
+
   getItemMetadata: (index) ->
     # Get the metadata from each one of the generators
     generators_metadata =
@@ -1519,13 +1525,6 @@ _.extend GridData.prototype,
 
   unregisterMetadataGenerator: (cb) ->
     @_metadataGenerators = _.without @_metadataGenerators, cb
-
-  sortChildren: (path, field, ascDesc) ->
-    path = helpers.normalizePath(path)
-
-    Meteor.call @getCollectionMethodName("sortChildren"), path, field, ascDesc, (err) ->
-      if cb?
-        cb err
 
 # ** Misc. **
   getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
