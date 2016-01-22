@@ -71,6 +71,22 @@ _.extend GridControl.prototype,
 
     return prereq
 
+  _opreqActivePathHasChildren: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    active_path_prereq = @_opreqActivePath()
+
+    # If there's no active path - just return the active prereq message
+    if not _.isEmpty active_path_prereq
+      _.extend(prereq, active_path_prereq)
+      return prereq
+
+    path_has_children = @_grid_data.pathHasChildren(@current_path.get())
+    if path_has_children == 0
+      prereq.active_path_has_no_children = "Can't perform this operation on an item with no sub-items"
+
+    return prereq
+
   _opreqActiveItemInLteLevelExistFollwingActive: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
