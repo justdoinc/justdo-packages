@@ -1471,6 +1471,12 @@ _.extend GridData.prototype,
     Meteor.call @getCollectionMethodName("sortChildren"), path, field, asc_desc, (err) ->
       helpers.callCb cb, err
 
+  bulkUpdate: (items_ids, modifier, cb) ->
+    path = helpers.normalizePath(path)
+
+    Meteor.call @getCollectionMethodName("bulkUpdate"), items_ids, modifier, (err, changed_items_count) ->
+      helpers.callCb cb, err, changed_items_count
+
   getItemMetadata: (index) ->
     # Get the metadata from each one of the generators
     generators_metadata =

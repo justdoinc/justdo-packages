@@ -237,8 +237,18 @@ _.extend GridDataCom.prototype,
     #
     # sortChildren: ()
     # middlewares on sortChildren won't be called and has no effect on execution
-
-    methods_names = ["addChild", "addSibling", "removeParent", "movePath", "sortChildren"]
+    #
+    # bulkUpdate: (selector, modifier)
+    # selector is a reference to the selector we are about to use in the update
+    # operation. Isn't a copy for the purpose of allowing it to be customized by
+    # the middlewares.
+    # Note: users selector isn't editable and will be overriden to the original if changed.
+    #
+    # modifier is a reference to the modifier we are about to use in the update
+    # operation. Isn't a copy for the purpose of allowing it to be customized by
+    # the middlewares.
+    #
+    methods_names = ["addChild", "addSibling", "removeParent", "movePath", "sortChildren", "bulkUpdate"]
 
     if method_name not in methods_names
       throw new Meteor.Error("unknown-method-name", "Unknown method name: #{method_name}, use one of: #{methods_names.join(", ")}")
@@ -432,5 +442,23 @@ _.extend GridDataCom.prototype,
           order += 1
       else
         throw exceptions.unkownPath()
+
+    methods[helpers.getCollectionMethodName(collection, "bulkUpdate")] = (items_ids, modifier) ->
+      # Returns the count of changed items
+      selector = 
+        _id:
+          $in: items_ids
+        users: @userId
+
+      self._runGridMethodMiddlewares @, "bulkUpdate", selector, modifier
+
+      # We make sure that the middleware don't change this condition, too risky.
+      selector.users = @userId
+
+      # XXX in terms of security we rely on the fact that the user belongs to
+      # the requested items (see selector query) to let him/her do basically
+      # whatever action they like (worst case... he destory his own data.
+      # perhaps in the future we'd like to apply some more checks here.
+      return collection.update selector, modifier, {multi: true}
 
     Meteor.methods methods
