@@ -234,6 +234,9 @@ _.extend GridDataCom.prototype,
     #   etc.current_parent_id, the id of the parent we are moving this item from
     #
     #   etc.new_parent_item, the document of the new parent
+    #
+    # sortChildren: ()
+    # middlewares on sortChildren won't be called and has no effect on execution
 
     methods_names = ["addChild", "addSibling", "removeParent", "movePath", "sortChildren"]
 
