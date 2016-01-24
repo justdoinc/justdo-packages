@@ -844,6 +844,30 @@ _.extend GridData.prototype,
     @emit "destroyed"
 
   # ** Tree info **
+  getDescendantsItemsIds: (item_id, inclusive=false, ids_arr=null, _initial=true) ->
+    # Returns an array of all item_id descendants ids
+
+    # If inclusive is true the array will include also item_id
+
+    # Not filter aware
+
+    # Not reactive
+
+    if ids_arr?
+      ids_arr = ids_arr
+    else
+      ids_arr = []
+
+    if inclusive
+      ids_arr.push item_id
+
+    if @tree_structure[item_id]?
+      for order, child_id of @tree_structure[item_id]
+        @getDescendantsItemsIds child_id, true, ids_arr, false
+
+    if _initial
+      return _.uniq ids_arr
+
   itemIdHasChildren: (item_id) ->
     # Reactive resource
 
