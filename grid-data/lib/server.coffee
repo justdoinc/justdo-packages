@@ -267,6 +267,7 @@ _.extend GridDataCom.prototype,
     # _runGridMethodMiddlewares: (method_this, method_name, middleware_arg1, middleware_arg2, ...)
     # Method this should be the this variable of the calling grid method. Limitation of the js
     # lang don't allow this API to be nicer.
+    # Important, you can rely only on @userId inside this
     method_args = _.toArray(arguments).slice(2)
 
     for middleware in @_getGridMethodMiddleware(method_name)
@@ -286,19 +287,24 @@ _.extend GridDataCom.prototype,
 
     collection = @collection
 
+    # Allow adding root child without going through the addChild method
+    # to allow adding a root child to a specific non-logged-in user 
+    self.addRootChild = (first_user_id, fields) ->
+      new_item = _.extend {}, fields,
+        parents:
+          "0":
+            order:
+              collection.getNewChildOrder("0")
+        users: [first_user_id]
+
+      self._runGridMethodMiddlewares {userId: first_user_id}, "addChild", "/", new_item
+
+      return collection.insert new_item
+
     methods[helpers.getCollectionMethodName(collection, "addChild")] = (path, fields = {}) ->
       if @userId?
         if path == "/"
-          new_item = _.extend {}, fields,
-            parents:
-              "0":
-                order:
-                  collection.getNewChildOrder("0")
-            users: [@userId]
-
-          self._runGridMethodMiddlewares @, "addChild", path, new_item
-
-          return collection.insert new_item
+          return self.addRootChild(@userId, fields)
       else
         throw exceptions.loginRequired()
 
