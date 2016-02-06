@@ -4,6 +4,7 @@ _.extend GridControl.prototype,
     header_columns_container = $('.slick-header-columns', @container)
     header_columns_container.sortable
       items: '> :not(:first,:nth-child(2))'
+      axis: "x"
       update: =>
         view = @getView()
 
