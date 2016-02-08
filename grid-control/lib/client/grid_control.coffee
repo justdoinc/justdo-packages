@@ -342,6 +342,9 @@ _.extend GridControl.prototype,
       if not def.label?
         def.label = field_name
 
+      if field_name == "users"
+        users_found = true
+
       if field_name == "parents"
         # validate parents field
         if def.type != Object
@@ -354,12 +357,6 @@ _.extend GridControl.prototype,
           err("`parents` field can't be visible")
 
         parents_found = true
-
-      else if field_name == "users"
-        if def.grid_visible_column
-          err("`users` field can't be visible")
-
-        users_found = true
 
       else
         if not def.grid_visible_column
