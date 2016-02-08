@@ -18,6 +18,24 @@ SimpleSchema.extendOptions
   # If undefined considered as false
   grid_editable_column: Match.Optional(Boolean)
 
+  # grid_pre_grid_control_column:
+  #
+  # By default grid control requires the first visible column to have a formatter
+  # and an editor that implement the grid control expand/collapse functionalities.
+  #
+  # If you want a field to be visible before the grid control column, use this
+  # option.
+  #
+  # pre_grid_control columns are fixed to their place and the user can't hide them.
+  #
+  # Note: since the pre_grid_control fields are always visible, their
+  # grid_default_grid_view option value will be forced to true.
+  #
+  # Ignored for fields that come after the first non-grid_pre_grid_control_column field.
+  #
+  # If undefined considered as false
+  grid_pre_grid_control_column: Match.Optional(Boolean)
+
   # grid_default_grid_view:
   #
   # If true, a column for this field will be added if the user didn't

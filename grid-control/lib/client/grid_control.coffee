@@ -25,6 +25,7 @@ GridControl = (options, container, operations_container) ->
 
   @schema = null
   @grid_control_field = null
+  @fixed_fields = null # will contain an array of the fields that can't be hidden or moved - in their order
   @_loadSchema() # loads @schema and @grid_control_field
 
   # _init_view is the view we use when building slick grid for the
@@ -297,14 +298,15 @@ _.extend GridControl.prototype,
 
   _loadSchema: ->
     schema = {}
+    fixed_fields = []
     parents_found = false
     users_found = false
-    first_visible_field_found = false
+    grid_control_field_found = false
 
     err = (message) =>
       throw @_error "grid-control-schema-error", message
 
-    set_default_formatter = (field_def, first_visible_field_formatter, other_visible_fields_formatter) =>
+    set_default_formatter = (field_def, grid_control_field_formatter, other_visible_fields_formatter) =>
       if not field_def.grid_visible_column
         field_def.grid_column_formatter = null
 
@@ -312,22 +314,22 @@ _.extend GridControl.prototype,
 
       if not field_def.grid_column_formatter?
         # If grid_column_formatter defined in the schema, do nothing
-        if not first_visible_field_found
-          # If this is the first field
-          field_def.grid_column_formatter = first_visible_field_formatter
+        if not grid_control_field_found and not field_def.grid_pre_grid_control_column
+          # If this is the grid control field
+          field_def.grid_column_formatter = grid_control_field_formatter
         else
           field_def.grid_column_formatter = other_visible_fields_formatter
 
-    set_default_editor = (field_def, first_visible_field_editor, other_visible_fields_editor) =>
+    set_default_editor = (field_def, grid_control_field_editor, other_visible_fields_editor) =>
       if not field_def.grid_editable_column
         field_def.grid_column_editor = null
 
         return
 
       if not field_def.grid_column_editor?
-        if not first_visible_field_found
-          # If this is the first field
-          field_def.grid_column_editor = first_visible_field_editor
+        if not grid_control_field_found and not field_def.grid_pre_grid_control_column
+          # If this is the grid control field
+          field_def.grid_column_editor = grid_control_field_editor
         else
           field_def.grid_column_editor = other_visible_fields_editor
 
@@ -382,21 +384,33 @@ _.extend GridControl.prototype,
             set_default_formatter(def, "textWithTreeControls", "defaultFormatter")
             set_default_editor(def, "TextWithTreeControlsEditor", "TextEditor")
 
-          # Validate formatter/editor
-          if not first_visible_field_found
-            first_visible_field_found = true
+          # Validate formatter/editor and build fixed_fields
+          if not grid_control_field_found and not def.grid_pre_grid_control_column
+            grid_control_field_found = true
+            fixed_fields.push field_name
 
             @grid_control_field = field_name
 
-            # First visible field must be default field
+            # grid control field must be a default field
             if not def.grid_default_grid_view
-              err "As the first visible field, `#{field_name}` must have grid_default_grid_view option set to true"
+              err "As the grid control field, `#{field_name}` must have grid_default_grid_view option set to true"
             
             if not(def.grid_column_formatter in PACK.TreeControlFormatters)
-              err "As the first visible field, `#{field_name}` must have grid_column_formatter option set to one of the grid-control formatter as set in PACK.TreeControlFormatters"
+              err "As the grid control field, `#{field_name}` must have grid_column_formatter option set to one of the grid-control formatter as set in PACK.TreeControlFormatters"
           else
             if def.grid_column_formatter in PACK.TreeControlFormatters
-              err "`#{field_name}` is not the first visible field, it can't use `#{def.grid_column_formatter}` as its formatter as it's a grid-control formatter, as defined in PACK.TreeControlFormatters"
+              err "`#{field_name}` is not the grid control field, it can't use `#{def.grid_column_formatter}` as its formatter as it's a grid-control formatter, as defined in PACK.TreeControlFormatters"
+
+            # grid_pre_grid_control_column related schema updates
+            if grid_control_field_found and def.grid_pre_grid_control_column
+              # Ignore grid_pre_grid_control_column if grid_control_field_found already
+              delete def.grid_pre_grid_control_column
+            else if not grid_control_field_found and def.grid_pre_grid_control_column
+              # Mark as a fixed field
+              fixed_fields.push field_name
+
+              # Force grid_pre_grid_control_column to be visible
+              def.grid_default_grid_view = true
 
           if not(def.grid_column_formatter of PACK.Formatters)
             err "Field `#{field_name}` use an unknown formatter `#{def.grid_column_formatter}`"
@@ -423,9 +437,10 @@ _.extend GridControl.prototype,
     if not users_found
       err "`users` field is not defined in grid's schema"
 
-    if not first_visible_field_found
-      err "You need to set at least one visible field"
+    if not grid_control_field_found
+      err "You need to set at least one visible field without the grid_pre_grid_control_column option set to true"
 
+    @fixed_fields = fixed_fields
     @schema = schema
 
     return schema
@@ -435,13 +450,18 @@ _.extend GridControl.prototype,
     err = (message) =>
       throw @_error "grid-control-invalid-view", message
 
-    if view.length == 0
-      err "Provided view can't be empty, you must define at least one column"
+    if view.length < @fixed_fields.length
+      err "View must include all fixed fields #{JSON.stringify(@fixed_fields)}"
 
     found_fields = {}
-    first = true
-    for column in view
+
+    fixed_fields = @fixed_fields.slice() # copy
+
+    for column in view      
       field_name = column.field
+
+      if (current_fixed_field = fixed_fields.shift())? and current_fixed_field != field_name
+        err "View must include all the fixed fields in their order - couldn't find #{current_fixed_field}"
 
       if field_name of found_fields
         err "Provided view specified more than one column for the same field `#{field_name}`"
@@ -451,15 +471,6 @@ _.extend GridControl.prototype,
         err "Provided view has a column for an unknown field `#{field_name}`"
 
       field_def = @schema[field_name]
-      if first
-        if not (field_def.grid_column_formatter in PACK.TreeControlFormatters)
-          err "Provided view must have as its first column a field with a tree-control formatter as defined in `PACK.TreeControlFormatters`"
-
-        first = false
-      else
-        if field_def.grid_column_formatter in PACK.TreeControlFormatters
-          err "Provided view can't have columns, other than the first one, for fields with a tree-control formatter as defined in `PACK.TreeControlFormatters`, see column for field `#{field_name}`"
-
       if not field_def.grid_visible_column
         err "Provided view has a column for non-visible field `#{field_name}`"        
 
@@ -496,6 +507,9 @@ _.extend GridControl.prototype,
         column.editor = @_editors[field_def.grid_column_editor]
       else
         column.focusable = false
+
+      if field not in @fixed_fields
+        column.sortable = true
 
       if column_def.width?
         column.width = column_def.width
