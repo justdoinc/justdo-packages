@@ -95,6 +95,7 @@ if (typeof Slick === "undefined") {
       name: "",
       resizable: true,
       sortable: false,
+      reorderable: false,
       minWidth: 30,
       rerenderOnResize: false,
       headerCssClass: null,
@@ -574,8 +575,13 @@ if (typeof Slick === "undefined") {
             .on('mouseleave', onMouseLeave);
         }
 
+        if (m.reorderable) {
+          header.addClass("slick-header-reorderable");
+        }
+
         if (m.sortable) {
           header.addClass("slick-header-sortable");
+          header.append("<span class='slick-sort-indicator' />");
         }
 
         trigger(self.onHeaderCellRendered, {

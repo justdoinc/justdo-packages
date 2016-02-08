@@ -3,7 +3,7 @@ _.extend GridControl.prototype,
     # Implement columns reordering
     header_columns_container = $('.slick-header-columns', @container)
     header_columns_container.sortable
-      items: '> .slick-header-sortable'
+      items: '> .slick-header-reorderable'
       axis: "x"
       update: =>
         view = @getView()

@@ -506,7 +506,7 @@ _.extend GridControl.prototype,
         column.focusable = false
 
       if field not in @fixed_fields
-        column.sortable = true
+        column.reorderable = true
 
       if column_def.width?
         column.width = column_def.width
