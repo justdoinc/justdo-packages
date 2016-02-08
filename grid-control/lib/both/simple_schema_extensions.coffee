@@ -56,6 +56,14 @@ SimpleSchema.extendOptions
   # If undefined, SlickGrid defaults' are used
   grid_default_width: Match.Optional(Number)
 
+  # grid_fixed_size_column:
+  #
+  # If true, the provided grid_default_width will be used as the fixed width size of the column, the user
+  # won't be able to change the column size.
+  #
+  # If undefined considered as false
+  grid_fixed_size_column: Match.Optional(Boolean)
+
   # grid_content_type and grid_column_editor defaults:
   #
   # The `type` option of a field affects the default formatter and editor

@@ -721,7 +721,7 @@ if (typeof Slick === "undefined") {
         return;
       }
       columnElements.each(function (i, e) {
-        if (i < firstResizable || (options.forceFitColumns && i >= lastResizable)) {
+        if (!columns[i].resizable || i < firstResizable || (options.forceFitColumns && i >= lastResizable)) {
           return;
         }
         $col = $(e);

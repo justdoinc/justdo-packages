@@ -516,6 +516,9 @@ _.extend GridControl.prototype,
       else if field_def.grid_default_width?
         column.width = field_def.grid_default_width
 
+      if field_def.grid_fixed_size_column? and field_def.grid_fixed_size_column
+        column.resizable = false
+
       if field_def.grid_values?
         column.values = field_def.grid_values
       else
