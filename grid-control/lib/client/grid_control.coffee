@@ -477,24 +477,20 @@ _.extend GridControl.prototype,
     # This method assumes that the view passed to it passed @_validateView
     columns = []
 
-    columns.push
-      id: "#",
-      name: '<i class="fa fa-circle-o-notch fa-spin slick-loading-indicator"></i>',
-      minWidth: 0
-      width: 24,
-      selectable: false,
-      resizable: false,
-      cssClass: "cell-handle"
-      focusable: false
-
+    first = true
     for column_def in view
       field = column_def.field
       field_def = @schema[field]
 
+      label = field_def.label
+      if first
+        first = false
+        label = "<div class='slick-loading-indicator'></div>#{label}"
+
       column =
         id: field,
         field: field,
-        name: field_def.label
+        name: label
         # We know for sure that formatter exist for a column of view that passed validation
         # (only visible columns allowed, and formatter is assigned to them on @schema init
         # if they don't have on)
@@ -515,6 +511,7 @@ _.extend GridControl.prototype,
 
       if field_def.grid_fixed_size_column? and field_def.grid_fixed_size_column
         column.resizable = false
+        column.minWidth = 0
 
       if field_def.grid_values?
         column.values = field_def.grid_values

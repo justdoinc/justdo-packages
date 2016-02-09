@@ -64,7 +64,7 @@ _.extend PACK.Formatters,
 
     if index?
       tree_control += """
-          <span class="label label-primary grid-tree-control-task-id slick-prevent-edit"
+          <span class="label label-primary grid-tree-control-task-id slick-prevent-edit cell-handle"
                  style="left: #{index_left}px;
                         width: #{index_width}px;">
             #{index}

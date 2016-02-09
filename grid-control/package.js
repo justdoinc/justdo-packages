@@ -45,6 +45,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/grid_control.sass', client);
 
   api.add_files('lib/client/media/cell-handle.png', client);
+  api.add_files('lib/client/media/loader.gif', client);
 
   // Operations
   api.add_files('lib/client/grid_operations/init.coffee', client);

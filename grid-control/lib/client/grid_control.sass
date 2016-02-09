@@ -13,13 +13,14 @@
   background: url('/packages/stem-capital_grid-control/lib/client/media/cell-handle.png') no-repeat center center
 
 .slick-loading-indicator
-  display: none
-  position: absolute
-  font-size: 14px
-  width: 14px
-  left: 5px
-  top: 5px
-  color: #777
+  display: inline-block
+  background: url('/packages/stem-capital_grid-control/lib/client/media/loader.gif') no-repeat center center
+  width: 5px
+  height: 16px
+  visibility: hidden
+  vertical-align: bottom
+  margin-right: 3px
+  opacity: .85
 
   .slick-state-not-ready &, .slick-state-ops-lock &
-    display: block
+    visibility: visible
