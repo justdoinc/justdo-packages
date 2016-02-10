@@ -412,22 +412,9 @@ _.extend GridData.prototype,
 
           # Regular changes
           if fields.length != 0
-            item = @items_by_id[id]
+            @_data_changes_queue.push ["update", [id, fields]]
 
-            if item?
-              # If item is in the internal data structure, update immediately don't wait
-              # for flush.
-              # This is very important due to the fact that when there's an active filter,
-              # the filter tracker will update the filtered items even when flush is locked
-              # as a result, if a structural release will occur
-              # (@_perform_temporal_strucutral_flush_lock_release) if data for existing items
-              # won't update, it will seems as if items is out of sync with the filter.
-              @_updateRowFields id, fields
-            else
-              #If item is not in the internal data structure yet (added during current flush cycle)
-              @_data_changes_queue.push ["update", [id, fields]]
-
-              @_set_need_flush()
+            @_set_need_flush()
 
         removed: (id) =>
           # @logger.debug "Tracker: Item removed #{id}"
