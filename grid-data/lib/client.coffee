@@ -408,7 +408,7 @@ _.extend GridData.prototype,
 
             @_set_need_flush()
 
-            fields = _.difference(_.keys(fields), ["parents"]) # remove parents field
+            fields = _.without(fields, "parents") # remove parents field
 
           # Regular changes
           if fields.length != 0
