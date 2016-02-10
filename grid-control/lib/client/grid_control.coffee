@@ -443,6 +443,16 @@ _.extend GridControl.prototype,
     if not grid_control_field_found
       err "You need to set at least one visible field without the grid_pre_grid_control_column option set to true"
 
+    # Add to each field information about the fields that depend on it under the "grid_dependent_fields" property
+    for dependent_field_name, dependent_field_def of schema
+      if _.isArray (dependencies = dependent_field_def.grid_dependencies_fields)
+        for dependency_name in dependencies
+          if (dependency_def = schema[dependency_name])?
+            if not dependency_def.grid_dependent_fields?
+              dependency_def.grid_dependent_fields = []
+
+            dependency_def.grid_dependent_fields.push(dependent_field_name)
+
     @fixed_fields = fixed_fields
     @schema = schema
 
