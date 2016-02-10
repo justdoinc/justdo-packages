@@ -64,6 +64,14 @@ SimpleSchema.extendOptions
   # If undefined considered as false
   grid_fixed_size_column: Match.Optional(Boolean)
 
+  # grid_dependent_fields:
+  #
+  # If exist, once field will change the cells of fields listed in
+  # grid_dependent_fields will be invalidated as a result
+  #
+  # If undefined ignored
+  grid_dependent_fields: Match.Optional([String])
+
   # grid_content_type and grid_column_editor defaults:
   #
   # The `type` option of a field affects the default formatter and editor

@@ -198,7 +198,14 @@ _.extend GridControl.prototype,
           break
 
         if col_id_to_row[field]?
-          @_grid.updateCell(row, col_id_to_row[field])        
+          # Invalidate field column if in present grid
+          @_grid.updateCell(row, col_id_to_row[field])
+
+        if field_def.grid_dependent_fields?
+          # Invalidate field dependent fields columns if exist and present in grid
+          for dependent_field in field_def.grid_dependent_fields
+            if col_id_to_row[dependent_field]?
+              @_grid.updateCell(row, col_id_to_row[dependent_field])          
 
       # tree_change, full_invalidation=false
       @emit "tree_change", false
