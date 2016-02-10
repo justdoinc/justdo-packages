@@ -185,11 +185,9 @@ _.extend GridControl.prototype,
         @emit "ready"
 
     @_grid_data.on "grid-item-changed", (row, fields) =>
-      col_id_to_row = _.invert(_.map @_grid.getColumns(), (cell) -> cell.id)
+      col_id_to_row = _.object(_.map @_grid.getColumns(), (cell, i) -> [cell.id, i])
 
       for field in fields
-        cell_id = parseInt(col_id_to_row[field], 10)
-
         field_def = @schema[field]
         if field_def? and field_def.grid_effects_metadata_rendering
           @_grid.invalidateRow(row)
@@ -199,7 +197,8 @@ _.extend GridControl.prototype,
           # the entire row
           break
 
-        @_grid.updateCell(row, cell_id)
+        if col_id_to_row[field]?
+          @_grid.updateCell(row, col_id_to_row[field])        
 
       # tree_change, full_invalidation=false
       @emit "tree_change", false
