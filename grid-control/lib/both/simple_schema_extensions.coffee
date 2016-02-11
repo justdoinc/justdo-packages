@@ -99,6 +99,17 @@ SimpleSchema.extendOptions
   # If undefined or if grid_foreign_key_collection is undefined ignored
   grid_foreign_key_collection_relevant_fields: Match.Optional(Object)
 
+  # grid_foreign_key_collection_cache:
+  #
+  # XXX not implemented yet
+  #
+  # If true, a cache will be maintained for all the grid_foreign_key_collection docs
+  # provided by the subscriptions.
+  #
+  # If undefined considered as false
+  # if grid_foreign_key_collection is undefined ignored
+  # grid_foreign_key_collection_cache: Match.Optional(Boolean)
+
   # grid_content_type and grid_column_editor defaults:
   #
   # The `type` option of a field affects the default formatter and editor
