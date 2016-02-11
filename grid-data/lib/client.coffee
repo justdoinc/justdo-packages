@@ -15,6 +15,7 @@ GridData = (collection) ->
 
   @_items_tracker = null
   @_flush_orchestrator = null
+  @_foreign_keys_trackers = null
   @_need_flush_count = 0
   @_need_flush = new ReactiveVar(0)
   @_flushing = false # Will be true during flush process
@@ -425,6 +426,64 @@ _.extend GridData.prototype,
 
       tracker_init = false
 
+  _init_foreign_keys_trackers: ->
+    if not @_destroyed and not @_foreign_keys_trackers?
+      foreign_keys_trackers = {}
+
+      if not (schema = @collection.simpleSchema())?
+        @logger.debug "GridData called for a collection with no simpleSchema definition"
+        return
+
+      schema = schema._schema
+
+      for field_name, field_def of schema
+        if field_def.grid_foreign_key_collection?
+          do (field_name, field_def) =>
+            tracker_cursor_options = {}
+
+            if _.isObject field_def.grid_foreign_key_collection_relevant_fields
+              tracker_cursor_options.fields =
+                field_def.grid_foreign_key_collection_relevant_fields
+
+            tracker_init = true
+
+            changesCb = (id) =>
+              if not tracker_init
+                affected_rows_query = {}
+                affected_rows_query[field_name] = id
+
+                affected_items = @collection.find(affected_rows_query, {fields: {_id: 1}}).fetch()
+
+                if affected_items.length > 0
+                  for item in affected_items
+                    @_data_changes_queue.push ["foreign_key_fields_update", [item._id, [field_name]]]
+
+                  @_set_need_flush()
+
+            foreign_keys_trackers[field_name] =
+              field_def.grid_foreign_key_collection().find({}, tracker_cursor_options).observeChanges
+                added: changesCb
+                changed: changesCb
+                removed: changesCb
+
+            tracker_init = false
+
+      if not _.isEmpty foreign_keys_trackers
+        # Set to false so the above existence check won't pass in
+        # following calls
+        @logger.debug "Foreign keys trackers initiated"
+        @_foreign_keys_trackers = foreign_keys_trackers
+
+  _destroy_foreign_keys_trackers: ->
+    if _.isObject @_foreign_keys_trackers
+      for field_name, tracker of @_foreign_keys_trackers
+        tracker.stop()
+
+        # Ensure gc will remove any trace
+        delete @_foreign_keys_trackers[field_name]
+
+      @logger.debug "Foreign keys trackers destroyed"
+
   _init_flush_orchestrator: ->
     if not @_destroyed and not @_flush_orchestrator
       @_flush_orchestrator = Meteor.autorun =>
@@ -495,6 +554,17 @@ _.extend GridData.prototype,
       rebuild_tree = false
 
       @_updateRowFields(id, fields)
+
+      return rebuild_tree
+
+    foreign_key_fields_update: (id, foreign_key_fields) ->
+      # console.log "foreign_key_fields_update", id, foreign_key_fields
+
+      rebuild_tree = false
+
+      if @_items_ids_map_to_grid_tree_indices[id]?
+        for row in @_items_ids_map_to_grid_tree_indices[id]
+          @emit "grid-item-changed", row, foreign_key_fields
 
       return rebuild_tree
 
@@ -778,6 +848,8 @@ _.extend GridData.prototype,
     @_init_items_tracker()
     @_init_flush_orchestrator()
 
+    @_init_foreign_keys_trackers()
+
     @_initialized = true
 
     Meteor.setTimeout =>
@@ -827,6 +899,8 @@ _.extend GridData.prototype,
       @_flush_orchestrator.stop()
 
     @_destroy_filter_manager()
+
+    @_destroy_foreign_keys_trackers()
 
     @emit "destroyed"
 

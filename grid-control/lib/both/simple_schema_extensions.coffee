@@ -72,6 +72,32 @@ SimpleSchema.extendOptions
   # If undefined ignored
   grid_dependencies_fields: Match.Optional([String])
 
+  # grid_foreign_key_collection:
+  #
+  # A *function* that returns a Mongo.Collection object
+  #
+  # XXX function is used due to difficulties of setting the Mongo.Collection object
+  # directly (resulting from SimpleSchema type matching limitations)
+  #
+  # Used for two purposes:
+  #
+  # * Reference: The stored Mongo.Collection can be used by formatters/editors to fetch
+  # the foreign linked document.
+  #
+  # * Reactivity: cells of the field and all their grid_dependencies_fields will receive
+  # the "grid-item-changed" event upon every change to to their linked item in the foreign
+  # key collection.
+  #
+  # If undefined ignored
+  grid_foreign_key_collection: Match.Optional(Function)
+
+  # grid_foreign_key_collection_relevant_fields:
+  #
+  # A Mongo field specifier that limits which fields of the foreign key collection,
+  # once changed, will trigger the "grid-item-changed" event of the linked cells.
+  #
+  # If undefined or if grid_foreign_key_collection is undefined ignored
+  grid_foreign_key_collection_relevant_fields: Match.Optional(Object)
 
   # grid_content_type and grid_column_editor defaults:
   #
