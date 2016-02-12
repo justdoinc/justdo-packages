@@ -82,6 +82,8 @@ _.extend GridControl.prototype,
       do (method_name) =>
         @[method_name] = -> @_grid_data[method_name].apply(@_grid_data, arguments)
 
+    @container.addClass "grid-control"
+
     @_grid = new Slick.Grid @container, @_grid_data, columns, slick_options
 
     @_initStatesClassesComputations()

@@ -24,3 +24,88 @@
 
   .slick-state-not-ready &, .slick-state-ops-lock &
     visibility: visible
+
+.grid-control
+  // Reimplement slick borders style in a way that serves the following
+  // 1. Avoid redundant space occupyed by transparent borders
+  // 2. Each cell has a top border instead of bottom border - allow us
+  //    to cancel the border of following active row with the css + selector
+  //    to improve look.
+  $row-min-height: 31px
+  $row-border-color: silver
+  $active-row-border-color: #805206
+  $row-border-style: 1px solid $row-border-color
+  $row-right-border-style: 1px dotted $row-border-color
+  $row-hidden-border-style: 1px solid transparent
+  // Option 1
+  $active-shadow-color-h: #A04BA2
+  $active-shadow-color-v: rgba(160, 75, 162, 0.82)
+  // Option 2
+  // $active-shadow-color-h: #D8361A
+  // $active-shadow-color-v: rgba(216, 54, 26, 0.67)
+  // Header cells paddings dictates the default editor/formatter
+  // horizontal paddings 
+
+  $standard-cell-padding-top: 5px
+  $standard-cell-padding-bottom: 3px
+  .grid-formatter, .grid-editor
+    // Don't use margin instead of padding as it'll cause wrong
+    // calculation of the meaning of width: 100%
+    padding: $standard-cell-padding-top 5px $standard-cell-padding-bottom
+    overflow: hidden
+    min-height: $row-min-height
+
+  .slick-cell
+    // Cancel all transparent borders
+    border: 0 none
+    border-right: $row-right-border-style
+
+  .slick-row
+    // Define borders in the row level
+    border-top: $row-border-style
+
+    &:first-child, &.f-first
+      // Keep occupying the space, so when it'll be active, the
+      // active border won't look like pushing content down
+      border-top-color: transparent
+
+      // Cancel the padding we get from hidden border-top
+      .grid-formatter, .grid-editor
+        padding-top: ($standard-cell-padding-top - 1)
+
+    &:last-child, &.f-last
+      // Last item border
+      border-bottom: $row-border-style
+
+    &.active
+      border-top: 1px solid $active-row-border-color
+      border-bottom: 1px solid $active-row-border-color
+      box-shadow: inset 0px 2px 2px -2px $active-shadow-color-h, inset 0px -2px 2px -2px $active-shadow-color-h
+
+      // Cancel following row border top - active set also bottom border
+      & + .slick-row
+        border-top: 0 none
+
+  // Improve style structure for our needs
+  .slick-cell
+    // If multi-line shift content to the top
+    vertical-align: top
+    // paddings are up to the formatters/editors to define
+    padding: 0
+
+    &.editable
+      background: transparent none
+      // Cancel borders
+      border-right-width: 0
+      box-shadow: inset 2px 0px 2px -1px $active-shadow-color-v, inset -2px 0px 3px -1px $active-shadow-color-v
+
+  .tree-control-input
+    outline: 0 none
+
+  .tree-control-textarea, .textarea-editor textarea
+    // Occupy all the height available, and nothing more, fix an issue with firefox
+    height: $row-min-height - $standard-cell-padding-top - $standard-cell-padding-bottom
+
+  .selector-editor
+    button
+      height: $row-min-height
