@@ -34,11 +34,7 @@ _.extend PACK.Formatters,
     toggle_indentation = horizontal_padding + toggle_margin_left + indentation_margin
     text_left_margin = indentation_margin + toggle_margin_left + toggle_width + toggle_margin_right
 
-    tree_control = """
-      <div class="grid-formatter text-tree-control">
-        <div class="grid-tree-control-toggle slick-prevent-edit #{state}"
-              style="left: #{toggle_indentation}px;"></div>
-    """
+    tree_control = ""
 
     index = null
     if item.seqId?
@@ -72,34 +68,44 @@ _.extend PACK.Formatters,
       pending_owner_id = item.pending_owner_id
 
     if owner_id?
-      owner_id_width = 28
-      owner_id_margin_right = 2
-      owner_id_left = horizontal_padding - 1 + text_left_margin
-      text_left_margin += owner_id_width + owner_id_margin_right
-
       owner_doc = @schema.owner_id.grid_foreign_key_collection().findOne(owner_id)
 
-      owner_img = owner_doc.user_profile_picture
-      owner_display_name = owner_doc.display_name
+      if owner_doc?
+        owner_img = owner_doc?.profile?.profile_pic
 
-      tree_control += """
-        <div class="grid-tree-control-user"
-             title="#{owner_display_name}"
-             style="left: #{owner_id_left}px;
-                    width: #{owner_id_width}px;
-                    height: #{owner_id_width}px;">
-          <img src="#{owner_img}"
-               class="grid-tree-control-user-img"
-               alt="#{owner_display_name}"
-               style="left: #{owner_id_left}px;
-                      width: #{owner_id_width}px;
-                      height: #{owner_id_width}px;">
-        </div>
-      """
+        if owner_img?
+          owner_display_name = owner_doc?.profile?.first_name + " " + owner_doc?.profile?.last_name
+
+          owner_id_width = 28
+          owner_id_margin_right = 2
+          owner_id_left = horizontal_padding - 1 + text_left_margin
+          text_left_margin += owner_id_width + owner_id_margin_right
+
+          tree_control += """
+            <div class="grid-tree-control-user slick-prevent-edit"
+                 title="#{owner_display_name}"
+                 style="left: #{owner_id_left}px;
+                        width: #{owner_id_width}px;
+                        height: #{owner_id_width}px;">
+              <img src="#{owner_img}"
+                   class="grid-tree-control-user-img"
+                   alt="#{owner_display_name}"
+                   style="left: #{owner_id_left}px;
+                          width: #{owner_id_width}px;
+                          height: #{owner_id_width}px;">
+            </div>
+          """
 
     tree_control += """
         <div class="grid-tree-control-text"
               style="margin-left: #{text_left_margin}px;">#{value}</div>
+    """
+
+    tree_control = """
+      <div class="grid-formatter text-tree-control">
+        <div class="grid-tree-control-activation-area slick-prevent-edit"
+                 style="width: #{text_left_margin + horizontal_padding}px;"></div>
+        #{tree_control}
       </div>
     """
 
