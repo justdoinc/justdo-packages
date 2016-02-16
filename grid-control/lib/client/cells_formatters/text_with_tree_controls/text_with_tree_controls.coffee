@@ -36,6 +36,11 @@ _.extend PACK.Formatters,
 
     tree_control = ""
 
+    tree_control += """
+      <div class="grid-tree-control-toggle slick-prevent-edit #{state}"
+           style="left: #{toggle_indentation}px;"></div>
+    """
+
     index = null
     if item.seqId?
       index = item.seqId # Note we don't worry about reactivity -> seqId considered static.
