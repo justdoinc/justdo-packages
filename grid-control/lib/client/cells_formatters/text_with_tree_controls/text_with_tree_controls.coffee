@@ -93,7 +93,7 @@ _.extend PACK.Formatters,
                         width: #{owner_id_width}px;
                         height: #{owner_id_width}px;">
               <img src="#{owner_img}"
-                   class="grid-tree-control-user-img"
+                   class="grid-tree-control-user-img slick-prevent-edit"
                    alt="#{owner_display_name}"
                    style="left: #{owner_id_left}px;
                           width: #{owner_id_width}px;

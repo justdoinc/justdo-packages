@@ -612,19 +612,40 @@ _.extend GridControl.prototype,
   # Return the current value stored in the memory
   getCellStoredValue: (row, cell) -> @_grid_data.getItem(row)[@getCellField(cell)]
 
-  getActiveCellItem: ->
+  eventCellIsActiveCell: (e) ->
+    # e is the event object
+    event_cell = @_grid.getCellFromEvent(e)
+
+    if not event_cell?
+      return false
+
+    event_row = event_cell.row
+    event_cell = event_cell.cell
+
     active_cell = @_grid.getActiveCell()
 
-    if active_cell?
-      return @_grid_data.getItem(active_cell.row)
+    if not active_cell?
+      return false
+
+    active_row = active_cell.row
+    active_cell = active_cell.cell
+
+    if event_row == active_row and event_cell == active_cell
+      return true
+
+    return false
+
+  getActiveCellRow: -> @_grid.getActiveCell()?.row
+
+  getActiveCellItem: ->
+    if (active_cell_row = @getActiveCellRow())?
+      return @_grid_data.getItem(active_cell_row)
     else
       return null
 
   getActiveCellPath: ->
-    active_cell = @_grid.getActiveCell()
-
-    if active_cell?
-      return @_grid_data.getItemPath(active_cell.row)
+    if (active_cell_row = @getActiveCellRow())?
+      return @_grid_data.getItemPath(active_cell_row)
     else
       return null
 

@@ -11,9 +11,9 @@
   background-color: transparent
 
 .grid-tree-control-toggle
+  display: none
   height: 23px
   width: 20px
-  display: block
   position: absolute
   top: 4px
 
@@ -21,6 +21,7 @@
     top: 4px
 
 .grid-tree-control-toggle.collapse
+  display: block
   background: url('/packages/stem-capital_grid-control/lib/client/cells_formatters/text_with_tree_controls/media/expand.gif') no-repeat center center
   cursor: zoom-in
   cursor: -webkit-zoom-in
@@ -28,6 +29,7 @@
   cursor: ms-zoom-in
 
 .grid-tree-control-toggle.expand, .sortable-new-level-mode-parent .grid-tree-control-toggle
+  display: block
   background: url('/packages/stem-capital_grid-control/lib/client/cells_formatters/text_with_tree_controls/media/collapse.gif') no-repeat center center
   cursor: zoom-out
   cursor: -webkit-zoom-out

@@ -1,7 +1,16 @@
+editor_cells_selectors = [
+  '.editor-text'
+  'input.editor-unicode-date'
+  '.tree-control-input'
+  '.tree-control-textarea'
+  '.textarea-editor'
+  'div.selector-editor'
+].join(",")
+
 PACK.jquery_events.push(
   {
     # destroy current cell editor if blurred out and value didn't change
-    args: ['blur', '.editor-text,input.editor-unicode-date,.tree-control-input,.tree-control-textarea,.textarea-editor,div.selector-editor']
+    args: ['blur', editor_cells_selectors]
     handler: (e) ->
       Meteor.defer =>
         if (e.currentTarget == $('.editor-text', @container).get(0)) or

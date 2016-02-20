@@ -3644,6 +3644,7 @@ if (typeof Slick === "undefined") {
 
         makeActiveCellNormal();
       }
+
       return true;
     }
 

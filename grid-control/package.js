@@ -74,7 +74,6 @@ Package.onUse(function (api) {
   // jquery_events
   api.add_files('lib/client/jquery_events/init.coffee', client, {bare: true});
   api.add_files('lib/client/jquery_events/destroy_editor_on_blur.coffee', client);
-  api.add_files('lib/client/jquery_events/activate_row_on_click_on_row_handle.coffee', client);
 
   // Formatters
   api.add_files('lib/client/cells_formatters/tree_control_formatters.coffee', client, {bare: true});
@@ -87,8 +86,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/cells_formatters/unicode_date/unicode_date.coffee', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls.sass', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls.coffee', client);
-  api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls_init.coffee', client);
-  api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls-jquery_events.coffee', client);
+  api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls-events.coffee', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/media/collapse.gif', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/media/expand.gif', client);
 
