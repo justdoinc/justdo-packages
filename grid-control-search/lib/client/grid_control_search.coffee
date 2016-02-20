@@ -83,10 +83,18 @@ _.extend GridControlSearch.prototype,
       $('.search-info-container', @container)
 
     @input.keydown (e) =>
-      # down arrow or enter key for next search result
-      if e.which == 40 or e.which == 13 # down or enter
+      # enter/shift-enter arrow for next/prev search result
+      if e.which == 13
+        if not e.shiftKey
+          @next()
+        else
+          @prev()
+        
+      # down arrow for next search result
+      if e.which == 40 # down
         e.preventDefault()
         @next()
+
 
       # up arrow for prev search result
       if e.which == 38 # up
