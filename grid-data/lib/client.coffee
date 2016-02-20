@@ -1237,11 +1237,13 @@ _.extend GridData.prototype,
 
     if @pathExist path
       for ancestor_path in helpers.getAllAncestorPaths(path)
-        if not(path of @_expanded_paths)
+        if not(ancestor_path of @_expanded_paths)
           @_structure_changes_queue.push ["expand_path", [ancestor_path]]
           @_set_need_flush()
     else
       @error "Can't expnad unknown path: #{path}"
+
+    return
 
   collapsePath: (path) ->
     path = helpers.normalizePath(path)
