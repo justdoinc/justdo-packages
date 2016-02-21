@@ -43,7 +43,7 @@ _.extend PACK.GridOperations,
 
           # Flush to make sure the item is in the tree DOM
           @_grid_data._flush()
-          @editPathCell new_item_path, 1
+          @editPathCell new_item_path, 0
 
           callCb cb, err, new_item_id, new_item_path
 
