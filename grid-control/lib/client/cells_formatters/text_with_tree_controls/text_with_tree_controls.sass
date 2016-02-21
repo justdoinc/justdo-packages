@@ -20,21 +20,41 @@
   .slick-row:first-child &, .slick-row.f-first &
     top: 4px
 
-.grid-tree-control-toggle.collapse
-  display: block
-  background: url('/packages/stem-capital_grid-control/lib/client/cells_formatters/text_with_tree_controls/media/expand.gif') no-repeat center center
-  cursor: zoom-in
-  cursor: -webkit-zoom-in
-  cursor: -moz-zoom-in
-  cursor: ms-zoom-in
+$expand_url: url('/packages/stem-capital_grid-control/lib/client/cells_formatters/text_with_tree_controls/media/collapse.gif')
+$collapse_url: url('/packages/stem-capital_grid-control/lib/client/cells_formatters/text_with_tree_controls/media/expand.gif')
 
-.grid-tree-control-toggle.expand, .sortable-new-level-mode-parent .grid-tree-control-toggle
-  display: block
-  background: url('/packages/stem-capital_grid-control/lib/client/cells_formatters/text_with_tree_controls/media/collapse.gif') no-repeat center center
-  cursor: zoom-out
-  cursor: -webkit-zoom-out
-  cursor: -moz-zoom-out
-  cursor: -ms-zoom-out
+$expand_background: $expand_url no-repeat center center
+$collapse_background: $collapse_url no-repeat center center
+.grid-tree-control-toggle
+  &.collapse, &.expand
+    display: block
+
+    .f-leaf &
+      // If is a leaf under current filter
+      display: none
+
+    .f-leaf.sortable-new-level-mode-parent &
+      display: block
+      background: $expand_background // yes, even if without filter should be collapsed
+
+  .sortable-new-level-mode-parent &, .f-leaf.sortable-new-level-mode-parent &
+    // for case without filter it's a leaf
+    display: block
+    background: $expand_background 
+
+  &.collapse
+    background: url('/packages/stem-capital_grid-control/lib/client/cells_formatters/text_with_tree_controls/media/expand.gif') no-repeat center center
+    cursor: zoom-in
+    cursor: -webkit-zoom-in
+    cursor: -moz-zoom-in
+    cursor: ms-zoom-in
+
+  &.expand
+    background: url('/packages/stem-capital_grid-control/lib/client/cells_formatters/text_with_tree_controls/media/collapse.gif') no-repeat center center
+    cursor: zoom-out
+    cursor: -webkit-zoom-out
+    cursor: -moz-zoom-out
+    cursor: -ms-zoom-out
 
 .grid-tree-control-task-id
   position: absolute

@@ -130,6 +130,10 @@ _.extend PACK.Plugins,
         parent = GridData.helpers.getPathParentId path
         order = doc.parents[parent].order
 
+        if expand_state != -1 and @_grid_data.pathHasChildren(path) in [0, 2]
+          # find the filter-aware expand state
+          expand_state = -1
+
         ext = {
           _id: doc._id
           doc: doc
