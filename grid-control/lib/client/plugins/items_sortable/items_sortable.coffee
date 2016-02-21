@@ -678,6 +678,8 @@ _.extend PACK.Plugins,
             # dragged item index. 
             sortable("cancel")
 
+            updateNewLevelMode(true)
+
             # Just release flush
             @_grid_data._release_flush()
           else
