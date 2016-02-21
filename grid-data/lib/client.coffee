@@ -1000,7 +1000,8 @@ _.extend GridData.prototype,
     return false
 
   pathHasChildren: (path) ->
-    # !important: works only on visible paths
+    # !important: reliable only for visible paths - for hidden/non existing
+    # paths will return 0 even if path actually has children
 
     # Returns 0 if path is a leaf, hidden, hidden by filter or doesn't exist
     #         1 if path has children
@@ -1021,6 +1022,8 @@ _.extend GridData.prototype,
     return 0
 
   pathExpandable: (path) ->
+    # !important: works only on visible paths
+
     # Reactive resource
 
     # Filters aware
@@ -1206,6 +1209,8 @@ _.extend GridData.prototype,
     return @getItemLevel @getItemRowByPath path
 
   getPathIsExpand: (path) ->
+    # !important: works correctly only for visible paths
+
     # Reactive resource
 
     # Filters aware
