@@ -10,6 +10,12 @@ _.extend GridControl.prototype,
       # so we need to check filters state for change
       @_updateFilterState()
 
+    @once "destroyed", =>
+      # Make sure filter-active class removed from container
+      # to avoid polluting future grid control initiated on that
+      # container
+      @container.removeClass("filter-active")
+
     @on "grid-view-change", =>
       @_updateFilterState()
 
