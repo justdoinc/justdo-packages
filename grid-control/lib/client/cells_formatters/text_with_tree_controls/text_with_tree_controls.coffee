@@ -76,30 +76,27 @@ _.extend PACK.Formatters,
       owner_doc = @schema.owner_id.grid_foreign_key_collection().findOne(owner_id)
 
       if owner_doc?
-        owner_img = owner_doc?.profile?.profile_pic
+        owner_display_name = owner_doc?.profile?.first_name + " " + owner_doc?.profile?.last_name
 
-        if owner_img?
-          owner_display_name = owner_doc?.profile?.first_name + " " + owner_doc?.profile?.last_name
+      owner_id_width = 28
+      owner_id_margin_right = 2
+      owner_id_left = horizontal_padding - 1 + text_left_margin
+      text_left_margin += owner_id_width + owner_id_margin_right
 
-          owner_id_width = 28
-          owner_id_margin_right = 2
-          owner_id_left = horizontal_padding - 1 + text_left_margin
-          text_left_margin += owner_id_width + owner_id_margin_right
-
-          tree_control += """
-            <div class="grid-tree-control-user slick-prevent-edit"
-                 title="#{owner_display_name}"
-                 style="left: #{owner_id_left}px;
-                        width: #{owner_id_width}px;
-                        height: #{owner_id_width}px;">
-              <img src="#{owner_img}"
-                   class="grid-tree-control-user-img slick-prevent-edit"
-                   alt="#{owner_display_name}"
-                   style="left: #{owner_id_left}px;
-                          width: #{owner_id_width}px;
-                          height: #{owner_id_width}px;">
-            </div>
-          """
+      tree_control += """
+        <div class="grid-tree-control-user slick-prevent-edit"
+             title="#{owner_display_name}"
+             style="left: #{owner_id_left}px;
+                    width: #{owner_id_width}px;
+                    height: #{owner_id_width}px;">
+          <img src="#{JustdoAvatar.showUserAvatarOrFallback(owner_doc)}"
+               class="grid-tree-control-user-img slick-prevent-edit"
+               alt="#{owner_display_name}"
+               style="left: #{owner_id_left}px;
+                      width: #{owner_id_width}px;
+                      height: #{owner_id_width}px;">
+        </div>
+      """
 
     tree_control += """
         <div class="grid-tree-control-text"
