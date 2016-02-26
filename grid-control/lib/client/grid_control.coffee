@@ -612,6 +612,9 @@ _.extend GridControl.prototype,
   # Return the current value stored in the memory
   getCellStoredValue: (row, cell) -> @_grid_data.getItem(row)[@getCellField(cell)]
 
+  #
+  # Events
+  #
   eventCellIsActiveCell: (e) ->
     # e is the event object
     event_cell = @_grid.getCellFromEvent(e)
@@ -634,6 +637,12 @@ _.extend GridControl.prototype,
       return true
 
     return false
+
+  getEventItem: (e) ->
+    if not (cell = @_grid.getCellFromEvent(e))?
+      return null
+
+    return @_grid_data.getItem(cell.row)
 
   getActiveCellRow: -> @_grid.getActiveCell()?.row
 

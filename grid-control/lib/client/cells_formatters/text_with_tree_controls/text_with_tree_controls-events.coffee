@@ -103,6 +103,6 @@ PACK.jquery_events.push
     save_and_exit_not_prevented = @saveAndExitActiveEditor()
 
     if save_and_exit_not_prevented
-      @emit "tree-control-user-image-clicked", e
+      @emit "tree-control-user-image-clicked", e, @getEventItem(e)
     else
       @logger.debug "tree-control-user-image-clicked event didn't emit due to failure to close active editor"
