@@ -9,7 +9,7 @@ _.extend GridControl.prototype,
         view = @getView()
 
         new_columns_order = []
-        $('> :not(:first)', header_columns_container).each (index, item) =>
+        $('> *', header_columns_container).each (index, item) =>
           new_columns_order.push $(item).data().column.field
 
         new_view = _.map new_columns_order, (field) ->
