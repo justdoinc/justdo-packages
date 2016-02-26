@@ -10,7 +10,6 @@ _.extend GridControl.prototype,
     @_setupColumnsFilters()
 
     @on "columns-headers-dom-rebuilt", =>
-      @_closeFiltersDropdown()
       @_setupColumnsFilters()
 
     @on "filter-change", =>
@@ -23,33 +22,10 @@ _.extend GridControl.prototype,
       </div>
     """
 
-    @$filter_dropdown = $(filter_dropdown_html)
-
-    @$filter_dropdown.appendTo("body")
-
-    @$filter_dropdown.click (e) ->
-      # Don't bubble clicks up, to avoid closing the dropdown
-      e.stopPropagation()
-
-    # The following proxies maintains @
-    closeFiltersDropdownProxy = => @_closeFiltersDropdown()
-    updateFiltersDropdownPositionProxy = => @_updateFiltersDropdownPosition()
-
-    @_grid.onScroll.subscribe =>
-      @_updateFiltersDropdownPosition()
-
-    $(document).on 'click', closeFiltersDropdownProxy
-    $(document).on 'contextmenu', closeFiltersDropdownProxy 
-    $(window).on 'resize', updateFiltersDropdownPositionProxy
-    $(window).on 'scroll', updateFiltersDropdownPositionProxy
-
-    @_grid.onBeforeDestroy.subscribe =>
-      $(document).off 'click', closeFiltersDropdownProxy
-      $(document).off 'contextmenu', closeFiltersDropdownProxy 
-      $(window).off 'resize', updateFiltersDropdownPositionProxy
-      $(window).off 'scroll', updateFiltersDropdownPositionProxy
-
-      @$filter_dropdown.remove()
+    @$filter_dropdown =
+      @initGridBoundElement filter_dropdown_html,
+        positionUpdateHandler: => @_updateFiltersDropdownPosition()
+        closeHandler: => @_closeFiltersDropdown()
 
   _setupColumnsFilters: ->
     $(".slick-header-column", @container)

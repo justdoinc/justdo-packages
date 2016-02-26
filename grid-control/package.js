@@ -64,6 +64,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/plugins/items_sortable/items_sortable.sass', client);
   api.add_files('lib/client/plugins/items_sortable/sortable_ext.coffee', client);
   api.add_files('lib/client/plugins/items_sortable/items_sortable.coffee', client);
+  api.add_files('lib/client/plugins/grid_bound_element/grid_bound_element.coffee', client);
   api.add_files('lib/client/plugins/grid_views/main.coffee', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters.coffee', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters.sass', client);
