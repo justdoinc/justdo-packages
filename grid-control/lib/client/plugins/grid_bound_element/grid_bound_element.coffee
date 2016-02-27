@@ -114,6 +114,8 @@ _.extend GridControl.prototype,
 
     if options.close_on_click_outside
       $(document).on 'click', close
+      # Bootstrap's dropdown button stops click propagation, so it needs special treatment
+      $(document).on 'show.bs.dropdown', close  
 
       $element.click (e) ->
         # Don't bubble clicks up, to avoid closing the element
@@ -136,6 +138,7 @@ _.extend GridControl.prototype,
       # Release all events bindings to document
       if options.close_on_click_outside
         $(document).off 'click', close
+        $(document).off 'show.bs.dropdown', close
 
       if options.close_on_context_menu_outside
         $(document).off 'contextmenu', close 
