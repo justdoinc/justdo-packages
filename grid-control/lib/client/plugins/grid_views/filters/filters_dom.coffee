@@ -24,8 +24,10 @@ _.extend GridControl.prototype,
 
     @$filter_dropdown =
       @initGridBoundElement filter_dropdown_html,
-        positionUpdateHandler: => @_updateFiltersDropdownPosition()
-        closeHandler: => @_closeFiltersDropdown()
+        positionUpdateHandler: ($connected_element) =>
+          @_updateFiltersDropdownPosition($connected_element)
+        openedHandler: => @_filtersDropdownOpenedHandler()
+        closedHandler: => @_filtersDropdownClosedHandler()
 
   _setupColumnsFilters: ->
     $(".slick-header-column", @container)
@@ -48,18 +50,13 @@ _.extend GridControl.prototype,
               .click (e) =>
                 e.stopPropagation()
 
-                if @_isFiltersDropdownOpen() and
-                   @$filter_dropdown.data("column-settings").field == column_settings.field
-                    # If already open, toggle
-                    @_closeFiltersDropdown()
-                else
-                  @$filter_dropdown
-                    .data("column-settings", column_settings)
-                    .data("connected-filter-button", $filter_control)
+                @$filter_dropdown
+                  .data("column-settings", column_settings)
 
-                  @_openFiltersDropdown()
-
-                  @_updateFiltersDropdownPosition()
+                # we pass column_settings.field as the GridBoundElement type
+                # so if same filter will be called again GridBoundElement will
+                # toggle the dropdown for us
+                @_openFiltersDropdown(column_settings.field, $filter_control) 
 
               .prependTo($el)
 
@@ -82,12 +79,13 @@ _.extend GridControl.prototype,
         else
           $el.removeClass(active_filter_class)
 
-  _isFiltersDropdownOpen: ->
-    @$filter_dropdown.hasClass("open")
+  _openFiltersDropdown: (element_type, $connected_element) ->
+    @$filter_dropdown.data("open")(element_type, $connected_element)
 
-  _openFiltersDropdown: ->
-    @_closeFiltersDropdown()
+  _closeFiltersDropdown: ->
+    @$filter_dropdown.data("close")()
 
+  _filtersDropdownOpenedHandler: ->
     column_settings = @$filter_dropdown.data("column-settings")
 
     if column_settings.filter_settings?.type?
@@ -120,36 +118,30 @@ _.extend GridControl.prototype,
       $(".column-filter-dropdown .clear").click =>
         @clearFieldFilter(column_settings.field)
 
-      @$filter_dropdown.addClass("open")
-
-  _closeFiltersDropdown: ->
-    if @$filter_dropdown?
-      @$filter_dropdown.removeClass("open")
-
+  _filtersDropdownClosedHandler: ->
     if @_current_filter_controller?
       @_current_filter_controller.destroy()
 
       @_current_filter_controller = null
 
-  _updateFiltersDropdownPosition: ->
-    if @_isFiltersDropdownOpen()
-      @$filter_dropdown
-        .position
-          of: @$filter_dropdown.data("connected-filter-button")
-          my: "left top"
-          at: "left bottom"
-          collision: "fit fit"
-          using: (new_position, details) =>
-            target = details.target
-            element = details.element
+  _updateFiltersDropdownPosition: ($connected_element) ->
+    @$filter_dropdown
+      .position
+        of: $connected_element
+        my: "left top"
+        at: "left bottom"
+        collision: "fit fit"
+        using: (new_position, details) =>
+          target = details.target
+          element = details.element
 
-            # If filter button hidden close dropdown
-            # XXX this calculation is wrong more work required in the future here
-            # if (target.left + target.width >= window.innerWidth)
-            #   @_closeFiltersDropdown()
+          # If filter button hidden close dropdown
+          # XXX this calculation is wrong more work required in the future here
+          # if (target.left + target.width >= window.innerWidth)
+          #   @_closeFiltersDropdown()
 
-            #   return
+          #   return
 
-            element.element.css
-              top: new_position.top
-              left: new_position.left
+          element.element.css
+            top: new_position.top
+            left: new_position.left

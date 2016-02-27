@@ -7,10 +7,19 @@ default_options =
   update_pos_on_dom_scroll: true
   update_pos_on_dom_resize: true
 
-  # Only if element is open - this handler will be called once position update required in response to certain events
-  positionUpdateHandler: -> return
-  # Will be called upon close that was triggered by initGridBoundElement logic
-  closeHandler: -> return
+  positionUpdateHandler: ($connected_element) ->
+    # Only if element is open - this handler will be called once position
+    # update required in response to certain events
+    return
+
+  closedHandler: ->
+    # Will be called upon close
+    return
+
+  openedHandler: ->
+    # Will be called upon open, if already open, will be closed first
+    # logic
+    return
 
 _.extend GridControl.prototype,
   initGridBoundElement: (element_html, options) ->
@@ -19,9 +28,6 @@ _.extend GridControl.prototype,
     # 
     # Element will be either "closed" or "opened". The element is considered closed
     # unless it has the "open" class.
-    #
-    # It is safe to close/open the created element by adding/removing the "open" class
-    # from logic outside this method.
     #
     # the method takes care of:
     #   * Removing the element from the DOM on grid_control destroy - and unbinding
@@ -41,47 +47,104 @@ _.extend GridControl.prototype,
 
     $element.appendTo(options.container)
 
+    #
+    # Element methods
+    #
+    open_class = "open"
+    $element.data "isOpen", isOpen = =>
+      $element.hasClass(open_class)
+
+    last_type = null
+    $connected_element = null
+    $element.data "open", open = (type, $type_connected_element) =>
+      # type can be any arbitrary string if open will be called for the second
+      # time with the same type it will be closed instead of open (toggle behavior)
+      #
+      # $type_connected_element will be passed as the first arg of positionUpdateHandler()
+      # to be used for positioning - should be jquery object.
+      # can be null if no such concept for this bound element
+
+      if isOpen() and type == last_type
+        close()
+        return
+
+      last_type = type
+      $connected_element = $type_connected_element
+
+      if isOpen()
+        # If open already, close first.
+        close()
+
+      $element.addClass(open_class)
+
+      options.openedHandler()
+
+      updatePosition()
+
+    $element.data "close", close = =>
+      if not isOpen()
+        # If closed, do nothing
+        return
+
+      $element.removeClass(open_class)
+
+      options.closedHandler()
+
+    $element.data "toggle", toggle = =>
+      if isOpen()
+        close()
+      else
+        open()
+
+    $element.data "updatePosition", updatePosition = =>
+      if not isOpen()
+        # Do nothing if closed
+        return
+
+      options.positionUpdateHandler($connected_element)
+
+    #
+    # Events handling
+    #
     if options.update_pos_on_grid_scroll
-      @_grid.onScroll.subscribe =>
-        options.positionUpdateHandler()
+      @_grid.onScroll.subscribe updatePosition
 
     if options.close_on_grid_header_rebuild
-      @on "columns-headers-dom-rebuilt", =>
-        options.closeHandler()
+      @on "columns-headers-dom-rebuilt", close
 
     if options.close_on_click_outside
-      $(document).on 'click', options.closeHandler
+      $(document).on 'click', close
 
       $element.click (e) ->
         # Don't bubble clicks up, to avoid closing the element
         e.stopPropagation()
 
     if options.close_on_context_menu_outside
-      $(document).on 'contextmenu', options.closeHandler
+      $(document).on 'contextmenu', close
 
       $element.on 'contextmenu', (e) ->
         # Don't bubble contextmenu, to avoid closing the element
         e.stopPropagation()
 
     if options.update_pos_on_dom_scroll
-      $(window).on 'scroll', options.positionUpdateHandler
+      $(window).on 'scroll', updatePosition
 
     if options.update_pos_on_dom_resize
-      $(window).on 'resize', options.positionUpdateHandler
+      $(window).on 'resize', updatePosition
 
     @_grid.onBeforeDestroy.subscribe =>
       # Release all events bindings to document
       if options.close_on_click_outside
-        $(document).off 'click', options.closeHandler
+        $(document).off 'click', close
 
       if options.close_on_context_menu_outside
-        $(document).off 'contextmenu', options.closeHandler 
+        $(document).off 'contextmenu', close 
 
       if options.update_pos_on_dom_scroll
-        $(window).off 'scroll', options.positionUpdateHandler
+        $(window).off 'scroll', updatePosition
 
       if options.update_pos_on_dom_resize
-        $(window).off 'resize', options.positionUpdateHandler
+        $(window).off 'resize', updatePosition
 
       $element.remove()
 
