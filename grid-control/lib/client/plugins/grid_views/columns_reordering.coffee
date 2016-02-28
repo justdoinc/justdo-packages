@@ -5,6 +5,7 @@ _.extend GridControl.prototype,
     header_columns_container.sortable
       items: '> .slick-header-reorderable'
       axis: "x"
+      distance: 3
       update: =>
         view = @getView()
 

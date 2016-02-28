@@ -1,5 +1,9 @@
 default_options =
   container: "body"
+  # If close_button_html isn't null it will be inserted inside a wrapper with
+  # the .close class, the GridBoundElement will take care of close logic.
+  # The wrapper will be appended to the element_html
+  close_button_html: '<i class="fa fa-close fa-fw"></i>'
   close_on_context_menu_outside: true
   close_on_click_outside: true
   close_on_grid_header_rebuild: true
@@ -44,6 +48,8 @@ _.extend GridControl.prototype,
     options = _.extend {}, default_options, options
 
     $element = $(element_html)
+
+    $element.addClass "grid-bound-element"
 
     $element.appendTo(options.container)
 
@@ -102,6 +108,19 @@ _.extend GridControl.prototype,
         return
 
       options.positionUpdateHandler($connected_element)
+
+    #
+    # Close button
+    #
+    if options.close_button_html?
+      default_close = if options.close_button_html == default_options.close_button_html then "default-close" else ""
+      $close_button = $("<div class=\"close-btn #{default_close}\">#{options.close_button_html}</div>")
+      $close_button.appendTo $element
+
+      $close_button.click (e) ->
+        e.stopPropagation()
+
+        close()
 
     #
     # Events handling
