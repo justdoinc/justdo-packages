@@ -66,6 +66,7 @@ _.extend PACK.Formatters,
           </span>
       """
 
+    # shortcuts
     owner_id = pending_owner_id = null
     if item.owner_id?
       owner_id = item.owner_id # For reactivity, make sure to specify owner_id and pending_owner_id as
@@ -73,7 +74,11 @@ _.extend PACK.Formatters,
       pending_owner_id = item.pending_owner_id
 
     if owner_id?
-      owner_doc = @schema.owner_id.grid_foreign_key_collection().findOne(owner_id)
+      item = @_grid_data.extendItemForeignKeys item,
+        in_place: false
+        foreign_keys: ["owner_id"]
+
+      owner_doc = item.owner
 
       if owner_doc?
         owner_display_name = owner_doc?.profile?.first_name + " " + owner_doc?.profile?.last_name

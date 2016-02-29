@@ -6,6 +6,13 @@ GridData = (collection) ->
 
   @collection = collection
 
+  if not (schema = @collection.simpleSchema())?
+    @logger.debug "GridData called for a collection with no simpleSchema definition"
+    return
+
+  # XXX need to find a way to bring normalized schema from GridControl
+  @schema = schema._schema
+
   @_initialized = false
   @_destroyed = false
 
@@ -430,13 +437,7 @@ _.extend GridData.prototype,
     if not @_destroyed and not @_foreign_keys_trackers?
       foreign_keys_trackers = {}
 
-      if not (schema = @collection.simpleSchema())?
-        @logger.debug "GridData called for a collection with no simpleSchema definition"
-        return
-
-      schema = schema._schema
-
-      for field_name, field_def of schema
+      for field_name, field_def of @schema
         if field_def.grid_foreign_key_collection?
           do (field_name, field_def) =>
             tracker_cursor_options = {}
@@ -483,6 +484,62 @@ _.extend GridData.prototype,
         delete @_foreign_keys_trackers[field_name]
 
       @logger.debug "Foreign keys trackers destroyed"
+
+  extendItemForeignKeys: (item, options) ->
+    # XXX this is the right place to implement caching mechanism for foreign keys
+    # docs for fields the user is interested to cache
+    #
+    # item: an item document, the same object will be edited
+    # options:
+    #   in_place: true by default. if true , we'll augment the item received
+    #             if false a new item will return
+    #   foreign_keys: null by default. If is array only the foreign keys
+    #                 listed in the array will be extended
+
+    # doc will be returned under a new property named after the foreign_key
+    # if foreign_key name ends with _id - without the "_id"
+    # otherwise "_doc" will be added
+
+    # Reactive resource
+
+    if options.in_place is false # considered true by default
+      # Copy item to new doc
+      item = _.extend {}, item
+
+    # Get the list of all the foreign keys from the _foreign_keys_trackers object - we use it
+    # only for this data - nothing elese
+    #
+    # XXX optimize - no need to do this more then once!
+    all_foreign_keys = _.keys @_foreign_keys_trackers
+
+    foreign_keys = options.foreign_keys
+    if not foreign_keys?
+      # Extend all
+      foreign_keys = all_foreign_keys
+
+    if _.isEmpty foreign_keys
+      @logger.debug "extendItemForeignKeys: No foreign keys to extend"
+
+      return item
+
+    for foreign_key in foreign_keys
+      if foreign_key not in all_foreign_keys
+        @logger.warn "extendItemForeignKeys: Unknown foreign key #{foreign_key} provided, skipping" 
+
+        continue
+
+      id_suffix_regex = /_id$/
+      if id_suffix_regex.test(foreign_key)
+        # If ends with _id just remove _id
+        extended_field_name = foreign_key.replace id_suffix_regex, ""
+      else
+        # Else add "_doc" ending
+        extended_field_name += "_doc"
+
+      item[extended_field_name] =
+        @schema[foreign_key].grid_foreign_key_collection().findOne(item[foreign_key])
+
+    return item
 
   _init_flush_orchestrator: ->
     if not @_destroyed and not @_flush_orchestrator
@@ -1036,6 +1093,11 @@ _.extend GridData.prototype,
   # requires us to provide it with getItem() method in the data source object).
   # Do not confuse item below with the tree items that stored in the collection.
   getItem: (id) -> @grid_tree[id][0]
+
+  getItemWithForeignKeys: (row_id, foreign_keys) ->
+    @extendItemForeignKeys @getItem(row_id),
+      in_place: false
+      foreign_keys: foreign_keys
 
   getItemId: (id) -> @getItem(id)._id
 
