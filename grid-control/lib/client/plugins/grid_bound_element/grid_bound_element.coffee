@@ -6,6 +6,7 @@ default_options =
   close_button_html: '<i class="fa fa-close fa-fw"></i>'
   close_on_context_menu_outside: true
   close_on_click_outside: true
+  close_on_mousedown_outside: true
   close_on_grid_header_rebuild: true
   update_pos_on_grid_scroll: true
   update_pos_on_dom_scroll: true
@@ -140,6 +141,13 @@ _.extend GridControl.prototype,
         # Don't bubble clicks up, to avoid closing the element
         e.stopPropagation()
 
+    if options.close_on_mousedown_outside
+      $(document).on 'mousedown', close
+
+      $element.mousedown (e) ->
+        # Don't bubble clicks up, to avoid closing the element
+        e.stopPropagation()
+
     if options.close_on_context_menu_outside
       $(document).on 'contextmenu', close
 
@@ -158,6 +166,9 @@ _.extend GridControl.prototype,
       if options.close_on_click_outside
         $(document).off 'click', close
         $(document).off 'show.bs.dropdown', close
+
+      if options.close_on_mousedown_outside
+        $(document).off 'mousedown', close
 
       if options.close_on_context_menu_outside
         $(document).off 'contextmenu', close 
