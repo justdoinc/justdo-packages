@@ -100,6 +100,20 @@ _.extend PACK.Formatters,
                style="left: #{owner_id_left}px;
                       width: #{owner_id_width}px;
                       height: #{owner_id_width}px;">
+      """
+
+      if pending_owner_id?
+        transfer_type = "transfer-non-related"
+        if Meteor.userId() == pending_owner_id
+          transfer_type = "transfer-to-me"
+        else if Meteor.userId() == owner_id
+          transfer_type = "transfer-from-me"
+
+        tree_control += """
+          <div class="transfer-owner #{transfer_type}"></div>
+        """
+
+      tree_control += """
         </div>
       """
 

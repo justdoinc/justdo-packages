@@ -94,6 +94,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls-events.coffee', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/media/collapse.gif', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/media/expand.gif', client);
+  api.add_files('lib/client/cells_formatters/text_with_tree_controls/media/transfer_state_icon_sprite.png', client);
 
   // Editors 
   api.add_files('lib/client/cells_editors/init.coffee', client, {bare: true});
