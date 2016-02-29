@@ -103,6 +103,8 @@ PACK.jquery_events.push
     save_and_exit_not_prevented = @saveAndExitActiveEditor()
 
     if save_and_exit_not_prevented
-      @emit "tree-control-user-image-clicked", e, @getEventItem(e)
+      event_item = @_grid_data.extendItemForeignKeys(@getEventItem(e), {foreign_keys: ["owner_id", "pending_owner_id"]})
+
+      @emit "tree-control-user-image-clicked", e, event_item
     else
       @logger.debug "tree-control-user-image-clicked event didn't emit due to failure to close active editor"
