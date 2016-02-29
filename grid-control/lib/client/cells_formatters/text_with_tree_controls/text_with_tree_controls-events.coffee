@@ -83,6 +83,8 @@ PACK.jquery_events.push
 PACK.jquery_events.push
   args: ['mousedown', '.grid-tree-control-user']
   handler: (e) ->
+    e.stopImmediatePropagation()
+
     if @eventCellIsActiveCell(e)
       # preventDefault in order to prevent blur event defined on destroy_editor_on_blur.coffee
       # from exiting edit mode. Exiting edit mode will destroy the current cell
