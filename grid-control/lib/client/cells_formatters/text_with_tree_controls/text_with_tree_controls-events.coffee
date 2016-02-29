@@ -102,11 +102,19 @@ PACK.jquery_events.push
     # above, it's assumed that same causes apply here, but 
     # e.preventDefault() for any case in .grid-tree-control-user mousedown
     # is not enough in that case.
+
+    event_row = $(e.target).closest(".slick-row")
+    event_item = @getEventItem(e)
+
     save_and_exit_not_prevented = @saveAndExitActiveEditor()
 
     if save_and_exit_not_prevented
-      event_item = @_grid_data.extendItemForeignKeys(@getEventItem(e), {foreign_keys: ["owner_id", "pending_owner_id"]})
+      event_item = @_grid_data.extendItemForeignKeys(event_item, {foreign_keys: ["owner_id", "pending_owner_id"]})
 
-      @emit "tree-control-user-image-clicked", e, event_item
+      # For case @saveAndExitActiveEditor() caused the text editor item to exit edit mode
+      # and thus remove the original clicked element, make sure we find the right one 
+      $clicked_element = event_row.find('.grid-tree-control-user')
+
+      @emit "tree-control-user-image-clicked", e, $clicked_element, event_item
     else
       @logger.debug "tree-control-user-image-clicked event didn't emit due to failure to close active editor"
