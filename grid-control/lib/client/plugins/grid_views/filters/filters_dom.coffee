@@ -47,6 +47,8 @@ _.extend GridControl.prototype,
 
             $filter_control
               .html('<i class=\'fa fa-filter\'></i>')
+              .mousedown (e) =>
+                e.stopPropagation()
               .click (e) =>
                 e.stopPropagation()
 
