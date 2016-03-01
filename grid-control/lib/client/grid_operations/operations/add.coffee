@@ -23,13 +23,8 @@ _.extend PACK.GridOperations,
 
             return
 
-          @forceItemsPassCurrentFilter new_item_id
-          Tracker.flush() # Needed so the filter tracker computation
-                          # which depends on grid_data.filter_independent_items
-                          # as a reactive resource, will immediately update 
-                          # @_filter_items and @_filter_paths so they'll
-                          # be available for the grid_data.flush before
-                          # entering edit mode (which block all grid_data.flush)
+          # Needed so the filter tracker computation to process immediately
+          Tracker.flush()
 
           if add_as_child
             # Mark parent as expanded (in case it isn't yet) before adding the child
@@ -42,7 +37,23 @@ _.extend PACK.GridOperations,
             @_grid_data.expandPath path
 
           # Flush to make sure the item is in the tree DOM
+          # Required for pathPassFilter to work proprely
           @_grid_data._flush()
+
+          if not @_grid_data.pathPassFilter(new_item_path)
+            # Force new item to show even if filtered
+            @forceItemsPassCurrentFilter new_item_id
+
+            Tracker.flush() # Needed so the filter tracker computation will
+                            # which depends on grid_data.filter_independent_items
+                            # as a reactive resource, will immediately update 
+                            # @_filter_items and @_filter_paths so they'll
+                            # be available for the grid_data.flush before
+                            # entering edit mode (which block all grid_data.flush)
+
+            # Flush to make sure the item is in the tree DOM
+            @_grid_data._flush()
+
           @editPathCell new_item_path, 0
 
           callCb cb, err, new_item_id, new_item_path
