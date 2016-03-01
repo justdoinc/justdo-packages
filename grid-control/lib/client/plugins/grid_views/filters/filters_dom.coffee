@@ -121,6 +121,8 @@ _.extend GridControl.prototype,
         @clearFieldFilter(column_settings.field)
 
   _filtersDropdownClosedHandler: ->
+    @_grid_data.clearFilterIndependentItems()
+
     if @_current_filter_controller?
       @_current_filter_controller.destroy()
 
