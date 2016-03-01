@@ -26,9 +26,7 @@ PACK.jquery_events.push(
             active_cell = @_grid.getActiveCell()
 
             if original_active_cell.row == active_cell.row and
-               original_active_cell.cell == active_cell.cell and
-               not $("div.selector-editor .dropdown-menu").is(":visible") and
-               not $(e.currentTarget).is(":focus")
+               original_active_cell.cell == active_cell.cell
                # If after blur active cell remains the same (means we blurred
                # out of the grid control) and the datepicker isn't visible (the
                # blur wasn't a result of opening the date picker) and we aren't
