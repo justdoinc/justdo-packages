@@ -644,6 +644,12 @@ _.extend GridControl.prototype,
 
     return @_grid_data.getItem(cell.row)
 
+  getEventPath: (e) ->
+    if not (cell = @_grid.getCellFromEvent(e))?
+      return null
+
+    return @_grid_data.getItemPath(cell.row)
+
   getActiveCellRow: -> @_grid.getActiveCell()?.row
 
   getActiveCellItem: ->
