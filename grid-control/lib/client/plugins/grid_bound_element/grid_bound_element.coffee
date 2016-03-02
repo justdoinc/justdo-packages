@@ -8,6 +8,7 @@ default_options =
   close_on_click_outside: true
   close_on_mousedown_outside: true
   close_on_grid_header_rebuild: true
+  close_on_grid_bound_elements_show: true
   update_pos_on_grid_scroll: true
   update_pos_on_dom_scroll: true
   update_pos_on_dom_resize: true
@@ -82,6 +83,8 @@ _.extend GridControl.prototype,
         # If open already, close first.
         close()
 
+      $element.trigger($.Event('show.grid.boundelement'))
+
       $element.addClass(open_class)
 
       options.openedHandler()
@@ -132,6 +135,10 @@ _.extend GridControl.prototype,
     if options.close_on_grid_header_rebuild
       @on "columns-headers-dom-rebuilt", close
 
+    if options.close_on_grid_bound_elements_show
+      $(document).on 'show.grid.boundelement', ->
+        close()
+
     if options.close_on_click_outside
       $(document).on 'click', close
       # Bootstrap's dropdown button stops click propagation, so it needs special treatment
@@ -166,6 +173,9 @@ _.extend GridControl.prototype,
       if options.close_on_click_outside
         $(document).off 'click', close
         $(document).off 'show.bs.dropdown', close
+
+      if options.close_on_grid_bound_elements_show
+        $(document).off 'show.grid.boundelement', close
 
       if options.close_on_mousedown_outside
         $(document).off 'mousedown', close
