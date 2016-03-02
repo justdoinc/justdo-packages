@@ -110,7 +110,7 @@ _.extend PACK.Formatters,
           transfer_type = "transfer-from-me"
 
         tree_control += """
-          <div class="transfer-owner #{transfer_type}"></div>
+          <div class="transfer-owner #{transfer_type} slick-prevent-edit"></div>
         """
 
       tree_control += """
