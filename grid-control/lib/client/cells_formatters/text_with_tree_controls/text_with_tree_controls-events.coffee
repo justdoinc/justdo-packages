@@ -105,11 +105,14 @@ PACK.jquery_events.push
 
     event_row = $(e.target).closest(".slick-row")
     event_item = @getEventItem(e)
+    event_path = @getEventPath(e)
 
     save_and_exit_not_prevented = @saveAndExitActiveEditor()
 
     if save_and_exit_not_prevented
-      event_item = @_grid_data.extendItemForeignKeys(event_item, {foreign_keys: ["owner_id", "pending_owner_id"]})
+      event_item = @_grid_data.extendItemForeignKeys(event_item, {foreign_keys: ["owner_id", "pending_owner_id"], in_place: false})
+
+      event_item.path = event_path
 
       # For case @saveAndExitActiveEditor() caused the text editor item to exit edit mode
       # and thus remove the original clicked element, make sure we find the right one 
