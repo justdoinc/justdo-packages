@@ -1,5 +1,4 @@
-prepareOpreqArgs = (prereq) ->
-  return if prereq? then prereq else {}
+prepareOpreqArgs = JustdoHelpers.prepareOpreqArgs
 
 _.extend GridControl.prototype,
   # The following methods used to generate a prerequisites object,
