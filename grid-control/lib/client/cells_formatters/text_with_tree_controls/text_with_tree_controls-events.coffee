@@ -96,13 +96,8 @@ PACK.jquery_events.push
 # grid-tree-control-user handling
 #
 PACK.jquery_events.push
-  args: ['mouseup', '.grid-tree-control-user']
+  args: ['click', '.grid-tree-control-user']
   handler: (e) ->
-    # For the reasone mouseup chosen instead of click, check [COMMENT 1]
-    # above, it's assumed that same causes apply here, but 
-    # e.preventDefault() for any case in .grid-tree-control-user mousedown
-    # is not enough in that case.
-
     event_row = $(e.target).closest(".slick-row")
     event_item = @getEventItem(e)
     event_path = @getEventPath(e)
