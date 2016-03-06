@@ -5,6 +5,7 @@ default_options =
   # The wrapper will be appended to the element_html
   close_button_html: '<i class="fa fa-close fa-fw"></i>'
   close_on_context_menu_outside: true
+  close_on_esc: true
   close_on_click_outside: true
   close_on_mousedown_outside: true
   close_on_grid_header_rebuild: true
@@ -142,7 +143,13 @@ _.extend GridControl.prototype,
     if options.close_on_grid_bound_elements_show
       $(document).on 'show.grid.boundelement', close
 
+    closeOnEsc = (e) ->
+      e = e || window.event
+      if e.keyCode == 27
         close()
+
+    if options.close_on_esc
+      $(document).on 'keydown', closeOnEsc
 
     if options.close_on_click_outside
       $(document).on 'click', close
@@ -173,6 +180,9 @@ _.extend GridControl.prototype,
 
     @_grid.onBeforeDestroy.subscribe =>
       # Release all events bindings to document
+      if options.close_on_esc
+        $(document).off 'keydown', closeOnEsc
+
       if options.close_on_click_outside
         $(document).off 'click', close
 
