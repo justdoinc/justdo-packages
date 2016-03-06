@@ -140,7 +140,8 @@ _.extend GridControl.prototype,
       $(document).on 'show.bs.dropdown', close  
 
     if options.close_on_grid_bound_elements_show
-      $(document).on 'show.grid.boundelement', ->
+      $(document).on 'show.grid.boundelement', close
+
         close()
 
     if options.close_on_click_outside
