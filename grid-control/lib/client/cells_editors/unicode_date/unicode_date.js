@@ -89,7 +89,7 @@ PACK.Editors.UnicodeDateEditor = function (args) {
   };
 
   this.validate = function () {
-    if (moment($input.val(), momentFormat, true).isValid()) {
+    if ($input.val()=='' || moment($input.val(), momentFormat, true).isValid()) {
       return {
         valid: true,
         msg: null
