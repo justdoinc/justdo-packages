@@ -115,6 +115,34 @@ _.extend GridControl.prototype,
 
       options.positionUpdateHandler($connected_element)
 
+    $element.data "destroy", destroy = _.once =>
+      # Release all events bindings to document
+      if options.close_on_esc
+        $(document).off 'keydown', closeOnEsc
+
+      if options.close_on_click_outside
+        $(document).off 'click', close
+
+      if options.close_on_bootstrap_dropdown_show
+        $(document).off 'show.bs.dropdown', close
+
+      if options.close_on_grid_bound_elements_show
+        $(document).off 'show.grid.boundelement', close
+
+      if options.close_on_mousedown_outside
+        $(document).off 'mousedown', close
+
+      if options.close_on_context_menu_outside
+        $(document).off 'contextmenu', close 
+
+      if options.update_pos_on_dom_scroll
+        $(window).off 'scroll', updatePosition
+
+      if options.update_pos_on_dom_resize
+        $(window).off 'resize', updatePosition
+
+      $element.remove()
+
     #
     # Close button
     #
@@ -179,31 +207,6 @@ _.extend GridControl.prototype,
       $(window).on 'resize', updatePosition
 
     @_grid.onBeforeDestroy.subscribe =>
-      # Release all events bindings to document
-      if options.close_on_esc
-        $(document).off 'keydown', closeOnEsc
-
-      if options.close_on_click_outside
-        $(document).off 'click', close
-
-      if options.close_on_bootstrap_dropdown_show
-        $(document).off 'show.bs.dropdown', close
-
-      if options.close_on_grid_bound_elements_show
-        $(document).off 'show.grid.boundelement', close
-
-      if options.close_on_mousedown_outside
-        $(document).off 'mousedown', close
-
-      if options.close_on_context_menu_outside
-        $(document).off 'contextmenu', close 
-
-      if options.update_pos_on_dom_scroll
-        $(window).off 'scroll', updatePosition
-
-      if options.update_pos_on_dom_resize
-        $(window).off 'resize', updatePosition
-
-      $element.remove()
+      destroy()
 
     return $element
