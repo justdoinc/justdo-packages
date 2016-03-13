@@ -712,6 +712,9 @@ _.extend GridControl.prototype,
 
     return true
 
+  activateItemId: (item_id, cell = 0, options) ->
+    @activatePath(@_grid_data.getItemIdPath(item_id), cell, options)
+
   movePath: (path, new_location, cb, usersDiffConfirmationCb) ->
     # A proxy to grid-data's movePath that takes care of using
     # options.usersDiffConfirmationCb if no custom
