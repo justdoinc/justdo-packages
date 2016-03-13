@@ -35,9 +35,5 @@ share.helpers = helpers =
     else
       return path_array[path_array.length - 2]
 
-  callCb: ->
-    cb = arguments[0]
-    args = _.toArray(arguments).slice(1)
 
-    if cb? and _.isFunction(cb)
-      cb.apply(@, args)
+  callCb: JustdoHelpers.callCb
