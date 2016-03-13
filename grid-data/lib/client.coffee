@@ -1119,6 +1119,35 @@ _.extend GridData.prototype,
     else
       return null
 
+  getItemIdPath: (item_id) ->
+    # Returns one of the paths that leads to the requested item_id
+    # the path that is picked picked arbitrarily.
+    #
+    # Will return null if no such item_id in the tree.
+
+    if item_id == "0"
+      return "/"
+
+    path = []
+
+    while item_id != "0"
+      if not (cur_item = @items_by_id[item_id])?
+        if path.length > 0
+          # If path is not empty, original item_id param exists but
+          # we can't find the chain to the root
+          @logger.warn "getItemIdPath reached a broken chain"
+
+        return null
+
+      path.unshift(item_id)
+
+      for parent_id of cur_item.parents
+        item_id = parent_id
+
+        break
+
+    return GridData.helpers.joinPathArray path
+
   getItemHasChildren: (id) ->
     # Reactive resource
 

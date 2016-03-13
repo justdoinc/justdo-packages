@@ -35,5 +35,6 @@ share.helpers = helpers =
     else
       return path_array[path_array.length - 2]
 
+  joinPathArray: (path_array) -> "/#{path_array.join('/')}/"
 
   callCb: JustdoHelpers.callCb
