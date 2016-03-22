@@ -13,10 +13,6 @@ _.extend GridControl.prototype,
 
     column_index_of_last_opened_cmenu = null # excludes the handle from the count
 
-    # Disable cell handle context-menu
-    $(".slick-header-column:first").bind "contextmenu", (e) ->
-      e.preventDefault()
-
     # Find missing fields
     current_view_fields = _.map @getView(), (col) -> col.field
     visible_fields = []
@@ -45,7 +41,7 @@ _.extend GridControl.prototype,
     ]
 
     grid_control_cmenu_id = "grid-control-column-context-menu"
-    $grid_control_cmenu_target = $(".slick-header-column:nth-child(2)")
+    $grid_control_cmenu_target = $(".slick-header-column:first")
     $("#dropdown-#{grid_control_cmenu_id}").remove() 
     if append_fields_submenu.length > 0
       # context-menu for grid-control column
@@ -62,7 +58,7 @@ _.extend GridControl.prototype,
 
     # common columns context menu
     $('#dropdown-common-column-context-menu').remove()
-    $common_cmenu_target = $('.slick-header-columns').children().slice(2)
+    $common_cmenu_target = $('.slick-header-columns').children().slice(1)
     if append_fields_submenu.length > 0
       menu = append_fields_menu
     else
@@ -79,4 +75,4 @@ _.extend GridControl.prototype,
 
     $common_cmenu_target.bind "mousedown", (e) ->
       if e.which == 3
-        column_index_of_last_opened_cmenu = $(e.target).closest(".slick-header-column").index() - 1 # -1 since we don't include the row handle column
+        column_index_of_last_opened_cmenu = $(e.target).closest(".slick-header-column").index()
