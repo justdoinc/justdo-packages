@@ -850,22 +850,6 @@ _.extend GridData.prototype,
 
     @emit "rebuild", diff
 
-  _updateRowFields: (item_id, fields) ->
-    # update internal data structure
-    old_item = @items_by_id[item_id]
-    item = @collection.findOne(item_id)
-
-    if old_item? and item?
-      for field in fields
-        @items_by_id[item_id][field] = item[field]
-
-      for removed_field in _.difference(_.keys(@items_by_id[item_id]), _.keys(item))
-        delete @items_by_id[item_id][removed_field]
-
-      if @_items_ids_map_to_grid_tree_indices[item_id]?
-        for row in @_items_ids_map_to_grid_tree_indices[item_id]
-          @emit "grid-item-changed", row, fields
-
   _buildNode: (node, level, node_path) ->
     child_orders = (_.keys node).sort(numSort)
 
@@ -890,6 +874,22 @@ _.extend GridData.prototype,
 
         if child_id of @tree_structure
           @_buildNode(@tree_structure[child_id], level + 1, "#{node_path}#{child_id}/")
+
+  _updateRowFields: (item_id, fields) ->
+    # update internal data structure
+    old_item = @items_by_id[item_id]
+    item = @collection.findOne(item_id)
+
+    if old_item? and item?
+      for field in fields
+        @items_by_id[item_id][field] = item[field]
+
+      for removed_field in _.difference(_.keys(@items_by_id[item_id]), _.keys(item))
+        delete @items_by_id[item_id][removed_field]
+
+      if @_items_ids_map_to_grid_tree_indices[item_id]?
+        for row in @_items_ids_map_to_grid_tree_indices[item_id]
+          @emit "grid-item-changed", row, fields
 
   _init: ->
     if @_initialized or @_destroyed
