@@ -4,6 +4,8 @@ numSort = (a, b) -> a - b
 GridData = (collection) ->
   EventEmitter.call this
 
+  @logger = Logger.get("grid-data")
+
   @collection = collection
 
   if not (schema = @collection.simpleSchema())?
@@ -62,8 +64,6 @@ GridData = (collection) ->
 
   @_metadataGenerators = []
 
-  @logger = Logger.get("grid-data")
-
   @filter = new ReactiveVar(null, (a, b) -> JSON.sortify(a) == JSON.sortify(b))
   # item_ids present in @filter_independent_items array will always pass the filter
   @filter_independent_items = new ReactiveVar(null, (a, b) -> JSON.stringify(a) == JSON.stringify(b))
@@ -86,7 +86,8 @@ GridData.helpers = helpers # Expose helpers to other packages throw GridData
 Util.inherits GridData, EventEmitter
 
 _.extend GridData.prototype,
-  
+  _error: JustdoHelpers.constructor_error
+
   # we use _idle_time_ms_before_set_need_flush to give priority to
   # @_items_tracker over the flush. If many items arrive at the same time, we
   # don't flush until the batch is ready
@@ -1249,10 +1250,10 @@ _.extend GridData.prototype,
     paths = []
 
     if not _.isRegExp(term)
-      throw new Meteor.Error "wrong-input", "search() supports only regular expressions as term argument"
+      throw @_error "wrong-input", "search() supports only regular expressions as term argument"
 
     if fields? and not _.isArray(fields)
-      throw new Meteor.Error "wrong-input", "search() `fields` argument must be array or null"
+      throw @_error "wrong-input", "search() `fields` argument must be array or null"
 
     _search = (node, path) ->
       # Recursively find paths with fields matching term
@@ -1337,7 +1338,7 @@ _.extend GridData.prototype,
           @_structure_changes_queue.push ["expand_path", [ancestor_path]]
           @_set_need_flush()
     else
-      @error "Can't expnad unknown path: #{path}"
+      @_error "unknown-path", "Can't expand unknown path: #{path}", {path: path}
 
     return
 
@@ -1475,7 +1476,7 @@ _.extend GridData.prototype,
 
     if executed is false
       # executed is false if edit blocked by events hooks
-      edit_failed(new Meteor.Error "edit-blocked-by-hook", "Edit blocked by hook")
+      edit_failed(@_error "edit-blocked-by-hook", "Edit blocked by hook")
 
   addChild: (path, fields, cb) ->
     # If cb provided, cb will be called with the following args when excution
@@ -1644,7 +1645,7 @@ _.extend GridData.prototype,
         @logger.debug "movePath cancelled by usersDiffConfirmationCb"
 
         # call cb with error
-        helpers.callCb cb, new Meteor.Error "operation-cancelled", "movePath operation cancelled by usersDiffConfirmationCb"
+        helpers.callCb cb, @_error("operation-cancelled", "movePath operation cancelled by usersDiffConfirmationCb")
 
       usersDiffConfirmationCb(path_item_id, new_parent_item_id, diff, proceed, cancel)
 

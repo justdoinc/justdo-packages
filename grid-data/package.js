@@ -25,11 +25,13 @@ Package.onUse(function (api) {
   api.use('justdoinc:justdo-helpers@1.0.0', both);
 
   api.add_files('lib/globals.js', both);
+
   api.add_files('lib/helpers.coffee', both);
-  api.add_files('lib/exceptions.coffee', both);
   api.add_files('lib/client.coffee', client, {bare: true});
   api.add_files('lib/hooks.coffee', client);
   api.add_files('lib/server.coffee', server);
+
+  api.add_files('lib/errors_types.coffee', both);
 
   api.export('GridData');
   api.export('GridDataCom');

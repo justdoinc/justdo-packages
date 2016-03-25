@@ -1,7 +1,4 @@
 helpers = share.helpers
-exceptions = share.exceptions
-
-logger = Logger.get("grid-data")
 
 # The communication layer between the server and the client
 GridDataCom = (collection) ->
@@ -27,6 +24,10 @@ GridDataCom = (collection) ->
 Util.inherits GridDataCom, EventEmitter
 
 _.extend GridDataCom.prototype,
+  logger: Logger.get("grid-data")
+
+  _error: JustdoHelpers.constructor_error
+
   setupGridPublication: (options = {}) ->
     self = this
 
@@ -251,10 +252,10 @@ _.extend GridDataCom.prototype,
     methods_names = ["addChild", "addSibling", "removeParent", "movePath", "sortChildren", "bulkUpdate"]
 
     if method_name not in methods_names
-      throw new Meteor.Error("unknown-method-name", "Unknown method name: #{method_name}, use one of: #{methods_names.join(", ")}")
+      throw @_error "unknown-method-name", "Unknown method name: #{method_name}, use one of: #{methods_names.join(", ")}"
 
     if not _.isFunction middleware
-      throw new Meteor.Error("wrong-type", "Middleware has to be a function")
+      throw @_error "wrong-type", "Middleware has to be a function"
 
     if not @_grid_methods_middlewares[method_name]?
       @_grid_methods_middlewares[method_name] = []
@@ -278,7 +279,7 @@ _.extend GridDataCom.prototype,
         continue
       if message instanceof Error
         throw message
-      throw new Meteor.Error("grid-method-blocked", message)
+      throw @_error "grid-method-blocked", message
 
   initDefaultGridMethods: ->
     self = @
@@ -302,152 +303,152 @@ _.extend GridDataCom.prototype,
       return collection.insert new_item
 
     methods[helpers.getCollectionMethodName(collection, "addChild")] = (path, fields = {}) ->
-      if @userId?
-        if path == "/"
-          return self.addRootChild(@userId, fields)
-      else
-        throw exceptions.loginRequired()
+      if not @userId?
+        throw self._error "login-required"
 
-      if (item = collection.getItemByPathIfUserBelong path, @userId)?
-        new_item = _.extend {}, fields, {parents: {}, users: item.users}
-        new_item.parents[item._id] = {order: collection.getNewChildOrder(item._id)}
+      if path == "/"
+        return self.addRootChild(@userId, fields)
 
-        self._runGridMethodMiddlewares @, "addChild", path, new_item
+      if not (item = collection.getItemByPathIfUserBelong path, @userId)?
+        throw self._error "unknown-path"
 
-        return collection.insert new_item
-      else
-        throw exceptions.unkownPath()
+      new_item = _.extend {}, fields, {parents: {}, users: item.users}
+      new_item.parents[item._id] = {order: collection.getNewChildOrder(item._id)}
+
+      self._runGridMethodMiddlewares @, "addChild", path, new_item
+
+      return collection.insert new_item
 
     methods[helpers.getCollectionMethodName(collection, "addSibling")] = (path, fields = {}) ->
-      if (item = collection.getItemByPathIfUserBelong path, @userId)?
-        parent_id = helpers.getPathParentId(path)
-        sibling_order = item.parents[parent_id].order + 1
+      if not (item = collection.getItemByPathIfUserBelong path, @userId)?
+        throw self._error "unknown-path"
 
-        new_item = _.extend {}, fields, {parents: {}, users: item.users}
-        new_item.parents[parent_id] = {order: sibling_order}
+      parent_id = helpers.getPathParentId(path)
+      sibling_order = item.parents[parent_id].order + 1
 
-        self._runGridMethodMiddlewares @, "addSibling", path, new_item
+      new_item = _.extend {}, fields, {parents: {}, users: item.users}
+      new_item.parents[parent_id] = {order: sibling_order}
 
-        collection.incrementChildsOrderGte parent_id, sibling_order
-        ret = collection.insert new_item
-        return ret
-      else
-        throw exceptions.unkownPath()
+      self._runGridMethodMiddlewares @, "addSibling", path, new_item
+
+      collection.incrementChildsOrderGte parent_id, sibling_order
+
+      return collection.insert new_item
 
     methods[helpers.getCollectionMethodName(collection, "removeParent")] = (path) ->
-      if (item = collection.getItemByPathIfUserBelong path, @userId)?
-        parent_id = helpers.getPathParentId(path)
+      if not (item = collection.getItemByPathIfUserBelong path, @userId)?
+        throw self._error "unknown-path"
 
-        if collection.getChildrenCount(item._id) > 0
-          throw new Meteor.Error(500, 'Error: Can\'t remove: Item have childrens (you might not have the permission to see all childrens)')
+      parent_id = helpers.getPathParentId(path)
 
-        if (_.size item.parents) == 1
-          self._runGridMethodMiddlewares @, "removeParent", path,
-            # the etc obj
-            item: item 
-            parent_id: parent_id,
-            no_more_parents: true
-            update_op: undefined
+      if collection.getChildrenCount(item._id) > 0
+        throw self._error "operation-blocked", 'Can\'t remove: Item have childrens (you might not have the permission to see all childrens)'
 
-          collection.remove item._id
-        else
-          update_op = {$unset: {}}
-          update_op.$unset["parents.#{parent_id}"] = ""
+      if (_.size item.parents) == 1
+        self._runGridMethodMiddlewares @, "removeParent", path,
+          # the etc obj
+          item: item 
+          parent_id: parent_id,
+          no_more_parents: true
+          update_op: undefined
 
-          self._runGridMethodMiddlewares @, "removeParent", path,
-            # the etc obj
-            item: item 
-            parent_id: parent_id,
-            no_more_parents: false
-            update_op: update_op
-
-          collection.update item._id, update_op
+        collection.remove item._id
       else
-        throw exceptions.unkownPath()
+        update_op = {$unset: {}}
+        update_op.$unset["parents.#{parent_id}"] = ""
+
+        self._runGridMethodMiddlewares @, "removeParent", path,
+          # the etc obj
+          item: item 
+          parent_id: parent_id,
+          no_more_parents: false
+          update_op: update_op
+
+        collection.update item._id, update_op
 
     methods[helpers.getCollectionMethodName(collection, "movePath")] = (path, new_location) ->
       if (not _.isObject(new_location)) or
          (not (("order" of new_location) or ("parent" of new_location)))
           # if new_location doens't have information for new location
-          throw new Meteor.Error("missing-argument", 'Error: Can\'t move path: new_location argument lack information for new location')
+          throw self._error "missing-argument", 'Error: Can\'t move path: new_location argument lack information for new location'
 
-      if (item = collection.getItemByPathIfUserBelong path, @userId)?
-        parent_id = helpers.getPathParentId(path)
+      if not (item = collection.getItemByPathIfUserBelong path, @userId)?
+        throw self._error "unknown-path"
 
-        if not ("parent" of new_location)
-          # If parent is not provided in new_location we assume change of order under same item
-          new_location.parent = parent_id
+      parent_id = helpers.getPathParentId(path)
 
-        if parent_id != new_location.parent
-          if collection.isAncestor(new_location.parent, item._id)
-            throw new Meteor.Error("infinite-loop", "Error: Can\'t move path: #{new_location.parent} ancestor of #{parent_id}")
+      if not ("parent" of new_location)
+        # If parent is not provided in new_location we assume change of order under same item
+        new_location.parent = parent_id
 
-        new_parent_item = collection.findOne(new_location.parent)
-        if new_location.parent != "0" and not(new_parent_item? and collection.isUserBelongToItem(new_parent_item, @userId))
-          throw new Meteor.Error("unkown-path", 'Error: Can\'t move path: new parent doesn\'t exist') # we don't indicate existance in case no permission
+      if parent_id != new_location.parent
+        if collection.isAncestor(new_location.parent, item._id)
+          throw self._error "infinite-loop", "Error: Can\'t move path: #{new_location.parent} ancestor of #{parent_id}"
 
-        if not ("order" of new_location)
-          new_location.order = collection.getNewChildOrder new_location.parent
+      new_parent_item = collection.findOne(new_location.parent)
+      if new_location.parent != "0" and not(new_parent_item? and collection.isUserBelongToItem(new_parent_item, @userId))
+        throw self._error "unknown-path", 'Error: Can\'t move path: new parent doesn\'t exist' # we don't indicate existance in case no permission
 
-        # Remove current parent op prepeation
-        remove_current_parent_update_op = {$unset: {}}
-        remove_current_parent_update_op.$unset["parents.#{parent_id}"] = ""
+      if not ("order" of new_location)
+        new_location.order = collection.getNewChildOrder new_location.parent
 
-        # Add to new parent op prepeation
-        set_new_parent_update_op = {$set: {}}
-        set_new_parent_update_op.$set["parents.#{new_location.parent}"] = {order: new_location.order}
+      # Remove current parent op prepeation
+      remove_current_parent_update_op = {$unset: {}}
+      remove_current_parent_update_op.$unset["parents.#{parent_id}"] = ""
 
-        # Check if an item exist already in new_location order
-        item_in_new_location = collection.getChildreOfOrder(new_location.parent, new_location.order)
-        if item_in_new_location? and item_in_new_location._id == item._id
-          # There's already an item in the new location, the same item..., nothing to do.
-          return
+      # Add to new parent op prepeation
+      set_new_parent_update_op = {$set: {}}
+      set_new_parent_update_op.$set["parents.#{new_location.parent}"] = {order: new_location.order}
 
-        self._runGridMethodMiddlewares @, "movePath", path,
-          # the etc obj
-          new_location: _.extend {}, new_location
-          item: item
-          current_parent_id: parent_id
-          new_parent_item: new_parent_item
+      # Check if an item exist already in new_location order
+      item_in_new_location = collection.getChildreOfOrder(new_location.parent, new_location.order)
+      if item_in_new_location? and item_in_new_location._id == item._id
+        # There's already an item in the new location, the same item..., nothing to do.
+        return
 
-        if item_in_new_location?
-          # if there's an item in the new location.
-          # Note we check above that it isn't the same item. We don't use sub if since
-          # we want to run the middlewares only when we are sure the operation is ready
-          # to be performed. 
-          collection.incrementChildsOrderGte new_location.parent, new_location.order
+      self._runGridMethodMiddlewares @, "movePath", path,
+        # the etc obj
+        new_location: _.extend {}, new_location
+        item: item
+        current_parent_id: parent_id
+        new_parent_item: new_parent_item
 
-        # Remove current parent
-        collection.update item._id, remove_current_parent_update_op
+      if item_in_new_location?
+        # if there's an item in the new location.
+        # Note we check above that it isn't the same item. We don't use sub if since
+        # we want to run the middlewares only when we are sure the operation is ready
+        # to be performed. 
+        collection.incrementChildsOrderGte new_location.parent, new_location.order
 
-        # Add to new parent
-        collection.update item._id, set_new_parent_update_op
-      else
-        throw exceptions.unkownPath()
+      # Remove current parent
+      collection.update item._id, remove_current_parent_update_op
+
+      # Add to new parent
+      collection.update item._id, set_new_parent_update_op
 
     methods[helpers.getCollectionMethodName(collection, "sortChildren")] = (path, field, sort_order) ->
       if path == "/"
-        throw exceptions.cantPerformOnRoot()
+        throw self._error "cant-perform-on-root"
 
-      if (parent = collection.getItemByPathIfUserBelong path, @userId)?
-        query = {}
-        query["parents.#{parent._id}"] = {$exists: true}
+      if not (parent = collection.getItemByPathIfUserBelong path, @userId)?
+        throw self._error "unknown-path"
 
-        sort = {}
-        sort[field] = 1
-        if sort_order != 1
-          sort[field] = -1
+      query = {}
+      query["parents.#{parent._id}"] = {$exists: true}
 
-        order = 0
-        collection.find(query, {sort: sort}).forEach (child) ->
-          set = {$set: {}}
-          set.$set["parents.#{parent._id}.order"] = order
-          collection.update child._id, set, (err) ->
-            if err?
-              logger.error "sortChildren: failed to change item order #{JSON.stringify(err)}"
-          order += 1
-      else
-        throw exceptions.unkownPath()
+      sort = {}
+      sort[field] = 1
+      if sort_order != 1
+        sort[field] = -1
+
+      order = 0
+      collection.find(query, {sort: sort}).forEach (child) ->
+        set = {$set: {}}
+        set.$set["parents.#{parent._id}.order"] = order
+        collection.update child._id, set, (err) ->
+          if err?
+            self.logger.error "sortChildren: failed to change item order #{JSON.stringify(err)}"
+        order += 1
 
     methods[helpers.getCollectionMethodName(collection, "bulkUpdate")] = (items_ids, modifier) ->
       # Returns the count of changed items

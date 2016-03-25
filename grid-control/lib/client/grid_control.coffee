@@ -255,26 +255,7 @@ _.extend GridControl.prototype,
 
     @_init_dfd.resolve()
 
-  _error: (type, message, details) ->
-    # XXX DRY, also appears in justdo-projects
-    if _.isObject message
-      details = message
-      message = undefined 
-
-    if not(type of @_errors_types)
-      @logger.warn("Unknown error type: #{type}")
-    else
-      # Use default if type is known and no message provided
-      if not message? or _.isEmpty(message)
-        message = @_errors_types[type]
-
-    log_message = "[#{type}] #{message}"
-    if details?
-      log_message += " #{JSON.stringify details}"
-
-    @logger.error(log_message)
-
-    new Meteor.Error(type, message, details)
+  _error: JustdoHelpers.constructor_error
 
   _initStatesClassesComputations: ->
     @_states_classes_computations = []
