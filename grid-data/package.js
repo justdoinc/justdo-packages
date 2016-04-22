@@ -28,17 +28,40 @@ Package.onUse(function (api) {
   api.add_files('lib/helpers.coffee', both);
 
   // GridData
-  api.add_files('lib/grid-data/grid-data.coffee', client, {bare: true});
-  api.add_files('lib/grid-data/hooks.coffee', client);
+  api.add_files('lib/grid-data/grid-data.coffee', client);
 
   // GridDataCom
-  api.add_files('lib/grid-data-com/grid-data-com-client.coffee', client, {bare: true});
+  api.add_files('lib/grid-data-com/grid-data-com-client.coffee', client);
   api.add_files('lib/grid-data-com/grid-data-com-server.coffee', server);
 
   api.add_files('lib/errors-types.coffee', both);
 
+  // Core data structures
+  api.add_files('lib/grid-data/data-structure-management/core-data-structures.coffee', client);
+
+  // Load apis
+  api.add_files('lib/grid-data/api/core-api.coffee', client);
+  api.add_files('lib/grid-data/api/search.coffee', client);
+
+  // Filters
+  api.add_files('lib/grid-data/data-structure-management/filters/filters.coffee', client);
+  api.add_files('lib/grid-data/data-structure-management/filters/filters-independent-items.coffee', client);
+
+  // Grid Sections
+  api.add_files('lib/grid-data/data-structure-management/grid-sections/grid-sections.coffee', client);
+  api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/section-manager-proto.coffee', client);
+  api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/data-tree.coffee', client);
+
+  // Metadata management
+  api.add_files('lib/grid-data/data-structure-management/metadata.coffee', client);
+
+  // Collection operations
+  api.add_files('lib/grid-data/collection-operations/collection-operations.coffee', client);
+  api.add_files('lib/grid-data/collection-operations/hooks.coffee', client);
+
   api.export('GridData');
   api.export('GridDataCom');
+  api.export('GridDataSectionManager');
 });
 
 Package.onTest(function(api) {

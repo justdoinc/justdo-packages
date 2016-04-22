@@ -10,7 +10,9 @@ errors_types =
   "infinite-loop": "Infinite loop"
   "missing-argument": "Missing argument"
   "wrong-input": "Wrong Input"
+  "invalid-option": "Invalid Option"
   "edit-blocked-by-hook": "Edit blocked by hook"
+  "unknown-section-manager-type": "Unknown section manager type"
 
 if Meteor.isClient
   _.extend GridData.prototype,

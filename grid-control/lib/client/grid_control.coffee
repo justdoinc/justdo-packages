@@ -663,12 +663,11 @@ _.extend GridControl.prototype,
 
     path_parent = GridData.helpers.getParentPath path
 
-    # XXX at the moment pathExist isn't filters aware,
-    # therefore we might open the path ancestor even though
-    # the path is actually filtered - will look weird
+    # XXX pathExist isn't filters aware, therefore we might open the path
+    # ancestor even though the path is actually filtered
     if @_grid_data.pathExist path
       # Expand parent path, if it isn't
-      if not @_grid_data.isPathVisible(path)
+      if not @_grid_data.pathInGridTree(path)
         if not options.expand
           @logger.debug "activatePath: options.expand=false and path #{path} isn't visible due to collapsed ancestor - don't activate"
 
@@ -678,12 +677,12 @@ _.extend GridControl.prototype,
 
           @once "rebuild_ready", =>
             # post slick grid rebuild
-            row = @_grid_data.getItemRowByPath(path)
+            row = @_grid_data.getPathGridTreeIndex(path)
 
             if row?
               @activateRow(row, cell, options.scroll_into_view)
       else
-        row = @_grid_data.getItemRowByPath(path)
+        row = @_grid_data.getPathGridTreeIndex(path)
 
         @activateRow(row, cell, options.scroll_into_view)
     else
@@ -693,8 +692,8 @@ _.extend GridControl.prototype,
 
     return true
 
-  activateItemId: (item_id, cell = 0, options) ->
-    @activatePath(@_grid_data.getItemIdPath(item_id), cell, options)
+  activateCollectionItemId: (item_id, cell = 0, options) ->
+    @activatePath(@_grid_data.getCollectionItemIdPath(item_id), cell, options)
 
   movePath: (path, new_location, cb, usersDiffConfirmationCb) ->
     # A proxy to grid-data's movePath that takes care of using

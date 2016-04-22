@@ -135,7 +135,12 @@ _.extend GridControlSearch.prototype,
     if @current_term != ""
       @logger.debug "Refresh search results"
 
-      @paths = @grid_control._grid_data.search(new RegExp(@current_term, "i"), fields, true)
+      search_regexp = new RegExp(@current_term, "i")
+      search_options =
+        fields: fields
+        exclude_filtered_paths: true
+        exclude_typed_items: true
+      @paths = @grid_control._grid_data.search search_regexp, search_options
 
       if @paths.length > 0
         @_setHaveResults(@paths)

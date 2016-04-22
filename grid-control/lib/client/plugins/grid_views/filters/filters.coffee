@@ -25,11 +25,11 @@ _.extend GridControl.prototype,
 
       @_grid_data.setFilter filter_query
 
-    @on "filtered-paths-updated", =>
+    @on "grid-tree-filter-updated", =>
       active_path = @getActiveCellPath()
 
       if active_path?
-        if not @_grid_data.pathPassFilter(active_path)
+        if not @_grid_data.pathPartOfFilteredTree(active_path)
           @resetActivePath()
 
     @registerMetadataGenerator (item, ext, index) =>
@@ -37,17 +37,17 @@ _.extend GridControl.prototype,
       # row elements without passing through slick.grid, in case
       # of row invalidation, we need to let slick grid know the
       # row classes according to their filtered state
-      filter_paths = @_grid_data.getFilterPaths()
+      grid_tree_filter_state = @_grid_data._grid_tree_filter_state
 
-      if not filter_paths? or not filter_paths[index]?
+      if not grid_tree_filter_state? or not grid_tree_filter_state[index]?
         # If no filter active filter
         return {}
 
-      return {cssClasses: @_getFilterStateClasses(filter_paths[index])}
+      return {cssClasses: @_getFilterStateClasses(grid_tree_filter_state[index])}
 
     waiting_rebuild = false
     filter_update_waiting = false
-    update_filtered_paths = =>
+    updateFilterState = =>
       if not filter_update_waiting
         return
 
@@ -57,21 +57,19 @@ _.extend GridControl.prototype,
         # with the new grid structure stored in @_grid_data.grid_tree,
         # therefore we'll have to wait for the rebuild to complete
         # in order to apply the filter represented in
-        # @_grid_data.getFilterPaths() for the current @_grid_data.grid_tree
-        @logger.debug "update_filtered_paths: blocked, waiting rebuild to complete"
+        # @_grid_data._grid_tree_filter_state for the current @_grid_data.grid_tree
+        @logger.debug "updateFilterState: blocked, waiting rebuild to complete"
 
         return
 
       filter_update_waiting = false
 
-      filter_paths = @_grid_data.getFilterPaths()
-
-      if not filter_paths?
+      if not (grid_tree_filter_state = @_grid_data._grid_tree_filter_state)?
         @container.removeClass("filter-active")
         all_row_filter_state_classes_string = row_filter_state_classes.join " "
         @container.find(".slick-row").removeClass(all_row_filter_state_classes_string)
       else
-        for filter_state, item_id in filter_paths
+        for filter_state, item_id in grid_tree_filter_state
           $row = @_grid.getRowJqueryObj(item_id)
 
           if $row?
@@ -90,7 +88,7 @@ _.extend GridControl.prototype,
 
         @container.addClass("filter-active")
 
-      @emit "filtered-paths-updated"
+      @emit "grid-tree-filter-updated"
 
     @_grid_data.on "pre_rebuild", =>
       waiting_rebuild = true
@@ -98,18 +96,18 @@ _.extend GridControl.prototype,
     @on "rebuild_ready", =>
       waiting_rebuild = false
 
-      update_filtered_paths()
+      updateFilterState()
 
-    filters_paths_events_handler = =>
+    gridTreeFilterEventsHandler = =>
       filter_update_waiting = true
 
-      update_filtered_paths()
+      updateFilterState()
 
     @once "init", =>
-      @_grid_data.on "filter-paths-cleared", filters_paths_events_handler
-      @_grid_data.on "filter-paths-update", filters_paths_events_handler
+      @_grid_data.on "grid-tree-filter-cleared", gridTreeFilterEventsHandler
+      @_grid_data.on "grid-tree-filter-updated", gridTreeFilterEventsHandler
 
-      update_filtered_paths()
+      updateFilterState()
 
     @_initFiltersDom() # Implemented in filters_dom.coffee
 

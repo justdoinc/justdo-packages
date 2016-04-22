@@ -18,4 +18,4 @@ _.extend PACK.GridOperations,
 
           releaseOpsLock()
 
-    prereq: -> @_opreqActivePathHasChildren(@_opreqUnlocked(@_opreqGridReady()))
+    prereq: -> @_opreqActivePathChildrenLevelPermitted(@_opreqActivePathHasChildren(@_opreqActivePathIsCollectionItem(@_opreqUnlocked(@_opreqGridReady()))))

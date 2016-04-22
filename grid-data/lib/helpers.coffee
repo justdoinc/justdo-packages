@@ -5,15 +5,15 @@ share.helpers = helpers =
 
   normalizePath: (path) -> if _.last(path) != "/" then "#{path}/" else path
 
-  isRootPath: (path) -> helpers.normalizePath(path) == "/"
+  isRootPath: (path) -> path == "/"
 
   getPathArray: (path) ->
     if helpers.isRootPath(path)
       return []
 
-    helpers.normalizePath(path).replace(/(^\/|\/$)/g, "").split("/")
+    path.replace(/(^\/|\/$)/g, "").split("/")
 
-  getParentPath: (path) -> helpers.normalizePath(path).replace(/[^\/]+\/$/, "")
+  getParentPath: (path) -> path.replace(/[^\/]+\/$/, "")
 
   getAllAncestorPaths: (path) ->
     # Return all ancestor paths including path itself
@@ -25,15 +25,20 @@ share.helpers = helpers =
 
     ancestors
 
-  getPathItemId: (path) -> _.last helpers.getPathArray helpers.normalizePath(path)
+  getPathItemId_: (path) -> _.last helpers.getPathArray path
+
+  getPathItemId: (path) -> path.substring(path.lastIndexOf("/", path.length - 2) + 1, path.length - 1)
 
   getPathParentId: (path) ->
-    path_array = helpers.getPathArray "/0#{helpers.normalizePath(path)}"
+    path_array = helpers.getPathArray "/0#{path}"
 
     if path_array.length < 2
       return null
     else
       return path_array[path_array.length - 2]
+
+  getPathLevel: (path) ->
+    JustdoHelpers.substrCount(path, "/") - 2 # - 2 is for the first and last /
 
   joinPathArray: (path_array) -> "/#{path_array.join('/')}/"
 

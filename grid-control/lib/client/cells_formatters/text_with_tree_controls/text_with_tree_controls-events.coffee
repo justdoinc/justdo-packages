@@ -105,7 +105,7 @@ PACK.jquery_events.push
     save_and_exit_not_prevented = @saveAndExitActiveEditor()
 
     if save_and_exit_not_prevented
-      event_item = @_grid_data.extendItemForeignKeys(event_item, {foreign_keys: ["owner_id", "pending_owner_id"], in_place: false})
+      event_item = @_grid_data.extendObjForeignKeys(event_item, {foreign_keys: ["owner_id", "pending_owner_id"], in_place: false})
 
       event_item.path = event_path
 

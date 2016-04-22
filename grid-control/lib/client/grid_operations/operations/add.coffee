@@ -4,7 +4,7 @@ callCb = PACK.helpers.callCb
 
 _.extend PACK.GridOperations,
   addItem:
-    op: (path, fields, add_as_child = false, cb) ->
+    op: (absolute_path, fields, add_as_child = false, cb) ->
       if not fields?
         fields = {}
 
@@ -12,8 +12,11 @@ _.extend PACK.GridOperations,
       if add_as_child
         op = "addChild"
 
+      section = @_grid_data.getPathSection(absolute_path)
+      relative_path = section.section_manager.relPath(absolute_path)
+
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        @_grid_data[op] path, fields, (err, new_item_id, new_item_path) =>
+        @_grid_data[op] relative_path, fields, (err, new_item_id, new_item_relative_path) =>
           if err?
             @logger.error "addChild failed: #{err}"
 
@@ -22,6 +25,8 @@ _.extend PACK.GridOperations,
             releaseOpsLock()
 
             return
+
+          new_item_absolute_path = section.section_manager.absPath(new_item_relative_path)
 
           # Needed so the filter tracker computation to process immediately
           Tracker.flush()
@@ -34,29 +39,29 @@ _.extend PACK.GridOperations,
 
             # true means force expansion (path might have no children before flush,
             # so it's required)
-            @_grid_data.expandPath path
+            @_grid_data.expandPath absolute_path
 
           # Flush to make sure the item is in the tree DOM
           # Required for pathPassFilter to work proprely
           @_grid_data._flush()
 
-          if not @_grid_data.pathPassFilter(new_item_path)
+          if not @_grid_data.pathPassFilter(new_item_absolute_path)
             # Force new item to show even if filtered
             @forceItemsPassCurrentFilter new_item_id
 
-            Tracker.flush() # Needed so the filter tracker computation will
+            Tracker.flush() # Needed so the filter tracker computation
                             # which depends on grid_data.filter_independent_items
                             # as a reactive resource, will immediately update 
-                            # @_filter_items and @_filter_paths so they'll
+                            # @_filter_collection_items_ids and @_grid_tree_filter_state so they'll
                             # be available for the grid_data.flush before
                             # entering edit mode (which block all grid_data.flush)
 
             # Flush to make sure the item is in the tree DOM
             @_grid_data._flush()
 
-          @editPathCell new_item_path, 0
+          @editPathCell new_item_absolute_path, 0
 
-          callCb cb, err, new_item_id, new_item_path
+          callCb cb, err, new_item_id, new_item_absolute_path
 
           # Release lock only after activation of new path to
           # avoid any chance of refering to previous path in
@@ -65,21 +70,12 @@ _.extend PACK.GridOperations,
 
     prereq: -> @_opreqUnlocked(@_opreqGridReady())
 
-  newTopLevelItem:
-    op: (fields, cb) -> @addItem "/", fields, true, cb
-    prereq: -> @addItem.prereq()
-
   addSubItem:
     op: (fields, cb) -> @addItem @getActiveCellPath(), fields, true, cb
-    prereq: -> @_opreqActivePath(@addItem.prereq())
+    prereq: -> @_opreqActivePathChildrenLevelPermitted(@_opreqActivePathIsCollectionItem(@addItem.prereq()))
 
   addSiblingItem:
     op: (fields, cb) ->
-      active_path = @getActiveCellPath()
+      @addItem @getActiveCellPath(), fields, false, cb
 
-      if active_path?
-        @addItem @getActiveCellPath(), fields, false, cb
-      else
-        @addItem "/", fields, true, cb
-
-    prereq: -> @addItem.prereq()
+    prereq: -> @_opreqActivePathLevelPermitted(@_opreqActivePathIsCollectionItem(@addItem.prereq()))

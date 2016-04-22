@@ -5,8 +5,20 @@ _.extend PACK.GridOperations,
     op: (cb) ->
       @_performLockingOperation (releaseOpsLock, timedout) =>
         active_path = @getActiveCellPath()
-        next_path = @_grid_data.getNextPath(active_path)
-        prev_path = @_grid_data.getPreviousPath(active_path)
+        active_item_row = @getActiveCellRow()
+
+        active_item_section = @_grid_data.getItemSection(active_item_row)
+
+        # find next/prev paths
+        next_path = prev_path = null
+        next_item = @_grid_data.filterAwareGetNextItem(active_item_row)
+        if next_item?
+          next_path = @_grid_data.getItemPath(next_item)
+        else # If we couldn't find next item, try to find previous item
+          prev_item = @_grid_data.filterAwareGetPreviousItem(active_item_row)
+
+          if prev_item?
+            prev_path = @_grid_data.getItemPath(prev_item)
 
         @_grid_data.removeParent active_path, (err) =>
           if err?
@@ -33,4 +45,4 @@ _.extend PACK.GridOperations,
           # following operations
           releaseOpsLock()
 
-    prereq: -> @_opreqActivePathIsLeaf(@_opreqUnlocked(@_opreqGridReady()))
+    prereq: -> @_opreqActivePathLevelPermitted(@_opreqActivePathIsLeaf(@_opreqUnlocked(@_opreqGridReady())))

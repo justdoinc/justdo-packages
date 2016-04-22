@@ -3,17 +3,13 @@ helpers = PACK.FormattersHelpers
 _.extend PACK.Formatters,
   textWithTreeControls: (row, cell, value, columnDef, item) ->
     level = @_grid_data.getItemLevel row
-    # has_childs note: we print the toggle button for filtered item (result ==
-    # 2) being hidden in the css level
-    has_childs = @_grid_data.getItemHasChildren(row) > 0
-    expand = @_grid_data.getItemIsExpand row
+    expand_state = @_grid_data.filterAwareGetItemExpandState row
 
     state = ""
-    if has_childs
-      if expand
-        state = "expand"
-      else
-        state = "collapse"
+    if expand_state == 1
+      state = "expand"
+    else if expand_state == 0
+      state = "collapse"
 
     if not value?
       value = ""
@@ -74,7 +70,7 @@ _.extend PACK.Formatters,
       pending_owner_id = item.pending_owner_id
 
     if owner_id?
-      item = @_grid_data.extendItemForeignKeys item,
+      item = @_grid_data.extendObjForeignKeys item,
         in_place: false
         foreign_keys: ["owner_id"]
 

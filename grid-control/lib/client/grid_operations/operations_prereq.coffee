@@ -51,17 +51,88 @@ _.extend GridControl.prototype,
 
     return prereq
 
-  _opreqActivePathIsLeaf: (prereq) ->
+  _opreqActivePathIsCollectionItem: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
-    active_path_prereq = @_opreqActivePath()
-
     # If there's no active path - just return the active prereq message
-    if not _.isEmpty active_path_prereq
+    # note: @_opreqActivePath is reactive resource
+    if not _.isEmpty(active_path_prereq = @_opreqActivePath())
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    path_has_children = @_grid_data.pathHasChildren(@current_path.get())
+    if @_grid_data.getItemIsTyped(@getActiveCellRow())
+      prereq.active_path_isnt_collection_item = ""
+
+    return prereq
+
+  _opreqActivePathChildrenLevelPermitted: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    # If there's no active path - just return the active prereq message
+    # note: @_opreqActivePath is reactive resource
+    if not _.isEmpty(active_path_prereq = @_opreqActivePath())
+      _.extend(prereq, active_path_prereq)
+      return prereq
+
+    if @_grid_data.getItemRelativeDepthPermitted(@getActiveCellRow(), 1) is -1
+      prereq.active_path_children_level_not_permitted = ""
+
+    return prereq
+
+  _opreqActivePathLevelPermitted: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    # If there's no active path - just return the active prereq message
+    # note: @_opreqActivePath is reactive resource
+    if not _.isEmpty(active_path_prereq = @_opreqActivePath())
+      _.extend(prereq, active_path_prereq)
+      return prereq
+
+    if @_grid_data.getItemRelativeDepthPermitted(@getActiveCellRow()) is -1
+      prereq.active_path_level_not_permitted = ""
+
+    return prereq
+
+  _opreqActivePathParentLevelPermitted: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    # If there's no active path - just return the active prereq message
+    # note: @_opreqActivePath is reactive resource
+    if not _.isEmpty(active_path_prereq = @_opreqActivePath())
+      _.extend(prereq, active_path_prereq)
+      return prereq
+
+    if @_grid_data.getItemRelativeDepthPermitted(@getActiveCellRow(), -1) is -1
+      prereq.active_path_parent_level_not_permitted = ""
+
+    return prereq
+
+  _opreqActivePathPrevItemLevelPermitted: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    # If there's no prev path - just return the active_path_item_isnt_first_prereq message
+    # note @_opreqActiveItemIsntSectionFirstItem also takes care of making sure there's
+    # an active path
+    if not _.isEmpty(active_path_item_isnt_first_prereq = @_opreqActiveItemIsntSectionFirstItem())
+      _.extend(prereq, active_path_item_isnt_first_prereq)
+      return prereq
+
+    previous_item_index = @_grid_data.filterAwareGetPreviousItem(@getActiveCellRow())
+
+    if @_grid_data.getItemRelativeDepthPermitted(previous_item_index) == -1
+      prereq.active_path_prev_item_level_not_permitted = ""
+
+    return prereq
+
+  _opreqActivePathIsLeaf: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    # If there's no active path - just return the active prereq message
+    if not _.isEmpty(active_path_prereq = @_opreqActivePath())
+      _.extend(prereq, active_path_prereq)
+      return prereq
+
+    path_has_children = @_grid_data.filterAwareGetPathHasChildren(@current_path.get())
     if path_has_children == 1
       prereq.active_path_is_not_leaf = "Can't perform operation on an item with sub-items"
 
@@ -73,80 +144,71 @@ _.extend GridControl.prototype,
   _opreqActivePathHasChildren: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
-    active_path_prereq = @_opreqActivePath()
-
     # If there's no active path - just return the active prereq message
-    if not _.isEmpty active_path_prereq
+    if not _.isEmpty(active_path_prereq = @_opreqActivePath())
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    path_has_children = @_grid_data.pathHasChildren(@current_path.get())
+    path_has_children = @_grid_data.filterAwareGetPathHasChildren(@current_path.get())
     if path_has_children == 0
       prereq.active_path_has_no_children = "Can't perform this operation on an item with no sub-items"
 
     return prereq
 
-  _opreqActiveItemInLteLevelExistFollwingActive: (prereq) ->
+  _opreqItemInLteLevelExistFollowingActiveInPermittedLevel: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
-    active_path_prereq = @_opreqActivePath()
-
     # If there's no active path - just return the active prereq message 
-    if not _.isEmpty active_path_prereq
+    if not _.isEmpty(active_path_prereq = @_opreqActivePath())
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    if not @_grid_data.getNextLteLevelPath(@current_path.get())?
-      prereq.no_lte_level_path_follows_active = "No item follows the item in lower level"
+    next_lte_level_index = @_grid_data.filterAwareGetNextLteLevelItem(@getActiveCellRow())
+    if not next_lte_level_index? or @_grid_data.getItemRelativeDepthPermitted(next_lte_level_index) == -1
+      prereq.no_permitted_lte_level_path_follows_active = "No item follows the item in permitted lower level"
 
     return prereq
 
-  _opreqActiveItemIsntFirst: (prereq) ->
+  _opreqActiveItemIsntSectionFirstItem: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
-    active_path_prereq = @_opreqActivePath()
-
     # If there's no active path - just return the active prereq message 
-    if not _.isEmpty active_path_prereq
+    if not _.isEmpty(active_path_prereq = @_opreqActivePath())
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    if not @_grid_data.getPreviousPath(@current_path.get())?
+    previous_path = @_grid_data.filterAwareGetPreviousPath(@current_path.get())
+    if not previous_path? or previous_path of @_grid_data.section_path_to_section # if no previous path, or if prev path is the section item
       prereq.active_item_is_first = "Can't perform this operation on the first item"
 
     return prereq
 
-  _opreqActiveItemIsntUnderRoot: (prereq) ->
+  _opreqActiveItemIsntSectionTopLevel: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
-    active_path_prereq = @_opreqActivePath()
-
     # If there's no active path - just return the active prereq message 
-    if not _.isEmpty active_path_prereq
+    if not _.isEmpty(active_path_prereq = @_opreqActivePath())
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    parent_path = GridData.helpers.getParentPath(@current_path.get())
-
-    if parent_path == "/"
-      prereq.first_level_item = "Can't perform this operation on first level items"
+    if @_grid_data.getItemNormalizedLevel(@getActiveCellRow()) == 0
+      prereq.top_level_item = "Can't perform this operation on first level items"
 
     return prereq
 
-  _opreqActiveItemPrevSiblingInGteLevel: (prereq) ->
+  _opreqActivePathPrevItemInGteLevel: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
-    active_path_item_isnt_first_prereq = @_opreqActiveItemIsntFirst()
     # If there's no prev path - just return the active_path_item_isnt_first_prereq message
-    # note @_opreqActiveItemIsntFirst also takes care of making sure there's
+    # note @_opreqActiveItemIsntSectionFirstItem also takes care of making sure there's
     # an active path
-    if not _.isEmpty active_path_item_isnt_first_prereq
+    if not _.isEmpty(active_path_item_isnt_first_prereq = @_opreqActiveItemIsntSectionFirstItem())
       _.extend(prereq, active_path_item_isnt_first_prereq)
       return prereq
 
     current_path = @current_path.get()
-    curr_path_level = @_grid_data.getPathLevel current_path
-    prev_path_level = @_grid_data.getPathLevel @_grid_data.getPreviousPath(current_path)
+    curr_path_level = GridData.helpers.getPathLevel current_path
+    prev_path_level = GridData.helpers.getPathLevel @_grid_data.filterAwareGetPreviousPath(current_path)
 
     if curr_path_level > prev_path_level
       prereq.prev_item_not_deeper = "Can't perform this operation when previous item isn't in a deeper level"

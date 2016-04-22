@@ -1,17 +1,17 @@
 #
 # Sortable helper
 #
-sortable = =>
+sortable = ->
   # Returns jQuery ui sortable method for grid-canvas
   $obj = $(".grid-canvas", @container)
 
   return $obj.sortable.apply $obj, arguments 
 
-refresh_sortable = =>
+refresh_sortable = ->
   sortable("refresh")
   sortable("refreshPositions")
 
-getPlaceholderIndex = (ui) =>
+getPlaceholderIndex = (ui) ->
   placeholder_index = ui.placeholder.index()
   helper_index = ui.helper.index()
 
@@ -33,6 +33,8 @@ _.extend PACK.Plugins,
       dragged_row_index = 0
       dragged_row_extended_details = null
 
+
+
       sort_state = {}
       initSortState = -> _.extend sort_state,
         last_changed: new Date()
@@ -45,7 +47,7 @@ _.extend PACK.Plugins,
 
       placeholder_position = {}
       initPlaceholderPosition = -> _.extend placeholder_position,
-        parent: null
+        parent_id: null
         order: null
         level: null
 
@@ -121,42 +123,24 @@ _.extend PACK.Plugins,
       #
       # React to sort_state updates, manage placeholder_position
       #
-      getRowExtendedDetails = (row_index) =>
-        if not row_index?
-          return null
+      getItemExtendedDetails = (index) =>
+        ext_details = @_grid_data.filterAwareGetItemExtendedDetails(index)
 
-        item = @_grid_data.grid_tree[row_index]
-        [doc, level, path, expand_state] = item
-        parent = GridData.helpers.getPathParentId path
-        order = doc.parents[parent].order
+        if ext_details?
+          ext_details.node = @_grid.getRowNode(index).rowNode
 
-        if expand_state != -1 and @_grid_data.pathHasChildren(path) in [0, 2]
-          # find the filter-aware expand state
-          expand_state = -1
-
-        ext = {
-          _id: doc._id
-          doc: doc
-          level: level
-          path: path
-          expand_state: expand_state
-          parent: parent
-          order: order,
-          node: @_grid.getRowNode(row_index).rowNode
-        }
-
-        return ext
+        return ext_details
 
       @rows_sort_state_updated_event_handler = (ui, sort_state) =>
         # console.log "rows-sort-state-updated", ui, sort_state
 
-        updatePlaceholderPosition = (parent, order, level) =>
-          if placeholder_position.parent != parent or
+        updatePlaceholderPosition = (parent_id, order, level) =>
+          if placeholder_position.parent_id != parent_id or
                 placeholder_position.order != order or
                 placeholder_position.level != level
             # We use extend to use the same object
             _.extend placeholder_position,
-              parent: parent
+              parent_id: parent_id
               order: order
               level: level
 
@@ -179,109 +163,119 @@ _.extend PACK.Plugins,
           previous_item_index = placeholder_index
           next_item_index = placeholder_index + 1
 
-        if @_grid_data.isActiveFilter()
-          # If there's an active filter, look for visible prev/next items indexes
-          filter_paths = @_grid_data.getFilterPaths()
+        previous_item_index =
+          @_grid_data.filterAwareGetFirstPassingFilterItem(previous_item_index, true)
+        next_item_index =
+          @_grid_data.filterAwareGetFirstPassingFilterItem(next_item_index, false)
 
-          if previous_item_index?
-            while previous_item_index >= 0
-              if filter_paths[previous_item_index][0] > 0 # means passing filter
-                break
+        section_begin = dragged_row_extended_details.section.begin
 
-              previous_item_index -= 1
+        if dragged_row_extended_details.section.id != "main"
+          # For non-main sections, begin from second item, first item is the section
+          # item
+          section_begin += 1
 
-          while next_item_index < @_grid_data.getLength()
-            if filter_paths[next_item_index][0] > 0 # means passing filter
-              break
-
-            next_item_index += 1        
-
-        if previous_item_index < 0
+        if previous_item_index < section_begin
           previous_item_index = null
 
-        if next_item_index > @_grid_data.getLength() - 1
+        if next_item_index > dragged_row_extended_details.section.end - 1
           # No next item
           next_item_index = null
 
         # ext stands for extended details
         ext =
-          prev: getRowExtendedDetails previous_item_index
-          next: getRowExtendedDetails next_item_index
+          prev: getItemExtendedDetails previous_item_index
+          next: getItemExtendedDetails next_item_index
           dragged: dragged_row_extended_details
+
+        # Sortable depth constraints
+        if dragged_row_extended_details.section.options.permitted_depth is 1 # If only non-top-level items are sortable
+          if ext.prev? and @_grid_data.getItemNormalizedLevel(ext.prev.index) < 1 # -1 is the section item level, 0 root level
+            ext.prev = null
+
+          if ext.next? and @_grid_data.getItemNormalizedLevel(ext.next.index) < 1
+            ext.next = null
 
         # Determine which sibling should be used as the placeholder sibling when determining new position
         determine_position_by = null # -1: previous item, 0: keep in original position; 1: next item
         if not ext.prev and not ext.next
-          # console.log "CASE 0: Determine by original - no next or prev items"
+          # console.log "CASE 0: Determine by original - no next or prev items" # OK
 
           determine_position_by = 0
         else if sort_state.sort_direction == 0
-          # console.log "CASE 1: Sort direction: 0 (sort just began)"
+          # console.log "CASE 1: Sort direction: 0 (sort just began)" # OK
           # If sort_direction == 0, sort had just began and the user hasn't
           # moved the placeholder yet.
           if sort_state.mouse_vs_placeholder == 0 or
                 (not ext.prev? and sort_state.mouse_vs_placeholder == -1) or
                 (not ext.next? and sort_state.mouse_vs_placeholder == 1)
+            # console.log "CASE 1.1: Original postion :: Use original; Cursor is inside the placeholder, or outside but there's no item outside" # OK
+
             # If cursor is inside the placeholder, or outside but there's no item outside
             # keep item in its original place
-            # console.log "CASE 1.1: Original postion :: Use original; Cursor is inside the placeholder, or outside but there's no item outside"
 
             determine_position_by = 0
           else if sort_state.mouse_vs_placeholder == -1
+            # console.log "CASE 1.2: Original postion :: Use previous; Cursor on previous item" # OK
+
             # If mouse on prev item
-            # console.log "CASE 1.2: Original postion :: Use previous; Cursor on previous item"
 
             determine_position_by = -1
           else if sort_state.mouse_vs_placeholder == 1 # else if used for readability
+            # console.log "CASE 1.3: Original postion :: Use next; Cursor on next item"
+
             # If mouse on next item. Note: we know for sure next item exist due to a check above.
-            # console.log "CASE 1.3: Original postion :: Use previous; Cursor on next item"
 
             determine_position_by = 1
-        else if not ext.next?
-          # If no next item, previous determines
+        else if not ext.next? # OK
           # console.log "CASE 2.1: No next item - determine by previous"
 
-          determine_position_by = -1
-        else if not ext.prev?
           # If no next item, previous determines
+
+          determine_position_by = -1
+        else if not ext.prev? # OK
           # console.log "CASE 2.2: No prev item - determine by next"
 
+          # If no next item, previous determines
+
           determine_position_by = 1
-        else if sort_state.sort_direction == 1
-          # If placeholder is being moved downwards
+        else if sort_state.sort_direction == 1 # OK
           # console.log "CASE 3: Placeholder moving down - next item exists"
+
+          # If placeholder is being moved downwards
 
           # Determine position based on previous item, unless cursor
           # placed on next item
-          if sort_state.mouse_vs_placeholder != 1
+          if sort_state.mouse_vs_placeholder != 1 # OK
             # console.log "CASE 3.1: Mouse isn't on next - determine by previous"
 
             determine_position_by = -1
-          else
+          else # OK
             # console.log "CASE 3.2: Mouse is on next - determine by next"
 
             determine_position_by = 1
         else if sort_state.sort_direction == -1
-          # If placeholder is being moved upwards
           # console.log "CASE 4: Placeholder moving up - next item exists"
+
+          # If placeholder is being moved upwards
 
           # Determine position based on next item, unless cursor
           # placed on prev item
-          if sort_state.mouse_vs_placeholder != -1
+          if sort_state.mouse_vs_placeholder != -1 # OK
             # console.log "CASE 4.1: Mouse isn't on prev - determine by next"
 
             determine_position_by = 1
-          else
+          else # OK
             # console.log "CASE 4.2: Mouse is on prev - determine by prev"
 
             determine_position_by = -1
 
-        parent = null
+        parent_id = null
         order = null
         level = null
         if determine_position_by == 0
-          parent = ext.dragged.parent
-          order = ext.dragged.order
+          parent_id = ext.dragged.natural_collection_info.parent_id
+          order = ext.dragged.natural_collection_info.order
           level = ext.dragged.level
         else if determine_position_by == -1
           # Determine placeholder position by previous parent
@@ -291,17 +285,17 @@ _.extend PACK.Plugins,
             # placeholder should be a child of that item -> hance level + 1
             # If we are in new-level-mode it means previous item serves
             # as our parent, even though it has no children.
-            parent = ext.prev._id
+            parent_id = ext.prev.natural_collection_info.item_id
             order = 0
             level = ext.prev.level + 1
           else
-            parent = ext.prev.parent
-            order = ext.prev.order + 1
+            parent_id = ext.prev.natural_collection_info.parent_id
+            order = ext.prev.natural_collection_info.order + 1
             level = ext.prev.level
         else if determine_position_by == 1
           # Determine placeholder position by next parent
-          parent = ext.next.parent
-          order = ext.next.order
+          parent_id = ext.next.natural_collection_info.parent_id
+          order = ext.next.natural_collection_info.order
           level = ext.next.level
 
           # Note! new order must be equal to next item and not (next item -1).
@@ -313,9 +307,9 @@ _.extend PACK.Plugins,
         # new order == previous order + 1: use previous order. As both will
         # lead to the same result but the other option will cause redundant
         # update in the server.
-        if parent == ext.dragged.parent and
-            order == ext.dragged.order + 1
-          order = ext.dragged.order
+        if parent_id == ext.dragged.natural_collection_info.parent_id and
+            order == ext.dragged.natural_collection_info.order + 1
+          order = ext.dragged.natural_collection_info.order
 
         if sort_state.long_hover and sort_state.mouse_vs_placeholder != 0
           # If long hover outside of placeholder
@@ -331,7 +325,7 @@ _.extend PACK.Plugins,
               @_grid_data._perform_temporal_strucutral_flush_lock_release()
 
               # Update dragged_row_index
-              dragged_row_index = @_grid_data.getItemRowByPath(dragged_row_extended_details.path)
+              dragged_row_index = @_grid_data.getPathGridTreeIndex(dragged_row_extended_details.path)
 
               # Update placeholder index to its correct post-expansion index
               sort_state.placeholder_index = getPlaceholderIndex(ui)
@@ -339,7 +333,7 @@ _.extend PACK.Plugins,
               refresh_sortable()
             if item_under_cursor.expand_state == -1
               # If item under cursor has no children, add placeholder as a new child
-              parent = item_under_cursor._id
+              parent_id = item_under_cursor.natural_collection_info.item_id
               order = 0
               level = item_under_cursor.level + 1
 
@@ -364,7 +358,7 @@ _.extend PACK.Plugins,
 
         updateNewLevelMode()
 
-        return updatePlaceholderPosition parent, order, level
+        return updatePlaceholderPosition parent_id, order, level
 
       @on "rows-sort-state-updated", @rows_sort_state_updated_event_handler
 
@@ -567,6 +561,28 @@ _.extend PACK.Plugins,
         _unsetCancelMode()
 
       #
+      # Sortable items management
+      #
+      default_sortable_items_selector = "> .movable"
+      limitSortableItemsToDraggedRowRange = =>
+        dragged_row_section = dragged_row_extended_details.section
+
+        permitted_depth = dragged_row_section.options.permitted_depth
+
+        selector = default_sortable_items_selector
+        if permitted_depth is 0
+          selector += ".section-#{dragged_row_section.id}"
+        else if permitted_depth is 1
+          selector += ".section-#{dragged_row_section.id}"
+
+        sortable("option", "items", selector)
+        sortable("refresh")
+
+      clearSortableItemsLimit = =>
+        sortable("option", "items", default_sortable_items_selector)
+        sortable("refresh")
+
+      #
       # Sortable
       #
       sortable
@@ -574,16 +590,20 @@ _.extend PACK.Plugins,
         cursor: "grabbing"
         axis: "y"
         distance: 5
+        items: default_sortable_items_selector
 
         beforeStart: (event, ui) =>
           # Note: Must find dragged_row_index beforeStart and not in start
           # since the placeholder method will be called before start (!)
           dragged_row_index = ui.item.index()
-          dragged_row_extended_details = getRowExtendedDetails dragged_row_index
+          dragged_row_extended_details = getItemExtendedDetails dragged_row_index
 
           # Attempt to commit current active editor changes if false is
           # returned (op failed), prevent sorting.
           can_start = @saveAndExitActiveEditor()
+
+          if can_start
+            limitSortableItemsToDraggedRowRange()
 
           return can_start
 
@@ -657,6 +677,10 @@ _.extend PACK.Plugins,
             copy_mode: isCopyModeEvent(event)
 
         stop: (event, ui) =>
+          # Clear custom sortable items so it'll be possible to resort
+          # all sortable items following the stop
+          clearSortableItemsLimit()
+
           # Save cancel state before clearing it
           is_cancel_mode = isCancelMode()
 
@@ -667,8 +691,8 @@ _.extend PACK.Plugins,
             sortable("cancel")
 
             @_grid_data._release_flush()
-          else if dragged_row_extended_details.parent == placeholder_position.parent and
-                dragged_row_extended_details.order == placeholder_position.order
+          else if dragged_row_extended_details.natural_collection_info.parent_id == placeholder_position.parent_id and
+                dragged_row_extended_details.natural_collection_info.order == placeholder_position.order
             # If position didn't change
 
             # In the case where filters are applied, there might be situations in
@@ -693,8 +717,9 @@ _.extend PACK.Plugins,
 
             dragged_row_path = dragged_row_extended_details.path
 
-            new_position = _.extend {}, placeholder_position
-            delete new_position.level
+            new_position =
+              parent: placeholder_position.parent_id
+              order: placeholder_position.order
 
             # Disable sortable while waiting for server until we update the tree
             # to its new structure.
@@ -711,7 +736,7 @@ _.extend PACK.Plugins,
                   # If succeed and dropped into a new level - expand parent
                   if isNewLevelMode()
                     parent_details =
-                      getRowExtendedDetails @_grid.getRowFromNode($(".#{_new_level_mode_parent_class}", @container).get(0))
+                      getItemExtendedDetails @_grid.getRowFromNode($(".#{_new_level_mode_parent_class}", @container).get(0))
 
                     @_grid_data.expandPath parent_details.path
 
