@@ -1,12 +1,15 @@
 helpers = share.helpers
 
 default_options =
-  sections: 
+  sections:
     [
       {
         id: "main"
 
         section_manager: "DataTreeSection"
+
+        options:
+          permitted_depth: 0
       }
     ]
 
