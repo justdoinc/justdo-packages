@@ -36,7 +36,9 @@ _.extend GridData.prototype,
     #
     @items_by_id = {}
 
-    @tree_structure = {}
+    @tree_structure = {} # Note @tree_structure contains both items we have items_by_id, and also those linked by other items as their parents
+                         # but aren't present in @items_by_id
+    @detaching_items_ids = {} # Keys are items ids that are parents of other items but aren't known to us, values are always true
     @grid_tree = [] # [[item, tree_level, path, expand_state], ...]
     @_items_ids_map_to_grid_tree_indices = {} # {item_id: [indices in @grid_tree]}
     @_typed_items_paths_map_to_grid_tree_indices = {} # {path: index in grid_tree}
@@ -319,12 +321,16 @@ _.extend GridData.prototype,
 
       # Update @items_by_id
       @items_by_id[id] = doc
+      delete @detaching_items_ids[id]
 
       # Update tree structure
       for parent_id, parent_metadata of doc.parents
         if not @tree_structure[parent_id]?
           @tree_structure[parent_id] = {}
         @tree_structure[parent_id][parent_metadata.order] = id
+
+        if not (parent_id of @items_by_id)
+          @detaching_items_ids[parent_id] = true
 
       @_requireGridTreeFilterUpdate()
 
@@ -363,10 +369,8 @@ _.extend GridData.prototype,
       # Update @items_by_id
       item_obj = @items_by_id[id]
 
-      delete @items_by_id[id]
-
-      # Remove from tree_structure
-      delete @tree_structure[id]
+      if id of @tree_structure
+        @detaching_items_ids[id] = true
 
       # Remove from tree structure any pointer to item
       for parent_id, parent_metadata of item_obj.parents
@@ -378,6 +382,7 @@ _.extend GridData.prototype,
 
           if _.isEmpty @tree_structure[parent_id]
             delete @tree_structure[parent_id]
+            delete @detaching_items_ids[parent_id]
 
       @_requireGridTreeFilterUpdate()
 
@@ -422,6 +427,10 @@ _.extend GridData.prototype,
 
           if not @tree_structure[parent_id]?
             @tree_structure[parent_id] = {}
+
+            if not (parent_id of @items_by_id)
+              @detaching_items_ids[parent_id] = true
+
           @tree_structure[parent_id][new_order] = item_id
 
       for parent_id, prev_parent_obj of prev_parents_obj
@@ -441,6 +450,7 @@ _.extend GridData.prototype,
 
           if _.isEmpty @tree_structure[parent_id]
             delete @tree_structure[parent_id]
+            delete @detaching_items_ids[parent_id]
 
       @_requireGridTreeFilterUpdate()
 
@@ -516,10 +526,14 @@ _.extend GridData.prototype,
 
     for item in @collection.find().fetch()
       @items_by_id[item._id] = item
+      delete @detaching_items_ids[item._id]
 
       for parent_id, parent_metadata of item.parents
         if not @tree_structure[parent_id]?
           @tree_structure[parent_id] = {}
+
+          if not (parent_id of @items_by_id)
+            @detaching_items_ids[parent_id] = true
 
         if parent_metadata.order? and _.isNumber parent_metadata.order
           @tree_structure[parent_id][parent_metadata.order] = item._id
