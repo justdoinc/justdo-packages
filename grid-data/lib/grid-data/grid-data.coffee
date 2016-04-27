@@ -11,6 +11,15 @@ default_options =
         options:
           permitted_depth: 0
       }
+      {
+        id: "shared"
+
+        options:
+          section_item_title: "Shared With Me"
+          permitted_depth: 1
+
+        section_manager: "DetachedDataSubTreesSection"
+      }
     ]
 
 GridData = (collection, options) ->
