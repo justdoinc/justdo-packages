@@ -3,7 +3,7 @@ helpers = PACK.FormattersHelpers
 _.extend PACK.Formatters,
   textWithTreeControls: (row, cell, value, columnDef, item) ->
     level = @_grid_data.getItemLevel row
-    expand_state = @_grid_data.filterAwareGetItemExpandState row
+    expand_state = @_grid_data.getItemExpandState row
 
     state = ""
     if expand_state == 1
