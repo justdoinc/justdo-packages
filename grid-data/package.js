@@ -50,6 +50,7 @@ Package.onUse(function (api) {
   // Grid Sections
   api.add_files('lib/grid-data/data-structure-management/grid-sections/grid-sections.coffee', client);
   api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/section-manager-proto.coffee', client);
+  api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/natural-collection-subtree.coffee', client);
   api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/data-tree.coffee', client);
   api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/detached-data-subtrees.coffee', client);
 
