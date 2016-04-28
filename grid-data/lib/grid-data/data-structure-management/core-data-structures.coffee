@@ -428,7 +428,7 @@ _.extend GridData.prototype,
           if not @tree_structure[parent_id]?
             @tree_structure[parent_id] = {}
 
-            if not (parent_id of @items_by_id)
+            if parent_id != "0" and not (parent_id of @items_by_id)
               @detaching_items_ids[parent_id] = true
 
           @tree_structure[parent_id][new_order] = item_id
@@ -532,7 +532,7 @@ _.extend GridData.prototype,
         if not @tree_structure[parent_id]?
           @tree_structure[parent_id] = {}
 
-          if not (parent_id of @items_by_id)
+          if parent_id != "0" and not (parent_id of @items_by_id)
             @detaching_items_ids[parent_id] = true
 
         if parent_metadata.order? and _.isNumber parent_metadata.order
