@@ -2,7 +2,7 @@ helpers = share.helpers
 
 default_options =
   filter: null
-  sortBy: (item_obj) -> item_obj.seqId
+  sort_by: (item_obj) -> item_obj.seqId
 
 DetachedDataSubTreesSection = (grid_data_obj, section_root, section_obj, options) ->
   GridDataSectionManager.call @, grid_data_obj, section_root, section_obj, options
@@ -67,7 +67,7 @@ _.extend DetachedDataSubTreesSection.prototype,
           detached_items_ids[child_id] = true
 
     detached_items_objs = _.map(_.keys(detached_items_ids), ((id) -> @grid_data.items_by_id[id]), @)
-    detached_items_objs = _.sortBy(detached_items_objs, @options.sortBy, @)
+    detached_items_objs = _.sortBy(detached_items_objs, @options.sort_by, @)
     if @options.filter?
       detached_items_objs = _.filter(detached_items_objs, @options.filter)
 
