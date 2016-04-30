@@ -414,7 +414,17 @@ _.extend GridData.prototype,
 
     return true
 
+  _destroySectionManagers: ->
+    if @sections?
+      # Call the _destroy() method of all the current section managers
+      for section in @sections
+        section.section_manager._destroy()
+
+    return
+
   _rebuildSections: ->
+    @_destroySectionManagers()
+
     @sections = []
     @section_path_to_section = {} # maintained for optimization
     @grid_tree = []

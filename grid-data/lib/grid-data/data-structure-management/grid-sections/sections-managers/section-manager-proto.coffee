@@ -9,6 +9,14 @@ GridDataSectionManager = (grid_data_obj, section_root, section_obj, options) ->
   return @
 
 _.extend GridDataSectionManager.prototype,
+  #
+  # _destroy
+  #
+  _destroy: ->
+    # Called when the section it's time for the section manager to relase the
+    # resources it is using
+    return
+
   relPath: (absolute_path) ->
     absolute_path.substr(@section_root.length - 1) # -1 is to leave first /
 

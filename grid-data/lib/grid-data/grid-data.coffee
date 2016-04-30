@@ -89,6 +89,8 @@ _.extend GridData.prototype,
       return
     @_destroyed = true
 
+    @_destroySectionManagers()
+
     if @_items_tracker?
       @_items_tracker.stop()
       @_items_tracker = null # As of Meteor 1.0.4 observers handles don't have
