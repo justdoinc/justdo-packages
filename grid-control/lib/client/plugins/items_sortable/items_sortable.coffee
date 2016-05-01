@@ -322,7 +322,7 @@ _.extend PACK.Plugins,
               # If there's a collapsed item with children under the cursor expand it
               @_grid_data.expandPath item_under_cursor.path
 
-              @_grid_data._perform_temporal_strucutral_flush_lock_release()
+              @_grid_data._perform_temporal_strucutral_release()
 
               # Update dragged_row_index
               dragged_row_index = @_grid_data.getPathGridTreeIndex(dragged_row_extended_details.path)
@@ -611,7 +611,7 @@ _.extend PACK.Plugins,
           # Don't allow grid data updates while sorting to avoid getting
           # dragged item, its information, and actual DOM element to
           # get out of-sync with the grid.
-          @_grid_data._lock_flush()
+          @_grid_data._lock()
 
           initSortState()
           initCancelTracker()
@@ -690,7 +690,7 @@ _.extend PACK.Plugins,
             # Cancel and release flush
             sortable("cancel")
 
-            @_grid_data._release_flush()
+            @_grid_data._release()
           else if dragged_row_extended_details.natural_collection_info.parent_id == placeholder_position.parent_id and
                 dragged_row_extended_details.natural_collection_info.order == placeholder_position.order
             # If position didn't change
@@ -705,7 +705,7 @@ _.extend PACK.Plugins,
             updateNewLevelMode(true)
 
             # Just release flush
-            @_grid_data._release_flush()
+            @_grid_data._release()
           else
             # If position changed
 
@@ -749,7 +749,7 @@ _.extend PACK.Plugins,
                 enableDraggedRowEditing()
 
                 # Release flush and flush right-away before re-enabling sortable
-                @_grid_data._release_flush true # true means flush right-away
+                @_grid_data._release true # true means flush right-away
 
                 releaseOpsLock()
 

@@ -32,6 +32,18 @@ _.extend GridData.prototype,
     @_structure_changes_queue = []
 
     #
+    # Rebuild managemnt
+    #
+    @_rebuild_orchestrator = null
+    @_need_rebuild_count = 0
+    @_need_rebuild = new ReactiveVar(0)
+    @_rebuilding = false # Will be true during rebuild process
+    # @_rebuild_counter counts the amount of performed flushes. Can be used to
+    # create reactive resources that gets invalidated upon tree changes.
+    # For clearity, use @invalidateOnRebuild() instead of directly
+    @_rebuild_counter = new ReactiveVar(0)
+
+    #
     # Grid representation
     #
     @items_by_id = {}
@@ -54,6 +66,8 @@ _.extend GridData.prototype,
     @_init_items_tracker()
 
     @_init_flush_orchestrator()
+
+    @_init_rebuild_orchestrator()
 
     @_init_foreign_keys_trackers()
 
@@ -102,7 +116,7 @@ _.extend GridData.prototype,
       return
 
     if @_flushing
-      # @logger.debug("_set_need_flush: called during flush, ignoring")
+      @logger.info("_set_need_flush: called during flush, ignoring")
 
       return
 
@@ -277,7 +291,7 @@ _.extend GridData.prototype,
       @_flush_orchestrator = Meteor.autorun =>
         # The _flush_orchestrator is used to combine required updates to the
         # internal data structure and perform them together in order to save
-        # CPU time and as result improve user experience
+        # CPU time and as a result improve the user experience
         #
         # Meteor calls Meteor.autorun when the system is idle. Hence all the
         # @_set_need_flush requests will wait till Meteor is idle (till next
@@ -286,6 +300,109 @@ _.extend GridData.prototype,
         if @_get_need_flush() != 0 # no need to flush on init
           Tracker.nonreactive =>
             @_flush()
+
+  _init_rebuild_orchestrator: ->
+    if not @_destroyed and not @_rebuild_orchestrator
+      @_rebuild_orchestrator = Meteor.autorun =>
+        # The _rebuild_orchestrator is used to combine required updates to the
+        # internal data structure and perform them together in order to save
+        # CPU time and as a result improve the user experience
+        #
+        # Meteor calls Meteor.autorun when the system is idle. Hence all the
+        # @_set_need_rebuild requests will wait till Meteor is idle (till next
+        # Meteor's flush phase) and will be performed together
+        if @_need_rebuild.get() != 0 # no need to rebuild on init
+          Tracker.nonreactive =>
+            @_rebuildGridTree()
+
+  _rebuild_lock: false
+  _rebuild_blocked_by_lock: false
+  _set_need_rebuild: ->
+    if @_rebuild_lock
+      @_rebuild_blocked_by_lock = true
+
+      return
+
+    if @_rebuilding
+      @warn.info("_set_need_rebuild: called during rebuild, ignoring")
+
+      return
+
+    @_need_rebuild.set(++@_need_rebuild_count)
+
+  invalidateOnRebuild: ->
+    if Tracker.currentComputation?
+      # If there's no computation - do nothing
+
+      # Call this method on methods that should gets recompute on rebuild (if ran
+      # inside a computation)
+      return @_rebuild_counter.get()
+
+  _lock: ->
+    @_lock_flush()
+    @_lock_rebuild()
+
+  _release: (immediate_rebuild) ->
+    @_release_flush(immediate_rebuild)
+    @_release_rebuild(immediate_rebuild)
+
+  _perform_temporal_rebuild_lock_release: ->
+    # If a rebuild was blocked by a lock, perform it now, keep the lock
+
+    # Returns true if rebuild performed; flase otherwise.
+
+    if @_rebuild_blocked_by_lock
+      @_rebuildGridTree()
+
+      @_rebuild_blocked_by_lock = false
+
+      return true
+
+    return false
+
+  _perform_temporal_strucutral_release: ->
+    # If a flush or a rebuild were blocked due to a lock, perform the blocked
+    # operations now and keep the lock
+
+    # IMPORTANT! Unlike @_perform_temporal_release this will
+    # perform only structural flushes - no data updates
+
+    # Returns true if rebuild (even if flush didn't) performed; flase otherwise.
+
+    @_perform_temporal_strucutral_flush_lock_release()
+
+    return @_perform_temporal_rebuild_lock_release()
+
+  _perform_temporal_release: ->
+    # If a flush or a rebuild were blocked due to a lock, perform the blocked
+    # operations now and keep the lock
+
+    # Returns true if rebuild (even if flush didn't) performed; flase otherwise.
+
+    @_perform_temporal_flush_lock_release()
+
+    return @_perform_temporal_rebuild_lock_release()
+
+  _lock_rebuild: ->
+    # Lock
+    @_rebuild_lock = true
+
+  _release_rebuild: (immediate_rebuild = false) ->
+    # If immediate_rebuild is true and rebuild was blocked
+    # a rebuild will be performed right away and not in the next
+    # tick
+
+    # Release lock
+    @_rebuild_lock = false
+
+    # If rebuild was blocked, set need rebuild
+    if @_rebuild_blocked_by_lock
+      @_rebuild_blocked_by_lock = false
+
+      if immediate_rebuild
+        @_rebuildGridTree()
+      else
+        @_set_need_rebuild()
 
   _structure_changes_handlers:
     expand_path: (path) ->
@@ -503,7 +620,7 @@ _.extend GridData.prototype,
 
     if rebuild_tree
       @logger.debug "Flush: rebuild tree"
-      @_rebuildGridTree()
+      @_set_need_rebuild()
     else
       # @_updateGridTreeFilter() is called in @_rebuildGridTree() so
       # there's no need to call it again if rebuild performed.
@@ -540,8 +657,12 @@ _.extend GridData.prototype,
 
   _getGridTreeSignature: -> (_.map @grid_tree, (item) -> item[2] + "." + item[3]).join("\n")
 
-  _rebuildGridTree: () ->
+  _rebuildGridTree: ->
     @emit "pre_rebuild"
+
+    @logger.debug "Rebuild: start"
+
+    @_rebuilding = true
 
     previous_signature = @_getGridTreeSignature()
 
@@ -591,6 +712,13 @@ _.extend GridData.prototype,
       last_change_type = current_change_type
 
     @_updateGridTreeFilter()
+
+    @logger.debug "Rebuild: Done"
+
+    @_rebuilding = false
+
+    Tracker.nonreactive =>
+      @_rebuild_counter.set(@_rebuild_counter.get() + 1)
 
     @emit "rebuild", diff
 

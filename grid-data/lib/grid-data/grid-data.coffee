@@ -101,6 +101,9 @@ _.extend GridData.prototype,
     if @_flush_orchestrator?
       @_flush_orchestrator.stop()
 
+    if @_rebuild_orchestrator?
+      @_rebuild_orchestrator.stop()
+
     @_destroy_filter_manager()
 
     @_destroy_foreign_keys_trackers()

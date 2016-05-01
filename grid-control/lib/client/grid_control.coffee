@@ -219,13 +219,13 @@ _.extend GridControl.prototype,
       @_grid_data.edit(edit_req)
 
     @_grid.onBeforeEditCell.subscribe () =>
-      # lock flushes while editing the cell
-      @_grid_data._lock_flush()
+      # lock grid data while editing the cell
+      @_grid_data._lock()
 
       return true
 
     @_grid.onCellEditorDestroy.subscribe () =>
-      @_grid_data._release_flush true
+      @_grid_data._release(true)
 
       return true
 

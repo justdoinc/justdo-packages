@@ -18,9 +18,9 @@ _.extend PACK.GridOperations,
           relation_to_next_path = -1
           next_path = @_grid_data.filterAwareGetNextPath(next_path)
 
-        @_grid_data._lock_flush()
+        @_grid_data._lock()
         @movePath active_path, [next_path, relation_to_next_path], (err, new_path) =>
-          @_grid_data._release_flush()
+          @_grid_data._release()
           if err?
             @logger.error "moveActivePath failed: #{err}"
 
@@ -67,9 +67,9 @@ _.extend PACK.GridOperations,
         if getPathLevel(active_path) < getPathLevel(prev_path)
           relation_to_prev_path = 1
 
-        @_grid_data._lock_flush()
+        @_grid_data._lock()
         @movePath active_path, [prev_path, relation_to_prev_path], (err, new_path) =>
-          @_grid_data._release_flush()
+          @_grid_data._release()
           if err?
             @logger.error "moveActivePath failed: #{err}"
 
@@ -114,9 +114,9 @@ _.extend PACK.GridOperations,
 
         parent_path = GridData.helpers.getParentPath(active_path)
 
-        @_grid_data._lock_flush()
+        @_grid_data._lock()
         @movePath active_path, [parent_path, 1], (err, new_path) =>
-          @_grid_data._release_flush()
+          @_grid_data._release()
           if err?
             @logger.error "moveActivePath failed: #{err}"
 
@@ -174,9 +174,9 @@ _.extend PACK.GridOperations,
           for i in [0..active_path_level]
             target_path += prev_path_array[i] + "/"
 
-        @_grid_data._lock_flush()
+        @_grid_data._lock()
         @movePath active_path, [target_path, relation], (err, new_path) =>
-          @_grid_data._release_flush()
+          @_grid_data._release()
           if err?
             @logger.error "moveActivePath failed: #{err}"
 
