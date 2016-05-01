@@ -9,11 +9,13 @@ _.extend GridData.prototype,
     @_filter_collection_items_ids = null
     @_grid_tree_filter_state = null
 
-    # @_grid_tree_filtered_state_need_update will set to true if tree structure changed or @_filter_collection_items_ids changed
-    # will trigger recalc of @_grid_tree_filter_state at the end of the flush or at the end of tree rebuild (whichever comes first)
-    @_grid_tree_filtered_state_need_update = false
+    # We use the following two to add core-api's @getGridTreeFilterState() reactive
+    # layer
+    @_grid_tree_filter_state_updated_count = 0
+    @_grid_tree_filter_state_updated = new ReactiveVar(0)
 
-    @once "_perform_deferred_procedures", -> @_init_filter_tracker()
+    @once "_perform_deferred_procedures", ->
+      @_init_filter_tracker()
 
   _init_filter_tracker: ->
     # Track changes to current filter query
@@ -21,6 +23,7 @@ _.extend GridData.prototype,
       @_filter_tracker = Tracker.autorun => @_updateFilterItems()
 
   _updateFilterItems: ->
+    @logger.debug "_updateFilterItems"
     # Update @_filter_collection_items_ids based on current @filter
 
     filter = @filter.get()
@@ -46,31 +49,17 @@ _.extend GridData.prototype,
 
       @_filter_collection_items_ids = _filter_collection_items_ids
 
-    # If init is undergoing, we don't want to call @_requireGridTreeFilterUpdate()
-    # yet since it will trigger a flush and we want the first flush to be a result
-    # of the initial items data load.
-    # Once data will start to load the items observer will request filter update
-    # anyway.
+    # If init is undergoing, we don't want to call @_updateGridTreeFilterState()
+    # as it'll be called anyway on first rebuild
     if @_initialized
-      @_requireGridTreeFilterUpdate()
+      @_updateGridTreeFilterState()
 
     @logger.debug "@_filter_collection_items_ids updated"
 
-  _requireGridTreeFilterUpdate: ->
-    @_grid_tree_filtered_state_need_update = true
-    @_set_need_flush()
-
-  _updateGridTreeFilter: ->
+  _updateGridTreeFilterState: ->
     # Filter visible items against @_filter_collection_items_ids, set result to @_grid_tree_filter_state
 
-    if not @_grid_tree_filtered_state_need_update
-      @logger.debug "Grid tree filter don't need update"
-
-      return
-    else
-      @logger.debug "Update grid tree filter"
-
-    @_grid_tree_filtered_state_need_update = false
+    @logger.debug "Update grid tree filter"
 
     filter = @filter.get()
 
@@ -81,7 +70,7 @@ _.extend GridData.prototype,
         @emit "grid-tree-filter-cleared"
     else
       if not @_filter_collection_items_ids?
-        @logger.warn "@_updateGridTreeFilter called with active filter but @_filter_collection_items_ids is null"
+        @logger.warn "@_updateGridTreeFilterState called with active filter but @_filter_collection_items_ids is null"
 
         return
 
@@ -180,6 +169,8 @@ _.extend GridData.prototype,
             @_grid_tree_filter_state[first_visible_index][1] = 3
           else
             @_grid_tree_filter_state[first_visible_index][1] = 1
+
+      @_grid_tree_filter_state_updated.set(++@_grid_tree_filter_state_updated_count)
 
       @emit "grid-tree-filter-updated"
 

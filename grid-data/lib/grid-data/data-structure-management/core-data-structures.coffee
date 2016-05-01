@@ -87,9 +87,6 @@ _.extend GridData.prototype,
           # Since we need the tree to build at least once to load sections info,
           # we rebuild the tree for the 2 cases above.
 
-          # Set require grid tree filter update so the @_updateGridTreeFilter call at the end of
-          # _rebuildGridTree will update the tree fileter (otherwise it'll skip) 
-          @_requireGridTreeFilterUpdate()
           @_rebuildGridTree()
 
           # We call _set_need_flush here to make sure the first flush will
@@ -324,7 +321,7 @@ _.extend GridData.prototype,
       return
 
     if @_rebuilding
-      @warn.info("_set_need_rebuild: called during rebuild, ignoring")
+      @logger.info("_set_need_rebuild: called during rebuild, ignoring")
 
       return
 
@@ -413,8 +410,6 @@ _.extend GridData.prototype,
 
         rebuild_tree = true
 
-        @_requireGridTreeFilterUpdate()
-
       return rebuild_tree
 
     collapse_path: (path) ->
@@ -424,8 +419,6 @@ _.extend GridData.prototype,
         delete @_expanded_paths[path]
 
         rebuild_tree = true
-
-        @_requireGridTreeFilterUpdate()
 
       return rebuild_tree
 
@@ -448,8 +441,6 @@ _.extend GridData.prototype,
 
         if not (parent_id of @items_by_id)
           @detaching_items_ids[parent_id] = true
-
-      @_requireGridTreeFilterUpdate()
 
       return rebuild_tree
 
@@ -500,8 +491,6 @@ _.extend GridData.prototype,
           if _.isEmpty @tree_structure[parent_id]
             delete @tree_structure[parent_id]
             delete @detaching_items_ids[parent_id]
-
-      @_requireGridTreeFilterUpdate()
 
       return rebuild_tree
 
@@ -569,8 +558,6 @@ _.extend GridData.prototype,
             delete @tree_structure[parent_id]
             delete @detaching_items_ids[parent_id]
 
-      @_requireGridTreeFilterUpdate()
-
       return rebuild_tree
 
   invalidateOnFlush: ->
@@ -621,12 +608,6 @@ _.extend GridData.prototype,
     if rebuild_tree
       @logger.debug "Flush: rebuild tree"
       @_set_need_rebuild()
-    else
-      # @_updateGridTreeFilter() is called in @_rebuildGridTree() so
-      # there's no need to call it again if rebuild performed.
-      # We call @_updateGridTreeFilter() on @_rebuildGridTree() since we want the
-      # filter to be ready when the `rebuild` event is emitted.
-      @_updateGridTreeFilter()
 
     @logger.debug "Flush: done"
 
@@ -711,7 +692,7 @@ _.extend GridData.prototype,
 
       last_change_type = current_change_type
 
-    @_updateGridTreeFilter()
+    @_updateGridTreeFilterState()
 
     @logger.debug "Rebuild: Done"
 

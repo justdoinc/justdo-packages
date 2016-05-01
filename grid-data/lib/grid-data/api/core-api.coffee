@@ -394,26 +394,23 @@ _.extend GridData.prototype,
   #
   # Filters Management
   #
-  setFilter: (filter_query) ->
-    @filter.set(filter_query)
-    # Update @_filter_collection_items_ids immediately so computations that
-    # tracks @filter changes will have the up-to-date @_filter_collection_items_ids
-    # available
-    @_updateFilterItems() # XXX could we use Tracker.flush() here?
-    # @_updateFilterItems() will call @_requireGridTreeFilterUpdate so
-    # @_updateGridTreeFilter will update @_grid_tree_filter_state
-    @_updateGridTreeFilter()
+  setFilter: (filter_query) -> @filter.set(filter_query)
+
+  #
+  # Low level filters info
+  #
+  getGridTreeFilterState: ->
+    @_grid_tree_filter_state_updated.get()
+
+    return @getGridTreeFilterStateNonReactive()
+
+  getGridTreeFilterStateNonReactive: -> @_grid_tree_filter_state
 
   isActiveFilter: ->
-    # True if there's an active filter, false otherwise; note that for
-    # reactivity purposes an invalidation will occur on every filter change
-    # (which is desired - don't change this behavior as some parts of the code
-    # depend on it)
-    @filter.get()?
+    @getGridTreeFilterState()?
 
   isActiveFilterNonReactive: ->
-    # @_filter_collection_items_ids is null if @filter is null
-    @_filter_collection_items_ids?
+    @getGridTreeFilterStateNonReactive()?
 
   #
   # @grid_tree item's filter info
@@ -426,7 +423,7 @@ _.extend GridData.prototype,
     if index < 0 or index >= @getLength()
       return false
 
-    if not @_filter_collection_items_ids?
+    if not @isActiveFilterNonReactive()
       # if no filter applied, all items are passing
       return true
 
@@ -453,7 +450,7 @@ _.extend GridData.prototype,
     if helpers.isRootPath path
       return true
 
-    if not @_filter_collection_items_ids?
+    if not @isActiveFilterNonReactive()
       # if no filter applied, all items are passing
       return true
 
@@ -527,9 +524,9 @@ _.extend GridData.prototype,
   # All the functions beginning with filterAware are reactive resources depending on:
   # * @invalidateOnFlush() : meaning, invalidation occurs following updates to:
   #     * @grid_tree
+  # * @isActiveFilter() : meaning, invalidation occurs following updates to:
   #     * @_filter_collection_items_ids
   #     * @_grid_tree_filter_state
-  # * @filter.get() : meaning, invalidation occurs following filter change
   #
 
   filterAwareGetItemExpandState: (index) ->
