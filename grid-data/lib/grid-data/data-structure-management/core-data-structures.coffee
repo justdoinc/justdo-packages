@@ -439,7 +439,7 @@ _.extend GridData.prototype,
           @tree_structure[parent_id] = {}
         @tree_structure[parent_id][parent_metadata.order] = id
 
-        if not (parent_id of @items_by_id)
+        if parent_id != "0" and not (parent_id of @items_by_id)
           @detaching_items_ids[parent_id] = true
 
       return rebuild_tree
