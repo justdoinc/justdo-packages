@@ -12,6 +12,8 @@ default_options =
 NaturalCollectionSubtreeSection = (grid_data_obj, section_root, section_obj, options) ->
   GridDataSectionManager.call @, grid_data_obj, section_root, section_obj, options
 
+  @_rootItemsComputation = null
+
   @options = _.extend {}, default_options, options
 
   return @
@@ -107,7 +109,22 @@ _.extend NaturalCollectionSubtreeSection.prototype,
     #
     # Traverse the section's top level items
 
-    root_items = @rootItems()
+    # In the first _each run, run @rootItems inside a computation so
+    # in case it's a reactive resource, we'll automatically trigger
+    # sections rebuild upon its invalidation 
+    root_items = null
+    if not @_rootItemsComputation?
+      @_rootItemsComputation = Tracker.autorun (c) =>
+        if @_rootItemsComputation?
+          @grid_data._set_need_rebuild()
+
+          c.stop()
+
+          return
+
+        root_items = @rootItems()
+    else
+      root_items = @rootItems()
 
     # Find all top level items
     top_level_items = {}
@@ -138,3 +155,8 @@ _.extend NaturalCollectionSubtreeSection.prototype,
           return false
 
     return true
+
+  _destroy: ->
+    # Upon destroy, stop @_rootItemsComputation, in case one was set
+    if @_rootItemsComputation?
+      @_rootItemsComputation.stop()
