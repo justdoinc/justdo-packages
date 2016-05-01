@@ -163,11 +163,6 @@ _.extend PACK.Plugins,
           previous_item_index = placeholder_index
           next_item_index = placeholder_index + 1
 
-        previous_item_index =
-          @_grid_data.filterAwareGetFirstPassingFilterItem(previous_item_index, true)
-        next_item_index =
-          @_grid_data.filterAwareGetFirstPassingFilterItem(next_item_index, false)
-
         section_begin = dragged_row_extended_details.section.begin
 
         if dragged_row_extended_details.section.id != "main"
@@ -177,10 +172,16 @@ _.extend PACK.Plugins,
 
         if previous_item_index < section_begin
           previous_item_index = null
+        else
+          previous_item_index =
+            @_grid_data.filterAwareGetFirstPassingFilterItem(previous_item_index, true)
 
         if next_item_index > dragged_row_extended_details.section.end - 1
           # No next item
           next_item_index = null
+        else
+          next_item_index =
+            @_grid_data.filterAwareGetFirstPassingFilterItem(next_item_index, false)
 
         # ext stands for extended details
         ext =
