@@ -62,6 +62,10 @@ _.extend NaturalCollectionSubtreeSection.prototype,
         if not parent_found
           return false
 
+      if path_array.length == 0
+        # If there are no further items in the path, that's it, we found it
+        return true
+
       current_node = tree_structure[top_level_item_id]
     else
       current_node = tree_structure[@options.tree_root_item_id]
