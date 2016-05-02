@@ -43,7 +43,7 @@ _.extend PACK.GridOperations,
 
           # Flush to make sure the item is in the tree DOM
           # Required for pathPassFilter to work proprely
-          @_grid_data._flush()
+          @_grid_data._flushAndRebuild()
 
           if not @_grid_data.pathPassFilter(new_item_absolute_path)
             # Force new item to show even if filtered
@@ -57,7 +57,7 @@ _.extend PACK.GridOperations,
                             # entering edit mode (which block all grid_data.flush)
 
             # Flush to make sure the item is in the tree DOM
-            @_grid_data._flush()
+            @_grid_data._flushAndRebuild()
 
           @editPathCell new_item_absolute_path, 0
 

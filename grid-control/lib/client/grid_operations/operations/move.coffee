@@ -34,7 +34,7 @@ _.extend PACK.GridOperations,
             @_grid_data.collapsePath active_path
 
           # Flush to make sure DOM is up-to-date before the call to cb
-          @_grid_data._flush()
+          @_grid_data._flushAndRebuild()
 
           @activatePath new_path
 
@@ -83,7 +83,7 @@ _.extend PACK.GridOperations,
             @_grid_data.collapsePath active_path
 
           # Flush to make sure DOM is up-to-date before the call to cb
-          @_grid_data._flush()
+          @_grid_data._flushAndRebuild()
 
           @activatePath new_path
 
@@ -130,7 +130,7 @@ _.extend PACK.GridOperations,
             @_grid_data.collapsePath active_path
 
           # Flush to make sure DOM is up-to-date before the call to cb
-          @_grid_data._flush()
+          @_grid_data._flushAndRebuild()
 
           @activatePath new_path
 
@@ -192,7 +192,7 @@ _.extend PACK.GridOperations,
           @_grid_data.expandPath target_path
 
           # Flush to make sure DOM is up-to-date before the call to cb
-          @_grid_data._flush()
+          @_grid_data._flushAndRebuild()
 
           @activatePath new_path
 

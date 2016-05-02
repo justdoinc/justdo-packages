@@ -618,12 +618,23 @@ _.extend GridData.prototype,
 
     @emit "flush"
 
-  _flushAndRebuild: ->
-    @_flush()
+  _flushAndRebuild: (structure_only) ->
+    # Flush and rebuild immediately (regardelss of whether or not flush/rebuild are locked)
+
+    @_flush(structure_only)
+
     # Call tracker.flush() to perform awaiting required grid
-    # rebuilds (@_need_rebuild) right away (only if they are
-    # necessary)
+    # rebuilds resulted from the @_flush (@_need_rebuild) right away
+    # (by relying on the regular rebuild reactivity triggers,  will
+    # rebuild only if necessary)
     Tracker.flush()
+
+    if @_rebuild_blocked_by_lock
+      # If the reactive rebuild triggers failed to trigger rebuild due to lock
+      # perform the rebuild directly
+      @_rebuildGridTree()
+
+    return
 
   _initDataStructure: () ->
     @items_by_id = {}

@@ -31,7 +31,7 @@ _.extend PACK.GridOperations,
             return
 
           # Make sure item removed from DOM
-          @_grid_data._flush()
+          @_grid_data._flushAndRebuild()
 
           callCb cb, err
 
