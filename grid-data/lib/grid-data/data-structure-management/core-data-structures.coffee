@@ -618,6 +618,13 @@ _.extend GridData.prototype,
 
     @emit "flush"
 
+  _flushAndRebuild: ->
+    @_flush()
+    # Call tracker.flush() to perform awaiting required grid
+    # rebuilds (@_need_rebuild) right away (only if they are
+    # necessary)
+    Tracker.flush()
+
   _initDataStructure: () ->
     @items_by_id = {}
     @tree_structure = {}
