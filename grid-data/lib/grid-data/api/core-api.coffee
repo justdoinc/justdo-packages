@@ -522,7 +522,7 @@ _.extend GridData.prototype,
 
   #
   # All the functions beginning with filterAware are reactive resources depending on:
-  # * @invalidateOnFlush() : meaning, invalidation occurs following updates to:
+  # * @invalidateOnRebuild() : meaning, invalidation occurs following updates to:
   #     * @grid_tree
   # * @isActiveFilter() : meaning, invalidation occurs following updates to:
   #     * @_filter_collection_items_ids
@@ -543,7 +543,7 @@ _.extend GridData.prototype,
     #   * path doesn't exist in @grid_tree
     #   * path is hidden by the filter
 
-    @invalidateOnFlush()
+    @invalidateOnRebuild()
     active_filter = @isActiveFilter()
 
     if helpers.isRootPath path
@@ -586,7 +586,7 @@ _.extend GridData.prototype,
       # Root is always expanded
       return 1
 
-    @invalidateOnFlush()
+    @invalidateOnRebuild()
     active_filter = @isActiveFilter()
 
     expand_state = @filterAwareGetPathExpandState(path)
@@ -622,7 +622,7 @@ _.extend GridData.prototype,
     # Gets an index of @grid_tree and returns the next index in the tree
     # that is positioned in either the same level or in a lower level.
 
-    @invalidateOnFlush()
+    @invalidateOnRebuild()
     active_filter = @isActiveFilter()
 
     if within_section
@@ -656,7 +656,7 @@ _.extend GridData.prototype,
     # Returns null if index is the last item (last visible item if filters enabled)
     # Filter aware
 
-    @invalidateOnFlush()
+    @invalidateOnRebuild()
     active_filter = @isActiveFilter()
 
     if within_section
@@ -687,7 +687,7 @@ _.extend GridData.prototype,
     # Returns null if index is the first item (first visible item if filters enabled)
     # Filter aware
 
-    @invalidateOnFlush()
+    @invalidateOnRebuild()
     active_filter = @isActiveFilter()
 
     previous_item_row = index - 1
@@ -720,7 +720,7 @@ _.extend GridData.prototype,
     #
     # If index itself pass the filter it will be returned.
 
-    @invalidateOnFlush()
+    @invalidateOnRebuild()
     active_filter = @isActiveFilter()
 
     if @getItemPassFilter(index)
@@ -763,7 +763,7 @@ _.extend GridData.prototype,
     if not index?
       return null
 
-    @invalidateOnFlush()
+    @invalidateOnRebuild()
     active_filter = @isActiveFilter()
 
     item = @grid_tree[index]
