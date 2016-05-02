@@ -33,8 +33,6 @@ _.extend PACK.Plugins,
       dragged_row_index = 0
       dragged_row_extended_details = null
 
-
-
       sort_state = {}
       initSortState = -> _.extend sort_state,
         last_changed: new Date()
@@ -50,6 +48,19 @@ _.extend PACK.Plugins,
         parent_id: null
         order: null
         level: null
+
+      refreshGridStructure = =>
+        # Call this method following a request to change the grid structure
+        # (for example expand/collapse) to make sure the internal vars are
+        # in-line with the new structure
+
+        @_grid_data._perform_temporal_strucutral_release()
+
+        # Update dragged_row_index
+        dragged_row_index = @_grid_data.getPathGridTreeIndex(dragged_row_extended_details.path)
+
+        # Update dragged row section object
+        dragged_row_extended_details.section = @_grid_data.section_path_to_section[dragged_row_extended_details.section.path]
 
       #
       # Manage sort_state
@@ -323,10 +334,7 @@ _.extend PACK.Plugins,
               # If there's a collapsed item with children under the cursor expand it
               @_grid_data.expandPath item_under_cursor.path
 
-              @_grid_data._perform_temporal_strucutral_release()
-
-              # Update dragged_row_index
-              dragged_row_index = @_grid_data.getPathGridTreeIndex(dragged_row_extended_details.path)
+              refreshGridStructure()
 
               # Update placeholder index to its correct post-expansion index
               sort_state.placeholder_index = getPlaceholderIndex(ui)
@@ -621,11 +629,7 @@ _.extend PACK.Plugins,
           # If dragging an expanded item - collapse it
           if dragged_row_extended_details.expand_state == 1
             @_grid_data.collapsePath dragged_row_extended_details.path
-            @_grid_data._flush() # Flush to collapse immediately and have
-                                 # the expanded state item replaced with the
-                                 # collapsed state one - which will be used
-                                 # as sortable's active and helper item
-                                 # instead of the original one.
+            refreshGridStructure()
 
             # Once grid_control finish updating dom with collapsed state
             # The original item is removed and the collapsed state item is
