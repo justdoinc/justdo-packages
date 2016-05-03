@@ -76,6 +76,35 @@ _.extend PACK.GridOperations,
 
   addSiblingItem:
     op: (fields, cb) ->
-      @addItem @getActiveCellPath(), fields, false, cb
+      active_path = @getActiveCellPath()
 
-    prereq: -> @_opreqActivePathLevelPermitted(@_opreqActivePathIsCollectionItem(@addItem.prereq()))
+      if active_path?
+        @addItem @getActiveCellPath(), fields, false, cb
+      else
+        # The prereq promise us the following exist if there's no active_path
+        tree_root_item_id = @_grid_data.section_path_to_section["/"].section_manager.options.tree_root_item_id
+
+        tree_root_item_path = "/"
+        if tree_root_item_id != "0"
+          tree_root_item_path += tree_root_item_id + "/"
+
+        @addItem tree_root_item_path, fields, true, cb
+
+    prereq: ->
+      active_path = @getActiveCellPath()
+
+      if active_path?
+        return @_opreqActivePathLevelPermitted(@_opreqActivePathIsCollectionItem(@addItem.prereq()))
+      else
+        # If there's no active item, check whether there's a section under the root path
+        # if there is, check whether it is of type is of type
+        if not _.isEmpty(add_item_prereq = @addItem.prereq())
+          return add_item_prereq
+        
+        if not ("/" of @_grid_data.section_path_to_section)
+          return {no_item_selected_no_section_on_root: ""}
+
+        if @_grid_data.section_path_to_section["/"].section_manager.constructor != GridData.sections_managers.DataTreeSection
+          return {root_path_section_isnt_data_tree_type: ""}
+
+        return {}

@@ -2,6 +2,8 @@ helpers = share.helpers
 
 PACK.sections_managers = {}
 
+GridData.sections_managers = PACK.sections_managers # Expose sections_managers through GridData to make it available to external uses
+
 _.extend GridData.prototype,
   _initGridSections: ->
     @_loadSectionsOption()
