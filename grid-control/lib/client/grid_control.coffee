@@ -182,7 +182,7 @@ _.extend GridControl.prototype,
         @emit "rebuild_ready"
         @emit "tree_change", true
 
-    @_grid_data.once "flush", =>
+    @_grid_data.once "rebuild", =>
       if not @_ready
         @_ready = true
         @ready.set true
