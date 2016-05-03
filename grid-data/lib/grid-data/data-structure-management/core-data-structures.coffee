@@ -574,6 +574,12 @@ _.extend GridData.prototype,
     # If structure_only is true, only structure updates will be performed
     # data updates will be ignored.
 
+    if (structure_only and @_structure_changes_queue.length == 0) or
+         (@_structure_changes_queue.length == 0 and @_data_changes_queue.length == 0)
+      @logger.debug "No need to flush"
+
+      return
+
     @logger.debug "Flush: start"
 
     @_flushing = true
