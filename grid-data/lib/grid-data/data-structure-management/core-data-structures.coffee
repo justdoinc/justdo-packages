@@ -88,15 +88,6 @@ _.extend GridData.prototype,
           # we rebuild the tree for the 2 cases above.
 
           @_rebuildGridTree()
-
-          # We call _set_need_flush here to make sure the first flush will
-          # occur even if we have no data for the grid.
-          # This is important since grid_control rely on the first `flush`
-          # event to triggers its `ready` event/state.
-
-          # Note: Data is considered ready by grid_control the first time
-          # @_init_flush_orchestrator triggers flush.
-          @_set_need_flush()
     , 250
 
   # we use _idle_time_ms_before_set_need_flush to give priority to
@@ -668,6 +659,13 @@ _.extend GridData.prototype,
     @logger.debug "Rebuild: start"
 
     @_rebuilding = true
+
+    # Before grid rebuild we ensure that all flush pending ops are done.
+    # This is critical since sections might ask for a rebuild as a result
+    # of changes to the @collection, in which case, if the internal data
+    # structures (such as items_by_id) won't be synced by flushing, we will
+    # run into bugs
+    @_flush()
 
     previous_signature = @_getGridTreeSignature()
 
