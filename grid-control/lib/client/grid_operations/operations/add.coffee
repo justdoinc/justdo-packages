@@ -76,10 +76,10 @@ _.extend PACK.GridOperations,
 
   addSiblingItem:
     op: (fields, cb) ->
-      active_path = @getActiveCellPath()
+      active_path = @current_path.get()
 
       if active_path?
-        @addItem @getActiveCellPath(), fields, false, cb
+        @addItem active_path, fields, false, cb
       else
         # The prereq promise us the following exist if there's no active_path
         tree_root_item_id = @_grid_data.section_path_to_section["/"].section_manager.options.tree_root_item_id
@@ -91,7 +91,7 @@ _.extend PACK.GridOperations,
         @addItem tree_root_item_path, fields, true, cb
 
     prereq: ->
-      active_path = @getActiveCellPath()
+      active_path = @current_path.get()
 
       if active_path?
         return @_opreqActivePathLevelPermitted(@_opreqActivePathIsCollectionItem(@addItem.prereq()))
