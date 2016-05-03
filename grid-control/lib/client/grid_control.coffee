@@ -74,7 +74,10 @@ _.extend GridControl.prototype,
     if @options.allow_dynamic_row_height
       slick_options.dynamicRowHeight = true
 
-    @_grid_data = new GridData @collection
+    grid_data_options = 
+      sections: @options.sections
+
+    @_grid_data = new GridData @collection, grid_data_options
 
     # proxy grid_data methods we want to be able to call from the
     # grid control level
