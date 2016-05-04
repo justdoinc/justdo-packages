@@ -135,7 +135,7 @@ _.extend GridControl.prototype,
 
       @_grid_data.once "rebuild", (diff) =>
         # If first build, or if fixed row height is used, we can use @_grid.invalidate
-        if not(@options.allow_dynamic_row_height) or not(@_ready)
+        if not(@options.allow_dynamic_row_height)
           # Reload visible portion of the grid
           @_grid.invalidate()
         else
@@ -182,12 +182,13 @@ _.extend GridControl.prototype,
         @emit "rebuild_ready"
         @emit "tree_change", true
 
-    @_grid_data.once "rebuild", =>
-      if not @_ready
-        @_ready = true
-        @ready.set true
-        @logger.debug "Ready"
-        @emit "ready"
+        if not @_ready
+          @_ready = true
+          @ready.set true
+          @logger.debug "Ready"
+          @emit "ready"
+
+        return
 
     @_grid_data.on "grid-item-changed", (row, fields) =>
       col_id_to_row = _.object(_.map @_grid.getColumns(), (cell, i) -> [cell.id, i])
