@@ -640,7 +640,7 @@ _.extend GridControl.prototype,
   activateRow: (row, cell = 0, scroll_into_view = true) ->
     @_grid.setActiveCell(row, cell, scroll_into_view)
 
-  activatePath: (path, cell = 0, options) ->
+  activatePath: (path, cell=0, options) ->
     if not options?
       options = {}
 
