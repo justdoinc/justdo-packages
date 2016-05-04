@@ -36,6 +36,9 @@ GridControl = (options, container, operations_container) ->
   @_operations_lock = new ReactiveVar false # Check /client/grid_operations/operations_lock.coffee
   @_operations_lock_timedout = new ReactiveVar false
 
+  @current_grid_tree_row = new ReactiveVar null
+  @current_path = new ReactiveVar null
+
   @_states_classes_computations = null
 
   Meteor.defer =>
@@ -97,9 +100,6 @@ _.extend GridControl.prototype,
     @_init_formatters()
     @_init_jquery_events()
 
-    # emit path-changed only as a result of a real change.
-    @current_path = new ReactiveVar @getActiveCellPath()
-
     @_grid_data.on "pre_rebuild", =>
       # Keep information about active cell and whether or not in edit mode and
       # if yes editor value compared to stored value
@@ -128,7 +128,7 @@ _.extend GridControl.prototype,
       # the slick grid structure.
       #
       # One example of buggy behavior that can be resulted from that: attempts to
-      # get path for current active row using @_grid_data.getActiveCellPath
+      # get path for current active row using @_grid_data.getActiveCellPathNonReactive
       # will result in wrong output
       # if active_cell_path?
       #   @_grid.resetActiveCell()
@@ -221,31 +221,22 @@ _.extend GridControl.prototype,
     @_grid.onCellChange.subscribe (e, edit_req) =>
       @_grid_data.edit(edit_req)
 
-    @_grid.onBeforeEditCell.subscribe () =>
+    @_grid.onBeforeEditCell.subscribe =>
       # lock grid data while editing the cell
       @_grid_data._lock()
 
       return true
 
-    @_grid.onCellEditorDestroy.subscribe () =>
+    @_grid.onCellEditorDestroy.subscribe =>
       @_grid_data._release(true)
 
       return true
 
-    @_grid.onActiveCellChanged.subscribe =>
-      current_path = Tracker.nonreactive => @current_path.get()
-
-      new_path = @getActiveCellPath()
-      if new_path == current_path
-        # Nothing changed
-        return
-
-      current_path = new_path
-      @current_path.set(current_path)
-
-      item_id = if current_path? then GridData.helpers.getPathItemId(current_path) else null
-
-      @logger.debug "Path changed", current_path
+    update_grid_position_tracking_reactive_vars = =>
+      @current_grid_tree_row.set(@getActiveCellRowNonReactive())
+      @current_path.set(@getActiveCellPathNonReactive())
+    update_grid_position_tracking_reactive_vars() # init the vars
+    @_grid.onActiveCellChanged.subscribe update_grid_position_tracking_reactive_vars
 
     for name, hook of @_init_hooks
       hook.call(@)
@@ -573,7 +564,7 @@ _.extend GridControl.prototype,
 
       @emit "grid-view-change", new_view
 
-  getView: () ->
+  getView: ->
     columns = @_grid.getColumns()
 
     view = _.map columns, (column) ->
@@ -634,19 +625,17 @@ _.extend GridControl.prototype,
 
     return @_grid_data.getItemPath(cell.row)
 
-  getActiveCellRow: -> @_grid.getActiveCell()?.row
+  getActiveCellRowNonReactive: -> @_grid.getActiveCell()?.row
 
-  getActiveCellItem: ->
-    if (active_cell_row = @getActiveCellRow())?
-      return @_grid_data.getItem(active_cell_row)
-    else
-      return null
+  getActiveCellRow: -> @current_grid_tree_row.get()
 
-  getActiveCellPath: ->
-    if (active_cell_row = @getActiveCellRow())?
+  getActiveCellPathNonReactive: ->
+    if (active_cell_row = @getActiveCellRowNonReactive())?
       return @_grid_data.getItemPath(active_cell_row)
-    else
-      return null
+
+    return null
+
+  getActiveCellPath: -> @current_path.get()
 
   activateRow: (row, cell = 0, scroll_into_view = true) ->
     @_grid.setActiveCell(row, cell, scroll_into_view)
