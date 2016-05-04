@@ -51,7 +51,7 @@ _.extend GridData.prototype,
     @tree_structure = {} # Note @tree_structure contains both items we have items_by_id, and also those linked by other items as their parents
                          # but aren't present in @items_by_id
     @detaching_items_ids = {} # Keys are items ids that are parents of other items but aren't known to us, values are always true
-    @grid_tree = [] # [[item, tree_level, path, expand_state], ...]
+    @grid_tree = [] # [[item, tree_level, path, expand_state, item_section], ...]
     @_items_ids_map_to_grid_tree_indices = {} # {item_id: [indices in @grid_tree]}
     @_typed_items_paths_map_to_grid_tree_indices = {} # {path: index in grid_tree}
     @_expanded_paths = {} # if path is a key of @_expanded_paths it is expanded regardless of its value
