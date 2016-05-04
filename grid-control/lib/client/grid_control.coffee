@@ -36,6 +36,22 @@ GridControl = (options, container, operations_container) ->
   @_operations_lock = new ReactiveVar false # Check /client/grid_operations/operations_lock.coffee
   @_operations_lock_timedout = new ReactiveVar false
 
+  # During slick grid changes the active row gets cleared, and is being set
+  # againg after the change is completed, if it is still in the tree.
+  #
+  # We rely on @_grid.onActiveCellChanged to track row changes, but during the
+  # clear we will see the current row as null and we won't be able to say whether
+  # it'll set to something else, or stay null.
+  #
+  # If following the null there'll be change to the current row or its path
+  # we don't want resources that rely on them to invalidate, but the change
+  # to null and back again will force that.
+  #
+  # Because of that we use intermediate computation to set @current_grid_tree_row
+  # and @current_path, and rely on Meteor flush process to avoid their invalidation.
+  @_current_state_invalidation_protection_computation = null
+  @_current_grid_tree_row = new ReactiveVar null
+  @_current_path = new ReactiveVar null
   @current_grid_tree_row = new ReactiveVar null
   @current_path = new ReactiveVar null
 
@@ -233,9 +249,12 @@ _.extend GridControl.prototype,
 
       return true
 
+    @_current_state_invalidation_protection_computation = Tracker.autorun =>
+      @current_grid_tree_row.set(@_current_grid_tree_row.get())
+      @current_path.set(@_current_path.get())
     update_grid_position_tracking_reactive_vars = =>
-      @current_grid_tree_row.set(@getActiveCellRowNonReactive())
-      @current_path.set(@getActiveCellPathNonReactive())
+      @_current_grid_tree_row.set(@getActiveCellRowNonReactive())
+      @_current_path.set(@getActiveCellPathNonReactive())
     update_grid_position_tracking_reactive_vars() # init the vars
     @_grid.onActiveCellChanged.subscribe update_grid_position_tracking_reactive_vars
 
@@ -776,6 +795,8 @@ _.extend GridControl.prototype,
     @_init_dfd.reject()
     @initialized.set false
     @ready.set false
+
+    @_current_state_invalidation_protection_computation.stop()
 
     @_destroyStatesClassesComputations()
     @_destroy_plugins()
