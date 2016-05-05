@@ -648,6 +648,7 @@ _.extend GridControl.prototype,
   getActiveCellRowNonReactive: -> @_grid.getActiveCell()?.row
 
   getActiveCellRow: -> @current_grid_tree_row.get()
+  getCurrentRow: -> @current_grid_tree_row.get()
 
   getActiveCellPathNonReactive: ->
     if (active_cell_row = @getActiveCellRowNonReactive())?
@@ -656,6 +657,7 @@ _.extend GridControl.prototype,
     return null
 
   getActiveCellPath: -> @current_path.get()
+  getCurrentPath: -> @current_path.get()
 
   activateRow: (row, cell = 0, scroll_into_view = true) ->
     @_grid.setActiveCell(row, cell, scroll_into_view)
