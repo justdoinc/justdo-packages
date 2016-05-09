@@ -144,7 +144,7 @@ _.extend GridControl.prototype,
       # the slick grid structure.
       #
       # One example of buggy behavior that can be resulted from that: attempts to
-      # get path for current active row using @_grid_data.getActiveCellPathNonReactive
+      # get path for current active row using @_grid_data.getCurrentPathNonReactive
       # will result in wrong output
       # if active_cell_path?
       #   @_grid.resetActiveCell()
@@ -253,8 +253,8 @@ _.extend GridControl.prototype,
       @current_grid_tree_row.set(@_current_grid_tree_row.get())
       @current_path.set(@_current_path.get())
     update_grid_position_tracking_reactive_vars = =>
-      @_current_grid_tree_row.set(@getActiveCellRowNonReactive())
-      @_current_path.set(@getActiveCellPathNonReactive())
+      @_current_grid_tree_row.set(@getCurrentRowNonReactive())
+      @_current_path.set(@getCurrentPathNonReactive())
     update_grid_position_tracking_reactive_vars() # init the vars
     @_grid.onActiveCellChanged.subscribe update_grid_position_tracking_reactive_vars
 
@@ -645,20 +645,46 @@ _.extend GridControl.prototype,
 
     return @_grid_data.getItemPath(cell.row)
 
-  getActiveCellRowNonReactive: -> @_grid.getActiveCell()?.row
-
+  #
+  # active row
+  #
+  getActiveCellRowNonReactive: -> @_grid.getActiveCell()?.row # obsolete name
   getActiveCellRow: -> @current_grid_tree_row.get()
-  getCurrentRow: -> @current_grid_tree_row.get()
+  getCurrentRowNonReactive: -> @_grid.getActiveCell()?.row # duplicate to above need to merge
+  getCurrentRow: -> @current_grid_tree_row.get() # duplicate to above need to merge
 
-  getActiveCellPathNonReactive: ->
-    if (active_cell_row = @getActiveCellRowNonReactive())?
+  #
+  # active row @_grid_data.grid_tree details
+  #
+  getCurrentRowGridTreeDetails: ->
+    # Return the current row's: @_grid_data.grid_tree[row], or null if no row is active
+    if not (row = @getCurrentRow())?
+      return null
+
+    return @_grid_data.grid_tree[row]
+
+  getCurrentRowGridTreeDetailsNonReactive: ->
+    if not (row = @getCurrentRowNonReactive())?
+      return null
+
+    return @_grid_data.grid_tree[row]
+
+  #
+  # active row @_grid_data.grid_tree item
+  #
+  getActiveCellPathNonReactive: -> # obsolete, should merge with getCurrentPathNonReactive
+    if (active_cell_row = @getCurrentRowNonReactive())?
       return @_grid_data.getItemPath(active_cell_row)
 
     return null
 
   getActiveCellPath: -> @current_path.get()
-  getCurrentPath: -> @current_path.get()
+  getCurrentPathNonReactive: -> @getActiveCellPathNonReactive() # need to merge
+  getCurrentPath: -> @current_path.get() # duplicate to above need to merge
 
+  #
+  # activate row/path
+  #
   activateRow: (row, cell = 0, scroll_into_view = true) ->
     @_grid.setActiveCell(row, cell, scroll_into_view)
 
