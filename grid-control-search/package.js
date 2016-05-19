@@ -14,6 +14,7 @@ Package.onUse(function (api) {
   api.use('coffeescript', both);
   api.use('erasaur:meteor-lodash', both);
   api.use('check', both);
+  api.use('tracker', both);
 
   api.use('twbs:bootstrap@3.3.5', both);
   api.use('raix:eventemitter@0.1.1', both);

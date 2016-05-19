@@ -5,6 +5,7 @@ GridControlSearch = (grid_control, container) ->
 
   @grid_control = grid_control
 
+  @destroyed = false
   @container = $(container)
   @input = @search_info = @clear_button = @search_prev = @search_next = null # controls
   @current_term = ""
@@ -23,14 +24,19 @@ GridControlSearch = (grid_control, container) ->
   @grid_control.on "destroyed", =>
     @destroy()
 
+  @active_row_tracker = null
   @grid_control._init_dfd.done =>
+    if @destroyed
+      # Destroyed already, do nothing
+      return
+    
     @grid_control._grid_data.on "grid-item-changed", =>
       @_search()
 
-    @grid_control._grid_data.on "filter-paths-cleared", =>
+    @grid_control._grid_data.on "grid-tree-filter-cleared", =>
       @_search()
 
-    @grid_control._grid_data.on "filter-paths-update", =>
+    @grid_control._grid_data.on "grid-tree-filter-updated", =>
       @_search()
 
     @grid_control.on "rebuild_ready", =>
@@ -39,7 +45,8 @@ GridControlSearch = (grid_control, container) ->
     @grid_control.on "grid-view-change", =>
       @_search()
 
-    @grid_control._grid.onActiveCellChanged.subscribe =>
+    @active_row_tracker = Tracker.autorun =>
+      @grid_control.current_path.get() # Upon change to current path
       @_update_location()
 
   return @
@@ -121,7 +128,7 @@ _.extend GridControlSearch.prototype,
     @search_next.on 'click', =>
       @next()
 
-  _search: () ->
+  _search: ->
     # actual search logic
     view_fields = _.map @grid_control.getView(), (x) -> x.field
     forced_fields = _.map @grid_control.schema, (def, field) ->
@@ -281,4 +288,5 @@ _.extend GridControlSearch.prototype,
 
   destroy: ->
     @container.empty()
+    @active_row_tracker?.stop()
     @logger.debug "Destroyed"
