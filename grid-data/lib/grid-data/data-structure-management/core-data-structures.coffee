@@ -483,6 +483,8 @@ _.extend GridData.prototype,
             delete @tree_structure[parent_id]
             delete @detaching_items_ids[parent_id]
 
+      delete @items_by_id[id]
+
       return rebuild_tree
 
     parent_update: (item_id, new_parents_field) ->
