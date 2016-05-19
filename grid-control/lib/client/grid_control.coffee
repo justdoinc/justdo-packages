@@ -656,13 +656,10 @@ _.extend GridControl.prototype,
   #
   # active row @_grid_data.grid_tree details
   #
-  getCurrentRowGridTreeDetails: ->
-    # Return the current row's: @_grid_data.grid_tree[row], or null if no row is active
-    if not (row = @getCurrentRow())?
-      return null
-
-    return @_grid_data.grid_tree[row]
-
+  # getCurrentRowGridTreeDetails:
+  #   No reactive version at the moment, when implement consider the
+  #   need to manage invalidations as a result of details changes,
+  #   just as we do in the special case of getCurrentRowGrid: @getCurrentPathObj()
   getCurrentRowGridTreeDetailsNonReactive: ->
     if not (row = @getCurrentRowNonReactive())?
       return null
