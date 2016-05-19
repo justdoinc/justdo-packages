@@ -324,9 +324,17 @@ _.extend GridDataCom.prototype,
         throw self._error "unknown-path"
 
       parent_id = helpers.getPathParentId(path)
+      if parent_id == "0"
+        # item that is added to the top level is added with the adding user only
+        users = [@userId]
+      else
+        # non top-level item inherents its parent users
+        parent_doc = collection.getItemById(parent_id)
+        users = parent_doc.users
+
       sibling_order = item.parents[parent_id].order + 1
 
-      new_item = _.extend {}, fields, {parents: {}, users: item.users}
+      new_item = _.extend {}, fields, {parents: {}, users: users}
       new_item.parents[parent_id] = {order: sibling_order}
 
       self._runGridMethodMiddlewares @, "addSibling", path, new_item
