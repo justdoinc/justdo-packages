@@ -459,6 +459,8 @@ _.extend GridDataCom.prototype,
         order += 1
 
     methods[helpers.getCollectionMethodName(collection, "bulkUpdate")] = (items_ids, modifier) ->
+      check(items_ids, [String])
+
       # Returns the count of changed items
       selector = 
         _id:
