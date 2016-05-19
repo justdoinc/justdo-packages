@@ -626,7 +626,11 @@ _.extend GridData.prototype,
     # rebuilds resulted from the @_flush (@_need_rebuild) right away
     # (by relying on the regular rebuild reactivity triggers,  will
     # rebuild only if necessary)
-    Tracker.flush()
+    try
+      Tracker.flush()
+    catch
+      # If we are already in flush, nothing to do
+      true
 
     if @_rebuild_blocked_by_lock
       # If the reactive rebuild triggers failed to trigger rebuild due to lock
