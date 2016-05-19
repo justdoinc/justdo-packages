@@ -40,6 +40,17 @@ share.helpers = helpers =
   getPathLevel: (path) ->
     JustdoHelpers.substrCount(path, "/") - 2 # - 2 is for the first and last /
 
+  getAllSubPaths: (path) ->
+    # Doesn't return root
+    path_array = @getPathArray(path)
+
+    last = "/"
+    sub_paths = []
+    for item in path_array
+      sub_paths.push (last += item + "/")
+
+    return sub_paths
+
   joinPathArray: (path_array) -> "/#{path_array.join('/')}/"
 
   callCb: JustdoHelpers.callCb
