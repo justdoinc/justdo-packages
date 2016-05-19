@@ -15,6 +15,8 @@ Package.onUse(function (api) {
   api.use('underscore', both);
   api.use('check', both);
   api.use('meteor', both);
+  api.use('tracker', both);
+  api.use('minimongo', both);
 
   api.use('twbs:bootstrap@3.3.5', both);
   api.use('mizzao:jquery-ui@1.11.4', both);

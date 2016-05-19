@@ -679,6 +679,61 @@ _.extend GridControl.prototype,
   getCurrentPathNonReactive: -> @getActiveCellPathNonReactive() # need to merge
   getCurrentPath: -> @current_path.get() # duplicate to above need to merge
 
+  getCurrentPathObjNonReactive: ->
+    # We don't give an option to filter fields for the non reactive getter
+    # as, the only real reason to have it for the reactive one is to allow
+    # controlling which field changes should trigger invalidation  
+    if not (active_item_details = @getCurrentRowGridTreeDetailsNonReactive())?
+      return null
+
+    return active_item_details[0]
+
+  getCurrentPathObj: (fields) ->
+    # Reactive to:
+    #   * Path changes
+    #   * Changes to the active item obj (if fields specified only, changes
+    #     to these fields will trigger reactivity).
+    #     Important Note: that for items that are stored in a Mongo
+    #     collection, only once the data changes are recognised and
+    #     handled by the grid's internal data structures activeItemObj
+    #     reactivity will trigger.
+    #     activeItemObj is always consistent with the grid's internal
+    #     data structures, which, on occasions such as flush blocks,
+    #     might be different from the data in the mongo collection.
+
+    if not (current_path = @getCurrentPath())?
+      # We call @getCurrentPath() only to make current_path reactivity
+       # dependency
+      return null
+
+    if not fields?
+      fields = {}
+
+    fieldsProjection = LocalCollection._compileProjection(fields) # LocalCollection Comes from minimongo
+
+    _getActiveItemObj = =>
+      if not (active_item_obj = @getCurrentPathObjNonReactive())?
+        return null
+
+      return fieldsProjection(active_item_obj)
+
+    current_obj = _getActiveItemObj()
+    if not (current_computation = Tracker.currentComputation)?
+      # If reactivity not required (no active comp), just return the value
+      return current_obj
+
+    _invalidateOnActiveItemObjChanged = ->
+      if not JustdoHelpers.jsonComp(current_obj, _getActiveItemObj())
+        current_computation.invalidate()
+
+      return
+
+    @on "tree_change", _invalidateOnActiveItemObjChanged
+    Tracker.onInvalidate =>
+      @off "tree_change", _invalidateOnActiveItemObjChanged
+
+    return current_obj
+
   #
   # activate row/path
   #
