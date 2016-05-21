@@ -719,6 +719,8 @@ _.extend PACK.Plugins,
             # Cancel and release flush
             sortable("cancel")
 
+            updateNewLevelMode(true)
+
             @_grid_data._release()
           else if dragged_row_extended_details.natural_collection_info.parent_id == placeholder_position.parent_id and
                 dragged_row_extended_details.natural_collection_info.order == placeholder_position.order
