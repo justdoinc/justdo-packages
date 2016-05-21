@@ -63,6 +63,37 @@ _.extend PACK.Plugins,
         dragged_row_extended_details.section = @_grid_data.section_path_to_section[dragged_row_extended_details.section.path]
 
       #
+      # Grid structure manipulations
+      #
+      expandPath = (path, ui) =>
+        @_grid_data.expandPath path
+
+        refreshGridStructure()
+
+        # Update placeholder index to its correct post-expansion index
+        sort_state.placeholder_index = getPlaceholderIndex(ui)
+
+        # jQueryUI keeps information about the item previous to the original position
+        # of the moved item to be able to reposition it in its original place in case
+        # of cancel.
+        # Expanding a path might change the previous item if the original position of the
+        # moved item was just before the expanded sub-tree.
+        # Therefore we need to update the internal data structure of jquery ui sortable
+        # to make sure we won't run into bugs.
+        if ui.domPosition.prev?
+          # If the first item is moved, there'll be no prev
+          previous = $(".ui-sortable-helper").prev()
+
+          if previous.is(".sortable-placeholder")
+            # If the placeholder is the current previous item, we
+            # need to take the element before it.
+            previous = previous.prev()
+
+          ui.domPosition.prev = previous.get(0)
+
+        refresh_sortable()
+
+      #
       # Manage sort_state
       #
       updateSortState = (new_state) =>
@@ -332,14 +363,7 @@ _.extend PACK.Plugins,
             # If there's an item under the cursor
             if item_under_cursor.expand_state == 0
               # If there's a collapsed item with children under the cursor expand it
-              @_grid_data.expandPath item_under_cursor.path
-
-              refreshGridStructure()
-
-              # Update placeholder index to its correct post-expansion index
-              sort_state.placeholder_index = getPlaceholderIndex(ui)
-
-              refresh_sortable()
+              expandPath(item_under_cursor.path, ui)
             if item_under_cursor.expand_state == -1
               # If item under cursor has no children, add placeholder as a new child
               parent_id = item_under_cursor.natural_collection_info.item_id
