@@ -646,7 +646,7 @@ _.extend GridControl.prototype,
     return @_grid_data.getItemPath(cell.row)
 
   #
-  # active row
+  # Active row
   #
   getActiveCellRowNonReactive: -> @_grid.getActiveCell()?.row # obsolete name
   getActiveCellRow: -> @current_grid_tree_row.get()
@@ -654,20 +654,7 @@ _.extend GridControl.prototype,
   getCurrentRow: -> @current_grid_tree_row.get() # duplicate to above need to merge
 
   #
-  # active row @_grid_data.grid_tree details
-  #
-  # getCurrentRowGridTreeDetails:
-  #   No reactive version at the moment, when implement consider the
-  #   need to manage invalidations as a result of details changes,
-  #   just as we do in the special case of getCurrentRowGrid: @getCurrentPathObj()
-  getCurrentRowGridTreeDetailsNonReactive: ->
-    if not (row = @getCurrentRowNonReactive())?
-      return null
-
-    return @_grid_data.grid_tree[row]
-
-  #
-  # active row @_grid_data.grid_tree item
+  # Active Path
   #
   getActiveCellPathNonReactive: -> # obsolete, should merge with getCurrentPathNonReactive
     if (active_cell_row = @getCurrentRowNonReactive())?
@@ -679,10 +666,39 @@ _.extend GridControl.prototype,
   getCurrentPathNonReactive: -> @getActiveCellPathNonReactive() # need to merge
   getCurrentPath: -> @current_path.get() # duplicate to above need to merge
 
+  #
+  # Row grid tree details
+  #
+
+  # getRowGridTreeDetailsNonReactive:
+  #   Non reactive version at the moment, when implement the reactive version
+  #   consider the need to manage invalidations as a result of details changes,
+  #   just as we do in the special case of @getCurrentPathObj()
+  getRowGridTreeDetailsNonReactive: (row) ->
+    if not row?
+      return null
+    
+    return @_grid_data.grid_tree[row]
+
+  getCurrentRowGridTreeDetailsNonReactive: ->
+    if not (row = @getCurrentRowNonReactive())?
+      return null
+
+    return @getRowGridTreeDetailsNonReactive(row)
+
+  #
+  # Path grid tree details
+  #
+  getPathObjNonReactive: (path) ->
+    if not (row = @_grid_data.getPathGridTreeIndex(path))?
+      return null
+
+    return @_grid_data.getItem(row)
+
   getCurrentPathObjNonReactive: ->
     # We don't give an option to filter fields for the non reactive getter
-    # as, the only real reason to have it for the reactive one is to allow
-    # controlling which field changes should trigger invalidation  
+    # as the only real reason to have it for the reactive one is to allow
+    # controlling which field changes should trigger invalidation
     if not (active_item_details = @getCurrentRowGridTreeDetailsNonReactive())?
       return null
 
