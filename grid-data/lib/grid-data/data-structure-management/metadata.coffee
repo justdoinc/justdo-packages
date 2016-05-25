@@ -26,6 +26,15 @@ _.extend GridData.prototype,
 
     # union all `cssClasses` metadata
     cssClasses = _.map generators_metadata, (metadata) -> metadata.cssClasses
+
+    if metadata?.columns?[0]?.colspan == "*"
+      # A work around.
+      #
+      # Due to the changes made to the slick grid dom structure, we lost the ability
+      # to present correctly specific cell colspan.
+      # With this workaround we add support for the first cell to occupy the entire-row
+      cssClasses.push ["full-row-colspan"]
+
     cssClasses = _.without cssClasses, undefined
     if not _.isEmpty cssClasses
       metadata.cssClasses = _.union.apply(_, cssClasses)
