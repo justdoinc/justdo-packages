@@ -4,7 +4,7 @@ GridControl = (options, container, operations_container) ->
   default_options =
     allow_dynamic_row_height: false
     usersDiffConfirmationCb: null
-    items_types_metadata_generators: null
+    items_types_settings: null
 
   @options = _.extend {}, default_options, options
 
@@ -96,7 +96,7 @@ _.extend GridControl.prototype,
 
     grid_data_options = 
       sections: @options.sections
-      items_types_metadata_generators: @options.items_types_metadata_generators
+      items_types_settings: @options.items_types_settings
 
     @_grid_data = new GridData @collection, grid_data_options
 

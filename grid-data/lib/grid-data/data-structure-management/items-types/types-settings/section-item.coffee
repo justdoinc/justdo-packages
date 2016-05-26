@@ -1,5 +1,5 @@
 PACK.items_types["section-item"] = 
-  metadataGenerator: (item, ext, index) ->
+  builtInMetadataGenerator: (item, ext, index) ->
     # Section title occupies the entire row
     metadata = {
       columns:

@@ -2,13 +2,34 @@ PACK.items_types = {}
 
 _.extend GridData.prototype,
   _initItemsTypes: ->
-    @custom_items_types_metadata_generators = {}
+    # Merge the built-in items types settings with those provided with the @options
+    # (if any) to @items_types_settings
+    #
+    # XXX note: at the moment we override built-in items types settings properties
+    # and not perform deep merge.
+    @items_types_settings = {}
+    for type, type_settings of PACK.items_types
+      custom_settings = @options?.items_types_settings?[type]
+      @items_types_settings[type] = _.extend {}, type_settings, custom_settings
 
+    # add to @items_types_settings settings for items defined only in @options
+    if (custom_items_types_settings = @options?.items_types_settings)?
+      for type, type_settings of custom_items_types_settings
+        if not (type of @items_types_settings)
+          @items_types_settings[type] = type_settings
+
+    # Register the custom metadata generators
+    @custom_items_types_metadata_generators = {}
+    for item_type, item_type_custom_options of @items_types_settings
+      if (generator = item_type_custom_options.metadataGenerator)?
+        @registerItemTypeGenerator(item_type, generator)
+
+    # Register the main metadata in charge on items types
     @registerMetadataGenerator (item, ext, index) =>
       type = @getItemType(index) or "default"
 
-      if (typeMetadataGenerator = PACK.items_types[type]?.metadataGenerator)?
-        metadata = typeMetadataGenerator(item, ext, index)
+      if (builtInTypeMetadataGenerator = @items_types_settings[type]?.builtInMetadataGenerator)?
+        metadata = builtInTypeMetadataGenerator(item, ext, index)
       else
         metadata = {}
 
@@ -25,9 +46,7 @@ _.extend GridData.prototype,
 
       return metadata
 
-    if @options.items_types_metadata_generators?
-      for item_type, generator of @options.items_types_metadata_generators
-        @registerItemTypeGenerator(item_type, generator)
+    return
 
   registerItemTypeGenerator: (item_type, metadata_generator) ->
     # registers a custom metadata generator for `item_type` 
