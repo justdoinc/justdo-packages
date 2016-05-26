@@ -46,7 +46,7 @@ _.extend GridControl.prototype,
   _opreqActivePath: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
-    if not @current_path.get()?
+    if not @getCurrentPath()?
       prereq.no_active_path = "Select an item to perform this operation"
 
     return prereq
@@ -132,7 +132,7 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    path_has_children = @_grid_data.filterAwareGetPathHasChildren(@current_path.get())
+    path_has_children = @_grid_data.filterAwareGetPathHasChildren(@getCurrentPath())
     if path_has_children == 1
       prereq.active_path_is_not_leaf = "Can't perform operation on an item with sub-items"
 
@@ -149,7 +149,7 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    path_has_children = @_grid_data.filterAwareGetPathHasChildren(@current_path.get())
+    path_has_children = @_grid_data.filterAwareGetPathHasChildren(@getCurrentPath())
     if path_has_children == 0
       prereq.active_path_has_no_children = "Can't perform this operation on an item with no sub-items"
 
@@ -177,7 +177,7 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    previous_path = @_grid_data.filterAwareGetPreviousPath(@current_path.get())
+    previous_path = @_grid_data.filterAwareGetPreviousPath(@getCurrentPath())
     if not previous_path? or previous_path of @_grid_data.section_path_to_section # if no previous path, or if prev path is the section item
       prereq.active_item_is_first = "Can't perform this operation on the first item"
 
@@ -206,7 +206,7 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_item_isnt_first_prereq)
       return prereq
 
-    current_path = @current_path.get()
+    current_path = @getCurrentPath()
     curr_path_level = GridData.helpers.getPathLevel current_path
     prev_path_level = GridData.helpers.getPathLevel @_grid_data.filterAwareGetPreviousPath(current_path)
 

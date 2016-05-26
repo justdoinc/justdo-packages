@@ -76,7 +76,7 @@ _.extend PACK.GridOperations,
 
   addSiblingItem:
     op: (fields, cb) ->
-      active_path = @current_path.get()
+      active_path = @getCurrentPath()
 
       if active_path?
         @addItem active_path, fields, false, cb
@@ -91,7 +91,7 @@ _.extend PACK.GridOperations,
         @addItem tree_root_item_path, fields, true, cb
 
     prereq: ->
-      active_path = @current_path.get()
+      active_path = @getCurrentPath()
 
       if active_path?
         return @_opreqActivePathLevelPermitted(@_opreqActivePathIsCollectionItem(@addItem.prereq()))

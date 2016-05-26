@@ -46,7 +46,7 @@ GridControlSearch = (grid_control, container) ->
       @_search()
 
     @active_row_tracker = Tracker.autorun =>
-      @grid_control.current_path.get() # Upon change to current path
+      @grid_control.getCurrentPath() # Upon change to current path
       @_update_location()
 
   return @

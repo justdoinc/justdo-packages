@@ -651,9 +651,16 @@ _.extend GridControl.prototype,
   # Active row
   #
   getActiveCellRowNonReactive: -> @_grid.getActiveCell()?.row # obsolete name
-  getActiveCellRow: -> @current_grid_tree_row.get()
-  getCurrentRowNonReactive: -> @_grid.getActiveCell()?.row # duplicate to above need to merge
-  getCurrentRow: -> @current_grid_tree_row.get() # duplicate to above need to merge
+  getActiveCellRow: ->
+    # We let @current_grid_tree_row trigger reactivity, but we always return
+    # the real active cell by checking @_grid.getActiveCell() directly.
+    #
+    # Read more about @current_grid_tree_row above.
+    @current_grid_tree_row.get()
+
+    return @getActiveCellRowNonReactive()
+  getCurrentRowNonReactive: -> @getActiveCellRowNonReactive() # duplicate to above need to merge
+  getCurrentRow: -> @getActiveCellRow() # duplicate to above need to merge
 
   #
   # Active Path
@@ -664,9 +671,16 @@ _.extend GridControl.prototype,
 
     return null
 
-  getActiveCellPath: -> @current_path.get()
+  getActiveCellPath: ->
+    # We let @current_path trigger reactivity, but we always return
+    # the real active path by checking @_grid.getCurrentRowNonReactive() directly.
+    #
+    # Read more about @current_path above.
+    @current_path.get()
+
+    return @getActiveCellPathNonReactive()
   getCurrentPathNonReactive: -> @getActiveCellPathNonReactive() # need to merge
-  getCurrentPath: -> @current_path.get() # duplicate to above need to merge
+  getCurrentPath: -> @getActiveCellPath() # duplicate to above need to merge
 
   #
   # Row grid tree details
