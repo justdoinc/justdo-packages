@@ -106,8 +106,19 @@ _.extend GridData.prototype,
     if not _.isString(type)
       throw @_error "missing-argument", "Typed item must have a type"
 
-    item_obj = Object.create(item_obj) # Add the "metadata layer" by inheriting provided obj
-    item_obj._type = type
+    # Originally we cloned item_obj and assigned the _type
+    # But we find that some 3rd parties APIs we use don't work well with that
+    # (Meteor's LocalCollection for example)
+    # Object.assign is 4 times slower, EJSON.clone 9-10.
+    #
+    # item_obj = Object.create(item_obj) # Add the "metadata layer" by inheriting provided obj
+    # item_obj._type = type
+
+    if Object.assign?
+      item_obj = Object.assign({_type: type}, item_obj)
+    else
+      item_obj = EJSON.clone(item_obj)
+      item_obj._type = type
 
     index = @_addItem(item_obj, absolute_path, expand_state, section)
 
