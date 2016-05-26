@@ -1,1 +1,0 @@
-# PACK.items_types.default = {} # default is the null type

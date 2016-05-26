@@ -49,7 +49,6 @@ Package.onUse(function (api) {
 
   // Items Types settings
   api.add_files('lib/grid-data/data-structure-management/items-types/items-types.coffee', client);
-  api.add_files('lib/grid-data/data-structure-management/items-types/types-settings/default.coffee', client);
   api.add_files('lib/grid-data/data-structure-management/items-types/types-settings/section-item.coffee', client);
 
   // Grid Sections
