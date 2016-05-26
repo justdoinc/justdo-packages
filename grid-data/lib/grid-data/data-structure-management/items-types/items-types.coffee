@@ -7,7 +7,7 @@ _.extend GridData.prototype,
     @registerMetadataGenerator (item, ext, index) =>
       type = @getItemType(index) or "default"
 
-      if (typeMetadataGenerator = PACK.items_types[type].metadataGenerator)?
+      if (typeMetadataGenerator = PACK.items_types[type]?.metadataGenerator)?
         metadata = typeMetadataGenerator(item, ext, index)
       else
         metadata = {}
