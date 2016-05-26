@@ -743,6 +743,18 @@ _.extend GridControl.prototype,
       if not (active_item_obj = @getCurrentPathObjNonReactive())?
         return null
 
+      if active_item_obj._type?
+        # fieldsProjection doesn't work well with multi-layer object, looking only
+        # on the first layer.
+        # In typed items we have multi layer objects (which we depend on for data
+        # consistency in some situations).
+        # So, for typed items, we send to fieldsProjection only the data layer of
+        # typed items.
+        #
+        # Note that this is also critical for the jsonComp we do in later in this
+        # func
+        active_item_obj = Object.getPrototypeOf(active_item_obj)
+
       return fieldsProjection(active_item_obj)
 
     current_obj = _getActiveItemObj()
