@@ -87,14 +87,16 @@ _.extend GridData.prototype,
 
     return @grid_tree.push(item_entry) - 1
 
+  _registerCollectionItemIndex: (index, item_id) ->
+    if not @_items_ids_map_to_grid_tree_indices[item_id]?
+      @_items_ids_map_to_grid_tree_indices[item_id] = []
+    @_items_ids_map_to_grid_tree_indices[item_id].push(index)
+
   _addCollectionItem: (item_obj, absolute_path, expand_state, section) ->
     # adds a data item to @grid_tree
     index = @_addItem(item_obj, absolute_path, expand_state, section)
 
-    item_id = item_obj._id
-    if not @_items_ids_map_to_grid_tree_indices[item_id]?
-      @_items_ids_map_to_grid_tree_indices[item_id] = []
-    @_items_ids_map_to_grid_tree_indices[item_id].push(index)
+    @_registerCollectionItemIndex(index, item_obj._id)
 
     return index
 
@@ -123,6 +125,9 @@ _.extend GridData.prototype,
     index = @_addItem(item_obj, absolute_path, expand_state, section)
 
     @_typed_items_paths_map_to_grid_tree_indices[absolute_path] = index
+
+    if @items_types_settings[type]?.is_collection_item
+      @_registerCollectionItemIndex(index, item_obj._id)
 
     return index
 
