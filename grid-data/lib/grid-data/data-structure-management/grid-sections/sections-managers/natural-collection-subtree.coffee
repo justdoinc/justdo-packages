@@ -31,6 +31,15 @@ _.extend NaturalCollectionSubtreeSection.prototype,
   # the section's top level items and not the root items themselves
   # if rootItems is null yield_root_items has no meaning
   yield_root_items: true
+  # itemsTypesAssigner can be a function that will be called during the _each process
+  # for every item we are going to yield, just before its yield with the item_obj and
+  # the item path relative to the section root:
+  #
+  #   itemsTypesAssigner(item_obj, relative_path)
+  #
+  # it should return a string with the type that should be assigned to this item
+  # or null to use the default item type 
+  itemsTypesAssigner: null
 
   _isPathExist: (relative_path) ->
     tree_structure = @grid_data.tree_structure
@@ -94,8 +103,14 @@ _.extend NaturalCollectionSubtreeSection.prototype,
 
   _each: (relative_path, options, iteratee) ->
     _naturalCollectionTreeTraversingIteratee = (item_id, item_path, expand_state) =>
-      # console.log "iteratee", @section_obj, item_id, @section_root_no_trailing_slash + item_path, expand_state
-      return iteratee(@section_obj, null, @grid_data.items_by_id[item_id], @section_root_no_trailing_slash + item_path, expand_state)
+      item_obj = @grid_data.items_by_id[item_id]
+
+      type = null
+      if @itemsTypesAssigner?
+        type = @itemsTypesAssigner(item_obj, item_path)
+
+      # console.log "iteratee", @section_obj, type, item_obj, path, expand_state
+      return iteratee(@section_obj, type, item_obj, @section_root_no_trailing_slash + item_path, expand_state)
 
     path_item_id = null
     if relative_path == "/" and not @rootItems?
