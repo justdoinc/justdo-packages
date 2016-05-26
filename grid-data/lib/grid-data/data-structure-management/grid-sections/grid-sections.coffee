@@ -410,7 +410,7 @@ _.extend GridData.prototype,
       if (section_item_row_id = section.section_item_row_id)?
         section_item = @getItem(section_item_row_id)
 
-        iteratee_ret = iteratee section, section_item._type.type, section_item, section.path, expand_state
+        iteratee_ret = iteratee section, section_item._type, section_item, section.path, expand_state
 
         if iteratee_ret is -1
           step_in = false
