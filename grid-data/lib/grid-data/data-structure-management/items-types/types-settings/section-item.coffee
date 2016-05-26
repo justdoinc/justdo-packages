@@ -1,4 +1,5 @@
-PACK.items_types["section-item"] = 
+PACK.items_types["section-item"] =
+  searchable: true
   builtInMetadataGenerator: (item, ext, index) ->
     # Section title occupies the entire row
     metadata = {

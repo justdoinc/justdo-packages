@@ -1,7 +1,6 @@
 default_options =
   fields: null # Search only specific fields
   exclude_filtered_paths: true # If true, and there's an active filters, search will be limited to filtered tree
-  exclude_typed_items: true # Look only in @collection's items, XXX false isn't implemented
 
 _.extend GridData.prototype,
   search: (term, options) ->
@@ -23,10 +22,11 @@ _.extend GridData.prototype,
       filtered_tree: options.exclude_filtered_paths and @isActiveFilterNonReactive()
 
     paths = []
-    @_each "/", each_options, (section, item_type, item_obj, path, expand_state) ->
-      if item_type? and options.exclude_typed_items
-        # Typed item, skip
-        return
+    @_each "/", each_options, (section, item_type, item_obj, path, expand_state) =>
+      if item_type?
+        if not (searchable = @items_types_settings[item_type]?.searchable)? or searchable == false
+          # If this item type isn't searchable, skip
+          return
 
       if fields?
         for field in fields
