@@ -47,6 +47,11 @@ Package.onUse(function (api) {
   api.add_files('lib/grid-data/data-structure-management/filters/filters.coffee', client);
   api.add_files('lib/grid-data/data-structure-management/filters/filters-independent-items.coffee', client);
 
+  // Items Types settings
+  api.add_files('lib/grid-data/data-structure-management/items-types/items-types.coffee', client);
+  api.add_files('lib/grid-data/data-structure-management/items-types/types-settings/default.coffee', client);
+  api.add_files('lib/grid-data/data-structure-management/items-types/types-settings/section-item.coffee', client);
+
   // Grid Sections
   api.add_files('lib/grid-data/data-structure-management/grid-sections/grid-sections.coffee', client);
   api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/section-manager-proto.coffee', client);

@@ -46,6 +46,8 @@ GridData = (collection, options) ->
 
   @_initGridSections() # defined in grid-sections.coffee
 
+  @_initItemsTypes() # defined in items-types.coffee
+
   Meteor.defer =>
     # give a chance for event binding and other procedures by caller
     # (such as setting filters, etc.) before actual init procedures
