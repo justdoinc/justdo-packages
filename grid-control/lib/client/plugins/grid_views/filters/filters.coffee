@@ -26,7 +26,7 @@ _.extend GridControl.prototype,
       @_grid_data.setFilter filter_query
 
     @on "grid-tree-filter-updated", =>
-      active_path = @getActiveCellPath()
+      active_path = @getCurrentPath()
 
       if active_path?
         if not @_grid_data.pathPartOfFilteredTree(active_path)

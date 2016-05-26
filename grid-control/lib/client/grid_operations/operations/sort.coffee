@@ -4,7 +4,7 @@ _.extend PACK.GridOperations,
   sortActivePathByPriorityDesc:
     op: (cb) ->
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        active_path = @getActiveCellPath()
+        active_path = @getCurrentPath()
 
         @_grid_data.sortChildren active_path, "priority", -1, (err) =>
           if err?

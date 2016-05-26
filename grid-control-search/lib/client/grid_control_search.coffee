@@ -175,7 +175,7 @@ _.extend GridControlSearch.prototype,
 
   _update_location: ->
     if @paths?
-      active_path = @grid_control.getActiveCellPath()
+      active_path = @grid_control.getCurrentPath()
 
       if not active_path?
         # If no active path: set first result as next

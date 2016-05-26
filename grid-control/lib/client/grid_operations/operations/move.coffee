@@ -6,7 +6,7 @@ _.extend PACK.GridOperations,
   moveActivePathDown:
     op: (cb) ->
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        active_path = @getActiveCellPath()
+        active_path = @getCurrentPath()
 
         next_path = @_grid_data.filterAwareGetNextLteLevelPath(active_path)
 
@@ -59,7 +59,7 @@ _.extend PACK.GridOperations,
   moveActivePathUp:
     op: (cb) ->
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        active_path = @getActiveCellPath()
+        active_path = @getCurrentPath()
 
         prev_path = @_grid_data.filterAwareGetPreviousPath(active_path)
 
@@ -110,7 +110,7 @@ _.extend PACK.GridOperations,
   moveActivePathLeft:
     op: (cb) ->
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        active_path = @getActiveCellPath()
+        active_path = @getCurrentPath()
 
         parent_path = GridData.helpers.getParentPath(active_path)
 
@@ -155,7 +155,7 @@ _.extend PACK.GridOperations,
   moveActivePathRight:
     op: (cb) ->
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        active_path = @getActiveCellPath()
+        active_path = @getCurrentPath()
         prev_path = @_grid_data.filterAwareGetPreviousPath(active_path)
 
         active_path_level = getPathLevel(active_path)

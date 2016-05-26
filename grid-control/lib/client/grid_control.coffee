@@ -648,39 +648,35 @@ _.extend GridControl.prototype,
     return @_grid_data.getItemPath(cell.row)
 
   #
-  # Active row
+  # Current row
   #
-  getActiveCellRowNonReactive: -> @_grid.getActiveCell()?.row # obsolete name
-  getActiveCellRow: ->
+  getCurrentRowNonReactive: -> @_grid.getActiveCell()?.row
+  getCurrentRow: ->
     # We let @current_grid_tree_row trigger reactivity, but we always return
     # the real active cell by checking @_grid.getActiveCell() directly.
     #
     # Read more about @current_grid_tree_row above.
     @current_grid_tree_row.get()
 
-    return @getActiveCellRowNonReactive()
-  getCurrentRowNonReactive: -> @getActiveCellRowNonReactive() # duplicate to above need to merge
-  getCurrentRow: -> @getActiveCellRow() # duplicate to above need to merge
+    return @getCurrentRowNonReactive()
 
   #
-  # Active Path
+  # Current Path
   #
-  getActiveCellPathNonReactive: -> # obsolete, should merge with getCurrentPathNonReactive
+  getCurrentPathNonReactive: ->
     if (active_cell_row = @getCurrentRowNonReactive())?
       return @_grid_data.getItemPath(active_cell_row)
 
     return null
 
-  getActiveCellPath: ->
+  getCurrentPath: ->
     # We let @current_path trigger reactivity, but we always return
     # the real active path by checking @_grid.getCurrentRowNonReactive() directly.
     #
     # Read more about @current_path above.
     @current_path.get()
 
-    return @getActiveCellPathNonReactive()
-  getCurrentPathNonReactive: -> @getActiveCellPathNonReactive() # need to merge
-  getCurrentPath: -> @getActiveCellPath() # duplicate to above need to merge
+    return @getCurrentPathNonReactive()
 
   #
   # Row grid tree details

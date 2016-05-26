@@ -60,7 +60,7 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    if @_grid_data.getItemIsTyped(@getActiveCellRow())
+    if @_grid_data.getItemIsTyped(@getCurrentRow())
       prereq.active_path_isnt_collection_item = ""
 
     return prereq
@@ -74,7 +74,7 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    if @_grid_data.getItemRelativeDepthPermitted(@getActiveCellRow(), 1) is -1
+    if @_grid_data.getItemRelativeDepthPermitted(@getCurrentRow(), 1) is -1
       prereq.active_path_children_level_not_permitted = ""
 
     return prereq
@@ -88,7 +88,7 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    if @_grid_data.getItemRelativeDepthPermitted(@getActiveCellRow()) is -1
+    if @_grid_data.getItemRelativeDepthPermitted(@getCurrentRow()) is -1
       prereq.active_path_level_not_permitted = ""
 
     return prereq
@@ -102,7 +102,7 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    if @_grid_data.getItemRelativeDepthPermitted(@getActiveCellRow(), -1) is -1
+    if @_grid_data.getItemRelativeDepthPermitted(@getCurrentRow(), -1) is -1
       prereq.active_path_parent_level_not_permitted = ""
 
     return prereq
@@ -117,7 +117,7 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_item_isnt_first_prereq)
       return prereq
 
-    previous_item_index = @_grid_data.filterAwareGetPreviousItem(@getActiveCellRow())
+    previous_item_index = @_grid_data.filterAwareGetPreviousItem(@getCurrentRow())
 
     if @_grid_data.getItemRelativeDepthPermitted(previous_item_index) == -1
       prereq.active_path_prev_item_level_not_permitted = ""
@@ -163,7 +163,7 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    next_lte_level_index = @_grid_data.filterAwareGetNextLteLevelItem(@getActiveCellRow())
+    next_lte_level_index = @_grid_data.filterAwareGetNextLteLevelItem(@getCurrentRow())
     if not next_lte_level_index? or @_grid_data.getItemRelativeDepthPermitted(next_lte_level_index) == -1
       prereq.no_permitted_lte_level_path_follows_active = "No item follows the item in permitted lower level"
 
@@ -191,7 +191,7 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    if @_grid_data.getItemNormalizedLevel(@getActiveCellRow()) == 0
+    if @_grid_data.getItemNormalizedLevel(@getCurrentRow()) == 0
       prereq.top_level_item = "Can't perform this operation on first level items"
 
     return prereq

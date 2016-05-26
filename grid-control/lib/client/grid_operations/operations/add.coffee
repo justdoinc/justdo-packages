@@ -71,7 +71,7 @@ _.extend PACK.GridOperations,
     prereq: -> @_opreqUnlocked(@_opreqGridReady())
 
   addSubItem:
-    op: (fields, cb) -> @addItem @getActiveCellPath(), fields, true, cb
+    op: (fields, cb) -> @addItem @getCurrentPath(), fields, true, cb
     prereq: -> @_opreqActivePathChildrenLevelPermitted(@_opreqActivePathIsCollectionItem(@addItem.prereq()))
 
   addSiblingItem:

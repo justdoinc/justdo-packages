@@ -4,8 +4,8 @@ _.extend PACK.GridOperations,
   removeActivePath:
     op: (cb) ->
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        active_path = @getActiveCellPath()
-        active_item_row = @getActiveCellRow()
+        active_path = @getCurrentPath()
+        active_item_row = @getCurrentRow()
 
         active_item_section = @_grid_data.getItemSection(active_item_row)
 
