@@ -11,3 +11,8 @@ _.extend TicketsQueueSection.prototype,
   # fetch only the _id field so invalidation will occur only when items set changes
   rootItems: -> _.indexBy @grid_data.collection.find({is_tickets_queue: true}, {fields: {_id: 1}}).fetch(), "_id"
   yield_root_items: true
+  itemsTypesAssigner: (item_obj, relative_path) ->
+    if GridData.helpers.getPathLevel(relative_path) == 0
+      return "ticket-queue-caption"
+
+    return null
