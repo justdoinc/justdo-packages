@@ -63,6 +63,7 @@ if (typeof Slick === "undefined") {
       leaveSpaceForNewRows: false,
       editable: false,
       autoEdit: true,
+      navigateDownOnEnter: false,
       enableCellNavigation: true,
       enableColumnReorder: true,
       asyncEditorLoading: false,
@@ -2950,7 +2951,7 @@ if (typeof Slick === "undefined") {
       // if so, do not steal the focus from the editor
       if (getEditorLock().commitCurrentEdit()) {
         setFocus();
-        if (options.autoEdit) {
+        if (options.navigateDownOnEnter) {
           navigateDown();
         }
       }
