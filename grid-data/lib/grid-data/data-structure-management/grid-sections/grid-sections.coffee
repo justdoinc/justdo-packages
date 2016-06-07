@@ -205,6 +205,21 @@ _.extend GridData.prototype,
           expand_state = undefined
 
           if self.pathPassFilter(path) or (has_passing_filter_descendants = section.section_manager._hasPassingFilterDescendants(path))
+            # Important! due to js nature has_passing_filter_descendants won't be set
+            # if self.pathPassFilter(path) is true.
+            #
+            # This is desired by us, since the _hasPassingFilterDescendants,
+            # is of higher complexity than self.pathPassFilter(path)'s O(1).
+            #
+            # !!! But, because of that, the existence of has_passing_filter_descendants must
+            # be checked before using it, and in case it doesn't exist it need to
+            # be calculated.
+            #
+            # Since optimization is very critical in _each, we sacrifice here code
+            # simplicity in the effort to avoid calling _hasPassingFilterDescendants
+            # more than once.
+
+
             # Note, we use here section_manager's _hasPassingFilterDescendants, since, if
             # we got to the point where we call this iteratee and not the original one,
             # it means we didn't have information about the current path ourself and we had
@@ -214,10 +229,15 @@ _.extend GridData.prototype,
 
             iteratee_ret = original_iteratee(section, item_type, item_obj, path, expand_state)
 
-            if iteratee_ret != -2 and not has_passing_filter_descendants
-              # iteratee didn't ask to stop traversing and no descendants passed
-              # the filter, don't step into the path
-              return -1
+            if iteratee_ret != -2
+              if not has_passing_filter_descendants?
+                # If has_passing_filter_descendants hasn't been calculated yet, read !important note above
+                has_passing_filter_descendants = section.section_manager._hasPassingFilterDescendants(path)
+              
+              if not has_passing_filter_descendants
+                # iteratee didn't ask to stop traversing and no descendants passed
+                # the filter, don't step into the path
+                return -1
 
             return iteratee_ret
 
