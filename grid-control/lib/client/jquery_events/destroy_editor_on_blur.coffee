@@ -38,6 +38,10 @@ PACK.jquery_events.push(
         if (e.currentTarget == $('input.editor-unicode-date', @container).get(0))
           original_active_cell = @_grid.getActiveCell()
           setTimeout =>
+            if not @_grid?
+              # Grid might not exist at that point anymore
+              return
+
             active_cell = @_grid.getActiveCell()
 
             if original_active_cell.row == active_cell.row and

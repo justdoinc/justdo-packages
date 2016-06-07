@@ -247,7 +247,7 @@ _.extend GridControl.prototype,
       return true
 
     @_grid.onCellEditorDestroy.subscribe =>
-      @_grid_data._release(true)
+      @_grid_data?._release(true)
 
       return true
 
