@@ -41,4 +41,6 @@ _.extend GridData.prototype,
 
             break
 
+      return
+
     return paths
