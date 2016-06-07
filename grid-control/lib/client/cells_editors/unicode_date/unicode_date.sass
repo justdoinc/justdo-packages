@@ -31,3 +31,27 @@ input.editor-unicode-date
   padding: 0
   vertical-align: top
   cursor: pointer
+
+//
+// Placeholder style
+//
+
+// Note we can use sass to combine the following selectors to one line,
+// caused chrome to stop reading the rules (reason not clear), that's
+// why a mixin used
+
+@mixin unicode-date-editor-placeholder-style()
+  font-size: 14px
+  font-style: italic
+
+.editor-unicode-date::-webkit-input-placeholder
+  @include unicode-date-editor-placeholder-style()
+
+.editor-unicode-date:-moz-placeholder
+  @include unicode-date-editor-placeholder-style()
+
+.editor-unicode-date::-moz-placeholder // MS IE 10, 11
+  @include unicode-date-editor-placeholder-style()
+
+.editor-unicode-date::-ms-input-placeholder // MS edge
+  @include unicode-date-editor-placeholder-style()

@@ -10,7 +10,7 @@ PACK.Editors.UnicodeDateEditor = function (args) {
   this.init = function () {
     var $editor = $("<div class='grid-editor unicode-date-editor' />");
 
-    $input = $("<INPUT type=text class='editor-unicode-date' />");
+    $input = $("<input type='text' class='editor-unicode-date' placeholder='yyyy-mm-dd' />");
     $editor
       .html($input)
       .appendTo(args.container);
