@@ -3,7 +3,7 @@ _.extend PACK.Formatters,
     if not value?
       date = ""
     else
-      date = moment(new Date(value)).format('YYYY-MM-DD')
+      date = moment(value, 'YYYY-MM-DD').format('YYYY-MM-DD')
 
     formatter = """
       <div class="grid-formatter uni-date-formatter">#{date}</div>
