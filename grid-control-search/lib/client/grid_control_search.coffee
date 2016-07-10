@@ -30,16 +30,10 @@ GridControlSearch = (grid_control, container) ->
       # Destroyed already, do nothing
       return
     
-    @grid_control._grid_data.on "grid-item-changed", =>
+    @grid_control.on "tree_change", =>
       @_search()
 
-    @grid_control._grid_data.on "grid-tree-filter-cleared", =>
-      @_search()
-
-    @grid_control._grid_data.on "grid-tree-filter-updated", =>
-      @_search()
-
-    @grid_control.on "rebuild_ready", =>
+    @grid_control.on "grid-tree-filter-updated", =>
       @_search()
 
     @grid_control.on "grid-view-change", =>
