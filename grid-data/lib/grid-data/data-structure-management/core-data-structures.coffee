@@ -72,8 +72,30 @@ _.extend GridData.prototype,
     @_init_foreign_keys_trackers()
 
     Meteor.setTimeout =>
+      # This setTimeout makes sure the grid is built
+      # at least once following the load of the data.
+      #
+      # Note: We need the tree to build at least once to load sections info
       Tracker.nonreactive =>
-        if not @_destroyed and @_get_need_flush() == 0
+        if @_destroyed
+          # Nothing to do
+          return
+
+        if @_rebuild_counter.get() != 0
+          # First build occured already
+          return
+
+        if @_flush_counter.get() != 0
+          # If first flush occured already but it didn't trigger rebuild
+          # (rare situation that the flush pending changes didn't need
+          # rebuild)
+
+          # Build tree for the first time immediately
+          @_rebuildGridTree()
+
+          return
+
+        if @_get_need_flush() == 0
           # @_get_need_flush() == 0 means that no flush performed yet.
           #
           # That can mean 2 things:
@@ -84,10 +106,19 @@ _.extend GridData.prototype,
           #    grid wasn't built for initial payload. (In this case all data
           #    loaded by @_initDataStructure).
 
-          # Since we need the tree to build at least once to load sections info,
-          # we rebuild the tree for the 2 cases above.
+          # We build the tree for the first time immediately for the 2 cases above.
 
           @_rebuildGridTree()
+
+          return
+        else # else is here to ease readability
+          # If there's a pending flush, wait for it to finish
+          # if after it no rebuild is needed perform the first
+          # rebuild
+          @once "flush", =>
+            if @_need_rebuild_count == 0
+              @_rebuildGridTree()
+
     , 250
 
   # we use _idle_time_ms_before_set_need_flush to give priority to
