@@ -916,7 +916,8 @@ _.extend GridControl.prototype,
     @initialized.set false
     @ready.set false
 
-    @_current_state_invalidation_protection_computation.stop()
+    if @_current_state_invalidation_protection_computation?
+      @_current_state_invalidation_protection_computation.stop()
 
     @_destroyStatesClassesComputations()
     @_destroy_plugins()
