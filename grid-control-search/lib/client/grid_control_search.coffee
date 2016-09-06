@@ -1,12 +1,13 @@
 _ = lodash
 
-GridControlSearch = (grid_control, container) ->
+GridControlSearch = (container) ->
   EventEmitter.call this
-
-  @grid_control = grid_control
 
   @destroyed = false
   @container = $(container)
+
+  @grid_control = null
+
   @input = @search_info = @clear_button = @search_prev = @search_next = null # controls
   @current_term = ""
   @paths = null # stores an array with results paths or null if no results or clear
@@ -20,28 +21,6 @@ GridControlSearch = (grid_control, container) ->
   if Tracker.currentComputation?
     Tracker.onInvalidate =>
       @destroy()
-
-  @grid_control.on "destroyed", =>
-    @destroy()
-
-  @active_row_tracker = null
-  @grid_control._init_dfd.done =>
-    if @destroyed
-      # Destroyed already, do nothing
-      return
-    
-    @grid_control.on "tree_change", =>
-      @_search()
-
-    @grid_control.on "grid-tree-filter-updated", =>
-      @_search()
-
-    @grid_control.on "grid-view-change", =>
-      @_search()
-
-    @active_row_tracker = Tracker.autorun =>
-      @grid_control.getCurrentPath() # Upon change to current path
-      @_update_location()
 
   return @
 
@@ -122,8 +101,59 @@ _.extend GridControlSearch.prototype,
     @search_next.on 'click', =>
       @next()
 
+  unsetGridControl: ->
+    if not @isGridControlDefined()
+      @logger.debug "@unsetGridControl(), no grid control to unset"
+
+      return
+
+    # Unset active row tracker
+    @active_row_tracker?.stop()
+    @active_row_tracker = null
+
+    # Unset binded events
+    @grid_control.unloadEventsArray(@active_events)
+    @active_events = null
+
+    @grid_control = null
+
+    @logger.debug "Grid control unset completed"
+
+  setGridControl: (grid_control) ->
+    if @isGridControlDefined()
+      # If grid control defined already, run uset procedures
+
+      @unsetGridControl()
+
+    @grid_control = grid_control
+
+    @active_row_tracker = Tracker.autorun =>
+      @grid_control.getCurrentPath() # Upon change to current path
+      @_update_location()
+
+    @active_events = [
+      ["on", "destroyed", (=> @unsetGridControl())]
+      ["on", "tree_change", (=> @_search())]
+      ["on", "grid-tree-filter-updated", (=> @_search())]
+      ["on", "grid-view-change", (=> @_search())]
+    ]
+    @grid_control.loadEventsArray(@active_events)
+
+    @_search() # To refresh results for new grid control
+
+    @logger.debug "Grid control set completed"
+
+  isGridControlDefined: ->
+    return @grid_control?
+
   _search: ->
     # actual search logic
+
+    if not @isGridControlDefined()
+      @logger.debug "Grid control is not defined, @_search() cancelled"
+
+      return
+
     view_fields = _.map @grid_control.getView(), (x) -> x.field
     forced_fields = _.map @grid_control.schema, (def, field) ->
       if def.grid_search_when_out_of_view == true
@@ -168,6 +198,11 @@ _.extend GridControlSearch.prototype,
     @_setMessage "0"
 
   _update_location: ->
+    if not @isGridControlDefined()
+      @logger.debug "Grid control is not defined, @_update_location() cancelled"
+
+      return
+
     if @paths?
       active_path = @grid_control.getCurrentPath()
 
@@ -260,10 +295,20 @@ _.extend GridControlSearch.prototype,
       @_setMessage("")
 
   prev: ->
+    if not @isGridControlDefined()
+      @logger.debug "Grid control is not defined, @prev() cancelled"
+
+      return
+
     if @prev_path?
       @grid_control.activatePath(@prev_path)
 
   next: ->
+    if not @isGridControlDefined()
+      @logger.debug "Grid control is not defined, @next() cancelled"
+
+      return
+
     if @next_path?
       @grid_control.activatePath(@next_path)
 
@@ -281,6 +326,14 @@ _.extend GridControlSearch.prototype,
       @clear()
 
   destroy: ->
+    if @destroyed
+      # Nothing to do
+      return
+
+    @destroyed = true
+
+    @unsetGridControl()
+
     @container.empty()
-    @active_row_tracker?.stop()
+
     @logger.debug "Destroyed"

@@ -50,7 +50,7 @@ In the browser:
 Insert the following in the console:
 
     function getCurrentGridControl() {
-      return APP.modules.project_page.grid_control.get();
+      return APP.modules.project_page.gridControl(false);
     }
 
     function getCurrentGridData() {

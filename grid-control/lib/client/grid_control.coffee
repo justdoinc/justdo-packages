@@ -8,6 +8,9 @@ GridControl = (options, container, operations_container) ->
 
   @options = _.extend {}, default_options, options
 
+  JustdoHelpers.loadEventEmitterHelperMethods(@)
+  @loadEventsFromOptions() # loads @options.events, if exists
+
   @collection = options.items_collection
   @container = container
   @operations_container = $(operations_container)

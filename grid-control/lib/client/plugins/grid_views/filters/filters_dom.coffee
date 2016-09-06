@@ -68,10 +68,11 @@ _.extend GridControl.prototype,
     filters_state = @_getViewFiltersState()
     active_filter_class = "column-filter-active"
 
+    column_filter_button = $(".column-filter-button", @container)
     if not filters_state?
-      $(".column-filter-button").removeClass(active_filter_class)
+      column_filter_button.removeClass(active_filter_class)
     else
-      $(".column-filter-button").each (i, el) =>
+      column_filter_button.each (i, el) =>
         $el = $(el)
 
         field = el.id.replace("-filter-button", "")
@@ -114,10 +115,10 @@ _.extend GridControl.prototype,
         .html(controller_container)
         .append(dropdown_controls)
 
-      $(".column-filter-dropdown .close-dropdown").click =>
+      $(".column-filter-dropdown .close-dropdown", @$filter_dropdown).click =>
         @_closeFiltersDropdown()
 
-      $(".column-filter-dropdown .clear").click =>
+      $(".column-filter-dropdown .clear", @$filter_dropdown).click =>
         @clearFieldFilter(column_settings.field)
 
   _filtersDropdownClosedHandler: ->

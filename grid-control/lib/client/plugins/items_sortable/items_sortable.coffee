@@ -1,30 +1,31 @@
 #
 # Sortable helper
 #
-sortable = ->
-  # Returns jQuery ui sortable method for grid-canvas
-  $obj = $(".grid-canvas", @container)
-
-  return $obj.sortable.apply $obj, arguments 
-
-refresh_sortable = ->
-  sortable("refresh")
-  sortable("refreshPositions")
-
-getPlaceholderIndex = (ui) ->
-  placeholder_index = ui.placeholder.index()
-  helper_index = ui.helper.index()
-
-  if helper_index < placeholder_index
-    # Cancel the shift to index resulted from the hidden placeholder
-    placeholder_index -= 1
-
-  return placeholder_index
-
 _.extend PACK.Plugins,
   items_resortable:
     init: ->
       # Note: @ is the grid_control object
+
+      @_sortable = =>
+        # Returns jQuery ui sortable method for grid-canvas
+        $obj = $(".grid-canvas", @container)
+
+        return $obj.sortable.apply $obj, arguments 
+
+      @_refresh_sortable = =>
+        @_sortable("refresh")
+        @_sortable("refreshPositions")
+
+      @_getPlaceholderIndex = (ui) =>
+        placeholder_index = ui.placeholder.index()
+        helper_index = ui.helper.index()
+
+        if helper_index < placeholder_index
+          # Cancel the shift to index resulted from the hidden placeholder
+          placeholder_index -= 1
+
+        return placeholder_index
+
 
       options =
         # The minimal time in ms before we regard sort state as a long hover
@@ -71,7 +72,7 @@ _.extend PACK.Plugins,
         refreshGridStructure()
 
         # Update placeholder index to its correct post-expansion index
-        sort_state.placeholder_index = getPlaceholderIndex(ui)
+        sort_state.placeholder_index = @_getPlaceholderIndex(ui)
 
         # jQueryUI keeps information about the item previous to the original position
         # of the moved item to be able to reposition it in its original place in case
@@ -82,7 +83,7 @@ _.extend PACK.Plugins,
         # to make sure we won't run into bugs.
         if ui.domPosition.prev?
           # If the first item is moved, there'll be no prev
-          previous = $(".ui-sortable-helper").prev()
+          previous = $(".ui-sortable-helper", @container).prev()
 
           if previous.is(".sortable-placeholder")
             # If the placeholder is the current previous item, we
@@ -91,7 +92,7 @@ _.extend PACK.Plugins,
 
           ui.domPosition.prev = previous.get(0)
 
-        refresh_sortable()
+        @_refresh_sortable()
 
       #
       # Manage sort_state
@@ -143,7 +144,7 @@ _.extend PACK.Plugins,
           # Return here if nothing changed to avoid emitting the event
           return
 
-        ui = sortable("instance")
+        ui = @_sortable("instance")
         @emit "rows-sort-state-updated", ui, sort_state
 
       longHoverMonitor = =>
@@ -376,11 +377,11 @@ _.extend PACK.Plugins,
 
                 # Update sort state to match new forced position
                 _.extend sort_state,
-                  placeholder_index: getPlaceholderIndex(ui)
+                  placeholder_index: @_getPlaceholderIndex(ui)
                   mouse_vs_placeholder: 0
                   sort_direction: 1 # down to make previous item the significant
 
-                refresh_sortable()
+                @_refresh_sortable()
 
               # Call updateNewLevelMode to clear any existing new-level-mode before
               # setting this one (otherwise we can have some style leftovers on prev
@@ -608,17 +609,17 @@ _.extend PACK.Plugins,
         else if permitted_depth is 1
           selector += ".section-#{dragged_row_section.id}"
 
-        sortable("option", "items", selector)
-        sortable("refresh")
+        @_sortable("option", "items", selector)
+        @_sortable("refresh")
 
       clearSortableItemsLimit = =>
-        sortable("option", "items", default_sortable_items_selector)
-        sortable("refresh")
+        @_sortable("option", "items", default_sortable_items_selector)
+        @_sortable("refresh")
 
       #
       # Sortable
       #
-      sortable
+      @_sortable
         handle: ".cell-handle"
         cursor: "grabbing"
         axis: "y"
@@ -663,10 +664,10 @@ _.extend PACK.Plugins,
             # Trick jQuery ui to regard the collapsed state item
             # as both the originaly dragged item and the helper.
             $dragged_row.addClass("ui-sortable-helper")
-            sortable("instance").currentItem = $dragged_row
-            sortable("instance").helper = $dragged_row
+            @_sortable("instance").currentItem = $dragged_row
+            @_sortable("instance").helper = $dragged_row
 
-            refresh_sortable()
+            @_refresh_sortable()
 
           # Add a mark to the placeholder
           ui.placeholder.addClass("sortable-placeholder")
@@ -688,7 +689,7 @@ _.extend PACK.Plugins,
           update: -> return undefined
 
         sort: (event, ui) =>
-          placeholder_index = getPlaceholderIndex(ui)
+          placeholder_index = @_getPlaceholderIndex(ui)
 
           # Find mouse position relative to placeholder
           placeholder_offset_top = ui.placeholder.offset().top
@@ -717,7 +718,7 @@ _.extend PACK.Plugins,
 
           if is_cancel_mode
             # Cancel and release flush
-            sortable("cancel")
+            @_sortable("cancel")
 
             updateNewLevelMode(true)
 
@@ -731,7 +732,7 @@ _.extend PACK.Plugins,
             # but the dom actually changed, in which case, we won't have a tree flush
             # since nothing changed. But next drag will have corrupted value for the
             # dragged item index. 
-            sortable("cancel")
+            @_sortable("cancel")
 
             updateNewLevelMode(true)
 
@@ -758,7 +759,7 @@ _.extend PACK.Plugins,
             @_performLockingOperation (releaseOpsLock, timedout) =>
               @movePath dragged_row_path, new_position, (err) =>
                 if err
-                  sortable("cancel")
+                  @_sortable("cancel")
 
                   invalidateRowCells(dragged_row_index)
 
@@ -790,12 +791,11 @@ _.extend PACK.Plugins,
 
       @_items_sortable_operations_lock_computation = Tracker.autorun =>
         if @operationsLocked()
-          sortable("disable")
+          @_sortable("disable")
         else
-          sortable("enable")
+          @_sortable("enable")
 
     destroy: ->
-      @rows_sort_placeholder_position_updated 
       if @rows_sort_state_updated_event_handler?
         @off "rows-sort-state-updated", @rows_sort_state_updated_event_handler
 
@@ -807,5 +807,5 @@ _.extend PACK.Plugins,
       if @_items_sortable_operations_lock_computation?
         @_items_sortable_operations_lock_computation.stop()
 
-      if sortable("instance")?
-        sortable("destroy")
+      if @_sortable("instance")?
+        @_sortable("destroy")
