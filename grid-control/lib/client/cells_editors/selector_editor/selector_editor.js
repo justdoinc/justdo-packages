@@ -6,6 +6,7 @@ PACK.Editors.SelectorEditor = function (args) {
     var currentValue;
     var scope = this;
     var grid = args.grid;
+    var select_picker_obj;
 
     this.init = function () {
       var self = this;
@@ -39,13 +40,11 @@ PACK.Editors.SelectorEditor = function (args) {
         width: "100%"
       });
       $select_picker = $select.next();
-      setTimeout(function () {
-        $("button", $select_picker).click();
 
-        setTimeout(function () {
-          self.focus();
-        }, 0);
-      }, 0);
+      select_picker_obj = $select_picker.data("this");
+      select_picker_obj.$menu.show();
+
+      self.focus();
 
       $grid_view_port = $(grid.getCanvasNode()).parent();
 
@@ -78,7 +77,7 @@ PACK.Editors.SelectorEditor = function (args) {
     };
 
     this.serializeValue = function () {
-      return $select.val();
+      return $select.selectpicker("val");
     };
 
     this.applyValue = function (item, state) {
