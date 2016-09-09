@@ -127,9 +127,17 @@ _.extend GridControlSearch.prototype,
 
     @grid_control = grid_control
 
-    @active_row_tracker = Tracker.autorun =>
-      @grid_control.getCurrentPath() # Upon change to current path
-      @_update_location()
+    @active_row_tracker = Tracker.nonreactive =>
+      # Purpose of the nonreactive is for case the call to
+      # setGridControl itself was enclosed with a nonreactive
+      # call, in such a case the following autorun won't work
+      # properly.
+      # (with the nonreactive we introduce another clean
+      # isolated reactivity context for the following
+      # Tracker.autorun).
+      return Tracker.autorun =>
+        @grid_control.getCurrentPath() # Upon change to current path
+        @_update_location()
 
     @active_events = [
       ["on", "destroyed", (=> @unsetGridControl())]
