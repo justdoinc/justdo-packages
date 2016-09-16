@@ -439,9 +439,10 @@ _.extend GridControlMux.prototype,
             grid_control = tab.grid_control
 
             grid_control.forceItemsPassCurrentFilter GridData.helpers.getPathItemId(path)
-            grid_control.activatePath path
-
-            @logger.debug "setPath: path #{path} of tab #{tab_id} activated"
+            if grid_control.activatePath path, 0, {smart_guess: true}
+              @logger.debug "setPath: path #{path} (or alternative) of tab #{tab_id} activated"
+            else
+              @logger.debug "setPath: path #{path} is unknown"
           else
             @logger.debug "setPath: tab #{tab_id} activated (only tab specified, no specific path to activate)"
 

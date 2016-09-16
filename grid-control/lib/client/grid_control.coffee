@@ -788,14 +788,34 @@ _.extend GridControl.prototype,
     if not options?
       options = {}
 
-    options = _.extend {expand: true, scroll_into_view: true}, options
+    options = _.extend {expand: true, scroll_into_view: true, smart_guess: false}, options
 
     # If options.expand is set to false, don't expand path ancestors
     # in case path isn't visible due to collapsed ancestor/s,
     # in which case we'll avoid activation.
 
+    # If options.smart_guess is on, if we fail to find the requested path,
+    # we will attempt to look for whether there's a path with
+    # for an item_id equal to /the/last/*part* of the requested path.
+    # If there's more than one path for this path, we will activate
+    # one of them arbitrarily.
+
     # Return true if path activated successfuly, false otherwise
     path = GridData.helpers.normalizePath path
+
+    if options.smart_guess and not @_grid_data.pathExist path
+      @logger.debug "activatePath: path `#{path}` doesn't exist, attempting smart-guess"
+
+      potential_item_id = GridData.helpers.getPathItemId(path)
+
+      if (alt_path = @_grid_data.getCollectionItemIdPath(potential_item_id))?
+        @logger.debug "activatePath: smart-guess: alternative path found #{alt_path}"
+
+        path = alt_path
+      else
+        @logger.debug "activatePath: smart-guess: failed to find alternative"
+
+        return false
 
     path_parent = GridData.helpers.getParentPath path
 
