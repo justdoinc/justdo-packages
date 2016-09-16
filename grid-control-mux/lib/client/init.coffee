@@ -45,6 +45,17 @@ _.extend GridControlMux.prototype,
     @_grid_controls_tabs = {}
     @_grid_controls_tabs_dependency = new Tracker.Dependency()
 
+    # If the @options.use_shared_grid_data_core is passed
+    # one GridDataCore object will be init by the grid-control-mux
+    # and shared among all the GridControl's GridData objects
+    @_shared_grid_data_core = null
+    if @options.use_shared_grid_data_core == true
+      grid_data_core_options = @options.shared_grid_data_core_options
+      if not grid_data_core_options.collection?
+        throw @_error "missing-option", "If the `use_shared_grid_data_core` option is set to true, you must specify the `shared_grid_data_core_options.collection` option to the collection you want GridDataCore to work with"
+
+      @_shared_grid_data_core = new GridDataCore(grid_data_core_options)
+
     # The following is managed by @setPath() used to recognize
     # whether an active setPath is happening to avoid reporting
     # intermediate path changes in the process of getting the

@@ -27,6 +27,10 @@ Package.onUse(function (api) {
   api.add_files('lib/globals.js', both);
   api.add_files('lib/helpers.coffee', both);
 
+  // GridDataCore
+  api.add_files('lib/grid-data-core/grid-data-core-client.coffee', client);
+  api.add_files('lib/grid-data-core/grid-data-core-errors.coffee', client);
+
   // GridData
   api.add_files('lib/grid-data/grid-data.coffee', client);
 
@@ -66,6 +70,7 @@ Package.onUse(function (api) {
   api.add_files('lib/grid-data/collection-operations/collection-operations.coffee', client);
   api.add_files('lib/grid-data/collection-operations/hooks.coffee', client);
 
+  api.export('GridDataCore');
   api.export('GridData');
   api.export('GridDataCom');
   api.export('GridDataSectionManager');
@@ -93,6 +98,7 @@ Package.onTest(function(api) {
   api.addFiles('unittest/client.coffee', client);
 
   // Just so we can use it from the console for debugging...
+  api.export('GridDataCore');
   api.export('GridData');
   api.export('GridDataCom');
   api.export('TestCol');

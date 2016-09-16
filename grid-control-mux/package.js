@@ -21,6 +21,7 @@ Package.onUse(function (api) {
   api.use('justdoinc:justdo-helpers@1.0.0', both);
 
   api.use('fourseven:scss@3.2.0', client);
+  api.use('stem-capital:grid-data', client);
   api.use('stem-capital:grid-control', client);
 
   api.use("reactive-var", both);

@@ -113,11 +113,12 @@ _.extend GridData.prototype,
       # Copy obj to new doc
       obj = _.extend {}, obj
 
-    # Get the list of all the foreign keys from the _foreign_keys_trackers object - we use it
-    # only for this data - nothing elese
+    # Get the list of all the foreign keys from the
+    # @_grid_data_core._foreign_keys_trackers object - we use it
+    # only for this data - nothing else
     #
     # XXX optimize - no need to do this more then once!
-    all_foreign_keys = _.keys @_foreign_keys_trackers
+    all_foreign_keys = _.keys @_grid_data_core._foreign_keys_trackers
 
     foreign_keys = options.foreign_keys
     if not foreign_keys?

@@ -103,7 +103,11 @@ _.extend GridDataCom.prototype,
     collection = @collection
 
     collection.allow
-      update: (userId, doc, fieldNames, modifier) -> collection.isUserBelongToItem(doc, userId)
+      update: (userId, doc, fieldNames, modifier) ->
+        # Keep the following for testing, helps to test
+        # behavior on update failure
+        # return false
+        collection.isUserBelongToItem(doc, userId)
 
   initDefaultCollectionMethods: ->
     collection = @collection

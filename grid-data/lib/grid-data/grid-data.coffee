@@ -1,6 +1,16 @@
 helpers = share.helpers
 
 default_options =
+  grid_data_core: null # a GridDataCore object can be provided to us
+                       # useful if multiple grids shares the same core
+                       # data structures
+                       # If null, grid-data will inits its own GridDataCore
+                       # object
+
+  grid_data_core_options: {} # Relevant only if grid_data_core is null.
+                             # In such case, we will init GridDataCore
+                             # with these options.
+
   sections:
     [
       {
@@ -20,6 +30,20 @@ GridData = (collection, options) ->
 
   @collection = collection
   @options = _.extend {}, default_options, options
+
+  # Load/init GridDataCore, only if init triggered
+  # by this GridData instance, it'll be destroyed
+  # on @destroy
+  @_grid_data_core_initiated_by_us = false
+  if not (@_grid_data_core = @options.grid_data_core)?
+    @_grid_data_core_initiated_by_us = true
+
+    gdc_options = _.extend {}, @options.grid_data_core_options
+    if not gdc_options.collection?
+      gdc_options.collection = @collection
+
+    @_grid_data_core =
+      new GridDataCore(gdc_options)
 
   if not (schema = @collection.simpleSchema())?
     @logger.debug "GridData called for a collection with no simpleSchema definition"
@@ -79,17 +103,13 @@ _.extend GridData.prototype,
 
   destroy: ->
     if @_destroyed
+      @logger.debug "Destroyed already"
+
       return
+
     @_destroyed = true
 
     @_destroySectionManagers()
-
-    if @_items_tracker?
-      @_items_tracker.stop()
-      @_items_tracker = null # As of Meteor 1.0.4 observers handles don't have
-                             # computation-like stopped attribute. Threfore we
-                             # set _items_tracker back to null, so we can test
-                             # that it's stopped.
 
     if @_flush_orchestrator?
       @_flush_orchestrator.stop()
@@ -99,6 +119,7 @@ _.extend GridData.prototype,
 
     @_destroy_filter_manager()
 
-    @_destroy_foreign_keys_trackers()
+    if @_grid_data_core_initiated_by_us
+      @_grid_data_core.destroy()
 
     @emit "destroyed"

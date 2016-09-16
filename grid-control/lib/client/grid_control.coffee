@@ -2,6 +2,7 @@ GridControl = (options, container, operations_container) ->
   EventEmitter.call this
 
   default_options =
+    grid_data_options: {}
     allow_dynamic_row_height: false
     usersDiffConfirmationCb: null
     items_types_settings: null
@@ -97,7 +98,7 @@ _.extend GridControl.prototype,
     if @options.allow_dynamic_row_height
       slick_options.dynamicRowHeight = true
 
-    grid_data_options = 
+    grid_data_options = _.extend {}, @options.grid_data_options,
       sections: @options.sections
       items_types_settings: @options.items_types_settings
 

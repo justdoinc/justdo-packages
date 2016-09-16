@@ -41,6 +41,8 @@ _.extend GridControl.prototype,
       if timedout
         @_operations_lock_timedout.set(true)
 
+      @emit "ops-lock-released"
+
     _timedout = false
     expireLock = =>
       @logger.warn "Operations lock released due to timeout"
@@ -54,6 +56,8 @@ _.extend GridControl.prototype,
     timedout = -> _timedout
 
     @_operations_lock.set true
+
+    @emit "ops-lock-locked"
 
     op releaseOpsLock, timedout
 

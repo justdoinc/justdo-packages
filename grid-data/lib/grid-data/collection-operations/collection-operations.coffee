@@ -13,7 +13,13 @@ _.extend GridData.prototype,
     update["$set"][col_field] = item[col_field]
 
     edit_failed = (err) =>
-      @_data_changes_queue.push ["update", [item_id, [col_field]]]
+      # XXX We used to think we need the following, now it seems
+      # that following a code refactor it became redundant.
+      # (was very hacky, so it's very good)
+      #
+      # See related topic: observeChanges doesn't revert failed edits
+      # See: https://github.com/meteor/meteor/issues/4282
+      # @_data_changes_queue.push ["update", [item_id, [col_field]]] # NEED REWRITE
 
       @_set_need_flush()
 
@@ -21,8 +27,6 @@ _.extend GridData.prototype,
 
     executed = @collection.update item._id, update, (err) =>
       if err
-        # observeChanges doesn't revert failed edits
-        # See: https://github.com/meteor/meteor/issues/4282
         edit_failed(err)
 
     if executed is false

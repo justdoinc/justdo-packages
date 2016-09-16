@@ -186,6 +186,16 @@ _.extend GridControlMux.prototype,
     if not (grid_control_options = options.grid_control_options)?
       throw @_error("missing-option", "Missing option 'grid_control_options'")
 
+    grid_control_options = _.extend {}, grid_control_options # Make a shallow copy of grid_control_options
+
+    if @_shared_grid_data_core?
+      Meteor._ensure(grid_control_options, "grid_data_options")
+
+      if not grid_control_options.grid_data_options.grid_data_core?
+        grid_control_options.grid_data_options.grid_data_core = @_shared_grid_data_core
+      else
+        @logger.warn "Tab #{tab_id} grid control options includes options: grid_data_options.grid_data_core, avoid using Multiplexer's grid-data-core"
+
     @_grid_controls_tabs[tab_id] =
       tab_id: tab_id
       grid_control_options: grid_control_options
@@ -490,6 +500,8 @@ _.extend GridControlMux.prototype,
     if @destroyed
       @logger.debug "Destroyed already"
 
+      return
+
     for tab_id of @getAllTabsNonReactive()
       @removeTab(tab_id, true)
 
@@ -500,6 +512,9 @@ _.extend GridControlMux.prototype,
     @destroyComputedReactiveVars()
 
     @_stopSetPathTabReadyTracker()
+
+    if @_shared_grid_data_core?
+      @_shared_grid_data_core.destroy()
 
     @destroyed = true
 
