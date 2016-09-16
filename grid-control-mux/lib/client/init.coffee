@@ -86,12 +86,6 @@ _.extend GridControlMux.prototype,
 
         @subscriptionReadyProcedures()
 
-    # React to invalidations
-    @destroyed = false
-    if Tracker.currentComputation?
-      Tracker.onInvalidate =>
-        @destroy() # defined in api.coffee
-
     return
 
   _deferredInit: ->

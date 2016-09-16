@@ -11,7 +11,11 @@ default_options =
 
 
 GridControlMux = (options) ->
+  # skeleton-version: v0.0.2
+
   EventEmitter.call this
+
+  @destroyed = false
 
   @logger = Logger.get("grid-control-mux")
 
@@ -19,12 +23,28 @@ GridControlMux = (options) ->
 
   @options = _.extend {}, default_options, options
 
-  @_immediateInit()
+  JustdoHelpers.loadEventEmitterHelperMethods(@)
+  @loadEventsFromOptions() # loads @options.events, if exists
+
+  if Meteor.isClient
+    # React to invalidations
+    if Tracker.currentComputation?
+      Tracker.onInvalidate =>
+        @logger.debug "Enclosing computation invalidated, destroying"
+        @destroy() # defined in client/api.coffee
+
+    # on the client, call @_immediateInit() in an isolated
+    # computation to avoid our init procedures from affecting
+    # the encapsulating computation (if any)
+    Tracker.nonreactive =>
+      @_immediateInit()
+  else
+    @_immediateInit()
 
   Meteor.defer =>
     @_deferredInit()
 
-  @logger.debug "Init complete"
+  @logger.debug "Init done"
 
   return @
 
