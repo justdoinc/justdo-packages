@@ -121,36 +121,63 @@ _.extend GridDataCom.prototype,
 
       getItemByPathIfUserBelong: (path, userId) -> if (item = collection.getItemByPath(path))? and collection.isUserBelongToItem(item, userId) then item else null
 
-      getChildrenCount: (item_id) ->
+      getChildrenCount: (item_id, item_doc=null) ->
+        # item_doc serves the same purpose new_child_fields serves in
+        # @getNewChildOrder, read comment there in its entirety
+        # including XXX section
         query = {}
         query["parents.#{item_id}.order"] = {$gte: 0}
-        collection.find(query).count()
+        return collection.find(query).count()
 
-      getNewChildOrder: (item_id) ->
+      getNewChildOrder: (parent_id, new_child_fields=null) ->
+        # Note: this @getNewChildOrder() does nothing with new_child_fields
+        # but, custom methods that will replace it might need information
+        # about the new_child_fields.
+        #
+        # Example: in one of grid-data-com usecases, root-items belongs to projects,
+        # hence, if an item is under the root, i.e. parent_id="0", the order
+        # should be project specific and not general to all projects, we need
+        # therefore the project_id to which the new child belongs to.
+        #
+        # XXX in the future, in order to allow root item to be under multiple
+        # projects roots, the same way an item can be under multiple parents.
+        # Instead of using "0" as root, a format such as "root:#{project_id}"
+        # should be used. And the concept of Trees, that is, the generalization
+        # of project_id concept, should introduce to grid-data.
+        # Following such implementation the new_child_fields argument above
+        # will become redundant and should be removed.
         query = {}
         sort = {}
-        query["parents.#{item_id}.order"] = {$gte: 0}
-        sort["parents.#{item_id}.order"] = -1
+        query["parents.#{parent_id}.order"] = {$gte: 0}
+        sort["parents.#{parent_id}.order"] = -1
 
         current_max_order_child = collection.findOne(query, {sort: sort})
         if current_max_order_child?
-          new_order = current_max_order_child.parents[item_id].order + 1
+          new_order = current_max_order_child.parents[parent_id].order + 1
         else
           new_order = 0
 
-        new_order
+        return new_order
 
-      incrementChildsOrderGte: (parent_id, min_order_to_inc) ->
+      incrementChildsOrderGte: (parent_id, min_order_to_inc, item_doc=null) ->
+        # item_doc serves the same purpose new_child_fields serves in
+        # @getNewChildOrder, read comment there in its entirety
+        # including XXX section
         query = {}
         query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
         update_op = {$inc: {}}
         update_op["$inc"]["parents.#{parent_id}.order"] = 1
-        collection.update query, update_op, {multi: true}
 
-      getChildreOfOrder: (item_id, order) ->
+        return collection.update query, update_op, {multi: true}
+
+      getChildreOfOrder: (item_id, order, item_doc=null) ->
+        # item_doc serves the same purpose new_child_fields serves in
+        # @getNewChildOrder, read comment there in its entirety
+        # including XXX section
         query = {}
         query["parents.#{item_id}.order"] = order
-        collection.findOne(query)
+        
+        return collection.findOne(query)
 
       isAncestor: (item_id, potential_ancestor_id) ->
         # Returns true if potential_ancestor_id is ancesotr of item_id or the same item
@@ -299,7 +326,7 @@ _.extend GridDataCom.prototype,
         parents:
           "0":
             order:
-              collection.getNewChildOrder("0")
+              collection.getNewChildOrder("0", fields)
         users: [first_user_id]
 
       self._runGridMethodMiddlewares {userId: first_user_id}, "addChild", "/", new_item
@@ -317,7 +344,7 @@ _.extend GridDataCom.prototype,
         throw self._error "unknown-path"
 
       new_item = _.extend {}, fields, {parents: {}, users: item.users}
-      new_item.parents[item._id] = {order: collection.getNewChildOrder(item._id)}
+      new_item.parents[item._id] = {order: collection.getNewChildOrder(item._id, fields)}
 
       self._runGridMethodMiddlewares @, "addChild", path, new_item
 
@@ -343,7 +370,7 @@ _.extend GridDataCom.prototype,
 
       self._runGridMethodMiddlewares @, "addSibling", path, new_item
 
-      collection.incrementChildsOrderGte parent_id, sibling_order
+      collection.incrementChildsOrderGte parent_id, sibling_order, item
 
       return collection.insert new_item
 
@@ -353,7 +380,7 @@ _.extend GridDataCom.prototype,
 
       parent_id = helpers.getPathParentId(path)
 
-      if collection.getChildrenCount(item._id) > 0
+      if collection.getChildrenCount(item._id, item) > 0
         throw self._error "operation-blocked", 'Can\'t remove: Item have childrens (you might not have the permission to see all childrens)'
 
       if (_.size item.parents) == 1
@@ -402,7 +429,7 @@ _.extend GridDataCom.prototype,
         throw self._error "unknown-path", 'Error: Can\'t move path: new parent doesn\'t exist' # we don't indicate existance in case no permission
 
       if not ("order" of new_location)
-        new_location.order = collection.getNewChildOrder new_location.parent
+        new_location.order = collection.getNewChildOrder(new_location.parent, item)
 
       # Remove current parent op prepeation
       remove_current_parent_update_op = {$unset: {}}
@@ -413,7 +440,7 @@ _.extend GridDataCom.prototype,
       set_new_parent_update_op.$set["parents.#{new_location.parent}"] = {order: new_location.order}
 
       # Check if an item exist already in new_location order
-      item_in_new_location = collection.getChildreOfOrder(new_location.parent, new_location.order)
+      item_in_new_location = collection.getChildreOfOrder(new_location.parent, new_location.order, item)
       if item_in_new_location? and item_in_new_location._id == item._id
         # There's already an item in the new location, the same item..., nothing to do.
         return
@@ -430,7 +457,7 @@ _.extend GridDataCom.prototype,
         # Note we check above that it isn't the same item. We don't use sub if since
         # we want to run the middlewares only when we are sure the operation is ready
         # to be performed. 
-        collection.incrementChildsOrderGte new_location.parent, new_location.order
+        collection.incrementChildsOrderGte new_location.parent, new_location.order, item
 
       # Remove current parent
       collection.update item._id, remove_current_parent_update_op
