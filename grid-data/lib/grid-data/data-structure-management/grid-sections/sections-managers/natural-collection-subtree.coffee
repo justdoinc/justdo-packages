@@ -9,8 +9,7 @@ default_options =
   # The following are relevant only if @rootItems or options.rootItems
   # aren't not null, if they are null, we will use the natural collection
   # items order without applying filter
-  root_items_filter: null # Apply filter on @rootItems output
-  root_items_sort_by: null # Apply sort on @rootItems output
+  root_items_sort_by: null # Apply sort on @rootItems output (if rootItems returns an array, this will force a different order)
 
 NaturalCollectionSubtreeSection = (grid_data_obj, section_root, section_obj, options) ->
   GridDataSectionManager.call @, grid_data_obj, section_root, section_obj, options
@@ -170,9 +169,6 @@ _.extend NaturalCollectionSubtreeSection.prototype,
 
     if @options.root_items_sort_by?
       top_level_items_objs = _.sortBy(top_level_items_objs, @options.root_items_sort_by, @)
-
-    if @options.root_items_filter?
-      top_level_items_objs = _.filter(top_level_items_objs, @options.root_items_filter, @)
 
     for top_level_items_obj in top_level_items_objs
       top_level_item_id = top_level_items_obj._id
