@@ -3,11 +3,14 @@ helpers = share.helpers
 default_options =
   tree_root_item_id: "0"
 
-  # The following are relevant only if @rootItems is not null,
-  # if it is null, we will use the natural collection items order
-  # without applying filter
-  root_items_filter: null
-  root_items_sort_by: null
+  # Overrides the constractor's prototypical @rootItems
+  rootItems: null
+
+  # The following are relevant only if @rootItems or options.rootItems
+  # aren't not null, if they are null, we will use the natural collection
+  # items order without applying filter
+  root_items_filter: null # Apply filter on @rootItems output
+  root_items_sort_by: null # Apply sort on @rootItems output
 
 NaturalCollectionSubtreeSection = (grid_data_obj, section_root, section_obj, options) ->
   GridDataSectionManager.call @, grid_data_obj, section_root, section_obj, options
@@ -15,6 +18,9 @@ NaturalCollectionSubtreeSection = (grid_data_obj, section_root, section_obj, opt
   @_rootItemsComputation = null
 
   @options = _.extend {}, default_options, options
+
+  if (rootItems = @options.rootItems)?
+    @rootItems = rootItems
 
   return @
 
@@ -113,16 +119,18 @@ _.extend NaturalCollectionSubtreeSection.prototype,
       return iteratee(@section_obj, type, item_obj, @section_root_no_trailing_slash + item_path, expand_state)
 
     path_item_id = null
-    if relative_path == "/" and not @rootItems?
+    forwardHandling = =>
+      return @_naturalCollectionTreeTraversing path_item_id, relative_path, options, _naturalCollectionTreeTraversingIteratee
+    if relative_path != "/"
+      path_item_id = helpers.getPathItemId(relative_path)
+
+      return forwardHandling()
+    else if not @rootItems?
       # If no @rootItems method defined yield the enitre tree, starting from
       # @options.tree_root_item_id
       path_item_id = @options.tree_root_item_id
-    else if relative_path != "/"
-      path_item_id = helpers.getPathItemId(relative_path)
 
-    # Simple case, path_item_id found, forward requests to @_naturalCollectionTreeTraversing
-    if path_item_id?
-      return @_naturalCollectionTreeTraversing path_item_id, relative_path, options, _naturalCollectionTreeTraversingIteratee
+      return forwardHandling()
 
     # By here we have: relative_path == "/" and @rootItems is defined
     #
@@ -146,17 +154,19 @@ _.extend NaturalCollectionSubtreeSection.prototype,
       root_items = @rootItems()
 
     # Find all top level items
-    top_level_items = {}
+    top_level_items = null
     if @yield_root_items
       top_level_items = root_items
     else
+      top_level_items = {}
+
       # add to top_level_items only the children of the root items
       for root_item_id of root_items
         if (root_item_node_struct = @grid_data.tree_structure[root_item_id])?
           for order, child_id of root_item_node_struct
             top_level_items[child_id] = true
 
-    top_level_items_objs = _.map(_.keys(top_level_items), ((id) -> @grid_data.items_by_id[id]), @)
+    top_level_items_objs = _.map(top_level_items, ((_ignore, id) -> @grid_data.items_by_id[id]), @)
 
     if @options.root_items_sort_by?
       top_level_items_objs = _.sortBy(top_level_items_objs, @options.root_items_sort_by, @)
