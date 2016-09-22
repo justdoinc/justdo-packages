@@ -9,7 +9,11 @@ Util.inherits TicketsQueueSection, PACK.sections_managers.NaturalCollectionSubtr
 
 _.extend TicketsQueueSection.prototype,
   # fetch only the _id field so invalidation will occur only when items set changes
-  rootItems: -> _.indexBy @grid_data.collection.find({is_tickets_queue: true}, {fields: {_id: 1}}).fetch(), "_id"
+  rootItems: ->
+    @grid_data.collection.find(
+      {is_tickets_queue: true},
+      {fields: {_id: 1}, sort: {seqId: -1}}
+    ).fetch()
   yield_root_items: true
   itemsTypesAssigner: (item_obj, relative_path) ->
     if GridData.helpers.getPathLevel(relative_path) == 0

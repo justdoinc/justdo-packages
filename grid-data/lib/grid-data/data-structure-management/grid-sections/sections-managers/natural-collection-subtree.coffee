@@ -29,8 +29,19 @@ Util.inherits NaturalCollectionSubtreeSection, GridDataSectionManager
 
 _.extend NaturalCollectionSubtreeSection.prototype,
   # if rootItems is null, the section will yield the entire naturalCollectionTree (starting from @options.tree_root_item_id)
-  # if rootItems is a method it is expected to return an object whose keys are items_ids
-  # of the items that should be used as the roots of the section's natural sub-trees. 
+  # if rootItems is a method it is expected to return either:
+  #   1. An object whose keys are items_ids of the items that should be used as the roots
+  #      of the section's natural sub-trees.
+  #   2. An array, whose items are objects that has the _id property of the items that should
+  #      be used as roots, e.g. {_id: "xx"}.
+  #      all other properties will be ignored.
+  #      The order of the array will be the default order in which the items will be listed.
+  #      The options.root_items_sort_by can override that
+  #
+  #      !IMPROTANT if @yield_root_items is false, the original order of
+  #      the array will be ignored, sort will be governed only by the
+  #      @options.root_items_sort_by options
+  #        
   rootItems: null
   # if yield_root_items is false, only the children of the rootItems will be yielded as
   # the section's top level items and not the root items themselves
@@ -58,8 +69,15 @@ _.extend NaturalCollectionSubtreeSection.prototype,
 
       root_items = @rootItems()
 
+      isItemIdInRootItems = (item_id) ->
+        # read comment on @rootItems output structure above.
+        if _.isArray root_items
+          return _.find(root_items, (item) -> item._id == item_id)?
+        else
+          return item_id of root_items
+
       if @yield_root_items
-        if not (top_level_item_id of root_items)
+        if not isItemIdInRootItems(top_level_item_id)
           return false
       else
         # Check whehter the top level item id has a parent in root_items
@@ -70,7 +88,7 @@ _.extend NaturalCollectionSubtreeSection.prototype,
 
         parent_found = false
         for parent_id of top_level_item_obj.parents
-          if parent_id of root_items
+          if isItemIdInRootItems(parent_id)
             parent_found = true
 
         if not parent_found
@@ -157,15 +175,29 @@ _.extend NaturalCollectionSubtreeSection.prototype,
     if @yield_root_items
       top_level_items = root_items
     else
+      # add to top_level_items only the children of the root items
       top_level_items = {}
 
-      # add to top_level_items only the children of the root items
-      for root_item_id of root_items
-        if (root_item_node_struct = @grid_data.tree_structure[root_item_id])?
+      addChildrenAsTopLevelItem = (item_id) =>
+        # adds the childrens of item_id to top_level_items
+        # in the @rootItems object output format
+        if (root_item_node_struct = @grid_data.tree_structure[item_id])?
           for order, child_id of root_item_node_struct
             top_level_items[child_id] = true
 
-    top_level_items_objs = _.map(top_level_items, ((_ignore, id) -> @grid_data.items_by_id[id]), @)
+      # read comment on @rootItems output structure above.
+      if _.isArray root_items
+        for item in root_items
+          addChildrenAsTopLevelItem(item._id)
+      else
+        for root_item_id of root_items
+          addChildrenAsTopLevelItem(root_item_id)
+
+    # read comment on @rootItems output structure above.
+    if _.isArray top_level_items
+      top_level_items_objs = _.map(top_level_items, ((item) -> @grid_data.items_by_id[item._id]), @)
+    else
+      top_level_items_objs = _.map(top_level_items, ((_ignore, id) -> @grid_data.items_by_id[id]), @)
 
     if @options.root_items_sort_by?
       top_level_items_objs = _.sortBy(top_level_items_objs, @options.root_items_sort_by, @)
