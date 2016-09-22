@@ -304,14 +304,18 @@ _.extend GridData.prototype,
   #
   _inExpandedPaths: (path) -> path of @_expanded_paths
 
-  expandPath: (path) ->
+  expandPath: (path, _force=false) ->
+    # If _force is set to true, we won't check whether the path
+    # exists before mark it as expanded in the datastructure
+    # should be used only by internal apis
+
     path = helpers.normalizePath path
 
     if helpers.isRootPath path
       # root always expanded
       return
 
-    if @pathExist path
+    if _force or @pathExist path
       for ancestor_path in helpers.getAllAncestorPaths(path)
         if not @_inExpandedPaths(ancestor_path)
           @_structure_changes_queue.push ["expand_path", [ancestor_path]]

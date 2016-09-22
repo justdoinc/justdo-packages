@@ -46,6 +46,12 @@ Each section is formatted as follow:
 
     # The title of the Section Item - html allowed
 
+    options.expanded_on_init: false
+
+    # If set to true the section item will be expanded
+    # on the grid init
+    # Relevant only for non "main" sections
+
     options.permitted_depth: -1
 
     # The section's relative depth on which the user can perform certain actions that

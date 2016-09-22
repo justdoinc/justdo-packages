@@ -46,6 +46,7 @@ _.extend GridData.prototype,
       default_options =
         section_item_title: JustdoHelpers.ucFirst(JustdoHelpers.dashSepTo(" ", section.id))
         permitted_depth: -1 # refer to README for more details  
+        expanded_on_init: false
 
       section.options = _.extend {}, default_options, section.options
 
@@ -59,6 +60,9 @@ _.extend GridData.prototype,
           throw @_error "unknown-section-manager-type"
       else if not _.isFunction section_manager
         throw @_error "unknown-section-manager-type"
+
+      if section.options.expanded_on_init
+        @expandPath(section.path, true)
 
       sections_configuration.push section
 
