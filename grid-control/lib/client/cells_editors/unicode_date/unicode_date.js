@@ -2,6 +2,7 @@ momentFormat = 'YYYY-MM-DD';
 datepickerFormat = 'yy-mm-dd';
 
 PACK.Editors.UnicodeDateEditor = function (args) {
+  var grid_control = args.grid_control;
   var $input;
   var currentValue;
   var scope = this;
@@ -25,7 +26,7 @@ PACK.Editors.UnicodeDateEditor = function (args) {
         calendarOpen = true;
       },
       onSelect: function () {
-        $input.focus();
+        grid_control.saveAndExitActiveEditor();
       },
       onClose: function () {
         calendarOpen = false;

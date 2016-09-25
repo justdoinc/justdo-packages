@@ -1,6 +1,6 @@
 _.extend PACK.Formatters,
   unicodeDateFormatter: (row, cell, value, columnDef, dataContext) ->
-    if not value?
+    if not value? or value == ""
       date = ""
     else
       date = moment(value, 'YYYY-MM-DD').format('YYYY-MM-DD')
