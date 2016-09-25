@@ -19,14 +19,16 @@ PACK.jquery_events.push(
         # We defer, so the new focused element will be determined
         Meteor.defer =>
           active_cell = @_grid.getActiveCell()
-          if original_active_cell.row == active_cell.row and
-             original_active_cell.cell == active_cell.cell
-            # Only if same active cell, still relevant
 
-            bootstrap_select_item_clicked = $(":focus").closest(".bootstrap-select").length != 0
-            if not bootstrap_select_item_clicked
-              # Focused went out of selector, exit
-              @cancelAndExitActiveEditor()
+          if active_cell?
+            if original_active_cell.row == active_cell.row and
+               original_active_cell.cell == active_cell.cell
+              # Only if same active cell, still relevant
+
+              bootstrap_select_item_clicked = $(":focus").closest(".bootstrap-select").length != 0
+              if not bootstrap_select_item_clicked
+                # Focused went out of selector, exit
+                @cancelAndExitActiveEditor()
 
         # Save and exit on any change request
         select_picker_obj = $(e.currentTarget).data("this")
@@ -50,15 +52,16 @@ PACK.jquery_events.push(
 
             active_cell = @_grid.getActiveCell()
 
-            if original_active_cell.row == active_cell.row and
-               original_active_cell.cell == active_cell.cell and
-               not $(".ui-datepicker").is(":visible") and
-               not $(e.currentTarget).is(":focus")
-               # If after blur active cell remains the same (means we blurred
-               # out of the grid control) and the datepicker isn't visible (the
-               # blur wasn't a result of opening the date picker) and we aren't
-               # focused (no reason to close) commit changes and exit editor 
-              @saveAndExitActiveEditor()
+            if active_cell?
+              if original_active_cell.row == active_cell.row and
+                 original_active_cell.cell == active_cell.cell and
+                 not $(".ui-datepicker").is(":visible") and
+                 not $(e.currentTarget).is(":focus")
+                 # If after blur active cell remains the same (means we blurred
+                 # out of the grid control) and the datepicker isn't visible (the
+                 # blur wasn't a result of opening the date picker) and we aren't
+                 # focused (no reason to close) commit changes and exit editor 
+                @saveAndExitActiveEditor()
           , 250
   }
 )

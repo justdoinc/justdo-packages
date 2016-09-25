@@ -123,6 +123,8 @@ _.extend GridControl.prototype,
     @_init_jquery_events()
 
     @_grid_data.on "pre_rebuild", =>
+      @emit "pre_rebuild"
+
       # Keep information about active cell and whether or not in edit mode and
       # if yes editor value compared to stored value
       active_cell = @_grid.getActiveCell()
@@ -198,6 +200,7 @@ _.extend GridControl.prototype,
             @activatePath active_cell_path, active_cell.cell,
               expand: false
               scroll_into_view: false
+              smart_guess: true
 
         # tree_change, full_invalidation=true
         @logger.debug "Rebuild ready"
@@ -831,12 +834,17 @@ _.extend GridControl.prototype,
         else
           @_grid_data.expandPath path_parent
 
-          @once "rebuild_ready", =>
-            # post slick grid rebuild
-            row = @_grid_data.getPathGridTreeIndex(path)
+          # We wait for the next pre_rebuild, since we might
+          # be in an active rebuild process, in which case
+          # rebuild_ready will call immediately.
+          # (Remember events are sync and not next-tick)
+          @once "pre_rebuild", =>
+            @once "rebuild_ready", =>
+              # post slick grid rebuild
+              row = @_grid_data.getPathGridTreeIndex(path)
 
-            if row?
-              @activateRow(row, cell, options.scroll_into_view)
+              if row?
+                @activateRow(row, cell, options.scroll_into_view)
       else
         row = @_grid_data.getPathGridTreeIndex(path)
 
