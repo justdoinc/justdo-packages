@@ -930,6 +930,8 @@ _.extend GridControl.prototype,
 
     return @_grid.getEditorLock().cancelCurrentEdit()
 
+  getGridUid: -> @_grid.uid
+
   destroy: ->
     if @_destroyed
       return

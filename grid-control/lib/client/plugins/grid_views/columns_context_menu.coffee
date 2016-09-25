@@ -1,4 +1,7 @@
 init_context_menu = _.once ->
+  # Note: seems that there is no issue with calling this one
+  # more than once. So no worries if using context for other
+  # things and re-initiating.
   context.init({})
 
 _.extend GridControl.prototype,
@@ -8,7 +11,15 @@ _.extend GridControl.prototype,
 
     @setView(_.filter(@getView(), (col) -> col.field != field))
 
-  _setupColumnsManagerContextMenu: () ->
+  _getColumnsManagerContextMenuId: (type) ->
+    # Current possible types: "first", "common"
+    return "grid-control-#{type}-column-context-menu" + @getGridUid()
+
+  _getColumnsManagerContextMenuSelector: (type) ->
+    # Current possible types: "first", "common"
+    return "#dropdown-" + @_getColumnsManagerContextMenuId(type)
+
+  _setupColumnsManagerContextMenu: ->
     init_context_menu()
 
     column_index_of_last_opened_cmenu = null # excludes the handle from the count
@@ -40,13 +51,12 @@ _.extend GridControl.prototype,
       }
     ]
 
-    grid_control_cmenu_id = "grid-control-column-context-menu"
-    $grid_control_cmenu_target = $(".slick-header-column:first")
-    $("#dropdown-#{grid_control_cmenu_id}").remove() 
+    $(@_getColumnsManagerContextMenuSelector("first")).remove() 
+    $grid_control_cmenu_target = $(".slick-header-column:first", @container)
     if append_fields_submenu.length > 0
       # context-menu for grid-control column
       context.attach $grid_control_cmenu_target,
-        id: grid_control_cmenu_id
+        id: @_getColumnsManagerContextMenuId("first")
         data: append_fields_menu
     else
       $grid_control_cmenu_target.bind "contextmenu", (e) ->
@@ -57,14 +67,14 @@ _.extend GridControl.prototype,
         column_index_of_last_opened_cmenu = 0
 
     # common columns context menu
-    $('#dropdown-common-column-context-menu').remove()
-    $common_cmenu_target = $('.slick-header-columns').children().slice(1)
+    $common_cmenu_target = $('.slick-header-columns', @container).children().slice(1)
+    $(@_getColumnsManagerContextMenuSelector("common")).remove()
     if append_fields_submenu.length > 0
       menu = append_fields_menu
     else
       menu = []
     context.attach $common_cmenu_target,
-      id: 'common-column-context-menu'
+      id: @_getColumnsManagerContextMenuId("common")
       data: menu.concat [
         {
           text: 'Hide Column'
@@ -76,3 +86,8 @@ _.extend GridControl.prototype,
     $common_cmenu_target.bind "mousedown", (e) ->
       if e.which == 3
         column_index_of_last_opened_cmenu = $(e.target).closest(".slick-header-column").index()
+
+
+  _destroyColumnsManagerContextMenu: ->
+    $(@_getColumnsManagerContextMenuSelector("first")).remove()
+    $(@_getColumnsManagerContextMenuSelector("common")).remove()

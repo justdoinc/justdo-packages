@@ -19,3 +19,4 @@ _.extend PACK.Plugins,
         @emit "grid-view-change", @getView()
 
     destroy: ->
+      @_destroyColumnsManagerContextMenu()

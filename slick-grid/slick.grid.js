@@ -3828,6 +3828,9 @@ if (typeof Slick === "undefined") {
       "init": finishInitialization,
       "destroy": destroy,
 
+      // vars
+      "uid": uid,
+
       // IEditor implementation
       "getEditorLock": getEditorLock,
       "getEditController": getEditController
