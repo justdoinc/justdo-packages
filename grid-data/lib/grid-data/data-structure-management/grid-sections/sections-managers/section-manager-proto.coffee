@@ -1,6 +1,8 @@
 numSort = (a, b) -> a - b # Be careful from unintended consequence of changing as grid-data is {bare: true} and has same func
 
 GridDataSectionManager = (grid_data_obj, section_root, section_obj, options) ->
+  EventEmitter.call this
+
   @grid_data = grid_data_obj
   @section_root = section_root
   @section_root_no_trailing_slash = @section_root.replace(/\/$/, "")
@@ -8,13 +10,22 @@ GridDataSectionManager = (grid_data_obj, section_root, section_obj, options) ->
 
   return @
 
+Util.inherits GridDataSectionManager, EventEmitter
+
 _.extend GridDataSectionManager.prototype,
   #
   # _destroy
   #
   _destroy: ->
-    # Called when the section it's time for the section manager to relase the
+    # Called when it's time for the section manager to relase the
     # resources it is using
+
+    @emit "destroy"
+
+    @destroy()
+
+    @emit "destroyed"
+
     return
 
   relPath: (absolute_path) ->

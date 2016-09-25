@@ -213,7 +213,7 @@ _.extend NaturalCollectionSubtreeSection.prototype,
 
     return true
 
-  _destroy: ->
+  destroy: ->
     # Upon destroy, stop @_rootItemsComputation, in case one was set
     if @_rootItemsComputation?
       @_rootItemsComputation.stop()

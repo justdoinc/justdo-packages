@@ -20,6 +20,8 @@ _.extend QuerySection.prototype,
 
     # options.query -> options.rootItems 
     if (query = options.query)?
+      # Note: `this` in query will be the section's
+      # obj, i.e. you can bind to the sections events
       options.rootItems = query
       delete options.query
 
