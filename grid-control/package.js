@@ -49,8 +49,8 @@ Package.onUse(function (api) {
   api.add_files('lib/client/errors_types.coffee', client);
   api.add_files('lib/client/grid_control.sass', client);
 
-  api.add_files('lib/client/media/cell-handle.png', client);
-  api.add_files('lib/client/media/loader.gif', client);
+  api.addAssets('lib/client/media/cell-handle.png', client);
+  api.addAssets('lib/client/media/loader.gif', client);
 
   // Operations
   api.add_files('lib/client/grid_operations/init.coffee', client);
@@ -93,9 +93,9 @@ Package.onUse(function (api) {
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls.sass', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls.coffee', client);
   api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls-events.coffee', client);
-  api.add_files('lib/client/cells_formatters/text_with_tree_controls/media/collapse.gif', client);
-  api.add_files('lib/client/cells_formatters/text_with_tree_controls/media/expand.gif', client);
-  api.add_files('lib/client/cells_formatters/text_with_tree_controls/media/transfer_state_icon_sprite.png', client);
+  api.addAssets('lib/client/cells_formatters/text_with_tree_controls/media/collapse.gif', client);
+  api.addAssets('lib/client/cells_formatters/text_with_tree_controls/media/expand.gif', client);
+  api.addAssets('lib/client/cells_formatters/text_with_tree_controls/media/transfer_state_icon_sprite.png', client);
 
   // Editors 
   api.add_files('lib/client/cells_editors/init.coffee', client, {bare: true});
@@ -115,7 +115,7 @@ Package.onUse(function (api) {
 
   api.add_files('lib/client/cells_editors/unicode_date/unicode_date.sass', client);
   api.add_files('lib/client/cells_editors/unicode_date/unicode_date.js', client);
-  api.add_files('lib/client/cells_editors/unicode_date/media/calendar.gif', client);
+  api.addAssets('lib/client/cells_editors/unicode_date/media/calendar.gif', client);
 
   api.export('GridControl');
 });
