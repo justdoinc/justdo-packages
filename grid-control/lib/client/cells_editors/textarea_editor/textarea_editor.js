@@ -10,7 +10,7 @@ PACK.Editors.TextareaEditor = function (args) {
   this.init = function () {
     var $editor = $("<div class='grid-editor textarea-editor' />");
 
-    $input = $("<textarea class='textarea-editor' rows='1' />");
+    $input = $("<textarea rows='1' />");
 
     $editor
       .html($input)
