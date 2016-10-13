@@ -1775,7 +1775,14 @@ if (typeof Slick === "undefined") {
       }
     }
 
-    function updateRow(row) {
+    function updateRow(row, cell) {
+      // If cell is provided, only the specified cell will be updated
+      // cell is optional and can be undefined (but not null)
+
+      if (typeof cell !== "undefined") {
+        cell = "" + cell;
+      }
+
       var cacheEntry = rowsCache[row];
       if (!cacheEntry) {
         return;
@@ -1786,6 +1793,10 @@ if (typeof Slick === "undefined") {
       var d = getDataItem(row);
 
       for (var columnIdx in cacheEntry.cellNodesByColumnIdx) {
+        if (typeof cell !== undefined && columnIdx !== cell) {
+          continue;
+        }
+
         if (!cacheEntry.cellNodesByColumnIdx.hasOwnProperty(columnIdx)) {
           continue;
         }
@@ -3588,7 +3599,7 @@ if (typeof Slick === "undefined") {
                 prevSerializedValue: serializedEditorValue,
                 execute: function () {
                   this.editor.applyValue(item, this.serializedValue);
-                  updateRow(this.row);
+                  updateRow(this.row, this.cell);
                   trigger(self.onCellChange, {
                     row: activeRow,
                     cell: activeCell,
