@@ -4,8 +4,43 @@ PACK.sections_managers = {}
 
 GridData.sections_managers = PACK.sections_managers # Expose sections_managers through GridData to make it available to external uses
 
+forbidden_section_names = ["global"] # global is forbidden since it is used under _sections_state to store global state vars
+
 _.extend GridData.prototype,
   _initGridSections: ->
+    # Sections state is a framework  that provides a session-
+    # persistent and reactive mechanism to maintain a state of
+    # variables that affect the operation of a section.
+    #
+    # Sections states can be specific to a section or global to all
+    # the section of the current grid-data.
+    #
+    # By using the exportSectionsState() and setSectionsState() tools
+    # can be implemented, in levels higher than GridData, to maintain
+    # sections state across sessions.
+    #
+    # Structure:
+    # {
+    #   "section-id": {
+    #     "state-var": ReactiveVar()
+    #   }, ...
+    # }
+    #
+    # Notes:
+    #   * At the moment, state-vars values can only of Strings
+    #   * All state vars are reactive vars that uses the default
+    #   equalsFunc (for simplicity of implementation) 
+    #   * Global sections state are stored under "global" prop, note
+    #   a section can't be given the id "global", so no risk of
+    #   collision 
+    @_sections_state = {}
+    # this dependency will change on any change to @_sections_state
+    # without it we can only be reactive to changes to existing sections
+    # state vars, but not to new vars/removed vars.
+    # Important! doesn't reactive to changes in the reactive vars
+    # values, only to the @_sections_state structure
+    @_sections_state_structure_dep = new Tracker.Dependency()
+
     @_loadSectionsOption()
 
   _loadSectionsOption: ->
@@ -27,6 +62,9 @@ _.extend GridData.prototype,
       for prop in ["id", "section_manager"]
         if not section[prop]?
           throw @_error "invalid-option", "Each section defined in @options.sections must have section.#{prop} defined"
+
+      if section.id in forbidden_section_names
+        throw @_error "forbidden-section-id", "`#{section.id}' is not allowed as section id"
 
       #
       # normalize
@@ -76,6 +114,142 @@ _.extend GridData.prototype,
         classes.push "movable"
 
       return {cssClasses: classes}
+
+    return
+
+  stateVarExist: (section_id, var_name) ->
+    return @_sections_state[section_id]?[var_name]?
+
+  setStateVar: (section_id, var_name, new_val) ->
+    # Use section_id = "global" for global sections state
+    #
+    # All state vars are reactive vars that uses the default
+    # equalsFunc (for simplicity of implementation)
+    #
+    # Setting a state var to null will undefine it:
+    # * We will set the reactive var to null - to trigger
+    # reactivity for resources that were depending on
+    # it, and then
+    # * Remove its reference from @_sections_state and trigger
+    # @_sections_state_structure_dep.change() to notify
+    # the structure change.
+
+    if not section_id? or not var_name?
+      throw @_error "missing-argument", "Provide section_id and var_name"
+
+      return
+
+    if new_val == null
+      # Unset section_id, var_name
+
+      if not @stateVarExist(section_id, var_name)
+        @logger.debug "Section's #{section_id} var #{var_name} is already undefined"
+
+        return
+      else
+        # First set var value to null to invalidate
+        # computations that uses its value
+        @_sections_state[section_id][var_name].set(null) 
+
+        # Second, update structure
+        delete @_sections_state[section_id][var_name]
+        if _.isEmpty @_sections_state[section_id]
+          delete @_sections_state[section_id]
+        @_sections_state_structure_dep.changed()
+
+        return
+
+    if typeof new_val != "string"
+      throw @_error "wrong-type", "At the moment, state variables can hold only Strings"
+
+      return
+
+    if not @stateVarExist(section_id, var_name)
+      Meteor._ensure @_sections_state, section_id
+
+      @_sections_state[section_id][var_name] = new ReactiveVar(new_val)
+
+      @_sections_state_structure_dep.changed()
+    else
+      @_sections_state[section_id][var_name].set(new_val)
+
+    @emit "section-state-var-set", section_id, var_name
+
+    return
+
+  unsetStateVar: (section_id, var_name) ->
+    @setStateVar section_id, var_name, null
+
+  getStateVar: (section_id, var_name, default_val) ->
+    # If var_name doesn't exist, we init it with default_val
+    # if default_val isn't provided, we will return undefined
+    #
+    # Reactivity:
+    # If var_name doesn't exist for the section, we depend
+    # on _sections_state_structure_dep
+    # Otherwise reactivity depends only on changes to the
+    # var_name's value.
+
+    if not @stateVarExist(section_id, var_name)
+      if not default_val?
+        # Depend on @_sections_state_structure_dep
+        # so if later state var will be created, we will
+        # load it
+        @_sections_state_structure_dep.depend()
+
+        return undefined
+      else # default_val provided, use it as init value
+        @setStateVar(section_id, var_name, default_val)
+
+    return @_sections_state[section_id][var_name].get()
+
+  globalStateVarExist: (var_name) ->
+    return @stateVarExist("global", var_name)
+
+  setGlobalStateVar: (var_name, new_val) ->
+    return @setStateVar("global", var_name, new_val)
+
+  unsetGlobalStateVar: (var_name) ->
+    return @setGlobalStateVar(var_name, null)
+
+  getGlobalStateVar: (var_name, default_val) ->
+    return @getStateVar("global", var_name, default_val)
+
+  exportSectionsState: ->
+    # Note, reactive to all sections state reactive var!
+    # you might want to run in a nonreactive context.
+    @_sections_state_structure_dep.depend()
+
+    export_obj = {}
+
+    for section_id, section_state of @_sections_state
+      section_export = export_obj[section_id] = {}
+
+      for var_name, var_reactive_var of section_state
+        section_export[var_name] = var_reactive_var.get()
+
+    return export_obj
+
+  setSectionsState: (state_obj, replace=true) ->
+    # If replace is true, the new_sections_state will be used instead of the
+    # current sections state.
+    # If replace is false, only listed sections state vars will
+    # be affected. (similar to _.expand() operation on current state)
+
+    if replace
+      # begin from removing state vars that are not
+      # present in the new state_obj
+      for section_id, section_state of @_sections_state
+        for var_name, var_value of section_state
+          if not state_obj[section_id]?[var_name]?
+            # If a current section var is no longer listed
+            # in the new state_obj, remove it.
+            @unsetStateVar section_id, var_name
+
+    # Update new sections state values
+    for section_id, section_state of state_obj
+      for var_name, var_value of section_state
+        @setStateVar section_id, var_name, var_value
 
     return
 
@@ -473,12 +647,6 @@ _.extend GridData.prototype,
     for section_conf in @sections_configuration
       section_obj = {}
 
-      section_manager =
-        new section_conf.section_manager(@, section_conf.path, section_obj, section_conf.section_manager_options)
-
-      #
-      # Init section's section_obj and push to @sections
-      #
       _.extend section_obj,
         id: section_conf.id
         path: section_conf.path
@@ -486,6 +654,14 @@ _.extend GridData.prototype,
         empty: false
         begin: @getLength()
         end: null
+
+      section_manager =
+        new section_conf.section_manager(@, section_conf.path, section_obj, section_conf.section_manager_options)
+
+      #
+      # Init section's section_obj and push to @sections
+      #
+      _.extend section_obj,
         expand_state: section_manager.expandState("/")
         section_manager: section_manager
 

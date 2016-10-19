@@ -13,6 +13,7 @@ errors_types =
   "invalid-option": "Invalid Option"
   "edit-blocked-by-hook": "Edit blocked by hook"
   "unknown-section-manager-type": "Unknown section manager type"
+  "forbidden-section-id": "Forbidden section id used"
 
 if Meteor.isClient
   _.extend GridData.prototype,

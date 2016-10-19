@@ -8,6 +8,8 @@ GridDataSectionManager = (grid_data_obj, section_root, section_obj, options) ->
   @section_root_no_trailing_slash = @section_root.replace(/\/$/, "")
   @section_obj = section_obj
 
+  @state_vars = {}
+
   return @
 
 Util.inherits GridDataSectionManager, EventEmitter
@@ -304,3 +306,27 @@ _.extend GridDataSectionManager.prototype,
     options = _.extend default_options, options
 
     return @_naturalCollectionTreeTraversing(item_id, target_path, options, iteratee)
+
+  globalStateVarExist: (var_name) ->
+    return @grid_data.globalStateVarExist(var_name)
+
+  setGlobalStateVar: (var_name, new_val) ->
+    return @grid_data.setGlobalStateVar(var_name, new_val)
+
+  unsetGlobalStateVar: (var_name) ->
+    return @grid_data.unsetGlobalStateVar(var_name)
+
+  getGlobalStateVar: (var_name, default_val) ->
+    return @grid_data.getGlobalStateVar(var_name, default_val)
+
+  stateVarExist: (var_name) ->
+    return @grid_data.stateVarExist(@section_obj.id, var_name)
+
+  setStateVar: (var_name, new_val) ->
+    return @grid_data.setStateVar(@section_obj.id, var_name, new_val)
+
+  unsetStateVar: (var_name) ->
+    return @grid_data.unsetStateVar(@section_obj.id, var_name)
+
+  getStateVar: (var_name, default_val) ->
+    return @grid_data.getStateVar(@section_obj.id, var_name, default_val)

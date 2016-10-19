@@ -497,6 +497,48 @@ _.extend GridControlMux.prototype,
     else
       @_current_grid_control_if_ready_crv.getSync()
 
+  getActiveGridControlSectionsState: ->
+    # Returns the current grid's sections state object
+    if not (gc = @getActiveGridControl(true))?
+      return null
+    else
+      return gc._grid_data.exportSectionsState()
+
+  setActiveGridControlSectionsState: (new_sections_state, replace) ->
+    # Updates the state of the current grid's sections
+    # state object
+    #
+    # replace argument is documented under grid-data package setSectionsState()
+    # see file named: grid-sections.coffee (note replace is true by default)
+    #
+    # If the active grid control is not ready, the new_sections_state will be set once the 'ready' event will be emitted by the grid
+    # If there's no active grid control, do nothing 
+
+    gc = null
+    setSectionsState = =>
+      gc._grid_data.setSectionsState(new_sections_state)
+
+      @logger.debug("setActiveGridControlSectionsState: updated")
+
+    return Tracker.nonreactive =>
+      if (gc = @getActiveGridControl(true))?
+        # Grid control is ready, load
+        setSectionsState()
+
+        return
+      else
+        if not (gc = @getActiveGridControl())?
+          @logger.debug("setActiveGridControlSectionsState: Can't update active sections state: No active grid")
+          return
+
+        @logger.debug("setActiveGridControlSectionsState: grid not ready yet, waiting")
+        gc.once "ready", =>
+          @logger.debug("setActiveGridControlSectionsState: grid ready")
+
+          setSectionsState()
+
+        return
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"
