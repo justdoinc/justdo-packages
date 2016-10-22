@@ -24,12 +24,49 @@ _.extend GridControlMux.prototype,
     isIdentical = (a, b) -> a is b
 
     #
-    # @_current_active_tab
+    # @_current_active_tab_crv
+    #
+    # Invalidates only when active tab changes
     #
     @_current_active_tab_crv =
       newComputedReactiveVar "current_active_tab", getActiveTabOrNull,
         # options
         reactiveVarEqualsFunc: isIdentical
+
+    #
+    # @_current_active_tab_state_sensitive_crv
+    #
+    # Invalidates when active tab changes and when
+    # the active tab state is changing
+    #
+    _current_tab_last_state = null
+    @_current_active_tab_state_sensitive_crv =
+      newComputedReactiveVar "current_active_tab_state", getActiveTabOrNull,
+        # options
+        reactiveVarEqualsFunc: (a, b) ->
+          if not a? and not b?
+            # Init state both null/undefined, don't invalidate
+            return true
+
+          # If different objects, then for sure active tab
+          # is different, and invalidation required
+          if a isnt b
+            # Since we want  to invalidate on state change, and we change the
+            # same tab object when the state change, the only way, to
+            # recognize whether the state changed is to compare it to a
+            # reference we keep to the last state
+            _current_tab_last_state = if b? then b.state else null
+
+            return false
+
+          # Otherwise, only if one of the tab state changed trigger
+          # invalidation
+          if b.state != _current_tab_last_state
+            _current_tab_last_state = b.state
+
+            return false
+
+          return true
 
     #
     # @_current_grid_control_crv
@@ -93,6 +130,7 @@ _.extend GridControlMux.prototype,
 
   destroyComputedReactiveVars: ->
     @_current_active_tab_crv.stop()
+    @_current_active_tab_state_sensitive_crv.stop()
     @_current_grid_control_crv.stop()
     @_current_grid_control_if_ready_crv.stop()
     @_current_path_crv.stop()
@@ -342,9 +380,29 @@ _.extend GridControlMux.prototype,
     # A reactive resource, invalidates only when
     # the current active tab changes.
     #
+    # IMPORTANT, doesn't invalidate on state changes,
+    # check @getActiveTabState() if needed
+    #
     # Make sure to read 'Main drawback of getSync()'
     # in computed-reactive-var.coffee
     return @_current_active_tab_crv.getSync()
+
+  getActiveTabState: ->
+    # Returns the active tab state, or null if there's
+    # no active tab
+    #
+    # A reactive resource, invalidates when
+    # the current active tab changes, and,
+    # when the current active tab state changes.
+    #
+    # Make sure to read 'Main drawback of getSync()'
+    # in computed-reactive-var.coffee
+    active_tab = @_current_active_tab_state_sensitive_crv.getSync()
+
+    if not active_tab?
+      return null
+
+    return active_tab.state
 
   activateTab: (new_tab_id) ->
     if not (new_active_tab = @getTabNonReactive(new_tab_id))?
