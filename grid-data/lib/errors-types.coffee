@@ -14,6 +14,8 @@ errors_types =
   "edit-blocked-by-hook": "Edit blocked by hook"
   "unknown-section-manager-type": "Unknown section manager type"
   "forbidden-section-id": "Forbidden section id used"
+  "invalid-section-id": "Section id must be an all-lower-case-hyphen-separated name"
+  "invalid-section-var-name": "Section var name must be an all-lower-case-hyphen-separated name"
 
 if Meteor.isClient
   _.extend GridData.prototype,

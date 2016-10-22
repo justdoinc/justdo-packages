@@ -6,6 +6,8 @@ GridData.sections_managers = PACK.sections_managers # Expose sections_managers t
 
 forbidden_section_names = ["global"] # global is forbidden since it is used under _sections_state to store global state vars
 
+lowercase_hyphen_separated_name_regex = /^[a-z0-9-]+$/
+
 _.extend GridData.prototype,
   _initGridSections: ->
     # Sections state is a framework  that provides a session-
@@ -43,6 +45,10 @@ _.extend GridData.prototype,
 
     @_loadSectionsOption()
 
+  _requireValidSectionId: (section_id) ->
+    if not lowercase_hyphen_separated_name_regex.test(section_id)
+      throw @_error "invalid-section-id"
+
   _loadSectionsOption: ->
     sections_configuration = []
 
@@ -65,6 +71,8 @@ _.extend GridData.prototype,
 
       if section.id in forbidden_section_names
         throw @_error "forbidden-section-id", "`#{section.id}' is not allowed as section id"
+
+      @_requireValidSectionId(section.id)
 
       #
       # normalize
@@ -138,6 +146,12 @@ _.extend GridData.prototype,
       throw @_error "missing-argument", "Provide section_id and var_name"
 
       return
+
+    # validations
+    @_requireValidSectionId(section_id)
+
+    if not lowercase_hyphen_separated_name_regex.test(var_name)
+      throw @_error "invalid-section-var-name"
 
     if new_val == null
       # Unset section_id, var_name
