@@ -10,6 +10,9 @@ lowercase_hyphen_separated_name_regex = /^[a-z0-9-]+$/
 
 _.extend GridData.prototype,
   _initGridSections: ->
+    if not @options.sections?
+      throw @_error "required-option-missing", "Can't find sections configuration in @options.sections"
+
     # Sections state is a framework  that provides a session-
     # persistent and reactive mechanism to maintain a state of
     # variables that affect the operation of a section.

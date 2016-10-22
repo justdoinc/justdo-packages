@@ -11,6 +11,7 @@ errors_types =
   "missing-argument": "Missing argument"
   "wrong-input": "Wrong Input"
   "invalid-option": "Invalid Option"
+  "required-option-missing": "Missing required option"
   "edit-blocked-by-hook": "Edit blocked by hook"
   "unknown-section-manager-type": "Unknown section manager type"
   "forbidden-section-id": "Forbidden section id used"
