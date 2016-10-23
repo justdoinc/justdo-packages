@@ -6,6 +6,9 @@ GridControl = (options, container, operations_container) ->
     allow_dynamic_row_height: false
     usersDiffConfirmationCb: null
     items_types_settings: null
+    default_view_extra_fields: null # if set to array of fields names
+                                    # these fields will be appended
+                                    # to the default view on init
 
   @options = _.extend {}, default_options, options
 
@@ -37,6 +40,9 @@ GridControl = (options, container, operations_container) ->
   # first time.
   # Calling @setView before init complete will change @_init_view value
   @_init_view = @_getDefaultView() # set @_init_view to the default view
+
+  if (extra_fields = @options.default_view_extra_fields)?
+    @_init_view = @_init_view.concat _.map(extra_fields, (field_id) -> {field: field_id})
 
   @_operations_lock = new ReactiveVar false # Check /client/grid_operations/operations_lock.coffee
   @_operations_lock_timedout = new ReactiveVar false
