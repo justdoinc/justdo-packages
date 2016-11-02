@@ -12,6 +12,10 @@ _.extend GridControl.prototype,
         @_editors[editor_name] = (args) =>
           args.grid_control = @
 
+          schema = @schema[args.column.id]
+
+          args.options = schema.grid_column_editor_options or {}
+
           return new editor(args)
 
 #  _init_editors: ->

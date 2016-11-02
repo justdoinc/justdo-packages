@@ -165,6 +165,12 @@ SimpleSchema.extendOptions
   # If undefined in visible field will be set according to type option as defined above.
   grid_column_formatter: Match.Optional(String)
 
+  # grid_column_formatter_options:
+  #
+  # An optional options object that will be passed to the
+  # formatter.
+  grid_column_formatter_options: Match.Optional(Object)
+
   # grid_column_editor:
   #
   # Sets the editor for the column. (Ignored if grid_editable_column is true for that field).
@@ -175,6 +181,12 @@ SimpleSchema.extendOptions
   #
   # If undefined in visible and editable field will be set according to type option as defined above.
   grid_column_editor: Match.Optional(String)
+
+  # grid_column_editor_options:
+  #
+  # An optional options object that will be passed to the
+  # editor.
+  grid_column_editor_options: Match.Optional(Object)
 
   # grid_effects_metadata_rendering:
   #

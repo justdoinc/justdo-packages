@@ -1,5 +1,7 @@
 _.extend PACK.Formatters,
-  unicodeDateFormatter: (row, cell, value, columnDef, dataContext) ->
+  unicodeDateFormatter: ->
+    {value, options} = @getFriendlyArgs()
+
     if not value? or value == ""
       date = ""
     else
