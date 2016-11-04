@@ -3,7 +3,7 @@ helpers = PACK.FormattersHelpers
 # XXX IMPORTANT: No XSS protection, if values can be modified
 # by user XSS protection must be added.
 
-getKeyValue = (schema, value, allow_html=true) ->
+getKeyValue = (schema, value, preferred_format="html") ->
   {grid_values} = schema
 
   if not grid_values?
@@ -15,7 +15,7 @@ getKeyValue = (schema, value, allow_html=true) ->
   if not (value_by_formats = grid_values[value])?
     return value
 
-  if allow_html and (html_format = value_by_formats.html)?
+  if (html_format = value_by_formats[preferred_format])?
     return html_format
   else if (txt_format = value_by_formats.txt)?
     return txt_format
@@ -38,4 +38,4 @@ _.extend PACK.Formatters,
     print: (doc, field) ->
       {schema, value} = @getFriendlyArgs()
 
-      return getKeyValue(schema, value, false)
+      return getKeyValue(schema, value, "print")
