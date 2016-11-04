@@ -9,8 +9,21 @@ PACK.filters_controllers.whitelist = (grid_control, column_settings) ->
 
   @controller = $("<ul class='fa-ul' />")
 
-  for value, option of @column_settings.values
-    @controller.append("<li value='#{value}'><i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i> #{option.txt}</li>")
+  for value, value_options of @column_settings.values
+    if (html = value_options.html)?
+      if value_options.skip_xss_guard
+        # Future ready for the day we'll allow users
+        # to define custom values.
+        # By adding this I'm forcing development to take
+        # xss into account
+        label = html
+      else
+        # Prefer the html label
+        label = JustdoHelpers.xssGuard(html)
+    else
+      label = value_options.txt
+
+    @controller.append("<li value='#{value}'><i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i> #{label}</li>")
 
   $(@controller).on "click", "li", (e) =>
     filter_state = @grid_control.getFieldFilter(@column_settings.field)
