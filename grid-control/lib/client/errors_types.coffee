@@ -9,3 +9,4 @@ _.extend GridControl.prototype,
     "unknown-filter-type": "Unknown filter type"
     "unfulfilled-prereq": "Grid operation called with unfulfilled prerequisites"
     "wrong-argument": "Wrong argument provided"
+    "invalid-formatter-definition": "Invalid formatter definition"

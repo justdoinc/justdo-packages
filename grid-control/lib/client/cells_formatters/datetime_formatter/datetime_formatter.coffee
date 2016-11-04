@@ -1,12 +1,21 @@
+getDateTimeString = (value) ->
+  if not value? or value == ""
+    return ""
+
+  return moment(value).format('L LTS')
+
 _.extend PACK.Formatters,
-  datetimeFormatter: (row, cell, value, columnDef, dataContext) ->
-    if not value? or value == ""
-      date = ""
-    else
-      date = moment(value).format('L LTS')
+  datetimeFormatter:
+    slick_grid: (row, cell, value, columnDef, dataContext) ->
+      {value} = @getFriendlyArgs()
 
-    formatter = """
-      <div class="grid-formatter datetime-formatter">#{date}</div>
-    """
+      formatter = """
+        <div class="grid-formatter datetime-formatter">#{getDateTimeString(value)}</div>
+      """
 
-    return formatter
+      return formatter
+
+    print: (doc, field) ->
+      {value, options} = @getFriendlyArgs()
+
+      return getDateTimeString(value)

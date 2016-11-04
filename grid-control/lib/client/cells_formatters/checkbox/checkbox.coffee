@@ -1,8 +1,17 @@
 _.extend PACK.Formatters,
-  checkboxFormatter: (row, cell, value, columnDef, dataContext) ->
-    input = '<input type="checkbox" class="checkbox-formatter" name="' + value + '" value="' + value + '"'
+  checkboxFormatter:
+    slick_grid: ->
+      {value} = @getFriendlyArgs()
 
-    if value
-      return input += ' checked />'
+      input = '<input type="checkbox" class="checkbox-formatter" value="#{value}"'
 
-    return input += ' />'
+      if value
+        return input += ' checked />'
+
+      return input += ' />'
+
+    print: (doc, field) ->
+      {value} = @getFriendlyArgs()
+
+      return if value then "+" else "-"
+

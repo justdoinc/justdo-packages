@@ -1,14 +1,22 @@
+normalizeUnicodeDateString = (unicode_date_string) ->
+  if not unicode_date_string? or unicode_date_string == ""
+    return ""
+
+  return moment(unicode_date_string, 'YYYY-MM-DD').format('YYYY-MM-DD')
+
+
 _.extend PACK.Formatters,
-  unicodeDateFormatter: ->
-    {value, options} = @getFriendlyArgs()
+  unicodeDateFormatter:
+    slick_grid: ->
+      {value} = @getFriendlyArgs()
 
-    if not value? or value == ""
-      date = ""
-    else
-      date = moment(value, 'YYYY-MM-DD').format('YYYY-MM-DD')
+      formatter = """
+        <div class="grid-formatter uni-date-formatter">#{normalizeUnicodeDateString(value)}</div>
+      """
 
-    formatter = """
-      <div class="grid-formatter uni-date-formatter">#{date}</div>
-    """
+      return formatter
 
-    return formatter
+    print: (doc, field) ->
+      {value} = @getFriendlyArgs()
+
+      return normalizeUnicodeDateString(value)
