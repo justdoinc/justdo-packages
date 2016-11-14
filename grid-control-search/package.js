@@ -12,10 +12,10 @@ Package.onUse(function (api) {
   api.versionsFrom('1.1.0.2');
 
   api.use('coffeescript', both);
-  api.use('erasaur:meteor-lodash', both);
   api.use('check', both);
   api.use('tracker', both);
 
+  api.use('stevezhu:lodash@4.16.4', both);
   api.use('twbs:bootstrap@3.3.5', both);
   api.use('raix:eventemitter@0.1.1', both);
   api.use('meteorspark:util@0.1.0', both);
