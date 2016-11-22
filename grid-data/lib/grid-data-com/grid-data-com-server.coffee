@@ -427,26 +427,28 @@ _.extend GridDataCom.prototype,
       if not (item = collection.getItemByPathIfUserBelong path, @userId)?
         throw self._error "unknown-path"
 
-      parent_id = helpers.getPathParentId(path)
+      current_parent_id = helpers.getPathParentId(path)
 
       if not ("parent" of new_location)
         # If parent is not provided in new_location we assume change of order under same item
-        new_location.parent = parent_id
+        new_location.parent = current_parent_id
 
-      if parent_id != new_location.parent
+      if current_parent_id != new_location.parent
         if collection.isAncestor(new_location.parent, item._id)
-          throw self._error "infinite-loop", "Error: Can\'t move path: #{new_location.parent} ancestor of #{parent_id}"
+          throw self._error "infinite-loop", "Error: Can\'t move path: #{item._id} is an ancestor of #{new_location.parent}"
 
-      new_parent_item = collection.findOne(new_location.parent)
-      if new_location.parent != "0" and not(new_parent_item? and collection.isUserBelongToItem(new_parent_item, @userId))
-        throw self._error "unknown-path", 'Error: Can\'t move path: new parent doesn\'t exist' # we don't indicate existance in case no permission
+      new_parent_item = null
+      if new_location.parent != "0"
+        new_parent_item = collection.findOne(new_location.parent)
+        if not(new_parent_item? and collection.isUserBelongToItem(new_parent_item, @userId))
+          throw self._error "unknown-path", 'Error: Can\'t move path: new parent doesn\'t exist' # we don't indicate existance in case no permission
 
       if not ("order" of new_location)
         new_location.order = collection.getNewChildOrder(new_location.parent, item)
 
       # Remove current parent op prepeation
       remove_current_parent_update_op = {$unset: {}}
-      remove_current_parent_update_op.$unset["parents.#{parent_id}"] = ""
+      remove_current_parent_update_op.$unset["parents.#{current_parent_id}"] = ""
 
       # Add to new parent op prepeation
       set_new_parent_update_op = {$set: {}}
@@ -462,7 +464,7 @@ _.extend GridDataCom.prototype,
         # the etc obj
         new_location: _.extend {}, new_location
         item: item
-        current_parent_id: parent_id
+        current_parent_id: current_parent_id
         new_parent_item: new_parent_item
 
       if item_in_new_location?
