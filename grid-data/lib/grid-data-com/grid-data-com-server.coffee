@@ -180,7 +180,7 @@ _.extend GridDataCom.prototype,
         return collection.findOne(query)
 
       isAncestor: (item_id, potential_ancestor_id) ->
-        # Returns true if potential_ancestor_id is ancesotr of item_id or the same item
+        # Returns true if potential_ancestor_id is ancestor of item_id or the same item
         if potential_ancestor_id == item_id
           return true
 
