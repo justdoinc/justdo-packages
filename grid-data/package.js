@@ -15,6 +15,7 @@ Package.onUse(function (api) {
   api.use('underscore', both);
   api.use('tracker', both);
   api.use('reactive-var', both);
+  api.use('check', both);
 
   api.use('raix:eventemitter@0.1.1', both);
   api.use('matb33:collection-hooks@0.7.13', both);

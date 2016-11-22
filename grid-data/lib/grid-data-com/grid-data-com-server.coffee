@@ -334,6 +334,9 @@ _.extend GridDataCom.prototype,
       return collection.insert new_item
 
     methods[helpers.getCollectionMethodName(collection, "addChild")] = (path, fields = {}) ->
+      check(path, String)
+      check(fields, Object)
+
       if not @userId?
         throw self._error "login-required"
 
@@ -351,6 +354,9 @@ _.extend GridDataCom.prototype,
       return collection.insert new_item
 
     methods[helpers.getCollectionMethodName(collection, "addSibling")] = (path, fields = {}) ->
+      check(path, String)
+      check(fields, Object)
+
       if not (item = collection.getItemByPathIfUserBelong path, @userId)?
         throw self._error "unknown-path"
 
@@ -375,6 +381,7 @@ _.extend GridDataCom.prototype,
       return collection.insert new_item
 
     methods[helpers.getCollectionMethodName(collection, "removeParent")] = (path) ->
+      check(path, String)
       if not (item = collection.getItemByPathIfUserBelong path, @userId)?
         throw self._error "unknown-path"
 
@@ -406,6 +413,12 @@ _.extend GridDataCom.prototype,
         collection.update item._id, update_op
 
     methods[helpers.getCollectionMethodName(collection, "movePath")] = (path, new_location) ->
+      check(path, String)
+      check(new_location, {
+        parent: Match.Maybe(String)
+        order: Match.Maybe(Number)
+      })
+
       if (not _.isObject(new_location)) or
          (not (("order" of new_location) or ("parent" of new_location)))
           # if new_location doens't have information for new location
@@ -466,6 +479,10 @@ _.extend GridDataCom.prototype,
       collection.update item._id, set_new_parent_update_op
 
     methods[helpers.getCollectionMethodName(collection, "sortChildren")] = (path, field, sort_order) ->
+      check(path, String)
+      check(field, String)
+      check(sort_order, Match.Maybe(Number))
+
       if path == "/"
         throw self._error "cant-perform-on-root"
 
@@ -490,7 +507,39 @@ _.extend GridDataCom.prototype,
         order += 1
 
     methods[helpers.getCollectionMethodName(collection, "bulkUpdate")] = (items_ids, modifier) ->
+      #
+      # Validate inputs
+      #
       check(items_ids, [String])
+
+      # To avoid security risk, we are whitelisting the allowed bulkUpdates
+      allowed_modifiers = [
+        {
+          $pull:
+            users:
+              $in: [String]
+        }
+        {
+          $push:
+            users:
+              $each: [String]
+        }
+        {
+          $set:
+            owner_id: String
+          $unset:
+            pending_owner_id: String # In reality we expect here only ""
+        }
+        {
+          $unset:
+            pending_owner_id: String # In reality we expect here only ""
+        }
+      ]
+      check(modifier, Match.OneOf.apply(Match, allowed_modifiers))
+
+      #
+      # Exec
+      #
 
       # Returns the count of changed items
       selector = 
