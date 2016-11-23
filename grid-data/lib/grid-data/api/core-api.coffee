@@ -354,6 +354,10 @@ _.extend GridData.prototype,
     #
     # Will return null if no such item_id in the tree.
 
+    # Note, we don't use getAllCollectionItemIdPaths() to implement this
+    # function, so we can apply optimization that stop the scanning as soon as
+    # we find a path for the item in the tree.
+
     if item_id == "0"
       return "/"
 
@@ -365,6 +369,28 @@ _.extend GridData.prototype,
         return -2
     
     return item_path
+
+  getAllCollectionItemIdPaths: (item_id) ->
+    # Returns an array with all the paths in @grid_tree that leads to the
+    # requested item_id of @collection, in their order in the tree.
+    #
+    # Will return undefined if we can't find item_id in the tree.
+
+    if item_id == "0"
+      return "/"
+
+    paths = []
+    @_each "/", {expand_only: false, filtered_tree: false}, (section, item_type, item_obj, path, expand_state) ->
+      if item_obj._id == item_id
+        paths.push(path)
+
+        # Let the each keep running
+        return undefined
+
+    if _.isEmpty paths
+      paths = undefined
+
+    return paths
 
   #
   # Filters Management
