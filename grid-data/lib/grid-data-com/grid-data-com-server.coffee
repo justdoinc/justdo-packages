@@ -390,7 +390,10 @@ _.extend GridDataCom.prototype,
       if collection.getChildrenCount(item._id, item) > 0
         throw self._error "operation-blocked", 'Can\'t remove: Item have childrens (you might not have the permission to see all childrens)'
 
-      if (_.size item.parents) == 1
+      if not (parent_id of item.parents)
+        throw self._error "unknown-parent", "#{parent_id} isn't a parent of #{item._id}"
+
+      if (_.size item.parents) == 1 
         self._runGridMethodMiddlewares @, "removeParent", path,
           # the etc obj
           item: item 
