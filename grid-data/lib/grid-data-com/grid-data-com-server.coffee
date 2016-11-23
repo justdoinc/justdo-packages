@@ -387,13 +387,17 @@ _.extend GridDataCom.prototype,
 
       parent_id = helpers.getPathParentId(path)
 
-      if collection.getChildrenCount(item._id, item) > 0
-        throw self._error "operation-blocked", 'Can\'t remove: Item have childrens (you might not have the permission to see all childrens)'
-
       if not (parent_id of item.parents)
         throw self._error "unknown-parent", "#{parent_id} isn't a parent of #{item._id}"
 
-      if (_.size item.parents) == 1 
+      # Perform removal
+      if _.size(item.parents) == 1
+        # Remove last parent, and the item itself.
+        # We don't allow removing an item with children
+
+        if collection.getChildrenCount(item._id, item) > 0
+          throw self._error "operation-blocked", 'Can\'t remove the last parent of an item that has sub-items. (You might not see sub-items you aren\'t member of)'
+
         self._runGridMethodMiddlewares @, "removeParent", path,
           # the etc obj
           item: item 
@@ -403,6 +407,7 @@ _.extend GridDataCom.prototype,
 
         collection.remove item._id
       else
+        # Remove parent
         update_op = {$unset: {}}
         update_op.$unset["parents.#{parent_id}"] = ""
 
