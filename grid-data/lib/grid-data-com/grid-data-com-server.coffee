@@ -113,13 +113,27 @@ _.extend GridDataCom.prototype,
     collection = @collection
 
     _.extend collection,
+      isUserBelongToItem: (item, userId) -> userId in item.users
+
       getItemByPath: (path) -> collection.findOne helpers.getPathItemId path
+
+      getItemByPathIfUserBelong: (path, userId) ->
+        item = collection.getItemByPath(path)
+
+        if item? and collection.isUserBelongToItem(item, userId)
+          return item
+        else
+          return null
 
       getItemById: (item_id) -> collection.findOne item_id
 
-      isUserBelongToItem: (item, userId) -> userId in item.users
+      getItemByIdIfUserBelong: (item_id, userId) ->
+        item = collection.getItemById(item_id)
 
-      getItemByPathIfUserBelong: (path, userId) -> if (item = collection.getItemByPath(path))? and collection.isUserBelongToItem(item, userId) then item else null
+        if item? and collection.isUserBelongToItem(item, userId)
+          return item
+        else
+          return null
 
       getChildrenCount: (item_id, item_doc=null) ->
         # item_doc serves the same purpose new_child_fields serves in
@@ -251,6 +265,21 @@ _.extend GridDataCom.prototype,
     #   allowing it to be customized by the middlewares. update_op will be provided only
     #   when no_more_parents is false, will be undefined otherwise.
     #
+    # addParent: (etc)
+    #
+    # etc is an object that contains the following keys:
+    #
+    #   etc.new_parent is a *copy* of the computed new_parent target based on
+    #   the argument provided and defaults applied. Do not change this object. Changing it
+    #   will have no effect on movePath execution and might result in bugs in following
+    #   middlewares.
+    #
+    #   etc.item is the document of the item we're about to add to a new
+    #   parent -> do not change this object without cloning it, it is passed
+    #   by reference.
+    #
+    #   etc.new_parent_item is the document of the new parent. passed by reference.
+    #
     # movePath: (path, etc)
     # path is the path we are going to move.
     #
@@ -280,7 +309,7 @@ _.extend GridDataCom.prototype,
     # operation. Isn't a copy for the purpose of allowing it to be customized by
     # the middlewares.
     #
-    methods_names = ["addChild", "addSibling", "removeParent", "movePath", "sortChildren", "bulkUpdate"]
+    methods_names = ["addChild", "addSibling", "removeParent", "addParent", "movePath", "sortChildren", "bulkUpdate"]
 
     if method_name not in methods_names
       throw @_error "unknown-method-name", "Unknown method name: #{method_name}, use one of: #{methods_names.join(", ")}"
@@ -382,6 +411,7 @@ _.extend GridDataCom.prototype,
 
     methods[helpers.getCollectionMethodName(collection, "removeParent")] = (path) ->
       check(path, String)
+
       if not (item = collection.getItemByPathIfUserBelong path, @userId)?
         throw self._error "unknown-path"
 
@@ -419,6 +449,83 @@ _.extend GridDataCom.prototype,
           update_op: update_op
 
         collection.update item._id, update_op
+
+    methods[helpers.getCollectionMethodName(collection, "addParent")] = (item_id, new_parent) ->
+      # new parent should be of the form:
+      #
+      # {
+      #   parent: "", # the new parent id, use "0" for root
+      #   order: int # order under the new parent - not required, will be added as the last item if not specified. 
+      # }
+
+      if (not _.isObject(new_parent))
+        throw self._error "missing-argument", 'new_parent argument is missing'
+
+      check(item_id, String)
+      new_parent = _.pick new_parent, ["parent", "order"]
+
+      {parent, order} = new_parent
+      new_parent_id = parent # Improved readability
+      new_parent_order = order
+
+      #
+      # Validate args
+      #
+      if not new_parent_id?
+        throw self._error "missing-argument", 'new_parent.parent is not set'      
+
+      check(new_parent_id, String)
+      check(new_parent_order, Match.Maybe(Number))
+
+      if not (item = collection.getItemByIdIfUserBelong item_id, @userId)?
+        throw self._error "unknown-id"
+
+      # Check if already parent of item
+      if new_parent_id of item.parents
+        throw self._error "parent-already-exists"
+
+      # Check whether item is an ancestor of new_parent_id
+      if collection.isAncestor(new_parent_id, item._id)
+        throw self._error "infinite-loop", "Can\'t add parent: #{item._id} is an ancestor of #{new_parent_id}"
+
+      # Check whether new_parent_id exists and belongs to user
+      new_parent_item = null
+      if new_parent_id != "0"
+        # if 0, always belongs...
+        new_parent_item = collection.findOne(new_parent_id)
+        if not(new_parent_item? and collection.isUserBelongToItem(new_parent_item, @userId))
+          throw self._error "unknown-path", 'Error: Can\'t add parent: new parent doesn\'t exist' # we don't indicate existance in case no permission
+
+      # If no new_parent_order provided, set to new_parent_order to the end of the item
+      if not new_parent_order?
+        new_parent_order = collection.getNewChildOrder(new_parent_id, item)
+
+      self._runGridMethodMiddlewares @, "addParent",
+        # the etc obj
+        new_parent: {
+          parent: new_parent_id
+          order: new_parent_order
+        }
+        item: item
+        new_parent_item: new_parent_item
+
+      # Check if an item exist already in new_parent_order
+      item_in_new_location =
+        collection.getChildreOfOrder(new_parent_id, new_parent_order, item)
+
+      if item_in_new_location?
+        # if there's an item in the new location.
+        # Note we check above that it isn't the same item. We don't use sub if since
+        # we want to run the middlewares only when we are sure the operation is ready
+        # to be performed. 
+        collection.incrementChildsOrderGte new_parent_id, new_parent_order, item
+
+      # Add to new parent
+      set_new_parent_update_op = {$set: {}}
+      set_new_parent_update_op.$set["parents.#{new_parent_id}"] = {order: new_parent_order}
+      collection.update item._id, set_new_parent_update_op
+
+      return
 
     methods[helpers.getCollectionMethodName(collection, "movePath")] = (path, new_location) ->
       check(path, String)
@@ -464,9 +571,22 @@ _.extend GridDataCom.prototype,
 
       # Check if an item exist already in new_location order
       item_in_new_location = collection.getChildreOfOrder(new_location.parent, new_location.order, item)
-      if item_in_new_location? and item_in_new_location._id == item._id
-        # There's already an item in the new location, the same item..., nothing to do.
-        return
+
+      # We used to have the following optimization but we found out that 
+      # it doesn't work well.
+      #
+      # If an item has multiple parents and you try to move it from one parent
+      # to another one in which it is in, under the same order, it should
+      # combine into one with the one in the new location.
+      #
+      # With this optimization, the original position won't remove and
+      # client will show wrong tree representation post-drop to the new
+      # position, as in reality with this optimization we don't  perform
+      # any action but the user actually changed the tree structure.
+      #
+      # if item_in_new_location? and item_in_new_location._id == item._id
+      #   # There's already an item in the new location, the same item..., nothing to do.
+      #   return
 
       self._runGridMethodMiddlewares @, "movePath", path,
         # the etc obj

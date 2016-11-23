@@ -67,6 +67,23 @@ _.extend GridData.prototype,
     Meteor.call @getCollectionMethodName("removeParent"), path, (err) ->
       helpers.callCb cb, err
 
+  addParent: (item_id, new_parent, cb) ->
+    # Add item_id to the parent detailed in new_parent.
+    #
+    # new_parent structure:
+    # {
+    #   parent: "", # the new parent id, use "0" for root
+    #   order: int # order under the new parent - not required, will be added as the last item if not specified. 
+    # }
+    #
+    # If cb provided, cb will be called with the following args when excution
+    # completed:
+    # cb(err)
+    new_parent = _.pick new_parent, ["parent", "order"]
+
+    Meteor.call @getCollectionMethodName("addParent"), item_id, new_parent, (err) ->
+      helpers.callCb cb, err
+
   movePath: (path, new_location, cb, usersDiffConfirmationCb) ->
     # Put path in the position provided in new_location.
 

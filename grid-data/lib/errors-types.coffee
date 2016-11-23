@@ -1,5 +1,6 @@
 errors_types =
   "unknown-path": "Path doesn't exist or doesn't belong to the user"
+  "unknown-id": "Task with given id doesn't exist or doesn't belong to the user"
   "cant-perform-on-root": "This operation can't perform on root path"
   "login-required": "Login required to perform operation"
   "unknown-method-name": "Unknown method name"
@@ -17,6 +18,8 @@ errors_types =
   "forbidden-section-id": "Forbidden section id used"
   "invalid-section-id": "Section id must be an all-lower-case-hyphen-separated name"
   "invalid-section-var-name": "Section var name must be an all-lower-case-hyphen-separated name"
+  "parent-already-exists": "Parent already exists"
+  "unknown-parent": "Unknown parent"
 
 if Meteor.isClient
   _.extend GridData.prototype,
