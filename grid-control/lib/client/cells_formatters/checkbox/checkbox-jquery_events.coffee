@@ -1,4 +1,4 @@
-PACK.jquery_events.push(
+PACK.jquery_builtin_events.push(
   {
     # Save checkbox formatter on_change
     args: ['change', '.checkbox-formatter']

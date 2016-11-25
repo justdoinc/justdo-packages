@@ -29,7 +29,7 @@ _.extend PACK.Formatters.textWithTreeControls,
 # grid-tree-control-toggle handling
 #
 recent_mousedown_event_row = null
-PACK.jquery_events.push
+PACK.jquery_builtin_events.push
   args: ['mousedown', '.grid-tree-control-toggle']
   handler: (e) ->
     if @eventCellIsActiveCell(e)
@@ -47,7 +47,7 @@ PACK.jquery_events.push
       # results in click event for .grid-tree-control-toggle to not trigger correctly
       e.preventDefault()
 
-PACK.jquery_events.push
+PACK.jquery_builtin_events.push
   args: ['click', '.grid-tree-control-toggle']
   handler: (e) ->
     # Important, this event handler will be triggered only
@@ -69,7 +69,7 @@ PACK.jquery_events.push
 #
 # grid-tree-control-user handling
 #
-PACK.jquery_events.push
+PACK.jquery_builtin_events.push
   args: ['mousedown', '.grid-tree-control-task-id']
   handler: (e) ->
     if @eventCellIsActiveCell(e)
@@ -80,7 +80,7 @@ PACK.jquery_events.push
 #
 # grid-tree-control-user handling
 #
-PACK.jquery_events.push
+PACK.jquery_builtin_events.push
   args: ['mousedown', '.grid-tree-control-user']
   handler: (e) ->
     e.stopImmediatePropagation()
@@ -95,7 +95,7 @@ PACK.jquery_events.push
 #
 # grid-tree-control-user handling
 #
-PACK.jquery_events.push
+PACK.jquery_builtin_events.push
   args: ['click', '.grid-tree-control-user']
   handler: (e) ->
     event_row = $(e.target).closest(".slick-row")
