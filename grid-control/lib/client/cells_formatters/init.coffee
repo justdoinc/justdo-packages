@@ -55,6 +55,8 @@ _.extend GridControl.prototype,
     #                                           tree control controls in its slick_grid
     #                                           formatter, otherwise set to false or don't
     #                                           set (false is default value)
+    #     slick_grid_jquery_events: If defined, should be an array of objects in the format described
+    #                               in /jquery_events/init.coffee for installCustomJqueryEvent()
     #
     #     gridControlInit: will be called once the "init" event
     #                      of the grid control will be fired,
@@ -82,7 +84,10 @@ _.extend GridControl.prototype,
     # 2. If, is_slick_grid_tree_control_formatter is true, add
     # formatter_name to @_tree_control_fomatters
     #
-    # 3. Creates the formatters functions:
+    # 3. If slick_grid_jquery_events is set, install the events
+    #    defined under it using @installCustomJqueryEvent()
+    #
+    # 4. Creates the formatters functions:
     #
     # * @_formatters[formatter_name]:
     # 
@@ -133,6 +138,10 @@ _.extend GridControl.prototype,
 
     if formatter_definition.is_slick_grid_tree_control_formatter
       @_tree_control_fomatters.push formatter_name
+
+    if _.isArray formatter_definition.slick_grid_jquery_events
+      for event_definition in formatter_definition.slick_grid_jquery_events
+        @installCustomJqueryEvent(event_definition)
 
     if _.isFunction(grid_control_init = formatter_definition.gridControlInit)
       @once "init", =>

@@ -2,7 +2,10 @@ GridControl.installFormatter "textWithTreeControls",
   is_slick_grid_tree_control_formatter: true
 
   # gridControlInit: ->
-  #  Defined in text_with_tree_controls-events.coffee
+  #   Defined in text_with_tree_controls-events.coffee
+
+  # slick_grid_jquery_events:
+  #   Defined in text_with_tree_controls-events.coffee
 
   slick_grid: ->
     {row, cell, value, doc, self} = @getFriendlyArgs()
