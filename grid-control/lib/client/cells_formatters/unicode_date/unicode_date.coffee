@@ -1,22 +1,40 @@
-normalizeUnicodeDateString = (unicode_date_string) ->
-  if not unicode_date_string? or unicode_date_string == ""
-    return ""
+GridControl.installFormatter "unicodeDateFormatter",
+  #
+  # Helpers:
+  # accessible through the 'formatter_obj' of the object returned
+  # by @getFriendlyArgs()
+  #
+  normalizeUnicodeDateString: (unicode_date_string) ->
+    if not unicode_date_string? or unicode_date_string == ""
+      return ""
 
-  return moment(unicode_date_string, 'YYYY-MM-DD').format('YYYY-MM-DD')
+    return moment(unicode_date_string, 'YYYY-MM-DD').format('YYYY-MM-DD')
 
+  #
+  # Formatters
+  #
+  slick_grid: ->
+    {formatter_obj, value} = @getFriendlyArgs()
 
-_.extend PACK.Formatters,
-  unicodeDateFormatter:
-    slick_grid: ->
-      {value} = @getFriendlyArgs()
+    unicode_date_string =
+      formatter_obj.normalizeUnicodeDateString(value)
 
-      formatter = """
-        <div class="grid-formatter uni-date-formatter">#{normalizeUnicodeDateString(value)}</div>
+    formatter_content = ""
+    if unicode_date_string != ""
+      formatter_content += """
+        #{unicode_date_string}
+        <i class="fa fa-fw fa-check" aria-hidden="true"></i>
       """
 
-      return formatter
+    formatter = """
+      <div class="grid-formatter uni-date-formatter">
+        #{formatter_content}
+      </div>
+    """
 
-    print: (doc, field) ->
-      {value} = @getFriendlyArgs()
+    return formatter
 
-      return normalizeUnicodeDateString(value)
+  print: (doc, field) ->
+    {formatter_obj, value} = @getFriendlyArgs()
+
+    return formatter_obj.normalizeUnicodeDateString(value)

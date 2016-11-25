@@ -34,6 +34,10 @@ GridControl = (options, container, operations_container) ->
   @schema = null
   @grid_control_field = null
   @fixed_fields = null # will contain an array of the fields that can't be hidden or moved - in their order
+  
+  @_load_formatters() # Need to be called before @_loadSchema()
+                      # to know which formatters can serve as tree control
+                      # formatters
   @_loadSchema() # loads @schema and @grid_control_field
 
   # _init_view is the view we use when building slick grid for the
@@ -89,7 +93,6 @@ _.extend GridControl.prototype,
     if @_initialized or @_destroyed
       return
 
-    @_load_formatters()
     @_load_editors()
     @_load_grid_operations()
 
@@ -125,7 +128,6 @@ _.extend GridControl.prototype,
     #@_grid.setSelectionModel(new Slick.RowSelectionModel())
 
     @_init_plugins()
-    @_init_formatters()
     @_init_jquery_events()
 
     @_grid_data.on "pre_rebuild", =>
@@ -410,11 +412,11 @@ _.extend GridControl.prototype,
             if not def.grid_default_grid_view
               err "As the grid control field, `#{field_name}` must have grid_default_grid_view option set to true"
             
-            if not(def.grid_column_formatter in PACK.TreeControlFormatters)
-              err "As the grid control field, `#{field_name}` must have grid_column_formatter option set to one of the grid-control formatter as set in PACK.TreeControlFormatters"
+            if not(def.grid_column_formatter in @_tree_control_fomatters)
+              err "As the grid control field, `#{field_name}` must have grid_column_formatter option set to one of the grid-control formatter as set in @_tree_control_fomatters"
           else
-            if def.grid_column_formatter in PACK.TreeControlFormatters
-              err "`#{field_name}` is not the grid control field, it can't use `#{def.grid_column_formatter}` as its formatter as it's a grid-control formatter, as defined in PACK.TreeControlFormatters"
+            if def.grid_column_formatter in @_tree_control_fomatters
+              err "`#{field_name}` is not the grid control field, it can't use `#{def.grid_column_formatter}` as its formatter as it's a grid-control formatter, as defined in @_tree_control_fomatters"
 
             # grid_pre_grid_control_column related schema updates
             if grid_control_field_found and def.grid_pre_grid_control_column

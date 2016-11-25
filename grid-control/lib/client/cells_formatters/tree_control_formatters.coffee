@@ -1,1 +1,0 @@
-PACK.TreeControlFormatters = ["textWithTreeControls"]

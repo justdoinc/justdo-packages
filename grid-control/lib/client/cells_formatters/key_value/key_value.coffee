@@ -1,5 +1,3 @@
-helpers = PACK.FormattersHelpers
-
 # XXX IMPORTANT: No XSS protection, if values can be modified
 # by user XSS protection must be added.
 
@@ -22,20 +20,19 @@ getKeyValue = (schema, value, preferred_format="html") ->
   else
     return value
 
-_.extend PACK.Formatters,
-  keyValueFormatter:
-    slick_grid: ->
-      {schema, value} = @getFriendlyArgs()
+GridControl.installFormatter "keyValueFormatter",
+  slick_grid: ->
+    {schema, value} = @getFriendlyArgs()
 
-      formatter = """
-        <div class="grid-formatter key-val-formatter">
-          #{getKeyValue(schema, value)}
-        </div>
-      """
+    formatter = """
+      <div class="grid-formatter key-val-formatter">
+        #{getKeyValue(schema, value)}
+      </div>
+    """
 
-      return formatter
+    return formatter
 
-    print: (doc, field) ->
-      {schema, value} = @getFriendlyArgs()
+  print: (doc, field) ->
+    {schema, value} = @getFriendlyArgs()
 
-      return getKeyValue(schema, value, "print")
+    return getKeyValue(schema, value, "print")

@@ -1,21 +1,20 @@
-helpers = PACK.FormattersHelpers
+GridControl.installFormatter "defaultFormatter",
+  slick_grid: ->
+    {schema, value, self} = @getFriendlyArgs()
 
-_.extend PACK.Formatters,
-  defaultFormatter:
-    slick_grid: (row, cell, value, columnDef, dataContext) ->
-      if not value?
-        return ""
+    if not value?
+      return ""
 
-      value = helpers.xssGuard value
+    value = self.xssGuard value
 
-      if @options.allow_dynamic_row_height
-        value = helpers.nl2br value
+    if @options.allow_dynamic_row_height
+      value = self.nl2br value
 
-      formatter = """
-        <div class="grid-formatter default-formatter">#{value}</div>
-      """
+    formatter = """
+      <div class="grid-formatter default-formatter">#{value}</div>
+    """
 
-      return formatter
+    return formatter
 
-    print: (doc, field) ->
-      return @defaultPrintFormatter()
+  print: (doc, field) ->
+    return @defaultPrintFormatter()

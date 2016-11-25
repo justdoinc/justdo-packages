@@ -82,9 +82,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/jquery_events/destroy_editor_on_blur.coffee', client);
 
   // Formatters
-  api.add_files('lib/client/cells_formatters/tree_control_formatters.coffee', client, {bare: true});
   api.add_files('lib/client/cells_formatters/init.coffee', client, {bare: true});
-  api.add_files('lib/client/cells_formatters/helpers.coffee', client);
   api.add_files('lib/client/cells_formatters/default/default.coffee', client);
   api.add_files('lib/client/cells_formatters/default/default.sass', client);
   api.add_files('lib/client/cells_formatters/key_value/key_value.coffee', client);

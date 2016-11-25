@@ -1,17 +1,15 @@
-_.extend PACK.Formatters,
-  checkboxFormatter:
-    slick_grid: ->
-      {value} = @getFriendlyArgs()
+GridControl.installFormatter "checkboxFormatter",
+  slick_grid: ->
+    {value} = @getFriendlyArgs()
 
-      input = '<input type="checkbox" class="checkbox-formatter" value="#{value}"'
+    input = '<input type="checkbox" class="checkbox-formatter" value="#{value}"'
 
-      if value
-        return input += ' checked />'
+    if value
+      return input += ' checked />'
 
-      return input += ' />'
+    return input += ' />'
 
-    print: (doc, field) ->
-      {value} = @getFriendlyArgs()
+  print: (doc, field) ->
+    {value} = @getFriendlyArgs()
 
-      return if value then "+" else "-"
-
+    return if value then "+" else "-"

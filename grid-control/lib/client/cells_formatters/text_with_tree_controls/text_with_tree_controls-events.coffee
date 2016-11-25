@@ -4,8 +4,8 @@
 # 3. A higher precedence event will trigger before a lower precedence
 #    event even if defined for on a higher dom element.
 
-_.extend PACK.FormattersInit,
-  textWithTreeControls: ->
+_.extend PACK.Formatters.textWithTreeControls,
+  gridControlInit: ->
     @_grid.onClick.subscribe (e, args) =>
       # Event will be bind by slick.grid to $canvas
 
