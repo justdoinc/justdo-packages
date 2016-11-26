@@ -10,6 +10,39 @@ PACK.Formatters = {}
 GridControl.installFormatter = (formatter_name, formatter_definition) ->
   return PACK.Formatters[formatter_name] = formatter_definition
 
+GridControl.installFormatterExtension = (options) ->
+  check options, {
+    formatter_name: String
+    extended_formatter_name: String
+    custom_properties: Object
+  }
+
+  {
+    formatter_name
+    extended_formatter_name
+    custom_properties
+  } = options
+
+  if not (parent_formatter = GridControl.getFormatters()[extended_formatter_name])?
+    throw Meteor.Error "unknown-formatter", "Formatter #{extended_formatter_name} doesn't exist"
+
+  new_formatter = Object.create(parent_formatter)
+
+  # Leave reference to the extended formatter
+  _.extend new_formatter, custom_properties,
+    extended_formatter_name: extended_formatter_name
+
+  # Leave references to the extended formatter that began
+  # the extensions chain
+  if new_formatter.original_extended_formatter_name?
+    new_formatter.original_extended_formatter_name =
+      extended_formatter_name
+
+  console.log "HERE", formatter_name, new_formatter
+  GridControl.installFormatter formatter_name, new_formatter
+
+  return 
+
 GridControl.getFormatters = ->
   # Return all the installed formatters_definitions
   return PACK.Formatters
