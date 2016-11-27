@@ -1,6 +1,48 @@
 PACK.Editors = {}
+
+GridControl.installEditor = (editor_name, editor_prototype) ->
+  prototype = Object.create(base_slick_grid_editors_prototype)
+
+  _.extend prototype, editor_prototype
+
+  EditorConstructor = (context) ->
+    @context = context
+
+    @doc = undefined
+
+    # @doc will store the data associated with the editor.
+    # slick grid will provide us this data by calling @loadValue()
+    # Note that @loadValue() is called on every data update
+    # to keep us updated.
+    #
+    # During the initial call to the editor constructor, we don't
+    # know yet @doc, therefore some of the editor's methods can't
+    # be called, for example: @getOriginalValue() and @getOriginalItem().
+    #
+    # Before @_data_ready is set, methods that rely on it will
+    # throw an exception.
+    #
+    # Since in GridControl's use case*, the @loadValue
+    # will be called immediately after @init(), it is safe to assume
+    # that @init() is the only place you can't call methods that rely
+    # on @doc.
+    #
+    # * Not true for SlickGrid in general.
+
+    @init()
+
+    return
+
+  EditorConstructor.prototype = prototype
+
+  PACK.Editors[editor_name] = EditorConstructor
+
+  return
+
+GridControl.getEditors = ->
+  return PACK.Editors
+
 PACK.EditorsHelpers = {}
-#PACK.EditorsInit = {}
 
 _.extend GridControl.prototype,
   _editors: null
@@ -9,16 +51,114 @@ _.extend GridControl.prototype,
 
     for editor_name, editor of PACK.Editors
       do (editor) =>
-        @_editors[editor_name] = (args) =>
-          args.grid_control = @
+        @_editors[editor_name] = (context) =>
+          # Enrich slick grid context with grid control context
 
-          schema = @schema[args.column.id]
+          schema = @schema[context.column.id]
 
-          args.options = schema.grid_column_editor_options or {}
+          _.extend context,
+            grid_control: @
+            schema: schema
+            options: schema.grid_column_editor_options or {}
 
-          return new editor(args)
+          return new editor(context)
 
-#  _init_editors: ->
-#    for editor_name, editor of @_editors
-#      if editor_name of PACK.EditorsInit
-#        PACK.EditorsInit[editor_name].call(@)
+base_slick_grid_editors_prototype =
+  #
+  # Slick Grid's Editors API required methods 
+  #
+  loadValue: (doc) ->
+    # Called with the current data document right after the
+    # first editor init and again once data updates occured
+
+    @doc = doc
+
+    init_value = @getEditorFieldValueFromDoc()
+
+    @setInputValue(init_value)
+
+    return
+
+  applyValue: (item, state) ->
+    # Slick grid requires this one, to be defined for every
+    # editor...
+    item[@getEditorFieldName()] = state
+
+    return
+
+  isValueChanged: ->
+    field_doc_value = @getEditorFieldValueFromDoc()
+
+    if field_doc_value?
+      return field_doc_value != @serializeValue()
+    else
+      # If field_doc_value is undefined/null in the document
+      # consider it changed only if @serializeValue() is defined
+      return @serializeValue()?
+
+  validate: ->
+    if _.isString(error_messgae = @validator(@serializeValue()))
+      return {
+        valid: false
+        msg: error_messgae
+      }
+    else
+      return {
+        valid: true
+        msg: null
+      }
+
+  #
+  # Default implementations
+  #
+  validator: (value) -> undefined # in case an editor doesn't implement validator, we assume all values are valid
+
+  #
+  # Helpers
+  #
+  getEditorFieldName: -> @context.column.field
+
+  requireDataReady: ->
+    if not @doc?
+      throw Meteor.Error "editor-data-not-ready-yet", "Editor data not ready yet, avoid calling data methods from @init()"
+
+    return
+
+  getEditorDoc: ->
+    # Returns the data document associated with the editor
+    # (the one provided to @loadValue())
+
+    @requireDataReady()
+
+    return @doc
+
+  getEditorFieldValueFromDoc: ->
+    # Returns the editor value from the data document
+    # associated with it (the one provided to @loadValue())
+    #
+    # Will return undefined if it isn't set
+
+    return @getEditorDoc()[@getEditorFieldName()]
+
+  callFormatter: (formatter_name) ->
+    # Get the output of formatter for current editor_args
+
+    active_cell = @context.grid.getActiveCell()
+
+    formatter = @context.grid_control._formatters[formatter_name]
+
+    formatter_output = formatter active_cell.row,
+      active_cell.cell,
+      @context.item[@context.column.field],
+      @context.column,
+      @context.item
+
+    return formatter_output
+
+  getValue: -> @serializeValue() # Consider getting rid of this one.
+                                 # Used by us due to wrong docs
+                                 # slick.grid doesn't use it.
+
+  setValue: -> @setInputValue() # Consider getting rid of this one.
+                                # Used by us due to wrong docs
+                                # slick.grid doesn't use it.
