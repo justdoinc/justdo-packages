@@ -23,7 +23,6 @@ GridControl.installFormatter "unicodeDateFormatter",
     if unicode_date_string != ""
       formatter_content += """
         #{unicode_date_string}
-        <i class="fa fa-fw fa-check" aria-hidden="true"></i>
       """
 
     formatter = """
