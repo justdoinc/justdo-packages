@@ -54,12 +54,14 @@ _.extend GridControl.prototype,
         @_editors[editor_name] = (context) =>
           # Enrich slick grid context with grid control context
 
-          schema = @schema[context.column.id]
+          field_schema = @schema[context.column.id]
 
           _.extend context,
             grid_control: @
-            schema: schema
-            options: schema.grid_column_editor_options or {}
+            field_name: context.column.field
+            schema: field_schema # XXX REMOVE ME, use only field_schema
+            field_schema: field_schema
+            options: field_schema.grid_column_editor_options or {}
 
           return new editor(context)
 
@@ -97,7 +99,33 @@ base_slick_grid_editors_prototype =
       return @serializeValue()?
 
   validate: ->
-    if _.isString(error_messgae = @validator(@serializeValue()))
+    serialized_value = @serializeValue()
+
+    #
+    # Validate against field schema
+    #
+    field_name = @getEditorFieldName()
+
+    field_schema = {}
+    field_schema[field_name] = @context.field_schema
+    field_simple_schema = new SimpleSchema(field_schema)
+
+    serialized_value_in_object = {}
+    serialized_value_in_object[field_name] = serialized_value
+
+    if not ((validation_context = field_simple_schema.newContext()).validate(serialized_value_in_object))
+      ik = _.map validation_context.invalidKeys(), (o) ->
+        "option `#{o.name}': #{validation_context.keyErrorMessage(o.name)}"
+
+      return {
+        valid: false
+        msg: ik.join(";\n")
+      }
+
+    #
+    # Validate against editors @validator()
+    #
+    if _.isString(error_messgae = @validator(serialized_value))
       return {
         valid: false
         msg: error_messgae
@@ -116,7 +144,7 @@ base_slick_grid_editors_prototype =
   #
   # Helpers
   #
-  getEditorFieldName: -> @context.column.field
+  getEditorFieldName: -> @context.field_name
 
   requireDataReady: ->
     if not @doc?
