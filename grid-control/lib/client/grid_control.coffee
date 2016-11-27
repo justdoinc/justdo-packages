@@ -389,17 +389,17 @@ _.extend GridControl.prototype,
           # Set default formatter/editor according to field type
           if def.type is String
             set_default_formatter(def, "textWithTreeControls", "defaultFormatter")
-            set_default_editor(def, "TextWithTreeControlsEditor", "TextEditor")
+            set_default_editor(def, "TextareaWithTreeControlsEditor", "TextareaEditor")
           if def.type is Date
             set_default_formatter(def, "textWithTreeControls", "unicodeDateFormatter")
-            set_default_editor(def, "TextWithTreeControlsEditor", "UnicodeDateEditor")
+            set_default_editor(def, "TextareaWithTreeControlsEditor", "UnicodeDateEditor")
           if def.type is Boolean
             set_default_formatter(def, "textWithTreeControls", "checkboxFormatter")
-            set_default_editor(def, "TextWithTreeControlsEditor", "CheckboxEditor")
+            set_default_editor(def, "TextareaWithTreeControlsEditor", "CheckboxEditor")
           else
             # For other types, same as String
             set_default_formatter(def, "textWithTreeControls", "defaultFormatter")
-            set_default_editor(def, "TextWithTreeControlsEditor", "TextEditor")
+            set_default_editor(def, "TextareaWithTreeControlsEditor", "TextareaEditor")
 
           # Validate formatter/editor and build fixed_fields
           if not grid_control_field_found and not def.grid_pre_grid_control_column
