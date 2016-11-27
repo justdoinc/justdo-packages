@@ -19,7 +19,6 @@ GridControl.installEditor "SelectorEditor",
     @$select.appendTo @context.container
 
     @$select.selectpicker
-      container: "body"
       dropupAuto: true
       size: false
       width: "100%"
