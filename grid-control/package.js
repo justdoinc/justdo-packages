@@ -110,7 +110,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/cells_editors/textarea_with_tree_controls_editor/textarea_with_tree_controls_editor.js', client);
 
   api.add_files('lib/client/cells_editors/unicode_date/unicode_date.sass', client);
-  api.add_files('lib/client/cells_editors/unicode_date/unicode_date.js', client);
+  api.add_files('lib/client/cells_editors/unicode_date/unicode_date.coffee', client);
   api.addAssets('lib/client/cells_editors/unicode_date/media/calendar.gif', client);
 
   api.export('GridControl');
