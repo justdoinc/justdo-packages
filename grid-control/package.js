@@ -100,7 +100,7 @@ Package.onUse(function (api) {
   // Editors 
   api.add_files('lib/client/cells_editors/init.coffee', client, {bare: true});
   api.add_files('lib/client/cells_editors/helpers.coffee', client);
-  api.add_files('lib/client/cells_editors/checkbox_editor/checkbox_editor.js', client);
+  // api.add_files('lib/client/cells_editors/checkbox_editor/checkbox_editor.js', client);
   api.add_files('lib/client/cells_editors/selector_editor/selector_editor.js', client);
   api.add_files('lib/client/cells_editors/selector_editor/selector_editor.sass', client);
   api.add_files('lib/client/cells_editors/textarea_editor/textarea_editor.sass', client);

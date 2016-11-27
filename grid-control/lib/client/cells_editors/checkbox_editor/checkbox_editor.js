@@ -1,49 +1,52 @@
-PACK.Editors.CheckboxEditor = function (args) {
-  var $select;
-  var currentValue;
-  var scope = this;
+// Need to convert to the new editors definitions approach
+// Once done, add back to package.js
 
-  this.init = function () {
-    $select = $("<input type='checkbox' class='editor-checkbox' hideFocus>");
-    $select.appendTo(args.container);
-    $select.focus();
-  };
+// PACK.Editors.CheckboxEditor = function (args) {
+//   var $select;
+//   var currentValue;
+//   var scope = this;
 
-  this.destroy = function () {
-    $select.remove();
-  };
+//   this.init = function () {
+//     $select = $("<input type='checkbox' class='editor-checkbox' hideFocus>");
+//     $select.appendTo(args.container);
+//     $select.focus();
+//   };
 
-  this.focus = function () {
-    $select.focus();
-  };
+//   this.destroy = function () {
+//     $select.remove();
+//   };
 
-  this.loadValue = function (item) {
-    currentValue = !!item[args.column.field];
-    if (currentValue) {
-      $select.prop('checked', true);
-    } else {
-      $select.prop('checked', false);
-    }
-  };
+//   this.focus = function () {
+//     $select.focus();
+//   };
 
-  this.serializeValue = function () {
-    return $select.prop('checked');
-  };
+//   this.loadValue = function (item) {
+//     currentValue = !!item[args.column.field];
+//     if (currentValue) {
+//       $select.prop('checked', true);
+//     } else {
+//       $select.prop('checked', false);
+//     }
+//   };
 
-  this.applyValue = function (item, state) {
-    item[args.column.field] = state;
-  };
+//   this.serializeValue = function () {
+//     return $select.prop('checked');
+//   };
 
-  this.isValueChanged = function () {
-    return (this.serializeValue() !== currentValue);
-  };
+//   this.applyValue = function (item, state) {
+//     item[args.column.field] = state;
+//   };
 
-  this.validate = function () {
-    return {
-      valid: true,
-      msg: null
-    };
-  };
+//   this.isValueChanged = function () {
+//     return (this.serializeValue() !== currentValue);
+//   };
 
-  this.init();
-};
+//   this.validate = function () {
+//     return {
+//       valid: true,
+//       msg: null
+//     };
+//   };
+
+//   this.init();
+// };
