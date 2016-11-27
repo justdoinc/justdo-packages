@@ -55,6 +55,15 @@ _.extend GridControl.prototype,
   _tree_control_fomatters: null
   _print_formatters: null
 
+  _loaded_slick_grid_jquery_events = null
+  # Formatters' slick_grid_jquery_events should be loaded only once.
+  #
+  # If a formatter is inheriting from another formatter that has
+  # slick_grid_jquery_events without changing it, we don't want to
+  # load it again, to prevent that, we use
+  # @_loaded_slick_grid_jquery_events to keep track on the events arrays
+  # we've loaded already, .
+
   _load_formatters: ->
     #
     # Load all the formatters for the current grid_control object
@@ -63,6 +72,7 @@ _.extend GridControl.prototype,
     @_formatters = {} # the SlickGrid formatters, called simply _formatters for historical reasons
     @_tree_control_fomatters = []
     @_print_formatters = {}
+    @_loaded_slick_grid_jquery_events = []
 
     for formatter_name, formatter_definition of PACK.Formatters
       @loadFormatter(formatter_name, formatter_definition)
@@ -90,6 +100,9 @@ _.extend GridControl.prototype,
     #                                           set (false is default value)
     #     slick_grid_jquery_events: If defined, should be an array of objects in the format described
     #                               in /jquery_events/init.coffee for installCustomJqueryEvent()
+    #                               If a formatter inherit from another formatter and doesn't change
+    #                               slick_grid_jquery_events, we won't load the events another time
+    #                               check @_loaded_slick_grid_jquery_events's comment above for more details.
     #
     #     gridControlInit: will be called once the "init" event
     #                      of the grid control will be fired,
@@ -172,9 +185,16 @@ _.extend GridControl.prototype,
     if formatter_definition.is_slick_grid_tree_control_formatter
       @_tree_control_fomatters.push formatter_name
 
-    if _.isArray formatter_definition.slick_grid_jquery_events
-      for event_definition in formatter_definition.slick_grid_jquery_events
-        @installCustomJqueryEvent(event_definition)
+    if _.isArray (formatter_slick_grid_jquery_events = formatter_definition.slick_grid_jquery_events)
+      if not (formatter_slick_grid_jquery_events in @_loaded_slick_grid_jquery_events)
+        # Don't load the formatter jquery events, if we loaded them already (can happen
+        # in inherited formatters)
+        # Read comment about @_loaded_slick_grid_jquery_events next to its
+        # definition above for more details
+        @_loaded_slick_grid_jquery_events.push(formatter_slick_grid_jquery_events)
+
+        for event_definition in formatter_slick_grid_jquery_events
+          @installCustomJqueryEvent(event_definition)
 
     if _.isFunction(grid_control_init = formatter_definition.gridControlInit)
       @once "init", =>
