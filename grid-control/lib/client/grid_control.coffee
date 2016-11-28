@@ -662,6 +662,41 @@ _.extend GridControl.prototype,
 
     return @_grid_data.getItemPath(cell.row)
 
+  editEventCell: (e, cb) ->
+    # Enters edit mode in the event's cell
+    #
+    # cb will be called if cell edit mode entered successfully
+    {row, cell} = @_grid.getCellFromEvent(e)
+
+    @_grid.setActiveCell(row, cell, false)
+
+    if @eventCellIsActiveCell(e)
+      @editActiveCell()
+      
+      if (cell_editor = @_grid.getCellEditor())?
+        cb(cell_editor)
+    
+    return
+
+  getEventFormatterDetails: (e) ->
+    {row, cell} = @_grid.getCellFromEvent(e)
+    
+    column_view_state = @getView()[cell]
+    field_name = column_view_state.field
+    column_field_schema = @schema[field_name]
+
+    if column_field_schema?
+      formatter_name = column_field_schema.grid_column_formatter
+      formatter_obj = GridControl.getFormatters()[formatter_name]
+
+    return {
+      field_name
+      column_view_state
+      column_field_schema
+      formatter_obj
+      formatter_name
+    }
+
   #
   # Current row
   #
