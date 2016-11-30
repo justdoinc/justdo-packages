@@ -4,8 +4,9 @@ GridControl.installEditor "TextareaEditor",
   init: ->
     @$input = $("""<textarea rows="1" />""")
 
-    $editor = $("""<div class="grid-editor textarea-editor" />""")
-    $editor.html(@$input).appendTo @context.container
+    $wrapper = @generateInputWrappingElement()
+
+    $wrapper.appendTo @context.container
 
     @$input.bind "keydown.nav", (e) ->
       # Prevent left/right arrows from propagating to avoid grid
@@ -58,3 +59,14 @@ GridControl.installEditor "TextareaEditor",
     @$input.remove()
 
     return
+
+#
+# Custom helpers
+#
+  generateInputWrappingElement: ->
+    # Separate the wrapping element generator, to allow its replacement
+    # by inheriting editors (see TextareaWithTreeControlsEditor for example)
+    $wrapper = $("""<div class="grid-editor textarea-editor" />""")
+    $wrapper.html(@$input)
+
+    return $wrapper
