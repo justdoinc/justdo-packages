@@ -86,7 +86,6 @@ Package.onUse(function (api) {
   api.add_files('lib/client/cells_formatters/default/default.coffee', client);
   api.add_files('lib/client/cells_formatters/default/default.sass', client);
   api.add_files('lib/client/cells_formatters/key_value/key_value.coffee', client);
-  api.add_files('lib/client/cells_formatters/checkbox/checkbox.coffee', client);
   api.add_files('lib/client/cells_formatters/datetime_formatter/datetime_formatter.coffee', client);
   api.add_files('lib/client/cells_formatters/datetime_formatter/datetime_formatter.sass', client);
   api.add_files('lib/client/cells_formatters/unicode_date/unicode_date.coffee', client);
@@ -100,7 +99,6 @@ Package.onUse(function (api) {
   // Editors 
   api.add_files('lib/client/cells_editors/init.coffee', client, {bare: true});
   api.add_files('lib/client/cells_editors/helpers.coffee', client);
-  // api.add_files('lib/client/cells_editors/checkbox_editor/checkbox_editor.js', client);
   api.add_files('lib/client/cells_editors/selector_editor/selector_editor.sass', client);
   api.add_files('lib/client/cells_editors/selector_editor/selector_editor.coffee', client);
   api.add_files('lib/client/cells_editors/textarea_editor/textarea_editor.sass', client);
