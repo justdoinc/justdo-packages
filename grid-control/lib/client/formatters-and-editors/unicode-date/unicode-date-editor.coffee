@@ -17,7 +17,7 @@ GridControl.installEditor "UnicodeDateEditor",
       dateFormat: @datepickerFormat
       showOn: "button"
       buttonImageOnly: true
-      buttonImage: "/packages/stem-capital_grid-control/lib/client/cells_editors/unicode_date/media/calendar.gif"
+      buttonImage: "/packages/stem-capital_grid-control/lib/client/formatters-and-editors/unicode-date/media/calendar.gif"
       showAnim: ""
       beforeShow: => return
       onSelect: => @saveAndExit()

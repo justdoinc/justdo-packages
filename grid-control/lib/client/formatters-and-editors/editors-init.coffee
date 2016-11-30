@@ -29,7 +29,7 @@ GridControl.installEditor = (editor_name, editor_prototype) ->
     #
     # * Not true for SlickGrid in general.
 
-    @init()
+    @init() # See base_slick_grid_editors_prototype below
 
     return
 
@@ -183,10 +183,10 @@ base_slick_grid_editors_prototype =
 
     return formatter_output
 
-  getValue: -> @serializeValue() # Consider getting rid of this one.
+  getValue: -> @serializeValue() # XXX Consider getting rid of this one.
                                  # Used by us due to wrong docs
                                  # slick.grid doesn't use it.
 
-  setValue: -> @setInputValue() # Consider getting rid of this one.
+  setValue: -> @setInputValue() # XXX Consider getting rid of this one.
                                 # Used by us due to wrong docs
                                 # slick.grid doesn't use it.

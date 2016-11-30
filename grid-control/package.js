@@ -81,35 +81,39 @@ Package.onUse(function (api) {
   api.add_files('lib/client/jquery_events/init.coffee', client, {bare: true});
   api.add_files('lib/client/jquery_events/destroy_editor_on_blur.coffee', client);
 
-  // Formatters
-  api.add_files('lib/client/cells_formatters/init.coffee', client, {bare: true});
-  api.add_files('lib/client/cells_formatters/default/default.coffee', client);
-  api.add_files('lib/client/cells_formatters/default/default.sass', client);
-  api.add_files('lib/client/cells_formatters/key_value/key_value.coffee', client);
-  api.add_files('lib/client/cells_formatters/datetime_formatter/datetime_formatter.coffee', client);
-  api.add_files('lib/client/cells_formatters/datetime_formatter/datetime_formatter.sass', client);
-  api.add_files('lib/client/cells_formatters/unicode_date/unicode_date.coffee', client);
-  api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls.sass', client);
-  api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls.coffee', client);
-  api.add_files('lib/client/cells_formatters/text_with_tree_controls/text_with_tree_controls-events.coffee', client);
-  api.addAssets('lib/client/cells_formatters/text_with_tree_controls/media/collapse.gif', client);
-  api.addAssets('lib/client/cells_formatters/text_with_tree_controls/media/expand.gif', client);
-  api.addAssets('lib/client/cells_formatters/text_with_tree_controls/media/transfer_state_icon_sprite.png', client);
+  // Formatters & Editors
+  api.add_files('lib/client/formatters-and-editors/formatters-init.coffee', client, {bare: true});
+  api.add_files('lib/client/formatters-and-editors/editors-init.coffee', client, {bare: true});
+  api.add_files('lib/client/formatters-and-editors/editors-helpers.coffee', client);
 
-  // Editors 
-  api.add_files('lib/client/cells_editors/init.coffee', client, {bare: true});
-  api.add_files('lib/client/cells_editors/helpers.coffee', client);
-  api.add_files('lib/client/cells_editors/selector_editor/selector_editor.sass', client);
-  api.add_files('lib/client/cells_editors/selector_editor/selector_editor.coffee', client);
-  api.add_files('lib/client/cells_editors/textarea_editor/textarea_editor.sass', client);
-  api.add_files('lib/client/cells_editors/textarea_editor/textarea_editor.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.sass', client);
 
-  api.add_files('lib/client/cells_editors/textarea_with_tree_controls_editor/textarea_with_tree_controls_editor.sass', client);
-  api.add_files('lib/client/cells_editors/textarea_with_tree_controls_editor/textarea_with_tree_controls_editor.js', client);
+  api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/textarea-with-tree-controls-editor.js', client);
+  api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/textarea-with-tree-controls-editor.sass', client);
+  api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls-events.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls.sass', client);
+  api.addAssets('lib/client/formatters-and-editors/textarea-with-tree-controls/media/collapse.gif', client);
+  api.addAssets('lib/client/formatters-and-editors/textarea-with-tree-controls/media/expand.gif', client);
+  api.addAssets('lib/client/formatters-and-editors/textarea-with-tree-controls/media/transfer-state-icon-sprite.png', client);
 
-  api.add_files('lib/client/cells_editors/unicode_date/unicode_date.sass', client);
-  api.add_files('lib/client/cells_editors/unicode_date/unicode_date.coffee', client);
-  api.addAssets('lib/client/cells_editors/unicode_date/media/calendar.gif', client);
+  api.add_files('lib/client/formatters-and-editors/unicode-date/unicode-date-editor.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/unicode-date/unicode-date-formatter.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/unicode-date/unicode-date.sass', client);
+  api.addAssets('lib/client/formatters-and-editors/unicode-date/media/calendar.gif', client);
+
+  api.add_files('lib/client/formatters-and-editors/default-formatter/default-formatter.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/default-formatter/default-formatter.sass', client);
+
+  api.add_files('lib/client/formatters-and-editors/textarea-editor/textarea-editor.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/textarea-editor/textarea-editor.sass', client);
+
+  api.add_files('lib/client/formatters-and-editors/key-value-formatter/key-value.coffee', client);
+
+  api.add_files('lib/client/formatters-and-editors/datetime-formatter/datetime-formatter.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/datetime-formatter/datetime-formatter.sass', client);
+
 
   api.export('GridControl');
 });
