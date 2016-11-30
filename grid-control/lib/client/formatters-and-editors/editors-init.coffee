@@ -74,8 +74,6 @@ GridControl.installEditorExtension = (options) ->
 GridControl.getEditors = ->
   return PACK.Editors
 
-PACK.EditorsHelpers = {}
-
 _.extend GridControl.prototype,
   _editors: null
   _load_editors: ->

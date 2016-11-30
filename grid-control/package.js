@@ -84,7 +84,6 @@ Package.onUse(function (api) {
   // Formatters & Editors
   api.add_files('lib/client/formatters-and-editors/formatters-init.coffee', client, {bare: true});
   api.add_files('lib/client/formatters-and-editors/editors-init.coffee', client, {bare: true});
-  api.add_files('lib/client/formatters-and-editors/editors-helpers.coffee', client);
 
   api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.coffee', client);
   api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.sass', client);
