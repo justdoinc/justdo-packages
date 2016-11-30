@@ -89,7 +89,10 @@ Package.onUse(function (api) {
   api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.coffee', client);
   api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.sass', client);
 
-  api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/textarea-with-tree-controls-editor.js', client);
+  api.add_files('lib/client/formatters-and-editors/textarea-editor/textarea-editor.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/textarea-editor/textarea-editor.sass', client);
+
+  api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/textarea-with-tree-controls-editor.coffee', client);
   api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/textarea-with-tree-controls-editor.sass', client);
   api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls.coffee', client);
   api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls-events.coffee', client);
@@ -104,9 +107,6 @@ Package.onUse(function (api) {
 
   api.add_files('lib/client/formatters-and-editors/default-formatter/default-formatter.coffee', client);
   api.add_files('lib/client/formatters-and-editors/default-formatter/default-formatter.sass', client);
-
-  api.add_files('lib/client/formatters-and-editors/textarea-editor/textarea-editor.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/textarea-editor/textarea-editor.sass', client);
 
   api.add_files('lib/client/formatters-and-editors/key-value-formatter/key-value.coffee', client);
 
