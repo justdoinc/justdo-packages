@@ -34,11 +34,10 @@ GridControl.installFormatterExtension = (options) ->
 
   # Leave references to the extended formatter that began
   # the extensions chain
-  if new_formatter.original_extended_formatter_name?
+  if not new_formatter.original_extended_formatter_name?
     new_formatter.original_extended_formatter_name =
       extended_formatter_name
 
-  console.log "HERE", formatter_name, new_formatter
   GridControl.installFormatter formatter_name, new_formatter
 
   return 
