@@ -13,4 +13,6 @@ GridControl.installEditorExtension
         .find(".grid-tree-control-text")
         .html(@$input)
 
+      @$input.addClass "tree-control-textarea"
+
       return $tree_control
