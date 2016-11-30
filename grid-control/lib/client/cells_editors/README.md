@@ -26,8 +26,12 @@ GridControl.installEditor "CamelCaseEditorName",
     # Get the value out of the editor, in the expected data
     # structure.
     #
+    # !IMPORTANT - If you want to unset a field return null
+    # and not undefined, as undefined fields doesn't pass well
+    # in ddp.
+    #
     # Consider the default value when serializing empty editor
-    # for example, if the default value for a field is undefined
+    # for example, if the default value for a field is null
     # (or not set at all), if the editor is empty its serialized
     # value should be undefined and not "", to avoid redundant
     # db update that replaces undefined with "".

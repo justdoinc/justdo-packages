@@ -47,7 +47,7 @@ GridControl.installEditor "UnicodeDateEditor",
     current_val = @$input.val()
 
     if _.isEmpty(current_val)
-      return undefined
+      return null
 
     return current_val
 
