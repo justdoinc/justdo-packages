@@ -39,6 +39,38 @@ GridControl.installEditor = (editor_name, editor_prototype) ->
 
   return
 
+GridControl.installEditorExtension = (options) ->
+  check options, {
+    editor_name: String
+    extended_editor_name: String
+    prototype_extensions: Object
+  }
+
+  {
+    editor_name
+    extended_editor_name
+    prototype_extensions
+  } = options
+
+  if not (parent_editor = GridControl.getEditors()[extended_editor_name])?
+    throw Meteor.Error "unknown-editor", "Editor #{extended_editor_name} doesn't exist"
+
+  new_editor_prototype = Object.create(parent_editor.prototype)
+
+  # Leave reference to the extended formatter
+  _.extend new_editor_prototype, prototype_extensions,
+    extended_editor_name: extended_editor_name
+
+  # Leave references to the extended editor that began
+  # the extensions chain
+  if not new_editor_prototype.original_extended_editor_name?
+    new_editor_prototype.original_extended_editor_name =
+      extended_editor_name
+
+  GridControl.installEditor editor_name, new_editor_prototype
+
+  return 
+
 GridControl.getEditors = ->
   return PACK.Editors
 
