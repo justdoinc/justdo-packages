@@ -98,8 +98,7 @@ Package.onUse(function (api) {
   api.addAssets('lib/client/formatters-and-editors/textarea-with-tree-controls/media/expand.gif', client);
   api.addAssets('lib/client/formatters-and-editors/textarea-with-tree-controls/media/transfer-state-icon-sprite.png', client);
 
-  api.add_files('lib/client/formatters-and-editors/unicode-date/unicode-date-editor.coffee', client);
-  api.add_files('lib/client/formatters-and-editors/unicode-date/unicode-date-formatter.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/unicode-date/unicode-date.coffee', client);
   api.add_files('lib/client/formatters-and-editors/unicode-date/unicode-date.sass', client);
   api.addAssets('lib/client/formatters-and-editors/unicode-date/media/calendar.gif', client);
 

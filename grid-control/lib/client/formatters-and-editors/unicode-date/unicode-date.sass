@@ -1,3 +1,49 @@
+//
+// Unicode date formatter and editor
+//
+
+// Buttons design
+
+// IMPORTANT!!! If buttons outer width change, you must update the
+// default_buttons obj in the sass file
+.udf-id-date-setter
+  width: 15px
+  height: 15px
+  margin: 2px 1px
+  background: transparent url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/unicode-date/media/calendar.gif')
+  cursor: pointer
+
+.udf-action-btn
+  .fa
+    cursor: pointer
+
+.uni-date-formatter
+  .udf-action-btn
+    display: none
+
+  &:hover
+    .udf-action-btn
+      display: inline-block
+
+      float: right
+
+.unicode-date-editor
+  .udf-action-btn
+    display: inline-block
+
+    float: right
+
+  .udf-id-date-setter
+    margin-right: 2px
+
+  &.udf-empty
+    .udf-hidden-if-empty
+      display: none
+
+//
+// Editor
+//
+
 /* jQuery UI datepicker smaller in size */
 
 #ui-datepicker-div
@@ -27,10 +73,7 @@ input.editor-unicode-date
   padding: 0
 
 .ui-datepicker-trigger
-  margin-top: 2px
-  padding: 0
-  vertical-align: top
-  cursor: pointer
+  display: none
 
 //
 // Placeholder style

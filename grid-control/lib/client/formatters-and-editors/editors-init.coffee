@@ -183,6 +183,11 @@ base_slick_grid_editors_prototype =
 
     return formatter_output
 
+  saveAndExit: ->
+    @context.grid_control.saveAndExitActiveEditor()
+
+    return
+
   getValue: -> @serializeValue() # XXX Consider getting rid of this one.
                                  # Used by us due to wrong docs
                                  # slick.grid doesn't use it.
