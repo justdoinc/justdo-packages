@@ -361,12 +361,19 @@ _.extend GridData.prototype,
     #                 the item type.
     #   item_obj:     the item object
     #   path:         the item's path under the root tree
-    #   expand_state: undefined if expand_only option is false
-    #                 -1 if item has no children, 0 if collapsed, 1 if expanded
-    #                 If filtered_tree option is set to true the state will be according to
-    #                 the filtered tree and not the regular tree. i.e. if item `a` passed the
-    #                 filter and is collapsed, if all `a`s items are filtered out its state
-    #                 will be -1.
+    #   expand_state: 
+    #     * **Defined only if options are: `{expand_only: true, filtered_tree: false}` , in all
+    #       other cases will be undefined.**
+    #     * If options are: `{expand_only: true, filtered_tree: false}` will be:  -1 if item has
+    #       no children, 0 if collapsed, 1 if expanded If filtered_tree option is set to true the
+    #       state will be according to the filtered tree and not the regular tree. i.e. if item `a`
+    #       passed the filter and is collapsed, if all `a`s items are filtered out its state will
+    #       be -1.
+    #
+    #     Note: the reason we provide the expand_state only for the specified options is that this
+    #     is the only case where finding the expand state is O(1) complexity , in all other cases,
+    #     finding the expand state is CPU expensive, and should be done only if needed, using the
+    #     `gc._grid_data. filterAwareGetPathExpandState(path)`.
     #
     #   if iteratee returns:
     #     -1: traversing won't attempt to step into item's under the
