@@ -208,6 +208,24 @@ _.extend GridControlMux.prototype,
     #                     the tab. Note, that since @activateTab() call @loadTab()
     #                     if the tab isn't loaded yet, no need to set load_on_init
     #                     to true if activate_on_init is true.
+    #
+    #   tabTitleGenerator: undefined by default. Can be undefined/String/Function.
+    #                      Affects the value returned by tab's name() method under @_grid_controls_tabs: 
+    #                      * If is undefined: the method will return the tab_id
+    #                      * If is String the method will return that String.
+    #                      * If is a function, that function will be called with
+    #                        the GridControlMux object as its `this` and the tab_id as its first argument.
+    #                        The function should return the string that will be used for the tab title.
+    #
+    #                        If the returned value isn't a String we'll print the default
+    #                        title (as if undefined was set as tabTitleGenerator).
+    #
+    #                        Tip: you can use @getTabGridControlSectionsState(tab_id) to
+    #                        get the current grid control sections state and set the tab
+    #                        title accordingly.
+    #
+    #                        tabTitleGenerator: (tab_id) ->
+    #                           sections_state = @getTabGridControlSectionsState(tab_id)
     # }
     #
 
@@ -215,6 +233,7 @@ _.extend GridControlMux.prototype,
       removable: true
       load_on_init: false
       activate_on_init: false
+      tabTitleGenerator: undefined
 
     options = _.extend {}, default_options, options
 
@@ -242,6 +261,19 @@ _.extend GridControlMux.prototype,
       active: false
       removable: options.removable
       grid_control_container: null
+      getTabTitle: =>
+        if (tabTitleGenerator = options.tabTitleGenerator)?
+          if _.isString tabTitleGenerator
+            return tabTitleGenerator          
+          else if _.isFunction tabTitleGenerator
+            if _.isString(title = tabTitleGenerator.call(@, tab_id))
+              return title
+            else
+              @logger.warn "tab's tabTitleGenerator() returned non-string value"
+          else
+            @logger.warn "We don't support tabTitleGenerator of type: #{typeof tabTitleGenerator}"
+
+        return tab_id
 
     @_grid_controls_tabs_dependency.changed()
     @logger.debug "Tab #{tab_id} added"
@@ -596,6 +628,24 @@ _.extend GridControlMux.prototype,
           setSectionsState()
 
         return
+
+  getTabGridControlNonReactive: (tab_id, require_ready=false) ->
+    # Similar output to @getActiveGridControl() for any tab_id
+    # Non Reactive
+
+    tab = @getTabNonReactive(tab_id)
+    if not require_ready or tab.state == "ready"
+      return tab.grid_control
+
+    return null
+
+  getTabGridControlSectionsState: (tab_id) ->
+    # Returns the tab_id's grid's sections state object, or null if
+    # tab_id's doesn't have grid_control or if it isn't ready
+    if not (gc = @getTabGridControlNonReactive(tab_id, true))?
+      return null
+    else
+      return gc._grid_data.exportSectionsState()
 
   destroy: ->
     if @destroyed
