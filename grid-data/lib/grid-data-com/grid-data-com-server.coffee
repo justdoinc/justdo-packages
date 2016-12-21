@@ -43,11 +43,13 @@ _.extend GridDataCom.prototype,
       # along subscription arguments and references (copy or create a new before changing)
       # to the current query and condition.
       #
-      # Should return an array of the form [query, condition] with the new query and
-      # condition to use for the provided cursor.
+      # Should return an array of the form
+      # [query, condition, pub_customization_safe_options, pub_customization_restricted_options]
+      # with the new query and condition to use for the provided cursor, and potentially (can be null/undefined) safe_options
+      # and restricted_options that will be passed to customizedCursorPublish.
       #
       # If returns false, we regard it as a blocked request for subscription,
-      # we will return an empty publication. 
+      # we will return an empty publication.
       #
       # `this` context is same as the Meteor.publish's
       #
@@ -64,13 +66,16 @@ _.extend GridDataCom.prototype,
 
     options = _.extend default_options, options
 
-    Meteor.publish options.name, (subscription_options) ->
+    Meteor.publish options.name, (subscription_options, pub_options) ->
       # `this` is the Publication context, use self for GridData instance 
       if options.require_login
         if not @userId?
           @ready()
 
           return
+
+      if not pub_options?
+        pub_options = {}
 
       query = {}
       projection = {}
@@ -79,6 +84,8 @@ _.extend GridDataCom.prototype,
         query.users = @userId
 
       middleware = options.middleware
+      pub_customization_safe_options = undefined
+      pub_customization_restricted_options = undefined
       if middleware?
         if options.middleware_incharge
           return middleware.call @, self.collection, options, _.toArray(arguments), query, projection
@@ -90,11 +97,17 @@ _.extend GridDataCom.prototype,
 
             return
           else
-            [query, projection] = result
+            [query, projection, pub_customization_safe_options, pub_customization_restricted_options] = result
 
-            return self.collection.find query, projection
-      else
-        return self.collection.find query, projection
+        if _.isObject(pub_customization_safe_options)
+          # Since the middleware has access to the pub_options received as an argument
+          # we give the its pub_customization_safe_options precdence over the user's
+          # pub_options.
+          pub_options = _.extend {}, pub_options, pub_customization_safe_options
+
+      cursor = self.collection.find query, projection
+
+      return JustdoHelpers.customizedCursorPublish(@, cursor, pub_options, pub_customization_restricted_options)
 
   initDefaultIndeices: ->
     @collection._ensureIndex {users: 1}
