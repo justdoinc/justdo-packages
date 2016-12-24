@@ -376,6 +376,10 @@ _.extend GridData.prototype,
     #
     # Will return undefined if we can't find item_id in the tree.
 
+    # This function is reactive to changes in the underlying tree data structures
+
+    @invalidateOnGridDataCoreStructureChange()
+
     if item_id == "0"
       return "/"
 

@@ -43,6 +43,11 @@ _.extend GridData.prototype,
     @_rebuild_counter = new ReactiveVar(0)
 
     #
+    # Grid data core related
+    #
+    @_grid_data_core_structure_changes_dependency = new Tracker.Dependency()
+
+    #
     # Grid representation
     #
 
@@ -120,6 +125,10 @@ _.extend GridData.prototype,
 
     @_grid_data_core.on "structure-changed", =>
       @_set_need_rebuild()
+
+      @_grid_data_core_structure_changes_dependency.changed()
+
+      return
 
     @_grid_data_core.on "content-changed", (item_id, changed_fields_array) =>
       if @_items_ids_map_to_grid_tree_indices[item_id]?
@@ -258,6 +267,16 @@ _.extend GridData.prototype,
 
     @_need_rebuild.set(++@_need_rebuild_count)
 
+  invalidateOnGridDataCoreStructureChange: ->
+    if Tracker.currentComputation?
+      # If there's no computation - do nothing
+
+      # Call this method on methods that should gets recompute when the
+      # data strucutres maintained by GridDataCore changes
+      return @_grid_data_core_structure_changes_dependency.depend()
+
+    return 
+
   invalidateOnRebuild: ->
     if Tracker.currentComputation?
       # If there's no computation - do nothing
@@ -265,6 +284,8 @@ _.extend GridData.prototype,
       # Call this method on methods that should gets recompute on rebuild (if ran
       # inside a computation)
       return @_rebuild_counter.get()
+
+    return
 
   _lock: ->
     # Note that @_lock doesn't lock the @_grid_data_core
