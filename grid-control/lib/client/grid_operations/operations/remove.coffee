@@ -45,4 +45,4 @@ _.extend PACK.GridOperations,
           # following operations
           releaseOpsLock()
 
-    prereq: -> @_opreqActivePathLevelPermitted(@_opreqActivePathIsLeaf(@_opreqUnlocked(@_opreqGridReady())))
+    prereq: -> @_opreqActivePathLevelPermitted(@_opreqActivePathIsLeafOrHaveMultipleParents(@_opreqUnlocked(@_opreqGridReady())))

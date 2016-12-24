@@ -141,6 +141,24 @@ _.extend GridControl.prototype,
 
     return prereq
 
+  _opreqActivePathIsLeafOrHaveMultipleParents: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    # If there's no active path - just return the active prereq message
+    if not _.isEmpty(active_path_prereq = @_opreqActivePath())
+      _.extend(prereq, active_path_prereq)
+      return prereq
+
+    # If the current path is under only one parent and it is leaf, block the opreation
+
+    current_item_id = GridData.helpers.getPathItemId(@getCurrentPath())
+    if @_grid_data.getAllCollectionItemIdPaths(current_item_id).length == 1 and 
+        not _.isEmpty(active_path_prereq = @_opreqActivePathIsLeaf())
+      _.extend(prereq, active_path_prereq)
+      return prereq
+
+    return prereq
+
   _opreqActivePathHasChildren: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
