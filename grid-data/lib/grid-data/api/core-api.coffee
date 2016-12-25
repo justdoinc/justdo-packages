@@ -213,6 +213,13 @@ _.extend GridData.prototype,
   getPathRelativePath: (path) ->
     # Return null if path doesn't exist
 
+    # Note: If path isn't under main section it must be on the visible tree
+
+    # If path on main section, just return it as is
+    path_section = @getPathSection(path)
+    if path_section?.id == "main"
+      return path
+
     index = @getPathGridTreeIndex(path)
 
     if not index?
