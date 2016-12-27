@@ -148,6 +148,14 @@ _.extend GridDataCom.prototype,
         else
           return null
 
+      getHasChildren: (item_id, item_doc=null) ->
+        # item_doc serves the same purpose new_child_fields serves in
+        # @getNewChildOrder, read comment there in its entirety
+        # including XXX section
+        query = {}
+        query["parents.#{item_id}.order"] = {$gte: 0}
+        return collection.findOne(query, {fields: {_id: 1}})?
+
       getChildrenCount: (item_id, item_doc=null) ->
         # item_doc serves the same purpose new_child_fields serves in
         # @getNewChildOrder, read comment there in its entirety
