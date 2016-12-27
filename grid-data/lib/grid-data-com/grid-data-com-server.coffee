@@ -162,7 +162,7 @@ _.extend GridDataCom.prototype,
         # including XXX section
         query = {}
         query["parents.#{item_id}.order"] = {$gte: 0}
-        return collection.find(query).count()
+        return collection.find(query, {fields: {_id: 1}}).count()
 
       getNewChildOrder: (parent_id, new_child_fields=null) ->
         # Note: this @getNewChildOrder() does nothing with new_child_fields
