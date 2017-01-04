@@ -28,6 +28,8 @@ _.extend GridDataCom.prototype,
 
   _error: JustdoHelpers.constructor_error
 
+  methods_names: ["addChild", "addSibling", "removeParent", "addParent", "movePath", "sortChildren", "bulkUpdate"]
+
   setupGridPublication: (options = {}) ->
     self = this
 
@@ -237,8 +239,7 @@ _.extend GridDataCom.prototype,
 
   setGridMethodMiddleware: (method_name, middleware) ->
     # Assigned middlewares are called just before the default execution of the method
-    # with the calling Meteor Method `this` variable as their `this`, and with some
-    # additional arguments.
+    # with the the GridDataCom object as their `this`, and with some additional arguments.
     #
     # Middleware allows rejecting the execution and can be used to perform additional
     # operations.
@@ -253,22 +254,24 @@ _.extend GridDataCom.prototype,
     #
     # Each grid method provides different arguments to its middlewares as follows:
     #
-    # Note: for all the grid methods the `this` var will be the same as the Meteor
-    # Method's this.
+    # Notes:
+    # * for all the grid methods the `this` var will be the GridDataCom object.
+    # * In all the grid methods, the perform_as arg is the user that should be regarded
+    # for security, access control and logging purposes as the one performing the action.
     #
-    # addChild: (path, new_item_fields)
+    # addChild: (path, new_item_fields, perform_as)
     # path is the path to which the new item is about to be added.
     #
     # new_item_fields reference to the original object and is not a copy for the purpose of
     # allowing it to be customized by the middlewares.
     #
-    # addSibling: (path, new_item_fields)
+    # addSibling: (path, new_item_fields, perform_as)
     # path is the path to which the new item is going to be sibling of.
     #
     # new_item_fields reference to the original object and is not a copy for the purpose of
     # allowing it to be customized by the middlewares.
     #
-    # removeParent: (path, etc)
+    # removeParent: (path, perform_as, etc)
     # path is the path we are going to remove.
     #
     # etc is an object that contains the following keys:
@@ -286,7 +289,7 @@ _.extend GridDataCom.prototype,
     #   allowing it to be customized by the middlewares. update_op will be provided only
     #   when no_more_parents is false, will be undefined otherwise.
     #
-    # addParent: (etc)
+    # addParent: (perform_as, etc)
     #
     # etc is an object that contains the following keys:
     #
@@ -301,7 +304,7 @@ _.extend GridDataCom.prototype,
     #
     #   etc.new_parent_item is the document of the new parent. passed by reference.
     #
-    # movePath: (path, etc)
+    # movePath: (path, perform_as, etc)
     # path is the path we are going to move.
     #
     # etc is an object that contains the following keys:
@@ -320,7 +323,7 @@ _.extend GridDataCom.prototype,
     # sortChildren: ()
     # middlewares on sortChildren won't be called and has no effect on execution
     #
-    # bulkUpdate: (selector, modifier)
+    # bulkUpdate: (selector, modifier, perform_as)
     # selector is a reference to the selector we are about to use in the update
     # operation. Isn't a copy for the purpose of allowing it to be customized by
     # the middlewares.
@@ -330,10 +333,9 @@ _.extend GridDataCom.prototype,
     # operation. Isn't a copy for the purpose of allowing it to be customized by
     # the middlewares.
     #
-    methods_names = ["addChild", "addSibling", "removeParent", "addParent", "movePath", "sortChildren", "bulkUpdate"]
 
-    if method_name not in methods_names
-      throw @_error "unknown-method-name", "Unknown method name: #{method_name}, use one of: #{methods_names.join(", ")}"
+    if method_name not in @methods_names
+      throw @_error "unknown-method-name", "Unknown method name: #{method_name}, use one of: #{@methods_names.join(", ")}"
 
     if not _.isFunction middleware
       throw @_error "wrong-type", "Middleware has to be a function"
@@ -345,15 +347,15 @@ _.extend GridDataCom.prototype,
 
   _getGridMethodMiddleware: (method_name) -> @_grid_methods_middlewares[method_name] or []
 
-  _runGridMethodMiddlewares: (method_this, method_name) ->
-    # _runGridMethodMiddlewares: (method_this, method_name, middleware_arg1, middleware_arg2, ...)
+  _runGridMethodMiddlewares: (method_name) ->
+    # _runGridMethodMiddlewares: (method_name, middleware_arg1, middleware_arg2, ...)
     # Method this should be the this variable of the calling grid method. Limitation of the js
     # lang don't allow this API to be nicer.
     # Important, you can rely only on @userId inside this
-    method_args = _.toArray(arguments).slice(2)
+    method_args = _.toArray(arguments).slice(1)
 
     for middleware in @_getGridMethodMiddleware(method_name)
-      message = middleware.apply method_this, method_args
+      message = middleware.apply @, method_args
 
       if message == true
         # no issue continue to run the next middleware
@@ -365,348 +367,20 @@ _.extend GridDataCom.prototype,
   initDefaultGridMethods: ->
     self = @
 
+    # Methods to API proxy
+
     methods = {}
-
-    collection = @collection
-
-    # Allow adding root child without going through the addChild method
-    # to allow adding a root child to a specific non-logged-in user 
-    self.addRootChild = (first_user_id, fields) ->
-      new_item = _.extend {}, fields,
-        parents:
-          "0":
-            order:
-              collection.getNewChildOrder("0", fields)
-        users: [first_user_id]
-
-      self._runGridMethodMiddlewares {userId: first_user_id}, "addChild", "/", new_item
-
-      return collection.insert new_item
-
-    methods[helpers.getCollectionMethodName(collection, "addChild")] = (path, fields = {}) ->
-      check(path, String)
-      check(fields, Object)
-
-      if not @userId?
-        throw self._error "login-required"
-
-      if path == "/"
-        return self.addRootChild(@userId, fields)
-
-      if not (item = collection.getItemByPathIfUserBelong path, @userId)?
-        throw self._error "unknown-path"
-
-      new_item = _.extend {}, fields, {parents: {}, users: item.users}
-      new_item.parents[item._id] = {order: collection.getNewChildOrder(item._id, fields)}
-
-      self._runGridMethodMiddlewares @, "addChild", path, new_item
-
-      return collection.insert new_item
-
-    methods[helpers.getCollectionMethodName(collection, "addSibling")] = (path, fields = {}) ->
-      check(path, String)
-      check(fields, Object)
-
-      if not (item = collection.getItemByPathIfUserBelong path, @userId)?
-        throw self._error "unknown-path"
-
-      parent_id = helpers.getPathParentId(path)
-      if parent_id == "0"
-        # item that is added to the top level is added with the adding user only
-        users = [@userId]
-      else
-        # non top-level item inherents its parent users
-        parent_doc = collection.getItemById(parent_id)
-        users = parent_doc.users
-
-      sibling_order = item.parents[parent_id].order + 1
-
-      new_item = _.extend {}, fields, {parents: {}, users: users}
-      new_item.parents[parent_id] = {order: sibling_order}
-
-      self._runGridMethodMiddlewares @, "addSibling", path, new_item
-
-      collection.incrementChildsOrderGte parent_id, sibling_order, item
-
-      return collection.insert new_item
-
-    methods[helpers.getCollectionMethodName(collection, "removeParent")] = (path) ->
-      check(path, String)
-
-      if not (item = collection.getItemByPathIfUserBelong path, @userId)?
-        throw self._error "unknown-path"
-
-      parent_id = helpers.getPathParentId(path)
-
-      if not (parent_id of item.parents)
-        throw self._error "unknown-parent", "#{parent_id} isn't a parent of #{item._id}"
-
-      # Perform removal
-      if _.size(item.parents) == 1
-        # Remove last parent, and the item itself.
-        # We don't allow removing an item with children
-
-        if collection.getChildrenCount(item._id, item) > 0
-          throw self._error "operation-blocked", 'Can\'t remove the last parent of an item that has sub-items. (You might not see sub-items you aren\'t member of)'
-
-        self._runGridMethodMiddlewares @, "removeParent", path,
-          # the etc obj
-          item: item 
-          parent_id: parent_id,
-          no_more_parents: true
-          update_op: undefined
-
-        collection.remove item._id
-      else
-        # Remove parent
-        update_op = {$unset: {}}
-        update_op.$unset["parents.#{parent_id}"] = ""
-
-        self._runGridMethodMiddlewares @, "removeParent", path,
-          # the etc obj
-          item: item 
-          parent_id: parent_id,
-          no_more_parents: false
-          update_op: update_op
-
-        collection.update item._id, update_op
-
-    methods[helpers.getCollectionMethodName(collection, "addParent")] = (item_id, new_parent) ->
-      # new parent should be of the form:
-      #
-      # {
-      #   parent: "", # the new parent id, use "0" for root
-      #   order: int # order under the new parent - not required, will be added as the last item if not specified. 
-      # }
-
-      if (not _.isObject(new_parent))
-        throw self._error "missing-argument", 'new_parent argument is missing'
-
-      check(item_id, String)
-      new_parent = _.pick new_parent, ["parent", "order"]
-
-      {parent, order} = new_parent
-      new_parent_id = parent # Improved readability
-      new_parent_order = order
-
-      #
-      # Validate args
-      #
-      if not new_parent_id?
-        throw self._error "missing-argument", 'new_parent.parent is not set'      
-
-      check(new_parent_id, String)
-      check(new_parent_order, Match.Maybe(Number))
-
-      if not (item = collection.getItemByIdIfUserBelong item_id, @userId)?
-        throw self._error "unknown-id"
-
-      # Check if already parent of item
-      if new_parent_id of item.parents
-        throw self._error "parent-already-exists"
-
-      # Check whether item is an ancestor of new_parent_id
-      if collection.isAncestor(new_parent_id, item._id)
-        throw self._error "infinite-loop", "Can\'t add parent: #{item._id} is an ancestor of #{new_parent_id}"
-
-      # Check whether new_parent_id exists and belongs to user
-      new_parent_item = null
-      if new_parent_id != "0"
-        # if 0, always belongs...
-        new_parent_item = collection.findOne(new_parent_id)
-        if not(new_parent_item? and collection.isUserBelongToItem(new_parent_item, @userId))
-          throw self._error "unknown-path", 'Error: Can\'t add parent: new parent doesn\'t exist' # we don't indicate existance in case no permission
-
-      # If no new_parent_order provided, set to new_parent_order to the end of the item
-      if not new_parent_order?
-        new_parent_order = collection.getNewChildOrder(new_parent_id, item)
-
-      self._runGridMethodMiddlewares @, "addParent",
-        # the etc obj
-        new_parent: {
-          parent: new_parent_id
-          order: new_parent_order
-        }
-        item: item
-        new_parent_item: new_parent_item
-
-      # Check if an item exist already in new_parent_order
-      item_in_new_location =
-        collection.getChildreOfOrder(new_parent_id, new_parent_order, item)
-
-      if item_in_new_location?
-        # if there's an item in the new location.
-        # Note we check above that it isn't the same item. We don't use sub if since
-        # we want to run the middlewares only when we are sure the operation is ready
-        # to be performed. 
-        collection.incrementChildsOrderGte new_parent_id, new_parent_order, item
-
-      # Add to new parent
-      set_new_parent_update_op = {$set: {}}
-      set_new_parent_update_op.$set["parents.#{new_parent_id}"] = {order: new_parent_order}
-      collection.update item._id, set_new_parent_update_op
-
-      return
-
-    methods[helpers.getCollectionMethodName(collection, "movePath")] = (path, new_location) ->
-      check(path, String)
-      check(new_location, {
-        parent: Match.Maybe(String)
-        order: Match.Maybe(Number)
-      })
-
-      if (not _.isObject(new_location)) or
-         (not (("order" of new_location) or ("parent" of new_location)))
-          # if new_location doens't have information for new location
-          throw self._error "missing-argument", 'Error: Can\'t move path: new_location argument lack information for new location'
-
-      if not (item = collection.getItemByPathIfUserBelong path, @userId)?
-        throw self._error "unknown-path"
-
-      current_parent_id = helpers.getPathParentId(path)
-
-      if not ("parent" of new_location)
-        # If parent is not provided in new_location we assume change of order under same item
-        new_location.parent = current_parent_id
-
-      if current_parent_id != new_location.parent
-        if collection.isAncestor(new_location.parent, item._id)
-          throw self._error "infinite-loop", "Error: Can\'t move path: #{item._id} is an ancestor of #{new_location.parent}"
-
-      new_parent_item = null
-      if new_location.parent != "0"
-        new_parent_item = collection.findOne(new_location.parent)
-        if not(new_parent_item? and collection.isUserBelongToItem(new_parent_item, @userId))
-          throw self._error "unknown-path", 'Error: Can\'t move path: new parent doesn\'t exist' # we don't indicate existance in case no permission
-
-      if not ("order" of new_location)
-        new_location.order = collection.getNewChildOrder(new_location.parent, item)
-
-      # Remove current parent op prepeation
-      remove_current_parent_update_op = {$unset: {}}
-      remove_current_parent_update_op.$unset["parents.#{current_parent_id}"] = ""
-
-      # Add to new parent op prepeation
-      set_new_parent_update_op = {$set: {}}
-      set_new_parent_update_op.$set["parents.#{new_location.parent}"] = {order: new_location.order}
-
-      # Check if an item exist already in new_location order
-      item_in_new_location = collection.getChildreOfOrder(new_location.parent, new_location.order, item)
-
-      # We used to have the following optimization but we found out that 
-      # it doesn't work well.
-      #
-      # If an item has multiple parents and you try to move it from one parent
-      # to another one in which it is in, under the same order, it should
-      # combine into one with the one in the new location.
-      #
-      # With this optimization, the original position won't remove and
-      # client will show wrong tree representation post-drop to the new
-      # position, as in reality with this optimization we don't  perform
-      # any action but the user actually changed the tree structure.
-      #
-      # if item_in_new_location? and item_in_new_location._id == item._id
-      #   # There's already an item in the new location, the same item..., nothing to do.
-      #   return
-
-      self._runGridMethodMiddlewares @, "movePath", path,
-        # the etc obj
-        new_location: _.extend {}, new_location
-        item: item
-        current_parent_id: current_parent_id
-        new_parent_item: new_parent_item
-
-      if item_in_new_location?
-        # if there's an item in the new location.
-        # Note we check above that it isn't the same item. We don't use sub if since
-        # we want to run the middlewares only when we are sure the operation is ready
-        # to be performed. 
-        collection.incrementChildsOrderGte new_location.parent, new_location.order, item
-
-      # Remove current parent
-      collection.update item._id, remove_current_parent_update_op
-
-      # Add to new parent
-      collection.update item._id, set_new_parent_update_op
-
-    methods[helpers.getCollectionMethodName(collection, "sortChildren")] = (path, field, sort_order) ->
-      check(path, String)
-      check(field, String)
-      check(sort_order, Match.Maybe(Number))
-
-      if path == "/"
-        throw self._error "cant-perform-on-root"
-
-      if not (parent = collection.getItemByPathIfUserBelong path, @userId)?
-        throw self._error "unknown-path"
-
-      query = {}
-      query["parents.#{parent._id}"] = {$exists: true}
-
-      sort = {}
-      sort[field] = 1
-      if sort_order != 1
-        sort[field] = -1
-
-      order = 0
-      collection.find(query, {sort: sort}).forEach (child) ->
-        set = {$set: {}}
-        set.$set["parents.#{parent._id}.order"] = order
-        collection.update child._id, set, (err) ->
-          if err?
-            self.logger.error "sortChildren: failed to change item order #{JSON.stringify(err)}"
-        order += 1
-
-    methods[helpers.getCollectionMethodName(collection, "bulkUpdate")] = (items_ids, modifier) ->
-      #
-      # Validate inputs
-      #
-      check(items_ids, [String])
-
-      # To avoid security risk, we are whitelisting the allowed bulkUpdates
-      allowed_modifiers = [
-        {
-          $pull:
-            users:
-              $in: [String]
-        }
-        {
-          $push:
-            users:
-              $each: [String]
-        }
-        {
-          $set:
-            owner_id: String
-          $unset:
-            pending_owner_id: String # In reality we expect here only ""
-        }
-        {
-          $unset:
-            pending_owner_id: String # In reality we expect here only ""
-        }
-      ]
-      check(modifier, Match.OneOf.apply(Match, allowed_modifiers))
-
-      #
-      # Exec
-      #
-
-      # Returns the count of changed items
-      selector = 
-        _id:
-          $in: items_ids
-        users: @userId
-
-      self._runGridMethodMiddlewares @, "bulkUpdate", selector, modifier
-
-      # We make sure that the middleware don't change this condition, too risky.
-      selector.users = @userId
-
-      # XXX in terms of security we rely on the fact that the user belongs to
-      # the requested items (see selector query) to let him/her do basically
-      # whatever action they like (worst case... he destory his own data.
-      # perhaps in the future we'd like to apply some more checks here.
-      return collection.update selector, modifier, {multi: true}
+    for method_name in self.methods_names
+      do (method_name) ->
+        methods[helpers.getCollectionMethodName(self.collection, method_name)] = (args...) ->
+          if not @userId?
+            throw self._error "login-required"
+
+          args.push @userId # add the user id as the last param, last param is always
+                            # perform_as in the API methods we are proxying
+
+          return self[method_name].apply(self, args)
 
     Meteor.methods methods
+
+    return

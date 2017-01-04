@@ -38,6 +38,7 @@ Package.onUse(function (api) {
   // GridDataCom
   api.add_files('lib/grid-data-com/grid-data-com-client.coffee', client);
   api.add_files('lib/grid-data-com/grid-data-com-server.coffee', server);
+  api.add_files('lib/grid-data-com/grid-data-com-server-api.coffee', server);
 
   api.add_files('lib/errors-types.coffee', both);
 
