@@ -28,8 +28,28 @@ _.extend GridDataCom.prototype,
 
   _error: JustdoHelpers.constructor_error
 
-  methods_names: ["addChild", "addSibling", "removeParent", "addParent", "movePath", "sortChildren", "bulkUpdate"]
-
+  methods_definitions:
+    # We need to know the perform_as argument position of each api method
+    # we proxy through a Meteor Method, in order to force the perform_as
+    # arg to the user doing the action.
+    # If the position of the argument changes in any of the following api
+    # methods below it *must* be updated here, otherwise it's a serious
+    # security issue.
+    addChild:
+      perform_as_arg_position: 2
+    addSibling:
+      perform_as_arg_position: 2
+    removeParent:
+      perform_as_arg_position: 1
+    addParent:
+      perform_as_arg_position: 2
+    movePath:
+      perform_as_arg_position: 2
+    sortChildren:
+      perform_as_arg_position: 3
+    bulkUpdate:
+      perform_as_arg_position: 2
+ 
   setupGridPublication: (options = {}) ->
     self = this
 
@@ -334,8 +354,8 @@ _.extend GridDataCom.prototype,
     # the middlewares.
     #
 
-    if method_name not in @methods_names
-      throw @_error "unknown-method-name", "Unknown method name: #{method_name}, use one of: #{@methods_names.join(", ")}"
+    if method_name not of @methods_definitions
+      throw @_error "unknown-method-name", "Unknown method name: #{method_name}, use one of: #{_.keys(@methods_definitions).join(", ")}"
 
     if not _.isFunction middleware
       throw @_error "wrong-type", "Middleware has to be a function"
@@ -370,14 +390,18 @@ _.extend GridDataCom.prototype,
     # Methods to API proxy
 
     methods = {}
-    for method_name in self.methods_names
-      do (method_name) ->
+    for method_name, method_def of self.methods_definitions
+      do (method_name, method_def) ->
         methods[helpers.getCollectionMethodName(self.collection, method_name)] = (args...) ->
           if not @userId?
             throw self._error "login-required"
 
-          args.push @userId # add the user id as the last param, last param is always
-                            # perform_as in the API methods we are proxying
+          # We force the perform_as argument of the API method to be the
+          # current @userId (not doing that will allow the user to disguise
+          # as another user)
+          if args[method_def.perform_as_arg_position]?
+            throw self._error "operation-blocked", "You are not allowed to set the argument in the #{method_def.perform_as_arg_position} position of this Meteor Method"
+          args[method_def.perform_as_arg_position] = @userId
 
           return self[method_name].apply(self, args)
 
