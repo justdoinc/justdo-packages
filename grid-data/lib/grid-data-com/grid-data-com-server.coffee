@@ -231,7 +231,7 @@ _.extend GridDataCom.prototype,
         update_op = {$inc: {}}
         update_op["$inc"]["parents.#{parent_id}.order"] = 1
 
-        return collection.update query, update_op, {multi: true}
+        return collection.update query, update_op, {multi: true, bypassCollection2: true}
 
       getChildreOfOrder: (item_id, order, item_doc=null) ->
         # item_doc serves the same purpose new_child_fields serves in
