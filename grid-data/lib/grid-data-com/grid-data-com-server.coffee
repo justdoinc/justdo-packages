@@ -320,10 +320,12 @@ _.extend GridDataCom.prototype,
     #
     #   etc.item is the document of the item we're about to add to a new
     #   parent -> do not change this object without cloning it, it is passed
-    #   by reference.
+    #   by reference and will affect othe middlewares.
     #
     #   etc.new_parent_item is the document of the new parent. passed by reference.
     #
+    #   etc.update_op, reference to the original object and is not a copy for the purpose of
+    #   allowing it to be customized by the middlewares.
     # movePath: (path, perform_as, etc)
     # path is the path we are going to move.
     #

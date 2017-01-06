@@ -173,6 +173,10 @@ _.extend GridDataCom.prototype,
     if not new_parent_order?
       new_parent_order = @collection.getNewChildOrder(new_parent_id, item)
 
+    # Add new parent update operation object
+    set_new_parent_update_op = {$set: {}}
+    set_new_parent_update_op.$set["parents.#{new_parent_id}"] = {order: new_parent_order}
+
     @_runGridMethodMiddlewares "addParent", perform_as,
       # the etc obj
       new_parent: {
@@ -181,6 +185,7 @@ _.extend GridDataCom.prototype,
       }
       item: item
       new_parent_item: new_parent_item
+      update_op: set_new_parent_update_op
 
     # Check if an item exist already in new_parent_order
     item_in_new_location =
@@ -193,9 +198,6 @@ _.extend GridDataCom.prototype,
       # to be performed. 
       @collection.incrementChildsOrderGte new_parent_id, new_parent_order, item
 
-    # Add to new parent
-    set_new_parent_update_op = {$set: {}}
-    set_new_parent_update_op.$set["parents.#{new_parent_id}"] = {order: new_parent_order}
     @collection.update item._id, set_new_parent_update_op
 
     return
