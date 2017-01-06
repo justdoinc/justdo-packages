@@ -202,6 +202,39 @@ _.extend GridDataCom.prototype,
 
     return
 
+  updateItem: (item_id, update_op, perform_as) ->
+    # edit item_id by performing the mongo structured update_op object on it.
+    #
+    # IMPORTANT - this method is meant to be used by trusted, server originated
+    # operations only! Do not proxy a Meteor Method to it without carefully
+    # checking the update operation and limiting it only to a set of allowed
+    # updates operations - other wise your server will probably be volvulnerable
+    # to mongo injections 
+
+    check(item_id, String)
+    check(update_op, Object) # this is enough only because we allow calling this method
+                          # only by trusted code
+
+    @_isPerformAsProvided(perform_as)
+
+    #
+    # Validate args
+    #
+    if not (item = @collection.getItemByIdIfUserBelong item_id, perform_as)?
+      throw @_error "unknown-id"
+
+    update_op = _.extend update_op # shallow copy original, since we
+                                   # allow middlewares to change it
+
+    @_runGridMethodMiddlewares "updateItem", perform_as,
+      # the etc obj
+      item: item
+      update_op: update_op
+
+    @collection.update item_id, update_op
+
+    return
+
   movePath: (path, new_location, perform_as) ->
     check(path, String)
     check(new_location, {

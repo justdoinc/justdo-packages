@@ -43,12 +43,18 @@ _.extend GridDataCom.prototype,
       perform_as_arg_position: 1
     addParent:
       perform_as_arg_position: 2
+    updateItem:
+      # Note, we aren't yet allow the client to call this Meteor Method
+      # as we don't consider it secure enough (update_op validations required).
+      perform_as_arg_position: 2 
     movePath:
       perform_as_arg_position: 2
     sortChildren:
       perform_as_arg_position: 3
     bulkUpdate:
       perform_as_arg_position: 2
+
+  disabled_methods: ["updateItem"] 
  
   setupGridPublication: (options = {}) ->
     self = this
@@ -326,6 +332,16 @@ _.extend GridDataCom.prototype,
     #
     #   etc.update_op, reference to the original object and is not a copy for the purpose of
     #   allowing it to be customized by the middlewares.
+    #
+    # updateItem: (perform_as, etc)
+    #
+    # etc is an object that contains the following keys:
+    #
+    #   etc.item is the document we're about to update -> do not change this object without
+    #   cloning it, it is passed by reference and will affect othe middlewares.
+    #   etc.update_op, reference to the original object and is not a copy for the purpose of
+    #   allowing it to be customized by the middlewares.
+    #
     # movePath: (path, perform_as, etc)
     # path is the path we are going to move.
     #
@@ -393,6 +409,9 @@ _.extend GridDataCom.prototype,
 
     methods = {}
     for method_name, method_def of self.methods_definitions
+      if method_name in self.disabled_methods
+        continue
+      
       do (method_name, method_def) ->
         methods[helpers.getCollectionMethodName(self.collection, method_name)] = (args...) ->
           if not @userId?
