@@ -321,7 +321,7 @@ _.extend GridDataCom.prototype,
     #
     #   etc.new_parent is a *copy* of the computed new_parent target based on
     #   the argument provided and defaults applied. Do not change this object. Changing it
-    #   will have no effect on movePath execution and might result in bugs in following
+    #   will have no effect on addParent execution and might result in bugs in following
     #   middlewares.
     #
     #   etc.item is the document of the item we're about to add to a new
@@ -357,6 +357,12 @@ _.extend GridDataCom.prototype,
     #   etc.current_parent_id, the id of the parent we are moving this item from
     #
     #   etc.new_parent_item, the document of the new parent
+    #
+    #   etc.remove_current_parent_update_op, reference to the original object and is not a copy for the purpose of
+    #   allowing it to be customized by the middlewares.
+    #
+    #   etc.set_new_parent_update_op, reference to the original object and is not a copy for the purpose of
+    #   allowing it to be customized by the middlewares.
     #
     # sortChildren: ()
     # middlewares on sortChildren won't be called and has no effect on execution

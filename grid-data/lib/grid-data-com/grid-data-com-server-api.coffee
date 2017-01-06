@@ -304,6 +304,8 @@ _.extend GridDataCom.prototype,
       item: item
       current_parent_id: current_parent_id
       new_parent_item: new_parent_item
+      remove_current_parent_update_op: remove_current_parent_update_op
+      set_new_parent_update_op: set_new_parent_update_op
 
     if item_in_new_location?
       # if there's an item in the new location.
