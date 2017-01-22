@@ -2,7 +2,7 @@
 
 GridControl.installEditor "TextareaEditor",
   init: ->
-    @$input = $("""<textarea rows="1" />""")
+    @$input = $("""<textarea rows="1" class="mousetrap" />""")
 
     $wrapper = @generateInputWrappingElement()
 
