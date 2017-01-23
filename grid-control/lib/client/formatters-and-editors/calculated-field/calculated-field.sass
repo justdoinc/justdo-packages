@@ -1,0 +1,100 @@
+//
+// Unicode date formatter and editor
+//
+
+// Buttons design
+
+// IMPORTANT!!! If buttons outer width change, you must update the
+// default_buttons obj in the sass file
+.udf-id-date-setter
+  width: 15px
+  height: 15px
+  margin: 2px 1px
+  background: transparent url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/calculated-field/media/calendar.gif')
+  cursor: pointer
+
+.udf-action-btn
+  .fa
+    cursor: pointer
+
+.uni-date-formatter
+  .udf-action-btn
+    display: none
+
+  &:hover
+    .udf-action-btn
+      display: inline-block
+
+      float: right
+
+.calculated-field-editor
+  .udf-action-btn
+    display: inline-block
+
+    float: right
+
+  .udf-id-date-setter
+    margin-right: 2px
+
+  &.udf-empty
+    .udf-hidden-if-empty
+      display: none
+
+//
+// Editor
+//
+
+/* jQuery UI datepicker smaller in size */
+
+#ui-datepicker-div
+  font-size: 12px
+  z-index: 15 !important
+
+.ui-datepicker-header
+  background: #e6e6e6 url('/packages/mizzao_jquery-ui/images/ui-bg_glass_75_e6e6e6_1x400.png')
+  color: #555
+
+.ui-datepicker th
+  color: #555
+
+/* remove datepicker input field outline */
+.datepicker
+  outline: none
+
+
+/* datepicker editor */
+input.editor-calculated-field
+  width: 100%
+  height: 100%
+  border: 0
+  margin: 0
+  background: transparent
+  outline: 0
+  padding: 0
+
+.ui-datepicker-trigger
+  display: none
+
+//
+// Placeholder style
+//
+
+// Note we can use sass to combine the following selectors to one line,
+// caused chrome to stop reading the rules (reason not clear), that's
+// why a mixin used
+
+@mixin calculated-field-editor-placeholder-style()
+  font-size: 14px
+  font-style: italic
+
+.editor-calculated-field::-webkit-input-placeholder
+  @include calculated-field-editor-placeholder-style()
+
+.editor-calculated-field:-moz-placeholder
+  @include calculated-field-editor-placeholder-style()
+
+.editor-calculated-field::-moz-placeholder // MS IE 10, 11
+  @include calculated-field-editor-placeholder-style()
+
+.editor-calculated-field::-ms-input-placeholder // MS edge
+  @include calculated-field-editor-placeholder-style()

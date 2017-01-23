@@ -104,6 +104,10 @@ Package.onUse(function (api) {
   api.add_files('lib/client/formatters-and-editors/unicode-date/unicode-date.sass', client);
   api.addAssets('lib/client/formatters-and-editors/unicode-date/media/calendar.gif', client);
 
+  api.add_files('lib/client/formatters-and-editors/calculated-field/calculated-field.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/calculated-field/calculated-field.sass', client);
+  api.addAssets('lib/client/formatters-and-editors/calculated-field/media/calendar.gif', client);
+
   api.add_files('lib/client/formatters-and-editors/default-formatter/default-formatter.coffee', client);
   api.add_files('lib/client/formatters-and-editors/default-formatter/default-formatter.sass', client);
 
