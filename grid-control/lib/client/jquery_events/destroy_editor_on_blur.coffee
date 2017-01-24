@@ -5,6 +5,7 @@ editor_cells_selectors = [
   '.tree-control-textarea'
   '.textarea-editor'
   'div.selector-editor'
+  '.cfld-editor-textarea'
 ].join(",")
 
 logger_prefix = "jQuery plugin - destroy-editor-on-blur:"
@@ -39,6 +40,7 @@ PACK.jquery_builtin_events.push(
       if (e.currentTarget == $('.editor-text', @container).get(0)) or
          (e.currentTarget == $('.tree-control-input', @container).get(0)) or
          (e.currentTarget == $('.tree-control-textarea', @container).get(0)) or
+         (e.currentTarget == $('.cfld-editor-textarea', @container).get(0)) or
          (e.currentTarget == $('.textarea-editor', @container).get(0))
           saveAndExitIfSameActiveCellPostBlur()
 

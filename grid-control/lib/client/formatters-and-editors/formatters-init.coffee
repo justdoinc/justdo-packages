@@ -236,6 +236,7 @@ slick_grid_formatters_extended_context_properties =
 
       row: row
       cell: cell
+      path: @_grid_data.getItemPath row
       value: value
       field: column_id
       grid_column_info: grid_column_info

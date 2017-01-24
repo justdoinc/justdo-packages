@@ -224,7 +224,7 @@ _.extend GridControl.prototype,
         return
 
     @_grid_data.on "grid-item-changed", (row, fields) =>
-      col_id_to_row = _.object(_.map @_grid.getColumns(), (cell, i) -> [cell.id, i])
+      field_id_to_col_id = @getFieldIdToColumnIndexMap()
 
       for field in fields
         field_def = @schema[field]
@@ -236,15 +236,15 @@ _.extend GridControl.prototype,
           # the entire row
           break
 
-        if col_id_to_row[field]?
+        if field_id_to_col_id[field]?
           # Invalidate field column if in present grid
-          @_grid.updateCell(row, col_id_to_row[field])
+          @_grid.updateCell(row, field_id_to_col_id[field])
 
         if field_def.grid_dependent_fields?
           # Invalidate field dependent fields columns if exist and present in grid
           for dependent_field in field_def.grid_dependent_fields
-            if col_id_to_row[dependent_field]?
-              @_grid.updateCell(row, col_id_to_row[dependent_field])          
+            if field_id_to_col_id[dependent_field]?
+              @_grid.updateCell(row, field_id_to_col_id[dependent_field])          
 
       # tree_change, full_invalidation=false
       @emit "tree_change", false
@@ -287,6 +287,15 @@ _.extend GridControl.prototype,
     @_init_dfd.resolve()
 
   _error: JustdoHelpers.constructor_error
+
+  getFieldIdToColumnIndexMap: ->
+    # Returns an object of the form presented in the following example:
+    #
+    # {
+    #   "title": 0
+    #   "subject": 1
+    # }
+    return _.object(_.map @_grid.getColumns(), (cell, i) -> [cell.id, i])
 
   _initStatesClassesComputations: ->
     @_states_classes_computations = []
