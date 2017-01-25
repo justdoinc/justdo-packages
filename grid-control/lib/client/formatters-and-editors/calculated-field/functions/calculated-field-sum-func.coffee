@@ -32,7 +32,10 @@ share.installCalculatedFieldFunction "sum",
       if not value? or value is ""
         return iteratee_return_value
 
-      sum += parseInt(value, 10)
+      float_val = parseFloat(value)
+
+      if not _.isNaN float_val
+        sum += float_val
 
       return iteratee_return_value # Don't traverse item children (if any)
 
