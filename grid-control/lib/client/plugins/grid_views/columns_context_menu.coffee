@@ -23,6 +23,24 @@ _.extend GridControl.prototype,
     init_context_menu()
 
     column_index_of_last_opened_cmenu = null # excludes the handle from the count
+    setColumnIndexOfLastOpenedCmenu = (e, val) ->
+      # Checks whether event is mouse right click, and if so
+      # sets column_index_of_last_opened_cmenu to val.
+      # If val is not set, will try to find the column index
+      # from the event.
+
+      if e.which == 3 or
+            (e.which == 1 and e.ctrlKey == true)
+             # Under mac, users can open the context menu by clicking on the left
+             # mouse key together with the ctrl key, on other systems, this won't
+             # have any effect since the context menu won't be opened
+
+        if not val?
+          val = $(e.target).closest(".slick-header-column").index()
+
+        column_index_of_last_opened_cmenu = val
+
+      return
 
     # Find missing fields
     current_view_fields = _.map @getView(), (col) -> col.field
@@ -63,8 +81,7 @@ _.extend GridControl.prototype,
         e.preventDefault()
 
     $grid_control_cmenu_target.bind "mousedown", (e) ->
-      if e.which == 3
-        column_index_of_last_opened_cmenu = 0
+      return setColumnIndexOfLastOpenedCmenu(e, 0)
 
     # common columns context menu
     $common_cmenu_target = $('.slick-header-columns', @container).children().slice(1)
@@ -84,9 +101,7 @@ _.extend GridControl.prototype,
       ]
 
     $common_cmenu_target.bind "mousedown", (e) ->
-      if e.which == 3
-        column_index_of_last_opened_cmenu = $(e.target).closest(".slick-header-column").index()
-
+      return setColumnIndexOfLastOpenedCmenu(e)
 
   _destroyColumnsManagerContextMenu: ->
     $(@_getColumnsManagerContextMenuSelector("first")).remove()
