@@ -187,20 +187,21 @@ _.extend GridControl.prototype,
 
     return filter_query
 
-  clearFieldFilter: (field) -> @setFieldFilter(field, null)
+  clearColumnFilter: (column_id) -> @setColumnFilter(column_id, null)
 
-  getFieldFilter: (field) ->
+  getColumnFilter: (column_id) ->
     for column_view in @getView()
-      if column_view.field == field
+      if column_view.field == column_id
         return column_view.filter
 
-    @logger.warn "Couldn't find field filter. Field #{field} is not present in the grid"
+    @logger.warn "Couldn't find column_id filter. column_id #{column_id} is not present in the grid"
 
-  setFieldFilter: (field, filter_state) ->
+  setColumnFilter: (column_id, filter_state) ->
+    # Replace the existing state
     view = @getView()
 
     for column_view in view
-      if column_view.field == field
+      if column_view.field == column_id
         column_view.filter = filter_state
 
         @setView view

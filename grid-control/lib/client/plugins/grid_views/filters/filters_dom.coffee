@@ -119,7 +119,7 @@ _.extend GridControl.prototype,
         @_closeFiltersDropdown()
 
       $(".column-filter-dropdown .clear", @$filter_dropdown).click =>
-        @clearFieldFilter(column_settings.field)
+        @clearColumnFilter(column_settings.field)
 
   _filtersDropdownClosedHandler: ->
     @_grid_data.clearFilterIndependentItems()
