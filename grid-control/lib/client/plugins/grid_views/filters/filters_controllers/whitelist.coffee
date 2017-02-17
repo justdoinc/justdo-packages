@@ -1,7 +1,8 @@
 # PACK.filters_controllers initiated in ../columns_filters.coffee
-PACK.filters_controllers.whitelist = (grid_control, column_settings) ->
-  @grid_control = grid_control
-  @column_settings = column_settings
+PACK.filters_controllers.whitelist = (context) ->
+  @grid_control = context.grid_control
+  @column_settings = context.column_settings
+  @column_filter_state_ops = context.column_filter_state_ops
 
   @filter_change_listener = => @refresh_state()
 
@@ -26,7 +27,7 @@ PACK.filters_controllers.whitelist = (grid_control, column_settings) ->
     @controller.append("<li value='#{value}'><i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i> #{label}</li>")
 
   $(@controller).on "click", "li", (e) =>
-    filter_state = @grid_control.getColumnFilter(@column_settings.field)
+    filter_state = @column_filter_state_ops.getColumnFilter()
     $el = $(e.target).closest("li")
     value = $el.attr("value")
 
@@ -39,9 +40,9 @@ PACK.filters_controllers.whitelist = (grid_control, column_settings) ->
         filter_state = [value]
 
     if _.isEmpty(filter_state)
-      grid_control.clearColumnFilter(@column_settings.field)
+      @column_filter_state_ops.clearColumnFilter()
     else
-      grid_control.setColumnFilter(@column_settings.field, filter_state)
+      @column_filter_state_ops.setColumnFilter(filter_state)
 
   @refresh_state()
 
@@ -49,7 +50,7 @@ PACK.filters_controllers.whitelist = (grid_control, column_settings) ->
 
 _.extend PACK.filters_controllers.whitelist.prototype,
   refresh_state: ->
-    filter_state = @grid_control.getColumnFilter(@column_settings.field)
+    filter_state = @column_filter_state_ops.getColumnFilter()
 
     $("li", @controller).removeClass("selected")
     if not filter_state?

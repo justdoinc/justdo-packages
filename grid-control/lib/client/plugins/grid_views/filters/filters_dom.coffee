@@ -91,14 +91,23 @@ _.extend GridControl.prototype,
 
   _filtersDropdownOpenedHandler: ->
     column_settings = @$filter_dropdown.data("column-settings")
+    column_id = column_settings.id
 
-    if column_settings.filter_settings?.type?
-      if not (column_settings.filter_settings.type of PACK.filters_controllers)
+    if (filter_type = column_settings.filter_settings?.type)?
+      if not (filter_type of PACK.filters_controllers)
         @_error "unknown-filter-type", "Can't open filter controller. Unknown filter type #{column_settings.filter_settings.type}"
 
         return
-      
-      @_current_filter_controller = new PACK.filters_controllers[column_settings.filter_settings.type](@, column_settings)
+
+      controller_context =
+        grid_control: @
+        column_settings: column_settings
+        column_filter_state_ops:
+          getColumnFilter: => @getColumnFilter(column_id)
+          setColumnFilter: (filter_state) => @setColumnFilter(column_id, filter_state)
+          clearColumnFilter: => @clearColumnFilter(column_id)
+      @_current_filter_controller =
+        new PACK.filters_controllers[filter_type](controller_context)
 
       controller_container = $("<div class='#{column_settings.filter_settings.type}-controller filter-controller-container' />")
         .html(@_current_filter_controller.controller)
