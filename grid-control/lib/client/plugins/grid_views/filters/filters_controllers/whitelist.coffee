@@ -1,5 +1,7 @@
-# PACK.filters_controllers initiated in ../columns_filters.coffee
-PACK.filters_controllers.whitelist = (context) ->
+#
+# Filter controller constructor
+#
+WhiteListFilterControllerConstructor = (context) ->
   @grid_control = context.grid_control
   @column_settings = context.column_settings
   @column_filter_state_ops = context.column_filter_state_ops
@@ -48,7 +50,7 @@ PACK.filters_controllers.whitelist = (context) ->
 
   return @
 
-_.extend PACK.filters_controllers.whitelist.prototype,
+_.extend WhiteListFilterControllerConstructor.prototype,
   refresh_state: ->
     filter_state = @column_filter_state_ops.getColumnFilter()
 
@@ -61,3 +63,17 @@ _.extend PACK.filters_controllers.whitelist.prototype,
 
   destroy: ->
     @grid_control.removeListener "filter-change", @filter_change_listener
+
+#
+# stateToQuery
+#
+columnFilterStateToQuery = (column_filter_state, context) ->
+  query = {}
+
+  query[context.column_id] = {$in: column_filter_state}
+
+  return query
+
+GridControl.installFilterType "whitelist",
+  controller_constructor: WhiteListFilterControllerConstructor
+  column_filter_state_to_query: columnFilterStateToQuery

@@ -1,3 +1,6 @@
+PACK.filters_controllers = {}
+PACK.filters_types_state_to_query_transformations = {}
+
 row_filter_state_classes = ["f-first", "f-last", "f-passed", "f-leaf", "f-inner-node"]
 
 _.extend GridControl.prototype,
@@ -149,7 +152,7 @@ _.extend GridControl.prototype,
 
     @_filters_state = new_state
 
-    @emit "filter-change", @_filters_state, @_filterStateToFilterQuery()
+    @emit "filter-change", @_filters_state, @_columnsFilterStateToQuery()
 
   _getViewFiltersState: (view) ->
     if not view?
@@ -162,28 +165,38 @@ _.extend GridControl.prototype,
 
     return filters_state
 
-  _filterStateToFilterQuery: (filters_state) ->
-    if not filters_state?
-      filters_state = @_filters_state
+  _columnsFilterStateToQuery: (columns_filters_state) ->
+    if not columns_filters_state?
+      columns_filters_state = @_filters_state
 
-    if not filters_state?
+    if not columns_filters_state?
       return null
 
     filter_query = {}
 
-    for field, state of filters_state
-      filter_settings = @schema[field].grid_column_filter_settings
+    for column_id, column_filter_state of columns_filters_state
+      column_settings = @schema[column_id]
+      filter_settings = column_settings.grid_column_filter_settings
 
-      if not filter_settings?.type?
-        @logger.warn "Field #{filed} can't be filtered"
-      
-      filter_type = filter_settings.type
+      if not (filter_type = filter_settings?.type)?
+        @logger.warn "column_id #{column_id} can't be filtered"
 
-      if filter_type == "whitelist"
-        filter_query[field] =
-          $in: state
-      else
-        @logger.warn "No known mapping for filter_type #{filter_type} to grid-control filter query"
+        continue
+
+      filter_controller_constructor =
+        PACK.filters_controllers[filter_type]
+
+      if not (columnFilterStateToQuery = PACK.filters_types_state_to_query_transformations[filter_type])?
+        @logger.warn "Couldn't find the columnFilterStateToQuery for filter type: #{filter_type}"
+
+        return
+
+      context =
+        column_id: column_id
+        grid_control: @
+        column_schema_definition: column_settings
+
+      _.extend filter_query, columnFilterStateToQuery(column_filter_state, context)
 
     return filter_query
 
@@ -208,4 +221,73 @@ _.extend GridControl.prototype,
 
         return
 
-    @logger.warn "Filter didn't set. Field #{field} is not present in the grid"
+    @logger.warn "Filter didn't set. column_id #{column_id} is not present in the grid"
+
+# Note, static method.
+GridControl.installFilterType = (filter_type_id, definition) ->
+  # Arguments:
+  #
+  # filtey_type_id: the type developers will use under the column schema's 
+  # grid_column_filter_settings.type option to use this filter type.
+  #
+  # definition: an object of the form:
+  #
+  # {
+  #   controller_constructor: Constructor
+  #   column_filter_state_to_query: function
+  # }
+  #
+  # ## controller_constructor
+  #
+  #   The controller constructor should be a constructor that initiates a
+  #   property named @container with jquery html object for the content to
+  #   show the user when the filter dialog is open.
+  #
+  #   The constructor gets two as its argument an object (named context) of the follow form:
+  #   
+  #   {
+  #       grid_control: The current grid control obj
+  #       column_settings: The settings of the target column
+  #       column_filter_state_ops: {
+  #         getColumnFilter(): returns the current column's filter state
+  #         setColumnFilter(filter_state): a function that sets the column's filter state
+  #           to the value given under filter_state replaces previous value. 
+  #         clearColumnFilter: clears the current filter state (equiv. to setColumnFilter(null)).
+  #       }
+  #   }
+  #
+  #   filter_controller MUST define the prototype method: destroy()
+  #   we will call this method when the controller need to be destroyed
+  #
+  # ## column_filter_state_to_query
+  #
+  #   The filter constructor uses the column_filter_state_ops to set the filter state
+  #   the of the current column.
+  #
+  #   That state can be in any format or structure. The function provided for 
+  #   column_filter_state_to_query should translate that structure to an actual
+  #   mongo query, that will filter the tasks presented.
+  #
+  #   column_filter_state_to_query gets as its parameters: (column_filter_state, context)
+  #
+  #   column_filter_state is the current column's filter state as set by you earlier
+  #     using column_filter_state_ops.setColumnFilter(state).
+  #
+  #   context: an object of the structure:
+  #     {
+  #       column_id: the current column id (as of writing, this is the field name, but might change in the future) 
+  #       grid_control: the current grid control obj
+  #       column_schema_definition: The simple schema definition of the main field of this
+  #       column.
+  #     }
+  #
+  #   column_filter_state_to_query should return the mongo query object you want to
+  #   apply for the current filter state. That mongo query will be *merged* (not deep merge)
+  #   with the other columns filters.
+  #
+  #   Note, you can return *any* query object you want, even one that affect other fields.
+
+  PACK.filters_controllers[filter_type_id] = definition.controller_constructor
+  PACK.filters_types_state_to_query_transformations[filter_type_id] = definition.column_filter_state_to_query
+
+  return

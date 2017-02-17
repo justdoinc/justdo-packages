@@ -1,5 +1,3 @@
-PACK.filters_controllers = {}
-
 _.extend GridControl.prototype,
   _initFiltersDom: ->
     @$filter_dropdown = null
