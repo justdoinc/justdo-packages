@@ -54,10 +54,14 @@ _.extend WhiteListFilterControllerConstructor.prototype,
   refresh_state: ->
     filter_state = @column_filter_state_ops.getColumnFilter()
 
+    # Remove the selected class from all items
     $("li", @controller).removeClass("selected")
+
+    # If no filter set, return
     if not filter_state?
       return
 
+    # Add the selected task, only to the selected items
     for value in filter_state
       $("[value=#{value}]", @controller).addClass("selected")
 
