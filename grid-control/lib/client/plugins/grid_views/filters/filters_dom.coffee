@@ -75,9 +75,10 @@ _.extend GridControl.prototype,
       column_filter_button.each (i, el) =>
         $el = $(el)
 
-        field = el.id.replace("-filter-button", "")
+        column_settings = $el.parent(".slick-header-column").data("column")
+        column_id = column_settings.id
 
-        if field of filters_state
+        if column_id of filters_state
           $el.addClass(active_filter_class)
         else
           $el.removeClass(active_filter_class)
