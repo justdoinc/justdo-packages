@@ -131,7 +131,6 @@ GridControl.installFormatter formatter_name,
 
     if item_id == "0"
       # Nothing to do, root is not a real item in the db
-      debugger
 
       return
 
