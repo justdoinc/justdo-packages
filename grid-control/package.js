@@ -76,6 +76,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/whitelist.sass', client);
   api.add_files('lib/client/plugins/grid_views/columns_reordering.coffee', client);
   api.add_files('lib/client/plugins/grid_views/columns_context_menu.coffee', client);
+  api.add_files('lib/client/plugins/cell_editing_timeout/cell_editing_timeout.coffee', client);
 
   // jquery_events
   api.add_files('lib/client/jquery_events/init.coffee', client, {bare: true});
