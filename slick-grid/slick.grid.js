@@ -2955,6 +2955,8 @@ if (typeof Slick === "undefined") {
       if (options.dynamicRowHeight) {
         scrollRowIntoView(activeRow, false);
       }
+
+      trigger(self.onEditCell, {row: activeRow, cell: activeCell, item: item, column: columnDef, currentEditor: currentEditor});
     }
 
     function commitEditAndSetFocus() {
@@ -3743,6 +3745,7 @@ if (typeof Slick === "undefined") {
       "onColumnsResized": new Slick.Event(),
       "onCellChange": new Slick.Event(),
       "onBeforeEditCell": new Slick.Event(),
+      "onEditCell": new Slick.Event(),
       "onBeforeCellEditorDestroy": new Slick.Event(),
       "onCellEditorDestroy": new Slick.Event(),
       "onBeforeDestroy": new Slick.Event(),
