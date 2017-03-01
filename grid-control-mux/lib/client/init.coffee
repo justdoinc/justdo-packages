@@ -56,6 +56,13 @@ _.extend GridControlMux.prototype,
 
       @_shared_grid_data_core = new GridDataCore(grid_data_core_options)
 
+    # options passed to @options.common_grid_control_options will be 
+    # set, with secondary precedence to the tab's grid_control_options,
+    # to all grid controls created by this grid control mux.
+    if @options.shared_grid_control_options? and not _.isObject @options.shared_grid_control_options
+      throw @_error("invalid-options", "shared_grid_control_options should be an object")
+    @_shared_grid_control_options = @options.shared_grid_control_options or {}
+
     # The following is managed by @setPath() used to recognize
     # whether an active setPath is happening to avoid reporting
     # intermediate path changes in the process of getting the

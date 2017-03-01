@@ -13,6 +13,8 @@ default_options =
 GridControlMux = (options) ->
   # skeleton-version: v0.0.2
 
+  # only both/errors-types.coffee upgraded to skeleton-version: v0.0.8
+
   EventEmitter.call this
 
   @destroyed = false

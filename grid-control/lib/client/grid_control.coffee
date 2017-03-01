@@ -936,9 +936,38 @@ _.extend GridControl.prototype,
 
             cancel()
 
-          usersDiffConfirmationCb item_id, target_id, diff, wrappedConfirm, wrappedCancel
+          usersDiffConfirmationCb item_id, target_id, diff, wrappedConfirm, wrappedCancel, {action_name: "move"}
 
     return @_grid_data.movePath(path, new_location, cb, wrappedUsersDiffConfirmationCb)
+
+  addParent: (item_id, new_parent, cb, usersDiffConfirmationCb) ->
+    # A proxy to grid-data's addParent that takes care of using
+    # options.usersDiffConfirmationCb if no custom
+    # usersDiffConfirmationCb provided above
+
+    if not usersDiffConfirmationCb?
+      usersDiffConfirmationCb = @options.usersDiffConfirmationCb
+
+    if _.isFunction usersDiffConfirmationCb
+      # if there's usersDiffConfirmationCb prevent operations lock
+      # expiration timeout while waiting for confirm/cancel.
+      # We do that since the provided usersDiffConfirmationCb
+      # might wait for user input.
+      wrappedUsersDiffConfirmationCb = (item_id, target_id, diff, confirm, cancel) =>
+        @_preventOperationsLockExpiration (releaseExpirationLock) =>
+          wrappedConfirm = =>
+            releaseExpirationLock()
+
+            confirm()
+
+          wrappedCancel = =>
+            releaseExpirationLock()
+
+            cancel()
+
+          usersDiffConfirmationCb item_id, target_id, diff, wrappedConfirm, wrappedCancel, {action_name: "add"}
+
+    return @_grid_data.addParent(item_id, new_parent, cb, wrappedUsersDiffConfirmationCb)
 
   editPathCell: (path, cell, options) ->
     # Return true if entered into edit mode, false if failed

@@ -67,7 +67,7 @@ _.extend GridData.prototype,
     Meteor.call @getCollectionMethodName("removeParent"), path, (err) ->
       helpers.callCb cb, err
 
-  addParent: (item_id, new_parent, cb) ->
+  addParent: (item_id, new_parent, cb, usersDiffConfirmationCb) ->
     # Add item_id to the parent detailed in new_parent.
     #
     # new_parent structure:
@@ -79,10 +79,72 @@ _.extend GridData.prototype,
     # If cb provided, cb will be called with the following args when excution
     # completed:
     # cb(err)
+    #
+    # if usersDiffConfirmationCb is provided, if users of item_id and
+    # new_parent aren't the same the addParent operation will be
+    # suspended and usersDiffConfirmationCb will be called with the following
+    # args:
+    #   usersDiffConfirmationCb(item_id, target_id, diff, proceed, cancel)
+    #   item_id: is the item_id arg provided to addParent
+    #   target_id: the id of the new parent
+    #   diff: An object of the form:
+    #         {
+    #           absent: [uid, uid, ...] # can be empty
+    #           alien: [uid, uid, ...] # can be empty
+    #         }
+    #         absent lists users that exists in path but don't in new_location
+    #         alien lists users that don't exist in path but do in new_location
+    #   proceed: a callback, if called, move operation will continue
+    #   cancel: a callback, if called, move operation will cancel
+    # if new location is the root we ignore usersDiffConfirmationCb
     new_parent = _.pick new_parent, ["parent", "order"]
 
-    Meteor.call @getCollectionMethodName("addParent"), item_id, new_parent, (err) ->
-      helpers.callCb cb, err
+    performOp = =>
+      Meteor.call @getCollectionMethodName("addParent"), item_id, new_parent, (err) ->
+        helpers.callCb cb, err
+
+    if not(usersDiffConfirmationCb? and _.isFunction usersDiffConfirmationCb)
+      # Perform operation right away.
+      return performOp()
+    else
+      new_parent_item_id = new_parent.parent
+
+      if new_parent_item_id == "0"
+        # moving to root, no diff as root isn't a real item
+        # perform op right away
+
+        @logger.debug "usersDiffConfirmationCb skipped, adding root as parent"
+
+        return performOp()
+
+      item_users = @items_by_id[item_id].users
+      new_parent_item_users = @items_by_id[new_parent_item_id].users
+
+      diff =
+        absent: _.difference item_users, new_parent_item_users
+        alien: _.difference new_parent_item_users, item_users
+
+      if _.isEmpty(diff.absent) and _.isEmpty(diff.alien)
+        # no diff perform op right away
+
+        @logger.debug "usersDiffConfirmationCb skipped, no diff"
+
+        return performOp()
+
+      proceed = ->
+        return performOp()
+
+      cancel = =>
+        @logger.debug "addParent cancelled by usersDiffConfirmationCb"
+
+        # call cb with error
+        helpers.callCb cb, @_error("operation-cancelled", "addParent operation cancelled by usersDiffConfirmationCb")
+
+        return
+
+      usersDiffConfirmationCb(item_id, new_parent_item_id, diff, proceed, cancel)
+
+    return
 
   movePath: (path, new_location, cb, usersDiffConfirmationCb) ->
     # Put path in the position provided in new_location.
@@ -116,7 +178,7 @@ _.extend GridData.prototype,
     #   usersDiffConfirmationCb(item_id, target_id, diff, proceed, cancel)
     #   item_id: the id of the item we move
     #   target_id: the id of the new parent
-    #   diff: will be null if users are equal otherwise it'll be of the form:
+    #   diff: An object of the form:
     #         {
     #           absent: [uid, uid, ...] # can be empty
     #           alien: [uid, uid, ...] # can be empty
@@ -184,7 +246,7 @@ _.extend GridData.prototype,
 
     if not(usersDiffConfirmationCb? and _.isFunction usersDiffConfirmationCb)
       # Perform operation right away.
-      performOp()
+      return performOp()
     else
       path_item_id = helpers.getPathItemId(path)
       new_parent_item_id = new_location_obj.parent
@@ -212,7 +274,7 @@ _.extend GridData.prototype,
         return performOp()
 
       proceed = ->
-        performOp()
+        return performOp()
 
       cancel = =>
         @logger.debug "movePath cancelled by usersDiffConfirmationCb"
@@ -220,7 +282,11 @@ _.extend GridData.prototype,
         # call cb with error
         helpers.callCb cb, @_error("operation-cancelled", "movePath operation cancelled by usersDiffConfirmationCb")
 
+        return
+
       usersDiffConfirmationCb(path_item_id, new_parent_item_id, diff, proceed, cancel)
+
+    return
 
   sortChildren: (path, field, asc_desc, cb) ->
     path = helpers.normalizePath(path)

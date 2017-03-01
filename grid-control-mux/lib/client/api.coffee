@@ -193,7 +193,10 @@ _.extend GridControlMux.prototype,
     #
     # options structure:
     # {
-    #   # the grid control options we use to initiate the
+    #   # the grid control options we use to initiate the tab's grid control
+    #   # note that these options will take precedence over options defined
+    #   # in the grid control mux's options.shared_grid_control_options option
+    #   # (kept after validation under @_shared_grid_control_options)
     #   grid_control_options: {}
     #   removable: true by default, if set to false removeTab
     #              will throw exception if requested for this
@@ -243,7 +246,7 @@ _.extend GridControlMux.prototype,
     if not (grid_control_options = options.grid_control_options)?
       throw @_error("missing-option", "Missing option 'grid_control_options'")
 
-    grid_control_options = _.extend {}, grid_control_options # Make a shallow copy of grid_control_options
+    grid_control_options = _.extend {}, @_shared_grid_control_options, grid_control_options # Merge with @_shared_grid_control_options
 
     if @_shared_grid_data_core?
       Meteor._ensure(grid_control_options, "grid_data_options")
