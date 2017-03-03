@@ -5,6 +5,8 @@ _.extend GridData.prototype,
     @filter_independent_items.set(null)
 
   addFilterIndependentItems: ->
+    # The independent items to add should be provided as arguments to this functions
+    # addFilterIndependentItems(path1, path2, ...)
     independent_items = Tracker.nonreactive => @filter_independent_items.get()
 
     if not _.isArray independent_items
