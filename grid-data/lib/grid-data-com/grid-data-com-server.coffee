@@ -176,12 +176,23 @@ _.extend GridDataCom.prototype,
         else
           return null
 
-      getHasChildren: (item_id, item_doc=null) ->
+      getHasChildren: (item_id, item_doc=null, options) ->
+        # Supported options:
+        # * user_id (default: undefined) will limit the search only to items to which user_id
+        #   has access to
+
         # item_doc serves the same purpose new_child_fields serves in
         # @getNewChildOrder, read comment there in its entirety
         # including XXX section
+
+        options = options or {}
+
         query = {}
         query["parents.#{item_id}.order"] = {$gte: 0}
+
+        if (user_id = options.user_id)?
+          query.users = user_id
+
         return collection.findOne(query, {fields: {_id: 1}})?
 
       getChildrenCount: (item_id, item_doc=null) ->
