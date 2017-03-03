@@ -36,8 +36,35 @@ GridControl.installEditor "TextareaEditor",
   serializeValue: ->
     current_val = @$input.val()
 
-    if _.isEmpty(current_val)
-      return null
+    field_schema = @context.field_schema
+
+    if field_schema.type is Number
+      # By default, Number fields in simple schema are restricted to
+      # integers values (floats will result in validation error).
+      #
+      # That behavior can change to allow float by setting the:
+      # `decimal: true` option.
+      #
+      # We parse the text value accordingly:
+      if field_schema.decimal
+        current_val = parseFloat(current_val)
+      else
+        current_val = parseInt(current_val, 10)
+
+      if _.isNaN(current_val)
+        # Consider as empty value if null values allowed for this field
+        # (`optional: true` in the field simple schema). Otherwise, set
+        # to 0
+        if field_schema.optional
+          return null
+        else
+          return 0
+
+    else
+      # _.isEmpty will always return true for Numbers, relevant
+      # only when working with strings
+      if _.isEmpty(current_val)
+        return null
 
     return current_val
 
