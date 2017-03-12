@@ -43,10 +43,12 @@ _.extend NaturalCollectionSubtreeSection.prototype,
   #      @options.root_items_sort_by options
   #        
   rootItems: null
+
   # if yield_root_items is false, only the children of the rootItems will be yielded as
   # the section's top level items and not the root items themselves
   # if rootItems is null yield_root_items has no meaning
   yield_root_items: true
+
   # itemsTypesAssigner can be a function that will be called during the _each process
   # for every item we are going to yield, just before its yield with the item_obj and
   # the item path relative to the section root:
@@ -56,6 +58,106 @@ _.extend NaturalCollectionSubtreeSection.prototype,
   # it should return a string with the type that should be assigned to this item
   # or null to use the default item type 
   itemsTypesAssigner: null
+
+  # root items filter:
+  #
+  # Note if @rootItems is not set, this property has no effect.
+  #
+  # If @rootItemsFilter is set it will get as its first parameter the output of
+  # @rootItems. Letting you change it before NaturalCollectionSubtreeSection start
+  # processing it.
+  #
+  # See DetachedDataSubTreesSection to see usage example.
+  #
+  # If you want to change the received root items you *must* create
+  # a shallow copy of the passed value, do not edit by reference.
+  #
+  # Can be a reactive resource. Note that @_rootItems() calls this
+  # method, and @_rootItems is run by NaturalCollectionSubtreeSection
+  # in a computations where necessary, so no additional computation
+  # needs to be introduced by you here.
+  #
+  # Notes:
+  # 
+  # 1. the main difference between @rootItemsFilter and @top_level_items
+  # is that @rootItemsFilter works directly on @rootItems() output, and not
+  # on the actual top level items of the section after @yield_root_items
+  # was taken into account. Also, rootItemsFilter() is run only if @rootItems()
+  # is defined.
+  #
+  # 2. @rootItemsFilter will get the root items in the same structure
+  # @rootItems() provided them. (there are two potential data structures
+  # @rootItems() can return, if you know in advance which one it will be,
+  # you don't need to worry about handling the other as well).
+  rootItemsFilter: null
+
+  # top level items filter:
+  #
+  # By top level items we mean here the top-level items of the section
+  # (so if the section is under the path /s/), root items are items
+  # of paths: /s/item_id/
+  #
+  # You need to implement two methods to implement top items filter
+  # you'll set them inside an object of the following structure:
+  #
+  # {
+  #   singleItem: (item_id) -> Should return true if item_id pass the filter, false otherwise
+  #   allItems: (top_level_items_objs) -> Read docs below
+  # }
+  #
+  # * top_level_items_filter.singleItem(item_id):
+  #
+  # Receives a single top level item id (String) and should return true
+  # if it passes the filter, false otherwise.
+  #
+  # @ is the section manager object
+  #
+  # * top_level_items_filter.allItems(top_level_items_objs):
+  #
+  # Will receive as its first argument all the top level items, after we
+  # calculated them based on @rootItems, taking into account @rootItemsFilter
+  # and the @yield_root_items value. Giving you last chance to change that
+  # list of item before adding it to the section.
+  #
+  # top_level_items_objs will be an array of the top level items objects
+  # as stored in @grid_data.items_by_id .
+  #
+  # You should return an array of the same structure. You shouldn't
+  # change the objects items objects (unsupported use, might result
+  # in bugs). You are allowed to change the array in place.
+  #
+  # @ is the section manager object
+  #
+  # Check DetachedDataSubTreesSection to see usage example.
+  #
+  # Implementation note:
+  #
+  # We require defining both singleItem and allItem since in some contexts
+  # we don't calculate the full list of top level items, and we don't want
+  # to have to do that just to be able to call the top levels items filter.
+  #
+  # From the other hand, when we have the full list, passing the entire list
+  # at once is much more efficient than one item after the other, and also
+  # allows you to define optimizations.
+  #
+  # Another use case that was took into consideration was implementation of
+  # items limit mechanism, such a mechanism is possible to implement properly
+  # only with the allItems() method. 
+  #
+  # We don't run any check to see whether both functions are defined, and not
+  # implementing both of them will result in a crash.
+  top_level_items_filter: null
+
+  _rootItems: ->
+    # Calls @rootItems() and pass it through @rootItemsFilter() if exists
+    # called internally, only in places where we check first whether @rootItems
+    # exists
+    root_items = @rootItems()
+
+    if @rootItemsFilter?
+      root_items = @rootItemsFilter(root_items)
+
+    return root_items
 
   _isPathExist: (relative_path) ->
     tree_structure = @grid_data.tree_structure
@@ -67,7 +169,7 @@ _.extend NaturalCollectionSubtreeSection.prototype,
       # is part of our @rootItems
       top_level_item_id = path_array.shift()
 
-      root_items = @rootItems()
+      root_items = @_rootItems()
 
       isItemIdInRootItems = (item_id) ->
         # read comment on @rootItems output structure above.
@@ -92,6 +194,10 @@ _.extend NaturalCollectionSubtreeSection.prototype,
             parent_found = true
 
         if not parent_found
+          return false
+
+      if @top_level_items_filter?
+        if not @top_level_items_filter.singleItem.call(@, top_level_item_id)
           return false
 
       if path_array.length == 0
@@ -166,9 +272,9 @@ _.extend NaturalCollectionSubtreeSection.prototype,
 
           return
 
-        root_items = @rootItems()
+        root_items = @_rootItems()
     else
-      root_items = @rootItems()
+      root_items = @_rootItems()
 
     # Find all top level items
     top_level_items = null
@@ -198,6 +304,10 @@ _.extend NaturalCollectionSubtreeSection.prototype,
       top_level_items_objs = _.map(top_level_items, ((item) -> @grid_data.items_by_id[item._id]), @)
     else
       top_level_items_objs = _.map(top_level_items, ((_ignore, id) -> @grid_data.items_by_id[id]), @)
+
+    if @top_level_items_filter?
+      top_level_items_objs =
+        @top_level_items_filter.allItems.call(@, top_level_items_objs)
 
     if @options.root_items_sort_by?
       top_level_items_objs = _.sortBy(top_level_items_objs, @options.root_items_sort_by, @)
