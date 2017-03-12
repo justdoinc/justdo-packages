@@ -16,13 +16,11 @@ DetachedDataSubTreesSection = (grid_data_obj, section_root, section_obj, options
 
   @isPseudoParentId = @options.isPseudoParentId
 
-  PACK.sections_managers.NaturalCollectionSubtreeSection.call @, grid_data_obj, section_root, section_obj, options
+  GridData.sections_managers.NaturalCollectionSubtreeSection.call @, grid_data_obj, section_root, section_obj, options
 
   return @
 
-PACK.sections_managers.DetachedDataSubTreesSection = DetachedDataSubTreesSection
-
-Util.inherits DetachedDataSubTreesSection, PACK.sections_managers.NaturalCollectionSubtreeSection
+Util.inherits DetachedDataSubTreesSection, GridData.sections_managers.NaturalCollectionSubtreeSection
 
 _.extend DetachedDataSubTreesSection.prototype,
   rootItems: ->
@@ -119,3 +117,5 @@ _.extend DetachedDataSubTreesSection.prototype,
       return top_level_items_objs
 
   yield_root_items: false
+
+GridData.installSectionManager("DetachedDataSubTreesSection", DetachedDataSubTreesSection)

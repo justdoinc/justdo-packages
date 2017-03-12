@@ -12,7 +12,7 @@ default_options =
   root_items_sort_by: null # Apply sort on @rootItems output (if rootItems returns an array, this will force a different order)
 
 NaturalCollectionSubtreeSection = (grid_data_obj, section_root, section_obj, options) ->
-  GridDataSectionManager.call @, grid_data_obj, section_root, section_obj, options
+  GridData.sections_managers.GridDataSectionManager.call @, grid_data_obj, section_root, section_obj, options
 
   @_rootItemsComputation = null
 
@@ -23,9 +23,7 @@ NaturalCollectionSubtreeSection = (grid_data_obj, section_root, section_obj, opt
 
   return @
 
-PACK.sections_managers.NaturalCollectionSubtreeSection = NaturalCollectionSubtreeSection
-
-Util.inherits NaturalCollectionSubtreeSection, GridDataSectionManager
+Util.inherits NaturalCollectionSubtreeSection, GridData.sections_managers.GridDataSectionManager
 
 _.extend NaturalCollectionSubtreeSection.prototype,
   # if rootItems is null, the section will yield the entire naturalCollectionTree (starting from @options.tree_root_item_id)
@@ -327,3 +325,6 @@ _.extend NaturalCollectionSubtreeSection.prototype,
     # Upon destroy, stop @_rootItemsComputation, in case one was set
     if @_rootItemsComputation?
       @_rootItemsComputation.stop()
+
+
+GridData.installSectionManager("NaturalCollectionSubtreeSection", NaturalCollectionSubtreeSection)

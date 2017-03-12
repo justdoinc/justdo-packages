@@ -1,13 +1,11 @@
 QuerySection = (grid_data_obj, section_root, section_obj, options) ->
   options = @_prepareOptions(options)
 
-  PACK.sections_managers.NaturalCollectionSubtreeSection.call @, grid_data_obj, section_root, section_obj, options
+  GridData.sections_managers.NaturalCollectionSubtreeSection.call @, grid_data_obj, section_root, section_obj, options
 
   return @
 
-PACK.sections_managers.QuerySection = QuerySection
-
-Util.inherits QuerySection, PACK.sections_managers.NaturalCollectionSubtreeSection
+Util.inherits QuerySection, GridData.sections_managers.NaturalCollectionSubtreeSection
 
 _.extend QuerySection.prototype,
   yield_root_items: true
@@ -31,3 +29,5 @@ _.extend QuerySection.prototype,
       delete options.root_items_sort_by
 
     return options
+
+GridData.installSectionManager("QuerySection", QuerySection)

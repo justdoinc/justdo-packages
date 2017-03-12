@@ -330,3 +330,5 @@ _.extend GridDataSectionManager.prototype,
 
   getStateVar: (var_name, default_val) ->
     return @grid_data.getStateVar(@section_obj.id, var_name, default_val)
+
+GridData.installSectionManager("GridDataSectionManager", GridDataSectionManager)

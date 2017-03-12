@@ -1,11 +1,9 @@
 TicketsQueueSection = (grid_data_obj, section_root, section_obj, options) ->
-  PACK.sections_managers.NaturalCollectionSubtreeSection.call @, grid_data_obj, section_root, section_obj, options
+  GridData.sections_managers.NaturalCollectionSubtreeSection.call @, grid_data_obj, section_root, section_obj, options
 
   return @
 
-PACK.sections_managers.TicketsQueueSection = TicketsQueueSection
-
-Util.inherits TicketsQueueSection, PACK.sections_managers.NaturalCollectionSubtreeSection
+Util.inherits TicketsQueueSection, GridData.sections_managers.NaturalCollectionSubtreeSection
 
 _.extend TicketsQueueSection.prototype,
   # fetch only the _id field so invalidation will occur only when items set changes
@@ -20,3 +18,5 @@ _.extend TicketsQueueSection.prototype,
       return "ticket-queue-caption"
 
     return null
+
+GridData.installSectionManager("TicketsQueueSection", TicketsQueueSection)

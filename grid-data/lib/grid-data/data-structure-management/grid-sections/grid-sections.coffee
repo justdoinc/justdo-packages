@@ -1,8 +1,11 @@
 helpers = share.helpers
 
-PACK.sections_managers = {}
+GridData.sections_managers = {} # Expose sections_managers through GridData to make it available to external uses
 
-GridData.sections_managers = PACK.sections_managers # Expose sections_managers through GridData to make it available to external uses
+GridData.installSectionManager = (section_manager_id, constructor) ->
+  GridData.sections_managers[section_manager_id] = constructor
+
+  return
 
 forbidden_section_names = ["global"] # global is forbidden since it is used under _sections_state to store global state vars
 
@@ -103,8 +106,8 @@ _.extend GridData.prototype,
       # make sure it is a function (constructor)
       section_manager = section.section_manager
       if _.isString section_manager
-        if PACK.sections_managers[section_manager]?
-          section.section_manager = PACK.sections_managers[section_manager]
+        if GridData.sections_managers[section_manager]?
+          section.section_manager = GridData.sections_managers[section_manager]
         else
           throw @_error "unknown-section-manager-type"
       else if not _.isFunction section_manager
