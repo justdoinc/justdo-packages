@@ -6,10 +6,8 @@ default_options =
   # Overrides the constractor's prototypical @rootItems
   rootItems: null
 
-  # The following are relevant only if @rootItems or options.rootItems
-  # aren't not null, if they are null, we will use the natural collection
-  # items order without applying filter
-  root_items_sort_by: null # Apply sort on @rootItems output (if rootItems returns an array, this will force a different order)
+  # Overrides the constractor's prototypical @root_items_sort_by
+  root_items_sort_by: null
 
 NaturalCollectionSubtreeSection = (grid_data_obj, section_root, section_obj, options) ->
   GridData.sections_managers.GridDataSectionManager.call @, grid_data_obj, section_root, section_obj, options
@@ -20,6 +18,9 @@ NaturalCollectionSubtreeSection = (grid_data_obj, section_root, section_obj, opt
 
   if (rootItems = @options.rootItems)?
     @rootItems = rootItems
+
+  if (root_items_sort_by = @options.root_items_sort_by)?
+    @root_items_sort_by = root_items_sort_by
 
   return @
 
@@ -34,11 +35,11 @@ _.extend NaturalCollectionSubtreeSection.prototype,
   #      be used as roots, e.g. {_id: "xx"}.
   #      all other properties will be ignored.
   #      The order of the array will be the default order in which the items will be listed.
-  #      The options.root_items_sort_by can override that
+  #      The @root_items_sort_by can override that
   #
   #      !IMPROTANT if @yield_root_items is false, the original order of
   #      the array will be ignored, sort will be governed only by the
-  #      @options.root_items_sort_by options
+  #      @root_items_sort_by options
   #        
   rootItems: null
 
@@ -145,6 +146,15 @@ _.extend NaturalCollectionSubtreeSection.prototype,
   # We don't run any check to see whether both functions are defined, and not
   # implementing both of them will result in a crash.
   top_level_items_filter: null
+
+  # root_items_sort_by a function that will be used to sort the top level
+  # items, the function should be constructed according to Underscore's
+  # sortBy iteratee
+  #
+  # Note: root_items_sort_by is relevant only if @rootItems or options.rootItems
+  # aren't not null, if they are null, we will use the natural collection
+  # items order without applying filter
+  root_items_sort_by: null
 
   _rootItems: ->
     # Calls @rootItems() and pass it through @rootItemsFilter() if exists
@@ -307,8 +317,8 @@ _.extend NaturalCollectionSubtreeSection.prototype,
       top_level_items_objs =
         @top_level_items_filter.allItems.call(@, top_level_items_objs)
 
-    if @options.root_items_sort_by?
-      top_level_items_objs = _.sortBy(top_level_items_objs, @options.root_items_sort_by, @)
+    if @root_items_sort_by?
+      top_level_items_objs = _.sortBy(top_level_items_objs, @root_items_sort_by, @)
 
     for top_level_items_obj in top_level_items_objs
       top_level_item_id = top_level_items_obj._id
