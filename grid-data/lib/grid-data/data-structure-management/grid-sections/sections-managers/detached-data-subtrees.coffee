@@ -49,8 +49,9 @@ _.extend DetachedDataSubTreesSection.prototype,
     # You can also set @isPseudoParentId without inheriting by passing it as parameter
     # to the constructor, see default_options above.
     #
-    # In the justdo project, we use the isPseudoParentId option to define direct tasks
-    # parents as pseudo parents, you can use it as an example.
+    # In the justdo project, we inherit from DetachedDataSubTreesSection and
+    # set @isPseudoParentId to regard direct tasks parents as pseudo parents,
+    # you can use it as an example. (see JustdoProjectsDetachedDataSubTreesSection)
     #
     # Returns true if parent_id is pseudo parent, false otherwise
     if parent_id == "0"
