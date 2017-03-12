@@ -14,7 +14,8 @@ default_options =
 DetachedDataSubTreesSection = (grid_data_obj, section_root, section_obj, options) ->
   @options = _.extend {}, default_options, options
 
-  @isPseudoParentId = @options.isPseudoParentId
+  if @options.isPseudoParentId?
+    @isPseudoParentId = @options.isPseudoParentId
 
   GridData.sections_managers.NaturalCollectionSubtreeSection.call @, grid_data_obj, section_root, section_obj, options
 
