@@ -64,7 +64,6 @@ Package.onUse(function (api) {
   api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/query.coffee', client);
   api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/data-tree.coffee', client);
   api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/detached-data-subtrees.coffee', client);
-  api.add_files('lib/grid-data/data-structure-management/grid-sections/sections-managers/tickets-queue.coffee', client);
 
   // Metadata management
   api.add_files('lib/grid-data/data-structure-management/metadata.coffee', client);
