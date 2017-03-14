@@ -24,6 +24,7 @@ _.extend GridDataSectionManager.prototype,
 
     @emit "destroy"
 
+    # inheritors must implement @destroy()
     @destroy()
 
     @emit "destroyed"
