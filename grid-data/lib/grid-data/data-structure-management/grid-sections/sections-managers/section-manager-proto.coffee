@@ -153,8 +153,10 @@ _.extend GridDataSectionManager.prototype,
     #     -1: traversing won't attempt to step into item's under the
     #     current item
     #     -2: traversing will stop immediately
-
-    return false
+    #
+    # Will return false if forced to stop by iteratee, true if travesing completed
+    #
+    return true
 
   #
   # hasChildren
