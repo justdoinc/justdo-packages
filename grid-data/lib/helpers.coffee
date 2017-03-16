@@ -51,6 +51,8 @@ share.helpers = helpers =
 
     return sub_paths
 
-  joinPathArray: (path_array) -> "/#{path_array.join('/')}/"
+  joinPathArray: (path_array) ->
+    joined = path_array.join('/')
+    return if joined.length > 0 then "/#{joined}/" else "/"
 
   callCb: JustdoHelpers.callCb
