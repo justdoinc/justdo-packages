@@ -909,6 +909,13 @@ _.extend GridControl.prototype,
     return true
 
   activateCollectionItemId: (item_id, cell = 0, options) ->
+    options = _.extend {force_pass_filter: false}, options
+
+    if options.force_pass_filter
+      if (filter_items_ids = @_grid_data._filter_collection_items_ids)?
+        if item_id not of filter_items_ids
+          @forceItemsPassCurrentFilter(item_id)
+
     @activatePath(@_grid_data.getCollectionItemIdPath(item_id), cell, options)
 
   movePath: (path, new_location, cb, usersDiffConfirmationCb) ->
