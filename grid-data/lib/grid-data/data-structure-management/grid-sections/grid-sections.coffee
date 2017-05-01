@@ -329,6 +329,22 @@ _.extend GridData.prototype,
       # No section item for Main Section
       return null
 
+    {show_if_empty} = section_obj.options
+
+    if not show_if_empty? or not show_if_empty
+      {section_manager} = section_obj
+
+      has_items = false
+      section_manager._each "/", {expand_only: false, filtered_tree: true}, (section, item_type, item_obj, absolute_path, expand_state) =>
+        has_items = true
+
+        return -2
+
+      if not has_items
+        # section_obj.id doesn't show if empty
+
+        return
+
     item_obj =
       title: section_obj.options.section_item_title
 
