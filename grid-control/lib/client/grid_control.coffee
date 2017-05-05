@@ -295,7 +295,7 @@ _.extend GridControl.prototype,
     #   "title": 0
     #   "subject": 1
     # }
-    return _.object(_.map @_grid.getColumns(), (cell, i) -> [cell.id, i])
+    return _.object(_.map @getSlickGridColumns(), (cell, i) -> [cell.id, i])
 
   _initStatesClassesComputations: ->
     @_states_classes_computations = []
@@ -628,7 +628,7 @@ _.extend GridControl.prototype,
 
     return view
 
-  getCellField: (cell_id) -> @_grid.getColumns()[cell_id].field
+  getCellField: (cell_id) -> @getSlickGridColumns()[cell_id].field
 
   # Return the current value stored in the memory
   getCellStoredValue: (row, cell) -> @_grid_data.getItem(row)[@getCellField(cell)]
@@ -1060,3 +1060,10 @@ _.extend GridControl.prototype,
     @emit "destroyed"
 
     @logger.debug "Destroyed"
+
+  #
+  # Grid querying / maintanace
+  #
+  getSlickGridColumns: ->
+    return @_grid.getColumns()
+
