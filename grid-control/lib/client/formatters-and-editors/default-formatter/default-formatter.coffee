@@ -3,7 +3,7 @@ GridControl.installFormatter "defaultFormatter",
     {schema, value, self} = @getFriendlyArgs()
 
     if not value?
-      return ""
+      value = ""
 
     value = self.xssGuard value
 
