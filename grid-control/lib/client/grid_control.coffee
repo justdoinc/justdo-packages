@@ -1067,3 +1067,37 @@ _.extend GridControl.prototype,
   getSlickGridColumns: ->
     return @_grid.getColumns()
 
+  getSlickGridLength: ->
+    return @_grid.getDataLength()
+
+  invalidateColumns: (columns) ->
+    # Gets a column id or array of columns ids look for them
+    # if columns with corresponding names exists in slick grid
+    # invalidate the cells in all of them.
+
+    if not columns?
+      return
+
+    if _.isString columns
+      columns = [columns]
+
+    current_slick_grid_columns = @getSlickGridColumns()
+
+    columns_nth_position = []
+    # Find requested columns ids order
+    for column_obj, nth_position in current_slick_grid_columns
+      if column_obj.id in columns
+        columns_nth_position.push(nth_position)
+
+    if _.isEmpty columns_nth_position
+      @logger.warn "invalidateColumns: couldn't find any of the requested columns #{columns.join()}"
+      return
+
+    if _.size(columns_nth_position) != columns.length
+      @logger.warn "invalidateColumns: some requested columns aren't present in the tree, skipping them"
+
+    for i in [0...@getSlickGridLength()]
+      for j in columns_nth_position
+        @_grid.updateCell(i, j)
+
+    return
