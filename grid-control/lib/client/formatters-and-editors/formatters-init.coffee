@@ -51,6 +51,7 @@ GridControl.getFormatters = ->
 #
 _.extend GridControl.prototype,
   _formatters: null
+  _columns_state_maintainers = null
   _tree_control_fomatters: null
   _print_formatters: null
 
@@ -68,7 +69,14 @@ _.extend GridControl.prototype,
     # Load all the formatters for the current grid_control object
     #
 
-    @_formatters = {} # the SlickGrid formatters, called simply _formatters for historical reasons
+    # the SlickGrid formatters, called simply _formatters for historical
+    # reasons
+    @_formatters = {}
+    # Each formatter type can define a column state maintainer (see
+    # slickGridColumnStateMaintainer below). The state maintainer is a reactive
+    # resource that upon invalidation will trigger recalculation of the entire
+    # column
+    @_columns_state_maintainers = {}
     @_tree_control_fomatters = []
     @_print_formatters = {}
     @_loaded_slick_grid_jquery_events = []
@@ -93,6 +101,9 @@ _.extend GridControl.prototype,
     #     slick_grid: the slick grid formatter
     #                 Read below about the @_formatters[formatter_name]
     #                 we generate based on slick_grid to learn more.
+    #     slickGridColumnStateMaintainer: Optional, a reactive resource that upon invalidation
+    #                                     will trigger recalculation of all columns that uses
+    #                                     this formatter.
     #     is_slick_grid_tree_control_formatter: set to true if this formatter has
     #                                           tree control controls in its slick_grid
     #                                           formatter, otherwise set to false or don't
@@ -155,6 +166,23 @@ _.extend GridControl.prototype,
     # just like described in @_formatters[formatter_name] but instead of 
     # slick_grid_formatters_extended_context_properties we extend the
     # GridControl-instance-inherited object with: print_formatters_extended_context_properties
+    #
+    # 5. Create the grid control columns state maintainers for each formatter:
+    #
+    # * @_columns_state_maintainers[formatter_name]
+    #
+    # This function is called by the JustDo grid control inside a computation
+    # that is created upon the grid control init for each row in the view that uses 
+    # formatter_name.
+    #
+    # The computation is stopped and recreated on every change to the grid columns (the
+    # grid view), and stopped without replacement on grid destroy.
+    #
+    # The state maintainer is expected to be a reactive resource that invalidates when
+    # a recalculation of the entire column that uses its formatter is required.
+    #
+    # We set @_columns_state_maintainers[formatter_name] only for the formatters
+    # that has the slickGridColumnStateMaintainer option set.
     if not (slick_grid_formatter = formatter_definition.slick_grid)?
       throw @_error "invalid-formatter-definition", "Formatter `#{formatter_name}' doesn't define the slick grid formatter under its .slick_grid property"
 
@@ -170,6 +198,18 @@ _.extend GridControl.prototype,
         slick_grid_formatters_extended_context_properties
 
       return slick_grid_formatter.apply(extended_grid_control_obj, arguments)
+
+    if (slickGridColumnStateMaintainer = formatter_definition.slickGridColumnStateMaintainer)?
+      # We set _columns_state_maintainers for formatter only if slickGridColumnStateMaintainer
+      # is defined for it
+      @_columns_state_maintainers[formatter_name] = =>
+        # @ is the GridControl instance
+        extended_grid_control_obj = Object.create(@)
+        _.extend extended_grid_control_obj,
+          {original_args: arguments, formatter_name: formatter_name}
+
+        return slickGridColumnStateMaintainer.apply(extended_grid_control_obj, arguments)
+
 
     @_print_formatters[formatter_name] = =>
       # @ is the GridControl instance

@@ -123,6 +123,7 @@ _.extend GridControl.prototype,
 
     @_grid = new Slick.Grid @container, @_grid_data, columns, slick_options
 
+    @_setColumnsStateMaintainersTrackerForView(@_init_view)
     @_initStatesClassesComputations()
 
     #@_grid.setSelectionModel(new Slick.RowSelectionModel())
@@ -512,6 +513,68 @@ _.extend GridControl.prototype,
 
     return true
 
+  _getColumnsStateMaintainersFromView: (view) ->
+    # This method assumes that the view passed to it passed @_validateView
+
+    # Returns object of the form:
+    #
+    # { column_id: columnStateMaintainer }
+    #
+    # For all the columns present in the grid that we have column state maintainer
+    # for their formatters.
+
+    state_maintainers = {}
+
+    for column_def in view
+      field = column_def.field
+      field_def = @schema[field]
+
+      if (column_state_maintainer = @_columns_state_maintainers[field_def.grid_column_formatter])?
+        state_maintainers[field] = column_state_maintainer
+
+    return state_maintainers
+
+  _state_maintainers_trackers = null
+  _resetColumnsStateMaintainersTrackers: ->
+    if @_state_maintainers_trackers?
+      for tracker in @_state_maintainers_trackers
+        tracker.stop()
+
+    @_state_maintainers_trackers = []
+
+    @logger.debug "Columns state maintainers initialized"
+
+    return
+
+  _setColumnsStateMaintainersTrackerForView: (view) ->
+    @_resetColumnsStateMaintainersTrackers()
+
+    columns_state_maintainers = @_getColumnsStateMaintainersFromView(view)
+
+    init_phase = true
+    for column_id, columnStateMaintainer of columns_state_maintainers
+      do (column_id, columnStateMaintainer) =>
+        computation = new Tracker.autorun =>
+          if not init_phase
+            # If recalculated after init phase, means we need to invalidate
+            # the column
+
+            @logger.debug "Column #{column_id} state maintainer trigger column recalculation"
+
+            @invalidateColumns([column_id])
+
+          columnStateMaintainer()
+
+          return
+
+        @_state_maintainers_trackers.push computation
+
+    init_phase = false
+
+    @logger.debug "State maintainers trackers updated"
+
+    return
+
   _getColumnsStructureFromView: (view) ->
     # This method assumes that the view passed to it passed @_validateView
     columns = []
@@ -604,6 +667,8 @@ _.extend GridControl.prototype,
         return
 
       new_view = @getView()
+
+      @_setColumnsStateMaintainersTrackerForView view
 
       if update_type # true means dom rebuilt
         @emit "columns-headers-dom-rebuilt", new_view
@@ -1056,6 +1121,8 @@ _.extend GridControl.prototype,
     if @_operation_controllers?
       for op_controller_name, op_controller of @_operation_controllers
         op_controller.destroy()
+
+    @_resetColumnsStateMaintainersTrackers()
 
     @emit "destroyed"
 

@@ -1,3 +1,49 @@
+getHeighestSeqId = ->
+  # Returns seqId of the item with the highest sequence id under @collection
+  # has, or undefined, if no item, or no item with sequence id exists.
+  #
+  # If APP.modules.project_page.curProj() exists, we limit the search
+  # for the heighest sequence id to the current project only.
+  #
+  # Reactive resource
+  #
+  # Must be called with @ set to the current GridControl object.
+
+  query = 
+    seqId:
+      $ne: null
+
+  if (current_project_id = APP?.modules?.project_page?.curProj?())?
+    # Not the most "pure" programming style to include a reference
+    # to APP.modules.project_page.curProj() here, but the code doesn't
+    # depend on it so that's a reasonable compromise with minimal
+    # technical debt -Daniel
+    query.project_id = current_project_id.id
+
+  highest_seq_id_doc = @collection.findOne(query, {fields: {seqId: 1}, sort: {seqId: -1}})
+
+  if not highest_seq_id_doc?
+    return undefined
+
+  return highest_seq_id_doc.seqId
+
+getMinimalSeqIdSpace = ->
+  # Returns the maximum between 3 and the the digits count of the item
+  # returned from getHeighestSeqId.
+  #
+  # Reactive resource
+  #
+  # Must be called with @ set to the current GridControl object. 
+
+  current_heighest_seq_id = getHeighestSeqId.call(@)
+
+  if current_heighest_seq_id?
+    current_heighest_seq_id_space = ("" + current_heighest_seq_id).length
+  else
+    current_heighest_seq_id_space = 0
+
+  return Math.max(3, current_heighest_seq_id_space)
+
 GridControl.installFormatter "textWithTreeControls",
   is_slick_grid_tree_control_formatter: true
 
@@ -6,6 +52,43 @@ GridControl.installFormatter "textWithTreeControls",
 
   # slick_grid_jquery_events:
   #   Defined in text_with_tree_controls-events.coffee
+
+  slickGridColumnStateMaintainer: ->
+    if not Tracker.active
+      @logger.warn "slickGridColumnStateMaintainer: called outside of computation, skipping"
+
+      return
+
+    # Create a dependency and depend on it.
+    dep = new Tracker.Dependency()
+    dep.depend()
+
+    highest_seqId_computation = null
+    first_run = true
+    prev_value = null
+    Tracker.nonreactive =>
+      # Run in an isolated reactivity scope
+      highest_seqId_computation = Tracker.autorun =>
+        minimal_seq_id_space = getMinimalSeqIdSpace.call(@)
+
+        # We trigger invalidation only if value *changed* in a way that requires
+        # column recalculation, therefore, if this is the first run, there is
+        # no need to check if invalidation requires.
+        if first_run
+          first_run = false
+          prev_value = minimal_seq_id_space
+
+          return
+
+        if prev_value != minimal_seq_id_space
+          dep.changed()
+
+        prev_value = minimal_seq_id_space
+
+    Tracker.onInvalidate ->
+      highest_seqId_computation.stop()
+
+    return
 
   slick_grid: ->
     {row, cell, value, doc, self} = @getFriendlyArgs()
@@ -53,7 +136,7 @@ GridControl.installFormatter "textWithTreeControls",
 
     if index?
       index_width_per_char = 8.2
-      index_chars = Math.max(("" + index).length, 3) # minimum 3 to avoid too many indent differences
+      index_chars = Tracker.nonreactive => getMinimalSeqIdSpace.call(@)
       index_width = Math.ceil(index_chars * index_width_per_char)
       index_horizontal_paddings = 6 * 2
       # Note: index label is box-sizing: content-box
