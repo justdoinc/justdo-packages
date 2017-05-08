@@ -241,9 +241,10 @@ GridControl.installFormatter formatter_name,
               _.intersection(old_doc_parents, new_doc_parents)
             )
 
-          grid_control.once "rebuild_ready", ->
-            for parent_id in changed_parents
-              formatter_obj._updateItemCalculatedFieldsAncestors(grid_control, parent_id, {update_self: true})
+          if changed_parents.length > 0
+            grid_control.once "rebuild_ready", ->
+              for parent_id in changed_parents
+                formatter_obj._updateItemCalculatedFieldsAncestors(grid_control, parent_id, {update_self: true})
 
           return
 
