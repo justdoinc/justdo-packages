@@ -345,11 +345,27 @@ _.extend GridDataCom.prototype,
 
     order = 0
     @collection.find(query, {sort: sort}).forEach (child) =>
+      # IMPORTANT!!!
+      #
+      # If you change the following modifiers in the future
+      # pay strong attention to the fact that we are bypassing collection2.
+      #
+      # Make sure your changes doesn't compromise security without collection2's
+      # schema restrictions!
+
       set = {$set: {}}
       set.$set["parents.#{parent._id}.order"] = order
-      @collection.update child._id, set, (err) =>
+
+      # We don't want tasks which their order had been changed by the
+      # sortChildren by command to show in the recently changed items.
+      # We do so by so skipping collection2 procedures.
+      # Result was very messy and counter-productive as a result of this action
+      # in the recently updated view.
+
+      @collection.update child._id, set, {bypassCollection2: true}, (err) =>
         if err?
           @logger.error "sortChildren: failed to change item order #{JSON.stringify(err)}"
+
       order += 1
 
     return
