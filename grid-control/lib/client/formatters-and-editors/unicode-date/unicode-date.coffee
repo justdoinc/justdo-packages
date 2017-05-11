@@ -2,7 +2,44 @@
 # Unicode date formatter and editor
 #
 
-moment_format = "YYYY-MM-DD"
+# This is the format we expect the raw data to be provided
+# to the formatter/editor as
+raw_data_moment_format = "YYYY-MM-DD"
+
+getUserPreferredDataFormat = ->
+  # Reactive resource!
+  if (preferred_date_format = Meteor.user()?.profile?.date_format)?
+    return preferred_date_format
+
+  if (default_date_format = JustdoHelpers.getCollectionSchemaForField(Meteor.users, "profile.date_format").defaultValue)?
+    return default_date_format
+
+  # Fallback to the raw_data_moment_format
+  return raw_data_moment_format
+
+getUserPreferredDataFormatInJqueryUiFormat = ->
+  preferred_format = getUserPreferredDataFormat()
+
+  jquery_ui_format = preferred_format
+    .replace("MM", "mm")
+    .replace("YYYY", "yy")
+    .replace("DD", "dd")
+
+  return jquery_ui_format
+
+normalizeUnicodeDateStringAndFormatToUserPreference = (unicode_date_string) ->
+  if not unicode_date_string? or unicode_date_string == ""
+    return ""
+
+  return moment(unicode_date_string, raw_data_moment_format).format(getUserPreferredDataFormat())
+
+normalizeUserPreferenceDateFormatAndFormatToUnicodeDateString = (user_format_date_string) ->
+  if not user_format_date_string? or user_format_date_string == ""
+    return ""
+
+  return moment(user_format_date_string, getUserPreferredDataFormat()).format(raw_data_moment_format)
+
+
 
 #
 # Actions buttons definitions:
@@ -66,13 +103,6 @@ GridControl.installFormatter "unicodeDateFormatter",
   # accessible through the 'formatter_obj' of the object returned
   # by @getFriendlyArgs()
   #
-  moment_format: moment_format
-
-  normalizeUnicodeDateString: (unicode_date_string) ->
-    if not unicode_date_string? or unicode_date_string == ""
-      return ""
-
-    return moment(unicode_date_string, @moment_format).format(@moment_format)
 
 
   actions_buttons: default_buttons
@@ -86,6 +116,43 @@ GridControl.installFormatter "unicodeDateFormatter",
 
     return _.find all_actions_buttons, (i) -> i.action_name == action_name
 
+  slickGridColumnStateMaintainer: ->
+    if not Tracker.active
+      @logger.warn "slickGridColumnStateMaintainer: called outside of computation, skipping"
+
+      return
+
+    # Create a dependency and depend on it.
+    dep = new Tracker.Dependency()
+    dep.depend()
+
+    profile_date_format_computation = null
+    first_run = true
+    prev_value = null
+    Tracker.nonreactive =>
+      # Run in an isolated reactivity scope
+      profile_date_format_computation = Tracker.autorun =>
+        preferred_date_format = getUserPreferredDataFormat()
+
+        # We trigger invalidation only if value *changed* in a way that requires
+        # column recalculation, therefore, if this is the first run, there is
+        # no need to check if invalidation requires.
+        if first_run
+          first_run = false
+          prev_value = preferred_date_format
+
+          return
+
+        if prev_value != preferred_date_format
+          dep.changed()
+
+        prev_value = preferred_date_format
+
+    Tracker.onInvalidate ->
+      profile_date_format_computation.stop()
+
+    return
+
   #
   # Formatters
   #
@@ -93,7 +160,7 @@ GridControl.installFormatter "unicodeDateFormatter",
     {formatter_obj, value} = @getFriendlyArgs()
 
     unicode_date_string =
-      formatter_obj.normalizeUnicodeDateString(value)
+      normalizeUnicodeDateStringAndFormatToUserPreference(value)
 
     formatter_content = ""
     content_empty = true
@@ -161,7 +228,7 @@ GridControl.installFormatter "unicodeDateFormatter",
   print: (doc, field) ->
     {formatter_obj, value} = @getFriendlyArgs()
 
-    return formatter_obj.normalizeUnicodeDateString(value)
+    return normalizeUnicodeDateStringAndFormatToUserPreference(value)
 
 #
 # EDITOR
@@ -170,16 +237,13 @@ GridControl.installFormatter "unicodeDateFormatter",
 # Check README.md to learn more about editors definitions
 
 GridControl.installEditor "UnicodeDateEditor",
-  moment_format: moment_format
-  datepicker_format: "yy-mm-dd"
-
   actions_buttons: default_buttons
   ext_actions_buttons: default_ext_buttons
 
   init: ->
     $editor = $("""<div class="grid-editor unicode-date-editor" />""")
 
-    @$input = $("""<input type="text" class="editor-unicode-date" placeholder="yyyy-mm-dd" />""")
+    @$input = $("""<input type="text" class="editor-unicode-date" placeholder="#{getUserPreferredDataFormatInJqueryUiFormat()}" />""")
 
     $editor
       .html(@$input)
@@ -215,7 +279,7 @@ GridControl.installEditor "UnicodeDateEditor",
         formatter_buttons_width += action_button_def.width
 
     @$input.datepicker
-      dateFormat: @datepicker_format
+      dateFormat: getUserPreferredDataFormatInJqueryUiFormat()
       showOn: "button"
       buttonImageOnly: true
       showAnim: ""
@@ -246,7 +310,7 @@ GridControl.installEditor "UnicodeDateEditor",
     if not val?
       val = null # val must be null to be interpreted as clear (undefined ignored)
 
-    @$input.datepicker("setDate", val)
+    @$input.datepicker("setDate", normalizeUnicodeDateStringAndFormatToUserPreference(val))
     @$input.change()
 
     @focus()
@@ -254,7 +318,7 @@ GridControl.installEditor "UnicodeDateEditor",
     return
 
   serializeValue: ->
-    current_val = @$input.val()
+    current_val = normalizeUserPreferenceDateFormatAndFormatToUnicodeDateString(@$input.val())
 
     if _.isEmpty(current_val)
       return null
@@ -263,7 +327,7 @@ GridControl.installEditor "UnicodeDateEditor",
 
   validator: (value) ->
     if value?
-      if not moment(value, @moment_format, true).isValid()
+      if not moment(value, raw_data_moment_format, true).isValid()
         return "Invalid date"
 
     return undefined
