@@ -563,7 +563,7 @@ _.extend GridControl.prototype,
 
             @invalidateColumns([column_id])
 
-          columnStateMaintainer()
+          columnStateMaintainer({column_id: column_id})
 
           return
 

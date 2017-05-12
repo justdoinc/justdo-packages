@@ -206,7 +206,9 @@ _.extend GridControl.prototype,
         # @ is the GridControl instance
         extended_grid_control_obj = Object.create(@)
         _.extend extended_grid_control_obj,
-          {original_args: arguments, original_gc: @, formatter_name: formatter_name}
+          {original_args: arguments, original_gc: @, formatter_name: formatter_name},
+          common_formatters_helpers,
+          slick_grid_columns_state_maintainers_extended_context_properties
 
         return slickGridColumnStateMaintainer.apply(extended_grid_control_obj, arguments)
 
@@ -302,7 +304,50 @@ slick_grid_formatters_extended_context_properties =
   getRealSchema: ->
     return @collection.simpleSchema()._schema[@original_args[3].id]
 
+slick_grid_columns_state_maintainers_extended_context_properties =
+  # Note the @ for each method is the GridControl-instance-inherited formatter
+  # object created in the loadFormatter proccess for each formatter.
+  # Read more in loadFormatter comment
+
+  getFriendlyArgs: ->
+    # Returns an object with the arguments
+    # passed to the formatter and other commonly needed resources
+    # (such as schema).
+    # That object will also include `options`
+    # property with the field's grid_column_formatter_options or
+    # empty object if grid_column_formatter_options weren't defined.
+
+    [{column_id}] = @original_args
+
+    field = column_id # at the moment field and column_id are interchangable,
+                      # in the future if it won't be the case, we'll need
+                      # to update the apis.
+
+    schema = @schema[field]
+
+    args =
+      # See notes on self in slick_grid_formatters_extended_context_properties
+      self: @
+
+      field: field
+
+      schema: schema
+
       original_grid_control: @original_gc
+
+      grid_control: @
+      grid_data: @_grid_data
+      slick_grid: @_grid
+
+      formatter_name: @formatter_name
+      # Read comment about formatter_obj in regular formatter's
+      # getFriendlyArgs
+      formatter_obj: PACK.Formatters[@formatter_name]
+
+    return args
+
+  getRealSchema: ->
+    return @collection.simpleSchema()._schema[@original_args[3].id]
 
 print_formatters_extended_context_properties =
   # Note the @ for each method is the GridControl-instance-inherited
