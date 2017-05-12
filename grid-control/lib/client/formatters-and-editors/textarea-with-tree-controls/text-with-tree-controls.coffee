@@ -1,4 +1,4 @@
-system_minmial_seq_id_space_on_grid = 3
+system_minimal_seq_id_space_on_grid = 3
 
 getHeighestSeqId = ->
   # Returns seqId of the item with the highest sequence id under @collection
@@ -44,7 +44,7 @@ getMinimalSeqIdSpace = ->
   else
     current_heighest_seq_id_space = 0
 
-  return Math.max(system_minmial_seq_id_space_on_grid, current_heighest_seq_id_space)
+  return Math.max(system_minimal_seq_id_space_on_grid, current_heighest_seq_id_space)
 
 GridControl.installFormatter "textWithTreeControls",
   is_slick_grid_tree_control_formatter: true
