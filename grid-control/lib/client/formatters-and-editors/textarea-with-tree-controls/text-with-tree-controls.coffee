@@ -22,12 +22,21 @@ getHeighestSeqId = ->
     # technical debt -Daniel
     query.project_id = current_project_id.id
 
-  highest_seq_id_doc = @collection.findOne(query, {fields: {seqId: 1}, sort: {seqId: -1}})
+  # Turned out to be too slow approach since minimongo with sort results in
+  # 100s of ms computations
+  # highest_seq_id_doc = @collection.findOne(query, {fields: {seqId: 1}, sort: {seqId: -1}})
+  #
+  # if not highest_seq_id_doc?
+  #   return undefined
+  #
+  # return highest_seq_id_doc.seqId
 
-  if not highest_seq_id_doc?
-    return undefined
+  # This approach will work only in environments with JustDo enabled
+  highest_seq_id = APP?.modules?.project_page?.curProj()?.getProjectDoc()?.lastTaskSeqId
 
-  return highest_seq_id_doc.seqId
+  console.log highest_seq_id
+
+  return highest_seq_id
 
 getMinimalSeqIdSpace = ->
   # Returns the maximum between 3 and the the digits count of the item
