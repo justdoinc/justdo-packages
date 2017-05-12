@@ -34,8 +34,6 @@ getHeighestSeqId = ->
   # This approach will work only in environments with JustDo enabled
   highest_seq_id = APP?.modules?.project_page?.curProj()?.getProjectDoc()?.lastTaskSeqId
 
-  console.log highest_seq_id
-
   return highest_seq_id
 
 getMinimalSeqIdSpace = ->
@@ -146,7 +144,12 @@ GridControl.installFormatter "textWithTreeControls",
 
     if index?
       index_width_per_char = 8.2
-      index_chars = minimal_seq_id_space
+
+      # minimal_seq_id_space won't be accurate in environment without JustDo
+      # projects, in such cases, we need to fallback to current cell seqId
+      # length
+      index_chars = Math.max(minimal_seq_id_space, ("" + index).length)   
+
       index_width = Math.ceil(index_chars * index_width_per_char)
       index_horizontal_paddings = 6 * 2
       # Note: index label is box-sizing: content-box
