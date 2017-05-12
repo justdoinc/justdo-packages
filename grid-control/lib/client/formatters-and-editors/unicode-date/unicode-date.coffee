@@ -6,7 +6,7 @@
 # to the formatter/editor as
 raw_data_moment_format = "YYYY-MM-DD"
 
-getUserPreferredDataFormat = ->
+getUserPreferredDateFormat = ->
   # Reactive resource!
   if (preferred_date_format = Meteor.user()?.profile?.date_format)?
     return preferred_date_format
@@ -18,7 +18,7 @@ getUserPreferredDataFormat = ->
   return raw_data_moment_format
 
 getUserPreferredDataFormatInJqueryUiFormat = ->
-  preferred_format = getUserPreferredDataFormat()
+  preferred_format = getUserPreferredDateFormat()
 
   jquery_ui_format = preferred_format
     .replace("MM", "mm")
@@ -27,17 +27,23 @@ getUserPreferredDataFormatInJqueryUiFormat = ->
 
   return jquery_ui_format
 
-normalizeUnicodeDateStringAndFormatToUserPreference = (unicode_date_string) ->
+normalizeUnicodeDateStringAndFormatToUserPreference = (unicode_date_string, user_preferred_date_format) ->
   if not unicode_date_string? or unicode_date_string == ""
     return ""
 
-  return moment(unicode_date_string, raw_data_moment_format).format(getUserPreferredDataFormat())
+  # We allow passing the user_preferred_date_format so for the slick grid formatter,
+  # that we need to be highly optimized, we will be able to cache it
+  # in the column level
+  if not user_preferred_date_format?
+    user_preferred_date_format = getUserPreferredDateFormat()
+
+  return moment(unicode_date_string, raw_data_moment_format).format(user_preferred_date_format)
 
 normalizeUserPreferenceDateFormatAndFormatToUnicodeDateString = (user_format_date_string) ->
   if not user_format_date_string? or user_format_date_string == ""
     return ""
 
-  return moment(user_format_date_string, getUserPreferredDataFormat()).format(raw_data_moment_format)
+  return moment(user_format_date_string, getUserPreferredDateFormat()).format(raw_data_moment_format)
 
 
 
@@ -127,26 +133,18 @@ GridControl.installFormatter "unicodeDateFormatter",
     dep.depend()
 
     profile_date_format_computation = null
-    first_run = true
-    prev_value = null
     Tracker.nonreactive =>
       # Run in an isolated reactivity scope
       profile_date_format_computation = Tracker.autorun =>
-        preferred_date_format = getUserPreferredDataFormat()
+        current_val = getUserPreferredDateFormat() # Reactive
+        cached_val = @getCurrentColumnData("user_preferred_date_format") # non reactive
 
-        # We trigger invalidation only if value *changed* in a way that requires
-        # column recalculation, therefore, if this is the first run, there is
-        # no need to check if invalidation requires.
-        if first_run
-          first_run = false
-          prev_value = preferred_date_format
+        if current_val != cached_val
+          @setCurrentColumnData("user_preferred_date_format", current_val)
 
-          return
-
-        if prev_value != preferred_date_format
           dep.changed()
 
-        prev_value = preferred_date_format
+        return
 
     Tracker.onInvalidate ->
       profile_date_format_computation.stop()
@@ -159,8 +157,15 @@ GridControl.installFormatter "unicodeDateFormatter",
   slick_grid: ->
     {formatter_obj, value} = @getFriendlyArgs()
 
+    # We can't tell for sure whether slickGridColumnStateMaintainer is the
+    # only one to affect the column cache, therefore, we don't rely on it
+    # to set the value for us. We set the value ourself if we don't find one.
+    if not (user_preferred_date_format = @getCurrentColumnData("user_preferred_date_format"))?
+      user_preferred_date_format = Tracker.nonreactive => getUserPreferredDateFormat.call(@)
+      @setCurrentColumnData("user_preferred_date_format", user_preferred_date_format)
+
     unicode_date_string =
-      normalizeUnicodeDateStringAndFormatToUserPreference(value)
+      normalizeUnicodeDateStringAndFormatToUserPreference(value, user_preferred_date_format)
 
     formatter_content = ""
     content_empty = true

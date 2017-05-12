@@ -130,7 +130,7 @@ GridControl.installFormatter "textWithTreeControls",
 
     # We can't tell for sure whether slickGridColumnStateMaintainer is the
     # only one to affect the column cache, therefore, we don't rely on it
-    # to set the value for us. We set the value ourself we don't find one.
+    # to set the value for us. We set the value ourself if we don't find one.
     if not (minimal_seq_id_space = @getCurrentColumnData("minimal_seq_id_space"))?
       minimal_seq_id_space = Tracker.nonreactive => getMinimalSeqIdSpace.call(@)
       @setCurrentColumnData("minimal_seq_id_space", minimal_seq_id_space)
