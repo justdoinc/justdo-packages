@@ -1,3 +1,5 @@
+system_minmial_seq_id_space_on_grid = 3
+
 getHeighestSeqId = ->
   # Returns seqId of the item with the highest sequence id under @collection
   # has, or undefined, if no item, or no item with sequence id exists.
@@ -42,7 +44,7 @@ getMinimalSeqIdSpace = ->
   else
     current_heighest_seq_id_space = 0
 
-  return Math.max(3, current_heighest_seq_id_space)
+  return Math.max(system_minmial_seq_id_space_on_grid, current_heighest_seq_id_space)
 
 GridControl.installFormatter "textWithTreeControls",
   is_slick_grid_tree_control_formatter: true
@@ -64,26 +66,18 @@ GridControl.installFormatter "textWithTreeControls",
     dep.depend()
 
     highest_seqId_computation = null
-    first_run = true
-    prev_value = null
     Tracker.nonreactive =>
       # Run in an isolated reactivity scope
       highest_seqId_computation = Tracker.autorun =>
-        minimal_seq_id_space = getMinimalSeqIdSpace.call(@)
+        current_val = getMinimalSeqIdSpace.call(@) # Reactive
+        cached_val = @getCurrentColumnData("minimal_seq_id_space") # non reactive
 
-        # We trigger invalidation only if value *changed* in a way that requires
-        # column recalculation, therefore, if this is the first run, there is
-        # no need to check if invalidation requires.
-        if first_run
-          first_run = false
-          prev_value = minimal_seq_id_space
+        if current_val != cached_val
+          @setCurrentColumnData("minimal_seq_id_space", current_val)
 
-          return
-
-        if prev_value != minimal_seq_id_space
           dep.changed()
 
-        prev_value = minimal_seq_id_space
+        return
 
     Tracker.onInvalidate ->
       highest_seqId_computation.stop()
@@ -134,9 +128,16 @@ GridControl.installFormatter "textWithTreeControls",
     # else
     #   index = getRandomArbitrary(0, 10000) # getRandomArbitrary = (min, max) -> Math.floor(Math.random() * (max - min) + min)
 
+    # We can't tell for sure whether slickGridColumnStateMaintainer is the
+    # only one to affect the column cache, therefore, we don't rely on it
+    # to set the value for us. We set the value ourself we don't find one.
+    if not (minimal_seq_id_space = @getCurrentColumnData("minimal_seq_id_space"))?
+      minimal_seq_id_space = Tracker.nonreactive => getMinimalSeqIdSpace.call(@)
+      @setCurrentColumnData("minimal_seq_id_space", minimal_seq_id_space)
+
     if index?
       index_width_per_char = 8.2
-      index_chars = Tracker.nonreactive => getMinimalSeqIdSpace.call(@)
+      index_chars = minimal_seq_id_space
       index_width = Math.ceil(index_chars * index_width_per_char)
       index_horizontal_paddings = 6 * 2
       # Note: index label is box-sizing: content-box
