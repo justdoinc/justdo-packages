@@ -72,6 +72,8 @@ GridControl = (options, container, operations_container) ->
 
   @_states_classes_computations = null
 
+  @_columns_data = {}
+
   Meteor.defer =>
     @_init()
 
@@ -1093,6 +1095,31 @@ _.extend GridControl.prototype,
 
   getGridUid: -> @_grid.uid
 
+  #
+  # Columns Key Val DB
+  #
+  # All the involved methods aren't reactive, reactiveness on the column
+  # level can be achived by the formatters's slickGridColumnStateMaintainer
+  # option
+  #
+  _columns_data: null # initiated to object by the contructor
+  setColumnData: (column_id, key, value) ->
+    Meteor._ensure(@_columns_data, column_id)
+
+    @_columns_data[column_id][key] = value
+
+    return
+
+  clearColumnData: (column_id, key) ->
+    if @_columns_data[column_id]?
+      # Note, if @_columns_data[column_id] doesn't exist, nothing to remove...
+      delete @_columns_data[column_id][key]
+
+    return
+
+  getColumnData: (column_id, key) ->
+    return @_columns_data[column_id]?[key]
+
   destroy: ->
     if @_destroyed
       return
@@ -1121,6 +1148,8 @@ _.extend GridControl.prototype,
     if @_operation_controllers?
       for op_controller_name, op_controller of @_operation_controllers
         op_controller.destroy()
+
+    @_columns_data = null
 
     @_resetColumnsStateMaintainersTrackers()
 

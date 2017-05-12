@@ -250,6 +250,24 @@ common_formatters_helpers =
   # run very fast (they can be called thusands of time on each build...)
   xssGuard: (text) -> (text + "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
 
+  getColumnFieldId: ->
+    friendly_args = @getFriendlyArgs()
+
+    return friendly_args.field
+
+  setCurrentColumnData: (key, val) ->
+    return @setColumnData(@getColumnFieldId(), key, val)
+
+  clearCurrentColumnData: (key) ->
+    friendly_args = @getFriendlyArgs()
+
+    return @clearColumnData(@getColumnFieldId(), key)
+
+  getCurrentColumnData: (key) ->
+    friendly_args = @getFriendlyArgs()
+
+    return @getColumnData(@getColumnFieldId(), key)
+
 slick_grid_formatters_extended_context_properties =
   # Note the @ for each method is the GridControl-instance-inherited formatter
   # object created in the loadFormatter proccess for each formatter.
