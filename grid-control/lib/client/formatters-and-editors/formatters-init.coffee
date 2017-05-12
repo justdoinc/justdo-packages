@@ -193,7 +193,7 @@ _.extend GridControl.prototype,
       # @ is the GridControl instance
       extended_grid_control_obj = Object.create(@)
       _.extend extended_grid_control_obj,
-        {original_args: arguments, formatter_name: formatter_name},
+        {original_args: arguments, original_gc: @, formatter_name: formatter_name},
         common_formatters_helpers,
         slick_grid_formatters_extended_context_properties
 
@@ -206,7 +206,7 @@ _.extend GridControl.prototype,
         # @ is the GridControl instance
         extended_grid_control_obj = Object.create(@)
         _.extend extended_grid_control_obj,
-          {original_args: arguments, formatter_name: formatter_name}
+          {original_args: arguments, original_gc: @, formatter_name: formatter_name}
 
         return slickGridColumnStateMaintainer.apply(extended_grid_control_obj, arguments)
 
@@ -215,7 +215,7 @@ _.extend GridControl.prototype,
       # @ is the GridControl instance
       extended_grid_control_obj = Object.create(@)
       _.extend extended_grid_control_obj,
-        {original_args: arguments, formatter_name: formatter_name},
+        {original_args: arguments, original_gc: @, formatter_name: formatter_name},
         common_formatters_helpers,
         print_formatters_extended_context_properties
 
@@ -284,6 +284,8 @@ slick_grid_formatters_extended_context_properties =
       doc: data
       options: schema.grid_column_formatter_options or {}
 
+      original_grid_control: @original_gc
+
       grid_control: @
       grid_data: @_grid_data
       slick_grid: @_grid
@@ -299,6 +301,8 @@ slick_grid_formatters_extended_context_properties =
 
   getRealSchema: ->
     return @collection.simpleSchema()._schema[@original_args[3].id]
+
+      original_grid_control: @original_gc
 
 print_formatters_extended_context_properties =
   # Note the @ for each method is the GridControl-instance-inherited
@@ -328,6 +332,8 @@ print_formatters_extended_context_properties =
       options: schema.grid_column_formatter_options or {}
 
       schema: schema
+
+      original_grid_control: @original_gc
 
       grid_control: @
       grid_data: @_grid_data
