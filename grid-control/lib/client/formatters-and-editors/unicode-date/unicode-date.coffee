@@ -6,27 +6,6 @@
 # to the formatter/editor as
 raw_data_moment_format = "YYYY-MM-DD"
 
-getUserPreferredDateFormat = ->
-  # Reactive resource!
-  if (preferred_date_format = Meteor.user()?.profile?.date_format)?
-    return preferred_date_format
-
-  if (default_date_format = JustdoHelpers.getCollectionSchemaForField(Meteor.users, "profile.date_format").defaultValue)?
-    return default_date_format
-
-  # Fallback to the raw_data_moment_format
-  return raw_data_moment_format
-
-getUserPreferredDataFormatInJqueryUiFormat = ->
-  preferred_format = getUserPreferredDateFormat()
-
-  jquery_ui_format = preferred_format
-    .replace("MM", "mm")
-    .replace("YYYY", "yy")
-    .replace("DD", "dd")
-
-  return jquery_ui_format
-
 normalizeUnicodeDateStringAndFormatToUserPreference = (unicode_date_string, user_preferred_date_format) ->
   if not unicode_date_string? or unicode_date_string == ""
     return ""
@@ -35,7 +14,7 @@ normalizeUnicodeDateStringAndFormatToUserPreference = (unicode_date_string, user
   # that we need to be highly optimized, we will be able to cache it
   # in the column level
   if not user_preferred_date_format?
-    user_preferred_date_format = getUserPreferredDateFormat()
+    user_preferred_date_format = JustdoHelpers.getUserPreferredDateFormat()
 
   return moment(unicode_date_string, raw_data_moment_format).format(user_preferred_date_format)
 
@@ -43,9 +22,7 @@ normalizeUserPreferenceDateFormatAndFormatToUnicodeDateString = (user_format_dat
   if not user_format_date_string? or user_format_date_string == ""
     return ""
 
-  return moment(user_format_date_string, getUserPreferredDateFormat()).format(raw_data_moment_format)
-
-
+  return moment(user_format_date_string, JustdoHelpers.getUserPreferredDateFormat()).format(raw_data_moment_format)
 
 #
 # Actions buttons definitions:
@@ -136,7 +113,7 @@ GridControl.installFormatter "unicodeDateFormatter",
     Tracker.nonreactive =>
       # Run in an isolated reactivity scope
       profile_date_format_computation = Tracker.autorun =>
-        current_val = getUserPreferredDateFormat() # Reactive
+        current_val = JustdoHelpers.getUserPreferredDateFormat() # Reactive
         cached_val = @getCurrentColumnData("user_preferred_date_format") # non reactive
 
         if current_val != cached_val
@@ -161,7 +138,7 @@ GridControl.installFormatter "unicodeDateFormatter",
     # only one to affect the column cache, therefore, we don't rely on it
     # to set the value for us. We set the value ourself if we don't find one.
     if not (user_preferred_date_format = @getCurrentColumnData("user_preferred_date_format"))?
-      user_preferred_date_format = Tracker.nonreactive => getUserPreferredDateFormat.call(@)
+      user_preferred_date_format = Tracker.nonreactive => JustdoHelpers.getUserPreferredDateFormat.call(@)
       @setCurrentColumnData("user_preferred_date_format", user_preferred_date_format)
 
     unicode_date_string =
@@ -248,7 +225,7 @@ GridControl.installEditor "UnicodeDateEditor",
   init: ->
     $editor = $("""<div class="grid-editor unicode-date-editor" />""")
 
-    @$input = $("""<input type="text" class="editor-unicode-date" placeholder="#{getUserPreferredDataFormatInJqueryUiFormat()}" />""")
+    @$input = $("""<input type="text" class="editor-unicode-date" placeholder="#{JustdoHelpers.getUserPreferredDataFormatInJqueryUiFormat()}" />""")
 
     $editor
       .html(@$input)
@@ -284,7 +261,7 @@ GridControl.installEditor "UnicodeDateEditor",
         formatter_buttons_width += action_button_def.width
 
     @$input.datepicker
-      dateFormat: getUserPreferredDataFormatInJqueryUiFormat()
+      dateFormat: JustdoHelpers.getUserPreferredDataFormatInJqueryUiFormat()
       showOn: "button"
       buttonImageOnly: true
       showAnim: ""
