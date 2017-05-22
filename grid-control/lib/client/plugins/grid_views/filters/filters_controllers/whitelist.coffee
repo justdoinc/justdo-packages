@@ -10,7 +10,7 @@ WhiteListFilterControllerConstructor = (context) ->
 
   @grid_control.on "filter-change", @filter_change_listener
 
-  @controller = $("<ul class='fa-ul' />")
+  @controller = $("<ul class='fa-ul whitelist-alike-filter-dropdown-ul' />")
 
   for value, value_options of @column_settings.values
     if (html = value_options.html)?
@@ -64,6 +64,8 @@ _.extend WhiteListFilterControllerConstructor.prototype,
     # Add the selected task, only to the selected items
     for value in filter_state
       $("[value=#{value}]", @controller).addClass("selected")
+
+    return
 
   destroy: ->
     @grid_control.removeListener "filter-change", @filter_change_listener
