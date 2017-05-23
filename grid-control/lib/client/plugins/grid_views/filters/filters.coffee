@@ -140,12 +140,18 @@ _.extend GridControl.prototype,
     # regardless their data.
     @_grid_data.addFilterIndependentItems.apply(@_grid_data, arguments)
 
-  _updateFilterState: () ->
+  _updateFilterState: (force=false) ->
     # Update filter according to the current view
     # emit "filter-change" if filter changed
     new_state = @_getViewFiltersState()
 
-    if JSON.sortify(new_state) == JSON.sortify(@_filters_state)
+    # force allow recalculating @_columnsFilterStateToQuery()
+    # when needed, even if the @_getViewFiltersState() didn't change
+    # Example use: a filter that filters dates columns to show only
+    # today's values - when date change we need to reproduce the
+    # query for the new date, even though @_getViewFiltersState()
+    # is the same.
+    if force == false and JSON.sortify(new_state) == JSON.sortify(@_filters_state)
       @logger.debug "_updateFilterState: no change to filters state"
 
       return
