@@ -52,7 +52,8 @@ _.extend GridData.prototype,
     # If init is undergoing, we don't want to call @_updateGridTreeFilterState()
     # as it'll be called anyway on first rebuild
     if @_initialized
-      @_updateGridTreeFilterState()
+      Tracker.nonreactive =>
+        @_updateGridTreeFilterState()
 
     @logger.debug "@_filter_collection_items_ids updated"
 
