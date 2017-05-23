@@ -172,7 +172,7 @@ _.extend GridControl.prototype,
     if not columns_filters_state?
       return null
 
-    filter_query = {}
+    current_columns_filters_queries = []
 
     for column_id, column_filter_state of columns_filters_state
       column_settings = @schema[column_id]
@@ -196,7 +196,20 @@ _.extend GridControl.prototype,
         grid_control: @
         column_schema_definition: column_settings
 
-      _.extend filter_query, columnFilterStateToQuery(column_filter_state, context)
+      current_column_filter_query = columnFilterStateToQuery(column_filter_state, context)
+
+      current_columns_filters_queries.push(current_column_filter_query)
+
+    filter_query = null
+
+    if current_columns_filters_queries.length == 0
+      @logger.warn "_columnsFilterStateToQuery: filter is on, but no filters queries produced"
+
+      filter_query = {}
+    else if current_columns_filters_queries.length == 1
+      filter_query = current_columns_filters_queries[0]
+    else
+      filter_query = {$and: current_columns_filters_queries}
 
     return filter_query
 
