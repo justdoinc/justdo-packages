@@ -201,6 +201,10 @@ _.extend GridControl.prototype,
         column_id: column_id
         grid_control: @
         column_schema_definition: column_settings
+        column_filter_state_ops:
+          getColumnFilter: => @getColumnFilter(column_id)
+          setColumnFilter: (column_filter_state) => @setColumnFilter(column_id, column_filter_state)
+          clearColumnFilter: => @clearColumnFilter(column_id)
 
       current_column_filter_query = columnFilterStateToQuery(column_filter_state, context)
 
