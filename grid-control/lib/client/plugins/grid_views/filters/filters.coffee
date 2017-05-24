@@ -141,9 +141,6 @@ _.extend GridControl.prototype,
     @_grid_data.addFilterIndependentItems.apply(@_grid_data, arguments)
 
   _updateFilterState: (force=false) ->
-    # Update filter according to the current view
-    # emit "filter-change" if filter changed
-    new_state = @_getViewFiltersState()
 
     # force allow recalculating @_columnsFilterStateToQuery()
     # when needed, even if the @_getViewFiltersState() didn't change
@@ -156,9 +153,15 @@ _.extend GridControl.prototype,
 
       return
 
+    # Update filter according to the current view
+    # emit "filter-change" if filter changed
+    new_state = @_getViewFiltersState()
+
     @_filters_state = new_state
 
     @emit "filter-change", @_filters_state, @_columnsFilterStateToQuery()
+
+    return
 
   _getViewFiltersState: (view) ->
     if not view?
