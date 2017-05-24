@@ -643,28 +643,29 @@ _.extend GridData.prototype,
       return true
 
     # else, yield all items
-    for section in @sections
-      expand_state = if options.expand_only then section.expand_state else undefined
+    if @sections? # Only if @sections are ready 
+      for section in @sections
+        expand_state = if options.expand_only then section.expand_state else undefined
 
-      # If the section has a section_item, yield it
-      step_in = true # By default we attempt to step into the current path, unless iteratee will tell us otherwise
-      if (section_item_row_id = section.section_item_row_id)?
-        section_item = @getItem(section_item_row_id)
+        # If the section has a section_item, yield it
+        step_in = true # By default we attempt to step into the current path, unless iteratee will tell us otherwise
+        if (section_item_row_id = section.section_item_row_id)?
+          section_item = @getItem(section_item_row_id)
 
-        iteratee_ret = iteratee section, section_item._type, section_item, section.path, expand_state
+          iteratee_ret = iteratee section, section_item._type, section_item, section.path, expand_state
 
-        if iteratee_ret is -1
-          step_in = false
-        else if iteratee_ret is -2
-          return false
-
-      if step_in isnt false # only false means do not step in
-        if not options.expand_only or expand_state == 1
-          _each_res = @_each section.path, options, iteratee, true
-
-          if _each_res is false
-            # _each stopped due to iteratee returned -2 - stop traversing and return false
+          if iteratee_ret is -1
+            step_in = false
+          else if iteratee_ret is -2
             return false
+
+        if step_in isnt false # only false means do not step in
+          if not options.expand_only or expand_state == 1
+            _each_res = @_each section.path, options, iteratee, true
+
+            if _each_res is false
+              # _each stopped due to iteratee returned -2 - stop traversing and return false
+              return false
 
     return true
 
