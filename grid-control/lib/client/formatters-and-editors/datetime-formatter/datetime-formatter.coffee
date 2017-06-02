@@ -1,9 +1,40 @@
 GridControl.installFormatter "datetimeFormatter",
   getDateTimeString: (value) ->
+    user_preferred_date_format = Tracker.nonreactive => JustdoHelpers.getUserPreferredDateFormat.call(@)
+
     if not value? or value == ""
       return ""
 
-    return moment(value).format('L LTS')
+    return moment(value).format("#{user_preferred_date_format} LTS")
+
+  slickGridColumnStateMaintainer: ->
+    if not Tracker.active
+      @logger.warn "slickGridColumnStateMaintainer: called outside of computation, skipping"
+
+      return
+
+    # Create a dependency and depend on it.
+    dep = new Tracker.Dependency()
+    dep.depend()
+
+    profile_date_format_computation = null
+    Tracker.nonreactive =>
+      # Run in an isolated reactivity scope
+      profile_date_format_computation = Tracker.autorun =>
+        current_val = JustdoHelpers.getUserPreferredDateFormat() # Reactive
+        cached_val = @getCurrentColumnData("user_preferred_date_format") # non reactive
+
+        if current_val != cached_val
+          @setCurrentColumnData("user_preferred_date_format", current_val)
+
+          dep.changed()
+
+        return
+
+    Tracker.onInvalidate ->
+      profile_date_format_computation.stop()
+
+    return
 
   slick_grid: ->
     {value, formatter_obj} = @getFriendlyArgs()
