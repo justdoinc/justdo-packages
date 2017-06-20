@@ -66,6 +66,28 @@ Each section is formatted as follow:
     #    1: depth restricted actions allowd only in relative level > 0
     #    2: XXX NOT IMPLEMENTED YET depth restricted actions allowd only in relative
     #       level > 0, only if they are bound to a single sub-tree of the section.
+
+    options.permitted_depth_removeSpecialCase: undefined
+
+    # Optional option - if set should be a Function.
+    #
+    # A mean to override the permitted_depth option effect on the removability
+    # of specific items.
+    #
+    # Relevant only if options.permitted_depth != 0 .
+    #
+    # If set, for items in a non-permitted levels, we will call the provided
+    # function with the active item grid row id as the first argument - this
+    # will be set to the GridControl object.
+    #
+    # If that function will return true, we will allow removing the item even
+    # though the item is in a non-permitted level.
+    #
+    # Note, this function overrides only the permitted level requirement before
+    # remove operations. It won't override other pre-requirements.
+    # For example, item with children in a non-permitted level, won't be
+    # removable even if options.permitted_depth_removeSpecialCase will return
+    # true for it.
   }
 
 Details and operations on each section can be done through the @sections
