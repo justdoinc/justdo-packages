@@ -45,7 +45,7 @@ Package.onUse(function (api) {
   api.add_files('lib/both/helpers.coffee', both);
   api.add_files('lib/both/simple_schema_extensions.coffee', both);
 
-  api.add_files('lib/client/grid_control.coffee', client, {bare: true});
+  api.add_files('lib/client/grid_control.coffee', client);
   api.add_files('lib/client/errors_types.coffee', client);
   api.add_files('lib/client/grid_control.sass', client);
 
@@ -79,12 +79,12 @@ Package.onUse(function (api) {
   api.add_files('lib/client/plugins/cell_editing_timeout/cell_editing_timeout.coffee', client);
 
   // jquery_events
-  api.add_files('lib/client/jquery_events/init.coffee', client, {bare: true});
+  api.add_files('lib/client/jquery_events/init.coffee', client);
   api.add_files('lib/client/jquery_events/destroy_editor_on_blur.coffee', client);
 
   // Formatters & Editors
-  api.add_files('lib/client/formatters-and-editors/formatters-init.coffee', client, {bare: true});
-  api.add_files('lib/client/formatters-and-editors/editors-init.coffee', client, {bare: true});
+  api.add_files('lib/client/formatters-and-editors/formatters-init.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/editors-init.coffee', client);
 
   api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.coffee', client);
   api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.sass', client);
