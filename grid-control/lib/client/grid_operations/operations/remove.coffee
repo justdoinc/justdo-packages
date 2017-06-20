@@ -8,6 +8,12 @@ _.extend PACK.GridOperations,
         active_item_row = @getCurrentRow()
 
         active_item_section = @_grid_data.getItemSection(active_item_row)
+        if active_item_section.id == "my-direct-tasks"
+          # Special case for the my-direct-tasks section
+          # replace the /my-direct-task/ part of the path with the actual
+          # parent we want to remove.
+          active_path =
+            active_path.replace(active_item_section.path, "/direct:#{Meteor.userId()}/")
 
         # find next/prev paths
         next_path = prev_path = null
