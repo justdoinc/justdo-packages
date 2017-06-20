@@ -356,7 +356,7 @@ _.extend GridData.prototype,
   #
   # Collection items info
   #
-  getCollectionItemIdPath: (item_id) ->
+  getCollectionItemIdPath: (item_id, options) ->
     # Returns the first path in @grid_tree that leads to the requested item_id of @collection.
     #
     # Will return null if no such item_id in the tree.
@@ -364,12 +364,22 @@ _.extend GridData.prototype,
     # Note, we don't use getAllCollectionItemIdPaths() to implement this
     # function, so we can apply optimization that stop the scanning as soon as
     # we find a path for the item in the tree.
+    #
+    # options itself, and all of its properties are optional.
+    # Options can have the following properties:
+    #
+    # options.each_options Object, the options we'll pass the @_each that looks
+    # for item_id. By default we pass: {expand_only: false, filtered_tree: false}
+
+    each_options = {expand_only: false, filtered_tree: false}
+    if (custom_each_options = options?.each_options)?
+      _.extend each_options, custom_each_options
 
     if item_id == "0"
       return "/"
 
     item_path = null
-    @_each "/", {expand_only: false, filtered_tree: false}, (section, item_type, item_obj, path, expand_state) ->
+    @_each "/", each_options, (section, item_type, item_obj, path, expand_state) ->
       if item_obj._id == item_id
         item_path = path
 
