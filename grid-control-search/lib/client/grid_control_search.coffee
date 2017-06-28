@@ -171,10 +171,10 @@ _.extend GridControlSearch.prototype,
     forced_fields = _.filter forced_fields, (x) -> x != false
     fields = _.union forced_fields, view_fields
 
-    #in case we just want to look for specific task id
-    if RegExp("^id:[0-9]{1,10}$","i").test(@current_term)
+    # In case we just want to look for specific task id
+    if (res = /^id:([0-9]{1,10})\s*$/i.exec(@current_term))?
       fields = ["seqId"]
-      @current_term = "^" + @current_term.substr(3) + "$"
+      @current_term = "^#{res[1]}$"
 
     if @current_term != ""
       @logger.debug "Refresh search results"
