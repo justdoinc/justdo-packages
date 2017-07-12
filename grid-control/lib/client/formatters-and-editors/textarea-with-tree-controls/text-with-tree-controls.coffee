@@ -129,6 +129,26 @@ GridControl.installFormatter "textWithTreeControls",
            style="left: #{toggle_indentation}px;"></div>
     """
 
+    # item icons
+    tree_control += """
+      <div class="grid-tree-control-item-icons">
+    """
+
+    if (description = doc.description)? and not _.isEmpty(description)
+      tree_control += """
+          <i class="fa fa-fw fa-align-left task-description slick-prevent-edit" title="Task description" aria-hidden="true"></i>
+      """
+
+    if (files = doc.files)?
+      if files.length > 0
+        tree_control += """
+            <i class="fa fa-fw fa-paperclip task-files slick-prevent-edit" title="#{files.length} files" aria-hidden="true"></i>
+        """
+
+    tree_control += """
+      </div>
+    """
+
     index = null
     if doc.seqId?
       index = doc.seqId # Note we don't worry about reactivity -> seqId considered static.
@@ -212,6 +232,7 @@ GridControl.installFormatter "textWithTreeControls",
         tree_control += """
           <div class="transfer-owner #{transfer_type} slick-prevent-edit"></div>
         """
+
 
       tree_control += """
         </div>

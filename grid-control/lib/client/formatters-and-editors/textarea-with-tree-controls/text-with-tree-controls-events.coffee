@@ -105,4 +105,27 @@ _.extend PACK.Formatters.textWithTreeControls,
         else
           @logger.debug "tree-control-user-image-clicked event didn't emit due to failure to close active editor"
     }
+    {
+      args: ['click', '.task-files']
+      handler: (e) ->
+        APP.modules.project_page.current_project_toolbar_selected_tab_id.set("tasks-file-manager")
+
+        # Update project toolbar
+        Tracker.flush()
+
+        $(".project-toolbar-content").scrollTop(0)
+    }
+    {
+      args: ['click', '.task-description']
+      handler: (e) ->
+        APP.modules.project_page.current_project_toolbar_selected_tab_id.set("item-details")
+
+        # Update project toolbar
+        Tracker.flush()
+
+        $description_section = $("#task-description-container").closest("section")
+        $description_section_top_edge = $description_section.position().top - 5
+        $project_toolbar_content = $description_section.closest(".project-toolbar-content")
+        $project_toolbar_content.scrollTop($description_section_top_edge)
+    }
   ]
