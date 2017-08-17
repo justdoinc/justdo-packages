@@ -1120,6 +1120,37 @@ _.extend GridControl.prototype,
   getColumnData: (column_id, key) ->
     return @_columns_data[column_id]?[key]
 
+  #
+  # Grid editing lock
+  #
+  editing_locked: false
+  _gridEditLockFn: (e) ->
+    console.log "[grid-control] Editing locked"
+
+    e.stopImmediatePropagation()
+
+    return
+
+  lockEditing: ->
+    if @editing_locked
+      return
+
+    @editing_locked = true
+
+    @_grid.onClick.subscribe(@_gridEditLockFn)
+
+    return
+
+  unlockEditing: ->
+    if not @editing_locked
+      return
+
+    @editing_locked = false
+
+    @_grid.onClick.unsubscribe(@_gridEditLockFn)
+
+    return
+
   destroy: ->
     if @_destroyed
       return
