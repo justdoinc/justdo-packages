@@ -4,6 +4,12 @@
 # 3. A higher precedence event will trigger before a lower precedence
 #    event even if defined for on a higher dom element.
 
+openProjectToolbarAndSetTab = (tab_id) ->
+  APP.modules.project_page.current_project_toolbar_selected_tab_id.set(tab_id)
+  APP.modules.project_page.updatePreferences({toolbar_open: true})
+
+  return
+
 _.extend PACK.Formatters.textWithTreeControls,
   gridControlInit: ->
     @_grid.onClick.subscribe (e, args) =>
@@ -113,6 +119,8 @@ _.extend PACK.Formatters.textWithTreeControls,
         # Update project toolbar
         Tracker.flush()
 
+        openProjectToolbarAndSetTab("tasks-file-manager")
+
         $(".project-toolbar-content").scrollTop(0)
     }
     {
@@ -122,6 +130,8 @@ _.extend PACK.Formatters.textWithTreeControls,
 
         # Update project toolbar
         Tracker.flush()
+
+        openProjectToolbarAndSetTab("item-details")
 
         $description_section = $("#task-description-container").closest("section")
         $description_section_top_edge = $description_section.position().top - 5
