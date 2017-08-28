@@ -121,8 +121,8 @@ _.extend GridData.prototype,
       new_parent_item_users = @items_by_id[new_parent_item_id].users
 
       diff =
-        absent: _.difference item_users, new_parent_item_users
         alien: _.difference new_parent_item_users, item_users
+        # absent: _.difference item_users, new_parent_item_users # We decided not to suggest removing members absent in the parent task when adding new parent
 
       if _.isEmpty(diff.absent) and _.isEmpty(diff.alien)
         # no diff perform op right away
