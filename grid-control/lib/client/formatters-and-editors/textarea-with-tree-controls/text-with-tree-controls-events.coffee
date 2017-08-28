@@ -114,24 +114,20 @@ _.extend PACK.Formatters.textWithTreeControls,
     {
       args: ['click', '.task-files']
       handler: (e) ->
-        APP.modules.project_page.current_project_toolbar_selected_tab_id.set("tasks-file-manager")
+        openProjectToolbarAndSetTab("tasks-file-manager")
 
         # Update project toolbar
         Tracker.flush()
-
-        openProjectToolbarAndSetTab("tasks-file-manager")
 
         $(".project-toolbar-content").scrollTop(0)
     }
     {
       args: ['click', '.task-description']
       handler: (e) ->
-        APP.modules.project_page.current_project_toolbar_selected_tab_id.set("item-details")
+        openProjectToolbarAndSetTab("item-details")
 
         # Update project toolbar
         Tracker.flush()
-
-        openProjectToolbarAndSetTab("item-details")
 
         $description_section = $("#task-description-container").closest("section")
         $description_section_top_edge = $description_section.position().top - 5
