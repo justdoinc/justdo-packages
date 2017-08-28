@@ -251,9 +251,11 @@ _.extend GridData.prototype,
       path_item_id = helpers.getPathItemId(path)
       new_parent_item_id = new_location_obj.parent
 
-      if new_parent_item_id == "0"
-        # moving to root, no diff as root isn't a real item
-        # perform op right away
+      is_intra_parent_move = GridData.helpers.getPathParentId(path) == new_location_obj.parent
+
+      if new_parent_item_id == "0" or is_intra_parent_move
+        # We don't show members diff if moving to root or
+        # if moving within the same parent.
 
         @logger.debug "usersDiffConfirmationCb skipped, moving item to root"
 
