@@ -1826,8 +1826,14 @@ if (typeof Slick === "undefined") {
           (options.showHeaderRow ? options.headerRowHeight + getVBoxDelta($headerRowScroller) : 0);
     }
 
-    function resizeCanvas() {
+    function resizeCanvas(update_row_count) {
       if (!initialized) { return; }
+
+      if (typeof update_row_count === "undefined") {
+        // This option is relevant only if options.dynamicRowHeight is enabled
+        // otherwise it has no effect
+        update_row_count = true;
+      }
 
       $viewport.height(getViewportHeight());
 
@@ -1840,7 +1846,9 @@ if (typeof Slick === "undefined") {
         autosizeColumns();
       }
 
-      if (!options.dynamicRowHeight) {
+      if (!options.dynamicRowHeight || update_row_count) {
+        // We don't update the row count only if options.dynamicRowHeight
+        // isn't enabled and update_row_count is false
         updateRowCount();
       }
 
