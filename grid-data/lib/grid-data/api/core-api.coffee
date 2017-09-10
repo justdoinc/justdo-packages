@@ -343,6 +343,10 @@ _.extend GridData.prototype,
       @_structure_changes_queue.push ["collapse_path", [path]]
       @_set_need_flush()
 
+  collapseAllPaths: ->
+    @_structure_changes_queue.push ["collapse_all_paths"]
+    @_set_need_flush()
+
   toggleItem: (index) ->
     if @_inExpandedPaths(@getItemPath index) # XXX shouldn't use filters aware op
       @collapseItem index

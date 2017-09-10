@@ -379,6 +379,19 @@ _.extend GridData.prototype,
 
       return rebuild_tree
 
+    collapse_all_paths: ->
+      rebuild_tree = false
+
+      if _.isEmpty @_expanded_paths
+        return rebuild_tree
+
+      rebuild_tree = true
+
+      for path of @_expanded_paths
+        delete @_expanded_paths[path]
+
+      return rebuild_tree
+
   invalidateOnFlush: ->
     if Tracker.currentComputation?
       # If there's no computation - do nothing
