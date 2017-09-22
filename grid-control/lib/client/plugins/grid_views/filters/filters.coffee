@@ -183,8 +183,9 @@ _.extend GridControl.prototype,
 
     current_columns_filters_queries = []
 
+    extended_schema = @getSchemaExtendedWithCustomFields()
     for column_id, column_filter_state of columns_filters_state
-      column_settings = @schema[column_id]
+      column_settings = extended_schema[column_id]
       filter_settings = column_settings.grid_column_filter_settings
 
       if not (filter_type = filter_settings?.type)?

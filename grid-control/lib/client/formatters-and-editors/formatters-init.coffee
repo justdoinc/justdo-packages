@@ -1,5 +1,7 @@
 PACK.Formatters = {}
 
+GridControl.Formatters = PACK.Formatters
+
 #
 # Formatters installers/getters
 #
@@ -284,7 +286,9 @@ slick_grid_formatters_extended_context_properties =
     [row, cell, value, grid_column_info, data] = @original_args
 
     column_id = grid_column_info.id
-    schema = @schema[column_id]
+    extended_schema = @getSchemaExtendedWithCustomFields()
+    schema = extended_schema[column_id]
+
 
     args =
       self: @
@@ -341,7 +345,8 @@ slick_grid_columns_state_maintainers_extended_context_properties =
                       # in the future if it won't be the case, we'll need
                       # to update the apis.
 
-    schema = @schema[field]
+    extended_schema = @getSchemaExtendedWithCustomFields()
+    schema = extended_schema[field]
 
     args =
       # See notes on self in slick_grid_formatters_extended_context_properties

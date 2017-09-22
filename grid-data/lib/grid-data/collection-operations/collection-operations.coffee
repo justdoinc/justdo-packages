@@ -6,11 +6,14 @@ _.extend GridData.prototype,
 
   edit: (edit_req) ->
     [row, cell, grid, item] = [edit_req.row, edit_req.cell, edit_req.grid, edit_req.item]
-    col_field = grid.getColumns()[cell].id
+
     item_id = item._id
 
+    col_field = grid.getColumns()[cell].id
+    new_value = item[col_field]
+
     update = {$set: {}}
-    update["$set"][col_field] = item[col_field]
+    update["$set"][col_field] = new_value
 
     edit_failed = (err) =>
       # XXX We used to think we need the following, now it seems

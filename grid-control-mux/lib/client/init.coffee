@@ -63,6 +63,16 @@ _.extend GridControlMux.prototype,
       throw @_error("invalid-options", "shared_grid_control_options should be an object")
     @_shared_grid_control_options = @options.shared_grid_control_options or {}
 
+    # If the @options.use_shared_grid_control_custom_fields_manager is passed
+    # a GridControlCustomFieldsManager object will be init by the grid-control-mux
+    # and will be passed as the grid_control_custom_fields_manager option of all
+    # the grid controls of this mux
+    @_shared_grid_control_custom_fields_manager = null
+    if @options.use_shared_grid_control_custom_fields_manager == true
+      shared_grid_control_custom_fields_manager_options = @options.shared_grid_control_custom_fields_manager_options
+
+      @_shared_grid_control_custom_fields_manager = new GridControlCustomFieldsManager(shared_grid_control_custom_fields_manager_options)
+
     # The following is managed by @setPath() used to recognize
     # whether an active setPath is happening to avoid reporting
     # intermediate path changes in the process of getting the

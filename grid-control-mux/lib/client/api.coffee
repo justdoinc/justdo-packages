@@ -256,6 +256,12 @@ _.extend GridControlMux.prototype,
       else
         @logger.warn "Tab #{tab_id} grid control options includes options: grid_data_options.grid_data_core, avoid using Multiplexer's grid-data-core"
 
+    if @_shared_grid_control_custom_fields_manager?
+      if not grid_control_options.custom_fields_manager?
+        grid_control_options.custom_fields_manager = @_shared_grid_control_custom_fields_manager
+      else
+        @logger.warn "Tab #{tab_id} grid control options includes options: custom_fields_manager, avoid using Multiplexer's @_shared_grid_control_custom_fields_manager"
+
     @_grid_controls_tabs[tab_id] =
       tab_id: tab_id
       grid_control_options: grid_control_options

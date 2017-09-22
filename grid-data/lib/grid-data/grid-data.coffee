@@ -1,6 +1,8 @@
 helpers = share.helpers
 
 default_options =
+  grid_control: null # A reference to the grid_control initiating this GridData
+
   grid_data_core: null # a GridDataCore object can be provided to us
                        # useful if multiple grids shares the same core
                        # data structures
@@ -49,7 +51,10 @@ GridData = (collection, options) ->
     @logger.debug "GridData called for a collection with no simpleSchema definition"
     return
 
+  @grid_control = @options.grid_control
+
   # XXX need to find a way to bring normalized schema from GridControl
+  # XXX2 Now that grid_control is passed as an option, might be the way to do so
   @schema = schema._schema
 
   @_initialized = false

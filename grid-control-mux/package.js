@@ -23,6 +23,7 @@ Package.onUse(function (api) {
   api.use('fourseven:scss@3.2.0', client);
   api.use('stem-capital:grid-data', client);
   api.use('stem-capital:grid-control', client);
+  api.use('justdoinc:grid-control-custom-fields', client);
 
   api.use("reactive-var", both);
   api.use("tracker", client);

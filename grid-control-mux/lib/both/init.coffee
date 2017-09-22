@@ -1,14 +1,27 @@
 default_options =
   container: null
   items_subscription: null
-  use_shared_grid_data_core: false # If set to true, one GridDataCore object will
-                                   # be created and managed by the mux for all its
-                                   # GridControls' GridData.
-                                   # (Optimizes memory and CPU usage).
-  shared_grid_data_core_options: {} # Relevant only if use_shared_grid_data_core is true
-                                    # The options obj with which the shared GridDataCore
-                                    # will initiate
+  shared_grid_control_options: null
 
+  # If set to true, one GridDataCore object will
+  # be created and managed by the mux for all its
+  # GridControls' GridData.
+  # (Optimizes memory and CPU usage).
+  use_shared_grid_data_core: false
+
+  # Relevant only if use_shared_grid_data_core is true
+  # The options obj with which the shared GridDataCore
+  # will initiate
+  shared_grid_data_core_options: {}
+
+  # If set to true, one GridControlCustomFieldsManager object will
+  # be created and managed by the mux for all its GridControls'.
+  use_shared_grid_control_custom_fields_manager: false
+
+  # Relevant only if use_shared_grid_control_custom_fields_manager is true
+  # The options obj with which the shared GridControlCustomFieldsManager
+  # will be initiated with
+  shared_grid_control_custom_fields_manager_options: {}
 
 GridControlMux = (options) ->
   # skeleton-version: v0.0.2

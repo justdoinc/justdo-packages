@@ -1,5 +1,7 @@
 PACK.Editors = {}
 
+GridControl.Editors = PACK.Editors
+
 GridControl.installEditor = (editor_name, editor_prototype) ->
   prototype = Object.create(base_slick_grid_editors_prototype)
 
@@ -84,7 +86,8 @@ _.extend GridControl.prototype,
         @_editors[editor_name] = (context) =>
           # Enrich slick grid context with grid control context
 
-          field_schema = @schema[context.column.id]
+          extended_schema = @getSchemaExtendedWithCustomFields()
+          field_schema = extended_schema[context.column.id]
 
           _.extend context,
             grid_control: @

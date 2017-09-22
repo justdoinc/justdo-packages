@@ -45,7 +45,8 @@ _.extend GridControl.prototype,
     # Find missing fields
     current_view_fields = _.map @getView(), (col) -> col.field
     visible_fields = []
-    for field, field_def of @schema
+    extended_schema = @getSchemaExtendedWithCustomFields()
+    for field, field_def of extended_schema
       if field_def.grid_visible_column
         visible_fields.push field
     missing_fields = _.filter visible_fields, (field) -> not(field in current_view_fields)
@@ -54,7 +55,7 @@ _.extend GridControl.prototype,
     for field in missing_fields
       do (field) =>
         append_fields_submenu.push
-          text: @schema[field].label
+          text: extended_schema[field].label
           action: (e) =>
             view = @getView()
             # add field after clicked item

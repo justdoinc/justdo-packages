@@ -31,6 +31,10 @@ GridControl = (options, container, operations_container) ->
 
   @logger = Logger.get("grid-control")
 
+  @custom_fields_manager = null
+  if @options.custom_fields_manager?
+    @custom_fields_manager = @options.custom_fields_manager
+
   @schema = null
   @grid_control_field = null
   @fixed_fields = null # will contain an array of the fields that can't be hidden or moved - in their order
@@ -112,6 +116,7 @@ _.extend GridControl.prototype,
     grid_data_options = _.extend {}, @options.grid_data_options,
       sections: @options.sections
       items_types_settings: @options.items_types_settings
+      grid_control: @
 
     @_grid_data = new GridData @collection, grid_data_options
 
@@ -229,8 +234,10 @@ _.extend GridControl.prototype,
     @_grid_data.on "grid-item-changed", (row, fields) =>
       field_id_to_col_id = @getFieldIdToColumnIndexMap()
 
+      extended_schema = @getSchemaExtendedWithCustomFields()
+
       for field in fields
-        field_def = @schema[field]
+        field_def = extended_schema[field]
         if field_def? and field_def.grid_effects_metadata_rendering
           @_grid.invalidateRow(row)
           @_grid.render()
@@ -243,7 +250,7 @@ _.extend GridControl.prototype,
           # Invalidate field column if in present grid
           @_grid.updateCell(row, field_id_to_col_id[field])
 
-        if field_def.grid_dependent_fields?
+        if field_def?.grid_dependent_fields?
           # Invalidate field dependent fields columns if exist and present in grid
           for dependent_field in field_def.grid_dependent_fields
             if field_id_to_col_id[dependent_field]?
@@ -399,19 +406,42 @@ _.extend GridControl.prototype,
           def.grid_default_grid_view = false
         else
           # Set default formatter/editor according to field type
+          # Defined in grid_control-static-methods.coffee
+          default_non_tree_control_formatter_and_editor = 
+            GridControl.getDefaultFormatterAndEditorForType(def.type)
+
+          default_tree_control_formatter = "textWithTreeControls"
+          default_tree_control_editor = "TextareaWithTreeControlsEditor"
+
           if def.type is String
-            set_default_formatter(def, "textWithTreeControls", "defaultFormatter")
-            set_default_editor(def, "TextareaWithTreeControlsEditor", "TextareaEditor")
+            set_default_formatter(def, default_tree_control_formatter,
+                                          default_non_tree_control_formatter_and_editor.formatter)
+
+            set_default_editor(def, default_tree_control_editor,
+                                      default_non_tree_control_formatter_and_editor.editor)
+
           if def.type is Date
-            set_default_formatter(def, "textWithTreeControls", "unicodeDateFormatter")
-            set_default_editor(def, "TextareaWithTreeControlsEditor", "UnicodeDateEditor")
+            set_default_formatter(def, default_tree_control_formatter,
+                                          default_non_tree_control_formatter_and_editor.formatter)
+
+            set_default_editor(def, default_tree_control_editor,
+                                      default_non_tree_control_formatter_and_editor.editor)
+
           if def.type is Boolean
-            set_default_formatter(def, "textWithTreeControls", "checkboxFormatter")
-            set_default_editor(def, "TextareaWithTreeControlsEditor", "CheckboxEditor")
+            set_default_formatter(def, default_tree_control_formatter,
+                                          default_non_tree_control_formatter_and_editor.formatter)
+
+            set_default_editor(def, default_tree_control_editor,
+                                      default_non_tree_control_formatter_and_editor.editor)
+
           else
             # For other types, same as String
-            set_default_formatter(def, "textWithTreeControls", "defaultFormatter")
-            set_default_editor(def, "TextareaWithTreeControlsEditor", "TextareaEditor")
+            set_default_formatter(def, default_tree_control_formatter,
+                                          default_non_tree_control_formatter_and_editor.formatter)
+
+            set_default_editor(def, default_tree_control_editor,
+                                      default_non_tree_control_formatter_and_editor.editor)
+
 
           # Validate formatter/editor and build fixed_fields
           if not grid_control_field_found and not def.grid_pre_grid_control_column
@@ -484,6 +514,19 @@ _.extend GridControl.prototype,
 
     return schema
 
+  getSchemaExtendedWithCustomFields: ->
+    schema = _.extend {}, @schema # shallow copy schema
+
+    if not @custom_fields_manager?
+      return schema
+
+    custom_fields_schema =
+      @custom_fields_manager.getCustomFieldsSchema()
+
+    _.extend schema, custom_fields_schema
+
+    return schema
+
   _validateView: (view) ->
     # Returns true if valid view, throws a "grid-control-invalid-view" error otherwise
     err = (message) =>
@@ -506,10 +549,11 @@ _.extend GridControl.prototype,
         err "Provided view specified more than one column for the same field `#{field_name}`"
       found_fields[field_name] = true
 
-      if not(field_name of @schema)
+      extended_schema = @getSchemaExtendedWithCustomFields()
+      if not(field_name of extended_schema)
         err "Provided view has a column for an unknown field `#{field_name}`"
 
-      field_def = @schema[field_name]
+      field_def = extended_schema[field_name]
       if not field_def.grid_visible_column
         err "Provided view has a column for non-visible field `#{field_name}`"        
 
@@ -527,9 +571,11 @@ _.extend GridControl.prototype,
 
     state_maintainers = {}
 
+    extended_schema = @getSchemaExtendedWithCustomFields()
+
     for column_def in view
       field = column_def.field
-      field_def = @schema[field]
+      field_def = extended_schema[field]
 
       if (column_state_maintainer = @_columns_state_maintainers[field_def.grid_column_formatter])?
         state_maintainers[field] = column_state_maintainer
@@ -581,10 +627,12 @@ _.extend GridControl.prototype,
     # This method assumes that the view passed to it passed @_validateView
     columns = []
 
+    extended_schema = @getSchemaExtendedWithCustomFields()
+
     first = true
     for column_def in view
       field = column_def.field
-      field_def = @schema[field]
+      field_def = extended_schema[field]
 
       label = field_def.label
       if first
@@ -640,7 +688,9 @@ _.extend GridControl.prototype,
   _getDefaultView: ->
     view = []
 
-    for field_name, field_def of @schema # We assume @schema passed validation
+    extended_schema = @getSchemaExtendedWithCustomFields()
+
+    for field_name, field_def of extended_schema # We assume extended_schema passed validation
       if field_def.grid_default_grid_view
         field_view =
           field: field_name,
@@ -759,7 +809,8 @@ _.extend GridControl.prototype,
     
     column_view_state = @getView()[cell]
     field_name = column_view_state.field
-    column_field_schema = @schema[field_name]
+    extended_schema = @getSchemaExtendedWithCustomFields()
+    column_field_schema = extended_schema[field_name]
 
     if column_field_schema?
       formatter_name = column_field_schema.grid_column_formatter
