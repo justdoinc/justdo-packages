@@ -258,6 +258,9 @@ _.extend GridControlMux.prototype,
 
     if @_shared_grid_control_custom_fields_manager?
       if not grid_control_options.custom_fields_manager?
+        # By checking whether custom_fields_manager is set in the grid_control_options
+        # we allow the @_shared_grid_control_custom_fields_manager to be overriden
+        # for specific tabs
         grid_control_options.custom_fields_manager = @_shared_grid_control_custom_fields_manager
       else
         @logger.warn "Tab #{tab_id} grid control options includes options: custom_fields_manager, avoid using Multiplexer's @_shared_grid_control_custom_fields_manager"
@@ -678,6 +681,9 @@ _.extend GridControlMux.prototype,
 
     if @_shared_grid_data_core?
       @_shared_grid_data_core.destroy()
+
+    if @_shared_grid_control_custom_fields_manager?
+      @_shared_grid_control_custom_fields_manager.destroy()
 
     @destroyed = true
 

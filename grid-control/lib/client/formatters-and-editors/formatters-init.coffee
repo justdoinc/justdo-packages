@@ -387,7 +387,7 @@ print_formatters_extended_context_properties =
 
     [doc, field] = @original_args
 
-    schema = @schema[field]
+    schema = @getSchemaExtendedWithCustomFields()[field]
 
     args =
       # See notes on self in slick_grid_formatters_extended_context_properties

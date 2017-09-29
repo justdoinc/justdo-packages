@@ -32,8 +32,32 @@ GridControl = (options, container, operations_container) ->
   @logger = Logger.get("grid-control")
 
   @custom_fields_manager = null
+  @custom_fields_changes_computation = null
   if @options.custom_fields_manager?
     @custom_fields_manager = @options.custom_fields_manager
+
+    first_comp = true
+    Tracker.nonreactive =>
+      # Isolated computation
+      @custom_fields_changes_computation = Tracker.autorun =>
+        @custom_fields_manager.getCustomFieldsSchema()
+
+        if not first_comp
+          @emit "custom_fields_changed"
+        else
+          first_comp = false
+
+        return
+
+  @on "custom_fields_changed", =>
+    @_destroyColumnsManagerContextMenu()
+    @_setupColumnsManagerContextMenu()
+
+    # Refresh view (so removed custom fields that are currently in the view will be removed)
+    @setView(@getView())
+
+    return
+
 
   @schema = null
   @grid_control_field = null
@@ -75,6 +99,8 @@ GridControl = (options, container, operations_container) ->
   @current_path = new ReactiveVar null
 
   @_states_classes_computations = null
+
+  @_view_changes_dependency = new Tracker.Dependency()
 
   @_columns_data = {}
 
@@ -707,13 +733,34 @@ _.extend GridControl.prototype,
     return view
 
   setView: (view) ->
+    @_grid.getActiveCell()
+
+    view = view.slice() # shallow copy
+
+    # Ignore columns that aren't part of the schema or the custom fields definition
+    allowed_fields = @getSchemaExtendedWithCustomFields()
+
+    view = _.filter view, (column) ->
+      if column.field not of allowed_fields
+        return false
+
+      return true
+
     @_validateView(view)
 
     columns = @_getColumnsStructureFromView view
     if not @_initialized
       @_init_view = columns
     else
+      active_row = @getCurrentRowNonReactive()
+
       update_type = @_grid.setColumns columns
+
+      # If the last selected cell will be removed as a result of updating the view,
+      # this.getCurrentRowNonReactive() that rely on the underlying selected cell
+      # will start return undefined, we need to re-activate the row.
+      if active_row? and not @getCurrentRowNonReactive()?
+        @activateRow(active_row)
 
       if not update_type? # null means nothing changed
         return
@@ -725,6 +772,7 @@ _.extend GridControl.prototype,
       if update_type # true means dom rebuilt
         @emit "columns-headers-dom-rebuilt", new_view
 
+      @_view_changes_dependency.changed()
       @emit "grid-view-change", new_view
 
   getView: ->
@@ -744,6 +792,42 @@ _.extend GridControl.prototype,
     view = _.filter view, (column) -> not(column is false)
 
     return view
+
+  getViewReactive: ->
+    # Originally, @getView() wasn't reactive, to avoid unexpected bug, we introduce another
+    # method to handle reactivity.
+    @_view_changes_dependency.depend()
+
+    return @getView()
+
+  invalidateOnViewChange: ->
+    view = @getView()
+
+    return view
+
+  addFieldToView: (field_id, position) ->
+    view = @getView()
+
+    if position?
+      # add field after clicked item
+      view.splice(position, 0, {field: field_id})
+    else
+      view.push({field: field_id})
+
+    @setView(view)
+
+    return
+
+  fieldsMissingFromView: ->
+    current_view_fields = _.map @getView(), (col) -> col.field
+    visible_fields = []
+    extended_schema = @getSchemaExtendedWithCustomFields()
+    for field, field_def of extended_schema
+      if field_def.grid_visible_column
+        visible_fields.push field
+    missing_fields = _.filter visible_fields, (field) -> not(field in current_view_fields)
+
+    return missing_fields
 
   getCellField: (cell_id) -> @getSlickGridColumns()[cell_id].field
 
@@ -1218,6 +1302,9 @@ _.extend GridControl.prototype,
     @_destroyStatesClassesComputations()
     @_destroy_plugins()
     @_destroy_jquery_events()
+
+    if @custom_fields_changes_computation?
+      @custom_fields_changes_computation.stop()
 
     if @_grid_data?
       @_grid_data.destroy()
