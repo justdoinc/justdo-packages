@@ -3791,6 +3791,7 @@ if (typeof Slick === "undefined") {
       "getSelectedRows": getSelectedRows,
       "setSelectedRows": setSelectedRows,
       "getContainerNode": getContainerNode,
+      "absBox": absBox,
 
       "render": render,
       "cleanUpAndRenderCells": cleanUpAndRenderCells,

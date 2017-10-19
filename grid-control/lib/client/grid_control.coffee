@@ -1286,6 +1286,99 @@ _.extend GridControl.prototype,
 
     return
 
+  getFieldDef: (field_id) ->
+    extended_schema = @getSchemaExtendedWithCustomFields()
+
+    if field_id not of extended_schema
+      throw @_error "unknown-field-id", "Unknown field #{field_id}"
+
+    return extended_schema[field_id]
+
+  isEditableField: (field_id) ->
+    return @getFieldDef(field_id).grid_editable_column
+
+  generateFieldEditor: (field_id, item_id) ->
+    item = @collection.findOne(item_id)
+
+    if not item?
+      throw @_error "unknown-item-id", "Unknown item id: #{item_id}"
+
+    extended_schema = @getSchemaExtendedWithCustomFields()
+
+    field_def = @getFieldDef(field_id)
+
+    if not @isEditableField(field_id)
+      throw @_error "field-not-editable", "Field: #{field_id} is not editable"
+
+    field_editor_id = field_def.grid_column_editor
+
+    $container = $("<div>")
+    editor_context = {
+        grid: @_grid
+        gridPosition: @_grid.absBox(@container.get(0))
+        position: {top: 0, left: 0, right: 0, bottom: 0}
+        container: $container
+        column: {id: field_id, field: field_id, values: field_def.grid_values}
+        item: item
+        commitChanges: -> return
+        cancelChanges: -> return
+    }
+
+    editor = new @_editors[field_editor_id](editor_context)
+    editor.loadValue(item)
+
+    destroyed = false
+    destory = ->
+      if destroyed
+        return
+      
+      editor.destroy()
+
+      destroyed = true
+
+      return
+
+    cancel = ->
+      # Load original value
+      if destroyed
+        return
+
+      editor.loadValue(item)
+
+      return
+
+    save = =>
+      if destroyed
+        return
+
+      update = {$set: {}}
+
+      update.$set[field_id] = editor.serializeValue()
+
+      @collection.update item_id, update
+
+      return
+
+    saveAndExit = =>
+      if destroyed
+        return
+
+      save()
+
+      destory()
+
+      return
+
+    return {
+      "$dom_node": $container
+      editor: editor
+
+      saveAndExit: saveAndExit
+      cancel: cancel
+      save: save
+      destory: destory
+    }
+
   destroy: ->
     if @_destroyed
       return

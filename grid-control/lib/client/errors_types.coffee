@@ -10,3 +10,6 @@ _.extend GridControl.prototype,
     "unfulfilled-prereq": "Grid operation called with unfulfilled prerequisites"
     "wrong-argument": "Wrong argument provided"
     "invalid-formatter-definition": "Invalid formatter definition"
+    "unknown-field-id": "Unknown field ID"
+    "field-not-editable": "Field is not editable"
+    "unknown-item-id": "Unknown item id"
