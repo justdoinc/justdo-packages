@@ -1298,10 +1298,11 @@ _.extend GridControl.prototype,
     return @getFieldDef(field_id).grid_editable_column
 
   generateFieldEditor: (field_id, item_id) ->
-    item = @collection.findOne(item_id)
+    if item_id?
+      item = @collection.findOne(item_id)
 
-    if not item?
-      throw @_error "unknown-item-id", "Unknown item id: #{item_id}"
+      if not item?
+        throw @_error "unknown-item-id", "Unknown item id: #{item_id}"
 
     extended_schema = @getSchemaExtendedWithCustomFields()
 
@@ -1319,13 +1320,17 @@ _.extend GridControl.prototype,
         position: {top: 0, left: 0, right: 0, bottom: 0}
         container: $container
         column: {id: field_id, field: field_id, values: field_def.grid_values}
-        item: item
         commitChanges: -> return
         cancelChanges: -> return
     }
 
+    if item?
+      editor_context.item = item
+
     editor = new @_editors[field_editor_id](editor_context)
-    editor.loadValue(item)
+
+    if item?
+      editor.loadValue(item)
 
     destroyed = false
     destory = ->
@@ -1339,15 +1344,21 @@ _.extend GridControl.prototype,
       return
 
     cancel = ->
+      # We don't deal here with a case where the editor was generated without item_id
+      # we assume this method won't be called in such case.
+
       # Load original value
       if destroyed
         return
 
-      editor.loadValue(item)
+      editor.loadValue(@collection.findOne(item_id)) # don't use item, for case the item changed by someone else, while we were editing it.
 
       return
 
     save = =>
+      # We don't deal here with a case where the editor was generated without item_id
+      # we assume this method won't be called in such case.
+
       if destroyed
         return
 
