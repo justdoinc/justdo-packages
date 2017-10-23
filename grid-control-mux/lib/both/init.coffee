@@ -42,17 +42,17 @@ GridControlMux = (options) ->
   @loadEventsFromOptions() # loads @options.events, if exists
 
   if Meteor.isClient
-    # React to invalidations
-    if Tracker.currentComputation?
-      Tracker.onInvalidate =>
-        @logger.debug "Enclosing computation invalidated, destroying"
-        @destroy() # defined in client/api.coffee
-
     # on the client, call @_immediateInit() in an isolated
     # computation to avoid our init procedures from affecting
     # the encapsulating computation (if any)
     Tracker.nonreactive =>
       @_immediateInit()
+
+    # React to invalidations
+    if Tracker.currentComputation?
+      Tracker.onInvalidate =>
+        @logger.debug "Enclosing computation invalidated, destroying"
+        @destroy() # defined in client/api.coffee
   else
     @_immediateInit()
 
