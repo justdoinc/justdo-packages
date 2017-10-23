@@ -1298,6 +1298,12 @@ _.extend GridControl.prototype,
     return @getFieldDef(field_id).grid_editable_column
 
   generateFieldEditor: (field_id, item_id) ->
+    # We allow fields editor to be generated without item_id
+    #
+    # The usecase for that is to allow cases where the editor might be useful
+    # to present without specific value, for example select editor, for the
+    # purpose of presenting available options when editing the field options.
+
     if item_id?
       item = @collection.findOne(item_id)
 
