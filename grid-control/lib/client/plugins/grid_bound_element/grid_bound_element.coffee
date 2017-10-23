@@ -105,6 +105,9 @@ _.extend GridControl.prototype,
     # Augment original destroy
     #
     $element.data "destroy", destroy = _.once =>
+      if options.update_pos_on_grid_scroll
+        @_grid.onScroll.unsubscribe updatePosition
+
       original_destroy()
 
     #
