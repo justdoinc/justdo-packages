@@ -1286,16 +1286,19 @@ _.extend GridControl.prototype,
 
     return
 
-  getFieldDef: (field_id) ->
+  getFieldDef: (field_id, throw_if_not_exists=true) ->
     extended_schema = @getSchemaExtendedWithCustomFields()
 
     if field_id not of extended_schema
-      throw @_error "unknown-field-id", "Unknown field #{field_id}"
+      if throw_if_not_exists
+        throw @_error "unknown-field-id", "Unknown field #{field_id}"
+      else
+        return undefined
 
     return extended_schema[field_id]
 
   isEditableField: (field_id) ->
-    return @getFieldDef(field_id).grid_editable_column
+    return @getFieldDef(field_id, false)?.grid_editable_column
 
   generateFieldEditor: (field_id, item_id) ->
     # We allow fields editor to be generated without item_id
