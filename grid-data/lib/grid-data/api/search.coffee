@@ -17,6 +17,13 @@ _.extend GridData.prototype,
     if fields? and not _.isArray(fields)
       throw @_error "wrong-input", "search() `fields` option must be array or null"
 
+    fields_schema = @grid_control.getSchemaExtendedWithCustomFields()
+    testVal = (field, val) ->
+      if (human_readable_val = fields_schema[field]?.grid_values?[val]?.txt)?
+        val = human_readable_val
+      
+      return term.test(val)
+
     each_options =
       expand_only: false
       filtered_tree: options.exclude_filtered_paths and @isActiveFilterNonReactive()
@@ -30,13 +37,13 @@ _.extend GridData.prototype,
 
       if fields?
         for field in fields
-          if item_obj[field]? and term.test(item_obj[field])
+          if item_obj[field]? and testVal(field, item_obj[field])
             paths.push path
 
             break
       else
         for field, value of item_obj
-          if term.test(value)
+          if testVal(field, value)
             paths.push path
 
             break
