@@ -78,12 +78,14 @@ GridControl.installFormatter formatter_name,
 
     cache = @_calculatedFieldFieldsCache[grid_control.getGridUid()]
 
+    grid_schema = grid_control.getSchemaExtendedWithCustomFields()
+
     calculated_fields = []
     for field in fields_array
       # make sure we have in the cache information about all the fields
       # requrested
       if field not of cache
-        field_schema = grid_control.schema[field]
+        field_schema = grid_schema[field]
 
         cache[field] = field_schema?.grid_column_formatter == formatter_name
 
