@@ -43,6 +43,12 @@ GridControl.installEditor "SelectorEditor",
     return
 
   setInputValue: (val) ->
+    if not val?
+      # Regard undefined value as empty string to allow the user set a label
+      # for empty/undefined values
+
+      val = ""
+    
     @$select.selectpicker("val", val);
 
     return

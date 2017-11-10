@@ -33,13 +33,19 @@ WhiteListFilterControllerConstructor = (context) ->
     $el = $(e.target).closest("li")
     value = $el.attr("value")
 
+    stored_values_to_filter = [value]
+    if value is ""
+      # We regard null/undefined value as equivalent to empty string.
+      stored_values_to_filter.push null
+
     if $el.hasClass("selected")
-      filter_state = _.without filter_state, value
+      args = [filter_state].concat(stored_values_to_filter)
+      filter_state = _.without.apply _, args
     else
       if filter_state?
-        filter_state = _.union filter_state, [value]
+        filter_state = _.union filter_state, stored_values_to_filter
       else
-        filter_state = [value]
+        filter_state = stored_values_to_filter
 
     if _.isEmpty(filter_state)
       @column_filter_state_ops.clearColumnFilter()
@@ -63,7 +69,7 @@ _.extend WhiteListFilterControllerConstructor.prototype,
 
     # Add the selected task, only to the selected items
     for value in filter_state
-      $("[value=#{value}]", @controller).addClass("selected")
+      $("[value='#{value}']", @controller).addClass("selected")
 
     return
 

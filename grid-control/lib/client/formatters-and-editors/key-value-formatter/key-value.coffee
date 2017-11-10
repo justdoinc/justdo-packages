@@ -8,7 +8,9 @@ getKeyValue = (schema, value, preferred_format="html") ->
     grid_values = {}
 
   if not value?
-    return ""
+    # Regard undefined value as empty string (we don't return immediately to
+    # allow the user set a html/txt labels for empty/undefined values)
+    value = ""
 
   if not (value_by_formats = grid_values[value])?
     return value
