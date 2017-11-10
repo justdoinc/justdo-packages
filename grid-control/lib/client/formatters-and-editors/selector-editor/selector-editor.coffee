@@ -4,6 +4,21 @@ GridControl.installEditor "SelectorEditor",
   init: ->
     if not (selector_options = @context.column.values)?
       selector_options = {}
+    else
+      selector_options = _.extend {}, selector_options # shallow copy to avoid affecting the original object
+
+    if not (removed_selector_options = @context.column.removed_values)?
+      removed_selector_options = {}
+
+    if (field_value = this.context.item[this.context.field_name])?
+      # If we can determine the field_value, and it isn't part of the selector_options,
+      # check whether it is part of the removed_selector_options, and if so, add it as
+      # the first select options.
+      # Note, we do that by adding the option definition to the selector_options object that we
+      # *shallow copied* we don't affect the original object.
+      if field_value not of selector_options and field_value of removed_selector_options
+        selector_options[field_value] = _.extend({}, removed_selector_options[field_value])
+        selector_options[field_value].order = -9999 # to ensure it'll appear first.
 
     options = []
     for value, value_def of selector_options
