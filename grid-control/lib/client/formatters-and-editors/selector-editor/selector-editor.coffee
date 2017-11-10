@@ -5,15 +5,25 @@ GridControl.installEditor "SelectorEditor",
     if not (selector_options = @context.column.values)?
       selector_options = {}
 
-    selector_options_html = ""
+    options = []
     for value, value_def of selector_options
       if (html_format = value_def.html)?
         label = html_format
       else
         label = value_def.txt
 
+      options.push {
+        label: label
+        value: value
+        order: value_def.order
+      }
+
+    options = _.sortBy options, "order"
+
+    selector_options_html = ""
+    for option in options
       selector_options_html +=
-        """<option value="#{value}" data-content="#{label}">#{label}</option>"""
+        """<option value="#{option.value}" data-content="#{option.label}">#{label}</option>"""
 
     @$select = $("""<select class="selector-editor">#{selector_options_html}</select>""")
     @$select.appendTo @context.container
