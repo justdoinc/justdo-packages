@@ -2,10 +2,13 @@
 # by user XSS protection must be added.
 
 getKeyValue = (schema, value, preferred_format="html") ->
-  {grid_values} = schema
+  {grid_values, grid_removed_values} = schema
 
   if not grid_values?
     grid_values = {}
+
+  if not grid_removed_values?
+    grid_removed_values = {}
 
   if not value?
     # Regard undefined value as empty string (we don't return immediately to
@@ -13,7 +16,9 @@ getKeyValue = (schema, value, preferred_format="html") ->
     value = ""
 
   if not (value_by_formats = grid_values[value])?
-    return value
+    # Try look for the value in grid_removed_values
+    if not (value_by_formats = grid_removed_values[value])?
+      return value
 
   if (html_format = value_by_formats[preferred_format])?
     return html_format
