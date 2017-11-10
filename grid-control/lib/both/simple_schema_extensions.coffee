@@ -221,6 +221,13 @@ SimpleSchema.extendOptions
   # If relevant to the current field editor/formatter and is undefined considered as an empty object.
   grid_values: Match.Optional(Match.OneOf(Function, Object))
 
+  # grid_removed_values:
+  #
+  # Just like grid_values, all comments to grid_values are relevant, but used to store
+  # removed grid_values for the purpose of being able to present correct labels for existing
+  # record that are still using obsolete grid_values.
+  grid_removed_values: Match.Optional(Match.OneOf(Function, Object))
+
   # grid_column_filter_settings:
   #
   # Enable filtering grid content based on this column.

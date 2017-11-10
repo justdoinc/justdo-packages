@@ -503,16 +503,17 @@ _.extend GridControl.prototype,
           if def.grid_editable_column and not(def.grid_column_editor of PACK.Editors)
             err "Field `#{field_name}` use an unknown editor `#{def.grid_column_editor}`"
 
-      # Init grid_values
-      if def.grid_values?
-        if _.isFunction(def.grid_values)
-          def.grid_values = def.grid_values(@)
-        else
-          def.grid_values = _.extend({}, def.grid_values)
+      for prop_name in ["grid_values", "grid_removed_values"]
+        # Init grid_values
+        if def[prop_name]?
+          if _.isFunction(def[prop_name])
+            def[prop_name] = def[prop_name](@)
+          else
+            def[prop_name] = _.extend({}, def[prop_name])
 
-        for option_id, option of def.grid_values
-          if not option.txt?
-            err "Each value of grid_values must have a txt property"
+          for option_id, option of def[prop_name]
+            if not option.txt?
+              err "Each value of #{prop_name} must have a txt property"
 
       schema[field_name] = def
 
@@ -695,6 +696,11 @@ _.extend GridControl.prototype,
         column.values = field_def.grid_values
       else
         column.values = null
+
+      if field_def.grid_removed_values?
+        column.removed_values = field_def.grid_removed_values
+      else
+        column.removed_values = null
 
       if column_def.grid_effects_metadata_rendering
         column.grid_effects_metadata_rendering = true
