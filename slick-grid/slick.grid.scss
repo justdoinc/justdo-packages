@@ -78,6 +78,13 @@ classes should alter those!
 .grid-canvas {
   position: relative;
   outline: 0;
+  min-height: 1px; // Required, without min-height to the canvas, if there are no visible items,
+                   // the browsers will regard the canvas as no-space occupying box and will ignore
+                   // its width, that will later make the viewport not scrollable horizontally,
+                   // which means that headers outside the viewport will be unaccessible.
+                   // In justdo it caused a serious bug since these headers might have had the filters
+                   // that caused all items to be cleared - making it impossible to unset the filter,
+                   // leaving the user with a grid not usable. 
 }
 
 .slick-row.ui-widget-content, .slick-row.ui-state-active {
