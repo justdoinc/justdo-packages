@@ -392,6 +392,33 @@ _.extend GridData.prototype,
 
       return rebuild_tree
 
+    expand_passed_filter_paths: ->
+      # expand all the paths that passed the filter.
+      rebuild_tree = true
+
+      # Begin from removing all paths (avoid, duplicates, and avoid longevity memory leak)
+      for path of @_expanded_paths
+        delete @_expanded_paths[path]
+
+      last_path = null
+      # the first path we'll encounter (if any), will necessarily will be of level 1, so
+      # with that, we don't need to worry of attempt to expand the null last_path
+      last_path_level = 1
+      @each "/", {filtered_tree: true, expand_only: false}, (_1, _2, _3, path) =>
+        # Check whether the previous item is a parent, if it is, expand it.
+        path_level = GridData.helpers.getPathLevel(path)
+
+        if path_level > last_path_level
+          # last_path is a parent, expand it.
+          @_expanded_paths[last_path] = true
+
+        last_path_level = path_level
+        last_path = path
+
+        return
+
+      return rebuild_tree
+
   invalidateOnFlush: ->
     if Tracker.currentComputation?
       # If there's no computation - do nothing
