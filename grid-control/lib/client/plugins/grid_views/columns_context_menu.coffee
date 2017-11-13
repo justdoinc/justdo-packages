@@ -56,7 +56,7 @@ _.extend GridControl.prototype,
 
     append_fields_menu = [
       {
-        text: 'Append Column'
+        text: 'Add Column'
         subMenu: append_fields_submenu
       }
     ]
