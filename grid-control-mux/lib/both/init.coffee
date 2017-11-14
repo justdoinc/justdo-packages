@@ -23,6 +23,14 @@ default_options =
   # will be initiated with
   shared_grid_control_custom_fields_manager_options: {}
 
+  # Same as use_shared_grid_control_custom_fields_manager but for the removed
+  # custom fields
+  use_shared_grid_control_removed_custom_fields_manager: false
+
+  # Same as shared_grid_control_removed_custom_fields_manager_options but for the removed
+  # custom fields
+  shared_grid_control_removed_custom_fields_manager_options: {}
+
 GridControlMux = (options) ->
   # skeleton-version: v0.0.2
 

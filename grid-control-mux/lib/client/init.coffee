@@ -73,6 +73,14 @@ _.extend GridControlMux.prototype,
 
       @_shared_grid_control_custom_fields_manager = new GridControlCustomFieldsManager(shared_grid_control_custom_fields_manager_options)
 
+    # Read comment for @options.use_shared_grid_control_custom_fields_manager above,
+    # this is just the same but for the removed custom fields.
+    @_shared_grid_control_removed_custom_fields_manager = null
+    if @options.use_shared_grid_control_removed_custom_fields_manager == true
+      shared_grid_control_removed_custom_fields_manager_options = @options.shared_grid_control_removed_custom_fields_manager_options
+
+      @_shared_grid_control_removed_custom_fields_manager = new GridControlCustomFieldsManager(shared_grid_control_removed_custom_fields_manager_options)
+
     # The following is managed by @setPath() used to recognize
     # whether an active setPath is happening to avoid reporting
     # intermediate path changes in the process of getting the

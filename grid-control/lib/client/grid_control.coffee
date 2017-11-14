@@ -58,6 +58,23 @@ GridControl = (options, container, operations_container) ->
 
     return
 
+  @removed_custom_fields_manager = null
+  @removed_custom_fields_changes_computation = null
+  if @options.removed_custom_fields_manager?
+    @removed_custom_fields_manager = @options.removed_custom_fields_manager
+
+    first_comp = true
+    Tracker.nonreactive =>
+      # Isolated computation
+      @removed_custom_fields_changes_computation = Tracker.autorun =>
+        @removed_custom_fields_manager.getCustomFieldsSchema()
+
+        if not first_comp
+          @emit "removed_custom_fields_changed"
+        else
+          first_comp = false
+
+        return
 
   @schema = null
   @grid_control_field = null
@@ -541,7 +558,7 @@ _.extend GridControl.prototype,
 
     return schema
 
-  getSchemaExtendedWithCustomFields: ->
+  getSchemaExtendedWithCustomFields: (include_removed_fields = false) ->
     schema = _.extend {}, @schema # shallow copy schema
 
     if not @custom_fields_manager?
@@ -551,6 +568,24 @@ _.extend GridControl.prototype,
       @custom_fields_manager.getCustomFieldsSchema()
 
     _.extend schema, custom_fields_schema
+
+    if include_removed_fields
+      if not @removed_custom_fields_manager?
+        return schema
+
+      # Make a shallow copy of the returned schema, as we are going to replace the objects
+      # provided with new object prototypically inherit from the origin ones that adds the
+      # 'obsolete' property set to true - to allow distinguishing between removed and current
+      # custom fields.
+      removed_custom_fields_schema =
+        _.extend {}, @removed_custom_fields_manager.getCustomFieldsSchema()
+
+      # Add the obsolete property to all the removed custom fields.
+      for custom_field_id, field_schema of removed_custom_fields_schema
+        removed_custom_fields_schema[custom_field_id] = Object.create(field_schema)
+        removed_custom_fields_schema[custom_field_id].obsolete = true
+
+      _.extend schema, removed_custom_fields_schema
 
     return schema
 
@@ -1424,6 +1459,9 @@ _.extend GridControl.prototype,
 
     if @custom_fields_changes_computation?
       @custom_fields_changes_computation.stop()
+
+    if @removed_custom_fields_changes_computation?
+      @removed_custom_fields_changes_computation.stop()
 
     if @_grid_data?
       @_grid_data.destroy()
