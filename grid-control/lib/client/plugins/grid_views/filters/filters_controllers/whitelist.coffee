@@ -1,3 +1,9 @@
+empty_state_representing_value_for_html = "|NIL|"
+
+# In ie11, when we tried add inputs with argument value of "" ie changed it to "1" (!)
+getHtmlValue = (value) -> if value != "" then value else empty_state_representing_value_for_html
+getValueFromHtmlValue = (html_value) -> if html_value != empty_state_representing_value_for_html then html_value else ""
+
 #
 # Filter controller constructor
 #
@@ -26,12 +32,14 @@ WhiteListFilterControllerConstructor = (context) ->
     else
       label = value_options.txt
 
-    @controller.append("<li value='#{value}'><i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i> #{label}</li>")
+    @controller.append("<li value='#{getHtmlValue(value)}'><i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i> #{label}</li>")
 
   $(@controller).on "click", "li", (e) =>
     filter_state = @column_filter_state_ops.getColumnFilter()
     $el = $(e.target).closest("li")
-    value = $el.attr("value")
+
+    html_value = $el.attr("value")
+    value = getValueFromHtmlValue(html_value)
 
     stored_values_to_filter = [value]
     if value is ""
@@ -69,7 +77,7 @@ _.extend WhiteListFilterControllerConstructor.prototype,
 
     # Add the selected task, only to the selected items
     for value in filter_state
-      $("[value='#{value}']", @controller).addClass("selected")
+      $("[value='#{getHtmlValue(value)}']", @controller).addClass("selected")
 
     return
 
