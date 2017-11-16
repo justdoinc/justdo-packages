@@ -99,6 +99,11 @@ _.extend GridDataCore.prototype,
     if not (@collection = @options.collection)?
       throw @_error "required-option-missing", "Missing required option 'collection'"
 
+    # By passing options.tasks_query the user of grid data core can specify a query that will limit the tasks
+    # we'll fetch from @collection to populate the tree with.
+    if not (@tasks_query = @options.tasks_query)?
+      @tasks_query = {}
+
     if not (schema = @collection.simpleSchema())?
       throw @_error "schemaless-collection"
 
@@ -291,7 +296,7 @@ _.extend GridDataCore.prototype,
     @tree_structure = {}
     @detaching_items_ids = {}
 
-    for item in @collection.find().fetch()
+    for item in @collection.find(@tasks_query).fetch()
       @items_by_id[item._id] = item
       delete @detaching_items_ids[item._id]
 
@@ -316,7 +321,7 @@ _.extend GridDataCore.prototype,
       # tracker_init var is here to avoid adding this data
       # second time.
       tracker_init = true
-      @_items_tracker = @collection.find().observeChanges
+      @_items_tracker = @collection.find(@tasks_query).observeChanges
         added: (id, doc) =>
           # @logger.debug "Tracker: Item added #{id}"
 
