@@ -37,8 +37,13 @@ GridControl.installEditor "SelectorEditor",
 
     selector_options_html = ""
     for option in options
+      label = option.label.trim()
+
+      if _.isEmpty label
+        label = "&nbsp;"
+
       selector_options_html +=
-        """<option value="#{option.value}" data-content="#{option.label}">#{label}</option>"""
+        """<option value="#{option.value}" data-content="#{label}">#{label}</option>"""
 
     @$select = $("""<select class="selector-editor">#{selector_options_html}</select>""")
     @$select.appendTo @context.container
