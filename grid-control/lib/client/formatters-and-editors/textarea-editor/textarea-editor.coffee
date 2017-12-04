@@ -75,10 +75,14 @@ GridControl.installEditor "TextareaEditor",
     @$input.focus()
 
     val = @$input.val()
-    # place the cursor in the end of the editor text
-    # (instead of the default select-all on focus
-    # behavior)
-    @$input[0].setSelectionRange val.length, val.length
+
+    # try/catch required since IE11 fails when val.length == 0
+    try
+      # place the cursor in the end of the editor text
+      # (instead of the default select-all on focus
+      # behavior)
+      @$input[0].setSelectionRange val.length, val.length
+    catch e
 
     return
 
