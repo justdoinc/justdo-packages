@@ -1412,11 +1412,12 @@ _.extend GridControl.prototype,
       if destroyed
         return
 
-      update = {$set: {}}
+      if editor.isValueChanged()
+        update = {$set: {}}
 
-      update.$set[field_id] = editor.serializeValue()
+        update.$set[field_id] = editor.serializeValue()
 
-      @collection.update item_id, update
+        @collection.update item_id, update
 
       return
 
