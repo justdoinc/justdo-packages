@@ -111,23 +111,40 @@ GridControl.installFormatter "textWithTreeControls",
     if @options.allow_dynamic_row_height
       value = self.nl2br value
 
-    horizontal_padding = 5
+    current_left_pos = 0
+    horizontal_padding = 3
 
-    toggle_margin_left = -5
+    current_left_pos += horizontal_padding
+
+    tree_control = ""
+
+    if doc.priority?
+      priority_width = 7
+
+      priority_indentation = current_left_pos
+
+      # priority
+      tree_control += """
+        <div class="grid-tree-control-priority slick-prevent-edit"
+             style="background-color: #{JustdoColorGradient.getColor(doc.priority or 0)}; left: #{priority_indentation}px;"></div>
+      """
+
+      current_left_pos += priority_width
+
+    toggle_margin_left = 1
     toggle_width = 21
-    toggle_margin_right = 0
+    toggle_margin_right = 1
 
     level_indent = 15
     indentation_margin = (level_indent * level)
-    toggle_indentation = horizontal_padding + toggle_margin_left + indentation_margin
-    text_left_margin = indentation_margin + toggle_margin_left + toggle_width + toggle_margin_right
-
-    tree_control = ""
+    toggle_indentation = current_left_pos + toggle_margin_left + indentation_margin
 
     tree_control += """
       <div class="grid-tree-control-toggle slick-prevent-edit #{state}"
            style="left: #{toggle_indentation}px;"></div>
     """
+
+    current_left_pos += indentation_margin + toggle_margin_left + toggle_width + toggle_margin_right
 
     # item icons
     tree_control += """
@@ -175,8 +192,7 @@ GridControl.installFormatter "textWithTreeControls",
       # Note: index label is box-sizing: content-box
       index_outer_width = index_width + index_horizontal_paddings
       index_margin_right = 3
-      index_left = horizontal_padding + text_left_margin
-      text_left_margin += index_outer_width + index_margin_right
+      index_left = current_left_pos
 
       tree_control += """
           <span class="label label-primary grid-tree-control-task-id slick-prevent-edit cell-handle"
@@ -185,6 +201,8 @@ GridControl.installFormatter "textWithTreeControls",
             #{index}
           </span>
       """
+
+      current_left_pos += index_outer_width + index_margin_right
 
     # shortcuts
     owner_id = pending_owner_id = null
@@ -204,9 +222,9 @@ GridControl.installFormatter "textWithTreeControls",
         owner_display_name = owner_doc?.profile?.first_name + " " + owner_doc?.profile?.last_name
 
       owner_id_width = 28
-      owner_id_margin_right = 2
-      owner_id_left = horizontal_padding - 1 + text_left_margin
-      text_left_margin += owner_id_width + owner_id_margin_right
+      owner_id_margin_right = 0
+      owner_id_left = 1 + current_left_pos
+      current_left_pos += owner_id_width + owner_id_margin_right
 
       tree_control += """
         <div class="grid-tree-control-user slick-prevent-edit"
@@ -237,6 +255,8 @@ GridControl.installFormatter "textWithTreeControls",
       tree_control += """
         </div>
       """
+
+    text_left_margin = current_left_pos
 
     tree_control += """
         <div class="grid-tree-control-text"
