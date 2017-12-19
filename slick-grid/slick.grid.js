@@ -1769,6 +1769,7 @@ if (typeof Slick === "undefined") {
       var m = columns[cell], d = getDataItem(row);
       if (currentEditor && activeRow === row && activeCell === cell) {
         currentEditor.loadValue(d);
+        currentEditor.focus();
       } else {
         cellNode.innerHTML = d ? getFormatter(row, m)(row, cell, getDataItemValueForColumn(d, m), m, d) : "";
         invalidatePostProcessingResults(row);
@@ -1807,6 +1808,7 @@ if (typeof Slick === "undefined") {
 
         if (row === activeRow && columnIdx === activeCell && currentEditor) {
           currentEditor.loadValue(d);
+          currentEditor.focus();
         } else if (d) {
           node.innerHTML = getFormatter(row, m)(row, columnIdx, getDataItemValueForColumn(d, m), m, d);
         } else {
@@ -2955,6 +2957,7 @@ if (typeof Slick === "undefined") {
 
       if (item) {
         currentEditor.loadValue(item);
+        currentEditor.focus();
       }
 
       serializedEditorValue = currentEditor.serializeValue();

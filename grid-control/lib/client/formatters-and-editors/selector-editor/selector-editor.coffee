@@ -58,8 +58,6 @@ GridControl.installEditor "SelectorEditor",
 
     @showSelect()
 
-    @focus()
-
     @$grid_view_port =
       $(@context.grid.getCanvasNode()).parent()
 

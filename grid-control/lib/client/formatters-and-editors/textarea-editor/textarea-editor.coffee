@@ -21,8 +21,6 @@ GridControl.installEditor "TextareaEditor",
   setInputValue: (val) ->
     @$input.val(val)
 
-    @focus()
-
     @$input.autosize()
 
     # if autosize already initiated for the element consecutive

@@ -295,8 +295,6 @@ GridControl.installEditor "UnicodeDateEditor",
     @$input.datepicker("setDate", normalizeUnicodeDateStringAndFormatToUserPreference(val))
     @$input.change()
 
-    @focus()
-
     return
 
   serializeValue: ->
