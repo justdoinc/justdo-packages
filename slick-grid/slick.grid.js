@@ -1552,7 +1552,7 @@ if (typeof Slick === "undefined") {
         rowStyle = "";
       }
 
-      stringArray.push("<div class='ui-widget-content " + cssClasses + "'" + rowStyle + ">");
+      stringArray.push("<div class='" + cssClasses + "'" + rowStyle + ">");
 
       var colspan, m;
       for (var i = 0, ii = columns.length; i < ii; i++) {
