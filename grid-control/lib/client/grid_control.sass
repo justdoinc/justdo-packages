@@ -25,29 +25,50 @@
   .slick-state-not-ready &, .slick-state-ops-lock &
     visibility: visible
 
-.grid-control
-  // Reimplement slick borders style in a way that serves the following
-  // 1. Avoid redundant space occupyed by transparent borders
-  // 2. Each cell has a top border instead of bottom border - allow us
-  //    to cancel the border of following active row with the css + selector
-  //    to improve look.
-  $row-min-height: 31px
-  $row-border-color: silver
-  $active-row-border-color: #805206
-  $row-border-style: 1px solid $row-border-color
-  $row-right-border-style: 1px dotted $row-border-color
-  $row-hidden-border-style: 1px solid transparent
-  // Option 1
-  $active-shadow-color-h: #A04BA2
-  $active-shadow-color-v: rgba(160, 75, 162, 0.82)
-  // Option 2
-  // $active-shadow-color-h: #D8361A
-  // $active-shadow-color-v: rgba(216, 54, 26, 0.67)
-  // Header cells paddings dictates the default editor/formatter
-  // horizontal paddings 
+// Reimplement slick borders style in a way that serves the following
+// 1. Avoid redundant space occupyed by transparent borders
+// 2. Each cell has a top border instead of bottom border - allow us
+//    to cancel the border of following active row with the css + selector
+//    to improve look.
+$row-min-height: 31px
+$row-border-color: silver
+$active-row-border-color: #805206
+$row-border-style: 1px solid $row-border-color
+$row-right-border-style: 1px dotted $row-border-color
+$row-hidden-border-style: 1px solid transparent
+// Option 1
+$active-shadow-color-h: #A04BA2
+$active-shadow-color-v: rgba(160, 75, 162, 0.82)
+// Option 2
+// $active-shadow-color-h: #D8361A
+// $active-shadow-color-v: rgba(216, 54, 26, 0.67)
+// Header cells paddings dictates the default editor/formatter
+// horizontal paddings 
 
-  $standard-cell-padding-top: 5px
-  $standard-cell-padding-bottom: 3px
+$standard-cell-padding-top: 5px
+$standard-cell-padding-bottom: 3px
+
+.slick-row
+  // Define borders in the row level
+  border-top: $row-border-style
+
+  &:first-child, &.f-first
+    // Keep occupying the space, so when it'll be active, the
+    // active border won't look like pushing content down
+    border-top-color: transparent
+
+    // Cancel the padding we get from hidden border-top
+    .grid-formatter, .grid-editor
+      padding-top: ($standard-cell-padding-top - 1)
+
+  &:last-child, &.f-last
+    // Last item border
+    border-bottom: $row-border-style
+
+  &.active
+    background-color: #F2F6FE
+
+.grid-control
   .grid-formatter, .grid-editor
     // Don't use margin instead of padding as it'll cause wrong
     // calculation of the meaning of width: 100%
@@ -59,26 +80,6 @@
     // Cancel all transparent borders
     border: 0 none
     border-right: $row-right-border-style
-
-  .slick-row
-    // Define borders in the row level
-    border-top: $row-border-style
-
-    &:first-child, &.f-first
-      // Keep occupying the space, so when it'll be active, the
-      // active border won't look like pushing content down
-      border-top-color: transparent
-
-      // Cancel the padding we get from hidden border-top
-      .grid-formatter, .grid-editor
-        padding-top: ($standard-cell-padding-top - 1)
-
-    &:last-child, &.f-last
-      // Last item border
-      border-bottom: $row-border-style
-
-    &.active
-      background-color: #EAF0FA !important
 
   // Improve style structure for our needs
   .slick-cell

@@ -191,6 +191,20 @@ _.extend GridControlSearch.prototype,
       else
         @_unsetHaveResults()
 
+  highlightMatchedPaths: ->
+    @clearMatchedPaths()
+
+    for path in @paths
+      if (item_index = @grid_control._grid_data.getPathGridTreeIndex(path))?
+        $(".slick-row:nth-child(#{item_index + 1})", @grid_control.container).addClass("search-result")
+
+    return
+
+  clearMatchedPaths: ->
+    $(".search-result", @grid_control.container).removeClass("search-result")
+
+    return
+
   _setHaveResults: (paths) ->
     @paths = paths
     @container.addClass('results-found')
@@ -199,6 +213,10 @@ _.extend GridControlSearch.prototype,
     @loc_buttons.removeClass('disabled')
     @_setMessage "<span class='location'></span><span class='results-count'>#{paths.length}</span>"
     @_update_location()
+
+    @highlightMatchedPaths()
+
+    return
 
   _unsetHaveResults: () ->
     @paths = null
@@ -209,6 +227,10 @@ _.extend GridControlSearch.prototype,
     @search_info.addClass('label-warning')
     @loc_buttons.addClass('disabled')
     @_setMessage "0"
+
+    @clearMatchedPaths()
+
+    return
 
   _update_location: ->
     if not @isGridControlDefined()
