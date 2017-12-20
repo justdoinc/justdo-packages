@@ -118,9 +118,9 @@ GridControl.installFormatter "textWithTreeControls",
 
     tree_control = ""
 
-    priority_width = 5
-    project_has_docs_with_priority = true # If the project has any document with priority, the rest of the tasks (incl. section headers, etc. should be printed with same left indent even if they don't have priority). For now we don't really calculate that, since in all the text-with-tree-controls.coffee use cases we have priority, just to keep it flexible for the future.
     if doc.priority?
+      priority_width = 7
+
       priority_indentation = current_left_pos
 
       # Priority
@@ -133,8 +133,6 @@ GridControl.installFormatter "textWithTreeControls",
              style="background-color: #{JustdoColorGradient.getColor(doc.priority or 0)}; left: #{priority_indentation}px;"></div>
       """
 
-      current_left_pos += priority_width
-    else if project_has_docs_with_priority
       current_left_pos += priority_width
 
     tree_control += """
