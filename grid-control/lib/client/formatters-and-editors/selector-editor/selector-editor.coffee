@@ -68,6 +68,8 @@ GridControl.installEditor "SelectorEditor",
 
     @$grid_view_port.on "scroll", @grid_view_port_scroll_handler
 
+    @applyStaticFix()
+
     return
 
   setInputValue: (val) ->
@@ -92,9 +94,22 @@ GridControl.installEditor "SelectorEditor",
 
     return
 
+  applyStaticFix: ->
+    if $(@context.container).hasClass("slick-cell")
+      $(@context.container).addClass("selector-editor-container-cell")
+
+    return
+
+  destroyStaticFix: ->
+    $(@context.container).removeClass("selector-editor-container-cell")
+
+    return
+
   destroy: ->
     @$select.selectpicker("destroy")
     @$grid_view_port.off("scroll", @grid_view_port_scroll_handler)
+
+    @destroyStaticFix()
 
     return
 
