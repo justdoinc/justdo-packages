@@ -1,3 +1,8 @@
+#project-search-comp-container
+  width: 250px
+  float: right
+
+
 .grid-control-search
   .form-control
     padding-left: 7px
@@ -7,13 +12,16 @@
     outline: 0
     border: 0 none
 
+    &::-ms-clear
+      display: none
+
   /* .input-group-btn This one is needed in order to override bootstrap rules that were set with 3 levels of classes */
   .input-group-btn
     .clear-button
       position: absolute
       left: -17px
 
-      color: #CCC
+      color: #AAA
       text-decoration: none
       background-color: transparent
       box-shadow: none
@@ -50,3 +58,53 @@
 
 .search-result.active
   background-color: #d4e7ea
+
+// THE FOLLOWING IS A HACK TO MIGRATE TO NEW DESIGN WITHOUT
+// RESTRUCTURING THE DOM, IN THE FUTURE WE SHOULD IMPORVE!
+#project-search-comp-container
+  margin-right: -39px
+
+.grid-control-search
+  .input-group-btn
+    .search-prev
+      display: none
+
+    .search-next
+      visibility: hidden
+      padding: 0
+      width: 40px
+
+#project-search-comp-container
+  .form-control
+    border: none
+    border-radius: 3px
+    box-shadow: none
+    background-color: #F8F8F8
+    position: relative
+    padding-left: 25px
+    &::before
+      font-family: "FontAwesome"
+      content: "\f002"
+      width: 25px
+      height: 30px
+      position: absolute
+      top: 0
+      left: 0
+      vertical-align: middle
+      font-size: 14px
+      padding-top: 5px
+      padding-left: 7px
+      color: #828282
+  .search-input
+    background-color: #F8F8F8
+    font-family: "lato", sans-serif
+    color: black
+    font-size: 13px
+    &::placeholder
+      color: #adadad
+  .search-info
+    background-color: #eaf7ef
+    color: black
+    border: 1px solid #96d6ae
+    font-family: "Lato", sans-serif
+    padding: .2em .4em .3em

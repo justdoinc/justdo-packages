@@ -119,7 +119,7 @@ GridControl.installFormatter "textWithTreeControls",
     tree_control = ""
 
     if doc.priority?
-      priority_width = 7
+      priority_width = 4
 
       priority_indentation = current_left_pos
 

@@ -6,6 +6,18 @@
     -webkit-box-sizing: content-box
     -ms-box-sizing: content-box
 
+.slick-header.ui-state-default, .slick-header-column
+  border-right: none
+  background: #F8F8F8
+
+.slick-header-column
+  font-weight: 600
+  color: #000000
+  text-transform: uppercase
+  font-size: 12px
+  padding-top: 2px
+  border-right: 1px dotted gainsboro
+
 .slick-row.active
   background: rgb(255, 237, 219) none
 
@@ -31,10 +43,11 @@
 //    to cancel the border of following active row with the css + selector
 //    to improve look.
 $row-min-height: 31px
-$row-border-color: silver
+$horizontal-borders-colors: #DFDFDF
+$vertical-borders-colors: #DFDFDF
 $active-row-border-color: #805206
-$row-border-style: 1px solid $row-border-color
-$row-right-border-style: 1px dotted $row-border-color
+$row-border-style: 1px solid $horizontal-borders-colors
+$row-right-border-style: 1px solid $vertical-borders-colors
 $row-hidden-border-style: 1px solid transparent
 // Option 1
 $active-shadow-color-h: #A04BA2
@@ -89,10 +102,10 @@ $standard-cell-padding-bottom: 3px
     padding: 0
 
     &.editable
-      background: transparent none
-      // Cancel borders
-      border-right-width: 0
-      box-shadow: inset 2px 0px 2px -1px $active-shadow-color-v, inset -2px 0px 3px -1px $active-shadow-color-v
+      background: rgba(49, 93, 194, 0.1) none
+    //   // Cancel borders
+    //   border-right-width: 0
+    //   box-shadow: inset 2px 0px 2px -1px $active-shadow-color-v, inset -2px 0px 3px -1px $active-shadow-color-v
 
   .tree-control-input
     outline: 0 none

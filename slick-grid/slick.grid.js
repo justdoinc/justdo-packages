@@ -229,8 +229,8 @@ if (typeof Slick === "undefined") {
       $container
           .empty()
           .css("outline", 0)
-          .addClass(uid)
-          .addClass("ui-widget");
+          .addClass(uid);
+          // .addClass("ui-widget"); // Adds redundant styling which isn't inline with our design
 
       // set up a positioning container if needed
       if (!/relative|absolute|fixed/.test($container.css("position"))) {
