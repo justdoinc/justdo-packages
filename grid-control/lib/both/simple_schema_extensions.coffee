@@ -246,3 +246,10 @@ SimpleSchema.extendOptions
   # If true, the default search behavior will look for results
   # in this field even if it is not part of the current view
   grid_search_when_out_of_view: Match.Optional(Boolean)
+
+  # grid_dependent_fields
+  #
+  # DO NOT USE THIS PROPERTY IN YOUR FIELDS DEFINITION
+  #
+  # This is a helper property used by the grid control.
+  grid_dependent_fields: Match.Optional([String])
