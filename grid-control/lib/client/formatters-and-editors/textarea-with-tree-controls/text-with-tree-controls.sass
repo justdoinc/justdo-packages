@@ -1,3 +1,5 @@
+$tree_control_icons_sprite_bg: url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/textarea-with-tree-controls/media/tree-control-icons-sprite.png') no-repeat center center
+
 .text-tree-control
   position: relative
   width: 100%
@@ -20,11 +22,20 @@
   .slick-row:first-child &, .slick-row.f-first &
     top: 4px
 
-$expand_url: url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/textarea-with-tree-controls/media/collapse.gif')
-$collapse_url: url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/textarea-with-tree-controls/media/expand.gif')
+=expandIcon()
+  // background: $tree_control_icons_sprite_bg
+  // background-position: -3px -125px
 
-$expand_background: $expand_url no-repeat center center
-$collapse_background: $collapse_url no-repeat center center
+  // We end up using the following since the border contrast is better
+  background: url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/textarea-with-tree-controls/media/expand.gif') no-repeat center center
+
+=collapseIcon()
+  // background: $tree_control_icons_sprite_bg
+  // background-position: -3px -98px
+
+  // We end up using the following since the border contrast is better
+  background: url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/textarea-with-tree-controls/media/collapse.gif') no-repeat center center
+
 .grid-tree-control-toggle
   &.collapse, &.expand
     display: block
@@ -35,22 +46,26 @@ $collapse_background: $collapse_url no-repeat center center
 
     .f-leaf.sortable-new-level-mode-parent &
       display: block
-      background: $expand_background // yes, even if without filter should be collapsed
+
+      +collapseIcon()
 
   .sortable-new-level-mode-parent &, .f-leaf.sortable-new-level-mode-parent &
     // for case without filter it's a leaf
     display: block
-    background: $expand_background 
+    +collapseIcon()
 
   &.collapse
-    background: url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/textarea-with-tree-controls/media/expand.gif') no-repeat center center
+    +expandIcon()
+
     cursor: zoom-in
     cursor: -webkit-zoom-in
     cursor: -moz-zoom-in
     cursor: ms-zoom-in
 
   &.expand
-    background: url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/textarea-with-tree-controls/media/collapse.gif') no-repeat center center
+
+    +collapseIcon()
+
     cursor: zoom-out
     cursor: -webkit-zoom-out
     cursor: -moz-zoom-out
@@ -87,7 +102,7 @@ $collapse_background: $collapse_url no-repeat center center
     position: absolute
     right: 0
     bottom: 0
-    background: url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/textarea-with-tree-controls/media/transfer-state-icon-sprite.png') no-repeat center center
+    background: $tree_control_icons_sprite_bg
 
   .transfer-non-related
     background-position: 0 -14px
@@ -105,7 +120,7 @@ $collapse_background: $collapse_url no-repeat center center
     cursor: pointer
 
 .grid-tree-control-priority
-  width: 4px
+  width: 6px
   height: auto
   position: absolute
   border-radius: 0

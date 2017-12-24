@@ -119,7 +119,7 @@ GridControl.installFormatter "textWithTreeControls",
     tree_control = ""
 
     if doc.priority?
-      priority_width = 4
+      priority_width = 6 + 3 # (3 for right outline)
 
       priority_indentation = current_left_pos
 
@@ -141,9 +141,9 @@ GridControl.installFormatter "textWithTreeControls",
                  style="width: #{text_left_margin + horizontal_padding}px;"></div>
     """
 
-    toggle_margin_left = 1
+    toggle_margin_left = 0
     toggle_width = 21
-    toggle_margin_right = 1
+    toggle_margin_right = 0
 
     level_indent = 15
     indentation_margin = (level_indent * level)
