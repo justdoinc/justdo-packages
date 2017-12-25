@@ -20,8 +20,20 @@ _.extend GridData.prototype,
     fields_schema = @grid_control.getSchemaExtendedWithCustomFields()
     testVal = (field, val) ->
       if (human_readable_val = fields_schema[field]?.grid_values?[val]?.txt)?
+        # Options
+
         val = human_readable_val
-      
+
+      if fields_schema[field].type == Date and _.isDate(val)
+        # Dates
+
+        val = JustdoHelpers.getDateTimeStringInUserPreferenceFormat(val)
+
+      if fields_schema[field].grid_column_formatter == "unicodeDateFormatter" and _.isString(val) and not _.isEmpty(val)
+        # Unicode date strings
+
+        val = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(val)
+
       return term.test(val)
 
     each_options =

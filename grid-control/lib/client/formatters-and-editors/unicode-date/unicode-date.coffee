@@ -6,18 +6,6 @@
 # to the formatter/editor as
 raw_data_moment_format = "YYYY-MM-DD"
 
-normalizeUnicodeDateStringAndFormatToUserPreference = (unicode_date_string, user_preferred_date_format) ->
-  if not unicode_date_string? or unicode_date_string == ""
-    return ""
-
-  # We allow passing the user_preferred_date_format so for the slick grid formatter,
-  # that we need to be highly optimized, we will be able to cache it
-  # in the column level
-  if not user_preferred_date_format?
-    user_preferred_date_format = JustdoHelpers.getUserPreferredDateFormat()
-
-  return moment(unicode_date_string, raw_data_moment_format).format(user_preferred_date_format)
-
 normalizeUserPreferenceDateFormatAndFormatToUnicodeDateString = (user_format_date_string) ->
   if not user_format_date_string? or user_format_date_string == ""
     return ""
@@ -142,7 +130,7 @@ GridControl.installFormatter "unicodeDateFormatter",
       @setCurrentColumnData("user_preferred_date_format", user_preferred_date_format)
 
     unicode_date_string =
-      normalizeUnicodeDateStringAndFormatToUserPreference(value, user_preferred_date_format)
+      JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(value, user_preferred_date_format)
 
     formatter_content = ""
     content_empty = true
@@ -210,7 +198,7 @@ GridControl.installFormatter "unicodeDateFormatter",
   print: (doc, field) ->
     {formatter_obj, value} = @getFriendlyArgs()
 
-    return normalizeUnicodeDateStringAndFormatToUserPreference(value)
+    return JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(value)
 
 #
 # EDITOR
@@ -292,7 +280,7 @@ GridControl.installEditor "UnicodeDateEditor",
     if not val?
       val = null # val must be null to be interpreted as clear (undefined ignored)
 
-    @$input.datepicker("setDate", normalizeUnicodeDateStringAndFormatToUserPreference(val))
+    @$input.datepicker("setDate", JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(val))
     @$input.change()
 
     return

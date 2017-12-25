@@ -1,11 +1,5 @@
 GridControl.installFormatter "datetimeFormatter",
-  getDateTimeString: (value) ->
-    user_preferred_date_format = Tracker.nonreactive => JustdoHelpers.getUserPreferredDateFormat.call(@)
-
-    if not value? or value == ""
-      return ""
-
-    return moment(value).format("#{user_preferred_date_format} LTS")
+  getDateTimeString: (value) -> JustdoHelpers.getDateTimeStringInUserPreferenceFormat(value)
 
   slickGridColumnStateMaintainer: ->
     if not Tracker.active
