@@ -123,14 +123,11 @@ GridControl.installFormatter "textWithTreeControls",
 
       priority_indentation = current_left_pos
 
-      # Priority
-      #
-      # We filter to avoid affecting the priority indicator which we need to keep outside the grid-formatter
-      # container due to positioning needs (need it relative to the .slick-dynamic-row-height .slick-cell
-      # for correct height)
+      # We keep outside the grid-formatter container due to positioning needs (need it relative to the
+      # .slick-dynamic-row-height .slick-cell for correct height)
       tree_control += """
         <div class="grid-tree-control-priority slick-prevent-edit"
-             style="background-color: #{JustdoColorGradient.getColor(doc.priority or 0)}; left: #{priority_indentation}px;"></div>
+             style="background-color: #{JustdoColorGradient.getColorRgbString(doc.priority or 0)}; left: #{priority_indentation}px;"></div>
       """
 
       current_left_pos += priority_width
