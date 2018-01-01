@@ -135,12 +135,6 @@ GridControl.installFormatter "textWithTreeControls",
 
       current_left_pos += priority_width
 
-    tree_control += """
-      <div class="grid-formatter text-tree-control">
-        <div class="grid-tree-control-activation-area slick-prevent-edit"
-                 style="width: #{text_left_margin + horizontal_padding}px;"></div>
-    """
-
     toggle_margin_left = 0
     toggle_width = 21
     toggle_margin_right = 0
@@ -148,6 +142,10 @@ GridControl.installFormatter "textWithTreeControls",
     level_indent = 15
     indentation_margin = (level_indent * level)
     toggle_indentation = current_left_pos + toggle_margin_left + indentation_margin
+
+    tree_control += """
+      <div class="grid-formatter text-tree-control">
+    """
 
     tree_control += """
       <div class="grid-tree-control-toggle slick-prevent-edit #{state}"
@@ -275,6 +273,13 @@ GridControl.installFormatter "textWithTreeControls",
 
     tree_control += """
       </div>
+    """
+
+    # We keep outside the grid-formatter container due to positioning needs (need it relative to the
+    # .slick-dynamic-row-height .slick-cell for correct height)
+    tree_control += """
+      <div class="grid-tree-control-activation-area slick-prevent-edit"
+               style="width: #{toggle_indentation}px;"></div>
     """
 
     return tree_control
