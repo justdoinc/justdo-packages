@@ -1,0 +1,9 @@
+<template name="project_toolbar_chat_section">
+  <section class="task-pane-chat {{#if $not hasMessages}}empty{{/if}}">
+    <h2>Chat</h2>
+
+    {{> common_chat_messages_board getChannelObject=getTaskChatObject}}
+
+    {{> common_chat_message_editor getChannelObject=getTaskChatObject}}
+  </section>
+</template>

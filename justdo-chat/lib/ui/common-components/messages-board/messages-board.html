@@ -1,0 +1,22 @@
+<template name="common_chat_messages_board">
+  <div class="messages-board">
+    {{#each messages}}
+      {{> common_chat_messages_board_message_card}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="common_chat_messages_board_message_card">
+  <div class="message-card">
+    <div class="avatar">{{#with authorDoc}}{{> justdo_avatar}}{{/with}}</div>
+    <div class="message-container">
+      <div class="message-header">
+        <span class="author">{{displayName author}}</span>
+        <span class="date" title="{{moFormat createdAt "YYYY-MM-DD hh:mm"}}">{{friendlyDateFormat createdAt}}</span>
+      </div>
+      <div class="message-body">
+        {{body}}
+      </div>
+    </div>
+  </div>
+</template>
