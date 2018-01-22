@@ -197,7 +197,7 @@ _.extend ChannelBaseServer.prototype,
 
       return
 
-    console.log "TODO Ensure index for @getChannelDoc() findAndModify"
+    console.log "TODO Ensure index for @getChannelDocNonReactive() findAndModify"
 
     result = @justdo_chat.channels_collection.findAndModify
       query: @channel_identifier,
@@ -212,8 +212,12 @@ _.extend ChannelBaseServer.prototype,
 
     return result.value
 
-  getChannelDoc: (allow_cache=true) ->
+  getChannelDocNonReactive: (allow_cache=true) ->
     # Retrieves the channel doc for the identifier. Creates one if one doesn't exists.
+
+    # We add the NonReactive suffix to make it clear that we don't return cursor here,
+    # to avoid mistakes by future developers that might return the output of this method
+    # in a publication (of course, there is no reactivity in the server. D.C ).
 
     # Caching:
     #
@@ -331,7 +335,7 @@ _.extend ChannelBaseServer.prototype,
     update.add = @removeNonPermittedUsers(update.add)
     update.remove = @removeNonPermittedUsers(update.remove)
 
-    channel_doc = @getChannelDoc()
+    channel_doc = @getChannelDocNonReactive()
 
     # Remove already subscribed / already removed
     existing_users = _.map channel_doc.subscribers, (subscribed_user) ->
@@ -407,7 +411,7 @@ _.extend ChannelBaseServer.prototype,
       )
     message_obj = cleaned_val
 
-    channel_doc = @getChannelDoc()
+    channel_doc = @getChannelDocNonReactive()
 
     # Note, if user is already subscribed, @manageSubscribers() will simply ignore the call.
     # Thanks to the channel doc caching, this won't @_cached_channel_doc result in addition
@@ -435,7 +439,7 @@ _.extend ChannelBaseServer.prototype,
         $inc:
           messages_count: 1
 
-    channel_doc = @getChannelDoc()
+    channel_doc = @getChannelDocNonReactive()
     # The findAndModifyChannelDoc() we just did, brought us back the most recent version
     # of the channel document, we hope that this will be enough to perform the update to
     # the unread fields of the subscribers, without losing data written to the subscribers
@@ -491,7 +495,7 @@ _.extend ChannelBaseServer.prototype,
       )
     options = cleaned_val
 
-    channel_doc = @getChannelDoc()
+    channel_doc = @getChannelDocNonReactive()
 
     console.log "TODO: ensure index!"
 
@@ -510,6 +514,10 @@ _.extend ChannelBaseServer.prototype,
     return @justdo_chat.messages_collection.find(query, query_options)
 
   getChannelDocCursor: ->
+    # Returns a cursor for the channel.
+    #
+    # Cursor, of course, might be empty .
+
     return @justdo_chat.channels_collection.find(@channel_identifier)
 
   #

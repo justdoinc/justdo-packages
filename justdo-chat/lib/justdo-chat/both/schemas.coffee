@@ -71,7 +71,7 @@ JustdoChat.schemas.ChannelsSchema = new SimpleSchema
 
     type: Date
 
-    optional: true # We must set createdAt to optional (we never do so in other schemas) here because of the complex building of this doc on @getChannelDoc() (channel-base-server.coffee)
+    optional: true # We must set createdAt to optional (we never do so in other schemas) here because of the complex building of this doc on @getChannelDocNonReactive() (channel-base-server.coffee)
 
     autoValue: ->
       if this.isInsert
