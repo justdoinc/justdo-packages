@@ -197,8 +197,10 @@ _.extend ChannelBaseServer.prototype,
 
       return
 
-    console.log "TODO Ensure index for @getChannelDocNonReactive() findAndModify"
-
+    #
+    # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+    # and to drop obsolete indexes
+    #
     result = @justdo_chat.channels_collection.findAndModify
       query: @channel_identifier,
       update: update
@@ -468,7 +470,19 @@ _.extend ChannelBaseServer.prototype,
 
     return
 
-  _getChannelMessagesCursorOptionsSchema: new SimpleSchema
+  getChannelDocCursor: ->
+    # Returns a cursor for the channel.
+    #
+    # Cursor, of course, might be empty .
+
+    #
+    # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+    # and to drop obsolete indexes
+    #
+
+    return @justdo_chat.channels_collection.find(@channel_identifier)
+
+  _channelMessagesPublicationHandlerOptionsSchema: new SimpleSchema
     limit:
       # Note, simple schema takes care of .trim() the value for us
 
@@ -477,11 +491,13 @@ _.extend ChannelBaseServer.prototype,
       defaultValue: 10
 
       max: 1000
-  getChannelMessagesCursor: (options) ->
+  channelMessagesPublicationHandler: (publish_this, options) ->
+    self = @
+
     if not options?
       options = {}
 
-    options_schema = @_getChannelMessagesCursorOptionsSchema._schema
+    options_schema = @_channelMessagesPublicationHandlerOptionsSchema._schema
     if (pre_validation_limit = options?.limit)?
       if pre_validation_limit > (max_limit = options_schema.limit.max)
         # Just to provide a more friendly error message for that case (v.s the one simple schema will throw)
@@ -489,36 +505,115 @@ _.extend ChannelBaseServer.prototype,
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_getChannelMessagesCursorOptionsSchema,
+        @_channelMessagesPublicationHandlerOptionsSchema,
         options,
         {self: @, throw_on_error: true}
       )
     options = cleaned_val
 
-    channel_doc = @getChannelDocNonReactive()
-
-    console.log "TODO: ensure index!"
-
-    query = {channel_id: channel_doc._id}
-
-    query_options = 
-      sort:
-        createdAt: -1
-      fields:
-        channel_id: 1
-        body: 1
-        author: 1
-        createdAt: 1
-      limit: options.limit
-
-    return @justdo_chat.messages_collection.find(query, query_options)
-
-  getChannelDocCursor: ->
-    # Returns a cursor for the channel.
     #
-    # Cursor, of course, might be empty .
+    # Messages related procedures (called by the channel related procedures)
+    #
+    messages_tracker = null
+    publishMessages = (channel_id) =>
+      if messages_tracker?
+        publish_this.stop()
 
-    return @justdo_chat.channels_collection.find(@channel_identifier)
+        throw self._error "fatal", "We should never get to situation where publishMessages() is called twice"
+
+      query = {channel_id: channel_id}
+
+      #
+      # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+      # and to drop obsolete indexes
+      #
+      query_options = 
+        sort:
+          createdAt: -1
+        fields:
+          channel_id: 1
+          body: 1
+          author: 1
+          createdAt: 1
+        limit: options.limit
+
+      # See IMPORTANT few lines above
+      messages_cursor = @justdo_chat.messages_collection.find(query, query_options)
+
+      messages_collection_name =
+        JustdoHelpers.getCollectionNameFromCursor(messages_cursor)
+
+      messages_tracker = messages_cursor.observeChanges
+        added: (id, data) ->
+          publish_this.added messages_collection_name, id, data
+
+          return
+
+        changed: (id, data) ->
+          publish_this.changed messages_collection_name, id, data
+
+          return
+
+        removed: (id) ->
+          publish_this.removed messages_collection_name, id
+
+          return
+
+      return
+
+    #
+    # Channel related procedures
+    #
+    channel_doc_cursor = @getChannelDocCursor()
+
+    channels_collection_name =
+      JustdoHelpers.getCollectionNameFromCursor(channel_doc_cursor)
+
+    channel_tracker = channel_doc_cursor.observeChanges
+      added: (id, data) ->
+        publish_this.added channels_collection_name, id, data
+
+        publishMessages(id)
+
+        return
+
+      changed: (id, data) ->
+        publish_this.changed channels_collection_name, id, data
+
+        return
+
+      removed: (id) ->
+        publish_this.removed channels_collection_name, id
+
+        # Note, we rely on publish_this.onStop below to stop the messages_tracker
+        # and on Meteor ddp implementation to rid all the messages docs, even if
+        # they weren't actually removed from the messages collection (this will
+        # happen when the channel doc got removed, but not its messages).
+        #
+        # Note, that stopping a tracker doesn't trigger a call to its removed method
+        # with all the docs that it tracked.
+        # Hence, if we won't stop the publication altogether, we will have to maintain
+        # our own list of messages that been published as a result of the messages_tracker
+        # above.
+        # The case of removed channel should be extremely rare, so I just decided to stop
+        # the publication completely if it happened, and not care about it. (D.C)
+        publish_this.stop()
+
+        return
+
+    #
+    # onStop setup + ready()
+    #
+    publish_this.onStop ->
+      channel_tracker.stop()
+
+      messages_tracker?.stop()
+
+      return
+
+    publish_this.ready()
+
+    return
 
   #
   #
