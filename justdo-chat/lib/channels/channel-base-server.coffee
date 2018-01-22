@@ -8,7 +8,7 @@ ChannelBaseServer = (options) ->
   @logger = Logger.get(@channel_name_dash_separated)
   @JA = JustdoAnalytics.setupConstructorJA(@, @channel_name_dash_separated)
 
-  @logger.debug "Init begin"
+  # @logger.debug "Init begin" - too many inits to log
 
   @options = _.extend {}, @default_options, options
   if not _.isEmpty(@options_schema)
@@ -41,7 +41,7 @@ ChannelBaseServer = (options) ->
   Meteor.defer =>
     @_deferredInit()
 
-  @logger.debug "Init done"
+  # @logger.debug "Init done" - too many inits to log
 
   return @
 
