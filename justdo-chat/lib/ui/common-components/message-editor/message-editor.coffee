@@ -72,6 +72,9 @@ Template.common_chat_message_editor.events
           return
 
         $input.val("")
+
+        $input.trigger("autosize.resize")
+
         Meteor.defer ->
           $input.focus()
 
