@@ -26,6 +26,16 @@ APP.executeAfterAppLibCode ->
 
     return
 
+  Template.project_toolbar_chat_section_container.helpers
+    showSection: ->
+      module_id = "justdo-chat"
+
+      cur_project = module.curProj()
+      if not cur_project?
+        return
+
+      return cur_project.isCustomFeatureEnabled(module_id)
+
   Template.project_toolbar_chat_section.helpers
     getTaskChatObject: ->
       tpl = Template.instance()

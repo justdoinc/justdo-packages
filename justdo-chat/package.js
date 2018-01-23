@@ -120,6 +120,14 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/chat-section.html", client);
   api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/chat-section.coffee", client);
 
+  //
+  // Project Conf
+  //
+
+  api.addFiles("lib/project-conf/justdo-chat-project-config.sass", client);
+  api.addFiles("lib/project-conf/justdo-chat-project-config.html", client);
+  api.addFiles("lib/project-conf/justdo-chat-project-config.coffee", client);
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);
