@@ -74,12 +74,14 @@ Package.onUse(function (api) {
 
   // Server
   api.addFiles("lib/justdo-chat/server/init.coffee", server);
+  api.addFiles("lib/justdo-chat/server/static-channel-registrar.coffee", server);
   api.addFiles("lib/justdo-chat/server/api.coffee", server);
   api.addFiles("lib/justdo-chat/server/allow-deny.coffee", server);
   api.addFiles("lib/justdo-chat/server/collections-hooks.coffee", server);
   api.addFiles("lib/justdo-chat/server/collections-indexes.coffee", server);
   api.addFiles("lib/justdo-chat/server/methods.coffee", server);
   api.addFiles("lib/justdo-chat/server/publications.coffee", server);
+
 
   // Client
   api.addFiles("lib/justdo-chat/client/api.coffee", client);
@@ -98,6 +100,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/channels/task/task-channel-both-register.coffee", both);
   api.addFiles("lib/channels/task/task-channel-client-constructor.coffee", client);
   api.addFiles("lib/channels/task/task-channel-server-constructor.coffee", server);
+  api.addFiles("lib/channels/task/task-channel-server-register.coffee", server);
+  
 
   //
   // UI
