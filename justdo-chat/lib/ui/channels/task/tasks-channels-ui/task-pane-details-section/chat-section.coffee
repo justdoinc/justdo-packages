@@ -20,7 +20,7 @@ APP.executeAfterAppLibCode ->
           project_object: module.curProj()
           task_id: module.activeItemId()
 
-      task_channel_object.subscribeChannelMessagesPublication()
+      task_channel_object.requestChannelMessages()
 
       task_chat_object_dependency.changed()
 
@@ -47,4 +47,4 @@ APP.executeAfterAppLibCode ->
 
       channel = tpl.getTaskChatObject()
 
-      return channel.isSubscriptionMessagesHasDocs()
+      return channel.isMessagesSubscriptionHasDocs()

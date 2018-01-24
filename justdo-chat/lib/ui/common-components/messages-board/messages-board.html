@@ -1,8 +1,10 @@
 <template name="common_chat_messages_board">
-  <div class="messages-board">
-    {{#each messages}}
-      {{> common_chat_messages_board_message_card}}
-    {{/each}}
+  <div class="messages-board-viewport">
+    <div class="messages-board">
+      {{#each messages}}
+        {{> common_chat_messages_board_message_card}}
+      {{/each}}
+    </div>
   </div>
 </template>
 

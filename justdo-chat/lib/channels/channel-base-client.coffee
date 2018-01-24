@@ -125,11 +125,15 @@ _.extend ChannelBaseClient.prototype,
     return
 
   sendMessage: (body, cb) ->
-    @justdo_chat.sendMessage @channel_type, @getChannelIdentifier(), {body: body}, cb
+    @justdo_chat.sendMessage @channel_type, @getChannelIdentifier(), {body: body}, =>
+      @emit "message-sent"
+
+      JustdoHelpers.callCb cb
 
     return
 
   _channel_messages_subscription: null
+  _active_channel_messages_subscription_options: null
   subscribeChannelMessagesPublication: (options, callbacks) ->
     # Args:
     #
@@ -153,12 +157,7 @@ _.extend ChannelBaseClient.prototype,
     # subscription (if any). That will prevent ddp from sending docs we already got (thanks to ddp
     # mergebox feature.)
 
-    # Defaults are set by the server, don't set them here.
-    if not options? or not _.isObject(options)
-      options = {}
-
-    if not options.limit?
-      options.limit = 100 # XXX Until we have the load more button set higher limit
+    options = _.extend {limit: 10}, options
 
     # Normalize callbacks (there are two ways they can be Meteor.subscribe callbacks can be provided, check docs)
     if _.isFunction callbacks
@@ -183,6 +182,7 @@ _.extend ChannelBaseClient.prototype,
           @_channel_messages_subscription.stop()
 
         @_channel_messages_subscription = subscription
+        @_active_channel_messages_subscription_options = options
 
         original_callbacks?.onReady?()
 
@@ -204,27 +204,117 @@ _.extend ChannelBaseClient.prototype,
       @logger.debug("Channel messages subscription stopped")
 
       @_channel_messages_subscription?.stop()
+      @_active_subscription_limit_option = null
 
       return
 
     return
 
-  getSubscriptionMessagesCursorInNaturalOrder: ->
+  getMessagesSubscriptionChannelDoc: ->
+    return @justdo_chat.channels_collection.findOne(@getChannelIdentifier())
+
+  getMessagesSubscriptionChannelDocId: ->
+    return @getMessagesSubscriptionChannelDoc()?._id
+
+  getMessagesSubscriptionCursorInNaturalOrder: ->
     # Returns null if we can't come up with the channel_id == things aren't ready
     # Will return the cursor otherwise.
-    if not (channel_doc = @justdo_chat.channels_collection.findOne(@getChannelIdentifier()))?
+    if not (channel_id = @getMessagesSubscriptionChannelDocId())?
       return null
 
-    return @justdo_chat.messages_collection.find({channel_id: channel_doc._id}, {sort: {createdAt: 1}})
+    return @justdo_chat.messages_collection.find({channel_id: channel_id}, {sort: {createdAt: 1}})
 
-  isSubscriptionMessagesHasDocs: ->
+  isMessagesSubscriptionHasDocs: ->
     # Returns null if we can't come up with the channel_id == things aren't ready
     # Will return the cursor otherwise.
-    if not (channel_doc = @justdo_chat.channels_collection.findOne(@getChannelIdentifier()))?
+    if not (channel_id = @getMessagesSubscriptionChannelDocId())?
       return false
 
-    return @justdo_chat.messages_collection.findOne({channel_id: channel_doc._id})?
+    return @justdo_chat.messages_collection.findOne({channel_id: channel_id})?
 
+  getChannelMessagesSubscriptionState: ->
+    # 4 potential returned values
+    #
+    # "no-sub": No subscription created yet
+    # "no-channel-doc": Subscription not ready yet/channel doc hasn't been created yet
+    # "more": some messages haven't been returned by the subscription
+    # "all": all the messages belonging to this channel been loaded by the subscription.
+
+    if not @_channel_messages_subscription?
+      return "no-sub"
+
+    if not (channel_doc = @getMessagesSubscriptionChannelDoc())?
+      return "no-channel-doc"
+
+    if not (subscription_limit = @_active_channel_messages_subscription_options?.limit)?
+      # We shouldn't get here...
+      throw @_error "fatal", "Can't find active subscription limit"
+
+    if channel_doc.messages_count > subscription_limit
+      return "more"
+    else
+      return "all"
+
+  _waiting_for_previous_request_channel_messages_to_complete: false
+  requestChannelMessages: (options) ->
+    # If no channel messages subscription existing yet, will subscribe with limit set
+    # to initial_messages_to_request, otherwise, if there are more messages that we haven't
+    # fetched yet with the messages subscription, requests additional_messages_to_request .
+
+    options = _.extend {}, {
+      initial_messages_to_request: 10
+      additional_messages_to_request: 30
+      onReady: null
+    }, options
+
+    if @_waiting_for_previous_request_channel_messages_to_complete
+      @logger.debug "Waiting for previous @requestChannelMessages() to complete"
+
+      return
+
+    channel_messages_subscription_state = @getChannelMessagesSubscriptionState()
+
+    performSubscription = (subscription_options) =>
+      @_waiting_for_previous_request_channel_messages_to_complete = true
+
+      @subscribeChannelMessagesPublication subscription_options,
+        onReady: =>
+          @_waiting_for_previous_request_channel_messages_to_complete = false
+
+          JustdoHelpers.callCb options.onReady
+
+          return
+
+      return
+
+    if channel_messages_subscription_state == "no-sub"
+      @logger.debug "Initial channel messages subscription"
+
+      performSubscription({limit: options.initial_messages_to_request})
+
+      return
+    else if channel_messages_subscription_state == "no-channel-doc"
+      @logger.debug "Channel empty/not ready"
+
+      return
+    else if channel_messages_subscription_state == "more"
+      @logger.debug "Channel load more messsages"
+
+      new_limit =
+        @_active_channel_messages_subscription_options.limit + options.additional_messages_to_request
+
+      # Use same options as previous call, change only the limit
+      options = _.extend {}, options, {limit: new_limit}
+
+      performSubscription(options)
+
+      return
+    else
+      @logger.debug "All messages subscribed"
+
+      return
+
+    return
   #
   #
   #
