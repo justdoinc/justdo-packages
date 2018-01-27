@@ -2,7 +2,7 @@ _.extend JustdoChat.prototype,
   _setupPublications: ->
     self = @
 
-    Meteor.publish "jdcSubscribeChannelMessages", (channel_type, channel_identifier, options) -> # Note the use of -> not =>, we need @userId
+    Meteor.publish "jdcChannelMessages", (channel_type, channel_identifier, options) -> # Note the use of -> not =>, we need @userId
       # Publishes the channel document, if one exists, for the requested channel, and the messages
       # of this channel, according to the provided options.
 

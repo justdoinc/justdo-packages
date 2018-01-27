@@ -4,4 +4,4 @@ _.extend JustdoChat.prototype,
     check channel_identifier, Object
     check options, Object
 
-    return Meteor.subscribe "jdcSubscribeChannelMessages", channel_type, channel_identifier, options, callbacks
+    return Meteor.subscribe "jdcChannelMessages", channel_type, channel_identifier, options, callbacks
