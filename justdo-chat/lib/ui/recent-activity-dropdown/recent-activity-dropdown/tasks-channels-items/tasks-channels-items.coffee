@@ -46,12 +46,13 @@ Template.recent_activity_item_task.events
 
     dropdown_instance.closeDropdown()
 
-    Meteor.defer ->
+    Meteor.defer =>
       $(".task-pane-chat .message-editor").focus()
 
-    channel_obj = getTaskChannelObjectForTaskId(@task_id)
+      console.log "TODO: the reason this is part of the defer is the same reason toggle button isn't working at the moment, issue with setting the right collection"
+      channel_obj = getTaskChannelObjectForTaskId(@task_id)
 
-    channel_obj.setChannelUnreadState(false)
+      channel_obj.setChannelUnreadState(false)
 
     return
 
