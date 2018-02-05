@@ -1,0 +1,25 @@
+<template name="project_toolbar_chat_section_chat">
+  <div class="chat-header">
+    <div class="subscribers-management-button-block">
+      {{#if isChannelExistAndReady}}
+        <div class="subscribers-management"><i class="fa fa-user"></i> {{subscribersCount}}</div>
+      {{/if}}
+    </div>
+
+    <div class="main-block">
+      <h2>Chat</h2>
+
+      {{#if isChannelExistAndReady}}
+        <div class="user-subscription-toggle {{#if isSubscribedToChannel}}subscribed{{/if}}" title="{{#if isSubscribedToChannel}}You will receive notifications from this chat, click to unsubscribe{{else}}Subscribe to notifications from this chat{{/if}}"></div>
+
+        <span class="subscribers-names">
+          {{subscribersDisplayNames}}
+        </span>
+      {{/if}}
+    </div>
+  </div>
+
+  {{> common_chat_messages_board getChannelObject=getTaskChatObject}}
+
+  {{> common_chat_message_editor getChannelObject=getTaskChatObject}}
+</template>

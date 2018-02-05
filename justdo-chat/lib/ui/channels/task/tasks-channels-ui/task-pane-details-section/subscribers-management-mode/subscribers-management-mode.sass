@@ -1,0 +1,79 @@
+@import "{justdoinc:justdo-chat}/lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/vars.scss"
+
+.subscribers-management-header
+  border-bottom: $parts-separator-border
+
+  padding-top: 2px
+  padding-bottom: 3px
+
+.sm-btn
+  text-transform: uppercase
+  float: right
+  display: inline-block
+  padding: 0 6px
+  cursor: pointer
+  font-weight: bold
+  margin-top: -1px
+  user-select: none
+
+.sm-save
+  color: #2B71CF
+
+  padding-right: 2px
+
+.users-board
+  min-height: 170px
+
+  margin-bottom: 8px
+
+  .user-card
+    position: relative
+
+    border-bottom: 1px dotted #efefef
+
+    &:last-child
+      border-bottom: 0 none
+
+    .justdo-avatar
+      position: absolute
+      left: 2px
+      margin-top: 7px
+
+    .user-name
+      display: block
+
+      margin-left: 39px
+
+      line-height: 300%
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+
+  .subscribe-state
+    position: absolute
+
+    top: 10px
+    right: 0
+
+    width: 35px
+
+    display: inline-block
+    padding: 0px 9px
+    text-align: center
+    background: #E6EEF9
+    border-radius: 10px
+    cursor: pointer
+    user-select: none
+
+    font-family: FontAwesome
+    font-style: normal
+    font-weight: normal
+    text-decoration: inherit
+
+    &::before
+      content: "\f1f6"
+
+    &.subscribed::before
+      color: #337ab7
+
+      content: "\f0f3"

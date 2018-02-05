@@ -1,0 +1,61 @@
+.jdc-recent-activity-button-container
+  float: left
+  padding: 8px 0
+
+.recent-activity-button
+  $font-size: 20px
+  $margin-right: 9px
+
+  margin-top: 5px
+  margin-right: $margin-right
+
+  user-select: none
+
+  font-size: $font-size
+  width: $font-size
+  height: $font-size
+  line-height: $font-size
+
+  cursor: pointer
+  position: relative
+
+  &.no-unread
+    color: #999
+
+.unread-count
+  $font-size: 11px
+
+  font-family: Verdana, Geneva, sans-serif
+  background-color: #c52e34
+  position: absolute
+  top: -8px
+  right: -8px
+  color: #f3f3f3
+  font-size: $font-size
+  border: 1px solid #f3f3f3
+  border-radius: 3px
+  text-align: center
+  padding: 2px 4px
+  line-height: $font-size + 1
+
+  .no-unread &
+    display: none
+
+
+  .double-digit &, .off-the-charts &
+    padding: 4px 3px
+
+  .double-digit &
+    $font-size: 9px
+
+    right: -10px
+
+    font-size: $font-size
+    line-height: $font-size
+
+  .off-the-charts &
+    $font-size: 8px
+
+    right: -13px
+    font-size: $font-size
+    line-height: $font-size

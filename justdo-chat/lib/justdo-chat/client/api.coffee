@@ -2,6 +2,18 @@ channel_type_to_channels_constructors = share.channel_type_to_channels_construct
 
 _.extend JustdoChat.prototype,
   _immediateInit: ->
+    @_initRecentActivitySupplementaryPseudoCollections()
+
+    return
+
+  _initRecentActivitySupplementaryPseudoCollections: ->
+    @recent_activity_supplementary_pseudo_collections = {}
+
+    for channel_type, channel_type_conf of share.channel_types_conf
+      if (sup_pseudo_cols = channel_type_conf.recent_activity_supplementary_pseudo_collections)?
+        for col_id, col_name of sup_pseudo_cols
+          @recent_activity_supplementary_pseudo_collections[col_id] = new Mongo.Collection(col_name)
+
     return
 
   _deferredInit: ->

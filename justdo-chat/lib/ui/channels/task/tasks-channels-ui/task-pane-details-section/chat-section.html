@@ -1,15 +1,13 @@
-<template name="project_toolbar_chat_section_container">
-  {{#if showSection}}
-    {{> project_toolbar_chat_section}}
-  {{/if}}
-</template>
-
 <template name="project_toolbar_chat_section">
   <section class="task-pane-chat {{#if $not hasMessages}}empty{{/if}}">
-    <h2>Chat</h2>
+    <div class="{{mode}}-mode">
+      {{#if $eq mode "chat"}}
+        {{> project_toolbar_chat_section_chat}}
+      {{/if}}
 
-    {{> common_chat_messages_board getChannelObject=getTaskChatObject}}
-
-    {{> common_chat_message_editor getChannelObject=getTaskChatObject}}
+      {{#if $eq mode "subscribers-management"}}
+        {{> project_toolbar_chat_section_subscribers_management}}
+      {{/if}}
+    </div>
   </section>
 </template>

@@ -199,7 +199,7 @@ _.extend ChannelBaseServer.prototype,
 
     #
     # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-    # and to drop obsolete indexes
+    # and to drop obsolete indexes (see CHANNEL_IDENTIFIER_INDEX there)
     #
     result = @justdo_chat.channels_collection.findAndModify
       query: @channel_identifier,
@@ -391,6 +391,25 @@ _.extend ChannelBaseServer.prototype,
 
     return
 
+  setChannelUnreadState: (unread) ->
+    check unread, Boolean
+
+    console.log "TODO: ENSURE INDEX"
+
+    query = _.extend {}, @channel_identifier,
+      subscribers:
+        $elemMatch:
+          user_id: @performing_user
+          unread: not unread
+
+    update =
+      $set:
+        "subscribers.$.unread": unread
+
+    @justdo_chat.channels_collection.rawCollection().update query, update
+
+    return
+
   _sendMessageMessageObjectSchema: new SimpleSchema
     body:
       # Note, simple schema takes care of .trim() the value for us
@@ -462,6 +481,11 @@ _.extend ChannelBaseServer.prototype,
 
         subscriber.unread = true
 
+      if subscriber.user_id == @performing_user and subscriber.unread == true
+        changed = true
+
+        subscriber.unread = false
+
     if changed
       @findAndModifyChannelDoc
         update:
@@ -470,6 +494,61 @@ _.extend ChannelBaseServer.prototype,
 
     return
 
+  _getChannelMessagesCursorOptionsSchema: new SimpleSchema
+    channel_id: # IMPORTANT! @_getChannelMessagesCursor doesn't do any security check.
+      type: String
+    fields:
+      type: Object
+      blackbox: true
+    limit:
+      type: Number
+
+      defaultValue: 10
+
+      max: 1000
+  _getChannelMessagesCursor: (options) ->
+    # We use the _ internal prefix, since we don't perform any security checks on whether the
+    # performing user has access to the provided channel_id.
+    #
+    # This method shouldn't be exposed to external apis, and assumes security is handled by callee
+    #
+    # Note, we allow receiving the channel_id as an option, even though this object is for a specific
+    # channel, to avoid the need to fetch the channel doc just to obtain its _id in certain situation
+    # where the _id is already known to us, see for example the case of the
+    # JustdoChat._getSubscribedChannelsRecentActivityCursor.
+    #
+    # PROPER SECURITY CONSIDERATIONS MUST BE TAKEN ANY TIME YOU DO THIS!!!
+
+    if not options?
+      options = {}
+
+    options_schema = @_getChannelMessagesCursorOptionsSchema._schema
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_getChannelMessagesCursorOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
+
+    #
+    # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+    # and to drop obsolete indexes (see MESSAGES_FETCHING_INDEX there)
+    #
+
+    channel_messages_cursor_query =
+      channel_id: options.channel_id
+
+    channel_messages_cursor_options =
+      limit: options.limit
+      sort:
+        createdAt: -1
+
+    if options.fields?
+      channel_messages_cursor_options.fields = options.fields
+
+    return @justdo_chat.messages_collection.find(channel_messages_cursor_query, channel_messages_cursor_options)
+
   getChannelDocCursor: ->
     # Returns a cursor for the channel.
     #
@@ -477,15 +556,13 @@ _.extend ChannelBaseServer.prototype,
 
     #
     # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-    # and to drop obsolete indexes
+    # and to drop obsolete indexes (see CHANNEL_IDENTIFIER_INDEX there)
     #
 
     return @justdo_chat.channels_collection.find(@channel_identifier)
 
   _channelMessagesPublicationHandlerOptionsSchema: new SimpleSchema
     limit:
-      # Note, simple schema takes care of .trim() the value for us
-
       type: Number
 
       defaultValue: 10
@@ -521,24 +598,15 @@ _.extend ChannelBaseServer.prototype,
 
         throw self._error "fatal", "We should never get to situation where publishMessages() is called twice"
 
-      query = {channel_id: channel_id}
-
-      #
-      # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-      # and to drop obsolete indexes
-      #
-      query_options = 
-        sort:
-          createdAt: -1
+      # See IMPORTANT few lines above
+      messages_cursor = @_getChannelMessagesCursor
+        channel_id: channel_id
+        limit: options.limit
         fields:
           channel_id: 1
           body: 1
           author: 1
           createdAt: 1
-        limit: options.limit
-
-      # See IMPORTANT few lines above
-      messages_cursor = @justdo_chat.messages_collection.find(query, query_options)
 
       messages_collection_name =
         JustdoHelpers.getCollectionNameFromCursor(messages_cursor)
@@ -734,7 +802,30 @@ _.extend ChannelBaseServer.prototype,
     #
     # Important! we don't validate the provided Augmented Fields values against the channel_augemented_fields_simple_schema
     # of the channel conf.
+    #
+    # The augmented fields of all types are transmitted as part of the jdcSubscribedChannelsRecentActivity
+    # publication.
 
     return {}
+
+  getChannelRecentActivitySupplementaryDocs: ->
+    # Should return an array of the following structure:
+    #
+    # [
+    #   ["collection_id", "doc_id", doc]
+    #   ["collection_id", "doc_id", doc]
+    # ]
+    #
+    # These docs will be published by the JustdoChat.subscribedChannelsRecentActivityPublicationHandler
+    # when this channel is published.
+    #
+    # The supplementary docs aren't live (non-reactive). They can't be changed once sent.
+    # read comment under the jdcSubscribedChannelsRecentActivity publication definition (publications.coffee)
+    # for full details.
+    #
+    # The handler will take care of removing these docs from the publication when the channel shouldn't
+    # be part of the publication any longer.
+
+    return []
 
 share.ChannelBaseServer = ChannelBaseServer

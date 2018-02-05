@@ -11,12 +11,23 @@ _.extend JustdoChat,
     # WE ASSUME JustdoChat.registerChannelType() is called before the JustdoChat objects init!!!
     # on schemas.coffee 
 
+    conf = _.extend {}, conf # shallow copy
+
     {
       channel_type, # should be == @channel_type in client/server constructor
-      channel_type_camel_case, # should be the same as the camel case form used beofre the client/server constructors names
-      channel_identifier_fields_simple_schema,
-      channel_augemented_fields_simple_schema
+      channel_type_camel_case # should be the same as the camel case form used beofre the client/server constructors names
+      recent_activity_supplementary_pseudo_collections
     } = conf
+
+    #
+    # Load recent_activity_supplementary_pseudo_collections
+    #
+    if recent_activity_supplementary_pseudo_collections?
+      recent_activity_supplementary_pseudo_collections = _.extend {}, recent_activity_supplementary_pseudo_collections # shallow copy
+
+      for col_id, col_name of recent_activity_supplementary_pseudo_collections
+        recent_activity_supplementary_pseudo_collections[col_id] = "JDChatRecentActivity" + col_name # add the common prefix
+      conf.recent_activity_supplementary_pseudo_collections = recent_activity_supplementary_pseudo_collections
 
     share.channel_types.push channel_type
 

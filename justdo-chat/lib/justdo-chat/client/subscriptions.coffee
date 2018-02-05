@@ -5,3 +5,14 @@ _.extend JustdoChat.prototype,
     check options, Object
 
     return Meteor.subscribe "jdcChannelMessages", channel_type, channel_identifier, options, callbacks
+
+  subscribeSubscribedUnreadChannelsCount: (callbacks) ->
+    return Meteor.subscribe "jdcSubscribedUnreadChannelsCount", callbacks
+
+  subscribeSubscribedChannelsRecentActivity: (options, callbacks) ->
+    if not options?
+      options = {}
+
+    check options, Object
+
+    return Meteor.subscribe "jdcSubscribedChannelsRecentActivity", options, callbacks

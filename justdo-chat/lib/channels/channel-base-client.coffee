@@ -132,6 +132,48 @@ _.extend ChannelBaseClient.prototype,
 
     return
 
+  toggleChannelUnreadState: (cb) ->
+    if not (subscriber_doc = @getChannelSubscriberDoc(Meteor.userId()))?
+      # We shouldn't get here
+      console.warn "Channel is not ready yet"
+
+      return
+
+    current_state = subscriber_doc.unread
+
+    new_state = not current_state
+
+    @setChannelUnreadState(new_state)
+
+    return
+
+  setChannelUnreadState: (new_state, cb) ->
+    if not (subscriber_doc = @getChannelSubscriberDoc(Meteor.userId()))?
+      # We shouldn't get here
+      console.warn "Channel is not ready yet"
+
+      return
+
+    current_state = subscriber_doc.unread
+
+    if new_state == current_state
+      # Nothing to do
+
+      return
+
+    @justdo_chat.setChannelUnreadState @channel_type, @getChannelIdentifier(), new_state, =>
+      JustdoHelpers.callCb cb
+
+    return
+
+  manageSubscribers: (update, cb) ->
+    @justdo_chat.manageSubscribers @channel_type, @getChannelIdentifier(), update, =>
+      JustdoHelpers.callCb cb
+
+      return
+
+    return
+
   _channel_messages_subscription: null
   _active_channel_messages_subscription_options: null
   subscribeChannelMessagesPublication: (options, callbacks) ->
@@ -212,6 +254,9 @@ _.extend ChannelBaseClient.prototype,
 
   getMessagesSubscriptionChannelDoc: ->
     return @justdo_chat.channels_collection.findOne(@getChannelIdentifier())
+
+  isChannelExistAndReady: ->
+    return @getMessagesSubscriptionChannelDoc()?
 
   getMessagesSubscriptionChannelDocId: ->
     return @getMessagesSubscriptionChannelDoc()?._id
@@ -315,6 +360,40 @@ _.extend ChannelBaseClient.prototype,
       return
 
     return
+
+  getChannelSubscriberDoc: (user_id) ->
+    # Returns the document from the subscribers array of the channel belonging
+    # to user_id, undefined otherwise.
+    #
+    # Returns undefined also when the channel isn't ready/doesn't exist
+
+    if not (channel_doc = @getMessagesSubscriptionChannelDoc())?
+      return undefined
+
+    return _.find channel_doc.subscribers, (subscriber) -> subscriber.user_id == user_id
+
+  isUserSubscribedToChannel: (user_id) ->
+    # Returns false if user_id isn't subscribed, or channel isn't ready/doesn't exist
+    # true if subscribed
+
+    if not (subscriber_doc = @getChannelSubscriberDoc(user_id))?
+      return false
+
+    return true
+
+  toggleUserSubscriptionToChannel: (user_id) ->
+    if not @isChannelExistAndReady()
+      @logger.warn "Channel not ready yet to toggle user subscription"
+
+      return
+
+    if @isUserSubscribedToChannel(user_id)
+      @manageSubscribers({remove: [user_id]})
+    else
+      @manageSubscribers({add: [user_id]})
+
+    return
+
   #
   #
   #
@@ -371,6 +450,9 @@ _.extend ChannelBaseClient.prototype,
     #
     # On the server, the channel identifier object will be provided to the backend channel type constructor
     # as part of its options argument.
+    #
+    # The channel identifiers fields of all types are transmitted as part of the jdcSubscribedChannelsRecentActivity
+    # publication
 
     return {}
 

@@ -1,0 +1,29 @@
+<template name="justdo_chat_recent_activity_button">
+  <li class="jdc-recent-activity-button-container">
+    <div class="recent-activity-button
+                {{#if $eq unread_count 0}}
+                  no-unread
+                {{else}}
+                  has-unread
+                {{/if}}
+
+                {{#if $eq unread_count 0}}
+                {{else if $lte unread_count 9}}
+                  single-digit
+                {{else if $lte unread_count 99}}
+                  double-digit
+                {{else}}
+                  off-the-charts
+                {{/if}}
+                ">
+      <i class="fa fa-comments"></i>
+      <div class="unread-count">
+        {{#if $lte unread_count 99}}
+          {{unread_count}}
+        {{else}}
+          99+
+        {{/if}}
+      </div>
+    </div>
+  </li>
+</template>

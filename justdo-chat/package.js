@@ -67,13 +67,13 @@ Package.onUse(function (api) {
   api.addFiles("lib/justdo-chat/both/analytics.coffee", both);
 
   api.addFiles("lib/justdo-chat/both/init.coffee", both);
+  api.addFiles("lib/justdo-chat/both/static-settings.coffee", both);
   api.addFiles("lib/justdo-chat/both/static-channel-registrar.coffee", both);
   api.addFiles("lib/justdo-chat/both/schemas.coffee", both);
   api.addFiles("lib/justdo-chat/both/errors-types.coffee", both);
   api.addFiles("lib/justdo-chat/both/api.coffee", both);
 
   // Server
-  api.addFiles("lib/justdo-chat/server/init.coffee", server);
   api.addFiles("lib/justdo-chat/server/static-channel-registrar.coffee", server);
   api.addFiles("lib/justdo-chat/server/api.coffee", server);
   api.addFiles("lib/justdo-chat/server/allow-deny.coffee", server);
@@ -86,6 +86,7 @@ Package.onUse(function (api) {
   // Client
   api.addFiles("lib/justdo-chat/client/api.coffee", client);
   api.addFiles("lib/justdo-chat/client/methods.coffee", client);
+  api.addFiles("lib/justdo-chat/client/pseudo-collections.coffee", client);
   api.addFiles("lib/justdo-chat/client/subscriptions.coffee", client);
 
   //
@@ -120,9 +121,30 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/common-components/messages-board/messages-board.coffee", client);
 
   // Tasks channel
+  api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/vars.scss", client);
+
+  api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/chat-mode/chat-mode.sass", client);
+  api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/chat-mode/chat-mode.html", client);
+  api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/chat-mode/chat-mode.coffee", client);
+
+  api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/subscribers-management-mode/subscribers-management-mode.sass", client);
+  api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/subscribers-management-mode/subscribers-management-mode.html", client);
+  api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/subscribers-management-mode/subscribers-management-mode.coffee", client);
+
   api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/chat-section.sass", client);
   api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/chat-section.html", client);
   api.addFiles("lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/chat-section.coffee", client);
+
+  // Recent channels activity
+  api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/tasks-channels-items/tasks-channels-items.sass", client);
+  api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/tasks-channels-items/tasks-channels-items.html", client);
+  api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/tasks-channels-items/tasks-channels-items.coffee", client);
+  api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/recent-activity-dropdown.sass", client);
+  api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/recent-activity-dropdown.html", client);
+  api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-dropdown/recent-activity-dropdown.coffee", client);
+  api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-button.sass", client);
+  api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-button.html", client);
+  api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-button.coffee", client);
 
   //
   // Project Conf

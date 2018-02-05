@@ -15,11 +15,14 @@ _.extend JustdoChat.prototype,
       index_options =
         unique: true
 
+      # CHANNEL_IDENTIFIER_INDEX
       @channels_collection.rawCollection().createIndex(channel_identifier_index_definition_obj, index_options)
 
     #
     # Ensure messages fetching indexes
     #
+
+    # MESSAGES_FETCHING_INDEX
     @messages_collection.rawCollection().createIndex({channel_id: 1, createdAt: -1})
 
     return

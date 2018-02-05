@@ -1,0 +1,73 @@
+.recent-activity-dropdown
+  width: 430px
+  max-height: 500px
+
+  overflow: hidden
+
+  z-index: 12
+
+  cursor: default
+
+  padding: 0px
+  border-radius: 3px
+  font-family: "lato", sans-serif
+
+  margin-top: 0
+  border-top-left-radius: 0
+  border-top-right-radius: 0
+
+  margin: 2px 0 0
+  list-style: none
+  font-size: 13px
+  text-align: left
+  background-color: #ffffff
+  border: 1px solid rgba(0, 0, 0, 0.15)
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175)
+  background-clip: padding-box
+
+  user-select: none
+
+.recent-activity-item
+  border-bottom: 1px solid #E3E3E3
+  padding: 8px 12px
+  position: relative
+  cursor: pointer
+
+  &:hover
+    background-color: #f7f7f7
+
+  &:last-child
+    border: none
+
+  &.unread
+    background-color: #EFF4FC;
+
+    &:hover
+      background-color: #dee6f3
+
+.recent-activity-items-footer
+  background: #F8F8F8
+  border-top: 1px solid #E3E3E3
+  text-align: right
+  padding: 5px 10px
+  border-radius: 0px 0px 3px 3px
+
+.mark-all-activity-read
+  font-weight: 600
+  font-size: 14px
+  color: #2B71CF
+  cursor: pointer
+
+  &:hover
+    text-decoration: underline
+
+.no-recent-activity-items-container
+  text-align: center
+  color: #999999
+  padding: 40px 0
+
+  i
+    font-size: 25px
+
+  p
+    font-size: 15px

@@ -64,4 +64,17 @@ _.extend TaskChannelServer.prototype,
 
     return {project_id: task_doc.project_id}
 
+  getChannelRecentActivitySupplementaryDocs: ->
+    sup_cols =
+      JustdoChat.getChannelTypeConf(@channel_type).recent_activity_supplementary_pseudo_collections
+
+    # We assume all user projects are published, and doesn't need to be published 
+    channel_task_doc = _.pick @getIdentifierTaskDoc(), ["_id", "seqId", "project_id", "title"]
+
+    supplementary_docs = [
+      [sup_cols.tasks, channel_task_doc._id, channel_task_doc]
+    ]
+
+    return supplementary_docs
+
 share.TaskChannelServer = TaskChannelServer

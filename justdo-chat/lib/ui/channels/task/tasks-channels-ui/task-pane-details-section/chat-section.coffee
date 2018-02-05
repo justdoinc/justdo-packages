@@ -9,6 +9,8 @@ APP.executeAfterAppLibCode ->
 
       return task_channel_object
 
+    @mode = new ReactiveVar "chat"
+
     @autorun =>
       if not (grid_control = module.gridControl())?
         # Grid control isn't ready can't init chat
@@ -24,23 +26,18 @@ APP.executeAfterAppLibCode ->
 
       task_chat_object_dependency.changed()
 
+      # In any change to the chat channel, reset the mode to the chat mode
+      @mode.set("chat")
+
+      return
+
     return
 
-  Template.project_toolbar_chat_section_container.helpers
-    showSection: ->
-      module_id = "justdo-chat"
-
-      cur_project = module.curProj()
-      if not cur_project?
-        return
-
-      return cur_project.isCustomFeatureEnabled(module_id)
-
   Template.project_toolbar_chat_section.helpers
-    getTaskChatObject: ->
+    mode: ->
       tpl = Template.instance()
 
-      return tpl.getTaskChatObject
+      return tpl.mode.get()
 
     hasMessages: ->
       tpl = Template.instance()

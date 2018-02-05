@@ -1,0 +1,18 @@
+<template name="project_toolbar_chat_section_subscribers_management">
+  <div class="subscribers-management-header">
+    <div class="sm-btn sm-save">Save</div>
+    <div class="sm-btn sm-cancel">Cancel</div>
+
+    <h2>Subscribers Management</h2>
+  </div>
+
+  <div class="users-board">
+    {{#each taskMembers}}
+      <div class="user-card">
+        {{> justdo_avatar}} <div class="user-name">{{displayName}}</div> 
+
+        <div user-id="{{_id}}" class="subscribe-state {{#if isSubscriber}}subscribed{{else}}unsubscribed{{/if}}"></div>
+      </div>
+    {{/each}}
+  </div>
+</template>
