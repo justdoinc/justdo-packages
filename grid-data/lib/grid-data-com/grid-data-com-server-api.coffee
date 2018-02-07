@@ -37,7 +37,17 @@ _.extend GridDataCom.prototype,
     if not (item = @collection.getItemByPathIfUserBelong path, perform_as)?
       throw @_error "unknown-path"
 
-    new_item = _.extend {}, fields, {parents: {}, users: item.users}
+    # If users for the new task weren't provided, set users to be the parent task users
+    if not (users = fields.users)?
+      users = item.users
+
+    # perform_as must always be part of the task users
+    if perform_as not in users
+      users = users.slice()
+
+      users.push(perform_as)
+
+    new_item = _.extend {}, fields, {parents: {}, users: users}
     new_item.parents[item._id] = {order: @collection.getNewChildOrder(item._id, fields)}
 
     @_runGridMethodMiddlewares "addChild", path, new_item, perform_as
@@ -56,13 +66,22 @@ _.extend GridDataCom.prototype,
       throw @_error "unknown-path"
 
     parent_id = helpers.getPathParentId(path)
-    if parent_id == "0"
-      # item that is added to the top level is added with the adding user only
-      users = [perform_as]
-    else
-      # non top-level item inherents its parent users
-      parent_doc = @collection.getItemById(parent_id)
-      users = parent_doc.users
+
+    # If users for the new task weren't provided
+    if not (users = fields.users)?
+      if parent_id == "0"
+        # item that is added to the top level is added with the adding user only
+        users = [perform_as]
+      else
+        # non top-level item inherents its parent users
+        parent_doc = @collection.getItemById(parent_id)
+        users = parent_doc.users
+
+    # perform_as must always be part of the task users
+    if perform_as not in users
+      users = users.slice()
+
+      users.push(perform_as)
 
     sibling_order = item.parents[parent_id].order + 1
 
