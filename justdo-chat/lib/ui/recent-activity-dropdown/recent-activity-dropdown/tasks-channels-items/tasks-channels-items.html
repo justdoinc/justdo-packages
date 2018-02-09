@@ -2,7 +2,7 @@
   <div class="recent-activity-items-task">
     <div class="item-header">
       <div class="date-block">
-        <span class="date" title="date">{{friendlyDateFormat last_message_date}}</span>
+        <span class="date" title="{{last_message_date}}">{{friendlyDateFormat last_message_date}}</span>
       </div>
 
       <div class="main-block">
@@ -16,7 +16,7 @@
 
     <div class="item-body">
       <div class="read-indicator-block">
-        <div class="read-indicator" title="{{#if unread}}Mark as read{{else}}Mark as unread{{/if}}" style="visibility: hidden;"></div>{{!-- We still got issue with the collection that holds the channel doc (whether it is the recent activity or the regular one) --}}
+        <div class="read-indicator" title="{{#if unread}}Mark as read{{else}}Mark as unread{{/if}}"></div>
       </div>
 
       <div class="main-block">

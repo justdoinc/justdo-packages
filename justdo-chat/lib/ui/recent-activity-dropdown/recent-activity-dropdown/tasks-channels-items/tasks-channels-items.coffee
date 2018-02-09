@@ -23,10 +23,14 @@ Template.recent_activity_item_task.helpers
     return APP.justdo_chat.friendlyDateFormat(date)
 
 getTaskChannelObjectForTaskId = (task_id) ->
-  channel_obj = APP.justdo_chat.generateClientChannelObject "task",
+  channel_obj = APP.justdo_chat.generateClientChannelObject "task", { # channel conf
     grid_control: {} # Required options, but we might not have it in all cases, and for our needs from the channel_obj, it is redundant.
     project_object: {} # Required options, but we might not have it in all cases, and for our needs from the channel_obj, it is redundant.
     task_id: task_id
+  }, { # other options
+    custom_channels_collection: APP.collections.JDChatRecentActivityChannels
+    custom_messages_collection: APP.collections.JDChatRecentActivityMessages
+  }
 
   return channel_obj
 
@@ -44,15 +48,13 @@ Template.recent_activity_item_task.events
 
       return
 
+    channel_obj = getTaskChannelObjectForTaskId(@task_id)
+    channel_obj.setChannelUnreadState(false)
+
     dropdown_instance.closeDropdown()
 
     Meteor.defer =>
       $(".task-pane-chat .message-editor").focus()
-
-      console.log "TODO: the reason this is part of the defer is the same reason toggle button isn't working at the moment, issue with setting the right collection"
-      channel_obj = getTaskChannelObjectForTaskId(@task_id)
-
-      channel_obj.setChannelUnreadState(false)
 
     return
 

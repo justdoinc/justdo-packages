@@ -67,6 +67,28 @@ _.extend ChannelBaseClient.prototype,
 
   options_schema:
     both:
+      custom_channels_collection:
+        # In some situations, we want to use custom collection as the channels collection.
+        # An example for that can be the case of the recent activity dropdown, where we get
+        # from the publication information about involved channels into pseudo collection
+        # to avoid polluting the real collection.
+
+        # If the custom_channels_collection is provided we'll use it instead of
+        # @justdo_chat.channels_collection
+        type: "skip-type-check"
+        optional: true
+        bind_to_instance: false
+
+      custom_messages_collection:
+        # Read custom_channels_collection to get idea about the motivation.
+
+        # If the custom_channels_collection is provided we'll use it instead of
+        # @justdo_chat.messages_collection
+
+        type: "skip-type-check"
+        optional: true
+        bind_to_instance: false
+
       justdo_chat:
         type: "skip-type-check"
         optional: false
@@ -112,6 +134,18 @@ _.extend ChannelBaseClient.prototype,
     @logger.debug "Destroyed"
 
     return
+
+  _getChannelsCollection: ->
+    if (custom_collection = @options.custom_channels_collection)?
+      return custom_collection
+
+    return @justdo_chat.channels_collection
+
+  _getMessagesCollection: ->
+    if (custom_collection = @options.custom_messages_collection)?
+      return custom_collection
+
+    return @justdo_chat.messages_collection
 
   _verifyChannelConfObjectAgainstSchema: ->
     {cleaned_val} =
@@ -253,7 +287,7 @@ _.extend ChannelBaseClient.prototype,
     return
 
   getMessagesSubscriptionChannelDoc: ->
-    return @justdo_chat.channels_collection.findOne(@getChannelIdentifier())
+    return @_getChannelsCollection().findOne(@getChannelIdentifier())
 
   isChannelExistAndReady: ->
     return @getMessagesSubscriptionChannelDoc()?
@@ -267,7 +301,7 @@ _.extend ChannelBaseClient.prototype,
     if not (channel_id = @getMessagesSubscriptionChannelDocId())?
       return null
 
-    return @justdo_chat.messages_collection.find({channel_id: channel_id}, {sort: {createdAt: 1}})
+    return @_getMessagesCollection().find({channel_id: channel_id}, {sort: {createdAt: 1}})
 
   isMessagesSubscriptionHasDocs: ->
     # Returns null if we can't come up with the channel_id == things aren't ready
@@ -275,7 +309,7 @@ _.extend ChannelBaseClient.prototype,
     if not (channel_id = @getMessagesSubscriptionChannelDocId())?
       return false
 
-    return @justdo_chat.messages_collection.findOne({channel_id: channel_id})?
+    return @_getMessagesCollection().findOne({channel_id: channel_id})?
 
   getChannelMessagesSubscriptionState: ->
     # 4 potential returned values
@@ -369,6 +403,15 @@ _.extend ChannelBaseClient.prototype,
 
     if not (channel_doc = @getMessagesSubscriptionChannelDoc())?
       return undefined
+
+    if user_id == Meteor.userId() and (unread = channel_doc.unread)?
+      # Special case, if we got the unread property, the subscription that populated
+      # the collection is the recent activity publication: see subscribedChannelsRecentActivityPublicationHandler()
+      # all the channels returned by this publication are subscribed by the logged-in
+      # member, and the unread state is indicates whether the current user has unread messages
+      # we can construct from it *fake* subscriber doc.
+      return {user_id: user_id, unread: unread}
+    
 
     return _.find channel_doc.subscribers, (subscriber) -> subscriber.user_id == user_id
 

@@ -22,17 +22,17 @@ _.extend JustdoChat.prototype,
 
     return
 
-  generateClientChannelObject: (channel_type, channel_conf) ->
+  generateClientChannelObject: (channel_type, channel_conf, other_options) ->
     @requireAllowedChannelType(channel_type)
     check channel_conf, Object
 
     # See both/static-channel-registrar.coffee
     channel_constructor_name = channel_type_to_channels_constructors[channel_type].client
 
-    conf = {
+    conf = _.extend {
       justdo_chat: @
       channel_conf: channel_conf
-    }
+    }, other_options
 
     return new share[channel_constructor_name](conf)
 
