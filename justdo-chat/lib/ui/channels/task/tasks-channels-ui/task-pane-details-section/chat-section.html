@@ -1,5 +1,5 @@
 <template name="project_toolbar_chat_section">
-  <section class="task-pane-chat {{#if $not hasMessages}}empty{{/if}}">
+  <section class="task-pane-chat {{#if $not hasMessages}}empty{{/if}} {{#if isProposedSubscribersEmulationMode}}proposed-subscribers-emulation-mode{{/if}}">
     <div class="{{mode}}-mode">
       {{#if $eq mode "chat"}}
         {{> project_toolbar_chat_section_chat}}

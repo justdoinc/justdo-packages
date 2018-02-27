@@ -45,6 +45,12 @@ _.extend TaskChannelClient.prototype,
 
     return {task_id: @task_id}
 
+  proposedSubscribersForNewChannel: ->
+    if not (task_doc = this.grid_control.collection.findOne(@task_id))?
+      return []
+
+    return _.union([Meteor.userId(), task_doc.owner_id])
+
   #
   # Manage Chat Records Subscription
   #

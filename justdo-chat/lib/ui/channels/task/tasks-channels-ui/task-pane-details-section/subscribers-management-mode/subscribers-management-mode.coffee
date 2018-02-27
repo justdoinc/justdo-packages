@@ -13,10 +13,8 @@ Template.project_toolbar_chat_section_subscribers_management.onCreated ->
 
       channel = main_tpl.getTaskChatObject()
 
-      if (channel_doc = channel.getMessagesSubscriptionChannelDoc())?
-        channel_subscribers_doc_on_creation = channel_doc.subscribers
-      else
-        return
+      if not (channel_subscribers_doc_on_creation = channel.getSubscribersArray())?
+        channel_subscribers_doc_on_creation = []
 
       subscribers_hash = {}
 
@@ -64,19 +62,23 @@ Template.project_toolbar_chat_section_subscribers_management.events
     tpl.$(".subscribed").each ->
       selected_subscribed_users_ids.push $(@).attr("user-id")
 
-    existing_subscribers_hash = tpl.getSubscribersHash(false) # false is to avoid using cache
+    channel = main_tpl.getTaskChatObject()
+
+    if not channel.isProposedSubscribersEmulationMode()
+      existing_subscribers_hash = tpl.getSubscribersHash(false) # false is to avoid using cache
+    else
+      existing_subscribers_hash = {}
+
     existing_subscribers_ids = _.keys existing_subscribers_hash
 
     subscribers_to_remove = _.difference existing_subscribers_ids, selected_subscribed_users_ids
     subscribers_to_add = _.difference selected_subscribed_users_ids, existing_subscribers_ids
 
-    channel = main_tpl.getTaskChatObject()
-
     if not _.isEmpty subscribers_to_remove.concat(subscribers_to_add)
       channel.manageSubscribers {remove: subscribers_to_remove, add: subscribers_to_add}, ->
         main_tpl.mode.set("chat")
     else
-      # Nothing to do, go back just to chat
+      # Nothing to do, just go back to chat
       main_tpl.mode.set("chat")
 
     return

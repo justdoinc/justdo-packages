@@ -45,3 +45,29 @@ APP.executeAfterAppLibCode ->
       channel = tpl.getTaskChatObject()
 
       return channel.isMessagesSubscriptionHasDocs()
+
+    isProposedSubscribersEmulationMode: ->
+      tpl = Template.instance()
+
+      channel = tpl.getTaskChatObject()
+
+      return channel.isProposedSubscribersEmulationMode()
+
+  Template.project_toolbar_chat_section.events
+    "keyup .message-editor": (e, tpl) ->
+      # When the user begin typing, if we are under non-initilized channel,
+      # turn on proposed subscribers emulation mode, turn off, if text clear
+
+      channel = tpl.getTaskChatObject()
+
+      if channel.getChannelMessagesSubscriptionState() == "no-channel-doc"
+        if _.isEmpty $(e.target).val()
+          channel.stopProposedSubscribersEmulationMode()
+        else
+          if not channel.isProposedSubscribersEmulationMode()
+            channel.setProposedSubscribersEmulationMode()
+
+      # Note, since for initialized channels the proposed subscribers mode has no effect,
+      # we don't care much about turning it off.
+
+      return

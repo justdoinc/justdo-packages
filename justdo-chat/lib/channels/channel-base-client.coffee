@@ -101,6 +101,12 @@ _.extend ChannelBaseClient.prototype,
         bind_to_instance: true
 
   _immediateInit: ->
+    @_modes = []
+    @_modes_dep = new Tracker.Dependency()
+
+    @_initial_subscription_ready = new ReactiveVar false
+    @_channel_messages_subscription_dep = new Tracker.Dependency()
+
     @_verifyChannelConfObjectAgainstSchema()
 
     # Inits related to the messages subscriptions (note, we don't subscribe automatically)
@@ -159,6 +165,12 @@ _.extend ChannelBaseClient.prototype,
     return
 
   sendMessage: (body, cb) ->
+    if @isProposedSubscribersEmulationMode()
+      @manageSubscribers {add: @proposedSubscribersForNewChannel()}
+
+      # Note, proposed-subscribers-emulation has no effect on existing channels, we aren't
+      # worry about turning it off.
+
     @justdo_chat.sendMessage @channel_type, @getChannelIdentifier(), {body: body}, =>
       @emit "message-sent"
 
@@ -183,8 +195,7 @@ _.extend ChannelBaseClient.prototype,
 
   setChannelUnreadState: (new_state, cb) ->
     if not (subscriber_doc = @getChannelSubscriberDoc(Meteor.userId()))?
-      # We shouldn't get here
-      console.warn "Channel is not ready yet"
+      # User isn't subscribed to this channel, can't set state.
 
       return
 
@@ -256,8 +267,12 @@ _.extend ChannelBaseClient.prototype,
           @logger.debug("Channel subscription replaced")
 
           @_channel_messages_subscription.stop()
+        else
+          @_initial_subscription_ready.set true
+
 
         @_channel_messages_subscription = subscription
+        @_channel_messages_subscription_dep.changed()
         @_active_channel_messages_subscription_options = options
 
         original_callbacks?.onReady?()
@@ -289,9 +304,6 @@ _.extend ChannelBaseClient.prototype,
   getMessagesSubscriptionChannelDoc: ->
     return @_getChannelsCollection().findOne(@getChannelIdentifier())
 
-  isChannelExistAndReady: ->
-    return @getMessagesSubscriptionChannelDoc()?
-
   getMessagesSubscriptionChannelDocId: ->
     return @getMessagesSubscriptionChannelDoc()?._id
 
@@ -312,15 +324,20 @@ _.extend ChannelBaseClient.prototype,
     return @_getMessagesCollection().findOne({channel_id: channel_id})?
 
   getChannelMessagesSubscriptionState: ->
-    # 4 potential returned values
+    # 5 potential returned values
     #
     # "no-sub": No subscription created yet
-    # "no-channel-doc": Subscription not ready yet/channel doc hasn't been created yet
+    # "initial-not-ready": The initial (first, pre infinite scroll) subscription created by requestChannelMessages isn't ready yet
+    # "no-channel-doc": Channel doc hasn't been created yet
     # "more": some messages haven't been returned by the subscription
     # "all": all the messages belonging to this channel been loaded by the subscription.
 
+    @_channel_messages_subscription_dep.depend()
     if not @_channel_messages_subscription?
       return "no-sub"
+
+    if @_initial_subscription_ready.get() == false
+      return "initial-not-ready"
 
     if not (channel_doc = @getMessagesSubscriptionChannelDoc())?
       return "no-channel-doc"
@@ -351,7 +368,8 @@ _.extend ChannelBaseClient.prototype,
 
       return
 
-    channel_messages_subscription_state = @getChannelMessagesSubscriptionState()
+    channel_messages_subscription_state = Tracker.nonreactive =>
+      return @getChannelMessagesSubscriptionState()
 
     performSubscription = (subscription_options) =>
       @_waiting_for_previous_request_channel_messages_to_complete = true
@@ -372,8 +390,12 @@ _.extend ChannelBaseClient.prototype,
       performSubscription({limit: options.initial_messages_to_request})
 
       return
+    else if channel_messages_subscription_state == "initial-not-ready"
+      @logger.debug "Channel subscription not ready"
+
+      return
     else if channel_messages_subscription_state == "no-channel-doc"
-      @logger.debug "Channel empty/not ready"
+      @logger.debug "No channel doc"
 
       return
     else if channel_messages_subscription_state == "more"
@@ -385,7 +407,7 @@ _.extend ChannelBaseClient.prototype,
       # Use same options as previous call, change only the limit
       options = _.extend {}, options, {limit: new_limit}
 
-      performSubscription(options)
+      performSubscription({limit: options.initial_messages_to_request})
 
       return
     else
@@ -395,25 +417,58 @@ _.extend ChannelBaseClient.prototype,
 
     return
 
+  getSubscribersArray: ->
+    # Returns the channel subscribers array, taking into account the 
+    # proposed-subscribers-emulation mode, if we can't come up with one
+    # return undefined.
+
+    if (channel_doc = @getMessagesSubscriptionChannelDoc())?
+      return channel_doc.subscribers
+
+    # ONLY IF THE CHANNEL DOC DOESN'T EXIST, AND UNDER proposed-subscribers-emulation mode:
+    # Returns an array of subscribers, with similar structure to the one under:
+    # the channel_doc.subscribers
+    # Otherwise, returns undefined
+
+    if not @isProposedSubscribersEmulationMode()
+      return undefined
+
+    channel_messages_subscription_state = @getChannelMessagesSubscriptionState()
+
+    if channel_messages_subscription_state != "no-channel-doc"
+      return undefined
+
+    # We are under a non-initialized channel, under the proposed-subscribers-emulation
+    # mode, generate emulated subscribers_array based on proposedSubscribersForNewChannel.
+
+    pseudo_subscribers_ids = @proposedSubscribersForNewChannel()
+
+    subscribers_array = []
+
+    for subscriber_id in pseudo_subscribers_ids
+      subscribers_array.push {user_id: subscriber_id, unread: false}
+
+    return subscribers_array
+
   getChannelSubscriberDoc: (user_id) ->
     # Returns the document from the subscribers array of the channel belonging
     # to user_id, undefined otherwise.
     #
     # Returns undefined also when the channel isn't ready/doesn't exist
 
-    if not (channel_doc = @getMessagesSubscriptionChannelDoc())?
+    if (channel_doc = @getMessagesSubscriptionChannelDoc())?
+      if user_id == Meteor.userId() and (unread = channel_doc.unread)?
+        # Special case, if we got the unread property, the subscription that populated
+        # the collection is the recent activity publication: see subscribedChannelsRecentActivityPublicationHandler()
+        # all the channels returned by this publication are subscribed by the logged-in
+        # member, and the unread state is indicates whether the current user has unread messages
+        # we can construct from it *fake* subscriber doc.
+        return {user_id: user_id, unread: unread}
+
+    if not (subscribers_array = @getSubscribersArray())?
       return undefined
 
-    if user_id == Meteor.userId() and (unread = channel_doc.unread)?
-      # Special case, if we got the unread property, the subscription that populated
-      # the collection is the recent activity publication: see subscribedChannelsRecentActivityPublicationHandler()
-      # all the channels returned by this publication are subscribed by the logged-in
-      # member, and the unread state is indicates whether the current user has unread messages
-      # we can construct from it *fake* subscriber doc.
-      return {user_id: user_id, unread: unread}
-    
-
-    return _.find channel_doc.subscribers, (subscriber) -> subscriber.user_id == user_id
+    return _.find subscribers_array, (subscriber) -> subscriber.user_id == user_id
 
   isUserSubscribedToChannel: (user_id) ->
     # Returns false if user_id isn't subscribed, or channel isn't ready/doesn't exist
@@ -425,8 +480,13 @@ _.extend ChannelBaseClient.prototype,
     return true
 
   toggleUserSubscriptionToChannel: (user_id) ->
-    if not @isChannelExistAndReady()
-      @logger.warn "Channel not ready yet to toggle user subscription"
+    # This method needs the channel to be initialized to toggle the user state (it can be refactored to lift this restriction).
+
+    channel_messages_subscription_state = Tracker.nonreactive =>
+      return @getChannelMessagesSubscriptionState()
+
+    if channel_messages_subscription_state in ["no-sub", "initial-not-ready", "no-channel-doc"]
+      @logger.warn "Channel not ready yet, or not initialized, to toggle user subscription"
 
       return
 
@@ -436,6 +496,49 @@ _.extend ChannelBaseClient.prototype,
       @manageSubscribers({add: [user_id]})
 
     return
+
+  _getModes: ->
+    @_modes_dep.depend()
+
+    return @_modes
+
+  _addModes: (modes_ids_array) ->
+    @_modes = _.union(@_modes, modes_ids_array)
+
+    @_modes_dep.changed()
+
+    return
+
+  _removeModes: (modes_ids_array) ->
+    @_modes = _.difference(@_modes, modes_ids_array)
+
+    @_modes_dep.changed()
+
+    return
+
+  setProposedSubscribersEmulationMode: ->
+    # setProposedSubscribersEmulationMode has effect only for non-initialized channels
+    # (channels without channel doc), it has **completely no effect** when called for initialized
+    # channels.
+    #
+    # When called for initialized channels, the channel object will enter 'proposed-subscribers-emulation' mode
+    # see @operation_modes
+    #
+    # This will affect all the methods involving pulling info about subscribers, all of them will
+    # behave as if the list of users ids returned by @proposedSubscribersForNewChannel() are subscribed
+    # to the channel.
+
+    @_addModes(["proposed-subscribers-emulation"])
+
+    return
+
+  stopProposedSubscribersEmulationMode: ->
+    @_removeModes(["proposed-subscribers-emulation"])
+
+    return
+
+  isProposedSubscribersEmulationMode: ->
+    return @getChannelMessagesSubscriptionState() == "no-channel-doc" and "proposed-subscribers-emulation" in @_getModes()
 
   #
   #
@@ -469,6 +572,18 @@ _.extend ChannelBaseClient.prototype,
     # provided @channel_conf_schema .
 
     return
+
+  proposedSubscribersForNewChannel: ->
+    # proposedSubscribersForNewChannel lets you to set users ids of members that
+    # will be proposed to user for channel before they are created.
+
+    # Is used when under the 'proposed-subscribers-emulation' mode, check comment
+    # under: @setProposedSubscribersEmulationMode() and see it being taken into
+    # account under: @getSubscribersArray(), @sendMessage().
+
+    # Return empty array if no subscribers to propose.
+
+    return []
 
   #
   # All the following SHOULD be set/implimented by the inheriting channels constructors

@@ -2,16 +2,26 @@ Template.project_toolbar_chat_section_chat.onCreated ->
   @getMainTemplate = =>
     return Template.closestInstance("project_toolbar_chat_section")
 
+getTemplateChannelObject = ->
+  main_tpl = Template.instance().getMainTemplate()
+
+  return main_tpl.getTaskChatObject()
+
+getTemplateChannelMessagesSubscriptionState = ->
+  channel = getTemplateChannelObject()
+
+  return channel.getChannelMessagesSubscriptionState()
+
 getChannelSubscribersIdsIntersectionWithTaskMembersIds = (channel) ->
   # Due to the non-transactional nature of mongo, we are running a potential
   # risk of an edge case where removed task members remains in the task's
   # channel subscribers list, we therefore, count the intersection
   # between the subscribers list and the existing task members.
 
-  if not (channel_doc = channel.getMessagesSubscriptionChannelDoc())?
+  if not (subscribers_array = channel.getSubscribersArray())?
     return []
 
-  subscribers_ids = _.map channel_doc.subscribers, (sub) -> sub.user_id
+  subscribers_ids = _.map subscribers_array, (sub) -> sub.user_id
 
   task_members = APP.modules.project_page.activeItemObj({"users": true}).users
 
@@ -21,33 +31,50 @@ Template.project_toolbar_chat_section_chat.helpers
   getTaskChatObject: ->
     main_tpl = Template.instance().getMainTemplate()
 
-    return main_tpl.getTaskChatObject
+    return main_tpl.getTaskChatObject # Note, we don't call main_tpl.getTaskChatObject just pass reference, hence we don't use getTemplateChannelObject
 
-  isChannelExistAndReady: ->
-    main_tpl = Template.instance().getMainTemplate()
+  getChannelMessagesSubscriptionState: ->
+    channel = getTemplateChannelObject()
 
-    channel = main_tpl.getTaskChatObject()
+    return channel.getChannelMessagesSubscriptionState()
 
-    return channel.isChannelExistAndReady()
+  isSubscriptionReady: ->
+    channel_messages_subscription_state = getTemplateChannelMessagesSubscriptionState()
+
+    return channel_messages_subscription_state not in ["no-sub", "initial-not-ready"]
+
+  isSubscriptionReadyChannelExistsAndNotEmptyOrHasSubscribers: ->
+    # We treat existing, empty, channel with no subscribers the same way as non-existing
+    # channel.
+
+    channel = getTemplateChannelObject()
+
+    channel_messages_subscription_state = getTemplateChannelMessagesSubscriptionState()
+    channel_ready_and_exists =
+      channel_messages_subscription_state not in ["no-sub", "initial-not-ready", "no-channel-doc"]
+
+    # The commented condition doesn't look good.
+    if not channel_ready_and_exists # and not channel.isProposedSubscribersEmulationMode() # if we are under proposed subscribers emulation mode, non-existing channel might have pseudo users so we treat it like existing
+      return false
+
+    channel_doc = channel.getMessagesSubscriptionChannelDoc()
+
+    channel_has_subscribers = not _.isEmpty(channel.getSubscribersArray())
+
+    return channel.isMessagesSubscriptionHasDocs() or channel_has_subscribers
 
   isSubscribedToChannel: ->
-    main_tpl = Template.instance().getMainTemplate()
-
-    channel = main_tpl.getTaskChatObject()
+    channel = getTemplateChannelObject()
 
     return channel.isUserSubscribedToChannel(Meteor.userId())
 
   subscribersCount: ->
-    main_tpl = Template.instance().getMainTemplate()
-
-    channel = main_tpl.getTaskChatObject()
+    channel = getTemplateChannelObject()
 
     return getChannelSubscribersIdsIntersectionWithTaskMembersIds(channel).length
 
   subscribersDisplayNames: (limit=10) ->
-    main_tpl = Template.instance().getMainTemplate()
-
-    channel = main_tpl.getTaskChatObject()
+    channel = getTemplateChannelObject()
 
     subscribers_ids = getChannelSubscribersIdsIntersectionWithTaskMembersIds(channel)
 
@@ -67,9 +94,7 @@ Template.project_toolbar_chat_section_chat.helpers
 
 Template.project_toolbar_chat_section_chat.events
   "click .user-subscription-toggle": (e, tpl) ->
-    main_tpl = tpl.getMainTemplate()
-
-    channel = main_tpl.getTaskChatObject()
+    channel = getTemplateChannelObject()
 
     return channel.toggleUserSubscriptionToChannel(Meteor.userId())
 
@@ -82,10 +107,11 @@ Template.project_toolbar_chat_section_chat.events
 
   "click": (e, tpl) ->
     # Click anywhere will mark the channel as read
-    main_tpl = tpl.getMainTemplate()
+    if getTemplateChannelMessagesSubscriptionState() not in ["no-sub", "initial-not-ready", "no-channel-doc"]
+      channel = getTemplateChannelObject()
 
-    channel = main_tpl.getTaskChatObject()
+      channel.setChannelUnreadState(false)
 
-    channel.setChannelUnreadState(false)
+      return
 
     return
