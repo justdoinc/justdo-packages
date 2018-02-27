@@ -16,6 +16,22 @@ Template.common_chat_message_editor.onCreated ->
   @clearError = -> @setError(null)
   @getError = -> @_error.get()
 
+Template.common_chat_message_editor.onRendered ->
+  @autorun =>
+    channel = @data.getChannelObject()
+
+    $message_editor = $(this.firstNode).parent().find(".message-editor")
+    if _.isEmpty(stored_temp_message = channel.getTempMessage())
+      $message_editor.val("")
+    else
+      $message_editor.val(stored_temp_message)
+
+      $message_editor.keyup() # To trigger stuff like the proposed subscribers emulation mode (see "keyup .message-editor" event in chat-section.coffee)
+
+    return
+
+  return
+
 Template.common_chat_message_editor.helpers
   isSendingState: ->
     tpl = Template.instance()
@@ -28,6 +44,11 @@ Template.common_chat_message_editor.helpers
     return tpl.getError()
 
 Template.common_chat_message_editor.events
+  "keyup .message-editor": (e, tpl) ->
+    @getChannelObject().saveTempMessage $(e.target).val().trim()
+
+    return
+
   "keydown .message-editor": (e, tpl) ->
     $input = $(e.target)
     if e.which == 13

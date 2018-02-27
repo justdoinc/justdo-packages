@@ -1,3 +1,9 @@
+TEMPORARY_MESSAGES = {}
+# Temporary messages are messages the user started typing but didn't save yet,
+# we provide a layer to store and get such temp messages for channels to prevent
+# data loss when the user temporarily hide/remove dom elements that holds chat
+# inputs.
+
 ChannelBaseClient = (options) ->
   # derived from skeleton-version: v0.0.11-onepage_skeleton
 
@@ -140,6 +146,9 @@ _.extend ChannelBaseClient.prototype,
     @logger.debug "Destroyed"
 
     return
+
+  _getChannelSerializedIdentifier: ->
+    return @channel_type + "::" + _.map(@getChannelIdentifier(), (val ,key) => key + ":" + val).sort().join("|")
 
   _getChannelsCollection: ->
     if (custom_collection = @options.custom_channels_collection)?
@@ -539,6 +548,12 @@ _.extend ChannelBaseClient.prototype,
 
   isProposedSubscribersEmulationMode: ->
     return @getChannelMessagesSubscriptionState() == "no-channel-doc" and "proposed-subscribers-emulation" in @_getModes()
+
+  saveTempMessage: (message) -> TEMPORARY_MESSAGES[@_getChannelSerializedIdentifier()] = message
+
+  getTempMessage: -> TEMPORARY_MESSAGES[@_getChannelSerializedIdentifier()]
+
+  clearTempMessage: -> delete TEMPORARY_MESSAGES[@_getChannelSerializedIdentifier()]
 
   #
   #
