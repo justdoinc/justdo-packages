@@ -33,3 +33,8 @@ APP.getEnv (env) ->
     messages_collection: APP.collections.JDChatMessages
 
   APP.justdo_chat = new JustdoChat options
+
+  if Meteor.isClient
+    APP.justdo_chat._setupHtmlTitlePrefixController()
+
+  return

@@ -16,6 +16,22 @@ _.extend JustdoChat.prototype,
 
     return
 
+  _setupHtmlTitlePrefixController: ->
+    count_observer_autorun = Tracker.autorun ->
+      count = APP.collections.JDChatInfo.findOne("subscribed_unread_channels_count")?.count or 0
+
+      if count > 0
+        APP.page_title_manager.setPrefix("(#{count})")
+      else
+        APP.page_title_manager.setPrefix("")
+
+      return
+
+    @onDestroy ->
+      count_observer_autorun.stop()
+
+    return
+
   _deferredInit: ->
     if @destroyed
       return
