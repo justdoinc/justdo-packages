@@ -53,6 +53,8 @@ Template.recent_activity_item_task.events
 
     dropdown_instance.closeDropdown()
 
+    APP.modules.project_page.setCurrentProjectToolbarSectionId("details")
+
     Meteor.defer =>
       $(".task-pane-chat .message-editor").focus()
 
