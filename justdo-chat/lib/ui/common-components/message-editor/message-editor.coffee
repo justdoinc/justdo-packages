@@ -96,6 +96,7 @@ Template.common_chat_message_editor.events
           return
 
         $input.val("")
+        task_chat_object.clearTempMessage()
 
         $input.trigger("autosize.resize")
 
