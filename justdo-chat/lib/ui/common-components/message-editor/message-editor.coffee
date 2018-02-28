@@ -26,7 +26,10 @@ Template.common_chat_message_editor.onRendered ->
     else
       $message_editor.val(stored_temp_message)
 
-      $message_editor.keyup() # To trigger stuff like the proposed subscribers emulation mode (see "keyup .message-editor" event in chat-section.coffee)
+      Tracker.nonreactive ->
+        # We don't want potential reactive resources called by handlers of the keyup to trigger invalidation of
+        # this autorun (it actually happened, Daniel C.)
+        $message_editor.keyup() # To trigger stuff like the proposed subscribers emulation mode (see "keyup .message-editor" event in chat-section.coffee)
 
     return
 
