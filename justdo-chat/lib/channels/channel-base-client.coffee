@@ -416,7 +416,7 @@ _.extend ChannelBaseClient.prototype,
       # Use same options as previous call, change only the limit
       options = _.extend {}, options, {limit: new_limit}
 
-      performSubscription({limit: options.initial_messages_to_request})
+      performSubscription({limit: options.limit})
 
       return
     else
