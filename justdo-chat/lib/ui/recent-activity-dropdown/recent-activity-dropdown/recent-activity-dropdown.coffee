@@ -20,13 +20,12 @@ share.RecentActivityDropdown = JustdoHelpers.generateNewTemplateDropdown "recent
     return
 
 Template.recent_activity_dropdown.onCreated ->
-  @subscribed_channels_recent_activity_subscription =
-    APP.justdo_chat.subscribeSubscribedChannelsRecentActivity({limit: 1000}) # XXX remove limit when implementing incremental loading
+  APP.justdo_chat.requestSubscribedChannelsRecentActivity()
 
   return
 
 Template.recent_activity_dropdown.onDestroyed ->
-  @subscribed_channels_recent_activity_subscription.stop()
+  APP.justdo_chat.stopChannelsRecentActivityPublication()
 
   return
 
@@ -37,5 +36,16 @@ Template.recent_activity_dropdown.helpers
 Template.recent_activity_dropdown.events
   "click .mark-all-activity-read": ->
     APP.justdo_chat.markAllChannelsAsRead()
+
+    return
+
+  "scroll .recent-activity-items-viewport": (e, tpl) ->
+    viewport_bottom_position = tpl.$(".recent-activity-items-viewport").scrollTop() + $(".recent-activity-items-viewport").height()
+    total_items_height = $(".recent-activity-items").height()
+
+    if total_items_height - viewport_bottom_position == 0
+      # User hit bottom
+
+      APP.justdo_chat.requestSubscribedChannelsRecentActivity()
 
     return

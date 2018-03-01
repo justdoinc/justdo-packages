@@ -159,7 +159,7 @@ _.extend JustdoChat.prototype,
 
     # Get last message
     # Get channel specific augmented info.
-    gdc_info_collection_name = JustdoChat.jdc_info_pseudo_collection_name
+    jdc_info_collection_name = JustdoChat.jdc_info_pseudo_collection_name
 
     count = 0
     initial = true
@@ -168,7 +168,7 @@ _.extend JustdoChat.prototype,
         count += 1
 
         if not initial
-          publish_this.changed gdc_info_collection_name, "subscribed_unread_channels_count", {count: count}
+          publish_this.changed jdc_info_collection_name, "subscribed_unread_channels_count", {count: count}
 
         return
 
@@ -176,12 +176,12 @@ _.extend JustdoChat.prototype,
         count -= 1
 
         if not initial
-          publish_this.changed gdc_info_collection_name, "subscribed_unread_channels_count", {count: count}
+          publish_this.changed jdc_info_collection_name, "subscribed_unread_channels_count", {count: count}
 
         return
 
     initial = false
-    publish_this.added gdc_info_collection_name, "subscribed_unread_channels_count", {count: count}
+    publish_this.added jdc_info_collection_name, "subscribed_unread_channels_count", {count: count}
 
     #
     # onStop setup + ready()
@@ -433,7 +433,7 @@ _.extend JustdoChat.prototype,
               if not (new_unread_state = subscriber.unread)?
                 new_unread_state = false
 
-          console.log "NEW UNREAD STATE", new_unread_state, supplement_data_sent_by_channel_id[channel_id].unread_state
+          # console.log "NEW UNREAD STATE", new_unread_state, supplement_data_sent_by_channel_id[channel_id].unread_state
 
           if new_unread_state != supplement_data_sent_by_channel_id[channel_id].unread_state
             data.unread = new_unread_state
@@ -471,11 +471,31 @@ _.extend JustdoChat.prototype,
 
         return
 
+    getChannelsRecentActivityCount = -> subscribed_channels_recent_activity_cursor.count()
+
+    jdc_info_collection_name = JustdoChat.jdc_info_pseudo_collection_name
+
+    last_count_reported = getChannelsRecentActivityCount()
+    publish_this.added jdc_info_collection_name, "subscribed_channels_recent_activity_count", {count: last_count_reported}
+
+    subscribed_channels_recent_activity_count_calculator_interval = Meteor.setInterval ->
+      new_count = getChannelsRecentActivityCount()
+
+      if last_count_reported != new_count
+        publish_this.changed jdc_info_collection_name, "subscribed_channels_recent_activity_count", {count: new_count}
+
+        last_count_reported = new_count
+
+    , 15 * 1000
+
     #
     # onStop setup + ready()
     #
     publish_this.onStop ->
       recent_activity_channels_tracker.stop()
+
+      Meteor.clearInterval subscribed_channels_recent_activity_count_calculator_interval
+      # On stop, Meteor's DDP layer, will take of removing subscribed_channels_recent_activity_count, no need to do it ourself
 
       return
 

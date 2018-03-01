@@ -1,10 +1,12 @@
 <template name="recent_activity_dropdown">
   {{#with recentActivityItems}}
     <div class="recent-activity-items-container">
-      <div class="recent-activity-items">
-        {{#each this}}
-          {{> recent_activity_item}}
-        {{/each}}
+      <div class="recent-activity-items-viewport">
+        <div class="recent-activity-items">
+          {{#each this}}
+            {{> recent_activity_item}}
+          {{/each}}
+        </div>
       </div>
       <div class="recent-activity-items-footer">
         <div class="mark-all-activity-read">Mark All as Read</div>

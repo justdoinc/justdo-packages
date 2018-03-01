@@ -359,6 +359,8 @@ _.extend ChannelBaseClient.prototype,
     else
       return "all"
 
+  # XXX there's a generalization opportunity here, we are doing something very similar in the
+  # JustdoChat object, see: requestSubscribedChannelsRecentActivity() there
   _waiting_for_previous_request_channel_messages_to_complete: false
   requestChannelMessages: (options) ->
     # If no channel messages subscription existing yet, will subscribe with limit set

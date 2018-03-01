@@ -59,6 +59,12 @@ _.extend JustdoChat.prototype,
       # * JustdoChat.jdc_recent_activity_messages_collection_name
       # * Type specific pseudo collections for supplementary docs.
       # (see both/static-settings.coffee for actual names)
+      # * JustdoChat.jdc_info_pseudo_collection_name
+      #   * A document will be published under the id 'subscribed_channels_recent_activity_count' with
+      #     a field 'count' that will hold the total count of subscribed channels recent activity
+      #     to allow correct implementation of incremental loading of recent messages.
+      #     The count isn't fully reactive, see setInterval under subscribedChannelsRecentActivityPublicationHandler
+      #     for exact interval in which it updates.
       #
       # We publish the information to pseudo collections to avoid data collisions with
       # other publications that publish documents from the collections involved in this publication
