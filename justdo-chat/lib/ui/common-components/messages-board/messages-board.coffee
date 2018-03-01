@@ -80,7 +80,6 @@ Template.common_chat_messages_board.events
       # channel.requestChannelMessages will request more messages, if there are more
       # messages to request.
 
-      $first_message_card_before_more_loaded = 
       channel.requestChannelMessages 
         onReady: =>
           tpl.stick_viewport_to_card_on_next_cards_render = tpl.$(".message-card:first-child")

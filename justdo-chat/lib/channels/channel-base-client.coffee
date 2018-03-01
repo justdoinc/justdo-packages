@@ -304,7 +304,6 @@ _.extend ChannelBaseClient.prototype,
       @logger.debug("Channel messages subscription stopped")
 
       @_channel_messages_subscription?.stop()
-      @_active_subscription_limit_option = null
 
       return
 
