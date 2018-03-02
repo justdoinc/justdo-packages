@@ -308,7 +308,7 @@ _.extend ChannelBaseServer.prototype,
     #
     # If same user id is in both add and in remove, invalid-argument will be thrown
     #
-    # Both add, and remove array are filtered through the @removeNonPermittedUsers()
+    # The add array is filtered through the @removeNonPermittedUsers(), we don't worry about the remove array.
     #
     # For added users manageSubscribers will set the unread property of the subscriber object
     # according to the following rules:
@@ -333,9 +333,8 @@ _.extend ChannelBaseServer.prototype,
     if _.intersection(update.add, update.remove).length != 0
       throw @_error "invalid-argument", "Can't add and remove same user id"
 
-    # Get rid of non permitted users ids
+    # Get rid of user ids of users that are not permitted to subscribe
     update.add = @removeNonPermittedUsers(update.add)
-    update.remove = @removeNonPermittedUsers(update.remove)
 
     channel_doc = @getChannelDocNonReactive()
 
