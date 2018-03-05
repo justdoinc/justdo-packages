@@ -38,11 +38,10 @@ _.extend JustdoChat.prototype,
       # CHANNEL_AUGMENTED_FIELDS_INDEX
       @channels_collection.rawCollection().createIndex(channel_augmented_fields_definition_obj)
 
-    #
-    # Ensure messages fetching indexes
-    #
-
     # MESSAGES_FETCHING_INDEX
     @messages_collection.rawCollection().createIndex({channel_id: 1, createdAt: -1})
+
+    # USER_UNREAD_MESSAGES_INDEX
+    @channels_collection.rawCollection().createIndex({"subscribers.user_id": 1, "subscribers.unread": 1})
 
     return

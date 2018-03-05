@@ -393,7 +393,9 @@ _.extend ChannelBaseServer.prototype,
   setChannelUnreadState: (unread) ->
     check unread, Boolean
 
-    console.log "TODO: ENSURE INDEX"
+    # XXX Index wise, it seems that since @channel_identifier is involved in the query, mongo,
+    # is capable to use the CHANNEL_IDENTIFIER_INDEX to optimize this query,
+    # at the moment, no further indexes are added for this one Daniel C.
 
     query = _.extend {}, @channel_identifier,
       subscribers:

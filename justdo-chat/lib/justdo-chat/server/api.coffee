@@ -61,8 +61,6 @@ _.extend JustdoChat.prototype,
     return new share[channel_constructor_name](conf)
 
   markAllChannelsAsRead: (user_id) ->
-    console.log "TODO: ENSURE INDEX"
-
     check user_id, String
 
     if not user_id? or _.isEmpty user_id
@@ -70,6 +68,10 @@ _.extend JustdoChat.prototype,
 
       return
 
+    #
+    # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+    # and to drop obsolete indexes (see USER_UNREAD_MESSAGES_INDEX there)
+    #
     query = 
       subscribers:
         $elemMatch:
@@ -124,10 +126,8 @@ _.extend JustdoChat.prototype,
 
     #
     # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-    # and to drop obsolete indexes (see XXX there)
+    # and to drop obsolete indexes (see USER_UNREAD_MESSAGES_INDEX there)
     #
-
-    console.log "TODO: ENSURE INDEX"
 
     subscribed_unread_channels_cursor_query =
       subscribers:
@@ -232,11 +232,9 @@ _.extend JustdoChat.prototype,
 
     #
     # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-    # and to drop obsolete indexes (see XXX there)
+    # and to drop obsolete indexes (see USER_UNREAD_MESSAGES_INDEX there)
     #
-
-    console.log "TODO: ENSURE INDEX"
-
+    # NOTE: the following uses a subset of the USER_UNREAD_MESSAGES_INDEX index.
     channels_recent_activity_cursor_query =
       "subscribers.user_id": options.user_id
 
