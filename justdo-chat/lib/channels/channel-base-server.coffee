@@ -352,13 +352,15 @@ _.extend ChannelBaseServer.prototype,
     # Build query
     add_query_items = []
     for user_id in update.add
-      unread = false
-      if user_id != @performing_user and channel_doc.messages_count != 0
+      subscriber_obj = {user_id: user_id, unread: true}
+
+      if not (user_id != @performing_user and channel_doc.messages_count != 0)
         # We turn the unread flag on, only for users that aren't the performing user
         # (which necessarily see this channel), and if there are messages at all
-        unread = true
+        subscriber_obj.unread = false
+        subscriber_obj.last_read = new Date()
 
-      add_query_items.push {user_id: user_id, unread: unread}
+      add_query_items.push subscriber_obj
 
     remove_query_items = []
     for user_id in update.remove
@@ -401,11 +403,14 @@ _.extend ChannelBaseServer.prototype,
       subscribers:
         $elemMatch:
           user_id: @performing_user
-          unread: not unread
+          unread: not unread # note we don't find if the user unread state is already the requested one
 
     update =
       $set:
         "subscribers.$.unread": unread
+
+    if unread == false
+      update.$set["subscribers.$.last_read"] = new Date()
 
     @justdo_chat.channels_collection.rawCollection().update query, update
 

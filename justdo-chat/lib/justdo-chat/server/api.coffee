@@ -81,6 +81,7 @@ _.extend JustdoChat.prototype,
     update =
       $set:
         "subscribers.$.unread": false
+        "subscribers.$.last_read": new Date()
 
     options =
       multi: true
