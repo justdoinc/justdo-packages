@@ -18,6 +18,10 @@ JustdoChat.registerChannelType
 
       type: String
 
+  # If set to true, an mongodb index will be added with all the keys specified under
+  # channel_augemented_fields_simple_schema see collections-indexes.coffee
+  add_index_for_augemented_fields: true
+
   # Read comment for publication jdcSubscribedChannelsRecentActivity under publications.coffee
   # to learn about recent_activity_supplementary_pseudo_collections purpose.
   #
