@@ -66,6 +66,19 @@ JustdoChat.schemas.ChannelsSchema = new SimpleSchema
 
     optional: true
 
+  archived_subscribers:
+    # In situations where a channel becomes obsolete*, we might want to maintain the history
+    # of its subscribers to allow bringing them back for case the procedure that got the channel
+    # obsolete got reversed** , the archived_subscribers field serves that purpose .
+
+    # * e.g. for a task channel, situations where the channel's task is remvoed, or the entire
+    # project the task belongs to is removed.
+    # ** Removed project/task been unremoved
+
+    type: [JustdoChat.schemas.SubscribedUserSchema]
+
+    optional: true
+
   createdAt:
     label: "Created At"
 
