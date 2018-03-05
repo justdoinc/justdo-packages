@@ -37,14 +37,64 @@ JustdoChat.registerChannelTypeServerSpecific
         # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
         # and to drop obsolete indexes (see MESSAGES_FETCHING_INDEX there)
         #
+        query = {task_id: doc._id}
+
         update =
           $pull:
             subscribers:
               user_id:
                 $in: users_to_remove
 
+
         # We use rawCollection() since the request is too heavy for collection2/simple-schema
-        @channels_collection.rawCollection().update({task_id: doc._id}, update)
+        @channels_collection.rawCollection().update(query, update)
+
+        return
+
+    # When a task is removed, rename its subscribers field to "archived_subscribers",
+    # read more about that field in schemas.coffee .
+    @tasks_collection.after.remove (user_id, doc, field_names, modifier, options) =>
+      #
+      # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+      # and to drop obsolete indexes (see MESSAGES_FETCHING_INDEX there)
+      #
+      query = {task_id: doc._id}
+
+      update =
+        $rename:
+          subscribers: "archived_subscribers"
+
+      # We use rawCollection() since the request is too heavy for collection2/simple-schema
+      @channels_collection.rawCollection().update(query, update)
+
+      return
+
+    # When a project is removed, rename the subscribers field of all its channels to
+    # archived_subscribers. read more about that field in schemas.coffee .
+    APP.executeAfterAppLibCode =>
+      # APP.projects is initiated in the lib app's lib folder
+
+      # DEVELOPER, don't copy paste this part without considering product implication
+      # of post project-removed procedures, search the code for
+      # AVOID_DRASTIC_POST_PROJECT_REMOVAL_PROCEDURES and read comment there.
+      APP.projects.on "project-removed", (project_id) =>
+        console.log "PROJECT REMOVED", project_id
+
+        #
+        # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+        # and to drop obsolete indexes (see CHANNEL_AUGMENTED_FIELDS_INDEX there)
+        #
+        query = {project_id: project_id}
+
+        update =
+          $rename:
+            subscribers: "archived_subscribers"
+
+        options =
+          multi: true
+
+        # We use rawCollection() since the request is too heavy for collection2/simple-schema
+        @channels_collection.rawCollection().update(query, update, options)
 
         return
 
