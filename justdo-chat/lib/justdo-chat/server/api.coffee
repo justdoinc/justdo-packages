@@ -345,6 +345,16 @@ _.extend JustdoChat.prototype,
         catch e
           self.logger.warn "subscribedChannelsRecentActivityPublicationHandler: channel #{channel_id} skipped for user #{user_id} due to lack of authorization"
 
+          # Remove the user from the channel subscribers list, it is very likely that we got this situation
+          # due to mongo non-transactional nature, we fix the mismatch here.
+          update =
+            $pull:
+              subscribers:
+                user_id: user_id
+
+          # rawCollection is used since the update is to complex for Simple Schema
+          self.channels_collection.rawCollection().update {_id: channel_id}, update
+
           channels_skipped_due_to_failed_auth[channel_id] = true
 
           return
@@ -450,6 +460,8 @@ _.extend JustdoChat.prototype,
       removed: (channel_id) ->
         if channels_skipped_due_to_failed_auth[channel_id]
           # We skipped this channel publication, no need to publish removed
+
+          delete channels_skipped_due_to_failed_auth[channel_id]
 
           return
 
