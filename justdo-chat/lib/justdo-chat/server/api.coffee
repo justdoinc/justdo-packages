@@ -3,6 +3,17 @@ channel_type_to_channels_constructors = share.channel_type_to_channels_construct
 default_subscribed_channels_recent_activity_limit = 10
 default_subscribed_unread_channels_limit = 10
 
+# If you change the fields here, consider changing them also for publicBasicUsersInfo publication
+# (from which they are derived), look for file named 020-publications.coffee
+published_recent_activity_authors_details_fields =
+  _id: 1
+  emails: 1
+  "profile.first_name": 1
+  "profile.last_name": 1
+  "profile.profile_pic": 1
+  "profile.avatar_fg": 1
+  "profile.avatar_bg": 1
+
 _.extend JustdoChat.prototype,
   _immediateInit: ->
     @_getTypeIdentifiyingFields_cached_result = {}
@@ -310,6 +321,8 @@ _.extend JustdoChat.prototype,
       JustdoChat.jdc_recent_activity_channels_collection_name
     recent_activity_messages_collection_name =
       JustdoChat.jdc_recent_activity_messages_collection_name
+    recent_activity_authors_details_collection_name =
+      JustdoChat.jdc_recent_activity_authors_details_collection_name
 
     channels_skipped_due_to_failed_auth = {} # hash is used for O(1) search
     supplement_data_sent_by_channel_id = {}
@@ -318,11 +331,39 @@ _.extend JustdoChat.prototype,
     # {
     #   channel_id: {
     #     unread_state: true/false # used to determine whether to send update to the unread property following update to the subscribers sub-document
-    #     last_message: last_message_id
+    #     last_message_id: last_message_id
+    #     last_message_author_id: the user id of the author of the last message, used maintain authors_details_sent
     #     type_specific_docs: [[collection_id, doc_id], [collection_id, doc_id], ...]
     #   }
     # }
     channel_objs_by_channel_id = {} # Cache the channel_objs created in the added phase.
+    authors_details_sent = {} # holds the authors to which we sent details about, details include, first name, last name, user avatar
+                              # structure:
+                              # {
+                              #   user_id: count of messages in the publication that had him as author
+                              # }
+
+    reportAuthorDetailsNotRequired = (author_id) ->
+      authors_details_sent[author_id] -= 1 # We assume that if an author is reported to be not required any longer, he was reported before to be required.
+
+      if authors_details_sent[author_id] == 0
+        # No one need the details about the previous channel.
+        delete authors_details_sent[author_id]
+
+        publish_this.removed recent_activity_authors_details_collection_name, author_id
+
+      return
+
+    reportAuthorDetailsRequired = (author_id) ->
+      if not authors_details_sent[author_id]?
+        authors_details_sent[author_id] = 1
+
+        publish_this.added recent_activity_authors_details_collection_name, author_id, Meteor.users.findOne(author_id, {fields: published_recent_activity_authors_details_fields})
+      else 
+        authors_details_sent[author_id] += 1
+
+      return
+
     recent_activity_channels_tracker = subscribed_channels_recent_activity_cursor.observeChanges
       added: (channel_id, data) ->
         #
@@ -387,6 +428,11 @@ _.extend JustdoChat.prototype,
           publish_this.added recent_activity_messages_collection_name, last_message._id, last_message
 
           supplement_data.last_message_id = last_message._id
+
+          author_id = last_message.author
+          supplement_data.last_message_author_id = author_id
+
+          reportAuthorDetailsRequired(author_id)
         else
           # We shouldn't get here
           self.logger.warn "subscribedChannelsRecentActivityPublicationHandler: couldn't find last message for channel #{channel_id} - this shouldn't happen"
@@ -432,6 +478,18 @@ _.extend JustdoChat.prototype,
             # We shouldn't get here
             self.logger.warn "subscribedChannelsRecentActivityPublicationHandler: couldn't find last message for channel #{channel_id} - this shouldn't happen"
 
+          new_message_author_id = last_message.author
+          previous_message_author_id = supplement_data_sent_by_channel_id[channel_id].last_message_author_id
+          supplement_data_sent_by_channel_id[channel_id].last_message_author_id = new_message_author_id
+          if new_message_author_id != previous_message_author_id
+            # The author of the last message for this channel changed.
+            # We need to update the publication with the details about the new author, if
+            # we haven't published it already for another channel.
+            # In addition we need to remove from the publication the details about the previous
+            # author if it isn't needed for any channel any longer.
+            reportAuthorDetailsNotRequired(previous_message_author_id)
+            reportAuthorDetailsRequired(new_message_author_id)
+
         #
         # Maintain unread state / Remove subscribers sub-document from updates (we don't publish it)
         #
@@ -470,6 +528,8 @@ _.extend JustdoChat.prototype,
         if (last_message_id = supplement_data_sent.last_message_id)?
           publish_this.removed recent_activity_messages_collection_name, last_message_id
 
+        if (last_message_author_id = supplement_data_sent.last_message_author_id)?
+          reportAuthorDetailsNotRequired(last_message_author_id)
 
         for record in supplement_data_sent.type_specific_docs
           [record_col, record_id] = record

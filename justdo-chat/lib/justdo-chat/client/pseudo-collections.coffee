@@ -4,3 +4,4 @@ APP.collections.JDChatInfo = new Mongo.Collection JustdoChat.jdc_info_pseudo_col
 
 APP.collections.JDChatRecentActivityChannels = new Mongo.Collection JustdoChat.jdc_recent_activity_channels_collection_name
 APP.collections.JDChatRecentActivityMessages = new Mongo.Collection JustdoChat.jdc_recent_activity_messages_collection_name
+APP.collections.JDChatRecentActivityAuthorsDetails = new Mongo.Collection JustdoChat.jdc_recent_activity_authors_details_collection_name

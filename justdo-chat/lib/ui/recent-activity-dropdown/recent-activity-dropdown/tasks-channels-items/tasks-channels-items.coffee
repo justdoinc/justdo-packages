@@ -17,7 +17,7 @@ Template.recent_activity_item_task.helpers
   last_message_author: ->
     last_message = APP.collections.JDChatRecentActivityMessages.findOne({channel_id: @_id})
 
-    return Meteor.users.findOne(last_message.author)
+    return APP.collections.JDChatRecentActivityAuthorsDetails.findOne(last_message.author)
 
   friendlyDateFormat: (date) ->
     return APP.justdo_chat.friendlyDateFormat(date)
