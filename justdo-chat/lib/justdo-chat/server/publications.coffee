@@ -65,6 +65,10 @@ _.extend JustdoChat.prototype,
       #     to allow correct implementation of incremental loading of recent messages.
       #     The count isn't fully reactive, see setInterval under subscribedChannelsRecentActivityPublicationHandler
       #     for exact interval in which it updates.
+      # * JustdoChat.jdc_recent_activity_authors_details_collection_name
+      #   * Will get user documents similar to the one published by the publicBasicUsersInfo publication
+      #     for all the authors of the messages under JustdoChat.jdc_recent_activity_messages_collection_name
+      #     (to allow proper presentation of their details).
       #
       # We publish the information to pseudo collections to avoid data collisions with
       # other publications that publish documents from the collections involved in this publication
