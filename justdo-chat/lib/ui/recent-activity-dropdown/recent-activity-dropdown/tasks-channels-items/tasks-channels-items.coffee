@@ -36,11 +36,8 @@ getTaskChannelObjectForTaskId = (task_id) ->
 
 Template.recent_activity_item_task.events
   "click .recent-activity-items-task": ->
-    channel_project = getChannelProject(@project_id)
-    channel_task = getChannelTask(@task_id)
-
-    window.location = "/p/#{channel_project._id}#&t=main&p=/#{channel_task._id}/"
-
+    # We do this outside of activateTask() since it might be called when we don't
+    # have template instance set any longer (Meteor.defer)
     if not (dropdown_instance = Template.instance().getDropdownInstance())?
       # We shouldn't get here
 
@@ -48,15 +45,50 @@ Template.recent_activity_item_task.events
 
       return
 
-    channel_obj = getTaskChannelObjectForTaskId(@task_id)
-    channel_obj.setChannelUnreadState(false)
+    activateTask = =>
+      gcm = APP.modules.project_page.getCurrentGcm()
 
-    dropdown_instance.closeDropdown()
+      gcm.setPath(["main", @task_id], {collection_item_id_mode: true})
 
-    APP.modules.project_page.setCurrentProjectToolbarSectionId("details")
+      channel_obj = getTaskChannelObjectForTaskId(@task_id)
+      channel_obj.setChannelUnreadState(false)
 
-    Meteor.defer =>
-      $(".task-pane-chat .message-editor").focus()
+      dropdown_instance.closeDropdown()
+
+      APP.modules.project_page.setCurrentProjectToolbarSectionId("details")
+
+      Meteor.defer =>
+        $(".task-pane-chat .message-editor").focus()
+
+      return
+
+    if JustdoHelpers.currentPageName() == "project" and Router.current().project_id == @project_id
+      activateTask()
+    else
+      Router.go "project", {_id: @project_id}
+
+      Tracker.flush()
+
+      tracker = Tracker.autorun (c) ->
+        module = APP.modules.project_page
+
+        project = module.curProj()
+
+        gcm = APP.modules.project_page.getCurrentGcm()
+
+        if gcm.getAllTabs()?.main?.state == "ready"
+          # Wait for main tab to become ready and activate the task
+          activateTask()
+
+          c.stop()
+
+          return
+
+        return
+
+      setTimeout ->
+        tracker.stop() # after 10 seconds stop the tracker regardless, to avoid lingering trackers in case didn't work well
+      , 10000
 
     return
 

@@ -1152,10 +1152,14 @@ _.extend GridControl.prototype,
     return true
 
   activateCollectionItemId: (item_id, cell = 0, options) ->
-    options = _.extend {force_pass_filter: false}, options
+    options = _.extend {force_pass_filter: false, readyCb: null}, options
 
     activate = =>
       @activatePath(@_grid_data.getCollectionItemIdPath(item_id), cell, options)
+
+      JustdoHelpers.callCb options.readyCb
+
+      return
 
     if options.force_pass_filter and
         (filter_items_ids = @_grid_data._filter_collection_items_ids)? and

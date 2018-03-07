@@ -489,13 +489,23 @@ _.extend GridControlMux.prototype,
       if not current_autorun.stopped
         current_autorun.stop()
 
-  setPath: (path_array) ->
+  setPath: (path_array, options) ->
+    # path_array should be of the form: [tab_id, path]
+    #
     # Activates tab_id, if it isn't yet, and set its path to the
     # requested path once ready
     #
     # If tab_id doesn't exist will log error.
     # If path doesn't exist in requrested tab_id no indication will be given
     # and will fail silently.
+    #
+    # options can be an object with the following properties:
+    #
+    # {
+    #   collection_item_id_mode: if set to true, path will be treated as an item_id of a document from the collection associated to the grid, we will find one of the paths in which this item is presented and will highlight it.
+    # }
+
+    options = _.extend {collection_item_id_mode: false}, options
 
     current_path = Tracker.nonreactive => @getPath()
     if JustdoHelpers.jsonComp(current_path, path_array)
@@ -552,11 +562,21 @@ _.extend GridControlMux.prototype,
             # If there's a path to activate, activate it
             grid_control = tab.grid_control
 
-            grid_control.forceItemsPassCurrentFilter GridData.helpers.getPathItemId(path), =>
-              if grid_control.activatePath path, 0, {smart_guess: true}
-                @logger.debug "setPath: path #{path} (or alternative) of tab #{tab_id} activated"
-              else
-                @logger.debug "setPath: path #{path} is unknown"
+            if not options.collection_item_id_mode
+              grid_control.forceItemsPassCurrentFilter GridData.helpers.getPathItemId(path), =>
+                if grid_control.activatePath path, 0, {smart_guess: true}
+                  @logger.debug "setPath: path #{path} (or alternative) of tab #{tab_id} activated"
+                else
+                  @logger.debug "setPath: path #{path} is unknown"
+            else
+              item_id = path # to ease readability
+
+              grid_control.activateCollectionItemId item_id, 0,
+                force_pass_filter: true
+                readyCb: =>
+                  @logger.debug "setPath: item id #{item_id} of tab #{tab_id} activated"
+
+                  return
           else
             @logger.debug "setPath: tab #{tab_id} activated (only tab specified, no specific path to activate)"
 
