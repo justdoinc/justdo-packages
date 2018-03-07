@@ -1154,12 +1154,17 @@ _.extend GridControl.prototype,
   activateCollectionItemId: (item_id, cell = 0, options) ->
     options = _.extend {force_pass_filter: false}, options
 
-    if options.force_pass_filter
-      if (filter_items_ids = @_grid_data._filter_collection_items_ids)?
-        if item_id not of filter_items_ids
-          @forceItemsPassCurrentFilter(item_id)
+    activate = =>
+      @activatePath(@_grid_data.getCollectionItemIdPath(item_id), cell, options)
 
-    @activatePath(@_grid_data.getCollectionItemIdPath(item_id), cell, options)
+    if options.force_pass_filter and
+        (filter_items_ids = @_grid_data._filter_collection_items_ids)? and
+        item_id not of filter_items_ids
+          @forceItemsPassCurrentFilter item_id, activate
+    else
+      activate()
+
+    return
 
   movePath: (path, new_location, cb, usersDiffConfirmationCb) ->
     # A proxy to grid-data's movePath that takes care of using

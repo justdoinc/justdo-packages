@@ -48,6 +48,14 @@ _.extend PACK.GridOperations,
           if not @_grid_data.pathPassFilter(new_item_absolute_path)
             # Force new item to show even if filtered
             @forceItemsPassCurrentFilter new_item_id
+            # XXX, I refrain from touching this working code, but starting from the version this
+            # comment is written, @forceItemsPassCurrentFilter, now can get a callback as its
+            # last parameter that takes care of flushing, it doesn't take care of 
+            # @_grid_data._flushAndRebuild(), you might want to use it in the future, but do so
+            # carefully. Daniel C.
+            #
+            # Note, that if a callback is not passed to @forceItemsPassCurrentFilter it won't
+            # call Tracker.flush().
 
             Tracker.flush() # Needed so the filter tracker computation
                             # which depends on grid_data.filter_independent_items
