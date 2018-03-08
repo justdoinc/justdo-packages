@@ -98,7 +98,7 @@ Template.project_toolbar_chat_section_chat.events
 
     return channel.toggleUserSubscriptionToChannel(Meteor.userId())
 
-  "click .subscribers-management-button-block": (e, tpl) ->
+  "click .subscribers-management-button-block, click .subscribers-names": (e, tpl) ->
     main_tpl = tpl.getMainTemplate()
 
     main_tpl.mode.set("subscribers-management")
