@@ -92,7 +92,7 @@ Template.recent_activity_item_task.events
 
     return
 
-  "click .read-indicator": (e, tpl) ->
+  "click .read-indicator-block": (e, tpl) ->
     channel_obj = getTaskChannelObjectForTaskId(@task_id)
 
     channel_obj.toggleChannelUnreadState()
