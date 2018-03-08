@@ -15,8 +15,10 @@
     </div>
 
     <div class="item-body">
-      <div class="read-indicator-block">
-        <div class="read-indicator" title="{{#if unread}}Mark as read{{else}}Mark as unread{{/if}}"></div>
+      <div class="read-indicator-block tooltip-container">
+        <div class="read-indicator"></div>
+
+        <div class="tooltip-content tooltip-left">{{#if unread}}Mark as read{{else}}Mark as unread{{/if}}</div>
       </div>
 
       <div class="main-block">

@@ -99,5 +99,7 @@ Template.recent_activity_item_task.events
 
     e.stopPropagation()
 
+    $(e.target).closest(".read-indicator-block").find(".tooltip-content").remove()
+
     return
 
