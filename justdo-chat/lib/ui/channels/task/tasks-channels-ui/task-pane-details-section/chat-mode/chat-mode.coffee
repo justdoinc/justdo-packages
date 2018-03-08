@@ -78,14 +78,28 @@ Template.project_toolbar_chat_section_chat.helpers
 
     subscribers_ids = getChannelSubscribersIdsIntersectionWithTaskMembersIds(channel)
 
+    subscribers_includes_logged_in_user = false
+    if Meteor.userId() in subscribers_ids
+      subscribers_includes_logged_in_user = true
+
+      limit -= 1 # we are going to include 'You' as last item always, so reduce limit by 1
+
+      subscribers_ids = _.without(subscribers_ids, Meteor.userId())
+
     truncated = false
     if subscribers_ids.length > limit
       truncated = true
-      subscribers_ids = subscribers_ids.slice(0, limit) # take up to 10
+
+      subscribers_ids = subscribers_ids.slice(0, limit) # take up to limit
 
     task_members_doc = Meteor.users.find({_id: {$in: subscribers_ids}}).fetch()
 
-    subscribers_names = _.map(task_members_doc, (user_obj) -> JustdoHelpers.displayName(user_obj)).join(", ")
+    if subscribers_includes_logged_in_user
+      task_members_doc.push Meteor.user()
+
+    subscribers_names = _.map(task_members_doc, (user_obj) -> JustdoHelpers.displayName(user_obj))
+
+    subscribers_names = subscribers_names.join(", ")
 
     if truncated
       subscribers_names = "#{subscribers_names}, ..."
