@@ -83,7 +83,7 @@ Template.project_toolbar_chat_section_subscribers_management.events
 
     return
 
-  "click .subscribe-state": (e, tpl) ->
-    $(e.target).toggleClass("subscribed unsubscribed")
+  "click .user-card": (e, tpl) ->
+    $(e.target).closest(".user-card").find(".subscribe-state").toggleClass("subscribed unsubscribed")
 
     return
