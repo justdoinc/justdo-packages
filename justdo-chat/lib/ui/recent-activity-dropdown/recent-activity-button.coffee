@@ -5,8 +5,7 @@ Template.justdo_chat_recent_activity_button.onRendered ->
 
   share.current_recent_activity_dropdown = @recent_activity_dropdown
 
-  @subscribed_unread_channels_count_subscription =
-    APP.justdo_chat.subscribeSubscribedUnreadChannelsCount()
+  APP.justdo_chat.requireSubscribedUnreadChannelsCountSubscription()
 
   return
 
@@ -15,10 +14,11 @@ Template.justdo_chat_recent_activity_button.onDestroyed ->
     @recent_activity_dropdown.destroy()
     @recent_activity_dropdown = null
 
-  @subscribed_unread_channels_count_subscription.stop()
+  APP.justdo_chat.releaseRequirementForSubscribedUnreadChannelsCountSubscription()
 
   return
 
 Template.justdo_chat_recent_activity_button.helpers
   unread_count: ->
-    return APP.collections.JDChatInfo.findOne("subscribed_unread_channels_count")?.count or 0
+    return APP.justdo_chat.getSubscribedUnreadChannelsCount() or 0
+

@@ -7,6 +7,10 @@ _.extend JustdoChat.prototype,
     @_subscribed_channels_recent_activity_subscription_dep = new Tracker.Dependency()
     @_initial_subscribed_channels_recent_activity_subscription_ready = new ReactiveVar false
 
+    @_resources_requiring_subscribed_unread_channels_count_subscription_count = 0
+
+    @_subscribed_unread_channels_count_subscription = null
+
     @_setupChannelsRecentActivitySubscriptionsDestroyer()
 
     return
@@ -22,8 +26,10 @@ _.extend JustdoChat.prototype,
     return
 
   _setupHtmlTitlePrefixController: ->
-    count_observer_autorun = Tracker.autorun ->
-      count = APP.collections.JDChatInfo.findOne("subscribed_unread_channels_count")?.count or 0
+    @requireSubscribedUnreadChannelsCountSubscription()
+
+    count_observer_autorun = Tracker.autorun =>
+      count = @getSubscribedUnreadChannelsCount() or 0
 
       if count > 0
         APP.page_title_manager.setPrefix("(#{count})")
@@ -32,8 +38,12 @@ _.extend JustdoChat.prototype,
 
       return
 
-    @onDestroy ->
+    @onDestroy =>
       count_observer_autorun.stop()
+
+      @releaseRequirementForSubscribedUnreadChannelsCountSubscription()
+
+    return
 
     return
 
@@ -238,6 +248,33 @@ _.extend JustdoChat.prototype,
       return
 
     return
+
+  requireSubscribedUnreadChannelsCountSubscription: ->
+    if @_resources_requiring_subscribed_unread_channels_count_subscription_count == 0
+      @_subscribed_unread_channels_count_subscription =
+        @subscribeSubscribedUnreadChannelsCount()
+
+    @_resources_requiring_subscribed_unread_channels_count_subscription_count += 1
+
+    return @_subscribed_unread_channels_count_subscription
+
+  releaseRequirementForSubscribedUnreadChannelsCountSubscription: ->
+    @_resources_requiring_subscribed_unread_channels_count_subscription_count -= 1
+
+    if @_resources_requiring_subscribed_unread_channels_count_subscription_count == 0
+      @_subscribed_unread_channels_count_subscription.stop()
+
+    return
+
+  getSubscribedUnreadChannelsCount: ->
+    # Note, you must ensure a subscription is available to you by calling:
+    # @requireSubscribedUnreadChannelsCountSubscription() that returns a subscription object for you
+    # do not stop that subscription when you don't need it any longer, call:
+    # @releaseRequirementForSubscribedUnreadChannelsCountSubscription() .
+
+    # Returns null if we can't determine the count.
+
+    return APP.collections.JDChatInfo.findOne("subscribed_unread_channels_count")?.count or null
 
   destroy: ->
     if @destroyed
