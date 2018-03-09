@@ -22,7 +22,7 @@ _.extend JustdoChat.prototype,
     Meteor.call "jdcMarkChannelAsUnread", channel_type, channel_identifier, cb
 
   markAllChannelsAsRead: (cb) ->
-    console.log "TODO: ONLY IF REQUIRED"
+    # XXX TODO: ONLY IF REQUIRED
 
     Meteor.call "jdcMarkAllChannelsAsRead", cb
 
