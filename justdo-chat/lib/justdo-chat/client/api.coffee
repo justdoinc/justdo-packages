@@ -45,6 +45,128 @@ _.extend JustdoChat.prototype,
 
     return
 
+  _setupReceivedMessagesSoundNotification: ->
+    @requireSubscribedUnreadChannelsCountSubscription()
+
+    getCountFromSubscription = =>
+      # will be null if subscription isn't ready, a number otherwise.
+      return @getSubscribedUnreadChannelsCount()
+
+    _local_storage_key = "received-messages-sound-notification-count-cache"
+    getCurrentKnownCount = ->
+      # Will return null if we can't determine current count
+      return localStorage.getItem(_local_storage_key)
+
+    setCurrentKnown = (new_count) ->
+      # new_count should be null, if count can't be determined, in such case, we won't set it to the
+      # local storage
+
+      if new_count?
+        localStorage.setItem(_local_storage_key, new_count)
+
+      return
+
+    ping_audio = new Audio("/packages/justdoinc_justdo-chat/media/notification.ogg")
+    ping = ->
+      # console.log "XXX PING!"
+      ping_audio.play()
+
+      return
+
+    # Init current known count
+    setCurrentKnown(getCountFromSubscription())
+
+    # Prevent user initiated requests to set a task as read from causing a notification sound.
+    @on "pre-set-channel-unread-state-request", userUnreadStateChangesListener = (channel_type, channel_identifier, new_state) ->
+      if new_state == true
+         # User requested a task to be marked as unread, increase the current known count by 1
+         # so when the server will report count increased, we will have that number already and
+         # will ignore it
+        if (current_known_count = getCurrentKnownCount())? # Only if we have a known count
+          # Increase count to avoid ping in other tabs
+
+          # console.log "XXX Increase count to avoid ping in other tabs"
+          setCurrentKnown(current_known_count + 1)
+
+      return
+
+    current_required_ping_timeout = null
+    clearCurrentRequiredPingTimeout = ->
+      if current_required_ping_timeout?
+        clearTimeout current_required_ping_timeout   
+
+      current_required_ping_timeout = null
+
+      return
+    server_count_observer_autorun = Tracker.autorun ->
+      clearCurrentRequiredPingTimeout() # clear existing-non-executed ping timeout, avoid multiple notifications, in short period of time.
+
+      server_count = getCountFromSubscription()
+
+      if not server_count?
+        # Subscription isn't ready, do nothing.
+
+        return
+
+      current_known_count = getCurrentKnownCount()
+
+      # console.log "XXX CHECK IF PING NEEDED", server_count, current_known_count
+      if not (current_known_count? and server_count > current_known_count)
+        # console.log "XXX DONT PING NOT HIGHER COUNT, OR PREVIOUS, DIDN'T EXIST"
+
+        # Immediately set current known count without ping
+
+        if server_count != current_known_count
+          setCurrentKnown(server_count)
+      else
+        # We had a known count, and the new count reported from the server is bigger.
+        if JustdoHelpers.isTabVisible()
+          # Immediately set current known count without ping
+
+          # console.log "XXX DONT PING WE ARE ON WINDOW"
+
+          setCurrentKnown(server_count)
+        else
+          # Wait random time within the next second, ping if after the wait, the
+          # window is still not focused and a newly fetched currently known count
+          # is still smaller from the server count.
+
+          min = 0
+          max = 1000
+          random_time_to_wait = Math.floor(Math.random() * (max - min) + min)
+
+          current_required_ping_timeout = setTimeout ->
+            server_count = getCountFromSubscription()
+            current_known_count = getCurrentKnownCount()
+
+            if JustdoHelpers.isTabVisible()
+              # Window is focused now, set current known without ping
+              setCurrentKnown(server_count)
+
+              # console.log "XXX TAB BECAME VISIBLE, DON'T PING"
+            else
+              if current_known_count? and server_count > current_known_count
+                ping()
+
+                setCurrentKnown(server_count)
+              # else
+              #   # Ping isn't required any longer
+              #   console.log "XXX Ping isn't required any longer"
+
+            clearCurrentRequiredPingTimeout()
+          , random_time_to_wait
+
+          # console.log "XXX WAIT #{random_time_to_wait} AND PING"
+      return
+
+
+    @onDestroy =>
+      server_count_observer_autorun.stop()
+
+      @removeListener "pre-set-channel-unread-state-request", userUnreadStateChangesListener
+
+      @releaseRequirementForSubscribedUnreadChannelsCountSubscription()
+
     return
 
   _deferredInit: ->

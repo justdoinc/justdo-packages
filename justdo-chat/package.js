@@ -165,5 +165,11 @@ Package.onUse(function (api) {
   // the server will have the access to the apis loaded after the init.coffee
   // file. 
 
+  //
+  // Assets
+  //
+
+  api.addAssets("media/notification.ogg", client);
+
   api.export("JustdoChat", both);
 });

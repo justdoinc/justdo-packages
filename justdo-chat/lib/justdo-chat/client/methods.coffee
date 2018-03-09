@@ -16,6 +16,8 @@ _.extend JustdoChat.prototype,
     Meteor.call "jdcSendMessage", channel_type, channel_identifier, message_obj, cb
 
   setChannelUnreadState: (channel_type, channel_identifier, new_state, cb) ->
+    @emit "pre-set-channel-unread-state-request", channel_type, channel_identifier, new_state
+
     Meteor.call "jdcSetChannelUnreadState", channel_type, channel_identifier, new_state, cb
 
   markAllChannelsAsRead: (cb) ->
