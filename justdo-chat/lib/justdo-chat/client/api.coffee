@@ -55,7 +55,7 @@ _.extend JustdoChat.prototype,
     _local_storage_key = "received-messages-sound-notification-count-cache"
     getCurrentKnownCount = ->
       # Will return null if we can't determine current count
-      return localStorage.getItem(_local_storage_key)
+      return parseInt(localStorage.getItem(_local_storage_key), 10)
 
     setCurrentKnown = (new_count) ->
       # new_count should be null, if count can't be determined, in such case, we won't set it to the
@@ -396,7 +396,10 @@ _.extend JustdoChat.prototype,
 
     # Returns null if we can't determine the count.
 
-    return APP.collections.JDChatInfo.findOne("subscribed_unread_channels_count")?.count or null
+    if not (subscribed_unread_channels_count_doc = APP.collections.JDChatInfo.findOne("subscribed_unread_channels_count"))?
+      return null
+
+    return subscribed_unread_channels_count_doc.count
 
   destroy: ->
     if @destroyed
