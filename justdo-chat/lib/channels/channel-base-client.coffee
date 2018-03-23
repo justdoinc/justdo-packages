@@ -228,6 +228,16 @@ _.extend ChannelBaseClient.prototype,
 
     return
 
+  makeWindowVisible: ->
+    # A proxy to ease calling to the method under the bottom windows manager with the same name
+
+    return @justdo_chat._justdo_chat_bottom_windows_manager.makeWindowVisible(@channel_type, @getChannelIdentifier())
+
+  removeWindow: ->
+    # A proxy to ease calling to the method under the bottom windows manager with the same name
+
+    return @justdo_chat._justdo_chat_bottom_windows_manager.removeWindow(@channel_type, @getChannelIdentifier())
+
   _channel_messages_subscription: null
   _active_channel_messages_subscription_options: null
   subscribeChannelMessagesPublication: (options, callbacks) ->
@@ -370,6 +380,7 @@ _.extend ChannelBaseClient.prototype,
     options = _.extend {}, {
       initial_messages_to_request: 10
       additional_messages_to_request: 30
+      request_authors_details: false
       onReady: null
     }, options
 
@@ -397,7 +408,7 @@ _.extend ChannelBaseClient.prototype,
     if channel_messages_subscription_state == "no-sub"
       @logger.debug "Initial channel messages subscription"
 
-      performSubscription({limit: options.initial_messages_to_request})
+      performSubscription({limit: options.initial_messages_to_request, provide_authors_details: options.request_authors_details})
 
       return
     else if channel_messages_subscription_state == "initial-not-ready"
@@ -417,7 +428,7 @@ _.extend ChannelBaseClient.prototype,
       # Use same options as previous call, change only the limit
       options = _.extend {}, options, {limit: new_limit}
 
-      performSubscription({limit: options.limit})
+      performSubscription({limit: options.limit, provide_authors_details: options.request_authors_details})
 
       return
     else

@@ -6,11 +6,13 @@
       </div>
 
       <div class="main-block">
-        <span class="project">{{#with channel_project}}{{title}}{{/with}}:</span>
+        <div class="task-details">
+          <span class="project">{{#with channel_project}}{{title}}{{/with}}:</span>
 
-        {{#with channel_task}}
-          <span class="task-id">#{{seqId}} - </span><span class="name">{{title}}</span>
-        {{/with}}
+          {{#with channel_task}}
+            <span class="task-id">#{{seqId}} - </span><span class="name">{{title}}</span>
+          {{/with}}
+        </div>
       </div>
     </div>
 

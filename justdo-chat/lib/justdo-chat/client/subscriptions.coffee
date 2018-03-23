@@ -16,3 +16,11 @@ _.extend JustdoChat.prototype,
     check options, Object
 
     return Meteor.subscribe "jdcSubscribedChannelsRecentActivity", options, callbacks
+
+  subscribeBottomWindows: (options, callbacks) ->
+    if not options?
+      options = {}
+
+    check options, Object
+
+    return Meteor.subscribe "jdcBottomWindows", options, callbacks

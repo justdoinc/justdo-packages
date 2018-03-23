@@ -2,6 +2,10 @@
 # a getChannelObject() method.
 
 Template.common_chat_messages_board.onCreated ->
+  @request_authors_details = @data.request_authors_details or false
+
+  @messages_authors_collection = @data.messages_authors_collection or Meteor.users
+
   @scrollToBottom = =>
     $messages_board_viewport = @$(".messages-board-viewport")
 
@@ -44,6 +48,8 @@ Template.common_chat_messages_board.onCreated ->
     #
     channel = @data.getChannelObject()
 
+    channel.requestChannelMessages({request_authors_details: @request_authors_details}) # Request first messages payload
+
     # When a new message is sent by the user for this channel - scroll to bottom
     channel.on "message-sent", (@message_sent_handler = @scrollToBottom.bind(@))
 
@@ -80,7 +86,8 @@ Template.common_chat_messages_board.events
       # channel.requestChannelMessages will request more messages, if there are more
       # messages to request.
 
-      channel.requestChannelMessages 
+      channel.requestChannelMessages
+        request_authors_details: @request_authors_details
         onReady: =>
           tpl.stick_viewport_to_card_on_next_cards_render = tpl.$(".message-card:first-child")
 
@@ -92,7 +99,10 @@ Template.common_chat_messages_board_message_card.helpers
   friendlyDateFormat: ->
     return APP.justdo_chat.friendlyDateFormat(@createdAt)
 
-  authorDoc: -> return Meteor.users.findOne(@author)
+  authorDoc: ->
+    tpl = Template.closestInstance("common_chat_messages_board")
+
+    return tpl.messages_authors_collection.findOne(@author)
 
 Template.common_chat_messages_board_message_card.onRendered ->
   $message_card = @$(".message-card")

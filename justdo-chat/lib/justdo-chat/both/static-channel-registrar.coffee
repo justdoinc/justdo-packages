@@ -15,8 +15,9 @@ _.extend JustdoChat,
 
     {
       channel_type, # should be == @channel_type in client/server constructor
-      channel_type_camel_case # should be the same as the camel case form used beofre the client/server constructors names
+      channel_type_camel_case, # should be the same as the camel case form used beofre the client/server constructors names
       recent_activity_supplementary_pseudo_collections
+      bottom_windows_supplementary_pseudo_collections
     } = conf
 
     #
@@ -28,6 +29,16 @@ _.extend JustdoChat,
       for col_id, col_name of recent_activity_supplementary_pseudo_collections
         recent_activity_supplementary_pseudo_collections[col_id] = "JDChatRecentActivity" + col_name # add the common prefix
       conf.recent_activity_supplementary_pseudo_collections = recent_activity_supplementary_pseudo_collections
+
+    #
+    # Load bottom_windows_supplementary_pseudo_collections
+    #
+    if bottom_windows_supplementary_pseudo_collections?
+      bottom_windows_supplementary_pseudo_collections = _.extend {}, bottom_windows_supplementary_pseudo_collections # shallow copy
+
+      for col_id, col_name of bottom_windows_supplementary_pseudo_collections
+        bottom_windows_supplementary_pseudo_collections[col_id] = "JDChatBottomWindows" + col_name # add the common prefix
+      conf.bottom_windows_supplementary_pseudo_collections = bottom_windows_supplementary_pseudo_collections
 
     share.channel_types.push channel_type
 

@@ -1,4 +1,5 @@
 @import "{justdoinc:justdo-chat}/lib/ui/channels/task/tasks-channels-ui/task-pane-details-section/vars.scss"
+@import "{justdoinc:justdo-chat}/lib/ui/common-components/vars.scss";
 
 .task-pane-chat
   .chat-mode
@@ -32,54 +33,12 @@
         padding-right: 5px
 
   .messages-board-viewport
-    border-top: $parts-separator-border
-
     margin-top: 3px
     max-height: 250px
     overflow-y: auto
 
   &.empty .messages-board-viewport
     border: 0 none
-
-  .message-card
-    position: relative
-
-    padding: 8px 5px
-    border-bottom: $internal-separator-border
-    transition: background-color 1s ease-in
-
-    &:last-child
-      border-bottom: 0 none
-
-    .author
-      font-weight: bold
-
-    .date
-      float: right
-      color: #686666
-      font-size: 12px
-
-    .avatar
-      position: absolute
-
-      margin-top: 1px
-
-      img
-        width: 33px
-        height: 33px
-
-    .message-container
-      margin-left: 39px
-
-  .message-editor
-    width: 100%
-    border: none
-    height: 35px
-    padding: 7px 7px 0
-    resize: none
-    outline: none
-    margin-bottom: 4px
-    border-top: $parts-separator-border
 
   .user-subscription-toggle
     display: inline-block

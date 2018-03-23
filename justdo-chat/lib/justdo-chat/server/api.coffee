@@ -3,6 +3,8 @@ channel_type_to_channels_constructors = share.channel_type_to_channels_construct
 default_subscribed_channels_recent_activity_limit = 10
 default_subscribed_unread_channels_limit = 10
 
+default_bottom_windows_limit = 30
+
 # If you change the fields here, consider changing them also for publicBasicUsersInfo publication
 # (from which they are derived), look for file named 020-publications.coffee
 published_recent_activity_authors_details_fields =
@@ -16,8 +18,6 @@ published_recent_activity_authors_details_fields =
 
 _.extend JustdoChat.prototype,
   _immediateInit: ->
-    @_getTypeIdentifiyingFields_cached_result = {}
-
     for type, conf of share.channel_types_server_specific_conf
       if conf._immediateInit?
         conf._immediateInit.call(@)
@@ -369,7 +369,8 @@ _.extend JustdoChat.prototype,
         #
         # Begin by creating a channel object based on the channel doc.
         # The process of creating a channel object involves verification that the user has authorization
-        # to access the channel. An exception is thrown otherwise.
+        # to access the channel. If the user doesn't have access we remove him from the subscribers array
+        # for the channel.
         #
         # IMPORTANT Relying on the fact that user is subscribed to a channel is not enough!!!
         #
@@ -410,6 +411,9 @@ _.extend JustdoChat.prototype,
           if subscriber.user_id == user_id
             if not (unread = subscriber.unread)?
               unread = false
+
+            break
+
         data.unread = unread
         delete data.subscribers
 
@@ -500,6 +504,8 @@ _.extend JustdoChat.prototype,
               if not (new_unread_state = subscriber.unread)?
                 new_unread_state = false
 
+              break
+
           # console.log "NEW UNREAD STATE", new_unread_state, supplement_data_sent_by_channel_id[channel_id].unread_state
 
           if new_unread_state != supplement_data_sent_by_channel_id[channel_id].unread_state
@@ -574,6 +580,331 @@ _.extend JustdoChat.prototype,
 
     return
 
+  #
+  # Bottom windows related
+  #
+  _getBottomWindowsChannelsCursorOptionsSchema: new SimpleSchema
+    user_id:
+      type: String
+    fields:
+      type: Object
+      blackbox: true
+    limit:
+      type: Number
+
+      defaultValue: default_subscribed_channels_recent_activity_limit
+
+      max: 1000
+  _getBottomWindowsChannelsCursor: (options) ->
+    # Returns a cursor for channels for which user_id has bottom windows for, sorted by their order (ASC)
+
+    # Note, we intentionally not receiving the user_id as last arg, this method should
+    # be used internally, and taking user_id as last argument might encourage someone to expose
+    # it. (D.C)
+
+    if not options?
+      options = {}
+
+    options_schema = @_getBottomWindowsChannelsCursorOptionsSchema._schema
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_getBottomWindowsChannelsCursorOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
+
+    #
+    # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+    # and to drop obsolete indexes (see USER_BOTTOM_WINDOWS_INDEX there)
+    #
+    # NOTE: the following uses a subset of the USER_BOTTOM_WINDOWS_INDEX index.
+    bottom_windows_channels_cursor_query =
+      "bottom_windows.user_id": options.user_id
+
+    bottom_windows_channels_cursor_options =
+      limit: options.limit
+      sort:
+        "bottom_windows.order": 1
+
+    if options.fields?
+      bottom_windows_channels_cursor_options.fields = options.fields
+
+    return @channels_collection.find bottom_windows_channels_cursor_query, bottom_windows_channels_cursor_options
+
+
+  _bottomWindowsPublicationHandlerOptionsSchema: new SimpleSchema
+    limit:
+      type: Number
+
+      defaultValue: default_bottom_windows_limit
+
+      max: default_bottom_windows_limit
+  bottomWindowsPublicationHandler: (publish_this, options, user_id) ->
+    # !!! IMPORTANT !!!
+    # Documentation for this handler is maintained under publications.coffee (jdcBottomWindows)
+    # reading the docs there is essential to understanding this handler and its security model
+    # KEEP IT UPDATED if you change behavior below!
+    # !!! IMPORTANT !!!
+
+    self = @
+
+    check user_id, String
+
+    if not options?
+      options = {}
+
+    options_schema = @_bottomWindowsPublicationHandlerOptionsSchema._schema
+    if (pre_validation_limit = options?.limit)?
+      if pre_validation_limit > (max_limit = options_schema.limit.max)
+        # Just to provide a more friendly error message for that case (v.s the one simple schema will throw)
+        throw @_error "invalid-options", "Can't subscribe to more than #{max_limit} bottom windows entries"
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_bottomWindowsPublicationHandlerOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
+
+    #
+    # Get the bottom windows channels
+    #
+
+    # If you change published fields, update comment under publications.coffee
+    fields_to_fetch =
+      _id: 1
+      subscribers: 1
+      bottom_windows: 1
+      channel_type: 1
+
+    for field_id in @getAllTypesIdentifiyingAndAugmentedFields()
+      fields_to_fetch[field_id] = 1
+
+    bottom_windows_channels_cursor = @_getBottomWindowsChannelsCursor
+      limit: options.limit
+      user_id: user_id
+      fields: fields_to_fetch
+
+    # See comment under publications.coffee for why we use pseudo collection name
+    # here. (under jdcBottomWindows)
+    bottom_windows_channels_collection_name =
+      JustdoChat.jdc_bottom_windows_channels_collection_name
+
+    channels_skipped_due_to_failed_auth = {} # hash is used for O(1) search
+    supplement_data_sent_by_channel_id = {}
+    # supplement_data_sent_by_channel_id structure is as follows:
+    # 
+    # {
+    #   channel_id: {
+    #     unread_state: true/false # used to determine whether to send update to the unread property following update to the subscribers sub-document
+    #     window_state: "open"/"min"
+    #     order: Number
+    #     type_specific_docs: [[collection_id, doc_id], [collection_id, doc_id], ...]
+    #   }
+    # }
+    channel_objs_by_channel_id = {} # Cache the channel_objs created in the added phase.
+
+    bottom_windows_channels_tracker = bottom_windows_channels_cursor.observeChanges
+      added: (channel_id, data) ->
+        #
+        # Begin by creating a channel object based on the channel doc.
+        # The process of creating a channel object involves verification that the user has authorization
+        # to access the channel. If the user doesn't have access we remove him from the bottom_windows array
+        # for the channel.
+        #
+        # IMPORTANT Relying on the fact that user has a bottom window for the channel is not enough!!!
+        #
+
+        channel_type = data.channel_type
+
+        # pick identifying fields
+        channel_identifying_fields = _.pick data, self.getTypeIdentifiyingFields(channel_type)
+
+        try
+          channel_obj = self.generateServerChannelObject(channel_type, channel_identifying_fields, user_id)
+          channel_objs_by_channel_id[channel_id] = channel_obj
+        catch e
+          self.logger.warn "bottomWindowsPublicationHandler: channel #{channel_id} skipped for user #{user_id} due to lack of authorization"
+
+          # Remove the user from the bottom_windows array, it is very likely that we got this situation
+          # due to mongo non-transactional nature, we fix the mismatch here.
+          update =
+            $pull:
+              bottom_windows:
+                user_id: user_id
+
+          # rawCollection is used since the update is to complex for Simple Schema
+          self.channels_collection.rawCollection().update {_id: channel_id}, update
+
+          channels_skipped_due_to_failed_auth[channel_id] = true
+
+          return
+
+        # Find the unread state for the logged-in user, and publish only that info
+        # under the unread property.
+        #
+        # If you change this behavior, or properties names, please update comment under
+        # publications.coffee
+        data.unread = false # Note, unlike, subscribedChannelsRecentActivityPublicationHandler
+                            # for the bottomWindowsPublicationHandler, a bottom window doesn't
+                            # imply user is subscribed, so we might not find the performing_user
+                            # under subscribers, it changes the loop slightly.
+        subscribers = data.subscribers
+        for subscriber in subscribers
+          if subscriber.user_id == user_id
+            if not (unread = subscriber.unread)?
+              unread = false
+
+            data.unread = unread
+
+            break
+
+        delete data.subscribers # We don't publish the full subscribers list for this publication
+
+        bottom_windows = data.bottom_windows
+        for bottom_window in bottom_windows
+          # We assume we will find the user in bottom_windows list
+          if bottom_window.user_id == user_id
+            if not (state = bottom_window.state)?
+              state = JustdoChat.schemas.BottomWindowSchema._schema.state.defaultValue
+
+            if not (order = bottom_window.order)?
+              order = JustdoChat.schemas.BottomWindowSchema._schema.order.defaultValue
+
+            data.state = state
+            data.order = order
+
+            break
+
+        delete data.bottom_windows # We don't publish the full bottom_windows list for this publication
+
+        publish_this.added bottom_windows_channels_collection_name, channel_id, data
+
+        #
+        # Get supplement docs
+        #
+        supplement_data = {
+          unread_state: data.unread
+          state: data.state
+          order: data.order
+          type_specific_docs: []
+        }
+
+        supplementary_records = channel_obj.getBottomWindowsChannelsSupplementaryDocs()
+
+        for supplementary_record in supplementary_records
+          [collection_id, doc_id, doc] = supplementary_record
+
+          publish_this.added collection_id, doc_id, doc
+
+          supplement_data.type_specific_docs.push [collection_id, doc_id]
+
+        supplement_data_sent_by_channel_id[channel_id] = supplement_data
+
+        return
+
+      changed: (channel_id, data) ->
+        if channels_skipped_due_to_failed_auth[channel_id]
+          # We skipped this channel publication, no need to react to changes
+
+          return
+
+        channel_obj = channel_objs_by_channel_id[channel_id]
+
+        #
+        # Maintain unread state / Remove subscribers sub-document from updates (we don't publish it)
+        #
+        new_unread_state = false
+        if (subscribers = data.subscribers)?
+          for subscriber in subscribers
+            # We don't assume we will find the user in subscribers list
+            if subscriber.user_id == user_id
+              if not (new_unread_state = subscriber.unread)?
+                new_unread_state = false
+
+              break
+
+          # console.log "NEW UNREAD STATE", new_unread_state, supplement_data_sent_by_channel_id[channel_id].unread_state
+
+          if new_unread_state != supplement_data_sent_by_channel_id[channel_id].unread_state
+            data.unread = new_unread_state
+
+            supplement_data_sent_by_channel_id[channel_id].unread_state = new_unread_state
+
+          delete data.subscribers # We don't publish this field
+
+
+        #
+        # Maintain order/staete , Remove bottom_windows sub-document from updates (we don't publish it)
+        #
+        new_state = JustdoChat.schemas.BottomWindowSchema._schema.state.defaultValue
+        new_order = JustdoChat.schemas.BottomWindowSchema._schema.order.defaultValue
+        if (bottom_windows = data.bottom_windows)?
+          for bottom_window in bottom_windows
+            # We assume we will find the user in the bottom_windows list
+            if bottom_window.user_id == user_id
+              if bottom_window.state?
+                new_state = bottom_window.state
+
+              if bottom_window.order?
+                new_order = bottom_window.order
+
+              break
+
+          if new_state != supplement_data_sent_by_channel_id[channel_id].state
+            data.state = new_state
+
+            supplement_data_sent_by_channel_id[channel_id].state = new_state
+
+          if new_order != supplement_data_sent_by_channel_id[channel_id].order
+            data.order = new_order
+
+            supplement_data_sent_by_channel_id[channel_id].order = new_order
+
+          delete data.bottom_windows # We don't publish this field
+
+        if not _.isEmpty data
+          publish_this.changed bottom_windows_channels_collection_name, channel_id, data
+
+        return
+
+      removed: (channel_id) ->
+        if channels_skipped_due_to_failed_auth[channel_id]
+          # We skipped this channel publication, no need to publish removed
+
+          delete channels_skipped_due_to_failed_auth[channel_id]
+
+          return
+
+        publish_this.removed bottom_windows_channels_collection_name, channel_id
+
+        supplement_data_sent = supplement_data_sent_by_channel_id[channel_id]
+
+        for record in supplement_data_sent.type_specific_docs
+          [record_col, record_id] = record
+
+          publish_this.removed record_col, record_id
+
+        # Remove all supplement_data_sent_by_channel_id
+        delete channel_objs_by_channel_id[channel_id]
+        delete supplement_data_sent_by_channel_id[channel_id]
+
+        return
+
+    #
+    # onStop setup + ready()
+    #
+    publish_this.onStop ->
+      bottom_windows_channels_tracker.stop()
+
+      return
+
+    publish_this.ready()
+
+    return
+
   # The result shouldn't change during the instance lifetime, so we can cache it
   _getAllTypesIdentifiyingAndAugmentedFields_cached_result: null
   getAllTypesIdentifiyingAndAugmentedFields: ->
@@ -603,18 +934,6 @@ _.extend JustdoChat.prototype,
     @_allTypesIdentifiyingAndAugmentedFields_cached_result = result
 
     return @_allTypesIdentifiyingAndAugmentedFields_cached_result
-
-  # The result shouldn't change during the instance lifetime, so we can cache it
-  _getTypeIdentifiyingFields_cached_result: null # initiated to {} on @_immediateInit()
-  getTypeIdentifiyingFields: (type) ->
-    if (identifying_fields = @_getTypeIdentifiyingFields_cached_result[type])?
-      return identifying_fields
-
-    identifying_fields = share.channel_types_conf[type].channel_identifier_fields_simple_schema._schemaKeys
-
-    @_getTypeIdentifiyingFields_cached_result[type] = identifying_fields
-
-    return identifying_fields
 
   _getChannelLastMessageFromChannelObject: (channel_obj, channel_id) ->
     last_message_cursor = channel_obj._getChannelMessagesCursor

@@ -1,8 +1,11 @@
 channel_type_to_channels_constructors = share.channel_type_to_channels_constructors
+JustdoChatBottomWindowsManager = share.JustdoChatBottomWindowsManager
 
 _.extend JustdoChat.prototype,
   _immediateInit: ->
     @_initRecentActivitySupplementaryPseudoCollections()
+
+    @_initBottomWindowsSupplementaryPseudoCollections()
 
     @_subscribed_channels_recent_activity_subscription_dep = new Tracker.Dependency()
     @_initial_subscribed_channels_recent_activity_subscription_ready = new ReactiveVar false
@@ -15,6 +18,12 @@ _.extend JustdoChat.prototype,
 
     return
 
+  _deferredInit: ->
+    if @destroyed
+      return
+
+    return
+
   _initRecentActivitySupplementaryPseudoCollections: ->
     @recent_activity_supplementary_pseudo_collections = {}
 
@@ -22,6 +31,16 @@ _.extend JustdoChat.prototype,
       if (sup_pseudo_cols = channel_type_conf.recent_activity_supplementary_pseudo_collections)?
         for col_id, col_name of sup_pseudo_cols
           @recent_activity_supplementary_pseudo_collections[col_id] = new Mongo.Collection(col_name)
+
+    return
+
+  _initBottomWindowsSupplementaryPseudoCollections: ->
+    @bottom_windows_supplementary_pseudo_collections = {}
+
+    for channel_type, channel_type_conf of share.channel_types_conf
+      if (sup_pseudo_cols = channel_type_conf.bottom_windows_supplementary_pseudo_collections)?
+        for col_id, col_name of sup_pseudo_cols
+          @bottom_windows_supplementary_pseudo_collections[col_id] = new Mongo.Collection(col_name)
 
     return
 
@@ -169,8 +188,13 @@ _.extend JustdoChat.prototype,
 
     return
 
-  _deferredInit: ->
-    if @destroyed
+  _setupBottomWindows: ->
+    @_justdo_chat_bottom_windows_manager = new JustdoChatBottomWindowsManager
+      justdo_chat: @
+
+    @onDestroy =>
+      @_justdo_chat_bottom_windows_manager.destroy()
+
       return
 
     return

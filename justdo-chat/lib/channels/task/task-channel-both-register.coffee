@@ -39,3 +39,21 @@ JustdoChat.registerChannelType
   # Access by calling the static method: JustdoChat.getChannelTypeConf(channel_type)
   recent_activity_supplementary_pseudo_collections:
     tasks: "Tasks"
+
+  # Read comment for publication jdcBottomWindows under publications.coffee
+  # to learn about bottom_windows_supplementary_pseudo_collections purpose.
+  #
+  # Collections should be defined as follows:
+  #
+  # {col_id: "CollectionName"}
+  #
+  # The provided 'CollectionName's will be prefixed by us with JDChatBottomWindows
+  # and will have that name when accessed through the correct APIs.
+  #
+  # Once JustdoChat is initiated on the client side, a pseudo collections will be created under:
+  # justdo_chat_object.bottom_windows_supplementary_pseudo_collections.col_id <- That will be a minimongo
+  # object.
+  #
+  # Access by calling the static method: JustdoChat.getChannelTypeConf(channel_type)
+  bottom_windows_supplementary_pseudo_collections:
+    tasks: "Tasks"

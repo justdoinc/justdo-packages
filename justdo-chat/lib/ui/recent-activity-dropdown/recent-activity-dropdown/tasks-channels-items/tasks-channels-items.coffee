@@ -24,8 +24,7 @@ Template.recent_activity_item_task.helpers
 
 getTaskChannelObjectForTaskId = (task_id) ->
   channel_obj = APP.justdo_chat.generateClientChannelObject "task", { # channel conf
-    grid_control: {} # Required options, but we might not have it in all cases, and for our needs from the channel_obj, it is redundant.
-    project_object: {} # Required options, but we might not have it in all cases, and for our needs from the channel_obj, it is redundant.
+    tasks_collection: APP.justdo_chat.recent_activity_supplementary_pseudo_collections.tasks
     task_id: task_id
   }, { # other options
     custom_channels_collection: APP.collections.JDChatRecentActivityChannels
@@ -35,13 +34,29 @@ getTaskChannelObjectForTaskId = (task_id) ->
   return channel_obj
 
 Template.recent_activity_item_task.events
-  "click .recent-activity-items-task": ->
+  "click .recent-activity-items-task": (e) ->
+    # If the user didn't click on the text under the task-details div, we just open a window
+    # for the channel, otherwise, we switch to the channel's task project to activate the
+    # channel task on the project grid.
+
     # We do this outside of activateTask() since it might be called when we don't
     # have template instance set any longer (Meteor.defer)
     if not (dropdown_instance = Template.instance().getDropdownInstance())?
       # We shouldn't get here
 
       logger.warn "Can't find dropdown instance"
+
+      return
+
+    if $(e.target).closest(".task-details").length == 0
+      # Open/highlight the window for the channel.
+      channel_obj = getTaskChannelObjectForTaskId(@task_id)
+
+      channel_obj.makeWindowVisible()
+
+      channel_obj.setChannelUnreadState(false)
+
+      dropdown_instance.closeDropdown()
 
       return
 

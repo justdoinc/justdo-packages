@@ -27,3 +27,12 @@ _.extend JustdoChat.prototype,
 
   manageSubscribers: (channel_type, channel_identifier, update, cb) ->
     Meteor.call "jdcManageSubscribers", channel_type, channel_identifier, update, cb
+
+  #
+  # Bottom windows
+  #
+  setBottomWindow: (channel_type, channel_identifier, window_settings, cb) ->
+    Meteor.call "jdcSetBottomWindow", channel_type, channel_identifier, window_settings, cb
+
+  removeBottomWindow: (channel_type, channel_identifier, cb) ->
+    Meteor.call "jdcRemoveBottomWindow", channel_type, channel_identifier, cb

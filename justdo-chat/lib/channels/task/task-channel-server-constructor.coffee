@@ -77,4 +77,17 @@ _.extend TaskChannelServer.prototype,
 
     return supplementary_docs
 
+  getBottomWindowsChannelsSupplementaryDocs: ->
+    sup_cols =
+      JustdoChat.getChannelTypeConf(@channel_type).bottom_windows_supplementary_pseudo_collections
+
+    # We assume all user projects are published, and doesn't need to be published 
+    channel_task_doc = _.pick @getIdentifierTaskDoc(), ["_id", "seqId", "project_id", "title"]
+
+    supplementary_docs = [
+      [sup_cols.tasks, channel_task_doc._id, channel_task_doc]
+    ]
+
+    return supplementary_docs
+
 share.TaskChannelServer = TaskChannelServer

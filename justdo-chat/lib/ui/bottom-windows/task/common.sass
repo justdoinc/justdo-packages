@@ -1,0 +1,42 @@
+@import "{justdoinc:justdo-chat}/lib/ui/bottom-windows/task/vars.scss";
+
+.chat-window
+  position: absolute
+  width: 100%
+  background: #FFFFFF
+  border-radius: 3px 3px 0px 0px
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25), 0px 0px 10px rgba(0, 0, 0, 0.05)
+
+  .chat-header
+    background: #F8F8F8
+    height: $chat-window-header-height
+    border-radius: 2px 2px 0px 0px
+    padding: 0px 10px
+
+  .close-chat 
+    float: right
+    font-size: 12px
+    color: #5d5d5d
+    cursor: pointer
+    height: 100%
+    line-height: 33px
+
+  .task-id
+    float: left
+    font-weight: bold
+    font-size: 13px
+    line-height: 30px
+    color: #484848
+
+.window-active
+  .chat-header 
+    background: $active-window-background
+
+  .close-chat
+    color: rgba(255, 255, 255, 0.55)
+
+  .chat-info
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1)
+
+  .task-id
+    color: white

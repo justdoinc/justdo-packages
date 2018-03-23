@@ -21,14 +21,9 @@ _.extend TaskChannelClient.prototype,
   channel_name_dash_separated: "#{channel_type}-channel-client" # for logging purposes
 
   channel_conf_schema: new SimpleSchema
-    grid_control:
+    tasks_collection:
       type: "skip-type-check"
       optional: false
-
-    project_object:
-      type: Object
-      optional: false
-      blackbox: true
 
     task_id:
       type: String
@@ -36,7 +31,7 @@ _.extend TaskChannelClient.prototype,
 
   loadChannel: ->
     # Bind all channel_conf props to @
-    {@grid_control, @project_object, @task_id} = @channel_conf
+    {@tasks_collection, @task_id} = @channel_conf
 
     return
 
@@ -46,7 +41,7 @@ _.extend TaskChannelClient.prototype,
     return {task_id: @task_id}
 
   proposedSubscribersForNewChannel: ->
-    if not (task_doc = this.grid_control.collection.findOne(@task_id))?
+    if not (task_doc = @tasks_collection.findOne(@task_id))?
       return []
 
     return _.union([Meteor.userId(), task_doc.owner_id])

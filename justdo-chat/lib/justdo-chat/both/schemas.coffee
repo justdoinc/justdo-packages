@@ -23,12 +23,30 @@ JustdoChat.schemas.SubscribedUserSchema = new SimpleSchema
 
     type: Date
 
-  # web_window_state:
-  #   type: String
+#
+# BottomWindowSchema
+#
+JustdoChat.schemas.BottomWindowSchema = new SimpleSchema
+  user_id:
+    label: "User ID"
 
-  #   optional: true
+    type: String
 
-  #   allowedValues: ["open", "minified", "closed"]
+  state:
+    label: "Window State"
+
+    type: String
+
+    allowedValues: ["min", "open"]
+
+    defaultValue: "open"
+
+  order:
+    label: "Order"
+
+    type: Number
+
+    defaultValue: 0
 
 #
 # ChannelsSchema
@@ -76,6 +94,17 @@ JustdoChat.schemas.ChannelsSchema = new SimpleSchema
     # ** Removed project/task been unremoved
 
     type: [JustdoChat.schemas.SubscribedUserSchema]
+
+    optional: true
+
+  bottom_windows:
+    # Maintains information about users that has an open window with that channel.
+    #
+    # Unlike subscribers, in case that a channel becomes obsolete, we simply remove
+    # this field so we don't maintain archived_bottom_windows .
+    type: [JustdoChat.schemas.BottomWindowSchema]
+
+    defaultValue: []
 
     optional: true
 

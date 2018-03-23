@@ -1,0 +1,18 @@
+<template name="chat_bottom_windows_extra_windows_button">
+  <div class="chat-extra-windows-button-container">
+    <div class="chat-extra-windows-button dropup">
+      <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-comment" aria-hidden="true"></i>
+      </button>
+      <ul class="dropdown-menu">
+        {{#each extraWindows}}
+          {{> chat_bottom_windows_extra_windows_button_item}}
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</template>
+
+<template name="chat_bottom_windows_extra_windows_button_item">
+  <li><div class="window-title">{{{xssGuard title}}}</div> <div class="close-window"><i class="close-hidden-chat fa fa-times" aria-hidden="true"></i></div></li>
+</template>

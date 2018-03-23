@@ -44,4 +44,7 @@ _.extend JustdoChat.prototype,
     # USER_UNREAD_MESSAGES_INDEX
     @channels_collection.rawCollection().createIndex({"subscribers.user_id": 1, "subscribers.unread": 1})
 
+    # USER_BOTTOM_WINDOWS_INDEX
+    @channels_collection.rawCollection().createIndex({"bottom_windows.user_id": 1, "bottom_windows.order": 1})
+
     return

@@ -7,7 +7,10 @@ JustdoChat.registerChannelTypeServerSpecific
   _immediateInit: ->
     # @ is the JustdoChat object's
 
-    # When a user stop being a member of a task unsubscribe him from the task chat
+    # When a user stop being a member of a task:
+    #
+    #  * unsubscribe him from the task chat
+    #  * Remove entry he has in the open_windows field of that task (if any).
     @tasks_collection.after.update (user_id, doc, field_names, modifier, options) =>
       # Remove the user as subscriber from tasks channels when the user is removed
       # from the task users field: either for a specific task, or when the user removed
@@ -35,9 +38,13 @@ JustdoChat.registerChannelTypeServerSpecific
 
         #
         # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-        # and to drop obsolete indexes (see MESSAGES_FETCHING_INDEX there)
+        # and to drop obsolete indexes (see CHANNEL_IDENTIFIER_INDEX there)
         #
         query = {task_id: doc._id}
+
+        #
+        # Remove from subscribers, remove from bottom_windows
+        #
 
         update =
           $pull:
@@ -45,24 +52,32 @@ JustdoChat.registerChannelTypeServerSpecific
               user_id:
                 $in: users_to_remove
 
+            bottom_windows:
+              user_id:
+                $in: users_to_remove
 
         # We use rawCollection() since the request is too heavy for collection2/simple-schema
         @channels_collection.rawCollection().update(query, update)
 
         return
 
-    # When a task is removed, rename its subscribers field to "archived_subscribers",
-    # read more about that field in schemas.coffee .
+    # When a task is removed:
+    #
+    #  * Rename its subscribers field to "archived_subscribers", read more about that
+    #    field in schemas.coffee .
+    #  * Remove its bottom_windows field
     @tasks_collection.after.remove (user_id, doc, field_names, modifier, options) =>
-      #
-      # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-      # and to drop obsolete indexes (see MESSAGES_FETCHING_INDEX there)
-      #
       query = {task_id: doc._id}
 
+      #
+      # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+      # and to drop obsolete indexes (see CHANNEL_IDENTIFIER_INDEX there)
+      #
       update =
         $rename:
           subscribers: "archived_subscribers"
+        $unset:
+          bottom_windows: ""
 
       # We use rawCollection() since the request is too heavy for collection2/simple-schema
       @channels_collection.rawCollection().update(query, update)
@@ -78,8 +93,6 @@ JustdoChat.registerChannelTypeServerSpecific
       # of post project-removed procedures, search the code for
       # AVOID_DRASTIC_POST_PROJECT_REMOVAL_PROCEDURES and read comment there.
       APP.projects.on "project-removed", (project_id) =>
-        console.log "PROJECT REMOVED", project_id
-
         #
         # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
         # and to drop obsolete indexes (see CHANNEL_AUGMENTED_FIELDS_INDEX there)
@@ -89,6 +102,8 @@ JustdoChat.registerChannelTypeServerSpecific
         update =
           $rename:
             subscribers: "archived_subscribers"
+          $unset:
+            bottom_windows: ""
 
         options =
           multi: true

@@ -1,4 +1,25 @@
 _.extend JustdoChat.prototype,
+  _bothImmediateInit: ->
+    # @_bothImmediateInit runs before the specific env's @_immediateInit()
+
+    # Add here code that should run, in the Server and Client, during the JS
+    # tick in which we create the object instance.
+
+    @_getTypeIdentifiyingFields_cached_result = {}
+
+    return
+
+  _bothDeferredInit: ->
+    # @_bothDeferredInit runs before the specific env's @_deferredInit()
+
+    # Add here code that should run, in the Server and Client, after the JS
+    # tick in which we created the object instance.
+
+    if @destroyed
+      return
+
+    return
+
   getChannelsSchema: -> JustdoChat.schemas.ChannelsSchema._schema
 
   getMessagesSchema: -> JustdoChat.schemas.MessagesSchema._schema
@@ -34,3 +55,15 @@ _.extend JustdoChat.prototype,
     check(user_id, String)
 
     return true
+
+  # The result shouldn't change during the instance lifetime, so we can cache it
+  _getTypeIdentifiyingFields_cached_result: null # initiated to {} on @_immediateInit()
+  getTypeIdentifiyingFields: (type) ->
+    if (identifying_fields = @_getTypeIdentifiyingFields_cached_result[type])?
+      return identifying_fields
+
+    identifying_fields = share.channel_types_conf[type].channel_identifier_fields_simple_schema._schemaKeys
+
+    @_getTypeIdentifiyingFields_cached_result[type] = identifying_fields
+
+    return identifying_fields

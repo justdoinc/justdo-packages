@@ -50,6 +50,8 @@ Package.onUse(function (api) {
   api.use("meteorspark:logger@0.3.0", both);
   api.use("justdoinc:justdo-helpers@1.0.0", both);
 
+  api.use("justdoinc:justdo-bottom-windows-wireframe@1.0.0", client);
+  
   api.use("stem-capital:projects@0.1.0", both);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
@@ -60,6 +62,11 @@ Package.onUse(function (api) {
 
   api.use("reactive-var", both);
   api.use("tracker", client);
+
+  //
+  // JustDo Chat Bottom windows
+  //
+  api.addFiles("lib/justdo-chat-bottom-windows-manager/justdo-chat-bottom-windows-manager.coffee", client);    
 
   //
   // JustDo Chat
@@ -104,13 +111,14 @@ Package.onUse(function (api) {
   api.addFiles("lib/channels/task/task-channel-client-constructor.coffee", client);
   api.addFiles("lib/channels/task/task-channel-server-constructor.coffee", server);
   api.addFiles("lib/channels/task/task-channel-server-register.coffee", server);
-  
 
   //
   // UI
   //
 
   // Common components
+
+  api.addFiles("lib/ui/common-components/vars.scss", client);
 
   // Message editor
   api.addFiles("lib/ui/common-components/message-editor/message-editor.sass", client);
@@ -147,6 +155,23 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-button.sass", client);
   api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-button.html", client);
   api.addFiles("lib/ui/recent-activity-dropdown/recent-activity-button.coffee", client);
+
+  // Bottom windows
+  api.addFiles("lib/ui/bottom-windows/extra-windows-button.html", client);
+  api.addFiles("lib/ui/bottom-windows/extra-windows-button.sass", client);
+  api.addFiles("lib/ui/bottom-windows/extra-windows-button.coffee", client);
+
+  api.addFiles("lib/ui/bottom-windows/task/vars.scss", client);
+  api.addFiles("lib/ui/bottom-windows/task/common.sass", client);
+  api.addFiles("lib/ui/bottom-windows/task/common.coffee", client);
+
+  api.addFiles("lib/ui/bottom-windows/task/task-minimized.sass", client);
+  api.addFiles("lib/ui/bottom-windows/task/task-minimized.html", client);
+  api.addFiles("lib/ui/bottom-windows/task/task-minimized.coffee", client);
+
+  api.addFiles("lib/ui/bottom-windows/task/task-open.sass", client);
+  api.addFiles("lib/ui/bottom-windows/task/task-open.html", client);
+  api.addFiles("lib/ui/bottom-windows/task/task-open.coffee", client);
 
   //
   // Project Conf

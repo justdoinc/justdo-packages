@@ -276,6 +276,104 @@ _.extend ChannelBaseServer.prototype,
 
     return channel_doc
 
+  _setBottomWindowWindowSettingsObjectSchema: new SimpleSchema
+    order:
+      type: Number
+
+      optional: true
+
+    state:
+      # If any of the provided users isn't subscribed, we just ignore it
+
+      type: String
+
+      allowedValues: JustdoChat.schemas.BottomWindowSchema._schema.state.allowedValues
+
+      optional: true
+
+  setBottomWindow: (window_settings) ->
+    # Creates/updates a window for this channel for performing user.
+    #
+    # If window_settings is empty, we ignore the request, we throw error, to ease tracking the issue.
+
+    if not window_settings?
+      throw @_error "invalid-argument", "setBottomWindow: you must provide non-empty window_settings"
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_setBottomWindowWindowSettingsObjectSchema,
+        window_settings,
+        {self: @, throw_on_error: true}
+      )
+    window_settings = cleaned_val
+
+    if _.isEmpty(window_settings)
+      throw @_error "invalid-argument", "setBottomWindow: you must provide non-empty window_settings"
+
+ 
+    # XXX Index wise, it seems that since @channel_identifier is involved in the query, mongo,
+    # is capable to use the CHANNEL_IDENTIFIER_INDEX to optimize this query,
+    # at the moment, no further indexes are added for this one Daniel C.
+
+    #
+    # First, assume that an entry for a bottom window for the performing user exists already
+    # for that channel, and update it with the new window_settings.
+    #
+    # If we get nModified == 0, it means, that an entry didn't exist, in such a case we push
+    # a new entry.
+    #
+    update_existing_bottom_window_query = _.extend {}, @channel_identifier,
+      bottom_windows:
+        $elemMatch:
+          user_id: @performing_user
+
+    fields_to_set = {}
+    for field, val of window_settings
+      fields_to_set["bottom_windows.$.#{field}"] = val
+    update_existing_bottom_window_query_update =
+      $set: fields_to_set
+
+    @justdo_chat.channels_collection.rawCollection().update update_existing_bottom_window_query, update_existing_bottom_window_query_update, Meteor.bindEnvironment (err, res) =>
+      # XXX API might change to nMatched on future Mongo versions
+      if res.result.n != 0
+        # Update performed, nothing further to do.
+
+        return
+
+      # The first clean, didn't apply defaults, in case of updates, we don't want to update
+      # fields the user didn't request a change for. But, when creating a new bottom_window
+      # entry for this channel for the performing user, we want to apply the defaults.
+
+      window_settings.user_id = @performing_user # Reminder, the process of window_settings cleaning, performs shallow copy.
+
+      {cleaned_val} =
+        JustdoHelpers.simpleSchemaCleanAndValidate(
+          JustdoChat.schemas.BottomWindowSchema,
+          window_settings,
+          {self: @, throw_on_error: true}
+        )
+      window_settings = cleaned_val
+
+      @findAndModifyChannelDoc
+        update:
+          $push:
+            bottom_windows: window_settings
+
+      return
+
+    return
+
+  removeBottomWindow: ->
+    # Remove the window performing user got with this channel (if such a window exists).
+
+    @findAndModifyChannelDoc
+      update:
+        $pull:
+          bottom_windows:
+            user_id: @performing_user
+
+    return
+
   _manageSubscribersUpdateObjectSchema: new SimpleSchema
     add:
       type: [String]
@@ -555,7 +653,7 @@ _.extend ChannelBaseServer.prototype,
 
     return @justdo_chat.messages_collection.find(channel_messages_cursor_query, channel_messages_cursor_options)
 
-  getChannelDocCursor: ->
+  getChannelDocCursor: (options) ->
     # Returns a cursor for the channel.
     #
     # Cursor, of course, might be empty .
@@ -565,7 +663,7 @@ _.extend ChannelBaseServer.prototype,
     # and to drop obsolete indexes (see CHANNEL_IDENTIFIER_INDEX there)
     #
 
-    return @justdo_chat.channels_collection.find(@channel_identifier)
+    return @justdo_chat.channels_collection.find(@channel_identifier, options)
 
   _channelMessagesPublicationHandlerOptionsSchema: new SimpleSchema
     limit:
@@ -574,6 +672,16 @@ _.extend ChannelBaseServer.prototype,
       defaultValue: 10
 
       max: 1000
+    provide_authors_details:
+      # If set to true, details about authors of messages in this publication,
+      # will be provided by the publication, and will be available under the
+
+      type: Boolean
+
+      defaultValue: false
+
+      optional: true
+
   channelMessagesPublicationHandler: (publish_this, options) ->
     self = @
 
@@ -593,6 +701,62 @@ _.extend ChannelBaseServer.prototype,
         {self: @, throw_on_error: true}
       )
     options = cleaned_val
+
+    channel_messages_authors_details_collection_name =
+      JustdoChat.jdc_channel_messages_authors_details_collection_name
+
+    authors_details_sent = {} # holds the authors to which we sent details about, details include, first name, last name, user avatar
+                              # structure:
+                              # {
+                              #   user_id: count of messages in the publication that had him as author
+                              # }
+
+    message_id_to_author_id = {} # Is used to be able to know which author wrote a message when
+                                 # the remove hook of the messages_tracker is called for a message
+                                 # (so we can report it isn't necessary any longer).
+
+    # If you change the fields here, consider changing them also for publicBasicUsersInfo publication
+    # (from which they are derived), look for file named 020-publications.coffee
+    published_channel_messages_authors_details_fields =
+      _id: 1
+      emails: 1
+      "profile.first_name": 1
+      "profile.last_name": 1
+      "profile.profile_pic": 1
+      "profile.avatar_fg": 1
+      "profile.avatar_bg": 1
+
+    reportAuthorDetailsRequired = (message_id, author_id) ->
+      if not options.provide_authors_details
+        return
+
+      message_id_to_author_id[message_id] = author_id
+
+      if not authors_details_sent[author_id]?
+        authors_details_sent[author_id] = 1
+
+        publish_this.added channel_messages_authors_details_collection_name, author_id, Meteor.users.findOne(author_id, {fields: published_channel_messages_authors_details_fields})
+      else 
+        authors_details_sent[author_id] += 1
+
+      return
+
+    reportAuthorDetailsNotRequired = (message_id) ->
+      if not options.provide_authors_details
+        return
+
+      author_id = message_id_to_author_id[message_id]
+      delete message_id_to_author_id[message_id] # If reportAuthorDetailsNotRequired is called, it implies that the message got removed from the publication, no need to keep a reference
+
+      authors_details_sent[author_id] -= 1 # We assume that if an author is reported to be not required any longer, he was reported before to be required.
+
+      if authors_details_sent[author_id] == 0
+        # No one need the details about the previous channel.
+        delete authors_details_sent[author_id]
+
+        publish_this.removed channel_messages_authors_details_collection_name, author_id
+
+      return
 
     #
     # Messages related procedures (called by the channel related procedures)
@@ -621,15 +785,21 @@ _.extend ChannelBaseServer.prototype,
         added: (id, data) ->
           publish_this.added messages_collection_name, id, data
 
+          reportAuthorDetailsRequired(id, data.author)
+
           return
 
         changed: (id, data) ->
           publish_this.changed messages_collection_name, id, data
 
+          # We don't care of changes to author, we assume such changes won't happen
+
           return
 
         removed: (id) ->
           publish_this.removed messages_collection_name, id
+
+          reportAuthorDetailsNotRequired(id)
 
           return
 
@@ -638,7 +808,7 @@ _.extend ChannelBaseServer.prototype,
     #
     # Channel related procedures
     #
-    channel_doc_cursor = @getChannelDocCursor()
+    channel_doc_cursor = @getChannelDocCursor({fields: {bottom_windows: 0}})
 
     channels_collection_name =
       JustdoHelpers.getCollectionNameFromCursor(channel_doc_cursor)
@@ -827,6 +997,26 @@ _.extend ChannelBaseServer.prototype,
     #
     # The supplementary docs aren't live (non-reactive). They can't be changed once sent.
     # read comment under the jdcSubscribedChannelsRecentActivity publication definition (publications.coffee)
+    # for full details.
+    #
+    # The handler will take care of removing these docs from the publication when the channel shouldn't
+    # be part of the publication any longer.
+
+    return []
+
+  getBottomWindowsChannelsSupplementaryDocs: ->
+    # Should return an array of the following structure:
+    #
+    # [
+    #   ["collection_id", "doc_id", doc]
+    #   ["collection_id", "doc_id", doc]
+    # ]
+    #
+    # These docs will be published by the JustdoChat.bottomWindowsPublicationHandler
+    # when this channel is published.
+    #
+    # The supplementary docs aren't live (non-reactive). They can't be changed once sent.
+    # read comment under the jdcBottomWindows publication definition (publications.coffee)
     # for full details.
     #
     # The handler will take care of removing these docs from the publication when the channel shouldn't

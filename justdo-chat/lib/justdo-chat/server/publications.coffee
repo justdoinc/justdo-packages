@@ -53,6 +53,8 @@ _.extend JustdoChat.prototype,
       #
       # * JustdoChat.jdc_recent_activity_channels_collection_name
       #     * Docs will include:
+      #        * channel_type
+      #        * last_message_date
       #        * all types indenifying and augmented fields
       #        * a field named: `unread` that we derive from the subscribers sub-document
       #          will be true if the logged-in user has unread messages in the channel.
@@ -122,3 +124,71 @@ _.extend JustdoChat.prototype,
         return
 
       return self.subscribedChannelsRecentActivityPublicationHandler(@, options, @userId)
+
+    Meteor.publish "jdcBottomWindows", (options) ->
+      # Publishes information about the user's bottom windows.
+
+      # ## Published information:
+      #
+      # The information is published to the following pseudo collections:
+      #
+      # * JustdoChat.jdc_bottom_windows_channels_collection_name
+      #     * Docs will include:
+      #        * channel_type
+      #        * all types indenifying and augmented fields
+      #        * state - the window state
+      #        * order - the window order
+      #        * a field named: `unread` that we derive from the subscribers sub-document
+      #          will be true if the logged-in user *is subscribed* and has unread messages
+      #          in the channel.
+      # * Type specific pseudo collections for supplementary docs.
+      # (see both/static-settings.coffee for actual names)
+      #
+      # We publish the information to pseudo collections to avoid data collisions with
+      # other publications that publish documents from the collections involved in this publication
+      # as is. We manipulate the original documents stored in the mongodb as we publish them in
+      # this publication, to reduce the amount of updates required from the publication
+      # (removing redundant data that we don't want to maintain up-to-data), and introduce
+      # pseudo fields.
+      #
+      # ### Type specific pseudo collections
+      #
+      # Specific channel types can define more pseudo collections to publish additional
+      # supplementary docs to.
+      #
+      # THESE DOCS AREN'T REACTIVE - They won't change during the course of the publication!
+      # That's why they *must* be published to pseudo collections, to avoid collisions with
+      # publications that does maintain them up-to-date.
+      #
+      # ## Reactivity nature of jdcBottomWindows
+      #
+      # * The channels docs are fully reactive for the fields they have. Core devs, implemented with observer on Channels doc.
+      #
+      # ## Security model:
+      #
+      # * We are basing the initial fetch of channels recent activity on the existence of the performing
+      #   user in the subscribers sub-document of channels. This is a *WEAK* indication for access authorization.
+      #   We therefore, create a channel object for every channel found in the fetch, to strongly verify
+      #   access authorization.
+      #   Resources usage wise, this in most cases will involve extra mongo requests, but that is fine,
+      #   since these reqeuests, are very likely required anyway to provide the supplementary docs
+      #   of the channel in a secured way, and it's unlikely to re-fetch the channel itself, since the
+      #   provided channel identifier should be enough to answer whether or not access is permitted,
+      #   without requesting the channel doc itself again.
+      #   As with other parts of the JustdoChat, here again, if the authorization status of the user to
+      #   a published channel will change, during the life of the publication - the user *won't* lose
+      #   access to it, or to its supplementary data (!) .
+      #
+      # ## Other security consideration:
+      #
+      # * Options structures is thoroughly checked by self.bottomWindowsPublicationHandler()
+      
+      check options, Match.Maybe(Object)
+
+      if not @userId?
+        # Nothing to return for logged-out users
+        @ready()
+
+        return
+
+      return self.bottomWindowsPublicationHandler(@, options, @userId)

@@ -43,7 +43,7 @@ _.extend JustdoChat.prototype,
         #
         # channel_type is checked thoroughly by @generateServerChannelObject
         # channel_identifier is checked thoroughly by the channel object constructor on init.
-        # update structures is thoroughly checked by channel_obj.sendMessage()
+        # update structures is thoroughly checked by channel_obj.manageSubscribers()
 
         self.requireAllowedChannelType(channel_type)
         check channel_identifier, Object
@@ -52,5 +52,33 @@ _.extend JustdoChat.prototype,
         channel_obj = self.generateServerChannelObject(channel_type, channel_identifier, @userId)
 
         return channel_obj.manageSubscribers(update)
+
+      jdcSetBottomWindow: (channel_type, channel_identifier, window_settings) ->
+        # Security note:
+        #
+        # channel_type is checked thoroughly by @generateServerChannelObject
+        # channel_identifier is checked thoroughly by the channel object constructor on init.
+        # window_settings structures is thoroughly checked by channel_obj.setBottomWindow()
+
+        self.requireAllowedChannelType(channel_type)
+        check channel_identifier, Object
+        check window_settings, Object
+
+        channel_obj = self.generateServerChannelObject(channel_type, channel_identifier, @userId)
+
+        return channel_obj.setBottomWindow(window_settings)
+
+      jdcRemoveBottomWindow: (channel_type, channel_identifier) ->
+        # Security note:
+        #
+        # channel_type is checked thoroughly by @generateServerChannelObject
+        # channel_identifier is checked thoroughly by the channel object constructor on init.
+
+        self.requireAllowedChannelType(channel_type)
+        check channel_identifier, Object
+
+        channel_obj = self.generateServerChannelObject(channel_type, channel_identifier, @userId)
+
+        return channel_obj.removeBottomWindow()
 
     return
