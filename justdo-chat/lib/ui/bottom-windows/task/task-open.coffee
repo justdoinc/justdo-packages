@@ -30,7 +30,7 @@ Template.chat_bottom_windows_task_open.events
 
     return
 
-  "click .task-id": ->
+  "click .header-title": ->
     activateTask = =>
       gcm = APP.modules.project_page.getCurrentGcm()
 

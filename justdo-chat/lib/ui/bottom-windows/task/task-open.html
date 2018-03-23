@@ -2,10 +2,8 @@
   <div class="open-chat-window-container jdc-basic-design">
     <div class="chat-window open-chat-window">
       <div class="chat-header">
-        <div class="chat-info">
-          <div class="task-id">#{{getTask.seqId}}{{#with getTask.title}}: {{this}}{{/with}}</div>
-          <div class="close-chat"><i class="fa fa-times" aria-hidden="true"></i></div>
-        </div>
+        <div class="header-title">#{{getTask.seqId}}{{#with getTask.title}}: {{this}}{{/with}}</div>
+        <div class="close-chat"><i class="fa fa-times" aria-hidden="true"></i></div>
       </div>
 
       {{> common_chat_messages_board getChannelObject=getTaskChatObject request_authors_details=true messages_authors_collection=getMessagesAuthorsCollection}}
