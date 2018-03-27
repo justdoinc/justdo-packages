@@ -195,6 +195,7 @@ Package.onUse(function (api) {
   //
 
   api.addAssets("media/notification.ogg", client);
+  api.addAssets("media/chat-sprite.png", client);
 
   api.export("JustdoChat", both);
 });

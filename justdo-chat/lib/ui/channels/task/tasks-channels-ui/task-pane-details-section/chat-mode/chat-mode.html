@@ -1,5 +1,9 @@
 <template name="project_toolbar_chat_section_chat">
   <div class="chat-header">
+    <div class="open-chat-in-window-container" title="Open chat in a window">
+      <div class="open-chat-in-window"></div>
+    </div>
+
     <div class="subscribers-management-button-block">
       <div class="subscribers-management"><i class="fa fa-user"></i> {{#if isSubscriptionReady}}{{subscribersCount}}{{else}}&nbsp;&nbsp;&nbsp;{{/if}}</div>
     </div>

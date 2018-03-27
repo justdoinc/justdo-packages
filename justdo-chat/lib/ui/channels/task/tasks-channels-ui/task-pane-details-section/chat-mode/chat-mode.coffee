@@ -119,6 +119,11 @@ Template.project_toolbar_chat_section_chat.events
 
     return
 
+  "click .open-chat-in-window-container": (e, tpl) ->
+    channel = getTemplateChannelObject()
+
+    return channel.makeWindowVisible()
+
   "click": (e, tpl) ->
     # Click anywhere will mark the channel as read
     if getTemplateChannelMessagesSubscriptionState() not in ["no-sub", "initial-not-ready", "no-channel-doc"]

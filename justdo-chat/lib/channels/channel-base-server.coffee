@@ -340,6 +340,8 @@ _.extend ChannelBaseServer.prototype,
 
         return
 
+      @getChannelDocNonReactive() # to create the channel document, for case it doesn't exist
+
       # The first clean, didn't apply defaults, in case of updates, we don't want to update
       # fields the user didn't request a change for. But, when creating a new bottom_window
       # entry for this channel for the performing user, we want to apply the defaults.
