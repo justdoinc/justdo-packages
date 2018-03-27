@@ -134,10 +134,10 @@ _.extend GridControl.prototype,
 
     path_has_children = @_grid_data.filterAwareGetPathHasChildren(@getCurrentPath())
     if path_has_children == 1
-      prereq.active_path_is_not_leaf = "Can't perform operation on an item with sub-items"
+      prereq.active_path_is_not_leaf = "Can't perform operation on an item with child tasks"
 
     if path_has_children == 2
-      prereq.active_path_is_not_leaf_all_child_filtered = "Can't perform operation on an item with sub-items (has filtered children)"
+      prereq.active_path_is_not_leaf_all_child_filtered = "Can't perform operation on an item with child tasks (has filtered children)"
 
     return prereq
 
@@ -168,7 +168,7 @@ _.extend GridControl.prototype,
 
     path_has_children = @_grid_data.filterAwareGetPathHasChildren(@getCurrentPath())
     if path_has_children == 0
-      prereq.active_path_has_no_children = "Can't perform this operation on an item with no sub-items"
+      prereq.active_path_has_no_children = "Can't perform this operation on an item with no child tasks"
 
     return prereq
 
