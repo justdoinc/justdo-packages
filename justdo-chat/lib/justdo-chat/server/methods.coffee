@@ -81,4 +81,19 @@ _.extend JustdoChat.prototype,
 
         return channel_obj.removeBottomWindow()
 
+      #
+      # Notifications subscriptions
+      #
+      jdcSetUnreadNotificationsSubscription: (notification_type, new_state) ->
+        # Security note:
+        #
+        # notification_type is checked thoroughly by self.setUnreadNotificationsSubscription() .
+        # new_state is checked thoroughly by self.setUnreadNotificationsSubscription().
+
+        check notification_type, String
+
+        self.setUnreadNotificationsSubscription(notification_type, new_state, @userId)
+
+        return
+
     return

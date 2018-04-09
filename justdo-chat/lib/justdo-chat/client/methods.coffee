@@ -36,3 +36,11 @@ _.extend JustdoChat.prototype,
 
   removeBottomWindow: (channel_type, channel_identifier, cb) ->
     Meteor.call "jdcRemoveBottomWindow", channel_type, channel_identifier, cb
+
+  #
+  # Notifications subscriptions
+  #
+  setUnreadNotificationsSubscription: (notification_type, new_state, cb) ->
+    Meteor.call "jdcSetUnreadNotificationsSubscription", notification_type, new_state, cb
+
+    return

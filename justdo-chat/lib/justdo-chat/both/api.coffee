@@ -6,6 +6,7 @@ _.extend JustdoChat.prototype,
     # tick in which we create the object instance.
 
     @_getTypeIdentifiyingFields_cached_result = {}
+    @_getTypeAugmentedFields_cached_result = {}
 
     return
 
@@ -67,3 +68,33 @@ _.extend JustdoChat.prototype,
     @_getTypeIdentifiyingFields_cached_result[type] = identifying_fields
 
     return identifying_fields
+
+  # The result shouldn't change during the instance lifetime, so we can cache it
+  _getTypeAugmentedFields_cached_result: null # initiated to {} on @_immediateInit()
+  getTypeAugmentedFields: (type) ->
+    if (augmented_fields = @_getTypeAugmentedFields_cached_result[type])?
+      return augmented_fields
+
+    augmented_fields = share.channel_types_conf[type].channel_augmented_fields_simple_schema._schemaKeys
+
+    @_getTypeAugmentedFields_cached_result[type] = augmented_fields
+
+    return augmented_fields
+
+  getTypeIdentifiyingAndAugmentedFields: (type) ->
+    return @getTypeIdentifiyingFields(type).concat(@getTypeAugmentedFields(type))
+
+  # The result shouldn't change during the instance lifetime, so we can cache it
+  _getAllTypesIdentifiyingAndAugmentedFields_cached_result: null
+  getAllTypesIdentifiyingAndAugmentedFields: ->
+    if @_allTypesIdentifiyingAndAugmentedFields_cached_result?
+      return @_allTypesIdentifiyingAndAugmentedFields_cached_result
+
+    result = []
+    for channel_type, channel_type_conf of share.channel_types_conf
+      result = result.concat @getTypeIdentifiyingAndAugmentedFields(channel_type)
+
+    @_allTypesIdentifiyingAndAugmentedFields_cached_result = result
+
+    return @_allTypesIdentifiyingAndAugmentedFields_cached_result
+

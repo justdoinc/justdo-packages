@@ -74,6 +74,9 @@ _.extend ChannelBaseServer.prototype,
         bind_to_instance: true
         min: 1
 
+    _processedNotificationsIndicatorsFields: ["unread_email_processed"]
+    # Read more about Processed Notifications Indicators Fields under README-notification-system.md
+
   _immediateInit: ->
     @_verifyChannelIdentifierObjectAgainstSchema()
 
@@ -108,6 +111,33 @@ _.extend ChannelBaseServer.prototype,
     @logger.debug "Destroyed"
 
     return
+
+  replacePerformingUser: (user_id) ->
+    # Set @performing_user to user_id, and ensure it has access to the channel.
+    # throws an error otherwise, reversing the @performing_user to the previous
+    # one.
+
+    original_performing_user = @performing_user
+
+    @performing_user = user_id
+
+    try
+      @requirePerformingUserPermittedToAccessChannel()
+    catch e
+      @performing_user = original_performing_user
+
+      throw e
+
+    return
+
+  getChannelTypeIdentifiyingFields: ->
+    return @justdo_chat.getTypeIdentifiyingFields(@channel_type)
+
+  getChannelTypeAugmentedFields: ->
+    return @justdo_chat.getTypeAugmentedFields(@channel_type)
+
+  getChannelTypeIdentifiyingAndAugmentedFields: ->
+    return @justdo_chat.getTypeIdentifiyingAndAugmentedFields(@channel_type)
 
   _verifyChannelIdentifierObjectAgainstSchema: ->
     {cleaned_val} =
@@ -261,7 +291,7 @@ _.extend ChannelBaseServer.prototype,
     channel_document.createdAt = new Date()
 
     # Get the channel augmented fields
-    # We assume @getChannelAugmentedFields() complies with the channel conf channel_augemented_fields_simple_schema
+    # We assume @getChannelAugmentedFields() complies with the channel conf channel_augmented_fields_simple_schema
     channel_augmented_fields = @getChannelAugmentedFields() 
 
     # Add the channel identifier and augmented fields
@@ -452,13 +482,19 @@ _.extend ChannelBaseServer.prototype,
     # Build query
     add_query_items = []
     for user_id in update.add
-      subscriber_obj = {user_id: user_id, unread: true}
+      subscriber_obj = {user_id: user_id}
 
       if not (user_id != @performing_user and channel_doc.messages_count != 0)
         # We turn the unread flag on, only for users that aren't the performing user
         # (which necessarily see this channel), and if there are messages at all
         subscriber_obj.unread = false
-        subscriber_obj.last_read = new Date()
+
+        if channel_doc.messages_count != 0
+          subscriber_obj.last_read = new Date()
+      else
+        subscriber_obj.unread = true
+        subscriber_obj.iv_unread = new Date()
+        subscriber_obj.iv_unread_type = "new-sub"
 
       add_query_items.push subscriber_obj
 
@@ -511,6 +547,14 @@ _.extend ChannelBaseServer.prototype,
 
     if unread == false
       update.$set["subscribers.$.last_read"] = new Date()
+
+      update.$unset = {}
+
+      update.$unset["subscribers.$.iv_unread"] = ""
+      update.$unset["subscribers.$.iv_unread_type"] = ""
+
+      for unread_notification_type, unread_notification_conf of share.unread_channels_notifications_conf
+        update.$unset["subscribers.$.#{unread_notification_conf.processed_notifications_indicator_field_name}"] = ""
 
     @justdo_chat.channels_collection.rawCollection().update query, update
 
@@ -574,6 +618,8 @@ _.extend ChannelBaseServer.prototype,
     #
     # Once we migrate to mongo v3.6 , we will be able to do the following with one query,
     # without the mentioned risk of data loss.
+    #
+    # IMPROVEMENT_PENDING_MONGO_MIGRATION
 
     new_subscribers_array = channel_doc.subscribers
 
@@ -586,11 +632,18 @@ _.extend ChannelBaseServer.prototype,
         changed = true
 
         subscriber.unread = true
+        subscriber.iv_unread = message_date
+        subscriber.iv_unread_type = "new-msg"
 
       if subscriber.user_id == @performing_user and subscriber.unread == true
         changed = true
 
         subscriber.unread = false
+        delete subscriber.iv_unread
+        delete subscriber.iv_unread_type
+
+        for unread_notification_type, unread_notification_conf of share.unread_channels_notifications_conf
+          delete subscriber[unread_notification_conf.processed_notifications_indicator_field_name]
 
     if changed
       @findAndModifyChannelDoc
@@ -810,7 +863,21 @@ _.extend ChannelBaseServer.prototype,
     #
     # Channel related procedures
     #
-    channel_doc_cursor = @getChannelDocCursor({fields: {bottom_windows: 0}})
+    channel_fields_to_fetch = _.extend
+      _id: 1
+
+      channel_type: 1
+      messages_count: 1
+      last_message_date: 1
+
+      "subscribers.user_id": 1
+      "subscribers.unread": 1
+      "subscribers.last_read": 1
+
+    for type_specific_field in @getChannelTypeIdentifiyingAndAugmentedFields()
+      channel_fields_to_fetch[type_specific_field] = 1
+
+    channel_doc_cursor = @getChannelDocCursor({fields: channel_fields_to_fetch})
 
     channels_collection_name =
       JustdoHelpers.getCollectionNameFromCursor(channel_doc_cursor)
@@ -978,7 +1045,7 @@ _.extend ChannelBaseServer.prototype,
     # Here you can return their value for the current channel, these value will be used when creating the channel
     # document.
     #
-    # Important! we don't validate the provided Augmented Fields values against the channel_augemented_fields_simple_schema
+    # Important! we don't validate the provided Augmented Fields values against the channel_augmented_fields_simple_schema
     # of the channel conf.
     #
     # The augmented fields of all types are transmitted as part of the jdcSubscribedChannelsRecentActivity

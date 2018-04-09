@@ -34,7 +34,7 @@ Package.onUse(function (api) {
   //   checkNpmVersions({
   //     'colors': '1.1.x'
   //   }, 'justdoinc:justdo-analytics')
-  // api.use("ecmascript", both);
+  api.use("ecmascript", both);
   // api.use("tmeasday:check-npm-versions@0.3.1", both);
 
   // api.use("stevezhu:lodash@4.17.2", both);
@@ -56,12 +56,16 @@ Package.onUse(function (api) {
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 
+  api.use("justdoinc:justdo-jobs-processor@1.0.0", server);
+
   api.use("matb33:collection-hooks@0.8.4", both);
 
   api.use("lbee:moment-helpers", both);
 
   api.use("reactive-var", both);
   api.use("tracker", client);
+
+  api.use('justdoinc:justdo-emails@1.0.0', both); // client is needed for media files
 
   //
   // JustDo Chat Bottom windows
@@ -84,19 +88,28 @@ Package.onUse(function (api) {
 
   // Server
   api.addFiles("lib/justdo-chat/server/static-channel-registrar.coffee", server);
+  api.addFiles("lib/justdo-chat/server/static-unread-channels-notifications-managers-registrar.coffee", server);
   api.addFiles("lib/justdo-chat/server/api.coffee", server);
   api.addFiles("lib/justdo-chat/server/allow-deny.coffee", server);
   api.addFiles("lib/justdo-chat/server/collections-hooks.coffee", server);
   api.addFiles("lib/justdo-chat/server/collections-indexes.coffee", server);
   api.addFiles("lib/justdo-chat/server/methods.coffee", server);
   api.addFiles("lib/justdo-chat/server/publications.coffee", server);
-
+  api.addFiles("lib/justdo-chat/server/jobs-definitions.coffee", server);
 
   // Client
   api.addFiles("lib/justdo-chat/client/api.coffee", client);
+  api.addFiles("lib/justdo-chat/client/hash-requests.coffee", client);
   api.addFiles("lib/justdo-chat/client/methods.coffee", client);
   api.addFiles("lib/justdo-chat/client/pseudo-collections.coffee", client);
   api.addFiles("lib/justdo-chat/client/subscriptions.coffee", client);
+
+  //
+  // Unread notifications
+  //
+
+  // Email
+  api.addFiles("lib/justdo-chat/server/unread-notifications/email-unread-notifications.coffee", server);
 
   //
   // Channels
@@ -174,13 +187,21 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/bottom-windows/task/task-open.coffee", client);
 
   //
+  // User conf
+  //
+  api.addFiles("lib/user-conf/user-conf-involuntary-unread-chat-notifications.coffee", client);
+
+  api.addFiles("lib/user-conf/involuntary-unread-email-chat-notifications/involuntary-unread-email-chat-notifications.html", client);
+  api.addFiles("lib/user-conf/involuntary-unread-email-chat-notifications/involuntary-unread-email-chat-notifications.sass", client);
+  api.addFiles("lib/user-conf/involuntary-unread-email-chat-notifications/involuntary-unread-email-chat-notifications.coffee", client);
+
+  //
   // Project Conf
   //
-
   api.addFiles("lib/project-conf/justdo-chat-project-config.sass", client);
   api.addFiles("lib/project-conf/justdo-chat-project-config.html", client);
   api.addFiles("lib/project-conf/justdo-chat-project-config.coffee", client);
-
+  
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);

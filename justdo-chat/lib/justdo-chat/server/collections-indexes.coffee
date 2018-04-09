@@ -21,18 +21,18 @@ _.extend JustdoChat.prototype,
     # For channel types that requested it in their config, add index for their
     # augmented fields.
     for channel_type, channel_type_conf of share.channel_types_conf
-      if not channel_type_conf.add_index_for_augemented_fields
+      if not channel_type_conf.add_index_for_augmented_fields
         continue
 
       #
       # Ensure channel identifier fields index for each one of the channel type identifiers
       #
-      channel_augemented_keys =
-        channel_type_conf.channel_augemented_fields_simple_schema._schemaKeys
+      channel_augmented_keys =
+        channel_type_conf.channel_augmented_fields_simple_schema._schemaKeys
 
       channel_augmented_fields_definition_obj = {}
 
-      for key in channel_augemented_keys
+      for key in channel_augmented_keys
         channel_augmented_fields_definition_obj[key] = 1
 
       # CHANNEL_AUGMENTED_FIELDS_INDEX
@@ -46,5 +46,8 @@ _.extend JustdoChat.prototype,
 
     # USER_BOTTOM_WINDOWS_INDEX
     @channels_collection.rawCollection().createIndex({"bottom_windows.user_id": 1, "bottom_windows.order": 1})
+
+    # INVOLUNTARY_UNREAD_NOTIFICATIONS_HANDLING_CRITERIA
+    @channels_collection.rawCollection().createIndex({"subscribers.iv_unread": 1, "subscribers.unread_email_processed ": 1})
 
     return

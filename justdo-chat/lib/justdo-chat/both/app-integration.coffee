@@ -32,11 +32,15 @@ APP.getEnv (env) ->
     channels_collection: APP.collections.JDChatChannels
     messages_collection: APP.collections.JDChatMessages
 
+  if Meteor.isClient
+    options.hash_requests_handler = APP.hash_requests_handler
+
   APP.justdo_chat = new JustdoChat options
 
   if Meteor.isClient
     APP.justdo_chat._setupHtmlTitlePrefixController()
     APP.justdo_chat._setupReceivedMessagesSoundNotification()
     APP.justdo_chat._setupBottomWindows()
+    APP.justdo_chat._setupHashRequests()
 
   return

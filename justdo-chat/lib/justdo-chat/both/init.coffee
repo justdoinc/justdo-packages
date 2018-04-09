@@ -22,6 +22,11 @@ options_schema =
       optional: false
       bind_to_instance: true
 
+    hash_requests_handler:
+      type: "skip-type-check"
+      optional: true
+      bind_to_instance: true
+
 # options_schema
 # ==============
 #

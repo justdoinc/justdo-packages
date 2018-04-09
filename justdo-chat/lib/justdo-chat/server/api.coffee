@@ -7,7 +7,7 @@ default_bottom_windows_limit = 30
 
 # If you change the fields here, consider changing them also for publicBasicUsersInfo publication
 # (from which they are derived), look for file named 020-publications.coffee
-published_recent_activity_authors_details_fields =
+share.common_public_user_info_fetched_fields = 
   _id: 1
   emails: 1
   "profile.first_name": 1
@@ -15,6 +15,8 @@ published_recent_activity_authors_details_fields =
   "profile.profile_pic": 1
   "profile.avatar_fg": 1
   "profile.avatar_bg": 1
+
+published_recent_activity_authors_details_fields = share.common_public_user_info_fetched_fields
 
 _.extend JustdoChat.prototype,
   _immediateInit: ->
@@ -46,6 +48,9 @@ _.extend JustdoChat.prototype,
 
     # Defined in collections-indexes.coffee
     @_ensureIndexesExists()
+
+    # Defined in jobs-definitions.coffee
+    @_setupJobs()
 
     return
 
@@ -127,7 +132,6 @@ _.extend JustdoChat.prototype,
     if not options?
       options = {}
 
-    options_schema = @_getChannelsRecentActivityCursorOptionsSchema._schema
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
         @_getSubscribedUnreadChannelsOptionsSchema,
@@ -233,7 +237,6 @@ _.extend JustdoChat.prototype,
     if not options?
       options = {}
 
-    options_schema = @_getChannelsRecentActivityCursorOptionsSchema._schema
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
         @_getChannelsRecentActivityCursorOptionsSchema,
@@ -302,7 +305,8 @@ _.extend JustdoChat.prototype,
     # If you change published fields, update comment under publications.coffee
     fields_to_fetch =
       _id: 1
-      subscribers: 1
+      "subscribers.user_id": 1
+      "subscribers.unread": 1
       channel_type: 1
       last_message_date: 1 # We don't publish this field, we observe it to keep the published message
                            # for this channel up-to-date.
@@ -605,7 +609,6 @@ _.extend JustdoChat.prototype,
     if not options?
       options = {}
 
-    options_schema = @_getBottomWindowsChannelsCursorOptionsSchema._schema
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
         @_getBottomWindowsChannelsCursorOptionsSchema,
@@ -675,7 +678,8 @@ _.extend JustdoChat.prototype,
     # If you change published fields, update comment under publications.coffee
     fields_to_fetch =
       _id: 1
-      subscribers: 1
+      "subscribers.user_id": 1
+      "subscribers.unread": 1
       bottom_windows: 1
       channel_type: 1
 
@@ -905,36 +909,6 @@ _.extend JustdoChat.prototype,
 
     return
 
-  # The result shouldn't change during the instance lifetime, so we can cache it
-  _getAllTypesIdentifiyingAndAugmentedFields_cached_result: null
-  getAllTypesIdentifiyingAndAugmentedFields: ->
-    if @_allTypesIdentifiyingAndAugmentedFields_cached_result?
-      return @_allTypesIdentifiyingAndAugmentedFields_cached_result
-
-    result = []
-    for channel_type, channel_type_conf of share.channel_types_conf
-      result = result.concat channel_type_conf.channel_identifier_fields_simple_schema._schemaKeys
-      result = result.concat channel_type_conf.channel_augemented_fields_simple_schema._schemaKeys
-
-    @_allTypesIdentifiyingAndAugmentedFields_cached_result = result
-
-    return @_allTypesIdentifiyingAndAugmentedFields_cached_result
-
-  # The result shouldn't change during the instance lifetime, so we can cache it
-  _getAllTypesIdentifiyingAndAugmentedFields_cached_result: null
-  getAllTypesIdentifiyingAndAugmentedFields: ->
-    if @_allTypesIdentifiyingAndAugmentedFields_cached_result?
-      return @_allTypesIdentifiyingAndAugmentedFields_cached_result
-
-    result = []
-    for channel_type, channel_type_conf of share.channel_types_conf
-      result = result.concat @getTypeIdentifiyingFields(channel_type)
-      result = result.concat channel_type_conf.channel_augemented_fields_simple_schema._schemaKeys
-
-    @_allTypesIdentifiyingAndAugmentedFields_cached_result = result
-
-    return @_allTypesIdentifiyingAndAugmentedFields_cached_result
-
   _getChannelLastMessageFromChannelObject: (channel_obj, channel_id) ->
     last_message_cursor = channel_obj._getChannelMessagesCursor
       channel_id: channel_id
@@ -946,6 +920,32 @@ _.extend JustdoChat.prototype,
         createdAt: 1
 
     return last_message_cursor.fetch()?[0]
+
+  setUnreadNotificationsSubscription: (notification_type, new_state, user_id) ->
+    check notification_type, String
+    check user_id, String
+    @requireUserProvided(user_id)
+
+    if not (notification_definition = share.unread_channels_notifications_conf[notification_type])?
+      throw @_error "invalid-argument", "Unknown unread notification notification_type: #{notification_type}"
+
+    if not notification_definition.is_user_configurable_notification
+      @logger.info "Nothing to do, notification_type '#{notification_type}' is not configurable by the user"
+
+      return
+
+    check new_state, notification_definition.user_configuration_field_type
+
+    if (allowed_values = notification_definition.user_configuration_field_allowedValues)?
+      if new_state not in allowed_values      
+        throw @_error "invalid-argument", "Unknown unread notification new_state provided, choose from: #{JSON.stringify(allowed_values)}"
+
+    update = {$set: {}}
+    update.$set[notification_definition.user_configuration_field] = new_state
+
+    Meteor.users.update(user_id, update)
+
+    return
 
   destroy: ->
     if @destroyed

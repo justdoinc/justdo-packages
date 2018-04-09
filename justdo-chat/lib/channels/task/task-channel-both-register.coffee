@@ -12,15 +12,15 @@ JustdoChat.registerChannelType
 
   # Read about the identifier fields on the comment for @getChannelAugmentedFields() under channel-base-server.coffee
   # The information there is comprehensive and essential to understand the purpose and use of that definition!
-  channel_augemented_fields_simple_schema: new SimpleSchema
+  channel_augmented_fields_simple_schema: new SimpleSchema
     project_id:
       label: "Project id"
 
       type: String
 
   # If set to true, an mongodb index will be added with all the keys specified under
-  # channel_augemented_fields_simple_schema see collections-indexes.coffee
-  add_index_for_augemented_fields: true
+  # channel_augmented_fields_simple_schema see collections-indexes.coffee
+  add_index_for_augmented_fields: true
 
   # Read comment for publication jdcSubscribedChannelsRecentActivity under publications.coffee
   # to learn about recent_activity_supplementary_pseudo_collections purpose.

@@ -35,6 +35,29 @@ _.extend TaskChannelServer.prototype,
 
     return task_doc
 
+  getIdentifierProjectId: ->
+    # Note, we rely here on the @getIdentifierTaskDoc() and not on @getChannelDocNonReactive()
+    # to retreive the project id, since the @getIdentifierTaskDoc(), will always be called in
+    # order to init the channel obj to verify the user's permission to access the doc, hence
+    # we will have it cached and we won't do further calls to the db.
+    #
+    # @getChannelDocNonReactive(), is more likely to cause a hit to the db.
+
+    return @getIdentifierTaskDoc().project_id
+
+  _channel_project_doc_cache: null
+  getIdentifierProjectDoc: (allow_cache=true) ->
+    project_id = @getIdentifierProjectId()
+
+    if allow_cache and @_channel_project_doc_cache?
+      return @_channel_project_doc_cache
+
+    project_doc = @justdo_chat.projects_collection.findOne(project_id, {fields: {_id: 1, title: 1}})
+
+    @_channel_project_doc_cache = project_doc
+
+    return project_doc
+
   isValidChannelIdentifier: ->
     if not @getIdentifierTaskDoc()?
       return false

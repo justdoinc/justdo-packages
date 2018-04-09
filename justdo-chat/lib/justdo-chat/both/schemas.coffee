@@ -23,6 +23,46 @@ JustdoChat.schemas.SubscribedUserSchema = new SimpleSchema
 
     type: Date
 
+  iv_unread:
+    # Read more about this field under README-notification-system.md
+
+    # Is set to the date in which the current unread state turned true as a result of involuntary
+    # operation by another member.
+    #
+    # $unset when unread state turns false for any reason.
+    label: "Involuntary Unread"
+
+    optional: true
+
+    type: Date
+
+  iv_unread_type:
+    # Read more about this field under README-notification-system.md
+
+    # When iv_unread is set, this field will be set as well with the cause that made this channel
+    # unread involuntarily for the subscriber.
+    #
+    # $unset when unread state turns false for any reason.
+    label: "Involuntary Unread Type"
+
+    type: String
+
+    optional: true
+
+    allowedValues: ["new-sub", "new-msg"]
+
+  unread_email_processed:
+    # Read more about this field under README-notification-system.md
+
+    # Processed doesn't mean sent, just that we checked whether notification sending is required
+    # or not.
+
+    label: "Email unread notifications processed"
+
+    type: Boolean
+
+    optional: true
+
 #
 # BottomWindowSchema
 #
@@ -218,8 +258,8 @@ _.extend JustdoChat.prototype,
       if (identifier_fields_simple_schema = channel_conf.channel_identifier_fields_simple_schema)?
         @channels_collection.attachSchema identifier_fields_simple_schema, {selector: {channel_type: channel_type}}
 
-      if (augemented_fields_simple_schema = channel_conf.channel_augemented_fields_simple_schema)?
-        @channels_collection.attachSchema augemented_fields_simple_schema, {selector: {channel_type: channel_type}}
+      if (augmented_fields_simple_schema = channel_conf.channel_augmented_fields_simple_schema)?
+        @channels_collection.attachSchema augmented_fields_simple_schema, {selector: {channel_type: channel_type}}
 
     return
 
