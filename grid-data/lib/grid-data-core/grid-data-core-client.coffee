@@ -143,6 +143,7 @@ _.extend GridDataCore.prototype,
 
       # New item always changes tree structure
       structure_changed = true
+      items_ids_with_changed_children = {}
 
       # Update @items_by_id
       @items_by_id[id] = doc
@@ -150,6 +151,8 @@ _.extend GridDataCore.prototype,
 
       # Update tree structure
       for parent_id, parent_metadata of doc.parents
+        items_ids_with_changed_children[parent_id] = true
+
         if not @tree_structure[parent_id]?
           @tree_structure[parent_id] = {}
         @tree_structure[parent_id][parent_metadata.order] = id
@@ -157,7 +160,7 @@ _.extend GridDataCore.prototype,
         if parent_id != "0" and not (parent_id of @items_by_id)
           @detaching_items_ids[parent_id] = true
 
-      return structure_changed
+      return [structure_changed, items_ids_with_changed_children]
 
     update: (id, fields) ->
       # console.log "update", id, fields
@@ -167,6 +170,7 @@ _.extend GridDataCore.prototype,
       # its update
 
       structure_changed = false
+      items_ids_with_changed_children = {}
 
       # update items_by_id[id] without replacing it with a
       # new object (make use of original object). 
@@ -185,22 +189,24 @@ _.extend GridDataCore.prototype,
 
         @emit "content-changed", id, fields 
 
-      return structure_changed
+      return [structure_changed, items_ids_with_changed_children]
 
     foreign_key_fields_update: (id, foreign_key_fields) ->
       # console.log "foreign_key_fields_update", id, foreign_key_fields
 
       structure_changed = false
+      items_ids_with_changed_children = {}
 
       @emit "content-changed", id, foreign_key_fields
 
-      return structure_changed
+      return [structure_changed, items_ids_with_changed_children]
 
     remove: (id) ->
       # console.log "remove", id
 
       # Item removal always changes tree structure
       structure_changed = true
+      items_ids_with_changed_children = {}
 
       # Update @items_by_id
       item_obj = @items_by_id[id]
@@ -210,6 +216,8 @@ _.extend GridDataCore.prototype,
 
       # Remove from tree structure any pointer to item
       for parent_id, parent_metadata of item_obj.parents
+        items_ids_with_changed_children[parent_id] = true
+
         # Make sure parent still exist
         if @tree_structure[parent_id]?
           # Make sure still pointing to item
@@ -222,13 +230,13 @@ _.extend GridDataCore.prototype,
 
       delete @items_by_id[id]
 
-      return structure_changed
-
+      return [structure_changed, items_ids_with_changed_children]
 
     parent_update: (item_id, new_parents_field) ->
       # console.log "parent_update", item_id, new_parents_field
 
       structure_changed = false
+      items_ids_with_changed_children = {}
 
       # XXX Is there any situation in which we won't find the item?
       prev_item_obj = @items_by_id[item_id]
@@ -262,6 +270,8 @@ _.extend GridDataCore.prototype,
 
           structure_changed = true
 
+          items_ids_with_changed_children[parent_id] = true
+
           if not @tree_structure[parent_id]?
             @tree_structure[parent_id] = {}
 
@@ -279,6 +289,8 @@ _.extend GridDataCore.prototype,
 
           structure_changed = true
 
+          items_ids_with_changed_children[parent_id] = true
+
           # Update tree structure
           # Make sure no other item moved to removed position already
           # XXX can this situation happen?
@@ -289,7 +301,7 @@ _.extend GridDataCore.prototype,
             delete @tree_structure[parent_id]
             delete @detaching_items_ids[parent_id]
 
-      return structure_changed
+      return [structure_changed, items_ids_with_changed_children]
 
   _initDataStructure: ->
     @items_by_id = {}
@@ -421,6 +433,7 @@ _.extend GridDataCore.prototype,
     @logger.debug "Flush: begin"
 
     structure_changed = false
+    returned_ops_items_ids_with_changed_children = [{}] # We init with empty {} so the _.extend() below won't changed returned objects
 
     # Preform all required data changes, data changes funcs return true
     # if tree structure changed.
@@ -428,12 +441,16 @@ _.extend GridDataCore.prototype,
       # @logger.debug "Flush: process data changes - begin"
       [type, args] = change
       # @logger.debug "Flush: Process #{type}: #{JSON.stringify args}"
-      op_changed_structure = @_data_changes_handlers[type].apply @, args
+      [op_changed_structure, op_items_ids_with_changed_children] = @_data_changes_handlers[type].apply @, args
       structure_changed = structure_changed || op_changed_structure
+      returned_ops_items_ids_with_changed_children.push op_items_ids_with_changed_children
+
       # @logger.debug "Flush: process data changes - done; structure_changed = #{structure_changed}"
 
+    items_ids_with_changed_children = _.extend.apply _, returned_ops_items_ids_with_changed_children
+
     if structure_changed
-      @emit "structure-changed"
+      @emit "structure-changed", {items_ids_with_changed_children}
 
     # Init queue
     @_data_changes_queue = []

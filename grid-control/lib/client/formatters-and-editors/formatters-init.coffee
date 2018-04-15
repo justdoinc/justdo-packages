@@ -116,6 +116,13 @@ _.extend GridControl.prototype,
     #                               slick_grid_jquery_events, we won't load the events another time
     #                               check @_loaded_slick_grid_jquery_events's comment above for more details.
     #
+    #     invalidate_ancestors_on_change: Can be set to: "off" / "structure-and-content" / "structure-content-and-filters"
+    #                                     Is "off" by default.
+    #                                     If set to "structure-and-content", changes to items content, and tree structure changes,
+    #                                     will trigger invalidation (recalculation) of ancestors of the affected rows.
+    #                                     If set to "structure-content-and-filters", tree structure changes resulted from filters
+    #                                     will also trigger invalidation of ancestors of the affected rows.
+    #
     #     gridControlInit: will be called once the "init" event
     #                      of the grid control will be fired,
     #                      that's the place to perform inits required
@@ -238,6 +245,63 @@ _.extend GridControl.prototype,
 
         for event_definition in formatter_slick_grid_jquery_events
           @installCustomJqueryEvent(event_definition)
+
+    pending_rebuild_or_tree_filter_updated_updates_arrays = []
+    executePendingRebuildOrTreeFilterUpdatedUpdates = =>
+      pending_rebuild_or_tree_filter_updated_updates_arrays = [] # init
+
+      return
+
+    handleRebuildOrTreeFilterUpdatedUpdates = (items_pending_update_array) =>
+      pending_rebuild_or_tree_filter_updated_updates_arrays.push items_pending_update_array
+
+      Meteor.defer =>
+        executePendingRebuildOrTreeFilterUpdatedUpdates()
+
+        return
+
+      return
+
+    if formatter_definition.invalidate_ancestors_on_change == "structure-content-and-filters"
+      @on "grid-tree-filter-updated", (data) =>
+        if not _.isEmpty (visible_tree_leaves_changes = data.visible_tree_leaves_changes)
+          handleRebuildOrTreeFilterUpdatedUpdates(_.keys(visible_tree_leaves_changes))
+
+          @_invalidateItemAncestorsFieldsOfFormatterType(_.keys(visible_tree_leaves_changes), formatter_name, {update_self: true})
+
+        return
+
+    if formatter_definition.invalidate_ancestors_on_change in ["structure-and-content", "structure-content-and-filters"]
+      @once "init", =>
+        # keep reference to _grid_data_core as by the time grid_control
+        # is destroyed, the reference to _grid_data will be removed from
+        # it.
+        grid_data_core = @_grid_data._grid_data_core
+
+        @on "rebuild_ready", (data) =>
+          if not _.isEmpty (items_ids_with_changed_children = data.items_ids_with_changed_children)
+            handleRebuildOrTreeFilterUpdatedUpdates(_.keys(items_ids_with_changed_children))
+
+            @_invalidateItemAncestorsFieldsOfFormatterType(_.keys(items_ids_with_changed_children), formatter_name, {update_self: true})
+
+          return
+
+        # Keep track of content changes
+        content_changed_cb = (item_id, changed_fields_array) =>
+          @_invalidateItemAncestorsFieldsOfFormatterType(item_id, formatter_name, {changed_fields_array})
+
+          return
+
+        grid_data_core.on "content-changed", content_changed_cb
+
+        @once "destroyed", ->
+          # Remove the content-changed listener, note that this is important
+          # since multiple tabs in grid-control-mux shares the same grid-data-core
+          # so when a tab is unloaded we don't want its event to keep living  
+          grid_data_core.removeListener "content-changed", content_changed_cb
+          grid_data_core = null
+
+          return
 
     if _.isFunction(grid_control_init = formatter_definition.gridControlInit)
       @once "init", =>

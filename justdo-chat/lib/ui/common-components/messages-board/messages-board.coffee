@@ -68,7 +68,7 @@ Template.common_chat_messages_board.onCreated ->
 Template.common_chat_messages_board.onDestroyed ->
   channel = @data.getChannelObject()
 
-  channel.removeListener "message-sent", @message_sent_handler
+  channel?.removeListener "message-sent", @message_sent_handler
 
   return
 

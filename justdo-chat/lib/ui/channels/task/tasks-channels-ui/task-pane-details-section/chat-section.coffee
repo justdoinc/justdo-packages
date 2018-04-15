@@ -16,10 +16,13 @@ APP.executeAfterAppLibCode ->
         # Grid control isn't ready can't init chat
         return
 
-      task_channel_object =
-        APP.justdo_chat.generateClientChannelObject "task",
-          tasks_collection: grid_control.collection
-          task_id: module.activeItemId()
+      if (task_id = module.activeItemId())?
+        task_channel_object =
+          APP.justdo_chat.generateClientChannelObject "task",
+            tasks_collection: grid_control.collection
+            task_id: task_id
+      else
+        task_channel_object = null
 
       module.curProj() # XXX To trigger invalidation on project change, not sure if this is
                        # necessary, it used to be part of the options provided to

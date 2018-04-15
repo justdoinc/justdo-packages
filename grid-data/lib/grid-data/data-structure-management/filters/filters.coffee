@@ -76,7 +76,7 @@ _.extend GridData.prototype,
         return
 
       # calculate filtered tree
-      # [item_filter_state, special_position]
+      # [item_filter_state, special_position, is_leaf_of_visible_filtered_tree]
       #
       # item_filter_state:
       #   0: didn't pass filter
@@ -89,6 +89,13 @@ _.extend GridData.prototype,
       #   1: first passing item
       #   2: last passing item
       #   3: only passing item
+      #
+      # is_leaf_of_visible_filtered_tree:
+      #   0: The item either didn't pass the filter, or has visible children in the 
+      #      current tree.
+      #   1: The item or one of its descendants passed the filter, and either doesn't
+      #      have descendants that pass the filter, or has descendants that passed the
+      #      filter but is collapsed.
 
       @_grid_tree_filter_state = []
 
@@ -98,6 +105,8 @@ _.extend GridData.prototype,
         parent_level = null
         # inner_node is true when we find an inner node
         inner_node = false
+
+        prev_visible_item_level = null
         
         last_visible_found = false
         first_visible_index = null
@@ -117,7 +126,7 @@ _.extend GridData.prototype,
 
             [child, level, path, expand_state] = @grid_tree[i]
 
-            @_grid_tree_filter_state[i] = [0, 0]
+            @_grid_tree_filter_state[i] = [0, 0, 0]
 
             inner_node = false
             if parent_level?
@@ -164,6 +173,12 @@ _.extend GridData.prototype,
               if not last_visible_found
                 @_grid_tree_filter_state[i][1] = 2
                 last_visible_found = true
+
+              if not prev_visible_item_level? or prev_visible_item_level <= level
+                @_grid_tree_filter_state[i][2] = 1
+
+              prev_visible_item_level = level
+              
 
         if first_visible_index?
           if @_grid_tree_filter_state[first_visible_index][1] == 2

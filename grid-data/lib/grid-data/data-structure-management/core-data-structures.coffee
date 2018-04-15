@@ -58,6 +58,14 @@ _.extend GridData.prototype,
 
     @_ignore_change_in_fields = []
 
+    # We collect from the "structure-changed" event information about items ids with changed children.
+    #
+    # We buffer these changes into the @_items_ids_with_changed_children_buffer object.
+    #
+    # Following a rebuild, we send, the gathered items ids with changed children as an argument
+    # of the "rebuild" event and flush the buffer.
+    @_items_ids_with_changed_children_buffer = {}
+
     @once "_perform_deferred_procedures", -> @_initCoreStructuresManagers()
 
   _initCoreStructuresManagers: ->
@@ -123,7 +131,9 @@ _.extend GridData.prototype,
     @tree_structure = @_grid_data_core.tree_structure
     @detaching_items_ids = @_grid_data_core.detaching_items_ids
 
-    @_grid_data_core.on "structure-changed", =>
+    @_grid_data_core.on "structure-changed", (data) =>
+      @_bufferItemsIdsWithChangedChildren(data.items_ids_with_changed_children)
+
       @_set_need_rebuild()
 
       @_grid_data_core_structure_changes_dependency.changed()
@@ -266,6 +276,18 @@ _.extend GridData.prototype,
       return
 
     @_need_rebuild.set(++@_need_rebuild_count)
+
+  _bufferItemsIdsWithChangedChildren: (items_ids_with_changed_children) ->
+    _.extend @_items_ids_with_changed_children_buffer, items_ids_with_changed_children
+
+    return
+
+  _flushItemsIdsWithChangedChildren: ->
+    items_ids_with_changed_children = @_items_ids_with_changed_children_buffer
+
+    @_items_ids_with_changed_children_buffer = {}
+
+    return items_ids_with_changed_children
 
   invalidateOnGridDataCoreStructureChange: ->
     if Tracker.currentComputation?
@@ -573,4 +595,4 @@ _.extend GridData.prototype,
     Tracker.nonreactive =>
       @_rebuild_counter.set(@_rebuild_counter.get() + 1)
 
-    @emit "rebuild", diff
+    @emit "rebuild", diff, @_flushItemsIdsWithChangedChildren()

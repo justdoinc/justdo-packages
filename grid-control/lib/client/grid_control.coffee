@@ -216,7 +216,7 @@ _.extend GridControl.prototype,
       # if active_cell_path?
       #   @_grid.resetActiveCell()
 
-      @_grid_data.once "rebuild", (diff) =>
+      @_grid_data.once "rebuild", (diff, items_ids_with_changed_children) =>
         # If first build, or if fixed row height is used, we can use @_grid.invalidate
         if not(@options.allow_dynamic_row_height)
           # Reload visible portion of the grid
@@ -263,7 +263,7 @@ _.extend GridControl.prototype,
 
         # tree_change, full_invalidation=true
         @logger.debug "Rebuild ready"
-        @emit "rebuild_ready"
+        @emit "rebuild_ready", {items_ids_with_changed_children}
         @emit "tree_change", true
 
         if not @_ready
@@ -341,7 +341,128 @@ _.extend GridControl.prototype,
 
   _error: JustdoHelpers.constructor_error
 
-  getFieldIdToColumnIndexMap: ->
+  getViewColumnsAffectedByFieldArrayChangesThatUseFormatterType: (fields_array, formatter_type) ->
+    # fields_array is an array of fields_ids
+    #
+    # Returns columns ids (don't confuse with fields ids) of columns that either linked directly
+    # to a field_id in fields_array, (i.e. their field_id is is in fields_array) or has in their
+    # grid_dependencies_fields a field that is in fields_array.
+    #
+    # In addition, require the formatter_type to be the specified formatter_type.
+
+    # First find all the visible columns, see whether any of them of formatter_type.
+
+    grid_schema = @getSchemaExtendedWithCustomFields()
+
+    all_columns_ids = _.map @getView(), (col) -> col.field # col.field as a term is wrong, it is actually the column_id and not the field_id
+
+    columns_ids_of_formatter_type_affected_by_fields_array =
+      _.filter all_columns_ids, (column_id) ->
+        column_def = grid_schema[column_id]
+
+        if column_def.grid_column_formatter == formatter_type
+          if column_id in fields_array # XXX The mix between columns ids and columns fields ids is an historical mistake that we don't have the resources to fix at the moment.
+            return true
+
+          if (grid_dependencies_fields = column_def.grid_dependencies_fields)?
+            for dependency_field in grid_dependencies_fields
+              if dependency_field in fields_array
+                return true
+
+        return false
+
+    return columns_ids_of_formatter_type_affected_by_fields_array
+
+  _invalidateItemAncestorsFieldsOfFormatterType: (items_ids, formatter_type, options) ->
+    # This method looks for columns that uses formatter_type, it invalidates all the
+    # ancestors of items_ids that appears in the grid.
+
+    # ## options
+    #
+    # ### changed_fields_array
+    # 
+    # default: undefined
+    #
+    # Specifies the fields that had been changed, pass this option to limit the
+    # update only to columns that are affected by the fields that been change to optimize the run.
+    # 
+    # If not provided or (null/undefined) we'll assume all the fields of items_ids had been changed
+    # and will invalidate all the ancestors' columns of type formatter_type .
+    #
+    # ### update_self
+    #
+    # default: false
+    #
+    # If set to false, we will update only the ancestors of items_ids.
+    #
+    # If set to true, we will also update items_ids itself - useful when we pass the
+    # parents we want to update as items_ids and don't let _invalidateItemAncestorsFieldsOfFormatterType
+    # to find them. In formatter_type, particular we use this feature on item remove and parents change.
+    #
+    # true value is useful in cases where the item or an item's parent removed
+    # in such case you can pass the parent that had been removed 
+    # Finds the calculated fields in the list of options.changed_fields_array
+    # and then updates them in all the ancestors of items_ids in the grid
+    # (to reflect the change upwards in the tree)
+
+    if _.isString items_ids
+      items_ids = [items_ids]
+
+    if not options?
+      options = {}
+
+    {changed_fields_array, update_self} = options
+
+    if not changed_fields_array?
+      changed_fields_array = _.keys @getFieldIdToColumnIndexMap()
+
+    if not update_self?
+      update_self = false
+
+    affected_view_columns_of_formatter_type =
+      @getViewColumnsAffectedByFieldArrayChangesThatUseFormatterType(changed_fields_array, formatter_type)
+
+    if affected_view_columns_of_formatter_type.length == 0
+      # No calculated field changed
+      return
+
+    ancestor_paths = {}
+    for item_id in items_ids
+      if item_id == "0"
+        continue
+      
+      item_paths = @_grid_data.getAllCollectionItemIdPaths(item_id)
+
+      if not item_paths?
+        # item_id no longer exists...
+
+        continue
+
+      for path in item_paths
+        if not update_self
+          path = GridData.helpers.getParentPath(path)
+
+        parent_path_sub_paths = GridData.helpers.getAllSubPaths(path)
+
+        for ancestor_path in parent_path_sub_paths
+          if ancestor_path != "/" and ancestor_path not in ancestor_paths 
+            ancestor_paths[ancestor_path] = true
+
+    if _.isEmpty ancestor_paths
+      return
+
+    column_id_to_column_index_map = @getColumnsIdsToColumnIndexMap()
+    columns_ids_to_update = _.values(_.pick(column_id_to_column_index_map, affected_view_columns_of_formatter_type))
+
+    for ancestor_path of ancestor_paths
+      # If row for the ancestor path exists in the visible grid
+      if (row = @_grid_data.getPathGridTreeIndex(ancestor_path))?
+        for col_id in columns_ids_to_update
+          @_grid.updateCell(row, col_id)
+
+    return
+
+  getColumnsIdsToColumnIndexMap: ->
     # Returns an object of the form presented in the following example:
     #
     # {
@@ -349,6 +470,10 @@ _.extend GridControl.prototype,
     #   "subject": 1
     # }
     return _.object(_.map @getSlickGridColumns(), (cell, i) -> [cell.id, i])
+
+  getFieldIdToColumnIndexMap: ->
+    # Obsolete, due to wrong terminology used back then.
+    return @getColumnsIdsToColumnIndexMap()
 
   _initStatesClassesComputations: ->
     @_states_classes_computations = []
