@@ -248,11 +248,19 @@ _.extend GridControl.prototype,
 
     pending_rebuild_or_tree_filter_updated_updates_arrays = []
     executePendingRebuildOrTreeFilterUpdatedUpdates = =>
-      pending_rebuild_or_tree_filter_updated_updates_arrays = [] # init
+      if pending_rebuild_or_tree_filter_updated_updates_arrays.length > 0
+        # If anything remains in the buffer, execute and init the buffer
+        @_invalidateItemAncestorsFieldsOfFormatterType(pending_rebuild_or_tree_filter_updated_updates_arrays, formatter_name, {update_self: true})
+
+        pending_rebuild_or_tree_filter_updated_updates_arrays = [] # init
 
       return
 
     handleRebuildOrTreeFilterUpdatedUpdates = (items_pending_update_array) =>
+      # When a tree structure change occur, it is likely that we'll get on the same
+      # JS tick the both the 'grid-tree-filter-updated' and the 'rebuild_ready'
+      # event. We use handleRebuildOrTreeFilterUpdatedUpdates() to buffer
+      # them both to execute all the changes at once.
       pending_rebuild_or_tree_filter_updated_updates_arrays.push items_pending_update_array
 
       Meteor.defer =>
@@ -267,8 +275,6 @@ _.extend GridControl.prototype,
         if not _.isEmpty (visible_tree_leaves_changes = data.visible_tree_leaves_changes)
           handleRebuildOrTreeFilterUpdatedUpdates(_.keys(visible_tree_leaves_changes))
 
-          @_invalidateItemAncestorsFieldsOfFormatterType(_.keys(visible_tree_leaves_changes), formatter_name, {update_self: true})
-
         return
 
     if formatter_definition.invalidate_ancestors_on_change in ["structure-and-content", "structure-content-and-filters"]
@@ -281,8 +287,6 @@ _.extend GridControl.prototype,
         @on "rebuild_ready", (data) =>
           if not _.isEmpty (items_ids_with_changed_children = data.items_ids_with_changed_children)
             handleRebuildOrTreeFilterUpdatedUpdates(_.keys(items_ids_with_changed_children))
-
-            @_invalidateItemAncestorsFieldsOfFormatterType(_.keys(items_ids_with_changed_children), formatter_name, {update_self: true})
 
           return
 

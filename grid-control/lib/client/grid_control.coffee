@@ -377,6 +377,11 @@ _.extend GridControl.prototype,
     # This method looks for columns that uses formatter_type, it invalidates all the
     # ancestors of items_ids that appears in the grid.
 
+    # items_ids can be either array of ids, or array of arrays of ids. We use the first item
+    # type to determine the type.
+    # (Done to save the computational waste of concatenating more than one array of items_ids
+    # that need processing)
+
     # ## options
     #
     # ### changed_fields_array
@@ -408,6 +413,11 @@ _.extend GridControl.prototype,
     if _.isString items_ids
       items_ids = [items_ids]
 
+    if _.isArray items_ids[0]
+      items_ids_arrays = items_ids
+    else
+      items_ids_arrays = [items_ids]
+
     if not options?
       options = {}
 
@@ -426,27 +436,34 @@ _.extend GridControl.prototype,
       # No calculated field changed
       return
 
+    processed_items_ids = {}
     ancestor_paths = {}
-    for item_id in items_ids
-      if item_id == "0"
-        continue
-      
-      item_paths = @_grid_data.getAllCollectionItemIdPaths(item_id)
+    for items_ids_array in items_ids_arrays
+      for item_id in items_ids_array
+        if item_id == "0"
+          continue
 
-      if not item_paths?
-        # item_id no longer exists...
+        if item_id of processed_items_ids
+          continue
 
-        continue
+        processed_items_ids[item_id] = true
 
-      for path in item_paths
-        if not update_self
-          path = GridData.helpers.getParentPath(path)
+        item_paths = @_grid_data.getAllCollectionItemIdPaths(item_id)
 
-        parent_path_sub_paths = GridData.helpers.getAllSubPaths(path)
+        if not item_paths?
+          # item_id no longer exists...
 
-        for ancestor_path in parent_path_sub_paths
-          if ancestor_path != "/" and ancestor_path not in ancestor_paths 
-            ancestor_paths[ancestor_path] = true
+          continue
+
+        for path in item_paths
+          if not update_self
+            path = GridData.helpers.getParentPath(path)
+
+          parent_path_sub_paths = GridData.helpers.getAllSubPaths(path)
+
+          for ancestor_path in parent_path_sub_paths
+            if ancestor_path != "/" and ancestor_path not in ancestor_paths 
+              ancestor_paths[ancestor_path] = true
 
     if _.isEmpty ancestor_paths
       return
