@@ -1255,15 +1255,15 @@ if (typeof Slick === "undefined") {
       }
 
       // Check whether only filters states changed
-      var current_ex_filters, new_ex_filters;
-      _.each(current_ex_filters = _.map(current_columns_definition, _.clone), function(col) {delete col.filter_state});
-      _.each(new_ex_filters = _.map(columns_definition, _.clone), function(col) {delete col.filter_state});
+      var current_ex_filters_ex_width, new_ex_filters_ex_width;
+      _.each(current_ex_filters_ex_width = _.map(current_columns_definition, _.clone), function(col) {delete col.filter_state; delete col.width; delete col.previousWidth;});
+      _.each(new_ex_filters_ex_width = _.map(columns_definition, _.clone), function(col) {delete col.filter_state; delete col.width; delete col.previousWidth;});
 
-      var only_filters_update = false;
-      if (JSON.sortify(current_ex_filters) == JSON.sortify(new_ex_filters)) {
-        logger.debug("setColumn: Only filters states changed");
+      var only_filters_update_or_width = false;
+      if (JSON.sortify(current_ex_filters_ex_width) == JSON.sortify(new_ex_filters_ex_width)) {
+        logger.debug("setColumn: Only filters or width states changed");
 
-        only_filters_update = true;
+        only_filters_update_or_width = true;
       }
 
       // update columns
@@ -1276,7 +1276,7 @@ if (typeof Slick === "undefined") {
       }
 
       // No need to rerender the DOM if we are only updating the filters
-      if (only_filters_update) {
+      if (only_filters_update_or_width) {
         return false;
       }
 
