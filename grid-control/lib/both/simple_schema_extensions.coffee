@@ -251,5 +251,7 @@ SimpleSchema.extendOptions
   #
   # DO NOT USE THIS PROPERTY IN YOUR FIELDS DEFINITION
   #
+  # (We do use this property, on the setupPercentCompletedCustomFieldsInstaller(), look it up)
+  #
   # This is a helper property used by the grid control.
   grid_dependent_fields: Match.Optional([String])
