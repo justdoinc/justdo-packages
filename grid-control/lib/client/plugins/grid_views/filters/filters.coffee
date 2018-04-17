@@ -258,9 +258,12 @@ _.extend GridControl.prototype,
 
             # Find all the parents of item_id. Read CONDITION_3 doc above for why it is necessary
             # to check all the items.
-            for parent_id of @_grid_data.items_by_id[item_id].parents
-              if parent_id != "0"
-                addFilterPassingVisiblePathsOfItemIdToChanges(parent_id)
+            if (item_obj = @_grid_data.items_by_id[item_id])?
+              # We might not have item_obj, if the parent isn't known to us, or if removed and
+              # lingered in this task as parent.
+              for parent_id of item_obj.parents
+                if parent_id != "0"
+                  addFilterPassingVisiblePathsOfItemIdToChanges(parent_id)
 
             return
 
