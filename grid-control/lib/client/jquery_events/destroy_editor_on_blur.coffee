@@ -9,7 +9,7 @@ editor_cells_selectors = [
 ].join(",")
 
 logger_prefix = "jQuery plugin - destroy-editor-on-blur:"
-PACK.jquery_builtin_events.push(
+GridControl.jquery_builtin_events.push(
   {
     # destroy current cell editor if blurred out and value didn't change
     args: ['blur', editor_cells_selectors]

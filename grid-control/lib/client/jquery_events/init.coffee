@@ -1,4 +1,4 @@
-PACK.jquery_builtin_events = []
+GridControl.jquery_builtin_events = []
 
 _.extend GridControl.prototype,
   _jquery_events_destructors: null
@@ -8,7 +8,7 @@ _.extend GridControl.prototype,
   _init_jquery_events: ->
     @_jquery_events_destructors = []
 
-    events_to_init = PACK.jquery_builtin_events
+    events_to_init = GridControl.jquery_builtin_events
 
     if @_custom_jquery_events?
       events_to_init = events_to_init.concat(@_custom_jquery_events)

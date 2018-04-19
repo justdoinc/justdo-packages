@@ -4,7 +4,7 @@ last_mouse_down_row = null
 
 selector = ".slick-cell:not(.active):not(.editable)"
 
-PACK.jquery_builtin_events.push(
+GridControl.jquery_builtin_events.push(
   {
     args: ['mousedown', selector]
     handler: (e) ->
@@ -14,7 +14,7 @@ PACK.jquery_builtin_events.push(
   }
 )
 
-PACK.jquery_builtin_events.push(
+GridControl.jquery_builtin_events.push(
   {
     args: ['mouseup', selector]
     handler: (e) ->
