@@ -281,5 +281,5 @@ GridControl.installFormatter "textWithTreeControls",
 
     return tree_control
 
-  print: (doc, field) ->
+  print: (doc, field, path) ->
     return @defaultPrintFormatter()

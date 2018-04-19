@@ -453,7 +453,7 @@ print_formatters_extended_context_properties =
     # property with the field's grid_column_formatter_options or
     # empty object if grid_column_formatter_options weren't defined.
 
-    [doc, field] = @original_args
+    [doc, field, path] = @original_args
 
     schema = @getSchemaExtendedWithCustomFields()[field]
 
@@ -464,6 +464,7 @@ print_formatters_extended_context_properties =
       doc: doc
       field: field
       value: doc[field]
+      path: path
 
       options: schema.grid_column_formatter_options or {}
 

@@ -16,5 +16,5 @@ GridControl.installFormatter "defaultFormatter",
 
     return formatter
 
-  print: (doc, field) ->
+  print: (doc, field, path) ->
     return @defaultPrintFormatter()

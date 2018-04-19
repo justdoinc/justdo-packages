@@ -195,7 +195,7 @@ GridControl.installFormatter "unicodeDateFormatter",
     }
   ]
 
-  print: (doc, field) ->
+  print: (doc, field, path) ->
     {formatter_obj, value} = @getFriendlyArgs()
 
     return JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(value)

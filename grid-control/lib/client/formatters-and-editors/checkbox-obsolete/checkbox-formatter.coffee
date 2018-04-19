@@ -26,7 +26,7 @@
 #       }
 #     ]
 
-#   print: (doc, field) ->
+#   print: (doc, field, path) ->
 #     {value} = @getFriendlyArgs()
 
 #     return if value then "+" else "-"

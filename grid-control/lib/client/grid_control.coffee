@@ -1043,11 +1043,17 @@ _.extend GridControl.prototype,
 
     return false
 
-  getEventItem: (e) ->
+  getEventRow: (e) ->
     if not (cell = @_grid.getCellFromEvent(e))?
       return null
 
-    return @_grid_data.getItem(cell.row)
+    return cell.row
+
+  getEventItem: (e) ->
+    if not (row = @getEventRow(e))?
+      return null
+
+    return @_grid_data.getItem(row)
 
   getEventPath: (e) ->
     if not (cell = @_grid.getCellFromEvent(e))?

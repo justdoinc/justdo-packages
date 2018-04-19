@@ -319,7 +319,7 @@ GridControl.installFormatter formatter_name,
     }
   ]
 
-  print: (doc, field) ->
+  print: (doc, field, path) ->
     friendly_args = @getFriendlyArgs()
 
     {formatter_obj} = friendly_args 

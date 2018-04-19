@@ -39,7 +39,7 @@ GridControl.installFormatter "keyValueFormatter",
 
     return formatter
 
-  print: (doc, field) ->
+  print: (doc, field, path) ->
     {schema, value} = @getFriendlyArgs()
 
     return getKeyValue(schema, value, "print")

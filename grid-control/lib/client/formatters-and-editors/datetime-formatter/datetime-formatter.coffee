@@ -39,7 +39,7 @@ GridControl.installFormatter "datetimeFormatter",
 
     return formatter
 
-  print: (doc, field) ->
+  print: (doc, field, path) ->
     {value, options, formatter_obj} = @getFriendlyArgs()
 
     return formatter_obj.getDateTimeString(value)
