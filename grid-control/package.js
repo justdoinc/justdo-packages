@@ -86,6 +86,7 @@ Package.onUse(function (api) {
   // jquery_events
   api.add_files('lib/client/jquery_events/init.coffee', client);
   api.add_files('lib/client/jquery_events/destroy_editor_on_blur.coffee', client);
+  api.add_files('lib/client/jquery_events/activate_on_click.coffee', client);
 
   // Formatters & Editors
   api.add_files('lib/client/formatters-and-editors/formatters-init.coffee', client);
