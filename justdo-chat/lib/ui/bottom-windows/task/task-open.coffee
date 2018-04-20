@@ -36,7 +36,7 @@ Template.chat_bottom_windows_task_open.events
 
       gcm.setPath(["main", @task_id], {collection_item_id_mode: true})
 
-      APP.modules.project_page.setCurrentProjectToolbarSectionId("details")
+      APP.modules.project_page.setCurrentTaskPaneSectionId("details")
 
       Meteor.defer =>
         $(".task-pane-chat .message-editor").focus()

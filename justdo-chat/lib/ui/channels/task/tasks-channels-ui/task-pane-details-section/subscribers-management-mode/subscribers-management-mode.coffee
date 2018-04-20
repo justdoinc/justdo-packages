@@ -1,6 +1,6 @@
-Template.project_toolbar_chat_section_subscribers_management.onCreated ->
+Template.task_pane_chat_section_subscribers_management.onCreated ->
   @getMainTemplate = =>
-    return Template.closestInstance("project_toolbar_chat_section")
+    return Template.closestInstance("task_pane_chat_section")
 
   @subscribers_hash = null
   @getSubscribersHash = (use_cache=true) =>
@@ -27,7 +27,7 @@ Template.project_toolbar_chat_section_subscribers_management.onCreated ->
 
   return
 
-Template.project_toolbar_chat_section_subscribers_management.helpers
+Template.task_pane_chat_section_subscribers_management.helpers
   taskMembers: ->
     main_tpl = Template.instance().getMainTemplate()
 
@@ -47,7 +47,7 @@ Template.project_toolbar_chat_section_subscribers_management.helpers
 
     return false
 
-Template.project_toolbar_chat_section_subscribers_management.events
+Template.task_pane_chat_section_subscribers_management.events
   "click .sm-cancel": (e, tpl) ->
     main_tpl = tpl.getMainTemplate()
 

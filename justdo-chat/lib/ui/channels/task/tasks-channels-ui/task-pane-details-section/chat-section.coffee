@@ -1,7 +1,7 @@
 APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
-  Template.project_toolbar_chat_section.onCreated ->
+  Template.task_pane_chat_section.onCreated ->
     task_channel_object = null
     task_chat_object_dependency = new Tracker.Dependency()
     @getTaskChatObject = ->
@@ -38,7 +38,7 @@ APP.executeAfterAppLibCode ->
 
     return
 
-  Template.project_toolbar_chat_section.helpers
+  Template.task_pane_chat_section.helpers
     mode: ->
       tpl = Template.instance()
 
@@ -58,7 +58,7 @@ APP.executeAfterAppLibCode ->
 
       return channel.isProposedSubscribersEmulationMode()
 
-  Template.project_toolbar_chat_section.events
+  Template.task_pane_chat_section.events
     "keyup .message-editor": (e, tpl) ->
       # When the user begin typing, if we are under non-initilized channel,
       # turn on proposed subscribers emulation mode, turn off, if text clear

@@ -4,8 +4,8 @@
 # 3. A higher precedence event will trigger before a lower precedence
 #    event even if defined for on a higher dom element.
 
-openProjectToolbarAndSetTab = (tab_id) ->
-  APP.modules.project_page.current_project_toolbar_selected_tab_id.set(tab_id)
+openTaskPaneAndSetTab = (tab_id) ->
+  APP.modules.project_page.current_task_pane_selected_tab_id.set(tab_id)
   APP.modules.project_page.updatePreferences({toolbar_open: true})
 
   return
@@ -114,24 +114,24 @@ _.extend PACK.Formatters.textWithTreeControls,
     {
       args: ['click', '.task-files']
       handler: (e) ->
-        openProjectToolbarAndSetTab("tasks-file-manager")
+        openTaskPaneAndSetTab("tasks-file-manager")
 
-        # Update project toolbar
+        # Update task pane
         Tracker.flush()
 
-        $(".project-toolbar-content").scrollTop(0)
+        $(".task-pane-content").scrollTop(0)
     }
     {
       args: ['click', '.task-description']
       handler: (e) ->
-        openProjectToolbarAndSetTab("item-details")
+        openTaskPaneAndSetTab("item-details")
 
-        # Update project toolbar
+        # Update task pane
         Tracker.flush()
 
         $description_section = $("#task-description-container").closest("section")
         $description_section_top_edge = $description_section.position().top - 5
-        $project_toolbar_content = $description_section.closest(".project-toolbar-content")
-        $project_toolbar_content.scrollTop($description_section_top_edge)
+        $task_pane_content = $description_section.closest(".task-pane-content")
+        $task_pane_content.scrollTop($description_section_top_edge)
     }
   ]

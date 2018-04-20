@@ -1,6 +1,6 @@
-Template.project_toolbar_chat_section_chat.onCreated ->
+Template.task_pane_chat_section_chat.onCreated ->
   @getMainTemplate = =>
-    return Template.closestInstance("project_toolbar_chat_section")
+    return Template.closestInstance("task_pane_chat_section")
 
 getTemplateChannelObject = ->
   main_tpl = Template.instance().getMainTemplate()
@@ -27,7 +27,7 @@ getChannelSubscribersIdsIntersectionWithTaskMembersIds = (channel) ->
 
   return _.intersection(subscribers_ids, task_members)
 
-Template.project_toolbar_chat_section_chat.helpers
+Template.task_pane_chat_section_chat.helpers
   getTaskChatObject: ->
     main_tpl = Template.instance().getMainTemplate()
 
@@ -106,7 +106,7 @@ Template.project_toolbar_chat_section_chat.helpers
 
     return subscribers_names
 
-Template.project_toolbar_chat_section_chat.events
+Template.task_pane_chat_section_chat.events
   "click .user-subscription-toggle": (e, tpl) ->
     channel = getTemplateChannelObject()
 
