@@ -17,7 +17,7 @@ setupCollapseAllButton = (grid_control) ->
   $(".slick-header-column:first", grid_control.container)
     .append($el)
 
-  $el = $("""<div class="grid-state-button expand-grid-button" title="Exapand all tree" />""")
+  $el = $("""<div class="grid-state-button expand-grid-button" title="Expand all tree" />""")
     .click =>
       i = 0
 
