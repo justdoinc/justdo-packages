@@ -1247,23 +1247,16 @@ if (typeof Slick === "undefined") {
         }
       }
 
+      // Remove previousWidth, we don't care about changes made to it.
+      var current_columns, new_columns;
+      _.each(current_columns = _.map(current_columns_definition, _.clone), function(col) {delete col.previousWidth;});
+      _.each(new_columns = _.map(columns_definition, _.clone), function(col) {delete col.previousWidth;});
+
       // Check whether anything changed
-      if (JSON.sortify(current_columns_definition) == JSON.sortify(columns_definition)) {
+      if (JSON.sortify(current_columns) == JSON.sortify(new_columns)) {
         logger.debug("setColumn: Nothing changed");
 
         return null;
-      }
-
-      // Check whether only filters states changed
-      var current_ex_filters_ex_width, new_ex_filters_ex_width;
-      _.each(current_ex_filters_ex_width = _.map(current_columns_definition, _.clone), function(col) {delete col.filter_state; delete col.width; delete col.previousWidth;});
-      _.each(new_ex_filters_ex_width = _.map(columns_definition, _.clone), function(col) {delete col.filter_state; delete col.width; delete col.previousWidth;});
-
-      var only_filters_update_or_width = false;
-      if (JSON.sortify(current_ex_filters_ex_width) == JSON.sortify(new_ex_filters_ex_width)) {
-        logger.debug("setColumn: Only filters or width states changed");
-
-        only_filters_update_or_width = true;
       }
 
       // update columns
@@ -1275,15 +1268,39 @@ if (typeof Slick === "undefined") {
         columnsById[columns[i].id] = i;
       }
 
-      // No need to rerender the DOM if we are only updating the filters
-      if (only_filters_update_or_width) {
-        return false;
+      var full_render_needed = true;
+
+      // Check whether only filters states or width changed
+      // Full re rerender is not required, only the filters and/or width changed
+      var current_ex_filters_ex_width, new_ex_filters_ex_width;
+      _.each(current_ex_filters_ex_width = _.map(current_columns, _.clone), function(col) {delete col.filter_state; delete col.width;});
+      _.each(new_ex_filters_ex_width = _.map(new_columns, _.clone), function(col) {delete col.filter_state; delete col.width;});
+      if (JSON.sortify(current_ex_filters_ex_width) == JSON.sortify(new_ex_filters_ex_width)) {
+        logger.debug("setColumn: Only filters or width states changed");
+
+        var current_ex_filters, new_ex_filters;
+        _.each(current_ex_filters = _.map(current_columns, _.clone), function(col) {delete col.filter_state;});
+        _.each(new_ex_filters = _.map(new_columns, _.clone), function(col) {delete col.filter_state;});
+
+        // Check whether only filters changed
+        if (JSON.sortify(current_ex_filters) == JSON.sortify(new_ex_filters)) {
+          // Only filters updated, nothing to do in the SlickGrid level
+          logger.debug("setColumn: Only filters updated");
+
+          return false; // false means header didn't rerender
+        }
+
+        // Only width, and potentialy filters state, changed, partial grid rerender is enough, full rerender is not required. 
+        full_render_needed = false;
       }
 
       updateColumnCaches();
 
       if (initialized) {
-        invalidateAllRows();
+        if (full_render_needed) {
+          invalidateAllRows();          
+        }
+
         createColumnHeaders();
         removeCssRules();
         createCssRules();
@@ -1292,7 +1309,7 @@ if (typeof Slick === "undefined") {
         handleScroll();
       }
 
-      return true;
+      return true; // true means header rerender
     }
 
     function getOptions() {
