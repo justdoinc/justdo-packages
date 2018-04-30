@@ -201,7 +201,7 @@ _.extend NaturalCollectionSubtreeSection.prototype,
         # Check whehter the top level item id has a parent in root_items
         # (if @yield_root_items is false, only the children of the root items
         # are printed)
-        if not (top_level_item_obj = @grid_data.items_by_id[top_level_item_id])?
+        if not (top_level_item_obj = @grid_data.items_by_id[top_level_item_id])? and not (top_level_item_obj = @fallbackItemsDictionary()[top_level_item_id])?
           return false
 
         parent_found = false
