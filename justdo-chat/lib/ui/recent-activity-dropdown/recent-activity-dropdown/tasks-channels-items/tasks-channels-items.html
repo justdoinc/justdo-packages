@@ -1,5 +1,5 @@
 <template name="recent_activity_item_task">
-  <div class="recent-activity-items-task">
+  <div class="recent-activity-item recent-activity-item-task {{#if unread}}unread{{/if}}">
     <div class="item-header">
       <div class="date-block">
         <span class="date" title="{{last_message_date}}">{{friendlyDateFormat last_message_date}}</span>

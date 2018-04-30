@@ -34,7 +34,7 @@ getTaskChannelObjectForTaskId = (task_id) ->
   return channel_obj
 
 Template.recent_activity_item_task.events
-  "click .recent-activity-items-task": (e) ->
+  "click .recent-activity-item-task": (e) ->
     # If the user didn't click on the text under the task-details div, we just open a window
     # for the channel, otherwise, we switch to the channel's task project to activate the
     # channel task on the project grid.

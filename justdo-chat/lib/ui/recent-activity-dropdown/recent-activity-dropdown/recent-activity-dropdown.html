@@ -21,9 +21,7 @@
 </template>
 
 <template name="recent_activity_item">
-  <div class="recent-activity-item {{#if unread}}unread{{/if}}">
-    {{#if $eq channel_type "task"}}
-      {{> recent_activity_item_task}}
-    {{/if}}
-  </div>
+  {{#if $eq channel_type "task"}}
+    {{> recent_activity_item_task}}
+  {{/if}}
 </template>
