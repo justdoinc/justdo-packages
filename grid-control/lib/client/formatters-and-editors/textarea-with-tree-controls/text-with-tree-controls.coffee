@@ -172,7 +172,7 @@ GridControl.installFormatter "textWithTreeControls",
     """
 
     index = null
-    if doc.seqId?
+    if doc.seqId? and not doc._omit_seqId_comp
       index = doc.seqId # Note we don't worry about reactivity -> seqId considered static.
     # else
     #   index = getRandomArbitrary(0, 10000) # getRandomArbitrary = (min, max) -> Math.floor(Math.random() * (max - min) + min)
@@ -211,7 +211,7 @@ GridControl.installFormatter "textWithTreeControls",
 
     # shortcuts
     owner_id = pending_owner_id = null
-    if doc.owner_id?
+    if doc.owner_id? and not doc._omit_owner_control
       owner_id = doc.owner_id # For reactivity, make sure to specify owner_id and pending_owner_id as
                                # dependencies
       pending_owner_id = doc.pending_owner_id
