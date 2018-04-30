@@ -43,6 +43,14 @@ _.extend NaturalCollectionSubtreeSection.prototype,
   #        
   rootItems: null
 
+
+  # fallbackItemsDictionary can be a method that returns an object whose keys are items ids
+  # and values are items documents.
+  #
+  # If we can't find items in the default grid collection as cached by @grid_data.items_by_id
+  # we will try to look for the items in the object returned by the fallbackItemsDictionary
+  fallbackItemsDictionary: -> {}
+
   # if yield_root_items is false, only the children of the rootItems will be yielded as
   # the section's top level items and not the root items themselves
   # if rootItems is null yield_root_items has no meaning
@@ -240,7 +248,7 @@ _.extend NaturalCollectionSubtreeSection.prototype,
 
   _each: (relative_path, options, iteratee) ->
     _naturalCollectionTreeTraversingIteratee = (item_id, item_path, expand_state) =>
-      item_obj = @grid_data.items_by_id[item_id]
+      item_obj = @grid_data.items_by_id[item_id] or @fallbackItemsDictionary()[item_id]
 
       type = null
       if @itemsTypesAssigner?
@@ -307,11 +315,13 @@ _.extend NaturalCollectionSubtreeSection.prototype,
         for root_item_id of root_items
           addChildrenAsTopLevelItem(root_item_id)
 
-    # read comment on @rootItems output structure above.
+    fallback_items_dictionary = @fallbackItemsDictionary()
+
     if _.isArray top_level_items
-      top_level_items_objs = _.map(top_level_items, ((item) -> @grid_data.items_by_id[item._id]), @)
+      top_level_items_objs = _.map(top_level_items, ((item) -> @grid_data.items_by_id[item._id] or fallback_items_dictionary[item._id]), @)
     else
-      top_level_items_objs = _.map(top_level_items, ((_ignore, id) -> @grid_data.items_by_id[id]), @)
+      top_level_items_objs = _.map(top_level_items, ((_ignore, id) -> @grid_data.items_by_id[id] or fallback_items_dictionary[id]), @)
+
 
     if @top_level_items_filter?
       top_level_items_objs =
@@ -323,11 +333,13 @@ _.extend NaturalCollectionSubtreeSection.prototype,
     for top_level_items_obj in top_level_items_objs
       top_level_item_id = top_level_items_obj._id
 
-      if @grid_data.items_by_id[top_level_item_id]?
+      if @grid_data.items_by_id[top_level_item_id]? or fallback_items_dictionary[top_level_item_id]?
         traversing_ret = @_naturalCollectionTreeTraversing top_level_item_id, relative_path, options, _naturalCollectionTreeTraversingIteratee, true
 
         if traversing_ret is false
           return false
+      else
+        logger.warn "NaturalCollectionSubtreeSection: couldn't find a top level item object for", top_level_item_id
 
     return true
 
