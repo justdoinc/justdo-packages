@@ -313,6 +313,11 @@ _.extend GridData.prototype,
     # we rely on the inheritence feature to keep the item up-to-date when
     # getItem() is call by slick grid.
     item_obj = Object.create(item_obj) # Add the "metadata layer" by inheriting provided obj
+
+    if (getForcedItemFields = @items_types_settings[type].getForcedItemFields)?
+      _.extend item_obj, getForcedItemFields()
+
+    # Set after getForcedItemFields to prevent ability to override.
     item_obj._type = type
 
     index = @_addItem(item_obj, absolute_path, expand_state, section)
