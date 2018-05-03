@@ -231,9 +231,23 @@ GridControl.installFormatter "textWithTreeControls",
       owner_id_left = 1 + current_left_pos
       current_left_pos += owner_id_width + owner_id_margin_right
 
+      title = owner_display_name
+      if pending_owner_id?
+        doc = @_grid_data.extendObjForeignKeys doc,
+          in_place: false
+          foreign_keys: ["pending_owner_id"]
+
+        pending_owner_doc = doc.pending_owner
+
+        if pending_owner_doc?
+          pending_owner_display_name = pending_owner_doc?.profile?.first_name + " " + pending_owner_doc?.profile?.last_name
+
+        title += " &rarr; " + pending_owner_display_name
+
+
       tree_control += """
         <div class="grid-tree-control-user slick-prevent-edit"
-             title="#{owner_display_name}"
+             title="#{title}"
              style="left: #{owner_id_left}px;
                     width: #{owner_id_width}px;
                     height: #{owner_id_width}px;">
