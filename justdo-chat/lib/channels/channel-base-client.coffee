@@ -228,10 +228,12 @@ _.extend ChannelBaseClient.prototype,
 
     return
 
-  makeWindowVisible: ->
+  makeWindowVisible: (cb) ->
     # A proxy to ease calling to the method under the bottom windows manager with the same name
+    #
+    # cb is called when the operation is completed.
 
-    return @justdo_chat._justdo_chat_bottom_windows_manager.makeWindowVisible(@channel_type, @getChannelIdentifier())
+    return @justdo_chat._justdo_chat_bottom_windows_manager.makeWindowVisible @channel_type, @getChannelIdentifier(), {onComplete: cb}
 
   removeWindow: ->
     # A proxy to ease calling to the method under the bottom windows manager with the same name

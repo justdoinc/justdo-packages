@@ -188,7 +188,7 @@ _.extend JustdoChatBottomWindowsManager.prototype,
     # XXX at the moment, we just use the put_first: true option, in the future,
     # we will probably need a more sufisticated sorting algorithm, putting current requested
     # window on the far right position, is the easiest to implement 
-    options = _.extend {put_first: true}, options # if put_first is false, we put last.
+    options = _.extend {put_first: true, onComplete: undefined}, options # if put_first is false, we put last.
 
     if options.put_first
       sort = 1
@@ -203,7 +203,38 @@ _.extend JustdoChatBottomWindowsManager.prototype,
     else
       order = current_order - sort
 
-    return @_setBottomWindow(channel_type, channel_identifier, {order: order, state: "open"})
+
+    if _.isFunction options.onComplete
+      onComplete = =>
+        channel_conf =
+          tasks_collection: APP.justdo_chat.bottom_windows_supplementary_pseudo_collections.tasks
+          task_id: channel_identifier.task_id
+
+        channel_object =
+          @justdo_chat.generateClientChannelObject channel_type, channel_conf
+
+        serialized_identifier =
+          channel_object._getChannelSerializedIdentifier()
+
+        tracker = Tracker.autorun (c) =>
+          windows_arrangement = @bottom_windows_wireframe.getWindowsArrangement()
+
+          if windows_arrangement?
+            for window_arrangement_def in windows_arrangement
+              if window_arrangement_def.id == serialized_identifier
+                options.onComplete(window_arrangement_def)
+
+                c.stop()
+
+          return
+
+        setTimeout ->
+          tracker.stop() # after 1 seconds stop the tracker regardless, to avoid lingering trackers in case window failed to open, for whatever reason.
+        , 1000
+
+        return
+
+    return @_setBottomWindow(channel_type, channel_identifier, {order: order, state: "open"}, onComplete)
 
   removeWindow: (channel_type, channel_identifier) ->
     return @_removeBottomWindow(channel_type, channel_identifier)

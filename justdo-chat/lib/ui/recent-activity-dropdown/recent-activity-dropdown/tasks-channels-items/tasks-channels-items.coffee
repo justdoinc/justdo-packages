@@ -52,7 +52,10 @@ Template.recent_activity_item_task.events
       # Open/highlight the window for the channel.
       channel_obj = getTaskChannelObjectForTaskId(@task_id)
 
-      channel_obj.makeWindowVisible()
+      channel_obj.makeWindowVisible (window_arrangement_def) ->
+        $(".message-editor", window_arrangement_def.template_obj.node).focus()
+
+        return
 
       channel_obj.setChannelUnreadState(false)
 
