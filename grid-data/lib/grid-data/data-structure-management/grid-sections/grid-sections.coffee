@@ -315,7 +315,7 @@ _.extend GridData.prototype,
     item_obj = Object.create(item_obj) # Add the "metadata layer" by inheriting provided obj
 
     if (getForcedItemFields = @items_types_settings[type].getForcedItemFields)?
-      _.extend item_obj, getForcedItemFields()
+      _.extend item_obj, getForcedItemFields(type, item_obj, absolute_path, expand_state, section)
 
     # Set after getForcedItemFields to prevent ability to override.
     item_obj._type = type
