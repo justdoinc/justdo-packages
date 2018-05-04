@@ -9,6 +9,10 @@ GridControl = (options, container, operations_container) ->
     default_view_extra_fields: null # if set to array of fields names
                                     # these fields will be appended
                                     # to the default view on init
+    forced_metadata_affecting_fields: null # Can be set to an object of the form: {field: true}
+                                           # Changes to field will trigger row invalidations
+                                           # regardless on its schema's grid_effects_metadata_rendering
+                                           # setting
 
   @options = _.extend {}, default_options, options
 
@@ -120,6 +124,11 @@ GridControl = (options, container, operations_container) ->
   @_view_changes_dependency = new Tracker.Dependency()
 
   @_columns_data = {}
+
+  if @options.forced_metadata_affecting_fields
+    @forced_metadata_affecting_fields = @options.forced_metadata_affecting_fields
+  else
+    @forced_metadata_affecting_fields = {} # to avoid the need to check existence we don't set to null
 
   Meteor.defer =>
     @_init()
@@ -281,7 +290,7 @@ _.extend GridControl.prototype,
 
       for field in fields
         field_def = extended_schema[field]
-        if field_def? and field_def.grid_effects_metadata_rendering
+        if field_def? and (field_def.grid_effects_metadata_rendering or field of @forced_metadata_affecting_fields)
           @_grid.invalidateRow(row)
           @_grid.render()
 
