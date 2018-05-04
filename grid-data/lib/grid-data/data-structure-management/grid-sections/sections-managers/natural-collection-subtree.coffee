@@ -19,6 +19,9 @@ NaturalCollectionSubtreeSection = (grid_data_obj, section_root, section_obj, opt
   if (rootItems = @options.rootItems)?
     @rootItems = rootItems
 
+  if (itemsTypesAssigner = @options.itemsTypesAssigner)?
+    @itemsTypesAssigner = itemsTypesAssigner
+
   if (root_items_sort_by = @options.root_items_sort_by)?
     @root_items_sort_by = root_items_sort_by
 
