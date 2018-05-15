@@ -5,7 +5,8 @@ JustdoChat.registerUnreadChannelsNotificationsManager
   is_user_configurable_notification: true
   user_configuration_field_type: String
   user_configuration_field_allowedValues: ["off", "twice-daily", "once-per-unread"]
-  user_configuration_field_defaultValue: "off" # set to off for first deploy, later we'll set the default to once-per-unread.
+  user_configuration_field_defaultValue: "once-per-unread" # If you change the default here, you must update
+                                                           # code on: 
   user_configuration_field_enabled_value: "once-per-unread"
 
   new_subscribers_notifications: true
@@ -34,7 +35,7 @@ JustdoChat.registerUnreadChannelsNotificationsManager
 
       job_storage.projects_docs_cache[project_id] = project_doc
 
-    base_url = "#{process.env.WEB_APP_ROOT_URL}"
+    base_url = JustdoHelpers.getProdUrl("web-app")
 
     template_data =
       user: user
