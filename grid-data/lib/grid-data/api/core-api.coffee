@@ -15,6 +15,21 @@ _.extend GridData.prototype,
   getLength: -> @grid_tree.length
   getItem: (index) -> @grid_tree[index][0]
 
+  getItemExcludingMetadataLayer: (index) ->
+    # Typed items, has a data layer. Created in:
+    # packages/grid-data/lib/grid-data/data-structure-management/grid-sections/grid-sections.coffee
+    # This layer is implemented as an object that inherits from the actual item.
+    #
+    # This method, returns the underlying item for typed items, and the item itself, for non typed
+    # items.
+
+    item = @getItem(index)
+
+    if not @getItemIsTyped(index)
+      return item
+
+    return Object.getPrototypeOf(item)
+
   #
   # @grid_tree shortcuts/extended info
   #

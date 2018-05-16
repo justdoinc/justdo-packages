@@ -1396,6 +1396,14 @@ if (typeof Slick === "undefined") {
       return getDataLength() + (options.enableAddRow ? 1 : 0);
     }
 
+    function getDataItemExcludingMetadataLayer(i) {
+      if (data.getItemExcludingMetadataLayer) {
+        return data.getItemExcludingMetadataLayer(i);
+      } else {
+        return getDataItem(i);
+      }
+    }
+
     function getDataItem(i) {
       if (data.getItem) {
         return data.getItem(i);
@@ -3615,7 +3623,7 @@ if (typeof Slick === "undefined") {
     // IEditor implementation for the editor lock
 
     function commitCurrentEdit() {
-      var item = getDataItem(activeRow);
+      var item = getDataItemExcludingMetadataLayer(activeRow);
       var column = columns[activeCell];
 
       if (currentEditor) {
@@ -3805,6 +3813,7 @@ if (typeof Slick === "undefined") {
       "getData": getData,
       "getDataLength": getDataLength,
       "getDataItem": getDataItem,
+      "getDataItemExcludingMetadataLayer": getDataItemExcludingMetadataLayer,
       "setData": setData,
       "getSelectionModel": getSelectionModel,
       "setSelectionModel": setSelectionModel,

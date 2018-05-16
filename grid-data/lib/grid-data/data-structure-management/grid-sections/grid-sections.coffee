@@ -313,6 +313,8 @@ _.extend GridData.prototype,
     # we rely on the inheritence feature to keep the item up-to-date when
     # getItem() is call by slick grid.
     item_obj = Object.create(item_obj) # Add the "metadata layer" by inheriting provided obj
+                                       # note: GridData's core-api implements @getItemExcludingMetadataLayer()
+                                       # that returns the item_obj sans the metadata layer.
 
     if (getForcedItemFields = @items_types_settings[type].getForcedItemFields)?
       _.extend item_obj, getForcedItemFields(type, item_obj, absolute_path, expand_state, section)
