@@ -16,6 +16,8 @@ Template.common_chat_message_editor.onCreated ->
   @clearError = -> @setError(null)
   @getError = -> @_error.get()
 
+  return
+
 Template.common_chat_message_editor.onRendered ->
   @autorun =>
     channel = @data.getChannelObject()

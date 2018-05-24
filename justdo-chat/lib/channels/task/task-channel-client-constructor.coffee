@@ -29,9 +29,42 @@ _.extend TaskChannelClient.prototype,
       type: String
       optional: false
 
+  findMembersMentionedInMessageThatArentSubscribers: (message) ->
+    existing_subscribers_ids = _.map @getSubscribersArray(), (subscriber) -> subscriber.user_id
+
+    if not (task_doc = @tasks_collection.findOne(@task_id))?
+      return []
+
+    non_subscribed_members_ids = _.difference task_doc.users, existing_subscribers_ids
+
+    if _.isEmpty non_subscribed_members_ids
+      return []
+
+    task_members_docs = Meteor.users.find({_id: {$in: non_subscribed_members_ids}}).fetch()
+
+    regex = /(?:^|\s)@([\w\d]{2,})(?:[?:.,])?/ig
+
+    potential_names_found = []
+    while (result = regex.exec(message))?
+      potential_names_found.push result[1].toLowerCase()
+
+    non_subscribers_members_ids_mentioned = []
+    for task_members_doc in task_members_docs
+      for potential_name_found in potential_names_found
+        if potential_name_found in [task_members_doc.profile?.first_name.toLowerCase(), task_members_doc.profile?.last_name.toLowerCase()]
+          non_subscribers_members_ids_mentioned.push task_members_doc._id
+
+    return non_subscribers_members_ids_mentioned
+
   loadChannel: ->
     # Bind all channel_conf props to @
     {@tasks_collection, @task_id} = @channel_conf
+
+    @on "message-sent", (payload) =>
+      if not _.isEmpty(mentioned_members_ids_to_add = @findMembersMentionedInMessageThatArentSubscribers(payload.body))
+        @manageSubscribers {add: mentioned_members_ids_to_add}
+
+      return
 
     return
 
