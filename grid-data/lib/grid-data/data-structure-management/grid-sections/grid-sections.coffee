@@ -417,7 +417,8 @@ _.extend GridData.prototype,
     #
     if options.filtered_tree
       if not _.isArray @_grid_tree_filter_state
-        @logger.warn "_each: options.filtered_tree is true but no filter is set, ignoring"
+        # @logger.warn "_each: options.filtered_tree is true but no filter is set, ignoring"
+
         options.filtered_tree = false
       else
         # If filtered_tree option is true, replace received iteratee with a version
