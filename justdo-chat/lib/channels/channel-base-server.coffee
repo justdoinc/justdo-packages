@@ -74,7 +74,7 @@ _.extend ChannelBaseServer.prototype,
         bind_to_instance: true
         min: 1
 
-    _processedNotificationsIndicatorsFields: ["unread_email_processed"]
+    _processedNotificationsIndicatorsFields: ["unread_email_processed", "unread_firebase_mobile_processed"]
     # Read more about Processed Notifications Indicators Fields under README-notification-system.md
 
   _immediateInit: ->

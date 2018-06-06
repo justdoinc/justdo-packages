@@ -63,6 +63,18 @@ JustdoChat.schemas.SubscribedUserSchema = new SimpleSchema
 
     optional: true
 
+  unread_firebase_mobile_processed:
+    # Read more about this field under README-notification-system.md
+
+    # Processed doesn't mean sent, just that we checked whether notification sending is required
+    # or not.
+
+    label: "Firebase mobile push notifications processed"
+
+    type: Boolean
+
+    optional: true
+
 #
 # BottomWindowSchema
 #

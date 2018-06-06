@@ -41,6 +41,8 @@ Package.onUse(function (api) {
   api.use("templating", client);
   api.use('fourseven:scss@3.2.0', client);
 
+  api.use("justdoinc:justdo-push-notifications@1.0.0", server);
+
   api.use('copleykj:jquery-autosize@1.17.8', client);
 
   api.use("aldeed:simple-schema@1.5.3", both);
@@ -110,6 +112,9 @@ Package.onUse(function (api) {
 
   // Email
   api.addFiles("lib/justdo-chat/server/unread-notifications/email-unread-notifications.coffee", server);
+
+  // Firebase Mobile Push notifications
+  api.addFiles("lib/justdo-chat/server/unread-notifications/firebase-mobile-push-notifications.coffee", server);
 
   //
   // Channels

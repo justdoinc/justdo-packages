@@ -9,6 +9,7 @@ JustdoChat.registerUnreadChannelsNotificationsManager
                                                            # code on: 
   user_configuration_field_enabled_value: "once-per-unread"
 
+  # At the moment, the following aren't in use! Ignore!
   new_subscribers_notifications: true
   new_subscribers_notifications_threshold_ms: 1000 * 60 * 10
   new_subscribers_notifications_max_messages: 10

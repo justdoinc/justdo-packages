@@ -49,5 +49,6 @@ _.extend JustdoChat.prototype,
 
     # INVOLUNTARY_UNREAD_NOTIFICATIONS_HANDLING_CRITERIA
     @channels_collection.rawCollection().createIndex({"subscribers.iv_unread": 1, "subscribers.unread_email_processed ": 1})
+    @channels_collection.rawCollection().createIndex({"subscribers.iv_unread": 1, "subscribers.unread_firebase_mobile_processed ": 1})
 
     return
