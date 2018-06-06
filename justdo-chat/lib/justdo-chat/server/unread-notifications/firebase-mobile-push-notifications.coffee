@@ -1,4 +1,4 @@
-if APP.justdo_push_notifications.isFirebaseEnabled
+if APP.justdo_push_notifications.isFirebaseEnabled()
   JustdoChat.registerUnreadChannelsNotificationsManager
     notification_type: "firebase-mobile" # Must be dash-separated!
     polling_interval_ms: 1000 # 1 second
