@@ -28,6 +28,8 @@ default_options =
 GridData = (collection, options) ->
   EventEmitter.call this
 
+  @_on_destroy_procedures = []
+
   @logger = Logger.get("grid-data")
 
   @collection = collection
@@ -106,6 +108,12 @@ _.extend GridData.prototype,
 
     @emit "init"
 
+  onDestroy: (proc) ->
+    # not to be confused with @destroy, onDestroy registers procedures to be called by @destroy()
+    @_on_destroy_procedures.push proc
+
+    return
+
   destroy: ->
     if @_destroyed
       @logger.debug "Destroyed already"
@@ -113,6 +121,8 @@ _.extend GridData.prototype,
       return
 
     @_destroyed = true
+
+    _.each @_on_destroy_procedures, (proc) -> proc()
 
     @_destroySectionManagers()
 

@@ -16,6 +16,34 @@ _.extend GridData.prototype,
     if not @options.sections?
       throw @_error "required-option-missing", "Can't find sections configuration in @options.sections"
 
+    # @options.sections can be an array of sections definitinos of the form defined
+    # under: grid-data/lib/grid-data/data-structure-management/grid-sections/README.md
+    # Or a reactive resource that returns such an array.
+    if _.isArray @options.sections
+      @sections_def = @options.sections
+    else if _.isFunction @options.sections
+      initiated = false
+      @sections_def_comp = Tracker.autorun =>
+        @sections_def = @options.sections()
+
+        if initiated
+          # On the first run, no need to call @_rebuildSections(), only
+          # on invalidations
+          @_loadSectionsOption()
+
+          @_rebuildGridTree()
+        else
+          initiated = true
+
+        return
+
+      @onDestroy =>
+        @sections_def_comp.stop()
+
+        return
+    else
+      throw @_error "wrong-type", "Wrong type provided to options.sections, should be a function or an array"
+
     # Sections state is a framework  that provides a session-
     # persistent and reactive mechanism to maintain a state of
     # variables that affect the operation of a section.
@@ -51,6 +79,10 @@ _.extend GridData.prototype,
 
     @_loadSectionsOption()
 
+    @_registerSectionsMetadataGenerator()
+
+    return
+
   _requireValidSectionId: (section_id) ->
     if not lowercase_hyphen_separated_name_regex.test(section_id)
       throw @_error "invalid-section-id"
@@ -58,7 +90,7 @@ _.extend GridData.prototype,
   _loadSectionsOption: ->
     sections_configuration = []
 
-    for section in @options.sections
+    for section in @sections_def
       #
       # Deep copy
       #
@@ -73,7 +105,7 @@ _.extend GridData.prototype,
       #
       for prop in ["id", "section_manager"]
         if not section[prop]?
-          throw @_error "invalid-option", "Each section defined in @options.sections must have section.#{prop} defined"
+          throw @_error "invalid-option", "Each section defintion must have section.#{prop} defined"
 
       if section.id in forbidden_section_names
         throw @_error "forbidden-section-id", "`#{section.id}' is not allowed as section id"
@@ -120,6 +152,9 @@ _.extend GridData.prototype,
 
     @sections_configuration = sections_configuration
 
+    return
+
+  _registerSectionsMetadataGenerator: ->
     @registerMetadataGenerator (item, ext, index) =>
       # Add a class with the item's section id and the movable class, if movable
       classes = ["section-#{ext[4].id}"]
