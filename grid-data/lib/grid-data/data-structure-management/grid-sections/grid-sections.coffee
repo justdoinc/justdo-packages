@@ -9,6 +9,7 @@ GridData.installSectionManager = (section_manager_id, constructor) ->
 
 forbidden_section_names = ["global"] # global is forbidden since it is used under _sections_state to store global state vars
 
+hyphen_separated_name_regex = /^[a-z0-9-]+$/i
 lowercase_hyphen_separated_name_regex = /^[a-z0-9-]+$/
 
 _.extend GridData.prototype,
@@ -84,7 +85,7 @@ _.extend GridData.prototype,
     return
 
   _requireValidSectionId: (section_id) ->
-    if not lowercase_hyphen_separated_name_regex.test(section_id)
+    if not hyphen_separated_name_regex.test(section_id)
       throw @_error "invalid-section-id"
 
   _loadSectionsOption: ->
