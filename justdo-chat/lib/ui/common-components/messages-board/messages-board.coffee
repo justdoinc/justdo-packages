@@ -107,6 +107,15 @@ Template.common_chat_messages_board_message_card.helpers
 
     return tpl.messages_authors_collection.findOne(@author)
 
+  body: ->
+    body = @body
+
+    body = JustdoHelpers.htmlEntities(body)
+
+    body = JustdoHelpers.nl2br(body)
+
+    return body
+
 Template.common_chat_messages_board_message_card.onRendered ->
   $message_card = @$(".message-card")
 
