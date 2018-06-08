@@ -23,9 +23,10 @@ getChannelSubscribersIdsIntersectionWithTaskMembersIds = (channel) ->
 
   subscribers_ids = _.map subscribers_array, (sub) -> sub.user_id
 
-  task_members = APP.modules.project_page.activeItemObj({"users": true}).users
+  if (task_members = APP.modules.project_page.activeItemObj({"users": true})?.users)?
+    return _.intersection(subscribers_ids, task_members)
 
-  return _.intersection(subscribers_ids, task_members)
+  return []
 
 Template.task_pane_chat_section_chat.helpers
   getTaskChatObject: ->
