@@ -114,6 +114,8 @@ Template.common_chat_messages_board_message_card.helpers
 
     body = JustdoHelpers.nl2br(body)
 
+    body = linkifyStr(body)
+
     return body
 
 Template.common_chat_messages_board_message_card.onRendered ->

@@ -64,6 +64,8 @@ Package.onUse(function (api) {
 
   api.use("lbee:moment-helpers", both);
 
+  api.use("justdoinc:justdo-linkify", client);
+
   api.use("reactive-var", both);
   api.use("tracker", client);
 
