@@ -10,6 +10,35 @@ Template.chat_bottom_windows_task_open.onCreated ->
 
   return
 
+Template.chat_bottom_windows_task_open.onRendered ->
+  $window_container = $(this.firstNode).closest(".window-container")
+
+  $(this.firstNode).mousedown =>
+    @task_channel_object.enterFocusMode()
+
+    return
+
+  @blurCb = (e) =>
+    if $(e.target).closest(".window-container").get(0) != $window_container.get(0)
+      @task_channel_object.exitFocusMode()
+
+    return
+
+  # The best user experience is with mousedown, but we can't trust mousedown to always
+  # bubble up, hence, we have to bind to mouseup as well.
+  $(document).mousedown @blurCb
+  $(document).mouseup @blurCb
+
+  return
+
+Template.chat_bottom_windows_task_open.onDestroyed ->
+  $(document).off("mousedown", @blurCb)
+  $(document).off("mouseup", @blurCb)
+
+  @task_channel_object.destroy()
+
+  return
+
 Template.chat_bottom_windows_task_open.helpers
   getTaskChatObject: ->
     tpl = Template.instance()
@@ -23,6 +52,11 @@ Template.chat_bottom_windows_task_open.helpers
     tpl = Template.instance()
 
     return tpl.getTaskDoc()
+
+  isFocused: ->
+    tpl = Template.instance()
+
+    return tpl.task_channel_object.isFocused()
 
 Template.chat_bottom_windows_task_open.events
   "click .close-chat": ->

@@ -110,6 +110,14 @@ _.extend ChannelBaseClient.prototype,
     @_modes = []
     @_modes_dep = new Tracker.Dependency()
 
+    @_is_focused = false
+    @_is_focused_dep = new Tracker.Dependency()
+
+    @onDestroy =>
+      @exitFocusMode()
+
+      return
+
     @_initial_subscription_ready = new ReactiveVar false
     @_channel_messages_subscription_dep = new Tracker.Dependency()
 
@@ -334,6 +342,33 @@ _.extend ChannelBaseClient.prototype,
       return null
 
     return @_getMessagesCollection().find({channel_id: channel_id}, {sort: {createdAt: 1}})
+
+  enterFocusMode: ->
+    if @_is_focused
+      # Focused already
+
+      return
+
+    @_is_focused = true
+    @_is_focused_dep.changed()
+
+    return
+
+  exitFocusMode: ->
+    if not @_is_focused
+      # Not focused already
+
+      return
+
+    @_is_focused = false
+    @_is_focused_dep.changed()
+
+    return
+
+  isFocused: ->
+    @_is_focused_dep.depend()
+
+    return @_is_focused
 
   isMessagesSubscriptionHasDocs: ->
     # Returns null if we can't come up with the channel_id == things aren't ready

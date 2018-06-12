@@ -35,6 +35,26 @@ Template.common_chat_message_editor.onRendered ->
 
     return
 
+  $(this.firstNode).focus =>
+    @data.getChannelObject().enterFocusMode()
+
+    return
+
+  if ($window_container = $(this.firstNode).closest(".window-container")).length == 0
+    # Isn't rendered inside a window, take care of exiting focus mode
+    # when focus out.
+    #
+    # For windows, we are counting on the task-opne.html mouseup/down handlers
+    # to take care of bluring (as the concept of bluring out of the window
+    # is more complex in that case).
+
+    $(this.firstNode).blur (e) =>
+      @data.getChannelObject().exitFocusMode()
+
+      return
+
+    return
+
   return
 
 Template.common_chat_message_editor.helpers

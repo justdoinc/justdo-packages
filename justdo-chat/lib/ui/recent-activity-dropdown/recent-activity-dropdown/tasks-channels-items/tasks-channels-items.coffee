@@ -53,7 +53,37 @@ Template.recent_activity_item_task.events
       channel_obj = getTaskChannelObjectForTaskId(@task_id)
 
       channel_obj.makeWindowVisible (window_arrangement_def) ->
-        $(".message-editor", window_arrangement_def.template_obj.node).focus()
+        window_arrangement_def.window_def.channel_object.enterFocusMode()
+
+        # This is a workaround
+        # we want the window to appear as active immediately as the user see it.
+        $(".open-chat-window", window_arrangement_def.template_obj.node).addClass("window-active")
+
+        Meteor.defer ->
+          # Reason to use Meteor.defer:
+          #
+          # If we call .focus() on the same tick, $.focus() procedures defined on its
+          # onRendered() aren't called already (not sure why onRendered isn't called
+          # in a point where we can already .focus() it. Daniel C.).
+          $(".message-editor", window_arrangement_def.template_obj.node).focus()
+
+          # Now, we should have to window-active, one from the hack above,
+          # and one from the .enterFocusMode called by the focus handler of
+          # the message-editor. The 2nd one is in the blaze level.
+
+          # To avoid messing things up, we remove both of them, and bring back
+          # only one. Now the DOM is inline with Blaze's expectation of it.
+          $(".open-chat-window", window_arrangement_def.template_obj.node).removeClass("window-active")
+          $(".open-chat-window", window_arrangement_def.template_obj.node).addClass("window-active")
+
+          return
+
+        return
+
+        Meteor.defer ->
+          $(".message-editor", window_arrangement_def.template_obj.node).focus()
+
+          return
 
         return
 
