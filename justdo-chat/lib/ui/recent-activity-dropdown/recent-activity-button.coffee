@@ -20,5 +20,6 @@ Template.justdo_chat_recent_activity_button.onDestroyed ->
 
 Template.justdo_chat_recent_activity_button.helpers
   unread_count: ->
-    return APP.justdo_chat.getSubscribedUnreadChannelsCount() or 0
-
+    return JustdoHelpers.delayedReactiveResourceOutput ->
+      return APP.justdo_chat.getSubscribedUnreadChannelsCount() or 0
+    , 100
