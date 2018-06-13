@@ -61,7 +61,7 @@ Template.chat_bottom_windows_task_open.helpers
   hasUnreadMessages: ->
     tpl = Template.instance()
 
-    return tpl.task_channel_object.getChannelSubscriberDoc(Meteor.userId()).unread
+    return tpl.task_channel_object.getChannelSubscriberDoc(Meteor.userId())?.unread
 
 Template.chat_bottom_windows_task_open.events
   "click .close-chat": ->
