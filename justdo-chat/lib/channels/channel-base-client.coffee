@@ -352,6 +352,11 @@ _.extend ChannelBaseClient.prototype,
     @_is_focused = true
     @_is_focused_dep.changed()
 
+    @_focus_mode_channel_auto_read_setter_comp = Tracker.autorun =>
+      if @getChannelSubscriberDoc(Meteor.userId()).unread
+        if JustdoHelpers.isTabVisible()
+          @setChannelUnreadState false
+
     return
 
   exitFocusMode: ->
@@ -362,6 +367,9 @@ _.extend ChannelBaseClient.prototype,
 
     @_is_focused = false
     @_is_focused_dep.changed()
+
+    @_focus_mode_channel_auto_read_setter_comp?.stop()
+    @_focus_mode_channel_auto_read_setter_comp = null
 
     return
 
