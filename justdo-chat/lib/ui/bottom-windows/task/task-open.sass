@@ -1,7 +1,7 @@
 @import "{justdoinc:justdo-chat}/lib/ui/bottom-windows/task/vars.scss";
 
 $window-height: 320px
-$chat-input-height: 35px
+$default-chat-input-height: 35px
 
 .open-chat-window-container
   width: 100%
@@ -15,7 +15,7 @@ $chat-input-height: 35px
     border-bottom: 1px solid #EBEBEB
 
   .messages-board-viewport
-    height: $window-height - $chat-window-header-height - $chat-input-height - 2
+    height: $window-height - $chat-window-header-height - $default-chat-input-height - 2
     overflow-y: auto
     padding: 0 3px
     width: 100%
@@ -23,7 +23,7 @@ $chat-input-height: 35px
     font-size: 13px
 
   .message-editor
-    height: $chat-input-height !important // Until we'll implement auto-resize
+    max-height: $default-chat-input-height * 3
     overflow: auto
 
   .header-title

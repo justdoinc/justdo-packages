@@ -132,6 +132,33 @@ Template.common_chat_message_editor.events
 Template.common_chat_message_editor.onRendered ->
   $textarea = @$("textarea")
 
-  $textarea.autosize()
+  $textarea.keydown ->
+    # The following fixes an issue we got that when the max height of the textarea
+    # is reached, the viewport doesn't focus the caret when additional lines are added
+    textarea = $textarea.get(0)
+    if $textarea.val().length == textarea.selectionStart
+      Meteor.defer ->
+        textarea.scrollTop = textarea.scrollHeight
+
+        return
+
+    return
+
+  $textarea.autosize
+    callback: =>
+      Meteor.defer =>
+        $chat_window = @$(_this.firstNode).closest(".chat-window")
+        $chat_header = $chat_window.find(".chat-header")
+        $message_editor = $chat_window.find(".message-editor")
+        $message_board_viewport = $chat_window.find(".messages-board-viewport")
+
+        new_message_board_viewport_height =
+          $chat_window.outerHeight() - $chat_header.outerHeight() - $message_editor.outerHeight()
+
+        $message_board_viewport.height(new_message_board_viewport_height)
+
+        return
+
+      return
 
   return
