@@ -1,4 +1,39 @@
 // We use scss, and not sass here, since we have a bug interfering with sass files @import
 
 $active-window-background: #2d6fcf;
+$non-active-window-background: #f4f4f4;
+
+$time-for-each-unread-blinking-color: 0.75s;
+
 $chat-window-header-height: 31px;
+
+
+@keyframes active-unread-chat-window {
+  0% {
+    background: $active-window-background
+  }
+  50% {
+    background: $active-window-background
+  }
+  51% {
+    background: darken($active-window-background, 10)
+  }
+  100% {
+    background: darken($active-window-background, 10)
+  }
+}
+
+@keyframes non-active-unread-chat-window {
+  0% {
+    background: $non-active-window-background
+  }
+  50% {
+    background: $non-active-window-background
+  }
+  51% {
+    background: darken($non-active-window-background, 10)
+  }
+  100% {
+    background: darken($non-active-window-background, 10)
+  }
+}

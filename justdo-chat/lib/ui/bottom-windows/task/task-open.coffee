@@ -58,6 +58,11 @@ Template.chat_bottom_windows_task_open.helpers
 
     return tpl.task_channel_object.isFocused()
 
+  hasUnreadMessages: ->
+    tpl = Template.instance()
+
+    return tpl.task_channel_object.getChannelSubscriberDoc(Meteor.userId()).unread
+
 Template.chat_bottom_windows_task_open.events
   "click .close-chat": ->
     APP.justdo_chat._justdo_chat_bottom_windows_manager.removeWindow "task", {task_id: @task_id}

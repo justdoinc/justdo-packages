@@ -10,13 +10,17 @@ $close-chat-width: 26px
   box-shadow: 0px 0 3px rgba(0, 0, 0, 0.25), 0px 0px 10px rgba(0, 0, 0, 0.05)
 
   .chat-header
-    background: #f4f4f4
+    background: $non-active-window-background
 
     color: #fff
 
     height: $chat-window-header-height
     border-radius: 2px 2px 0px 0px
     position: relative
+
+  &.window-unread
+    .chat-header
+      animation: non-active-unread-chat-window ($time-for-each-unread-blinking-color * 2) infinite
 
   .close-chat 
     position: absolute
@@ -53,8 +57,12 @@ $close-chat-width: 26px
     padding-right: $close-chat-width
 
 .window-active
-  .chat-header 
+  .chat-header
     background: $active-window-background
+
+  &.window-unread
+    .chat-header
+      animation: active-unread-chat-window ($time-for-each-unread-blinking-color * 2) infinite
 
   .close-chat
     color: rgba(255, 255, 255, 0.80)
