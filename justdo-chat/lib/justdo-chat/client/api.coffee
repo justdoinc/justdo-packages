@@ -265,7 +265,7 @@ _.extend JustdoChat.prototype,
         else
           @_initial_subscribed_channels_recent_activity_subscription_ready.set true
 
-
+        @_time_current_recent_activity_publication_established = new Date()
         @_subscribed_channels_recent_activity_subscription = subscription
         @_subscribed_channels_recent_activity_subscription_dep.changed()
         @_active_channels_recent_activity_subscription_options = options
@@ -284,12 +284,82 @@ _.extend JustdoChat.prototype,
 
     return
 
-  stopChannelsRecentActivityPublication: ->
-    @_subscribed_channels_recent_activity_subscription?.stop()
+  # To avoid delay in consecutive requests to get the recent activity publication,
+  # in cases such as that of the recent activity dropdown reopening in a short
+  # timespan, we don't stop the publication immediately when
+  # @stopChannelsRecentActivityPublication() is called, but instead we delay the stop.
+  #
+  # If another request to get the recent activity publication will be received
+  # during the delay time, we will cancel the request to stop the publication.
 
-    @_subscribed_channels_recent_activity_subscription = null
-    @_subscribed_channels_recent_activity_subscription_dep.changed()
+  _time_current_recent_activity_publication_established: null
 
+  _channel_recent_activity_publication_stop_delay_ms: 1000 * 60 * 5 # 5 mins
+  _current_delayed_request_to_stop_channel_recent_activity_publication: null
+
+  # We force refresh of the recent activity publication, in the form of
+  # actual stop, and resubscription when @_time_current_recent_activity_publication_established
+  # is older than @_max_recent_activity_publication_age .
+  #
+  # We perform the refresh when @stopChannelsRecentActivityPublication is called
+  # before setting up the stop delay timeout.
+  #
+  # We do it here and not under the @requestSubscribedChannelsRecentActivity()
+  # since the publication sends augmented data about the recent activity items
+  # (projects, users, tasks detals, etc.) that isn't reactive. If we will establish
+  # a new subscription before stoping the existing one (the approach we use for
+  # example for the incremental load (increase limit) that relies on the DDP mergebox
+  # to not send docs the user already have), it is assumed (not tested),
+  # that we will run into issues with the DDP's merge box that won't resend docs ids
+  # that already exists in the open publication, and the updated version of the
+  # augmented docs won't be received by the user (and they are all the point we
+  # want to refresh the subscription for to begin with).
+  #
+  # If we would refresh in this fashion (full stop, and resubscription) on
+  # @requestSubscribedChannelsRecentActivity() the user will experience
+  # interference (data will disappear and show again).
+  #
+  # By doing it here, we avoid that issue, but we potentially 'waste' a request to recent
+  # activity subscription, that might never be used.
+  _max_recent_activity_publication_age: 1000 * 60 * 5 # 5 mins
+
+  stopChannelsRecentActivityPublication: (_allow_keep_alive=true) ->
+    if not @_subscribed_channels_recent_activity_subscription?
+      # Nothing to stop...
+
+      return
+
+    @_cancelDelayedRequestToStopChannelRecentActivityPublication()
+
+    if not _allow_keep_alive
+      @_subscribed_channels_recent_activity_subscription.stop() # we check existence above
+      @_subscribed_channels_recent_activity_subscription = null
+      @_subscribed_channels_recent_activity_subscription_dep.changed()
+
+      @_time_current_recent_activity_publication_established = null
+
+      @logger.debug("Channels recent activity subscription stopped")
+
+      return
+
+    if JustdoHelpers.getDateMsOffset(-1 * @_max_recent_activity_publication_age) > @_time_current_recent_activity_publication_established
+      # The existing publicatino, reached its max allowed age refresh it (read comment above @_max_recent_activity_publication_age)
+      @stopChannelsRecentActivityPublication(false) # Stop the existing publication.
+      @requestSubscribedChannelsRecentActivity({additional_recent_activity_request: false})
+
+      @logger.debug("Channels recent activity subscription refreshed")
+
+    @_current_delayed_request_to_stop_channel_recent_activity_publication = setTimeout =>
+      @stopChannelsRecentActivityPublication(false)
+    , @_channel_recent_activity_publication_stop_delay_ms
+
+    return
+
+  _cancelDelayedRequestToStopChannelRecentActivityPublication: ->
+    if @_current_delayed_request_to_stop_channel_recent_activity_publication?
+      clearTimeout @_current_delayed_request_to_stop_channel_recent_activity_publication
+      @_current_delayed_request_to_stop_channel_recent_activity_publication = null
+    
     return
 
   _setupChannelsRecentActivitySubscriptionsDestroyer: ->
@@ -339,9 +409,22 @@ _.extend JustdoChat.prototype,
     # to initial_messages_to_request, otherwise, if there are more messages that we haven't
     # fetched yet with the messages subscription, requests additional_messages_to_request .
 
+    @_cancelDelayedRequestToStopChannelRecentActivityPublication()
+
     options = _.extend {}, {
       initial_messages_to_request: 10
       additional_messages_to_request: 30
+      additional_recent_activity_request: true # If set to true, we assume that the UI already presents
+                                               # activity from that publication to the user, and the
+                                               # user wants additional entries.
+                                               #
+                                               # If set to false, we assume that the presentation of recent
+                                               # activity just started (e.g. click on the recent activity button)
+                                               # we might have a lingered subscription already*, thanks to which,
+                                               # recent activity is already presented to the user, or the user
+                                               # is now in the wait for the subscription load.
+                                               #
+                                               # * See @stopChannelsRecentActivityPublication() comments
       onReady: null
     }, options
 
@@ -377,6 +460,11 @@ _.extend JustdoChat.prototype,
 
       return
     else if subscribed_channels_activity_state == "more"
+      if not options.additional_recent_activity_request
+        @logger.debug "Channel subscription already established"
+
+        return
+
       @logger.debug "Channel load more messsages"
 
       new_limit =

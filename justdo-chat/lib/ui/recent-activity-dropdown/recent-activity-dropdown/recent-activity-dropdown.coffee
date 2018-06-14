@@ -20,7 +20,7 @@ share.RecentActivityDropdown = JustdoHelpers.generateNewTemplateDropdown "recent
     return
 
 Template.recent_activity_dropdown.onCreated ->
-  APP.justdo_chat.requestSubscribedChannelsRecentActivity()
+  APP.justdo_chat.requestSubscribedChannelsRecentActivity({additional_recent_activity_request: false})
 
   return
 
