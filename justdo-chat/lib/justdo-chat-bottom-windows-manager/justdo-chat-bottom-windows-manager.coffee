@@ -222,9 +222,10 @@ _.extend JustdoChatBottomWindowsManager.prototype,
           if windows_arrangement?
             for window_arrangement_def in windows_arrangement
               if window_arrangement_def.id == serialized_identifier
-                options.onComplete(window_arrangement_def)
+                if window_arrangement_def.rendered_state == "open"
+                  options.onComplete(window_arrangement_def)
 
-                c.stop()
+                  c.stop()
 
           return
 
