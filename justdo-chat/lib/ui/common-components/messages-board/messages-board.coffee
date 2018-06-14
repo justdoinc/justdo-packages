@@ -13,31 +13,30 @@ Template.common_chat_messages_board.onCreated ->
 
     return
 
-  # Purpose of @first_message_rendered_for_channel
-  #
-  # This flag is used to determine when we should scroll the board view-port to the
-  # bottom.
-  #
-  # When a new channel is loaded for this template, its messages will arrive at once
-  # from the subscription, all will be rendered and only after they all been rendered
-  # the onRendered() of each will be called.
-  #
-  # Since the onRendered() of the messages cards are called after the rendering of all
-  # the cards that been rendered in the same flush, we can't rely on the code that takes care
-  # of scrolling the view port to the bottom on introduction of new card from the server if
-  # the viewport is positioned in the end of the messages cards, to keep bring the viewport
-  # to the bottom (since call isn't incremental).
-  #
-  # @first_message_rendered_for_channel is used as a hint for whether we are rendering the
-  # messages of a channel for the first time in the viewport positioning algorithem.
-  @first_message_rendered_for_channel = false
+  @initial_messages_payload_rendering_completed = false
+  @max_time_between_messages_to_be_considered_part_of_initial_payload_chain_ms = 150
+  @current_initial_payload_sealing_timeout = null
+  @initialPayloadMessageRendered = =>
+    @scrollToBottom()
 
-  # Purpose of @first_message_rendered_for_channel
-  #
+    if @current_initial_payload_sealing_timeout?
+      clearTimeout @current_initial_payload_sealing_timeout
+
+    @current_initial_payload_sealing_timeout = setTimeout =>
+      # Read comment about @initial_messages_payload_rendering_completed above!
+      @initial_messages_payload_rendering_completed = true
+
+      @scrollToBottom()
+
+      return
+    , @max_time_between_messages_to_be_considered_part_of_initial_payload_chain_ms
+
+    return
+
   # If set to a message card, on the next message card rendering, stick the viewport to
   # to the head of that message_card. Used when loading additional tasks to place the viewport
   # on the last message the user saw and avoid perceived "jump" to the beginning of the list
-  # of received tasks. See comment for @first_message_rendered_for_channel regarding the way
+  # of received tasks. See comment for @initial_messages_payload_rendering_completed regarding the way
   # onRendered() works, we rely/affected on/by that behavior for
   # @stick_viewport_to_card_on_next_cards_render as well.
   @stick_viewport_to_card_on_next_cards_render = null
@@ -59,7 +58,7 @@ Template.common_chat_messages_board.onCreated ->
     # I don't see situation where not removing the event will lead to mem-leak, so we don't
     # remove it on destroy (the channel obj is destroyed/replaced in a way that protects us).
 
-    @first_message_rendered_for_channel = false
+    @initial_messages_payload_rendering_completed = false
 
     return
 
@@ -127,11 +126,8 @@ Template.common_chat_messages_board_message_card.onRendered ->
   common_chat_messages_board_tpl =
     Template.closestInstance("common_chat_messages_board")
 
-  if common_chat_messages_board_tpl.first_message_rendered_for_channel == false
-    # Read comment about @first_message_rendered_for_channel above!
-    common_chat_messages_board_tpl.first_message_rendered_for_channel = true
-
-    common_chat_messages_board_tpl.scrollToBottom()
+  if common_chat_messages_board_tpl.initial_messages_payload_rendering_completed == false
+    common_chat_messages_board_tpl.initialPayloadMessageRendered()
 
     return
 
