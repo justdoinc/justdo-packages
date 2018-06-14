@@ -24,6 +24,18 @@ Template.chat_bottom_windows_task_open.onRendered ->
 
     return
 
+  # We don't want mouseup/down on chat to trigger window activation
+  @$(".close-chat")
+    .mouseup (e) ->
+      e.stopPropagation()
+
+      return
+
+    .mousedown (e) ->
+      e.stopPropagation()
+
+      return
+
   # The best user experience is with mousedown, but we can't trust mousedown to always
   # bubble up, hence, we have to bind to mouseup as well.
   $(document).mousedown @blurCb
