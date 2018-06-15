@@ -40,6 +40,15 @@ _.extend GridData.prototype,
   getItemSection: (index) -> @grid_tree[index][4]
   getItemType: (index) -> @grid_tree[index][0]._type
   getItemIsTyped: (index) -> @getItemType(index)?
+  getItemIsCollectionItem: (index) ->
+    if not (item_type = @getItemType(index))?
+      # Not typed item, must be collection item.
+      return true
+
+    if @items_types_settings[item_type]?.is_collection_item
+      return true
+
+    return false
 
   getItemRelativePath: (index) ->
     section = @getItemSection(index)

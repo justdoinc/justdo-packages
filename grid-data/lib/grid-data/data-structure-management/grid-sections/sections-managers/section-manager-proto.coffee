@@ -206,7 +206,7 @@ _.extend GridDataSectionManager.prototype,
     #  -1 if operations on normalized_level aren't permitted
     #   0 if operations on normalized_level are permitted and can affect any depth of the section
     #   1 if operations on normalized_level are permitted and can affect only non-section's root level items (normalized level > 0).
-    #   2 XXX NOT IMPLEMENTED YET if operations on normalized_level are permitted and can affect only non-section's root level items under the same top-level parent subtree.
+    #   2 if operations on normalized_level are permitted and can affect only non-section's root level items under the same top-level parent subtree.
 
     permitted_depth = @section_obj.options.permitted_depth
 
@@ -220,6 +220,15 @@ _.extend GridDataSectionManager.prototype,
 
     # permitted_depth > 0, 0 level items not movable 
     if normalized_level == 0
+      return -1
+
+    if permitted_depth == 1
+      return 1
+
+    # by now, we know permitted_depth is 2
+
+    if normalized_level == 1
+      # Both first normalized levels aren't allowed for moves
       return -1
 
     return permitted_depth

@@ -314,6 +314,23 @@ _.extend PACK.Plugins,
 
             determine_position_by = -1
 
+        # If we should determine the position by the previous item,
+        # but we can't determine the previous item's collection item
+        if determine_position_by == -1 and not ext.prev.natural_collection_info?
+          if ext.next.natural_collection_info?
+            # If we got collection item for the next item, use it instead.
+            determine_position_by = 1
+          else
+            # Otherwise determine position by the item itself.
+            determine_position_by = 0
+
+        # See comments for the mirror case above.
+        if determine_position_by == 1 and not ext.next.natural_collection_info?
+          if ext.prev.natural_collection_info?
+            determine_position_by = -1
+          else
+            determine_position_by = 0
+
         parent_id = null
         order = null
         level = null
@@ -360,8 +377,8 @@ _.extend PACK.Plugins,
           item_under_cursor =
             if sort_state.mouse_vs_placeholder == -1 then ext.prev else ext.next
 
-          if item_under_cursor?
-            # If there's an item under the cursor
+          if item_under_cursor? and item_under_cursor.natural_collection_info?
+            # If there's an item under the cursor that we can determine its natural collection info
             if item_under_cursor.expand_state == 0
               # If there's a collapsed item with children under the cursor expand it
               expandPath(item_under_cursor.path, ui)

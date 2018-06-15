@@ -60,7 +60,7 @@ _.extend GridControl.prototype,
       _.extend(prereq, active_path_prereq)
       return prereq
 
-    if @_grid_data.getItemIsTyped(@getCurrentRow())
+    if not @_grid_data.getItemIsCollectionItem(@getCurrentRow())
       prereq.active_path_isnt_collection_item = ""
 
     return prereq
