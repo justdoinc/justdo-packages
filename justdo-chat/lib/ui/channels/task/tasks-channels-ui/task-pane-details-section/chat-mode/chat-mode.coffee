@@ -18,7 +18,7 @@ getChannelSubscribersIdsIntersectionWithTaskMembersIds = (channel) ->
   # channel subscribers list, we therefore, count the intersection
   # between the subscribers list and the existing task members.
 
-  if not (subscribers_array = channel.getSubscribersArray())?
+  if not (subscribers_array = channel?.getSubscribersArray())?
     return []
 
   subscribers_ids = _.map subscribers_array, (sub) -> sub.user_id
