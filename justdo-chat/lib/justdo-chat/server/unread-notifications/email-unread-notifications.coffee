@@ -53,6 +53,7 @@ JustdoChat.registerUnreadChannelsNotificationsManager
       template: "notifications-iv-unread-chat"
       template_data: template_data
       to: to
-      subject: "New messages are waiting under #{project_doc.title} - ##{task_doc.seqId}: #{JustdoHelpers.ellipsis(task_doc.title or "", 60)}"
+      subject: "New chat messages are waiting for you"
+      # subject: "New messages are waiting under #{project_doc.title} - ##{task_doc.seqId}: #{JustdoHelpers.ellipsis(task_doc.title or "", 60)}"
 
     return
