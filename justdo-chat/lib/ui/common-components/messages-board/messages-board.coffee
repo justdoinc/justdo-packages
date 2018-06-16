@@ -109,11 +109,7 @@ Template.common_chat_messages_board_message_card.helpers
   body: ->
     body = @body
 
-    body = JustdoHelpers.htmlEntities(body)
-
-    body = JustdoHelpers.nl2br(body)
-
-    body = linkifyStr(body)
+    body = linkifyStr(body, {nl2br: true}) # linkify already escapes html entities, so don't worry about xss here.
 
     return body
 
