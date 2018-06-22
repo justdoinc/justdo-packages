@@ -55,10 +55,13 @@
       padding-right: 22px
 
 .search-result
-  background-color: #eaf7ef
+  background-color: #fff7af
 
 .search-result.active
-  background-color: #d4e7ea
+  background-color: #ffba51
+
+  .slick-cell.editable
+    background-color: rgba(194, 0, 0, 0.13)
 
 // THE FOLLOWING IS A HACK TO MIGRATE TO NEW DESIGN WITHOUT
 // RESTRUCTURING THE DOM, IN THE FUTURE WE SHOULD IMPORVE!
@@ -77,7 +80,7 @@
 
 #project-search-comp-container
   .form-control
-    border: none
+    border: 1px solid #c3c3c3
     border-radius: 3px
     box-shadow: none
     background-color: #F5F5F5
@@ -104,8 +107,8 @@
     &::placeholder
       color: #707070
   .search-info
-    background-color: #eaf7ef
+    background-color: #fff8af
     color: black
-    border: 1px solid #96d6ae
+    border: 1px solid #fee492
     font-family: "Lato", sans-serif
     padding: .2em .45em .3em
