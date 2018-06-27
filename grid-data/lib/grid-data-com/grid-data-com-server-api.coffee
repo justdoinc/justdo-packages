@@ -442,3 +442,25 @@ _.extend GridDataCom.prototype,
     # whatever action they like (worst case... he destory his own data.
     # perhaps in the future we'd like to apply some more checks here.
     return @collection.update selector, modifier, {multi: true}
+
+  getContexts: (task_id, options, perform_as) ->
+    options = {} #to be future compatible
+    check(task_id, String)
+    @_isPerformAsProvided(perform_as)
+
+    findParentsPaths = (task_id, user_id) =>
+      contexts = []
+      if (task = @collection.findOne({_id: task_id, users: user_id}))
+        for k,v of task.parents
+          if k != "0"
+            contexts = contexts.concat(findParentsPaths(k,user_id))
+          else
+            contexts = contexts.concat([[{_id:0, title: '', seq: 0}]])
+
+      for a of contexts
+        contexts[a].push {_id:task._id, title: task.title, seq: task.seqId}
+
+      return contexts
+
+    contexts = findParentsPaths task_id,perform_as
+    return contexts

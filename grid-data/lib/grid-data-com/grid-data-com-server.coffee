@@ -53,6 +53,9 @@ _.extend GridDataCom.prototype,
       perform_as_arg_position: 3
     bulkUpdate:
       perform_as_arg_position: 2
+    getContexts:
+      perform_as_arg_position: 2
+
 
   disabled_methods: ["updateItem"] 
  
