@@ -206,7 +206,7 @@ _.extend JustdoChat,
 
         min_iv_unread = JustdoHelpers.getDateMsOffset(-1 * conf.min_unread_period_ms, proc_date)
 
-        justdo_chat.logger.info "Unread channels notifications - #{conf.notification_type} - min_iv_unread: #{min_iv_unread} - BEGIN"
+        # justdo_chat.logger.info "Unread channels notifications - #{conf.notification_type} - min_iv_unread: #{min_iv_unread} - BEGIN"
 
         subscriber_element_matching_criteria =
           iv_unread:
@@ -486,7 +486,8 @@ _.extend JustdoChat,
 
           return
 
-        justdo_chat.logger.info "Unread channels notifications - #{conf.notification_type} - processed_channels: #{processed_channels}; notifications_sent: #{notifications_sent} ; channel_access_rejected: #{channel_access_rejected} - DONE"
+        if processed_channels > 0
+          justdo_chat.logger.info "Unread channels notifications - #{conf.notification_type} - processed_channels: #{processed_channels}; notifications_sent: #{notifications_sent} ; channel_access_rejected: #{channel_access_rejected} - DONE"
 
         return
 
