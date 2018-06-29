@@ -444,23 +444,87 @@ _.extend GridDataCom.prototype,
     return @collection.update selector, modifier, {multi: true}
 
   getContexts: (task_id, options, perform_as) ->
-    options = {} #to be future compatible
+    options = {} # Force to empty object for now, options will be defined in the future
+
     check(task_id, String)
+
     @_isPerformAsProvided(perform_as)
 
-    findParentsPaths = (task_id, user_id) =>
-      contexts = []
-      if (task = @collection.findOne({_id: task_id, users: user_id}))
-        for k,v of task.parents
-          if k != "0"
-            contexts = contexts.concat(findParentsPaths(k,user_id))
-          else
-            contexts = contexts.concat([[{_id:0, title: '', seq: 0}]])
+    findParentsPaths = (task_id, user_id, _first_iteration=true) =>
+      # This function will return an array of arrays of the following form:
+      #
+      # [
+      #  [{_id: "", title: "", seqId: ""}, {_id: "", title: "", seqId: ""}, ...]
+      #  [{_id: "", title: "", seqId: ""}, {_id: "", title: "", seqId: ""}, ...]
+      # ]
+      #
+      # Each sub-array represents task_id's path that is known to user_id .
+      #
+      # Notes:
+      #
+      # 1. We represent items that aren't known to the user with _id: -1
+      #
+      #   Example path: 
+      #   [ { _id: -1, title: 'Shared with me', seqId: null },
+      #       { _id: 'cxhpvSW3zC6mkoZ4C', title: undefined, seqId: 29 },
+      #       { _id: 'JDCfBrRJkW2DnvDjG', title: undefined, seqId: 30 },
+      #       { _id: 'doJWiByooShyeHtzS', title: undefined, seqId: 31 } ]
+      #
+      # 2. As in other places, root is represented with _id: 0
+      #
+      # 3. seqId will be null for pseudo items (root, shared with me)
+      #
+      # 4. IMPORTANT: The following pseudo items aren't supported at the moment:
+      #    Tickets Queues, Direct Tasks.
+      #
+      # Todo:
+      #
+      # This alg involves n calls to the mongo server where n is the amount of ancestors.
+      # Can be optimised to n calls where n is the longest path to root.
 
-      for a of contexts
-        contexts[a].push {_id:task._id, title: task.title, seq: task.seqId}
+      contexts = []
+
+      if (task = @collection.findOne({_id: task_id, users: user_id}))?
+        for parent_id, parent_info of task.parents
+          if parent_id != "0"
+            contexts = contexts.concat(findParentsPaths(parent_id, user_id, false))
+          else
+            contexts = contexts.concat([[{_id: 0, title: "", seqId: null}]])
+
+        for context in contexts
+          context.push {_id: task._id, title: task.title, seqId: task.seqId}
+      else
+        if _first_iteration
+          # If first iteration, the user doesn't even know the task_id
+          # provided to getContexts(), or the task doesn't exists at all
+
+          return []
+
+        contexts = contexts.concat([[{_id: -1, title: "Shared with me", seqId: null}]])
 
       return contexts
 
-    contexts = findParentsPaths task_id,perform_as
+    contexts = findParentsPaths task_id, perform_as
+
+    known_parent_exists = false
+    unknown_parents_found = false
+    for context, i in contexts
+      if context[0]._id != -1 or context.length > 2
+        known_parent_exists = true
+      
+      if context[0]._id == -1 and context.length == 2
+        if unknown_parents_found
+          # An item will appear as a child of Shared with me for only one of its parents.
+          contexts[i] = null
+        else
+          unknown_parents_found = true
+
+    contexts = _.compact contexts
+
+    if known_parent_exists and unknown_parents_found
+      # If an item got known parents, the parents that aren't known won't cause
+      # him to appear under the shared with me (it won't appear under the shared
+      # with me at all)
+      contexts = _.filter contexts, (context) -> context[0]._id != -1 or context.length > 2
+
     return contexts
