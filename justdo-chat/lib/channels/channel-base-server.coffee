@@ -163,6 +163,9 @@ _.extend ChannelBaseServer.prototype,
     if _.isString(users_ids) and not _.isEmpty(users_ids)
       users_ids = [users_ids]
 
+    if _.isArray users_ids # We don't rely on the input type still.
+      users_ids = _.compact(users_ids) # Remove null/undefined values
+
     if not _.isArray(users_ids) or _.isEmpty(users_ids)
       # Note, it is very important to throw an exception here.
       # @_getUsersAccessPermission() expect users_ids to be non-empty.

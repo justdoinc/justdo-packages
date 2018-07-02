@@ -77,7 +77,7 @@ _.extend TaskChannelClient.prototype,
     if not (task_doc = @tasks_collection.findOne(@task_id))?
       return []
 
-    return _.union([Meteor.userId(), task_doc.owner_id, task_doc.pending_owner_id])
+    return _.compact(_.union([Meteor.userId(), task_doc.owner_id, task_doc.pending_owner_id]))
 
   #
   # Manage Chat Records Subscription
