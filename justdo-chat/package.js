@@ -58,6 +58,8 @@ Package.onUse(function (api) {
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 
+  api.use("justdoinc:justdo-accounts@1.0.0", both);
+
   api.use("justdoinc:justdo-jobs-processor@1.0.0", server);
 
   api.use("matb33:collection-hooks@0.8.4", both);

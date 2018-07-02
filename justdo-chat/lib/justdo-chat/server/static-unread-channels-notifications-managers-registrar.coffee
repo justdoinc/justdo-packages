@@ -246,11 +246,6 @@ _.extend JustdoChat,
 
           return true
 
-        fetched_users_fields =
-          "#{conf.user_configuration_field}": 1
-
-        _.extend fetched_users_fields, share.common_public_user_info_fetched_fields
-
         # We cache the fetched users obj in the job level, so each user will be fetched up to one
         # time per job.
         _users_docs_cache = {}
@@ -276,7 +271,7 @@ _.extend JustdoChat,
               need_fetch_from_db.push user_id
 
           if not _.isEmpty need_fetch_from_db
-            for user_doc in Meteor.users.find({_id: {$in: need_fetch_from_db}}, {fields: fetched_users_fields}).fetch()
+            for user_doc in APP.accounts.fetchPublicBasicUsersInfo(need_fetch_from_db, {additional_fields: {"#{conf.user_configuration_field}": 1}})
               _users_docs_cache[user_doc._id] = user_doc
 
               yield user_doc
@@ -287,7 +282,7 @@ _.extend JustdoChat,
           if user_id of _users_docs_cache
             return _users_docs_cache[user_id]
 
-          user_doc = Meteor.users.findOne(user_id, {fields: fetched_users_fields})
+          user_doc = APP.accounts.findOnePublicBasicUserInfo(user_id, {additional_fields: {"#{conf.user_configuration_field}": 1}})
 
           _users_docs_cache[user_id] = user_doc
 

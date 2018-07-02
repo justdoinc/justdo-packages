@@ -770,17 +770,6 @@ _.extend ChannelBaseServer.prototype,
                                  # the remove hook of the messages_tracker is called for a message
                                  # (so we can report it isn't necessary any longer).
 
-    # If you change the fields here, consider changing them also for publicBasicUsersInfo publication
-    # (from which they are derived), look for file named 020-publications.coffee
-    published_channel_messages_authors_details_fields =
-      _id: 1
-      emails: 1
-      "profile.first_name": 1
-      "profile.last_name": 1
-      "profile.profile_pic": 1
-      "profile.avatar_fg": 1
-      "profile.avatar_bg": 1
-
     reportAuthorDetailsRequired = (message_id, author_id) ->
       if not options.provide_authors_details
         return
@@ -790,7 +779,7 @@ _.extend ChannelBaseServer.prototype,
       if not authors_details_sent[author_id]?
         authors_details_sent[author_id] = 1
 
-        publish_this.added channel_messages_authors_details_collection_name, author_id, Meteor.users.findOne(author_id, {fields: published_channel_messages_authors_details_fields})
+        publish_this.added channel_messages_authors_details_collection_name, author_id, APP.accounts.findOnePublicBasicUserInfo(author_id)
       else 
         authors_details_sent[author_id] += 1
 

@@ -5,19 +5,6 @@ default_subscribed_unread_channels_limit = 10
 
 default_bottom_windows_limit = 30
 
-# If you change the fields here, consider changing them also for publicBasicUsersInfo publication
-# (from which they are derived), look for file named 020-publications.coffee
-share.common_public_user_info_fetched_fields = 
-  _id: 1
-  emails: 1
-  "profile.first_name": 1
-  "profile.last_name": 1
-  "profile.profile_pic": 1
-  "profile.avatar_fg": 1
-  "profile.avatar_bg": 1
-
-published_recent_activity_authors_details_fields = share.common_public_user_info_fetched_fields
-
 _.extend JustdoChat.prototype,
   _immediateInit: ->
     for type, conf of share.channel_types_server_specific_conf
@@ -362,7 +349,7 @@ _.extend JustdoChat.prototype,
       if not authors_details_sent[author_id]?
         authors_details_sent[author_id] = 1
 
-        publish_this.added recent_activity_authors_details_collection_name, author_id, Meteor.users.findOne(author_id, {fields: published_recent_activity_authors_details_fields})
+        publish_this.added recent_activity_authors_details_collection_name, author_id, APP.accounts.findOnePublicBasicUserInfo(author_id)
       else 
         authors_details_sent[author_id] += 1
 
