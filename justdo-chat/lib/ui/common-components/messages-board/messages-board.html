@@ -13,7 +13,7 @@
     <div class="avatar">{{#with authorDoc}}{{> justdo_avatar}}{{/with}}</div>
     <div class="message-container">
       <div class="message-header">
-        <span class="author">{{displayName authorDoc}}</span>
+        <span class="author">{{> display_name_with_graphic_unverified_warning authorDoc}}</span>
         <span class="date" title="{{moFormat createdAt "YYYY-MM-DD hh:mm"}}">{{friendlyDateFormat createdAt}}</span>
       </div>
       <div dir="auto" class="message-body">

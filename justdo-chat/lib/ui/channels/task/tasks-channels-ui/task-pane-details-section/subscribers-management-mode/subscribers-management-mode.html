@@ -9,7 +9,7 @@
   <div class="users-board">
     {{#each taskMembers}}
       <div class="user-card">
-        {{> justdo_avatar}} <div class="user-name">{{displayName}}</div> 
+        {{> justdo_avatar}} <div class="user-name">{{> display_name_with_graphic_unverified_warning}}</div> 
 
         <div user-id="{{_id}}" class="subscribe-state {{#if isSubscriber}}subscribed{{else}}unsubscribed{{/if}}"></div>
       </div>
