@@ -77,7 +77,16 @@ _.extend TaskChannelClient.prototype,
     if not (task_doc = @tasks_collection.findOne(@task_id))?
       return []
 
-    return _.compact(_.union([Meteor.userId(), task_doc.owner_id, task_doc.pending_owner_id]))
+    ownership_related_suggestions =
+      _.compact(_.union([Meteor.userId(), task_doc.owner_id, task_doc.pending_owner_id]))
+
+    if task_doc.users.length == 2
+      only_two_users_related_suggestions = _.compact(task_doc.users)
+
+    all_suggestions = 
+      _.union(ownership_related_suggestions, only_two_users_related_suggestions)
+
+    return all_suggestions
 
   #
   # Manage Chat Records Subscription
