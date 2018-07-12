@@ -195,6 +195,8 @@ _.extend JustdoChat,
 
         Meteor.users.attachSchema user_conf_field_schema
 
+    conf._interval = null
+
     # Define the job we will register on @_setupUnreadChannelsNotificationsJobs() see jobs-definitions.coffee
     conf.job = ->
       # Assume @ is the justdo_chat object, actual registration is happening under jobs-definitions.coffee
@@ -486,7 +488,14 @@ _.extend JustdoChat,
 
         return
 
-      Meteor.setInterval proc, conf.polling_interval_ms
+      conf._interval = Meteor.setInterval proc, conf.polling_interval_ms
+
+    conf.stopJob = ->
+      Meteor.clearInterval conf._interval
+
+      conf._interval = null
+
+      return
 
     share.unread_channels_notifications_conf[conf.notification_type] = conf
 
