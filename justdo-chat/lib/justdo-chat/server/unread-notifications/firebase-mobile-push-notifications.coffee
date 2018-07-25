@@ -50,20 +50,16 @@ if APP.justdo_push_notifications.isFirebaseEnabled()
       #     task_id: task_doc._id
 
       APP.justdo_push_notifications.pnUsersViaFirebase
-        message_type: "chat-msg"
+        message_type: "unread-chat"
 
         # title: "New chat message received"
 
-        body: "New chat messages received for task ##{task_doc.seqId}: #{JustdoHelpers.ellipsis task_doc.title, 80} :: #{project_doc.title}"
+        body: "New chat messages received"
 
         recipients_ids: [user._id]
 
         networks: ["mobile"]
 
-        data:
-          channel_type: channel_type
-          channel_id: channel_obj.getChannelDocNonReactive()._id
-          project_id: project_doc._id
-          task_id: task_doc._id
+        data: {}
 
       return
