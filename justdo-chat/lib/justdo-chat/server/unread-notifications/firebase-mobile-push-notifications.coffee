@@ -32,6 +32,23 @@ if APP.justdo_push_notifications.isFirebaseEnabled()
 
         job_storage.projects_docs_cache[project_id] = project_doc
 
+      # APP.justdo_push_notifications.pnUsersViaFirebase
+      #   message_type: "chat-msg"
+
+      #   # title: "New chat message received"
+
+      #   body: "New message - ##{task_doc.seqId}: #{JustdoHelpers.ellipsis task_doc.title, 80} :: #{project_doc.title}"
+
+      #   recipients_ids: [user._id]
+
+      #   networks: ["mobile"]
+
+      #   data:
+      #     channel_type: channel_type
+      #     channel_id: channel_obj.getChannelDocNonReactive()._id
+      #     project_id: project_doc._id
+      #     task_id: task_doc._id
+
       APP.justdo_push_notifications.pnUsersViaFirebase
         message_type: "chat-msg"
 
