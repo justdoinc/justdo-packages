@@ -192,3 +192,15 @@ _.extend JustdoChat.prototype,
         return
 
       return self.bottomWindowsPublicationHandler(@, options, @userId)
+
+    Meteor.publish "jdcBotsInfo", ->
+      col_name = JustdoChat.jdc_bots_info_collection_name
+
+      for bot_id, bot_def of self.getBotsInfo()
+        @added col_name, bot_id,
+          all_emails_verified: true
+          profile: bot_def
+
+      @ready()
+
+      return

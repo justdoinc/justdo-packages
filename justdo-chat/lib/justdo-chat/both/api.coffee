@@ -98,3 +98,8 @@ _.extend JustdoChat.prototype,
 
     return @_allTypesIdentifiyingAndAugmentedFields_cached_result
 
+  isBotUserId: (user_id) ->
+    if user_id.substr(0, JustdoChat.bot_user_id_prefix.length) == JustdoChat.bot_user_id_prefix
+      return true
+
+    return false

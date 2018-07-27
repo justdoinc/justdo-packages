@@ -16,3 +16,5 @@ _.extend JustdoChat.prototype,
       "task-doesnt-exist": "Task doesn't exist or permission missing"
       "invalid-message": "Invalid message"
       "unknown-channel-type": "Unknown channel type"
+      "only-bot-user-ids-are-allowed", "Only bots user ids are allowed"
+      "unknown-bot-id", "Unknown bot-id"

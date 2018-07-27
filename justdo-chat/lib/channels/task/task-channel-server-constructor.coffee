@@ -73,7 +73,9 @@ _.extend TaskChannelServer.prototype,
       not_permitted: []
     }
     for user_id in users_ids
-      if @justdo_chat.tasks_collection.isUserBelongToItem(task_doc, user_id)
+      if @justdo_chat.isBotUserId user_id
+        result_array.permitted.push user_id
+      else if @justdo_chat.tasks_collection.isUserBelongToItem(task_doc, user_id)
         result_array.permitted.push user_id
       else
         result_array.not_permitted.push user_id

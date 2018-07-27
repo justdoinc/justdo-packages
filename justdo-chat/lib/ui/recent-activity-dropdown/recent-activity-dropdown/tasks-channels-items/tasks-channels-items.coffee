@@ -17,7 +17,13 @@ Template.recent_activity_item_task.helpers
   last_message_author: ->
     last_message = APP.collections.JDChatRecentActivityMessages.findOne({channel_id: @_id})
 
-    return APP.collections.JDChatRecentActivityAuthorsDetails.findOne(last_message?.author)
+    if not (author_id = last_message?.author)?
+      return null
+
+    if APP.justdo_chat.isBotUserId author_id
+      return APP.collections.JDChatBotsInfo.findOne(author_id)
+
+    return APP.collections.JDChatRecentActivityAuthorsDetails.findOne(author_id)
 
   friendlyDateFormat: (date) ->
     return APP.justdo_chat.friendlyDateFormat(date)

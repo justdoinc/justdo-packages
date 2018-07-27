@@ -24,3 +24,6 @@ _.extend JustdoChat.prototype,
     check options, Object
 
     return Meteor.subscribe "jdcBottomWindows", options, callbacks
+
+  jdcBotsInfo: (callbacks) ->
+    return Meteor.subscribe "jdcBotsInfo", callbacks

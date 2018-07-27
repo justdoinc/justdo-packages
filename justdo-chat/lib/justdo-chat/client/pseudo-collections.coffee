@@ -9,3 +9,5 @@ APP.collections.JDChatRecentActivityAuthorsDetails = new Mongo.Collection Justdo
 APP.collections.JDChatBottomWindowsChannels = new Mongo.Collection JustdoChat.jdc_bottom_windows_channels_collection_name
 
 APP.collections.JDChatChannelMessagesAuthorsDetails = new Mongo.Collection JustdoChat.jdc_channel_messages_authors_details_collection_name
+
+APP.collections.JDChatBotsInfo = new Mongo.Collection JustdoChat.jdc_bots_info_collection_name

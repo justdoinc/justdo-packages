@@ -934,6 +934,46 @@ _.extend JustdoChat.prototype,
 
     return
 
+  sendMessageAsBot: (channel_type, channel_identifier, message_obj, bot_id="bot:your-assistant") ->
+    @requireAllowedChannelType(channel_type)
+    check channel_identifier, Object
+    check message_obj, Object
+
+    if not @isBotUserId(bot_id)
+      throw @_error "only-bot-user-ids-are-allowed", "Only bots user ids are allowed"
+
+    if not @getBotsInfo()?[bot_id]?
+      throw @_error "unknown-bot-id", "Unknown bot-id #{bot_id}"
+
+    channel_obj = @generateServerChannelObject(channel_type, channel_identifier, bot_id)
+
+    if channel_type == "task"
+      if _.isEmpty channel_obj.getChannelDocNonReactive().subscribers
+        task_doc = channel_obj.getIdentifierTaskDoc()
+
+        subscribers_to_add = []
+        if task_doc.owner_id?
+          subscribers_to_add.push task_doc.owner_id
+        
+        if task_doc.pending_owner_id?
+          subscribers_to_add.push task_doc.pending_owner_id
+
+        channel_obj.manageSubscribers(add: subscribers_to_add)
+
+    return channel_obj.sendMessage(message_obj)
+
+  getBotsInfo: ->
+    bots =
+      "bot:your-assistant":
+        # your-assistant is our main bot, consider it integral.
+        # When, @sendMessageAsBot is called without bot_id, "bot:your-assistant" will be
+        # used as the default bot.
+        first_name: "Your"
+        last_name: "Assistant"
+        profile_pic: "/packages/justdoinc_justdo-chat/media/bots-avatars/your-assistant.png"
+
+    return bots
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"

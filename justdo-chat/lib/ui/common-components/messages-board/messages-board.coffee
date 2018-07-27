@@ -104,6 +104,9 @@ Template.common_chat_messages_board_message_card.helpers
   authorDoc: ->
     tpl = Template.closestInstance("common_chat_messages_board")
 
+    if APP.justdo_chat.isBotUserId @author
+      return APP.collections.JDChatBotsInfo.findOne(@author)
+
     return tpl.messages_authors_collection.findOne(@author)
 
   body: ->

@@ -16,11 +16,21 @@ _.extend JustdoChat.prototype,
 
     @_setupChannelsRecentActivitySubscriptionsDestroyer()
 
+    @_setupBotsInfoSubscription()
+
     return
 
   _deferredInit: ->
     if @destroyed
       return
+
+    return
+
+  _setupBotsInfoSubscription: ->
+    @_jdc_bots_info_subscription = @jdcBotsInfo()
+
+    @onDestroy =>
+      @_jdc_bots_info_subscription.stop()
 
     return
 
