@@ -619,11 +619,12 @@ _.extend ChannelBaseServer.prototype,
 
     channel_doc = @getChannelDocNonReactive()
 
-    # Note, if user is already subscribed, @manageSubscribers() will simply ignore the call.
-    # Thanks to the channel doc caching, this won't @_cached_channel_doc result in addition
-    # requests to the db.
-    @manageSubscribers
-      add: [@performing_user]
+    if not @justdo_chat.isBotUserId(@performing_user)
+      # Note, if user is already subscribed, @manageSubscribers() will simply ignore the call.
+      # Thanks to the channel doc caching, this won't @_cached_channel_doc result in addition
+      # requests to the db.
+      @manageSubscribers
+        add: [@performing_user]
 
     # Add message to channel.
 
