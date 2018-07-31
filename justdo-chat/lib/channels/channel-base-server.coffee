@@ -468,6 +468,7 @@ _.extend ChannelBaseServer.prototype,
 
     # Get rid of user ids of users that are not permitted to subscribe
     update.add = @removeNonPermittedUsers(update.add)
+    update.add = _.uniq update.add
 
     channel_doc = @getChannelDocNonReactive()
 
