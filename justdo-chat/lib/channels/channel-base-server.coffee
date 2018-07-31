@@ -563,7 +563,7 @@ _.extend ChannelBaseServer.prototype,
 
     return
 
-  _sendMessageMessageObjectSchema: new SimpleSchema
+  _sendMessageMessageObjectSchemaForTxtType: new SimpleSchema
     body:
       # Note, simple schema takes care of .trim() the value for us
 
@@ -571,19 +571,50 @@ _.extend ChannelBaseServer.prototype,
 
       min: JustdoChat.schemas.MessagesSchema._schema.body.min
       max: JustdoChat.schemas.MessagesSchema._schema.body.max
-  sendMessage: (message_obj) ->
-    messages_schema = @justdo_chat.getMessagesSchema()
-    if message_obj?.body?.length > (max_task_length = messages_schema.body.max)
-      # Just to provide a more friendly error message for that case (v.s the one simple schema will throw)
-      throw @_error "invalid-message", "Message can't be longer than #{max_task_length} charecters"
+  sendMessage: (message_obj, message_type="txt") ->
+    # Message type can be either txt or data
 
-    {cleaned_val} =
-      JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_sendMessageMessageObjectSchema,
-        message_obj,
-        {self: @, throw_on_error: true}
-      )
-    message_obj = cleaned_val
+    check message_obj, Object
+    check message_type, String
+
+    if message_type == "txt"
+      messages_schema = @justdo_chat.getMessagesSchema()
+      if message_obj?.body?.length > (max_task_length = messages_schema.body.max)
+        # Just to provide a more friendly error message for that case (v.s the one simple schema will throw)
+        throw @_error "invalid-message", "Message can't be longer than #{max_task_length} charecters"
+
+      {cleaned_val} =
+        JustdoHelpers.simpleSchemaCleanAndValidate(
+          @_sendMessageMessageObjectSchemaForTxtType,
+          message_obj,
+          {self: @, throw_on_error: true}
+        )
+      message_obj = cleaned_val
+
+    else if message_type == "data"
+      if not @justdo_chat.isBotUserId(@performing_user)
+        throw @_error "data-message-submission-forbidden", "Only bot user ids are allowed to send data messages."
+
+      # Ensure message_obj.msg_type is allowed type for @performing_user (bot)
+
+      bots_definitions = @justdo_chat.getBotsDefinitions()
+
+      if not (bot_definition = bots_definitions[@performing_user])?
+        throw @_error "unknown-bot", "Can't send data message, unknown bot: #{@performing_user}"
+
+      if not (message_type_definition = bot_definition.msgs_types[message_obj.type])?
+        throw @_error "unknown-data-message-type", "Unknown data message type: #{message_obj.type} for bot: #{@performing_user}"
+
+      {cleaned_val} =
+        JustdoHelpers.simpleSchemaCleanAndValidate(
+          message_type_definition.data_schema,
+          message_obj,
+          {self: @, throw_on_error: true}
+        )
+      message_obj = cleaned_val
+
+    else
+      throw @_error "invalid-message-type", "Unknown message type: #{message_type}"
 
     channel_doc = @getChannelDocNonReactive()
 
@@ -597,13 +628,19 @@ _.extend ChannelBaseServer.prototype,
 
     message_date = new Date()
 
-    # write the message
-    @justdo_chat.messages_collection.insert
+    message_doc = 
       channel_id: channel_doc._id
       channel_type: @channel_type
-      body: message_obj.body
       author: @performing_user
       createdAt: message_date
+
+    if message_type == "txt"
+      message_doc.body = message_obj.body
+    else if message_type == "data"
+      message_doc.data = message_obj
+
+    # write the message
+    @justdo_chat.messages_collection.insert message_doc
 
     # Update messages_count and last_message_date related fields
     @findAndModifyChannelDoc
@@ -822,6 +859,7 @@ _.extend ChannelBaseServer.prototype,
         fields:
           channel_id: 1
           body: 1
+          data: 1
           author: 1
           createdAt: 1
 
@@ -945,6 +983,9 @@ _.extend ChannelBaseServer.prototype,
                                              # If the performing user will try to access this channel
                                              # without permission he'll see the "invalid-channel" thrown
                                              # (he won't know whether the channel exist or not).
+      "invalid-message-type": "Unknown message type"
+      "data-message-submission-forbidden": "Data message submission forbidden"
+      "unknown-bot": "Unknown bot"
 
   #
   # All the following SHOULD be set/implimented by the inheriting channels constructors

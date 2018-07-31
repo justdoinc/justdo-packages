@@ -7,6 +7,11 @@ default_bottom_windows_limit = 30
 
 _.extend JustdoChat.prototype,
   _immediateInit: ->
+    @_bots_definitions = {}
+    @_bots_public_info = {} # The cached projection of @_bots_definitions that is published to clients
+
+    @_registerIntegralBots()
+
     for type, conf of share.channel_types_server_specific_conf
       if conf._immediateInit?
         conf._immediateInit.call(@)
@@ -903,6 +908,7 @@ _.extend JustdoChat.prototype,
       fields:
         channel_id: 1
         body: 1
+        data: 1
         author: 1
         createdAt: 1
 
@@ -934,20 +940,26 @@ _.extend JustdoChat.prototype,
 
     return
 
-  sendMessageAsBot: (channel_type, channel_identifier, message_obj, bot_id="bot:your-assistant") ->
+  sendDataMessageAsBot: (channel_type, channel_identifier, bot_id, data) ->
     @requireAllowedChannelType(channel_type)
     check channel_identifier, Object
-    check message_obj, Object
+    check bot_id, String
+    check data, Object
+
+    if not data.type? or not _.isString data.type
+      throw @_error "invalid-argument", "sendDataMessageAsBot: data object must include a valid 'type' property."
 
     if not @isBotUserId(bot_id)
       throw @_error "only-bot-user-ids-are-allowed", "Only bots user ids are allowed"
 
-    if not @getBotsInfo()?[bot_id]?
+    if not @getBotsDefinitions()?[bot_id]?
       throw @_error "unknown-bot-id", "Unknown bot-id #{bot_id}"
 
     channel_obj = @generateServerChannelObject(channel_type, channel_identifier, bot_id)
 
     if channel_type == "task"
+      # If channel type is task, and the subscribers list is empty,
+      # add the owner_id, and pending_owner_id (if exists), as subscribers.
       if _.isEmpty channel_obj.getChannelDocNonReactive().subscribers
         task_doc = channel_obj.getIdentifierTaskDoc()
 
@@ -960,19 +972,78 @@ _.extend JustdoChat.prototype,
 
         channel_obj.manageSubscribers(add: subscribers_to_add)
 
-    return channel_obj.sendMessage(message_obj)
+    return channel_obj.sendMessage(data, "data")
 
-  getBotsInfo: ->
-    bots =
-      "bot:your-assistant":
+  _registerIntegralBots: ->
+    @_registerBot "bot:your-assistant",
+      profile:
         # your-assistant is our main bot, consider it integral.
-        # When, @sendMessageAsBot is called without bot_id, "bot:your-assistant" will be
+        # When, @sendDataMessageAsBot is called without bot_id, "bot:your-assistant" will be
         # used as the default bot.
         first_name: "Your"
         last_name: "Assistant"
         profile_pic: "/packages/justdoinc_justdo-chat/media/bots-avatars/your-assistant.png"
 
-    return bots
+      msgs_types:
+        "task-created-by-email":
+          data_schema:
+            sender:
+              type: String
+
+          rec_msgs_templates:
+            en:
+              "This task created by an email received from {{sender}} . See the task Description for more details."
+
+        "email-added-to-task":
+          data_schema:
+            sender:
+              type: String
+
+          rec_msgs_templates:
+            en:
+              "An email received for this task from {{sender}} . Check the EMAILS tab ."
+
+    return
+
+  _registerBot: (bot_id, bot_def) ->
+    #
+    # Build bot definition
+    #
+    bot_definition = _.extend {}, bot_def
+    bot_definition.msgs_types = _.extend {}, bot_def.msgs_types
+
+    for msg_type, msg_obj of bot_definition.msgs_types
+      msg_obj = _.extend {}, msg_obj
+      bot_definition.msgs_types[msg_type] = msg_obj
+
+      if msg_obj.data_schema.type?
+        throw @_error "Bot #{bot_id} registratino, 'type' is not allowed property in bot's data schema"
+
+      msg_obj.data_schema = new SimpleSchema _.extend {}, msg_obj.data_schema, {type: {type: String, label: "Message type", optional: false, allowedValues: [msg_type]}}
+
+    @_bots_definitions[bot_id] = bot_definition
+
+    #
+    # Build bot info
+    #
+    bot_public_info = _.extend {}, bot_def
+    bot_public_info.msgs_types = _.extend {}, bot_def.msgs_types
+
+    for msg_type, msg_obj of bot_public_info.msgs_types
+      msg_obj = _.extend {}, msg_obj
+      bot_public_info.msgs_types[msg_type] = msg_obj
+
+      delete msg_obj.data_schema
+
+    @_bots_public_info[bot_id] = bot_public_info
+
+    return
+
+  getBotsDefinitions: ->
+    return @_bots_definitions
+
+  getBotsPublicInfo: ->
+    return @_bots_public_info
 
   destroy: ->
     if @destroyed

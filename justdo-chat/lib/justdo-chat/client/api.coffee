@@ -523,6 +523,17 @@ _.extend JustdoChat.prototype,
 
     return subscribed_unread_channels_count_doc.count
 
+  renderDataMessage: (data, bot) ->
+    if (bot_info = APP.collections.JDChatBotsInfo.findOne({_id: bot}))?
+      if (en_msg_template = bot_info.msgs_types?[data.type]?.rec_msgs_templates.en)?
+        return en_msg_template.replace /{{(.*?)}}/g, (m, placeholder) ->
+          if (val = data[placeholder])?
+            return val
+          else
+            return placeholder
+
+    return data
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"

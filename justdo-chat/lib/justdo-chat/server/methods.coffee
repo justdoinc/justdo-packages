@@ -16,7 +16,7 @@ _.extend JustdoChat.prototype,
 
         channel_obj = self.generateServerChannelObject(channel_type, channel_identifier, @userId)
 
-        return channel_obj.sendMessage(message_obj)
+        return channel_obj.sendMessage(message_obj, "txt")
 
       jdcSetChannelUnreadState: (channel_type, channel_identifier, new_state) ->
         # Security note:

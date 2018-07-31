@@ -110,7 +110,10 @@ Template.common_chat_messages_board_message_card.helpers
     return tpl.messages_authors_collection.findOne(@author)
 
   body: ->
-    body = @body
+    if @data?
+      body = APP.justdo_chat.renderDataMessage(@data, @author)
+    else
+      body = @body
 
     body = linkifyStr(body, {nl2br: true}) # linkify already escapes html entities, so don't worry about xss here.
 

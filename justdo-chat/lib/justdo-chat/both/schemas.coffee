@@ -214,10 +214,28 @@ JustdoChat.schemas.MessagesSchema = new SimpleSchema
   body:
     label: "Message body"
 
+    optional: true
+
     type: String
 
     min: 1
     max: 10000
+
+  "data_msg_type":
+    label: "Data Message type"
+
+    optional: true
+
+    type: String
+
+  "data":
+    label: "Data object"
+
+    optional: true
+
+    type: Object
+
+    blackbox: true
 
   author:
     label: "Message author"

@@ -14,6 +14,14 @@ Template.recent_activity_item_task.helpers
 
   channel_last_message: -> APP.collections.JDChatRecentActivityMessages.findOne({channel_id: @_id})
 
+  body: ->
+    if @data?
+      body = APP.justdo_chat.renderDataMessage(@data, @author)
+    else
+      body = @body
+
+    return body
+
   last_message_author: ->
     last_message = APP.collections.JDChatRecentActivityMessages.findOne({channel_id: @_id})
 
