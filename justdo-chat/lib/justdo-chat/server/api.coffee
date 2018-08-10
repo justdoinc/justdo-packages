@@ -990,18 +990,28 @@ _.extend JustdoChat.prototype,
             sender:
               type: String
 
+            subject:
+              type: String
+
+              defaultValue: "(No subject)"
+
           rec_msgs_templates:
             en:
-              "This task created by an email received from {{sender}} . See the task Description for more details."
+              "This task created by an email '{{subject}}' received from {{sender}} . See the task Description for more details."
 
         "email-added-to-task":
           data_schema:
             sender:
               type: String
 
+            subject:
+              type: String
+
+              defaultValue: "(No subject)"
+
           rec_msgs_templates:
             en:
-              "An email received for this task from {{sender}} . Check the EMAILS tab ."
+              "An email '{{subject}}' received for this task from {{sender}} . Check the EMAILS tab ."
 
     return
 
