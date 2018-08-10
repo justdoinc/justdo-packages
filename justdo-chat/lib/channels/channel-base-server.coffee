@@ -572,11 +572,31 @@ _.extend ChannelBaseServer.prototype,
 
       min: JustdoChat.schemas.MessagesSchema._schema.body.min
       max: JustdoChat.schemas.MessagesSchema._schema.body.max
-  sendMessage: (message_obj, message_type="txt") ->
+  _sendMessageOptionsSchema: new SimpleSchema
+    skip_unread_state_update_for_subscribers:
+      # If set, the users ids listed in the provided array, won't have their
+      # unread state changed as a result of sending the message (if
+      # subscriber.unread == false it won't change to true, even if it normally should have)
+      type: [String]
+
+      optional: true
+
+  sendMessage: (message_obj, message_type="txt", options) ->
     # Message type can be either txt or data
 
     check message_obj, Object
     check message_type, String
+
+    if not options?
+      options = {}
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_sendMessageOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
 
     if message_type == "txt"
       messages_schema = @justdo_chat.getMessagesSchema()
@@ -665,11 +685,17 @@ _.extend ChannelBaseServer.prototype,
 
     new_subscribers_array = channel_doc.subscribers
 
+    if not _.isArray (skip_unread_state_update_for_subscribers = options.skip_unread_state_update_for_subscribers)
+      skip_unread_state_update_for_subscribers = []
+
     # changed tracks whether an update is needed at all, if there are no subscribers other than
     # the @performing_user, or if all the subscribers already have their unread flag turned
     # on - there's nothing to do.
     changed = false
     for subscriber in new_subscribers_array
+      if subscriber.user_id in skip_unread_state_update_for_subscribers
+        continue
+
       if subscriber.user_id != @performing_user and subscriber.unread == false
         changed = true
 

@@ -940,7 +940,7 @@ _.extend JustdoChat.prototype,
 
     return
 
-  sendDataMessageAsBot: (channel_type, channel_identifier, bot_id, data) ->
+  sendDataMessageAsBot: (channel_type, channel_identifier, bot_id, data, send_message_options) ->
     @requireAllowedChannelType(channel_type)
     check channel_identifier, Object
     check bot_id, String
@@ -957,6 +957,22 @@ _.extend JustdoChat.prototype,
 
     channel_obj = @generateServerChannelObject(channel_type, channel_identifier, bot_id)
 
+    # Load send_message_options, we need it later to skip adding default subscribers to
+    # empty channels that are listed in the
+    # send_message_options.skip_unread_state_update_for_subscribers
+    if not send_message_options?
+      send_message_options = {}    
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        channel_obj._sendMessageOptionsSchema,
+        send_message_options,
+        {self: @, throw_on_error: true}
+      )
+    send_message_options = cleaned_val
+
+    if not _.isArray (skip_unread_state_update_for_subscribers = send_message_options.skip_unread_state_update_for_subscribers)
+      skip_unread_state_update_for_subscribers = []
+
     if channel_type == "task"
       # If channel type is task, and the subscribers list is empty,
       # add the owner_id, and pending_owner_id (if exists), as subscribers.
@@ -964,15 +980,15 @@ _.extend JustdoChat.prototype,
         task_doc = channel_obj.getIdentifierTaskDoc()
 
         subscribers_to_add = []
-        if task_doc.owner_id?
-          subscribers_to_add.push task_doc.owner_id
+        if (owner_id = task_doc.owner_id)? and owner_id not in skip_unread_state_update_for_subscribers
+          subscribers_to_add.push owner_id
         
-        if task_doc.pending_owner_id?
-          subscribers_to_add.push task_doc.pending_owner_id
+        if (pending_owner_id = task_doc.pending_owner_id)? and pending_owner_id not in skip_unread_state_update_for_subscribers
+          subscribers_to_add.push pending_owner_id
 
         channel_obj.manageSubscribers(add: subscribers_to_add)
 
-    return channel_obj.sendMessage(data, "data")
+    return channel_obj.sendMessage(data, "data", send_message_options)
 
   _registerIntegralBots: ->
     @_registerBot "bot:your-assistant",
