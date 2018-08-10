@@ -530,7 +530,7 @@ _.extend JustdoChat.prototype,
           if (val = data[placeholder])?
             return val
           else
-            return placeholder
+            return ""
 
     return data
 
