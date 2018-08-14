@@ -696,7 +696,14 @@ _.extend ChannelBaseServer.prototype,
       if subscriber.user_id in skip_unread_state_update_for_subscribers
         continue
 
-      if subscriber.user_id != @performing_user and subscriber.unread == false
+      # Note, we are checking subscriber.iv_unread state and not the subscriber.unread
+      # state. If the subscriber.unread is set to true, as a result of voluntary set as
+      # unread by the user, we still want to set .iv_unread so notifications (push/email)
+      # will be sent to the user.
+      # When a user mark the channel as unread, he is usually aware of what the unread
+      # conversation is about, therefore, we need to help the user be aware that more
+      # things happned in the channel since his last interaction with it.
+      if subscriber.user_id != @performing_user and not subscriber.iv_unread?
         changed = true
 
         subscriber.unread = true
