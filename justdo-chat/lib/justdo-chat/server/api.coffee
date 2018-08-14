@@ -68,6 +68,24 @@ _.extend JustdoChat.prototype,
 
     return new share[channel_constructor_name](conf)
 
+
+  _getSubscribersUnreadUpdateObject: ->
+    # Returns the update object that will set the channel for all the subscribers
+    # matched in the query ($elemMatch assumed) as read.
+
+    update = 
+      $set:
+        "subscribers.$.unread": false
+        "subscribers.$.last_read": new Date()
+      $unset:
+        "subscribers.$.iv_unread": ""
+        "subscribers.$.iv_unread_type": ""
+
+    for unread_notification_type, unread_notification_conf of share.unread_channels_notifications_conf
+      update.$unset["subscribers.$.#{unread_notification_conf.processed_notifications_indicator_field_name}"] = ""
+
+    return update
+
   markAllChannelsAsRead: (user_id) ->
     check user_id, String
 
@@ -86,10 +104,7 @@ _.extend JustdoChat.prototype,
           user_id: user_id
           unread: true
 
-    update =
-      $set:
-        "subscribers.$.unread": false
-        "subscribers.$.last_read": new Date()
+    update = @_getSubscribersUnreadUpdateObject()
 
     options =
       multi: true

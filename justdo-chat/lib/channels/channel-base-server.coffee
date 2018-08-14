@@ -545,20 +545,12 @@ _.extend ChannelBaseServer.prototype,
           user_id: @performing_user
           unread: not unread # note we don't find if the user unread state is already the requested one
 
-    update =
-      $set:
-        "subscribers.$.unread": unread
-
     if unread == false
-      update.$set["subscribers.$.last_read"] = new Date()
-
-      update.$unset = {}
-
-      update.$unset["subscribers.$.iv_unread"] = ""
-      update.$unset["subscribers.$.iv_unread_type"] = ""
-
-      for unread_notification_type, unread_notification_conf of share.unread_channels_notifications_conf
-        update.$unset["subscribers.$.#{unread_notification_conf.processed_notifications_indicator_field_name}"] = ""
+      update = @justdo_chat._getSubscribersUnreadUpdateObject()
+    else
+      update =
+        $set:
+          "subscribers.$.unread": true
 
     @justdo_chat.channels_collection.rawCollection().update query, update
 
