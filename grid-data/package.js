@@ -17,6 +17,8 @@ Package.onUse(function (api) {
   api.use('reactive-var', both);
   api.use('check', both);
 
+  api.use("justdoinc:justdo-ddp-extensions@1.0.0", both);
+
   api.use('raix:eventemitter@0.1.1', both);
   api.use('matb33:collection-hooks@0.7.13', both);
   api.use('meteorspark:util@0.2.0', both);

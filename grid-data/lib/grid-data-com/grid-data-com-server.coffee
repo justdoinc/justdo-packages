@@ -97,7 +97,7 @@ _.extend GridDataCom.prototype,
 
     options = _.extend default_options, options
 
-    Meteor.publish options.name, (subscription_options, pub_options) ->
+    APP.justdo_ddp_extensions.unmergedPublication options.name, (subscription_options, pub_options) ->
       # `this` is the Publication context, use self for GridData instance 
       if options.require_login
         if not @userId?
@@ -139,6 +139,10 @@ _.extend GridDataCom.prototype,
       cursor = self.collection.find query, projection
 
       return JustdoHelpers.customizedCursorPublish(@, cursor, pub_options, pub_customization_restricted_options)
+    , {
+      getCollectionItemsIdentifyingCriteria: (subscription_options) ->
+        tasks: {project_id: subscription_options.project_id}
+    }
 
   initDefaultIndeices: ->
     @collection._ensureIndex {users: 1}

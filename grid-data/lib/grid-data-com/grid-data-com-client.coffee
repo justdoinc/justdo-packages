@@ -23,4 +23,4 @@ _.extend GridDataCom.prototype,
 
     args.unshift helpers.getCollectionPubSubName(@collection)
 
-    Meteor.subscribe.apply @, args
+    return APP.justdo_ddp_extensions.unmergedSubscribe.apply @, args
