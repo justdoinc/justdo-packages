@@ -142,6 +142,8 @@ _.extend GridDataCom.prototype,
     , {
       getCollectionItemsIdentifyingCriteria: (subscription_options) ->
         tasks: {project_id: subscription_options.project_id}
+      getCollectionsWithPotentialDdpConflicts: (subscription_options) ->
+        tasks: true
     }
 
   initDefaultIndeices: ->
