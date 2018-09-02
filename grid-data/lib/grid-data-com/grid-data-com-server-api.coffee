@@ -441,7 +441,12 @@ _.extend GridDataCom.prototype,
     # the requested items (see selector query) to let him/her do basically
     # whatever action they like (worst case... he destory his own data.
     # perhaps in the future we'd like to apply some more checks here.
-    return @collection.update selector, modifier, {multi: true}
+
+    # Use rawCollection here, skip collection2/hooks
+    return @collection.rawCollection().update selector, modifier, {multi: true}, (err) ->
+      if err?
+        console.error(err)
+      return
 
   getContexts: (task_id, options, perform_as) ->
     options = {} # Force to empty object for now, options will be defined in the future
