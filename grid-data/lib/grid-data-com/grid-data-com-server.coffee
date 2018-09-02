@@ -1,3 +1,5 @@
+Fiber = Npm.require "fibers"
+
 helpers = share.helpers
 
 # The communication layer between the server and the client
@@ -11,6 +13,8 @@ GridDataCom = (collection) ->
   @initDefaultGridMethods()
 
   @initDefaultIndeices()
+
+  @setupGridCollectionHooks()
 
   # Note: to avoid obfuscating critical security consideration that
   # should be made by the app developer, we don't init the grid allow/deny
@@ -56,9 +60,154 @@ _.extend GridDataCom.prototype,
     getContexts:
       perform_as_arg_position: 2
 
-
   disabled_methods: ["updateItem"] 
- 
+
+  _getCurrentDateUpdateObjectForUsers: (prefix, users) ->
+    ret = {}
+
+    for user_id in users
+      ret["#{prefix}.#{user_id}"] = true
+
+    return ret
+
+  _addRawFieldsUpdatesToUpdateModifier: (modifier, existing_doc) ->
+    # Note: edits modifier in place !
+
+    if (existing_current_date_mod = modifier.$currentDate)?
+      current_date_updates = existing_current_date_mod
+    else
+      current_date_updates = {}
+
+    if (existing_unset_mod = modifier.$unset)?
+      unset_updates = existing_unset_mod
+    else
+      unset_updates = {}
+
+    if (existing_add_to_set_mod = modifier.$addToSet)?
+      add_to_set_updates = existing_add_to_set_mod
+    else
+      add_to_set_updates = {}
+
+    if (existing_pull_mod = modifier.$pull)?
+      pull_updates = existing_pull_mod
+    else
+      pull_updates = {}
+
+    _.extend current_date_updates,
+      _raw_updated_date: true
+
+    #
+    # Find changes in users
+    #
+    added_users = []
+    removed_users = []
+
+    if (pushed_users = modifier.$push?.users?.$each)?
+      added_users = added_users.concat(pushed_users)
+
+    if (pulled_users = modifier.$pull?.users?.$in)?
+      removed_users = removed_users.concat(pulled_users)
+
+    if (users = modifier.$set?.users)?
+      if (existing_users = existing_doc?.users)?
+        added_users = added_users.concat(_.difference users, existing_users)
+        removed_users = removed_users.concat(_.difference existing_users, users)
+
+        if not _.isEmpty(added_users) and not _.isEmpty(removed_users)
+          throw @_error "operation-blocked", "$set.users update that involves both removal and addition of new users, isn't allowed" # since we can't $pull and $addToSet items from/to _raw_added_users_dates with a single query
+
+      else
+        # If no existing_doc, assume insert of new document
+        _.extend current_date_updates, @_getCurrentDateUpdateObjectForUsers("_raw_added_users_dates", users)
+
+    #
+    # If users changed, update relevant raw fields
+    #
+    if not _.isEmpty(added_users)
+      _.extend current_date_updates, @_getCurrentDateUpdateObjectForUsers("_raw_added_users_dates", added_users)
+
+      for user_id in added_users
+        unset_updates["_raw_removed_users_dates.#{user_id}"] = ""
+
+      pull_updates._raw_removed_users =
+        $in: added_users
+
+    if not _.isEmpty(removed_users)
+      _.extend current_date_updates, @_getCurrentDateUpdateObjectForUsers("_raw_removed_users_dates", removed_users)
+
+      for user_id in removed_users
+        unset_updates["_raw_added_users_dates.#{user_id}"] = ""
+
+      add_to_set_updates._raw_removed_users =
+        $each: removed_users
+
+    #
+    # Update changed modifiers
+    #
+    if not _.isEmpty current_date_updates
+      modifier["$currentDate"] = current_date_updates
+
+    if not _.isEmpty unset_updates
+      modifier["$unset"] = unset_updates
+
+    if not _.isEmpty add_to_set_updates
+      modifier["$addToSet"] = add_to_set_updates
+
+    if not _.isEmpty pull_updates
+      modifier["$pull"] = pull_updates
+
+    return
+
+  setupGridCollectionHooks: ->
+    @collection.before.insert =>
+      # Since we need to update the raw fields that needs the update's operator $currentDate,
+      # we can't allow inserts using the .insert() operator, only .upsert()s are allowed.
+      throw @_error "operation-blocked", "Inserts aren't allowed on grid-data-com's @collection. Use @_insertItem() instead."
+
+    @collection.before.upsert (user_id, selector, modifier, options) =>
+      # We allow upserts only for inserts since the @_addRawFieldsUpdatesToUpdateModifier(modifier)
+      # makes the assumption that if a doc wasn't provided in its second argument, we are dealing with
+      # creation of a new document, and updates of raw fields related to remoevd users, shouldn't be
+      # updated in case where $set.users is provided (there might be other unexpected results).
+
+      if not Fiber.current._allow_tasks_upsert?
+        throw @_error "operation-blocked", "Upserts for grid-data-com's @collection are allowed only to insert new documents. If you are intending to use this upsert in order to insert new documents (only), search the code for Fiber.current._allow_tasks_upsert to learn more."
+
+      @_addRawFieldsUpdatesToUpdateModifier(modifier)
+
+      return
+
+    @collection.before.update (user_id, doc, field_names, modifier, options) =>
+      @_addRawFieldsUpdatesToUpdateModifier(modifier, doc)
+
+      return
+
+    @collection.before.remove (user_id, doc) =>
+      current_date_updates = 
+        _raw_removed_date: true
+        # Note, _raw_updated_at and others will be taken care of by @_addRawFieldsUpdatesToUpdateModifier().
+
+      update =
+        $unset: {}
+        $currentDate: current_date_updates
+        $set:
+          users: []
+
+      for field_name of doc
+        if field_name not in ["_id", "users", "seqId", "project_id", "_raw_added_users_dates", "_raw_updated_date", "_raw_removed_date", "_raw_removed_users", "_raw_removed_users_dates"]
+          update.$unset[field_name] = ""
+
+      @_addRawFieldsUpdatesToUpdateModifier(update, doc)
+
+      @collection.rawCollection().update {_id: doc._id}, update, (err) ->
+        if err?
+          console.error(err)
+        return
+
+      return false
+
+    return
+
   setupGridPublication: (options = {}) ->
     self = this
 
@@ -455,3 +604,4 @@ _.extend GridDataCom.prototype,
     Meteor.methods methods
 
     return
+

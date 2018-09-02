@@ -1,9 +1,26 @@
+Fiber = Npm.require "fibers"
+
 helpers = share.helpers
 
 _.extend GridDataCom.prototype,
   _isPerformAsProvided: (perform_as) ->
     if not perform_as?
       throw @_error "missing-argument", "You must provide the perform_as field"
+
+  _insertItem: (fields) ->
+    _id = Random.id()
+
+    Fiber.current._allow_tasks_upsert = true
+    try
+      @collection.upsert({_id}, {$set: fields}, {upsert: true})
+    catch e
+      console.error "grid-data-com: Failed to insert document", e
+
+      return undefined
+    finally
+      delete Fiber.current._allow_tasks_upsert
+
+    return _id
 
   # Allow adding root child without going through the addChild method
   # to allow adding a root child to a specific non-logged-in user 
@@ -21,7 +38,7 @@ _.extend GridDataCom.prototype,
 
     @_runGridMethodMiddlewares "addChild", "/", new_item, perform_as
 
-    return @collection.insert new_item
+    return @_insertItem new_item
 
   addChild: (path, fields = {}, perform_as) ->
     check(path, String)
@@ -52,7 +69,7 @@ _.extend GridDataCom.prototype,
 
     @_runGridMethodMiddlewares "addChild", path, new_item, perform_as
 
-    return @collection.insert new_item
+    return @_insertItem new_item
 
   addSibling: (path, fields = {}, perform_as) ->
     check(path, String)
@@ -92,7 +109,7 @@ _.extend GridDataCom.prototype,
 
     @collection.incrementChildsOrderGte parent_id, sibling_order, item
 
-    return @collection.insert new_item
+    return @_insertItem new_item
 
   removeParent: (path, perform_as) ->
     check(path, String)
@@ -436,6 +453,8 @@ _.extend GridDataCom.prototype,
 
     # We make sure that the middleware don't change this condition, too risky.
     selector.users = perform_as
+
+    @_addRawFieldsUpdatesToUpdateModifier(modifier)
 
     # XXX in terms of security we rely on the fact that the user belongs to
     # the requested items (see selector query) to let him/her do basically
