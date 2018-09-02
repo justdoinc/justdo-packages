@@ -109,7 +109,10 @@ _.extend JustdoChat.prototype,
     options =
       multi: true
 
-    @channels_collection.rawCollection().update query, update, options
+    @channels_collection.rawCollection().update query, update, options, (err) ->
+      if err?
+        console.error(err)
+      return
 
     return
 
@@ -405,7 +408,10 @@ _.extend JustdoChat.prototype,
                 user_id: user_id
 
           # rawCollection is used since the update is to complex for Simple Schema
-          self.channels_collection.rawCollection().update {_id: channel_id}, update
+          self.channels_collection.rawCollection().update {_id: channel_id}, update, (err) ->
+            if err?
+              console.error(err)
+            return
 
           channels_skipped_due_to_failed_auth[channel_id] = true
 
@@ -747,7 +753,10 @@ _.extend JustdoChat.prototype,
                 user_id: user_id
 
           # rawCollection is used since the update is to complex for Simple Schema
-          self.channels_collection.rawCollection().update {_id: channel_id}, update
+          self.channels_collection.rawCollection().update {_id: channel_id}, update, (err) ->
+            if err?
+              console.error(err)
+            return
 
           channels_skipped_due_to_failed_auth[channel_id] = true
 

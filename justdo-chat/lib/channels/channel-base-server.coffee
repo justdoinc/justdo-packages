@@ -552,7 +552,10 @@ _.extend ChannelBaseServer.prototype,
         $set:
           "subscribers.$.unread": true
 
-    @justdo_chat.channels_collection.rawCollection().update query, update
+    @justdo_chat.channels_collection.rawCollection().update query, update, (err) ->
+      if err?
+        console.error(err)
+      return
 
     return
 
