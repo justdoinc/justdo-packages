@@ -6,21 +6,23 @@ GridDataCom = (collection) ->
 
   @collection = collection
 
-  @
+  return @
 
 Util.inherits GridDataCom, EventEmitter
 
 _.extend GridDataCom.prototype,
-  subscribeDefaultGridSubscription:  ->
-    # subscribeDefaultGridSubscription: (collection, arg1, arg2, ...)
+  subscribeDefaultGridSubscription: (args...) ->
+    # subscribeDefaultGridSubscription: (arg1, arg2, ..., subscription_callbacks)
     #
     # Subscribes to the subscription created by GridDataCom.setGridPublication
     # as long as the `name` option didn't change.
     #
     # Arguments that follows the collection argument will be used as the subscription
     # args.
-    args = _.toArray(arguments).slice(1)
 
     args.unshift helpers.getCollectionPubSubName(@collection)
 
-    return APP.justdo_ddp_extensions.unmergedSubscribe.apply @, args
+    return APP.justdo_ddp_extensions.unclearedUnmergedSubscribe.apply APP.justdo_ddp_extensions, args
+
+
+
