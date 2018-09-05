@@ -211,6 +211,9 @@ _.extend GridDataCom.prototype,
   setupGridPublication: (options = {}) ->
     self = this
 
+    if not options.unmergedPublication_options?
+      throw @_error "missing-required-option", "you must provide options.unmergedPublication_options"
+
     default_options =
       name: helpers.getCollectionPubSubName(@collection)
       require_login: true
@@ -288,12 +291,7 @@ _.extend GridDataCom.prototype,
       cursor = self.collection.find query, projection
 
       return JustdoHelpers.customizedCursorPublish(@, cursor, pub_options, pub_customization_restricted_options)
-    , {
-      getCollectionItemsIdentifyingCriteria: (subscription_options) ->
-        tasks: {project_id: subscription_options.project_id}
-      getCollectionsWithPotentialDdpConflicts: (subscription_options) ->
-        tasks: true
-    }
+    , options.unmergedPublication_options
 
   initDefaultIndeices: ->
     @collection._ensureIndex {users: 1}
