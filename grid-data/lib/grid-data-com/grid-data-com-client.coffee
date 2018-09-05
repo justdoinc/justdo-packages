@@ -24,5 +24,5 @@ _.extend GridDataCom.prototype,
 
     return APP.justdo_ddp_extensions.unclearedUnmergedSubscribe.apply APP.justdo_ddp_extensions, args
 
-
-
+# Add a shortcut to helpers
+GridDataCom.helpers = helpers
