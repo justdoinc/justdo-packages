@@ -3,6 +3,8 @@ share.helpers = helpers =
 
   getCollectionPubSubName: (collection) -> "#{collection._name}_grid"
 
+  getCollectionUnmergedPubSubName: (collection) -> "#{collection._name}_grid_um"
+
   normalizePath: (path) -> if _.last(path) != "/" then "#{path}/" else path
 
   isRootPath: (path) -> path == "/"

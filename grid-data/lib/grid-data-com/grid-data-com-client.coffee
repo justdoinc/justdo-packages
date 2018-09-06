@@ -20,7 +20,7 @@ _.extend GridDataCom.prototype,
     # Arguments that follows the collection argument will be used as the subscription
     # args.
 
-    args.unshift helpers.getCollectionPubSubName(@collection)
+    args.unshift helpers.getCollectionUnmergedPubSubName(@collection)
 
     return APP.justdo_ddp_extensions.unclearedUnmergedSubscribe.apply APP.justdo_ddp_extensions, args
 

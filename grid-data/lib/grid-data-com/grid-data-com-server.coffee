@@ -211,10 +211,9 @@ _.extend GridDataCom.prototype,
   setupGridPublication: (options = {}) ->
     self = this
 
-    if not options.unmergedPublication_options?
-      throw @_error "missing-required-option", "you must provide options.unmergedPublication_options"
-
     default_options =
+      unmerged_pub: false
+      unmergedPublication_options: null
       name: helpers.getCollectionPubSubName(@collection)
       require_login: true
       exposed_to_guests: false
@@ -247,9 +246,22 @@ _.extend GridDataCom.prototype,
       # Example:
       # middleware: (collection, options, sub_args, query, projection) -> collection.find query, projection
 
+    if options.unmerged_pub and not options.unmergedPublication_options?
+      throw @_error "missing-required-option", "For true options.unmerged_pub, you must provide options.unmergedPublication_options"
+
     options = _.extend default_options, options
 
-    APP.justdo_ddp_extensions.unmergedPublication options.name, (subscription_options, pub_options) ->
+    if options.unmerged_pub
+      publishMethod = APP.justdo_ddp_extensions.unmergedPublication
+      publishMethod_this = APP.justdo_ddp_extensions
+    else
+      publishMethod = Meteor.publish
+      publishMethod_this = Meteor
+
+    args = []
+
+    args.push options.name
+    args.push (subscription_options, pub_options) ->
       # `this` is the Publication context, use self for GridData instance 
       if options.require_login
         if not @userId?
@@ -291,7 +303,11 @@ _.extend GridDataCom.prototype,
       cursor = self.collection.find query, projection
 
       return JustdoHelpers.customizedCursorPublish(@, cursor, pub_options, pub_customization_restricted_options)
-    , options.unmergedPublication_options
+
+    if options.unmerged_pub
+      args.push options.unmergedPublication_options
+
+    return publishMethod.apply publishMethod_this, args
 
   initDefaultIndeices: ->
     @collection._ensureIndex {users: 1}
@@ -603,3 +619,5 @@ _.extend GridDataCom.prototype,
 
     return
 
+# Add a shortcut to helpers
+GridDataCom.helpers = helpers
