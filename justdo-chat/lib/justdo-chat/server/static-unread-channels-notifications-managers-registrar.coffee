@@ -416,9 +416,14 @@ _.extend JustdoChat,
 
                 # Query augmented docs, according to channel type
 
+                if not (user_doc = getUserDoc(user_id))?
+                  console.error "justdo-chat: static-unread-channels-notifications-managers-registrar.coffee: couldn't find user: '#{user_id}', skipping notification"
+
+                  continue
+
                 notification_obj =
                   channel_type: channel_type
-                  user: getUserDoc(user_id)
+                  user: user_doc
                   justdo_chat: justdo_chat
                   channel_obj: channel_obj
                   messages_to_include_in_notification: [] # See XXX above.
