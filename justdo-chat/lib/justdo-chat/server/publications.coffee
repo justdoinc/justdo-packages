@@ -31,9 +31,9 @@ _.extend JustdoChat.prototype,
 
     Meteor.publish "jdcSubscribedUnreadChannelsCount", ->
       # Publishes the count of the unread subscribed channels to the *pseudo*
-      # JustdoChatInfo collection under the doc _id: "subscribed_unread_channels_count".
+      # JDChatInfo collection under the doc _id: "subscribed_unread_channels_count".
       #
-      # Note: on the web client JustdoChatInfo collection object is accessible from
+      # Note: on the web client JDChatInfo collection object is accessible from
       # APP.collections.JDChatInfo . See: client/pseudo-collections.coffee
 
       if not @userId?
