@@ -1037,11 +1037,11 @@ _.extend JustdoChat.prototype,
 
           rec_msgs_templates: # rec stands for recommanded
             en:
-              "This task created by an email '{{subject}}' received from {{sender}} . Check the task Description for more details."
+              "This task created by an email '{{subject}}' received from {{sender}} . Check the EMAILS tab."
 
           rec_andr_msgs_templates_pre: # andr stands for android; pre stands for pre-support
             en:
-              "This task created by an email '{{subject}}' received from {{sender}} . Check the task Description on the website for more details."
+              "This task created by an email '{{subject}}' received from {{sender}} . Check the task EMAILS tab on the website."
 
           rec_andr_msgs_templates_post:
             en:
