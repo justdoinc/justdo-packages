@@ -182,6 +182,27 @@ _.extend GridDataCom.prototype,
 
       return
 
+    _before_pseudo_remove_procedures = []
+    _after_pseudo_remove_procedures = []
+
+    # Define hooks that will let packages hook to our pseudo remove
+
+    @collection.before.pseudo_remove = (cb) ->
+      # cb returned value is ignored.
+      # cb(user_id, doc to be removed before any change, update to be performed)
+
+      _before_pseudo_remove_procedures.push cb
+
+      return
+
+    @collection.after.pseudo_remove = (cb) ->
+      # cb returned value is ignored.
+      # cb(user_id, doc to be removed before any change, update performed)
+
+      _after_pseudo_remove_procedures.push cb
+
+      return
+
     @collection.before.remove (user_id, doc) =>
       current_date_updates = 
         _raw_removed_date: true
@@ -199,9 +220,16 @@ _.extend GridDataCom.prototype,
 
       @_addRawFieldsUpdatesToUpdateModifier(update, doc)
 
-      @collection.rawCollection().update {_id: doc._id}, update, (err) ->
+      _.each _before_pseudo_remove_procedures, (proc) -> proc(user_id, doc, update)
+
+      @collection.rawCollection().update {_id: doc._id}, update, Meteor.bindEnvironment (err) ->
         if err?
           console.error(err)
+
+          return
+
+        _.each _after_pseudo_remove_procedures, (proc) -> proc(user_id, doc, update)
+
         return
 
       return false
