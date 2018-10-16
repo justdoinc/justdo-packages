@@ -109,7 +109,7 @@ _.extend JustdoChat.prototype,
     options =
       multi: true
 
-    @channels_collection.rawCollection().update query, update, options, (err) ->
+    @channels_collection.rawCollection().update query, update, options, Meteor.bindEnvironment (err) ->
       if err?
         console.error(err)
       return
@@ -408,7 +408,7 @@ _.extend JustdoChat.prototype,
                 user_id: user_id
 
           # rawCollection is used since the update is to complex for Simple Schema
-          self.channels_collection.rawCollection().update {_id: channel_id}, update, (err) ->
+          self.channels_collection.rawCollection().update {_id: channel_id}, update, Meteor.bindEnvironment (err) ->
             if err?
               console.error(err)
             return
@@ -753,7 +753,7 @@ _.extend JustdoChat.prototype,
                 user_id: user_id
 
           # rawCollection is used since the update is to complex for Simple Schema
-          self.channels_collection.rawCollection().update {_id: channel_id}, update, (err) ->
+          self.channels_collection.rawCollection().update {_id: channel_id}, update, Meteor.bindEnvironment (err) ->
             if err?
               console.error(err)
             return

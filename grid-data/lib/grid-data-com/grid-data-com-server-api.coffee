@@ -462,7 +462,7 @@ _.extend GridDataCom.prototype,
     # perhaps in the future we'd like to apply some more checks here.
 
     # Use rawCollection here, skip collection2/hooks
-    return @collection.rawCollection().update selector, modifier, {multi: true}, (err) ->
+    return @collection.rawCollection().update selector, modifier, {multi: true}, Meteor.bindEnvironment (err) ->
       if err?
         console.error(err)
       return

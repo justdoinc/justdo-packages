@@ -484,7 +484,7 @@ _.extend JustdoChat,
             subscriber_to_update[conf.processed_notifications_indicator_field_name] = proc_date
 
           if channel_subscribers_update_needed
-            justdo_chat.channels_collection.rawCollection().update {_id: channel_doc._id}, {$set: {subscribers: subscribers_to_update}}, (err) ->
+            justdo_chat.channels_collection.rawCollection().update {_id: channel_doc._id}, {$set: {subscribers: subscribers_to_update}}, Meteor.bindEnvironment (err) ->
               if err?
                 console.error(err)
               return
