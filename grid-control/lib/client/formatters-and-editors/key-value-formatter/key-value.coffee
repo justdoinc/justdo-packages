@@ -1,3 +1,28 @@
+# If you change the following two, change also selector-editor.coffee
+normalizeBgColor = (color) ->
+  if not color?
+    return "transparent"
+
+  if color.toLowerCase() == "ffffff"
+    return "transparent"
+
+  if color.toLowerCase() == "transparent"
+    return "transparent"
+
+  if color[0] != "#"
+    return "#" + color
+  else
+    return color
+
+getFgColor = (color) ->
+  if (normalized_color = normalizeBgColor(color)) == "transparent"
+    return "#000000"
+
+  if JustdoHelpers.useDarkTextColorForBackground(normalized_color)
+    return "#000000"
+  else
+    return "#ffffff"
+
 # XXX IMPORTANT: No XSS protection, if values can be modified
 # by user XSS protection must be added.
 
@@ -27,12 +52,41 @@ getKeyValue = (schema, value, preferred_format="html") ->
   else
     return value
 
+getKeyBgColor = (schema, value) ->
+  {grid_values, grid_removed_values} = schema
+
+  if not grid_values?
+    grid_values = {}
+
+  if not grid_removed_values?
+    grid_removed_values = {}
+
+  if not value?
+    # Regard undefined value as empty string (we don't return immediately to
+    # allow the user set a html/txt labels for empty/undefined values)
+    return undefined
+
+  if not (value_def = grid_values[value])?
+    # Try look for the value in grid_removed_values
+    if not (value_def = grid_removed_values[value])?
+      return undefined
+
+  return value_def.bg_color
+
 GridControl.installFormatter "keyValueFormatter",
   slick_grid: ->
     {schema, value} = @getFriendlyArgs()
 
+    bg_color = normalizeBgColor(getKeyBgColor(schema, value))
+
+    if bg_color != "transparent"
+      custom_style = """ style="background-color: #{bg_color}; color: #{getFgColor(bg_color)};" """
+    else
+      custom_style = ''
+
+
     formatter = """
-      <div class="grid-formatter key-val-formatter">
+      <div class="grid-formatter key-val-formatter" #{custom_style}>
         #{getKeyValue(schema, value)}
       </div>
     """

@@ -1,5 +1,44 @@
 # Check README.md to learn more about editors definitions
 
+getKeyBgColor = (grid_values, value) ->
+  if not grid_values?
+    grid_values = {}
+
+  if not value?
+    # Regard undefined value as empty string (we don't return immediately to
+    # allow the user set a html/txt labels for empty/undefined values)
+    return undefined
+
+  if not (value_def = grid_values[value])?
+    return undefined
+
+  return value_def.bg_color
+
+# If you change these two, change also key-value.coffee
+normalizeBgColor = (color) ->
+  if not color?
+    return "transparent"
+
+  if color.toLowerCase() == "ffffff"
+    return "transparent"
+
+  if color.toLowerCase() == "transparent"
+    return "transparent"
+
+  if color[0] != "#"
+    return "#" + color
+  else
+    return color
+
+getFgColor = (color) ->
+  if (normalized_color = normalizeBgColor(color)) == "transparent"
+    return "#000000"
+
+  if JustdoHelpers.useDarkTextColorForBackground(normalized_color)
+    return "#000000"
+  else
+    return "#ffffff"
+
 GridControl.installEditor "SelectorEditor",
   init: ->
     if not (selector_options = @context.column.values)?
@@ -31,6 +70,7 @@ GridControl.installEditor "SelectorEditor",
         label: label
         value: value
         order: value_def.order
+        bg_color: normalizeBgColor(value_def.bg_color)
       }
 
     options = _.sortBy options, "order"
@@ -42,8 +82,13 @@ GridControl.installEditor "SelectorEditor",
       if _.isEmpty label
         label = "&nbsp;"
 
+      if option.bg_color != "transparent"
+        custom_style = """ style="background-color: #{option.bg_color}; color: #{getFgColor(option.bg_color)};" """
+      else
+        custom_style = ''
+
       selector_options_html +=
-        """<option value="#{option.value}" data-content="#{label}">#{label}</option>"""
+        """<option value="#{option.value}" data-content="#{label}" #{custom_style}>#{label}</option>"""
 
     @$select = $("""<select class="selector-editor">#{selector_options_html}</select>""")
     @$select.appendTo @context.container
@@ -80,6 +125,14 @@ GridControl.installEditor "SelectorEditor",
       val = ""
     
     @$select.selectpicker("val", val);
+
+    bg_color = normalizeBgColor(getKeyBgColor(@context.column.values, val))
+    fg_color = getFgColor(bg_color)
+
+    if bg_color?    
+      $(".dropdown-toggle", @$select_picker)
+        .css("background-color", bg_color)
+        .css("color", fg_color)
 
     return
 
