@@ -122,6 +122,18 @@ _.extend PACK.Formatters.textWithTreeControls,
         $(".task-pane-content").scrollTop(0)
     }
     {
+      args: ['click', '.task-is-project']
+      handler: (e) ->
+        openTaskPaneAndSetTab("justdo-delivery-planner")
+
+        APP.justdo_delivery_planner.taskPaneSectionSetCurrentTab("project")
+
+        # Update task pane
+        Tracker.flush()
+
+        $(".task-pane-content").scrollTop(0)
+    }
+    {
       args: ['click', '.task-description']
       handler: (e) ->
         openTaskPaneAndSetTab("item-details")

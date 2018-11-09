@@ -36,6 +36,9 @@ getHeighestSeqId = ->
 
   return highest_seq_id
 
+getIsDeliveryPlannerPluginEnabled = ->
+  return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled("justdo_delivery_planner")
+
 getMinimalSeqIdSpace = ->
   # Returns the maximum between 3 and the the digits count of the item
   # returned from getHeighestSeqId.
@@ -73,6 +76,7 @@ GridControl.installFormatter "textWithTreeControls",
     dep.depend()
 
     highest_seqId_computation = null
+    is_delivery_planner_plugin_enabled_computation = null
     Tracker.nonreactive =>
       # Run in an isolated reactivity scope
       highest_seqId_computation = Tracker.autorun =>
@@ -86,8 +90,20 @@ GridControl.installFormatter "textWithTreeControls",
 
         return
 
+      is_delivery_planner_plugin_enabled_computation = Tracker.autorun =>
+        current_val = getIsDeliveryPlannerPluginEnabled.call(@) # Reactive
+        cached_val = @getCurrentColumnData("delivery_planner_plugin_enabled") # non reactive
+
+        if current_val != cached_val
+          @setCurrentColumnData("delivery_planner_plugin_enabled", current_val)
+
+          dep.changed()
+
+        return
+
     Tracker.onInvalidate ->
       highest_seqId_computation.stop()
+      is_delivery_planner_plugin_enabled_computation.stop()
 
     return
 
@@ -166,6 +182,13 @@ GridControl.installFormatter "textWithTreeControls",
         tree_control += """
             <i class="fa fa-fw fa-paperclip task-files slick-prevent-edit" title="#{files.length} files" aria-hidden="true"></i>
         """
+
+    if @getCurrentColumnData("delivery_planner_plugin_enabled")
+      if (is_project = doc["p:dp:is_project"])?
+        if is_project
+          tree_control += """
+              <i class="fa fa-fw fa-briefcase task-is-project slick-prevent-edit" title="Task is a project" aria-hidden="true"></i>
+          """
 
     tree_control += """
       </div>
