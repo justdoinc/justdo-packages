@@ -474,6 +474,99 @@ _.extend GridDataCom.prototype,
 
         return parents_situation
 
+
+      findSubTree: (item_id, options, perform_as) ->
+        # Finds all tasks of the sub-tree whose root is item_id.
+        #
+        # Returns an object with the found items ids in the form:
+        #
+        # {
+        #   found_item_id: doc
+        # }
+        #
+        # (item id itself will be part of the returned doc).
+        #
+        # doc will include a pseudo field called: _children that will be an array with all the
+        # children id of doc.
+        #
+        # options:
+        #
+        #   fields: a mongo style positive fields projection (negative isn't supported!)
+        #   max_level: if undefined we will go as deep as the sub-tree goes, otherwise we won't traverse
+        #             items in levels higher than the level specified (0 is the root level).
+        #   max_items: if undefined we will return as many items as we find for the sub-tree, otherwise
+        #              we will return up to max_items items. (Since we are running in batches, the actual
+        #              number can be slightly higher).
+        #
+        # perform_as:
+        #
+        #   If is set, we limit the sub-tree to items that perform_as is their user only.
+        #
+        # Notes:
+        #
+        #   * If item_id doesn't exist -> returns empty object
+        #   * We impose hard limit of 20 to max_level
+        #   * We impose hard limit of 1000 to max_items
+
+        mandatory_fields = {_id: 1, parents: 1}
+        if not (fields = options?.fields)?
+          fields = {}
+        fields = _.extend {}, fields, mandatory_fields
+
+        max_level_hard_limit = 20
+        if not (max_level = options?.max_level)? or not _.isNumber(max_level) or max_level > max_level_hard_limit or max_level < 0
+          max_level = max_level_hard_limit
+
+        max_items_hard_limit = 1000
+        if not (max_items = options?.max_items)? or not _.isNumber max_items or max_items > max_items_hard_limit or max_items < 1
+          max_items = max_items_hard_limit
+
+        ret = {}
+        items_found = 0
+        addItemToRet = (doc) ->
+          items_found += 1
+
+          ret[doc._id] = doc
+
+          doc._children = []
+
+          for parent_id, p_def of doc.parents
+            ret[parent_id]?._children.push doc._id
+
+          return
+
+        root_query = {_id: item_id}
+        if perform_as?
+          root_query.users = perform_as
+        addItemToRet(@findOne(root_query, {fields: fields}))
+        if items_found == max_items or _.isEmpty ret
+          return ret
+
+        last_level_items = [item_id]
+        for level in [0...max_level]
+          query = {}
+
+          if perform_as?
+            query.users = perform_as
+
+          query.$or = _.map last_level_items, (item_id) -> {"parents.#{item_id}": {$exists: true}}
+
+          last_level_items = []
+          @find(query, {fields: fields}).forEach (doc) ->
+            last_level_items.push doc._id
+
+            addItemToRet(doc)
+
+          # Note, we can't break the forEach loop above, therefore, the actual amount of items
+          # returned might be slightly bigger.
+          if items_found > max_items
+            return ret
+
+          if _.isEmpty last_level_items
+            break
+
+        return ret
+
   setGridMethodMiddleware: (method_name, middleware) ->
     # Assigned middlewares are called just before the default execution of the method
     # with the the GridDataCom object as their `this`, and with some additional arguments.
