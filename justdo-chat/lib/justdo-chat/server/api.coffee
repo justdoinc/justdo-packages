@@ -262,6 +262,7 @@ _.extend JustdoChat.prototype,
     # NOTE: the following uses a subset of the USER_UNREAD_MESSAGES_INDEX index.
     channels_recent_activity_cursor_query =
       "subscribers.user_id": options.user_id
+      messages_count: {$gt: 0}
 
     channels_recent_activity_cursor_options =
       limit: options.limit
