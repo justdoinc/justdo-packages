@@ -232,6 +232,7 @@ _.extend JustdoChat,
               $elemMatch: subscriber_element_matching_criteria
           ,
             fields: fields_to_fetch
+            jd_analytics_skip_logging: true
 
         isSubscriberCandidateForProcessing = (subscriber_doc) ->
           # Returns true if the subscriber is candidate for processing
@@ -484,7 +485,11 @@ _.extend JustdoChat,
             subscriber_to_update[conf.processed_notifications_indicator_field_name] = proc_date
 
           if channel_subscribers_update_needed
-            justdo_chat.channels_collection.rawCollection().update {_id: channel_doc._id}, {$set: {subscribers: subscribers_to_update}}, Meteor.bindEnvironment (err) ->
+            query = {_id: channel_doc._id}
+            modifier = {$set: {subscribers: subscribers_to_update}}
+
+            APP.justdo_analytics.logMongoRawConnectionOp(justdo_chat.channels_collection._name, "update", query, modifier)
+            justdo_chat.channels_collection.rawCollection().update query, modifier, Meteor.bindEnvironment (err) ->
               if err?
                 console.error(err)
               return

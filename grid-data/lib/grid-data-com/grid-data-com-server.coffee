@@ -222,6 +222,7 @@ _.extend GridDataCom.prototype,
 
       _.each _before_pseudo_remove_procedures, (proc) -> proc(user_id, doc, update)
 
+      APP.justdo_analytics.logMongoRawConnectionOp(@collection._name, "update", {_id: doc._id}, update)
       @collection.rawCollection().update {_id: doc._id}, update, Meteor.bindEnvironment (err) ->
         if err?
           console.error(err)

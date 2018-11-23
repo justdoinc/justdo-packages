@@ -109,6 +109,7 @@ _.extend JustdoChat.prototype,
     options =
       multi: true
 
+    APP.justdo_analytics.logMongoRawConnectionOp(@channels_collection._name, "update", query, update, options)
     @channels_collection.rawCollection().update query, update, options, Meteor.bindEnvironment (err) ->
       if err?
         console.error(err)
@@ -409,6 +410,7 @@ _.extend JustdoChat.prototype,
                 user_id: user_id
 
           # rawCollection is used since the update is to complex for Simple Schema
+          APP.justdo_analytics.logMongoRawConnectionOp(self.channels_collection._name, "update", {_id: channel_id}, update)
           self.channels_collection.rawCollection().update {_id: channel_id}, update, Meteor.bindEnvironment (err) ->
             if err?
               console.error(err)
@@ -754,6 +756,7 @@ _.extend JustdoChat.prototype,
                 user_id: user_id
 
           # rawCollection is used since the update is to complex for Simple Schema
+          APP.justdo_analytics.logMongoRawConnectionOp(self.channels_collection._name, "update", {_id: channel_id}, update)
           self.channels_collection.rawCollection().update {_id: channel_id}, update, Meteor.bindEnvironment (err) ->
             if err?
               console.error(err)

@@ -366,6 +366,7 @@ _.extend ChannelBaseServer.prototype,
     update_existing_bottom_window_query_update =
       $set: fields_to_set
 
+    APP.justdo_analytics.logMongoRawConnectionOp(@justdo_chat.channels_collection._name, "update", update_existing_bottom_window_query, update_existing_bottom_window_query_update)
     @justdo_chat.channels_collection.rawCollection().update update_existing_bottom_window_query, update_existing_bottom_window_query_update, Meteor.bindEnvironment (err, res) =>
       # XXX API might change to nMatched on future Mongo versions
       if res.result.n != 0
@@ -552,6 +553,7 @@ _.extend ChannelBaseServer.prototype,
         $set:
           "subscribers.$.unread": true
 
+    APP.justdo_analytics.logMongoRawConnectionOp(@justdo_chat.channels_collection._name, "update", query, update)
     @justdo_chat.channels_collection.rawCollection().update query, update, Meteor.bindEnvironment (err) ->
       if err?
         console.error(err)
