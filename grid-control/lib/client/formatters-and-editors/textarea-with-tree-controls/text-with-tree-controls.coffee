@@ -125,7 +125,7 @@ GridControl.installFormatter "textWithTreeControls",
     return
 
   slick_grid: ->
-    {row, cell, value, doc, self} = @getFriendlyArgs()
+    {row, cell, value, doc, self, path} = @getFriendlyArgs()
 
     level = @_grid_data.getItemLevel row
     expand_state = @_grid_data.getItemExpandState row
@@ -216,6 +216,22 @@ GridControl.installFormatter "textWithTreeControls",
           tree_control += """
               <i class="fa fa-fw fa-briefcase task-is-project slick-prevent-edit" title="Task is a project" aria-hidden="true"></i>
           """
+
+    if APP.justdo_checklist?
+
+#      tree_control += """
+#              <i class="p-jd-checklist p-jd-cl-#{doc._id} slick-prevent-edit" >x</i>
+#          """
+      container = "p-jd-checklist-container#{Math.floor(Math.random()*99999999)}"
+      console.log container
+
+      tree_control += """
+              <i class="#{container} slick-prevent-edit" ></i>
+          """
+      Meteor.defer =>
+        Blaze.renderWithData Template.checklist_grid_mark, {task_id: doc._id, path: path}, $(".#{container}")[0]
+#        APP.justdo_checklist.refreshMark(doc._id)
+
 
     tree_control += """
       </div>
