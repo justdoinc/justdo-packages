@@ -179,19 +179,20 @@ base_slick_grid_editors_prototype =
   #
   getEditorFieldName: -> @context.field_name
 
-  requireDataReady: ->
+  isDataReady: ->
     if not @doc?
-      throw Meteor.Error "editor-data-not-ready-yet", "Editor data not ready yet, avoid calling data methods from @init()"
+      return false
 
-    return
+    return true
 
   getEditorDoc: ->
     # Returns the data document associated with the editor
     # (the one provided to @loadValue())
 
-    @requireDataReady()
-
-    return @doc
+    if @isDataReady()
+      return @doc
+    else
+      return {}
 
   getEditorFieldValueFromDoc: ->
     # Returns the editor value from the data document
