@@ -49,13 +49,76 @@
 #ui-datepicker-div
   font-size: 12px
   z-index: 15 !important
+  padding: 7px
+  border: none
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25), 0px 5px 45px rgba(0, 0, 0, 0.15)
 
 .ui-datepicker-header
-  background: #e6e6e6 url('/packages/mizzao_jquery-ui/images/ui-bg_glass_75_e6e6e6_1x400.png')
-  color: #555
+  background: none
+  color: #37474F
+  border: none
+  font-size: 13px
 
-.ui-datepicker th
-  color: #555
+  .ui-datepicker-prev, .ui-datepicker-next
+    cursor: pointer
+    transition: all 0.3s ease
+
+  .ui-datepicker-prev .ui-icon-circle-triangle-w
+    background-position: -97px 0px
+
+
+  .ui-datepicker-next .ui-icon-circle-triangle-e
+      background-position: -32px 0px
+
+  .ui-datepicker-prev-hover
+    top: 2px
+    left: 2px
+
+  .ui-datepicker-next-hover
+    top: 2px
+    right: 2px
+
+  .ui-state-hover
+    border: none
+    border-radius: 2px
+    background: #ECEFF1
+
+.ui-datepicker
+  th
+    color: #555
+
+  table
+    margin: 0
+
+.ui-datepicker-calendar
+  font-family: "Lato", sans-serif
+
+  .ui-state-default
+    border: 1px solid #ECEFF1
+    background: #ECEFF1
+    color: #37474F
+    font-size: 13px
+    font-weight: bold
+    text-align: center
+    border-radius: 2px
+    transition: all .3s ease
+
+  .ui-state-default:hover
+    background: #2c70cf
+    color: white
+
+  .ui-state-active
+    background: #2c70cf !important
+    color: white
+    border: none !important
+
+  .ui-datepicker-today a
+    border: 1px solid #2c70cf
+    background: #ffffff
+    color: #2c70cf
+
+    &.ui-state-active
+      color: white
 
 /* remove datepicker input field outline */
 .datepicker
