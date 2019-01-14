@@ -8,11 +8,17 @@ _.extend GridDataCom.prototype,
       throw @_error "missing-argument", "You must provide the perform_as field"
 
   _insertItem: (fields) ->
-    _id = Random.id()
+    task_id = Random.id()
+
+    upsert_mutator = {$set: fields}
+
+    {no_changes_to_public_task, mutator, private_fields_mutator} =
+      @_extractPrivateDataUpdatesFromMutatorInPlace(upsert_mutator)
+    upsert_mutator = mutator # upsert_mutator is edited in place, still, I leave this for readability (Daniel C.)
 
     Fiber.current._allow_tasks_upsert = true
     try
-      @collection.upsert({_id}, {$set: fields}, {upsert: true})
+      @collection.upsert({_id: task_id}, upsert_mutator, {upsert: true})
     catch e
       console.error "grid-data-com: Failed to insert document", e
 
@@ -20,7 +26,451 @@ _.extend GridDataCom.prototype,
     finally
       delete Fiber.current._allow_tasks_upsert
 
-    return _id
+    if _.size(private_fields_mutator) > 0
+      # Note, by this point thanks to the allow deny rules defined on initDefaultGridAllowDenyRules() of the
+      # grid data com package, we know for sure the user belongs to the task. We assume that since the
+      # task belongs to the user, the user also belongs to the project (not necessarily true in the theoretical
+      # case).
+      #
+      # Also, note, that the only fields that can be included in the private_fields_mutator are prefixed
+      # with the "priv:" prefix, as required by _upsertItemPrivateData
+      APP.projects._grid_data_com._upsertItemPrivateData(fields.project_id, task_id, private_fields_mutator, fields.created_by_user_id)
+
+    return task_id
+
+  _upsertItemPrivateData: (project_id, task_id, mutators, user_id) ->
+    check project_id, String
+    check task_id, String
+    check mutators, Object
+    check user_id, String
+
+    # IMPORTANT 1: By this point, we assume security related verification been performed.
+    #
+    # (e.g. we assume user_id belongs to task_id, and project_id, that mutators are
+    # valid and so on)
+    #
+    # Note, user_id is the last argument, and isn't coming before mutator, to keep consistent
+    # with other JustDo apis.
+    #
+    # IMPORTANT 2: We are assuming that mutators only affects fields that are prefixed with
+    # "priv:", thus, we don't need to worry about attempts to affect internal fields, such
+    # as the user_id/task_id, etc. by mutators.
+
+    Fiber.current._allow_tasks_private_data_upsert = true
+    try
+      #
+      # IMPORTANT, if you change the following, don't forget to update the relevant collections-indexes.coffee
+      # and to drop obsolete indexes (see FETCH_PROJECT_TASK_PRIVATE_DATA_OF_SPECIFIC_USER_INDEX there)
+      #
+      @private_data_collection.upsert({project_id, task_id, user_id}, mutators, {upsert: true})
+    catch e
+      console.error "grid-data-com: Failed to insert private data document", e
+
+      return undefined
+    finally
+      delete Fiber.current._allow_tasks_private_data_upsert
+
+    return
+
+
+  _getCurrentDateUpdateObjectForUsers: (prefix, users) ->
+    ret = {}
+
+    for user_id in users
+      ret["#{prefix}.#{user_id}"] = true
+
+    return ret
+
+  _addRawFieldsUpdatesToUpdateModifier: (modifier, existing_doc) ->
+    # Note: edits modifier in place !
+
+    if (existing_current_date_mod = modifier.$currentDate)?
+      current_date_updates = existing_current_date_mod
+    else
+      current_date_updates = {}
+
+    if (existing_unset_mod = modifier.$unset)?
+      unset_updates = existing_unset_mod
+    else
+      unset_updates = {}
+
+    if (existing_add_to_set_mod = modifier.$addToSet)?
+      add_to_set_updates = existing_add_to_set_mod
+    else
+      add_to_set_updates = {}
+
+    if (existing_pull_mod = modifier.$pull)?
+      pull_updates = existing_pull_mod
+    else
+      pull_updates = {}
+
+    _.extend current_date_updates,
+      _raw_updated_date: true
+
+    #
+    # Find changes in users
+    #
+    added_users = []
+    removed_users = []
+
+    if (pushed_users = modifier.$push?.users?.$each)?
+      added_users = added_users.concat(pushed_users)
+
+    if (pulled_users = modifier.$pull?.users?.$in)?
+      removed_users = removed_users.concat(pulled_users)
+
+    if (users = modifier.$set?.users)?
+      if (existing_users = existing_doc?.users)?
+        added_users = added_users.concat(_.difference users, existing_users)
+        removed_users = removed_users.concat(_.difference existing_users, users)
+
+        if not _.isEmpty(added_users) and not _.isEmpty(removed_users)
+          throw @_error "operation-blocked", "$set.users update that involves both removal and addition of new users, isn't allowed" # since we can't $pull and $addToSet items from/to _raw_added_users_dates with a single query
+
+      else
+        # If no existing_doc, assume insert of new document
+        _.extend current_date_updates, @_getCurrentDateUpdateObjectForUsers("_raw_added_users_dates", users)
+
+    #
+    # If users changed, update relevant raw fields
+    #
+    if not _.isEmpty(added_users)
+      _.extend current_date_updates, @_getCurrentDateUpdateObjectForUsers("_raw_added_users_dates", added_users)
+
+      for user_id in added_users
+        unset_updates["_raw_removed_users_dates.#{user_id}"] = ""
+
+      pull_updates._raw_removed_users =
+        $in: added_users
+
+    if not _.isEmpty(removed_users)
+      _.extend current_date_updates, @_getCurrentDateUpdateObjectForUsers("_raw_removed_users_dates", removed_users)
+
+      for user_id in removed_users
+        unset_updates["_raw_added_users_dates.#{user_id}"] = ""
+
+      add_to_set_updates._raw_removed_users =
+        $each: removed_users
+
+    #
+    # Update changed modifiers
+    #
+    if not _.isEmpty current_date_updates
+      modifier["$currentDate"] = current_date_updates
+
+    if not _.isEmpty unset_updates
+      modifier["$unset"] = unset_updates
+
+    if not _.isEmpty add_to_set_updates
+      modifier["$addToSet"] = add_to_set_updates
+
+    if not _.isEmpty pull_updates
+      modifier["$pull"] = pull_updates
+
+    return
+
+  setupGridCollectionHooks: ->
+    @collection.before.insert =>
+      # Since we need to update the raw fields that needs the update's operator $currentDate,
+      # we can't allow inserts using the .insert() operator, only .upsert()s are allowed.
+      throw @_error "operation-blocked", "Inserts aren't allowed on grid-data-com's @collection. Use @_insertItem() instead."
+
+    @collection.before.upsert (user_id, selector, modifier, options) =>
+      # We allow upserts only for inserts since the @_addRawFieldsUpdatesToUpdateModifier(modifier)
+      # makes the assumption that if a doc wasn't provided in its second argument, we are dealing with
+      # creation of a new document, and updates of raw fields related to remoevd users, shouldn't be
+      # updated in case where $set.users is provided (there might be other unexpected results).
+
+      if not Fiber.current._allow_tasks_upsert?
+        throw @_error "operation-blocked", "Upserts for grid-data-com's @collection are allowed only to insert new documents. If you are intending to use this upsert in order to insert new documents (only), search the code for Fiber.current._allow_tasks_upsert to learn more."
+
+      @_addRawFieldsUpdatesToUpdateModifier(modifier)
+
+      return
+
+    @collection.before.update (user_id, doc, field_names, modifier, options) =>
+      @_addRawFieldsUpdatesToUpdateModifier(modifier, doc)
+
+      return
+
+    _before_pseudo_remove_procedures = []
+    _after_pseudo_remove_procedures = []
+
+    # Define hooks that will let packages hook to our pseudo remove
+
+    @collection.before.pseudo_remove = (cb) ->
+      # cb returned value is ignored.
+      # cb(user_id, doc to be removed before any change, update to be performed)
+
+      _before_pseudo_remove_procedures.push cb
+
+      return
+
+    @collection.after.pseudo_remove = (cb) ->
+      # cb returned value is ignored.
+      # cb(user_id, doc to be removed before any change, update performed)
+
+      _after_pseudo_remove_procedures.push cb
+
+      return
+
+    @collection.before.remove (user_id, doc) =>
+      current_date_updates = 
+        _raw_removed_date: true
+        # Note, _raw_updated_at and others will be taken care of by @_addRawFieldsUpdatesToUpdateModifier().
+
+      update =
+        $unset: {}
+        $currentDate: current_date_updates
+        $set:
+          users: []
+
+      for field_name of doc
+        if field_name not in ["_id", "users", "seqId", "project_id", "_raw_added_users_dates", "_raw_updated_date", "_raw_removed_date", "_raw_removed_users", "_raw_removed_users_dates"]
+          update.$unset[field_name] = ""
+
+      @_addRawFieldsUpdatesToUpdateModifier(update, doc)
+
+      _.each _before_pseudo_remove_procedures, (proc) -> proc(user_id, doc, update)
+
+      APP.justdo_analytics.logMongoRawConnectionOp(@collection._name, "update", {_id: doc._id}, update)
+      @collection.rawCollection().update {_id: doc._id}, update, Meteor.bindEnvironment (err) ->
+        if err?
+          console.error(err)
+
+          return
+
+        _.each _after_pseudo_remove_procedures, (proc) -> proc(user_id, doc, update)
+
+        return
+
+      return false
+
+    return
+
+  _addRawFieldsUpdatesToTasksPrivateDataUpdateModifier: (modifier, existing_doc) ->
+    # Note: edits modifier in place !
+
+    if (existing_current_date_mod = modifier.$currentDate)?
+      current_date_updates = existing_current_date_mod
+    else
+      current_date_updates = {}
+
+    _.extend current_date_updates,
+      _raw_updated_date: true
+
+    #
+    # Update changed modifiers
+    #
+    if not _.isEmpty current_date_updates
+      modifier["$currentDate"] = current_date_updates
+
+    return
+
+  setupGridPrivateDataCollectionHooks: ->
+    self = @
+
+    @private_data_collection.before.insert =>
+      # Since we need to update the raw fields that needs the update's operator $currentDate,
+      # we can't allow inserts using the .insert() operator, only .upsert()s are allowed.
+      throw @_error "operation-blocked", "Inserts aren't allowed on grid-data-com's @private_data_collection. Use @_upsertItemPrivateData() instead."
+
+    @private_data_collection.before.upsert (user_id, selector, modifier, options) =>
+      # At the moment we force all upserts to go through @_upsertItemPrivateData()
+      # so we'll know for sure what to expect in terms of selector/modifier/options.
+      if not Fiber.current._allow_tasks_private_data_upsert?
+        throw @_error "operation-blocked", "Upserts for grid-data-com's @private_data_collection are allowed only when called from @_upsertItemPrivateData()."
+
+      if "$unset" of modifier
+        throw @_error "operation-blocked", "We do not permit $unset of fields of the private data collection documents (read web-app Changelog for v1.117.0 to learn more)."
+
+      @_addRawFieldsUpdatesToTasksPrivateDataUpdateModifier(modifier)
+
+      return
+
+    @private_data_collection.before.update (user_id, doc, field_names, modifier, options) =>
+      # Since we want all the updates/inserts to go through @_upsertItemPrivateData()
+      # as a single point for operations, we block updates.
+      throw @_error "operation-blocked", "Updates aren't allowed on grid-data-com's @private_data_collection. Use @_upsertItemPrivateData() instead."
+
+      return
+
+    @private_data_collection.before.remove (user_id, doc) =>
+      console.warn "Operation blocked: attempt to remove private data for task #{doc.task_id}, (private data doc id: #{doc._id}). We do not allow removal of private data docs as it interferes with the tasks_grid_um publication (Read web-app Changelog for v1.117.0 to learn more)."
+
+      return false
+
+    @collection.after.pseudo_remove (user_id, doc) =>
+      # After an item is pseudo removed (equivalent to irreversible real remove), we remove all
+      # the @private_data_collection items associated with the removed item.
+      #
+      # Read web-app Changelog for v1.117.0 to learn more .
+
+      # This Query is using the FETCH_PROJECT_TASK_PRIVATE_DATA_OF_SPECIFIC_USER_INDEX index
+      query = {task_id: doc._id}
+
+      APP.justdo_analytics.logMongoRawConnectionOp(@private_data_collection._name, "remove", query)
+      @private_data_collection.rawCollection().remove query, (err) ->
+        if err?
+          console.error(err)
+
+        return
+
+      return
+
+    @collection.after.update (user_id, doc, field_names, modifier, options) ->
+      if "users" in field_names
+        # Maintain the _raw_frozen field of fields associated to the tasks private
+        # data docs as a result of users changes.
+        added_users = _.difference doc.users, @previous.users
+        removed_users = _.difference @previous.users, doc.users
+
+        if not _.isEmpty added_users
+          self._setPrivateDataDocsFreezeState(added_users, [doc._id], false)
+
+        if not _.isEmpty removed_users
+          self._setPrivateDataDocsFreezeState(removed_users, [doc._id], true)
+
+        console.warn "A task `users' field been updated using a direct call to the collections .update() method, it is highly recommanded to use the tasks_bulkUpdate ddp method or GridDataCom's bulkUpdate api, as they employ a far more efficient procedure."
+
+      return
+
+    return
+
+  _freezeAllProjectPrivateDataDocsForUsersIds: (project_id, users_ids) ->
+    #
+    # IMPORTANT, if you change the following, don't forget to update the relevant collections-indexes.coffee
+    # and to drop obsolete indexes (see FETCH_PROJECT_TASK_PRIVATE_DATA_OF_SPECIFIC_USER_INDEX there)
+    #
+    query =
+      project_id: project_id
+      user_id:
+        $in: users_ids
+
+    modifier = {$set: {_raw_frozen: true}}
+
+    APP.justdo_analytics.logMongoRawConnectionOp(@private_data_collection._name, "update", query, modifier, {multi: true})
+    @private_data_collection.rawCollection().update query, modifier, {multi: true}, (err) ->
+      if err?
+        console.error(err)
+
+      return
+
+    return
+
+  _setPrivateDataDocsFreezeState: (users_ids, tasks_ids, freeze=true) ->
+    # Freeze any tasks_ids private data docs of users in users_ids.
+
+    check users_ids, [String]
+    check tasks_ids, [String]
+
+    if freeze
+      modifier = {$set: {_raw_frozen: true}}
+    else
+      modifier = {$unset: {_raw_frozen: ""}}
+
+    @_addRawFieldsUpdatesToTasksPrivateDataUpdateModifier(modifier)
+
+    for user_id in users_ids
+      #
+      # IMPORTANT, if you change the following, don't forget to update the relevant collections-indexes.coffee
+      # and to drop obsolete indexes (see FETCH_PROJECT_TASK_PRIVATE_DATA_OF_SPECIFIC_USER_INDEX there)
+      #
+      query = 
+        task_id: 
+          $in: tasks_ids
+        user_id: user_id
+
+      APP.justdo_analytics.logMongoRawConnectionOp(@private_data_collection._name, "update", query, modifier, {multi: true})
+      @private_data_collection.rawCollection().update query, modifier, {multi: true}, (err) ->
+        if err?
+          console.error(err)
+
+        return
+
+    return
+
+  _extractPrivateDataUpdatesFromMutatorInPlace: (mutator) ->
+    # IMPORTANT! Mutator is edited in-place
+
+    no_changes_to_public_task = false
+
+    private_fields_mutator = {}
+    for modifier, mutation of mutator
+      for field, modification of mutation
+        if field.substr(0, 5) == "priv:"
+          Meteor._ensure private_fields_mutator, modifier, field
+
+          private_fields_mutator[modifier][field] = modification
+
+          delete mutation[field]
+
+      # Remove modifiers that left without mutations
+      if _.size(mutation) == 0
+        delete mutator[modifier]
+
+    if _.size(mutator) == 0
+      no_changes_to_public_task = true
+
+    if _.size(mutator) == 1 and _.size(mutator.$set) == 2 and mutator.$set.updated_by? and mutator.$set.updatedAt?
+      no_changes_to_public_task = true
+
+    return {no_changes_to_public_task, mutator, private_fields_mutator}
+
+  setupGridCollectionWritesProxies: ->
+    # We make the existance of the @private_data_collection transparent to the client
+    # private fields defined for the user are published in the tasks_grid_um pulication
+    # as if they were part of the @collection itself. The only identification we leave is
+    # the "priv:" prefix, that we prefix the private fields with to identify them later on.
+    #
+    # Hence, when the client asks to perform actions on fields that begins with the "priv:" prefix,
+    # we know that we actually need to update the user's private field doc of that task (and create
+    # one if one doesn't exists).
+
+    @collection.beforeAllowDenyUpdate = (user_id, selector, mutator, options, doc) =>
+      # The hook for beforeAllowDenyUpdate is defined in: tasks-collection-constructor-and-initiator.js
+      # of the justdo-tasks-collections-manager package.
+
+      if not user_id?
+        console.warn "beforeAllowDenyUpdate: Couldn't find #{user_id}, this shouldn't happen, check why it happened (skipping)"
+
+        return
+
+      if not (_.isString(selector) or (_.isObject(selector) and _.size(selector) == 1 and _.isString(selector._id)))
+        console.warn "beforeAllowDenyUpdate: received selector which isn't of specific ID, this shouldn't happen, check why it happened (skipping)"
+
+        return
+
+      if not (project_id = doc.project_id)?
+        console.warn "beforeAllowDenyUpdate: the associated task doesn't have project_id set to it, this shouldn't happen, check why it happened (skipping)"
+
+        return      
+
+      if _.isString selector
+        task_id = selector
+      else
+        task_id = selector._id
+
+      {no_changes_to_public_task, mutator, private_fields_mutator} =
+        @_extractPrivateDataUpdatesFromMutatorInPlace(mutator)
+
+      if _.size(private_fields_mutator) > 0
+        # Note, by this point thanks to the allow deny rules defined on initDefaultGridAllowDenyRules() of the
+        # grid data com package, we know for sure the user belongs to the task. We assume that since the
+        # task belongs to the user, the user also belongs to the project (not necessarily true in the theoretical
+        # case).
+        #
+        # Also, note, that the only fields that can be included in the private_fields_mutator are prefixed
+        # with the "priv:" prefix, as required by _upsertItemPrivateData
+        APP.projects._grid_data_com._upsertItemPrivateData(project_id, task_id, private_fields_mutator, user_id)
+
+      if no_changes_to_public_task
+        return false # don't proceed with the update to the tasks collection, there's nothing to do with it.
+
+      return true
+
+    return
+
 
   # Allow adding root child without going through the addChild method
   # to allow adding a root child to a specific non-logged-in user 
@@ -406,6 +856,18 @@ _.extend GridDataCom.prototype,
 
     return
 
+  _bulkUpdateFromSecureSource: (query, modifier) ->
+    # Like bulkUpdate, but when we trust query and modifier completely!
+
+    @_addRawFieldsUpdatesToUpdateModifier(modifier)
+
+    # Use rawCollection here, skip collection2/hooks
+    APP.justdo_analytics.logMongoRawConnectionOp(@collection._name, "update", query, modifier, {multi: true})
+    return @collection.rawCollection().update query, modifier, {multi: true}, Meteor.bindEnvironment (err) ->
+      if err?
+        console.error(err)
+      return
+
   bulkUpdate: (items_ids, modifier, perform_as) ->
     #
     # Validate inputs
@@ -454,19 +916,27 @@ _.extend GridDataCom.prototype,
     # We make sure that the middleware don't change this condition, too risky.
     selector.users = perform_as
 
-    @_addRawFieldsUpdatesToUpdateModifier(modifier)
-
     # XXX in terms of security we rely on the fact that the user belongs to
     # the requested items (see selector query) to let him/her do basically
     # whatever action they like (worst case... he destory his own data.
     # perhaps in the future we'd like to apply some more checks here.
 
-    # Use rawCollection here, skip collection2/hooks
-    APP.justdo_analytics.logMongoRawConnectionOp(@collection._name, "update", selector, modifier, {multi: true})
-    return @collection.rawCollection().update selector, modifier, {multi: true}, Meteor.bindEnvironment (err) ->
-      if err?
-        console.error(err)
-      return
+    added_users = []
+    removed_users = []
+
+    if (pushed_users = modifier.$push?.users?.$each)?
+      added_users = added_users.concat(pushed_users)
+
+    if (pulled_users = modifier.$pull?.users?.$in)?
+      removed_users = removed_users.concat(pulled_users)
+
+    if not _.isEmpty added_users
+      @_setPrivateDataDocsFreezeState(added_users, items_ids, false)
+
+    if not _.isEmpty removed_users
+      @_setPrivateDataDocsFreezeState(removed_users, items_ids, true)
+
+    return @_bulkUpdateFromSecureSource(selector, modifier)
 
   getContexts: (task_id, options, perform_as) ->
     options = {} # Force to empty object for now, options will be defined in the future

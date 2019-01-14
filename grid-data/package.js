@@ -17,6 +17,8 @@ Package.onUse(function (api) {
   api.use('reactive-var', both);
   api.use('check', both);
 
+  api.use("meteorspark:app@0.3.0", both);
+
   api.use("justdoinc:justdo-ddp-extensions@1.0.0", both);
 
   api.use('raix:eventemitter@0.1.1', both);
