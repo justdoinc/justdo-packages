@@ -151,6 +151,10 @@ _.extend GridControl.prototype,
     if @_initialized or @_destroyed
       return
 
+    # Remove from the _init_view any unknown fields.
+    _extended_schema = @getSchemaExtendedWithCustomFields()
+    @_init_view = _.filter @_init_view, (column) -> column.field of _extended_schema
+
     @_load_editors()
     @_load_grid_operations()
 

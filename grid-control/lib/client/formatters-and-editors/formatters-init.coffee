@@ -374,7 +374,7 @@ slick_grid_formatters_extended_context_properties =
       grid_column_info: grid_column_info
       schema: schema
       doc: data
-      options: schema.grid_column_formatter_options or {}
+      options: schema?.grid_column_formatter_options or {}
 
       original_grid_control: @original_gc
 
@@ -466,7 +466,7 @@ print_formatters_extended_context_properties =
       value: doc[field]
       path: path
 
-      options: schema.grid_column_formatter_options or {}
+      options: schema?.grid_column_formatter_options or {}
 
       schema: schema
 
