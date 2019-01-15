@@ -62,7 +62,7 @@ _.extend GridDataCom.prototype,
       # IMPORTANT, if you change the following, don't forget to update the relevant collections-indexes.coffee
       # and to drop obsolete indexes (see FETCH_PROJECT_TASK_PRIVATE_DATA_OF_SPECIFIC_USER_INDEX there)
       #
-      @private_data_collection.upsert({project_id, task_id, user_id}, mutators, {upsert: true})
+      @private_data_collection.upsert({project_id, task_id, user_id}, mutators, {upsert: true, bypassCollection2: true})
     catch e
       console.error "grid-data-com: Failed to insert private data document", e
 
