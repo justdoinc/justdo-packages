@@ -189,6 +189,11 @@ _.extend GridDataCom.prototype,
       return
 
     @collection.before.update (user_id, doc, field_names, modifier, options) =>
+      if "$unset" of modifier
+        for field of modifier["$unset"]
+          if "." not in field
+            throw @_error "operation-blocked", "We do not permit $unset of top-level fields of the tasks collection documents (read web-app Changelog for v1.117.0 to learn more)."
+
       @_addRawFieldsUpdatesToUpdateModifier(modifier, doc)
 
       return
@@ -282,7 +287,9 @@ _.extend GridDataCom.prototype,
         throw @_error "operation-blocked", "Upserts for grid-data-com's @private_data_collection are allowed only when called from @_upsertItemPrivateData()."
 
       if "$unset" of modifier
-        throw @_error "operation-blocked", "We do not permit $unset of fields of the private data collection documents (read web-app Changelog for v1.117.0 to learn more)."
+        for field of modifier["$unset"]
+          if "." not in field
+            throw @_error "operation-blocked", "We do not permit $unset of top-level fields of the private data collection documents (read web-app Changelog for v1.117.0 to learn more)."
 
       @_addRawFieldsUpdatesToTasksPrivateDataUpdateModifier(modifier)
 
@@ -889,12 +896,11 @@ _.extend GridDataCom.prototype,
       {
         $set:
           owner_id: String
-        $unset:
-          pending_owner_id: String # In reality we expect here only ""
+          pending_owner_id: null
       }
       {
-        $unset:
-          pending_owner_id: String # In reality we expect here only ""
+        $set:
+          pending_owner_id: null
       }
     ]
     check(modifier, Match.OneOf.apply(Match, allowed_modifiers))
