@@ -173,3 +173,17 @@ GridControl.installEditor "SelectorEditor",
     @$select_picker_obj.$menu.show()
 
     return
+
+  moreInfoSectionCustomizations: ($firstNode, field_editor) ->
+    field_editor.$dom_node.find("div.dropdown-menu").removeAttr("style")
+
+    $firstNode.find(".dropdown-menu a")
+      .click (e) ->
+        Meteor.defer ->
+          field_editor.save()
+
+          $(":focus").blur()
+
+          return
+
+    return

@@ -339,3 +339,33 @@ GridControl.installEditor "UnicodeDateEditor",
 
   getAllActionsButtons: ->
     return @actions_buttons.concat(@ext_actions_buttons)
+
+  moreInfoSectionCustomizations: ($firstNode, field_editor) ->
+    $firstNode.find(".editor-unicode-date")
+      .keydown (e) ->
+        if e.which == 13
+          field_editor.save()
+
+          $(e.target).blur()
+
+          return
+
+        if e.which == 27
+          field_editor.cancel()
+
+          $(e.target).blur()
+
+          return
+
+      .blur (e) ->
+        if not $("#ui-datepicker-div").is(":visible")
+          field_editor.save()
+
+        return
+
+      .data().datepicker.settings.onSelect = ->
+        field_editor.save()
+
+        return
+
+    return
