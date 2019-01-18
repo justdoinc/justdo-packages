@@ -190,9 +190,28 @@ _.extend GridDataCom.prototype,
 
     @collection.before.update (user_id, doc, field_names, modifier, options) =>
       if "$unset" of modifier
-        for field of modifier["$unset"]
-          if "." not in field
-            throw @_error "operation-blocked", "We do not permit $unset of top-level fields of the tasks collection documents (read web-app Changelog for v1.117.0 to learn more)."
+        first_unset_field = _.keys(modifier.$unset)[0]
+
+        if _.size(modifier.$unset) == 1 and "." not in first_unset_field
+          # Backward compatibility, replace $unset with set to null.
+
+          # On the mobile, $unset was used before, we want the apps to keep
+          # working after the point in which we stopped supporting $unset
+          # of Tasks fields.
+          #
+          # All the cases in which mobiles used $unset examined, they all had a
+          # single field involved and they all can be replaced with {$set: {field:
+          # null}}.
+
+          Meteor._ensure(modifier, "$set")
+
+          _.extend modifier.$set, {"#{first_unset_field}": null}
+
+          delete modifier.$unset
+        else
+          for field of modifier["$unset"]
+            if "." not in field
+              throw @_error "operation-blocked", "We do not permit $unset of top-level fields of the tasks collection documents (read web-app Changelog for v1.117.0 to learn more)."
 
       @_addRawFieldsUpdatesToUpdateModifier(modifier, doc)
 
