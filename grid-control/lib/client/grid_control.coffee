@@ -724,6 +724,14 @@ _.extend GridControl.prototype,
 
     _.extend schema, custom_fields_schema
 
+    # Remove disabled fields from schema, we regard disabled fields the
+    # same way as removed fields for the matter of the include_removed_fields
+    # argument
+    if not include_removed_fields
+      for field_id, field_def of schema
+        if field_def.disabled? and field_def.disabled is true
+          delete schema[field_id]
+
     if include_removed_fields
       if not @removed_custom_fields_manager?
         return schema
