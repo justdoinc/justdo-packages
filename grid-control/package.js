@@ -42,6 +42,8 @@ Package.onUse(function (api) {
 
   api.use('justdoinc:justdo-snackbar@1.0.0', client);
 
+  api.use("justdoinc:justdo-mathjs@1.0.0", both);
+
   api.add_files('lib/globals.js', both);
 
   api.add_files('lib/both/helpers.coffee', both);

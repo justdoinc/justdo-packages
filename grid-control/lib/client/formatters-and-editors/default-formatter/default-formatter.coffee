@@ -1,9 +1,19 @@
+formatDecimals = (decimal) ->
+  if not decimal?
+    return ""
+
+  return JustdoMathjs.math.format(decimal, {precision: 2})
+
 GridControl.installFormatter "defaultFormatter",
   slick_grid: ->
     {schema, value, self} = @getFriendlyArgs()
 
     if not value?
       value = ""
+    else
+      # Only if we got value!
+      if schema.type is Number and schema.decimal is true
+        value = formatDecimals(value)
 
     value = self.xssGuard value
 
@@ -17,4 +27,12 @@ GridControl.installFormatter "defaultFormatter",
     return formatter
 
   print: (doc, field, path) ->
-    return @defaultPrintFormatter()
+    {value, schema} = @getFriendlyArgs()
+
+    if schema.type is Number and schema.decimal is true
+      return formatDecimals(value)
+
+    if _.isNumber value
+      return "" + value
+
+    return value
