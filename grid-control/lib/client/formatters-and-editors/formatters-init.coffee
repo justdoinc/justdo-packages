@@ -489,4 +489,7 @@ print_formatters_extended_context_properties =
   defaultPrintFormatter: ->
     {value} = @getFriendlyArgs()
 
+    if _.isNumber value
+      return "" + value
+
     return value
