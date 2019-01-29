@@ -2,7 +2,7 @@ formatDecimals = (decimal) ->
   if not decimal?
     return ""
 
-  return JustdoMathjs.math.format(decimal, {precision: 2})
+  return JustdoMathjs.math.format(decimal, {precision: 2, notation: "fixed"}).replace(/\.0+$/, "")
 
 GridControl.installFormatter "defaultFormatter",
   slick_grid: ->
