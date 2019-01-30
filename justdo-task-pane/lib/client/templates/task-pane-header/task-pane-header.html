@@ -1,0 +1,35 @@
+<template name="task_pane_header">
+  <div class="task-pane-header {{#if $lte toolbar_sections_count 1}}no-tabs{{/if}}">
+
+    {{#with getPriorityColor}}
+      <div class="task-pane-header-task-priority" style="background-color: {{this}}"></div>
+    {{/with}}
+
+    <div class="task-pane-header-title">
+      {{#if seq_id}}#{{seq_id}}: {{/if}}
+      {{#if title}}
+        {{title}}
+        <div class="btn btn-default btn-xs copy-to-clipboard" title="Copy to clipboard"><i class="fa fa-clipboard"></i></div>
+      {{else}}
+        &nbsp;
+      {{/if}}
+    </div>
+  
+    {{#if $gt toolbar_sections_count 1}}
+      {{!-- Only if there's more than 1 section, we show tabs --}}
+      {{#each toolbar_sections}}
+        {{> task_pane_tab}}
+      {{/each}}
+    {{/if}}
+
+    <div class="task-pane-settings-btn">
+      <i class="fa fa-caret-down fa-fw"></i>
+    </div>
+  </div>
+</template>
+
+<template name="task_pane_tab">
+  <div class="task-pane-tab {{#if $eq toolbar_selected_section_id id}}active{{/if}}">
+    {{options.title}} {{options.titleInfo}}
+  </div>
+</template>

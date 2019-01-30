@@ -1,0 +1,32 @@
+<template name="custom_field_conf_formula_field_editor_opener">
+  <div class="fa fa-cog custom-field-formula-field-editor-opener" aria-hidden="true" field-id="{{field_id}}"></div>
+</template>
+
+<template name="custom_field_conf_formula_field_editor">
+  <div class="editor-caption">
+    Edit field formula <div class="open-formula-editor-help" title="Learn how to write a formula"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
+  </div>
+
+  <div class="editor-content">
+    <input type="text" class="formula-input form-control input-sm" autocomplete="off" placeholder="Enter formula" value="{{getHumanReadableFormula}}" />
+
+    <div class="formula-editor-section">
+      Add field to formula:
+        <select class="field-to-add-selector">
+          {{#each availableFields}}
+            <option value="{{label}}">{{label}}</option>
+          {{/each}}
+        </select>
+
+        <div class="add-field btn btn-xs btn-default">Add</div>
+    </div>
+  </div>
+
+  <div role="separator" class="divider"></div>
+
+  <div class="dropdown-filter-controls-container">
+    <button type="button" class="btn btn-xs btn-primary save">Save</button>
+    <button type="button" class="btn btn-xs btn-default cancel">Cancel</button>
+    <div style="clear: both"></div>
+  </div>
+</template>

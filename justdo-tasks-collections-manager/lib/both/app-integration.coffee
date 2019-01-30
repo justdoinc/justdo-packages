@@ -1,0 +1,1 @@
+APP.justdo_tasks_collections_manager = new JustdoTasksCollectionsManager()

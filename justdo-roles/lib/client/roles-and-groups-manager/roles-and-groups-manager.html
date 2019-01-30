@@ -1,0 +1,158 @@
+<template name="justdo_roles_and_groups_manager">
+  <ul class="nav nav-pills" role="tablist">
+    <li role="presentation" class="{{#if $eq getCurrentTab "roles"}}active{{/if}}">
+      <a href="#roles" aria-controls="roles" role="tab" data-toggle="tab">Roles</a>
+    </li>
+    <li role="presentation" class="{{#if $eq getCurrentTab "groups"}}active{{/if}}">
+      <a href="#groups" aria-controls="groups" role="tab" data-toggle="tab">Groups</a>
+    </li>
+  </ul>
+
+  <div class="table-container">
+    <table class="jd-table">
+      {{>justdo_roles_and_groups_manager_table_regions_header}}
+
+      {{#if $eq getCurrentTab "roles"}}
+        {{> justdo_roles_and_groups_manager_roles}}
+      {{else if $eq getCurrentTab "groups"}}
+        {{> justdo_roles_and_groups_manager_groups}}
+      {{/if}}
+    </table>
+  </div>
+</template>
+
+<template name="justdo_roles_and_groups_manager_table_regions_header">
+  <tr>
+    <th>
+      {{#if $eq getCurrentTab "roles"}}Role{{else if $eq getCurrentTab "groups"}}Group{{/if}}
+    </th>
+    {{#each roles_and_groups_manager_controller.getRegions}}
+      <th region-id="{{_id}}" class="region-label-cell">
+        {{getLabel}}
+        {{#if regionalManagersEditable}}
+          <span class="edit-region-members">
+            <div class="regional-managers-controller-block">
+              <div class="regional-management"><i class="fa fa-user"></i> {{getRegionManagersCount}}</div>
+            </div>
+          </span>
+        {{/if}}
+
+        <div class="region-controls">
+          {{#if userCanAddOrRemoveRegions}}
+            <span class="region-control remove-region" title="Remove {{getLabel}}"><i class="fa fa-times" aria-hidden="true"></i></span>
+          {{/if}}
+
+          {{#if isLabelEditable}}
+            <span class="region-control edit-region-label"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+          {{/if}}
+        </div>
+      </th>
+    {{/each}}
+  </tr>
+</template>
+
+<template name="justdo_roles_and_groups_manager_roles">
+  {{#each roles_and_groups_manager_controller.getRoles}}
+    <tr>
+      <td role-id="{{_id}}" class="role-label-cell">
+        {{getLabel}}
+
+        <div class="roles-controls">
+          {{#if userCanAddOrRemoveRoles}}
+            <span class="region-control remove-role" title="Remove {{getLabel}}"><i class="fa fa-times" aria-hidden="true"></i></span>
+          {{/if}}
+
+          {{#if isLabelEditable}}
+            <span class="region-control edit-role-label" title="Edit name"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+          {{/if}}
+        </div>
+      </td>
+
+      {{#each getRegionsValueControllers}}
+        {{#if has_value}}
+          <td>
+            <div class="jdr-user-item {{#if $eq region_id 'default'}}default-reg{{/if}} {{#if $not isUserMemberOfProject}}jdr-user-item-warning{{/if}}" title="{{#if $not isUserMemberOfProject}}User removed from the project{{/if}}">
+              {{#with user}}
+                {{> justdo_avatar}} {{> display_name_with_graphic_unverified_warning}}
+              {{/with}}
+
+              <div class="cell-controls">
+                <span class="cell-control edit-role-member"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+
+                {{#if user_can_be_removed}}
+                  <span class="cell-control remove-role-member"><i class="fa fa-times" aria-hidden="true"></i></span>
+                {{/if}}
+              </div>
+
+            </div>
+          </td>
+        {{else}}
+          <td class="empty-cell">
+            <div class="empty-cell-controls">
+              <span class="cell-control set-role-member"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+            </div>
+          </td>
+        {{/if}}
+      {{/each}}
+    </tr>
+  {{/each}}
+</template>
+
+<template name="justdo_roles_and_groups_manager_groups">
+  {{#each roles_and_groups_manager_controller.getGroups}}
+    <tr>
+      <td group-id="{{_id}}" class="group-label-cell">
+        {{getLabel}}
+
+        <div class="group-controls">
+          {{#if userCanAddOrRemoveGroups}}
+            <span class="region-control remove-group" title="Remove {{getLabel}}"><i class="fa fa-times" aria-hidden="true"></i></span>
+          {{/if}}
+
+          {{#if isLabelEditable}}
+            <span class="region-control edit-group-label" title="Edit name"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+          {{/if}}
+        </div>
+      </td>
+
+      {{#each getRegionsValueControllers}}
+        <td>
+          {{#each getUsers}}
+            <div class="jdr-user-item {{#if $eq region_id 'default'}}default-reg{{/if}} {{#if $not isUserMemberOfProject}}jdr-user-item-warning{{/if}}" title="{{#if $not isUserMemberOfProject}}User removed from the project{{/if}}">
+              {{> justdo_avatar}} {{> display_name_with_graphic_unverified_warning}}
+
+              <div class="cell-controls">
+                <span class="cell-control edit-group-member"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+
+                <span class="cell-control remove-group-member"><i class="fa fa-times" aria-hidden="true"></i></span>
+              </div>
+            </div>
+          {{/each}}
+
+          <div class="group-editing-controls {{#if $not has_value}}empty-group{{/if}}">
+            <span class="cell-control set-group-members" title="Set group members"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+            {{#if has_value}}
+              <span class="cell-control clear-all-group-members" title="Clear all group members"><i class="fa fa-trash" aria-hidden="true"></i></span>
+            {{/if}}
+          </div>
+        </td>
+      {{/each}}
+    </tr>
+  {{/each}}
+</template>
+
+<template name="justdo_roles_and_groups_manager_footer">
+  <div class="modal-footer">
+    {{#if roles_and_groups_manager_controller.userCanAddOrRemoveRegions}}
+      <button class="btn add-new-region">+ Add a new region</button>
+      {{#if $eq getCurrentTab "roles"}}
+        <button class="btn add-new-role">+ Add a new role</button>
+      {{else if $eq getCurrentTab "groups"}}
+        <button class="btn add-new-group">+ Add a new Group</button>
+      {{/if}}
+    {{/if}}
+    <button class="btn btn-default cancel">Cancel</button>
+    <button class="btn btn-default save">Save</button>
+    <button class="btn btn-primary-no-bootbox-auto-focus save-and-close">Save &amp; close</button>
+  </div>
+</template>

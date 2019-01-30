@@ -1,0 +1,92 @@
+.task-pane-header
+  overflow: hidden
+  background-color: #f8f8f8
+  font-family: Verdana, Arial, sans-serif
+
+  user-select: none
+
+  color: #555
+  font-size: 13px
+
+  position: relative
+
+.task-pane-header-task-priority
+  width: 100%
+
+  top: 0
+  left: 0
+  right: 0
+
+  height: 3px
+
+.task-pane-header-title
+  font-size: 15px
+  padding: 6px 9px 6px
+  color: #333
+  font-weight: bold
+  font-family: "Lato", sans-serif
+  overflow: hidden
+  margin-right: 0
+  border-bottom: 1px solid #ddd
+  user-select: initial
+  line-height: 21px
+
+  .copy-to-clipboard
+    display: none
+    margin-top: -3px
+    line-height: 16px
+
+  .email-task
+    display: none
+    margin-top: -3px
+    line-height: 16px
+    .fa
+      color: black
+
+
+  &:hover
+    .copy-to-clipboard
+      display: inline-block
+
+    .email-task
+      display: inline-block
+
+$tab-height: 29px
+.task-pane-tab
+  float: left
+
+  font-weight: 600
+
+  text-transform: uppercase
+  font-size: 12px
+  font-family: "Lato", sans-serif
+
+  line-height: $tab-height
+  height: $tab-height
+
+  text-align: center
+  cursor: pointer
+
+  padding: 0 14px
+
+  &:hover
+    border-bottom: 2px solid #DDD
+
+  &.active
+    color: #000
+    border-bottom: 2px solid #19649b
+
+.task-pane-settings-btn
+  float: right
+
+  cursor: pointer
+  padding: 0 5px
+
+  line-height: $tab-height
+
+  .no-tabs &
+    float: none
+    position: absolute
+    top: 2px
+    right: 0
+    padding-bottom: 2px

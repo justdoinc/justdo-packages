@@ -1,0 +1,74 @@
+@import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
+
+.project-card
+  position: relative
+  display: block
+
+  float: left
+
+  width: 250px
+
+  font-family: $verdana-fallbacks
+
+  background-color: #eaeaea
+  border: 1px solid #ccc
+  border-radius: 3px
+  padding: 7px 10px 10px
+  margin: 16px 0 0 16px
+  cursor: pointer
+
+  &:hover, &:focus
+    text-decoration: none
+
+.project-card-header
+  margin-bottom: 5px
+
+  .required-actions-bell
+    // .required-actions-bell full definition is in required-actions.sass
+
+    position: absolute
+    right: 0
+    top: 0
+
+    font-size: 15px
+
+  .required-actions-count
+    font-size: 10px
+    right: -4px
+    top: -4px
+
+  .many-actions
+    .required-actions-count
+      $font-size: 9px
+
+      right: -9px
+
+      font-size: $font-size
+      line-height: $font-size
+
+      padding: 4px 3px
+
+.project-card-title
+  font-size: 13px
+  color: #1C0840
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+  margin-right: 22px
+
+.project-members
+  background-color: #fff
+  border: 1px solid #ccc
+  border-radius: 3px
+  padding: 8px 10px
+
+.create-project
+  height: 90px
+  font-size: 16px
+  line-height: 70px
+  text-align: center
+  padding-left: 0px
+  color: #555
+
+  &:hover
+    color: #333

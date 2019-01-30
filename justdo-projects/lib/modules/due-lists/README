@@ -1,0 +1,93 @@
+Due Lists Module
+================
+
+This module contains the logic related to due-lists.
+That includes: queries generating methods and publications
+that let the user querying due lists for the projects/tasks he
+has access to.
+
+Queries
+-------
+
+There are few types of *Queries* that we use to generate
+Due lists:
+
+  * **Due List:** Involves tasks that have due date and/or follow up date.
+  * **Prioritized Items**: Involves tasks that have neither due date nor follow up date.
+  * **In-Progress Items**: Involves all the tasks that are in in-progress state.
+  * **Start Date Items**: Involves queries on tasks that has the start_date field set.
+
+Common configurations
+---------------------
+
+Both *Queries* can be configured with the following configurations under all the functions that handle querying/publishing based on them:
+
+* **projects:** one of:
+  * null or undefined: 
+    * All projects the user is member of.
+    * [array of project ids]: List of project ids we want to get due lists for.
+      * project ids that the current user isn’t member of will be ignored.
+      * Empty array will be regarded the same we we regard null or undefined -> due list projects won't be restricted.
+    * "project_id": is equal to ["project_id"]
+
+* **owners:** one of:
+  * null, empty array or undefined: current user_id’s due list will be returned
+  * ["user_id", ...] list of user ids whose combined due list we want to get. Users that aren’t members of the project will be ignored.
+  * "user_id" equal to ["user_id"]
+  * Special case, if owners is "*" or ["*", other items ignored in this case], we won't restrict owners.
+
+* **get_has_children**: - v1.17 - Optional, bool, false by default. If set to true the publication will return for each item a field with the following name: `_has_children: true/false`.
+
+Due List query specific configuration
+-------------------------------------
+
+In addition to the Common configurations the Due List query
+also gets:
+
+* **include_start_date**: - v1.47.4 - Optional, bool, false by default. If set to true, tasks in which the start_date field is in the `dates` conf range will be returned as well.
+* **dates:** one of:
+  * String of a specific date:
+    * Will limit the tasks to those that are due to the specific date or have followup on the specific date. 
+  * Range array: [from_date, to_date]
+  * Range array with excluded due date: [from_date, to_date, excluded_due_date]
+  
+  dates option notes
+  ------------------
+
+  * Dates are in unicode date format: `yyyy-mm-dd`
+  * Both from_date and to_date can be set to undefined/null (they still have to exist, example [undefined, undefined]) to avoid limiting the from_date and to_date.
+  * If both from_date and to_date are dates: from_date must be <= to_date .
+  * *Very important:* If a range is provided, if a task has a due date and follow up date, its due date will be ignored - follow up takes precedence. So even if a task’s due date is in the range but its follow up isn’t it won’t be returned.
+  That's in contrast to the behavior when specific date is provided, in such case both tasks that are due to the specific date and has followup will be returned.
+  In the web-app, we use the specific date behavior to show the due list’s today’s task sections (in which both due and follow up dates are critical).
+  The range we use for the other sections, and the precedence to the followup make a clear rule that prevents tasks that have both follow up and due date from appearing in two different range sections.
+  * if range array provided and from_date == to_date we will still regard as range and not as a specific date behavior.
+
+  Purpose of excluded_due_date:
+  -----------------------------
+
+  The described above String based input to the dates option behaves differently from the Array range based input for tasks that has both due-date and follow-up, in such tasks:
+    * String based input will return tasks that at least one of the dates inputs are in the specified date.
+    * Range array will ignore the due date.
+  Therefore, in views that shows both output from String based output and from Range array output we might have duplicates. (E.g. task that due to today, and passed-due follow up).
+  excluded_due_date, allows us to avoid the duplicates.
+
+Prioritized Items query specific configuration
+----------------------------------------------
+
+In addition to the Common configurations the Prioritized Items query also gets:
+
+* **limit:** the maximum amount of items to return, default to 50 - max 1000
+
+In Progress Items query specific configuration
+----------------------------------------------
+
+In Progress Items query gets only the Common configurations.
+
+Start Date Items query specific configuration
+---------------------------------------------
+
+In addition to the Common configurations the Start Date Items query also gets:
+
+* **dates:** the dates range of the start_date we want to include in the query. The format of the `dates` configuration is almost identical to the one specified for the Projects due list publication above.
+The only difference: the Start date items pub ignores the exclude_date value in the triple array format [start_date, end_date, exclude_date]

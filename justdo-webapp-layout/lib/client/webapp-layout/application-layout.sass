@@ -1,0 +1,44 @@
+@import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
+
+html
+  overflow: hidden
+
+body
+  height: 100%
+  min-width: 100%
+  position: absolute
+
+  font-smoothing: antialiased
+  text-rendering: optimizeLegibility
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  -moz-font-feature-settings: "liga" on
+
+.global-wrapper
+  overflow: auto
+  position: relative
+  min-height: 100%
+
+.main-container
+  // .main-container is a .container-fluid that gets from boot strap
+  // padding: 0 15px 0; by default.
+  // We want to pass the decision over paddings to the pages containers
+  // See below .page-container, which get bootstrap defaults.
+  padding: 0
+
+  height: 100%
+
+.page-container
+  padding: 0 15px 0
+
+.page-global-loader
+  margin-top: 150px
+
+.app-wrapper
+  // show scrolls only if we are under the minimal width required for the project container
+  overflow: hidden
+
+  position:relative
+
+  &.lt-minimal-project-container-width
+    overflow: auto

@@ -1,0 +1,1 @@
+APP.justdo_highcharts = new JustdoHighcharts()

@@ -1,0 +1,57 @@
+<template name="meeting_container">
+  <div class="meeting-container">
+    {{> meetings_meeting_header}}
+    {{#if expanded}}
+      <table class="meeting-container-info">
+      {{#each notes}}
+        <tr>
+          <td>
+            <div class="meeting-container-section">
+              {{#if isPrivateNote}}
+                <div class="info-title">Private Note:</div>
+              {{else}}
+                {{#if user_id}}
+                  {{#with lookupUser user_id}}
+                    {{profile.first_name}} {{profile.last_name}}:
+                  {{/with}}
+                {{else}}
+                  <div class="info-title">Meeting note:</div>
+                {{/if}}
+              {{/if}}
+              <div class="info-text">{{note}}</div>
+            </div>
+          </td>
+        </tr>
+      {{else}}
+        <tr>
+          <td>
+            <div class="meeting-container-section">
+              <div class="info-title no-notes">No notes</div>
+            </div>
+          </td>
+        </tr>
+      {{/each}}
+      {{#with addedTasks}}
+        {{#if this.exist}}
+          <tr>
+            <td>
+              <div class="meeting-container-section">
+                <div class="info-title">Added tasks:</div>
+                <table>
+                  {{#each this.tasks}}
+                    <tr class="info-subtask">
+                      <td class="info-subtask-seqId"><div>{{seqId}}</div></td>
+                      <td class="info-subtask-title">{{title}}</td>
+                    </tr>
+                  {{/each}}
+                </table>
+              </div>
+            </td>
+          </tr>
+        {{/if}}
+      {{/with}}
+      </table>
+      <span class="meeting-all-notes">All meeting notes</span>
+    {{/if}}
+  </div>
+</template>

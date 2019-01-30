@@ -1,0 +1,105 @@
+// Note: resize token sass is under task-pane-resize-token.sass
+
+//
+// task pane internal structure
+//
+#task-pane
+  position: relative
+  overflow-x: visible // We set overflow-x to visible since we want the 
+                      // resize area, and open/close task pane token
+                      // to exceed the edges of the task pane.
+                      // Safari don't allow this behavior (negative left/right/margins,
+                      // or any rule that cause a child element to exceed the parent)
+                      // on elements of type table. (before that issue discovered we used
+                      // overflow-x: none)
+  overflow-y: auto
+  display: table
+  width: 100%
+  height: 100%
+
+.task-pane-resizable
+  position: absolute
+
+.task-pane-header-container, .task-pane-content-container
+  display: table-row
+
+.task-pane-header-container
+  height: 1px
+
+.task-pane-content-container
+  height: 100%
+
+.task-pane-header, .task-pane-content
+  display: table-cell
+
+.task-pane-content
+  height: 100%
+  width: 100%
+  overflow: auto
+  position: relative
+  display: inline-block // Needed only for firefox
+
+.task-pane-section
+  position: absolute
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+
+  background-color: white
+
+  padding: 12px 10px
+
+//
+// No content section
+//
+.task-pane-no-content
+  width: 261px
+  height: 100%
+  background-image: url(/layout/logos-ext/justdo_logo_without_text_normal.png)
+  background-repeat: no-repeat
+  background-position: center center
+  background-size: 150px
+  opacity: 0.7
+  margin: 0 auto
+
+//
+// helper elements
+//
+.textual-controller, .textual-controller i.fa
+  cursor: pointer
+  text-decoration: underline
+  color: #595959
+
+  &:hover, &:hover i.fa
+    color: #23527c
+
+// Important: rules related to toolbar position in wireframe (left/bottom...)
+// should be specified in project.sass
+$border-color: #c0c0c0
+
+.right-toolbar, .left-toolbar
+  #task-pane
+    .container-fluid
+      padding: 0
+
+.right-toolbar #task-pane
+  border-left: 1px solid $border-color
+
+.left-toolbar #task-pane
+  border-right: 1px solid $border-color
+
+.bottom-toolbar #task-pane
+  border-top: 1px solid $border-color
+
+// Sub sections
+section
+  margin-bottom: 12px
+  overflow: auto
+
+  h2
+    font-size: 14px
+    font-weight: bold
+    font-family: "Helvetica", arial, sans-serif
+    margin: 0
+    margin-bottom: 5px

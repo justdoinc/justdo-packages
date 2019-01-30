@@ -1,0 +1,27 @@
+<template name="justdo_project_pane">
+  <div class="justdo-project-pane {{#if isExpanded}}expand{{else}}collapsed{{/if}}">
+    {{#if isExpanded}}
+      {{> justdo_project_pane_expanded}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="justdo_project_pane_expanded">
+  {{> justdo_project_pane_expanded_header}}
+
+  <div class="justdo-project-pane-tab-container tab-{{getActiveTabId}}-container">{{> UI.dynamic template=getActiveTabTemplateName}}</div>
+</template>
+
+<template name="justdo_project_pane_expanded_header">
+  <div class="justdo-project-pane-header">
+    <div class="justdo-project-pane-tabs">
+      {{#each getTabs}}
+        <div tab-id="{{tab_id}}" class="project-pane-tab {{#if $eq getActiveTabId tab_id}}active{{/if}}">{{tab_label}}</div>
+      {{/each}}
+    </div>
+
+    <div class="justdo-project-pane-close">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+  </div>
+</template>

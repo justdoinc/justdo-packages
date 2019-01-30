@@ -1,0 +1,42 @@
+<template name="project_operations_tab_switcher_dropdown">
+  {{!--
+
+  IMPORTANT!
+
+  If you change any of the following tab's titles update 101-post-both-project-page-default-tabs.coffee as well.
+
+  --}}
+
+  <ul class="dropdown-menu dropdown-menu-no-box-style">
+    {{!-- Note: dropdown-menu-no-box-style defined in: lib/client/009-bootstrap-extensions/010-dropdown-menu-no-box-style.sass --}}
+    <li><a href="#" data-tab-id="main"><i class="fa fa-fw fa-th-large"></i> Main View</a></li>
+
+    <li><a href="#" data-tab-id="due-list" data-sv-global_owners="{{userId}}"><i class="fa fa-fw fa-calendar-check-o"></i> My Due List</a></li>
+
+    {{>workload_planner_tab_switcher_items}}
+
+    <li class="dropdown-header">Recently</li>
+
+    <li><a href="#" data-tab-id="recent-updates" data-sv-global_tracked-field="state_updated_at" data-sv-global_custom-query='{"state":"done"}'><i class="fa fa-fw fa-check"></i> Completed</a></li>
+
+    <li><a href="#" data-tab-id="recent-updates" data-sv-global_tracked-field="updatedAt"><i class="fa fa-fw fa-newspaper-o"></i> Updated</a></li>
+
+    <li><a href="#" data-tab-id="recent-updates" data-sv-global_tracked-field="createdAt"><i class="fa fa-fw fa-plus"></i> Created</a></li>
+
+    <li class="dropdown-header">Miscellaneous</li>
+
+    <li><a href="#" data-tab-id="awaiting-transfer"><i class="fa fa-fw fa-exchange"></i> Tasks Ownership Transfers</a></li>
+
+    {{#if ticketsQueuesExists}}
+    <li><a href="#" data-tab-id="tickets-queues"><i class="fa fa-fw fa-sticky-note-o"></i> Tickets Queues</a></li>
+    {{/if}}
+
+    {{#with project_all_members_except_me_sorted_by_first_name}}
+      <li class="dropdown-header">Members Due Lists</li>
+      <li><a href="#" data-tab-id="due-list" data-sv-global_owners="*"><i class="fa fa-fw fa-users"></i> All Members Due List</a></li>
+      {{#each this}}
+        <li><a href="#" data-tab-id="due-list" data-sv-global_owners="{{user_id}}">{{> gtpl_user_profile_pic}} {{displayName}}</a></li>
+      {{/each}}
+    {{/with}}
+  </ul>
+</template>

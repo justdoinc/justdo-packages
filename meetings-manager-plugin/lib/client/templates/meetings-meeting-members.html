@@ -1,0 +1,63 @@
+<template name="meetings_meeting_members">
+  <div class="item-members">
+    {{> justdo_avatars_box
+          box_grid=box_grid
+          primary_users=primary_users
+          secondary_users=secondary_users
+          show_button=show_button
+    }}
+  </div>
+</template>
+
+<template name="meetings_meeting_members_editor">
+  {{#each sections}}
+    {{> meetings_meeting_members_editor_section}}
+  {{/each}}
+
+  {{#if display_cascade_checkbox}}
+    <div class="checkbox">
+      <label>
+        <input class="cascade-action-checkbox" type="checkbox" checked="{{isChecked cascade true}}"> Apply changes to all child-tasks.
+      </label>
+    </div>
+  {{/if}}
+
+  {{#if display_notes_section}}
+    <div class="notes">
+      <span>Notes:</span>
+      <ul>
+        {{#each notes}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+</template>
+
+<template name="meetings_meeting_members_editor_section">
+  {{#if action_users}}{{!-- If there are members for this action --}}
+    <div class="members-editor-dialog-{{action_id}}-section">
+      <div class="section-caption">{{caption}}</div>
+      <div class="action-users">
+        {{#each action_users}}
+          {{> meetings_meeting_members_editor_user_btn}}
+        {{/each}}
+      </div>
+      <div class="bulk-select-label">{{proceed_message}}:</div> <div class="select-all">All</div> <div class="select-none">None</div>
+    </div>
+  {{/if}}
+</template>
+
+<template name="meetings_meeting_members_editor_user_btn">
+  <button class="btn btn-default btn-xs user-btn action-btn {{#if proceed.get}}proceed{{else}}dont-proceed{{/if}}" type="button" title="{{btn_title}}">
+    {{#with user_doc}}{{> gtpl_user_profile_pic}}{{/with}} <span>{{displayName user_doc}}</span>
+    {{#if proceed.get}}
+      <i class="fa fa-times fa-fw toggle"></i>
+    {{else}}
+      <i class="fa fa-plus fa-fw toggle"></i>
+    {{/if}}
+    {{#if status_fa_icon}}
+      <i class="fa fa-fw {{status_fa_icon}} status-icon"></i>
+    {{/if}}
+  </button>
+</template>

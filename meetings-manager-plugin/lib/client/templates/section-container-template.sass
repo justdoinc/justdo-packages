@@ -1,0 +1,103 @@
+.meeting-container
+  padding: 7px
+  background: #fafafa
+  margin-bottom: 5px
+  border-radius: 3px
+  cursor: pointer
+  &.expanded
+    .title
+      color: black
+      font-weight: bold
+  table
+    width: 100%
+  .icon-wrapper
+    width: 1px
+    vertical-align: top
+  .icon
+    width: 23px
+    height: 21px
+    border-radius: 2px
+    font-size: 13px
+    font-weight: bold
+    text-align: center
+    line-height: 21px
+    color: white
+    background: #7D7D7D
+  .title
+    font-size: 14px
+    color: #333333
+    padding: 0px 5px
+    line-height: 21px
+    overflow: hidden
+    text-overflow: ellipsis
+    -webkit-line-clamp: 2
+    -webkit-box-orient: vertical
+    display: block
+    display: -webkit-box
+    &:hover
+      color: black
+  .date
+    text-align: right
+    font-size: 11px
+    color: #6A6A6A
+    line-height: 21px
+    white-space: nowrap
+    vertical-align: top
+    padding-right: 5px
+
+.meeting-container-info
+  margin: 10px 20px
+  border-left: 3px solid #E4E4E4
+
+.meeting-container-section
+  padding: 3px 5px
+  .info-title
+    font-size: 13px
+    color: black
+    font-weight: bold
+    &.no-notes
+      color: #b5b5b5
+  .info-text
+    font-size: 13px
+    display: block
+    unicode-bidi: embed
+    white-space: pre
+  .info-subtask
+    cursor: pointer
+    &:hover
+      .info-subtask-title
+        text-decoration: underline
+      .info-subtask-seqId div
+        background: #e6e6e6
+  .info-subtask-seqId
+    vertical-align: top
+    div
+      font-size: 12px
+      font-weight: bold
+      color: #000000
+      background: #ececec
+      border-radius: 2px
+      padding: 3px 5px
+      margin: 3px 0px
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1)
+      border: 1px solid rgb(199, 199, 199)
+  .info-subtask-title
+    font-size: 13px
+    padding-left: 5px
+
+.meeting-all-notes
+  background: #ECECEC
+  border: 1px solid #c7c7c7
+  border-radius: 2px
+  font-size: 13px
+  color: #000000
+  padding: 3px 7px
+  cursor: pointer
+  margin-left: 20px
+  margin-bottom: 5px
+  display: inline-block
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.10)
+  &:hover
+    background: #e6e6e6
+  &:active
+    background: #e0e0e0

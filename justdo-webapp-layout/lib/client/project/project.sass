@@ -1,0 +1,51 @@
+.page-container.page-project
+  // Cancel default page-container paddings
+  padding: 0
+
+.project-container
+  width: 100%
+  position: relative
+
+#project-main
+  padding: 0 15px
+
+.project-container, #project-main
+  overflow: hidden
+
+//
+// Wireframe positioning related
+//
+
+#task-pane
+  z-index: 10
+
+.right-toolbar, .left-toolbar
+  #project-main, #task-pane
+    height: 100%
+
+  #task-pane
+    position: absolute
+    top: 0
+
+    .container-fluid
+      // if you change this, change also min_toolbar_dim.width
+      // in project.coffee
+      min-width: 200px 
+
+.bottom-toolbar
+  #task-pane
+    top: auto !important // jQuery resizable quirks
+
+.right-toolbar
+  #task-pane
+    right: 0
+    left: auto !important // jQuery resizable quirks
+
+.left-toolbar
+  #task-pane
+    left: 0
+    right: auto !important // jQuery resizable quirks
+
+  #project-main
+    position: absolute
+    right: 0

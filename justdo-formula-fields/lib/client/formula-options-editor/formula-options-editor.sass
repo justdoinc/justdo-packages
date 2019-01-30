@@ -1,0 +1,63 @@
+$color-button-width: 24px
+$buttons-margins: 1px
+$remove-add-button-width: 24px
+
+.custom-field-formula-field-editor-opener
+  position: relative
+  margin-left: 5px
+  cursor: pointer
+  color: rgba(43, 113, 207, 0.7)
+  &:hover
+    color: #5a82b9
+
+.custom-field-formula-field-editor
+  z-index: 1100
+
+  margin: 0
+  padding: 0
+
+.open-formula-editor-help
+  display: inline-block
+  cursor: pointer
+  margin-left: 2px
+  font-size: 15px
+
+.custom-field-formula-field-editor-content
+  width: 400px
+  position: relative
+  max-height: 265px
+  overflow: auto
+  border-radius: 2px
+
+  .formula-editor-section
+    margin: 5px 4px
+
+  .editor-caption
+    font-family: "lato", sans-serif
+    color: #68757b
+    margin: 7px 8px 0px
+
+  .editor-content
+    margin: 0 8px
+
+  .option-label
+    margin-left: 28px
+    padding-top: 3px
+    font-size: 14px
+    margin-right: $color-button-width + $remove-add-button-width + $buttons-margins
+    color: #888888
+
+    input
+      width: 100%
+
+  .divider
+    margin: 5px 0 0 0
+
+  ul
+    padding-left: 23px
+    padding-top: 4px
+    padding-bottom: 4px
+
+  .formula-input
+    margin-bottom: 9px
+    margin-top: 9px

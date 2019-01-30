@@ -1,0 +1,10 @@
+<template name="core_user_conf_core_time_settings">
+  <div class="form-group-sm">
+    <label for="date-format-date-time-setting">{{label}}</label>
+    <select type="text" id="date-format-date-time-setting" class="form-control date-format-date-time-setting">
+      {{#each allowed_date_formats}}
+        <option value="{{this}}" {{isSelected this user_date_format}}>{{this}}</option>
+      {{/each}}
+    </select>
+  </div>
+</template>

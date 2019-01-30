@@ -1,0 +1,28 @@
+<template name="custom_field_conf_select_options_editor_opener">
+  <div class="fa fa-cog custom-field-select-options-editor-opener" aria-hidden="true" field-id="{{field_id}}"></div>
+</template>
+
+<template name="custom_field_conf_select_options_editor">
+  <div class="editor-caption">
+    Edit options
+  </div>
+
+  <div class="custom-field-options"></div>
+
+  <div class="add-custom-field-option">
+    <div class="option-label"><input type="text" class="new-option-label" placeholder="Add option" /></div>
+
+    <div class="bg-color-selector">{{> justdo_color_picker_dropdown color_picker_controller=colorPickerDropdownController}}</div>
+
+    {{#if showAddButton}}
+      <div class="add-option"><i class="fa fa-fw fa-check" aria-hidden="true"></i></div>
+    {{/if}}
+  </div>
+  <div role="separator" class="divider"></div>
+
+  <div class="dropdown-filter-controls-container">
+    <button type="button" class="btn btn-xs btn-primary save">Save</button>
+    <button type="button" class="btn btn-xs btn-default cancel">Cancel</button>
+    <div style="clear: both"></div>
+  </div>
+</template>

@@ -1,0 +1,18 @@
+<template name="plugins_store_layout">
+  <div class="plugins-store-layout-container">
+    <div class="plugins-categories">
+      {{> justdo_plugins_store_categories_list}}
+    </div>
+    <div class="store-front">
+      {{#if showPluginPageMode}}
+        <div class="plugins-list">
+          {{> justdo_plugins_store_plugins_list}}
+        </div>
+      {{else}}
+        <div class="plugin-page">
+          {{> justdo_plugins_store_plugin_page}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</template>

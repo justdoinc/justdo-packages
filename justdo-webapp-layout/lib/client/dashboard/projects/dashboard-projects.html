@@ -1,0 +1,36 @@
+<template name="dashboard_projects">
+  <div class="projects-list">
+    {{#each projects}}
+      {{> dashboard_projects_project_card}}
+    {{/each}}
+
+    <div class="project-card create-project">
+      <i class="fa fa-plus fa-fw"></i> Create a new JustDo
+    </div>
+
+    <div style="clear: both;"></div>
+  </div>
+</template>
+
+<template name="dashboard_projects_project_card">
+  <a class="project-card" href="{{pathFor route='project' data=this}}">
+    <div class="project-card-header">
+      <div class="project-card-title">
+        {{title}}
+      </div>
+      {{> required_actions_bell}}
+    </div>
+    {{> dashboard_projects_project_card_members}}
+  </a>
+</template>
+
+<template name="dashboard_projects_project_card_members">
+  <div class="project-members">
+    {{> justdo_avatars_box
+          box_grid=box_grid
+          primary_users=primary_users
+          secondary_users=secondary_users
+          show_button="on-excess"
+    }}
+  </div>
+</template>

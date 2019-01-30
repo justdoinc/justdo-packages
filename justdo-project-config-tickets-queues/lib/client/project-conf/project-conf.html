@@ -1,0 +1,50 @@
+<template name="justdo_project_config_tickets_queues_project_config">
+  <div class="project-conf-justdo-project-config-tickets-queues-config">
+    <table class="table tq-fields-conf">
+      {{#with ticketsQueues}}
+        {{#each this}}
+          {{> ticket_queue_conf}}
+        {{/each}}
+      {{/with}}
+
+      <tr>
+        <th colspan="4" class="add-new-tq-field-header">
+          Add New Ticket Queue
+        </th>
+      </tr>
+
+      <tr class="add-new">
+        <td class="tq-task-seqId">
+          <input class="new-tq-seqId field-label" placeholder="Enter task number" maxlength="30" />
+        </td>
+        <td class="tq-field-action add">
+          {{#if showAddButton}}
+            ADD
+          {{/if}}
+        </td>
+      </tr>
+    </table>
+  </div>
+</template>
+
+<template name="ticket_queue_conf">
+  <tr task-id="{{_id}}" class="tq-row">
+    <td class="tq-task-container">
+      <div class="tq-task">
+        <b>#{{seqId}}:</b> {{title}}
+      </div>
+    </td>
+    <td class="tq-field-action">
+      <div class="tq-remove-btn tooltip-container">
+        <i class="fa fa-fw fa-trash-o remove {{#if isRemovable}}removable{{/if}}" aria-hidden="true"></i>
+
+        {{#if $not isRemovable}}
+          <div class="tooltip-content tooltip-left">
+            You can't remove this Ticket Queue, since you aren't member of its Task
+          </div>
+        {{/if}}
+      </div>
+
+    </td>
+  </tr>
+</template>

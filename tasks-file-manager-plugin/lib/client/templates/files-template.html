@@ -1,0 +1,61 @@
+<template name="tasks_file_manager_files">
+  <div class="tasks-file-manager-files">
+    {{#each files}}
+      {{#with task=.. file=.}}
+        <div class="file">
+          <div class="type-logo {{typeClass}}"></div>
+
+          <div class="content">
+            <div class="title">
+              {{#if renaming}}
+                <input type="text" name="title" value="{{file.title}}">
+              {{else}}
+                <a href="{{shareableLink}}" class="file-download-link">{{file.title}}</a>
+              {{/if}}
+            </div>
+            <div class="metadata">
+              <span class="date">{{date file.date_uploaded}}</span>
+              <span class="dot"></span>
+              <span class="size">{{size}}</span>
+              <span class="dot"></span>
+              <span class="mimetype">{{file.type}}</span>
+            </div>
+          </div>
+
+          {{#if isImage}}
+            <div class="image-preview file-download-link loading {{tempPlaceHolder}}"></div>
+          {{/if}}
+
+          {{#if deletion}}
+            <div class="msg">
+              <div class="loader">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+              </div>
+              <div class="msg-content">
+                Remove this file?
+                <a href="" class="msg-ok">Ok</a>
+                <a href="" class="msg-cancel">Cancel</a>
+              </div>
+              <!-- <p>Remove this file?</p>
+               -->
+            </div>
+          {{/if}}
+
+          {{#if renaming}}
+            <div class="actions-rename">
+              <a href="" class="file-rename-done"></a>
+              <a href="" class="file-rename-cancel"></a>
+            </div>
+          {{/if}}
+
+          <div class="actions">
+            <a href="" class="file-rename-link"></a>
+            <a href="" class="file-remove-link"></a>
+          </div>
+
+        </div>
+      {{/with}}
+    {{/each}}
+  </div>
+</template>

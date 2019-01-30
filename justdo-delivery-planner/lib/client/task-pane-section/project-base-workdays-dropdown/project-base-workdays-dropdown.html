@@ -1,0 +1,29 @@
+<template name="delivery_planner_task_pane_workdays_editor_btn">
+  <div class="edit-project-workdays" title="Edit project workdays">
+    <i class="fa fa-pencil"></i>
+  </div>
+</template>
+
+<template name="delivery_planner_task_pane_workdays_editor_dropdown">
+  <div class="checkbox">
+    <label><input type="checkbox" checked="{{#if isWorkdaySelected 1}}checked{{/if}}" class="project-base-workday-checkbox" value="1">Monday</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" checked="{{#if isWorkdaySelected 2}}checked{{/if}}" class="project-base-workday-checkbox" value="2">Tuesday</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" checked="{{#if isWorkdaySelected 3}}checked{{/if}}" class="project-base-workday-checkbox" value="3">Wednesday</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" checked="{{#if isWorkdaySelected 4}}checked{{/if}}" class="project-base-workday-checkbox" value="4">Thursday</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" checked="{{#if isWorkdaySelected 5}}checked{{/if}}" class="project-base-workday-checkbox" value="5">Friday</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" checked="{{#if isWorkdaySelected 6}}checked{{/if}}" class="project-base-workday-checkbox" value="6">Saturday</label>
+  </div>
+  <div class="checkbox">
+    <label><input type="checkbox" checked="{{#if isWorkdaySelected 0}}checked{{/if}}" class="project-base-workday-checkbox" value="0">Sunday</label>
+  </div>
+</template>

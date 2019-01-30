@@ -1,0 +1,49 @@
+$max-desc-width: 750px
+#task-description-container
+  #description-editor
+    display: none
+
+  #cke_description-editor
+    display: none
+    max-width: $max-desc-width
+    margin-top: 4px
+    margin-bottom: 7px
+
+  .editor
+    display: none
+
+  #description
+    margin-bottom: 7px
+
+    max-height: 240px
+    overflow: auto
+    max-width: $max-desc-width
+
+    p:last-child
+      margin-bottom: 0
+
+  &.edit-mode
+    #cke_description-editor
+      display: block
+
+    .editor
+      display: block
+
+    #description
+      display: none
+
+    #edit-description, #add-description
+      display: none
+
+  #done-edit-description
+    margin-right: 7px
+    border: none
+    color: #ffffff
+    background-color: #2B71CF
+    font-weight: bold
+    &:hover
+      box-shadow: 0 0 0 3px rgba(62, 138, 214, 0.5)
+    &:active
+      box-shadow: 0 0 0 3px rgba(62, 138, 214, 0.5)
+    &:focus
+      box-shadow: 0 0 0 3px rgba(62, 138, 214, 0.5)

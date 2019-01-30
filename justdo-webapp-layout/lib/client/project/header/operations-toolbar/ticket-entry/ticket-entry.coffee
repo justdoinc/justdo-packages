@@ -1,0 +1,336 @@
+loading_ckeditor = new ReactiveVar false
+
+APP.executeAfterAppLibCode ->
+  project_page_module = APP.modules.project_page
+
+  target_select_pickers = ["#ticket-queue-id", "#ticket-assigned-user-id"]
+
+  project_page_module.setNullaryOperation "ticketEntry", 
+    human_description: "Quick Add"
+    template:
+      font_awesome_icon: "sticky-note-o"
+    op: ->
+      if loading_ckeditor.get() == true
+        return
+
+      loading_ckeditor.set true
+      
+      # Load ckeditor before we render the dialog, to avoid the textarea to appear
+      # without the ckeditor applied on it.
+      module.dynamicImport('meteor/justdoinc:justdo-wa-ckeditor').then (m) =>
+        loading_ckeditor.set false
+        message_template =
+          APP.helpers.renderTemplateInNewNode(Template.ticket_entry, {})
+
+        preBootboxDestroyProcedures = ->
+          # We destroy the selectors here and not under destroy since
+          # when the bootbox is closed while picker is open, it remains
+          # open until close animation completed, and it looks bad.
+          for selector in target_select_pickers
+            $(selector).selectpicker "destroy"
+
+        bootbox.dialog
+          title: "Quick Add"
+          message: message_template.node
+          className: "ticket-entry-dialog bootbox-new-design"
+          onEscape: ->
+            preBootboxDestroyProcedures()
+          buttons:
+            cancel:
+              label: "Cancel"
+
+              className: "btn-default"
+
+              callback: =>
+                preBootboxDestroyProcedures()
+
+            submit:
+              label: "Submit"
+
+              callback: =>
+                submit_attempted.set true
+
+                selected_owner_id = selected_owner.get()
+
+                destination_type = selected_destination_type_reactive_var.get()
+
+                if destination_type == "ticket-queue"
+                  if not selected_owner_id?
+                    selected_owner_id = getSelectedTicketsQueueDoc().owner_id
+
+                if not formIsValid()
+                  return false
+
+                grid_control = project_page_module.gridControl(false)
+                grid_data = grid_control._grid_data
+
+                # XXX Note that we don't provide path to addChild. addChild will transform
+                # the queue id to a path under root in the path normalization process:
+                # "/tickets_queue_id/". This might stop working in future API changes
+                # as addChild isn't meant to be used this way.
+                task_fields =
+                  title: title.get()
+                  priority: priority.get()
+                  description: $("#ticket-content").val()
+                  pending_owner_id:
+                    if Meteor.userId() != selected_owner_id \
+                      then selected_owner_id \
+                      else null
+
+                activateItemId = (item_id) ->
+                  grid_control.once "rebuild_ready", ->
+                    Meteor.defer ->
+                      grid_control.activateCollectionItemId(item_id, 0, {force_pass_filter: true})
+
+                  return
+
+                grid_control._performLockingOperation (releaseOpsLock, timedout) =>
+                  if destination_type == "ticket-queue"
+                    Meteor.call "newTQTicket",
+                      {
+                        project_id: project_page_module.helpers.curProj().id,
+                        tq: selected_destination_id.get()
+                      },
+                      task_fields,
+                      (err, task_id) ->
+                        # XXX see above note, can't rely on new_item_path
+                        if err?
+                          project_page_module.logger.error "add direct task failed: #{err}"
+
+                          releaseOpsLock()
+
+                          return
+
+                        activateItemId(task_id)
+
+                        releaseOpsLock()
+
+                        return
+
+                  if destination_type == "direct-task"
+                    direct_task_parent_id = selected_destination_id.get()
+
+                    direct_task_parent_id_user = direct_task_parent_id.substr(7)
+
+                    Meteor.call "newDirectTask",
+                                {
+                                  project_id: project_page_module.helpers.curProj().id,
+                                  user_id: direct_task_parent_id_user
+                                },
+                                task_fields,
+                                (err, task_id) ->
+                                  # XXX see above note, can't rely on new_item_path
+                                  if err?
+                                    project_page_module.logger.error "add direct task failed: #{err}"
+
+                                    releaseOpsLock()
+
+                                    return
+
+                                  activateItemId(task_id)
+
+                                  releaseOpsLock()
+
+                                  return
+
+                    releaseOpsLock()
+
+                    return
+
+                preBootboxDestroyProcedures()
+
+                return true
+
+    prereq: -> 
+      if loading_ckeditor.get() == true
+        return {"loading-in-progress": "Loading in progress"}
+
+      return {}
+
+  formIsValid = -> selected_destination_id.get()? and not _.isEmpty(title.get())
+
+  selected_destination_id = new ReactiveVar null
+  title = new ReactiveVar null
+  selected_owner = new ReactiveVar null
+  description = new ReactiveVar null
+  priority = new ReactiveVar null
+  submit_attempted = new ReactiveVar null
+  initReactiveVars = ->
+    selected_destination_id.set null
+    title.set ""
+    selected_owner.set null
+    description.set ""
+    priority.set 0
+    submit_attempted.set false
+
+  getSelectedTicketsQueueDoc = -> APP.collections.TicketsQueues.findOne selected_destination_id.get()
+
+  tickets_queues_reactive_var = null
+  direct_task_reactive_var = null
+  selected_destination_users_reactive_var = null
+  selected_destination_type_reactive_var = null
+  Template.ticket_entry.onCreated ->
+    # Init reactive vars
+    initReactiveVars()
+
+    tickets_queues_reactive_var = APP.helpers.newComputedReactiveVar "tickets_queues", ->
+      return APP.collections.TicketsQueues.find({}, {sort: {title: 1}}).fetch()
+
+    direct_task_reactive_var = APP.helpers.newComputedReactiveVar "direct_tasks_parents", ->
+      project_members_ids = project_page_module.helpers.curProj().getMembersIds()
+
+      cur_user_id = Meteor.userId()
+
+      current_user_doc = APP.helpers.getUsersDocsByIds([cur_user_id])
+      other_users_docs = JustdoHelpers.sortUsersDocsArrayByDisplayName(APP.helpers.getUsersDocsByIds(_.without(project_members_ids, cur_user_id)))
+
+      project_members_docs = current_user_doc.concat(other_users_docs)
+
+      direct_tasks = _.map project_members_docs, (memeber_doc) ->
+        return {
+          direct_task_id: "direct:#{memeber_doc._id}"
+          title: if memeber_doc._id == cur_user_id then "My Direct Tasks" else JustdoHelpers.displayName(memeber_doc)
+          memeber_doc: memeber_doc
+        }
+
+      return direct_tasks
+
+    selected_destination_type_reactive_var = APP.helpers.newComputedReactiveVar "selected_destination_type", ->
+      destination_id = selected_destination_id.get()
+
+      if not destination_id?
+        return "none"
+      if destination_id.substr(0, 7) == "direct:"
+        return "direct-task"
+
+      return "ticket-queue"
+
+    selected_destination_users_reactive_var = APP.helpers.newComputedReactiveVar "selected_destination_users", ->
+      destination_type = selected_destination_type_reactive_var.get()
+
+      if destination_type == "direct-task"
+        destination_id = selected_destination_id.get()
+
+        if not destination_id?
+          return [] # can happen, when selected_destination_type_reactive_var is pending update
+        
+        destination_user_id = destination_id.substr(7)
+        return [Meteor.users.findOne(destination_user_id)]
+      else # for readability    
+        if not selected_destination_id.get()?
+          return []
+
+        selected_tickets_queue_doc = getSelectedTicketsQueueDoc()
+
+        if not selected_tickets_queue_doc?
+          return []
+
+        owner_doc = APP.helpers.getUsersDocsByIds([selected_tickets_queue_doc.owner_id])
+        other_users_docs = APP.helpers.getUsersDocsByIds(_.without(selected_tickets_queue_doc.users, selected_tickets_queue_doc.owner_id))
+
+        return owner_doc.concat(other_users_docs)
+
+  Template.ticket_entry.onRendered ->
+    for selector in target_select_pickers
+      $(selector)
+        .selectpicker
+          container: "body",
+          dropupAuto: true,
+          size: 6,
+          width: "100%"
+        .on "show.bs.select", (e) ->
+          setTimeout ->
+            $(e.target).focus()
+          , 0
+
+    tickets_queues_reactive_var.on "computed", ->
+      Meteor.defer =>
+        destination_type = selected_destination_type_reactive_var.get()
+
+        if destination_type == "ticket-queue"
+          if selected_destination_id.get() not in _.map(tickets_queues_reactive_var.get(), (queue) -> queue._id)
+            # If selected ticket queue removed as ticket queue
+            selected_destination_id.set(null)
+            $("#ticket-queue-id").val("")
+
+        $("#ticket-queue-id").selectpicker("refresh")
+
+    direct_task_reactive_var.on "computed", ->
+      Meteor.defer =>
+        destination_type = selected_destination_type_reactive_var.get()
+
+        if destination_type == "direct-task"
+          if selected_destination_id.get() not in _.map(direct_task_reactive_var.get(), (direct_task_parent) -> direct_task_parent.direct_task_id)
+            # If selected ticket queue removed as ticket queue
+            selected_destination_id.set(null)
+            $("#ticket-queue-id").val("")
+
+        $("#ticket-queue-id").selectpicker("refresh")
+
+    selected_destination_users_reactive_var.on "computed", ->
+      Meteor.defer =>
+        if selected_owner.get() not in _.map(selected_destination_users_reactive_var.get(), (user) -> user._id)
+          # If selected user is no longer member of ticket queue
+          selected_owner.set(null)
+          $("#ticket-assigned-user-id").val("")
+
+        $("#ticket-assigned-user-id").selectpicker("refresh")
+
+    $('#ticket-content').ckeditor()
+
+    task_priority_slider = new genericSlider "ticket-priority", 0, (new_val, is_final) ->
+      priority.set Math.round(100 * new_val)
+
+  Template.ticket_entry.onDestroyed ->
+    tickets_queues_reactive_var.stop()
+    tickets_queues_reactive_var = null
+
+    direct_task_reactive_var.stop()
+    direct_task_reactive_var = null
+
+    selected_destination_users_reactive_var.stop()
+    selected_destination_users_reactive_var = null
+
+    selected_destination_type_reactive_var.stop()
+    selected_destination_type_reactive_var = null
+
+    initReactiveVars()
+
+  Template.ticket_entry.helpers
+    direct_tasks: -> direct_task_reactive_var.get()
+    tickets_queues: -> tickets_queues_reactive_var.get()
+    selected_destination_id: -> selected_destination_id.get()
+    selected_destination_type: -> selected_destination_type_reactive_var.get()
+    selected_destination_users: -> selected_destination_users_reactive_var.get()
+    max_printed_task_title: 60
+    max_printed_display_name: 40
+    isCategoryManager: ->
+      current_tickets_queue_doc = APP.collections.TicketsQueues.findOne(selected_destination_id.get())
+
+      if not current_tickets_queue_doc?
+        # Can happen while reactive state is in calculation process
+        return false
+      
+      return @_id == current_tickets_queue_doc.owner_id
+
+    isInvalidTitle: -> submit_attempted.get() and _.isEmpty(title.get())
+    isInvalidTicketsQueue: -> submit_attempted.get() and not selected_destination_id.get()?
+
+  Template.ticket_entry.events
+    "change #ticket-queue-id": ->
+      selected_destination_id.set($('#ticket-queue-id').val())
+
+      # init owner selector
+      selected_owner.set(null)
+      $('#ticket-assigned-user-id').val("")
+
+    "change #ticket-assigned-user-id": ->
+      user_id = $('#ticket-assigned-user-id').val()
+
+      if user_id == ""
+        user_id = null
+
+      selected_owner.set(user_id)
+
+    "keyup #ticket-title": (e) ->
+      title.set($(e.target).val().trim())

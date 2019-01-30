@@ -1,0 +1,76 @@
+<template name="header">
+  <nav class="header navbar navbar-default" style="width: {{getHeaderWidth}}px">
+    <div class="container-fluid" style="width: {{getHeaderWidth}}px">
+      <div class="navbar-toggle drawer-hamburger pull-left">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </div>
+      <div class="navbar-header">
+        <a class="brand" href="/"></a>
+      </div>
+
+      {{#with middleHeaderTemplate}}
+        {{> UI.dynamic template=middleHeaderTemplate}}
+      {{/with}}
+
+      {{#if loginStateIs "logged-in"}}
+        <ul class="nav navbar-nav navbar-right">
+          {{> tutorials_submenu}}
+
+          {{> justdo_chat_recent_activity_button}}
+
+          <li>
+            {{#with rightHeaderTemplate}}
+              {{> UI.dynamic template=rightHeaderTemplate}}
+            {{/with}}
+          </li>
+
+          {{> loginButtons}}
+        </ul>
+      {{/if}}
+    </div>
+    <nav class="drawer-nav" role="navigation">
+      <div class="drawer-brand">
+        <div class="navbar-toggle drawer-hamburger pull-left">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </div>
+        <a href="/"><img src="/layout/logos-ext/justdo_logo_with_text_webapp_navbar.png" alt="justDo"></a>
+      </div>
+
+      <div class="drawer-top-menu">
+        {{#each topMenuItems}}
+          <div class="menu-item">
+            {{{html}}}
+          </div>
+        {{/each}}
+
+        <div class="menu-item">
+          <i class="fa fa-fw fa-th-large icons" aria-hidden="true"></i>JustDos
+
+          <div class="create-new-project" title="Create a new JustDo">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer-projects-list list-group" style="top: {{drawerProjectsListTop}}px">
+        {{#each projects}}
+          <a href="/p/{{_id}}" class="list-group-item">{{title}}</a>
+        {{/each}}
+      </div>
+      <div class="drawer-footer">
+        {{#each bottomMenuItems}}
+          {{{html}}}
+        {{/each}}
+      </div>
+    </nav>
+    <div class="drawer-overlay"></div>
+  </nav>
+  <div class="container-fluid global-messages" style="width: {{getWindowWidth}}px">
+    {{> status}}
+    {{> timesync_status}}
+  </div>
+</template>

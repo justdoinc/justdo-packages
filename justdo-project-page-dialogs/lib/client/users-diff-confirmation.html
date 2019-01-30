@@ -1,0 +1,56 @@
+<template name="users_diff_confirmation">
+  <p class="diff-message">
+    You are about to {{action_name}} task
+    <b>#{{task.seqId}}{{#if task.title}}: {{cutString task.title max_printed_task_title}}{{/if}}</b>
+    to
+    <b>#{{target_task.seqId}}{{#if target_task.title}}: {{cutString target_task.title max_printed_task_title}}{{/if}}</b>.</p>
+  <p class="diff-message">Please approve the following changes to task <b>#{{task.seqId}} and all its child tasks</b>, to keep them in line with the members of <b>#{{target_task.seqId}}</b>.</p>
+
+  <div class="members-update-search">
+    <label><i class="fa fa-search"></i></label>
+    <input type="text" class="members-search-input" value="" placeholder="Find member">
+  </div>
+
+  <div class="members-section">
+    {{#each sections}}
+      {{> users_diff_action_section}}
+    {{/each}}
+  </div>
+
+  {{#if display_notes_section}}
+    <div class="notes">
+      <span>Notes:</span>
+      <ul>
+        {{#each notes}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+</template>
+
+<template name="users_diff_action_section">
+  <div class="members-list-container {{#if action_members}}{{#if section_width_trigger}}full-width{{/if}}{{else}}hide-container{{/if}}">
+      <div class="{{#if $not perform_action}}avoid-action{{/if}} members-update-dialog-{{action_id}}-section">
+        <div class="bulk-select-section">
+          {{section_label}}<br />
+          <div class="bulk-select-label">{{proceed_message}}:</div> <div class="select-all">All</div> <div class="select-none">None</div>
+        </div>
+        <div class="members-diff">
+          {{#each action_members_filtered}}
+            {{> users_diff_user_btn}}
+          {{else}}
+            <div class="no-members-diff"> 
+              No results found
+            </div>
+          {{/each}}
+        </div>
+      </div>
+  </div>
+</template>
+
+<template name="users_diff_user_btn">
+  <button class="btn btn-default btn-xs user-btn {{#if proceed.get}}proceed{{else}}dont-proceed{{/if}}" type="button" title="{{btn_title}}">
+    {{> gtpl_user_profile_pic}} <div class="display-name">{{displayName this}}</div>
+  </button>
+</template>

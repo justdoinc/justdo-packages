@@ -1,0 +1,14 @@
+<template name="task_pane_item_details_members">
+  <div class="item-members">
+    {{> justdo_avatars_box
+          box_grid=box_grid
+          primary_users=primary_users
+          secondary_users=secondary_users
+          show_button="none"
+    }}
+
+    {{#with hiddenUsersCount}}
+      <div class="hidden-users-count">+{{this}}</div>
+    {{/with}}
+  </div>
+</template>

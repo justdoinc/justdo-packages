@@ -1,0 +1,295 @@
+.missing-dependency
+  text-align: center
+  background-color: #ffbd79
+  padding: 8px
+  margin-bottom: 8px
+
+.delivery-planner
+  font-family: "lato", sans-serif
+  font-smoothing: antialiased
+  text-rendering: optimizeLegibility
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  -moz-font-feature-settings: "liga" on
+
+  .nav-tabs
+    li
+      a
+        color: #838383
+        font-weight: 500
+        font-size: 13px
+        padding: 6px 7px
+        border: none
+
+        &:focus, &:hover
+          background-color: white
+          border: none
+
+      &.active
+        a
+          border-bottom: 2px solid #0F56AE
+          font-weight: bold
+          color: #0F56AE
+
+  .is-project-toggle
+    float: right
+    margin-top: 6px
+    margin-right: 3px
+
+    font-size: 13px
+    color: #868686
+    cursor: pointer
+    user-select: none
+
+    &.is-project
+      color: #337ab7
+
+  section
+    margin: 8px 0 0 0
+
+    h2
+      color: #616161
+      font-weight: bold
+      font-size: 13px
+      padding: 6px 7px
+      border: none
+      font-family: "lato", sans-serif
+      border-bottom: 1px solid #dddddd
+      cursor: default
+      user-select: none
+
+  .refresh,.baseline-projection-buttons
+    float: right
+    margin: 1px
+    cursor: pointer
+
+  .insufficiant-data-message,.no-project-members-message,.no-projects-available,.highcharts-not-ready,.burndown-data-not-ready
+    text-align: center
+    padding: 25px 0px
+    border-bottom: 1px solid #dddddd
+    color: #666565
+    font-size: 15px
+
+  .no-project-members-message
+    border-bottom: 0 none
+
+  .dp-project-setting
+    padding: 6px 7px
+
+    &:hover
+      background-color: #f7faff
+
+    .btn-xs
+      padding: 1px 9px
+
+    .setting-label
+      float: left
+
+      color: #303030
+      font-size: 13px
+
+      border: none
+      font-family: "lato", sans-serif
+      cursor: default
+      user-select: none
+
+    .setting-controller
+      float: right
+
+  .field-editor
+    width: 100px
+    // UnicodeDateEditor, UnicodeDateFollowUpDateEditor
+    .unicode-date-editor
+      position: relative
+
+      .editor-unicode-date
+        width: 100% !important
+
+        $placeholder-color: #BBB
+        &::placeholder
+          color: $placeholder-color
+
+        &::-webkit-input-placehold
+          color: $placeholder-color
+
+        &::-moz-placeholder
+          color: $placeholder-color
+
+        &:-ms-input-placehold
+          color: $placeholder-color
+
+        &:-moz-placeholder
+          color: $placeholder-color
+
+
+      .udf-id-date-setter
+        position: absolute
+        right: 0
+        top: -1px
+
+  .commit-project-plan-more-info, .archive-project-more-info, .baseline-projection-more-info
+    cursor: help
+
+  .members-avail-table-wrapper
+    background-color: #F7F7F7
+    padding: 0 8px 0px 8px
+    margin-bottom: 8px
+
+  .dp-save-members-availability, .dp-cencel-members-availability
+    float: right
+    margin-right: 7px
+    margin-top: -13px
+    margin-bottom: 6px
+
+  .dp-committed
+    color: #4d4d4d
+    font-style: italic
+    font-size: 13px
+
+  .dp-uncommit-to-project-plan
+    float: right
+    margin-top: 5px
+
+  .assign-to-project-section
+    overflow: visible
+
+  .project-add-wrapper
+    background-color: #F7F7F7
+    padding: 8px
+    margin-bottom: 8px
+
+  .dp-task-context
+    margin-bottom: 8px
+    padding: 8px 10px
+    border: 1px solid #f5f5f5
+    position: relative
+    border-radius: 4px
+
+    user-select: none // So attempts to drag mover icon, won't select
+
+    &:hover
+      border-color: #d3d3d3
+
+      .dp-task-context-delete
+        display: block
+
+  .dp-task-context-delete
+    display: none
+
+    float: right
+    cursor: pointer
+
+  .dp-context-item
+    cursor: pointer
+    white-space: nowrap
+    text-overflow: ellipsis
+    overflow: hidden
+    margin-bottom: 7px
+
+    &:last-child
+      margin-bottom: 0
+
+    .dp-task-seq-id
+      // Override .label/.grid-tree-control-task-id designs
+      position: relative
+      display: inline-block
+      top: 0
+      width: auto
+      min-width: 25px
+      margin-right: 3px
+
+  .extended-days-avail-separator
+    color: #bcbcbc
+
+  .member-name
+    vertical-align: top
+    padding-top: 6px
+    font-weight: bold
+
+  .daily-avail
+    position: relative
+
+  .daily-avail-simple
+    $controller-width: 126px
+    $addon-width: 65px
+    $customize-button-width: 63px
+
+    width: $controller-width + $customize-button-width + 3
+    float: right
+
+    .input-group
+      width: $controller-width
+      display: inline-block
+      height: 30px
+      white-space: nowrap
+
+    .simple-daily-availability
+      display: inline-block
+      width: $controller-width - $addon-width
+      padding: 5px 11px
+      height: 30px
+
+    .input-group-addon
+      display: inline-block
+      width: $addon-width
+      height: 30px
+
+    .customize-daily-availability
+      display: inline-block
+      width: $customize-button-width
+
+  .daily-avail-extended-td
+    padding-right: 66px
+
+  .daily-avail-extended
+    width: 200px
+    float: right
+
+    .daily-avail-extended-header
+      font-weight: bold
+      margin-bottom: 1px
+      margin-top: 6px
+
+    .set-simple-daily-availability
+      position: absolute
+      top: 0px
+      right: 0px
+      width: 63px
+
+    .dayoff-bullet
+      color: #7e7e7e
+
+    .daily-avail-extended-edit-workdays,.daily-avail-extended-add-daysoff,.daily-avail-extended-remove-daysoff
+      display: inline-block
+      cursor: pointer
+      padding: 0px 4px 0 2px
+
+  $dropdown-width: 331px
+  $dropdown-width-small-layout: 280px
+  .project-select
+    width: $dropdown-width !important
+    margin-right: 2px
+
+    .dropdown-toggle
+      height: 34px
+      padding-top: 4px
+      padding-bottom: 4px
+
+    $max-dropdown-height: 257px
+    .dropdown-menu.open
+      max-height: $max-dropdown-height !important
+      max-width: $dropdown-width !important
+
+    .dropdown-menu.inner
+      max-height: $max-dropdown-height - 54 !important
+      overflow-x: hidden !important
+
+  &.small-layout
+    .project-select
+      width: $dropdown-width-small-layout !important
+
+      .dropdown-menu.open
+        max-width: $dropdown-width-small-layout !important
+
+  .add-resource-btn
+    width: 56px

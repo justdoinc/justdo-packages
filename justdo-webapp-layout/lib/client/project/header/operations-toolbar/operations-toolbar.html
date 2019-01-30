@@ -1,0 +1,26 @@
+<template name="project_operations_toolbar">
+  <div id="project-grid-operations">
+    <div class="btn-toolbar" role="toolbar">
+      {{> project_operations_tab_switcher}}{{!-- XXX when removing this one, don't forget to remove the tab-switcher folder--}}
+      {{> project_operations_ticket_entry}}
+      <div class="btn-group" role="group">
+        {{> project_operations_add_sibling_task}}
+        {{> project_operations_add_sub_task}}
+        {{> project_operations_remove_task}}
+      </div>
+      <div class="btn-group" role="group" id="project-move-around-btns">
+        {{> project_operations_move_left}}
+        {{> project_operations_move_right}}
+        {{> project_operations_move_up}}
+        {{> project_operations_move_down}}
+      </div>
+      <div class="btn-group" role="group">
+        {{> project_operations_print_grid}}
+      </div>
+      {{> item_duplicate_control}} {{!-- Defined in the justdo-item-duplicate-control package --}}
+      {{> rows_styling_control}} {{!-- Defined in the justdo-rows-styling package --}}
+      {{> project_operations_sort_by_priority}}
+      {{> project_operations_priority_slider}}
+    </div>
+  </div>
+</template>

@@ -1,0 +1,92 @@
+.required-actions-dropdown
+  font-family: Verdana, Georgia, sans-serif
+  width: 450px
+
+  background-color: #e5e5e5
+  border: 1px solid #ccc
+  border-radius: 0 0 2px 2px
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .2)
+
+  padding: 12px 17px 19px
+  font-size: 14px
+
+  z-index: 12
+
+  cursor: default
+
+  &.bound-element .default-close
+    color: #BBB
+    top: 6px
+    right: 6px
+
+    &:hover
+      color: #999
+
+.required-actions-dropdown-header
+  width: 100%
+
+  font-size: 16px
+  font-weight: bold
+  text-align: center
+  color: #666
+
+  margin-bottom: 10px
+
+.required-actions-cards-area
+  max-height: 300px
+  overflow-y: auto
+  overflow-x: hidden
+
+.required-actions-card
+  position: relative
+
+  background-color: #fff
+  padding: 9px 11px
+
+  border: 1px solid #d9d9d9
+  border-radius: 5px
+
+  margin-bottom: 5px
+
+.no-actions-card
+  padding: 45px
+
+.no-actions-message
+  width: 250px
+  color: #666
+  background-color: #fff
+  border-radius: 3px
+  position: relative
+  font-size: 13px
+  padding: 15px 20px
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .2)
+  margin: 0 auto
+
+  &:before, &:after
+    border: solid transparent
+    content: ""
+    height: 0
+    width: 0
+    left: 50%
+    top: 100%
+    position: absolute
+    pointer-events: none
+
+  &:before
+    border-color: rgba(170, 170, 170, 0)
+    border-top-color: #ccc
+    border-width: 6px
+    margin-left: -6px
+
+  &:after
+    border-color: rgba(255, 255, 255, 0)
+    border-top-color: #fff
+    border-width: 5px
+    margin-left: -5px
+
+.no-actions-graphic
+  $font-size: 100px
+  text-align: center
+  font-size: $font-size
+  line-height: $font-size
+  color: #ccc

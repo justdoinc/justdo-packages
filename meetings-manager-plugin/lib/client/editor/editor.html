@@ -1,0 +1,24 @@
+<template name="locking_text_editor">
+  <div class="{{class}} {{editing_class}} {{locked_class}} locking-text-editor">
+    {{#if editing}}
+      {{> locking_text_editor_textarea placeholder=placeholder content=content}}
+    {{else}}
+      <pre class="note-box">{{content}}</pre>
+    {{/if}}
+    {{#if locked}}
+      <div class="text-editor-locked">
+        <span class="text-editor-locked-message"> Locked, {{displayName locked_user_id}} is editing</span>
+        {{> justdo_avatar locked_user}}
+      </div>
+    {{/if}}
+    <!--{{#if locked_by_self}}-->
+      <!--<div class="text-editor-locked-by-self">-->
+        <!--<span class="text-editor-locked-message">You are editing - locked for other users.</span>-->
+      <!--</div>-->
+    <!--{{/if}}-->
+  </div>
+</template>
+
+<template name="locking_text_editor_textarea">
+  <textarea placeholder={{placeholder}} class="note-box" dir="auto">{{content}}</textarea>
+</template>

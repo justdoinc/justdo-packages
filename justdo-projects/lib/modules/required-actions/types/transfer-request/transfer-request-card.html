@@ -1,0 +1,41 @@
+<template name="required_action_card_transfer_request">
+  <div class="card-with-avatar">
+    <div class="card-avatar">
+      {{#with current_owner_doc}}
+        {{> justdo_avatar}}
+      {{/with}}
+    </div>
+    <div class="card-details">
+      {{#with current_owner_doc}}{{displayName}}{{/with}} wants to transfer ownership of task
+      {{#with task_doc}}
+        <a href="javascript:return void(0);" class="task-link">#{{seqId}}: {{cutString task_title 80}}</a>
+      {{/with}} to you
+    </div>
+  </div>
+
+  <div class="card-footer">
+    {{#if $eq getState "pre-reject"}}
+      {{#if showShortcutCue}}
+        <div class="keyboard-shortcut-cue">Ctrl-Enter to submit</div>
+      {{/if}}
+      {{> required_action_card_transfer_request_input}}
+      <div class="card-actions">
+        <button type="button" class="reject btn btn-sm btn-danger">Send</button>
+        <button type="button" class="cancel-reject btn btn-sm btn-primary">Cancel</button>
+      </div>
+    {{else}}
+      <div class="card-actions">
+        <button type="button" class="pre-reject btn btn-sm btn-danger">Reject</button>
+        <button type="button" class="accept btn btn-sm btn-primary">Accept</button>
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="clearfix"></div>
+</template>
+
+<template name="required_action_card_transfer_request_input">
+  <div class="reject-message-input-container">
+    <textarea type="text" class="form-control reject-message-input" placeholder="Leave a reject message"></textarea>
+  </div>
+</template>

@@ -1,0 +1,37 @@
+<template name="app_layout">
+  <div class="global-wrapper">
+    <div class="app-wrapper {{#if projectContainerBelowMinimalWidth}}lt-minimal-project-container-width{{/if}}" style="width: {{getWindowWidth}}px; height: {{getWindowHeight}}px; margin-left: {{windowDimGravityOffset.left}}px; margin-top: {{windowDimGravityOffset.top}}px;">
+      {{> header}}
+
+        {{#if $not initialUserStateReady}}
+          {{> global_loader message="Getting Ready..."}}
+        {{else}}
+          {{#if loginStateIs "loading"}}
+            {{> global_loader message="Getting Ready..."}}
+          {{else}}
+            {{#if loginStateIs "logged-out"}}
+              {{#if isInitialLoginState}}
+                {{> global_loader message="Getting Ready..."}}
+              {{else}}
+                {{> global_loader message="Logging out..."}}
+              {{/if}}
+            {{else}}
+              {{#if userRequirePostRegistrationInit}}
+                {{> global_loader message="Initiating..."}}
+              {{else}}
+                <div class="page-container page-{{currentPageName}}">
+                  {{> yield}}
+                </div>
+              {{/if}}
+            {{/if}}
+          {{/if}}
+        {{/if}}
+      </div>
+  </div>
+</template>
+
+<template name="global_loader">
+  <div class="page-container page-global-loader">
+    {{> general_loading_indicator message=message}}
+  </div>
+</template>

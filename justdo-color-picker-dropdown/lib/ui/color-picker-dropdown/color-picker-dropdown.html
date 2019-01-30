@@ -1,0 +1,18 @@
+<template name="justdo_color_picker_dropdown">
+
+  <div class="justdo-color-picker-color-option-container justdo-color-picker-color-option-opener {{color_picker_controller.options.opener_custom_class}}" title="{{color_picker_controller.options.label}}">
+    <div class="justdo-color-picker-color-option" style="background-color: #{{color_picker_controller.getSelectedColor}}"></div>
+  </div>
+</template>
+
+<template name="justdo_color_picker_dropdown_content">
+  {{#with color_picker_controller.options.label}}
+    <div class="jdp-dropdown-label">{{this}}</div>
+  {{/with}}
+
+  {{#each color_picker_controller.options.available_colors}}
+    <div class="justdo-color-picker-color-option-container {{#if isSelectedColor}}justdo-color-picker-color-option-selected{{/if}}">
+      <div class="justdo-color-picker-color-option {{contrastClasses}}" style="background-color: #{{this}}"></div>
+    </div>
+  {{/each}}
+</template>

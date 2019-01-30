@@ -1,0 +1,116 @@
+.idc-context-section
+  overflow: hidden
+  position: relative
+
+  .idc-expand-collapse-button
+    position: absolute
+
+    bottom: 0px
+    left: 0px
+    right: 0px
+    background: white
+    padding-top: 0
+    height: 19px
+    text-align: center
+    vertical-align: middle
+    color: #2B71CF
+    font-weight: bold
+
+    font-size: 13px
+    cursor: pointer
+
+    &:hover
+      text-decoration: underline
+
+  &.collapsed
+    .idc-expand-collapse-button
+      height: 60px
+      padding-top: 33px
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 55%, #FFFFFF 80%)
+
+.idc-context-item-moveable
+  .fa-map-marker
+    display: none
+
+@mixin seqid-with-move-indicator
+  .idc-task-seq-id-number
+    visibility: hidden 
+
+  .fa-map-marker
+    display: inline-block
+    position: absolute
+    left: 50%
+    margin-left: -3px
+
+.gu-mirror.idc-task-seq-id, .gu-transit.idc-task-seq-id
+  @include seqid-with-move-indicator
+
+.gu-mirror.idc-task-seq-id
+  height: 13px !important
+
+.idc-task-contexts
+  padding-top: 2px
+
+.idc-task-context
+  margin-bottom: 8px
+  padding: 8px 10px
+  border: 1px solid #f5f5f5
+  position: relative
+  border-radius: 4px
+
+  user-select: none // So attempts to drag mover icon, won't select
+
+  &:hover
+    border-color: #d3d3d3
+
+    .idc-task-context-delete
+      display: block
+
+    .idc-context-item-moveable
+      @include seqid-with-move-indicator
+
+.idc-task-context-delete
+  display: none
+
+  float: right
+  cursor: pointer
+
+.idc-task-context-add-parent-container
+  float: right
+  margin-top: -3px
+  font-family: Helvetica
+  font-size: 13.5px
+  cursor: pointer
+
+  &:active
+    font-style: italic
+
+.idc-task-context-add-parent.gu-mirror
+  // Fix issue where dragulla wraps the handle text 
+  width: 200px !important
+  font-style: italic
+
+.idc-context-item
+  cursor: pointer
+  white-space: nowrap
+  text-overflow: ellipsis
+  overflow: hidden
+  margin-bottom: 7px
+  font-family: Verdana, Arial, sans-serif
+
+  &:last-child
+    margin-bottom: 0
+
+  .idc-task-seq-id
+    // Override .label/.grid-tree-control-task-id designs
+    position: relative
+    display: inline-block
+    top: 0
+    width: auto
+    min-width: 25px
+    margin-right: 3px
+
+.idc-section-header
+  font-style: italic
+  text-decoration: underline
+

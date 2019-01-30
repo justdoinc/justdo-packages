@@ -1,0 +1,110 @@
+$color-button-width: 24px
+$buttons-margins: 1px
+$remove-add-button-width: 24px
+
+.custom-field-select-options-editor-opener
+  position: relative
+  margin-left: 5px
+  cursor: pointer
+  color: rgba(43, 113, 207, 0.7)
+  &:hover
+    color: #5a82b9
+
+.custom-field-select-options-editor
+  z-index: 1100
+
+  margin: 0
+  padding: 0
+
+.custom-field-select-options-editor-content
+  width: 200px
+  position: relative
+  max-height: 265px
+  overflow: auto
+  border-radius: 2px
+
+  .editor-caption
+    font-family: "lato", sans-serif
+    color: #68757b
+    margin: 7px 8px 0px
+
+  .option-label
+    margin-left: 28px
+    padding-top: 3px
+    font-size: 14px
+    margin-right: $color-button-width + $remove-add-button-width + $buttons-margins
+    color: #888888
+
+    input
+      width: 100%
+
+  .add-option
+    position: absolute
+    right: 2px
+    width: $remove-add-button-width
+    height: 26px
+    top: 0px
+    text-align: center
+    padding-top: 4px
+
+  .bg-color-selector
+    position: absolute
+    right: $remove-add-button-width + $buttons-margins
+    width: $remove-add-button-width
+    height: 26px
+    top: 0px
+    text-align: center
+    padding-top: 4px
+
+  .custom-fields-justdo-color-picker-opener
+    margin: 1px 3px
+
+  .remove-option
+    position: absolute
+    right: 2px
+    width: $remove-add-button-width
+    height: 26px
+    top: 2px
+    text-align: center
+    padding-top: 4px
+
+  .remove-option, .add-option
+    cursor: pointer
+    color: #2b71cf
+
+  .new-option-label
+    width: 95%
+    border: none
+    padding: 2px 5px
+    background-color: rgba(43, 113, 207, 0.1)
+    border-radius: 2px
+    &::placeholder
+      color: #5a82b9
+    &:focus
+      outline: none
+
+  .custom-field-options
+    max-height: 175px
+    overflow: auto
+
+  .custom-field-option
+    height: 32px
+
+  .custom-field-option, .add-custom-field-option
+    position: relative
+
+  .option-handle
+    cursor: move
+    font-size: 11px
+    color: #b3b3b3
+    position: absolute
+    left: 0px
+    top: 0px
+    width: 29px
+    height: 32px
+    padding: 8px
+    margin-right: 0
+    text-align: center
+
+  .divider
+    margin: 5px 0 0 0

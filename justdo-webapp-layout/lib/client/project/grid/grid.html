@@ -1,0 +1,13 @@
+<template name="project_grid_container">
+  {{#if tasksSubscriptionReady}}
+    {{> project_grid}}
+  {{else}}
+    <div class="project-loading-indicator-container">
+      {{> general_loading_indicator message="Loading..."}}
+    </div>
+  {{/if}}
+</template>
+
+<template name="project_grid">
+  <div id="grid-control-mux"></div>
+</template>

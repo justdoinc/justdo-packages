@@ -1,0 +1,54 @@
+<template name="task_pane_item_details_context">
+  <section class="idc-context-section {{#if showCollapsed}}collapsed{{/if}}" style="height: {{sectionHeight}};">
+    <div class="idc-task-context-add-parent-container" draggable="true" width="181" height="28" unselectable="on">{{!-- The unselectable solves issue with MS edge --}}
+      <div class="idc-task-context-add-parent">
+        <i class="fa fa-map-marker" aria-hidden="true"
+           title="Drag onto a task to add a new parent"></i>
+           Drag to add a parent Task
+      </div>
+    </div>
+
+    <h2>Context</h2>
+
+    <div class="idc-task-contexts">
+      {{#each selectedObjectPaths}}
+        <div class="idc-task-context">
+          {{> task_pane_item_details_context_per_path}}
+        </div>
+      {{/each}}
+    </div>
+
+    {{#if hasMoreThanOnePaths}}
+      <div class="idc-expand-collapse-button">{{#if showCollapsed}}Show All{{else}}Show Less{{/if}}</div>
+    {{/if}}
+  </section>
+</template>
+
+<template name="task_pane_item_details_context_per_path">
+  {{#if canDeletePath}}
+    <div class="idc-task-context-delete" title="Click to remove parent">
+      <i class="fa fa-trash-o" aria-hidden="true"></i>
+    </div>
+  {{/if}}
+
+  {{#each $mapped allParents}}
+    <div class="idc-context-item {{#if section_header}}idc-section-header{{/if}} {{#if canMoveCurrentPathItem}}idc-context-item-moveable{{/if}}"
+         style="padding-left: {{margin_left}}px"
+         path="{{path}}"
+         title="{{title}}{{#if status}}
+Status: {{status}}{{/if}}">
+      {{#if seqId}}
+        <span class="idc-task-seq-id grid-tree-control-task-id label" title="{{#if canMoveCurrentPathItem}}Drag to change parent task{{/if}}">
+          <span class="idc-task-seq-id-number">
+            {{seqId}}
+          </span>
+          {{#if canMoveCurrentPathItem}}
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+          {{/if}}
+        </span>
+      {{/if}}
+
+      {{title}}
+    </div>
+  {{/each}}
+</template>

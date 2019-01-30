@@ -1,0 +1,30 @@
+<template name="required_actions_dropdown">
+  <div class="required-actions-dropdown-header">Required Actions</div>
+
+  <div class="required-actions-cards-area">
+    {{#if $eq 0 required_actions.length}}
+      <div class="required-actions-card no-actions-card">
+        <div class="no-actions-message">
+          No pending actions. Well done!
+        </div>
+        <div class="no-actions-graphic">
+          <i class="fa fa-smile-o"></i>
+        </div>
+      </div>
+    {{else}}
+      {{#each required_actions}}
+        {{> required_action_card}}
+      {{/each}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="required_action_card">
+  <div class="required-actions-card required-actions-card-{{type}}">
+    <div class="card-header">
+      <div class="date" title="{{moFormat date "YYYY-MM-DD hh:mm"}}">{{moFromNow negativeDateOrNow}}</div>
+      <div class="type-name">{{required_action_type_title}}</div>
+    </div>
+    {{> Template.dynamic template=getTypeTemplate data=typeTemplateData}}
+  </div>
+</template>

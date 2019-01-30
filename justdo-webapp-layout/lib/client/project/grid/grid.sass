@@ -1,0 +1,37 @@
+#grid-control-mux
+  height: 400px
+  margin-bottom: 6px
+
+  $font-size: 15px
+  font-size: $font-size
+  .ui-widget
+    font-size: $font-size
+
+  .type-section-item
+    background-color: #f8f8f8
+    font-weight: bold
+
+    &.active
+      background-color: #e8edf5
+
+// Design null-state in the state dropdown menu
+$null-state-border: 1px solid #AAA
+.grid-control
+  .null-state
+    border-top: $null-state-border
+    margin: 11px 18px
+
+    .dropdown-menu &, .bootstrap-select &
+      margin-top: 9px
+      margin-bottom: 9px
+
+.filter-controller-container
+  .null-state
+    border-bottom: $null-state-border
+    padding-top: 9px
+    margin-bottom: 8px
+    margin-left: 1px
+    margin-right: 40%
+
+.project-loading-indicator-container
+  margin-top: 150px

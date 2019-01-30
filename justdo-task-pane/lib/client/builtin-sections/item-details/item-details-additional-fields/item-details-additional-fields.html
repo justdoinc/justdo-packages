@@ -1,0 +1,48 @@
+<template name="task_pane_item_details_additional_fields">
+  {{#with additionalFields}}
+    <section class="additional-fields-section">
+      <h2>More Info</h2>
+      <div class="additional-field-items-list">
+        <table class="table">
+          {{#if rerenderTrigger}}
+            {{>task_pane_item_details_additional_fields_rerender_wrapper}}
+          {{else}}
+            {{>task_pane_item_details_additional_fields_rerender_wrapper}}
+          {{/if}}
+        </table>
+      </div>
+    </section>
+  {{/with}}
+</template>
+
+<template name="task_pane_item_details_additional_fields_rerender_wrapper">
+  {{#each this}}
+    {{> task_pane_item_details_additional_field}}
+  {{/each}}
+</template>
+
+<template name="task_pane_item_details_additional_field">
+  <tr class="additional-field-item">
+    <td class="field-label">{{label}}</td>
+
+    <td class="field-value {{#if $not isEditableField}}read-only{{/if}}">
+      {{#if isEditableField}}
+        {{> task_pane_item_details_additional_field_editor}}
+      {{else}}
+        {{{formatted_value}}}
+      {{/if}}
+
+      <div class="field-actions tooltip-container">
+        <i class="fa field-action fa-table add-to-grid" aria-hidden="true" field-id="{{field_id}}"></i>
+
+        <div class="tooltip-content tooltip-left">
+          Add to table
+        </div>
+      </div>
+    </td>
+  </tr>
+</template>
+
+<template name="task_pane_item_details_additional_field_editor">
+  <div class="field-editor"></div>
+</template>

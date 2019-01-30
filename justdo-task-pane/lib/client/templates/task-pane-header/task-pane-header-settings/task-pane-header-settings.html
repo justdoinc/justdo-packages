@@ -1,0 +1,13 @@
+<template name="task_pane_settings">
+  {{> task_pane_settings_dock_to}}
+</template>
+
+<template name="task_pane_settings_dock_to">
+  <div class="dock-to-setting">Dock To
+    <div class="dock-to-setting-options">
+      {{#each available_positions}}
+        <div class="dock-to-setting-option dock-to-{{this}}" target-position="{{this}}"></div>
+      {{/each}}
+    </div>
+  </div>
+</template>

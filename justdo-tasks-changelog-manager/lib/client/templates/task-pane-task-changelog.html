@@ -1,0 +1,38 @@
+<template name="task_pane_task_changelog">
+  <div class="task-pane-task-changelog">
+    <div class="filter-toggle {{#if filterForStatusChanges}}active-filter{{/if}}" >
+      {{#if filterForStatusChanges}}
+        <i class="fa fa-toggle-on fa-fw"></i>
+      {{else}}
+        <i class="fa fa-toggle-off fa-fw"></i>
+      {{/if}}
+
+      Filter for Status/Notes changes only.
+
+    </div>
+    {{#if dataLoaded}}
+      {{#each changeLogRecords}}
+        {{> task_pane_task_changelog_record}}
+      {{/each}}
+    {{else}}
+      <div class="loading">
+        {{> general_loading_indicator message="Loading..."}}
+      </div>
+    {{/if}}
+  </div>
+</template>
+
+<template name="task_pane_task_changelog_record">
+  {{#unless filtered}}
+    <div class="record">
+      <div class="image">{{#with changingUser}}{{> justdo_avatar}}{{/with}}</div>
+      <div class="content">
+        <span class="data">
+          {{#if $neq field 'description'}}{{formatedValue}}{{else}}{{{xssGuard new_value}}}{{/if}}
+          {{!--todo: present only the first  line from the description with a hover to display it all.... --}}
+        </span>
+        <div class="date">{{formatDate}}</div>
+      </div>
+    </div>
+  {{/unless}}
+</template>

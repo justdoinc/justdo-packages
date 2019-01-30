@@ -1,0 +1,220 @@
+@import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
+
+$drawer-brand-height: 46px
+$drawer-footer-height: 85px
+
+.header
+  margin: 0
+  user-select: none
+  background: white
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
+  border: 0px
+  z-index: 100
+
+.drawer-hamburger
+  border: 0px
+  display: block
+  margin: 0
+  padding: 15px 14px 16px 14px
+  cursor: pointer
+
+  &:hover
+    background: none
+
+  .container-fluid > &
+    margin-left: -14px
+
+  .drawer-brand > &
+    margin-left: -16px
+    margin-top: -10px
+
+.drawer-nav
+  position: fixed
+  z-index: 200
+  top: 0
+  left: -270px
+  overflow: hidden
+  width: 270px
+  height: 100%
+  transition: left .6s cubic-bezier(0.190,1.000,0.220,1.000)
+  background-color: white
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2)
+
+.drawer-brand
+  height: $drawer-brand-height
+  padding: 10px 17px
+  border-bottom: 1px solid #e1e1e1
+
+  cusor: default
+  user-select: none
+
+  width: 100%
+
+  a
+    display: block
+    width: 100px
+    margin-left: 34px
+
+  img
+    width: 100px
+    margin-left: 2px
+
+$drawer-top-menu-padding-top: 10px
+$drawer-top-menu-padding-bottom: 0
+$drawer-top-menu-item-vertical-padding: 4px
+$drawer-top-menu-item-height: 22px + ($drawer-top-menu-item-vertical-padding * 2)
+.drawer-top-menu
+  padding: $drawer-top-menu-padding-top 16px $drawer-top-menu-padding-bottom 13px
+  background-color: white
+  font-size: 16px
+
+  position: relative
+
+  .icons
+    color: #2c71cf
+
+  .menu-item
+    position: relative
+    padding: $drawer-top-menu-item-vertical-padding 0
+
+    .icons
+      margin-right: 6px
+
+.create-new-project
+  cursor: pointer
+  font-size: 14px
+
+  position: absolute
+  right: -6px
+  top: 1px
+  width: 20px
+  height: 21px
+  padding-left: 4px
+
+  .fa
+    color: #2c71cf
+
+.drawer-projects-list
+  overflow-y: auto
+  position: absolute
+  // Top is calculated in the coffee level
+  bottom: $drawer-footer-height
+  left: 0
+  right: 0
+  margin: 0px
+  a
+    padding: 6px 20px 6px 40px
+    border: none
+    white-space: nowrap
+    overflow: hidden
+    -o-text-overflow: ellipsis
+    text-overflow: ellipsis
+
+.drawer-top-menu
+  a
+    color: #333
+
+    &:hover
+      text-decoration: none
+  i
+    color: #2c71cf
+
+.drawer-footer
+  padding: 15px 20px
+  border-top: 1px solid #e1e1e1
+  background-color: white
+  position: absolute
+  bottom: 0px
+  left: 0
+  right: 0
+  a
+    width: 100%
+    display: block
+    font-size: 16px
+    margin-bottom: 10px
+    color: black
+
+    &:last-child
+      margin-bottom: 0
+  i
+    color: #2c71cf
+    margin-right: 6px
+
+.drawer-overlay
+  position: fixed
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  background: rgba(255, 255, 255, 0)
+  z-index: 100
+  display: none
+
+.drawer-open
+  .drawer-nav
+    left: 0
+  .drawer-overlay
+    display: block
+
+.navbar-nav > li > a
+    padding-left: 10px
+    padding-right: 10px
+    font-size: 15px
+
+.brand
+  display: block
+
+  background: url(/layout/logos-ext/justdo_logo_with_text_webapp_navbar.png) no-repeat transparent
+  background-size: contain
+
+  width: 100px
+  height: 26px
+  margin: 10px -2px 0 2px
+
+#login-dropdown-list
+  a
+    margin-top: -1px
+
+  #forgot-password-link, #signup-link
+    padding: 0 2px
+    clear: none
+
+  img
+  	float: left
+  	margin: -4px 6px 0 0px
+
+.global-messages
+  position: fixed
+  z-index: 15
+  width: 100%
+
+  .alert:first-child
+    margin-top: 13px
+    margin-bottom: 5px
+
+  .alert-warning
+    color: #8a6d3b
+    background-color: #fcf8e3
+    border-color: #8a6d3b
+    border-width: 2px
+    opacity: 0.95
+
+.navbar-icon
+  background: url(/packages/justdoinc_justdo-webapp-layout/lib/client/assets/layout-sprite.png) no-repeat transparent
+
+.navbar-icon-help
+  margin-right: -1px
+  margin-top: 1px
+  margin-bottom: -1px
+  background-position: -20px 0
+  width: 18px
+  height: 18px
+  display: inline-block
+  vertical-align: text-top
+
+.navbar-icon-feedback
+  background-position: 0 0
+  width: 20px
+  height: 17px
+  display: inline-block
+  vertical-align: text-top

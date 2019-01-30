@@ -1,0 +1,277 @@
+// Members editor dialog
+
+$empty-box-message-text: #86a8d1
+
+.members-editor-search
+  border-bottom: 1px solid #EEEEEE
+  label
+    position: absolute
+    top: 8px
+    color: #6a96d2
+  input
+    border: none
+    padding: 8px
+    font-family: "lato", sans-serif
+    font-weight: 600
+    font-size: 16px
+    color: #3D495B
+    width: 100%
+    padding-left: 20px
+    &:focus
+      outline: none
+    &::-webkit-input-placeholder
+      color: #5a83ba
+    &::-moz-placeholder
+      color: #5a83ba
+    &:-ms-input-placeholder
+      color: #5a83ba
+    &:-moz-placeholder
+      color: #5a83ba
+
+    &::-ms-clear
+      display: none
+
+$members-section-height: 350px
+$invite-members-section-height: 67px
+$section-caption-height: 33px
+$add-users-section-margin-bottom-when-invite-members-displayed: 2px
+.members-section
+  height: $members-section-height
+  font-family: "lato",sans-serif
+
+  .members-list-container
+    width: 50%
+    height: 100%
+    float: left
+    overflow-y: auto
+
+  .members-list
+    overflow: auto
+    height: $members-section-height - $section-caption-height
+    position: relative
+    padding-top: 2px
+
+    &.members-list-no-members
+      height: $members-section-height
+
+  .no-members
+    font-weight: bold
+    text-align: center
+    color: $empty-box-message-text
+    font-size: 16px
+    margin-top: 130px
+    margin-left: -12px
+    user-select: none
+    cursor: default
+
+  .members-editor-dialog-add-users-section
+    .no-members
+      margin-top: 135px
+
+  .no-results
+    font-weight: bold
+    text-align: center
+    color: $empty-box-message-text
+    font-size: 16px
+    margin-top: 83px
+    user-select: none
+    cursor: default
+
+  // Sections customizations
+  .members-editor-dialog-keep-users-section
+    background-color: #F4F8FD
+    padding-left: 10px
+
+    .dont-proceed
+      background-color: #E4EDF9
+
+      .display-name
+        opacity: .8
+        text-decoration: line-through
+
+      .toggle
+        display: none
+
+      &:hover
+        .toggle
+          display: inline
+
+  .members-list-keep-users-container
+    .section-caption
+      background-color: #f4f8fd
+      padding-left: 9px
+
+  .members-editor-dialog-add-users-section
+    .proceed
+      background-color: #E4EDF9
+
+      .display-name
+        font-weight: bold
+
+      .toggle
+        display: none
+
+      &:hover
+        .toggle
+          display: inline
+
+  // Show invite members section customizations
+  .show-invite-members-section
+    .members-list
+      height: $members-section-height - $section-caption-height - $invite-members-section-height - $add-users-section-margin-bottom-when-invite-members-displayed
+
+    .members-editor-dialog-add-users-section
+      margin-bottom: $add-users-section-margin-bottom-when-invite-members-displayed
+      padding-left: 2px
+
+    .members-list-no-members
+      height: $members-section-height - $invite-members-section-height - $add-users-section-margin-bottom-when-invite-members-displayed
+
+  .invite-members-section
+    background: #F5F5F5
+    border-radius: 2px
+    padding: 5px 9px
+    height: $invite-members-section-height
+    position: relative
+    margin-right: 2px
+
+    .invite-members-section-caption
+      border-bottom: 1px solid #EAEAEA
+      padding-bottom: 5px
+      margin-bottom: 5px
+      font-size: 14px
+      font-weight: 600
+      color: #3D495B
+
+    input
+      width: 212px
+      border: 0px
+      background-color: #f7f7f7
+      &:focus
+        outline: none
+      &::-webkit-input-placeholder
+        color: #5a83ba
+      &::-moz-placeholder
+        color: #5a83ba
+      &:-ms-input-placeholder
+        color: #5a83ba
+      &:-moz-placeholder
+        color: #5a83ba
+      &::-ms-clear
+        display: none
+
+    button
+      position: absolute
+      right: 5px
+      border: 0px
+      background: none
+      font-weight: 600
+      color: #2B71CF
+      &:focus
+        outline: none
+
+.members-editor-dialog
+  .modal-body
+    overflow: visible
+
+  .checkbox
+    margin-left: 2px
+    margin-bottom: 6px
+    position: absolute
+    bottom: -45px
+    label
+      font-weight: 600
+      font-family: "lato", sans-serif
+      font-size: 15px
+      font-weight: 600
+      color: #3D495B
+      user-select: none
+
+  .section-caption
+    font-size: 14px
+    font-weight: 600
+    color: #3D495B
+    user-select: none
+    cursor: default
+    height: 31px
+    padding: 7px 2px
+
+  $user_pic_height: 30px
+  .user-btn
+    cursor: pointer
+    line-height: $user_pic_height
+    height: $user_pic_height
+    box-shadow: none
+    border: none
+    width: 99%
+    padding: 0px 10px 0px 0px
+    margin: 0 0 3px
+    border-radius: 25px 0px 0px 25px
+    text-align: left
+    background: none
+    position: relative
+    display: block
+
+    &:active
+      background-color: #E6E6E6
+      border-color: #ADADAD
+    &:hover
+      background-color: #E4EDF9
+
+    img
+      width: $user_pic_height
+      height: $user_pic_height
+      float: left
+      margin-right: 4px
+      vertical-align: bottom
+      position: relative // prevent text from shiftin on click on IE
+    .display-name
+      font-family: "lato", sans-serif
+      font-size: 16px
+      color: #3D495B
+      font-weight: 600
+      margin-left: 2px
+      display: inline-block
+      position: relative // prevent text from shiftin on click on IE
+      text-overflow: ellipsis
+      max-width: 185px
+      overflow: hidden
+    .toggle
+      padding: 9px 1px 5px
+      color: #95B8E7
+      position: absolute // prevent text from shiftin on click on IE
+      right: 10px
+
+  .bulk-select-label, .select-all, .select-none, .add-new-member
+    display: inline-block
+    font-size: 13px
+    color: #2B71CF
+
+  .select-all, .select-none, .add-new-member
+    cursor: pointer
+    text-decoration: underline
+
+  .notes
+    padding: 15px 0px
+    border-top: 1px solid #eeeeee
+    font-family: "lato", sans-serif
+    span
+      font-size: 18px
+      font-weight: bold
+      color: #3D495B
+    ul
+      margin: 0px
+      padding: 0px
+      list-style-type: none
+      font-size: 15px
+    li
+      border-bottom: 1px dotted #cecece
+      padding: 10px 0px
+      &:last-child
+        border-bottom: none
+
+.bootbox.opened-by-members-managment-dialog
+  margin-top: 45px
+
+  & + .modal-backdrop
+    display: none

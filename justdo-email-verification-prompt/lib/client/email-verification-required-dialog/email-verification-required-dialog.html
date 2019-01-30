@@ -1,0 +1,20 @@
+<template name="email_verification_required_dialog">
+  <div class="email-verification-required-dialog-inner-wrapper">
+    <p>Please verify your email address by looking for an email titled: <i>"Verify your email address - JustDo"</i> in your email mailbox:</p>
+
+    <div class="row target-row">
+      <div class="col-xs-12 email-input-container">
+        <div class="form-group">
+          <div>
+            <input id="current-email-2" disabled="disabled" class="form-control" value="{{current_email}}">
+            <div class="change-email-btn"><i class="fa fa-pencil" aria-hidden="true"></i> Change email</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>If you can't find such email, please also check your spam folder. You can click the button below to send another verification email.</p>
+
+    <p>You can use JustDo to its full extent with unverified email address, but, for some opeations, users will see your name with a warning sign <span class="unverified-email-warn" title="Unverified Email"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span> that indicates your email isn't verified.</p>
+  </div>
+</template>

@@ -1,0 +1,72 @@
+[section-id="tickets-queues"]
+  .tq-fields-conf
+    th
+      color: #68757b
+
+    tr
+      border-bottom: 1px dotted #eeeeee
+
+      height: 30px
+
+      &.add-new
+        border-bottom: none
+        background: rgba(221, 230, 244, 0.5)
+
+      .tq-task-container
+        padding-left: 4px
+        max-width: 515px
+
+      .tq-task
+        width: 100%
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
+
+      .tq-field-action
+        width: 45px
+
+  .add-new-tq-field-header
+    padding-top: 7px
+    padding-bottom: 2px
+
+  .remove
+    font-size: 17px
+
+    cursor: default
+    color: #bebebe
+
+    &.removable
+      color: rgba(43, 113, 207, 0.7)
+      cursor: pointer
+
+      &:hover
+        color: #2b71cf
+
+  .add
+    cursor: pointer
+    color: #2b71cf
+    font-size: 14px
+    font-weight: bold
+
+  .field-label
+    border: none
+    margin: 5px 0px 5px 4px
+    padding: 2px 5px
+    background: rgba(43, 113, 207, 0.1)
+    border-radius: 2px
+    width: 95%
+    &::placeholder
+      color: #5a82b9
+    &:focus
+      outline: none
+
+  .tq-remove-btn
+    position: relative
+
+    .tooltip-content
+      top: -17px
+      bottom: -16px
+      right: 51px
+
+      width: 168px
+      white-space: normal

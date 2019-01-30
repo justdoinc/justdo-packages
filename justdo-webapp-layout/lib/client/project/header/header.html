@@ -1,0 +1,92 @@
+<template name="project_header">
+  <div class="project-header">
+    {{> search_comp}}
+
+    {{> project_operations_toolbar}}
+
+    <div class="clearfix"></div>
+  </div>
+</template>
+
+<template name="project_header_global_layout_header_right">
+  <div class="project-page-global-layout-header-right">
+    {{> members_dropdown_button}}
+
+    {{> plugins_store_button}}
+
+    {{> project_settings}}
+
+    {{> project_required_actions_dropdown_comp}}
+  </div>
+</template>
+
+<template name="project_header_global_layout_header_middle">
+  <div class="project-page-global-layout-header-middle">
+    {{> project_name}}
+  </div>
+</template>
+
+<template name="project_name">
+  {{!-- 
+
+    The new design doesn't work well with the project logo feature.
+
+    {{#with getProjectConfigurationSetting "project_logo"}}
+      <div class="project-logo" style="
+        background-image: url({{this}});
+        {{#with getProjectConfigurationSetting "project_logo_width"}}
+          width: {{this}}px;
+        {{/with}}
+      "></div>
+    {{/with}}
+
+  --}}
+
+  <input type="text" id="project-name"
+         disabled={{#unless is_project_admin}}"disabled"{{/unless}}
+         class="{{#if project_is_untitled}}untitled{{/if}}"
+         placeholder="Untitled JustDo"
+         value="{{project_title}}"
+  >
+</template>
+
+<template name="project_settings">
+  <div id="project-settings-dropdown" class="dropdown">
+    <div id="settingsDropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <i class="fa fa-cog settings-button" title="Settings" ></i>
+    </div>
+
+    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="settingsDropdown">
+      <li id="register-project-for-daily-email" class="item">
+      {{#if isSubscribedToDailyEmail}}
+        <i class="fa fa-toggle-on fa-fw"></i>
+      {{else}}
+        <i class="fa fa-toggle-off fa-fw"></i>
+      {{/if}}
+      Email daily updates for this JustDo</li>
+
+      <li class="item email-notifications">
+      {{#if isSubscribedToEmailNotifications}}
+        <i class="fa fa-toggle-on fa-fw"></i>
+      {{else}}
+        <i class="fa fa-toggle-off fa-fw"></i>
+      {{/if}}
+      Email ownership transfer notifications</li>
+
+      {{#if showRolesAndGroupsManager}}
+        <li class="roles-and-groups-manager item">
+          <i class="fa fa-users fa-fw" aria-hidden="true"></i> Roles &amp; Groups Manager
+        </li>
+      {{/if}}
+
+      {{#if is_project_admin}}
+        <li id="project-config" class="item"><i class="fa fa-crosshairs fa-fw" aria-hidden="true" ></i> Configure this JustDo</li>
+        {{> project_settings_dropdown_remove_project}}
+      {{/if}}
+    </ul>
+  </div>
+</template>
+
+<template name="search_comp">
+  <div id="project-search-comp-container"></div>
+</template>

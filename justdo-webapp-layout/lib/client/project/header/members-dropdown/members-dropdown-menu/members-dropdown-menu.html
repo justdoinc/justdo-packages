@@ -1,0 +1,99 @@
+<template name="members_dropdown_menu">
+  <ul>
+    <li class="member-search">
+      <i class="fa fa-search"></i>
+      <input type="text" class="members-search-input" placeholder="Members">
+    </li>
+  </ul>
+
+  <div class="alerts-container"></div>
+
+  <ul class="project-members-container">
+    {{#if isEmptyResults getCurrentMembersFilter}}
+      <li class="no-results">No results found</li>
+    {{else}}
+      {{#with project_enrolled_admins_sorted_by_first_name getCurrentMembersFilter}}
+        <li class="dropdown-header">Admins</li>
+
+        {{#each this}}
+          {{> admin_member_item}}
+        {{/each}}
+      {{/with}}
+
+      {{#with project_enrolled_regular_members_sorted_by_first_name getCurrentMembersFilter}}
+        <li class="dropdown-header">Members</li>
+
+        {{#each this}}
+          {{> regular_member_item}}
+        {{/each}}
+      {{/with}}
+
+      {{#with project_non_enrolled_members_sorted_by_first_name getCurrentMembersFilter}}
+        <li class="dropdown-header">Awaiting Registration</li>
+
+        {{#each this}}
+          {{> enrollment_pending_member}}
+        {{/each}}
+      {{/with}}
+    {{/if}}
+  </ul>
+  <ul class="add-project-members">
+    {{#if is_project_admin}}
+      <li class="dropdown-header">Invite New Members</li>
+      <li>
+        <div class="input-group add-members-comp">
+           <input type="text" class="form-control input-sm" placeholder="Member's Email">
+           <span class="input-group-btn">
+             <button class="btn btn-sm btn-default" type="button">Invite</button>
+           </span>
+         </div>
+      </li>
+    {{/if}}
+  </ul>
+</template>
+
+<template name="admin_member_item">
+  <li class="member-item admin-item" user-id="{{_id}}">
+    {{#if is_project_admin}}
+      <i class="fa fa-certificate fa-fw op-button downgrade-admin" title="Revoke {{displayName}}'s admin rights"></i>
+    {{/if}}
+
+    {{#if allow_member_remove user_id}}
+      <i class="fa fa-user-times fa-fw op-button remove" title="Remove {{displayName}} from this project"></i>
+    {{/if}}
+
+    {{> gtpl_user_profile_pic}} <div class="display-name" title="{{userEmail this}}">{{> display_name_with_graphic_unverified_warning}}</div>
+  </li>
+</template>
+
+<template name="regular_member_item">
+  <li class="member-item regular-member-item" user-id="{{_id}}">
+    {{#if is_project_admin}}
+      <i class="fa fa-certificate fa-fw op-button upgrade-admin" title="Make {{displayName}} an admin"></i>
+    {{/if}}
+
+    {{#if allow_member_remove user_id}}
+      <i class="fa fa-user-times fa-fw op-button remove" title="Remove {{displayName}} from this project"></i>
+    {{/if}}
+
+    {{> gtpl_user_profile_pic}} <div class="display-name" title="{{userEmail this}}">{{> display_name_with_graphic_unverified_warning}}</div>
+  </li>
+</template>
+
+<template name="enrollment_pending_member">
+  <li class="member-item enrollment-pending-member-item" user-id="{{_id}}">
+    {{#if is_project_admin}}
+      <i class="fa fa-certificate fa-fw op-button {{#if is_admin}}downgrade-admin{{else}}upgrade-admin{{/if}}" title="{{#if is_admin}}Revoke {{displayName}}'s admin rights{{else}}Make {{displayName}} a project admin upon registration{{/if}}"></i>
+    {{/if}}
+
+    {{#if allow_member_remove user_id}}
+      <i class="fa fa-user-times fa-fw op-button remove" title="Remove {{displayName}} from this project"></i>
+    {{/if}}
+
+    {{#if allow_member_edit_enrollment_pending_member user_id}}
+      <i class="fa fa-pencil fa-fw op-button edit-enrolled" title="Edit {{displayName}}"></i>
+    {{/if}}
+
+    {{> gtpl_user_profile_pic}} <div class="display-name" title="{{userEmail this}}">{{displayName}}</div>
+  </li>
+</template>

@@ -1,0 +1,71 @@
+<template name="meetings_meetings_menu">
+  <div class="meetings-menu">
+    <div data-toggle="dropdown" class="btn-meeting-menu"></div>
+    <div class="dropdown-menu">
+      <div class="dropdown-content">
+        <div class="meetings-menu-title">
+          <span></span>
+        </div>
+        <div class="meetings-menu-list">
+          {{#if meetingsExist}}
+            {{#with meetings "draft"}}
+              {{#if this.exist}}
+                <section>
+                  <span class="meetings-menu-section-title">Meetings unpublished</span>
+                  {{#each this.meetings}}
+                    <div class="meetings-menu-item">
+                      {{> meetings_meeting_header}}
+                    </div>
+                  {{/each}}
+                </section>
+              {{/if}}
+            {{/with}}
+            {{#with meetings "pending"}}
+              {{#if this.exist}}
+                <section>
+                  <span class="meetings-menu-section-title">Meetings pending</span>
+                  {{#each this.meetings}}
+                    <div class="meetings-menu-item">
+                      {{> meetings_meeting_header}}
+                    </div>
+                  {{/each}}
+                </section>
+              {{/if}}
+            {{/with}}
+            {{#with meetings "in-progress"}}
+              {{#if this.exist}}
+                <section>
+                  <span class="meetings-menu-section-title">Meetings in progress</span>
+                  {{#each this.meetings}}
+                    <div class="meetings-menu-item">
+                      {{> meetings_meeting_header}}
+                    </div>
+                  {{/each}}
+                </section>
+              {{/if}}
+            {{/with}}
+            {{#with meetings "adjourned"}}
+              {{#if this.exist}}
+                <section>
+                  <span class="meetings-menu-section-title">Meetings done</span>
+                  {{#each this.meetings}}
+                    <div class="meetings-menu-item">
+                      {{> meetings_meeting_header}}
+                    </div>
+                  {{/each}}
+                </section>
+              {{/if}}
+            {{/with}}
+          {{else}}
+            <div class="meetings-menu-msg">No meetings information found</div>
+          {{/if}}
+        </div>
+        <form class="meetings-menu-new form-inline">
+          <div class="form-group">
+            <button type="submit" class="btn btn-sm btn-default"><span>+</span> Start a new meeting</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>

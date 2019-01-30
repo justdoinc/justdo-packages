@@ -1,0 +1,35 @@
+<template name="task_pane_item_parent_tasks">
+  {{!-- use ptm- as class ids prefix --}}
+  <div class="ptm-wrapper">
+    <div class="form-inline ptm-add-parent-task-form">
+      <div class="form-group">
+        <label for="ptm-add-parent-seqid">Add parent task:</label>
+        <input type="text" class="form-control input-sm" id="ptm-add-parent-seqid" placeholder="Task #">
+        <div class="btn btn-default btn-sm ptm-add-parent-task">Add</div>
+      </div>
+    </div>
+    {{#if activeTaskParentIsNotTypedItem}}
+      <div class="form-inline ptm-move-parent-task-form">
+        <div class="form-group">
+          <label for="ptm-move-parent-seqid">Move from <u>{{currentTaskParentSeqId}}</u> to:</label>
+          <input type="text" class="form-control input-sm" id="ptm-move-parent-seqid" placeholder="Task #">
+          <div class="btn btn-default btn-sm ptm-move-parent-task">Move</div>
+        </div>
+      </div>
+    {{/if}}
+    <div class="form-inline ptm-remove-parent-task-form">
+      <div class="form-group">
+        <label for="ptm-remove-parent-seqid">Remove parent task:</label>
+        <input type="text" class="form-control input-sm" id="ptm-remove-parent-seqid" placeholder="Task #">
+        <div class="btn btn-default btn-sm ptm-remove-parent-task">Remove</div>
+        {{#if activeTaskParentIsNotTypedItem}}
+          <div class="btn btn-default btn-sm ptm-remove-current-parent-task">Remove Current</div>
+        {{/if}}
+      </div>
+    </div>
+    <div class="note">Note: Use 0 to add add an item to the root</div>
+    {{#with error}}
+      <div class="text-danger">Error: {{this}}</div>
+    {{/with}}
+  </div>
+</template>

@@ -1,0 +1,136 @@
+.additional-fields-section
+  overflow: visible
+
+.additional-field-items-list
+  border-top: 1px solid #EEEEEE
+  border-bottom: 1px solid #EEEEEE
+  padding: 10px 0px
+  margin: 10px 0px
+
+  table
+    margin-bottom: 0px
+    width: 98%
+
+    td
+      padding: 3px
+
+  // Editors style modifications
+
+  // Textarea editor
+  .textarea-editor
+    textarea
+      min-height: 20px
+
+  // CalculatedFieldEditor
+  .cfld-editor
+    textarea
+      width: 100% !important
+
+      min-height: 20px
+
+  // SelectorEditor
+  $null-state-border: 1px solid #AAA
+  .selector-editor
+    .null-state
+      border-top: $null-state-border
+      margin: 11px 18px
+
+  // UnicodeDateEditor, UnicodeDateFollowUpDateEditor
+  .unicode-date-editor
+    position: relative
+
+    .editor-unicode-date
+      width: 100% !important
+
+      $placeholder-color: #BBB
+      &::placeholder
+        color: $placeholder-color
+
+      &::-webkit-input-placehold
+        color: $placeholder-color
+
+      &::-moz-placeholder
+        color: $placeholder-color
+
+      &:-ms-input-placehold
+        color: $placeholder-color
+
+      &:-moz-placeholder
+        color: $placeholder-color
+
+
+    .udf-id-date-setter
+      position: absolute
+      right: 0
+      top: -1px
+
+.additional-field-item
+  border-bottom: 1px dotted #eeeeee
+
+  .add-to-grid
+    display: none
+    cursor: pointer
+
+    margin-top: 5px
+    margin-left: 5px
+
+    color: #2c71cf
+
+  &:last-child
+    border-bottom: none
+  &:hover
+    background-color: #f7faff
+    .add-to-grid
+      display: block
+
+  .field-value
+    position: relative
+
+    &.read-only
+      cursor: default
+
+    color: #000
+
+    .field-editor
+      margin-right: 22px
+
+  .field-label
+    color: #545454
+
+  .field-actions
+    display: inline-block
+
+    position: absolute
+
+    width: 20px
+    height: 20px
+
+    right: 4px
+    top: 50%
+
+    margin-top: -12px
+
+  .tooltip-content
+    top: 2px
+    bottom: -2px
+    right: 23px
+
+.bottom-toolbar
+  table
+    max-width: 600px
+
+.shine-slick-grid-column-header
+  $times-to-shine: 1
+  $time-to-play-animation: 1.25s
+  animation: shine-slick-grid-column-header $time-to-play-animation linear $times-to-shine forwards
+
+@keyframes shine-slick-grid-column-header
+  0%
+    background: rgba(255, 228, 20, 0)
+    color: black
+  50%
+    background: rgba(255, 228, 20, 1)
+    color: black
+  100%
+    background: rgba(255, 228, 20, 0)
+    color: black

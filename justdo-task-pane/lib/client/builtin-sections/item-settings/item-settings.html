@@ -1,0 +1,8 @@
+<template name="task_pane_item_settings_section">
+  {{#each sections}}
+    <section>
+      <h2>{{title}}</h2>
+      {{> Template.dynamic template=template}}
+    </section>
+  {{/each}}
+</template>

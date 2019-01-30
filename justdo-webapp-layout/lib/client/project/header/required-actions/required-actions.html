@@ -1,0 +1,23 @@
+<template name="project_required_actions_dropdown_comp">
+  <div class="required-actions-dropdown-container">
+    {{#with current_project}}
+      {{> required_actions_bell}}
+    {{/with}}
+  </div>
+</template>
+
+<template name="required_actions_bell">
+  <div class="required-actions-bell
+              {{#if $eq required_actions_count 0}}no-actions{{else}}pending-actions{{/if}}
+              {{#if $gt required_actions_count 9}}many-actions{{/if}}
+              ">
+    <i class="fa fa-bell"></i>
+    <div class="required-actions-count">
+      {{#if $lte required_actions_count 9}}
+        {{required_actions_count}}
+      {{else}}
+        9+
+      {{/if}}
+    </div>
+  </div>
+</template>

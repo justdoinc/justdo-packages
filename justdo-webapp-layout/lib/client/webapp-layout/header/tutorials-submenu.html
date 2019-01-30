@@ -1,0 +1,32 @@
+<template name="tutorials_submenu">
+  <li class="dropdown tutorials-dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="navbar-icon navbar-icon-help"></span></a>
+  </li>
+</template>
+
+<template name="tutorials_submenu_dropdown">
+  <li><a href="https://www.youtube.com/watch?v=KSetzC43q7E&list=PLrmyjry49_CT_6cF2q0sbDZPTVEcG673Y" target="_blank"><i class="fa fa-fw fa-play" aria-hidden="true"></i> <b>Getting Started with JustDo</b></a></li>
+
+  <li role="separator" class="divider"></li>
+
+  {{#with tutorials}}
+    <li class="dropdown-header">Popular tutorials</li>
+
+    {{#each this}}
+      {{> tutorials_submenu_dropdown_item }}
+    {{/each}}
+
+    <li role="separator" class="divider"></li>
+  {{/with}}
+
+  {{> tutorials_submenu_bugmuncher}}
+
+  {{#if zendeskEnabled}}
+    <li><a href="{{zendeskHost}}" target="_blank"><i class="fa fa-fw fa-book"></i> JustDo Knowledge Base</a></li>
+    <li><a href="#" class="support-center"><i class="fa fa-fw fa-question-circle"></i> JustDo Support Center</a></li>
+  {{/if}}
+</template>
+
+<template name="tutorials_submenu_dropdown_item">
+  <li><a class="tutorial-item" href="" tutorial-id="{{tutorial_id}}">{{cutString tutorial.readable_name 100}}</a></li>
+</template>

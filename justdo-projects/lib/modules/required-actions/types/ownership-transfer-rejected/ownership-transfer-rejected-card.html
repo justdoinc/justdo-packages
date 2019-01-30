@@ -1,0 +1,36 @@
+<template name="required_action_card_ownership_transfer_rejected">
+  <div class="card-with-avatar">
+    <div class="card-avatar">
+      {{#with rejecting_user_obj}}
+        {{> justdo_avatar}}
+      {{/with}}
+    </div>
+    <div class="card-details">
+      {{#with rejecting_user_obj}}{{displayName}}{{/with}} rejected your ownership transfer request for task
+      {{#with task_doc}}
+        <a href="javascript:return void(0);" class="task-link">#{{seqId}}: {{cutString task_title 80}}</a>
+      {{/with}}
+      {{#if reject_ownership_message}}
+        <div class="reject-message-box">
+          <i class="fa fa-comment-o" aria-hidden="true"></i>
+
+          {{#if showAll}}
+            {{nl2br reject_ownership_message}}
+          {{else}}
+            {{cutString reject_ownership_message 80}}
+
+            {{#if showReadMore}}<span class="rm-read-more">Read More</span>{{/if}}
+          {{/if}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <div class="card-actions">
+      <button type="button" class="dismiss btn btn-sm btn-primary">Dismiss</button>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+</template>

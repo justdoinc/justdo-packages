@@ -1,0 +1,35 @@
+<template name="invite_new_user_dialog">
+  <div class="invite-new-user-dialog-inner-wrapper">
+
+    <form>
+      <div class="row target-row">
+        <div class="col-xs-12 email-input-container">
+          <div class="form-group {{#if isInvalidEmail}}has-error{{/if}}">
+            <label for="new-user-email" class="control-label">Email</label>
+            <div>
+              <input id="new-user-email" class="form-control" value="{{email}}">
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div class="form-group {{#if isInvalidFirstName}}has-error{{/if}}">
+            <label for="new-user-first-name" class="control-label">First Name</label>
+            <div>
+              <input id="new-user-first-name" class="form-control" value="{{first_name}}">
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <div class="form-group {{#if isInvalidLastName}}has-error{{/if}}">
+            <label for="new-user-last-name" class="control-label">Last Name</label>
+            <div>
+              <input id="new-user-last-name" class="form-control" value="{{last_name}}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <p>If no invitation email will be received by the new member, please ensure correct email entered, and ask the new member to check the spam folder.</p>
+  </div>
+</template>

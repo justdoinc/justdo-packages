@@ -1,0 +1,265 @@
+// If you change max-height value, find the derived highet
+// for the entire dropdown and update the max_owner_dropdown_height
+// variable under updateDropdownPosition on owners-management.coffee
+$max_content_height: 158px
+
+.owners-dropdown-menu
+  position: relative
+
+  min-width: 290px
+
+  border: none
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.15)
+  padding: 0px 11px
+  border-radius: 2px
+  font-smoothing: antialiased
+  text-rendering: optimizeLegibility
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  -moz-font-feature-settings: "liga" on
+
+  .members-search-input
+    margin-top: 1px
+    width: 100%
+    height: 40px
+    border: none
+    border-bottom: 1px solid #EEEEEE
+    padding-left: 21px
+    font-family: "lato", sans-serif
+    font-size: 15px
+    font-weight: 600
+    color: #3d495b
+
+    &:focus
+      outline: none
+
+    &::-webkit-input-placeholder
+      color: #5A83BA
+
+    &::-moz-placeholder
+      color: #5A83BA
+
+    &:-ms-input-placeholder
+      color: #5A83BA
+
+    &:-moz-placeholder
+      color: #5A83BA
+
+    &::-ms-clear
+      display: none
+
+  .search-icon
+    position: absolute
+    font-size: 16px
+    line-height: 40px
+    color: #6a96d2
+
+.ownership-transfer-dialog
+  width: 270px
+
+  padding: 0 2px
+
+.members
+  max-height: $max_content_height
+  overflow-y: auto
+  overflow-x: hidden
+  padding: 2px 0px
+  position: relative
+  .right-gradient
+    position: absolute
+    width: 15px
+    height: 100%
+    background-image: linear-gradient(to left, white, white, rgba(255, 255, 255, 0))
+    top: 0
+    right: 0px
+
+.new-owner-option
+  width: 100%
+  font-family: "Lato",sans-serif
+  font-size: 15px
+  font-weight: 600
+  color: #3d495b
+  white-space: nowrap
+
+  cursor: pointer
+
+  height: 34px
+  line-height: 34px
+
+  &:first-child
+    margin: 0px
+  &:hover
+    background-color: #fbfbfb
+
+  .justdo-avatar
+    margin-top: -4px
+
+.manage-members, .only-member-message
+  height: 44px
+  border-top: 1px solid #EEEEEE
+  font-family: "Lato", sans-serif
+  font-size: 15px
+  font-weight: 600
+  color: rgba(61, 73, 91, 0.75)
+  text-align: center
+  line-height: 41px
+
+.manage-members
+  cursor: pointer
+
+  &:hover
+    color: #3d495b
+
+.only-member-message
+  cursor: default
+
+.no-members-found
+  line-height: 34px
+  margin-left: 4px
+
+//
+// Decisions dialogs
+//
+.decisions-dialogs
+  padding: 13px 0 8px
+
+.avatar-area
+  position: absolute
+
+  margin-top: 2px
+
+.message-area
+  display: inline-block
+
+  margin-left: 37px
+
+  font-family: "lato",sans-serif
+  line-height: 16px
+  font-size: 16px
+  color: #3D495B
+  font-weight: 600
+  padding-right: 10px
+  border-right: 1px solid #e2e2e2
+
+  .action-message
+    margin-bottom: 4px
+
+  .member-name
+    font-size: 15px
+    color: #777f8c
+
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+
+.action-area
+  display: inline-block
+
+  font-size: 16px
+  font-weight: 700
+  font-family: "lato", sans-serif
+  cursor: pointer
+
+  width: 75px
+  height: 40px
+  padding: 0
+  vertical-align: top
+  text-align: center
+  padding-top: 6px
+
+.cancel-ownership-transfer-dialog
+  width: 357px
+
+  .message-area
+    width: 240px
+
+  .action-area  
+    color: #e24242
+
+    &:hover
+      color: #af2121
+
+.take-ownership-dialog
+  width: 302px
+
+  .message-area
+    width: 184px
+
+  .action-area
+    color: #2B71CF
+
+    &:hover
+      color: #1a58ab
+
+.ownership-accept-reject-dialog
+  width: 388px
+
+  .message-area
+    width: 270px
+
+  .action-area
+    padding-top: 0
+    margin-top: -7px
+    line-height: 24px
+
+    .approve-transfer
+      color: #2B71CF
+
+      &:hover
+        color: #1a58ab
+
+    .pre-reject-button
+      color: #e24242
+
+      &:hover
+        color: #af2121
+
+.ownership-reject-dialog
+  .message-area
+    border: 0 none
+
+.reject-message-input
+  display: block
+
+  box-shadow: none
+  outline: none
+
+  border-radius: 0px
+  border: none
+  border-top: 1px solid #EEEEEE
+  border-bottom: 1px solid #EEEEEE
+  font-family: "lato", sans-serif
+  color: #3d495b
+  resize: none
+
+  width: 100%
+
+  min-height: 80px
+
+  max-height: $max_content_height
+
+  padding: 5px 1px
+
+.reject-ownership-buttons
+  text-align: right
+  font-family: "lato", sans-serif
+  font-size: 16px
+  font-weight: 700
+  margin: 6px 0
+
+.cancel-reject-button
+  cursor: pointer
+
+  color: #777f8c
+  border: 0 none
+  background: none
+
+.cancel-transfer
+  cursor: pointer
+
+  color: #e24242
+  border: 0 none
+  background: none
+
+  &:hover
+    color: #af2121

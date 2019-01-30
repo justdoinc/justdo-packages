@@ -1,0 +1,61 @@
+$link-text: #2B71CF
+$font-family: "Lato", sans-serif
+
+.edit-members
+  font-family: $font-family
+  font-weight: bold
+  color: $link-text
+  user-select: none
+  cursor: pointer
+  &:hover
+    color: #115abb
+  &::before
+    content: "·"
+    padding: 0px 5px
+    color: #d2d2d2
+    font-size: 13px
+
+.item-members
+  margin-top: 10px
+  overflow: hidden
+  cursor: default
+
+  .justdo-avatars-box
+    display: inline-block
+    white-space: nowrap
+    font-size: 0
+
+    > *
+      display: inline-block
+      float: none
+
+    .cont
+      margin-bottom: 5px
+      margin-right: 3px
+
+      &.last
+        margin-right: 0
+
+    .sep
+      margin-right: 3px
+      margin-left: 0
+
+  .hidden-users-count
+    background: #E6EEF9
+    padding: 3px 8px
+    border-radius: 25px
+    font-family: $font-family
+    font-size: 12px
+    font-weight: bold
+    color: $link-text
+    user-select: none
+    cursor: pointer
+    display: inline-block
+    height: 22px
+    margin-bottom: 5px
+
+    vertical-align: center
+    line-height: 17px
+    top: 4px
+    position: relative
+

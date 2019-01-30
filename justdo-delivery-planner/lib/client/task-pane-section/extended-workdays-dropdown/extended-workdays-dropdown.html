@@ -1,0 +1,63 @@
+<template name="delivery_planner_task_pane_extended_workdays_editor_btn">
+  <div class="daily-avail-extended-edit-workdays" title="Edit workdays">
+    <i class="fa fa-fw fa-pencil"></i>
+  </div>
+</template>
+
+<template name="delivery_planner_task_pane_extended_workdays_editor_dropdown">
+  <div class="extended-workday-editor-container">
+    <div class="input-group">
+      <div class="input-group-addon input-sm extended-workday-editor-weekday">Monday</div>
+      <input type="text" class="form-control input-sm extended-daily-availability" value="{{getWorkdayValue 1}}" day-index="1" placeholder="{{placeholder}}">
+      <div class="input-group-addon input-sm">Hours</div>
+    </div>
+  </div>
+
+  <div class="extended-workday-editor-container">
+    <div class="input-group">
+      <div class="input-group-addon input-sm extended-workday-editor-weekday">Tuesday</div>
+      <input type="text" class="form-control input-sm extended-daily-availability" value="{{getWorkdayValue 2}}" day-index="2" placeholder="{{placeholder}}">
+      <div class="input-group-addon input-sm">Hours</div>
+    </div>
+  </div>
+
+  <div class="extended-workday-editor-container">
+    <div class="input-group">
+      <div class="input-group-addon input-sm extended-workday-editor-weekday">Wednesday</div>
+      <input type="text" class="form-control input-sm extended-daily-availability" value="{{getWorkdayValue 3}}" day-index="3" placeholder="{{placeholder}}">
+      <div class="input-group-addon input-sm">Hours</div>
+    </div>
+  </div>
+
+  <div class="extended-workday-editor-container">
+    <div class="input-group">
+      <div class="input-group-addon input-sm extended-workday-editor-weekday">Thursday</div>
+      <input type="text" class="form-control input-sm extended-daily-availability" value="{{getWorkdayValue 4}}" day-index="4" placeholder="{{placeholder}}">
+      <div class="input-group-addon input-sm">Hours</div>
+    </div>
+  </div>
+
+  <div class="extended-workday-editor-container">
+    <div class="input-group">
+      <div class="input-group-addon input-sm extended-workday-editor-weekday">Friday</div>
+      <input type="text" class="form-control input-sm extended-daily-availability" value="{{getWorkdayValue 5}}" day-index="5" placeholder="{{placeholder}}">
+      <div class="input-group-addon input-sm">Hours</div>
+    </div>
+  </div>
+
+  <div class="extended-workday-editor-container">
+    <div class="input-group">
+      <div class="input-group-addon input-sm extended-workday-editor-weekday">Saturday</div>
+      <input type="text" class="form-control input-sm extended-daily-availability" value="{{getWorkdayValue 6}}" day-index="6" placeholder="{{placeholder}}">
+      <div class="input-group-addon input-sm">Hours</div>
+    </div>
+  </div>
+
+  <div class="extended-workday-editor-container">
+    <div class="input-group">
+      <div class="input-group-addon input-sm extended-workday-editor-weekday">Sunday</div>
+      <input type="text" class="form-control input-sm extended-daily-availability" value="{{getWorkdayValue 0}}" day-index="0" placeholder="{{placeholder}}">
+      <div class="input-group-addon input-sm">Hours</div>
+    </div>
+  </div>
+</template>

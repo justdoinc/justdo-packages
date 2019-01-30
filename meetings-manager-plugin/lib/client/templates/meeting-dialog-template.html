@@ -1,0 +1,193 @@
+<template name="meetings_meeting_dialog">
+  <div class="meetings_meeting-dialog {{minimizedClass}}">
+    <div class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-minimize" aria-label="Minimize"></button>
+          </div>
+          <div class="modal-body {{#if mayEdit}}admin{{/if}} {{#unless $eq meeting.status "draft"}}show-less{{/unless}}">
+
+            <!-- MEETING HEADER -->
+            <div class="meeting-header">
+              <div class="meeting-title">
+                <input type="text" name="title" placeholder="Meeting Name" value="{{meeting_title}}" class="meeting-name meeting-input" dir="auto">
+                <!-- <span class="fa fa-2x {{#if doc.private}}fa-eye-slash{{else}}fa-eye{{/if}} {{mayLockClass}} meeting-private"></span> -->
+                <span class="fa fa-print meeting-print"></span>
+                <span class="fa fa-envelope meeting-email"></span>
+                <span class="fa fa-copy meeting-copy"></span>
+                <!--span class="fa fa-video-camera meeting-conversation {{conversationClass}}"></span -->
+                <span class="fa fa-2x {{#if doc.locked}}fa-lock{{else}}fa-unlock{{/if}} {{mayLockClass}} meeting-lock"></span>
+                <div class="lock-msg">
+                  {{#if mayLock}}
+                    {{#if doc.locked}}
+                      <span class="msg-main-text">Click to unlock meeting</span>
+                      <span class="msg-sub-text">let meeting participants to edit the agenda, notes, etc</span>
+                    {{else}}
+                      <span class="msg-main-text">Click to lock meeting</span>
+                      <span class="msg-sub-text">reserve the right to edit the agenda, notes, etc. to yourself</span>
+                    {{/if}}
+                  {{else}}
+                    {{#if doc.locked}}
+                      <span class="msg-main-text">Meeting is locked</span>
+                      <span class="msg-sub-text">you can't edit the agenda, notes, etc</span>
+                    {{else}}
+                      <span class="msg-main-text">Meeting is unlocked</span>
+                      <span class="msg-sub-text">you can edit the agenda, notes, etc</span>
+                    {{/if}}
+                  {{/if}}
+                </div>
+              </div>
+              <div class="meeting-info">
+                <input type="text" name="date" placeholder="Date" value="{{rawdate doc.date}}" class="meeting-date meeting-input">
+                <input type="text" name="time" placeholder="Time" value="{{doc.time}}" class="meeting-time meeting-input">
+                <span class="wrapper-location">
+                  <input type="text" name="location" placeholder="Location" value="{{doc.location}}" data-toggle="dropdown" class="meeting-location meeting-input" dir="auto">
+                  <ul class="dropdown-menu recent-locations">
+                    {{#each recentLocations}}
+                      <li>{{this}}</li>
+                    {{/each}}
+                  </ul>
+                </span>
+                <span class="meeting-members-mini">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#"></a>
+                  <ul class="dropdown-menu">
+                    {{#with meeting}}
+                      {{> meetings_meeting_members}}
+                    {{/with}}
+                  </ul>
+                </span>
+              </div>
+              <div class="meeting-members">
+                {{#with meeting}}
+                  {{> meetings_meeting_members}}
+                {{/with}}
+              </div>
+            </div>
+
+            <!-- AGENDA HEADER -->
+            <div class="agenda-header {{agendaEditClass}} {{agendaDraftClass}}">
+              <span class="agenda-label">
+                Agenda {{#if agendaEditClass}}(edit mode){{/if}}
+              </span>
+              {{#if mayEditAgenda}}
+                <span class="agenda-edit">edit</span>
+                <span class="btn-agenda-edit-mode">
+                  <span class="agenda-save">save</span>
+                  <span class="agenda-cancel">cancel</span>
+                </span>
+                <div class="meeting-add-task">
+                  <input type="text" size="6" name="seqId" value="{{doc.seqId}}" placeholder="Type task number" class="meeting-input meeting-task-add">
+                  <span class="add-task-btn">Add Task</span>
+                </div>
+              {{/if}}
+            </div>
+            <!-- AGENDA BODY -->
+            <div class="meeting-tasks {{agendaEditClass}} {{agendaDraftClass}}">
+              <div class="meeting-tasks-list" >
+                {{#unless noRander}}
+                  {{#each tasks}}
+                      {{> meetings_dialog_task}}
+                  {{/each}}
+                {{/unless}}
+              </div>
+
+              {{#if showMeetingNote}}
+                <div class="meeting-note">
+                  <span class="note-label">General meeting note</span>
+                  {{> locking_text_editor content=meeting.note class="note" placeholder="Note" lock=meeting.note_lock disabled=mayNotEditMeetingNote onSave=onSaveMeetingNote}}
+                </div>
+              {{/if}}
+
+            </div>
+
+
+
+            <!--Adding new task-->
+            <!--{{#if mayEdit}}-->
+              <!--<div class="meeting-add-task">-->
+                <!--<div class="row">-->
+                  <!--<div class="col-sm-4">-->
+                    <!--<div class="form-group">-->
+                      <!--<label>Task #</label>-->
+                      <!--<input type="text" name="seqId" value="{{doc.seqId}}" class="form-control" placeholder="Task #">-->
+                    <!--</div>-->
+                  <!--</div>-->
+                  <!--<div class="col-sm-4">-->
+                    <!--<button type="button" class="add-task-btn btn btn-primary">Add Task</button>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--{{/if}}-->
+
+            {{#if errors}}
+              <div class="errors">
+                {{#each errors}}
+                  <div class="error">{{message}}</div>
+                {{/each}}
+              </div>
+            {{/if}}
+          </div>
+
+          {{#unless agendaEditClass}}
+            {{#if mayEdit}}
+              <div class="modal-footer">
+
+                    <div class="meeting-flow-control">
+                      <ul class="meeting-states list-inline">
+                        <li class="state {{#if $eq meeting.status "draft"}}active{{/if}}">Upublished</li>
+                        <li class="angle-right"><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+                        <li class="state {{#if $eq meeting.status "pending"}}active{{/if}}">Pending</li>
+                        <li class="angle-right"><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+                        <li class="state {{#if $eq meeting.status "in-progress"}}active{{/if}}">In progress</li>
+                        <li class="angle-right"><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+                        <li class="state {{#if $eq meeting.status "adjourned"}}active{{/if}}">Done</li>
+                      </ul>
+                    </div>
+
+                    {{#if showDiscardButton}}
+                      <button type="button" class="btn btn-default btn-cancel-meeting">Discard</button>
+                    {{/if}}
+
+                    {{#if $eq meeting.status "draft"}}
+                      <button type="button" class="btn btn-primary btn-publish-meeting">Publish</button>
+                    {{/if}}
+                    {{#if $eq meeting.status "pending"}}
+                      <button type="button" class="btn btn-primary btn-start-meeting">Start Meeting</button>
+                    {{/if}}
+                    {{#if $eq meeting.status "in-progress"}}
+                      <button type="button" class="btn btn-primary btn-end-meeting">End Meeting</button>
+                    {{/if}}
+                    {{#if $eq meeting.status "adjourned"}}
+                      <button type="button" class="btn btn-default btn-start-meeting pull-right">Reopen</button>
+                      <!-- <button type="button" class="btn btn-primary pull-right">Print</button> -->
+                      <div class="done-msg">
+                        <span class="msg-main-text">Meeting finished</span>
+                        <span class="msg-sub-text">You can reopen meeting to edit</span>
+                      </div>
+                    {{/if}}
+
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+              </div>
+            {{/if}}
+          {{/unless}}
+
+          <div class="discard-msg">
+            <div class="discard-msg-content">
+              <label class="control-label">Discard this meeting?</label>
+              <div class="form-group">
+                <button type="button" class="btn btn-primary btn-discard-ok" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-default btn-discard-no">No</button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="title-bar">
+      {{meeting.title}}<span class="fa fa-window-maximize"></span>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,110 @@
+<template name="item_owners_management">
+  {{#if $eq $.Meteor.userId pending_owner_id}}
+    {{!-- This task is waiting for my approval --}}
+
+    {{#if $eq getState "pre-reject"}}
+      <div class="decisions-dialogs ownership-reject-dialog">
+        <div class="avatar-area">
+          {{#with owner}}{{> justdo_avatar}}{{/with}}
+        </div>
+
+        <div class="message-area">
+          <div class="action-message">Reject ownership transfer from</div>
+          <div class="member-name">{{#with owner}}{{displayName}}{{/with}}</div>
+        </div>
+      </div>
+
+      {{> item_owners_management_reject_transfer_request_input}}
+
+      <div class="reject-ownership-buttons">
+        <button type="button" class="cancel-reject-button">Cancel</button>
+        <button type="button" class="cancel-transfer">Send</button>
+      </div>
+    {{else}}
+      <div class="decisions-dialogs ownership-accept-reject-dialog">
+        <div class="avatar-area">
+          {{#with owner}}{{> justdo_avatar}}{{/with}}
+        </div>
+
+        <div class="message-area">
+          <div class="action-message">Accept ownership transfer from</div>
+          <div class="member-name">{{#with owner}}{{displayName}}{{/with}}</div>
+        </div>
+
+        <div class="action-area">
+          <span class="approve-transfer">Accept</span><br />
+          <span class="pre-reject-button">Reject</span>
+        </div>
+      </div>
+    {{/if}}
+  {{else if $eq $.Meteor.userId owner_id}}
+    {{#if $not pending_owner_id}}
+      {{#if taskHasOtherMembers}}
+        <div class="ownership-transfer-dialog">
+          <label class="search-icon">
+            <i class="fa fa-search"></i>
+          </label>
+
+          <input class="members-search-input" placeholder="Transfer ownership to...">
+
+          <div class="members">
+            <div class="right-gradient"></div>
+            {{#each taskMembersOtherThanMeMatchingFilter}}
+              <div class="new-owner-option">
+                {{> justdo_avatar}} {{> display_name_with_graphic_unverified_warning}}
+              </div>
+            {{else}}
+              <div class="no-members-found">
+                No results found
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      {{else}}
+        <div class="only-member-message">This task is visible only to you</div>
+      {{/if}}
+    {{else}}
+      <div class="decisions-dialogs cancel-ownership-transfer-dialog">
+        <div class="avatar-area">
+          {{#with pending_owner}}{{> justdo_avatar}}{{/with}}
+        </div>
+
+        <div class="message-area">
+          <div class="action-message">Cancel ownership transfer to</div>
+          <div class="member-name">{{#with pending_owner}}{{displayName}}{{/with}}</div>
+        </div>
+
+        <div class="action-area cancel-transfer">Cancel</div>
+      </div>
+    {{/if}}
+  {{else}}
+    {{!-- Not the owner of the task, need to take ownership first --}}
+    <div class="decisions-dialogs take-ownership-dialog">
+      <div class="avatar-area">
+        {{#with owner}}{{> justdo_avatar}}{{/with}}
+      </div>
+
+      <div class="message-area">
+        <div class="action-message">Take ownership from</div>
+        <div class="member-name">{{#with owner}}{{displayName}}{{/with}}</div>
+      </div>
+
+      <div class="action-area take-ownership">Take</div>
+    </div>
+  {{/if}}
+
+  {{#if $neq getState "pre-reject"}}
+    {{!-- Only for the pre-reject state we don't show the membership management area--}}
+    <div class="manage-members">
+      {{#if taskHasOtherMembers}}
+        Edit Task Members
+      {{else}}
+        Share Task
+      {{/if}}
+    </div>
+  {{/if}}
+</template>
+
+<template name="item_owners_management_reject_transfer_request_input">
+  <textarea type="text" class="reject-message-input" placeholder="Leave a reject message"></textarea>
+</template>

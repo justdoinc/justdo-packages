@@ -1,0 +1,43 @@
+<template name="task_pane_item_details_description">
+  <div id="task-description-container">
+    {{#if description}}
+      <div id="description">{{{xssGuard description}}}</div>
+    {{else}}
+      {{#if $not edit_mode}}
+        <span id="add-description" class="textual-controller description-caption"><i class="fa fa-align-left"></i> Add Task Description</span> {{> task_pane_item_details_description_lock_message}}
+      {{/if}}
+    {{/if}}
+
+    <textarea id="description-editor">{{{xssGuard description}}}</textarea>
+
+    {{#if $or description edit_mode}}
+      <div class="description-caption">
+        {{#if edit_mode}}
+          <div id="done-edit-description" class="btn btn-sm btn-primary">Done</div>
+
+          {{#if $eq save_state 1}}
+            <span id="save-description" class="textual-controller">Save</span>
+          {{/if}}
+
+          {{#if $eq save_state 2}}
+            Saving...
+          {{/if}}
+
+          {{#if $eq save_state 3}}
+            Saved
+          {{/if}}
+
+          {{#if $eq save_state 4}}
+            Save failed, try again: <span id="save-description" class="textual-controller">Save</span>
+          {{/if}}
+        {{else}}
+          <span id="edit-description" class="textual-controller"><i class="fa fa-pencil-square-o"></i> Edit Description</span> {{>task_pane_item_details_description_lock_message}}
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
+</template>
+
+<template name="task_pane_item_details_description_lock_message">
+  {{#if lock}}<i class="fa fa-lock"></i> {{displayName lock.user}}{{/if}}
+</template>

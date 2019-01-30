@@ -1,0 +1,3 @@
+This folder is named builtin-sections not because the following sections has
+any special feature but simply because they are part of this package that
+implements the task pane itself.

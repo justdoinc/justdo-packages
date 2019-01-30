@@ -1,0 +1,106 @@
+$dropdown-user-pic-size: 25px
+$dropdown-user-pic-margin: 6px
+.owners-filter-controller
+  width: 270px
+  margin-right: 11px
+  user-select: none
+
+  .owners-search
+    margin-top: -5px
+    margin-left: 2px
+    padding-right: 16px
+
+  .no-results
+    padding: 7px 8px 3px
+    font-size: 14px
+
+  .owners-search-input
+    margin-top: 1px
+    width: 100%
+    height: 35px
+    border: none
+    border-bottom: 1px solid #EEEEEE
+    padding-left: 21px
+    font-family: "lato", sans-serif
+    font-size: 15px
+    font-weight: 600
+    color: #3d495b
+
+    &:focus
+      outline: none
+
+    &::-webkit-input-placeholder
+      color: #5A83BA
+
+    &::-moz-placeholder
+      color: #5A83BA
+
+    &:-ms-input-placeholder
+      color: #5A83BA
+
+    &:-moz-placeholder
+      color: #5A83BA
+
+    &::-ms-clear
+      display: none
+
+  .search-icon
+    position: absolute
+    font-size: 16px
+    line-height: 35px
+    color: #6a96d2
+
+  ul
+    padding: 0
+    margin: 0
+
+    max-height: 227px
+    overflow: auto
+    min-width: 200px
+
+  li
+    list-style: none outside none
+    display: block
+    clear: both
+    padding: 3px 0
+    position: relative
+
+  li.dropdown-header
+    margin-top: 3px
+
+    &:first-child
+      margin-top: 0
+
+  li.member-item
+    min-height: 31px
+    color: inherit
+    font-size: 15px
+    background: 0 none
+    font-weight: normal
+    line-height: $dropdown-user-pic-size
+    color: #333
+    white-space: nowrap
+    text-decoration: none
+    cursor: pointer
+
+    &.filtered-out
+      display: none
+
+    &.selected
+      transition: background-color 0.2s ease
+      background-color: #f6f6fd
+
+    img
+      position: absolute
+      margin-right: 5px
+      width: $dropdown-user-pic-size
+      height: $dropdown-user-pic-size
+
+    .display-name
+      display: block
+      overflow: hidden
+      margin-left: $dropdown-user-pic-size + $dropdown-user-pic-margin
+
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis

@@ -1,0 +1,71 @@
+<template name="task_pane_item_details_members_editor">
+  <div class="members-editor-search">
+    <label class="search-icon"><i class="fa fa-search"></i></label>
+    <input type="text" class="members-search-input" value="" placeholder="Find member">
+  </div>
+  <div class="members-section">
+    {{#each sections}}
+      {{> task_pane_item_details_members_editor_section}}
+    {{/each}}
+  </div>
+  <div class="checkbox">
+    <label>
+      <input class="cascade-action-checkbox" type="checkbox" checked="{{isChecked cascade true}}"> Apply changes to all child-tasks.
+    </label>
+  </div>
+  {{#if display_notes_section}}
+    <div class="notes">
+      <span>Notes</span>
+      <ul>
+        {{#each notes}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+</template>
+
+<template name="task_pane_item_details_members_editor_section">
+  <div class="members-list-container members-list-{{action_id}}-container {{#if showInviteMembersSection}}show-invite-members-section{{/if}}">
+    {{#if $not action_users_empty}}{{!-- If there are members for this action --}}
+      <div class="section-caption">
+        {{caption}}
+        <div class="bulk-select-label">{{proceed_message}}: </div> <div class="select-all">All</div> <div class="select-none">None</div>
+      </div>
+      <div class="members-editor-dialog-{{action_id}}-section members-list">
+        <div class="action-users">
+          {{#each action_users_filtered}}
+            {{> task_pane_item_details_members_editor_user_btn}}
+          {{else}}
+            <div class="no-results">No results found</div>
+          {{/each}}
+        </div>
+      </div>
+    {{else}}
+      <div class="members-editor-dialog-{{action_id}}-section members-list members-list-no-members">
+        <div class="no-members">
+          {{no_members_msg}}<br>
+        </div>
+      </div>
+    {{/if}}
+
+    {{#if showInviteMembersSection}}
+      <div class="invite-members-section">
+        <div class="invite-members-section-caption">Invite new members</div>
+        <input type="text" placeholder="Member's Email">
+        <button type="button" name="button">Invite</button>
+      </div>
+    {{/if}}
+  </div>
+</template>
+
+<template name="task_pane_item_details_members_editor_user_btn">
+  <button class="btn btn-default btn-xs user-btn action-btn {{#if proceed.get}}proceed{{else}}dont-proceed{{/if}}" user-id="{{_id}}" type="button" title="{{btn_title}}">
+    {{#with user_doc}}{{> gtpl_user_profile_pic}}{{/with}} <div class="display-name">{{> display_name_with_graphic_unverified_warning user_doc}}</div>
+    {{#if proceed.get}}
+      <i class="fa fa-times fa-fw toggle"></i>
+    {{else}}
+      <i class="fa fa-plus fa-fw toggle"></i>
+    {{/if}}
+  </button>
+</template>

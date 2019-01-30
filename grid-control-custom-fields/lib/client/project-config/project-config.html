@@ -1,0 +1,64 @@
+<template name="custom_fields_conf">
+  <table class="table custom-fields-conf">
+    {{#with customFields}}
+      <tr>
+        <th colspan="2">
+          Label
+        </th>
+        <th>
+          Type
+        </th>
+        <th></th>
+      </tr>
+
+      {{#each this}}
+        {{> custom_field_conf}}
+      {{/each}}
+    {{/with}}
+
+    <tr>
+      <th colspan="4" class="add-new-custom-field-header">
+        Add New Custom Field
+      </th>
+    </tr>
+
+    <tr class="add-new">
+      <td class="custom-field-label" colspan="2">
+        <input class="new-field-label field-label" placeholder="label" maxlength="30" />
+      </td>
+      <td class="custom-field-type">
+        <select class="new-field-type">
+          {{#each getFieldTypes}}
+            <option value="{{custom_field_type_id}}">{{label}}</option>
+          {{/each}}
+        </select>
+      </td>
+      <td class="custom-field-action">
+        {{#if showAddButton}}
+          <i class="add fa fa-fw fa-check" aria-hidden="true"></i>
+        {{/if}}
+      </td>
+    </tr>
+  </table>
+</template>
+
+<template name="custom_field_conf">
+  <tr field-id="{{field_id}}" class="custom-field-row">
+    <td class="sort-handle">
+      <i class="fa fa-align-justify" aria-hidden="true"></i>
+    </td>
+    <td class="custom-field-label">
+      <input class="field-label" placeholder="label" value="{{label}}" maxlength="30" />
+    </td>
+    <td class="custom-field-type">
+      {{fieldTypeToFieldLabel}}
+
+      {{#if settingsButtonTemplate}}
+        {{> UI.dynamic template=settingsButtonTemplate}}
+      {{/if}}
+    </td>
+    <td class="custom-field-action">
+      <i class="fa fa-fw fa-trash-o remove" aria-hidden="true"></i>
+    </td>
+  </tr>
+</template>

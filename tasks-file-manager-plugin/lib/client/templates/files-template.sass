@@ -1,0 +1,234 @@
+.tasks-file-manager-files
+  .file
+    padding-bottom: 6px
+    margin-bottom: 6px
+    min-height: 30px
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.05)
+    position: relative
+    &:last-child
+      border-bottom: none
+    .metadata
+      font-size: 12px
+      color: #b5b5b5
+      .dot
+        padding-right: 2px
+        padding-left: 2px
+        font-size: 12px
+        &::after
+          content: "·"
+    .actions
+      position: absolute
+      width: 62px
+      top: 0
+      right: 0
+      margin: 0
+      padding: 0
+      display: none
+      z-index: 100
+    .actions-rename
+      position: absolute
+      width: 62px
+      top: 0
+      right: 0
+      margin: 0
+      padding: 0
+      z-index: 200
+      a
+        width: 29px
+        height: 29px
+        background-color: #f2f3fa
+        border-radius: 3px
+        display: inline-block
+      .file-rename-done
+        background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png)
+        background-position: 0px -29px
+      .file-rename-cancel
+        background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png)
+        background-position: -29px -29px
+    &.active .actions
+      display: block
+    .actions
+      a
+        width: 29px
+        height: 29px
+        background-color: #F5F5F5
+        border-radius: 3px
+        display: inline-block
+        &:hover
+          background-color: #EBEBEB
+      .file-rename-link
+        background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png)
+        background-position: 0px 0px
+      .file-remove-link
+        background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png)
+        background-position: -29px 0px
+    .type-logo
+      margin-top: 5px
+      margin-left: 7px
+      width: 24px
+      height: 32px
+      float: left
+      background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png)
+      background-position: -58px 0px
+      &.jpeg
+        background-position: -82px 0px
+      &.vnd_ms-excel
+        background-position: -130px 0px
+      &.png
+        background-position: -226px 0px
+      &.pdf
+        background-position: -250px 0px
+      &.javascript
+        background-position: -346px 0px
+      &.html
+        background-position: -370px 0px
+      &.msword
+        background-position: -442px 0px
+
+    .image-preview
+      background-size: cover
+      width: 100%
+      height: 300px
+      background-repeat: no-repeat
+      background-position: center center
+      margin: 8px 0 0 0
+      cursor: pointer
+
+      &.loading
+        background-image: url("/layout/loading-spinner.gif") !important // The important is here to deal with the fact that blaze doesn't recognize the image that we set ourself using jquery. Without it, switching between tasks that has images, might reuse the same preview div component, and show the previously presented image that got set with jquery, until the new image complete load. The !important solves that.
+
+        background-size: auto
+
+    .content
+      margin-left: 42px
+      margin-right: 70px
+      .title
+        position: relative
+        a
+          color: #3d95c1
+          font-size: 14px
+          overflow: hidden
+          text-overflow: ellipsis
+          -o-text-overflow: ellipsis
+          -webkit-line-clamp: 2
+          -webkit-box-orient: vertical
+          display: block
+          display: -webkit-box
+        input
+          height: 20px
+          color: #3d95c1
+          width: 100%
+          position: relative
+          left: -1px
+          border: none
+          font-style: italic
+          &:focus
+            outline: none
+    .msg
+      position: absolute
+      background: rgba(255, 255, 255, 0.9)
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      z-index: 150
+      .msg-content
+        width: 110px
+        height: 40px
+        position: absolute
+        top: -3px
+        right: 20px
+        font-size: 13px
+        font-weight: 500
+        text-align: right
+        color: #6d6d6d
+        .msg-cancel
+          width: 60px
+          display: inline-block
+          height: 22px
+          background: #B8B8B8
+          text-align: center
+          color: white
+          border-radius: 3px
+          font-size: 12px
+          line-height: 22px
+          text-decoration: none
+          font-weight: 500
+        .msg-ok
+          width: 40px
+          display: inline-block
+          height: 22px
+          background: #1B78AB
+          text-align: center
+          color: white
+          border-radius: 3px
+          font-size: 12px
+          line-height: 22px
+          text-decoration: none
+          font-weight: 500
+      p
+        text-align: right
+      .loader
+        width: 25px
+        height: 25px
+        position: absolute
+        right: 0
+        top: 0
+        display: none
+        .double-bounce1
+          width: 100%
+          height: 100%
+          border-radius: 50%
+          background-color: rgb(218, 222, 251)
+          opacity: 0.5
+          position: absolute
+          top: 0
+          left: 0
+          -webkit-animation: sk-bounce 2.0s infinite ease-in-out
+          animation: sk-bounce 2.0s infinite ease-in-out
+        .double-bounce2
+          width: 100%
+          height: 100%
+          border-radius: 50%
+          background-color: rgb(218, 222, 251)
+          opacity: 0.5
+          position: absolute
+          top: 0
+          left: 0
+          -webkit-animation: sk-bounce 2.0s infinite ease-in-out
+          animation: sk-bounce 2.0s infinite ease-in-out
+          -webkit-animation-delay: -1.0s
+          animation-delay: -1.0s
+
+.bottom-toolbar
+  .tasks-file-manager-files
+    position: absolute
+    left: 350px
+    right: 10px
+    top: 10px
+    bottom: 10px
+    overflow-y: auto
+
+@-webkit-keyframes sk-bounce
+  0%, 100%
+    -webkit-transform: scale(0.5)
+  50%
+    -webkit-transform: scale(1)
+
+
+@keyframes sk-bounce
+  0%, 100%
+    transform: scale(0)
+    -webkit-transform: scale(0.5)
+  50%
+    transform: scale(1)
+    -webkit-transform: scale(1)
+
+//
+// Preview Bootbox
+//
+.tasks-file-manager-preview-dialog
+  .modal-dialog
+    width: 1000px
+  .bootbox-body
+    text-align: center

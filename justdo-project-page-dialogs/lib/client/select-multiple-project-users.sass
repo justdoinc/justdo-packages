@@ -1,0 +1,58 @@
+.select-multiple-project-users-dialog
+  .modal-header
+    display: none
+
+  .modal-body
+    padding: 30px 0 29px 5px
+    font-size: 17px
+    font-family: "lato", sans-serif
+    font-weight: bold
+    margin-top: 60px
+
+  .select-multiple-project-members-dialog-title
+    display: inline-block
+
+    margin-right: 7px
+
+// Selector rule defined under .select-multiple-project-users-dialog affects only
+// the dropdown button
+.select-multiple-project-users-dialog
+  .select-multiple-project-members-dialog-selector
+    margin-top: 6px
+    width: 100% !important
+
+    button
+      padding-left: 7px
+
+    &.dropdown-menu-lite-users.dropdown-menu li > a img,
+    &.dropdown-menu-lite-users .dropdown-menu li > a img,
+    &.dropdown-menu-lite-users.bootstrap-select button img
+      margin-left: 4px
+
+// Define in the top level, as the dropdown is attached to <body>
+.select-multiple-project-members-dialog-selector
+  .filter-option
+    line-height: 23px
+
+.select-multiple-project-members-dialog-selector
+  &.dropdown-menu-lite-users.dropdown-menu li > a img,
+  &.dropdown-menu-lite-users .dropdown-menu li > a img,
+  &.dropdown-menu-lite-users.bootstrap-select button img
+    width: 25px
+    height: 25px
+    margin-right: 3px
+    margin-top: -1px
+    float: none
+
+  .selected > a
+    background-color: #337ab7
+
+    color: white
+
+  &.dropdown-menu-lite.dropdown-menu li.selected > a:hover,
+  &.dropdown-menu-lite.dropdown-submenu:hover .selected > a,
+  &.dropdown-menu-lite .dropdown-menu li.selected > a:hover,
+  &.dropdown-menu-lite .dropdown-submenu:hover .selected > a
+    background-color: #337ab7
+
+    color: white

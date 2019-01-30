@@ -1,0 +1,11 @@
+<template name="select_project_member_dialog">
+  <div class="select-project-member-dialog-title">{{title}}:</div>{{>select_project_member_dialog_selector}}
+</template>
+
+<template name="select_project_member_dialog_selector">
+  <select class="select-project-member-dialog-selector dropdown-menu-lite dropdown-menu-lite-users">
+    {{#each project_all_members_sorted_by_first_name}}
+      <option selected="{{#if isSelectedUser}}selected{{/if}}" value="{{_id}}">{{> justdo_avatar}} {{> display_name_with_graphic_unverified_warning}}</option>
+    {{/each}}
+  </select>
+</template>

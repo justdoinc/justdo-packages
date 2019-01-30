@@ -1,0 +1,45 @@
+<template name="delivery_planner_task_pane_add_daysoff_btn">
+  <div class="daily-avail-extended-add-daysoff" title="Add days off">
+    <i class="fa fa-fw fa-plus"></i>
+  </div>
+</template>
+
+<template name="delivery_planner_task_pane_add_daysoff_dropdown">
+  <div class="add-daysoff-controllers-container">
+    <div class="daysoff-range-input-header">Add days off</div>
+
+    <div class="daysoff-range-input-controller-container">
+      <div class="input-group {{#if startHasError}}has-error{{/if}} daysoff-range-start-input-group">
+        <div class="input-group-addon input-sm daysoff-range-input-label">Start</div>
+        <div  class="form-control input-sm daysoff-range-input-container">{{> delivery_planner_task_pane_add_daysoff_dropdown_date_field_editor}}</div>
+      </div>
+    </div>
+
+    <div class="daysoff-range-input-controller-container">
+      <div class="input-group {{#if endHasError}}has-error{{/if}} daysoff-range-end-input-group">
+        <div class="input-group-addon input-sm daysoff-range-input-label">End</div>
+        <div class="form-control input-sm daysoff-range-input-container">{{> delivery_planner_task_pane_add_daysoff_dropdown_date_field_editor}}</div>
+      </div>
+    </div>
+
+    <div class="daysoff-ranges-errors">
+      <ul>
+        {{#each getDateInputsErrors}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+
+  <div role="separator" class="divider"></div>
+
+  <div class="dropdown-add-daysoff-controls-container">
+    <button type="button" class="btn btn-xs btn-primary add">Add</button>
+    <button type="button" class="btn btn-xs btn-default cancel">Cancel</button>
+    <div style="clear: both"></div>
+  </div>
+</template>
+
+<template name="delivery_planner_task_pane_add_daysoff_dropdown_date_field_editor">
+  <div class="field-editor" style="width: 100px"></div>
+</template>

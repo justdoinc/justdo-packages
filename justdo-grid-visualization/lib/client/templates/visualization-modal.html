@@ -1,0 +1,23 @@
+<template name="grid_visualization_modal">
+  <div class="grid-visualization-content">
+    <div class="grid-visualization-header">{{title}}</div>
+    {{#if errors}}
+      <div class="error">
+        <h1>Cannot Generate Chart</h1>
+        <ul>
+          {{#each errors}}
+            <li class="grid-visualization-error">{{message}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    {{else}}
+      <div class="grid-visualization-drawing">
+      </div>
+      <div class="spinner">
+        <span class="fa fa-spinner fa-spin"></span>
+      </div>
+      <canvas class="grid-visualization-canvas" width="300" height="300"></canvas>
+      <img src="" class="grid-visualization-chart">
+    {{/if}}
+  </div>
+</template>

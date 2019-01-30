@@ -1,0 +1,187 @@
+$closed-toolbar-visible-area: 5px
+$resize-token-border-radius: 3px
+
+$token-offset-from-toolbar-vertical: -4px
+$token-offset-from-toolbar-horizontal: -4px
+
+$vertical-resize-token-dim-width: 10px
+$vertical-resize-token-dim-height: 40px
+$vertical-resize-token-inner-line-offset: 2px
+
+$horizontal-resize-token-dim-width: $vertical-resize-token-dim-height
+$horizontal-resize-token-dim-height: $vertical-resize-token-dim-width
+$horizontal-resize-token-inner-line-offset: $vertical-resize-token-inner-line-offset
+
+$token-hover-extension: 3px
+
+$vertical-toolbar-token-background-color: #FFF
+$horizontal-toolbar-token-background-color: #F8F8F8
+
+$token-border-style-toolbar-connection-border-vertical: 1px solid $vertical-toolbar-token-background-color
+$token-border-style-toolbar-connection-border-horizontal: 1px solid $horizontal-toolbar-token-background-color
+
+.task-pane-resize-token
+  position: absolute
+  width: $vertical-resize-token-dim-width
+  height: $vertical-resize-token-dim-height
+  z-index: 100
+  cursor: pointer
+  background: #FFFFFF
+  border: 1px solid #C0C0C0
+  user-select: none
+
+  &::before
+    content: " "
+    width: 2px
+    height: 26px
+    background: #C0C0C0
+    position: absolute
+    border-radius: 1px
+
+
+.closed-toolbar
+  .task-pane-header-container
+    display: none
+  .task-pane-content-container
+    display: none
+
+//
+// task pane - Right
+//
+.right-toolbar
+  .task-pane-resizable
+    width: 7px
+    left: -5px
+    top: 0
+    height: 100%
+
+  .task-pane-resize-token
+    left: $token-offset-from-toolbar-vertical
+    top: 0
+    bottom: 0
+    margin: auto 0
+    border-radius: $resize-token-border-radius 0px 0px $resize-token-border-radius
+    border-right: $token-border-style-toolbar-connection-border-vertical
+
+    &::before
+      right: $vertical-resize-token-inner-line-offset
+      top: 0
+      bottom: 0
+      margin: auto 0
+
+  &.closed-toolbar
+    #task-pane
+      right: $closed-toolbar-visible-area
+
+//
+// Resizable style
+//
+.right-toolbar
+  .task-pane-resizable
+    width: 7px
+    left: -5px
+    top: 0
+    height: 100%
+
+.left-toolbar
+  .task-pane-resizable
+    width: 7px
+    right: -5px
+    top: 0
+    height: 100%
+
+.bottom-toolbar
+  .task-pane-resizable
+    height: 7px
+    width: 100%
+    top: -5px
+    left: 0
+
+//
+// task pane - Left
+//
+.left-toolbar
+  .task-pane-resize-token
+    right: $token-offset-from-toolbar-vertical
+    top: 0
+    bottom: 0
+    margin: auto 0
+    border-radius: 0px $resize-token-border-radius $resize-token-border-radius 0px
+    border-left: $token-border-style-toolbar-connection-border-vertical
+
+    &::before
+      left: $vertical-resize-token-inner-line-offset
+      top: 0
+      bottom: 0
+      margin: auto 0
+
+  &.closed-toolbar
+    #task-pane
+      left: $closed-toolbar-visible-area
+
+//
+// task pane - Bottom
+//
+.bottom-toolbar
+  .task-pane-resize-token
+    left: 0
+    right: 0
+    top: $token-offset-from-toolbar-horizontal
+    margin: 0 auto
+    width: $horizontal-resize-token-dim-width
+    height: $horizontal-resize-token-dim-height
+    background-color: $horizontal-toolbar-token-background-color
+    border-radius: $resize-token-border-radius $resize-token-border-radius 0px 0px
+    border-bottom: $token-border-style-toolbar-connection-border-horizontal
+
+    &::before
+      width: 26px
+      height: 2px
+      left: 0
+      right: 0
+      bottom: $horizontal-resize-token-inner-line-offset
+      margin: 0 auto
+
+  &.closed-toolbar
+    #task-pane
+      top: -$closed-toolbar-visible-area !important
+      height: $closed-toolbar-visible-area !important
+      bottom: 0
+      background-color: $horizontal-toolbar-token-background-color
+
+//
+// Resize token transition
+//
+$resize-token-hover-transition: all .2s ease-in-out
+.right-toolbar
+  .task-pane-resize-token
+    &:hover, &:active
+      transition: $resize-token-hover-transition
+      width: $vertical-resize-token-dim-width + $token-hover-extension
+      left: $token-offset-from-toolbar-vertical - $token-hover-extension
+
+      &::before
+        transition: $resize-token-hover-transition
+        right: $vertical-resize-token-inner-line-offset + $token-hover-extension
+
+.left-toolbar
+  .task-pane-resize-token
+    &:hover, &:active
+      transition: $resize-token-hover-transition
+      width: $vertical-resize-token-dim-width + $token-hover-extension
+      right: $token-offset-from-toolbar-vertical - $token-hover-extension
+
+      &::before
+        transition: $resize-token-hover-transition
+        left: $vertical-resize-token-inner-line-offset + $token-hover-extension
+
+.bottom-toolbar
+  .task-pane-resize-token
+    &:hover, &:active
+      transition: $resize-token-hover-transition
+      height: $horizontal-resize-token-dim-height + $token-hover-extension
+      top: $token-offset-from-toolbar-horizontal - $token-hover-extension
+
+      &::before
+        transition: $resize-token-hover-transition
+        bottom: $horizontal-resize-token-inner-line-offset + $token-hover-extension

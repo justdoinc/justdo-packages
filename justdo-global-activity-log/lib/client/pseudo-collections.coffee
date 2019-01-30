@@ -1,0 +1,1 @@
+APP.collections.JDGlobalChangelog = new Mongo.Collection JustdoGlobalActivityLog.global_changelog_collection_name

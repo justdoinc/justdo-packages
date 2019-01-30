@@ -1,0 +1,183 @@
+$bootbox-main-text: #3D495B
+$empty-box-message-text: #86a8d1
+$font-family: "lato", sans-serif
+$members-section-height: 300px
+$members-section-label-height: 58px
+
+.members-update-dialog
+  font-family: $font-family
+
+.diff-message
+  color: $bootbox-main-text
+  font-size: 15px
+  margin: 10px 0px
+
+.members-update-search
+  border-top: 1px solid #EEEEEE
+  border-bottom: 1px solid #EEEEEE
+  position: relative
+  label
+    position: absolute
+    top: 8px
+    color: #6a96d2
+  input
+    border: none
+    padding: 8px
+    font-weight: 600
+    font-size: 16px
+    color: $bootbox-main-text
+    width: 100%
+    padding-left: 20px
+    &:focus
+      outline: none
+    &::-webkit-input-placeholder
+      color: #5a83ba
+    &::-moz-placeholder
+      color: #5a83ba
+    &:-ms-input-placeholder
+      color: #5a83ba
+    &:-moz-placeholder
+      color: #5a83ba
+    &::-ms-clear
+      display: none
+
+.members-update-dialog
+  .members-section
+    height: $members-section-height
+  .members-list-container
+    width: 50%
+    height: 100%
+    float: left
+    overflow-y: auto
+    border-right: 1px solid #eeeeee
+    &:last-child
+      border-right: none
+    &.hide-container
+      display: none
+    &.full-width
+      width: 100%
+      border: none
+      .members-update-dialog-remove-absents-section
+        padding-left: 0px
+
+  .bulk-select-section
+    height: $members-section-label-height
+    margin-left: 0
+    padding: 10px 0
+    user-select: none
+
+  $user_pic_height: 30px
+  .user-btn
+    cursor: pointer
+    line-height: $user_pic_height
+    height: $user_pic_height
+    box-shadow: none
+    border: none
+    width: 99%
+    padding: 0px 10px 0px 0px
+    margin: 0 0 3px
+    border-radius: 25px 0px 0px 25px
+    text-align: left
+    background: none
+    position: relative
+    display: block
+
+    &:active
+      background-color: #E6E6E6
+      border-color: #ADADAD
+
+    &.proceed
+      background-color: #E4EDF9
+
+    &.dont-proceed
+      opacity: 1
+
+    img
+      width: $user_pic_height
+      height: $user_pic_height
+      float: left
+      margin-right: 4px
+      vertical-align: bottom
+      position: relative
+    .display-name
+      font-size: 16px
+      color: $bootbox-main-text
+      font-weight: 600
+      margin-left: 2px
+      display: inline-block
+      position: relative
+      text-overflow: ellipsis
+      max-width: 185px
+      overflow: hidden
+    .toggle
+      padding: 9px 1px 5px
+      color: #95B8E7
+      position: absolute
+      right: 10px
+
+  .bulk-select-label, .select-all, .select-none
+    display: inline-block
+    font-size: 13px
+    color: #2B71CF
+
+  .select-all, .select-none
+    cursor: pointer
+    text-decoration: underline
+
+  .no-members-diff
+    font-weight: bold
+    text-align: center
+    color: $empty-box-message-text
+    font-size: 16px
+    margin-top: 80px
+    user-select: none
+    cursor: default
+
+  .notes
+    padding: 15px 0px
+    border-top: 1px solid #eeeeee
+    span
+      font-size: 18px
+      font-weight: bold
+      color: #3D495B
+    ul
+      margin: 0px
+      padding: 0px
+      list-style-type: none
+      font-size: 15px
+    li
+      border-bottom: 1px dotted #cecece
+      padding: 10px 0px
+      &:last-child
+        border-bottom: none
+
+.members-update-dialog-remove-absents-section
+  padding-left: 10px
+  .proceed
+    .toggle
+      display: none
+
+    &:hover
+      .toggle
+        display: inline-block
+
+  .dont-proceed
+    .display-name
+      text-decoration: line-through
+
+.members-update-dialog-add-aliens-section
+  .proceed
+    .toggle
+      display: none
+
+    &:hover
+      .toggle
+        display: inline-block
+
+  .dont-proceed
+    .display-name
+      text-decoration: line-through
+
+.members-diff
+  height: $members-section-height - $members-section-label-height
+  overflow: auto
