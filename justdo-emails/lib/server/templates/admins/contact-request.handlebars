@@ -1,0 +1,30 @@
+<tr>
+    <td style="padding-top:20px;font-family:'lato',Arial,sans-serif;color:#333333;font-size:17px;line-height:1.5em;">
+        Hi,<br/ >
+        We got a new contact request:
+        <ul style="color:#68757B;font-size:16px">
+            <li>Name: {{name}}</li>
+            <li>Email: {{email}}</li>
+            <li>Company: {{company}}</li>
+            <li>Subject: {{subject}}</li>
+            <li>Message: {{message}}</li>
+            <li>Timezone: {{tz}}</li>
+            <li>Request ID: {{request_id}}</li>
+        </ul>
+        Last 5 requests received:
+        <ul>
+            {{#each previous_requests}}
+            <li>{{name}} @ {{createdAt}}
+                <ul style="color:#68757B;font-size:16px">
+                    <li>{{email}}</li>
+                    <li>{{company}}</li>
+                    <li>{{subject}}</li>
+                    <li>{{message}}</li>
+                    <li>{{tz}}</li>
+                    <li>{{_id}}</li>
+                </ul>
+            </li>
+            {{/each}}
+        </ul>
+    </td>
+</tr>

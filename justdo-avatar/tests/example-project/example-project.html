@@ -1,0 +1,28 @@
+<head>
+  <title>Example of Justdo Avatar Package</title>
+</head>
+
+<body>
+  {{> custom_input}}
+  {{> all_user}}
+</body>
+
+<template name="custom_input">
+  {{> justdo_avatar profile_pic=profile_pic email=email first_name=first_name last_name=last_name}}
+  <div>
+    <input type="text" id="email" placeholder="Enter email..." />
+    <input type="text" id="first-name" placeholder="Enter first name..." />
+    <input type="text" id="last-name" placeholder="Enter last name..." />
+  </div>
+</template>
+
+<template name="all_user">
+  {{#each users}}
+    <div>
+      {{> justdo_avatar }}
+    </div>
+    <div>
+      {{profile.first_name}}, {{profile.last_name}}, {{emails.[0].address}}
+    </div>
+  {{/each}}
+</template>

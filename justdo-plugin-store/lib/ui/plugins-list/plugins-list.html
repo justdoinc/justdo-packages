@@ -1,0 +1,37 @@
+<template name="justdo_plugins_store_plugins_list">
+  <div class="justdo-plugins-store-plugins-list {{#if useBootstrapLayout}}row{{/if}}">
+    {{#if isActiveCategoryPluginsEmpty}}
+      <div class="empty-category">
+        {{#if isInstalledCateogry}}
+          No plugins installed yet<br />
+          <a href="" class="browse-our-featured-plugins">Browse our featured plugins</a>
+        {{else}}
+          Empty category
+        {{/if}}
+      </div>
+    {{else}}
+      {{#each listActiveCategoryPlugins}}
+        <div class="plugin-tile plugin-{{id}} {{#if useBootstrapLayout}}col-xs-12 col-sm-6 col-md-4{{/if}}">
+          <div class="plugin-img" style="background-image: url('{{image_url}}')">
+            <div class="developer-info">
+              <p class="developer-name">{{developer}}</p>
+              <p class="developer-site">{{developer_url}}</p>
+            </div>
+          </div>
+          <div class="plugin-short-info">
+            <a class="plugin-name"><strong>{{title}}</strong> - {{short_description}}</a>
+            <div class="more-info">
+              <div class="plugin-price">{{price}}</div>
+              {{#if isPluginInstalled}}
+                <div class="plugin-installed">
+                  <i class="fa fa-check-circle-o" aria-hidden="true"></i> Installed
+                </div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    {{/if}}
+  </div>
+</template>
+

@@ -1,0 +1,56 @@
+.justdo-avatars-box
+  .justdo-avatar
+    width: 100%
+    height: 100%
+
+  .cont // Stands for container
+    float: left
+
+  .sep // Separator
+    float: left
+
+  .avatar-box-button
+    float: left
+
+.default-avatar-box-button
+  width: 100%
+  height: 100%
+
+  border-radius: 50%
+  color: #aaa
+  line-height: 30px
+  background-color: #ddd
+  font-size: 18px
+  text-align: center
+  vertical-align: middle
+  cursor: pointer
+
+// Defaults style - need to change if defaults change
+.justdo-avatars-box
+  $avatar-width: 30px
+  $avatar-height: 30px
+  $avatar-margin-right: 5px
+  $avatar-margin-bottom: 0
+
+  .avatar-box-button
+    height: $avatar-height
+    width: $avatar-width
+
+  .cont
+    height: $avatar-height
+    width: $avatar-width
+    margin-right: $avatar-margin-right
+    margin-bottom: $avatar-margin-bottom
+
+    &.last
+      margin-right: 0
+      margin-bottom: 0
+
+  .sep
+    height: $avatar-height
+    margin-left: -1 * ceil($avatar-margin-right / 2)
+
+    width: 1px
+    background-color: #dedede
+    display: inline-block
+    vertical-align: middle

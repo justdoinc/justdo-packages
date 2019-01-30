@@ -1,0 +1,1 @@
+APP.collections.JustdoSystem = new Mongo.Collection "JustdoSystem"

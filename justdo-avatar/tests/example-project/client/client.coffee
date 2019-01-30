@@ -1,0 +1,1 @@
+Meteor.loginWithPassword "calvin@meteorspark.com", "123456"

@@ -1,0 +1,1 @@
+APP.logger = Logger.get "Main"

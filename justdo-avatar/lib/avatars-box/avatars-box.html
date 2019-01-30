@@ -1,0 +1,73 @@
+<template name="justdo_avatars_box">
+  {{!--
+
+  Expected data context:
+
+  box_dim: (object) an object with width and height properties that
+                    will be used to limit the amount of printed users.
+                    If null (default), all passed users will be printed.
+                    If defined it must have the width property, if the
+                    height property isn't defined, only a single row of
+                    users will be printed, otherwise multi row might
+                    be printed acording to the space available.
+
+  box_grid: (object) If not null (default), box_dim will be ignored.
+                    an object with rows and cols properties that
+                    will be used to limit the amount of printed users.
+                    If defined it must have the cols property, if the
+                    rows property isn't defined, only a single row of
+                    users will be printed.
+
+  avatar_dim: (object) an object with: width, height, margin_right and
+                       margin_bottom properties (all required)
+                       If undefined, defaults will be used.
+
+  primary_users: (array of users objects or users_ids) - their avatars
+                 will be printed in their order.
+                 Important: items type need to be same for all items.
+
+  secondary_users: like primary_users - can be empty or null - secondary
+                   users will be printed after a seperator.
+                   Important: items type need to be same for all items.
+
+  show_button: (string) can be one of:
+    "on-excess": (default) button will show only if there was not
+                 enough space to show all users.
+    "never": no button will be shown as last avatar.
+    "always": button will always show as last avatar.
+
+  button_content: (string) html to put inside the button default to
+                  font awesome "fa-ellipsis-h" element
+
+  --}}
+
+  <div class="justdo-avatars-box">
+    {{#each box_components}}
+      {{#if type}}
+        {{#if $eq type "sep"}}
+          <div class="sep"></div>
+        {{/if}}
+        {{#if $eq type "btn"}}
+          {{> justdo_avatars_box_button button_content=button_content}}
+        {{/if}}
+      {{else}}
+        {{> justdo_avatars_box_avatar user=this}}
+      {{/if}}
+    {{/each}}
+    <div class="clearfix"></div>
+  </div>
+</template>
+
+<template name="justdo_avatars_box_avatar">
+  <div class="cont {{#if user.last}}last{{/if}}">
+    {{#with user}}
+      {{> justdo_avatar}}
+    {{/with}}
+  </div>
+</template>
+
+<template name="justdo_avatars_box_button">
+  <div class="avatar-box-button">
+    {{{button_content}}}
+  </div>
+</template>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{app_name}}</title>
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <style type="text/css" media="screen">
+
+    td {
+      border-collapse: collapse;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .wrap {
+      width: 600px;
+      padding: 35px;
+      background-color: #ffffff;
+    }
+
+  </style>
+  <style type="text/css" media="only screen and (max-width: 600px)">
+    @media only screen and (max-width: 600px) {
+        table[class="wrap"] {
+        width: 100% !important;
+      }
+    }
+  </style>
+</head>
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="#ffffff" style="margin:0;padding:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;">
+  <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="margin:0;padding:0;width:100%!important;">
+    <tr>
+      <td align="center" valign="top" width="100%">
+        <table cellpadding="0" cellspacing="0" width="600" class="wrap">
+          <tr>
+            <td valign="top">
+              <table cellpadding="0" cellspacing="0" style="width:100% !important;">
+                <tr>
+                 <td height="40" valign="top" style="border-bottom: 1px solid #F0F0F0;">
+                    <img width="116" height="27" src="{{logo_path}}" alt="logo">
+                  </td>
+                </tr>
+                {{{body}}}
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

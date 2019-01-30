@@ -1,0 +1,2 @@
+JustdoLegalDocsVersions = {}
+JustdoLegalDocsVersionsApi = {}

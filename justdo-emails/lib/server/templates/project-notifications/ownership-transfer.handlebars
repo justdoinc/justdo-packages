@@ -1,0 +1,67 @@
+<tr>
+  <td valign="top" style="padding-top:40px;padding-bottom:40px;">
+    <table cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td valign="top" style="padding-bottom:20px; font-family: 'lato', Arial, sans-serif;font-size:20px;font-weight:bold;line-height:26px;color:#333333;">
+          Hi {{to.profile.first_name}},
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" style="padding-bottom:10px;font-family:'lato',Arial,sans-serif;color:#68757B!important;font-size:16px;line-height:1.5em;">
+          {{from.profile.first_name}} {{from.profile.last_name}} is asking you to take ownership of the following task:</td>
+      </tr>
+      <tr>
+        <td valign="top" style="padding-bottom:20px;font-family:'lato',Arial,sans-serif;color:#68757B!important;font-size:16px;line-height:1.5em;">
+          <a href="{{task_link}}" style="text-decoration:none;color:#2B71CF">#{{task.seqId}}: {{task.title}}</a>
+        </td>
+      </tr>
+      <tr>
+        <td valign="top" style="padding-bottom:10px;font-family:'lato',Arial,sans-serif;color:#68757B!important;font-size:16px;line-height:1.5em;">
+          {{context}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table cellspacing="0" cellpadding="0" width="290" bgcolor="#ffffff">
+            <tr>
+              <td style="width:150px;height:42px;user-select: none;">
+                <div><!--[if mso]>
+                  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{accept_link}}" style="v-text-anchor:middle;width:140px;height:42px;" stroke="f" fillcolor="#2B71CF">
+                    <w:anchorlock/>
+                    <center>
+                  <![endif]-->
+                    <a href="{{accept_link}}" style="background-color:#2B71CF;color:#ffffff;display:inline-block;font-family:'lato',Arial,sans-serif;font-size:16px;line-height:42px;text-align:center;text-decoration:none;width:140px;height:42px;-webkit-text-size-adjust:none;border-radius:2px;user-select: none;">Accept</a>
+                  <!--[if mso]>
+                    </center>
+                  </v:rect>
+                <![endif]-->
+                </div>
+              </td>
+              <td style="width:140px;height:42px;user-select: none;">
+        <div><!--[if mso]>
+                  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{reject_link}}" style="v-text-anchor:middle;width:140px;height:42px;" stroke="f" fillcolor="#2B71CF">
+                    <w:anchorlock/>
+                    <center>
+                  <![endif]-->
+                    <a href="{{reject_link}}" style="background-color:#2B71CF;color:#ffffff;display:inline-block;font-family:'lato',Arial,sans-serif;font-size:16px;line-height:42px;text-align:center;text-decoration:none;width:140px;height:42px;-webkit-text-size-adjust:none;border-radius:2px;user-select: none;">Reject</a>
+                  <!--[if mso]>
+                    </center>
+                  </v:rect>
+                <![endif]-->
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td valign="top" style="font-size:15px;padding-top:10px;border-top:1px solid #f0f0f0;font-family:'lato',Arial,sans-serif;color:#68757B;line-height:1.5em;">
+    
+      <a href="{{unsubscribe_link}}" style="text-decoration:none;color:#2B71CF; font-size:14px;">Stop receiving email notifications from the {{project.title}} JustDo.</a>
+      
+    <h4 style="margin:0;padding:0;font-size:16px;color:#333333;font-size:14px;">Having any issues? Reply to this email for support.</h4>
+  </td>
+</tr>

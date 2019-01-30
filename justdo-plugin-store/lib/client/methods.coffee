@@ -1,0 +1,1 @@
+_.extend JustdoPluginStore.prototype, {}

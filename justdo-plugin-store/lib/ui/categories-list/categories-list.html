@@ -1,0 +1,7 @@
+<template name="justdo_plugins_store_categories_list">
+  <ul class="plugins-categories-list">
+    {{#each categories}}
+      <li class="plugins-category plugins-category-{{id}} {{#if isActiveCategory}}active{{/if}}" category-id="{{id}}">{{label.en}}</li>
+    {{/each}}
+  </ul>
+</template>

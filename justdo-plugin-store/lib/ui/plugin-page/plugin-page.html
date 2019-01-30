@@ -1,0 +1,70 @@
+<template name="justdo_plugins_store_plugin_page">
+  <div class="justdo-plugins-plugin-page">
+    {{#with getActivePluginPageObject}}
+      <div class="row">
+        <div class="col-md-8">
+          <div class="return-to-menu"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></div>
+          <h1>{{title}}</h1>
+        </div>
+        <div class="col-md-4">
+          {{#if isProjectPage}}
+            {{#if isProjectPageAdmin}}
+              {{#if activePluginPagePluginInstallable}}
+                {{#if activePluginPagePluginEnabledForEnvironment}}
+                  <button class="btn-jd btn-jd-primary pull-right install-toggle-btn">
+                    {{#if activePluginPagePluginInstalled}}
+                      <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;&nbsp;Uninstall
+                    {{else}}
+                      <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Install
+                    {{/if}}
+                  </button>
+                {{else}}
+                  <div class="unable-to-install-notice">Plugin is not supported, <br> please contact support to install</div>
+                {{/if}}
+              {{/if}}
+            {{else}}
+              {{#if activePluginPagePluginInstalled}}
+                <div class="unable-to-install-notice" style="padding-top: 12px; text-align: center;">Installed</div>
+              {{else}}
+                <div class="unable-to-install-notice">Contact this JustDo admins to <br> install this plugin</div>
+              {{/if}}
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+      <!-- Images slider -->
+      <div id="plugin-carousel" class="carousel slide" data-ride="carousel">
+        {{#if hasMoreThanOneSliderItems}}
+          <ol class="carousel-indicators">
+            {{{carouselIndicators}}}
+          </ol>
+        {{/if}}
+        <div class="carousel-inner" role="listbox">
+          {{{carousel}}}
+        </div>
+      </div>
+      <!-- Plugin info -->
+      <div class="plugin-info row {{#if hasMoreThanOneSliderItems}}has-more-than-one-slider-items{{/if}}">
+        <div class="plugin-category col-md-6">
+          {{{categories}}}
+        </div>
+        <div class="plugin-price col-md-6">
+          Price: <strong>Free</strong>
+        </div>
+      </div>
+      <!-- Plugin description -->
+      <div class="plugin-description">
+        {{{full_description}}}
+      </div>
+      <div class="plugin-additional-info">
+        <h5>ADDITIONAL INFO</h5>
+        <p>Version:<strong> {{version}}</strong></p>
+      </div>
+      <div class="plugin-developer">
+        <h5>DEVELOPER</h5>
+        <p>Company:<strong> {{developer}}</strong></p>
+        <p>Website:<strong> {{developer_url}}</strong></p>
+      </div>
+    {{/with}}
+  </div>
+</template>

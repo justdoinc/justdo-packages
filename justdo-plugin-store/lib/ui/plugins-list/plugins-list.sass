@@ -1,0 +1,84 @@
+.empty-category
+  margin: 0 auto
+  width: 410px
+  font-size: 16px
+  text-align: center
+  font-family: lato
+  position: relative
+  top: 230px
+  font-weight: bold
+  user-select: none
+
+.plugin-tile
+  cursor: pointer
+
+  margin-bottom: 20px
+
+  .plugin-img
+    height: 230px
+    background-color: blue
+    border-radius: 2px
+    position: relative
+    overflow: hidden
+    background-position: center
+    background-repeat: no-repeat
+    background-size: cover
+
+    .developer-info
+      widows: 100%
+      position: absolute
+      bottom: -100px
+      left: 0
+      right: 0
+      background-color: rgba(0, 0, 0, 0.65)
+      padding: 7px 10px
+      transition: bottom .1s ease
+      p
+        margin: 0px
+        font-size: 14px
+
+        &.developer-name
+          color: white
+
+        &.developer-site
+          color: rgba(255, 255, 255, 0.55)
+
+  .plugin-short-info
+    margin-top: 4px
+    height: 94px
+    overflow: hidden
+
+  &:hover
+    .developer-info
+      bottom: 0
+
+  .plugin-rate
+    font-size: 20px
+    color: #BDBDBD
+    letter-spacing: 2px
+    margin-top: 7px
+    margin-bottom: 2px
+    .golden-stars
+      color: #F9C939
+
+  .plugin-name
+    color: #68757b
+    text-decoration: none
+    font-size: 16px
+    margin: 10px 0px
+    strong
+      color: #333333
+
+  .more-info
+    margin-top: 5px
+    padding: 0 1px 0 0;
+
+  .plugin-price
+    color: #2568D2
+    font-size: 16px
+    float: left
+
+  .plugin-installed
+    float: right
+    color: #454545
+    font-size: 15px
