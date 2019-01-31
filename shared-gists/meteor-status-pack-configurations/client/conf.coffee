@@ -1,0 +1,1 @@
+Status.setTemplate 'alert' # the `status_` prefix is added by the package 
