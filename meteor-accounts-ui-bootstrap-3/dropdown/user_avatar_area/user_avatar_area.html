@@ -1,0 +1,25 @@
+<template name="_loginDropdownAvatarArea">
+  {{#with currentUser}}
+    <div class="dropdown-avatar">
+      <div class="dropdown-user-avatar {{#if $not avatarUploadAllowed}}disable-avatar-upload{{/if}}" style="background-image: url('{{getProfilePic}}')">
+        {{#if avatarUploadAllowed}}
+          <span class="avatar-edit upload-new-profile-pic">
+            {{#if userHasProfilePic}}
+              Change
+            {{else}}
+              Upload
+            {{/if}}
+          </span>
+        {{/if}}
+        <div class="dropdown-user-avatar-loading-indicator">
+          Uploading
+        </div>
+      </div>
+
+      {{#if userHasProfilePic}}
+        {{!-- Note that we allow removing profile pic even if upload is disabled --}}
+        <span class="avatar-remove remove-profile-pic"></span>
+      {{/if}}
+    </div>
+  {{/with}}
+</template>

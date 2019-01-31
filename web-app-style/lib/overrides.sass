@@ -1,0 +1,26 @@
+$ticks-margin-left: 16px
+
+.radio, .checkbox
+  label
+    padding-left: $ticks-margin-left
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"]
+  margin-left: -1 * $ticks-margin-left
+
+.radio-inline,
+.checkbox-inline
+  padding-left: $ticks-margin-left
+
+.radio,
+.checkbox
+  margin-top: 0
+  margin-bottom: 8px
+
+.radio.disabled label,
+.checkbox.disabled label,
+fieldset[disabled] .radio label,
+fieldset[disabled] .checkbox label
+  color: #999

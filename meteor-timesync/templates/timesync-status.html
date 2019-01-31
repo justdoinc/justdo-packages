@@ -1,0 +1,11 @@
+<template name="timesync_status">
+  {{#if connected}}
+    {{#if sync_failed}}
+      <div class="alert alert-warning text-center" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <i class="fa fa-exclamation-triangle"></i>
+        <strong>Failed to sync server time.</strong> Some features disabled. <span id="timesync-reconnect" class="alert-link">Try now</span>
+      </div>
+    {{/if}}
+  {{/if}}
+</template>

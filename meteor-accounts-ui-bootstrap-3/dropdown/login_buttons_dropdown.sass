@@ -1,0 +1,176 @@
+#login-dropdown-list
+  .dropdown-toggle
+    display: block
+    height: 46px
+    margin-right: 4px
+    margin-top: -2px
+
+    img
+      margin-right: 0
+      width: 33px
+      height: 33px
+
+  &.open
+    .dropdown-toggle
+      filter: brightness(105%)
+      background: 0 none
+      transition: filter .10s ease-in-out
+
+  .dropdown-menu
+    width: 435px
+    padding: 0px
+    margin-right: 10px
+    border-radius: 3px
+
+    .dropdown-content
+      padding: 20px
+      position: relative
+
+    // Style for settings view
+    &.settings
+      width: 300px
+      .form-group
+        margin-top: 10px
+        margin-bottom: 0px
+      label
+        padding-left: 0px !important
+        margin-bottom: 2px !important
+        font-size: 13px
+        color: #767676
+        font-weight: normal
+      input
+        margin: 0px 0px 9px 0px !important
+        border-radius: 0px !important
+        padding: 0px 0px 3px 1px
+        border: none
+        box-shadow: none
+        font-size: 16px
+        color: #333333
+        border-bottom: 1px solid #DBDBDB
+        height: 25px
+
+      section
+        font-size: 13px
+
+        margin-bottom: 0px
+
+        h4
+          font-size: 15px
+          margin-left: -1px
+
+        &:first-child
+          margin-top: 8px
+
+        label
+          font-weight: normal
+
+        select
+          margin-top: 2px
+
+        .form-inline
+          margin-bottom: 7px
+
+      .dropdown-info
+        width: 100%
+        text-align: center
+
+      .info-btn-password
+        margin-top: 5px
+
+    // Style for change password view
+    // &.password
+    //   width: 300px
+    //   label
+    //     padding-left: 0px !important
+    //     margin-bottom: 0px !important
+    //     font-size: 13px
+    //     color: #A2A2A2
+    //     font-weight: normal
+    //   input
+    //     margin: 0px 0px 7px 0px !important
+    //     border-radius: 0px !important
+    //     padding: 0px 0px 7px 0px
+    //     border: none
+    //     box-shadow: none
+    //     font-size: 16px
+    //     color: #333333
+    //     border-bottom: 1px solid #DBDBDB
+    //     height: 25px
+
+.dropdown-info-btn
+  margin: 5px 1px 2px
+  span.dot
+    padding-right: 2px
+    padding-left: 2px
+    font-size: 12px
+    color: #a7a7a7
+    &::after
+      content: "·"
+  span
+    font-size: 15px
+    color: #337ab7
+    cursor: pointer
+    &:hover
+      text-decoration: underline
+
+.affiliates-console-btn-container
+  margin: 14px 1px 2px
+
+  float: right
+  margin-top: 14px
+
+  span
+    font-size: 15px
+    color: #337ab7
+    cursor: pointer
+    &:hover
+      text-decoration: underline
+
+#login-buttons-logout
+  width: 120px
+  margin-top: 8px
+
+.login-buttons-global-settings
+  margin-bottom: 8px
+
+.return-arrow
+  width: 22px
+  height: 26px
+  float: left
+  cursor: pointer
+  &:hover
+    i
+      color: black
+
+#login-buttons-do-change-password
+  margin-top: 20px
+
+// Style for settings, password view
+.dropdown-menu
+  &.settings,
+  &.password
+    .dropdown-avatar
+      border: none
+      padding: 0px
+      left: 0
+      right: 0
+      margin-left: auto
+      margin-right: auto
+      display: block
+      .dropdown-user-avatar
+        left: 0
+        right: 0
+
+  &.password
+    .dropdown-avatar
+      margin-bottom: 15px
+
+.dropdown-info
+  .action-buttons
+    font-size: 14px
+    color: #337ab7
+    cursor: pointer
+    white-space: nowrap
+
+    &:hover
+      text-decoration: underline

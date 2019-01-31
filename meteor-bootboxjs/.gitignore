@@ -1,0 +1,7 @@
+.versions
+
+.npm
+smart.lock
+
+*~
+.build*

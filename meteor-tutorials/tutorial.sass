@@ -1,0 +1,43 @@
+// The darkness of the spotlight shadow
+$opacity: 0.40
+
+.spotlight
+  display: block
+  position: absolute
+  // The position values are animated and moved
+  top: 0
+  left: 0
+  // Don't want these so we can have a total spot where needed
+  // bottom: auto
+  // right: auto
+  border-radius: 10px
+  box-shadow: 0px 0px 5px 5px rgba(0,0,0,$opacity) inset, 0px 0px 0px 4000px rgba(0,0,0,$opacity)
+  pointer-events: none
+  z-index: 1000
+
+.modal-dialog.positioned
+  position: absolute
+  // Ideal value is above OpenLayers' controls of 1000+x, below bootstrap modal dialog of 1050
+  z-index: 1049
+
+.modal-footer.compact
+  margin-top: 0
+
+$close-btn-color: #666
+.tutorial-close-button
+  color: $close-btn-color
+  margin-top: -10px
+  margin-right: -10px
+
+  &:hover, &:active
+    color: $close-btn-color
+
+.drag-to-reposition-message
+  margin: 4px 0 0 4px
+
+.tutorial-dialog
+  h4
+    margin-top: 4px
+
+  p:last-child
+    margin-bottom: 0
