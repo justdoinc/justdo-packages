@@ -145,6 +145,30 @@ _.extend JustdoHelpers,
 
     return false
 
+  normalizeBgColor: (color) ->
+    if not color?
+      return "transparent"
+
+    if color.toLowerCase() == "ffffff"
+      return "transparent"
+
+    if color.toLowerCase() == "transparent"
+      return "transparent"
+
+    if color[0] != "#"
+      return "#" + color
+    else
+      return color
+
+  getFgColor: (color) ->
+    if (normalized_color = JustdoHelpers.normalizeBgColor(color)) == "transparent"
+      return "#000000"
+
+    if JustdoHelpers.useDarkTextColorForBackground(normalized_color)
+      return "#000000"
+    else
+      return "#ffffff"
+
   hexToRgb: (hex) ->
     result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
 
@@ -152,3 +176,4 @@ _.extend JustdoHelpers,
       return [0, 0, 0]
 
     return [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
+
