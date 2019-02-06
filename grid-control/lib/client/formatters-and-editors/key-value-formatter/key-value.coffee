@@ -1,28 +1,3 @@
-# If you change the following two, change also selector-editor.coffee
-normalizeBgColor = (color) ->
-  if not color?
-    return "transparent"
-
-  if color.toLowerCase() == "ffffff"
-    return "transparent"
-
-  if color.toLowerCase() == "transparent"
-    return "transparent"
-
-  if color[0] != "#"
-    return "#" + color
-  else
-    return color
-
-getFgColor = (color) ->
-  if (normalized_color = normalizeBgColor(color)) == "transparent"
-    return "#000000"
-
-  if JustdoHelpers.useDarkTextColorForBackground(normalized_color)
-    return "#000000"
-  else
-    return "#ffffff"
-
 # XXX IMPORTANT: No XSS protection, if values can be modified
 # by user XSS protection must be added.
 
@@ -77,13 +52,12 @@ GridControl.installFormatter "keyValueFormatter",
   slick_grid: ->
     {schema, value} = @getFriendlyArgs()
 
-    bg_color = normalizeBgColor(getKeyBgColor(schema, value))
+    bg_color = JustdoHelpers.normalizeBgColor(getKeyBgColor(schema, value))
 
     if bg_color != "transparent"
-      custom_style = """ style="background-color: #{bg_color}; color: #{getFgColor(bg_color)};" """
+      custom_style = """ style="background-color: #{bg_color}; color: #{JustdoHelpers.getFgColor(bg_color)};" """
     else
       custom_style = ''
-
 
     formatter = """
       <div class="grid-formatter key-val-formatter" #{custom_style}>

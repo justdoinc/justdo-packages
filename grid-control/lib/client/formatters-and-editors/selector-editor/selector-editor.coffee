@@ -14,31 +14,6 @@ getKeyBgColor = (grid_values, value) ->
 
   return value_def.bg_color
 
-# If you change these two, change also key-value.coffee
-normalizeBgColor = (color) ->
-  if not color?
-    return "transparent"
-
-  if color.toLowerCase() == "ffffff"
-    return "transparent"
-
-  if color.toLowerCase() == "transparent"
-    return "transparent"
-
-  if color[0] != "#"
-    return "#" + color
-  else
-    return color
-
-getFgColor = (color) ->
-  if (normalized_color = normalizeBgColor(color)) == "transparent"
-    return "#000000"
-
-  if JustdoHelpers.useDarkTextColorForBackground(normalized_color)
-    return "#000000"
-  else
-    return "#ffffff"
-
 GridControl.installEditor "SelectorEditor",
   init: ->
     if not (selector_options = @context.column.values)?
@@ -70,7 +45,7 @@ GridControl.installEditor "SelectorEditor",
         label: label
         value: value
         order: value_def.order
-        bg_color: normalizeBgColor(value_def.bg_color)
+        bg_color: JustdoHelpers.normalizeBgColor(value_def.bg_color)
       }
 
     options = _.sortBy options, "order"
@@ -83,7 +58,7 @@ GridControl.installEditor "SelectorEditor",
         label = "&nbsp;"
 
       if option.bg_color != "transparent"
-        custom_style = """ style="background-color: #{option.bg_color}; color: #{getFgColor(option.bg_color)};" """
+        custom_style = """ style="background-color: #{option.bg_color}; color: #{JustdoHelpers.getFgColor(option.bg_color)};" """
       else
         custom_style = ''
 
@@ -126,8 +101,8 @@ GridControl.installEditor "SelectorEditor",
     
     @$select.selectpicker("val", val);
 
-    bg_color = normalizeBgColor(getKeyBgColor(@context.column.values, val))
-    fg_color = getFgColor(bg_color)
+    bg_color = JustdoHelpers.normalizeBgColor(getKeyBgColor(@context.column.values, val))
+    fg_color = JustdoHelpers.getFgColor(bg_color)
 
     if bg_color?    
       $(".dropdown-toggle", @$select_picker)
