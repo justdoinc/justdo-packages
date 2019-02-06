@@ -1,47 +1,32 @@
-default_filter_options =
-  filter_options: [
+default_grid_ranges = [
     # # Format:
     #
     # {
-    #   type: ""
-    #
-    #   type specific options
-    # }
-    #
-    # ## Supported Types and their options
-    #
-    # ### "range"
-    #
-    # {
-    #   type: "range",
     #   id: "high",
     #   label: "Overdue",
     #   range: [90, null]
     # }
     #
-    # id should be dash separated all-lower case name. Label can change without loosing
+    # id should be dash separated all-lower case name. Label can change without losing
     # user settings in the process, as long as id remains the same.
     #
-    # Range is an array with 2 items the first number is the begin number (inclusive)
+    # range is an array with 2 items the first number is the begin number (inclusive)
     # The second is the end number (inclusive).
     #
     # null means unlimited (in the example above: all numbers equal or larger to 90).
 
     # The following defaults are provided mostly to serve us example
     {
-      type: "range",
       id: "less-than-50",
       label: "Less than 50",
       range: [null, 49]
-    }
+    },
     {
-      type: "range",
       id: "equal-50",
       label: "50",
       range: [50, 50]
-    }
+    },
     {
-      type: "range",
       id: "more-than-50",
       label: "More than 50",
       range: [50, null]
@@ -56,9 +41,7 @@ NumericFilterControllerConstructor = (context) ->
   @column_settings = context.column_settings
   @column_filter_state_ops = context.column_filter_state_ops
 
-  filter_settings_options = @column_settings?.filter_settings?.options
-
-  @filter_settings_options = _.extend {}, default_filter_options, filter_settings_options
+  @grid_ranges = @column_settings?.grid_ranges or default_grid_ranges.slice()
 
   @filter_change_listener = => @refresh_state()
 
@@ -67,21 +50,20 @@ NumericFilterControllerConstructor = (context) ->
   @controller = $("""<div class="numeric-filter-controller" />""")
 
   filter_options_html = ""
-  for filter_option in @filter_settings_options.filter_options
-    if filter_option.type == "range"
-      if not filter_option.id?
-        console.warn "range filter option has no id, skipping"
-        
-        continue
+  for range in @grid_ranges
+    if not range.id?
+      console.warn "range filter option has no id, skipping"
       
-      option_item = """
-        <li value='range-#{filter_option.id}'>
-          <i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i>
-          #{filter_option.label}
-        </li>
-      """
+      continue
+    
+    option_item = """
+      <li value='range-#{range.id}'>
+        <i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i>
+        #{range.label}
+      </li>
+    """
 
-      filter_options_html += option_item
+    filter_options_html += option_item
 
   # note, the reason why we seperate the ul for the dropdown-header is that
   # the vertical scroll of the members ul, when there are many members, go
@@ -162,8 +144,8 @@ _.extend NumericFilterControllerConstructor.prototype,
 columnFilterStateToQuery = (column_filter_state, context) ->
   ranges_queries = []
 
-  if not (filter_settings_options = context.column_schema_definition?.grid_column_filter_settings?.options)?
-    console.error "Couldn't find filter_settings_options"
+  if not (grid_ranges = context.column_schema_definition?.grid_ranges)?
+    console.error "Couldn't find grid_ranges"
 
     return {}
 
@@ -173,15 +155,15 @@ columnFilterStateToQuery = (column_filter_state, context) ->
   if (original_ranges = column_filter_state.ranges)?
     found_ranges = original_ranges.slice() # copy
 
-    all_filter_option_id_found = true
+    all_range_ids_found = true
     for range_id in original_ranges
-      filter_option_id_found = false
-      for filter_option in filter_settings_options.filter_options
-        if filter_option.type == "range" and filter_option.id == range_id
-          filter_option_id_found = true
+      range_id_found = false
+      for range_def in grid_ranges
+        if range_def.id == range_id
+          range_id_found = true
 
-          if not (range = filter_option.range)?
-            console.warn "range #{filter_option.id} has no range prop - skipping"
+          if not (range = range_def.range)?
+            console.warn "range #{range_def.id} has no range prop - skipping"
 
           [gte, lte] = range
 
@@ -198,11 +180,11 @@ columnFilterStateToQuery = (column_filter_state, context) ->
 
           break
 
-      if not filter_option_id_found
-        all_filter_option_id_found = false
+      if not range_id_found
+        all_range_ids_found = false
         found_ranges = _.without found_ranges, range_id
 
-    if not all_filter_option_id_found
+    if not all_range_ids_found
       if found_ranges.length > 0
         column_filter_state.ranges = found_ranges
       else
