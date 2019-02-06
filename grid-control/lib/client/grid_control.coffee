@@ -687,6 +687,12 @@ _.extend GridControl.prototype,
             if not option.txt?
               err "Each value of #{prop_name} must have a txt property"
 
+      for prop_name in ["grid_ranges"]
+        # Init grid_ranges
+        if def[prop_name]?
+          if _.isFunction(def[prop_name])
+            def[prop_name] = def[prop_name](@)
+
       schema[field_name] = def
 
     if not parents_found
@@ -910,6 +916,11 @@ _.extend GridControl.prototype,
           column.filter_state = column_def.filter
         else
           column.filter_state = null
+
+      if field_def.grid_ranges?
+        column.grid_ranges = field_def.grid_ranges
+      else
+        column.grid_ranges = null
 
       columns.push column
 
