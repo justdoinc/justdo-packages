@@ -49,6 +49,8 @@ Package.onUse(function (api) {
   api.use("justdoinc:justdo-helpers@1.0.0", both);
   api.use("iron:router@1.1.2", both);
 
+  api.use("justdoinc:justdo-snackbar@1.0.0", client);
+
   api.use("justdoinc:justdo-tasks-collections-manager@1.0.0", both); // We depend on the regular follow up field schema definition.
 
   api.use("stem-capital:grid-control@0.1.0", both);
