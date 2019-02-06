@@ -22,4 +22,5 @@ Package.onUse(function (api) {
   api.add_files("docs/privacy-policy.html", client);
   api.add_files("docs/terms-conditions.html", client);
   api.add_files("docs/common.coffee", client);
+  api.addAssets("docs/data-subject-access-request.pdf", client);
 });
