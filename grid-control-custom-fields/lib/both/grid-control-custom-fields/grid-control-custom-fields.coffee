@@ -39,6 +39,28 @@ _.extend GridControlCustomFields,
 
       blackbox: true
 
+    filter_type:
+      # Ignored for field_type "date" (forced to: "unicode-dates-filter"), "select"
+      # (forced to: "whitelist")
+      type: String
+
+      optional: true
+
+    filter_options:
+      # Will be taken into account only if filter_type is set, or if field_type is "date" (in which case
+      # should be considered as if field_type got defaulted to: "unicode-dates-filter")
+      type: "skip-type-check"
+
+      optional: true
+
+    grid_ranges:
+      # Translates to grid_ranges
+      type: [Object]
+
+      blackbox: true
+
+      optional: true
+
     grid_visible_column:
       type: Boolean
 
@@ -65,13 +87,6 @@ _.extend GridControlCustomFields,
 
     decimal:
       type: Boolean
-
-      optional: true
-
-    filter_options:
-      type: Object
-
-      blackbox: true
 
       optional: true
 
@@ -180,6 +195,9 @@ _.extend GridControlCustomFields,
       if (disabled = custom_field_definition.disabled)?
         custom_field_schema.disabled = disabled
 
+      if (grid_ranges = custom_field_definition.grid_ranges)?
+        custom_field_schema.grid_ranges = grid_ranges
+
       if Meteor.isClient
         # The following is relevant only when running on the client, on the server we won't
         # even have GridControl defined
@@ -249,7 +267,9 @@ _.extend GridControlCustomFields,
 
           custom_field_schema.grid_column_filter_settings = {type: "whitelist"}
 
-        if custom_field_definition.field_type == "date"
+          # END IF field_type "select"
+
+        else if custom_field_definition.field_type == "date"
           custom_field_schema.grid_column_filter_settings =
             type: "unicode-dates-filter"
 
@@ -322,6 +342,16 @@ _.extend GridControlCustomFields,
                   relative_range: [null, -1]
                 }
               ]
+
+          # END IF field_type "date"
+
+        else
+          if (filter_type = custom_field_definition.filter_type)?
+            custom_field_schema.grid_column_filter_settings =
+              type: filter_type
+
+          if (filter_options = custom_field_definition.filter_options)?
+            custom_field_schema.grid_column_filter_settings.options = custom_field_definition.filter_options
 
       custom_fields_schema[custom_field_id] = custom_field_schema
 
