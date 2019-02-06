@@ -1,3 +1,5 @@
+$begin-input-width: 50px
+$end-input-width: 50px
 $color-button-width: 24px
 $buttons-margins: 1px
 $remove-add-button-width: 24px
@@ -40,12 +42,46 @@ $remove-add-button-width: 24px
   .editor-content
     margin: 0 8px
 
+  .option-label, .option-begin, .option-end
+    font-size: 14px
+    padding-top: 3px
+
+    &.new
+      input
+        border: none
+        padding: 2px 5px
+        background-color: rgba(43, 113, 207, 0.1)
+        border-radius: 2px
+        &::placeholder
+          color: #5a82b9
+        &:focus
+          outline: none
+
   .option-label
     margin-left: 28px
-    padding-top: 3px
-    font-size: 14px
-    margin-right: $color-button-width + $remove-add-button-width + $buttons-margins
-    color: #888888
+
+
+    margin-right: $begin-input-width + $buttons-margins + $end-input-width + $buttons-margins + $color-button-width + $buttons-margins + $remove-add-button-width + $buttons-margins
+
+    input
+      width: 100%
+
+  .option-begin
+    position: absolute
+    right: $remove-add-button-width + $buttons-margins + $color-button-width + $buttons-margins + $end-input-width + $buttons-margins
+    width: $begin-input-width
+    top: 0px
+    text-align: center
+
+    input
+      width: 100%
+
+  .option-end
+    position: absolute
+    right: $remove-add-button-width + $buttons-margins + $color-button-width + $buttons-margins
+    width: $end-input-width
+    top: 0px
+    text-align: center
 
     input
       width: 100%
@@ -61,3 +97,71 @@ $remove-add-button-width: 24px
   .formula-input
     margin-bottom: 9px
     margin-top: 9px
+
+  .add-option
+    position: absolute
+    right: 2px
+    width: $remove-add-button-width
+    height: 26px
+    top: 0px
+    text-align: center
+    padding-top: 4px
+
+  .bg-color-selector
+    position: absolute
+    right: $remove-add-button-width + $buttons-margins
+    width: $color-button-width
+    height: 26px
+    top: 0px
+    text-align: center
+    padding-top: 4px
+
+  .custom-fields-justdo-color-picker-opener
+    margin: 1px 3px
+
+  .remove-option
+    position: absolute
+    right: 2px
+    width: $remove-add-button-width
+    height: 26px
+    top: 2px
+    text-align: center
+    padding-top: 4px
+
+  .remove-option, .add-option
+    cursor: pointer
+    color: #2b71cf
+
+  .new-option-label
+    width: 95%
+    border: none
+    padding: 2px 5px
+    background-color: rgba(43, 113, 207, 0.1)
+    border-radius: 2px
+    &::placeholder
+      color: #5a82b9
+    &:focus
+      outline: none
+
+  .custom-field-options
+    max-height: 175px
+    overflow: auto
+
+  .custom-field-option
+    height: 32px
+
+  .custom-field-option, .add-custom-field-option
+    position: relative
+
+  .option-handle
+    cursor: move
+    font-size: 11px
+    color: #b3b3b3
+    position: absolute
+    left: 0px
+    top: 0px
+    width: 29px
+    height: 32px
+    padding: 8px
+    margin-right: 0
+    text-align: center

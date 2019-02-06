@@ -22,6 +22,25 @@
     </div>
   </div>
 
+  <div class="editor-caption">
+    Set formula filters
+  </div>
+
+  <div class="custom-field-options"></div>
+
+  <div class="add-custom-field-option">
+    <div class="option-label"><input type="text" class="new-option-label" placeholder="Add filter" /></div>
+
+    <div class="bg-color-selector">{{> justdo_color_picker_dropdown color_picker_controller=colorPickerDropdownController}}</div>
+
+    <div class="option-begin new"><input class="new-option-begin" type="text" placeholder="Begin" /></div>
+    <div class="option-end new"><input class="new-option-end" type="text" placeholder="End" /></div>
+
+    {{#if showAddButton}}
+      <div class="add-option"><i class="fa fa-fw fa-check" aria-hidden="true"></i></div>
+    {{/if}}
+  </div>
+
   <div role="separator" class="divider"></div>
 
   <div class="dropdown-filter-controls-container">
