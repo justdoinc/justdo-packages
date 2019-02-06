@@ -221,6 +221,37 @@ SimpleSchema.extendOptions
   # If relevant to the current field editor/formatter and is undefined considered as an empty object.
   grid_values: Match.Optional(Match.OneOf(Function, Object))
 
+  # grid_ranges:
+  #
+  # Define ranges of values that can be labeled and have special customizations (Used by some
+  # formatters/editors/filters, in particular for Numeric fields).
+  #
+  # General format (can be extended):
+  #
+  # [
+  #   {
+  #     id: "not-set",
+  #     label: "Not set",
+  #     range: [null, 0] # null means +/- infinity
+  #   }
+  # ]
+  #
+  # Alternatively you can specify a function that get the current grid_control as
+  # its fisrt argument parameter and returns an object of the above format.
+  #
+  # function (grid_control) {
+  #   return [...]
+  # }
+  #
+  # XXX not implemented
+  # XXX If the function is a reactive resource editors/formatters that uses it should react
+  # XXX to changes upon invalidation.
+  #
+  # Note: this option is in use by some of the editors/formatters it has no effect otherwise.
+  #
+  # If relevant to the current field editor/formatter and is undefined considered as an empty object.
+  grid_ranges: Match.Optional(Match.OneOf(Function, [Object]))
+
   # grid_removed_values:
   #
   # Just like grid_values, all comments to grid_values are relevant, but used to store
