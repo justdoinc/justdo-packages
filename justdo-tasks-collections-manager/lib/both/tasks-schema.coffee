@@ -354,40 +354,34 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         grid_column_filter_settings:
           type: "numeric-filter"
-          options: {
-            filter_options: [
-              {
-                type: "range",
-                id: "not-set",
-                label: "Not set",
-                range: [null, 0]
-              }
-              {
-                type: "range",
-                id: "low",
-                label: "Low (1-49)",
-                range: [1, 49]
-              }
-              {
-                type: "range",
-                id: "medium",
-                label: "Medium (50-74)",
-                range: [50, 74]
-              }
-              {
-                type: "range",
-                id: "high",
-                label: "High (75-95)",
-                range: [75, 95]
-              }
-              {
-                type: "range",
-                id: "top",
-                label: "Top (96-100)",
-                range: [96, null]
-              }
-            ]
+
+        grid_ranges: [
+          {
+            id: "not-set",
+            label: "Not set",
+            range: [null, 0]
           }
+          {
+            id: "low",
+            label: "Low (1-49)",
+            range: [1, 49]
+          }
+          {
+            id: "medium",
+            label: "Medium (50-74)",
+            range: [50, 74]
+          }
+          {
+            id: "high",
+            label: "High (75-95)",
+            range: [75, 95]
+          }
+          {
+            id: "top",
+            label: "Top (96-100)",
+            range: [96, null]
+          }
+        ]
 
       project_id:
         label: "JustDo ID"
