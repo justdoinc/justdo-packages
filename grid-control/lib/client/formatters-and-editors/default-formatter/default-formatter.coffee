@@ -6,12 +6,13 @@ formatDecimals = (decimal) ->
 
 GridControl.installFormatter "defaultFormatter",
   slick_grid: ->
+    custom_style = ""
+
     {schema, value, self} = @getFriendlyArgs()
 
     if not value?
       value = ""
     else
-      custom_style = ""
       if (grid_ranges = schema.grid_ranges)?
         value_range = null
         for range_def in grid_ranges
@@ -37,10 +38,12 @@ GridControl.installFormatter "defaultFormatter",
             bg_color = JustdoHelpers.normalizeBgColor(bg_color)
 
             if bg_color != "transparent"
-              custom_style = """ style="background-color: #{bg_color}; color: #{JustdoHelpers.getFgColor(bg_color)};" """
+              custom_style += """background-color: #{bg_color}; color: #{JustdoHelpers.getFgColor(bg_color)};"""
 
-      if schema.type is Number and schema.decimal is true
-        value = formatDecimals(value)
+      if schema.type is Number
+        custom_style += " text-align: right;"
+        if schema.decimal is true
+          value = formatDecimals(value)
 
       value = self.xssGuard value
 
@@ -48,7 +51,7 @@ GridControl.installFormatter "defaultFormatter",
         value = self.nl2br value
 
     formatter = """
-      <div class="grid-formatter default-formatter" #{custom_style}>#{value}</div>
+      <div class="grid-formatter default-formatter"#{if custom_style != "" then " style=\"#{custom_style}\"" else ""}>#{value}</div>
     """
 
     return formatter

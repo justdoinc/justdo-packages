@@ -2,7 +2,12 @@
 
 GridControl.installEditor "TextareaEditor",
   init: ->
-    @$input = $("""<textarea rows="1" class="mousetrap" />""")
+    custom_style = ""
+
+    if @context.schema.type is Number
+      custom_style += " text-align: right;"
+
+    @$input = $("""<textarea rows="1" class="mousetrap" #{if custom_style != "" then " style=\"#{custom_style}\"" else ""} />""")
 
     $wrapper = @generateInputWrappingElement()
 
@@ -89,9 +94,9 @@ GridControl.installEditor "TextareaEditor",
 
     return
 
-#
-# Custom helpers
-#
+  #
+  # Custom helpers
+  #
   generateInputWrappingElement: ->
     # Separate the wrapping element generator, to allow its replacement
     # by inheriting editors (see TextareaWithTreeControlsEditor for example)
