@@ -18,9 +18,11 @@ Template.justdo_plugins_store_categories_list.events
   "click .plugins-category": ->
     tpl = Template.instance()
 
+
     tpl.store_manager.clearActivePluginPage()
     tpl.store_manager.setActiveCategory @id
 
     $(".store-front").scrollTop(0)
+    $(document).scrollTop(0)
 
     return

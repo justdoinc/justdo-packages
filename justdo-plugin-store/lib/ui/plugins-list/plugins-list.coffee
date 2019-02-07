@@ -40,6 +40,7 @@ Template.justdo_plugins_store_plugins_list.events
     Tracker.flush()
 
     $(".store-front").scrollTop(0)
+    $(document).scrollTop(0)
 
     return
 
