@@ -49,9 +49,11 @@ _.extend GridControlCustomFields,
     filter_options:
       # Will be taken into account only if filter_type is set, or if field_type is "date" (in which case
       # should be considered as if field_type got defaulted to: "unicode-dates-filter")
-      type: "skip-type-check"
+      type: Object
 
       optional: true
+
+      blackbox: true
 
     grid_ranges:
       # Translates to grid_ranges
@@ -274,7 +276,8 @@ _.extend GridControlCustomFields,
             type: "unicode-dates-filter"
 
           if (filter_options = custom_field_definition.filter_options)?
-            custom_field_schema.grid_column_filter_settings.options = custom_field_definition.filter_options
+            custom_field_schema.grid_column_filter_settings.options =
+              custom_field_definition.filter_options
           else
             custom_field_schema.grid_column_filter_settings.options =
               filter_options: [
