@@ -44,9 +44,15 @@ _.extend JustdoLegalDocsVersionsApi,
         if signed_doc.version.version == JustdoLegalDocsVersions[doc_id].version
           report.docs[doc_id] = "SIGNED"
         else
-          all_signed_and_up_to_date = false
+          # Due to issue discovered on Android, we report falsely that all docs are
+          # up to date. Un-comment the line below somewhere around mid-march 2019.
+          # Remove the report.docs[doc_id] = "SIGNED" line.
+          #
+          # all_signed_and_up_to_date = false
 
-          report.docs[doc_id] = "OUT-DATED"
+          # report.docs[doc_id] = "OUT-DATED"
+
+          report.docs[doc_id] = "SIGNED"
 
       report.status = all_signed_and_up_to_date
 
