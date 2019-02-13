@@ -134,6 +134,20 @@ _.extend PACK.Formatters.textWithTreeControls,
         $(".task-pane-content").scrollTop(0)
     }
     {
+      args: ['click', '.jdt-play']
+      handler: (e) ->
+        event_item = @getEventItem(e)
+
+        APP.justdo_time_tracker.playProjectTask(event_item._id)
+    }
+    {
+      args: ['click', '.jdt-stop']
+      handler: (e) ->
+        event_item = @getEventItem(e)
+
+        APP.justdo_time_tracker.stopProjectTask()
+    }
+    {
       args: ['click', '.task-description']
       handler: (e) ->
         openTaskPaneAndSetTab("item-details")

@@ -39,6 +39,10 @@ getHeighestSeqId = ->
 getIsDeliveryPlannerPluginEnabled = ->
   return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled("justdo_delivery_planner")
 
+getIsTimeTrackerPluginEnabled = ->
+  # The time tracker plugin needs both itself installed, and the resource manager as dependency
+  return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled(JustdoTimeTracker?.project_custom_feature_id) and APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled(JustdoResourcePlanner?.project_custom_feature_id)
+
 getMinimalSeqIdSpace = ->
   # Returns the maximum between 3 and the the digits count of the item
   # returned from getHeighestSeqId.
@@ -77,6 +81,7 @@ GridControl.installFormatter "textWithTreeControls",
 
     highest_seqId_computation = null
     is_delivery_planner_plugin_enabled_computation = null
+    is_time_tracker_plugin_enabled_computation = null
     Tracker.nonreactive =>
       # Run in an isolated reactivity scope
       highest_seqId_computation = Tracker.autorun =>
@@ -101,9 +106,21 @@ GridControl.installFormatter "textWithTreeControls",
 
         return
 
+      is_time_tracker_plugin_enabled_computation = Tracker.autorun =>
+        current_val = getIsTimeTrackerPluginEnabled.call(@) # Reactive
+        cached_val = @getCurrentColumnData("time_tracker_plugin_enabled") # non reactive
+
+        if current_val != cached_val
+          @setCurrentColumnData("time_tracker_plugin_enabled", current_val)
+
+          dep.changed()
+
+        return
+
     Tracker.onInvalidate ->
       highest_seqId_computation.stop()
       is_delivery_planner_plugin_enabled_computation.stop()
+      is_time_tracker_plugin_enabled_computation.stop()
 
     return
 
@@ -171,6 +188,16 @@ GridControl.installFormatter "textWithTreeControls",
     tree_control += """
       <div class="grid-tree-control-item-icons">
     """
+
+    if @getCurrentColumnData("time_tracker_plugin_enabled")
+      if doc[JustdoTimeTracker?.running_task_private_field_id]?
+        tree_control += """
+            <i class="fa fa-fw fa-stop-circle-o jdt-stop slick-prevent-edit" title="You are working on this task now, press to stop and log the time worked" aria-hidden="true"></i>
+        """
+      else
+        tree_control += """
+            <i class="fa fa-fw fa-play-circle-o jdt-play slick-prevent-edit" title="Start working on this task" aria-hidden="true"></i>
+        """
 
     if (description = doc.description)? and not _.isEmpty(description)
       tree_control += """
