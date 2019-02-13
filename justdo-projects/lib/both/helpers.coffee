@@ -27,3 +27,12 @@ _.extend Projects.prototype,
 
   getNonAdminsIdsFromProjectDoc: (project_doc) ->
     @getAdminsIdsFromProjectDoc project_doc, true
+
+  isPluginInstalledOnProjectDoc: (custom_feature_id, project_doc) ->
+    if not project_doc? and Meteor.isClient
+      project_doc = APP?.modules?.project_page?.curProj()?.getProjectDoc({fields: {conf: 1}})
+
+    if _.isArray(custom_features = project_doc?.conf?.custom_features)
+      return custom_feature_id in project_doc?.conf?.custom_features
+
+    return false
