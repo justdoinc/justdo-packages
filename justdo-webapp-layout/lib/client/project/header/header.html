@@ -1,10 +1,30 @@
 <template name="project_header">
   <div class="project-header">
+    <div class="above-project-header-items">
+      {{#each aboveProjectHeaderItems}}
+        {{#if template}}
+          {{> Template.dynamic template=template data=template_data}}
+        {{else if html}}
+          {{{html}}}
+        {{/if}}
+      {{/each}}
+    </div>
+
     {{> search_comp}}
 
     {{> project_operations_toolbar}}
 
     <div class="clearfix"></div>
+
+    <div class="below-project-header-items">
+      {{#each belowProjectHeaderItems}}
+        {{#if template}}
+          {{> Template.dynamic template=template data=template_data}}
+        {{else if html}}
+          {{{html}}}
+        {{/if}}
+      {{/each}}
+    </div>
   </div>
 </template>
 

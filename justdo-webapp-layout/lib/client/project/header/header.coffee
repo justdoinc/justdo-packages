@@ -9,6 +9,13 @@ APP.executeAfterAppLibCode ->
   #
   Template.project_header.helpers project_template_helpers
 
+  Template.project_header.helpers
+    aboveProjectHeaderItems: ->
+      return module.getExtensionsPlaceholdersItems("above_project_header")
+
+    belowProjectHeaderItems: ->
+      return module.getExtensionsPlaceholdersItems("below_project_header")
+
   #
   # project_header_global_layout_header_right, project_header_global_layout_header_middle templates
   #
