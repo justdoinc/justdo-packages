@@ -7,7 +7,7 @@ justdo_snackbar_default_options = {
   actionTextColor: "#c9a6f4"
   # showSecondButton: false
   # secondButtonText: ""
-  # secondButtonTextColor: "#4CAF50"'"
+  secondButtonTextColor: "#c9a6f4"
   # backgroundColor: "#323232"'"
   # pos: "bottom-left"
   # duration: 5000
