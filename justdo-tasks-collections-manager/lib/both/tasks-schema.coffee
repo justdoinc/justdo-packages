@@ -3,6 +3,17 @@ _.extend JustdoTasksCollectionsManager.prototype,
     # Note: default order of columns derived from the fields order of definition
     # below
 
+    title_field_grid_dependencies_fields = [
+        "owner_id",
+        "priority",
+        "pending_owner_id",
+        "seqId",
+        "files",
+        "description",
+        "p:dp:is_project",
+        "priv:jdt:running_since"
+      ]
+
     Schema =
       title:
         label: "Subject"
@@ -12,7 +23,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_default_grid_view: true
         grid_default_width: 400
 
-        grid_dependencies_fields: ["owner_id", "priority", "pending_owner_id", "seqId", "files", "description", "p:dp:is_project"]
+        grid_dependencies_fields: title_field_grid_dependencies_fields
 
         type: String
         optional: true

@@ -63,6 +63,10 @@ Package.onUse(function (api) {
   api.addAssets("store-db/plugins/delivery-planner/media/delivery-planner-icon.png", client);
   api.addAssets("store-db/plugins/delivery-planner/media/delivery-planner-screenshot.png", client);
 
+  // time-tracker 
+  api.addFiles("store-db/plugins/justdo-time-tracker/justdo-time-tracker.coffee", both);
+  api.addAssets("store-db/plugins/justdo-time-tracker/media/store-list-icon.png", client);
+
   // resource-management
   api.addFiles("store-db/plugins/resource-management/resource-management.coffee", both);
   api.addAssets("store-db/plugins/resource-management/media/store-list-icon.png", client);
