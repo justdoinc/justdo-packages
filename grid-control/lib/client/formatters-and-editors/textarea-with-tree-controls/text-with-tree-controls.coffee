@@ -274,7 +274,7 @@ GridControl.installFormatter "textWithTreeControls",
       owner_doc = doc.owner
 
       if owner_doc?
-        owner_display_name = owner_doc?.profile?.first_name + " " + owner_doc?.profile?.last_name
+        owner_display_name = JustdoHelpers.xssGuard(Justowner_doc?.profile?.first_name + " " + owner_doc?.profile?.last_name)
 
       owner_id_width = 28
       owner_id_margin_right = 0
@@ -290,7 +290,7 @@ GridControl.installFormatter "textWithTreeControls",
         pending_owner_doc = doc.pending_owner
 
         if pending_owner_doc?
-          pending_owner_display_name = pending_owner_doc?.profile?.first_name + " " + pending_owner_doc?.profile?.last_name
+          pending_owner_display_name = JustdoHelpers.xssGuard(pending_owner_doc?.profile?.first_name + " " + pending_owner_doc?.profile?.last_name)
 
         title += " &rarr; " + pending_owner_display_name
 
