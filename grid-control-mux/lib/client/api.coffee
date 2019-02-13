@@ -610,6 +610,20 @@ _.extend GridControlMux.prototype,
 
     return @_current_path_crv.getSync()
 
+  activateCollectionItemIdInCurrentPathOrFallbackToMainTab: (item_id) ->
+    activatePath = => @getActiveTabNonReactive()?.grid_control?.activatePath("/" + item_id + "/", 0, {smart_guess: true})
+
+    if not activatePath()
+      @activateTab("main")
+
+      # To activate the tab
+      Tracker.flush()
+
+      # Second attempt after switching to the main tab
+      activatePath()
+
+    return
+
   getActiveGridControl: (require_ready=false) ->
     # Returns the grid control object of the current active tab
     #
