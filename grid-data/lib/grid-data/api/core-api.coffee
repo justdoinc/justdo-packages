@@ -263,7 +263,7 @@ _.extend GridData.prototype,
 
     if not (section = @getPathSection(path))?
       # Path is under no known section
-      return -1
+      return false
 
     return section.section_manager.isPathExist path
 
