@@ -21,6 +21,7 @@ _.extend JustdoFormulaFields.prototype,
     return
 
   isPluginInstalledOnProjectDoc: (project_doc) ->
+    # XXX need to use APP.projects.isPluginInstalledOnProjectDoc() instead.
     if _.isArray(custom_features = project_doc?.conf?.custom_features)
       return JustdoFormulaFields.project_custom_feature_id in project_doc?.conf?.custom_features
 
