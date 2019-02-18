@@ -189,14 +189,14 @@ GridControl.installFormatter "textWithTreeControls",
       <div class="grid-tree-control-item-icons">
     """
 
-    if @getCurrentColumnData("time_tracker_plugin_enabled")
+    if @getCurrentColumnData("time_tracker_plugin_enabled") and not doc._type?
       if doc[JustdoTimeTracker?.running_task_private_field_id]?
         tree_control += """
-            <i class="fa fa-fw fa-stop-circle-o jdt-stop slick-prevent-edit" title="You are working on this task now, press to stop and log the time worked" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-stop-circle-o jdt-stop jdt-grid-icon slick-prevent-edit" title="You are working on this task now, press to stop and log the time worked" aria-hidden="true"></i>
         """
       else
         tree_control += """
-            <i class="fa fa-fw fa-play-circle-o jdt-play slick-prevent-edit" title="Start working on this task" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-play-circle-o jdt-play jdt-grid-icon slick-prevent-edit" title="Start working on this task" aria-hidden="true"></i>
         """
 
     if (description = doc.description)? and not _.isEmpty(description)
