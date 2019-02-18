@@ -6,8 +6,10 @@ GridControl.installEditor "TextareaEditor",
 
     if @context.schema.type is Number
       custom_style += " text-align: right;"
+    else
+      custom_style += " text-align: left;" # left is needed, since we user dir="auto" that affect direction in a way non desirable by us
 
-    @$input = $("""<textarea rows="1" class="mousetrap" #{if custom_style != "" then " style=\"#{custom_style}\"" else ""} />""")
+    @$input = $("""<textarea dir="auto" rows="1" class="mousetrap" #{if custom_style != "" then " style=\"#{custom_style}\"" else ""} />""")
 
     $wrapper = @generateInputWrappingElement()
 

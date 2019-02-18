@@ -51,7 +51,7 @@ GridControl.installFormatter "defaultFormatter",
         value = self.nl2br value
 
     formatter = """
-      <div class="grid-formatter default-formatter"#{if custom_style != "" then " style=\"#{custom_style}\"" else ""}>#{value}</div>
+      <div class="grid-formatter default-formatter"#{if custom_style != "" then " style=\"#{custom_style}\"" else ""} dir="auto">#{value}</div>
     """
 
     return formatter

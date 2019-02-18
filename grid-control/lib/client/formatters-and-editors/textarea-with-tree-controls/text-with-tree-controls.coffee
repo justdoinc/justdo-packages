@@ -328,7 +328,7 @@ GridControl.installFormatter "textWithTreeControls",
     text_left_margin = current_left_pos
 
     tree_control += """
-        <div class="grid-tree-control-text"
+        <div class="grid-tree-control-text" dir="auto"
               style="margin-left: #{text_left_margin}px;">#{value}</div>
     """
 
