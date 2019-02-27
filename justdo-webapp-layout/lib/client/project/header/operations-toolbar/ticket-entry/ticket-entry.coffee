@@ -1,5 +1,7 @@
 loading_ckeditor = new ReactiveVar false
 
+gridControlMux = -> APP.modules.project_page.grid_control_mux?.get()
+
 APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
 
@@ -77,14 +79,32 @@ APP.executeAfterAppLibCode ->
                       then selected_owner_id \
                       else null
 
-                activateItemId = (item_id) ->
-                  grid_control.once "rebuild_ready", ->
-                    Meteor.defer ->
-                      grid_control.activateCollectionItemId(item_id, 0, {force_pass_filter: true})
+                activateItemId = (item_id, options) ->
+                  item_doc = APP.collections.Tasks.findOne({_id: item_id, project_id: project_page_module.helpers.curProj().id})
+
+                  title = "Task <b>##{item_doc.seqId}: #{JustdoHelpers.ellipsis(item_doc.title, 50)}</b> added"
+                  if (destination_title = options.destination_title)?
+                    title += " to <b>#{destination_title}</b>"
+
+                  if (pending_owner_id = task_fields.pending_owner_id)?
+                    title += " assigned to <b>#{JustdoHelpers.displayName(Meteor.users.findOne(pending_owner_id))}</b>"
+
+                  JustdoSnackbar.show
+                    text: title
+                    duration: 7000
+                    actionText: "View"
+                    onActionClick: =>
+                      JustdoSnackbar.close()
+
+                      gridControlMux()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(item_id)
+
+                      return
 
                   return
 
                 grid_control._performLockingOperation (releaseOpsLock, timedout) =>
+                  destination_title = $("div.ticket-category-select button")?.attr("title")
+
                   if destination_type == "ticket-queue"
                     Meteor.call "newTQTicket",
                       {
@@ -101,7 +121,7 @@ APP.executeAfterAppLibCode ->
 
                           return
 
-                        activateItemId(task_id)
+                        activateItemId(task_id, {destination_title})
 
                         releaseOpsLock()
 
@@ -127,7 +147,7 @@ APP.executeAfterAppLibCode ->
 
                                     return
 
-                                  activateItemId(task_id)
+                                  activateItemId(task_id, {destination_title})
 
                                   releaseOpsLock()
 
