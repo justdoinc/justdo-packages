@@ -59,5 +59,5 @@ _.extend JustdoHelpers,
 
   htmlEntitiesXssGuard: (str) ->
     # https://css-tricks.com/snippets/javascript/htmlentities-for-javascript/
-    String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;')
 
