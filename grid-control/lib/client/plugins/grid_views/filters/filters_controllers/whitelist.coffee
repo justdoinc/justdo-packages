@@ -28,7 +28,7 @@ WhiteListFilterControllerConstructor = (context) ->
         label = html
       else
         # Prefer the html label
-        label = JustdoHelpers.xssGuard(html)
+        label = JustdoHelpers.xssGuard(html, {allow_html_parsing: true, enclosing_char: ''})
     else
       label = value_options.txt
 
