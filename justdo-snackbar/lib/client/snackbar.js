@@ -1,5 +1,15 @@
 // https://raw.githubusercontent.com/polonel/SnackBar/036f63cca0ac55170b8c1483a9142e39e289aa7f/dist/snackbar.js
 
+// JUSTDOers! IMPORTANT! I (Daniel) Added XSS protections below, if you upgrade to
+// heigher version - pay attention to keep them!
+
+// Note, I decided to do it here, and not in our layer, to avoid letting any plugin
+// developer accidentally using it directly without XSS protection.
+
+// Also, in case of upgrade that will add additional fields that need guarding - 
+// my hope is that whoever will do the upgrade will notice the need to add guarding
+// to these fields.
+
 /*!
  * Snackbar v0.1.11
  * http://polonel.com/Snackbar
@@ -48,6 +58,29 @@
 
     Snackbar.show = function($options) {
         var options = Extend(true, $defaults, $options);
+
+        // for option_name, option_val of options
+        //   if _.isString(option_val)
+        //     if option_name in ["text", "actionText", "secondButtonText"]
+        //       options[option_name] = JustdoHelpers.xssGuard(option_val, {allow_html_parsing: true, enclosing_char: ""})
+        //     else
+        //       options[option_name] = JustdoHelpers.xssGuard(option_val)
+
+        var option_name, option_val;
+
+        for (option_name in options) {
+          option_val = options[option_name];
+          if (_.isString(option_val)) {
+            if (option_name === "text" || option_name === "actionText" || option_name === "secondButtonText") {
+              options[option_name] = JustdoHelpers.xssGuard(option_val, {
+                allow_html_parsing: true,
+                enclosing_char: ""
+              });
+            } else {
+              options[option_name] = JustdoHelpers.xssGuard(option_val);
+            }
+          }
+        }
 
         if (Snackbar.current) {
             Snackbar.current.style.opacity = 0;
