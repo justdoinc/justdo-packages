@@ -316,9 +316,7 @@ _.extend GridControl.prototype,
 common_formatters_helpers =
   nl2br: (text) -> text.replace(/\n/g, "<br>")
 
-  # We use very simple xssGuard due to the need for formatters to
-  # run very fast (they can be called thusands of time on each build...)
-  xssGuard: (text) -> (text + "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+  xssGuard: (text) -> JustdoHelpers.xssGuard(text)
 
   getColumnFieldId: ->
     friendly_args = @getFriendlyArgs()
