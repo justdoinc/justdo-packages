@@ -27,10 +27,7 @@
     <div class="record">
       <div class="image">{{#with changingUser}}{{> justdo_avatar}}{{/with}}</div>
       <div class="content">
-        <span class="data">
-          {{#if $neq field 'description'}}{{formatedValue}}{{else}}{{{xssGuard new_value}}}{{/if}}
-          {{!--todo: present only the first  line from the description with a hover to display it all.... --}}
-        </span>
+        <span class="data">{{formatedValue}}</span>
         <div class="date">{{formatDate}}</div>
       </div>
     </div>
