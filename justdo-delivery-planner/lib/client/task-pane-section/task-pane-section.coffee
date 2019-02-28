@@ -771,7 +771,7 @@ APP.executeAfterAppLibCode ->
 
         result = workdays.join(""" <span class="extended-days-avail-separator">&#8226;</span> """)
 
-      return JustdoHelpers.xssGuard(result)
+      return JustdoHelpers.xssGuard(result, {allow_html_parsing: true, enclosing_char: ''})
 
     getDaysoffRanges: ->
       if _.isEmpty(ranges = @getExtendedDaysoffRanges())
