@@ -7,13 +7,13 @@ var htmlPurifier = function(settings){
     var customTags = {};
     var noTextManhandle = false;
     var encodeHtmlEntities = false;
+    var allowEmptyTags = false;
     var root;
     var insertion_mode;
     var noFormatting;
     var preferB_I = false;
     var preferStrong_Em = false;
     var withoutTags;
-
 
     var scope_markers = {'td': true, 'th': true, 'caption': true};
     var tags_with_implied_end = {'li': true, 'p': true};
@@ -153,7 +153,13 @@ var htmlPurifier = function(settings){
             return text;
         },
         toString: function () {
-            if (this.isEmpty()) return '';
+            if (this.isEmpty()) {
+              if (!allowEmptyTags) {
+                return '';
+              } else {
+                return indentation(this.depth(), dontIndent[this.name]) + this.startTag() + this.endTag();
+              }
+            }
 
             var string = "";
             if (selfClosing[this.name]) {
@@ -235,6 +241,10 @@ var htmlPurifier = function(settings){
             noFormatting = true;
         }
         encodeHtmlEntities = settings.encodeHtmlEntities;
+        if (typeof settings.allowEmptyTags !== "undefined") {
+          allowEmptyTags = settings.allowEmptyTags;
+        }
+        
         preferStrong_Em = !!settings.preferStrong_Em;
         preferB_I = !preferStrong_Em && !!settings.preferB_I;
         allowHeaders = !settings.noHeaders;
