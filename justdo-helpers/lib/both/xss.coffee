@@ -11,6 +11,7 @@ _.extend JustdoHelpers,
       allow_html_parsing: false
       enclosing_char: undefined
       enclosing_char_esc: undefined # If set to undefined, we will use the html entity value for the char.
+      allowEmptyTags: true
 
     options = _.extend {}, default_options, options
 
@@ -128,9 +129,15 @@ _.extend JustdoHelpers,
       table: [ 'border' ]
 
     try
-      purified_html = UniHTML.purify text,
+      uni_html_options =
         customTags: customTags
         allowed_attributes: allowed_attributes
+
+      if options.allowEmptyTags? # If set to undefined we will not pass this option at all, to use the defaults
+        uni_html_options.allowEmptyTags = options.allowEmptyTags
+
+      purified_html = UniHTML.purify text, uni_html_options
+
     catch e
       console.warn "JustdoHelpers.xssGuard: UniHTML.purify failed to secure a string, falling back to HTML Entities XSS guard.", e
 
