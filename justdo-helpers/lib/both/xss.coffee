@@ -143,7 +143,30 @@ _.extend JustdoHelpers,
 
       APP.justdo_analytics.JAReportClientSideError("xss-guard-failure", JSON.stringify(e))
 
-      purified_html = JustdoHelpers.htmlEntitiesXssGuard(text)
+      return JustdoHelpers.htmlEntitiesXssGuard(text)
+
+    # The following:
+    #
+    # text = '<option value="4DG9TSoqeLTm4oo2R" data-content="<b>da</b><script>alert(12)</script>" ><b>da</b><script>alert(12)</script></option><option value="" data-content="<div class=\'null-state\'></div>" ><div class=\'null-state\'></div></option>'
+    #
+    # When passed through:
+    #
+    # JustdoHelpers.xssGuard(text, , {allow_html_parsing: true, enclosing_char: ''})
+    #
+    # Remains with the <script> tag intact!
+    #
+    # We need to find where UniHTML.purify fails.
+    #
+    # Until we find the cause, we can't take any risk, so:
+    purified_html = purified_html.replace(/(<\s*\/?\s*)(script.*?)(\s*>)/g, "")
+
+    if not _.isEmpty(enclosing_char)
+      # By this point we know that if we have enclosing_char we have the enclosing_char_esc
+      #
+      # The XSS purifier changes attributes that are enclosed with single quote with double
+      # quote: <div x='y'> will result in <div x="y">, so, in order to respect the enclosing
+      # char - we need to perform the replace second time.
+      purified_html = purified_html.replace(RegExp(enclosing_char, "g"), enclosing_char_esc)
 
     return purified_html
 
