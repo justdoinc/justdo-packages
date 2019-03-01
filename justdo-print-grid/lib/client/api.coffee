@@ -66,7 +66,7 @@ _.extend JustdoPrintGrid.prototype,
       for i in [0...cols.length]
         table_header.push
           "class": "table-header"
-          "value": gc.getSchemaExtendedWithCustomFields()[cols[i].field].label
+          "value": JustdoHelpers.xssGuard(gc.getSchemaExtendedWithCustomFields()[cols[i].field].label, {allow_html_parsing: true, enclosing_char: ''})
           "colspan": 1
 
       # Add class for first element in header
@@ -76,10 +76,10 @@ _.extend JustdoPrintGrid.prototype,
       table_header[0].colspan = max_level + 2
 
       # Create Thead
-      name = Meteor.user()?.profile.first_name + " " + Meteor.user()?.profile.last_name
-      project_name = module.curProj()?.getProjectDoc()?.title
+      name = JustdoHelpers.xssGuard(JustdoHelpers.displayName(Meteor.user()))
+      project_name = JustdoHelpers.xssGuard module.curProj()?.getProjectDoc()?.title
       thead_colspan = cols.length + max_level + 1
-      tab_title = gcm.getActiveTab().getTabTitle()
+      tab_title = JustdoHelpers.xssGuard gcm.getActiveTab().getTabTitle()
 
       thead = """
         <thead>
@@ -119,7 +119,7 @@ _.extend JustdoPrintGrid.prototype,
           else
             cell.push
               "class": "section-title"
-              "value": JustdoHelpers.nl2br(item_obj.title or "")
+              "value": JustdoHelpers.nl2br(JustdoHelpers.xssGuard(item_obj.title) or "")
               "colspan": cols.length + max_level + 1
 
           matrix.push cell
@@ -134,9 +134,7 @@ _.extend JustdoPrintGrid.prototype,
             tr[0].colspan = max_level + 1 - (rows[i][1])
             user = Meteor.users.findOne(rows[i][0].owner_id)
             if user?
-              first_name = user and user.profile.first_name
-              last_name = user and user.profile.last_name
-              tr[0].value += """<br><span class="task-info">#{first_name} #{last_name}</span>"""
+              tr[0].value += """<br><span class="task-info">#{JustdoHelpers.xssGuard(JustdoHelpers.displayName(user))}</span>"""
 
             tr[0].class = "task"
 
@@ -352,7 +350,7 @@ _.extend JustdoPrintGrid.prototype,
           if schema[property]?.grid_visible_column == true
             label = schema[property].label
             checked_attr = checkVisibility(property)
-            li += """<li><label class="sortable-item"><input type="checkbox" #{checked_attr} field-name="#{property}">#{label}</label><span class="sortable-aria"><span></li>"""
+            li += """<li><label class="sortable-item"><input type="checkbox" #{checked_attr} field-name="#{JustdoHelpers.xssGuard(property)}">#{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})}</label><span class="sortable-aria"><span></li>"""
 
         $(".print-settings ul").html li
         $(".print-settings ul li").first().addClass "locked"
@@ -459,9 +457,11 @@ _.extend JustdoPrintGrid.prototype,
           else
             user = Meteor.users.findOne(row[0].owner_id)
             if user?
-              first_name = user and user.profile.first_name
-              last_name = user and user.profile.last_name
-            rowCSV = [row[0].seqId, row[0].title, first_name + " " + last_name]
+              display_name = JustdoHelpers.xssGuard(JustdoHelpers.displayName(user))
+            else
+              display_name = "Unknown user"
+
+            rowCSV = [row[0].seqId, row[0].title, display_name]
 
             for i in [1...cols.length]
               field_name = cols[i].field
@@ -470,7 +470,7 @@ _.extend JustdoPrintGrid.prototype,
             rowCSV.push row[1], row[2]
 
         else # Section title
-          section_title = row[0].title
+          section_title = JustdoHelpers.xssGuard(row[0].title)
           section_title = "----- " + section_title.toUpperCase() + " -----"
           rowCSV = [" ", section_title]
 
@@ -548,7 +548,7 @@ _.extend JustdoPrintGrid.prototype,
 
         return val
 
-      return gc._print_formatters[formatter_id](item_doc, field, path)
+      return JustdoHelpers.xssGuard(gc._print_formatters[formatter_id](item_doc, field, path))
 
     #
     # Main
