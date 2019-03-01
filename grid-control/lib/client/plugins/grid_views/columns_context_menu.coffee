@@ -50,7 +50,7 @@ _.extend GridControl.prototype,
     for field in missing_fields
       do (field) =>
         append_fields_submenu.push
-          text: extended_schema[field].label
+          text: JustdoHelpers.xssGuard(extended_schema[field].label, {allow_html_parsing: true, enclosing_char: ''})
           action: (e) =>
             @addFieldToView(field, column_index_of_last_opened_cmenu + 1)
 

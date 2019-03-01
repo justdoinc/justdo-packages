@@ -55,13 +55,13 @@ GridControl.installFormatter "keyValueFormatter",
     bg_color = JustdoHelpers.normalizeBgColor(getKeyBgColor(schema, value))
 
     if bg_color != "transparent"
-      custom_style = """ style="background-color: #{bg_color}; color: #{JustdoHelpers.getFgColor(bg_color)};" """
+      custom_style = """ style="background-color: #{JustdoHelpers.xssGuard(bg_color)}; color: #{JustdoHelpers.xssGuard(JustdoHelpers.getFgColor(bg_color))};" """
     else
       custom_style = ''
 
     formatter = """
       <div class="grid-formatter key-val-formatter" #{custom_style}>
-        #{getKeyValue(schema, value)}
+        #{JustdoHelpers.xssGuard(getKeyValue(schema, value), {allow_html_parsing: true, enclosing_char: ''})}
       </div>
     """
 

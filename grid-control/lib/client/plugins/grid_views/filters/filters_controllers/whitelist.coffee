@@ -32,7 +32,7 @@ WhiteListFilterControllerConstructor = (context) ->
     else
       label = value_options.txt
 
-    @controller.append("<li value='#{getHtmlValue(value)}'><i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i> #{label}</li>")
+    @controller.append("<li value='#{JustdoHelpers.xssGuard(getHtmlValue(value), {allow_html_parsing: true, enclosing_char: "'"})}'><i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i> #{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})}</li>")
 
   $(@controller).on "click", "li", (e) =>
     filter_state = @column_filter_state_ops.getColumnFilter()

@@ -59,7 +59,7 @@ NumericFilterControllerConstructor = (context) ->
     option_item = """
       <li value='range-#{range.id}'>
         <i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i>
-        #{range.label}
+        #{JustdoHelpers.xssGuard(range.label, {allow_html_parsing: true, enclosing_char: ''})}
       </li>
     """
 

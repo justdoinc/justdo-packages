@@ -58,12 +58,12 @@ GridControl.installEditor "SelectorEditor",
         label = "&nbsp;"
 
       if option.bg_color != "transparent"
-        custom_style = """ style="background-color: #{option.bg_color}; color: #{JustdoHelpers.getFgColor(option.bg_color)};" """
+        custom_style = """ style="background-color: #{JustdoHelpers.xssGuard(option.bg_color)}; color: #{JustdoHelpers.xssGuard(JustdoHelpers.getFgColor(option.bg_color))};" """
       else
         custom_style = ''
 
       selector_options_html +=
-        """<option value="#{option.value}" data-content="#{label}" #{custom_style}>#{label}</option>"""
+        """<option value='#{JustdoHelpers.xssGuard(option.value, {allow_html_parsing: true, enclosing_char: "'"})}' data-content="#{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: '"'})}" #{custom_style}>#{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ""})}</option>"""
 
     @$select = $("""<select class="selector-editor">#{selector_options_html}</select>""")
     @$select.appendTo @context.container

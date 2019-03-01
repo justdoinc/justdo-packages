@@ -562,7 +562,7 @@ if (typeof Slick === "undefined") {
         var m = columns[i];
 
         var header = $("<div class='ui-state-default slick-header-column' />")
-            .html("<span class='slick-column-name'>" + m.name + "</span>")
+            .html("<span class='slick-column-name'>" + JustdoHelpers.xssGuard(m.name, {allow_html_parsing: true, enclosing_char: ''}) + "</span>")
             .width(m.width - headerColumnWidthDiff)
             .attr("id", "" + uid + m.id)
             .attr("title", m.toolTip || "")
