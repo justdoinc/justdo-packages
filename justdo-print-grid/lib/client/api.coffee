@@ -204,7 +204,7 @@ _.extend JustdoPrintGrid.prototype,
       for tr in table
         table_html += "<tr>"
         for td in tr
-          table_html += """<td class="#{td.class}" colspan="#{td.colspan}">#{td.value}</td>"""
+          table_html += """<td class="#{td.class}" colspan="#{td.colspan}" dir="auto">#{td.value}</td>"""
         table_html += "</tr>"
       table_html += "</table>"
 
