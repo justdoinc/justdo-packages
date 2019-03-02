@@ -189,14 +189,19 @@
    * map a flexible set of arguments into a single returned object
    * if args.length is already one just return it, otherwise
    * use the properties argument to map the unnamed args to
-   * object properties
+   * object properties.
+   *
+   * Also secure against XSS attacks
+   *
    * so in the latter case:
-   * mapArguments(["foo", $.noop], ["message", "callback"])
+   * mapAndSecureArguments(["foo", $.noop], ["message", "callback"])
    * -> { message: "foo", callback: $.noop }
    */
-  function mapArguments(args, properties) {
+  function mapAndSecureArguments(args, properties) {
     var argn = args.length;
     var options = {};
+
+    args = JustdoHelpers.xssGuardObject(args, {allow_html_parsing: true, enclosing_char: ''});
 
     if (argn < 1 || argn > 2) {
       throw new Error("Invalid argument length");
@@ -225,7 +230,7 @@
       defaults,
       // args could be an object or array; if it's an array properties will
       // map it to a proper options object
-      mapArguments(
+      mapAndSecureArguments(
         args,
         properties
       )
@@ -570,6 +575,8 @@
 
   exports.dialog = function(options) {
     options = sanitize(options);
+
+    options = JustdoHelpers.xssGuardObject(options, {allow_html_parsing: true, enclosing_char: ''});
 
     var dialog = $(templates.dialog);
     var innerDialog = dialog.find(".modal-dialog");
