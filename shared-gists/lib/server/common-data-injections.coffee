@@ -39,12 +39,21 @@ env_vars_to_expose = [
 if JustdoHelpers.permitAppVersionExposeToClient()
   env_vars_to_expose.push "APP_VERSION"
   
+getExposedClientEnvVars = ->
+  return _.pick process.env, env_vars_to_expose
+
 # push current "env" to the client
 app_routes.middleware (req, res, next) ->
-  # Expose environment variables that should be available in the
-  # client
-  clients_env = _.pick process.env, env_vars_to_expose
-
-  InjectData.pushData res, "env", clients_env
+  # Expose environment variables that should be available in the client
+  InjectData.pushData res, "env", getExposedClientEnvVars()
 
   next()
+
+  return
+
+Meteor.publish null, ->
+  @added("JustdoSystem", "env", getExposedClientEnvVars())
+
+  @ready()
+
+  return

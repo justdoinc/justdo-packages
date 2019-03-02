@@ -11,3 +11,5 @@ if (app_version = JustdoHelpers.getAppVersion())?
     @added("JustdoSystem", "app_version", {app_version: app_version})
 
     @ready()
+
+    return
