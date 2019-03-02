@@ -17,6 +17,8 @@ Package.onUse(function (api) {
   ], 'client'); //Needed by helpers for test and live,
   api.use('underscore', ['client', 'server']);
 
+  api.use("justdoinc:justdo-helpers@1.0.0", both);
+
   api.export('Helpers');
   api.addFiles('common.js', ['client', 'server']);
   api.addFiles('helpers.operators.js', 'client');

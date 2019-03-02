@@ -82,7 +82,8 @@ if (typeof UI !== 'undefined') {
     });
 
     UI.registerHelper('nl2br', function (text) {
-        var nl2br = (text + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br>' + '$2');
+        var nl2br = (JustdoHelpers.xssGuard(text, {allow_html_parsing: false, enclosing_char: ""}) + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br>' + '$2');
+
         return new Spacebars.SafeString(nl2br);
     });
 
