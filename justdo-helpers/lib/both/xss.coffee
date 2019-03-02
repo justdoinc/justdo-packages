@@ -170,6 +170,50 @@ _.extend JustdoHelpers,
 
     return purified_html
 
+  xssGuardObject: (obj, xssGuard_options) ->
+    # Recursively searching for strings in obj and guarding all of them *in-place*.
+    #
+    # obj can be an array, which is technically an object in js. All the array items
+    # will be guarded.
+    # obj that is of type String will be guarded using xssGuard.
+    # obj that is of anyother type will be returned as is.
+    #
+    # IMPORTANT! The object keys are guarded as well!
+
+    if not obj?
+      # If obj us null/undefined
+      return obj
+
+    if _.isString obj
+      return JustdoHelpers.xssGuard obj, xssGuard_options
+
+    if _.isFunction obj
+      return obj
+
+    if _.isArray obj
+      for item, i in obj
+        obj[i] = JustdoHelpers.xssGuardObject(item, xssGuard_options)
+
+      return obj
+
+    if _.isObject obj
+      # Note, null is regarded in js as an object, but the check of obj? above,
+      # protects us from that case
+
+      for key, val of obj
+        guarded_key = JustdoHelpers.xssGuardObject(key, xssGuard_options)
+        if guarded_key == key
+          obj[key] = JustdoHelpers.xssGuardObject(val, xssGuard_options)
+        else
+          delete obj[key]
+
+          obj[guarded_key] = JustdoHelpers.xssGuardObject(val, xssGuard_options)
+
+      return obj
+
+    # For any other type - return as is.
+    return obj
+
   htmlEntitiesXssGuard: (str) ->
     # https://css-tricks.com/snippets/javascript/htmlentities-for-javascript/
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;')
