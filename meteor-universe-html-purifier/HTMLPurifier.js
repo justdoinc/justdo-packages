@@ -1120,7 +1120,22 @@ UniHTML = {
                 throw e;
             }
         }
-        return purifierInstance.getResult();
+
+        var result = purifierInstance.getResult();
+
+        // Even if some script tags managed to slip away - get rid of them.
+        //
+        // Without this, the following:
+        //
+        //   text = '<option value="x" data-content="<b>da</b><script>alert(12)</script>" ><b>da</b><script>alert(12)</script></option><option value="" data-content="<div class=\'null-state\'></div>" ><div class=\'null-state\'></div></option>'
+        //   purify(text)
+        //
+        // Will result in:
+        //
+        //   <option value="x" data-content="<b>da</b><script>alert(12)</script>" ><b>da</b><script>alert(12)</script></option><option value="" data-content="" >
+        result = result.replace(/(<\s*\/?\s*)(script.*?)(\s*>)/g, "");
+
+        return result;
     },
     /**
      * Sets new default allowed attributes for one or all tags
