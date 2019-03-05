@@ -1,3 +1,5 @@
+mainGridControl = -> APP.modules.project_page.mainGridControl()
+
 human_readable_workdays_names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
 raw_data_moment_format = "YYYY-MM-DD"
@@ -903,7 +905,7 @@ APP.executeAfterAppLibCode ->
 
       project_tasks = devPlanner().getKnownProjects(current_project_id, {active_only: true, exclude_tasks: exclude_tasks}, Meteor.userId())
 
-      gc = module.gridControl()
+      gc = mainGridControl()
       grid_data = gc?._grid_data
 
       # Remove projects that are tasks to which we can't be assigned as a child due to circular
