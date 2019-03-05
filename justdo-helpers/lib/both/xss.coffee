@@ -190,6 +190,9 @@ _.extend JustdoHelpers,
     if _.isFunction obj
       return obj
 
+    if _.isElement obj
+      return obj
+
     if _.isArray obj
       for item, i in obj
         obj[i] = JustdoHelpers.xssGuardObject(item, xssGuard_options)
