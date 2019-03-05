@@ -156,6 +156,13 @@ HTMLParser = function( html, handler ) {
 				text = text.replace(/<!--(.*?)-->/g, "$1")
 					.replace(/<!\[CDATA\[(.*?)]]>/g, "$1");
 
+				if (special[ stack.last() ]) {
+					// Special tags, can contain anything, but, we need to prevent an exploit.
+					// Without this, nothing prevent a hacker to simply do: purify('<script><script>alert()</script></script>')
+					// and get '<script>alert()</script>' in the output.
+					text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+				}
+
 				if ( handler.chars )
 					handler.chars( text );
 
