@@ -1,10 +1,34 @@
 <template name="core_user_conf_core_time_settings">
   <div class="form-group-sm">
-    <label for="date-format-date-time-setting">{{label}}</label>
+    <label for="date-format-date-time-setting">{{date_format_label}}</label>
     <select type="text" id="date-format-date-time-setting" class="form-control date-format-date-time-setting">
       {{#each allowed_date_formats}}
         <option value="{{this}}" {{isSelected this user_date_format}}>{{this}}</option>
       {{/each}}
     </select>
   </div>
+
+  <div class="row time-settings-row">
+    <div class="col-sm-6">
+      <div class="form-group-sm">
+        <label for="use-am-pm-date-time-setting">{{use_am_pm_format_label}}</label>
+        <select type="text" id="use-am-pm-date-time-setting" class="form-control use-am-pm-date-time-setting">
+          <option value="default" {{isSelected null use_am_pm}}>Default</option>
+          <option value="12" {{isSelected true use_am_pm}}>12 hour</option>
+          <option value="24" {{isSelected false use_am_pm}}>24 hour</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group-sm">
+        <label for="first-week-day-date-time-setting">{{first_day_of_week_label}}</label>
+        <select type="text" id="first-week-day-date-time-setting" class="form-control first-week-day-date-time-setting">{{first_day_of_week}}
+          {{#each allowed_first_day_of_week_inputs}}
+            <option value="{{id}}" {{isSelected id first_day_of_week}}>{{name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+  </div>
+
 </template>

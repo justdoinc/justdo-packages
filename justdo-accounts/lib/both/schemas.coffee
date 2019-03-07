@@ -103,6 +103,18 @@ _.extend JustdoAccounts,
         "MM.DD.YYYY"
       ]
 
+    use_am_pm:
+      label: "Time format"
+      type: Boolean
+      optional: true # If undefined/null, should use the machine's locale
+      defaultValue: null
+
+    first_day_of_week:
+      label: "First day of week"
+      type: Number
+      defaultValue: 1
+      allowedValues: [0, 1, 2, 3, 4, 5, 6] # Follows JS Date.getDay() - 0 is Sunday
+
     timezone:
       optional: true
 
