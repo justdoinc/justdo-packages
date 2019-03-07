@@ -71,6 +71,17 @@ _.extend JustdoHelpers,
     # Fallback to the raw_data_moment_format
     return raw_data_moment_format
 
+  getUserPreferredUseAmPm: ->
+    # Reactive resource!
+    if (preferred_use_am_pm = Meteor.user()?.profile?.use_am_pm)?
+      return preferred_use_am_pm
+
+    if (default_use_am_pm = JustdoHelpers.getCollectionSchemaForField(Meteor.users, "profile.use_am_pm").defaultValue)?
+      return default_use_am_pm
+
+    # Fallback to null <=> system locale
+    return null
+
   getUserPreferredDataFormatInJqueryUiFormat: ->
     preferred_format = JustdoHelpers.getUserPreferredDateFormat()
 
@@ -94,13 +105,39 @@ _.extend JustdoHelpers,
 
     return moment(unicode_date_string, raw_data_moment_format).format(user_preferred_date_format)
 
-  getDateTimeStringInUserPreferenceFormat: (date) ->
-    user_preferred_date_format = Tracker.nonreactive => JustdoHelpers.getUserPreferredDateFormat.call(@)
+  getTimeStringInUserPreferenceFormat: (show_seconds=true) ->
+    # Reactive resource!
+    user_preferred_use_am_pm_format = JustdoHelpers.getUserPreferredUseAmPm.call(@)
+
+    if user_preferred_use_am_pm_format is true
+      if show_seconds
+        return "h:mm:ss A"
+      else
+        return "h:mm A"
+
+    if user_preferred_use_am_pm_format is false
+      if show_seconds
+        return "H:mm:ss"
+      else
+        return "H:mm"
+
+    # Fallback to system default if null/undefined or any other value
+    if show_seconds
+      return "LTS"
+    else
+      return "LT"
+
+  getDateTimeStringInUserPreferenceFormat: (date, show_seconds) ->
+    user_preferred_date_format = JustdoHelpers.getUserPreferredDateFormat.call(@)
+    time_string_in_user_preference_format = JustdoHelpers.getTimeStringInUserPreferenceFormat.call(@, show_seconds)
 
     if not date? or date == ""
       return ""
 
-    return moment(date).format("#{user_preferred_date_format} LTS")
+    return moment(date).format("#{user_preferred_date_format} #{time_string_in_user_preference_format}")
+
+  getDateTimeStringInUserPreferenceFormatNonReactive: (date, show_seconds) ->
+    return Tracker.nonreactive => JustdoHelpers.getDateTimeStringInUserPreferenceFormat(date, show_seconds)
 
   filterUsersDocsArray: (users_docs, niddle) ->
     if not niddle?
@@ -119,6 +156,27 @@ _.extend JustdoHelpers,
       return false
 
     return results
+
+  friendlyDateFormat: (date) ->
+    moment_date = moment(date)
+
+    time_string_in_user_preference_format =
+      JustdoHelpers.getTimeStringInUserPreferenceFormat(false)
+
+    if moment_date.isSame(Date.now(), "day")
+      # Show hour only
+      return moment_date.format(time_string_in_user_preference_format)
+    else if moment().diff(date, 'days') <= 5 # Last 5 days
+      # Show day name and hour
+      return moment_date.format("dddd #{time_string_in_user_preference_format}")
+    else if moment_date.isSame(Date.now(), "year")
+      # Show date without year + hour
+      return moment_date.format("MMMM Do, #{time_string_in_user_preference_format}")
+    else
+      # Show date with year + hour
+      return moment_date.format("MMMM Do YYYY, #{time_string_in_user_preference_format}")
+    
+    return
 
   sortUsersDocsArrayByDisplayName: (users_docs) ->
     return _.sortBy users_docs, (user_doc) -> JustdoHelpers.displayName(user_doc).toLowerCase()
