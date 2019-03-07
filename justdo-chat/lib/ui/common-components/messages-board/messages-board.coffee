@@ -98,9 +98,6 @@ Template.common_chat_messages_board.events
     return
 
 Template.common_chat_messages_board_message_card.helpers
-  friendlyDateFormat: ->
-    return APP.justdo_chat.friendlyDateFormat(@createdAt)
-
   authorDoc: ->
     tpl = Template.closestInstance("common_chat_messages_board")
 

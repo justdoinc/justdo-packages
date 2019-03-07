@@ -33,9 +33,6 @@ Template.recent_activity_item_task.helpers
 
     return APP.collections.JDChatRecentActivityAuthorsDetails.findOne(author_id)
 
-  friendlyDateFormat: (date) ->
-    return APP.justdo_chat.friendlyDateFormat(date)
-
 getTaskChannelObjectForTaskId = (task_id) ->
   channel_obj = APP.justdo_chat.generateClientChannelObject "task", { # channel conf
     tasks_collection: APP.justdo_chat.recent_activity_supplementary_pseudo_collections.tasks

@@ -1,5 +1,5 @@
 GridControl.installFormatter "datetimeFormatter",
-  getDateTimeString: (value) -> JustdoHelpers.getDateTimeStringInUserPreferenceFormat(value)
+  getDateTimeString: (value) -> JustdoHelpers.getDateTimeStringInUserPreferenceFormatNonReactive(value)
 
   slickGridColumnStateMaintainer: ->
     if not Tracker.active
@@ -12,6 +12,7 @@ GridControl.installFormatter "datetimeFormatter",
     dep.depend()
 
     profile_date_format_computation = null
+    profile_use_am_pm_computation = null
     Tracker.nonreactive =>
       # Run in an isolated reactivity scope
       profile_date_format_computation = Tracker.autorun =>
@@ -25,8 +26,21 @@ GridControl.installFormatter "datetimeFormatter",
 
         return
 
+      # Run in an isolated reactivity scope
+      profile_use_am_pm_computation = Tracker.autorun =>
+        current_val = JustdoHelpers.getUserPreferredUseAmPm() # Reactive
+        cached_val = @getCurrentColumnData("user_preferred_use_am_pm") # non reactive
+
+        if current_val != cached_val
+          @setCurrentColumnData("user_preferred_use_am_pm", current_val)
+
+          dep.changed()
+
+        return
+
     Tracker.onInvalidate ->
       profile_date_format_computation.stop()
+      profile_use_am_pm_computation.stop()
 
     return
 

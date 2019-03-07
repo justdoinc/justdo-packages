@@ -27,7 +27,7 @@ _.extend GridData.prototype,
       if fields_schema[field].type == Date and _.isDate(val)
         # Dates
 
-        val = JustdoHelpers.getDateTimeStringInUserPreferenceFormat(val)
+        val = JustdoHelpers.getDateTimeStringInUserPreferenceFormatNonReactive(val)
 
       if fields_schema[field].grid_column_formatter == "unicodeDateFormatter" and _.isString(val) and not _.isEmpty(val)
         # Unicode date strings
