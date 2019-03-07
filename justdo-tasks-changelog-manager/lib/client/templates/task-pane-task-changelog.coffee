@@ -34,8 +34,6 @@ Template.task_pane_task_changelog.events
 Template.task_pane_task_changelog_record.helpers
   changingUser: -> APP.helpers.getUsersDocsByIds @by
 
-  formatDate: -> moment(new Date(@when)).format('LLL')
-
   formatedLabel: ->
     if @change_type == 'moved_to_task' \
         or @change_type == 'users_change' \

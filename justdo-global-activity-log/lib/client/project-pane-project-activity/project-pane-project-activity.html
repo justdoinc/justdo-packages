@@ -11,7 +11,7 @@
     <div class="filter-toggle {{#if isActiveStatusFilter}}active-filter{{/if}}"><i class="fa {{#if isActiveStatusFilter}}fa-toggle-on{{else}}fa-toggle-off{{/if}} fa-fw"></i> Filter for Status/Notes changes only</div>
 
     {{#each activities}}
-      <div class="project-log"><span class="task-details">{{getTaskDetails}}</span> <span class="activity-message">{{getActivityMessage}}</span> <span class="date">{{moFromNow negativeDateOrNow}}</span></div>
+      <div class="project-log" title="{{userDateFormat when}}"><span class="task-details">{{getTaskDetails}}</span> <span class="activity-message">{{getActivityMessage}}</span> <span class="date">{{moFromNow negativeDateOrNow}}</span></div>
     {{/each}}
   </div>
 </template>

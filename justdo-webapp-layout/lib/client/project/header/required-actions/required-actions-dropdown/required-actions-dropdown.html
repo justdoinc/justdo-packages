@@ -22,7 +22,7 @@
 <template name="required_action_card">
   <div class="required-actions-card required-actions-card-{{type}}">
     <div class="card-header">
-      <div class="date" title="{{moFormat date "YYYY-MM-DD hh:mm"}}">{{moFromNow negativeDateOrNow}}</div>
+      <div class="date" title="{{userDateFormat date}}">{{moFromNow negativeDateOrNow}}</div>
       <div class="type-name">{{required_action_type_title}}</div>
     </div>
     {{> Template.dynamic template=getTypeTemplate data=typeTemplateData}}

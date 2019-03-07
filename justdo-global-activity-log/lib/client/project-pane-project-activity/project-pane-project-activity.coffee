@@ -104,9 +104,9 @@ Template.global_activity_log_project_pane_project_activity.helpers
     
     return task_details
 
-   negativeDateOrNow: -> JustdoHelpers.negativeDateOrNow(@when)
+  negativeDateOrNow: -> JustdoHelpers.negativeDateOrNow(@when)
 
-   isActiveStatusFilter: -> getStatusFilterState()
+  isActiveStatusFilter: -> getStatusFilterState()
 
 Template.global_activity_log_project_pane_project_activity.events
   "click .project-log": ->

@@ -16,7 +16,6 @@ Template.tasks_file_manager_files.onCreated ->
 Template.tasks_file_manager_files.helpers
   renaming: -> Template.instance().renaming.get() == this.file.id
   deletion: -> Template.instance().deletion.get() == this.file.id
-  date: (date) -> moment(date).format "MMMM DD, YYYY hh:mm a"
   size: -> JustdoHelpers.bytesToHumanReadable(this.file.size)
 
   shareableLink: () ->
