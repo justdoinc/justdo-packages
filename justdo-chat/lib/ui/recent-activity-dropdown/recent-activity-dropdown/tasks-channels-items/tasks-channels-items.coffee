@@ -104,11 +104,8 @@ Template.recent_activity_item_task.events
 
       return
 
-    activateTask = =>
-      gcm = APP.modules.project_page.getCurrentGcm()
 
-      gcm.setPath(["main", @task_id], {collection_item_id_mode: true})
-
+    APP.modules.project_page.activateTaskInProject @project_id, @task_id, =>
       channel_obj = getTaskChannelObjectForTaskId(@task_id)
       channel_obj.setChannelUnreadState(false)
 
@@ -120,34 +117,6 @@ Template.recent_activity_item_task.events
         $(".task-pane-chat .message-editor").focus()
 
       return
-
-    if JustdoHelpers.currentPageName() == "project" and Router.current().project_id == @project_id
-      activateTask()
-    else
-      Router.go "project", {_id: @project_id}
-
-      Tracker.flush()
-
-      tracker = Tracker.autorun (c) ->
-        module = APP.modules.project_page
-
-        project = module.curProj()
-
-        gcm = APP.modules.project_page.getCurrentGcm()
-
-        if gcm?.getAllTabs()?.main?.state == "ready"
-          # Wait for main tab to become ready and activate the task
-          activateTask()
-
-          c.stop()
-
-          return
-
-        return
-
-      setTimeout ->
-        tracker.stop() # after 10 seconds stop the tracker regardless, to avoid lingering trackers in case didn't work well
-      , 10000
 
     return
 
