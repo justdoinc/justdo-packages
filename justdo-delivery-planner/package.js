@@ -16,6 +16,8 @@ Package.onUse(function (api) {
   api.use("underscore", both);
   api.use("mongo", both);
 
+  api.use("stem-capital:grid-data@0.1.0", both);
+
   // Uncomment if you want to use NPM peer dependencies using
   // checkNpmVersions.
   //
@@ -99,6 +101,14 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/task-pane-section/extended-workdays-dropdown/extended-workdays-dropdown.sass", client);
   api.addFiles("lib/client/task-pane-section/extended-workdays-dropdown/extended-workdays-dropdown.html", client);
   api.addFiles("lib/client/task-pane-section/extended-workdays-dropdown/extended-workdays-dropdown.coffee", client);
+
+  api.addFiles("lib/client/tab-switcher-items/tab-switcher-items.sass", client);
+  api.addFiles("lib/client/tab-switcher-items/tab-switcher-items.html", client);
+  api.addFiles("lib/client/tab-switcher-items/tab-switcher-items.coffee", client);
+
+  api.addFiles("lib/client/tabs-definitions/tab-styling.sass", client);
+  api.addFiles("lib/client/tabs-definitions/sections-managers/all-projects.coffee", client);
+  api.addFiles("lib/client/tabs-definitions/tabs-definitions.coffee", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
