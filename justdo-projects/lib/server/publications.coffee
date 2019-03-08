@@ -27,6 +27,8 @@ _.extend Projects.prototype,
 
         "conf.custom_features": 1
 
+        "createdAt": 1
+
       if @userId?
         return self.projects_collection.find({"members.user_id": @userId}, {fields: published_fields})
       else
