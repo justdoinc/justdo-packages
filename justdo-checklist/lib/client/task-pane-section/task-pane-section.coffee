@@ -43,23 +43,23 @@ renderChart = (active_item)->
     checked.data.push ret.checked
     unchecked.data.push ret.count-ret.checked
 
-  Highcharts.chart('checklist_chart_container', {
-    chart:
-      type: 'bar'
-      animation: false
-    title:
-      text: 'Checklist Status'
-    xAxis:
-      categories: categories
-    legend:
-      reversed: true
-    plotOptions:
-      series:
-        stacking: 'normal'
+    $("#checklist_chart_container").highcharts
+      chart:
+        type: 'bar'
         animation: false
+      title:
+        text: 'Checklist Status'
+      xAxis:
+        categories: categories
+      legend:
+        reversed: true
+      plotOptions:
+        series:
+          stacking: 'normal'
+          animation: false
 
-    series: [unchecked,checked]
-  })
+      series: [unchecked,checked]
+
   return
 
 
@@ -69,7 +69,9 @@ Template.task_pane_justdo_checklist_task_pane_section_section.helpers
       return true
     return false
 
-
+Template.task_pane_justdo_checklist_task_pane_section_section.onCreated ->
+  APP.justdo_highcharts.requireHighcharts()
+  return
 
 Template.task_pane_justdo_checklist_task_pane_section_section.onRendered ->
   @autorun =>
