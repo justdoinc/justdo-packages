@@ -1,3 +1,5 @@
+APP.justdo_highcharts.requireHighcharts()
+
 countCheckedLeafes = (task_id)->
   ret =
     count: 1
@@ -23,8 +25,6 @@ renderChart = (active_item)->
     return
   $('#checklist_chart_container').show()
 
-
-
   categories = []
   checked =
     name: 'checked'
@@ -35,6 +35,7 @@ renderChart = (active_item)->
     data: []
     color: 'lightgray'
 
+  $("#checklist_chart_container").html ""
 
   APP.collections.Tasks.find({"parents.#{active_item._id}":{$exists:true}}).forEach (doc)=>
     ret = countCheckedLeafes(doc._id)
@@ -51,17 +52,17 @@ renderChart = (active_item)->
         text: 'Checklist Status'
       xAxis:
         categories: categories
+      yAxis:
+        tickInterval: 1
       legend:
         reversed: true
       plotOptions:
         series:
           stacking: 'normal'
           animation: false
-
       series: [unchecked,checked]
 
   return
-
 
 Template.task_pane_justdo_checklist_task_pane_section_section.helpers
   isChecklist: ->
@@ -69,8 +70,10 @@ Template.task_pane_justdo_checklist_task_pane_section_section.helpers
       return true
     return false
 
+  isHighchartsReady: -> APP.justdo_highcharts.isHighchartLoaded()
+
 Template.task_pane_justdo_checklist_task_pane_section_section.onCreated ->
-  APP.justdo_highcharts.requireHighcharts()
+
   return
 
 Template.task_pane_justdo_checklist_task_pane_section_section.onRendered ->
