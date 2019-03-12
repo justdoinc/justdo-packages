@@ -509,7 +509,7 @@ _.extend JustdoPrintGrid.prototype,
         window.navigator.msSaveOrOpenBlob(csv_blob_obj, file_name)
       else
         # Create invisible link to set file name
-        encoded_uri = encodeURI("data:text/csv;charset=utf-8,#{csv_string}")
+        encoded_uri = "data:text/csv;charset=utf-8," + encodeURIComponent(csv_string)
         download_link = document.createElement("a")
         download_link.target = '_blank'
         download_link.href = encoded_uri
