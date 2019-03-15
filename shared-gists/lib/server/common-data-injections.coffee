@@ -38,6 +38,7 @@ env_vars_to_expose = [
   "RECAPTCHA_MAX_ATTEMPTS_WITHOUT"
   "RECAPTCHA_V2_CHECKBOX_SITE_KEY"
   "RECAPTCHA_V2_ANDROID_SITE_KEY"
+  "PASSWORD_STRENGTH_MINIMUM_CHARS"
 ]
 
 if JustdoHelpers.permitAppVersionExposeToClient()
