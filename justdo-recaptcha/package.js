@@ -12,6 +12,8 @@ both = [client, server]
 Package.onUse(function (api) {
   api.versionsFrom("1.4.1.1");
 
+  api.use("http", server);
+
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("mongo", both);
@@ -65,6 +67,10 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
+
+  api.addFiles("lib/client/template/justdo_recaptcha.html", client);
+  api.addFiles("lib/client/template/justdo_recaptcha.coffee", client);
+  api.addFiles("lib/client/template/justdo_recaptcha.sass", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.

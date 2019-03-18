@@ -33,6 +33,11 @@ options_schema =
       optional: true
       bind_to_instance: true
 
+    hl:
+      type: String
+      defaultValue: "en"
+      bind_to_instance: true
+
 # options_schema
 # ==============
 #

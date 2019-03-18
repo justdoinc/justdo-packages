@@ -7,3 +7,11 @@ _.extend JustdoRecaptcha.prototype,
       return
 
     return
+
+  getResponse: ->
+    if @supported
+      grecaptcha.getResponse()
+
+      return
+
+    return ""

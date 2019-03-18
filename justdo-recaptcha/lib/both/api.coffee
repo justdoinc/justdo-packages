@@ -37,3 +37,5 @@ _.extend JustdoRecaptcha.prototype,
       return
 
     return
+
+  isSupported: -> @supported
