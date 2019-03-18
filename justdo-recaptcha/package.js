@@ -16,6 +16,12 @@ Package.onUse(function (api) {
 
   api.use("coffeescript", both);
   api.use("underscore", both);
+  api.use("accounts-base@1.2.14", both);
+  api.use("accounts-password@1.3.3", both);
+  api.use("srp", both);
+  api.use("sha", both);
+  api.use("ejson", both);
+  api.use("ddp", both);
   api.use("mongo", both);
 
   // Uncomment if you want to use NPM peer dependencies using
@@ -62,10 +68,12 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/api.coffee", both);
 
   api.addFiles("lib/server/api.coffee", server);
+  api.addFiles("lib/server/accounts-password-ext.coffee", server);
   api.addFiles("lib/server/methods.coffee", server);
   api.addFiles("lib/server/publications.coffee", server);
 
   api.addFiles("lib/client/api.coffee", client);
+  api.addFiles("lib/client/accounts-password-ext.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
   api.addFiles("lib/client/template/justdo_recaptcha.html", client);
