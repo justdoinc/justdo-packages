@@ -6,6 +6,7 @@ _.extend JustdoHelpers,
     #
     # Make use of them!
     "fatal": "Fatal issue"
+    "not-supported": "Not supported"
     "invalid-options": "Invalid options" # used in /both/simple-schema.coffee
     "invalid-argument": "Invalid argument"
     "missing-argument": "Missing argument"
