@@ -1,3 +1,17 @@
 <template name="project_settings_dropdown_remove_project">
   <li id="remove-project" class="item"><i class="fa fa-times fa-fw"></i> Delete this JustDo</li>
 </template>
+
+<template name="remove_project_dialog_content">
+  <div class="message-paragraph">
+    This will permanently remove the <b>{{currrent_project_title}}</b> JustDo.<br />
+  </div>
+
+  <div class="message-paragraph">
+    Please type in the name of the JustDo to confirm.
+  </div>
+
+  <input type="text" class="project-remove-project-name-input form-control">
+
+  <div class="remove-failed-error-message empty"></div>
+</template>

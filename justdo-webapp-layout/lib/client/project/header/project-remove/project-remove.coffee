@@ -40,21 +40,12 @@ APP.executeAfterAppLibCode ->
 
         return
 
+      message_template =
+        APP.helpers.renderTemplateInNewNode(Template.remove_project_dialog_content, {currrent_project_title})
+
       box = bootbox.dialog
         title: "Are you sure?"
-        message: """
-          <div class="message-paragraph">
-            This will permanently remove the <b>#{currrent_project_title}</b> JustDo.<br />
-          </div>
-
-          <div class="message-paragraph">
-            Please type in the name of the JustDo to confirm.
-          </div>
-
-          <input type="text" class="project-remove-project-name-input form-control">
-
-          <div class="remove-failed-error-message empty"></div>
-        """
+        message: message_template.node
         animate: false
         className: "project-remove-dialog"
 
