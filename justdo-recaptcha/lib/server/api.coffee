@@ -1,6 +1,7 @@
 _.extend JustdoRecaptcha.prototype,
   _immediateInit: ->
-    @addJustdoAccountsPasswordExtensions()
+    if @supported
+      @addJustdoAccountsPasswordExtensions()
 
     return
 

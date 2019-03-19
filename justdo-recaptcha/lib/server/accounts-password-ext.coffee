@@ -1,5 +1,10 @@
 _.extend JustdoRecaptcha.prototype,
   addJustdoAccountsPasswordExtensions: ->
+    self = @
+
+    # Note we don't call this method if recaptcha isn't supported for the environment,
+    # leaving accounts-password code as-is
+
     # The following modifies Meteor's account-password package methods for
     # our needs.
     #
@@ -92,9 +97,11 @@ _.extend JustdoRecaptcha.prototype,
 
       check(options, {
         user: userQueryValidator,
-        password: passwordValidator
+        password: passwordValidator,
+        // #### <JUSTDO CHANGES> (and the comma in the end of the previous line)
+        recaptcha: Match.Optional(self._verifyCaptchaCaptchaInputSchema)
+        // #### </JUSTDO CHANGES>
       });
-
 
       var user = Accounts._findUserByQuery(options.user);
       if (!user) {
@@ -105,6 +112,108 @@ _.extend JustdoRecaptcha.prototype,
           !(user.services.password.bcrypt || user.services.password.srp)) {
         handleError("User has no password set");
       }
+
+      // #### <JUSTDO CHANGES>
+
+      ////////////////////////////////////////////////
+      // COFFEE SCRIPT SOURCE FOR OUR MODIFICATIONS //
+      ////////////////////////////////////////////////
+      //
+      // failed_login_attempts_field = "services.password.failed_login_attempts"
+
+      // if not (failed_login_attempts = user.services?.password?.failed_login_attempts)?
+      //   failed_login_attempts = 0
+      // else
+      //   # We got something in the db, get it and validate it
+      //   if not _.isNumber(failed_login_attempts) or failed_login_attempts < 0
+      //     # In the unlikely case where we encounter a non-number in the db, or a weird
+      //     # number, we set the number to the max allowed number to show a captcha right
+      //     # away.
+      //     Meteor.users.update(user._id, {$set: {"#{failed_login_attempts_field}": self.max_attempts_without}})
+        
+      //     failed_login_attempts = self.max_attempts_without
+
+      // recaptcha_passed = false
+      // if options.recaptcha?
+      //   # Note, if recaptcha provided, we test it regardless of whether we require
+      //   # it or not, and fail if it is not required.
+        
+      //   # This allows clients provide us a captcha to test, in case a suspicous
+      //   # activity is encountered by them.
+
+      //   recaptcha_result = self.verifyCaptcha(this.connection.clientAddress, options.recaptcha)
+
+      //   if not recaptcha_result.err?
+      //     recaptcha_passed = true
+          
+      //     # Recaptcha passed, init failed_login_attempts_field
+      //     Meteor.users.update(user._id, {$set: {"#{failed_login_attempts_field}": 0}})
+      //   else
+      //     handleError("Recaptcha failed: #{recaptcha_result.err.reason}");
+
+      // if failed_login_attempts >= self.max_attempts_without and not recaptcha_passed
+      //   handleError("recaptcha-required")
+
+      // # Begin by adding 1 to the failed login attempts. No matter why we failed,
+      // # we want a record that we failed.
+      // Meteor.users.update(user._id, {$inc: {"#{failed_login_attempts_field}": 1}})
+
+      var failed_login_attempts, failed_login_attempts_field, recaptcha_passed, recaptcha_result, ref, ref1;
+
+      failed_login_attempts_field = "services.password.failed_login_attempts";
+
+      if ((failed_login_attempts = (ref = user.services) != null ? (ref1 = ref.password) != null ? ref1.failed_login_attempts : void 0 : void 0) == null) {
+        failed_login_attempts = 0;
+      } else {
+        // We got something in the db, get it and validate it
+        if (!_.isNumber(failed_login_attempts) || failed_login_attempts < 0) {
+          // In the unlikely case where we encounter a non-number in the db, or a weird
+          // number, we set the number to the max allowed number to show a captcha right
+          // away.
+          Meteor.users.update(user._id, {
+            $set: {
+              [`${failed_login_attempts_field}`]: self.max_attempts_without
+            }
+          });
+          failed_login_attempts = self.max_attempts_without;
+        }
+      }
+
+      recaptcha_passed = false;
+
+      if (options.recaptcha != null) {
+        // Note, if recaptcha provided, we test it regardless of whether we require
+        // it or not, and fail if it is not required.
+
+        // This allows clients provide us a captcha to test, in case a suspicous
+        // activity is encountered by them.
+        recaptcha_result = self.verifyCaptcha(this.connection.clientAddress, options.recaptcha);
+        if (recaptcha_result.err == null) {
+          recaptcha_passed = true;
+          
+          // Recaptcha passed, init failed_login_attempts_field
+          Meteor.users.update(user._id, {
+            $set: {
+              [`${failed_login_attempts_field}`]: 0
+            }
+          });
+        } else {
+          handleError(`Recaptcha failed: ${recaptcha_result.err.reason}`);
+        }
+      }
+
+      if (failed_login_attempts >= self.max_attempts_without && !recaptcha_passed) {
+        handleError("recaptcha-required");
+      }
+
+      // Begin by adding 1 to the failed login attempts. No matter why we failed,
+      // we want a record that we failed.
+      Meteor.users.update(user._id, {
+        $inc: {
+          [`${failed_login_attempts_field}`]: 1
+        }
+      });
+      // #### </JUSTDO CHANGES>
 
       if (!user.services.password.bcrypt) {
         if (typeof options.password === "string") {
@@ -133,11 +242,35 @@ _.extend JustdoRecaptcha.prototype,
         }
       }
 
-      return checkPassword(
+      // #### <JUSTDO CHANGES>
+      // return checkPassword(
+      //   user,
+      //   options.password
+      // );
+
+      var password_check_result = checkPassword(
         user,
         options.password
       );
-    // #### <JUSTDO CHANGES>
+
+      ////////////////////////////////////////////////
+      // COFFEE SCRIPT SOURCE FOR OUR MODIFICATIONS //
+      ////////////////////////////////////////////////
+      //
+      // if not password_check_result.error?
+      //   # Successful login, remove failed login attempts count
+      //   Meteor.users.update(user._id, {$unset: {"#{failed_login_attempts_field}": ""}})
+
+      if (password_check_result.error == null) {
+        // Successful login, remove failed login attempts count
+        Meteor.users.update(user._id, {
+          $unset: {
+            [`${failed_login_attempts_field}`]: ""
+          }
+        });
+      }
+
+      return password_check_result;
     // # Removed: });
     }};
     // #### </JUSTDO CHANGES>

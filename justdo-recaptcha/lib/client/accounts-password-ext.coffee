@@ -1,5 +1,8 @@
 _.extend JustdoRecaptcha.prototype,
   addJustdoAccountsPasswordExtensions: ->
+    # Note we don't call this method if recaptcha isn't supported for the environment,
+    # leaving accounts-password code as-is
+
     # The following modifies Meteor's account-password package methods for
     # our needs.
     #
@@ -63,18 +66,39 @@ _.extend JustdoRecaptcha.prototype,
      *   on failure.
      * @importFromPackage meteor
      */
-    Meteor.loginWithPassword = function (selector, password, callback) {
+    // #### <JUSTDO CHANGES>
+    // Removed: Meteor.loginWithPassword = function (selector, password, callback) {
+    Meteor.loginWithPassword = function (selector, password, recaptcha_token, callback) {
+    if (_.isFunction(recaptcha_token)) {
+      callback = recaptcha_token;
+      recaptcha_token = undefined;
+    }
+    // #### </JUSTDO CHANGES>
       if (typeof selector === 'string')
         if (selector.indexOf('@') === -1)
           selector = {username: selector};
         else
           selector = {email: selector};
 
-      Accounts.callLoginMethod({
-        methodArguments: [{
+      // #### <JUSTDO CHANGES>
+      var login_options = {
           user: selector,
           password: Accounts._hashPassword(password)
-        }],
+      };
+
+      // Coffee: if recaptcha_token? and _.isString(recaptcha_token) and not _.isEmpty(recaptcha_token.trim())
+      if ((typeof recaptcha_token !== "undefined" && recaptcha_token !== null) && _.isString(recaptcha_token) && !_.isEmpty(recaptcha_token.trim())) {
+        login_options.recaptcha = {
+          type: "v2_checkbox",
+          captcha_data: recaptcha_token
+        };
+      }
+      // #### </JUSTDO CHANGES>
+
+      Accounts.callLoginMethod({
+        // #### <JUSTDO CHANGES>
+        methodArguments: [login_options],
+        // #### </JUSTDO CHANGES>
         userCallback: function (error, result) {
           if (error && error.error === 400 &&
               error.reason === 'old password format') {

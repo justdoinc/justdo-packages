@@ -1,6 +1,7 @@
 _.extend JustdoRecaptcha.prototype,
   _immediateInit: ->
-    @addJustdoAccountsPasswordExtensions()
+    if @supported
+      @addJustdoAccountsPasswordExtensions()
 
     return
 
@@ -12,8 +13,9 @@ _.extend JustdoRecaptcha.prototype,
 
   getResponse: ->
     if @supported
-      grecaptcha.getResponse()
-
-      return
+      try
+        return grecaptcha.getResponse()
+      catch e
+        return ""
 
     return ""
