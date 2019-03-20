@@ -23,7 +23,7 @@ _.extend JustdoAccounts.prototype,
     # similar to the password, can be undefined or empty
 
     if not password? or not _.isString(password) or password.length == 0
-      return {code: "empty", reason: "Please set password"}
+      return {code: "empty", reason: "Please set a password"}
 
     minimum_length = 8
     minimum_length = Math.max(@options.password_strength_minimum_chars or minimum_length, minimum_length)
@@ -47,7 +47,7 @@ _.extend JustdoAccounts.prototype,
     if not user_inputs?
       user_inputs = []
 
-    check user_inputs, [String]
+    user_inputs = _.map user_inputs, (x) -> String(x)
 
     minimum_forbidden_similar_length = 3
 
@@ -76,11 +76,12 @@ _.extend JustdoAccounts.prototype,
       parts = parts.concat(additional_parts)
 
       for part in parts
-        forbidden_strings[part.substr(0, minimum_forbidden_similar_length)] = true
-        forbidden_strings[part.substr(minimum_forbidden_similar_length * -1)] = true
+        forbidden_strings[part.substr(0, minimum_forbidden_similar_length).toLowerCase()] = true
+        forbidden_strings[part.substr(minimum_forbidden_similar_length * -1).toLowerCase()] = true
 
+    lower_cased_password = password.toLowerCase()
     for forbidden_string of forbidden_strings
-      if password.indexOf(forbidden_string) >= 0
+      if lower_cased_password.indexOf(forbidden_string) >= 0
         return {code: "too-similar", reason: "Password is too similar to your other inputs"}
 
     return undefined
