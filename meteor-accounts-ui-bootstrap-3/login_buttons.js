@@ -158,16 +158,44 @@
     }
   };
   Accounts._loginButtons.validatePassword = function(password, passwordAgain) {
-    if (password.length >= 6) {
-      if (typeof passwordAgain !== "undefined" && passwordAgain !== null && password != passwordAgain) {
-        loginButtonsSession.errorMessage(i18n('errorMessages.passwordsDontMatch'));
-        return false;
+    // Coffee script source, for the code below:
+    //
+    // current_user = Meteor.user()
+
+    // user_email = JustdoHelpers.getUserMainEmail(current_user)
+    // first_name = current_user.profile.first_name
+    // last_name = current_user.profile.last_name
+
+    // if (password_strength_issue = APP.accounts.passwordStrengthValidator(password, [user_email, first_name, last_name]))?
+    //   if password_strength_issue.code == "too-similar"
+    //     loginButtonsSession.errorMessage("Password is too similar to your first name, last name or email.")
+    //   else
+    //     loginButtonsSession.errorMessage(password_strength_issue.reason)
+
+    //   return false
+
+    // return true
+
+    var current_user, first_name, last_name, password_strength_issue, user_email;
+
+    current_user = Meteor.user();
+
+    user_email = JustdoHelpers.getUserMainEmail(current_user);
+
+    first_name = current_user.profile.first_name;
+
+    last_name = current_user.profile.last_name;
+
+    if ((password_strength_issue = APP.accounts.passwordStrengthValidator(password, [user_email, first_name, last_name])) != null) {
+      if (password_strength_issue.code === "too-similar") {
+        loginButtonsSession.errorMessage("Password is too similar to your first name, last name or email.");
+      } else {
+        loginButtonsSession.errorMessage(password_strength_issue.reason);
       }
-      return true;
-    } else {
-      loginButtonsSession.errorMessage(i18n('errorMessages.passwordTooShort'));
       return false;
     }
+
+    return true;
   };
 
   Accounts._loginButtons.rendered = function() {
