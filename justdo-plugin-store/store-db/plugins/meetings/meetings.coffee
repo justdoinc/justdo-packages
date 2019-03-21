@@ -18,7 +18,7 @@ share.store_db.plugins.push
       <li>For every task that was part of one or more meetings agenda - you will be able to quickly tap into the relevant meeting notes information.</li>
     </ul>
   """
-  categories: ["featured", "management"]
+  categories: ["justdo-labs"]
   image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/meetings/media/store-list-icon.png"
   price: "Free"
   version: "1.0"

@@ -12,7 +12,7 @@ share.store_db.plugins.push
     </ul><br>
     Hence with a task with multiple child tasks, and stages of work, you could set the calculated due date based upon the highest due date of all the parent’s task’s, child tasks. This in turn would mean that if one task is running behind, the parent’s task due date would automatically be updated to reflect this new reality.
   """
-  categories: ["featured", "misc"]
+  categories: ["justdo-labs"]
   image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/calculated-due-dates/media/store-list-icon.png"
   price: "Free"
   version: "1.0"

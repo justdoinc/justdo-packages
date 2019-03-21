@@ -20,6 +20,11 @@ share.store_db.categories =
       label:
         en: "Power tools"
     }
+    {
+      id: "justdo-labs"
+      label:
+        en: "JustDo Labs"
+    }
   ]
 
 share.store_db.installed_category_def =
