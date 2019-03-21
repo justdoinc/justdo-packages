@@ -95,6 +95,8 @@ GridControl = (options, container, operations_container) ->
   @_init_view = @_getDefaultView() # set @_init_view to the default view
 
   if (extra_fields = @options.default_view_extra_fields)?
+    extra_fields = _.filter extra_fields, (extra_field) => _.findIndex(@_init_view, (field_def) => field_def.field != extra_field) == -1
+    
     @_init_view = @_init_view.concat _.map(extra_fields, (field_id) -> {field: field_id})
 
   @_operations_lock = new ReactiveVar false # Check /client/grid_operations/operations_lock.coffee
@@ -944,6 +946,20 @@ _.extend GridControl.prototype,
         #   field_view.filter = ["done"]
 
         view.push field_view
+
+    if APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled("justdo_private_follow_up")
+      # Starting from late March 2019 we move towards replacing the follow up field that is shared with
+      # all the members to the private follow up field, realising that follow ups are private and different
+      # task stake holders might want to set different follow ups to the same task.
+      #  * We enabled the Private follow up plugin by default.
+      #  * Here, we make the private follow up field part of the default grid view.
+      #    we show it after the due date field, if exists, or else in the end of the view.
+
+      private_field_position = view.length
+      if (due_date_field_pos = _.findIndex(view, (field_def) -> field_def.field == "due_date")) > -1
+        private_field_position = due_date_field_pos
+
+      view.splice(private_field_position, 0, {field: "priv:follow_up", width: 142})
 
     return view
 
