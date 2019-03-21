@@ -464,8 +464,14 @@ _.extend JustdoPrintGrid.prototype,
             rowCSV = [row[0].seqId, row[0].title, display_name]
 
             for i in [1...cols.length]
+
+              item_id = row[0]._id
               field_name = cols[i].field
-              rowCSV.push row[0][field_name]
+              val = row[0][field_name]
+              item_doc = row[0]
+              path = row[2]
+
+              rowCSV.push formatWithPrintFormatter(item_id, field_name, val, item_doc, path, true) or ""
 
             rowCSV.push row[1], row[2]
 
@@ -536,7 +542,7 @@ _.extend JustdoPrintGrid.prototype,
       $(".print-modal-buttons").show()
       return
 
-    formatWithPrintFormatter = (item_id, field, val, item_doc, path) ->
+    formatWithPrintFormatter = (item_id, field, val, item_doc, path, _skip_xss_guard=false) ->
       if not (field_schema_def = gc.getSchemaExtendedWithCustomFields()[field])?
         module.logger.error "Failed to find print formatter to field #{field}"
 
@@ -548,7 +554,10 @@ _.extend JustdoPrintGrid.prototype,
 
         return val
 
-      return JustdoHelpers.xssGuard(gc._print_formatters[formatter_id](item_doc, field, path))
+      if not _skip_xss_guard
+        return JustdoHelpers.xssGuard(gc._print_formatters[formatter_id](item_doc, field, path))
+      else
+        return gc._print_formatters[formatter_id](item_doc, field, path)
 
     #
     # Main
