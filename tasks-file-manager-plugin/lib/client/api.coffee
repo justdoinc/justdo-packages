@@ -1,33 +1,21 @@
 _.extend TasksFileManagerPlugin.prototype,
   showPreviewOrStartDownload: (task_id, file) ->
-    pics_embedder = (link, alt) ->
-      """<img src="#{link}" alt="#{alt}" title="#{alt}" style="max-width: 100%;" />"""
+    preview_supported_formats = ["application/pdf", "image/png", "image/gif", "image/jpeg", "image/bmp"]
 
-    preview_supported_formats =
-      "application/pdf":
-        embedder: (link, alt) ->
-          """<embed src="#{link}" width="970" height="550" alt="#{alt}" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">"""
-      "image/png":
-        embedder: pics_embedder
-      "image/gif":
-        embedder: pics_embedder
-      "image/jpeg":
-        embedder: pics_embedder
-      "image/bmp":
-        embedder: pics_embedder
-
-    file_format = file.type
-    if file_format of preview_supported_formats
+    if file.type in preview_supported_formats
       # Show preview in bootbox
-
-      embedder = preview_supported_formats[file_format].embedder
-
       link = APP.tasks_file_manager_plugin.tasks_file_manager.getDownloadLink task_id, file.id, (err, link) ->
+        if err?
+          alert("Error occured: #{err.reason}")
+
+          return
+
+        message_template =
+          JustdoHelpers.renderTemplateInNewNode(Template.tasks_file_manager_files_preview, {download_link: link, file: file})
+
         bootbox.dialog
           title: file.title
-          message: """
-            #{embedder(link, file.title)}
-          """
+          message: message_template.node
           animate: false
           className: "tasks-file-manager-preview-dialog"
 

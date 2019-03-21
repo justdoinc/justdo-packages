@@ -47,6 +47,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
+  api.addFiles("lib/client/templates/files-preview.html", client);
+  api.addFiles("lib/client/templates/files-preview.coffee", client);
   api.addFiles("lib/client/templates/files-template.html", client);
   api.addFiles("lib/client/templates/files-template.coffee", client);
   api.addFiles("lib/client/templates/files-template.sass", client);
