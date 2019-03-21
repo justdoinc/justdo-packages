@@ -231,6 +231,8 @@ _.extend Projects.prototype,
           is_admin: true
         }
       ]
+      conf:
+        custom_features: ["justdo_private_follow_up"]
 
     project_id = @projects_collection.insert project
 
