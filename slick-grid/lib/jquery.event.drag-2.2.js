@@ -375,26 +375,26 @@ $event.dispatch = function( event ){
 };
 
 // event fix hooks for touch events...
-var touchHooks = 
-$event.fixHooks.touchstart = 
-$event.fixHooks.touchmove = 
-$event.fixHooks.touchend =
-$event.fixHooks.touchcancel = {
-	props: "clientX clientY pageX pageY screenX screenY".split( " " ),
-	filter: function( event, orig ) {
-		if ( orig ){
-			var touched = ( orig.touches && orig.touches[0] )
-				|| ( orig.changedTouches && orig.changedTouches[0] )
-				|| null; 
-			// iOS webkit: touchstart, touchmove, touchend
-			if ( touched ) 
-				$.each( touchHooks.props, function( i, prop ){
-					event[ prop ] = touched[ prop ];
-				});
-		}
-		return event;
-	}
-};
+// var touchHooks = 
+// $event.fixHooks.touchstart = 
+// $event.fixHooks.touchmove = 
+// $event.fixHooks.touchend =
+// $event.fixHooks.touchcancel = {
+// 	props: "clientX clientY pageX pageY screenX screenY".split( " " ),
+// 	filter: function( event, orig ) {
+// 		if ( orig ){
+// 			var touched = ( orig.touches && orig.touches[0] )
+// 				|| ( orig.changedTouches && orig.changedTouches[0] )
+// 				|| null; 
+// 			// iOS webkit: touchstart, touchmove, touchend
+// 			if ( touched ) 
+// 				$.each( touchHooks.props, function( i, prop ){
+// 					event[ prop ] = touched[ prop ];
+// 				});
+// 		}
+// 		return event;
+// 	}
+// };
 
 // share the same special event configuration with related events...
 $special.draginit = $special.dragstart = $special.dragend = drag;
