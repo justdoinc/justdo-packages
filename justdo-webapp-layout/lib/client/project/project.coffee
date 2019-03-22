@@ -70,7 +70,7 @@ APP.executeAfterAppLibCode ->
     main_module.unsetCustomHeaderTemplate("right")
 
     if module.project?
-      module.helpers.curProj().stop()
+      module.helpers.curProj()?.stop()
       module.project.set(null)
 
     module.stopWireframeManager()
