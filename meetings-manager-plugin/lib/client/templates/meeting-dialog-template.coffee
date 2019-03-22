@@ -199,7 +199,7 @@ Template.meetings_meeting_dialog.onCreated ->
 
 Template.meetings_meeting_dialog.onRendered ->
 
-  $('.meetings_meeting-dialog .modal').zIndex(200)
+  $('.meetings_meeting-dialog .modal').css("z-index", 200)
 
   instance = this
 
