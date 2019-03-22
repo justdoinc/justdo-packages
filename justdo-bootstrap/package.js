@@ -6,27 +6,18 @@ Package.describe({
   version: "3.3.5" // Should be same as the bootstrap version in use
 });
 
-bootstrap_data_pack = 'justdoinc:bootstrap-data@3.3.5'
-var pluginOptions = {
-  name: 'bootstrap-configurator',
-  use: [
-    'underscore@1.0.2',
-    bootstrap_data_pack
-  ],
-  sources: [
-    'module-definitions.js',
-    'distributed-configuration.js',
-    'bootstrap-configurator.js'
-  ],
-  npmDependencies: {}
-};
+client = "client"
+server = "server"
+both = [client, server]
 
-Package._transitional_registerBuildPlugin(pluginOptions);
+Package.onUse(function (api) {
+  api.versionsFrom("1.4.1.1");
 
-Package.on_use(function (api) {
-  api.versionsFrom("METEOR@0.9.2.2");
-  api.use([
-    'jquery',
-    bootstrap_data_pack
-  ], 'client');
+  api.use("coffeescript", both);
+  api.use("underscore", both);
+  api.use("mongo", both);
+
+  api.use("templating", client);
+
+  api.addFiles('head.html', client);
 });
