@@ -1,6 +1,3 @@
-[submodule "justdo-bootstrap-data/bootstrap"]
-	path = justdo-bootstrap-data/bootstrap
-	url = git@github.com:twbs/bootstrap.git
 [submodule "meteor-context-menu"]
 	path = meteor-context-menu
 	url = git@github.com:justdoinc/meteor-context-menu.git
