@@ -1,7 +1,7 @@
 import { checkNpmVersions } from "meteor/tmeasday:check-npm-versions"
 
 checkNpmVersions({
-  'bluebird': '3.4.x'
+  'bluebird': '3.x.x'
 }, 'justdoinc:justdo-webapp-boot')
 
 Promise = require "bluebird"
