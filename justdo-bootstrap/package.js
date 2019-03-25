@@ -17,10 +17,10 @@ Package.onUse(function (api) {
   api.use("underscore", both);
   api.use("mongo", both);
 
-  // api.addFiles("bootstrap3/bootstrap.js", client);
-  // api.addFiles("bootstrap3/bootstrap.css", client);
+  api.addFiles("bootstrap3/bootstrap.js", client);
+  api.addFiles("bootstrap3/bootstrap.css", client);
 
-  api.addFiles("bootstrap4/popper.js", client);
-  api.addFiles("bootstrap4/bootstrap.js", client);
-  api.addFiles("bootstrap4/bootstrap.css", client);
+  // api.addFiles("bootstrap4/popper.js", client);
+  // api.addFiles("bootstrap4/bootstrap.js", client);
+  // api.addFiles("bootstrap4/bootstrap.css", client);
 });
