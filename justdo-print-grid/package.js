@@ -23,6 +23,7 @@ Package.onUse(function (api) {
   api.use("meteorspark:util@0.2.0", client);
   api.use("meteorspark:logger@0.3.0", client);
   api.use("justdoinc:justdo-helpers@1.0.0", client);
+  api.use("justdoinc:web-app-style@0.1.0", client);
 
   api.use("matb33:collection-hooks@0.8.4", client);
 
