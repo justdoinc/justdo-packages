@@ -30,25 +30,13 @@ Package.onUse(function (api) {
   api.use("reactive-var", both);
   api.use("tracker", client);
 
-  // api.addFiles("bootstrap3/bootstrap.js", client);
-  // api.addFiles("bootstrap3/bootstrap.css", client);
-
   api.addFiles("bootstrap4/popper.js", client);
   api.addFiles("bootstrap4/bootstrap.js", client);
 
-  // Switch themes with: APP.bootstrap_themes_manager.setTheme("sketchy")
-
-  api.addAssets("bootstrap4/themes/default/bootstrap.css", client);
-  api.addAssets("bootstrap4/themes/cerulean/bootstrap.css", client);
-  api.addAssets("bootstrap4/themes/minty/bootstrap.css", client);
-  api.addAssets("bootstrap4/themes/sandstone/bootstrap.css", client);
-  api.addAssets("bootstrap4/themes/sketchy/bootstrap.css", client);
-  api.addAssets("bootstrap4/themes/superhero/bootstrap.css", client);
-
-  api.addFiles("bootstrap4/themes-manager/themes-manager.coffee", client);
+  api.addFiles("themes-manager/themes-manager.coffee", client);
 
   api.use("meteorspark:app@0.3.0", client);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", client);
-  api.addFiles("bootstrap4/themes-manager/app-integration.coffee", client);
+  api.addFiles("themes-manager/app-integration.coffee", client);
 
 });
