@@ -4,6 +4,7 @@ _.extend JustdoChecklist.prototype,
 
     Meteor.methods
       flipChecklistSwitch: (task_id) ->
+
         # let's verify that the user has access to the task
         t = APP.collections.Tasks.findOne({_id:task_id,users:Meteor.user()._id})
         if not t

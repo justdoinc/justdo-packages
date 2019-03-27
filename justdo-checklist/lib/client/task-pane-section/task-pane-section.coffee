@@ -40,7 +40,11 @@ renderChart = (active_item)->
   APP.collections.Tasks.find({"parents.#{active_item._id}":{$exists:true}}).forEach (doc)=>
     ret = countCheckedLeafes(doc._id)
 
-    categories.push doc.title
+    if doc.title
+      categories.push doc.title
+    else
+      categories.push ""
+
     checked.data.push ret.checked
     unchecked.data.push ret.count-ret.checked
 

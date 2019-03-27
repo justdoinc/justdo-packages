@@ -11,7 +11,12 @@ _.extend JustdoTasksCollectionsManager.prototype,
         "files",
         "description",
         "p:dp:is_project",
-        "priv:jdt:running_since"
+        "priv:jdt:running_since",
+        "p:checklist:is_checklist",
+        "p:checklist:is_checked",
+        "p:checklist:total_count",
+        "p:checklist:checked_count",
+        "p:checklist:has_partial"
       ]
 
     Schema =
