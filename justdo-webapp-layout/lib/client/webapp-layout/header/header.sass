@@ -11,12 +11,18 @@ $drawer-footer-height: 85px
   border: 0px
   z-index: 100
 
+nav.navbar
+  padding: 4px 12px 4px 0px
+
 .drawer-hamburger
   border: 0px
   display: block
   margin: 0
-  padding: 15px 14px 16px 14px
   cursor: pointer
+
+  .navbar-toggler-icon
+    width: 1.3rem
+    height: 1.3rem
 
   &:hover
     background: none
@@ -26,7 +32,6 @@ $drawer-footer-height: 85px
 
   .drawer-brand > &
     margin-left: -16px
-    margin-top: -10px
 
 .drawer-nav
   position: fixed
@@ -53,7 +58,6 @@ $drawer-footer-height: 85px
   a
     display: block
     width: 100px
-    margin-left: 34px
 
   img
     width: 100px
@@ -163,17 +167,16 @@ $drawer-pages-menu-item-height: 22px + ($drawer-pages-menu-item-vertical-padding
 
 .brand
   display: block
-
   background: url(/layout/logos-ext/justdo_logo_with_text_webapp_navbar.png) no-repeat transparent
   background-size: contain
-
   width: 100px
   height: 26px
-  margin: 10px -2px 0 2px
 
 #login-dropdown-list
   a
     margin-top: -1px
+    &::after
+      display: none
 
   #forgot-password-link, #signup-link
     padding: 0 2px
@@ -222,14 +225,12 @@ $drawer-pages-menu-item-height: 22px + ($drawer-pages-menu-item-vertical-padding
   background: url(/packages/justdoinc_justdo-webapp-layout/lib/client/assets/layout-sprite.png) no-repeat transparent
 
 .navbar-icon-help
-  margin-right: -1px
-  margin-top: 1px
-  margin-bottom: -1px
+  margin-right: 9px
+  margin-top: 11px
   background-position: -20px 0
   width: 18px
   height: 18px
-  display: inline-block
-  vertical-align: text-top
+  display: block
 
 .navbar-icon-feedback
   background-position: 0 0

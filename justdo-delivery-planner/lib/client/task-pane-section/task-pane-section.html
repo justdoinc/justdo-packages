@@ -21,7 +21,7 @@
 
     </div>
 
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs border-0">
       {{#if isProject}}
         <li role="presentation" tab-id="project" class="delivery-planner-tab {{#if $eq currentTab "project"}}active{{/if}}"><a href="#">Project {{#if isArchived}}(closed){{/if}}</a></li>
       {{/if}}
@@ -216,7 +216,7 @@ We use this snapshot to calculate the Ideal Work Remaining Line of the Burn Down
   <div id="burndown-chart"></div>
 
   {{#if showBaselineSetting}}
-    <div class="dp-project-setting">  
+    <div class="dp-project-setting">
       <div class="setting-label">Baseline projection <span class="baseline-projection-more-info" title="The Baseline Projection 'Freezes' the Current Projection as a reference point for future comparisons."><i class="fa fa-question-circle fa-fw"></i></span></div>
 
       <div class="setting-controller">
@@ -238,7 +238,7 @@ We use this snapshot to calculate the Ideal Work Remaining Line of the Burn Down
           <div class="dp-task-context-delete" title="Unassign project">
             <i class="fa fa-trash-o" aria-hidden="true"></i>
           </div>
-          <div class="dp-context-item" style="padding-left: 0px" path="/QxZD3RdZhiJmiaBqm/">      
+          <div class="dp-context-item" style="padding-left: 0px" path="/QxZD3RdZhiJmiaBqm/">
             <span class="dp-task-seq-id grid-tree-control-task-id label">
               <span class="dp-task-seq-id-number">
                 {{seqId}}
@@ -270,7 +270,7 @@ We use this snapshot to calculate the Ideal Work Remaining Line of the Burn Down
       <div class="no-projects-available">
         <p>No projects available for assigning.</p>
       </div>
-      
+
     {{/with}}
   </section>
 </template>

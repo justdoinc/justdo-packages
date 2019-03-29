@@ -41,13 +41,14 @@
 </template>
 
 <template name="project_header_global_layout_header_middle">
-  <div class="project-page-global-layout-header-middle">
+  <!-- <div class="project-page-global-layout-header-middle">
     {{> project_name}}
-  </div>
+  </div> -->
+  {{> project_name}}
 </template>
 
 <template name="project_name">
-  {{!-- 
+  {{!--
 
     The new design doesn't work well with the project logo feature.
 
@@ -77,7 +78,7 @@
     </div>
 
     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="settingsDropdown">
-      <li id="register-project-for-daily-email" class="item">
+      <li id="register-project-for-daily-email" class="dropdown-item">
       {{#if isSubscribedToDailyEmail}}
         <i class="fa fa-toggle-on fa-fw"></i>
       {{else}}
@@ -85,7 +86,7 @@
       {{/if}}
       Email daily updates for this JustDo</li>
 
-      <li class="item email-notifications">
+      <li class="dropdown-item email-notifications">
       {{#if isSubscribedToEmailNotifications}}
         <i class="fa fa-toggle-on fa-fw"></i>
       {{else}}
@@ -94,7 +95,7 @@
       Email ownership transfer notifications</li>
 
       {{#if showRolesAndGroupsManager}}
-        <li class="roles-and-groups-manager item">
+        <li class="roles-and-groups-manager dropdown-item">
           <i class="fa fa-users fa-fw" aria-hidden="true"></i> Roles &amp; Groups Manager
         </li>
       {{/if}}
@@ -112,7 +113,7 @@
       {{/if}}
 
       {{#if is_project_admin}}
-        <li id="project-config" class="item"><i class="fa fa-crosshairs fa-fw" aria-hidden="true" ></i> Configure this JustDo</li>
+        <li id="project-config" class="dropdown-item"><i class="fa fa-crosshairs fa-fw" aria-hidden="true" ></i> Configure this JustDo</li>
         {{> project_settings_dropdown_remove_project}}
       {{/if}}
     </ul>

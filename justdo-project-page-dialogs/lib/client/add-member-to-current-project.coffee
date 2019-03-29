@@ -69,7 +69,7 @@ ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_op
 
     invited_members_dialog_options = _.extend {}, invited_members_dialog_options,
       title: "Add a New Member"
-      buttons: 
+      buttons:
         cancel:
           label: "Cancel"
 
@@ -123,7 +123,7 @@ ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_op
 #
 
 ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options) ->
-  # At the moment, we assume this method is called from a project page on which 
+  # At the moment, we assume this method is called from a project page on which
   # user_id is Awaiting Registration.
   #
   # Notes:
@@ -171,12 +171,12 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
           dialog.data("bs.modal").hide()
 
         return
-    
+
     return
 
   invited_members_dialog_options = _.extend {}, invited_members_dialog_options,
     title: "Edit invited member's details"
-    buttons: 
+    buttons:
       cancel:
         label: "Cancel"
 

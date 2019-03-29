@@ -8,6 +8,8 @@
     margin-right: 8px
     color: #333333
     cursor: pointer
+    &::after
+      display: none
 
   .dropdown-menu
     margin-top: 9px !important // We had to add this in the transition to bootstrap3 without modifications (due to media query in the default bootstrap3 that affects small screens), should avoid in the future

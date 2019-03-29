@@ -1,12 +1,7 @@
 <template name="header">
-  <nav class="header navbar navbar-default" style="width: {{getHeaderWidth}}px">
-    <div class="container-fluid" style="width: {{getHeaderWidth}}px">
-      <div class="navbar-toggle drawer-hamburger pull-left">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </div>
-      <div class="navbar-header">
+  <nav class="navbar navbar-light border-bottom shadow-sm justify-content-between" style="width: {{getHeaderWidth}}px">
+      <div class="d-flex align-items-center">
+        <button class="navbar-toggler drawer-hamburger border-0" type="button"><span class="navbar-toggler-icon"></span></button>
         <a class="brand" href="/"></a>
       </div>
 
@@ -15,7 +10,7 @@
       {{/with}}
 
       {{#if loginStateIs "logged-in"}}
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav">
           {{#each globalRightNavbarItems}}
             {{#if template}}
               {{> Template.dynamic template=template data=template_data}}
@@ -33,14 +28,11 @@
           {{> loginButtons}}
         </ul>
       {{/if}}
-    </div>
+
+
     <nav class="drawer-nav" role="navigation">
-      <div class="drawer-brand">
-        <div class="navbar-toggle drawer-hamburger pull-left">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </div>
+      <div class="drawer-brand d-flex align-items-center">
+        <button class="navbar-toggler drawer-hamburger border-0" type="button"><span class="navbar-toggler-icon"></span></button>
         <a href="/"><img src="/layout/logos-ext/justdo_logo_with_text_webapp_navbar.png" alt="justDo"></a>
       </div>
 

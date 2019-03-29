@@ -5,8 +5,7 @@ $empty-box-message-text: #86a8d1
 .members-editor-search
   border-bottom: 1px solid #EEEEEE
   label
-    position: absolute
-    top: 8px
+    margin: 0
     color: #6a96d2
   input
     border: none
@@ -16,7 +15,6 @@ $empty-box-message-text: #86a8d1
     font-size: 16px
     color: #3D495B
     width: 100%
-    padding-left: 20px
     &:focus
       outline: none
     &::-webkit-input-placeholder
@@ -171,8 +169,14 @@ $add-users-section-margin-bottom-when-invite-members-displayed: 2px
         outline: none
 
 .members-editor-dialog
+  .modal-dialog
+    min-width: 600px
   .modal-body
     overflow: visible
+    padding-top: 0px
+
+  .modal-title
+    font-size: 18px
 
   .checkbox
     margin-left: 2px

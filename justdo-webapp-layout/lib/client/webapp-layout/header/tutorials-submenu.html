@@ -5,30 +5,24 @@
 </template>
 
 <template name="tutorials_submenu_dropdown">
-  <li><a href="https://www.youtube.com/watch?v=KSetzC43q7E&list=PLrmyjry49_CT_6cF2q0sbDZPTVEcG673Y" target="_blank"><i class="fa fa-fw fa-play" aria-hidden="true"></i> <b>Getting Started with JustDo</b></a></li>
-
-  <li><a href="https://blog.justdo.com" target="_blank"><i class="fa fa-fw fa-newspaper-o" aria-hidden="true"></i> <b>JustDo Blog</b></a></li>
-
-  <li role="separator" class="divider"></li>
+  <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=KSetzC43q7E&list=PLrmyjry49_CT_6cF2q0sbDZPTVEcG673Y" target="_blank"><i class="fa fa-fw fa-play" aria-hidden="true"></i> <b>Getting Started with JustDo</b></a></li>
+  <li><a class="dropdown-item"  href="https://blog.justdo.com" target="_blank"><i class="fa fa-fw fa-newspaper-o" aria-hidden="true"></i> <b>JustDo Blog</b></a></li>
+  <li role="separator" class="dropdown-divider"></li>
 
   {{#with tutorials}}
     <li class="dropdown-header">Popular tutorials</li>
-
     {{#each this}}
       {{> tutorials_submenu_dropdown_item }}
     {{/each}}
-
-    <li role="separator" class="divider"></li>
+    <li role="separator" class="dropdown-divider"></li>
   {{/with}}
-
   {{> tutorials_submenu_bugmuncher}}
-
   {{#if zendeskEnabled}}
-    <li><a href="{{zendeskHost}}" target="_blank"><i class="fa fa-fw fa-book"></i> JustDo Knowledge Base</a></li>
-    <li><a href="#" class="support-center"><i class="fa fa-fw fa-question-circle"></i> JustDo Support Center</a></li>
+    <li><a class="dropdown-item" href="{{zendeskHost}}" target="_blank"><i class="fa fa-fw fa-book"></i> JustDo Knowledge Base</a></li>
+    <li><a class="dropdown-item support-center" href="#"><i class="fa fa-fw fa-question-circle"></i> JustDo Support Center</a></li>
   {{/if}}
 </template>
 
 <template name="tutorials_submenu_dropdown_item">
-  <li><a class="tutorial-item" href="" tutorial-id="{{tutorial_id}}">{{cutString tutorial.readable_name 100}}</a></li>
+  <li><a class="dropdown-item tutorial-item" href="" tutorial-id="{{tutorial_id}}">{{cutString tutorial.readable_name 100}}</a></li>
 </template>

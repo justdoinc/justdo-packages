@@ -3,8 +3,16 @@
     max-height: 397px
     overflow: auto
 
+.tutorials-dropdown
+  .dropdown-toggle::after
+    display: none
+
 .tutorials-menu-content .dropdown-menu
   position: relative
+
+.tutorials-menu-content.open
+  .dropdown-menu
+    display: block
 
 // override bootstrap
 .navbar-default .navbar-nav > .open.tutorials-dropdown > a, .navbar-default .navbar-nav > .open.tutorials-dropdown > a:hover, .navbar-default .navbar-nav > .open > a:focus

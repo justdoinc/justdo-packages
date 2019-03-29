@@ -2,7 +2,7 @@ $project-logo-max-width: 0 // With the introduction of the new design, we decide
 $project-name-input-width: 222px
 
 .project-page-global-layout-header-right
-  margin-top: 9px
+  margin-top: 5px
 
 .project-page-global-layout-header-middle
   position: absolute
@@ -40,7 +40,7 @@ $project-name-input-width: 222px
     border-color: #4d90fe
 
 .project-logo
-  width: 135px // Configurable with project conf "project_logo_width" 
+  width: 135px // Configurable with project conf "project_logo_width"
   max-width: $project-logo-max-width
   height: 30px
   vertical-align: bottom
@@ -69,6 +69,8 @@ $project-name-input-width: 222px
 #project-plugins-store-button
   .dropdown-toggle
     margin-right: 0
+    &::after
+      display: none
 
   .dropdown-menu
     user-select: none
