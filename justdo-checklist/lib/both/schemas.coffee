@@ -7,7 +7,7 @@ _.extend JustdoChecklist.prototype,
         optional: true
 
       "p:checklist:is_checked":
-        label: "Is checklist checked"
+        label: "checklist checked"
         type: Boolean
         optional: true
 
