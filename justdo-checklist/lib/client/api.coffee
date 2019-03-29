@@ -67,18 +67,18 @@ _.extend JustdoChecklist.prototype,
 
     # if checked
     if task['p:checklist:is_checked']
-      return "<i class='fa fa-check slick-prevent-edit' aria-hidden='true' style='color:green' onclick=#{f}></i>"
+      return "<i class='fa fa-check slick-prevent-edit' aria-hidden='true' style='color:green' onclick=#{f} title='Click to uncheck.'></i>"
 
     # if implied as checked
     if task['p:checklist:total_count'] and (task['p:checklist:total_count'] == task['p:checklist:checked_count'])
-      return "<i class='fa fa-check-square slick-prevent-edit' aria-hidden='true' style='color:green' onclick=#{f}></i>"
+      return "<i class='fa fa-check-square slick-prevent-edit' aria-hidden='true' style='color:green' onclick=#{f} title='Implied as checked.'></i>"
 
     # if implied as partially checked
     if (task['p:checklist:checked_count'] and task['p:checklist:checked_count'] > 0) or task['p:checklist:has_partial'] == true
-      return "<i class='fa fa-check-square slick-prevent-edit p-jd-checklist' aria-hidden='true' style='color:silver' onclick=#{f}></i>"
+      return "<i class='fa fa-check-square slick-prevent-edit p-jd-checklist' aria-hidden='true' style='color:silver' onclick=#{f} title='Implied as partially checked.'></i>"
 
     # else empty square
-    return "<i class='fa fa-square-o slick-prevent-edit p-jd-checklist' aria-hidden='true' onclick=#{f}></i>"
+    return "<i class='fa fa-square-o slick-prevent-edit p-jd-checklist' aria-hidden='true' onclick=#{f} title='Click to check.'></i>"
 
 
   setupCustomFeatureMaintainer: ->
