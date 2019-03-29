@@ -151,7 +151,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
             due_list_state: true
 
           "nil":
-            txt: "Category"
+            txt: ""
             order: 6
             print: ""
             skip_xss_guard: true
