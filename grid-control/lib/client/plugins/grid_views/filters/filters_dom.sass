@@ -1,7 +1,15 @@
-.column-filter-dropdown
-  position: relative
-  margin-top: 7px
-  padding: 0
+.column-filter-dropdown-container.open
+  .column-filter-dropdown
+    display: block
+
+  .column-filter-dropdown
+    position: relative
+    margin-top: 7px
+    padding: 0
+
+  .dropdown-menu
+    right: 0px
+    font-size: 14px
 
   .divider
     margin: 0
@@ -20,7 +28,9 @@
     color: #337AB7
 
 .dropdown-filter-controls-container
-  padding: 4px
+  padding: 0px 6px 6px 0px
+  button
+    font-size: 12px
 
   button
     margin-left: 4px

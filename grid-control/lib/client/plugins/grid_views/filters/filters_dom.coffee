@@ -56,7 +56,7 @@ _.extend GridControl.prototype,
                 # we pass column_settings.field as the GridBoundElement type
                 # so if same filter will be called again GridBoundElement will
                 # toggle the dropdown for us
-                @_openFiltersDropdown(column_settings.field, $filter_control) 
+                @_openFiltersDropdown(column_settings.field, $filter_control)
 
               .prependTo($el)
 
@@ -111,10 +111,10 @@ _.extend GridControl.prototype,
         .html(@_current_filter_controller.controller)
 
       dropdown_controls = """
-        <div role='separator' class='divider'></div>
+        <div role='separator' class='dropdown-divider'></div>
         <div class="dropdown-filter-controls-container">
-          <button type="button" class="btn btn-xs btn-default close-dropdown">Close</button>
-          <button type="button" class="btn btn-xs btn-default clear">Clear</button>
+          <button type="button" class="btn btn-outline-dark btn-sm close-dropdown">Close</button>
+          <button type="button" class="btn btn-outline-dark btn-sm clear">Clear</button>
           <div style="clear: both"></div>
         </div>
       """

@@ -29,10 +29,10 @@ Util.inherits GridControlSearch, EventEmitter
 _.extend GridControlSearch.prototype,
   search_ui_component:
     '<div class="grid-control-search input-group input-group-sm">
-      <div class="form-control"><input type="text" class="search-input" placeholder="Search" /></div>
-      <span class="input-group-btn">
+      <input type="text" class="form-control search-input" placeholder="Search" />
+      <span class="input-group-btn d-flex align-items-center">
+        <div class="search-info-container"><span class="search-info"></span></div>
         <div class="btn clear-button"><i class="fa fa-times"></i></div>
-        <div class="btn search-info-container"><span class="label search-info"></span></div>
         <button type="button" class="btn btn-default search-prev disabled"><i class="fa fa-chevron-up"></i></button>
         <button type="button" class="btn btn-default search-next disabled"><i class="fa fa-chevron-down"></i></button>
       </span>
@@ -69,7 +69,7 @@ _.extend GridControlSearch.prototype,
           @next()
         else
           @prev()
-        
+
       # down arrow for next search result
       if e.which == 40 # down
         e.preventDefault()
@@ -353,7 +353,7 @@ _.extend GridControlSearch.prototype,
       @grid_control.activatePath(@next_path)
 
   search: (term) ->
-    if term? and term != "" 
+    if term? and term != ""
       if @current_term != term
         @container.addClass('input-not-empty')
 

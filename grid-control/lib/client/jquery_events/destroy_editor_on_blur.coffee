@@ -86,7 +86,7 @@ GridControl.jquery_builtin_events.push(
                  # If after blur active cell remains the same (means we blurred
                  # out of the grid control) and the datepicker isn't visible (the
                  # blur wasn't a result of opening the date picker) and we aren't
-                 # focused (no reason to close) commit changes and exit editor 
+                 # focused (no reason to close) commit changes and exit editor
                 @saveAndExitActiveEditor()
           , 250
   }

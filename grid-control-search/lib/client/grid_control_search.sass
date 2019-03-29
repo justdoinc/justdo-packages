@@ -1,114 +1,66 @@
 #project-search-comp-container
-  width: 250px
+  width: 210px
+  border-radius: 4px
+  background-color: #F5F5F5
+  border: 1px solid #c3c3c3
   float: right
-
-
-.grid-control-search
-  .form-control
-    padding-top: 3px
+  position: relative
+  transition: box-shadow 0.15s ease-in-out
+  font-family: "Lato", sans-serif
+  &:hover
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+  &::before
+    font-family: "FontAwesome"
+    content: "\f002"
+    width: 25px
+    height: 30px
+    position: absolute
+    top: 0
+    left: 0
+    vertical-align: middle
+    font-size: 14px
+    padding-top: 6px
     padding-left: 7px
+    color: #707070
 
-  input
-    width: 100%
-    outline: 0
-    border: 0 none
+  .search-input
+    padding: 0px 8px 0px 24px !important
+    border: none
+    background-color: transparent
+    &:focus
+      box-shadow: none
 
-    &::-ms-clear
-      display: none
-
-  /* .input-group-btn This one is needed in order to override bootstrap rules that were set with 3 levels of classes */
   .input-group-btn
     .clear-button
-      position: absolute
-      left: -17px
-
-      color: #AAA
-      text-decoration: none
-      background-color: transparent
-      box-shadow: none
+      font-size: 12px
+      padding: 5px
       display: none
-
-      margin-right: 0
-      padding-top: 5px
-      padding-left: 1px
-      padding-right: 6px
+      cursor: pointer
 
     .search-info-container
-      position: absolute
+      position: unset
+      left: unset !important
+      top: unset !important
+      display: none
+      .search-info
+        background-color: #fff8af
+        color: black
+        border: 1px solid #fee492
+        font-family: "Lato", sans-serif
+        font-size: 10px
+        font-weight: bold
+        padding: 1px 2px
+        border-radius: 3px
+        display: block
 
-      background-color: transparent
-      box-shadow: none
-
-      padding-right: 0
-      padding-left: 0
-
-      cursor: default
-
-    .search-prev, .search-next
-      cursor: default
-
-  .input-not-empty &
-    .clear-button
-      display: block
-
-    .form-control
-      padding-right: 22px
-
-.search-result
-  background-color: #fff7af
-
-.search-result.active
-  background-color: #ffba51
-
-  .slick-cell.editable
-    background-color: rgba(194, 0, 0, 0.13)
-
-// THE FOLLOWING IS A HACK TO MIGRATE TO NEW DESIGN WITHOUT
-// RESTRUCTURING THE DOM, IN THE FUTURE WE SHOULD IMPORVE!
-#project-search-comp-container
-  margin-right: -39px
-
-.grid-control-search
-  .input-group-btn
-    .search-prev
+    .search-prev,
+    .search-next
       display: none
 
-    .search-next
-      visibility: hidden
-      padding: 0
-      width: 40px
+#project-search-comp-container.input-not-empty
+  .clear-button
+    display: block
 
-#project-search-comp-container
-  .form-control
-    border: 1px solid #c3c3c3
-    border-radius: 3px
-    box-shadow: none
-    background-color: #F5F5F5
-    position: relative
-    padding-left: 24px
-    &::before
-      font-family: "FontAwesome"
-      content: "\f002"
-      width: 25px
-      height: 30px
-      position: absolute
-      top: 0
-      left: 0
-      vertical-align: middle
-      font-size: 14px
-      padding-top: 4px
-      padding-left: 7px
-      color: #707070
-  .search-input
-    background-color: #F5F5F5
-    font-family: "lato", sans-serif
-    color: black
-    font-size: 14px
-    &::placeholder
-      color: #707070
-  .search-info
-    background-color: #fff8af
-    color: black
-    border: 1px solid #fee492
-    font-family: "Lato", sans-serif
-    padding: .2em .45em .3em
+#project-search-comp-container.results-found
+  .search-info-container
+    display: block
