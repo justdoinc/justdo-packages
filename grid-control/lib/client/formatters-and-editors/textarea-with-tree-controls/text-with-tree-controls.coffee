@@ -89,6 +89,7 @@ GridControl.installFormatter "textWithTreeControls",
     is_delivery_planner_plugin_enabled_computation = null
     is_time_tracker_plugin_enabled_computation = null
     is_checklist_plugin_enabled_computation = null
+
     Tracker.nonreactive =>
       # Run in an isolated reactivity scope
       highest_seqId_computation = Tracker.autorun =>
@@ -141,7 +142,10 @@ GridControl.installFormatter "textWithTreeControls",
       is_time_tracker_plugin_enabled_computation.stop()
       is_checklist_plugin_enabled_computation.stop()
 
+      return
+
     return
+    
 
   slick_grid: ->
     {row, cell, value, doc, self, path} = @getFriendlyArgs()
@@ -237,15 +241,7 @@ GridControl.installFormatter "textWithTreeControls",
           """
 
     if @getCurrentColumnData("checklist_plugin_enabled") and not doc._type?
-      container = "p-jd-checklist-container#{Math.floor(Math.random()*99999999)}"
-
-      tree_control += """
-              <i class="#{container} slick-prevent-edit" ></i>
-          """
-      Meteor.defer =>
-        Blaze.renderWithData Template.checklist_grid_mark, {task_id: doc._id, path: path}, $(".#{container}")[0]
-
-        return
+      tree_control += APP.justdo_checklist.htmlMark(doc,path)
 
     tree_control += """
       </div>
