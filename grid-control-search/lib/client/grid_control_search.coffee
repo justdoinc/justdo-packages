@@ -171,15 +171,18 @@ _.extend GridControlSearch.prototype,
     forced_fields = _.filter forced_fields, (x) -> x != false
     fields = _.union forced_fields, view_fields
 
+    search_pattern = null
     # In case we just want to look for specific task id
     if (res = /^id:([0-9]{1,10})\s*$/i.exec(@current_term))?
       fields = ["seqId"]
-      @current_term = "^#{res[1]}$"
-
-    if @current_term != ""
+      search_pattern = "^#{res[1]}$"
+    else if String(@current_term).trim() != ""
       @logger.debug "Refresh search results"
 
-      search_regexp = new RegExp(@current_term, "i")
+      search_pattern = JustdoHelpers.escapeRegExp(@current_term)
+
+    if search_pattern?
+      search_regexp = new RegExp(search_pattern, "i")
       search_options =
         fields: fields
         exclude_filtered_paths: true
@@ -190,6 +193,8 @@ _.extend GridControlSearch.prototype,
         @_setHaveResults(@paths)
       else
         @_unsetHaveResults()
+
+    return
 
   highlightMatchedPaths: ->
     @clearMatchedPaths()
