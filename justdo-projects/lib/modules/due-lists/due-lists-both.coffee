@@ -171,6 +171,14 @@ _.extend PACK.modules,
 
       query = @_getCommonQuery(conf)
 
+      if (projects = conf.projects)?
+        project_id_requirement =
+          $in: projects
+      else
+        project_id_requirement =
+          $ne: null # To avoid cases where we get docs that received only their private fields,
+                        # but not yet their normal fields
+
       # the conf cleanup ensure dates exist and are either
       # string - specific date
       # Array - range
@@ -193,9 +201,7 @@ _.extend PACK.modules,
             $or: [
               query,
               {
-                project_id:
-                  $ne: null # To avoid cases where we get docs that received only their private fields,
-                            # but not yet their normal fields
+                project_id: project_id_requirement
                 "priv:follow_up": date
               }
             ]
@@ -262,9 +268,7 @@ _.extend PACK.modules,
                 $or: [
                   query,
                   {
-                    project_id:
-                      $ne: null # To avoid cases where we get docs that received only their private fields,
-                                # but not yet their normal fields
+                    project_id: project_id_requirement
                     "priv:follow_up": range_selector
                   }
                 ]
