@@ -12,7 +12,22 @@ poc_permitted_domains = [
 
   # local https
   "https://local.justdo.today", "https://app-local.justdo.today",
-  "https://alpha-local.justdo.today", "https://app-local-beta.justdo.today"
+  "https://alpha-local.justdo.today", "https://app-local-beta.justdo.today",
+
+  # alpha .com
+  "https://alpha.justdo.com", "https://app-alpha.justdo.com",
+  "https://alpha-beta.justdo.com", "https://app-alpha-beta.justdo.com",
+
+  # Daniel's .com
+  "http://daniel-dev.justdo.com:3000", "http://daniel-dev.justdo.com:4000",
+
+  # local http .com
+  "http://local.justdo.com", "http://app-local.justdo.com",
+  "http://alpha-local.justdo.com", "http://app-local-beta.justdo.com",
+
+  # local https .com
+  "https://local.justdo.com", "https://app-local.justdo.com",
+  "https://alpha-local.justdo.com", "https://app-local-beta.justdo.com",
 ]
 
 first_call = true

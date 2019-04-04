@@ -1,11 +1,11 @@
 getUrlDomain = (url) ->
   return /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im.exec(url)[1]
 
-global_prod_landing_app = "https://justdo.today"
-global_prod_webapp = "https://app.justdo.today"
+global_prod_landing_app = "https://justdo.com"
+global_prod_webapp = "https://app.justdo.com"
 
-global_beta_landing_app = "https://beta.justdo.today"
-global_beta_webapp = "https://app-beta.justdo.today"
+global_beta_landing_app = "https://beta.justdo.com"
+global_beta_webapp = "https://app-beta.justdo.com"
 
 _.extend JustdoHelpers,
   getProdUrl: (app_type) ->
