@@ -20,7 +20,7 @@ share.store_db.plugins.push
   price: "Free"
   version: "1.0"
   developer: "JustDo, Inc."
-  developer_url: "justdo.today"
+  developer_url: "justdo.com"
 
   package_name: "justdoinc:justdo-private-follow-up"
   package_project_custom_feature_id: "justdo_private_follow_up"

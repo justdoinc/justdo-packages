@@ -29,7 +29,7 @@ build_and_send_options_schema = new SimpleSchema
 
 _.extend JustdoEmails,
   options:
-    default_sender: "your.assistant@justdo.today"
+    default_sender: "your.assistant@justdo.com"
     site_name: "JustDo"
     logo_path: Meteor.absoluteUrl "layout/logos/justdo_logo_for_emails.png"
     default_subjects:

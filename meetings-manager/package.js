@@ -1,7 +1,7 @@
 Package.describe({
   name: "justdoinc:meetings-manager",
   version: "1.0.0",
-  summary: "Meetings Management in JustDo.today",
+  summary: "Meetings Management in JustDo.com",
   git: "https://github.com/justdoinc/justdo-shared-packages/tree/master/meetings-manager"
 });
 

@@ -14,7 +14,7 @@ share.store_db.plugins.push
   price: "Free"
   version: "1.0"
   developer: "JustDo, Inc."
-  developer_url: "justdo.today"
+  developer_url: "justdo.com"
 
   package_name: "justdoinc:justdo-formula-fields"
   package_project_custom_feature_id: "justdo_formula_fields"

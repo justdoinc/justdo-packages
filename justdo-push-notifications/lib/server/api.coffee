@@ -128,7 +128,7 @@ _.extend JustdoPushNotifications.prototype,
     if args.title?
       message_data.title = args.title
 
-    if (cloud_domain = JustdoHelpers.getProdDomain()) != "justdo.today"
+    if (cloud_domain = JustdoHelpers.getProdDomain()) != "justdo.com"
       # Is private cloud
 
       message_data.pcloud = cloud_domain
