@@ -36,6 +36,30 @@ if (typeof Slick === "undefined") {
     }
   });
 
+  var bindEventPageOffsets = function (event, original) {
+    // Bring back functionality that got removed from jQuery3, that slick.grid relied upon
+    // Code taken from: https://github.com/jquery/jquery/blob/9f268caaf43629addb9a1a2001ab341839300b14/src/event.js#L424
+
+    var eventDoc, doc, body,
+      button = original.button;
+
+    // Calculate pageX/Y if missing and clientX/Y available
+    if ( event.pageX == null && original.clientX != null ) {
+      eventDoc = event.target.ownerDocument || document;
+      doc = eventDoc.documentElement;
+      body = eventDoc.body;
+
+      event.pageX = original.clientX +
+        ( doc && doc.scrollLeft || body && body.scrollLeft || 0 ) -
+        ( doc && doc.clientLeft || body && body.clientLeft || 0 );
+      event.pageY = original.clientY +
+        ( doc && doc.scrollTop  || body && body.scrollTop  || 0 ) -
+        ( doc && doc.clientTop  || body && body.clientTop  || 0 );
+    }
+
+    return event;
+  };
+
   // shared across all grids on the page
   var scrollbarDimensions;
   var maxSupportedCssHeight;  // browser's breaking point
@@ -735,9 +759,11 @@ if (typeof Slick === "undefined") {
         $("<div class='slick-resizable-handle' />")
             .appendTo(e)
             .bind("dragstart", function (e, dd) {
+              e = bindEventPageOffsets(e, e.originalEvent);
               if (!getEditorLock().commitCurrentEdit()) {
                 return false;
               }
+
               pageX = e.pageX;
               $(this).parent().addClass("slick-header-column-active");
               var shrinkLeewayOnRight = null, stretchLeewayOnRight = null;
@@ -794,6 +820,7 @@ if (typeof Slick === "undefined") {
               minPageX = pageX - Math.min(shrinkLeewayOnLeft, stretchLeewayOnRight);
             })
             .bind("drag", function (e, dd) {
+              e = bindEventPageOffsets(e, e.originalEvent);
               var actualMinWidth, d = Math.min(maxPageX, Math.max(minPageX, e.pageX)) - pageX, x;
               if (d < 0) { // shrink column
                 x = d;
