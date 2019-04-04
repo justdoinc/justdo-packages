@@ -237,7 +237,7 @@ drag = $special.drag = {
 		// modify the event type
 		event.type = type;
 		// remove the original event
-		event.originalEvent = null;
+		// event.originalEvent = null; // I don't see what reason the original author had to remove the originalEvent . Daniel C.
 		// initialize the results
 		dd.results = [];
 		// handle each interacted element
@@ -293,7 +293,7 @@ drag = $special.drag = {
 		while ( ++i < len )
 		// restore the original event & type
 		event.type = orig.type;
-		event.originalEvent = orig.event;
+		// event.originalEvent = orig.event;
 		// return all handler results
 		return drag.flatten( dd.results );
 	},
