@@ -88,6 +88,11 @@ GridControl.installEditor "SelectorEditor",
 
     @$grid_view_port.on "scroll", @grid_view_port_scroll_handler
 
+    @$select.on "change-request-processed", =>
+      @context.grid_control.saveAndExitActiveEditor()
+
+      return
+
     @applyStaticFix()
 
     return
