@@ -43,6 +43,12 @@ getIsTimeTrackerPluginEnabled = ->
   # The time tracker plugin needs both itself installed, and the resource manager as dependency
   return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled(JustdoTimeTracker?.project_custom_feature_id) and APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled(JustdoResourcePlanner?.project_custom_feature_id)
 
+getIsChecklistPluginEnabled = ->
+  if not JustdoChecklist?.project_custom_feature_id?
+    return false
+
+  return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled(JustdoChecklist?.project_custom_feature_id)
+
 getMinimalSeqIdSpace = ->
   # Returns the maximum between 3 and the the digits count of the item
   # returned from getHeighestSeqId.
@@ -82,6 +88,7 @@ GridControl.installFormatter "textWithTreeControls",
     highest_seqId_computation = null
     is_delivery_planner_plugin_enabled_computation = null
     is_time_tracker_plugin_enabled_computation = null
+    is_checklist_plugin_enabled_computation = null
     Tracker.nonreactive =>
       # Run in an isolated reactivity scope
       highest_seqId_computation = Tracker.autorun =>
@@ -117,10 +124,22 @@ GridControl.installFormatter "textWithTreeControls",
 
         return
 
+      is_checklist_plugin_enabled_computation = Tracker.autorun =>
+        current_val = getIsChecklistPluginEnabled.call(@) # Reactive
+        cached_val = @getCurrentColumnData("checklist_plugin_enabled") # non reactive
+
+        if current_val != cached_val
+          @setCurrentColumnData("checklist_plugin_enabled", current_val)
+
+          dep.changed()
+
+        return
+
     Tracker.onInvalidate ->
       highest_seqId_computation.stop()
       is_delivery_planner_plugin_enabled_computation.stop()
       is_time_tracker_plugin_enabled_computation.stop()
+      is_checklist_plugin_enabled_computation.stop()
 
     return
 
@@ -217,21 +236,16 @@ GridControl.installFormatter "textWithTreeControls",
               <i class="fa fa-fw fa-briefcase task-is-project slick-prevent-edit" title="Task is a project" aria-hidden="true"></i>
           """
 
-    if APP.justdo_checklist?
-
-#      tree_control += """
-#              <i class="p-jd-checklist p-jd-cl-#{doc._id} slick-prevent-edit" >x</i>
-#          """
+    if @getCurrentColumnData("checklist_plugin_enabled") and not doc._type?
       container = "p-jd-checklist-container#{Math.floor(Math.random()*99999999)}"
-      console.log container
 
       tree_control += """
               <i class="#{container} slick-prevent-edit" ></i>
           """
       Meteor.defer =>
         Blaze.renderWithData Template.checklist_grid_mark, {task_id: doc._id, path: path}, $(".#{container}")[0]
-#        APP.justdo_checklist.refreshMark(doc._id)
 
+        return
 
     tree_control += """
       </div>
