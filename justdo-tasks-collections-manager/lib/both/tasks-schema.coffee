@@ -151,9 +151,9 @@ _.extend JustdoTasksCollectionsManager.prototype,
             due_list_state: true
 
           "nil":
-            txt: ""
+            txt: "\u2014"
             order: 6
-            print: ""
+            print: "\u2014"
             skip_xss_guard: true
             html: "<div class='null-state'></div>"
 
