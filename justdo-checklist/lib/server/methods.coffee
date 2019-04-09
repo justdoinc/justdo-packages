@@ -3,31 +3,14 @@ _.extend JustdoChecklist.prototype,
     self = @
 
     Meteor.methods
-      flipChecklistSwitch: (task_id) ->
+      jdchToggleChecklistSwitch: (task_id) ->
+        check task_id, String
 
-        # let's verify that the user has access to the task
-        t = APP.collections.Tasks.findOne({_id:task_id,users:Meteor.user()._id})
-        if not t
-          return
-        check = true
-        if (t['p:checklist:is_checklist']==true)
-          check = false
+        return self.toggleChecklistSwitch(task_id, @userId)
 
-        APP.collections.Tasks.update({_id:task_id},{$set: {"p:checklist:is_checklist":check}})
+      jdchToggleCheckItemSwitch: (task_id) ->
+        check task_id, String
 
-        return
+        return self.toggleCheckItemSwitch(task_id, @userId)
 
-      flipCheckItemSwitch: (task_id) ->
-        # let's verify that the user has access to the task
-        t = APP.collections.Tasks.findOne({_id:task_id,users:Meteor.user()._id})
-        if not t
-          return
-
-        check = true
-        if (t['p:checklist:is_checked']==true)
-          check = false
-
-        APP.collections.Tasks.update({_id:task_id},{$set: {"p:checklist:is_checked":check}})
-
-        return
-
+    return

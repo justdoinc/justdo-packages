@@ -36,7 +36,7 @@ _.extend JustdoChecklist.prototype,
       id: "justdo-checklist"
       type: "JustdoChecklistTaskPaneSection" # the name of the template derives from the type
       options:
-        title: "CHECKLIST"
+        title: "Checklist"
         titleInfo: -> "" # Can be a reactive resource
       section_options: {}
 

@@ -22,4 +22,11 @@
 APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
-  APP.justdo_checklist = new JustdoChecklist()
+
+  options =
+    projects_collection: APP.collections.Projects
+    tasks_collection: APP.collections.Tasks
+
+  APP.justdo_checklist = new JustdoChecklist(options)
+
+  return

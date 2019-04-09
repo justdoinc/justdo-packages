@@ -15,6 +15,7 @@ Package.onUse(function (api) {
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("mongo", both);
+  api.use("check", both);
 
   // Uncomment if you want to use NPM peer dependencies using
   // checkNpmVersions.
@@ -47,6 +48,7 @@ Package.onUse(function (api) {
   api.use("meteorspark:util@0.2.0", both);
   api.use("meteorspark:logger@0.3.0", both);
   api.use("justdoinc:justdo-helpers@1.0.0", both);
+  api.use("justdoinc:justdo-tasks-collections-manager@1.0.0", both);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 
@@ -61,7 +63,6 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/both/init.coffee", both);
   api.addFiles("lib/both/static.coffee", both);
-  api.addFiles("lib/both/router.coffee", both);
   api.addFiles("lib/both/errors-types.coffee", both);
   api.addFiles("lib/both/api.coffee", both);
   api.addFiles("lib/both/schemas.coffee", both);
@@ -76,22 +77,18 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
-  api.addFiles("lib/client/grid-mark.html", client);
-  api.addFiles("lib/client/grid-mark.coffee", client);
-
   api.addFiles("lib/client/project-conf/project-conf.sass", client);
   api.addFiles("lib/client/project-conf/project-conf.html", client);
   api.addFiles("lib/client/project-conf/project-conf.coffee", client);
-
-  api.addFiles("lib/client/plugin-page/plugin-page.sass", client);
-  api.addFiles("lib/client/plugin-page/plugin-page.html", client);
-  api.addFiles("lib/client/plugin-page/plugin-page.coffee", client);
 
   api.addFiles("lib/client/task-pane-section/task-pane-section-registrar.coffee", client);
 
   api.addFiles("lib/client/task-pane-section/task-pane-section.sass", client);
   api.addFiles("lib/client/task-pane-section/task-pane-section.html", client);
   api.addFiles("lib/client/task-pane-section/task-pane-section.coffee", client);
+
+  api.addFiles("lib/client/on-grid-mark/on-grid-mark.coffee", client);
+  api.addFiles("lib/client/on-grid-mark/on-grid-mark.sass", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.

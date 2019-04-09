@@ -90,4 +90,4 @@ Template.task_pane_justdo_checklist_task_pane_section_section.onRendered ->
 
 Template.task_pane_justdo_checklist_task_pane_section_section.events
   "click .checklist-on-off-switch": (e, tpl) ->
-    Meteor.call "flipChecklistSwitch", APP.modules.project_page.activeItemObj()._id
+    Meteor.call "jdchToggleChecklistSwitch", APP.modules.project_page.activeItemObj()._id

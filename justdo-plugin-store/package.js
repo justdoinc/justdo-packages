@@ -113,7 +113,7 @@ Package.onUse(function (api) {
 
   // justdo-checklist
   api.addFiles("store-db/plugins/justdo-checklist/justdo-checklist.coffee", both);
-  api.addAssets("store-db/plugins/justdo-checklist/media/checklist-icon.png", client);
+  api.addAssets("store-db/plugins/justdo-checklist/media/checklist-icon.jpg", client);
 
 
   api.addFiles("lib/both/analytics.coffee", both);

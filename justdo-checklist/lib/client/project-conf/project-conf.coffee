@@ -14,6 +14,9 @@ module_id = JustdoChecklist.project_custom_feature_id
 curProj = -> APP.modules.project_page.curProj()
 
 Template.justdo_checklist_project_config.helpers
+  pluginName: ->
+    return JustdoChecklist.plugin_human_readable_name
+
   isModuleEnabled: ->
     return curProj().isCustomFeatureEnabled(module_id)
 
@@ -26,3 +29,4 @@ Template.justdo_checklist_project_config.events
     else
       curProj().enableCustomFeatures(module_id)
 
+    return

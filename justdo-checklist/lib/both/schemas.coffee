@@ -26,6 +26,6 @@ _.extend JustdoChecklist.prototype,
         type: Boolean
         optional: true
 
-    APP.collections.Tasks.attachSchema Schema
+    @tasks_collection.attachSchema Schema
 
     return
