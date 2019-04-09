@@ -241,7 +241,7 @@ GridControl.installFormatter "textWithTreeControls",
           """
 
     if @getCurrentColumnData("checklist_plugin_enabled") and not doc._type?
-      tree_control += APP.justdo_checklist.htmlMark(doc,path)
+      tree_control += APP.justdo_checklist.getOnGridCheckMarkHtml(doc, path)
 
     tree_control += """
       </div>

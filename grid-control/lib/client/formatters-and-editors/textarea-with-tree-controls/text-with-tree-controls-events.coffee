@@ -160,4 +160,11 @@ _.extend PACK.Formatters.textWithTreeControls,
         $task_pane_content = $description_section.closest(".task-pane-content")
         $task_pane_content.scrollTop($description_section_top_edge)
     }
+    {
+      args: ['click', '.jdch-check']
+      handler: (e) ->
+        event_item = @getEventItem(e)
+
+        APP.justdo_checklist.toggleCheckItemSwitch(event_item._id)
+    }
   ]
