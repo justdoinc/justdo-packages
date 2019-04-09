@@ -1,3 +1,5 @@
+Promise = require "bluebird"
+
 APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
 
@@ -8,21 +10,24 @@ APP.executeAfterAppLibCode ->
   #   2 - saving
   #   3 - saved
   #   4 - failed
+
   idle_save_timeout = null
   idle_save_timeout_ms = 3 * 1000 # 3 secs
   initIdleSaveTimeout = ->
-    if idle_save_timeout?
-      clearTimeout idle_save_timeout
-
-    save_state.set 1
+    clearIdleSaveTimeout()
 
     idle_save_timeout = setTimeout ->
       save()
     , idle_save_timeout_ms
+  
+  clearIdleSaveTimeout = ->
+    if idle_save_timeout?
+      clearTimeout idle_save_timeout
+      idle_save_timeout = null
 
   save_interval = null
   save_interval_ms = 20 * 1000
-  setupSaveInterval = ->
+  initSaveInterval = ->
     if save_interval?
       # If already set, do nothing
       return
@@ -33,56 +38,48 @@ APP.executeAfterAppLibCode ->
         save()
     , save_interval_ms
 
-  stopSaveInterval = ->
+  clearSaveInterval = ->
     if save_interval?
       clearInterval save_interval
       save_interval = null
 
   save_count = 0
   save = ->
-    if idle_save_timeout?
-      clearTimeout idle_save_timeout
+    save_state.set 2
+    op =
+      $set:
+        description: $("#description-editor").froalaEditor("html.get")
 
-    if current_description_editor
-      save_state.set 2
+    save_count += 1
+    this_save_count = save_count
+    do (this_save_count) ->
+      APP.collections.Tasks.update task_id, op, (err) ->
+        if save_state.get() == 2 and this_save_count == save_count
+          # Change the save_state only if during saving state mode
+          # and if no other save requests followed this save request.
+          if err?
+            save_state.set 4
+          else
+            save_state.set 3
 
-      description = $("#description-editor").val()
+  close_timeout = null
+  close_timeout_ms = 60 * 1000 # 1 min
+  initCloseTimeout = ->
+    clearCloseTimeout()
 
-      if description == ""
-        op =
-          $set:
-            description: null
-      else
-        op =
-          $set:
-            description: $("#description-editor").val()
+    close_timeout = setTimeout ->
+      closeEditor()
+    , close_timeout_ms
 
-      save_count += 1
-      this_save_count = save_count
-      do (this_save_count) ->
-        APP.collections.Tasks.update current_description_editor.task_id, op, (err) ->
-          if save_state.get() == 2 and this_save_count == save_count
-            # Change the save_state only if during saving state mode
-            # and if no other save requests followed this save request.
-            if err?
-              save_state.set 4
-            else
-              save_state.set 3
-
-  destroy_timeout = null
-  destroy_timeout_ms = 60 * 1000 # 1 min
-  initDestroyTimeout = ->
-    if destroy_timeout?
-      clearTimeout destroy_timeout
-
-    destroy_timeout = setTimeout ->
-      destroyEditor()
-    , destroy_timeout_ms
-
+  clearCloseTimeout = ->
+    if close_timeout?
+      clearTimeout close_timeout
+      close_timeout = null
+  
   getContainer = -> $("#task-description-container")
 
   relock_interval = null
-  relock_interval_ms = Math.floor(destroy_timeout_ms * .5)
+  relock_interval_ms = Math.floor(close_timeout_ms * .5)
   lockTask = (task_id) ->
     lock = ->
       APP.collections.Tasks.update task_id,
@@ -147,7 +144,7 @@ APP.executeAfterAppLibCode ->
     description_lock = task.description_lock
 
     if description_lock? and
-        (server_time - description_lock.locked) < destroy_timeout_ms and
+        (server_time - description_lock.locked) < close_timeout_ms and
         description_lock.user != Meteor.userId()
         # If locked by current user, then we allow editing, assuming tab got closed or refresh happened
       return description_lock
@@ -165,113 +162,164 @@ APP.executeAfterAppLibCode ->
       edit_mode.set(false)
       $container.removeClass("edit-mode")
 
-  current_description_editor = null
+  task_id = null
+
+  importEditor = ->
+    loadCss = (url) ->
+      $("head").append('<link href="' + url + '" rel="stylesheet">')
+
+    loadJs = (url) ->
+      new Promise (resolve, reject) =>
+        $.getScript(url)
+          .done =>
+            resolve()
+          .fail(( jqxhr, settings, exception ) => reject(exception))
+
+    loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_editor.min.css"
+    loadCss "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"
+    loadCss "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css"
+    loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/colors.min.css"
+    loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/table.min.css"
+    loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/image.min.css"
+    loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/fullscreen.min.css"
+
+    
+    Promise.each([
+      "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js",
+      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/froala_editor.min.js"
+      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/colors.min.js",
+      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/table.min.js",
+      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/font_family.min.js",
+      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/font_size.min.js",
+      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/align.min.js",
+      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/image.min.js",
+      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/link.min.js",
+      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/lists.min.js",
+      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/fullscreen.min.js"
+    ], (url) ->
+      loadJs url
+    )
+      
+  editor_importing = false
+  editor_imported = false
+  EDITOR_NOT_IMPORTED = 0
+  EDITOR_IMPORITING = 1
+  EDITOR_IMPORTED = 2
+  editor_import_status = EDITOR_NOT_IMPORTED
+  
+  isEditorOpened = ->
+    $("#description-editor").data("froala.editor")?
+
   initEditor = ->
+    if editor_import_status == EDITOR_IMPORITING # to make sure the editor is only imported once
+      return Promise.reject("Editor is already importing")
+    
+    if editor_import_status == EDITOR_NOT_IMPORTED # to make sure the editor is only imported once
+      editor_import_status = EDITOR_IMPORITING
+      return importEditor().then =>
+        editor_import_status = EDITOR_IMPORTED
+      .catch =>
+        editor_import_status = EDITOR_NOT_IMPORTED
+    
+    return Promise.resolve()
+    
+  openEditor = ->
     # Fetch the most recent version of task (for case grid-lock just released and
     # we have old version of it)
     if not (task = project_page_module.activeItemObjFromCollection({description: 1}))
       project_page_module.logger.debug "Task doesn't exist anymore"
       return
 
-    initDestroyTimeout()
-    setupSaveInterval()
-
-    $container = getContainer()
-
-    # Force task description to be the most recent fetched-from-collection
-    # description, for case we just got out of grid lock
-    $("#description-editor", $container).val(task.description)
-
-    task_id =
-      project_page_module.activeItemId()
-
+    # close editor if opened
+    closeEditor()
+    # check whether the task is locked
     task_locked = isLocked(task_id)
-
     if not task_locked?
       APP.logger.warn "Can't open task editor: Can't tell whether task is locked. Failed to obtain server time"
-
       return
-
     if task_locked != false
       APP.logger.warn "Task is locked, can't open editor"
 
       return
 
-    # Lock
+    # Lock task
     lockTask(task_id)
 
-    min_height = 130
-    height = 200 # height when editor init on a left/right task pane
-    project_page_pref = APP.modules.project_page.preferences.get()
-    if project_page_pref?.toolbar_position? and
-          project_page_pref.toolbar_position == "bottom"
-      height = min_height
+    initEditor().then =>  # editor will only be initialized once
+      # set timeouts
+      initCloseTimeout()
+      initSaveInterval()
+  
+      # enable editor
+      $("#description-editor").froalaEditor({
+        toolbarButtons: ["fullscreen", "bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
+          "align", "formatUL", "formatOL", "quote", "insertLink", "insertImage", "clearFormatting", "undo", "redo"],
+        heightMin: 200
+      });
+      
+      # set editor content
+      if task.description?
+        $("#description-editor").froalaEditor("html.set", task.description)
 
-    config =
-      height: height
-      resize_minHeight: min_height
-      disableNativeSpellChecker: false
-
-    module.dynamicImport('meteor/justdoinc:justdo-wa-ckeditor').then (m) =>
-      editor = current_description_editor =
-        $("#description-editor", $container).ckeditor((-> setEditMode(true)), config).editor
-
-      editor.task_id = task_id
+      # set listener
+      $("#description-editor").on "froalaEditor.contentChanged", (e, editor) =>
+        if isEditorOpened()
+          save_state.set 1
+          initIdleSaveTimeout()
+          initCloseTimeout()
 
       save_state.set 0
+      setEditMode(true)
+    .catch =>
+      unlockTask(task_id)
 
-      editor.on "change", ->
-        initIdleSaveTimeout()
-        initDestroyTimeout()
-
-      return
-
-  destroyEditor = ->
-    if current_description_editor?
-      stopSaveInterval()
-
+  closeEditor = ->
+    if isEditorOpened()
+      # save
       save()
+      # unlock task
+      unlockTask(task_id)
+      # clear timeouts and intervals
+      clearIdleSaveTimeout()
+      clearSaveInterval()
+      clearCloseTimeout()
+      # disable editor
+      $("#description-editor").froalaEditor("destroy")
 
-      unlockTask(current_description_editor.task_id)
+      setEditMode(false)
 
       # The following is in order to make sure, that by the
       # time we destroy the editor the grid control internal data
       # structures from which we derive the description, will have
-      # the up-to-date descripion
+      # the up-to-date description
       APP.modules.project_page.gridControl()?._grid_data?._flushAndRebuild()
 
-      # if there's editor
-      current_description_editor.destroy()
-      current_description_editor = null
-
-      setEditMode(false)
 
   Template.task_pane_item_details_description.helpers
     edit_mode: -> edit_mode.get()
     save_state: -> save_state.get()
-    description: -> @description?.replace(/\n/g, "") # We found out that new lines can break rendering, removing them has no effect on the html rendering.
+    description: -> @description?.replace(/\n/g, "")
 
   Template.task_pane_item_details_description_lock_message.helpers
     lock: -> isLocked(@_id)
 
   Template.task_pane_item_details_description.onCreated ->
     @autorun ->
-      # On every path change, destroy the editor (destroyEditor, saves current state)
+      # On every path change, destroy the editor (closeEditor, saves current state)
       project_page_module.activeItemPath()
-
-      destroyEditor()
-
-    return
+      closeEditor()
+      task_id = project_page_module.activeItemId()
 
   Template.task_pane_item_details_description.events
     "click #add-description": (e) ->
-      initEditor()
+      openEditor()
 
     "click #edit-description": (e) ->
-      initEditor()
+      openEditor()
 
     "click #done-edit-description": (e) ->
-      destroyEditor()
+      closeEditor()
 
     "click #save-description": (e) ->
       save()
@@ -282,4 +330,4 @@ APP.executeAfterAppLibCode ->
       window.open(url, "_blank")
 
   Template.task_pane_item_details_description.onDestroyed ->
-    destroyEditor() # destroyEditor takes care of saving
+    closeEditor() # closeEditor takes care of saving

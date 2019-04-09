@@ -3,15 +3,6 @@ $max-desc-width: 750px
   #description-editor
     display: none
 
-  #cke_description-editor
-    display: none
-    max-width: $max-desc-width
-    margin-top: 4px
-    margin-bottom: 7px
-
-  .editor
-    display: none
-
   #description
     margin-bottom: 7px
 
@@ -22,11 +13,15 @@ $max-desc-width: 750px
     p:last-child
       margin-bottom: 0
 
-  &.edit-mode
-    #cke_description-editor
-      display: block
+  &:not(.edit-mode)
+    .ql-container
+      display: none
 
-    .editor
+    .ql-toolbar
+      display: none
+
+  &.edit-mode
+    #description-editor
       display: block
 
     #description
@@ -47,3 +42,6 @@ $max-desc-width: 750px
       box-shadow: 0 0 0 3px rgba(62, 138, 214, 0.5)
     &:focus
       box-shadow: 0 0 0 3px rgba(62, 138, 214, 0.5)
+
+  .description-caption
+    margin-top: 8px
