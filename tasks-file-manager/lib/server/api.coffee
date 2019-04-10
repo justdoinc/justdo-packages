@@ -125,14 +125,39 @@ _.extend TasksFileManager.prototype,
 
     return results[0]
 
-  getDownloadLink: (task_id, file_id, user_id) ->
-    if user_id?
-      task = @requireUserTask task_id, user_id
-    else
-      task = @requireTask task_id
+  getUploadPolicy: (task_id, user_id) ->
+    task = @requireTaskDoc(task_id, user_id)
 
-    file = @requireFile task, file_id
+    location_and_path = @getStorageLocationAndPath(task_id)
 
+    # This policy is to prevent users from abusing our filestack and S3
+    # accounts, it doesn't affect a user's ability to associate uploaded
+    # files with a task.
+    policy =
+      # Short expiry time, limiting the usefulness of this token if users
+      # capture it from the browser session.
+      # This does necessitate frequently refreshing the token on the client
+      expiry: Date.now() / 1000 + 1 * 60 * 60 # 1 hour
+
+      # Force user to place files in a path related to the task they have
+      # access for, making it easier to cleanup the consequences of an
+      # abused token.
+      path: location_and_path.path
+
+      # Limit users to upload only, to download they'll need a download
+      # token, making this token fairly useless for abuse or if lost.
+      call: ["store", "pick"]
+
+    # Signs our policy by jsonifying it, base64 encoding it and applying
+    # an hmac-sha256 signature algorithm.
+    signature = APP.filestack_base.signPolicy policy
+
+    return {
+      signature: signature.hmac
+      policy: signature.encoded_policy
+    }
+
+  getDownloadPolicySignature: (task_id, file_id) ->
     # This policy is to prevent users from abusing our filestack and S3
     # accounts, it doesn't affect a user's ability to associate uploaded
     # files with a task.
@@ -154,7 +179,12 @@ _.extend TasksFileManager.prototype,
     # an hmac-sha256 signature algorithm.
     signature = APP.filestack_base.signPolicy policy
 
-    # XXX should we log this? I don't think so.
+    return signature
+
+  getDownloadLink: (task_id, file_id, user_id) ->
+    task = @requireTaskDoc(task_id, user_id)
+    file = @requireFile task, file_id
+    signature = @getDownloadPolicySignature(task_id, file_id)
 
     return "#{file.url}?signature=#{signature.hmac}&policy=#{signature.encoded_policy}"
 
@@ -216,38 +246,6 @@ _.extend TasksFileManager.prototype,
     #     "files": true
 
     @logger.debug("New activity #{"file_removed"} by user #{user_id} - extra data: #{JSON.stringify({ title: file.title, size: file.size })}\n Message that will be presented: #{"User {{user}} removed a file {{title}}."}")
-
-  getUploadPolicy: (task_id, user_id) ->
-    task = @requireTaskDoc(task_id, user_id)
-
-    location_and_path = @getStorageLocationAndPath(task_id)
-
-    # This policy is to prevent users from abusing our filestack and S3
-    # accounts, it doesn't affect a user's ability to associate uploaded
-    # files with a task.
-    policy =
-      # Short expiry time, limiting the usefulness of this token if users
-      # capture it from the browser session.
-      # This does necessitate frequently refreshing the token on the client
-      expiry: Date.now() / 1000 + 1 * 60 * 60 # 1 hour
-
-      # Force user to place files in a path related to the task they have
-      # access for, making it easier to cleanup the consequences of an
-      # abused token.
-      path: location_and_path.path
-
-      # Limit users to upload only, to download they'll need a download
-      # token, making this token fairly useless for abuse or if lost.
-      call: ["store", "pick"]
-
-    # Signs our policy by jsonifying it, base64 encoding it and applying
-    # an hmac-sha256 signature algorithm.
-    signature = APP.filestack_base.signPolicy policy
-
-    return {
-      signature: signature.hmac
-      policy: signature.encoded_policy
-    }
 
   destroy: ->
     if @destroyed
