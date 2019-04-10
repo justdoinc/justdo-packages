@@ -21,6 +21,19 @@ _.extend TasksFileManager.prototype,
 
     return task
 
+  requireTaskDoc: (task_id, user_id) ->
+    # user_id is optional, if isn't provided, we will regard the request as a "system"
+    # request.
+    #
+    # If provided, the user has to have access to the task.
+
+    if user_id?
+      task = @requireUserTask task_id, user_id
+    else
+      task = @requireTask task_id
+
+    return task
+
   requireFile: (task, file_id) ->
     check task, Object
     if not task.files?
@@ -44,10 +57,7 @@ _.extend TasksFileManager.prototype,
       throw @_error "file-url-invalid"
 
   registerUploadedFiles: (task_id, files, user_id) ->
-    if user_id?
-      task = @requireUserTask task_id, user_id
-    else
-      task = @requireTask task_id
+    task = @requireTaskDoc(task_id, user_id)
 
     check files, [Object]
     _.each files, (file) => @requireFilestackUrl file.url
@@ -149,10 +159,7 @@ _.extend TasksFileManager.prototype,
     return "#{file.url}?signature=#{signature.hmac}&policy=#{signature.encoded_policy}"
 
   renameFile: (task_id, file_id, new_title, user_id) ->
-    if user_id?
-      task = @requireUserTask task_id, user_id
-    else
-      task = @requireTask task_id
+    task = @requireTaskDoc(task_id, user_id)
 
     file = @requireFile task, file_id
 
@@ -168,10 +175,7 @@ _.extend TasksFileManager.prototype,
   # INTERNAL ONLY
   # Sets metadata on a file
   setFileMetadata: (task_id, file_id, metadata, user_id) ->
-    if user_id?
-      task = @requireUserTask task_id, user_id
-    else
-      task = @requireTask task_id
+    task = @requireTaskDoc(task_id, user_id)
 
     file = @requireFile task, file_id
 
@@ -188,10 +192,7 @@ _.extend TasksFileManager.prototype,
       $set: modifier
 
   removeFile: (task_id, file_id, user_id) ->
-    if user_id?
-      task = @requireUserTask task_id, user_id
-    else
-      task = @requireTask task_id
+    task = @requireTaskDoc(task_id, user_id)
 
     file = @requireFile task, file_id
 
@@ -216,11 +217,8 @@ _.extend TasksFileManager.prototype,
 
     @logger.debug("New activity #{"file_removed"} by user #{user_id} - extra data: #{JSON.stringify({ title: file.title, size: file.size })}\n Message that will be presented: #{"User {{user}} removed a file {{title}}."}")
 
-  getUploadPolicy: (task_id) ->
-    if user_id?
-      task = @requireUserTask task_id, user_id
-    else
-      task = @requireTask task_id
+  getUploadPolicy: (task_id, user_id) ->
+    task = @requireTaskDoc(task_id, user_id)
 
     location_and_path = @getStorageLocationAndPath(task_id)
 
