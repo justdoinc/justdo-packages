@@ -86,8 +86,6 @@ _.extend TasksFileManager.prototype,
 
         return
 
-    console.log Schema
-
     @tasks_collection.attachSchema Schema
 
     return
