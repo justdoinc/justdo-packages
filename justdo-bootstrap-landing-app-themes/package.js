@@ -19,4 +19,9 @@ Package.onUse(function (api) {
   api.addAssets("sandstone/bootstrap.css", client);
   api.addAssets("sketchy/bootstrap.css", client);
   api.addAssets("superhero/bootstrap.css", client);
+  api.addAssets("cyborg/bootstrap.css", client);
+  api.addAssets("journal/bootstrap.css", client);
+  api.addAssets("simplex/bootstrap.css", client);
+  api.addAssets("slate/bootstrap.css", client);
+  api.addAssets("solar/bootstrap.css", client);
 });
