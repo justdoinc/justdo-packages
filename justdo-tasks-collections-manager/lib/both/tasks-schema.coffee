@@ -630,54 +630,56 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
 
     for field_name in ["_raw_added_users_dates", "_raw_removed_users_dates"]
-      Schema[field_name] =
-        type: Object
+      do (field_name) =>
+        Schema[field_name] =
+          type: Object
 
-        optional: true
+          optional: true
 
-        blackbox: true
+          blackbox: true
 
-        autoValue: ->
-          # If the code is not from trusted code unset the update
-          if not @isFromTrustedCode
-            if @isSet
-              self.logger.warn "Untrusted attempt to change #{field_name} rejected"
+          autoValue: ->
+            # If the code is not from trusted code unset the update
+            if not @isFromTrustedCode
+              if @isSet
+                self.logger.warn "Untrusted attempt to change task's #{field_name} field rejected"
 
-              return @unset()
+                return @unset()
 
-          return # Keep this return to return undefined (as required by autoValue)
+            return # Keep this return to return undefined (as required by autoValue)
 
-    for field_name in ["_raw_updated_date", "_raw_removed_date"] 
-      Schema[field_name] =
-        type: "skip-type-check"
+    for field_name in ["_raw_updated_date", "_raw_removed_date"]
+      do (field_name) =>
+        Schema[field_name] =
+          type: "skip-type-check"
 
-        optional: true
+          optional: true
 
-        autoValue: ->
-          # If the code is not from trusted code unset the update
-          if not @isFromTrustedCode
-            if @isSet
-              self.logger.warn "Untrusted attempt to change #{field_name} rejected"
+          autoValue: ->
+            # If the code is not from trusted code unset the update
+            if not @isFromTrustedCode
+              if @isSet
+                self.logger.warn "Untrusted attempt to change task's #{field_name} field rejected"
 
-              return @unset()
+                return @unset()
 
-          return # Keep this return to return undefined (as required by autoValue)
+            return # Keep this return to return undefined (as required by autoValue)
 
     for field_name in ["_raw_removed_users"]
-      Schema[field_name] =
-        type: [String]
+      do (field_name) =>
+        Schema[field_name] =
+          type: [String]
 
-        optional: true
+          optional: true
 
-        autoValue: ->
-          # If the code is not from trusted code unset the update
-          if not @isFromTrustedCode
-            if @isSet
-              self.logger.warn "Untrusted attempt to change #{field_name} rejected"
+          autoValue: ->
+            # If the code is not from trusted code unset the update
+            if not @isFromTrustedCode
+              if @isSet
+                self.logger.warn "Untrusted attempt to change task's #{field_name} field rejected"
 
-              return @unset()
+                return @unset()
 
-          return # Keep this return to return undefined (as required by autoValue)
-
+            return # Keep this return to return undefined (as required by autoValue)
 
     @tasks_collection.attachSchema Schema
