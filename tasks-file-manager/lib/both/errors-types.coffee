@@ -14,3 +14,4 @@ _.extend TasksFileManager.prototype,
     "file-url-invalid": "File url is not a filestack url"
     "api-key-required": "Filestack API key required"
     "api-secret-required": "Filestack API secret required"
+    "api-version-not-supported": "API version not supported"

@@ -76,15 +76,17 @@ _.extend TasksFileManager.prototype,
         # is being added or updated
 
     for field_id, field_def of Schema
-      Schema[field_id].autoValue = ->
-        # If the code is not from trusted code unset the update,
-        # only api calls should be able to set
-        if not @isFromTrustedCode
-          console.warn "Untrusted attempt to change files (#{field_id}) field rejected"
+      do (field_id) =>
+        Schema[field_id].autoValue = ->
+          if @isSet
+            # If the code is not from trusted code unset the update,
+            # only api calls should be able to set
+            if not @isFromTrustedCode
+              console.warn "Untrusted attempt to change files (#{field_id}) field rejected"
 
-          return @unset()
+              return @unset()
 
-        return
+            return
 
     @tasks_collection.attachSchema Schema
 

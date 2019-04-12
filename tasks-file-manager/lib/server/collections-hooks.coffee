@@ -1,9 +1,12 @@
 removeFilesOfRemovedTaskHook = (userId, doc) ->
-  if (doc_files = doc.files)?
-    _.each doc_files, (file) ->
-      APP.filestack_base.cleanupRemovedFile file
+  Meteor.defer =>
+    # Run in defer to preven waiting for the remove process to complete
 
-      return
+    if (doc_files = doc.files)?
+      _.each doc_files, (file) ->
+        APP.filestack_base.cleanupRemovedFile file, {cleanup_from_task_document: doc}
+
+        return
 
   return
 

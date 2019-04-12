@@ -20,6 +20,9 @@ _.extend TasksFileManager.prototype,
   getDownloadLink: (task_id, file_id, cb) ->
     Meteor.call('tfm_GetDownloadLink', task_id, file_id, cb)
 
+  getPreviewDownloadLink: (task_id, file_id, version, options, cb) ->
+    Meteor.call('tfm_GetPreviewDownloadLink', task_id, file_id, version, options, cb)
+
   renameFile: (task_id, file_id, newTitle, cb) ->
     Meteor.call('tfm_RenameFile', task_id, file_id, newTitle, cb)
 

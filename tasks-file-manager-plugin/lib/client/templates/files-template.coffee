@@ -31,7 +31,7 @@ Template.tasks_file_manager_files.helpers
 
     tpl = Template.instance()
 
-    APP.tasks_file_manager_plugin.tasks_file_manager.getDownloadLink task.task_id, file.id, (err, link) =>
+    APP.tasks_file_manager_plugin.tasks_file_manager.getPreviewDownloadLink task.task_id, file.id, 1, {width: 512}, (err, link) =>
       # Load the image
       load_element = $("<img/>").attr("src", link).on "load", =>
         # On load, set as the element's background

@@ -36,7 +36,52 @@ _.extend FilestackBase.prototype,
       match = url.match(regex)
       return match?[0]
 
-  cleanupRemovedFile: (file) ->
+  _cleanupRemovedFileOptionsSchema: new SimpleSchema
+    cleanup_from_task_document:
+      # cleanup_from_task_document is optional
+      #
+      # Should be the task document of the task from which we should remove stored information about the file.
+      #
+      # We ask for the document and not the task_id since:
+      #
+      #   * The relevant task document might have been removed from the db already, and we just need to
+      #   clean associated resources (such as remove converted files from filestack).
+      #   * Save another call to the db to fetch it, in case we got it already.
+      #
+      # If provided, we:
+      # 
+      #   1. Will remove the file reference from the provided task's .files array.
+      #   2. Will look for stored converted files of the provided file, if found:
+      #     2.1 We will assume that the file also have data about its dimension stored, and will remove it
+      #         from the db as well (if task hasn't been removed altogether).
+      #         The file dimension is stored under: cleanup_from_task_document._secret.files_dimensions[file.id]
+      #     2.2 We will remove converted files stored for file from filestack, and (if task hasn't been
+      #         removed altogether), we will update the db accordingly.
+      #         References to the converted files are under: 
+      #           cleanup_from_task_document._secret.files_previews[file.id] # (file is the file
+      #           object provided to cleanupRemovedFile())
+      #
+      # As mentioned above, by the time cleanupRemovedFile() with cleanup_from_task_document, the task might
+      # had been removed from the db, our cleanups in such case are mostly critical to remove associated
+      # information stored outside of the db.
+      #
+      # Learn more on comment left on @getPreviewDownloadLink() of tasks-file-manager/lib/server/api.coffee
+
+      type: Object
+      blackbox: true
+      optional: true
+  cleanupRemovedFile: (file, options) ->
+    if not options?
+      options = {}
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_cleanupRemovedFileOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
+
     if _.isString file
       file =
         id: @getHandle file
@@ -52,7 +97,7 @@ _.extend FilestackBase.prototype,
     policy =
       handle: file.id,
       expiry: Date.now() / (1000 + 60) * 30 # 30 minutes (to account for any clock mismatches)
-      call: 'remove'
+      call: "remove"
 
     signed_policy = @signPolicy policy
 
@@ -62,6 +107,52 @@ _.extend FilestackBase.prototype,
     catch e
       if not (e?.response?.statusCode == 404)
         throw e
+
+    if (task_doc = options.cleanup_from_task_document)?
+      # See comment above!
+
+      #
+      # Remove the file from the files array.
+      #
+      # Note, this one isn't done on the @rawCollection() we want regular update here, with updates to unmerged-publications
+      # raw fields!
+      #
+      APP.collections.Tasks.update
+        _id: task_doc._id
+      ,
+        $pull:
+          "files":
+            id: file.id
+
+      #
+      # Cleanup all the file's previews and associated data
+      #
+      any_found = false
+      for file_preview_id, file_preview_def of task_doc._secret.files_previews[file.id]
+        @cleanupRemovedFile(file_preview_def)
+
+        any_found = true
+
+      if any_found
+        query = {_id: task_doc._id}
+        update = 
+          $unset:
+            "_secret.files_previews.#{file.id}": ""
+            "_secret.files_dimensions.#{file.id}": ""
+
+        # We don't want the unmerged publications raw field, nor any other hook to trigger as a result
+        # of that update, hence the use of the rawCollection()
+        #
+        # Note that by now the task document might had been removed already, but that will have no
+        # effect on the following operation, that in such a case will do nothing.
+        APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Tasks._name, "update", query, update)
+        APP.collections.Tasks.rawCollection().update query, update, Meteor.bindEnvironment (err) ->
+          if err?
+            console.error(err)
+
+            return
+
+          return
 
     return
 

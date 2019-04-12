@@ -157,7 +157,7 @@ _.extend TasksFileManager.prototype,
       policy: signature.encoded_policy
     }
 
-  getDownloadPolicySignature: (task_id, file_id) ->
+  getDownloadPolicySignature: (file_id) ->
     # This policy is to prevent users from abusing our filestack and S3
     # accounts, it doesn't affect a user's ability to associate uploaded
     # files with a task.
@@ -181,12 +181,209 @@ _.extend TasksFileManager.prototype,
 
     return signature
 
+  getConvertPolicySignature: (task_id, file_id) ->
+    location_and_path = @getStorageLocationAndPath(task_id)
+
+    # This policy is to prevent users from abusing our filestack and S3
+    # accounts, it doesn't affect a user's ability to associate uploaded
+    # files with a task.
+    policy =
+      # Very short expiry time, the client api auto-downloads this file
+      # immediately, so we just need time for network and a few extra
+      # minutes for time-syncronization differences.
+      expiry: (Date.now() / 1000) + (60 * 5) # 5 minutes in the future
+
+      # This token can only be used to download this file, not any other
+      # file
+      handle: file_id
+
+      # This token can only be used to download, not upload or any other
+      # action
+      call: ["convert"]
+
+      # Force user to place files in a path related to the task they have
+      # access for, making it easier to cleanup the consequences of an
+      # abused token.
+      path: location_and_path.path
+
+    # Signs our policy by jsonifying it, base64 encoding it and applying
+    # an hmac-sha256 signature algorithm.
+    signature = APP.filestack_base.signPolicy policy
+
+    return signature
+
+  _simpleDownloadLink: (file) ->
+    # IMPORTANT In this method we assume accesss rights checked by the caller!
+
+    signature = @getDownloadPolicySignature(file.id)
+
+    return "#{file.url}?signature=#{signature.hmac}&policy=#{signature.encoded_policy}"
+
+  _getFileDimensionLinkCalc: (task_id, file) ->
+    signature = @getConvertPolicySignature(task_id, file.id)
+    security_string = "/security=p:#{signature.encoded_policy},s:#{signature.hmac}"
+
+    return "https://cdn.filestackcontent.com/imagesize#{security_string}/#{file.id}"
+
   getDownloadLink: (task_id, file_id, user_id) ->
     task = @requireTaskDoc(task_id, user_id)
     file = @requireFile task, file_id
-    signature = @getDownloadPolicySignature(task_id, file_id)
 
-    return "#{file.url}?signature=#{signature.hmac}&policy=#{signature.encoded_policy}"
+    return @_simpleDownloadLink(file)
+
+  _getPreviewDownloadLinkOptionsSchema: new SimpleSchema
+    width:
+      type: Number
+
+      allowedValues: [512, 1024]
+
+      defaultValue: 512
+
+      optional: true
+
+  getPreviewDownloadLink: (task_id, file_id, version, options, user_id) ->
+    check version, Number
+    check options, Object
+
+    if version != 1
+      throw @_error "api-version-not-supported", "At the moment only version 1 is supported for getPreviewDownloadLink"
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_getPreviewDownloadLinkOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
+
+    task = @requireTaskDoc(task_id, user_id)
+    file = @requireFile task, file_id
+
+    if file.type not in ["image/png", "image/jpeg", "image/gif"]
+      return @_simpleDownloadLink(file)
+
+    # IMPORTANT!!! IF YOU CHANGE THIS COMMENT UPDATE ALSO filestack-base/lib/server/api.coffee
+    #
+    # We place the references to the previews under the _secret subdocument which is not
+    # published.
+    #
+    # This isn't done for security reason, but to prevent a pitfall that might cause redundant
+    # invalidations of view.
+    #
+    # Since we are modifying here the task document itself, if, when querying the document,
+    # the client-side developer isn't careful enough to limit the tracked fields only to
+    # those he needs. Once we will update the preview file, we will cause his view to invalidate
+    # and another request to get the file will be triggered.
+    #
+    # The preview subdocument should be structured as follows:
+    #
+    # _secret: {
+    #   files_previews: {
+    #     "file_id": {
+    #       "vVERSION_preview_id1": preview_file_info_object,
+    #       "vVERSION_preview_id2": preview_file_info_object
+    #     }
+    #   }
+    # }
+    #
+    # It is critical that this structure will be kept in future versions
+    # as well, for APP.filestack_base.cleanupRemovedFile() to work properly.
+    #
+    # IMPORTANT!!! IF YOU CHANGE THIS COMMENT UPDATE ALSO filestack-base/lib/server/api.coffee
+
+    preview_file_id = "v#{version}_w#{options.width}"
+
+    if (preview_file = task._secret?.files_previews?[file_id]?[preview_file_id])?
+      return @_simpleDownloadLink(preview_file)
+
+    location_and_path = @getStorageLocationAndPath(task_id)
+    signature = @getConvertPolicySignature(task_id, file_id)
+    security_string = "/security=p:#{signature.encoded_policy},s:#{signature.hmac}"
+
+    convert_file_ext = file.type.replace("image/", "").replace("jpeg", "jpg")
+    convert_file_name = "#{file.id}-convert-#{preview_file_id}.#{convert_file_ext}"
+    store_task = """/store=path:"#{encodeURIComponent(location_and_path.path)}",filename:"#{convert_file_name}",location:#{location_and_path.location}"""
+
+    if not (file_dimension = task._secret?.files_dimensions?[file_id])?
+      file_dimension_result = HTTP.get @_getFileDimensionLinkCalc(task_id, file)
+      if not (file_dimension_result?.statusCode == 200)
+        console.warn "Failed to fetch file dimensions"
+
+        return @_simpleDownloadLink(file)
+      file_dimension = file_dimension_result.data
+
+      query = {_id: task_id}
+      update = 
+        $set:
+          "_secret.files_dimensions.#{file_id}": file_dimension
+
+      # We don't want the unmerged publications raw fields, nor any other hook to trigger as a result
+      # of that update, hence the use of the rawCollection()
+      APP.justdo_analytics.logMongoRawConnectionOp(@tasks_collection._name, "update", query, update)
+      @tasks_collection.rawCollection().update query, update, Meteor.bindEnvironment (err) ->
+        if err?
+          console.error(err)
+
+          return
+
+        return
+
+    processing_tasks = ""
+
+    if file_dimension.width > options.width
+      processing_tasks +=
+        "/resize=width:#{options.width}"
+
+    processing_tasks +=
+      "/rotate=deg:exif" +
+      "/compress"
+
+    convery_url = "https://cdn.filestackcontent.com#{security_string}#{processing_tasks}#{store_task}/#{file_id}"
+
+    convert_result = HTTP.get convery_url
+    if not (convert_result?.statusCode == 200)
+      console.warn "Image file conversion failed"
+
+      return @_simpleDownloadLink(file)
+
+    converted_file_doc = convert_result.data
+
+    converted_file_doc.id = converted_file_doc.url.replace(/.*\//, "")
+
+    # Ensure that we don't have already a file that been converted with the same instruction
+    up_to_date_task = @tasks_collection.findOne(task_id)
+    if (previously_converted_file = up_to_date_task?._secret?.files_previews?[file_id]?[preview_file_id])?
+      @logger.info "Removing existing stored converted file (redundant convert occured, if you see this message frequently, might indicate a bug with images preview conversion process)", previously_converted_file.key
+
+      # We found that a request to perform this conversion already happened.
+      # A case like this can happen when multiple conversion requests received at the same time.
+      # Remove the previously converted file, to keep only the one we got now.
+
+      # This isn't theoretical, I saw it happening in real world (Daniel C.)
+
+      Meteor.defer =>
+        # Defer to prevent blocking
+        APP.filestack_base.cleanupRemovedFile previously_converted_file
+
+        return
+
+    query = {_id: task_id}
+    update = 
+      $set:
+        "_secret.files_previews.#{file_id}.#{preview_file_id}": converted_file_doc
+
+    # We don't want the unmerged publications raw fields, nor any other hook to trigger as a result
+    # of that update, hence the use of the rawCollection()
+    APP.justdo_analytics.logMongoRawConnectionOp(@tasks_collection._name, "update", query, update)
+    @tasks_collection.rawCollection().update query, update, Meteor.bindEnvironment (err) ->
+      if err?
+        console.error(err)
+
+        return
+
+      return
+
+    return @_simpleDownloadLink(converted_file_doc)
 
   renameFile: (task_id, file_id, new_title, user_id) ->
     task = @requireTaskDoc(task_id, user_id)
@@ -227,23 +424,7 @@ _.extend TasksFileManager.prototype,
     file = @requireFile task, file_id
 
     # Remove the file from our file store (filestack/s3)
-    APP.filestack_base.cleanupRemovedFile file
-
-    @tasks_collection.update
-      _id: task_id
-    ,
-      $pull:
-        "files":
-          id: file_id
-
-    # If there are no more files, we should remove the array
-    # We no longer support $unset on the Tasks collection, just leave empty array.
-    # @tasks_collection.update
-    #   _id: task_id
-    #   "files": []
-    # ,
-    #   "$unset":
-    #     "files": true
+    APP.filestack_base.cleanupRemovedFile file, {cleanup_from_task_document: task}
 
     @logger.debug("New activity #{"file_removed"} by user #{user_id} - extra data: #{JSON.stringify({ title: file.title, size: file.size })}\n Message that will be presented: #{"User {{user}} removed a file {{title}}."}")
 

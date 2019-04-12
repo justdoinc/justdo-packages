@@ -43,7 +43,7 @@ _.extend TasksFileManagerPlugin.prototype,
       options:
         title: "Files"
         titleInfo: ->
-          if not (active_item_obj = module.activeItemObj({files: 1}))?
+          if not (active_item_obj = module.activeItemObj({"files.id": 1}))?
             return ""
 
           if not (files = active_item_obj.files) or files.length <= 0

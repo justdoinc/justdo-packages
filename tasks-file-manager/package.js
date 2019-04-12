@@ -26,6 +26,8 @@ Package.onUse(function (api) {
   api.use("underscore", both);
   api.use("check", both);
 
+  api.use("aldeed:simple-schema@1.5.3", both);
+  api.use('aldeed:collection2@2.3.2', both);
   api.use('raix:eventemitter@0.1.1', both);
   api.use('meteorspark:util@0.2.0', both);
   api.use('meteorspark:logger@0.3.0', both);
