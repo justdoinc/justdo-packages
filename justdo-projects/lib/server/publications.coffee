@@ -1,7 +1,6 @@
 _.extend Projects.prototype,
   _setupPublications: ->
     @_setupUserProjectsPublication()
-    @_setupUserProjectsTasksPublication()
     @_setupUnmergedUserProjectsTasksPublication()
 
     # Defined in required-actions.coffee
@@ -33,56 +32,6 @@ _.extend Projects.prototype,
         return self.projects_collection.find({"members.user_id": @userId}, {fields: published_fields})
       else
         this.ready() # no projects for anonymous
-
-    return
-
-  _setupUserProjectsTasksPublication: ->
-    self = @
-
-    # IMPORTANT! OBSOLETE! _setupUserProjectsTasksPublication:
-    #  * Doesn't support private.
-    #  * Doesn't remove the raw fields from the published tasks.
-
-    @_grid_data_com.setupGridPublication
-      name: GridDataCom.helpers.getCollectionPubSubName(self.items_collection)
-      middleware: (collection, private_data_collection, options, sub_args, query, private_data_query, projection, private_data_projection) ->
-        sub_options = sub_args[0]
-
-        # Options:
-        # project_id (required String): the project_id to get the
-        # tasks for.
-        # get_parents_as_string (optional Bool, default true): If
-        # false by default. If set to true the publication will return for
-        # each item a field with the following name and structure:
-        # _parents_str: "parent_id_1:order_in_parent_1,parent_id_2:order_in_parent_2,..."
-
-        {project_id, get_parents_as_string} = sub_options
-        # Validate options
-        if not project_id?
-          throw self._error "missing-argument", "You must specify the list of project_ids you want to subscribe to"
-        check project_id, String
-        check get_parents_as_string, Match.Maybe(Boolean)
-
-        pub_customization_safe_options = {}
-        pub_customization_restricted_options = {}
-        if get_parents_as_string? and get_parents_as_string == true
-          pub_customization_restricted_options.data_maps =
-            dependent_field: "parents"
-            map: (id, data) ->
-              parents = data.parents
-
-              _parents_str = ""
-
-              for parent_id, parent_details of parents
-                _parents_str += "#{parent_id}:#{parent_details.order},"
-
-              _parents_str = _parents_str.slice(0, -1)
-
-              return {_parents_str}
-
-        query.project_id = project_id
-
-        return [query, projection, pub_customization_safe_options, pub_customization_restricted_options]
 
     return
 
