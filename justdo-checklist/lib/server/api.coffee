@@ -76,6 +76,7 @@ _.extend JustdoChecklist.prototype,
            sibling_task_doc["p:checklist:has_partial"] == true
           has_partial = true
 
+      query = {_id: parent_id}
       update = 
         $set:
           "p:checklist:total_count": total_count
@@ -84,8 +85,8 @@ _.extend JustdoChecklist.prototype,
 
       APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(update)
 
-      APP.justdo_analytics.logMongoRawConnectionOp(@tasks_collection._name, "update", {_id: parent_id}, update)
-      @tasks_collection.rawCollection().update {_id: parent_id}, update, Meteor.bindEnvironment (err) ->
+      APP.justdo_analytics.logMongoRawConnectionOp(@tasks_collection._name, "update", query, update)
+      @tasks_collection.rawCollection().update query, update, Meteor.bindEnvironment (err) ->
         if err?
           console.error(err)
 
