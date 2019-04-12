@@ -590,6 +590,22 @@ _.extend JustdoTasksCollectionsManager.prototype,
           else
             @unset()
 
+      _secret:
+        # The unmerged publication delete the _secret field from the published docs
+        type: "skip-type-check"
+
+        optional: true
+
+        autoValue: ->
+          # If the code is not from trusted code unset the update
+          if not @isFromTrustedCode
+            if @isSet
+              console.warn "Untrusted attempt to change the task's _secret field rejected"
+
+              return @unset()
+
+          return # Keep this return to return undefined (as required by autoValue)
+
     # We use this to debug multi filters at once behavior - don't remove
     #
     # another_state:

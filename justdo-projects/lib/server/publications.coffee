@@ -167,6 +167,12 @@ _.extend Projects.prototype,
 
           return
 
+        _removeSecretFields = (data) ->
+          # Anything under the _secret is not published
+          delete data._secret
+
+          return
+
         # sub_options.get_parents_as_string
         if not get_parents_as_string? or not get_parents_as_string
           dataMapsExtensions = (id, data, action) ->
@@ -175,6 +181,7 @@ _.extend Projects.prototype,
               return
 
             _removeRawFields(data)
+            _removeSecretFields(data)
 
             return
 
@@ -202,6 +209,7 @@ _.extend Projects.prototype,
               return
 
             _removeRawFields(data)
+            _removeSecretFields(data)
 
             if data[dependent_field]? or
                   (dependent_field == "id" and action == "added")
