@@ -208,8 +208,8 @@ APP.executeAfterAppLibCode ->
   EDITOR_IMPORTED = 2
   editor_import_status = EDITOR_NOT_IMPORTED
   
-  isEditorOpened = ->
-    $("#description-editor").data("froala.editor")?
+  isEditorOpen = ->
+    return $("#description-editor").data("froala.editor")?
 
   initEditor = ->
     if editor_import_status == EDITOR_IMPORITING # to make sure the editor is only imported once
@@ -275,7 +275,7 @@ APP.executeAfterAppLibCode ->
       unlockTask(task_id)
 
   closeEditor = ->
-    if isEditorOpened()
+    if isEditorOpen()
       # save
       save()
       # unlock task
@@ -310,6 +310,10 @@ APP.executeAfterAppLibCode ->
       project_page_module.activeItemPath()
       closeEditor()
       task_id = project_page_module.activeItemId()
+
+      return
+
+    return
 
   Template.task_pane_item_details_description.events
     "click #add-description": (e) ->
