@@ -45,22 +45,31 @@ APP.executeAfterAppLibCode ->
 
   save_count = 0
   save = ->
-    save_state.set 2
-    op =
-      $set:
-        description: $("#description-editor").froalaEditor("html.get")
+    if isEditorOpen()
+      save_state.set 2
+      op =
+        $set:
+          description: $("#description-editor").froalaEditor("html.get")
 
-    save_count += 1
-    this_save_count = save_count
-    do (this_save_count) ->
-      APP.collections.Tasks.update task_id, op, (err) ->
-        if save_state.get() == 2 and this_save_count == save_count
-          # Change the save_state only if during saving state mode
-          # and if no other save requests followed this save request.
-          if err?
-            save_state.set 4
-          else
-            save_state.set 3
+      save_count += 1
+      this_save_count = save_count
+      do (this_save_count) ->
+        APP.collections.Tasks.update task_id, op, (err) ->
+          if save_state.get() == 2 and this_save_count == save_count
+            # Change the save_state only if during saving state mode
+            # and if no other save requests followed this save request.
+            if err?
+              save_state.set 4
+
+              return
+            else
+              save_state.set 3
+
+          return
+
+        return
+
+    return
 
   close_timeout = null
   close_timeout_ms = 60 * 1000 # 1 min
