@@ -270,8 +270,7 @@ APP.executeAfterAppLibCode ->
       });
       
       # set editor content
-      if task.description?
-        $("#description-editor").froalaEditor("html.set", task.description)
+      $("#description-editor").froalaEditor("html.set", task.description or "")
 
       # set change listeners
       for change_event in ["froalaEditor.contentChanged", "froalaEditor.keydown"]
