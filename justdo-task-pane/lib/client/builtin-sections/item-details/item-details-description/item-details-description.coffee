@@ -12,7 +12,7 @@ APP.executeAfterAppLibCode ->
   #   4 - failed
 
   idle_save_timeout = null
-  idle_save_timeout_ms = 3 * 1000 # 3 secs
+  idle_save_timeout_ms = 2 * 1000 # + 1 second: due to the fact contentChanged event happens in delay after the keydown event, there is actually extra .5 second here
   initIdleSaveTimeout = ->
     clearIdleSaveTimeout()
 
@@ -271,12 +271,17 @@ APP.executeAfterAppLibCode ->
       if task.description?
         $("#description-editor").froalaEditor("html.set", task.description)
 
-      # set listener
-      $("#description-editor").on "froalaEditor.contentChanged", (e, editor) =>
-        if isEditorOpened()
-          save_state.set 1
-          initIdleSaveTimeout()
-          initCloseTimeout()
+      # set change listeners
+      for change_event in ["froalaEditor.contentChanged", "froalaEditor.keydown"]
+        x = Math.random()
+        $("#description-editor").on change_event, (e, editor) =>
+          console.log "HERE", x
+          if isEditorOpen()
+            save_state.set 1
+            initIdleSaveTimeout()
+            initCloseTimeout()
+
+          return
 
       save_state.set 0
       setEditMode(true)
