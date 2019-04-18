@@ -1,13 +1,15 @@
 
-$btn-box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
-$enable-shadows: true;
 $blue: #2b71cf;
 $font-family-sans-serif: Lato;
 $border-radius: .1rem;
 $border-radius-lg: .15rem;
 $input-border-color: #c9d9ef;
-$input-box-shadow: #FFFFFF;
 $input-placeholder-color: rgb(123, 163, 218);
 $input-bg: rgba(43, 113, 207, 0.04);
 $light: #f7f7f7;
 $text-muted: #6d89ad;
+$form-feedback-icon-invalid-color: none;
+$box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+$btn-box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+$enable-shadows: true;
+$input-box-shadow: none;
