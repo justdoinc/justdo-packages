@@ -8,7 +8,7 @@
         {{> justdo_avatar}}
       {{/with}}
     </a>
-    <div class="dropdown-menu dropdown-menu-right {{#if inSettingsEditingFlow}}settings{{/if}}">
+    <div class="dropdown-menu {{#if inSettingsEditingFlow}}settings{{/if}}">
       <div class="dropdown-content">
       {{#if inMessageOnlyFlow}}
         {{> _loginButtonsMessages}}
@@ -79,7 +79,7 @@
     </div>
   {{/if}}
 
-  <button class="btn btn-outline-secondary" id="login-buttons-logout">
+  <button class="btn btn-default" id="login-buttons-logout">
     <i class="fa fa-sign-out" aria-hidden="true"></i>
     {{i18n 'loginButtonsLoggedInDropdownActions.signOut'}}
   </button>
