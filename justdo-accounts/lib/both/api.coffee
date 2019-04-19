@@ -31,8 +31,11 @@ _.extend JustdoAccounts.prototype,
     if password.length < minimum_length
       return {code: "too-short", reason: "Password must consist of at least #{minimum_length} characters"}
 
-    if not /([^\w]|[\d])/i.test(password)
-      return {code: "missing-special-sign-or-number", reason: "Password must have at least one special character or number"}
+    if not /([\d])/i.test(password)
+      return {code: "missing-number", reason: "Password must have at least one number"}
+
+    if not /([^\d\w\s])/i.test(password)
+      return {code: "missing-special-sign", reason: "Password must have at least one special character"}
 
     if not /[a-z]/.test(password)
       return {code: "atleast-one-lowercase", reason: "Password must have at least one lower case English letter"}
