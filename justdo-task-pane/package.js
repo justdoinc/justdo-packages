@@ -19,6 +19,8 @@ Package.onUse(function (api) {
   api.use("underscore", client);
   api.use("ecmascript", both);
 
+  api.use("froala:editor", both);
+
   // api.use("stevezhu:lodash@4.17.2", client);
   api.use("templating", client);
   api.use('fourseven:scss@3.2.0', client);

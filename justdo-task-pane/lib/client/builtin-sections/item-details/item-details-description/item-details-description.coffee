@@ -173,66 +173,9 @@ APP.executeAfterAppLibCode ->
 
   task_id = null
 
-  importEditor = ->
-    loadCss = (url) ->
-      $("head").append('<link href="' + url + '" rel="stylesheet">')
-
-    loadJs = (url) ->
-      new Promise (resolve, reject) =>
-        $.getScript(url)
-          .done =>
-            resolve()
-          .fail(( jqxhr, settings, exception ) => reject(exception))
-
-    loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_editor.min.css"
-    loadCss "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"
-    loadCss "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css"
-    loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/colors.min.css"
-    loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/table.min.css"
-    loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/image.min.css"
-    loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/fullscreen.min.css"
-
-    
-    Promise.each([
-      "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js",
-      "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js",
-      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/froala_editor.min.js"
-      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/colors.min.js",
-      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/table.min.js",
-      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/font_family.min.js",
-      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/font_size.min.js",
-      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/align.min.js",
-      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/image.min.js",
-      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/link.min.js",
-      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/lists.min.js",
-      "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/fullscreen.min.js"
-    ], (url) ->
-      loadJs url
-    )
-      
-  editor_importing = false
-  editor_imported = false
-  EDITOR_NOT_IMPORTED = 0
-  EDITOR_IMPORITING = 1
-  EDITOR_IMPORTED = 2
-  editor_import_status = EDITOR_NOT_IMPORTED
-  
   isEditorOpen = ->
     return $("#description-editor").data("froala.editor")?
 
-  initEditor = ->
-    if editor_import_status == EDITOR_IMPORITING # to make sure the editor is only imported once
-      return Promise.reject("Editor is already importing")
-    
-    if editor_import_status == EDITOR_NOT_IMPORTED # to make sure the editor is only imported once
-      editor_import_status = EDITOR_IMPORITING
-      return importEditor().then =>
-        editor_import_status = EDITOR_IMPORTED
-      .catch =>
-        editor_import_status = EDITOR_NOT_IMPORTED
-    
-    return Promise.resolve()
-    
   openEditor = ->
     # Fetch the most recent version of task (for case grid-lock just released and
     # we have old version of it)
@@ -255,39 +198,36 @@ APP.executeAfterAppLibCode ->
     # Lock task
     lockTask(task_id)
 
-    initEditor().then =>  # editor will only be initialized once
-      # set timeouts
-      initCloseTimeout()
-      initSaveInterval()
-  
-      # enable editor
-      $("#description-editor").froalaEditor({
-        toolbarButtons: ["fullscreen", "bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
-          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"],
-        pasteImage: false,
-        imageUpload: false,
-        heightMin: 200
-      });
-      
-      # set editor content
-      $("#description-editor").froalaEditor("html.set", task.description or "")
+    # set timeouts
+    initCloseTimeout()
+    initSaveInterval()
 
-      # set change listeners
-      for change_event in ["froalaEditor.contentChanged", "froalaEditor.keydown"]
-        x = Math.random()
-        $("#description-editor").on change_event, (e, editor) =>
-          console.log "HERE", x
-          if isEditorOpen()
-            save_state.set 1
-            initIdleSaveTimeout()
-            initCloseTimeout()
+    # enable editor
+    $("#description-editor").froalaEditor({
+      toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
+        "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"],
+      pasteImage: false,
+      imageUpload: false,
+      heightMin: 200,
+      key: ''
+    });
+    
+    # set editor content
+    $("#description-editor").froalaEditor("html.set", task.description or "")
 
-          return
+    # set change listeners
+    for change_event in ["froalaEditor.contentChanged", "froalaEditor.keydown"]
+      x = Math.random()
+      $("#description-editor").on change_event, (e, editor) =>
+        if isEditorOpen()
+          save_state.set 1
+          initIdleSaveTimeout()
+          initCloseTimeout()
 
-      save_state.set 0
-      setEditMode(true)
-    .catch =>
-      unlockTask(task_id)
+        return
+
+    save_state.set 0
+    setEditMode(true)
 
   closeEditor = ->
     if isEditorOpen()
