@@ -17,6 +17,8 @@ Package.onUse(function (api) {
   api.use("underscore", both);
   api.use("mongo", both);
 
+  api.use("templating", client);
+
   api.use("amplify", client);
 
   api.use("aldeed:simple-schema@1.5.3", both);
@@ -34,6 +36,7 @@ Package.onUse(function (api) {
   api.addFiles("bootstrap4/bootstrap.js", client);
 
   api.addFiles("themes-manager/themes-manager.coffee", client);
+  api.addFiles("themes-manager/injected-theme.html", client);
 
   api.use("meteorspark:app@0.3.0", client);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", client);
