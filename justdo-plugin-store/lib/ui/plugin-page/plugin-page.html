@@ -1,17 +1,17 @@
 <template name="justdo_plugins_store_plugin_page">
   <div class="justdo-plugins-plugin-page">
     {{#with getActivePluginPageObject}}
-      <div class="row">
-        <div class="col-md-8">
-          <div class="return-to-menu"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i></div>
-          <h1>{{title}}</h1>
+      <div class="row mb-3">
+        <div class="col-md-8 d-flex align-items-center">
+          <div class="return-to-menu mr-2 jd-c-pointer"><svg class="jd-icon jd-icon-32 text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left-circle"/></svg></div>
+          <h2 class="m-0">{{title}}</h2>
         </div>
         <div class="col-md-4">
           {{#if isProjectPage}}
             {{#if isProjectPageAdmin}}
               {{#if activePluginPagePluginInstallable}}
                 {{#if activePluginPagePluginEnabledForEnvironment}}
-                  <button class="btn-jd btn-jd-primary pull-right install-toggle-btn">
+                  <button class="btn btn-primary pull-right install-toggle-btn">
                     {{#if activePluginPagePluginInstalled}}
                       <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;&nbsp;Uninstall
                     {{else}}
@@ -33,37 +33,37 @@
         </div>
       </div>
       <!-- Images slider -->
-      <div id="plugin-carousel" class="carousel slide" data-ride="carousel">
+      <div id="plugin-carousel" class="carousel slide py-3" data-ride="carousel">
         {{#if hasMoreThanOneSliderItems}}
           <ol class="carousel-indicators">
             {{{carouselIndicators}}}
           </ol>
         {{/if}}
-        <div class="carousel-inner" role="listbox">
+        <div class="carousel-inner d-flex justify-content-center" role="listbox">
           {{{carousel}}}
         </div>
       </div>
       <!-- Plugin info -->
-      <div class="plugin-info row {{#if hasMoreThanOneSliderItems}}has-more-than-one-slider-items{{/if}}">
-        <div class="plugin-category col-md-6">
+      <div class="plugin-info border-bottom border-top py-3 row {{#if hasMoreThanOneSliderItems}}has-more-than-one-slider-items{{/if}}">
+        <div class="plugin-category text-center border-right col-md-6 px-3 d-flex align-items-center justify-content-center">
           {{{categories}}}
         </div>
-        <div class="plugin-price col-md-6">
-          Price: <strong>Free</strong>
+        <div class="plugin-price text-center col-md-6 px-3 d-flex align-items-center justify-content-center">
+          Price: <strong class="text-primary ml-1">Free</strong>
         </div>
       </div>
       <!-- Plugin description -->
-      <div class="plugin-description">
-        {{{full_description}}}
+      <div class="plugin-description py-3 border-bottom">
+        <p>{{{full_description}}}</p>
       </div>
-      <div class="plugin-additional-info">
+      <div class="plugin-additional-info py-3 border-bottom">
         <h5>ADDITIONAL INFO</h5>
-        <p>Version:<strong> {{version}}</strong></p>
+        <p class="mb-0">Version:<strong class="text-primary"> {{version}}</strong></p>
       </div>
-      <div class="plugin-developer">
+      <div class="plugin-developer py-3">
         <h5>DEVELOPER</h5>
-        <p>Company:<strong> {{developer}}</strong></p>
-        <p>Website:<strong> {{developer_url}}</strong></p>
+        <p class="mb-0">Company:<strong class="text-primary"> {{developer}}</strong></p>
+        <p class="mb-0">Website:<strong class="text-primary"> {{developer_url}}</strong></p>
       </div>
     {{/with}}
   </div>

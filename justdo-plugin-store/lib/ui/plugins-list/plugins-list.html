@@ -11,22 +11,25 @@
       </div>
     {{else}}
       {{#each listActiveCategoryPlugins}}
-        <div class="plugin-tile plugin-{{id}} {{#if useBootstrapLayout}}col-xs-12 col-sm-6 col-md-4{{/if}}">
-          <div class="plugin-img" style="background-image: url('{{image_url}}')">
-            <div class="developer-info">
-              <p class="developer-name">{{developer}}</p>
-              <p class="developer-site">{{developer_url}}</p>
-            </div>
-          </div>
-          <div class="plugin-short-info">
-            <a class="plugin-name"><strong>{{title}}</strong> - {{short_description}}</a>
-            <div class="more-info">
-              <div class="plugin-price">{{price}}</div>
-              {{#if isPluginInstalled}}
-                <div class="plugin-installed">
-                  <i class="fa fa-check-circle-o" aria-hidden="true"></i> Installed
+        <div class="{{#if useBootstrapLayout}}col-xs-12 col-sm-6 col-md-4{{/if}}">
+          <div class="plugin-tile rounded mb-5 plugin-tile plugin-{{id}}">
+            <div class="p-2">
+              <div class="plugin-img shadow" style="background-image: url('{{image_url}}')">
+                {{#if isPluginInstalled}}
+                  <div class="plugin-installed border bg-light rounded-sm font-weight-bold py-1 px-2 d-flex align-items-center"><svg class="jd-icon jd-icon-16 mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#check-circle"/></svg>Installed</div>
+                {{/if}}
+                <div class="developer-info bg-dark p-2">
+                  <small class="text-white d-block developer-name">{{developer}}</small>
+                  <small class="text-white d-block developer-site">{{developer_url}}</small>
                 </div>
-              {{/if}}
+              </div>
+              <div class="plugin-short-info">
+                <p class="mb-0 mt-2">{{title}}</p>
+                <p class="border-top mt-2 pt-2 mb-0 d-block text-muted">{{short_description}}</p>
+                <div class="more-info">
+                  <small class="text-primary">{{price}}</small>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -34,4 +37,3 @@
     {{/if}}
   </div>
 </template>
-
