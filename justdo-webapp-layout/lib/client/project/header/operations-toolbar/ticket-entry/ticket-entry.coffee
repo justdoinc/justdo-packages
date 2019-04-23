@@ -1,3 +1,5 @@
+Promise = require "bluebird"
+
 loading_ckeditor = new ReactiveVar false
 
 gridControlMux = -> APP.modules.project_page.grid_control_mux?.get()
@@ -17,9 +19,46 @@ APP.executeAfterAppLibCode ->
 
       loading_ckeditor.set true
       
+      importEditor = ->
+        loadCss = (url) ->
+          $("head").append('<link href="' + url + '" rel="stylesheet">')
+
+        loadJs = (url) ->
+          new Promise (resolve, reject) =>
+            $.getScript(url)
+              .done =>
+                resolve()
+              .fail(( jqxhr, settings, exception ) => reject(exception))
+
+        loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_editor.min.css"
+        loadCss "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"
+        loadCss "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css"
+        loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/colors.min.css"
+        loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/table.min.css"
+        loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/image.min.css"
+        loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/fullscreen.min.css"
+
+        
+        Promise.each([
+          "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js",
+          "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js",
+          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/froala_editor.min.js"
+          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/colors.min.js",
+          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/table.min.js",
+          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/font_family.min.js",
+          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/font_size.min.js",
+          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/align.min.js",
+          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/image.min.js",
+          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/link.min.js",
+          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/lists.min.js",
+          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/fullscreen.min.js"
+        ], (url) ->
+          loadJs url
+        )
+      
       # Load ckeditor before we render the dialog, to avoid the textarea to appear
       # without the ckeditor applied on it.
-      module.dynamicImport('meteor/justdoinc:justdo-wa-ckeditor').then (m) =>
+      importEditor().then (m) =>
         loading_ckeditor.set false
         message_template =
           APP.helpers.renderTemplateInNewNode(Template.ticket_entry, {})
@@ -73,7 +112,7 @@ APP.executeAfterAppLibCode ->
                 task_fields =
                   title: title.get()
                   priority: priority.get()
-                  description: $("#ticket-content").val()
+                  description: $("#ticket-content").froalaEditor("html.get")
                   pending_owner_id:
                     if Meteor.userId() != selected_owner_id \
                       then selected_owner_id \
@@ -296,7 +335,13 @@ APP.executeAfterAppLibCode ->
 
         $("#ticket-assigned-user-id").selectpicker("refresh")
 
-    $('#ticket-content').ckeditor()
+    $("#ticket-content").froalaEditor({
+        toolbarButtons: ["fullscreen", "bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
+          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"],
+        pasteImage: false,
+        imageUpload: false,
+        height: 300
+      });
 
     task_priority_slider = new genericSlider "ticket-priority", 0, (new_val, is_final) ->
       priority.set Math.round(100 * new_val)
