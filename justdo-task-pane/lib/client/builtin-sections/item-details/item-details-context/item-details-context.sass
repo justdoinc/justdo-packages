@@ -1,6 +1,7 @@
 .idc-context-section
   overflow: hidden
   position: relative
+  font-size: 14px
 
   .idc-expand-collapse-button
     position: absolute
@@ -34,13 +35,14 @@
 
 @mixin seqid-with-move-indicator
   .idc-task-seq-id-number
-    visibility: hidden 
+    visibility: hidden
 
   .fa-map-marker
     display: inline-block
     position: absolute
     left: 50%
     margin-left: -3px
+    top: 3px
 
 .gu-mirror.idc-task-seq-id, .gu-transit.idc-task-seq-id
   @include seqid-with-move-indicator
@@ -86,7 +88,7 @@
     font-style: italic
 
 .idc-task-context-add-parent.gu-mirror
-  // Fix issue where dragulla wraps the handle text 
+  // Fix issue where dragulla wraps the handle text
   width: 200px !important
   font-style: italic
 
@@ -113,4 +115,3 @@
 .idc-section-header
   font-style: italic
   text-decoration: underline
-

@@ -11,6 +11,7 @@
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   -moz-font-feature-settings: "liga" on
+  font-size: 14px
 
   .nav-tabs
     li
@@ -20,10 +21,12 @@
         font-size: 13px
         padding: 6px 7px
         border: none
+        line-height: 30px
 
         &:focus, &:hover
           background-color: white
           border: none
+          text-decoration: none
 
       &.active
         a
@@ -164,9 +167,8 @@
     border: 1px solid #f5f5f5
     position: relative
     border-radius: 4px
-
-    user-select: none // So attempts to drag mover icon, won't select
-
+    // So attempts to drag mover icon, won't select
+    user-select: none
     &:hover
       border-color: #d3d3d3
 
@@ -202,8 +204,8 @@
     color: #bcbcbc
 
   .member-name
-    vertical-align: top
-    padding-top: 6px
+    // vertical-align: top
+    // padding-top: 6px
     font-weight: bold
 
   .daily-avail
@@ -217,22 +219,22 @@
     width: $controller-width + $customize-button-width + 3
     float: right
 
-    .input-group
-      width: $controller-width
-      display: inline-block
-      height: 30px
-      white-space: nowrap
+    // .input-group
+    //   width: $controller-width
+    //   display: inline-block
+    //   height: 30px
+    //   white-space: nowrap
 
     .simple-daily-availability
-      display: inline-block
-      width: $controller-width - $addon-width
-      padding: 5px 11px
-      height: 30px
+      // display: inline-block
+      // width: $controller-width - $addon-width
+      // padding: 5px 11px
+      // height: 30px
 
     .input-group-addon
-      display: inline-block
-      width: $addon-width
-      height: 30px
+      // display: inline-block
+      // width: $addon-width
+      // height: 30px
 
     .customize-daily-availability
       display: inline-block

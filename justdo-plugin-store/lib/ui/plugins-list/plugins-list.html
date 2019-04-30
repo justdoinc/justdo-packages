@@ -1,5 +1,6 @@
 <template name="justdo_plugins_store_plugins_list">
-  <div class="justdo-plugins-store-plugins-list {{#if useBootstrapLayout}}row{{/if}}">
+  <!-- <div class="justdo-plugins-store-plugins-list {{#if useBootstrapLayout}}row{{/if}}"> -->
+  <div class="justdo-plugins-store-plugins-list row mx-0">
     {{#if isActiveCategoryPluginsEmpty}}
       <div class="empty-category">
         {{#if isInstalledCateogry}}
@@ -11,7 +12,8 @@
       </div>
     {{else}}
       {{#each listActiveCategoryPlugins}}
-        <div class="{{#if useBootstrapLayout}}col-xs-12 col-sm-6 col-md-4{{/if}}">
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <!-- <div class="{{#if useBootstrapLayout}}col-xs-12 col-sm-6 col-md-4{{/if}}"> -->
           <div class="plugin-tile rounded mb-5 plugin-tile plugin-{{id}}">
             <div class="p-2">
               <div class="plugin-img shadow" style="background-image: url('{{image_url}}')">

@@ -21,7 +21,7 @@
 
     </div>
 
-    <ul class="nav nav-tabs border-0">
+    <ul class="nav nav-tabs">
       {{#if isProject}}
         <li role="presentation" tab-id="project" class="delivery-planner-tab {{#if $eq currentTab "project"}}active{{/if}}"><a href="#">Project {{#if isArchived}}(closed){{/if}}</a></li>
       {{/if}}
@@ -69,12 +69,9 @@
   <section>
     <h2>Project settings</h2>
 
-    <div class="dp-project-setting">
+    <div class="d-flex align-items-center justify-content-between dp-project-setting">
       <div class="setting-label">Project start date</div>
-
       <div class="setting-controller">{{> delivery_planner_task_pane_project_tab_start_date_field_editor}}</div>
-
-      <div class="clearfix"></div>
     </div>
 
     <div class="dp-project-setting">
@@ -132,14 +129,11 @@ We use this snapshot to calculate the Ideal Work Remaining Line of the Burn Down
     </div>
     -->
 
-    <div class="dp-project-setting">
+    <div class="d-flex align-items-center justify-content-between dp-project-setting">
       <div class="setting-label">{{#if isArchived}}Reopen{{else}}Close{{/if}} project <span class="archive-project-more-info" title="Closed projects aren't showing in the tasks' 'Assign to Project' tab, and are showing separately from the active, non-closed, projects in the grid."><i class="fa fa-question-circle fa-fw"></i></span></div>
-
       <div class="setting-controller">
-        <div class="btn btn-default btn-xs dp-archive-project">{{#if isArchived}}Reopen{{else}}Close{{/if}}</div>
+        <div class="btn btn-outline-secondary btn-sm dp-archive-project">{{#if isArchived}}Reopen{{else}}Close{{/if}}</div>
       </div>
-
-      <div class="clearfix"></div>
     </div>
   </section>
 </template>
@@ -161,7 +155,7 @@ We use this snapshot to calculate the Ideal Work Remaining Line of the Burn Down
 
   {{#if membersAvailabilityProxy.changed.get}}
     <div class="btn btn-primary btn-sm dp-save-members-availability">Save Availability</div>
-    <div class="btn btn-default btn-sm dp-cencel-members-availability">Cancel</div>
+    <div class="btn btn-outline-secondary btn-sm dp-cencel-members-availability">Cancel</div>
   {{/if}}
 
   <div class="clearfix"></div>
@@ -169,15 +163,17 @@ We use this snapshot to calculate the Ideal Work Remaining Line of the Burn Down
 
 <template name="delivery_planner_task_pane_project_tab_member_availability">
   <tr member-id="{{user_id}}">
-    <td class="member-name">{{#with user_doc}}{{displayName}}{{/with}}</td>
+    <td class="member-name align-middle">{{#with user_doc}}{{displayName}}{{/with}}</td>
     <td class="daily-avail {{#if $eq getAvailabilityType "extended"}}daily-avail-extended-td{{/if}}">
       {{#if $eq getAvailabilityType "simple"}}
-        <div class="daily-avail-simple">
-          <div class="input-group">
+        <div class="daily-avail-simple d-flex">
+          <div class="input-group input-group-sm mr-1">
             <input type="text" class="form-control simple-daily-availability" value="{{getFormattedSimpleDailyAvailability}}" placeholder="{{placeholder}}">
-            <div class="input-group-addon">Hours</div>
+            <div class="input-group-append">
+              <span class="input-group-text">Hours</span>
+            </div>
           </div>
-          <div class="btn btn-default btn-sm customize-daily-availability">Custom</div>
+          <div class="btn btn-outline-secondary btn-sm customize-daily-availability">Custom</div>
         </div>
       {{else}}
         <div class="daily-avail-extended">
@@ -205,7 +201,7 @@ We use this snapshot to calculate the Ideal Work Remaining Line of the Burn Down
 
             </div>
           </div>
-          <div class="btn btn-default btn-sm set-simple-daily-availability">Simple</div>
+          <div class="btn btn-outline-secondary btn-sm set-simple-daily-availability">Simple</div>
         </div>
       {{/if}}
     </td>
@@ -216,14 +212,11 @@ We use this snapshot to calculate the Ideal Work Remaining Line of the Burn Down
   <div id="burndown-chart"></div>
 
   {{#if showBaselineSetting}}
-    <div class="dp-project-setting">
+    <div class="d-flex align-items-center justify-content-between dp-project-setting">
       <div class="setting-label">Baseline projection <span class="baseline-projection-more-info" title="The Baseline Projection 'Freezes' the Current Projection as a reference point for future comparisons."><i class="fa fa-question-circle fa-fw"></i></span></div>
-
       <div class="setting-controller">
-        <div class="btn btn-default btn-xs {{#if hasBaselineProjection}}dp-remove-baseline{{else}}dp-save-baseline{{/if}}">{{#if hasBaselineProjection}}Remove{{else}}Save{{/if}}</div>
+        <div class="btn btn-outline-secondary btn-sm {{#if hasBaselineProjection}}dp-remove-baseline{{else}}dp-save-baseline{{/if}}">{{#if hasBaselineProjection}}Remove{{else}}Save{{/if}}</div>
       </div>
-
-      <div class="clearfix"></div>
     </div>
   {{/if}}
 </template>

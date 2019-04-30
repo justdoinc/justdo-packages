@@ -5,7 +5,7 @@ APP.executeAfterAppLibCode ->
 
   target_select_pickers = ["#ticket-queue-id", "#ticket-assigned-user-id"]
 
-  project_page_module.setNullaryOperation "ticketEntry", 
+  project_page_module.setNullaryOperation "ticketEntry",
     human_description: "Quick Add"
     template:
       font_awesome_icon: "sticky-note-o"
@@ -144,8 +144,6 @@ APP.executeAfterAppLibCode ->
 
                   releaseOpsLock()
 
-                  return
-
               preBootboxDestroyProcedures()
 
               return true
@@ -219,10 +217,10 @@ APP.executeAfterAppLibCode ->
 
         if not destination_id?
           return [] # can happen, when selected_destination_type_reactive_var is pending update
-        
+
         destination_user_id = destination_id.substr(7)
         return [Meteor.users.findOne(destination_user_id)]
-      else # for readability    
+      else # for readability
         if not selected_destination_id.get()?
           return []
 
@@ -327,7 +325,7 @@ APP.executeAfterAppLibCode ->
       if not current_tickets_queue_doc?
         # Can happen while reactive state is in calculation process
         return false
-      
+
       return @_id == current_tickets_queue_doc.owner_id
 
     isInvalidTitle: -> submit_attempted.get() and _.isEmpty(title.get())
