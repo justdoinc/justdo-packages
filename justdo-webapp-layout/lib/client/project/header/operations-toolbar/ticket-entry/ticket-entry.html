@@ -18,7 +18,7 @@
             {{#with direct_tasks}}
               <optgroup label="Direct Tasks">
                 {{#each this}}
-                  <option value="{{direct_task_id}}">{{#with memeber_doc}}{{> gtpl_user_profile_pic}}{{/with}}<span class="option-img-text">{{cutString title max_printed_task_title}}</span></option>
+                  <option value="{{direct_task_id}}" data-content="{{data_content}}"></option>
                 {{/each}}
               </optgroup>
             {{/with}}

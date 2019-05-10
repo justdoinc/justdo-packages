@@ -191,11 +191,15 @@ APP.executeAfterAppLibCode ->
       project_members_docs = current_user_doc.concat(other_users_docs)
 
       direct_tasks = _.map project_members_docs, (memeber_doc) ->
-        return {
+        direct_task = {
           direct_task_id: "direct:#{memeber_doc._id}"
           title: if memeber_doc._id == cur_user_id then "My Direct Tasks" else JustdoHelpers.displayName(memeber_doc)
           memeber_doc: memeber_doc
         }
+
+        direct_task.data_content = JustdoHelpers.xssGuard("""#{JustdoAvatar.getAvatarHtml(direct_task.memeber_doc)}<span class="option-img-text">#{JustdoHelpers.ellipsis(direct_task.title, max_printed_task_title)}</span>""", {allow_html_parsing: true, enclosing_char: ""})
+
+        return direct_task
 
       return direct_tasks
 
@@ -238,10 +242,10 @@ APP.executeAfterAppLibCode ->
     for selector in target_select_pickers
       $(selector)
         .selectpicker
-          container: "body",
-          dropupAuto: true,
-          size: 6,
+          container: "body"
+          size: 6
           width: "100%"
+          sanitize: false
         .on "show.bs.select", (e) ->
           setTimeout ->
             $(e.target).focus()

@@ -54,7 +54,9 @@ Package.onUse(function (api) {
   api.use("reactive-var", client);
   api.use("tracker", client);
 
- api.use("ecmascript", both);
+  api.use("justdoinc:justdo-avatar", client);
+
+  api.use("ecmascript", both);
 
   api.addFiles("lib/both/analytics.coffee", both);
 
