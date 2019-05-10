@@ -33,6 +33,9 @@ _.extend JustdoAvatar,
 
     return @showAvatarOrFallback profile_pic, email, first_name, last_name, options
 
+  getAvatarHtml: (user_doc) ->
+    return """<img class="justdo-avatar" src="#{JustdoHelpers.xssGuard(JustdoAvatar.showUserAvatarOrFallback(user_doc))}" title="#{JustdoHelpers.xssGuard(JustdoHelpers.displayName(user_doc))}" />"""
+
   #
   # Initials generators
   #
