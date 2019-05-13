@@ -8,7 +8,7 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-    api.addFiles("bootstrap-select/css/bootstrap-select.css", "client");
-    api.addFiles("bootstrap-select/js/bootstrap-select.js", "client");
+    api.addFiles("bootstrap-select/dist/css/bootstrap-select.css", "client");
+    api.addFiles("bootstrap-select/dist/js/bootstrap-select.js", "client");
 });
 
