@@ -1,23 +1,21 @@
 APP.justdo_highcharts.requireHighcharts()
 
-countCheckedLeafes = (task_id)->
+countCheckedLeafes = (task)->
   ret =
     count: 1
     checked: 0
-  t = APP.collections.Tasks.findOne({_id:task_id})
-  if t['p:checklist:is_checked'] == true or
-      t['p:checklist:total_count'] and (t['p:checklist:total_count'] == t['p:checklist:checked_count'])
+  if task['p:checklist:is_checked'] == true or
+      task['p:checklist:total_count'] and (task['p:checklist:total_count'] == task['p:checklist:checked_count'])
     ret.checked = 1
-  APP.collections.Tasks.find({"parents.#{task_id}":{$exists:true}}).forEach (doc)=>
-    r = countCheckedLeafes(doc._id)
-    ret.count += r.count
-    ret.checked += r.checked
+  APP.collections.Tasks.find({"parents.#{task._id}":{$exists:true}}).forEach (doc)=>
+    subTasks = countCheckedLeafes(doc)
+    ret.count += subTasks.count
+    ret.checked += subTasks.checked
 
   return ret
 
 
 renderChart = (active_item)->
-
   # if non of the task in the path is a checklist, no need to mark anything
   path = APP.modules.project_page.gridControl().getCurrentPath()
   if not APP.collections.Tasks.findOne({_id: {$in:path.split('/')},'p:checklist:is_checklist':true})
@@ -38,7 +36,7 @@ renderChart = (active_item)->
   $("#checklist_chart_container").html ""
 
   APP.collections.Tasks.find({"parents.#{active_item._id}":{$exists:true}}).forEach (doc)=>
-    ret = countCheckedLeafes(doc._id)
+    ret = countCheckedLeafes(doc)
 
     if doc.title
       categories.push doc.title
@@ -48,23 +46,23 @@ renderChart = (active_item)->
     checked.data.push ret.checked
     unchecked.data.push ret.count-ret.checked
 
-    $("#checklist_chart_container").highcharts
-      chart:
-        type: 'bar'
+  $("#checklist_chart_container").highcharts
+    chart:
+      type: 'bar'
+      animation: false
+    title:
+      text: 'Checklist Status'
+    xAxis:
+      categories: categories
+    yAxis:
+      tickInterval: 1
+    legend:
+      reversed: true
+    plotOptions:
+      series:
+        stacking: 'normal'
         animation: false
-      title:
-        text: 'Checklist Status'
-      xAxis:
-        categories: categories
-      yAxis:
-        tickInterval: 1
-      legend:
-        reversed: true
-      plotOptions:
-        series:
-          stacking: 'normal'
-          animation: false
-      series: [unchecked,checked]
+    series: [unchecked,checked]
 
   return
 
