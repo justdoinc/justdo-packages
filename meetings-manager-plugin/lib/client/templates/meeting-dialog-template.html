@@ -4,8 +4,10 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
+            <span class="model-header-title">{{meeting_title_raw}}</span>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
             <button type="button" class="btn-minimize" aria-label="Minimize"></button>
+            <button type="button" class="btn-maximize fa fa-window-maximize" aria-label="Maximize"></button>
           </div>
           <div class="modal-body {{#if mayEdit}}admin{{/if}} {{#unless $eq meeting.status "draft"}}show-less{{/unless}}">
 
@@ -186,8 +188,5 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <div class="title-bar">
-      {{meeting.title}}<span class="fa fa-window-maximize"></span>
-    </div>
   </div>
 </template>

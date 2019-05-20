@@ -260,6 +260,11 @@ Template.meetings_meeting_dialog.helpers
       return ""
     return meeting.title
 
+  meeting_title_raw: ->
+    meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
+      _id: @meeting_id
+    return meeting.title
+
   minimizedClass: ->
     if Template.instance().minimized.get() then "minimized" else "maximized"
 
@@ -448,9 +453,13 @@ Template.meetings_meeting_dialog.events
   #         tmpl.form.invalidate [{ error: error, message: error + '', name: "" }]
   #   )
   #
-  # 'click .btn-minimize': (e, tmpl) ->
-  #
-  #   tmpl.minimized.set true
+  'click .btn-minimize': (e, tmpl) ->
+  
+    tmpl.minimized.set true
+  
+  'click .btn-maximize': (e, tmpl) ->
+    tmpl.minimized.set false
+  
   #
   # 'click .minimized': (e, tmpl) ->
   #

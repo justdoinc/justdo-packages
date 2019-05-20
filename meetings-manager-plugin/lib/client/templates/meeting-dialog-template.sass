@@ -340,13 +340,25 @@
       background-image: url(/packages/justdoinc_meetings-manager-plugin/media/icons.png)
       &:focus
         outline: none
-  .close
-    margin-left: 5px
-    background-position: -21px 0px
-  .btn-minimize
-    background-position: 0px 0px
-    background-color: rgba(255, 255, 255, 0)
-
+    .model-header-title
+      float: left
+      margin-top: -7px
+      max-width: 100px
+      overflow: hidden
+      display: none
+    .close
+      margin-left: 5px
+      background-position: -21px 0px
+    .btn-minimize
+      background-position: 0px 0px
+      background-color: rgba(255, 255, 255, 0)
+    .btn-maximize
+      display: none
+      background-image: none
+      background-color: rgba(255, 255, 255, 0)
+      color: rgba(142, 142, 142, 1)
+      margin-top: -7px
+  
   .modal
     height: 0
     overflow: visible
@@ -488,17 +500,33 @@
       font-weight: normal
     button
       margin: 3px
-
+  
+  .modal
+    display: block !important
 
   // show the title-bar when minimized
   &.minimized
-    .title-bar
+    .modal-content
+      min-height: 0
+      min-width: 0
+      height: auto !important
+      width: 200px !important
+      .model-header-title
+        display: block
+      .modal-body
+        display: none
+      .modal-footer
+        display: none
+      .discard-msg
+        display: none
+      .ui-resizable-handle
+        display: none
+    .btn-maximize
       display: block
+    .btn-minimize
+      display: none
 
-  // show the dialog when maximized
-  &.maximized
-    .modal
-      display: block !important
+
 
   $form-padding: 15px
 
@@ -559,7 +587,7 @@
     // 400px is my hand-calculated height of all other elements of the modal
        this might not account for the error box, and would be tricky to
        calculate dynamically
-
+  
 .close-split-view
   position: absolute
   right: 20px
