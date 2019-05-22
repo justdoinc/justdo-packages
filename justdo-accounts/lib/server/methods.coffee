@@ -91,6 +91,7 @@ _.extend JustdoAccounts.prototype,
 
         return accounts_object.changeAccountEmail email, password, @userId
       
-      registerAsPromoter: (description) ->
-        check description, String
-        return accounts_object.registerAsPromoter description, @userId
+      registerAsPromoter: (description, campaignId) ->
+        check description, Match.Maybe(String)
+        check campaignId, Match.Maybe(String)
+        return accounts_object.registerAsPromoter description, campaignId, @userId

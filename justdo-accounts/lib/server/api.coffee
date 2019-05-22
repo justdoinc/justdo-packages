@@ -713,13 +713,17 @@ _.extend JustdoAccounts.prototype,
 
     return
 
-  registerAsPromoter: (description, user_id) ->
-    check(description, String)
+  registerAsPromoter: (description, campaignId, user_id) ->
+    check description, Match.Maybe(String)
+    check campaignId, Match.Maybe(String)
 
     @requireLogin(user_id)
 
     if not (user_obj = @getUserById(user_id))?
       throw @_error("unknown-user")
+
+    if user_obj.promoters?.is_promoter
+      throw @_error("User has already registered as a promoter")
 
     Meteor.users.update user_id,
       $set:
@@ -727,7 +731,7 @@ _.extend JustdoAccounts.prototype,
           is_promoter: true,
           is_approved: false,
           promoter_description: description,
-          campaign_id: null
+          campaign_id: campaignId
         }
 
     return
