@@ -705,6 +705,25 @@ _.extend JustdoAccounts.prototype,
 
     return
 
+  registerAsPromoter: (description, user_id) ->
+    check(description, String)
+
+    @requireLogin(user_id)
+
+    if not (user_obj = @getUserById(user_id))?
+      throw @_error("unknown-user")
+
+    Meteor.users.update user_id,
+      $set:
+        promoters: {
+          is_promoter: true,
+          is_approved: false,
+          promoter_description: description,
+          campaign_id: null
+        }
+
+    return
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"

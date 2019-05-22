@@ -90,3 +90,7 @@ _.extend JustdoAccounts.prototype,
         check password, passwordValidator
 
         return accounts_object.changeAccountEmail email, password, @userId
+      
+      registerAsPromoter: (description) ->
+        check description, String
+        return accounts_object.registerAsPromoter description, @userId
