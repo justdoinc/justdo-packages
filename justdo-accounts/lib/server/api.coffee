@@ -72,7 +72,15 @@ _.extend JustdoAccounts.prototype,
 
     picked_profile = _.pick(profile, "profile_pic")
 
-    return {profile: picked_profile}
+    if user_obj.promoters?
+      is_promoter = true
+    else 
+      is_promoter = false
+
+    return {
+      profile: picked_profile
+      is_promoter: is_promoter
+    }
 
   userCompletedRegistration: (user_obj) ->
     if @_passwordSetInUserObj(user_obj)
