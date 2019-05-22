@@ -42,6 +42,11 @@ _.extend JustdoAccounts.prototype,
         optional: true
 
         type: JustdoAccounts.standard_legal_doc_structure
+      
+      "signed_legal_docs.promoters_terms_conditions":
+        optional: true
+
+        type: JustdoAccounts.standard_legal_doc_structure
 
       "_profile_pic_metadata":
         optional: true
@@ -52,6 +57,31 @@ _.extend JustdoAccounts.prototype,
         type: String
 
       "_profile_pic_metadata.id":
+        type: String
+      
+      promoters:
+        optional: true
+
+        type: Object
+      
+      "promoters.is_promoter":
+        optional: true
+
+        type: Boolean
+      
+      "promoters.is_approved":
+        optional: true
+
+        type: Boolean
+
+      "promoters.promoter_description":
+        optional: true
+
+        type: String
+
+      "promoters.campaign_id":
+        optional: true
+
         type: String
 
     return
