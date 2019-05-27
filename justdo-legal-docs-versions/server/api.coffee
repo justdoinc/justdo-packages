@@ -28,9 +28,10 @@ _.extend JustdoLegalDocsVersionsApi,
 
       all_required_docs_signed_and_up_to_date = true
       for doc_id of report.docs
-        if JustdoLegalDocsVersions[doc_id].signature_required == true and not (signed_doc = signed_legal_docs[doc_id])?
-          # User didn't sign this required document
-          all_required_docs_signed_and_up_to_date = false
+        if not (signed_doc = signed_legal_docs[doc_id])?
+          if JustdoLegalDocsVersions[doc_id].signature_required == true
+            # User didn't sign this required document but signature is required
+            all_required_docs_signed_and_up_to_date = false
 
           continue
 
