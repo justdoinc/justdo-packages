@@ -72,5 +72,5 @@ _.extend JustdoAccounts.prototype,
   changeAccountEmail: (email, password, cb) ->
     Meteor.call "changeAccountEmail", email, password, cb
 
-  registerAsPromoter: (description, campaignId, cb) ->
-    Meteor.call "registerAsPromoter", description, campaignId, cb
+  registerAsPromoter: (options, cb) ->
+    Meteor.call "registerAsPromoter", options, cb

@@ -713,10 +713,20 @@ _.extend JustdoAccounts.prototype,
 
     return
 
-  registerAsPromoter: (description, campaignId, user_id) ->
-    check description, Match.Maybe(String)
-    check campaignId, Match.Maybe(String)
-
+  _registerAsPromoterOptionsSchema: new SimpleSchema
+    campaign_id:
+      type: String
+      
+  registerAsPromoter: (options, user_id) ->
+    check user_id, String
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_registerAsPromoterOptionsSchema,
+        options or {},
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
+      
     @requireLogin(user_id)
 
     if not (user_obj = @getUserById(user_id))?
@@ -730,8 +740,8 @@ _.extend JustdoAccounts.prototype,
         promoters: {
           is_promoter: true,
           is_approved: false,
-          promoter_description: description,
-          campaign_id: campaignId
+          promoter_description: "",
+          campaign_id: options.campaign_id
         }
 
     return

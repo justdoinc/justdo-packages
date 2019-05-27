@@ -91,7 +91,6 @@ _.extend JustdoAccounts.prototype,
 
         return accounts_object.changeAccountEmail email, password, @userId
       
-      registerAsPromoter: (description, campaignId) ->
-        check description, Match.Maybe(String)
-        check campaignId, Match.Maybe(String)
-        return accounts_object.registerAsPromoter description, campaignId, @userId
+      registerAsPromoter: (options) ->
+        check options, Object # options is thoroughly verified in api.coffee
+        return accounts_object.registerAsPromoter options, @userId
