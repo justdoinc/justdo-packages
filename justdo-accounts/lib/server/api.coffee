@@ -727,13 +727,17 @@ _.extend JustdoAccounts.prototype,
     if user_obj.promoters?.is_promoter
       throw @_error("User has already registered as a promoter")
 
+    campaign_obj = APP.collections.PromotersCampaigns.findOne
+      _id: options.campaign_id
+    
     Meteor.users.update user_id,
       $set:
         promoters: {
           is_promoter: true,
           is_approved: false,
           promoter_description: "",
-          campaign_id: options.campaign_id
+          campaign_id: campaign_obj?._id,
+          referring_promoter_id: campaign_obj?.promoter_id
         }
 
     return

@@ -84,6 +84,11 @@ _.extend JustdoAccounts.prototype,
 
         type: String
 
+      "promoters.referring_promoter_id":
+        optional: true
+
+        type: String
+
     return
 
  # note that schemas aren't prototype properties !!!
