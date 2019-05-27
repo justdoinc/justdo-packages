@@ -2,7 +2,7 @@ _.extend JustdoLegalDocsVersionsApi,
     getLegalDocsReportForUserDoc: (user_doc) ->
       # Returns an object with two properties: status, docs
       #
-      # status is either true or false - false means some of the legal docs
+      # status is either true or false - false means some of the required legal docs
       # haven't been signed or need re-signing due to update. True means
       # all is docs were signed and are up-to-date.
       # 
@@ -26,11 +26,11 @@ _.extend JustdoLegalDocsVersionsApi,
         # User didn't sign any doc
         return report
 
-      all_signed_and_up_to_date = true
+      all_required_docs_signed_and_up_to_date = true
       for doc_id of report.docs
-        if not (signed_doc = signed_legal_docs[doc_id])?
-          # User didn't sign this document
-          all_signed_and_up_to_date = false
+        if JustdoLegalDocsVersions[doc_id].signature_required == true and not (signed_doc = signed_legal_docs[doc_id])?
+          # User didn't sign this required document
+          all_required_docs_signed_and_up_to_date = false
 
           continue
 
@@ -48,12 +48,12 @@ _.extend JustdoLegalDocsVersionsApi,
           # up to date. Un-comment the line below somewhere around mid-march 2019.
           # Remove the report.docs[doc_id] = "SIGNED" line.
           #
-          # all_signed_and_up_to_date = false
+          # all_required_docs_signed_and_up_to_date = false
 
           # report.docs[doc_id] = "OUT-DATED"
 
           report.docs[doc_id] = "SIGNED"
 
-      report.status = all_signed_and_up_to_date
+      report.status = all_required_docs_signed_and_up_to_date
 
       return report
