@@ -108,7 +108,7 @@ Template.chat_bottom_windows_task_open.events
 
         gcm = APP.modules.project_page.getCurrentGcm()
 
-        if gcm.getAllTabs()?.main?.state == "ready"
+        if gcm?.getAllTabs()?.main?.state == "ready"
           # Wait for main tab to become ready and activate the task
           activateTask()
 
