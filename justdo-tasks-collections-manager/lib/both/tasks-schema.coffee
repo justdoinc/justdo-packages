@@ -147,13 +147,13 @@ _.extend JustdoTasksCollectionsManager.prototype,
             txt: "On hold"
             order: 4
 
-            due_list_state: true
+            due_list_state: false
 
           "duplicate":
             txt: "Duplicate"
             order: 5
 
-            due_list_state: true
+            due_list_state: false
 
           "nil":
             txt: "\u2014"
