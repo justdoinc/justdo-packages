@@ -14,6 +14,11 @@
 .plugins-store-dialog
   $modal-height: 54px
 
+  .modal-open &.modal
+    // Fix an issue casing scroll to be visible and hijack the ability to scroll
+    // inside the store box (doesn't happen in all machines, so be careful to remove).
+    overflow-y: hidden
+
   .modal-header
     position: fixed
     left: 2px
