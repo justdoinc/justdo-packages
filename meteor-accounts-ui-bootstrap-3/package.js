@@ -44,8 +44,6 @@ Package.on_use(function (api) {
 
   api.use("justdoinc:justdo-avatar@1.0.0", client);
 
-  api.use("justdoinc:justdo-wa-ckeditor@1.0.0", client);
-
   api.add_files([
     'accounts_ui.js',
 
