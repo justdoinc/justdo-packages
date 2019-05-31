@@ -203,10 +203,14 @@ APP.executeAfterAppLibCode ->
     # enable editor
     $("#description-editor").froalaEditor({
       toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
-        "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"],
-      pasteImage: false,
-      imageUpload: false,
-      heightMin: 200,
+        "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"]
+      pasteImage: false
+      imageUpload: false
+      height: 270
+      heightMin: 270
+      heightMax: 270
+      quickInsertTags: []
+      charCounterCount: false
       key: env.FROALA_ACTIVATION_KEY
     });
     
