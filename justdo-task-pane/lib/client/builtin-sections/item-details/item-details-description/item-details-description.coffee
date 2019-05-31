@@ -1,5 +1,3 @@
-Promise = require "bluebird"
-
 APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
 
@@ -209,7 +207,7 @@ APP.executeAfterAppLibCode ->
       pasteImage: false,
       imageUpload: false,
       heightMin: 200,
-      key: ''
+      key: env.FROALA_ACTIVATION_KEY
     });
     
     # set editor content
