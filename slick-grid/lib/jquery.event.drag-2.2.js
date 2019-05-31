@@ -7,6 +7,8 @@
 // Updated: 2012-05-21
 // REQUIRES: jquery 1.7.x
 
+// Updated by Jonas on 2019-05-28
+
 ;(function( $ ){
 
 // add the jquery instance method
@@ -34,7 +36,8 @@ drag = $special.drag = {
 	defaults: {
 		which: 1, // mouse button pressed to start drag sequence
 		distance: 0, // distance dragged before dragstart
-		not: ':input', // selector to suppress dragging on target elements
+		on: '.slick-header-reorderable,.slick-resizable-handle', // selector for dragging on target elements
+		// not: ':input, #description-editor*', // selector to suppress dragging on target elements
 		handle: null, // selector to match handle target elements
 		relative: false, // true to use "position", false to use "offset"
 		drop: true, // false to suppress drop events, true or selector to allow
@@ -112,7 +115,7 @@ drag = $special.drag = {
 		if ( event.which != 0 && dd.which > 0 && event.which != dd.which ) 
 			return; 
 		// check for suppressed selector
-		if ( $( event.target ).is( dd.not ) ) 
+		if ( !$( event.target ).is( dd.on ) ) 
 			return;
 		// check for handle selector
 		if ( dd.handle && !$( event.target ).closest( dd.handle, event.currentTarget ).length ) 
