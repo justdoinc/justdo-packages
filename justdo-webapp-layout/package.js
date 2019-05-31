@@ -40,6 +40,8 @@ Package.onUse(function (api) {
   api.use("templating@1.3.2", client);
   api.use('fourseven:scss@3.2.0', client);
 
+  api.use("froala:editor@2.9.5", both);
+
   api.use("raix:eventemitter@0.1.1", client);
   api.use("meteorspark:util@0.2.0", client);
   api.use("meteorspark:logger@0.3.0", client);
