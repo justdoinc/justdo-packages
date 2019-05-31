@@ -1,7 +1,3 @@
-Promise = require "bluebird"
-
-loading_ckeditor = new ReactiveVar false
-
 gridControlMux = -> APP.modules.project_page.grid_control_mux?.get()
 
 APP.executeAfterAppLibCode ->
@@ -14,196 +10,147 @@ APP.executeAfterAppLibCode ->
     template:
       font_awesome_icon: "sticky-note-o"
     op: ->
-      if loading_ckeditor.get() == true
-        return
+      message_template =
+        APP.helpers.renderTemplateInNewNode(Template.ticket_entry, {})
 
-      loading_ckeditor.set true
-      
-      importEditor = ->
-        loadCss = (url) ->
-          $("head").append('<link href="' + url + '" rel="stylesheet">')
+      preBootboxDestroyProcedures = ->
+        # We destroy the selectors here and not under destroy since
+        # when the bootbox is closed while picker is open, it remains
+        # open until close animation completed, and it looks bad.
+        for selector in target_select_pickers
+          $(selector).selectpicker "destroy"
 
-        loadJs = (url) ->
-          new Promise (resolve, reject) =>
-            $.getScript(url)
-              .done =>
-                resolve()
-              .fail(( jqxhr, settings, exception ) => reject(exception))
+      bootbox.dialog
+        title: "Quick Add"
+        message: message_template.node
+        className: "ticket-entry-dialog bootbox-new-design"
+        onEscape: ->
+          preBootboxDestroyProcedures()
+        buttons:
+          cancel:
+            label: "Cancel"
 
-        loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_editor.min.css"
-        loadCss "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"
-        loadCss "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css"
-        loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/colors.min.css"
-        loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/table.min.css"
-        loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/image.min.css"
-        loadCss "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/plugins/fullscreen.min.css"
+            className: "btn-default"
 
-        
-        Promise.each([
-          "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js",
-          "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js",
-          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/froala_editor.min.js"
-          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/colors.min.js",
-          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/table.min.js",
-          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/font_family.min.js",
-          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/font_size.min.js",
-          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/align.min.js",
-          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/image.min.js",
-          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/link.min.js",
-          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/lists.min.js",
-          "https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/plugins/fullscreen.min.js"
-        ], (url) ->
-          loadJs url
-        )
-      
-      # Load ckeditor before we render the dialog, to avoid the textarea to appear
-      # without the ckeditor applied on it.
-      importEditor().then (m) =>
-        loading_ckeditor.set false
-        message_template =
-          APP.helpers.renderTemplateInNewNode(Template.ticket_entry, {})
+            callback: =>
+              preBootboxDestroyProcedures()
 
-        preBootboxDestroyProcedures = ->
-          # We destroy the selectors here and not under destroy since
-          # when the bootbox is closed while picker is open, it remains
-          # open until close animation completed, and it looks bad.
-          for selector in target_select_pickers
-            $(selector).selectpicker "destroy"
+          submit:
+            label: "Submit"
 
-        bootbox.dialog
-          title: "Quick Add"
-          message: message_template.node
-          className: "ticket-entry-dialog bootbox-new-design"
-          onEscape: ->
-            preBootboxDestroyProcedures()
-          buttons:
-            cancel:
-              label: "Cancel"
+            callback: =>
+              submit_attempted.set true
 
-              className: "btn-default"
+              selected_owner_id = selected_owner.get()
 
-              callback: =>
-                preBootboxDestroyProcedures()
+              destination_type = selected_destination_type_reactive_var.get()
 
-            submit:
-              label: "Submit"
+              if destination_type == "ticket-queue"
+                if not selected_owner_id?
+                  selected_owner_id = getSelectedTicketsQueueDoc().owner_id
 
-              callback: =>
-                submit_attempted.set true
+              if not formIsValid()
+                return false
 
-                selected_owner_id = selected_owner.get()
+              grid_control = project_page_module.gridControl(false)
+              grid_data = grid_control._grid_data
 
-                destination_type = selected_destination_type_reactive_var.get()
+              # XXX Note that we don't provide path to addChild. addChild will transform
+              # the queue id to a path under root in the path normalization process:
+              # "/tickets_queue_id/". This might stop working in future API changes
+              # as addChild isn't meant to be used this way.
+              task_fields =
+                title: title.get()
+                priority: priority.get()
+                description: $("#ticket-content").froalaEditor("html.get")
+                pending_owner_id:
+                  if Meteor.userId() != selected_owner_id \
+                    then selected_owner_id \
+                    else null
+
+              activateItemId = (item_id, options) ->
+                item_doc = APP.collections.Tasks.findOne({_id: item_id, project_id: project_page_module.helpers.curProj().id})
+
+                title = "Task <b>##{item_doc.seqId}: #{JustdoHelpers.ellipsis(item_doc.title, 50)}</b> added"
+                if (destination_title = options.destination_title)?
+                  title += " to <b>#{destination_title}</b>"
+
+                if (pending_owner_id = task_fields.pending_owner_id)?
+                  title += " assigned to <b>#{JustdoHelpers.displayName(Meteor.users.findOne(pending_owner_id))}</b>"
+
+                JustdoSnackbar.show
+                  text: title
+                  duration: 7000
+                  actionText: "View"
+                  onActionClick: =>
+                    JustdoSnackbar.close()
+
+                    gridControlMux()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(item_id)
+
+                    return
+
+                return
+
+              grid_control._performLockingOperation (releaseOpsLock, timedout) =>
+                destination_title = $("div.ticket-category-select button")?.attr("title")
 
                 if destination_type == "ticket-queue"
-                  if not selected_owner_id?
-                    selected_owner_id = getSelectedTicketsQueueDoc().owner_id
-
-                if not formIsValid()
-                  return false
-
-                grid_control = project_page_module.gridControl(false)
-                grid_data = grid_control._grid_data
-
-                # XXX Note that we don't provide path to addChild. addChild will transform
-                # the queue id to a path under root in the path normalization process:
-                # "/tickets_queue_id/". This might stop working in future API changes
-                # as addChild isn't meant to be used this way.
-                task_fields =
-                  title: title.get()
-                  priority: priority.get()
-                  description: $("#ticket-content").froalaEditor("html.get")
-                  pending_owner_id:
-                    if Meteor.userId() != selected_owner_id \
-                      then selected_owner_id \
-                      else null
-
-                activateItemId = (item_id, options) ->
-                  item_doc = APP.collections.Tasks.findOne({_id: item_id, project_id: project_page_module.helpers.curProj().id})
-
-                  title = "Task <b>##{item_doc.seqId}: #{JustdoHelpers.ellipsis(item_doc.title, 50)}</b> added"
-                  if (destination_title = options.destination_title)?
-                    title += " to <b>#{destination_title}</b>"
-
-                  if (pending_owner_id = task_fields.pending_owner_id)?
-                    title += " assigned to <b>#{JustdoHelpers.displayName(Meteor.users.findOne(pending_owner_id))}</b>"
-
-                  JustdoSnackbar.show
-                    text: title
-                    duration: 7000
-                    actionText: "View"
-                    onActionClick: =>
-                      JustdoSnackbar.close()
-
-                      gridControlMux()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(item_id)
-
-                      return
-
-                  return
-
-                grid_control._performLockingOperation (releaseOpsLock, timedout) =>
-                  destination_title = $("div.ticket-category-select button")?.attr("title")
-
-                  if destination_type == "ticket-queue"
-                    Meteor.call "newTQTicket",
-                      {
-                        project_id: project_page_module.helpers.curProj().id,
-                        tq: selected_destination_id.get()
-                      },
-                      task_fields,
-                      (err, task_id) ->
-                        # XXX see above note, can't rely on new_item_path
-                        if err?
-                          project_page_module.logger.error "add direct task failed: #{err}"
-
-                          releaseOpsLock()
-
-                          return
-
-                        activateItemId(task_id, {destination_title})
+                  Meteor.call "newTQTicket",
+                    {
+                      project_id: project_page_module.helpers.curProj().id,
+                      tq: selected_destination_id.get()
+                    },
+                    task_fields,
+                    (err, task_id) ->
+                      # XXX see above note, can't rely on new_item_path
+                      if err?
+                        project_page_module.logger.error "add direct task failed: #{err}"
 
                         releaseOpsLock()
 
                         return
 
-                  if destination_type == "direct-task"
-                    direct_task_parent_id = selected_destination_id.get()
+                      activateItemId(task_id, {destination_title})
 
-                    direct_task_parent_id_user = direct_task_parent_id.substr(7)
+                      releaseOpsLock()
 
-                    Meteor.call "newDirectTask",
-                                {
-                                  project_id: project_page_module.helpers.curProj().id,
-                                  user_id: direct_task_parent_id_user
-                                },
-                                task_fields,
-                                (err, task_id) ->
-                                  # XXX see above note, can't rely on new_item_path
-                                  if err?
-                                    project_page_module.logger.error "add direct task failed: #{err}"
+                      return
 
-                                    releaseOpsLock()
+                if destination_type == "direct-task"
+                  direct_task_parent_id = selected_destination_id.get()
 
-                                    return
+                  direct_task_parent_id_user = direct_task_parent_id.substr(7)
 
-                                  activateItemId(task_id, {destination_title})
+                  Meteor.call "newDirectTask",
+                              {
+                                project_id: project_page_module.helpers.curProj().id,
+                                user_id: direct_task_parent_id_user
+                              },
+                              task_fields,
+                              (err, task_id) ->
+                                # XXX see above note, can't rely on new_item_path
+                                if err?
+                                  project_page_module.logger.error "add direct task failed: #{err}"
 
                                   releaseOpsLock()
 
                                   return
 
-                    releaseOpsLock()
+                                activateItemId(task_id, {destination_title})
 
-                    return
+                                releaseOpsLock()
 
-                preBootboxDestroyProcedures()
+                                return
 
-                return true
+                  releaseOpsLock()
+
+                  return
+
+              preBootboxDestroyProcedures()
+
+              return true
 
     prereq: -> 
-      if loading_ckeditor.get() == true
-        return {"loading-in-progress": "Loading in progress"}
-
       return {}
 
   formIsValid = -> selected_destination_id.get()? and not _.isEmpty(title.get())
@@ -336,11 +283,16 @@ APP.executeAfterAppLibCode ->
         $("#ticket-assigned-user-id").selectpicker("refresh")
 
     $("#ticket-content").froalaEditor({
-        toolbarButtons: ["fullscreen", "bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
-          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"],
-        pasteImage: false,
-        imageUpload: false,
-        height: 300
+        toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
+          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"]
+        pasteImage: false
+        imageUpload: false
+        height: 250
+        heightMin: 250
+        heightMax: 250
+        quickInsertTags: []
+        charCounterCount: false
+        key: env.FROALA_ACTIVATION_KEY
       });
 
     task_priority_slider = new genericSlider "ticket-priority", 0, (new_val, is_final) ->
