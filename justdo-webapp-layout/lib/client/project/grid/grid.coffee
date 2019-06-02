@@ -133,9 +133,9 @@ APP.executeAfterAppLibCode ->
             existing_preferences = module.preferences.get()
 
             Meteor._ensure existing_preferences, "saved_grid_views", project_id, tab_id
-            preferences.saved_grid_views[project_id][tab_id] = new_view
-            preferences = _.pick preferences, "saved_grid_views" # Update only 'saved_grid_views' preference
-            module.updatePreferences(preferences)
+            existing_preferences.saved_grid_views[project_id][tab_id] = new_view
+            existing_preferences = _.pick existing_preferences, "saved_grid_views" # Update only 'saved_grid_views' preference
+            module.updatePreferences(existing_preferences)
 
             module.logger.debug "Update stored view for project: #{project_id}, tab_id: #{tab_id}"
 
