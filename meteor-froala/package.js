@@ -9,6 +9,8 @@ Package.onUse(function(api) {
   api.use("jquery@1.0.1", "client");
   api.use("fortawesome:fontawesome@4.4.0", "client");
 
+  api.use('fourseven:scss@3.2.0', client);
+
   api.addFiles("assets/css/froala_editor.min.css", "client");
   api.addFiles("assets/css/froala_style.min.css", "client");
   api.addFiles("assets/css/plugins/char_counter.min.css", "client");
@@ -67,4 +69,6 @@ Package.onUse(function(api) {
   api.addFiles("assets/js/third_party/image_aviary.min.js", "client");
   api.addFiles("assets/js/third_party/image_tui.min.js", "client");
   api.addFiles("assets/js/third_party/spell_checker.min.js", "client");
+
+  api.addFiles("justdo-modifications.sass", "client");
 });
