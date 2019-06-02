@@ -8,24 +8,21 @@ APP.executeAfterAppLibCode ->
   #   2 - saving
   #   3 - saved
   #   4 - failed
-
   idle_save_timeout = null
-  idle_save_timeout_ms = 2 * 1000 # + 1 second: due to the fact contentChanged event happens in delay after the keydown event, there is actually extra .5 second here
+  idle_save_timeout_ms = 3 * 1000 # 3 secs
   initIdleSaveTimeout = ->
-    clearIdleSaveTimeout()
+    if idle_save_timeout?
+      clearTimeout idle_save_timeout
+
+    save_state.set 1
 
     idle_save_timeout = setTimeout ->
       save()
     , idle_save_timeout_ms
-  
-  clearIdleSaveTimeout = ->
-    if idle_save_timeout?
-      clearTimeout idle_save_timeout
-      idle_save_timeout = null
 
   save_interval = null
   save_interval_ms = 20 * 1000
-  initSaveInterval = ->
+  setupSaveInterval = ->
     if save_interval?
       # If already set, do nothing
       return
@@ -36,57 +33,56 @@ APP.executeAfterAppLibCode ->
         save()
     , save_interval_ms
 
-  clearSaveInterval = ->
+  stopSaveInterval = ->
     if save_interval?
       clearInterval save_interval
       save_interval = null
 
   save_count = 0
   save = ->
-    if isEditorOpen()
+    if idle_save_timeout?
+      clearTimeout idle_save_timeout
+
+    if current_description_editor
       save_state.set 2
-      op =
-        $set:
-          description: $("#description-editor").froalaEditor("html.get")
+
+      description = $("#description-editor").val()
+
+      if description == ""
+        op =
+          $set:
+            description: null
+      else
+        op =
+          $set:
+            description: description
 
       save_count += 1
       this_save_count = save_count
       do (this_save_count) ->
-        APP.collections.Tasks.update task_id, op, (err) ->
+        APP.collections.Tasks.update current_description_editor.task_id, op, (err) ->
           if save_state.get() == 2 and this_save_count == save_count
             # Change the save_state only if during saving state mode
             # and if no other save requests followed this save request.
             if err?
               save_state.set 4
-
-              return
             else
               save_state.set 3
 
-          return
+  destroy_timeout = null
+  destroy_timeout_ms = 60 * 1000 # 1 min
+  initDestroyTimeout = ->
+    if destroy_timeout?
+      clearTimeout destroy_timeout
 
-        return
+    destroy_timeout = setTimeout ->
+      destroyEditor()
+    , destroy_timeout_ms
 
-    return
-
-  close_timeout = null
-  close_timeout_ms = 60 * 1000 # 1 min
-  initCloseTimeout = ->
-    clearCloseTimeout()
-
-    close_timeout = setTimeout ->
-      closeEditor()
-    , close_timeout_ms
-
-  clearCloseTimeout = ->
-    if close_timeout?
-      clearTimeout close_timeout
-      close_timeout = null
-  
   getContainer = -> $("#task-description-container")
 
   relock_interval = null
-  relock_interval_ms = Math.floor(close_timeout_ms * .5)
+  relock_interval_ms = Math.floor(destroy_timeout_ms * .5)
   lockTask = (task_id) ->
     lock = ->
       APP.collections.Tasks.update task_id,
@@ -151,7 +147,7 @@ APP.executeAfterAppLibCode ->
     description_lock = task.description_lock
 
     if description_lock? and
-        (server_time - description_lock.locked) < close_timeout_ms and
+        (server_time - description_lock.locked) < destroy_timeout_ms and
         description_lock.user != Meteor.userId()
         # If locked by current user, then we allow editing, assuming tab got closed or refresh happened
       return description_lock
@@ -169,118 +165,127 @@ APP.executeAfterAppLibCode ->
       edit_mode.set(false)
       $container.removeClass("edit-mode")
 
-  task_id = null
-
-  isEditorOpen = ->
-    return $("#description-editor").data("froala.editor")?
-
-  openEditor = ->
+  current_description_editor = null
+  initEditor = ->
     # Fetch the most recent version of task (for case grid-lock just released and
     # we have old version of it)
     if not (task = project_page_module.activeItemObjFromCollection({description: 1}))
       project_page_module.logger.debug "Task doesn't exist anymore"
       return
 
-    # close editor if opened
-    closeEditor()
-    # check whether the task is locked
+    initDestroyTimeout()
+    setupSaveInterval()
+
+    $container = getContainer()
+
+    # Force task description to be the most recent fetched-from-collection
+    # description, for case we just got out of grid lock
+    $("#description-editor", $container).val(task.description)
+
+    task_id =
+      project_page_module.activeItemId()
+
     task_locked = isLocked(task_id)
+
     if not task_locked?
       APP.logger.warn "Can't open task editor: Can't tell whether task is locked. Failed to obtain server time"
+
       return
+
     if task_locked != false
       APP.logger.warn "Task is locked, can't open editor"
 
       return
 
-    # Lock task
+    # Lock
     lockTask(task_id)
 
-    # set timeouts
-    initCloseTimeout()
-    initSaveInterval()
+    $("#description-editor", $container)
+      .one("froalaEditor.initialized", (e, editor) ->
+        setEditMode(true)
 
-    # enable editor
-    $("#description-editor").froalaEditor({
-      toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
-        "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"]
-      pasteImage: false
-      imageUpload: false
-      height: 270
-      heightMin: 270
-      heightMax: 270
-      quickInsertTags: []
-      charCounterCount: false
-      key: env.FROALA_ACTIVATION_KEY
-    });
-    
-    # set editor content
-    $("#description-editor").froalaEditor("html.set", task.description or "")
+        current_description_editor = editor
 
-    # set change listeners
-    for change_event in ["froalaEditor.contentChanged", "froalaEditor.keydown"]
-      x = Math.random()
-      $("#description-editor").on change_event, (e, editor) =>
-        if isEditorOpen()
-          save_state.set 1
-          initIdleSaveTimeout()
-          initCloseTimeout()
+        editor.task_id = task_id
+
+        save_state.set 0
+
+        editor.html.set(task.description or "")
+
+        # set change listeners
+        for change_event in ["contentChanged", "keydown"]
+          editor.events.on change_event, (e) ->
+            initIdleSaveTimeout()
+            initDestroyTimeout()
+
+            return
+          , false # false for the 'first' argument: events.on (name, callback, [first])
 
         return
+      )
 
-    save_state.set 0
-    setEditMode(true)
+    $("#description-editor", $container)
+      .froalaEditor({
+        toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
+          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"]
+        pasteImage: false
+        imageUpload: false
+        height: 270
+        heightMin: 270
+        heightMax: 270
+        quickInsertTags: []
+        charCounterCount: false
+        key: env.FROALA_ACTIVATION_KEY
+      });
 
-  closeEditor = ->
-    if isEditorOpen()
-      # save
+    return
+
+  destroyEditor = ->
+    if current_description_editor?
+      stopSaveInterval()
+
       save()
-      # unlock task
-      unlockTask(task_id)
-      # clear timeouts and intervals
-      clearIdleSaveTimeout()
-      clearSaveInterval()
-      clearCloseTimeout()
-      # disable editor
-      $("#description-editor").froalaEditor("destroy")
 
-      setEditMode(false)
+      unlockTask(current_description_editor.task_id)
 
       # The following is in order to make sure, that by the
       # time we destroy the editor the grid control internal data
       # structures from which we derive the description, will have
-      # the up-to-date description
+      # the up-to-date descripion
       APP.modules.project_page.gridControl()?._grid_data?._flushAndRebuild()
 
+      # if there's editor
+      current_description_editor.destroy()
+      current_description_editor = null
+
+      setEditMode(false)
 
   Template.task_pane_item_details_description.helpers
     edit_mode: -> edit_mode.get()
     save_state: -> save_state.get()
-    description: -> @description?.replace(/\n/g, "")
+    description: -> @description?.replace(/\n/g, "") # We found out that new lines can break rendering, removing them has no effect on the html rendering.
 
   Template.task_pane_item_details_description_lock_message.helpers
     lock: -> isLocked(@_id)
 
   Template.task_pane_item_details_description.onCreated ->
     @autorun ->
-      # On every path change, destroy the editor (closeEditor, saves current state)
+      # On every path change, destroy the editor (destroyEditor, saves current state)
       project_page_module.activeItemPath()
-      closeEditor()
-      task_id = project_page_module.activeItemId()
 
-      return
+      destroyEditor()
 
     return
 
   Template.task_pane_item_details_description.events
     "click #add-description": (e) ->
-      openEditor()
+      initEditor()
 
     "click #edit-description": (e) ->
-      openEditor()
+      initEditor()
 
     "click #done-edit-description": (e) ->
-      closeEditor()
+      destroyEditor()
 
     "click #save-description": (e) ->
       save()
@@ -291,4 +296,4 @@ APP.executeAfterAppLibCode ->
       window.open(url, "_blank")
 
   Template.task_pane_item_details_description.onDestroyed ->
-    closeEditor() # closeEditor takes care of saving
+    destroyEditor() # destroyEditor takes care of saving
