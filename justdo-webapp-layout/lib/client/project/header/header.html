@@ -99,6 +99,18 @@
         </li>
       {{/if}}
 
+      {{#if customJustdoSaveDefaultViewEnabled}}
+        <li class="reset-default-views-columns item">
+          <i class="fa fa-window-restore fa-fw" aria-hidden="true"></i> Reset Default Views columns
+        </li>
+
+        {{#if is_project_admin}}
+          <li class="set-current-columns-structure-as-default item">
+            <i class="fa fa-columns fa-fw" aria-hidden="true"></i> Set Current Columns Structure as Default
+          </li>
+        {{/if}}
+      {{/if}}
+
       {{#if is_project_admin}}
         <li id="project-config" class="item"><i class="fa fa-crosshairs fa-fw" aria-hidden="true" ></i> Configure this JustDo</li>
         {{> project_settings_dropdown_remove_project}}

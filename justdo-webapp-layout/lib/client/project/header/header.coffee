@@ -44,6 +44,9 @@ APP.executeAfterAppLibCode ->
     showRolesAndGroupsManager: ->
       return APP.justdo_roles?.showRolesAndGroupsManagerDialogOpenerInProjectSettingsDropdown()
 
+    customJustdoSaveDefaultViewEnabled: ->
+      return APP.custom_justdo_save_default_view?.isPluginInstalledOnProjectDoc(curProj()?.getProjectDoc())
+
   Template.project_settings.events
     "click #project-config": (e) ->
       module.project_config_ui.show()
@@ -70,3 +73,16 @@ APP.executeAfterAppLibCode ->
       APP.justdo_roles.openRolesAndGroupsManagerDialog()
 
       return
+
+    "click .reset-default-views-columns": ->
+      APP.custom_justdo_save_default_view?.resetUserViews()
+
+      return
+
+    "click .set-current-columns-structure-as-default": ->
+      APP.custom_justdo_save_default_view?.saveCurrentViewAsDefaultViewForActiveProject()
+
+      return
+
+      
+      
