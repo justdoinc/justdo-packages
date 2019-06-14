@@ -1,7 +1,7 @@
 <template name="tasks_file_manager_files_preview">
   {{#if preview_link}}
     {{#if isPdf}}
-      <embed src="{{preview_link}}" width="970" height="550" alt="{{file.title}}" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
+      <embed src="{{preview_link}}&r={{randomString}}" width="970" height="550" alt="{{file.title}}" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
     {{else if isImage}}
       <img src="{{preview_link}}" alt="{{file.title}}" title="{{file.title}}" style="max-width: 100%;" />
     {{/if}}
