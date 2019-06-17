@@ -111,8 +111,8 @@ Template.meetings_meeting_dialog.onCreated ->
     ret = """
       <img src="/layout/logos-ext/justdo_logo_with_text_normal.png" alt="justDo" class='thead-logo' >
       <p>
-      <h2 dir='auto'> #{JustdoHelpers.xssGuard meeting.title}</h2>
-      <h3>Meeting Notes</h3>
+      <h2 dir='auto' class='print-task-title'> #{JustdoHelpers.xssGuard meeting.title}</h2>
+      <h3 class='print-meeting-notes-title'>Meeting Notes</h3>
       <h4> #{moment(meeting.date).format("YYYY-MM-DD")} #{JustdoHelpers.xssGuard(meeting.time)} <span dir='auto'>#{JustdoHelpers.xssGuard meeting.location}</span></h4>
       <h3>Invited:</h3>
       #{attended_html}
