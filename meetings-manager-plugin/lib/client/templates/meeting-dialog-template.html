@@ -45,7 +45,7 @@
                 <input type="text" name="date" placeholder="Date" value="{{rawdate doc.date}}" class="meeting-date meeting-input">
                 <input type="text" name="time" placeholder="Time" value="{{doc.time}}" class="meeting-time meeting-input">
                 <span class="wrapper-location">
-                  <input type="text" name="location" placeholder="Location" value="{{doc.location}}" data-toggle="dropdown" class="meeting-location meeting-input" dir="auto">
+                  <input type="text" name="location" placeholder="Location" value="{{doc.location}}" class="meeting-location meeting-input" dir="auto" autocomplete="off">
                   <ul class="dropdown-menu recent-locations">
                     {{#each recentLocations}}
                       <li>{{this}}</li>
