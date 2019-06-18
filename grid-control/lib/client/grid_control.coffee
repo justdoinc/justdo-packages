@@ -967,8 +967,6 @@ _.extend GridControl.prototype,
     return view
 
   setView: (view) ->
-    @_grid.getActiveCell()
-
     view = view.slice() # shallow copy
 
     # Ignore columns that aren't part of the schema or the custom fields definition
