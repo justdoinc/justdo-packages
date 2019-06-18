@@ -85,8 +85,9 @@ Template.task_pane_justdo_checklist_task_pane_section_section.onRendered ->
               "parents": 1
             limit: 1
             reactive: false
-        task = cursor.fetch()[0]
-        if task._id in subtasks_ids
+        if not (task = cursor.fetch()[0])?
+          ancestor = 0
+        else if task._id in subtasks_ids
           ancestor = task._id
         else if (immediate_parent_id = Object.keys(task.parents)[0]) == "0" or immediate_parent_id == 0
           ancestor = 0
@@ -112,7 +113,7 @@ Template.task_pane_justdo_checklist_task_pane_section_section.onRendered ->
               movedBefore: true
             cursor.reactive = false
         
-        ancestor_cache[task._id] = ancestor   
+        ancestor_cache[task_id] = ancestor   
          
       return ancestor_cache[task_id]
     
