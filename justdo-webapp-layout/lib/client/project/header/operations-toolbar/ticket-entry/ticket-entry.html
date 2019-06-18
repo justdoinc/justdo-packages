@@ -1,6 +1,6 @@
 <template name="ticket_entry">
-  <div>
-    <div class="col-xs-7 task-destination-container">
+  <div class="row">
+    <div class="col-sm-7 task-destination-container">
       <div class="form-group {{#if isInvalidTicketsQueue}}has-error{{/if}}">
         <label for="ticket-queue-id" class="control-label">Task Destination</label>
         <div class="{{#if $not selected_destination_id}}no-tq-selected{{/if}}">
@@ -27,7 +27,7 @@
       </div>
     </div>
     {{#if $eq selected_destination_type "ticket-queue"}}
-      <div class="col-xs-5 owner-selector-container">
+      <div class="col-sm-5 pl-0 owner-selector-container">
         <div class="form-group">
           <label for="ticket-assigned-user-id">Owner</label>
           <div class="{{#if $not selected_destination_id}}no-tq-selected{{/if}}">

@@ -47,7 +47,7 @@ APP.executeAfterAppLibCode ->
         title: "Are you sure?"
         message: message_template.node
         animate: false
-        className: "project-remove-dialog"
+        className: "project-remove-dialog bootbox-new-design"
 
         onEscape: ->
           return true

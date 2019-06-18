@@ -161,6 +161,19 @@
     padding: 8px
     margin-bottom: 8px
 
+    .add-project-btn
+      font-size: 14px
+      color: #333
+      background-color: #fff
+      border-color: #ccc
+      &:hover
+        background-color: #e6e6e6
+        border-color: #adadad
+      &:active
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
+        background-color: #e6e6e6
+        border-color: #adadad
+
   .dp-task-context
     margin-bottom: 8px
     padding: 8px 10px
@@ -271,11 +284,15 @@
   .project-select
     width: $dropdown-width !important
     margin-right: 2px
+    left: 0
 
     .dropdown-toggle
       height: 34px
       padding-top: 4px
       padding-bottom: 4px
+      background-color: white
+      border-color: #ccc
+      font-size: 14px
 
     $max-dropdown-height: 257px
     .dropdown-menu.open

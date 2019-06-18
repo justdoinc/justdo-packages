@@ -322,8 +322,8 @@ _.extend JustdoPrintGrid.prototype,
       print_settings = """
         <div class="print-settings">
           <div class="modal-header">
-            <button class="bootbox-close-button close">×</button>
             <h4 class="modal-title">Columns options</h4>
+            <button class="bootbox-close-button close">×</button>
           </div>
           <ul></ul>
           <div class="modal-footer">

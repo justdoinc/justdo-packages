@@ -1,5 +1,19 @@
 @import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
 
+.ticket-entry-dialog
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+  line-height: 1.4
+
+  label
+    font-weight: bold
+    font-size: 14px
+
+  #ticket-title
+    font-size: 14px
+
+  .modal-footer .btn+.btn
+    margin-left: 5px
+
 .ticket-entry-dialog.bootbox-new-design
   .modal-body
     overflow: visible
@@ -37,17 +51,44 @@
   margin-left: 3px
 
 .ticket-category-select
+  .dropdown-item
+    font-size: 14px
+  .dropdown-toggle
+    background-color: white
+    border-color: #ced4da
+    font-size: 14px
+
   .select-category-option
   	display: none
+
+  .dropdown-divider
+    display: none
+
+  .dropdown-header
+    padding: 3px 20px
+    font-size: 12px
+    line-height: 1.4
+    color: #777
+    white-space: nowrap
 
 .ticket-category-select.open
   .dropdown-menu
     display: block
 
 .ticket-owner-select
-  width: 226px !important
+  width: 233px !important
+  .dropdown-item
+    font-size: 14px
+  .dropdown-toggle
+    background-color: white
+    border-color: #ced4da
+    font-size: 14px
 
 .no-tq-selected
   .filter-option
   	opacity: $placeholder-opacity
   	font-style: italic
+
+@media (min-width: 576px)
+  .ticket-entry-dialog .modal-dialog
+    max-width: 600px
