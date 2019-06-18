@@ -40,7 +40,7 @@ APP.executeAfterAppLibCode ->
         return 
 
   Template.tutorials_submenu_bugmuncher.helpers
-    bugMuncherEnabled: -> getBugmucherApiKey()?
+    bugMuncherEnabled: -> (key = getBugmucherApiKey())? and key != ""
 
   Template.tutorials_submenu_bugmuncher.events
     "click .send-feedback": (e) ->
