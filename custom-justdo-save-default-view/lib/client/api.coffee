@@ -27,18 +27,17 @@ _.extend CustomJustdoSaveDefaultView.prototype,
 
             active_tab = gcm.getActiveTab()
 
-            if gcm.getActiveTabState() == "ready"
-              stored_grid_views = Tracker.nonreactive => @getActiveProjectStoredSavedGridViews()
-              default_grid_views = Tracker.nonreactive => @getDefaultViewsForActiveProject()
+            stored_grid_views = Tracker.nonreactive => @getActiveProjectStoredSavedGridViews()
+            default_grid_views = Tracker.nonreactive => @getDefaultViewsForActiveProject()
 
-              if active_tab.tab_id of stored_grid_views
-                # User edited the tab, leave it alone
-                return
+            if active_tab.tab_id of stored_grid_views
+              # User edited the tab, leave it alone
+              return
 
-              if active_tab.tab_id of default_grid_views
-                # We got a default, set it
+            if active_tab.tab_id of default_grid_views
+              # We got a default, set it
 
-                active_tab.grid_control.setView(default_grid_views[active_tab.tab_id])
+              active_tab.grid_control.setView(default_grid_views[active_tab.tab_id])
 
             return
 
