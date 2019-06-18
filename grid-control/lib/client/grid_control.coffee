@@ -132,6 +132,8 @@ GridControl = (options, container, operations_container) ->
   else
     @forced_metadata_affecting_fields = {} # to avoid the need to check existence we don't set to null
 
+  @_load_editors()
+
   Meteor.defer =>
     @_init()
 
@@ -157,7 +159,6 @@ _.extend GridControl.prototype,
     _extended_schema = @getSchemaExtendedWithCustomFields()
     @_init_view = _.filter @_init_view, (column) -> column.field of _extended_schema
 
-    @_load_editors()
     @_load_grid_operations()
 
     columns = @_getColumnsStructureFromView(@_init_view)
