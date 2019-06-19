@@ -1,3 +1,5 @@
+max_printed_task_title = 60
+
 gridControlMux = -> APP.modules.project_page.grid_control_mux?.get()
 
 APP.executeAfterAppLibCode ->
@@ -321,7 +323,7 @@ APP.executeAfterAppLibCode ->
     selected_destination_id: -> selected_destination_id.get()
     selected_destination_type: -> selected_destination_type_reactive_var.get()
     selected_destination_users: -> selected_destination_users_reactive_var.get()
-    max_printed_task_title: 60
+    max_printed_task_title: max_printed_task_title
     max_printed_display_name: 40
     isCategoryManager: ->
       current_tickets_queue_doc = APP.collections.TicketsQueues.findOne(selected_destination_id.get())
