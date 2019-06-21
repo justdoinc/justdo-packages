@@ -1,3 +1,25 @@
 <template name="task_pane_tasks_locks_section_container">
+  {{#if isFeatureEnabled}}
+    {{> task_pane_tasks_locks_section}}
+  {{/if}}
 
+</template>
+
+<template name="task_pane_tasks_locks_section">
+  <section>
+    <h2>Tasks Locks <span class="about-locked-tasks" title="Once you lock a task:
+
+    * No member will be able to remove the task.
+    * No member will be able to revoke your access to the task.
+    * The fields: Title and Due List, will be editable only by you, unless there are more locking members, in which case - no one will be able to edit these fields."><i class="fa fa-question-circle fa-fw"></i></span></h2>
+
+    {{#with getActiveTaskDocLockingUsersDocs}}
+      Task is locked:
+      {{#each this}}
+        {{displayName}}<br>
+      {{/each}}
+    {{/with}}
+
+    {{#if isLockedByActiveUser}}LOCKED BY ME{{else}}NOT LOCKED BY ME{{/if}}
+  </section>
 </template>
