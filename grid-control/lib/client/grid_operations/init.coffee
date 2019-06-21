@@ -28,13 +28,58 @@ PACK.GridOperations = {}
 
 _.extend GridControl.prototype,
   _load_grid_operations: ->
+    @_custom_grid_operations_pre_requirements = {}
+
     for opId, op_struct of PACK.GridOperations
       do (opId, op_struct) =>
         @[opId] = =>
-          prereq = op_struct.prereq.call @
+          prereq = @[opId].prereq.call @
           if _.isEmpty prereq
             op_struct.op.apply @, arguments
           else
             throw @_error "unfulfilled-prereq", prereq
 
-        @[opId].prereq = => op_struct.prereq.call @
+        @[opId].prereq = =>
+          prereq = op_struct.prereq.call @
+
+          for customPrereq in @getCustomGridOperationPreReq(opId)
+            prereq = customPrereq(prereq)
+
+          return prereq
+
+  getCustomGridOperationPreReq: (opId) ->
+    # Returns a shallow copy of opId custom prereqs
+    if not @_custom_grid_operations_pre_requirements[opId]?
+      return []
+
+    return @_custom_grid_operations_pre_requirements[opId].slice() # slice to create a copy
+
+  registerCustomGridOperationPreReq: (opId, prereq) ->
+    if not _.isFunction prereq
+      throw @_error "invalid-argument", "registerCustomGridOperationPreReq: prereq has to be a function"
+
+    if not @_custom_grid_operations_pre_requirements[opId]?
+      @_custom_grid_operations_pre_requirements[opId] = []
+
+    registry = @_custom_grid_operations_pre_requirements[opId]
+
+    if prereq in registry
+      return
+
+    registry.push prereq
+
+    return
+
+  unregisterCustomGridOperationPreReq: (opId, prereq) ->
+    if not _.isFunction prereq
+      throw @_error "invalid-argument", "registerCustomGridOperationPreReq: prereq has to be a function"
+
+    if not @_custom_grid_operations_pre_requirements[opId]?
+      console.warn "registerCustomGridOperationPreReq: No custom prereq is registered for opId"
+
+      return
+
+    @_custom_grid_operations_pre_requirements[opId] =
+      _.without @_custom_grid_operations_pre_requirements[opId], prereq
+
+    return
