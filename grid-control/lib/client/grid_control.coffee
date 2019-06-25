@@ -1900,3 +1900,18 @@ _.extend GridControl.prototype,
       formatter_obj: PACK.Formatters[@formatter_name]
 
     return friendly_args
+
+  isDocFieldAndPathEditable: (doc, field, path) ->
+    friendly_args = @getFriendlyArgsForDocFieldAndPath(doc, field, path)
+
+    before_edit_cell_events_handlers = @getBeforeEditCellEvents()
+
+    for handler in before_edit_cell_events_handlers
+      e = new Slick.EventData()
+      res = handler(e, friendly_args) # Return false to avoid other handlers execution + avoid entering edit mode
+
+      if res == false
+        # False returned, stop execution (slick grid will notice it as well and won't take other handlers nor transition to edit mode)
+        return false
+
+    return true
