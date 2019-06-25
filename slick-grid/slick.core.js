@@ -122,7 +122,7 @@
       scope = scope || this;
 
       var return_value = true;
-      for (var i = 0; i < handlers.length && return_value && !(e.isPropagationStopped() || e.isImmediatePropagationStopped()); i++) {
+      for (var i = 0; i < handlers.length && !(e.isPropagationStopped() || e.isImmediatePropagationStopped()); i++) {
         var result = handlers[i].call(scope, e, args);
 
         if (result === false) {

@@ -1776,42 +1776,42 @@ _.extend GridControl.prototype,
     return
 
   _setupGridEventsSubscriptionsHooks: ->
+    # Both false and e.stopImmediatePropagation() can be used to prevent entering edit mode.
     #
-    # getNormalModeOnClickEvents/registerNormalModeOnClickEvents/unregisterNormalModeOnClickEvents
-    # 
-    # Both false and e.isImmediatePropagationStopped() can be used to stop processing other pending
-    # handler, entering edit mode, and propogate the event up the DOM tree -
-    # e.isImmediatePropagationStopped() might be too strong, use with care.
+    # e.stopImmediatePropagation() will, in addition, stop processing other pending
+    # handler, and propogate the event up the DOM tree (might be too strong, use with care)
+
     @_grid.onClick.subscribe (e, cell) =>
       {cell, row} = cell
 
-      normal_mode_events_handlers = @getNormalModeOnClickEvents()
+      normal_mode_events_handlers = @getHandlers("NormalModeOnClick")
 
+      ret = true
       for handler in normal_mode_events_handlers
         res = handler(e, @getFriendlyCellArgs(row, cell))
 
-        if res == false or e.isImmediatePropagationStopped()
-          # False or e.stopImmediatePropagation() called, stop execution (slick grid will notice it as well and won't take other handlers nor transition to edit mode)
-          return false
+        if res == false
+          ret = false
 
-      return true
+        if e.isImmediatePropagationStopped()
+          # e.stopImmediatePropagation() called, stop execution (slick grid will notice it as well and won't take other handlers nor transition to edit mode)
+          return ret
 
-    #
-    # getBeforeEditCellEvents/registerBeforeEditCellEvents/unregisterBeforeEditCellEvents
-    #
+      return ret
+
     @_grid.onBeforeEditCell.subscribe (e, cell) =>
       {cell, row} = cell
 
-      before_edit_cell_events_handlers = @getBeforeEditCellEvents()
+      before_edit_cell_events_handlers = @getHandlers("BeforeEditCell")
 
+      ret = true
       for handler in before_edit_cell_events_handlers
         res = handler(e, @getFriendlyCellArgs(row, cell)) # Return false to avoid other handlers execution + avoid entering edit mode
 
         if res == false
-          # False returned, stop execution (slick grid will notice it as well and won't take other handlers nor transition to edit mode)
-          return false
+          ret = false
 
-      return true
+      return ret
 
   _setupDefaultGridEvents: ->
     #
