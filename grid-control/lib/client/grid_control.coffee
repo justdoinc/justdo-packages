@@ -192,6 +192,8 @@ _.extend GridControl.prototype,
     @_setupHandlersRegistrar("normal_mode_onClick", "NormalModeOnClick") # getNormalModeOnClickEvents/registerNormalModeOnClickEvents/unregisterNormalModeOnClickEvents
     @_setupHandlersRegistrar("before_edit_cell", "BeforeEditCell") # getBeforeEditCellEvents/registerBeforeEditCellEvents/unregisterBeforeEditCellEvents
     @_setupGridEventsSubscriptionsHooks()
+    @_setupDefaultGridEvents()
+
     @_setColumnsStateMaintainersTrackerForView(@_init_view)
     @_initStatesClassesComputations()
 
@@ -1810,6 +1812,19 @@ _.extend GridControl.prototype,
           return false
 
       return true
+
+  _setupDefaultGridEvents: ->
+    #
+    # Disable edits if target element has the .slick-prevent-edit class
+    #
+    @registerNormalModeOnClickEvents (e, args) ->
+      if $(e.target).hasClass("slick-prevent-edit")
+        return false
+
+      return true
+
+    return
+
   #
   # getFriendlyCellArgs
   #

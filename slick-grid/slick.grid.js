@@ -2645,9 +2645,6 @@ if (typeof Slick === "undefined") {
       }
 
       var enter_edit_mode = true;
-      if ($(e.target).hasClass("slick-prevent-edit")) {
-        enter_edit_mode = false;
-      }
 
       var clicked_on_current_active_cell =
             activeCell == cell.cell && activeRow == cell.row;
