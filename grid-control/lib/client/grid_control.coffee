@@ -189,8 +189,8 @@ _.extend GridControl.prototype,
 
     @_grid = new Slick.Grid @container, @_grid_data, columns, slick_options
 
-    @_setupHandlersRegistrar("normal_mode_onClick", "NormalModeOnClick") # getNormalModeOnClickEvents/registerNormalModeOnClickEvents/unregisterNormalModeOnClickEvents
-    @_setupHandlersRegistrar("before_edit_cell", "BeforeEditCell") # getBeforeEditCellEvents/registerBeforeEditCellEvents/unregisterBeforeEditCellEvents
+    JustdoHelpers.setupHandlersRegistry(@)
+
     @_setupGridEventsSubscriptionsHooks()
     @_setupDefaultGridEvents()
 
@@ -1736,45 +1736,6 @@ _.extend GridControl.prototype,
 
     return
 
-  #
-  # Setup handlers registrar
-  #
-  _setupHandlersRegistrar: (registrar_underscore_name, registrar_camelcase_name) ->
-    registrar = []
-    registrar_dep = new Tracker.Dependency()
-
-    getter_name = "get#{registrar_camelcase_name}Events"
-    registrar_name = "register#{registrar_camelcase_name}Events"
-    unregistrar_name = "unregister#{registrar_camelcase_name}Events"
-
-    @[getter_name] = =>
-      registrar_dep.depend()
-
-      return registrar.slice() # slice to create a shallow copy
-
-    @[registrar_name] = (handler) => # event is reserved word
-      if not _.isFunction handler
-        throw @_error "invalid-argument", "#{registrar_name}: handler has to be a function"
-
-      if handler in registrar
-        return
-
-      registrar.push handler
-      registrar_dep.changed()
-
-      return
-
-    @[unregistrar_name] = (handler) =>
-      if not _.isFunction handler
-        throw @_error "invalid-argument", "#{unregistrar_name}: handler has to be a function"
-
-      registrar = _.without registrar, handler
-      registrar_dep.changed()
-
-      return
-
-    return
-
   _setupGridEventsSubscriptionsHooks: ->
     # Both false and e.stopImmediatePropagation() can be used to prevent entering edit mode.
     #
@@ -1817,7 +1778,7 @@ _.extend GridControl.prototype,
     #
     # Disable edits if target element has the .slick-prevent-edit class
     #
-    @registerNormalModeOnClickEvents (e, args) ->
+    @register "NormalModeOnClick", (e, args) ->
       if $(e.target).hasClass("slick-prevent-edit")
         return false
 
@@ -1919,7 +1880,7 @@ _.extend GridControl.prototype,
   isDocFieldAndPathEditable: (doc, field, path) ->
     friendly_args = @getFriendlyArgsForDocFieldAndPath(doc, field, path)
 
-    before_edit_cell_events_handlers = @getBeforeEditCellEvents()
+    before_edit_cell_events_handlers = @getHandlers("BeforeEditCell")
 
     for handler in before_edit_cell_events_handlers
       e = new Slick.EventData()
