@@ -329,7 +329,7 @@ _.extend GridControl.prototype,
     @_grid.onCellChange.subscribe (e, edit_req) =>
       @_grid_data.edit(edit_req)
 
-    @registerBeforeEditCellEvents =>
+    @_grid.onEditCell.subscribe =>
       # lock grid data while editing the cell
       @_grid_data._lock()
 
