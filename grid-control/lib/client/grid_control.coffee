@@ -1730,3 +1730,94 @@ _.extend GridControl.prototype,
         @_grid.updateCell(i, j)
 
     return
+
+  #
+  # getFriendlyCellArgs
+  #
+  getFriendlyCellArgs: (row, cell) ->
+    field = @getCellField(cell)
+    doc = @_grid_data.getItem(row)
+
+    grid_column_info = @_grid.getColumns()[cell]
+
+    extended_schema = @getSchemaExtendedWithCustomFields()
+    schema = extended_schema[field]
+
+    friendly_args =
+      self: @
+      # We added self, in additional to the slick_grid reference below
+      # as it might be easier to explain formatters developers that
+      # the special formatters helpers assigned during formatters init process
+      # are accessible through self instead of explaining the real
+      # inheritance nature of formatters objects
+      #
+      # See how formatters are initiated to learn more
+
+      row: row
+      cell: cell
+      path: @_grid_data.getItemPath row
+
+      value: doc[field]
+      field: field
+
+      grid_control: @
+      grid_data: @_grid_data
+      slick_grid: @_grid
+
+      grid_column_info: grid_column_info
+      schema: schema
+      doc: doc
+      formatter_options: schema?.grid_column_formatter_options or {}
+
+      formatter_name: schema.grid_column_formatter
+      # With formatter_obj referencing to the original formatter object we
+      # can access helper methods attached to that object. It is useful not
+      # only to keep orginzation but to allow formatters
+      # inheritence (see unicode_date as a usage example)
+      formatter_obj: PACK.Formatters[@formatter_name]
+
+    return friendly_args
+
+  getFriendlyArgsForDocFieldAndPath: (doc, field, path) ->
+    # * The assumption is that if @getFriendlyCellArgs weren't called, the field isn't in the grid
+    # * We ask both path and doc: for cases the doc isn't in the grid at all, and for performance (of retrieving one from the other).
+    # * Path is *kind of* optional
+    row = cell = grid_column_info = null 
+
+    extended_schema = @getSchemaExtendedWithCustomFields()
+    schema = extended_schema[field]
+
+    friendly_args =
+      self: @
+      # We added self, in additional to the slick_grid reference below
+      # as it might be easier to explain formatters developers that
+      # the special formatters helpers assigned during formatters init process
+      # are accessible through self instead of explaining the real
+      # inheritance nature of formatters objects
+      #
+      # See how formatters are initiated to learn more
+
+      row: row
+      cell: cell
+      path: path
+
+      value: doc[field]
+      field: field
+
+      grid_control: @
+      grid_data: @_grid_data
+      slick_grid: @_grid
+
+      grid_column_info: grid_column_info
+      schema: schema
+      doc: doc
+      formatter_options: schema?.grid_column_formatter_options or {}
+
+      formatter_name: schema.grid_column_formatter
+      # With formatter_obj referencing to the original formatter object we
+      # can access helper methods attached to that object. It is useful not
+      # only to keep orginzation but to allow formatters
+      # inheritence (see unicode_date as a usage example)
+      formatter_obj: PACK.Formatters[@formatter_name]
+
+    return friendly_args

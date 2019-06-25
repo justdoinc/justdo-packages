@@ -349,45 +349,14 @@ slick_grid_formatters_extended_context_properties =
     # property with the field's grid_column_formatter_options or
     # empty object if grid_column_formatter_options weren't defined.
 
-    [row, cell, value, grid_column_info, data] = @original_args
+    [row, cell] = @original_args
 
-    column_id = grid_column_info.id
-    extended_schema = @getSchemaExtendedWithCustomFields()
-    schema = extended_schema[column_id]
+    friendly_args = @getFriendlyCellArgs(row, cell)
 
+    friendly_args.original_grid_control = @original_gc # note isn't the same as friendly_args.self !
+    friendly_args.options = friendly_args.formatter_options # For backward compatibility.
 
-    args =
-      self: @
-      # We added self, in additional to the slick_grid reference below
-      # as it might be easier to explain formatters developers that
-      # the special formatters helpers assigned during init process
-      # are accessible through self instead of explaining the real
-      # inheritance nature of formatters objects
-
-      row: row
-      cell: cell
-      path: @_grid_data.getItemPath row
-      value: value
-      field: column_id
-      grid_column_info: grid_column_info
-      schema: schema
-      doc: data
-      options: schema?.grid_column_formatter_options or {}
-
-      original_grid_control: @original_gc
-
-      grid_control: @
-      grid_data: @_grid_data
-      slick_grid: @_grid
-
-      formatter_name: @formatter_name
-      # With formatter_obj referencing to the original formatter object we
-      # can access helper methods attached to that object. It is useful not
-      # only to keep orginzation but to allow formatters
-      # inheritence (see unicode_date as a usage example)
-      formatter_obj: PACK.Formatters[@formatter_name]
-
-    return args
+    return friendly_args
 
   getRealSchema: ->
     return @collection.simpleSchema()._schema[@original_args[3].id]
