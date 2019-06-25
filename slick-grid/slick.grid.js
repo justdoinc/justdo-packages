@@ -2639,8 +2639,8 @@ if (typeof Slick === "undefined") {
         return;
       }
 
-      trigger(self.onClick, {row: cell.row, cell: cell.cell}, e);
-      if (e.isImmediatePropagationStopped()) {
+      var result = trigger(self.onClick, {row: cell.row, cell: cell.cell}, e);
+      if (e.isImmediatePropagationStopped() || result === false) {
         return;
       }
 
