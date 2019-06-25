@@ -61,6 +61,7 @@ Package.onUse(function (api) {
   api.add_files("lib/both/common-regexps.coffee", both);
   api.add_files("lib/both/common-errors-types.coffee", both);
   api.add_files("lib/both/get-app-version.coffee", both);
+  api.add_files("lib/both/handlers-registrar.coffee", both);
   api.add_files("lib/both/ddp-helpers.coffee", both);
 
   api.add_files("lib/client/blaze-extensions.coffee", client);
