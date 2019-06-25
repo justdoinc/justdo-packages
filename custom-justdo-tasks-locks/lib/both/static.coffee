@@ -4,3 +4,5 @@ _.extend CustomJustdoTasksLocks,
   plugin_human_readable_name: "custom-justdo-tasks-locks"
 
   locking_users_task_field: "p:tasks_locks:locking_users"
+
+  restricted_fields: ["title", "due_date"]

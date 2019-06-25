@@ -65,6 +65,10 @@ APP.executeAfterAppLibCode ->
 
       additional_fields = []
       for field_id in fields_missing_from_view
+        # Be reactive to fields editability
+        current_item_obj = module.activeItemObj({"#{field_id}": 1, "#{CustomJustdoTasksLocks.locking_users_task_field}": 1})
+        is_cell_editable = gc.isDocFieldAndPathEditable(current_item_obj, field_id, current_item_path)
+
         value = missing_fields_values[field_id]
 
         additional_field = 
@@ -73,7 +77,8 @@ APP.executeAfterAppLibCode ->
           value: value
           formatter: extended_schema[field_id].grid_column_formatter
 
-        if not gc.isEditableField(field_id)
+        # gc.isEditableField is a column wide true/false value is_cell_editable can be cell specific
+        if not gc.isEditableField(field_id) or not is_cell_editable
           additional_field.formatted_value =
             formatWithPrintFormatter(gc, current_item_id, field_id, value, missing_fields_values, current_item_path)
 
@@ -85,7 +90,13 @@ APP.executeAfterAppLibCode ->
     isEditableField: ->
       gc = APP.modules.project_page.gridControl()
 
-      return gc.isEditableField(@field_id)
+      if not gc.isEditableField(@field_id)
+        return false
+
+      current_item_obj = module.activeItemObj({"#{@field_id}": 1, "#{CustomJustdoTasksLocks.locking_users_task_field}": 1})
+      current_item_path = module.activeItemPath()
+
+      return gc.isDocFieldAndPathEditable(current_item_obj, @field_id, current_item_path)
 
   Template.task_pane_item_details_additional_field.events
     "click .add-to-grid": (e) ->

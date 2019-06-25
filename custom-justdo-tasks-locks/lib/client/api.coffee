@@ -26,6 +26,17 @@ _.extend CustomJustdoTasksLocks.prototype,
 
       return prereq
 
+    beforeEditHandler = (e, args) =>
+      user_is_allowed_to_perform_restricted_ops =
+        @isUserAllowedToPerformRestrictedOperationsOnTaskDoc(args.doc, Meteor.userId())
+
+      restricted_fields = CustomJustdoTasksLocks.restricted_fields
+
+      if not user_is_allowed_to_perform_restricted_ops and args.field in restricted_fields
+        return false
+
+      return true
+
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage CustomJustdoTasksLocks.project_custom_feature_id,
         installer: =>
@@ -35,6 +46,8 @@ _.extend CustomJustdoTasksLocks.prototype,
           prereq_installer_comp = Tracker.autorun =>
             if (gc = APP.modules.project_page.gridControl())?
               gc.registerCustomGridOperationPreReq("removeActivePath", removeActivePathCustomPreReq)
+
+              gc.registerBeforeEditCellEvents(beforeEditHandler)
 
           return
 
@@ -47,6 +60,7 @@ _.extend CustomJustdoTasksLocks.prototype,
 
           for tab_id, tab_def of all_tabs
             tab_def.grid_control?.unregisterCustomGridOperationPreReq("removeActivePath", removeActivePathCustomPreReq)
+            tab_def.grid_control?.unregisterBeforeEditCellEvents(beforeEditHandler)
 
           prereq_installer_comp?.stop()
           prereq_installer_comp = null
