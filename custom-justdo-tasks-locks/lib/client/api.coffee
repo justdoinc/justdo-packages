@@ -47,7 +47,7 @@ _.extend CustomJustdoTasksLocks.prototype,
             if (gc = APP.modules.project_page.gridControl())?
               gc.registerCustomGridOperationPreReq("removeActivePath", removeActivePathCustomPreReq)
 
-              gc.registerBeforeEditCellEvents(beforeEditHandler)
+              gc.register "BeforeEditCell", beforeEditHandler
 
           return
 
@@ -60,7 +60,7 @@ _.extend CustomJustdoTasksLocks.prototype,
 
           for tab_id, tab_def of all_tabs
             tab_def.grid_control?.unregisterCustomGridOperationPreReq("removeActivePath", removeActivePathCustomPreReq)
-            tab_def.grid_control?.unregisterBeforeEditCellEvents(beforeEditHandler)
+            tab_def.grid_control?.unregister "BeforeEditCell", beforeEditHandler
 
           prereq_installer_comp?.stop()
           prereq_installer_comp = null
