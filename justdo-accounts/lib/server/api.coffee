@@ -736,7 +736,7 @@ _.extend JustdoAccounts.prototype,
           is_promoter: true,
           is_approved: false,
           promoter_description: "",
-          campaign_id: campaign_obj?._id,
+          referring_campaign_id: campaign_obj?._id,
           referring_promoter_id: campaign_obj?.promoter_id
         }
 

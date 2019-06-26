@@ -79,7 +79,7 @@ _.extend JustdoAccounts.prototype,
 
         type: String
 
-      "promoters.campaign_id":
+      "promoters.referring_campaign_id":
         optional: true
 
         type: String
