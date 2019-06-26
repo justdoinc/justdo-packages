@@ -13,6 +13,7 @@ _.extend CustomJustdoTasksLocks.prototype,
 
   setupCustomFeatureMaintainer: ->
     prereq_installer_comp = null
+    task_update_collection_hook = null
 
     removeActivePathCustomPreReq = (prereq) =>
       prereq = JustdoHelpers.prepareOpreqArgs(prereq)
@@ -61,6 +62,35 @@ _.extend CustomJustdoTasksLocks.prototype,
 
           ProjectPageDialogs.members_management_dialog.register "BeforeUserItemClickProcessing", membersManagementDialogBeforeUserItemClickProcessing
 
+          # The following locks the task on ownership transfer
+          task_update_collection_hook = @tasks_collection.after.update (user_id, doc, field_names, modifier, options) =>
+            if doc.owner_id != Meteor.userId()
+              # If the doc isn't owned by the current user, nothing to do
+              return
+
+            if not (new_pending_owner_id = modifier.$set?.pending_owner_id)?
+              # If there is no pending owner, nothing to do
+              return
+
+            locking_users = @getTaskDocLockingUsersIds(doc)
+
+            if Meteor.userId() in locking_users
+              # Nothing to do, already locking
+              return
+
+            @toggleTaskLockedState doc._id, (err) =>
+              JustdoSnackbar.show
+                text: "Task locked"
+                actionText: "Unlock"
+                onActionClick: =>
+                  @toggleTaskLockedState doc._id
+
+                  JustdoSnackbar.close()
+
+                  return
+
+            return
+
           return
 
         destroyer: =>
@@ -78,6 +108,9 @@ _.extend CustomJustdoTasksLocks.prototype,
 
           prereq_installer_comp?.stop()
           prereq_installer_comp = null
+
+          task_update_collection_hook?.remove()
+          task_update_collection_hook = null
 
           return
 
