@@ -263,7 +263,10 @@ APP.executeAfterAppLibCode ->
       getEventDropdownData(e, "close")()
 
   currentTaskMembersIdsOtherThanMe = ->
-    if not (users = module.activeItemObjFromCollection({users: 1})?.users)?
+    tpl = Template.instance()
+    current_task_id = tpl.data._id # Note, a user might click the ownership transfer dialog of a task other than the active one, hence we can't use activeItemObj()
+
+    if not (users = APP.collections.Tasks.findOne(current_task_id, {users: 1})?.users)?
       module.logger.warn "Can't find the active task users"
 
       return null
