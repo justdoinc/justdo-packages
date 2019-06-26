@@ -12,7 +12,7 @@ EventEmitter = function(options) {
   self._eventEmitter = {
     onListeners: {},
     onceListeners: {},
-    maxListeners: options.maxListeners || 50
+    maxListeners: options.maxListeners || 100
   };
 };
 
