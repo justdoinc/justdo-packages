@@ -1737,42 +1737,19 @@ _.extend GridControl.prototype,
     return
 
   _setupGridEventsSubscriptionsHooks: ->
-    # Both false and e.stopImmediatePropagation() can be used to prevent entering edit mode.
-    #
-    # e.stopImmediatePropagation() will, in addition, stop processing other pending
-    # handler, and propogate the event up the DOM tree (might be too strong, use with care)
-
     @_grid.onClick.subscribe (e, cell) =>
-      {cell, row} = cell
+      # Both false and e.stopImmediatePropagation() can be used to prevent entering edit mode.
+      #
+      # e.stopImmediatePropagation() will, in addition, stop processing other pending
+      # handler, and propogate the event up the DOM tree (might be too strong, use with care)
 
-      normal_mode_events_handlers = @getHandlers("NormalModeOnClick")
-
-      ret = true
-      for handler in normal_mode_events_handlers
-        res = handler(e, @getFriendlyCellArgs(row, cell))
-
-        if res == false
-          ret = false
-
-        if e.isImmediatePropagationStopped()
-          # e.stopImmediatePropagation() called, stop execution (slick grid will notice it as well and won't take other handlers nor transition to edit mode)
-          return ret
-
-      return ret
+      return @processHandlersWithBreakCondition("NormalModeOnClick", -> # breaking condition
+        return e.isImmediatePropagationStopped()
+      , e, @getFriendlyCellArgs(cell.row, cell.cell))
 
     @_grid.onBeforeEditCell.subscribe (e, cell) =>
-      {cell, row} = cell
-
-      before_edit_cell_events_handlers = @getHandlers("BeforeEditCell")
-
-      ret = true
-      for handler in before_edit_cell_events_handlers
-        res = handler(e, @getFriendlyCellArgs(row, cell)) # Return false to avoid other handlers execution + avoid entering edit mode
-
-        if res == false
-          ret = false
-
-      return ret
+      # Return false to avoid other handlers execution + avoid entering edit mode
+      return @processHandlers("BeforeEditCell", e, @getFriendlyCellArgs(cell.row, cell.cell))
 
   _setupDefaultGridEvents: ->
     #
