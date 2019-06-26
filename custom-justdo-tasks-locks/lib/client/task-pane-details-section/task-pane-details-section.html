@@ -6,20 +6,28 @@
 </template>
 
 <template name="task_pane_tasks_locks_section">
-  <section>
-    <h2>Tasks Locks <span class="about-locked-tasks" title="Once you lock a task:
+  <section class="task-pane-tasks-locks-section">
+    <h2>Tasks Locks</h2>
 
-    * No member will be able to remove the task.
-    * No member will be able to revoke your access to the task.
-    * The fields: Title and Due List, will be editable only by you, unless there are more locking members, in which case - no one will be able to edit these fields."><i class="fa fa-question-circle fa-fw"></i></span></h2>
+    <div class="task-pane-tasks-locks-section-settings">
+      <div class="setting-label">{{#if isActiveUserLockingActiveTaskDoc}}<i class="fa fa-lock" style="margin-right: 2px"></i>{{else}}<i class="fa fa-unlock"></i>{{/if}} You are {{#if isActiveUserLockingActiveTaskDoc}}<b>locking</b>{{else}}not locking{{/if}} this task
+        <span class="about-locked-tasks" title="{{taskLockInfo}}">
+            <i class="fa fa-question-circle fa-fw"></i>
+        </span>
+      </div>
+
+      <div class="setting-controller">
+        <div class="btn btn-default btn-xs tasks-locks-toggle-lock-state">{{#if isActiveUserLockingActiveTaskDoc}}Unlock{{else}}Lock{{/if}}</div>
+      </div>
+
+      <div class="clearfix"></div>
+    </div>
 
     {{#with getActiveTaskDocLockingUsersDocs}}
-      Task is locked:
+      <b>The following members are locking this task:</b><br>
       {{#each this}}
-        {{displayName}}<br>
+        <div class="locking-member">{{> justdo_avatar}} {{displayName}}</div>
       {{/each}}
     {{/with}}
-
-    {{#if isActiveUserLockingActiveTaskDoc}}LOCKED BY ME{{else}}NOT LOCKED BY ME{{/if}}
   </section>
 </template>
