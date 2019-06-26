@@ -37,6 +37,16 @@ _.extend CustomJustdoTasksLocks.prototype,
 
       return true
 
+    membersManagementDialogBeforeUserItemClickProcessing = (task_obj, action_id, clicked_user_id) =>
+      locking_users = @getTaskDocLockingUsersIds(task_obj)
+
+      if action_id == "keep-users" and clicked_user_id in locking_users
+        JustdoSnackbar.show
+          text: "Can't remove a locking user."
+        return false
+
+      return true
+
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage CustomJustdoTasksLocks.project_custom_feature_id,
         installer: =>
@@ -48,6 +58,8 @@ _.extend CustomJustdoTasksLocks.prototype,
               gc.registerCustomGridOperationPreReq("removeActivePath", removeActivePathCustomPreReq)
 
               gc.register "BeforeEditCell", beforeEditHandler
+
+          ProjectPageDialogs.members_management_dialog.register "BeforeUserItemClickProcessing", membersManagementDialogBeforeUserItemClickProcessing
 
           return
 
@@ -61,6 +73,8 @@ _.extend CustomJustdoTasksLocks.prototype,
           for tab_id, tab_def of all_tabs
             tab_def.grid_control?.unregisterCustomGridOperationPreReq("removeActivePath", removeActivePathCustomPreReq)
             tab_def.grid_control?.unregister "BeforeEditCell", beforeEditHandler
+
+          ProjectPageDialogs.members_management_dialog.unregister "BeforeUserItemClickProcessing", membersManagementDialogBeforeUserItemClickProcessing
 
           prereq_installer_comp?.stop()
           prereq_installer_comp = null

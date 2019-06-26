@@ -52,6 +52,9 @@ Package.onUse(function (api) {
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
+  api.use("justdoinc:justdo-project-page-dialogs@1.0.0", both);
+  
+
   api.use("reactive-var", both);
   api.use("tracker", client);
 
