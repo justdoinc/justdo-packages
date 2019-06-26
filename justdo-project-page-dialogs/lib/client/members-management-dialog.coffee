@@ -1,5 +1,7 @@
 ProjectPageDialogs.members_management_dialog = {}
 
+JustdoHelpers.setupHandlersRegistry(ProjectPageDialogs.members_management_dialog)
+
 addFilledUser = ->
   email_input = $(".invite-members-section input")
 
@@ -366,7 +368,14 @@ APP.executeAfterAppLibCode ->
       return "#{message} #{display_name}"
 
   Template.task_pane_item_details_members_editor_user_btn.events
-    "click .user-btn": (e) ->
+    "click .user-btn": (e, tpl) ->
+      clicked_user_id = @_id
+      action_id = Template.parentData(1).action_id
+      task_obj = Template.parentData(2)
+
+      if not ProjectPageDialogs.members_management_dialog.processHandlers("BeforeUserItemClickProcessing", task_obj, action_id, clicked_user_id)
+        return
+
       current_state = @proceed.get()
       new_state = not current_state
 
