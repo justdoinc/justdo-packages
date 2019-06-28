@@ -199,7 +199,7 @@ _.extend TasksFileManager.prototype,
 
       # This token can only be used to download, not upload or any other
       # action
-      call: ["convert"]
+      call: ["store", "convert"]
 
       # Force user to place files in a path related to the task they have
       # access for, making it easier to cleanup the consequences of an
