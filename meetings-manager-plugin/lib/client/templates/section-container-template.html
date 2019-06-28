@@ -5,7 +5,7 @@
       <table class="meeting-container-info">
       {{#each notes}}
         <tr>
-          <td>
+          <td style="word-wrap: break-word; max-width: 100%;">
             <div class="meeting-container-section">
               {{#if isPrivateNote}}
                 <div class="info-title">Private Note:</div>
@@ -18,7 +18,7 @@
                   <div class="info-title">Meeting note:</div>
                 {{/if}}
               {{/if}}
-              <div class="info-text">{{note}}</div>
+              <div class="info-text">{{nl2br note}}</div>
             </div>
           </td>
         </tr>
