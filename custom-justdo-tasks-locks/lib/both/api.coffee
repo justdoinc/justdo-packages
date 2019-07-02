@@ -18,6 +18,9 @@ _.extend CustomJustdoTasksLocks.prototype,
 
     return
 
+  getProjectDocIfPluginInstalled: (project_id) ->
+    return @projects_collection.findOne({_id: project_id, "conf.custom_features": CustomJustdoTasksLocks.project_custom_feature_id})
+
   isPluginInstalledOnProjectDoc: (project_doc) ->
     return APP.projects.isPluginInstalledOnProjectDoc(CustomJustdoTasksLocks.project_custom_feature_id, project_doc)
 

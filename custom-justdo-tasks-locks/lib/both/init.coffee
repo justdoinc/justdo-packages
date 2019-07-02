@@ -73,7 +73,7 @@ options_schema =
 #         defaultValue: 30
 
 CustomJustdoTasksLocks = (options) ->
-  # skeleton-version: v0.0.17
+  # skeleton-version: v0.0.18
 
   # Developer, avoid changing this constuctor, to do stuff on init
   # for both server & client, use below the: @_bothImmediateInit()
