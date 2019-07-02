@@ -10,6 +10,8 @@ _.extend JustdoHelpers,
     # IMPORTANT! on the server cb is called on the same js tick in a sync
     # way, on the client it's async.
     #
+    # On the server, will return the cb output
+    #
     # A bulletproof way to check the doc + modifiers result:
     # We use a null-backed collection to simulate the effect of this action
     # this could fail if one of the arguments we're passed is oncompatible
@@ -24,7 +26,7 @@ _.extend JustdoHelpers,
         new_doc = mock_collection.findOne(doc._id)
         mock_collection.remove doc._id
 
-        cb(undefined, new_doc)
+        return cb(undefined, new_doc)
       else
         # If doc provided with _id, we want to avoid situation where
         # more than one call for a document with this _id will be done
@@ -59,14 +61,14 @@ _.extend JustdoHelpers,
               # as the user of this method expect it to be returned
               new_doc._id = original_id
 
-            cb(undefined, new_doc)
+            return cb(undefined, new_doc)
 
             removeDoc()
 
             return
             
     catch e
-      cb(e)
+      return cb(e)
 
     return
       
