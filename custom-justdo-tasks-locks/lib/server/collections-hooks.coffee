@@ -46,7 +46,8 @@ _.extend CustomJustdoTasksLocks.prototype,
     @tasks_collection.before.update (user_id, doc, field_names, modifier, options) =>
       if @isUserAllowedToPerformRestrictedOperationsOnTaskDoc(doc, user_id)
         # User is not locked to perform the operation, operation is permitted for sure
-        # (even if plugin isn't installed on the project)
+        # (regardless of whether or not plugin is installed on the project, see
+        # comment above: Comment regarding testing whether or not the plugin is installed)
         return true
 
       locking_members_removed = false
