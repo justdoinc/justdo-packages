@@ -49,6 +49,7 @@ _.extend CustomJustdoTasksLocks.prototype,
         # (even if plugin isn't installed on the project)
         return true
 
+      locking_members_removed = false
       if "users" in field_names
         locking_members_removed = JustdoHelpers.applyMongoModifiers doc, modifier, (e, modified_doc) =>
           old_users = doc.users
