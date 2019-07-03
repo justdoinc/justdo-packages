@@ -13,7 +13,7 @@ _.extend JustdoHelpers,
         throw new Error("Can't set a handlers registry on the provided object, method name #{method_name} already set.")
 
     processHandlers_default_conf =
-      __breakCondition: () => return true
+      __breakCondition: () => return false
 
     ensureDomainExists = (domain_name) ->
       if not (domain = handlers_regisrtry[domain_name])?
