@@ -49,6 +49,8 @@ Package.onUse(function (api) {
 
   api.use("matb33:collection-hooks@0.8.4", client);
 
+  api.use("stem-capital:grid-control@0.1.0", client);
+
   api.use("reactive-var", client);
   api.use("tracker", client);
 
@@ -70,7 +72,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/app-integration.coffee", client);
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
-  // file. 
+  // file.
+
+  api.addFiles("lib/client/grid-control-extensions/checklist-field-editor.coffee", client);
 
   api.export("CustomJustdoCumulativeSelect", client);
 });

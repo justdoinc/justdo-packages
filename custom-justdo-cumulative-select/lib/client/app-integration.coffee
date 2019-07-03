@@ -13,7 +13,7 @@
 
 # **Method A:** If you aren't depending on any env variable just comment the following
 
-# APP.custom_justdo_cumulative_select = new CustomJustdoCumulativeSelect()
+# APP.justdo_checklist_field = new CustomJustdoCumulativeSelect()
 
 # **Method B:** If you are depending on env variables to decide whether or not to load
 # this package, or even if you use them inside the constructor, you need to wait for
@@ -27,6 +27,6 @@ APP.getEnv (env) ->
     projects_collection: APP.collections.Projects
     tasks_collection: APP.collections.Tasks
 
-  APP.custom_justdo_cumulative_select = new CustomJustdoCumulativeSelect(options)
+  APP.justdo_checklist_field = new CustomJustdoCumulativeSelect(options)
 
   return
