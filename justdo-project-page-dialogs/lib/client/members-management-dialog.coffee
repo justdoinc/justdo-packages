@@ -173,7 +173,7 @@ APP.executeAfterAppLibCode ->
 
     @autorun ->
       cascade_val = cascade.get()
-      current_owner_id = module.activeItemObj({owner_id: 1})?.owner_id
+      current_owner_id = APP.collections.Tasks.findOne(data._id, {fields: {owner_id: 1}})?.owner_id
       members_to_remove = _getMembersIdsInReactiveVarByProceedState(users_to_keep, false)
 
       grid_control = module.gridControl()
