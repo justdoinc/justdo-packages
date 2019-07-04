@@ -99,6 +99,8 @@ _.extend PACK.Formatters.textWithTreeControls,
         save_and_exit_not_prevented = @saveAndExitActiveEditor()
 
         if save_and_exit_not_prevented
+          @activateRow(@getEventRow(e))
+
           event_item = @_grid_data.extendObjForeignKeys(event_item, {foreign_keys: ["owner_id", "pending_owner_id"], in_place: false})
 
           event_item.path = event_path
