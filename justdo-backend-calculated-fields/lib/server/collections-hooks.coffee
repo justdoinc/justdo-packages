@@ -49,7 +49,8 @@ _.extend JustdoBackendCalculatedFields.prototype,
       runIfBackendCalculatedFieldsEnabled doc.project_id, ->
 
         for parent_id of doc.parents
-          self.triggerDueDatesCommandsUpdatesForTaskChange self.tasks_collection.findOne(parent_id), user_id
+          if parent_id != "0"
+            self.triggerDueDatesCommandsUpdatesForTaskChange self.tasks_collection.findOne(parent_id), user_id
 
       return
 
