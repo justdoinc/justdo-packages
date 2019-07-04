@@ -15,7 +15,7 @@ _.extend CustomJustdoCumulativeSelect.prototype,
     return APP.projects.isPluginInstalledOnProjectDoc(CustomJustdoCumulativeSelect.project_custom_feature_id, project_doc)
 
   setupCustomFeatureMaintainer: ->
-    prereq_installer_comp = null
+    grids_setups_maintainer_comp = null
 
     beforeEditHandler = (e, args) =>
       # Read: Note regarding editor/formatter in the README
@@ -29,7 +29,7 @@ _.extend CustomJustdoCumulativeSelect.prototype,
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage CustomJustdoCumulativeSelect.project_custom_feature_id,
         installer: =>
-          prereq_installer_comp = Tracker.autorun =>
+          grids_setups_maintainer_comp = Tracker.autorun =>
             if (gc = APP.modules.project_page.gridControl())?
               gc.register "BeforeEditCell", beforeEditHandler
 
@@ -40,8 +40,11 @@ _.extend CustomJustdoCumulativeSelect.prototype,
           return
 
         destroyer: =>
-          prereq_installer_comp?.stop()
-          prereq_installer_comp = null
+          grids_setups_maintainer_comp?.stop()
+          grids_setups_maintainer_comp = null
+
+          if not (all_tabs = APP.modules.project_page.getGridControlMux()?.getAllTabs())?
+            all_tabs = {}
 
           for tab_id, tab_def of all_tabs
             tab_def.grid_control?.unregister "BeforeEditCell", beforeEditHandler
