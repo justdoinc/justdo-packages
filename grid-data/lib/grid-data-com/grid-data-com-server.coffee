@@ -5,6 +5,7 @@ helpers = share.helpers
 # The communication layer between the server and the client
 GridDataCom = (collection, private_data_collection) ->
   EventEmitter.call this
+  JustdoHelpers.setupHandlersRegistry(@)
 
   @collection = collection
 

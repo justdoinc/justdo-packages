@@ -217,24 +217,21 @@ _.extend GridDataCom.prototype,
 
       return
 
-    _before_pseudo_remove_procedures = []
-    _after_pseudo_remove_procedures = []
-
     # Define hooks that will let packages hook to our pseudo remove
 
-    @collection.before.pseudo_remove = (cb) ->
+    @collection.before.pseudo_remove = (cb) =>
       # cb returned value is ignored.
       # cb(user_id, doc to be removed before any change, update to be performed)
 
-      _before_pseudo_remove_procedures.push cb
+      @register "BeforePseudoRemove", cb
 
       return
 
-    @collection.after.pseudo_remove = (cb) ->
+    @collection.after.pseudo_remove = (cb) =>
       # cb returned value is ignored.
       # cb(user_id, doc to be removed before any change, update performed)
 
-      _after_pseudo_remove_procedures.push cb
+      @register "AfterPseudoRemove", cb
 
       return
 
@@ -249,22 +246,24 @@ _.extend GridDataCom.prototype,
         $set:
           users: []
 
+      result = @processHandlers("BeforePseudoRemove", user_id, doc, update)
+      if result is false
+        return false
+
       for field_name of doc
         if field_name not in ["_id", "users", "seqId", "project_id", "_raw_added_users_dates", "_raw_updated_date", "_raw_removed_date", "_raw_removed_users", "_raw_removed_users_dates"]
           update.$unset[field_name] = ""
 
       @_addRawFieldsUpdatesToUpdateModifier(update, doc)
 
-      _.each _before_pseudo_remove_procedures, (proc) -> proc(user_id, doc, update)
-
       APP.justdo_analytics.logMongoRawConnectionOp(@collection._name, "update", {_id: doc._id}, update)
-      @collection.rawCollection().update {_id: doc._id}, update, Meteor.bindEnvironment (err) ->
+      @collection.rawCollection().update {_id: doc._id}, update, Meteor.bindEnvironment (err) =>
         if err?
           console.error(err)
 
           return
 
-        _.each _after_pseudo_remove_procedures, (proc) -> proc(user_id, doc, update)
+        @processHandlers("AfterPseudoRemove", user_id, doc, update)
 
         return
 
