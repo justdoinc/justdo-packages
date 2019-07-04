@@ -113,3 +113,9 @@ _.extend JustdoEmails,
     email_html = JustdoEmails._buildEmail template_html
 
     return JustdoEmails._send options.to, subject, email_html
+
+APP.getEnv (env) ->
+  if (default_sender = env.MAIL_SENDER_EMAIL)?
+    JustdoEmails.options.default_sender = default_sender
+
+  return
