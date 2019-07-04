@@ -220,7 +220,9 @@ _.extend GridControlCustomFields,
               formatter_type = default_formatter_and_editor.formatter
 
           if formatter_type not of GridControl.Formatters
-            throw error("unknown-grid-formatter", "Unknown grid formatter #{formatter_type}")
+            console.warn "unknown-grid-formatter", "Unknown grid formatter #{formatter_type}, using instead the default formatter for type #{custom_field_definition.field_type}: #{default_formatter_and_editor.formatter}"
+
+            formatter_type = default_formatter_and_editor.formatter
 
         if not custom_field_schema.grid_editable_column
           editor_type = null
@@ -236,7 +238,9 @@ _.extend GridControlCustomFields,
               editor_type = default_formatter_and_editor.editor
 
           if editor_type not of GridControl.Editors
-            throw error("unknown-grid-editor", "Unknown grid editor #{editor_type}")
+            console.warn "unknown-grid-formatter", "Unknown grid editor #{editor_type}, using instead the default editor for type #{custom_field_definition.field_type}: #{default_formatter_and_editor.editor}"
+
+            editor_type = default_formatter_and_editor.editor
 
         custom_field_schema.grid_column_formatter = formatter_type
         custom_field_schema.grid_column_editor = editor_type
