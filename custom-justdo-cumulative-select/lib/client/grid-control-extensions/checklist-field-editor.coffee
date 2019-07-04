@@ -89,13 +89,15 @@ GridControl.installEditor CustomJustdoCumulativeSelect.custom_field_editor_id,
     return
 
   validator: (value) ->
-    return undefined
+    return true
 
   focus: ->
     return
 
   serializeValue: ->
     return APP.justdo_checklist_field.getFieldValueForGridControlPath(@context.grid_control, @context.grid_control.current_path.get(), @context.field_name)
+
+  isValueChanged: -> false # Never changes, we control changes using the click event (the user input nothing)
 
   destroy: ->
     @$input.remove()
