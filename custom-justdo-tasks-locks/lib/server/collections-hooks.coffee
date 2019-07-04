@@ -80,3 +80,17 @@ _.extend CustomJustdoTasksLocks.prototype,
 
       # Prevent the operation
       return false
+
+    @tasks_collection.before.pseudo_remove (user_id, doc) =>
+      if @isUserAllowedToPerformRestrictedOperationsOnTaskDoc(doc, user_id)
+        # User is not locked to perform the operation, operation is permitted for sure
+        # (regardless of whether or not plugin is installed on the project, see
+        # comment above: Comment regarding testing whether or not the plugin is installed)
+        return true
+
+      if not (project_doc = @getProjectDocIfPluginInstalled(doc.project_id))?
+        # Operation isn't permitted - but the plugin is not installed on the project
+        # so we still allow it to happen.
+        return true
+
+      return false
