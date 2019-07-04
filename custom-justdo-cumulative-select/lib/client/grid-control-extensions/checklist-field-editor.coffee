@@ -94,6 +94,9 @@ GridControl.installEditor CustomJustdoCumulativeSelect.custom_field_editor_id,
   focus: ->
     return
 
+  serializeValue: ->
+    return APP.justdo_checklist_field.getFieldValueForGridControlPath(@context.grid_control, @context.grid_control.current_path.get(), @context.field_name)
+
   destroy: ->
     @$input.remove()
     return
