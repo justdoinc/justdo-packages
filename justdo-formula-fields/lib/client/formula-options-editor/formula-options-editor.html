@@ -1,51 +1,43 @@
 <template name="custom_field_conf_formula_field_editor_opener">
-  <div class="fa fa-cog custom-field-formula-field-editor-opener" aria-hidden="true" field-id="{{field_id}}"></div>
+  <div class="custom-field-formula-field-editor-opener d-flex align-items-center mr-1" aria-hidden="true" field-id="{{field_id}}">
+    <svg class="fa fa-cog jd-icon-custom-field text-white" aria-hidden="true" field-id="{{field_id}}"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg>
+  </div>
 </template>
 
 <template name="custom_field_conf_formula_field_editor">
-  <div class="editor-caption">
+  <div class="editor-caption font-weight-bold text-body text-uppercase">
     Edit field formula <div class="open-formula-editor-help" title="Learn how to write a formula"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
   </div>
 
-  <div class="editor-content">
-    <input type="text" class="formula-input form-control input-sm" autocomplete="off" placeholder="Enter formula" value="{{getHumanReadableFormula}}" />
+  <div class="editor-content my-2">
+    <input type="text" class="formula-input form-control form-control-sm" autocomplete="off" placeholder="Enter formula" value="{{getHumanReadableFormula}}" />
 
     <div class="formula-editor-section">
-      Add field to formula:
-        <select class="field-to-add-selector">
+      <div class="d-flex align-items-center mt-2">
+        <select class="field-to-add-selector form-control form-control-sm">
           {{#each availableFields}}
             <option value="{{label}}">{{label}}</option>
           {{/each}}
         </select>
-
-        <div class="add-field btn btn-xs btn-default">Add</div>
+        <div class="add-field btn btn-primary btn-sm ml-2 text-nowrap">ADD FIELD TO FORMULA</div>
+      </div>
     </div>
   </div>
 
-  <div class="editor-caption">
-    Set formula filters
-  </div>
-
+  <div class="editor-caption font-weight-bold text-body text-uppercase mt-4">Set formula filters</div>
   <div class="custom-field-options"></div>
-
-  <div class="add-custom-field-option">
-    <div class="option-label"><input type="text" class="new-option-label" placeholder="Add filter" /></div>
-
-    <div class="bg-color-selector">{{> justdo_color_picker_dropdown color_picker_controller=colorPickerDropdownController}}</div>
-
-    <div class="option-begin new"><input class="new-option-begin" type="text" placeholder="Begin" /></div>
-    <div class="option-end new"><input class="new-option-end" type="text" placeholder="End" /></div>
-
+  <div class="add-custom-field-option d-flex align-items-center py-2 mb-2">
+    <input type="text" class="new-option-label form-control form-control-sm" placeholder="Add filter">
+    <input class="new-option-begin form-control form-control-sm" type="text" placeholder="Begin">
+    <input class="new-option-end form-control form-control-sm" type="text" placeholder="End">
+    <!-- <div class="bg-color-selector">{{> justdo_color_picker_dropdown color_picker_controller=colorPickerDropdownController}}</div>
     {{#if showAddButton}}
       <div class="add-option"><i class="fa fa-fw fa-check" aria-hidden="true"></i></div>
-    {{/if}}
+    {{/if}} -->
+    <svg class="jd-icon-custom-field text-primary add-option" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
   </div>
-
-  <div role="separator" class="divider"></div>
-
-  <div class="dropdown-filter-controls-container">
-    <button type="button" class="btn btn-xs btn-outline-secondary save">Save</button>
-    <button type="button" class="btn btn-xs btn-outline-secondary cancel">Cancel</button>
-    <div style="clear: both"></div>
+  <div class="text-right">
+    <button type="button" class="btn btn-primary btn-sm font-weight-bold cancel mr-1">CANCEL</button>
+    <button type="button" class="btn btn-primary btn-sm font-weight-bold save">SAVE</button>
   </div>
 </template>

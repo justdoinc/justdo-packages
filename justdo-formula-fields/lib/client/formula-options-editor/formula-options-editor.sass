@@ -1,22 +1,21 @@
-$begin-input-width: 50px
-$end-input-width: 50px
-$color-button-width: 24px
-$buttons-margins: 1px
-$remove-add-button-width: 24px
+// $begin-input-width: 50px
+// $end-input-width: 50px
+// $color-button-width: 24px
+// $buttons-margins: 1px
+// $remove-add-button-width: 24px
 
-.custom-field-formula-field-editor-opener
-  position: relative
-  margin-left: 5px
-  cursor: pointer
-  color: rgba(43, 113, 207, 0.7)
-  &:hover
-    color: #5a82b9
+// .custom-field-formula-field-editor-opener
+//   position: relative
+//   margin-left: 5px
+//   cursor: pointer
+//   color: rgba(43, 113, 207, 0.7)
+//   &:hover
+//     color: #5a82b9
 
-.custom-field-formula-field-editor
-  z-index: 1100
-
-  margin: 0
-  padding: 0
+// .custom-field-formula-field-editor
+//   z-index: 1100
+//   margin: 0
+//   padding: 0
 
 .open-formula-editor-help
   display: inline-block
@@ -26,142 +25,142 @@ $remove-add-button-width: 24px
 
 .custom-field-formula-field-editor-content
   width: 400px
-  position: relative
-  max-height: 265px
-  overflow: auto
-  border-radius: 2px
+  // position: relative
+  // max-height: 265px
+  // overflow: auto
 
-  .formula-editor-section
-    margin: 5px 4px
+  // .formula-editor-section
+  //   margin: 5px 4px
 
   .editor-caption
-    font-family: "lato", sans-serif
-    color: #68757b
-    margin: 7px 8px 0px
+    font-size: 12px
 
-  .editor-content
-    margin: 0 8px
+  .add-custom-field-option
+    border-bottom: 1px dashed #e0e0e0
 
-  .option-label, .option-begin, .option-end
-    font-size: 14px
-    padding-top: 3px
+  // .editor-content
+  //   margin: 0 8px
 
-    &.new
-      input
-        border: none
-        padding: 2px 5px
-        background-color: rgba(43, 113, 207, 0.1)
-        border-radius: 2px
-        &::placeholder
-          color: #5a82b9
-        &:focus
-          outline: none
+  // .option-label, .option-begin, .option-end
+    // font-size: 14px
+    // padding-top: 3px
+    //
+    // &.new
+    //   input
+    //     border: none
+    //     padding: 2px 5px
+    //     background-color: rgba(43, 113, 207, 0.1)
+    //     border-radius: 2px
+    //     &::placeholder
+    //       color: #5a82b9
+    //     &:focus
+    //       outline: none
 
-  .option-label
-    margin-left: 28px
+  // .option-label
+  //   margin-left: 28px
+  //
+  //
+  //   margin-right: $begin-input-width + $buttons-margins + $end-input-width + $buttons-margins + $color-button-width + $buttons-margins + $remove-add-button-width + $buttons-margins
+  //
+  //   input
+  //     width: 100%
 
+  // .option-begin
+  //   position: absolute
+  //   right: $remove-add-button-width + $buttons-margins + $color-button-width + $buttons-margins + $end-input-width + $buttons-margins
+  //   width: $begin-input-width
+  //   top: 0px
+  //   text-align: center
+  //
+  //   input
+  //     width: 100%
+  //
+  // .option-end
+  //   position: absolute
+  //   right: $remove-add-button-width + $buttons-margins + $color-button-width + $buttons-margins
+  //   width: $end-input-width
+  //   top: 0px
+  //   text-align: center
+  //
+  //   input
+  //     width: 100%
 
-    margin-right: $begin-input-width + $buttons-margins + $end-input-width + $buttons-margins + $color-button-width + $buttons-margins + $remove-add-button-width + $buttons-margins
+  // .divider
+  //   margin: 5px 0 0 0
+  //
+  // ul
+  //   padding-left: 23px
+  //   padding-top: 4px
+  //   padding-bottom: 4px
 
-    input
-      width: 100%
+  // .formula-input
+  //   margin-bottom: 9px
+  //   margin-top: 9px
 
-  .option-begin
-    position: absolute
-    right: $remove-add-button-width + $buttons-margins + $color-button-width + $buttons-margins + $end-input-width + $buttons-margins
-    width: $begin-input-width
-    top: 0px
-    text-align: center
+  // .add-option
+  //   position: absolute
+  //   right: 2px
+  //   width: $remove-add-button-width
+  //   height: 26px
+  //   top: 0px
+  //   text-align: center
+  //   padding-top: 4px
 
-    input
-      width: 100%
+  // .bg-color-selector
+  //   position: absolute
+  //   right: $remove-add-button-width + $buttons-margins
+  //   width: $color-button-width
+  //   height: 26px
+  //   top: 0px
+  //   text-align: center
+  //   padding-top: 4px
 
-  .option-end
-    position: absolute
-    right: $remove-add-button-width + $buttons-margins + $color-button-width + $buttons-margins
-    width: $end-input-width
-    top: 0px
-    text-align: center
+  // .custom-fields-justdo-color-picker-opener
+  //   margin: 1px 3px
 
-    input
-      width: 100%
+  // .remove-option
+  //   position: absolute
+  //   right: 2px
+  //   width: $remove-add-button-width
+  //   height: 26px
+  //   top: 2px
+  //   text-align: center
+  //   padding-top: 4px
+  //
+  // .remove-option, .add-option
+  //   cursor: pointer
+  //   color: #2b71cf
 
-  .divider
-    margin: 5px 0 0 0
+  // .new-option-label
+  //   width: 95%
+  //   border: none
+  //   padding: 2px 5px
+  //   background-color: rgba(43, 113, 207, 0.1)
+  //   border-radius: 2px
+  //   &::placeholder
+  //     color: #5a82b9
+  //   &:focus
+  //     outline: none
+  //
+  // .custom-field-options
+  //   max-height: 175px
+  //   overflow: auto
+  //
+  // .custom-field-option
+  //   height: 32px
 
-  ul
-    padding-left: 23px
-    padding-top: 4px
-    padding-bottom: 4px
+  // .custom-field-option, .add-custom-field-option
+  //   position: relative
 
-  .formula-input
-    margin-bottom: 9px
-    margin-top: 9px
-
-  .add-option
-    position: absolute
-    right: 2px
-    width: $remove-add-button-width
-    height: 26px
-    top: 0px
-    text-align: center
-    padding-top: 4px
-
-  .bg-color-selector
-    position: absolute
-    right: $remove-add-button-width + $buttons-margins
-    width: $color-button-width
-    height: 26px
-    top: 0px
-    text-align: center
-    padding-top: 4px
-
-  .custom-fields-justdo-color-picker-opener
-    margin: 1px 3px
-
-  .remove-option
-    position: absolute
-    right: 2px
-    width: $remove-add-button-width
-    height: 26px
-    top: 2px
-    text-align: center
-    padding-top: 4px
-
-  .remove-option, .add-option
-    cursor: pointer
-    color: #2b71cf
-
-  .new-option-label
-    width: 95%
-    border: none
-    padding: 2px 5px
-    background-color: rgba(43, 113, 207, 0.1)
-    border-radius: 2px
-    &::placeholder
-      color: #5a82b9
-    &:focus
-      outline: none
-
-  .custom-field-options
-    max-height: 175px
-    overflow: auto
-
-  .custom-field-option
-    height: 32px
-
-  .custom-field-option, .add-custom-field-option
-    position: relative
-
-  .option-handle
-    cursor: move
-    font-size: 11px
-    color: #b3b3b3
-    position: absolute
-    left: 0px
-    top: 0px
-    width: 29px
-    height: 32px
-    padding: 8px
-    margin-right: 0
-    text-align: center
+  // .option-handle
+  //   cursor: move
+  //   font-size: 11px
+  //   color: #b3b3b3
+  //   position: absolute
+  //   left: 0px
+  //   top: 0px
+  //   width: 29px
+  //   height: 32px
+  //   padding: 8px
+  //   margin-right: 0
+  //   text-align: center

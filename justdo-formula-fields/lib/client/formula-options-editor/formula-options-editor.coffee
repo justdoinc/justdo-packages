@@ -12,7 +12,7 @@ APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
   module.CustomFieldFormulaFieldEditor = JustdoHelpers.generateNewTemplateDropdown "custom-field-formula-field-editor", "custom_field_conf_formula_field_editor",
-    custom_dropdown_class: "dropdown-menu"
+    custom_dropdown_class: "dropdown-menu animate slideIn shadow-lg border-0 p-3"
     custom_bound_element_options:
       close_button_html: null
 
@@ -127,7 +127,7 @@ APP.executeAfterAppLibCode ->
 
     $(".bg-color-selector", $option_dom).data("color_picker_controller", color_picker_controller)
 
-    color_picker_dropdown_node = 
+    color_picker_dropdown_node =
       APP.helpers.renderTemplateInNewNode("justdo_color_picker_dropdown", {color_picker_controller: color_picker_controller})
 
     $(".bg-color-selector", $option_dom).html color_picker_dropdown_node.node
@@ -189,7 +189,7 @@ APP.executeAfterAppLibCode ->
       begin_value = null
     else
       begin_value = parseFloat(begin_value)
-    
+
     end_value = $end_input.val().trim()
     if end_value is ""
       end_value = null
@@ -201,12 +201,12 @@ APP.executeAfterAppLibCode ->
     if _.isNaN(range[0]) or _.isNaN(range[1])
       alert("Invalid begin/end values given to filter.")
 
-      return    
+      return
 
     if range[0]? and range[1]? and range[0] > range[1]
       alert("Filter's Begin value can't be bigger than End value.")
 
-      return    
+      return
 
     if not range[0]? and not range[1]?
       alert("Filter must have either Begin or End value.")
