@@ -41,9 +41,6 @@
 </template>
 
 <template name="project_header_global_layout_header_middle">
-  <!-- <div class="project-page-global-layout-header-middle">
-    {{> project_name}}
-  </div> -->
   {{> project_name}}
 </template>
 
@@ -65,7 +62,7 @@
 
   <input type="text" id="project-name"
          disabled={{#unless is_project_admin}}"disabled"{{/unless}}
-         class="{{#if project_is_untitled}}untitled{{/if}}"
+         class="{{#if project_is_untitled}}untitled{{/if}} form-control text-dark"
          placeholder="Untitled JustDo"
          value="{{project_title}}"
   >
@@ -74,46 +71,47 @@
 <template name="project_settings">
   <div id="project-settings-dropdown" class="dropdown">
     <div id="settingsDropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <i class="fa fa-cog settings-button" title="Settings" ></i>
+      <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg>
     </div>
 
-    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="settingsDropdown">
-      <li id="register-project-for-daily-email" class="dropdown-item">
+    <ul class="dropdown-menu dropdown-menu-right px-3 animate slideIn shadow-lg border-0" aria-labelledby="settingsDropdown">
+      <li id="register-project-for-daily-email" class="dropdown-item d-flex align-items-center px-1">
       {{#if isSubscribedToDailyEmail}}
-        <i class="fa fa-toggle-on fa-fw"></i>
+        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
       {{else}}
-        <i class="fa fa-toggle-off fa-fw"></i>
+        <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
       {{/if}}
       Email daily updates for this JustDo</li>
 
-      <li class="dropdown-item email-notifications">
+      <li class="dropdown-item email-notifications d-flex align-items-center px-1">
       {{#if isSubscribedToEmailNotifications}}
-        <i class="fa fa-toggle-on fa-fw"></i>
+        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
       {{else}}
-        <i class="fa fa-toggle-off fa-fw"></i>
+        <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
       {{/if}}
       Email ownership transfer notifications</li>
-
       {{#if showRolesAndGroupsManager}}
-        <li class="roles-and-groups-manager dropdown-item">
+        <li class="roles-and-groups-manager dropdown-item d-flex align-items-center">
           <i class="fa fa-users fa-fw" aria-hidden="true"></i> Roles &amp; Groups Manager
         </li>
       {{/if}}
 
       {{#if customJustdoSaveDefaultViewEnabled}}
-        <li class="reset-default-views-columns item">
-          <i class="fa fa-window-restore fa-fw" aria-hidden="true"></i> Reset Default Views columns
+      <hr class="my-2 border-light">
+        <li class="reset-default-views-columns dropdown-item d-flex align-items-center px-1">
+          <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#x-square"/></svg>Reset Default Views columns
         </li>
 
         {{#if is_project_admin}}
-          <li class="set-current-columns-structure-as-default item">
-            <i class="fa fa-columns fa-fw" aria-hidden="true"></i> Set Current Columns Structure as Default
+          <li class="set-current-columns-structure-as-default dropdown-item d-flex align-items-center px-1">
+            <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#layout"/></svg>Set Current Columns Structure as Default
           </li>
         {{/if}}
+      <hr class="my-2 border-light">
       {{/if}}
 
       {{#if is_project_admin}}
-        <li id="project-config" class="dropdown-item"><i class="fa fa-crosshairs fa-fw" aria-hidden="true" ></i> Configure this JustDo</li>
+        <li id="project-config" class="dropdown-item d-flex align-items-center px-1"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#sliders"/></svg> Configure this JustDo</li>
         {{> project_settings_dropdown_remove_project}}
       {{/if}}
     </ul>

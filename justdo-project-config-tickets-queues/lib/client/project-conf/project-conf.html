@@ -1,50 +1,25 @@
 <template name="justdo_project_config_tickets_queues_project_config">
   <div class="project-conf-justdo-project-config-tickets-queues-config">
-    <table class="table tq-fields-conf">
-      {{#with ticketsQueues}}
-        {{#each this}}
-          {{> ticket_queue_conf}}
-        {{/each}}
-      {{/with}}
-
-      <tr>
-        <th colspan="4" class="add-new-tq-field-header">
-          Add New Ticket Queue
-        </th>
-      </tr>
-
-      <tr class="add-new">
-        <td class="tq-task-seqId p-0">
-          <input class="new-tq-seqId field-label" placeholder="Enter task number" maxlength="30" />
-        </td>
-        <td class="tq-field-action add">
-          {{#if showAddButton}}
-            ADD
-          {{/if}}
-        </td>
-      </tr>
-    </table>
+    {{#with ticketsQueues}}
+      {{#each this}}
+        {{> ticket_queue_conf}}
+      {{/each}}
+    {{/with}}
+    <div class="add-new-tq font-weight-bold text-body text-uppercase mt-4 mb-1">Add New Ticket Queue</div>
+    <div class="d-flex align-items-center">
+      <input class="new-tq-seqId form-control form-control-sm" placeholder="Enter task number" maxlength="30">
+      <button class="add btn btn-primary btn-sm ml-2">ADD</button>
+    </div>
   </div>
 </template>
 
 <template name="ticket_queue_conf">
-  <tr task-id="{{_id}}" class="tq-row">
-    <td class="tq-task-container">
-      <div class="tq-task">
-        <b>#{{seqId}}:</b> {{title}}
-      </div>
-    </td>
-    <td class="tq-field-action">
-      <div class="tq-remove-btn tooltip-container">
-        <i class="fa fa-fw fa-trash-o remove {{#if isRemovable}}removable{{/if}}" aria-hidden="true"></i>
-
-        {{#if $not isRemovable}}
-          <div class="tooltip-content tooltip-left">
-            You can't remove this Ticket Queue, since you aren't member of its Task
-          </div>
-        {{/if}}
-      </div>
-
-    </td>
-  </tr>
+  <div class="tq-task-item d-flex align-items-center py-2" task-id="{{_id}}">
+    <div class="tq-task w-75"><b>#{{seqId}}:</b> {{title}}</div>
+    {{#if isRemovable}}
+      <svg class="jd-icon-tq-task remove removable text-primary ml-auto"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+    {{else}}
+      You can't remove this Ticket Queue, since you aren't member of its Task
+    {{/if}}
+  </div>
 </template>

@@ -1,9 +1,10 @@
 <template name="meetings_config">
-  <div class="project-conf-meetings-config">
+  <div class="project-conf-meetings-config py-2 d-flex align-items-center">
+    Meetings
     {{#if isModuleEnabled}}
-      <i class="fa fa-toggle-on" aria-hidden="true"></i>
+      <svg class="jd-icon-extension text-primary ml-auto"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
     {{else}}
-      <i class="fa fa-toggle-off" aria-hidden="true"></i>
-    {{/if}} Meetings
+      <svg class="jd-icon-extension text-secondary ml-auto"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+    {{/if}}
   </div>
 </template>

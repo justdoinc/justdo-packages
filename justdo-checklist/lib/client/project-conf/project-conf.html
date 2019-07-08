@@ -1,9 +1,10 @@
 <template name="justdo_checklist_project_config">
-  <div class="project-conf-justdo-checklist-config">
+  <div class="project-conf-justdo-checklist-config py-2 d-flex align-items-center">
+    {{pluginName}}
     {{#if isModuleEnabled}}
-      <i class="fa fa-toggle-on" aria-hidden="true"></i>
+      <svg class="jd-icon-extension text-primary ml-auto"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
     {{else}}
-      <i class="fa fa-toggle-off" aria-hidden="true"></i>
-    {{/if}} {{pluginName}}
+      <svg class="jd-icon-extension text-secondary ml-auto"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+    {{/if}}
   </div>
 </template>

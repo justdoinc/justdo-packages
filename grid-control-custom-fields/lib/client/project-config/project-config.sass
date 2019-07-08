@@ -1,62 +1,45 @@
-[section-id="custom-fields"]
-  .custom-fields-conf
-    font-size: 14px
-  .custom-fields-conf th
-    color: #68757b
-    border-top: none
-    padding: 0.3rem 0
-
-  .custom-fields-conf tr
-    border-bottom: 1px dotted #eeeeee
-
-    &.add-new
-      border-bottom: none
-      background: rgba(221, 230, 244, 0.5)
-
-  .custom-fields-conf td
-    padding: 0
-    vertical-align: middle
-
-  .custom-field-label
-    width: 70%
-    overflow: auto
-
-  .custom-field-type
-    color: #888888
-
-  .custom-field-action
-    padding-right: 15px
-
-  .add-new-custom-field-header
-    padding-top: 7px
-    padding-bottom: 2px
-
-  .field-label
-    border: none
-    margin: 5px 0px 5px 4px
-    padding: 2px 5px
-    background: rgba(43, 113, 207, 0.1)
-    border-radius: 2px
-    width: 95%
-    &::placeholder
-      color: #5a82b9
-    &:focus
-      outline: none
-
-  .remove
-    cursor: pointer
-    color: rgba(43, 113, 207, 0.7)
-    font-size: 17px
-
-    &:hover
-      color: #2b71cf
-
-  .add
-    cursor: pointer
-    color: #2b71cf
-    font-size: 17px
-
+.custom-field-item
+  transition: all 0.2s linear
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.12)
+  &:first-child
+    border-top: 1px dashed rgba(0, 0, 0, 0.12)
+  &:hover
+    .field-label
+      background-color: rgba(0, 0, 0, 0.02) !important
+    color: black
   .sort-handle
-    color: rgba(43, 113, 207, 0.7)
+    width: 14px
+    height: 14px
+    opacity: 0.6
     cursor: move
-    font-size: 11px
+    &:hover
+      stroke: black
+.custom-field-label
+  .field-label
+    font-size: 15px
+    transition: all 0.2s linear
+    &:focus
+      background-color: rgba(0, 0, 0, 0.02) !important
+.custom-field-type
+  padding: 4px 10px
+.custom-field-type-label
+  font-size: 12px
+.custom-field-type-divider
+  height: 14px
+  opacity: 0.25
+.jd-icon-custom-field
+  cursor: pointer
+  stroke: currentColor
+  stroke-width: 2
+  stroke-linecap: round
+  stroke-linejoin: round
+  fill: none
+  width: 16px
+  height: 16px
+  transition: all 0.2s linear
+  opacity: 0.8
+  &:hover
+    opacity: 1
+    transform: scale(1.05)
+.add-new-field
+  font-size: 12px

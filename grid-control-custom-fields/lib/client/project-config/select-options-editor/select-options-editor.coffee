@@ -12,7 +12,7 @@ APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
   module.CustomFieldSelectOptionsEditor = JustdoHelpers.generateNewTemplateDropdown "custom-field-select-options-editor", "custom_field_conf_select_options_editor",
-    custom_dropdown_class: "dropdown-menu"
+    custom_dropdown_class: "dropdown-menu animate slideIn shadow-lg border-0 p-3"
     custom_bound_element_options:
       close_button_html: null
 
@@ -105,13 +105,11 @@ APP.executeAfterAppLibCode ->
   #
   appendOptionToEditor = ($options_list, option_id, option_label, option_background_color) ->
     $option_dom = $("""
-      <div class="custom-field-option" option-id="#{option_id}">
-        <div class="option-handle">
-          <i class="fa fa-bars" aria-hidden="true"></i>
-        </div>
-        <div class="option-label"><input type="text" placeholder="Label name" value="#{option_label}" /></div>
+      <div class="custom-field-option d-flex align-items-center" option-id="#{option_id}">
+        <svg class="jd-icon-custom-field text-muted option-handle"><use xlink:href="/layout/icons-feather-sprite.svg#menu"/></svg>
+        <input class="option-label form-control form-control-sm border-0 bg-transparent text-body my-1 ml-1" type="text" placeholder="Label name" value="#{option_label}">
         <div class="bg-color-selector">#{option_background_color}</div>
-        <div class="remove-option" title="Remove option"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+        <svg class="jd-icon-custom-field text-primary remove-option"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
       </div>
     """)
 
@@ -122,7 +120,7 @@ APP.executeAfterAppLibCode ->
 
     $(".bg-color-selector", $option_dom).data("color_picker_controller", color_picker_controller)
 
-    color_picker_dropdown_node = 
+    color_picker_dropdown_node =
       APP.helpers.renderTemplateInNewNode("justdo_color_picker_dropdown", {color_picker_controller: color_picker_controller})
 
     $(".bg-color-selector", $option_dom).html color_picker_dropdown_node.node
@@ -179,8 +177,7 @@ APP.executeAfterAppLibCode ->
 
     option_id = Random.id()
 
-    option_background_color =
-      tpl.new_option_color_picker_dropdown_controller.getSelectedColor()
+    option_background_color = Random.choice(available_colors)
 
     $custom_field_options = tpl.$(".custom-field-options")
     appendOptionToEditor($custom_field_options, option_id, option_label, option_background_color)
@@ -236,7 +233,7 @@ APP.executeAfterAppLibCode ->
 
       $(e.target).closest(".custom-field-select-options-editor-content").find(".custom-field-option").each ->
         option_id = $(this).attr("option-id")
-        option_label = $(this).find(".option-label input").val()
+        option_label = $(this).find(".option-label").val()
         bg_color = $(this).find(".bg-color-selector").data("color_picker_controller").getSelectedColor()
 
         select_options.push {option_id, label: option_label, bg_color: bg_color}

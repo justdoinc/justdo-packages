@@ -1,28 +1,25 @@
 <template name="custom_field_conf_select_options_editor_opener">
-  <div class="fa fa-cog custom-field-select-options-editor-opener" aria-hidden="true" field-id="{{field_id}}"></div>
+  <div class="custom-field-select-options-editor-opener d-flex align-items-center mr-1" aria-hidden="true" field-id="{{field_id}}">
+    <svg class="jd-icon-custom-field text-white" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg>
+  </div>
 </template>
 
 <template name="custom_field_conf_select_options_editor">
-  <div class="editor-caption">
-    Edit options
-  </div>
+  <div class="editor-caption font-weight-bold text-body text-uppercase">Edit options</div>
 
   <div class="custom-field-options"></div>
 
-  <div class="add-custom-field-option">
-    <div class="option-label"><input type="text" class="new-option-label" placeholder="Add option" /></div>
+  <div class="add-custom-field-option d-flex align-items-center py-2 mb-2">
+    <input type="text" class="new-option-label option-label form-control form-control-sm text-body mr-2" placeholder="Add option">
+    <!-- <div class="bg-color-selector">{{> justdo_color_picker_dropdown color_picker_controller=colorPickerDropdownController}}</div> -->
 
-    <div class="bg-color-selector">{{> justdo_color_picker_dropdown color_picker_controller=colorPickerDropdownController}}</div>
-
-    {{#if showAddButton}}
+    <!-- {{#if showAddButton}}
       <div class="add-option"><i class="fa fa-fw fa-check" aria-hidden="true"></i></div>
-    {{/if}}
+    {{/if}} -->
+    <svg class="jd-icon-custom-field text-primary add-option" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
   </div>
-  <div role="separator" class="divider"></div>
-
-  <div class="dropdown-filter-controls-container">
-    <button type="button" class="btn btn-xs btn-outline-secondary save">Save</button>
-    <button type="button" class="btn btn-xs btn-outline-secondary cancel">Cancel</button>
-    <div style="clear: both"></div>
+  <div class="text-right">
+    <button type="button" class="btn btn-primary btn-sm font-weight-bold cancel mr-1">CANCEL</button>
+    <button type="button" class="btn btn-primary btn-sm font-weight-bold save">SAVE</button>
   </div>
 </template>

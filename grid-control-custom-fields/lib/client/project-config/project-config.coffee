@@ -32,7 +32,6 @@ APP.executeAfterAppLibCode ->
       handle: ".sort-handle"
       items: ".custom-field-row"
       axis: "y"
-      helper: "clone"
       start: (event, ui) ->
         ui.helper.hide()
         ui.placeholder.html(ui.item.html()).css("visibility", "visible").find()
@@ -155,9 +154,9 @@ APP.executeAfterAppLibCode ->
     "click .remove": (e) ->
       project = module.curProj()
 
-      $tr = $(e.target).closest("tr")
-      field_id = $tr.attr("field-id")
-      field_label = $tr.find(".field-label").val()
+      $field_item = $(e.target).closest(".custom-field-item")
+      field_id = $field_item.attr("field-id")
+      field_label = $field_item.find(".field-label").val()
 
       bootbox.confirm "Are you sure you want to remove field <i>#{field_label}</i>?", (result) ->
         if result
@@ -178,9 +177,9 @@ APP.executeAfterAppLibCode ->
     "change .field-label": (e) ->
       project = module.curProj()
 
-      $tr = $(e.target).closest("tr")
-      field_id = $tr.attr("field-id")
-      field_label = $tr.find(".field-label").val()
+      $field_item = $(e.target).closest(".custom-field-item")
+      field_id = $field_item.attr("field-id")
+      field_label = $field_item.find(".field-label").val()
 
       custom_fields = project.getProjectCustomFields()
 

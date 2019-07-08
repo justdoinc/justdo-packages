@@ -1,78 +1,73 @@
 <template name="header">
   <nav class="navbar navbar-light border-bottom shadow-sm justify-content-between" style="width: {{getHeaderWidth}}px">
+    <div class="d-flex align-items-center">
+      <div class="drawer-icon mr-3" data-toggle="modal" data-target=".drawer"><span></span><span></span><span></span></div>
+      <a class="brand" href="/"></a>
+    </div>
+
+    {{#with middleHeaderTemplate}}
+      {{> UI.dynamic template=middleHeaderTemplate}}
+    {{/with}}
+
+    {{#if loginStateIs "logged-in"}}
       <div class="d-flex align-items-center">
-        <button class="navbar-toggler drawer-hamburger border-0" type="button"><span class="navbar-toggler-icon"></span></button>
-        <a class="brand" href="/"></a>
-      </div>
-
-      {{#with middleHeaderTemplate}}
-        {{> UI.dynamic template=middleHeaderTemplate}}
-      {{/with}}
-
-      {{#if loginStateIs "logged-in"}}
-        <ul class="nav">
-          {{#each globalRightNavbarItems}}
-            {{#if template}}
-              {{> Template.dynamic template=template data=template_data}}
-            {{else if html}}
-              {{{html}}}
-            {{/if}}
-          {{/each}}
-
-          <li>
-            {{#with rightHeaderTemplate}}
-              {{> UI.dynamic template=rightHeaderTemplate}}
-            {{/with}}
-          </li>
-
-          {{> loginButtons}}
-        </ul>
-      {{/if}}
-
-
-    <nav class="drawer-nav" role="navigation">
-      <div class="drawer-brand d-flex align-items-center">
-        <button class="navbar-toggler drawer-hamburger border-0" type="button"><span class="navbar-toggler-icon"></span></button>
-        <a href="/"><img src="/layout/logos-ext/justdo_logo_with_text_webapp_navbar.png" alt="justDo"></a>
-      </div>
-
-      <div class="drawer-pages-menu">
-        {{#each drawerPagesMenuItems}}
-          <div class="menu-item">
-            {{#if template}}
-              {{> Template.dynamic template=template data=template_data}}
-            {{else if html}}
-              {{{html}}}
-            {{/if}}
-          </div>
-        {{/each}}
-
-        <div class="menu-item">
-          <i class="fa fa-fw fa-th-large icons" aria-hidden="true"></i>JustDos
-
-          <div class="create-new-project" title="Create a new JustDo">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="drawer-projects-list list-group" style="top: {{drawerProjectsListTop}}px">
-        {{#each projects}}
-          <a href="/p/{{_id}}" class="list-group-item">{{title}}</a>
-        {{/each}}
-      </div>
-      <div class="drawer-footer">
-        {{#each drawerBottomMenuItems}}
+        {{#each globalRightNavbarItems}}
           {{#if template}}
             {{> Template.dynamic template=template data=template_data}}
           {{else if html}}
             {{{html}}}
           {{/if}}
         {{/each}}
+
+        {{#with rightHeaderTemplate}}
+          {{> UI.dynamic template=rightHeaderTemplate}}
+        {{/with}}
+
+        {{> loginButtons}}
       </div>
-    </nav>
-    <div class="drawer-overlay"></div>
+    {{/if}}
   </nav>
+
+  <div class="modal left fade drawer" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-0 border-0">
+        <div class="modal-body">
+          <ul class="list-group list-group-flush">
+            <div class="list-group-item projects-header text-primary h5 px-0 py-2 font-weight-bold d-flex justify-content-between align-items-center">
+              JustDos
+              <svg class="create-new-project text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+            </div>
+            {{#each projects}}
+              <a href="/p/{{_id}}" class="list-group-item list-group-item-action project-item px-0 py-2">{{title}}</a>
+            {{/each}}
+          </ul>
+          {{#with drawerPagesMenuItems}}
+            <div>
+              DRAWER PAGES MENU
+              {{#each this}}
+                <div class="menu-item">
+                  {{#if template}}
+                    {{> Template.dynamic template=template data=template_data}}
+                  {{else if html}}
+                    {{{html}}}
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+          {{/with}}
+        </div>
+        <div class="modal-footer px-0 py-3 d-flex justify-content-center">
+          {{#each drawerBottomMenuItems}}
+            {{#if template}}
+              {{> Template.dynamic template=template data=template_data}}
+            {{else if html}}
+              {{{html}}}
+            {{/if}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container-fluid global-messages" style="width: {{getWindowWidth}}px">
     {{> status}}
     {{> timesync_status}}

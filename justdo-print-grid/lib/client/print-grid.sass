@@ -1,41 +1,11 @@
 .print-dropdown
-  float: right
-
-  .dropdown-toggle
-    line-height: 24px
-    font-size: 24px
-    margin-top: 2px
-    margin-right: 8px
-    color: #333333
-    cursor: pointer
-    &::after
-      display: none
-
-  .dropdown-menu
-    margin-top: 9px !important // We had to add this in the transition to bootstrap3 without modifications (due to media query in the default bootstrap3 that affects small screens), should avoid in the future
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
-
-  .dropdown-header,
-  .dropdown-menu li a
-    padding: 3px 9px !important // We had to add this in the transition to bootstrap3 without modifications (due to media query in the default bootstrap3 that affects small screens), should avoid in the future
-    color: #333 !important // We had to add this in the transition to bootstrap3 without modifications (due to media query in the default bootstrap3 that affects small screens), should avoid in the future
-    font-size: 14px
-    white-space: nowrap
-    display: block
-    &:hover
-      text-decoration: none
-      background-color: #f5f5f5
-
-  .dropdown-header
-    font-size: 12px
-    line-height: 1.4
-
-  .print-dropdown-item
+  .dropdown-item
     i
       display: inline-block
       margin: 0 3px
       width: 16px
       height: 11px
+      margin-right: 8px
       background-image: url(/packages/justdoinc_justdo-print-grid/media/icons.png)
     &.visible-tasks
       i

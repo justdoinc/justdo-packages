@@ -1,11 +1,3 @@
-# If you want to change the vars below, update corresponding
-# header.sass vars oh header.sass as well.
-drawer_brand_height = 46
-drawer_top_menu_padding_top = 10
-drawer_top_menu_padding_bottom = 0
-drawer_top_menu_item_vertical_padding = 4
-drawer_top_menu_item_height = 22 + (drawer_top_menu_item_vertical_padding * 2)
-
 APP.executeAfterAppLibCode ->
   main_module = APP.modules.main
   project_page_module = APP.modules.project_page
@@ -52,14 +44,9 @@ APP.executeAfterAppLibCode ->
     position: 200
 
   Template.header.events
-    "click .drawer-hamburger": (e, tmpl) ->
-      $(".global-wrapper").addClass "drawer-open"
-
-    "click .drawer-nav": (e, tmpl) ->
-      $(".global-wrapper").removeClass "drawer-open"
-
-    "click .drawer-overlay": (e, tmpl) ->
-      $(".global-wrapper").removeClass "drawer-open"
-
     "click .create-new-project":(e, tmpl) ->
       APP.projects.createNewProject({}, (err, project_id) -> Router.go "project", {_id: project_id})
+      $(".drawer").modal "hide"
+
+    "click .project-item":(e, tmpl) ->
+      $(".drawer").modal "hide"

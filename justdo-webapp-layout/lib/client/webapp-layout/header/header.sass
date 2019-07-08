@@ -1,165 +1,133 @@
 @import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
 
-$drawer-brand-height: 46px
-$drawer-footer-height: 85px
-
-.header
-  margin: 0
-  user-select: none
-  background: white
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
-  border: 0px
+nav.navbar
   z-index: 100
 
-nav.navbar
-  padding: 4px 12px 4px 0px
-
-.drawer-hamburger
-  border: 0px
-  display: block
-  margin: 0
-  cursor: pointer
-
-  .navbar-toggler-icon
-    width: 24px
-    height: 24px
-    margin-right: 5px
-
+.jd-icon
+  stroke: currentColor
+  stroke-width: 2
+  stroke-linecap: round
+  stroke-linejoin: round
+  fill: none
+  width: 24px
+  height: 24px
+  padding: 2px
+  margin: 0px 4px
+  transition: all 0.2s linear
+  border-radius: 4px
   &:hover
-    background: none
+    stroke: black
+    background-color: rgba(0, 0, 0, 0.08)
+    transform: scale(1.05)
 
-  .container-fluid > &
-    margin-left: -14px
-
-  .drawer-brand > &
-    margin-left: -16px
-
-.drawer-nav
-  position: fixed
-  z-index: 200
-  top: 0
-  left: -270px
-  overflow: hidden
-  width: 270px
-  height: 100%
-  transition: left .6s cubic-bezier(0.190,1.000,0.220,1.000)
-  background-color: white
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2)
-
-.drawer-brand
-  height: $drawer-brand-height
-  padding: 10px 17px
-  border-bottom: 1px solid #e1e1e1
-
-  cusor: default
-  user-select: none
-
-  width: 100%
-
-  a
-    display: block
-    width: 100px
-
-  img
-    width: 100px
-    margin-left: 2px
-
-$drawer-pages-menu-padding-top: 10px
-$drawer-pages-menu-padding-bottom: 0
-$drawer-pages-menu-item-vertical-padding: 4px
-$drawer-pages-menu-item-height: 22px + ($drawer-pages-menu-item-vertical-padding * 2)
-.drawer-pages-menu
-  padding: $drawer-pages-menu-padding-top 16px $drawer-pages-menu-padding-bottom 13px
-  background-color: white
-  font-size: 16px
-
-  position: relative
-
-  .icons
-    color: #2c71cf
-
-  .menu-item
-    position: relative
-    padding: $drawer-pages-menu-item-vertical-padding 0
-
-    .icons
-      margin-right: 6px
-
-.create-new-project
-  cursor: pointer
-  font-size: 14px
-
-  position: absolute
-  right: -6px
-  top: 1px
+.jd-icon-dropdown
+  stroke: currentColor
+  stroke-width: 2
+  stroke-linecap: round
+  stroke-linejoin: round
+  fill: none
   width: 20px
-  height: 21px
-  padding-left: 4px
+  height: 20px
+  padding: 1px
+  margin-right: 12px
 
-  .fa
-    color: #2c71cf
+.dropdown-item:active
+  .jd-icon-dropdown
+    stroke: white
 
-.drawer-projects-list
-  overflow-y: auto
-  position: absolute
-  // Top is calculated in the coffee level
-  bottom: $drawer-footer-height
-  left: 0
-  right: 0
-  margin: 0px
-  a
-    padding: 6px 20px 6px 40px
-    border: none
+.jd-c-pointer
+  cursor: pointer
+
+.animate
+  animation-duration: 0.3s
+  animation-fill-mode: both
+
+@keyframes slideIn
+  0%
+    transform: translateY(0rem)
+    opacity: 0
+
+  100%
+    transform: translateY(1rem)
+    opacity: 1
+
+  0%
+    transform: translateY(0rem)
+    opacity: 0
+
+.slideIn
+  animation-name: slideIn
+
+.slideIn.show
+  top: 20px !important
+
+.drawer-icon
+  width: 20px
+  opacity: 0.6
+  transition: opacity 0.2s linear
+  cursor: pointer
+  span
+    width: 100%
+    height: 2px
+    background-color: black
+    display: block
+    margin: 4px 0px
+    border-radius: 4px
+  &:hover
+    opacity: 1
+
+
+.drawer
+  &.modal.left .modal-dialog
+    position: fixed
+    margin: auto
+    width: 320px
+    height: 100%
+    transform: translate3d(0%, 0, 0)
+  &.modal.left .modal-content
+    height: 100%
+    overflow-y: auto
+  &.modal.left.fade .modal-dialog
+    left: -320px
+    transition: opacity 0.1s linear, left 0.1s cubic-bezier(0.190,1.000,0.220,1.000)
+  &.modal.left.fade.show .modal-dialog
+    left: 0
+  .project-item
+    border-style: dotted
+    border-color: #E6EEF9
+    transition: all 0.2s linear
     white-space: nowrap
     overflow: hidden
-    -o-text-overflow: ellipsis
     text-overflow: ellipsis
-
-.drawer-pages-menu
-  a
-    color: #333
-
     &:hover
-      text-decoration: none
-  i
-    color: #2c71cf
-
-.drawer-footer
-  padding: 15px 20px
-  border-top: 1px solid #e1e1e1
-  background-color: white
-  position: absolute
-  bottom: 0px
-  left: 0
-  right: 0
-  a
-    width: 100%
-    display: block
-    font-size: 16px
-    margin-bottom: 10px
+      color: black
+  .projects-header + .project-item
+    border-top: 1px solid #E6EEF9
+  .create-new-project
+    border-radius: 2px
+    box-shadow: 0px 0px 3px transparent
+    padding: 2px
+    transition: all 0.2s linear
+    stroke: currentColor
+    stroke-width: 2
+    stroke-linecap: round
+    stroke-linejoin: round
+    fill: none
+    width: 22px
+    height: 22px
+    cursor: pointer
+    &:hover
+      background-color: rgba(0, 123, 255, 0.12)
+  .modal-body
+    overflow-y: auto
+    padding: 1.2rem 2rem
+  .modal-footer
+    font-size: 13px
     color: black
-
-    &:last-child
-      margin-bottom: 0
-  i
-    color: #2c71cf
-    margin-right: 6px
-
-.drawer-overlay
-  position: fixed
-  top: 0
-  bottom: 0
-  left: 0
-  right: 0
-  background: rgba(255, 255, 255, 0)
-  z-index: 100
-  display: none
-
-.drawer-open
-  .drawer-nav
-    left: 0
-  .drawer-overlay
-    display: block
+    margin: 0rem 2rem
+    border-color: #E6EEF9
+    i
+      display: none
 
 .navbar-nav > li > a
     padding-left: 10px
@@ -173,23 +141,13 @@ $drawer-pages-menu-item-height: 22px + ($drawer-pages-menu-item-vertical-padding
   width: 100px
   height: 26px
 
-#login-dropdown-list
-  a
-    margin-top: -1px
-    &::after
-      display: none
-
-  #forgot-password-link, #signup-link
-    padding: 0 2px
-    clear: none
-
-  img
-  	float: left
-  	margin: -4px 6px 0 0px
+#forgot-password-link, #signup-link
+  padding: 0 2px
+  clear: none
 
 .global-messages
   position: fixed
-  z-index: 15
+  z-index: 99999
   width: 100%
 
   .alert:first-child

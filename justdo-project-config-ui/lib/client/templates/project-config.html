@@ -1,15 +1,15 @@
 <template name="project_config_dialog">
   <div class="project-config-dialog-container">
     {{#each sections}}
-      <section section-id="{{id}}">
-        {{#if title}}<h3>{{title}}</h3>{{/if}}
+      <div class="p-4" section-id="{{id}}">
+        {{#if title}}<div class="h6 font-weight-bold text-primary text-uppercase">{{title}}</div>{{/if}}
 
         {{#each templates}}
           <div class="controller-template" controller-template-id="{{id}}">
             {{> UI.dynamic template=template}}
           </div>
         {{/each}}
-      </section>
+      </div>
     {{/each}}
   </div>
 </template>

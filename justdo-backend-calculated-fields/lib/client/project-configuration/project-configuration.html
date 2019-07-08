@@ -1,9 +1,10 @@
 <template name="backend_calculated_fields_config">
-  <div class="project-conf-backend-calculated-fields-config">
+  <div class="project-conf-backend-calculated-fields-config py-2 d-flex align-items-center">
+    Calculated Due Dates
     {{#if isModuleEnabled}}
-      <i class="fa fa-toggle-on" aria-hidden="true"></i>
+      <svg class="jd-icon-extension text-primary ml-auto"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
     {{else}}
-      <i class="fa fa-toggle-off" aria-hidden="true"></i>
-    {{/if}} Calculated Due Dates
+      <svg class="jd-icon-extension text-secondary ml-auto"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+    {{/if}}
   </div>
 </template>
