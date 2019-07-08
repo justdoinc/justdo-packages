@@ -1,9 +1,9 @@
 <template name="_loginDropdownNameAndEmailArea">
   {{#with currentUser}}
-    <div class="dropdown-info-name">{{displayName}}</div>
-    <div class="dropdown-info-email">{{currentUserMainEmail}}</div>
+    <div class="dropdown-info-name font-weight-bold">{{displayName}}</div>
+    <div class="dropdown-info-email text-secondary text-uppercase">{{currentUserMainEmail}}</div>
     {{#if $not isUserEmailsVerified}}
-        <div class="verify-your-email"><span class="unverified-email-warn" title="Unverified Email"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span> Please verify your email address</div>
+      <div class="verify-your-email"><span class="unverified-email-warn" title="Unverified Email"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span> Please verify your email address</div>
     {{/if}}
   {{/with}}
 </template>

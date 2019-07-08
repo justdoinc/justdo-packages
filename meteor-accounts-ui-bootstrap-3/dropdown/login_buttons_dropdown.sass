@@ -1,12 +1,11 @@
 #login-dropdown-list
-  .dropdown-toggle
-    display: block
-    margin-right: 0px
-    margin-top: 7px
-    margin-left: 12px
-
+  .user-dropdown-toggle
+    transition: box-shadow 0.15s ease-in-out
+    &:hover
+      box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.08)
+    &:active
+      box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.12)
     img
-      margin-right: 0
       width: 33px
       height: 33px
 
@@ -17,15 +16,6 @@
       transition: filter .10s ease-in-out
 
   .dropdown-menu
-    width: 455px
-    padding: 0px
-    margin-right: 10px
-    border-radius: 3px
-
-    .dropdown-content
-      padding: 20px
-      position: relative
-
     // Style for settings view
     &.settings
       width: 300px
@@ -98,20 +88,9 @@
     //     height: 25px
 
 .dropdown-info-btn
-  margin: 5px 1px 2px
-  span.dot
-    padding-right: 2px
-    padding-left: 2px
-    font-size: 12px
-    color: #a7a7a7
-    &::after
-      content: "·"
-  span
-    font-size: 15px
-    color: #337ab7
-    cursor: pointer
-    &:hover
-      text-decoration: underline
+  .dropdown-info-divider
+    width: 1px
+    opacity: 0.2
 
 .affiliates-console-btn-container
   margin: 14px 1px 2px
@@ -125,13 +104,6 @@
     cursor: pointer
     &:hover
       text-decoration: underline
-
-#login-buttons-logout
-  width: 120px
-  margin-top: 8px
-
-.login-buttons-global-settings
-  margin-bottom: 8px
 
 .return-arrow
   width: 22px
@@ -147,23 +119,9 @@
 
 // Style for settings, password view
 .dropdown-menu
-  &.settings,
-  &.password
+  &.settings
     .dropdown-avatar
-      border: none
-      padding: 0px
-      left: 0
-      right: 0
-      margin-left: auto
-      margin-right: auto
-      display: block
-      .dropdown-user-avatar
-        left: 0
-        right: 0
-
-  &.password
-    .dropdown-avatar
-      margin-bottom: 15px
+      margin: 0px 0px 15px 0px !important
 
 .dropdown-info
   .action-buttons

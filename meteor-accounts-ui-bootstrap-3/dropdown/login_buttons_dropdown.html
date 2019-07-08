@@ -2,14 +2,14 @@
 <!-- LOGGED IN -->
 <!--           -->
 <template name="_loginButtonsLoggedInDropdown">
-  <li id="login-dropdown-list" class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown">
+  <div id="login-dropdown-list" class="dropdown">
+    <div class="user-dropdown-toggle ml-2 jd-c-pointer rounded-circle" data-toggle="dropdown">
       {{#with user}}
         {{> justdo_avatar}}
       {{/with}}
-    </a>
-    <div class="dropdown-menu dropdown-menu-right {{#if inSettingsEditingFlow}}settings{{/if}}">
-      <div class="dropdown-content">
+    </div>
+    <div class="dropdown-menu dropdown-menu-right animate slideIn shadow-lg border-0 p-0 {{#if inSettingsEditingFlow}}settings{{/if}}">
+      <div class="dropdown-content d-flex p-4 {{#if inSettingsEditingFlow}}flex-column{{/if}}">
       {{#if inMessageOnlyFlow}}
         {{> _loginButtonsMessages}}
       {{else}}
@@ -53,7 +53,7 @@
       {{/if}}
       </div>
     </div>
-  </li>
+  </div>
 </template>
 
 <template name="_loginButtonsLoggedInDropdownActions">
@@ -61,12 +61,12 @@
     {{> _loginButtonsAdditionalLoggedInDropdownActions}}
   {{/if}}
 
-  <div class="dropdown-info-btn">
-    <span class="info-btn-settings login-buttons-global-settings">Account Preferences</span>
-    <span class="dot"></span>
-    <span class="info-btn-privacy"><a href="{{landingAppRootUrl}}/privacy-policy" target="_blank">Privacy</a></span>
-    <span class="dot"></span>
-    <span class="info-btn-terms"><a href="{{landingAppRootUrl}}/terms-and-conditions" target="_blank">Terms</a></span>
+  <div class="dropdown-info-btn d-flex my-1">
+    <a href="#" class="info-btn-settings login-buttons-global-settings text-nowrap">Account Preferences</a>
+    <div class="dropdown-info-divider bg-primary my-1 mx-2"></div>
+    <a href="{{landingAppRootUrl}}/privacy-policy" class="info-btn-privacy" target="_blank">Privacy</a>
+    <div class="dropdown-info-divider bg-primary my-1 mx-2"></div>
+    <a href="{{landingAppRootUrl}}/terms-and-conditions" class="info-btn-terms" target="_blank">Terms</a>
   </div>
 
   {{#if isAffiliate}}
@@ -79,8 +79,7 @@
     </div>
   {{/if}}
 
-  <button class="btn btn-outline-secondary" id="login-buttons-logout">
-    <i class="fa fa-sign-out" aria-hidden="true"></i>
+  <button class="btn btn-sm btn-secondary text-uppercase shadow-sm font-weight-bold mt-2" id="login-buttons-logout">
     {{i18n 'loginButtonsLoggedInDropdownActions.signOut'}}
   </button>
 </template>

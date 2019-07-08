@@ -1,6 +1,6 @@
 <template name="_loginDropdownAvatarArea">
   {{#with currentUser}}
-    <div class="dropdown-avatar">
+    <div class="dropdown-avatar mr-4 d-flex justify-content-center align-items-center">
       <div class="dropdown-user-avatar {{#if $not avatarUploadAllowed}}disable-avatar-upload{{/if}}" style="background-image: url('{{getProfilePic}}')">
         {{#if avatarUploadAllowed}}
           <span class="avatar-edit upload-new-profile-pic">
