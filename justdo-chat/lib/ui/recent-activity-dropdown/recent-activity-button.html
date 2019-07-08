@@ -1,6 +1,5 @@
 <template name="justdo_chat_recent_activity_button">
-  <li class="jdc-recent-activity-button-container">
-    <div class="recent-activity-button
+  <div class="nav-activity
                 {{#if $eq unread_count 0}}
                   no-unread
                 {{else}}
@@ -16,14 +15,13 @@
                   off-the-charts
                 {{/if}}
                 ">
-      <i class="fa fa-comments"></i>
-      <div class="unread-count">
-        {{#if $lte unread_count 99}}
-          {{unread_count}}
-        {{else}}
-          99+
-        {{/if}}
-      </div>
+    <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#message-circle"/></svg>
+    <div class="unread-count">
+      {{#if $lte unread_count 99}}
+        {{unread_count}}
+      {{else}}
+        99+
+      {{/if}}
     </div>
-  </li>
+  </div>
 </template>
