@@ -413,6 +413,8 @@ APP.executeAfterAppLibCode ->
         submit:
           label: "Save"
           callback: =>
+            project = module.curProj()
+
             if ($(".opened-by-members-managment-dialog").length > 0)
               # (It's a hack) Invite members dialog is open, can't save in that state
               return false
@@ -460,7 +462,7 @@ APP.executeAfterAppLibCode ->
                   users:
                     $in: members_to_remove
 
-              grid_data.bulkUpdate items_to_edit, members_remove_modifier
+              project.bulkUpdate items_to_edit, members_remove_modifier
 
             if not _.isEmpty members_to_add
               members_add_modifier =
@@ -468,7 +470,7 @@ APP.executeAfterAppLibCode ->
                   users:
                     $each: members_to_add
 
-              grid_data.bulkUpdate items_to_edit, members_add_modifier
+              project.bulkUpdate items_to_edit, members_add_modifier
 
             if not _.isEmpty items_to_assume_ownership_of
               ownership_update_modifier =
@@ -476,14 +478,14 @@ APP.executeAfterAppLibCode ->
                   owner_id: Meteor.userId()
                   pending_owner_id: null
 
-              grid_data.bulkUpdate items_to_assume_ownership_of, ownership_update_modifier
+              project.bulkUpdate items_to_assume_ownership_of, ownership_update_modifier
 
             if not _.isEmpty items_to_cancel_ownership_transfer_of
               ownership_transfer_cancel_modifier =
                 $set:
                   pending_owner_id: null
 
-              grid_data.bulkUpdate items_to_cancel_ownership_transfer_of, ownership_transfer_cancel_modifier
+              project.bulkUpdate items_to_cancel_ownership_transfer_of, ownership_transfer_cancel_modifier
 
             return true
 

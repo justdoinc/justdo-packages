@@ -43,6 +43,7 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
 
           callback: =>
             module = getProjectPageModule()
+            project = module.curProj()
 
             grid_control = module.gridControl()
             grid_data = module.gridData()
@@ -95,7 +96,7 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
                     users:
                       $in: members_ids_to_remove
 
-                grid_data.bulkUpdate items_to_edit, members_remove_modifier, cb
+                project.bulkUpdate items_to_edit, members_remove_modifier, cb
 
             if not _.isEmpty members_ids_to_add
               bulk_updates.push (cb) ->
@@ -104,7 +105,7 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
                     users:
                       $each: members_ids_to_add
 
-                grid_data.bulkUpdate items_to_edit, members_add_modifier, cb
+                project.bulkUpdate items_to_edit, members_add_modifier, cb
 
             if not _.isEmpty items_to_assume_ownership_of
               bulk_updates.push (cb) ->
@@ -113,7 +114,7 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
                     owner_id: Meteor.userId()
                     pending_owner_id: null
 
-                grid_data.bulkUpdate items_to_assume_ownership_of, ownership_update_modifier, cb
+                project.bulkUpdate items_to_assume_ownership_of, ownership_update_modifier, cb
 
             if not _.isEmpty items_to_cancel_ownership_transfer_of
               bulk_updates.push (cb) ->
@@ -121,7 +122,7 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
                   $set:
                     pending_owner_id: null
 
-                grid_data.bulkUpdate items_to_cancel_ownership_transfer_of, ownership_transfer_cancel_modifier, cb
+                project.bulkUpdate items_to_cancel_ownership_transfer_of, ownership_transfer_cancel_modifier, cb
 
             async.each bulk_updates,
               (bulk_update, cb) ->

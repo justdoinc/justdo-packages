@@ -780,6 +780,78 @@ _.extend Projects.prototype,
 
     return
 
+  bulkUpdate: (project_id, items_ids, modifier, user_id) ->
+    check project_id, String
+    check items_ids, [String]
+    # Modifier is thoroughly checked below
+    check user_id, String
+
+    @requireUserIsMemberOfProject project_id, user_id
+
+    #
+    # Validate inputs
+    #
+
+    # To avoid security risk, we are whitelisting the allowed bulkUpdates
+    allowed_modifiers = [
+      {
+        $pull:
+          users:
+            $in: [String]
+      }
+      {
+        $push:
+          users:
+            $each: [String]
+      }
+      {
+        $set:
+          owner_id: String
+          pending_owner_id: null
+      }
+      {
+        $set:
+          pending_owner_id: null
+      }
+    ]
+    check(modifier, Match.OneOf.apply(Match, allowed_modifiers))
+
+    #
+    # Exec
+    #
+
+    # Returns the count of changed items
+    selector = 
+      _id:
+        $in: items_ids
+      users: user_id
+      project_id: project_id
+
+    # We make sure that the middleware don't change this condition, too risky.
+    selector.users = user_id
+
+    # XXX in terms of security we rely on the fact that the user belongs to
+    # the requested items (see selector query) to let him/her do basically
+    # whatever action they like (worst case... he destory his own data.
+    # perhaps in the future we'd like to apply some more checks here.
+
+    added_users = []
+    removed_users = []
+
+    if (pushed_users = modifier.$push?.users?.$each)?
+      added_users = added_users.concat(pushed_users)
+
+    if (pulled_users = modifier.$pull?.users?.$in)?
+      removed_users = removed_users.concat(pulled_users)
+
+    if not _.isEmpty added_users
+      @_grid_data_com._setPrivateDataDocsFreezeState(added_users, items_ids, false)
+
+    if not _.isEmpty removed_users
+      @_grid_data_com._setPrivateDataDocsFreezeState(removed_users, items_ids, true)
+
+    return @_grid_data_com._bulkUpdateFromSecureSource(selector, modifier)
+
   removeMember: (project_id, member_id, user_id) ->
     if user_id != member_id # user can remove himself from project even if not admin
       @requireProjectAdmin(project_id, user_id)

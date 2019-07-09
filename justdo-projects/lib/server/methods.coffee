@@ -65,6 +65,15 @@ _.extend Projects.prototype,
 
         projects_object.removeMember project_id, member_id, @userId
 
+      bulkUpdate: (project_id, items_ids, modifier) ->
+        check project_id, String
+        check items_ids, [String]
+        # modifier is thoroughly verified by projects_object.bulkUpdate
+
+        projects_object.bulkUpdate project_id, items_ids, modifier, @userId
+
+        return
+
       postRegInit: ->
         projects_object.postRegInit @userId
 

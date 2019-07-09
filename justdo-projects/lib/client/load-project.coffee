@@ -77,6 +77,12 @@ _.extend Projects.prototype,
         Meteor.call "inviteMember", @id, invited_user, (err, user_id) ->
           cb(err, user_id)
 
+      bulkUpdate: (items_ids, modifier, cb) -> 
+        Meteor.call "bulkUpdate", @id, items_ids, modifier, (err) ->
+          return cb(err)
+
+        return
+
       removeMember: (member_id, cb) -> 
         Meteor.call "removeMember", @id, member_id, (err) ->
           cb(err)
