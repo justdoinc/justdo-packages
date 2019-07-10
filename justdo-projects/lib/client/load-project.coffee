@@ -79,7 +79,7 @@ _.extend Projects.prototype,
 
       bulkUpdate: (items_ids, modifier, cb) -> 
         Meteor.call "bulkUpdate", @id, items_ids, modifier, (err) ->
-          return cb(err)
+          return JustdoHelpers.callCb cb, err
 
         return
 

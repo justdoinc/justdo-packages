@@ -783,6 +783,17 @@ _.extend Projects.prototype,
   bulkUpdate: (project_id, items_ids, modifier, user_id) ->
     check project_id, String
     check items_ids, [String]
+    # Modifier is thoroughly checked by _bulkUpdate
+    check user_id, String
+
+    if not @processHandlers("BeforeBulkUpdateExecution", project_id, items_ids, modifier, user_id)
+      return
+
+    return @_bulkUpdate(project_id, items_ids, modifier, user_id)
+
+  _bulkUpdate: (project_id, items_ids, modifier, user_id) ->
+    check project_id, String
+    check items_ids, [String]
     # Modifier is thoroughly checked below
     check user_id, String
 
