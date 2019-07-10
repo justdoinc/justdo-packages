@@ -1,6 +1,8 @@
 Projects = (options) ->
   EventEmitter.call this
 
+  JustdoHelpers.setupHandlersRegistry(@)
+
   @main_logger_name = "Projects"
   @logger = Logger.get @main_logger_name
 
