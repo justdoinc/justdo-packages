@@ -26,6 +26,7 @@ APP.getEnv (env) ->
   options =
     projects_collection: APP.collections.Projects
     tasks_collection: APP.collections.Tasks
+    justdo_projects: APP.projects
 
   APP.custom_justdo_tasks_locks = new CustomJustdoTasksLocks(options)
 
