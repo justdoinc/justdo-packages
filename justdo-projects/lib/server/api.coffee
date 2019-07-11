@@ -895,22 +895,38 @@ _.extend Projects.prototype,
 
     @projects_collection.update project_id, update
 
-    # Remove member from all the project's tasks that has it
-
     #
-    # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-    # and to drop obsolete indexes (see FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_INDEX there)
+    # Take care of removing pending transfer requests to the user in the project tasks
     #
-    query =
+    remove_pending_ownership_transfer_query =
       users: member_id
       project_id: project_id
+      pending_owner_id: member_id
 
-    update =
-      $pull:
-        users: member_id
+    update_pending_ownership_transfer_query =
+      $set:
+        pending_owner_id: null
 
-    @_grid_data_com._bulkUpdateFromSecureSource(query, update)
-    @_grid_data_com._freezeAllProjectPrivateDataDocsForUsersIds(project_id, [member_id])
+    @_grid_data_com._bulkUpdateFromSecureSource remove_pending_ownership_transfer_query, update_pending_ownership_transfer_query, (err) =>
+      if not err?
+        # Remove member from all the project's tasks that has it
+
+        #
+        # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+        # and to drop obsolete indexes (see FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_INDEX there)
+        #
+        query =
+          users: member_id
+          project_id: project_id
+
+        update =
+          $pull:
+            users: member_id
+
+        @_grid_data_com._bulkUpdateFromSecureSource(query, update)
+        @_grid_data_com._freezeAllProjectPrivateDataDocsForUsersIds(project_id, [member_id])
+
+      return
 
     return
 
