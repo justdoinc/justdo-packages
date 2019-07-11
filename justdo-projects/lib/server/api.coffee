@@ -923,8 +923,12 @@ _.extend Projects.prototype,
           $pull:
             users: member_id
 
-        @_grid_data_com._bulkUpdateFromSecureSource(query, update)
-        @_grid_data_com._freezeAllProjectPrivateDataDocsForUsersIds(project_id, [member_id])
+        @_grid_data_com._bulkUpdateFromSecureSource query, update, (err) =>
+          @_grid_data_com._freezeAllProjectPrivateDataDocsForUsersIds(project_id, [member_id])
+
+          @processHandlers("AfterRemoveMember", project_id, member_id, user_id)
+
+          return
 
       return
 
