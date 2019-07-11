@@ -138,7 +138,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
             due_list_state: false
 
           "will-not-do":
-            txt: "Won't do"
+            txt: "Cancelled"
             order: 3
 
             due_list_state: false
