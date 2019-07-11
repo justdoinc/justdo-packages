@@ -881,7 +881,7 @@ _.extend GridDataCom.prototype,
 
     return
 
-  _bulkUpdateFromSecureSource: (query, modifier) ->
+  _bulkUpdateFromSecureSource: (query, modifier, cb) ->
     # Like bulkUpdate, but when we trust query and modifier completely!
 
     @_addRawFieldsUpdatesToUpdateModifier(modifier)
@@ -891,6 +891,9 @@ _.extend GridDataCom.prototype,
     return @collection.rawCollection().update query, modifier, {multi: true}, Meteor.bindEnvironment (err) ->
       if err?
         console.error(err)
+
+      JustdoHelpers.callCb cb, err
+
       return
 
   bulkUpdate: (items_ids, modifier, perform_as) ->
