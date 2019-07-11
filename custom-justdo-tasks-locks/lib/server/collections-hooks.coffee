@@ -4,6 +4,8 @@ _.extend CustomJustdoTasksLocks.prototype,
 
     @setupTasksLocks()
 
+    @setupUserRemovedFromProjectHook()
+
     return
 
   projectsInstallUninstallProcedures: ->
@@ -155,3 +157,20 @@ _.extend CustomJustdoTasksLocks.prototype,
       # We took control of the original bulkUpdate request, don't let the original bulkUpdate
       # request to continue! return false.
       return false
+
+  setupUserRemovedFromProjectHook: ->
+    @justdo_projects.register "AfterRemoveMember", (project_id, member_id, user_id) =>
+      query =
+        "#{CustomJustdoTasksLocks.locking_users_task_field}": member_id
+        project_id: project_id
+
+      update =
+        $pull:
+          "#{CustomJustdoTasksLocks.locking_users_task_field}": member_id
+
+      @justdo_projects._grid_data_com._bulkUpdateFromSecureSource query, update, (err) =>
+        return
+
+      return
+
+    return
