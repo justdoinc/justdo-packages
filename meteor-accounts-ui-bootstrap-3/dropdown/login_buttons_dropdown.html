@@ -69,19 +69,15 @@
     <a href="{{landingAppRootUrl}}/terms-and-conditions" class="info-btn-terms" target="_blank">Terms</a>
   </div>
 
-  {{#if isAffiliate}}
-    <div class="affiliates-console-btn-container">
-      <span>
-        <a class="affiliates-console-btn">
-          Promoter Console
-        </a>
-      </span>
-    </div>
-  {{/if}}
+  <div class="mt-2">
+    {{#if isAffiliate}}
+      <button class="btn btn-sm btn-primary text-uppercase shadow-sm font-weight-bold affiliates-console-btn mr-1">Promoter Console</button>
+    {{/if}}
 
-  <button class="btn btn-sm btn-secondary text-uppercase shadow-sm font-weight-bold mt-2" id="login-buttons-logout">
-    {{i18n 'loginButtonsLoggedInDropdownActions.signOut'}}
-  </button>
+    <button class="btn btn-sm btn-secondary text-uppercase shadow-sm font-weight-bold" id="login-buttons-logout">
+      {{i18n 'loginButtonsLoggedInDropdownActions.signOut'}}
+    </button>
+  </div>
 </template>
 
 <template name="_loginButtonsChangePassword">
