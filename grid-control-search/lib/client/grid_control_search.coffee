@@ -28,14 +28,14 @@ Util.inherits GridControlSearch, EventEmitter
 
 _.extend GridControlSearch.prototype,
   search_ui_component:
-    '<div class="grid-control-search input-group input-group-sm">
-      <input type="text" class="form-control search-input" placeholder="Search" />
-      <span class="input-group-btn d-flex align-items-center">
-        <div class="search-info-container"><span class="search-info"></span></div>
-        <div class="btn clear-button"><i class="fa fa-times"></i></div>
+    '<div class="grid-control-search position-relative">
+      <input type="text" class="form-control form-control-sm search-input pr-5" placeholder="Search" />
+      <div class="grid-control-search-btn d-flex align-items-center position-absolute">
+        <div class="search-info-container bg-warning p-1 rounded-sm"><span class="search-info"></span></div>
+        <svg class="jd-icon jd-c-pointer text-dark clear-button p-1"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
         <button type="button" class="btn btn-default search-prev disabled"><i class="fa fa-chevron-up"></i></button>
         <button type="button" class="btn btn-default search-next disabled"><i class="fa fa-chevron-down"></i></button>
-      </span>
+      </div>
     </div>'
 
   _init: ->
@@ -311,7 +311,7 @@ _.extend GridControlSearch.prototype,
       at: "left"
       of: @clear_button
 
-    $(".form-control", @container).css("padding-right", @clear_button.outerWidth() + @search_info_container.outerWidth())
+    # $(".form-control", @container).css("padding-right", @clear_button.outerWidth() + @search_info_container.outerWidth())
 
   _setMessage: (message) ->
     @search_info.html(message)

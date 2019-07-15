@@ -1,72 +1,103 @@
-#project-search-comp-container
-  width: 211px
-  height: 30px
-  margin-top: -1px
-  border-radius: 3px
-  background-color: #F5F5F5
-  border: 1px solid #c3c3c3
-  float: right
-  position: relative
-  transition: box-shadow 0.15s ease-in-out
-  font-family: "Lato", sans-serif
-  &:hover
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
-  &::before
-    font-family: "FontAwesome"
-    content: "\f002"
-    width: 25px
-    height: 30px
-    position: absolute
-    top: 0
-    left: 0
-    vertical-align: middle
-    font-size: 14px
-    padding-top: 4px
-    padding-left: 7px
-    color: #707070
 
-  .grid-control-search
-    height: 100%
+#project-search-comp-container
+  .search-prev,
+  .search-next
+    display: none
 
   .search-input
-    padding: 0px 8px 0px 25px !important
-    border: none
-    background-color: transparent
-    height: 100%
-    &:focus
-      box-shadow: none
+    width: 200px
 
-  .input-group-btn
-    .clear-button
-      font-size: 12px
-      padding: 5px
-      display: none
-      cursor: pointer
+  .grid-control-search-btn
+    top: 0
+    bottom: 0
+    right: 0
 
-    .search-info-container
-      position: unset
-      left: unset !important
-      top: unset !important
-      display: none
-      .search-info
-        background-color: #fff8af
-        color: black
-        border: 1px solid #fee492
-        font-family: "Lato", sans-serif
-        font-size: 10px
-        font-weight: bold
-        padding: 1px 2px
-        border-radius: 3px
-        display: block
+  .clear-button
+    display: none
+    &:hover
+      background-color: unset
 
-    .search-prev,
-    .search-next
-      display: none
+  .search-info-container
+    font-size: 10px
+    display: none
 
 #project-search-comp-container.input-not-empty
   .clear-button
     display: block
-
-#project-search-comp-container.results-found
   .search-info-container
     display: block
+
+.search-result
+  background-color: #fff7af
+
+
+// #project-search-comp-container
+//   width: 211px
+//   height: 30px
+//   margin-top: -1px
+//   border-radius: 3px
+//   background-color: #F5F5F5
+//   border: 1px solid #c3c3c3
+//   float: right
+//   position: relative
+//   transition: box-shadow 0.15s ease-in-out
+//   font-family: "Lato", sans-serif
+//   &:hover
+//     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+//   &::before
+//     font-family: "FontAwesome"
+//     content: "\f002"
+//     width: 25px
+//     height: 30px
+//     position: absolute
+//     top: 0
+//     left: 0
+//     vertical-align: middle
+//     font-size: 14px
+//     padding-top: 4px
+//     padding-left: 7px
+//     color: #707070
+//
+//   .grid-control-search
+//     height: 100%
+//
+//   .search-input
+//     padding: 0px 8px 0px 25px !important
+//     border: none
+//     background-color: transparent
+//     height: 100%
+//     &:focus
+//       box-shadow: none
+//
+//   .input-group-btn
+//     .clear-button
+//       font-size: 12px
+//       padding: 5px
+//       display: none
+//       cursor: pointer
+//
+//     .search-info-container
+//       position: unset
+//       left: unset !important
+//       top: unset !important
+//       display: none
+//       .search-info
+//         background-color: #fff8af
+//         color: black
+//         border: 1px solid #fee492
+//         font-family: "Lato", sans-serif
+//         font-size: 10px
+//         font-weight: bold
+//         padding: 1px 2px
+//         border-radius: 3px
+//         display: block
+//
+
+//
+// #project-search-comp-container.input-not-empty
+//   .clear-button
+//     display: block
+//
+// #project-search-comp-container.results-found
+//   .search-info-container
+//     display: block
