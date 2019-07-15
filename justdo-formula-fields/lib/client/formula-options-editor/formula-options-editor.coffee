@@ -108,15 +108,27 @@ APP.executeAfterAppLibCode ->
     end_txt = if end? then end else ""
 
     $option_dom = $("""
-      <div class="custom-field-option" option-id="#{id}">
-        <div class="option-handle">
-          <i class="fa fa-bars" aria-hidden="true"></i>
+      <div class="custom-field-option d-flex align-items-center" option-id="#{id}">
+        <div class="d-flex align-items-center">
+          <svg class="jd-icon-custom-field text-muted option-handle"><use xlink:href="/layout/icons-feather-sprite.svg#menu"/></svg>
         </div>
-        <div class="option-label"><input type="text" placeholder="Filter label" value="#{label}" /></div>
-        <div class="option-begin"><input type="text" placeholder="Begin" value="#{begin_txt}" /></div>
-        <div class="option-end"><input type="text" placeholder="End" value="#{end_txt}" /></div>
+
+        <div class="option-label">
+          <input class="form-control form-control-sm border-0 bg-transparent text-body my-1 ml-1" type="text" placeholder="Filter label" value="#{label}" />
+        </div>
+
+        <div class="option-begin w-25 mx-2">
+          <input class="form-control form-control-sm border-0 bg-transparent text-body my-1 ml-1" type="text" placeholder="Begin" value="#{begin_txt}" />
+        </div>
+
+        <div class="option-end w-25">
+          <input class="form-control form-control-sm border-0 bg-transparent text-body my-1 ml-1" type="text" placeholder="End" value="#{end_txt}" />
+        </div>
+
         <div class="bg-color-selector">#{bg_color}</div>
-        <div class="remove-option" title="Remove option"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+        <div class="d-flex align-items-center">
+          <svg class="jd-icon-custom-field text-primary remove-option"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+        </div>
       </div>
     """)
 
@@ -215,8 +227,10 @@ APP.executeAfterAppLibCode ->
 
     option_id = Random.id()
 
-    option_background_color =
-      tpl.new_option_color_picker_dropdown_controller.getSelectedColor()
+    # option_background_color =
+    #   tpl.new_option_color_picker_dropdown_controller.getSelectedColor()
+
+    option_background_color = Random.choice(available_colors)
 
     $custom_field_options = tpl.$(".custom-field-options")
     appendOptionToEditor($custom_field_options, option_id, option_label, range, option_background_color)

@@ -1,23 +1,25 @@
 <template name="justdo_formula_fields_editing_rules">
-  <h2>Examples:</h2>
-
-  <p>
-    <b>Example 1:</b> Calculate entitled sales commission.
-    <div class="formula-example">{Deal value} * {Commision rate}</div>
-  </p>
-
-  <p>
-    <b>Example 2:</b> Calculate the percent of Insurance Limit reached for Claims.
-    <div class="formula-example">min({Insurance Limit}, {Claims}) / {Insurance Limit}</div>
-  </p>
-
-  <h2>Editing Rules:</h2>
-
-  <ul class="rules-list">
-    <li>Formula must have at least one field.</li>
-    <li>Only the fields listed in the dropdown are supported.</li>
-    <li>Permitted operators: +, -, *, /, and parentheses.</li>
-    <li>Supported functions: {{supportedFunctions}}.</li>
-    <li>Functions usage example: min({Insurance Limit}, {Claims})</li>
-  </ul>
+  <div class="p-3">
+    <div class="h6 font-weight-bold text-primary text-uppercase">
+      Examples:
+    </div>
+    <div class="mb-2">
+      <b>Example 1:</b> Calculate entitled sales commission.
+      <div class="formula-example bg-dark p-2 text-light rounded-sm text-monospace mt-1">{Deal value} * {Commision rate}</div>
+    </div>
+    <div class="mb-2">
+      <b>Example 2:</b> Calculate the percent of Insurance Limit reached for Claims.
+      <div class="formula-example bg-dark p-2 text-light rounded-sm text-monospace mt-1">min({Insurance Limit}, {Claims}) / {Insurance Limit}</div>
+    </div>
+    <div class="h6 font-weight-bold text-primary text-uppercase mt-4">
+      Editing Rules:
+    </div>
+    <ul class="rules-list">
+      <li>Formula must have at least one field.</li>
+      <li>Only the fields listed in the dropdown are supported.</li>
+      <li>Permitted operators: +, -, *, /, and parentheses.</li>
+      <li>Supported functions: {{supportedFunctions}}.</li>
+      <li>Functions usage example: min({Insurance Limit}, {Claims})</li>
+    </ul>
+  </div>
 </template>

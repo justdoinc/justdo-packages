@@ -28,13 +28,18 @@
   <div class="custom-field-options"></div>
   <div class="add-custom-field-option d-flex align-items-center py-2 mb-2">
     <input type="text" class="new-option-label form-control form-control-sm" placeholder="Add filter">
-    <input class="new-option-begin form-control form-control-sm" type="text" placeholder="Begin">
-    <input class="new-option-end form-control form-control-sm" type="text" placeholder="End">
+    <div class="ml-2 d-flex">
+      <input class="new-option-begin form-control form-control-sm" type="text" placeholder="Begin">
+      <input class="new-option-end form-control form-control-sm ml-2" type="text" placeholder="End">
+    </div>
+    <div class="ml-2 d-flex align-items-center">
+      <svg class="jd-icon-custom-field text-primary add-option" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+    </div>
     <!-- <div class="bg-color-selector">{{> justdo_color_picker_dropdown color_picker_controller=colorPickerDropdownController}}</div>
     {{#if showAddButton}}
       <div class="add-option"><i class="fa fa-fw fa-check" aria-hidden="true"></i></div>
     {{/if}} -->
-    <svg class="jd-icon-custom-field text-primary add-option" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+
   </div>
   <div class="text-right">
     <button type="button" class="btn btn-primary btn-sm font-weight-bold cancel mr-1">CANCEL</button>
