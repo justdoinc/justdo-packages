@@ -15,16 +15,20 @@
       {{else}}
         {{#if inSettingsEditingFlow}}
           {{#if inChangePasswordFlow}}
-            <div class="return-arrow login-buttons-exit-change-password"><i class="fa fa-arrow-left"></i></div>
+            <div class="return-arrow login-buttons-exit-change-password">
+              <svg class="jd-icon jd-c-pointer text-body"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left"/></svg>
+            </div>
           {{else}}
-            <div class="return-arrow login-buttons-exit-global-settings"><i class="fa fa-arrow-left"></i></div>
+            <div class="return-arrow login-buttons-exit-global-settings position-absolute">
+              <svg class="jd-icon jd-c-pointer text-body"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left"/></svg>
+            </div>
           {{/if}}
         {{/if}}
 
         {{> _loginDropdownAvatarArea}}
 
         {{#if inChangePasswordFlow}}
-          <div class="dropdown-info">
+          <div class="dropdown-info mb-3">
             {{> _loginDropdownNameAndEmailArea}}
           </div>
 
@@ -61,7 +65,7 @@
     {{> _loginButtonsAdditionalLoggedInDropdownActions}}
   {{/if}}
 
-  <div class="dropdown-info-btn d-flex my-1">
+  <div class="dropdown-info-btn d-flex mt-1 mb-3">
     <a href="#" class="info-btn-settings login-buttons-global-settings text-nowrap">Account Preferences</a>
     <div class="dropdown-info-divider bg-primary my-1 mx-2"></div>
     <a href="{{landingAppRootUrl}}/privacy-policy" class="info-btn-privacy" target="_blank">Privacy</a>
@@ -85,14 +89,14 @@
   {{#each fields}}
     {{> _loginButtonsFormField}}
   {{/each}}
-  <button class="btn btn-block btn-primary" id="login-buttons-do-change-password">{{i18n 'loginButtonsChangePassword.submit'}}</button>
+  <button class="btn btn-block btn-primary mt-3" id="login-buttons-do-change-password">{{i18n 'loginButtonsChangePassword.submit'}}</button>
   <!-- <button class="btn btn-block btn-default" id="login-buttons-cancel-change-password">{{i18n 'loginButtonsChangePassword.cancel'}}</button> -->
 </template>
 
 
 <template name="_loginButtonsFormField">
   {{#if visible}}
-  <div class="form-group">
+  <div class="form-group mb-1">
     <!-- TODO: Implement more input types -->
     {{#if equals inputType "checkbox"}}
       <div class="checkbox">
@@ -133,7 +137,7 @@
 
     {{#if inputTextual}}
       <label for="login-{{fieldName}}">{{fieldLabel}}</label>
-      <input id="login-{{fieldName}}" type="{{inputType}}" class="form-control" />
+      <input id="login-{{fieldName}}" type="{{inputType}}" class="form-control form-control-sm" />
     {{/if}}
     </div>
   {{/if}}

@@ -1,4 +1,13 @@
 #login-dropdown-list
+  .dropdown-info-btn
+    .dropdown-info-divider
+      width: 1px
+      opacity: 0.2
+
+  label
+    font-size: 15px
+    margin-bottom: 0.25rem
+
   .user-dropdown-toggle
     transition: box-shadow 0.15s ease-in-out
     &:hover
@@ -9,63 +18,75 @@
       width: 33px
       height: 33px
 
-  &.open
-    .dropdown-toggle
-      filter: brightness(105%)
-      background: 0 none
-      transition: filter .10s ease-in-out
+  .dropdown-avatar
+    margin-right: 1.5rem
 
   .dropdown-menu
     // Style for settings view
     &.settings
-      width: 300px
-      .form-group
-        margin-top: 10px
-        margin-bottom: 0px
-      label
-        padding-left: 0px !important
-        margin-bottom: 2px !important
-        font-size: 13px
-        color: #767676
-        font-weight: normal
-      input
-        margin: 0px 0px 9px 0px !important
-        border-radius: 0px !important
-        padding: 0px 0px 3px 1px
-        border: none
-        box-shadow: none
-        font-size: 16px
-        color: #333333
-        border-bottom: 1px solid #DBDBDB
-        height: 25px
-
-      section
-        font-size: 13px
-
-        margin-bottom: 0px
-
-        h4
-          font-size: 15px
-          margin-left: -1px
-
-        &:first-child
-          margin-top: 8px
-
-        label
-          font-weight: normal
-
-        select
-          margin-top: 2px
-
-        .form-inline
-          margin-bottom: 7px
-
+      .dropdown-avatar
+        margin-right: 0rem
+      .dropdown-info-name
+        padding-top: 0.5rem
       .dropdown-info
-        width: 100%
         text-align: center
 
-      .info-btn-password
-        margin-top: 5px
+  // &.open
+  //   .dropdown-toggle
+  //     filter: brightness(105%)
+  //     background: 0 none
+  //     transition: filter .10s ease-in-out
+
+  //.dropdown-menu
+    // Style for settings view
+    // &.settings
+    //   width: 300px
+      // .form-group
+      //   margin-top: 10px
+      //   margin-bottom: 0px
+      // label
+      //   padding-left: 0px !important
+      //   margin-bottom: 2px !important
+      //   font-size: 13px
+      //   color: #767676
+      //   font-weight: normal
+      // input
+      //   margin: 0px 0px 9px 0px !important
+      //   border-radius: 0px !important
+      //   padding: 0px 0px 3px 1px
+      //   border: none
+      //   box-shadow: none
+      //   font-size: 16px
+      //   color: #333333
+      //   border-bottom: 1px solid #DBDBDB
+      //   height: 25px
+      //
+      // section
+      //   font-size: 13px
+      //   margin-bottom: 0px
+      //
+      //   h4
+      //     font-size: 15px
+      //     margin-left: -1px
+      //
+      //   &:first-child
+      //     margin-top: 8px
+      //
+      //   label
+      //     font-weight: normal
+      //
+      //   select
+      //     margin-top: 2px
+      //
+      //   .form-inline
+      //     margin-bottom: 7px
+
+      // .dropdown-info
+      //   width: 100%
+      //   text-align: center
+      //
+      // .info-btn-password
+      //   margin-top: 5px
 
     // Style for change password view
     // &.password
@@ -87,10 +108,7 @@
     //     border-bottom: 1px solid #DBDBDB
     //     height: 25px
 
-.dropdown-info-btn
-  .dropdown-info-divider
-    width: 1px
-    opacity: 0.2
+
 
 // .affiliates-console-btn-container
 //   margin: 14px 1px 2px
@@ -105,30 +123,30 @@
 //     &:hover
 //       text-decoration: underline
 
-.return-arrow
-  width: 22px
-  height: 26px
-  float: left
-  cursor: pointer
-  &:hover
-    i
-      color: black
-
-#login-buttons-do-change-password
-  margin-top: 20px
+// .return-arrow
+//   width: 22px
+//   height: 26px
+//   float: left
+//   cursor: pointer
+//   &:hover
+//     i
+//       color: black
+//
+// #login-buttons-do-change-password
+//   margin-top: 20px
 
 // Style for settings, password view
-.dropdown-menu
-  &.settings
-    .dropdown-avatar
-      margin: 0px 0px 15px 0px !important
-
-.dropdown-info
-  .action-buttons
-    font-size: 14px
-    color: #337ab7
-    cursor: pointer
-    white-space: nowrap
-
-    &:hover
-      text-decoration: underline
+// .dropdown-menu
+//   &.settings
+//     .dropdown-avatar
+//       margin: 0px 0px 15px 0px !important
+//
+// .dropdown-info
+//   .action-buttons
+//     font-size: 14px
+//     color: #337ab7
+//     cursor: pointer
+//     white-space: nowrap
+//
+//     &:hover
+//       text-decoration: underline
