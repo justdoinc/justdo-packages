@@ -27,6 +27,8 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.custom_fields_conf.onRendered ->
+    firstSort = true # firstSort need to avoid Jquery-UI issue when the sortable element jumps ( on the first sort )
+
     @$(".custom-fields-conf").sortable
       containment: "parent"
       handle: ".sort-handle"
@@ -38,6 +40,9 @@ APP.executeAfterAppLibCode ->
 
         $("input", ui.placeholder).val($("input", ui.item).val())
 
+        if firstSort
+          $(".custom-fields-conf").sortable 'refreshPositions'
+          firstSort = false
         return
 
       stop: (event, ui) ->

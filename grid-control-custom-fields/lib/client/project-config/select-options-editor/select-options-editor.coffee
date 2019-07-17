@@ -162,9 +162,15 @@ APP.executeAfterAppLibCode ->
 
         appendOptionToEditor($options_list, option_id, label, bg_color)
 
+    firstSort = true # firstSort need to avoid Jquery-UI issue when the sortable element jumps ( on the first sort )
     $options_list.sortable
       handle: ".option-handle"
       axis: "y"
+      start: (event, ui) ->
+        if firstSort
+          $options_list.sortable 'refreshPositions'
+          firstSort = false
+        return
 
     return
 
