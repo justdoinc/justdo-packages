@@ -725,7 +725,7 @@ _.extend JustdoAccounts.prototype,
       throw @_error("unknown-user")
 
     if user_obj.promoters?.is_promoter
-      throw @_error("User has already registered as a promoter")
+      throw @_error("already-promoter", "User has already registered as a promoter")
 
     campaign_obj = APP.collections.PromotersCampaigns.findOne
       _id: options.campaign_id

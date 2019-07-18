@@ -18,3 +18,4 @@ _.extend JustdoAccounts.prototype,
     "user-already-verified": "User already verified"
     "expected-string": "Expected value to be string"
     "permission-denied": "Permission denied"
+    "already-promoter": "User has already registered as a promoter"
