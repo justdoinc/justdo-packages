@@ -705,43 +705,6 @@ _.extend JustdoAccounts.prototype,
 
     return
 
-  _registerAsPromoterOptionsSchema: new SimpleSchema
-    campaign_id:
-      type: String
-      
-  registerAsPromoter: (options, user_id) ->
-    check user_id, String
-    {cleaned_val} =
-      JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_registerAsPromoterOptionsSchema,
-        options or {},
-        {self: @, throw_on_error: true}
-      )
-    options = cleaned_val
-      
-    @requireLogin(user_id)
-
-    if not (user_obj = @getUserById(user_id))?
-      throw @_error("unknown-user")
-
-    if user_obj.promoters?.is_promoter
-      throw @_error("already-promoter", "User has already registered as a promoter")
-
-    campaign_obj = APP.collections.PromotersCampaigns.findOne
-      _id: options.campaign_id
-    
-    Meteor.users.update user_id,
-      $set:
-        promoters: {
-          is_promoter: true,
-          is_approved: false,
-          promoter_description: "",
-          referring_campaign_id: campaign_obj?._id,
-          referring_promoter_id: campaign_obj?.promoter_id
-        }
-
-    return
-
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"

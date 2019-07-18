@@ -91,6 +91,3 @@ _.extend JustdoAccounts.prototype,
 
         return accounts_object.changeAccountEmail email, password, @userId
       
-      registerAsPromoter: (options) ->
-        check options, Object # options is thoroughly verified in api.coffee
-        return accounts_object.registerAsPromoter options, @userId
