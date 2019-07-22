@@ -31,7 +31,7 @@ _.extend GridControlSearch.prototype,
     '<div class="grid-control-search position-relative">
       <input type="text" class="form-control form-control-sm search-input pr-5" placeholder="Search" />
       <div class="grid-control-search-btn d-flex align-items-center position-absolute">
-        <div class="search-info-container bg-warning text-white font-weight-bold p-1 rounded-sm"><span class="search-info"></span></div>
+        <div class="search-info-container bg-primary text-white font-weight-bold p-1 rounded-sm"><span class="search-info"></span></div>
         <svg class="jd-icon jd-c-pointer text-dark clear-button p-1"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
         <button type="button" class="btn btn-default search-prev disabled"><i class="fa fa-chevron-up"></i></button>
         <button type="button" class="btn btn-default search-next disabled"><i class="fa fa-chevron-down"></i></button>
