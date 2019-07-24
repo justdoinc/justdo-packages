@@ -9,35 +9,35 @@
 
   <ul class="dropdown-menu dropdown-menu-no-box-style">
     {{!-- Note: dropdown-menu-no-box-style defined in: lib/client/009-bootstrap-extensions/010-dropdown-menu-no-box-style.sass --}}
-    <li><a href="#" class="dropdown-item" data-tab-id="main"><i class="fa fa-fw fa-th-large"></i> Main View</a></li>
+    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="main"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#grid"/></svg> Main View</a></li>
 
-    <li><a href="#" class="dropdown-item" data-tab-id="due-list" data-sv-global_owners="{{userId}}"><i class="fa fa-fw fa-calendar-check-o"></i> My Due List</a></li>
+    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="due-list" data-sv-global_owners="{{userId}}"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#check-square"/></svg> My Due List</a></li>
 
     {{>delivery_planner_tab_switcher_items}}
 
     {{>workload_planner_tab_switcher_items}}
 
-    <li class="dropdown-header">Recently</li>
+    <li class="dropdown-header px-1 py-2">Recently</li>
 
-    <li><a href="#" class="dropdown-item" data-tab-id="recent-updates" data-sv-global_tracked-field="state_updated_at" data-sv-global_custom-query='{"state":"done"}'><i class="fa fa-fw fa-check"></i> Completed</a></li>
+    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="recent-updates" data-sv-global_tracked-field="state_updated_at" data-sv-global_custom-query='{"state":"done"}'><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg> Completed</a></li>
 
-    <li><a href="#" class="dropdown-item" data-tab-id="recent-updates" data-sv-global_tracked-field="updatedAt"><i class="fa fa-fw fa-newspaper-o"></i> Updated</a></li>
+    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="recent-updates" data-sv-global_tracked-field="updatedAt"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#rotate-cw"/></svg> Updated</a></li>
 
-    <li><a href="#" class="dropdown-item" data-tab-id="recent-updates" data-sv-global_tracked-field="createdAt"><i class="fa fa-fw fa-plus"></i> Created</a></li>
+    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="recent-updates" data-sv-global_tracked-field="createdAt"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg> Created</a></li>
 
-    <li class="dropdown-header">Miscellaneous</li>
+    <li class="dropdown-header px-1 py-2">Miscellaneous</li>
 
-    <li><a href="#" class="dropdown-item" data-tab-id="awaiting-transfer"><i class="fa fa-fw fa-exchange"></i> Tasks Ownership Transfers</a></li>
+    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="awaiting-transfer"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#repeat"/></svg> Tasks Ownership Transfers</a></li>
 
     {{#if ticketsQueuesExists}}
-    <li><a href="#" class="dropdown-item" data-tab-id="tickets-queues"><i class="fa fa-fw fa-sticky-note-o"></i> Tickets Queues</a></li>
+    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="tickets-queues"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#file"/></svg> Tickets Queues</a></li>
     {{/if}}
 
     {{#with project_all_members_except_me_sorted_by_first_name}}
-      <li class="dropdown-header">Members Due Lists</li>
-      <li><a href="#" class="dropdown-item" data-tab-id="due-list" data-sv-global_owners="*"><i class="fa fa-fw fa-users"></i> All Members Due List</a></li>
+      <li class="dropdown-header px-1 py-2">Members Due Lists</li>
+      <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="due-list" data-sv-global_owners="*"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#users"/></svg> All Members Due List</a></li>
       {{#each this}}
-        <li><a href="#" class="dropdown-item" data-tab-id="due-list" data-sv-global_owners="{{user_id}}">{{> gtpl_user_profile_pic}} {{displayName}}</a></li>
+        <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="due-list" data-sv-global_owners="{{user_id}}">{{> gtpl_user_profile_pic}} {{displayName}}</a></li>
       {{/each}}
     {{/with}}
   </ul>

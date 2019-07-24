@@ -66,7 +66,7 @@ APP.executeAfterAppLibCode ->
 
             rendered_user_avatar.destroy()
 
-            return html 
+            return html
           else
             return unknown_tab_icon
         else
@@ -77,7 +77,7 @@ APP.executeAfterAppLibCode ->
 
       console.log tab_id, sections_state
 
-      return 
+      return
 
   tab_switcher_dropdown = null
 

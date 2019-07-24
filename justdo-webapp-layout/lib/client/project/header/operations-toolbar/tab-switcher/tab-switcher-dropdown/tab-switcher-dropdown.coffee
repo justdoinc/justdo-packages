@@ -2,7 +2,7 @@ APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
   module.TabSwitcherDropdown = JustdoHelpers.generateNewTemplateDropdown "tab-switcher", "project_operations_tab_switcher_dropdown",
-    custom_dropdown_class: "dropdown-menu"
+    custom_dropdown_class: "dropdown-menu px-3 animate slideIn shadow-lg border-0"
     custom_bound_element_options:
       container: ".project-container" # So we can use the .project-admin and other state classes bound to .project-container
       close_button_html: null
