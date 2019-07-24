@@ -37,4 +37,3 @@ Template.justdo_project_pane_expanded_header.events
   "click .project-pane-tab": (e) -> APP.justdo_project_pane.setActiveTab $(e.target).attr("tab-id")
 
   "click .justdo-project-pane-close": (e) -> APP.justdo_project_pane.collapse()
-

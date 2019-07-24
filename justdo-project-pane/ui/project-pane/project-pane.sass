@@ -1,12 +1,10 @@
 $collapsed-height: 15px
-
 $project-pane-border-top: 1px solid #c0c0c0
 
 .justdo-project-pane-container, .justdo-project-pane
   width: 100%
   height: 100% !important
   position: relative
-
   top: 0 !important // jquery-ui resizable, tries to change it, for some reason
 
 .justdo-project-pane
@@ -31,50 +29,40 @@ $project-pane-border-top: 1px solid #c0c0c0
 $project-pane-header-height: 30px
 .justdo-project-pane-header
   user-select: none
+  border-top: 1px solid rgba(0, 0, 0, 0.08)
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04)
+  // height: $project-pane-header-height
 
-  border-top: $project-pane-border-top
+  .project-pane-tab
+    font-size: 12px
 
-  border-bottom: 1px solid #dddddd
+// .project-pane-tab
+//   float: left
+//   font-weight: 600
+//   text-transform: uppercase
+//   font-size: 12px
+//   font-family: "Lato", sans-serif
+//   line-height: 29px
+//   height: 29px
+//   text-align: center
+//   cursor: pointer
+//   padding: 0 14px
+//
+//   &:hover
+//     border-bottom: 3px solid #DDD
+//
+//   &.active
+//     color: #000
+//     border-bottom: 2px solid #19649b
 
-  height: $project-pane-header-height
+.active-tab-bottom-border
+  position: absolute
+  width: 100%
+  height: 3px
+  bottom: 0px
 
-  background-color: #f8f8f8
-
-.project-pane-tab
-  float: left
-  font-weight: 600
-  text-transform: uppercase
-  font-size: 12px
-  font-family: "Lato", sans-serif
-  line-height: 29px
-  height: 29px
-  text-align: center
-  cursor: pointer
-  padding: 0 14px
-
-  &:hover
-    border-bottom: 3px solid #DDD
-
-  &.active
-    color: #000
-    border-bottom: 2px solid #19649b
-
-.justdo-project-pane-close
-  float: right
-  font-size: 20px
-  padding: 0px 7px
-  color: #a5a5a5
-  cursor: pointer
-  margin-right: 1px
-
-  &:hover
-    color: #808080
 
 .justdo-project-pane-tab-container
-  font-family: "lato", sans-serif
-
   height: 100%
-
   padding-bottom: $project-pane-header-height
-
   overflow: hidden

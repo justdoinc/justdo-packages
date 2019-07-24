@@ -7,11 +7,17 @@
 </template>
 
 <template name="global_activity_log_project_pane_project_activity">
-  <div class="tab-project-activity">
+  <div class="tab-project-activity py-2">
     <div class="filter-toggle {{#if isActiveStatusFilter}}active-filter{{/if}}"><i class="fa {{#if isActiveStatusFilter}}fa-toggle-on{{else}}fa-toggle-off{{/if}} fa-fw"></i> Filter for Status/Notes changes only</div>
 
     {{#each activities}}
-      <div class="project-log" title="{{userDateFormat when}}"><span class="task-details">{{getTaskDetails}}</span> <span class="activity-message">{{getActivityMessage}}</span> <span class="date">{{moFromNow negativeDateOrNow}}</span></div>
+      <div class="project-log text-monospace px-3 py-1 d-flex" title="{{userDateFormat when}}">
+        <div class="">
+          <span class="task-details text-primary">{{getTaskDetails}}</span>
+          <span class="activity-message">{{getActivityMessage}}</span>
+        </div>
+        <span class="date text-muted ml-auto mr-0 text-nowrap">{{moFromNow negativeDateOrNow}}</span>
+      </div>
     {{/each}}
   </div>
 </template>

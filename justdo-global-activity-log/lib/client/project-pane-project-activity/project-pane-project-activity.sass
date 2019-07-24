@@ -3,31 +3,29 @@
   overflow: auto
 
   .filter-toggle
-    background-color: white
-    color: #646464
-    cursor: pointer
-    user-select: none
-
-    float: right
-    font-size: 13px
-    padding: 4px 8px 2px
-    cursor: pointer
-
-    &.active-filter
-      color: #337ab7
+    display: none
+    // background-color: white
+    // color: #646464
+    // cursor: pointer
+    // user-select: none
+    // float: right
+    // font-size: 13px
+    // padding: 4px 8px 2px
+    // cursor: pointer
+    //
+    // &.active-filter
+    //   color: #337ab7
 
 .project-log
-  padding: 2px 5px
-
   cursor: pointer
-
+  font-size: 12px
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.08)
   &:hover
     background-color: #f7f7f7
 
-  .date
-    color: #797878
+.justdo-project-pane-header
+  .filter-toggle
+    font-size: 13px
 
-.task-details
-  color: #2B71CF
-
-  font-weight: bold
+  .jd-icon
+    padding: 4px

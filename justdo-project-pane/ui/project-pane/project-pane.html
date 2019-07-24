@@ -13,15 +13,28 @@
 </template>
 
 <template name="justdo_project_pane_expanded_header">
-  <div class="justdo-project-pane-header">
-    <div class="justdo-project-pane-tabs">
+  <div class="justdo-project-pane-header d-flex align-items-center justify-content-between bg-light">
+    <div class="justdo-project-pane-tabs px-3">
       {{#each getTabs}}
-        <div tab-id="{{tab_id}}" class="project-pane-tab {{#if $eq getActiveTabId tab_id}}active{{/if}}">{{tab_label}}</div>
+        <div class="position-relative py-2 text-center">
+          <div tab-id="{{tab_id}}" class="project-pane-tab px-3 text-body text-uppercase font-weight-bold {{#if $eq getActiveTabId tab_id}}active{{/if}}">{{tab_label}}</div>
+          <div class="active-tab-bottom-border bg-primary"></div>
+        </div>
       {{/each}}
     </div>
-
-    <div class="justdo-project-pane-close">
-      <i class="fa fa-times" aria-hidden="true"></i>
+    <div class="d-flex">
+      <div class="filter-toggle {{#if isActiveStatusFilter}}active-filter{{/if}} align-items-center d-flex">
+        {{#if isActiveStatusFilter}}
+          <svg class="jd-icon jd-c-pointer text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+        {{else}}
+          <svg class="jd-icon jd-c-pointer text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+        {{/if}}
+        Filter for Status/Notes changes only</div>
+      <div class="project-pane-divider border-right my-1 ml-2"></div>
+      <div class="justdo-project-pane-close">
+        <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+      </div>
     </div>
+
   </div>
 </template>
