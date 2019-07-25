@@ -38,10 +38,6 @@ APP.executeAfterAppLibCode ->
           closedHandler: => @dropdownClosedHandler()
           close_button_html: null
 
-      @grid.container.on "click", (e) ->
-        # Avoid click event from reaching bootstrap's click handler for dropdowns
-        e.stopPropagation()
-
       @grid.on "tree-control-user-image-clicked", => @ownerSetterClickHandler.apply(@, arguments)
 
       @position_update_interval = null
