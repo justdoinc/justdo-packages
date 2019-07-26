@@ -37,6 +37,8 @@ Package.onUse(function (api) {
   api.use('fourseven:scss@3.2.0', client);
   api.use('jchristman:context-menu@1.2.0', client);
 
+  api.use("justdoinc:justdo-linkify", client);
+
   api.use('justdoinc:justdo-avatar@1.0.0', client);
   api.use('justdoinc:justdo-helpers@1.0.0', both);
 

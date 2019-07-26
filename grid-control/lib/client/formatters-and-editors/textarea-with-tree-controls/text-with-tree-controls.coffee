@@ -164,8 +164,8 @@ GridControl.installFormatter "textWithTreeControls",
 
     value = self.xssGuard value
 
-    if @options.allow_dynamic_row_height
-      value = self.nl2br value
+    value = linkifyStr value,
+      nl2br: @options.allow_dynamic_row_height
 
     current_left_pos = 0
     horizontal_padding = 3

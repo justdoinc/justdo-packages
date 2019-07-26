@@ -47,8 +47,8 @@ GridControl.installFormatter "defaultFormatter",
 
       value = self.xssGuard value
 
-      if @options.allow_dynamic_row_height
-        value = self.nl2br value
+      value = linkifyStr value,
+        nl2br: @options.allow_dynamic_row_height
 
     formatter = """
       <div class="grid-formatter default-formatter"#{if custom_style != "" then " style=\"#{custom_style}\"" else ""} dir="auto">#{value}</div>
