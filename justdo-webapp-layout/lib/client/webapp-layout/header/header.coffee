@@ -25,14 +25,14 @@ APP.executeAfterAppLibCode ->
 
     rightHeaderTemplate: -> main_module.getCustomHeaderTemplate("right")
 
-    topMenuItems: ->
-      return main_module.getDrawerMenuItems("top")
+    pagesMenuItems: ->
+      return main_module.getDrawerMenuItems("pages")
 
     bottomMenuItems: ->
       return main_module.getDrawerMenuItems("bottom")
 
     drawerProjectsListTop: ->
-      return drawer_brand_height + drawer_top_menu_padding_top + drawer_top_menu_padding_bottom + (drawer_top_menu_item_height * (main_module.getDrawerMenuItems("top").length + 1)) # + 1 is for the for the built-in projects list title
+      return drawer_brand_height + drawer_top_menu_padding_top + drawer_top_menu_padding_bottom + (drawer_top_menu_item_height * (main_module.getDrawerMenuItems("pages").length + 1)) # + 1 is for the for the built-in projects list title
 
   Template.header.events
     "click .drawer-hamburger": (e, tmpl) ->
