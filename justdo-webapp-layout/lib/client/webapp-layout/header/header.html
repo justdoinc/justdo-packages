@@ -45,7 +45,7 @@
       </div>
 
       <div class="drawer-pages-menu">
-        {{#each pagesMenuItems}}
+        {{#each drawerPagesMenuItems}}
           <div class="menu-item">
             {{#if template}}
               {{> Template.dynamic template=template data=template_data}}
@@ -70,7 +70,7 @@
         {{/each}}
       </div>
       <div class="drawer-footer">
-        {{#each bottomMenuItems}}
+        {{#each drawerBottomMenuItems}}
           {{#if template}}
             {{> Template.dynamic template=template data=template_data}}
           {{else if html}}

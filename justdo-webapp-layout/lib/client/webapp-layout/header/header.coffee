@@ -28,14 +28,12 @@ APP.executeAfterAppLibCode ->
 
     rightHeaderTemplate: -> main_module.getCustomHeaderTemplate("right")
 
-    pagesMenuItems: ->
-      return main_module.getDrawerMenuItems("pages")
+    drawerPagesMenuItems: -> main_module.getPlaceholderItems("drawer-pages")
 
-    bottomMenuItems: ->
-      return main_module.getDrawerMenuItems("bottom")
+    drawerBottomMenuItems: -> main_module.getPlaceholderItems("drawer-bottom")
 
     drawerProjectsListTop: ->
-      return drawer_brand_height + drawer_top_menu_padding_top + drawer_top_menu_padding_bottom + (drawer_top_menu_item_height * (main_module.getDrawerMenuItems("pages").length + 1)) # + 1 is for the for the built-in projects list title
+      return drawer_brand_height + drawer_top_menu_padding_top + drawer_top_menu_padding_bottom + (drawer_top_menu_item_height * (main_module.getPlaceholderItems("drawer-pages").length + 1)) # + 1 is for the for the built-in projects list title
 
   main_module.registerPlaceholderItem "justdo-chat-recent-activity",
     data:
