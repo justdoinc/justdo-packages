@@ -166,6 +166,7 @@ GridControl.installFormatter "textWithTreeControls",
 
     value = linkifyHtml value,
       nl2br: @options.allow_dynamic_row_height
+      linkClass: "jd-underline font-weight-bold text-body"
 
     current_left_pos = 0
     horizontal_padding = 3

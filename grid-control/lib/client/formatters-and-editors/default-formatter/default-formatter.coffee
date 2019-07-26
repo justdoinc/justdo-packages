@@ -49,6 +49,7 @@ GridControl.installFormatter "defaultFormatter",
 
       value = linkifyHtml value,
         nl2br: @options.allow_dynamic_row_height
+        linkClass: "jd-underline font-weight-bold text-body"
 
     formatter = """
       <div class="grid-formatter default-formatter"#{if custom_style != "" then " style=\"#{custom_style}\"" else ""} dir="auto">#{value}</div>
