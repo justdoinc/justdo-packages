@@ -63,6 +63,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/global-sass/global-vars.sass", "client");
   api.addFiles("lib/client/global-sass/tooltips-style.sass", "client");
   api.addFiles("lib/client/global-sass/outline-remover.sass", "client");
+  api.addFiles("lib/client/global-sass/justdo-bootstrap-extensions.sass", "client");
 
   api.addFiles("lib/client/dashboard/dashboard-footer/footer.html", "client");
   api.addFiles("lib/client/dashboard/dashboard-footer/footer.sass", "client");
