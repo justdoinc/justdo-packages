@@ -36,6 +36,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/print-grid.sass", client);
   api.addFiles("lib/client/print-dropdown.html", client);
 
+  api.addFiles("lib/client/print-menu-button.html", client);
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", client);

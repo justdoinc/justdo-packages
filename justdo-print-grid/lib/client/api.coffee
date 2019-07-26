@@ -564,7 +564,7 @@ _.extend JustdoPrintGrid.prototype,
     #
     JD.registerPlaceholderItem "print-button",
       data:
-        template: "print_dropdown"
+        template: "print_menu_button"
         template_data: {}
 
       domain: "project-right-navbar"
