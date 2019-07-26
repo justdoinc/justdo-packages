@@ -1,28 +1,32 @@
 <template name="tutorials_submenu">
-  <div class="nav-tutorials">
-    <svg class="jd-icon jd-c-pointer text-dark tutorials-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><use xlink:href="/layout/icons-feather-sprite.svg#help-circle"/></svg>
+  <div class="nav-tutorials dropdown">
+    <div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <svg class="jd-icon jd-c-pointer text-dark tutorials-dropdown"><use xlink:href="/layout/icons-feather-sprite.svg#help-circle"/></svg>
+    </div>
+    <ul class="dropdown-menu dropdown-menu-right px-3 animate slideIn shadow-lg border-0">
+      {{> tutorials_submenu_dropdown}}
+    </ul>
   </div>
 </template>
 
 <template name="tutorials_submenu_dropdown">
-  <li><a class="dropdown-item" href="https://www.youtube.com/watch?v=KSetzC43q7E&list=PLrmyjry49_CT_6cF2q0sbDZPTVEcG673Y" target="_blank"><i class="fa fa-fw fa-play" aria-hidden="true"></i> <b>Getting Started with JustDo</b></a></li>
-  <li><a class="dropdown-item"  href="https://blog.justdo.com" target="_blank"><i class="fa fa-fw fa-newspaper-o" aria-hidden="true"></i> <b>JustDo Blog</b></a></li>
-  <li role="separator" class="dropdown-divider"></li>
-
+  <li><a class="dropdown-item d-flex align-items-center px-1" href="https://www.youtube.com/watch?v=KSetzC43q7E&list=PLrmyjry49_CT_6cF2q0sbDZPTVEcG673Y" target="_blank"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#play"/></svg>Getting Started with JustDo</a></li>
+  <li><a class="dropdown-item d-flex align-items-center px-1"  href="https://blog.justdo.com" target="_blank"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#book"/></svg>JustDo Blog</a></li>
+  <hr class="my-2 border-light">
   {{#with tutorials}}
-    <li class="dropdown-header">Popular tutorials</li>
+    <li class="dropdown-header p-1">Popular tutorials</li>
     {{#each this}}
       {{> tutorials_submenu_dropdown_item }}
     {{/each}}
-    <li role="separator" class="dropdown-divider"></li>
+    <hr class="my-2 border-light">
   {{/with}}
   {{> tutorials_submenu_bugmuncher}}
   {{#if zendeskEnabled}}
-    <li><a class="dropdown-item" href="{{zendeskHost}}" target="_blank"><i class="fa fa-fw fa-book"></i> JustDo Knowledge Base</a></li>
-    <li><a class="dropdown-item support-center" href="#"><i class="fa fa-fw fa-question-circle"></i> JustDo Support Center</a></li>
+    <li><a class="dropdown-item d-flex align-items-center px-1" href="{{zendeskHost}}" target="_blank"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#help-circle"/></svg>JustDo Knowledge Base</a></li>
+    <li><a class="dropdown-item d-flex align-items-center px-1 support-center" href="#"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#book-open"/></svg>JustDo Support Center</a></li>
   {{/if}}
 </template>
 
 <template name="tutorials_submenu_dropdown_item">
-  <li><a class="dropdown-item tutorial-item" href="" tutorial-id="{{tutorial_id}}">{{cutString tutorial.readable_name 100}}</a></li>
+  <li><a class="dropdown-item d-flex align-items-center px-1 tutorial-item" href="" tutorial-id="{{tutorial_id}}">{{cutString tutorial.readable_name 100}}</a></li>
 </template>
