@@ -6,10 +6,11 @@ ReactiveItemsList = ->
   return @
 
 _.extend ReactiveItemsList.prototype,
-  getList: ->
+  getList: (domain="default") ->
     @_items_dep.depend()
 
     items = _.values @_items
+    items = _.filter @_items, (item) -> item.domain == domain
     items = _.sortBy items, "position"
 
     items = _.filter items, (item) ->
@@ -30,17 +31,24 @@ _.extend ReactiveItemsList.prototype,
     # {
     #   listingCondition: Optional function, can be reactive resource, has to return
     #                      true for the item to be returned by @getList()
+    #   domain: allow you to separate the items to different domains, if not set "default"
+    #   will be used
     #   position: Optional integer, default 0
     #   data: the value to be returned when calling @getList()
     # }
 
     default_item_options = {
       listingCondition: -> return true
+      domain: "default"
       position: 0
       data: {}
     }
 
     item = _.extend default_item_options, item
+
+    # We do these setups after the _.extend, to prevent the user from being able to
+    # set them in the item object
+    item._id = item_id
 
     @_items[item_id] = item
 
