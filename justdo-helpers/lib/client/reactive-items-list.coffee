@@ -1,3 +1,18 @@
+setupPlaceholdersReactiveListRegistry = (target_object) ->
+  regisrtry = new ReactiveItemsList()
+
+  _.extend target_object,
+    getPlaceholderItems: (domain) ->
+      return regisrtry.getList(domain)
+
+    registerPlaceholderItem: (item_id, item) ->
+      return regisrtry.registerItem(item_id, item)
+
+    unregisterPlaceholderItem: (item_id) ->
+      return regisrtry.unregisterItem(item_id)
+
+  return
+
 ReactiveItemsList = ->
   @_items = {}
 
@@ -64,3 +79,4 @@ _.extend ReactiveItemsList.prototype,
     return
 
 JustdoHelpers.ReactiveItemsList = ReactiveItemsList
+JustdoHelpers.setupPlaceholdersReactiveListRegistry = setupPlaceholdersReactiveListRegistry
