@@ -578,7 +578,12 @@ _.extend JustdoPrintGrid.prototype,
       </div>
     """
 
-    $("#project-settings-dropdown").after print_button
+    APP.modules.project_page.registerPlaceholderItem "print-button",
+      data:
+        html: print_button
+
+      domain: "project-right-navbar"
+      position: 350
 
     # Show Selected task section only if selected task exist
     $(".print-dropdown").on "click", ->

@@ -9,8 +9,6 @@ _.extend JustdoGridVisualization.prototype,
   showVisualizationButton: ->
     module_id = "grid-visualization"
 
-    menu_view = null
-
     Template.project_header.onRendered () ->
       @autorun ->
         cur_project = APP.modules.project_page.curProj()
@@ -20,22 +18,15 @@ _.extend JustdoGridVisualization.prototype,
         is_enabled = cur_project.isCustomFeatureEnabled(module_id)
 
         if is_enabled
-          if not menu_view?
-              target_element = $(".required-actions-dropdown-container")
-              target_parent = target_element.parent()[0]
+          APP.modules.project_page.registerPlaceholderItem "grid-visualization",
+            data:
+              template: "grid_visualization_menu"
+              template_data: {}
 
-              if target_element.length == 0
-                return
-              menu_view = Blaze.renderWithData(
-                Template.grid_visualization_menu,
-                { project_id: cur_project.id },
-                target_parent,
-                target_element[0]
-              )
-              menu_view.onViewDestroyed () =>
-                menu_view = null
-        else if menu_view?
-          Blaze.remove(menu_view)
+            domain: "project-right-navbar"
+            position: 360
+        else
+          APP.modules.project_page.unregisterPlaceholderItem "grid-visualization"
 
   showVisualization: ->
     selected_path = APP.modules.project_page.activeItemPath() or "/"

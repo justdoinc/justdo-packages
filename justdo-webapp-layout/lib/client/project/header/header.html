@@ -30,13 +30,13 @@
 
 <template name="project_header_global_layout_header_right">
   <div class="project-page-global-layout-header-right">
-    {{> members_dropdown_button}}
-
-    {{> plugins_store_button}}
-
-    {{> project_settings}}
-
-    {{> project_required_actions_dropdown_comp}}
+    {{#each rightNavbarItems}}
+      {{#if template}}
+        {{> Template.dynamic template=template data=template_data}}
+      {{else if html}}
+        {{{html}}}
+      {{/if}}
+    {{/each}}
   </div>
 </template>
 

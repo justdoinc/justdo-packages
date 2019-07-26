@@ -22,27 +22,21 @@ _.extend MeetingsManagerPlugin.prototype,
       @_meeting_dialog_view = null
 
   renderMeetingsMenu: (project_id, target_element) ->
-    if @_meetings_menu_view?
-      Blaze.remove @_meetings_menu_view
-      @_meetings_menu_view = null
+    APP.modules.project_page.registerPlaceholderItem "meetings-menu",
+      data:
+        template: "meetings_meetings_menu"
+        template_data:
+          project_id: project_id
 
-    # TODO check whether meetings_module is enabled for this project, if not
-    # don't initialize the UI
+      domain: "project-right-navbar"
+      position: 360
 
-    target_element = $(target_element)
-    target_parent = target_element.parent()[0]
-
-    @_meetings_menu_view = Blaze.renderWithData(
-      Template.meetings_meetings_menu,
-      { project_id: project_id },
-      target_parent,
-      target_element[0]
-    )
+    return
 
   removeMeetingsMenu: ->
-    if @_meetings_menu_view?
-      Blaze.remove @_meetings_menu_view
-      @_meetings_menu_view = null
+    APP.modules.project_page.unregisterPlaceholderItem "meetings-menu"
+
+    return
 
   registerConfigTemplate: ->
     # adding meeting to the project configuration:

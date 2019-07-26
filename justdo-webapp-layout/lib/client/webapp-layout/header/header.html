@@ -16,9 +16,13 @@
 
       {{#if loginStateIs "logged-in"}}
         <ul class="nav navbar-nav navbar-right">
-          {{> tutorials_submenu}}
-
-          {{> justdo_chat_recent_activity_button}}
+          {{#each globalRightNavbarItems}}
+            {{#if template}}
+              {{> Template.dynamic template=template data=template_data}}
+            {{else if html}}
+              {{{html}}}
+            {{/if}}
+          {{/each}}
 
           <li>
             {{#with rightHeaderTemplate}}
