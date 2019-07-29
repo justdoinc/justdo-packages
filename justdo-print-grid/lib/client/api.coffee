@@ -562,75 +562,60 @@ _.extend JustdoPrintGrid.prototype,
     #
     # Main
     #
-    print_button = """
-      <div class="print-dropdown dropdown">
-        <div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-print"></i>
-        </div>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li class="dropdown-header">Print JustDo</li>
-          <li><a href="#" class="print-dropdown-item all-tasks"><i></i> Entire JustDo</a></li>
-          <li><a href="#" class="print-dropdown-item visible-tasks"><i></i> Visible Tasks</a></li>
-          <li class="dropdown-header selected-task-section">Print Current Task</li>
-          <li><a href="#" class="print-dropdown-item all-sub-tasks selected-task-section"><i></i> All Child Tasks</a></li>
-          <li><a href="#" class="print-dropdown-item visible-sub-tasks selected-task-section"><i></i> Visible Child Tasks</a></li>
-        </ul>
-      </div>
-    """
-
     APP.modules.project_page.registerPlaceholderItem "print-button",
       data:
-        html: print_button
+        template: "print_dropdown"
+        template_data: {}
 
       domain: "project-right-navbar"
       position: 350
 
-    # Show Selected task section only if selected task exist
-    $(".print-dropdown").on "click", ->
-      path = getCurrentTaskPath()
-      if path?
-        $(".selected-task-section").css "display", "block"
-      else
-        $(".selected-task-section").css "display", "none"
-      return
+    Template.print_dropdown.events
+      "click .print-dropdown": ->
+        path = getCurrentTaskPath()
+        if path?
+          $(".selected-task-section").css "display", "block"
+        else
+          $(".selected-task-section").css "display", "none"
+        return
 
-    # Print visible tasks
-    $(".print-dropdown .visible-tasks").on "click", ->
-      item_path = "/"
-      enterPrintMode
-        item_path: item_path
-        expand_only: true
-        filtered_tree: true
-      return
-
-    # Print all tasks
-    $(".print-dropdown .all-tasks").on "click", ->
-      item_path = "/"
-      enterPrintMode
-        item_path: item_path
-        expand_only: false
-        filtered_tree: true
-      return
-
-    # Print visible sub-tasks
-    $(".print-dropdown .visible-sub-tasks").on "click", ->
-      if getCurrentTaskPath()?
-        item_path = getCurrentTaskPath()
+      # Print visible tasks
+      "click .print-dropdown .visible-tasks": ->
+        item_path = "/"
         enterPrintMode
           item_path: item_path
           expand_only: true
           filtered_tree: true
-      return
+        return
 
-    # Print all sub-tasks
-    $(".print-dropdown .all-sub-tasks").on "click", ->
-      if getCurrentTaskPath()?
-        item_path = getCurrentTaskPath()
+      # Print all tasks
+      "click .print-dropdown .all-tasks": ->
+        item_path = "/"
         enterPrintMode
           item_path: item_path
           expand_only: false
           filtered_tree: true
-      return
+        return
+
+      # Print visible sub-tasks
+      "click .print-dropdown .visible-sub-tasks": ->
+        if getCurrentTaskPath()?
+          item_path = getCurrentTaskPath()
+          enterPrintMode
+            item_path: item_path
+            expand_only: true
+            filtered_tree: true
+        return
+
+      # Print all sub-tasks
+      "click .print-dropdown .all-sub-tasks": ->
+        if getCurrentTaskPath()?
+          item_path = getCurrentTaskPath()
+          enterPrintMode
+            item_path: item_path
+            expand_only: false
+            filtered_tree: true
+        return
 
     # Hide and Show print buttons. Detecting browser print event for Chrome 9+ (Safari 5+ ???)
     if window.matchMedia

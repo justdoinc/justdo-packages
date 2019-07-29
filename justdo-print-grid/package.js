@@ -16,7 +16,7 @@ Package.onUse(function (api) {
   api.use("underscore", client);
 
   // api.use("stevezhu:lodash@4.17.2", client);
-  // api.use("templating", client);
+  api.use("templating", client);
   api.use('fourseven:scss@3.2.0', client);
 
   api.use("raix:eventemitter@0.1.1", client);
@@ -34,6 +34,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/errors-types.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/print-grid.sass", client);
+  api.addFiles("lib/client/print-dropdown.html", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
