@@ -47,7 +47,7 @@ GridControl.installFormatter "defaultFormatter",
 
       value = self.xssGuard value
 
-      value = linkifyStr value,
+      value = linkifyHtml value,
         nl2br: @options.allow_dynamic_row_height
 
     formatter = """
