@@ -1,11 +1,11 @@
 _.extend JustdoChecklist.prototype,
   registerConfigTemplate: ->
-    APP.executeAfterAppClientCode ->
-      module = APP.modules.project_page
-      module.project_config_ui.registerConfigTemplate "justdo_checklist_project_config",
-        section: "extensions"
-        template: "justdo_checklist_project_config"
-        priority: 100
+    # APP.executeAfterAppClientCode ->
+    #   module = APP.modules.project_page
+    #   module.project_config_ui.registerConfigTemplate "justdo_checklist_project_config",
+    #     section: "extensions"
+    #     template: "justdo_checklist_project_config"
+    #     priority: 100
 
     return
 

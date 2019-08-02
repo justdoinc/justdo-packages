@@ -15,8 +15,8 @@ share.store_db.plugins.push
   developer: "JustDo, Inc."
   developer_url: "justdo.com"
 
-  package_name: "justdoinc:justdo-checklist"
-  package_project_custom_feature_id: "justdo_checklist"
+  package_name: "justdoinc:custom-justdo-cumulative-select"
+  package_project_custom_feature_id: "justdo_checklist_fields"
   isPluginEnabledForEnvironment: -> true
 
   slider: []
