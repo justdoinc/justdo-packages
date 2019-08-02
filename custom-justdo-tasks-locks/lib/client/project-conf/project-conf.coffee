@@ -1,13 +1,13 @@
 _.extend CustomJustdoTasksLocks.prototype,
   registerConfigTemplate: ->
-    # APP.executeAfterAppClientCode ->
-    #   module = APP.modules.project_page
-    #   module.project_config_ui.registerConfigTemplate "custom_justdo_tasks_locks_project_config",
-    #     section: "extensions"
-    #     template: "custom_justdo_tasks_locks_project_config"
-    #     priority: 100
+    APP.executeAfterAppClientCode ->
+      module = APP.modules.project_page
+      module.project_config_ui.registerConfigTemplate "custom_justdo_tasks_locks_project_config",
+        section: "extensions"
+        template: "custom_justdo_tasks_locks_project_config"
+        priority: 100
 
-    # return
+    return
 
 module_id = CustomJustdoTasksLocks.project_custom_feature_id
 
