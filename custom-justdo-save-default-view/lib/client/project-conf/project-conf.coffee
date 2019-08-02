@@ -1,11 +1,11 @@
 _.extend CustomJustdoSaveDefaultView.prototype,
   registerConfigTemplate: ->
-    # APP.executeAfterAppClientCode ->
-    #   module = APP.modules.project_page
-    #   module.project_config_ui.registerConfigTemplate "custom_justdo_save_default_view_project_config",
-    #     section: "extensions"
-    #     template: "custom_justdo_save_default_view_project_config"
-    #     priority: 100
+    APP.executeAfterAppClientCode ->
+      module = APP.modules.project_page
+      module.project_config_ui.registerConfigTemplate "custom_justdo_save_default_view_project_config",
+        section: "extensions"
+        template: "custom_justdo_save_default_view_project_config"
+        priority: 100
 
     return
 
