@@ -54,6 +54,8 @@ Package.onUse(function (api) {
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
+  api.use("justdoinc:tasks-changelog-manager@1.0.0", both);
+
   api.use("reactive-var", both);
   api.use("tracker", client);
 
