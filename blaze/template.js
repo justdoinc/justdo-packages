@@ -168,8 +168,21 @@ Template.prototype.constructView = function (contentFunc, elseFunc) {
     inst.data = Blaze.getData(view);
 
     if (view._domrange && !view.isDestroyed) {
-      inst.firstNode = view._domrange.firstNode();
-      inst.lastNode = view._domrange.lastNode();
+      try {
+        inst.firstNode = view._domrange.firstNode();
+      } catch (e) {
+        console.warn("blaze: templateInstance(): failed to obtain the instance's firstNode(), where it should have been possible to obtain one.", e)
+
+        inst.firstNode = null;
+      }
+
+      try {
+        inst.lastNode = view._domrange.lastNode();
+      } catch (e) {
+        console.warn("blaze: templateInstance(): failed to obtain the instance's lastNode(), where it should have been possible to obtain one.", e)
+
+        inst.lastNode = null;
+      }
     } else {
       // on 'created' or 'destroyed' callbacks we don't have a DomRange
       inst.firstNode = null;
