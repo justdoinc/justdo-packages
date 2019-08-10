@@ -30,7 +30,6 @@ Template.required_action_card_transfer_request.events
     return
 
   "click .cancel-reject": (e, tpl) ->
-    tpl.$(".card-footer").css({height: ""})
     tpl.state.set("base")
 
     return
@@ -39,7 +38,7 @@ Template.required_action_card_transfer_request.events
     APP.projects.modules.owners.rejectOwnershipTransfer(@task_id, tpl.$("textarea").val())
 
   "click .accept": ->
-    update = 
+    update =
       $set:
         owner_id: Meteor.userId()
         pending_owner_id: null
@@ -63,8 +62,7 @@ Template.required_action_card_transfer_request_input.onRendered ->
 
   $textarea.keydown (e) ->
     if ((e.altKey or e.ctrlKey) and e.keyCode == 13)
-      $textarea.closest(".card-footer").find(".reject").click()
-
+      $textarea.closest(".card-with-avatar").find(".reject").click()
     return
 
   $textarea.autosize
@@ -76,8 +74,6 @@ Template.required_action_card_transfer_request_input.onRendered ->
           show_shortcut_cue.set true
         else
           show_shortcut_cue.set false
-
-        $textarea.closest(".card-footer").height(textarea_height)
 
         return
 

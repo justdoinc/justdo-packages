@@ -1,23 +1,6 @@
 APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
   curProj = module.helpers.curProj
-
-  module.RequiredActionsDropdown = JustdoHelpers.generateNewTemplateDropdown "required-actions-dropdown", "required_actions_dropdown",
-    updateDropdownPosition: ($connected_element) ->
-      @$dropdown
-        .position
-          of: $connected_element
-          my: "right top"
-          at: "right bottom"
-          collision: "fit fit"
-          using: (new_position, details) =>
-            target = details.target
-            element = details.element
-
-            element.element.css
-              top: new_position.top + 11
-              left: new_position.left + 20
-
   projects = APP.projects
 
   Template.required_actions_dropdown.helpers
@@ -46,3 +29,9 @@ APP.executeAfterAppLibCode ->
 
     required_action_type_title: ->
       required_actions_titles_map[@type]
+
+  Template.required_actions_dropdown.events
+    "click .required-actions-card": (e, tpl) ->
+      e.stopPropagation() # need to avoit close dropdown on click
+
+      return

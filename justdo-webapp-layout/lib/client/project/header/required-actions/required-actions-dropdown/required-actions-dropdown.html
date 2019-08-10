@@ -1,29 +1,28 @@
 <template name="required_actions_dropdown">
-  <div class="required-actions-dropdown-header">Required Actions</div>
-
-  <div class="required-actions-cards-area">
-    {{#if $eq 0 required_actions.length}}
-      <div class="required-actions-card no-actions-card">
-        <div class="no-actions-message">
-          No pending actions. Well done!
+  <div class="dropdown-menu dropdown-menu-right px-3 animate slideIn shadow-lg border-0">
+    <div class="required-actions-dropdown-header text-center">Required Actions</div>
+    <hr class="mt-2 mb-0 border-light">
+    <div class="required-actions-cards-area">
+      {{#if $eq 0 required_actions.length}}
+        <div class="no-actions-card p-3 text-center text-muted">
+          <div class="no-actions-message text-nowrap">
+            No pending actions. Well done!
+          </div>
         </div>
-        <div class="no-actions-graphic">
-          <i class="fa fa-smile-o"></i>
-        </div>
-      </div>
-    {{else}}
-      {{#each required_actions}}
-        {{> required_action_card}}
-      {{/each}}
-    {{/if}}
+      {{else}}
+        {{#each required_actions}}
+          {{> required_action_card}}
+        {{/each}}
+      {{/if}}
+    </div>
   </div>
 </template>
 
 <template name="required_action_card">
-  <div class="required-actions-card required-actions-card-{{type}}">
-    <div class="card-header">
-      <div class="date" title="{{userDateFormat date}}">{{moFromNow negativeDateOrNow}}</div>
-      <div class="type-name">{{required_action_type_title}}</div>
+  <div class="required-actions-card required-actions-card-{{type}} p-2">
+    <div class="card-header p-0 d-flex justify-content-between bg-white border-0 py-2">
+      <small class="type-name text-muted">{{required_action_type_title}}</small>
+      <small class="date text-muted" title="{{userDateFormat date}}">{{moFromNow negativeDateOrNow}}</small>
     </div>
     {{> Template.dynamic template=getTypeTemplate data=typeTemplateData}}
   </div>
