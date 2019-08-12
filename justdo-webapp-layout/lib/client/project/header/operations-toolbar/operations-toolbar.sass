@@ -5,11 +5,7 @@
     border-radius: 0px
     color: #292929
 
-  .btn
-    width: 32px
-    margin-bottom: 0
-    font-size: 0.75rem
-
+  .btn-grid-operations
     &.disabled
       cursor: default
       opacity: 0.5
@@ -17,13 +13,6 @@
     &.ops-lock, &.grid-not-ready, &.grid-not-init
       cursor: wait
 
-      &:active
-        // Revert active styling (don't show mouse press) as long
-        // as lock is on
-        box-shadow: none
-        background-color: #e6e6e6
-        border-color: #adadad
-
-  #add-sub-task .fa
-    // flip and move the original icon to ease function understanding by users
-    transform: scale(1, -1) rotate(270deg)
+  .jd-icon
+    padding: 4px
+    stroke-width: 2

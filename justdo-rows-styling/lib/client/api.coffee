@@ -40,7 +40,7 @@ _.extend JustdoRowsStyling.prototype,
       # Already installed.
 
       return
-    
+
     @_controller_styler_installer_computation = Tracker.autorun =>
       if (task = APP.modules.project_page.gridControl()?.getCurrentPathObj())?
         styles = ""
@@ -53,7 +53,7 @@ _.extend JustdoRowsStyling.prototype,
           if sb.italic?
             styles += "font-style:italic; "
 
-        $('#change-row-style .fa-font').attr("style", styles)
+        $('#change-row-style .jd-icon').attr("style", styles)
 
       return
 
@@ -84,7 +84,7 @@ _.extend JustdoRowsStyling.prototype,
       # Already installed.
 
       return
-    
+
     @_gc_rows_metadata_generator_installer_computation = Tracker.autorun =>
       if (gc = APP.modules.project_page.gridControl())?
         if not gc._justdo_rows_styling_installed?

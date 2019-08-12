@@ -10,7 +10,7 @@ APP.executeAfterAppLibCode ->
   project_page_module.setNullaryOperation "ticketEntry",
     human_description: "Quick Add"
     template:
-      font_awesome_icon: "sticky-note-o"
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#file"/></svg>"""
     op: ->
       message_template =
         APP.helpers.renderTemplateInNewNode(Template.ticket_entry, {})
@@ -150,7 +150,7 @@ APP.executeAfterAppLibCode ->
 
               return true
 
-    prereq: -> 
+    prereq: ->
       return {}
 
   formIsValid = -> selected_destination_id.get()? and not _.isEmpty(title.get())

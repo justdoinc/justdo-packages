@@ -4,12 +4,12 @@ APP.executeAfterAppLibCode ->
 
   gridControl = -> module.gridControl(false) # false means we'll get the gridControl even if it isn't init
 
-  module.setNullaryOperation "addSubTask", 
+  module.setNullaryOperation "addSubTask",
     human_description: "New Child Task"
     keyboard_shortcut: "alt+shift+enter"
     alternative_shortcuts: ["alt+\\"]
     template:
-      font_awesome_icon: "level-down"
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#corner-down-right"/></svg>"""
     op: ->
       gc = gridControl()
 
@@ -50,12 +50,12 @@ APP.executeAfterAppLibCode ->
 
     return false
 
-  module.setNullaryOperation "addSiblingTask", 
+  module.setNullaryOperation "addSiblingTask",
     human_description: "New Task"
     keyboard_shortcut: "alt+enter"
     alternative_shortcuts: ["alt+plus"]
     template:
-      font_awesome_icon: "plus"
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>"""
     op: ->
       gc = gridControl()
 
@@ -85,11 +85,11 @@ APP.executeAfterAppLibCode ->
 
       return gridControl().addSiblingItem.prereq()
 
-  module.setNullaryOperation "removeTask", 
+  module.setNullaryOperation "removeTask",
     human_description: "Remove Task"
     keyboard_shortcut: "alt+-"
     template:
-      font_awesome_icon: "trash-o"
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"/></svg>"""
     op: ->
       gc = gridControl()
 
@@ -117,41 +117,41 @@ APP.executeAfterAppLibCode ->
 
     prereq: -> gridControl().removeActivePath.prereq()
 
-  module.setNullaryOperation "moveDown", 
+  module.setNullaryOperation "moveDown",
     human_description: "Move Down"
     keyboard_shortcut: "alt+down"
     template:
-      font_awesome_icon: "arrow-down"
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-down"/></svg>"""
     op: -> gridControl().moveActivePathDown()
     prereq: -> gridControl().moveActivePathDown.prereq()
 
-  module.setNullaryOperation "moveUp", 
+  module.setNullaryOperation "moveUp",
     human_description: "Move Up"
     keyboard_shortcut: "alt+up"
     template:
-      font_awesome_icon: "arrow-up"
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-up"/></svg>"""
     op: -> gridControl().moveActivePathUp()
     prereq: -> gridControl().moveActivePathUp.prereq()
 
-  module.setNullaryOperation "moveLeft", 
+  module.setNullaryOperation "moveLeft",
     human_description: "Outdent"
     keyboard_shortcut: "alt+left"
     template:
-      font_awesome_icon: "outdent"
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left"/></svg>"""
     op: -> gridControl().moveActivePathLeft()
     prereq: -> gridControl().moveActivePathLeft.prereq()
 
-  module.setNullaryOperation "moveRight", 
+  module.setNullaryOperation "moveRight",
     human_description: "Indent"
     keyboard_shortcut: "alt+right"
     template:
-      font_awesome_icon: "indent"
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-right"/></svg>"""
     op: -> gridControl().moveActivePathRight()
     prereq: -> gridControl().moveActivePathRight.prereq()
 
-  module.setNullaryOperation "sortByPriority", 
+  module.setNullaryOperation "sortByPriority",
     human_description: "Sort by priority"
     template:
-      font_awesome_icon: "sort-amount-desc"
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trending-down"/></svg>"""
     op: -> gridControl().sortActivePathByPriorityDesc()
     prereq: -> gridControl().sortActivePathByPriorityDesc.prereq()
