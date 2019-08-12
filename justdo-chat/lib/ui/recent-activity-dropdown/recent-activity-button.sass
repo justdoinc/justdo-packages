@@ -4,39 +4,30 @@
     color: #999
 
 .unread-count
-  $font-size: 11px
-
-  font-family: Verdana, Geneva, sans-serif
-  background-color: #c52e34
+  background-color: #c7181f
   position: absolute
-  top: -8px
-  right: -8px
-  color: #f3f3f3
-  font-size: $font-size
-  border: 1px solid #f3f3f3
-  border-radius: 3px
+  top: -6px
+  right: 0px
+  color: #ffffff
+  font-weight: bold
+  font-size: 10px
+  border: 2px solid #ffffff
+  border-radius: 6px
   text-align: center
-  padding: 2px 4px
-  line-height: $font-size + 1
+  padding: 0px 4px
 
   .no-unread &
     display: none
 
 
-  .double-digit &, .off-the-charts &
+  .off-the-charts &
     padding: 4px 3px
 
   .double-digit &
-    $font-size: 9px
-
-    right: -10px
-
-    font-size: $font-size
-    line-height: $font-size
+    right: -6px
 
   .off-the-charts &
     $font-size: 8px
-
     right: -13px
     font-size: $font-size
     line-height: $font-size
