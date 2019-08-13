@@ -1,5 +1,5 @@
 <template name="project_header">
-  <div class="project-header py-2 d-flex align-items-center">
+  <div class="project-header py-2 d-flex flex-column">
     <div class="above-project-header-items">
       {{#each aboveProjectHeaderItems}}
         {{#if template}}
@@ -10,9 +10,10 @@
       {{/each}}
     </div>
 
-    {{> project_operations_toolbar}}
-
-    {{> search_comp}}
+    <div class="middle-project-header-items d-flex align-items-center">
+      {{> project_operations_toolbar}}
+      {{> search_comp}}
+    </div>
 
     <div class="below-project-header-items">
       {{#each belowProjectHeaderItems}}
