@@ -1,99 +1,108 @@
 <template name="members_dropdown_menu">
-  <ul>
-    <li class="member-search">
-      <i class="fa fa-search"></i>
-      <input type="text" class="members-search-input" placeholder="Members">
-    </li>
-  </ul>
+  <div class="members-dropdown-menu dropdown-menu dropdown-menu-right p-3 animate slideIn shadow-lg border-0">
+    <input type="text" class="members-search-input form-control form-control-sm" placeholder="Members">
 
-  <div class="alerts-container"></div>
+    <div class="alerts-container"></div>
 
-  <ul class="project-members-container">
-    {{#if isEmptyResults getCurrentMembersFilter}}
-      <li class="no-results">No results found</li>
-    {{else}}
-      {{#with project_enrolled_admins_sorted_by_first_name getCurrentMembersFilter}}
-        <li class="dropdown-header">Admins</li>
+    <ul class="project-members-container p-0 m-0">
+      {{#if isEmptyResults getCurrentMembersFilter}}
+        <li class="no-results text-center mt-3 text-muted">No results found</li>
+      {{else}}
+        {{#with project_enrolled_admins_sorted_by_first_name getCurrentMembersFilter}}
+          <li class="dropdown-header text-muted text-uppercase mt-1 px-0 pb-2">Admins</li>
 
-        {{#each this}}
-          {{> admin_member_item}}
-        {{/each}}
-      {{/with}}
+          {{#each this}}
+            {{> admin_member_item}}
+          {{/each}}
+        {{/with}}
 
-      {{#with project_enrolled_regular_members_sorted_by_first_name getCurrentMembersFilter}}
-        <li class="dropdown-header">Members</li>
+        {{#with project_enrolled_regular_members_sorted_by_first_name getCurrentMembersFilter}}
+          <li class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2 border-top border-light">Members</li>
 
-        {{#each this}}
-          {{> regular_member_item}}
-        {{/each}}
-      {{/with}}
+          {{#each this}}
+            {{> regular_member_item}}
+          {{/each}}
+        {{/with}}
 
-      {{#with project_non_enrolled_members_sorted_by_first_name getCurrentMembersFilter}}
-        <li class="dropdown-header">Awaiting Registration</li>
+        {{#with project_non_enrolled_members_sorted_by_first_name getCurrentMembersFilter}}
+          <li class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2 border-top border-light">Awaiting Registration</li>
 
-        {{#each this}}
-          {{> enrollment_pending_member}}
-        {{/each}}
-      {{/with}}
-    {{/if}}
-  </ul>
-  <ul class="add-project-members">
-    {{#if is_project_admin}}
-      <li class="dropdown-header">Invite New Members</li>
-      <li>
-        <div class="input-group input-group-sm add-members-comp">
-           <input type="text" class="form-control input-sm" placeholder="Member's Email">
-           <span class="input-group-append">
-             <button class="btn btn-outline-secondary" type="button">Invite</button>
-           </span>
-         </div>
-      </li>
-    {{/if}}
-  </ul>
+          {{#each this}}
+            {{> enrollment_pending_member}}
+          {{/each}}
+        {{/with}}
+      {{/if}}
+    </ul>
+    <div class="add-project-members">
+      {{#if is_project_admin}}
+      <div class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2 border-top border-light">Invite New Members</div>
+      <div class="add-members-comp d-flex align-items-center">
+        <input type="text" class="form-control form-control-sm mr-2" placeholder="Member's Email">
+        <button class="btn btn-primary btn-sm font-weight-bold text-uppercase" type="button">Invite</button>
+      </div>
+      {{/if}}
+    </div>
+  </div>
 </template>
 
 <template name="admin_member_item">
-  <li class="member-item admin-item" user-id="{{_id}}">
-    {{#if is_project_admin}}
-      <i class="fa fa-certificate fa-fw op-button downgrade-admin" title="Revoke {{displayName}}'s admin rights"></i>
-    {{/if}}
+  <li class="member-item admin-item d-flex align-items-center justify-content-between" user-id="{{_id}}">
+    <div class="d-flex align-items-center">
+      {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{displayName}}</div>
+    </div>
+    <div class="d-flex align-items-center">
+      {{#if $not isUserEmailsVerified}}
+        <svg class="jd-icon text-warning" title="Unverified email"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"/></svg>
+      {{/if}}
+      {{#if is_project_admin}}
+        <svg class="jd-icon text-secondary op-button downgrade-admin" title="Revoke {{displayName}}'s admin rights"><use xlink:href="/layout/icons-feather-sprite.svg#star"/><desc>[long description]</desc></svg>
+      {{/if}}
 
-    {{#if allow_member_remove user_id}}
-      <i class="fa fa-user-times fa-fw op-button remove" title="Remove {{displayName}} from this project"></i>
-    {{/if}}
-
-    {{> gtpl_user_profile_pic}} <div class="display-name">{{> display_name_with_graphic_unverified_warning}}</div>
+      {{#if allow_member_remove user_id}}
+        <svg class="jd-icon text-secondary op-button remove" title="Remove {{displayName}} from this project"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+      {{/if}}
+    </div>
   </li>
 </template>
 
 <template name="regular_member_item">
-  <li class="member-item regular-member-item" user-id="{{_id}}">
-    {{#if is_project_admin}}
-      <i class="fa fa-certificate fa-fw op-button upgrade-admin" title="Make {{displayName}} an admin"></i>
-    {{/if}}
+  <li class="member-item regular-member-item d-flex align-items-center justify-content-between" user-id="{{_id}}">
+    <div class="d-flex align-items-center">
+      {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{displayName}}</div>
+    </div>
+    <div class="d-flex align-items-center">
+      {{#if $not isUserEmailsVerified}}
+        <svg class="jd-icon text-warning" title="Unverified email"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"/></svg>
+      {{/if}}
+      {{#if is_project_admin}}
+        <svg class="jd-icon text-secondary op-button upgrade-admin" title="Make {{displayName}} an admin"><use xlink:href="/layout/icons-feather-sprite.svg#star"/></svg>
+      {{/if}}
 
-    {{#if allow_member_remove user_id}}
-      <i class="fa fa-user-times fa-fw op-button remove" title="Remove {{displayName}} from this project"></i>
-    {{/if}}
-
-    {{> gtpl_user_profile_pic}} <div class="display-name">{{> display_name_with_graphic_unverified_warning}}</div>
+      {{#if allow_member_remove user_id}}
+        <svg class="jd-icon text-secondary op-button remove" title="Remove {{displayName}} from this project"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+      {{/if}}
+    </div>
   </li>
 </template>
 
 <template name="enrollment_pending_member">
-  <li class="member-item enrollment-pending-member-item" user-id="{{_id}}">
-    {{#if is_project_admin}}
-      <i class="fa fa-certificate fa-fw op-button {{#if is_admin}}downgrade-admin{{else}}upgrade-admin{{/if}}" title="{{#if is_admin}}Revoke {{displayName}}'s admin rights{{else}}Make {{displayName}} a project admin upon registration{{/if}}"></i>
-    {{/if}}
+  <li class="member-item enrollment-pending-member-item d-flex align-items-center justify-content-between" user-id="{{_id}}">
+    <div class="d-flex align-items-center">
+      {{> gtpl_user_profile_pic}} <div class="display-name mx-2" title="{{userEmail this}}">{{displayName}}</div>
+    </div>
 
-    {{#if allow_member_remove user_id}}
-      <i class="fa fa-user-times fa-fw op-button remove" title="Remove {{displayName}} from this project"></i>
-    {{/if}}
+    <div class="d-flex align-items-center">
+      {{#if allow_member_edit_enrollment_pending_member user_id}}
+        <svg class="jd-icon text-secondary op-button edit-enrolled" title="Edit {{displayName}}"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>
+      {{/if}}
 
-    {{#if allow_member_edit_enrollment_pending_member user_id}}
-      <i class="fa fa-pencil fa-fw op-button edit-enrolled" title="Edit {{displayName}}"></i>
-    {{/if}}
+      {{#if is_project_admin}}
+        <svg class="jd-icon text-secondary op-button {{#if is_admin}}downgrade-admin{{else}}upgrade-admin{{/if}}" title="{{#if is_admin}}Revoke {{displayName}}'s admin rights{{else}}Make {{displayName}} a project admin upon registration{{/if}}"><use xlink:href="/layout/icons-feather-sprite.svg#star"/></svg>
+      {{/if}}
 
-    {{> gtpl_user_profile_pic}} <div class="display-name" title="{{userEmail this}}">{{displayName}}</div>
+      {{#if allow_member_remove user_id}}
+        <svg class="jd-icon text-secondary op-button remove" title="Remove {{displayName}} from this project"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+      {{/if}}
+    </div>
   </li>
 </template>

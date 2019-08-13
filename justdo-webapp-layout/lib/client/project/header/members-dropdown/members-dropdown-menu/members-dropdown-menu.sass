@@ -1,210 +1,30 @@
-$members-dropdown-width: 300px
-
-
-.dropdown-menu.members-dropdown-menu
-  padding: 9px 12px
-  width: $members-dropdown-width
-
-.members-management-alerts
-  .bootbox-body
-    padding: 18px 6px
-    font-size: 15px
-
-$dropdown-user-pic-size: 25px
-$dropdown-user-pic-margin: 6px
-$op-buttons-width: 50px
 .members-dropdown-menu
-  padding: 5px 12px 9px 12px
-  font-smoothing: antialiased
-  text-rendering: optimizeLegibility
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
-  -moz-font-feature-settings: "liga" on
-
+  width: 320px
   .dropdown-header
-    cursor: default
-    user-select: none
-    font-size: 13px
-    font-weight: 500
+    font-size: 11px
 
-  .member-search
-    position: relative
+.project-members-container
+  list-style-type: none
 
-    padding: 3px 0 0
+  .member-item
+    margin-bottom: 6px
+    img
+      width: 25px
+      height: 25px
 
-    input
-      width: 100%
-      border: none
-      border-bottom: 1px solid #EEEEEE
-      padding-left: 21px
-      padding-bottom: 8px
-      font-family: "lato", sans-serif
-      font-size: 15px
-      font-weight: 600
-      color: #3d495b
-      &:focus
-        outline: none
-      &::-webkit-input-placeholder
-        color: #5A83BA
-      &::-moz-placeholder
-        color: #5A83BA
-      &:-ms-input-placeholder
-        color: #5A83BA
-      &:-moz-placeholder
-        color: #5A83BA
-      &::-ms-clear
-        display: none
-    i
-      position: absolute
-      top: 6px
-      font-size: 16px
-      color: #6a96d2
+  .display-name
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    width: 160px
+
+  .jd-icon
+    padding: 3px
+    margin: 0px
+    stroke-width: 2
+    cursor: pointer
+  .downgrade-admin
+    fill: currentColor
 
   .no-results
-    line-height: 29px
-    margin-left: 4px
-    padding-bottom: 0
-
-  .alert-danger
-    margin-top: 4px
-    background-color: #fdf0f0
-
-    position: relative
-
-    button
-      opacity: .3
-
-      &:hover
-        opacity: .5
-
-      span
-        line-height: 11px
-        display: block
-
-    .alert
-      padding: 5px 7px
-      font-family: "lato",sans-serif
-      color: #d65252
-      border-radius: 3px
-
-    .close
-      font-size: 17px
-      font-weight: bold
-      line-height: 100%
-      color: #bb1a1a
-      position: absolute
-      right: 8px
-      top: 50%
-      margin-top: -8px
-      display: block
-      height: 11px
-      font-size: 18px
-
-  .dropdown-toggle
-    height: 30px
-
-  .dropdown-menu
-    width: 250px
-    padding: 9px 15px
-
-    width: 270px
-
-  .alerts-container
-    padding: 0
-
-    .alert
-      margin-bottom: 5px
-      padding: 8px
-
-  ul
-    padding: 0
-    margin: 0
-
-  .project-members-container
-    max-height: 344px
-    overflow: auto
-    padding: 4px 0
-
-  .add-project-members
-    margin-top: 5px
-
-  li
-    list-style: none outside none
-    display: block
-    clear: both
-    padding: 3px 0
-
-  li.dropdown-header
-    margin-top: 3px
-
-    &:first-child
-      margin-top: -3px
-
-  li.member-item
-    min-height: 31px
-    color: inherit
-    font-size: 15px
-    background: 0 none
-    font-weight: normal
-    line-height: $dropdown-user-pic-size
-    color: #333
-    white-space: nowrap
-    text-decoration: none
-    cursor: default
-    position: relative
-
-    &:hover
-      transition: background-color 0.2s ease
-      background-color: #f5f5f5
-
-    img
-      position: absolute
-      margin-right: 5px
-      width: $dropdown-user-pic-size
-      height: $dropdown-user-pic-size
-
-    .display-name
-      display: block
-      overflow: hidden
-      margin-left: $dropdown-user-pic-size + $dropdown-user-pic-margin
-
-      margin-right: $op-buttons-width
-
-    .op-button
-      float: right
-      cursor: pointer
-      margin: 3px 0 0 3px
-      font-size: 17px
-      display: none
-      color: #BBB
-
-      display: inline-block
-
-      &.remove:hover
-        color: #333
-
-        transition: color 0.5s ease
-
-      &.downgrade-admin
-        color: #333
-
-        &:hover
-          color: #BBB
-
-          transition: color 0.5s ease
-
-      &.upgrade-admin
-        color: #BBB
-
-        &:hover
-          color: #333
-
-          transition: color 0.5s ease
-
-      &.upgrade-admin
-
-  .add-members-comp
-    margin: 0
-
-    .btn:last-child
-      margin-right: 0
+    font-size: 14px

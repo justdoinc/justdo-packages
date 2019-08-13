@@ -2,32 +2,12 @@ APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
   curProj = module.helpers.curProj
 
-  module.ProjectMembersDropdown = JustdoHelpers.generateNewTemplateDropdown "members-dropdown-menu", "members_dropdown_menu",
-    custom_dropdown_class: "dropdown-menu"
-    custom_bound_element_options:
-      container: "body" # So we can use the .project-admin and other state classes bound to .project-container
-      close_button_html: null
-    updateDropdownPosition: ($connected_element) ->
-      @$dropdown
-        .position
-          of: $connected_element
-          my: "right top"
-          at: "right bottom"
-          collision: "fit fit"
-          using: (new_position, details) =>
-            target = details.target
-            element = details.element
-
-            element.element.css
-              top: new_position.top + 6
-              left: new_position.left
-
   addMembersDropDownError = (error_message) ->
     # Currently, we show up to one error at a time
     clearMembersDropDownErrors()
 
     error_elem = """
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger mt-3 mb-0 px-3 py-2" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
         <span class="sr-only">Error:</span>
@@ -50,7 +30,7 @@ APP.executeAfterAppLibCode ->
 
     email = email_input.val().trim().toLowerCase()
 
-    postSuccessProcedures = -> 
+    postSuccessProcedures = ->
       # Success procedures
       clearMembersDropDownErrors()
       email_input.val("") # clear input
@@ -60,7 +40,7 @@ APP.executeAfterAppLibCode ->
         $(".members-search-input").val("").keyup()
 
       Tracker.flush()
-      
+
       JustdoHelpers.newComputedReactiveVar null, (crv) ->
         if $(".members-dropdown-menu:visible").length == 0
           # Stop crv when the dropdown menu is closed
@@ -83,7 +63,7 @@ APP.executeAfterAppLibCode ->
         addMembersDropDownError err.reason
 
         return
-      
+
       postSuccessProcedures()
 
       return
@@ -116,7 +96,7 @@ APP.executeAfterAppLibCode ->
   Template.members_dropdown_menu.events
     "click .add-members-comp button": (e) ->
       addFilledUser()
-   
+
     "keypress .add-members-comp input": (e) ->
       if e.keyCode == 13
         addFilledUser()
@@ -182,6 +162,11 @@ APP.executeAfterAppLibCode ->
         return template.members_filter.set(null)
       else
         template.members_filter.set(value)
+
+      return
+
+    "click .members-dropdown-menu": (e, tpl) ->
+      e.stopPropagation() # need to avoit close dropdown on click
 
       return
 

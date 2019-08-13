@@ -1,11 +1,12 @@
 <template name="members_dropdown_button">
-  <div id="project-members-dropdown">
-    <button class="dropdown-toggle btn btn-primary btn-sm shadow-sm font-weight-bold" type="button" aria-haspopup="true" aria-expanded="true">
+  <div id="project-members-dropdown" class="dropdown">
+    <button class="btn btn-primary btn-sm shadow-sm font-weight-bold" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       {{#if is_project_admin}}
         SHARE
       {{else}}
         MEMBERS
       {{/if}}
     </button>
+    {{> members_dropdown_menu}}
   </div>
 </template>
