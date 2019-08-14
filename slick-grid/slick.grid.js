@@ -349,9 +349,7 @@ if (typeof Slick === "undefined") {
             .bind("draginit", handleDragInit)
             .bind("dragstart", {distance: 3}, handleDragStart)
             .bind("drag", handleDrag)
-            .bind("dragend", handleDragEnd)
-            .delegate(".slick-cell", "mouseenter", handleMouseEnter)
-            .delegate(".slick-cell", "mouseleave", handleMouseLeave);
+            .bind("dragend", handleDragEnd);
 
         // Work around http://crbug.com/312427.
         if (navigator.userAgent.toLowerCase().match(/webkit/) &&
@@ -549,14 +547,6 @@ if (typeof Slick === "undefined") {
     }
 
     function createColumnHeaders() {
-      function onMouseEnter() {
-        $(this).addClass("ui-state-hover");
-      }
-
-      function onMouseLeave() {
-        $(this).removeClass("ui-state-hover");
-      }
-
       $headers.find(".slick-header-column")
         .each(function() {
           var columnDef = $(this).data("column");
@@ -593,12 +583,6 @@ if (typeof Slick === "undefined") {
             .data("column", m)
             .addClass(m.headerCssClass || "")
             .appendTo($headers);
-
-        if (options.enableColumnReorder || m.sortable) {
-          header
-            .on('mouseenter', onMouseEnter)
-            .on('mouseleave', onMouseLeave);
-        }
 
         if (m.reorderable) {
           header.addClass("slick-header-reorderable");
@@ -2721,14 +2705,6 @@ if (typeof Slick === "undefined") {
       }
     }
 
-    function handleMouseEnter(e) {
-      trigger(self.onMouseEnter, {}, e);
-    }
-
-    function handleMouseLeave(e) {
-      trigger(self.onMouseLeave, {}, e);
-    }
-
     function cellExists(row, cell) {
       return !(row < 0 || row >= getDataLength() || cell < 0 || cell >= columns.length);
     }
@@ -3795,8 +3771,6 @@ if (typeof Slick === "undefined") {
       "onBeforeHeaderCellDestroy": new Slick.Event(),
       "onHeaderRowCellRendered": new Slick.Event(),
       "onBeforeHeaderRowCellDestroy": new Slick.Event(),
-      "onMouseEnter": new Slick.Event(),
-      "onMouseLeave": new Slick.Event(),
       "onClick": new Slick.Event(),
       "onDblClick": new Slick.Event(),
       "onContextMenu": new Slick.Event(),
