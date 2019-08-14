@@ -96,6 +96,9 @@ APP.executeAfterAppLibCode ->
       current_item_obj = module.activeItemObj({"#{@field_id}": 1, "#{CustomJustdoTasksLocks.locking_users_task_field}": 1})
       current_item_path = module.activeItemPath()
 
+      if not current_item_obj? or not current_item_path?
+        return false
+
       return gc.isDocFieldAndPathEditable(current_item_obj, @field_id, current_item_path)
 
   Template.task_pane_item_details_additional_field.events
