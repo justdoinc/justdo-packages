@@ -3015,40 +3015,50 @@ if (typeof Slick === "undefined") {
       }
     }
 
-    function absBox(elem) {
+    function absBox(elem, light_weight) {
+      if (typeof light_weight === "undefined") {
+        light_weight = false;
+      }
+
       var box = {
         top: elem.offsetTop,
         left: elem.offsetLeft,
         bottom: 0,
         right: 0,
-        width: $(elem).outerWidth(),
-        height: $(elem).outerHeight(),
         visible: true};
+
+      if (light_weight === false) {
+        box.width = $(elem).outerWidth();
+        box.height = $(elem).outerHeight();
+      }
+
       box.bottom = box.top + box.height;
       box.right = box.left + box.width;
 
-      // walk up the tree
-      var offsetParent = elem.offsetParent;
-      while ((elem = elem.parentNode) != document.body) {
-        if (box.visible && elem.scrollHeight != elem.offsetHeight && $(elem).css("overflowY") != "visible") {
-          box.visible = box.bottom > elem.scrollTop && box.top < elem.scrollTop + elem.clientHeight;
+      if (light_weight === false) {
+        // walk up the tree
+        var offsetParent = elem.offsetParent;
+        while ((elem = elem.parentNode) != document.body) {
+          if (box.visible && elem.scrollHeight != elem.offsetHeight && $(elem).css("overflowY") != "visible") {
+            box.visible = box.bottom > elem.scrollTop && box.top < elem.scrollTop + elem.clientHeight;
+          }
+
+          if (box.visible && elem.scrollWidth != elem.offsetWidth && $(elem).css("overflowX") != "visible") {
+            box.visible = box.right > elem.scrollLeft && box.left < elem.scrollLeft + elem.clientWidth;
+          }
+
+          box.left -= elem.scrollLeft;
+          box.top -= elem.scrollTop;
+
+          if (elem === offsetParent) {
+            box.left += elem.offsetLeft;
+            box.top += elem.offsetTop;
+            offsetParent = elem.offsetParent;
+          }
+
+          box.bottom = box.top + box.height;
+          box.right = box.left + box.width;
         }
-
-        if (box.visible && elem.scrollWidth != elem.offsetWidth && $(elem).css("overflowX") != "visible") {
-          box.visible = box.right > elem.scrollLeft && box.left < elem.scrollLeft + elem.clientWidth;
-        }
-
-        box.left -= elem.scrollLeft;
-        box.top -= elem.scrollTop;
-
-        if (elem === offsetParent) {
-          box.left += elem.offsetLeft;
-          box.top += elem.offsetTop;
-          offsetParent = elem.offsetParent;
-        }
-
-        box.bottom = box.top + box.height;
-        box.right = box.left + box.width;
       }
 
       return box;
