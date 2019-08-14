@@ -12,21 +12,31 @@ EventEmitter = function(options) {
   self._eventEmitter = {
     onListeners: {},
     onceListeners: {},
-    maxListeners: options.maxListeners || 100
+    maxListeners: options.maxListeners || 10
   };
 };
 
 var _checkListenerLimit = function(eventName, listenerCount) {
   var self = this;
-  // Check if we are to send a warning
-  if (self._eventEmitter.maxListeners && listenerCount > self._eventEmitter.maxListeners) {
-    // Return string
-    return 'warning: possible EventEmitter memory leak detected. ' +
-        listenerCount + ' listeners added on event "' + eventName +
-        '". Use emitter.setMaxListeners() to increase limit. (' +
-        self._eventEmitter.maxListeners + ')';
 
-  }
+  // I decided to disable this feature. Any number picked for maxListeners is arbitrary and can
+  // be exceeded in some use cases.
+  //
+  // In addition, I suspect that generating errors is expensive and causing exceeding the limit
+  // to slow our system.
+  //
+  // Daniel C.
+  return undefined;
+
+  // // Check if we are to send a warning
+  // if (self._eventEmitter.maxListeners && listenerCount > self._eventEmitter.maxListeners) {
+  //   // Return string
+  //   return 'warning: possible EventEmitter memory leak detected. ' +
+  //       listenerCount + ' listeners added on event "' + eventName +
+  //       '". Use emitter.setMaxListeners() to increase limit. (' +
+  //       self._eventEmitter.maxListeners + ')';
+
+  // }
 };
 
 // By default EventEmitters will print a warning if more than 30 listeners are
