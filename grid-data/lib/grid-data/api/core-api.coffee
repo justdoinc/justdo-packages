@@ -430,6 +430,10 @@ _.extend GridData.prototype,
 
     @invalidateOnGridDataCoreStructureChange()
 
+    same_tick_cache_key_id = "grid-data::getAllCollectionItemIdPaths::#{item_id}"
+    if JustdoHelpers.sameTickCacheExists(same_tick_cache_key_id)
+      return JustdoHelpers.sameTickCacheGet(same_tick_cache_key_id)
+
     if item_id == "0"
       return "/"
 
@@ -439,12 +443,16 @@ _.extend GridData.prototype,
         paths.push(path)
 
         # Let the each keep running
-        return undefined
+        ret_val = undefined
+        JustdoHelpers.sameTickCacheSet(same_tick_cache_key_id, ret_val)
+        return ret_val
 
     if _.isEmpty paths
       paths = undefined
 
-    return paths
+    ret_val = paths
+    JustdoHelpers.sameTickCacheSet(same_tick_cache_key_id, ret_val)
+    return ret_val
 
   #
   # Filters Management
