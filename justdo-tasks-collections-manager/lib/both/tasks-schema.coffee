@@ -548,6 +548,31 @@ _.extend JustdoTasksCollectionsManager.prototype,
           else
             @unset()
 
+        grid_column_filter_settings:
+          type: "dates-filter"
+          options: {
+            filter_options: [
+              {
+                type: "relative-range",
+                id: "last-24-hours",
+                label: "Last 24 hours",
+                relative_range: [-1, null]
+              }
+              {
+                type: "relative-range",
+                id: "last-7-days",
+                label: "Last 7 days",
+                relative_range: [-7, null]
+              }
+              {
+                type: "relative-range",
+                id: "last-30-days",
+                label: "Last 30 days",
+                relative_range: [-30, null]
+              }
+            ]
+          }
+
       updatedAt:
         label: "Updated"
 
@@ -589,6 +614,31 @@ _.extend JustdoTasksCollectionsManager.prototype,
             return {$setOnInsert: new Date()}
           else
             @unset()
+
+        grid_column_filter_settings:
+          type: "dates-filter"
+          options: {
+            filter_options: [
+              {
+                type: "relative-range",
+                id: "last-24-hours",
+                label: "Last 24 hours",
+                relative_range: [-1, null]
+              }
+              {
+                type: "relative-range",
+                id: "last-7-days",
+                label: "Last 7 days",
+                relative_range: [-7, null]
+              }
+              {
+                type: "relative-range",
+                id: "last-30-days",
+                label: "Last 30 days",
+                relative_range: [-30, null]
+              }
+            ]
+          }
 
       _secret:
         # The unmerged publication delete the _secret field from the published docs
