@@ -37,6 +37,7 @@ Package.onUse(function (api) {
 
   api.add_files("lib/init.coffee", both);
   api.add_files("lib/both/json.coffee", both);
+  api.add_files("lib/both/caching.coffee", both);
   api.add_files("lib/both/strings.coffee", both);
   api.add_files("lib/both/date.coffee", both);
   api.add_files("lib/both/modules.coffee", both);
