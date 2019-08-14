@@ -3,10 +3,10 @@
     <div class="grid-visualization-header">{{title}}</div>
     {{#if errors}}
       <div class="error">
-        <h1>Cannot Generate Chart</h1>
-        <ul>
+        <h4>Cannot Generate Chart</h4>
+        <ul class="list-group list-group-flush">
           {{#each errors}}
-            <li class="grid-visualization-error">{{message}}</li>
+            <li class="list-group-item grid-visualization-error px-0 py-2">{{message}}</li>
           {{/each}}
         </ul>
       </div>
