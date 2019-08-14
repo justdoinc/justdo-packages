@@ -606,6 +606,20 @@ _.extend JustdoTasksCollectionsManager.prototype,
               # of other items
               return
 
+          if Meteor.isClient
+            # Do not set the updatedAt if only private fields are updated.
+            #
+            # We do the following only for the client side, since the server takes
+            # that case into account in other places, and avoid updating the updatedAt
+            # if only private fields are updated
+            other_affected_keys = _.without(_.values(this.affectedKeys()), "updatedAt")
+            other_non_private_affected_keys = _.filter other_affected_keys, (key) -> key.substr(0, 5) != "priv:"
+
+            if _.isEmpty other_non_private_affected_keys
+              @unset()
+
+              return
+
           if this.isUpdate
             return new Date()
           else if this.isInsert
