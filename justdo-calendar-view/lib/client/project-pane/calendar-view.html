@@ -1,0 +1,47 @@
+<template name="justdo_calendar_project_pane">
+  Display Calendar for {{title_date}}
+  <i class="fa fa-arrow-circle-o-left calendar-view-prev-week" aria-hidden="true"></i>
+  <i class="fa fa-calendar-o calendar-view-back-to-today" aria-hidden="true"></i>
+  <i class="fa fa-arrow-circle-o-right calendar-view-next-week" aria-hidden="true"></i>
+  <table width="100%">
+    <tr>
+      <th></th>
+      {{#each datesToDisplay}}
+        <th>{{this}}</th>
+      {{/each}}
+    </tr>
+    {{> justdo_calendar_project_pane_user_view user_id=currentUserId dates_to_display=datesToDisplay}}
+
+    {{#each allOtherUsers}}
+      {{> justdo_calendar_project_pane_user_view user_id=this dates_to_display=datesToDisplay}}
+    {{/each}}
+
+  </table>
+</template>
+
+
+<template name="justdo_calendar_project_pane_user_view">
+  {{#each rowNumbers}}
+    <tr>
+      {{#each colNumbers}}
+        {{#if topLeftCell}}
+          <td rowspan={{numberOfRows}}>
+            {{#with userObj}}
+              {{> justdo_avatar}}
+            {{/with}}
+          </td>
+        {{else if leftCell}}
+        {{else}}
+          <td class="calendar_task_cell" task_id={{taskId}}>
+            {{#if isFollowupDate}}
+              (F)
+            {{/if}}
+            {{taskTitle}}
+          </td>
+        {{/if}}
+
+      {{/each}}
+    </tr>
+  {{/each}}
+
+</template>
