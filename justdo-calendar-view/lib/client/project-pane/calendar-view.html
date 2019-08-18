@@ -1,5 +1,5 @@
 <template name="justdo_calendar_project_pane">
-  Display Calendar for {{title_date}}
+  Display Calendar for {{title_date}} :
   <i class="fa fa-arrow-circle-o-left calendar-view-prev-week" aria-hidden="true"></i>
   <i class="fa fa-calendar-o calendar-view-back-to-today" aria-hidden="true"></i>
   <i class="fa fa-arrow-circle-o-right calendar-view-next-week" aria-hidden="true"></i>
@@ -32,14 +32,17 @@
           </td>
         {{else if leftCell}}
         {{else}}
-          <td class="calendar_task_cell" task_id={{taskId}}>
-            {{#if isFollowupDate}}
-              (F)
+              <td class="calendar_view_droppable" date={{columnDate}}>
+            {{#if taskId}}
+              <div class="calendar_task_cell calendar_view_draggable" task_id={{taskId}}>
+                {{#if isFollowupDate}}
+                  (F)
+                {{/if}}
+                {{taskTitle}}
+              </div>
             {{/if}}
-            {{taskTitle}}
           </td>
         {{/if}}
-
       {{/each}}
     </tr>
   {{/each}}

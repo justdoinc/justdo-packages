@@ -1,3 +1,16 @@
+setDragAndDrop = ->
+  $('.calendar_view_draggable').draggable
+    cursor: 'move'
+    helper: 'clone'
+  $('.calendar_view_droppable').droppable
+    drop: (e, ui)->
+      if ui.draggable[0].attributes.class.value.indexOf("calendar_view_draggable")>=0
+        APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
+                                      $set:{follow_up: e.target.attributes.date.value}
+                                    )
+      return
+  return
+
 Template.justdo_calendar_project_pane.onCreated ->
   @view_start_date = new ReactiveVar
   @view_start_date.set(new Date)
@@ -22,9 +35,9 @@ Template.justdo_calendar_project_pane.helpers
       d.add(1,"days")
     return dates
 
-  refreshHack: ->
-    d = Template.instance().view_start_date.get()
-    return true
+#  refreshHack: ->
+#    d = Template.instance().view_start_date.get()
+#    return true
 
 
 
@@ -46,8 +59,6 @@ Template.justdo_calendar_project_pane.events
   "click .calendar-view-back-to-today": ->
     Template.instance().view_start_date.set(new Date)
     return
-
-
 
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
@@ -89,14 +100,15 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
             row_index++
 
       self.days_matrix.set(days_matrix)
+      Tracker.afterFlush ->
+        setDragAndDrop()
       return
-
-
     return
-
   return
 
-
+Template.justdo_calendar_project_pane_user_view.onRendered ->
+  setDragAndDrop()
+  return
 
 Template.justdo_calendar_project_pane_user_view.helpers
 
@@ -137,7 +149,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     matrix = Template.instance().days_matrix.get()
 
     if col_num>=1
-      if (info=matrix[col_num-1]?[row_num])
+      if (info=matrix[col_num]?[row_num])
         return info.task.title
     return ""
 
@@ -147,7 +159,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     matrix = Template.instance().days_matrix.get()
 
     if col_num>=1
-      if (info=matrix[col_num-1]?[row_num])
+      if (info=matrix[col_num]?[row_num])
         return info.task.id
     return ""
 
@@ -157,9 +169,12 @@ Template.justdo_calendar_project_pane_user_view.helpers
     matrix = Template.instance().days_matrix.get()
 
     if col_num>=1
-      if (info=matrix[col_num-1]?[row_num])
+      if (info=matrix[col_num]?[row_num])
         return info.type == 'F'
     return false
+
+  columnDate: ->
+    return Template.instance().data.dates_to_display[@-1]
 
 
 Template.justdo_calendar_project_pane_user_view.events
