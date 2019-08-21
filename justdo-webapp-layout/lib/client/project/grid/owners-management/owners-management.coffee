@@ -38,7 +38,7 @@ APP.executeAfterAppLibCode ->
           closedHandler: => @dropdownClosedHandler()
           close_button_html: null
 
-      @grid.on "tree-control-user-image-clicked", => @ownerSetterClickHandler.apply(@, arguments)
+      @grid.on "tree-control-user-image-clicked", (...args) => @ownerSetterClickHandler.apply(@, args)
 
       @position_update_interval = null
 

@@ -258,13 +258,11 @@ _.extend JustdoLoginState.prototype,
       # at the moment all the other sym can happen only on init 
       return true
 
-  loginStateIs: ->
+  loginStateIs: (...args) ->
     # Gets an arbitrary list of states ids and return true
     # if any of them is the current state
     #
     # Reactive resource
-
-    args = _.toArray arguments
 
     current_login_state = @getLoginState()[0]
 

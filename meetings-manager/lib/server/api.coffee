@@ -249,10 +249,10 @@ _.extend MeetingsManager.prototype,
         "note": note_fields.note
         "note_lock": note_fields.note_lock
 
-  addUserNoteToTask: ->
+  addUserNoteToTask: (...args) ->
     # There's actually no difference at the moment between these two methods
     # there might be in the future.
-    @setUserNoteForTask.apply(this, arguments)
+    @setUserNoteForTask.apply(this, args)
 
   setUserNoteForTask: (meeting_id, task_id, note_fields, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
@@ -294,10 +294,10 @@ _.extend MeetingsManager.prototype,
         "user_notes.$.note": note_fields.note
         "user_notes.$.date_updated": new Date()
 
-  addPrivateNoteToTask: ->
+  addPrivateNoteToTask: (...args) ->
     # There's actually no difference at the moment between these two methods
     # there might be in the future.
-    @setPrivateNoteForTask.apply(this, arguments)
+    @setPrivateNoteForTask.apply(this, args)
 
   setPrivateNoteForTask: (meeting_id, task_id, note_fields, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"

@@ -53,7 +53,7 @@ _.extend PACK.modules.due_lists,
   #     #
   #     #   In the browser:
   #     #
-  #     #   Meteor.autorun(() => {
+  #     #   Tracker.autorun(() => {
   #     #     console.log("Query", JSON.stringify(
   #     #       APP.collections.JustdoSystem.findOne("query"), null, "\t"
   #     #     ));
@@ -112,7 +112,7 @@ _.extend PACK.modules.due_lists,
   #     #
   #     #   In the browser:
   #     #
-  #     #   Meteor.autorun(() => {
+  #     #   Tracker.autorun(() => {
   #     #     console.log("Query", JSON.stringify(
   #     #       APP.collections.JustdoSystem.findOne("query"), null, "\t"
   #     #     ));
@@ -173,7 +173,7 @@ _.extend PACK.modules.due_lists,
   #     #
   #     #   In the browser:
   #     #
-  #     #   Meteor.autorun(() => {
+  #     #   Tracker.autorun(() => {
   #     #     console.log("Query", JSON.stringify(
   #     #       APP.collections.JustdoSystem.findOne("query"), null, "\t"
   #     #     ));
@@ -233,7 +233,7 @@ _.extend PACK.modules.due_lists,
   #     #
   #     #   In the browser:
   #     #
-  #     #     Meteor.autorun(() => {
+  #     #     Tracker.autorun(() => {
   #     #       console.log("Query", JSON.stringify(
   #     #         APP.collections.JustdoSystem.findOne("query"), null, "\t"
   #     #       ));

@@ -91,7 +91,7 @@ _.extend MeetingsManager.prototype,
 
   subscribeToNotesForTask: (task_id) ->
 
-    Meteor.autorun =>
+    Tracker.autorun =>
       _.each @meetings.find().fetch(), (meeting) =>
         Meteor.subscribe "meetings_notes_for_task", task_id, meeting._id
 

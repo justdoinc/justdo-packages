@@ -270,31 +270,31 @@ _.extend JustdoAnalytics.prototype,
         do (op) ->
           originalOp = self._collection[op]
 
-          self._collection[op] = ->
+          self._collection[op] = (...args) ->
             col_name = self._name
 
             skip_logging =
-              (op in ["update", "upsert"] and arguments[2]?.jd_analytics_skip_logging)
+              (op in ["update", "upsert"] and args[2]?.jd_analytics_skip_logging)
 
             if not skip_logging
-              logMeteorMessage self._name, op, _.toArray(arguments)
+              logMeteorMessage self._name, op, _.toArray(args)
 
-            return originalOp.apply(self._collection, arguments)
+            return originalOp.apply(self._collection, args)
 
     for op in ["find", "findOne", "findAndModify"]
       do (op) ->
         originalOp = Mongo._CollectionPrototype[op]
 
-        Mongo._CollectionPrototype[op] = ->
+        Mongo._CollectionPrototype[op] = (...args) ->
           col_name = @_name
 
           skip_logging =
-            (op in ["find", "findOne"] and arguments[1]?.jd_analytics_skip_logging)
+            (op in ["find", "findOne"] and args[1]?.jd_analytics_skip_logging)
 
           if not skip_logging
-            logMeteorMessage @_name, op, _.toArray(arguments)
+            logMeteorMessage @_name, op, _.toArray(args)
 
-          return originalOp.apply(@, arguments)
+          return originalOp.apply(@, args)
 
     return
 
