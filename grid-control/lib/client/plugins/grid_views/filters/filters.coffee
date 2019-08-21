@@ -323,7 +323,7 @@ _.extend GridControl.prototype,
 
     return classes
 
-  forceItemsPassCurrentFilter: ->
+  forceItemsPassCurrentFilter: (...args) ->
     # forceItemsPassCurrentFilter(item_id_1, item_id_2, ..., onReady)
     #
     # Items called as this method's args will pass the current filter
@@ -332,7 +332,7 @@ _.extend GridControl.prototype,
     # onReady will be called after the grid processed the requested forced
     # items.
 
-    @_grid_data.addFilterIndependentItems.apply(@_grid_data, arguments)
+    @_grid_data.addFilterIndependentItems.apply(@_grid_data, args)
 
     return
 

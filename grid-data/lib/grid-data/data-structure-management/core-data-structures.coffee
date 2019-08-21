@@ -235,12 +235,12 @@ _.extend GridData.prototype,
 
   _init_flush_orchestrator: ->
     if not @_destroyed and not @_flush_orchestrator
-      @_flush_orchestrator = Meteor.autorun =>
+      @_flush_orchestrator = Tracker.autorun =>
         # The _flush_orchestrator is used to combine required updates to the
         # internal data structure and perform them together in order to save
         # CPU time and as a result improve the user experience
         #
-        # Meteor calls Meteor.autorun when the system is idle. Hence all the
+        # Meteor calls Tracker.autorun when the system is idle. Hence all the
         # @_set_need_flush requests will wait till Meteor is idle (till next
         # Meteor's flush phase) and will be performed together on the internal
         # data strtuctures
@@ -250,12 +250,12 @@ _.extend GridData.prototype,
 
   _init_rebuild_orchestrator: ->
     if not @_destroyed and not @_rebuild_orchestrator
-      @_rebuild_orchestrator = Meteor.autorun =>
+      @_rebuild_orchestrator = Tracker.autorun =>
         # The _rebuild_orchestrator is used to combine required updates to the
         # internal data structure and perform them together in order to save
         # CPU time and as a result improve the user experience
         #
-        # Meteor calls Meteor.autorun when the system is idle. Hence all the
+        # Meteor calls Tracker.autorun when the system is idle. Hence all the
         # @_set_need_rebuild requests will wait till Meteor is idle (till next
         # Meteor's flush phase) and will be performed together
         if @_need_rebuild.get() != 0 # no need to rebuild on init

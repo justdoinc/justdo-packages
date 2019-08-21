@@ -32,10 +32,10 @@ _.extend GridControl.prototype,
 
     for opId, op_struct of PACK.GridOperations
       do (opId, op_struct) =>
-        @[opId] = =>
+        @[opId] = (...args) =>
           prereq = @[opId].prereq.call @
           if _.isEmpty prereq
-            op_struct.op.apply @, arguments
+            op_struct.op.apply @, args
           else
             throw @_error "unfulfilled-prereq", prereq
 

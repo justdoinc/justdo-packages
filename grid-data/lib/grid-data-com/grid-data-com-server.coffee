@@ -538,12 +538,11 @@ _.extend GridDataCom.prototype,
 
   _getGridMethodMiddleware: (method_name) -> @_grid_methods_middlewares[method_name] or []
 
-  _runGridMethodMiddlewares: (method_name) ->
+  _runGridMethodMiddlewares: (method_name, ...method_args) ->
     # _runGridMethodMiddlewares: (method_name, middleware_arg1, middleware_arg2, ...)
     # Method this should be the this variable of the calling grid method. Limitation of the js
     # lang don't allow this API to be nicer.
     # Important, you can rely only on @userId inside this
-    method_args = _.toArray(arguments).slice(1)
 
     for middleware in @_getGridMethodMiddleware(method_name)
       message = middleware.apply @, method_args

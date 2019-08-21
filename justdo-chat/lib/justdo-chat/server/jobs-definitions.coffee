@@ -7,12 +7,12 @@ _.extend JustdoChat.prototype,
   _setupUnreadChannelsNotificationsJobs: ->
     for notification_type, conf of share.unread_channels_notifications_conf
       do (notification_type, conf) =>
-        APP.justdo_jobs_processor.registerCronJob conf.justdo_jobs_processor_job_id, =>
-          conf.job.apply(@, arguments)
+        APP.justdo_jobs_processor.registerCronJob conf.justdo_jobs_processor_job_id, (...args) =>
+          conf.job.apply(@, args)
 
           return
-        , =>
-          conf.stopJob.apply(@, arguments)
+        , (...args) =>
+          conf.stopJob.apply(@, args)
 
           return
 

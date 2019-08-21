@@ -147,7 +147,7 @@ Template.common_chat_message_editor.onRendered ->
   $textarea.autosize
     callback: =>
       Meteor.defer =>
-        $chat_window = @$(_this.firstNode).closest(".chat-window")
+        $chat_window = @$(@firstNode).closest(".chat-window")
         $chat_header = $chat_window.find(".chat-header")
         $message_editor = $chat_window.find(".message-editor")
         $message_board_viewport = $chat_window.find(".messages-board-viewport")

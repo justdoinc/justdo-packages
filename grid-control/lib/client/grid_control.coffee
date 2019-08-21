@@ -183,7 +183,7 @@ _.extend GridControl.prototype,
     # grid control level
     for method_name in PACK.grid_data_proxied_methods # defined in globals.js
       do (method_name) =>
-        @[method_name] = -> @_grid_data[method_name].apply(@_grid_data, arguments)
+        @[method_name] = (...args) -> @_grid_data[method_name].apply(@_grid_data, args)
 
     @container.addClass "grid-control"
 

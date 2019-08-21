@@ -198,39 +198,39 @@ _.extend GridControl.prototype,
     if not (print_formatter = formatter_definition.print)?
       throw @_error "invalid-formatter-definition", "Formatter `#{formatter_name}' doesn't define the print formatter under its .print property"
 
-    @_formatters[formatter_name] = =>
+    @_formatters[formatter_name] = (...args) =>
       # @ is the GridControl instance
       extended_grid_control_obj = Object.create(@)
       _.extend extended_grid_control_obj,
-        {original_args: arguments, original_gc: @, formatter_name: formatter_name},
+        {original_args: args, original_gc: @, formatter_name: formatter_name},
         common_formatters_helpers,
         slick_grid_formatters_extended_context_properties
 
-      return slick_grid_formatter.apply(extended_grid_control_obj, arguments)
+      return slick_grid_formatter.apply(extended_grid_control_obj, args)
 
     if (slickGridColumnStateMaintainer = formatter_definition.slickGridColumnStateMaintainer)?
       # We set _columns_state_maintainers for formatter only if slickGridColumnStateMaintainer
       # is defined for it
-      @_columns_state_maintainers[formatter_name] = =>
+      @_columns_state_maintainers[formatter_name] = (...args) =>
         # @ is the GridControl instance
         extended_grid_control_obj = Object.create(@)
         _.extend extended_grid_control_obj,
-          {original_args: arguments, original_gc: @, formatter_name: formatter_name},
+          {original_args: args, original_gc: @, formatter_name: formatter_name},
           common_formatters_helpers,
           slick_grid_columns_state_maintainers_extended_context_properties
 
-        return slickGridColumnStateMaintainer.apply(extended_grid_control_obj, arguments)
+        return slickGridColumnStateMaintainer.apply(extended_grid_control_obj, args)
 
 
-    @_print_formatters[formatter_name] = =>
+    @_print_formatters[formatter_name] = (...args) =>
       # @ is the GridControl instance
       extended_grid_control_obj = Object.create(@)
       _.extend extended_grid_control_obj,
-        {original_args: arguments, original_gc: @, formatter_name: formatter_name},
+        {original_args: args, original_gc: @, formatter_name: formatter_name},
         common_formatters_helpers,
         print_formatters_extended_context_properties
 
-      return print_formatter.apply(extended_grid_control_obj, arguments)
+      return print_formatter.apply(extended_grid_control_obj, args)
 
     if formatter_definition.is_slick_grid_tree_control_formatter
       @_tree_control_fomatters.push formatter_name

@@ -79,18 +79,20 @@ GridControl.getEditors = ->
 _.extend GridControl.prototype,
   _editors: null
   _load_editors: ->
-    @_editors = {}
+    self = @
+
+    self._editors = {}
 
     for editor_name, editor of PACK.Editors
-      do (editor) =>
-        @_editors[editor_name] = (context) =>
+      do (editor) ->
+        self._editors[editor_name] = (context) ->
           # Enrich slick grid context with grid control context
 
-          extended_schema = @getSchemaExtendedWithCustomFields()
+          extended_schema = self.getSchemaExtendedWithCustomFields()
           field_schema = extended_schema[context.column.id]
 
           _.extend context,
-            grid_control: @
+            grid_control: self
             field_name: context.column.field
             schema: field_schema # XXX REMOVE ME, use only field_schema
             field_schema: field_schema

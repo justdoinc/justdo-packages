@@ -34,8 +34,8 @@ _.extend GridData.prototype,
 
     self = this
 
-    wrapped_hook = () ->
-      result = hook.apply(this, arguments)
+    wrapped_hook = (...args) ->
+      result = hook.apply(this, args)
 
       if result is false
         self.logger.info "Edit prevented by hook #{name}"

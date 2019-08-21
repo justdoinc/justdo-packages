@@ -4,7 +4,7 @@ _.extend GridData.prototype,
   clearFilterIndependentItems: ->
     @filter_independent_items.set(null)
 
-  addFilterIndependentItems: ->
+  addFilterIndependentItems: (...new_independent_items) ->
     # The independent items to add should be provided as arguments to this functions
     # addFilterIndependentItems(item_id_1, item_id_2, ..., onReady)
     #
@@ -19,8 +19,6 @@ _.extend GridData.prototype,
     else
       # Copy, so reactive dict will be able to see difference
       independent_items = independent_items.slice()
-
-    new_independent_items = _.toArray(arguments)
 
     if _.isFunction(_.last(new_independent_items))
       onReady = new_independent_items.pop()
@@ -46,10 +44,10 @@ _.extend GridData.prototype,
 
     return
 
-  removeFilterIndependentItems: ->
+  removeFilterIndependentItems: (...args) ->
     independent_items = Tracker.nonreactive => @filter_independent_items.get()
 
     if not _.isArray independent_items
       return
 
-    @filter_independent_items.set _.difference(independent_items, _.toArray(arguments))
+    @filter_independent_items.set _.difference(independent_items, args)

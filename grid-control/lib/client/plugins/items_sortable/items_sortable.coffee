@@ -6,11 +6,11 @@ _.extend PACK.Plugins,
     init: ->
       # Note: @ is the grid_control object
 
-      @_sortable = =>
+      @_sortable = (...args) =>
         # Returns jQuery ui sortable method for grid-canvas
         $obj = $(".grid-canvas", @container)
 
-        return $obj.sortable.apply $obj, arguments 
+        return $obj.sortable.apply $obj, args 
 
       @_refresh_sortable = =>
         @_sortable("refresh")
