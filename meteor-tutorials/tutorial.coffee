@@ -75,8 +75,8 @@ class @TutorialManager
           # Bind validator dep in closure
           val = validator
           d = dep
-          return ->
-            actionCompleted = if val then val.apply(this, arguments) else true
+          return (...args) ->
+            actionCompleted = if val then val.apply(this, args) else true
             if actionCompleted
               d.completed = true
               d.changed()

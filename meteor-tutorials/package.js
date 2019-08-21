@@ -20,11 +20,8 @@ Package.onUse(function (api) {
   api.addFiles('templates.html', 'client');
   api.addFiles('tutorial.sass', 'client');
 
-  api.addFiles('eventEmitter.coffee', 'client');
   api.addFiles('drags.js', 'client');
 
   api.addFiles('tutorial.coffee', 'client');
   api.addFiles('helpers.coffee', 'client');
-
-  api.export('EventEmitter', 'client');
 });
