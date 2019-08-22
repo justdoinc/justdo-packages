@@ -12,6 +12,8 @@ both = [client, server]
 Package.onUse(function (api) {
   api.versionsFrom("1.4.1.1");
 
+  api.use("mongo", both);
+
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("templating", client);
