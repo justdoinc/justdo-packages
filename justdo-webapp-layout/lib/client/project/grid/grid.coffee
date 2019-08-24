@@ -43,7 +43,7 @@ APP.executeAfterAppLibCode ->
         return
 
       # I am using _project_id here and not project_id since under the
-      # ```grid_control_mux.on "grid-control-created"``` later on in this file
+      # grid_control_mux.on "grid-control-created"; later on in this file
       # we use the project_id name.
       #
       # Not sure if sharing the same name, ie setting project_id once in this stage
