@@ -1,81 +1,31 @@
-.item-header
-  font-size: 13px
-  width: 100%
-
-  .date-block
-    float: right
-
-  .main-block
-    width: auto
-
-    font-size: 13px
-    overflow: hidden
-
-    padding-right: 5px
-
-    .task-details
-      float: left
-      max-width: 100%
-      text-overflow: ellipsis
-      white-space: nowrap
-      overflow: hidden
-      color: #2c70d0
-
-      &:hover
-        text-decoration: underline
-
-  .project
-    font-weight: 600
-    color: #2B71CF
-    margin-right: 3px
-
-  .task-id
-    color: #2B71CF
-
-  .name
-    color: #5F656E
-
-  .date
-    color: #686666
-    font-size: 12px
-    margin-top: 1px
-
-.item-body
-  font-size: 14px
-  width: 100%
-
-  padding-top: 1px
-
-  .read-indicator-block
-    float: right
-    padding: 6px 6px 6px 6px
-    margin-right: -5px
+.recent-activity-item
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.12)
+  cursor: pointer
+  &:hover
+    background-color: rgba(45, 78, 142, 0.04)
+  &.unread
+    background-color: rgba(201, 217, 239, 0.3)
+    &:hover
+      background-color: rgba(201, 217, 239, 0.5)
+    .read-indicator
+      background-color: rgba(201, 217, 239, 1)
 
   .main-block
-    width: auto
-
-    color: #333333
-
+    font-size: 14px
     overflow: hidden
     text-overflow: ellipsis
     white-space: nowrap
 
-  .last-author
-    font-weight: 600
+  .task-details
+    text-overflow: ellipsis
+    overflow: hidden
 
-.read-indicator-block
+  .read-indicator
+    width: 8px
+    height: 8px
+    background-color: rgba(108, 117, 125, 0.2)
+    border-radius: 50%
+
   .tooltip-content
-    bottom: 8px
-    right: 30px
-
-.read-indicator
-  width: 8px
-  height: 8px
-  background-color: #b7b7b7
-  border-radius: 50%
-
-  right: 13px
-  bottom: 13px
-
-  .unread &
-    background-color: #4481D4
+    bottom: 0px
+    right: 16px

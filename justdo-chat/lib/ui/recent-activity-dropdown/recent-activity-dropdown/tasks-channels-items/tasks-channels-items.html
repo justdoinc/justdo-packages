@@ -1,30 +1,27 @@
 <template name="recent_activity_item_task">
-  <div class="recent-activity-item recent-activity-item-task {{#if unread}}unread{{/if}}">
-    <div class="item-header">
-      <div class="date-block">
-        <span class="date" title="{{userDateFormat last_message_date}}">{{friendlyDateFormat last_message_date}}</span>
-      </div>
-
+  <div class="recent-activity-item recent-activity-item-task {{#if unread}}unread{{/if}} p-2 bg-muted">
+    <div class="item-header d-flex align-items-center">
       <div class="main-block">
-        <div class="task-details">
-          <span class="project">{{#with channel_project}}{{title}}{{/with}}:</span>
-
-          {{#with channel_task}}
-            <span class="task-id">#{{seqId}} - </span><span class="name">{{title}}</span>
-          {{/with}}
+        <div class="task-details text-nowrap pr-3">
+          <span class="project text-primary"><strong>{{#with channel_project}}{{title}}{{/with}}:</strong>
+            {{#with channel_task}}
+              #{{seqId}} - {{title}}
+            {{/with}}
+          </span>
         </div>
+      </div>
+      <div class="date-block text-nowrap ml-auto mr-0">
+        <small class="date text-muted" title="{{userDateFormat last_message_date}}">{{friendlyDateFormat last_message_date}}</small>
       </div>
     </div>
 
-    <div class="item-body">
-      <div class="read-indicator-block tooltip-container">
-        <div class="read-indicator"></div>
-
-        <div class="tooltip-content tooltip-left">{{#if unread}}Mark as read{{else}}Mark as unread{{/if}}</div>
+    <div class="item-body d-flex">
+      <div class="main-block pr-3">
+        <span class="last-author font-weight-bold text-body">{{#with last_message_author}}{{displayName}}{{/with}}: </span><span class="last-message">{{#with channel_last_message}}{{body}}{{/with}}</span>
       </div>
-
-      <div class="main-block">
-        <span class="last-author">{{#with last_message_author}}{{displayName}}{{/with}}: </span><span class="last-message">{{#with channel_last_message}}{{body}}{{/with}}</span>
+      <div class="read-indicator-block tooltip-container ml-auto mr-0 mt-2 position-relative">
+        <div class="read-indicator"></div>
+        <div class="tooltip-content tooltip-left">{{#if unread}}Mark as read{{else}}Mark as unread{{/if}}</div>
       </div>
     </div>
   </div>

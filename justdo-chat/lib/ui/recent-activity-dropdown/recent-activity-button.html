@@ -1,5 +1,5 @@
 <template name="justdo_chat_recent_activity_button">
-  <div class="nav-activity
+  <div class="nav-activity dropdown
                 {{#if $eq unread_count 0}}
                   no-unread
                 {{else}}
@@ -15,13 +15,16 @@
                   off-the-charts
                 {{/if}}
                 ">
-    <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#message-circle"/></svg>
-    <div class="unread-count">
-      {{#if $lte unread_count 99}}
-        {{unread_count}}
-      {{else}}
-        99+
-      {{/if}}
+    <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#message-circle"/></svg>
+      <div class="unread-count">
+        {{#if $lte unread_count 99}}
+          {{unread_count}}
+        {{else}}
+          99+
+        {{/if}}
+      </div>
+      {{> recent_activity_dropdown}}
     </div>
   </div>
 </template>
