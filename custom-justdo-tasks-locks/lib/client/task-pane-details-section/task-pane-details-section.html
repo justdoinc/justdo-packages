@@ -9,18 +9,15 @@
   <section class="task-pane-tasks-locks-section">
     <h2>Tasks Locks</h2>
 
-    <div class="task-pane-tasks-locks-section-settings">
+    <div class="task-pane-tasks-locks-section-settings d-flex align-items-center py-1">
       <div class="setting-label">{{#if isActiveUserLockingActiveTaskDoc}}<i class="fa fa-lock" style="margin-right: 2px"></i>{{else}}<i class="fa fa-unlock"></i>{{/if}} You are {{#if isActiveUserLockingActiveTaskDoc}}<b>locking</b>{{else}}not locking{{/if}} this task
         <span class="about-locked-tasks" title="{{taskLockInfo}}">
-            <i class="fa fa-question-circle fa-fw"></i>
+          <i class="fa fa-question-circle fa-fw"></i>
         </span>
       </div>
-
-      <div class="setting-controller">
-        <div class="btn btn-default btn-xs tasks-locks-toggle-lock-state">{{#if isActiveUserLockingActiveTaskDoc}}Unlock{{else}}Lock{{/if}}</div>
+      <div class="setting-controller ml-auto mr-0">
+        <div class="btn btn-outline-secondary btn-sm tasks-locks-toggle-lock-state">{{#if isActiveUserLockingActiveTaskDoc}}Unlock{{else}}Lock{{/if}}</div>
       </div>
-
-      <div class="clearfix"></div>
     </div>
 
     {{#with getActiveTaskDocLockingUsersDocs}}
