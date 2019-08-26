@@ -1,2 +1,24 @@
-#operations-priority-slider
-  user-select: none
+.jd-priority-slider-divider
+  width: 1px
+  height: 20px
+  opacity: 0.2
+
+.jd-priority-slider
+  width: 100px
+  background-color: #f3f3f3
+  height: 4px
+  .ui-slider-range
+    background: #fbe0b7 !important
+    border-top-right-radius: 0px !important
+    border-bottom-right-radius: 0px !important
+
+.jd-priority-slider-handle
+  background: unset !important
+  width: 5px !important
+  height: 16px !important
+  cursor: pointer !important
+  transition: transform .15s ease-in-out
+  &:hover
+    transform: scale(1.1)
+  &:focus
+    outline: none
