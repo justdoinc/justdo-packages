@@ -152,6 +152,6 @@ APP.executeAfterAppLibCode ->
   module.setNullaryOperation "sortByPriority",
     human_description: "Sort by priority"
     template:
-      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trending-down"/></svg>"""
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#filter"/></svg>"""
     op: -> gridControl().sortActivePathByPriorityDesc()
     prereq: -> gridControl().sortActivePathByPriorityDesc.prereq()
