@@ -2,12 +2,42 @@ setDragAndDrop = ->
   $('.calendar_view_draggable').draggable
     cursor: 'move'
     helper: 'clone'
+  $('.uni-date-formatter').draggable
+    cursor: 'move'
+    helper: 'clone'
+
   $('.calendar_view_droppable').droppable
     drop: (e, ui)->
+
+      set_param = {}
+      row_user_id = e.target.parentElement.attributes.user_id.value
+      task_obj = APP.collections.Tasks.findOne({_id: ui.draggable[0].attributes.task_id.value})
+      # calculating task owner as it is on the calendar
+      owner_id = task_obj.owner_id
+      if task_obj.pending_owner_id
+        owner_id = task_obj.pending_owner_id
+      # for changing followups (but not private followup), we also allow to change the owner
+      if row_user_id != owner_id and ui.draggable[0].attributes.type.value == 'F'
+        if Meteor.userId() == row_user_id
+          set_param['owner_id'] = row_user_id
+          set_param['pending_owner_id'] = null
+        #if we return a task with pending owner to prev owner
+        else if task_obj.owner_id == row_user_id and task_obj.pending_owner_id?
+          set_param['pending_owner_id'] = null
+        else
+          set_param['pending_owner_id'] = row_user_id
       if ui.draggable[0].attributes.class.value.indexOf("calendar_view_draggable")>=0
-        APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
-                                      $set:{follow_up: e.target.attributes.date.value}
-                                    )
+        if ui.draggable[0].attributes.type.value == 'F'
+          set_param['follow_up'] = e.target.attributes.date.value
+          APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
+                                        $set:set_param
+                                       )
+
+        else if ui.draggable[0].attributes.type.value == 'P'
+          set_param['priv:follow_up'] = e.target.attributes.date.value
+          APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
+            $set: set_param
+          )
       return
   return
 
@@ -34,14 +64,6 @@ Template.justdo_calendar_project_pane.helpers
       dates.push(d.format("YYYY-MM-DD"))
       d.add(1,"days")
     return dates
-
-#  refreshHack: ->
-#    d = Template.instance().view_start_date.get()
-#    return true
-
-
-
-
 
 Template.justdo_calendar_project_pane.events
   "click .calendar-view-prev-week": ->
@@ -77,29 +99,117 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
       days_matrix.push []
     self.days_matrix.set(days_matrix)
 
+    first_date_to_display = data.dates_to_display[0]
+    last_date_to_display = data.dates_to_display[data.dates_to_display.length-1]
+
     q =
-      follow_up: {$in: data.dates_to_display}
-      $or: [{owner_id:  data.user_id},{pending_owner_id: data.user_id}]
+      #this part is about the dates part
+      $or: [
+        #regular followup date
+        follow_up: {$in: data.dates_to_display},
+        #private followup date
+        priv:follow_up: {$in: data.dates_to_display},
+        #due date in between the dates
+        $and: [
+          due_date: {$gte: first_date_to_display},
+          due_date: {$lte: last_date_to_display}
+        ],
+        #start date in between the dates
+        $and: [
+          start_date: {$gte: first_date_to_display},
+          start_date: {$lte: last_date_to_display}
+        ],
+        #start date before and due date after
+        $and: [
+          start_date: {$lt: first_date_to_display},
+          due_date: {$gt: last_date_to_display}
+        ]
+      ]
+      # this part is about the owner part
+      $or: [
+        {$and:[{owner_id:  data.user_id},{pending_owner_id: null}]}, #user is owner, and there is no pending owner
+        {pending_owner_id: data.user_id} #user is the pending owner
+      ]
 
     APP.collections.Tasks.find(q).forEach (task)->
-      #deal with followups
-      if task.follow_up
+      #deal with  regular followups
+      if task.follow_up and data.dates_to_display.indexOf(task.follow_up) >-1
         day_index = data.dates_to_display.indexOf(task.follow_up)
-        if day_index > -1
-          day_column = days_matrix[day_index]
-          row_index = 0
-          while true
-            if !day_column[row_index]?
-              day_column[row_index] =
-                task:
-                  id: task._id
-                  title: task.title
-                type: "F" # F for followup, R for regular
-                span: 1
-              break
-            row_index++
+        day_column = days_matrix[day_index]
+        row_index = 0
+        while true
+          if !day_column[row_index]?
+            day_column[row_index] =
+              task:
+                id: task._id
+                title: task.title
+              type: 'F' # F for followup, P for private followup, R for regular
+              span: 1
+            break
+          row_index++
+
+      #deal with private followups
+      if task['priv:follow_up'] and data.dates_to_display.indexOf(task['priv:follow_up']) >-1
+        day_index = data.dates_to_display.indexOf(task['priv:follow_up'])
+        day_column = days_matrix[day_index]
+        row_index = 0
+        while true
+          if !day_column[row_index]?
+            day_column[row_index] =
+              task:
+                id: task._id
+                title: task.title
+              type: 'P' # F for followup, P for private followup, R for regular
+              span: 1
+            break
+          row_index++
+
+      #deal with regular tasks
+      if (task.start_date? and task.start_date >= first_date_to_display and task.start_date <= last_date_to_display) or
+         (task.due_date? and task.due_date >= first_date_to_display and task.due_date <= last_date_to_display) or
+         (task.start_date? and task.due_date? and task.start_date<first_date_to_display and task.due_date>last_date_to_display)
+        start_date = ""
+        if task.start_date?
+          start_date = task.start_date
+        else
+          start_date = task.due_date
+        end_date = ""
+        if task.due_date?
+          end_date = task.due_date
+        else
+          end_date = task.start_date
+        start_day_index = data.dates_to_display.indexOf(start_date)
+        if start_day_index == -1
+          start_day_index = 0
+        end_day_index = data.dates_to_display.indexOf(end_date)
+        if end_day_index == -1
+          end_day_index = data.dates_to_display.length -1
+
+        # find a row in the matrix where all days are free
+        row_index = 0
+        while true
+          row_is_free = true
+          for column_index in [start_day_index..end_day_index]
+            if days_matrix[column_index][row_index]?
+              row_is_free = false
+          if row_is_free
+            days_matrix[start_day_index][row_index] =
+              task:
+                id: task._id
+                title: task.title
+              type: 'R' # F for followup, P for private followup, R for regular
+              span: end_day_index-start_day_index + 1
+            #todo  - mark the other days of the span as taken
+            if start_day_index != end_day_index
+              for i in [start_day_index+1..end_day_index]
+                days_matrix[i][row_index] =
+                  slot_is_taken: true
+
+            break
+          row_index++
 
       self.days_matrix.set(days_matrix)
+
       Tracker.afterFlush ->
         setDragAndDrop()
       return
@@ -111,6 +221,10 @@ Template.justdo_calendar_project_pane_user_view.onRendered ->
   return
 
 Template.justdo_calendar_project_pane_user_view.helpers
+
+  userId: ->
+    return Template.instance().data.user_id
+
 
   rowNumbers: ->
 
@@ -148,7 +262,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     row_num = Template.parentData()
     matrix = Template.instance().days_matrix.get()
 
-    if col_num>=1
+    if col_num>=0
       if (info=matrix[col_num]?[row_num])
         return info.task.title
     return ""
@@ -158,9 +272,40 @@ Template.justdo_calendar_project_pane_user_view.helpers
     row_num = Template.parentData()
     matrix = Template.instance().days_matrix.get()
 
-    if col_num>=1
+    if col_num>=0
       if (info=matrix[col_num]?[row_num])
         return info.task.id
+    return ""
+
+  colSpan: ->
+    col_num = @-1
+    row_num = Template.parentData()
+    matrix = Template.instance().days_matrix.get()
+
+    if col_num>=0
+      if (info=matrix[col_num]?[row_num])
+        return "#{info.span}"
+    return "1"
+
+
+  skipTD: ->
+    debucol_num = @-1
+    row_num = Template.parentData()
+    matrix = Template.instance().days_matrix.get()
+
+    if col_num>=0
+      if (info=matrix[col_num]?[row_num])
+        return info.slot_is_taken
+    return false
+
+  type: ->
+    col_num = @-1
+    row_num = Template.parentData()
+    matrix = Template.instance().days_matrix.get()
+
+    if col_num>=0
+      if (info=matrix[col_num]?[row_num])
+        return info.type
     return ""
 
   isFollowupDate: ->
@@ -168,9 +313,29 @@ Template.justdo_calendar_project_pane_user_view.helpers
     row_num = Template.parentData()
     matrix = Template.instance().days_matrix.get()
 
-    if col_num>=1
+    if col_num>=0
       if (info=matrix[col_num]?[row_num])
         return info.type == 'F'
+    return false
+
+  isPrivateFollowupDate: ->
+    col_num = @-1
+    row_num = Template.parentData()
+    matrix = Template.instance().days_matrix.get()
+
+    if col_num>=0
+      if (info=matrix[col_num]?[row_num])
+        return info.type == 'P'
+    return false
+
+  isRegularTask: ->
+    col_num = @-1
+    row_num = Template.parentData()
+    matrix = Template.instance().days_matrix.get()
+
+    if col_num>=0
+      if (info=matrix[col_num]?[row_num])
+        return info.type == 'R'
     return false
 
   columnDate: ->

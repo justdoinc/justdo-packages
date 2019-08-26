@@ -1,28 +1,29 @@
 <template name="justdo_calendar_project_pane">
-  Display Calendar for {{title_date}} :
-  <i class="fa fa-arrow-circle-o-left calendar-view-prev-week" aria-hidden="true"></i>
-  <i class="fa fa-calendar-o calendar-view-back-to-today" aria-hidden="true"></i>
-  <i class="fa fa-arrow-circle-o-right calendar-view-next-week" aria-hidden="true"></i>
-  <table width="100%">
-    <tr>
-      <th></th>
-      {{#each datesToDisplay}}
-        <th>{{this}}</th>
+  <div>
+    Display Calendar for {{title_date}} :
+    <i class="fa fa-arrow-circle-o-left calendar-view-prev-week" aria-hidden="true"></i>
+    <i class="fa fa-calendar-o calendar-view-back-to-today" aria-hidden="true"></i>
+    <i class="fa fa-arrow-circle-o-right calendar-view-next-week" aria-hidden="true"></i>
+    <table width="100%">
+      <tr>
+        <th></th>
+        {{#each datesToDisplay}}
+          <th width="15%">{{this}}</th>
+        {{/each}}
+      </tr>
+      {{> justdo_calendar_project_pane_user_view user_id=currentUserId dates_to_display=datesToDisplay}}
+
+      {{#each allOtherUsers}}
+        {{> justdo_calendar_project_pane_user_view user_id=this dates_to_display=datesToDisplay}}
       {{/each}}
-    </tr>
-    {{> justdo_calendar_project_pane_user_view user_id=currentUserId dates_to_display=datesToDisplay}}
-
-    {{#each allOtherUsers}}
-      {{> justdo_calendar_project_pane_user_view user_id=this dates_to_display=datesToDisplay}}
-    {{/each}}
-
-  </table>
+    </table>
+  </div>
 </template>
 
 
 <template name="justdo_calendar_project_pane_user_view">
   {{#each rowNumbers}}
-    <tr>
+    <tr user_id={{userId}}>
       {{#each colNumbers}}
         {{#if topLeftCell}}
           <td rowspan={{numberOfRows}}>
@@ -32,16 +33,24 @@
           </td>
         {{else if leftCell}}
         {{else}}
-              <td class="calendar_view_droppable" date={{columnDate}}>
-            {{#if taskId}}
-              <div class="calendar_task_cell calendar_view_draggable" task_id={{taskId}}>
-                {{#if isFollowupDate}}
-                  (F)
-                {{/if}}
-                {{taskTitle}}
-              </div>
-            {{/if}}
-          </td>
+          {{#unless skipTD}}
+            <td class="calendar_view_droppable" date={{columnDate}} colspan={{colSpan}}>
+              {{#if taskId}}
+                <div class="calendar_task_cell calendar_view_draggable" task_id={{taskId}} type={{type}}>
+                  {{#if isFollowupDate}}
+                    (F)
+                  {{/if}}
+                  {{#if isPrivateFollowupDate}}
+                    (PF)
+                  {{/if}}
+                  {{#if isRegularTask}}
+                    (R)
+                  {{/if}}
+                  {{taskTitle}}
+                </div>
+              {{/if}}
+            </td>
+          {{/unless}}
         {{/if}}
       {{/each}}
     </tr>

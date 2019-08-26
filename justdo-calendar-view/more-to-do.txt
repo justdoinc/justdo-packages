@@ -1,0 +1,25 @@
+Things to do:
+- handle start-end
+- highlight the entire cell
+- scroll one day at a time
+- hover on something to scroll one day
+- change start day to start of week (based on user preference)
+- start end
+  - allow changing duration
+  - use Ofer's method to display load
+
+- make the project pane scrollabel just at the table level (not the entire thing)
++ the project pane is not scrollable (sides and up-down)
++ handle private f/u
++ table doesn't display onthe first column
++ drag to change owner
++ display the task based on the pending owner ID, not the existing one.
+
+Additions for resource management
+- additional field of 'unassigned work' will be added at the task level. will hold
+  seconds and be presented in hours/days
+- when increasing planned hours, a server side hook will deduct the time added from the unassigned
+  time (down to zero unassigned)
+- need to add a caching for the amount of work (planned and executed) per member on the task level
+  (today we only have the total (will be done with the server-side hook)
+
