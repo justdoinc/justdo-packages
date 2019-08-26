@@ -29,7 +29,7 @@ Util.inherits GridControlSearch, EventEmitter
 _.extend GridControlSearch.prototype,
   search_ui_component:
     '<div class="grid-control-search position-relative">
-      <input type="text" class="form-control form-control-sm search-input pr-5" placeholder="Search" />
+      <input type="text" class="form-control form-control-sm search-input pl-3 pr-5 rounded-pill" placeholder="Search" />
       <div class="grid-control-search-btn d-flex align-items-center position-absolute">
         <div class="search-info-container bg-primary text-white font-weight-bold p-1 rounded-sm"><span class="search-info"></span></div>
         <svg class="jd-icon jd-c-pointer text-dark clear-button p-1"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
