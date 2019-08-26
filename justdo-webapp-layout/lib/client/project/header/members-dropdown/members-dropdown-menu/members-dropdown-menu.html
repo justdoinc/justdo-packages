@@ -48,18 +48,19 @@
 <template name="admin_member_item">
   <li class="member-item admin-item d-flex align-items-center justify-content-between" user-id="{{_id}}">
     <div class="d-flex align-items-center">
-      {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{displayName}}</div>
+      {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
     <div class="d-flex align-items-center">
-      {{#if $not isUserEmailsVerified}}
-        <svg class="jd-icon text-warning" title="Unverified email"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"/></svg>
-      {{/if}}
       {{#if is_project_admin}}
-        <svg class="jd-icon text-secondary op-button downgrade-admin" title="Revoke {{displayName}}'s admin rights"><use xlink:href="/layout/icons-feather-sprite.svg#star"/><desc>[long description]</desc></svg>
+        <span title="Revoke {{displayName}}'s admin rights">
+          <svg class="jd-icon text-secondary op-button downgrade-admin"><use xlink:href="/layout/icons-feather-sprite.svg#star"/><desc>[long description]</desc></svg>
+        </span>
       {{/if}}
 
       {{#if allow_member_remove user_id}}
-        <svg class="jd-icon text-secondary op-button remove" title="Remove {{displayName}} from this project"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+        <span title="Remove {{displayName}} from this project">
+          <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+        </span>
       {{/if}}
     </div>
   </li>
@@ -68,18 +69,19 @@
 <template name="regular_member_item">
   <li class="member-item regular-member-item d-flex align-items-center justify-content-between" user-id="{{_id}}">
     <div class="d-flex align-items-center">
-      {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{displayName}}</div>
+      {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
     <div class="d-flex align-items-center">
-      {{#if $not isUserEmailsVerified}}
-        <svg class="jd-icon text-warning" title="Unverified email"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"/></svg>
-      {{/if}}
       {{#if is_project_admin}}
-        <svg class="jd-icon text-secondary op-button upgrade-admin" title="Make {{displayName}} an admin"><use xlink:href="/layout/icons-feather-sprite.svg#star"/></svg>
+        <span title="Make {{displayName}} an admin">
+          <svg class="jd-icon text-secondary op-button upgrade-admin"><use xlink:href="/layout/icons-feather-sprite.svg#star"/></svg>
+        </span>
       {{/if}}
 
       {{#if allow_member_remove user_id}}
-        <svg class="jd-icon text-secondary op-button remove" title="Remove {{displayName}} from this project"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+        <span title="Remove {{displayName}} from this project">
+          <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+        </span>
       {{/if}}
     </div>
   </li>
@@ -93,15 +95,21 @@
 
     <div class="d-flex align-items-center">
       {{#if allow_member_edit_enrollment_pending_member user_id}}
-        <svg class="jd-icon text-secondary op-button edit-enrolled" title="Edit {{displayName}}"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>
+        <span title="Edit {{displayName}}">
+          <svg class="jd-icon text-secondary op-button edit-enrolled"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>
+        </span>
       {{/if}}
 
       {{#if is_project_admin}}
-        <svg class="jd-icon text-secondary op-button {{#if is_admin}}downgrade-admin{{else}}upgrade-admin{{/if}}" title="{{#if is_admin}}Revoke {{displayName}}'s admin rights{{else}}Make {{displayName}} a project admin upon registration{{/if}}"><use xlink:href="/layout/icons-feather-sprite.svg#star"/></svg>
+        <span title="{{#if is_admin}}Revoke {{displayName}}'s admin rights{{else}}Make {{displayName}} a project admin upon registration{{/if}}">
+          <svg class="jd-icon text-secondary op-button {{#if is_admin}}downgrade-admin{{else}}upgrade-admin{{/if}}"><use xlink:href="/layout/icons-feather-sprite.svg#star"/></svg>
+        </span>
       {{/if}}
 
       {{#if allow_member_remove user_id}}
-        <svg class="jd-icon text-secondary op-button remove" title="Remove {{displayName}} from this project"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+        <span title="Remove {{displayName}} from this project">
+          <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+        </span>
       {{/if}}
     </div>
   </li>
