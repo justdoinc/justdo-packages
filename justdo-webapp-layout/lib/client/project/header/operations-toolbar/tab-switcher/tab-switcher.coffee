@@ -2,6 +2,7 @@ APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
   fontAwesomeIconTag = (icon_id) -> '<i class="fa ' + icon_id + '"></i>'
+  svgIconTag = (icon_id) -> '<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#' + icon_id + '/></svg>'
 
   Template.project_operations_tab_switcher.helpers
     ready: -> module.getCurrentTabId()?
@@ -75,17 +76,4 @@ APP.executeAfterAppLibCode ->
       else
         return unknown_tab_icon
 
-      console.log tab_id, sections_state
-
       return
-
-  tab_switcher_dropdown = null
-
-  Template.project_operations_tab_switcher.onRendered ->
-    tab_switcher_dropdown =
-      new module.TabSwitcherDropdown(@firstNode) # defined in ./tab-switcher-dropdown/tab-switcher-dropdown.coffee
-
-  Template.project_operations_tab_switcher.onDestroyed ->
-    if tab_switcher_dropdown?
-      tab_switcher_dropdown.destroy()
-      tab_switcher_dropdown = null

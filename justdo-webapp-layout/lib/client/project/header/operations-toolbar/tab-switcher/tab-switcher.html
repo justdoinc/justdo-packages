@@ -1,13 +1,13 @@
 <template name="project_operations_tab_switcher">
-  <div id="tab-switcher">
-    <button type="button" class="btn btn-sm btn-default {{#unless ready}}disabled{{/unless}} dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Switch View">
+  <div id="tab-switcher" class="dropdown d-flex align-items-center">
+    <button type="button" class="btn btn-sm btn-default {{#unless ready}}disabled{{/unless}}"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Switch View">
       {{#if ready}}
         {{{getCurrentTabIcon}}}
-        <span class="caret"></span>
       {{else}}
         <i class="fa fa-spinner fa-spin"></i>
       {{/if}}
     </button>
+    <div class="tab-switcher-divider bg-secondary mx-2"></div>
+    {{>project_operations_tab_switcher_dropdown}}
   </div>
 </template>
-
