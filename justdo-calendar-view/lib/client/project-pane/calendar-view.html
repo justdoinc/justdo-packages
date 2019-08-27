@@ -1,9 +1,11 @@
 <template name="justdo_calendar_project_pane">
   <div>
     Display Calendar for {{title_date}} :
-    <i class="fa fa-arrow-circle-o-left calendar-view-prev-week" aria-hidden="true"></i>
+    <i class="fa fa-fast-backward calendar-view-prev-week" aria-hidden="true"></i>
+    <i class="fa fa-step-backward calendar-view-prev-day" aria-hidden="true"></i>
     <i class="fa fa-calendar-o calendar-view-back-to-today" aria-hidden="true"></i>
-    <i class="fa fa-arrow-circle-o-right calendar-view-next-week" aria-hidden="true"></i>
+    <i class="fa fa-step-forward calendar-view-next-day" aria-hidden="true"></i>
+    <i class="fa fa-fast-forward calendar-view-next-week" aria-hidden="true"></i>
     <table width="100%">
       <tr>
         <th></th>
@@ -34,9 +36,9 @@
         {{else if leftCell}}
         {{else}}
           {{#unless skipTD}}
-            <td class="calendar_view_droppable" date={{columnDate}} colspan={{colSpan}}>
+            <td class="calendar_view_droppable highlight_on_mouse_in" date={{columnDate}} colspan={{colSpan}}>
               {{#if taskId}}
-                <div class="calendar_task_cell calendar_view_draggable" task_id={{taskId}} type={{type}}>
+                <div class="calendar_task_cell calendar_view_draggable {{dimWhenPendingOwner}}" task_id={{taskId}} type={{type}}>
                   {{#if isFollowupDate}}
                     (F)
                   {{/if}}
@@ -44,9 +46,17 @@
                     (PF)
                   {{/if}}
                   {{#if isRegularTask}}
+                    {{#if startsBeforeView}}
+                      &lt;&lt;
+                    {{/if}}
                     (R)
-                  {{/if}}
-                  {{taskTitle}}
+                    {{taskTitle}}
+                    {{#if endsAfterView}}
+                      &gt;&gt;
+                    {{/if}}
+                   {{else}}
+                     {{taskTitle}}
+                   {{/if}}
                 </div>
               {{/if}}
             </td>

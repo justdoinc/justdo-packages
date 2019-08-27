@@ -1,19 +1,26 @@
 Things to do:
-- handle start-end
-- highlight the entire cell
-- scroll one day at a time
-- hover on something to scroll one day
-- change start day to start of week (based on user preference)
+
 - start end
   - allow changing duration
   - use Ofer's method to display load
 
-- make the project pane scrollabel just at the table level (not the entire thing)
+
++ dimm cases where there is a pending owner
++ highlight the entire cell
++ scroll one day at a time
++ change start day to start of week (based on user preference)
 + the project pane is not scrollable (sides and up-down)
 + handle private f/u
 + table doesn't display onthe first column
 + drag to change owner
 + display the task based on the pending owner ID, not the existing one.
++ handle start-end
++ query only the fields I care about (to reduce overhead)
+
+on hold:
+- hover on something to scroll one day - will not do, as requires timers etc.
+- make the project pane scrollabel just at the table level (not the entire thing) (need help here)
+
 
 Additions for resource management
 - additional field of 'unassigned work' will be added at the task level. will hold
