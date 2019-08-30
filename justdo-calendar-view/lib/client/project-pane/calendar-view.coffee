@@ -128,36 +128,47 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
     first_date_to_display = data.dates_to_display[0]
     last_date_to_display = data.dates_to_display[data.dates_to_display.length-1]
 
-    q =
-      #this part is about the dates part
-      $or: [
-        #regular followup date
-        follow_up: {$in: data.dates_to_display},
-        #private followup date
-        priv:follow_up: {$in: data.dates_to_display},
-        #due date in between the dates
-        $and: [
-          due_date: {$gte: first_date_to_display},
-          due_date: {$lte: last_date_to_display}
-        ],
-        #start date in between the dates
-        $and: [
-          start_date: {$gte: first_date_to_display},
-          start_date: {$lte: last_date_to_display}
-        ],
-        #start date before and due date after
-        $and: [
-          start_date: {$lt: first_date_to_display},
-          due_date: {$gt: last_date_to_display}
-        ]
-      ]
-      # this part is about the owner part
-      $or: [
-        {owner_id:  data.user_id}, #user is owner, and there is no pending owner
-        {pending_owner_id: data.user_id} #user is the pending owner
-      ]
+    planned_seconds_field = "p:rp:b:work-hours_p:b:user:#{data.user_id}"
+    executed_seconds_field = "p:rp:b:work-hours_e:b:user:#{data.user_id}"
 
-    APP.collections.Tasks.find(q,{
+    dates_part = [
+      #regular followup date
+      {follow_up: {$in: data.dates_to_display}},
+      #private followup date
+      {priv:follow_up: {$in: data.dates_to_display}},
+      #due date in between the dates
+      {$and: [
+        due_date: {$gte: first_date_to_display},
+        due_date: {$lte: last_date_to_display}
+      ]},
+      #start date in between the dates
+      {$and: [
+        start_date: {$gte: first_date_to_display},
+        start_date: {$lte: last_date_to_display}
+      ]},
+      #start date before and due date after
+      {$and: [
+        start_date: {$lt: first_date_to_display},
+        due_date: {$gt: last_date_to_display}
+      ]}
+    ]
+
+    if data.user_id == "unassigned_user_hours"
+      owner_part = [
+        {"p:rp:b:unassigned-work-hours": {$gt: 0}}
+      ]
+    else
+      owner_part = [
+          {owner_id:  data.user_id}, #user is owner, and there is no pending owner
+          {pending_owner_id: data.user_id}, #user is the pending owner
+          {"#{planned_seconds_field}": {$gt: 0}} #user has planned hours on the task
+        ]
+
+    query_parts = []
+    query_parts.push {$or: dates_part}
+    query_parts.push {$or: owner_part}
+
+    options =
       fields:
         _id: 1
         title: 1
@@ -167,8 +178,11 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         pending_owner_id: 1
         "priv:follow_up": 1
         follow_up: 1
+        "#{planned_seconds_field}": 1
+        "#{executed_seconds_field}": 1
+        "p:rp:b:unassigned-work-hours": 1
 
-    }).forEach (task)->
+    APP.collections.Tasks.find({$and: query_parts},options).forEach (task)->
       #deal with  regular followups
       if task.follow_up and data.dates_to_display.indexOf(task.follow_up) >-1
         day_index = data.dates_to_display.indexOf(task.follow_up)
@@ -176,13 +190,14 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         row_index = 0
         while true
           if !day_column[row_index]?
+
             day_column[row_index] =
               task:
                 id: task._id
                 title: task.title
                 pending_owner_id: task.pending_owner_id
                 owner_id: task.owner_id
-              type: 'F' # F for followup, P for private followup, R for regular
+              type: 'F'# F for followup, P for private followup, R for regular
               span: 1
             break
           row_index++
@@ -230,6 +245,12 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
           end_day_index = data.dates_to_display.length-1
           ends_after_view = true
 
+        # deal in situations where the start date is after the due date...
+        start_date_after_due_date = false
+        if end_day_index < start_day_index
+          start_day_index = end_day_index
+          start_date_after_due_date = true
+
         # find a row in the matrix where all days are free
         row_index = 0
         while true
@@ -238,16 +259,26 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
             if days_matrix[column_index][row_index]?
               row_is_free = false
           if row_is_free
+
+            planned_seconds = task[planned_seconds_field]
+            if data.user_id == "unassigned_user_hours"
+              planned_seconds = task["p:rp:b:unassigned-work-hours"]
+
             days_matrix[start_day_index][row_index] =
               task:
                 id: task._id
                 title: task.title
                 pending_owner_id: task.pending_owner_id
                 owner_id: task.owner_id
+                planned_seconds: planned_seconds
+                executed_seconds: task[executed_seconds_field]
+
               type: 'R' # F for followup, P for private followup, R for regular
               span: end_day_index-start_day_index + 1
               starts_before_view: starts_before_view
               ends_after_view: ends_after_view
+              start_date_after_due_date: start_date_after_due_date
+
 
 
             if start_day_index != end_day_index
@@ -314,6 +345,9 @@ Template.justdo_calendar_project_pane_user_view.helpers
 
   userObj: ->
     return  Meteor.users.findOne(Template.instance().data.user_id)
+
+  rowForUnassignedUser:->
+    return (Template.instance().data.user_id =="unassigned_user_hours")
 
   taskTitle: ->
     col_num = @-1
@@ -390,6 +424,17 @@ Template.justdo_calendar_project_pane_user_view.helpers
         return info.type
     return ""
 
+  startDateAfterDueDate: ->
+    col_num = @-1
+    row_num = Template.parentData()
+    matrix = Template.instance().days_matrix.get()
+
+    if col_num>=0
+      if (info=matrix[col_num]?[row_num])
+        if info.start_date_after_due_date
+          return true
+    return false
+
   isFollowupDate: ->
     col_num = @-1
     row_num = Template.parentData()
@@ -409,6 +454,35 @@ Template.justdo_calendar_project_pane_user_view.helpers
       if (info=matrix[col_num]?[row_num])
         return info.type == 'P'
     return false
+
+  plannedHours: ->
+
+    col_num = @-1
+    row_num = Template.parentData()
+    matrix = Template.instance().days_matrix.get()
+
+    if col_num>=0
+      if (info=matrix[col_num]?[row_num])
+        if info.type == 'R' and info.task.planned_seconds > 0
+          seconds = info.task.planned_seconds
+          if info.task.executed_seconds
+            seconds -= info.task.executed_seconds
+          overtime = false
+          if seconds < 0
+            seconds = -seconds
+            overtime = true
+          minutes = Math.floor(seconds/60)
+          hours = Math.floor(minutes/60)
+          mins = minutes - hours*60
+          if ! overtime
+            left = "left"
+            if Template.instance().data.user_id == "unassigned_user_hours"
+              left = ""
+            return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H #{left}]"
+          return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H overtime]"
+    return ""
+
+
 
   isRegularTask: ->
     col_num = @-1

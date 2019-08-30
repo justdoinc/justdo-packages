@@ -13,8 +13,8 @@
           <th width="15%">{{this}}</th>
         {{/each}}
       </tr>
+      {{> justdo_calendar_project_pane_user_view user_id="unassigned_user_hours" dates_to_display=datesToDisplay}}
       {{> justdo_calendar_project_pane_user_view user_id=currentUserId dates_to_display=datesToDisplay}}
-
       {{#each allOtherUsers}}
         {{> justdo_calendar_project_pane_user_view user_id=this dates_to_display=datesToDisplay}}
       {{/each}}
@@ -29,9 +29,13 @@
       {{#each colNumbers}}
         {{#if topLeftCell}}
           <td rowspan={{numberOfRows}}>
-            {{#with userObj}}
-              {{> justdo_avatar}}
-            {{/with}}
+            {{#if rowForUnassignedUser}}
+              (UA)
+            {{else}}
+              {{#with userObj}}
+                {{> justdo_avatar}}
+              {{/with}}
+            {{/if}}
           </td>
         {{else if leftCell}}
         {{else}}
@@ -39,6 +43,10 @@
             <td class="calendar_view_droppable highlight_on_mouse_in" date={{columnDate}} colspan={{colSpan}}>
               {{#if taskId}}
                 <div class="calendar_task_cell calendar_view_draggable {{dimWhenPendingOwner}}" task_id={{taskId}} type={{type}}>
+                  {{#if startDateAfterDueDate}}
+                    (!)
+                  {{/if}}
+
                   {{#if isFollowupDate}}
                     (F)
                   {{/if}}
@@ -49,7 +57,7 @@
                     {{#if startsBeforeView}}
                       &lt;&lt;
                     {{/if}}
-                    (R)
+                    (R) {{plannedHours}}
                     {{taskTitle}}
                     {{#if endsAfterView}}
                       &gt;&gt;

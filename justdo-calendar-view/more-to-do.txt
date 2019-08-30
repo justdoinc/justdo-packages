@@ -1,5 +1,14 @@
 Things to do:
 
+- planned work
+  + present on calendar view
+  - present the unassigned work user
+  - allow to change from one person to the other
+  - write an algo that checks if there are enough hours to complete all tasks , present on each day, how many hours are
+    allocated to which task.
+
+
+
 - start end
   - allow changing duration
   - use Ofer's method to display load
@@ -23,10 +32,10 @@ on hold:
 
 
 Additions for resource management
-- additional field of 'unassigned work' will be added at the task level. will hold
++ additional field of 'unassigned work' will be added at the task level. will hold
   seconds and be presented in hours/days
-- when increasing planned hours, a server side hook will deduct the time added from the unassigned
++ when increasing planned hours, a server side hook will deduct the time added from the unassigned
   time (down to zero unassigned)
-- need to add a caching for the amount of work (planned and executed) per member on the task level
++ need to add a caching for the amount of work (planned and executed) per member on the task level
   (today we only have the total (will be done with the server-side hook)
 
