@@ -1,15 +1,13 @@
 <template name="task_pane_justdo_checklist_task_pane_section_section">
-  <div class="checklist-on-off-switch" style="cursor:pointer">
+  <div class="checklist-on-off-switch d-flex align-items-center bg-light p-1 rounded mb-1">
     {{#if isChecklist}}
-      <i class="fa fa-toggle-on fa-fw" style="color: #337ab7"></i>
+      <svg class="jd-icon text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
     {{else}}
-      <i class="fa fa-toggle-off fa-fw"></i>
+      <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
     {{/if}}
-    Checklist
+    <span class="text-body text-uppercase font-weight-bold">Checklist</span>
   </div>
-
   <div class="{{#if $not showChart}}hidden{{/if}}">
     <div id="checklist_chart_container"></div>
   </div>
-
 </template>
