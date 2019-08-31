@@ -1,13 +1,13 @@
 <template name="task_pane_task_changelog">
   <div class="task-pane-task-changelog">
-    <div class="filter-toggle {{#if filterForStatusChanges}}active-filter{{/if}}" >
+    <div class="filter-toggle {{#if filterForStatusChanges}}active-filter{{/if}} d-flex align-items-center bg-light p-1 rounded mb-1">
       {{#if filterForStatusChanges}}
-        <i class="fa fa-toggle-on fa-fw"></i>
+        <svg class="jd-icon text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
       {{else}}
-        <i class="fa fa-toggle-off fa-fw"></i>
+        <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
       {{/if}}
 
-      Filter for Status/Notes changes only.
+      <span class="text-body text-uppercase font-weight-bold">Filter for Status/Notes changes only</span>
 
     </div>
     {{#if dataLoaded}}
@@ -24,11 +24,11 @@
 
 <template name="task_pane_task_changelog_record">
   {{#unless filtered}}
-    <div class="record">
-      <div class="image">{{#with changingUser}}{{> justdo_avatar}}{{/with}}</div>
+    <div class="record d-flex py-2">
+      <div class="image mr-2 mt-1">{{#with changingUser}}{{> justdo_avatar}}{{/with}}</div>
       <div class="content">
-        <span class="data">{{formatedValue}}</span>
-        <div class="date">{{userDateFormat when}}</div>
+        <div class="data text-body">{{formatedValue}}</div>
+        <small class="date text-muted">{{userDateFormat when}}</small>
       </div>
     </div>
   {{/unless}}
