@@ -99,7 +99,6 @@ Template.tasks_file_manager_files.events
     task = @task
     file = @file
     tmpl.$(".msg .msg-content").hide()
-    tmpl.$(".loader").show()
     APP.tasks_file_manager_plugin.tasks_file_manager.removeFile task.task_id, file.id, (err, result) ->
       if err
         console.log err

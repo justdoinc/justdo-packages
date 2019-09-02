@@ -37,4 +37,5 @@ Template.tasks_file_manager_file_upload.helpers
 
   filesClass: ->
     files = Template.instance().data.files
-    return "no-files" if !files?
+    if !files? or files?.length == 0
+      return "no-files"

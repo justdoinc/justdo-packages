@@ -1,52 +1,17 @@
 .tasks-file-manager-file-upload
-  width: 100%
-  cursor: pointer
-  padding: 10px 0
-  background-color: white
-  height: 100px
-  z-index: 300
-  &.no-files
-    padding: 0px
-    height: 100%
-    .drop-pane-logo
-      display: block !important
+  height: auto
   .drop-pane
-    text-align: center
-    background: #f8f8f8
-    border: 2px dashed #dddddd
-    border-radius: 5px
+    border-radius: 0.25rem
+    border: 2px dashed rgba(109, 137, 173, 0.4)
+    cursor: pointer
+    height: 80px
+  .jd-icon
+    width: 32px
+    height: 32px
+    display: none
+  &.no-files
     height: 100%
-    width: 100%
-    font-size: 15px
-    color: #a0a0a0
-    display: table
-    .drop-pane-label
-      display: table-cell
-      vertical-align: middle
-      .drop-pane-logo
-        width: 40px
-        height: 40px
-        background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png);
-        background-position: 0px -58px
-        margin: 5px auto
-        display: none
-  .drop-pane-hover
-    background: #f2f3fa
-    border: 2px dashed #d3d8fb
-    color: #337ab7
-
-.bottom-toolbar
-  .tasks-file-manager-file-upload
-    position: absolute
-    width: 330px
-    bottom: 0
-    top: 0
-    height: 100%
-    &.no-files
-      position: relative
-      width: 100%
-    .drop-pane-logo
-      display: block !important
-
-.task-pane-section-tasks-file-manager.fixed
-  overflow: hidden
+    .drop-pane
+      height: 100%
+    .jd-icon
+      display: block

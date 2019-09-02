@@ -19,8 +19,7 @@ _.extend TasksFileManagerPlugin.prototype,
 
         buttons:
           download:
-            label: """<i class="fa fa-download" aria-hidden="true"></i> Download"""
-
+            label: "Download"
             className: "btn-primary"
 
             callback: =>
@@ -32,8 +31,7 @@ _.extend TasksFileManagerPlugin.prototype,
 
           close:
             label: "Close"
-
-            className: "btn-primary"
+            className: "btn-secondary"
 
             callback: ->
               return true

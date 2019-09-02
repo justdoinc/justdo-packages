@@ -2,58 +2,57 @@
   <div class="tasks-file-manager-files">
     {{#each files}}
       {{#with task=.. file=.}}
-        <div class="file">
-          <div class="type-logo {{typeClass}}"></div>
-
-          <div class="content">
-            <div class="title">
+        <div class="file pb-2">
+          <div class="file-inner-wrapper p-3 bg-light position-relative">
+            <div class="d-flex">
+              <div class="type-logo-wrapper">
+                <div class="type-logo shadow-sm {{typeClass}}"></div>
+              </div>
+              <div class="content flex-grow-1 mx-2">
+                <div class="title">
+                  {{#if renaming}}
+                    <input class="form-control form-control-sm" type="text" name="title" value="{{file.title}}">
+                  {{else}}
+                    <a href="{{shareableLink}}" class="file-download-link">{{file.title}}</a>
+                  {{/if}}
+                </div>
+                <small class="metadata text-muted">
+                  <span class="date" title="{{userDateFormat file.date_uploaded}}">{{userDateFormat file.date_uploaded false}}, </span>
+                  <span class="size">{{size}}, </span>
+                  <span class="mimetype">{{file.type}}</span>
+                </small>
+              </div>
               {{#if renaming}}
-                <input type="text" name="title" value="{{file.title}}">
+                <div class="actions-rename d-flex">
+                  <svg class="file-rename-done jd-icon text-secondary mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
+                  <svg class="file-rename-cancel jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+                </div>
               {{else}}
-                <a href="{{shareableLink}}" class="file-download-link">{{file.title}}</a>
+                <div class="actions d-flex">
+                  <svg class="file-rename-link jd-icon text-secondary mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>
+                  <svg class="file-remove-link jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"/></svg>
+                </div>
               {{/if}}
             </div>
-            <div class="metadata">
-              <span class="date" title="{{userDateFormat file.date_uploaded}}">{{userDateFormat file.date_uploaded false}}</span>
-              <span class="dot"></span>
-              <span class="size">{{size}}</span>
-              <span class="dot"></span>
-              <span class="mimetype">{{file.type}}</span>
-            </div>
-          </div>
 
-          {{#if isImage}}
-            <div class="image-preview file-download-link loading {{tempPlaceHolder}}"></div>
-          {{/if}}
-
-          {{#if deletion}}
-            <div class="msg">
-              <div class="loader">
-                <div class="double-bounce1"></div>
-                <div class="double-bounce2"></div>
+            {{#if isImage}}
+              <div class="image-preview shadow-sm bg-primary mt-2 file-download-link d-flex justify-content-center align-items-center loading {{tempPlaceHolder}}">
+                <div class="loader">
+                  <div class="double-bounce1 bg-white"></div>
+                  <div class="double-bounce2 bg-white"></div>
+                </div>
               </div>
-              <div class="msg-content">
-                Remove this file?
-                <a href="" class="msg-ok">Ok</a>
-                <a href="" class="msg-cancel">Cancel</a>
+            {{/if}}
+
+            {{#if deletion}}
+              <div class="msg d-flex justify-content-center align-items-center">
+                <div class="msg-content text-center">
+                  <a href="" class="msg-ok btn btn-primary btn-sm text-uppercase mr-1 font-weight-bold">Remove this file</a>
+                  <a href="" class="msg-cancel btn btn-secondary btn-sm text-uppercase font-weight-bold">Cancel</a>
+                </div>
               </div>
-              <!-- <p>Remove this file?</p>
-               -->
-            </div>
-          {{/if}}
-
-          {{#if renaming}}
-            <div class="actions-rename d-flex">
-              <a href="" class="file-rename-done mr-1"></a>
-              <a href="" class="file-rename-cancel"></a>
-            </div>
-          {{/if}}
-
-          <div class="actions d-flex">
-            <a href="" class="file-rename-link mr-1"></a>
-            <a href="" class="file-remove-link"></a>
+            {{/if}}
           </div>
-
         </div>
       {{/with}}
     {{/each}}
