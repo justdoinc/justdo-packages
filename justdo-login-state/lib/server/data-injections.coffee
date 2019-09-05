@@ -14,6 +14,6 @@ _.extend JustdoLoginState.prototype,
 
     root_post_requests_picker.middleware (req, res, next) ->
       if (token = req.body?.token)?
-        InjectData.pushData res, "login-token", token
+        InjectData.pushData req, "login-token", token
 
       next()

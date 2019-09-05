@@ -13,7 +13,7 @@ _.extend JustdoAnalytics.prototype,
         [did, sid] = justdo_analytics.split("|")
 
         if did? and did.length == 17 and sid? and sid.length == 17
-          InjectData.pushData res, "justdo-analytics", "#{did}|#{sid}" # Build the justdo-analytics ourself and don't use justdo_analytics to avoid surprises
+          InjectData.pushData req, "justdo-analytics", "#{did}|#{sid}" # Build the justdo-analytics ourself and don't use justdo_analytics to avoid surprises
         else
           self.logger.error "Invalid justdo-analytics POST params injection attempt (did=#{did} , sid=#{sid})"
 

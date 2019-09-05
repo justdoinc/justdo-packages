@@ -52,7 +52,7 @@ Package.onUse(function (api) {
   api.use('justdoinc:body-parser@0.0.1', server);
   api.use('peerlibrary:async@1.5.2_1', server);
 
-  api.use('meteorhacks:inject-data@2.0.0', both);
+  api.use('staringatlights:inject-data@2.3.0', both);
   api.use('meteorhacks:picker@1.0.3', both);
 
   api.use('meteorspark:colors@1.1.2', server);

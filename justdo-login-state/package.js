@@ -26,7 +26,7 @@ Package.onUse(function (api) {
   api.use('justdoinc:justdo-helpers@1.0.0', both);
   api.use('justdoinc:body-parser@0.0.1', server);
   
-  api.use('meteorhacks:inject-data@2.0.0', both);
+  api.use('staringatlights:inject-data@2.3.0', both);
   api.use('meteorhacks:picker@1.0.3', both);
 
   api.add_files("lib/both/init.coffee", both);

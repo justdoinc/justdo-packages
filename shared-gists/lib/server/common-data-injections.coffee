@@ -52,7 +52,7 @@ getExposedClientEnvVars = ->
 # push current "env" to the client
 app_routes.middleware (req, res, next) ->
   # Expose environment variables that should be available in the client
-  InjectData.pushData res, "env", getExposedClientEnvVars()
+  InjectData.pushData req, "env", getExposedClientEnvVars()
 
   next()
 
