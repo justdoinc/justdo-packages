@@ -128,7 +128,7 @@ _.extend FilestackBase.prototype,
       # Cleanup all the file's previews and associated data
       #
       any_found = false
-      for file_preview_id, file_preview_def of task_doc._secret.files_previews[file.id]
+      for file_preview_id, file_preview_def of task_doc._secret?.files_previews[file.id]
         @cleanupRemovedFile(file_preview_def)
 
         any_found = true
