@@ -16,9 +16,6 @@
 [submodule "jazeee-meteor-spiderable"]
 	path = jazeee-meteor-spiderable
 	url = git@github.com:theosp/jazeee-meteor-spiderable.git
-[submodule "meteor-apm-agent"]
-	path = meteor-apm-agent
-	url = git@github.com:justdoinc/meteor-apm-agent.git
 [submodule "justdo-linkify/lib/linkify"]
 	path = justdo-linkify/lib/linkify
 	url = git@github.com:nfrasser/linkify-shim.git
