@@ -112,9 +112,7 @@
       return user.username || (user.emails && user.emails[0] && user.emails[0].address);
     },
     isAffiliate: function () {
-      var affiliates_program_module;
-
-      return (affiliates_program_module = APP.justdo_affiliates_program) != null ? affiliates_program_module.isAffiliate() : void 0;
+      return APP.justdo_promoters_campaigns.isCurrentUserPromoter();
     },
     additionalLoggedInDropdownActions: function() {
       return Template._loginButtonsAdditionalLoggedInDropdownActions !== undefined;
