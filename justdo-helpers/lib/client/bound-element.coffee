@@ -104,7 +104,13 @@ _.extend JustdoHelpers,
 
       return
 
-    $element.data "close", close = =>
+    # We track last_mousedown_in_container to avoid situations where a click that begins
+    # inside the container, and ends outside of it, cause the element to close.
+    last_mousedown_in_container = false
+    $element.data "close", close = (e) =>
+      if last_mousedown_in_container
+        return
+
       if not _allow_dropdown_close
         return
 
@@ -133,6 +139,11 @@ _.extend JustdoHelpers,
 
       options.positionUpdateHandler($connected_element)
 
+    documentMousedownHandler = (e) ->
+      last_mousedown_in_container = false
+
+      return close()
+
     $element.data "destroy", destroy = _.once =>
       # Release all events bindings to document
       if options.close_on_esc
@@ -148,7 +159,7 @@ _.extend JustdoHelpers,
         $(document).off 'show.boundelement', close
 
       if options.close_on_mousedown_outside
-        $(document).off 'mousedown', close
+        $(document).off 'mousedown', documentMousedownHandler
 
       if options.close_on_context_menu_outside
         $(document).off 'contextmenu', close 
@@ -204,9 +215,11 @@ _.extend JustdoHelpers,
         e.stopPropagation()
 
     if options.close_on_mousedown_outside
-      $(document).on 'mousedown', close
+      $(document).on 'mousedown', documentMousedownHandler
 
       $element.mousedown (e) ->
+        last_mousedown_in_container = true
+
         # Don't bubble clicks up, to avoid closing the element
         e.stopPropagation()
 
