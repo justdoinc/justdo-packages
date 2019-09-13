@@ -108,8 +108,13 @@ _.extend JustdoHelpers,
     # inside the container, and ends outside of it, cause the element to close.
     last_mousedown_in_container = false
     $element.data "close", close = (e) =>
-      if last_mousedown_in_container
-        return
+      # important, it isn't guarentee that e will be defined!
+
+      if e? and e.type == "click"
+        # If we are responding to a click. Close, only if the click didn't begin inside
+        # the bound element.
+        if last_mousedown_in_container
+          return
 
       if not _allow_dropdown_close
         return
@@ -142,7 +147,7 @@ _.extend JustdoHelpers,
     documentMousedownHandler = (e) ->
       last_mousedown_in_container = false
 
-      return close()
+      return close(e)
 
     $element.data "destroy", destroy = _.once =>
       # Release all events bindings to document
@@ -183,7 +188,7 @@ _.extend JustdoHelpers,
       $close_button.click (e) ->
         e.stopPropagation()
 
-        close()
+        close(e)
 
     #
     # Helpers
@@ -202,7 +207,7 @@ _.extend JustdoHelpers,
     closeOnEsc = (e) ->
       e = e || window.event
       if e.keyCode == 27
-        close()
+        close(e)
 
     if options.close_on_esc
       $(document).on 'keydown', closeOnEsc
