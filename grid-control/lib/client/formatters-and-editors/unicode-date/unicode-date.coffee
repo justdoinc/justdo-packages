@@ -253,6 +253,7 @@ GridControl.installEditor "UnicodeDateEditor",
       showOn: "button"
       buttonImageOnly: true
       showAnim: ""
+      firstDay: Meteor?.user()?.profile?.first_day_of_week or 0
       onSelect: => @saveAndExit()
       onClose: => @focus()
 
