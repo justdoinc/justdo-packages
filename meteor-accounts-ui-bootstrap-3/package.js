@@ -21,6 +21,8 @@ Package.on_use(function (api) {
 
   api.use("coffeescript", both);
 
+  api.use("tracker", client);
+
   api.use("ecmascript", both);
 
   api.imply('accounts-base', ['client', 'server']);

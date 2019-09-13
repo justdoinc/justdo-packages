@@ -15,7 +15,7 @@
     'click #login-name-link, click #login-sign-in-link': function(event) {
       event.stopPropagation();
       loginButtonsSession.set('dropdownVisible', true);
-      Meteor.flush();
+      Tracker.flush();
     },
     'click .login-close': function() {
       loginButtonsSession.closeDropdown();
@@ -43,21 +43,21 @@
       event.stopPropagation();
       loginButtonsSession.resetMessages();
       loginButtonsSession.set('inSettingsEditingFlow', true);
-      Meteor.flush();
+      Tracker.flush();
     },
 
     'click .login-buttons-exit-global-settings': function(event) {
       event.stopPropagation();
       loginButtonsSession.resetMessages();
       loginButtonsSession.set('inSettingsEditingFlow', false);
-      Meteor.flush();
+      Tracker.flush();
     },
 
     'click .login-buttons-exit-change-password': function(event) {
       event.stopPropagation();
       loginButtonsSession.resetMessages();
       loginButtonsSession.set('inChangePasswordFlow', false);
-      Meteor.flush();
+      Tracker.flush();
     }
   });
 
@@ -158,7 +158,7 @@
       event.stopPropagation();
       loginButtonsSession.resetMessages();
       Accounts._loginButtonsSession.set('inChangePasswordFlow', false);
-      Meteor.flush();
+      Tracker.flush();
     }
   });
 

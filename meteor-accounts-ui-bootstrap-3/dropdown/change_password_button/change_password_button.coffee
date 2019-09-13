@@ -23,7 +23,7 @@ Template.login_buttons_open_change_password_btn.events
     loginButtonsSession.resetMessages()
 
     loginButtonsSession.set('inChangePasswordFlow', true)
-    Meteor.flush()
+    Tracker.flush()
 
   "click #login-buttons-open-set-password": (e) ->
     APP.accounts.sendPasswordResetEmail JustdoHelpers.currentUserMainEmail(), (err) ->
