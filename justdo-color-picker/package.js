@@ -15,6 +15,6 @@ Package.onUse(function (api) {
   api.use('fourseven:scss@3.2.0', client);
   api.use("ecmascript");
 
-  api.mainModule("lib/client/color-picker.scss", "client");
+  api.addFiles("lib/client/color-picker.scss", "client");
   api.mainModule("lib/client/main.js", "client", { lazy: true });
 });
