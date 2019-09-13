@@ -16,7 +16,7 @@ showAddNewMemberToTaskReminder = ->
     actionText: "Learn More"
     duration: 10000
     onActionClick: ->
-      window.open("https://support.justdo.today/hc/en-us/articles/115003577233")
+      window.open("https://support.justdo.com/hc/en-us/articles/115003577233")
 
       return
 
