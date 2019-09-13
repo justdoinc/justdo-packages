@@ -4,6 +4,10 @@ _.extend GridData.prototype,
 
   getItemMetadata: (index) ->
     # Get the metadata from each one of the generators
+
+    if not @grid_tree[index]?
+      return {}
+
     generators_metadata =
       _.map @_metadataGenerators, (generator) =>
         generator(@grid_tree[index][0], @grid_tree[index], index)
