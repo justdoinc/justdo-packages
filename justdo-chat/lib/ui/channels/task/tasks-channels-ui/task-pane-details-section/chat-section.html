@@ -1,5 +1,5 @@
 <template name="task_pane_chat_section">
-  <section class="task-pane-chat {{#if $not hasMessages}}empty{{/if}} {{#if isProposedSubscribersEmulationMode}}proposed-subscribers-emulation-mode{{/if}} jdc-basic-design">
+  <section class="task-pane-chat border {{#if $not hasMessages}}empty{{/if}} {{#if isProposedSubscribersEmulationMode}}proposed-subscribers-emulation-mode{{/if}} jdc-basic-design">
     <div class="{{mode}}-mode">
       {{#if $eq mode "chat"}}
         {{> task_pane_chat_section_chat}}
