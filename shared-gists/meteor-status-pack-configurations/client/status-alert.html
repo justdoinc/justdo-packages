@@ -1,13 +1,9 @@
 <template name="status_alert">
   {{#if showStatus}}
-    <div class="meteor-connection-status alert alert-warning text-center" role="alert">
-      <strong>
-        <i class="fa fa-exclamation-triangle"></i> {{justdoStatusMessage}}
-      </strong>
-      {{extraMessage}}
-
+    <div class="meteor-connection-status bg-dark d-flex align-items-center justify-content-center fixed-top p-3 text-white">
+      <strong class="mr-2">{{justdoStatusMessage}}</strong>{{extraMessage}}
       {{#if showReconnect}}
-        <a href="#" class="alert-link">{{reconnectLabel}}</a>
+        <a href="#" class="alert-link text-warning ml-2"><u>{{reconnectLabel}}</u></a>
       {{/if}}
     </div>
   {{/if}}
