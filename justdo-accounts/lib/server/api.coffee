@@ -16,7 +16,8 @@ getPasswordString = (password) ->
 
 hashPassword = (password) ->
   password = getPasswordString(password)
-  bcryptHash password, Accounts._bcryptRounds
+
+  return bcryptHash(password, Accounts._bcryptRounds())
 
 # END
 
@@ -78,9 +79,9 @@ _.extend JustdoAccounts.prototype,
     if @_passwordSetInUserObj(user_obj)
       return true
 
-    # If the user has services other than resume and password, we assume he
+    # If the user has services other than email, resume and password, we assume he
     # completed registration using these services
-    if _.difference(_.keys(user_obj.services), ["resume", "password"]).length > 0
+    if _.difference(_.keys(user_obj.services), ["resume", "password", "email"]).length > 0
       return true
 
     return false
