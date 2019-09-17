@@ -80,6 +80,15 @@ APP.executeAfterAppLibCode = (cb) ->
 
   APP.init_lib_all_promise.then Meteor.bindEnvironment cb
 
+APP.init_app_accounts_ready = new Promise (resolve, reject) ->
+  APP.once("app-accounts-ready", resolve)
+
+  return
+
+APP.executeAfterAppAccountsReady = (cb) ->
+  APP.init_app_accounts_ready.then Meteor.bindEnvironment cb
+
+  return
 
 # On client we also provide a reactive var to get justdo labs state
 if Meteor.isClient

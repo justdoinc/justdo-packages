@@ -6,8 +6,6 @@ Projects = (options) ->
   @main_logger_name = "Projects"
   @logger = Logger.get @main_logger_name
 
-  @justdo_accounts = options.justdo_accounts
-
   @projects_collection = options.projects_collection
   @items_collection = options.items_collection
   @items_private_data_collection = options.items_private_data_collection
@@ -38,6 +36,11 @@ Projects = (options) ->
 Util.inherits Projects, EventEmitter
 
 _.extend Projects.prototype,
+  setJustdoAccountsObject: (justdo_accounts) ->
+    @justdo_accounts = justdo_accounts
+
+    return
+
   _initModules: ->
     @modules = {}
 

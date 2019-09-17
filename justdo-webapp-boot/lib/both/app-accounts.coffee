@@ -9,4 +9,6 @@ APP.getEnv (env) ->
       "justdo_projects.post_reg_init": false
       "justdo_projects.daily_email_projects_array": []
 
+  APP.emit "app-accounts-ready"
+
   return

@@ -54,6 +54,7 @@ Package.onUse(function (api) {
 
   api.use("justdoinc:justdo-project-page-dialogs@1.0.0", both);
   
+  api.use("stem-capital:projects", both);
 
   api.use("reactive-var", both);
   api.use("tracker", client);

@@ -25,7 +25,6 @@ APP.collections.Projects = new Mongo.Collection "projects"
 APP.login_state = new JustdoLoginState()
 
 project_options = 
-  justdo_accounts: APP.accounts
   projects_collection: APP.collections.Projects
   items_collection: APP.collections.Tasks
   items_private_data_collection: APP.collections.TasksPrivateData
@@ -89,3 +88,8 @@ if Meteor.isServer
     APP.collections.RemovedProjectsTasksPrivateDataArchiveCollection
 
 APP.projects = new Projects project_options
+
+APP.executeAfterAppAccountsReady ->
+  APP.projects.setJustdoAccountsObject APP.accounts
+
+  return
