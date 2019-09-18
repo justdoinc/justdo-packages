@@ -1,4 +1,49 @@
 Things to do:
++ remove the unassigned line
++ remove the one day backward/forward options
++ refactor prev and next week functons to prevent duplicates
++ add an area to scroll left/right
++ bug when due date is before start date something doesn't work
++ followup should be presented only with the owner. Now it's listed also with resources members
++ issue with dragging followup to a different user
++ bug dropping regular task not working
++ dropping regular task - move the end-date
++ calendar should be a rolling one
++ move tasks dates.
++ work with start date and a new field - end date (not due-date).
++ identify non-working days, holidays,
++ when moving a start date on the calendar - deal with non-working days
++ calendar view should start always with the first day of the week.
++ have a visual hint on the task for the state
++ dayte's names (monday tuesday...)
+
+- alerts - use Opher's method.
+
+
+- project filtering on the calendar
+
+- unassigned hours should be part of the task's owner view
+- moving unassigned hours to a new user- should also reassign the task
+
+- moving hours from one user to another changes ownership (can't move just hours, if need to move just
+  hours - use the resource planner view)
+- a way to view all unassigned hours
+
+- identify vacation days of users
+- handle a case what we move a task to a member that is not a member of this task
+
+- set justdo's level workdays and people's working hours etc. - igor to design
+
+- configuration - work with planned hours . working with left hours will happen later...
+
+later:
+- change task duration with drag and drop
+- a visual hint for people that are not on the selected task
+- there is a bug (minute 26) on the project plugin that not all tasks members are listed (task 29)
+- drag and drop from the main table to the calendar
+
+
+
 
 - planned work
   + present on calendar view

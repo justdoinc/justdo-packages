@@ -26,11 +26,20 @@ _.extend JustdoCalendarView.prototype,
             order: 101
             tab_template: "justdo_calendar_project_pane"
             tab_label: "Calendar"
-          return
+
+          APP.modules.project_page.setupPseudoCustomField JustdoCalendarView.end_date_field_id,
+            label: JustdoCalendarView.end_date_field_label
+            field_type: "date"
+            grid_visible_column: true
+            grid_editable_column: true
+            default_width: 200
+
+          return #installer
 
         destroyer: =>
           APP.justdo_project_pane.unregisterTab "justdo_calendar"
-          return
+          APP.modules.project_page.removePseudoCustomFields JustdoCalendarView.end_date_field_id
+          return #destroyer
 
     @onDestroy =>
       custom_feature_maintainer.stop()

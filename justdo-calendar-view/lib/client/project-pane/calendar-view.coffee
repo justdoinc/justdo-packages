@@ -16,8 +16,11 @@ setDragAndDrop = ->
       owner_id = task_obj.owner_id
       if task_obj.pending_owner_id
         owner_id = task_obj.pending_owner_id
-      # for changing followups (but not private followup), we also allow to change the owner
-      if row_user_id != owner_id and ui.draggable[0].attributes.type.value == 'F'
+
+      # for changing followups or regular tasks (but not private followup), we also allow to change the owner
+      if row_user_id != owner_id and
+          (ui.draggable[0].attributes.type.value == 'F' or ui.draggable[0].attributes.type.value == 'R')
+
         if Meteor.userId() == row_user_id
           set_param['owner_id'] = row_user_id
           set_param['pending_owner_id'] = null
@@ -26,22 +29,61 @@ setDragAndDrop = ->
           set_param['pending_owner_id'] = null
         else
           set_param['pending_owner_id'] = row_user_id
+
       if ui.draggable[0].attributes.class.value.indexOf("calendar_view_draggable")>=0
+        #dealing with Followups:
         if ui.draggable[0].attributes.type.value == 'F'
           set_param['follow_up'] = e.target.attributes.date.value
           APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
                                         $set:set_param
                                        )
-
+        #dealing with Private followups
         else if ui.draggable[0].attributes.type.value == 'P'
           set_param['priv:follow_up'] = e.target.attributes.date.value
           APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
             $set: set_param
           )
-      return
+
+        #dealing with Private followups
+        else if ui.draggable[0].attributes.type.value == 'R'
+          # from the query definitions we must have at least one of start or end dates.
+          original_start_date = task_obj.start_date
+          if !original_start_date
+            original_start_date = task_obj.end_date
+
+          original_end_date = task_obj.end_date
+          if !original_end_date
+            original_end_date = task_obj.start_date
+
+          new_start_date = e.target.attributes.date.value
+          #calculating the new end date taking days off into consideration:
+          new_end_date_moment = moment(e.target.attributes.date.value)
+          if original_start_date<original_end_date
+            d = moment(original_start_date)
+            while d < moment(original_end_date)
+              if justdo_level_workdays.weekly_work_days[d.day()] == 1
+                new_end_date_moment.add(1,'days')
+                #skip non working days
+                while(justdo_level_workdays.weekly_work_days[new_end_date_moment.day()] == 0)
+                  new_end_date_moment.add(1,'days')
+              d.add(1, 'days')
+
+          set_param['start_date'] = new_start_date
+          set_param['end_date'] = new_end_date_moment.format("YYYY-MM-DD")
+
+          #todo: calculate how to move the due-date
+          APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
+            $set: set_param
+          )
+      return #end of drop
+
   return
 
+justdo_level_workdays = {} #intentionally making this one a non-reactive var, otherwise we will hit it too many times
+
 Template.justdo_calendar_project_pane.onCreated ->
+  self = @
+
   @view_start_date = new ReactiveVar
   #calculate the first day to display based on the beginning of the week of the user
   @resetFirstDay = ->
@@ -56,9 +98,62 @@ Template.justdo_calendar_project_pane.onCreated ->
     d.setDate(d.getDate() - (dow - user_first_day_of_week))
     @view_start_date.set(d)
     return
+
   @resetFirstDay()
 
-  return
+  #scrolling left and right control flow
+  @scroll_left_right_handler = null
+
+  @setToPrevWeek = ->
+    date = moment(@view_start_date.get())
+    date.subtract(7, 'days');
+    @view_start_date.set(date)
+    return
+
+  @setToNextWeek = ->
+    date = moment(@view_start_date.get())
+    date.add(7, 'days');
+    @view_start_date.set(date)
+    return
+
+  @onSetScrollLeft = ->
+    self.scroll_left_right_handler = setInterval( =>
+      self.setToPrevWeek()
+      return
+    ,
+      2000
+    )
+    return
+
+  @onSetScrollRight = ->
+    self.scroll_left_right_handler = setInterval( =>
+      self.setToNextWeek()
+      return
+    ,
+      2000
+    )
+    return
+
+  @onUnsetScrollLeftRight = ->
+    if self.scroll_left_right_handler
+      clearInterval(self.scroll_left_right_handler)
+      self.scroll_left_right_handler = null
+    return
+
+  #todo: become future compatible - the project level workdays and holidays will come from the delivery planner
+  #todo: check with Daniel how to ensure plugins dependancies during load time.
+  #todo: once we apply project filters, take the workdays from the project record.
+
+  if APP.justdo_delivery_planner?.justdo_level_workdays
+    @autorun =>
+      justdo_level_workdays = APP.justdo_delivery_planner.justdo_level_workdays.get()
+  else
+    justdo_level_workdays =
+      weekly_work_days: [0, 1, 1, 1, 1, 1, 0] #sunday at index 0, default set to Monday-Friday
+      specific_off_days: [] # and no holidays by default
+
+
+  return # end onCreated
 
 Template.justdo_calendar_project_pane.helpers
   title_date: ->
@@ -79,17 +174,16 @@ Template.justdo_calendar_project_pane.helpers
       d.add(1,"days")
     return dates
 
+  formatDate: ->
+    return moment(@).format("ddd, Mo")
+
 Template.justdo_calendar_project_pane.events
   "click .calendar-view-prev-week": ->
-    date = moment(Template.instance().view_start_date.get())
-    date.subtract(7, 'days');
-    Template.instance().view_start_date.set(date)
+    Template.instance().setToPrevWeek()
     return
 
   "click .calendar-view-prev-day": ->
-    date = moment(Template.instance().view_start_date.get())
-    date.subtract(1, 'days');
-    Template.instance().view_start_date.set(date)
+    Template.instance().setToNextWeek()
     return
 
   "click .calendar-view-next-day": ->
@@ -138,8 +232,8 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
       {priv:follow_up: {$in: data.dates_to_display}},
       #due date in between the dates
       {$and: [
-        due_date: {$gte: first_date_to_display},
-        due_date: {$lte: last_date_to_display}
+        end_date: {$gte: first_date_to_display},
+        end_date: {$lte: last_date_to_display}
       ]},
       #start date in between the dates
       {$and: [
@@ -149,20 +243,15 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
       #start date before and due date after
       {$and: [
         start_date: {$lt: first_date_to_display},
-        due_date: {$gt: last_date_to_display}
+        end_date: {$gt: last_date_to_display}
       ]}
     ]
 
-    if data.user_id == "unassigned_user_hours"
-      owner_part = [
-        {"p:rp:b:unassigned-work-hours": {$gt: 0}}
+    owner_part = [
+        {owner_id:  data.user_id}, #user is owner, and there is no pending owner
+        {pending_owner_id: data.user_id}, #user is the pending owner
+        {"#{planned_seconds_field}": {$gt: 0}} #user has planned hours on the task
       ]
-    else
-      owner_part = [
-          {owner_id:  data.user_id}, #user is owner, and there is no pending owner
-          {pending_owner_id: data.user_id}, #user is the pending owner
-          {"#{planned_seconds_field}": {$gt: 0}} #user has planned hours on the task
-        ]
 
     query_parts = []
     query_parts.push {$or: dates_part}
@@ -171,10 +260,13 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
     options =
       fields:
         _id: 1
+        seqId: 1
         title: 1
         start_date: 1
         due_date: 1
+        end_date: 1
         owner_id: 1
+        state: 1
         pending_owner_id: 1
         "priv:follow_up": 1
         follow_up: 1
@@ -183,8 +275,21 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         "p:rp:b:unassigned-work-hours": 1
 
     APP.collections.Tasks.find({$and: query_parts},options).forEach (task)->
+
+      task_details =
+        _id: task._id
+        title: task.title
+        pending_owner_id: task.pending_owner_id
+        owner_id: task.owner_id
+        sequence_id: task.seqId
+        end_date: task.end_date
+        state: task.state
+
       #deal with  regular followups
-      if task.follow_up and data.dates_to_display.indexOf(task.follow_up) >-1
+
+      if task.follow_up and
+            (task.owner_id == data.user_id or task.pending_owner_id == data.user_id) and
+            data.dates_to_display.indexOf(task.follow_up) >-1
         day_index = data.dates_to_display.indexOf(task.follow_up)
         day_column = days_matrix[day_index]
         row_index = 0
@@ -192,15 +297,12 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
           if !day_column[row_index]?
 
             day_column[row_index] =
-              task:
-                id: task._id
-                title: task.title
-                pending_owner_id: task.pending_owner_id
-                owner_id: task.owner_id
+              task: task_details
               type: 'F'# F for followup, P for private followup, R for regular
               span: 1
             break
           row_index++
+
 
       #deal with private followups
       if task['priv:follow_up'] and data.dates_to_display.indexOf(task['priv:follow_up']) >-1 and data.user_id == Meteor.userId()
@@ -210,11 +312,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         while true
           if !day_column[row_index]?
             day_column[row_index] =
-              task:
-                id: task._id
-                title: task.title
-                pending_owner_id: task.pending_owner_id
-                owner_id: task.owner_id
+              task: task_details
               type: 'P' # F for followup, P for private followup, R for regular
               span: 1
             break
@@ -222,34 +320,38 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
       #deal with regular tasks
       if (task.start_date? and task.start_date >= first_date_to_display and task.start_date <= last_date_to_display) or
-         (task.due_date? and task.due_date >= first_date_to_display and task.due_date <= last_date_to_display) or
-         (task.start_date? and task.due_date? and task.start_date<first_date_to_display and task.due_date>last_date_to_display)
+         (task.end_date? and task.end_date >= first_date_to_display and task.end_date <= last_date_to_display) or
+         (task.start_date? and task.end_date? and task.start_date < first_date_to_display and task.end_date > last_date_to_display)
         start_date = ""
         starts_before_view = false
         if task.start_date?
           start_date = task.start_date
         else
-          start_date = task.due_date
+          start_date = task.end_date
         end_date = ""
         ends_after_view = false
-        if task.due_date?
-          end_date = task.due_date
+        if task.end_date?
+          end_date = task.end_date
         else
           end_date = task.start_date
         start_day_index = data.dates_to_display.indexOf(start_date)
-        if start_day_index == -1
+        if start_day_index == -1 and start_date < data.dates_to_display[0]
           start_day_index = 0
           starts_before_view = true
         end_day_index = data.dates_to_display.indexOf(end_date)
-        if end_day_index == -1
+        if end_day_index == -1 and end_date > data.dates_to_display[data.dates_to_display.length-1]
           end_day_index = data.dates_to_display.length-1
           ends_after_view = true
 
         # deal in situations where the start date is after the due date...
         start_date_after_due_date = false
-        if end_day_index < start_day_index
-          start_day_index = end_day_index
+        if end_date < start_date
           start_date_after_due_date = true
+          if end_day_index >= 0
+            start_day_index = end_day_index
+          else if start_day_index >= 0
+            end_day_index = start_day_index
+          # else should never happen
 
         # find a row in the matrix where all days are free
         row_index = 0
@@ -260,26 +362,16 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
               row_is_free = false
           if row_is_free
 
-            planned_seconds = task[planned_seconds_field]
-            if data.user_id == "unassigned_user_hours"
-              planned_seconds = task["p:rp:b:unassigned-work-hours"]
+            task_details.planned_seconds = task[planned_seconds_field]
+            task_details.executed_seconds = task[executed_seconds_field]
 
             days_matrix[start_day_index][row_index] =
-              task:
-                id: task._id
-                title: task.title
-                pending_owner_id: task.pending_owner_id
-                owner_id: task.owner_id
-                planned_seconds: planned_seconds
-                executed_seconds: task[executed_seconds_field]
-
+              task: task_details
               type: 'R' # F for followup, P for private followup, R for regular
               span: end_day_index-start_day_index + 1
               starts_before_view: starts_before_view
               ends_after_view: ends_after_view
               start_date_after_due_date: start_date_after_due_date
-
-
 
             if start_day_index != end_day_index
               for i in [start_day_index+1..end_day_index]
@@ -295,27 +387,20 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         setDragAndDrop()
       return
     return
-  return
 
 Template.justdo_calendar_project_pane_user_view.onRendered ->
   setDragAndDrop()
   return
 
 Template.justdo_calendar_project_pane_user_view.helpers
-
   userId: ->
     return Template.instance().data.user_id
 
   dimWhenPendingOwner: ->
-    col_num = @-1
-    row_num = Template.parentData()
-    matrix = Template.instance().days_matrix.get()
-
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        if info.task?.pending_owner_id? and info.task.owner_id == Template.instance().data.user_id
+    if @task?.pending_owner_id? and @task.owner_id == Template.instance().data.user_id
           return "ownership_transfer_in_progress"
     return ""
+
   rowNumbers: ->
     days_matrix = Template.instance().days_matrix.get()
     ret = 1
@@ -324,15 +409,18 @@ Template.justdo_calendar_project_pane_user_view.helpers
         ret = days_matrix[i].length
     return [0..ret-1]
 
-  topLeftCell: ->
-    return (Template.parentData()==0 and @+1==1)
+  firstRow: ->
+    return (@+1)==1
 
-  leftCell: ->
-    return (@+1==1)
-
+  markDaysOff: ->
+    column_date = Template.instance().data.dates_to_display[@]
+    z = moment(column_date).day();
+    if justdo_level_workdays.weekly_work_days[moment(column_date).day()] == 0
+      return "calendar_view_mark_days_off"
+    return ""
 
   colNumbers: ->
-    return [0..Template.instance().data.dates_to_display.length]
+    return [0..Template.instance().data.dates_to_display.length-1]
 
   numberOfRows: ->
     days_matrix = Template.instance().days_matrix.get()
@@ -346,157 +434,61 @@ Template.justdo_calendar_project_pane_user_view.helpers
   userObj: ->
     return  Meteor.users.findOne(Template.instance().data.user_id)
 
-  rowForUnassignedUser:->
-    return (Template.instance().data.user_id =="unassigned_user_hours")
-
-  taskTitle: ->
-    col_num = @-1
-    row_num = Template.parentData()
-    matrix = Template.instance().days_matrix.get()
-
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        return info.task.title
-    return ""
-
   taskId: ->
-    col_num = @-1
+    col_num = @
     row_num = Template.parentData()
     matrix = Template.instance().days_matrix.get()
 
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        if info.task?
-          return info.task.id
+    if (info=matrix[col_num]?[row_num])
+      if info.task?
+        return info.task._id
     return ""
 
   startsBeforeView: ->
-    col_num = @-1
-    row_num = Template.parentData()
-    matrix = Template.instance().days_matrix.get()
-
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        if info.starts_before_view?
-          return info.starts_before_view
-    return false
+    return @starts_before_view and @type == 'R'
 
   endsAfterView: ->
-    col_num = @-1
-    row_num = Template.parentData()
-    matrix = Template.instance().days_matrix.get()
-
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        if info.ends_after_view?
-          return info.ends_after_view
-    return false
-
-
-  colSpan: ->
-    col_num = @-1
-    row_num = Template.parentData()
-    matrix = Template.instance().days_matrix.get()
-
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        return "#{info.span}"
-    return "1"
-
+    return @ends_after_view and @type == 'R'
 
   skipTD: ->
-    col_num = @-1
+    col_num = @
     row_num = Template.parentData()
     matrix = Template.instance().days_matrix.get()
 
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        return info.slot_is_taken
+    if (info=matrix[col_num]?[row_num])
+      return info.slot_is_taken
     return false
 
-  type: ->
-    col_num = @-1
+  cellData: ->
+    col_num = @
     row_num = Template.parentData()
     matrix = Template.instance().days_matrix.get()
-
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        return info.type
-    return ""
+    return matrix[col_num]?[row_num]
 
   startDateAfterDueDate: ->
-    col_num = @-1
-    row_num = Template.parentData()
-    matrix = Template.instance().days_matrix.get()
-
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        if info.start_date_after_due_date
-          return true
-    return false
-
-  isFollowupDate: ->
-    col_num = @-1
-    row_num = Template.parentData()
-    matrix = Template.instance().days_matrix.get()
-
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        return info.type == 'F'
-    return false
-
-  isPrivateFollowupDate: ->
-    col_num = @-1
-    row_num = Template.parentData()
-    matrix = Template.instance().days_matrix.get()
-
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        return info.type == 'P'
-    return false
+    return @start_date_after_due_date
 
   plannedHours: ->
-
-    col_num = @-1
-    row_num = Template.parentData()
-    matrix = Template.instance().days_matrix.get()
-
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        if info.type == 'R' and info.task.planned_seconds > 0
-          seconds = info.task.planned_seconds
-          if info.task.executed_seconds
-            seconds -= info.task.executed_seconds
-          overtime = false
-          if seconds < 0
-            seconds = -seconds
-            overtime = true
-          minutes = Math.floor(seconds/60)
-          hours = Math.floor(minutes/60)
-          mins = minutes - hours*60
-          if ! overtime
-            left = "left"
-            if Template.instance().data.user_id == "unassigned_user_hours"
-              left = ""
-            return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H #{left}]"
-          return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H overtime]"
+    if @type == 'R' and @task.planned_seconds > 0
+      seconds = @task.planned_seconds
+      if @task.executed_seconds
+        seconds -= @task.executed_seconds
+      overtime = false
+      if seconds < 0
+        seconds = -seconds
+        overtime = true
+      minutes = Math.floor(seconds/60)
+      hours = Math.floor(minutes/60)
+      mins = minutes - hours*60
+      if ! overtime
+        return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H left]"
+      return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H overtime]"
     return ""
 
 
 
-  isRegularTask: ->
-    col_num = @-1
-    row_num = Template.parentData()
-    matrix = Template.instance().days_matrix.get()
-
-    if col_num>=0
-      if (info=matrix[col_num]?[row_num])
-        return info.type == 'R'
-    return false
-
   columnDate: ->
-    return Template.instance().data.dates_to_display[@-1]
-
+    return Template.instance().data.dates_to_display[@]
 
 Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_task_cell": (e, tpl)->
@@ -513,6 +505,29 @@ Template.justdo_calendar_project_pane_user_view.events
   "mouseout .highlight_on_mouse_in" : (e, tpl)->
     e.target.style.backgroundColor = ""
     return
+
+  #todo: there is a bug here when the mouse is moving out or in left/right cell, from time to time
+  # it throws an error.
+  "mouseover .calendar_view_scroll_left_cell" : (e, tpl)->
+    if (f = tpl.view?.parentView?.parentView?.parentView?.parentView?.templateInstance().onSetScrollLeft)
+      f()
+    return
+
+  "mouseout .calendar_view_scroll_left_cell" : (e, tpl)->
+    if( f = tpl.view?.parentView?.parentView?.parentView?.parentView?.templateInstance().onUnsetScrollLeftRight)
+      f()
+    return
+
+  "mouseover .calendar_view_scroll_right_cell" : (e, tpl)->
+    if(f = tpl.view?.parentView?.parentView?.parentView?.parentView?.templateInstance().onSetScrollRight)
+      f()
+    return
+
+  "mouseout .calendar_view_scroll_right_cell" : (e, tpl)->
+    if (f = tpl.view?.parentView?.parentView?.parentView?.parentView?.templateInstance().onUnsetScrollLeftRight)
+      f()
+    return
+
 
 
 
