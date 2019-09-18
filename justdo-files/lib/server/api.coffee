@@ -56,13 +56,17 @@ _.extend JustdoFiles.prototype,
       writestream = gfs.createWriteStream
         filename: file.name
         content_type: file.mime
-      (fs.createReadStream file.path).pipe writestream
-      writestream.on "close", Meteor.bindEnvironment (gridfs_file) ->
-        @collection.update gridfs_file._id,
-          $set:
-            "meta.gridfs_id": gridfs_file._id.toString()
-        @unlink @collection.findOne file._id # Remove the temporary file
-        console.log "Saved file to mongodb"
+      fs.createReadStream(file.path).pipe writestream
+      writestream.on "close", Meteor.bindEnvironment (gridfs_file) =>
+        try
+          @collection.update file._id,
+            $set:
+              "meta.gridfs_id": gridfs_file._id.toString()
+          console.log "Saved file to mongodb"
+        catch e
+          @collectione.remove file._id
+        finally
+          @unlink @collection.findOne file._id # Remove the temporary file
 
     TaskFiles.interceptDownload = (http, file, versionName) ->
       console.log "User trying to download the file"
