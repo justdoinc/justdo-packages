@@ -16,9 +16,7 @@ Things to do:
 + calendar view should start always with the first day of the week.
 + have a visual hint on the task for the state
 + dayte's names (monday tuesday...)
-
-- alerts - use Opher's method.
-
++ alerts - use Opher's method.
 
 - project filtering on the calendar
 
@@ -37,6 +35,7 @@ Things to do:
 - configuration - work with planned hours . working with left hours will happen later...
 
 later:
+- UI for config
 - change task duration with drag and drop
 - a visual hint for people that are not on the selected task
 - there is a bug (minute 26) on the project plugin that not all tasks members are listed (task 29)

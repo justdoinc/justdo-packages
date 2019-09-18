@@ -1,3 +1,11 @@
+config =
+  bottom_line:
+    show_number_of_tasks: false
+    show_flat_hours_per_day: false
+    show_workload: true
+
+
+
 setDragAndDrop = ->
   $('.calendar_view_draggable').draggable
     cursor: 'move'
@@ -151,6 +159,7 @@ Template.justdo_calendar_project_pane.onCreated ->
     justdo_level_workdays =
       weekly_work_days: [0, 1, 1, 1, 1, 1, 0] #sunday at index 0, default set to Monday-Friday
       specific_off_days: [] # and no holidays by default
+      working_hours_per_day: 8
 
 
   return # end onCreated
@@ -175,7 +184,7 @@ Template.justdo_calendar_project_pane.helpers
     return dates
 
   formatDate: ->
-    return moment(@).format("ddd, Mo")
+    return moment(@).format("ddd, Do")
 
 Template.justdo_calendar_project_pane.events
   "click .calendar-view-prev-week": ->
@@ -205,6 +214,8 @@ Template.justdo_calendar_project_pane.events
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
   @days_matrix = new ReactiveVar([])
+  @dates_workload = new ReactiveVar({})
+
   @autorun =>
     data = Template.currentData()
 
@@ -274,6 +285,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         "#{executed_seconds_field}": 1
         "p:rp:b:unassigned-work-hours": 1
 
+    self.dates_workload.set({})
     APP.collections.Tasks.find({$and: query_parts},options).forEach (task)->
 
       task_details =
@@ -283,6 +295,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         owner_id: task.owner_id
         sequence_id: task.seqId
         end_date: task.end_date
+        start_date: task.start_date
         state: task.state
 
       #deal with  regular followups
@@ -376,13 +389,66 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
             if start_day_index != end_day_index
               for i in [start_day_index+1..end_day_index]
                 days_matrix[i][row_index] =
-                  slot_is_taken: true
+                  task: task_details
+                  type: 't' # F for followup, P for private followup, R for regular, t for cont task
+#                  slot_is_taken: true
+#                  slot_is_taken_by_task_id: task_details._id
 
             break
           row_index++
 
-      self.days_matrix.set(days_matrix)
+      #now we need to loop over all days, and for each day count the total working hours
 
+      dates_workload = {}
+
+      task_to_flat_hours_per_day = {} # this is a cache var to hold hours per day for each task,
+                                      # based on flat distribution of planned hours over workdays.
+                                      # We clear it and repopulate it when working on the dates_workload
+      flatHoursPerDay = (row_data)->
+        if task_to_flat_hours_per_day[row_data.task._id]
+          return task_to_flat_hours_per_day[row_data.task._id]
+        start_date = moment(row_data.task.start_date)
+        end_date = moment(row_data.task.end_date)
+        if !row_data.task.start_date
+          start_date = end_date
+        if !row_data.task.end_date
+          end_date = start_date
+        if end_date <= start_date
+          task_to_flat_hours_per_day[row_data.task._id] = row_data.task.planned_seconds / 3600
+          return task_to_flat_hours_per_day[row_data.task._id]
+
+        days = 1
+        while start_date < end_date
+          if justdo_level_workdays.weekly_work_days[start_date.day()] == 1
+            days++
+          start_date.add(1,'days')
+        task_to_flat_hours_per_day[row_data.task._id] = row_data.task.planned_seconds / 3600 / days
+        return task_to_flat_hours_per_day[row_data.task._id]
+
+      for column_index of days_matrix
+        for row in days_matrix[column_index]
+          task_id = null
+
+          #due to tasks placements, there might be empty rows in the column. we will avoid those:
+          if !row?
+            continue
+
+          if row.type == "R" or row.type == "t"
+            date = data.dates_to_display[column_index]
+            Meteor._ensure dates_workload, date
+            #calcualte number of tasks:
+            if !dates_workload[date].number_of_tasks
+              dates_workload[date].number_of_tasks = 0
+            dates_workload[date].number_of_tasks++
+
+            #calculate number of hours, assuming flat distribution of task's time over workdays
+            if !dates_workload[date].total_hours
+              dates_workload[date].total_hours = 0
+            dates_workload[date].total_hours += flatHoursPerDay(row)
+
+
+      self.days_matrix.set(days_matrix)
+      self.dates_workload.set(dates_workload)
       Tracker.afterFlush ->
         setDragAndDrop()
       return
@@ -393,6 +459,24 @@ Template.justdo_calendar_project_pane_user_view.onRendered ->
   return
 
 Template.justdo_calendar_project_pane_user_view.helpers
+
+  bottomLine: ->
+    column_date = Template.instance().data.dates_to_display[this]
+    workload = Template.instance().dates_workload.get()
+
+    if( daily_workload = workload[column_date])
+      ret = ""
+
+      if config.bottom_line.show_number_of_tasks
+        ret += "#{daily_workload.number_of_tasks} task(s) "
+      if config.bottom_line.show_flat_hours_per_day
+        ret += "#{daily_workload.total_hours.toFixed(1)} H "
+      if config.bottom_line.show_workload
+        ret += "#{(daily_workload.total_hours/justdo_level_workdays.working_hours_per_day*100).toFixed(0)}% "
+      return ret
+
+    return "--"
+
   userId: ->
     return Template.instance().data.user_id
 
@@ -456,7 +540,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     matrix = Template.instance().days_matrix.get()
 
     if (info=matrix[col_num]?[row_num])
-      return info.slot_is_taken
+      return info.type == 't'
     return false
 
   cellData: ->
@@ -471,17 +555,20 @@ Template.justdo_calendar_project_pane_user_view.helpers
   plannedHours: ->
     if @type == 'R' and @task.planned_seconds > 0
       seconds = @task.planned_seconds
+      overtime = false
+      ### the following is in case that someday we will want to display (config base) the time left
       if @task.executed_seconds
         seconds -= @task.executed_seconds
-      overtime = false
+
       if seconds < 0
         seconds = -seconds
         overtime = true
+      ###
       minutes = Math.floor(seconds/60)
       hours = Math.floor(minutes/60)
       mins = minutes - hours*60
       if ! overtime
-        return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H left]"
+        return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H planned]"
       return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H overtime]"
     return ""
 
