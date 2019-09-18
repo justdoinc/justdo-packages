@@ -1,2 +1,10 @@
 _.extend JustdoFiles.prototype,
-  _setupPublications: -> return
+  _setupPublications: -> 
+    @_publishTaskFiles()
+    return
+
+  _publishTaskFiles: ->
+    self = @
+    Meteor.publish null, ->
+      return self.tasks_files.find().cursor 
+    
