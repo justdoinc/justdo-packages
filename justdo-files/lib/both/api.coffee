@@ -1,9 +1,3 @@
-import Grid from "gridfs-stream"
-import { MongoInternals } from "meteor/mongo"
-import fs from "fs"
-
-console.log "HERE", Grid?, MongoInternals?, fs?
-
 _.extend JustdoFiles.prototype,
   _bothImmediateInit: ->
     # @_bothImmediateInit runs before the specific env's @_immediateInit()
