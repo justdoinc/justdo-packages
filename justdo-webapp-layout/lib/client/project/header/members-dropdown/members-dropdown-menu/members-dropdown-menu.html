@@ -35,7 +35,7 @@
     </ul>
     <div class="add-project-members">
       {{#if is_project_admin}}
-      <div class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2 border-top border-light">Invite New Members</div>
+      <div class="dropdown-header text-muted text-uppercase px-0 pb-2 border-top border-light">Invite New Members</div>
       <div class="add-members-comp d-flex align-items-center">
         <input type="text" class="form-control form-control-sm mr-2" placeholder="Member's Email">
         <button class="btn btn-primary btn-sm font-weight-bold text-uppercase" type="button">Invite</button>
@@ -46,7 +46,7 @@
 </template>
 
 <template name="admin_member_item">
-  <li class="member-item admin-item d-flex align-items-center justify-content-between" user-id="{{_id}}">
+  <li class="member-item admin-item d-flex align-items-center justify-content-between mb-2" user-id="{{_id}}">
     <div class="d-flex align-items-center">
       {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
