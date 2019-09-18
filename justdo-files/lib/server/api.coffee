@@ -51,6 +51,8 @@ _.extend JustdoFiles.prototype,
     TaskFiles.onAfterUpload = (file) ->
       console.log "Received file: "
       console.log file
+      console.log "Saving to mongodb..."
+
       writestream = gfs.createWriteStream
         filename: file.name
         content_type: file.mime
@@ -63,10 +65,8 @@ _.extend JustdoFiles.prototype,
         console.log "Saved file to mongodb"
 
     TaskFiles.interceptDownload = (http, file, versionName) ->
-      console.log "======================"
       console.log "User trying to download the file"
-      console.log file
-      # check if user is allowed to donwload the file
+      # XXX check if user is allowed to donwload the file
       gridfs_id = file.meta.gridfs_id
       if gridfs_id?
         readstream = gfs.createReadStream

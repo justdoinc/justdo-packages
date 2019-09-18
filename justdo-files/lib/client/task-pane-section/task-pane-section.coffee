@@ -18,11 +18,10 @@ Template.task_pane_justdo_files_task_pane_section_section.events
         console.log err
         # XX files with zero bytes
         return 
-      console.log "file uploaded"
+
       $("#file-input").val ""
       return
 
     upload.start()
-    console.log "Uploading......."
 
     return
