@@ -3,4 +3,4 @@ _.extend JustdoFiles,
 
   plugin_human_readable_name: "JustDo Files"
 
-  max_file_size: 209715200 # 200mb
+  max_file_size: 104857600 # 100mb

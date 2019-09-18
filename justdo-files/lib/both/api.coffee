@@ -33,9 +33,11 @@ _.extend JustdoFiles.prototype,
       collectionName: "justdo_tasks_files"
       allowClientCode: false
       downloadRoute: "/justdo-tasks-files/download"
-      onBeforeUpload: ->
-        console.log "onBeforeUpLoad!!!"
-
-        return true
+      onBeforeUpload: (file) ->
+        if file.size <= JustdoFiles.max_file_size
+          console.log "uploading..."
+          return true
+        
+        return "Maximum file size is 100MB"
 
     return
