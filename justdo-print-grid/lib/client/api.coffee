@@ -570,11 +570,11 @@ _.extend JustdoPrintGrid.prototype,
       domain: "project-right-navbar"
       position: 350
 
-    Template.print_dropdown.helpers
+    Template.print_menu_button.helpers
       printDropdownBottomItems: ->
         return JD.getPlaceholderItems("print-dropdown-bottom")
 
-    Template.print_dropdown.events
+    Template.print_menu_button.events
       "click .print-dropdown": ->
         path = getCurrentTaskPath()
         if path?

@@ -34,8 +34,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/errors-types.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/print-grid.sass", client);
-  api.addFiles("lib/client/print-dropdown.html", client);
-
   api.addFiles("lib/client/print-menu-button.html", client);
 
   // Uncomment only in packages that integrate with the main applications
@@ -45,7 +43,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/app-integration.coffee", client);
   // // Note: app-integration need to load last, so immediateInit procedures in
   // // the server will have the access to the apis loaded after the init.coffee
-  // // file. 
+  // // file.
   api.addAssets("media/icons.png", client);
 
   api.export("JustdoPrintGrid", client);
