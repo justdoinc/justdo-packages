@@ -1,3 +1,11 @@
 <template name="task_pane_justdo_files_task_pane_section_section">
-  Section Template
+  <div>
+    <div>
+      {{#each file in files}}
+        <a href="{{fileURL file}}">{{file.name}}</a>
+        <br>
+      {{/each}}
+    </div>
+    <input id="file-input" type="file">
+  </div>
 </template>
