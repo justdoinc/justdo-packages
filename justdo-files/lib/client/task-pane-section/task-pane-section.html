@@ -1,11 +1,20 @@
 <template name="task_pane_justdo_files_task_pane_section_section">
-  <div>
-    <div>
-      {{#each file in files}}
-        <a href="{{fileURL file}}">{{file.name}}</a>
-        <br>
-      {{/each}}
-    </div>
-    <input id="file-input" type="file">
-  </div>
+  {{>justdo_files_gallery}}
+
+  {{> justdo_files_uploader}}
+</template>
+
+<template name="justdo_files_gallery">
+  <ul class="files-gallery-list">
+    {{#each files}}
+      <li><a href="{{fileURL this}}" target="_blank">{{name}}</a> <span class="remove-file"><i class="fa fa-trash" aria-hidden="true"></i></span></li>
+    {{/each}}
+  </ul>
+</template>
+
+<template name="justdo_files_uploader">
+  <label for="file-input" class="custom-file-input">
+    <span>{{uploadMessage}}</span>
+  </label>
+  <input id="file-input" type="file" multiple />
 </template>

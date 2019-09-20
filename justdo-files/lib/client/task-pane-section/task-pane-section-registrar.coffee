@@ -43,27 +43,11 @@ _.extend JustdoFiles.prototype,
     justdo_files_section_position =
       lodash.findIndex task_pane_sections, (section) -> section.id == "item-activity"
 
-    Tracker.autorun =>
-      if APP.modules.project_page.curProj()?.isCustomFeatureEnabled(JustdoFiles.project_custom_feature_id)
-        if not _.any(task_pane_sections, (section) => section.id == "justdo-files")
-          if justdo_files_section_position != -1
-            # If the item-activity section exist, put the file manager after it
-            task_pane_sections.splice(justdo_files_section_position + 1, 0, section_definition)
-          else
-            task_pane_sections.push section_definition
-
-          APP.modules.project_page.invalidateItemsTypesSettings()
-
+    if not _.any(task_pane_sections, (section) => section.id == "justdo-files")
+      if justdo_files_section_position != -1
+        # If the item-activity section exist, put the file manager after it
+        task_pane_sections.splice(justdo_files_section_position + 1, 0, section_definition)
       else
-        index = -1
-        _.find task_pane_sections, (section, i) =>
-          if section.id == "justdo-files"
-            index = i
-            return true
-
-        if index != -1
-
-          task_pane_sections.splice index, 1
-          APP.modules.project_page.invalidateItemsTypesSettings()
+        task_pane_sections.push section_definition
 
     return

@@ -23,10 +23,12 @@ APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
 
-  options =
-    projects_collection: APP.collections.Projects
-    tasks_collection: APP.collections.Tasks
+  if env.JUSTDO_FILES_ENABLED is "true"
+    options =
+      projects_collection: APP.collections.Projects
+      tasks_collection: APP.collections.Tasks
+      max_file_size: parseInt(env.JUSTDO_FILES_MAX_FILESIZE, 10) or 104857600 # 104857600 == 100MB
 
-  APP.justdo_files = new JustdoFiles(options)
+    APP.justdo_files = new JustdoFiles(options)
 
   return

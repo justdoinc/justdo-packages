@@ -12,6 +12,11 @@ options_schema =
       optional: false
       bind_to_instance: true
 
+    max_file_size:
+      type: Number
+      optional: true
+      bind_to_instance: false
+
 # options_schema
 # ==============
 #
