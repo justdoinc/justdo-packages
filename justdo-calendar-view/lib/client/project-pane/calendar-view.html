@@ -1,21 +1,29 @@
 <template name="justdo_calendar_project_pane">
   <div>
+
+    <select class="calendar_view_project_selector">
+      <option value="*" data-content="Pending">Entire JustDo</option>
+      {{#each projectsInJustDo}}
+        <option value={{_id}} data-content="Pending">{{title}}</option>
+      {{/each}}
+    </select>
+
     Display Calendar for {{title_date}} :
     <i class="fa fa-fast-backward calendar-view-prev-week" aria-hidden="true"></i>
 <!--    <i class="fa fa-step-backward calendar-view-prev-day" aria-hidden="true"></i>-->
     <i class="fa fa-calendar-o calendar-view-back-to-today" aria-hidden="true"></i>
 <!--    <i class="fa fa-step-forward calendar-view-next-day" aria-hidden="true"></i>-->
     <i class="fa fa-fast-forward calendar-view-next-week" aria-hidden="true"></i>
-    <table width="100%">
+    <table class="calendar_view_main_table"  width="100%">
       <tr>
-        <th></th>
-        <th>prev</th>
+        <th width="40px"></th>
+        <th width="10px"></th>
         {{#each datesToDisplay}}
           <th width="15%">{{formatDate}}</th>
         {{/each}}
-        <th>next</th>
+        <th width="10px"></th>
       </tr>
-      {{> justdo_calendar_project_pane_user_view user_id=currentUserId dates_to_display=datesToDisplay}}
+      {{> justdo_calendar_project_pane_user_view user_id=currentUserId dates_to_display=datesToDisplay delivery_planner_project_id=deliveryPlannerProjectId}}
       {{#each allOtherUsers}}
         {{> justdo_calendar_project_pane_user_view user_id=this dates_to_display=datesToDisplay}}
       {{/each}}
@@ -34,20 +42,23 @@
           {{/with}}
         </td>
       {{/if}}
-      <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell">..</td>
+      <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell calendar_view_droppable">..</td>
       {{#each colNumbers}}
         {{#unless skipTD}}
             {{#if taskId}}
               {{#with cellData}}
-                <td class="highlight_on_mouse_in " date={{columnDate}} colspan={{span}}>
-                  <div class="calendar_task_cell calendar_view_draggable {{dimWhenPendingOwner}}" task_id="{{task._id}}" type={{type}}>
+                <td class="" date={{columnDate}} colspan={{span}}>
+                  <div class="calendar_task_cell  {{dimWhenPendingOwner}}" task_id="{{task._id}}" >
+                    {{#unless hideDuePendingOwner}}
+                      <i class="fa fa-map-marker calendar_view_draggable " task_id="{{task._id}}" task_users="{{task.users}}" type={{type}} aria-hidden="true"></i>
+                    {{/unless}}
                     {{#if startDateAfterDueDate}}
                       (!)
                     {{/if}}
                     {{#if startsBeforeView}}
                       &lt;&lt;
                     {{/if}}
-                    ({{type}}) {{plannedHours}}
+                    ({{type}}) {{plannedHours}} {{unassignedHours}}
                     [{{task.sequence_id}}] {{task.title}} ({{task.state}})
                     {{#if endsAfterView}}
                       &gt;&gt;
@@ -56,13 +67,13 @@
                 </td>
               {{/with}}
             {{else}}
-              <td class="calendar_view_droppable highlight_on_mouse_in {{markDaysOff}}" date={{columnDate}}>
+              <td class="calendar_view_droppable  {{markDaysOff}}" date={{columnDate}}>
                 ((--))
               </td>
             {{/if}}
         {{/unless}}
       {{/each}}
-      <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell">..</td>
+      <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell calendar_view_droppable">..</td>
     </tr>
   {{/each}}
   <!--  lets add a dropable line-->
@@ -70,7 +81,7 @@
     <td></td>
     <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell">..</td>
     {{#each colNumbers}}
-      <td class="calendar_view_droppable highlight_on_mouse_in {{markDaysOff}}" date={{columnDate}} >(({{bottomLine}}))</td>
+      <td class="calendar_view_droppable  {{markDaysOff}}" date={{columnDate}} >(({{bottomLine}}))</td>
     {{/each}}
     <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell">..</td>
   </tr>

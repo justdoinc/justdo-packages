@@ -4,39 +4,67 @@ config =
     show_flat_hours_per_day: false
     show_workload: true
 
-
+# setting the following 5 functions as global here to make it easy to call them from justdo_calendar_project_pane_user_view
+onSetScrollLeft = -> return
+onClickScrollLeft = -> return
+onSetScrollRight = -> return
+onClickScrollRight = -> return
+onUnsetScrollLeftRight = -> return
 
 setDragAndDrop = ->
   $('.calendar_view_draggable').draggable
-    cursor: 'move'
+    cursor: 'none'
     helper: 'clone'
-  $('.uni-date-formatter').draggable
-    cursor: 'move'
-    helper: 'clone'
+
 
   $('.calendar_view_droppable').droppable
     drop: (e, ui)->
-
       set_param = {}
-      row_user_id = e.target.parentElement.attributes.user_id.value
+      target_user_id = e.target.parentElement.attributes.user_id.value
       task_obj = APP.collections.Tasks.findOne({_id: ui.draggable[0].attributes.task_id.value})
+
       # calculating task owner as it is on the calendar
-      owner_id = task_obj.owner_id
+      calendar_view_owner_id = task_obj.owner_id
       if task_obj.pending_owner_id
-        owner_id = task_obj.pending_owner_id
+        calendar_view_owner_id = task_obj.pending_owner_id
+
+      changing_owner = false
+      if calendar_view_owner_id != target_user_id
+        changing_owner = true
 
       # for changing followups or regular tasks (but not private followup), we also allow to change the owner
-      if row_user_id != owner_id and
-          (ui.draggable[0].attributes.type.value == 'F' or ui.draggable[0].attributes.type.value == 'R')
-
-        if Meteor.userId() == row_user_id
-          set_param['owner_id'] = row_user_id
+      if changing_owner and (ui.draggable[0].attributes.type.value == 'F' or ui.draggable[0].attributes.type.value == 'R')
+        if Meteor.userId() == target_user_id
+          set_param['owner_id'] = target_user_id
           set_param['pending_owner_id'] = null
         #if we return a task with pending owner to prev owner
-        else if task_obj.owner_id == row_user_id and task_obj.pending_owner_id?
+        else if task_obj.owner_id == target_user_id and task_obj.pending_owner_id?
           set_param['pending_owner_id'] = null
         else
-          set_param['pending_owner_id'] = row_user_id
+          set_param['pending_owner_id'] = target_user_id
+
+      # if we change owner of a regular task, we need to transfer the planned hours to the target owner,
+      # and assign all unassigned hours to the target owner
+      if changing_owner and ui.draggable[0].attributes.type.value == 'R'
+        original_owner_planning_time = 0 + task_obj["p:rp:b:work-hours_p:b:user:#{calendar_view_owner_id}"]
+
+        record =
+          delta: - original_owner_planning_time
+          resource_type: "b:user:#{calendar_view_owner_id}"
+          stage: "p"
+          source: "jd-calendar-view-plugin"
+          task_id: task_obj._id
+        APP.resource_planner.rpAddTaskResourceRecord record
+
+        record.delta = original_owner_planning_time
+        record.resource_type = "b:user:#{target_user_id}"
+        APP.resource_planner.rpAddTaskResourceRecord record
+
+        if (unassigned_hours = task_obj['p:rp:b:unassigned-work-hours'])
+          record.delta = unassigned_hours
+          APP.resource_planner.rpAddTaskResourceRecord record
+          set_param['p:rp:b:unassigned-work-hours'] = 0
+
 
       if ui.draggable[0].attributes.class.value.indexOf("calendar_view_draggable")>=0
         #dealing with Followups:
@@ -83,7 +111,43 @@ setDragAndDrop = ->
           APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
             $set: set_param
           )
+      $(".highlight_calendar_view_specific_target").removeClass("highlight_calendar_view_specific_target")
       return #end of drop
+
+    accept: (draggable)->
+      target_user = @parentElement.getAttribute('user_id')
+      task_users = $(draggable).attr("task_users").split(",")
+      return task_users.indexOf(target_user) > -1
+
+    activate: (e, ui)->
+      if not e.target.classList.contains("calendar_view_scroll_cell")
+        e.target.classList.add("highlight_calendar_view_droppable")
+      return
+
+    deactivate: (e, ui)->
+      if not e.target.classList.contains("calendar_view_scroll_cell")
+        e.target.classList.remove("highlight_calendar_view_droppable")
+      return
+
+    over: (e, ui)->
+      if e.target.classList.contains("calendar_view_scroll_left_cell")
+        onSetScrollLeft()
+        return
+      if e.target.classList.contains("calendar_view_scroll_right_cell")
+        onSetScrollRight()
+        return
+      e.target.classList.add("highlight_calendar_view_specific_target")
+      return
+
+    out: (e, ui)->
+      if e.target.classList.contains("calendar_view_scroll_left_cell")
+        onUnsetScrollLeftRight()
+        return
+      if e.target.classList.contains("calendar_view_scroll_right_cell")
+        onUnsetScrollLeftRight()
+        return
+      e.target.classList.remove("highlight_calendar_view_specific_target")
+      return
 
   return
 
@@ -91,6 +155,9 @@ justdo_level_workdays = {} #intentionally making this one a non-reactive var, ot
 
 Template.justdo_calendar_project_pane.onCreated ->
   self = @
+  @delivery_planner_project_id = new ReactiveVar ("*") # '*' for the entire JustDo
+
+  @all_other_users = new ReactiveVar([])
 
   @view_start_date = new ReactiveVar
   #calculate the first day to display based on the beginning of the week of the user
@@ -112,37 +179,49 @@ Template.justdo_calendar_project_pane.onCreated ->
   #scrolling left and right control flow
   @scroll_left_right_handler = null
 
-  @setToPrevWeek = ->
-    date = moment(@view_start_date.get())
+  @setToPrevWeek = (keep_scroll_handler)->
+    date = moment(self.view_start_date.get())
     date.subtract(7, 'days');
-    @view_start_date.set(date)
+    self.view_start_date.set(date)
+    if !keep_scroll_handler and self.scroll_left_right_handler
+      clearInterval(self.scroll_left_right_handler)
     return
 
-  @setToNextWeek = ->
-    date = moment(@view_start_date.get())
+  onClickScrollLeft = @setToPrevWeek
+
+  @setToNextWeek = (keep_scroll_handler)->
+    date = moment(self.view_start_date.get())
     date.add(7, 'days');
-    @view_start_date.set(date)
+    self.view_start_date.set(date)
+    if !keep_scroll_handler and self.scroll_left_right_handler
+      clearInterval(self.scroll_left_right_handler)
     return
 
-  @onSetScrollLeft = ->
+  onClickScrollRight = @setToNextWeek
+
+  onSetScrollLeft = ->
+    if self.scroll_left_right_handler
+      clearInterval(self.scroll_left_right_handler)
     self.scroll_left_right_handler = setInterval( =>
-      self.setToPrevWeek()
+      self.setToPrevWeek(true)
       return
     ,
-      2000
+      1500
     )
     return
 
-  @onSetScrollRight = ->
+  onSetScrollRight = ->
+    if self.scroll_left_right_handler
+      clearInterval(self.scroll_left_right_handler)
     self.scroll_left_right_handler = setInterval( =>
-      self.setToNextWeek()
+      self.setToNextWeek(true)
       return
     ,
-      2000
+      1500
     )
     return
 
-  @onUnsetScrollLeftRight = ->
+  onUnsetScrollLeftRight = ->
     if self.scroll_left_right_handler
       clearInterval(self.scroll_left_right_handler)
       self.scroll_left_right_handler = null
@@ -172,8 +251,16 @@ Template.justdo_calendar_project_pane.helpers
     return Meteor.userId()
 
   allOtherUsers: ->
-    return _.map Meteor.users.find({_id: {$ne: Meteor.userId()}},{fields: {_id:1}}).fetch(), (u)->
-     return u._id
+    if Template.instance().delivery_planner_project_id.get() == "*"
+      return _.map Meteor.users.find({_id: {$ne: Meteor.userId()}},{fields: {_id:1}}).fetch(), (u)-> u._id
+
+    return Template.instance().all_other_users.get()
+
+  projectsInJustDo: ->
+    return APP.collections.Tasks.find({
+        "p:dp:is_project": true
+        project_id: APP.modules.project_page.project.get().id
+      }).fetch()
 
   datesToDisplay: ->
     dates = []
@@ -182,6 +269,9 @@ Template.justdo_calendar_project_pane.helpers
       dates.push(d.format("YYYY-MM-DD"))
       d.add(1,"days")
     return dates
+
+  deliveryPlannerProjectId: ->
+    return Template.instance().delivery_planner_project_id.get()
 
   formatDate: ->
     return moment(@).format("ddd, Do")
@@ -211,6 +301,24 @@ Template.justdo_calendar_project_pane.events
     Template.instance().resetFirstDay()
     return
 
+  "change .calendar_view_project_selector": ->
+    project = $(".calendar_view_project_selector").val()
+    Template.instance().delivery_planner_project_id.set(project)
+
+    if project == "*"
+      Template.instance().all_other_users.set(
+        _.map Meteor.users.find({_id: {$ne: Meteor.userId()}},{fields: {_id:1}}).fetch(), (u)-> u._id
+      )
+    else
+      other_users = []
+      _.map APP.collections.Tasks.findOne(project).users, (u)->
+        if u != Meteor.userId()
+          other_users.push u
+        return
+      Template.instance().all_other_users.set(other_users)
+
+    return
+
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
   @days_matrix = new ReactiveVar([])
@@ -218,6 +326,15 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
   @autorun =>
     data = Template.currentData()
+    include_tasks = []
+    if data.delivery_planner_project_id? and data.delivery_planner_project_id != "*"
+      path = APP.modules.project_page.gridData().getCollectionItemIdPath(data.delivery_planner_project_id)
+      gc = APP.modules.project_page.mainGridControl()
+      gc._grid_data.each path, (section, item_type, item_obj, path) ->
+        include_tasks.push item_obj._id
+        return
+
+
 
     #days_matrix is eventually a matrix that represents the table that we are going to display,
     # where each column represents a day and each cell holds a task in such a way that we could later
@@ -240,7 +357,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
       #regular followup date
       {follow_up: {$in: data.dates_to_display}},
       #private followup date
-      {priv:follow_up: {$in: data.dates_to_display}},
+      {'priv:follow_up': {$in: data.dates_to_display}},
       #due date in between the dates
       {$and: [
         end_date: {$gte: first_date_to_display},
@@ -264,9 +381,17 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         {"#{planned_seconds_field}": {$gt: 0}} #user has planned hours on the task
       ]
 
+
+
+    project_part =
+      project_id: APP.modules.project_page.project.get().id
+
     query_parts = []
     query_parts.push {$or: dates_part}
     query_parts.push {$or: owner_part}
+    query_parts.push project_part
+    if include_tasks.length > 0
+      query_parts.push {_id: $in: include_tasks}
 
     options =
       fields:
@@ -284,6 +409,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         "#{planned_seconds_field}": 1
         "#{executed_seconds_field}": 1
         "p:rp:b:unassigned-work-hours": 1
+        "users": 1
 
     self.dates_workload.set({})
     APP.collections.Tasks.find({$and: query_parts},options).forEach (task)->
@@ -297,6 +423,8 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         end_date: task.end_date
         start_date: task.start_date
         state: task.state
+        unassigned_hours: task["p:rp:b:unassigned-work-hours"]
+        users: task.users
 
       #deal with  regular followups
 
@@ -405,6 +533,9 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
                                       # based on flat distribution of planned hours over workdays.
                                       # We clear it and repopulate it when working on the dates_workload
       flatHoursPerDay = (row_data)->
+        if row_data.task.planned_seconds == undefined
+          row_data.task.planned_seconds = 0
+
         if task_to_flat_hours_per_day[row_data.task._id]
           return task_to_flat_hours_per_day[row_data.task._id]
         start_date = moment(row_data.task.start_date)
@@ -459,7 +590,6 @@ Template.justdo_calendar_project_pane_user_view.onRendered ->
   return
 
 Template.justdo_calendar_project_pane_user_view.helpers
-
   bottomLine: ->
     column_date = Template.instance().data.dates_to_display[this]
     workload = Template.instance().dates_workload.get()
@@ -484,6 +614,11 @@ Template.justdo_calendar_project_pane_user_view.helpers
     if @task?.pending_owner_id? and @task.owner_id == Template.instance().data.user_id
           return "ownership_transfer_in_progress"
     return ""
+
+  hideDuePendingOwner: ->
+    if @task?.pending_owner_id? and @task.owner_id == Template.instance().data.user_id
+      return true
+    return false
 
   rowNumbers: ->
     days_matrix = Template.instance().days_matrix.get()
@@ -552,6 +687,15 @@ Template.justdo_calendar_project_pane_user_view.helpers
   startDateAfterDueDate: ->
     return @start_date_after_due_date
 
+  unassignedHours: ->
+    if @type == 'R' and @task.unassigned_hours > 0 and @task.owner_id == Template.instance().data.user_id
+      seconds = @task.unassigned_hours
+      minutes = Math.floor(seconds/60)
+      hours = Math.floor(minutes/60)
+      mins = minutes - hours*60
+      return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H unassigned]"
+    return ""
+
   plannedHours: ->
     if @type == 'R' and @task.planned_seconds > 0
       seconds = @task.planned_seconds
@@ -585,35 +729,43 @@ Template.justdo_calendar_project_pane_user_view.events
       return
     return
 
-  "mouseover .highlight_on_mouse_in" : (e, tpl)->
-    e.target.style.backgroundColor = "lightyellow"
+  "mouseover .calendar_task_cell" : (e, tpl)->
+    if (elm = $(e.target).find(".fa-map-marker")[0])
+      elm.style.visibility = 'visible'
     return
 
-  "mouseout .highlight_on_mouse_in" : (e, tpl)->
-    e.target.style.backgroundColor = ""
+  "mouseout .calendar_task_cell" : (e, tpl)->
+    if not e.relatedTarget.classList.contains("fa-map-marker")
+      if (elm = $(e.target).find(".fa-map-marker")[0])
+        elm.style.visibility = 'hidden'
     return
 
-  #todo: there is a bug here when the mouse is moving out or in left/right cell, from time to time
-  # it throws an error.
+  ### for now I think that it's better not to have the hover events -AL
   "mouseover .calendar_view_scroll_left_cell" : (e, tpl)->
-    if (f = tpl.view?.parentView?.parentView?.parentView?.parentView?.templateInstance().onSetScrollLeft)
-      f()
+    onSetScrollLeft()
     return
 
   "mouseout .calendar_view_scroll_left_cell" : (e, tpl)->
-    if( f = tpl.view?.parentView?.parentView?.parentView?.parentView?.templateInstance().onUnsetScrollLeftRight)
-      f()
+    onUnsetScrollLeftRight()
     return
 
   "mouseover .calendar_view_scroll_right_cell" : (e, tpl)->
-    if(f = tpl.view?.parentView?.parentView?.parentView?.parentView?.templateInstance().onSetScrollRight)
-      f()
+    onSetScrollRight()
     return
 
   "mouseout .calendar_view_scroll_right_cell" : (e, tpl)->
-    if (f = tpl.view?.parentView?.parentView?.parentView?.parentView?.templateInstance().onUnsetScrollLeftRight)
-      f()
+    onUnsetScrollLeftRight()
     return
+  ###
+
+  "click .calendar_view_scroll_left_cell" : (e, tpl)->
+    onClickScrollLeft()
+    return
+
+  "click .calendar_view_scroll_right_cell" : (e, tpl)->
+    onClickScrollRight()
+    return
+
 
 
 

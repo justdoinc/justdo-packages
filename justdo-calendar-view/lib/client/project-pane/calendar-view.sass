@@ -1,6 +1,9 @@
 .tab-justdo-calendar-container
   overflow: auto
 
+.calendar_view_main_table
+  table-layout: fixed
+
 .calendar_task_cell
   background: #D2E0E6
   margin-top: 1px
@@ -8,6 +11,8 @@
   margin-left: 1px
   margin-right: 1px
   white-space: nowrap
+  text-overflow: ellipsis
+  overflow: hidden
 
 .calendar_view_scroll_cell
   background: #c1e2b3
@@ -18,3 +23,13 @@
 
 .calendar_view_mark_days_off
   background: #dfdfdf
+
+.highlight_calendar_view_droppable
+  background: greenyellow
+
+.highlight_calendar_view_specific_target
+  background: red
+
+.calendar_view_draggable
+  visibility: hidden
+
