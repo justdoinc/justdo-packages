@@ -9,7 +9,7 @@ APP.executeAfterAppLibCode ->
     human_description: "Change Font Style"
 
     template:
-      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#bold"/></svg>"""
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#jd-a"/></svg>"""
 
     op: ->
       task = APP.modules.project_page.gridControl().getCurrentPathObj()
