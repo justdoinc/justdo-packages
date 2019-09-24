@@ -132,32 +132,3 @@ Package.onUse(function (api) {
 
   api.export('GridControl');
 });
-
-Package.onTest(function(api) {
-  api.versionsFrom('1.1.0.2');
-
-  api.use('tinytest', both);
-  api.use('coffeescript', both);
-  api.use('mongo', both);
-  api.use('tracker', both);
-  api.use('meteorspark:test-helpers@0.2.0', both);
-  api.use('meteorspark:logger@0.3.0', both);
-
-  api.use('aldeed:simple-schema@1.3.1', both);
-  api.use('aldeed:collection2@2.3.2', both);
-
-  api.use('stem-capital:slick-grid', client);
-  api.use('stem-capital:grid-data-seeder', server);
-  api.use('stem-capital:grid-data', client);
-  api.use('stem-capital:grid-control', both);
-
-  api.addFiles('unittest/setup/both.coffee', client, {bare: true});
-  api.addFiles('unittest/setup/both.coffee', server);
-  api.addFiles('unittest/setup/server.coffee', server);
-  api.addFiles('unittest/setup/client.coffee', client);
-  api.addFiles('unittest/client.coffee', client);
-
-  // Just so we can use it from the console for debugging...
-  api.export('GridControl');
-  api.export('TestCol');
-});
