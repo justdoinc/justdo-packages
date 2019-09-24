@@ -430,7 +430,7 @@ _.extend GridData.prototype,
 
     @invalidateOnGridDataCoreStructureChange()
 
-    same_tick_cache_key_id = "grid-data::getAllCollectionItemIdPaths::#{item_id}"
+    same_tick_cache_key_id = "grid-data::getAllCollectionItemIdPaths::#{@_grid_data_obj_uid}::#{item_id}"
     if JustdoHelpers.sameTickCacheExists(same_tick_cache_key_id)
       return JustdoHelpers.sameTickCacheGet(same_tick_cache_key_id)
 

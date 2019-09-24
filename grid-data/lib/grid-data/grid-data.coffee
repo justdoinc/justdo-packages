@@ -30,6 +30,8 @@ GridData = (collection, options) ->
 
   @_on_destroy_procedures = []
 
+  @_grid_data_obj_uid = Random.id()
+
   @logger = Logger.get("grid-data")
 
   @collection = collection
