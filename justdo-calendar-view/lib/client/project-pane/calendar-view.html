@@ -1,34 +1,39 @@
 <template name="justdo_calendar_project_pane">
-  <div>
 
-    <select class="calendar_view_project_selector">
-      <option value="*" data-content="Pending">Entire JustDo</option>
-      {{#each projectsInJustDo}}
-        <option value={{_id}} data-content="Pending">{{title}}</option>
-      {{/each}}
-    </select>
+    <div class="calendar_view_header">
+      <select class="calendar_view_project_selector">
+        <option value="*" data-content="Pending">Entire JustDo</option>
+        {{#each projectsInJustDo}}
+          <option value={{_id}} data-content="Pending">{{title}}</option>
+        {{/each}}
+      </select>
+      <div class="calendar_view_date_selector">
+        Display Calendar for {{title_date}}
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default calendar-view-prev-week"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg></button>
+          <button type="button" class="btn btn-default calendar-view-prev-day"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"/></svg></button>
+          <button type="button" class="btn btn-default calendar-view-back-to-today">This Week</button>
+          <button type="button" class="btn btn-default calendar-view-next-day"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"/></svg></button>
+          <button type="button" class="btn btn-default calendar-view-next-week"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg></button>
+        </div>
+      </div>
+    </div>
 
-    Display Calendar for {{title_date}} :
-    <i class="fa fa-fast-backward calendar-view-prev-week" aria-hidden="true"></i>
-<!--    <i class="fa fa-step-backward calendar-view-prev-day" aria-hidden="true"></i>-->
-    <i class="fa fa-calendar-o calendar-view-back-to-today" aria-hidden="true"></i>
-<!--    <i class="fa fa-step-forward calendar-view-next-day" aria-hidden="true"></i>-->
-    <i class="fa fa-fast-forward calendar-view-next-week" aria-hidden="true"></i>
+
     <table class="calendar_view_main_table"  width="100%">
       <tr>
-        <th width="40px"></th>
-        <th width="10px"></th>
+        <th class="calendar_view_user"></th>
+        <th class="calendar_view_move"></th>
         {{#each datesToDisplay}}
-          <th width="15%">{{formatDate}}</th>
+          <th class="calendar_view_date">{{{formatDate}}}</th>
         {{/each}}
-        <th width="10px"></th>
+        <th class="calendar_view_move"></th>
       </tr>
       {{> justdo_calendar_project_pane_user_view user_id=currentUserId dates_to_display=datesToDisplay delivery_planner_project_id=deliveryPlannerProjectId}}
       {{#each allOtherUsers}}
         {{> justdo_calendar_project_pane_user_view user_id=this dates_to_display=datesToDisplay}}
       {{/each}}
     </table>
-  </div>
 </template>
 
 
@@ -36,30 +41,42 @@
   {{#each rowNumbers}}
     <tr user_id={{userId}}>
       {{#if firstRow}}
-        <td rowspan={{numberOfRows}}>
+        <td class="calendar_table_user" rowspan={{numberOfRows}}>
           {{#with userObj}}
             {{> justdo_avatar}}
           {{/with}}
         </td>
       {{/if}}
-      <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell calendar_view_droppable">..</td>
+      <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell calendar_view_droppable">
+        <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg>
+      </td>
       {{#each colNumbers}}
         {{#unless skipTD}}
             {{#if taskId}}
               {{#with cellData}}
-                <td class="" date={{columnDate}} colspan={{span}}>
-                  <div class="calendar_task_cell  {{dimWhenPendingOwner}}" task_id="{{task._id}}" >
-                    {{#unless hideDuePendingOwner}}
-                      <i class="fa fa-map-marker calendar_view_draggable " task_id="{{task._id}}" task_users="{{task.users}}" type={{type}} aria-hidden="true"></i>
-                    {{/unless}}
+                <td class="calendar_table_cell" date={{columnDate}} colspan={{span}}>
+                  <div class="calendar_task_cell calendar_view_draggable {{dimWhenPendingOwner}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
+                    <div class="calendar_task_info">
+                      <div class="calendar_task_type">{{type}}</div>
+                      {{#if unassignedHours}}
+                        <div class="calendar_task_unassigned_hours">{{unassignedHours}}</div>
+                      {{/if}}
+                      {{#if plannedHours}}
+                        <div class="calendar_task_planned_hours">{{plannedHours}}</div>
+                      {{/if}}
+                    </div>
+                    <!-- {{#unless hideDuePendingOwner}}
+                      <i class="fa fa-map-marker calendar_view_draggable" task_id="{{task._id}}"aria-hidden="true"></i>
+                    {{/unless}} -->
                     {{#if startDateAfterDueDate}}
                       (!)
                     {{/if}}
                     {{#if startsBeforeView}}
                       &lt;&lt;
                     {{/if}}
-                    ({{type}}) {{plannedHours}} {{unassignedHours}}
-                    [{{task.sequence_id}}] {{task.title}} ({{task.state}})
+                    <div class="calendar_task_id">#{{task.sequence_id}}</div>
+                    <div class="calendar_task_title">{{task.title}}</div>
+                    <!-- ({{task.state}}) -->
                     {{#if endsAfterView}}
                       &gt;&gt;
                     {{/if}}
@@ -67,23 +84,26 @@
                 </td>
               {{/with}}
             {{else}}
-              <td class="calendar_view_droppable  {{markDaysOff}}" date={{columnDate}}>
-                ((--))
-              </td>
+              <td class="calendar_table_cell calendar_view_droppable  {{markDaysOff}}" date={{columnDate}}></td>
             {{/if}}
         {{/unless}}
       {{/each}}
-      <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell calendar_view_droppable">..</td>
+      <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell calendar_view_droppable">
+        <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg>
+      </td>
     </tr>
   {{/each}}
   <!--  lets add a dropable line-->
   <tr user_id={{userId}}>
-    <td></td>
-    <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell">..</td>
+    <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell">
+      <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg>
+    </td>
     {{#each colNumbers}}
-      <td class="calendar_view_droppable  {{markDaysOff}}" date={{columnDate}} >(({{bottomLine}}))</td>
+      <td class="calendar_view_resources calendar_view_droppable {{markDaysOff}}" date={{columnDate}} >{{bottomLine}}</td>
     {{/each}}
-    <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell">..</td>
+    <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell">
+      <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg>
+    </td>
   </tr>
 
 </template>

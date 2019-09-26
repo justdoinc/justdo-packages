@@ -1,35 +1,172 @@
 .tab-justdo-calendar-container
   overflow: auto
 
+.calendar_view_header
+  padding: 1rem
+  border-bottom: 1px solid #E5E9ED
+  display: flex
+  justify-content: space-between
+
+.calendar_view_project_selector
+  width: 160px
+  text-transform: uppercase
+  font-weight: bold
+  background-color: white
+
+.calendar_view_date_selector
+  font-size: 14px
+  font-weight: bold
+  display: flex
+  align-items: center
+
+.calendar_view_date_selector button
+  display: flex
+  align-items: center
+  height: 30px
+  padding: 0px 8px
+  font-weight: bold
+
+
+.calendar_view_date_icon
+  stroke: currentColor
+  stroke-width: 2
+  stroke-linecap: round
+  stroke-linejoin: round
+  fill: none
+  width: 20px
+  height: 20px
+  padding: 2px
+  transition: all 0.2s linear
+
+.btn-group
+  margin-left: 1.5rem
+
+.calendar_view_main_table tr
+  border-bottom: 1px dashed #E5E9ED
+  transition: background-color 0.2s linear
+  &.highlight
+    background-color: rgba(9, 89, 224, 0.04)
+
+.calendar_view_main_table th
+  padding: 1rem 0
+
+.calendar_view_main_table td
+  padding: 0.6rem
+  border-left: 1px dashed #E5E9ED
+
+.calendar_view_user
+  width: 50px
+
+.calendar_table_user
+  text-align: center
+  .justdo-avatar
+    transition: all 0.25s
+    &.highlight
+      border: 2px solid white
+      box-shadow: 0 0 0 0.2rem rgb(38, 143, 255)
+
+.calendar_view_move
+  width: 18px
+
+.calendar_view_resources
+  font-size: 11px
+  font-weight: bold
+  color: #0349bf
+  text-align: right
+
+.calendar_view_date
+  width: 15%
+  text-align: center
+  color: #525F7F
+  font-size: 12px
+  .week_day
+    text-transform: uppercase
+    margin-right: 4px
+    opacity: 0.6
+  & + &
+    border-left: 1px dashed #E5E9ED
+
 .calendar_view_main_table
   table-layout: fixed
 
 .calendar_task_cell
-  background: #D2E0E6
-  margin-top: 1px
-  margin-bottom: 1px
-  margin-left: 1px
-  margin-right: 1px
+  background-color: #0A59E0
+  border-radius: 2px
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25)
+  white-space: nowrap
+  text-overflow: ellipsis
+  padding: 0.6rem
+  color: white
+  font-weight: bold
+  position: relative
+  display: flex
+  cursor: move
+  &:hover
+    .calendar_task_planned_hours
+      opacity: 1
+      visibility: visible
+
+.calendar_task_info
+  position: absolute
+  font-size: 10px
+  text-transform: uppercase
+  top: -7px
+
+.calendar_task_type,
+.calendar_task_unassigned_hours,
+.calendar_task_planned_hours
+  border: 1px solid #000000
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12)
+  border-radius: 2px
+  background-color: white
+  color: black
+  padding: 0 0.2rem
+  display: inline-block
+
+.calendar_task_planned_hours
+  opacity: 0
+  visibility: hidden
+  transition: opacity 0.35s
+
+.calendar_task_id
+  opacity: 0.7
+  margin-right: 4px
+
+.calendar_task_title
   white-space: nowrap
   text-overflow: ellipsis
   overflow: hidden
 
 .calendar_view_scroll_cell
-  background: #c1e2b3
-  cursor: zoom-in
+  background: rgba(56, 87, 130, 0.03)
+  padding: 0px !important
+
+  .calendar_view_date_icon
+    width: 18px
+    height: 18px
+    opacity: 0.4
+    display: block
+  &:hover
+    .calendar_view_date_icon
+      opacity: 1
+
+
+.calendar_view_scroll_left_cell
+  cursor: w-resize
+
+.calendar_view_scroll_right_cell
+  cursor: e-resize
 
 .ownership_transfer_in_progress
   color: lightslategray
 
 .calendar_view_mark_days_off
-  background: #dfdfdf
+  background-color: rgba(230, 233, 238, 0.4)
 
 .highlight_calendar_view_droppable
-  background: greenyellow
+  background-color: greenyellow
 
 .highlight_calendar_view_specific_target
-  background: red
+  background-color: red
 
 .calendar_view_draggable
-  visibility: hidden
-

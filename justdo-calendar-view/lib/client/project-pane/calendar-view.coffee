@@ -15,9 +15,13 @@ setDragAndDrop = ->
   $('.calendar_view_draggable').draggable
     cursor: 'none'
     helper: 'clone'
-
+    start: (e, ui) ->
+      # To avoid size changes while dragging set the width of ui.helper equal to the width of an active task
+      $(ui.helper).width $(event.target).closest(".calendar_task_cell").width()
+      return
 
   $('.calendar_view_droppable').droppable
+    tolerance: 'pointer'
     drop: (e, ui)->
       set_param = {}
       target_user_id = e.target.parentElement.attributes.user_id.value
@@ -274,7 +278,7 @@ Template.justdo_calendar_project_pane.helpers
     return Template.instance().delivery_planner_project_id.get()
 
   formatDate: ->
-    return moment(@).format("ddd, Do")
+    return "<span class='week_day'>" + moment(@).format("ddd") + "</span>" + moment(@).format("Do")
 
 Template.justdo_calendar_project_pane.events
   "click .calendar-view-prev-week": ->
@@ -317,6 +321,23 @@ Template.justdo_calendar_project_pane.events
         return
       Template.instance().all_other_users.set(other_users)
 
+    return
+
+  # !!! Сode needs to be refactored in the next update
+  "mouseover .calendar_view_main_table tr": (e, tmpl) ->
+    $(".justdo-avatar").removeClass "highlight"
+    $("tr").removeClass "highlight"
+    focused_tr = $(e.target).closest "tr"
+    focused_user_id = $($(focused_tr)[0]).attr "user_id"
+    focused_users_tr = $("[user_id=" + focused_user_id + "]")
+    focused_users_tr.addClass "highlight"
+    $(focused_users_tr[0]).find(".justdo-avatar").addClass "highlight"
+    return
+
+  # !!! Сode needs to be refactored in the next update
+  "mouseleave .calendar_view_main_table tr": (e, tmpl) ->
+    $(".justdo-avatar").removeClass "highlight"
+    $("tr").removeClass "highlight"
     return
 
 Template.justdo_calendar_project_pane_user_view.onCreated ->
@@ -643,10 +664,11 @@ Template.justdo_calendar_project_pane_user_view.helpers
 
   numberOfRows: ->
     days_matrix = Template.instance().days_matrix.get()
-    ret = 1 # we start with 1 because we need at least one raw for the user name
+    ret = 1 # we start with 1 because we need at least one row for the user name
     for i in [0..Template.instance().data.dates_to_display.length]
       if days_matrix[i]?.length > ret
         ret = days_matrix[i].length
+    ret += 1 # we need one more row for resources
     return ret
 
 
@@ -693,7 +715,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
       minutes = Math.floor(seconds/60)
       hours = Math.floor(minutes/60)
       mins = minutes - hours*60
-      return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H unassigned]"
+      return "#{hours}:#{JustdoHelpers.padString(mins, 2)} H unassigned"
     return ""
 
   plannedHours: ->
@@ -712,8 +734,8 @@ Template.justdo_calendar_project_pane_user_view.helpers
       hours = Math.floor(minutes/60)
       mins = minutes - hours*60
       if ! overtime
-        return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H planned]"
-      return "[#{hours}:#{JustdoHelpers.padString(mins, 2)} H overtime]"
+        return "#{hours}:#{JustdoHelpers.padString(mins, 2)} H planned"
+      return "#{hours}:#{JustdoHelpers.padString(mins, 2)} H overtime"
     return ""
 
 
@@ -765,9 +787,3 @@ Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_view_scroll_right_cell" : (e, tpl)->
     onClickScrollRight()
     return
-
-
-
-
-
-
