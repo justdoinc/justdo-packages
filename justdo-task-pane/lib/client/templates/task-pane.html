@@ -7,16 +7,18 @@
       {{> task_pane_header}}
     </div>
     <div class="task-pane-content-container">
-      <div class="task-pane-content">
-        <div class="task-pane-section
-          {{#if toolbar_selected_section_id}}
-            task-pane-section-{{toolbar_selected_section_id}}
-          {{/if}}">
-          {{#if $neq toolbar_sections_count 0}}
-            {{> task_pane_section_content}}
-          {{else}}
-            <div class="task-pane-no-content"></div>
-          {{/if}}
+      <div class="task-pane-content-cell-wrapper">
+        <div class="task-pane-content">
+          <div class="task-pane-section
+            {{#if toolbar_selected_section_id}}
+              task-pane-section-{{toolbar_selected_section_id}}
+            {{/if}}">
+            {{#if $neq toolbar_sections_count 0}}
+              {{> task_pane_section_content}}
+            {{else}}
+              <div class="task-pane-no-content"></div>
+            {{/if}}
+          </div>
         </div>
       </div>
     </div>
