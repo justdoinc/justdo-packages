@@ -142,6 +142,11 @@ _.extend JustdoHelpers,
         # Do nothing if closed
         return
 
+      if not $connected_element.is(":visible")
+        # If the connected element isn't visible, attempts to reposition the bound element
+        # will cause it to be removed from the screen
+        return
+
       options.positionUpdateHandler($connected_element)
 
     documentMousedownHandler = (e) ->
