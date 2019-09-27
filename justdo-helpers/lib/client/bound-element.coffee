@@ -188,7 +188,9 @@ _.extend JustdoHelpers,
       $close_button.click (e) ->
         e.stopPropagation()
 
-        close(e)
+        close() # We don't pass the e here intentionally, it is a click event, and we have a special treatment for click events that will cause the close() to not closing (see close() implementation)
+
+        return
 
     #
     # Helpers
