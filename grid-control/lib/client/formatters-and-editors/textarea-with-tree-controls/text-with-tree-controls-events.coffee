@@ -93,13 +93,14 @@ _.extend PACK.Formatters.textWithTreeControls,
       args: ['click', '.grid-tree-control-user']
       handler: (e) ->
         event_row = $(e.target).closest(".slick-row")
+        event_row_id = @getEventRow(e)
         event_item = @getEventItem(e)
         event_path = @getEventPath(e)
 
         save_and_exit_not_prevented = @saveAndExitActiveEditor()
 
         if save_and_exit_not_prevented
-          @activateRow(@getEventRow(e))
+          @activateRow(event_row_id)
 
           event_item = @_grid_data.extendObjForeignKeys(event_item, {foreign_keys: ["owner_id", "pending_owner_id"], in_place: false})
 
