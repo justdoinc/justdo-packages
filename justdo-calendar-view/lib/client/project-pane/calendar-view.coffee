@@ -286,7 +286,9 @@ Template.justdo_calendar_project_pane.events
     return
 
   "click .calendar-view-prev-day": ->
-    Template.instance().setToNextWeek()
+    date = moment(Template.instance().view_start_date.get())
+    date.subtract(1, 'days');
+    Template.instance().view_start_date.set(date)
     return
 
   "click .calendar-view-next-day": ->
