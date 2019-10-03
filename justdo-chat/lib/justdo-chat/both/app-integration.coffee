@@ -19,6 +19,19 @@
 # this package, or even if you use them inside the constructor, you need to wait for
 # them to be ready, and it is better done here.
 
+_justdo_chat_dep = new Tracker.Dependency()
+APP.getJustdoChatObject = ->
+  _justdo_chat_dep.depend()
+
+  return APP.justdo_chat
+
+setJustdoChatObject = (justdo_chat) ->
+  APP.justdo_chat = justdo_chat
+
+  _justdo_chat_dep.changed()
+
+  return
+
 APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
@@ -35,7 +48,7 @@ APP.getEnv (env) ->
   if Meteor.isClient
     options.hash_requests_handler = APP.hash_requests_handler
 
-  APP.justdo_chat = new JustdoChat options
+  setJustdoChatObject new JustdoChat options
 
   if Meteor.isClient
     APP.justdo_chat._setupHtmlTitlePrefixController()

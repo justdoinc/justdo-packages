@@ -5,7 +5,10 @@ Template.justdo_chat_recent_activity_button.onRendered ->
 
   share.current_recent_activity_dropdown = @recent_activity_dropdown
 
-  APP.justdo_chat.requireSubscribedUnreadChannelsCountSubscription()
+  Tracker.autorun ->
+    APP.getJustdoChatObject()?.requireSubscribedUnreadChannelsCountSubscription()
+
+    return
 
   return
 
@@ -21,5 +24,5 @@ Template.justdo_chat_recent_activity_button.onDestroyed ->
 Template.justdo_chat_recent_activity_button.helpers
   unread_count: ->
     return JustdoHelpers.delayedReactiveResourceOutput ->
-      return APP.justdo_chat.getSubscribedUnreadChannelsCount() or 0
+      return APP.getJustdoChatObject()?.getSubscribedUnreadChannelsCount() or 0
     , 100

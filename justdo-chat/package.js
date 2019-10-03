@@ -69,7 +69,7 @@ Package.onUse(function (api) {
   api.use("justdoinc:justdo-linkify", client);
 
   api.use("reactive-var", both);
-  api.use("tracker", client);
+  api.use("tracker", both);
 
   api.use('justdoinc:justdo-emails@1.0.0', both); // client is needed for media files
 
