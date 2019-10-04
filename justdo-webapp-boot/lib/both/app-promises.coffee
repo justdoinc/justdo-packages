@@ -64,6 +64,40 @@ APP.isJustdoLabsFeaturesEnabled ->
 
   return
 
+development_mode_enabled_async = new Promise (resolve, reject) ->
+  APP.getEnv (env) ->
+    if env.DEVELOPMENT_MODE is "true"
+      resolve(true)
+    else
+      resolve(false)
+
+    return
+
+APP.isDevelopmentModeEnabled = (cb) ->
+  development_mode_enabled_async.then Meteor.bindEnvironment (enabled) ->
+    if enabled
+      cb()
+
+    # Quietly do nothing
+
+    return
+
+  return
+
+# On client we also provide a reactive var to get justdo labs state
+if Meteor.isClient
+  APP.development_mode_enabled_rv = new ReactiveVar false
+
+  APP.isDevelopmentModeEnabled ->
+    APP.development_mode_enabled_rv.set true
+
+    return
+
+APP.isDevelopmentModeEnabled ->
+  APP.logger.debug("Development mode is enabled - apply development mode modifications")
+
+  return
+
 APP.init_lib_both_promise = new Promise (resolve, reject) ->
   APP.once("both-code-executed", resolve)
 
