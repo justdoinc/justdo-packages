@@ -105,7 +105,11 @@ _.extend JustdoEmailVerificationPrompt.prototype,
         @hideEmailVerificationRequiredDialog()
       else if new_all_emails_verified_val is false
         @hideVerificationCompletedSuccessfullyDialog()
-        @showEmailVerificationRequiredDialog()
+
+        # When in development mode, we don't show the dialog automatically (so the user won't
+        # have to setup smtp to play with the JD SDK)
+        if APP.development_mode_enabled_rv.get() != true
+          @showEmailVerificationRequiredDialog()
 
       previous_all_emails_verified_val = new_all_emails_verified_val
 
