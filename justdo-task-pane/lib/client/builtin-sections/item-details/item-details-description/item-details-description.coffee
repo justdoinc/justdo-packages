@@ -230,9 +230,6 @@ APP.executeAfterAppLibCode ->
           "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"]
         pasteImage: false
         imageUpload: false
-        height: 270
-        heightMin: 270
-        heightMax: 270
         quickInsertTags: []
         charCounterCount: false
         key: env.FROALA_ACTIVATION_KEY
