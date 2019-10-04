@@ -76,9 +76,9 @@ development_mode_enabled_async = new Promise (resolve, reject) ->
 APP.isDevelopmentModeEnabled = (cb) ->
   development_mode_enabled_async.then Meteor.bindEnvironment (enabled) ->
     if enabled
-      cb()
-
-    # Quietly do nothing
+      cb(true)
+    else
+      cb(false)
 
     return
 
@@ -88,13 +88,14 @@ APP.isDevelopmentModeEnabled = (cb) ->
 if Meteor.isClient
   APP.development_mode_enabled_rv = new ReactiveVar false
 
-  APP.isDevelopmentModeEnabled ->
-    APP.development_mode_enabled_rv.set true
+  APP.isDevelopmentModeEnabled (res) ->
+    APP.development_mode_enabled_rv.set res
 
     return
 
-APP.isDevelopmentModeEnabled ->
-  APP.logger.debug("Development mode is enabled - apply development mode modifications")
+APP.isDevelopmentModeEnabled (res) ->
+  if res
+    APP.logger.debug("Development mode is enabled - apply development mode modifications")
 
   return
 
