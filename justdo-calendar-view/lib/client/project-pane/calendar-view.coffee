@@ -51,11 +51,12 @@ createDroppableWrapper = ->
 
   droppableWrapper += """</div>"""
 
-  $table.append droppableWrapper
+  $(".calendar_view_main_table_wrapper").append droppableWrapper
 
   # Make Wrapper Droppable
   $('.calendar_view_droppable_area').droppable
-    tolerance: 'pointer'
+    tolerance: "pointer"
+    hoverClass: "highlight"
     drop: (e, ui)->
       set_param = {}
       target_user_id = $(e.target).attr "user_id"
@@ -156,7 +157,6 @@ createDroppableWrapper = ->
       task_users = $(draggable).attr("task_users").split(",")
       return task_users.indexOf(target_user) > -1
 
-
   return
 
 destroyDroppableWrapper = ->
@@ -164,15 +164,18 @@ destroyDroppableWrapper = ->
   return
 
 setDragAndDrop = ->
+  allowScroll = null
   $('.calendar_view_draggable').draggable
     cursor: 'none'
     helper: 'clone'
+    zIndex: 100
+    scroll: true
+    addClasses: false
     start: (e, ui) ->
       # To avoid size changes while dragging set the width of ui.helper equal to the width of an active task
-      $(ui.helper).width($(event.target).closest(".calendar_task_cell").width()).css({"opacity": 1})
+      $(ui.helper).width($(event.target).closest(".calendar_task_cell").width())
       # Append an element to the table to avoid destruction when updating the table
       $(ui.helper).appendTo(".calendar_view_main_table")
-      # Create Droppable Wrapper
       createDroppableWrapper()
       return
     stop: (e, ui) ->
@@ -180,160 +183,28 @@ setDragAndDrop = ->
       return
 
   $('.calendar_view_scroll_cell').droppable
-    over: (e, ui) ->
-      delayAction (->
-        if $(e.target).hasClass "calendar_view_scroll_left_cell"
-          $(e.target).click()
-        if $(e.target).hasClass "calendar_view_scroll_right_cell"
-          $(e.target).click()
-
-        setTimeout (->
-          createDroppableWrapper()
-          return
-        ), 500
-      ), 500
+    tolerance: 'pointer'
+    out: (e, ui) ->
+      allowScroll = false
       return
+    over: (e, ui) ->
+      allowScroll = true
+      delayAction (->
+        if allowScroll
+          $tableWrapper = $(".calendar_view_main_table_wrapper")
+          $tableWrapper.addClass "fadeOut"
+          if $(e.target).hasClass "calendar_view_scroll_left_cell"
+            $(e.target).click()
+          if $(e.target).hasClass "calendar_view_scroll_right_cell"
+            $(e.target).click()
 
-  # $('.calendar_view_droppable').droppable
-  #   tolerance: 'pointer'
-  #   drop: (e, ui)->
-  #     set_param = {}
-  #     target_user_id = e.target.parentElement.attributes.user_id.value
-  #     task_obj = APP.collections.Tasks.findOne({_id: ui.draggable[0].attributes.task_id.value})
-  #
-  #     # calculating task owner as it is on the calendar
-  #     calendar_view_owner_id = task_obj.owner_id
-  #     if task_obj.pending_owner_id
-  #       calendar_view_owner_id = task_obj.pending_owner_id
-  #
-  #     changing_owner = false
-  #     if calendar_view_owner_id != target_user_id
-  #       changing_owner = true
-  #
-  #     # for changing followups or regular tasks (but not private followup), we also allow to change the owner
-  #     if changing_owner and (ui.draggable[0].attributes.type.value == 'F' or ui.draggable[0].attributes.type.value == 'R')
-  #       if Meteor.userId() == target_user_id
-  #         set_param['owner_id'] = target_user_id
-  #         set_param['pending_owner_id'] = null
-  #       #if we return a task with pending owner to prev owner
-  #       else if task_obj.owner_id == target_user_id and task_obj.pending_owner_id?
-  #         set_param['pending_owner_id'] = null
-  #       else
-  #         set_param['pending_owner_id'] = target_user_id
-  #
-  #     # if we change owner of a regular task, we need to transfer the planned hours to the target owner,
-  #     # and assign all unassigned hours to the target owner
-  #     if changing_owner and ui.draggable[0].attributes.type.value == 'R'
-  #       original_owner_planning_time = 0 + task_obj["p:rp:b:work-hours_p:b:user:#{calendar_view_owner_id}"]
-  #
-  #       record =
-  #         delta: - original_owner_planning_time
-  #         resource_type: "b:user:#{calendar_view_owner_id}"
-  #         stage: "p"
-  #         source: "jd-calendar-view-plugin"
-  #         task_id: task_obj._id
-  #       APP.resource_planner.rpAddTaskResourceRecord record
-  #
-  #       record.delta = original_owner_planning_time
-  #       record.resource_type = "b:user:#{target_user_id}"
-  #       APP.resource_planner.rpAddTaskResourceRecord record
-  #
-  #       if (unassigned_hours = task_obj['p:rp:b:unassigned-work-hours'])
-  #         record.delta = unassigned_hours
-  #         APP.resource_planner.rpAddTaskResourceRecord record
-  #         set_param['p:rp:b:unassigned-work-hours'] = 0
-  #
-  #
-  #     if ui.draggable[0].attributes.class.value.indexOf("calendar_view_draggable")>=0
-  #       #dealing with Followups:
-  #       if ui.draggable[0].attributes.type.value == 'F'
-  #         set_param['follow_up'] = e.target.attributes.date.value
-  #         APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
-  #                                       $set:set_param
-  #                                      )
-  #       #dealing with Private followups
-  #       else if ui.draggable[0].attributes.type.value == 'P'
-  #         set_param['priv:follow_up'] = e.target.attributes.date.value
-  #         APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
-  #           $set: set_param
-  #         )
-  #
-  #       #dealing with Private followups
-  #       else if ui.draggable[0].attributes.type.value == 'R'
-  #         # from the query definitions we must have at least one of start or end dates.
-  #         original_start_date = task_obj.start_date
-  #         if !original_start_date
-  #           original_start_date = task_obj.end_date
-  #
-  #         original_end_date = task_obj.end_date
-  #         if !original_end_date
-  #           original_end_date = task_obj.start_date
-  #
-  #         new_start_date = e.target.attributes.date.value
-  #         #calculating the new end date taking days off into consideration:
-  #         new_end_date_moment = moment(e.target.attributes.date.value)
-  #         if original_start_date < original_end_date
-  #           d = moment(original_start_date)
-  #           while d < moment(original_end_date)
-  #             if justdo_level_workdays.weekly_work_days[d.day()] == 1
-  #               new_end_date_moment.add(1,'days')
-  #               #skip non working days
-  #               while(justdo_level_workdays.weekly_work_days[new_end_date_moment.day()] == 0)
-  #                 new_end_date_moment.add(1,'days')
-  #             d.add(1, 'days')
-  #
-  #         set_param['start_date'] = new_start_date
-  #         set_param['end_date'] = new_end_date_moment.format("YYYY-MM-DD")
-  #
-  #         #todo: calculate how to move the due-date
-  #         APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
-  #           $set: set_param
-  #         )
-  #     $(".highlight_calendar_view_specific_target").removeClass("highlight_calendar_view_specific_target")
-  #     return #end of drop
-
-    # accept: (draggable)->
-    #   target_user = @parentElement.getAttribute('user_id')
-    #   task_users = $(draggable).attr("task_users").split(",")
-    #   return task_users.indexOf(target_user) > -1
-    #
-    # activate: (e, ui)->
-    #   if not e.target.classList.contains("calendar_view_scroll_cell")
-    #     e.target.classList.add("highlight_calendar_view_droppable")
-    #   return
-    #
-    # deactivate: (e, ui)->
-    #   if not e.target.classList.contains("calendar_view_scroll_cell")
-    #     e.target.classList.remove("highlight_calendar_view_droppable")
-    #   return
-
-    # over: (e, ui)->
-    #   if e.target.classList.contains("calendar_view_scroll_left_cell")
-    #     onSetScrollLeft()
-    #     return
-    #   if e.target.classList.contains("calendar_view_scroll_right_cell")
-    #     onSetScrollRight()
-    #     return
-    #   e.target.classList.add("highlight_calendar_view_specific_target")
-    #   return
-    #
-    # out: (e, ui)->
-    #   if e.target.classList.contains("calendar_view_scroll_left_cell")
-    #     onUnsetScrollLeftRight()
-    #     return
-    #   if e.target.classList.contains("calendar_view_scroll_right_cell")
-    #     onUnsetScrollLeftRight()
-    #     return
-    #   e.target.classList.remove("highlight_calendar_view_specific_target")
-    #   return
-
-    # over: (e, ui) ->
-    #   if $(e.target).hasClass "calendar_view_scroll_left_cell"
-    #     $(e.target).click()
-    #   if $(e.target).hasClass "calendar_view_scroll_right_cell"
-    #     $(e.target).click()
-    #   return
-
+          setTimeout (->
+            createDroppableWrapper()
+            $tableWrapper.removeClass "fadeOut"
+            return
+          ), 300
+      ), 1000
+      return
   return
 
 # Delay action
@@ -514,26 +385,17 @@ Template.justdo_calendar_project_pane.events
 
     return
 
-  # !!! Сode needs to be refactored in the next update
-  # "mouseover .calendar_view_main_table tr": (e, tmpl) ->
-  #   delayAction (->
-  #     $(".justdo-avatar").removeClass "highlight"
-  #     $("tr").removeClass "highlight"
-  #     focused_tr = $(e.target).closest "tr"
-  #     focused_user_id = $($(focused_tr)[0]).attr "user_id"
-  #     focused_users_tr = $("[user_id=" + focused_user_id + "]")
-  #     focused_users_tr.addClass "highlight"
-  #     $(focused_users_tr[0]).find(".justdo-avatar").addClass "highlight"
-  #   ), 500
-  #   return
+  "mouseover .calendar_view_main_table tr": (e, tmpl) ->
+    $(".justdo-avatar").removeClass "highlight"
+    focused_tr = $(e.target).closest "tr"
+    focused_user_id = $($(focused_tr)[0]).attr "user_id"
+    focused_users_tr = $("[user_id=" + focused_user_id + "]")
+    $(focused_users_tr[0]).find(".justdo-avatar").addClass "highlight"
+    return
 
-  # !!! Сode needs to be refactored in the next update
-  # "mouseleave .calendar_view_main_table tr": (e, tmpl) ->
-  #   delayAction (->
-  #     $(".justdo-avatar").removeClass "highlight"
-  #     $("tr").removeClass "highlight"
-  #   ), 500
-  #   return
+  "mouseleave .calendar_view_main_table tr": (e, tmpl) ->
+    $(".justdo-avatar").removeClass "highlight"
+    return
 
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
@@ -826,6 +688,9 @@ Template.justdo_calendar_project_pane_user_view.helpers
   userId: ->
     return Template.instance().data.user_id
 
+  showNavigation: ->
+    return Template.instance().data.show_navigation
+
   dimWhenPendingOwner: ->
     if @task?.pending_owner_id? and @task.owner_id == Template.instance().data.user_id
           return "ownership_transfer_in_progress"
@@ -842,7 +707,12 @@ Template.justdo_calendar_project_pane_user_view.helpers
     for i in [0..Template.instance().data.dates_to_display.length]
       if days_matrix[i]?.length > ret
         ret = days_matrix[i].length
+
     return [0..ret-1]
+
+  # NEED TO FIX IN THE FUTURE: Helper has to return the number of all possible rows
+  navRowspan: ->
+    return 9999
 
   firstRow: ->
     return (@+1)==1
@@ -974,3 +844,7 @@ Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_view_scroll_right_cell" : (e, tpl)->
     onClickScrollRight()
     return
+
+
+Template.registerHelper "equals", (a, b) ->
+  a == b

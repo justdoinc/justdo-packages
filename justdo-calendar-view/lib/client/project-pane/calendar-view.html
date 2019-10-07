@@ -19,21 +19,22 @@
       </div>
     </div>
 
-
-    <table class="calendar_view_main_table"  width="100%">
-      <tr>
-        <th class="calendar_view_user"></th>
-        <th class="calendar_view_move"></th>
-        {{#each datesToDisplay}}
-          <th class="calendar_view_date">{{{formatDate}}}</th>
+    <div class="calendar_view_main_table_wrapper">
+      <table class="calendar_view_main_table"  width="100%">
+        <tr>
+          <th class="calendar_view_user"></th>
+          <th class="calendar_view_move"></th>
+          {{#each datesToDisplay}}
+            <th class="calendar_view_date">{{{formatDate}}}</th>
+          {{/each}}
+          <th class="calendar_view_move"></th>
+        </tr>
+        {{> justdo_calendar_project_pane_user_view user_id=currentUserId dates_to_display=datesToDisplay delivery_planner_project_id=deliveryPlannerProjectId show_navigation=true}}
+        {{#each allOtherUsers}}
+          {{> justdo_calendar_project_pane_user_view user_id=this dates_to_display=datesToDisplay show_navigation=false}}
         {{/each}}
-        <th class="calendar_view_move"></th>
-      </tr>
-      {{> justdo_calendar_project_pane_user_view user_id=currentUserId dates_to_display=datesToDisplay delivery_planner_project_id=deliveryPlannerProjectId}}
-      {{#each allOtherUsers}}
-        {{> justdo_calendar_project_pane_user_view user_id=this dates_to_display=datesToDisplay}}
-      {{/each}}
-    </table>
+      </table>
+    </div>
 </template>
 
 
@@ -46,10 +47,12 @@
             {{> justdo_avatar}}
           {{/with}}
         </td>
+        {{#if showNavigation}}
+          <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell calendar_view_droppable" rowspan="{{navRowspan}}">
+            <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg>
+          </td>
+        {{/if}}
       {{/if}}
-      <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell calendar_view_droppable">
-        <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg>
-      </td>
       {{#each colNumbers}}
         {{#unless skipTD}}
             {{#if taskId}}
@@ -92,22 +95,21 @@
             {{/if}}
         {{/unless}}
       {{/each}}
-      <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell calendar_view_droppable">
-        <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg>
-      </td>
+      {{#if firstRow}}
+        {{#if showNavigation}}
+          <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell calendar_view_droppable" rowspan="{{navRowspan}}">
+
+            <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg>
+          </td>
+        {{/if}}
+      {{/if}}
     </tr>
   {{/each}}
   <!--  lets add a dropable line-->
   <tr user_id={{userId}}>
-    <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell">
-      <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg>
-    </td>
     {{#each colNumbers}}
       <td class="calendar_view_resources calendar_view_droppable {{markDaysOff}}" date={{columnDate}} >{{bottomLine}}</td>
     {{/each}}
-    <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell">
-      <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg>
-    </td>
   </tr>
 
 </template>
