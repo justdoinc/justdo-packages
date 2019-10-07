@@ -808,16 +808,16 @@ Template.justdo_calendar_project_pane_user_view.helpers
 
 Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_task_cell": (e, tpl)->
-    if (task_id = e.target.getAttribute("task_id"))?
+    if (task_id = $(e.target).closest(".calendar_task_cell").attr("task_id"))?
       gcm = APP.modules.project_page.getCurrentGcm()
       gcm.setPath(["main", task_id], {collection_item_id_mode: true})
       return
     return
 
-  "mouseover .calendar_task_cell" : (e, tpl)->
-    if (elm = $(e.target).find(".fa-map-marker")[0])
-      elm.style.visibility = 'visible'
-    return
+  # "mouseover .calendar_task_cell" : (e, tpl)->
+  #   if (elm = $(e.target).find(".fa-map-marker")[0])
+  #     elm.style.visibility = 'visible'
+  #   return
 
   ### for now I think that it's better not to have the hover events -AL
   "mouseover .calendar_view_scroll_left_cell" : (e, tpl)->
