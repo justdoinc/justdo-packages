@@ -123,7 +123,7 @@
 
   Template._loginButtonsLoggedInDropdownActions.events({
     "click  .affiliates-console-btn": function() {
-      Router.go("justdo_affiliates_program_page");
+      Router.go(JustdoAffiliatesProgram.plugin_page_id);
 
       return;
     }
