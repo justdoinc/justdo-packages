@@ -9,7 +9,6 @@ _.extend JustdoCalendarView.prototype,
       return
 
     @registerConfigTemplate()
-    #@registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
 
     return

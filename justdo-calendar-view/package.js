@@ -65,16 +65,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project-conf/project-conf.html", client);
   api.addFiles("lib/client/project-conf/project-conf.coffee", client);
 
-  api.addFiles("lib/client/plugin-page/plugin-page.sass", client);
-  api.addFiles("lib/client/plugin-page/plugin-page.html", client);
-  api.addFiles("lib/client/plugin-page/plugin-page.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/task-pane-section-registrar.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/task-pane-section.sass", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.html", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.coffee", client);
-
   api.addFiles("lib/client/project-pane/calendar-view.sass", client);
   api.addFiles("lib/client/project-pane/calendar-view.html", client);
   api.addFiles("lib/client/project-pane/calendar-view.coffee", client);
