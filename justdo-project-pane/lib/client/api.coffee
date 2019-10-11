@@ -26,6 +26,7 @@ _.extend JustdoProjectPane.prototype,
     expand_height:
       type: Number
       optional: true
+      decimal: true
     is_expanded:
       type: Boolean
       optional: true
