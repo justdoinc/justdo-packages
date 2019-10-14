@@ -25,7 +25,6 @@ Template.justdo_calendar_view_project_config.events
     proj = curProj()
 
     if proj.isCustomFeatureEnabled(module_id)
-      proj.disableCustomFeatures(module_id)
+      curProj().disableCustomFeatures(module_id)
     else
-      proj.enableCustomFeatures(module_id)
-
+      curProj().enableCustomFeatures(module_id)

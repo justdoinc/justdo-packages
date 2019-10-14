@@ -56,8 +56,8 @@ createDroppableWrapper = ->
   # Make Wrapper Droppable
   $('.calendar_view_droppable_area').droppable
     tolerance: "pointer"
-    hoverClass: "highlight"
-    drop: (e, ui)->
+    classes: "ui-droppable-hover": "highlight"
+    drop: (e, ui) ->
       set_param = {}
       target_user_id = $(e.target).attr "user_id"
       task_obj = APP.collections.Tasks.findOne({_id: ui.draggable[0].attributes.task_id.value})
@@ -106,7 +106,7 @@ createDroppableWrapper = ->
 
 
       if ui.draggable[0].attributes.class.value.indexOf("calendar_view_draggable")>=0
-        #dealing with Followups:
+        #dealing with Followups
         if ui.draggable[0].attributes.type.value == 'F'
           set_param['follow_up'] = e.target.attributes.date.value
           APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
@@ -119,7 +119,7 @@ createDroppableWrapper = ->
             $set: set_param
           )
 
-        #dealing with Private followups
+        #dealing with Regular
         else if ui.draggable[0].attributes.type.value == 'R'
           # from the query definitions we must have at least one of start or end dates.
           original_start_date = task_obj.start_date
@@ -143,8 +143,11 @@ createDroppableWrapper = ->
                   new_end_date_moment.add(1,'days')
               d.add(1, 'days')
 
-          set_param['start_date'] = new_start_date
-          set_param['end_date'] = new_end_date_moment.format("YYYY-MM-DD")
+          if task_obj.start_date?
+            set_param['start_date'] = new_start_date
+
+          if task_obj.end_date?
+            set_param['end_date'] = new_end_date_moment.format("YYYY-MM-DD")
 
           #todo: calculate how to move the due-date
           APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
@@ -169,13 +172,11 @@ setDragAndDrop = ->
     cursor: 'none'
     helper: 'clone'
     zIndex: 100
-    scroll: true
-    addClasses: false
     start: (e, ui) ->
       # To avoid size changes while dragging set the width of ui.helper equal to the width of an active task
       $(ui.helper).width($(event.target).closest(".calendar_task_cell").width())
       # Append an element to the table to avoid destruction when updating the table
-      $(ui.helper).appendTo(".calendar_view_main_table")
+      $(ui.helper).appendTo(".calendar_view_main_table_wrapper")
       createDroppableWrapper()
       return
     stop: (e, ui) ->
@@ -205,6 +206,7 @@ setDragAndDrop = ->
           ), 300
       ), 1000
       return
+
   return
 
 # Delay action
@@ -245,7 +247,9 @@ Template.justdo_calendar_project_pane.onCreated ->
 
   @setToPrevWeek = (keep_scroll_handler)->
     date = moment(self.view_start_date.get())
-    date.subtract(7, 'days');
+    if date.day() == 1 # This is Monday
+      date.subtract(1, "days") # Go back to Sunday to find previous Monday
+    date.startOf("isoWeek")
     self.view_start_date.set(date)
     if !keep_scroll_handler and self.scroll_left_right_handler
       clearInterval(self.scroll_left_right_handler)
@@ -255,7 +259,8 @@ Template.justdo_calendar_project_pane.onCreated ->
 
   @setToNextWeek = (keep_scroll_handler)->
     date = moment(self.view_start_date.get())
-    date.add(7, 'days');
+    date.endOf("isoWeek")
+    date.add(1, "days")
     self.view_start_date.set(date)
     if !keep_scroll_handler and self.scroll_left_right_handler
       clearInterval(self.scroll_left_right_handler)
@@ -316,15 +321,17 @@ Template.justdo_calendar_project_pane.helpers
 
   allOtherUsers: ->
     if Template.instance().delivery_planner_project_id.get() == "*"
-      return _.map Meteor.users.find({_id: {$ne: Meteor.userId()}},{fields: {_id:1}}).fetch(), (u)-> u._id
-
-    return Template.instance().all_other_users.get()
+      return _.difference(APP.modules.project_page.curProj().getMembersIds(), [Meteor.userId()])
+    else
+      return Template.instance().all_other_users.get()
 
   projectsInJustDo: ->
-    return APP.collections.Tasks.find({
-        "p:dp:is_project": true
-        project_id: APP.modules.project_page.project.get().id
-      }).fetch()
+    project = APP.modules.project_page.project.get()
+    if project?
+      return APP.collections.Tasks.find({
+          "p:dp:is_project": true
+          project_id: project.id
+        }, {sort: {"title": 1}}).fetch()
 
   datesToDisplay: ->
     dates = []
@@ -338,7 +345,14 @@ Template.justdo_calendar_project_pane.helpers
     return Template.instance().delivery_planner_project_id.get()
 
   formatDate: ->
-    return "<span class='week_day'>" + moment(@).format("ddd") + "</span>" + moment(@).format("Do")
+    formattedDate = "<span class='week_day'>" + moment(@).format("ddd") + "</span>" + moment(@).format("Do")
+    return formattedDate
+
+  isToday: (date) ->
+    today = moment()
+    if moment(date).isSame(today, "d")
+      return true
+
 
 Template.justdo_calendar_project_pane.events
   "click .calendar-view-prev-week": ->
@@ -406,12 +420,12 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
     data = Template.currentData()
     include_tasks = []
     if data.delivery_planner_project_id? and data.delivery_planner_project_id != "*"
+      include_tasks.push data.delivery_planner_project_id
       path = APP.modules.project_page.gridData().getCollectionItemIdPath(data.delivery_planner_project_id)
       gc = APP.modules.project_page.mainGridControl()
       gc._grid_data.each path, (section, item_type, item_obj, path) ->
         include_tasks.push item_obj._id
         return
-
 
 
     #days_matrix is eventually a matrix that represents the table that we are going to display,
@@ -462,7 +476,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
 
     project_part =
-      project_id: APP.modules.project_page.project.get().id
+      project_id: APP.modules.project_page.project.get()?.id
 
     query_parts = []
     query_parts.push {$or: dates_part}

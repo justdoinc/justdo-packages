@@ -36,7 +36,7 @@ _.extend JustdoCalendarView.prototype,
           return #installer
 
         destroyer: =>
-          APP.justdo_project_pane.unregisterTab "justdo_calendar"
+          APP.justdo_project_pane.unregisterTab "justdo-calendar"
           APP.modules.project_page.removePseudoCustomFields JustdoCalendarView.end_date_field_id
           return #destroyer
 

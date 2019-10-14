@@ -25,7 +25,7 @@
           <th class="calendar_view_user"></th>
           <th class="calendar_view_move"></th>
           {{#each datesToDisplay}}
-            <th class="calendar_view_date">{{{formatDate}}}</th>
+            <th class="calendar_view_date {{#if isToday this}}is_today{{/if}}">{{{formatDate}}}</th>
           {{/each}}
           <th class="calendar_view_move"></th>
         </tr>
@@ -48,7 +48,7 @@
           {{/with}}
         </td>
         {{#if showNavigation}}
-          <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell calendar_view_droppable" rowspan="{{navRowspan}}">
+          <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell" rowspan="{{navRowspan}}">
             <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg>
           </td>
         {{/if}}
@@ -61,6 +61,9 @@
                   <div class="calendar_task_cell calendar_view_draggable {{dimWhenPendingOwner}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
                     <div class="calendar_task_info">
                       <div class="calendar_task_type">{{type}}</div>
+                      {{#if startDateAfterDueDate}}
+                        <div class="calendar_task_startDateAfterDueDate" title="Start Date after Due Date">!</div>
+                      {{/if}}
                       {{#if unassignedHours}}
                         <div class="calendar_task_unassigned_hours">{{unassignedHours}}</div>
                       {{/if}}
@@ -71,9 +74,6 @@
                     <!-- {{#unless hideDuePendingOwner}}
                       <i class="fa fa-map-marker calendar_view_draggable" task_id="{{task._id}}"aria-hidden="true"></i>
                     {{/unless}} -->
-                    {{#if startDateAfterDueDate}}
-                      (!)
-                    {{/if}}
                     {{#if startsBeforeView}}
                       <div class="calendar_task_startsBeforeView">
                         <svg class="calendar_view_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"/></svg>
@@ -91,14 +91,13 @@
                 </td>
               {{/with}}
             {{else}}
-              <td class="calendar_table_cell calendar_view_droppable  {{markDaysOff}}" date={{columnDate}}></td>
+              <td class="calendar_table_cell {{markDaysOff}}" date={{columnDate}}></td>
             {{/if}}
         {{/unless}}
       {{/each}}
       {{#if firstRow}}
         {{#if showNavigation}}
-          <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell calendar_view_droppable" rowspan="{{navRowspan}}">
-
+          <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell" rowspan="{{navRowspan}}">
             <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg>
           </td>
         {{/if}}
@@ -108,7 +107,7 @@
   <!--  lets add a dropable line-->
   <tr user_id={{userId}}>
     {{#each colNumbers}}
-      <td class="calendar_view_resources calendar_view_droppable {{markDaysOff}}" date={{columnDate}} >{{bottomLine}}</td>
+      <td class="calendar_view_resources {{markDaysOff}}" date={{columnDate}} >{{bottomLine}}</td>
     {{/each}}
   </tr>
 
