@@ -20,3 +20,33 @@
 
     .remove-file
       cursor: pointer
+  
+  .drop-pane
+    position: relative
+    .prev-upload-result
+      margin-bottom: 16px
+    
+    .upload-success-msg
+      margin-bottom: 8px
+    
+    .drop-to-upload-msg
+      display: none
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      margin-top: -3px
+
+    &.hovering
+      .custom-file-input
+        background: #f2f3fa
+        border: 2px dashed #d3d8fb
+        color: #337ab7
+
+      .prev-upload-result, .upload-msg
+        visibility: hidden
+      
+      .drop-to-upload-msg
+        display: block
+
+    

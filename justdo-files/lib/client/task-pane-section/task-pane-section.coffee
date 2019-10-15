@@ -1,3 +1,5 @@
+import {Promise} from "bluebird";
+
 Template.task_pane_justdo_files_task_pane_section_section.onCreated ->
   @autorun =>
     if (active_item_id = APP.modules.project_page.activeItemId())?
@@ -62,37 +64,55 @@ Template.justdo_files_uploader.onCreated ->
   @uploadFiles = (files) =>
     tpl = @
 
+    tpl.clearUploadProcesses()
     tpl.state.set "uploading"
+    upload_promises = []
+
     for file in files
-      do (file) ->
-        upload = APP.justdo_files.tasks_files.insert
-          file: file
-          meta:
-            task_id: Tracker.nonreactive -> APP.modules.project_page.activeItemId()
-          streams: "dynamic"
-          chunkSize: "dynamic"
-          transport: "ddp" # Need to find out why http doesn't work
-        , false
+      upload_promises.push new Promise (resolve, reject) ->
+        try 
+          upload = APP.justdo_files.tasks_files.insert
+            file: file
+            meta:
+              task_id: Tracker.nonreactive -> APP.modules.project_page.activeItemId()
+            streams: "dynamic"
+            chunkSize: "dynamic"
+            transport: "ddp" # Need to find out why http doesn't work
+          , false
+        catch e
+          # create a fake upload object to faciliate the message display 
+          console.log "e1"
+          tpl.addUploadProcess
+            file: file
+            progress: new ReactiveVar 0
+            state: new ReactiveVar "aborted"
+            err_msg: e.reason
+
+          resolve()
+
+          return
 
         tpl.addUploadProcess(upload)
 
         upload.on "end", (err, file_obj) ->
           if err?
-            bootbox.alert
-              message: "Error: " + err.reason
-              className: "bootbox-new-design email-verification-prompt-alerts"
-              closeButton: false
-
-          tpl.state.set "ready"
-          tpl.clearUploadProcesses()
-          # Clear the input so re-attempt to upload the same file will work
-          $("#file-input").val("")
+            if not upload.err_msg?
+              upload.err_msg = if err.reason? then err.reason else err
+    
+          resolve()
 
           return
 
         upload.start()
 
         return
+    
+    Promise.all(upload_promises).then ->
+      tpl.state.set "ready"
+      # Clear the input so re-attempt to upload the same file will work
+      $("#file-input").val("")
+
+      return
 
     return
 
@@ -107,29 +127,45 @@ Template.justdo_files_uploader.onCreated ->
   return
 
 Template.justdo_files_uploader.helpers
-  uploadMessage: ->  
+  getState: ->
+    return Template.instance().state.get()
+
+  getUploadProcessMsg: ->
     tpl = Template.instance()
 
-    switch tpl.state.get()
-      when "ready"
-        return "Drop files here or click to upload"
-      when "hovering"
-        return "Drop to upload"
-      when "uploading"
-        upload_progress_state = _.map tpl.getUploadProcesses(), (upload) ->
-          [
-            if upload.state.get() == "completed" then 100 else upload.progress.get(),
-            upload.state.get()
-          ]
+    upload_progress_state = _.map tpl.getUploadProcesses(), (upload) ->
+      [
+        if upload.state.get() == "completed" then 100 else upload.progress.get(),
+        upload.state.get()
+      ]
 
-        active_uploads = _.filter(upload_progress_state, (res) -> res[1] not in ["completed", "aborted"])
-        total_percent_left = _.reduce upload_progress_state, (memo, cur) ->
-          memo + cur[0]
-        , 0
+    active_uploads = _.filter(upload_progress_state, (res) -> res[1] not in ["completed", "aborted"])
+    total_percent_left = _.reduce upload_progress_state, (memo, cur) ->
+      memo + cur[0]
+    , 0
 
-        return "Uploading files - #{(upload_progress_state.length - active_uploads.length)}/#{upload_progress_state.length} completed - %" + Math.floor(total_percent_left / upload_progress_state.length)
+    return "Uploading files - #{(upload_progress_state.length - active_uploads.length)}/#{upload_progress_state.length} completed - " + Math.floor(total_percent_left / upload_progress_state.length) + "%"
 
-    return ""
+  hasPreviousUploadResult: ->
+    return Template.instance().getUploadProcesses().length > 0
+  
+  numSuccessfulUploads: ->
+    _.reduce Template.instance().getUploadProcesses(), (memo, cur) ->
+      if cur.state.get() == "completed"
+        return memo + 1
+      return memo
+    , 0
+
+  numFailedUploads: ->
+    _.reduce Template.instance().getUploadProcesses(), (memo, cur) ->
+      if cur.state.get() == "aborted"
+        return memo + 1
+      return memo
+    , 0
+
+  getFailedUploads: ->
+    _.filter Template.instance().getUploadProcesses(), (upload) -> upload.state.get() == "aborted"
+
 
 Template.justdo_files_uploader.events
   "change #file-input": (e, tpl) ->
