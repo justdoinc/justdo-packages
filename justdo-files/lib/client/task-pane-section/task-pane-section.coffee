@@ -174,7 +174,9 @@ Template.justdo_files_uploader.events
     return
 
   "dragenter .drop-pane": (e, tpl) ->
-    # what if uploading
+    if tpl.state.get() == "uploading"
+      return false
+
     dragenter_count++
     if dragenter_count == 1
       tpl.state.set "hovering"
@@ -183,6 +185,9 @@ Template.justdo_files_uploader.events
     return false
 
   "dragleave .drop-pane": (e, tpl) ->
+    if tpl.state.get() == "uploading"
+      return false
+
     dragenter_count--
     if dragenter_count == 0
       tpl.state.set "ready"
@@ -191,14 +196,24 @@ Template.justdo_files_uploader.events
     return false
   
   "dragover .drop-pane": (e, tpl) ->
-    e.originalEvent.dataTransfer.dropEffect = 'copy'
+    if tpl.state.get() == "uploading"
+      e.originalEvent.dataTransfer.dropEffect = "none"
+    else
+      e.originalEvent.dataTransfer.dropEffect = 'copy'
     e.stopPropagation()
     e.preventDefault()
     return false
   
   "drop .drop-pane": (e, tpl) ->
+    if tpl.state.get() == "uploading"
+      return false
     dragenter_count = 0
     tpl.uploadFiles e.originalEvent.dataTransfer.files
     e.stopPropagation()
     e.preventDefault()
     return false
+  
+  "click .custom-file-input": (e, tpl) ->
+    if tpl.state.get() == "uploading"
+      return false
+    return true
