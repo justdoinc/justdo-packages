@@ -24,10 +24,10 @@
   .drop-pane
     position: relative
     .prev-upload-result
-      margin-bottom: 16px
+      padding-bottom: 16px
     
     .upload-success-msg
-      margin-bottom: 8px
+      padding-bottom: 8px
     
     .drop-to-upload-msg
       display: none
@@ -48,5 +48,10 @@
       
       .drop-to-upload-msg
         display: block
+    
+    &.uploading
+      .prev-upload-result
+        display: none
+      
 
     
