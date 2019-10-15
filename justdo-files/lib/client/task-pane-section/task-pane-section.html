@@ -7,7 +7,7 @@
 <template name="justdo_files_gallery">
   <ul class="files-gallery-list">
     {{#each files}}
-      <li><a href="{{fileURL this}}" target="_blank">{{name}}</a> <span class="remove-file"><i class="fa fa-trash" aria-hidden="true"></i></span></li>
+      <li><a href="{{fileURL this}}" download="{{this.name}}" target="_blank">{{name}}</a> <span class="remove-file"><i class="fa fa-trash" aria-hidden="true"></i></span></li>
     {{/each}}
   </ul>
 </template>
