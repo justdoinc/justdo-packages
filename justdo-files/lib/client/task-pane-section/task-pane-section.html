@@ -13,8 +13,10 @@
 </template>
 
 <template name="justdo_files_uploader">
-  <label for="file-input" class="custom-file-input">
-    <span>{{uploadMessage}}</span>
-  </label>
-  <input id="file-input" type="file" multiple />
+  <div class="drop-pane">
+    <label for="file-input" class="custom-file-input">
+      <span>{{uploadMessage}}</span>
+    </label>
+    <input id="file-input" type="file" multiple />
+  </div>
 </template>

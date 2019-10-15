@@ -31,8 +31,12 @@ Template.justdo_files_gallery.events
 
     return
 
+dragenter_count = 0
 
 Template.justdo_files_uploader.onCreated ->
+  dragenter_count = 0
+  @state = new ReactiveVar "ready"
+
   @_upload_processes_dep = new Tracker.Dependency()
   @_upload_processes = []
 
@@ -55,45 +59,11 @@ Template.justdo_files_uploader.onCreated ->
 
     return @_upload_processes
 
-  @autorun =>
-    # Clear _upload_processes on task change
-    APP.modules.project_page.activeItemId()
+  @uploadFiles = (files) =>
+    tpl = @
 
-    @clearUploadProcesses()
-
-    return
-
-  return
-
-Template.justdo_files_uploader.helpers
-  uploadMessage: ->
-    tpl = Template.instance()
-
-    upload_progress_state = _.map tpl.getUploadProcesses(), (upload) ->
-      [
-        if upload.state.get() == "completed" then 100 else upload.progress.get(),
-        upload.state.get()
-      ]
-
-    active_uploads = _.filter(upload_progress_state, (res) -> res[1] not in ["completed", "aborted"])
-
-    if active_uploads.length == 0
-      tpl.clearUploadProcesses()
-
-      # Clear the input so re-attempt to upload the same file will work
-      $("#file-input").val("")
-
-      return "Click to upload files"
-
-    total_percent_left = _.reduce upload_progress_state, (memo, cur) ->
-      memo + cur[0]
-    , 0
-
-    return "Uploading files - #{(upload_progress_state.length - active_uploads.length)}/#{upload_progress_state.length} completed - %" + Math.floor(total_percent_left / upload_progress_state.length)
-
-Template.justdo_files_uploader.events
-  "change #file-input": (e, tpl) ->
-    for file in e.currentTarget.files
+    tpl.state.set "uploading"
+    for file in files
       do (file) ->
         upload = APP.justdo_files.tasks_files.insert
           file: file
@@ -113,7 +83,10 @@ Template.justdo_files_uploader.events
               className: "bootbox-new-design email-verification-prompt-alerts"
               closeButton: false
 
-            return 
+          tpl.state.set "ready"
+          tpl.clearUploadProcesses()
+          # Clear the input so re-attempt to upload the same file will work
+          $("#file-input").val("")
 
           return
 
@@ -122,3 +95,74 @@ Template.justdo_files_uploader.events
         return
 
     return
+
+  @autorun =>
+    # Clear _upload_processes on task change
+    APP.modules.project_page.activeItemId()
+
+    @clearUploadProcesses()
+
+    return
+
+  return
+
+Template.justdo_files_uploader.helpers
+  uploadMessage: ->  
+    tpl = Template.instance()
+
+    switch tpl.state.get()
+      when "ready"
+        return "Drop files here or click to upload"
+      when "hovering"
+        return "Drop to upload"
+      when "uploading"
+        upload_progress_state = _.map tpl.getUploadProcesses(), (upload) ->
+          [
+            if upload.state.get() == "completed" then 100 else upload.progress.get(),
+            upload.state.get()
+          ]
+
+        active_uploads = _.filter(upload_progress_state, (res) -> res[1] not in ["completed", "aborted"])
+        total_percent_left = _.reduce upload_progress_state, (memo, cur) ->
+          memo + cur[0]
+        , 0
+
+        return "Uploading files - #{(upload_progress_state.length - active_uploads.length)}/#{upload_progress_state.length} completed - %" + Math.floor(total_percent_left / upload_progress_state.length)
+
+    return ""
+
+Template.justdo_files_uploader.events
+  "change #file-input": (e, tpl) ->
+    tpl.uploadFiles e.currentTarget.files
+
+    return
+
+  "dragenter .drop-pane": (e, tpl) ->
+    # what if uploading
+    dragenter_count++
+    if dragenter_count == 1
+      tpl.state.set "hovering"
+    e.stopPropagation()
+    e.preventDefault()
+    return false
+
+  "dragleave .drop-pane": (e, tpl) ->
+    dragenter_count--
+    if dragenter_count == 0
+      tpl.state.set "ready"
+    e.stopPropagation()
+    e.preventDefault()
+    return false
+  
+  "dragover .drop-pane": (e, tpl) ->
+    e.originalEvent.dataTransfer.dropEffect = 'copy'
+    e.stopPropagation()
+    e.preventDefault()
+    return false
+  
+  "drop .drop-pane": (e, tpl) ->
+    dragenter_count = 0
+    tpl.uploadFiles e.originalEvent.dataTransfer.files
+    e.stopPropagation()
+    e.preventDefault()
+    return false
