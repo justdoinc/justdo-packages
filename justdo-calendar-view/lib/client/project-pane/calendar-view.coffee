@@ -172,6 +172,7 @@ setDragAndDrop = ->
     cursor: 'none'
     helper: 'clone'
     zIndex: 100
+    refreshPositions: true
     start: (e, ui) ->
       # To avoid size changes while dragging set the width of ui.helper equal to the width of an active task
       $(ui.helper).width($(event.target).closest(".calendar_task_cell").width())
@@ -222,10 +223,10 @@ justdo_level_workdays = {} #intentionally making this one a non-reactive var, ot
 Template.justdo_calendar_project_pane.onCreated ->
   self = @
   @delivery_planner_project_id = new ReactiveVar ("*") # '*' for the entire JustDo
-
   @all_other_users = new ReactiveVar([])
-
   @view_start_date = new ReactiveVar
+  active_item_id = null
+
   #calculate the first day to display based on the beginning of the week of the user
   @resetFirstDay = ->
     d = new Date
@@ -296,6 +297,18 @@ Template.justdo_calendar_project_pane.onCreated ->
       self.scroll_left_right_handler = null
     return
 
+  findSelectedTask = (taskId) ->
+    $activeTask = $(".calendar_task_cell[task_id=#{taskId}]")
+    if $activeTask[0]?
+      $(".tab-justdo-calendar-container").animate { scrollTop: $activeTask.position().top - 30 }, 500
+      console.log $activeTask
+      $activeTask.addClass "show_cell"
+      setTimeout (->
+        $activeTask.removeClass "show_cell"
+        return
+      ), 1000
+    return
+
   #todo: become future compatible - the project level workdays and holidays will come from the delivery planner
   #todo: check with Daniel how to ensure plugins dependancies during load time.
   #todo: once we apply project filters, take the workdays from the project record.
@@ -308,6 +321,11 @@ Template.justdo_calendar_project_pane.onCreated ->
       weekly_work_days: [0, 1, 1, 1, 1, 1, 0] #sunday at index 0, default set to Monday-Friday
       specific_off_days: [] # and no holidays by default
       working_hours_per_day: 8
+
+  @autorun =>
+    if (active_item_id = APP.modules.project_page.activeItemId())?
+      findSelectedTask(active_item_id)
+    return
 
 
   return # end onCreated
