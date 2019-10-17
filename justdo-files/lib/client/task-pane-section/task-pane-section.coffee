@@ -81,7 +81,6 @@ Template.justdo_files_uploader.onCreated ->
           , false
         catch e
           # create a fake upload object to faciliate the message display 
-          console.log "e1"
           tpl.addUploadProcess
             file: file
             progress: new ReactiveVar 0
