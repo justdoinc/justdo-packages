@@ -335,14 +335,27 @@ Template.justdo_calendar_project_pane.onCreated ->
       justdo_level_workdays = APP.justdo_delivery_planner.justdo_level_workdays.get()
   else
     justdo_level_workdays =
-      weekly_work_days: [0, 1, 1, 1, 1, 1, 0] #sunday at index 0, default set to Monday-Friday
+      weekly_work_days: [1, 1, 1, 1, 1, 1, 1] #sunday at index 0, default set to Monday-Friday
       specific_off_days: [] # and no holidays by default
       working_hours_per_day: 8
+    user_first_day_of_week = 1
+    if Meteor.user().profile?.first_day_of_week?
+      user_first_day_of_week = Meteor.user().profile.first_day_of_week
+    user_first_day_of_week--
+    if(user_first_day_of_week<0)
+      user_first_day_of_week=6
+    justdo_level_workdays.weekly_work_days[user_first_day_of_week]=0
+    user_first_day_of_week--
+    if(user_first_day_of_week<0)
+      user_first_day_of_week=6
+    justdo_level_workdays.weekly_work_days[user_first_day_of_week]=0
+    
 
-  @autorun =>
-    if (active_item_id = APP.modules.project_page.activeItemId())?
-      findSelectedTask(active_item_id)
-    return
+  # commenting out for now, as it's UX is not good. -AL
+  #@autorun =>
+  #  if (active_item_id = APP.modules.project_page.activeItemId())?
+  #    findSelectedTask(active_item_id)
+  #  return
 
   @tasks_to_users = {}
   @users_to_tasks = {}
