@@ -228,8 +228,8 @@ Template.justdo_calendar_project_pane.onCreated ->
   active_item_id = null
 
   #calculate the first day to display based on the beginning of the week of the user
-  @resetFirstDay = ->
-    d = new Date
+  @resetFirstDay = (date)->
+    d = new Date(date)
     dow = d.getDay()
     user_first_day_of_week = 1
     if Meteor.user().profile?.first_day_of_week?
@@ -241,17 +241,26 @@ Template.justdo_calendar_project_pane.onCreated ->
     @view_start_date.set(d)
     return
 
-  @resetFirstDay()
+  @resetFirstDay(new Date)
 
   #scrolling left and right control flow
   @scroll_left_right_handler = null
 
   @setToPrevWeek = (keep_scroll_handler)->
-    date = moment(self.view_start_date.get())
-    if date.day() == 1 # This is Monday
-      date.subtract(1, "days") # Go back to Sunday to find previous Monday
-    date.startOf("isoWeek")
-    self.view_start_date.set(date)
+    d = self.view_start_date.get()
+    dow = d.getDay()
+    user_first_day_of_week = 1
+    if Meteor.user().profile?.first_day_of_week?
+      user_first_day_of_week = Meteor.user().profile.first_day_of_week
+
+    if dow == user_first_day_of_week
+      d.setDate(d.getDate() - 7)
+    else
+      if dow < user_first_day_of_week
+        dow += 7
+      d.setDate(d.getDate() - (dow - user_first_day_of_week))
+    self.view_start_date.set(d)
+
     if !keep_scroll_handler and self.scroll_left_right_handler
       clearInterval(self.scroll_left_right_handler)
     return
@@ -259,10 +268,18 @@ Template.justdo_calendar_project_pane.onCreated ->
   onClickScrollLeft = @setToPrevWeek
 
   @setToNextWeek = (keep_scroll_handler)->
-    date = moment(self.view_start_date.get())
-    date.endOf("isoWeek")
-    date.add(1, "days")
-    self.view_start_date.set(date)
+    d = self.view_start_date.get()
+    d.setDate(d.getDate() + 7)
+    dow = d.getDay()
+    user_first_day_of_week = 1
+    if Meteor.user().profile?.first_day_of_week?
+      user_first_day_of_week = Meteor.user().profile.first_day_of_week
+
+    if dow < user_first_day_of_week
+      dow += 7
+    d.setDate(d.getDate() - (dow - user_first_day_of_week))
+    self.view_start_date.set(d)
+
     if !keep_scroll_handler and self.scroll_left_right_handler
       clearInterval(self.scroll_left_right_handler)
     return
@@ -310,7 +327,7 @@ Template.justdo_calendar_project_pane.onCreated ->
     return
 
   #todo: become future compatible - the project level workdays and holidays will come from the delivery planner
-  #todo: check with Daniel how to ensure plugins dependancies during load time.
+  #todo: check with Daniel how to ensure plugins dependencies during load time.
   #todo: once we apply project filters, take the workdays from the project record.
 
   if APP.justdo_delivery_planner?.justdo_level_workdays
@@ -327,15 +344,178 @@ Template.justdo_calendar_project_pane.onCreated ->
       findSelectedTask(active_item_id)
     return
 
+  @tasks_to_users = {}
+  @users_to_tasks = {}
+  @project_members_to_dependency = {}
 
+  @onTaskAddedOrChanged = (task_id, fields)->
+    if !(task = APP.collections.Tasks.findOne(task_id))?
+      return
+
+    #############
+    # In this section we find which users are relevant to the task
+    #############
+    current_users = new Set() #we start by cleaning the association to all users.
+    current_users.add task.owner_id
+    if(pending_owner = task.pending_owner_id)
+      current_users.add pending_owner
+    if task["priv:follow_up"]
+      current_users.add Meteor.userId()
+
+    # dealing with users that have planned or executed times
+    for k,v of task
+      if k.indexOf("p:rp:b:work-hours_p:b:user:") == 0
+        current_users.add k.substr(27)
+      if k.indexOf("p:rp:b:work-hours_e:b:user:") == 0
+        current_users.add k.substr(27)
+
+    if not(prev_users = self.tasks_to_users[task_id])
+      self.tasks_to_users[task_id] = new Set()
+      prev_users = self.tasks_to_users[task_id]
+
+    else #check if current and prev are the same, if so, nothing to do now...
+      if prev_users.size == current_users.size
+        found_difference = false
+        prev_users.forEach (prev_user_id)->
+          if not current_users.has(prev_user_id)
+            found_difference = true
+        if not found_difference
+          return
+
+
+    # we know that the lists diverged. so now, remove users that are on the prev list and not on the
+    # current list
+    prev_users.forEach (prev_user_id)->
+      if not current_users.has(prev_user_id) #i.e. a user was on the task before and now he is not there
+        if (user_to_tasks = self.users_to_tasks[prev_user_id])
+          user_to_tasks.delete task_id
+          self.project_members_to_dependency[prev_user_id].changed()
+    # in a similar way, add the users that are on the new list and were not on the prev list
+    current_users.forEach (current_user_id)->
+      if not prev_users.has(current_user_id)
+        if not self.users_to_tasks[current_user_id]
+          self.users_to_tasks[current_user_id] = new Set()
+        self.users_to_tasks[current_user_id].add task_id
+        self.project_members_to_dependency[current_user_id].changed()
+
+    self.tasks_to_users[task_id] = current_users
+
+    return
+
+  @onTaskRemoved = (task_id)->
+    if !(users = self.tasks_to_users[task_id])
+      return
+    users.forEach (user_id)->
+      if (user_to_tasks = self.users_to_tasks[user_id])
+        user_to_tasks.delete task_id
+        self.project_members_to_dependency[user_id].changed()
+    delete self.tasks_to_users[task_id]
+
+    return
+
+
+  @autorun =>
+    #making reactive to changes in project members
+    all_members = APP.modules.project_page.curProj().getMembersIds()
+    for member in all_members
+      if not self.project_members_to_dependency[member]
+        self.project_members_to_dependency[member] = new Tracker.Dependency()
+      if !self.users_to_tasks[member]
+        self.users_to_tasks[member] = new Set()
+      else if self.users_to_tasks[member].size > 0
+        self.project_members_to_dependency[member].changed()
+        self.users_to_tasks[member].clear()
+      self.tasks_to_users={}
+
+
+    include_tasks = []
+    project_id = self.delivery_planner_project_id.get()
+    project_id="*"
+    if project_id != "*"
+      include_tasks.push project_id
+      path = APP.modules.project_page.gridData().getCollectionItemIdPath(project_id)
+      gc = APP.modules.project_page.mainGridControl()
+      gc._grid_data.each path, (section, item_type, item_obj, path) ->
+        include_tasks.push item_obj._id
+        return
+
+    d = moment(Template.instance().view_start_date.get())
+    dates = []
+    for i in [0..6]
+      dates.push(d.format("YYYY-MM-DD"))
+      d.add(1,"days")
+
+    first_date_to_display = dates[0]
+    last_date_to_display = dates[dates.length-1]
+
+    dates_part = [
+      #regular followup date
+      {follow_up: {$in: dates}},
+      #private followup date
+      {'priv:follow_up': {$in: dates}},
+      #due date in between the dates
+      {$and: [
+        {end_date: {$gte: first_date_to_display}},
+        {end_date: {$lte: last_date_to_display}}
+      ]},
+      #start date in between the dates
+      {$and: [
+        {start_date: {$gte: first_date_to_display}},
+        {start_date: {$lte: last_date_to_display}}
+      ]},
+      #start date before and due date after
+      {$and: [
+        {start_date: {$lt: first_date_to_display}},
+        {end_date: {$gt: last_date_to_display}}
+#        ,
+#        end_date: {$exists: true},
+#        start_date: {$exists: true}
+      ]}
+    ]
+
+    project_part =
+      project_id: APP.modules.project_page.project.get()?.id
+
+    query_parts = []
+    query_parts.push {$or: dates_part}
+    query_parts.push project_part
+    if include_tasks.length > 0
+      query_parts.push {_id: $in: include_tasks}
+
+    APP.collections.Tasks.find({$and: query_parts}).observeChanges
+      added: (id, fields) ->
+        self.onTaskAddedOrChanged id, fields
+        return
+      changed: (id, fields) ->
+        self.onTaskAddedOrChanged id, fields
+        return
+      removed: (id) ->
+        self.onTaskRemoved id
+        return
+    #end of autorun
   return # end onCreated
 
 Template.justdo_calendar_project_pane.helpers
+
+  currentUserDependency: ->
+    return Template.instance().project_members_to_dependency[Meteor.userId()]
+
+  userDependency: ->
+    return Template.instance().project_members_to_dependency[@]
+
+  currentUserTasksSet: ->
+    return Template.instance().users_to_tasks[Meteor.userId()]
+
+  userTasksSet: ->
+    return Template.instance().users_to_tasks[@]
+
+
   title_date: ->
     return moment(Template.instance().view_start_date.get()).format("YYYY-MM-DD")
 
   currentUserId: ->
     return Meteor.userId()
+
 
   allOtherUsers: ->
     if Template.instance().delivery_planner_project_id.get() == "*"
@@ -378,25 +558,24 @@ Template.justdo_calendar_project_pane.events
     return
 
   "click .calendar-view-prev-day": ->
-    date = moment(Template.instance().view_start_date.get())
-    date.subtract(1, 'days');
-    Template.instance().view_start_date.set(date)
+    d = Template.instance().view_start_date.get()
+    d.setDate(d.getDate() - 1)
+    Template.instance().view_start_date.set(d)
     return
 
   "click .calendar-view-next-day": ->
-    date = moment(Template.instance().view_start_date.get())
-    date.add(1, 'days');
-    Template.instance().view_start_date.set(date)
+    d = Template.instance().view_start_date.get()
+    d.setDate(d.getDate() + 1)
+    Template.instance().view_start_date.set(d)
+
     return
 
   "click .calendar-view-next-week": ->
-    date = moment(Template.instance().view_start_date.get())
-    date.add(7, 'days');
-    Template.instance().view_start_date.set(date)
+    Template.instance().setToNextWeek()
     return
 
   "click .calendar-view-back-to-today": ->
-    Template.instance().resetFirstDay()
+    Template.instance().resetFirstDay(new Date)
     return
 
   "change .calendar_view_project_selector": ->
@@ -434,24 +613,21 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
   @days_matrix = new ReactiveVar([])
   @dates_workload = new ReactiveVar({})
 
+  @last_tasks_set_size = 0
   @autorun =>
-    data = Template.currentData()
-    include_tasks = []
-    if data.delivery_planner_project_id? and data.delivery_planner_project_id != "*"
-      include_tasks.push data.delivery_planner_project_id
-      path = APP.modules.project_page.gridData().getCollectionItemIdPath(data.delivery_planner_project_id)
-      gc = APP.modules.project_page.mainGridControl()
-      gc._grid_data.each path, (section, item_type, item_obj, path) ->
-        include_tasks.push item_obj._id
-        return
 
+    data = Template.currentData()
+    data.dependency.depend()
+
+    if self.last_tasks_set_size == 0 and data.tasks_set.size == 0
+      return
+
+    self.last_tasks_set_size = data.tasks_set.size
 
     #days_matrix is eventually a matrix that represents the table that we are going to display,
     # where each column represents a day and each cell holds a task in such a way that we could later
     # display the table easily. after calculation, we set it into the reactive var, and trigger the templates
     # invalidation
-
-
     days_matrix = []
     for i in [0..data.dates_to_display.length]
       days_matrix.push []
@@ -462,46 +638,6 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
     planned_seconds_field = "p:rp:b:work-hours_p:b:user:#{data.user_id}"
     executed_seconds_field = "p:rp:b:work-hours_e:b:user:#{data.user_id}"
-
-    dates_part = [
-      #regular followup date
-      {follow_up: {$in: data.dates_to_display}},
-      #private followup date
-      {'priv:follow_up': {$in: data.dates_to_display}},
-      #due date in between the dates
-      {$and: [
-        end_date: {$gte: first_date_to_display},
-        end_date: {$lte: last_date_to_display}
-      ]},
-      #start date in between the dates
-      {$and: [
-        start_date: {$gte: first_date_to_display},
-        start_date: {$lte: last_date_to_display}
-      ]},
-      #start date before and due date after
-      {$and: [
-        start_date: {$lt: first_date_to_display},
-        end_date: {$gt: last_date_to_display}
-      ]}
-    ]
-
-    owner_part = [
-        {owner_id:  data.user_id}, #user is owner, and there is no pending owner
-        {pending_owner_id: data.user_id}, #user is the pending owner
-        {"#{planned_seconds_field}": {$gt: 0}} #user has planned hours on the task
-      ]
-
-
-
-    project_part =
-      project_id: APP.modules.project_page.project.get()?.id
-
-    query_parts = []
-    query_parts.push {$or: dates_part}
-    query_parts.push {$or: owner_part}
-    query_parts.push project_part
-    if include_tasks.length > 0
-      query_parts.push {_id: $in: include_tasks}
 
     options =
       fields:
@@ -522,7 +658,8 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         "users": 1
 
     self.dates_workload.set({})
-    APP.collections.Tasks.find({$and: query_parts},options).forEach (task)->
+
+    APP.collections.Tasks.find({_id: {$in: Array.from(data.tasks_set)}}, options).forEach (task)->
 
       task_details =
         _id: task._id

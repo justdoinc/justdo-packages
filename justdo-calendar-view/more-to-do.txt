@@ -1,3 +1,19 @@
+- adding members to a task (add all members), and still not all members are becoming drop-targets
+
+
+
+
+Open issues
++ click to select task
+- tasks that are not target for a drop (i.e. their user is not on the task's users list) should not
+be presented as drop targets.
+- once in drag and drop and scrolling to next or prev week, the cell under the cursor doesn't get the border highlight.
+
+- maybe add - find selected task
+- clicking on next/prev week should alway bring to Monady (not 7 days back)
+
+
+
 Things to do:
 + remove the unassigned line
 + remove the one day backward/forward options
