@@ -60,7 +60,7 @@ createDroppableWrapper = ->
     drop: (e, ui) ->
       set_param = {}
       target_user_id = $(e.target).attr "user_id"
-      task_obj = APP.collections.Tasks.findOne({_id: ui.draggable[0].attributes.task_id.value})
+      task_obj = APP.collections.Tasks.findOne({_id: ui.helper[0].attributes.task_id.value})
 
       # calculating task owner as it is on the calendar
       calendar_view_owner_id = task_obj.owner_id
@@ -109,13 +109,13 @@ createDroppableWrapper = ->
         #dealing with Followups
         if ui.draggable[0].attributes.type.value == 'F'
           set_param['follow_up'] = e.target.attributes.date.value
-          APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
+          APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
                                         $set:set_param
                                        )
         #dealing with Private followups
         else if ui.draggable[0].attributes.type.value == 'P'
           set_param['priv:follow_up'] = e.target.attributes.date.value
-          APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
+          APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
             $set: set_param
           )
 
@@ -150,7 +150,7 @@ createDroppableWrapper = ->
             set_param['end_date'] = new_end_date_moment.format("YYYY-MM-DD")
 
           #todo: calculate how to move the due-date
-          APP.collections.Tasks.update({_id: ui.draggable[0].attributes.task_id.value},
+          APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
             $set: set_param
           )
       return #end of drop
@@ -349,7 +349,7 @@ Template.justdo_calendar_project_pane.onCreated ->
     if(user_first_day_of_week<0)
       user_first_day_of_week=6
     justdo_level_workdays.weekly_work_days[user_first_day_of_week]=0
-    
+
 
   # commenting out for now, as it's UX is not good. -AL
   #@autorun =>
