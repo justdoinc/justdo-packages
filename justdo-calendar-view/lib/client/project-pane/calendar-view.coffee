@@ -222,6 +222,23 @@ justdo_level_workdays = {} #intentionally making this one a non-reactive var, ot
 
 Template.justdo_calendar_project_pane.onCreated ->
   self = @
+
+  # to handle highlighting the header of 'today', when the day changes...
+  # could be optimized to hit once per day, but this is good enough
+  start_of_day = new moment
+  start_of_day = start_of_day.startOf('day')
+  @today = new ReactiveVar(start_of_day)
+  setInterval( =>
+    start_of_day = new moment
+    start_of_day = start_of_day.startOf('day')
+    self.today.set(start_of_day)
+    return
+  ,
+    1000 * 60
+  )
+
+
+
   @delivery_planner_project_id = new ReactiveVar ("*") # '*' for the entire JustDo
   @all_other_users = new ReactiveVar([])
   @view_start_date = new ReactiveVar
@@ -440,10 +457,9 @@ Template.justdo_calendar_project_pane.onCreated ->
         self.users_to_tasks[member].clear()
       self.tasks_to_users={}
 
-
     include_tasks = []
     project_id = self.delivery_planner_project_id.get()
-    project_id="*"
+
     if project_id != "*"
       include_tasks.push project_id
       path = APP.modules.project_page.gridData().getCollectionItemIdPath(project_id)
@@ -508,6 +524,8 @@ Template.justdo_calendar_project_pane.onCreated ->
     #end of autorun
   return # end onCreated
 
+
+
 Template.justdo_calendar_project_pane.helpers
 
   currentUserDependency: ->
@@ -560,9 +578,9 @@ Template.justdo_calendar_project_pane.helpers
     return formattedDate
 
   isToday: (date) ->
-    today = moment()
-    if moment(date).isSame(today, "d")
+    if moment(date).isSame(Template.instance().today.get(), "d")
       return true
+    return false
 
 
 Template.justdo_calendar_project_pane.events
@@ -652,6 +670,13 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
     planned_seconds_field = "p:rp:b:work-hours_p:b:user:#{data.user_id}"
     executed_seconds_field = "p:rp:b:work-hours_e:b:user:#{data.user_id}"
 
+    owner_part =
+      $or: [
+        {owner_id:  data.user_id}, #user is owner, and there is no pending owner
+        {pending_owner_id: data.user_id}, #user is the pending owner
+        {"#{planned_seconds_field}": {$gt: 0}} #user has planned hours on the task
+        ]
+
     options =
       fields:
         _id: 1
@@ -672,7 +697,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
     self.dates_workload.set({})
 
-    APP.collections.Tasks.find({_id: {$in: Array.from(data.tasks_set)}}, options).forEach (task)->
+    APP.collections.Tasks.find({$and: [_id: {$in: Array.from(data.tasks_set)}, owner_part]}, options).forEach (task)->
 
       task_details =
         _id: task._id
