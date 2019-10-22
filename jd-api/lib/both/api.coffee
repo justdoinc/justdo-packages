@@ -1,1 +1,2 @@
-JD = {}
+JD =
+  collections: APP.collections
