@@ -102,7 +102,6 @@ $add-users-section-margin-bottom-when-invite-members-displayed: 2px
   .members-editor-dialog-add-users-section
     .proceed
       background-color: #E4EDF9
-
       .display-name
         font-weight: bold
 
@@ -200,51 +199,26 @@ $add-users-section-margin-bottom-when-invite-members-displayed: 2px
     height: 31px
     padding: 7px 2px
 
-  $user_pic_height: 30px
   .user-btn
     cursor: pointer
-    line-height: $user_pic_height
-    height: $user_pic_height
-    box-shadow: none
-    border: none
-    width: 99%
-    padding: 0px 10px 0px 0px
-    margin: 0 0 3px
-    border-radius: 25px 0px 0px 25px
-    text-align: left
-    background: none
-    position: relative
-    display: block
-
-    &:active
-      background-color: #E6E6E6
-      border-color: #ADADAD
+    border-radius: 1rem 0 0 1rem
     &:hover
-      background-color: #E4EDF9
 
+    .jd-icon
+      padding: 4px
+      stroke-width: 2
     img
-      width: $user_pic_height
-      height: $user_pic_height
-      float: left
+      width: 26px
+      height: 26px
       margin-right: 4px
-      vertical-align: bottom
       position: relative // prevent text from shiftin on click on IE
     .display-name
-      font-family: "lato", sans-serif
-      font-size: 16px
-      color: #3D495B
-      font-weight: 600
-      margin-left: 2px
       display: inline-block
       position: relative // prevent text from shiftin on click on IE
       text-overflow: ellipsis
       max-width: 185px
       overflow: hidden
-    .toggle
-      padding: 9px 1px 5px
-      color: #95B8E7
-      position: absolute // prevent text from shiftin on click on IE
-      right: 10px
+      white-space: nowrap
 
   .bulk-select-label, .select-all, .select-none, .add-new-member
     display: inline-block
