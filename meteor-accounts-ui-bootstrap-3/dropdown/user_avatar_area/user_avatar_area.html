@@ -14,12 +14,11 @@
         <div class="dropdown-user-avatar-loading-indicator">
           Uploading
         </div>
+        {{#if userHasProfilePic}}
+          {{!-- Note that we allow removing profile pic even if upload is disabled --}}
+          <svg class="avatar-remove remove-profile-pic jd-icon jd-c-pointer text-white"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"/></svg>
+        {{/if}}
       </div>
-
-      {{#if userHasProfilePic}}
-        {{!-- Note that we allow removing profile pic even if upload is disabled --}}
-        <span class="avatar-remove remove-profile-pic"></span>
-      {{/if}}
     </div>
   {{/with}}
 </template>

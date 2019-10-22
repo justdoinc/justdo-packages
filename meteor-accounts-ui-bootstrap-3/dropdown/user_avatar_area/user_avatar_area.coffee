@@ -40,11 +40,12 @@ Template._loginDropdownAvatarArea.events
       return
 
     bootbox.confirm
+      className: "bootbox-new-design"
       title: "Profile Picture Remove"
       message: "Are you sure you want to remove your profile picture?"
       buttons:
-        cancel: label: """<i class="fa fa-times"></i> Cancel"""
-        confirm: label: """<i class="fa fa-check"></i> Confirm"""
+        cancel: label: "Cancel"
+        confirm: label: "Confirm"
       callback: (result) ->
         if result
           Meteor.users.update(Meteor.userId(), {$unset: {"profile.profile_pic": ""}})
