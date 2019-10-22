@@ -6,7 +6,7 @@
 
     <ul class="project-members-container p-0 m-0">
       {{#if isEmptyResults getCurrentMembersFilter}}
-        <li class="no-results text-center mt-3 text-muted">No results found</li>
+        <li class="no-results text-center my-3 text-muted">No results found</li>
       {{else}}
         {{#with project_enrolled_admins_sorted_by_first_name getCurrentMembersFilter}}
           <li class="dropdown-header text-muted text-uppercase mt-1 px-0 pb-2">Admins</li>
