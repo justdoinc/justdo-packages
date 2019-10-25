@@ -20,15 +20,29 @@
     </div>
 
     <div class="calendar_view_main_table_wrapper">
-      <table class="calendar_view_main_table"  width="100%">
-        <tr>
-          <th class="calendar_view_user"></th>
-          <th class="calendar_view_move"></th>
-          {{#each datesToDisplay}}
-            <th class="calendar_view_date {{#if isToday this}}is_today{{/if}}">{{{formatDate}}}</th>
-          {{/each}}
-          <th class="calendar_view_move"></th>
-        </tr>
+      <table class="main_table_fixed_header" width="100%">
+        <thead>
+          <tr>
+            <th class="calendar_view_user"></th>
+            <th class="calendar_view_move"></th>
+            {{#each datesToDisplay}}
+              <th class="{{#if isToday this}}is_today{{/if}}">{{{formatDate}}}</th>
+            {{/each}}
+            <th class="calendar_view_move"></th>
+          </tr>
+        </thead>
+      </table>
+      <table class="calendar_view_main_table" width="100%">
+        <thead>
+          <tr>
+            <th class="calendar_view_user"></th>
+            <th class="calendar_view_move"></th>
+            {{#each datesToDisplay}}
+              <th class="calendar_view_date {{#if isToday this}}is_today{{/if}}">{{{formatDate}}}</th>
+            {{/each}}
+            <th class="calendar_view_move"></th>
+          </tr>
+        </thead>
         {{> justdo_calendar_project_pane_user_view tasks_set=currentUserTasksSet dependency=currentUserDependency user_id=currentUserId dates_to_display=datesToDisplay delivery_planner_project_id=deliveryPlannerProjectId show_navigation=true}}
         {{#each allOtherUsers}}
           {{> justdo_calendar_project_pane_user_view tasks_set=userTasksSet dependency=userDependency user_id=this dates_to_display=datesToDisplay show_navigation=false}}
@@ -58,7 +72,7 @@
             {{#if taskId}}
               {{#with cellData}}
                 <td class="calendar_table_cell" date={{columnDate}} colspan={{span}}>
-                  <div class="calendar_task_cell calendar_view_draggable {{dimWhenPendingOwner}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
+                  <div class="calendar_task_cell calendar_view_draggable {{dimWhenPendingOwner}}" title="{{task.title}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
                     <div class="calendar_task_info">
                       <div class="calendar_task_type">{{type}}</div>
                       {{#if startDateAfterDueDate}}
@@ -107,7 +121,7 @@
   <!--  lets add a dropable line-->
   <tr user_id={{userId}}>
     {{#each colNumbers}}
-      <td class="calendar_view_resources {{markDaysOff}}" date={{columnDate}} >{{bottomLine}}</td>
+      <td class="calendar_view_resources {{markDaysOff}}" date={{columnDate}}>{{#unless markDaysOff}}{{bottomLine}}{{/unless}}</td>
     {{/each}}
   </tr>
 

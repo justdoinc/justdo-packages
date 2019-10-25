@@ -9,7 +9,6 @@
   width: 100%
   background-color: white
   z-index: 200
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08)
 
 .calendar_view_project_selector
   width: 160px
@@ -45,16 +44,30 @@
 .btn-group
   margin-left: 1.5rem
 
-.calendar_view_main_table th, .calendar_view_main_table td
+.main_table_fixed_header
+  table-layout: fixed
+  position: fixed
+  z-index: 300
+  background-color: white
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08)
+  display: none
+
+.calendar_view_main_table th,
+.calendar_view_main_table td,
+.main_table_fixed_header th
   border: 1px dashed #eaeaea
   border-collapse: collapse
+
+.main_table_fixed_header th
+  border-bottom: 1px solid #eaeaea
 
 .calendar_view_main_table tr
   transition: background-color 0.2s linear
   &.highlight
     background-color: rgba(9, 89, 224, 0.04)
 
-.calendar_view_main_table th
+.calendar_view_main_table th,
+.main_table_fixed_header th
   padding: 1rem 0
 
 .calendar_view_main_table td
@@ -63,18 +76,21 @@
 .calendar_view_tasks_row
   height: 45px
 
-.calendar_view_user
+.calendar_view_user,
+.main_table_fixed_header .calendar_view_user
   width: 50px
 
 .calendar_table_user
   text-align: center
+  border-bottom-color: rgba(86, 99, 130, 0.4) !important
   .justdo-avatar
     transition: all 0.25s
     &.highlight
       border: 2px solid white
       box-shadow: 0 0 0 0.2rem rgb(38, 143, 255)
 
-.calendar_view_move
+.calendar_view_move,
+.main_table_fixed_header .calendar_view_move
   width: 35px
 
 .calendar_view_resources
@@ -82,8 +98,10 @@
   font-weight: bold
   color: #0349bf
   text-align: right
+  border-bottom-color: rgba(86, 99, 130, 0.4) !important
 
-.calendar_view_date
+.calendar_view_date,
+.main_table_fixed_header th
   width: 15%
   text-align: center
   color: #525F7F
@@ -93,7 +111,8 @@
     margin-right: 4px
     opacity: 0.6
 
-.calendar_view_date.is_today
+.calendar_view_date.is_today,
+.main_table_fixed_header th.is_today
   background-color: rgba(9, 89, 225, 0.04)
   color: #0959e0
   border-color: rgba(9, 89, 224, 0.16)

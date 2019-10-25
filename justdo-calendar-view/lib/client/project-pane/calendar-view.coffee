@@ -61,105 +61,110 @@ createDroppableWrapper = ->
       set_param = {}
       target_user_id = $(e.target).attr "user_id"
       task_obj = APP.collections.Tasks.findOne({_id: ui.helper[0].attributes.task_id.value})
+      task_users = ui.helper.attr("task_users").split(",")
+      task_acceptable = task_users.indexOf(target_user_id) > -1
 
-      # calculating task owner as it is on the calendar
-      calendar_view_owner_id = task_obj.owner_id
-      if task_obj.pending_owner_id
-        calendar_view_owner_id = task_obj.pending_owner_id
+      if task_acceptable
+        # calculating task owner as it is on the calendar
+        calendar_view_owner_id = task_obj.owner_id
+        if task_obj.pending_owner_id
+          calendar_view_owner_id = task_obj.pending_owner_id
 
-      changing_owner = false
-      if calendar_view_owner_id != target_user_id
-        changing_owner = true
+        changing_owner = false
+        if calendar_view_owner_id != target_user_id
+          changing_owner = true
 
-      # for changing followups or regular tasks (but not private followup), we also allow to change the owner
-      if changing_owner and (ui.draggable[0].attributes.type.value == 'F' or ui.draggable[0].attributes.type.value == 'R')
-        if Meteor.userId() == target_user_id
-          set_param['owner_id'] = target_user_id
-          set_param['pending_owner_id'] = null
-        #if we return a task with pending owner to prev owner
-        else if task_obj.owner_id == target_user_id and task_obj.pending_owner_id?
-          set_param['pending_owner_id'] = null
-        else
-          set_param['pending_owner_id'] = target_user_id
+        # for changing followups or regular tasks (but not private followup), we also allow to change the owner
+        if changing_owner and (ui.draggable[0].attributes.type.value == 'F' or ui.draggable[0].attributes.type.value == 'R')
+          if Meteor.userId() == target_user_id
+            set_param['owner_id'] = target_user_id
+            set_param['pending_owner_id'] = null
+          #if we return a task with pending owner to prev owner
+          else if task_obj.owner_id == target_user_id and task_obj.pending_owner_id?
+            set_param['pending_owner_id'] = null
+          else
+            set_param['pending_owner_id'] = target_user_id
 
-      # if we change owner of a regular task, we need to transfer the planned hours to the target owner,
-      # and assign all unassigned hours to the target owner
-      if changing_owner and ui.draggable[0].attributes.type.value == 'R'
-        original_owner_planning_time = 0 + task_obj["p:rp:b:work-hours_p:b:user:#{calendar_view_owner_id}"]
+        # if we change owner of a regular task, we need to transfer the planned hours to the target owner,
+        # and assign all unassigned hours to the target owner
+        if changing_owner and ui.draggable[0].attributes.type.value == 'R'
+          original_owner_planning_time = 0 + task_obj["p:rp:b:work-hours_p:b:user:#{calendar_view_owner_id}"]
 
-        record =
-          delta: - original_owner_planning_time
-          resource_type: "b:user:#{calendar_view_owner_id}"
-          stage: "p"
-          source: "jd-calendar-view-plugin"
-          task_id: task_obj._id
-        APP.resource_planner.rpAddTaskResourceRecord record
-
-        record.delta = original_owner_planning_time
-        record.resource_type = "b:user:#{target_user_id}"
-        APP.resource_planner.rpAddTaskResourceRecord record
-
-        if (unassigned_hours = task_obj['p:rp:b:unassigned-work-hours'])
-          record.delta = unassigned_hours
+          record =
+            delta: - original_owner_planning_time
+            resource_type: "b:user:#{calendar_view_owner_id}"
+            stage: "p"
+            source: "jd-calendar-view-plugin"
+            task_id: task_obj._id
           APP.resource_planner.rpAddTaskResourceRecord record
-          set_param['p:rp:b:unassigned-work-hours'] = 0
+
+          record.delta = original_owner_planning_time
+          record.resource_type = "b:user:#{target_user_id}"
+          APP.resource_planner.rpAddTaskResourceRecord record
+
+          if (unassigned_hours = task_obj['p:rp:b:unassigned-work-hours'])
+            record.delta = unassigned_hours
+            APP.resource_planner.rpAddTaskResourceRecord record
+            set_param['p:rp:b:unassigned-work-hours'] = 0
 
 
-      if ui.draggable[0].attributes.class.value.indexOf("calendar_view_draggable")>=0
-        #dealing with Followups
-        if ui.draggable[0].attributes.type.value == 'F'
-          set_param['follow_up'] = e.target.attributes.date.value
-          APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
-                                        $set:set_param
-                                       )
-        #dealing with Private followups
-        else if ui.draggable[0].attributes.type.value == 'P'
-          set_param['priv:follow_up'] = e.target.attributes.date.value
-          APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
-            $set: set_param
-          )
+        if ui.draggable[0].attributes.class.value.indexOf("calendar_view_draggable")>=0
+          #dealing with Followups
+          if ui.draggable[0].attributes.type.value == 'F'
+            set_param['follow_up'] = e.target.attributes.date.value
+            APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
+                                          $set:set_param
+                                         )
+          #dealing with Private followups
+          else if ui.draggable[0].attributes.type.value == 'P'
+            set_param['priv:follow_up'] = e.target.attributes.date.value
+            APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
+              $set: set_param
+            )
 
-        #dealing with Regular
-        else if ui.draggable[0].attributes.type.value == 'R'
-          # from the query definitions we must have at least one of start or end dates.
-          original_start_date = task_obj.start_date
-          if !original_start_date
-            original_start_date = task_obj.end_date
+          #dealing with Regular
+          else if ui.draggable[0].attributes.type.value == 'R'
+            # from the query definitions we must have at least one of start or end dates.
+            original_start_date = task_obj.start_date
+            if !original_start_date
+              original_start_date = task_obj.end_date
 
-          original_end_date = task_obj.end_date
-          if !original_end_date
-            original_end_date = task_obj.start_date
+            original_end_date = task_obj.end_date
+            if !original_end_date
+              original_end_date = task_obj.start_date
 
-          new_start_date = e.target.attributes.date.value
-          #calculating the new end date taking days off into consideration:
-          new_end_date_moment = moment(e.target.attributes.date.value)
-          if original_start_date < original_end_date
-            d = moment(original_start_date)
-            while d < moment(original_end_date)
-              if justdo_level_workdays.weekly_work_days[d.day()] == 1
-                new_end_date_moment.add(1,'days')
-                #skip non working days
-                while(justdo_level_workdays.weekly_work_days[new_end_date_moment.day()] == 0)
+            new_start_date = e.target.attributes.date.value
+            #calculating the new end date taking days off into consideration:
+            new_end_date_moment = moment(e.target.attributes.date.value)
+            if original_start_date < original_end_date
+              d = moment(original_start_date)
+              while d < moment(original_end_date)
+                if justdo_level_workdays.weekly_work_days[d.day()] == 1
                   new_end_date_moment.add(1,'days')
-              d.add(1, 'days')
+                  #skip non working days
+                  while(justdo_level_workdays.weekly_work_days[new_end_date_moment.day()] == 0)
+                    new_end_date_moment.add(1,'days')
+                d.add(1, 'days')
 
-          if task_obj.start_date?
-            set_param['start_date'] = new_start_date
+            if task_obj.start_date?
+              set_param['start_date'] = new_start_date
 
-          if task_obj.end_date?
-            set_param['end_date'] = new_end_date_moment.format("YYYY-MM-DD")
+            if task_obj.end_date?
+              set_param['end_date'] = new_end_date_moment.format("YYYY-MM-DD")
 
-          #todo: calculate how to move the due-date
-          APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
-            $set: set_param
-          )
+            #todo: calculate how to move the due-date
+            APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
+              $set: set_param
+            )
+      else # Task not acceptable
+        JustdoSnackbar.show
+          text: "Ownership transfer is not possible due to permissions"
+          actionText: "Close"
+          duration: 5000
+          onActionClick: =>
+            JustdoSnackbar.close()
+            return
       return #end of drop
-
-    accept: (draggable)->
-      target_user = $(this).attr "user_id"
-      task_users = $(draggable).attr("task_users").split(",")
-      return task_users.indexOf(target_user) > -1
-
   return
 
 destroyDroppableWrapper = ->
@@ -205,10 +210,21 @@ setDragAndDrop = ->
             $tableWrapper.removeClass "fadeOut"
             return
           ), 300
-      ), 1000
+      ), 300
       return
-
   return
+
+fixHeaderOnScroll = ->
+  $(".tab-justdo-calendar-container").on "scroll", ->
+    scrollTop = $(this).scrollTop()
+    $tableHeader = $(".main_table_fixed_header")
+    tableWidth = $(".calendar_view_main_table").width()
+    if scrollTop > 0
+      $tableHeader.width(tableWidth).show()
+    else
+      $tableHeader.hide()
+  return
+
 
 # Delay action
 delayAction = do ->
@@ -872,6 +888,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
 Template.justdo_calendar_project_pane_user_view.onRendered ->
   setDragAndDrop()
+  fixHeaderOnScroll()
   return
 
 Template.justdo_calendar_project_pane_user_view.helpers
