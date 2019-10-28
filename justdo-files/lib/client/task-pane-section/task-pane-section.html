@@ -13,7 +13,7 @@
 </template>
 
 <template name="justdo_files_uploader">
-  <div class="drop-pane {{getState}}">
+  <div class="drop-pane {{isHovering}} {{getState}}">
     <label for="file-input" class="custom-file-input">
       {{#if hasPreviousUploadResult}}
         <div class="prev-upload-result">
@@ -39,10 +39,9 @@
           {{else}}
             Drop file(s) here or click to upload
           {{/if}}
-        {{else if $eq getState "uploading"}}
-          {{getUploadProcessMsg}}
         {{else}}
-          ...
+          <div class="upload-process-msg">{{getUploadProcessMsg}}</div>
+          Drop or click to upload more file(s)
         {{/if}}
       </span>
 

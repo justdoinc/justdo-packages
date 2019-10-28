@@ -38,14 +38,18 @@ dragenter_count = 0
 Template.justdo_files_uploader.onCreated ->
   dragenter_count = 0
   @state = new ReactiveVar "ready"
+  @is_hovering = new ReactiveVar false
 
   @_upload_processes_dep = new Tracker.Dependency()
   @_upload_processes = []
+
+  @awaiting_upload_promises_group = 0
 
   @clearUploadProcesses = ->
     if @_upload_processes.length > 0 # this prevents infinite loop
       @_upload_processes = []
       @_upload_processes_dep.changed()
+      @awaiting_upload_promises_group = 0
 
     return 
 
@@ -64,8 +68,10 @@ Template.justdo_files_uploader.onCreated ->
   @uploadFiles = (files) =>
     tpl = @
 
-    tpl.clearUploadProcesses()
-    tpl.state.set "uploading"
+    if tpl.state.get() != "uploading"
+      tpl.clearUploadProcesses()
+      tpl.state.set "uploading"
+
     upload_promises = []
 
     for file in files
@@ -106,10 +112,13 @@ Template.justdo_files_uploader.onCreated ->
 
         return
     
+    tpl.awaiting_upload_promises_group++
+    
     Promise.all(upload_promises).then ->
-      tpl.state.set "ready"
-      # Clear the input so re-attempt to upload the same file will work
-      $("#file-input").val("")
+      if --tpl.awaiting_upload_promises_group == 0
+        tpl.state.set "ready"
+        # Clear the input so re-attempt to upload the same file will work
+        $("#file-input").val("")
 
       return
 
@@ -126,9 +135,13 @@ Template.justdo_files_uploader.onCreated ->
   return
 
 Template.justdo_files_uploader.helpers
-  getState: ->
-    return Template.instance().state.get()
+  getState: -> Template.instance().state.get()
 
+  isHovering: ->     
+    if Template.instance().is_hovering.get() == true
+      return "hovering"
+    return ""
+    
   getUploadProcessMsg: ->
     tpl = Template.instance()
 
@@ -173,46 +186,31 @@ Template.justdo_files_uploader.events
     return
 
   "dragenter .drop-pane": (e, tpl) ->
-    if tpl.state.get() == "uploading"
-      return false
-
     dragenter_count++
     if dragenter_count == 1
-      tpl.state.set "hovering"
+      tpl.is_hovering.set true
     e.stopPropagation()
     e.preventDefault()
     return false
 
   "dragleave .drop-pane": (e, tpl) ->
-    if tpl.state.get() == "uploading"
-      return false
-
     dragenter_count--
     if dragenter_count == 0
-      tpl.state.set "ready"
+      tpl.is_hovering.set false
     e.stopPropagation()
     e.preventDefault()
     return false
   
   "dragover .drop-pane": (e, tpl) ->
-    if tpl.state.get() == "uploading"
-      e.originalEvent.dataTransfer.dropEffect = "none"
-    else
-      e.originalEvent.dataTransfer.dropEffect = 'copy'
+    e.originalEvent.dataTransfer.dropEffect = 'copy'
     e.stopPropagation()
     e.preventDefault()
     return false
   
   "drop .drop-pane": (e, tpl) ->
-    if tpl.state.get() == "uploading"
-      return false
     dragenter_count = 0
+    tpl.is_hovering.set false
     tpl.uploadFiles e.originalEvent.dataTransfer.files
     e.stopPropagation()
     e.preventDefault()
     return false
-  
-  "click .custom-file-input": (e, tpl) ->
-    if tpl.state.get() == "uploading"
-      return false
-    return true
