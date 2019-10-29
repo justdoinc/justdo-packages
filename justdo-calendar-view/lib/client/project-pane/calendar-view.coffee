@@ -241,13 +241,11 @@ fixAvatarOnScroll = ->
 
       if obj_y_top + gap < sticky_y < obj_y_bottom - gap
         if !avatar_fixed
-          console.log "append"
           $(obj).find(".justdo-avatar").clone().hide().appendTo($sticky_avatar_helper).fadeIn()
           avatar_fixed = true
 
       if obj_y_top < sticky_y < obj_y_top + gap or obj_y_bottom - gap < sticky_y < obj_y_bottom
         if avatar_fixed
-          console.log "empty"
           $sticky_avatar_helper.empty()
           avatar_fixed = false
       return
@@ -1061,6 +1059,13 @@ Template.justdo_calendar_project_pane_user_view.helpers
   columnDate: ->
     return Template.instance().data.dates_to_display[@]
 
+  showType: (type) ->
+    if type == "R"
+      return false
+    else
+      return true
+
+
 Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_task_cell": (e, tpl)->
     if (task_id = $(e.target).closest(".calendar_task_cell").attr("task_id"))?
@@ -1099,7 +1104,3 @@ Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_view_scroll_right_cell" : (e, tpl)->
     onClickScrollRight()
     return
-
-
-Template.registerHelper "equals", (a, b) ->
-  a == b
