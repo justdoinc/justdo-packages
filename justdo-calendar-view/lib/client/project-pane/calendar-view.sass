@@ -80,14 +80,30 @@
 .main_table_fixed_header .calendar_view_user
   width: 50px
 
+.sticky-avatar-helper
+  position: fixed
+  width: 100%
+  height: 1px
+  z-index: 10000
+  margin-top: 38px
+  .justdo-avatar
+    position: absolute
+    top: 11px
+    left: 11px
+
 .calendar_table_user
-  text-align: center
+  position: relative
   border-bottom-color: rgba(86, 99, 130, 0.4) !important
   .justdo-avatar
+    position: absolute
+    top: 10px
+    left: 10px
     transition: all 0.25s
     &.highlight
       border: 2px solid white
       box-shadow: 0 0 0 0.2rem rgb(38, 143, 255)
+
+
 
 .calendar_view_move,
 .main_table_fixed_header .calendar_view_move

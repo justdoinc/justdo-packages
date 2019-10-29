@@ -214,6 +214,7 @@ setDragAndDrop = ->
       return
   return
 
+
 fixHeaderOnScroll = ->
   $(".tab-justdo-calendar-container").on "scroll", ->
     scrollTop = $(this).scrollTop()
@@ -223,7 +224,36 @@ fixHeaderOnScroll = ->
       $tableHeader.width(tableWidth).show()
     else
       $tableHeader.hide()
+    return
   return
+
+fixAvatarOnScroll = ->
+  avatar_fixed = false
+  $(".tab-justdo-calendar-container").on "scroll", ->
+    $sticky_avatar_helper = $(".sticky-avatar-helper")
+
+    $(".calendar_table_user").each (e, obj) ->
+      height = $(obj).outerHeight()
+      sticky_y = $sticky_avatar_helper[0].getBoundingClientRect().y
+      obj_y_top = obj.getBoundingClientRect().y
+      obj_y_bottom = obj_y_top + height
+      gap = 52
+
+      if obj_y_top + gap < sticky_y < obj_y_bottom - gap
+        if !avatar_fixed
+          console.log "append"
+          $(obj).find(".justdo-avatar").clone().hide().appendTo($sticky_avatar_helper).fadeIn()
+          avatar_fixed = true
+
+      if obj_y_top < sticky_y < obj_y_top + gap or obj_y_bottom - gap < sticky_y < obj_y_bottom
+        if avatar_fixed
+          console.log "empty"
+          $sticky_avatar_helper.empty()
+          avatar_fixed = false
+      return
+    return
+  return
+
 
 
 # Delay action
@@ -889,6 +919,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 Template.justdo_calendar_project_pane_user_view.onRendered ->
   setDragAndDrop()
   fixHeaderOnScroll()
+  fixAvatarOnScroll()
   return
 
 Template.justdo_calendar_project_pane_user_view.helpers
