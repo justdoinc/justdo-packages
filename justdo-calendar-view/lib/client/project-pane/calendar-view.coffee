@@ -379,7 +379,6 @@ Template.justdo_calendar_project_pane.onCreated ->
     $activeTask = $(".calendar_task_cell[task_id=#{taskId}]")
     if $activeTask[0]?
       $(".tab-justdo-calendar-container").animate { scrollTop: $activeTask.position().top - 30 }, 500
-      console.log $activeTask
       $activeTask.addClass "show_cell"
       setTimeout (->
         $activeTask.removeClass "show_cell"
@@ -608,7 +607,7 @@ Template.justdo_calendar_project_pane.helpers
 
   datesToDisplay: ->
     dates = []
-    d = moment(Template.instance().view_start_date.get())
+    d = moment(new Date(Template.instance().view_start_date.get()))
     for i in [0..6]
       dates.push(d.format("YYYY-MM-DD"))
       d.add(1,"days")
@@ -618,11 +617,11 @@ Template.justdo_calendar_project_pane.helpers
     return Template.instance().delivery_planner_project_id.get()
 
   formatDate: ->
-    formattedDate = "<span class='week_day'>" + moment(@).format("ddd") + "</span>" + moment(@).format("Do")
+    formattedDate = "<span class='week_day'>" + moment.utc(@).format("ddd") + "</span>" + moment.utc(@).format("Do")
     return formattedDate
 
   isToday: (date) ->
-    if moment(date).isSame(Template.instance().today.get(), "d")
+    if moment.utc(date).isSame(Template.instance().today.get(), "d")
       return true
     return false
 
@@ -972,8 +971,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
 
   markDaysOff: ->
     column_date = Template.instance().data.dates_to_display[@]
-    z = moment(column_date).day();
-    if justdo_level_workdays.weekly_work_days[moment(column_date).day()] == 0
+    if justdo_level_workdays.weekly_work_days[moment.utc(column_date).day()] == 0
       return "calendar_view_mark_days_off"
     return ""
 
