@@ -621,7 +621,7 @@ Template.justdo_calendar_project_pane.helpers
     return formattedDate
 
   isToday: (date) ->
-    if moment.utc(date).isSame(Template.instance().today.get(), "d")
+    if moment(date).isSame(Template.instance().today.get(), "d")
       return true
     return false
 
