@@ -98,6 +98,7 @@ _.extend JustdoFiles.prototype,
           _id: gridfs_id
         readstream.on "error", (err) ->
           throw err
+        http.response.setHeader "Content-Disposition", "attachment; filename=\"#{file.name}\""
         readstream.pipe http.response
 
       # Returning true means that we took control (intercepted the behavior), if we
