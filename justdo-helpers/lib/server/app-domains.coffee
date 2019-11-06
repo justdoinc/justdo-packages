@@ -9,6 +9,18 @@ global_beta_webapp = "https://app-beta.justdo.com"
 
 _.extend JustdoHelpers,
   getProdUrl: (app_type) ->
+    # In the past, we had a beta environment for every JustDo's deployment.
+    #
+    # Now, only the global deployment (app./justdo.com) has a beta environment (app-beta/beta.justdo.com).
+    #
+    # This method will return for the app-type the prod url if we are in a global
+    # beta site:
+    #
+    #   * global_beta_webapp -> global_prod_webapp
+    #   * global_beta_landing_app -> global_prod_landing_app
+    #
+    # For all the rest of the deployments it'll do nothing.
+
     # app_type can be either: "web-app" or "landing-app" we will ignore any input error
     if app_type == "web-app"
       app_url = process.env.WEB_APP_ROOT_URL
@@ -21,22 +33,9 @@ _.extend JustdoHelpers,
       global_prod_url = global_prod_landing_app
       global_beta_url = global_beta_landing_app
 
-
-    if not (environment = process.env.ENV)? or environment == "prod"
-      # No env seperation here, just return the WEB_APP_ROOT_URL
-      return app_url
-
-    # We are on beta and prod is requested.
-
     if app_url == global_beta_url
-      # The global prod is a special case where it comes to domain naming
-      # conventions.
-
       return global_prod_url
-    else
-      # The global prod is a special case where it comes to domain naming
-      # conventions.
 
-      return app_url.replace("-beta.", ".")
+    return app_url
 
   getProdDomain: (app_type) -> @getProdUrl().replace(/https?:\/\//, "")
