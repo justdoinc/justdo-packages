@@ -252,8 +252,6 @@ fixAvatarOnScroll = ->
     return
   return
 
-
-
 # Delay action
 delayAction = do ->
   timer = 0
@@ -567,10 +565,7 @@ Template.justdo_calendar_project_pane.onCreated ->
     #end of autorun
   return # end onCreated
 
-
-
 Template.justdo_calendar_project_pane.helpers
-
   currentUserDependency: ->
     return Template.instance().project_members_to_dependency[Meteor.userId()]
 
@@ -624,7 +619,6 @@ Template.justdo_calendar_project_pane.helpers
     if moment(date).isSame(Template.instance().today.get(), "d")
       return true
     return false
-
 
 Template.justdo_calendar_project_pane.events
   "click .calendar-view-prev-week": ->
@@ -717,7 +711,8 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
       $or: [
         {owner_id:  data.user_id}, #user is owner, and there is no pending owner
         {pending_owner_id: data.user_id}, #user is the pending owner
-        {"#{planned_seconds_field}": {$gt: 0}} #user has planned hours on the task
+        {"#{planned_seconds_field}": {$gt: 0}}, #user has planned hours on the task
+        {'priv:follow_up': {$exists: true}}
         ]
 
     options =
@@ -739,9 +734,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         "users": 1
 
     self.dates_workload.set({})
-
     APP.collections.Tasks.find({$and: [_id: {$in: Array.from(data.tasks_set)}, owner_part]}, options).forEach (task)->
-
       task_details =
         _id: task._id
         title: task.title
@@ -753,6 +746,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         state: task.state
         unassigned_hours: task["p:rp:b:unassigned-work-hours"]
         users: task.users
+        "priv:follow_up": task["priv:follow_up"]
 
       #deal with  regular followups
 
@@ -771,7 +765,6 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
               span: 1
             break
           row_index++
-
 
       #deal with private followups
       if task['priv:follow_up'] and data.dates_to_display.indexOf(task['priv:follow_up']) >-1 and data.user_id == Meteor.userId()
@@ -943,9 +936,11 @@ Template.justdo_calendar_project_pane_user_view.helpers
   showNavigation: ->
     return Template.instance().data.show_navigation
 
-  dimWhenPendingOwner: ->
-    if @task?.pending_owner_id? and @task.owner_id == Template.instance().data.user_id
-          return "ownership_transfer_in_progress"
+  dimTask: ->
+    if (@task?.pending_owner_id? and @task.owner_id == Template.instance().data.user_id) or
+      (Template.instance().data.user_id == Meteor.userId() and @task.owner_id != Meteor.userId() and @task["priv:follow_up"]? )
+          return "dim_task"
+
     return ""
 
   hideDuePendingOwner: ->
