@@ -83,13 +83,14 @@ _.extend TasksFileManager.DropPane.prototype,
     $element.on 'drop', (e) =>
       drag_enter_counter = 0
 
-      e.stopPropagation()
-      e.preventDefault()
+      try
+        e.stopPropagation()
+        e.preventDefault()
+      catch err
+        console.error(err)
 
       try
-
         if @_isFolderDropped(e)
-
           @_onError @task_id, "drop-folder", "Folders can't be uploaded"
 
         files = e.originalEvent.dataTransfer.files
@@ -102,9 +103,9 @@ _.extend TasksFileManager.DropPane.prototype,
         else
           @_onError @task_id, "drop-other", "Nothing to upload"
 
-      catch e
+      catch err
 
-        console.error(e)
+        console.error(err)
         @_onError @task_id, "unknown-error", "An error occurred: " + e
 
   _isFolderDropped: (event) ->
