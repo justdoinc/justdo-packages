@@ -1,12 +1,20 @@
 <template name="justdo_calendar_project_pane">
 
     <div class="calendar_view_header">
-      <select class="calendar_view_project_selector">
-        <option value="*" data-content="Pending">Entire JustDo</option>
-        {{#each projectsInJustDo}}
-          <option value={{_id}} data-content="Pending">{{title}}</option>
-        {{/each}}
-      </select>
+      <div class="calendar_view_project_selector dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          Entire JustDo
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="#" project_id="*">Entire JustDo</a></li>
+          <li class="dropdown-header">Projects</li>
+          {{#each projectsInJustDo}}
+            <li><a href="#" project_id={{_id}}>{{title}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+
+
       <div class="calendar_view_date_selector">
         Display Calendar for {{title_date}}
         <div class="btn-group" role="group">
@@ -73,7 +81,7 @@
             {{#if taskId}}
               {{#with cellData}}
                 <td class="calendar_table_cell" date={{columnDate}} colspan={{span}}>
-                  <div class="calendar_task_cell calendar_view_draggable {{dimTask}}" title="{{task.title}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
+                  <div class="calendar_task_cell calendar_view_draggable {{dimTask}} task_cell_{{type}}" title="{{task.title}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
                     <div class="calendar_task_info">
                       {{#if showType type}}
                         <div class="calendar_task_type">{{type}}</div>

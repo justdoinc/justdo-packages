@@ -11,10 +11,15 @@
   z-index: 200
 
 .calendar_view_project_selector
-  width: 160px
-  text-transform: uppercase
-  font-weight: bold
-  background-color: white
+  button
+    padding: 4px 12px
+    text-transform: uppercase
+    font-weight: bold
+    max-width: 250px
+    text-overflow: ellipsis
+    white-space: nowrap
+    overflow: hidden
+    text-align: left
 
 .calendar_view_date_selector
   font-size: 14px
@@ -147,27 +152,37 @@
   table-layout: fixed
 
 .calendar_task_cell
-  background-color: #0A59E0
   border-radius: 2px
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25)
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12)
   white-space: nowrap
   text-overflow: ellipsis
   padding: 0.6rem
-  color: white
   font-weight: bold
   position: relative
   display: flex
   cursor: move
   transition: box-shadow 0.12s linear
   &:hover
-    box-shadow: 0 0 0 0.2rem rgb(255, 255, 255), 0 0 0 0.4rem rgb(9, 89, 224)
     .calendar_task_planned_hours
       opacity: 1
       visibility: visible
-  // &.active
-  //   box-shadow: 0 0 0 0.2rem rgb(255, 255, 255), 0 0 0 0.4rem rgb(9, 89, 224)
   &.show_cell
     box-shadow: 0 0 0 0.2rem rgb(255, 255, 255), 0 0 0 0.4rem rgb(9, 89, 224)
+  &.task_cell_R
+    background-color: #C4E6FC
+    border: 1px solid #9ecfef
+    color: #19649b
+    &:hover
+      box-shadow: 0 0 0 0.2rem rgb(255, 255, 255), 0 0 0 0.4rem #0a85d4
+  &.task_cell_F,
+  &.task_cell_P
+    background-color: #EAE7FD
+    border: 1px solid #cbc8e6
+    color: #7770B2
+    &:hover
+      box-shadow: 0 0 0 0.2rem rgb(255, 255, 255), 0 0 0 0.4rem #5e579e
+
+
 
 .calendar_task_info
   position: absolute

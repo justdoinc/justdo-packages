@@ -646,8 +646,10 @@ Template.justdo_calendar_project_pane.events
     Template.instance().resetFirstDay(new Date)
     return
 
-  "change .calendar_view_project_selector": ->
-    project = $(".calendar_view_project_selector").val()
+  "click .calendar_view_project_selector a": (e) ->
+    project = $(e.currentTarget).attr "project_id"
+    project_name = $(e.currentTarget).text()
+    $(".calendar_view_project_selector button").text(project_name)
     Template.instance().delivery_planner_project_id.set(project)
 
     if project == "*"
@@ -661,7 +663,6 @@ Template.justdo_calendar_project_pane.events
           other_users.push u
         return
       Template.instance().all_other_users.set(other_users)
-
     return
 
   "mouseover .calendar_view_main_table tr": (e, tmpl) ->
