@@ -22,10 +22,16 @@ _.extend TasksFileManager.prototype,
     return
 
   _setupPasteEventListener: ->
+    # If any of the restricted targets is currently focused, we skip the paste procedure
+    restricted_targets = ["#task-description-container"]
+
     window.addEventListener "paste", (e) =>
       if JustdoHelpers.currentPageName() == "project"
         if (gc = APP.modules.project_page.gridControl())? and (current_row = gc.getCurrentRow())?
           if gc._grid_data.getItemIsCollectionItem(current_row)
+            if $(e.target).closest(restricted_targets.join(",")).length
+              return
+
             @_retrieveImageFromClipboardAsBlob e, (image_blob) =>
               if image_blob?
                 dropEvent = $.Event("drop")
