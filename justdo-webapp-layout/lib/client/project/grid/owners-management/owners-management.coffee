@@ -209,6 +209,42 @@ APP.executeAfterAppLibCode ->
             owner_id: Meteor.userId() # The one that request the transfer become the owner
             pending_owner_id: new_owner_doc._id
 
+
+      # find the tasks that belong to 'me' and are visible to the transferee
+      child_tasks = []
+      gc = APP.modules.project_page.mainGridControl()
+      gc._grid_data.each APP.modules.project_page.getCurrentGcm().getPath()[1], (section, item_type, item_obj) ->
+        if item_obj.owner_id == Meteor.userId() and
+              new_owner_doc._id in item_obj.users and
+              not item_obj.pending_owner_id?
+          child_tasks.push item_obj._id
+        return
+
+      # if there are relevant child tasks:
+      if child_tasks.length > 0
+        JustdoSnackbar.show
+          text: "Transfer ownership of #{child_tasks.length} child-tasks as well?"
+          actionText: "Transfer"
+          duration: 10000
+          onActionClick: =>
+            for task_id in child_tasks
+              APP.collections.Tasks.update task_id,
+                $set:
+                  pending_owner_id: new_owner_doc._id
+
+            JustdoSnackbar.show
+              text: "Transfer ownership of #{child_tasks.length} child-tasks processed."
+              actionText: "UNDO"
+              duration: 10000
+              onActionClick: =>
+                for task_id in child_tasks
+                  APP.collections.Tasks.update task_id,
+                    $unset:
+                      pending_owner_id: ""
+                JustdoSnackbar.close()
+                return
+            return
+
       getEventDropdownData(e, "close")()
 
     "click .cancel-transfer": (e, template) ->
