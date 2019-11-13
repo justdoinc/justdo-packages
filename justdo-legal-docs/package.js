@@ -24,6 +24,7 @@ Package.onUse(function (api) {
   api.add_files("docs/privacy-shield.html", client);
   api.add_files("docs/on-premise.html", client);
   api.add_files("docs/promoters-terms-conditions.html", client);
+  api.add_files("docs/cookie-policy.html", client);
   api.add_files("docs/common.coffee", client);
   api.addAssets("docs/data-subject-access-request.pdf", client);
 });
