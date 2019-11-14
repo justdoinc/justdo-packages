@@ -3,6 +3,9 @@
     display: none
 
   .custom-file-input
+    display: flex
+    align-items: center
+    justify-content: center
     text-align: center
     background: #f8f8f8
     border: 2px dashed #dddddd
@@ -23,6 +26,15 @@
   
   .drop-pane
     position: relative
+
+    .drop-pane-logo
+      width: 40px
+      height: 40px
+      background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png);
+      background-position: 0px -58px
+      margin: 5px auto
+      display: none
+
     .prev-upload-result
       padding-bottom: 16px
     
@@ -39,6 +51,15 @@
       left: 50%
       transform: translate(-50%, -50%)
       margin-top: -3px
+      
+    &.no-files
+      height: 100%
+
+      .custom-file-input
+        height: 100%
+
+      .drop-pane-logo
+        display: block
 
     &.hovering
       .custom-file-input
@@ -46,14 +67,14 @@
         border: 2px dashed #d3d8fb
         color: #337ab7
 
-      .prev-upload-result, .upload-msg
+      .prev-upload-result, .upload-msg, .drop-pane-logo
         visibility: hidden
       
       .drop-to-upload-msg
         display: block
     
     &.uploading
-      .prev-upload-result
+      .prev-upload-result, .drop-pane-logo
         display: none
       
 

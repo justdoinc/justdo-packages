@@ -185,6 +185,9 @@ Template.justdo_files_uploader.helpers
   getFailedUploads: ->
     _.filter Template.instance().getUploadProcesses(), (upload) -> upload.state.get() == "aborted"
 
+  noFiles: ->
+    return APP.justdo_files.tasks_files.find({"meta.task_id": APP.modules.project_page.activeItemId()}).count() == 0
+
 
 Template.justdo_files_uploader.events
   "change #file-input": (e, tpl) ->

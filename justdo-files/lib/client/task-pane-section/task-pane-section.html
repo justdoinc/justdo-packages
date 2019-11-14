@@ -13,42 +13,45 @@
 </template>
 
 <template name="justdo_files_uploader">
-  <div class="drop-pane {{isHovering}} {{getState}}">
+  <div class="drop-pane {{isHovering}} {{getState}} {{#if noFiles}}no-files{{/if}}">
     <label for="file-input" class="custom-file-input">
-      {{#if hasPreviousUploadResult}}
-        <div class="prev-upload-result">
-          {{#if $gt numSuccessfulUploads 0}}
-            <div class="upload-success-msg">{{numSuccessfulUploads}} file(s) uploaded successfully.</div>
-          {{/if}}
-          {{#if $gt numFailedUploads 0}}
-            {{numFailedUploads}} file(s) failed to upload:
-            {{#each getFailedUploads}}
-              <div class="upload-failed-entry" data-toggle="tooltip" data-placement="bottom" title="{{this.err_msg}}">
-                <span>{{this.file.name}}</span>
-                <i class="fa fa-exclamation-circle"></i>
-              </div>
-            {{/each}}
-          {{/if}}
-        </div>
-      {{/if}}
-      
-      <span class="upload-msg">
-        {{#if $eq getState "ready"}}
-          {{#if hasPreviousUploadResult}}
-            Drop or click to upload other file(s)
-          {{else}}
-            Drop file(s) here or click to upload
-          {{/if}}
-        {{else}}
-          <div class="upload-process-msg">{{getUploadProcessMsg}}</div>
-          Drop or click to upload more file(s)
+      <div>
+        <div class="drop-pane-logo"></div>
+        {{#if hasPreviousUploadResult}}
+          <div class="prev-upload-result">
+            {{#if $gt numSuccessfulUploads 0}}
+              <div class="upload-success-msg">{{numSuccessfulUploads}} file(s) uploaded successfully.</div>
+            {{/if}}
+            {{#if $gt numFailedUploads 0}}
+              {{numFailedUploads}} file(s) failed to upload:
+              {{#each getFailedUploads}}
+                <div class="upload-failed-entry" data-toggle="tooltip" data-placement="bottom" title="{{this.err_msg}}">
+                  <span>{{this.file.name}}</span>
+                  <i class="fa fa-exclamation-circle"></i>
+                </div>
+              {{/each}}
+            {{/if}}
+          </div>
         {{/if}}
-      </span>
-
-      <span class="drop-to-upload-msg">
-        Drop to upload
-      </span>
-
+        
+        <span class="upload-msg">
+          {{#if $eq getState "ready"}}
+            {{#if hasPreviousUploadResult}}
+              Drop or click to upload other file(s)
+            {{else}}
+              Drop file(s) here or click to upload
+            {{/if}}
+          {{else}}
+            <div class="upload-process-msg">{{getUploadProcessMsg}}</div>
+            Drop or click to upload more file(s)
+          {{/if}}
+        </span>
+  
+        <span class="drop-to-upload-msg">
+          Drop to upload
+        </span>
+  
+      </div>
     </label>
     <input id="file-input" type="file" multiple />
   </div>
