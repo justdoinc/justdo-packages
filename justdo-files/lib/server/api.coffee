@@ -99,7 +99,17 @@ _.extend JustdoFiles.prototype,
           _id: gridfs_id
         readstream.on "error", (err) ->
           throw err
-        http.response.setHeader "Content-Disposition", "attachment; filename=\"#{file.name}\""
+        
+        # URL with query string "preview=true" will make allow browsers to render the file instead of forcing browsers to download the file
+        # Note that the whitelist for preview types must be selected carefully, 
+        # some file types such as text/html can cause XSS vulnerabilities
+        preview_types_whitelist = ["application/pdf", "image/png", "image/gif", "image/jpeg", "image/bmp"]
+
+        if http.request.query.preview == "true" and file.type in preview_types_whitelist
+          http.response.setHeader "Content-Disposition", "inline; filename=\"#{file.name}\""
+        else
+          http.response.setHeader "Content-Disposition", "attachment; filename=\"#{file.name}\""
+
         readstream.pipe http.response
 
       # Returning true means that we took control (intercepted the behavior), if we

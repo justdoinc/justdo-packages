@@ -39,8 +39,40 @@ Template.justdo_files_gallery.helpers
       return true
 
     return false
+  
+  tempPlaceHolder: ->
+    task = @task
+    file = @file
+
+    placeholder = "tfm_img_placeholder_#{task.task_id}_#{file.id}"
+
+    tpl = Template.instance()
+
+    link = APP.justdo_files.tasks_files.findOne(file._id).link()
+    # Load the image
+    load_element = $("<img/>").attr("src", link).on "load", =>
+      # On load, set as the element's background
+      tpl.$(".#{placeholder}")
+        .css("background-image", "url(#{link})")
+        .removeClass("loading")
+        .addClass("image-preview")
+
+      load_element.remove()
+
+      return
+
+    return placeholder
 
 Template.justdo_files_gallery.events
+  "click .file-download-link": (e, tmpl) ->
+    e.preventDefault()
+    task = @task
+    file = @file
+
+    APP.justdo_files.showPreviewOrStartDownload(task.task_id, file)
+
+    return
+
   "click .file-rename-link": (e, tmpl) ->
     e.preventDefault()
     tmpl.renaming.set @file._id

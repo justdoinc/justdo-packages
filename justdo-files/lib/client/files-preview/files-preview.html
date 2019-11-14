@@ -1,0 +1,9 @@
+<template name="justdo_files_files_preview">
+  {{#if preview_link}}
+    {{#if isPdf}}
+      <embed src="{{preview_link}}&r={{randomString}}" type="{{file.type}}" width="970" height="550" alt="{{file.name}}" style="border: 0 none;">
+    {{else if isImage}}
+      <img src="{{preview_link}}" alt="{{file.name}}" title="{{file.name}}" style="max-width: 100%;" />
+    {{/if}}
+  {{/if}}
+</template>
