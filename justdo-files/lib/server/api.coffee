@@ -73,6 +73,7 @@ _.extend JustdoFiles.prototype,
             tasks_files_this.collection.update file._id,
               $set:
                 "meta.gridfs_id": gfs_id
+                "meta.upload_date": new Date()
           else
             # FILE REMOVED BEFORE LINKING! remove the gfs_id
             removed_before_linking = true

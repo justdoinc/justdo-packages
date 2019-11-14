@@ -10,28 +10,86 @@ Template.task_pane_justdo_files_task_pane_section_section.onCreated ->
 
   return
 
-Template.justdo_files_gallery.helpers
-  files: ->
-    return APP.justdo_files.tasks_files.find({"meta.task_id": APP.modules.project_page.activeItemId()})
+Template.justdo_files_gallery.onCreated ->
+  @renaming = new ReactiveVar false
+  @deletion = new ReactiveVar false
 
-Template.justdo_files_gallery.events
-  "click .remove-file": ->
-    file_id = @_id
-
-    bootbox.confirm
-      message: "Are you sure you want to remove this file?"
-      className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
-      closeButton: false
-
-      callback: (result) ->
-        if result
-          APP.justdo_files.removeFile file_id
-
-          return
-
-        return
+  @getTypeCssClass = (file_type) ->
+    [p1, p2] = file_type.split('/')
+    if not p2?
+      return p1
+    else
+      return p2.replace(/\./, "_")
 
     return
+
+Template.justdo_files_gallery.helpers
+  files: -> APP.justdo_files.tasks_files.find({"meta.task_id": APP.modules.project_page.activeItemId()})
+  
+  typeClass: -> Template.instance().getTypeCssClass(@file.type)
+  
+  renaming: -> Template.instance().renaming.get() == @file._id
+
+  deletion: -> Template.instance().deletion.get() == @file._id
+
+  size: -> JustdoHelpers.bytesToHumanReadable(@file.size)
+
+  isImage: ->
+    if (@file.type.slice(0,6) == "image/")
+      return true
+
+    return false
+
+Template.justdo_files_gallery.events
+  "click .file-rename-link": (e, tmpl) ->
+    e.preventDefault()
+    tmpl.renaming.set @file._id
+    Meteor.defer ->
+      tmpl.$("[name='title']").focus()
+
+  "keypress [name='title']": (e, tmpl) ->
+    if e.which == 13 # enter key
+      tmpl.$('.file-rename-done').click()
+
+  "click .file-rename-done": (e, tmpl) ->
+    e.preventDefault()
+    task = @task
+    file = @file
+    newTitle = tmpl.$("[name='title']").val()
+    APP.justdo_files.renameFile file._id, newTitle, (err, result) ->
+      if err
+        console.log(err)
+      else
+        tmpl.renaming.set false
+      return
+
+  "click .file-rename-cancel": (e, tmpl) ->
+    e.preventDefault()
+    tmpl.renaming.set false
+
+  "click .file-remove-link": (e, tmpl) ->
+    e.preventDefault()
+    tmpl.deletion.set @file._id
+
+  "click .msg-ok": (e, tmpl) ->
+    e.preventDefault()
+    task = @task
+    file = @file
+    tmpl.$(".msg .msg-content").hide()
+    tmpl.$(".loader").show()
+    APP.justdo_files.removeFile file._id
+
+  "click .msg-cancel": (e, tmpl) ->
+    e.preventDefault()
+    tmpl.deletion.set false
+
+  "mouseenter .file": (e, tmpl) ->
+    e.preventDefault()
+    $(e.currentTarget).addClass "active"
+
+  "mouseleave .file": (e, tmpl) ->
+    e.preventDefault()
+    $(".file").removeClass "active"
 
 justdo_files_uploaders_state = {}
 
