@@ -10,4 +10,9 @@ _.extend JustdoFiles.prototype,
 
         return
 
+      "jdfRenameFile": (file_id, new_filename) ->
+        check file_id, String
+        
+        self.renameFile file_id, new_filename, @userId
+
     return

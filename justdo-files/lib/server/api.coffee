@@ -129,3 +129,23 @@ _.extend JustdoFiles.prototype,
         throw err
 
     return
+  
+  renameFile: (file_id, new_filename, user_id) ->
+    if not (file_obj = @tasks_files.findOne(file_id))?
+        throw @_error "unknown-file"
+
+      task_id = file_obj.meta.task_id
+
+      if not @isUserAllowedToAccessTasksFiles(task_id, user_id)
+        throw @_error "unknown-file"
+
+      new_filename_split = new_filename.split "."
+      new_ext = if new_filename_split.length <= 1 then "" else new_filename_split[new_filename_split.length-1]
+      if new_ext != file_obj.ext
+        new_filename += ".#{file_obj.ext}"
+
+      @tasks_files.update file_id, 
+        $set:
+          name: new_filename
+
+      return

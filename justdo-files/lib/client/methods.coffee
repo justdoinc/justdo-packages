@@ -3,3 +3,6 @@ _.extend JustdoFiles.prototype,
     Meteor.call "jdfRemoveFile", file_id, cb
 
     return
+  
+  renameFile: (file_id, new_filename, cb) ->
+    Meteor.call "jdfRenameFile", file_id, new_filename, cb
