@@ -20,6 +20,13 @@ nav.navbar
     background-color: rgba(0, 0, 0, 0.08)
     transform: scale(1.05)
 
+.disabled
+  .jd-icon
+    cursor: default
+    &:hover
+      transform: none
+      background-color: unset
+
 .jd-icon-dropdown
   stroke: currentColor
   stroke-width: 1.5
@@ -37,6 +44,12 @@ nav.navbar
 
 .jd-c-pointer
   cursor: pointer
+
+// Extra small butto
+.jd-btn-xsm
+  padding: 0.2rem 0.25rem !important
+  font-size: 0.75rem !important
+  line-height: 1 !important
 
 .animate
   animation-duration: 0.3s
@@ -119,7 +132,7 @@ nav.navbar
     &:hover
       background-color: rgba(0, 123, 255, 0.12)
   .modal-body
-    padding: 1.2rem 2rem 0rem 2rem
+    padding: 0.5rem 2rem 0rem 2rem
     overflow: hidden
   .projects-wrapper
     overflow-y: auto

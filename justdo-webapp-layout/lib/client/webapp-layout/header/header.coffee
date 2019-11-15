@@ -48,5 +48,5 @@ APP.executeAfterAppLibCode ->
       APP.projects.createNewProject({}, (err, project_id) -> Router.go "project", {_id: project_id})
       $(".drawer").modal "hide"
 
-    "click .project-item":(e, tmpl) ->
+    "click .project-item, click .drawer .modal-footer a, click .pages-section a":(e, tmpl) ->
       $(".drawer").modal "hide"

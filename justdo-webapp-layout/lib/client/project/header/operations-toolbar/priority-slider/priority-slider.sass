@@ -17,6 +17,7 @@
   position: absolute
   left: 6px
   display: none
+  user-select: none
 
 .ticks-wrapper
   .tick
@@ -73,3 +74,7 @@
     transform: scale(1.1)
   &:focus
     outline: none
+
+.ui-state-disabled
+  .jd-priority-slider-handle
+    background: black !important

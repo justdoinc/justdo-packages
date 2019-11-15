@@ -67,7 +67,7 @@
 </template>
 
 <template name="regular_member_item">
-  <li class="member-item regular-member-item d-flex align-items-center justify-content-between" user-id="{{_id}}">
+  <li class="member-item regular-member-item d-flex align-items-center justify-content-between mb-2" user-id="{{_id}}">
     <div class="d-flex align-items-center">
       {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
@@ -88,7 +88,7 @@
 </template>
 
 <template name="enrollment_pending_member">
-  <li class="member-item enrollment-pending-member-item d-flex align-items-center justify-content-between" user-id="{{_id}}">
+  <li class="member-item enrollment-pending-member-item d-flex align-items-center justify-content-between mb-2" user-id="{{_id}}">
     <div class="d-flex align-items-center">
       {{> gtpl_user_profile_pic}} <div class="display-name mx-2" title="{{userEmail this}}">{{displayName}}</div>
     </div>
