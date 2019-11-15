@@ -113,8 +113,8 @@ _.extend GridControl.prototype,
       dropdown_controls = """
         <div role='separator' class='dropdown-divider'></div>
         <div class="dropdown-filter-controls-container">
-          <button type="button" class="btn btn-outline-dark btn-sm close-dropdown">Close</button>
-          <button type="button" class="btn btn-outline-dark btn-sm clear">Clear</button>
+          <button type="button" class="btn btn-light border jd-btn-xsm close-dropdown">Close</button>
+          <button type="button" class="btn btn-light border jd-btn-xsm clear">Clear</button>
           <div style="clear: both"></div>
         </div>
       """
