@@ -1,27 +1,25 @@
-# NEED TO REMOVE THIS CODE -- START --
+share.RecentActivityDropdown = JustdoHelpers.generateNewTemplateDropdown "recent-activity-dropdown", "recent_activity_dropdown",
+  custom_bound_element_options:
+    close_button_html: null
 
-# share.RecentActivityDropdown = JustdoHelpers.generateNewTemplateDropdown "recent-activity-dropdown", "recent_activity_dropdown",
-#   custom_bound_element_options:
-#     close_button_html: null
-#
-#   updateDropdownPosition: ($connected_element) ->
-#     @$dropdown
-#       .position
-#         of: $connected_element
-#         my: "right top"
-#         at: "right bottom"
-#         collision: "fit fit"
-#         using: (new_position, details) =>
-#           target = details.target
-#           element = details.element
-#
-#           element.element.css
-#             top: new_position.top + 4
-#             left: new_position.left + 20
-#
-#     return
+  updateDropdownPosition: ($connected_element) ->
+    @$dropdown
+      .position
+        of: $connected_element
+        my: "right top"
+        at: "right bottom"
+        collision: "fit fit"
+        using: (new_position, details) =>
+          target = details.target
+          element = details.element
+          element.element.addClass "animate slideIn shadow-lg"
+          element.element.css
+            top: new_position.top + 4
+            left: new_position.left + 20
 
-# -- END --
+      $(".dropdown-menu").dropdown "hide"
+
+    return
 
 Template.recent_activity_dropdown.onCreated ->
   APP.justdo_chat.requestSubscribedChannelsRecentActivity({additional_recent_activity_request: false})
@@ -51,11 +49,5 @@ Template.recent_activity_dropdown.events
       # User hit bottom
 
       APP.justdo_chat.requestSubscribedChannelsRecentActivity()
-
-    return
-
-
-  "click .recent-activity-dropdown": (e, tpl) ->
-    e.stopPropagation() # need to avoit close dropdown on click
 
     return

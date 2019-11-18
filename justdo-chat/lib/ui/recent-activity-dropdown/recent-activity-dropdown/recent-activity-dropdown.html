@@ -1,24 +1,23 @@
 <template name="recent_activity_dropdown">
-  <div class="recent-activity-dropdown dropdown-menu dropdown-menu-right p-0 animate slideIn shadow-lg border-0">
-    {{#with recentActivityItems}}
-      <div class="recent-activity-items-container">
-        <div class="recent-activity-items-viewport">
-          <div class="recent-activity-items m-2">
-            {{#each this}}
-              {{> recent_activity_item}}
-            {{/each}}
-          </div>
-        </div>
-        <div class="recent-activity-items-footer d-flex justify-content-end px-3 py-2 shadow-sm">
-          <div class="mark-all-activity-read text-primary font-weight-bold">Mark all as read</div>
+  {{#with recentActivityItems}}
+    <div class="recent-activity-items-container">
+      <div class="recent-activity-items-viewport">
+        <div class="recent-activity-items">
+          {{#each this}}
+            {{> recent_activity_item}}
+          {{/each}}
         </div>
       </div>
-    {{else}}
-      <div class="no-recent-activity-items-container">
-        <p class="text-muted">You have no messages, yet</p>
+      <div class="recent-activity-items-footer">
+        <div class="mark-all-activity-read">Mark All as Read</div>
       </div>
-    {{/with}}
-  </div>
+    </div>
+  {{else}}
+    <div class="no-recent-activity-items-container">
+      <i class="fa fa-comments" aria-hidden="true"></i>
+      <p>You have no messages, yet</p>
+    </div>
+  {{/with}}
 </template>
 
 <template name="recent_activity_item">
