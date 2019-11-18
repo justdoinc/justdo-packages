@@ -32,6 +32,11 @@ APP.executeAfterAppLibCode ->
       else
         $(".jd-priority-slider").slider "disable"
 
+  Template.project_operations_priority_slider.helpers
+    active_is_slider: ->
+     if APP.modules.project_page.activeItemId()?
+       return true
+
 
   Template.project_operations_priority_slider.events
     "click .tick-0": (e, tmpl) ->

@@ -23,7 +23,7 @@ _.extend JustdoFiles.prototype,
         title: file.name
         message: message_template.node
         animate: false
-        className: "tasks-file-manager-preview-dialog"
+        className: "tasks-file-manager-preview-dialog bootbox-new-design"
 
         onEscape: ->
           return true
@@ -49,7 +49,6 @@ _.extend JustdoFiles.prototype,
     else
       # Start download
       APP.justdo_files.downloadFile file._id
-  
+
   downloadFile: (file_id) ->
     window.location.href = APP.justdo_files.tasks_files.findOne(file_id).link()
-

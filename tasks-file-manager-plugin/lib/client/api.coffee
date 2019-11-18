@@ -12,7 +12,7 @@ _.extend TasksFileManagerPlugin.prototype,
         title: file.title
         message: message_template.node
         animate: false
-        className: "tasks-file-manager-preview-dialog"
+        className: "tasks-file-manager-preview-dialog bootbox-new-design"
 
         onEscape: ->
           return true

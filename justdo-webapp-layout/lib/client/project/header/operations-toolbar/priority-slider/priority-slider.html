@@ -1,6 +1,6 @@
 <template name="project_operations_priority_slider">
   <div class="jd-priority-slider-divider bg-secondary ml-2 mr-3"></div>
-  <div class="jd-priority-slider-wrapper position-relative">
+  <div class="jd-priority-slider-wrapper position-relative {{#if active_is_slider}}slider-active{{/if}}">
     <div class="jd-priority-slider border-0">
       <div class="jd-priority-slider-handle ui-slider-handle position-relative bg-primary border-0 m-0 shadow-sm">
         <div class="jd-priority-value text-body"></div>

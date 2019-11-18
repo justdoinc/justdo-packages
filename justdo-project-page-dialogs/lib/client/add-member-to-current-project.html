@@ -1,27 +1,25 @@
 <template name="invite_new_user_dialog">
-  <form>
-    <div class="form-group">
-      <div class="form-group {{#if isInvalidEmail}}has-error{{/if}}">
-        <label for="new-user-email" class="control-label">Email</label>
-        <div>
-          <input id="new-user-email" class="form-control" value="{{email}}">
-        </div>
+  <div class="form-group">
+    <div class="form-group {{#if isInvalidEmail}}has-error{{/if}}">
+      <label for="new-user-email" class="control-label">Email</label>
+      <div>
+        <input id="new-user-email" class="form-control" value="{{email}}">
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group col {{#if isInvalidFirstName}}has-error{{/if}}">
-        <label for="new-user-first-name" class="control-label">First Name</label>
-        <div>
-          <input id="new-user-first-name" class="form-control" value="{{first_name}}">
-        </div>
-      </div>
-      <div class="form-group col {{#if isInvalidLastName}}has-error{{/if}}">
-        <label for="new-user-last-name" class="control-label">Last Name</label>
-        <div>
-          <input id="new-user-last-name" class="form-control" value="{{last_name}}">
-        </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col {{#if isInvalidFirstName}}has-error{{/if}}">
+      <label for="new-user-first-name" class="control-label">First Name</label>
+      <div>
+        <input id="new-user-first-name" class="form-control" value="{{first_name}}">
       </div>
     </div>
-  </form>
+    <div class="form-group col {{#if isInvalidLastName}}has-error{{/if}}">
+      <label for="new-user-last-name" class="control-label">Last Name</label>
+      <div>
+        <input id="new-user-last-name" class="form-control" value="{{last_name}}">
+      </div>
+    </div>
+  </div>
   <p>If no invitation email will be received by the new member, please ensure correct email entered, and ask the new member to check the spam folder.</p>
 </template>
