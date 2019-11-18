@@ -11,7 +11,7 @@
               {{#if $eq required_actions_count 0}}no-actions{{else}}pending-actions{{/if}}
               {{#if $gt required_actions_count 9}}many-actions{{/if}}
               ">
-    <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <div data-toggle="{{#if current_project}}dropdown{{/if}}" aria-haspopup="true" aria-expanded="true">
       <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#bell"/></svg>
       <div class="required-actions-count">
         {{#if $lte required_actions_count 9}}
@@ -20,7 +20,9 @@
           9+
         {{/if}}
       </div>
-      {{> required_actions_dropdown}}
+      {{#if current_project}}
+        {{> required_actions_dropdown}}
+      {{/if}}
     </div>
   </div>
 </template>

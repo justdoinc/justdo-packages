@@ -10,3 +10,6 @@ APP.executeAfterAppLibCode ->
   Template.required_actions_bell.helpers
     required_actions_count: ->
       projects.modules.required_actions.getCursor(@_id).count()
+
+    current_project: ->
+      curProj()
