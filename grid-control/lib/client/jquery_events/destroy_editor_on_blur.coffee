@@ -62,11 +62,6 @@ GridControl.jquery_builtin_events.push(
                 # Focused went out of selector, exit
                 @cancelAndExitActiveEditor()
 
-        # Save and exit on any change request
-        select_picker_obj = $(e.currentTarget).data("this")
-        select_picker_obj?.$element?.on "change-request-processed", =>
-          @saveAndExitActiveEditor()
-
       Meteor.defer =>
         # Destroy date editor only if blur isn't a result of opening the datepicker
         if (e.currentTarget == $('input.editor-unicode-date', @container).get(0))

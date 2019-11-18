@@ -65,35 +65,36 @@ GridControl.installEditor "SelectorEditor",
       selector_options_html +=
         """<option value='#{JustdoHelpers.xssGuard(option.value, {allow_html_parsing: true, enclosing_char: "'"})}' data-content="#{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: '"'})}" #{custom_style}>#{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ""})}</option>"""
 
-    @$select = $("""<select class="selector-editor">#{selector_options_html}</select>""")
+    @$select = $("""<select class="selector-editor dropdown-menu-lite">#{selector_options_html}</select>""")
     @$select.appendTo @context.container
 
+    @$select = $(".selector-editor", @context.container)
+
     @$select.selectpicker
-      dropupAuto: true
-      size: false
+      container: "body"
       width: "100%"
+      sanitize: false
+      size: 8
+
+    @$select.selectpicker("refresh")
+    @$select.selectpicker("render")
 
     @$select_picker = @$select.next()
-    @$select_picker_obj = @$select_picker.data("this")
 
     @showSelect()
 
     @$grid_view_port =
       $(@context.grid.getCanvasNode()).parent()
 
-    @grid_view_port_scroll_handler = =>
-      @$select.selectpicker "resizeHandler"
-
-      return
-
-    @$grid_view_port.on "scroll", @grid_view_port_scroll_handler
-
     @$select.on "change-request-processed", =>
       @context.grid_control.saveAndExitActiveEditor()
 
       return
 
-    @applyStaticFix()
+    @$select.on "hidden.bs.select", =>
+      @context.grid_control.saveAndExitActiveEditor()
+
+      return
 
     return
 
@@ -103,8 +104,10 @@ GridControl.installEditor "SelectorEditor",
       # for empty/undefined values
 
       val = ""
-    
-    @$select.selectpicker("val", val);
+
+    @$select.selectpicker("val", val)
+    @$select.selectpicker("refresh")
+    @$select.selectpicker("render")
 
     bg_color = JustdoHelpers.normalizeBgColor(getKeyBgColor(@context.column.values, val))
     fg_color = JustdoHelpers.getFgColor(bg_color)
@@ -127,43 +130,12 @@ GridControl.installEditor "SelectorEditor",
 
     return
 
-  applyStaticFix: ->
-    if $(@context.container).hasClass("slick-cell")
-      $(@context.container).addClass("selector-editor-container-cell")
-
-    return
-
-  destroyStaticFix: ->
-    $(@context.container).removeClass("selector-editor-container-cell")
-
-    return
-
   destroy: ->
     @$select.selectpicker("destroy")
-    @$grid_view_port.off("scroll", @grid_view_port_scroll_handler)
-
-    @destroyStaticFix()
 
     return
 
-  #
-  # Editor specific helpers
-  #
   showSelect: ->
-    @$select_picker_obj.$menu.show()
-
-    return
-
-  moreInfoSectionCustomizations: ($firstNode, field_editor) ->
-    field_editor.$dom_node.find("div.dropdown-menu").removeAttr("style")
-
-    $firstNode.find(".dropdown-menu a")
-      .click (e) ->
-        Meteor.defer ->
-          field_editor.save()
-
-          $(":focus").blur()
-
-          return
+    @$select.selectpicker("toggle")
 
     return
