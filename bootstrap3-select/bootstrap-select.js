@@ -2430,6 +2430,8 @@
                 .triggerNative('change');
             }
           }
+
+          that.$element.trigger('change-request-processed');
         }
       });
 
