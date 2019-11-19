@@ -6,6 +6,13 @@ _.extend JD,
     # Normalize non-existence result to 'undefined'
     return undefined
 
+  active_justdo:
+    isAdmin: ->
+      if not (cur_proj = APP.modules?.project_page?.curProj())?
+        return false
+
+      return cur_proj.isAdmin()
+
   activeItem: (fields) ->
     if (active_obj = APP.modules?.project_page?.activeItemObj(fields))?
       return active_obj
@@ -19,3 +26,9 @@ _.extend JD,
 
     # Normalize non-existence result to 'undefined'
     return undefined
+
+  registerPlaceholderItem: (...args) -> APP.modules.main.registerPlaceholderItem.apply(APP.modules.main, args)
+
+  unregisterPlaceholderItem: (...args) -> APP.modules.main.unregisterPlaceholderItem.apply(APP.modules.main, args)
+
+  getPlaceholderItems: (...args) -> APP.modules.main.getPlaceholderItems.apply(APP.modules.main, args)

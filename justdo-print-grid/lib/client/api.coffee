@@ -562,13 +562,17 @@ _.extend JustdoPrintGrid.prototype,
     #
     # Main
     #
-    APP.modules.project_page.registerPlaceholderItem "print-button",
+    JD.registerPlaceholderItem "print-button",
       data:
         template: "print_dropdown"
         template_data: {}
 
       domain: "project-right-navbar"
       position: 350
+
+    Template.print_dropdown.helpers
+      printDropdownBottomItems: ->
+        return JD.getPlaceholderItems("print-dropdown-bottom")
 
     Template.print_dropdown.events
       "click .print-dropdown": ->

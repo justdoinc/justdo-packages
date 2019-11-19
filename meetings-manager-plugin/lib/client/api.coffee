@@ -22,7 +22,7 @@ _.extend MeetingsManagerPlugin.prototype,
       @_meeting_dialog_view = null
 
   renderMeetingsMenu: (project_id, target_element) ->
-    APP.modules.project_page.registerPlaceholderItem "meetings-menu",
+    JD.registerPlaceholderItem "meetings-menu",
       data:
         template: "meetings_meetings_menu"
         template_data:
@@ -34,7 +34,7 @@ _.extend MeetingsManagerPlugin.prototype,
     return
 
   removeMeetingsMenu: ->
-    APP.modules.project_page.unregisterPlaceholderItem "meetings-menu"
+    JD.unregisterPlaceholderItem "meetings-menu"
 
     return
 

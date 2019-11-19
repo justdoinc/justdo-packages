@@ -12,7 +12,7 @@ APP.executeAfterAppLibCode ->
 
   Template.header.helpers
     globalRightNavbarItems: ->
-      return main_module.getPlaceholderItems("global-right-navbar").reverse() # We reverse to have consistent order with the float right behaviour of the project-right-navbar
+      return JD.getPlaceholderItems("global-right-navbar").reverse() # We reverse to have consistent order with the float right behaviour of the project-right-navbar
 
     getHeaderWidth: ->
       min_project_container_width =
@@ -28,14 +28,14 @@ APP.executeAfterAppLibCode ->
 
     rightHeaderTemplate: -> main_module.getCustomHeaderTemplate("right")
 
-    drawerPagesMenuItems: -> main_module.getPlaceholderItems("drawer-pages")
+    drawerPagesMenuItems: -> JD.getPlaceholderItems("drawer-pages")
 
-    drawerBottomMenuItems: -> main_module.getPlaceholderItems("drawer-bottom")
+    drawerBottomMenuItems: -> JD.getPlaceholderItems("drawer-bottom")
 
     drawerProjectsListTop: ->
-      return drawer_brand_height + drawer_top_menu_padding_top + drawer_top_menu_padding_bottom + (drawer_top_menu_item_height * (main_module.getPlaceholderItems("drawer-pages").length + 1)) # + 1 is for the for the built-in projects list title
+      return drawer_brand_height + drawer_top_menu_padding_top + drawer_top_menu_padding_bottom + (drawer_top_menu_item_height * (JD.getPlaceholderItems("drawer-pages").length + 1)) # + 1 is for the for the built-in projects list title
 
-  main_module.registerPlaceholderItem "justdo-chat-recent-activity",
+  JD.registerPlaceholderItem "justdo-chat-recent-activity",
     data:
       template: "justdo_chat_recent_activity_button"
       template_data: {}
@@ -43,7 +43,7 @@ APP.executeAfterAppLibCode ->
     domain: "global-right-navbar"
     position: 100
 
-  main_module.registerPlaceholderItem "tutorials-submenu",
+  JD.registerPlaceholderItem "tutorials-submenu",
     data:
       template: "tutorials_submenu"
       template_data: {}

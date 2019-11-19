@@ -10,6 +10,14 @@
       <li class="dropdown-header selected-task-section">Print Current Task</li>
       <li><a href="#" class="print-dropdown-item all-sub-tasks selected-task-section"><i></i> All Child Tasks</a></li>
       <li><a href="#" class="print-dropdown-item visible-sub-tasks selected-task-section"><i></i> Visible Child Tasks</a></li>
+
+      {{#each printDropdownBottomItems}}
+        {{#if template}}
+          {{> Template.dynamic template=template data=template_data}}
+        {{else if html}}
+          {{{html}}}
+        {{/if}}
+      {{/each}}
     </ul>
   </div>
 </template>

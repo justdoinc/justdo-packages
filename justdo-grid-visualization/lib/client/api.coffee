@@ -18,7 +18,7 @@ _.extend JustdoGridVisualization.prototype,
         is_enabled = cur_project.isCustomFeatureEnabled(module_id)
 
         if is_enabled
-          APP.modules.project_page.registerPlaceholderItem "grid-visualization",
+          JD.registerPlaceholderItem "grid-visualization",
             data:
               template: "grid_visualization_menu"
               template_data: {}
@@ -26,7 +26,7 @@ _.extend JustdoGridVisualization.prototype,
             domain: "project-right-navbar"
             position: 360
         else
-          APP.modules.project_page.unregisterPlaceholderItem "grid-visualization"
+          JD.unregisterPlaceholderItem "grid-visualization"
 
   showVisualization: ->
     selected_path = APP.modules.project_page.activeItemPath() or "/"

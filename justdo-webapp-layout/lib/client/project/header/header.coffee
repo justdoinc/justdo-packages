@@ -11,10 +11,10 @@ APP.executeAfterAppLibCode ->
 
   Template.project_header.helpers
     aboveProjectHeaderItems: ->
-      return module.getPlaceholderItems("above-project-header")
+      return JD.getPlaceholderItems("above-project-header")
 
     belowProjectHeaderItems: ->
-      return module.getPlaceholderItems("below-project-header")
+      return JD.getPlaceholderItems("below-project-header")
 
   #
   # project_header_global_layout_header_right, project_header_global_layout_header_middle templates
@@ -22,9 +22,9 @@ APP.executeAfterAppLibCode ->
   Template.project_header_global_layout_header_right.helpers project_template_helpers
   Template.project_header_global_layout_header_right.helpers
     rightNavbarItems: ->
-      return module.getPlaceholderItems("project-right-navbar")
+      return JD.getPlaceholderItems("project-right-navbar")
 
-  module.registerPlaceholderItem "members-dropdown-button",
+  JD.registerPlaceholderItem "members-dropdown-button",
     data:
       template: "members_dropdown_button"
       template_data: {}
@@ -32,7 +32,7 @@ APP.executeAfterAppLibCode ->
     domain: "project-right-navbar"
     position: 100
 
-  module.registerPlaceholderItem "plugins-store-button",
+  JD.registerPlaceholderItem "plugins-store-button",
     data:
       template: "plugins_store_button"
       template_data: {}
@@ -40,7 +40,7 @@ APP.executeAfterAppLibCode ->
     domain: "project-right-navbar"
     position: 200
 
-  module.registerPlaceholderItem "project-settings",
+  JD.registerPlaceholderItem "project-settings",
     data:
       template: "project_settings"
       template_data: {}
@@ -48,7 +48,7 @@ APP.executeAfterAppLibCode ->
     domain: "project-right-navbar"
     position: 300
 
-  module.registerPlaceholderItem "project-required-actions-dropdown-comp",
+  JD.registerPlaceholderItem "project-required-actions-dropdown-comp",
     data:
       template: "project_required_actions_dropdown_comp"
       template_data: {}
