@@ -22,7 +22,7 @@ APP.executeAfterAppLibCode ->
   Template.project_header_global_layout_header_right.helpers project_template_helpers
   Template.project_header_global_layout_header_right.helpers
     rightNavbarItems: ->
-      return JD.getPlaceholderItems("project-right-navbar")
+      return JD.getPlaceholderItems("project-right-navbar").reverse()
 
   JD.registerPlaceholderItem "members-dropdown-button",
     data:
