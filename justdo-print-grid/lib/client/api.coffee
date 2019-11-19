@@ -321,8 +321,8 @@ _.extend JustdoPrintGrid.prototype,
       # Create print settings popup
       print_settings = """
         <div class="print-settings">
-          <div class="modal-header">
-            <h4 class="modal-title">Columns options</h4>
+          <div class="modal-header d-flex align-items-center">
+            <h5 class="modal-title">Columns options</h5>
             <button class="bootbox-close-button close">×</button>
           </div>
           <ul></ul>
