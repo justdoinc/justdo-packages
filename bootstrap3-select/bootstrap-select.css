@@ -427,3 +427,19 @@ select.selectpicker {
   float: none;
 }
 /*# sourceMappingURL=bootstrap-select.css.map */
+
+/* Custom styles */
+.bootstrap-select .dropdown-item.selected {
+  background-color: #f8f9fa;
+  color: #16181b;
+  font-weight: bold;
+}
+
+.bootstrap-select .dropdown-item:active {
+  background-color: #f8f9fa;
+  color: #16181b;
+}
+
+.bootstrap-select .dropdown-item:focus {
+  outline: none;
+}
