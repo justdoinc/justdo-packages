@@ -1,10 +1,12 @@
 <template name="justdo_global_activity_log_project_config">
   <div class="project-conf-justdo-global-activity-log-config py-2 d-flex align-items-center">
     JustDo Activity
-    {{#if isModuleEnabled}}
-      <svg class="jd-icon-extension text-primary ml-auto"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
-    {{else}}
-      <svg class="jd-icon-extension text-secondary ml-auto"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
-    {{/if}}
+    <div class="ml-auto">
+      {{#if isModuleEnabled}}
+        <svg class="jd-icon-extension text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+      {{else}}
+        <svg class="jd-icon-extension text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+      {{/if}}
+    </div>
   </div>
 </template>

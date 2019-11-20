@@ -2,6 +2,11 @@
 
 nav.navbar
   z-index: 100
+  .project-header-button
+    .jd-icon:hover
+      stroke: black
+      background-color: rgba(0, 0, 0, 0.08)
+      transform: scale(1.05)
 
 .jd-icon
   stroke: currentColor
@@ -12,22 +17,8 @@ nav.navbar
   width: 24px
   height: 24px
   padding: 2px
-  margin: 0px 4px
   transition: all 0.2s linear
   border-radius: 4px
-  &:hover
-    stroke: black
-    background-color: rgba(0, 0, 0, 0.08)
-    transform: scale(1.05)
-
-.disabled
-  .jd-icon
-    cursor: default
-    &:hover
-      transform: none
-      background-color: unset
-      transform: unset
-      stroke: currentColor
 
 .jd-icon-dropdown
   stroke: currentColor
@@ -80,19 +71,16 @@ nav.navbar
   top: 25px !important
 
 .drawer-icon
-  width: 20px
-  opacity: 0.6
-  transition: opacity 0.2s linear
   cursor: pointer
-  span
-    width: 100%
-    height: 2px
-    background-color: black
-    display: block
-    margin: 4px 0px
-    border-radius: 4px
-  &:hover
-    opacity: 1
+  .jd-icon
+    opacity: 0.6
+    width: 45px
+    height: 45px
+    padding: 0.6rem 0.6rem 0.6rem 0
+    &:hover
+      opacity: 1
+
+
 
 
 .drawer

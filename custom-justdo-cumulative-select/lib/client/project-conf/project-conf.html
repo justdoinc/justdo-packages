@@ -1,10 +1,12 @@
 <template name="custom_justdo_cumulative_select_project_config">
   <div class="project-conf-custom-justdo-cumulative-select-config py-2 d-flex align-items-center">
     {{pluginName}}
-    {{#if isModuleEnabled}}
-      <svg class="jd-icon-extension text-primary ml-auto"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
-    {{else}}
-      <svg class="jd-icon-extension text-secondary ml-auto"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
-    {{/if}}
+    <div class="ml-auto">
+      {{#if isModuleEnabled}}
+        <svg class="jd-icon-extension text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+      {{else}}
+        <svg class="jd-icon-extension text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+      {{/if}}
+    </div>
   </div>
 </template>

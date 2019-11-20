@@ -16,8 +16,8 @@
   <div class="justdo-project-pane-header d-flex align-items-center justify-content-between bg-light">
     <div class="justdo-project-pane-tabs d-flex px-3">
       {{#each getTabs}}
-        <div class="position-relative py-2 text-center">
-          <div tab-id="{{tab_id}}" class="project-pane-tab px-3 text-body text-uppercase font-weight-bold {{#if $eq getActiveTabId tab_id}}active{{/if}}">
+        <div class="position-relative text-center">
+          <div tab-id="{{tab_id}}" class="project-pane-tab px-3 py-2 text-body text-uppercase font-weight-bold h-100 d-flex align-items-center {{#if $eq getActiveTabId tab_id}}active{{/if}}">
             {{tab_label}}
             <div class="active-tab-bottom-border bg-primary"></div>
           </div>
@@ -27,7 +27,7 @@
     <div class="d-flex">
       <div class="project-pane-divider border-right my-1 ml-2"></div>
       <div class="justdo-project-pane-close">
-        <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+        <svg class="jd-icon jd-c-pointer text-dark mx-1"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
       </div>
     </div>
 

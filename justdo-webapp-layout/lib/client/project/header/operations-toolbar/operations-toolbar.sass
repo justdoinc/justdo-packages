@@ -1,4 +1,8 @@
 #project-grid-operations
+
+  .project-operations-button
+    margin: 0 3px
+
   .btn-grid-operations
     &.disabled
       cursor: default
@@ -10,3 +14,16 @@
   .jd-icon
     padding: 4px
     stroke-width: 2
+    &:hover
+      stroke: black
+      background-color: rgba(0, 0, 0, 0.08)
+      transform: scale(1.05)
+
+  .disabled
+    .jd-icon
+      cursor: default
+      &:hover
+        transform: none
+        background-color: unset
+        transform: unset
+        stroke: currentColor

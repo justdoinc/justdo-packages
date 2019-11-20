@@ -1,9 +1,12 @@
 <template name="justdo_user_config_high_contrast_config">
   <div class="justdo-user-config-high-contrast-config d-flex">
-    {{#if enabledForThisDevice}}
-      <svg class="jd-icon-user-settings text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
-    {{else}}
-      <svg class="jd-icon-user-settings text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
-    {{/if}} <div>Set high contrast mode <b>for this device</b></div>
+    <div>
+      {{#if enabledForThisDevice}}
+        <svg class="jd-icon-user-settings text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+      {{else}}
+        <svg class="jd-icon-user-settings text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+      {{/if}}
+    </div>
+    <div>Set high contrast mode <b>for this device</b></div>
   </div>
 </template>

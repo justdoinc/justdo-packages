@@ -8,8 +8,15 @@
 
 <template name="global_activity_log_project_pane_project_activity">
   <div class="tab-project-activity py-2">
-    <div class="filter-toggle {{#if isActiveStatusFilter}}active-filter{{/if}}"><i class="fa {{#if isActiveStatusFilter}}fa-toggle-on{{else}}fa-toggle-off{{/if}} fa-fw"></i> Filter for Status/Notes changes only</div>
-
+    <div class="filter-toggle d-flex align-items-center">
+      <div class="mr-1">
+        {{#if isActiveStatusFilter}}
+          <svg class="jd-icon text-secondary mr-0"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+        {{else}}
+          <svg class="jd-icon text-primary mr-0"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+        {{/if}}
+      </div>Filter for Status/Notes changes only
+    </div>
     {{#each activities}}
       <div class="project-log text-monospace px-3 py-1 d-flex" title="{{userDateFormat when}}">
         <div class="">
