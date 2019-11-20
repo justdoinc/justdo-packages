@@ -1,9 +1,12 @@
 <template name="involuntary_unread_email_chat_notifications_subscription_profile_settings">
   <div class="project-conf-unread-notif-email-subscription d-flex">
-    {{#if isSubscribed}}
-      <svg class="jd-icon-user-settings text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
-    {{else}}
-      <svg class="jd-icon-user-settings text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
-    {{/if}} <div>Receive chat emails notifications</div>
+    <div>
+      {{#if isSubscribed}}
+        <svg class="jd-icon-user-settings text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+      {{else}}
+        <svg class="jd-icon-user-settings text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+      {{/if}}
+    </div>
+    <div>Receive chat emails notifications</div>
   </div>
 </template>
