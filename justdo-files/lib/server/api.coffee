@@ -1,12 +1,14 @@
 import Grid from "gridfs-stream"
 import fs from "fs"
 import { MongoInternals } from "meteor/mongo"
+import JSZip from "jszip"
 
 _.extend JustdoFiles.prototype,
   _immediateInit: ->
     @gfs = Grid MongoInternals.defaultRemoteCollectionDriver().mongo.db, MongoInternals.NpmModule
 
     @_setupOstrioFiles()
+    @_setupFilesArchiveRoute()
 
     return
 
@@ -159,3 +161,57 @@ _.extend JustdoFiles.prototype,
           name: new_filename
 
       return
+
+  getFilesArchiveOfTask: (task_id, user_id) ->
+    check task_id, String
+    check user_id, String
+    
+    if not @isUserAllowedToAccessTasksFiles(task_id, user_id)
+      throw @_error "access-denied"
+
+    zip = new JSZip()
+    has_files = false
+
+    @tasks_files.find
+      "meta.task_id": task_id
+    .forEach (file) =>
+      has_files = true
+      gridfs_id = file.meta.gridfs_id
+
+      if gridfs_id?
+        filestream = @gfs.createReadStream
+          _id: gridfs_id
+        filestream.on "error", (err) ->
+          throw err
+        
+        zip.file file.name, filestream,
+          date: file.meta.upload_date
+    
+    if not has_files
+      throw @_error "access-denied"
+
+    return {
+      name: "#{@tasks_collection.findOne(task_id).title}-files-archive"
+      stream: zip.generateNodeStream()
+    } 
+      
+
+  _setupFilesArchiveRoute: ->
+    self = @
+    Router.route "/justdo-files/files-archive/:task_id", ->
+      task_id = @params.task_id
+
+      try
+        # Authenicate user
+        login_token = @request.cookies.meteor_login_token
+        if login_token? and (user = Meteor.users.findOne({"services.resume.loginTokens.hashedToken" : Accounts._hashLoginToken(@request.cookies.meteor_login_token)}))?
+          files_archive = self.getFilesArchiveOfTask task_id, user._id
+          @response.setHeader "Content-Disposition", "inline; filename=\"#{files_archive.name}\""
+          files_archive.stream.pipe @response
+        else 
+          throw @_error "access-denied"
+      catch e
+        @response.statusCode = 403
+        @response.end "Access denied!"
+
+    , {where: "server"}

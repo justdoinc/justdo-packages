@@ -63,6 +63,10 @@
         </div>
       {{/with}}
     {{/each}}
+
+    {{#if $not noFiles}}
+      <button class="dl-all-files">Download all</button>
+    {{/if}}
   </div>
 </template>
 

@@ -62,6 +62,9 @@ Template.justdo_files_gallery.helpers
       return
 
     return placeholder
+  
+  noFiles: ->
+    return APP.justdo_files.tasks_files.find({"meta.task_id": APP.modules.project_page.activeItemId()}).count() == 0
 
 Template.justdo_files_gallery.events
   "click .file-download-link": (e, tmpl) ->
@@ -123,6 +126,11 @@ Template.justdo_files_gallery.events
     e.preventDefault()
     $(".file").removeClass "active"
 
+  "click .dl-all-files" : (e, tpl) ->
+    window.location.href = "/justdo-files/files-archive/#{APP.modules.project_page.activeItemId()}"
+
+    return
+    
 justdo_files_uploaders_state = {}
 
 Template.justdo_files_uploader.onCreated ->
