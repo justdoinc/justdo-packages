@@ -58,6 +58,10 @@ Package.onUse(function (api) {
   api.addFiles("store-db/init.coffee", both);
   api.addFiles("store-db/categories.coffee", both);
 
+  // justdo-calendar-view
+  api.addFiles("store-db/plugins/justdo-calendar-view/justdo-calendar-view.coffee", both);
+  api.addAssets("store-db/plugins/justdo-calendar-view/media/store-list-icon.png", client);
+
   // justdo-delivery-plannner
   api.addFiles("store-db/plugins/delivery-planner/delivery-planner.coffee", both);
   api.addAssets("store-db/plugins/delivery-planner/media/delivery-planner-icon.png", client);

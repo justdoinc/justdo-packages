@@ -19,7 +19,7 @@ share.store_db.plugins.push
 
   """
   categories: ["featured", "management", "power-tools"]
-  image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/justdo-calendar-view/media/calendar_view_icon.png"
+  image_url: "/packages/justdoinc_justdo-plugin-store/store-db/plugins/justdo-calendar-view/media/store-list-icon.png"
   price: "Free"
   version: "1.0"
   developer: "JustDo, Inc."
