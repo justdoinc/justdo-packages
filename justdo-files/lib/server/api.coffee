@@ -190,8 +190,13 @@ _.extend JustdoFiles.prototype,
     if not has_files
       throw @_error "access-denied"
 
+    task = @tasks_collection.findOne(task_id)
+
+    if not task?
+      throw @_error "access-denied"
+
     return {
-      name: "#{@tasks_collection.findOne(task_id).title}-files-archive"
+      name: "#{task.project_id}-#{task.seqId}-files-archive.zip"
       stream: zip.generateNodeStream()
     } 
       
