@@ -206,16 +206,20 @@ _.extend JustdoFiles.prototype,
     Router.route "/justdo-files/files-archive/:task_id", ->
       task_id = @params.task_id
 
-      try
-        # Authenicate user
-        login_token = @request.cookies.meteor_login_token
-        if login_token? and (user = Meteor.users.findOne({"services.resume.loginTokens.hashedToken" : Accounts._hashLoginToken(@request.cookies.meteor_login_token)}))?
+      # Authenicate user
+      login_token = @request.cookies.meteor_login_token
+      if login_token? and (user = Meteor.users.findOne({"services.resume.loginTokens.hashedToken" : Accounts._hashLoginToken(@request.cookies.meteor_login_token)}))?
+        try
           files_archive = self.getFilesArchiveOfTask task_id, user._id
           @response.setHeader "Content-Disposition", "inline; filename=\"#{files_archive.name}\""
           files_archive.stream.pipe @response
-        else 
-          throw @_error "access-denied"
-      catch e
+        catch e
+          if e.error == "access-denied"
+            @response.statusCode = 403
+            @response.end "Access denied!"
+          else
+            throw e
+      else
         @response.statusCode = 403
         @response.end "Access denied!"
 
