@@ -17,7 +17,7 @@ share.RecentActivityDropdown = JustdoHelpers.generateNewTemplateDropdown "recent
             top: new_position.top + 4
             left: new_position.left + 20
 
-      $(".dropdown-menu").dropdown "hide"
+      $(".dropdown-menu.show").removeClass("show") # Hide active dropdown
 
     return
 
