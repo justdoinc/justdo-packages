@@ -18,6 +18,7 @@ APP.executeAfterAppLibCode ->
     $(error_elem)
       .prependTo(".members-dropdown-menu .alerts-container")
       .on "click", ".close", (e) ->
+        e.stopPropagation()
         $(e.currentTarget).closest(".alert").remove()
 
   clearMembersDropDownErrors = ->

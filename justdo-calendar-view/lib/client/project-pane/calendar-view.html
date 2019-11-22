@@ -1,28 +1,30 @@
 <template name="justdo_calendar_project_pane">
 
-    <div class="calendar_view_header">
+    <div class="calendar_view_header p-2">
       <div class="calendar_view_project_selector dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <button class="btn btn-light btn-sm border" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Entire JustDo
         </button>
-        <ul class="dropdown-menu">
-          <li><a href="#" project_id="*">Entire JustDo</a></li>
-          <li class="dropdown-header">Projects</li>
-          {{#each projectsInJustDo}}
-            <li><a href="#" project_id={{_id}}>{{title}}</a></li>
-          {{/each}}
+        <ul class="dropdown-menu jd-p-075 animate slideIn shadow-lg border-0">
+          <li><a href="#" class="dropdown-item px-1" project_id="*">Entire JustDo</a></li>
+          {{#if projectsInJustDo}}
+            <hr class="my-2 border-light">
+            <li class="dropdown-header text-muted text-uppercase px-1 py-0">Projects</li>
+            {{#each projectsInJustDo}}
+              <li><a href="#" class="dropdown-item px-1" project_id={{_id}}>{{title}}</a></li>
+            {{/each}}
+          {{/if}}
         </ul>
       </div>
-
 
       <div class="calendar_view_date_selector">
         Display Calendar for {{title_date}}
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default calendar-view-prev-week"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg></button>
-          <button type="button" class="btn btn-default calendar-view-prev-day"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"/></svg></button>
-          <button type="button" class="btn btn-default calendar-view-back-to-today">This Week</button>
-          <button type="button" class="btn btn-default calendar-view-next-day"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"/></svg></button>
-          <button type="button" class="btn btn-default calendar-view-next-week"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg></button>
+          <button type="button" class="btn btn-light btn-sm border calendar-view-prev-week"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg></button>
+          <button type="button" class="btn btn-light btn-sm border calendar-view-prev-day"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"/></svg></button>
+          <button type="button" class="btn btn-light btn-sm border calendar-view-back-to-today">This Week</button>
+          <button type="button" class="btn btn-light btn-sm border calendar-view-next-day"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"/></svg></button>
+          <button type="button" class="btn btn-light btn-sm border calendar-view-next-week"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg></button>
         </div>
       </div>
     </div>

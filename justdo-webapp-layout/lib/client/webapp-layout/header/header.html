@@ -1,7 +1,7 @@
 <template name="header">
   <nav class="navbar navbar-light shadow-sm border-0 justify-content-between py-0" style="width: {{getHeaderWidth}}px">
     <div class="d-flex align-items-center">
-      <div class="drawer-icon" data-toggle="modal" data-target=".drawer">
+      <div class="drawer-icon">
         <svg class="jd-icon text-secndary"><use xlink:href="/layout/icons-feather-sprite.svg#menu"/></svg>
       </div>
       <a class="brand" href="/"></a>
@@ -30,47 +30,43 @@
     {{/if}}
   </nav>
 
-  <div class="modal left fade drawer" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content rounded-0 border-0">
-        <div class="modal-body d-flex flex-column">
-          <div class="projects-wrapper h-100">
-            <ul class="list-group list-group-flush">
-              <div class="list-group-item projects-header text-primary h5 px-0 py-2 font-weight-bold d-flex justify-content-between align-items-center">
-                JustDos
-                <svg class="create-new-project text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
-              </div>
-              {{#each projects}}
-                <a href="/p/{{_id}}" class="list-group-item list-group-item-action project-item p-2">{{title}}</a>
-              {{/each}}
-            </ul>
-          </div>
-          {{#with drawerPagesMenuItems}}
-            <div class="pages-section pt-2">
-              {{#each this}}
-                <div class="menu-item pb-2">
-                  {{#if template}}
-                    {{> Template.dynamic template=template data=template_data}}
-                  {{else if html}}
-                    {{{html}}}
-                  {{/if}}
-                </div>
-              {{/each}}
-            </div>
-          {{/with}}
+  <div class="drawer d-flex flex-column shadow bg-white">
+    <div class="projects-wrapper h-100">
+      <ul class="list-group list-group-flush">
+        <div class="list-group-item projects-header text-primary h5 px-0 py-2 font-weight-bold d-flex justify-content-between align-items-center">
+          JustDos
+          <svg class="create-new-project text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
         </div>
-        <div class="modal-footer px-0 py-3 d-flex justify-content-center">
-          {{#each drawerBottomMenuItems}}
+        {{#each projects}}
+          <a href="/p/{{_id}}" class="list-group-item list-group-item-action project-item p-2">{{title}}</a>
+        {{/each}}
+      </ul>
+    </div>
+    {{#with drawerPagesMenuItems}}
+      <div class="pages-section pt-2">
+        {{#each this}}
+          <div class="menu-item pb-2">
             {{#if template}}
               {{> Template.dynamic template=template data=template_data}}
             {{else if html}}
               {{{html}}}
             {{/if}}
-          {{/each}}
-        </div>
+          </div>
+        {{/each}}
       </div>
+    {{/with}}
+
+    <div class="drawer-footer px-0 py-3 d-flex justify-content-center">
+      {{#each drawerBottomMenuItems}}
+        {{#if template}}
+          {{> Template.dynamic template=template data=template_data}}
+        {{else if html}}
+          {{{html}}}
+        {{/if}}
+      {{/each}}
     </div>
   </div>
+  <div class="drawer-backdrop"></div>
 
   <div class="container-fluid global-messages" style="width: {{getWindowWidth}}px">
     {{> status}}

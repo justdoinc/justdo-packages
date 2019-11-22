@@ -44,9 +44,12 @@ APP.executeAfterAppLibCode ->
     position: 200
 
   Template.header.events
+    "click .drawer-icon": ->
+      $(".global-wrapper").addClass "drawer-open"
+
     "click .create-new-project":(e, tmpl) ->
       APP.projects.createNewProject({}, (err, project_id) -> Router.go "project", {_id: project_id})
-      $(".drawer").modal "hide"
+      $(".global-wrapper").removeClass "drawer-open"
 
-    "click .project-item, click .drawer .modal-footer a, click .pages-section a":(e, tmpl) ->
-      $(".drawer").modal "hide"
+    "click .project-item, click .drawer .modal-footer a, click .pages-section a, click .drawer-backdrop":(e, tmpl) ->
+      $(".global-wrapper").removeClass "drawer-open"

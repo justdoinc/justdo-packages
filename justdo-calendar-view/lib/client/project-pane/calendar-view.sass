@@ -2,7 +2,6 @@
   overflow: auto
 
 .calendar_view_header
-  padding: 1rem
   display: flex
   justify-content: space-between
   position: fixed
@@ -23,6 +22,8 @@
     white-space: nowrap
     overflow: hidden
     text-align: left
+  .dropdown-header
+    font-size: 11px
 
 .calendar_view_date_selector
   font-size: 14px
@@ -73,10 +74,10 @@
 
 .calendar_view_main_table th,
 .main_table_fixed_header th
-  padding: 1rem 0
+  padding: 0.5rem 0
 
 .calendar_view_main_table td
-  padding: 0.6rem
+  padding: 0.3rem
 
 .calendar_view_tasks_row
   height: 45px
@@ -106,7 +107,7 @@
     transition: all 0.25s
     &.highlight
       border: 2px solid white
-      box-shadow: 0 0 0 0.2rem rgb(38, 143, 255)
+      box-shadow: 0 0 0 2px rgb(38, 143, 255)
 
 
 
@@ -143,7 +144,7 @@
 .calendar_view_main_table_wrapper
   position: relative
   transition: opacity 0.3s
-  top: 50px
+  top: 47px
   padding-bottom: 80px
   &.fadeOut
     opacity: 0
@@ -152,11 +153,12 @@
   table-layout: fixed
 
 .calendar_task_cell
+  font-size: 14px
   border-radius: 2px
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12)
   white-space: nowrap
   text-overflow: ellipsis
-  padding: 0.6rem
+  padding: 0.3rem 0.4rem
   font-weight: bold
   position: relative
   display: flex
@@ -167,20 +169,20 @@
       opacity: 1
       visibility: visible
   &.show_cell
-    box-shadow: 0 0 0 0.2rem rgb(255, 255, 255), 0 0 0 0.4rem rgb(9, 89, 224)
+    box-shadow: 0 0 0 2px rgb(255, 255, 255), 0 0 0 4px rgb(9, 89, 224)
   &.task_cell_R
-    background-color: #C4E6FC
+    background-color: #c4e6fc9c
     border: 1px solid #9ecfef
     color: #19649b
     &:hover
-      box-shadow: 0 0 0 0.2rem rgb(255, 255, 255), 0 0 0 0.4rem #0a85d4
+      box-shadow: 0 0 0 2px rgb(255, 255, 255), 0 0 0 4px #0a85d4
   &.task_cell_F,
   &.task_cell_P
     background-color: #EAE7FD
     border: 1px solid #cbc8e6
     color: #7770B2
     &:hover
-      box-shadow: 0 0 0 0.2rem rgb(255, 255, 255), 0 0 0 0.4rem #5e579e
+      box-shadow: 0 0 0 2px rgb(255, 255, 255), 0 0 0 4px #5e579e
 
 
 

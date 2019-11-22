@@ -80,24 +80,17 @@ nav.navbar
     &:hover
       opacity: 1
 
-
-
-
 .drawer
-  &.modal.left .modal-dialog
-    position: fixed
-    margin: auto
-    width: 320px
-    height: 100%
-    transform: translate3d(0%, 0, 0)
-  &.modal.left .modal-content
-    height: 100%
-    overflow-y: auto
-  &.modal.left.fade .modal-dialog
-    left: -320px
-    transition: opacity 0.1s linear, left 0.1s cubic-bezier(0.190,1.000,0.220,1.000)
-  &.modal.left.fade.show .modal-dialog
-    left: 0
+  position: absolute
+  top: 0
+  bottom: 0
+  height: auto
+  padding: 0rem 1.5rem
+  overflow: hidden
+  width: 312px
+  z-index: 99999
+  transform: translateX(-312px)
+  transition: transform .35s cubic-bezier(0.24,1,0.32,1)
   .project-item
     border-style: dotted
     border-color: #E6EEF9
@@ -105,10 +98,18 @@ nav.navbar
     white-space: nowrap
     overflow: hidden
     text-overflow: ellipsis
+    font-size: 15px
     &:hover
       color: black
-  .projects-header + .project-item
-    border-top: 1px solid #E6EEF9
+  .list-group-item:first-child
+    border: none !important
+  .projects-header
+    height: 45px
+    position: fixed
+    z-index: 10
+    top: 0
+    left: 1.5rem
+    right: 1.5rem
   .create-new-project
     border-radius: 2px
     box-shadow: 0px 0px 3px transparent
@@ -124,21 +125,22 @@ nav.navbar
     cursor: pointer
     &:hover
       background-color: rgba(0, 123, 255, 0.12)
-  .modal-body
-    padding: 0.5rem 2rem 0rem 2rem
-    overflow: hidden
+
   .projects-wrapper
     overflow-y: auto
     margin-right: -50px
     .list-group
       width: 256px
-  .modal-footer
+      padding-top: 45px
+  .drawer-footer
     font-size: 13px
     color: black
-    margin: 0rem 2rem
     border-color: #E6EEF9
+    border-top: 1px solid #E6EEF9
     i
       display: none
+    a + a
+      margin-left: 12px
   .pages-section
     border-top: 1px solid #E6EEF9
     max-height: 75px
@@ -149,6 +151,22 @@ nav.navbar
         margin-right: 12px
   .pages-section:hover
     max-height: 2000px
+
+.drawer-backdrop
+  position: fixed
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  background-color: rgba(255, 255, 255, 0)
+  z-index: 88888
+  display: none
+
+.drawer-open
+  .drawer
+    transform: translateX(0px)
+  .drawer-backdrop
+    display: block
 
 .navbar-nav > li > a
     padding-left: 10px
