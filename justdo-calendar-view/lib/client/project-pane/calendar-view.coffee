@@ -3,6 +3,8 @@ config =
     show_number_of_tasks: false
     show_flat_hours_per_day: false
     show_workload: true
+
+  #the following controls the zoom in/out options of the view. Each array should hold the same number of vars
   supported_days_resolution:  [7, 14, 28, 56]
   days_resolution_small_step: [1,  3,  7, 14]
   days_resolution_big_step:   [7, 14, 21, 42]
@@ -962,6 +964,19 @@ Template.justdo_calendar_project_pane_user_view.onRendered ->
   return
 
 Template.justdo_calendar_project_pane_user_view.helpers
+
+  fontSizeClass: ->
+    index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
+    if index == 0
+      return ""
+    if index == 1
+      return "smaller_text"
+    if index == 2
+      return "x_small_text"
+    return "xx_small_text"
+
+
+
   isCollapsed: ->
     return Template.instance().collapsed_view.get()
 

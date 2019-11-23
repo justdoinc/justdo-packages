@@ -19,8 +19,8 @@
 
       <div class="calendar_view_date_selector">
         Display Calendar for {{title_date}}
-        <i class="fa fa-search-minus calendar_view_zoom_in" aria-hidden="true"></i> /
-        <i class="fa fa-search-plus calendar_view_zoom_out" aria-hidden="true"></i>
+        <i class="fa fa-search-plus calendar_view_zoom_in" aria-hidden="true"></i> /
+        <i class="fa fa-search-minus calendar_view_zoom_out" aria-hidden="true"></i>
         <div class="btn-group" role="group">
           <button type="button" class="btn btn-light btn-sm border calendar-view-prev-week"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg></button>
           <button type="button" class="btn btn-light btn-sm border calendar-view-prev-day"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"/></svg></button>
@@ -112,31 +112,31 @@
                     <div class="calendar_task_cell calendar_view_draggable {{dimTask}} task_cell_{{type}}" title="{{task.title}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
                       <div class="calendar_task_info">
                         {{#if showType type}}
-                          <div class="calendar_task_type">{{type}}</div>
+                          <div class="calendar_task_type {{fontSizeClass}}">{{type}}</div>
                         {{/if}}
                         {{#if startDateAfterDueDate}}
-                          <div class="calendar_task_startDateAfterDueDate" title="Start Date after Due Date">!</div>
+                          <div class="calendar_task_startDateAfterDueDate {{fontSizeClass}}" title="Start Date after Due Date">!</div>
                         {{/if}}
                         {{#if unassignedHours}}
-                          <div class="calendar_task_unassigned_hours">{{unassignedHours}}</div>
+                          <div class="calendar_task_unassigned_hours {{fontSizeClass}}">{{unassignedHours}}</div>
                         {{/if}}
                         {{#if plannedHours}}
-                          <div class="calendar_task_planned_hours">{{plannedHours}}</div>
+                          <div class="calendar_task_planned_hours {{fontSizeClass}}">{{plannedHours}}</div>
                         {{/if}}
                       </div>
                       <!-- {{#unless hideDuePendingOwner}}
                         <i class="fa fa-map-marker calendar_view_draggable" task_id="{{task._id}}"aria-hidden="true"></i>
                       {{/unless}} -->
                       {{#if startsBeforeView}}
-                        <div class="calendar_task_startsBeforeView">
+                        <div class="calendar_task_startsBeforeView {{fontSizeClass}}">
                           <svg class="calendar_view_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"/></svg>
                         </div>
                       {{/if}}
-                      <div class="calendar_task_id">#{{task.sequence_id}}</div>
-                      <div class="calendar_task_title">{{task.title}}</div>
+                      <div class="calendar_task_id {{fontSizeClass}}">#{{task.sequence_id}}</div>
+                      <div class="calendar_task_title {{fontSizeClass}}">{{task.title}}</div>
                       <!-- ({{task.state}}) -->
                       {{#if endsAfterView}}
-                        <div class="calendar_task_endsAfterView">
+                        <div class="calendar_task_endsAfterView {{fontSizeClass}}">
                           <svg class="calendar_view_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"/></svg>
                         </div>
                       {{/if}}
@@ -160,7 +160,7 @@
     <!--  lets add a dropable line-->
     <tr user_id={{userId}}>
       {{#each colNumbers}}
-        <td class="calendar_view_resources {{markDaysOff}}" date={{columnDate}}>{{#unless markDaysOff}}{{bottomLine}}{{/unless}}</td>
+        <td class="calendar_view_resources {{markDaysOff}} {{fontSizeClass}}" date={{columnDate}}>{{#unless markDaysOff}}{{bottomLine}}{{/unless}}</td>
       {{/each}}
     </tr>
   {{/if}}
