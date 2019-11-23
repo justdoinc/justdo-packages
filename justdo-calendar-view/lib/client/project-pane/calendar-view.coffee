@@ -11,6 +11,8 @@ onSetScrollRight = -> return
 onClickScrollRight = -> return
 onUnsetScrollLeftRight = -> return
 
+members_collapse_state_vars = {}
+
 # Create Wrapper (Layer) with droppable divs under the existing table
 createDroppableWrapper = ->
   $(".calendar_view_droppable_wrapper").remove()
@@ -263,6 +265,7 @@ delayAction = do ->
 justdo_level_workdays = {} #intentionally making this one a non-reactive var, otherwise we will hit it too many times
 
 Template.justdo_calendar_project_pane.onCreated ->
+
   self = @
 
   # to handle highlighting the header of 'today', when the day changes...
@@ -621,6 +624,17 @@ Template.justdo_calendar_project_pane.helpers
     return false
 
 Template.justdo_calendar_project_pane.events
+
+  "click .expand_all": ->
+    for member, state of members_collapse_state_vars
+      state.set(false)
+    return
+
+  "click .collapse_all": ->
+    for member, state of members_collapse_state_vars
+      state.set(true)
+    return
+
   "click .calendar-view-prev-week": ->
     Template.instance().setToPrevWeek()
     return
@@ -682,6 +696,8 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
   @days_matrix = new ReactiveVar([])
   @dates_workload = new ReactiveVar({})
   @collapsed_view = new ReactiveVar(true)
+
+  members_collapse_state_vars[Template.currentData().user_id] = @collapsed_view
 
   @last_tasks_set_size = 0
   @autorun =>
@@ -908,6 +924,11 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
       return
     return
 
+
+Template.justdo_calendar_project_pane_user_view.onDestroyed ->
+    delete members_collapse_state_vars[Template.currentData().user_id]
+    return
+
 Template.justdo_calendar_project_pane_user_view.onRendered ->
   setDragAndDrop()
   fixHeaderOnScroll()
@@ -959,6 +980,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     for i in [0..Template.instance().data.dates_to_display.length]
       if days_matrix[i]?.length > ret
         ret = days_matrix[i].length
+
     return [0..ret-1]
 
   # NEED TO FIX IN THE FUTURE: Helper has to return the number of all possible rows

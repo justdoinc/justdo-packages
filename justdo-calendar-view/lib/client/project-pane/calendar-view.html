@@ -34,7 +34,10 @@
       <table class="main_table_fixed_header" width="100%">
         <thead>
           <tr>
-            <th class="calendar_view_user"></th>
+            <th class="calendar_view_user">
+              <i class="fa fa-plus-square-o expand_all" aria-hidden="true" ></i> /
+              <i class="fa fa-minus-square-o collapse_all" aria-hidden="true" ></i>
+            </th>
             <th class="calendar_view_move"></th>
             {{#each datesToDisplay}}
               <th class="{{#if isToday this}}is_today{{/if}}">{{{formatDate}}}</th>
@@ -46,7 +49,10 @@
       <table class="calendar_view_main_table" width="100%">
         <thead>
           <tr>
-            <th class="calendar_view_user"></th>
+            <th class="calendar_view_user">
+              <i class="fa fa-plus-square-o expand_all" aria-hidden="true" ></i> /
+              <i class="fa fa-minus-square-o collapse_all" aria-hidden="true" ></i>
+            </th>
             <th class="calendar_view_move"></th>
             {{#each datesToDisplay}}
               <th class="calendar_view_date {{#if isToday this}}is_today{{/if}}">{{{formatDate}}}</th>
