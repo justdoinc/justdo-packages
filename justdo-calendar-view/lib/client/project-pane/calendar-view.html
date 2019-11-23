@@ -64,78 +64,97 @@
 
 
 <template name="justdo_calendar_project_pane_user_view">
-  {{#each rowNumbers}}
+
+  {{#if isCollapsed}}
     <tr class="calendar_view_tasks_row" user_id={{userId}}>
-      {{#if firstRow}}
-        <td class="calendar_table_user" rowspan={{numberOfRows}}>
-          {{#with userObj}}
-            {{> justdo_avatar}}
-          {{/with}}
+      <td class="calendar_table_user">
+        {{#with userObj}}
+          {{> justdo_avatar}} <i class="fa fa-plus-square-o calendar_view_expand_collapse expand" aria-hidden="true" ></i>
+        {{/with}}
+      </td>
+      {{#if showNavigation}}
+        <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell" rowspan="{{navRowspan}}">
+          <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg>
         </td>
-        {{#if showNavigation}}
-          <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell" rowspan="{{navRowspan}}">
-            <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg>
-          </td>
-        {{/if}}
       {{/if}}
       {{#each colNumbers}}
-        {{#unless skipTD}}
-            {{#if taskId}}
-              {{#with cellData}}
-                <td class="calendar_table_cell" date={{columnDate}} colspan={{span}}>
-                  <div class="calendar_task_cell calendar_view_draggable {{dimTask}} task_cell_{{type}}" title="{{task.title}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
-                    <div class="calendar_task_info">
-                      {{#if showType type}}
-                        <div class="calendar_task_type">{{type}}</div>
+        <td class="calendar_view_resources {{markDaysOff}}" date={{columnDate}}>{{#unless markDaysOff}}{{bottomLine}}{{/unless}}</td>
+      {{/each}}
+    </tr>
+  {{else}}
+    {{#each rowNumbers}}
+      <tr class="calendar_view_tasks_row" user_id={{userId}}>
+        {{#if firstRow}}
+          <td class="calendar_table_user" rowspan={{numberOfRows}}>
+            {{#with userObj}}
+              {{> justdo_avatar}} <i class="fa fa-minus-square-o calendar_view_expand_collapse collapse" aria-hidden="true"></i>
+            {{/with}}
+          </td>
+          {{#if showNavigation}}
+            <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell" rowspan="{{navRowspan}}">
+              <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg>
+            </td>
+          {{/if}}
+        {{/if}}
+        {{#each colNumbers}}
+          {{#unless skipTD}}
+              {{#if taskId}}
+                {{#with cellData}}
+                  <td class="calendar_table_cell" date={{columnDate}} colspan={{span}}>
+                    <div class="calendar_task_cell calendar_view_draggable {{dimTask}} task_cell_{{type}}" title="{{task.title}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
+                      <div class="calendar_task_info">
+                        {{#if showType type}}
+                          <div class="calendar_task_type">{{type}}</div>
+                        {{/if}}
+                        {{#if startDateAfterDueDate}}
+                          <div class="calendar_task_startDateAfterDueDate" title="Start Date after Due Date">!</div>
+                        {{/if}}
+                        {{#if unassignedHours}}
+                          <div class="calendar_task_unassigned_hours">{{unassignedHours}}</div>
+                        {{/if}}
+                        {{#if plannedHours}}
+                          <div class="calendar_task_planned_hours">{{plannedHours}}</div>
+                        {{/if}}
+                      </div>
+                      <!-- {{#unless hideDuePendingOwner}}
+                        <i class="fa fa-map-marker calendar_view_draggable" task_id="{{task._id}}"aria-hidden="true"></i>
+                      {{/unless}} -->
+                      {{#if startsBeforeView}}
+                        <div class="calendar_task_startsBeforeView">
+                          <svg class="calendar_view_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"/></svg>
+                        </div>
                       {{/if}}
-                      {{#if startDateAfterDueDate}}
-                        <div class="calendar_task_startDateAfterDueDate" title="Start Date after Due Date">!</div>
-                      {{/if}}
-                      {{#if unassignedHours}}
-                        <div class="calendar_task_unassigned_hours">{{unassignedHours}}</div>
-                      {{/if}}
-                      {{#if plannedHours}}
-                        <div class="calendar_task_planned_hours">{{plannedHours}}</div>
+                      <div class="calendar_task_id">#{{task.sequence_id}}</div>
+                      <div class="calendar_task_title">{{task.title}}</div>
+                      <!-- ({{task.state}}) -->
+                      {{#if endsAfterView}}
+                        <div class="calendar_task_endsAfterView">
+                          <svg class="calendar_view_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"/></svg>
+                        </div>
                       {{/if}}
                     </div>
-                    <!-- {{#unless hideDuePendingOwner}}
-                      <i class="fa fa-map-marker calendar_view_draggable" task_id="{{task._id}}"aria-hidden="true"></i>
-                    {{/unless}} -->
-                    {{#if startsBeforeView}}
-                      <div class="calendar_task_startsBeforeView">
-                        <svg class="calendar_view_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"/></svg>
-                      </div>
-                    {{/if}}
-                    <div class="calendar_task_id">#{{task.sequence_id}}</div>
-                    <div class="calendar_task_title">{{task.title}}</div>
-                    <!-- ({{task.state}}) -->
-                    {{#if endsAfterView}}
-                      <div class="calendar_task_endsAfterView">
-                        <svg class="calendar_view_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"/></svg>
-                      </div>
-                    {{/if}}
-                  </div>
-                </td>
-              {{/with}}
-            {{else}}
-              <td class="calendar_table_cell {{markDaysOff}}" date={{columnDate}}></td>
-            {{/if}}
-        {{/unless}}
-      {{/each}}
-      {{#if firstRow}}
-        {{#if showNavigation}}
-          <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell" rowspan="{{navRowspan}}">
-            <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg>
-          </td>
+                  </td>
+                {{/with}}
+              {{else}}
+                <td class="calendar_table_cell {{markDaysOff}}" date={{columnDate}}></td>
+              {{/if}}
+          {{/unless}}
+        {{/each}}
+        {{#if firstRow}}
+          {{#if showNavigation}}
+            <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell" rowspan="{{navRowspan}}">
+              <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg>
+            </td>
+          {{/if}}
         {{/if}}
-      {{/if}}
-    </tr>
-  {{/each}}
-  <!--  lets add a dropable line-->
-  <tr user_id={{userId}}>
-    {{#each colNumbers}}
-      <td class="calendar_view_resources {{markDaysOff}}" date={{columnDate}}>{{#unless markDaysOff}}{{bottomLine}}{{/unless}}</td>
+      </tr>
     {{/each}}
-  </tr>
+    <!--  lets add a dropable line-->
+    <tr user_id={{userId}}>
+      {{#each colNumbers}}
+        <td class="calendar_view_resources {{markDaysOff}}" date={{columnDate}}>{{#unless markDaysOff}}{{bottomLine}}{{/unless}}</td>
+      {{/each}}
+    </tr>
+  {{/if}}
 
 </template>

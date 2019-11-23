@@ -681,6 +681,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
   @days_matrix = new ReactiveVar([])
   @dates_workload = new ReactiveVar({})
+  @collapsed_view = new ReactiveVar(true)
 
   @last_tasks_set_size = 0
   @autorun =>
@@ -914,6 +915,9 @@ Template.justdo_calendar_project_pane_user_view.onRendered ->
   return
 
 Template.justdo_calendar_project_pane_user_view.helpers
+  isCollapsed: ->
+    return Template.instance().collapsed_view.get()
+
   bottomLine: ->
     column_date = Template.instance().data.dates_to_display[this]
     workload = Template.instance().dates_workload.get()
@@ -955,7 +959,6 @@ Template.justdo_calendar_project_pane_user_view.helpers
     for i in [0..Template.instance().data.dates_to_display.length]
       if days_matrix[i]?.length > ret
         ret = days_matrix[i].length
-
     return [0..ret-1]
 
   # NEED TO FIX IN THE FUTURE: Helper has to return the number of all possible rows
@@ -1066,6 +1069,14 @@ Template.justdo_calendar_project_pane_user_view.events
       gcm = APP.modules.project_page.getCurrentGcm()
       gcm.setPath(["main", task_id], {collection_item_id_mode: true})
       return
+    return
+
+  "click .expand": (e, tpl)->
+    tpl.collapsed_view.set(false)
+    return
+
+  "click .collapse": (e, tpl)->
+    tpl.collapsed_view.set(true)
     return
 
   # "mouseover .calendar_task_cell" : (e, tpl)->
