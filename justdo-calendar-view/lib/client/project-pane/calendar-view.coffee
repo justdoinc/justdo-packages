@@ -3,6 +3,10 @@ config =
     show_number_of_tasks: false
     show_flat_hours_per_day: false
     show_workload: true
+  supported_days_resolution:  [7, 14, 28, 56]
+  days_resolution_small_step: [1,  3,  7, 14]
+  days_resolution_big_step:   [7, 14, 21, 42]
+
 
 # setting the following 5 functions as global here to make it easy to call them from justdo_calendar_project_pane_user_view
 onSetScrollLeft = -> return
@@ -12,6 +16,11 @@ onClickScrollRight = -> return
 onUnsetScrollLeftRight = -> return
 
 members_collapse_state_vars = {}
+
+dates_to_display = new ReactiveVar([])
+number_of_days_to_display = new ReactiveVar(7)
+
+
 
 # Create Wrapper (Layer) with droppable divs under the existing table
 createDroppableWrapper = ->
@@ -265,7 +274,6 @@ delayAction = do ->
 justdo_level_workdays = {} #intentionally making this one a non-reactive var, otherwise we will hit it too many times
 
 Template.justdo_calendar_project_pane.onCreated ->
-
   self = @
 
   # to handle highlighting the header of 'today', when the day changes...
@@ -311,16 +319,18 @@ Template.justdo_calendar_project_pane.onCreated ->
   @setToPrevWeek = (keep_scroll_handler)->
     d = self.view_start_date.get()
     dow = d.getDay()
+    index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
+    step_size = config.days_resolution_big_step[index]
     user_first_day_of_week = 1
     if Meteor.user().profile?.first_day_of_week?
       user_first_day_of_week = Meteor.user().profile.first_day_of_week
 
     if dow == user_first_day_of_week
-      d.setDate(d.getDate() - 7)
+      d.setDate(d.getDate() - step_size)
     else
       if dow < user_first_day_of_week
         dow += 7
-      d.setDate(d.getDate() - (dow - user_first_day_of_week))
+      d.setDate(d.getDate() - (dow - step_size))
     self.view_start_date.set(d)
 
     if !keep_scroll_handler and self.scroll_left_right_handler
@@ -331,7 +341,9 @@ Template.justdo_calendar_project_pane.onCreated ->
 
   @setToNextWeek = (keep_scroll_handler)->
     d = self.view_start_date.get()
-    d.setDate(d.getDate() + 7)
+    index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
+    step_size = config.days_resolution_big_step[index]
+    d.setDate(d.getDate() + step_size)
     dow = d.getDay()
     user_first_day_of_week = 1
     if Meteor.user().profile?.first_day_of_week?
@@ -487,6 +499,14 @@ Template.justdo_calendar_project_pane.onCreated ->
 
     return
 
+  @autorun =>
+    dates = []
+    d = moment(new Date(Template.instance().view_start_date.get()))
+    for i in [0..(number_of_days_to_display.get()-1)]
+      dates.push(d.format("YYYY-MM-DD"))
+      d.add(1,"days")
+    dates_to_display.set(dates)
+    return
 
   @autorun =>
     #making reactive to changes in project members
@@ -513,10 +533,7 @@ Template.justdo_calendar_project_pane.onCreated ->
         return
 
     d = moment(Template.instance().view_start_date.get())
-    dates = []
-    for i in [0..6]
-      dates.push(d.format("YYYY-MM-DD"))
-      d.add(1,"days")
+    dates = dates_to_display.get()
 
     first_date_to_display = dates[0]
     last_date_to_display = dates[dates.length-1]
@@ -604,12 +621,7 @@ Template.justdo_calendar_project_pane.helpers
         }, {sort: {"title": 1}}).fetch()
 
   datesToDisplay: ->
-    dates = []
-    d = moment(new Date(Template.instance().view_start_date.get()))
-    for i in [0..6]
-      dates.push(d.format("YYYY-MM-DD"))
-      d.add(1,"days")
-    return dates
+    return dates_to_display.get()
 
   deliveryPlannerProjectId: ->
     return Template.instance().delivery_planner_project_id.get()
@@ -624,6 +636,18 @@ Template.justdo_calendar_project_pane.helpers
     return false
 
 Template.justdo_calendar_project_pane.events
+  "click .calendar_view_zoom_out": ->
+    index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
+    if index < config.supported_days_resolution.length-1
+      number_of_days_to_display.set(config.supported_days_resolution[index + 1])
+    return
+
+  "click .calendar_view_zoom_in": ->
+    index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
+    if index > 0
+      number_of_days_to_display.set(config.supported_days_resolution[index - 1])
+    return
+
 
   "click .expand_all": ->
     for member, state of members_collapse_state_vars
@@ -641,13 +665,15 @@ Template.justdo_calendar_project_pane.events
 
   "click .calendar-view-prev-day": ->
     d = Template.instance().view_start_date.get()
-    d.setDate(d.getDate() - 1)
+    index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
+    d.setDate(d.getDate() - config.days_resolution_small_step[index])
     Template.instance().view_start_date.set(d)
     return
 
   "click .calendar-view-next-day": ->
     d = Template.instance().view_start_date.get()
-    d.setDate(d.getDate() + 1)
+    index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
+    d.setDate(d.getDate() + config.days_resolution_small_step[index])
     Template.instance().view_start_date.set(d)
 
     return
