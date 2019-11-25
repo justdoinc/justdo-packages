@@ -51,5 +51,5 @@ APP.executeAfterAppLibCode ->
       APP.projects.createNewProject({}, (err, project_id) -> Router.go "project", {_id: project_id})
       $(".global-wrapper").removeClass "drawer-open"
 
-    "click .project-item, click .drawer .modal-footer a, click .pages-section a, click .drawer-backdrop":(e, tmpl) ->
+    "click .project-item, click .drawer .drawer-footer a, click .pages-section a, click .drawer-backdrop":(e, tmpl) ->
       $(".global-wrapper").removeClass "drawer-open"

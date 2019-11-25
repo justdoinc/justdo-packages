@@ -71,12 +71,12 @@ APP.executeAfterAppLibCode ->
 
   Template.members_dropdown_menu.onCreated ->
     @members_filter = new ReactiveVar null
-
     return
 
   Template.members_dropdown_menu.onRendered ->
-    $(".members-dropdown-menu-content .members-search-input").focus()
-
+    $("#project-members-dropdown").on "show.bs.dropdown", ->
+      $(".members-search-input").focus()
+      return
     return
 
   Template.members_dropdown_menu.helpers module.template_helpers
