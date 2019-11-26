@@ -196,7 +196,7 @@ _.extend JustdoFiles.prototype,
       throw @_error "access-denied"
 
     return {
-      name: "#{task.project_id}-#{task.seqId}-files-archive.zip"
+      name: "justdo-task-#{task.seqId}-files-archive.zip"
       stream: zip.generateNodeStream()
     } 
       
