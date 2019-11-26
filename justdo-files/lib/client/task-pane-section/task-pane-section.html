@@ -1,6 +1,5 @@
 <template name="task_pane_justdo_files_task_pane_section_section">
   {{>justdo_files_gallery}}
-
   {{> justdo_files_uploader}}
 </template>
 
@@ -8,108 +7,101 @@
   <div class="justdo-files-gallery">
     {{#each files}}
       {{#with task=.. file=.}}
-        <div class="file">
-          <div class="type-logo {{typeClass}}"></div>
-
-          <div class="content">
-            <div class="title">
+        <div class="file pb-2">
+          <div class="file-inner-wrapper p-3 bg-light position-relative">
+            <div class="d-flex">
+              <div class="type-logo shadow-sm {{typeClass}}"></div>
+              <div class="content flex-grow-1 mx-2">
+                <div class="title">
+                  {{#if renaming}}
+                    <input class="form-control form-control-sm" type="text" name="title" value="{{file.name}}">
+                  {{else}}
+                    <a href="{{fileURL file}}" target="_blank" class="file-download-link">{{file.name}}</a>
+                  {{/if}}
+                </div>
+                <small class="metadata text-muted">
+                  <span class="date" title="{{userDateFormat file.meta.upload_date}}">{{userDateFormat file.meta.upload_date false}}, </span>
+                  <span class="size">{{size}}, </span>
+                  <span class="mimetype">{{file.type}}</span>
+                </small>
+              </div>
               {{#if renaming}}
-                <input type="text" name="title" value="{{file.name}}">
+                <div class="actions-rename d-flex">
+                  <svg class="file-rename-done jd-icon text-secondary mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
+                  <svg class="file-rename-cancel jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+                </div>
               {{else}}
-                <a href="{{fileURL file}}" target="_blank" class="file-download-link">{{file.name}}</a>
+                <div class="actions d-flex">
+                  <svg class="file-rename-link jd-icon text-secondary mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>
+                  <svg class="file-remove-link jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"/></svg>
+                </div>
               {{/if}}
             </div>
-            <div class="metadata">
-              <span class="date" title="{{userDateFormat file.meta.upload_date}}">{{userDateFormat file.meta.upload_date false}}</span>
-              <span class="dot"></span>
-              <span class="size">{{size}}</span>
-              <span class="dot"></span>
-              <span class="mimetype">{{file.type}}</span>
-            </div>
-          </div>
-
-          {{#if isImage}}
-            <div class="image-preview file-download-link loading {{tempPlaceHolder}}"></div>
-          {{/if}}
-
-          {{#if deletion}}
-            <div class="msg">
-              <div class="loader">
-                <div class="double-bounce1"></div>
-                <div class="double-bounce2"></div>
+            {{#if isImage}}
+              <div class="image-preview bg-light mt-2 file-download-link d-flex justify-content-center align-items-center loading {{tempPlaceHolder}}">
+                <div class="loader">
+                  <div class="double-bounce1 bg-secondary"></div>
+                  <div class="double-bounce2 bg-secondary"></div>
+                </div>
               </div>
-              <div class="msg-content">
-                Remove this file?
-                <a href="" class="msg-ok">Ok</a>
-                <a href="" class="msg-cancel">Cancel</a>
+            {{/if}}
+            {{#if deletion}}
+              <div class="msg d-flex justify-content-center align-items-center">
+                <div class="msg-content text-center">
+                  <a href="" class="msg-ok btn btn-primary btn-sm text-uppercase mr-1 font-weight-bold">Remove this file</a>
+                  <a href="" class="msg-cancel btn btn-secondary btn-sm text-uppercase font-weight-bold">Cancel</a>
+                </div>
               </div>
-              <!-- <p>Remove this file?</p>
-                -->
-            </div>
-          {{/if}}
+            {{/if}}
 
-          {{#if renaming}}
-            <div class="actions-rename">
-              <a href="" class="file-rename-done"></a>
-              <a href="" class="file-rename-cancel"></a>
-            </div>
-          {{/if}}
-
-          <div class="actions">
-            <a href="" class="file-rename-link"></a>
-            <a href="" class="file-remove-link"></a>
           </div>
-
         </div>
       {{/with}}
     {{/each}}
 
     {{#if $not noFiles}}
-      <button class="dl-all-files">Download all files as .zip</button>
+      <button class="btn btn-secondary btn-sm w-100 mb-2 dl-all-files">Download all files as .zip</button>
     {{/if}}
   </div>
 </template>
 
 <template name="justdo_files_uploader">
   <div class="drop-pane {{isHovering}} {{getState}} {{#if noFiles}}no-files{{/if}}">
-    <label for="file-input" class="custom-file-input">
-      <div>
-        <div class="drop-pane-logo"></div>
-        {{#if hasPreviousUploadResult}}
-          <div class="prev-upload-result">
-            {{#if $gt numSuccessfulUploads 0}}
-              <div class="upload-success-msg">{{numSuccessfulUploads}} file(s) uploaded successfully.</div>
-            {{/if}}
-            {{#if $gt numFailedUploads 0}}
-              {{numFailedUploads}} file(s) failed to upload:
-              {{#each getFailedUploads}}
-                <div class="upload-failed-entry" data-toggle="tooltip" data-placement="bottom" title="{{this.err_msg}}">
-                  <span>{{this.file.name}}</span>
-                  <i class="fa fa-exclamation-circle"></i>
-                </div>
-              {{/each}}
-            {{/if}}
-          </div>
-        {{/if}}
-        
-        <span class="upload-msg">
-          {{#if $eq getState "ready"}}
-            {{#if hasPreviousUploadResult}}
-              Drop or click to upload other file(s)
-            {{else}}
-              Drop file(s) here or click to upload
-            {{/if}}
-          {{else}}
-            <div class="upload-process-msg">{{getUploadProcessMsg}}</div>
-            Drop or click to upload more file(s)
+    <label for="file-input" class="custom-file-input bg-light d-flex flex-column align-items-center">
+      <svg class="drop-pane-logo jd-icon text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#upload"/></svg>
+      {{#if hasPreviousUploadResult}}
+        <div class="prev-upload-result">
+          {{#if $gt numSuccessfulUploads 0}}
+            <div class="upload-success-msg">{{numSuccessfulUploads}} file(s) uploaded successfully.</div>
           {{/if}}
-        </span>
-  
-        <span class="drop-to-upload-msg">
-          Drop to upload
-        </span>
-  
-      </div>
+          {{#if $gt numFailedUploads 0}}
+            {{numFailedUploads}} file(s) failed to upload:
+            {{#each getFailedUploads}}
+              <div class="upload-failed-entry" data-toggle="tooltip" data-placement="bottom" title="{{this.err_msg}}">
+                <span>{{this.file.name}}</span>
+                <i class="fa fa-exclamation-circle"></i>
+              </div>
+            {{/each}}
+          {{/if}}
+        </div>
+      {{/if}}
+
+      <span class="upload-msg text-muted">
+        {{#if $eq getState "ready"}}
+          {{#if hasPreviousUploadResult}}
+            Drop or click to upload other file(s)
+          {{else}}
+            Drop file(s) here or click to upload
+          {{/if}}
+        {{else}}
+          <div class="upload-process-msg">{{getUploadProcessMsg}}</div>
+          Drop or click to upload more file(s)
+        {{/if}}
+      </span>
+
+      <span class="drop-to-upload-msg text-muted">
+        Drop to upload
+      </span>
     </label>
     <input id="file-input" type="file" multiple />
   </div>

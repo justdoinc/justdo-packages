@@ -7,28 +7,49 @@
     align-items: center
     justify-content: center
     text-align: center
-    background: #f8f8f8
     border: 2px dashed #dddddd
     border-radius: 5px
     width: 100%
-    font-size: 15px
-    color: #a0a0a0
     cursor: pointer
     padding: 28px 3px
     font-weight: normal
+    opacity: 1
+
+  .loader
+    width: 25px
+    height: 25px
+    position: absolute
+    display: none
+    .double-bounce1
+      width: 100%
+      height: 100%
+      border-radius: 50%
+      opacity: 0.2
+      position: absolute
+      top: 0
+      left: 0
+      animation: sk-bounce 2.0s infinite ease-in-out
+    .double-bounce2
+      width: 100%
+      height: 100%
+      border-radius: 50%
+      opacity: 0.2
+      position: absolute
+      top: 0
+      left: 0
+      animation: sk-bounce 2.0s infinite ease-in-out
+      animation-delay: -1.0s
 
   .justdo-files-gallery
     .file
-      padding-bottom: 6px
-      margin-bottom: 6px
-      min-height: 30px
-      border-bottom: 1px dotted rgba(0, 0, 0, 0.05)
-      position: relative
-      &:last-child
-        border-bottom: none
+      .jd-icon
+        margin: 0px
+        cursor: pointer
+        display: block
+        padding: 4px
+        stroke-width: 2
+        background-color: rgba(0, 0, 0, 0.04)
       .metadata
-        font-size: 12px
-        color: #b5b5b5
         .dot
           padding-right: 2px
           padding-left: 2px
@@ -36,57 +57,14 @@
           &::after
             content: "·"
       .actions
-        position: absolute
-        width: 62px
-        top: 0
-        right: 0
-        margin: 0
-        padding: 0
-        display: none
-        z-index: 100
-      .actions-rename
-        position: absolute
-        width: 62px
-        top: 0
-        right: 0
-        margin: 0
-        padding: 0
-        z-index: 200
-        a
-          width: 29px
-          height: 29px
-          background-color: #f2f3fa
-          border-radius: 3px
-          display: inline-block
-        .file-rename-done
-          background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png)
-          background-position: 0px -29px
-        .file-rename-cancel
-          background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png)
-          background-position: -29px -29px
-      &.active .actions
-        display: block
-      .actions
-        a
-          width: 29px
-          height: 29px
-          background-color: #F5F5F5
-          border-radius: 3px
-          display: inline-block
-          &:hover
-            background-color: #EBEBEB
-        .file-rename-link
-          background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png)
-          background-position: 0px 0px
-        .file-remove-link
-          background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png)
-          background-position: -29px 0px
+        opacity: 0
+        transition: opacity 0.2s linear
+      &.active
+        .actions
+          opacity: 1
       .type-logo
-        margin-top: 5px
-        margin-left: 7px
         width: 24px
         height: 32px
-        float: left
         background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png)
         background-position: -58px 0px
         &.jpeg
@@ -110,39 +88,17 @@
         height: 300px
         background-repeat: no-repeat
         background-position: center center
-        margin: 8px 0 0 0
         cursor: pointer
-
+        border-radius: 4px
         &.loading
-          background-image: url("/layout/loading-spinner.gif") !important // The important is here to deal with the fact that blaze doesn't recognize the image that we set ourself using jquery. Without it, switching between tasks that has images, might reuse the same preview div component, and show the previously presented image that got set with jquery, until the new image complete load. The !important solves that.
-
+          background-image: none
           background-size: auto
-
-      .content
-        margin-left: 42px
-        margin-right: 70px
-        .title
-          position: relative
-          a
-            color: #3d95c1
-            font-size: 14px
-            overflow: hidden
-            text-overflow: ellipsis
-            -o-text-overflow: ellipsis
-            -webkit-line-clamp: 2
-            -webkit-box-orient: vertical
+          .loader
             display: block
-            display: -webkit-box
-          input
-            height: 20px
-            color: #3d95c1
-            width: 100%
-            position: relative
-            left: -1px
-            border: none
-            font-style: italic
-            &:focus
-              outline: none
+
+      .title
+        line-height: 1rem
+
       .msg
         position: absolute
         background: rgba(255, 255, 255, 0.9)
@@ -151,73 +107,6 @@
         left: 0
         right: 0
         z-index: 150
-        .msg-content
-          width: 110px
-          height: 40px
-          position: absolute
-          top: -3px
-          right: 20px
-          font-size: 13px
-          font-weight: 500
-          text-align: right
-          color: #6d6d6d
-          .msg-cancel
-            width: 60px
-            display: inline-block
-            height: 22px
-            background: #B8B8B8
-            text-align: center
-            color: white
-            border-radius: 3px
-            font-size: 12px
-            line-height: 22px
-            text-decoration: none
-            font-weight: 500
-          .msg-ok
-            width: 40px
-            display: inline-block
-            height: 22px
-            background: #1B78AB
-            text-align: center
-            color: white
-            border-radius: 3px
-            font-size: 12px
-            line-height: 22px
-            text-decoration: none
-            font-weight: 500
-        p
-          text-align: right
-        .loader
-          width: 25px
-          height: 25px
-          position: absolute
-          right: 0
-          top: 0
-          display: none
-          .double-bounce1
-            width: 100%
-            height: 100%
-            border-radius: 50%
-            background-color: rgb(218, 222, 251)
-            opacity: 0.5
-            position: absolute
-            top: 0
-            left: 0
-            -webkit-animation: sk-bounce 2.0s infinite ease-in-out
-            animation: sk-bounce 2.0s infinite ease-in-out
-          .double-bounce2
-            width: 100%
-            height: 100%
-            border-radius: 50%
-            background-color: rgb(218, 222, 251)
-            opacity: 0.5
-            position: absolute
-            top: 0
-            left: 0
-            -webkit-animation: sk-bounce 2.0s infinite ease-in-out
-            animation: sk-bounce 2.0s infinite ease-in-out
-            -webkit-animation-delay: -1.0s
-            animation-delay: -1.0s
 
   .bottom-toolbar
     .justdo-files-gallery
@@ -243,9 +132,7 @@
       transform: scale(1)
       -webkit-transform: scale(1)
 
-  //
   // Preview Bootbox
-  //
   .tasks-file-manager-preview-dialog
     .modal-dialog
       width: 1000px
@@ -253,27 +140,13 @@
       text-align: center
 
 
-  
+
   .drop-pane
     position: relative
-
     .drop-pane-logo
-      width: 40px
-      height: 40px
-      background-image: url(/packages/justdoinc_tasks-file-manager-plugin/media/icons.png);
-      background-position: 0px -58px
-      margin: 5px auto
-      display: none
+      width: 32px
+      height: 32px
 
-    .prev-upload-result
-      padding-bottom: 16px
-    
-    .upload-process-msg
-      padding-bottom: 24px
-
-    .upload-success-msg
-      padding-bottom: 8px
-    
     .drop-to-upload-msg
       display: none
       position: absolute
@@ -281,7 +154,7 @@
       left: 50%
       transform: translate(-50%, -50%)
       margin-top: -3px
-      
+
     &.no-files
       height: 100%
 
@@ -289,7 +162,7 @@
         height: 100%
 
       .drop-pane-logo
-        display: block
+        display: block !important
 
     &.hovering
       .custom-file-input
@@ -299,13 +172,14 @@
 
       .prev-upload-result, .upload-msg, .drop-pane-logo
         visibility: hidden
-      
+
       .drop-to-upload-msg
         display: block
-    
+
     &.uploading
       .prev-upload-result, .drop-pane-logo
         display: none
-      
 
-    
+  .drop-pane.ready
+    .drop-pane-logo
+      display: none
