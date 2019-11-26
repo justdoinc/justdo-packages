@@ -227,7 +227,6 @@ setDragAndDrop = ->
       return
   return
 
-
 fixHeaderOnScroll = ->
   $(".tab-justdo-calendar-container").on "scroll", ->
     scrollTop = $(this).scrollTop()
@@ -277,6 +276,8 @@ justdo_level_workdays = {} #intentionally making this one a non-reactive var, ot
 
 Template.justdo_calendar_project_pane.onCreated ->
   self = @
+
+  @justdo_level_holidays = new Set()
 
   # to handle highlighting the header of 'today', when the day changes...
   # could be optimized to hit once per day, but this is good enough
@@ -508,6 +509,7 @@ Template.justdo_calendar_project_pane.onCreated ->
       dates.push(d.format("YYYY-MM-DD"))
       d.add(1,"days")
     dates_to_display.set(dates)
+    @justdo_level_holidays = APP.justdo_resources_availability?.workdaysAndHolidaysIn(JD.activeJustdo()._id, dates).holidays
     return
 
   @autorun =>
@@ -637,6 +639,11 @@ Template.justdo_calendar_project_pane.helpers
       return true
     return false
 
+  isHoliday: (date) ->
+    if Template.instance().justdo_level_holidays.has(date)
+      return "is_holiday"
+    return ""
+
 Template.justdo_calendar_project_pane.events
   "click .calendar_view_zoom_out": ->
     index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
@@ -725,7 +732,9 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
   @dates_workload = new ReactiveVar({})
   @collapsed_view = new ReactiveVar(true)
 
+
   members_collapse_state_vars[Template.currentData().user_id] = @collapsed_view
+  @justdo_user_holidays = new Set()
 
   @last_tasks_set_size = 0
   @autorun =>
@@ -733,10 +742,15 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
     data = Template.currentData()
     data.dependency.depend()
 
+    @justdo_user_holidays = APP.justdo_resources_availability?.workdaysAndHolidaysIn(JD.activeJustdo()._id,
+      data.dates_to_display, Meteor.userId()).holidays
+
     if self.last_tasks_set_size == 0 and data.tasks_set.size == 0
       return
 
     self.last_tasks_set_size = data.tasks_set.size
+
+
 
     #days_matrix is eventually a matrix that represents the table that we are going to display,
     # where each column represents a day and each cell holds a task in such a way that we could later
@@ -952,7 +966,6 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
       return
     return
 
-
 Template.justdo_calendar_project_pane_user_view.onDestroyed ->
     delete members_collapse_state_vars[Template.currentData().user_id]
     return
@@ -964,7 +977,6 @@ Template.justdo_calendar_project_pane_user_view.onRendered ->
   return
 
 Template.justdo_calendar_project_pane_user_view.helpers
-
   fontSizeClass: ->
     index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
     if index == 0
@@ -974,8 +986,6 @@ Template.justdo_calendar_project_pane_user_view.helpers
     if index == 2
       return "x_small_text"
     return "xx_small_text"
-
-
 
   isCollapsed: ->
     return Template.instance().collapsed_view.get()
@@ -1032,8 +1042,9 @@ Template.justdo_calendar_project_pane_user_view.helpers
     return (@+1)==1
 
   markDaysOff: ->
+
     column_date = Template.instance().data.dates_to_display[@]
-    if justdo_level_workdays.weekly_work_days[moment.utc(column_date).day()] == 0
+    if Template.instance().justdo_user_holidays.has(column_date)
       return "calendar_view_mark_days_off"
     return ""
 
@@ -1124,7 +1135,6 @@ Template.justdo_calendar_project_pane_user_view.helpers
       return false
     else
       return true
-
 
 Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_task_cell": (e, tpl)->

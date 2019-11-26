@@ -141,6 +141,17 @@
   .week_day
     opacity: 0.6
 
+.calendar_view_date.is_holiday,
+.main_table_fixed_header th.is_holiday
+  background-color: rgba(230, 233, 238, 0.4)
+  color: #333333
+  border-color: rgba(9, 89, 224, 0.16)
+  .week_day
+    opacity: 0.6
+
+
+
+
 .calendar_view_main_table_wrapper
   position: relative
   transition: opacity 0.3s
@@ -281,6 +292,7 @@
 
 .calendar_view_scroll_right_cell
   cursor: e-resize
+
 
 .dim_task
   color: rgba(255, 255, 255, 0.5)
