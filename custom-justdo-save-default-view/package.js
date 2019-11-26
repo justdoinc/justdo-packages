@@ -47,6 +47,7 @@ Package.onUse(function (api) {
   api.use("meteorspark:util@0.2.0", both);
   api.use("meteorspark:logger@0.3.0", both);
   api.use("justdoinc:justdo-helpers@1.0.0", both);
+  api.use("stem-capital:projects@0.1.0", both);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 

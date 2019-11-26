@@ -23,6 +23,7 @@ Package.onUse(function (api) {
   api.use("ejson", both);
   api.use("ddp", both);
   api.use("mongo", both);
+  api.use("check", both);
 
   // Uncomment if you want to use NPM peer dependencies using
   // checkNpmVersions.
