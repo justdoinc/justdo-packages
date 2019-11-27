@@ -83,6 +83,15 @@ APP.executeAfterAppLibCode ->
     customJustdoSaveDefaultViewEnabled: ->
       return APP.custom_justdo_save_default_view?.isPluginInstalledOnProjectDoc(curProj()?.getProjectDoc())
 
+    settingsDropdownTopItems: ->
+      return JD.getPlaceholderItems("settings-dropdown-top")
+
+    settingsDropdownMiddleItems: ->
+      return JD.getPlaceholderItems("settings-dropdown-middle")
+
+    settingsDropdownBottomItems: ->
+      return JD.getPlaceholderItems("settings-dropdown-bottom")
+
   Template.project_settings.events
     "click #project-config": (e) ->
       module.project_config_ui.show()

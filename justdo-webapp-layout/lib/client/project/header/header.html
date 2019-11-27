@@ -74,6 +74,14 @@
     </div>
 
     <ul class="dropdown-menu dropdown-menu-right jd-p-075 animate slideIn shadow-lg border-0" aria-labelledby="settingsDropdown">
+      {{#each settingsDropdownTopItems}}
+        {{#if template}}
+          {{> Template.dynamic template=template data=template_data}}
+        {{else if html}}
+          {{{html}}}
+        {{/if}}
+      {{/each}}
+
       <li id="register-project-for-daily-email" class="dropdown-item d-flex align-items-center px-1">
       {{#if isSubscribedToDailyEmail}}
         <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
@@ -95,6 +103,14 @@
         </li>
       {{/if}}
 
+      {{#each settingsDropdownMiddleItems}}
+        {{#if template}}
+          {{> Template.dynamic template=template data=template_data}}
+        {{else if html}}
+          {{{html}}}
+        {{/if}}
+      {{/each}}
+
       {{#if customJustdoSaveDefaultViewEnabled}}
         <li class="reset-default-views-columns dropdown-item d-flex align-items-center px-1">
           <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#x-square"/></svg>Reset Default Views columns
@@ -111,6 +127,14 @@
         <li id="project-config" class="dropdown-item d-flex align-items-center px-1"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#sliders"/></svg> Configure this JustDo</li>
         {{> project_settings_dropdown_remove_project}}
       {{/if}}
+
+      {{#each settingsDropdownBottomItems}}
+        {{#if template}}
+          {{> Template.dynamic template=template data=template_data}}
+        {{else if html}}
+          {{{html}}}
+        {{/if}}
+      {{/each}}
     </ul>
   </div>
 </template>
