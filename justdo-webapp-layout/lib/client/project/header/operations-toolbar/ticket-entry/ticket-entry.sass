@@ -69,9 +69,12 @@
     color: #777
     white-space: nowrap
 
-.ticket-category-select.open
+.ticket-category-select.show
   .dropdown-menu
     display: block
+    max-height: 300px !important
+    .inner
+      max-height: inherit !important
 
 .ticket-owner-select
   width: 233px !important
