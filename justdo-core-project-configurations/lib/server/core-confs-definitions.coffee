@@ -19,15 +19,3 @@ Projects.registerAllowedConfs
       return true
     allow_change: false
     allow_unset: false
-
-  project_logo:
-    admin_allowed_to_set: true
-    value_matcher: SimpleSchema.RegEx.Url
-    allow_change: true
-    allow_unset: true
-
-  project_logo_width:
-    admin_allowed_to_set: true
-    value_matcher: Number
-    allow_change: true
-    allow_unset: true

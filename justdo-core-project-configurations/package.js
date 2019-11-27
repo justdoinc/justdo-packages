@@ -30,8 +30,6 @@ Package.onUse(function (api) {
   api.use("meteorspark:app@0.3.0", both);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
 
-  api.addFiles("lib/client/templates/logo.html", client);
-  api.addFiles("lib/client/templates/logo.coffee", client);
   api.addFiles("lib/client/templates/project-uid.html", client);
   api.addFiles("lib/client/templates/project-uid.coffee", client);
 

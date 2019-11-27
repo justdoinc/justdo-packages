@@ -24,8 +24,7 @@ _.extend Projects.prototype,
         "custom_fields": 1
         "removed_custom_fields": 1
 
-        "conf.custom_features": 1
-        "conf.#{CustomJustdoSaveDefaultView.project_conf_key}": 1
+        "conf": 1
 
         "createdAt": 1
 
