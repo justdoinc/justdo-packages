@@ -78,6 +78,7 @@
       <td class="calendar_table_user">
         {{#with userObj}}
           {{> justdo_avatar}} <i class="fa fa-plus-square-o calendar_view_expand_collapse expand" aria-hidden="true" ></i>
+                              <i class="fa fa-clock-o calendar_view_clock clock" aria-hidden="true"></i>
         {{/with}}
       </td>
       {{#if showNavigation}}
@@ -96,6 +97,7 @@
           <td class="calendar_table_user" rowspan={{numberOfRows}}>
             {{#with userObj}}
               {{> justdo_avatar}} <i class="fa fa-minus-square-o calendar_view_expand_collapse collapse" aria-hidden="true"></i>
+                                  <i class="fa fa-clock-o calendar_view_clock clock" aria-hidden="true"></i>
             {{/with}}
           </td>
           {{#if showNavigation}}

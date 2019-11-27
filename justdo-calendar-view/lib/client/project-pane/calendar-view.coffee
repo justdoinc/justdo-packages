@@ -277,7 +277,7 @@ justdo_level_workdays = {} #intentionally making this one a non-reactive var, ot
 Template.justdo_calendar_project_pane.onCreated ->
   self = @
 
-  @justdo_level_holidays = new Set()
+  @justdo_level_holidays = new ReactiveVar(new Set())
 
   # to handle highlighting the header of 'today', when the day changes...
   # could be optimized to hit once per day, but this is good enough
@@ -509,7 +509,7 @@ Template.justdo_calendar_project_pane.onCreated ->
       dates.push(d.format("YYYY-MM-DD"))
       d.add(1,"days")
     dates_to_display.set(dates)
-    @justdo_level_holidays = APP.justdo_resources_availability?.workdaysAndHolidaysIn(JD.activeJustdo()._id, dates).holidays
+    @justdo_level_holidays.set(APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo()._id, dates).holidays)
     return
 
   @autorun =>
@@ -640,7 +640,7 @@ Template.justdo_calendar_project_pane.helpers
     return false
 
   isHoliday: (date) ->
-    if Template.instance().justdo_level_holidays.has(date)
+    if Template.instance().justdo_level_holidays.get().has(date)
       return "is_holiday"
     return ""
 
@@ -742,8 +742,8 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
     data = Template.currentData()
     data.dependency.depend()
 
-    @justdo_user_holidays = APP.justdo_resources_availability?.workdaysAndHolidaysIn(JD.activeJustdo()._id,
-      data.dates_to_display, Meteor.userId()).holidays
+    @justdo_user_holidays = APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo()._id,\
+                            data.dates_to_display, Template.currentData().user_id).holidays
 
     if self.last_tasks_set_size == 0 and data.tasks_set.size == 0
       return
@@ -1150,6 +1150,11 @@ Template.justdo_calendar_project_pane_user_view.events
 
   "click .collapse": (e, tpl)->
     tpl.collapsed_view.set(true)
+    return
+
+  "click .clock": (e, tpl)->
+    if (ra = APP.justdo_resources_availability)
+      ra.displayConfigDialog JD.activeJustdo()._id, tpl.data.user_id
     return
 
   # "mouseover .calendar_task_cell" : (e, tpl)->
