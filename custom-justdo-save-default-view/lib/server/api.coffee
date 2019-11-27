@@ -29,7 +29,7 @@ _.extend CustomJustdoSaveDefaultView.prototype,
   _registerAllowedConfs: ->
     Projects.registerAllowedConfs
       "#{CustomJustdoSaveDefaultView.project_conf_key}":
-        admin_allowed_to_set: true
+        require_admin_permission: true
         value_matcher: String
         allow_change: true
         allow_unset: true

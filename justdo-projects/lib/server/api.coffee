@@ -22,9 +22,8 @@ Fiber = Npm.require "fibers"
 # (justdo-core-project-configurations code is shared with sdk developers)
 allowed_confs = {
   # structure:
-  #   admin_allowed_to_set: true/false
-  #
-  #     if false, only super admin are allowed to set.
+  #   require_admin_permission: true/false # If false, regular members can
+  #                                        # edit this configuration as well
   #
   #   value_matcher: RegExp/Matcher # regexp or Matcher
   #   validator: function # optional, function that will
@@ -46,7 +45,7 @@ allowed_confs = {
     # to the project to new members (both registered and
     # unregistered) to the email set in its value, instead
     # of the new member's email
-    admin_allowed_to_set: true
+    require_admin_permission: true
     value_matcher: JustdoHelpers.common_regexps.email
     allow_change: true
     allow_unset: true
@@ -1131,11 +1130,7 @@ _.extend Projects.prototype,
 
     return false
 
-  configureProject: (project_id, conf, requesting_user_id) ->
-    # In this method we use the term super admin to mean
-    # calls with no requesting_user_id set (these calls
-    # can't be initiated by the "configureProject' method).
-    #
+  configureProject: (project_id, conf, user_id) ->
     # conf struct:
     #
     # {
@@ -1153,9 +1148,8 @@ _.extend Projects.prototype,
     # 
     #   # * **conf_name** will be ignored if:
     #   #   * It isn't in the allowed_confs
-    #   #   * If requesting_user_id is set and it isn't comply
-    #   #     with the `admin_allowed_to_set` value of the conf
-    #   #     definition.
+    #   #   * If user_id isn't comply with the `require_admin_permission
+    #   #     value of the conf definition.
     #   # * A validation-error will be raised if conf_name has a value
     #   #   already and conf definition `allow_change` is set to false.
     #   # * **value** if not undefined (unset) must comply with
@@ -1163,51 +1157,44 @@ _.extend Projects.prototype,
     #   #    will be raised otherwise)
     # }
 
-    # console.log {project_id, conf, requesting_user_id}
+    # console.log "STEP 1", {project_id, conf, user_id}
 
     if not _.isObject conf or _.isEmpty conf
-      # nothing to do.
       return 
 
-    permission_level = null # 0 simple member, 1 admin, 2 super admin
+    permission_level = -1 # 0 regular member, 1 admin
 
-    if not requesting_user_id?
-      permission_level = 2
+    @requireLogin user_id # To make sure is String
 
-      project = @getProject(project_id)
+    if (project = @getProjectIfUserIsAdmin(project_id, user_id))?
+      permission_level = 1
+    else if (project = @getProjectIfUserIsMember(project_id, user_id))?
+      permission_level = 0
     else
-      # If requesting_user_id isn't set, we assume system
-      # request, hence no need to check permission
-      @requireLogin requesting_user_id # To make sure is String
+      throw @_error "unknown-project"
 
-      project = @getProjectIfUserIsAdmin(project_id, requesting_user_id)
+    # console.log "STEP 2", {user_id, permission_level, project}
 
-      if project?
-        permission_level = 1
-      else
-        throw @_error "admin-permission-required"
+    # Get allowed_confs according to user permission
+    permitted_confs = _.pickBy allowed_confs, (conf_def, key) ->
+      if not (require_admin_permission = conf_def.require_admin_permission)? or
+         not require_admin_permission
+        return true
 
-    # console.log {requesting_user_id, permission_level, project}
+      if require_admin_permission and permission_level == 1
+        return true
 
-    if permission_level != 2
-      # Get allowed_confs according to user permission
-      allowed_confs = _.pickBy allowed_confs, (conf_def, key) ->
-        if permission_level == 1 and
-            (admin_allowed_to_set = conf_def.admin_allowed_to_set)? and
-            admin_allowed_to_set
-          return true
+      return false
 
-        return false
-
-    # console.log {allowed_confs}
+    # console.log "STEP 3", {permitted_confs}
 
     # Remove unknown/not permitted confs
     conf = _.pickBy conf, (conf_val, key) ->
-      if key of allowed_confs
+      if key of permitted_confs
         return true
       return false
 
-    # console.log {id: "New conf", conf}
+    # console.log "STEP 4", {id: "New conf", conf}
 
     conf_subdocument_field_name = "conf"
     $set = {}

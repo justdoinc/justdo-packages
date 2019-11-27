@@ -4,13 +4,13 @@ Projects.registerAllowedConfs
     #
     # This field is in use by the client side methods of the current project obj:
     # current_project.enableCustomFeatures(features), current_project.disableCustomFeatures(features), current_project.isCustomFeatureEnabled(feature)
-    admin_allowed_to_set: true
+    require_admin_permission: true
     value_matcher: [String]
     allow_change: true
     allow_unset: true
 
   project_uid:
-    admin_allowed_to_set: true
+    require_admin_permission: true
     value_matcher: /^[0-9a-z-]+$/
     validator: (value) ->
       if (@projects_collection.findOne({"conf.project_uid": value}))?
