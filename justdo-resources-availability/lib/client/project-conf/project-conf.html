@@ -1,0 +1,15 @@
+<template name="justdo_resources_availability_project_config">
+  <div>
+    <span class="project-conf-justdo-resources-availability-config">
+      {{#if isModuleEnabled}}
+        <i class="fa fa-toggle-on " aria-hidden="true"></i>
+      {{else}}
+        <i class="fa fa-toggle-off " aria-hidden="true"></i>
+      {{/if}} {{pluginName}}
+    </span>
+    {{#if isModuleEnabled}}
+      <i class="fa fa-cog settings-button resources-availability-config-justdo-level" title="Settings"></i>
+    {{/if}}
+  </div>
+
+</template>

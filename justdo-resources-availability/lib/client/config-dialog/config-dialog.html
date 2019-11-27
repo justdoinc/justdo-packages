@@ -1,0 +1,48 @@
+<template name="justdo_resources_availability_config_dialog">
+  <h3>
+    Workdays
+  </h3>
+  <table>
+    <tr>
+      <th>Day</th>
+      <th width="110px">From</th>
+      <th width="10px"></th>
+      <th width="110px">To</th>
+      <th></th>
+    </tr>
+  {{#each week_days}}
+    {{>justdo_resources_availability_config_dialog_workday}}
+  {{/each}}
+  </table>
+  <h3>
+    Holidays
+  </h3>
+  <textarea class="form-control availability_config_dialog_holidays {{holidaysFormatError}}" rows="3" placeholder="YYYY-MM-DD, YYYY-MM-DD,...">{{holidaysList}}</textarea>
+  <br>
+  (*) Enter comma separated dates in the format of YYYY-MM-DD.
+</template>
+
+
+<template name="justdo_resources_availability_config_dialog_workday">
+
+    <tr>
+      <td>
+        <input type="checkbox" class="form-check-input" id="availability_config_dialog_checkbox_{{this}}" {{checked}}>
+        <label class="form-check-label" for="availability_config_dialog_checkbox_{{this}}">{{this}}</label>
+      </td>
+
+    {{#unless isHoliday}}
+      <td>
+        <input type="time" min="00:00" max="23:59" value={{fromTime}} class="from_time" required>
+      </td>
+      <td> : </td>
+      <td>
+        <input type="time" min="00:00" max="23:59" value={{toTime}} class="to_time" required>
+      </td>
+      {{#unless timesChecked}}
+        <td style="font-size: smaller; color: red">"From" time must be before "To" time</td>
+      {{/unless}}
+    {{/unless}}
+    </tr>
+
+</template>
