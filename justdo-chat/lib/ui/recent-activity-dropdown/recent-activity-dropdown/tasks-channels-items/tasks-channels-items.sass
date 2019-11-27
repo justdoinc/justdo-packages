@@ -1,14 +1,27 @@
 .recent-activity-item
   border-bottom: 1px dashed rgba(0, 0, 0, 0.12)
   cursor: pointer
+  position: relative
   &:hover
-    background-color: rgba(45, 78, 142, 0.04)
+    background-color: rgba(45, 78, 142, 0.02)
   &.unread
-    background-color: rgba(201, 217, 239, 0.3)
-    &:hover
-      background-color: rgba(201, 217, 239, 0.35)
-    .read-indicator
-      background-color: rgba(201, 217, 239, 1)
+    .recent-activity-item-bg
+      opacity: 0.04
+  &.unread:hover
+    .recent-activity-item-bg
+      opacity: 0.05
+
+
+  .recent-activity-item-content
+    position: relative
+
+  .recent-activity-item-bg
+    position: absolute
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
+    opacity: 0
 
   .main-block
     font-size: 14px
