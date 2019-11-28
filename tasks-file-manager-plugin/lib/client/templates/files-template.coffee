@@ -112,3 +112,7 @@ Template.tasks_file_manager_files.events
   "mouseleave .file": (e, tmpl) ->
     e.preventDefault()
     $(".file").removeClass "active"
+
+  "keydown .file input": (e, tmpl) ->
+    if e.which == 27
+      tmpl.renaming.set false
