@@ -1,3 +1,5 @@
 <template name="login_buttons_open_edit_email_btn">
-   <a href="#" id="login-buttons-open-edit-email" class="action-buttons">Change email</a> 
+  {{#if isAllowAccountsToChangeEmailEnabled}}
+    <a href="#" id="login-buttons-open-edit-email" class="action-buttons">Change email</a> 
+  {{/if}}
 </template>

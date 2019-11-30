@@ -3,3 +3,7 @@ Template.login_buttons_open_edit_email_btn.events
     ProjectPageDialogs.editEmail()
 
     return
+
+Template.login_buttons_open_edit_email_btn.helpers
+  isAllowAccountsToChangeEmailEnabled: ->
+    return env.ALLOW_ACCOUNTS_TO_CHANGE_EMAIL is "true"
