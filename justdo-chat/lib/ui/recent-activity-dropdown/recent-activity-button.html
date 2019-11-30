@@ -1,20 +1,5 @@
 <template name="justdo_chat_recent_activity_button">
-  <div class="nav-activity project-header-button
-                {{#if $eq unread_count 0}}
-                  no-unread
-                {{else}}
-                  has-unread
-                {{/if}}
-
-                {{#if $eq unread_count 0}}
-                {{else if $lte unread_count 9}}
-                  single-digit
-                {{else if $lte unread_count 99}}
-                  double-digit
-                {{else}}
-                  off-the-charts
-                {{/if}}
-                ">
+  <div class="nav-activity project-header-button {{#if $eq unread_count 0}}no-unread{{else}}has-unread{{/if}} {{#if $eq unread_count 0}}{{else if $lte unread_count 9}}single-digit{{else if $lte unread_count 99}}double-digit{{else}}off-the-charts{{/if}} {{unread_count}}">
     <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#message-circle"/></svg>
     <div class="unread-count">
       {{#if $lte unread_count 99}}
