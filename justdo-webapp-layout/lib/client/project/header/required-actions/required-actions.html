@@ -7,10 +7,7 @@
 </template>
 
 <template name="required_actions_bell">
-  <div class="required-actions-bell project-header-button dropdown
-              {{#if $eq required_actions_count 0}}no-actions{{else}}pending-actions{{/if}}
-              {{#if $gt required_actions_count 9}}many-actions{{/if}}
-              ">
+  <div class="required-actions-bell project-header-button dropdown {{#if $eq required_actions_count 0}}no-actions{{else}}pending-actions{{/if}} {{#if $gt required_actions_count 9}}many-actions{{/if}}">
     <div data-toggle="{{#if current_project}}dropdown{{/if}}" aria-haspopup="true" aria-expanded="true">
       <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#bell"/></svg>
       <div class="required-actions-count">
