@@ -37,17 +37,19 @@
           <div class="dropdown-info">
             {{> _loginDropdownNameAndEmailArea}}
 
-            {{#if inSettingsEditingFlow}}
-              {{> login_buttons_open_edit_email_btn}}
+            <div class="actions-buttons-container">
+              {{#if inSettingsEditingFlow}}
+                {{> login_buttons_open_edit_email_btn}}
 
-              {{> login_buttons_open_change_password_btn}}
+                {{> login_buttons_open_change_password_btn}}
 
-              {{#if $not userHasProfilePic}}
-                 &middot; {{> _loginDropdownEditAvatarColorsBtn}}
+                {{#if $not userHasProfilePic}}
+                   {{> _loginDropdownEditAvatarColorsBtn}}
+                {{/if}}
+              {{else}}
+                {{> _loginButtonsLoggedInDropdownActions}}
               {{/if}}
-            {{else}}
-              {{> _loginButtonsLoggedInDropdownActions}}
-            {{/if}}
+            </div>
           </div>
 
           {{#if inSettingsEditingFlow}}

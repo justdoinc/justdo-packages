@@ -14,6 +14,9 @@ Template.login_buttons_open_change_password_btn.onCreated ->
     return
 
 Template.login_buttons_open_change_password_btn.helpers
+  isAccountsPasswordEnabled: ->
+    return env.ALLOW_ACCOUNTS_PASSWORD_BASED_LOGIN is "true"
+
   userHasPassword: ->
     return Template.instance().user_has_password.get()
 
