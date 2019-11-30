@@ -1,15 +1,17 @@
 <template name="justdo_resources_availability_project_config">
-  <div>
-    <span class="project-conf-justdo-resources-availability-config">
+  <div class="project-conf-justdo-resources-availability-config py-2 d-flex align-items-center">
+    <div class="">
+      {{pluginName}}
       {{#if isModuleEnabled}}
-        <i class="fa fa-toggle-on " aria-hidden="true"></i>
+        <svg class="jd-icon-extension settings-button text-primary resources-availability-config-justdo-level p-1 ml-1"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg>
+      {{/if}}
+    </div>
+    <div class="ml-auto">
+      {{#if isModuleEnabled}}
+        <svg class="jd-icon-extension text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
       {{else}}
-        <i class="fa fa-toggle-off " aria-hidden="true"></i>
-      {{/if}} {{pluginName}}
-    </span>
-    {{#if isModuleEnabled}}
-      <i class="fa fa-cog settings-button resources-availability-config-justdo-level" title="Settings"></i>
-    {{/if}}
+        <svg class="jd-icon-extension text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+      {{/if}}
+    </div>
   </div>
-
 </template>
