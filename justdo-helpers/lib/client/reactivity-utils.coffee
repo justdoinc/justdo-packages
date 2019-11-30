@@ -13,9 +13,10 @@ _.extend JustdoHelpers,
 
     value = undefined
 
-    reactive_resource_tracker = Tracker.nonreactive ->
+    reactive_resource_tracker = null
+    Tracker.nonreactive ->
       initial_run = true
-      tracker = Tracker.autorun ->
+      reactive_resource_tracker = Tracker.autorun ->
         value = reactiveResource()
 
         if not initial_run
