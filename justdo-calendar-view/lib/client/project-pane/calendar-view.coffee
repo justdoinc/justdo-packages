@@ -630,8 +630,13 @@ Template.justdo_calendar_project_pane.helpers
   deliveryPlannerProjectId: ->
     return Template.instance().delivery_planner_project_id.get()
 
-  formatDate: ->
-    formattedDate = "<span class='week_day'>" + moment.utc(@).format("ddd") + "</span>" + moment.utc(@).format("Do")
+  formatDate: (viewResolution) ->
+    if number_of_days_to_display.get() == 7
+      formattedDate = "<span class='week_day'>" + moment.utc(@).format("ddd") + "</span>" + moment.utc(@).format("Do")
+    if number_of_days_to_display.get() == 14
+      formattedDate = "<span class='week_day'>" + moment.utc(@).format("dd") + "</span>" + moment.utc(@).format("D")
+    if number_of_days_to_display.get() > 14
+      formattedDate = moment.utc(@).format("D")
     return formattedDate
 
   isToday: (date) ->
@@ -643,6 +648,13 @@ Template.justdo_calendar_project_pane.helpers
     if Template.instance().justdo_level_holidays.get().has(date)
       return "is_holiday"
     return ""
+
+  isMonday: (date) ->
+    return moment.utc(date).day() == 1
+
+  calendarViewResolution: -> number_of_days_to_display.get()
+
+
 
 Template.justdo_calendar_project_pane.events
   "click .calendar_view_zoom_out": ->
@@ -728,6 +740,7 @@ Template.justdo_calendar_project_pane.events
 
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
+  console.log @
   @days_matrix = new ReactiveVar([])
   @dates_workload = new ReactiveVar({})
   @collapsed_view = new ReactiveVar(true)
@@ -1136,6 +1149,13 @@ Template.justdo_calendar_project_pane_user_view.helpers
     else
       return true
 
+  userInitials: (userId) ->
+    initials = Meteor.users.findOne(userId).profile.first_name.charAt(0) + Meteor.users.findOne(userId).profile.last_name.charAt(0)
+    return initials
+
+  userName: (userId) ->
+    return Meteor.users.findOne(userId).profile.first_name + " " + Meteor.users.findOne(userId).profile.last_name
+
 Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_task_cell": (e, tpl)->
     if (task_id = $(e.target).closest(".calendar_task_cell").attr("task_id"))?
@@ -1144,11 +1164,11 @@ Template.justdo_calendar_project_pane_user_view.events
       return
     return
 
-  "click .expand": (e, tpl)->
+  "click .expand_user": (e, tpl)->
     tpl.collapsed_view.set(false)
     return
 
-  "click .collapse": (e, tpl)->
+  "click .collapse_user": (e, tpl)->
     tpl.collapsed_view.set(true)
     return
 

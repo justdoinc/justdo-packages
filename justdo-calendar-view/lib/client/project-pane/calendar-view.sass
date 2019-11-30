@@ -9,9 +9,6 @@
   background-color: white
   z-index: 200
 
-  .btn-group
-    margin-left: 1.5rem
-
 .calendar_view_project_selector
   button
     padding: 4px 12px
@@ -81,6 +78,24 @@
 
 .calendar_view_tasks_row
   height: 45px
+  &.is_collapsed
+    height: auto
+    .expand_user
+      width: 32px
+      cursor: zoom-in
+    &:hover
+      .calendar_table_user_name
+        display: block
+
+.calendar_table_user_name
+  position: absolute
+  background-color: white
+  white-space: nowrap
+  font-size: 12px
+  left: 100%
+  padding: 2px 5px
+  display: none
+  z-index: 200
 
 .calendar_view_user,
 .main_table_fixed_header .calendar_view_user
@@ -148,9 +163,6 @@
   border-color: rgba(9, 89, 224, 0.16)
   .week_day
     opacity: 0.6
-
-
-
 
 .calendar_view_main_table_wrapper
   position: relative
@@ -241,7 +253,7 @@
   padding: 0px !important
   position: relative
   z-index: 100
-  border: 1px solid #eaeaea
+  border-bottom-color: rgba(86, 99, 130, 0.4) !important
 
   .calendar_view_date_icon
     width: 18px
@@ -327,15 +339,53 @@
     height: 100%
     background-color: red
 
-.calendar_view_expand_collapse
+.calendar_view_expand_collapse,
   position: absolute
-  top: 0px
-  right: 0px
+  top: 6px
+  right: 6px
+  .jd-icon
+    width: 14px
+    height: 14px
+    padding: 1px
+    cursor: pointer
+    background-color: white
+    border-radius: 2px
+    display: none
+
+.calendar_table_user:hover
+  .calendar_view_expand_collapse,
+  .calendar_view_clock
+    .jd-icon
+      display: block
+
+.calendar_expand_collapse
+  .jd-icon
+    padding: 0.25rem
+    color: #525F7F
+    cursor: pointer
+    &:hover
+      color: black
+      stroke-width: 2
+
+  .expand_collapse_divider
+    width: 1px
+    height: 16px
+
+.collapse_user
+  cursor: zoom-out
 
 .calendar_view_clock
   position: absolute
-  top: 0px
-  left: 0px
+  top: 4px
+  right: 4px
+  .jd-icon
+    width: 16px
+    height: 16px
+    padding: 1px
+    cursor: pointer
+    background-color: white
+    border-radius: 50%
+    display: none
 
 .smaller_text
   font-size: smaller
@@ -343,3 +393,8 @@
   font-size: x-small
 .xx_small_text
   font-size: xx-small
+
+.calendar-view-28,
+.calendar-view-56
+  .is_monday
+    border-left: 1px solid #007bff !important
