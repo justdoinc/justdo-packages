@@ -60,18 +60,11 @@ _.extend JustdoResourcesAvailability.prototype,
       console.log ">>>", "subscription stopped"
     return
 
-
-
-
-
-
   # The following will open the resources config dialog.
   # if user_id is provided - then for the user in the current JustDo, else - for the entire JustDo
   displayConfigDialog: (project_id, user_id, task_id)->
     if not project_id
       project_id = JD.activeJustdo({_id: 1})._id
-
-    config_data = {}
 
     # load user task specific info
     if task_id?
@@ -100,8 +93,15 @@ _.extend JustdoResourcesAvailability.prototype,
         weekdays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?[project_id]?.working_days
         holidays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?[project_id]?.holidays
 
+    config_data.config_user_id = user_id
+
     message_template =
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_resources_availability_config_dialog, config_data)
+
+    dialog_button_label = "Close"
+    if JD.active_justdo.isAdmin() or user_id == Meteor.userId()
+      dialog_button_label = "Save"
+
 
     bootbox.dialog
       title: config_data.title
@@ -113,8 +113,8 @@ _.extend JustdoResourcesAvailability.prototype,
         return true
 
       buttons:
-        close:
-          label: "Close"
+        save:
+          label: dialog_button_label
           className: "btn-primary resources_availability_close_dialog_button"
           callback: ->
             if config_data.has_issues.size > 0

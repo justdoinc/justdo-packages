@@ -7,7 +7,7 @@
       </div>
     {{/each}}
     <div class="h6 font-weight-bold text-primary text-uppercase mt-4">Holidays</div>
-    <textarea class="form-control availability_config_dialog_holidays {{holidaysFormatError}} mb-1" rows="3" placeholder="YYYY-MM-DD, YYYY-MM-DD,...">{{holidaysList}}</textarea>
+    <textarea {{readonly}} class="form-control availability_config_dialog_holidays {{holidaysFormatError}} mb-1" rows="3" placeholder="YYYY-MM-DD, YYYY-MM-DD,...">{{holidaysList}}</textarea>
     <small class="text-muted">* Enter comma separated dates in the format of YYYY-MM-DD.</small>
   </div>
 </template>
@@ -20,9 +20,9 @@
   </div>
   {{#unless isHoliday}}
     <div class="d-flex position-relative">
-      <input type="time" min="00:00" max="23:59" value={{fromTime}} class="from_time form-control form-control-sm {{#unless timesChecked}}border-danger{{/unless}}" required>
+      <input type="time" {{readonly}} min="00:00" max="23:59" value={{fromTime}} class="from_time form-control form-control-sm {{#unless timesChecked}}border-danger{{/unless}}" required>
       <div class="mx-1">:</div>
-      <input type="time" min="00:00" max="23:59" value={{toTime}} class="to_time form-control form-control-sm {{#unless timesChecked}}border-danger{{/unless}}" required>
+      <input type="time" {{readonly}} min="00:00" max="23:59" value={{toTime}} class="to_time form-control form-control-sm {{#unless timesChecked}}border-danger{{/unless}}" required>
       {{#unless timesChecked}}
         <div class="resources-availability-time-note shadow-sm rounded-sm text-danger">"From" time must be before "To" time</div>
       {{/unless}}

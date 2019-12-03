@@ -43,6 +43,12 @@ Template.justdo_resources_availability_config_dialog.helpers
 
     return ret.slice 0, -2
 
+  readonly: ->
+    if JD.active_justdo.isAdmin() or Template.currentData().config_user_id == Meteor.userId()
+      return ""
+    return "readonly"
+
+
 Template.justdo_resources_availability_config_dialog.events
   "keyup/change/paste/blur .availability_config_dialog_holidays": (e, tpl) ->
     has_issues = Template.currentData().has_issues
@@ -114,9 +120,20 @@ Template.justdo_resources_availability_config_dialog_workday.helpers
       return r
     return "16:00"
 
-Template.justdo_resources_availability_config_dialog_workday.events
-  "change .form-check-input": (e, tpl)->
+  readonly: ->
+    if JD.active_justdo.isAdmin() or Template.parentData().config_user_id == Meteor.userId()
+      return ""
+    return "readonly"
 
+
+
+Template.justdo_resources_availability_config_dialog_workday.events
+  "click .form-check-input": (e, tpl)->
+    if JD.active_justdo.isAdmin() or Template.parentData().config_user_id == Meteor.userId()
+      return true
+    return false
+
+  "change .form-check-input": (e, tpl)->
     parent_data = Template.parentData()
     Meteor._ensure parent_data, "weekdays", "#{days_of_week.indexOf(Template.instance().data)}"
     parent_data_day = parent_data.weekdays["#{days_of_week.indexOf(Template.instance().data)}"]

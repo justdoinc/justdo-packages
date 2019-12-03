@@ -60,17 +60,26 @@ _.extend JustdoResourcesAvailability.prototype,
     if not(project_obj = APP.collections.Projects.findOne({_id: project_id, "members.user_id": executing_user_id}))
       throw @_error "project-not-found", "Project not found, or executing member not part of project"
 
-    resource_availability_field = JustdoResourcesAvailability.project_custom_feature_id
-    all_resources = _.extend {}, project_obj[resource_availability_field]
-    key = project_id
-    if resource_user_id
-      key += ":" + resource_user_id
-    if task_id
-      key += ":" + task_id
+    #find the executing member to see if he is allowed to modify
+    is_admin = false
+    for member in project_obj.members
+      if member.user_id == executing_user_id
+        if member.is_admin
+          is_admin = true
+        break
 
-    all_resources[key] = sanitized_availability
-    op = {$set: {"#{resource_availability_field}": all_resources}}
+    if is_admin or executing_user_id == resource_user_id
+      resource_availability_field = JustdoResourcesAvailability.project_custom_feature_id
+      all_resources = _.extend {}, project_obj[resource_availability_field]
+      key = project_id
+      if resource_user_id
+        key += ":" + resource_user_id
+      if task_id
+        key += ":" + task_id
 
-    APP.collections.Projects.update(project_id, op)
+      all_resources[key] = sanitized_availability
+      op = {$set: {"#{resource_availability_field}": all_resources}}
+
+      APP.collections.Projects.update(project_id, op)
 
     return
