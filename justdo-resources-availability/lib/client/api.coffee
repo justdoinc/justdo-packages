@@ -10,7 +10,6 @@ _.extend JustdoResourcesAvailability.prototype,
       return
 
     @registerConfigTemplate()
-#    @registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
 
 
@@ -24,22 +23,10 @@ _.extend JustdoResourcesAvailability.prototype,
           Tracker.autorun =>
             @resorce_availability_subscription = Meteor.subscribe "jd-resource-availability", JD.activeJustdo({_id: 1})._id
             return
-
-      #          if JustdoResourcesAvailability.add_pseudo_field
-#            APP.modules.project_page.setupPseudoCustomField JustdoResourcesAvailability.pseudo_field_id,
-#              label: JustdoResourcesAvailability.pseudo_field_label
-#              field_type: JustdoResourcesAvailability.pseudo_field_type
-#              grid_visible_column: true
-#              grid_editable_column: true
-#              default_width: 200
-
           return
 
         destroyer: =>
           @resorce_availability_subscription.stop()
-#          if JustdoResourcesAvailability.add_pseudo_field
-#            APP.modules.project_page.removePseudoCustomFields JustdoResourcesAvailability.pseudo_field_id
-
           return
 
     @onDestroy =>

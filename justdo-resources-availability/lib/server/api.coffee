@@ -36,28 +36,41 @@ _.extend JustdoResourcesAvailability.prototype,
 
     return
 
-  saveResourceAvailability: (executing_user_id, project_id, availability, user_id, task_id) ->
+  saveResourceAvailability: (project_id, availability, resource_user_id, task_id, executing_user_id) ->
+
+    #sanitize availability structure
+    sanitized_availability = {}
+
+    check availability.holidays, [String]
+    sanitized_availability.holidays = availability.holidays
+    for i in [0..6]
+      check availability.working_days["#{i}"].from, String
+      check availability.working_days["#{i}"].to, String
+      check availability.working_days["#{i}"].holiday, Boolean
+      Meteor._ensure sanitized_availability, "working_days", "#{i}"
+      sanitized_availability.working_days["#{i}"] = availability.working_days["#{i}"]
+
     check executing_user_id, String
     check project_id, String
-    if user_id
-      check user_id, String
+    if resource_user_id
+      check resource_user_id, String
     if task_id
       check task_id, String
 
-    if not(projectObj = APP.collections.Projects.findOne({_id: project_id, "members.user_id": executing_user_id}))
-      throw @_error "Project not found, or executing member not part of project"
+    if not(project_obj = APP.collections.Projects.findOne({_id: project_id, "members.user_id": executing_user_id}))
+      throw @_error "project-not-found", "Project not found, or executing member not part of project"
 
-    ra_field = JustdoResourcesAvailability.project_custom_feature_id
-    all_resources = _.extend {}, projectObj[ra_field]
+    resource_availability_field = JustdoResourcesAvailability.project_custom_feature_id
+    all_resources = _.extend {}, project_obj[resource_availability_field]
     key = project_id
-    if user_id
-      key += ":" + user_id
+    if resource_user_id
+      key += ":" + resource_user_id
     if task_id
       key += ":" + task_id
 
-    all_resources[key] = availability
-    op = {$set: {"#{ra_field}": all_resources}}
+    all_resources[key] = sanitized_availability
+    op = {$set: {"#{resource_availability_field}": all_resources}}
 
-    APP.collections.Projects.update({_id: project_id},op)
+    APP.collections.Projects.update(project_id, op)
 
     return

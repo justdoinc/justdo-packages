@@ -284,14 +284,14 @@ Template.justdo_calendar_project_pane.onCreated ->
   start_of_day = new moment
   start_of_day = start_of_day.startOf('day')
   @today = new ReactiveVar(start_of_day)
-  setInterval( =>
+  setInterval  =>
     start_of_day = new moment
     start_of_day = start_of_day.startOf('day')
     self.today.set(start_of_day)
     return
   ,
     1000 * 60
-  )
+
 
 
 
@@ -366,23 +366,23 @@ Template.justdo_calendar_project_pane.onCreated ->
   onSetScrollLeft = ->
     if self.scroll_left_right_handler
       clearInterval(self.scroll_left_right_handler)
-    self.scroll_left_right_handler = setInterval( =>
+    self.scroll_left_right_handler = setInterval =>
       self.setToPrevWeek(true)
       return
     ,
       1500
-    )
+
     return
 
   onSetScrollRight = ->
     if self.scroll_left_right_handler
       clearInterval(self.scroll_left_right_handler)
-    self.scroll_left_right_handler = setInterval( =>
+    self.scroll_left_right_handler = setInterval =>
       self.setToNextWeek(true)
       return
     ,
       1500
-    )
+
     return
 
   onUnsetScrollLeftRight = ->
@@ -740,7 +740,6 @@ Template.justdo_calendar_project_pane.events
 
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
-  console.log @
   @days_matrix = new ReactiveVar([])
   @dates_workload = new ReactiveVar({})
   @collapsed_view = new ReactiveVar(true)
