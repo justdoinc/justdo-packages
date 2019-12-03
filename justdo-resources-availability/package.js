@@ -75,10 +75,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
-  api.addFiles("lib/client/project-conf/project-conf.sass", client);
-  api.addFiles("lib/client/project-conf/project-conf.html", client);
-  api.addFiles("lib/client/project-conf/project-conf.coffee", client);
-
   api.addFiles("lib/client/plugin-page/plugin-page.sass", client);
   api.addFiles("lib/client/plugin-page/plugin-page.html", client);
   api.addFiles("lib/client/plugin-page/plugin-page.coffee", client);
@@ -92,6 +88,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/config-dialog/config-dialog.sass", client);
   api.addFiles("lib/client/config-dialog/config-dialog.html", client);
   api.addFiles("lib/client/config-dialog/config-dialog.coffee", client);
+
+  api.addFiles("lib/client/justdo-level-config/justdo-level-config.sass", client);
+  api.addFiles("lib/client/justdo-level-config/justdo-level-config.html", client);
+  api.addFiles("lib/client/justdo-level-config/justdo-level-config.coffee", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.

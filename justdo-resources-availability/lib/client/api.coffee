@@ -9,24 +9,16 @@ _.extend JustdoResourcesAvailability.prototype,
     if @destroyed
       return
 
-    @registerConfigTemplate()
     @setupCustomFeatureMaintainer()
-
-
-
     return
 
   setupCustomFeatureMaintainer: ->
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoResourcesAvailability.project_custom_feature_id,
         installer: =>
-          Tracker.autorun =>
-            @resorce_availability_subscription = Meteor.subscribe "jd-resource-availability", JD.activeJustdo({_id: 1})._id
-            return
           return
 
         destroyer: =>
-          @resorce_availability_subscription.stop()
           return
 
     @onDestroy =>
@@ -35,6 +27,43 @@ _.extend JustdoResourcesAvailability.prototype,
       return
 
     return
+
+  # The following is used for client-side plugins to register/unregister for the project-resources data in the project document
+  subscribers_to_project_data: new Set()
+  enableResourceAvailability: (requesting_plugin_id)->
+    check requesting_plugin_id, String
+    if @subscribers_to_project_data.has requesting_plugin_id
+      return
+    @subscribers_to_project_data.add requesting_plugin_id
+    if @subscribers_to_project_data.size == 1
+      console.log ">>>", "subscription started"
+      @subscription_tracker = Tracker.autorun =>
+        @resorce_availability_subscription = Meteor.subscribe "jd-resource-availability", JD.activeJustdo({_id: 1})._id
+        return
+
+      JD.registerPlaceholderItem  "#{JustdoResourcesAvailability.project_custom_feature_id}:global-config", {
+        domain: "settings-dropdown-bottom"
+        listingCondition: () => return JD.active_justdo.isAdmin()
+        data:
+          template: "justdo_resources_availability_project_config"
+          template_data: {}
+      }
+    return
+
+  disbleResourceAvailability: (requesting_plugin_id)->
+    check requesting_plugin_id, String
+    @subscribers_to_project_data.delete requesting_plugin_id
+    if @subscribers_to_project_data.size == 0
+      @resorce_availability_subscription.stop()
+      @subscription_tracker.stop()
+      JD.unregisterPlaceholderItem "#{JustdoResourcesAvailability.project_custom_feature_id}:global-config"
+      console.log ">>>", "subscription stopped"
+    return
+
+
+
+
+
 
   # The following will open the resources config dialog.
   # if user_id is provided - then for the user in the current JustDo, else - for the entire JustDo

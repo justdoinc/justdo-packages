@@ -10,6 +10,13 @@ with all browsers.
 
   
 ### API:
+* _enableResourceAvailability(requesting_plugin_id)_ (client) <br>
+    Enables the functionality of the plugin (if called by different plugins 
+    still have a single copy)
+    
+* _disbleResourceAvailability(requesting_plugin_id)_ (client) <br>
+    Disable the plugin
+
 * _displayConfigDialog: (user_id, task_id)_ (client ) <br>
     user_id: optional <br>
     task_id: optional <br>
@@ -25,5 +32,8 @@ with all browsers.
             working_hours: {} # in the structure of [[from, to],[from,to],...] where the main index is the day of week
             
      "from" and "to" are in "HH:MM" format
+     
+    
+    
  
  

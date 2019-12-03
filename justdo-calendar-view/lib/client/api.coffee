@@ -33,11 +33,13 @@ _.extend JustdoCalendarView.prototype,
             grid_editable_column: true
             default_width: 200
 
+          APP.justdo_resources_availability.enableResourceAvailability JustdoCalendarView.project_custom_feature_id
           return #installer
 
         destroyer: =>
           APP.justdo_project_pane.unregisterTab "justdo-calendar"
           APP.modules.project_page.removePseudoCustomFields JustdoCalendarView.end_date_field_id
+          APP.justdo_resources_availability.disbleResourceAvailability JustdoCalendarView.project_custom_feature_id
           return #destroyer
 
     @onDestroy =>
