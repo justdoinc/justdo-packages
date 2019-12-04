@@ -1,39 +1,25 @@
 .meetings-menu-item
-  table
-    width: 100%
-  .icon-wrapper
-    width: 1px
-    vertical-align: top
-  .icon
-    width: 23px
-    height: 21px
-    border-radius: 2px
-    font-size: 13px
-    font-weight: bold
-    text-align: center
-    line-height: 21px
-    color: white
-    background: #7D7D7D
+  border-left: 3px solid
   .title
-    font-size: 14px
-    color: #333333
-    padding-left: 6px
-    padding-right: 20px
-    line-height: 21px
-    overflow: hidden
-    max-width: 200px
+    white-space: nowrap
     text-overflow: ellipsis
-    -webkit-line-clamp: 2
-    -webkit-box-orient: vertical
-    display: block
-    display: -webkit-box
+    overflow: hidden
     &:hover
       color: black
-  .date
-    text-align: right
-    font-size: 11px
-    color: #6A6A6A
-    line-height: 21px
-    white-space: nowrap
-    vertical-align: top
-    padding-right: 5px
+      text-decoration: underline
+
+.meetings-menu-list-draft
+  .meetings-menu-item
+    border-left-color: rgba(0, 0, 0, 0.16)
+
+.meetings-menu-list-pending
+  .meetings-menu-item
+    border-left-color: rgba(0, 0, 0, 0.5)
+
+.meetings-menu-list-in-progress
+  .meetings-menu-item
+    border-left-color: rgba(0, 123, 255, 1)
+
+.meetings-menu-list-adjourned
+  .meetings-menu-item
+    border-left-color: rgba(0, 123, 255, 0.4)

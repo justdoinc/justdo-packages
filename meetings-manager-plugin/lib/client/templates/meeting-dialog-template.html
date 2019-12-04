@@ -3,63 +3,72 @@
     <div class="modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <span class="model-header-title">{{meeting_title_raw}}</span>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-            <button type="button" class="btn-minimize" aria-label="Minimize"></button>
-            <button type="button" class="btn-maximize fa fa-window-maximize" aria-label="Maximize"></button>
+          <div class="modal-header d-flex align-items-center py-2 pl-3 pr-2 bg-light">
+            <div class="model-header-title">{{meeting_title_raw}}</div>
+            <div class="ml-auto d-flex">
+              <svg class="jd-icon jd-c-pointer text-dark btn-minimize" aria-label="Minimize"><use xlink:href="/layout/icons-feather-sprite.svg#minus"/></svg>
+              <svg class="jd-icon jd-c-pointer text-dark btn-maximize" aria-label="Maximize"><use xlink:href="/layout/icons-feather-sprite.svg#square"/></svg>
+              <svg class="jd-icon jd-c-pointer text-dark" data-dismiss="modal" aria-label="Close"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+            </div>
           </div>
-          <div class="modal-body {{#if mayEdit}}admin{{/if}} {{#unless $eq meeting.status "draft"}}show-less{{/unless}}">
-
+          <div class="modal-body px-4 pt-2 pb-0 {{#if mayEdit}}admin{{/if}} {{#unless $eq meeting.status "draft"}}show-less{{/unless}}">
             <!-- MEETING HEADER -->
             <div class="meeting-header">
-              <div class="meeting-title">
-                <input type="text" name="title" placeholder="Meeting Name" value="{{meeting_title}}" class="meeting-name meeting-input" dir="auto">
-                <!-- <span class="fa fa-2x {{#if doc.private}}fa-eye-slash{{else}}fa-eye{{/if}} {{mayLockClass}} meeting-private"></span> -->
-                <span class="fa fa-print meeting-print"></span>
-                <span class="fa fa-envelope meeting-email"></span>
-                <span class="fa fa-copy meeting-copy"></span>
-                <!--span class="fa fa-video-camera meeting-conversation {{conversationClass}}"></span -->
-                <span class="fa fa-2x {{#if doc.locked}}fa-lock{{else}}fa-unlock{{/if}} {{mayLockClass}} meeting-lock"></span>
-                <div class="lock-msg">
-                  {{#if mayLock}}
-                    {{#if doc.locked}}
-                      <span class="msg-main-text">Click to unlock meeting</span>
-                      <span class="msg-sub-text">let meeting participants to edit the agenda, notes, etc</span>
-                    {{else}}
-                      <span class="msg-main-text">Click to lock meeting</span>
-                      <span class="msg-sub-text">reserve the right to edit the agenda, notes, etc. to yourself</span>
-                    {{/if}}
+              <div class="meeting-title position-relative d-flex align-items-center">
+                <input type="text" name="title" placeholder="Meeting Name" value="{{meeting_title}}" class="form-control rounded-0 border-top-0 border-left-0 border-right-0 pl-0" dir="auto">
+                <div class="meeting-control-buttons d-flex px-1 bg-light rounded ">
+                  <svg class="jd-icon jd-c-pointer text-dark meeting-print"><use xlink:href="/layout/icons-feather-sprite.svg#printer"/></svg>
+                  <svg class="jd-icon jd-c-pointer text-dark meeting-email"><use xlink:href="/layout/icons-feather-sprite.svg#mail"/></svg>
+                  <svg class="jd-icon jd-c-pointer text-dark meeting-copy"><use xlink:href="/layout/icons-feather-sprite.svg#copy"/></svg>
+                  {{#if doc.locked}}
+                    <svg class="jd-icon jd-c-pointer text-dark {{mayLockClass}} meeting-lock"><use xlink:href="/layout/icons-feather-sprite.svg#lock"/></svg>
                   {{else}}
-                    {{#if doc.locked}}
-                      <span class="msg-main-text">Meeting is locked</span>
-                      <span class="msg-sub-text">you can't edit the agenda, notes, etc</span>
-                    {{else}}
-                      <span class="msg-main-text">Meeting is unlocked</span>
-                      <span class="msg-sub-text">you can edit the agenda, notes, etc</span>
-                    {{/if}}
+                    <svg class="jd-icon jd-c-pointer text-dark {{mayLockClass}} meeting-lock"><use xlink:href="/layout/icons-feather-sprite.svg#unlock"/></svg>
                   {{/if}}
+                  <div class="lock-msg">
+                    {{#if mayLock}}
+                      {{#if doc.locked}}
+                        <span class="msg-main-text">Click to unlock meeting</span>
+                        <span class="msg-sub-text">let meeting participants to edit the agenda, notes, etc</span>
+                      {{else}}
+                        <span class="msg-main-text">Click to lock meeting</span>
+                        <span class="msg-sub-text">reserve the right to edit the agenda, notes, etc. to yourself</span>
+                      {{/if}}
+                    {{else}}
+                      {{#if doc.locked}}
+                        <span class="msg-main-text">Meeting is locked</span>
+                        <span class="msg-sub-text">you can't edit the agenda, notes, etc</span>
+                      {{else}}
+                        <span class="msg-main-text">Meeting is unlocked</span>
+                        <span class="msg-sub-text">you can edit the agenda, notes, etc</span>
+                      {{/if}}
+                    {{/if}}
+                  </div>
                 </div>
               </div>
-              <div class="meeting-info">
-                <input type="text" name="date" placeholder="Date" value="{{rawdate doc.date}}" class="meeting-date meeting-input">
-                <input type="text" name="time" placeholder="Time" value="{{doc.time}}" class="meeting-time meeting-input">
-                <span class="wrapper-location">
-                  <input type="text" name="location" placeholder="Location" value="{{doc.location}}" class="meeting-location meeting-input" dir="auto" autocomplete="off">
+              <div class="meeting-info form-row">
+                <div class="col pr-0">
+                  <input type="text" name="date" placeholder="Date" value="{{rawdate doc.date}}" class="form-control form-control-sm rounded-0 border-top-0 border-left-0 w-100 pl-0 meeting-date">
+                </div>
+                <div class="col px-0">
+                  <input type="text" name="time" placeholder="Time" value="{{doc.time}}" class="form-control form-control-sm rounded-0 border-top-0 border-left-0 meeting-time w-100">
+                </div>
+                <div class="col pl-0 wrapper-location">
+                  <input type="text" name="location" placeholder="Location" value="{{doc.location}}" class="form-control form-control-sm rounded-0 border-top-0 border-left-0 border-right-0 w-100 meeting-location" dir="auto" autocomplete="off">
                   <ul class="dropdown-menu recent-locations">
                     {{#each recentLocations}}
                       <li>{{this}}</li>
                     {{/each}}
                   </ul>
-                </span>
-                <span class="meeting-members-mini">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#"></a>
-                  <ul class="dropdown-menu">
-                    {{#with meeting}}
-                      {{> meetings_meeting_members}}
-                    {{/with}}
-                  </ul>
-                </span>
+                  <span class="meeting-members-mini">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"></a>
+                    <ul class="dropdown-menu">
+                      {{#with meeting}}
+                        {{> meetings_meeting_members}}
+                      {{/with}}
+                    </ul>
+                  </span>
+                </div>
               </div>
               <div class="meeting-members">
                 {{#with meeting}}
@@ -69,42 +78,46 @@
             </div>
 
             <!-- AGENDA HEADER -->
-            <div class="agenda-header {{agendaEditClass}} {{agendaDraftClass}}">
-              <span class="agenda-label">
-                Agenda {{#if agendaEditClass}}(edit mode){{/if}}
-              </span>
-              {{#if mayEditAgenda}}
-                <span class="agenda-edit">edit</span>
-                <span class="btn-agenda-edit-mode">
-                  <span class="agenda-save">save</span>
-                  <span class="agenda-cancel">cancel</span>
+            <div class="agenda-header d-flex align-items-center justify-content-between py-2 {{agendaEditClass}} {{agendaDraftClass}}">
+              <div class="d-flex align-items-center">
+                <span class="agenda-label font-weight-bold text-uppercase {{#if agendaEditClass}}text-primary{{/if}}">
+                  Agenda {{#if agendaEditClass}} - Edit{{/if}}
                 </span>
-                <div class="meeting-add-task">
-                  <input type="text" size="6" name="seqId" value="{{doc.seqId}}" placeholder="Type task number" class="meeting-input meeting-task-add">
-                  <span class="add-task-btn">Add Task</span>
+                {{#if mayEditAgenda}}
+                  {{#unless agendaEditClass}}
+                    <small class="agenda-edit text-primary ml-1">edit</small>
+                  {{/unless}}
+                  {{#if agendaEditClass}}
+                    <span class="btn-agenda-edit-mode ml-3">
+                      <button class="agenda-save btn btn-sm btn-primary">Save</button>
+                      <button class="agenda-cancel btn btn-sm btn-light border">Cancel</button>
+                    </span>
+                  {{/if}}
+                {{/if}}
+              </div>
+              {{#if mayEditAgenda}}
+                <div class="meeting-add-task d-flex">
+                  <input type="text" size="6" name="seqId" value="{{doc.seqId}}" placeholder="Type task number" class="form-control form-control-sm meeting-task-add">
+                  <button class="btn btn-light btn-sm text-nowrap border ml-2 add-task-btn">Add Task</button>
                 </div>
               {{/if}}
             </div>
             <!-- AGENDA BODY -->
-            <div class="meeting-tasks {{agendaEditClass}} {{agendaDraftClass}}">
-              <div class="meeting-tasks-list" >
+            <div class="meeting-tasks bg-light border-top border-bottom {{agendaEditClass}} {{agendaDraftClass}}">
+              <div class="meeting-tasks-list p-2">
                 {{#unless noRander}}
                   {{#each tasks}}
-                      {{> meetings_dialog_task}}
+                    {{> meetings_dialog_task}}
                   {{/each}}
                 {{/unless}}
               </div>
-
               {{#if showMeetingNote}}
-                <div class="meeting-note">
+                <div class="meeting-note p-2">
                   <span class="note-label">General meeting note</span>
                   {{> locking_text_editor content=meeting.note class="note" placeholder="Note" lock=meeting.note_lock disabled=mayNotEditMeetingNote onSave=onSaveMeetingNote}}
                 </div>
               {{/if}}
-
             </div>
-
-
 
             <!--Adding new task-->
             <!--{{#if mayEdit}}-->
@@ -134,43 +147,39 @@
 
           {{#unless agendaEditClass}}
             {{#if mayEdit}}
-              <div class="modal-footer">
-
-                    <div class="meeting-flow-control">
-                      <ul class="meeting-states list-inline">
-                        <li class="state {{#if $eq meeting.status "draft"}}active{{/if}}">Upublished</li>
-                        <li class="angle-right"><i class="fa fa-angle-right" aria-hidden="true"></i></li>
-                        <li class="state {{#if $eq meeting.status "pending"}}active{{/if}}">Pending</li>
-                        <li class="angle-right"><i class="fa fa-angle-right" aria-hidden="true"></i></li>
-                        <li class="state {{#if $eq meeting.status "in-progress"}}active{{/if}}">In progress</li>
-                        <li class="angle-right"><i class="fa fa-angle-right" aria-hidden="true"></i></li>
-                        <li class="state {{#if $eq meeting.status "adjourned"}}active{{/if}}">Done</li>
-                      </ul>
+              <div class="modal-footer pt-0 px-4 border-0 flex-column">
+                <div class="meeting-flow-control w-100 text-center border-bottom py-2 mb-3">
+                  <ul class="meeting-states list-inline">
+                    <li class="list-inline-item state {{#if $eq meeting.status "draft"}}text-primary font-weight-bold{{/if}}">Upublished</li>
+                    <li class="list-inline-item angle-right"><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+                    <li class="list-inline-item state {{#if $eq meeting.status "pending"}}text-primary font-weight-bold{{/if}}">Pending</li>
+                    <li class="list-inline-item angle-right"><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+                    <li class="list-inline-item state {{#if $eq meeting.status "in-progress"}}text-primary font-weight-bold{{/if}}">In progress</li>
+                    <li class="list-inline-item angle-right"><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+                    <li class="list-inline-item state {{#if $eq meeting.status "adjourned"}}text-primary font-weight-bold{{/if}}">Done</li>
+                  </ul>
+                </div>
+                <div class="w-100 text-right">
+                  {{#if showDiscardButton}}
+                    <button type="button" class="btn btn-secondary btn-cancel-meeting">Discard</button>
+                  {{/if}}
+                  {{#if $eq meeting.status "draft"}}
+                    <button type="button" class="btn btn-primary btn-publish-meeting">Publish</button>
+                  {{/if}}
+                  {{#if $eq meeting.status "pending"}}
+                    <button type="button" class="btn btn-primary btn-start-meeting">Start Meeting</button>
+                  {{/if}}
+                  {{#if $eq meeting.status "in-progress"}}
+                    <button type="button" class="btn btn-primary btn-end-meeting">End Meeting</button>
+                  {{/if}}
+                  {{#if $eq meeting.status "adjourned"}}
+                    <button type="button" class="btn btn-secondary btn-start-meeting pull-right">Reopen</button>
+                    <div class="done-msg">
+                      <span class="msg-main-text">Meeting finished</span>
+                      <span class="msg-sub-text">You can reopen meeting to edit</span>
                     </div>
-
-                    {{#if showDiscardButton}}
-                      <button type="button" class="btn btn-default btn-cancel-meeting">Discard</button>
-                    {{/if}}
-
-                    {{#if $eq meeting.status "draft"}}
-                      <button type="button" class="btn btn-primary btn-publish-meeting">Publish</button>
-                    {{/if}}
-                    {{#if $eq meeting.status "pending"}}
-                      <button type="button" class="btn btn-primary btn-start-meeting">Start Meeting</button>
-                    {{/if}}
-                    {{#if $eq meeting.status "in-progress"}}
-                      <button type="button" class="btn btn-primary btn-end-meeting">End Meeting</button>
-                    {{/if}}
-                    {{#if $eq meeting.status "adjourned"}}
-                      <button type="button" class="btn btn-default btn-start-meeting pull-right">Reopen</button>
-                      <!-- <button type="button" class="btn btn-primary pull-right">Print</button> -->
-                      <div class="done-msg">
-                        <span class="msg-main-text">Meeting finished</span>
-                        <span class="msg-sub-text">You can reopen meeting to edit</span>
-                      </div>
-                    {{/if}}
-
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                  {{/if}}
+                </div>
               </div>
             {{/if}}
           {{/unless}}

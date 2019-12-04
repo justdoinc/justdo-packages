@@ -1,155 +1,133 @@
 <template name="meetings_dialog_task">
-  <div class="meetings_dialog-task">
-    <span class="task-index">{{index}}</span>
+  <div class="meetings_dialog-task d-flex mb-2">
+    <small class="text-muted mr-2 mt-2">{{index}}</small>
 
     <!-- Task Dialog tab -->
-    <table class="dialog-task-table" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <div class="dialog-task-item bg-white p-2 flex-grow-1 rounded-sm">
       <!-- Seq id, task title, task-controls -->
-      <tr>
-        <th rowspan="4"><div class="task-seqId">{{item.seqId}}</div></th>
-        <td>
-          <div class="task-title" dir="auto">
-            {{task.title}}
-            <!-- {{#with lookupUser task.owner_id}}
-              ({{displayName}})
-            {{/with}} -->
-          </div>
-        </td>
-        <th rowspan="4">
-          <div class="task-controls-container">
-            {{#if allowAddingNotes}}
-              <div class="btn-group add-note-group">
-                <a class="dropdown-toggle add-note" data-toggle="dropdown" href="#">
-                </a>
-                <ul class="dropdown-menu">
-                  <!-- {{#unless hasOwnNote}}
-                    <li><div class="btn-add-note"><i class="fa fa-pencil fa-fw"></i>Add note</div></li>
-                  {{/unless}} -->
-                  {{#unless hasPrivateNote}}
-                    <li><div class="btn-add-private-note">Add private note</div></li>
-                  {{/unless}}
-                  {{#unless hasNoAccessToTask}}
-                    <li><div class="btn-add-task">Add task</div></li>
-                  {{/unless}}
-                </ul>
-              </div>
-            {{/if}}
-            {{#if allowSortingNotes}}
-              <span class="btn-agenda-edit remove-task"></span>
-              <span class="btn-agenda-edit sort-task"></span>
-            {{/if}}
+      <div class="d-flex align-items-start">
+        <small class="task-seqId bg-light border rounded-sm px-1">{{item.seqId}}</small>
+        <div class="task-title flex-grow-1 px-2" dir="auto">
+          {{task.title}}
+          <!-- {{#with lookupUser task.owner_id}}
+            ({{displayName}})
+          {{/with}} -->
+        </div>
+        <div class="task-controls-container d-flex align-items-center">
+          {{#if allowAddingNotes}}
+            <div class="btn-group add-note-group">
+              <svg class="jd-icon jd-c-pointer text-dark dropdown-toggle add-note" data-toggle="dropdown"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+              <ul class="dropdown-menu">
+                <!-- {{#unless hasOwnNote}}
+                  <li><div class="btn-add-note"><i class="fa fa-pencil fa-fw"></i>Add note</div></li>
+                {{/unless}} -->
+                {{#unless hasPrivateNote}}
+                  <li><div class="btn-add-private-note">Add private note</div></li>
+                {{/unless}}
+                {{#unless hasNoAccessToTask}}
+                  <li><div class="btn-add-task">Add task</div></li>
+                {{/unless}}
+              </ul>
+            </div>
+          {{/if}}
+          {{#if allowSortingNotes}}
+            <svg class="jd-icon jd-c-pointer text-dark btn-agenda-edit remove-task"><use xlink:href="/layout/icons-feather-sprite.svg#trash"/></svg>
+            <svg class="jd-icon jd-c-pointer text-dark btn-agenda-edit sort-task"><use xlink:href="/layout/icons-feather-sprite.svg#menu"/></svg>
+          {{/if}}
 
-            <!-- {{#if mayEdit}}
-              {{#unless firstItem}}
-                <span class="fa fa-chevron-up move move-up"></span>
-              {{/unless}}
-              {{#unless lastItem}}
-                <span class="fa fa-chevron-down move move-down"></span>
-              {{/unless}}
-            {{/if}} -->
-          </div>
-        </th>
-      </tr>
+          <!-- {{#if mayEdit}}
+            {{#unless firstItem}}
+              <span class="fa fa-chevron-up move move-up"></span>
+            {{/unless}}
+            {{#unless lastItem}}
+              <span class="fa fa-chevron-down move move-down"></span>
+            {{/unless}}
+          {{/if}} -->
+        </div>
+      </div>
 
       <!-- Private note -->
-      <tr>
-        <td>
-          {{#if private_note}}
-            <div class="task-private-note task-user-note">
-              <span class="user">
-                My private note:
-              </span>
-              <span class="note">
-                <textarea name="private_note" class="note-box" dir="auto"></textarea>
-              </span>
-            </div>
-          {{/if}}
-        </td>
-      </tr>
+      {{#if private_note}}
+        <div class="task-private-note task-user-note">
+          <div class="user mb-1">My private note:</div>
+          <span class="note">
+            <textarea name="private_note" class="note-box form-control" dir="auto"></textarea>
+          </span>
+        </div>
+      {{/if}}
+
 
       <!-- User note -->
-      <tr>
-        <td>
-          {{#each userNotes}}
-            <div class="task-user-note">
-              <span class="user">
-                {{#with lookupUser this.user_id}}
-                  {{displayName}}:
-                {{/with}}
-              </span>
-              <span class="note">
-                {{#if isSelf this.user_id}}
-                  {{!--
-                  IMPORTANT: we use jquery to set the contents of this
-                  textarea because otherwise there's a race condition when we
-                  update the value of the textarea.
-                   --}}
-                  <textarea name="user_notes.{{this.user_id}}" class="note-box" dir="auto"></textarea>
-                {{else}}
-                  <pre class="note-box">{{notesForUser this.user_id}}</pre>
-                {{/if}}
-              </span>
-            </div>
-          {{/each}}
-        </td>
-      </tr>
+      {{#each userNotes}}
+        <div class="task-user-note">
+          <span class="user">
+            {{#with lookupUser this.user_id}}
+              {{displayName}}:
+            {{/with}}
+          </span>
+          <span class="note">
+            {{#if isSelf this.user_id}}
+              {{!--
+              IMPORTANT: we use jquery to set the contents of this
+              textarea because otherwise there's a race condition when we
+              update the value of the textarea.
+               --}}
+              <textarea name="user_notes.{{this.user_id}}" class="note-box form-control" dir="auto"></textarea>
+            {{else}}
+              <pre class="note-box">{{notesForUser this.user_id}}</pre>
+            {{/if}}
+          </span>
+        </div>
+      {{/each}}
+
 
       <!-- Added tasks -->
-      <tr>
-        <td>
-          {{#if meeting_task.added_tasks}}
-            <div class="task-added-tasks task-user-note">
-              <span class="user">
-                <span class="user-pic">Added tasks</span>
-              </span>
-              <span class="note">
-                {{#each meeting_task.added_tasks}}
-                  {{#with lookupTask}}
-                    <div class="sub-task">
-                      <span class="task-seqId">{{this.seqId}}</span>
-                      <!-- TODO: other details, like is this task being transfered, show the owner's name, etc. -->
-                      <!-- <span class="owner">
-                        {{#with lookupUser this.owner_id}}
-                          {{> justdo_avatar}}
-                        {{/with}}
-                      </span> -->
-                      <span class="title">
-                        {{this.title}}
-                      </span>
-                    </div>
-                  {{/with}}
-                {{/each}}
-              </span>
-            </div>
-          {{/if}}
-        </td>
-      </tr>
+      {{#if meeting_task.added_tasks}}
+        <div class="task-added-tasks task-user-note">
+          <span class="user">
+            <span class="user-pic">Added tasks</span>
+          </span>
+          <span class="note">
+            {{#each meeting_task.added_tasks}}
+              {{#with lookupTask}}
+                <div class="sub-task d-flex align-items-start mt-2">
+                  <small class="task-seqId bg-light border rounded-sm px-1">{{this.seqId}}</small>
+                  <!-- TODO: other details, like is this task being transfered, show the owner's name, etc. -->
+                  <!-- <span class="owner">
+                    {{#with lookupUser this.owner_id}}
+                      {{> justdo_avatar}}
+                    {{/with}}
+                  </span> -->
+                  <div class="title ml-2">
+                    {{this.title}}
+                  </div>
+                </div>
+              {{/with}}
+            {{/each}}
+          </span>
+        </div>
+      {{/if}}
 
       <!-- Task summary -->
-      <tr>
-        <td colspan="3" class="summary-note-wrapper">
-          {{#if displayTaskNote}}
-            <div class="task-summary-note">
-              {{> locking_text_editor content=meeting_task.note class="note" placeholder=placeholderForTaskNote lock=meeting_task.note_lock disabled=mayNotEditTaskNote onSave=onSaveTaskNote}}
-            </div>
-          {{/if}}
-        </td>
-      </tr>
+      <div class="summary-note-wrapper">
+        {{#if displayTaskNote}}
+          <div class="task-summary-note">
+            {{> locking_text_editor content=meeting_task.note class="note" placeholder=placeholderForTaskNote lock=meeting_task.note_lock disabled=mayNotEditTaskNote onSave=onSaveTaskNote}}
+          </div>
+        {{/if}}
+      </div>
+
 
       <!-- Error -->
-      <tr>
-        <td colspan="3">
-          <div class="errors">
-            {{#each errors}}
-              <div class="error">
-                {{message}}
-              </div>
-            {{/each}}
+      <div class="errors">
+        {{#each errors}}
+          <div class="error">
+            {{message}}
           </div>
+        {{/each}}
+      </div>
 
-        </td>
-      </tr>
-    </table>
+    </div>
 
   </div>
 </template>

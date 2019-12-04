@@ -1,61 +1,27 @@
-.task-index
-  position: absolute
-  top: 9px
-  left: -15px
-  font-size: 15px
-  color: #afafaf
-  font-weight: bold
-
-.dialog-task-table
-  width: 100%
-  tr
-    border: 0px
-  th
-    border: 0px
-    width: 1px
-    white-space: nowrap
-    vertical-align: top
-  td
-    border: 0px
-    white-space: initial
-    padding: 0px
-    empty-cells: hide
-  .summary-note-wrapper
-    padding: 0px
+.summary-note-wrapper
+  padding: 0px
 
 .task-private-note
-  padding: 5px
+  padding: 8px 25px
 
 .task-added-tasks
-  padding: 5px
-  margin-bottom: 5px
-  .sub-task
-    padding: 2px 0px
+  padding: 8px 25px
   .title
     font-size: 13px
+
+.dialog-task-item
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.15)
+
+.task-title
+  font-size: 14px
 
 .task-user-note
   .user
     font-size: 13px
-    color: #353535
     font-weight: bold
   textarea
-    background: rgba(215,215,215,0.20)
-    border-radius: 3px
-    border: none
-    padding: 5px 9px
-    font-size: 13px
-    margin-top: 3px
     resize: none
   .note-box
-    width: 100%
-    min-height: 45px
-    margin: 0
-    display: block
-    background: rgba(215, 215, 215, 0.2)
-    border-radius: 3px
-    border: none
-    padding: 5px 9px
     font-size: 13px
     resize: none
     white-space: pre-wrap
@@ -67,27 +33,21 @@
   .note-box
     width: 100%
     min-height: 45px
-    margin: 0
-    display: block
-    background: rgba(215, 215, 215, 0.2)
-    border-radius: 3px
-    border: none
-    padding: 5px 9px
+    background: rgba(215, 215, 215, 0.12)
     font-size: 13px
     resize: none
     white-space: pre-wrap
 
 .task-controls-container
-  float: right
-  .add-note
-    width: 18px
-    height: 18px
-    display: block
-    background-image: url(/packages/justdoinc_meetings-manager-plugin/media/icons.png)
-    background-position: -92px 0px
-    border-radius: 2px
+  .jd-icon
+    padding: 3px
+    width: 20px
+    height: 20px
     &:hover
-      background-color: #f8f8f8
+      background-color: rgba(0, 0, 0, 0.08)
+  .add-note
+    width: 22px
+    height: 22px
   .btn-group.open .dropdown-toggle
     box-shadow: none
   .dropdown-menu
@@ -112,34 +72,21 @@
   .btn-add-task
     cursor: pointer
   .btn-agenda-edit
-    height: 27px
-    width: 27px
-    display: inline-block
-    position: relative
     display: none
-    top: -2px
-    background-image: url(/packages/justdoinc_meetings-manager-plugin/media/icons.png)
-    border-radius: 2px
-  .remove-task
-    background-color: #F5F5F5
-    background-position: -110px 0px
     cursor: pointer
-    &:hover
-      background-color: #e8e8e8
   .recover-task
     background-color: #bfbfbf !important
     background-position: -159px 4px
     cursor: pointer
   .sort-task
-    background-position: -137px 0px
     cursor: move
-    &:hover
-      background-color: #f9f9f9
 
 .agenda-edit-mode
   .meetings_dialog-task
     overflow-y: hidden
     overflow-x: visible !important
+    &.remove
+      opacity: 0.3
   .add-note-group
       display: none
   .btn-agenda-edit
@@ -174,37 +121,3 @@
     bottom: 0
   .note
     color: grey
-
-.task-seqId
-  font-size: 12px
-  font-weight: bold
-  color: #000000
-  background: #E9E9E9
-  border-radius: 2px
-  padding: 3px 5px
-
-.task-title
-  font-size: 13px
-  color: #000000
-  cursor: default
-  padding: 3px 5px
-
-.meetings_dialog-task
-  background: #FFFFFF
-  box-shadow: 0 0 3px 0 rgba(0,0,0,0.15)
-  border-radius: 2px
-  margin-bottom: 6px
-  position: relative
-  margin-left: 10px
-  padding: 8px
-  &.remove
-    opacity: 0.3
-  .buttons
-    padding: 3px
-    text-align: center
-  .error
-    margin: 3px
-    padding: 10px
-    border: 1px solid red
-    background: #faa
-    text-align: center

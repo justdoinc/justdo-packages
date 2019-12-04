@@ -7,91 +7,28 @@
   padding: 5px 20px
   background: #f0f0f0
 
-.meeting-input
-  height: 100%
-  color: black
-  float: left
-  transition: all 0.2s
-  border: none
-
-.meeting-name
-  font-size: 21px
-  width: 100%
-
-
-.meeting-date
-  font-size: 15px
-  width: 95px
-  border-right: 1px solid #e5e5e5
-
-.meeting-time
-  font-size: 15px
-  width: 95px
-  border-right: 1px solid #e5e5e5
-  padding-left: 7px
-
-.meeting-location
-  font-size: 15px
-  width: 100%
-  padding-left: 7px
-  padding-right: 30px
-
 .meeting-task-add
-  width: 130px
-  padding: 0 7px
+  width: 128px !important
 
 // Title section
 .meeting-title
-  padding-right: 105px
-  position: relative
   height: 38px
   width: 100%
-  border-bottom: 1px solid #E5E5E5
   transition: height 0.2s
-  .meeting-print
+  input
+    text-overflow: ellipsis
+    white-space: nowrap
+    overflow: hidden
+    padding-right: 140px
+  .meeting-control-buttons
     position: absolute
-    top: 8px
-    right: 25px
-    cursor: pointer
-    font-size: 1.7em
-    color: #ababab
-    transition: all 0.2s
-
-  .meeting-email
-    position: absolute
-    top: 8px
-    right: 50px
-    cursor: pointer
-    font-size: 1.7em
-    color: #ababab
-    transition: all 0.2s
-
-  .meeting-copy
-    position: absolute
-    top: 8px
-    right: 75px
-    cursor: pointer
-    font-size: 1.7em
-    color: #ababab
-    transition: all 0.2s
-
-  //.meeting-conversation
-    position: absolute
-    top: 8px
-    right: 25px
-    cursor: pointer
-    font-size: 1.7em
-    color: #ababab
-    transition: all 0.2s
-    &.active
-      color: #337ab7
-  .meeting-lock
-    transition: all 0.2s
-    top: 8px
-    font-size: 1.7em
     right: 0
-    position: absolute
-    color: #ababab
+  .jd-icon
+    margin: 2px
+    padding: 4px
+    &:hover
+      background-color: rgba(0, 0, 0, 0.08)
+  .meeting-lock
     &.may-edit
       cursor: pointer
   .lock-msg
@@ -115,20 +52,12 @@
   .msg-sub-text
     font-size: 11px
 
+
 // Info section
 .meeting-info
-  position: relative
-  height: 38px
-  width: 100%
-  border-bottom: 1px solid #E5E5E5
   transition: height 0.2s
   .wrapper-location
-    display: block
-    height: 100%
-    width: auto
-    position: absolute
-    left: 190px
-    right: 0px
+    position: relative
   .recent-locations
     background: #FFFFFF
     padding: 5px 12px
@@ -151,10 +80,6 @@
     right: 0px
     background: white
     border-left: 1px solid #e5e5e5
-    .item-members
-      .justdo-avatars-box
-        > *
-          float: left
   a
     width: 100%
     height: 100%
@@ -168,31 +93,28 @@
     border: none
     padding: 7px
 
-// Members section
 .meeting-members
-  margin: 12px 0
-
   .item-members
-    .justdo-avatars-box
-      > *
-        float: left
+    margin: 0
+  .justdo-avatars-box
+    display: flex
+    align-items: center
+    padding: 1rem 0
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.07)
+    .cont
+      margin-bottom: 0px
 
 .meetings_meeting-dialog
-  .cont
-    width: 34px
-    height: 34px
-    margin-bottom: 5px
-  .justdo-avatar
-    box-shadow: 0 0 3px 0 rgba(0,0,0,0.20)
-    border-radius: 3px
   .avatar-box-button
     width: 34px
     height: 34px
     background-image: url(/packages/justdoinc_meetings-manager-plugin/media/icons.png)
     background-position: -42px 0px
     background-color: #f8f8f8
+    margin-left: 0.25rem
+    border-radius: 50%
   .default-avatar-box-button
-    border-radius: 3px
+    border-radius: inherit
     background-color: rgba(248, 248, 248, 0)
     border: 2px dashed #dadada
     i
@@ -202,81 +124,25 @@
 
 // Agenda section
 .agenda-header
-  position: relative
-  height: 38px
-  width: 100%
-  border-top: 1px solid #E5E5E5
-  border-bottom: 1px solid #E5E5E5
-  span
-    display: inline-block
-    line-height: 36px
-    font-weight: bold
-    color: black
-    margin-right: 5px
-
+  .agenda-label
+    font-size: 14px
   .agenda-edit
     cursor: pointer
-    color: #2F79B9
-
-  .btn-agenda-edit-mode
-    display: none
-    cursor: pointer
-    span
-      line-height: 24px
-      padding: 0px 7px
-      border-radius: 3px
-
-  .agenda-save
-    background: rgba(47, 121, 185, 0.11)
-    color: #2F79B9
-
-  .agenda-cancel
-    background: whitesmoke
-    color: #8c8c8c
-
-  .meeting-add-task
-    height: 100%
-    width: 200px
-    float: right
-    border-left: 1px solid #e5e5e5
-
-  .add-task-btn
-    color: #2F79B9
-    cursor: pointer
-    float: right
-    margin: 0
-
-.agenda-edit-mode
-  .agenda-edit
-    display: none
-  .btn-agenda-edit-mode
-    display: inline-block
-
-.agenda-draft-mode
-  .agenda-edit
-    display: none
+    &:hover
+      text-decoration: underline
+  &.agenda-draft-mode
+    .agenda-edit
+      display: none
 
 // Tasks section
 .meeting-tasks
-  background: #F7F7F7
-  padding: 15px
-  position: absolute
-  top: 177px
-  bottom: 0
-  width: 100%
+  height: 280px
   overflow-y: auto
-  transition: top 0.2s
-
-.meeting-tasks-list
-  width: 100%
-  min-height: 200px
-  padding-bottom: 20px
 
 .meeting-note
   border-top: 1px solid #E5E5E5
-  padding: 10px
   .note-label
-    color: #616161
+    font-size: 14px
   .note-box
     width: 100%
     min-height: 45px
@@ -297,76 +163,30 @@
     border: none
     background: none
     padding: 0px
+    white-space: pre-wrap
 
 // Show less
 .show-less
-  .meeting-input
-    font-size: 13px
-
-  .meeting-title
-    height: 28px
-  .meeting-lock,
-  .meeting-conversation,
-  .meeting-print,
-  .meeting-copy,
-  .meeting-email
-    top: 2px
-    font-size: 1.6em
-  .meeting-info
-    height: 28px
-  .meeting-members-mini
-    display: block
-  .meeting-members
-    display: none
-  .agenda-header
-    border-top: none
-  .meeting-tasks
-    top: 94px
 
 
-/* =================================*/
+
 
 .meetings_meeting-dialog
   position: fixed
   z-index: 1000
-  
+
   .modal-header
-    border: none
-    border-radius: 3px 3px 0px 0px
-    background: #F7F7F7
-    padding-bottom: 20px
-    color: darkslategrey
-    height: 35px
-    button
-      width: 21px
-      height: 21px
-      border: none
-      opacity: 1
-      float: right
-      margin-top: -8px
-      background-image: url(/packages/justdoinc_meetings-manager-plugin/media/icons.png)
-      &:focus
-        outline: none
     .model-header-title
       display: none
-      float: left
-      margin-top: -7px
       max-width: 100px
+      text-overflow: ellipsis
       overflow: hidden
       white-space: nowrap
-    .close
-      margin-left: 5px
-      background-position: -21px 0px
     .btn-minimize
-      background-position: 0px 0px
-      background-color: rgba(255, 255, 255, 0)
+      display: block
     .btn-maximize
       display: none
-      background-image: none
-      background-color: rgba(255, 255, 255, 0)
-      color: rgba(142, 142, 142, 1)
-      margin-top: -7px
-  
+
   .modal
     height: 0
     overflow: visible
@@ -383,27 +203,15 @@
     min-width: 520px
     width: 520px
     min-height: 620px
-    text-rendering: optimizeLegibility
-    -webkit-font-smoothing: antialiased
-    -moz-osx-font-smoothing: grayscale
-    -moz-font-feature-settings: "liga" on
-
-  .modal-body
-    position: absolute
-    top: 50px
-    left: 25px
-    right: 25px
-    bottom: 25px
-    padding: 0
-    border-bottom: 1px solid #e5e5e5
-    &.admin
-      bottom: 100px !important
 
   .errors
     display: block
     position: absolute
     width: 100%
     z-index: 100
+    left: 0
+    right: 0
+    top: 0
 
   .error
     margin: 3px
@@ -419,58 +227,16 @@
     background-position: -76px 0px
 
   /* FOOTER */
-  .modal-footer
-    bottom: 0
-    left: 25px
-    right: 25px
-    position: absolute
-    background: white
-    padding: 0px 0px 15px 0px
-    border: none
-
   .meeting-flow-control
-    border-bottom: 1px solid #e5e5e5
-    margin-bottom: 10px
-    position: relative
-    text-align: center
-    padding: 10px
-    &::after
-      content: ''
-      background: #f7f7f7
-      position: absolute
-      width: 100%
-      height: 5px
-      left: 0
-      top: -6px
 
-  .arrow
-    background: red
-    width: 100
 
   .meeting-states
     margin: 0
     padding: 0
-
   .state
-    font-size: 14px
-    color: #888888
-    position: relative
-    &.active
-      color: #333333
-      font-weight: bold
-      &::before
-        content: ''
-        width: 10px
-        height: 10px
-        background: #f7f7f7
-        border: 1px solid #e5e5e5
-        position: absolute
-        left: 0
-        right: 0
-        top: -15px
-        margin: 0 auto
-        transform: rotate(45deg)
-
+    font-size: 13px
+    user-select: none
+    text-transform: uppercase
   .angle-right
     padding: 0
     color: #ababab
@@ -508,7 +274,7 @@
       font-weight: normal
     button
       margin: 3px
-  
+
   .modal
     display: block !important
 
@@ -535,67 +301,6 @@
       display: none
 
 
-
-  $form-padding: 15px
-
-
-  //$modal-body-padding: 1px
-
-  // The modal-body uses a default padding, however we're using borders
-  //   to separate the different sections, and with padding on the parent
-  //   those borders don't show correctly
-  //.modal-body
-  //  padding: 0
-
-  // We put this padding back for each of the children of the modal dialog
-  .meeting-header
-    // padding: 3px 3px 3px 3px
-
-    .form-control
-      // padding: 3px
-
-    .form-group
-      margin-bottom: $form-padding
-
-
-  .item-members
-    margin-top: 2px
-
-  //.form-feedback
-  //  padding: $modal-body-padding
-
-
-    // two sections have issues with padding because form-groups have
-       bottom margin, here we cancel that.
-    //& > :last-child .form-group
-    //  margin-bottom: 0
-
-  // For this section we place the padding one level down
-  //.meeting-tasks
-  //  padding: 0
-
-    // Each child recieves left and right padding
-    //& > div
-    //  padding-left: $modal-body-padding
-      //padding-right: $modal-body-padding
-      //padding-top: $modal-body-padding / 2
-
-  // Borders between the sections
-  //.modal-body > div
-  //  border-bottom: 1px solid #e5e5e5
-
-    //&:last-child
-    //  border-bottom: none
-
-
-  // Limit the height of this section so the modal doesn't expand beyond the
-     bottom of the screen
-
-
-    // 400px is my hand-calculated height of all other elements of the modal
-       this might not account for the error box, and would be tricky to
-       calculate dynamically
-  
 .close-split-view
   position: absolute
   right: 20px
@@ -635,4 +340,3 @@
   margin-bottom: 10px
   width: 11%
   height: 40px
-

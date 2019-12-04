@@ -1,9 +1,4 @@
 <template name="meetings_meeting_header">
-  <table>
-    <tr>
-      <td class="icon-wrapper"><div class="icon">M</div></td>
-      <td class="title"><div dir="auto">{{title}}</div></td>
-      <td class="date">{{when this.date}}</td>
-    </tr>
-  </table>
+  <div class="title flex-grow-1 mr-3">{{title}}</div>
+  <small class="text-muted text-nowrap">{{when this.date}}</small>
 </template>

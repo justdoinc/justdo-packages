@@ -18,7 +18,7 @@ Template.meetings_meeting_members.events
       title: "Edit Meeting Participants"
       message: message_template.node
       animate: false
-      className: "members-editor-dialog"
+      className: "members-editor-dialog bootbox-new-design"
 
       onEscape: ->
         return true

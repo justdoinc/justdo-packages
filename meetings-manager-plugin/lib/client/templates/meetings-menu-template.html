@@ -1,7 +1,7 @@
 <template name="meetings_meetings_menu">
-  <div class="meetings-menu project-header-button">
-    <svg class="btn-meeting-menu jd-icon jd-c-pointer text-dark" data-toggle="dropdown"><use xlink:href="/layout/icons-feather-sprite.svg#jd-meetings"/></svg>
-    <div class="dropdown-menu">
+  <div class="meetings-menu project-header-button dropdown">
+    <svg class="btn-meeting-menu jd-icon jd-c-pointer text-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#jd-meetings"/></svg>
+    <div class="dropdown-menu dropdown-menu-right p-3 animate slideIn shadow-lg border-0">
       <div class="dropdown-content">
         <div class="meetings-menu-title">
           <span></span>
@@ -10,10 +10,10 @@
           {{#if meetingsExist}}
             {{#with meetings "draft"}}
               {{#if this.exist}}
-                <section>
-                  <span class="meetings-menu-section-title">Meetings unpublished</span>
+                <section class="meetings-menu-list-draft">
+                  <div class="meetings-menu-section-title text-muted text-uppercase py-1">Meetings unpublished</div>
                   {{#each this.meetings}}
-                    <div class="meetings-menu-item">
+                    <div class="meetings-menu-item d-flex align-items-center bg-light py-1 px-2">
                       {{> meetings_meeting_header}}
                     </div>
                   {{/each}}
@@ -22,10 +22,10 @@
             {{/with}}
             {{#with meetings "pending"}}
               {{#if this.exist}}
-                <section>
-                  <span class="meetings-menu-section-title">Meetings pending</span>
+                <section class="meetings-menu-list-pending">
+                  <div class="meetings-menu-section-title text-muted text-uppercase py-1">Meetings pending</div>
                   {{#each this.meetings}}
-                    <div class="meetings-menu-item">
+                    <div class="meetings-menu-item d-flex align-items-center bg-light py-1 px-2">
                       {{> meetings_meeting_header}}
                     </div>
                   {{/each}}
@@ -34,10 +34,10 @@
             {{/with}}
             {{#with meetings "in-progress"}}
               {{#if this.exist}}
-                <section>
-                  <span class="meetings-menu-section-title">Meetings in progress</span>
+                <section class="meetings-menu-list-in-progress">
+                  <div class="meetings-menu-section-title text-muted text-uppercase py-1">Meetings in progress</div>
                   {{#each this.meetings}}
-                    <div class="meetings-menu-item">
+                    <div class="meetings-menu-item d-flex align-items-center bg-light py-1 px-2">
                       {{> meetings_meeting_header}}
                     </div>
                   {{/each}}
@@ -46,10 +46,10 @@
             {{/with}}
             {{#with meetings "adjourned"}}
               {{#if this.exist}}
-                <section>
-                  <span class="meetings-menu-section-title">Meetings done</span>
+                <section class="meetings-menu-list-adjourned">
+                  <div class="meetings-menu-section-title text-muted text-uppercase py-1">Meetings done</div>
                   {{#each this.meetings}}
-                    <div class="meetings-menu-item">
+                    <div class="meetings-menu-item d-flex align-items-center bg-light py-1 px-2">
                       {{> meetings_meeting_header}}
                     </div>
                   {{/each}}
@@ -57,13 +57,11 @@
               {{/if}}
             {{/with}}
           {{else}}
-            <div class="meetings-menu-msg">No meetings information found</div>
+            <div class="meetings-menu-msg pb-3 px-3 pt-1 text-center text-muted text-nowrap">No meetings information found</div>
           {{/if}}
         </div>
-        <form class="meetings-menu-new form-inline">
-          <div class="form-group">
-            <button type="submit" class="btn btn-sm btn-default"><span>+</span> Start a new meeting</button>
-          </div>
+        <form class="meetings-menu-new">
+          <button type="submit" class="btn btn-light text-primary w-100 text-nowrap"><svg class="jd-icon p-1"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg> Start a new meeting</button>
         </form>
       </div>
     </div>

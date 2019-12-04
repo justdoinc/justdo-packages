@@ -6,10 +6,11 @@ saveTasksOrder = (tmpl) ->
   list = $("div.meetings_dialog-task")
   tmpl.meetings_tasks_noRender.set true
 
-  for i in [0..list.length-1]
-    item = list[i].$blaze_range.view._templateInstance.data.item
-    APP.meetings_manager_plugin.meetings_manager.setMeetingTaskOrder meeting_id, item.task_id, i, (e,r) ->
-      tmpl.meetings_tasks_noRender.set false
+  if list.length > 0
+    for i in [0..list.length-1]
+      item = list[i].$blaze_range.view._templateInstance.data.item
+      APP.meetings_manager_plugin.meetings_manager.setMeetingTaskOrder meeting_id, item.task_id, i, (e,r) ->
+        tmpl.meetings_tasks_noRender.set false
 
 
 Template.meetings_meeting_dialog.onCreated ->
@@ -454,12 +455,12 @@ Template.meetings_meeting_dialog.events
   #   )
   #
   'click .btn-minimize': (e, tmpl) ->
-  
+
     tmpl.minimized.set true
-  
+
   'click .btn-maximize': (e, tmpl) ->
     tmpl.minimized.set false
-  
+
   #
   # 'click .minimized': (e, tmpl) ->
   #
