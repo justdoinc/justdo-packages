@@ -36,11 +36,11 @@
                 {{#each selected_destination_users}}
                   <option value="{{_id}}">{{> gtpl_user_profile_pic}}<span class="option-img-text">{{cutString displayName max_printed_display_name}}</span></option>
                 {{/each}}
-                {{else}}
+              {{else}}
                   <option value="" selected="selected">Select Owner</option>
                   {{#each selected_destination_users}}
                     <option value="{{_id}}">{{> gtpl_user_profile_pic}}<span class="option-img-text">{{cutString displayName max_printed_display_name}}{{#if isCategoryManager}} (Queue Manager){{/if}}</span></option>
-                {{/each}}
+                  {{/each}}
               {{/if}}
             </select>
           </div>
@@ -57,8 +57,33 @@
     <div class="form-inline priority-container-container">
       <div class="form-group">
         <label for="ticket-priority">Priority</label>
-        <div class="priority-container">
+        <!-- <div class="priority-container">
           [<canvas id="ticket-priority" width="100" height="10"></canvas>]
+        </div> -->
+        <div class="jd-priority-slider-divider bg-secondary ml-2 mr-3"></div>
+        <div class="jd-priority-slider-wrapper position-relative slider-active">
+          <div class="jd-priority-slider-ticket border-0">
+            <div class="jd-priority-slider-handle ui-slider-handle position-relative bg-primary border-0 m-0 shadow-sm">
+              <div class="jd-priority-value text-body"></div>
+            </div>
+          </div>
+          <div class="ticks-wrapper w-100 position-relative">
+            <div class="tick tick-0">
+              <div class="nick"></div>
+            </div>
+            <div class="tick tick-25">
+              <div class="nick"></div>
+            </div>
+            <div class="tick tick-50">
+              <div class="nick"></div>
+            </div>
+            <div class="tick tick-75">
+              <div class="nick"></div>
+            </div>
+            <div class="tick tick-100">
+              <div class="nick"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -299,8 +299,21 @@ APP.executeAfterAppLibCode ->
         key: env.FROALA_ACTIVATION_KEY
       });
 
-    task_priority_slider = new genericSlider "ticket-priority", 0, (new_val, is_final) ->
-      priority.set Math.round(100 * new_val)
+    $(".jd-priority-slider-ticket").slider
+      range: 'min'
+      value: 0
+      min: 0
+      max: 100
+      create: ->
+        $(".jd-priority-slider-handle")
+      slide: (event, ui) ->
+        $(".ui-slider-range").attr("style", "background: " + JustdoColorGradient.getColorRgbString(ui.value or 0) + " !important")
+        $(".jd-priority-value").text ui.value
+      start: (event, ui) ->
+        $(".jd-priority-value").fadeIn()
+      stop: (event, ui) ->
+        $(".jd-priority-value").fadeOut()
+        priority.set ui.value
 
   Template.ticket_entry.onDestroyed ->
     tickets_queues_reactive_var.stop()
@@ -337,6 +350,7 @@ APP.executeAfterAppLibCode ->
     isInvalidTitle: -> submit_attempted.get() and _.isEmpty(title.get())
     isInvalidTicketsQueue: -> submit_attempted.get() and not selected_destination_id.get()?
 
+
   Template.ticket_entry.events
     "change #ticket-queue-id": ->
       selected_destination_id.set($('#ticket-queue-id').val())
@@ -355,3 +369,28 @@ APP.executeAfterAppLibCode ->
 
     "keyup #ticket-title": (e) ->
       title.set($(e.target).val().trim())
+
+    "click .tick-0": (e, tmpl) ->
+        priority.set 0
+        $(".jd-priority-slider-ticket").slider "value", 0
+        $(".jd-priority-value").text("0").fadeIn().fadeOut()
+
+    "click .tick-25": (e, tmpl) ->
+        priority.set 25
+        $(".jd-priority-slider-ticket").slider "value", 25
+        $(".jd-priority-value").text("25").fadeIn().fadeOut()
+
+    "click .tick-50": (e, tmpl) ->
+        priority.set 50
+        $(".jd-priority-slider-ticket").slider "value", 50
+        $(".jd-priority-value").text("50").fadeIn().fadeOut()
+
+    "click .tick-75": (e, tmpl) ->
+        priority.set 75
+        $(".jd-priority-slider-ticket").slider "value", 75
+        $(".jd-priority-value").text("75").fadeIn().fadeOut()
+
+    "click .tick-100": (e, tmpl) ->
+        priority.set 100
+        $(".jd-priority-slider-ticket").slider "value", 100
+        $(".jd-priority-value").text("100").fadeIn().fadeOut()
