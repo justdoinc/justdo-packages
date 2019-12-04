@@ -157,7 +157,7 @@ GridControl.installFormatter "textWithTreeControls",
     if expand_state == 1
       state = "expand"
     else if expand_state == 0
-      state = "collapse"
+      state = "_collapse" # .collapse is part of the bs4 framework, hence, we can't use the same name.
 
     if not value?
       value = ""

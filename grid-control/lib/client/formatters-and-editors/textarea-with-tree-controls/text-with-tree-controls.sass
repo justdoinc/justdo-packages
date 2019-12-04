@@ -40,8 +40,9 @@ $tree_control_icons_sprite_bg: url('/packages/stem-capital_grid-control/lib/clie
   background: url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/textarea-with-tree-controls/media/collapse.gif') no-repeat center center
 
 .grid-tree-control-toggle
-  &.collapse, &.expand
-    display: block !important
+  // .collapse is part of the bs4 framework, hence, we can't use the same name.
+  &._collapse, &.expand
+    display: block
 
     .f-leaf &
       // If is a leaf under current filter
@@ -57,7 +58,7 @@ $tree_control_icons_sprite_bg: url('/packages/stem-capital_grid-control/lib/clie
     display: block
     +collapseIcon()
 
-  &.collapse
+  &._collapse
     +expandIcon()
 
     cursor: zoom-in
