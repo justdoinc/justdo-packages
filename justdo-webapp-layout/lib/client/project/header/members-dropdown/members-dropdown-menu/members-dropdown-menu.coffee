@@ -75,7 +75,9 @@ APP.executeAfterAppLibCode ->
 
   Template.members_dropdown_menu.onRendered ->
     $("#project-members-dropdown").on "show.bs.dropdown", ->
-      $(".members-search-input").focus()
+      setTimeout (->
+        $(".members-search-input").focus()
+      ), 500
       return
     return
 
