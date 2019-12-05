@@ -152,7 +152,7 @@ createDroppableWrapper = ->
 
             #now we need to know how many working days the original owner had between start and end date.
             original_user_availability = APP.justdo_resources_availability.userAvailabilityBetweenDates original_start_date, original_end_date,
-                JD.activeJustdo()._id,calendar_view_owner_id
+                JD.activeJustdo()._id, calendar_view_owner_id
 
             new_start_date = e.target.attributes.date.value
             new_end_date = APP.justdo_resources_availability.startToFinishForUser JD.activeJustdo()._id, target_user_id,
@@ -937,12 +937,13 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
           task_to_flat_hours_per_day[row_data.task._id] = row_data.task.planned_seconds / 3600
           return task_to_flat_hours_per_day[row_data.task._id]
 
-        days = 1
-        while start_date < end_date
-          if justdo_level_workdays_old.weekly_work_days[start_date.day()] == 1
-            days++
-          start_date.add(1,'days')
-        task_to_flat_hours_per_day[row_data.task._id] = row_data.task.planned_seconds / 3600 / days
+
+        user_availability = APP.justdo_resources_availability.userAvailabilityBetweenDates start_date.format("YYYY-MM-DD"),
+            end_date.format("YYYY-MM-DD"), JD.activeJustdo()._id, data.user_id
+        
+        if user_availability.working_days == 0
+          user_availability.working_days = 1
+        task_to_flat_hours_per_day[row_data.task._id] = row_data.task.planned_seconds / 3600 / user_availability.working_days
         return task_to_flat_hours_per_day[row_data.task._id]
 
       for column_index of days_matrix
@@ -1004,13 +1005,18 @@ Template.justdo_calendar_project_pane_user_view.helpers
 
     if( daily_workload = workload[column_date])
       ret = ""
-
       if config.bottom_line.show_number_of_tasks
         ret += "#{daily_workload.number_of_tasks} task(s) "
       if config.bottom_line.show_flat_hours_per_day
         ret += "#{daily_workload.total_hours.toFixed(1)} H "
       if config.bottom_line.show_workload
-        ret += "#{(daily_workload.total_hours/justdo_level_workdays_old.working_hours_per_day*100).toFixed(0)}% "
+
+        if  JD.activeJustdo()._id
+
+          user_available_hours = APP.justdo_resources_availability.userAvailabilityBetweenDates(column_date, column_date,
+            JD.activeJustdo()._id, Template.instance().data.user_id).available_hours
+          if user_available_hours
+            ret += "#{(daily_workload.total_hours / user_available_hours * 100).toFixed(0)}% "
       return ret
 
     return "--"
