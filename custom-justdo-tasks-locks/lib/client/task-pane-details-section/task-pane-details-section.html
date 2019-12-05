@@ -7,24 +7,35 @@
 
 <template name="task_pane_tasks_locks_section">
   <section class="task-pane-tasks-locks-section">
-    <h2>Tasks Locks</h2>
-
-    <div class="task-pane-tasks-locks-section-settings d-flex align-items-center py-1">
-      <div class="setting-label">{{#if isActiveUserLockingActiveTaskDoc}}<i class="fa fa-lock" style="margin-right: 2px"></i>{{else}}<i class="fa fa-unlock"></i>{{/if}} You are {{#if isActiveUserLockingActiveTaskDoc}}<b>locking</b>{{else}}not locking{{/if}} this task
-        <span class="about-locked-tasks" title="{{taskLockInfo}}">
-          <i class="fa fa-question-circle fa-fw"></i>
-        </span>
+    <div class="d-flex align-items-center justify-content-between position-relative">
+      <h2 class="m-0">Tasks Locks <span class="tasks-locks-info">You are {{#if isActiveUserLockingActiveTaskDoc}}<b>locking</b>{{else}}not locking{{/if}} this task</span></h2>
+      <div>
+        <div class="badge badge-secondary tasks-locks-tooltip-icon">
+          <i class="fa fa-question"></i>
+        </div>
+        <div class="badge badge-primary tasks-locks-toggle-lock-state">
+          {{#if isActiveUserLockingActiveTaskDoc}}
+            <i class="fa fa-lock"></i>
+          {{else}}
+            <i class="fa fa-unlock"></i>
+          {{/if}}
+        </div>
       </div>
-      <div class="setting-controller ml-auto mr-0">
-        <div class="btn btn-outline-secondary btn-sm tasks-locks-toggle-lock-state">{{#if isActiveUserLockingActiveTaskDoc}}Unlock{{else}}Lock{{/if}}</div>
+
+      <div class="tasks-locks-tooltip">
+        <span class="msg-main-text">Once you lock a task:</span>
+        <span class="msg-sub-text">* No member will be able to remove the task.</span>
+        <span class="msg-sub-text">* No member will be able to revoke your access to the task.</span>
+        <span class="msg-sub-text">* The fields: Title and Due Date, will be editable only by you, unless there are more locking members, in which case - no one will be able to edit these fields.</span>
       </div>
     </div>
-
     {{#with getActiveTaskDocLockingUsersDocs}}
-      <b>The following members are locking this task:</b><br>
-      {{#each this}}
-        <div class="locking-member">{{> justdo_avatar}} {{displayName}}</div>
-      {{/each}}
+      <div class="border-top mt-2">
+        <div class="locking-member-label my-2">The following members are locking this task:</div>
+        {{#each this}}
+          <div class="locking-member">{{> justdo_avatar}} {{displayName}}</div>
+        {{/each}}
+      </div>
     {{/with}}
   </section>
 </template>

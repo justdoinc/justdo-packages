@@ -1,17 +1,38 @@
 .task-pane-tasks-locks-section
-  .about-locked-tasks
-    cursor: help
-
-  .task-pane-tasks-locks-section-settings
-    border-top: 1px solid #d9d9d9
-    border-bottom: 1px solid #d9d9d9
-    &:hover
-      background-color: #f7faff
-
-    .setting-label
+  .tasks-locks-info
+    font-weight: bold
+    color: #2B71CF
+    user-select: none
+    &::before
+      content: "·"
+      padding: 0px 5px
+      color: #d2d2d2
       font-size: 13px
-      cursor: default
-      user-select: none
+  .tasks-locks-tooltip-icon
+    cursor: help
+  .tasks-locks-tooltip
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.07), 0 5px 15px 0 rgba(199, 199, 199, 0.5)
+    background: #FFFFFF
+    position: absolute
+    border-radius: 2px
+    padding: 5px 12px
+    width: 360px
+    left: 0px
+    top: 24px
+    display: none
+    .msg-main-text
+      display: block
+      font-size: 13px
+      font-weight: bold
+    .msg-sub-text
+      display: block
+      font-size: 12px
+
+  .tasks-locks-toggle-lock-state
+    cursor: pointer
+
+  .locking-member-label
+    font-size: 14px
 
   .locking-member
     margin: 4px 1px
