@@ -271,7 +271,6 @@ delayAction = do ->
     timer = setTimeout(callback, ms)
     return
 
-justdo_level_workdays_old = {} #intentionally making this one a non-reactive var, otherwise we will hit it too many times
 
 Template.justdo_calendar_project_pane.onCreated ->
   self = @
@@ -405,26 +404,16 @@ Template.justdo_calendar_project_pane.onCreated ->
   #todo: check with Daniel how to ensure plugins dependencies during load time.
   #todo: once we apply project filters, take the workdays from the project record.
 
-  if APP.justdo_delivery_planner?.justdo_level_workdays
-    @autorun =>
-      justdo_level_workdays_old = APP.justdo_delivery_planner.justdo_level_workdays.get()
-  else
-    justdo_level_workdays_old =
-      weekly_work_days: [1, 1, 1, 1, 1, 1, 1] #sunday at index 0, default set to Monday-Friday
-      specific_off_days: [] # and no holidays by default
-      working_hours_per_day: 8
-    user_first_day_of_week = 1
-    if Meteor.user().profile?.first_day_of_week?
-      user_first_day_of_week = Meteor.user().profile.first_day_of_week
-    user_first_day_of_week--
-    if(user_first_day_of_week<0)
-      user_first_day_of_week=6
-    justdo_level_workdays_old.weekly_work_days[user_first_day_of_week]=0
-    user_first_day_of_week--
-    if(user_first_day_of_week<0)
-      user_first_day_of_week=6
-    justdo_level_workdays_old.weekly_work_days[user_first_day_of_week]=0
 
+  user_first_day_of_week = 1
+  if Meteor.user().profile?.first_day_of_week?
+    user_first_day_of_week = Meteor.user().profile.first_day_of_week
+  user_first_day_of_week--
+  if(user_first_day_of_week<0)
+    user_first_day_of_week=6
+  user_first_day_of_week--
+  if(user_first_day_of_week<0)
+    user_first_day_of_week=6
 
   # commenting out for now, as it's UX is not good. -AL
   #@autorun =>
@@ -940,7 +929,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
         user_availability = APP.justdo_resources_availability.userAvailabilityBetweenDates start_date.format("YYYY-MM-DD"),
             end_date.format("YYYY-MM-DD"), JD.activeJustdo()._id, data.user_id
-        
+
         if user_availability.working_days == 0
           user_availability.working_days = 1
         task_to_flat_hours_per_day[row_data.task._id] = row_data.task.planned_seconds / 3600 / user_availability.working_days
