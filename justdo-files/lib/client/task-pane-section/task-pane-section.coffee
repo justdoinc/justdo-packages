@@ -44,7 +44,7 @@ Template.justdo_files_gallery.helpers
     task = @task
     file = @file
 
-    placeholder = "tfm_img_placeholder_#{task.task_id}_#{file.id}"
+    placeholder = "tfm_img_placeholder_#{task._id}_#{file._id}"
 
     tpl = Template.instance()
 
