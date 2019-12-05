@@ -136,6 +136,10 @@ createDroppableWrapper = ->
             )
 
           #dealing with Regular
+
+          # Important notice - moving tasks around is performed now based on users' workdays, and not based on their
+          # available hours. This is following Ofer's style. Future compatible wise - we can do it based on hours needed.
+
           else if ui.draggable[0].attributes.type.value == 'R'
             # from the query definitions we must have at least one of start or end dates.
             original_start_date = task_obj.start_date
@@ -146,24 +150,19 @@ createDroppableWrapper = ->
             if !original_end_date
               original_end_date = task_obj.start_date
 
+            #now we need to know how many working days the original owner had between start and end date.
+            original_user_availability = APP.justdo_resources_availability.userAvailabilityBetweenDates original_start_date, original_end_date,
+                JD.activeJustdo()._id,calendar_view_owner_id
+
             new_start_date = e.target.attributes.date.value
-            #calculating the new end date taking days off into consideration:
-            new_end_date_moment = moment(e.target.attributes.date.value)
-            if original_start_date < original_end_date
-              d = moment(original_start_date)
-              while d < moment(original_end_date)
-                if justdo_level_workdays.weekly_work_days[d.day()] == 1
-                  new_end_date_moment.add(1,'days')
-                  #skip non working days
-                  while(justdo_level_workdays.weekly_work_days[new_end_date_moment.day()] == 0)
-                    new_end_date_moment.add(1,'days')
-                d.add(1, 'days')
+            new_end_date = APP.justdo_resources_availability.startToFinishForUser JD.activeJustdo()._id, target_user_id,
+              new_start_date, original_user_availability.working_days, "days"
 
             if task_obj.start_date?
               set_param['start_date'] = new_start_date
 
             if task_obj.end_date?
-              set_param['end_date'] = new_end_date_moment.format("YYYY-MM-DD")
+              set_param['end_date'] = new_end_date
 
             #todo: calculate how to move the due-date
             APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
@@ -272,7 +271,7 @@ delayAction = do ->
     timer = setTimeout(callback, ms)
     return
 
-justdo_level_workdays = {} #intentionally making this one a non-reactive var, otherwise we will hit it too many times
+justdo_level_workdays_old = {} #intentionally making this one a non-reactive var, otherwise we will hit it too many times
 
 Template.justdo_calendar_project_pane.onCreated ->
   self = @
@@ -408,9 +407,9 @@ Template.justdo_calendar_project_pane.onCreated ->
 
   if APP.justdo_delivery_planner?.justdo_level_workdays
     @autorun =>
-      justdo_level_workdays = APP.justdo_delivery_planner.justdo_level_workdays.get()
+      justdo_level_workdays_old = APP.justdo_delivery_planner.justdo_level_workdays.get()
   else
-    justdo_level_workdays =
+    justdo_level_workdays_old =
       weekly_work_days: [1, 1, 1, 1, 1, 1, 1] #sunday at index 0, default set to Monday-Friday
       specific_off_days: [] # and no holidays by default
       working_hours_per_day: 8
@@ -420,11 +419,11 @@ Template.justdo_calendar_project_pane.onCreated ->
     user_first_day_of_week--
     if(user_first_day_of_week<0)
       user_first_day_of_week=6
-    justdo_level_workdays.weekly_work_days[user_first_day_of_week]=0
+    justdo_level_workdays_old.weekly_work_days[user_first_day_of_week]=0
     user_first_day_of_week--
     if(user_first_day_of_week<0)
       user_first_day_of_week=6
-    justdo_level_workdays.weekly_work_days[user_first_day_of_week]=0
+    justdo_level_workdays_old.weekly_work_days[user_first_day_of_week]=0
 
 
   # commenting out for now, as it's UX is not good. -AL
@@ -654,8 +653,6 @@ Template.justdo_calendar_project_pane.helpers
 
   calendarViewResolution: -> number_of_days_to_display.get()
 
-
-
 Template.justdo_calendar_project_pane.events
   "click .calendar_view_zoom_out": ->
     index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
@@ -742,8 +739,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
   @days_matrix = new ReactiveVar([])
   @dates_workload = new ReactiveVar({})
-  @collapsed_view = new ReactiveVar(true)
-
+  @collapsed_view = new ReactiveVar (Template.currentData().user_id != Meteor.userId())
 
   members_collapse_state_vars[Template.currentData().user_id] = @collapsed_view
   @justdo_user_holidays = new Set()
@@ -943,7 +939,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
         days = 1
         while start_date < end_date
-          if justdo_level_workdays.weekly_work_days[start_date.day()] == 1
+          if justdo_level_workdays_old.weekly_work_days[start_date.day()] == 1
             days++
           start_date.add(1,'days')
         task_to_flat_hours_per_day[row_data.task._id] = row_data.task.planned_seconds / 3600 / days
@@ -1014,7 +1010,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
       if config.bottom_line.show_flat_hours_per_day
         ret += "#{daily_workload.total_hours.toFixed(1)} H "
       if config.bottom_line.show_workload
-        ret += "#{(daily_workload.total_hours/justdo_level_workdays.working_hours_per_day*100).toFixed(0)}% "
+        ret += "#{(daily_workload.total_hours/justdo_level_workdays_old.working_hours_per_day*100).toFixed(0)}% "
       return ret
 
     return "--"

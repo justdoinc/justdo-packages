@@ -33,7 +33,18 @@ with all browsers.
             
      "from" and "to" are in "HH:MM" format
      
+* _userAvailabilityBetweenDates: (from_date, to_date, project_id, user_id, task_id)_ <br>
+    returns the number of available days and the available hours for the users between 
+    the two dates (inclusive)
+*       ret =
+              working_days: 
+              available_hours:     
+* _startToFinishForUser: (project_id, user_id, start_date, amount, type)_
+    Given project, user, and start date, the amount of days/hours required,
+    the function will return the date of the end of the period (start to end) 
+    taking into account holidays or working hours.<br><br>
+    Type is either 'days' or 'hours'. <br>
     
-    
+      
  
  
