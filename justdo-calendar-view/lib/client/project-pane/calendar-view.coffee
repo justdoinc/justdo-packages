@@ -962,7 +962,21 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
       Tracker.afterFlush ->
         setDragAndDrop()
       return
+
+    # Set drag and drop after user info has been expanded
+    @autorun =>
+      if !@collapsed_view.get()
+        setTimeout (->
+          setDragAndDrop()
+          return
+        ), 300
+      return
+
     return
+
+
+
+
 
 Template.justdo_calendar_project_pane_user_view.onDestroyed ->
     delete members_collapse_state_vars[Template.currentData().user_id]
