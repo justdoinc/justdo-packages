@@ -141,7 +141,17 @@ createDroppableWrapper = ->
           # available hours. This is following Ofer's style. Future compatible wise - we can do it based on hours needed.
 
           else if ui.draggable[0].attributes.type.value == 'R'
-            # from the query definitions we must have at least one of start or end dates.
+            # Note: from the query definitions we must have at least one of start or end or due dates.
+
+            # if there is only due-date (i.e. no start and no end date)
+            if (not task_obj.start_date) and (not task_obj.end_date)
+              set_param['due_date'] = e.target.attributes.date.value
+              APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
+                $set: set_param
+              )
+              return
+
+
             original_start_date = task_obj.start_date
             if !original_start_date
               original_start_date = task_obj.end_date
@@ -149,6 +159,8 @@ createDroppableWrapper = ->
             original_end_date = task_obj.end_date
             if !original_end_date
               original_end_date = task_obj.start_date
+
+
 
             #now we need to know how many working days the original owner had between start and end date.
             original_user_availability = APP.justdo_resources_availability.userAvailabilityBetweenDates original_start_date, original_end_date,
@@ -164,7 +176,6 @@ createDroppableWrapper = ->
             if task_obj.end_date?
               set_param['end_date'] = new_end_date
 
-            #todo: calculate how to move the due-date
             APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
               $set: set_param
             )
@@ -535,23 +546,30 @@ Template.justdo_calendar_project_pane.onCreated ->
       {follow_up: {$in: dates}},
       #private followup date
       {'priv:follow_up': {$in: dates}},
-      #due date in between the dates
+      #end date in between the dates
       {$and: [
         {end_date: {$gte: first_date_to_display}},
         {end_date: {$lte: last_date_to_display}}
+      ]},
+      #due date in between the dates
+      {$and: [
+        {due_date: {$gte: first_date_to_display}},
+        {due_date: {$lte: last_date_to_display}}
       ]},
       #start date in between the dates
       {$and: [
         {start_date: {$gte: first_date_to_display}},
         {start_date: {$lte: last_date_to_display}}
       ]},
-      #start date before and due date after
+      # start before and end after
       {$and: [
         {start_date: {$lt: first_date_to_display}},
         {end_date: {$gt: last_date_to_display}}
-#        ,
-#        end_date: {$exists: true},
-#        start_date: {$exists: true}
+      ]},
+      # start before and due after
+      {$and: [
+        {start_date: {$lt: first_date_to_display}},
+        {due_date: {$gt: last_date_to_display}}
       ]}
     ]
 
@@ -799,6 +817,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         owner_id: task.owner_id
         sequence_id: task.seqId
         end_date: task.end_date
+        due_date: task.due_date
         start_date: task.start_date
         state: task.state
         unassigned_hours: task["p:rp:b:unassigned-work-hours"]
@@ -840,19 +859,27 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
       #deal with regular tasks
       if (task.start_date? and task.start_date >= first_date_to_display and task.start_date <= last_date_to_display) or
          (task.end_date? and task.end_date >= first_date_to_display and task.end_date <= last_date_to_display) or
-         (task.start_date? and task.end_date? and task.start_date < first_date_to_display and task.end_date > last_date_to_display)
+         (task.due_date? and task.due_date >= first_date_to_display and task.due_date <= last_date_to_display) or
+         (task.start_date? and task.end_date? and task.start_date < first_date_to_display and task.end_date > last_date_to_display) or
+         (task.start_date? and task.due_date? and task.start_date < first_date_to_display and task.due_date > last_date_to_display)
         start_date = ""
         starts_before_view = false
         if task.start_date?
           start_date = task.start_date
-        else
+        else if task.end_date?
           start_date = task.end_date
+        else
+          start_date = task.due_date
+
         end_date = ""
         ends_after_view = false
         if task.end_date?
           end_date = task.end_date
+        else if task.due_date?
+          end_date = task.due_date
         else
           end_date = task.start_date
+
         start_day_index = data.dates_to_display.indexOf(start_date)
         if start_day_index == -1 and start_date < data.dates_to_display[0]
           start_day_index = 0
@@ -897,8 +924,6 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
                 days_matrix[i][row_index] =
                   task: task_details
                   type: 't' # F for followup, P for private followup, R for regular, t for cont task
-#                  slot_is_taken: true
-#                  slot_is_taken_by_task_id: task_details._id
 
             break
           row_index++
@@ -1123,6 +1148,14 @@ Template.justdo_calendar_project_pane_user_view.helpers
       mins = minutes - hours*60
       return "#{hours}:#{JustdoHelpers.padString(mins, 2)} H unassigned"
     return ""
+
+  hasDueDate: ->
+    if @type == 'R' and @task.due_date
+      return true
+    return false
+
+  dueDate: ->
+    return "Due: #{@task.due_date}"
 
   plannedHours: ->
     if @type == 'R' and @task.planned_seconds > 0

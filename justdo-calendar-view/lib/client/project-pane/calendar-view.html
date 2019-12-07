@@ -150,6 +150,9 @@
                         {{#if plannedHours}}
                           <div class="calendar_task_planned_hours {{fontSizeClass}}">{{plannedHours}}</div>
                         {{/if}}
+                        {{#if hasDueDate}}
+                          <div class="calendar_task_due_date {{fontSizeClass}}">{{dueDate}}</div>
+                        {{/if}}
                       </div>
                       <!-- {{#unless hideDuePendingOwner}}
                         <i class="fa fa-map-marker calendar_view_draggable" task_id="{{task._id}}"aria-hidden="true"></i>
