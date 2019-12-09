@@ -8,16 +8,16 @@
 <template name="task_pane_tasks_locks_section">
   <section class="task-pane-tasks-locks-section">
     <div class="d-flex align-items-center justify-content-between position-relative">
-      <h2 class="m-0">Tasks Locks <span class="tasks-locks-info">You are {{#if isActiveUserLockingActiveTaskDoc}}<b>locking</b>{{else}}not locking{{/if}} this task</span></h2>
+      <h2 class="m-0">Tasks Locks <span class="tasks-locks-info {{#if isActiveUserLockingActiveTaskDoc}}locked{{else}}text-muted font-weight-normal{{/if}}">You are {{#if isActiveUserLockingActiveTaskDoc}}<b>locking</b>{{else}}not locking{{/if}} this task</span></h2>
       <div>
         <div class="badge badge-secondary tasks-locks-tooltip-icon">
           <i class="fa fa-question"></i>
         </div>
         <div class="badge badge-primary tasks-locks-toggle-lock-state">
           {{#if isActiveUserLockingActiveTaskDoc}}
-            <i class="fa fa-lock"></i>
+            <i class="fa fa-fw fa-lock"></i>
           {{else}}
-            <i class="fa fa-unlock"></i>
+            <i class="fa fa-fw fa-unlock"></i>
           {{/if}}
         </div>
       </div>
