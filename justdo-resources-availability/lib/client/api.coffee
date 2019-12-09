@@ -63,7 +63,6 @@ _.extend JustdoResourcesAvailability.prototype,
       return
     @subscribers_to_project_data.add requesting_plugin_id
     if @subscribers_to_project_data.size == 1
-      console.log ">>>", "subscription started"
       @subscription_tracker = Tracker.autorun =>
         @resorce_availability_subscription = Meteor.subscribe "jd-resource-availability", JD.activeJustdo({_id: 1})._id
         return
@@ -84,7 +83,6 @@ _.extend JustdoResourcesAvailability.prototype,
       @resorce_availability_subscription.stop()
       @subscription_tracker.stop()
       JD.unregisterPlaceholderItem "#{JustdoResourcesAvailability.project_custom_feature_id}:global-config"
-      console.log ">>>", "subscription stopped"
     return
 
   # The following will open the resources config dialog.
