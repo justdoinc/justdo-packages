@@ -81,6 +81,7 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/client/files-preview/files-preview.html", client);
   api.addFiles("lib/client/files-preview/files-preview.coffee", client);
+  api.addFiles("lib/client/files-preview/files-preivew.sass", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.

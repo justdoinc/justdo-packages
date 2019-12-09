@@ -23,7 +23,7 @@ _.extend JustdoFiles.prototype,
         title: file.name
         message: message_template.node
         animate: false
-        className: "tasks-file-manager-preview-dialog bootbox-new-design"
+        className: "justdo-files-preview-dialog bootbox-new-design"
 
         onEscape: ->
           return true
