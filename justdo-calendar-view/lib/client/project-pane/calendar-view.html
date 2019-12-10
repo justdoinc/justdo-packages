@@ -51,7 +51,7 @@
             </th>
             <th class="calendar_view_move"></th>
             {{#each datesToDisplay}}
-              <th class="{{#if isToday this}}is_today{{/if}} {{isHoliday this}} {{#if isMonday this}}is_monday{{/if}}">{{{formatDate}}}</th>
+              <th class="{{#if isToday this}}is_today{{/if}} {{isHoliday this}} {{#if isFirstDayOfWeek this}}is_start_of_week{{/if}}">{{{formatDate}}}</th>
             {{/each}}
             <th class="calendar_view_move"></th>
           </tr>
@@ -73,7 +73,7 @@
             </th>
             <th class="calendar_view_move"></th>
             {{#each datesToDisplay}}
-              <th class="calendar_view_date {{#if isToday this}}is_today{{/if}} {{isHoliday this}} {{#if isMonday this}}is_monday{{/if}}">{{{formatDate}}}</th>
+              <th class="calendar_view_date {{#if isToday this}}is_today{{/if}} {{isHoliday this}} {{#if isFirstDayOfWeek this}}is_start_of_week{{/if}}">{{{formatDate}}}</th>
             {{/each}}
             <th class="calendar_view_move"></th>
           </tr>

@@ -659,8 +659,8 @@ Template.justdo_calendar_project_pane.helpers
       return "is_holiday"
     return ""
 
-  isMonday: (date) ->
-    return moment.utc(date).day() == 1
+  isFirstDayOfWeek: (date) ->
+    return moment.utc(date).day() == Meteor.user().profile.first_day_of_week
 
   calendarViewResolution: -> number_of_days_to_display.get()
 
