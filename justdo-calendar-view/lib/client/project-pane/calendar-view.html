@@ -190,7 +190,7 @@
     <!--  lets add a dropable line-->
     <tr user_id={{userId}}>
       {{#each colNumbers}}
-        <td class="calendar_view_resources {{markDaysOff}} {{fontSizeClass}}" date={{columnDate}}>{{#unless markDaysOff}}{{bottomLine}}{{/unless}}</td>
+        <td class="calendar_view_resources {{markDaysOff}} {{fontSizeClass}}" date={{columnDate}}>{{#unless markDaysOff}}{{{bottomLine}}}{{/unless}}</td>
       {{/each}}
     </tr>
   {{/if}}

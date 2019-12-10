@@ -1038,13 +1038,17 @@ Template.justdo_calendar_project_pane_user_view.helpers
       if config.bottom_line.show_flat_hours_per_day
         ret += "#{daily_workload.total_hours.toFixed(1)} H "
       if config.bottom_line.show_workload
-
         if  JD.activeJustdo()._id
-
           user_available_hours = APP.justdo_resources_availability.userAvailabilityBetweenDates(column_date, column_date,
             JD.activeJustdo()._id, Template.instance().data.user_id).available_hours
           if user_available_hours
-            ret += "#{(daily_workload.total_hours / user_available_hours * 100).toFixed(0)}% "
+            workload = (daily_workload.total_hours / user_available_hours * 100).toFixed(0)
+            color = "blue"
+            if workload >= 80 and workload < 120
+              color = "green"
+            else if workload >= 120
+              color = "red"
+            ret += "<span style='color: #{color}'>#{workload}% </span>"
       return ret
 
     return "--"
