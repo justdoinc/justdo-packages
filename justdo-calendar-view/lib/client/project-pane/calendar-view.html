@@ -136,7 +136,7 @@
               {{#if taskId}}
                 {{#with cellData}}
                   <td class="calendar_table_cell" date={{columnDate}} colspan={{span}}>
-                    <div class="calendar_task_cell calendar_view_draggable {{dimTask}} task_cell_{{type}}" title="{{task.title}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
+                    <div class="calendar_task_cell calendar_view_draggable {{dimTask}} task_cell_{{type}}" title="{{projectName}}{{task.title}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
                       <div class="calendar_task_info">
                         {{#if showType type}}
                           <div class="calendar_task_type {{fontSizeClass}}">{{type}}</div>
@@ -163,7 +163,7 @@
                         </div>
                       {{/if}}
                       <div class="calendar_task_id {{fontSizeClass}}">#{{task.sequence_id}}</div>
-                      <div class="calendar_task_title {{fontSizeClass}}">{{task.title}}</div>
+                      <div class="calendar_task_title {{fontSizeClass}}">{{projectName}}{{task.title}}</div>
                       <!-- ({{task.state}}) -->
                       {{#if endsAfterView}}
                         <div class="calendar_task_endsAfterView {{fontSizeClass}}">

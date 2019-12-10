@@ -23,6 +23,14 @@ dates_to_display = new ReactiveVar([])
 number_of_days_to_display = new ReactiveVar(7)
 
 
+findProjectName = (task_obj)->
+  if task_obj["p:dp:is_project"]
+    return task_obj.title
+  for parent_id of task_obj.parents
+    if (task_obj = APP.collections.Tasks.findOne(parent_id))
+      if (project_name = findProjectName(task_obj))
+        return project_name
+  return null
 
 # Create Wrapper (Layer) with droppable divs under the existing table
 createDroppableWrapper = ->
@@ -1003,10 +1011,6 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
     return
 
-
-
-
-
 Template.justdo_calendar_project_pane_user_view.onDestroyed ->
     delete members_collapse_state_vars[Template.currentData().user_id]
     return
@@ -1092,7 +1096,6 @@ Template.justdo_calendar_project_pane_user_view.helpers
     return (@+1)==1
 
   markDaysOff: ->
-
     column_date = Template.instance().data.dates_to_display[@]
     if Template.instance().justdo_user_holidays.has(column_date)
       return "calendar_view_mark_days_off"
@@ -1200,6 +1203,20 @@ Template.justdo_calendar_project_pane_user_view.helpers
 
   userName: (userId) ->
     return Meteor.users.findOne(userId).profile.first_name + " " + Meteor.users.findOne(userId).profile.last_name
+
+  projectName: ->
+    # if this is a project, no need to append anything
+    task_obj = APP.collections.Tasks.findOne(@task._id)
+    if task_obj?["p:dp:is_project"]
+      return ""
+
+    #if we filter to a certain project, no need to display project name as well
+    if (Template.parentData(3).delivery_planner_project_id != "*")
+      return ""
+
+    if (project_name = findProjectName(task_obj))
+      return "#{project_name} : "
+    return ""
 
 Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_task_cell": (e, tpl)->
