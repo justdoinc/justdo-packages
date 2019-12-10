@@ -125,15 +125,17 @@ createDroppableWrapper = ->
           #dealing with Followups
           if ui.draggable[0].attributes.type.value == 'F'
             set_param['follow_up'] = e.target.attributes.date.value
-            APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
-                                          $set:set_param
-                                         )
+            if ui.helper[0]?.attributes?.task_id?.value?
+              APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
+                                            $set:set_param
+                                           )
           #dealing with Private followups
           else if ui.draggable[0].attributes.type.value == 'P'
             set_param['priv:follow_up'] = e.target.attributes.date.value
-            APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
-              $set: set_param
-            )
+            if ui.helper[0]?.attributes?.task_id?.value?
+              APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
+                $set: set_param
+              )
 
           #dealing with Regular
 
@@ -145,10 +147,11 @@ createDroppableWrapper = ->
 
             # if there is only due-date (i.e. no start and no end date)
             if (not task_obj.start_date) and (not task_obj.end_date)
-              set_param['due_date'] = e.target.attributes.date.value
-              APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
-                $set: set_param
-              )
+              set_param.due_date = e.target.attributes.date.value
+              if ui.helper[0]?.attributes?.task_id?.value?
+                APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
+                  $set: set_param
+                )
               return
 
 
@@ -176,9 +179,10 @@ createDroppableWrapper = ->
             if task_obj.end_date?
               set_param['end_date'] = new_end_date
 
-            APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
-              $set: set_param
-            )
+            if ui.helper[0]?.attributes?.task_id?.value?
+              APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
+                $set: set_param
+              )
       else # Task not acceptable
         JustdoSnackbar.show
           text: "Ownership transfer is not possible due to permissions"
