@@ -18,6 +18,7 @@ Package.onUse(function (api) {
   api.use("mongo", both);
 
   api.use("templating", client);
+  api.use('fourseven:scss@3.2.0', client);
 
   api.use("amplify", client);
 
@@ -38,8 +39,14 @@ Package.onUse(function (api) {
   api.addFiles("themes-manager/themes-manager.coffee", client);
   api.addFiles("themes-manager/injected-theme.html", client);
 
+  // Themes selector
+  api.addFiles("themes-selector/themes-selector.sass", client);
+  api.addFiles("themes-selector/themes-selector.html", client);
+  api.addFiles("themes-selector/themes-selector.coffee", client);
+
   api.use("meteorspark:app@0.3.0", client);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", client);
   api.addFiles("themes-manager/app-integration.coffee", client);
+  api.addFiles("themes-manager/web-app-integration.coffee", client);
 
 });

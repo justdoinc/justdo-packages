@@ -1,0 +1,10 @@
+<template name="themes_selector">
+  <div class="form-group mb-2">
+    <label for="themes-selector">JustDo Theme</label>
+    <select type="text" id="themes-selector" class="form-control form-control-sm themes-selector">
+      {{#each webAppAvailableThemes}}
+        <option value="{{id}}" {{isSelected id userSelectedTheme}}>{{label}}</option>
+      {{/each}}
+    </select>
+  </div>
+</template>
