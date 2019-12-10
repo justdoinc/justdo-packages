@@ -118,6 +118,10 @@ Template.justdo_files_gallery.events
     e.preventDefault()
     tmpl.deletion.set false
 
+  "keydown .file input": (e, tmpl) ->
+    if e.which == 27
+      tmpl.renaming.set false
+
   "mouseenter .file": (e, tmpl) ->
     e.preventDefault()
     $(e.currentTarget).addClass "active"
