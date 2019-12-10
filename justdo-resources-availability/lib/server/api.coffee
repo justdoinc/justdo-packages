@@ -44,11 +44,11 @@ _.extend JustdoResourcesAvailability.prototype,
     check availability.holidays, [String]
     sanitized_availability.holidays = availability.holidays
     for i in [0..6]
-      check availability.working_days["#{i}"].from, String
-      check availability.working_days["#{i}"].to, String
-      check availability.working_days["#{i}"].holiday, Boolean
-      Meteor._ensure sanitized_availability, "working_days", "#{i}"
-      sanitized_availability.working_days["#{i}"] = availability.working_days["#{i}"]
+      check availability.working_days[i].from, String
+      check availability.working_days[i].to, String
+      check availability.working_days[i].holiday, Boolean
+      Meteor._ensure sanitized_availability, "working_days", i
+      sanitized_availability.working_days[i] = availability.working_days[i]
 
     check executing_user_id, String
     check project_id, String

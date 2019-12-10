@@ -419,10 +419,10 @@ Template.justdo_calendar_project_pane.onCreated ->
   user_first_day_of_week = 1
   if Meteor.user().profile?.first_day_of_week?
     user_first_day_of_week = Meteor.user().profile.first_day_of_week
-  user_first_day_of_week--
+  user_first_day_of_week -= 1
   if(user_first_day_of_week<0)
     user_first_day_of_week=6
-  user_first_day_of_week--
+  user_first_day_of_week -= 1
   if(user_first_day_of_week<0)
     user_first_day_of_week=6
 
