@@ -19,8 +19,8 @@
               <svg class="jd-icon jd-c-pointer text-body"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left"/></svg>
             </div>
           {{else}}
-            <div class="return-arrow login-buttons-exit-global-settings position-absolute">
-              <svg class="jd-icon jd-c-pointer text-body"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left"/></svg>
+            <div class="return-arrow login-buttons-exit-global-settings position-relative">
+              <svg class="jd-icon jd-c-pointer text-body position-absolute"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left"/></svg>
             </div>
           {{/if}}
         {{/if}}
@@ -75,7 +75,7 @@
     <a href="{{landingAppRootUrl}}/terms-and-conditions" class="info-btn-terms" target="_blank">Terms</a>
   </div>
 
-  <div class="mt-2">
+  <div class="mt-2 d-flex">
     {{#if isAffiliate}}
       <button class="btn btn-sm btn-primary text-uppercase shadow-sm font-weight-bold affiliates-console-btn mr-1">Promoter Console</button>
     {{/if}}
