@@ -23,13 +23,15 @@ dates_to_display = new ReactiveVar([])
 number_of_days_to_display = new ReactiveVar(7)
 
 
-findProjectName = (task_obj)->
+findProjectName = (task_obj) ->
   if task_obj["p:dp:is_project"]
     return task_obj.title
+
   for parent_id of task_obj.parents
-    if (task_obj = APP.collections.Tasks.findOne(parent_id))
-      if (project_name = findProjectName(task_obj))
+    if (task_obj = APP.collections.Tasks.findOne(parent_id))?
+      if (project_name = findProjectName(task_obj))?
         return project_name
+
   return null
 
 # Create Wrapper (Layer) with droppable divs under the existing table
@@ -123,27 +125,23 @@ createDroppableWrapper = ->
           record.resource_type = "b:user:#{target_user_id}"
           APP.resource_planner.rpAddTaskResourceRecord record
 
-          if (unassigned_hours = task_obj['p:rp:b:unassigned-work-hours'])
+          if (unassigned_hours = task_obj["p:rp:b:unassigned-work-hours"])?
             record.delta = unassigned_hours
             APP.resource_planner.rpAddTaskResourceRecord record
-            set_param['p:rp:b:unassigned-work-hours'] = 0
+            set_param["p:rp:b:unassigned-work-hours"] = 0
 
 
         if ui.draggable[0].attributes.class.value.indexOf("calendar_view_draggable")>=0
           #dealing with Followups
-          if ui.draggable[0].attributes.type.value == 'F'
-            set_param['follow_up'] = e.target.attributes.date.value
-            if ui.helper[0]?.attributes?.task_id?.value?
-              APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
-                                            $set:set_param
-                                           )
+          if ui.draggable[0].attributes.type.value == "F"
+            set_param["follow_up"] = e.target.attributes.date.value
+            if (task_id = ui.helper[0]?.attributes?.task_id?.value)?
+              APP.collections.Tasks.update(task_id, {$set: set_param})
           #dealing with Private followups
-          else if ui.draggable[0].attributes.type.value == 'P'
-            set_param['priv:follow_up'] = e.target.attributes.date.value
-            if ui.helper[0]?.attributes?.task_id?.value?
-              APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
-                $set: set_param
-              )
+          else if ui.draggable[0].attributes.type.value == "P"
+            set_param["priv:follow_up"] = e.target.attributes.date.value
+            if (task_id = ui.helper[0]?.attributes?.task_id?.value)?
+              APP.collections.Tasks.update(task_id, {$set: set_param})
 
           #dealing with Regular
 
@@ -156,10 +154,8 @@ createDroppableWrapper = ->
             # if there is only due-date (i.e. no start and no end date)
             if (not task_obj.start_date) and (not task_obj.end_date)
               set_param.due_date = e.target.attributes.date.value
-              if ui.helper[0]?.attributes?.task_id?.value?
-                APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
-                  $set: set_param
-                )
+              if (task_id = ui.helper[0]?.attributes?.task_id?.value)?
+                APP.collections.Tasks.update(task_id, {$set: set_param})
               return
 
 
@@ -187,10 +183,8 @@ createDroppableWrapper = ->
             if task_obj.end_date?
               set_param['end_date'] = new_end_date
 
-            if ui.helper[0]?.attributes?.task_id?.value?
-              APP.collections.Tasks.update({_id: ui.helper[0].attributes.task_id.value},
-                $set: set_param
-              )
+            if (task_id = ui.helper[0]?.attributes?.task_id?.value)?
+              APP.collections.Tasks.update(task_id, {$set: set_param})
       else # Task not acceptable
         JustdoSnackbar.show
           text: "Ownership transfer is not possible due to permissions"
@@ -1152,7 +1146,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     return @start_date_after_due_date
 
   unassignedHours: ->
-    if @type == 'R' and @task.unassigned_hours > 0 and @task.owner_id == Template.instance().data.user_id
+    if @type == "R" and @task.unassigned_hours > 0 and @task.owner_id == Template.instance().data.user_id
       seconds = @task.unassigned_hours
       minutes = Math.floor(seconds/60)
       hours = Math.floor(minutes/60)
@@ -1210,12 +1204,13 @@ Template.justdo_calendar_project_pane_user_view.helpers
     if task_obj?["p:dp:is_project"]
       return ""
 
-    #if we filter to a certain project, no need to display project name as well
+    # if we filter to a certain project, no need to display project name as well
     if (Template.parentData(3).delivery_planner_project_id != "*")
       return ""
 
-    if (project_name = findProjectName(task_obj))
+    if (project_name = findProjectName(task_obj))?
       return "#{project_name} : "
+
     return ""
 
 Template.justdo_calendar_project_pane_user_view.events
