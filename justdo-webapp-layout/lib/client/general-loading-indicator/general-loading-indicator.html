@@ -1,6 +1,13 @@
 <template name="general_loading_indicator">
-  <div class="general-loading-indicator">
-    <img src="/layout/loading-spinner.gif">
-    {{message}}
+  <div class="general-loading-indicator d-flex justify-content-center align-items-center">
+    {{> loader size="34"}}
+    <div class="general-loading-indicator-msg text-muted ml-2">{{message}}</div>
+  </div>
+</template>
+
+<template name="loader">
+  <div class="jd-loader" style="width: {{size}}px; height: {{size}}px">
+    <div class="double-bounce1 bg-primary"></div>
+    <div class="double-bounce2 bg-primary"></div>
   </div>
 </template>
