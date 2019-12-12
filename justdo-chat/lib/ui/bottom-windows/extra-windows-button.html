@@ -1,10 +1,8 @@
 <template name="chat_bottom_windows_extra_windows_button">
   <div class="chat-extra-windows-button-container">
-    <div class="chat-extra-windows-button dropup">
-      <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-comment" aria-hidden="true"></i>
-      </button>
-      <ul class="dropdown-menu">
+    <div class="chat-extra-windows-button dropdown dropup">
+      <svg class="chat-extra-windows-icon jd-icon jd-c-pointer text-dark bg-white px-2 py-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><use xlink:href="/layout/icons-feather-sprite.svg#message-circle"/></svg>
+      <ul class="dropdown-menu p-2 shadow-lg border-0">
         {{#each extraWindows}}
           {{> chat_bottom_windows_extra_windows_button_item}}
         {{/each}}
@@ -14,5 +12,10 @@
 </template>
 
 <template name="chat_bottom_windows_extra_windows_button_item">
-  <li><div class="window-title">{{{xssGuard title}}}</div> <div class="close-window"><i class="close-hidden-chat fa fa-times" aria-hidden="true"></i></div></li>
+  <li class="dropdown-item d-flex align-items-center px-1">
+    <div class="window-title flex-grow-1">{{{xssGuard title}}}</div>
+    <div class="close-window">
+      <svg class="close-window-icon jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+    </div>
+  </li>
 </template>

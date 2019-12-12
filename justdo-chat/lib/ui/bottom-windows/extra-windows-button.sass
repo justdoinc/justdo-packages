@@ -1,50 +1,22 @@
 .chat-extra-windows-button-container
-  width: 100%
-
-  bottom: -2px
-  height: 34px
-
+  bottom: 0
   position: absolute
 
 .chat-extra-windows-button
-  width: 100%
-
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.25), 0px 0px 10px rgba(0, 0, 0, 0.05)
-  border-radius: 3px 3px 0px 0px
-  font-size: 17px
-  text-align: center
-  line-height: 28px
-
   .dropdown-menu
-    width: 230px
-    li
-      line-height: 23px
-      height: 23px
-
-    .window-title
-      text-overflow: ellipsis
-      white-space: nowrap
-      overflow: hidden
-      padding: 3px 10px
-      width: 205px
-      font-size: 13px
-      cursor: pointer
-      line-height: 17px
-
-      display: inline-block
-
-      &:hover
-        background-color: #f5f5f5
-
-    .close-window
-      cursor: pointer
-      display: inline-block
-      width: 23px
-      height: 20px
-      text-align: center
-      float: right
-      line-height: 20px
-  .close-hidden-chat
-    font-size: 12px
-    color: #5d5d5d
+    width: 240px
+  .dropdown-item + .dropdown-item
+    border-top: 1px dashed rgba(0, 0, 0, 0.12)
+  .window-title
+    text-overflow: ellipsis
+    white-space: nowrap
+    overflow: hidden
     cursor: pointer
+    font-size: 14px
+  .chat-extra-windows-icon
+    width: 35px
+    height: 35px
+    box-shadow: 0px 0 3px rgba(0, 0, 0, 0.25), 0px 0px 10px rgba(0, 0, 0, 0.05)
+    border-radius: 3px 3px 0px 0px
+  .close-window-icon
+    padding: 4px
