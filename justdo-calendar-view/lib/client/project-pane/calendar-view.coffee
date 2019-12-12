@@ -21,7 +21,7 @@ members_collapse_state_vars = {}
 
 dates_to_display = new ReactiveVar([])
 number_of_days_to_display = new ReactiveVar(7)
-
+delivery_planner_project_id = new ReactiveVar ("*") # '*' for the entire JustDo
 
 findProjectName = (task_obj) ->
   if task_obj["p:dp:is_project"]
@@ -310,7 +310,7 @@ Template.justdo_calendar_project_pane.onCreated ->
 
 
 
-  @delivery_planner_project_id = new ReactiveVar ("*") # '*' for the entire JustDo
+
   @all_other_users = new ReactiveVar([])
   @view_start_date = new ReactiveVar
   active_item_id = null
@@ -531,7 +531,7 @@ Template.justdo_calendar_project_pane.onCreated ->
       self.tasks_to_users={}
 
     include_tasks = []
-    project_id = self.delivery_planner_project_id.get()
+    project_id = delivery_planner_project_id.get()
 
     if project_id != "*"
       include_tasks.push project_id
@@ -623,7 +623,7 @@ Template.justdo_calendar_project_pane.helpers
 
 
   allOtherUsers: ->
-    if Template.instance().delivery_planner_project_id.get() == "*"
+    if delivery_planner_project_id.get() == "*"
       return _.difference(APP.modules.project_page.curProj().getMembersIds(), [Meteor.userId()])
     else
       return Template.instance().all_other_users.get()
@@ -640,7 +640,7 @@ Template.justdo_calendar_project_pane.helpers
     return dates_to_display.get()
 
   deliveryPlannerProjectId: ->
-    return Template.instance().delivery_planner_project_id.get()
+    return delivery_planner_project_id.get()
 
   formatDate: (viewResolution) ->
     if number_of_days_to_display.get() == 7
@@ -721,7 +721,7 @@ Template.justdo_calendar_project_pane.events
     project = $(e.currentTarget).attr "project_id"
     project_name = $(e.currentTarget).text()
     $(".calendar_view_project_selector button").text(project_name)
-    Template.instance().delivery_planner_project_id.set(project)
+    delivery_planner_project_id.set(project)
 
     if project == "*"
       Template.instance().all_other_users.set(
@@ -1205,7 +1205,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
       return ""
 
     # if we filter to a certain project, no need to display project name as well
-    if (Template.parentData(3).delivery_planner_project_id != "*")
+    if (delivery_planner_project_id.get() != "*")
       return ""
 
     if (project_name = findProjectName(task_obj))?
