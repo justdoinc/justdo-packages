@@ -195,6 +195,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/ui/bottom-windows/task/task-open.html", client);
   api.addFiles("lib/ui/bottom-windows/task/task-open.coffee", client);
 
+  api.addFiles("lib/ui/bottom-windows/fix-unclickable-area-under-chat-windows.sass", client);
+
   //
   // User conf
   //

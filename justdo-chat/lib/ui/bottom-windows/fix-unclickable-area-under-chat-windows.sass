@@ -1,0 +1,7 @@
+// The following fixes an issue we encountered that caused the area under the chat windows
+// (in particular, the bottom sheet) not clickable.
+.window-container, .open-chat-window-container
+  pointer-events: none
+
+.chat-window
+  pointer-events: auto
