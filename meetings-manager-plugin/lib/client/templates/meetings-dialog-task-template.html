@@ -16,18 +16,14 @@
         <div class="task-controls-container d-flex align-items-center">
           {{#if allowAddingNotes}}
             <div class="btn-group add-note-group">
-              <svg class="jd-icon jd-c-pointer text-dark dropdown-toggle add-note" data-toggle="dropdown"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
-              <ul class="dropdown-menu">
-                <!-- {{#unless hasOwnNote}}
-                  <li><div class="btn-add-note"><i class="fa fa-pencil fa-fw"></i>Add note</div></li>
-                {{/unless}} -->
-                {{#unless hasPrivateNote}}
-                  <li><div class="btn-add-private-note">Add private note</div></li>
-                {{/unless}}
-                {{#unless hasNoAccessToTask}}
-                  <li><div class="btn-add-task">Add task</div></li>
-                {{/unless}}
-              </ul>
+              {{#unless hasPrivateNote}}
+                <div class="btn-add-private-note"><i class="fa fa-user-secret" aria-hidden="true" title="Add a private note"></i></div>
+              {{/unless}}
+              {{#unless hasNoAccessToTask}}
+                <div class="btn-add-task">
+                  <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
+                </div>
+              {{/unless}}
             </div>
           {{/if}}
           {{#if allowSortingNotes}}
@@ -49,7 +45,7 @@
       <!-- Private note -->
       {{#if private_note}}
         <div class="task-private-note task-user-note">
-          <div class="user mb-1">My private note:</div>
+          <div class="user mb-1"><i class="fa fa-user-secret" aria-hidden="true"></i> My private note:</div>
           <span class="note">
             <textarea name="private_note" class="note-box form-control" dir="auto"></textarea>
           </span>
