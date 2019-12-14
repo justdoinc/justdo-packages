@@ -69,6 +69,11 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/templates/meetings-dialog-task-template.sass", client);
   api.addFiles("lib/client/templates/meetings-dialog-task-template.coffee", client);
 
+  api.addFiles("lib/client/templates/meetings-dialog-task-template-subtask.html", client);
+  api.addFiles("lib/client/templates/meetings-dialog-task-template-subtask.sass", client);
+  api.addFiles("lib/client/templates/meetings-dialog-task-template-subtask.coffee", client);
+
+
   api.addFiles("lib/client/templates/meetings-meeting-members.html", client);
   // api.addFiles("lib/client/templates/meetings-meeting-members.css", client);
   api.addFiles("lib/client/templates/meetings-meeting-members.coffee", client);

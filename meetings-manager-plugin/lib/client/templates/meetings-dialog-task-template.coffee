@@ -220,24 +220,7 @@ Template.meetings_dialog_task.events
 
   "click .btn-add-task": (e, tmpl) ->
     tmpl.form.validate()
-
-    bootbox.prompt
-      title: "Task Title"
-      className: "bootbox-new-design"
-      callback: (result) =>
-        if result?
-          APP.meetings_manager_plugin.meetings_manager.addSubTaskToTask(
-           @meeting._id
-          ,
-           @item.task_id
-          ,
-            title: result
-          ,
-            (error) ->
-              if error?
-                tmpl.form.invalidate [{ error: error, message: error + '', name: "" }]
-
-          )
+    APP.meetings_manager_plugin.meetings_manager.addSubTaskToTask @meeting._id, @item.task_id, title: "Untitled Task"
 
   "keyup textarea": (e, tmpl) ->
 

@@ -21,7 +21,10 @@
               {{/unless}}
               {{#unless hasNoAccessToTask}}
                 <div class="btn-add-task">
-                  <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
+                  <svg class="jd-icon jd-c-pointer text-dark">
+                    <use xlink:href="/layout/icons-feather-sprite.svg#plus"></use>
+                    <title>Add Task</title>
+                  </svg>
                 </div>
               {{/unless}}
             </div>
@@ -87,16 +90,8 @@
             {{#each meeting_task.added_tasks}}
               {{#with lookupTask}}
                 <div class="sub-task d-flex align-items-start mt-2">
-                  <small class="task-seqId bg-light border rounded-sm px-1">{{this.seqId}}</small>
-                  <!-- TODO: other details, like is this task being transfered, show the owner's name, etc. -->
-                  <!-- <span class="owner">
-                    {{#with lookupUser this.owner_id}}
-                      {{> justdo_avatar}}
-                    {{/with}}
-                  </span> -->
-                  <div class="title ml-2">
-                    {{this.title}}
-                  </div>
+                  {{> meetings_dialog_task_subtask}}
+
                 </div>
               {{/with}}
             {{/each}}

@@ -1,0 +1,31 @@
+<template name="meetings_dialog_task_subtask">
+  <small class="task-seqId bg-light border rounded-sm px-1">{{this.seqId}}</small>
+
+<!--  {{#with lookupUser this.owner_id}}-->
+
+  <div class="btn-group dropright">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="sub-task-user-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      {{#with taskOwner}}
+        <span class="task-owner-selector">
+          {{> justdo_avatar}}
+        </span>
+      {{/with}}
+    </button>
+    <div class="dropdown-menu" aria-labelledby="sub-task-user-selector">
+      {{#each tasksUsers}}
+        <button class="dropdown-item select-pending-owner" user_id="{{this._id}}" type="button">{{this.profile.first_name}} {{this.profile.last_name}}</button>
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="title ml-2">
+    <textarea class="task-subject-box form-control" dir="auto" style="overflow: hidden; overflow-wrap: break-word; resize: none;">
+      {{this.title}}
+    </textarea>
+  </div>
+
+  <div class="due-date ml-2">
+    <input type="text" class="task-due-date form-control" dir="auto"
+           style="overflow: hidden; overflow-wrap: break-word; resize: none;" value="{{this.due_date}}">
+  </div>
+</template>
