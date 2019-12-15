@@ -1,8 +1,10 @@
 <template name="meetings_dialog_task_subtask">
-  <small class="task-seqId bg-light border rounded-sm px-1">{{seqId}}</small>
+  <small class="subtask-seqId bg-light border rounded-sm px-1">{{seqId}}</small>
 
   <div class="btn-group dropright task-owner-selector">
-    <button {{disabled}} class="btn btn-light btn-sm dropdown-toggle" type="button" id="sub-task-user-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button {{disabled}} class="btn btn-light btn-sm dropdown-toggle" type="button" id="sub-task-user-selector"
+                         style="padding: 0px"
+                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       {{#with taskOwner}}
         <span class="task-owner-selector">
           {{> justdo_avatar}}
@@ -18,7 +20,7 @@
 
   <div class="title ml-2">
     <textarea {{readOnly}} class="task-subject-box form-control form-control-sm" dir="auto"
-              style="overflow: hidden; width: 290px; overflow-wrap: break-word; resize: none;"
+              style="overflow: hidden; width: 310px; overflow-wrap: break-word; resize: none;"
               placeholder="Untitled Task">{{subject}}</textarea>
   </div>
 
