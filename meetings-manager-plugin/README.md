@@ -11,3 +11,4 @@ dialog
  ownership, set due date
 + added alerts for tasks that were added in meeting, but later
 changed or removed
++ Task #5545: when clicking 'copy' (to clipboard), add a snackbar indication that the information has been copied.

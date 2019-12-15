@@ -17,9 +17,18 @@
               <div class="meeting-title position-relative d-flex align-items-center">
                 <input type="text" name="title" placeholder="Meeting Name" value="{{meeting_title}}" class="form-control rounded-0 border-top-0 border-left-0 border-right-0 pl-0" dir="auto">
                 <div class="meeting-control-buttons d-flex px-1 bg-light rounded ">
-                  <svg class="jd-icon jd-c-pointer text-dark meeting-print"><use xlink:href="/layout/icons-feather-sprite.svg#printer"/></svg>
-                  <svg class="jd-icon jd-c-pointer text-dark meeting-email"><use xlink:href="/layout/icons-feather-sprite.svg#mail"/></svg>
-                  <svg class="jd-icon jd-c-pointer text-dark meeting-copy"><use xlink:href="/layout/icons-feather-sprite.svg#copy"/></svg>
+                  <svg class="jd-icon jd-c-pointer text-dark meeting-print">
+                    <use xlink:href="/layout/icons-feather-sprite.svg#printer"/>
+                    <title>Print meeting</title>
+                  </svg>
+                  <svg class="jd-icon jd-c-pointer text-dark meeting-email">
+                    <use xlink:href="/layout/icons-feather-sprite.svg#mail"/>
+                    <title>Email meeting details</title>
+                  </svg>
+                  <svg class="jd-icon jd-c-pointer text-dark meeting-copy">
+                    <use xlink:href="/layout/icons-feather-sprite.svg#copy"/>
+                    <title>Copy meeting details to the clipboard</title>
+                  </svg>
                   {{#if doc.locked}}
                     <svg class="jd-icon jd-c-pointer text-dark {{mayLockClass}} meeting-lock"><use xlink:href="/layout/icons-feather-sprite.svg#lock"/></svg>
                   {{else}}

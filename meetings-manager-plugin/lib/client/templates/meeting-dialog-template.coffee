@@ -414,6 +414,15 @@ Template.meetings_meeting_dialog.events
 
   'click .meeting-copy': (e, tmpl) ->
     tmpl.copy_me()
+    JustdoSnackbar.show
+      text: "Meeting details copied to clipboard."
+      duration: 3000
+      actionText: "Dismiss"
+      onActionClick: =>
+        JustdoSnackbar.close()
+        return
+
+
 
   'documentChange .meeting-header, documentChange .meeting-note': (e, tmpl, doc, changes) ->
     tmpl.form.validate()
