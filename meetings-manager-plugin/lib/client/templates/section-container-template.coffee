@@ -61,7 +61,17 @@ Template.meeting_container.helpers
 
     return added_tasks
 
+  taskNotFound: ->
+    if not (JD.collections.Tasks.findOne({_id:@task_id}))
+      return true
+    return false
 
+  taskDiverged: ->
+
+    if ( task_obj = JD.collections.Tasks.findOne({_id:@task_id}))?
+      if task_obj.title == @title
+        return false
+    return true
 
   lookupUser: (user_id) -> Meteor.users.findOne user_id
 
@@ -91,4 +101,5 @@ Template.meeting_container.events
 
   # Focus on task
   "click .info-subtask-title": (e, tmpl) ->
-    console.log("focus on task")
+    #todo: select
+    return

@@ -45,6 +45,10 @@ _.extend MeetingsManager.prototype,
 
     Meteor.call "meetings_addSubTaskToTask", meeting_id, task_id, task_fields, cb
 
+  saveSubTaskSubject: (meeting_id, task_id, added_task_id, added_task_subject, cb) ->
+
+    Meteor.call "meetings_saveSubTaskSubject", meeting_id, task_id, added_task_id, added_task_subject, cb
+
   addUserNoteToTask: (meeting_id, task_id, note_fields, cb) ->
 
     Meteor.call "meetings_addUserNoteToTask", meeting_id, task_id, note_fields, cb

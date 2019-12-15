@@ -44,6 +44,10 @@ _.extend MeetingsManager.prototype,
         user_id = @userId
         self.addSubTaskToTask meeting_id, task_id, task_fields, user_id
 
+      meetings_saveSubTaskSubject: (meeting_id, task_id, added_task_id, added_task_subject) ->
+        user_id = @userId
+        self.saveSubTaskSubject meeting_id, task_id, added_task_id, added_task_subject, user_id
+
       meetings_addUserNoteToTask: (meeting_id, task_id, note_fields) ->
         user_id = @userId
         self.addUserNoteToTask meeting_id, task_id, note_fields, user_id

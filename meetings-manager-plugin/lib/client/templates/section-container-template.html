@@ -41,7 +41,13 @@
                   {{#each this.tasks}}
                     <tr class="info-subtask">
                       <td class="info-subtask-seqId"><div>{{seqId}}</div></td>
-                      <td class="info-subtask-title">{{title}}</td>
+                      <td class="info-subtask-title">{{title}}
+                        {{#if taskNotFound}}<i class="fa fa-exclamation-triangle" aria-hidden="true" title="Task not found"></i>{{/if}}
+                        {{#unless taskNotFound}}
+                          {{#if taskDiverged}}<i class="fa fa-exclamation-triangle" aria-hidden="true" title="Task subject changed"></i>{{/if}}
+                        {{/unless}}
+
+                      </td>
                     </tr>
                   {{/each}}
                 </table>

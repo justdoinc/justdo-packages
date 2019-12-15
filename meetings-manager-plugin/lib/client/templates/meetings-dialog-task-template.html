@@ -16,9 +16,10 @@
         <div class="task-controls-container d-flex align-items-center">
           {{#if allowAddingNotes}}
             <div class="btn-group add-note-group">
-              {{#unless hasPrivateNote}}
-                <div class="btn-add-private-note"><i class="fa fa-user-secret" aria-hidden="true" title="Add a private note"></i></div>
-              {{/unless}}
+<!--              disabeling adding private note from now, in order to keep the product simple-->
+<!--              {{#unless hasPrivateNote}}-->
+<!--                <div class="btn-add-private-note"><i class="fa fa-user-secret" aria-hidden="true" title="Add a private note"></i></div>-->
+<!--              {{/unless}}-->
               {{#unless hasNoAccessToTask}}
                 <div class="btn-add-task">
                   <svg class="jd-icon jd-c-pointer text-dark">
@@ -45,7 +46,7 @@
         </div>
       </div>
 
-      <!-- Private note -->
+      <!-- Private note (backward compatible, currently inactive) -->
       {{#if private_note}}
         <div class="task-private-note task-user-note">
           <div class="user mb-1"><i class="fa fa-user-secret" aria-hidden="true"></i> My private note:</div>
@@ -56,7 +57,7 @@
       {{/if}}
 
 
-      <!-- User note -->
+      <!-- User note (backward compatible, currently inactive)-->
       {{#each userNotes}}
         <div class="task-user-note">
           <span class="user">
@@ -79,6 +80,14 @@
         </div>
       {{/each}}
 
+      <!-- Task summary -->
+      <div class="summary-note-wrapper">
+        {{#if displayTaskNote}}
+          <div class="task-summary-note">
+            {{> locking_text_editor content=meeting_task.note class="note" placeholder="Task's note" lock=meeting_task.note_lock disabled=mayNotEditTaskNote onSave=onSaveTaskNote}}
+          </div>
+        {{/if}}
+      </div>
 
       <!-- Added tasks -->
       {{#if meeting_task.added_tasks}}
@@ -90,8 +99,7 @@
             {{#each meeting_task.added_tasks}}
               {{#with lookupTask}}
                 <div class="sub-task d-flex align-items-start mt-2">
-                  {{> meetings_dialog_task_subtask}}
-
+                  {{> meetings_dialog_task_subtask task_id=this._id parent_task_id=taskId meeting_id=meetingId may_edit=mayEditChildTask}}
                 </div>
               {{/with}}
             {{/each}}
@@ -99,14 +107,7 @@
         </div>
       {{/if}}
 
-      <!-- Task summary -->
-      <div class="summary-note-wrapper">
-        {{#if displayTaskNote}}
-          <div class="task-summary-note">
-            {{> locking_text_editor content=meeting_task.note class="note" placeholder=placeholderForTaskNote lock=meeting_task.note_lock disabled=mayNotEditTaskNote onSave=onSaveTaskNote}}
-          </div>
-        {{/if}}
-      </div>
+
 
 
       <!-- Error -->

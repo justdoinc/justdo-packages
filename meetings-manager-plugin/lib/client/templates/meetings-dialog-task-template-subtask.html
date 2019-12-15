@@ -1,10 +1,8 @@
 <template name="meetings_dialog_task_subtask">
-  <small class="task-seqId bg-light border rounded-sm px-1">{{this.seqId}}</small>
+  <small class="task-seqId bg-light border rounded-sm px-1">{{seqId}}</small>
 
-<!--  {{#with lookupUser this.owner_id}}-->
-
-  <div class="btn-group dropright">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="sub-task-user-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="btn-group dropright task-owner-selector">
+    <button {{disabled}} class="btn btn-light btn-sm dropdown-toggle" type="button" id="sub-task-user-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       {{#with taskOwner}}
         <span class="task-owner-selector">
           {{> justdo_avatar}}
@@ -19,13 +17,15 @@
   </div>
 
   <div class="title ml-2">
-    <textarea class="task-subject-box form-control" dir="auto" style="overflow: hidden; overflow-wrap: break-word; resize: none;">
-      {{this.title}}
-    </textarea>
+    <textarea {{readOnly}} class="task-subject-box form-control form-control-sm" dir="auto"
+              style="overflow: hidden; width: 290px; overflow-wrap: break-word; resize: none;"
+              placeholder="Untitled Task">{{subject}}</textarea>
   </div>
 
   <div class="due-date ml-2">
-    <input type="text" class="task-due-date form-control" dir="auto"
-           style="overflow: hidden; overflow-wrap: break-word; resize: none;" value="{{this.due_date}}">
+    <input {{readOnly}} type="date" class="task-due-date form-control form-control-sm"
+           style="width: 150px; height: fit-content; overflow: hidden; overflow-wrap: break-word; resize: none;"
+           dir="auto" value="{{dueDate}}"
+           placeholder="Due Date">
   </div>
 </template>

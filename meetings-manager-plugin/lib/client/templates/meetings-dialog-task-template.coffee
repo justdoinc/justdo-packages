@@ -84,6 +84,12 @@ Template.meetings_dialog_task.helpers
       return false
     return true
 
+  meetingId: ->
+    return Template.instance().data.meeting._id
+
+  taskId: ->
+    return Template.instance().data.item.task_id
+
   onSaveTaskNote: ->
     tmpl = Template.instance()
     (changes) =>
@@ -166,6 +172,10 @@ Template.meetings_dialog_task.helpers
   mayEdit: () ->
     return @meeting.organizer_id == Meteor.userId() or not @meeting.locked
 
+  mayEditChildTask: () ->
+    return Template.instance().data.meeting.status != "adjourned"
+
+
   firstItem: () ->
     return @item.task_order == 0
 
@@ -220,7 +230,7 @@ Template.meetings_dialog_task.events
 
   "click .btn-add-task": (e, tmpl) ->
     tmpl.form.validate()
-    APP.meetings_manager_plugin.meetings_manager.addSubTaskToTask @meeting._id, @item.task_id, title: "Untitled Task"
+    APP.meetings_manager_plugin.meetings_manager.addSubTaskToTask @meeting._id, @item.task_id, title: ""
 
   "keyup textarea": (e, tmpl) ->
 

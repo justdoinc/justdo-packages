@@ -183,12 +183,35 @@ _.extend MeetingsManager.prototype,
     _.each meeting.tasks, (task, i) =>
       update["tasks.#{i}.task_order"] = tasks.indexOf task
 
-    console.log update
-
     @meetings.update
       _id: meeting_id
     ,
       $set: update
+
+  saveSubTaskSubject: (meeting_id, task_id, added_task_id, added_task_subject, user_id) ->
+
+    @_requireString meeting_id, "meeting_id should be a string"
+    check task_id, String
+    check added_task_id, String
+    meeting = @_requireMeetingMember meeting_id, false, user_id
+    meeting_task = _.findWhere meeting.tasks, { task_id: task_id }
+
+    if not meeting_task?
+      throw @_error "invalid-request", "Task is not part of meeting."
+
+    query =
+      meeting_id: meeting_id
+      task_id: task_id
+      "added_tasks.task_id": added_task_id
+    op =
+      $set:
+        'added_tasks.$.title': added_task_subject
+
+    @meetings_tasks.update query, op
+
+    return
+
+
 
   addSubTaskToTask: (meeting_id, task_id, task_fields, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
