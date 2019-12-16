@@ -20,8 +20,13 @@
 
   <div class="title ml-2">
     <textarea {{readOnly}} class="task-subject-box form-control form-control-sm" dir="auto"
-              style="overflow: hidden; width: 310px; overflow-wrap: break-word; resize: none;"
-              placeholder="Untitled Task">{{subject}}</textarea>
+              style="overflow: hidden; width: 310px; overflow-wrap: break-word; resize: none;
+                      {{#if taskSubjectDiverged}}
+                        color: red;
+                      {{/if}}"
+              placeholder="Untitled Task" title={{divergedSubjectTitle}} >{{subject}}</textarea>
+
+
   </div>
 
   <div class="due-date ml-2">
