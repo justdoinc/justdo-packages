@@ -337,6 +337,9 @@ _.extend GridControlMux.prototype,
       # @unloadTab or @destroy()
       return new GridControl tab.grid_control_options, tab.grid_control_container
 
+    grid_control.grid_control_mux = @
+    grid_control.grid_control_mux_tab_id = tab_id
+
     tab.state = "loading"
     tab.grid_control = grid_control
 

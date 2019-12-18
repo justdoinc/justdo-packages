@@ -31,7 +31,7 @@ Util.inherits NaturalCollectionSubtreeSection, GridData.sections_managers.GridDa
 
 _.extend NaturalCollectionSubtreeSection.prototype,
   # if rootItems is null, the section will yield the entire naturalCollectionTree (starting from @options.tree_root_item_id)
-  # if rootItems is a method it is expected to return either:
+  # if rootItems is a method it is expected to return:
   #   1. An object whose keys are items_ids of the items that should be used as the roots
   #      of the section's natural sub-trees.
   #   2. An array, whose items are objects that has the _id property of the items that should
@@ -43,6 +43,9 @@ _.extend NaturalCollectionSubtreeSection.prototype,
   #      !IMPROTANT if @yield_root_items is false, the original order of
   #      the array will be ignored, sort will be governed only by the
   #      @root_items_sort_by options
+  #   3. Null/Undefined, in such a case we'll behave as if rootItems isn't defined.
+  #      This was added 2019-12-17 to allow sections to set custom rootItems() conditional to the section state
+  #      vars.
   #        
   rootItems: null
 
@@ -183,12 +186,13 @@ _.extend NaturalCollectionSubtreeSection.prototype,
 
     path_array = helpers.getPathArray(relative_path)
 
-    if @rootItems?
+    if not @rootItems? or not (root_items = @_rootItems())?
+      # If @rootItems isn't set, or if root_items returned null
+      current_node = tree_structure[@options.tree_root_item_id]
+    else
       # If is a sub-trees section, check whether relative_path's top level item
       # is part of our @rootItems
       top_level_item_id = path_array.shift()
-
-      root_items = @_rootItems()
 
       isItemIdInRootItems = (item_id) ->
         # read comment on @rootItems output structure above.
@@ -224,8 +228,6 @@ _.extend NaturalCollectionSubtreeSection.prototype,
         return true
 
       current_node = tree_structure[top_level_item_id]
-    else
-      current_node = tree_structure[@options.tree_root_item_id]
 
     if not current_node?
       return false
@@ -294,6 +296,12 @@ _.extend NaturalCollectionSubtreeSection.prototype,
         root_items = @_rootItems()
     else
       root_items = @_rootItems()
+
+    if not root_items?
+      # If @rootItems returned null, we behave as if it isn't set.
+      path_item_id = @options.tree_root_item_id
+
+      return forwardHandling()
 
     # Find all top level items
     top_level_items = null
