@@ -690,6 +690,18 @@ _.extend GridControlMux.prototype,
 
         return
 
+  activateTabWithSectionsState: (tab_id, sections_state) ->
+    @activateTab(tab_id)
+
+    Tracker.flush() # Run post-tab-change procedures immeidately
+                    # Will prevent buttons that depends on tab
+                    # state (e.g. print) from delay disable/enable
+                    # mode update until flush.
+
+    @setActiveGridControlSectionsState(sections_state, true) # true is to replace any existing section state vars
+
+    return
+
   getTabGridControlNonReactive: (tab_id, require_ready=false) ->
     # Similar output to @getActiveGridControl() for any tab_id
     # Non Reactive
