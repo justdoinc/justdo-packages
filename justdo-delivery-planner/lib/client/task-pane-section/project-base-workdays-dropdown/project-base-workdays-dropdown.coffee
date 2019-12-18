@@ -69,7 +69,7 @@ Template.delivery_planner_task_pane_workdays_editor_btn.onRendered ->
   return
 
 Template.delivery_planner_task_pane_workdays_editor_btn.onDestroyed ->
-  @base_workdays_dropdown.destroy()
+  @base_workdays_dropdown?.destroy()
 
   return
 
