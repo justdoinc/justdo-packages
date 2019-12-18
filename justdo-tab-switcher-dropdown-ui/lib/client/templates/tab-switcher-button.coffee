@@ -32,6 +32,8 @@ APP.executeAfterAppLibCode ->
           return fontAwesomeIconTag("fa-plus")
         else
           return unknown_tab_icon
+      else if tab_id == "sub-tree"
+        return fontAwesomeIconTag("fa-briefcase")
       else if tab_id == "jdp-all-projects"
         return fontAwesomeIconTag("fa-briefcase")
       else if tab_id == "jwp-term"

@@ -10,6 +10,11 @@
 
 <template name="delivery_planner_task_pane_main">
   <div class="delivery-planner {{#if isSmallLayout}}small-layout{{/if}}">
+    {{#if isProject}}
+      <div class="open-in-sub-tree-tab">
+        <i class="fa fa-fw fa-external-link-square" aria-hidden="true"></i>
+      </div>
+    {{/if}}
     <div class="is-project-toggle {{#if isProject}}is-project{{/if}}" >
       {{#if isProject}}
         <i class="fa fa-toggle-on fa-fw"></i>

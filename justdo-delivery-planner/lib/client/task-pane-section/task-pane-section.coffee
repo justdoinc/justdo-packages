@@ -537,6 +537,18 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    "click .open-in-sub-tree-tab": (e, tpl) ->
+      gcm = module.getCurrentGcm()
+      active_item_id = module.activeItemId()
+
+      tab_id = "sub-tree"
+
+      gcm.activateTabWithSectionsState(tab_id, {global: {"root-item": active_item_id}})
+
+      gcm.setPath([tab_id, "/#{active_item_id}/"])
+
+      return
+
   Template.delivery_planner_task_pane_project_tab.onCreated ->
     APP.justdo_highcharts.requireHighcharts()
 
