@@ -37,10 +37,6 @@ APP.executeAfterAppLibCode ->
 
       gcm = module.getCurrentGcm()
 
-      gcm.activateTab(tab_id)
-      Tracker.flush() # Run post-tab-change procedures immeidately
-                      # Will prevent buttons that depends on tab
-                      # state (e.g. print) from delay disable/enable
-                      # mode update until flush.
+      gcm.activateTabWithSectionsState(tab_id, sections_state)
 
-      gcm.setActiveGridControlSectionsState(sections_state, true) # true is to replace any existing section state vars
+      return

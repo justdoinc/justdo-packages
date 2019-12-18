@@ -112,12 +112,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project/header/operations-toolbar/priority-slider/priority-slider.coffee", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/priority-slider/priority-slider.html", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/priority-slider/priority-slider.sass", "client");
-  api.addFiles("lib/client/project/header/operations-toolbar/tab-switcher/tab-switcher-dropdown/tab-switcher-dropdown.coffee", "client");
-  api.addFiles("lib/client/project/header/operations-toolbar/tab-switcher/tab-switcher-dropdown/tab-switcher-dropdown.html", "client");
-  api.addFiles("lib/client/project/header/operations-toolbar/tab-switcher/tab-switcher-dropdown/tab-switcher-dropdown.sass", "client");
-  api.addFiles("lib/client/project/header/operations-toolbar/tab-switcher/tab-switcher.coffee", "client");
-  api.addFiles("lib/client/project/header/operations-toolbar/tab-switcher/tab-switcher.html", "client");
-  api.addFiles("lib/client/project/header/operations-toolbar/tab-switcher/tab-switcher.sass", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/ticket-entry/ticket-entry.coffee", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/ticket-entry/ticket-entry.html", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/ticket-entry/ticket-entry.sass", "client");
