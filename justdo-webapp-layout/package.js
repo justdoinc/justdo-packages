@@ -107,6 +107,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project/header/operations-toolbar/nullary-operations.coffee", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/operations-toolbar.html", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/operations-toolbar.sass", "client");
+  api.addFiles("lib/client/project/header/operations-toolbar/operations-toolbar.coffee", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/print-grid/print-grid.coffee", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/print-grid/print-grid.html", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/priority-slider/priority-slider.coffee", "client");

@@ -1,70 +1,91 @@
 APP.executeAfterAppLibCode ->
-  Template.project_operations_priority_slider.onRendered ->
-    $(".jd-priority-slider").slider
+  tpl_instances = {}
+
+  Template.justdo_priority_slider.getInstance = (id) ->
+    return tpl_instances[id]
+
+  Template.justdo_priority_slider.onCreated ->
+    if @data?.id?
+      @_id = @data.id
+    else
+      @_id = "jd-priority-slider-#{Math.floor(Math.random() * 1000000)}"
+
+    tpl_instances[@_id] = @
+
+    @_value = null
+    @_onChangeCallbacks = []
+    @_is_enabled = true
+
+    @setValue = (value) =>
+      if (not value?) or @_value == value
+        return
+
+      @_value = value
+      if @is_enabled()
+        $("##{@_id} .jd-priority-slider").slider "value", value
+        $("##{@_id} .jd-priority-slider-handle").css "left", value + "%"
+        $("##{@_id} .ui-slider-range").attr("style", "background: " + JustdoColorGradient.getColorRgbString(value) + " !important; width: " + value + "%")
+        for callback in @_onChangeCallbacks
+          callback value, @
+      return
+
+    @getValue = =>
+      return @_value
+
+    @enable = =>
+      @_is_enabled = true
+      $("##{@_id} .jd-priority-slider").slider "enable"
+      return
+    
+    @disable = =>
+      @_is_enabled = false
+      $("##{@_id} .jd-priority-slider").slider "disable"
+      return
+    
+    @is_enabled = =>
+      return @_is_enabled
+      
+    @onChange = (callback) =>
+      @_onChangeCallbacks.push callback
+      return
+
+
+  Template.justdo_priority_slider.onRendered ->
+    tpl = @
+    $("##{tpl._id} .jd-priority-slider").slider
       range: 'min'
       value: 0
       min: 0
       max: 100
       create: ->
-        $(".jd-priority-slider-handle")
+        $("##{tpl._id} .jd-priority-slider-handle")
       slide: (event, ui) ->
-        $(".ui-slider-range").attr("style", "background: " + JustdoColorGradient.getColorRgbString(ui.value or 0) + " !important")
-        $(".jd-priority-value").text ui.value
+        $("##{tpl._id} .ui-slider-range").attr("style", "background: " + JustdoColorGradient.getColorRgbString(ui.value or 0) + " !important")
+        $("##{tpl._id} .jd-priority-value").text ui.value
       start: (event, ui) ->
-        $(".jd-priority-value").fadeIn()
+        $("##{tpl._id} .jd-priority-value").fadeIn()
       stop: (event, ui) ->
-        $(".jd-priority-value").fadeOut()
-        task_id = APP.modules.project_page.activeItemId()
-        if task_id?
-          APP.collections.Tasks.update task_id, {$set: {priority: ui.value}}
+        $("##{tpl._id} .jd-priority-value").fadeOut()
+      change: (event, ui) ->
+        tpl.setValue ui.value
 
+  Template.justdo_priority_slider.helpers
+    getId: ->
+      return Template.instance()._id
 
-    # Make the task_priority_slider reactive
-    @autorun ->
-      task_id = APP.modules.project_page.activeItemId()
-      if task_id?
-        $(".jd-priority-slider").slider "enable"
-        item = APP.collections.Tasks.findOne task_id
-        if item?
-          priority = item.priority
-          $(".jd-priority-slider-handle").css "left", priority + "%"
-          $(".ui-slider-range").attr("style", "background: " + JustdoColorGradient.getColorRgbString(priority) + " !important; width: " + priority + "%")
-      else
-        $(".jd-priority-slider").slider "disable"
-
-  Template.project_operations_priority_slider.helpers
     active_is_slider: ->
-     if APP.modules.project_page.activeItemId()?
-       return true
+      return Template.instance().is_enabled()
 
 
-  Template.project_operations_priority_slider.events
-    "click .tick-0": (e, tmpl) ->
-      task_id = APP.modules.project_page.activeItemId()
-      if task_id?
-        APP.collections.Tasks.update task_id, {$set: {priority: 0}}
-        $(".jd-priority-value").text("0").fadeIn().fadeOut()
-
-    "click .tick-25": (e, tmpl) ->
-      task_id = APP.modules.project_page.activeItemId()
-      if task_id?
-        APP.collections.Tasks.update task_id, {$set: {priority: 25}}
-        $(".jd-priority-value").text("25").fadeIn().fadeOut()
-
-    "click .tick-50": (e, tmpl) ->
-      task_id = APP.modules.project_page.activeItemId()
-      if task_id?
-        APP.collections.Tasks.update task_id, {$set: {priority: 50}}
-        $(".jd-priority-value").text("50").fadeIn().fadeOut()
-
-    "click .tick-75": (e, tmpl) ->
-      task_id = APP.modules.project_page.activeItemId()
-      if task_id?
-        APP.collections.Tasks.update task_id, {$set: {priority: 75}}
-        $(".jd-priority-value").text("75").fadeIn().fadeOut()
-
-    "click .tick-100": (e, tmpl) ->
-      task_id = APP.modules.project_page.activeItemId()
-      if task_id?
-        APP.collections.Tasks.update task_id, {$set: {priority: 100}}
-        $(".jd-priority-value").text("100").fadeIn().fadeOut()
+  Template.justdo_priority_slider.events
+    "click .tick": (e ,tpl) ->
+      if tpl.is_enabled()
+        $ui = $(e.target)
+        while not $ui.hasClass "tick"
+          $ui = $ui.parent() 
+        value = $ui.data "value"
+        tpl.setValue value
+        $("##{tpl._id} .jd-priority-value").text(value).fadeIn().fadeOut()
+  
+  Template.justdo_priority_slider.onDestroyed ->
+    delete tpl_instances[@_id]

@@ -299,21 +299,9 @@ APP.executeAfterAppLibCode ->
         key: env.FROALA_ACTIVATION_KEY
       });
 
-    $(".jd-priority-slider-ticket").slider
-      range: 'min'
-      value: 0
-      min: 0
-      max: 100
-      create: ->
-        $(".jd-priority-slider-handle")
-      slide: (event, ui) ->
-        $(".ui-slider-range").attr("style", "background: " + JustdoColorGradient.getColorRgbString(ui.value or 0) + " !important")
-        $(".jd-priority-value").text ui.value
-      start: (event, ui) ->
-        $(".jd-priority-value").fadeIn()
-      stop: (event, ui) ->
-        $(".jd-priority-value").fadeOut()
-        priority.set ui.value
+    priority_slider = Template.justdo_priority_slider.getInstance "ticket-entry-priority-slider"
+    priority_slider.onChange (value) ->
+      priority.set value
 
   Template.ticket_entry.onDestroyed ->
     tickets_queues_reactive_var.stop()
@@ -369,28 +357,3 @@ APP.executeAfterAppLibCode ->
 
     "keyup #ticket-title": (e) ->
       title.set($(e.target).val().trim())
-
-    "click .tick-0": (e, tmpl) ->
-        priority.set 0
-        $(".jd-priority-slider-ticket").slider "value", 0
-        $(".jd-priority-value").text("0").fadeIn().fadeOut()
-
-    "click .tick-25": (e, tmpl) ->
-        priority.set 25
-        $(".jd-priority-slider-ticket").slider "value", 25
-        $(".jd-priority-value").text("25").fadeIn().fadeOut()
-
-    "click .tick-50": (e, tmpl) ->
-        priority.set 50
-        $(".jd-priority-slider-ticket").slider "value", 50
-        $(".jd-priority-value").text("50").fadeIn().fadeOut()
-
-    "click .tick-75": (e, tmpl) ->
-        priority.set 75
-        $(".jd-priority-slider-ticket").slider "value", 75
-        $(".jd-priority-value").text("75").fadeIn().fadeOut()
-
-    "click .tick-100": (e, tmpl) ->
-        priority.set 100
-        $(".jd-priority-slider-ticket").slider "value", 100
-        $(".jd-priority-value").text("100").fadeIn().fadeOut()
