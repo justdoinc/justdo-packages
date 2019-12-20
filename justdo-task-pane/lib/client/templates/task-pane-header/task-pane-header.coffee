@@ -32,7 +32,7 @@ APP.executeAfterAppLibCode ->
     getMaxTaskPaneHeaderWidth: ->
       module.invalidateOnWireframeStructureUpdates()
 
-      if (calculatedTaskPaneWidth = $("#task-pane")?.attr("style").replace(/.*width: (\d+)px;.*/g, "$1"))?
+      if (calculatedTaskPaneWidth = $("#task-pane")?.attr("style")?.replace(/.*width: (\d+)px;.*/g, "$1"))?
         return calculatedTaskPaneWidth + "px"
 
       return "auto"
