@@ -28,7 +28,14 @@ APP.executeAfterAppLibCode ->
         return null
 
       return JustdoColorGradient.getColorRgbString(priority)
-      
+    
+    getMaxTaskPaneHeaderWidth: ->
+      module.invalidateOnWireframeStructureUpdates()
+
+      if (calculatedTaskPaneWidth = $("#task-pane")?.attr("style").replace(/.*width: (\d+)px;.*/g, "$1"))?
+        return calculatedTaskPaneWidth + "px"
+
+      return "auto"
 
   Template.task_pane_header.events
     "click .copy-to-clipboard": (e) ->

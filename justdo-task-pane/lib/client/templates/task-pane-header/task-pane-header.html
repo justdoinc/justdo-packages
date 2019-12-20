@@ -1,5 +1,5 @@
 <template name="task_pane_header">
-  <div class="task-pane-header {{#if $lte toolbar_sections_count 1}}no-tabs{{/if}}">
+  <div class="task-pane-header {{#if $lte toolbar_sections_count 1}}no-tabs{{/if}}" style="max-width: {{getMaxTaskPaneHeaderWidth}};">
 
     {{#with getPriorityColor}}
       <div class="task-pane-header-task-priority" style="background-color: {{this}}"></div>
