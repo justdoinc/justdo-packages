@@ -207,8 +207,17 @@ _.extend Projects.prototype,
         return
 
       isSubscribedToDailyEmail: ->
+        console.log "DAILY_EMAIL_DEBUG", 1, "Meteor.user()", Meteor.user()
+        console.log "DAILY_EMAIL_DEBUG", 2, "Meteor.user()?.justdo_projects", Meteor.user()?.justdo_projects
+        console.log "DAILY_EMAIL_DEBUG", 3, "Meteor.user()?.justdo_projects?.daily_email_projects_array", Meteor.user()?.justdo_projects?.daily_email_projects_array
+
         daily_email_projects_array =
           Meteor.user()?.justdo_projects?.daily_email_projects_array
+
+        console.log "DAILY_EMAIL_DEBUG", 4, "_.isArray(daily_email_projects_array)", _.isArray(daily_email_projects_array)
+        console.log "DAILY_EMAIL_DEBUG", 5, "@id in daily_email_projects_array", @id in daily_email_projects_array
+
+        console.log "DAILY_EMAIL_DEBUG", 6, "_.isArray(daily_email_projects_array) and @id in daily_email_projects_array", _.isArray(daily_email_projects_array) and @id in daily_email_projects_array
 
         if _.isArray(daily_email_projects_array) and @id in daily_email_projects_array
           return true
