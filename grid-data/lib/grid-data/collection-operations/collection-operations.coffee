@@ -49,6 +49,27 @@ _.extend GridData.prototype,
       else
         helpers.callCb cb, err, child_id, path + child_id + "/"
 
+  bulkAddChild: (path, childs_fields, cb) ->
+    # If cb provided, cb will be called with the following args when excution
+    # completed:
+    # cb(err, [[child_id, child_path]])
+
+    path = helpers.normalizePath(path)
+
+    Meteor.call @getCollectionMethodName("bulkAddChild"), path, childs_fields, (err, childs_ids) ->
+      if err?
+        helpers.callCb cb, err
+      else
+        results = []
+        for child_id in childs_ids
+          results.push([child_id, path + child_id + "/"])
+
+        helpers.callCb cb, err, results
+
+      return
+
+    return
+
   addSibling: (path, fields, cb) ->
     # If cb provided, cb will be called with the following args when excution
     # completed:
@@ -62,6 +83,28 @@ _.extend GridData.prototype,
       else
         helpers.callCb cb, err, sibling_id, helpers.getParentPath(path) + sibling_id + "/"
 
+  bulkAddSibling: (path, siblings_fields, cb) ->
+    # If cb provided, cb will be called with the following args when excution
+    # completed:
+    # cb(err, [[sibling_id, sibling_path]])
+
+    path = helpers.normalizePath(path)
+
+    Meteor.call @getCollectionMethodName("bulkAddSibling"), path, siblings_fields, (err, siblings_ids) ->
+      if err?
+        helpers.callCb cb, err
+      else
+        results = []
+
+        for sibling_id in siblings_ids
+          results.push([sibling_id, helpers.getParentPath(path) + sibling_id + "/"])
+
+        helpers.callCb cb, err, results 
+
+      return
+
+    return
+
   removeParent: (path, cb) ->
     # If cb provided, cb will be called with the following args when excution
     # completed:
@@ -69,6 +112,20 @@ _.extend GridData.prototype,
     path = helpers.normalizePath(path)
     Meteor.call @getCollectionMethodName("removeParent"), path, (err) ->
       helpers.callCb cb, err
+
+  bulkRemoveParents: (paths, cb) ->
+    # If cb provided, cb will be called with the following args when excution
+    # completed:
+    # cb(err)
+
+    paths = _.map paths, (path) -> helpers.normalizePath(path)
+
+    Meteor.call @getCollectionMethodName("bulkRemoveParents"), paths, (err) ->
+      helpers.callCb cb, err
+
+      return
+
+    return
 
   addParent: (item_id, new_parent, cb, usersDiffConfirmationCb) ->
     # Add item_id to the parent detailed in new_parent.

@@ -546,6 +546,16 @@ _.extend GridDataCom.prototype,
 
     return @_insertItem new_item
 
+  bulkAddChild: (path, childs_fields, perform_as) ->
+    check childs_fields, [Object]
+
+    results = []
+    # All the security measures are handled by @addChild
+    for child_fields in childs_fields
+      results.push(@addChild path, child_fields, perform_as)
+
+    return results
+
   addSibling: (path, fields = {}, perform_as) ->
     check(path, String)
     check(fields, Object)
@@ -585,6 +595,17 @@ _.extend GridDataCom.prototype,
     @collection.incrementChildsOrderGte parent_id, sibling_order, item
 
     return @_insertItem new_item
+
+  bulkAddSibling: (path, siblings_fields, perform_as) ->
+    check siblings_fields, [Object]
+
+    results = []
+
+    # All the security measures are handled by @addSibling
+    for sibling_fields in siblings_fields
+      results.push(@addSibling path, sibling_fields, perform_as)
+
+    return results
 
   removeParent: (path, perform_as) ->
     check(path, String)
@@ -631,6 +652,15 @@ _.extend GridDataCom.prototype,
 
     return
   
+  bulkRemoveParents: (paths, perform_as) ->
+    check paths, [String]
+
+    # All the security measures are handled by @removeParent
+    for path in paths
+      @removeParent path, perform_as
+
+    return
+
   addParent: (item_id, new_parent, perform_as) ->
     # new parent should be of the form:
     #

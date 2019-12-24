@@ -47,12 +47,21 @@ _.extend GridDataCom.prototype,
     addChild:
       perform_as_arg_position: 2
       unblock_method_invocation: false
+    bulkAddChild:
+      perform_as_arg_position: 2
+      unblock_method_invocation: true
     addSibling:
       perform_as_arg_position: 2
       unblock_method_invocation: false
+    bulkAddSibling:
+      perform_as_arg_position: 2
+      unblock_method_invocation: true
     removeParent:
       perform_as_arg_position: 1
       unblock_method_invocation: false
+    bulkRemoveParents:
+      perform_as_arg_position: 1
+      unblock_method_invocation: true
     addParent:
       perform_as_arg_position: 2
       unblock_method_invocation: false
