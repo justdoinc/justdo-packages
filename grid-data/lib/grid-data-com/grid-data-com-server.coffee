@@ -46,24 +46,33 @@ _.extend GridDataCom.prototype,
     # security issue.
     addChild:
       perform_as_arg_position: 2
+      unblock_method_invocation: false
     addSibling:
       perform_as_arg_position: 2
+      unblock_method_invocation: false
     removeParent:
       perform_as_arg_position: 1
+      unblock_method_invocation: false
     addParent:
       perform_as_arg_position: 2
+      unblock_method_invocation: false
     updateItem:
       # Note, we aren't yet allow the client to call this Meteor Method
       # as we don't consider it secure enough (update_op validations required).
       perform_as_arg_position: 2 
+      unblock_method_invocation: false
     movePath:
       perform_as_arg_position: 2
+      unblock_method_invocation: false
     sortChildren:
       perform_as_arg_position: 3
+      unblock_method_invocation: false
     bulkUpdate:
       perform_as_arg_position: 2
+      unblock_method_invocation: false
     getContexts:
       perform_as_arg_position: 2
+      unblock_method_invocation: false
 
   disabled_methods: ["updateItem"] 
 
@@ -575,6 +584,9 @@ _.extend GridDataCom.prototype,
           if args[method_def.perform_as_arg_position]?
             throw self._error "operation-blocked", "You are not allowed to set the argument in the #{method_def.perform_as_arg_position} position of this Meteor Method"
           args[method_def.perform_as_arg_position] = @userId
+
+          if method_def.unblock_method_invocation
+            @unblock()
 
           return self[method_name].apply(self, args)
 
