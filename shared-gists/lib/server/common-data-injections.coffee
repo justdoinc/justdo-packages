@@ -69,6 +69,8 @@ app_routes.middleware (req, res, next) ->
 Meteor.publish null, ->
   @added("JustdoSystem", "env", getExposedClientEnvVars())
 
+  @added("JustdoSystem", "net-if", {ips: JustdoHelpers.getNetworkInterfacesIps()})
+
   @ready()
 
   return
