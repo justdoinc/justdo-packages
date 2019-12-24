@@ -84,6 +84,7 @@ Package.onUse(function (api) {
 
   api.add_files("lib/server/app-domains.coffee", server);
   api.add_files("lib/server/ddp.coffee", server);
+  api.add_files("lib/server/network.coffee", server);
   api.add_files("lib/server/cpu.coffee", server);
 
   api.export("JustdoHelpers", both);
