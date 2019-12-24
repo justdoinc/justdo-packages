@@ -84,16 +84,16 @@
 
       <li id="register-project-for-daily-email" class="dropdown-item d-flex align-items-center px-1">
       {{#if isSubscribedToDailyEmail}}
-        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
-      {{else}}
         <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+      {{else}}
+        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
       {{/if}}
       Email daily updates for this JustDo</li>
       <li class="dropdown-item email-notifications d-flex align-items-center px-1">
       {{#if isSubscribedToEmailNotifications}}
-        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
-      {{else}}
         <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+      {{else}}
+        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
       {{/if}}
       Email ownership transfer notifications</li>
       {{#if showRolesAndGroupsManager}}
