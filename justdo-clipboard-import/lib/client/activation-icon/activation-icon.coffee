@@ -40,20 +40,22 @@ testDataAndImport = (modal_data, dates_format) ->
 
         # If Priority - check that the value is between 0 and 100
         if field_type == "Priority"
-          if not /^[0-9][0-9]?$|^100$/g.exec cell_val
-            JustdoSnackbar.show
-              text: "Invalid priority value in line #{line_number} (must be between 0 and 100). Import aborted."
-            return
-          task[column_id] = parseInt cell_val, 10
+          if cell_val.trim().length > 0
+            if not /^[0-9][0-9]?$|^100$/g.exec cell_val
+              JustdoSnackbar.show
+                text: "Invalid priority value in line #{line_number} (must be between 0 and 100). Import aborted."
+              return
+            task[column_id] = parseInt cell_val, 10
 
 
         # If we have a date field, check that the date is formatted properly, and transform to internal format
         if field_type in potential_date_columns
-          moment_date = moment.utc cell_val, dates_format
-          if not moment_date.isValid()
-            JustdoSnackbar.show
-              text: "Invalid date format in line #{line_number}. Import aborted."
-            return
+          if cell_val.trim().length > 0
+            moment_date = moment.utc cell_val, dates_format
+            if not moment_date.isValid()
+              JustdoSnackbar.show
+                text: "Invalid date format in line #{line_number}. Import aborted."
+              return
           task[column_id] = moment_date.format("YYYY-MM-DD")
 
     tasks.push task
