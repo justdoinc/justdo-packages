@@ -8,12 +8,15 @@ bindTargetToPaste = (tpl)->
 
       tr_reg_exp = /<\s*tr[^>]*>(.*?)<\s*\/\s*tr>/gs
       td_reg_exp = /<\s*td[^>]*>(.*?)<\s*\/\s*td>/gs
+      longest_row_length = 0
       rows = []
-
       while ((tr = tr_reg_exp.exec(data)) != null)
         cells = []
+        row_length = 0
         all_cells_are_empty = true
+        processing_column_number = 0
         while ((td = td_reg_exp.exec(tr[1])) != null)
+          processing_column_number += 1
           cell = td[1]
           cell = cell.replace /<br\/>/g, "\n"
           cell = cell.replace /&quot;/g , '"'
@@ -21,16 +24,23 @@ bindTargetToPaste = (tpl)->
           cells.push cell
           if cell.trim().length > 0
             all_cells_are_empty = false
+            row_length = processing_column_number
 
         if not all_cells_are_empty
           rows.push cells
+          if longest_row_length < row_length
+            longest_row_length = row_length
 
       #limit max number of rows to import
       if rows.length > 50
         JustdoSnackbar.show
           text: "Too many rows, you may copy up to 50 rows."
-
         return
+
+      #trim all rows according to the longest row. This handles cases where the entire row is copied to
+      #the clipboard
+      for row_number of rows
+        rows[row_number] = rows[row_number].slice 0, longest_row_length
 
       if rows.length > 0
         tpl.data.clipboard_data.set rows
