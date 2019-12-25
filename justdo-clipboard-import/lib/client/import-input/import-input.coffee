@@ -12,13 +12,18 @@ bindTargetToPaste = (tpl)->
 
       while ((tr = tr_reg_exp.exec(data)) != null)
         cells = []
+        all_cells_are_empty = true
         while ((td = td_reg_exp.exec(tr[1])) != null)
           cell = td[1]
           cell = cell.replace /<br\/>/g, "\n"
           cell = cell.replace /&quot;/g , '"'
           cell = cell.replace /&#39;/g, "'"
           cells.push cell
-        rows.push cells
+          if cell.trim().length > 0
+            all_cells_are_empty = false
+
+        if not all_cells_are_empty
+          rows.push cells
 
       #limit max number of rows to import
       if rows.length > 50
