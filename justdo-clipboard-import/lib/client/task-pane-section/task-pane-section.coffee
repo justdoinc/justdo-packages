@@ -1,1 +1,0 @@
-Template.task_pane_justdo_clipboard_import_task_pane_section_section.helpers {}

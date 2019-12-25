@@ -7,7 +7,6 @@ _.extend JustdoClipboardImport.prototype,
       return
 
     @registerConfigTemplate()
-    #  @registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
 
     return

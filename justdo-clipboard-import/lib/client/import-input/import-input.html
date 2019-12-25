@@ -1,0 +1,38 @@
+<template name="justdo_clipboard_import_input">
+  <div>
+    <textarea class="form-control justdo_clipboard_import_paste_target"
+              placeholder="Paste your data here."></textarea>
+  </div>
+
+  <div>
+    <table class="justdo_clipboard_import_table" border="1">
+      <tr>
+        <th>Subject</th>
+        {{#each numberOfAdditionalColumns}}
+          <th>
+            <div class="dropdown justdo_clipboard_import_input_selector">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="justdo_clipboard_import_input_{{this}}"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                select...
+              </button>
+              <div class="dropdown-menu" aria-labelledby="justdo_clipboard_import_input_{{this}}">
+                <li><a href="#" class="dropdown-item px-1" column_id="justdo_clipboard_import_input_{{this}}">Start Date</a></li>
+                <li><a href="#" class="dropdown-item px-1" column_id="justdo_clipboard_import_input_{{this}}">End Date</a></li>
+                <li><a href="#" class="dropdown-item px-1" column_id="justdo_clipboard_import_input_{{this}}">Due Date</a></li>
+                <li><a href="#" class="dropdown-item px-1" column_id="justdo_clipboard_import_input_{{this}}">Priority</a></li>
+              </div>
+            </div>
+          </th>
+        {{/each}}
+      </tr>
+      {{#each rows}}
+        <tr>
+          {{#each this}}
+            <td>{{this}}</td>
+          {{/each}}
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+
+</template>

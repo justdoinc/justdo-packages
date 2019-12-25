@@ -60,7 +60,6 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/both/init.coffee", both);
   api.addFiles("lib/both/static.coffee", both);
-  api.addFiles("lib/both/router.coffee", both);
   api.addFiles("lib/both/errors-types.coffee", both);
   api.addFiles("lib/both/api.coffee", both);
   api.addFiles("lib/both/schemas.coffee", both);
@@ -79,23 +78,13 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project-conf/project-conf.html", client);
   api.addFiles("lib/client/project-conf/project-conf.coffee", client);
 
-  api.addFiles("lib/client/plugin-page/plugin-page.sass", client);
-  api.addFiles("lib/client/plugin-page/plugin-page.html", client);
-  api.addFiles("lib/client/plugin-page/plugin-page.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/task-pane-section-registrar.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/task-pane-section.sass", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.html", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.coffee", client);
-
   api.addFiles("lib/client/activation-icon/activation-icon.sass", client);
   api.addFiles("lib/client/activation-icon/activation-icon.html", client);
   api.addFiles("lib/client/activation-icon/activation-icon.coffee", client);
 
-  api.addFiles("lib/client/import-dialog/import.sass", client);
-  api.addFiles("lib/client/import-dialog/import.html", client);
-  api.addFiles("lib/client/import-dialog/import.coffee", client);
+  api.addFiles("lib/client/import-input/import-input.sass", client);
+  api.addFiles("lib/client/import-input/import-input.html", client);
+  api.addFiles("lib/client/import-input/import-input.coffee", client);
 
 
   // Uncomment only in packages that integrate with the main applications

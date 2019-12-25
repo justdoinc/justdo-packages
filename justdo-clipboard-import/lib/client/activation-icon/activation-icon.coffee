@@ -7,7 +7,7 @@ column_name_to_colum_id =
   "Priority": "priority"
 
 testDataAndImport = (modal_data, dates_format) ->
-  #check that all columns have the same number of cells
+  # Check that all columns have the same number of cells
   cp_data = modal_data.clipboard_data.get()
   number_of_columns = cp_data[0].length
   project_id = JD.activeJustdo()._id
@@ -20,8 +20,8 @@ testDataAndImport = (modal_data, dates_format) ->
       JustdoSnackbar.show
         text: "Mismatch in number of columns on different rows. Import aborted."
       return
-    #check fields content such as dates format, priority range etc.
-    #row 0 is always the subject. let's make sure it's a simple string
+    # Check fields content such as dates format, priority range etc.
+    # Row 0 is always the subject. let's make sure it's a simple string
     try
       check row[0], String
     catch
@@ -35,10 +35,10 @@ testDataAndImport = (modal_data, dates_format) ->
     if number_of_columns > 1
       for column_num in [1..number_of_columns]
         cell_val = row[column_num]
-        field_type = modal_data.columns_selection["justdo_clipboard_import_dialog_#{column_num+1}"]
+        field_type = modal_data.columns_selection["justdo_clipboard_import_input_#{column_num + 1}"]
         column_id = column_name_to_colum_id[field_type]
 
-        # if Priority - check that the value is between 0 and 100
+        # If Priority - check that the value is between 0 and 100
         if field_type == "Priority"
           if not /^[0-9][0-9]?$|^100$/g.exec cell_val
             JustdoSnackbar.show
@@ -46,7 +46,7 @@ testDataAndImport = (modal_data, dates_format) ->
             return
           task[column_id] = parseInt cell_val
 
-        # if we have a date field, check that the date is formatted properly, and transform to internal format
+        # If we have a date field, check that the date is formatted properly, and transform to internal format
         if field_type in potential_date_columns
           moment_date = moment.utc cell_val, dates_format
           if not moment_date.isValid()
@@ -57,7 +57,6 @@ testDataAndImport = (modal_data, dates_format) ->
 
     tasks.push task
 
-  #todo - Daniel - please advise if needed xssguard or if enough to verify that subject is a string.
   gc = APP.modules.project_page.mainGridControl()
   gc._grid_data
   gc._grid_data.bulkAddChild modal_data.parent_task_id, tasks, (err, results) ->
@@ -66,7 +65,7 @@ testDataAndImport = (modal_data, dates_format) ->
         text: "#{err}. Import aborted."
         duration: 15000
       return
-    #no error
+    # No error
     JustdoSnackbar.show
       text: "#{results.length} task(s) imported."
       duration: 10000
@@ -88,10 +87,9 @@ testDataAndImport = (modal_data, dates_format) ->
 
 
 Template.justdo_clipboard_import_activation_icon.events
-
   "click .justdo-clipboard-import-activation": (e,tpl)->
 
-    #check to see if there is a task selected
+    # Check to see if there is a task selected
     if not JD.activePath()
       JustdoSnackbar.show
         text: "A task must be selected to import from the clipboard."
@@ -104,7 +102,7 @@ Template.justdo_clipboard_import_activation_icon.events
       parent_task_id: JD.activeItem()._id
 
     message_template =
-      JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_dialog, modal_data)
+      JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)
 
     bootbox.dialog
       title: "Import Clipboard Data"
@@ -136,18 +134,17 @@ Template.justdo_clipboard_import_activation_icon.events
             if cp_data.length == 0
               return true
             number_of_columns = cp_data[0].length
-            #this should not happen, but just in case
+            # This should not happen, but just in case
             if number_of_columns == 0
               return true
 
-            #check that all columns are selected and return false if not the case
+            # Check that all columns are selected and return false if not the case
             if Object.keys(modal_data.columns_selection).length < (number_of_columns - 1)
               JustdoSnackbar.show
                 text: "Please select all columns fields."
               return false
 
-            #manage dates - ask for input format
-
+            # Manage dates - ask for input format
             date_column_found = false
             for column_id, column_name of modal_data.columns_selection
               if column_name in potential_date_columns

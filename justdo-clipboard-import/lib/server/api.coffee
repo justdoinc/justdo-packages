@@ -25,7 +25,7 @@ _.extend JustdoClipboardImport.prototype,
 
   performInstallProcedures: (project_doc, user_id) ->
     # Called when plugin installed for project project_doc._id
-    console.log "Plugin #{JustdoFormulaFields.project_custom_feature_id} installed on project #{project_doc._id}"
+    # console.log "Plugin #{JustdoFormulaFields.project_custom_feature_id} installed on project #{project_doc._id}"
 
     return
 
@@ -34,6 +34,6 @@ _.extend JustdoClipboardImport.prototype,
 
     # Note, isn't called on project removal
 
-    console.log "Plugin #{JustdoFormulaFields.project_custom_feature_id} removed from project #{project_doc._id}"
+    # console.log "Plugin #{JustdoFormulaFields.project_custom_feature_id} removed from project #{project_doc._id}"
 
     return
