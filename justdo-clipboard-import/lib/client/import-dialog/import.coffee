@@ -3,9 +3,6 @@ bindTargetToPaste = (tpl)->
     e.stopPropagation()
     e.preventDefault()
     cd = e.originalEvent.clipboardData
-    #    console.log(cd.types)
-    #    console.log(">>> plain "  + cd.getData("text/plain"))
-    #    console.log(">>> html  "  + cd.getData("text/html"))
 
     if ("text/html" in cd.types)
       data = cd.getData("text/html")
@@ -26,15 +23,16 @@ bindTargetToPaste = (tpl)->
       if rows.length > 50
         JustdoSnackbar.show
           text: "Too many rows, you may copy up to 50 rows."
-          actionText: "Close"
-          duration: 10000
-          onActionClick: =>
-            JustdoSnackbar.close()
-            return
         return
 
-      tpl.data.clipboard_data.set rows
-      tpl.data.dialog_state.set "has_data"
+      if rows.length > 0
+        tpl.data.clipboard_data.set rows
+        tpl.data.dialog_state.set "has_data"
+        $(".justdo-clipboard-import-main-button").html("Import")
+      else
+        JustdoSnackbar.show
+          text: "Couldn't find tabular information in the clipboard."
+
     return
   return
 
@@ -61,21 +59,7 @@ Template.justdo_clipboard_import_dialog.onCreated ->
     return
   return
 
-
-Template.justdo_clipboard_import_dialog.onRendered ->
-
-  self = @
-
-
 Template.justdo_clipboard_import_dialog.helpers
-#  showDropTarget: ->
-#    debugger
-#    if ("wait_for_paste" == Template.instance().data.dialog_state.get())
-#      return
-#    return "style=\"display: none\""
-
-#  has_data: -> return ("has_data" == Template.instance().data.dialog_state.get())
-
   rows: ->
     if not ("has_data" == Template.instance().data.dialog_state.get())
       return []
@@ -86,18 +70,16 @@ Template.justdo_clipboard_import_dialog.helpers
       return []
     return [2..Template.instance().data.clipboard_data.get()[0].length]
 
-
-
-
 Template.justdo_clipboard_import_dialog.events
   "keyup .justdo_clipboard_import_paste_target": (e, tpl)->
     $(".justdo_clipboard_import_paste_target").val("");
     return false
 
-  "click .justdo_clipboard_import_dialog_header_selector a": (e) ->
+  "click .justdo_clipboard_import_dialog_header_selector a": (e, tpl) ->
     field_name = $(e.currentTarget).text()
     col_header_id = $(e.currentTarget)[0].getAttribute("column_id")
     $("##{col_header_id}").text(field_name)
+    tpl.data.columns_selection[col_header_id] = field_name
     return
 
 
