@@ -104,7 +104,7 @@ Template.justdo_clipboard_import_activation_icon.events
     message_template =
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)
 
-    bootbox.dialog
+    dialog = bootbox.dialog
       title: "Import Clipboard Data"
       message: message_template.node
       animate: true
@@ -177,4 +177,8 @@ Template.justdo_clipboard_import_activation_icon.events
               testDataAndImport modal_data
 
             return true
+
+    dialog.on 'shown.bs.modal', (e) ->
+      $(".justdo_clipboard_import_paste_target").focus()
+      return
     return
