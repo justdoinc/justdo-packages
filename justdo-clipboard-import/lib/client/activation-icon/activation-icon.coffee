@@ -44,7 +44,8 @@ testDataAndImport = (modal_data, dates_format) ->
             JustdoSnackbar.show
               text: "Invalid priority value in line #{line_number} (must be between 0 and 100). Import aborted."
             return
-          task[column_id] = parseInt cell_val
+          task[column_id] = parseInt cell_val, 10
+
 
         # If we have a date field, check that the date is formatted properly, and transform to internal format
         if field_type in potential_date_columns
@@ -58,7 +59,6 @@ testDataAndImport = (modal_data, dates_format) ->
     tasks.push task
 
   gc = APP.modules.project_page.mainGridControl()
-  gc._grid_data
   gc._grid_data.bulkAddChild modal_data.parent_task_id, tasks, (err, results) ->
     if err
       JustdoSnackbar.show
