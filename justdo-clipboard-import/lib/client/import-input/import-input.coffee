@@ -21,6 +21,8 @@ bindTargetToPaste = (tpl)->
           cell = cell.replace /<br\/>/g, "\n"
           cell = cell.replace /&quot;/g , '"'
           cell = cell.replace /&#39;/g, "'"
+          cell = cell.replace /&lt;/g, "<"
+          cell = cell.replace /&gt;/g, ">"
           cells.push cell
           if cell.trim().length > 0
             all_cells_are_empty = false
