@@ -88,9 +88,8 @@ testDataAndImport = (modal_data, dates_format) ->
 
 Template.justdo_clipboard_import_activation_icon.events
   "click .justdo-clipboard-import-activation": (e,tpl)->
-
     # Check to see if there is a task selected
-    if not JD.activePath()
+    if not (JD.activePath() and JD.activeItem()._id?)
       JustdoSnackbar.show
         text: "A task must be selected to import from the clipboard."
       return
