@@ -1,0 +1,2 @@
+Meteor.methods
+  echo: -> "echo"
