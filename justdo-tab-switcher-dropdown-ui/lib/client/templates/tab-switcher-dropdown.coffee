@@ -39,4 +39,7 @@ APP.executeAfterAppLibCode ->
 
       gcm.activateTabWithSectionsState(tab_id, sections_state)
 
+      # Ensure the dropdown is closed.
+      $(e.target).closest(".dropdown-menu").removeClass("show").closest(".dropdown").removeClass("show")
+
       return
