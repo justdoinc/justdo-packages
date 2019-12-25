@@ -3,12 +3,11 @@ bindTargetToPaste = (tpl)->
     e.stopPropagation()
     e.preventDefault()
     clipboard_data = e.originalEvent.clipboardData
-
     if ("text/html" in clipboard_data.types)
       data = clipboard_data.getData("text/html")
 
-      tr_reg_exp = /<\s*tr[^>]*>(.*?)<\s*\/\s*tr>/g
-      td_reg_exp = /<\s*td[^>]*>(.*?)<\s*\/\s*td>/g
+      tr_reg_exp = /<\s*tr[^>]*>(.*?)<\s*\/\s*tr>/gs
+      td_reg_exp = /<\s*td[^>]*>(.*?)<\s*\/\s*td>/gs
       rows = []
 
       while ((tr = tr_reg_exp.exec(data)) != null)
