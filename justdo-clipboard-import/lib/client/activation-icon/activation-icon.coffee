@@ -156,21 +156,21 @@ Template.justdo_clipboard_import_activation_icon.events
                 title: "Please select dates format"
                 animate: true
                 className: "bootbox-new-design"
-                inputType: 'select'
+                inputType: "select"
                 inputOptions: [
-                    text: 'YYYY-MM-DD'
-                    value: 'YYYY-MM-DD'
+                    text: "YYYY-MM-DD"
+                    value: "YYYY-MM-DD"
                   ,
-                    text: 'YYYY/MM/DD'
-                    value: 'YYYY/MM/DD'
+                    text: "YYYY/MM/DD"
+                    value: "YYYY/MM/DD"
                   ,
-                    text: 'DD/MM/YYYY'
-                    value: 'DD/MM/YYYY'
+                    text: "DD/MM/YYYY"
+                    value: "DD/MM/YYYY"
                   ,
-                  text: 'MM/DD/YYYY'
-                  value: 'MM/DD/YYYY'
+                  text: "MM/DD/YYYY"
+                  value: "MM/DD/YYYY"
                 ]
-                callback: (date_format)->
+                callback: (date_format) ->
                   testDataAndImport modal_data, date_format
                   return
 
@@ -179,7 +179,7 @@ Template.justdo_clipboard_import_activation_icon.events
 
             return true
 
-    dialog.on 'shown.bs.modal', (e) ->
+    dialog.on "shown.bs.modal", (e) ->
       $(".justdo-clipboard-import-paste-target").focus()
       return
     return
