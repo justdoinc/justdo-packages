@@ -123,7 +123,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
     tasks.push task
 
   gc = APP.modules.project_page.mainGridControl()
-  gc._grid_data.bulkAddChild modal_data.parent_task_id, tasks, (err, results) ->
+  gc._grid_data.bulkAddChild "/" + modal_data.parent_task_id + "/", tasks, (err, results) ->
     if err?
       JustdoSnackbar.show
         text: "#{err}. Import aborted."
@@ -139,7 +139,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
       onActionClick: =>
         paths = []
         for result in results
-          paths.push "/" + result[1]
+          paths.push result[1]
         gc._grid_data.bulkRemoveParents paths, (err)->
           if err
             JustdoSnackbar.show
