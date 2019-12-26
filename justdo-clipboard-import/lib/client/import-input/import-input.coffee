@@ -58,6 +58,8 @@ bindTargetToPaste = (tpl)->
 Template.justdo_clipboard_import_input.onCreated ->
   self = @
 
+  @getAvailableFieldTypes = @data.getAvailableFieldTypes
+
   Meteor.defer ->
     self.data.dialog_state.set "wait_for_paste"
 
@@ -97,6 +99,9 @@ Template.justdo_clipboard_import_input.helpers
 
     return [2..Template.instance().data.clipboard_data.get()[0].length]
 
+  getAvailableFieldTypesArray: ->
+    return Template.instance().getAvailableFieldTypes()[1]
+
 Template.justdo_clipboard_import_input.events
   "keyup .justdo-clipboard-import-paste-target": (e, tpl)->
     $(".justdo-clipboard-import-paste-target").val("")
@@ -104,10 +109,14 @@ Template.justdo_clipboard_import_input.events
     return false
 
   "click .justdo-clipboard-import-input-selector a": (e, tpl) ->
-    field_name = $(e.currentTarget).text()
-    col_header_id = $(e.currentTarget)[0].getAttribute("column-id")
-    $("##{col_header_id}").text(field_name)
-    tpl.data.columns_selection[col_header_id] = field_name
+    e.preventDefault()
+
+    field_id = $(e.currentTarget)[0].getAttribute("field-id")
+    field_label = Template.instance().getAvailableFieldTypes()?[0]?[field_id]?.label
+
+    $(e.currentTarget).closest(".justdo-clipboard-import-input-selector").find("button")
+      .text(field_label)
+      .val(field_id)
 
     return
 

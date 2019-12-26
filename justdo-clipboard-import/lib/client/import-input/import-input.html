@@ -7,15 +7,14 @@
           {{#each numberOfAdditionalColumns}}
             <th>
               <div class="dropdown justdo-clipboard-import-input-selector">
-                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="justdo-clipboard-import-input-{{this}}"
+                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Select...
                 </button>
                 <div class="dropdown-menu" aria-labelledby="justdo-clipboard-import-input-{{this}}">
-                  <li><a href="#" class="dropdown-item px-1 small" column-id="justdo-clipboard-import-input-{{this}}">Start Date</a></li>
-                  <li><a href="#" class="dropdown-item px-1 small" column-id="justdo-clipboard-import-input-{{this}}">End Date</a></li>
-                  <li><a href="#" class="dropdown-item px-1 small" column-id="justdo-clipboard-import-input-{{this}}">Due Date</a></li>
-                  <li><a href="#" class="dropdown-item px-1 small" column-id="justdo-clipboard-import-input-{{this}}">Priority</a></li>
+                  {{#each getAvailableFieldTypesArray}}
+                    <li><a class="dropdown-item px-1 small" field-id="{{_id}}">{{label}}</a></li>
+                  {{/each}}
                 </div>
               </div>
             </th>

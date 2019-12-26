@@ -1,12 +1,49 @@
-potential_date_columns = ["Start Date", "End Date", "Due Date"]
+# The order below will also serve as the ordering in the dropdown
+supported_fields_ids = [
+  "start_date"
+  "end_date"
+  "due_date"
+  "priority"
+]
 
-column_name_to_colum_id =
-  "Start Date": "start_date"
-  "End Date": "end_date"
-  "Due Date": "due_date"
-  "Priority": "priority"
+isDateFieldDef = (field_def) ->
+  return field_def.grid_column_formatter == "unicodeDateFormatter"
 
-testDataAndImport = (modal_data, dates_format) ->
+getAvailableFieldTypes = ->
+  # Reactive resource
+  #
+  # Returns an array whose
+  #
+  #  * First item is an object with the schema definition for the
+  #  supported_fields_ids available in the current grid.
+  #  * Second item is an array of schema definitions + _id field with the
+  #  field id. Ordered according to supported_fields_ids order.
+  gc = APP.modules.project_page.mainGridControl()
+
+  supported_fields_definitions_object =
+    _.pick gc.getSchemaExtendedWithCustomFields(), supported_fields_ids
+
+  supported_fields_definitions_array =
+    _.map supported_fields_ids, (field_id) ->
+      return _.extend {}, supported_fields_definitions_object[field_id], {_id: field_id}
+
+  return [supported_fields_definitions_object, supported_fields_definitions_array]
+
+getSelectedColumnsDefinitions = ->
+  available_field_types = getAvailableFieldTypes()
+
+  selected_columns_definitions = []
+
+  $(".justdo-clipboard-import-input-selector button[value]").each ->
+    field_id = $(@).val()
+
+    selected_columns_definitions.push(_.extend {}, available_field_types?[0]?[field_id], {_id: field_id})
+
+    return
+
+  return selected_columns_definitions
+
+testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
   # Check that all columns have the same number of cells
   cp_data = modal_data.clipboard_data.get()
   number_of_columns = cp_data[0].length
@@ -33,30 +70,40 @@ testDataAndImport = (modal_data, dates_format) ->
     task.project_id = project_id
 
     if number_of_columns > 1
-      for column_num in [1..number_of_columns]
-        cell_val = row[column_num]
-        field_type = modal_data.columns_selection["justdo-clipboard-import-input-#{column_num + 1}"]
-        column_id = column_name_to_colum_id[field_type]
+      for column_num in [1..(number_of_columns - 1)]
+        cell_val = row[column_num].trim()
+        field_def = selected_columns_definitions[column_num - 1]
+        field_id = field_def._id
 
-        # If Priority - check that the value is between 0 and 100
-        if field_type == "Priority"
-          if cell_val.trim().length > 0
-            if not /^[0-9][0-9]?$|^100$/g.exec cell_val
+        if cell_val.length > 0
+          if field_def.type is Number
+            cell_val = parseInt(cell_val.trim(), 10)
+
+            # Check valid range
+            out_of_range = false
+            if field_def.min?
+              if cell_val < field_def.min
+                out_of_range = true
+
+            if field_def.max?
+              if cell_val > field_def.max
+                out_of_range = true
+
+            if out_of_range
               JustdoSnackbar.show
-                text: "Invalid priority value in line #{line_number} (must be between 0 and 100). Import aborted."
+                text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} (must be between #{field_def.min} and #{field_def.max}). Import aborted."
               return
-            task[column_id] = parseInt cell_val, 10
 
+            task[field_id] = cell_val
 
-        # If we have a date field, check that the date is formatted properly, and transform to internal format
-        if field_type in potential_date_columns
-          if cell_val.trim().length > 0
+          # If we have a date field, check that the date is formatted properly, and transform to internal format
+          if isDateFieldDef(field_def)
             moment_date = moment.utc cell_val, dates_format
             if not moment_date.isValid()
               JustdoSnackbar.show
                 text: "Invalid date format in line #{line_number}. Import aborted."
               return
-          task[column_id] = moment_date.format("YYYY-MM-DD")
+            task[field_id] = moment_date.format("YYYY-MM-DD")
 
     tasks.push task
 
@@ -99,8 +146,8 @@ Template.justdo_clipboard_import_activation_icon.events
     modal_data =
       dialog_state: new ReactiveVar ""
       clipboard_data: new ReactiveVar []
-      columns_selection: {}
       parent_task_id: JD.activeItem()._id
+      getAvailableFieldTypes: getAvailableFieldTypes
 
     message_template =
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)
@@ -123,7 +170,6 @@ Template.justdo_clipboard_import_activation_icon.events
           callback: =>
             modal_data.dialog_state.set "wait_for_paste"
             modal_data.clipboard_data.set []
-            modal_data.columns_selection = {}
             $(".justdo-clipboard-import-main-button").html("Cancel")
 
             Meteor.defer ->
@@ -143,16 +189,18 @@ Template.justdo_clipboard_import_activation_icon.events
             if number_of_columns == 0
               return true
 
+            selected_columns_definitions = getSelectedColumnsDefinitions()
+
             # Check that all columns are selected and return false if not the case
-            if Object.keys(modal_data.columns_selection).length < (number_of_columns - 1)
+            if selected_columns_definitions.length < (number_of_columns - 1)
               JustdoSnackbar.show
                 text: "Please select all columns fields."
               return false
 
             # Manage dates - ask for input format
             date_column_found = false
-            for column_id, column_name of modal_data.columns_selection
-              if column_name in potential_date_columns
+            for column_def in selected_columns_definitions
+              if isDateFieldDef(column_def)
                 date_column_found = true
                 break
             if date_column_found
@@ -175,11 +223,11 @@ Template.justdo_clipboard_import_activation_icon.events
                   value: "MM/DD/YYYY"
                 ]
                 callback: (date_format) ->
-                  testDataAndImport modal_data, date_format
+                  testDataAndImport modal_data, selected_columns_definitions, date_format
                   return
 
             else
-              testDataAndImport modal_data
+              testDataAndImport modal_data, selected_columns_definitions
 
             return true
 
