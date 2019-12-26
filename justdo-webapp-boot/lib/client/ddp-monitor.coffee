@@ -14,7 +14,7 @@ setTimeout ->
   reportDDPMethodResultMalfunctionIssue = _.once ->
     console.error "DDP MONITOR: DDP Method Result Malfunction"
 
-    APP.justdo_analytics?.JAReportClientSideError("ddp-method-result-failure", JSON.stringify({"net-if-ips": APP.collections.JustdoSystem?.findOne("net-if")?.ips}))
+    APP.justdo_analytics?.JAReportClientSideError("ddp-method-result-failure", JSON.stringify({"net-if": APP.collections.JustdoSystem?.findOne("net-if")}))
 
     return
 
