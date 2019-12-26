@@ -35,7 +35,7 @@ testDataAndImport = (modal_data, dates_format) ->
     if number_of_columns > 1
       for column_num in [1..number_of_columns]
         cell_val = row[column_num]
-        field_type = modal_data.columns_selection["justdo_clipboard_import_input_#{column_num + 1}"]
+        field_type = modal_data.columns_selection["justdo-clipboard-import-input-#{column_num + 1}"]
         column_id = column_name_to_colum_id[field_type]
 
         # If Priority - check that the value is between 0 and 100
@@ -180,6 +180,6 @@ Template.justdo_clipboard_import_activation_icon.events
             return true
 
     dialog.on 'shown.bs.modal', (e) ->
-      $(".justdo_clipboard_import_paste_target").focus()
+      $(".justdo-clipboard-import-paste-target").focus()
       return
     return

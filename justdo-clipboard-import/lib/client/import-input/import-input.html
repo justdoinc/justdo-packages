@@ -1,25 +1,25 @@
 <template name="justdo_clipboard_import_input">
   <div>
-    <textarea class="form-control justdo_clipboard_import_paste_target"
+    <textarea class="form-control justdo-clipboard-import-paste-target"
               placeholder="Paste your data here."></textarea>
   </div>
 
   <div>
-    <table class="justdo_clipboard_import_table" border="1">
+    <table class="justdo-clipboard-import-table" border="1">
       <tr>
         <th class="p-1">Subject</th>
         {{#each numberOfAdditionalColumns}}
-          <th class="p-1">
-            <div class="dropdown justdo_clipboard_import_input_selector">
-              <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="justdo_clipboard_import_input_{{this}}"
+          <th>
+            <div class="dropdown justdo-clipboard-import-input-selector">
+              <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="justdo-clipboard-import-input-{{this}}"
                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Select...
               </button>
-              <div class="dropdown-menu" aria-labelledby="justdo_clipboard_import_input_{{this}}">
-                <li><a href="#" class="dropdown-item px-1 small" column_id="justdo_clipboard_import_input_{{this}}">Start Date</a></li>
-                <li><a href="#" class="dropdown-item px-1 small" column_id="justdo_clipboard_import_input_{{this}}">End Date</a></li>
-                <li><a href="#" class="dropdown-item px-1 small" column_id="justdo_clipboard_import_input_{{this}}">Due Date</a></li>
-                <li><a href="#" class="dropdown-item px-1 small" column_id="justdo_clipboard_import_input_{{this}}">Priority</a></li>
+              <div class="dropdown-menu" aria-labelledby="justdo-clipboard-import-input-{{this}}">
+                <li><a href="#" class="dropdown-item px-1 small" column-id="justdo-clipboard-import-input-{{this}}">Start Date</a></li>
+                <li><a href="#" class="dropdown-item px-1 small" column-id="justdo-clipboard-import-input-{{this}}">End Date</a></li>
+                <li><a href="#" class="dropdown-item px-1 small" column-id="justdo-clipboard-import-input-{{this}}">Due Date</a></li>
+                <li><a href="#" class="dropdown-item px-1 small" column-id="justdo-clipboard-import-input-{{this}}">Priority</a></li>
               </div>
             </div>
           </th>

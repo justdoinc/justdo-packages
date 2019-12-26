@@ -1,5 +1,5 @@
 bindTargetToPaste = (tpl)->
-  $(".justdo_clipboard_import_paste_target").bind "paste", (e) ->
+  $(".justdo-clipboard-import-paste-target").bind "paste", (e) ->
     e.stopPropagation()
     e.preventDefault()
     clipboard_data = e.originalEvent.clipboardData
@@ -67,8 +67,8 @@ Template.justdo_clipboard_import_input.onCreated ->
     state = Template.instance().data.dialog_state.get()
 
     if state == "wait_for_paste"
-      $(".justdo_clipboard_import_paste_target").css("display", "")
-      $(".justdo_clipboard_import_table").css("display", "none")
+      $(".justdo-clipboard-import-paste-target").css("display", "")
+      $(".justdo-clipboard-import-table").css("display", "none")
 
       Meteor.defer ->
         bindTargetToPaste self
@@ -76,11 +76,11 @@ Template.justdo_clipboard_import_input.onCreated ->
         return
 
     else if state == "has_data"
-      $(".justdo_clipboard_import_paste_target").css("display", "none")
-      $(".justdo_clipboard_import_table").css("display", "")
+      $(".justdo-clipboard-import-paste-target").css("display", "none")
+      $(".justdo-clipboard-import-table").css("display", "")
     else
-      $(".justdo_clipboard_import_paste_target").css("display", "none")
-      $(".justdo_clipboard_import_table").css("display", "none")
+      $(".justdo-clipboard-import-paste-target").css("display", "none")
+      $(".justdo-clipboard-import-table").css("display", "none")
     return
   return
 
@@ -98,14 +98,14 @@ Template.justdo_clipboard_import_input.helpers
     return [2..Template.instance().data.clipboard_data.get()[0].length]
 
 Template.justdo_clipboard_import_input.events
-  "keyup .justdo_clipboard_import_paste_target": (e, tpl)->
-    $(".justdo_clipboard_import_paste_target").val("")
+  "keyup .justdo-clipboard-import-paste-target": (e, tpl)->
+    $(".justdo-clipboard-import-paste-target").val("")
 
     return false
 
-  "click .justdo_clipboard_import_input_selector a": (e, tpl) ->
+  "click .justdo-clipboard-import-input-selector a": (e, tpl) ->
     field_name = $(e.currentTarget).text()
-    col_header_id = $(e.currentTarget)[0].getAttribute("column_id")
+    col_header_id = $(e.currentTarget)[0].getAttribute("column-id")
     $("##{col_header_id}").text(field_name)
     tpl.data.columns_selection[col_header_id] = field_name
 
