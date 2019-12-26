@@ -125,6 +125,10 @@ Template.justdo_clipboard_import_activation_icon.events
             modal_data.clipboard_data.set []
             modal_data.columns_selection = {}
             $(".justdo-clipboard-import-main-button").html("Cancel")
+
+            Meteor.defer ->
+              $(".justdo-clipboard-import-paste-target").focus()
+
             return false
 
         Import:
