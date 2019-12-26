@@ -119,7 +119,7 @@ Template.justdo_clipboard_import_activation_icon.events
       buttons:
         Reset:
           label: "Reset"
-          className: "btn-primary justdo-import-clipboard-data-reset-button"
+          className: "btn-default justdo-import-clipboard-data-reset-button"
           callback: =>
             modal_data.dialog_state.set "wait_for_paste"
             modal_data.clipboard_data.set []
