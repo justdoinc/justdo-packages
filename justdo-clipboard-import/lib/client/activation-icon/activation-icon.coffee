@@ -33,7 +33,11 @@ getAvailableFieldTypes = ->
 
   supported_fields_definitions_array =
     _.map supported_fields_ids, (field_id) ->
-      return _.extend {}, supported_fields_definitions_object[field_id], {_id: field_id}
+      if (field_def = supported_fields_definitions_object[field_id])?
+        return _.extend {}, field_def, {_id: field_id}
+      return undefined
+
+  supported_fields_definitions_array = _.filter(supported_fields_definitions_array)
 
   return [supported_fields_definitions_object, supported_fields_definitions_array]
 
