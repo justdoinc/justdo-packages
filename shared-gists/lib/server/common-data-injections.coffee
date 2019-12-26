@@ -69,7 +69,7 @@ app_routes.middleware (req, res, next) ->
 Meteor.publish null, ->
   @added("JustdoSystem", "env", getExposedClientEnvVars())
 
-  @added("JustdoSystem", "net-if", {ips: JustdoHelpers.getNetworkInterfacesIps()})
+  @added("JustdoSystem", "net-if", {ips: JustdoHelpers.getNetworkInterfacesIps(), "x-forwarded-for": @connection.httpHeaders["x-forwarded-for"], "conn-id": @connection.id})
 
   @ready()
 
