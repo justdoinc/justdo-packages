@@ -226,6 +226,10 @@ Template.justdo_clipboard_import_activation_icon.events
                 inputOptions: _.map(getAllowedDateFormats(), (format) -> {text: format, value: format})
                 value: getDefaultDateFormat()
                 callback: (date_format) ->
+                  if not date_format?
+                    # The user clicked the X button to Cancel the operation.
+                    return
+
                   testDataAndImport modal_data, selected_columns_definitions, date_format
 
                   return
