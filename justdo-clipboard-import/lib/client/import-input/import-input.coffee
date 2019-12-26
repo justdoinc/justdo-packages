@@ -18,7 +18,7 @@ bindTargetToPaste = (tpl)->
         while ((td = td_reg_exp.exec(tr[1])) != null)
           processing_column_number += 1
           cell = td[1]
-          cell = cell.replace /<br\/>/g, "\n"
+          cell = cell.replace /<br\/?>/g, "\n"
           cell = cell.replace /&quot;/g , '"'
           cell = cell.replace /&#39;/g, "'"
           cell = cell.replace /&lt;/g, "<"
