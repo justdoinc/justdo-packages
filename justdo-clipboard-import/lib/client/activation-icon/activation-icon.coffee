@@ -6,6 +6,14 @@ supported_fields_ids = [
   "priority"
 ]
 
+fallback_date_format = "YYYY-MM-DD"
+
+getAllowedDateFormats = ->
+  return Meteor.users.simpleSchema()?.schema()?["profile.date_format"]?.allowedValues or [fallback_date_format]
+
+getDefaultDateFormat = ->
+  return Meteor.user()?.profile?.date_format or Meteor.users.simpleSchema()?.schema()?["profile.date_format"]?.defaultValue or fallback_date_format
+
 isDateFieldDef = (field_def) ->
   return field_def.grid_column_formatter == "unicodeDateFormatter"
 
@@ -215,22 +223,11 @@ Template.justdo_clipboard_import_activation_icon.events
                 animate: true
                 className: "bootbox-new-design"
                 inputType: "select"
-                inputOptions: [
-                    text: "YYYY-MM-DD"
-                    value: "YYYY-MM-DD"
-                  ,
-                    text: "YYYY/MM/DD"
-                    value: "YYYY/MM/DD"
-                  ,
-                    text: "DD/MM/YYYY"
-                    value: "DD/MM/YYYY"
-                  ,
-                  text: "MM/DD/YYYY"
-                  value: "MM/DD/YYYY"
-                ]
+                inputOptions: _.map(getAllowedDateFormats(), (format) -> {text: format, value: format})
+                value: getDefaultDateFormat()
                 callback: (date_format) ->
                   testDataAndImport modal_data, selected_columns_definitions, date_format
-                  
+
                   return
 
             else
