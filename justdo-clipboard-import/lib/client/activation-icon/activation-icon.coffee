@@ -56,6 +56,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
     if row.length != number_of_columns
       JustdoSnackbar.show
         text: "Mismatch in number of columns on different rows. Import aborted."
+
       return
     # Check fields content such as dates format, priority range etc.
     # Row 0 is always the subject. let's make sure it's a simple string
@@ -64,6 +65,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
     catch
       JustdoSnackbar.show
         text: "Invalid Subject format in #{line_number}. Import aborted."
+
       return
 
     task.title = row[0]
@@ -92,6 +94,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
             if out_of_range
               JustdoSnackbar.show
                 text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} (must be between #{field_def.min} and #{field_def.max}). Import aborted."
+
               return
 
             task[field_id] = cell_val
@@ -109,11 +112,13 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
 
   gc = APP.modules.project_page.mainGridControl()
   gc._grid_data.bulkAddChild modal_data.parent_task_id, tasks, (err, results) ->
-    if err
+    if err?
       JustdoSnackbar.show
         text: "#{err}. Import aborted."
         duration: 15000
+
       return
+
     # No error
     JustdoSnackbar.show
       text: "#{results.length} task(s) imported."
@@ -129,6 +134,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
               text: "#{err}."
               duration: 15000
           return
+
         JustdoSnackbar.close()
         return
 
@@ -136,7 +142,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
 
 
 Template.justdo_clipboard_import_activation_icon.events
-  "click .justdo-clipboard-import-activation": (e,tpl)->
+  "click .justdo-clipboard-import-activation": (e, tpl)->
     # Check to see if there is a task selected
     if not (JD.activePath() and JD.activeItem()._id?)
       JustdoSnackbar.show
@@ -224,6 +230,7 @@ Template.justdo_clipboard_import_activation_icon.events
                 ]
                 callback: (date_format) ->
                   testDataAndImport modal_data, selected_columns_definitions, date_format
+                  
                   return
 
             else
