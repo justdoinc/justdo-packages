@@ -171,7 +171,7 @@ Template.justdo_clipboard_import_activation_icon.events
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)
 
     dialog = bootbox.dialog
-      title: "Import Clipboard Data"
+      title: "Import Spreadsheet Data"
       message: message_template.node
       animate: true
       className: "bootbox-new-design"

@@ -1,7 +1,7 @@
 _.extend JustdoClipboardImport,
   project_custom_feature_id: "justdo_clipboard_import" # Use underscores
 
-  plugin_human_readable_name: "Clipboard Import"
+  plugin_human_readable_name: "Spreadsheet Import"
 
   task_pane_tab_label: "justdo-clipboard-import"
 
