@@ -16,7 +16,7 @@ APP.executeAfterAppLibCode ->
     @_onChangeCallbacks = []
     @_is_enabled = true
 
-    @setValue = (value) =>
+    @setValue = (value, trigger_callbacks = true) =>
       if (not value?) or @_value == value
         return
 
@@ -25,8 +25,9 @@ APP.executeAfterAppLibCode ->
         $("##{@_id} .jd-priority-slider").slider "value", value
         $("##{@_id} .jd-priority-slider-handle").css "left", value + "%"
         $("##{@_id} .ui-slider-range").attr("style", "background: " + JustdoColorGradient.getColorRgbString(value) + " !important; width: " + value + "%")
-        for callback in @_onChangeCallbacks
-          callback value, @
+        if trigger_callbacks
+          for callback in @_onChangeCallbacks
+            callback value, @
       return
 
     @getValue = =>

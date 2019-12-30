@@ -6,12 +6,12 @@ Template.project_operations_toolbar.onRendered ->
     if task_id?
       APP.collections.Tasks.update task_id, {$set: {priority: value}}
 
-   return
+    return
 
   @autorun =>
-    if (task_id = APP.modules.project_page.activeItemId())? and (task = APP.collections.Tasks.findOne task_id)?
+    if (task = APP.modules.project_page.activeItemObj())?
       priority_slider.enable()
-      priority_slider.setValue task.priority
+      priority_slider.setValue task.priority, false
     else
       priority_slider.disable()
 
