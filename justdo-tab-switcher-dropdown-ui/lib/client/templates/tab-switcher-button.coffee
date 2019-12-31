@@ -19,7 +19,7 @@ APP.executeAfterAppLibCode ->
       sections_state = module.getCurrentTabSectionsState()
 
       if tab_id == "main"
-        return fontAwesomeIconTag("fa-th-large")
+        return fontAwesomeIconTag("fa-th-large text-dark")
       else if tab_id == "recent-updates"
         if not (tracked_field = sections_state?.global?["tracked-field"])?
           return unknown_tab_icon
