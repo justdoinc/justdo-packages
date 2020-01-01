@@ -1,11 +1,5 @@
 <template name="task_pane_justdo_delivery_planner_task_pane_section_section">
-  {{#if resourcePlannerIsEnabled}}
-    {{> delivery_planner_task_pane_main}}
-  {{else}}
-    <div class="missing-dependency">
-      The Projects Plugin depends on the Resource Management plugin, please enable it to continue.
-    </div>
-  {{/if}}
+  {{> delivery_planner_task_pane_main}}
 </template>
 
 <template name="delivery_planner_task_pane_main">
@@ -46,94 +40,6 @@
 
 <template name="delivery_planner_task_pane_project_tab">
   <section>
-    <div class="refresh">
-      <i class="fa fa-refresh fa-fw refresh" title="Refresh chart"></i>
-    </div>
-
-    <h2>Burn Down Chart</h2>
-
-    {{#if burndownDataPending}}
-      <div class="burndown-data-not-ready">
-        <p>Loading chart...</p>
-      </div>
-    {{else if $not isHighchartsReady}}
-      <div class="highcharts-not-ready">
-        <p>Loading chart...</p>
-      </div>
-    {{else if sufficientDataForChart}}
-      {{> delivery_planner_task_pane_project_tab_burndown_chart}}
-    {{else}}
-      <div class="insufficiant-data-message">
-        <p>Not enough information to generate the project burn down chart.</p>
-
-        <p>Please set the planned resources for the project's tasks.</p>
-      </div>
-    {{/if}}
-  </section>
-
-  <section>
-    <h2>Project settings</h2>
-
-    <div class="d-flex align-items-center justify-content-between dp-project-setting">
-      <div class="setting-label">Project start date</div>
-      <div class="setting-controller">{{> delivery_planner_task_pane_project_tab_start_date_field_editor}}</div>
-    </div>
-
-    <div class="dp-project-setting">
-      <div class="setting-label">Project workdays</div>
-
-      <div class="setting-controller">
-        <span class="project-workday-list">{{humanReadableProjectWorkdays}}</span>
-
-        {{> delivery_planner_task_pane_workdays_editor_btn workdays_editor=getWorkdaysEditorController}}
-
-      </div>
-
-      <div class="clearfix"></div>
-    </div>
-
-    <div class="dp-project-setting">
-      <div class="refresh" title="Refresh project members list
-
-The project members list includes all the members that have planned hours in the project's tasks.">
-        <i class="fa fa-refresh fa-fw"></i>
-      </div>
-
-      <div class="setting-label">Members availability hours per workday</div>
-
-      <div class="clearfix"></div>
-    </div>
-
-    {{#if taskHasMembersAvailabilityRecords}}
-      {{> delivery_planner_task_pane_project_tab_members_avail_table}}
-    {{else}}
-      <div class="no-project-members-message">
-        <p>This project doesn't have any members.</p>
-
-        <p>Go to the Resources tab of the tasks to which you want to plan time, and set the planned time for each project member for each task.</p>
-      </div>
-    {{/if}}
-
-    <!--
-    <div class="dp-project-setting">
-      <div class="setting-label">Commit to project plan <span class="commit-project-plan-more-info" title="Once you commit to a project plan, we take a snapshot of the current project Start Date, Resources, and Members Availability.
-
-We use this snapshot to calculate the Ideal Work Remaining Line of the Burn Down Chart, with which you can analyze your progress in comparison to the plan."><i class="fa fa-question-circle fa-fw"></i></span></div>
-
-      <div class="setting-controller">
-        {{#if isCommitted}}
-          <span class="dp-committed">Committed: {{formattedCommitDate}}</span>
-          <br>
-          <div class="btn btn-default btn-xs dp-uncommit-to-project-plan">Remove Commitment</div>
-        {{else}}
-          <div class="btn btn-default btn-xs dp-commit-to-project-plan">Commit to Plan</div>
-        {{/if}}
-      </div>
-
-      <div class="clearfix"></div>
-    </div>
-    -->
-
     <div class="d-flex align-items-center justify-content-between dp-project-setting">
       <div class="setting-label">{{#if isArchived}}Reopen{{else}}Close{{/if}} project <span class="archive-project-more-info" title="Closed projects aren't showing in the tasks' 'Assign to Project' tab, and are showing separately from the active, non-closed, projects in the grid."><i class="fa fa-question-circle fa-fw"></i></span></div>
       <div class="setting-controller">
@@ -141,6 +47,107 @@ We use this snapshot to calculate the Ideal Work Remaining Line of the Burn Down
       </div>
     </div>
   </section>
+
+  {{#if resourcePlannerIsEnabled}}
+    <section>
+      <div class="refresh">
+        <i class="fa fa-refresh fa-fw refresh" title="Refresh chart"></i>
+      </div>
+
+      <h2>Burn Down Chart</h2>
+
+      {{#if burndownDataPending}}
+        <div class="burndown-data-not-ready">
+          <p>Loading chart...</p>
+        </div>
+      {{else if $not isHighchartsReady}}
+        <div class="highcharts-not-ready">
+          <p>Loading chart...</p>
+        </div>
+      {{else if sufficientDataForChart}}
+        {{> delivery_planner_task_pane_project_tab_burndown_chart}}
+      {{else}}
+        <div class="insufficiant-data-message">
+          <p>Not enough information to generate the project burn down chart.</p>
+
+          <p>Please set the planned resources for the project's tasks.</p>
+        </div>
+      {{/if}}
+    </section>
+
+    <section>
+      <h2>Project Execution Planning</h2>
+
+      <div class="d-flex align-items-center justify-content-between dp-project-setting">
+        <div class="setting-label">Project start date</div>
+        <div class="setting-controller">{{> delivery_planner_task_pane_project_tab_start_date_field_editor}}</div>
+      </div>
+
+      <div class="dp-project-setting">
+        <div class="setting-label">Project workdays</div>
+
+        <div class="setting-controller">
+          <span class="project-workday-list">{{humanReadableProjectWorkdays}}</span>
+
+          {{> delivery_planner_task_pane_workdays_editor_btn workdays_editor=getWorkdaysEditorController}}
+
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="dp-project-setting">
+        <div class="refresh" title="Refresh project members list
+
+  The project members list includes all the members that have planned hours in the project's tasks.">
+          <i class="fa fa-refresh fa-fw"></i>
+        </div>
+
+        <div class="setting-label">Members availability hours per workday</div>
+
+        <div class="clearfix"></div>
+      </div>
+
+      {{#if taskHasMembersAvailabilityRecords}}
+        {{> delivery_planner_task_pane_project_tab_members_avail_table}}
+      {{else}}
+        <div class="no-project-members-message">
+          <p>This project doesn't have any members.</p>
+
+          <p>Go to the Resources tab of the tasks to which you want to plan time, and set the planned time for each project member for each task.</p>
+        </div>
+      {{/if}}
+
+      <!--
+      <div class="dp-project-setting">
+        <div class="setting-label">Commit to project plan <span class="commit-project-plan-more-info" title="Once you commit to a project plan, we take a snapshot of the current project Start Date, Resources, and Members Availability.
+
+  We use this snapshot to calculate the Ideal Work Remaining Line of the Burn Down Chart, with which you can analyze your progress in comparison to the plan."><i class="fa fa-question-circle fa-fw"></i></span></div>
+
+        <div class="setting-controller">
+          {{#if isCommitted}}
+            <span class="dp-committed">Committed: {{formattedCommitDate}}</span>
+            <br>
+            <div class="btn btn-default btn-xs dp-uncommit-to-project-plan">Remove Commitment</div>
+          {{else}}
+            <div class="btn btn-default btn-xs dp-commit-to-project-plan">Commit to Plan</div>
+          {{/if}}
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+      -->
+    </section>
+  {{else}}
+    <div class="missing-dependency">
+      <p><small>
+        The Projects plugin can work in tandem with the Resource Management plugin to provide you tools such as a Burndown Chart for the resources attached to the project's tasks.
+      </small></p>
+      <p><small>
+        Enable the Resource Management plugin to give it a try.
+      </small></p>
+    </div>
+  {{/if}}
 </template>
 
 <template name="delivery_planner_task_pane_project_tab_start_date_field_editor">

@@ -476,10 +476,6 @@ APP.executeAfterAppLibCode ->
 
   dataTypeDef = -> devPlanner().getTimeMinutesDataTypeDef()
 
-  Template.task_pane_justdo_delivery_planner_task_pane_section_section.helpers
-    resourcePlannerIsEnabled: ->
-      return curProj().isCustomFeatureEnabled("resource_planner_module")
-
   Template.delivery_planner_task_pane_main.onCreated ->
     @getCurrentTab = ->
       if (active_item_obj = module.activeItemObj())?
@@ -568,6 +564,9 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.delivery_planner_task_pane_project_tab.helpers
+    resourcePlannerIsEnabled: ->
+      return curProj().isCustomFeatureEnabled("resource_planner_module")
+
     sufficientDataForChart: -> devPlanner().sufficientDataForChart()
 
     isHighchartsReady: -> APP.justdo_highcharts.isHighchartLoaded()
