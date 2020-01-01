@@ -65,7 +65,62 @@ _.extend JustdoTasksCollectionsManager.prototype,
         type: String
         optional: true
 
+        grid_column_formatter: "statusFieldFormatter"
         grid_column_editor: "TextareaEditor"
+
+      status_by:
+        label: "Status / Notes By"
+
+        grid_editable_column: false
+        grid_visible_column: false
+
+        type: String
+        optional: true
+
+        autoValue: ->
+          # Automatically set the status_by to the logged
+          # in user id, upon updates to the status.
+          status = @field("status")
+          if status.isSet
+            if status.value == null
+              return {$set: null}
+            else
+              if not @isSet
+                return @userId
+          else
+            # Don't allow changing the status_by if we don't update the status
+            if not @isFromTrustedCode
+              if @isSet
+                throw self._error "permission-denied", "Untrusted attempt to change status_by rejected"
+          
+          return # Keep this return to return undefined (as required by autoValue)
+
+      status_updated_at:
+        label: "Status / Notes Updated At"
+
+        grid_editable_column: false
+        grid_visible_column: false
+
+        type: Date
+        optional: true
+
+        autoValue: ->
+          status = @field("status")
+
+          if status.isSet
+            if status.value == null
+              return {$set: null}
+            else
+              return new Date()
+          else
+            # If the code is not from trusted code unset the update
+            if not @isFromTrustedCode
+              if @isSet
+                throw self._error "permission-denied", "Untrusted attempt to change status_updated_at rejected"
+
+                # return @unset()
+
+          return # Keep this return to return undefined (as required by autoValue)
 
       state:
         label: "State"
