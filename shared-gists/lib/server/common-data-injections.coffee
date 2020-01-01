@@ -66,10 +66,23 @@ app_routes.middleware (req, res, next) ->
 
   return
 
+static_net_if = {}
+
+if process.env.QUERY_AND_EXPOSE_AWS_MACHINE_INFO_TO_NET_IF == "true"
+  # At the moment we only expose local-ipv4, into net-if.aws-local-ipv4
+
+  static_net_if["aws-local-ipv4"] = "LOADING..."
+
+  aws_meta_data_obj = {}
+  JustdoAnalytics.prototype._addAWSMetaDataToEnvObj aws_meta_data_obj, ->
+    static_net_if["aws-local-ipv4"] = aws_meta_data_obj.aws["local-ipv4"]
+
+    return
+
 Meteor.publish null, ->
   @added("JustdoSystem", "env", getExposedClientEnvVars())
 
-  @added("JustdoSystem", "net-if", {ips: JustdoHelpers.getNetworkInterfacesIps(), "x-forwarded-for": @connection.httpHeaders["x-forwarded-for"], "conn-id": @connection.id})
+  @added("JustdoSystem", "net-if", _.extend {}, static_net_if, {ips: JustdoHelpers.getNetworkInterfacesIps(), "x-forwarded-for": @connection.httpHeaders["x-forwarded-for"], "conn-id": @connection.id})
 
   @ready()
 
