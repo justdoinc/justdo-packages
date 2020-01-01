@@ -123,6 +123,7 @@ Package.onUse(function (api) {
 
   api.add_files('lib/client/formatters-and-editors/default-formatter/default-formatter.coffee', client);
   api.add_files('lib/client/formatters-and-editors/default-formatter/default-formatter.sass', client);
+  api.add_files('lib/client/formatters-and-editors/default-formatter/extensions/status-field-formatter.coffee', client);
 
   api.add_files('lib/client/formatters-and-editors/key-value-formatter/key-value.coffee', client);
 

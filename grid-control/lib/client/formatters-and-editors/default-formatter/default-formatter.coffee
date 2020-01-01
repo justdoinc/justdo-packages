@@ -5,10 +5,14 @@ formatDecimals = (decimal) ->
   return JustdoMathjs.math.format(decimal, {precision: 2, notation: "fixed"}).replace(/\.0+$/, "")
 
 GridControl.installFormatter "defaultFormatter",
+  defaultHoverCaption: (friendly_args) -> undefined
+
   slick_grid: ->
     custom_style = ""
 
-    {schema, value, self} = @getFriendlyArgs()
+    friendly_args = @getFriendlyArgs()
+
+    {schema, value, formatter_obj, self} = friendly_args
 
     if not value?
       value = ""
@@ -52,7 +56,7 @@ GridControl.installFormatter "defaultFormatter",
         linkClass: "jd-underline font-weight-bold text-body"
 
     formatter = """
-      <div class="grid-formatter default-formatter"#{if custom_style != "" then " style=\"#{custom_style}\"" else ""} dir="auto">#{value}</div>
+      <div class="grid-formatter default-formatter"#{if custom_style != "" then " style=\"#{custom_style}\"" else ""}#{if (caption = formatter_obj.defaultHoverCaption(friendly_args))? then " title=\"#{caption}\"" else ""} dir="auto">#{value}</div>
     """
 
     return formatter
