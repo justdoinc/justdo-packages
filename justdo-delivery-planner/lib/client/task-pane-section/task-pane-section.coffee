@@ -1060,7 +1060,7 @@ APP.executeAfterAppLibCode ->
 
   Template.delivery_planner_task_pane_assign_tab.events
     "click .add-project-btn": (e, tpl) ->
-      tpl.addNewParentToActiveItemId $(".project-select").val() 
+      tpl.addNewParentToActiveItemId $("select.project-select").val()
 
       return
 
