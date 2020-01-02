@@ -6,8 +6,9 @@ bindTargetToPaste = (tpl)->
     if ("text/html" in clipboard_data.types)
       data = clipboard_data.getData("text/html")
 
-      tr_reg_exp = /<\s*tr[^>]*>(.*?)<\s*\/\s*tr>/gs
-      td_reg_exp = /<\s*td[^>]*>(.*?)<\s*\/\s*td>/gs
+      # Info about why we use [^\x05] can be found on: https://bugzilla.mozilla.org/show_bug.cgi?id=1579867
+      tr_reg_exp = /<\s*tr[^>]*>([^\x05]*?)<\s*\/\s*tr>/g
+      td_reg_exp = /<\s*td[^>]*>([^\x05]*?)<\s*\/\s*td>/g
       longest_row_length = 0
       rows = []
       while ((tr = tr_reg_exp.exec(data)) != null)
