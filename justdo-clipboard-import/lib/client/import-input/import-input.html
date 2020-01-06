@@ -1,17 +1,16 @@
 <template name="justdo_clipboard_import_input">
   {{#if rows}}{{!-- Only if there are rows to present print the following--}}
     <div class="justdo-clipboard-import-table-container">
-      <table class="justdo-clipboard-import-table" border="1">
+      <table class="justdo-clipboard-import-table table table-sm">
         <tr>
-          <th class="p-1">Subject</th>
+          <th class="import-table-subject px-2 bg-light">Subject</th>
           {{#each numberOfAdditionalColumns}}
-            <th>
+            <th class="bg-light">
               <div class="dropdown justdo-clipboard-import-input-selector">
-                <button class="btn btn-sm btn-secondary dropdown-toggle" type="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Select...
+                <button class="btn btn-sm btn-secondary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select
                 </button>
-                <div class="dropdown-menu" aria-labelledby="justdo-clipboard-import-input-{{this}}">
+                <div class="dropdown-menu p-1 shadow-lg border-0" aria-labelledby="justdo-clipboard-import-input-{{this}}">
                   {{#each getAvailableFieldTypesArray}}
                     <li><a href="#" class="dropdown-item px-1 small" field-id="{{_id}}">{{label}}</a></li>
                   {{/each}}
