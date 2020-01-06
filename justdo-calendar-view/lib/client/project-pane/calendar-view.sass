@@ -1,10 +1,3 @@
-.tab-justdo-calendar-container
-  overflow: auto
-
-  .dropdown-menu
-    overflow: auto
-    max-height: 190px
-
 .calendar_view_header
   display: flex
   justify-content: space-between
@@ -25,6 +18,10 @@
     text-align: left
   .dropdown-header
     font-size: 11px
+  .dropdown-item
+    max-width: 320px
+    overflow: hidden
+    text-overflow: ellipsis
 
 .calendar_view_date_selector
   font-size: 14px
@@ -172,6 +169,8 @@
   transition: opacity 0.3s
   top: 47px
   padding-bottom: 80px
+  height: 100%
+  overflow: auto
   &.fadeOut
     opacity: 0
 

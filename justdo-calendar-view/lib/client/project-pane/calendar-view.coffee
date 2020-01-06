@@ -244,10 +244,11 @@ setDragAndDrop = ->
   return
 
 fixHeaderOnScroll = ->
-  $(".tab-justdo-calendar-container").on "scroll", ->
+  $(".calendar_view_main_table_wrapper").on "scroll", ->
+    console.log "scroll"
     scrollTop = $(this).scrollTop()
     $tableHeader = $(".main_table_fixed_header")
-    tableWidth = $(".calendar_view_main_table").width()
+    tableWidth = $(".calendar_view_main_table")[0]["clientWidth"]
     if scrollTop > 0
       $tableHeader.width(tableWidth).show()
     else
@@ -257,7 +258,7 @@ fixHeaderOnScroll = ->
 
 fixAvatarOnScroll = ->
   avatar_fixed = false
-  $(".tab-justdo-calendar-container").on "scroll", ->
+  $(".calendar_view_main_table_wrapper").on "scroll", ->
     $sticky_avatar_helper = $(".sticky-avatar-helper")
 
     $(".calendar_table_user").each (e, obj) ->
