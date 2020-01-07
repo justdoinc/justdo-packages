@@ -44,7 +44,6 @@ Package.onUse(function (api) {
   // // Note: app-integration need to load last, so immediateInit procedures in
   // // the server will have the access to the apis loaded after the init.coffee
   // // file.
-  api.addAssets("media/icons.png", client);
 
   api.export("JustdoPrintGrid", client);
 });
