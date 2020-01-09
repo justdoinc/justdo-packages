@@ -4,14 +4,7 @@
   font-style: italic
 
 .delivery-planner
-  font-family: "lato", sans-serif
-  font-smoothing: antialiased
-  text-rendering: optimizeLegibility
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
-  -moz-font-feature-settings: "liga" on
   font-size: 14px
-
   .nav-tabs
     li
       a
@@ -219,8 +212,6 @@
     color: #bcbcbc
 
   .member-name
-    // vertical-align: top
-    // padding-top: 6px
     font-weight: bold
 
   .daily-avail
@@ -233,24 +224,6 @@
 
     width: $controller-width + $customize-button-width + 3
     float: right
-
-    // .input-group
-    //   width: $controller-width
-    //   display: inline-block
-    //   height: 30px
-    //   white-space: nowrap
-
-    .simple-daily-availability
-      // display: inline-block
-      // width: $controller-width - $addon-width
-      // padding: 5px 11px
-      // height: 30px
-
-    .input-group-addon
-      // display: inline-block
-      // width: $addon-width
-      // height: 30px
-
     .customize-daily-availability
       display: inline-block
       width: $customize-button-width
@@ -297,17 +270,19 @@
       font-size: 14px
 
     $max-dropdown-height: 257px
-    .dropdown-menu.open
+    .dropdown-menu.show
       max-height: $max-dropdown-height !important
       max-width: $dropdown-width !important
+      min-width: 0 !important
 
     .dropdown-menu.inner
       max-height: $max-dropdown-height - 54 !important
       overflow-x: hidden !important
+      overflow-y: auto
 
     .dropdown-item
       .text
-        max-width: 320px
+        max-width: $dropdown-width - 50
         overflow: hidden
         text-overflow: ellipsis
 
@@ -315,7 +290,7 @@
     .project-select
       width: $dropdown-width-small-layout !important
 
-      .dropdown-menu.open
+      .dropdown-menu.show
         max-width: $dropdown-width-small-layout !important
 
   .add-resource-btn
