@@ -1067,7 +1067,7 @@
           '<button type="button" class="' + this.options.styleBase + ' dropdown-toggle" ' + (this.options.display === 'static' ? 'data-display="static"' : '') + 'data-toggle="dropdown"' + autofocus + ' role="button">' +
             '<div class="filter-option">' +
               '<div class="filter-option-inner">' +
-                '<div class="filter-option-inner-inner"></div>' +
+                '<div class="filter-option-inner-inner text-body"></div>' +
               '</div> ' +
             '</div>' +
             (
