@@ -1,5 +1,5 @@
 # The order below will also serve as the ordering in the dropdown
-supported_fields_ids = [
+_supported_fields_ids = [
   "start_date"
   "end_date"
   "due_date"
@@ -28,8 +28,15 @@ getAvailableFieldTypes = ->
   #  field id. Ordered according to supported_fields_ids order.
   gc = APP.modules.project_page.mainGridControl()
 
+  supported_fields_ids = _supported_fields_ids.slice()
+  all_fields = gc.getSchemaExtendedWithCustomFields()
+  for field_id, field of all_fields
+    # allow also to add to custom fields that are not of 'option' type
+    if field.custom_field and (field.grid_column_formatter == "defaultFormatter" or field.grid_column_formatter == "unicodeDateFormatter")
+      supported_fields_ids.push field_id
+
   supported_fields_definitions_object =
-    _.pick gc.getSchemaExtendedWithCustomFields(), supported_fields_ids
+    _.pick gc.all_fields, supported_fields_ids
 
   supported_fields_definitions_array =
     _.map supported_fields_ids, (field_id) ->
@@ -38,7 +45,6 @@ getAvailableFieldTypes = ->
       return undefined
 
   supported_fields_definitions_array = _.filter(supported_fields_definitions_array)
-
   return [supported_fields_definitions_object, supported_fields_definitions_array]
 
 getSelectedColumnsDefinitions = ->
@@ -90,8 +96,11 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
         field_id = field_def._id
 
         if cell_val.length > 0
+          if field_def.type is String
+            task[field_id] = cell_val
+
           if field_def.type is Number
-            cell_val = parseInt(cell_val.trim(), 10)
+            cell_val = parseFloat(cell_val.trim(), 10)
 
             # Check valid range
             out_of_range = false
