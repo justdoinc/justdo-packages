@@ -643,12 +643,13 @@ Template.justdo_calendar_project_pane.helpers
     return delivery_planner_project_id.get()
 
   formatDate: (viewResolution) ->
+    date = moment.utc(@, "YYYY-MM-DD")
     if number_of_days_to_display.get() == 7
-      formattedDate = "<span class='week_day'>" + moment.utc(@).format("ddd") + "</span>" + moment.utc(@).format("Do")
+      formattedDate = "<span class='week_day'>" + date.format("ddd") + "</span>" + date.format("Do")
     if number_of_days_to_display.get() == 14
-      formattedDate = "<span class='week_day'>" + moment.utc(@).format("dd") + "</span>" + moment.utc(@).format("D")
+      formattedDate = "<span class='week_day'>" + date.format("dd") + "</span>" + date.format("D")
     if number_of_days_to_display.get() > 14
-      formattedDate = moment.utc(@).format("D")
+      formattedDate = date.format("D")
     return formattedDate
 
   isToday: (date) ->
@@ -662,7 +663,7 @@ Template.justdo_calendar_project_pane.helpers
     return ""
 
   isFirstDayOfWeek: (date) ->
-    return moment.utc(date).day() == Meteor.user().profile.first_day_of_week
+    return moment.utc(date, "YYYY-MM-DD").day() == Meteor.user().profile.first_day_of_week
 
   calendarViewResolution: -> number_of_days_to_display.get()
 
