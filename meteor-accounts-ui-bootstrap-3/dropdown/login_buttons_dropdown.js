@@ -122,10 +122,14 @@
   });
 
   Template._loginButtonsLoggedInDropdownActions.events({
-    "click  .affiliates-console-btn": function() {
+    "click .affiliates-console-btn": function() {
       Router.go(JustdoAffiliatesProgram.plugin_page_id);
 
       return;
+    },
+
+    "click .info-btn-settings": function(e) {
+      e.preventDefault();
     }
   });
 
