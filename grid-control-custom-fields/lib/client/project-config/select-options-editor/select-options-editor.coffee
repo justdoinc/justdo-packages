@@ -12,7 +12,7 @@ APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
   module.CustomFieldSelectOptionsEditor = JustdoHelpers.generateNewTemplateDropdown "custom-field-select-options-editor", "custom_field_conf_select_options_editor",
-    custom_dropdown_class: "dropdown-menu shadow-lg border-0 p-3"
+    custom_dropdown_class: "dropdown-menu animate slideIn shadow-lg border-0 p-3"
     custom_bound_element_options:
       close_button_html: null
 
@@ -50,9 +50,6 @@ APP.executeAfterAppLibCode ->
         # We want the user to have to use the save/cancel button, and prevent accidental close of
         # the editor.
         @$dropdown.data("preventDropdownClose")()
-
-        # $(".bound-element.open").data("allowDropdownClose")()
-        # $(".bound-element.open").data("close")()
 
         return
 

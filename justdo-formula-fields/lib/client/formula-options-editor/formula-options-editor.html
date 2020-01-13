@@ -8,8 +8,10 @@
   <div class="editor-caption font-weight-bold text-body text-uppercase">
     Edit field formula <div class="open-formula-editor-help" title="Learn how to write a formula"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
   </div>
+
   <div class="editor-content my-2">
     <input type="text" class="formula-input form-control form-control-sm" autocomplete="off" placeholder="Enter formula" value="{{getHumanReadableFormula}}" />
+
     <div class="formula-editor-section">
       <div class="d-flex align-items-center mt-2">
         <select class="field-to-add-selector form-control form-control-sm">
@@ -21,6 +23,7 @@
       </div>
     </div>
   </div>
+
   <div class="editor-caption font-weight-bold text-body text-uppercase mt-4">Set formula filters</div>
   <div class="custom-field-options"></div>
   <div class="add-custom-field-option d-flex align-items-center py-2 mb-2">
@@ -32,6 +35,11 @@
     <div class="ml-2 d-flex align-items-center">
       <svg class="jd-icon-custom-field text-primary add-option" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
     </div>
+    <!-- <div class="bg-color-selector">{{> justdo_color_picker_dropdown color_picker_controller=colorPickerDropdownController}}</div>
+    {{#if showAddButton}}
+      <div class="add-option"><i class="fa fa-fw fa-check" aria-hidden="true"></i></div>
+    {{/if}} -->
+
   </div>
   <div class="text-right">
     <button type="button" class="btn btn-primary btn-sm font-weight-bold cancel mr-1">CANCEL</button>

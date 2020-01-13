@@ -12,7 +12,7 @@ APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
   module.CustomFieldFormulaFieldEditor = JustdoHelpers.generateNewTemplateDropdown "custom-field-formula-field-editor", "custom_field_conf_formula_field_editor",
-    custom_dropdown_class: "dropdown-menu shadow-lg border-0 p-3"
+    custom_dropdown_class: "dropdown-menu animate slideIn shadow-lg border-0 p-3"
     custom_bound_element_options:
       close_button_html: null
 
