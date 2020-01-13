@@ -38,15 +38,15 @@ _.extend JustdoHelpers,
 
         A user can set guarded_string to: '" onclick="script here', which is an input we
         consider as technically legitimate when passed through our HTML purifier, but,
-        if placed above, will result will in: <div title="" onclick="script here" which
+        if placed above, will result in: <div title="" onclick="script here" which
         can be used for hacking.
 
         Therefore, we force all calls to xssGuard, in which the allow_html_parsing option
-        is set to true, to include information about the enclosing charecter of the input,
+        is set to true, to include information about the enclosing character of the input,
         or else we will have to use html-entities based escaping, to avoid unintended
-        security volunarability.
+        security vulnerability.
 
-        Please find out whether you got an enclosing charecter that needs escaping.
+        Please find out whether you got an enclosing character that needs escaping.
 
         If you do, add it in to your options:
 
@@ -56,7 +56,7 @@ _.extend JustdoHelpers,
 
             {allow_html_parsing: true, enclosing_char: ""}
 
-        (By default, we are replacing the char with its html entitiy code, but you can
+        (By default, we are replacing the char with its html entity code, but you can
         set a different replace value in the enclosing_char_esc option).
       '''
 
