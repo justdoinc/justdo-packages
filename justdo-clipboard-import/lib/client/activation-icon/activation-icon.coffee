@@ -1,5 +1,5 @@
 # The order below will also serve as the ordering in the dropdown
-_supported_fields_ids = [
+base_supported_fields_ids = [
   "start_date"
   "end_date"
   "due_date"
@@ -28,7 +28,7 @@ getAvailableFieldTypes = ->
   #  field id. Ordered according to supported_fields_ids order.
   gc = APP.modules.project_page.mainGridControl()
 
-  supported_fields_ids = _supported_fields_ids.slice()
+  supported_fields_ids = base_supported_fields_ids.slice()
   all_fields = gc.getSchemaExtendedWithCustomFields()
   for field_id, field of all_fields
     # allow also to add to custom fields that are not of 'option' type
@@ -36,7 +36,7 @@ getAvailableFieldTypes = ->
       supported_fields_ids.push field_id
 
   supported_fields_definitions_object =
-    _.pick gc.all_fields, supported_fields_ids
+    _.pick all_fields, supported_fields_ids
 
   supported_fields_definitions_array =
     _.map supported_fields_ids, (field_id) ->
@@ -100,6 +100,8 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
             task[field_id] = cell_val
 
           if field_def.type is Number
+            # TODO: Look for: '_available_field_types' under justdo-internal-packages/grid-control-custom-fields/lib/both/grid-control-custom-fields/grid-control-custom-fields.coffee
+            # in the future, the information on whether we need to use parseFloat or parseInt() should be taken from the relevant definition.
             cell_val = parseFloat(cell_val.trim(), 10)
 
             # Check valid range
