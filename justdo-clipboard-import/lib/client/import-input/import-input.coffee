@@ -58,6 +58,7 @@ bindTargetToPaste = (tpl)->
 
 Template.justdo_clipboard_import_input.onCreated ->
   self = @
+  self.showIntro = new ReactiveVar false
 
   @getAvailableFieldTypes = @data.getAvailableFieldTypes
 
@@ -103,6 +104,9 @@ Template.justdo_clipboard_import_input.helpers
   getAvailableFieldTypesArray: ->
     return Template.instance().getAvailableFieldTypes()[1]
 
+  showIntro: ->
+    return Template.instance().showIntro.get()
+
 Template.justdo_clipboard_import_input.events
   "keyup .justdo-clipboard-import-paste-target": (e, tpl)->
     $(".justdo-clipboard-import-paste-target").val("")
@@ -121,5 +125,14 @@ Template.justdo_clipboard_import_input.events
 
     return
 
+  "click .show-intro": (e) ->
+    e.preventDefault()
+    Template.instance().showIntro.set true
 
+    return
 
+  "click .hide-intro": (e) ->
+    e.preventDefault()
+    Template.instance().showIntro.set false
+
+    return

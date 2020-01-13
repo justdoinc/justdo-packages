@@ -34,5 +34,13 @@
                 placeholder="Copy content from your spreadsheet and paste it here to create tasks.
 The first column is regarded as the Subject."></textarea>
     </div>
+    <div class="justdo-clipboard-import-intro text-center mt-3 position-relative">
+      {{#if showIntro}}
+        <img class="rounded shadow-sm border w-100 mb-3" src="/layout/intro/intro-import-spreadsheet.gif">
+        <a href="#" class="hide-intro">Hide Intro</a>
+      {{else}}
+        <a href="#" class="show-intro">How it Work?</a>
+      {{/if}}
+    </div>
   {{/if}}
 </template>
