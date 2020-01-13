@@ -40,21 +40,3 @@ Package.onUse(function (api) {
   api.imply('promise@0.11.1');
   api.imply('dynamic-import@0.4.1');
 });
-
-Package.onTest(function (api) {
-  api.use(['coffeescript', 'tinytest', 'modern-browsers']);
-  api.use(['coffeescript-test-helper', 'ecmascript'], ['client', 'server']); // Need ecmascript to compile tests/es2015_module.js
-  api.addFiles('tests/bare_test_setup.coffee', ['client'], {bare: true});
-  api.addFiles('tests/bare_tests.js', ['client']);
-  api.addFiles([
-    'tests/coffeescript_test_setup.js',
-    'tests/coffeescript_tests.coffee',
-    'tests/coffeescript_strict_tests.coffee',
-    'tests/coffeescript_module.coffee',
-    'tests/es2015_module.js',
-    'tests/litcoffeescript_tests.litcoffee',
-    'tests/litcoffeescript_tests.coffee.md',
-    'tests/coffeescript_tests.js'
-  ], ['client', 'server']);
-  api.addFiles('tests/modern_browsers.coffee', ['server']);
-});
