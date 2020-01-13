@@ -384,7 +384,7 @@ _.extend MysqlDriver.prototype,
 
     con.query query, (err) ->
       if err?
-        console.error "[justdo-analytics] Attempt to write server record failed, Log: ", log_object, err
+        console.error "[justdo-analytics] Attempt to write server record failed, Log: ", log, err
 
         return
       return
