@@ -246,7 +246,7 @@ _.extend JustdoAnalytics.prototype,
 
     @logger.debug "Mongo queries log initiated"
 
-    CollectionHooks.additionalCollectionsExtensions = (self, constructor) ->
+    CollectionHooks.additionalCollectionsExtensions = (self, args) ->
       # It seems that in the self._collection, level, it isn't guarenteed that
       # our jd_analytics_skip_logging option won't be cleared (for updates it seems
       # that it doesn't clear, which is great).
