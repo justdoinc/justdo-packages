@@ -232,6 +232,8 @@ CollectionHooks.reassignPrototype = function reassignPrototype (instance, constr
   }
 }
 
+CollectionHooks.additionalCollectionsExtensions = null;
+
 CollectionHooks.wrapCollection = function wrapCollection (ns, as) {
   if (!as._CollectionConstructor) as._CollectionConstructor = as.Collection
   if (!as._CollectionPrototype) as._CollectionPrototype = new as.Collection(null)
@@ -242,6 +244,11 @@ CollectionHooks.wrapCollection = function wrapCollection (ns, as) {
   ns.Collection = function (...args) {
     const ret = constructor.apply(this, args)
     CollectionHooks.extendCollectionInstance(this, constructor)
+
+    if (typeof CollectionHooks.additionalCollectionsExtensions === "function") {
+      CollectionHooks.additionalCollectionsExtensions(this, args);
+    }
+
     return ret
   }
   // Retain a reference to the new constructor to allow further wrapping.
