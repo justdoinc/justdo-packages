@@ -1,10 +1,11 @@
-/* global Tinytest Meteor Mongo InsecureLogin */
-
-var Collection = typeof Mongo !== 'undefined' && typeof Mongo.Collection !== 'undefined' ? Mongo.Collection : Meteor.Collection
+import { Meteor } from 'meteor/meteor'
+import { Mongo } from 'meteor/mongo'
+import { Tinytest } from 'meteor/tinytest'
+import { InsecureLogin } from './insecure_login'
 
 Tinytest.addAsync('upsert - hooks should all fire the appropriate number of times', function (test, next) {
-  var collection = new Collection(null)
-  var counts = {
+  const collection = new Mongo.Collection(null)
+  const counts = {
     before: {
       insert: 0,
       update: 0,
@@ -30,11 +31,11 @@ Tinytest.addAsync('upsert - hooks should all fire the appropriate number of time
   collection.after.upsert(function () { counts.after.upsert++ })
 
   InsecureLogin.ready(function () {
-    collection.remove({test: true}, function (err) {
+    collection.remove({ test: true }, function (err) {
       if (err) throw err
-      collection.upsert({test: true}, {test: true, step: 'insert'}, function (err, obj) {
+      collection.upsert({ test: true }, { test: true, step: 'insert' }, function (err, obj) {
         if (err) throw err
-        collection.upsert(obj.insertedId, {test: true, step: 'update'}, function (err) {
+        collection.upsert(obj.insertedId, { test: true, step: 'update' }, function (err) {
           if (err) throw err
           test.equal(counts.before.insert, 0, 'before.insert should be 0')
           test.equal(counts.before.update, 0, 'before.update should be 0')
@@ -53,8 +54,8 @@ Tinytest.addAsync('upsert - hooks should all fire the appropriate number of time
 
 if (Meteor.isServer) {
   Tinytest.add('upsert - hooks should all fire the appropriate number of times in a synchronous environment', function (test) {
-    var collection = new Collection(null)
-    var counts = {
+    const collection = new Mongo.Collection(null)
+    const counts = {
       before: {
         insert: 0,
         update: 0,
@@ -79,9 +80,9 @@ if (Meteor.isServer) {
     collection.after.remove(function () { counts.after.remove++ })
     collection.after.upsert(function () { counts.after.upsert++ })
 
-    collection.remove({test: true})
-    var obj = collection.upsert({test: true}, {test: true, step: 'insert'})
-    collection.upsert(obj.insertedId, {test: true, step: 'update'})
+    collection.remove({ test: true })
+    const obj = collection.upsert({ test: true }, { test: true, step: 'insert' })
+    collection.upsert(obj.insertedId, { test: true, step: 'update' })
 
     test.equal(counts.before.insert, 0, 'before.insert should be 0')
     test.equal(counts.before.update, 0, 'before.update should be 0')
@@ -94,8 +95,48 @@ if (Meteor.isServer) {
   })
 }
 
+Tinytest.addAsync('upsert before.upsert can stop the execution', function (test, next) {
+  const collection = new Mongo.Collection(null)
+
+  collection.before.upsert(() => false)
+
+  collection.remove({ test: true })
+  collection.upsert({ test: true }, { $set: { test: true } })
+
+  test.isUndefined(collection.findOne({ test: true }), 'doc should not exist')
+  next()
+})
+
+Tinytest.addAsync('upsert after.update should have a correct prev-doc', function (test, next) {
+  const collection = new Mongo.Collection(null)
+
+  collection.after.update(function (userId, doc) {
+    test.isNotUndefined(this.previous, 'this.previous should not be undefined')
+    test.equal(this.previous.step, 'inserted', 'previous doc should have a step property equal to inserted')
+    test.equal(doc.step, 'updated', 'doc should have a step property equal to updated')
+    next()
+  })
+
+  collection.remove({ test: true })
+  collection.insert({ test: true, step: 'inserted' })
+  collection.upsert({ test: true }, { $set: { test: true, step: 'updated' } })
+})
+
+Tinytest.addAsync('upsert after.update should have the list of manipulated fields', function (test, next) {
+  const collection = new Mongo.Collection(null)
+
+  collection.after.update(function (userId, doc, fields) {
+    test.equal(fields, ['step'])
+    next()
+  })
+
+  collection.remove({ test: true })
+  collection.insert({ test: true, step: 'inserted' })
+  collection.upsert({ test: true }, { $set: { step: 'updated' } })
+})
+
 Tinytest.addAsync('issue #156 - upsert after.insert should have a correct doc using $set', function (test, next) {
-  var collection = new Collection(null)
+  const collection = new Mongo.Collection(null)
 
   collection.after.insert(function (userId, doc) {
     test.isNotUndefined(doc, 'doc should not be undefined')
@@ -105,13 +146,13 @@ Tinytest.addAsync('issue #156 - upsert after.insert should have a correct doc us
     next()
   })
 
-  collection.remove({test: true})
-  collection.upsert({test: true}, {$set: {test: true, step: 'insert-async'}})
+  collection.remove({ test: true })
+  collection.upsert({ test: true }, { $set: { test: true, step: 'insert-async' } })
 })
 
 if (Meteor.isServer) {
   Tinytest.add('issue #156 - upsert after.insert should have a correct doc using $set in synchronous environment', function (test) {
-    var collection = new Collection(null)
+    const collection = new Mongo.Collection(null)
 
     collection.after.insert(function (userId, doc) {
       test.isNotUndefined(doc, 'doc should not be undefined')
@@ -120,7 +161,7 @@ if (Meteor.isServer) {
       test.equal(doc.step, 'insert-sync', 'doc should have a step property equal to insert-sync')
     })
 
-    collection.remove({test: true})
-    collection.upsert({test: true}, {$set: {test: true, step: 'insert-sync'}})
+    collection.remove({ test: true })
+    collection.upsert({ test: true }, { $set: { test: true, step: 'insert-sync' } })
   })
 }

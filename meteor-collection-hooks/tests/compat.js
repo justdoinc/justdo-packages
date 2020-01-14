@@ -1,14 +1,8 @@
-/* global Tinytest Meteor Mongo InsecureLogin */
-/* eslint-disable no-new */
+import { Mongo } from 'meteor/mongo'
+import { Tinytest } from 'meteor/tinytest'
+import { InsecureLogin } from './insecure_login'
 
-Tinytest.add('compat - legacy "new Meteor.Collection" should not throw an exception', function (test) {
-  try {
-    new Meteor.Collection(null)
-    test.ok()
-  } catch (e) {
-    test.fail(e.message)
-  }
-})
+/* eslint-disable no-new */
 
 Tinytest.add('compat - "new Mongo.Collection" should not throw an exception', function (test) {
   try {
@@ -19,22 +13,18 @@ Tinytest.add('compat - "new Mongo.Collection" should not throw an exception', fu
   }
 })
 
-Tinytest.addAsync('compat - hooks should work for "new Meteor.Collection"', function (test, next) {
-  simpleCountTest(new Meteor.Collection(null), test, next)
-})
-
 Tinytest.addAsync('compat - hooks should work for "new Mongo.Collection"', function (test, next) {
   simpleCountTest(new Mongo.Collection(null), test, next)
 })
 
 function simpleCountTest (collection, test, next) {
   collection.allow({
-    insert: function () { return true },
-    update: function () { return true },
-    remove: function () { return true }
+    insert () { return true },
+    update () { return true },
+    remove () { return true }
   })
 
-  var counts = {
+  const counts = {
     before: {
       insert: 0,
       update: 0,
@@ -56,11 +46,11 @@ function simpleCountTest (collection, test, next) {
   collection.after.remove(function (userId, doc) { counts.after.remove++ })
 
   InsecureLogin.ready(function () {
-    collection.insert({_id: '1', start_value: true}, function (err, id) {
+    collection.insert({ _id: '1', start_value: true }, function (err, id) {
       if (err) throw err
-      collection.update({_id: id}, {$set: {update_value: true}}, function (err) {
+      collection.update({ _id: id }, { $set: { update_value: true } }, function (err) {
         if (err) throw err
-        collection.remove({_id: id}, function (nil) {
+        collection.remove({ _id: id }, function (nil) {
           test.equal(counts.before.insert, 1, 'before insert should have 1 count')
           test.equal(counts.before.update, 1, 'before update should have 1 count')
           test.equal(counts.before.remove, 1, 'before remove should have 1 count')

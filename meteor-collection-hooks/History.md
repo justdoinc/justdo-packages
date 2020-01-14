@@ -1,4 +1,27 @@
-## vNEXT
+## v1.0.1
+* Fix bug in upsert hook `after.update` not returning manipulated fields [#258](https://github.com/Meteor-Community-Packages/meteor-collection-hooks/pull/258) [@SimonSimCity](https://github.com/SimonSimCity)
+
+## v1.0.0
+* Modernization of the package
+* BREAKING CHANGE: Minimum required Meteor version is now 1.7.0.5
+
+## v0.9.1
+* Fixed selector not being able to be modified when String or MongoID is used
+* Add `npm prune --production` to publication script to prevent addition of dev only packages to the bundle. Fixes issue [#246](https://github.com/Meteor-Community-Packages/meteor-collection-hooks/issues/246)
+
+## v0.9.0
+
+* BREAKING CHANGE: Minimum required Meteor version is now 1.6.1
+* Fix unsafe `selector` in `before.find` and `before.findOne` when called without arguments. This is potentially a *BREAKING CHANGE* for those who are relying on the current behavior of `selector` in `before.find` and `before.findOne`
+* Align return values with original methods when a hook returns `false`
+* Always run `find` hooks when fetching documents for `update`, `upsert` and `remove` hooks
+* Add support for update/upsert hooks to run on a different selector based on custom options when used together with a find hook that manipulates the selector based on custom options
+* Fix Meteor.publish override, the previous override resulted in false positives of autopublish warning
+* Use spacejam for headless testing, will make headless testing work locally
+* Add support for the new modifiers $max, $min and $currentDate
+* No longer fetch documents when no hooks are defined
+* Fix conflict with [sewdn:collection-behaviours](https://github.com/Sewdn/meteor-collection-behaviours) package
+* Updated dependencies and node version in tests
 
 ## v0.8.3
 
@@ -13,7 +36,7 @@
 
 ## v0.8.0
 
-* Add support for `upsert` hooks. This is potentiallly a *breaking change* for those relying on `before.update` for `upsert`, as the behavior has changed to fire `before.upsert` instead, and either `after.insert` or `after.update` depending on the outcome of the upsert operation
+* Add support for `upsert` hooks. This is potentially a *breaking change* for those relying on `before.update` for `upsert`, as the behavior has changed to fire `before.upsert` instead, and either `after.insert` or `after.update` depending on the outcome of the upsert operation
 
 ## v0.7.15
 

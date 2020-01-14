@@ -1,15 +1,16 @@
-/* global Tinytest Meteor Mongo InsecureLogin */
+import { Meteor } from 'meteor/meteor'
+import { Mongo } from 'meteor/mongo'
+import { Tinytest } from 'meteor/tinytest'
+import { InsecureLogin } from './insecure_login'
 
-var Collection = typeof Mongo !== 'undefined' && typeof Mongo.Collection !== 'undefined' ? Mongo.Collection : Meteor.Collection
-
-var collection = new Collection('test_update_allow_collection')
+const collection = new Mongo.Collection('test_update_allow_collection')
 
 if (Meteor.isServer) {
   // full client-side access
   collection.allow({
-    insert: function () { return true },
-    update: function (userId, doc, fieldNames, modifier) { return modifier.$set.allowed },
-    remove: function () { return true }
+    insert () { return true },
+    update (userId, doc, fieldNames, modifier) { return modifier.$set.allowed },
+    remove () { return true }
   })
 
   Meteor.methods({
@@ -38,17 +39,17 @@ if (Meteor.isClient) {
     InsecureLogin.ready(function () {
       Meteor.call('test_update_allow_reset_collection', function (nil, result) {
         function start (id1, id2) {
-          collection.update({_id: id1}, {$set: {update_value: true, allowed: true}}, function (err1) {
-            collection.update({_id: id2}, {$set: {update_value: true, allowed: false}}, function (err2) {
-              test.equal(collection.find({start_value: true, update_value: true, client_value: true, server_value: true}).count(), 1)
+          collection.update({ _id: id1 }, { $set: { update_value: true, allowed: true } }, function (err1) {
+            collection.update({ _id: id2 }, { $set: { update_value: true, allowed: false } }, function (err2) {
+              test.equal(collection.find({ start_value: true, update_value: true, client_value: true, server_value: true }).count(), 1)
               next()
             })
           })
         }
 
         // Insert two documents
-        collection.insert({start_value: true}, function (err1, id1) {
-          collection.insert({start_value: true}, function (err2, id2) {
+        collection.insert({ start_value: true }, function (err1, id1) {
+          collection.insert({ start_value: true }, function (err2, id2) {
             start(id1, id2)
           })
         })

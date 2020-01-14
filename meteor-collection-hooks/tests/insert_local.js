@@ -1,10 +1,11 @@
-/* global Tinytest Meteor Mongo InsecureLogin */
-
-var Collection = typeof Mongo !== 'undefined' && typeof Mongo.Collection !== 'undefined' ? Mongo.Collection : Meteor.Collection
+import { Meteor } from 'meteor/meteor'
+import { Mongo } from 'meteor/mongo'
+import { Tinytest } from 'meteor/tinytest'
+import { InsecureLogin } from './insecure_login'
 
 Tinytest.addAsync('insert - local collection document should have extra property added before being inserted', function (test, next) {
-  var collection = new Collection(null)
-  var tmp = {}
+  const collection = new Mongo.Collection(null)
+  const tmp = {}
 
   collection.before.insert(function (userId, doc) {
     tmp.typeof_userId = typeof userId
@@ -12,21 +13,21 @@ Tinytest.addAsync('insert - local collection document should have extra property
   })
 
   InsecureLogin.ready(function () {
-    collection.insert({start_value: true}, function (err, id) {
+    collection.insert({ start_value: true }, function (err, id) {
       if (err) throw err
       if (Meteor.isServer) {
         test.equal(tmp.typeof_userId, 'undefined', 'Local collection on server should NOT know about a userId')
       } else {
         test.equal(tmp.typeof_userId, 'string', 'There should be a userId on the client')
       }
-      test.equal(collection.find({start_value: true, before_insert_value: true}).count(), 1)
+      test.equal(collection.find({ start_value: true, before_insert_value: true }).count(), 1)
       next()
     })
   })
 })
 
 Tinytest.addAsync('insert - local collection should fire after-insert hook', function (test, next) {
-  var collection = new Collection(null)
+  const collection = new Mongo.Collection(null)
 
   collection.after.insert(function (userId, doc) {
     if (Meteor.isServer) {
@@ -42,6 +43,6 @@ Tinytest.addAsync('insert - local collection should fire after-insert hook', fun
   })
 
   InsecureLogin.ready(function () {
-    collection.insert({start_value: true})
+    collection.insert({ start_value: true })
   })
 })

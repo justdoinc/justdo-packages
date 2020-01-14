@@ -1,10 +1,10 @@
-/* global Tinytest Meteor Mongo InsecureLogin */
-
-var Collection = typeof Mongo !== 'undefined' && typeof Mongo.Collection !== 'undefined' ? Mongo.Collection : Meteor.Collection
+import { Mongo } from 'meteor/mongo'
+import { Tinytest } from 'meteor/tinytest'
+import { InsecureLogin } from './insecure_login'
 
 Tinytest.addAsync('general - multiple hooks should all fire the appropriate number of times', function (test, next) {
-  var collection = new Collection(null)
-  var counts = {
+  const collection = new Mongo.Collection(null)
+  const counts = {
     before: {
       insert: 0,
       update: 0,
@@ -34,11 +34,11 @@ Tinytest.addAsync('general - multiple hooks should all fire the appropriate numb
   collection.after.remove(function () { counts.after.remove++ })
 
   InsecureLogin.ready(function () {
-    collection.insert({start_value: true}, function (err, id) {
+    collection.insert({ start_value: true }, function (err, id) {
       if (err) throw err
-      collection.update({_id: id}, {$set: {}}, function (err) {
+      collection.update({ _id: id }, { $set: {} }, function (err) {
         if (err) throw err
-        collection.remove({_id: id}, function (nil) {
+        collection.remove({ _id: id }, function (nil) {
           test.equal(counts.before.insert, 2)
           test.equal(counts.before.update, 2)
           test.equal(counts.before.remove, 2)

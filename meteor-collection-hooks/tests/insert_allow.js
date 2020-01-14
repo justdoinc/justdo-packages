@@ -1,15 +1,16 @@
-/* global Tinytest Meteor Mongo InsecureLogin */
+import { Meteor } from 'meteor/meteor'
+import { Mongo } from 'meteor/mongo'
+import { Tinytest } from 'meteor/tinytest'
+import { InsecureLogin } from './insecure_login'
 
-var Collection = typeof Mongo !== 'undefined' && typeof Mongo.Collection !== 'undefined' ? Mongo.Collection : Meteor.Collection
-
-var collection = new Collection('test_insert_allow_collection')
+const collection = new Mongo.Collection('test_insert_allow_collection')
 
 if (Meteor.isServer) {
   // full client-side access
   collection.allow({
-    insert: function (userId, doc) { return doc.allowed },
-    update: function () { return true },
-    remove: function () { return true }
+    insert (userId, doc) { return doc.allowed },
+    update () { return true },
+    remove () { return true }
   })
 
   Meteor.methods({
@@ -37,9 +38,9 @@ if (Meteor.isClient) {
 
     InsecureLogin.ready(function () {
       Meteor.call('test_insert_allow_reset_collection', function (nil, result) {
-        collection.insert({start_value: true, allowed: false}, function (err1, id1) {
-          collection.insert({start_value: true, allowed: true}, function (err2, id2) {
-            test.equal(collection.find({start_value: true, client_value: true, server_value: true}).count(), 1)
+        collection.insert({ start_value: true, allowed: false }, function (err1, id1) {
+          collection.insert({ start_value: true, allowed: true }, function (err2, id2) {
+            test.equal(collection.find({ start_value: true, client_value: true, server_value: true }).count(), 1)
             next()
           })
         })
