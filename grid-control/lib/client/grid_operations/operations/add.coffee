@@ -26,55 +26,78 @@ _.extend PACK.GridOperations,
 
             return
 
-          new_item_absolute_path = section.section_manager.absPath(new_item_relative_path)
+          focusItemAndReleaseOpsLock = =>
+            new_item_absolute_path = section.section_manager.absPath(new_item_relative_path)
 
-          # Needed so the filter tracker computation to process immediately
-          Tracker.flush()
+            # Needed so the filter tracker computation to process immediately
+            Tracker.flush()
 
-          if add_as_child
-            # Mark parent as expanded (in case it isn't yet) before adding the child
-            # to the tree - this will allow to show the result in one flush
-            # instead of two (one for add, one for expand), and as a result
-            # the UX will be much faster and smooth.
+            if add_as_child
+              # Mark parent as expanded (in case it isn't yet) before adding the child
+              # to the tree - this will allow to show the result in one flush
+              # instead of two (one for add, one for expand), and as a result
+              # the UX will be much faster and smooth.
 
-            # true means force expansion (path might have no children before flush,
-            # so it's required)
-            @_grid_data.expandPath absolute_path
-
-          # Flush to make sure the item is in the tree DOM
-          # Required for pathPassFilter to work proprely
-          @_grid_data._flushAndRebuild()
-
-          if not @_grid_data.pathPassFilter(new_item_absolute_path)
-            # Force new item to show even if filtered
-            @forceItemsPassCurrentFilter new_item_id
-            # XXX, I refrain from touching this working code, but starting from the version this
-            # comment is written, @forceItemsPassCurrentFilter, now can get a callback as its
-            # last parameter that takes care of flushing, it doesn't take care of 
-            # @_grid_data._flushAndRebuild(), you might want to use it in the future, but do so
-            # carefully. Daniel C.
-            #
-            # Note, that if a callback is not passed to @forceItemsPassCurrentFilter it won't
-            # call Tracker.flush().
-
-            Tracker.flush() # Needed so the filter tracker computation
-                            # which depends on grid_data.filter_independent_items
-                            # as a reactive resource, will immediately update 
-                            # @_filter_collection_items_ids and @_grid_tree_filter_state so they'll
-                            # be available for the grid_data.flush before
-                            # entering edit mode (which block all grid_data.flush)
+              # true means force expansion (path might have no children before flush,
+              # so it's required)
+              @_grid_data.expandPath absolute_path
 
             # Flush to make sure the item is in the tree DOM
+            # Required for pathPassFilter to work proprely
             @_grid_data._flushAndRebuild()
 
-          @editPathCell new_item_absolute_path, 0
+            if not @_grid_data.pathPassFilter(new_item_absolute_path)
+              # Force new item to show even if filtered
+              @forceItemsPassCurrentFilter new_item_id
+              # XXX, I refrain from touching this working code, but starting from the version this
+              # comment is written, @forceItemsPassCurrentFilter, now can get a callback as its
+              # last parameter that takes care of flushing, it doesn't take care of 
+              # @_grid_data._flushAndRebuild(), you might want to use it in the future, but do so
+              # carefully. Daniel C.
+              #
+              # Note, that if a callback is not passed to @forceItemsPassCurrentFilter it won't
+              # call Tracker.flush().
 
-          callCb cb, err, new_item_id, new_item_absolute_path
+              Tracker.flush() # Needed so the filter tracker computation
+                              # which depends on grid_data.filter_independent_items
+                              # as a reactive resource, will immediately update 
+                              # @_filter_collection_items_ids and @_grid_tree_filter_state so they'll
+                              # be available for the grid_data.flush before
+                              # entering edit mode (which block all grid_data.flush)
 
-          # Release lock only after activation of new path to
-          # avoid any chance of refering to previous path in
-          # following operations
-          releaseOpsLock()
+              # Flush to make sure the item is in the tree DOM
+              @_grid_data._flushAndRebuild()
+
+            @editPathCell new_item_absolute_path, 0
+
+            callCb cb, err, new_item_id, new_item_absolute_path
+
+            # Release lock only after activation of new path to
+            # avoid any chance of refering to previous path in
+            # following operations
+            releaseOpsLock()
+
+            return
+
+          # To avoid any chance of lingering autoruns, put a timeout.
+          wait_for_item_to_load_to_collection_comp_timeout = setTimeout ->
+            wait_for_item_to_load_to_collection_comp.stop()
+          , 3000
+
+          wait_for_item_to_load_to_collection_comp = Tracker.autorun (c) =>
+            if @_grid_data.collection.findOne(new_item_id)?
+              c.stop()
+
+              # To allow the .flush() inside focusItemAndReleaseOpsLock to work, we
+              # need to call focusItemAndReleaseOpsLock() outside of Tracker.autorun()
+              Meteor.defer -> focusItemAndReleaseOpsLock()
+              clearTimeout wait_for_item_to_load_to_collection_comp_timeout
+
+            return
+
+          return
+        return
+      return
 
     prereq: -> @_opreqUnlocked(@_opreqGridReady())
 
