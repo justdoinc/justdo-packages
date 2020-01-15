@@ -71,7 +71,6 @@ GridControl.installEditor "SelectorEditor",
     @$select = $(".selector-editor", @context.container)
 
     @$select.selectpicker
-      container: "body"
       width: "100%"
       sanitize: false
       size: 8
