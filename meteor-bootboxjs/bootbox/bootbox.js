@@ -657,6 +657,11 @@
       if (e.target === this) {
         dialog.remove();
       }
+
+      // To prevent failure of the scroll of the first modal (in cases, when the modal opened twice)
+      if($(".modal").hasClass("show")){
+        $('body').addClass("modal-open");
+      }
     });
 
     /*
