@@ -125,6 +125,21 @@ $tree_control_icons_sprite_bg: url('/packages/stem-capital_grid-control/lib/clie
   .fa
     cursor: pointer
 
+.jd-icon.jd-icon-context-menu
+  padding: 0
+  width: 14px
+  height: 20px
+  border-radius: 2px
+  margin-right: -1px
+  margin-top: -5px
+  opacity: 0.4
+  transition: opacity 0.2s linear
+
+.slick-cell.active,
+.text-tree-control:hover
+  .jd-icon-context-menu
+    opacity: 1
+
 .grid-tree-control-priority
   width: 6px
   height: auto
@@ -144,7 +159,7 @@ $tree_control_icons_sprite_bg: url('/packages/stem-capital_grid-control/lib/clie
 .jdt-grid-icon
   height: 22px
   line-height: 22px
-  width: 21px
+  width: 19px
 
 .jdt-stop
   color: red

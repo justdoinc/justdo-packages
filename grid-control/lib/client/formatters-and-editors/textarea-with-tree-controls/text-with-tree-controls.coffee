@@ -245,6 +245,12 @@ GridControl.installFormatter "textWithTreeControls",
       tree_control += APP.justdo_checklist.getOnGridCheckMarkHtml(doc, path)
 
     tree_control += """
+      <svg class="jd-icon jd-icon-context-menu jd-c-pointer text-secondary slick-prevent-edit">
+        <use xlink:href="/layout/icons-feather-sprite.svg#more-vertical" class="slick-prevent-edit"></use>
+      </svg>
+    """
+
+    tree_control += """
       </div>
     """
 

@@ -170,4 +170,13 @@ _.extend PACK.Formatters.textWithTreeControls,
 
         APP.justdo_checklist.toggleCheckItemSwitch(event_item._id)
     }
+    {
+      args: ['click', '.jd-icon-context-menu']
+      handler: (e) ->
+        event_item = @getEventItem(e)
+
+        APP.justdo_tasks_context_menu.show(event_item._id, {of: $(e.target).closest(".jd-icon-context-menu")})
+
+        return
+    }
   ]
