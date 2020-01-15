@@ -33,7 +33,10 @@ APP.executeAfterAppLibCode ->
         else
           return unknown_tab_icon
       else if tab_id == "sub-tree"
-        return fontAwesomeIconTag("fa-briefcase")
+        if APP.collections.Tasks?.findOne(sections_state.global["root-item"])?["p:dp:is_project"] == true
+          return fontAwesomeIconTag("fa-briefcase")
+        else
+          return fontAwesomeIconTag("fa-window-restore")
       else if tab_id == "jdp-all-projects"
         return fontAwesomeIconTag("fa-briefcase")
       else if tab_id == "jwp-term"
