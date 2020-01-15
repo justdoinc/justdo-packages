@@ -155,3 +155,21 @@ APP.executeAfterAppLibCode ->
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#jd-sort"/></svg>"""
     op: -> gridControl().sortActivePathByPriorityDesc()
     prereq: -> gridControl().sortActivePathByPriorityDesc.prereq()
+
+  module.setNullaryOperation "zoomIn",
+    human_description: "Zoom in"
+    template:
+      custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#zoom-in"/></svg>"""
+    op: ->
+      gcm = module.getCurrentGcm()
+      active_item_id = module.activeItemId()
+
+      tab_id = "sub-tree"
+
+      gcm.activateTabWithSectionsState(tab_id, {global: {"root-item": active_item_id}})
+
+      gcm.setPath([tab_id, "/#{active_item_id}/"])
+    prereq: ->
+      gc = gridControl()
+
+      return gc._opreqActivePathIsCollectionItem(gc._opreqGridReady())

@@ -534,14 +534,7 @@ APP.executeAfterAppLibCode ->
       return
 
     "click .open-in-sub-tree-tab": (e, tpl) ->
-      gcm = module.getCurrentGcm()
-      active_item_id = module.activeItemId()
-
-      tab_id = "sub-tree"
-
-      gcm.activateTabWithSectionsState(tab_id, {global: {"root-item": active_item_id}})
-
-      gcm.setPath([tab_id, "/#{active_item_id}/"])
+      APP.modules.project_page.performOp("zoomIn")
 
       return
 

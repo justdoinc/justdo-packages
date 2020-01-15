@@ -1,0 +1,22 @@
+<template name="tasks_context_menu">
+  <ul class="dropdown-menu p-2 shadow-lg border-0">
+    {{#if isAddSiblingAllowed}}
+      <li class="dropdown-item context-action-item new-task">
+        <svg class="jd-icon jd-icon-context-action text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg> New Task
+      </li>
+    {{/if}}
+    <li class="dropdown-item context-action-item new-child-task">
+      <svg class="jd-icon jd-icon-context-action text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#corner-down-right"/></svg> New Child Task
+    </li>
+    <li class="dropdown-item context-action-item zoom-in">
+      <svg class="jd-icon jd-icon-context-action text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#zoom-in"/></svg> Zoom In
+    </li>
+    <hr class="my-2">
+    <li class="more-info-items">
+      <div>
+        <div>Updated {{moFromNow controller.getContextItemObj.updatedAt}}</div>
+        <div class="text-secondary">by {{displayName updatedByOrCreatedBy}}</div>
+      </div>
+    </li>
+  </ul>
+</template>
