@@ -67,25 +67,26 @@ Template.meetings_meeting_dialog.onCreated ->
       _id: Template.currentData().meeting_id
 
     #attended:
-    attended_html ="<ul>"
+    attended_html = ""
     for user_id in meeting.users
       user = Meteor.users.findOne user_id
-      attended_html += "<li> #{JustdoHelpers.xssGuard user.profile.first_name} #{JustdoHelpers.xssGuard user.profile.last_name}</li>"
-    attended_html +="</ul>"
+      attended_html += """<span class="mr-2">#{JustdoHelpers.xssGuard user.profile.first_name} #{JustdoHelpers.xssGuard user.profile.last_name},</span>"""
+
+    attended_html = attended_html.substring(0, attended_html.length - 8) + "</span>"
 
     #tasks:
     tasks_html = ""
     tasks = _.sortBy meeting.tasks, 'task_order'
     for item in tasks
-      tasks_html += "<h4><u>#{item.seqId} #{JustdoHelpers.xssGuard item.title}</u></h4>"
+      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><h5 class="font-weight-bold"><span class="bg-light border px-2 rounded mr-1">#{item.seqId}</span> #{JustdoHelpers.xssGuard item.title}</h5>"""
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
 
       if meeting_task?.added_tasks?.length > 0
-        tasks_html += "<b>Tasks Added:</b><ul>"
+        tasks_html += """<div class="mt-3 mb-2 font-weight-bold">Tasks Added:</div><ul>"""
         for task_added in meeting_task.added_tasks
-          tasks_html += "<li>#{task_added.seqId} #{JustdoHelpers.xssGuard task_added.title} </li>"
+          tasks_html += "<li>#{task_added.seqId} #{JustdoHelpers.xssGuard task_added.title}</li>"
         tasks_html += "</ul>"
 
       if meeting_task?.note?
@@ -94,10 +95,10 @@ Template.meetings_meeting_dialog.onCreated ->
         re =new RegExp(key,'g')
         note = meeting_task.note.replace /\n/g, key
         note = JustdoHelpers.xssGuard note
-        note = "<div dir='auto'>" + note.replace(re, "</div><div dir='auto'>") + "</div>"
+        note = """<div dir="auto" class="print-meeting-mode-note">""" + note.replace(re, "</div><div dir='auto'>") + "</div>"
         tasks_html += note
 
-      tasks_html += "<p>"
+      tasks_html += "</div>"
 
     bottomNote = "None"
     if meeting.note?
@@ -106,21 +107,29 @@ Template.meetings_meeting_dialog.onCreated ->
       bottomNote = meeting.note
       bottomNote = bottomNote.replace /\n/g, key
       bottomNote = JustdoHelpers.xssGuard bottomNote
-      bottomNote = "<div dir='auto'>" + bottomNote.replace(re, "</div><div dir='auto'>") + "</div>"
+      bottomNote = "<div dir='auto' class='print-meeting-mode-note'>" + bottomNote.replace(re, "</div><div dir='auto'>") + "</div>"
 
 
     ret = """
-      <img src="/layout/logos-ext/justdo_logo_with_text_normal.png" alt="justDo" class='thead-logo' >
-      <p>
-      <h2 dir='auto' class='print-task-title'> #{JustdoHelpers.xssGuard meeting.title}</h2>
-      <h3 class='print-meeting-notes-title'>Meeting Notes</h3>
-      <h4> #{moment(meeting.date).format("YYYY-MM-DD")} #{JustdoHelpers.xssGuard(meeting.time)} <span dir='auto'>#{JustdoHelpers.xssGuard meeting.location}</span></h4>
-      <h3>Invited:</h3>
-      #{attended_html}
-      <h3>Agenda Notes</h3>
-      #{tasks_html}
-      <h3>Other Notes</h3>
-      #{bottomNote}
+      <img src="/layout/logos-ext/justdo_logo_with_text_normal.png" alt="justDo" class="thead-logo">
+      <h3 class="font-weight-bold mt-4">#{JustdoHelpers.xssGuard meeting.title}</h3>
+      <div class="border-bottom pb-3">
+        <span class="mr-2">Date: <strong>#{moment(meeting.date).format("YYYY-MM-DD")}</strong>,</span>
+        <span class="mr-2">Time: <strong>#{JustdoHelpers.xssGuard(meeting.time)}</strong>,</span>
+        <span class="mr-2">Location: <strong>#{JustdoHelpers.xssGuard meeting.location}</strong></span>
+      </div>
+      <div class="border-bottom py-3">
+        <div class="h3 font-weight-bold">Invited</div>
+        #{attended_html}
+      </div>
+      <div class="border-bottom py-3">
+        <div class="h3 font-weight-bold">Agenda Notes</div>
+        #{tasks_html}
+      </div>
+      <div class="py-3">
+        <div class="h3 font-weight-bold">Other Notes</div>
+        #{bottomNote}
+      </div>
       """
     return ret
 

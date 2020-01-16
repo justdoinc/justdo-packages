@@ -314,8 +314,8 @@
 
 
 .print-meeting-mode-overlay
-  background: rgba(0, 0, 0, 1)
-  padding: 50px 0px
+  background: white
+  padding: 50px
   position: absolute
   top: 0
   left: 0
@@ -324,19 +324,18 @@
   height: auto
   min-height: 100%
   min-width: 1020px
-  .print-task-title
-    float: left
-    margin: -2px 0 0 20px
-  .print-meeting-notes-title
-    clear: both
-    padding-top: 20px
+  opacity: 0
+
+.print-meeting-mode-task
+  border-left: 3px solid rgba(0, 0, 0, 0.25)
+  max-width: 800px
+
+.print-meeting-mode-note
+  font-style: italic
+
+.thead-logo
+  height: 40px
 
 @media print
   .print-meeting-mode-overlay
-    background: white !important
-
-.thead-logo
-  float: left
-  margin-bottom: 10px
-  width: 11%
-  height: 40px
+    opacity: 1 !important
