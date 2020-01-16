@@ -59,15 +59,18 @@ createDroppableWrapper = ->
   for item in $(".calendar_view_tasks_row")
     userIds.push $(item).attr "user_id"
 
+  tableTop = $table.position().top
+  tableHeight = $table.height()
+
   userIds = _.uniq(userIds)
 
   # Build and append DroppableWrapper
-  droppableWrapper = """<div class="calendar_view_droppable_wrapper">"""
+  droppableWrapper = """<div class="calendar_view_droppable_wrapper" style="height:#{tableHeight}px">"""
 
   for leftPosition, i in leftPositionArray
     for height, j in heightArray
       droppableWrapper += """
-        <div class="calendar_view_droppable_item" style="height:#{height}; width:#{width}px; left:#{leftPosition}px; top:#{topPositionArray[j]}px">
+        <div class="calendar_view_droppable_item" style="height:#{height}; width:#{width}px; left:#{leftPosition}px; top:#{topPositionArray[j] - tableTop}px">
           <div class="calendar_view_droppable_area" user_id="#{userIds[j]}" date="#{dateArray[i]}"></div>
         </div>
       """
@@ -245,7 +248,6 @@ setDragAndDrop = ->
 
 fixHeaderOnScroll = ->
   $(".calendar_view_main_table_wrapper").on "scroll", ->
-    console.log "scroll"
     scrollTop = $(this).scrollTop()
     $tableHeader = $(".main_table_fixed_header")
     tableWidth = $(".calendar_view_main_table")[0]["clientWidth"]
