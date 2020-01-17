@@ -86,7 +86,14 @@ Template.meetings_meeting_dialog.onCreated ->
       if meeting_task?.added_tasks?.length > 0
         tasks_html += """<div class="mt-3 mb-2 font-weight-bold">Tasks Added:</div><ul>"""
         for task_added in meeting_task.added_tasks
-          tasks_html += "<li>#{task_added.seqId} #{JustdoHelpers.xssGuard task_added.title}</li>"
+          user_name = ""
+          if (task_obj = JD.collections.Tasks.findOne task_added.task_id)?
+            user_id = task_obj.owner_id
+            if task_obj.pending_owner_id
+              user_id = task_obj.pending_owner_id
+            user = Meteor.users.findOne user_id
+            user_name = """<span class="mr-2">#{JustdoHelpers.xssGuard user.profile.first_name} #{JustdoHelpers.xssGuard user.profile.last_name},</span>"""
+          tasks_html += """<li><span class="bg-light border px-2 rounded mr-1">#{task_added.seqId}</span> #{user_name} #{JustdoHelpers.xssGuard task_added.title}</li>"""
         tasks_html += "</ul>"
 
       if meeting_task?.note?
@@ -123,7 +130,7 @@ Template.meetings_meeting_dialog.onCreated ->
         #{attended_html}
       </div>
       <div class="border-bottom py-3">
-        <div class="h3 font-weight-bold">Agenda Notes</div>
+        <div class="h3 font-weight-bold">Meeting Notes</div>
         #{tasks_html}
       </div>
       <div class="py-3">
