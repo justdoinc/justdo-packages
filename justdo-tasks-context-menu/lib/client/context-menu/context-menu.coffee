@@ -3,6 +3,9 @@ Template.tasks_context_menu.helpers
     return _.isEmpty(APP.modules.project_page.getUnfulfilledOpReq("addSiblingTask"))
 
   updatedByOrCreatedBy: ->
+    if not item_obj?
+      return false
+
     item_obj = @controller.getContextItemObj()
     
     return item_obj.updated_by or item_obj.created_by_user_id
