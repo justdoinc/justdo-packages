@@ -143,7 +143,7 @@ _.extend JustdoHelpers,
     if not niddle?
       return users_docs
 
-    filter_regexp = new RegExp("#{JustdoHelpers.escapeRegExp(niddle)}", "i")
+    filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(niddle)}", "i")
 
     results = _.filter users_docs, (doc) ->
       display_name = JustdoHelpers.displayName(doc)
