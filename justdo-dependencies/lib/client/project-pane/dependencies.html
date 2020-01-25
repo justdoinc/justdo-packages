@@ -1,0 +1,35 @@
+<template name="justdo_project_dependencies">
+  <div class="justdo-dependencies-title">
+    Following is the list of tasks that you can start working on immediately
+  </div>
+  <div>
+    {{#if hasTasksToStart}}
+      {{#each tasksToStart}}
+        <div class="justdo-dependencies-line" task_id="{{this._id}}">
+          #{{this.seqId}}: {{this.title}}
+        </div>
+      {{/each}}
+    {{else}}
+      <div class="justdo-dependencies-not-found">
+        Nothing found.
+      </div>
+    {{/if}}
+  </div>
+  <div class="justdo-dependencies-title">
+    Following is the list of tasks that are pending other tasks completion
+  </div>
+  <div>
+    {{#if hasTasksWaiting}}
+      {{#each tasksWaiting}}
+        <div class="justdo-dependencies-line" task_id="{{this._id}}">
+          #{{this.seqId}}: {{this.title}}
+        </div>
+      {{/each}}
+    {{else}}
+      <div class="justdo-dependencies-not-found">
+        No pending tasks.
+      </div>
+    {{/if}}
+  </div>
+
+</template>
