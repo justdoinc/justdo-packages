@@ -1,5 +1,4 @@
 Template.justdo_project_dependencies.onCreated ->
-
   self = @
 
   @tasks_to_start = new ReactiveVar []

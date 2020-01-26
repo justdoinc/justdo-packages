@@ -7,7 +7,6 @@ _.extend JustdoDependencies.prototype,
       return
 
     @registerConfigTemplate()
-    @registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
 
     return
@@ -31,6 +30,8 @@ _.extend JustdoDependencies.prototype,
     # check (server side) that there is no infinite loop
     # check that a single task is not listed more than once
     # check that the task doesn't list itself as dependant
+    # check that the task is not dependent on any of its parents
+
 
     return true
 
@@ -73,3 +74,6 @@ _.extend JustdoDependencies.prototype,
       return
 
     return
+
+  # providing this function as an API for other modules to check if there are dependencies
+  pseudoFiledId: -> return JustdoDependencies.pseudo_field_id

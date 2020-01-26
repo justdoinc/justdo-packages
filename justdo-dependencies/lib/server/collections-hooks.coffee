@@ -9,7 +9,6 @@ _.extend JustdoDependencies.prototype,
 
     #todo - cache which projects have the feature installed to and check before hitting the database
 
-
     self.tasks_collection.after.update (user_id, doc, fieldNames, modifier, options) ->
       if "state" in fieldNames
         # fetch all the tasks from this project that have any dependencies, and are candidates for 'all clear' notification
