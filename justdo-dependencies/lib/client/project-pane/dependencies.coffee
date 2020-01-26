@@ -11,14 +11,14 @@ Template.justdo_project_dependencies.onCreated ->
     JD.collections.Tasks.find
       project_id: JD.activeJustdo({_id: 1})._id
       owner_id: Meteor.userId()
-      "#{JustdoDependencies.pseudo_field_id}":
+      "#{JustdoDependencies.dependencies_field_id}":
         $exists: true
       $or: [{state: "pending"}, {state: "in-progress"}, {state: "on-hold"}, {state: "nil"}]
     .forEach (task) ->
-      if task[JustdoDependencies.pseudo_field_id] != null and task[JustdoDependencies.pseudo_field_id] != ""
+      if task[JustdoDependencies.dependencies_field_id] != null and task[JustdoDependencies.dependencies_field_id] != ""
         all_dependents_are_done = true
         # for each dependent seq ID
-        (task[JustdoDependencies.pseudo_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
+        (task[JustdoDependencies.dependencies_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
           if (task_obj = JD.collections.Tasks.findOne({seqId: dependant}))
             if task_obj.state != "done"
               all_dependents_are_done = false

@@ -12,10 +12,10 @@ _.extend JustdoDependencies.prototype,
     return
 
   checkDependenciesFormatBeforeUpdate: (doc, field_names, modifier, options) ->
-    if JustdoDependencies.pseudo_field_id not in field_names
+    if JustdoDependencies.dependencies_field_id not in field_names
       return true
 
-    if not (new_value = modifier["$set"]?[JustdoDependencies.pseudo_field_id])
+    if not (new_value = modifier["$set"]?[JustdoDependencies.dependencies_field_id])
       return true
 
     # Check for right format (comma separated)
@@ -45,9 +45,9 @@ _.extend JustdoDependencies.prototype,
             tab_template: "justdo_project_dependencies"
             tab_label: "Dependencies"
 
-          APP.modules.project_page.setupPseudoCustomField JustdoDependencies.pseudo_field_id,
-            label: JustdoDependencies.pseudo_field_label
-            field_type: JustdoDependencies.pseudo_field_type
+          APP.modules.project_page.setupPseudoCustomField JustdoDependencies.dependencies_field_id,
+            label: JustdoDependencies.dependencies_field_label
+            field_type: JustdoDependencies.dependencies_field_type
             grid_visible_column: true
             grid_editable_column: true
             default_width: 100
@@ -60,7 +60,7 @@ _.extend JustdoDependencies.prototype,
         destroyer: =>
           APP.justdo_project_pane.unregisterTab "justdo-dependencies"
 
-          APP.modules.project_page.removePseudoCustomFields JustdoDependencies.pseudo_field_id
+          APP.modules.project_page.removePseudoCustomFields JustdoDependencies.dependencies_field_id
 
           @collection_hook.remove()
 

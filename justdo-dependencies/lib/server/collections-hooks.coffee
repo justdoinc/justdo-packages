@@ -15,19 +15,19 @@ _.extend JustdoDependencies.prototype,
         potential_tasks = []
         JD.collections.Tasks.find
           project_id: doc.project_id
-          "#{JustdoDependencies.pseudo_field_id}":
+          "#{JustdoDependencies.dependencies_field_id}":
             $exists: true
           $or: [{state: "pending"}, {state: "in-progress"}, {state: "on-hold"}, {state: "nil"}]
         .forEach (task) ->
-          if task[JustdoDependencies.pseudo_field_id] != null and task[JustdoDependencies.pseudo_field_id] != ""
-            (task[JustdoDependencies.pseudo_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
+          if task[JustdoDependencies.dependencies_field_id] != null and task[JustdoDependencies.dependencies_field_id] != ""
+            (task[JustdoDependencies.dependencies_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
               if dependant == doc.seqId
                 potential_tasks.push task
 
         all_dependencies = new Set()
         for task in potential_tasks
-          if task[JustdoDependencies.pseudo_field_id] != null and task[JustdoDependencies.pseudo_field_id] != ""
-            (task[JustdoDependencies.pseudo_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
+          if task[JustdoDependencies.dependencies_field_id] != null and task[JustdoDependencies.dependencies_field_id] != ""
+            (task[JustdoDependencies.dependencies_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
               all_dependencies.add dependant
         #cache all tasks that we might be depend on
         seq_id_2_state = {}
@@ -39,9 +39,9 @@ _.extend JustdoDependencies.prototype,
           seq_id_2_state[task.seqId] = task.state
 
         for task in potential_tasks
-          if task[JustdoDependencies.pseudo_field_id] != null and task[JustdoDependencies.pseudo_field_id] != ""
+          if task[JustdoDependencies.dependencies_field_id] != null and task[JustdoDependencies.dependencies_field_id] != ""
             all_dependents_are_done = true
-            (task[JustdoDependencies.pseudo_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
+            (task[JustdoDependencies.dependencies_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
               if seq_id_2_state[dependant] != "done"
                 all_dependents_are_done = false
             if all_dependents_are_done
