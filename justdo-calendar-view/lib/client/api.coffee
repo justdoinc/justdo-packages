@@ -26,13 +26,6 @@ _.extend JustdoCalendarView.prototype,
             tab_template: "justdo_calendar_project_pane"
             tab_label: "Calendar"
 
-          APP.modules.project_page.setupPseudoCustomField JustdoCalendarView.end_date_field_id,
-            label: JustdoCalendarView.end_date_field_label
-            field_type: "date"
-            grid_visible_column: true
-            grid_editable_column: true
-            default_width: 200
-
           APP.justdo_resources_availability.enableResourceAvailability JustdoCalendarView.project_custom_feature_id
           return #installer
 

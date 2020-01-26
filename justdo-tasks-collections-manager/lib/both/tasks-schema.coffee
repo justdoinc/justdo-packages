@@ -345,6 +345,51 @@ _.extend JustdoTasksCollectionsManager.prototype,
             ]
           }
 
+      end_date:
+        label: "End Date"
+
+        grid_editable_column: true
+        grid_visible_column: true
+        grid_default_grid_view: false
+        grid_default_width: 122
+
+        grid_column_formatter: "unicodeDateFormatter"
+        grid_column_editor: "UnicodeDateEditor"
+
+        type: String
+        optional: true
+
+        grid_column_filter_settings:
+          type: "unicode-dates-filter"
+          options: {
+            filter_options: [
+              {
+                type: "relative-range",
+                id: "ending-today",
+                label: "Ending today",
+                relative_range: [0, 0]
+              }
+              {
+                type: "relative-range",
+                id: "ended-last-7-days",
+                label: "Ended in the last 7 days",
+                relative_range: [-8, -1]
+              }
+              {
+                type: "relative-range",
+                id: "ended-last-30-days",
+                label: "Ended in the last 30 days",
+                relative_range: [-31, -1]
+              }
+              {
+                type: "relative-range",
+                id: "ended",
+                label: "Ended",
+                relative_range: [null, -1]
+              }
+            ]
+          }
+
       due_date:
         label: "Due Date"
 

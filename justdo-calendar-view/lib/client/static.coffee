@@ -4,4 +4,3 @@ _.extend JustdoCalendarView,
   plugin_human_readable_name: "justdo-calendar-view"
 
   end_date_field_id: "end_date"
-  end_date_field_label: "End Date"
