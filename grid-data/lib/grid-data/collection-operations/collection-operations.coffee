@@ -32,9 +32,14 @@ _.extend GridData.prototype,
       if err
         edit_failed(err)
 
-    if executed is false
+    if executed is false or executed is 0
       # executed is false if edit blocked by events hooks
+      @_grid_data_core._data_changes_handlers.update.call(@_grid_data_core, item_id, [col_field])
+      
       edit_failed(@_error "edit-blocked-by-hook", "Edit blocked by hook")
+
+
+    return
 
   addChild: (path, fields, cb) ->
     # If cb provided, cb will be called with the following args when excution

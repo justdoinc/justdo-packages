@@ -324,7 +324,7 @@ _.extend GridControl.prototype,
       @emit "tree_change", false
 
     @_grid_data.on "edit-failed", (err) =>
-      throw @_error "edit-failed", err
+      console.error @_error "edit-failed", err
 
     @_grid.onCellChange.subscribe (e, edit_req) =>
       @_grid_data.edit(edit_req)
