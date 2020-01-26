@@ -5,8 +5,6 @@ _.extend JustdoDependencies,
 
   task_pane_tab_label: "justdo-dependencies"
 
-  add_pseudo_field: true
-  pseudo_field_id: "justdo_dependencies_f2s"
+  pseudo_field_id: "justdo_task_dependencies"
   pseudo_field_label: "Starts After"
   pseudo_field_type: "string"
-

@@ -1,13 +1,13 @@
 _.extend JustdoDependencies.prototype,
   _setupCollectionsHooks: ->
+    @chatBotHooks()
+
     @projectsInstallUninstallProcedures()
 
     return
 
-  projectsInstallUninstallProcedures: ->
+  chatBotHooks: ->
     self = @
-
-    #todo - cache which projects have the feature installed to and check before hitting the database
 
     self.tasks_collection.after.update (user_id, doc, fieldNames, modifier, options) ->
       if "state" in fieldNames
@@ -38,14 +38,10 @@ _.extend JustdoDependencies.prototype,
         .forEach (task) ->
           seq_id_2_state[task.seqId] = task.state
 
-        console.log ">>>>> seq_ids to states " , seq_id_2_state
-
         for task in potential_tasks
-          console.log ">>>> potential task", task.seqId
           if task[JustdoDependencies.pseudo_field_id] != null and task[JustdoDependencies.pseudo_field_id] != ""
             all_dependents_are_done = true
             (task[JustdoDependencies.pseudo_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
-              console.log ">>>> checking state for dependent ", dependant, seq_id_2_state[dependant]
               if seq_id_2_state[dependant] != "done"
                 all_dependents_are_done = false
             if all_dependents_are_done
@@ -53,6 +49,11 @@ _.extend JustdoDependencies.prototype,
               channel_obj = APP.justdo_chat.generateServerChannelObject("task", {task_id: doc._id}, "bot:your-assistant-jd-dependencies")
               channel_obj.manageSubscribers(add: [doc.owner_id])
       return
+
+    return
+
+  projectsInstallUninstallProcedures: ->
+    self = @
 
     self.projects_collection.after.update (user_id, doc, fieldNames, modifier, options) ->
       feature_id = JustdoDependencies.project_custom_feature_id # shortcut
