@@ -7,7 +7,6 @@ _.extend JustdoGantt.prototype,
       return
 
     @registerConfigTemplate()
-    @registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
 
     return
@@ -16,9 +15,17 @@ _.extend JustdoGantt.prototype,
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoGantt.project_custom_feature_id,
         installer: =>
+
+          APP.justdo_project_pane.registerTab
+            tab_id: "justdo-gantt"
+            order: 103
+            tab_template: "justdo_gantt"
+            tab_label: "Gantt Chart"
+
           return
 
         destroyer: =>
+          APP.justdo_project_pane.unregisterTab "justdo-gantt"
           return
 
     @onDestroy =>

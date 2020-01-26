@@ -37,7 +37,7 @@ _.extend JustdoHighcharts.prototype,
 
     @_load_begun = true
 
-    scripts_count = 3
+    scripts_count = 4
     reportSciptLoadCompleted = =>
       scripts_count -= 1
 
@@ -49,18 +49,17 @@ _.extend JustdoHighcharts.prototype,
     JustdoHelpers.getCachedScript("https://code.highcharts.com/highcharts.js").done ->
       reportSciptLoadCompleted()
 
-      JustdoHelpers.getCachedScript("https://code.highcharts.com/modules/exporting.js").done ->
+      JustdoHelpers.getCachedScript("https://code.highcharts.com/gantt/modules/gantt.js").done ->
         reportSciptLoadCompleted()
 
-        JustdoHelpers.getCachedScript("https://code.highcharts.com/modules/export-data.js").done ->
+        JustdoHelpers.getCachedScript("https://code.highcharts.com/modules/exporting.js").done ->
           reportSciptLoadCompleted()
 
-          return
-
+          JustdoHelpers.getCachedScript("https://code.highcharts.com/modules/export-data.js").done ->
+            reportSciptLoadCompleted()
+            return
         return
-
       return
-
     return
 
   isHighchartLoaded: -> @_highchart_loaded_rv.get()
