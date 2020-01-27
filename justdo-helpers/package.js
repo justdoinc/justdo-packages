@@ -51,6 +51,7 @@ Package.onUse(function (api) {
   api.add_files("lib/both/simple-schema.coffee", both);
   api.add_files("lib/both/functions.coffee", both);
   api.add_files("lib/both/users.coffee", both);
+  api.add_files("lib/both/tasks.coffee", both);
   api.add_files("lib/both/xss.coffee", both);
   api.add_files("lib/both/control-flows.coffee", both);
   api.add_files("lib/both/mongo.coffee", both);
