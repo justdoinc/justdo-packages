@@ -94,6 +94,35 @@ _.extend GridControlMux.prototype,
       reactiveVarEqualsFunc: isIdentical
 
     #
+    # @_main_grid_control_crv
+    #
+    @_main_grid_control_crv = newComputedReactiveVar "main_grid_control", =>
+      @_grid_controls_tabs_dependency.depend()
+
+      if (main_tab = @getAllTabsNonReactive().main)?
+        return main_tab.grid_control
+
+      return null
+    , # options
+      reactiveVarEqualsFunc: isIdentical
+
+    #
+    # @_main_grid_control_if_ready_crv
+    #
+    @_main_grid_control_if_ready_crv = newComputedReactiveVar "main_grid_control_if_ready", =>
+      # Returns the main grid control only if tab
+      # is ready
+      @_grid_controls_tabs_dependency.depend()
+
+      if (main_tab = @getAllTabsNonReactive().main)?
+        if main_tab.state == "ready"
+          return main_tab.grid_control
+
+      return null
+    , # options
+      reactiveVarEqualsFunc: isIdentical
+
+    #
     # @_current_path_crv
     #
     @_current_path_crv = newComputedReactiveVar "current_gcm_path", =>
@@ -133,6 +162,8 @@ _.extend GridControlMux.prototype,
     @_current_active_tab_state_sensitive_crv.stop()
     @_current_grid_control_crv.stop()
     @_current_grid_control_if_ready_crv.stop()
+    @_main_grid_control_crv.stop()
+    @_main_grid_control_if_ready_crv.stop()
     @_current_path_crv.stop()
 
   isItemsSubscriptionReady: ->
@@ -647,6 +678,14 @@ _.extend GridControlMux.prototype,
       @_current_grid_control_crv.getSync()
     else
       @_current_grid_control_if_ready_crv.getSync()
+
+  getMainGridControl: (require_ready=false) ->
+    # Same as getActiveGridControl for the main tab
+
+    if not require_ready
+      @_main_grid_control_crv.getSync()
+    else
+      @_main_grid_control_if_ready_crv.getSync()
 
   getActiveGridControlSectionsState: ->
     # Returns the current grid's sections state object
