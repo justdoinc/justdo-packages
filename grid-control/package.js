@@ -130,6 +130,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/formatters-and-editors/datetime-formatter/datetime-formatter.coffee', client);
   api.add_files('lib/client/formatters-and-editors/datetime-formatter/datetime-formatter.sass', client);
 
+  api.add_files('lib/client/formatters-and-editors/array-fields/array-fields.coffee', client);
 
   api.export('GridControl');
 });

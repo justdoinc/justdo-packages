@@ -7,6 +7,8 @@ formatDecimals = (decimal) ->
 GridControl.installFormatter "defaultFormatter",
   defaultHoverCaption: (friendly_args) -> undefined
 
+  valueTransformation: (value) -> value
+
   slick_grid: ->
     custom_style = ""
 
@@ -17,6 +19,8 @@ GridControl.installFormatter "defaultFormatter",
     if not value?
       value = ""
     else
+      value = formatter_obj.valueTransformation(value)
+
       if (grid_ranges = schema.grid_ranges)?
         value_range = null
         for range_def in grid_ranges
@@ -63,6 +67,8 @@ GridControl.installFormatter "defaultFormatter",
 
   print: (doc, field, path) ->
     {value, schema} = @getFriendlyArgs()
+
+    value = formatter_obj.valueTransformation(value)
 
     if schema.type is Number and schema.decimal is true
       return formatDecimals(value)

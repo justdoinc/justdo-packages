@@ -25,8 +25,10 @@ GridControl.installEditor "TextareaEditor",
 
     return
 
+  valueTransformation: (value) -> value
+
   setInputValue: (val) ->
-    @$input.val(val)
+    @$input.val(@valueTransformation(val))
 
     @$input.autosize()
 
