@@ -5,7 +5,8 @@ Template.justdo_project_dependencies.onCreated ->
   @my_tasks_blocked_by_others = new ReactiveVar []
 
   @autorun =>
-    project_id = JD.activeJustdo({_id: 1})._id
+    if not (project_id = JD.activeJustdo({_id: 1})?._id)?
+      return
 
     all_the_potentially_blocked_tasks_query =
       project_id: project_id
