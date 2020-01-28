@@ -5,9 +5,10 @@ _.extend JustdoDependencies,
 
   task_pane_tab_label: "justdo-dependencies"
 
-  dependencies_field_id: "justdo_task_dependencies_string"
+  dependencies_field_id: "justdo_task_dependencies"
   dependencies_field_label: "Starts After"
-  dependencies_field_type: "string"
+  dependencies_field_type: "numbers_array"
+  dependencies_field_schema_type: [Number]
 
   # Only tasks with the following states that have dependencies that aren't met, are considered blocked
   blocked_tasks_states: ["pending", "in-progress", "on-hold", "nil"]

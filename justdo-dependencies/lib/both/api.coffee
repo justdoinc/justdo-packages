@@ -28,15 +28,10 @@ _.extend JustdoDependencies.prototype,
     if not (dependencies = task_doc[JustdoDependencies.dependencies_field_id])?
       return []
 
-    if not _.isString(dependencies)
+    if not _.isArray(dependencies)
       return []
 
-    dependencies = dependencies.trim()
-
-    if dependencies == ""
-      return []
-
-    return dependencies.split(/\s*,\s*/).map(Number)
+    return dependencies
 
   getTaskDependenciesTasksObjs: (task_doc, options, user_id) ->
     options = _.extend {fields: null}, options

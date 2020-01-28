@@ -15,16 +15,8 @@ _.extend JustdoDependencies.prototype,
     if JustdoDependencies.dependencies_field_id not in field_names
       return true
 
-    if not (new_value = modifier["$set"]?[JustdoDependencies.dependencies_field_id])
+    if not (new_value = modifier["$set"]?[JustdoDependencies.dependencies_field_id])?
       return true
-
-    # Check for right format (comma separated)
-    re = /^(\d+(\s*,\s*\d+)*)\s*?$/g
-    if not re.test new_value
-      JustdoSnackbar.show
-        text: "Please enter comma-separated tasks sequence numbers."
-
-      return false
 
     # todo: other checkes:
     # check that the user has access to all the tasks that he lists
