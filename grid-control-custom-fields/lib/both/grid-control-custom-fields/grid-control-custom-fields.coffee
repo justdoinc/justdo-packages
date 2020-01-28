@@ -30,7 +30,7 @@ _.extend GridControlCustomFields,
       type: String
 
       # Update getJsTypeForFieldType() if you change the list of allowed values
-      allowedValues: ["string", "number", "date", "boolean", "select", "calc"]
+      allowedValues: ["string", "strings_array", "number", "numbers_array", "date", "boolean", "select", "calc"]
 
     field_options:
       type: Object
@@ -129,8 +129,12 @@ _.extend GridControlCustomFields,
   getJsTypeForFieldType: (field_type) ->
     if field_type == "string"
       return String
+    if field_type == "strings_array"
+      return [String]
     else if field_type == "number"
       return Number
+    else if field_type == "numbers_array"
+      return [Number]
     else if field_type == "date"
       return String # XXX Yeah... they are strings ...
     else if field_type == "calc"
@@ -214,6 +218,10 @@ _.extend GridControlCustomFields,
               formatter_type = "keyValueFormatter"
             else if custom_field_definition.field_type == "date"
               formatter_type = "unicodeDateFormatter"
+            else if custom_field_definition.field_type == "strings_array"
+              formatter_type = "arrayDefaultFieldFormatter"
+            else if custom_field_definition.field_type == "numbers_array"
+              formatter_type = "arrayDefaultFieldFormatter"
             else if custom_field_definition.field_type == "calc"
               formatter_type = "calculatedFieldFormatter"
             else
@@ -232,6 +240,10 @@ _.extend GridControlCustomFields,
               editor_type = "SelectorEditor"
             else if custom_field_definition.field_type == "date"
               editor_type = "UnicodeDateEditor"
+            else if custom_field_definition.field_type == "strings_array"
+              editor_type = "ArrayCSVEditor"
+            else if custom_field_definition.field_type == "numbers_array"
+              editor_type = "ArrayCSVEditor"
             else if custom_field_definition.field_type == "calc"
               editor_type = "CalculatedFieldEditor"
             else
