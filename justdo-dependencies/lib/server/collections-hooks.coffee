@@ -9,45 +9,34 @@ _.extend JustdoDependencies.prototype,
   chatBotHooks: ->
     self = @
 
+    # Send a chat message that notify that all blocking tasks been fulfilled
     self.tasks_collection.after.update (user_id, doc, fieldNames, modifier, options) ->
-      if "state" in fieldNames
-        # fetch all the tasks from this project that have any dependencies, and are candidates for 'all clear' notification
-        potential_tasks = []
-        JD.collections.Tasks.find
-          project_id: doc.project_id
-          "#{JustdoDependencies.dependencies_field_id}":
-            $exists: true
-          $or: [{state: "pending"}, {state: "in-progress"}, {state: "on-hold"}, {state: "nil"}]
-        .forEach (task) ->
-          if task[JustdoDependencies.dependencies_field_id] != null and task[JustdoDependencies.dependencies_field_id] != ""
-            (task[JustdoDependencies.dependencies_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
-              if dependant == doc.seqId
-                potential_tasks.push task
+      if not (new_state = modifier?.$set?.state)?
+        return
 
-        all_dependencies = new Set()
-        for task in potential_tasks
-          if task[JustdoDependencies.dependencies_field_id] != null and task[JustdoDependencies.dependencies_field_id] != ""
-            (task[JustdoDependencies.dependencies_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
-              all_dependencies.add dependant
-        #cache all tasks that we might be depend on
-        seq_id_2_state = {}
-        JD.collections.Tasks.find
-          project_id: doc.project_id
-          seqId:
-            $in: Array.from all_dependencies
-        .forEach (task) ->
-          seq_id_2_state[task.seqId] = task.state
+      if new_state not in JustdoDependencies.non_blocking_tasks_states
+        return
 
-        for task in potential_tasks
-          if task[JustdoDependencies.dependencies_field_id] != null and task[JustdoDependencies.dependencies_field_id] != ""
-            all_dependents_are_done = true
-            (task[JustdoDependencies.dependencies_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
-              if seq_id_2_state[dependant] != "done"
-                all_dependents_are_done = false
-            if all_dependents_are_done
-              APP.justdo_chat.sendDataMessageAsBot("task", {task_id: task._id}, "bot:your-assistant-jd-dependencies", {type: "dependencies-cleared-for-execution"}, {})
-              channel_obj = APP.justdo_chat.generateServerChannelObject("task", {task_id: doc._id}, "bot:your-assistant-jd-dependencies")
-              channel_obj.manageSubscribers(add: [doc.owner_id])
+      # fetch all the tasks from this project that have any dependencies, and are candidates for 'all clear' notification
+      potential_tasks = []
+      JD.collections.Tasks.find
+        project_id: doc.project_id
+        "#{JustdoDependencies.dependencies_field_id}":
+          $exists: true
+        state: {$in: JustdoDependencies.blocked_tasks_states}
+      .forEach (task) ->
+        for dependencies_seq_ids in self.getTaskDependenciesSeqId(task)
+          if dependencies_seq_ids == doc.seqId
+            potential_tasks.push task
+
+        return
+
+      for potential_task_doc in potential_tasks
+        if _.isEmpty(self.getTasksObjsBlockingTask(potential_task_doc))
+          APP.justdo_chat.sendDataMessageAsBot("task", {task_id: potential_task_doc._id}, "bot:your-assistant", {type: "dependencies-cleared-for-execution"}, {})
+          channel_obj = APP.justdo_chat.generateServerChannelObject("task", {task_id: doc._id}, "bot:your-assistant-jd-dependencies")
+          channel_obj.manageSubscribers(add: [doc.owner_id])
+
       return
 
     return

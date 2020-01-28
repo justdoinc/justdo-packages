@@ -1,57 +1,64 @@
 Template.justdo_project_dependencies.onCreated ->
   self = @
 
-  @tasks_to_start = new ReactiveVar []
-  @pending_tasks = new ReactiveVar []
+  @my_non_blocked_blocking_tasks = new ReactiveVar []
+  @my_tasks_blocked_by_others = new ReactiveVar []
 
   @autorun =>
-    tasks_to_start = []
-    pending_tasks = []
-    # find all the tasks from this project, where the current user is owner, and have any dependencies
-    JD.collections.Tasks.find
-      project_id: JD.activeJustdo({_id: 1})._id
-      owner_id: Meteor.userId()
+    project_id = JD.activeJustdo({_id: 1})._id
+
+    all_the_potentially_blocked_tasks_query =
+      project_id: project_id
+      state: {$in: JustdoDependencies.blocked_tasks_states}
       "#{JustdoDependencies.dependencies_field_id}":
         $exists: true
-      $or: [{state: "pending"}, {state: "in-progress"}, {state: "on-hold"}, {state: "nil"}]
-    .forEach (task) ->
-      if task[JustdoDependencies.dependencies_field_id] != null and task[JustdoDependencies.dependencies_field_id] != ""
-        all_dependents_are_done = true
-        # for each dependent seq ID
-        (task[JustdoDependencies.dependencies_field_id].split(/\s*,\s*/).map(Number)).forEach (dependant) ->
-          if (task_obj = JD.collections.Tasks.findOne({seqId: dependant}))
-            if task_obj.state != "done"
-              all_dependents_are_done = false
-        if all_dependents_are_done
-          tasks_to_start.push task
-        else
-          pending_tasks.push task
 
-    self.tasks_to_start.set tasks_to_start
-    self.pending_tasks.set pending_tasks
+    my_non_blocked_blocking_tasks = {}
+    my_tasks_blocked_by_others = {}
+    JD.collections.Tasks.find(all_the_potentially_blocked_tasks_query).forEach (task) ->
+      if _.isEmpty(blocking_tasks_objs = APP.justdo_dependencies.getTasksObjsBlockingTask(task, {fields: {_id: 1, owner_id: 1, title: 1, seqId: 1, state: 1, project_id: 1}}))
+        # Not blocked task
+        return
+
+      for blocking_task_obj in blocking_tasks_objs
+        # Check if I own task and others are blocking me
+        if task.owner_id == Meteor.userId() and blocking_task_obj.owner_id != Meteor.userId()
+          if task._id not of my_tasks_blocked_by_others
+            my_tasks_blocked_by_others[task._id] = task
+            my_tasks_blocked_by_others[task._id]._blocked_by = []
+
+          my_tasks_blocked_by_others[task._id]._blocked_by.push blocking_task_obj
+
+        # Check if any of the blocking tasks are mine, if so, check if I can start working on it,
+        # i.e. whether it should be under my_non_blocked_blocking_tasks
+        if blocking_task_obj.owner_id == Meteor.userId()
+          if _.isEmpty(APP.justdo_dependencies.getTasksObjsBlockingTask(blocking_task_obj))
+            if blocking_task_obj._id not of my_non_blocked_blocking_tasks
+              my_non_blocked_blocking_tasks[blocking_task_obj._id] = blocking_task_obj
+              my_non_blocked_blocking_tasks[blocking_task_obj._id]._blocking_tasks = []
+            my_non_blocked_blocking_tasks[blocking_task_obj._id]._blocking_tasks.push task
+
+      return # end forEach
+
+    @my_non_blocked_blocking_tasks.set _.values(my_non_blocked_blocking_tasks)
+    @my_tasks_blocked_by_others.set _.values(my_tasks_blocked_by_others)
+
+    return # end autorun
 
   return
 
 
 Template.justdo_project_dependencies.helpers
-  tasksToStart: ->
-    return Template.instance().tasks_to_start.get()
+  myNonBlockedBlockingTasks: ->
+    return Template.instance().my_non_blocked_blocking_tasks.get()
 
-  tasksWaiting: ->
-    return Template.instance().pending_tasks.get()
-
-  hasTasksToStart: ->
-    return (Template.instance().tasks_to_start.get().length > 0)
-  hasTasksWaiting: ->
-    return (Template.instance().pending_tasks.get().length > 0)
+  myTasksBlockedByOthers: ->
+    return Template.instance().my_tasks_blocked_by_others.get()
 
 Template.justdo_project_dependencies.events
-
   "click .justdo-dependencies-line": (e, tpl) ->
+    if (task_id = $(e.target).closest("[task-id]").attr("task-id"))?
+      gcm = APP.modules.project_page.getCurrentGcm()
+      gcm.setPath(["main", task_id], {collection_item_id_mode: true})
 
-    task_id = e.target.getAttribute"task_id"
-    gcm = APP.modules.project_page.getCurrentGcm()
-    gcm.setPath(["main", task_id], {collection_item_id_mode: true})
-
-
-return
+    return

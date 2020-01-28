@@ -1,60 +1,26 @@
-APP.justdo_highcharts.requireHighcharts()
-
-
 Template.justdo_gantt.onCreated ->
   self = @
 
-  # the following are the color codes for different 'depth' of the gantt baskets.
-  # if 'deeper' depth is presented, highcharts will provide default colors
-  @gantt_colors = ["#146eff","#87a8de", "#d5e2f7", "#dbf8ff", "#dbfff3"]
+  @following_active_task = new ReactiveVar false
 
+  @gantt_top_path = new ReactiveVar "/"
+  @gantt_title = new ReactiveVar ""
 
   @dateStringToUTC = (date) ->
     re = /^\d\d\d\d-\d\d-\d\d$/g
+
     if not re.test date
       return Date.UTC(0)
+
     split_date = date.split("-")
+
     return Date.UTC(split_date[0], split_date[1] - 1, split_date[2])
 
-  @is_grid_data_ready = new ReactiveVar false
-  @gantt_top_path = new ReactiveVar "/"
-  @gantt_title = new ReactiveVar ""
-  @following_active_task = new ReactiveVar false
-
-  # this autorun makes the gantt following the selected task
-  @autorun =>
-    if self.following_active_task.get()
-      if (current_path = JD.activePath())
-        self.gantt_top_path.set current_path
-        self.gantt_title.set JD.activeItem().title
-        return
-    self.gantt_top_path.set "/"
-    return
-
-  # this autorun deals with the gantt title
-  @autorun =>
-    top_path  = self.gantt_top_path.get()
-    if top_path == "/"
-      self.gantt_title.set JD.activeJustdo().title
+  @drawGantt = ->
+    if not (gcm = APP.modules.project_page?.grid_control_mux.get())?
       return
 
-    return
-
-  #this autorun draws the gantt chart
-  @autorun =>
-    if not (gc = APP.modules.project_page?.mainGridControl())
-      return
-
-    #trigger reactivity when grid data will be ready
-    self.is_grid_data_ready.get()
-    checkGridData = ->
-      if gc._grid_data
-        self.is_grid_data_ready.set true
-      else
-        setTimeout checkGridData, 500
-
-    if not gc._grid_data
-      setTimeout checkGridData, 500
+    if not (gc = gcm.getMainGridControl(true))?
       return
 
     top_path = self.gantt_top_path.get()
@@ -64,20 +30,21 @@ Template.justdo_gantt.onCreated ->
 
     no_data = true
 
-    gc._grid_data.each top_path
-    ,
+    gc._grid_data.each top_path,
       expand_only: false
       filtered_tree: false
     , (section, item_type, item_obj, path) ->
       path_depth = (path.split("/").length) - 2
+      item_label = JustdoHelpers.taskCommonName(item_obj, 40)
+
       if path_depth == top_path_depth + 1
         current_series =
-          name: item_obj.title
+          name: item_label
           data: []
         series.push current_series
 
       data_obj =
-        name: item_obj.title
+        name: item_label
         id: item_obj._id
         color: self.gantt_colors[path_depth - top_path_depth - 1]
 
@@ -92,6 +59,7 @@ Template.justdo_gantt.onCreated ->
       if item_obj.state == "done"
         data_obj.completed =
           amount: 1
+
       # in regards to due dates - highcharts define that in milestones only the start option is handled, while end is ignored.
       # so therefore, we will add it a second time
       if item_obj.due_date
@@ -99,14 +67,10 @@ Template.justdo_gantt.onCreated ->
         delete data_obj.end
         data_obj.milestone = true
 
-
-      # dealing with dependencies:
-      if APP.justdo_dependencies
-        if (dependencies = item_obj[APP.justdo_dependencies.pseudoFiledId()])
-          data_obj.dependency = []
-          dependencies.split(/\s*,\s*/).map(Number).forEach (dependant) ->
-            if (dependent_task_obj = JD.collections.Tasks.findOne({seqId: dependant}))
-              data_obj.dependency.push dependent_task_obj._id
+      if APP.justdo_dependencies?.isPluginInstalledOnProjectDoc()
+        data_obj.dependency = []
+        for dependency_obj in APP.justdo_dependencies.getTaskDependenciesTasksObjs(item_obj)
+          data_obj.dependency.push dependency_obj._id
 
       current_series.data.push data_obj
       no_data = false
@@ -119,6 +83,9 @@ Template.justdo_gantt.onCreated ->
         id: "-"
       ]
 
+    if _.isEmpty(series)
+      $("#gantt-chart-container").html("""<h2 class="mt-5 text-center text-secondary">No information to build gantt chart</h2>""")
+      return
 
     # we must add an empty series here to present the last series properly when collapsed
     series.push
@@ -128,19 +95,18 @@ Template.justdo_gantt.onCreated ->
         id: "--"
       }]
 
-
-    Highcharts.ganttChart "gantt_chart_container"
-    ,
+    viewport_scroll_top = $(".justdo-project-pane-tab-container").scrollTop()
+    Highcharts.ganttChart "gantt-chart-container",
       title:
         text: self.gantt_title.get()
-        margin: 15
+        margin: 10
 
       navigator:
         enabled: true,
         liveRedraw: true,
         height: 10
         series:
-          type: 'gantt'
+          type: "gantt"
           pointPlacement: 0.5
           pointPadding: 0.25
           data: [{
@@ -166,6 +132,7 @@ Template.justdo_gantt.onCreated ->
 
       plotOptions:
         series:
+          animation: false
 
           point:
             events:
@@ -176,12 +143,72 @@ Template.justdo_gantt.onCreated ->
 
       series: series
 
-    return # end of autorun
+    $(".justdo-project-pane-tab-container").scrollTop(viewport_scroll_top)
+    return # end of drawGantt
 
-  return # end of onCreated
+  return
 
-Template.justdo_gantt.events
-  "change #jd_gantt_follow_active_item_id": (e, tpl) ->
-    tpl.following_active_task.set $("#jd_gantt_follow_active_item_id").prop("checked")
+Template.justdo_gantt.onRendered ->
+  self = @
+
+  APP.justdo_highcharts.requireHighcharts()
+
+  # the following are the color codes for different 'depth' of the gantt baskets.
+  # if 'deeper' depth is presented, highcharts will provide default colors
+  @gantt_colors = ["#146eff", "#87a8de", "#d5e2f7", "#dbf8ff", "#dbfff3"]
+
+
+  # this autorun makes the gantt following the selected task
+  @autorun =>
+    if self.following_active_task.get()
+      if (current_path = JD.activePath())?
+        self.gantt_top_path.set current_path
+        self.gantt_title.set JustdoHelpers.taskCommonName(JD.activeItem({seqId: 1, title: 1}), 80)
+
+        return
+
+    self.gantt_top_path.set "/"
+    self.gantt_title.set JD.activeJustdo().title
+
     return
 
+  # this autorun triggers gantt charts redraws
+  @autorun =>
+    if not (gcm = APP.modules.project_page?.grid_control_mux.get())?
+      return
+
+    if not (gc = gcm.getMainGridControl(true))?
+      return
+
+    # Add reactivity to JustDos changes
+    project_id = JD.activeJustdo({_id: 1, title: 1})._id
+    # Add reactivity to Tasks changes
+    JD.collections.Tasks.find({project_id: project_id}, {fields: {_id: 1, title: 1, start_date: 1, end_date: 1, due_date: 1, state: 1, "#{JustdoDependencies.dependencies_field_id}": 1}}).fetch()
+    # Add reactivity to gantt title and top path
+    self.gantt_title.get()
+    self.gantt_top_path.get()
+    # Add reactivity to un/install of the dependencies plugin
+    APP.justdo_dependencies?.isPluginInstalledOnProjectDoc()
+
+    Tracker.nonreactive ->
+      Meteor.defer ->
+        # Defer is here to let the grid process the updates before we call the .each() iteration
+        self.drawGantt()
+
+        return
+
+    return
+
+  return
+
+Template.justdo_gantt.helpers
+  isFollowingActiveTask: ->
+    tpl = Template.instance()
+
+    return tpl.following_active_task.get()
+
+Template.justdo_gantt.events
+  "click .follow-active-task-toggle": (e, tpl) ->
+    tpl.following_active_task.set(not tpl.following_active_task.get())
+    
+    return

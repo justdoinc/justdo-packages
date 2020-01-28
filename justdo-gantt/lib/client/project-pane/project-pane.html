@@ -1,12 +1,15 @@
 <template name="justdo_gantt">
-  <div class="jd_gantt_chart">
-    <div class="jd_gantt_follow_active_item">
-      <input type="checkbox" id="jd_gantt_follow_active_item_id" > Follow selected task
+  <div class="jd-gantt-chart">
+    <div class="follow-active-task-toggle d-flex align-items-center bg-light p-1 rounded mb-1">
+      {{#if isFollowingActiveTask}}
+        <svg class="jd-icon text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"></use></svg>
+      {{else}}
+        <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"></use></svg>
+      {{/if}}
+      <span class="text-body text-uppercase font-weight-bold jd-c-pointer ml-1">Follow selected task</span>
     </div>
-    <div class="gannt_chart_wrapper">
-      <div id="gantt_chart_container">
-      </div>
+    <div class="gannt-chart-wrapper">
+      <div id="gantt-chart-container"></div>
     </div>
   </div>
-
 </template>
