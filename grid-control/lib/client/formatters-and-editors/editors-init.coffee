@@ -142,7 +142,9 @@ base_slick_grid_editors_prototype =
     field_name = @getEditorFieldName()
 
     field_schema = {}
-    field_schema[field_name] = @context.field_schema
+    # A bug in SimpleSchema caused the field_schema to be edited in place when an array type was set for
+    # the field schema, the following performs a shallow copy as workaround
+    field_schema[field_name] = _.extend {}, @context.field_schema
     field_simple_schema = new SimpleSchema(field_schema)
 
     serialized_value_in_object = {}
