@@ -1073,6 +1073,13 @@ _.extend JustdoChat.prototype,
             en:
               "An email '{{subject}}' received for this task from {{sender}} . Check the task bottom sheet for more details."
 
+        # This one is in use by the justdo-dependencies plugin - move to the package when we'll have proper API to extend msgs_types.
+        "dependencies-cleared-for-execution":
+          data_schema: {}
+          rec_msgs_templates: # rec stands for recommanded
+            en:
+              "All dependencies are fulfilled. You can start working on this task."
+
     return
 
   _registerBot: (bot_id, bot_def) ->
