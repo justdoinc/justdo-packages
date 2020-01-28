@@ -21,21 +21,15 @@ _.extend JustdoDependencies.prototype,
       potential_tasks = []
       JD.collections.Tasks.find
         project_id: doc.project_id
-        "#{JustdoDependencies.dependencies_field_id}":
-          $exists: true
+        "#{JustdoDependencies.dependencies_field_id}": doc.seqId
         state: {$in: JustdoDependencies.blocked_tasks_states}
-      .forEach (task) ->
-        for dependencies_seq_ids in self.getTaskDependenciesSeqId(task)
-          if dependencies_seq_ids == doc.seqId
-            potential_tasks.push task
-
-        return
-
-      for potential_task_doc in potential_tasks
+      .forEach (potential_task_doc) ->
         if _.isEmpty(self.getTasksObjsBlockingTask(potential_task_doc))
           APP.justdo_chat.sendDataMessageAsBot("task", {task_id: potential_task_doc._id}, "bot:your-assistant", {type: "dependencies-cleared-for-execution"}, {})
           channel_obj = APP.justdo_chat.generateServerChannelObject("task", {task_id: doc._id}, "bot:your-assistant-jd-dependencies")
           channel_obj.manageSubscribers(add: [doc.owner_id])
+
+        return
 
       return
 
