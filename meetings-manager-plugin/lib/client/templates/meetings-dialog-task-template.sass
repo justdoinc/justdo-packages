@@ -1,102 +1,72 @@
-.summary-note-wrapper
-  padding: 0px
+.meetings_dialog-task
+  border-bottom: 1px dashed #D8E1E8
+  padding: 8px 0
+  position: relative
+  background-color: white
+  &:last-child
+    border-bottom: none
+  &:hover
+    .btn-agenda-edit
+      display: block
 
-.task-private-note
-  padding: 8px 25px
+  .meeting-task-index
+    font-size: 14px
+    color: #BECDD9
+    margin-right: 0.7rem
 
-.task-added-tasks
-  padding: 3px 0px
-  .title
-    font-size: 13px
+  .dialog-task-item
+    font-size: 14px
 
-.dialog-task-item
-  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.15)
-
-.task-title
-  font-size: 14px
-
-.task-user-note
-  .user
-    font-size: 13px
+  .dialog-task-seqId
     font-weight: bold
-  textarea
-    resize: none
-  .note-box
-    font-size: 13px
-    resize: none
-    white-space: pre-wrap
+    margin-right: 4px
 
-.task-summary-note
-  border-top: 1px solid #F2F2F2
-  padding-top: 7px
-  margin-top: 6px
-  .note-box
-    width: 100%
-    min-height: 45px
-    background: rgba(215, 215, 215, 0.12)
-    font-size: 13px
-    resize: none
-    white-space: pre-wrap
-
-.task-controls-container
-  .jd-icon
-    padding: 3px
-    width: 20px
-    height: 20px
-    &:hover
-      background-color: rgba(0, 0, 0, 0.08)
-  .add-note
-    width: 22px
-    height: 22px
-  .btn-group.open .dropdown-toggle
-    box-shadow: none
-  .dropdown-menu
-    background: #FFFFFF
-    padding: 5px 12px
-    li
-      border-bottom: 1px solid #f3f3f3
-      font-size: 13px
-      color: black
-      font-weight: normal
-      padding: 3px 0px
+  .task-controls-container
+    .task-controls-dropdown
       cursor: pointer
-      &:last-child
-        border-bottom: none
-  .move
-    padding: 0 1px
-    cursor: pointer
-  .dropdown-menu
-    left: -128px
-  .btn-add-note
-  .btn-add-private-note
-  .btn-add-task
-    cursor: pointer
-  .btn-agenda-edit
-    display: none
-    cursor: pointer
-  .recover-task
-    background-color: #bfbfbf !important
-    background-position: -159px 4px
-    cursor: pointer
-  .sort-task
-    cursor: move
+      color: #A5ABB3
+      padding: 3px
+      width: 14px
+      height: 20px
+      transition: all 0.3s
+      padding: 0px
+      &:hover
+        background-color: rgba(234, 236, 237, 0.64)
+        color: 607081
+    .dropdown-item
+      font-size: 14px
+      padding: 0.25rem 0.5rem 0.25rem 0.25rem
+      cursor: pointer
+      .jd-icon
+        margin-right: 6px
+        width: 20px
+        height: 20px
 
-.agenda-edit-mode
-  .meetings_dialog-task
-    overflow-y: hidden
-    overflow-x: visible !important
-    &.remove
-      opacity: 0.3
-  .add-note-group
-      display: none
   .btn-agenda-edit
-    display: inline-block
-  .meeting-note
+    cursor: pointer
+    padding: 4px
+    position: absolute
+    right: -5px
+    top: 30px
+    color: #A5ABB3
+    transition: all 0.3s
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)
+    cursor: move
     display: none
+    background-color: white
+    border-radius: 2px
+    &:hover
+      color: 607081
+
+
+
+
+
+
+
+// ===============================
 
 .agenda-draft-mode
-  .btn-agenda-edit
-    display: inline-block
   &.dragging
     .meetings_dialog-task
       overflow-y: hidden
@@ -114,10 +84,6 @@
     right: 0
     content: "..."
     background: white
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
-    font-size: 14px
   .empty:after
     top: auto
     bottom: 0
-  .note
-    color: grey

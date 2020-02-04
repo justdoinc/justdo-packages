@@ -110,8 +110,5 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/templates/meetings-config.sass" , client);
   api.addFiles("lib/client/templates/meetings-config.coffee" , client);
 
-  // Media
-  api.addAssets("media/icons.png", client);
-
   api.export("MeetingsManagerPlugin", both);
 });

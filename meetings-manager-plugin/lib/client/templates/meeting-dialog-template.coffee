@@ -60,7 +60,7 @@ Template.meetings_meeting_dialog.onCreated ->
     current_project_id = Router.current().project_id
 
     if (current_project_id? and current_project_id != @project_id) or !current_project_id?
-      $(".meetings_meeting-dialog .modal").remove()
+      $(".meetings_meeting-dialog").remove()
 
   @html_representation = ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -215,19 +215,11 @@ Template.meetings_meeting_dialog.onCreated ->
 
 
 Template.meetings_meeting_dialog.onRendered ->
-
-  $('.meetings_meeting-dialog .modal').css("z-index", 200)
-
   instance = this
-
   meeting_note_box = @$ "[name=\"note\"]"
   meeting_note_box.autosize()
 
-  @$(".modal-content").draggable
-    handle: '.modal-header'
-    containment: ".global-wrapper"
-
-  @$(".modal-content").resizable()
+  # @$(".modal-content").resizable()
 
   @$(".meeting-date").datepicker()
 
@@ -251,18 +243,6 @@ Template.meetings_meeting_dialog.onRendered ->
     if updateTaskOrder
       saveTasksOrder(instance)
       Session.set "updateTaskOrder", false
-
-  # Scroll event for .meeting-tasks
-  # lastScrollTop = 0
-  #
-  # $('.meeting-tasks').on 'scroll', ->
-  #   st = $(this).scrollTop()
-  #   if st > lastScrollTop and st > 150
-  #     $(".meetings_meeting-dialog .modal-body").addClass "show-less"
-  #   lastScrollTop = st
-  #
-  #   if lastScrollTop == 0
-  #     $(".meetings_meeting-dialog .modal-body").removeClass "show-less"
 
 
 Template.meetings_meeting_dialog.helpers
@@ -440,7 +420,7 @@ Template.meetings_meeting_dialog.events
 
 
 
-  'documentChange .meeting-header, documentChange .meeting-note': (e, tmpl, doc, changes) ->
+  'documentChange .meeting-dialog-info, documentChange .meeting-note': (e, tmpl, doc, changes) ->
     tmpl.form.validate()
     if tmpl.form.isValid()
 
@@ -464,6 +444,7 @@ Template.meetings_meeting_dialog.events
     if e.which == 13
       $(e.currentTarget).trigger 'change'
       tmpl.$(".meeting-add-task .add-task-btn").trigger 'click'
+      $(".meeting-task-add").val ""
 
   # "click .move": (e, tmpl) ->
   #   tmpl.form.validate()
@@ -609,7 +590,7 @@ Template.meetings_meeting_dialog.events
   "click .btn-discard-no": (e, tmpl) ->
     $(".discard-msg").hide()
 
-  'click [data-dismiss="modal"]': (e, tmpl) ->
+  'click .meeting-dialog-close': (e, tmpl) ->
     APP.meetings_manager_plugin.removeMeetingDialog()
 
   "keypress [name=\"note\"]": (e, tmpl) ->

@@ -175,14 +175,6 @@ Template.meetings_dialog_task.helpers
   mayEditChildTask: () ->
     return Template.instance().data.meeting.status != "adjourned"
 
-
-  firstItem: () ->
-    return @item.task_order == 0
-
-  lastItem: () ->
-    return @item.task_order == @meeting.tasks.length - 1
-
-
   index: () ->
     return (@item.task_order + 1)
 

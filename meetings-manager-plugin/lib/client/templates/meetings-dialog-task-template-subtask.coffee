@@ -67,7 +67,7 @@ Template.meetings_dialog_task_subtask.helpers
 Template.meetings_dialog_task_subtask.events
   "blur .task-subject-box": (e, tpl) ->
     if tpl.task_obj
-      subject = e.target.value
+      subject = $(e.target).text()
       if tpl.data.may_edit
         JD.collections.Tasks.update {_id: tpl.task_obj._id}, {$set: {title: subject}}
         APP.meetings_manager_plugin.meetings_manager.saveSubTaskSubject tpl.data.meeting_id, tpl.data.parent_task_id, tpl.task_obj._id, subject
@@ -103,6 +103,3 @@ Template.meetings_dialog_task_subtask.events
     JD.collections.Tasks.update _id: tpl.task_obj._id,
       $set: {pending_owner_id: selected_user_id}
     return
-
-
-

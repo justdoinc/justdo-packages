@@ -1,56 +1,221 @@
-.title-bar
-  display: none
-  position: fixed
-  bottom: 0px
-  right: 10px
-  z-index: 10
-  padding: 5px 20px
-  background: #f0f0f0
+$meeting_dialog_width: 680px
+$meeting_dialog_header_height: 50px
+$meeting_dialog_info_height: 100px
+$meeting_dialog_footer_height: 70px
+$meeting_color: #687B8E
+$meeting-padding: 2.5rem
 
-.meeting-task-add
-  width: 128px !important
+.meetings_meeting-dialog
+  position: absolute
+  z-index: 1000
+  top: 40px
+  bottom: 40px
+  height: auto
+  width: $meeting_dialog_width
+  left: 50%
+  margin-left: - $meeting_dialog_width / 2
+  background-color: white
+
+
+  .meeting-header,
+  .agenda-header,
+  .meeting-tasks,
+  .discard-msg
+    display: none !important
+
+
+  .meeting-dialog-header
+    height: $meeting_dialog_header_height
+    position: relative
+
+  .meeting-dialog-close
+    opacity: 0.5
+    cursor: pointer
+    stroke-width: 2
+    color: $meeting_color
+    &:hover
+      opacity: 1
+
+  .meeting-dialog-state
+    background-color: #687B8E
+    position: absolute
+    top: -12px
+    left: $meeting-padding
+    color: white
+    font-size: 12px
+    font-weight: bold
+    text-transform: uppercase
+    padding: 4px 8px
+
+  .meeting-dialog-actions
+    background-color: white
+    position: absolute
+    top: -15px
+    right: 70px
+    padding: 5px 8px
+    .jd-icon
+      color: $meeting_color
+      padding: 3px
+      cursor: pointer
+      &:hover
+        background-color: rgba(0, 0, 0, 0.08)
+        color: black
+    .meeting-dialog-divider
+      width: 1px
+      margin: 0px 5px
+      height: 16px
+      opacity: 0.12
+  .meeting-dialog-info
+    height: $meeting_dialog_info_height
+    padding: 0 $meeting-padding
+
+  .meeting-dialog-title
+    border: none
+    font-size: 22px
+    font-weight: bold
+    text-overflow: ellipsis
+    overflow: hidden
+    margin-right: 2rem
+    border-radius: 2px
+    transition: all 0.2s
+    &:focus
+      outline: 0
+    &:hover
+      background-color: rgba(243, 244, 245, 0.5)
+    &::placeholder
+      color: #BECDD9
+
+  .meetings-dialog-options
+    font-size: 15px
+    position: relative
+    .meeting-dialog-divider
+      width: 1px
+      margin: 0px 8px
+      height: 22px
+      opacity: 0.12
+    .meeting-lock
+      stroke-width: 2px
+      width: 20px
+      height: 20px
+      &.may-edit
+        cursor: pointer
+    .lock-msg
+      position: absolute
+      top: 35px
+      right: -5px
+      background: #FFFFFF
+      box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.07), 0 5px 15px 0 rgba(199, 199, 199, 0.5)
+      border-radius: 2px
+      border: none
+      padding: 5px 12px
+      z-index: 20
+      width: 180px
+      display: none
+      span
+        display: block
+        font-size: 13px
+    .msg-main-text
+      font-weight: bold
+      font-size: 13px
+    .msg-sub-text
+      font-size: 11px
+
+  .meeting-time
+    font-size: 15px
+
+  .meeting-dialog-footer
+    position: absolute
+    bottom: 0px
+    width: 100%
+    height: $meeting_dialog_footer_height
+    padding: 0 $meeting-padding
+
+  .meeting-members
+    .item-members
+      margin: 0
+    .justdo-avatars-box
+      display: flex
+      align-items: center
+      padding: 0.65rem 0
+      .justdo-avatar
+        width: 28px
+        height: 28px
+      .cont
+        margin-bottom: 0px
+      .sep
+        display: none
+    .avatar-box-button
+      margin-right: 2px
+      background-color: #F2F4F5
+      width: 28px
+      height: 28px
+      border-radius: 100%
+      padding: 2px
+    .default-avatar-box-button
+      background-color: #F2F4F5
+      color: $meeting_color
+      transition: all 0.2s
+      width: 100%
+      height: 100%
+      background: linear-gradient(#99AABC, #99AABC), linear-gradient(#99AABC, #99AABC), #F2F4F5
+      background-position: center
+      background-size: 50% 2px,2px 50%
+      background-repeat: no-repeat
+      &:hover
+        box-shadow: 0 0 0 2px rgba(103, 123, 141, 0.2)
+      i
+        display: none
+
+  .meeting-dialog-agenda
+    position: absolute
+    top: $meeting_dialog_header_height + $meeting_dialog_info_height
+    bottom: $meeting_dialog_footer_height
+    height: auto
+    width: 100%
+    padding: 0 $meeting-padding
+
+  .meeting-dialog-agenda-title
+    font-size: 18px
+    font-weight: bold
+
+  .meeting-dialog-add-task-wrapper
+    position: relative
+    cursor: pointer
+    margin: 0.5rem 0
+    transition: all 0.2s
+    &:hover
+      background-color: rgba(243, 244, 245, 0.5)
+    &:focus
+      outline: 0
+    &:active
+      background-color: white
+    .jd-icon
+      position: absolute
+      color: #BECDD9
+      height: 45px
+      width: 45px
+      padding: 12px
+
+  .meeting-task-add
+    border: 2px dashed rgba(190, 205, 217, 0.5)
+    border-radius: 4px
+    height: 45px
+    line-height: 45px
+    margin: 1rem 0
+    cursor: pointer
+    font-size: 15px
+    padding-left: 2.5rem
+    background-color: transparent
+    &::placeholder
+      color: #BECDD9
+
+
+
+// ========================================================================
 
 // Title section
 .meeting-title
-  height: 38px
-  width: 100%
-  transition: height 0.2s
-  input
-    text-overflow: ellipsis
-    white-space: nowrap
-    overflow: hidden
-    padding-right: 140px
-  .meeting-control-buttons
-    position: absolute
-    right: 0
-  .jd-icon
-    margin: 2px
-    padding: 4px
-    &:hover
-      background-color: rgba(0, 0, 0, 0.08)
-  .meeting-lock
-    &.may-edit
-      cursor: pointer
-  .lock-msg
-    position: absolute
-    top: 35px
-    right: -5px
-    background: #FFFFFF
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.07), 0 5px 15px 0 rgba(199, 199, 199, 0.5)
-    border-radius: 2px
-    border: none
-    padding: 5px 12px
-    z-index: 20
-    width: 180px
-    display: none
-    span
-      display: block
-      font-size: 13px
-  .msg-main-text
-    font-weight: bold
-    font-size: 13px
-  .msg-sub-text
-    font-size: 11px
+
 
 
 // Info section
@@ -92,35 +257,6 @@
     border-radius: 2px
     border: none
     padding: 7px
-
-.meeting-members
-  .item-members
-    margin: 0
-  .justdo-avatars-box
-    display: flex
-    align-items: center
-    padding: 1rem 0
-    border-bottom: 1px dashed rgba(0, 0, 0, 0.07)
-    .cont
-      margin-bottom: 0px
-
-.meetings_meeting-dialog
-  .avatar-box-button
-    width: 34px
-    height: 34px
-    background-image: url(/packages/justdoinc_meetings-manager-plugin/media/icons.png)
-    background-position: -42px 0px
-    background-color: #f8f8f8
-    margin-left: 0.25rem
-    border-radius: 50%
-  .default-avatar-box-button
-    border-radius: inherit
-    background-color: rgba(248, 248, 248, 0)
-    border: 2px dashed #dadada
-    i
-      display: none
-  .sep
-    display: none
 
 // Agenda section
 .agenda-header
@@ -165,45 +301,6 @@
     padding: 0px
     white-space: pre-wrap
 
-// Show less
-.show-less
-
-
-
-
-.meetings_meeting-dialog
-  position: fixed
-  z-index: 1000
-
-  .modal-header
-    .model-header-title
-      display: none
-      max-width: 100px
-      text-overflow: ellipsis
-      overflow: hidden
-      white-space: nowrap
-    .btn-minimize
-      display: block
-    .btn-maximize
-      display: none
-
-  .modal
-    height: 0
-    overflow: visible
-    z-index: 10
-
-  .modal-dialog
-    height: 0px
-
-  .modal-content
-    background: #FFFFFF
-    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.07), 0 15px 35px 0 rgba(199,199,199,0.50)
-    border-radius: 3px
-    border: 1px solid #cccccc
-    min-width: 520px
-    width: 660px
-    min-height: 620px
-
   .errors
     display: block
     position: absolute
@@ -225,21 +322,6 @@
   .ui-icon
     background-image: url(/packages/justdoinc_meetings-manager-plugin/media/icons.png)
     background-position: -76px 0px
-
-  /* FOOTER */
-  .meeting-flow-control
-
-
-  .meeting-states
-    margin: 0
-    padding: 0
-  .state
-    font-size: 13px
-    user-select: none
-    text-transform: uppercase
-  .angle-right
-    padding: 0
-    color: #ababab
 
   .done-msg
     width: 180px
@@ -274,32 +356,6 @@
       font-weight: normal
     button
       margin: 3px
-
-  .modal
-    display: block !important
-
-  // show the title-bar when minimized
-  &.minimized
-    .modal-content
-      min-height: 0
-      min-width: 0
-      height: auto !important
-      width: 200px !important
-      .model-header-title
-        display: block
-      .modal-body
-        display: none
-      .modal-footer
-        display: none
-      .discard-msg
-        display: none
-      .ui-resizable-handle
-        display: none
-    .btn-maximize
-      display: block
-    .btn-minimize
-      display: none
-
 
 .close-split-view
   position: absolute

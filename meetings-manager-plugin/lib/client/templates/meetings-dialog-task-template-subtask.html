@@ -1,38 +1,37 @@
 <template name="meetings_dialog_task_subtask">
-  <small class="subtask-seqId bg-light border rounded-sm px-1">{{seqId}}</small>
-
-  <div class="btn-group dropright task-owner-selector">
-    <button {{disabled}} class="btn btn-light btn-sm dropdown-toggle" type="button" id="sub-task-user-selector"
-                         style="padding: 0px"
-                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="dropdown">
+    <button {{disabled}} class="sub-task-user-selector" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       {{#with taskOwner}}
-        <span class="task-owner-selector">
-          {{> justdo_avatar}}
-        </span>
+        {{> justdo_avatar}}
       {{/with}}
     </button>
-    <div class="dropdown-menu" aria-labelledby="sub-task-user-selector">
+    <div class="dropdown-menu animate slideIn shadow-lg p-2 border-0">
       {{#each tasksUsers}}
         <button class="dropdown-item select-pending-owner" user_id="{{this._id}}" type="button">{{this.profile.first_name}} {{this.profile.last_name}}</button>
       {{/each}}
     </div>
   </div>
 
-  <div class="title ml-2">
-    <textarea {{readOnly}} class="task-subject-box form-control form-control-sm" dir="auto"
-              style="overflow: hidden; width: 310px; overflow-wrap: break-word; resize: none;
-                      {{#if taskSubjectDiverged}}
-                        color: red;
-                      {{/if}}"
-              placeholder="Untitled Task" title={{divergedSubjectTitle}} >{{subject}}</textarea>
-
-
+  <div class="task-priority flex-shrink-0"></div>
+  <div class="task-seqId-box flex-shrink-0 text-primary">{{seqId}}.</div>
+  <div class="task-subject-box flex-grow-1" contenteditable="true" placeholder="Untitled Task...">{{subject}}</div>
+  <div class="d-flex align-items-center flex-shrink-0">
+    <div class="task-due-date" contenteditable="true" placeholder="Due date"></div>
+    <div class="task-controls-container dropdown d-flex">
+      <svg class="jd-icon task-controls-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
+      <ul class="dropdown-menu dropdown-menu-left animate slideIn shadow-lg p-2 border-0">
+        <li class="dropdown-item d-flex align-items-center remove-task">
+          <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>Remove Task
+        </li>
+      </ul>
+    </div>
   </div>
 
-  <div class="due-date ml-2">
+
+  <!-- <div class="due-date ml-2">
     <input {{readOnly}} type="date" class="task-due-date form-control form-control-sm"
            style="width: 150px; height: fit-content; overflow: hidden; overflow-wrap: break-word; resize: none;"
            dir="auto" value="{{dueDate}}"
            placeholder="Due Date">
-  </div>
+  </div> -->
 </template>

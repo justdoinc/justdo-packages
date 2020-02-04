@@ -1,6 +1,65 @@
-.task-owner-selector
-  margin-left: 3px
+.task-added-tasks
+  margin-top: 8px
+  .sub-task
+    margin: 4px 0
+  .select-pending-owner
+    font-size: 14px
+    padding: 0.25rem 0.5rem 0.25rem 0.25rem
+    cursor: pointer
 
-.subtask-seqId
-  font-size: x-small
+  .justdo-avatar
+    width: 20px
+    height: 20px
+    vertical-align: baseline
 
+  .task-priority
+    width: 3px
+    height: 18px
+    background-color: red
+    margin: 3px 4px 2px 4px
+    border-radius: 2px
+
+  .task-subject-box,
+  .task-seqId-box
+    font-size: 14px
+    margin-top: 1px
+
+  .task-seqId-box
+    margin-right: 2px
+    font-weight: bold
+
+  .task-subject-box
+    margin-right: 1rem
+    &:focus
+      outline: 0
+
+  .task-due-date
+    font-size: 10px
+    text-transform: uppercase
+    white-space: nowrap
+    font-weight: bold
+    margin-right: 4px
+    cursor: pointer
+    &:hover
+      &:empty:before
+        color: #687B8E
+        text-decoration: underline
+
+  .sub-task-user-selector
+    border: none
+    width: 20px
+    height: 20px
+    background-color: transparent
+    border-radius: 100%
+    margin-top: 2px
+    padding: 0
+    transition: box-shadow 0.2s
+    &:focus
+      outline: 0
+    &:hover
+      box-shadow: 0 0 0 3px rgba(103, 123, 141, 0.2)
+
+  [contenteditable=true]:empty:before
+    content: attr(placeholder)
+    display: block
+    color: rgba(81, 108, 134, 0.45)
