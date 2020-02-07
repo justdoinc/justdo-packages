@@ -106,7 +106,7 @@ APP.executeAfterAppLibCode ->
 
     "click .remove": (e) ->
       if @user_id == Meteor.userId()
-        confirm_message = "Are you sure you want to leave this project?"
+        confirm_message = "Are you sure you want to leave this JustDo?"
       else
         confirm_message = "Are you sure you want to remove this member?"
 
@@ -124,7 +124,7 @@ APP.executeAfterAppLibCode ->
           return
 
     "click .upgrade-admin": (e) ->
-      confirm_message = "Are you sure you want to make this member admin of this project?"
+      confirm_message = "Are you sure you want to make this member admin of this JustDo?"
 
       bootbox.confirm
         message: confirm_message
@@ -141,7 +141,7 @@ APP.executeAfterAppLibCode ->
 
     "click .downgrade-admin": (e) ->
       if @user_id == Meteor.userId()
-        confirm_message = "Are you sure you want to stop manage this project?"
+        confirm_message = "Are you sure you want to stop manage this JustDo?"
       else
         confirm_message = "Are you sure you want to remove this admin?"
 
