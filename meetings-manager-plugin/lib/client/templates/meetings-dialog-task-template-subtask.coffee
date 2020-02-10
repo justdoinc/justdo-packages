@@ -6,6 +6,10 @@ Template.meetings_dialog_task_subtask.onCreated ->
   return
 
 Template.meetings_dialog_task_subtask.onRendered ->
+  $(".task-due-date").datepicker onSelect: (date) ->
+    $(this).prev().text date
+    return
+
   return
 
 Template.meetings_dialog_task_subtask.helpers

@@ -5,7 +5,7 @@
         {{> justdo_avatar}}
       {{/with}}
     </button>
-    <div class="dropdown-menu animate slideIn shadow-lg p-2 border-0">
+    <div class="dropdown-menu shadow-lg p-2 border-0">
       {{#each tasksUsers}}
         <button class="dropdown-item select-pending-owner" user_id="{{this._id}}" type="button">{{this.profile.first_name}} {{this.profile.last_name}}</button>
       {{/each}}
@@ -16,10 +16,14 @@
   <div class="task-seqId-box flex-shrink-0 text-primary">{{seqId}}.</div>
   <div class="task-subject-box flex-grow-1" contenteditable="true" placeholder="Untitled Task...">{{subject}}</div>
   <div class="d-flex align-items-center flex-shrink-0">
-    <div class="task-due-date" contenteditable="true" placeholder="Due date"></div>
+    <div class="task-due-date-wrapper">
+      <div class="task-due-date-label">Due date</div>
+      <input class="task-due-date" type="text" value="">
+    </div>
+
     <div class="task-controls-container dropdown d-flex">
       <svg class="jd-icon task-controls-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
-      <ul class="dropdown-menu dropdown-menu-left animate slideIn shadow-lg p-2 border-0">
+      <ul class="dropdown-menu dropdown-menu-right shadow-lg p-2 border-0">
         <li class="dropdown-item d-flex align-items-center remove-task">
           <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>Remove Task
         </li>

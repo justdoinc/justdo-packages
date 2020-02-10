@@ -221,7 +221,9 @@ Template.meetings_meeting_dialog.onRendered ->
 
   # @$(".modal-content").resizable()
 
-  @$(".meeting-date").datepicker()
+  @$(".meeting-date").datepicker onSelect: (date) ->
+    $(".meeting-date-label").text date
+    return
 
   # Make tasks sortable
   meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -417,6 +419,11 @@ Template.meetings_meeting_dialog.events
       onActionClick: =>
         JustdoSnackbar.close()
         return
+
+  "click .meeting-dialog-add-task": (e, tmpl) ->
+    $(".meeting-dialog-agenda").animate { scrollTop: $(".meeting-task-add").offset().top }, 500
+    $(".meeting-task-add").focus()
+    return
 
 
 
