@@ -19,7 +19,7 @@
                 <small class="metadata text-muted">
                   <span class="date" title="{{userDateFormat file.date_uploaded}}">{{userDateFormat file.date_uploaded false}}, </span>
                   <span class="size">{{size}}, </span>
-                  <span class="mimetype">{{file.type}}</span>
+                  <span class="mimetype">{{displayedFileType file.type}}</span>
                 </small>
               </div>
               {{#if renaming}}

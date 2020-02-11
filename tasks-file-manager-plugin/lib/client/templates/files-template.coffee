@@ -13,10 +13,20 @@ Template.tasks_file_manager_files.onCreated ->
 
   return
 
+DISPLAYED_FILE_TYPES = {
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx"
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation": "pptx"
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx"
+}
+
 Template.tasks_file_manager_files.helpers
   renaming: -> Template.instance().renaming.get() == this.file.id
   deletion: -> Template.instance().deletion.get() == this.file.id
   size: -> JustdoHelpers.bytesToHumanReadable(this.file.size)
+  displayedFileType: (mine_type) ->
+    if (name = DISPLAYED_FILE_TYPES[mine_type])?
+      return name
+    return mine_type
 
   shareableLink: () ->
     task = @task
