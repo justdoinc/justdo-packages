@@ -41,18 +41,19 @@ Template.meetings_meeting_dialog.onCreated ->
     if cur_item?
       Forms.instance().doc "seqId", cur_item.seqId
 
+  # DEPRECATED
   # Get recent locations
-  locations = []
-  meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find().fetch()
-  meetings = _.sortBy(meetings, "updatedAt").reverse()
-
-  $(meetings).each ->
-    if this.location? and _.indexOf(locations, this.location) < 0
-      locations.push this.location
-      if locations.length >= 5
-        return false
-
-  Template.currentData().locations = locations
+  # locations = []
+  # meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find().fetch()
+  # meetings = _.sortBy(meetings, "updatedAt").reverse()
+  #
+  # $(meetings).each ->
+  #   if this.location? and _.indexOf(locations, this.location) < 0
+  #     locations.push this.location
+  #     if locations.length >= 5
+  #       return false
+  #
+  # Template.currentData().locations = locations
 
   # Get current project_id
   @autorun =>
@@ -219,11 +220,9 @@ Template.meetings_meeting_dialog.onRendered ->
   meeting_note_box = @$ "[name=\"note\"]"
   meeting_note_box.autosize()
 
-  # @$(".modal-content").resizable()
+  # @$(".meetings_meeting-dialog").resizable()
 
-  @$(".meeting-date").datepicker onSelect: (date) ->
-    $(".meeting-date-label").text date
-    return
+  @$(".meeting-date").datepicker()
 
   # Make tasks sortable
   meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -365,6 +364,11 @@ Template.meetings_meeting_dialog.helpers
       return moment(date).format("YYYY-MM-DD")
     return ""
 
+  labelDate: (date) ->
+    if(date?)
+      return moment(date).format("D MMM YYYY")
+    return "Set Date"
+
   agendaEditClass: ->
     tmpl = Template.instance()
     if tmpl.agenda_edit_mode?.get()
@@ -377,8 +381,9 @@ Template.meetings_meeting_dialog.helpers
     if meeting.status == "draft"
       return "agenda-draft-mode"
 
-  recentLocations: ->
-    return Template.instance().data.locations
+  # DEPRECATED
+  # recentLocations: ->
+  #   return Template.instance().data.locations
 
 
   showDiscardButton: ->
@@ -427,7 +432,7 @@ Template.meetings_meeting_dialog.events
 
 
 
-  'documentChange .meeting-dialog-info, documentChange .meeting-note': (e, tmpl, doc, changes) ->
+  "documentChange .meeting-dialog-info, documentChange .meeting-note": (e, tmpl, doc, changes) ->
     tmpl.form.validate()
     if tmpl.form.isValid()
 
@@ -649,19 +654,6 @@ Template.meetings_meeting_dialog.events
       Session.set "updateTaskOrder", true
     , 100
 
-
-  # Select location
-  "keyup .meeting-location": (e, tmpl) ->
-    $(".wrapper-location").removeClass "open"
-
-    input = $(e.currentTarget)
-    if !input.val()
-      $(".wrapper-location").addClass "open"
-
-  "click .recent-locations li": (e, tmpl) ->
-    location = $(e.currentTarget).html()
-    $(".meeting-location").val location
-    $(".meeting-location").trigger "change"
 
   # Meeting conversation
   "click .meeting-conversation": (e, tmpl) ->
