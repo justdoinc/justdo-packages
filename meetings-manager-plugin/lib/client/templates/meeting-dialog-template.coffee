@@ -261,9 +261,6 @@ Template.meetings_meeting_dialog.helpers
       _id: @meeting_id
     return meeting.title
 
-  minimizedClass: ->
-    if Template.instance().minimized.get() then "minimized" else "maximized"
-
   mayLock: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
      _id: @meeting_id
@@ -461,31 +458,6 @@ Template.meetings_meeting_dialog.events
       tmpl.$(".meeting-add-task .add-task-btn").trigger 'click'
       $(".meeting-task-add").val ""
 
-  # "click .move": (e, tmpl) ->
-  #   tmpl.form.validate()
-  #
-  #   move = if $(e.currentTarget).is(".move-up") then -1 else 1
-  #
-  #   APP.meetings_manager_plugin.meetings_manager.moveMeetingTask(
-  #     this.meeting._id,
-  #     this.item.task_id,
-  #     move,
-  #     (error) ->
-  #       if error?
-  #         tmpl.form.invalidate [{ error: error, message: error + '', name: "" }]
-  #   )
-  #
-  'click .btn-minimize': (e, tmpl) ->
-
-    tmpl.minimized.set true
-
-  'click .btn-maximize': (e, tmpl) ->
-    tmpl.minimized.set false
-
-  #
-  # 'click .minimized': (e, tmpl) ->
-  #
-  #   tmpl.minimized.set false
 
   'click .meeting-add-task .add-task-btn': (e, tmpl) ->
     # NOTE, Calling validate here clears out any existing errors so that if the
