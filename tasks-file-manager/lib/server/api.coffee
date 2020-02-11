@@ -396,7 +396,7 @@ _.extend TasksFileManager.prototype,
         "/rotate=deg:exif" +
         "/compress"
 
-      return @_getProcessedFileLink task, file, proccess_str, "v#{version}_w#{options.width}", convert_file_ext
+      return @_getProcessedFileLink task, file, proccess_str, "v#{version}_w#{options.width}", processed_file_ext
 
   renameFile: (task_id, file_id, new_title, user_id) ->
     task = @requireTaskDoc(task_id, user_id)
