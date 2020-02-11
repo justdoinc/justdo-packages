@@ -212,6 +212,12 @@ _.extend TasksFileManager.prototype,
 
     return signature
 
+  _convertToPdfLink: (task, file) ->
+    signature = @getConvertPolicySignature(task._id, file.id)
+    security_string = "security=p:#{signature.encoded_policy},s:#{signature.hmac}"
+
+    return "https://cdn.filestackcontent.com/output=f:pdf/#{security_string}/#{file.id}"
+
   _simpleDownloadLink: (file) ->
     # IMPORTANT In this method we assume accesss rights checked by the caller!
 
@@ -241,27 +247,7 @@ _.extend TasksFileManager.prototype,
 
       optional: true
 
-  getPreviewDownloadLink: (task_id, file_id, version, options, user_id) ->
-    check version, Number
-    check options, Object
-
-    if version != 1
-      throw @_error "api-version-not-supported", "At the moment only version 1 is supported for getPreviewDownloadLink"
-
-    {cleaned_val} =
-      JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_getPreviewDownloadLinkOptionsSchema,
-        options,
-        {self: @, throw_on_error: true}
-      )
-    options = cleaned_val
-
-    task = @requireTaskDoc(task_id, user_id)
-    file = @requireFile task, file_id
-
-    if file.type not in ["image/png", "image/jpeg", "image/gif"]
-      return @_simpleDownloadLink(file)
-
+  _getProcessedFileLink: (task, file, process_str, processed_file_id, processed_file_ext) ->
     # IMPORTANT!!! IF YOU CHANGE THIS COMMENT UPDATE ALSO filestack-base/lib/server/api.coffee
     #
     # We place the references to the previews under the _secret subdocument which is not
@@ -291,31 +277,52 @@ _.extend TasksFileManager.prototype,
     #
     # IMPORTANT!!! IF YOU CHANGE THIS COMMENT UPDATE ALSO filestack-base/lib/server/api.coffee
 
-    preview_file_id = "v#{version}_w#{options.width}"
+    task_id = task._id
+    file_id = file.id
 
-    if (preview_file = task._secret?.files_previews?[file_id]?[preview_file_id])?
-      return @_simpleDownloadLink(preview_file)
+    if (preview_file = task._secret?.files_previews?[file_id]?[processed_file_id])?
+        return @_simpleDownloadLink(preview_file)
 
-    location_and_path = @getStorageLocationAndPath(task_id)
-    signature = @getConvertPolicySignature(task_id, file_id)
-    security_string = "/security=p:#{signature.encoded_policy},s:#{signature.hmac}"
+      location_and_path = @getStorageLocationAndPath(task_id)
+      signature = @getConvertPolicySignature(task_id, file_id)
+      security_string = "/security=p:#{signature.encoded_policy},s:#{signature.hmac}"
 
-    convert_file_ext = file.type.replace("image/", "").replace("jpeg", "jpg")
-    convert_file_name = "#{file.id}-convert-#{preview_file_id}.#{convert_file_ext}"
-    store_task = """/store=path:"#{encodeURIComponent(location_and_path.path)}",filename:"#{convert_file_name}",location:#{location_and_path.location}"""
+      processed_file_name = "#{file.id}-convert-#{processed_file_id}.#{processed_file_ext}"
+      store_task = """/store=path:"#{encodeURIComponent(location_and_path.path)}",filename:"#{processed_file_name}",location:#{location_and_path.location}"""
+      
+      convert_url = "https://cdn.filestackcontent.com#{security_string}#{process_str}/#{store_task}/#{file_id}"
 
-    if not (file_dimension = task._secret?.files_dimensions?[file_id])?
-      file_dimension_result = HTTP.get @_getFileDimensionLinkCalc(task_id, file)
-      if not (file_dimension_result?.statusCode == 200)
-        console.warn "Failed to fetch file dimensions"
+      convert_result = HTTP.get convert_url
+      if not (convert_result?.statusCode == 200)
+        console.warn "Image file conversion failed"
 
         return @_simpleDownloadLink(file)
-      file_dimension = file_dimension_result.data
+
+      converted_file_doc = convert_result.data
+
+      converted_file_doc.id = converted_file_doc.url.replace(/.*\//, "")
+
+      # Ensure that we don't have already a file that been converted with the same instruction
+      up_to_date_task = @tasks_collection.findOne(task_id)
+      if (previously_converted_file = up_to_date_task?._secret?.files_previews?[file_id]?[processed_file_id])?
+        @logger.info "Removing existing stored converted file (redundant convert occured, if you see this message frequently, might indicate a bug with images preview conversion process)", previously_converted_file.key
+
+        # We found that a request to perform this conversion already happened.
+        # A case like this can happen when multiple conversion requests received at the same time.
+        # Remove the previously converted file, to keep only the one we got now.
+
+        # This isn't theoretical, I saw it happening in real world (Daniel C.)
+
+        Meteor.defer =>
+          # Defer to prevent blocking
+          APP.filestack_base.cleanupRemovedFile previously_converted_file
+
+          return
 
       query = {_id: task_id}
       update = 
         $set:
-          "_secret.files_dimensions.#{file_id}": file_dimension
+          "_secret.files_previews.#{file_id}.#{processed_file_id}": converted_file_doc
 
       # We don't want the unmerged publications raw fields, nor any other hook to trigger as a result
       # of that update, hence the use of the rawCollection()
@@ -328,62 +335,68 @@ _.extend TasksFileManager.prototype,
 
         return
 
-    processing_tasks = ""
+      return @_simpleDownloadLink(converted_file_doc)
 
-    if file_dimension.width > options.width
-      processing_tasks +=
-        "/resize=width:#{options.width}"
+  getPreviewDownloadLink: (task_id, file_id, version, options, user_id) ->
+    check version, Number
+    check options, Object
 
-    processing_tasks +=
-      "/rotate=deg:exif" +
-      "/compress"
+    if version != 1
+      throw @_error "api-version-not-supported", "At the moment only version 1 is supported for getPreviewDownloadLink"
 
-    convery_url = "https://cdn.filestackcontent.com#{security_string}#{processing_tasks}#{store_task}/#{file_id}"
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_getPreviewDownloadLinkOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
 
-    convert_result = HTTP.get convery_url
-    if not (convert_result?.statusCode == 200)
-      console.warn "Image file conversion failed"
+    task = @requireTaskDoc(task_id, user_id)
+    file = @requireFile task, file_id
 
-      return @_simpleDownloadLink(file)
+    if file.type == "application/pdf"
+      return @_simpleDownloadLink file
+    else if file.type not in ["image/png", "image/jpeg", "image/gif"]
+      return @_getProcessedFileLink task, file, "/output=f:pdf", "v#{version}", "pdf"   
+    else
+      if not (file_dimension = task._secret?.files_dimensions?[file_id])?
+        file_dimension_result = HTTP.get @_getFileDimensionLinkCalc(task_id, file)
+        if not (file_dimension_result?.statusCode == 200)
+          console.warn "Failed to fetch file dimensions"
 
-    converted_file_doc = convert_result.data
+          return @_simpleDownloadLink(file)
+        file_dimension = file_dimension_result.data
 
-    converted_file_doc.id = converted_file_doc.url.replace(/.*\//, "")
+        query = {_id: task_id}
+        update = 
+          $set:
+            "_secret.files_dimensions.#{file_id}": file_dimension
 
-    # Ensure that we don't have already a file that been converted with the same instruction
-    up_to_date_task = @tasks_collection.findOne(task_id)
-    if (previously_converted_file = up_to_date_task?._secret?.files_previews?[file_id]?[preview_file_id])?
-      @logger.info "Removing existing stored converted file (redundant convert occured, if you see this message frequently, might indicate a bug with images preview conversion process)", previously_converted_file.key
+        # We don't want the unmerged publications raw fields, nor any other hook to trigger as a result
+        # of that update, hence the use of the rawCollection()
+        APP.justdo_analytics.logMongoRawConnectionOp(@tasks_collection._name, "update", query, update)
+        @tasks_collection.rawCollection().update query, update, Meteor.bindEnvironment (err) ->
+          if err?
+            console.error(err)
 
-      # We found that a request to perform this conversion already happened.
-      # A case like this can happen when multiple conversion requests received at the same time.
-      # Remove the previously converted file, to keep only the one we got now.
+            return
 
-      # This isn't theoretical, I saw it happening in real world (Daniel C.)
+          return
 
-      Meteor.defer =>
-        # Defer to prevent blocking
-        APP.filestack_base.cleanupRemovedFile previously_converted_file
+      processed_file_ext = file.type.replace("image/", "").replace("jpeg", "jpg")
+      
+      proccess_str = ""
 
-        return
+      if file_dimension.width > options.width
+        proccess_str +=
+          "/resize=width:#{options.width}"
 
-    query = {_id: task_id}
-    update = 
-      $set:
-        "_secret.files_previews.#{file_id}.#{preview_file_id}": converted_file_doc
+      proccess_str +=
+        "/rotate=deg:exif" +
+        "/compress"
 
-    # We don't want the unmerged publications raw fields, nor any other hook to trigger as a result
-    # of that update, hence the use of the rawCollection()
-    APP.justdo_analytics.logMongoRawConnectionOp(@tasks_collection._name, "update", query, update)
-    @tasks_collection.rawCollection().update query, update, Meteor.bindEnvironment (err) ->
-      if err?
-        console.error(err)
-
-        return
-
-      return
-
-    return @_simpleDownloadLink(converted_file_doc)
+      return @_getProcessedFileLink task, file, proccess_str, "v#{version}_w#{options.width}", convert_file_ext
 
   renameFile: (task_id, file_id, new_title, user_id) ->
     task = @requireTaskDoc(task_id, user_id)

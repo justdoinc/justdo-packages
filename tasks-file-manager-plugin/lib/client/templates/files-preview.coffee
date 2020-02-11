@@ -14,7 +14,12 @@ Template.tasks_file_manager_files_preview.onCreated ->
   return
 
 Template.tasks_file_manager_files_preview.helpers
-  isPdf: -> @file.type == "application/pdf"
+  isPdfPreview: -> @file.type in  ["application/pdf",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",    # docx
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",  # pptx
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"           # xlsx
+  ]
+  
   isImage: -> @file.type.indexOf("image") == 0
 
   randomString: ->
