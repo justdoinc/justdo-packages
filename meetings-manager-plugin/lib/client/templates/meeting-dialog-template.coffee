@@ -16,7 +16,6 @@ saveTasksOrder = (tmpl) ->
 Template.meetings_meeting_dialog.onCreated ->
   @note_out_of_date = new ReactiveVar false
   @minimized = new ReactiveVar false
-  @agenda_edit_mode = new ReactiveVar false
   @meetings_tasks_noRender = new ReactiveVar false
   @project_id = Router.current().project_id
 
@@ -219,15 +218,14 @@ Template.meetings_meeting_dialog.onRendered ->
   instance = this
   meeting_note_box = @$ "[name=\"note\"]"
   meeting_note_box.autosize()
-
-  # @$(".meetings_meeting-dialog").resizable()
-
-  @$(".meeting-date").datepicker()
-
-  # Make tasks sortable
   meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
     _id: Template.currentData().meeting_id
 
+  # @$(".meetings_meeting-dialog").resizable()]
+
+  @$(".meeting-date").datepicker({ "minDate": 0, "defaultDate": meeting.date, "dateFormat": "yy-mm-dd" })
+
+  # Make tasks sortable
   @$(".meeting-tasks-list").sortable
     handle: ".sort-task"
     start: (event, ui) ->
@@ -356,8 +354,6 @@ Template.meetings_meeting_dialog.helpers
 
     return _.filter tasks, _.identity
 
-  datetime: (date) ->
-    moment(date).format("MM/DD/YYYY hh:mm a")
 
   rawdate: (date) ->
     if(date?)
@@ -369,10 +365,16 @@ Template.meetings_meeting_dialog.helpers
       return moment(date).format("D MMM YYYY")
     return "Set Date"
 
-  agendaEditClass: ->
-    tmpl = Template.instance()
-    if tmpl.agenda_edit_mode?.get()
-      return "agenda-edit-mode"
+  # NEED TO CHANGE: We need to retrieve meeting time from Date !
+  rawTime: (time) ->
+    if (time?)
+      return moment(time).format("HH:mm")
+    return ""
+
+  labelTime: (time) ->
+    if (time?)
+      return moment(time).format("HH:mm")
+    return "Set Time"
 
   agendaDraftClass: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -430,8 +432,6 @@ Template.meetings_meeting_dialog.events
     $(".meeting-task-add").focus()
     return
 
-
-
   "documentChange .meeting-dialog-info, documentChange .meeting-note": (e, tmpl, doc, changes) ->
     tmpl.form.validate()
     if tmpl.form.isValid()
@@ -442,6 +442,9 @@ Template.meetings_meeting_dialog.events
 
       if changes.date
         changes.date = moment(changes.date).toDate()
+
+      if changes.time
+        changes.time = moment(changes.time).toDate()
 
       APP.meetings_manager_plugin.meetings_manager.updateMeetingMetadata doc._id, changes, (err) =>
         if err
@@ -623,37 +626,6 @@ Template.meetings_meeting_dialog.events
 
   "mouseleave .meeting-lock": () ->
     $(".lock-msg").hide()
-
-  # Enter Agenda edit mode
-  "click .agenda-edit": (e, tmpl) ->
-    tmpl.agenda_edit_mode.set true
-    Session.set "tasks_to_remove", []
-
-  # Cancel and Exit Agenda edit mode
-  "click .agenda-cancel": (e, tmpl) ->
-    tmpl.agenda_edit_mode.set false
-    $(".meetings_dialog-task").removeClass "remove"
-    $(".btn-agenda-edit").removeClass "recover-task"
-    $(".btn-agenda-edit").addClass "remove-task"
-    Session.set "updateTaskOrder", true
-
-  # Save and Exit Agenda edit mode
-  "click .agenda-save": (e, tmpl) ->
-    tmpl.agenda_edit_mode.set false
-    $(".meetings_dialog-task").removeClass "remove"
-    $(".btn-agenda-edit").removeClass "recover-task"
-    $(".btn-agenda-edit").addClass "remove-task"
-
-    meeting_id = tmpl.data.meeting_id
-    tasks_to_remove = Session.get "tasks_to_remove"
-
-    for task_id in tasks_to_remove
-      APP.meetings_manager_plugin.meetings_manager.removeTaskFromMeeting meeting_id, task_id
-
-    Meteor.setTimeout =>
-      Session.set "updateTaskOrder", true
-    , 100
-
 
   # Meeting conversation
   "click .meeting-conversation": (e, tmpl) ->

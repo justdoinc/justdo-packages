@@ -274,38 +274,10 @@ Template.meetings_dialog_task.events
       )
 
   "click .remove-task": (e, tmpl) ->
-    meeting_status = tmpl.meeting_status.curValue
-
-    if meeting_status == "draft"
-      meeting_id = tmpl.data.meeting._id
-      task_id = tmpl.data.meeting_task.task_id
-      APP.meetings_manager_plugin.meetings_manager.removeTaskFromMeeting meeting_id, task_id
-
-      Meteor.setTimeout =>
-        Session.set "updateTaskOrder", true
-      , 100
-    else
-      el = $(e.currentTarget)
-      el.removeClass "remove-task"
-      el.addClass "recover-task"
-      task = el.closest ".meetings_dialog-task"
-      task.addClass "remove"
-
-      task_id = tmpl.data.meeting_task.task_id
-      tasks_to_remove = Session.get "tasks_to_remove"
-      tasks_to_remove.push task_id
-      Session.set "tasks_to_remove", tasks_to_remove
-
-
-  "click .recover-task": (e, tmpl) ->
-    el = $(e.currentTarget)
+    meeting_id = tmpl.data.meeting._id
     task_id = tmpl.data.meeting_task.task_id
-    el.removeClass "recover-task"
-    el.addClass "remove-task"
-    task = el.closest ".meetings_dialog-task"
-    task.removeClass "remove"
+    APP.meetings_manager_plugin.meetings_manager.removeTaskFromMeeting meeting_id, task_id
 
-    task_id = tmpl.data.meeting_task.task_id
-    tasks_to_remove = Session.get "tasks_to_remove"
-    tasks_to_remove = _.without tasks_to_remove, task_id
-    Session.set "tasks_to_remove", tasks_to_remove
+    Meteor.setTimeout =>
+      Session.set "updateTaskOrder", true
+    , 100
