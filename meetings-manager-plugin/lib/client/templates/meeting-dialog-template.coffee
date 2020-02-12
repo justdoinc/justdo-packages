@@ -229,13 +229,11 @@ Template.meetings_meeting_dialog.onRendered ->
   @$(".meeting-tasks-list").sortable
     handle: ".sort-task"
     start: (event, ui) ->
-      if meeting.status == "draft"
-        $(".meeting-tasks").addClass "dragging"
+      $(".meeting-dialog-agenda").addClass "dragging"
 
     stop: (event, ui) ->
-      if meeting.status == "draft"
-        Session.set "updateTaskOrder", true
-        $(".meeting-tasks").removeClass "dragging"
+      Session.set "updateTaskOrder", true
+      $(".meeting-dialog-agenda").removeClass "dragging"
 
   @autorun =>
     updateTaskOrder = Session.get "updateTaskOrder"
@@ -373,13 +371,6 @@ Template.meetings_meeting_dialog.helpers
       return moment(time).format("HH:mm")
     return "Set Time"
 
-  agendaDraftClass: ->
-    meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
-      _id: @meeting_id
-
-    if meeting.status == "draft"
-      return "agenda-draft-mode"
-
   # DEPRECATED
   # recentLocations: ->
   #   return Template.instance().data.locations
@@ -451,41 +442,40 @@ Template.meetings_meeting_dialog.events
           # Log an error using the logger
           APP.meetings_manager_plugin.logger.error err
 
-  'keydown [name="seqId"]': (e, tmpl) ->
-    # Click the add-task-btn if the user presses enter in the seqId field
+  "keydown .meeting-task-add": (e, tmpl) ->
     if e.which == 13
-      $(e.currentTarget).trigger 'change'
-      tmpl.$(".meeting-add-task .add-task-btn").trigger 'click'
+      $(e.currentTarget).trigger "change"
+      # NOTE, Calling validate here clears out any existing errors so that if the
+      # last call to validate created a server-inserted error, that error will be
+      # hidden.
+      tmpl.form.validate("seqId")
+      if tmpl.form.isValid("seqId")
+
+        doc = tmpl.form.doc()
+        changes = { seqId: doc.seqId }
+
+        if not changes.seqId
+          return
+
+        APP.meetings_manager_plugin.meetings_manager.addTaskToMeeting doc._id, changes, (err) =>
+          if err
+            # Invalidate the form and show the user an error.
+            tmpl.form.invalidate [{ error: err, name: "seqId", message: "Adding task failed: " + err }]
+            tmpl.form.set "seqId", ""
+            Meteor.setTimeout ->
+                tmpl?.form?.validate("seqId")
+              , 3000
+
+            # Log an error using the logger
+            APP.meetings_manager_plugin.logger.error err
+
+          else
+            tmpl.form.set "seqId", ""
+
       $(".meeting-task-add").val ""
+    return
 
 
-  'click .meeting-add-task .add-task-btn': (e, tmpl) ->
-    # NOTE, Calling validate here clears out any existing errors so that if the
-    # last call to validate created a server-inserted error, that error will be
-    # hidden.
-    tmpl.form.validate("seqId")
-    if tmpl.form.isValid("seqId")
-
-      doc = tmpl.form.doc()
-      changes = { seqId: doc.seqId }
-
-      if not changes.seqId
-        return
-
-      APP.meetings_manager_plugin.meetings_manager.addTaskToMeeting doc._id, changes, (err) =>
-        if err
-          # Invalidate the form and show the user an error.
-          tmpl.form.invalidate [{ error: err, name: "seqId", message: "Adding task failed: " + err }]
-          tmpl.form.set "seqId", ""
-          Meteor.setTimeout ->
-              tmpl?.form?.validate("seqId")
-            , 3000
-
-          # Log an error using the logger
-          APP.meetings_manager_plugin.logger.error err
-
-        else
-          tmpl.form.set "seqId", ""
 
   'click .meeting-lock': (e, tmpl) ->
     # Clear out any existing errors related to the locked status

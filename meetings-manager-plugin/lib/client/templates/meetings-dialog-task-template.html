@@ -74,7 +74,6 @@
         {{> locking_text_editor content=meeting_task.note class="note" placeholder="Task's note" lock=meeting_task.note_lock disabled=mayNotEditTaskNote onSave=onSaveTaskNote}}
       {{/if}}
 
-
       <!-- Added tasks -->
       {{#if meeting_task.added_tasks}}
         <div class="task-added-tasks">
@@ -87,9 +86,6 @@
           {{/each}}
         </div>
       {{/if}}
-
-
-
 
       <!-- Error -->
       <div class="errors">

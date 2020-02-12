@@ -1,4 +1,7 @@
 <template name="meetings_meeting_dialog">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js"></script>
+
   <div class="meetings_meeting-dialog d-flex flex-column rounded shadow-lg">
     <!-- Meeting Header -->
     <div class="meeting-dialog-header">
@@ -77,7 +80,7 @@
         <svg class="meeting-dialog-add-task text-primary jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
       {{/if}}
     </div>
-    <div class="meeting-dialog-agenda {{agendaDraftClass}}">
+    <div class="meeting-dialog-agenda">
       <div class="meeting-tasks-list">
         {{#unless noRander}}
           {{#each tasks}}
@@ -121,62 +124,13 @@
       </div>
     </div>
 
-
-
-
-    <!-- =============================================================================== -->
-
-    <div>
-      <!-- AGENDA HEADER -->
-      <div class="agenda-header d-flex align-items-center justify-content-between py-2 {{agendaDraftClass}}">
-        {{#if mayEditAgenda}}
-          <div class="meeting-add-task d-flex">
-            <input type="text" size="6" name="seqId" value="{{doc.seqId}}" placeholder="Type task number" class="form-control form-control-sm meeting-task-add">
-            <button class="btn btn-light btn-sm text-nowrap border ml-2 add-task-btn">Add Task</button>
-          </div>
-        {{/if}}
+    {{#if errors}}
+      <div class="errors">
+        {{#each errors}}
+          <div class="error">{{message}}</div>
+        {{/each}}
       </div>
-      <!-- AGENDA BODY -->
-      <div class="meeting-tasks bg-light border-top border-bottom {{agendaDraftClass}}">
-        <div class="meeting-tasks-list p-2">
-          {{#unless noRander}}
-            {{#each tasks}}
-              {{> meetings_dialog_task}}
-            {{/each}}
-          {{/unless}}
-        </div>
-        {{#if showMeetingNote}}
-          <div class="meeting-note">
-            {{> locking_text_editor content=meeting.note class="note" placeholder="Note" lock=meeting.note_lock disabled=mayNotEditMeetingNote onSave=onSaveMeetingNote}}
-          </div>
-        {{/if}}
-      </div>
-
-      <!--Adding new task-->
-      <!--{{#if mayEdit}}-->
-        <!--<div class="meeting-add-task">-->
-          <!--<div class="row">-->
-            <!--<div class="col-sm-4">-->
-              <!--<div class="form-group">-->
-                <!--<label>Task #</label>-->
-                <!--<input type="text" name="seqId" value="{{doc.seqId}}" class="form-control" placeholder="Task #">-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-sm-4">-->
-              <!--<button type="button" class="add-task-btn btn btn-primary">Add Task</button>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--{{/if}}-->
-
-      {{#if errors}}
-        <div class="errors">
-          {{#each errors}}
-            <div class="error">{{message}}</div>
-          {{/each}}
-        </div>
-      {{/if}}
-    </div>
+    {{/if}}
 
     <div class="discard-msg">
       <div class="discard-msg-content">
