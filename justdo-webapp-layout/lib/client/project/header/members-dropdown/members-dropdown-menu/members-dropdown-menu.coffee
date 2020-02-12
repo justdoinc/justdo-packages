@@ -24,7 +24,7 @@ APP.executeAfterAppLibCode ->
   clearMembersDropDownErrors = ->
     $(".members-dropdown-menu .alert").remove()
 
-  addFilledUser = ->
+  addFilledUser = (add_as_guest) ->
     clearMembersDropDownErrors()
 
     email_input = $(".add-members-comp input")
@@ -36,7 +36,7 @@ APP.executeAfterAppLibCode ->
       clearMembersDropDownErrors()
       email_input.val("") # clear input
 
-    ProjectPageDialogs.addMemberToCurrentProject email, {}, (err, user_id) ->
+    ProjectPageDialogs.addMemberToCurrentProject email, {add_as_guest: add_as_guest}, (err, user_id) ->
       if $(".members-search-input").val().length > 0
         $(".members-search-input").val("").keyup()
 
@@ -71,6 +71,11 @@ APP.executeAfterAppLibCode ->
 
   Template.members_dropdown_menu.onCreated ->
     @members_filter = new ReactiveVar null
+
+    @add_as_guest_toggle_controller = new Template.add_as_guest_toggle.Controller()
+
+    @isAddAsGuest = -> @add_as_guest_toggle_controller.isAddAsGuest()
+
     return
 
   Template.members_dropdown_menu.onRendered ->
@@ -96,13 +101,23 @@ APP.executeAfterAppLibCode ->
 
       return empty
 
-  Template.members_dropdown_menu.events
-    "click .add-members-comp button": (e) ->
-      addFilledUser()
+    add_as_guest_toggle_controller: -> Template.instance().add_as_guest_toggle_controller
 
-    "keypress .add-members-comp input": (e) ->
+    isAddAsGuest: -> Template.instance().isAddAsGuest()
+
+    isGuestsEnabled: -> APP.justdo_guests.isPluginInstalledOnProjectDoc()
+
+  Template.members_dropdown_menu.events
+    "click .add-members-comp button": (e, tpl) ->
+      addFilledUser(tpl.isAddAsGuest())
+
+      return
+
+    "keypress .add-members-comp input": (e, tpl) ->
       if e.keyCode == 13
-        addFilledUser()
+        addFilledUser(tpl.isAddAsGuest())
+
+      return
 
     "click .remove": (e) ->
       if @user_id == Meteor.userId()
@@ -178,7 +193,7 @@ APP.executeAfterAppLibCode ->
   Template.enrollment_pending_member.helpers module.template_helpers
 
   Template.enrollment_pending_member.events
-    "click .edit-enrolled": ->
-      ProjectPageDialogs.editEnrolledMember @user_id
+    "click .edit-enrolled": (e, tpl) ->
+      ProjectPageDialogs.editEnrolledMember @user_id, {add_as_guest: tpl.data.is_guest}
 
       return

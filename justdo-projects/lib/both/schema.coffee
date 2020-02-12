@@ -5,7 +5,12 @@ MembersObjectsSchema = new SimpleSchema
     type: String
 
   is_admin:
-    label: "Action description"
+    label: "Is Admin"
+
+    type: Boolean
+
+  is_guest:
+    label: "Is Guest"
 
     type: Boolean
 

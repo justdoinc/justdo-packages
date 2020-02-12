@@ -446,6 +446,8 @@ _.extend Projects.prototype,
     #   {
     #     email:
     #
+    #     add_as_guest: false (default) / true
+    #
     #     profile: {
     #       *Optional*
     #
@@ -481,6 +483,9 @@ _.extend Projects.prototype,
     if not _.isObject(invited_user) or not invited_user.email?
       throw @_error("invalid-argument", "No email provided in invited_user arg")
     invited_user_email = invited_user.email
+
+    if not (add_as_guest = invited_user.add_as_guest)? or not _.isBoolean(add_as_guest)
+      add_as_guest = false
 
     if not JustdoHelpers.common_regexps.email.test(invited_user_email)
       throw @_error("invalid-email")
@@ -572,6 +577,7 @@ _.extend Projects.prototype,
     member_doc =
       user_id: invited_user_id
       is_admin: false
+      is_guest: add_as_guest
 
     if inviting_user_id
       member_doc.invited_by = inviting_user_id

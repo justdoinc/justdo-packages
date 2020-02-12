@@ -14,7 +14,11 @@ _.extend Projects.prototype,
 
     options = _.extend {include_removed_members: false}, options
 
-    members_ids = @getMembersIdsFromProjectDoc(@getProjectDoc(project_id, {fields: {members: 1}}))
+    # The following will happen only for guests
+    if not (members = @getProjectDoc(project_id, {fields: {members: 1}}).members)?
+      members = [{user_id: Meteor.userId(), is_admin: false, is_guest: true}]
+    
+    members_ids = @getMembersIdsFromProjectDoc({members})
 
     if options.include_removed_members
       members_ids = members_ids.concat(@getRemovedMembersIdsFromProjectDoc(@getProjectDoc(project_id, {fields: {removed_members: 1}})))

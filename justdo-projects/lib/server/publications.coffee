@@ -11,27 +11,48 @@ _.extend Projects.prototype,
   _setupUserProjectsPublication: ->
     self = @
 
-    Meteor.publish "userProjects", -> # Note the use of -> not =>, we need @userId
-      published_fields =
-        title: 1
-        lastTaskSeqId: 1
+    guests_published_fields =
+      title: 1
+      lastTaskSeqId: 1
 
-        "members.user_id": 1
-        "members.is_admin": 1
+      "custom_fields": 1
+      "removed_custom_fields": 1
 
-        "removed_members.user_id": 1
+      "conf": 1
 
-        "custom_fields": 1
-        "removed_custom_fields": 1
+      "createdAt": 1
 
-        "conf": 1
+    non_guests_published_fields = _.extend {}, guests_published_fields,
+      "members.user_id": 1
+      "members.is_admin": 1
+      "members.is_guest": 1
 
-        "createdAt": 1
+      "removed_members.user_id": 1
 
-      if @userId?
-        return self.projects_collection.find({"members.user_id": @userId}, {fields: published_fields})
-      else
+    Meteor.publish "userProjects", (guest_projects=false) -> # Note the use of -> not =>, we need @userId
+      if not @userId?
         this.ready() # no projects for anonymous
+        return
+
+      if guest_projects
+        guests_query =
+          members:
+            $elemMatch:
+              user_id: @userId
+              is_guest: true
+        
+        return self.projects_collection.find(guests_query, {fields: guests_published_fields})
+      else
+        non_guests_query =
+          members:
+            $elemMatch:
+              user_id: @userId
+              $or: [
+                {is_guest: false}
+                {is_guest: null}
+              ]
+
+        return self.projects_collection.find(non_guests_query, {fields: non_guests_published_fields})
 
     return
 

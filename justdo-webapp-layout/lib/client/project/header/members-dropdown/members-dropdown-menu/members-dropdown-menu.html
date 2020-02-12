@@ -28,7 +28,15 @@
         {{/with}}
 
         {{#with project_non_enrolled_members_sorted_by_first_name getCurrentMembersFilter}}
-          <li class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2">Awaiting Registration</li>
+          <li class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2">Members Awaiting Registration</li>
+
+          {{#each this}}
+            {{> enrollment_pending_member}}
+          {{/each}}
+        {{/with}}
+
+        {{#with project_non_enrolled_guests_sorted_by_first_name getCurrentMembersFilter}}
+          <li class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2">Guests Awaiting Registration</li>
 
           {{#each this}}
             {{> enrollment_pending_member}}
@@ -36,15 +44,18 @@
         {{/with}}
       {{/if}}
     </ul>
-    <div class="add-project-members">
-      {{#if is_project_admin}}
-      <div class="dropdown-header text-muted text-uppercase px-0 pb-2">Invite New Members</div>
-      <div class="add-members-comp d-flex align-items-center">
-        <input type="text" class="form-control form-control-sm mr-2" placeholder="Member's Email">
-        <button class="btn btn-primary btn-sm font-weight-bold text-uppercase" type="button">Invite</button>
+    {{#if is_project_admin}}
+      <div class="add-project-members">
+        <div class="dropdown-header text-muted text-uppercase px-0 pb-2">
+          {{> add_as_guest_toggle controller=add_as_guest_toggle_controller}}
+          Invite New Members
+        </div>
+        <div class="add-members-comp d-flex align-items-center">
+          <input type="text" class="form-control form-control-sm mr-2" placeholder="{{#if isAddAsGuest}}Guest{{else}}Member{{/if}}'s Email">
+          <button class="btn btn-primary btn-sm font-weight-bold text-uppercase" type="button">Invite</button>
+        </div>
       </div>
-      {{/if}}
-    </div>
+    {{/if}}
   </div>
 </template>
 
@@ -61,7 +72,7 @@
       {{/if}}
 
       {{#if allow_member_remove user_id}}
-        <span title="Remove {{displayName}} from this project">
+        <span title="Remove {{displayName}} from this JustDo">
           <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
         </span>
       {{/if}}
@@ -82,7 +93,7 @@
       {{/if}}
 
       {{#if allow_member_remove user_id}}
-        <span title="Remove {{displayName}} from this project">
+        <span title="Remove {{displayName}} from this JustDo">
           <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
         </span>
       {{/if}}
@@ -103,14 +114,16 @@
         </span>
       {{/if}}
 
-      {{#if is_project_admin}}
-        <span title="{{#if is_admin}}Revoke {{displayName}}'s admin rights{{else}}Make {{displayName}} a project admin upon registration{{/if}}">
-          <svg class="jd-icon text-secondary op-button {{#if is_admin}}downgrade-admin{{else}}upgrade-admin{{/if}}"><use xlink:href="/layout/icons-feather-sprite.svg#star"/></svg>
-        </span>
-      {{/if}}
+      {{#unless is_guest}}
+        {{#if is_project_admin}}
+          <span title="{{#if is_admin}}Revoke {{displayName}}'s admin rights{{else}}Make {{displayName}} a JustDo admin upon registration{{/if}}">
+            <svg class="jd-icon text-secondary op-button {{#if is_admin}}downgrade-admin{{else}}upgrade-admin{{/if}}"><use xlink:href="/layout/icons-feather-sprite.svg#star"/></svg>
+          </span>
+        {{/if}}
+      {{/unless}}
 
       {{#if allow_member_remove user_id}}
-        <span title="Remove {{displayName}} from this project">
+        <span title="Remove {{displayName}} from this JustDo">
           <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
         </span>
       {{/if}}

@@ -13,7 +13,7 @@
 </template>
 
 <template name="dashboard_projects_project_card">
-  <a class="project-card" href="{{pathFor route='project' data=this}}">
+  <a class="project-card {{#unless members}}guest{{/unless}}" href="{{pathFor route='project' data=this}}">
     <div class="project-card-header">
       <div class="project-card-title">
         {{title}}

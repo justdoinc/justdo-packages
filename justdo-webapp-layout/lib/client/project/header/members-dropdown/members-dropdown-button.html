@@ -1,12 +1,14 @@
 <template name="members_dropdown_button">
-  <div id="project-members-dropdown" class="dropdown">
-    <button class="btn btn-light btn-sm shadow-sm font-weight-bold border-primary text-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      {{#if is_project_admin}}
-        SHARE
-      {{else}}
-        MEMBERS
-      {{/if}}
-    </button>
-    {{> members_dropdown_menu}}
-  </div>
+  {{#unless is_project_guest}}
+    <div id="project-members-dropdown" class="dropdown">
+      <button class="btn btn-light btn-sm shadow-sm font-weight-bold border-primary text-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{#if is_project_admin}}
+          SHARE
+        {{else}}
+          MEMBERS
+        {{/if}}
+      </button>
+      {{> members_dropdown_menu}}
+    </div>
+  {{/unless}}
 </template>

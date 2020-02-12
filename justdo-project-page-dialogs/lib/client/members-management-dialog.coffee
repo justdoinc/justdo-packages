@@ -2,7 +2,7 @@ ProjectPageDialogs.members_management_dialog = {}
 
 JustdoHelpers.setupHandlersRegistry(ProjectPageDialogs.members_management_dialog)
 
-addFilledUser = ->
+addFilledUser = (add_as_guest) ->
   email_input = $(".invite-members-section input")
 
   email = email_input.val().trim().toLowerCase()
@@ -13,7 +13,7 @@ addFilledUser = ->
 
     return
 
-  ProjectPageDialogs.addMemberToCurrentProject email, {custom_classes: "opened-by-members-managment-dialog"}, (err, user_id) ->
+  ProjectPageDialogs.addMemberToCurrentProject email, {add_as_guest: add_as_guest, custom_classes: "opened-by-members-managment-dialog"}, (err, user_id) ->
     if $(".members-search-input").val().length > 0
       $(".members-search-input").val("").keyup()
 
@@ -308,6 +308,13 @@ APP.executeAfterAppLibCode ->
   #
   # Editor dialog sections
   #
+  Template.task_pane_item_details_members_editor_section.onCreated ->
+    @add_as_guest_toggle_controller = new Template.add_as_guest_toggle.Controller()
+
+    @isAddAsGuest = -> @add_as_guest_toggle_controller.isAddAsGuest()
+
+    return
+
   Template.task_pane_item_details_members_editor_section.helpers
     perform_action: ->
       return @proceed_action_reactive_var.get()
@@ -329,6 +336,10 @@ APP.executeAfterAppLibCode ->
 
       return false
 
+    isAddAsGuest: -> Template.instance().isAddAsGuest()
+
+    add_as_guest_toggle_controller: -> Template.instance().add_as_guest_toggle_controller
+
   Template.task_pane_item_details_members_editor_section.events
     "click .select-all": ->
       _setProceedStateForAllUsersInReactiveVarExcludingFiltered @action_users_reactive_var, true
@@ -336,12 +347,12 @@ APP.executeAfterAppLibCode ->
     "click .select-none": ->
       _setProceedStateForAllUsersInReactiveVarExcludingFiltered @action_users_reactive_var, false
 
-    "click .invite-members-section button": (e) ->
-      addFilledUser()
+    "click .invite-members-section button": (e, tpl) ->
+      addFilledUser(tpl.isAddAsGuest())
    
-    "keypress .invite-members-section input": (e) ->
+    "keypress .invite-members-section input": (e, tpl) ->
       if e.keyCode == 13
-        addFilledUser()
+        addFilledUser(tpl.isAddAsGuest())
 
   #
   # Editor dialog section user button

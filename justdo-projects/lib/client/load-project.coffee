@@ -39,10 +39,19 @@ _.extend Projects.prototype,
         else
           return false
 
+      isGuest: -> not JD.activeJustdo({members: 1}).members?
+
       membersCount: ->
         @getProjectDoc()?.members?.length
 
-      getMembers: -> @getProjectDoc()?.members
+      getMembers: ->
+        if not (project_doc = @getProjectDoc())?
+          return []
+
+        if (members = project_doc.members)?
+          return members
+
+        return [{user_id: Meteor.userId(), is_admin: false, is_guest: true}] # This will happen only for guests
 
       getMembersIds: (options) -> self.getProjectMembersIds(@id, options)
 

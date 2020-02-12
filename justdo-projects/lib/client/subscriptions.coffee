@@ -24,6 +24,9 @@ getCurrentSyncTimeWithSafetyDelta = -> new Date(TimeSync.getServerTime() - sync_
 _.extend Projects.prototype,
   _setupSubscriptions: ->
     @_subscribeUserProjects()
+    @_subscribeUserGuestProjects()
+
+    return
 
   _setupProjectRemovalProcedures: ->
     self = @
@@ -52,7 +55,9 @@ _.extend Projects.prototype,
 
     return handle
 
-  _subscribeUserProjects: -> @_setSubscriptionHandle "projects", Meteor.subscribe "userProjects"
+  _subscribeUserProjects: -> @_setSubscriptionHandle "projects", Meteor.subscribe("userProjects", false)
+
+  _subscribeUserGuestProjects: -> @_setSubscriptionHandle "guest_projects", Meteor.subscribe("userProjects", true)
 
   requireProjectTasksSubscription: (project_id) ->
     self = @

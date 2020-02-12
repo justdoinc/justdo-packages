@@ -8,6 +8,10 @@ email_regex = JustdoHelpers.common_regexps.email
 # ProjectPageDialogs.addMemberToCurrentProject
 #
 
+inviteeTerm = (guest_term) -> if guest_term then "guest" else "member"
+
+ucFirstInviteeTerm = (guest_term) -> JustdoHelpers.ucFirst(inviteeTerm(guest_term))
+
 getCurrentProject = -> APP.modules.project_page.helpers.curProj()
 
 showAddNewMemberToTaskReminder = ->
@@ -42,6 +46,8 @@ ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_op
 
     return
 
+  invited_members_dialog_options = _.extend {add_as_guest: false}, invited_members_dialog_options
+
   APP.accounts.userExists email, (err, exists) ->
     if err?
       JustdoHelpers.callCb cb, err
@@ -49,7 +55,7 @@ ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_op
       return
 
     if exists
-      getCurrentProject().inviteMember {email: email}, (err, user_id) ->
+      getCurrentProject().inviteMember {email: email, add_as_guest: invited_members_dialog_options.add_as_guest}, (err, user_id) ->
         if err?
           JustdoHelpers.callCb cb, err
 
@@ -68,7 +74,7 @@ ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_op
     # details to prepare an invite to Justdo.
 
     invited_members_dialog_options = _.extend {}, invited_members_dialog_options,
-      title: "Add a New Member"
+      title: "Add a New #{ucFirstInviteeTerm(invited_members_dialog_options.add_as_guest)}"
       buttons:
         cancel:
           label: "Cancel"
@@ -79,7 +85,7 @@ ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_op
             return true
 
         submit:
-          label: "Add Member"
+          label: "Add #{ucFirstInviteeTerm(invited_members_dialog_options.add_as_guest)}"
 
           callback: =>
             submit_attempted_rv.set(true)
@@ -93,10 +99,10 @@ ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_op
 
               email = email_rv.get()
 
-              getCurrentProject().inviteMember {email: email, profile: profile}, (err, user_id) ->
+              getCurrentProject().inviteMember {email: email, profile: profile, add_as_guest: invited_members_dialog_options.add_as_guest}, (err, user_id) ->
                 if err
                   if err.error == "member-already-exists"
-                    error_message = "Member <i>#{JustdoHelpers.xssGuard(JustdoHelpers.displayName(Meteor.users.findOne({"emails.address": email})))}</i> (#{email}) already exist in this project."
+                    error_message = "#{ucFirstInviteeTerm(invited_members_dialog_options.add_as_guest)} <i>#{JustdoHelpers.xssGuard(JustdoHelpers.displayName(Meteor.users.findOne({"emails.address": email})))}</i> (#{email}) already exist in this project."
                   else
                     error_message = err.reason
                   bootbox.alert
@@ -141,6 +147,8 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
 
     return
 
+  invited_members_dialog_options = _.extend {add_as_guest: false}, invited_members_dialog_options
+
   processEditRequest = (options) ->
     options = _.extend {force_enrollment_email_resend: false}, options
 
@@ -175,7 +183,7 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
     return
 
   invited_members_dialog_options = _.extend {}, invited_members_dialog_options,
-    title: "Edit invited member's details"
+    title: "Edit invited #{inviteeTerm(invited_members_dialog_options.add_as_guest)}'s details"
     buttons:
       cancel:
         label: "Cancel"
@@ -241,6 +249,7 @@ initReactiveVars = (init_vals) ->
 initInvitedMembersDialog = (data, options) ->
   default_options =
     title: "SET TITLE"
+    add_as_guest: false
     custom_classes: ""
     buttons:
       cancel:
@@ -254,6 +263,8 @@ initInvitedMembersDialog = (data, options) ->
   options = _.extend default_options, options
 
   initReactiveVars(data)
+
+  _.extend data, {add_as_guest: options.add_as_guest}
 
   message_template =
     APP.helpers.renderTemplateInNewNode(Template.invite_new_user_dialog, data)
@@ -296,6 +307,7 @@ Template.invite_new_user_dialog.helpers
   isInvalidEmail: -> not email_is_valid_rv.get()
   isInvalidFirstName: -> not first_name_is_valid_rv.get()
   isInvalidLastName: -> not last_name_is_valid_rv.get()
+  inviteeTerm: -> inviteeTerm(@add_as_guest)
 
 Template.invite_new_user_dialog.events
   "keyup #new-user-email, change #new-user-email": (e) ->
