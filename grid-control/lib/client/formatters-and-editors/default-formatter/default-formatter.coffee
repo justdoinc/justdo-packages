@@ -66,7 +66,7 @@ GridControl.installFormatter "defaultFormatter",
     return formatter
 
   print: (doc, field, path) ->
-    {value, schema} = @getFriendlyArgs()
+    {value, schema, formatter_obj} = @getFriendlyArgs()
 
     value = formatter_obj.valueTransformation(value)
 
