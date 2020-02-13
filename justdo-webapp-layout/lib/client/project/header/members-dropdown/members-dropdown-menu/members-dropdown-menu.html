@@ -27,6 +27,14 @@
           {{/each}}
         {{/with}}
 
+        {{#with project_enrolled_guests_sorted_by_first_name getCurrentMembersFilter}}
+          <li class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2">Guests</li>
+
+          {{#each this}}
+            {{> guest_member_item}}
+          {{/each}}
+        {{/with}}
+
         {{#with project_non_enrolled_members_sorted_by_first_name getCurrentMembersFilter}}
           <li class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2">Members Awaiting Registration</li>
 
@@ -92,6 +100,21 @@
         </span>
       {{/if}}
 
+      {{#if allow_member_remove user_id}}
+        <span title="Remove {{displayName}} from this JustDo">
+          <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+        </span>
+      {{/if}}
+    </div>
+  </li>
+</template>
+
+<template name="guest_member_item">
+  <li class="member-item regular-member-item d-flex align-items-center justify-content-between mb-2" user-id="{{_id}}">
+    <div class="d-flex align-items-center">
+      {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
+    </div>
+    <div class="d-flex align-items-center">
       {{#if allow_member_remove user_id}}
         <span title="Remove {{displayName}} from this JustDo">
           <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>

@@ -190,6 +190,7 @@ APP.executeAfterAppLibCode ->
 
   Template.admin_member_item.helpers module.template_helpers
   Template.regular_member_item.helpers module.template_helpers
+  Template.guest_member_item.helpers module.template_helpers
   Template.enrollment_pending_member.helpers module.template_helpers
 
   Template.enrollment_pending_member.events
