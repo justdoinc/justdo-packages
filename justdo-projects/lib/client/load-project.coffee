@@ -90,6 +90,14 @@ _.extend Projects.prototype,
         Meteor.call "upgradeAdmin", @id, member_id, (err) ->
           cb(err)
 
+      makeGuest: (member_id, cb) ->
+        Meteor.call "makeGuest", @id, member_id, (err) ->
+          cb(err)
+
+      upgradeGuest: (guest_id, cb) ->
+        Meteor.call "upgradeGuest", @id, guest_id, (err) ->
+          cb(err)
+
       inviteMember: (invited_user, cb) ->
         Meteor.call "inviteMember", @id, invited_user, (err, user_id) ->
           cb(err, user_id)

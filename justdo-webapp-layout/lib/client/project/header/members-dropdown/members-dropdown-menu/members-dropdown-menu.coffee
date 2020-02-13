@@ -154,6 +154,37 @@ APP.executeAfterAppLibCode ->
 
           return
 
+    "click .make-guest": (e) ->
+      confirm_message = "Are you sure you want to make this member a guest of this JustDo?"
+
+      bootbox.confirm
+        message: confirm_message
+        className: "bootbox-new-design members-management-alerts"
+        closeButton: false
+        callback: (res) =>
+          if res
+            curProj().makeGuest @user_id, (err) ->
+              clearMembersDropDownErrors()
+              if err?
+                addMembersDropDownError err.reason
+
+          return
+
+    "click .upgrade-guest": (e) ->
+      confirm_message = "Are you sure you want to make this guest a member of this JustDo?<br />Once a member, all the other guests/members/admins of this JustDo will become visible to this guest."
+
+      bootbox.confirm
+        message: confirm_message
+        className: "bootbox-new-design members-management-alerts"
+        closeButton: false
+        callback: (res) =>
+          if res
+            curProj().upgradeGuest @user_id, (err) ->
+              clearMembersDropDownErrors()
+              if err?
+                addMembersDropDownError err.reason
+
+          return
     "click .downgrade-admin": (e) ->
       if @user_id == Meteor.userId()
         confirm_message = "Are you sure you want to stop manage this JustDo?"
@@ -190,6 +221,8 @@ APP.executeAfterAppLibCode ->
 
   Template.admin_member_item.helpers module.template_helpers
   Template.regular_member_item.helpers module.template_helpers
+  Template.regular_member_item.helpers
+    isGuestsEnabled: -> APP.justdo_guests.isPluginInstalledOnProjectDoc()
   Template.guest_member_item.helpers module.template_helpers
   Template.enrollment_pending_member.helpers module.template_helpers
 

@@ -98,6 +98,12 @@
         <span title="Make {{displayName}} an admin">
           <svg class="jd-icon text-secondary op-button upgrade-admin"><use xlink:href="/layout/icons-feather-sprite.svg#star"/></svg>
         </span>
+
+        {{#if isGuestsEnabled}}
+          <span title="Make {{displayName}} a guest">
+            <svg class="jd-icon text-secondary op-button make-guest"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"/></svg>
+          </span>
+        {{/if}}
       {{/if}}
 
       {{#if allow_member_remove user_id}}
@@ -115,6 +121,12 @@
       {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
     <div class="d-flex align-items-center">
+      {{#if is_project_admin}}
+        <span title="Make {{displayName}} a member">
+          <svg class="jd-icon text-secondary op-button upgrade-guest"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"/></svg>
+        </span>
+      {{/if}}
+
       {{#if allow_member_remove user_id}}
         <span title="Remove {{displayName}} from this JustDo">
           <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>

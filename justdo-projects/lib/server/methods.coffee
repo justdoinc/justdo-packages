@@ -59,6 +59,18 @@ _.extend Projects.prototype,
 
         projects_object.upgradeAdmin project_id, member_id, @userId
 
+      makeGuest: (project_id, member_id) ->
+        check(project_id, String)
+        check(member_id, String)
+
+        projects_object.makeGuest project_id, member_id, @userId
+
+      upgradeGuest: (project_id, guest_id) ->
+        check(project_id, String)
+        check(guest_id, String)
+
+        projects_object.upgradeGuest project_id, guest_id, @userId
+
       removeMember: (project_id, member_id) ->
         check(project_id, String)
         check(member_id, String)

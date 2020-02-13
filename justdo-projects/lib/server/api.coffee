@@ -742,6 +742,41 @@ _.extend Projects.prototype,
 
     return
 
+  upgradeGuest: (project_id, guest_id, user_id) ->
+    @requireProjectAdmin(project_id, user_id)
+
+    query =
+      _id: project_id
+
+      members:
+        $elemMatch:
+          {"user_id": guest_id, "is_guest": true}
+
+    update =
+      $set:
+        "members.$.is_guest": false
+
+    @projects_collection.update query, update
+
+    return
+
+  makeGuest: (project_id, member_id, user_id) ->
+    @requireProjectAdmin(project_id, user_id)
+
+    query =
+      _id: project_id
+
+      members:
+        $elemMatch:
+          {"user_id": member_id, "is_admin": false}
+
+    update =
+      $set:
+        "members.$.is_guest": true
+
+    @projects_collection.update query, update
+
+    return
 
   upgradeAdmin: (project_id, member_id, user_id) ->
     @requireProjectAdmin(project_id, user_id)
