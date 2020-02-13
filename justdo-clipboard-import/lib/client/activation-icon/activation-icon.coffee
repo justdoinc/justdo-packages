@@ -1,5 +1,6 @@
 # The order below will also serve as the ordering in the dropdown
 base_supported_fields_ids = [
+  "title"
   "start_date"
   "end_date"
   "due_date"
@@ -76,60 +77,49 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
         text: "Mismatch in number of columns on different rows. Import aborted."
 
       return
-    # Check fields content such as dates format, priority range etc.
-    # Row 0 is always the subject. let's make sure it's a simple string
-    try
-      check row[0], String
-    catch
-      JustdoSnackbar.show
-        text: "Invalid Subject format in #{line_number}. Import aborted."
 
-      return
-
-    task.title = row[0]
     task.project_id = project_id
 
-    if number_of_columns > 1
-      for column_num in [1..(number_of_columns - 1)]
-        cell_val = row[column_num].trim()
-        field_def = selected_columns_definitions[column_num - 1]
-        field_id = field_def._id
+    for column_num in [0..(number_of_columns - 1)]
+      cell_val = row[column_num].trim()
+      field_def = selected_columns_definitions[column_num]
+      field_id = field_def._id
 
-        if cell_val.length > 0
-          if field_def.type is String
-            task[field_id] = cell_val
+      if cell_val.length > 0
+        if field_def.type is String
+          task[field_id] = cell_val
 
-          if field_def.type is Number
-            # TODO: Look for: '_available_field_types' under justdo-internal-packages/grid-control-custom-fields/lib/both/grid-control-custom-fields/grid-control-custom-fields.coffee
-            # in the future, the information on whether we need to use parseFloat or parseInt() should be taken from the relevant definition.
-            cell_val = parseFloat(cell_val.trim(), 10)
+        if field_def.type is Number
+          # TODO: Look for: '_available_field_types' under justdo-internal-packages/grid-control-custom-fields/lib/both/grid-control-custom-fields/grid-control-custom-fields.coffee
+          # in the future, the information on whether we need to use parseFloat or parseInt() should be taken from the relevant definition.
+          cell_val = parseFloat(cell_val.trim(), 10)
 
-            # Check valid range
-            out_of_range = false
-            if field_def.min?
-              if cell_val < field_def.min
-                out_of_range = true
+          # Check valid range
+          out_of_range = false
+          if field_def.min?
+            if cell_val < field_def.min
+              out_of_range = true
 
-            if field_def.max?
-              if cell_val > field_def.max
-                out_of_range = true
+          if field_def.max?
+            if cell_val > field_def.max
+              out_of_range = true
 
-            if out_of_range
-              JustdoSnackbar.show
-                text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} (must be between #{field_def.min} and #{field_def.max}). Import aborted."
+          if out_of_range
+            JustdoSnackbar.show
+              text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} (must be between #{field_def.min} and #{field_def.max}). Import aborted."
 
-              return
+            return
 
-            task[field_id] = cell_val
+          task[field_id] = cell_val
 
-          # If we have a date field, check that the date is formatted properly, and transform to internal format
-          if isDateFieldDef(field_def)
-            moment_date = moment.utc cell_val, dates_format
-            if not moment_date.isValid()
-              JustdoSnackbar.show
-                text: "Invalid date format in line #{line_number}. Import aborted."
-              return
-            task[field_id] = moment_date.format("YYYY-MM-DD")
+        # If we have a date field, check that the date is formatted properly, and transform to internal format
+        if isDateFieldDef(field_def)
+          moment_date = moment.utc cell_val, dates_format
+          if not moment_date.isValid()
+            JustdoSnackbar.show
+              text: "Invalid date format in line #{line_number}. Import aborted."
+            return
+          task[field_id] = moment_date.format("YYYY-MM-DD")
 
     tasks.push task
 

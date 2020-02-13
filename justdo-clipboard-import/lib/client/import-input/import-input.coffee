@@ -95,11 +95,11 @@ Template.justdo_clipboard_import_input.helpers
 
     return Template.instance().data.clipboard_data.get()
 
-  numberOfAdditionalColumns: ->
+  numberOfColumns: ->
     if not ("has_data" == Template.instance().data.dialog_state.get())
       return []
 
-    return [2..Template.instance().data.clipboard_data.get()[0].length]
+    return [1..Template.instance().data.clipboard_data.get()[0].length]
 
   getAvailableFieldTypesArray: ->
     return Template.instance().getAvailableFieldTypes()[1]
