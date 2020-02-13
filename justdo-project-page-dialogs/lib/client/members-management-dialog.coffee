@@ -104,7 +104,7 @@ APP.executeAfterAppLibCode ->
       throw module._error("unknown-data-context", "can't determine current task users")
     _users_to_keep = _.without item_users, Meteor.userId()
 
-    if not (project_members = (project = module.curProj())?.getMembersIds())?
+    if not (project_members = (project = module.curProj())?.getMembersIds({if_justdo_guest_include_ancestors_members_of_items: task_id}))?
       throw module._error("unknown-data-context", "can't determine project members")
     _users_to_add = _.difference project_members, item_users
 
