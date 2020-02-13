@@ -1,13 +1,9 @@
 <template name="meetings_meeting_dialog">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js"></script>
-
   <div class="meetings_meeting-dialog d-flex flex-column rounded shadow-lg">
     <!-- Meeting Header -->
     <div class="meeting-dialog-header">
-      <svg class="meeting-dialog-close jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
-      <div class="meeting-dialog-state shadow-sm rounded-sm {{#if $eq meeting.status 'pending'}}bg-primary{{/if}} {{#if $eq meeting.status 'in-progress'}}bg-success{{/if}}">{{meeting.status}}</div>
       <div class="meeting-dialog-actions shadow-sm rounded d-flex align-items-center">
+        <div class="meeting-dialog-state shadow-sm rounded-sm {{#if $eq meeting.status 'pending'}}bg-primary{{/if}} {{#if $eq meeting.status 'in-progress'}}bg-success{{/if}}">{{meeting.status}}</div>
         <svg class="jd-icon meeting-print">
           <use xlink:href="/layout/icons-feather-sprite.svg#printer"/>
           <title>Print meeting</title>
@@ -23,8 +19,8 @@
           <title>Copy meeting details to the clipboard</title>
         </svg>
       </div>
+      <svg class="meeting-dialog-close jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
     </div>
-
     <!-- Meeting Info -->
     <div class="meeting-dialog-info">
       <div class="meeting-dialog-options d-flex align-items-center">
@@ -72,7 +68,6 @@
         {{/with}}
       </div>
     </div>
-
     <!-- Meeting Agenda -->
     <div class="meeting-dialog-agenda-title">
       Agenda
@@ -94,7 +89,6 @@
         </div>
       {{/if}}
     </div>
-
     <!-- Meeting Footer -->
     <div class="meeting-dialog-footer">
       {{#if showMeetingNote}}
@@ -121,24 +115,6 @@
             <button type="button" class="btn btn-secondary btn-start-meeting">Reopen</button>
           {{/if}}
         {{/if}}
-      </div>
-    </div>
-
-    {{#if errors}}
-      <div class="errors">
-        {{#each errors}}
-          <div class="error">{{message}}</div>
-        {{/each}}
-      </div>
-    {{/if}}
-
-    <div class="discard-msg">
-      <div class="discard-msg-content">
-        <label class="control-label">Discard this meeting?</label>
-        <div class="form-group">
-          <button type="button" class="btn btn-primary btn-discard-ok" data-dismiss="modal">Yes</button>
-          <button type="button" class="btn btn-default btn-discard-no">No</button>
-        </div>
       </div>
     </div>
   </div>

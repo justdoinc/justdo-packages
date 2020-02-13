@@ -16,10 +16,6 @@ $meeting-padding: 2.5rem
   margin-left: - $meeting_dialog_width / 2
   background-color: white
 
-
-  .discard-msg
-    display: none !important
-
   .meeting-dialog-header
     position: relative
     padding: .75rem 0.75rem .25rem 0.75rem
@@ -37,21 +33,19 @@ $meeting-padding: 2.5rem
 
   .meeting-dialog-state
     background-color: #687B8E
-    position: absolute
-    top: -12px
-    left: $meeting-padding
     color: white
     font-size: 12px
     font-weight: bold
     text-transform: uppercase
     padding: 4px 8px
+    margin-right: 8px
 
   .meeting-dialog-actions
     background-color: white
     position: absolute
-    top: -15px
-    right: 70px
-    padding: 5px 8px
+    top: -12px
+    left: $meeting-padding
+    padding: 4px 8px 4px 4px
     .jd-icon
       color: $meeting_color
       padding: 3px
@@ -245,21 +239,16 @@ $meeting-padding: 2.5rem
     margin-right: 1.5rem
     color: #A5ABB3
 
-
-
-// ========================================================================
-
-.close-split-view
-  position: absolute
-  right: 20px
-  top: 20px
-  cursor: pointer
-  display: block
-  width: 23px
-  height: 23px
-  background-image: url(/packages/justdoinc_meetings-manager-plugin/media/icons.png)
-  background-position: -22px -28px
-
+// .close-split-view
+//   position: absolute
+//   right: 20px
+//   top: 20px
+//   cursor: pointer
+//   display: block
+//   width: 23px
+//   height: 23px
+//   background-image: url(/packages/justdoinc_meetings-manager-plugin/media/icons.png)
+//   background-position: -22px -28px
 
 .print-meeting-mode-overlay
   background: white

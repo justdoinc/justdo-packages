@@ -12,6 +12,15 @@ saveTasksOrder = (tmpl) ->
       APP.meetings_manager_plugin.meetings_manager.setMeetingTaskOrder meeting_id, item.task_id, i, (e,r) ->
         tmpl.meetings_tasks_noRender.set false
 
+showSnackbar = (message) ->
+  JustdoSnackbar.show
+    text: message
+    duration: 4000
+    actionText: "Dismiss"
+    onActionClick: =>
+      JustdoSnackbar.close()
+      return
+
 
 Template.meetings_meeting_dialog.onCreated ->
   @note_out_of_date = new ReactiveVar false
@@ -302,6 +311,7 @@ Template.meetings_meeting_dialog.helpers
 
           # Log an error using the logger
           APP.meetings_manager_plugin.logger.error err
+          showSnackbar(err.message)
 
   mayNotEditMeetingNote: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -407,13 +417,7 @@ Template.meetings_meeting_dialog.events
 
   'click .meeting-copy': (e, tmpl) ->
     tmpl.copy_me()
-    JustdoSnackbar.show
-      text: "Meeting details copied to clipboard."
-      duration: 3000
-      actionText: "Dismiss"
-      onActionClick: =>
-        JustdoSnackbar.close()
-        return
+    showSnackbar("Meeting details copied to clipboard.")
 
   "click .meeting-dialog-add-task": (e, tmpl) ->
     $(".meeting-dialog-agenda").animate { scrollTop: $(".meeting-task-add").offset().top }, 500
@@ -441,6 +445,7 @@ Template.meetings_meeting_dialog.events
 
           # Log an error using the logger
           APP.meetings_manager_plugin.logger.error err
+          showSnackbar(err.message)
 
   "keydown .meeting-task-add": (e, tmpl) ->
     if e.which == 13
@@ -468,6 +473,7 @@ Template.meetings_meeting_dialog.events
 
             # Log an error using the logger
             APP.meetings_manager_plugin.logger.error err
+            showSnackbar(err.message)
 
           else
             tmpl.form.set "seqId", ""
@@ -491,6 +497,7 @@ Template.meetings_meeting_dialog.events
 
         # Log an error using the logger
         APP.meetings_manager_plugin.logger.error err
+        showSnackbar(err.message)
 
   'click .meeting-private': (e, tmpl) ->
     # Clear out any existing errors related to the locked status
@@ -506,6 +513,7 @@ Template.meetings_meeting_dialog.events
 
         # Log an error using the logger
         APP.meetings_manager_plugin.logger.error err
+        showSnackbar(err.message)
 
 
   'click .btn-publish-meeting': (e, tmpl) ->
@@ -520,6 +528,7 @@ Template.meetings_meeting_dialog.events
 
         # Log an error using the logger
         APP.meetings_manager_plugin.logger.error err
+        showSnackbar(err.message)
 
   'click .btn-start-meeting': (e, tmpl) ->
     # Clear out any existing errors related to the locked status
@@ -533,6 +542,7 @@ Template.meetings_meeting_dialog.events
 
         # Log an error using the logger
         APP.meetings_manager_plugin.logger.error err
+        showSnackbar(err.message)
 
 
   'click .btn-end-meeting': (e, tmpl) ->
@@ -547,25 +557,33 @@ Template.meetings_meeting_dialog.events
 
         # Log an error using the logger
         APP.meetings_manager_plugin.logger.error err
+        showSnackbar(err.message)
 
   "click .btn-cancel-meeting": (e, tmpl) ->
-    $(".discard-msg").show()
+    JustdoSnackbar.show
+      text: "Discard this meeting?"
+      duration: 6000
+      actionText: "No"
+      showSecondButton: true
+      secondButtonText: "Yes"
+      onSecondButtonClick: =>
+        # Clear out any existing errors related to the locked status
+        doc = tmpl.form.doc()
+        tmpl.form.validate("status")
 
-  "click .btn-discard-ok": (e, tmpl) ->
-    # Clear out any existing errors related to the locked status
-    doc = tmpl.form.doc()
-    tmpl.form.validate("status")
+        APP.meetings_manager_plugin.meetings_manager.updateMeetingStatus doc._id, "cancelled", (err) =>
+          $(".meetings_meeting-dialog").remove()
+          JustdoSnackbar.close()
+          if err
+            # Invalidate the form and show the user an error.
+            tmpl.form.invalidate [{ error: err, name: "status", message: "Update status failed: " + err }]
 
-    APP.meetings_manager_plugin.meetings_manager.updateMeetingStatus doc._id, "cancelled", (err) =>
-      if err
-        # Invalidate the form and show the user an error.
-        tmpl.form.invalidate [{ error: err, name: "status", message: "Update status failed: " + err }]
-
-        # Log an error using the logger
-        APP.meetings_manager_plugin.logger.error err
-
-  "click .btn-discard-no": (e, tmpl) ->
-    $(".discard-msg").hide()
+            # Log an error using the logger
+            APP.meetings_manager_plugin.logger.error err
+            showSnackbar(err.message)
+      onActionClick: =>
+        JustdoSnackbar.close()
+        return
 
   'click .meeting-dialog-close': (e, tmpl) ->
     APP.meetings_manager_plugin.removeMeetingDialog()
