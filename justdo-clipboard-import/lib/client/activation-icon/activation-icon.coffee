@@ -1,6 +1,7 @@
 # The order below will also serve as the ordering in the dropdown
 base_supported_fields_ids = [
   "title"
+  "status"
   "start_date"
   "end_date"
   "due_date"
