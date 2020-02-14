@@ -626,10 +626,13 @@ Template.justdo_calendar_project_pane.helpers
 
 
   allOtherUsers: ->
+    other_users_ids = []
     if delivery_planner_project_id.get() == "*"
-      return _.difference(APP.modules.project_page.curProj().getMembersIds(), [Meteor.userId()])
+      other_users_ids = _.difference(APP.modules.project_page.curProj().getMembersIds(), [Meteor.userId()])
     else
-      return Template.instance().all_other_users.get()
+      other_users_ids = Template.instance().all_other_users.get()
+
+    return _.sortBy other_users_ids, (user_id) -> JustdoHelpers.displayName(user_id).toLowerCase()
 
   projectsInJustDo: ->
     project = APP.modules.project_page.project.get()
@@ -1202,8 +1205,8 @@ Template.justdo_calendar_project_pane_user_view.helpers
     initials = Meteor.users.findOne(userId).profile.first_name.charAt(0) + Meteor.users.findOne(userId).profile.last_name.charAt(0)
     return initials
 
-  userName: (userId) ->
-    return Meteor.users.findOne(userId).profile.first_name + " " + Meteor.users.findOne(userId).profile.last_name
+  userName: (user_id) ->
+    return  JustdoHelpers.displayName(user_id)
 
   projectName: ->
     # if this is a project, no need to append anything
