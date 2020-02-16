@@ -41,7 +41,7 @@ Template.tasks_file_manager_files.helpers
 
     tpl = Template.instance()
 
-    APP.tasks_file_manager_plugin.tasks_file_manager.getPreviewDownloadLink task.task_id, file.id, 1, {width: 512}, (err, link) =>
+    APP.tasks_file_manager_plugin.tasks_file_manager.getPreviewDownloadLink task.task_id, file.id, 1, {width: 512, cropHeightForNonImgSrc: 256, output: "jpg"}, (err, link) =>
       # Load the image
       load_element = $("<img/>").attr("src", link).on "load", =>
         # On load, set as the element's background
@@ -58,11 +58,8 @@ Template.tasks_file_manager_files.helpers
 
     return placeholder
 
-  isImage: ->
-    if (@file.type.slice(0,6) == "image/")
-      return true
-
-    return false
+  isPreviewSupported: ->
+    return  APP.tasks_file_manager_plugin.tasks_file_manager.isConversionSupported @file.type, "jpg"
 
   typeClass: ->
     return Template.instance().getTypeCssClass(@file.type)

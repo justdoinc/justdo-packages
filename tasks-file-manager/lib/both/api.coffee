@@ -17,3 +17,40 @@ _.extend TasksFileManager.prototype,
       path: "/tasks-files/#{task_id}/"
 
     return location
+  
+  _CONVERSION_MATRIX:
+      "pdf": [
+        "image/jpeg", "image/jpg", 
+        "image/png",
+        "image/gif", 
+        "image/webp",
+        "image/heic", "image/heif",
+        "image/bmp",
+        "image/tiff",
+        "application/pdf", , 
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",    # docx
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation",  # pptx
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"           # xlsx
+      ]
+      "jpg": [
+        "image/jpeg", "image/jpg", 
+        "image/png",
+        "image/gif", 
+        "image/webp",
+        "image/heic", "image/heif",
+        "image/bmp",
+        "image/tiff",
+        "application/pdf", , 
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",    # docx
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation",  # pptx
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"           # xlsx
+      ]
+
+  getConversionMartix: () ->
+    return @_CONVERSION_MATRIX
+
+  isConversionSupported: (src_mime, des_format) ->    
+    if (supported_srcs = @_CONVERSION_MATRIX[des_format])?
+      return supported_srcs.includes src_mime 
+    
+    return false

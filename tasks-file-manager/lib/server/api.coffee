@@ -246,6 +246,20 @@ _.extend TasksFileManager.prototype,
       defaultValue: 512
 
       optional: true
+    
+    cropHeightForNonImgSrc:
+      type: Number
+      
+      allowedValues: [256, 512, 1024]
+      
+      defaultValue: 256
+
+      optional: true
+
+    output:
+      type: String
+      
+      allowedValues: ["pdf", "jpg"]
 
   _getProcessedFileLink: (task, file, process_str, processed_file_id, processed_file_ext) ->
     # IMPORTANT!!! IF YOU CHANGE THIS COMMENT UPDATE ALSO filestack-base/lib/server/api.coffee
@@ -355,48 +369,65 @@ _.extend TasksFileManager.prototype,
     task = @requireTaskDoc(task_id, user_id)
     file = @requireFile task, file_id
 
-    if file.type == "application/pdf"
-      return @_simpleDownloadLink file
-    else if file.type not in ["image/png", "image/jpeg", "image/gif"]
-      return @_getProcessedFileLink task, file, "/output=f:pdf", "v#{version}", "pdf"   
-    else
-      if not (file_dimension = task._secret?.files_dimensions?[file_id])?
-        file_dimension_result = HTTP.get @_getFileDimensionLinkCalc(task_id, file)
-        if not (file_dimension_result?.statusCode == 200)
-          console.warn "Failed to fetch file dimensions"
+    if options.output == "pdf"
+      if file.type == "application/pdf"   
+        # pdf to pdf
+        return @_simpleDownloadLink file
+      else                                
+        # others to pdf
+        # XXX supported file formats
+        return @_getProcessedFileLink task, file, "/output=f:pdf", "v#{version}_pdf", "pdf"
+    else if options.output == "jpg"       
+      if file.type.indexOf("image/") == 0
+      # image to jpg
+        if not (file_dimension = task._secret?.files_dimensions?[file_id])?
+            file_dimension_result = HTTP.get @_getFileDimensionLinkCalc(task_id, file)
+            if not (file_dimension_result?.statusCode == 200)
+              console.warn "Failed to fetch file dimensions"
 
-          return @_simpleDownloadLink(file)
-        file_dimension = file_dimension_result.data
+              return @_simpleDownloadLink(file)
+            file_dimension = file_dimension_result.data
 
-        query = {_id: task_id}
-        update = 
-          $set:
-            "_secret.files_dimensions.#{file_id}": file_dimension
+            query = {_id: task_id}
+            update = 
+              $set:
+                "_secret.files_dimensions.#{file_id}": file_dimension
 
-        # We don't want the unmerged publications raw fields, nor any other hook to trigger as a result
-        # of that update, hence the use of the rawCollection()
-        APP.justdo_analytics.logMongoRawConnectionOp(@tasks_collection._name, "update", query, update)
-        @tasks_collection.rawCollection().update query, update, Meteor.bindEnvironment (err) ->
-          if err?
-            console.error(err)
+            # We don't want the unmerged publications raw fields, nor any other hook to trigger as a result
+            # of that update, hence the use of the rawCollection()
+            APP.justdo_analytics.logMongoRawConnectionOp(@tasks_collection._name, "update", query, update)
+            @tasks_collection.rawCollection().update query, update, Meteor.bindEnvironment (err) ->
+              if err?
+                console.error(err)
 
-            return
+                return
 
-          return
+              return
 
-      processed_file_ext = file.type.replace("image/", "").replace("jpeg", "jpg")
-      
-      proccess_str = ""
+        processed_file_ext = file.type.replace("image/", "").replace("jpeg", "jpg")
+        
+        proccess_str = ""
 
-      if file_dimension.width > options.width
+        if file_dimension.width > options.width
+          proccess_str +=
+            "/resize=width:#{options.width}"
+
         proccess_str +=
-          "/resize=width:#{options.width}"
+          "/rotate=deg:exif" +
+          "/compress"
 
-      proccess_str +=
-        "/rotate=deg:exif" +
-        "/compress"
+        return @_getProcessedFileLink task, file, proccess_str, "v#{version}_w#{options.width}", processed_file_ext
+      else 
+        # others to jpg
+        proccess_str = "/output=f:jpg" +
+          "/resize=width:#{options.width}" +
+          "/crop=dim:[0,0,#{options.width},#{options.cropHeightForNonImgSrc}]" +
+          "/rotate=deg:exif" +
+          "/compress"
 
-      return @_getProcessedFileLink task, file, proccess_str, "v#{version}_w#{options.width}", processed_file_ext
+        return @_getProcessedFileLink task, file, proccess_str, "v#{version}_w#{options.width}h#{options.cropHeightForNonImgSrc}", "jpg" 
+      
+      return null
 
   renameFile: (task_id, file_id, new_title, user_id) ->
     task = @requireTaskDoc(task_id, user_id)

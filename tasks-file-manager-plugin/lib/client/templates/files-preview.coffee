@@ -1,26 +1,39 @@
+isPdfPreview = (file_type) ->
+  APP.tasks_file_manager_plugin.tasks_file_manager.isConversionSupported file_type, "pdf"
+
+isImagePreview = (file_type) ->
+  file_type.indexOf("image/") == 0
+
 Template.tasks_file_manager_files_preview.onCreated ->
   @preview_link = new ReactiveVar null
 
-  APP.tasks_file_manager_plugin.tasks_file_manager.getPreviewDownloadLink @data.task_id, @data.file.id, 1, {width: 1024}, (err, link) =>
-    if err?
-      alert("Error occured: #{err.reason}")
+  preview_options = null
+  if isImagePreview @data.file.type
+    preview_options =
+      output: "jpg"
+      width: 1024
+  else if isPdfPreview @data.file.type
+    preview_options = 
+      output: "pdf"
+
+  if preview_options?
+    APP.tasks_file_manager_plugin.tasks_file_manager.getPreviewDownloadLink @data.task_id, @data.file.id, 1, preview_options, (err, link) =>
+      if err?
+        alert("Error occured: #{err.reason}")
+
+        return
+
+      @preview_link.set(link)
 
       return
-
-    @preview_link.set(link)
-
-    return
 
   return
 
 Template.tasks_file_manager_files_preview.helpers
-  isPdfPreview: -> @file.type in  ["application/pdf",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",    # docx
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation",  # pptx
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"           # xlsx
-  ]
+  isImagePreview: -> isImagePreview @file.type
+
+  isPdfPreview: -> isPdfPreview @file.type
   
-  isImage: -> @file.type.indexOf("image") == 0
 
   randomString: ->
     # We found out that in some machines caching might cause an issue with pdf previews,

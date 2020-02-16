@@ -1,10 +1,7 @@
 _.extend TasksFileManagerPlugin.prototype,
   showPreviewOrStartDownload: (task_id, file) ->
-    preview_supported_formats = ["application/pdf", "image/png", "image/gif", "image/jpeg", "image/bmp", 
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",    # docx
-      "application/vnd.openxmlformats-officedocument.presentationml.presentation",  # pptx
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"           # xlsx
-    ]
+    conv_matrix = @tasks_file_manager.getConversionMartix()
+    preview_supported_formats = _.union conv_matrix["pdf"], conv_matrix["jpg"]
 
     if file.type in preview_supported_formats
       # Show preview in bootbox

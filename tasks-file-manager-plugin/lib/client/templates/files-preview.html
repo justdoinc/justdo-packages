@@ -1,10 +1,9 @@
 <template name="tasks_file_manager_files_preview">
   {{#if preview_link}}
-    {{#if isPdfPreview}}
-      <!-- <iframe src="{{preview_link}}&r={{randomString}}" width="970" height="550" alt="{{file.title}}" style="border: 0 none;"></iframe> -->
-      <iframe src="{{preview_link}}" width="970" height="550" alt="{{file.title}}" style="border: 0 none;"></iframe>
-      {{else if isImage}}
+    {{#if isImagePreview}}
       <img src="{{preview_link}}" alt="{{file.title}}" title="{{file.title}}" style="max-width: 100%;" />
+    {{else if isPdfPreview}}
+      <iframe src="{{preview_link}}" width="970" height="550" alt="{{file.title}}" style="border: 0 none;"></iframe>
     {{/if}}
   {{/if}}
 </template>
