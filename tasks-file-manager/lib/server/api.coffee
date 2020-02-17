@@ -212,12 +212,6 @@ _.extend TasksFileManager.prototype,
 
     return signature
 
-  _convertToPdfLink: (task, file) ->
-    signature = @getConvertPolicySignature(task._id, file.id)
-    security_string = "security=p:#{signature.encoded_policy},s:#{signature.hmac}"
-
-    return "https://cdn.filestackcontent.com/output=f:pdf/#{security_string}/#{file.id}"
-
   _simpleDownloadLink: (file) ->
     # IMPORTANT In this method we assume accesss rights checked by the caller!
 
