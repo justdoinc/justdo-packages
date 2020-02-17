@@ -602,12 +602,7 @@ Template.justdo_calendar_project_pane.helpers
     return Template.instance().users_to_tasks[@]
 
 
-  title_date: ->    
-    start_month = moment(Template.instance().view_start_date.get()).format("MMMM")
-    end_month = moment(Template.instance().view_end_date.get()).format("MMMM")
-    if start_month == end_month
-      return "#{moment(Template.instance().view_start_date.get()).format('MMMM Do')} - #{moment(Template.instance().view_end_date.get()).format('Do')} "
-
+  title_date: ->
     return "#{moment(Template.instance().view_start_date.get()).format('MMMM Do')} - #{moment(Template.instance().view_end_date.get()).format('MMMM Do')} "
 
   currentUserId: ->
