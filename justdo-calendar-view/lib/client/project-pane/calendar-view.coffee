@@ -316,6 +316,7 @@ Template.justdo_calendar_project_pane.onCreated ->
 
   @all_other_users = new ReactiveVar([])
   @view_start_date = new ReactiveVar
+  @view_end_date = new ReactiveVar
   active_item_id = null
 
   #calculate the first day to display based on the beginning of the week of the user
@@ -517,6 +518,7 @@ Template.justdo_calendar_project_pane.onCreated ->
       dates.push(d.format("YYYY-MM-DD"))
       d.add(1,"days")
     dates_to_display.set(dates)
+    Template.instance().view_end_date.set(dates[dates.length - 1])
     @justdo_level_holidays.set(APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo()._id, dates).holidays)
     return
 
@@ -544,7 +546,6 @@ Template.justdo_calendar_project_pane.onCreated ->
         include_tasks.push item_obj._id
         return
 
-    d = moment(Template.instance().view_start_date.get())
     dates = dates_to_display.get()
 
     first_date_to_display = dates[0]
@@ -619,11 +620,14 @@ Template.justdo_calendar_project_pane.helpers
 
 
   title_date: ->
-    return moment(Template.instance().view_start_date.get()).format("YYYY-MM-DD")
+    start_month = moment(Template.instance().view_start_date.get()).format("MMMM")
+    end_month = moment(Template.instance().view_end_date.get()).format("MMMM")
+    if start_month == end_month
+      return start_month
+    return "#{start_month} - #{end_month}"
 
   currentUserId: ->
     return Meteor.userId()
-
 
   allOtherUsers: ->
     other_users_ids = []
