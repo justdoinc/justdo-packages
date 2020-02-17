@@ -343,16 +343,7 @@ Template.justdo_calendar_project_pane.onCreated ->
     dow = d.getDay()
     index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
     step_size = config.days_resolution_big_step[index]
-    user_first_day_of_week = 1
-    if Meteor.user().profile?.first_day_of_week?
-      user_first_day_of_week = Meteor.user().profile.first_day_of_week
-
-    if dow == user_first_day_of_week
-      d.setDate(d.getDate() - step_size)
-    else
-      if dow < user_first_day_of_week
-        dow += 7
-      d.setDate(d.getDate() - (dow - step_size))
+    d.setDate(d.getDate() - step_size)
     self.view_start_date.set(d)
 
     if !keep_scroll_handler and self.scroll_left_right_handler
@@ -366,14 +357,6 @@ Template.justdo_calendar_project_pane.onCreated ->
     index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
     step_size = config.days_resolution_big_step[index]
     d.setDate(d.getDate() + step_size)
-    dow = d.getDay()
-    user_first_day_of_week = 1
-    if Meteor.user().profile?.first_day_of_week?
-      user_first_day_of_week = Meteor.user().profile.first_day_of_week
-
-    if dow < user_first_day_of_week
-      dow += 7
-    d.setDate(d.getDate() - (dow - user_first_day_of_week))
     self.view_start_date.set(d)
 
     if !keep_scroll_handler and self.scroll_left_right_handler
