@@ -149,7 +149,7 @@
                           <div class="calendar_task_startDateAfterDueDate {{fontSizeClass}}" title="Start Date after Due Date">!</div>
                         {{/if}}
                         {{#if hasDueDate}}
-                          <div class="calendar_task_due_date {{fontSizeClass}}">{{dueDate}}</div>
+                          <div class="calendar_task_due_date {{fontSizeClass}} {{highlightPastDueDate}}">{{dueDate}}</div>
                         {{/if}}
                         {{#if unassignedHours}}
                           <div class="calendar_task_unassigned_hours {{fontSizeClass}}">{{unassignedHours}}</div>

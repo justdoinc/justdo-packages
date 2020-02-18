@@ -1157,6 +1157,11 @@ Template.justdo_calendar_project_pane_user_view.helpers
   dueDate: ->
     return "Due: #{@task.due_date}"
 
+  highlightPastDueDate: ->
+    if @task.due_date < moment().format("YYYY-MM-DD") and (@task.state in ['pending', 'in-progress', 'on-hold','duplicate'])
+      return "highlighted_due_date"
+    return ""
+
   plannedHours: ->
     if @type == 'R' and @task.planned_seconds > 0
       seconds = @task.planned_seconds
