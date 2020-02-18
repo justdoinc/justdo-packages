@@ -140,7 +140,7 @@
               {{#if taskId}}
                 {{#with cellData}}
                   <td class="calendar_table_cell" date={{columnDate}} colspan={{span}}>
-                    <div class="calendar_task_cell calendar_view_draggable {{dimTask}} task_cell_{{type}}" title="{{projectName}}{{task.title}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
+                    <div class="calendar_task_cell calendar_view_draggable {{dimTask}} task_cell_{{type}}" title="{{projectName}}{{task.title}} {{additionalInfo}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
                       <div class="calendar_task_info">
                         {{#if showType type}}
                           <div class="calendar_task_type {{fontSizeClass}}">{{type}}</div>

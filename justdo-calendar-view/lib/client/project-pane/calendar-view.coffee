@@ -803,6 +803,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         "#{executed_seconds_field}": 1
         "p:rp:b:unassigned-work-hours": 1
         "users": 1
+        priority: 1
 
     self.dates_workload.set({})
     APP.collections.Tasks.find({$and: [_id: {$in: Array.from(data.tasks_set)}, owner_part]}, options).forEach (task)->
@@ -819,6 +820,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         unassigned_hours: task["p:rp:b:unassigned-work-hours"]
         users: task.users
         "priv:follow_up": task["priv:follow_up"]
+        priority: task.priority
 
       #deal with  regular followups
 
@@ -1205,6 +1207,19 @@ Template.justdo_calendar_project_pane_user_view.helpers
       return "#{project_name} : "
 
     return ""
+
+  additionalInfo: ->
+    ret = ""
+    if @task.priority > 0
+      ret += "\nPriority: #{@task.priority}"
+    if @task.planned_seconds
+      seconds = @task.planned_seconds
+      minutes = Math.floor(seconds/60)
+      hours = Math.floor(minutes/60)
+      mins = minutes - hours*60
+      ret += "\nPlanned: #{hours}:#{JustdoHelpers.padString(mins, 2)} hours"
+
+    return ret
 
 Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_task_cell": (e, tpl)->
