@@ -30,8 +30,19 @@
 
   .task-subject-box
     margin-right: 1rem
+    padding: 0px 4px
+    border-radius: 4px
+    transition: background-color 0.2s
+    &:hover
+      background-color: #F9F9FA
     &:focus
       outline: 0
+      background-color: #F9F9FA
+    &[placeholder]:empty::before
+      content: attr(placeholder)
+      color: #99aabb
+    &[placeholder]:empty:focus::before
+        content: ""
 
   .task-due-date-wrapper
     position: relative

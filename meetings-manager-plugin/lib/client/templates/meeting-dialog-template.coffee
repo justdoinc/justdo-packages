@@ -21,6 +21,32 @@ showSnackbar = (message) ->
       JustdoSnackbar.close()
       return
 
+setMeetingHours = (tmpl, hours) ->
+  meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
+    _id: tmpl.data.meeting_id
+
+  if meeting.time?
+    time = new Date meeting.time
+  else
+    time = new Date()
+    time.setHours(0, 0, 0, 0)
+
+  $(".meeting-time").val(new Date(time.setHours(time.getHours() + hours))).change()
+  return
+
+setMeetingMinutes = (tmpl, minutes) ->
+  meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
+    _id: tmpl.data.meeting_id
+
+  if meeting.time?
+    time = new Date meeting.time
+  else
+    time = new Date()
+    time.setHours(0, 0, 0, 0)
+
+  $(".meeting-time").val(new Date(time.setMinutes(time.getMinutes() + minutes))).change()
+  return
+
 
 Template.meetings_meeting_dialog.onCreated ->
   @note_out_of_date = new ReactiveVar false
@@ -230,19 +256,24 @@ Template.meetings_meeting_dialog.onRendered ->
   meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
     _id: Template.currentData().meeting_id
 
-  # @$(".meetings_meeting-dialog").resizable()]
+  @$(".meetings_meeting-dialog").draggable
+    containment: ".global-wrapper"
+    handle: ".meeting-dialog-header"
 
-  @$(".meeting-date").datepicker({ "minDate": 0, "defaultDate": meeting.date, "dateFormat": "yy-mm-dd" })
+  @$(".meeting-date").datepicker
+    "minDate": 0,
+    "defaultDate": meeting.date
+    "dateFormat": "yy-mm-dd"
 
   # Make tasks sortable
   @$(".meeting-tasks-list").sortable
     handle: ".sort-task"
-    start: (event, ui) ->
-      $(".meeting-dialog-agenda").addClass "dragging"
-
     stop: (event, ui) ->
       Session.set "updateTaskOrder", true
-      $(".meeting-dialog-agenda").removeClass "dragging"
+
+
+
+
 
   @autorun =>
     updateTaskOrder = Session.get "updateTaskOrder"
@@ -373,13 +404,23 @@ Template.meetings_meeting_dialog.helpers
   # NEED TO CHANGE: We need to retrieve meeting time from Date !
   rawTime: (time) ->
     if (time?)
-      return moment(time).format("HH:mm")
+      return moment(new Date(time)).format("HH:mm")
     return ""
 
   labelTime: (time) ->
     if (time?)
-      return moment(time).format("HH:mm")
+      return moment(new Date(time)).format("HH:mm")
     return "Set Time"
+
+  labelTimeHours: (time) ->
+    if (time?)
+      return moment(new Date(time)).format("HH")
+    return "00"
+
+  labelTimeMinutes: (time) ->
+    if (time?)
+      return moment(new Date(time)).format("mm")
+    return "00"
 
   # DEPRECATED
   # recentLocations: ->
@@ -406,6 +447,7 @@ Template.meetings_meeting_dialog.helpers
     active_conversation_id = Session.get "active-conversation-id"
     if active_conversation_id? and active_conversation_id == @meeting_id
       return "active"
+
 
 Template.meetings_meeting_dialog.events
 
@@ -436,7 +478,7 @@ Template.meetings_meeting_dialog.events
         changes.date = moment(changes.date).toDate()
 
       if changes.time
-        changes.time = moment(changes.time).toDate()
+        changes.time = moment(new Date(changes.time)).toDate()
 
       APP.meetings_manager_plugin.meetings_manager.updateMeetingMetadata doc._id, changes, (err) =>
         if err
@@ -636,3 +678,23 @@ Template.meetings_meeting_dialog.events
         split_view.enabled.set(false)
         Session.set "active-conversation-id", false
     , 300
+
+  "click .meeting-time-hours-wrapper .meeting-time-up": (e, tmpl) ->
+    setMeetingHours(tmpl, 1)
+    return
+
+  "click .meeting-time-hours-wrapper .meeting-time-down": (e, tmpl) ->
+    setMeetingHours(tmpl, -1)
+    return
+
+  "click .meeting-time-minutes-wrapper .meeting-time-up": (e, tmpl) ->
+    setMeetingMinutes(tmpl, 15)
+    return
+
+  "click .meeting-time-minutes-wrapper .meeting-time-down": (e, tmpl) ->
+    setMeetingMinutes(tmpl, -15)
+    return
+
+  "click .meeting-time-picker": (e, tmpl) ->
+    e.stopPropagation()
+    return

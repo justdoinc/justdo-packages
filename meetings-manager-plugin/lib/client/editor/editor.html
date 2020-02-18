@@ -3,7 +3,9 @@
     {{#if editing}}
       {{> locking_text_editor_textarea placeholder=placeholder content=content}}
     {{else}}
-      <pre class="note-box">{{content}}</pre>
+      {{#if content}}
+        <pre class="note-box">{{content}}</pre>
+      {{/if}}
     {{/if}}
     {{#if locked}}
       <div class="text-editor-locked">

@@ -6,9 +6,15 @@ Template.meetings_dialog_task_subtask.onCreated ->
   return
 
 Template.meetings_dialog_task_subtask.onRendered ->
-  $(".task-due-date").datepicker onSelect: (date) ->
-    $(this).prev().text date
-    return
+  instance = this
+
+  $(".task-due-date").datepicker
+    onSelect: (date) ->
+      tmpl = Blaze.getView($(this)[0]).parentView._templateInstance
+      if tmpl.task_obj
+        if tmpl.data.may_edit
+          JD.collections.Tasks.update {_id: tmpl.task_obj._id}, {$set: {due_date: date}}
+      return
 
   return
 
@@ -23,6 +29,11 @@ Template.meetings_dialog_task_subtask.helpers
     if Template.instance().task_subject_diverged_ra.get()
       return "Task subject diverged."
     return ""
+
+  taskPriority: ->
+    priority = Template.instance().task_obj?.priority
+    color = JustdoColorGradient.getColorRgbString priority
+    return color
 
   subject: ->
     task_meeting_title = ""
@@ -43,7 +54,10 @@ Template.meetings_dialog_task_subtask.helpers
     return task_meeting_title
 
   dueDate: ->
-    return Template.instance().task_obj?.due_date
+    dueDate = Template.instance().task_obj?.due_date
+    if dueDate?
+      return moment(new Date(dueDate)).format("D MMM YYYY")
+    return "Due Date"
 
   taskOwner: ->
     if (task_obj = Template.instance().task_obj)
@@ -67,22 +81,19 @@ Template.meetings_dialog_task_subtask.helpers
       return "disabled"
     return ""
 
+  allowAddingTasks: ->
+    return Template.instance().data.may_edit
+
 
 Template.meetings_dialog_task_subtask.events
   "blur .task-subject-box": (e, tpl) ->
     if tpl.task_obj
       subject = $(e.target).text()
+      # $(e.target).text ""
       if tpl.data.may_edit
         JD.collections.Tasks.update {_id: tpl.task_obj._id}, {$set: {title: subject}}
         APP.meetings_manager_plugin.meetings_manager.saveSubTaskSubject tpl.data.meeting_id, tpl.data.parent_task_id, tpl.task_obj._id, subject
     return
-
-  "blur .task-due-date": (e, tpl) ->
-    if tpl.task_obj
-      if tpl.data.may_edit
-        JD.collections.Tasks.update {_id: tpl.task_obj._id}, {$set: {due_date: e.target.value}}
-    return
-
 
   "click .select-pending-owner": (e, tpl) ->
     if not tpl.task_obj
@@ -106,4 +117,19 @@ Template.meetings_dialog_task_subtask.events
     #else
     JD.collections.Tasks.update _id: tpl.task_obj._id,
       $set: {pending_owner_id: selected_user_id}
+    return
+
+  "click .remove-sub-task": (e, tmpl) ->
+    meeting_id = tmpl.data.meeting_id
+    task_id = tmpl.data.task_id
+    APP.meetings_manager_plugin.meetings_manager.removeTaskFromMeeting meeting_id, task_id
+    Meteor.setTimeout =>
+      Session.set "updateTaskOrder", true
+    , 100
+    return
+
+  "click .task-subject-box, click .task-priority": (e, tmpl) ->
+    task_id = tmpl.data.task_id
+    gcm = APP.modules.project_page.getCurrentGcm()
+    gcm.setPath(["main", task_id], {collection_item_id_mode: true})
     return

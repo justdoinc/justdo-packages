@@ -79,9 +79,7 @@
         <div class="task-added-tasks">
           {{#each meeting_task.added_tasks}}
             {{#with lookupTask}}
-              <div class="sub-task d-flex align-items-start">
-                {{> meetings_dialog_task_subtask task_id=this._id parent_task_id=taskId meeting_id=meetingId may_edit=mayEditChildTask}}
-              </div>
+              {{> meetings_dialog_task_subtask task_id=this._id parent_task_id=taskId meeting_id=meetingId may_edit=mayEditChildTask}}
             {{/with}}
           {{/each}}
         </div>

@@ -1,9 +1,9 @@
 <template name="meetings_meeting_dialog">
-  <div class="meetings_meeting-dialog d-flex flex-column rounded shadow-lg">
+  <div class="meetings_meeting-dialog d-flex flex-column rounded shadow-lg {{meeting.status}}">
     <!-- Meeting Header -->
     <div class="meeting-dialog-header">
+      <div class="meeting-dialog-state shadow-sm rounded-sm {{#if $eq meeting.status 'pending'}}bg-primary{{/if}} {{#if $eq meeting.status 'in-progress'}}bg-success{{/if}}">{{meeting.status}}</div>
       <div class="meeting-dialog-actions shadow-sm rounded d-flex align-items-center">
-        <div class="meeting-dialog-state shadow-sm rounded-sm {{#if $eq meeting.status 'pending'}}bg-primary{{/if}} {{#if $eq meeting.status 'in-progress'}}bg-success{{/if}}">{{meeting.status}}</div>
         <svg class="jd-icon meeting-print">
           <use xlink:href="/layout/icons-feather-sprite.svg#printer"/>
           <title>Print meeting</title>
@@ -31,9 +31,31 @@
             <input type="text" name="date" value="{{rawdate doc.date}}" class="meeting-date" readonly="readonly">
           </div>
           <div class="mr-1">,</div>
-          <div class="meeting-time-wrapper">
-            <div class="text-primary meeting-time-label">Set time</div>
+          <div class="meeting-time-wrapper dropdown">
+            <div class="text-primary meeting-time-label" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{labelTime doc.time}}</div>
             <input type="text" name="time" class="meeting-time" readonly="readonly">
+            <div class="meeting-time-picker dropdown-menu dropdown-menu-right shadow-lg p-2 border-0">
+              <div class="d-flex">
+                <div class="meeting-time-hours-wrapper">
+                  <div class="meeting-time-up">
+                    <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"/></svg>
+                  </div>
+                  <div class="meeting-time-hours">{{labelTimeHours doc.time}}</div>
+                  <div class="meeting-time-down">
+                    <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"/></svg>
+                  </div>
+                </div>
+                <div class="meeting-time-minutes-wrapper">
+                  <div class="meeting-time-up">
+                    <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"/></svg>
+                  </div>
+                  <div class="meeting-time-minutes">{{labelTimeMinutes doc.time}}</div>
+                  <div class="meeting-time-down">
+                    <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <!-- <div class="meeting-dialog-divider bg-secondary"></div>
           {{#if doc.locked}}
@@ -96,23 +118,23 @@
           {{> locking_text_editor content=meeting.note class="note" placeholder="Note" lock=meeting.note_lock disabled=mayNotEditMeetingNote onSave=onSaveMeetingNote}}
         </div>
       {{/if}}
-      <div class="d-flex align-items-center justify-content-end py-3">
+      <div class="d-flex align-items-center justify-content-end py-4">
         {{#if mayEdit}}
           {{#if showDiscardButton}}
-            <button type="button" class="btn btn-secondary btn-cancel-meeting mr-2">Discard</button>
+            <button type="button" class="btn btn-secondary btn-sm text-uppercase font-weight-bold btn-cancel-meeting mr-2">Discard</button>
           {{/if}}
           {{#if $eq meeting.status "draft"}}
-            <button type="button" class="btn btn-primary btn-publish-meeting">Publish</button>
+            <button type="button" class="btn btn-primary btn-sm text-uppercase font-weight-bold btn-publish-meeting">Publish</button>
           {{/if}}
           {{#if $eq meeting.status "pending"}}
-            <button type="button" class="btn btn-primary btn-start-meeting">Start Meeting</button>
+            <button type="button" class="btn btn-primary btn-sm text-uppercase font-weight-bold btn-start-meeting">Start Meeting</button>
           {{/if}}
           {{#if $eq meeting.status "in-progress"}}
-            <button type="button" class="btn btn-primary btn-end-meeting">End Meeting</button>
+            <button type="button" class="btn btn-primary btn-sm text-uppercase font-weight-bold btn-end-meeting">End Meeting</button>
           {{/if}}
           {{#if $eq meeting.status "adjourned"}}
             <div class="done-msg">Meeting finished, you can reopen meeting to edit</div>
-            <button type="button" class="btn btn-secondary btn-start-meeting">Reopen</button>
+            <button type="button" class="btn btn-secondary btn-sm text-uppercase font-weight-bold btn-start-meeting">Reopen</button>
           {{/if}}
         {{/if}}
       </div>

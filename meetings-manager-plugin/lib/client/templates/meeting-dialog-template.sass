@@ -3,14 +3,15 @@ $meeting_dialog_header_height: 50px
 $meeting_dialog_info_height: 100px
 $meeting_dialog_footer_height: 160px
 $meeting_color: #687B8E
-$meeting-padding: 2.5rem
+$meeting-padding: 2rem
 
 .meetings_meeting-dialog
   position: absolute
-  z-index: 1000
+  z-index: 1020
   top: 40px
-  bottom: 40px
   height: auto
+  min-height: 400px
+  bottom: 40px
   width: $meeting_dialog_width
   left: 50%
   margin-left: - $meeting_dialog_width / 2
@@ -31,6 +32,9 @@ $meeting-padding: 2.5rem
     &:hover
       opacity: 1
 
+  .meeting-tasks-list
+    width: 615px
+
   .meeting-dialog-state
     background-color: #687B8E
     color: white
@@ -39,6 +43,9 @@ $meeting-padding: 2.5rem
     text-transform: uppercase
     padding: 4px 8px
     margin-right: 8px
+    position: absolute
+    top: -9px
+    right: 44px
 
   .meeting-dialog-actions
     background-color: white
@@ -106,17 +113,47 @@ $meeting-padding: 2.5rem
       background-color: rgba(243, 244, 245, 0.5)
       .meeting-time-label
         text-decoration: underline
+    .meeting-time-label
+      cursor: pointer
     .meeting-time
       position: absolute
       background-color: red
       border: none
       outline: none
-      width: 100%
-      height: 100%
+      width: 0
+      height: 0
       top: 0
       opacity: 0
       cursor: pointer
       font-size: 15px
+    .meeting-time-up,
+    .meeting-time-down
+      cursor: pointer
+
+  .meeting-time-picker
+    min-width: 80px
+    .meeting-time-hours-wrapper,
+    .meeting-time-minutes-wrapper
+      width: 50%
+      display: flex
+      flex-direction: column
+      text-align: center
+      padding: 0 2px
+    .meeting-time-hours,
+    .meeting-time-minutes
+      border: 1px solid #ECEFF1
+      background: #ECEFF1
+      color: #37474F
+      font-size: 13px
+      font-weight: bold
+      border-radius: 2px
+      padding: 3px 0px
+    .jd-icon
+      stroke-width: 3
+      padding: 4px
+      opacity: 0.6
+      &:hover
+        opacity: 1
 
   .meetings-dialog-options
     font-size: 15px
@@ -210,9 +247,6 @@ $meeting-padding: 2.5rem
     align-items: center
     justify-content: space-between
 
-  .meeting-tasks-list
-    width: 600px
-
   .meeting-dialog-add-task
     cursor: pointer
     &:hover
@@ -222,6 +256,7 @@ $meeting-padding: 2.5rem
     position: relative
     cursor: pointer
     margin: 0.5rem 0
+    width: 615px
 
   .meeting-task-add
     border: 2px dashed rgba(190, 205, 217, 0.5)
