@@ -1,7 +1,6 @@
 Template.justdo_gantt.onCreated ->
   self = @
 
-  @following_active_task = new ReactiveVar false
 
   @gantt_top_path = new ReactiveVar "/"
   @gantt_title = new ReactiveVar ""
@@ -130,6 +129,7 @@ Template.justdo_gantt.onCreated ->
       xAxis:
         currentDateIndicator: true
 
+
       plotOptions:
         series:
           animation: false
@@ -140,6 +140,7 @@ Template.justdo_gantt.onCreated ->
                 gcm = APP.modules.project_page.getCurrentGcm()
                 gcm.setPath(["main", @id], {collection_item_id_mode: true})
                 return
+
 
       series: series
 
@@ -158,19 +159,6 @@ Template.justdo_gantt.onRendered ->
   @gantt_colors = ["#146eff", "#87a8de", "#d5e2f7", "#dbf8ff", "#dbfff3"]
 
 
-  # this autorun makes the gantt following the selected task
-  @autorun =>
-    if self.following_active_task.get()
-      if (current_path = JD.activePath())?
-        self.gantt_top_path.set current_path
-        self.gantt_title.set JustdoHelpers.taskCommonName(JD.activeItem({seqId: 1, title: 1}), 80)
-
-        return
-
-    self.gantt_top_path.set "/"
-    self.gantt_title.set JD.activeJustdo().title
-
-    return
 
   # this autorun triggers gantt charts redraws
   @autorun =>
@@ -202,13 +190,45 @@ Template.justdo_gantt.onRendered ->
   return
 
 Template.justdo_gantt.helpers
-  isFollowingActiveTask: ->
-    tpl = Template.instance()
+  projectsInJustDo: ->
+    project = APP.modules.project_page.project.get()
+    if project?
+      return APP.collections.Tasks.find({
+        "p:dp:is_project": true
+        project_id: project.id
+      }, {sort: {"title": 1}}).fetch()
 
-    return tpl.following_active_task.get()
+  notOnSameTask: ->
+    if not JD.activePath()
+      return false
+    return JD.activePath() != Template.instance().gantt_top_path.get()
+
+  selectedTaskTitle: ->
+    ret = "##{JD.activeItem({seqId: 1}).seqId} #{JD.activeItem({title: 1}).title}"
+    return JustdoHelpers.ellipsis ret, 30
+
+  selectedTaskId: ->
+    return JD.activeItem({_id: 1})._id
+
+  selectedGanttTask: ->
+    path =  Template.instance().gantt_top_path.get()
+    if path == "/"
+      return "ENTIRE JUSTDO"
+    debugger
+    task_id = path.split("/").reverse()[1]
+    title = JD.collections.Tasks.findOne(task_id).title
+    return JustdoHelpers.ellipsis title, 30
 
 Template.justdo_gantt.events
-  "click .follow-active-task-toggle": (e, tpl) ->
-    tpl.following_active_task.set(not tpl.following_active_task.get())
-    
+  "click .gantt_project_selector a": (e) ->
+    task_id = $(e.currentTarget).attr "task_id"
+    if task_id == "*"
+      Template.instance().gantt_top_path.set("/")
+    else
+      path = APP.modules.project_page.gridData().getCollectionItemIdPath(task_id)
+      Template.instance().gantt_top_path.set path
     return
+
+
+
+
