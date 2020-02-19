@@ -28,6 +28,8 @@ Template.justdo_gantt.onCreated ->
     current_series = {}
 
     no_data = true
+    from_date = null
+    to_date = null
 
     gc._grid_data.each top_path,
       expand_only: false
@@ -52,8 +54,12 @@ Template.justdo_gantt.onCreated ->
 
       if item_obj.start_date
         data_obj.start = self.dateStringToUTC item_obj.start_date
+        if not from_date or from_date > data_obj.start
+          from_date = data_obj.start
       if item_obj.end_date
         data_obj.end = self.dateStringToUTC item_obj.end_date
+        if not to_date or to_date < data_obj.end
+          to_date = data_obj.end
 
       if item_obj.state == "done"
         data_obj.completed =
@@ -87,13 +93,17 @@ Template.justdo_gantt.onCreated ->
       return
 
     # we must add an empty series here to present the last series properly when collapsed
+    # this entry is also used to create some margins around the actual data
     series.push
       name: "-"
       data: [{
         name: ""
         id: "--"
+        color: "#ffffff"
+        start: from_date - 5 * 24 * 3600000
+        end: to_date + 5 * 24 * 3600000
       }]
-
+    
     viewport_scroll_top = $(".justdo-project-pane-tab-container").scrollTop()
     Highcharts.ganttChart "gantt-chart-container",
       title:
@@ -128,6 +138,7 @@ Template.justdo_gantt.onCreated ->
 
       xAxis:
         currentDateIndicator: true
+
 
 
       plotOptions:
