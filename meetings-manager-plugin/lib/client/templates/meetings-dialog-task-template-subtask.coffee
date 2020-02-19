@@ -120,12 +120,22 @@ Template.meetings_dialog_task_subtask.events
     return
 
   "click .remove-sub-task": (e, tmpl) ->
-    meeting_id = tmpl.data.meeting_id
-    task_id = tmpl.data.task_id
-    APP.meetings_manager_plugin.meetings_manager.removeTaskFromMeeting meeting_id, task_id
-    Meteor.setTimeout =>
-      Session.set "updateTaskOrder", true
-    , 100
+
+    bootbox.confirm
+      message: "You are about to delete the task (not only remove it from the meeting's agenda). Please confirm."
+      className: "bootbox-new-design members-management-alerts"
+      closeButton: false
+      callback: (res) =>
+        if res
+          meeting_id = tmpl.data.meeting_id
+          subtask_id = tmpl.data.task_id
+          parent_task_id = tmpl.data.parent_task_id
+          APP.meetings_manager_plugin.meetings_manager.removeSubtaskFromMeeting meeting_id, parent_task_id, subtask_id
+          Meteor.setTimeout =>
+            Session.set "updateTaskOrder", true
+          , 100
+          return
+        return
     return
 
   "click .task-subject-box, click .task-priority": (e, tmpl) ->

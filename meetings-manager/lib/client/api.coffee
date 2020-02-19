@@ -31,7 +31,12 @@ _.extend MeetingsManager.prototype,
 
     Meteor.call "meetings_removeTaskFromMeeting", meeting_id, task_id, cb
 
-  # obsolete
+  removeSubtaskFromMeeting: (meeting_id, parent_task_id, subtask_id, cb) ->
+
+    Meteor.call "meetings_removeSubtaskFromMeeting", meeting_id, parent_task_id, subtask_id, cb
+
+
+# obsolete
   moveMeetingTask: (meeting_id, task_id, move_direction, cb) ->
 
     Meteor.call "meetings_moveMeetingTask", meeting_id, task_id, move_direction, cb

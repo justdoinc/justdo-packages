@@ -104,6 +104,27 @@ _.extend MeetingsManager.prototype,
 
     return meeting_task_id
 
+  removeSubtaskFromMeeting: (meeting_id, parent_task_id, subtask_id, user_id) ->
+    @_requireString meeting_id, "meeting_id should be a string"
+    @_requireString parent_task_id, "parent_task_id should be a string"
+    @_requireString subtask_id, "subtask_id should be a string"
+    meeting = @_requireMeetingMember meeting_id, true, user_id
+
+    query =
+      meeting_id: meeting_id
+      task_id: parent_task_id
+    op =
+      $pull:
+        added_tasks:
+          task_id: subtask_id
+    @meetings_tasks.update query, op
+
+    JD.collections.Tasks.remove subtask_id
+
+
+    return true
+
+
   removeTaskFromMeeting: (meeting_id, task_id, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireString task_id, "task_id should be a string"

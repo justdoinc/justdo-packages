@@ -31,6 +31,10 @@ _.extend MeetingsManager.prototype,
         user_id = @userId
         self.removeTaskFromMeeting meeting_id, task_id, user_id
 
+      meetings_removeSubtaskFromMeeting: (meeting_id, parent_task_id, subtask_id) ->
+        user_id = @userId
+        self.removeSubtaskFromMeeting meeting_id, parent_task_id, subtask_id, user_id
+
       #obsolete
       meetings_moveMeetingTask: (meeting_id, task_id, move_direction) ->
         user_id = @userId
