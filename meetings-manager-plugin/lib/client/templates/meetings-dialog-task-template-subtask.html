@@ -15,7 +15,11 @@
 
     <div class="task-priority flex-shrink-0" style="background-color: {{taskPriority}}"></div>
     <div class="task-seqId-box flex-shrink-0 text-primary">{{seqId}}.</div>
-    <div class="task-subject-box flex-grow-1" contenteditable="{{#if allowAddingTasks}}true{{/if}}" placeholder="Untitled Task...">{{subject}}</div>
+    {{#if allowAddingTasks}}
+      {{{taskSubjectBox subject}}}
+    {{else}}
+      <div class="task-subject-box flex-grow-1" placeholder="Untitled Task...">{{subject}}</div>
+    {{/if}}
     {{#if allowAddingTasks}}
       <div class="d-flex align-items-center flex-shrink-0">
         <div class="task-due-date-wrapper">

@@ -84,12 +84,17 @@ Template.meetings_dialog_task_subtask.helpers
   allowAddingTasks: ->
     return Template.instance().data.may_edit
 
+  # Because of the issue with Blaze contenteditable reactivity, we need to isolate editable content from Blaze generated DOM elements using this Helper.
+  taskSubjectBox: (subject) ->
+    if !subject?
+      subject = ""
+    return """<div class="task-subject-box flex-grow-1" contenteditable="true" placeholder="Untitled Task...">""" + subject + """</div>"""
+
 
 Template.meetings_dialog_task_subtask.events
   "blur .task-subject-box": (e, tpl) ->
     if tpl.task_obj
       subject = $(e.target).text()
-      # $(e.target).text ""
       if tpl.data.may_edit
         JD.collections.Tasks.update {_id: tpl.task_obj._id}, {$set: {title: subject}}
         APP.meetings_manager_plugin.meetings_manager.saveSubTaskSubject tpl.data.meeting_id, tpl.data.parent_task_id, tpl.task_obj._id, subject
