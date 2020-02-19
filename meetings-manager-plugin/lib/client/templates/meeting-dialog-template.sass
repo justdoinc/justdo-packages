@@ -7,7 +7,7 @@ $meeting-padding: 2rem
 
 .meetings_meeting-dialog
   position: absolute
-  z-index: 1020
+  z-index: 110
   top: 40px
   height: auto
   min-height: 400px
@@ -45,13 +45,13 @@ $meeting-padding: 2rem
     margin-right: 8px
     position: absolute
     top: -9px
-    right: 44px
+    left: 2rem
 
   .meeting-dialog-actions
     background-color: white
     position: absolute
     top: -12px
-    left: $meeting-padding
+    right: 4rem
     padding: 4px 8px 4px 4px
     .jd-icon
       color: $meeting_color
@@ -274,17 +274,6 @@ $meeting-padding: 2rem
     margin-right: 1.5rem
     color: #A5ABB3
 
-// .close-split-view
-//   position: absolute
-//   right: 20px
-//   top: 20px
-//   cursor: pointer
-//   display: block
-//   width: 23px
-//   height: 23px
-//   background-image: url(/packages/justdoinc_meetings-manager-plugin/media/icons.png)
-//   background-position: -22px -28px
-
 .print-meeting-mode-overlay
   background: white
   padding: 50px
@@ -311,3 +300,5 @@ $meeting-padding: 2rem
 @media print
   .print-meeting-mode-overlay
     opacity: 1 !important
+  .meetings_meeting-dialog
+    visibility: hidden
