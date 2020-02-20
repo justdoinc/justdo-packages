@@ -298,7 +298,9 @@ $meeting-padding: 2rem
   height: 40px
 
 @media print
+  .drawer
+    box-shadow: none !important
   .print-meeting-mode-overlay
     opacity: 1 !important
   .meetings_meeting-dialog
-    visibility: hidden
+    display: none !important
