@@ -37,7 +37,7 @@ _.extend JustdoHighcharts.prototype,
 
     @_load_begun = true
 
-    scripts_count = 4
+    scripts_count = 5
     reportSciptLoadCompleted = =>
       scripts_count -= 1
 
@@ -57,7 +57,12 @@ _.extend JustdoHighcharts.prototype,
 
           JustdoHelpers.getCachedScript("https://code.highcharts.com/modules/export-data.js").done ->
             reportSciptLoadCompleted()
+
+            JustdoHelpers.getCachedScript("https://code.highcharts.com/gantt/modules/draggable-points.js").done ->
+              reportSciptLoadCompleted()
+              return
             return
+          return
         return
       return
     return

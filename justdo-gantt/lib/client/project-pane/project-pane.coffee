@@ -5,6 +5,31 @@ Template.justdo_gantt.onCreated ->
   @gantt_top_path = new ReactiveVar "/"
   @gantt_title = new ReactiveVar ""
 
+  @onDrop = (e) ->
+    if (task_obj = JD.collections.Tasks.findOne e.newPointId)
+      if e.newPoint.end
+        JD.collections.Tasks.update
+          _id:e.newPointId
+        ,
+          $set:
+            end_date: self.timeToDateString e.newPoint.end
+
+      if e.newPoint.start
+        # here we can have either start_date or due_date. The current implementation doesn't allow both, and gives
+        # preference to due date
+        field = "start_date"
+        if JD.collections.Tasks.findOne(e.newPointId).due_date
+          field = "due_date"
+        JD.collections.Tasks.update
+          _id:e.newPointId
+        ,
+          $set:
+            "#{field}": self.timeToDateString e.newPoint.start
+    return
+
+  @timeToDateString = (time) ->
+    return moment(time).format("YYYY-MM-DD")
+
   @dateStringToUTC = (date) ->
     re = /^\d\d\d\d-\d\d-\d\d$/g
 
@@ -28,6 +53,7 @@ Template.justdo_gantt.onCreated ->
     current_series = {}
 
     no_data = true
+    object_count = 0
     from_date = null
     to_date = null
 
@@ -35,6 +61,7 @@ Template.justdo_gantt.onCreated ->
       expand_only: false
       filtered_tree: false
     , (section, item_type, item_obj, path) ->
+
       path_depth = (path.split("/").length) - 2
       item_label = JustdoHelpers.taskCommonName(item_obj, 40)
 
@@ -78,6 +105,7 @@ Template.justdo_gantt.onCreated ->
           data_obj.dependency.push dependency_obj._id
 
       current_series.data.push data_obj
+      object_count += 1
       no_data = false
 
       return # end of _grid_data.each
@@ -103,9 +131,17 @@ Template.justdo_gantt.onCreated ->
         start: from_date - 5 * 24 * 3600000
         end: to_date + 5 * 24 * 3600000
       }]
-    
+    object_count += 1
+
     viewport_scroll_top = $(".justdo-project-pane-tab-container").scrollTop()
+
+    day = 1000 * 60 * 60 * 24
+
     Highcharts.ganttChart "gantt-chart-container",
+
+      # chart:
+      #  height: 1 #Without first/default value height function doesn't work
+
       title:
         text: self.gantt_title.get()
         margin: 10
@@ -139,25 +175,46 @@ Template.justdo_gantt.onCreated ->
       xAxis:
         currentDateIndicator: true
 
-
-
       plotOptions:
         series:
           animation: false
+          allowPointSelect: true
+
+          dragDrop:
+            draggableX: true
+            draggableY: false
+            dragMinY: 0
+            dragMaxY: 2
+            dragPrecisionX: day
+
 
           point:
             events:
               click: ->
                 gcm = APP.modules.project_page.getCurrentGcm()
                 gcm.setPath(["main", @id], {collection_item_id_mode: true})
+                console.log ">>>>> on click"
                 return
+              drop: (e)->
+                return self.onDrop e
 
 
       series: series
+    ### the following is not working due to bug on filestack side. waiting for their reply
+        https://github.com/highcharts/highcharts/issues/12012
+    ###
+    # ,
+    #  (chart) ->
+    #    # 40 is a pixel value for one cell
+    #     chartHeight = 40 * object_count;
+    #    chart.update({
+    #      chart: {
+    #        height: chartHeight
+    #      }
+    #    })
 
     $(".justdo-project-pane-tab-container").scrollTop(viewport_scroll_top)
     return # end of drawGantt
-
   return
 
 Template.justdo_gantt.onRendered ->
@@ -183,19 +240,14 @@ Template.justdo_gantt.onRendered ->
     project_id = JD.activeJustdo({_id: 1, title: 1})._id
     # Add reactivity to Tasks changes
     JD.collections.Tasks.find({project_id: project_id}, {fields: {_id: 1, title: 1, start_date: 1, end_date: 1, due_date: 1, state: 1, "#{JustdoDependencies.dependencies_field_id}": 1}}).fetch()
+
     # Add reactivity to gantt title and top path
     self.gantt_title.get()
     self.gantt_top_path.get()
     # Add reactivity to un/install of the dependencies plugin
     APP.justdo_dependencies?.isPluginInstalledOnProjectDoc()
 
-    Tracker.nonreactive ->
-      Meteor.defer ->
-        # Defer is here to let the grid process the updates before we call the .each() iteration
-        self.drawGantt()
-
-        return
-
+    Meteor.setTimeout self.drawGantt, 500
     return
 
   return
@@ -225,7 +277,6 @@ Template.justdo_gantt.helpers
     path =  Template.instance().gantt_top_path.get()
     if path == "/"
       return "ENTIRE JUSTDO"
-    debugger
     task_id = path.split("/").reverse()[1]
     title = JD.collections.Tasks.findOne(task_id).title
     return JustdoHelpers.ellipsis title, 30

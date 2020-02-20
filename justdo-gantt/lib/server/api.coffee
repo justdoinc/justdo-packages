@@ -32,3 +32,4 @@ _.extend JustdoGantt.prototype,
 
     # Note, isn't called on project removal
     return
+
