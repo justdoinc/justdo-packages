@@ -1,6 +1,14 @@
 Template.justdo_gantt.onCreated ->
   self = @
 
+  @dependencies_module_installed = new ReactiveVar false
+  @autorun =>
+    curProj = -> APP.modules.project_page.curProj()
+    if curProj().isCustomFeatureEnabled(JustdoDependencies.project_custom_feature_id)
+      self.dependencies_module_installed.set true
+    else
+      self.dependencies_module_installed.set false
+    return
 
   @gantt_top_path = new ReactiveVar "/"
   @gantt_title = new ReactiveVar ""
@@ -39,6 +47,39 @@ Template.justdo_gantt.onCreated ->
     split_date = date.split("-")
 
     return Date.UTC(split_date[0], split_date[1] - 1, split_date[2])
+
+  @in_ctrl_key_mode = new ReactiveVar(false)
+  @ctrl_key_mode_first_task_id = ""
+  @handleCtrlClick = (e) ->
+    if self.dependencies_module_installed.get == false
+      return
+
+    if not self.in_ctrl_key_mode.get()
+      self.in_ctrl_key_mode.set true
+      self.ctrl_key_mode_first_task_id = e.point.id
+
+
+    else
+      first_point = self.ctrl_key_mode_first_task_id
+      second_point = e.point.id
+      justdo_id = JD.activeJustdo({_id: 1})._id
+
+      if APP.justdo_dependencies.tasksDependentF2S justdo_id, first_point , second_point
+        APP.justdo_dependencies.removeFinishToStartDependency justdo_id, first_point, second_point
+      else
+        APP.justdo_dependencies.addFinishToStartDependency justdo_id, first_point, second_point
+
+
+      self.in_ctrl_key_mode.set false
+      self.ctrl_key_mode_first_task_id = ""
+
+    return
+
+  @stopCtrlClick = (e) ->
+    self.in_ctrl_key_mode.set false
+    self.ctrl_key_mode_first_task_id = ""
+
+    return
 
   @drawGantt = ->
     if not (gcm = APP.modules.project_page?.grid_control_mux.get())?
@@ -190,10 +231,15 @@ Template.justdo_gantt.onCreated ->
 
           point:
             events:
-              click: ->
+              click: (e) ->
+                if e.ctrlKey
+                  return self.handleCtrlClick e
+                else
+                  self.stopCtrlClick e
+
                 gcm = APP.modules.project_page.getCurrentGcm()
                 gcm.setPath(["main", @id], {collection_item_id_mode: true})
-                console.log ">>>>> on click"
+
                 return
               drop: (e)->
                 return self.onDrop e
@@ -224,7 +270,7 @@ Template.justdo_gantt.onRendered ->
 
   # the following are the color codes for different 'depth' of the gantt baskets.
   # if 'deeper' depth is presented, highcharts will provide default colors
-  @gantt_colors = ["#146eff", "#87a8de", "#d5e2f7", "#dbf8ff", "#dbfff3"]
+  @gantt_colors = ["#5234eb", "#345feb", "#3483eb", "#349ceb", "#34baeb", "#34d3eb", "#34e2eb"]
 
 
 
@@ -281,6 +327,10 @@ Template.justdo_gantt.helpers
     title = JD.collections.Tasks.findOne(task_id).title
     return JustdoHelpers.ellipsis title, 30
 
+  displayDependencyHint: ->
+    return not Template.instance().in_ctrl_key_mode.get()
+
+
 Template.justdo_gantt.events
   "click .gantt_project_selector a": (e) ->
     task_id = $(e.currentTarget).attr "task_id"
@@ -289,6 +339,10 @@ Template.justdo_gantt.events
     else
       path = APP.modules.project_page.gridData().getCollectionItemIdPath(task_id)
       Template.instance().gantt_top_path.set path
+    return
+
+  "click .gantt_dependnecies_conntector_hint .cancel": (e, tpl) ->
+    tpl.in_ctrl_key_mode.set false
     return
 
 

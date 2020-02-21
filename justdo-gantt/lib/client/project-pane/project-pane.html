@@ -22,6 +22,17 @@
       </ul>
     </div>
 
+    <div class="gantt_dependnecies_conntector_hint">
+      {{#if displayDependencyHint}}
+        <svg class="jd-icon ">
+          <use xlink:href="/layout/icons-feather-sprite.svg#help-circle"/>
+          <title>Select at task on the chart while holding the ctrl key to initiate dependency setup.</title>
+        </svg>
+      {{else}}
+        ... Select the dependent task while holding the ctrl key down to add/remove dependency <span class="cancel">[Cancel]</span>
+      {{/if}}
+    </div>
+
 
     <div class="gannt-chart-wrapper">
       <div id="gantt-chart-container"></div>
