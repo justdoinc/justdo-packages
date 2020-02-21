@@ -1,5 +1,5 @@
 <template name="meetings_meeting_dialog">
-  <div class="meetings_meeting-dialog d-flex flex-column rounded shadow-lg {{meeting.status}}">
+  <div class="meetings_meeting-dialog {{meeting.status}}">
     <!-- Meeting Header -->
     <div class="meeting-dialog-header">
       <div class="meeting-dialog-state shadow-sm rounded-sm {{#if $eq meeting.status 'pending'}}bg-primary{{/if}} {{#if $eq meeting.status 'in-progress'}}bg-success{{/if}}">{{meeting.status}}</div>

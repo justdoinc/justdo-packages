@@ -16,6 +16,10 @@ $meeting-padding: 2rem
   left: 50%
   margin-left: - $meeting_dialog_width / 2
   background-color: white
+  display: flex
+  flex-direction: column
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175)
+  border-radius: 0.25rem
 
   .meeting-dialog-header
     position: relative
@@ -283,9 +287,13 @@ $meeting-padding: 2rem
   right: 0
   z-index: 1000
   height: auto
-  min-height: 100%
-  min-width: 1020px
+  width: auto
   opacity: 0
+  font-size: 18pt !important
+  h3
+    font-size: 24pt !important
+  h5
+    font-size: 17pt !important
 
 .print-meeting-mode-task
   border-left: 3px solid rgba(0, 0, 0, 0.25)
