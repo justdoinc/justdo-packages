@@ -82,6 +82,11 @@ Template.justdo_gantt.onCreated ->
     return
 
   @drawGantt = ->
+
+    day = 1000 * 60 * 60 * 24
+    five_hours = 1000 * 60 * 60 * 5
+
+
     if not (gcm = APP.modules.project_page?.grid_control_mux.get())?
       return
 
@@ -122,10 +127,21 @@ Template.justdo_gantt.onCreated ->
 
       if item_obj.start_date
         data_obj.start = self.dateStringToUTC item_obj.start_date
+        # deal with situation when we have start w/o end
+        if not item_obj.end_date
+          data_obj.end = five_hours + self.dateStringToUTC item_obj.start_date
+
+        # set the lowest point on the chart
         if not from_date or from_date > data_obj.start
           from_date = data_obj.start
+
       if item_obj.end_date
-        data_obj.end = self.dateStringToUTC item_obj.end_date
+        data_obj.end = day - 1 + self.dateStringToUTC item_obj.end_date # the "day - 1 +.." marks the time to the end of the day
+        # deal with situations when we have end w/o start
+        if not item_obj.start_date
+          data_obj.start = data_obj.end - five_hours
+
+        #set the highest point on the chart
         if not to_date or to_date < data_obj.end
           to_date = data_obj.end
 
@@ -176,7 +192,7 @@ Template.justdo_gantt.onCreated ->
 
     viewport_scroll_top = $(".justdo-project-pane-tab-container").scrollTop()
 
-    day = 1000 * 60 * 60 * 24
+
 
     Highcharts.ganttChart "gantt-chart-container",
 
