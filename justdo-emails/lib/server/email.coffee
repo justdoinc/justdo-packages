@@ -4,6 +4,8 @@ htmlToText = Npm.require "html-to-text"
 
 getTemplate = (templateName) -> Handlebars.templates[templateName]
 
+forbidden_email_domains = ["qq.com"]
+
 build_and_send_options_schema = new SimpleSchema
   to:
     label: "To"
@@ -111,6 +113,10 @@ _.extend JustdoEmails,
     template_html = template(template_data)
 
     email_html = JustdoEmails._buildEmail template_html
+
+    if options.to.split("@")[1] in forbidden_email_domains
+      console.warn "An email to a forbidden email domain skipped (#{options.to})"
+      return
 
     return JustdoEmails._send options.to, subject, email_html
 
