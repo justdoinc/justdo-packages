@@ -1,6 +1,9 @@
 Template.justdo_gantt.onCreated ->
   self = @
 
+  @config =
+    work_hours_per_day: 8
+
   @dependencies_module_installed = new ReactiveVar false
   @autorun =>
     curProj = -> APP.modules.project_page.curProj()
@@ -75,6 +78,70 @@ Template.justdo_gantt.onCreated ->
   @stopCtrlClick = ->
     self.in_ctrl_key_mode.set false
     self.ctrl_key_mode_first_task_id = ""
+    return
+
+  # here we deal with whole dates, so always round up. 3 hours will become one day. 9 hours will be two days
+  @hoursToUsedWorkdays = (hours) ->
+    return Math.ceil(hours / self.config.work_hours_per_day)
+
+  @implied_dates = {}
+  @calculateImpliedDates = (gc, top_path, options) ->
+    self.implied_dates = {} # map of task_id to {end_date:...., start_date:...}
+
+    tasks_with_potential_implied = {}
+    # 1. for those tasks with start time and no end time, imply end time
+    gc._grid_data.each top_path, options, (section, item_type, item_obj, path) ->
+      hours_planned = item_obj['p:rp:b:work-hours_p'] / 3600
+      if item_obj.start_date and (not item_obj.end_date) and (hours_planned > 0)
+        workdays = self.hoursToUsedWorkdays hours_planned
+        implied_end_date = new moment(item_obj.start_date)
+        implied_end_date = implied_end_date.add(workdays - 1, 'days')
+        Meteor._ensure self.implied_dates, item_obj._id
+        self.implied_dates[item_obj._id].end_date = implied_end_date.format "YYYY-MM-DD"
+
+      # at the same time, identify tasks that are potential for implied dates, ie. tasks that are dependent F2S on
+      # other task
+      if (dependencies = APP.justdo_dependencies?.getTaskDependenciesTasksObjs(item_obj))
+        if dependencies.length > 0
+          tasks_with_potential_implied[item_obj._id] = dependencies
+
+    # 2. next loop on the potential tasks and see if implied dates can be set, repeat until there is no change
+
+    keep_looping = true
+    while keep_looping
+      keep_looping = false
+      for task_id, dependencies of tasks_with_potential_implied
+        # check if all dependencies have end_date or implied end_date
+        imply_start_date = true
+        biggest_end_date = null
+        for dependency in dependencies
+          end_date = ""
+          if dependency.end_date
+            end_date = dependency.end_date
+          else if (implied_end = self.implied_dates[dependency._id]?.end_date)?
+            end_date = implied_end
+          if end_date == ""
+            imply_start_date = false
+            break
+          if not biggest_end_date
+            biggest_end_date = end_date
+          else if end_date > biggest_end_date
+              biggest_end_date = end_date
+        if imply_start_date
+          Meteor._ensure self.implied_dates, task_id
+          start_date = moment(biggest_end_date).add(1, 'day').format("YYYY-MM-DD")
+          self.implied_dates[task_id].start_date = start_date
+          delete tasks_with_potential_implied[task_id]
+          # also set the end-date here
+          task_obj = JD.collections.Tasks.findOne task_id
+          hours_planned = task_obj['p:rp:b:work-hours_p'] / 3600
+          if (not task_obj.end_date) and (hours_planned > 0)
+            workdays = self.hoursToUsedWorkdays hours_planned
+            implied_end_date = new moment(start_date)
+            implied_end_date = implied_end_date.add(workdays - 1, 'days')
+            self.implied_dates[task_obj._id].end_date = implied_end_date.format "YYYY-MM-DD"
+
+          keep_looping = true
 
     return
 
@@ -100,10 +167,13 @@ Template.justdo_gantt.onCreated ->
     from_date = null
     to_date = null
 
-    gc._grid_data.each top_path,
+    options =
       expand_only: false
       filtered_tree: false
-    , (section, item_type, item_obj, path) ->
+
+    self.calculateImpliedDates gc, top_path, options
+
+    gc._grid_data.each top_path, options, (section, item_type, item_obj, path) ->
 
       path_depth = (path.split("/").length) - 2
       item_label = JustdoHelpers.taskCommonName(item_obj, 40)
@@ -119,9 +189,25 @@ Template.justdo_gantt.onCreated ->
             align: 'right'
           ,
             enabled: true
+            format: '<i class="fa fa-{point.font_symbol_after_right}" title="Implied based on planned time"></i>',
+            useHTML: true,
+            align: 'right'
+            x: 8
+            y: 18
+            color: "#5234eb"
+          ,
+            enabled: true
             format: '<i class="fa fa-{point.font_symbol_left}"></i>',
             useHTML: true,
             align: 'left'
+          ,
+            enabled: true
+            format: '<i class="fa fa-{point.font_symbol_before_left}" title="Implied"></i>',
+            useHTML: true,
+            align: 'left'
+            x: -8
+            y: 18
+            color: "#5234eb"
           ]
         series.push current_series
 
@@ -133,23 +219,45 @@ Template.justdo_gantt.onCreated ->
       if path_depth > top_path_depth + 1
         data_obj.parent = path.split("/")[path_depth-1]
 
+      start = null
+      implied_start = false
+
       if item_obj.start_date
-        data_obj.start = self.dateStringToUTC item_obj.start_date
+        start = item_obj.start_date
+      else if self.implied_dates[item_obj._id]?.start_date
+        start = self.implied_dates[item_obj._id].start_date
+        implied_start = true
+
+      end = null
+      implied_end = false
+
+      if item_obj.end_date
+        end = item_obj.end_date
+      else if self.implied_dates[item_obj._id]?.end_date
+        end = self.implied_dates[item_obj._id].end_date
+        implied_end = true
+
+      if start
+        data_obj.start = self.dateStringToUTC start
         # deal with situation when we have start w/o end
-        if not item_obj.end_date
-          data_obj.end = five_hours + self.dateStringToUTC item_obj.start_date
+        if not end
+          data_obj.end = five_hours + self.dateStringToUTC start
           data_obj.font_symbol_left = 'arrow-right'
+        if implied_start
+          data_obj.font_symbol_before_left = 'chain'
 
         # set the lowest point on the chart
         if not from_date or from_date > data_obj.start
           from_date = data_obj.start
 
-      if item_obj.end_date
-        data_obj.end = day - 1 + self.dateStringToUTC item_obj.end_date # the "day - 1 +.." marks the time to the end of the day
+      if end
+        data_obj.end = day - 1 + self.dateStringToUTC end # the "day - 1 +.." marks the time to the end of the day
         # deal with situations when we have end w/o start
-        if not item_obj.start_date
+        if not start
           data_obj.start = data_obj.end - five_hours
           data_obj.font_symbol_right = 'step-forward'
+        if implied_end
+          data_obj.font_symbol_after_right = 'chain'
 
         #set the highest point on the chart
         if not to_date or to_date < data_obj.end
@@ -189,6 +297,10 @@ Template.justdo_gantt.onCreated ->
 
     # we must add an empty series here to present the last series properly when collapsed
     # this entry is also used to create some margins around the actual data
+    if from_date and not to_date
+      to_date = from_date
+    if to_date and not from_date
+      from_date = to_date
     series.push
       name: "-"
       data: [{
@@ -250,6 +362,10 @@ Template.justdo_gantt.onCreated ->
               if (task_id = JD.collections.Tasks.findOne({seqId: seq_id})._id)
                 self.handleCtrlClick task_id
               return
+
+#      time:
+#        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+#        useUTC: false
 
       plotOptions:
         series:
@@ -318,7 +434,7 @@ Template.justdo_gantt.onRendered ->
     # Add reactivity to JustDos changes
     project_id = JD.activeJustdo({_id: 1, title: 1})._id
     # Add reactivity to Tasks changes
-    JD.collections.Tasks.find({project_id: project_id}, {fields: {_id: 1, title: 1, start_date: 1, end_date: 1, due_date: 1, state: 1, "#{JustdoDependencies.dependencies_field_id}": 1}}).fetch()
+    JD.collections.Tasks.find({project_id: project_id}, {fields: {_id: 1, title: 1, start_date: 1, end_date: 1, due_date: 1, state: 1, "#{JustdoDependencies.dependencies_field_id}": 1, "p:rp:b:work-hours_p": 1}}).fetch()
 
     # Add reactivity to gantt title and top path
     self.gantt_title.get()
