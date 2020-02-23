@@ -50,18 +50,17 @@ Template.justdo_gantt.onCreated ->
 
   @in_ctrl_key_mode = new ReactiveVar(false)
   @ctrl_key_mode_first_task_id = ""
-  @handleCtrlClick = (e) ->
+  @handleCtrlClick = (task_id) ->
     if self.dependencies_module_installed.get == false
       return
 
     if not self.in_ctrl_key_mode.get()
       self.in_ctrl_key_mode.set true
-      self.ctrl_key_mode_first_task_id = e.point.id
-
+      self.ctrl_key_mode_first_task_id = task_id
 
     else
       first_point = self.ctrl_key_mode_first_task_id
-      second_point = e.point.id
+      second_point = task_id
       justdo_id = JD.activeJustdo({_id: 1})._id
 
       if APP.justdo_dependencies.tasksDependentF2S justdo_id, first_point , second_point
@@ -69,13 +68,12 @@ Template.justdo_gantt.onCreated ->
       else
         APP.justdo_dependencies.addFinishToStartDependency justdo_id, first_point, second_point
 
-
       self.in_ctrl_key_mode.set false
       self.ctrl_key_mode_first_task_id = ""
 
     return
 
-  @stopCtrlClick = (e) ->
+  @stopCtrlClick = ->
     self.in_ctrl_key_mode.set false
     self.ctrl_key_mode_first_task_id = ""
 
@@ -232,6 +230,15 @@ Template.justdo_gantt.onCreated ->
       xAxis:
         currentDateIndicator: true
 
+      yAxis:
+        labels:
+          events:
+            dblclick: (e) ->
+              seq_id = parseInt(this.value.substr(1))
+              if (task_id = JD.collections.Tasks.findOne({seqId: seq_id})._id)
+                self.handleCtrlClick task_id
+              return
+
       plotOptions:
         series:
           animation: false
@@ -244,19 +251,17 @@ Template.justdo_gantt.onCreated ->
             dragMaxY: 2
             dragPrecisionX: day
 
-
           point:
             events:
-              click: (e) ->
-                if e.ctrlKey
-                  return self.handleCtrlClick e
-                else
-                  self.stopCtrlClick e
+              dblclick: (e) ->
+                self.handleCtrlClick @id
+                return
 
+              click: (e) ->
                 gcm = APP.modules.project_page.getCurrentGcm()
                 gcm.setPath(["main", @id], {collection_item_id_mode: true})
-
                 return
+                
               drop: (e)->
                 return self.onDrop e
 
