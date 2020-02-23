@@ -357,8 +357,11 @@ Template.justdo_gantt.helpers
     if path == "/"
       return "ENTIRE JUSTDO"
     task_id = path.split("/").reverse()[1]
-    title = JD.collections.Tasks.findOne(task_id).title
-    return JustdoHelpers.ellipsis title, 30
+    task_obj = JD.collections.Tasks.findOne(task_id)
+    ret = JustdoHelpers.ellipsis task_obj.title, 30
+    if task_obj.due_date
+      ret += " Due: #{task_obj.due_date}"
+    return  ret
 
   displayDependencyHint: ->
     return not Template.instance().in_ctrl_key_mode.get()
