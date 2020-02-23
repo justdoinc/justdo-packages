@@ -112,6 +112,17 @@ Template.justdo_gantt.onCreated ->
         current_series =
           name: item_label
           data: []
+          dataLabels: [
+            enabled: true
+            format: '<i class="fa fa-{point.font_symbol_right}"></i>',
+            useHTML: true,
+            align: 'right'
+          ,
+            enabled: true
+            format: '<i class="fa fa-{point.font_symbol_left}"></i>',
+            useHTML: true,
+            align: 'left'
+          ]
         series.push current_series
 
       data_obj =
@@ -127,6 +138,7 @@ Template.justdo_gantt.onCreated ->
         # deal with situation when we have start w/o end
         if not item_obj.end_date
           data_obj.end = five_hours + self.dateStringToUTC item_obj.start_date
+          data_obj.font_symbol_left = 'arrow-right'
 
         # set the lowest point on the chart
         if not from_date or from_date > data_obj.start
@@ -137,6 +149,7 @@ Template.justdo_gantt.onCreated ->
         # deal with situations when we have end w/o start
         if not item_obj.start_date
           data_obj.start = data_obj.end - five_hours
+          data_obj.font_symbol_right = 'step-forward'
 
         #set the highest point on the chart
         if not to_date or to_date < data_obj.end
