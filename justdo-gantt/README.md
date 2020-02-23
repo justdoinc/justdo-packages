@@ -4,3 +4,11 @@
   Need to add two objects to the gantt (at the moment I just add
   the due-date as a milestone )
 * set a different color scale for things that are 'done' 
+
+
+### Known bugs:
+* if by drag and drop you move the end-date to be on the 
+  start date the chart will display and empty point and
+  then removes it, the data is okay.  Need
+  to refresh the chart to show the point again
+  

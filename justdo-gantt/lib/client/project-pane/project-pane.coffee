@@ -16,11 +16,13 @@ Template.justdo_gantt.onCreated ->
   @onDrop = (e) ->
     if (task_obj = JD.collections.Tasks.findOne e.newPointId)
       if e.newPoint.end
+        m = new moment(e.newPoint.end)
+        m.subtract 1, 'day'
         JD.collections.Tasks.update
           _id:e.newPointId
         ,
           $set:
-            end_date: self.timeToDateString e.newPoint.end
+            end_date: m.format("YYYY-MM-DD")
 
       if e.newPoint.start
         # here we can have either start_date or due_date. The current implementation doesn't allow both, and gives
@@ -32,11 +34,8 @@ Template.justdo_gantt.onCreated ->
           _id:e.newPointId
         ,
           $set:
-            "#{field}": self.timeToDateString e.newPoint.start
+            "#{field}": moment(e.newPoint.start).format("YYYY-MM-DD")
     return
-
-  @timeToDateString = (time) ->
-    return moment(time).format("YYYY-MM-DD")
 
   @dateStringToUTC = (date) ->
     re = /^\d\d\d\d-\d\d-\d\d$/g
@@ -261,7 +260,7 @@ Template.justdo_gantt.onCreated ->
                 gcm = APP.modules.project_page.getCurrentGcm()
                 gcm.setPath(["main", @id], {collection_item_id_mode: true})
                 return
-                
+
               drop: (e)->
                 return self.onDrop e
 
