@@ -119,8 +119,7 @@ _.extend MeetingsManager.prototype,
           task_id: subtask_id
     @meetings_tasks.update query, op
 
-    JD.collections.Tasks.remove subtask_id
-
+    APP.projects._grid_data_com.removeParent("/#{parent_task_id}/#{subtask_id}/", user_id)
 
     return true
 
