@@ -216,8 +216,6 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
     &:hover
       box-shadow: 0 0 0 2px rgb(255, 255, 255), 0 0 0 4px #5e579e
 
-
-
 .calendar_task_info
   position: absolute
   font-size: 10px
@@ -410,3 +408,27 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
 
 .highlighted_due_date
   background-color: #f7caca
+
+.calendar_task_tooltip
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)
+  border-radius: 0.2rem
+  background-color: white
+  padding: 0px 4px
+  position: absolute
+  bottom: -16px
+  left: 4px
+  font-size: 12px
+  display: none
+  z-index: 10
+
+.calendar-view-14,
+.calendar-view-28,
+.calendar-view-56
+  .calendar_task_cell:hover
+    .calendar_task_tooltip
+      display: block
+
+.calendar-view-56
+  .calendar_task_id,
+  .calendar_task_title
+    opacity: 0
