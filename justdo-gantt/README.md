@@ -12,4 +12,6 @@
   start date the chart will display and empty point and
   then removes it, the data is okay.  Need
   to refresh the chart to show the point again
+* a task with start time and no end time should be marked with a right arrow on the chart. for
+  some reason the arrow is displayed only when the chart is 'zoomed-in'
   

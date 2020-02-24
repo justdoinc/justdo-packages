@@ -184,26 +184,26 @@ Template.justdo_gantt.onCreated ->
           data: []
           dataLabels: [
             enabled: true
-            format: '<i class="fa fa-{point.font_symbol_right}"></i>',
-            useHTML: true,
+            format: '<i class="fa fa-{point.font_symbol_right}"></i>'
+            useHTML: true
             align: 'right'
           ,
             enabled: true
-            format: '<i class="fa fa-{point.font_symbol_after_right}" title="Implied based on planned time"></i>',
-            useHTML: true,
+            format: '<i class="fa fa-{point.font_symbol_after_right}" title="Implied based on planned time"></i>'
+            useHTML: true
             align: 'right'
             x: 8
             y: 18
             color: "#5234eb"
           ,
             enabled: true
-            format: '<i class="fa fa-{point.font_symbol_left}"></i>',
-            useHTML: true,
+            format: '<i class="fa fa-{point.font_symbol_left}"></i>'
+            useHTML: true
             align: 'left'
           ,
             enabled: true
-            format: '<i class="fa fa-{point.font_symbol_before_left}" title="Implied"></i>',
-            useHTML: true,
+            format: '<i class="fa fa-{point.font_symbol_before_left}" title="Implied based on dependencies"></i>'
+            useHTML: true
             align: 'left'
             x: -8
             y: 18
