@@ -15,15 +15,125 @@ _.extend JustdoDependencies.prototype,
     if JustdoDependencies.dependencies_field_id not in field_names
       return true
 
-    if not (new_value = modifier["$set"]?[JustdoDependencies.dependencies_field_id])?
+    new_set_values = modifier["$set"]?[JustdoDependencies.dependencies_field_id]
+    new_push_value = modifier["$push"]?[JustdoDependencies.dependencies_field_id]
+    if not new_set_values and not new_push_value
       return true
 
-    # todo: other checkes:
-    # check that the user has access to all the tasks that he lists
-    # check (server side) that there is no infinite loop
-    # check that a single task is not listed more than once
-    # check that the task doesn't list itself as dependant
-    # check that the task is not dependent on any of its parents
+    existing_dependencies = doc[JustdoDependencies.dependencies_field_id] | []
+
+    checkForInfiniteLoop = (tasks_ids, new_dependency_seq_id) ->
+      # in this check we don't check for the existing of the dependency, but just if it creates an infinite loop
+      new_dependency_doc = JD.collections.Tasks.findOne {seqId: new_dependency_seq_id}
+      if new_dependency_doc
+        # if the doc is already listed, get out
+        if new_dependency_doc._id in tasks_ids
+          return true
+        tasks_ids.push new_dependency_doc._id
+        if (new_dependencies_seq = new_dependency_doc[JustdoDependencies.dependencies_field_id])
+          for new_dependency_seq in new_dependencies_seq
+            if checkForInfiniteLoop(tasks_ids, new_dependency_seq) == true
+              return true
+      # if we didn't find the dependent task, it's okay...
+      return false
+
+    collect_parents_ids = (task_id, all_parents_set) ->
+      if task_id == "0"
+        return
+      if(task_parents = JD.collections.Tasks.findOne(task_id)?.parents)
+        for parent_id in Object.keys(task_parents)
+          if parent_id != "0"
+            collect_parents_ids parent_id, all_parents_set
+            all_parents_set.add parent_id
+      return
+
+    collect_children_ids = (task_id, all_children_set) ->
+      _.each JD.collections.Tasks.find({"parents.#{task_id}": {$exists: true}}).fetch(), (child_doc) ->
+        collect_children_ids child_doc._id, all_children_set
+        all_children_set.add child_doc._id
+        return
+      return
+
+
+
+      if(task_parents = JD.collections.Tasks.findOne(task_id)?.parents)
+        for parent_id in Object.keys(task_parents)
+          if parent_id != "0"
+            collect_parents_ids parent_id, all_parents_set
+            all_parents_set.add parent_id
+      return
+
+    parent_dependency = (task_id, dependency) ->
+      all_parents = new Set()
+      collect_parents_ids(task_id, all_parents)
+      found_one = false
+      _.each JD.collections.Tasks.find({_id: {$in: Array.from(all_parents)}}).fetch(), (parent_doc) ->
+        if parent_doc.seqId == dependency
+          found_one = true
+      if found_one
+        return true
+      return false
+
+    child_dependency = (task_id, dependency) ->
+      all_children = new Set()
+      collect_children_ids(task_id, all_children)
+      found_one = false
+      _.each JD.collections.Tasks.find({_id: {$in: Array.from(all_children)}}).fetch(), (child_doc) ->
+        if child_doc.seqId == dependency
+          found_one = true
+      if found_one
+        return true
+      return false
+
+    if new_push_value
+      if new_push_value in existing_dependencies
+        JustdoSnackbar.show text: "This dependency already exists"
+        return false
+
+      if new_push_value == doc.seqId
+        JustdoSnackbar.show text: "Task can't be dependent on itself"
+        return false
+
+      if not (JD.collections.Tasks.findOne {seqId: new_push_value})
+        JustdoSnackbar.show text: "Task ##{new_push_value} not found."
+        return false
+
+      if checkForInfiniteLoop([doc._id], new_push_value)
+        JustdoSnackbar.show text: "Infinite dependency loop identified, update reversed.."
+        return false
+
+      if parent_dependency doc._id, new_push_value
+        JustdoSnackbar.show text: "A task can't be dependant on any of its parents, update reversed.."
+        return false
+
+      if child_dependency doc._id, new_push_value
+        JustdoSnackbar.show text: "A task can't be dependant on any of its child-tasks, update reversed.."
+        return false
+
+
+    if new_set_values
+      for new_set_value in new_set_values
+        if (not doc[JustdoDependencies.dependencies_field_id]?) or (new_set_value not in doc[JustdoDependencies.dependencies_field_id])
+          # dealing with only new ones...
+          if new_set_value == doc.seqId
+            JustdoSnackbar.show text: "Task can't be dependent on itself"
+            return false
+
+          if not (JD.collections.Tasks.findOne {seqId: new_set_value})
+            JustdoSnackbar.show text: "Task ##{new_set_value} not found."
+            return false
+
+          if checkForInfiniteLoop([doc._id], new_set_value)
+            JustdoSnackbar.show text: "Infinite dependency loop identified, update reversed.."
+            return false
+
+          if parent_dependency doc._id, new_set_value
+            JustdoSnackbar.show text: "A task can't be dependant on any of its parents, update reversed.."
+            return false
+
+          if child_dependency doc._id, new_set_value
+            JustdoSnackbar.show text: "A task can't be dependant on any of its child-tasks, update reversed.."
+            return false
 
     return true
 
@@ -93,24 +203,25 @@ _.extend JustdoDependencies.prototype,
         return
 
       # connect the tasks, and present an undo option
-      JD.collections.Tasks.update
-        _id: to_task_id
-      ,
-        $push:
-          "#{JustdoDependencies.dependencies_field_id}": from_task_seqId
-
-      JustdoSnackbar.show
-        text: "Task ##{to_task.seqId} is now dependent on Task ##{from_task.seqId}"
-        duration: 5000
-        actionText: "Undo"
-        onActionClick: =>
-          JD.collections.Tasks.update
-            _id: to_task_id
-          ,
-          $pull:
+      ret = JD.collections.Tasks.update
+          _id: to_task_id
+        ,
+          $push:
             "#{JustdoDependencies.dependencies_field_id}": from_task_seqId
-          JustdoSnackbar.close()
-          return
+
+      if ret
+        JustdoSnackbar.show
+          text: "Task ##{to_task.seqId} is now dependent on Task ##{from_task.seqId}"
+          duration: 5000
+          actionText: "Undo"
+          onActionClick: =>
+            JD.collections.Tasks.update
+              _id: to_task_id
+            ,
+            $pull:
+              "#{JustdoDependencies.dependencies_field_id}": from_task_seqId
+            JustdoSnackbar.close()
+            return
     return
 
 
