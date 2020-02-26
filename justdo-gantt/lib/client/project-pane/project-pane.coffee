@@ -4,6 +4,9 @@ Template.justdo_gantt.onCreated ->
   @config =
     work_hours_per_day: 8
 
+  @chart_warnings = new ReactiveVar [] # structure: [{text: , task: }]
+  @display_warnings = new ReactiveVar false
+
   @dependencies_module_installed = new ReactiveVar false
   @autorun =>
     curProj = -> APP.modules.project_page.curProj()
@@ -150,12 +153,15 @@ Template.justdo_gantt.onCreated ->
     day = 1000 * 60 * 60 * 24
     five_hours = 1000 * 60 * 60 * 5
 
-
     if not (gcm = APP.modules.project_page?.grid_control_mux.get())?
       return
 
     if not (gc = gcm.getMainGridControl(true))?
       return
+
+    # Note: I was considering here if to make the notes textual or structural. Although structural is the right thing
+    # to do, I'm going now with textual, in order to reduce coding time.
+    chart_warnings = []
 
     top_path = self.gantt_top_path.get()
     top_path_depth = (top_path.split("/").length) - 2
@@ -172,6 +178,10 @@ Template.justdo_gantt.onCreated ->
       filtered_tree: false
 
     self.calculateImpliedDates gc, top_path, options
+
+    # the following is a map of depth to data object. It is used to calculate if child tasks exceed any of the parent
+    # end or due dates.
+    parents_data_objects = {}
 
     gc._grid_data.each top_path, options, (section, item_type, item_obj, path) ->
 
@@ -215,6 +225,14 @@ Template.justdo_gantt.onCreated ->
         name: item_label
         id: item_obj._id
         color: self.gantt_colors[path_depth - top_path_depth - 1]
+        seqId: item_obj.seqId
+
+      parents_data_objects[path_depth] = data_obj
+      #remove 'deeper' levels if exist
+      level = path_depth + 1
+      while parents_data_objects[level]
+        delete parents_data_objects[level]
+        level += 1
 
       if path_depth > top_path_depth + 1
         data_obj.parent = path.split("/")[path_depth-1]
@@ -279,12 +297,41 @@ Template.justdo_gantt.onCreated ->
         for dependency_obj in APP.justdo_dependencies.getTaskDependenciesTasksObjs(item_obj)
           data_obj.dependency.push dependency_obj._id
 
+          # checking if the dependency triggers a warning
+          dependency_end_date = null
+          if dependency_obj.end_date
+            dependency_end_date = dependency_obj.end_date
+          else if self.implied_dates[dependency_obj._id]?.end_date
+            dependency_end_date = self.implied_dates[dependency_obj._id]?.end_date
+          if dependency_end_date and  (day - 1 + self.dateStringToUTC(dependency_end_date) > data_obj.start)
+            chart_warnings.push
+              text: "[F2S violation] - Task: ##{data_obj.seqId} starts before task ##{dependency_obj.seqId} ends."
+              task: data_obj.id
+
+
       current_series.data.push data_obj
       object_count += 1
       no_data = false
 
+      # check if data_obj violates any of its parents end-times or due dates
+
+      if data_obj.end and (path_depth > 1)
+
+        for i in [1..(path_depth - 1)]
+          parent = parents_data_objects[i]
+          if parent.end and data_obj.end > parent.end
+            chart_warnings.push
+              text: "[Parent end-time violation] - Task: ##{data_obj.seqId} ends after its parent (##{parent.seqId})"
+              task: data_obj.id
+
+          if parent.milestone and data_obj.end > parent.start
+            chart_warnings.push
+              text: "[Parent due-date violation] - Task: ##{data_obj.seqId} ends after its parent (##{parent.seqId}) due date"
+              task: data_obj.id
+
       return # end of _grid_data.each
 
+    self.chart_warnings.set chart_warnings
     if no_data
       current_series.data = [
         name: ""
@@ -448,6 +495,18 @@ Template.justdo_gantt.onRendered ->
   return
 
 Template.justdo_gantt.helpers
+
+  warnings: ->
+    return Template.instance().chart_warnings.get()
+
+  hasWarnings: ->
+    if Template.instance().chart_warnings.get().length > 0
+      return true
+    return false
+
+  displayWarnings: ->
+    return Template.instance().display_warnings.get()
+
   projectsInJustDo: ->
     project = APP.modules.project_page.project.get()
     if project?
@@ -497,6 +556,18 @@ Template.justdo_gantt.events
     tpl.in_ctrl_key_mode.set false
     return
 
+  "click .gantt-display_warnings": (e, tpl) ->
+    tpl.display_warnings.set(not tpl.display_warnings.get())
+    return
+
+  "click .gantt-warnnings-list-container .close-button": (e, tpl) ->
+    tpl.display_warnings.set false
+    return
 
 
+  "click .gantt-warnnings-list-container .warning-line": (e,tpl) ->
+    task_id = e.target.id
+    if (gcm = APP.modules.project_page.getCurrentGcm())?
+      gcm.setPath(["main", task_id], {collection_item_id_mode: true})
+    return
 
