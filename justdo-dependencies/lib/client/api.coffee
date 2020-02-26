@@ -34,6 +34,7 @@ _.extend JustdoDependencies.prototype,
           for new_dependency_seq in new_dependencies_seq
             if checkForInfiniteLoop(tasks_ids, new_dependency_seq) == true
               return true
+        tasks_ids.pop()
       # if we didn't find the dependent task, it's okay...
       return false
 
