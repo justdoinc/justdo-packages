@@ -21,26 +21,30 @@ Template.justdo_gantt.onCreated ->
 
   @onDrop = (e) ->
     if (task_obj = JD.collections.Tasks.findOne e.newPointId)
-      if e.newPoint.end
+      if JD.collections.Tasks.findOne(e.newPointId).due_date
         m = new moment(e.newPoint.end)
         m.subtract 1, 'day'
         JD.collections.Tasks.update
           _id:e.newPointId
         ,
           $set:
-            end_date: m.format("YYYY-MM-DD")
+            due_date: m.format("YYYY-MM-DD")
+      else
+        if e.newPoint.end
+          m = new moment(e.newPoint.end)
+          m.subtract 1, 'day'
+          JD.collections.Tasks.update
+            _id:e.newPointId
+          ,
+            $set:
+              end_date: m.format("YYYY-MM-DD")
 
-      if e.newPoint.start
-        # here we can have either start_date or due_date. The current implementation doesn't allow both, and gives
-        # preference to due date
-        field = "start_date"
-        if JD.collections.Tasks.findOne(e.newPointId).due_date
-          field = "due_date"
-        JD.collections.Tasks.update
-          _id:e.newPointId
-        ,
-          $set:
-            "#{field}": moment(e.newPoint.start).format("YYYY-MM-DD")
+        if e.newPoint.start
+          JD.collections.Tasks.update
+            _id:e.newPointId
+          ,
+            $set:
+              start_date: moment(e.newPoint.start).format("YYYY-MM-DD")
     return
 
   @dateStringToUTC = (date) ->
@@ -288,9 +292,14 @@ Template.justdo_gantt.onCreated ->
       # in regards to due dates - highcharts define that in milestones only the start option is handled, while end is ignored.
       # so therefore, we will add it a second time
       if item_obj.due_date
-        data_obj.start = self.dateStringToUTC item_obj.due_date
-        delete data_obj.end
+        data_obj.start = day - 1 + self.dateStringToUTC item_obj.due_date
+        data_obj.end = data_obj.start
         data_obj.milestone = true
+
+        if not to_date or to_date < data_obj.start
+          to_date = data_obj.start
+        if not from_date or from_date > data_obj.start
+          from_date = data_obj.start
 
       if APP.justdo_dependencies?.isPluginInstalledOnProjectDoc()
         data_obj.dependency = []
@@ -314,10 +323,8 @@ Template.justdo_gantt.onCreated ->
       no_data = false
 
       # check if data_obj violates any of its parents end-times or due dates
-
-      if data_obj.end and (path_depth > 1)
-
-        for i in [1..(path_depth - 1)]
+      if data_obj.end and (path_depth > top_path_depth + 1)
+        for i in [(top_path_depth + 1)..(path_depth - 1)]
           parent = parents_data_objects[i]
           if parent.end and data_obj.end > parent.end
             chart_warnings.push

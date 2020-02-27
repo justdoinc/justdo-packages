@@ -20,7 +20,7 @@ _.extend JustdoDependencies.prototype,
     if not new_set_values and not new_push_value
       return true
 
-    existing_dependencies = doc[JustdoDependencies.dependencies_field_id] | []
+    existing_dependencies = doc[JustdoDependencies.dependencies_field_id] or []
 
     checkForInfiniteLoop = (tasks_ids, new_dependency_seq_id) ->
       # in this check we don't check for the existing of the dependency, but just if it creates an infinite loop
@@ -30,7 +30,7 @@ _.extend JustdoDependencies.prototype,
         if new_dependency_doc._id in tasks_ids
           return true
         tasks_ids.push new_dependency_doc._id
-        if (new_dependencies_seq = new_dependency_doc[JustdoDependencies.dependencies_field_id])
+        if (new_dependencies_seq = new_dependency_doc[JustdoDependencies.dependencies_field_id])?
           for new_dependency_seq in new_dependencies_seq
             if checkForInfiniteLoop(tasks_ids, new_dependency_seq) == true
               return true
@@ -41,7 +41,7 @@ _.extend JustdoDependencies.prototype,
     collect_parents_ids = (task_id, all_parents_set) ->
       if task_id == "0"
         return
-      if(task_parents = JD.collections.Tasks.findOne(task_id)?.parents)
+      if(task_parents = JD.collections.Tasks.findOne(task_id)?.parents)?
         for parent_id in Object.keys(task_parents)
           if parent_id != "0"
             collect_parents_ids parent_id, all_parents_set
@@ -64,7 +64,7 @@ _.extend JustdoDependencies.prototype,
             all_parents_set.add parent_id
       return
 
-    parent_dependency = (task_id, dependency) ->
+    parentDependency = (task_id, dependency) ->
       all_parents = new Set()
       collect_parents_ids(task_id, all_parents)
       found_one = false
@@ -103,7 +103,7 @@ _.extend JustdoDependencies.prototype,
         JustdoSnackbar.show text: "Infinite dependency loop identified, update reversed.."
         return false
 
-      if parent_dependency doc._id, new_push_value
+      if parentDependency doc._id, new_push_value
         JustdoSnackbar.show text: "A task can't be dependant on any of its parents, update reversed.."
         return false
 
@@ -128,7 +128,7 @@ _.extend JustdoDependencies.prototype,
             JustdoSnackbar.show text: "Infinite dependency loop identified, update reversed.."
             return false
 
-          if parent_dependency doc._id, new_set_value
+          if parentDependency doc._id, new_set_value
             JustdoSnackbar.show text: "A task can't be dependant on any of its parents, update reversed.."
             return false
 

@@ -5,6 +5,10 @@
   the due-date as a milestone )
 * set a different color scale for things that are 'done'
 * present % completed based on resources manager if available 
+* unless specified, hicharts calculate parent's tasks start and end date internally, and then
+  such tasks can't be used for calculating start date based on F2S.. so in order to fix it, 
+  the start/end times should be calculated by us. Should be easy now that we have the parents 
+  for all tasks during the iteration 
 
 
 ### Known bugs:
