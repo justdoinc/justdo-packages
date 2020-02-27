@@ -135,7 +135,9 @@ _.extend JustdoBackendCalculatedFields.prototype,
 
       info_message = "Usage:\n• To set the due date as the date of task 5 minus 3 days use: '5,-3'\n• To set the due date as the date of task 5 plus days use: '5,3'"
 
-    @tasks_collection.direct.update(_id:task._id, {$set: {backend_calc_field_cmd_params: info_message, updated_by: 0}}, {bypassCollection2: true})
+    update = {$set: {backend_calc_field_cmd_params: info_message, updated_by: 0}}
+    APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(update)
+    @tasks_collection.direct.update(_id:task._id, update, {bypassCollection2: true})
 
     return false
 
@@ -335,7 +337,10 @@ _.extend JustdoBackendCalculatedFields.prototype,
                 # in (at least) the max_accepted_changes_per_task depth of the runCommandsAffectedByTaskChange, then each level
                 # of the loop will start returning false and will attempt to set error message.
                 # This ensures only the deepest level in which we recognized the infinite loop will set the infinite loop error.
-                @tasks_collection.direct.update(command.task_id, {$set:{"#{"backend_calc_field_cmd_params"}": error, due_date: "", updated_by: user_id}}, {bypassCollection2: true})
+
+                update = {$set:{"#{"backend_calc_field_cmd_params"}": error, due_date: "", updated_by: user_id}}
+                APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(update)
+                @tasks_collection.direct.update(command.task_id, update, {bypassCollection2: true})
 
               cached_command_doc.params = error
 
