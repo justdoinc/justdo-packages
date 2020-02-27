@@ -138,3 +138,22 @@ GridControl.installEditor "SelectorEditor",
     @$select.selectpicker("toggle")
 
     return
+
+  moreInfoSectionCustomizationsExtensions: ($firstNode, field_editor) ->
+    @$select.on "change-request-processed", =>
+      Meteor.defer ->
+        field_editor.save()
+
+        return
+
+      return
+
+    @$select.on "hidden.bs.select", =>
+      Meteor.defer ->
+        field_editor.save()
+
+        return
+
+      return
+
+    return
