@@ -20,3 +20,6 @@ _.extend Projects.prototype,
 
     # Defined in grid-control-middlewares.coffee
     @_setupGridControlMiddlewares()
+
+    # Init projects plugins cache
+    @_initProjectsPluginsCache()

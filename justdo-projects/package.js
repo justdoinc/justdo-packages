@@ -94,6 +94,7 @@ Package.onUse(function (api) {
   api.add_files('lib/server/fast-render.coffee', server);
   api.add_files('lib/server/collections-indices.coffee', server);
   api.add_files('lib/server/hooks.coffee', server);
+  api.add_files('lib/server/projects-plugins-cache.coffee', server);
   api.add_files('lib/server/publications.coffee', server);
   api.add_files('lib/server/allow-deny.coffee', server);
   api.add_files('lib/server/grid-control-middlewares.coffee', server);
