@@ -105,8 +105,6 @@ APP.executeAfterAppLibCode ->
 
     isAddAsGuest: -> Template.instance().isAddAsGuest()
 
-    isGuestsEnabled: -> APP.justdo_guests.isPluginInstalledOnProjectDoc()
-
   Template.members_dropdown_menu.events
     "click .add-members-comp button": (e, tpl) ->
       addFilledUser(tpl.isAddAsGuest())
@@ -221,8 +219,6 @@ APP.executeAfterAppLibCode ->
 
   Template.admin_member_item.helpers module.template_helpers
   Template.regular_member_item.helpers module.template_helpers
-  Template.regular_member_item.helpers
-    isGuestsEnabled: -> APP.justdo_guests.isPluginInstalledOnProjectDoc()
   Template.guest_member_item.helpers module.template_helpers
   Template.enrollment_pending_member.helpers module.template_helpers
 

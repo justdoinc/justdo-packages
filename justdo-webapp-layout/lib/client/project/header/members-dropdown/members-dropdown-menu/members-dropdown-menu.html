@@ -99,11 +99,9 @@
           <svg class="jd-icon text-secondary op-button upgrade-admin"><use xlink:href="/layout/icons-feather-sprite.svg#star"/></svg>
         </span>
 
-        {{#if isGuestsEnabled}}
-          <span title="Make {{displayName}} a guest">
-            <svg class="jd-icon text-secondary op-button make-guest"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"/></svg>
-          </span>
-        {{/if}}
+        <span title="Make {{displayName}} a guest">
+          <svg class="jd-icon text-secondary op-button make-guest"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"/></svg>
+        </span>
       {{/if}}
 
       {{#if allow_member_remove user_id}}
