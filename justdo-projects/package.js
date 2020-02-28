@@ -63,6 +63,7 @@ Package.onUse(function (api) {
   // both
   api.add_files('lib/both/main.coffee', server);
   api.add_files('lib/both/main.coffee', client, {bare: true});
+  api.add_files('lib/both/static.coffee', both);
   api.add_files('lib/both/errors-types.coffee', both);
   api.add_files('lib/both/defaults.coffee', both);
   api.add_files('lib/both/helpers.coffee', both);
@@ -80,6 +81,10 @@ Package.onUse(function (api) {
   api.add_files('lib/client/load-project.coffee', client);
   api.add_files('lib/client/methods.coffee', client);
   api.add_files('lib/client/hash-requests.coffee', client);
+
+  api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.sass", client);
+  api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.html", client);
+  api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.coffee", client);
 
   // server
   api.add_files('lib/server/init.coffee', server);

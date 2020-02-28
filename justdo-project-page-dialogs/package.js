@@ -47,8 +47,6 @@ Package.onUse(function (api) {
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 
-  api.use("justdoinc:justdo-guests@1.0.0", both);
-
   api.use("matb33:collection-hooks@0.8.4", client);
 
   api.use("reactive-var", client);

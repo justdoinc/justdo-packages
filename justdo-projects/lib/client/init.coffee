@@ -8,3 +8,7 @@ _.extend Projects.prototype,
 
     # Defined in hash-requests.coffee
     @_setupHashRequests()
+
+    # Guests related
+    @initEncounteredUsersIdsTracker()
+    @initEncounteredUsersIdsPublicBasicUsersInfoFetcher()

@@ -59,3 +59,46 @@ _.extend Projects.prototype,
       members_ids = members_ids.concat(@getRemovedMembersIdsFromProjectDoc(@getProjectDoc(project_id, {fields: {removed_members: 1}})))
 
     return members_ids
+
+  initEncounteredUsersIdsTracker: ->
+    @_encountered_users = new Set()
+    @_encountered_users_dep = new Tracker.Dependency()
+
+    addEncounteredUsersIdsFromSelector = (selector) =>
+      if not selector?
+        return
+
+      pre_size = @_encountered_users.size
+
+      if (user_id = selector._id)?
+        if _.isString(user_id)
+          @_encountered_users.add(user_id)
+
+        if _.isObject(user_id)
+          if (users_ids = user_id.$in)?
+            for user_id in users_ids
+              @_encountered_users.add(user_id)
+
+      if pre_size < @_encountered_users.size
+        @_encountered_users_dep.changed()
+
+      return
+
+    Meteor.users.before.findOne (userId, selector, options) -> addEncounteredUsersIdsFromSelector(selector)
+    Meteor.users.before.find (userId, selector, options) -> addEncounteredUsersIdsFromSelector(selector)
+
+    return
+
+  initEncounteredUsersIdsPublicBasicUsersInfoFetcher: ->
+    if @_encountered_users_fetcher_comp?
+      return
+
+    @_encountered_users_fetcher_comp = Tracker.autorun (c) =>
+      Meteor.subscribe "publicBasicUsersInfo", Array.from(@_encountered_users)
+
+      @_encountered_users_dep.depend()
+
+      return 
+    
+    return
+

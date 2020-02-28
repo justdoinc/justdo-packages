@@ -1,0 +1,14 @@
+<template name="add_as_guest_toggle">
+  <div class="add-as-guest-toggle-wrapper jd-c-pointer float-right">
+    <div class="add-as-guest-toggle {{#if isAddAsGuest}}active-filter{{/if}} d-flex align-items-center">
+      {{#if isAddAsGuest}}
+        <svg class="jd-icon text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"></use></svg>
+      {{else}}
+        <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"></use></svg>
+      {{/if}}
+      <span class="text-uppercase add-as-guest-caption">
+        Add as Guest <span class="add-as-guest-more-info" title="{{about_guests}}"><i class="fa fa-question-circle fa-fw"></i></span>
+      </span>
+    </div>
+  </div>
+</template>
