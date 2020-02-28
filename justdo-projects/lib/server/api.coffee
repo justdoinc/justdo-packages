@@ -829,12 +829,20 @@ _.extend Projects.prototype,
     if not @processHandlers("BeforeBulkUpdateExecution", project_id, items_ids, modifier, user_id)
       return
 
-    return @_bulkUpdate(project_id, items_ids, modifier, user_id)
+    cb = (err) =>
+      @processHandlers("AfterBulkUpdateExecution", project_id, items_ids, modifier, user_id, err)
+      return
+
+    return @_bulkUpdateWithCb(project_id, items_ids, modifier, cb, user_id)
 
   _bulkUpdate: (project_id, items_ids, modifier, user_id) ->
+    return @_bulkUpdateWithCb project_id, items_ids, modifier, undefined, user_id
+
+  _bulkUpdateWithCb: (project_id, items_ids, modifier, cb, user_id) ->
     check project_id, String
     check items_ids, [String]
     # Modifier is thoroughly checked below
+    check cb, Match.Maybe(Function)
     check user_id, String
 
     @requireUserIsMemberOfProject project_id, user_id
@@ -901,7 +909,7 @@ _.extend Projects.prototype,
     if not _.isEmpty removed_users
       @_grid_data_com._setPrivateDataDocsFreezeState(removed_users, items_ids, true)
 
-    return @_grid_data_com._bulkUpdateFromSecureSource(selector, modifier)
+    return @_grid_data_com._bulkUpdateFromSecureSource selector, modifier, cb
 
   removeMember: (project_id, member_id, user_id) ->
     if user_id != member_id # user can remove himself from project even if not admin
