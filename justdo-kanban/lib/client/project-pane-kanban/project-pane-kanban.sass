@@ -1,0 +1,424 @@
+.tab-kanban-container
+  display: flex
+  flex-direction: column
+
+.kanban-toolbar
+  display: flex
+  align-items: center
+  padding: 1rem
+  justify-content: space-between
+
+.kanban-toolbar-operations-left,
+.kanban-toolbar-operations-right
+  display: flex
+  align-items: center
+  min-width: 200px
+  .divider
+    width: 1px
+    height: 24px
+    background: #E8EBEE
+    margin: 0px 8px 0px 16px
+
+.kanban-active-task-title
+  font-size: 17px
+  font-weight: bold
+  max-width: 360px
+  overflow: hidden
+  white-space: nowrap
+  text-overflow: ellipsis
+
+.kanban-task-selector,
+.kanban-state-selector,
+.kanban-member-selector,
+.kanban-sort-selector
+  button
+    text-transform: uppercase
+    font-weight: bold
+    max-width: 260px
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
+  .dropdown-header
+    font-size: 11px
+    text-transform: uppercase
+    padding: 0px 6px
+  .dropdown-item
+    padding: 4px 6px
+    font-size: 15px
+    max-width: 260px
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
+    border-radius: 4px
+    &:active
+      background-color: white
+      color: #007bff
+  .jd-icon
+    cursor: pointer
+    padding: 4px
+    &:hover
+      background-color: rgba(0, 0, 0, 0.08)
+      transform: scale(1.05)
+
+.kanban-task-selector
+  button
+    .jd-icon
+      pointer-events: none
+
+.kanban-member-selector
+  .dropdown-menu
+    max-height: 300px
+    overflow: auto
+    .dropdown-item
+      min-width: 180px
+      display: flex
+      align-items: center
+  .kanban-member-selector-search
+    padding: 0px 10px
+    color: black
+    min-width: 180px
+    &::placeholder
+      opacity: 0.5
+  .kanban-clear-member-filter
+    cursor: pointer
+    border-radius: 20px
+    stroke-width: 3px
+    opacity: 0.5
+    width: 20px
+    height: 20px
+    margin: 0 2px 0 4px
+
+.kanban-member-selector
+  &.active-member
+    padding: 2px
+    background-color: #f3f3f3
+    border-radius: 20px
+    display: flex
+    align-items: center
+
+
+.kanban-sort-selector
+  .dropdown-menu .dropdown-item
+    display: flex
+    justify-content: space-between
+    .jd-icon
+      pointer-events: none
+      display: none
+      stroke-width: 2.5
+  &.sort-by-priority
+    .kanban-sort-by-priority
+      color: #007bff
+      font-weight: bold
+      .jd-icon
+        display: block
+  &.sort-by-createdAt
+    .kanban-sort-by-date
+      color: #007bff
+      font-weight: bold
+      .jd-icon
+        display: block
+  &.sort-by-due_date
+    .kanban-sort-by-due-date
+      color: #007bff
+      font-weight: bold
+      .jd-icon
+        display: block
+
+
+
+.disable-element
+  pointer-events: none
+  opacity: 0.5
+
+.kanban-wrapper
+  overflow-x: auto
+  display: flex
+  white-space: nowrap
+  position: relative
+  flex: auto
+  flex-direction: column
+  background-color: #fff
+
+.kanban-start-message
+  font-size: 17px
+  display: flex
+  align-items: center
+  justify-content: center
+  opacity: 0.35
+  padding: 0 5rem
+  height: 100%
+
+.kanban-wrapper-container
+  height: 0
+  overflow-x: visible
+  display: flex
+  overflow: hidden
+  position: relative
+  flex: auto
+  flex-direction: row
+  white-space: nowrap
+
+.kanban-boards
+  display: flex
+  width: 100%
+  flex: auto
+  flex-direction: row
+  white-space: nowrap
+  overflow-x: auto
+  padding: 3px 1rem 1rem 1rem
+
+.kanban-board
+  min-width: 360px
+  max-width: 360px
+  border-radius: 6px
+  background-color: #F5F5F7
+  display: flex
+  white-space: normal
+  margin-right: 16px
+  vertical-align: top
+  position: relative
+  flex: auto
+  flex-direction: column
+  transition: box-shadow 0.35s
+  &:hover
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+  &.ui-sortable-placeholder
+    background-color: rgba(0, 0, 0, 0.02)
+    box-shadow: none
+    visibility: visible !important
+
+
+.kanban-board-add
+  min-width: 360px
+  max-width: 360px
+  display: flex
+  white-space: normal
+  flex: auto
+  flex-direction: column
+  width: 360px
+  height: 80px
+  cursor: pointer
+  padding-right: 16px
+
+.kanban-board-add-content
+  border-radius: 6px
+  font-size: 15px
+  transition: background-color 0.35s
+  border: 2px dashed rgba(190, 205, 217, 0.5)
+  height: 80px
+  display: flex
+  justify-content: center
+  align-items: center
+  &:hover
+    background-color: #f5f5f7
+  .jd-icon
+    width: 32px
+    height: 32px
+    stroke-width: 2
+    opacity: 0.5
+
+.kanban-board-add-item
+  width: 100%
+  text-align: left
+  text-transform: uppercase
+  font-weight: bold
+  margin-bottom: 0.5rem
+  &:last-child
+    margin-bottom: 0
+  &.hidden
+    opacity: 0.3
+
+.kanban-board-header
+  margin: 8px 16px
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.kanban-board-title
+  align-items: center
+  display: flex
+  text-transform: uppercase
+  font-size: 15px
+  font-weight: bold
+  color: black
+  user-select: none
+  align-items: flex-end
+  .kanban-board-count
+    color: #687B8E
+    margin-right: 4px
+  .over-max-count
+    color: red
+
+
+.kanban-board-dropdown
+  display: flex
+  .kanban-board-dropdown-icon
+    width: 16px
+    padding: 0
+  .dropdown-item
+    align-items: center
+    font-size: 15px
+    padding: 0.25rem 0.5rem 0.25rem 0.25rem
+    cursor: pointer
+    display: flex
+    &:active
+      background-color: white
+      color: #007bff
+  .kanban-board-edit svg,
+  .kanban-board-hide svg
+    color: #687B8E
+    margin-right: 6px
+    width: 20px
+    height: 20px
+
+.kanban-board-task-add-button
+  stroke-width: 2
+  padding: 3px
+
+.kanban-board-task-add-button,
+.kanban-board-dropdown-icon
+  color: #687B8E
+  cursor: pointer
+  &:hover
+    background-color: rgba(0, 0, 0, 0.08)
+    transform: scale(1.05)
+
+.kanban-board-control
+  align-items: center
+  display: flex
+
+.kanban-board-content
+  flex: auto
+  overflow: auto
+
+.kanban-task
+  position: relative
+  margin: 8px 16px 16px 16px
+  padding: 4px
+  cursor: pointer
+  background: #FFFFFF
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12)
+  border-radius: 4px
+  display: flex
+  transition: box-shadow 0.35s, font-weight 0.35s
+  &:hover
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.12)
+  &.ui-sortable-placeholder
+    background-color: rgba(0, 0, 0, 0.02)
+    box-shadow: none
+    visibility: visible !important
+
+
+.kanban-task-id
+  border: 1px solid #000000
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12)
+  border-radius: 2px
+  background-color: white
+  font-size: 9px
+  color: black
+  padding: 0 0.2rem
+  position: absolute
+  top: -8px
+  left: 0px
+
+.kanban-task-priority
+  width: 3px
+  border-radius: 2px
+  flex-shrink: 0
+
+.kanban-task-user
+  width: 22px
+  height: 22px
+  background-color: gray
+  border-radius: 100%
+  margin: 4px 6px
+  flex-shrink: 0
+
+.kanban-member-avatar
+  width: 22px
+  height: 22px
+  border-radius: 100%
+  margin-right: 6px
+
+.kanban-filter-member-avatar
+  width: 24px
+  height: 24px
+  border-radius: 100%
+  cursor: pointer
+  border: 2px solid white
+  transition: box-shadow 0.2s linear
+  &:hover
+    box-shadow: 0 0 0 2px #268fff
+
+.kanban-task-title
+  font-size: 14px
+  color: black
+  margin: 4px 8px 4px 0px
+  flex-grow: 1
+
+.kanban-task-control
+  display: flex
+  .kanban-task-control-icon
+    width: 14px
+    padding: 0
+    color: #687B8E
+    cursor: pointer
+    &:hover
+      background-color: rgba(0, 0, 0, 0.08)
+      transform: scale(1.05)
+  .dropdown-item
+    display: flex
+    align-items: center
+    font-size: 15px
+    padding: 0.25rem 0.5rem 0.25rem 0.25rem
+    cursor: pointer
+  .kanban-task-remove svg
+    color: #687B8E
+    margin-right: 6px
+    width: 20px
+    height: 20px
+
+.kanban-task-tooltip
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)
+  border-radius: 0.2rem
+  background-color: white
+  padding: 0px 4px
+  position: absolute
+  top: -8px
+  right: 20px
+  font-size: 10px
+  font-weight: bold
+  display: none
+  z-index: 10
+  text-transform: uppercase
+
+.kanban-task:hover
+  .kanban-task-tooltip
+    display: block
+
+.kanban-task-add
+  margin: 16px
+  input
+    border: 2px dashed rgba(190, 205, 217, 0.5)
+    font-size: 15px
+    background-color: transparent
+
+#kanban-add-board,
+#kanban-board-settings
+  background-color: rgba(0, 0, 0, 0.5)
+
+.kanban-shake
+  animation: kanban-shake 0.82s cubic-bezier(.36,.07,.19,.97) both
+  transform: translate3d(0, 0, 0)
+  backface-visibility: hidden
+  perspective: 1000px
+
+@keyframes kanban-shake
+  10%, 90%
+    transform: translate3d(-1px, 0, 0)
+  20%, 80%
+    transform: translate3d(2px, 0, 0)
+  30%, 50%, 70%
+    transform: translate3d(-4px, 0, 0)
+  40%, 60%
+    transform: translate3d(4px, 0, 0)
