@@ -336,6 +336,9 @@ Template.justdo_gantt.onCreated ->
 
         if data_obj.end? and milestone_data_obj.start < data_obj.end
           milestone_data_obj.color = 'red'
+          chart_warnings.push
+            text: "[Task due-date violation] - Task: ##{data_obj.seqId} due-date is earlier than its end-date"
+            task: data_obj.id
 
         if path_depth > top_path_depth + 1
           milestone_data_obj.parent = path.split("/")[path_depth-1]
