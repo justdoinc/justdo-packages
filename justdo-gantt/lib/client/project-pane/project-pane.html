@@ -9,10 +9,12 @@
         </button>
         <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
           <li><a href="#" class="dropdown-item px-1" task_id="*">ENTIRE JUSTDO</a></li>
-          {{#if notOnSameTask}}
-          <hr class="my-2 border-light">
-          <li class="dropdown-header text-muted text-uppercase px-1 py-0">Selected Task</li>
-          <li><a href="#" class="dropdown-item px-1" task_id={{selectedTaskId}}>{{selectedTaskTitle}}</a></li>
+          {{#if hasSelectedTask}}
+            {{#if notOnSameTask}}
+            <hr class="my-2 border-light">
+            <li class="dropdown-header text-muted text-uppercase px-1 py-0">Selected Task</li>
+            <li><a href="#" class="dropdown-item px-1" task_id={{selectedTaskId}}>{{selectedTaskTitle}}</a></li>
+            {{/if}}
           {{/if}}
           {{#if projectsInJustDo}}
           <hr class="my-2 border-light">

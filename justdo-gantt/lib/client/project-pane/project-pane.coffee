@@ -20,12 +20,12 @@ Template.justdo_gantt.onCreated ->
   @gantt_title = new ReactiveVar ""
 
   @onDrop = (e) ->
-    if (task_obj = JD.collections.Tasks.findOne e.newPointId)
-      if JD.collections.Tasks.findOne(e.newPointId).due_date
-        m = new moment(e.newPoint.end)
+    if (task_obj = JD.collections.Tasks.findOne e.target.task_id)?
+      if e.target.milestone
+        m = new moment(e.newPoint.start)
         m.subtract 1, 'day'
         JD.collections.Tasks.update
-          _id:e.newPointId
+          _id:e.target.task_id
         ,
           $set:
             due_date: m.format("YYYY-MM-DD")
@@ -34,14 +34,14 @@ Template.justdo_gantt.onCreated ->
           m = new moment(e.newPoint.end)
           m.subtract 1, 'day'
           JD.collections.Tasks.update
-            _id:e.newPointId
+            _id:e.target.task_id
           ,
             $set:
               end_date: m.format("YYYY-MM-DD")
 
         if e.newPoint.start
           JD.collections.Tasks.update
-            _id:e.newPointId
+            _id:e.target.task_id
           ,
             $set:
               start_date: moment(e.newPoint.start).format("YYYY-MM-DD")
@@ -56,6 +56,10 @@ Template.justdo_gantt.onCreated ->
     split_date = date.split("-")
 
     return Date.UTC(split_date[0], split_date[1] - 1, split_date[2])
+
+  @dateStringToUTCEndOfDay = (date) ->
+    day = 1000 * 60 * 60 * 24
+    return day - 1 + self.dateStringToUTC date
 
   @in_ctrl_key_mode = new ReactiveVar(false)
   @ctrl_key_mode_first_task_id = ""
@@ -127,6 +131,8 @@ Template.justdo_gantt.onCreated ->
             end_date = dependency.end_date
           else if (implied_end = self.implied_dates[dependency._id]?.end_date)?
             end_date = implied_end
+          else if dependency.due_date
+            end_date = dependency.due_date
           if end_date == ""
             imply_start_date = false
             break
@@ -153,7 +159,6 @@ Template.justdo_gantt.onCreated ->
     return
 
   @drawGantt = ->
-
     day = 1000 * 60 * 60 * 24
     five_hours = 1000 * 60 * 60 * 5
 
@@ -187,49 +192,50 @@ Template.justdo_gantt.onCreated ->
     # end or due dates.
     parents_data_objects = {}
 
+    current_series =
+      name: "top series"
+      data: []
+      dataLabels: [
+        enabled: true
+        format: '<i class="fa fa-{point.font_symbol_right}"></i>'
+        useHTML: true
+        align: 'right'
+      ,
+        enabled: true
+        format: '<i class="fa fa-{point.font_symbol_after_right}" title="Implied based on planned time"></i>'
+        useHTML: true
+        align: 'right'
+        x: 8
+        y: 18
+        color: "#5234eb"
+      ,
+        enabled: true
+        format: '<i class="fa fa-{point.font_symbol_left}"></i>'
+        useHTML: true
+        align: 'left'
+      ,
+        enabled: true
+        format: '<i class="fa fa-{point.font_symbol_before_left}" title="Implied based on dependencies"></i>'
+        useHTML: true
+        align: 'left'
+        x: -8
+        y: 18
+        color: "#5234eb"
+      ]
+    series.push current_series
+
+
     gc._grid_data.each top_path, options, (section, item_type, item_obj, path) ->
 
       path_depth = (path.split("/").length) - 2
       item_label = JustdoHelpers.taskCommonName(item_obj, 40)
-
-      if path_depth == top_path_depth + 1
-        current_series =
-          name: item_label
-          data: []
-          dataLabels: [
-            enabled: true
-            format: '<i class="fa fa-{point.font_symbol_right}"></i>'
-            useHTML: true
-            align: 'right'
-          ,
-            enabled: true
-            format: '<i class="fa fa-{point.font_symbol_after_right}" title="Implied based on planned time"></i>'
-            useHTML: true
-            align: 'right'
-            x: 8
-            y: 18
-            color: "#5234eb"
-          ,
-            enabled: true
-            format: '<i class="fa fa-{point.font_symbol_left}"></i>'
-            useHTML: true
-            align: 'left'
-          ,
-            enabled: true
-            format: '<i class="fa fa-{point.font_symbol_before_left}" title="Implied based on dependencies"></i>'
-            useHTML: true
-            align: 'left'
-            x: -8
-            y: 18
-            color: "#5234eb"
-          ]
-        series.push current_series
 
       data_obj =
         name: item_label
         id: item_obj._id
         color: self.gantt_colors[path_depth - top_path_depth - 1]
         seqId: item_obj.seqId
+        task_id: "#{item_obj._id}"
 
       parents_data_objects[path_depth] = data_obj
       #remove 'deeper' levels if exist
@@ -258,6 +264,8 @@ Template.justdo_gantt.onCreated ->
       else if self.implied_dates[item_obj._id]?.end_date
         end = self.implied_dates[item_obj._id].end_date
         implied_end = true
+      else if start and item_obj.due_date and self.dateStringToUTC(start) < self.dateStringToUTCEndOfDay(item_obj.due_date)
+        end = item_obj.due_date
 
       if start
         data_obj.start = self.dateStringToUTC start
@@ -273,7 +281,7 @@ Template.justdo_gantt.onCreated ->
           from_date = data_obj.start
 
       if end
-        data_obj.end = day - 1 + self.dateStringToUTC end # the "day - 1 +.." marks the time to the end of the day
+        data_obj.end = self.dateStringToUTCEndOfDay end
         # deal with situations when we have end w/o start
         if not start
           data_obj.start = data_obj.end - five_hours
@@ -289,17 +297,7 @@ Template.justdo_gantt.onCreated ->
         data_obj.completed =
           amount: 1
 
-      # in regards to due dates - highcharts define that in milestones only the start option is handled, while end is ignored.
-      # so therefore, we will add it a second time
-      if item_obj.due_date
-        data_obj.start = day - 1 + self.dateStringToUTC item_obj.due_date
-        data_obj.end = data_obj.start
-        data_obj.milestone = true
 
-        if not to_date or to_date < data_obj.start
-          to_date = data_obj.start
-        if not from_date or from_date > data_obj.start
-          from_date = data_obj.start
 
       if APP.justdo_dependencies?.isPluginInstalledOnProjectDoc()
         data_obj.dependency = []
@@ -312,11 +310,42 @@ Template.justdo_gantt.onCreated ->
             dependency_end_date = dependency_obj.end_date
           else if self.implied_dates[dependency_obj._id]?.end_date
             dependency_end_date = self.implied_dates[dependency_obj._id]?.end_date
-          if dependency_end_date and  (day - 1 + self.dateStringToUTC(dependency_end_date) > data_obj.start)
+          if dependency_end_date and  (self.dateStringToUTCEndOfDay(dependency_end_date) > data_obj.start)
             chart_warnings.push
               text: "[F2S violation] - Task: ##{data_obj.seqId} starts before task ##{dependency_obj.seqId} ends."
               task: data_obj.id
 
+
+
+      # present due-dates as milestones
+      if item_obj.due_date
+
+        milestone_data_obj =
+          name: item_label
+          color: self.gantt_colors[path_depth - top_path_depth - 1]
+          seqId: item_obj.seqId
+          start: self.dateStringToUTCEndOfDay item_obj.due_date
+          milestone: true
+          task_id: "#{item_obj._id}"
+
+        if data_obj.end? or data_obj.start?
+          milestone_data_obj.id = "ms: #{item_obj._id}"
+        else
+          milestone_data_obj.id = "#{item_obj._id}"
+          data_obj.id = "empty_task: #{data_obj.id}"
+
+        if data_obj.end? and milestone_data_obj.start < data_obj.end
+          milestone_data_obj.color = 'red'
+
+        if path_depth > top_path_depth + 1
+          milestone_data_obj.parent = path.split("/")[path_depth-1]
+
+        if not to_date or to_date < milestone_data_obj.start
+          to_date = milestone_data_obj.start
+        if not from_date or from_date > milestone_data_obj.start
+          from_date = milestone_data_obj.start
+
+        current_series.data.push milestone_data_obj
 
       current_series.data.push data_obj
       object_count += 1
@@ -355,15 +384,14 @@ Template.justdo_gantt.onCreated ->
       to_date = from_date
     if to_date and not from_date
       from_date = to_date
-    series.push
-      name: "-"
-      data: [{
+
+    current_series.data.push
         name: ""
         id: "--"
         color: "#ffffff"
         start: from_date - 5 * 24 * 3600000
         end: to_date + 5 * 24 * 3600000
-      }]
+
     object_count += 1
 
     viewport_scroll_top = $(".justdo-project-pane-tab-container").scrollTop()
@@ -372,8 +400,6 @@ Template.justdo_gantt.onCreated ->
 
     Highcharts.ganttChart "gantt-chart-container",
 
-      # chart:
-      #  height: 1 #Without first/default value height function doesn't work
 
       title:
         text: self.gantt_title.get()
@@ -409,12 +435,19 @@ Template.justdo_gantt.onCreated ->
         currentDateIndicator: true
 
       yAxis:
+        uniqueNames: true
         labels:
           events:
             dblclick: (e) ->
               seq_id = parseInt(this.value.substr(1))
               if (task_id = JD.collections.Tasks.findOne({seqId: seq_id})._id)
                 self.handleCtrlClick task_id
+              return
+            click: (e) ->
+              if (gcm = APP.modules.project_page.getCurrentGcm())?
+                seq_id = parseInt(this.value.substr(1))
+                if (task_id = JD.collections.Tasks.findOne({seqId: seq_id})._id)
+                  gcm.setPath(["main", task_id], {collection_item_id_mode: true})
               return
 
 #      time:
@@ -436,12 +469,12 @@ Template.justdo_gantt.onCreated ->
           point:
             events:
               dblclick: (e) ->
-                self.handleCtrlClick @id
+                self.handleCtrlClick @task_id
                 return
 
               click: (e) ->
                 gcm = APP.modules.project_page.getCurrentGcm()
-                gcm.setPath(["main", @id], {collection_item_id_mode: true})
+                gcm.setPath(["main", @task_id], {collection_item_id_mode: true})
                 return
 
               drop: (e)->
@@ -449,18 +482,6 @@ Template.justdo_gantt.onCreated ->
 
 
       series: series
-    ### the following is not working due to bug on filestack side. waiting for their reply
-        https://github.com/highcharts/highcharts/issues/12012
-    ###
-    # ,
-    #  (chart) ->
-    #    # 40 is a pixel value for one cell
-    #     chartHeight = 40 * object_count;
-    #    chart.update({
-    #      chart: {
-    #        height: chartHeight
-    #      }
-    #    })
 
     $(".justdo-project-pane-tab-container").scrollTop(viewport_scroll_top)
     return # end of drawGantt
@@ -527,7 +548,14 @@ Template.justdo_gantt.helpers
       return false
     return JD.activePath() != Template.instance().gantt_top_path.get()
 
+  hasSelectedTask: ->
+    if JD.activeItem()
+      return true
+    return false
+
   selectedTaskTitle: ->
+    if not JD.activeItem()
+      return ""
     ret = "##{JD.activeItem({seqId: 1}).seqId} #{JD.activeItem({title: 1}).title}"
     return JustdoHelpers.ellipsis ret, 30
 
