@@ -8,8 +8,7 @@
 + when there is a dependency on something with due-date but no end-date, use the due date instead
 + click on milestone to select the task on the grid
 + what happens on a double click on a milestone?
-
-* remove the 'top-series' from the title of the on-hover on point
++ remove the 'top-series' from the title of the on-hover on point
 * alert when a due-date is before the implied start/end date
 * check if milestone violates anything
 * add alert on the due-date before start/end date on the alerts list.    

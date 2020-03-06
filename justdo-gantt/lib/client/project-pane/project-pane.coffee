@@ -450,6 +450,22 @@ Template.justdo_gantt.onCreated ->
                   gcm.setPath(["main", task_id], {collection_item_id_mode: true})
               return
 
+      tooltip:
+        formatter: (tooltip) ->
+          ret = "<b>#{@point.name}</b><br>"
+          if @x? and @x2?
+            from_date = (new moment(@x)).format("YYYY-MM-DD")
+            to_date = (new moment(@x2)).subtract(1, 'day').format("YYYY-MM-DD")
+            if to_date < from_date  # this happens when a task ends mid-day (like when the end-time can't be calculated and
+                                    # we add 5 hours to the chart
+              ret += "#{from_date}"
+            else
+              ret += "#{from_date} .. #{to_date}"
+          else if @x?
+            date = (new moment(@x)).subtract(1, 'day').format("YYYY-MM-DD")
+            ret += "#{date}"
+          return ret
+
 #      time:
 #        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
 #        useUTC: false
