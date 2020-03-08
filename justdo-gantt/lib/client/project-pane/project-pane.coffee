@@ -233,9 +233,10 @@ Template.justdo_gantt.onCreated ->
       data_obj =
         name: item_label
         id: item_obj._id
-        color: self.gantt_colors[path_depth - top_path_depth - 1]
+        color: self.gantt_color_task
         seqId: item_obj.seqId
         task_id: "#{item_obj._id}"
+
 
       parents_data_objects[path_depth] = data_obj
       #remove 'deeper' levels if exist
@@ -322,7 +323,7 @@ Template.justdo_gantt.onCreated ->
 
         milestone_data_obj =
           name: item_label
-          color: self.gantt_colors[path_depth - top_path_depth - 1]
+          color: self.gantt_color_milestone
           seqId: item_obj.seqId
           start: self.dateStringToUTCEndOfDay item_obj.due_date
           milestone: true
@@ -353,6 +354,20 @@ Template.justdo_gantt.onCreated ->
       current_series.data.push data_obj
       object_count += 1
       no_data = false
+
+      # mark parent task (if exists) as a basket
+      if (path_depth > top_path_depth + 1)
+        parent = parents_data_objects[path_depth - 1]
+        parent.color = self.gantt_color_basket
+        parent.pointWidth = 15
+        if not parent.alert_for_existing_dates?
+          if parent.start or parent.end
+            chart_warnings.push
+              text: "[Basket start/end time] - Task: ##{parent.seqId} is set as a basket and has a fixed start/end date"
+              task: parent.task_id
+            parent.alert_for_existing_dates = true
+
+
 
       # check if data_obj violates any of its parents end-times or due dates
       if data_obj.end and (path_depth > top_path_depth + 1)
@@ -514,6 +529,9 @@ Template.justdo_gantt.onRendered ->
   # the following are the color codes for different 'depth' of the gantt baskets.
   # if 'deeper' depth is presented, highcharts will provide default colors
   @gantt_colors = ["#5234eb", "#345feb", "#3483eb", "#349ceb", "#34baeb", "#34d3eb", "#34e2eb"]
+  @gantt_color_task = "#3483eb"
+  @gantt_color_milestone = "#5234eb"
+  @gantt_color_basket = 'gray'
 
 
 
