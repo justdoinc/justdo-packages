@@ -211,15 +211,13 @@ _.extend JustdoResourcesAvailability.prototype,
 
   # Given a project_id and a user id, the function will return the number of days and total hours available
   # between the dates. dates are in the format of YYYY-MM-DD
-  userAvailabilityBetweenDates: (from_date, to_date, project_id, user_id, task_id)->
+
+  userAvailabilityBetweenDates: (from_date, to_date, project_id, user_id)->
     check from_date, String
     check to_date, String
     check project_id, String
     check user_id, String
-    if task_id
-      check task_id, String
-      alert "not ready"
-      return
+
     if not (project_obj = JD.collections.Projects.findOne({_id: project_id}))
       return
 
