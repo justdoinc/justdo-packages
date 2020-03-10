@@ -20,31 +20,60 @@ Template.justdo_gantt.onCreated ->
   @gantt_title = new ReactiveVar ""
 
   @onDrop = (e) ->
-    if (task_obj = JD.collections.Tasks.findOne e.target.task_id)?
-      if e.target.milestone
-        m = new moment(e.newPoint.start)
-        m.subtract 1, 'day'
-        JD.collections.Tasks.update
-          _id:e.target.task_id
-        ,
-          $set:
-            due_date: m.format("YYYY-MM-DD")
-      else
-        if e.newPoint.end
-          m = new moment(e.newPoint.end)
-          m.subtract 1, 'day'
-          JD.collections.Tasks.update
-            _id:e.target.task_id
-          ,
-            $set:
-              end_date: m.format("YYYY-MM-DD")
+    if not (task_obj = JD.collections.Tasks.findOne e.target.task_id)?
+      return
 
-        if e.newPoint.start
-          JD.collections.Tasks.update
-            _id:e.target.task_id
-          ,
-            $set:
-              start_date: moment(e.newPoint.start).format("YYYY-MM-DD")
+    # dealing with milestones:
+    if e.target.milestone
+      m = new moment(e.newPoint.start)
+      m.subtract 1, 'day'
+      JD.collections.Tasks.update
+        _id:e.target.task_id
+      ,
+        $set:
+          due_date: m.format("YYYY-MM-DD")
+      return
+
+    ###
+    dealing with regular tasks (based on ganttpro):
+    - if the user moves only the end date - the intention is to change the task's duration
+    - if the user moves the start date (or the entire task) - the intention is to calculate the new end-date based
+      on the task's duration from before moving the task. In other words - keep the previous duration net of vacations
+      and holidays
+    ###
+
+
+    set_value = {}
+
+    if e.newPoint.end and not e.newPoint.start
+      m = new moment(e.newPoint.end)
+      m.subtract 1, 'day'
+      set_value.end_date = m.format("YYYY-MM-DD")
+      if not task_obj.start_date?
+        set_value.start_date = set_value.end_date
+
+    if e.newPoint.start
+      previous_task_duration = 1
+      previous_start_date = task_obj.start_date
+      previous_end_date = task_obj.end_date or task_obj.due_date
+      if previous_start_date and previous_end_date
+        user_id = task_obj.pending_owner_id or task_obj.owner_id
+        project_id = task_obj.project_id
+        previous_task_duration = APP.justdo_resources_availability.userAvailabilityBetweenDates previous_start_date,
+              previous_end_date, project_id, user_id
+
+      moment_start = moment(e.newPoint.start)
+
+      set_value.start_date = moment_start.format("YYYY-MM-DD")
+      set_value.end_date = APP.justdo_resources_availability.startToFinishForUser project_id, user_id,
+            set_value.start_date, previous_task_duration.working_days, 'days'
+
+    if not _.isEmpty(set_value)
+      JD.collections.Tasks.update
+        _id:e.target.task_id
+      ,
+        $set: set_value
+
     return
 
   @dateStringToUTC = (date) ->
@@ -197,6 +226,13 @@ Template.justdo_gantt.onCreated ->
       data: []
       dataLabels: [
         enabled: true
+        formatter: ->
+          if @point.is_task     # this is used to not label milestones with the label.
+            return @point.name
+          return ""
+        align: 'center'
+      ,
+        enabled: true
         format: '<i class="fa fa-{point.font_symbol_right}"></i>'
         useHTML: true
         align: 'right'
@@ -230,13 +266,22 @@ Template.justdo_gantt.onCreated ->
       path_depth = (path.split("/").length) - 2
       item_label = JustdoHelpers.taskCommonName(item_obj, 40)
 
+      # the following are the color codes for different 'depth' of the gantt baskets.
+      # if 'deeper' depth is presented, highcharts will provide default colors
+      gantt_color_task = "#3483eb"
+      gantt_color_milestone = "#344feb"
+
+      ganttGradientColor = (depth) ->
+        colors = ["#ff6666", "#ffc266", "#f7ff66", "#a1ff66", "#66fff7"]
+        return colors[depth % colors.length]
+
       data_obj =
         name: item_label
         id: item_obj._id
-        color: self.gantt_color_task
+        color: gantt_color_task
         seqId: item_obj.seqId
         task_id: "#{item_obj._id}"
-
+        is_task: 1
 
       parents_data_objects[path_depth] = data_obj
       #remove 'deeper' levels if exist
@@ -272,33 +317,49 @@ Template.justdo_gantt.onCreated ->
         data_obj.start = self.dateStringToUTC start
         # deal with situation when we have start w/o end
         if not end
-          data_obj.end = five_hours + self.dateStringToUTC start
+          data_obj.end = data_obj.start + day
           data_obj.font_symbol_left = 'arrow-right'
         if implied_start
           data_obj.font_symbol_before_left = 'chain'
-
-        # set the lowest point on the chart
-        if not from_date or from_date > data_obj.start
-          from_date = data_obj.start
 
       if end
         data_obj.end = self.dateStringToUTCEndOfDay end
         # deal with situations when we have end w/o start
         if not start
-          data_obj.start = data_obj.end - five_hours
+          data_obj.start = data_obj.end - day
           data_obj.font_symbol_right = 'step-forward'
         if implied_end
           data_obj.font_symbol_after_right = 'chain'
 
-        #set the highest point on the chart
-        if not to_date or to_date < data_obj.end
-          to_date = data_obj.end
+      if not start and not end
+        # find the closest parent start time, or default for 'today'
+        start = self.dateStringToUTC(moment().format("YYYY-MM-DD"))
+        if path_depth > top_path_depth + 1
+          for i in [(path_depth - 1)..(top_path_depth + 1)] #going up the tree to find the nearest parent
+            parent = parents_data_objects[i]
+            if parent.start
+              start = parent.start
+              break
+
+
+        data_obj.start = start
+        data_obj.end = start + day
+        data_obj.set_for_today_as_a_regular_task = true # using this field to mark this line as calculated. later on
+                                                        # if we find a child-task, we need to remove the start and end
+                                                        # of this task, otherwise highcharts will not calculate it by itself
+        data_obj.color = 'white'
 
       if item_obj.state == "done"
         data_obj.completed =
           amount: 1
 
+      # set the lowest point on the chart
+      if data_obj.start and (not from_date or from_date > data_obj.start)
+        from_date = data_obj.start
 
+      #set the highest point on the chart
+      if data_obj.end and (not to_date or to_date < data_obj.end)
+        to_date = data_obj.end
 
       if APP.justdo_dependencies?.isPluginInstalledOnProjectDoc()
         data_obj.dependency = []
@@ -316,14 +377,11 @@ Template.justdo_gantt.onCreated ->
               text: "[F2S violation] - Task: ##{data_obj.seqId} starts before task ##{dependency_obj.seqId} ends."
               task: data_obj.id
 
-
-
       # present due-dates as milestones
       if item_obj.due_date
-
         milestone_data_obj =
           name: item_label
-          color: self.gantt_color_milestone
+          color: gantt_color_milestone
           seqId: item_obj.seqId
           start: self.dateStringToUTCEndOfDay item_obj.due_date
           milestone: true
@@ -358,16 +416,25 @@ Template.justdo_gantt.onCreated ->
       # mark parent task (if exists) as a basket
       if (path_depth > top_path_depth + 1)
         parent = parents_data_objects[path_depth - 1]
-        parent.color = self.gantt_color_basket
-        parent.pointWidth = 15
+        if parent.set_for_today_as_a_regular_task
+          delete parent.set_for_today_as_a_regular_task
+          delete parent.start
+          delete parent.end
+
+        parent.color =
+          linearGradient:
+            x1: 0
+            x2: 0
+            y1: 0
+            y2: 1
+          stops: [[0, '#003399'], [1, ganttGradientColor(path_depth)]]
+
         if not parent.alert_for_existing_dates?
           if parent.start or parent.end
             chart_warnings.push
               text: "[Basket start/end time] - Task: ##{parent.seqId} is set as a basket and has a fixed start/end date"
               task: parent.task_id
             parent.alert_for_existing_dates = true
-
-
 
       # check if data_obj violates any of its parents end-times or due dates
       if data_obj.end and (path_depth > top_path_depth + 1)
@@ -407,17 +474,16 @@ Template.justdo_gantt.onCreated ->
         name: ""
         id: "--"
         color: "#ffffff"
+        borderColor: 'white'
         start: from_date - 5 * 24 * 3600000
         end: to_date + 5 * 24 * 3600000
+
 
     object_count += 1
 
     viewport_scroll_top = $(".justdo-project-pane-tab-container").scrollTop()
 
-
-
     Highcharts.ganttChart "gantt-chart-container",
-
 
       title:
         text: self.gantt_title.get()
@@ -493,6 +559,8 @@ Template.justdo_gantt.onCreated ->
           animation: false
           allowPointSelect: true
 
+          borderColor: '#303030'
+
           dragDrop:
             draggableX: true
             draggableY: false
@@ -525,13 +593,6 @@ Template.justdo_gantt.onRendered ->
   self = @
 
   APP.justdo_highcharts.requireHighcharts()
-
-  # the following are the color codes for different 'depth' of the gantt baskets.
-  # if 'deeper' depth is presented, highcharts will provide default colors
-  @gantt_colors = ["#5234eb", "#345feb", "#3483eb", "#349ceb", "#34baeb", "#34d3eb", "#34e2eb"]
-  @gantt_color_task = "#3483eb"
-  @gantt_color_milestone = "#5234eb"
-  @gantt_color_basket = 'gray'
 
 
 

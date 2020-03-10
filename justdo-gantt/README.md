@@ -9,7 +9,16 @@
 + click on milestone to select the task on the grid
 + what happens on a double click on a milestone?
 + remove the 'top-series' from the title of the on-hover on point
-* alert when a due-date is before the implied start/end date
++ alert when a due-date is before the implied start/end date
+* as in 'ganttpro' 
+  * colors for baskets, same for tasks
+  * name of task on the bar
+  * when moving a basket - all tasks underneath it are moving in the same way
+  * the basket derives it's start-end from its children
+
+* fix "if parent.milestone and data_obj.end > parent.start"
+* deal with colors and colors of baskets
+* add a note if there are unassigned hours
 * check if milestone violates anything
 * add alert on the due-date before start/end date on the alerts list.    
 * on the title - if we zoom into a project and it has a due date which is crossed, color it red
