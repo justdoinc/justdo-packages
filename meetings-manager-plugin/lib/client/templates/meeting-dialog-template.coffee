@@ -397,8 +397,9 @@ Template.meetings_meeting_dialog.helpers
     return ""
 
   labelDate: (date) ->
+    date_format = Meteor.user().profile.date_format
     if(date?)
-      return moment(date).format("D MMM YYYY")
+      return moment(date).format(date_format)
     return "Set Date"
 
   # NEED TO CHANGE: We need to retrieve meeting time from Date !
@@ -408,19 +409,38 @@ Template.meetings_meeting_dialog.helpers
     return ""
 
   labelTime: (time) ->
+    use_am_pm = Meteor.user().profile.use_am_pm
     if (time?)
-      return moment(new Date(time)).format("HH:mm")
+      if use_am_pm
+        return moment(new Date(time)).format("h:mm A")
+      else
+        return moment(new Date(time)).format("HH:mm")
     return "Set Time"
 
   labelTimeHours: (time) ->
+    use_am_pm = Meteor.user().profile.use_am_pm
     if (time?)
-      return moment(new Date(time)).format("HH")
+      if use_am_pm
+        return moment(new Date(time)).format("h")
+      else
+        return moment(new Date(time)).format("HH")
     return "00"
 
   labelTimeMinutes: (time) ->
     if (time?)
       return moment(new Date(time)).format("mm")
     return "00"
+
+  labelTimeAmPm: (time) ->
+    use_am_pm = Meteor.user().profile.use_am_pm
+    if (time?)
+      return moment(new Date(time)).format("A")
+    return "AM"
+
+  useAmPm: ->
+    user = Meteor.user()
+    if user?
+      return user.profile.use_am_pm
 
   # DEPRECATED
   # recentLocations: ->
@@ -693,6 +713,10 @@ Template.meetings_meeting_dialog.events
 
   "click .meeting-time-minutes-wrapper .meeting-time-down": (e, tmpl) ->
     setMeetingMinutes(tmpl, -15)
+    return
+
+  "click .meeting-time-am-pm": (e, tmpl) ->
+    setMeetingHours(tmpl, 12)
     return
 
   "click .meeting-time-picker": (e, tmpl) ->

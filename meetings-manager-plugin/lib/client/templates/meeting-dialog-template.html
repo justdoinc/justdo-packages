@@ -54,6 +54,11 @@
                     <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"/></svg>
                   </button>
                 </div>
+                {{#if useAmPm}}
+                  <div class="meeting-time-am-pm-wrapper">
+                    <div class="meeting-time-am-pm">{{labelTimeAmPm doc.time}}</div>
+                  </div>
+                {{/if}}
               </div>
             </div>
           </div>

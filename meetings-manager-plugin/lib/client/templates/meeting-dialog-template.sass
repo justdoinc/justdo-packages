@@ -146,7 +146,8 @@ $meeting-padding: 2rem
       text-align: center
       padding: 0 2px
     .meeting-time-hours,
-    .meeting-time-minutes
+    .meeting-time-minutes,
+    .meeting-time-am-pm
       border: 1px solid #ECEFF1
       background: #ECEFF1
       color: #37474F
@@ -161,6 +162,20 @@ $meeting-padding: 2rem
       opacity: 0.6
       &:hover
         opacity: 1
+    .meeting-time-am-pm-wrapper
+      display: flex
+      align-items: center
+    .meeting-time-am-pm
+      border: 1px solid #ECEFF1
+      background: #ECEFF1
+      color: #37474F
+      font-size: 13px
+      font-weight: bold
+      border-radius: 2px
+      margin: 4px 0
+      cursor: pointer
+      user-select: none
+      padding: 3px
 
   .meetings-dialog-options
     font-size: 15px
