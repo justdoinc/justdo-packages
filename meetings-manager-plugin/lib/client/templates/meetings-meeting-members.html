@@ -10,9 +10,12 @@
 </template>
 
 <template name="meetings_meeting_members_editor">
-  {{#each sections}}
-    {{> meetings_meeting_members_editor_section}}
-  {{/each}}
+  <div class="meeting-members-wrapper">
+    {{#each sections}}
+      {{> meetings_meeting_members_editor_section}}
+    {{/each}}
+  </div>
+
 
   {{#if display_cascade_checkbox}}
     <div class="checkbox">
@@ -37,27 +40,30 @@
 <template name="meetings_meeting_members_editor_section">
   {{#if action_users}}{{!-- If there are members for this action --}}
     <div class="members-editor-dialog-{{action_id}}-section">
-      <div class="section-caption">{{caption}}</div>
+      <div class="font-weight-bold mt-2 mb-1">{{caption}}</div>
       <div class="action-users">
         {{#each action_users}}
           {{> meetings_meeting_members_editor_user_btn}}
         {{/each}}
       </div>
-      <div class="bulk-select-label">{{proceed_message}}:</div> <div class="select-all">All</div> <div class="select-none">None</div>
+      <div>
+        <div class="bulk-select-label text-primary">{{proceed_message}}:</div> <div class="select-all text-primary">All</div> <div class="select-none text-primary">None</div>
+      </div>
     </div>
   {{/if}}
 </template>
 
 <template name="meetings_meeting_members_editor_user_btn">
-  <button class="btn btn-default btn-xs user-btn action-btn {{#if proceed.get}}proceed{{else}}dont-proceed{{/if}}" type="button" title="{{btn_title}}">
-    {{#with user_doc}}{{> gtpl_user_profile_pic}}{{/with}} <span>{{displayName user_doc}}</span>
-    {{#if proceed.get}}
-      <i class="fa fa-times fa-fw toggle"></i>
-    {{else}}
-      <i class="fa fa-plus fa-fw toggle"></i>
-    {{/if}}
-    {{#if status_fa_icon}}
-      <i class="fa fa-fw {{status_fa_icon}} status-icon"></i>
-    {{/if}}
+  <button class="btn user-btn action-btn {{#if proceed.get}}proceed bg-light{{else}}dont-proceed{{/if}}" type="button" title="{{btn_title}}">
+    <div class="flex-grow-1">
+      {{#with user_doc}}{{> gtpl_user_profile_pic}}{{/with}} <span>{{displayName user_doc}}</span>
+    </div>
+    <div>
+      {{#if proceed.get}}
+        <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+      {{else}}
+        <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+      {{/if}}
+    </div>
   </button>
 </template>

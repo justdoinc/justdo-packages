@@ -75,7 +75,7 @@ Package.onUse(function (api) {
 
 
   api.addFiles("lib/client/templates/meetings-meeting-members.html", client);
-  // api.addFiles("lib/client/templates/meetings-meeting-members.css", client);
+  api.addFiles("lib/client/templates/meetings-meeting-members.sass", client);
   api.addFiles("lib/client/templates/meetings-meeting-members.coffee", client);
 
   api.addFiles("lib/client/templates/section-container-template.html", client);
