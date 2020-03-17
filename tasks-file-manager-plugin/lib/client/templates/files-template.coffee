@@ -83,6 +83,10 @@ Template.tasks_file_manager_files.events
   "keypress [name='title']": (e, tmpl) ->
     if e.which == 13 # enter key
       tmpl.$('.file-rename-done').click()
+  "click .file-direct-download-link": (e, tmpl) ->
+    APP.tasks_file_manager_plugin.tasks_file_manager.downloadFile @task.task_id, @file.id, (err, url) ->
+      if err then console.log(err)
+    return
   "click .file-rename-done": (e, tmpl) ->
     e.preventDefault()
     task = @task
