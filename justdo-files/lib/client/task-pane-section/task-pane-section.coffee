@@ -86,6 +86,10 @@ Template.justdo_files_gallery.events
     if e.which == 13 # enter key
       tmpl.$('.file-rename-done').click()
 
+  "click .file-direct-download-link": (e, tmpl) ->
+    APP.justdo_files.downloadFile @file._id
+    return
+
   "click .file-rename-done": (e, tmpl) ->
     e.preventDefault()
     task = @task
