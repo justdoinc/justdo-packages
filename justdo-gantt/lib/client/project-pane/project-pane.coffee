@@ -4,7 +4,7 @@ Template.justdo_gantt.onCreated ->
   @config =
     work_hours_per_day: 8
 
-  @chart_warnings = new ReactiveVar [] # structure: [{text: , task: }]
+  @last_hicharts_chart = null
 
   @dependencies_module_installed = new ReactiveVar false
   @autorun =>
@@ -464,12 +464,27 @@ Template.justdo_gantt.onCreated ->
 
     return
 
+  @collapsedItems = () ->
+    if not self.last_hicharts_chart?
+      return []
+
+    ret = []
+    last_pos = null
+    _.forEach self.last_hicharts_chart.yAxis[0].ticks, (tick) ->
+      if (tick.pos - 1) != last_pos and tick.pos > 0
+        ret.push last_pos
+      last_pos = tick.pos
+      return
+
+    return ret
   @drawGantt = ->
+
     if not (gcm = APP.modules.project_page?.grid_control_mux.get())?
       return
 
     if not (gc = gcm.getMainGridControl(true))?
       return
+
 
     top_path = self.gantt_top_path.get()
     top_path_depth = (top_path.split("/").length) - 2
@@ -485,6 +500,7 @@ Template.justdo_gantt.onCreated ->
     self.addDatesToGanttLines gantt_lines
     series = self.initializeSeries()
     self.addWarningsToGanttLines gantt_lines
+    collapsed_items = self.collapsedItems()
 
     # now that we have the data, we can draw the chart
     gantt_color_task = "#accefa" # "#3483eb"
@@ -498,10 +514,14 @@ Template.justdo_gantt.onCreated ->
         id: "#{index}"
         justdo_data_line: line
 
+
       if line.start?
         data_obj.start = self.dateStringToUTC line.start
       if line.end?
         data_obj.end = self.dateStringToUTCEndOfDay line.end
+
+      if index in collapsed_items
+        data_obj.collapsed = true
 
       #set color:
       if line.is_basket
@@ -597,8 +617,9 @@ Template.justdo_gantt.onCreated ->
       end: max_end + 5 * 24 * 3600000
       pointWidth: 0
 
-    Highcharts.ganttChart "gantt-chart-container",
+    previous_scroll_position = $(".tab-justdo-gantt-container").scrollTop()
 
+    Highcharts.ganttChart "gantt-chart-container",
       title:
         text: self.gantt_title.get()
         margin: 10
@@ -692,6 +713,13 @@ Template.justdo_gantt.onCreated ->
                 return self.onDrop e
 
       series: series
+    ,
+      (chart) ->
+        self.last_hicharts_chart = chart
+        return
+
+    $(".tab-justdo-gantt-container").scrollTop(previous_scroll_position)
+
     return
 
 Template.justdo_gantt.onRendered ->
