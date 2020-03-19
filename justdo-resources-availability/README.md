@@ -11,19 +11,19 @@ with all browsers.
   
 ### API:
        
-* Enable Library
+* **Enable Library**
 
       enableResourceAvailability(requesting_plugin_id) #(client) 
     
     Enables the functionality of the plugin (if called by different plugins 
     still have a single copy)
     
-* Disable library
+* **Disable library**
 
       disbleResourceAvailability(requesting_plugin_id) #(client) 
     
 
-* Display configuration dialog   
+* **Display configuration dialog**   
      
       displayConfigDialog: (user_id, task_id) #(client )
       
@@ -34,7 +34,7 @@ with all browsers.
     else if user is given, it will display the info for the justdo user
     else it will display the info for the justdo
    
-* Get workdays and holidays for user
+* **Get workdays and holidays for user**
 
       workdaysAndHolidaysFor(project_id, dates_list, user_id) #(both)  
   
@@ -45,7 +45,7 @@ with all browsers.
               
   "from" and "to" are in "HH:MM" format
      
-* Find user availability
+* **Find user availability**
 
       userAvailabilityBetweenDates: (from_date, to_date, project_id, user_id) 
   
@@ -56,7 +56,7 @@ with all browsers.
   returns the number of available days and the available hours for the user between 
   the two dates (inclusive)
 
-* Calculate end date given start date and work required   
+* **Calculate end date given start date and work required**   
 
       startToFinishForUser: (project_id, user_id, start_date, amount, type)
     
@@ -65,6 +65,25 @@ with all browsers.
   taking into account holidays or working hours.
   
   Type is either 'days' or 'hours'.
+  
+* **Calculate the number of working days between two dates**
+
+      justDoLevelWorkingDaysOffset: (project_id, from_date, to_date)
+      
+  This returns the number of business days based on the JustDo level (vs member level)
+  The number of business days is inclusive to to the from and to dates.
+  Offset will be negative if to_date < from_date, 0 if same, and otherwise positive 
+  
+* **Calculate a date given a start date and number of ofset days**
+
+      justDoLevelDateOffset: (project_id, date, offset)
+   
+  This returns a new date ("YYYY-MM-DD") with a a certain number of business days offset from 
+  a given date. Holidays and vacations are based on the JustDo level (vs member level).
+  For negative offset, the returned date will be earlier than the given date.
+  
+   
+    
   
     
       

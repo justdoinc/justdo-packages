@@ -218,7 +218,7 @@ _.extend JustdoResourcesAvailability.prototype,
     check project_id, String
     check user_id, String
 
-    if not (project_obj = JD.collections.Projects.findOne({_id: project_id}))
+    if not (project_obj = JD.collections.Projects.findOne(project_id))
       return
 
     resources_data = project_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]
@@ -250,3 +250,81 @@ _.extend JustdoResourcesAvailability.prototype,
 
     return ret
 
+  justDoLevelDateOffset: (project_id, from_date, offset_days) ->
+    check project_id, String
+    check from_date, String
+    check offset_days, Number
+
+    if offset_days == 0
+      return from_date
+
+    date = moment.utc(from_date)
+    justdo_level_data = @default_workdays
+    if (project_obj = JD.collections.Projects.findOne({_id: project_id}))?
+      resources_data = project_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]
+    if (resources_data?[project_id])?
+      justdo_level_data  = resources_data[project_id]
+
+    while offset_days != 0
+      is_holiday = false
+      if justdo_level_data?.holidays and (date.format("YYYY-MM-DD") in justdo_level_data.holidays) or \
+        justdo_level_data?.working_days?[date.day()]?.holiday
+        is_holiday = true
+
+      if offset_days > 0
+        date.add 1, 'day'
+      else if offset_days < 0
+        date.subtract 1, 'day'
+
+      if is_holiday == false
+        if offset_days < 0
+          offset_days += 1
+        else if offset_days > 0
+          offset_days -= 1
+    return date.format("YYYY-MM-DD")
+
+  justDoLevelWorkingDaysOffset: (project_id, from_date, to_date) ->
+    check project_id, String
+    check from_date, String
+    check to_date, String
+
+    if from_date == to_date
+      return 0
+
+    justdo_level_data = @default_workdays
+    if (project_obj = JD.collections.Projects.findOne({_id: project_id}))?
+      resources_data = project_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]
+    if (resources_data?[project_id])?
+      justdo_level_data  = resources_data[project_id]
+
+    reverse_offset = false
+    if from_date > to_date
+      tmp_date = from_date
+      from_date = to_date
+      to_date = tmp_date
+      reverse_offset = true
+
+    count = 0
+    start_date = moment.utc(from_date)
+    last_date = moment.utc(to_date)
+    max_count = 10000
+    while start_date < last_date
+      date = start_date.format("YYYY-MM-DD")
+      is_holiday = false
+      if justdo_level_data?.holidays and (date in justdo_level_data.holidays) or \
+        justdo_level_data?.working_days?[start_date.day()]?.holiday
+        is_holiday = true
+
+      if not is_holiday
+        count += 1
+
+      start_date.add(1, 'days')
+
+      #should never happen, but just in case...
+      max_count -= 1
+      if max_count == 0
+        throw "infinite-loop"
+
+    if reverse_offset
+      return -count
+    return count
