@@ -74,8 +74,8 @@ Template.justdo_gantt.onCreated ->
             # find offset between the childd and the parent task
             child_new_start_date = new_start_date
             if (child_task_obj.start_date)?
-              child_offset = APP.justdo_resources_availability.justDoLevelWorkingDaysOffset task_obj.project_id, previous_start_date, child_task_obj.start_date
-              child_new_start_date = APP.justdo_resources_availability.justDoLevelDateOffset task_obj.project_id, new_start_date, child_offset
+              child_offset = APP.justdo_resources_availability.justdoLevelWorkingDaysOffset task_obj.project_id, previous_start_date, child_task_obj.start_date
+              child_new_start_date = APP.justdo_resources_availability.justdoLevelDateOffset task_obj.project_id, new_start_date, child_offset
             self.moveTaskToNewStartDate child_task_obj, child_new_start_date
             return #end of forEach
           return #end of callback

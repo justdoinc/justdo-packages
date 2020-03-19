@@ -68,7 +68,7 @@ with all browsers.
   
 * **Calculate the number of working days between two dates**
 
-      justDoLevelWorkingDaysOffset: (project_id, from_date, to_date)
+      justdoLevelWorkingDaysOffset: (project_id, from_date, to_date)
       
   This returns the number of business days based on the JustDo level (vs member level)
   The number of business days is inclusive to to the from and to dates.
@@ -76,7 +76,7 @@ with all browsers.
   
 * **Calculate a date given a start date and number of ofset days**
 
-      justDoLevelDateOffset: (project_id, date, offset)
+      justdoLevelDateOffset: (project_id, date, offset)
    
   This returns a new date ("YYYY-MM-DD") with a a certain number of business days offset from 
   a given date. Holidays and vacations are based on the JustDo level (vs member level).

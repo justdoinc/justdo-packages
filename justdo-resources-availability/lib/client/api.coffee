@@ -102,7 +102,7 @@ _.extend JustdoResourcesAvailability.prototype,
       if!(proj_obj = APP.collections.Projects.findOne(project_id))
         throw "Cant find project id"
 
-      user = Meteor.users.findOne({_id:user_id})
+      user = Meteor.users.findOne(user_id)
       config_data =
         title: "Workdays for #{JD.activeJustdo().title}: #{user.profile.first_name} #{user.profile.last_name}"
         weekdays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?["#{project_id}:#{user_id}"]?.working_days
@@ -171,7 +171,7 @@ _.extend JustdoResourcesAvailability.prototype,
     if type not in ["hours", "days"]
       throw "incompatible-type"
 
-    if not (project_obj = JD.collections.Projects.findOne({_id: project_id}))
+    if not (project_obj = JD.collections.Projects.findOne(project_id))
       return
 
     resources_data = project_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]
@@ -250,7 +250,7 @@ _.extend JustdoResourcesAvailability.prototype,
 
     return ret
 
-  justDoLevelDateOffset: (project_id, from_date, offset_days) ->
+  justdoLevelDateOffset: (project_id, from_date, offset_days) ->
     check project_id, String
     check from_date, String
     check offset_days, Number
@@ -260,7 +260,7 @@ _.extend JustdoResourcesAvailability.prototype,
 
     date = moment.utc(from_date)
     justdo_level_data = @default_workdays
-    if (project_obj = JD.collections.Projects.findOne({_id: project_id}))?
+    if (project_obj = JD.collections.Projects.findOne(project_id))?
       resources_data = project_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]
     if (resources_data?[project_id])?
       justdo_level_data  = resources_data[project_id]
@@ -283,7 +283,7 @@ _.extend JustdoResourcesAvailability.prototype,
           offset_days -= 1
     return date.format("YYYY-MM-DD")
 
-  justDoLevelWorkingDaysOffset: (project_id, from_date, to_date) ->
+  justdoLevelWorkingDaysOffset: (project_id, from_date, to_date) ->
     check project_id, String
     check from_date, String
     check to_date, String
@@ -292,7 +292,7 @@ _.extend JustdoResourcesAvailability.prototype,
       return 0
 
     justdo_level_data = @default_workdays
-    if (project_obj = JD.collections.Projects.findOne({_id: project_id}))?
+    if (project_obj = JD.collections.Projects.findOne(project_id))?
       resources_data = project_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]
     if (resources_data?[project_id])?
       justdo_level_data  = resources_data[project_id]
