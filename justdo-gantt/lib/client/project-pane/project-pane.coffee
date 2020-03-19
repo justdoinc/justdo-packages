@@ -5,7 +5,6 @@ Template.justdo_gantt.onCreated ->
     work_hours_per_day: 8
 
   @chart_warnings = new ReactiveVar [] # structure: [{text: , task: }]
-  @display_warnings = new ReactiveVar false
 
   @dependencies_module_installed = new ReactiveVar false
   @autorun =>
@@ -18,9 +17,6 @@ Template.justdo_gantt.onCreated ->
 
   @gantt_top_path = new ReactiveVar "/"
   @gantt_title = new ReactiveVar ""
-  @gantt_calculated_data = [] # in this array we will keep a copy of the data provided to highcharts
-  @highchart_chart = []  # this holds the data as is presented by highcharts (the difference is (for example) that
-                        # highcharts calculates the baskets dates internally
 
   @moveDependentTasksDueToEndDateUpdate = (original_task_obj_id) ->
     original_task_obj = JD.collections.Tasks.findOne original_task_obj_id
@@ -343,11 +339,38 @@ Template.justdo_gantt.onCreated ->
         align: 'center'
       ,
         enabled: true
+        formatter: ->
+
+          if @point.justdo_data_line?.warnings? and not @point.milestone
+            warning = """
+              <button class="btn btn-light btn-sm gantt-warning-icon" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <svg class="jd-icon " point_number="#{@point.id}">
+                  <use xlink:href="/layout/icons-feather-sprite.svg#alert-triangle"/>
+                </svg>
+              </button>
+              <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+            """
+            _.forEach @point.justdo_data_line.warnings, (line_warning) ->
+              warning += "<li><a href=\"#\" class=\"dropdown-item px-1\" >#{line_warning.text}</a></li>"
+              return
+            warning += """
+              </ul>
+              """
+
+            return warning
+          return ""
+        align: 'right'
+        x: 15
+        y: -24
+        color: "red"
+        useHTML: true
+      ,
+        enabled: false
         format: '<i class="fa fa-{point.font_symbol_right}"></i>'
         useHTML: true
         align: 'right'
       ,
-        enabled: true
+        enabled: false
         format: '<i class="fa fa-{point.font_symbol_after_right}" title="Implied based on planned time"></i>'
         useHTML: true
         align: 'right'
@@ -355,12 +378,12 @@ Template.justdo_gantt.onCreated ->
         y: 18
         color: "#5234eb"
       ,
-        enabled: true
+        enabled: false
         format: '<i class="fa fa-{point.font_symbol_left}"></i>'
         useHTML: true
         align: 'left'
       ,
-        enabled: true
+        enabled: false
         format: '<i class="fa fa-{point.font_symbol_before_left}" title="Implied based on dependencies"></i>'
         useHTML: true
         align: 'left'
@@ -371,7 +394,7 @@ Template.justdo_gantt.onCreated ->
     series.push current_series
     return series
 
-  @addGanttLinesDates = (gantt_lines) ->
+  @addDatesToGanttLines = (gantt_lines) ->
     ###
     Add to the gantt lines start end end dates (YYYY-MM-DD), and is_implies when applicable
     ###
@@ -396,16 +419,16 @@ Template.justdo_gantt.onCreated ->
       return
     return
 
-  @generateWarnings = (gantt_lines) ->
-    chart_warnings = []
-    console.log ">>>>", gantt_lines
+  @addWarningsToGanttLines = (gantt_lines) ->
     depth = {}
     _.each gantt_lines, (line) ->
       depth[line.depth] = line
 
       # check due-date and end-dates
       if line.task_obj.due_date? and line.task_obj.due_date < line.end
-        chart_warnings.push
+        if not line.warnings?
+          line.warnings = []
+        line.warnings.push
           text: "[Task due-date violation] - Task: ##{line.task_obj.seqId} due-date is earlier than its end-date"
           task: line.task_obj._id
 
@@ -414,28 +437,30 @@ Template.justdo_gantt.onCreated ->
         for i in [0..(line.depth - 1)]
           parent = depth[i]
           if parent.end < line.end
-            chart_warnings.push
+            if not line.warnings?
+              line.warnings = []
+            line.warnings.push
               text: "[Parent end-time violation] - Task: ##{line.task_obj.seqId} ends after its parent (Task ##{parent.task_obj.seqId})"
               task: line.task_obj._id
 
           if parent.start > line.start
-            chart_warnings.push
+            if not line.warnings?
+              line.warnings = []
+            line.warnings.push
               text: "[Parent start-time violation] - Task: ##{line.task_obj.seqId} starts before its parent (Task ##{parent.task_obj.seqId})"
               task: line.task_obj._id
 
       # check dependencies
       if line.dependencies?
         line.dependencies.forEach (depender_index) ->
-#          debugger
           if gantt_lines[depender_index].end >= line.start
-#            debugger
-            chart_warnings.push
+            if not line.warnings?
+              line.warnings = []
+            line.warnings.push
               text: "[F2S violation] - Task: ##{line.task_obj.seqId} starts before task ##{gantt_lines[depender_index].task_obj.seqId} ends."
               task: line.task_obj._id
 
       return # end of each
-
-    self.chart_warnings.set chart_warnings
 
     return
 
@@ -457,9 +482,9 @@ Template.justdo_gantt.onCreated ->
     gantt_lines = self.ganttRawData gc, top_path, options
     task_id_to_gantt_lines = self.indexGanttLines gantt_lines
     self.addDependenciesDataToGanttLines gantt_lines, task_id_to_gantt_lines
-    self.addGanttLinesDates gantt_lines
+    self.addDatesToGanttLines gantt_lines
     series = self.initializeSeries()
-    self.generateWarnings gantt_lines
+    self.addWarningsToGanttLines gantt_lines
 
     # now that we have the data, we can draw the chart
     gantt_color_task = "#accefa" # "#3483eb"
@@ -640,7 +665,7 @@ Template.justdo_gantt.onCreated ->
       plotOptions:
         series:
           animation: false
-          allowPointSelect: true
+          allowPointSelect: false
 
           borderColor: '#303030'
 
@@ -701,17 +726,6 @@ Template.justdo_gantt.onRendered ->
   return
 
 Template.justdo_gantt.helpers
-  warnings: ->
-    return Template.instance().chart_warnings.get()
-
-  hasWarnings: ->
-    if Template.instance().chart_warnings.get().length > 0
-      return true
-    return false
-
-  displayWarnings: ->
-    return Template.instance().display_warnings.get()
-
   projectsInJustDo: ->
     project = APP.modules.project_page.project.get()
     if project?
@@ -754,6 +768,10 @@ Template.justdo_gantt.helpers
     return not Template.instance().in_ctrl_key_mode.get()
 
 Template.justdo_gantt.events
+#  "mouseover .gantt-warning-icon": (e) ->
+#    debugger
+#    return
+
   "click .gantt_project_selector a": (e) ->
     task_id = $(e.currentTarget).attr "task_id"
     if task_id == "*"
@@ -766,19 +784,3 @@ Template.justdo_gantt.events
   "click .gantt_dependnecies_conntector_hint .cancel": (e, tpl) ->
     tpl.in_ctrl_key_mode.set false
     return
-
-  "click .gantt-display_warnings": (e, tpl) ->
-    tpl.display_warnings.set(not tpl.display_warnings.get())
-    return
-
-  "click .gantt-warnnings-list-container .close-button": (e, tpl) ->
-    tpl.display_warnings.set false
-    return
-
-
-  "click .gantt-warnnings-list-container .warning-line": (e,tpl) ->
-    task_id = e.target.id
-    if (gcm = APP.modules.project_page.getCurrentGcm())?
-      gcm.setPath(["main", task_id], {collection_item_id_mode: true})
-    return
-

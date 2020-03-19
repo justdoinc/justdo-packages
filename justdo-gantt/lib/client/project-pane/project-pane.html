@@ -40,32 +40,7 @@
           ... Double click on a dependent task to add/remove dependency <span class="cancel">[Cancel]</span>
         </div>
         {{/if}}
-
       </div>
-
-      {{#if hasWarnings}}
-        <div class="gantt_warnings">
-          <svg class="jd-icon gantt-display_warnings">
-            <use xlink:href="/layout/icons-feather-sprite.svg#alert-triangle"/>
-            <title>Click to display/hide warnings</title>
-          </svg>
-        </div>
-        {{#if displayWarnings}}
-        <div class="gantt-warnnings-list-container">
-          <div class="close-button">
-            X
-          </div>
-          <div class="list">
-            {{#each warnings}}
-              <div class="warning-line" id="{{this.task}}">
-                {{this.text}}
-              </div>
-            {{/each}}
-          </div>
-        </div>
-        {{/if}}
-      {{/if}}
-
     </div>
 
 
