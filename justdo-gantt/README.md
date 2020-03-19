@@ -15,8 +15,9 @@
   * name of task on the bar
   * when moving a basket - all tasks underneath it are moving in the same way
   * the basket derives it's start-end from its children
-
+* in the tooltip add the amount of planned hours, and the net working days for the task owner
 * fix "if parent.milestone and data_obj.end > parent.start"
+* deal with refresh of the chart that throws the view port
 * deal with colors and colors of baskets
 * add a note if there are unassigned hours
 * check if milestone violates anything
@@ -45,6 +46,8 @@
   
 
 ### Known bugs:
+* gannt does not support multiple-parents for now. conflict 
+  between unique name and multiple parents
 * if by drag and drop you move the end-date to be on the 
   start date the chart will display and empty point and
   then removes it, the data is okay.  Need
