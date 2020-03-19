@@ -17,4 +17,14 @@
     ```javascript
       tasksDependentF2S(project_id, from_task_id, to_task_id) #client side
     ```
-    Returns true if to_task is F2S dependent on from_task 
+    Returns true if to_task is F2S dependent on from_task
+    
+* Get the latest end_date off all dependent task of a certain task_obj. 
+  Use to find the potential start date of a task. 
+
+       heighestDependentsEndDate(task_obj) #client
+       
+  returns "YYYY-MM-DD"  the latest end date or null if there are no
+  dependencies or no dependencies with end_date
+  
+ 

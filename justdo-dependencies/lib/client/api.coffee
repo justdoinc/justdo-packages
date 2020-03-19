@@ -186,7 +186,6 @@ _.extend JustdoDependencies.prototype,
         return true
     return false
 
-
   addFinishToStartDependency: (project_id, from_task_id, to_task_id) ->
     from_task = JD.collections.Tasks.findOne {_id: from_task_id, project_id: project_id}
     to_task = JD.collections.Tasks.findOne {_id: to_task_id, project_id: project_id}
@@ -225,7 +224,6 @@ _.extend JustdoDependencies.prototype,
             return
     return
 
-
   removeFinishToStartDependency: (project_id, from_task_id, to_task_id) ->
     from_task = JD.collections.Tasks.findOne {_id: from_task_id, project_id: project_id}
     to_task = JD.collections.Tasks.findOne {_id: to_task_id, project_id: project_id}
@@ -262,3 +260,23 @@ _.extend JustdoDependencies.prototype,
           JustdoSnackbar.close()
           return
     return
+
+  heighestDependentsEndDate: (task_obj) ->
+    dependencies = @getTaskDependenciesTasksObjs task_obj
+    if dependencies.length == 0
+      return null
+    biggest_end_date = null
+    for dependency in dependencies
+      end_date = ""
+      if dependency.end_date
+        end_date = dependency.end_date
+      else if dependency.due_date
+        end_date = dependency.due_date
+
+      if end_date
+        if not biggest_end_date
+          biggest_end_date = end_date
+        else if end_date > biggest_end_date
+          biggest_end_date = end_date
+
+    return biggest_end_date
