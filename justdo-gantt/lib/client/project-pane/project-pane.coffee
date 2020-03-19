@@ -24,12 +24,11 @@ Template.justdo_gantt.onCreated ->
     # todo: this brings tasks from outside of the gantt as well, and we need to consider if to alert the user on moving
     # those as well, or if to ignore tasks that are not in the chart... The current implementation is updating all.
 
-
-    JD.collections.Tasks.find({justdo_task_dependencies: original_task_obj.seqId}).forEach (dependee) ->
+    JD.collections.Tasks.find({justdo_task_dependencies: original_task_obj.seqId, project_id: original_task_obj.project_id}).forEach (dependee) ->
       latest_date = null
       # due to the asynchronous nature of the client side, we need to check the database and then overrider it with information
       # from the chart data
-      JD.collections.Tasks.find({seqId: {$in: dependee.justdo_task_dependencies}}).forEach (depender) ->
+      JD.collections.Tasks.find({seqId: {$in: dependee.justdo_task_dependencies}, project_id: original_task_obj.project_id}).forEach (depender) ->
         end_date = null
         if depender.end_date?
           end_date = depender.end_date
@@ -66,13 +65,12 @@ Template.justdo_gantt.onCreated ->
     ,
       $set: set_value
     ,
-        () ->
-
+        ->
           # important note - must call with the _id and not the object, because the object changes by the update
           # call, but task_obj doesn't
           self.moveDependentTasksDueToEndDateUpdate task_obj._id
           #move all children that have no dependency to match the start time given their existing offset
-          JD.collections.Tasks.find({"parents.#{task_obj._id}": {$exists:true}, $or: [{justdo_task_dependencies: {$exists: false}}, {justdo_task_dependencies: {$size: 0}} ]}).forEach (child_task_obj) ->
+          JD.collections.Tasks.find({project_id: task_obj.project_id, "parents.#{task_obj._id}": {$exists:true}, $or: [{justdo_task_dependencies: {$exists: false}}, {justdo_task_dependencies: {$size: 0}} ]}).forEach (child_task_obj) ->
             # find offset between the childd and the parent task
             child_new_start_date = new_start_date
             if (child_task_obj.start_date)?
@@ -98,7 +96,6 @@ Template.justdo_gantt.onCreated ->
           due_date: m.format("YYYY-MM-DD")
       return
 
-
     ###
     Based on ganttpro:
     - if the user moves only the end date - the intention is to change the task's duration
@@ -122,8 +119,9 @@ Template.justdo_gantt.onCreated ->
       ,
         # important note - must call with the _id and not the object, because the object changes by the update
         # call, but task_obj doesn't
-          () ->
+          ->
             self.moveDependentTasksDueToEndDateUpdate(task_obj._id)
+            return
 
       return
 
@@ -196,7 +194,6 @@ Template.justdo_gantt.onCreated ->
         Meteor._ensure self.implied_dates, item_obj._id
         self.implied_dates[item_obj._id].end_date = implied_end_date.format "YYYY-MM-DD"
 
-
       if (not item_obj.start_date) and item_obj.end_date
         workdays = self.hoursToUsedWorkdays hours_planned
         implied_start_date = new moment(item_obj.end_date)
@@ -210,7 +207,6 @@ Template.justdo_gantt.onCreated ->
         self.implied_dates[item_obj._id].start_date = moment().format("YYYY-MM-DD")
         self.implied_dates[item_obj._id].end_date = moment().format("YYYY-MM-DD")
         self.implied_dates[item_obj._id].implied_for_today_as_a_regular_task = true
-
 
       # at the same time, identify tasks that are potential for implied dates, ie. tasks that are dependent F2S on
       # other task
@@ -325,7 +321,7 @@ Template.justdo_gantt.onCreated ->
             return
     return
 
-  @initializeSeries = () ->
+  @initializeSeries = ->
     series = []
     current_series =
       name: "top series"
@@ -464,7 +460,7 @@ Template.justdo_gantt.onCreated ->
 
     return
 
-  @collapsedItems = () ->
+  @collapsedItems = ->
     if not self.last_hicharts_chart?
       return []
 
@@ -477,14 +473,13 @@ Template.justdo_gantt.onCreated ->
       return
 
     return ret
-  @drawGantt = ->
 
+  @drawGantt = ->
     if not (gcm = APP.modules.project_page?.grid_control_mux.get())?
       return
 
     if not (gc = gcm.getMainGridControl(true))?
       return
-
 
     top_path = self.gantt_top_path.get()
     top_path_depth = (top_path.split("/").length) - 2
@@ -513,7 +508,6 @@ Template.justdo_gantt.onCreated ->
         name: JustdoHelpers.taskCommonName(line.task_obj, 40)
         id: "#{index}"
         justdo_data_line: line
-
 
       if line.start?
         data_obj.start = self.dateStringToUTC line.start
@@ -727,8 +721,6 @@ Template.justdo_gantt.onRendered ->
 
   APP.justdo_highcharts.requireHighcharts()
 
-
-
   # this autorun triggers gantt charts redraws
   @autorun =>
     if not (gcm = APP.modules.project_page?.grid_control_mux.get())?
@@ -796,10 +788,6 @@ Template.justdo_gantt.helpers
     return not Template.instance().in_ctrl_key_mode.get()
 
 Template.justdo_gantt.events
-#  "mouseover .gantt-warning-icon": (e) ->
-#    debugger
-#    return
-
   "click .gantt_project_selector a": (e) ->
     task_id = $(e.currentTarget).attr "task_id"
     if task_id == "*"
