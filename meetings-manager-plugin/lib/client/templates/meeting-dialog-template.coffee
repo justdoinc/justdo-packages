@@ -157,8 +157,7 @@ Template.meetings_meeting_dialog.onCreated ->
       <h3 class="font-weight-bold mt-4">#{JustdoHelpers.xssGuard meeting.title}</h3>
       <div class="border-bottom pb-3">
         <span class="mr-2">Date: <strong>#{moment(meeting.date).format("YYYY-MM-DD")}</strong>,</span>
-        <span class="mr-2">Time: <strong>#{JustdoHelpers.xssGuard(meeting.time)}</strong>,</span>
-        <span class="mr-2">Location: <strong>#{JustdoHelpers.xssGuard meeting.location}</strong></span>
+        <span class="mr-2">Time: <strong>#{JustdoHelpers.xssGuard(meeting.time)}</strong></span>
       </div>
       <div class="border-bottom py-3">
         <div class="h3 font-weight-bold">Invited</div>
