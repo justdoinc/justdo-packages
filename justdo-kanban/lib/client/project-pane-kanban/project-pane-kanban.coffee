@@ -55,6 +55,8 @@ Template.project_pane_kanban.onCreated ->
 
 # HELPERS
 Template.project_pane_kanban.helpers
+  isSelectedTaskCollectionItem: -> APP.modules.project_page.getActiveGridItemType() == "default"
+
   selectedTask: ->
     return JD.activeItem()
 
