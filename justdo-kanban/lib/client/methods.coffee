@@ -1,10 +1,4 @@
 _.extend JustdoKanban.prototype,
-  addSubTask: (parent_task_id, options, callback) ->
-    return Meteor.call "kanban_addSubTask", parent_task_id, options, callback
-
-  removeSubTask: (parent_task_id, subtask_id, callback) ->
-    return Meteor.call "kanban_removeSubTask", parent_task_id, subtask_id, callback
-
   createKanban: (task_id, callback) ->
     return Meteor.call "kanban_createKanban", task_id, callback
 

@@ -66,31 +66,6 @@ _.extend JustdoKanban.prototype,
       @kanbans_collection.insert kanban_config
     return
 
-  addSubTask: (parent_task_id, options, user_id) ->
-    new_task_id = APP.projects._grid_data_com.addChild(
-      "/" + parent_task_id + "/",
-      project_id: options.project_id
-      title: options.title
-      ,
-      user_id
-    )
-
-    JD.collections.Tasks.update({_id: new_task_id}, {$set: {"#{options.state}": options.board}})
-    return
-
-  removeSubTask: (parent_task_id, subtask_id, user_id) ->
-    try
-      parentId = "parents." + subtask_id
-      childTasks = APP.collections.Tasks.find({"#{parentId}": {$exists: true}}).fetch()
-
-      if childTasks.length > 0
-        throw new Error "Task has child tasks and can't be removed."
-
-      APP.projects._grid_data_com.removeParent("/#{parent_task_id}/#{subtask_id}/", user_id)
-    catch error
-      return {error: error.message}
-    return
-
   setMemberFilter: (task_id, active_member_id, user_id) ->
     @kanbans_collection.update(task_id, {$set: {"#{user_id}.memberFilter": active_member_id}})
     return

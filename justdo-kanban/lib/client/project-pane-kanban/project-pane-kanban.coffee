@@ -229,6 +229,10 @@ Template.project_pane_kanban.events
         "project_id": JD.activeJustdo()._id
       }
 
+      APP.modules.project_page.gridControl()?._grid_data?.addChild "/" + parent_task_id + "/",
+        project_id: options.project_id
+        title: options.title
+
       APP.justdo_kanban.addSubTask parent_task_id, options
 
       kanbanStateId = kanbanState.field_id
@@ -264,19 +268,23 @@ Template.project_pane_kanban.events
     $task = $(e.currentTarget).parents(".kanban-task")
     parent_task_id = tmpl.kanbanActiveTask.get()._id
     subtask_id = Blaze.getData(e.target)._id
-    APP.justdo_kanban.removeSubTask parent_task_id, subtask_id, (e, error) ->
-      if error
+
+    APP.modules.project_page.gridControl()?._grid_data?.removeParent "/#{parent_task_id}/#{subtask_id}/", (error) ->
+      if error?
         $task.addClass "kanban-shake"
         setTimeout ->
           $task.removeClass "kanban-shake"
         , 1500
         JustdoSnackbar.show
-          text: error.error
+          text: error.reason
           duration: 4000
           actionText: "Dismiss"
           onActionClick: =>
             JustdoSnackbar.close()
             return
+
+      return
+
     return
 
   "click .kanban-sort-by-date": (e, tmpl) ->

@@ -3,16 +3,6 @@ _.extend JustdoKanban.prototype,
     self = @
 
     Meteor.methods
-      kanban_addSubTask: (parent_task_id, options) ->
-        self.addSubTask parent_task_id, options, @userId
-
-        return
-
-      kanban_removeSubTask: (parent_task_id, subtask_id) ->
-        self.removeSubTask parent_task_id, subtask_id, @userId
-
-        return
-
       kanban_createKanban: (task_id) ->
         self.createKanban task_id, @userId
 
