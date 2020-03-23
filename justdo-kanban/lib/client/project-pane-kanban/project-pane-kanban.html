@@ -10,7 +10,11 @@
           <li class="dropdown-header text-muted mt-1">Selected task</li>
           {{#if selectedTask}}
             {{#with selectedTask}}
-              <li><a href="#" class="dropdown-item js-kanban-selected-task">#{{seqId}} - {{title}}</a></li>
+              <li>
+                <a href="#" class="dropdown-item js-kanban-selected-task">
+                  {{taskCommonName}}
+                </a>
+              </li>
             {{/with}}
           {{else}}
               <li><a href="#" class="dropdown-item disable-element text-muted">No selected task</a></li>
@@ -97,7 +101,7 @@
     {{#if activeTask}}
       <div class="kanban-active-task-title">
         {{#with activeTask}}
-          #{{seqId}} - {{title}}
+          {{taskCommonName}}
         {{/with}}
       </div>
     {{/if}}

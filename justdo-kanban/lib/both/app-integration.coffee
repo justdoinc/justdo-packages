@@ -23,9 +23,12 @@ APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
 
+  APP.collections.Kanbans = new Mongo.Collection("kanbans")
+
   options =
     projects_collection: APP.collections.Projects
     tasks_collection: APP.collections.Tasks
+    kanbans_collection: APP.collections.Kanbans
 
   APP.justdo_kanban = new JustdoKanban(options)
 

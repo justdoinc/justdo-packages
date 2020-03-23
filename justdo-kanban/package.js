@@ -60,7 +60,6 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/both/init.coffee", both);
   api.addFiles("lib/both/static.coffee", both);
-  api.addFiles("lib/both/router.coffee", both);
   api.addFiles("lib/both/errors-types.coffee", both);
   api.addFiles("lib/both/api.coffee", both);
   api.addFiles("lib/both/schemas.coffee", both);
@@ -82,16 +81,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project-pane-kanban/project-pane-kanban.html", client);
   api.addFiles("lib/client/project-pane-kanban/project-pane-kanban.sass", client);
   api.addFiles("lib/client/project-pane-kanban/project-pane-kanban.coffee", client);
-
-  api.addFiles("lib/client/plugin-page/plugin-page.sass", client);
-  api.addFiles("lib/client/plugin-page/plugin-page.html", client);
-  api.addFiles("lib/client/plugin-page/plugin-page.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/task-pane-section-registrar.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/task-pane-section.sass", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.html", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.coffee", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.

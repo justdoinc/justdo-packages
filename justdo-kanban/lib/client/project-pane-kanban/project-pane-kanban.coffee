@@ -25,7 +25,7 @@ Template.project_pane_kanban.onCreated ->
     if activeTask?
       APP.justdo_kanban.createKanban activeTask._id
       APP.justdo_kanban.subscribeToKanbans activeTask._id
-      kanban_config = APP.justdo_kanban.kanbans.findOne(activeTask._id)
+      kanban_config = APP.justdo_kanban.kanbans_collection.findOne(activeTask._id)
       kanbanStateId = instance.kanbanStateId.get()
       if kanban_config?
         instance.kanbanConfig.set kanban_config[Meteor.userId()]
@@ -181,6 +181,8 @@ Template.project_pane_kanban.events
     return
 
   "click .js-kanban-selected-task": (e, tmpl) ->
+    e.preventDefault()
+
     task = Blaze.getData(e.target)
     task_id = task._id
     tmpl.kanbanActiveTask.set task
@@ -189,6 +191,8 @@ Template.project_pane_kanban.events
     return
 
   "click .js-kanban-state-item": (e, tmpl) ->
+    e.preventDefault()
+    
     active_task_id = tmpl.kanbanActiveTask.get()._id
     state = Blaze.getData(e.target)
     APP.justdo_kanban.addState(active_task_id, state)
@@ -197,6 +201,8 @@ Template.project_pane_kanban.events
     return
 
   "click .js-kanban-state-item-default": (e, tmpl) ->
+    e.preventDefault()
+
     tmpl.kanbanStateId.set "state"
     $(".kanban-state-selector button").text $(e.target).text()
     return
@@ -274,6 +280,8 @@ Template.project_pane_kanban.events
     return
 
   "click .kanban-sort-by-date": (e, tmpl) ->
+    e.preventDefault()
+
     active_task_id = tmpl.kanbanActiveTask.get()._id
     kanbanSortBy = tmpl.kanbanConfig.get().sortBy.option
     if kanbanSortBy == "createdAt"
@@ -287,6 +295,8 @@ Template.project_pane_kanban.events
     return
 
   "click .kanban-sort-by-priority": (e, tmpl) ->
+    e.preventDefault()
+
     active_task_id = tmpl.kanbanActiveTask.get()._id
     kanbanSortBy = tmpl.kanbanConfig.get().sortBy.option
     if kanbanSortBy == "priority"
@@ -300,6 +310,8 @@ Template.project_pane_kanban.events
     return
 
   "click .kanban-sort-by-due-date": (e, tmpl) ->
+    e.preventDefault()
+
     active_task_id = tmpl.kanbanActiveTask.get()._id
     kanbanSortBy = tmpl.kanbanConfig.get().sortBy.option
     if kanbanSortBy == "due_date"
@@ -367,6 +379,8 @@ Template.project_pane_kanban.events
     return
 
   "click .kanban-filter-member-item": (e, tmpl) ->
+    e.preventDefault()
+
     user_id = Blaze.getData(e.target)
     active_task_id = tmpl.kanbanActiveTask.get()._id
     APP.justdo_kanban.setMemberFilter(active_task_id, user_id)

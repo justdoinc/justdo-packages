@@ -2,10 +2,13 @@ _.extend JustdoKanban.prototype,
   registerConfigTemplate: ->
     APP.executeAfterAppClientCode ->
       module = APP.modules.project_page
+
       module.project_config_ui.registerConfigTemplate "justdo_kanban_project_config",
         section: "extensions"
         template: "justdo_kanban_project_config"
         priority: 100
+
+      return
 
     return
 
@@ -28,3 +31,5 @@ Template.justdo_kanban_project_config.events
       curProj().disableCustomFeatures(module_id)
     else
       curProj().enableCustomFeatures(module_id)
+
+    return

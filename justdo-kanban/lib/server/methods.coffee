@@ -4,31 +4,38 @@ _.extend JustdoKanban.prototype,
 
     Meteor.methods
       kanban_addSubTask: (parent_task_id, options) ->
-        user_id = @userId
-        self.addSubTask parent_task_id, options, user_id
+        self.addSubTask parent_task_id, options, @userId
 
-      kanban_removeSubTask: (parent_task_id, subtask_id, callback) ->
-        user_id = @userId
-        self.removeSubTask parent_task_id, subtask_id, user_id, callback
+        return
+
+      kanban_removeSubTask: (parent_task_id, subtask_id) ->
+        self.removeSubTask parent_task_id, subtask_id, @userId
+
+        return
 
       kanban_createKanban: (task_id) ->
-        user_id = @userId
-        self.createKanban task_id, user_id
+        self.createKanban task_id, @userId
+
+        return
 
       kanban_setMemberFilter: (task_id, active_member_id) ->
-        user_id = @userId
-        self.setMemberFilter task_id, active_member_id, user_id
+        self.setMemberFilter task_id, active_member_id, @userId
+
+        return
 
       kanban_setSortBy: (task_id, sortBy, reverse) ->
-        user_id = @userId
-        self.setSortBy task_id, sortBy, reverse, user_id
+        self.setSortBy task_id, sortBy, reverse, @userId
+
+        return
 
       kanban_addState: (task_id, state_object) ->
-        user_id = @userId
-        self.addState task_id, state_object, user_id
+        self.addState task_id, state_object, @userId
+
+        return
 
       kanban_updateStateOption: (task_id, state_id, option_id, option_label, new_value) ->
-        user_id = @userId
-        self.updateStateOption task_id, state_id, option_id, option_label, new_value, user_id
+        self.updateStateOption task_id, state_id, option_id, option_label, new_value, @userId
+
+        return
 
     return

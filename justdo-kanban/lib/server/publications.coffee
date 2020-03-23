@@ -3,4 +3,6 @@ _.extend JustdoKanban.prototype,
     self = @
 
     Meteor.publish "kanbans", (task_id) ->
-      return self.kanbans.find(task_id)
+      return self.kanbans_collection.find(task_id)
+
+    return

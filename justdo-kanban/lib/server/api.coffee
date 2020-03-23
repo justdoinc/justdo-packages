@@ -25,8 +25,6 @@ _.extend JustdoKanban.prototype,
 
   performInstallProcedures: (project_doc, user_id) ->
     # Called when plugin installed for project project_doc._id
-    console.log "Plugin #{JustdoKanban.project_custom_feature_id} installed on project #{project_doc._id}"
-
     return
 
   performUninstallProcedures: (project_doc, user_id) ->
@@ -34,13 +32,10 @@ _.extend JustdoKanban.prototype,
 
     # Note, isn't called on project removal
 
-    console.log "Plugin #{JustdoKanban.project_custom_feature_id} removed from project #{project_doc._id}"
-
     return
 
-
   createKanban: (task_id, user_id) ->
-    kanban = @kanbans.findOne(task_id)
+    kanban = @kanbans_collection.findOne(task_id)
 
     if !kanban?
       kanban_config = {
@@ -68,7 +63,7 @@ _.extend JustdoKanban.prototype,
         }
       }
 
-      @kanbans.insert kanban_config
+      @kanbans_collection.insert kanban_config
     return
 
   addSubTask: (parent_task_id, options, user_id) ->
@@ -97,16 +92,16 @@ _.extend JustdoKanban.prototype,
     return
 
   setMemberFilter: (task_id, active_member_id, user_id) ->
-    @kanbans.update(task_id, {$set: {"#{user_id}.memberFilter": active_member_id}})
+    @kanbans_collection.update(task_id, {$set: {"#{user_id}.memberFilter": active_member_id}})
     return
 
   setSortBy: (task_id, sortBy, reverse, user_id) ->
-    @kanbans.update(task_id, {$set: {"#{user_id}.sortBy.option": sortBy, "#{user_id}.sortBy.reverse": reverse}})
+    @kanbans_collection.update(task_id, {$set: {"#{user_id}.sortBy.option": sortBy, "#{user_id}.sortBy.reverse": reverse}})
     return
 
   addState: (task_id, state_object, user_id) ->
     state_id = state_object.field_id
-    kanban = @kanbans.findOne(task_id)
+    kanban = @kanbans_collection.findOne(task_id)
 
     new_state = {
       "field_id": state_object.field_id,
@@ -118,18 +113,18 @@ _.extend JustdoKanban.prototype,
       option.visible = true
       option.limit = null
 
-    if !kanban[user_id].states[state_id]?
-      @kanbans.update(task_id, {$set: {"#{user_id}.states.#{state_id}": new_state}})
+    if not kanban[user_id].states[state_id]?
+      @kanbans_collection.update(task_id, {$set: {"#{user_id}.states.#{state_id}": new_state}})
     return
 
   updateStateOption: (task_id, state_id, option_id, option_label, new_value, user_id) ->
-    kanban = @kanbans.findOne(task_id)
+    kanban = @kanbans_collection.findOne(task_id)
     options = kanban[user_id].states[state_id].field_options.select_options
 
     for option in options
       if option.option_id == option_id
         option[option_label] = new_value
 
-    @kanbans.update(task_id, {$set: {"#{user_id}.states.#{state_id}.field_options.select_options": options}})
+    @kanbans_collection.update(task_id, {$set: {"#{user_id}.states.#{state_id}.field_options.select_options": options}})
 
     return
