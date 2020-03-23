@@ -122,3 +122,32 @@
     text-align: center
     iframe
       width: 100%
+
+// Print Mode
+.tasks-file-manager-print
+  font-size: 11px
+  cursor: pointer
+  .jd-icon
+    padding: 4px
+
+.print-files-mode-overlay
+  background: white
+  padding: 50px
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  z-index: 1000
+  height: 100%
+  width: 100%
+  opacity: 0
+
+.print-files-item
+  margin-bottom: 3.5rem
+
+.print-files-item-image
+  width: 100%
+
+@media print
+  .print-files-mode-overlay
+    opacity: 1 !important

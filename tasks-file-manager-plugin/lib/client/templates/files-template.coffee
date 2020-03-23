@@ -11,6 +11,36 @@ Template.tasks_file_manager_files.onCreated ->
 
     return
 
+
+  @print_files = ->
+    $("body").append """<div class="print-files-mode-overlay"></div>"""
+    $print_files_mode_overlay = $(".print-files-mode-overlay")
+    files = $(".tasks-file-manager-files .file")
+    html = ""
+
+    for file in files
+      title = $(file).find(".title a").text()
+      date = $(file).find(".date").attr("title")
+      image_preview = $(file).find(".image-preview")
+      file_html = """
+        <div class="print-files-item">
+          <h2>#{title}</h2>
+          <p>#{date}</p>
+        """
+      if $(image_preview)[0]?
+        image_url = $(image_preview).css("background-image").replace(/^url\(['"](.+)['"]\)/, '$1')
+        file_html += """
+          <img class="print-files-item-image" src="#{image_url}" alt="#{title}">
+        """
+
+      file_html += """</div>"""
+      html += file_html
+
+    $print_files_mode_overlay.html html
+    window.print()
+    $print_files_mode_overlay.remove()
+    return
+
   return
 
 DISPLAYED_FILE_TYPES = {
@@ -127,3 +157,7 @@ Template.tasks_file_manager_files.events
   "keydown .file input": (e, tmpl) ->
     if e.which == 27
       tmpl.renaming.set false
+
+  "click .tasks-file-manager-print": (e, tmpl) ->
+    tmpl.print_files()
+    return
