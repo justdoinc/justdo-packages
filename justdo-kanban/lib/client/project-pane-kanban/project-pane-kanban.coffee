@@ -61,7 +61,10 @@ Template.project_pane_kanban.helpers
     return JD.activeItem()
 
   activeTask: ->
-    return Template.instance().kanbanActiveTask.get()
+    activeTask = Template.instance().kanbanActiveTask.get()
+    if activeTask?
+      active_task_id = activeTask._id
+      return APP.collections.Tasks.findOne(active_task_id)
 
   projects: ->
     project = APP.modules.project_page.project.get()
@@ -194,7 +197,7 @@ Template.project_pane_kanban.events
 
   "click .js-kanban-state-item": (e, tmpl) ->
     e.preventDefault()
-    
+
     active_task_id = tmpl.kanbanActiveTask.get()._id
     state = Blaze.getData(e.target)
     APP.justdo_kanban.addState(active_task_id, state)
