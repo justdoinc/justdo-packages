@@ -14,6 +14,7 @@ Template.tasks_file_manager_files.onCreated ->
 
   @print_files = ->
     $("body").append """<div class="print-files-mode-overlay"></div>"""
+
     $print_files_mode_overlay = $(".print-files-mode-overlay")
     files = $(".tasks-file-manager-files .file")
     html = ""
@@ -22,15 +23,16 @@ Template.tasks_file_manager_files.onCreated ->
       title = $(file).find(".title a").text()
       date = $(file).find(".date").attr("title")
       image_preview = $(file).find(".image-preview")
+
       file_html = """
         <div class="print-files-item">
-          <h2>#{title}</h2>
-          <p>#{date}</p>
+          <h2>#{JustdoHelpers.xssGuard(title)}</h2>
+          <p>#{JustdoHelpers.xssGuard(date)}</p>
         """
       if $(image_preview)[0]?
-        image_url = $(image_preview).css("background-image").replace(/^url\(['"](.+)['"]\)/, '$1')
+        image_url = $(image_preview).css("background-image").replace(/^url\(['"](.+)['"]\)/, "$1")
         file_html += """
-          <img class="print-files-item-image" src="#{image_url}" alt="#{title}">
+          <img class="print-files-item-image" src="#{image_url.replace(/"/g, "")}" alt="#{JustdoHelpers.xssGuard(title)}">
         """
 
       file_html += """</div>"""
@@ -39,6 +41,7 @@ Template.tasks_file_manager_files.onCreated ->
     $print_files_mode_overlay.html html
     window.print()
     $print_files_mode_overlay.remove()
+
     return
 
   return
