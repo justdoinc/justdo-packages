@@ -98,6 +98,8 @@ Template.tasks_file_manager_files.helpers
   typeClass: ->
     return Template.instance().getTypeCssClass(@file.type)
 
+  showPrintFiles: ->
+    return APP.justdo_files_tab_print.isPluginInstalledOnProjectDoc()
 
 Template.tasks_file_manager_files.events
   "click .file-download-link": (e, tmpl) ->
