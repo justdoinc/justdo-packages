@@ -25,9 +25,10 @@ Template.tasks_file_manager_files.onCreated ->
       image_preview = $(file).find(".image-preview")
 
       file_html = """
+        <h1>Files :: #{JustdoHelpers.taskCommonName(APP.collections.Tasks.findOne(@data.task_id), 120)}</h1><br>
         <div class="print-files-item">
           <h2>#{JustdoHelpers.xssGuard(title)}</h2>
-          <p>#{JustdoHelpers.xssGuard(date)}</p>
+          <h3>#{JustdoHelpers.xssGuard(date)}</h3>
         """
       if $(image_preview)[0]?
         image_url = $(image_preview).css("background-image").replace(/^url\(['"](.+)['"]\)/, "$1")
