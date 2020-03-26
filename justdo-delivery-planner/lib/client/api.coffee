@@ -10,6 +10,8 @@ _.extend JustdoDeliveryPlanner.prototype,
     @registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
 
+    @registerTabSwitcherSection()
+
     return
 
   setupCustomFeatureMaintainer: ->
@@ -76,5 +78,23 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return
 
+  registerTabSwitcherSection: ->
+    APP.modules.project_page.tab_switcher_manager.registerSectionItem "main", "projects",
+      position: 300
+      data:
+        label: "Projects"
+        tab_id: "jdp-all-projects"
+
+        icon_type: "feather"
+        icon_val: "briefcase"
+      listingCondition: ->
+        cur_project = APP.modules.project_page.curProj()
+
+        if not cur_project?
+          return
+
+        return cur_project.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
+
+    return
 
 

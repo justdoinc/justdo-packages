@@ -1,11 +1,11 @@
 <template name="project_operations_tab_switcher">
   <div id="tab-switcher" class="dropdown d-flex align-items-center">
     <button type="button" class="btn btn-sm btn-default {{#unless ready}}disabled{{/unless}}"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Switch View">
-      {{#if ready}}
-        {{{getCurrentTabIcon}}}
-      {{else}}
-        <i class="fa fa-spinner fa-spin"></i>
-      {{/if}}
+      {{#with getCurrentSectionItem}}
+        <div class="icon-container {{#if $eq tab_id "loading"}}loading{{/if}}">
+          {{> project_operations_tab_switcher_dropdown_tab_icon}}
+        </div>
+      {{/with}}
     </button>
     <div class="tab-switcher-divider bg-secondary mx-2"></div>
     {{>project_operations_tab_switcher_dropdown}}

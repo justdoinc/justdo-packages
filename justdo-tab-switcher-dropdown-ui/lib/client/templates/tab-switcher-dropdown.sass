@@ -1,14 +1,37 @@
 #tab-switcher
+  .views-search-wrapper
+    position: relative
+    margin-bottom: 5px
+    margin-left: -2px
+
+    .views-search-input
+      padding-left: 1.8rem
+
+    .jd-icon
+      position: absolute
+      padding: 4px
+      stroke-width: 2.5
+      opacity: 0.4
+      left: 4px
+
+      &:hover
+        // The following undo the changes applied on tag: PROJECT-GRID-OPS-JD-ICON-ON-HOVER scan the codebase
+        transform: none
+        stroke: currentColor
+        background-color: transparent
+
   .dropdown-menu
-    max-height: 400px
     overflow: auto
+    max-height: 400px
     left: -10px !important
-    &::-webkit-scrollbar
-      display: none
+
+    min-width: 270px
+
     .justdo-avatar
       width: 24px
       height: 24px
       margin-right: 8px
+
     .dropdown-header
       cursor: default
       text-transform: uppercase

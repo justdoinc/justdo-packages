@@ -102,10 +102,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/task-pane-section/extended-workdays-dropdown/extended-workdays-dropdown.html", client);
   api.addFiles("lib/client/task-pane-section/extended-workdays-dropdown/extended-workdays-dropdown.coffee", client);
 
-  api.addFiles("lib/client/tab-switcher-items/tab-switcher-items.sass", client);
-  api.addFiles("lib/client/tab-switcher-items/tab-switcher-items.html", client);
-  api.addFiles("lib/client/tab-switcher-items/tab-switcher-items.coffee", client);
-
   api.addFiles("lib/client/tabs-definitions/tab-styling.sass", client);
   api.addFiles("lib/client/tabs-definitions/sections-managers/all-projects.coffee", client);
   api.addFiles("lib/client/tabs-definitions/tabs-definitions.coffee", client);

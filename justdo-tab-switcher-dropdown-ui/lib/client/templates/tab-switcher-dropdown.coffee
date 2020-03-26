@@ -4,8 +4,15 @@ APP.executeAfterAppLibCode ->
   Template.project_operations_tab_switcher_dropdown.helpers module.template_helpers
 
   Template.project_operations_tab_switcher_dropdown.helpers
-    userId: -> Meteor.userId()
-    ticketsQueuesExists: -> APP.collections.TicketsQueues.find().count() > 0
+    tab_switcher_manager: -> module.tab_switcher_manager
+    tabAttributes: ->
+      tab_attributes = {}
+
+      for attribute_type, attribute_type_keys of @tab_sections_state
+        for attribute_type_key, attribute_type_val of attribute_type_keys
+          tab_attributes["data-sv-#{attribute_type}_#{attribute_type_key}"] = attribute_type_val
+
+      return tab_attributes
 
   sections_vars_attributes_prefix = "data-sv-"
   Template.project_operations_tab_switcher_dropdown.events
@@ -41,5 +48,10 @@ APP.executeAfterAppLibCode ->
 
       # Ensure the dropdown is closed.
       $(e.target).closest(".dropdown-menu").removeClass("show").closest(".dropdown").removeClass("show")
+
+      return
+
+    "change .views-search-input, keyup .views-search-input": (e) ->
+      module.tab_switcher_manager.setSectionsItemsLabelFilter($(e.target).val())
 
       return

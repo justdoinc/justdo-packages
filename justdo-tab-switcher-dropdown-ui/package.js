@@ -16,6 +16,8 @@ Package.onUse(function (api) {
   api.use("underscore", client);
   api.use("templating", client);
 
+  api.use("justdoinc:jd-api@1.0.0", both);
+
   api.use('fourseven:scss@3.2.0', client);
 
   api.use("raix:eventemitter@0.1.1", client);
@@ -27,6 +29,8 @@ Package.onUse(function (api) {
 
   api.use("reactive-var", client);
   api.use("tracker", client);
+
+  api.addFiles("lib/client/tab-switcher-manager/tab-switcher-manager.coffee", client);
 
   api.addFiles("lib/client/templates/tab-switcher-button.html", client);
   api.addFiles("lib/client/templates/tab-switcher-button.sass", client);

@@ -7,30 +7,35 @@
 
   --}}
 
-  <ul class="dropdown-menu jd-p-075 animate slideIn shadow-lg border-0" aria-labelledby="tab-switcher">
-    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="main"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#grid"/></svg> Main View</a></li>
-    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="due-list" data-sv-global_owners="{{userId}}"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#check-square"/></svg> My Due List</a></li>
+  <div class="dropdown-menu jd-p-075 animate slideIn shadow-lg border-0" aria-labelledby="tab-switcher">
+    <div class="views-search-wrapper d-flex align-items-center">
+      <input type="text" class="views-search-input form-control form-control-sm" placeholder="Views">
+      <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#search"/></svg>
+    </div>
 
-    {{>delivery_planner_tab_switcher_items}}
-    {{>workload_planner_tab_switcher_items}}
+    {{#each tab_switcher_manager.getSections}}
+      {{#if label}}
+        <div class="dropdown-header px-1 py-2">{{label}}</div>
+      {{/if}}
 
-    <li class="dropdown-header px-1 py-2">Recently</li>
-    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="recent-updates" data-sv-global_tracked-field="state_updated_at" data-sv-global_custom-query='{"state":"done"}'><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg> Completed</a></li>
-    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="recent-updates" data-sv-global_tracked-field="updatedAt"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#rotate-cw"/></svg> Updated</a></li>
-    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="recent-updates" data-sv-global_tracked-field="createdAt"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg> Created</a></li>
-    <li class="dropdown-header px-1 py-2">Miscellaneous</li>
-    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="awaiting-transfer"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#repeat"/></svg> Tasks Ownership Transfers</a></li>
-
-    {{#if ticketsQueuesExists}}
-    <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="tickets-queues"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#file"/></svg> Tickets Queues</a></li>
-    {{/if}}
-
-    {{#with project_all_members_except_me_sorted_by_first_name}}
-      <li class="dropdown-header px-1 py-2">Members Due Lists</li>
-      <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="due-list" data-sv-global_owners="*"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#users"/></svg> All Members Due List</a></li>
-      {{#each this}}
-        <li><a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="due-list" data-sv-global_owners="{{user_id}}">{{> gtpl_user_profile_pic}} {{displayName}}</a></li>
+      {{#each reactive_items_list.getList}}
+        <div>
+          <a href="#" class="dropdown-item px-1 d-flex align-items-center" data-tab-id="{{tab_id}}" {{tabAttributes}}>
+            {{> project_operations_tab_switcher_dropdown_tab_icon}}
+            {{label}}
+          </a>
+        </div>
       {{/each}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="project_operations_tab_switcher_dropdown_tab_icon">
+  {{#if $eq icon_type "feather"}}
+    <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#{{icon_val}}"/></svg>
+  {{else if $eq icon_type "user-avatar"}}
+    {{#with icon_val}}
+      {{> gtpl_user_profile_pic}}
     {{/with}}
-  </ul>
+  {{/if}}
 </template>
