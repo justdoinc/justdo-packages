@@ -2,8 +2,8 @@ setupPlaceholdersReactiveListRegistry = (target_object) ->
   regisrtry = new ReactiveItemsList()
 
   _.extend target_object,
-    getPlaceholderItems: (domain) ->
-      return regisrtry.getList(domain)
+    getPlaceholderItems: (domain, ignore_listing_condition) ->
+      return regisrtry.getList(domain, ignore_listing_condition)
 
     registerPlaceholderItem: (item_id, item) ->
       return regisrtry.registerItem(item_id, item)
@@ -18,25 +18,65 @@ ReactiveItemsList = ->
 
   @_items_dep = new Tracker.Dependency()
 
+  # Global listing conditions are listing conditions that will apply for all items,
+  # in addition to their specific listingCondition.
+  @_global_listing_conditions_dep = new Tracker.Dependency()
+  @_global_listing_conditions = {}
+
   return @
 
 _.extend ReactiveItemsList.prototype,
-  getList: (domain="default") ->
+  registerGlobalListingCondition: (global_listing_condition_id, listing_condition) ->
+    @_global_listing_conditions[global_listing_condition_id] = listing_condition
+    @_global_listing_conditions_dep.changed()
+
+    return
+
+  unregisterGlobalListingCondition: (global_listing_condition_id) ->
+    delete @_global_listing_conditions[global_listing_condition_id]
+
+    @_global_listing_conditions_dep.changed()
+
+    return
+
+  getList: (domain="default", ignore_listing_condition=false) ->
+    @_global_listing_conditions_dep.depend()
+    global_listing_conditions = _.values @_global_listing_conditions
+
     @_items_dep.depend()
 
     items = _.values @_items
     items = _.filter @_items, (item) -> item.domain == domain
     items = _.sortBy items, "position"
 
-    items = _.filter items, (item) ->
-      if not (listingCondition = item.listingCondition)?
-        return true
-      else
-        return listingCondition()
+    if not ignore_listing_condition
+      items = _.filter items, (item) ->
+        if (listingCondition = item.listingCondition)? and not listingCondition(item)
+          return false
 
-    items = _.map items, (item) -> item.data
+        for globalListingCondition in global_listing_conditions
+          if not globalListingCondition(item)
+            return false
+
+        return true
+
+    items = _.map items, (item) -> _.extend {}, item.data, {id: item._id}
 
     return items
+
+  getItem: (item_id, ignore_listing_condition=false) ->
+    @_items_dep.depend()
+
+    if item_id not of @_items
+      return undefined
+
+    if ignore_listing_condition
+      return @_items[item_id]
+
+    if not (listingCondition = @_items[item_id].listingCondition)? or listingCondition()
+      return @_items[item_id]
+
+    return undefined
 
   registerItem: (item_id, item) ->
     # item_id, if an item with item_id already exists, it will be replaced.
@@ -73,6 +113,13 @@ _.extend ReactiveItemsList.prototype,
 
   unregisterItem: (item_id) ->
     delete @_items[item_id]
+
+    @_items_dep.changed()
+
+    return
+
+  unregisterAllItems: ->
+    @_items = {}
 
     @_items_dep.changed()
 
