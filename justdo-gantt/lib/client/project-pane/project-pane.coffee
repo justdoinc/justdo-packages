@@ -204,9 +204,14 @@ Template.justdo_gantt.onCreated ->
       # for tasks that have no start time and not end time imply 'today', (later on will mark them with white background)
       if not item_obj.start_date and not item_obj.end_date
         Meteor._ensure self.implied_dates, item_obj._id
-        self.implied_dates[item_obj._id].start_date = moment().format("YYYY-MM-DD")
-        self.implied_dates[item_obj._id].end_date = moment().format("YYYY-MM-DD")
-        self.implied_dates[item_obj._id].implied_for_today_as_a_regular_task = true
+        if item_obj.due_date
+          self.implied_dates[item_obj._id].start_date = item_obj.due_date
+          self.implied_dates[item_obj._id].end_date = item_obj.due_date
+          self.implied_dates[item_obj._id].implied_based_on_due_date = true
+        else
+          self.implied_dates[item_obj._id].start_date = moment().format("YYYY-MM-DD")
+          self.implied_dates[item_obj._id].end_date = moment().format("YYYY-MM-DD")
+          self.implied_dates[item_obj._id].implied_for_today_as_a_regular_task = true
 
       # at the same time, identify tasks that are potential for implied dates, ie. tasks that are dependent F2S on
       # other task
@@ -396,7 +401,9 @@ Template.justdo_gantt.onCreated ->
     ###
     _.each gantt_lines, (line, task_id_to_gantt_lines) ->
 
-      if line.is_basket and self.implied_dates[line.task_obj._id]?.implied_for_today_as_a_regular_task
+      if line.is_basket and \
+            ( self.implied_dates[line.task_obj._id]?.implied_for_today_as_a_regular_task or \
+              self.implied_dates[line.task_obj._id]?.implied_based_on_due_date )
         return
 
       if line.task_obj.start_date?
@@ -535,7 +542,16 @@ Template.justdo_gantt.onCreated ->
           stops: [[0, start_color], [1, end_color]]
 
       else if line.implied_start and line.implied_end
-        data_obj.color = 'white'
+        if self.implied_dates[line.task_obj._id]?.implied_based_on_due_date
+          data_obj.color =
+            linearGradient:
+              x1: 0
+              x2: 1
+              y1: 0
+              y2: 0
+            stops: [[0, 'white'], [1, gantt_color_milestone]]
+        else
+          data_obj.color = 'white'
       else if line.implied_start and not line.implied_end
         data_obj.color =
           linearGradient:
