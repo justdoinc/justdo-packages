@@ -10,8 +10,6 @@ _.extend JustdoDeliveryPlanner.prototype,
     @registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
 
-    @registerTabSwitcherSection()
-
     return
 
   setupCustomFeatureMaintainer: ->
@@ -64,10 +62,14 @@ _.extend JustdoDeliveryPlanner.prototype,
         if (gcm = APP.modules.project_page.grid_control_mux.get())?
           installTabsOnGcm(gcm)
 
+        @registerTabSwitcherSection()
+
         return
 
       destroyer: =>
         removeGridControlMuxCreatedListener()
+
+        @unregisterTabSwitcherSection()
 
         return
 
@@ -79,6 +81,19 @@ _.extend JustdoDeliveryPlanner.prototype,
     return
 
   registerTabSwitcherSection: ->
+    self = @
+
+    isInstalledOnCurrentProject = ->
+      cur_project = APP.modules.project_page.curProj()
+
+      if not cur_project?
+        return
+
+      return cur_project.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
+
+    getAllJustdoActiveProjectsSortedByProjectName = ->
+      return APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdo({_id: 1})._id, {active_only: true, sort_by: {title: 1}}, Meteor.userId())
+
     APP.modules.project_page.tab_switcher_manager.registerSectionItem "main", "projects",
       position: 300
       data:
@@ -87,14 +102,46 @@ _.extend JustdoDeliveryPlanner.prototype,
 
         icon_type: "feather"
         icon_val: "briefcase"
+      listingCondition: isInstalledOnCurrentProject
+    APP.modules.project_page.tab_switcher_manager.registerSection "projects",
+      position: 350
+      data:
+        label: "Projects"
+
       listingCondition: ->
-        cur_project = APP.modules.project_page.curProj()
+        if isInstalledOnCurrentProject() and getAllJustdoActiveProjectsSortedByProjectName().length > 0
+          return true
 
-        if not cur_project?
-          return
+    if self.tab_switcher_items_builder_comp?
+      self.tab_switcher_items_builder_comp.stop()
 
-        return cur_project.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
+    self.tab_switcher_items_builder_comp = Tracker.autorun ->
+      APP.modules.project_page.tab_switcher_manager.resetSectionItems("projects")
+      
+      for project_task_doc, i in getAllJustdoActiveProjectsSortedByProjectName()
+        APP.modules.project_page.tab_switcher_manager.registerSectionItem "projects", project_task_doc._id,
+          position: i
+          data:
+            label: project_task_doc.title
+            tab_id: "sub-tree"
+
+            icon_type: "feather"
+            icon_val: "briefcase"
+
+            tab_sections_state:
+              global:
+                "root-item": project_task_doc._id
+
+      return
 
     return
 
+  unregisterTabSwitcherSection: ->
+    APP.modules.project_page.tab_switcher_manager.unregisterSectionItem "main", "projects"
 
+    APP.modules.project_page.tab_switcher_manager.unregisterSection "projects"
+
+    @tab_switcher_items_builder_comp?.stop()
+    @tab_switcher_items_builder_comp = null
+
+    return
