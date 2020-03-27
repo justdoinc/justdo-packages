@@ -1,3 +1,12 @@
+# FUNCTIONS
+makeTasksDraggable = ->
+  $(".kanban-task").draggable
+    helper: "clone"
+    start: (event, ui) ->
+      $(ui.helper).width($(event.target).width())
+  return
+
+
 # ON CREATED
 Template.project_pane_kanban.onCreated ->
   instance = @
@@ -39,17 +48,20 @@ Template.project_pane_kanban.onCreated ->
           tolerance: "pointer"
           cancel: ".kanban-board-control, .kanban-task-control, .kanban-task-add"
 
-        $(".kanban-board-content").sortable
-          items: ".kanban-task"
-          tolerance: "pointer"
-          connectWith: ".kanban-board-content"
-          cancel: ".kanban-task-control"
-          receive: (event, ui) ->
+        makeTasksDraggable()
+
+        $(".kanban-board-content").droppable
+          drop: (event, ui) ->
             state_id = instance.kanbanState.get().field_id
             board_option_id = Blaze.getData(event.target).option_id
-            task_id = Blaze.getData(ui.item[0])._id
+            task_id = Blaze.getData(ui.draggable[0])._id
             JD.collections.Tasks.update({_id: task_id}, {$set: {"#{state_id}": board_option_id}})
+
+            setTimeout ->
+              makeTasksDraggable()
+            , 500
             return
+
       , 1000
 
 
