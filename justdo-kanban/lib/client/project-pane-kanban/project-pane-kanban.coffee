@@ -370,7 +370,8 @@ Template.project_pane_kanban.events
     active_task_id = tmpl.kanbanActiveTask.get()._id
     state_id = tmpl.kanbanState.get().field_id
     board_id = tmpl.kanbanActiveBoardId.get()
-    limit_val = $kanban_limit_input.val()
+    limit_val = parseInt($kanban_limit_input.val())
+
     if limit_val > 0
       APP.justdo_kanban.updateStateOption(active_task_id, state_id, board_id, "limit", limit_val)
       $("#kanban-board-settings").modal "hide"
