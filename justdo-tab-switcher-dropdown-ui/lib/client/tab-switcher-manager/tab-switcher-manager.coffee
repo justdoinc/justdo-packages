@@ -57,6 +57,13 @@ _.extend TabSwitcherManager.prototype,
       icon_type: "feather"
       icon_val: "circle"
 
+    zoom_in_tab_def =
+      label: "Zoom In"
+      tab_id: "unknown-tab"
+
+      icon_type: "font-awesome"
+      icon_val: "fa-window-restore"
+
     loading_tab_icon =
       label: "Loading Tab"
       tab_id: "loading"
@@ -84,6 +91,9 @@ _.extend TabSwitcherManager.prototype,
 
         if tab.tab_id == current_tab_id and JustdoHelpers.jsonComp(partial_current_sections_state, tab_sections_state)
           return tab
+
+    if current_tab_id == "sub-tree"
+      return zoom_in_tab_def
 
     return unknown_tab_def
 

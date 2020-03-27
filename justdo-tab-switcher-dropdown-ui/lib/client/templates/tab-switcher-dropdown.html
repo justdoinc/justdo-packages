@@ -37,5 +37,7 @@
     {{#with icon_val}}
       {{> gtpl_user_profile_pic}}
     {{/with}}
+  {{else if $eq icon_type "font-awesome"}}
+    <i class="fa {{icon_val}}"></i>
   {{/if}}
 </template>
