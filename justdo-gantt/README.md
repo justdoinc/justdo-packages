@@ -2,6 +2,9 @@
 * If there is no end-date, and no implied end-date but we do have due-date, we will use the 
   due date as if it is also the end-date
   
+## need Daniel's assistance with 
++ have a floating navigator https://jsfiddle.net/BlackLabel/60jo2dn1/
+
 
 ### Todo:
 + present due-date on the same line if exists, allow moving around

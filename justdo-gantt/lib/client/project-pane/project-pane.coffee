@@ -634,6 +634,10 @@ Template.justdo_gantt.onCreated ->
 
     previous_scroll_position = $(".tab-justdo-gantt-container").scrollTop()
 
+    prev_x_extreams = null
+    if (self.last_hicharts_chart)?
+      prev_x_extreams = self.last_hicharts_chart.xAxis[0].getExtremes()
+      
     Highcharts.ganttChart "gantt-chart-container",
       title:
         text: self.gantt_title.get()
@@ -731,9 +735,13 @@ Template.justdo_gantt.onCreated ->
     ,
       (chart) ->
         self.last_hicharts_chart = chart
+        if prev_x_extreams
+          chart.xAxis[0].setExtremes prev_x_extreams.min, prev_x_extreams.max
         return
 
     $(".tab-justdo-gantt-container").scrollTop(previous_scroll_position)
+
+
 
     return
 
