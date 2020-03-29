@@ -333,11 +333,15 @@ Template.justdo_gantt.onCreated ->
       data: []
       dataLabels: [
         enabled: true
+        color: "black"
         formatter: ->
           if not @point.milestone
             return @point.name
           return ""
         align: 'center'
+        style:
+          "textOutline": "none"
+        className: "gantt_line_label "
       ,
         enabled: true
         formatter: ->
@@ -526,13 +530,8 @@ Template.justdo_gantt.onCreated ->
 
       #set color:
       if line.is_basket
-        #start_color = ganttGradientColor(line.depth)
-        start_color = gantt_color_milestone
-        end_color = gantt_color_task
-        if (not line.start) and (not line.end)
-          start_color = 'gray'
-          end_color = 'white'
-
+        start_color = gantt_color_task
+        end_color = 'white'
         data_obj.color =
           linearGradient:
             x1: 0
@@ -540,6 +539,8 @@ Template.justdo_gantt.onCreated ->
             y1: 0
             y2: 1
           stops: [[0, start_color], [1, end_color]]
+        if (not line.start) and (not line.end)
+          data_obj.borderColor = 'white'
 
       else if line.implied_start and line.implied_end
         if self.implied_dates[line.task_obj._id]?.implied_based_on_due_date
@@ -550,8 +551,12 @@ Template.justdo_gantt.onCreated ->
               y1: 0
               y2: 0
             stops: [[0, 'white'], [1, gantt_color_milestone]]
+          data_obj.borderColor = 'white'
+
         else
-          data_obj.color = 'white'
+          data_obj.color = gantt_color_task
+          data_obj.borderColor = 'white'
+
       else if line.implied_start and not line.implied_end
         data_obj.color =
           linearGradient:
@@ -815,4 +820,11 @@ Template.justdo_gantt.events
 
   "click .gantt_dependnecies_conntector_hint .cancel": (e, tpl) ->
     tpl.in_ctrl_key_mode.set false
+    return
+
+  "dblclick .gantt_line_label": (e, tpl) ->
+    # Using the seq ID from the label is a hack, since I wasn't able to find a way to get to the line object itself
+    # from the event details. AL.
+    if(task_id = JD.collections.Tasks.findOne({seqId: parseInt(e.target.innerHTML.substr(1))})?._id)?
+      tpl.handleCtrlClick task_id
     return
