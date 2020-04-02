@@ -31,12 +31,11 @@
         <!-- Kanban State Selector -->
         <div class="kanban-state-selector dropdown ml-2">
           <button class="btn btn-light btn-sm border" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            State
+            {{buttonFieldLabel}}
           </button>
           <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
-            <li><a href="#" class="dropdown-item js-kanban-state-item-default">State</a></li>
-            {{#each customFields}}
-              <li><a href="#" class="dropdown-item js-kanban-state-item">{{label}}</a></li>
+            {{#each fields}}
+              <li><a href="#" class="dropdown-item js-kanban-field-item">{{fieldLabel field_id}}</a></li>
             {{/each}}
           </ul>
         </div>
@@ -65,7 +64,7 @@
           <svg class="jd-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#jd-sort"/></svg>
           <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
             <li>
-              <a href="#" class="dropdown-item kanban-sort-by-date">
+              <a href="#" class="dropdown-item kanban-sort-item kanban-sort-by-date"  sortby="createdAt">
                 Created
                 {{#if sortByReverse}}
                   <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-down"/></svg>
@@ -75,7 +74,7 @@
               </a>
             </li>
             <li>
-              <a href="#" class="dropdown-item kanban-sort-by-priority">
+              <a href="#" class="dropdown-item kanban-sort-item kanban-sort-by-priority" sortby="priority">
                 By Priority
                 {{#if sortByReverse}}
                   <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-up"/></svg>
@@ -85,7 +84,7 @@
               </a>
             </li>
             <li>
-              <a href="#" class="dropdown-item kanban-sort-by-due-date">
+              <a href="#" class="dropdown-item kanban-sort-item kanban-sort-by-due-date" sortby="due_date">
                 By Due Date
                 {{#if sortByReverse}}
                   <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-up"/></svg>
@@ -114,54 +113,52 @@
       <div class="kanban-boards">
 
         {{#each boards}}
-          {{#if visible}}
-            <div class="kanban-board">
-              <div class="kanban-board-header">
-                <div class="kanban-board-title">
-                  <div class="kanban-board-count {{markCrossedLimit option_id}}">{{boardCount option_id}}</div>
-                  {{label}}
-                </div>
-                <div class="kanban-board-control">
-                  <svg class="jd-icon kanban-board-task-add-button"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
-                  <div class="kanban-board-dropdown dropdown">
-                    <svg class="jd-icon kanban-board-dropdown-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
-                    <ul class="dropdown-menu p-2 shadow-lg border-0">
-                      <li class="dropdown-item kanban-board-edit" data-toggle="modal" data-target="#kanban-board-settings">
-                        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>Edit Column
-                      </li>
-                      <li class="dropdown-item kanban-board-hide">
-                        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#eye-off"/></svg>Hide Column
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+          <div class="kanban-board">
+            <div class="kanban-board-header">
+              <div class="kanban-board-title">
+                <div class="kanban-board-count {{markCrossedLimit board_value_id}}">{{boardCount board_value_id}}</div>
+                {{boardLabel board_value_id}}
               </div>
-              <div class="kanban-board-content">
-                {{#each tasks option_id}}
-                  <div class="kanban-task">
-                    <div class="kanban-task-id">{{seqId}}</div>
-                    <div class="kanban-task-priority" style="background-color: {{taskPriorityColor priority}}"></div>
-                    <img class="kanban-task-user" src="{{memberAvatar owner_id}}">
-                    <div class="kanban-task-title">{{title}}</div>
-                    <div class="kanban-task-control dropdown">
-                      <svg class="jd-icon kanban-task-control-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
-                      <ul class="dropdown-menu p-2 shadow-lg border-0">
-                        <li class="dropdown-item kanban-task-remove">
-                          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"/></svg>Remove Task
-                        </li>
-                      </ul>
-                    </div>
-                    {{#if due_date}}
-                      <div class="kanban-task-tooltip">Due Date: {{due_date}}</div>
-                    {{/if}}
-                  </div>
-                {{/each}}
-                <div class="kanban-task-add">
-                  <input class="form-control kanban-task-add-input" type="text" placeholder="Add new Task">
+              <div class="kanban-board-control">
+                <svg class="jd-icon kanban-board-task-add-button"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+                <div class="kanban-board-dropdown dropdown">
+                  <svg class="jd-icon kanban-board-dropdown-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
+                  <ul class="dropdown-menu p-2 shadow-lg border-0">
+                    <li class="dropdown-item kanban-board-edit" data-toggle="modal" data-target="#kanban-board-settings">
+                      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>Edit Column
+                    </li>
+                    <li class="dropdown-item kanban-board-hide">
+                      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#eye-off"/></svg>Hide Column
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
-          {{/if}}
+            <div class="kanban-board-content">
+              {{#each tasks board_value_id}}
+                <div class="kanban-task">
+                  <div class="kanban-task-id">{{seqId}}</div>
+                  <div class="kanban-task-priority" style="background-color: {{taskPriorityColor priority}}"></div>
+                  <img class="kanban-task-user" src="{{memberAvatar owner_id}}">
+                  <div class="kanban-task-title">{{title}}</div>
+                  <div class="kanban-task-control dropdown">
+                    <svg class="jd-icon kanban-task-control-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
+                    <ul class="dropdown-menu p-2 shadow-lg border-0">
+                      <li class="dropdown-item kanban-task-remove">
+                        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"/></svg>Remove Task
+                      </li>
+                    </ul>
+                  </div>
+                  {{#if due_date}}
+                    <div class="kanban-task-tooltip">Due Date: {{due_date}}</div>
+                  {{/if}}
+                </div>
+              {{/each}}
+              <div class="kanban-task-add">
+                <input class="form-control kanban-task-add-input" type="text" placeholder="Add new Task">
+              </div>
+            </div>
+          </div>
         {{/each}}
         <div class="kanban-board-add text-muted" data-toggle="modal" data-target="#kanban-add-board">
           <div class="kanban-board-add-content"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg></div>
@@ -208,8 +205,8 @@
           </button>
         </div>
         <div class="modal-body">
-          {{#each boards}}
-            <button type="button" class="kanban-board-add-item btn btn-primary {{#unless visible}}hidden{{/unless}} btn-sm text-left font-weight-bold">{{label}}</button>
+          {{#each allBoards}}
+            <button type="button" class="kanban-board-add-item btn btn-primary {{boardIsHidden this}} btn-sm text-left font-weight-bold">{{boardLabel this}}</button>
           {{/each}}
         </div>
       </div>

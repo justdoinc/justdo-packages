@@ -36,70 +36,29 @@ _.extend JustdoKanban.prototype,
 
   createKanban: (task_id, user_id) ->
     kanban = @kanbans_collection.findOne(task_id)
-
-    if !kanban?
-      kanban_config = {
-        "_id": task_id
-        "#{user_id}": {
-          "memberFilter": null,
-          "sortBy": { "option": "priority", "reverse": true},
-          "states": {
-            "state": {
-              "field_id": "state",
-              "label": "State"
-              "field_options": {
-                select_options: [
-                  {"option_id": "pending", "label": "Pending", "visible": true, "limit": null},
-                  {"option_id": "in-progress", "label": "In progress", "visible": true, "limit": null},
-                  {"option_id": "done", "label": "Done", "visible": true, "limit": null},
-                  {"option_id": "will-not-do", "label": "Cancelled", "visible": false, "limit": null},
-                  {"option_id": "on-hold", "label": "On hold", "visible": false, "limit": null},
-                  {"option_id": "duplicate", "label": "Duplicate", "visible": false, "limit": null},
-                  {"option_id": "nil", "label": "No State", "visible": false, "limit": null},
-                ]
-              }
-            }
-          }
-        }
-      }
-
-      @kanbans_collection.insert kanban_config
-    return
-
-  setMemberFilter: (task_id, active_member_id, user_id) ->
-    @kanbans_collection.update(task_id, {$set: {"#{user_id}.memberFilter": active_member_id}})
-    return
-
-  setSortBy: (task_id, sortBy, reverse, user_id) ->
-    @kanbans_collection.update(task_id, {$set: {"#{user_id}.sortBy.option": sortBy, "#{user_id}.sortBy.reverse": reverse}})
-    return
-
-  addState: (task_id, state_object, user_id) ->
-    state_id = state_object.field_id
-    kanban = @kanbans_collection.findOne(task_id)
-
-    new_state = {
-      "field_id": state_object.field_id,
-      "label": state_object.label,
-      "field_options": state_object.field_options
+    kanban_default = {
+      "boards_field_id": "state"
+      "sort": {priority: 1}
+      "query": {}
+      "visible_boards": [
+        { "board_value_id": "pending", "limit": 1000 },
+        { "board_value_id": "in-progress", "limit": 1000 },
+        { "board_value_id": "done", "limit": 1000 },
+        { "board_value_id": "will-not-do", "limit": 1000 },
+        { "board_value_id": "on-hold", "limit": 1000 },
+        { "board_value_id": "duplicate", "limit": 1000 },
+        { "board_value_id": "nil", "limit": 1000 }
+      ]
     }
 
-    for option in new_state.field_options.select_options
-      option.visible = true
-      option.limit = null
-
-    if not kanban[user_id].states[state_id]?
-      @kanbans_collection.update(task_id, {$set: {"#{user_id}.states.#{state_id}": new_state}})
+    if kanban?
+      if not kanban[user_id]?
+        @kanbans_collection.update(task_id, {$set: {"#{user_id}": kanban_default}})
+    else
+      kanban = {"_id": task_id, "#{user_id}": kanban_default }
+      @kanbans_collection.insert kanban
     return
 
-  updateStateOption: (task_id, state_id, option_id, option_label, new_value, user_id) ->
-    kanban = @kanbans_collection.findOne(task_id)
-    options = kanban[user_id].states[state_id].field_options.select_options
-
-    for option in options
-      if option.option_id == option_id
-        option[option_label] = new_value
-
-    @kanbans_collection.update(task_id, {$set: {"#{user_id}.states.#{state_id}.field_options.select_options": options}})
-
+  updateKanban: (task_id, key, val, user_id) ->
+    @kanbans_collection.update(task_id, {$set: {"#{user_id}.#{key}": val}})
     return

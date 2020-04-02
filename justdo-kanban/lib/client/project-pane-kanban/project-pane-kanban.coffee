@@ -10,12 +10,10 @@ makeTasksDraggable = ->
 # ON CREATED
 Template.project_pane_kanban.onCreated ->
   instance = @
+  instance.kanban = new ReactiveVar null
   instance.kanbanActiveTask = new ReactiveVar null
-  instance.kanbanConfig = new ReactiveVar null
-  instance.kanbanState = new ReactiveVar null
   instance.kanbanMembersFilter = new ReactiveVar null
   instance.kanbanActiveBoardId = new ReactiveVar null
-  instance.kanbanStateId = new ReactiveVar "state"
 
   # starting with the selected task
   if (selected_task_id = JD.activeItem())?
@@ -34,11 +32,10 @@ Template.project_pane_kanban.onCreated ->
     if activeTask?
       APP.justdo_kanban.createKanban activeTask._id
       APP.justdo_kanban.subscribeToKanbans activeTask._id
-      kanban_config = APP.justdo_kanban.kanbans_collection.findOne(activeTask._id)
-      kanbanStateId = instance.kanbanStateId.get()
-      if kanban_config?
-        instance.kanbanConfig.set kanban_config[Meteor.userId()]
-        instance.kanbanState.set kanban_config[Meteor.userId()].states[kanbanStateId]
+
+      kanban = APP.justdo_kanban.kanbans_collection.findOne(activeTask._id)
+      if kanban?
+        instance.kanban.set kanban[Meteor.userId()]
 
       setTimeout ->
         # Make Kanban Sortable
@@ -47,15 +44,23 @@ Template.project_pane_kanban.onCreated ->
           helper: "clone"
           tolerance: "pointer"
           cancel: ".kanban-board-control, .kanban-task-control, .kanban-task-add"
+          stop: ( event, ui ) ->
+            active_task_id = instance.kanbanActiveTask.get()._id
+            visible_boards = []
+            $(".kanban-board").each ->
+              visible_boards.push Blaze.getData($(this)[0])
+
+            APP.justdo_kanban.updateKanban(active_task_id, "visible_boards", visible_boards)
+            return
 
         makeTasksDraggable()
 
         $(".kanban-board-content").droppable
           drop: (event, ui) ->
-            state_id = instance.kanbanState.get().field_id
-            board_option_id = Blaze.getData(event.target).option_id
+            boards_field_id = instance.kanban.get().boards_field_id
+            board_value_id = Blaze.getData(event.target).board_value_id
             task_id = Blaze.getData(ui.draggable[0])._id
-            JD.collections.Tasks.update({_id: task_id}, {$set: {"#{state_id}": board_option_id}})
+            JD.collections.Tasks.update({_id: task_id}, {$set: {"#{boards_field_id}": board_value_id}})
 
             setTimeout ->
               makeTasksDraggable()
@@ -83,83 +88,109 @@ Template.project_pane_kanban.helpers
     if project?
       return APP.collections.Tasks.find({ "p:dp:is_project": true, project_id: project.id }, {sort: {"title": 1}}).fetch()
 
-  tasks: (option_id) ->
-    kanbanState = Template.instance().kanbanState.get()
+  boards: ->
+    kanban = Template.instance().kanban.get()
+    if kanban?
+      return kanban.visible_boards
+
+  boardLabel: (board_value_id) ->
+    boards_field_id = Template.instance().kanban.get()?.boards_field_id
+    gc = APP.modules.project_page.gridControl()
+    label = gc?.getSchemaExtendedWithCustomFields()[boards_field_id]?.grid_values[board_value_id]?.txt
+    return label
+
+  boardIsHidden: (board_value_id) ->
+    kanban = Template.instance().kanban.get()
+    if kanban?
+      visible_boards = kanban.visible_boards
+      for board in visible_boards
+        if board.board_value_id == board_value_id
+          return "visible"
+
+  allBoards: ->
+    kanban = Template.instance().kanban.get()
+    boards_field_id = kanban?.boards_field_id
+    visible_boards = kanban?.visible_boards
+    gc = APP.modules.project_page.gridControl()
+    boards = gc?.getSchemaExtendedWithCustomFields()[boards_field_id]?.grid_values
+    if boards?
+      boards = Object.keys(boards)
+      return boards
+
+  tasks: (board_value_id) ->
+    kanban = Template.instance().kanban.get()
     kanbanActiveTask = Template.instance().kanbanActiveTask.get()
-    kanbanActiveMember = Template.instance().kanbanConfig.get().memberFilter
-    kanbanSortBy = Template.instance().kanbanConfig.get().sortBy.option
-    kanbanSortByReverse = Template.instance().kanbanConfig.get().sortBy.reverse
-    if kanbanActiveTask? and kanbanState?
-      kanbanStateId = kanbanState.field_id
-      active_task_id = kanbanActiveTask._id
-      parentId = "parents." + active_task_id
-      if kanbanActiveMember?
-        tasks = APP.collections.Tasks.find({"#{parentId}": {$exists: true}, "#{kanbanStateId}": "#{option_id}", "owner_id": kanbanActiveMember}).fetch()
+    if kanbanActiveTask? and kanban?
+      parentId = "parents." + kanbanActiveTask._id
+      if kanban.query.users?
+        tasks = APP.collections.Tasks.find({"#{parentId}": {$exists: true}, "#{kanban.boards_field_id}": "#{board_value_id}", "owner_id": kanban.query.users}, sort: kanban.sort)
       else
-        tasks = APP.collections.Tasks.find({"#{parentId}": {$exists: true}, "#{kanbanStateId}": "#{option_id}"}).fetch()
-
-      tasks = _.sortBy(tasks, kanbanSortBy)
-
-      if kanbanSortByReverse
-        tasks = tasks.reverse()
-
+        tasks = APP.collections.Tasks.find({"#{parentId}": {$exists: true}, "#{kanban.boards_field_id}": "#{board_value_id}"}, sort: kanban.sort)
       return tasks
 
   activeMember: ->
-    kanbanConfig = Template.instance().kanbanConfig.get()
-    if kanbanConfig?
-      return kanbanConfig.memberFilter
+    kanban = Template.instance().kanban.get()
+    if kanban?
+      if kanban.query.users != "all"
+        return kanban.query.users
 
   thisIsActiveMember: (user_id) ->
-    kanbanConfig = Template.instance().kanbanConfig.get()
-    if kanbanConfig?
-      if kanbanConfig.memberFilter == user_id
+    kanban = Template.instance().kanban.get()
+    if kanban?
+      if kanban.query.users == user_id
         return true
 
-  boardCount: (option_id) ->
-    kanbanState = Template.instance().kanbanState.get()
+  boardCount: (board_value_id) ->
+    kanban = Template.instance().kanban.get()
     kanbanActiveTask = Template.instance().kanbanActiveTask.get()
-    if kanbanActiveTask? and kanbanState?
-      kanbanStateId = kanbanState.field_id
-      active_task_id = kanbanActiveTask._id
-      parentId = "parents." + active_task_id
-      count = APP.collections.Tasks.find({"#{parentId}": {$exists: true}, "#{kanbanStateId}": "#{option_id}"}).count()
+    if kanbanActiveTask? and kanban?
+      parentId = "parents." + kanbanActiveTask._id
+      count = APP.collections.Tasks.find({"#{parentId}": {$exists: true}, "#{kanban.boards_field_id}": "#{board_value_id}"}).count()
       if count > 0
         return count
 
-  markCrossedLimit: (option_id) ->
-    kanbanState = Template.instance().kanbanState.get()
-    if not (field_options = _.findWhere kanbanState.field_options.select_options, {option_id: option_id})?
+  markCrossedLimit: (value_id) ->
+    kanban = Template.instance().kanban.get()
+    if not (visible_board = _.findWhere kanban.visible_boards, {board_value_id: value_id})?
       return ""
-    if not field_options.limit?
+    if not visible_board.limit?
       return ""
     if not (kanbanActiveTask = Template.instance().kanbanActiveTask.get())?
       return ""
 
-    kanbanStateId = kanbanState.field_id
     active_task_id = kanbanActiveTask._id
     parentId = "parents." + active_task_id
-    count = JD.collections.Tasks.find({"#{parentId}": {$exists: true}, "#{kanbanStateId}": "#{option_id}"}).count()
-    if count > field_options.limit
+
+    count = JD.collections.Tasks.find({"#{parentId}": {$exists: true}, "#{kanban.boards_field_id}": "#{value_id}"}).count()
+
+    if count > visible_board.limit
       return "over-max-count"
     return ""
 
   taskPriorityColor: (priority) ->
     return JustdoColorGradient.getColorRgbString priority
 
-  customFields: ->
-    customFields = []
+  fields: ->
+    fields = [{"field_id": "state"}]
     if JD.activeJustdo()?
       if JD.activeJustdo().custom_fields?
         for field in JD.activeJustdo().custom_fields
           if field.custom_field_type_id == "basic-select"
-            customFields.push field
-        return customFields
+            fields.push {"field_id": field.field_id}
+    return fields
 
-  boards: ->
-    kanbanBoards = Template.instance().kanbanState.get()
-    if kanbanBoards?
-      return kanbanBoards.field_options.select_options
+  fieldLabel: (field_id) ->
+    gc = APP.modules.project_page.gridControl()
+    if gc?
+      label = gc.getSchemaExtendedWithCustomFields()[field_id].label
+      return label
+
+  buttonFieldLabel: ->
+    kanban = Template.instance().kanban.get()
+    boards_field_id = kanban?.boards_field_id
+    gc = APP.modules.project_page.gridControl()
+    label = gc?.getSchemaExtendedWithCustomFields()[boards_field_id]?.label
+    return label
 
   members: ->
     kanbanMembersFilter = Template.instance().kanbanMembersFilter.get()
@@ -177,14 +208,15 @@ Template.project_pane_kanban.helpers
     return JustdoHelpers.displayName(user_id)
 
   sortBy: ->
-    kanbanConfig = Template.instance().kanbanConfig.get()
-    if kanbanConfig?
-      return kanbanConfig.sortBy.option
+    kanban = Template.instance().kanban.get()
+    if kanban?
+      return Object.keys(kanban.sort)[0]
 
   sortByReverse: ->
-    kanbanConfig = Template.instance().kanbanConfig.get()
-    if kanbanConfig?
-      return kanbanConfig.sortBy.reverse
+    kanban = Template.instance().kanban.get()
+    if kanban?
+      if Object.values(kanban.sort)[0] < 0
+        return true
 
 
 # EVENTS
@@ -199,7 +231,6 @@ Template.project_pane_kanban.events
 
   "click .js-kanban-selected-task": (e, tmpl) ->
     e.preventDefault()
-
     task = Blaze.getData(e.target)
     task_id = task._id
     tmpl.kanbanActiveTask.set task
@@ -207,21 +238,21 @@ Template.project_pane_kanban.events
     gcm.setPath(["main", task_id], {collection_item_id_mode: true})
     return
 
-  "click .js-kanban-state-item": (e, tmpl) ->
+  "click .js-kanban-field-item": (e, tmpl) ->
     e.preventDefault()
-
+    visible_boards = []
     active_task_id = tmpl.kanbanActiveTask.get()._id
-    state = Blaze.getData(e.target)
-    APP.justdo_kanban.addState(active_task_id, state)
-    tmpl.kanbanStateId.set state.field_id
-    $(".kanban-state-selector button").text $(e.target).text()
-    return
+    field_id = Blaze.getData(e.target).field_id
 
-  "click .js-kanban-state-item-default": (e, tmpl) ->
-    e.preventDefault()
+    gc = APP.modules.project_page.gridControl()
+    board_values = gc?.getSchemaExtendedWithCustomFields()[field_id]?.grid_values
 
-    tmpl.kanbanStateId.set "state"
-    $(".kanban-state-selector button").text $(e.target).text()
+    for value in Object.keys(board_values)
+      if value != ""
+        visible_boards.push {"board_value_id": value, "limit": 1000}
+
+    APP.justdo_kanban.updateKanban(active_task_id, "boards_field_id", field_id)
+    APP.justdo_kanban.updateKanban(active_task_id, "visible_boards", visible_boards)
     return
 
   "click .kanban-task": (e, tmpl) ->
@@ -233,28 +264,19 @@ Template.project_pane_kanban.events
   "keydown .kanban-task-add-input": (e, tmpl) ->
     if e.which == 13 or e.which == 9 # Enter or Tab
       kanbanActiveTask = tmpl.kanbanActiveTask.get()
-      kanbanState = tmpl.kanbanState.get()
+      boards_field_id = tmpl.kanban.get().boards_field_id
       parent_task_id = kanbanActiveTask._id
-      board_id = Blaze.getData(e.target).option_id
+      board_value_id = Blaze.getData(e.target).board_value_id
       board_limit = Blaze.getData(e.target).limit
       board_label = Blaze.getData(e.target).label
 
-      options = {
-        "state": kanbanState.field_id
-        "board": board_id
-        "title": $(e.target).val()
-        "project_id": JD.activeJustdo()._id
-      }
-
       APP.modules.project_page.gridControl()?._grid_data?.addChild "/" + parent_task_id + "/",
-        project_id: options.project_id
-        title: options.title
+        project_id: JD.activeJustdo()._id
+        title: $(e.target).val()
+        "#{boards_field_id}": board_value_id
 
-      APP.justdo_kanban.addSubTask parent_task_id, options
-
-      kanbanStateId = kanbanState.field_id
       parentId = "parents." + parent_task_id
-      tasks = APP.collections.Tasks.find({"#{parentId}": {$exists: true}, "#{kanbanStateId}": "#{board_id}"}).fetch()
+      tasks = APP.collections.Tasks.find({"#{parentId}": {$exists: true}, "#{boards_field_id}": "#{board_value_id}"}).fetch()
 
       if board_limit > 0 and tasks.length > board_limit
         $kanban_board = $(e.currentTarget).parents(".kanban-board")
@@ -304,62 +326,31 @@ Template.project_pane_kanban.events
 
     return
 
-  "click .kanban-sort-by-date": (e, tmpl) ->
+  "click .kanban-sort-item": (e, tmpl) ->
     e.preventDefault()
-
     active_task_id = tmpl.kanbanActiveTask.get()._id
-    kanbanSortBy = tmpl.kanbanConfig.get().sortBy.option
-    if kanbanSortBy == "createdAt"
-      kanbanSortByReverse = tmpl.kanbanConfig.get().sortBy.reverse
-      if kanbanSortByReverse
-        APP.justdo_kanban.setSortBy(active_task_id, "createdAt", false)
-      else
-        APP.justdo_kanban.setSortBy(active_task_id, "createdAt", true)
+    kanbanSortBy = $(e.currentTarget).attr "sortBy"
+    kanbanSortByReverse = Object.values(tmpl.kanban.get().sort)[0]
+    if kanbanSortByReverse == -1
+      APP.justdo_kanban.updateKanban(active_task_id, "sort", {"#{kanbanSortBy}": 1})
     else
-      APP.justdo_kanban.setSortBy(active_task_id, "createdAt", false)
-    return
-
-  "click .kanban-sort-by-priority": (e, tmpl) ->
-    e.preventDefault()
-
-    active_task_id = tmpl.kanbanActiveTask.get()._id
-    kanbanSortBy = tmpl.kanbanConfig.get().sortBy.option
-    if kanbanSortBy == "priority"
-      kanbanSortByReverse = tmpl.kanbanConfig.get().sortBy.reverse
-      if kanbanSortByReverse
-        APP.justdo_kanban.setSortBy(active_task_id, "priority", false)
-      else
-        APP.justdo_kanban.setSortBy(active_task_id, "priority", true)
-    else
-      APP.justdo_kanban.setSortBy(active_task_id, "priority", false)
-    return
-
-  "click .kanban-sort-by-due-date": (e, tmpl) ->
-    e.preventDefault()
-
-    active_task_id = tmpl.kanbanActiveTask.get()._id
-    kanbanSortBy = tmpl.kanbanConfig.get().sortBy.option
-    if kanbanSortBy == "due_date"
-      kanbanSortByReverse = tmpl.kanbanConfig.get().sortBy.reverse
-      if kanbanSortByReverse
-        APP.justdo_kanban.setSortBy(active_task_id, "due_date", false)
-      else
-        APP.justdo_kanban.setSortBy(active_task_id, "due_date", true)
-    else
-      APP.justdo_kanban.setSortBy(active_task_id, "due_date", false)
+      APP.justdo_kanban.updateKanban(active_task_id, "sort", {"#{kanbanSortBy}": -1})
     return
 
   "click .kanban-board-hide": (e, tmpl) ->
     active_task_id = tmpl.kanbanActiveTask.get()._id
-    state_id = tmpl.kanbanState.get().field_id
-    board_id = Blaze.getData(e.target).option_id
-    APP.justdo_kanban.updateStateOption(active_task_id, state_id, board_id, "visible", false)
+    board_value_id = Blaze.getData(e.target).board_value_id
+    visible_boards = tmpl.kanban.get().visible_boards
+
+    visible_boards.forEach (boards, i) ->
+      if boards.board_value_id == board_value_id
+        visible_boards.splice(i, 1)
+
+    APP.justdo_kanban.updateKanban(active_task_id, "visible_boards", visible_boards)
     return
 
   "click .kanban-board-edit": (e, tmpl) ->
-    active_task_id = tmpl.kanbanActiveTask.get()._id
-    state_id = tmpl.kanbanState.get().field_id
-    tmpl.kanbanActiveBoardId.set Blaze.getData(e.target).option_id
+    tmpl.kanbanActiveBoardId.set Blaze.getData(e.target).board_value_id
     limit = Blaze.getData(e.target).limit
     if limit > 0
       $(".kanban-board-limit-input").val limit
@@ -368,12 +359,16 @@ Template.project_pane_kanban.events
   "click .kanban-limit-save": (e, tmpl) ->
     $kanban_limit_input = $(".kanban-board-limit-input")
     active_task_id = tmpl.kanbanActiveTask.get()._id
-    state_id = tmpl.kanbanState.get().field_id
     board_id = tmpl.kanbanActiveBoardId.get()
     limit_val = parseInt($kanban_limit_input.val())
+    visible_boards = tmpl.kanban.get().visible_boards
 
     if limit_val > 0
-      APP.justdo_kanban.updateStateOption(active_task_id, state_id, board_id, "limit", limit_val)
+      visible_boards.forEach (boards, i) ->
+        if boards.board_value_id == board_id
+          visible_boards[i].limit = limit_val
+
+      APP.justdo_kanban.updateKanban(active_task_id, "visible_boards", visible_boards)
       $("#kanban-board-settings").modal "hide"
     else
       $kanban_limit_input.addClass "kanban-shake"
@@ -384,16 +379,19 @@ Template.project_pane_kanban.events
 
   "click .kanban-board-add-item": (e, tmpl) ->
     active_task_id = tmpl.kanbanActiveTask.get()._id
-    state_id = tmpl.kanbanState.get().field_id
-    option_id = Blaze.getData(e.target).option_id
-    visibility = Blaze.getData(e.target).visible
+    board_id = Blaze.getData(e.target)
+    kanban = tmpl.kanban.get()
+    board_is_visible = $(e.target).hasClass "visible"
+    if kanban?
+      visible_boards = kanban.visible_boards
+      if board_is_visible
+        visible_boards.forEach (board, i) ->
+          if board.board_value_id == board_id
+            visible_boards.splice(i, 1)
+      else
+        visible_boards.push ({"board_value_id": board_id, "limit": 1000})
 
-    if visibility
-      new_value = false
-    else
-      new_value = true
-
-    APP.justdo_kanban.updateStateOption(active_task_id, state_id, option_id, "visible", new_value)
+      APP.justdo_kanban.updateKanban(active_task_id, "visible_boards", visible_boards)
     return
 
   "keyup .kanban-member-selector-search": (e, tmpl) ->
@@ -406,13 +404,12 @@ Template.project_pane_kanban.events
 
   "click .kanban-filter-member-item": (e, tmpl) ->
     e.preventDefault()
-
     user_id = Blaze.getData(e.target)
     active_task_id = tmpl.kanbanActiveTask.get()._id
-    APP.justdo_kanban.setMemberFilter(active_task_id, user_id)
+    APP.justdo_kanban.updateKanban(active_task_id, "query", {"users": user_id})
     return
 
   "click .kanban-clear-member-filter": (e, tmpl) ->
     active_task_id = tmpl.kanbanActiveTask.get()._id
-    APP.justdo_kanban.setMemberFilter(active_task_id, null)
+    APP.justdo_kanban.updateKanban(active_task_id, "query", {})
     return
