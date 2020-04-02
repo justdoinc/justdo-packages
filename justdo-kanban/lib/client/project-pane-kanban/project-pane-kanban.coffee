@@ -270,31 +270,33 @@ Template.project_pane_kanban.events
       board_value_id = Blaze.getData(e.target).board_value_id
       board_limit = Blaze.getData(e.target).limit
       board_label = Blaze.getData(e.target).label
+      task_title = $(e.target).val().trim()
 
-      APP.modules.project_page.gridControl()?._grid_data?.addChild "/" + parent_task_id + "/",
-        project_id: JD.activeJustdo()._id
-        title: $(e.target).val()
-        "#{boards_field_id}": board_value_id
+      if not (task_title == "")
+        APP.modules.project_page.gridControl()?._grid_data?.addChild "/" + parent_task_id + "/",
+          project_id: JD.activeJustdo()._id
+          title: task_title
+          "#{boards_field_id}": board_value_id
 
-      parentId = "parents." + parent_task_id
-      tasks = APP.collections.Tasks.find({"#{parentId}": {$exists: true}, "#{boards_field_id}": "#{board_value_id}"}).fetch()
+        parentId = "parents." + parent_task_id
+        tasks = APP.collections.Tasks.find({"#{parentId}": {$exists: true}, "#{boards_field_id}": "#{board_value_id}"}).fetch()
 
-      if board_limit > 0 and tasks.length > board_limit
-        $kanban_board = $(e.currentTarget).parents(".kanban-board")
-        $kanban_board.addClass "kanban-shake"
-        setTimeout ->
-          $kanban_board.removeClass "kanban-shake"
-        , 1500
+        if board_limit > 0 and tasks.length > board_limit
+          $kanban_board = $(e.currentTarget).parents(".kanban-board")
+          $kanban_board.addClass "kanban-shake"
+          setTimeout ->
+            $kanban_board.removeClass "kanban-shake"
+          , 1500
 
-        JustdoSnackbar.show
-          text: "'" + board_label + "' has a limit of " + board_limit + " Tasks"
-          duration: 4000
-          actionText: "Dismiss"
-          onActionClick: =>
-            JustdoSnackbar.close()
-            return
+          JustdoSnackbar.show
+            text: "'" + board_label + "' has a limit of " + board_limit + " Tasks"
+            duration: 4000
+            actionText: "Dismiss"
+            onActionClick: =>
+              JustdoSnackbar.close()
+              return
 
-      $(e.target).val ""
+        $(e.target).val ""
 
     if e.which == 27 # Escape
        $(e.target).blur().val ""
