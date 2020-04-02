@@ -44,12 +44,13 @@ Template.project_pane_kanban.onCreated ->
           helper: "clone"
           tolerance: "pointer"
           cancel: ".kanban-board-control, .kanban-task-control, .kanban-task-add"
-          stop: ( event, ui ) ->
+          update: ( event, ui ) ->
             active_task_id = instance.kanbanActiveTask.get()._id
             visible_boards = []
             $(".kanban-board").each ->
               visible_boards.push Blaze.getData($(this)[0])
 
+            APP.justdo_kanban.updateKanban(active_task_id, "visible_boards", [])
             APP.justdo_kanban.updateKanban(active_task_id, "visible_boards", visible_boards)
             return
 
