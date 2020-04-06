@@ -66,7 +66,13 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project-conf/project-conf.html", client);
   api.addFiles("lib/client/project-conf/project-conf.coffee", client);
 
+  api.addFiles("lib/client/gantt-grid-formatter/gantt-grid-formatter.sass", client);
   api.addFiles("lib/client/gantt-grid-formatter/gantt-grid-formatter.coffee", client);
+
+  api.addFiles("lib/client/gantt-controller/gantt-controller.sass", client);
+  api.addFiles("lib/client/gantt-controller/gantt-controller.html", client);
+  api.addFiles("lib/client/gantt-controller/gantt-controller.coffee", client);
+
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
