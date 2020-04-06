@@ -25,9 +25,11 @@ _.extend JustdoGridGantt.prototype,
             APP.modules.project_page.setupPseudoCustomField JustdoGridGantt.pseudo_field_id,
               label: JustdoGridGantt.pseudo_field_label
               field_type: JustdoGridGantt.pseudo_field_type
+              formatter: JustdoGridGantt.pseudo_field_formatter_id
               grid_visible_column: true
-              grid_editable_column: true
-              default_width: 200
+              grid_editable_column: false
+              grid_dependencies_fields: JustdoGridGantt.gantt_field_grid_dependencies_fields
+              default_width: 400
 
           return
 

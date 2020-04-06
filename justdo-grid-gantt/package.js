@@ -50,6 +50,8 @@ Package.onUse(function (api) {
 
   api.use("matb33:collection-hooks@0.8.4", client);
 
+  api.use("stem-capital:grid-control@0.1.0", client);
+
   api.use("reactive-var", client);
   api.use("tracker", client);
 
@@ -63,6 +65,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project-conf/project-conf.sass", client);
   api.addFiles("lib/client/project-conf/project-conf.html", client);
   api.addFiles("lib/client/project-conf/project-conf.coffee", client);
+
+  api.addFiles("lib/client/gantt-grid-formatter/gantt-grid-formatter.coffee", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
