@@ -41,13 +41,13 @@ _.extend JustdoKanban.prototype,
       "sort": {priority: 1}
       "query": {}
       "visible_boards": [
-        { "board_value_id": "pending", "limit": 1000 },
-        { "board_value_id": "in-progress", "limit": 1000 },
-        { "board_value_id": "done", "limit": 1000 },
-        { "board_value_id": "will-not-do", "limit": 1000 },
-        { "board_value_id": "on-hold", "limit": 1000 },
-        { "board_value_id": "duplicate", "limit": 1000 },
-        { "board_value_id": "nil", "limit": 1000 }
+        { "board_value_id": "pending", "limit": JustdoKanban.default_kanban_boards_limit },
+        { "board_value_id": "in-progress", "limit": JustdoKanban.default_kanban_boards_limit },
+        { "board_value_id": "done", "limit": JustdoKanban.default_kanban_boards_limit },
+        { "board_value_id": "will-not-do", "limit": JustdoKanban.default_kanban_boards_limit },
+        { "board_value_id": "on-hold", "limit": JustdoKanban.default_kanban_boards_limit },
+        { "board_value_id": "duplicate", "limit": JustdoKanban.default_kanban_boards_limit },
+        { "board_value_id": "nil", "limit": JustdoKanban.default_kanban_boards_limit }
       ]
     }
 

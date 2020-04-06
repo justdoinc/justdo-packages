@@ -250,7 +250,7 @@ Template.project_pane_kanban.events
 
     for value in Object.keys(board_values)
       if value != ""
-        visible_boards.push {"board_value_id": value, "limit": 1000}
+        visible_boards.push {board_value_id: value, limit: JustdoKanban.default_kanban_boards_limit}
 
     APP.justdo_kanban.updateKanban(active_task_id, "boards_field_id", field_id)
     APP.justdo_kanban.updateKanban(active_task_id, "visible_boards", visible_boards)
@@ -392,7 +392,7 @@ Template.project_pane_kanban.events
           if board.board_value_id == board_id
             visible_boards.splice(i, 1)
       else
-        visible_boards.push ({"board_value_id": board_id, "limit": 1000})
+        visible_boards.push ({board_value_id: board_id, limit: JustdoKanban.default_kanban_boards_limit})
 
       APP.justdo_kanban.updateKanban(active_task_id, "visible_boards", visible_boards)
     return
