@@ -124,6 +124,7 @@ GridControl = (options, container, operations_container) ->
   @_states_classes_computations = null
 
   @_view_changes_dependency = new Tracker.Dependency()
+  @on "grid-view-change", => @_view_changes_dependency.changed()
 
   @_columns_data = {}
 
@@ -1021,7 +1022,6 @@ _.extend GridControl.prototype,
       if update_type # true means dom rebuilt
         @emit "columns-headers-dom-rebuilt", new_view
 
-      @_view_changes_dependency.changed()
       @emit "grid-view-change", new_view
 
   getView: ->
