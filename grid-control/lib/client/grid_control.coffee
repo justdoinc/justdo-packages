@@ -314,9 +314,21 @@ _.extend GridControl.prototype,
           # Invalidate field column if in present grid
           @_grid.updateCell(row, field_id_to_col_id[field])
 
-        if field_def?.grid_dependent_fields?
+        extended_dependent_fields = []
+        for extended_schema_field_id, extended_schema_field_def of extended_schema
+          if extended_schema_field_def.custom_field == true
+            # For the builtin fields we automatically build the grid_dependent_fields
+            # based on grid_dependencies_fields in: @_loadSchema() so no need to redo
+            # here.
+            if not extended_schema_field_def.grid_dependencies_fields? or not _.isArray(extended_schema_field_def.grid_dependencies_fields)
+              continue
+
+            if field in extended_schema_field_def.grid_dependencies_fields
+              extended_dependent_fields.push extended_schema_field_id
+
+        if field_def?.grid_dependent_fields? or not _.isEmpty extended_dependent_fields
           # Invalidate field dependent fields columns if exist and present in grid
-          for dependent_field in field_def.grid_dependent_fields
+          for dependent_field in _.union(field_def.grid_dependent_fields, extended_dependent_fields)
             if field_id_to_col_id[dependent_field]?
               @_grid.updateCell(row, field_id_to_col_id[dependent_field])          
 
