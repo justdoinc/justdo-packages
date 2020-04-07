@@ -82,7 +82,44 @@ _.extend TaskChannelServer.prototype,
 
     return result_array
 
-  loadChannel: -> return
+  loadChannel: ->
+    @on "message-sent", =>
+      task_doc = @getIdentifierTaskDoc()
+
+      query =
+        _id: task_doc._id
+
+      update =
+        $set: 
+          "#{JustdoChat.tasks_chat_channel_last_message_from_field_id}": @performing_user
+        $currentDate:
+          "#{JustdoChat.tasks_chat_channel_last_message_date_field_id}": true
+
+      APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(update)
+
+      @justdo_chat.tasks_collection.rawCollection().update query, update, Meteor.bindEnvironment (err) ->    
+        if err?
+          @logger.error("Failed to log a message sent, error:")
+          console.error err
+
+          return
+
+        return
+
+      return
+
+    @on "channel-unread-state-changed", (unread) =>
+      task_doc = @getIdentifierTaskDoc()
+
+      private_fields_mutator =
+        $currentDate:
+          "#{JustdoChat.tasks_chat_channel_last_read_field_id}": true
+
+      APP.projects._grid_data_com._upsertItemPrivateData(task_doc.project_id, task_doc._id, private_fields_mutator, @performing_user)
+
+      return
+
+    return
 
   getChannelAugmentedFields: ->
     task_doc = @getIdentifierTaskDoc()

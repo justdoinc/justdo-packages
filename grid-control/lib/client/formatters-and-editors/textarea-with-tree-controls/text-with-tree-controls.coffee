@@ -228,6 +228,19 @@ GridControl.installFormatter "textWithTreeControls",
           <i class="fa fa-fw fa-align-left task-description slick-prevent-edit" title="Task description" aria-hidden="true"></i>
       """
 
+    if (last_message_date = doc[JustdoChat.tasks_chat_channel_last_message_date_field_id])?
+      # Mark as unread if last message isn't from me, and I never read the messages in this channel,
+      # or, didn't read yet.
+      if doc[JustdoChat.tasks_chat_channel_last_message_from_field_id] != Meteor.userId() and
+         (not (last_read = doc[JustdoChat.tasks_chat_channel_last_read_field_id])? or last_message_date > last_read)
+        chat_classes = "fa-comments chat-messages-new"
+      else
+        chat_classes = "fa-comments-o"
+
+      tree_control += """
+          <i class="fa fa-fw chat-messages #{chat_classes} slick-prevent-edit" title="Chat messages" aria-hidden="true"></i>
+      """
+
     if (files = doc.files)?
       if files.length > 0
         tree_control += """

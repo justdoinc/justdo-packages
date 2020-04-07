@@ -271,10 +271,61 @@ JustdoChat.schemas.MessagesSchema = new SimpleSchema
   #     else
   #       @unset()
 
+#
+# TasksSchema
+#
+JustdoChat.schemas.TasksSchema = new SimpleSchema
+  "#{JustdoChat.tasks_chat_channel_last_message_from_field_id}":
+    label: "Last message from"
+
+    optional: true
+
+    type: String
+
+    autoValue: ->
+      # Don't allow the client to edit this field
+      if not @isFromTrustedCode
+        return @unset()
+
+      return
+
+    grid_dependent_fields: ["title"]
+
+  "#{JustdoChat.tasks_chat_channel_last_message_date_field_id}":
+    label: "Last message date"
+
+    optional: true
+
+    type: Date
+
+    autoValue: ->
+      # Don't allow the client to edit this field
+      if not @isFromTrustedCode
+        return @unset()
+
+      return
+
+    grid_dependent_fields: ["title"]
+
+  "#{JustdoChat.tasks_chat_channel_last_read_field_id}":
+    label: "Last read date"
+
+    type: Date
+
+    optional: true
+
+    grid_dependent_fields: ["title"]
+
 _.extend JustdoChat.prototype,
   _attachCollectionsSchemas: ->
+    @_attachTasksCollectionSchema()
     @_attachChannelsCollectionSchema()
     @_attachMessagesCollectionSchema()
+
+  _attachTasksCollectionSchema: ->
+    @tasks_collection.attachSchema JustdoChat.schemas.TasksSchema
+
+    return
 
   _attachChannelsCollectionSchema: ->
     @channels_collection.attachSchema JustdoChat.schemas.ChannelsSchema

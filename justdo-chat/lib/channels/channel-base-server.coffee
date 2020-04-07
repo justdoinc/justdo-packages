@@ -559,6 +559,8 @@ _.extend ChannelBaseServer.prototype,
         console.error(err)
       return
 
+    @emit "channel-unread-state-changed", unread
+
     return
 
   _sendMessageMessageObjectSchemaForTxtType: new SimpleSchema
@@ -722,6 +724,8 @@ _.extend ChannelBaseServer.prototype,
         update:
           $set:
             subscribers: new_subscribers_array
+
+    @emit "message-sent"
 
     return
 

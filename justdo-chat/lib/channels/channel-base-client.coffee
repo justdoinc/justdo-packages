@@ -211,18 +211,6 @@ _.extend ChannelBaseClient.prototype,
     return
 
   setChannelUnreadState: (new_state, cb) ->
-    if not (subscriber_doc = @getChannelSubscriberDoc(Meteor.userId()))?
-      # User isn't subscribed to this channel, can't set state.
-
-      return
-
-    current_state = subscriber_doc.unread
-
-    if new_state == current_state
-      # Nothing to do
-
-      return
-
     @justdo_chat.setChannelUnreadState @channel_type, @getChannelIdentifier(), new_state, =>
       JustdoHelpers.callCb cb
 

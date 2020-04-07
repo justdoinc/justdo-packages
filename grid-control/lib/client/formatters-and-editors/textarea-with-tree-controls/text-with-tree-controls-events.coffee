@@ -125,6 +125,29 @@ _.extend PACK.Formatters.textWithTreeControls,
         $(".task-pane-content").scrollTop(0)
     }
     {
+      args: ['click', '.chat-messages']
+      handler: (e) ->
+        openTaskPaneAndSetTab("item-details")
+
+        # Update task pane
+        Tracker.flush()
+
+        $(".task-pane-content").scrollTop(0)
+
+        return
+    }
+    {
+      args: ['click', '.chat-messages-new']
+      handler: (e) ->
+        event_item = this.getEventItem(e)
+
+        # Set the channel unread state to false, for users that aren't subscribe to the channel notifications, this
+        # will only set their last read date to now (and will remove the new-messages-mark).
+        APP.justdo_chat.generateClientChannelObject("task", {task_id: event_item._id, tasks_collection: APP.collections.Tasks})?.setChannelUnreadState(false)
+
+        return
+    }
+    {
       args: ['click', '.task-is-project']
       handler: (e) ->
         openTaskPaneAndSetTab("justdo-delivery-planner")
