@@ -32,9 +32,11 @@ getAvailableFieldTypes = ->
 
   supported_fields_ids = base_supported_fields_ids.slice()
   all_fields = gc.getSchemaExtendedWithCustomFields()
+
   for field_id, field of all_fields
-    # allow also to add to custom fields that are not of 'option' type
-    if field.custom_field and (field.grid_column_formatter == "defaultFormatter" or field.grid_column_formatter == "unicodeDateFormatter")
+    if field.custom_field and (field.grid_column_formatter == "defaultFormatter" or
+        field.grid_column_formatter == "unicodeDateFormatter" or field.grid_column_formatter == "keyValueFormatter"
+    )
       supported_fields_ids.push field_id
 
   supported_fields_definitions_object =
@@ -82,14 +84,28 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
     task.project_id = project_id
 
     for column_num in [0..(number_of_columns - 1)]
-      debugger
+
       cell_val = row[column_num].trim()
       field_def = selected_columns_definitions[column_num]
       field_id = field_def._id
 
       if cell_val.length > 0 and field_id != "clipboard-import-no-import"
         if field_def.type is String
-          task[field_id] = cell_val
+          #dealing with options fields
+          if field_def.grid_column_formatter == "keyValueFormatter"
+            val = null
+            for key, defs of field_def.grid_values
+              if defs.txt == cell_val
+                val = key
+                break
+            if val == null
+              JustdoSnackbar.show
+                text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} - not a valid option. Import aborted."
+                duration: 15000
+              return
+            task[field_id] = val
+          else
+            task[field_id] = cell_val
 
         if field_def.type is Number
           # TODO: Look for: '_available_field_types' under justdo-internal-packages/grid-control-custom-fields/lib/both/grid-control-custom-fields/grid-control-custom-fields.coffee
@@ -213,7 +229,7 @@ Template.justdo_clipboard_import_activation_icon.events
             selected_columns_definitions = getSelectedColumnsDefinitions()
 
             # Check that all columns are selected and return false if not the case
-            if selected_columns_definitions.length < (number_of_columns - 1)
+            if selected_columns_definitions.length < (number_of_columns)
               JustdoSnackbar.show
                 text: "Please select all columns fields."
               return false
