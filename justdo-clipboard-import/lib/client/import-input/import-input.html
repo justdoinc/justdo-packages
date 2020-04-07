@@ -10,9 +10,11 @@
                   Select
                 </button>
                 <div class="dropdown-menu p-1 shadow-lg border-0 dropdown-field-selector" aria-labelledby="justdo-clipboard-import-input-{{this}}">
+
                   {{#each getAvailableFieldTypesArray}}
                     <li><a href="#" class="dropdown-item px-1 small" field-id="{{_id}}">{{label}}</a></li>
                   {{/each}}
+                  <li><a href="#" class="dropdown-item px-1 small" field-id="clipboard-import-no-import">-- skip column --</a></li>
                 </div>
               </div>
             </th>

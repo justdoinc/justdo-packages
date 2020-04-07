@@ -82,11 +82,12 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
     task.project_id = project_id
 
     for column_num in [0..(number_of_columns - 1)]
+      debugger
       cell_val = row[column_num].trim()
       field_def = selected_columns_definitions[column_num]
       field_id = field_def._id
 
-      if cell_val.length > 0
+      if cell_val.length > 0 and field_id != "clipboard-import-no-import"
         if field_def.type is String
           task[field_id] = cell_val
 
