@@ -35,9 +35,9 @@ bindTargetToPaste = (tpl)->
             longest_row_length = row_length
 
       #limit max number of rows to import
-      if rows.length > 50
+      if rows.length > 100
         JustdoSnackbar.show
-          text: "Too many rows, you may copy up to 50 rows."
+          text: "Too many rows, you may copy up to 100 rows."
         return
 
       #trim all rows according to the longest row. This handles cases where the entire row is copied to
