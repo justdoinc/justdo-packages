@@ -46,10 +46,6 @@ Template.meetings_meetings_menu.helpers
       }
     return meetings
 
-  meetingsExist: ->
-    meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find({"project_id": @project_id}).fetch()
-    return meetings?.length
-
 
 Template.meetings_meetings_menu.events
   "click .meetings-menu-new": (e, tmpl) ->
