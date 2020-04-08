@@ -95,7 +95,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
           if field_def.grid_column_formatter == "keyValueFormatter"
             val = null
             for key, defs of field_def.grid_values
-              if defs.txt == cell_val
+              if defs?.txt?.trim()?.toLowerCase() == cell_val.trim().toLowerCase()
                 val = key
                 break
             if val == null
