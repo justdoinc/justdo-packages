@@ -65,7 +65,13 @@ Template.meetings_meetings_menu.events
     , (err, meeting_id) ->
       if err?
         console.log err
+        JustdoSnackbar.show
+          text: "Internal Server Error. Please try again."
+        return
+
       APP.meetings_manager_plugin.renderMeetingDialog(meeting_id)
+      return
+
 
   "click .meetings-menu-item": (e, tmpl) ->
     meeting_id = @_id
