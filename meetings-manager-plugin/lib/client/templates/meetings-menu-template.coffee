@@ -52,7 +52,7 @@ Template.meetings_meetings_menu.helpers
 
 
 Template.meetings_meetings_menu.events
-  "submit .meetings-menu-new": (e, tmpl) ->
+  "click .meetings-menu-new": (e, tmpl) ->
     e.preventDefault()
 
     name = 'Untitled Meeting'
@@ -71,9 +71,10 @@ Template.meetings_meetings_menu.events
 
       APP.meetings_manager_plugin.renderMeetingDialog(meeting_id)
       return
+    return
 
 
   "click .meetings-menu-item": (e, tmpl) ->
     meeting_id = @_id
-
     APP.meetings_manager_plugin.renderMeetingDialog(meeting_id)
+    return
