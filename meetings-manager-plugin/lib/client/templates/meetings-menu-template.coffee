@@ -56,7 +56,7 @@ Template.meetings_meetings_menu.events
     e.preventDefault()
 
     name = 'Untitled Meeting'
-    project_id = tmpl.data.project_id
+    project_id = JD.activeJustdo({_id: 1})._id
 
     APP.meetings_manager_plugin.meetings_manager.createMeeting
       title: name
