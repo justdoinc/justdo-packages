@@ -327,7 +327,8 @@ GridControl.installFormatter formatter_name,
     value = formatter_obj.getFieldValue(friendly_args)
 
     return value
-    
+
+  print_formatter_produce_html: true
 
 #
 # EDITOR
