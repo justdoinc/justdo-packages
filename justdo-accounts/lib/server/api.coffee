@@ -401,13 +401,15 @@ _.extend JustdoAccounts.prototype,
 
     metadata = result.data
 
-    url = "https://#{metadata.container}.s3.amazonaws.com/#{metadata.path}"
+    pathEncodeURIComponent = (path) -> _.map(path.split("/"), (part) -> encodeURIComponent(part)).join("/")
+
+    url = "https://#{metadata.container}.s3.amazonaws.com/#{pathEncodeURIComponent(metadata.path)}"
 
     #
     # Make a copy with proper cache header
     #
     copy_params =
-      CopySource: "#{metadata.container}/#{metadata.key}"
+      CopySource: "#{metadata.container}/#{pathEncodeURIComponent(metadata.key)}"
       # Target
       ACL: "public-read"
       Bucket: metadata.container
@@ -422,6 +424,7 @@ _.extend JustdoAccounts.prototype,
     APP.aws.S3.copyObject copy_params, (err, data) =>
       if err?
         @logger.error "Failed to set cache on file"
+        console.error err
 
       return
 
