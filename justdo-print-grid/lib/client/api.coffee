@@ -114,7 +114,7 @@ _.extend JustdoPrintGrid.prototype,
 
               cell.push
                 "class": "text #{field}"
-                "value": JustdoHelpers.nl2br(formatWithPrintFormatter(item_obj._id, field, val, item_obj, path) or "")
+                "value": formatWithPrintFormatter(item_obj._id, field, val, item_obj, path) or ""
                 "colspan": 1
           else
             cell.push
@@ -542,7 +542,7 @@ _.extend JustdoPrintGrid.prototype,
       $(".print-modal-buttons").show()
       return
 
-    formatWithPrintFormatter = (item_id, field, val, item_doc, path, _skip_xss_guard=false) ->
+    formatWithPrintFormatter = (item_id, field, val, item_doc, path, format_for_csv=false) ->
       if not (field_schema_def = gc.getSchemaExtendedWithCustomFields()[field])?
         module.logger.error "Failed to find print formatter to field #{field}"
 
@@ -554,10 +554,32 @@ _.extend JustdoPrintGrid.prototype,
 
         return val
 
-      if not _skip_xss_guard
-        return JustdoHelpers.xssGuard(gc._print_formatters[formatter_id](item_doc, field, path))
+      printFormatter = gc._print_formatters[formatter_id]
+      if not format_for_csv
+        if printFormatter.html_output is true
+          xssGuard_options =
+            allow_html_parsing: true
+            enclosing_char: ""
+        else
+          xssGuard_options = {}
+
+        pre_nl2br_content = JustdoHelpers.xssGuard(printFormatter(item_doc, field, path), xssGuard_options)
+
+        if printFormatter.html_output is true
+          # For html content, let the formatter developer set <br>s where appropriate.
+          return pre_nl2br_content
+        else
+          return JustdoHelpers.nl2br(pre_nl2br_content)
+        
       else
-        return gc._print_formatters[formatter_id](item_doc, field, path)
+        formatter_content = printFormatter(item_doc, field, path)
+        if printFormatter.html_output is true
+          # Html content, which in the context of a csv file, is meaningless.
+          #
+          # In such cases, we strip away all the html tags from the formatter output
+          return formatter_content.replace(/(<([^>]+)>)/ig, "")
+        else
+          return formatter_content
 
     #
     # Main
