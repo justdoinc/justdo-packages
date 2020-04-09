@@ -38,7 +38,7 @@
     <div class="projects-wrapper h-100">
       <ul class="list-group list-group-flush">
         {{#each projects}}
-          <a href="/p/{{_id}}" class="list-group-item list-group-item-action project-item p-2">{{title}}</a>
+          <a href="/p/{{_id}}" class="list-group-item list-group-item-action project-item p-2">{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}</a>
         {{/each}}
       </ul>
     </div>
