@@ -134,6 +134,10 @@ _.extend GridControl.prototype,
     #            Read below about the @_print_formatters[formatter_name]
     #            we generate based on slick_grid to learn more.
     #
+    #     print_formatter_produce_html: This flag indicates that the print formatter outputs html.
+    #                                   This will add to the print function object the .html_output = true property
+    #                                   which will affect printing/producing csv from the output.
+    #
     #     Any other properties set here will be accessible from the generated
     #     @_formatters[formatter_name] and @_print_formatters[formatter_name]
     #     by calling inside them: @getFriendlyArgs() -> the returned object
@@ -231,6 +235,9 @@ _.extend GridControl.prototype,
         print_formatters_extended_context_properties
 
       return print_formatter.apply(extended_grid_control_obj, args)
+
+    if (html_output = formatter_definition.print_formatter_produce_html) is true
+      @_print_formatters[formatter_name].html_output = true
 
     if formatter_definition.is_slick_grid_tree_control_formatter
       @_tree_control_fomatters.push formatter_name
