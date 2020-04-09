@@ -1,5 +1,6 @@
 Template.meetings_meetings_menu.onCreated ->
-  APP.meetings_manager_plugin.meetings_manager.subscribeToMeetingsList @data.project_id
+  @autorun =>
+    APP.meetings_manager_plugin.meetings_manager.subscribeToMeetingsList JD.activeJustdo({_id: 1})._id
 
 
 Template.meetings_meetings_menu.onRendered ->
@@ -37,9 +38,7 @@ Template.meetings_meetings_menu.onRendered ->
 
 Template.meetings_meetings_menu.helpers
   meetings: (status) ->
-    # APP.meetings_manager_plugin.meetings_manager.meetings.find
-    #   project_id: @project_id
-    meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find({"project_id":@project_id, "status":status}).fetch()
+    meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find({"project_id": JD.activeJustdo({_id: 1})._id, "status":status}).fetch()
     meetings = {
       "exist": meetings.length,
       "meetings": meetings
