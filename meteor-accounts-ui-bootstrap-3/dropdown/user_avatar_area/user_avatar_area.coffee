@@ -12,7 +12,7 @@ activeUploadProcess = ->
   return $(".dropdown-avatar").hasClass("loading")
 
 Template._loginDropdownAvatarArea.events
-  "click .dropdown-user-avatar": ->
+  "click .upload-new-profile-pic": ->
     if not APP.accounts.isAvatarUploadEnabled()
       return
 
