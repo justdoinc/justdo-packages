@@ -2,7 +2,11 @@
   {{#if rows}}{{!-- Only if there are rows to present print the following--}}
     <div class="justdo-clipboard-import-table-container">
       <table class="justdo-clipboard-import-table table table-sm">
+
         <tr>
+          <td class="bg-light">
+            Skip
+          </td>
           {{#each numberOfColumns}}
             <th class="bg-light">
               <div class="dropdown justdo-clipboard-import-input-selector">
@@ -20,7 +24,10 @@
           {{/each}}
         </tr>
         {{#each rows}}
-          <tr>
+          <tr class="{{skipRow @index}}">
+            <td class="first-column">
+              <input type="checkbox" class="skip-row-checkbox" row-index="{{@index}}">
+            </td>
             {{#each this}}
               <td>{{nl2br this}}</td>
             {{/each}}

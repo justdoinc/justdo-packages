@@ -58,7 +58,8 @@ bindTargetToPaste = (tpl)->
 
 Template.justdo_clipboard_import_input.onCreated ->
   self = @
-  self.showIntro = new ReactiveVar false
+
+  @showIntro = new ReactiveVar false
 
   @getAvailableFieldTypes = @data.getAvailableFieldTypes
 
@@ -107,6 +108,14 @@ Template.justdo_clipboard_import_input.helpers
   showIntro: ->
     return Template.instance().showIntro.get()
 
+  skipRow: (index)->
+
+    rows_to_skip = Template.instance().data.rows_to_skip_Set.get()
+    console.log index, rows_to_skip
+    if rows_to_skip.has "#{index}"
+      return "skip-row"
+    return ""
+
 Template.justdo_clipboard_import_input.events
   "keyup .justdo-clipboard-import-paste-target": (e, tpl)->
     $(".justdo-clipboard-import-paste-target").val("")
@@ -138,4 +147,13 @@ Template.justdo_clipboard_import_input.events
     e.preventDefault()
     Template.instance().showIntro.set false
 
+    return
+
+  "change .skip-row-checkbox": (e, tpl) ->
+    rows_to_skip = Template.instance().data.rows_to_skip_Set.get()
+    if e.target.checked
+      rows_to_skip.add e.target.getAttribute("row-index")
+    else
+      rows_to_skip.delete e.target.getAttribute("row-index")
+    Template.instance().data.rows_to_skip_Set.set rows_to_skip
     return

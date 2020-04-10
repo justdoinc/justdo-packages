@@ -20,6 +20,7 @@ isDateFieldDef = (field_def) ->
   return field_def.grid_column_formatter == "unicodeDateFormatter"
 
 getAvailableFieldTypes = ->
+  ###
   # Reactive resource
   #
   # Returns an array whose
@@ -28,6 +29,7 @@ getAvailableFieldTypes = ->
   #  supported_fields_ids available in the current grid.
   #  * Second item is an array of schema definitions + _id field with the
   #  field id. Ordered according to supported_fields_ids order.
+  ###
   gc = APP.modules.project_page.mainGridControl()
 
   supported_fields_ids = base_supported_fields_ids.slice()
@@ -72,6 +74,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
   project_id = JD.activeJustdo()._id
   line_number = 0
   tasks = []
+  row_index = 0
   for row in cp_data
     task = {}
     line_number += 1
@@ -82,64 +85,63 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
       return
 
     task.project_id = project_id
+    if not modal_data.rows_to_skip_Set.get().has("#{row_index}")
+      for column_num in [0..(number_of_columns - 1)]
+        cell_val = row[column_num].trim()
+        field_def = selected_columns_definitions[column_num]
+        field_id = field_def._id
 
-    for column_num in [0..(number_of_columns - 1)]
+        if cell_val.length > 0 and field_id != "clipboard-import-no-import"
+          if field_def.type is String
+            #dealing with options fields
+            if field_def.grid_column_formatter == "keyValueFormatter"
+              val = null
+              for key, defs of field_def.grid_values
+                if defs?.txt?.trim()?.toLowerCase() == cell_val.trim().toLowerCase()
+                  val = key
+                  break
+              if val == null
+                JustdoSnackbar.show
+                  text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} - not a valid option. Import aborted."
+                  duration: 15000
+                return
+              task[field_id] = val
+            else
+              task[field_id] = cell_val
 
-      cell_val = row[column_num].trim()
-      field_def = selected_columns_definitions[column_num]
-      field_id = field_def._id
+          if field_def.type is Number
+            # TODO: Look for: '_available_field_types' under justdo-internal-packages/grid-control-custom-fields/lib/both/grid-control-custom-fields/grid-control-custom-fields.coffee
+            # in the future, the information on whether we need to use parseFloat or parseInt() should be taken from the relevant definition.
+            cell_val = parseFloat(cell_val.trim(), 10)
 
-      if cell_val.length > 0 and field_id != "clipboard-import-no-import"
-        if field_def.type is String
-          #dealing with options fields
-          if field_def.grid_column_formatter == "keyValueFormatter"
-            val = null
-            for key, defs of field_def.grid_values
-              if defs?.txt?.trim()?.toLowerCase() == cell_val.trim().toLowerCase()
-                val = key
-                break
-            if val == null
+            # Check valid range
+            out_of_range = false
+            if field_def.min?
+              if cell_val < field_def.min
+                out_of_range = true
+
+            if field_def.max?
+              if cell_val > field_def.max
+                out_of_range = true
+
+            if out_of_range
               JustdoSnackbar.show
-                text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} - not a valid option. Import aborted."
-                duration: 15000
+                text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} (must be between #{field_def.min} and #{field_def.max}). Import aborted."
+
               return
-            task[field_id] = val
-          else
+
             task[field_id] = cell_val
 
-        if field_def.type is Number
-          # TODO: Look for: '_available_field_types' under justdo-internal-packages/grid-control-custom-fields/lib/both/grid-control-custom-fields/grid-control-custom-fields.coffee
-          # in the future, the information on whether we need to use parseFloat or parseInt() should be taken from the relevant definition.
-          cell_val = parseFloat(cell_val.trim(), 10)
-
-          # Check valid range
-          out_of_range = false
-          if field_def.min?
-            if cell_val < field_def.min
-              out_of_range = true
-
-          if field_def.max?
-            if cell_val > field_def.max
-              out_of_range = true
-
-          if out_of_range
-            JustdoSnackbar.show
-              text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} (must be between #{field_def.min} and #{field_def.max}). Import aborted."
-
-            return
-
-          task[field_id] = cell_val
-
-        # If we have a date field, check that the date is formatted properly, and transform to internal format
-        if isDateFieldDef(field_def)
-          moment_date = moment.utc cell_val, dates_format
-          if not moment_date.isValid()
-            JustdoSnackbar.show
-              text: "Invalid date format in line #{line_number}. Import aborted."
-            return
-          task[field_id] = moment_date.format("YYYY-MM-DD")
-
-    tasks.push task
+          # If we have a date field, check that the date is formatted properly, and transform to internal format
+          if isDateFieldDef(field_def)
+            moment_date = moment.utc cell_val, dates_format
+            if not moment_date.isValid()
+              JustdoSnackbar.show
+                text: "Invalid date format in line #{line_number}. Import aborted."
+              return
+            task[field_id] = moment_date.format("YYYY-MM-DD")
+      tasks.push task
+    row_index += 1
 
   gc = APP.modules.project_page.mainGridControl()
   gc._grid_data.bulkAddChild "/" + modal_data.parent_task_id + "/", tasks, (err, results) ->
@@ -184,6 +186,7 @@ Template.justdo_clipboard_import_activation_icon.events
       dialog_state: new ReactiveVar ""
       clipboard_data: new ReactiveVar []
       parent_task_id: JD.activeItem()._id
+      rows_to_skip_Set: new ReactiveVar(new Set())
       getAvailableFieldTypes: getAvailableFieldTypes
 
     message_template =
@@ -207,6 +210,7 @@ Template.justdo_clipboard_import_activation_icon.events
           callback: =>
             modal_data.dialog_state.set "wait_for_paste"
             modal_data.clipboard_data.set []
+            modal_data.rows_to_skip_Set.set(new Set())
             $(".justdo-clipboard-import-main-button").html("Cancel")
 
             Meteor.defer ->
