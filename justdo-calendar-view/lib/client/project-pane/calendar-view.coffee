@@ -310,10 +310,6 @@ Template.justdo_calendar_project_pane.onCreated ->
   ,
     1000 * 60
 
-
-
-
-
   @all_other_users = new ReactiveVar([])
   @view_start_date = new ReactiveVar
   @view_end_date = new ReactiveVar
@@ -494,6 +490,7 @@ Template.justdo_calendar_project_pane.onCreated ->
 
     return
 
+  # Handle dates to display
   @autorun =>
     dates = []
     d = moment(new Date(Template.instance().view_start_date.get()))
@@ -979,12 +976,34 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
               dates_workload[date].total_hours = 0
             dates_workload[date].total_hours += flatHoursPerDay(row)
 
-
       self.days_matrix.set(days_matrix)
       self.dates_workload.set(dates_workload)
       Tracker.afterFlush ->
         setDragAndDrop()
-      return
+      return # end of tasks.forEach
+
+    # MEETINGS part
+    # add meetings to the days matrix only if the plugin is there and only for the current user
+    if APP.meetings_manager_plugin?.meetings_manager?.meetings? and data.user_id == Meteor.userId()
+      query =
+        $and: [
+          date:
+            $gte: new Date(moment(first_date_to_display))
+        ,
+          date:
+            $lte: new Date(moment(last_date_to_display))
+        ]
+      APP.meetings_manager_plugin.meetings_manager.meetings.find(query).forEach (meeting) ->
+        row_index = 0
+        day_index = data.dates_to_display.indexOf(moment(meeting.date).format("YYYY-MM-DD"))
+        while true
+          if not days_matrix[day_index][row_index]
+            days_matrix[day_index][row_index] =
+              meeting: meeting
+              span: 1
+            break
+          row_index++
+        return
 
     # Set drag and drop after user info has been expanded
     @autorun =>
@@ -1116,6 +1135,17 @@ Template.justdo_calendar_project_pane_user_view.helpers
         return info.task._id
     return ""
 
+  isMeeting: ->
+    col_num = @
+    row_num = Template.parentData()
+    matrix = Template.instance().days_matrix.get()
+
+    if (info=matrix[col_num]?[row_num])
+      if info.meeting?
+        return true
+    return false
+
+
   startsBeforeView: ->
     return @starts_before_view and @type == 'R'
 
@@ -1227,22 +1257,26 @@ Template.justdo_calendar_project_pane_user_view.helpers
     return ret
 
 Template.justdo_calendar_project_pane_user_view.events
-  "click .calendar_task_cell": (e, tpl)->
+  "click .calendar_task_cell": (e, tpl) ->
     if (task_id = $(e.target).closest(".calendar_task_cell").attr("task_id"))?
       gcm = APP.modules.project_page.getCurrentGcm()
       gcm.setPath(["main", task_id], {collection_item_id_mode: true})
       return
     return
+  "click .calendar_meeting": (e, tpl) ->
+    if APP.meetings_manager_plugin?
+      APP.meetings_manager_plugin.renderMeetingDialog(@meeting._id)
+    return
 
-  "click .expand_user": (e, tpl)->
+  "click .expand_user": (e, tpl) ->
     tpl.collapsed_view.set(false)
     return
 
-  "click .collapse_user": (e, tpl)->
+  "click .collapse_user": (e, tpl) ->
     tpl.collapsed_view.set(true)
     return
 
-  "click .clock": (e, tpl)->
+  "click .clock": (e, tpl) ->
     if (ra = APP.justdo_resources_availability)
       ra.displayConfigDialog JD.activeJustdo()._id, tpl.data.user_id
     return
@@ -1270,10 +1304,10 @@ Template.justdo_calendar_project_pane_user_view.events
     return
   ###
 
-  "click .calendar_view_scroll_left_cell" : (e, tpl)->
+  "click .calendar_view_scroll_left_cell" : (e, tpl) ->
     onClickScrollLeft()
     return
 
-  "click .calendar_view_scroll_right_cell" : (e, tpl)->
+  "click .calendar_view_scroll_right_cell" : (e, tpl) ->
     onClickScrollRight()
     return

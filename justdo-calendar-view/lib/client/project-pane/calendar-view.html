@@ -172,14 +172,29 @@
                       <!-- ({{task.state}}) -->
                       {{#if endsAfterView}}
                         <div class="calendar_task_endsAfterView {{fontSizeClass}}">
-                          <svg class="calendar_view_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"/></svg>
+                          <svg class="calendar_view_icon">
+                            <use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"/></svg>
                         </div>
                       {{/if}}
                     </div>
                   </td>
                 {{/with}}
               {{else}}
-                <td class="calendar_table_cell {{markDaysOff}}" date={{columnDate}}></td>
+                {{#if isMeeting}}
+                  {{#with cellData}}
+                    <td>
+                      <div class="calendar_task_cell calendar_meeting">
+                        <div class="calendar_meeting_title {{fontSizeClass}}" title="{{this.meeting.title}}">
+                          <svg class="jd-icon calendar-meeting-icon-size">
+                            <use xlink:href="/layout/icons-feather-sprite.svg#jd-meetings">
+                          </use>
+                          </svg>{{this.meeting.title}}</div>
+                      </div>
+                    </td>
+                  {{/with}}
+                {{else}}
+                  <td class="calendar_table_cell {{markDaysOff}}" date={{columnDate}}></td>
+                {{/if}}
               {{/if}}
           {{/unless}}
         {{/each}}

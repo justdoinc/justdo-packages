@@ -1,38 +1,28 @@
 _.extend MeetingsManager.prototype,
   createMeeting: (fields, cb) ->
-
     Meteor.call "meetings_createMeeting", fields, cb
 
   addUsersToMeeting: (meeting_id, user_ids, cb) ->
-
     Meteor.call "meetings_addUsersToMeeting", meeting_id, user_ids, cb
 
   removeUsersFromMeeting: (meeting_id, user_ids, cb) ->
-
     Meteor.call "meetings_removeUsersFromMeeting", meeting_id, user_ids, cb
 
   updateMeetingMetadata: (meeting_id, fields, cb) ->
-
     # XXX We should validate the changes here so that errors can come back faster.
-
     Meteor.call "meetings_updateMeetingMetadata", meeting_id, fields, cb
 
   updateMeetingStatus: (meeting_id, new_status, cb) ->
-
     # XXX We should validate the changes here so that errors can come back faster.
-
     Meteor.call "meetings_updateMeetingStatus", meeting_id, new_status, cb
 
   addTaskToMeeting: (meeting_id, task_fields, cb) ->
-
     Meteor.call "meetings_addTaskToMeeting", meeting_id, task_fields, cb
 
   removeTaskFromMeeting: (meeting_id, task_id, cb) ->
-
     Meteor.call "meetings_removeTaskFromMeeting", meeting_id, task_id, cb
 
   removeSubtaskFromMeeting: (meeting_id, parent_task_id, subtask_id, cb) ->
-
     Meteor.call "meetings_removeSubtaskFromMeeting", meeting_id, parent_task_id, subtask_id, cb
 
 
