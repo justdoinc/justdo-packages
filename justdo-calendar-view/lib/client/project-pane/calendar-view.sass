@@ -238,7 +238,8 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
 .calendar_task_startDateAfterDueDate,
 .calendar_task_unassigned_hours,
 .calendar_task_planned_hours,
-.calendar_task_due_date
+.calendar_task_due_date,
+.calendar_week_number
   border: 1px solid #000000
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12)
   border-radius: 2px
@@ -246,6 +247,19 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
   color: black
   padding: 0 0.2rem
   display: inline-block
+
+.calendar_week_number
+  position: absolute
+  top: -12px
+  left: 0px
+  display: inline-block
+  width: 47px
+  text-align: left
+  height: 14px
+  font-size: xx-small
+
+.calendar_header_date
+  position: relative
 
 .calendar_task_startDateAfterDueDate
   cursor: help

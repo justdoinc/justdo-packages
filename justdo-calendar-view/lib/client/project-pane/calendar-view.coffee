@@ -651,6 +651,10 @@ Template.justdo_calendar_project_pane.helpers
   isFirstDayOfWeek: (date) ->
     return moment.utc(date, "YYYY-MM-DD").day() == Meteor.user().profile.first_day_of_week
 
+  weekNumber: ->
+    return moment(@).isoWeek()
+    
+
   calendarViewResolution: -> number_of_days_to_display.get()
 
 Template.justdo_calendar_project_pane.events
