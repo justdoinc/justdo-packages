@@ -8,7 +8,7 @@
       <div class="d-flex align-items-start">
         <div class="d-flex flex-grow-1 pr-4">
           <div class="dialog-task-seqId text-primary">{{item.seqId}}.</div>
-          <div class="dialog-task-title">{{task.title}}</div>
+          <div class="dialog-task-title">{{nl2br task.title}}</div>
         </div>
         <!-- {{#with lookupUser task.owner_id}} ({{displayName}}) {{/with}} -->
         {{#if allowSortingNotes}}

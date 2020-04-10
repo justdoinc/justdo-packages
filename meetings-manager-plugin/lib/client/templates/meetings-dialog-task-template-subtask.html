@@ -18,7 +18,7 @@
     {{#if allowAddingTasks}}
       {{{taskSubjectBox subject}}}
     {{else}}
-      <div class="task-subject-box flex-grow-1" placeholder="Untitled Task...">{{subject}}</div>
+      <div class="task-subject-box flex-grow-1" placeholder="Untitled Task...">{{nl2br subject}}</div>
     {{/if}}
     {{#if allowAddingTasks}}
       <div class="d-flex align-items-center flex-shrink-0">
