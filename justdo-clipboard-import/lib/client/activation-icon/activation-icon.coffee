@@ -20,7 +20,6 @@ isDateFieldDef = (field_def) ->
   return field_def.grid_column_formatter == "unicodeDateFormatter"
 
 getAvailableFieldTypes = ->
-  ###
   # Reactive resource
   #
   # Returns an array whose
@@ -29,7 +28,7 @@ getAvailableFieldTypes = ->
   #  supported_fields_ids available in the current grid.
   #  * Second item is an array of schema definitions + _id field with the
   #  field id. Ordered according to supported_fields_ids order.
-  ###
+
   gc = APP.modules.project_page.mainGridControl()
 
   supported_fields_ids = base_supported_fields_ids.slice()
@@ -85,7 +84,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
       return
 
     task.project_id = project_id
-    if not modal_data.rows_to_skip_Set.get().has("#{row_index}")
+    if not modal_data.rows_to_skip_set.get().has("#{row_index}")
       for column_num in [0..(number_of_columns - 1)]
         cell_val = row[column_num].trim()
         field_def = selected_columns_definitions[column_num]
@@ -186,7 +185,7 @@ Template.justdo_clipboard_import_activation_icon.events
       dialog_state: new ReactiveVar ""
       clipboard_data: new ReactiveVar []
       parent_task_id: JD.activeItem()._id
-      rows_to_skip_Set: new ReactiveVar(new Set())
+      rows_to_skip_set: new ReactiveVar(new Set())
       getAvailableFieldTypes: getAvailableFieldTypes
 
     message_template =
@@ -211,7 +210,7 @@ Template.justdo_clipboard_import_activation_icon.events
           callback: =>
             modal_data.dialog_state.set "wait_for_paste"
             modal_data.clipboard_data.set []
-            modal_data.rows_to_skip_Set.set(new Set())
+            modal_data.rows_to_skip_set.set(new Set())
             $(".justdo-clipboard-import-main-button").html("Cancel")
 
             Meteor.defer ->

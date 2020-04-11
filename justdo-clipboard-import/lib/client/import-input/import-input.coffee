@@ -109,7 +109,7 @@ Template.justdo_clipboard_import_input.helpers
     return Template.instance().showIntro.get()
 
   skipRow: (index)->
-    rows_to_skip = Template.instance().data.rows_to_skip_Set.get()
+    rows_to_skip = Template.instance().data.rows_to_skip_set.get()
     if rows_to_skip.has "#{index}"
       return "skip-row"
     return ""
@@ -148,10 +148,10 @@ Template.justdo_clipboard_import_input.events
     return
 
   "change .skip-row-checkbox": (e, tpl) ->
-    rows_to_skip = Template.instance().data.rows_to_skip_Set.get()
+    rows_to_skip = Template.instance().data.rows_to_skip_set.get()
     if e.target.checked
       rows_to_skip.add e.target.getAttribute("row-index")
     else
       rows_to_skip.delete e.target.getAttribute("row-index")
-    Template.instance().data.rows_to_skip_Set.set rows_to_skip
+    Template.instance().data.rows_to_skip_set.set rows_to_skip
     return
