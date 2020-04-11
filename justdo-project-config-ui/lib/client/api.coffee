@@ -22,7 +22,8 @@ _.extend JustdoProjectConfigUI.prototype,
 
     return sections
 
-  show: ->
+  show: (options) ->
+    options = _.extend {dialog_title: "Configure this JustDo"}, options
     template_data =
       sections: => @getSectionsForPresentations()
 
@@ -30,13 +31,21 @@ _.extend JustdoProjectConfigUI.prototype,
       APP.helpers.renderTemplateInNewNode(Template.project_config_dialog, template_data)
 
     bootbox.dialog
-      title: "Configurations"
+      title: options.dialog_title
       message: message_template.node
       animate: false
       className: "project-configuration-dialog bootbox-new-design"
 
       onEscape: ->
         return true
+
+    return
+
+  showCustomFieldsConfigurationOnly: ->
+    @show({dialog_title: "Configure Custom Fields"})
+    $('.project-configuration-dialog [section-id]:not([section-id="custom-fields"])').hide()
+
+    return
 
   registerConfigSection: (section_id, settings) ->
     if not section_id?

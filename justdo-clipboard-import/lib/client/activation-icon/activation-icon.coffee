@@ -195,7 +195,7 @@ Template.justdo_clipboard_import_activation_icon.events
       title: "Import spreadsheet data as child tasks to <i>#{JustdoHelpers.taskCommonName(JD.activeItem(), 80)}</i>"
       message: message_template.node
       animate: true
-      className: "bootbox-new-design"
+      className: "bootbox-new-design justdo-clipboard-import-dialog"
 
       onEscape: ->
         return true

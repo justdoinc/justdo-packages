@@ -108,11 +108,17 @@ Template.justdo_clipboard_import_input.helpers
   showIntro: ->
     return Template.instance().showIntro.get()
 
-  skipRow: (index)->
+  importRow: (index) ->
     rows_to_skip = Template.instance().data.rows_to_skip_set.get()
     if rows_to_skip.has "#{index}"
-      return "skip-row"
-    return ""
+      return false
+    return true
+
+  isAdmin: ->
+    if not (cur_proj = APP.modules?.project_page?.curProj())?
+      return false
+
+    return cur_proj.isAdmin()
 
 Template.justdo_clipboard_import_input.events
   "keyup .justdo-clipboard-import-paste-target": (e, tpl)->
@@ -147,11 +153,19 @@ Template.justdo_clipboard_import_input.events
 
     return
 
-  "change .skip-row-checkbox": (e, tpl) ->
+  "click .manage-columns": ->
+    APP.modules.project_page.project_config_ui.showCustomFieldsConfigurationOnly()
+
+    return
+
+  "change .import-row-checkbox": (e, tpl) ->
     rows_to_skip = Template.instance().data.rows_to_skip_set.get()
+
     if e.target.checked
-      rows_to_skip.add e.target.getAttribute("row-index")
-    else
       rows_to_skip.delete e.target.getAttribute("row-index")
+    else
+      rows_to_skip.add e.target.getAttribute("row-index")
+
     Template.instance().data.rows_to_skip_set.set rows_to_skip
+
     return
