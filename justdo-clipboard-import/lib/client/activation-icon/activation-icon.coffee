@@ -112,7 +112,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
           if field_def.type is Number
             # TODO: Look for: '_available_field_types' under justdo-internal-packages/grid-control-custom-fields/lib/both/grid-control-custom-fields/grid-control-custom-fields.coffee
             # in the future, the information on whether we need to use parseFloat or parseInt() should be taken from the relevant definition.
-            cell_val = parseFloat(cell_val.trim(), 10)
+            cell_val = parseFloat(cell_val.trim())
 
             # Check valid range
             out_of_range = false

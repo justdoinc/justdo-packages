@@ -109,9 +109,7 @@ Template.justdo_clipboard_import_input.helpers
     return Template.instance().showIntro.get()
 
   skipRow: (index)->
-
     rows_to_skip = Template.instance().data.rows_to_skip_Set.get()
-    console.log index, rows_to_skip
     if rows_to_skip.has "#{index}"
       return "skip-row"
     return ""
