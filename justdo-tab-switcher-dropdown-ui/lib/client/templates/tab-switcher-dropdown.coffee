@@ -22,7 +22,7 @@ APP.executeAfterAppLibCode ->
       tab_switcher = e.currentTarget
       $tab_switcher = $(tab_switcher)
 
-      tab_id = $tab_switcher.data("tab-id")
+      tab_id = $tab_switcher.attr("data-tab-id")
 
       tab_switcher_attributes = _.map tab_switcher.attributes, (attr) -> attr.name
 
