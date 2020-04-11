@@ -988,7 +988,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
     # MEETINGS part
     # add meetings to the days matrix only if the plugin is there and only for the current user
-    if APP.meetings_manager_plugin?.meetings_manager?.meetings? and data.user_id == Meteor.userId()
+    if (meetings = APP.meetings_manager_plugin?.meetings_manager?.meetings)? and data.user_id == Meteor.userId()
       query =
         $and: [
           date:
@@ -997,7 +997,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
           date:
             $lte: new Date(moment(last_date_to_display))
         ]
-      APP.meetings_manager_plugin.meetings_manager.meetings.find(query).forEach (meeting) ->
+      meetings.find(query).forEach (meeting) ->
         row_index = 0
         day_index = data.dates_to_display.indexOf(moment(meeting.date).format("YYYY-MM-DD"))
         while true
@@ -1006,7 +1006,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
               meeting: meeting
               span: 1
             break
-          row_index++
+          row_index += 1
         return
 
     # Set drag and drop after user info has been expanded
@@ -1144,7 +1144,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     row_num = Template.parentData()
     matrix = Template.instance().days_matrix.get()
 
-    if (info=matrix[col_num]?[row_num])
+    if (info = matrix[col_num]?[row_num])?
       if info.meeting?
         return true
     return false
