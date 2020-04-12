@@ -9,6 +9,7 @@ Template.meetings_dialog_task_subtask.onRendered ->
   instance = this
 
   $(".task-due-date").datepicker
+    dateFormat: "yy-mm-dd"
     onSelect: (date) ->
       tmpl = Blaze.getView($(this)[0]).parentView._templateInstance
       if tmpl.task_obj
