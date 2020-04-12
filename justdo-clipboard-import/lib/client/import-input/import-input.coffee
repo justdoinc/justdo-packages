@@ -126,14 +126,13 @@ Template.justdo_clipboard_import_input.events
 
     return false
 
-  "click .justdo-clipboard-import-input-selector a": (e, tpl) ->
+  "click .justdo-clipboard-import-input-selector a[field-id]": (e, tpl) ->
     e.preventDefault()
 
     field_id = $(e.currentTarget)[0].getAttribute("field-id")
     field_label = "-- skip column --"
     if field_id != "clipboard-import-no-import"
       field_label = Template.instance().getAvailableFieldTypes()?[0]?[field_id]?.label
-
 
     $(e.currentTarget).closest(".justdo-clipboard-import-input-selector").find("button")
       .text(field_label)

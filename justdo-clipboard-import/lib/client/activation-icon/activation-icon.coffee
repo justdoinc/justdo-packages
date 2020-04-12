@@ -35,7 +35,7 @@ getAvailableFieldTypes = ->
   all_fields = gc.getSchemaExtendedWithCustomFields()
 
   for field_id, field of all_fields
-    if field.custom_field and (field.grid_column_formatter == "defaultFormatter" or
+    if field.custom_field and field.grid_editable_column and (field.grid_column_formatter == "defaultFormatter" or
         field.grid_column_formatter == "unicodeDateFormatter" or field.grid_column_formatter == "keyValueFormatter"
     )
       supported_fields_ids.push field_id
@@ -66,7 +66,7 @@ getSelectedColumnsDefinitions = ->
 
   return selected_columns_definitions
 
-testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
+testDataAndImport = (modal_data, selected_columns_definitions) ->
   # Check that all columns have the same number of cells
   cp_data = modal_data.clipboard_data.get()
   number_of_columns = cp_data[0].length
@@ -81,7 +81,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
       JustdoSnackbar.show
         text: "Mismatch in number of columns on different rows. Import aborted."
 
-      return
+      return false
 
     task.project_id = project_id
     if not modal_data.rows_to_skip_set.get().has("#{row_index}")
@@ -100,10 +100,12 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
                   val = key
                   break
               if val == null
+                $(".justdo-clipboard-import-table tr:nth-child(#{line_number + 1})").effect("highlight", {}, 3000)
+
                 JustdoSnackbar.show
                   text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} - not a valid option. Import aborted."
                   duration: 15000
-                return
+                return false
               task[field_id] = val
             else
               task[field_id] = cell_val
@@ -127,17 +129,17 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
               JustdoSnackbar.show
                 text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} (must be between #{field_def.min} and #{field_def.max}). Import aborted."
 
-              return
+              return false
 
             task[field_id] = cell_val
 
           # If we have a date field, check that the date is formatted properly, and transform to internal format
           if isDateFieldDef(field_def)
-            moment_date = moment.utc cell_val, dates_format
+            moment_date = moment.utc cell_val, modal_data.date_fields_date_format.get()
             if not moment_date.isValid()
               JustdoSnackbar.show
                 text: "Invalid date format in line #{line_number}. Import aborted."
-              return
+              return false
             task[field_id] = moment_date.format("YYYY-MM-DD")
       tasks.push task
     row_index += 1
@@ -149,7 +151,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
         text: "#{err}. Import aborted."
         duration: 15000
 
-      return
+      return false
 
     # No error
     JustdoSnackbar.show
@@ -170,7 +172,7 @@ testDataAndImport = (modal_data, selected_columns_definitions, dates_format) ->
         JustdoSnackbar.close()
         return
 
-  return
+  return true
 
 
 Template.justdo_clipboard_import_activation_icon.events
@@ -187,6 +189,7 @@ Template.justdo_clipboard_import_activation_icon.events
       parent_task_id: JD.activeItem()._id
       rows_to_skip_set: new ReactiveVar(new Set())
       getAvailableFieldTypes: getAvailableFieldTypes
+      date_fields_date_format: new ReactiveVar(null)
 
     message_template =
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)
@@ -243,7 +246,8 @@ Template.justdo_clipboard_import_activation_icon.events
               if isDateFieldDef(column_def)
                 date_column_found = true
                 break
-            if date_column_found
+
+            if date_column_found and not modal_data.date_fields_date_format.get()?
               bootbox.prompt
                 title: "Please select dates format"
                 animate: true
@@ -252,18 +256,19 @@ Template.justdo_clipboard_import_activation_icon.events
                 inputOptions: _.map(getAllowedDateFormats(), (format) -> {text: format, value: format})
                 value: getDefaultDateFormat()
                 callback: (date_format) ->
-                  if not date_format?
-                    # The user clicked the X button to Cancel the operation.
-                    return
+                  modal_data.date_fields_date_format.set(date_format)
 
-                  testDataAndImport modal_data, selected_columns_definitions, date_format
+                  if testDataAndImport modal_data, selected_columns_definitions
+                    bootbox.hideAll()
 
-                  return
+                  return true
 
-            else
-              testDataAndImport modal_data, selected_columns_definitions
+              return false
 
-            return true
+            if testDataAndImport modal_data, selected_columns_definitions
+              return true
+
+            return false
 
     dialog.on "shown.bs.modal", (e) ->
       $(".justdo-clipboard-import-paste-target").focus()
