@@ -59,7 +59,7 @@ Template.task_pane_meetings_manager_section.events
       title: "Ad-Hoc Re: " + task.title
       project_id: task.project_id
       date: new Date()
-      time: moment().format('HH:mm')
+      time: "" + new Date()
       status: "in-progress"
     , (err, meeting_id) ->
 
