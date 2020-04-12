@@ -55,7 +55,7 @@
             </th>
             <th class="calendar_view_move"></th>
             {{#each datesToDisplay}}
-              <th class="calendar_view_date {{#if isToday this}}is_today{{/if}} {{isHoliday this}} {{#if isFirstDayOfWeek this}}is_start_of_week{{/if}}">
+              <th class="{{#if isToday this}}is_today{{/if}} {{isHoliday this}} {{#if isFirstDayOfWeek this}}is_start_of_week{{/if}}">
                 <div class="calendar_header_date">
                   {{{formatDate}}}
                   {{#if isFirstDayOfWeek this}}
