@@ -935,8 +935,9 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
                                       # based on flat distribution of planned hours over workdays.
                                       # We clear it and repopulate it when working on the dates_workload
       flatHoursPerDay = (row_data)->
-        if row_data.task.planned_seconds == undefined
-          row_data.task.planned_seconds = 0
+        # Optimization: avoid calculations for tasks that don't have planned_seconds.
+        if not row_data.task.planned_seconds? or row_data.task.planned_seconds == 0
+          return 0
 
         if task_to_flat_hours_per_day[row_data.task._id]
           return task_to_flat_hours_per_day[row_data.task._id]
