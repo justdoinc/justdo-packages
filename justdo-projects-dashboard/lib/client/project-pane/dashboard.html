@@ -1,3 +1,39 @@
 <template name="justdo_projects_dashboard">
-    hello ninja
+  <div class="justdo-projects-dashboard">
+    <div class="projects-table">
+      <table>
+        <tr>
+          <th>Project</th>
+          <th>Owner</th>
+          <th>Start</th>
+          <th>End</th>
+          <th># of subtasks</th>
+        </tr>
+        {{#each activeProjects}}
+          {{>justdo_projects_dashboard_project_line}}
+        {{/each}}
+      </table>
+    </div>
+  </div>
+</template>
+
+
+<template name="justdo_projects_dashboard_project_line">
+  <tr>
+    <td>
+      {{this.title}}
+    </td>
+    <td>
+      {{ownerName}}
+    </td>
+    <td>
+      {{formatDate start_date}}
+    </td>
+    <td>
+      {{formatDate end_date}}
+    </td>
+    <td>
+      {{numberOfSubtasks}}
+    </td>
+  </tr>
 </template>
