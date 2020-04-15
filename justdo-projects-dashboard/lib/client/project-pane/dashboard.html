@@ -1,13 +1,18 @@
 <template name="justdo_projects_dashboard">
   <div class="justdo-projects-dashboard">
     <div class="projects-table">
-      <table>
+      <table border="1px">
         <tr>
           <th>Project</th>
           <th>Owner</th>
           <th>Start</th>
           <th>End</th>
           <th># of subtasks</th>
+          {{#each tableFieldsOfInterestTitles}}
+            <th>
+              {{this}}
+            </th>
+          {{/each}}
         </tr>
         {{#each activeProjects}}
           {{>justdo_projects_dashboard_project_line}}
@@ -35,5 +40,11 @@
     <td>
       {{numberOfSubtasks}}
     </td>
+    {{#each columnsData}}
+      <td>
+        {{this.count}}
+      </td>
+    {{/each}}
+
   </tr>
 </template>
