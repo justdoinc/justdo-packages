@@ -37,7 +37,7 @@ _.extend JustdoHighcharts.prototype,
 
     @_load_begun = true
 
-    scripts_count = 6
+    scripts_count = 7
     reportSciptLoadCompleted = =>
       scripts_count -= 1
 
@@ -63,6 +63,11 @@ _.extend JustdoHighcharts.prototype,
 
               JustdoHelpers.getCachedScript("https://blacklabel.github.io/custom_events/js/customEvents.js").done ->
                 reportSciptLoadCompleted()
+  
+                JustdoHelpers.getCachedScript("https://code.highcharts.com/highcharts-3d.js").done ->
+                  reportSciptLoadCompleted()
+                  
+                  return
                 return
               return
             return

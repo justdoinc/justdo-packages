@@ -96,11 +96,9 @@ Template.justdo_projects_dashboard.onCreated ->
       return
     
     table_field_obj = gc.getSchemaExtendedWithCustomFields()[table_part_inetest]
-    field_options[table_part_inetest] = table_field_obj.grid_values
-  
+    field_options[table_part_inetest] = table_field_obj
     main_field_obj = gc.getSchemaExtendedWithCustomFields()[main_part_interest]
-    field_options[main_part_interest] = main_field_obj.grid_values
-  
+    field_options[main_part_interest] = main_field_obj
     APP.justdo_projects_dashboard.field_ids_to_grid_values.set field_options
     return
   
@@ -115,7 +113,9 @@ Template.justdo_projects_dashboard.onCreated ->
     APP.justdo_projects_dashboard.main_part_dirty_rv.set false
     
     field_of_interest = APP.justdo_projects_dashboard.main_part_interest.get()
-    field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values.get()[field_of_interest]
+    if not (field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values.get()[field_of_interest]?.grid_values)?
+      return
+    
     
     main_part_data =
       number_of_projects: 0
@@ -137,25 +137,120 @@ Template.justdo_projects_dashboard.onCreated ->
       main_part_data.projects_count_by_project_manager[project_owner] += 1
       main_part_data.projects_field_of_interest[project_id] = tpl_collected_data.fields[field_of_interest]
       main_part_data.project_objs[project_id] = tpl_instance.data
-    
+      
     self.main_part_data_rv.set main_part_data
     return # end autorun collecting data
     
   # lastly - init the system with fields of interest
-  APP.justdo_projects_dashboard.main_part_interest.set "tzBEyvnXM8f8eiGGx"
-  APP.justdo_projects_dashboard.table_part_interest.set "tzBEyvnXM8f8eiGGx"
+  APP.justdo_projects_dashboard.main_part_interest.set "BbJpRcsmTZuBALLhk"
+  APP.justdo_projects_dashboard.table_part_interest.set "BbJpRcsmTZuBALLhk"
   return # end of onCreated
 
 Template.justdo_projects_dashboard.onDestroyed ->
   @stopObserver()
   return
 
+Template.justdo_projects_dashboard.onRendered ->
+  @autorun =>
+    
+    field_of_interest = APP.justdo_projects_dashboard.main_part_interest.get()
+    grid_values =  APP.justdo_projects_dashboard.field_ids_to_grid_values.get()
+    if not (field_options = grid_values[field_of_interest]?.grid_values)?
+      return
+    field_label = grid_values[field_of_interest].label
+      
+    main_part_data = Template.instance().main_part_data_rv.get()
+    
+    # chart 1 - the projects count by the field of interest
+    field_type_count =
+      undefined: 0
+    for project_id, project_obj of main_part_data.project_objs
+      if not (field_option_id = project_obj[field_of_interest])?
+        field_type_count.undefined += 1
+      else
+        if not field_type_count[field_option_id]
+          field_type_count[field_option_id] = 0
+        field_type_count[field_option_id] += 1
+    
+    data = []
+    for option_id, option of field_options
+      title = option.txt
+      count = field_type_count[option_id] or 0
+      color = "##{option.bg_color}"
+      if option_id == ""
+        count = field_type_count.undefined
+        title = "Unselected"
+        color = "#ebead1"
+      
+      if count > 0
+        data.push
+          y: count
+          name: title
+          color: color
+    
+    chart =
+      chart:
+        type: 'pie'
+        width: 350
+        options3d:
+          enabled: true
+          alpha: 35
+      title:
+        text: "Projects by #{field_label}"
+      plotOptions:
+        pie:
+          innerSize: 100
+          depth: 45
+        
+      series: [
+        name: ""
+        animation: false
+        dataLabels:
+          distance: -20
+        data: data
+      ]
+    Highcharts.chart "justdo-projects-dashboard-chart-1", chart
+    chart.chart =
+      type: 'column'
+      width: 350
+      options3d:
+        enabled: true
+        alpha: 15
+        beta: 15
+        viewDistance: 25
+        depth: 40
+      
+    chart.options3d =
+      enabled: true
+      alpha: 15
+      beta: 15
+      viewDistance: 25
+      depth: 40
+    chart.plotOptions.column =
+      stacking: 'normal'
+      depth: 40
+    chart.xAxis =
+      labels:
+        skew3d: true
+        style:
+          fontSize: '16px'
+        
+    Highcharts.chart "justdo-projects-dashboard-chart-2", chart
+    chart.chart =
+      type: 'bar'
+      width: 350
+      
+      
+    Highcharts.chart "justdo-projects-dashboard-chart-3", chart
+    return # end of autorun
+  return
+
 Template.justdo_projects_dashboard.helpers
+  
   numberOfProjects: ->
     return Template.instance().main_part_data_rv.get().number_of_projects
   totalNumberOfTasks: ->
     return Template.instance().main_part_data_rv.get().total_tasks
-    
     
   activeProjects: ->
     query =
@@ -169,7 +264,8 @@ Template.justdo_projects_dashboard.helpers
     return JD.collections.Tasks.find query
   
   tableFieldsOfInterestTitles: ->
-    field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values.get()[APP.justdo_projects_dashboard.table_part_interest. get()]
+    if not (field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values.get()[APP.justdo_projects_dashboard.table_part_interest. get()]?.grid_values)?
+      return []
     ret = []
     for option_id, option of field_options
       if option.txt? and option.txt != ""
@@ -248,7 +344,8 @@ Template.justdo_projects_dashboard_project_line.helpers
   
   columnsData: ->
     field_of_interest = APP.justdo_projects_dashboard.table_part_interest.get()
-    field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values.get()[field_of_interest]
+    if not (field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values.get()[field_of_interest]?.grid_values)?
+      return
     if not (collected_data_for_field = Template.instance().collected_data_rv.get().fields?[field_of_interest])?
       return
     ret = []
