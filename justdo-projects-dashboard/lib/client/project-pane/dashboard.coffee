@@ -104,6 +104,43 @@ Template.justdo_projects_dashboard.onCreated ->
     APP.justdo_projects_dashboard.field_ids_to_grid_values.set field_options
     return
   
+  @main_part_data_rv = new ReactiveVar {}
+  
+  # collect the data for the main part
+  @autorun =>
+    # trigger and clear dirty bit
+    
+    if not APP.justdo_projects_dashboard.main_part_dirty_rv.get()
+      return
+    APP.justdo_projects_dashboard.main_part_dirty_rv.set false
+    
+    field_of_interest = APP.justdo_projects_dashboard.main_part_interest.get()
+    field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values.get()[field_of_interest]
+    
+    main_part_data =
+      number_of_projects: 0
+      total_tasks: 0
+      projects_count_by_project_manager: {} # structure of <user_id>: <count>
+      projects_field_of_interest: {}  # structure of <project_id>:
+                                      #                 <field_option_id>: <count>
+      field_options: field_options
+      project_objs: {}                # structure of <project_id>: <project_doc?
+    
+    
+    for project_id, tpl_instance of APP.justdo_projects_dashboard.project_id_to_template_instance
+      tpl_collected_data = tpl_instance.collected_data_rv.get()
+      main_part_data.number_of_projects += 1
+      main_part_data.total_tasks += tpl_collected_data.tasks_count
+      project_owner = tpl_instance.data.owner_id
+      if not main_part_data.projects_count_by_project_manager[project_owner]?
+        main_part_data.projects_count_by_project_manager[project_owner] = 0
+      main_part_data.projects_count_by_project_manager[project_owner] += 1
+      main_part_data.projects_field_of_interest[project_id] = tpl_collected_data.fields[field_of_interest]
+      main_part_data.project_objs[project_id] = tpl_instance.data
+    
+    self.main_part_data_rv.set main_part_data
+    return # end autorun collecting data
+    
   # lastly - init the system with fields of interest
   APP.justdo_projects_dashboard.main_part_interest.set "tzBEyvnXM8f8eiGGx"
   APP.justdo_projects_dashboard.table_part_interest.set "tzBEyvnXM8f8eiGGx"
@@ -114,6 +151,12 @@ Template.justdo_projects_dashboard.onDestroyed ->
   return
 
 Template.justdo_projects_dashboard.helpers
+  numberOfProjects: ->
+    return Template.instance().main_part_data_rv.get().number_of_projects
+  totalNumberOfTasks: ->
+    return Template.instance().main_part_data_rv.get().total_tasks
+    
+    
   activeProjects: ->
     query =
       "p:dp:is_project": true
@@ -164,6 +207,7 @@ Template.justdo_projects_dashboard_project_line.onCreated ->
           field_data[field_value] += 1
       return #and of each grid_data iterator
     self.collected_data_rv.set collected_data
+    APP.justdo_projects_dashboard.main_part_dirty_rv.set true
     return
   
   @autorun =>
@@ -187,6 +231,8 @@ Template.justdo_projects_dashboard_project_line.onCreated ->
 
 Template.justdo_projects_dashboard_project_line.onDestroyed ->
   delete APP.justdo_projects_dashboard.project_id_to_template_instance[@data._id]
+  APP.justdo_projects_dashboard.main_part_dirty_rv.set true
+  return
   
 Template.justdo_projects_dashboard_project_line.helpers
   ownerName: ->
@@ -201,10 +247,10 @@ Template.justdo_projects_dashboard_project_line.helpers
     return ""
   
   columnsData: ->
-    
     field_of_interest = APP.justdo_projects_dashboard.table_part_interest.get()
     field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values.get()[field_of_interest]
-    collected_data_for_field = Template.instance().collected_data_rv.get().fields[field_of_interest]
+    if not (collected_data_for_field = Template.instance().collected_data_rv.get().fields?[field_of_interest])?
+      return
     ret = []
     for option_id, option of field_options
       if option.txt? and option.txt != ""

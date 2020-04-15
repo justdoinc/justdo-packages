@@ -1,5 +1,27 @@
 <template name="justdo_projects_dashboard">
   <div class="justdo-projects-dashboard">
+    <div class="main-part">
+      <table>
+        <tr>
+          <td class="main-part-left-column">
+            <div class="big-picture-data">
+              <div class="title">Projects</div>
+              <div class="data">{{numberOfProjects}}</div>
+              <div class="units"></div>
+            </div>
+            <div class="big-picture-data">
+              <div class="title">Tasks</div>
+              <div class="data">{{totalNumberOfTasks}}</div>
+              <div class="units"></div>
+            </div>
+          </td>
+          <td class="main-part-charts-column">
+            MAIN PART
+          </td>
+        </tr>
+      </table>
+
+    </div>
     <div class="projects-table">
       <table border="1px">
         <tr>

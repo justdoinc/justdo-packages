@@ -43,5 +43,7 @@ _.extend JustdoProjectsDashboard.prototype,
   # cache the labels
   field_ids_to_grid_values: new ReactiveVar {}
   
+  main_part_dirty_rv: new ReactiveVar true
+  
   
   
