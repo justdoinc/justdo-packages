@@ -373,6 +373,29 @@ _.extend GridControl.prototype,
 
     @_init_dfd.resolve()
 
+  getAllDependentFields: (field_id, extended_schema=null) ->
+    # Returns all the fields that are depending on field_id
+
+    if not extended_schema?
+      # Optimization, the user can provide his own extended_schema to avoid recalculating it
+      extended_schema = @getSchemaExtendedWithCustomFields()
+
+    field_def = extended_schema[field_id]
+
+    extended_dependent_fields = []
+    for extended_schema_field_id, extended_schema_field_def of extended_schema
+      if extended_schema_field_def.custom_field == true
+        # For the builtin fields we automatically build the grid_dependent_fields
+        # based on grid_dependencies_fields in: @_loadSchema() so no need to redo
+        # here.
+        if not extended_schema_field_def.grid_dependencies_fields? or not _.isArray(extended_schema_field_def.grid_dependencies_fields)
+          continue
+
+        if field_id in extended_schema_field_def.grid_dependencies_fields
+          extended_dependent_fields.push extended_schema_field_id
+
+    return _.union(field_def.grid_dependent_fields or [], extended_dependent_fields)
+
   _error: JustdoHelpers.constructor_error
 
   getViewColumnsAffectedByFieldArrayChangesThatUseFormatterType: (fields_array, formatter_type) ->
@@ -1880,3 +1903,28 @@ _.extend GridControl.prototype,
         return false
 
     return true
+
+  getFormatterDefinition: (formatter_id) -> GridControl.Formatters[formatter_id]
+
+  getGridControlMux: -> @grid_control_mux # If this grid control initiated by a grid control multiplexer @grid_control will be assigned by the multiplexer.
+
+  getMainGridControlOrSelf: ->
+    # For grid controls that been initiated by a grid control multiplexer, it is
+    # likely that non-main tabs will have only partial data of the main tab which 
+    # will usually will have the data's natural tree representation, and hence
+    # the most complete tree view (and the one in which the paths are most intuitive
+    # to users/developers).
+    #
+    # If we aren't running under a grid control multiplexer, this will simply return
+    # @
+
+    if (main_tab = @grid_control_mux?._grid_controls_tabs?.main)?
+      # If we are running under a grid control multiplexer, always use the main tab
+      # (That should have the most complete data, which is needed for finding a
+      # path for field_id)
+
+      # Reminder, the main grid is always loaded by the multiplexer (for the rest of
+      # the tab, we can't assume the grid_control is initiated).
+      return main_tab.grid_control
+    
+    return @
