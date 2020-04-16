@@ -51,7 +51,7 @@ _.extend TaskChannelClient.prototype,
     non_subscribers_members_ids_mentioned = []
     for task_members_doc in task_members_docs
       for potential_name_found in potential_names_found
-        if potential_name_found in [task_members_doc.profile?.first_name.toLowerCase(), task_members_doc.profile?.last_name.toLowerCase()]
+        if potential_name_found in [task_members_doc.profile?.first_name.trim().toLowerCase(), task_members_doc.profile?.last_name.trim().toLowerCase()]
           non_subscribers_members_ids_mentioned.push task_members_doc._id
 
     return non_subscribers_members_ids_mentioned
