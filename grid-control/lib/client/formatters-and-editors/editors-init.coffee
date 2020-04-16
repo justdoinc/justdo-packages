@@ -196,7 +196,7 @@ base_slick_grid_editors_prototype =
     if @isDataReady()
       return @doc
     else
-      return {}
+      return @context.item
 
   getEditorFieldValueFromDoc: ->
     # Returns the editor value from the data document
