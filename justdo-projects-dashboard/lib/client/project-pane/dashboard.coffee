@@ -157,11 +157,15 @@ Template.justdo_projects_dashboard.onRendered ->
     grid_values =  APP.justdo_projects_dashboard.field_ids_to_grid_values.get()
     if not (field_options = grid_values[field_of_interest]?.grid_values)?
       return
-    field_label = grid_values[field_of_interest].label
       
+    field_label = grid_values[field_of_interest].label
     main_part_data = Template.instance().main_part_data_rv.get()
+  
+    common_charts_width = 300
     
+    #######################################################
     # chart 1 - the projects count by the field of interest
+    #######################################################
     field_type_count =
       undefined: 0
     for project_id, project_obj of main_part_data.project_objs
@@ -191,12 +195,12 @@ Template.justdo_projects_dashboard.onRendered ->
     chart =
       chart:
         type: 'pie'
-        width: 350
+        width: common_charts_width
         options3d:
           enabled: true
           alpha: 35
       title:
-        text: "Projects by #{field_label}"
+        text: "Overall"
       plotOptions:
         pie:
           innerSize: 100
@@ -210,43 +214,176 @@ Template.justdo_projects_dashboard.onRendered ->
         data: data
       ]
     Highcharts.chart "justdo-projects-dashboard-chart-1", chart
-    chart.chart =
-      type: 'column'
-      width: 350
-      options3d:
-        enabled: true
-        alpha: 15
-        beta: 15
-        viewDistance: 25
-        depth: 40
-      
-    chart.options3d =
-      enabled: true
-      alpha: 15
-      beta: 15
-      viewDistance: 25
-      depth: 40
-    chart.plotOptions.column =
-      stacking: 'normal'
-      depth: 40
-    chart.xAxis =
-      labels:
-        skew3d: true
-        style:
-          fontSize: '16px'
+    
+  
+    #######################################################
+    # chart 2 - per project breakdown of options
+    #######################################################
+    
+    projects = {} # structure:  <project_id>:
+                  #               <option_id>: <count>
+    
+    # generate a list of project ids sorted by project name
+    projects_list = []
+    for project_id, project_obj of main_part_data.project_objs
+      projects_list.push
+        id: project_id
+        title: project_obj.title
+    projects_list = _.sortBy projects_list, (item) -> item.title.toUpperCase()
+    
+    categories = []
+    
+    for item in projects_list
+      projects[item.id] = {}
+      categories.push item.title
+      for option_id, option of field_options
+        projects[item.id][option_id] = main_part_data.projects_field_of_interest[item.id][option_id] or 0
+    
+    series = []
+    for option_id, option of field_options
+      if option_id != ""
+        data = []
+        for item in projects_list
+          data.push projects[item.id][option_id]
+        series.push
+          name: option.txt
+          data: data
+          animation: false
+          color: "##{option.bg_color}"
+    
+    chart =
+      chart:
+        type: "column"
+        width: common_charts_width
+        options3d:
+          enabled: true
+          alpha: 15
+          beta: 15
+          viewDistance: 25
+          depth: 40
         
-    Highcharts.chart "justdo-projects-dashboard-chart-2", chart
-    chart.chart =
-      type: 'bar'
-      width: 350
+      title:
+        text: "#{field_label}"
+        
+      xAxis:
+        categories: categories
+        labels:
+          skew3d: true
+          style:
+            fontSize: "16px"
+    
+      yAxis:
+        allowDecimals: false
+        min: 0
+        reversedStacks: false
+        title:
+          enabled: false
+          # text: ""
+          # skew3d: true
       
+      tooltip:
+        headerFormat: "<b>{point.key}</b><br>"
+        pointFormat: """<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}"""
+        
+      plotOptions:
+        column:
+          stacking: "normal"
+          depth: 40
+      
+      series: series
+     
+    Highcharts.chart "justdo-projects-dashboard-chart-2", chart
+  
+    #######################################################
+    # chart 3 - per project owner breakdown of options
+    #######################################################
+  
+    owners = {} # structure:  <owner id>:
+                #               <option_id>: <count>
+    
+    # generate a list of owner ids sorted by owner name
+    owners_list = []
+    owners_found = new Set()
+    for project_id, project_obj of main_part_data.project_objs
+      if owners_found.has project_obj.owner_id
+        continue
+      else
+        owners_found.add project_obj.owner_id
+        owners_list.push
+          id: project_obj.owner_id
+          name: JustdoHelpers.displayName(project_obj.owner_id)
+    owners_list = _.sortBy owners_list, (owner) -> owner.name.toUpperCase()
+    
+    for project_id, project_obj of main_part_data.project_objs
+      owner_id = project_obj.owner_id
+      if not owners[owner_id]?
+        owners[owner_id] = {}
+      for option_id, option of field_options
+        if not owners[owner_id][option_id]?
+          owners[owner_id][option_id] = 0
+        owners[owner_id][option_id] += main_part_data.projects_field_of_interest[project_id][option_id] or 0
+  
+    
+    categories = []
+    for owner in owners_list
+      categories.push owner.name
+      
+    series = []
+    for option_id, option of field_options
+      if option_id != ""
+        data = []
+        for owner in owners_list
+          data.push owners[owner.id][option_id]
+        series.push
+          name: option.txt
+          data: data
+          animation: false
+          color: "##{option.bg_color}"
+  
+    chart =
+      chart:
+        type: "bar"
+        width: common_charts_width
+        options3d:
+          enabled: true
+          alpha: 15
+          beta: 15
+          viewDistance: 25
+          depth: 40
+    
+      title:
+        text: "owners"
+    
+      xAxis:
+        categories: categories
+        labels:
+          skew3d: true
+          style:
+            fontSize: "16px"
+    
+      yAxis:
+        allowDecimals: false
+        min: 0
+        reversedStacks: false
+        title:
+          enabled: false
+    
+      tooltip:
+        headerFormat: "<b>{point.key}</b><br>"
+        pointFormat: """<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}"""
+    
+      plotOptions:
+        series:
+          stacking: "normal"
+          depth: 40
+    
+      series: series
       
     Highcharts.chart "justdo-projects-dashboard-chart-3", chart
     return # end of autorun
   return
 
 Template.justdo_projects_dashboard.helpers
-  
   numberOfProjects: ->
     return Template.instance().main_part_data_rv.get().number_of_projects
   totalNumberOfTasks: ->
