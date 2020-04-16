@@ -67,6 +67,20 @@ formatter_name = "calculatedFieldFormatter"
 GridControl.installFormatter formatter_name,
   invalidate_ancestors_on_change: "structure-content-and-filters"
 
+  gridControlInit: ->
+    # Setup methods that are introduced as shortcuts for dealing with calculated fields
+
+    @getItemCalculatedFieldValue = (item_id, field_id, path=undefined) =>
+      # Note path is optional, but, providing it will improve performance, and
+      # has other implications, search this file for comment marked:
+      # INDEX_NULL_PATH_IMPLICATION
+
+      main_gc = @getMainGridControlOrSelf()
+
+      return GridControl.Formatters.calculatedFieldFormatter.calculatePathCalculatedFieldValue(main_gc, field_id, path, main_gc._grid_data._grid_data_core.items_by_id[item_id])
+
+    return
+
   #
   # Functions
   #
@@ -106,16 +120,17 @@ GridControl.installFormatter formatter_name,
     # data provided is true and correct.
     #
     # ### null path argument, and implications on future types of supported
-    #     calculated fields functions:
+    #     calculated fields functions INDEX_NULL_PATH_IMPLICATION:
     #
-    # For the print formatters we don't have direct way to know what
-    # path the item we are formatting for printing is under. That's
-    # because gc._print_formatters.formatter(document, field_name) is not
-    # called with path.
+    # For the print formatters and when value is calculated by @getItemCalculatedFieldValue
+    # we don't have direct way to know what path the item we are formatting
+    # for printing is under. That's because gc._print_formatters.formatter(document, field_name)
+    # is not called with path, and for @getItemCalculatedFieldValue, by design,
+    # the path is optional.
     #
     # Because of that, if path is null, we'll find it by ourself before we
     # call the field function (that expect path to be set). 
-    # Every item might be under many paths (as a resulte of the multiple
+    # Every item might be under many paths (as a result of the multiple
     # parents data structure).
     #
     # Since we don't know which path is the one the user is printing, we simply
