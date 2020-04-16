@@ -78,6 +78,7 @@ Package.onUse(function (api) {
   api.add_files("lib/client/iron-router.coffee", client);
   api.add_files("lib/client/jquery.coffee", client);
   api.add_files("lib/client/tab-visibility.coffee", client);
+  api.add_files("lib/client/tasks-generator.coffee", client);
   api.add_files("lib/client/query-string.js", client);
   api.add_files("lib/client/reactive-items-list.coffee", client);
   api.add_files("lib/client/reactivity-utils.coffee", client);
