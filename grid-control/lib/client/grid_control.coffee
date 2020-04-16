@@ -532,7 +532,23 @@ _.extend GridControl.prototype,
       # If row for the ancestor path exists in the visible grid
       if (row = @_grid_data.getPathGridTreeIndex(ancestor_path))?
         for col_id in columns_ids_to_update
+          pre_update_value = $(@_grid.getCellNode(row, col_id)).html()
           @_grid.updateCell(row, col_id)
+          post_update_value = $(@_grid.getCellNode(row, col_id)).html()
+
+          if pre_update_value != post_update_value
+            # Presented value updated, update dependents fields
+            field_updated = @getSlickGridColumns()[col_id].field
+
+            if not _.isEmpty(dependent_fields = @getAllDependentFields(field_updated))
+              field_id_to_col_id = @getFieldIdToColumnIndexMap()
+              # Can be optimized by both providing extended_schema (see @getAllDependentFields definition),
+              # and by caching dependencies cache
+
+              for dependent_field_id in dependent_fields
+                if field_id_to_col_id[dependent_field_id]?
+                  # If present in the grid, update
+                  @_grid.updateCell(row, field_id_to_col_id[dependent_field_id])
 
     return
 
