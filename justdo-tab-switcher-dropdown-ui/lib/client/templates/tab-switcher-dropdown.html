@@ -32,12 +32,12 @@
 
 <template name="project_operations_tab_switcher_dropdown_tab_icon">
   {{#if $eq icon_type "feather"}}
-    <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#{{icon_val}}"/></svg>
+    <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#{{icon_val}}"/></svg>
   {{else if $eq icon_type "user-avatar"}}
     {{#with icon_val}}
       {{> gtpl_user_profile_pic}}
     {{/with}}
   {{else if $eq icon_type "font-awesome"}}
-    <i class="fa {{icon_val}}"></i>
+    <i class="fa {{icon_val}} text-dark"></i>
   {{/if}}
 </template>
