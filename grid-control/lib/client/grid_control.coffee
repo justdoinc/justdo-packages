@@ -315,6 +315,11 @@ _.extend GridControl.prototype,
           # Invalidate field column if in present grid
           @_grid.updateCell(row, field_id_to_col_id[field])
 
+        # When grid-data informs us that a field data updated in the db (the "grid-item-changed" event),
+        # even if that field doesn't exist in the grid (hidden column) trigger invalidation to all its
+        # dependent fields that are existing in the grid, and if they are of formatters that have the
+        # 'invalidate_ancestors_on_change' option set to one of ["structure-and-content", "structure-content-and-filters"]
+        # trigger ancestors invalidation as well.
         for dependent_field in @getAllDependentFields(field, extended_schema)
           if field_id_to_col_id[dependent_field]?
             @_grid.updateCell(row, field_id_to_col_id[dependent_field])
@@ -526,6 +531,7 @@ _.extend GridControl.prototype,
       # If row for the ancestor path exists in the visible grid
       if (row = @_grid_data.getPathGridTreeIndex(ancestor_path))?
         for col_id in columns_ids_to_update
+          # For every ancestor updated with a *new* value, trigger invalidation to all dependent fields of its item
           pre_update_value = $(@_grid.getCellNode(row, col_id)).html()
           @_grid.updateCell(row, col_id)
           post_update_value = $(@_grid.getCellNode(row, col_id)).html()
