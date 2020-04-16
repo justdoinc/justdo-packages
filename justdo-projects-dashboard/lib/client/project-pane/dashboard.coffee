@@ -3,6 +3,7 @@ Template.justdo_projects_dashboard.onCreated ->
   
   # one observer to trigger on all information that we care about
   @observer = null
+  @selected_project_owner_id_rv = new ReactiveVar null # null or owner id
   
   @triggerProjectsReactivityForTask = (task_id, wait) ->
     if not (gc = APP.modules.project_page.mainGridControl())?
@@ -141,6 +142,22 @@ Template.justdo_projects_dashboard.onCreated ->
     self.main_part_data_rv.set main_part_data
     return # end autorun collecting data
     
+  @activeProjectsList = (ignore_owners_part = false) ->
+    query =
+      "p:dp:is_project": true
+      $or:  [
+        "p:dp:is_archived_project": false
+      ,
+        "p:dp:is_archived_project":
+          $exists: false
+      ]
+    if not ignore_owners_part
+      if (owner_id = self.selected_project_owner_id_rv.get())?
+        query.owner_id = owner_id
+      
+    return JD.collections.Tasks.find(query).fetch()
+    
+  
   # lastly - init the system with fields of interest
   APP.justdo_projects_dashboard.main_part_interest.set "BbJpRcsmTZuBALLhk"
   APP.justdo_projects_dashboard.table_part_interest.set "BbJpRcsmTZuBALLhk"
@@ -384,21 +401,30 @@ Template.justdo_projects_dashboard.onRendered ->
   return
 
 Template.justdo_projects_dashboard.helpers
+  projectsOwnersList: ->
+    projects = Template.instance().activeProjectsList(true)
+    owners_set = new Set()
+    owners_list = []
+    for project in projects
+      owner_id = project.owner_id
+      if not owners_set.has owner_id
+        owners_set.add owner_id
+        owners_list.push
+          id: owner_id
+          name: JustdoHelpers.displayName(owner_id)
+    return _.sortBy owners_list, name
+    
+    
+
   numberOfProjects: ->
     return Template.instance().main_part_data_rv.get().number_of_projects
   totalNumberOfTasks: ->
     return Template.instance().main_part_data_rv.get().total_tasks
     
   activeProjects: ->
-    query =
-      "p:dp:is_project": true
-      $or:  [
-        "p:dp:is_archived_project": false
-      ,
-        "p:dp:is_archived_project":
-          $exists: false
-      ]
-    return JD.collections.Tasks.find query
+    list = Template.instance().activeProjectsList()
+    list = _.sortBy list, (project) -> project.title.toUpperCase()
+    return list
   
   tableFieldsOfInterestTitles: ->
     if not (field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values.get()[APP.justdo_projects_dashboard.table_part_interest. get()]?.grid_values)?
@@ -408,6 +434,16 @@ Template.justdo_projects_dashboard.helpers
       if option.txt? and option.txt != ""
         ret.push option.txt
     return ret
+
+Template.justdo_projects_dashboard.events
+  "click .justdo-projects-dashboard-owner-selector a": (e,tpl) ->
+    if this.name?
+      $(".justdo-projects-dashboard-owner-selector button").text(this.name)
+      tpl.selected_project_owner_id_rv.set this.id
+    else
+      $(".justdo-projects-dashboard-owner-selector button").text("All Managers")
+      tpl.selected_project_owner_id_rv.set null
+    return
 
 
 Template.justdo_projects_dashboard_project_line.onCreated ->
