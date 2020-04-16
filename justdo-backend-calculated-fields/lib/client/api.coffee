@@ -8,6 +8,8 @@ _.extend JustdoBackendCalculatedFields.prototype,
     if @destroyed
       return
 
+    @setupCustomFeatureMaintainer()
+
     return
 
   enableBackendCalculatedFieldsForCurrentProject: ->
@@ -57,6 +59,53 @@ _.extend JustdoBackendCalculatedFields.prototype,
           slick_grid._backend_calculated_fields_hooks_installed = true
 
     return
+  
+  commands:
+    max_due_date_of_direct_subtasks:
+      label: "Max due date by direct child-tasks"
+    max_due_date_of_all_subtasks:
+      label: "Max due date by all child tasks"
+    max_due_date_of:
+      label: "Max due date of specific tasks"
+    due_date_offset:
+      label: "Due date by offset"
+
+  setupCustomFeatureMaintainer: ->
+    self = @
+
+    self.custom_feature_maintainer =
+      APP.modules.project_page.setupProjectCustomFeatureOnProjectPage self.options.custom_feature_id,
+        installer: =>
+          commands_select_options = []
+          for command_id, command_def of @commands
+            commands_select_options.push
+              option_id: command_id
+              label: command_def.label
+
+          APP.modules.project_page.setupPseudoCustomField "backend_calc_field_cmd",
+            "field_type" : "select",
+            "grid_editable_column" : true,
+            "grid_visible_column" : true,
+            "label" : "Calc command",
+            "default_width" : 240,
+            "field_options" :
+              "select_options" : commands_select_options
+          
+          APP.modules.project_page.setupPseudoCustomField "backend_calc_field_cmd_params",
+            "field_type" : "string",
+            "grid_editable_column" : true,
+            "grid_visible_column" : true,
+            "label" : "Calc parameters",
+            "default_width" : 250
+
+        destroyer: =>
+          APP.modules.project_page.removePseudoCustomFields "backend_calc_field_cmd"
+
+          APP.modules.project_page.removePseudoCustomFields "backend_calc_field_cmd_params"
+
+          return
+
+    return
 
   destroy: ->
     if @destroyed
@@ -64,8 +113,10 @@ _.extend JustdoBackendCalculatedFields.prototype,
 
       return
 
-    @destroyed = true
+    @custom_feature_maintainer.stop()
 
+    @destroyed = true
+    
     @logger.debug "Destroyed"
 
     return

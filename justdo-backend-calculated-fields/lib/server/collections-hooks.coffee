@@ -7,21 +7,6 @@ _.extend JustdoBackendCalculatedFields.prototype,
   projectsCustomFieldsMaintananceHooks: ->
     self = @
 
-    # here we want to maintain the list of enabled projects.
-    self.projects_collection.after.update (user_id, doc, fieldNames, modifier, options) =>
-      if (custom_features = modifier.$set?["conf.custom_features"])?
-        # Note, when we update the custom_features sub-document, we set all the custom features
-        # including the existing ones. So, every update to conf.custom_features is going to
-        # trigger @setupCustomFieldsForProject for projects that has the backend calculated field
-        # enabled, @setupCustomFieldsForProject calls @removeCustomFieldsForProject() first
-        # so we avoid duplicate setup.
-        if @options.custom_feature_id in custom_features
-          @setupCustomFieldsForProject(doc._id, user_id)
-        else
-          @removeCustomFieldsForProject(doc._id, user_id)
-
-      return
-
     runIfBackendCalculatedFieldsEnabled = (project_id, cb) ->
       # nothing to do if the project is not enabled
       if not self.enabled_projects_cache[project_id]?
