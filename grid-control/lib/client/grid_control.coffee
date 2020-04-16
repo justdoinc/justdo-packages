@@ -315,23 +315,17 @@ _.extend GridControl.prototype,
           # Invalidate field column if in present grid
           @_grid.updateCell(row, field_id_to_col_id[field])
 
-        extended_dependent_fields = []
-        for extended_schema_field_id, extended_schema_field_def of extended_schema
-          if extended_schema_field_def.custom_field == true
-            # For the builtin fields we automatically build the grid_dependent_fields
-            # based on grid_dependencies_fields in: @_loadSchema() so no need to redo
-            # here.
-            if not extended_schema_field_def.grid_dependencies_fields? or not _.isArray(extended_schema_field_def.grid_dependencies_fields)
-              continue
+        for dependent_field in @getAllDependentFields(field, extended_schema)
+          if field_id_to_col_id[dependent_field]?
+            @_grid.updateCell(row, field_id_to_col_id[dependent_field])
 
-            if field in extended_schema_field_def.grid_dependencies_fields
-              extended_dependent_fields.push extended_schema_field_id
-
-        if field_def?.grid_dependent_fields? or not _.isEmpty extended_dependent_fields
-          # Invalidate field dependent fields columns if exist and present in grid
-          for dependent_field in _.union(field_def.grid_dependent_fields, extended_dependent_fields)
-            if field_id_to_col_id[dependent_field]?
-              @_grid.updateCell(row, field_id_to_col_id[dependent_field])          
+            if (dependent_field_formatter = extended_schema[dependent_field].grid_column_formatter)?
+              # If we can determine the formatter
+              if (formatter_definition = @getFormatterDefinition(dependent_field_formatter))?
+                # If we can determine the formatter definition
+                if formatter_definition.invalidate_ancestors_on_change in ["structure-and-content", "structure-content-and-filters"]
+                  # If the formatter defines that ancestors should invalidate, invalidate ancestors as well
+                  @_invalidateItemAncestorsFieldsOfFormatterType(@_grid_data.getItem(row)._id, dependent_field_formatter, {changed_fields_array: [dependent_field], update_self: false})
 
       # tree_change, full_invalidation=false
       @emit "tree_change", false
