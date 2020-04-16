@@ -10,11 +10,20 @@ APP.executeAfterAppLibCode ->
       # Return val as is
       return val
 
+    printFormatter = gc._print_formatters[formatter_id]
+
     formatted_val =
-      gc._print_formatters[formatter_id](missing_fields_values, field, path)
+      printFormatter(missing_fields_values, field, path)
 
     if _.isString formatted_val
-      return JustdoHelpers.xssGuard formatted_val
+      if printFormatter.html_output is true
+        xssGuard_options =
+          allow_html_parsing: true
+          enclosing_char: ""
+      else
+        xssGuard_options = {}
+
+      return JustdoHelpers.xssGuard formatted_val, xssGuard_options
 
     return formatted_val
 
