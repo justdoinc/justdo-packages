@@ -434,7 +434,6 @@ Template.justdo_projects_dashboard.onRendered ->
   return
 
 Template.justdo_projects_dashboard.helpers
-
   selectedFieldLabel: ->
     main_part_interest = APP.justdo_projects_dashboard.main_part_interest.get()
     field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()[main_part_interest]
@@ -486,6 +485,12 @@ Template.justdo_projects_dashboard.helpers
       if option.txt? and option.txt != ""
         ret.push option.txt
     return ret
+  
+  columnWidthPercent: ->
+    if not (field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()[APP.justdo_projects_dashboard.table_part_interest. get()]?.grid_values)?
+      return 0
+    return (100 - 50)/ ((_.size field_options) - 1)
+    
 
 Template.justdo_projects_dashboard.events
   "click .justdo-projects-dashboard-owner-selector a": (e,tpl) ->
@@ -567,10 +572,22 @@ Template.justdo_projects_dashboard_project_line.helpers
   
   formatDate: (date)->
     return JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(date)
+  
+  barProgress: ->
+    if not (subtasks = Template.instance().collected_data_rv.get().tasks_count)?
+      return 0
+    if subtasks == 0
+      return 0
+    return 100 * this.count / subtasks
+    
+  displayData: ->
+    if this.count > 0
+      return true
+    return false
     
   numberOfSubtasks: ->
-    if (count = Template.instance().collected_data_rv.get().tasks_count)?
-      return count
+    if (subtasks = Template.instance().collected_data_rv.get().tasks_count)?
+      return subtasks
     return ""
   
   columnsData: ->
@@ -584,9 +601,13 @@ Template.justdo_projects_dashboard_project_line.helpers
       if option.txt? and option.txt != ""
         if not (count = collected_data_for_field[option_id])?
           count = 0
+        if not (color = option.bg_color)?
+          color = "#0069d9"
         ret.push
           count: count
+          bg_color: color
+    
     return ret
-    
-    
+  
+  
     

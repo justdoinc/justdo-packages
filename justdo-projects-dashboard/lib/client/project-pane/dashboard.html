@@ -49,11 +49,11 @@
         <tr>
           <th>Project</th>
           <th>Owner</th>
-          <th>Start</th>
-          <th>End</th>
-          <th># of subtasks</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+<!--          <th># of subtasks</th>-->
           {{#each tableFieldsOfInterestTitles}}
-            <th>
+            <th width="{{columnWidthPercent}}%">
               {{this}}
             </th>
           {{/each}}
@@ -81,12 +81,20 @@
     <td>
       {{formatDate end_date}}
     </td>
-    <td>
-      {{numberOfSubtasks}}
-    </td>
+<!--    <td>-->
+<!--      {{numberOfSubtasks}}-->
+<!--    </td>-->
     {{#each columnsData}}
       <td>
-        {{this.count}}
+        <div class="progress" style="margin-bottom: 0px">
+          <div class="progress-bar" role="progressbar"
+               style="width: {{barProgress}}%; color: #000000; background: #{{this.bg_color}}"
+               aria-valuenow="barProgress" aria-valuemin="0" aria-valuemax="100">
+            {{#if displayData}}
+              {{this.count}} / {{numberOfSubtasks}}
+            {{/if}}
+          </div>
+        </div>
       </td>
     {{/each}}
   </tr>
