@@ -34,6 +34,10 @@ first_call = true
 
 _.extend JustdoHelpers,
   isPocPermittedDomains: (root_url) ->
+    if not root_url?
+      if not (root_url = document.location.origin)?
+        return false
+    
     if root_url in poc_permitted_domains
       if first_call
         console.info "IMPORTANT NOTE!!! this environment is running under root_url #{root_url} which is considered, POC permitted domain, running justdo under such a domain ISN'T SECURE! don't use for production purposes."
