@@ -41,7 +41,7 @@ _.extend JustdoProjectsDashboard.prototype,
   table_part_interest: new ReactiveVar ""
   
   # cache the labels
-  field_ids_to_grid_values: new ReactiveVar {}
+  field_ids_to_grid_values_rv: new ReactiveVar {} # structure of <option id>: <field options>
   
   main_part_dirty_rv: new ReactiveVar true
   

@@ -100,7 +100,7 @@ Template.justdo_projects_dashboard.onCreated ->
     field_options[table_part_inetest] = table_field_obj
     main_field_obj = gc.getSchemaExtendedWithCustomFields()[main_part_interest]
     field_options[main_part_interest] = main_field_obj
-    APP.justdo_projects_dashboard.field_ids_to_grid_values.set field_options
+    APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.set field_options
     return
   
   @main_part_data_rv = new ReactiveVar {}
@@ -114,7 +114,7 @@ Template.justdo_projects_dashboard.onCreated ->
     APP.justdo_projects_dashboard.main_part_dirty_rv.set false
     
     field_of_interest = APP.justdo_projects_dashboard.main_part_interest.get()
-    if not (field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values.get()[field_of_interest]?.grid_values)?
+    if not (field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()[field_of_interest]?.grid_values)?
       return
     
     
@@ -157,10 +157,24 @@ Template.justdo_projects_dashboard.onCreated ->
       
     return JD.collections.Tasks.find(query).fetch()
     
+    
+  # lastly - init and save the system with fields of interest
+  @amiplify_base = "justdo-projects-dashboard-#{JD.activeJustdo({_id: 1})._id}"
+  @autorun =>
+    if APP.justdo_projects_dashboard.main_part_interest.get() == "" # i.e. we didn't init the interest yet
+      return
+    amplify.store "#{self.amiplify_base}-main", APP.justdo_projects_dashboard.main_part_interest.get()
+    amplify.store "#{self.amiplify_base}-table", APP.justdo_projects_dashboard.table_part_interest.get()
+    return # end autorun
   
-  # lastly - init the system with fields of interest
-  APP.justdo_projects_dashboard.main_part_interest.set "BbJpRcsmTZuBALLhk"
-  APP.justdo_projects_dashboard.table_part_interest.set "BbJpRcsmTZuBALLhk"
+  if not (main_interest = amplify.store "#{self.amiplify_base}-main")?
+    main_interest = "state"
+  APP.justdo_projects_dashboard.main_part_interest.set main_interest
+  
+  if not (table_interest = amplify.store "#{self.amiplify_base}-table")?
+    table_interest = "state"
+  APP.justdo_projects_dashboard.table_part_interest.set table_interest
+  
   return # end of onCreated
 
 Template.justdo_projects_dashboard.onDestroyed ->
@@ -171,7 +185,7 @@ Template.justdo_projects_dashboard.onRendered ->
   @autorun =>
     
     field_of_interest = APP.justdo_projects_dashboard.main_part_interest.get()
-    grid_values =  APP.justdo_projects_dashboard.field_ids_to_grid_values.get()
+    grid_values =  APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()
     if not (field_options = grid_values[field_of_interest]?.grid_values)?
       return
       
@@ -197,17 +211,27 @@ Template.justdo_projects_dashboard.onRendered ->
     for option_id, option of field_options
       title = option.txt
       count = field_type_count[option_id] or 0
-      color = "##{option.bg_color}"
+      color = null
+      
       if option_id == ""
         count = field_type_count.undefined
-        title = "Unselected"
+        title = "(Unselected)"
         color = "#ebead1"
-      
+        
+      if option_id == "nil" # there is inconsistency here - the state field has 'nil' and all others ""
+        title = "(Unselected)"
+        color = "#ebead1"
+  
+      if option.bg_color?
+        color = "##{option.bg_color}"
+  
       if count > 0
-        data.push
+        series_obj =
           y: count
           name: title
-          color: color
+        if color?
+          series_obj.color = color
+        data.push series_obj
     
     chart =
       chart:
@@ -217,7 +241,7 @@ Template.justdo_projects_dashboard.onRendered ->
           enabled: true
           alpha: 35
       title:
-        text: "Overall"
+        text: "Projects"
       plotOptions:
         pie:
           innerSize: 100
@@ -231,7 +255,6 @@ Template.justdo_projects_dashboard.onRendered ->
         data: data
       ]
     Highcharts.chart "justdo-projects-dashboard-chart-1", chart
-    
   
     #######################################################
     # chart 2 - per project breakdown of options
@@ -254,7 +277,9 @@ Template.justdo_projects_dashboard.onRendered ->
       projects[item.id] = {}
       categories.push item.title
       for option_id, option of field_options
-        projects[item.id][option_id] = main_part_data.projects_field_of_interest[item.id][option_id] or 0
+        if not (count = main_part_data.projects_field_of_interest[item.id]?[option_id])?
+          count = 0
+        projects[item.id][option_id] = count
     
     series = []
     for option_id, option of field_options
@@ -262,12 +287,17 @@ Template.justdo_projects_dashboard.onRendered ->
         data = []
         for item in projects_list
           data.push projects[item.id][option_id]
-        series.push
+        
+        series_obj =
           name: option.txt
           data: data
           animation: false
-          color: "##{option.bg_color}"
-    
+          
+        if option.bg_color?
+          series_obj.color = "##{option.bg_color}"
+          
+        series.push series_obj
+        
     chart =
       chart:
         type: "column"
@@ -338,9 +368,10 @@ Template.justdo_projects_dashboard.onRendered ->
       for option_id, option of field_options
         if not owners[owner_id][option_id]?
           owners[owner_id][option_id] = 0
-        owners[owner_id][option_id] += main_part_data.projects_field_of_interest[project_id][option_id] or 0
-  
-    
+        if not (count = main_part_data.projects_field_of_interest[project_id]?[option_id])?
+          count = 0
+        owners[owner_id][option_id] += count
+      
     categories = []
     for owner in owners_list
       categories.push owner.name
@@ -351,11 +382,13 @@ Template.justdo_projects_dashboard.onRendered ->
         data = []
         for owner in owners_list
           data.push owners[owner.id][option_id]
-        series.push
+        series_obj =
           name: option.txt
           data: data
           animation: false
-          color: "##{option.bg_color}"
+        if option.bg_color?
+          series_obj.color = "##{option.bg_color}"
+        series.push series_obj
   
     chart =
       chart:
@@ -401,6 +434,26 @@ Template.justdo_projects_dashboard.onRendered ->
   return
 
 Template.justdo_projects_dashboard.helpers
+
+  selectedFieldLabel: ->
+    main_part_interest = APP.justdo_projects_dashboard.main_part_interest.get()
+    field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()[main_part_interest]
+    if (ret = field_options?.label)?
+      return ret
+    return ""
+    
+  gridOptionFields: ->
+    if not (gc = APP.modules.project_page.mainGridControl())?
+      return []
+    ret = []
+    for field_id, field_options of gc.getSchemaExtendedWithCustomFields()
+      if field_options.grid_column_formatter == "keyValueFormatter"
+        ret.push
+          id: field_id
+          options: field_options
+    console.log ret
+    return ret
+  
   projectsOwnersList: ->
     projects = Template.instance().activeProjectsList(true)
     owners_set = new Set()
@@ -413,11 +466,10 @@ Template.justdo_projects_dashboard.helpers
           id: owner_id
           name: JustdoHelpers.displayName(owner_id)
     return _.sortBy owners_list, name
-    
-    
 
   numberOfProjects: ->
     return Template.instance().main_part_data_rv.get().number_of_projects
+
   totalNumberOfTasks: ->
     return Template.instance().main_part_data_rv.get().total_tasks
     
@@ -427,7 +479,7 @@ Template.justdo_projects_dashboard.helpers
     return list
   
   tableFieldsOfInterestTitles: ->
-    if not (field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values.get()[APP.justdo_projects_dashboard.table_part_interest. get()]?.grid_values)?
+    if not (field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()[APP.justdo_projects_dashboard.table_part_interest. get()]?.grid_values)?
       return []
     ret = []
     for option_id, option of field_options
@@ -444,7 +496,13 @@ Template.justdo_projects_dashboard.events
       $(".justdo-projects-dashboard-owner-selector button").text("All Managers")
       tpl.selected_project_owner_id_rv.set null
     return
-
+  
+  "click .justdo-projects-dashboard-field-selector a": (e,tpl) ->
+    # for now changing the main part interest will change also the table.
+    # in the future we could control both independently
+    APP.justdo_projects_dashboard.main_part_interest.set this.id
+    APP.justdo_projects_dashboard.table_part_interest.set this.id
+    return
 
 Template.justdo_projects_dashboard_project_line.onCreated ->
   # The @data here is the task(project) object
@@ -517,7 +575,7 @@ Template.justdo_projects_dashboard_project_line.helpers
   
   columnsData: ->
     field_of_interest = APP.justdo_projects_dashboard.table_part_interest.get()
-    if not (field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values.get()[field_of_interest]?.grid_values)?
+    if not (field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()[field_of_interest]?.grid_values)?
       return
     if not (collected_data_for_field = Template.instance().collected_data_rv.get().fields?[field_of_interest])?
       return
