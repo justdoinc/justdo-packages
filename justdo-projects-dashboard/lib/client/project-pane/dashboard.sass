@@ -1,16 +1,88 @@
 .justdo-projects-dashboard
+  display: flex
+  flex-direction: column
+
   .main-part
-    .main-part-left-column
-      .big-picture-data
-        background-color: lightgrey
-        margin: 5px
-        padding: 5px
-        text-align: center
+    display: flex
 
-        .title
-          font-size: smaller
-          color: darkgray
+  .projects-item
+    background-color: white
+    padding: 1rem
+    border-radius: 8px
+    transition: box-shadow 0.15s ease-in-out
+    &:hover
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
 
-        .data
-          font-size: xx-large
-          color: black
+  .projects-dropdown
+    button
+      font-weight: bold
+      text-transform: uppercase
+      width: 160px
+      text-overflow: ellipsis
+      overflow: hidden
+      white-space: nowrap
+      text-align: left
+      background-color: #0069d9
+
+  .main-part-left-column
+    display: flex
+    margin: 1rem
+    flex-direction: column
+    box-shadow: 0 0 0 0.2rem #0069d9 !important
+
+  .big-picture-data
+    padding: 0.75rem 0.5rem
+    border-top: 1px dashed rgba(255, 255, 255, 0.25)
+    .title
+      font-size: 15px
+      text-transform: uppercase
+      font-weight: bold
+      opacity: 0.75
+    .data
+      font-size: 40px
+      line-height: 44px
+      text-transform: uppercase
+      font-weight: bold
+
+  .main-part-charts-column
+    display: flex
+    flex-grow: 1
+
+  .projects-chart
+    height: 400px
+    margin: 1rem 1rem 1rem 0rem
+    flex-grow: 1
+    box-shadow: 0 0 0 0.2rem rgba(82, 95, 127, 0.12)
+    .highcharts-root
+      font-family: "Lato" !important
+    .highcharts-title
+      text-transform: uppercase
+      font-weight: bold
+      fill: black !important
+      font-size: 15px !important
+    .highcharts-credits
+      display: none
+
+  .projects-table
+    margin: 0rem 1rem 1rem 1rem
+    box-shadow: 0 0 0 0.2rem rgba(82, 95, 127, 0.12)
+    table
+      width: 100%
+      border-collapse: collapse
+      tr
+        border-bottom: 1px dashed #eaeaea
+        &:last-child
+          border-bottom: none
+      th
+        padding: 0.5rem
+        border-right: 1px dashed #eaeaea
+        text-transform: uppercase
+        font-size: 15px
+        &:last-child
+          border-right: none
+      td
+        padding: 0.5rem
+        border-right: 1px dashed #eaeaea
+        font-size: 14px
+        &:last-child
+          border-right: none

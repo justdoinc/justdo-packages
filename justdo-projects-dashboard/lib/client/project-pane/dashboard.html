@@ -1,39 +1,48 @@
 <template name="justdo_projects_dashboard">
-  <div class="justdo-projects-dashboard">
+  <div class="justdo-projects-dashboard bg-light">
     <div class="main-part">
-      <table>
-        <tr>
-          <td class="main-part-left-column">
-            <div class="big-picture-data">
-              <div class="title">Projects</div>
-              <div class="data">{{numberOfProjects}}</div>
-              <div class="units"></div>
-            </div>
-            <div class="big-picture-data">
-              <div class="title">Tasks</div>
-              <div class="data">{{totalNumberOfTasks}}</div>
-              <div class="units"></div>
-            </div>
-          </td>
-          <td class="main-part-charts-column">
-            <table class="main-part-charts-column-table">
-              <td class="chart-td">
-                <div id="justdo-projects-dashboard-chart-1"></div>
-              </td>
-              <td class="chart-td">
-                <div id="justdo-projects-dashboard-chart-2"></div>
-              </td>
-              <td class="chart-td">
-                <div id="justdo-projects-dashboard-chart-3"></div>
-              </td>
-            </table>
-          </td>
-        </tr>
-      </table>
-
+      <div class="main-part-left-column projects-item bg-primary">
+        <!-- Project Manager Dropdown -->
+        <div class="dropdown projects-dropdown mb-2">
+          <button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Project Manager
+          </button>
+          <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+            <li><a href="#" class="dropdown-item">Project Manager 1</a></li>
+            <li><a href="#" class="dropdown-item">Project Manager 2</a></li>
+          </ul>
+        </div>
+        <!-- Field of Interest Dropdown -->
+        <div class="dropdown projects-dropdown mb-3">
+          <button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Field of Interest
+          </button>
+          <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+            <li><a href="#" class="dropdown-item">Field of Interest 1</a></li>
+            <li><a href="#" class="dropdown-item">Field of Interest 2</a></li>
+          </ul>
+        </div>
+        <div class="big-picture-data">
+          <div class="title text-white">Projects</div>
+          <div class="data text-white">{{numberOfProjects}}</div>
+          <div class="units"></div>
+        </div>
+        <div class="big-picture-data">
+          <div class="title text-white">Tasks</div>
+          <div class="data text-white">{{totalNumberOfTasks}}</div>
+          <div class="units"></div>
+        </div>
+      </div>
+      <div class="main-part-charts-column">
+        <div id="justdo-projects-dashboard-chart-1" class="projects-chart projects-item"></div>
+        <div id="justdo-projects-dashboard-chart-2" class="projects-chart projects-item"></div>
+        <div id="justdo-projects-dashboard-chart-3" class="projects-chart projects-item"></div>
+      </div>
     </div>
-    <div class="projects-table">
-      <table border="1px">
+
+
+    <div class="projects-table projects-item">
+      <table>
         <tr>
           <th>Project</th>
           <th>Owner</th>
@@ -77,6 +86,5 @@
         {{this.count}}
       </td>
     {{/each}}
-
   </tr>
 </template>
