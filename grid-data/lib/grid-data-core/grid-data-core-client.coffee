@@ -126,6 +126,8 @@ _.extend GridDataCore.prototype,
     @flush_manager = new JustdoHelpers.FlushManager
       min_flush_delay: 80
 
+    @_initCollectionItemsDescendantsChangesTracker()
+
     Tracker.nonreactive =>
       # We don't want GDC's internal computation to affect
       # any enclosing computations
@@ -462,6 +464,158 @@ _.extend GridDataCore.prototype,
   lock: -> @flush_manager.lock()
 
   release: (immediate) -> @flush_manager.release()
+
+  _initCollectionItemsDescendantsChangesTracker: ->
+    @_collection_items_tracked_for_descendants_changes = {}
+    # _collection_items_tracked_for_descendants_changes Structure:
+    # {
+    #   "item_id": [ # An array because there can be more than one tracker for the same item_id
+    #     {
+    #       tracker_id: A random id for this tracker, so we can remove it when it isn't needed anymore
+    #       direct_children_only: false # true / false
+    #       descendants_changed_dep: new Tracker.Dependency() # reports that changes made to the queue,
+    #                                                         # can be received by getChanges
+    #       tracked_fields: [] # Either undefined, or an array of fields, if undefined, all fields are
+    #                          # tracked
+    #     }
+    #   ]
+    # }
+
+    @_collection_items_tracked_for_descendants_changes = {}
+
+    getAllDirectParentsItemsDocs = (items_ids) =>
+      res = []
+
+      # TODO: ensure each doc returns only once!
+
+      for item_id in items_ids
+        if item_id == "0" or item_id == 0
+          # Root
+          continue
+
+        if (parents_ids = _.keys(@items_by_id[item_id]?.parents))
+          for parent_id in parents_ids
+            if (parent_doc = @items_by_id[parent_id])?
+              res.push parent_doc
+
+      # Remove parents found more than once
+      res = _.uniq res, false, (doc) -> doc._id # false is for isSorted
+
+      return res
+
+    announceTrackedItemChanged = (tracked_item_id, is_direct_children_changed, fields_affected) =>
+      # fields_affected might be undefined, in which case we assume all the fields
+      # are affected
+
+      for tracker in @_collection_items_tracked_for_descendants_changes[tracked_item_id]
+        if tracker.direct_children_only and not is_direct_children_changed
+          continue
+
+        if fields_affected?
+          # When fields_affected is undefined - we assume all the fields are affected by this change,
+          # hence no need to check intersection with the tracker tracked fields.
+          if tracker.tracked_fields? and _.isEmpty(_.intersection(tracker.tracked_fields, fields_affected))
+            continue
+
+        tracker.descendants_changed_dep.changed()
+
+      return
+
+    @on "structure-changed", (changes) ->
+      if _.isEmpty(@_collection_items_tracked_for_descendants_changes)
+        # Nothing to do
+        return
+
+      # Note, unlike content-changed below, the changes provided here are already pointing
+      # to their parents. Hence we begin differently - looping over all the parents, which
+      # we regard as direct parents of the changes, and only then looping over their descendants.
+
+      for parent_id of changes.items_ids_with_changed_children
+        if parent_id of @_collection_items_tracked_for_descendants_changes
+          announceTrackedItemChanged(parent_id, true) 
+
+      # Go up the tree, for every parent, check if it is in the
+      # _collection_items_tracked_for_descendants_changes
+      items_to_check = _.keys(changes.items_ids_with_changed_children)
+      while (not _.isEmpty(parents_docs = getAllDirectParentsItemsDocs(items_to_check)))
+        items_to_check = []
+
+        for parent_doc in parents_docs
+          if parent_doc._id of @_collection_items_tracked_for_descendants_changes
+            announceTrackedItemChanged(parent_doc._id, false) # false is for direct parents
+
+          items_to_check.push parent_doc._id
+
+      return
+
+
+    @on "content-changed", (item_id, changed_fields_array) ->
+      if _.isEmpty(@_collection_items_tracked_for_descendants_changes)
+        # Nothing to do
+        return
+
+      # Go up the tree, for every parent, check if it is in the
+      # _collection_items_tracked_for_descendants_changes
+      items_to_check = [item_id]
+      direct_parents = true
+      while (not _.isEmpty(parents_docs = getAllDirectParentsItemsDocs(items_to_check)))
+        items_to_check = []
+
+        for parent_doc in parents_docs
+          if parent_doc._id of @_collection_items_tracked_for_descendants_changes
+            announceTrackedItemChanged(parent_doc._id, direct_parents, changed_fields_array)
+
+          items_to_check.push parent_doc._id
+
+        direct_parents = false # After the first loop, we are not checking item_id direct parents
+                               # any longer
+
+      return
+
+  invalidateOnCollectionItemDescendantsChanges: (collection_item_id, options) ->
+    if not Tracker.currentComputation?
+      console.error "invalidateOnCollectionItemDescendantsChanges must be called inside a computation"
+
+      return
+
+    default_options =
+      direct_children_only: false
+      tracked_fields: undefined # Usage example for direct_children_only: ["title", "status"]
+                                #
+                                # Note, structure changes (add/remove parent) are considered
+                                # as changing all the fields, so even if option is set to
+                                # ["title", "status"] , add child to the tracked
+                                # collection_item_id will still trigger invalidation.
+    options = _.extend default_options, options
+
+    tracker_id = Random.id()
+    tracker_dep = new Tracker.Dependency()
+
+    tracker_dep.depend()
+
+    tracker_def =
+      tracker_id: tracker_id
+      direct_children_only: options.direct_children_only or false
+      tracked_fields: options.tracked_fields or undefined
+      descendants_changed_dep: tracker_dep
+
+    if not @_collection_items_tracked_for_descendants_changes[collection_item_id]?
+      @_collection_items_tracked_for_descendants_changes[collection_item_id] = []
+    @_collection_items_tracked_for_descendants_changes[collection_item_id].push tracker_def
+
+    if Tracker.currentComputation?
+      Tracker.onInvalidate =>
+        # Once invalidated, remove the tracker.
+
+        @_collection_items_tracked_for_descendants_changes[collection_item_id] =
+          _.filter(@_collection_items_tracked_for_descendants_changes[collection_item_id], (_tracker_def) -> _tracker_def.tracker_id != tracker_id)
+
+        if _.isEmpty(@_collection_items_tracked_for_descendants_changes[collection_item_id])
+          delete @_collection_items_tracked_for_descendants_changes[collection_item_id]
+
+        return
+
+    return
 
   onDestroy: (proc) ->
     # not to be confused with @destroy, onDestroy registers procedures to be called by @destroy()
