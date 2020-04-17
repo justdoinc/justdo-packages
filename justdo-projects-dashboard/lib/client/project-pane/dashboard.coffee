@@ -528,7 +528,7 @@ Template.justdo_projects_dashboard.helpers
     
   activeProjects: ->
     list = Template.instance().activeProjectsList()
-    list = _.sortBy list, (project) -> project.title.toUpperCase()
+    list = _.sortBy list, (project) -> project.title?.toUpperCase()
     return list
   
   tableFieldsOfInterestTitles: ->
