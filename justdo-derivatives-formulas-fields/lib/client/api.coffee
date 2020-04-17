@@ -25,7 +25,7 @@ _.extend JustdoDerivativesFormulasFields.prototype,
     return
 
   installProjectFields: (project_id) ->
-    if (deriviatives_formulas_fields = JustdoDerivativesFormulasFields.deriviatives_formulas_fields[project_id])?
+    if (deriviatives_formulas_fields = JustdoDerivativesFormulasFields.deriviatives_formulas_fields?[project_id])?
       for deriviatives_formulas_field in deriviatives_formulas_fields
         APP.modules.project_page.setupPseudoCustomField deriviatives_formulas_field.field_id,
           label: deriviatives_formulas_field.field_label
@@ -46,7 +46,7 @@ _.extend JustdoDerivativesFormulasFields.prototype,
     return
 
   uninstallProjectFields: (project_id) ->
-    if (deriviatives_formulas_fields = JustdoDerivativesFormulasFields.deriviatives_formulas_fields[project_id])?
+    if (deriviatives_formulas_fields = JustdoDerivativesFormulasFields.deriviatives_formulas_fields?[project_id])?
       for deriviatives_formulas_field in deriviatives_formulas_fields
         APP.modules.project_page.removePseudoCustomFields deriviatives_formulas_field.field_id
 

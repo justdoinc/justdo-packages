@@ -62,3 +62,5 @@ _.extend JustdoDerivativesFormulasFields,
   #         return """<div style="font-weight: bold; text-decoration: underline; text-align: right;">#{result}</div>"""
   #     }
   #   ]
+
+  deriviatives_formulas_fields: {}
