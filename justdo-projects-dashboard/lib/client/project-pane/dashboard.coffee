@@ -5,7 +5,7 @@ Template.justdo_projects_dashboard.onCreated ->
   @observer = null
   @selected_project_owner_id_rv = new ReactiveVar null # null or owner id
   
-  @triggerProjectsReactivityForTask = (task_id, wait) ->
+  @triggerProjectsReactivityForTask = (task_id) ->
     if not (gc = APP.modules.project_page.mainGridControl())?
       return
     if  not(gd = gc._grid_data)?
@@ -19,7 +19,7 @@ Template.justdo_projects_dashboard.onCreated ->
     Meteor.setTimeout ->
       if not paths?
         if not (paths = gd.getAllCollectionItemIdPaths(task_id))?
-          # we shouldn't get here
+          # may get to this point if remove of task happens w/in 500m of adding the task
           return
       
       for path in paths
@@ -38,12 +38,12 @@ Template.justdo_projects_dashboard.onCreated ->
     if not self.tasks_queue_is_dirty_rv.get()
       return
     _.each self.tasks_queue, (task_id) ->
-      self.triggerProjectsReactivityForTask task_id
+      self.triggerProjectsReactivityForTask task_id # note - reactive function
     self.tasks_queue = []
     self.tasks_queue_is_dirty_rv.set false
     return
   
-  @queuTaskForProjectsReactivityChecks = (task_id) ->
+  @queueTaskForProjectsReactivityChecks = (task_id) ->
     self.tasks_queue.push task_id
     self.tasks_queue_is_dirty_rv.set true
     return
@@ -61,13 +61,13 @@ Template.justdo_projects_dashboard.onCreated ->
         
       self.observer = cursor.observeChanges
         added: (id, fields)->
-          self.queuTaskForProjectsReactivityChecks id
+          self.queueTaskForProjectsReactivityChecks id
           return
         changed: (id, fields)->
-          self.queuTaskForProjectsReactivityChecks id
+          self.queueTaskForProjectsReactivityChecks id
           return
         removed: (id)->
-          self.queuTaskForProjectsReactivityChecks id
+          self.queueTaskForProjectsReactivityChecks id
           return
     return
     
@@ -80,7 +80,8 @@ Template.justdo_projects_dashboard.onCreated ->
   # trigger observer reset on justdo change
   @autorun =>
     if (justdo_id = JD.activeJustdo({_id: 1})._id)?
-      self.setObserver()
+      self.setObserver() # note - set observer is reactive resource
+    return
   
   # set the data to collect based on the needs of the main part and the table...
   @autorun =>
@@ -136,7 +137,7 @@ Template.justdo_projects_dashboard.onCreated ->
       if not main_part_data.projects_count_by_project_manager[project_owner]?
         main_part_data.projects_count_by_project_manager[project_owner] = 0
       main_part_data.projects_count_by_project_manager[project_owner] += 1
-      main_part_data.projects_field_of_interest[project_id] = tpl_collected_data.fields[field_of_interest]
+      main_part_data.projects_field_of_interest[project_id] = tpl_collected_data.fields?[field_of_interest]
       main_part_data.project_objs[project_id] = tpl_instance.data
       
     self.main_part_data_rv.set main_part_data
@@ -145,6 +146,7 @@ Template.justdo_projects_dashboard.onCreated ->
   @activeProjectsList = (ignore_owners_part = false) ->
     query =
       "p:dp:is_project": true
+      "project_id": JD.activeJustdo({_id: 1})._id
       $or:  [
         "p:dp:is_archived_project": false
       ,
@@ -154,9 +156,14 @@ Template.justdo_projects_dashboard.onCreated ->
     if not ignore_owners_part
       if (owner_id = self.selected_project_owner_id_rv.get())?
         query.owner_id = owner_id
-      
-    return JD.collections.Tasks.find(query).fetch()
+    APP.justdo_projects_dashboard.main_part_dirty_rv.set true
+    projects_list = []
+    JD.collections.Tasks.find(query).forEach (project) ->
+      projects_list.push project
+      if (tpl = APP.justdo_projects_dashboard.project_id_to_template_instance[project._id])?
+        tpl.data = project
     
+    return projects_list
     
   # lastly - init and save the system with fields of interest
   @amiplify_base = "justdo-projects-dashboard-#{JD.activeJustdo({_id: 1})._id}"
@@ -167,13 +174,18 @@ Template.justdo_projects_dashboard.onCreated ->
     amplify.store "#{self.amiplify_base}-table", APP.justdo_projects_dashboard.table_part_interest.get()
     return # end autorun
   
-  if not (main_interest = amplify.store "#{self.amiplify_base}-main")?
-    main_interest = "state"
-  APP.justdo_projects_dashboard.main_part_interest.set main_interest
-  
-  if not (table_interest = amplify.store "#{self.amiplify_base}-table")?
-    table_interest = "state"
-  APP.justdo_projects_dashboard.table_part_interest.set table_interest
+  #reload on JustDo change
+  @autorun =>
+    JD.activeJustdo({_id: 1})
+    if not (main_interest = amplify.store "#{self.amiplify_base}-main")?
+      main_interest = "state"
+    APP.justdo_projects_dashboard.main_part_interest.set main_interest
+    
+    if not (table_interest = amplify.store "#{self.amiplify_base}-table")?
+      table_interest = "state"
+    APP.justdo_projects_dashboard.table_part_interest.set table_interest
+    self.main_part_data_rv.set {}
+    return # end of autorun
   
   return # end of onCreated
 
@@ -188,10 +200,13 @@ Template.justdo_projects_dashboard.onRendered ->
     grid_values =  APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()
     if not (field_options = grid_values[field_of_interest]?.grid_values)?
       return
-      
+  
+    if $("#justdo-projects-dashboard-chart-1").length == 0
+      return
+    
     field_label = grid_values[field_of_interest].label
     main_part_data = Template.instance().main_part_data_rv.get()
-  
+    
     common_charts_width = 300
     
     #######################################################
@@ -240,6 +255,10 @@ Template.justdo_projects_dashboard.onRendered ->
         options3d:
           enabled: true
           alpha: 35
+  
+      exporting:
+        enabled: false
+  
       title:
         text: "Projects"
       plotOptions:
@@ -308,6 +327,15 @@ Template.justdo_projects_dashboard.onRendered ->
           beta: 15
           viewDistance: 25
           depth: 40
+          
+      exporting:
+        enabled: false
+  
+      legend:
+        align: "left"
+        verticalAlign: "top"
+        floating: true
+        y: 20
         
       title:
         text: "#{field_label}"
@@ -400,9 +428,15 @@ Template.justdo_projects_dashboard.onRendered ->
           beta: 15
           viewDistance: 25
           depth: 40
+          
+      exporting:
+        enabled: false
+        
+      legend:
+        enabled: false
     
       title:
-        text: "owners"
+        text: "project owners"
     
       xAxis:
         categories: categories
@@ -450,7 +484,6 @@ Template.justdo_projects_dashboard.helpers
         ret.push
           id: field_id
           options: field_options
-    console.log ret
     return ret
   
   projectsOwnersList: ->
@@ -468,7 +501,20 @@ Template.justdo_projects_dashboard.helpers
 
   numberOfProjects: ->
     return Template.instance().main_part_data_rv.get().number_of_projects
-
+    
+  isProjectsModuleEnabled: ->
+    if (curProj = APP.modules.project_page.curProj())?
+      return curProj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
+    return false
+    
+  readyToDisplayCharts: ->
+    # this one blocks until there are projects loaded and highcharts is ready and the projects module is installed
+    if Template.instance().activeProjectsList().length > 0
+      if APP.justdo_highcharts._highchart_loaded_rv.get()
+        if (curProj = APP.modules.project_page.curProj())?
+          return curProj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
+    return false
+    
   totalNumberOfTasks: ->
     return Template.instance().main_part_data_rv.get().total_tasks
     
@@ -498,7 +544,7 @@ Template.justdo_projects_dashboard.events
       $(".justdo-projects-dashboard-owner-selector button").text(this.name)
       tpl.selected_project_owner_id_rv.set this.id
     else
-      $(".justdo-projects-dashboard-owner-selector button").text("All Managers")
+      $(".justdo-projects-dashboard-owner-selector button").text("All Members")
       tpl.selected_project_owner_id_rv.set null
     return
   
@@ -551,7 +597,7 @@ Template.justdo_projects_dashboard_project_line.onCreated ->
         undefined: 0
         
     # for now we re-iterate on every refresh. todo: improve performance
-    if (grid_data = APP.modules.project_page?.gridData())?
+    if (grid_data = APP.modules.project_page.getGridControlMux()?.getMainGridControl(true)?._grid_data)?
       if (path = grid_data.getCollectionItemIdPath(@data._id))?
         #trigger if marked so by the mother ship
         if not self.is_dirty_rv.get()
@@ -567,8 +613,8 @@ Template.justdo_projects_dashboard_project_line.onDestroyed ->
   return
   
 Template.justdo_projects_dashboard_project_line.helpers
-  ownerName: ->
-    return JustdoHelpers.displayName(@owner_id)
+  ownerDoc: ->
+    Meteor.users.findOne(@owner_id)
   
   formatDate: (date)->
     return JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(date)
@@ -602,12 +648,17 @@ Template.justdo_projects_dashboard_project_line.helpers
         if not (count = collected_data_for_field[option_id])?
           count = 0
         if not (color = option.bg_color)?
-          color = "#0069d9"
+          color = "c3dafc"
         ret.push
           count: count
           bg_color: color
     
     return ret
+
+Template.justdo_projects_dashboard_project_line.events
+  "click a": (e) ->
+    e.preventDefault()
+    gcm = APP.modules.project_page.getCurrentGcm()
+    gcm.activateTabWithSectionsState "sub-tree", {global: {"root-item": this._id}}
+    return
   
-  
-    

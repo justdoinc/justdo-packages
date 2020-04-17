@@ -1,68 +1,80 @@
 <template name="justdo_projects_dashboard">
-  <div class="justdo-projects-dashboard bg-light">
-    <div class="main-part">
-      <div class="main-part-left-column projects-item bg-primary">
-        <!-- Project Manager Dropdown -->
-        <div class="dropdown projects-dropdown mb-2 justdo-projects-dashboard-owner-selector">
-          <button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            All Managers
-          </button>
-          <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
-            <li><a href="#" class="dropdown-item" owner-id="*">All Managers</a></li>
-            {{#each projectsOwnersList}}
-              <li><a href="#" class="dropdown-item" owner-id="{{this.id}}">{{this.name}}</a></li>
-            {{/each}}
-          </ul>
+  <div style="height: 100%">
+    {{#if readyToDisplayCharts}}
+      <div class="justdo-projects-dashboard bg-light">
+        <div class="main-part">
+        <div class="main-part-left-column projects-item bg-primary">
+          <!-- Project Manager Dropdown -->
+          <div class="dropdown projects-dropdown mb-2 justdo-projects-dashboard-owner-selector">
+            <button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              All Members
+            </button>
+            <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+              <li><a href="#" class="dropdown-item" owner-id="*">All Members</a></li>
+              {{#each projectsOwnersList}}
+                <li><a href="#" class="dropdown-item" owner-id="{{id}}">{{name}}</a></li>
+              {{/each}}
+            </ul>
+          </div>
+          <!-- Field of Interest Dropdown -->
+          <div class="dropdown projects-dropdown mb-3 justdo-projects-dashboard-field-selector">
+            <button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{selectedFieldLabel}}
+            </button>
+            <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+              {{#each gridOptionFields}}
+                <li><a href="#" class="dropdown-item">{{options.label}}</a></li>
+              {{/each}}
+            </ul>
+          </div>
+          <div class="big-picture-data">
+            <div class="title text-white">Projects</div>
+            <div class="data text-white">{{numberOfProjects}}</div>
+            <div class="units"></div>
+          </div>
+          <div class="big-picture-data">
+            <div class="title text-white">Tasks</div>
+            <div class="data text-white">{{totalNumberOfTasks}}</div>
+            <div class="units"></div>
+          </div>
         </div>
-        <!-- Field of Interest Dropdown -->
-        <div class="dropdown projects-dropdown mb-3 justdo-projects-dashboard-field-selector">
-          <button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{selectedFieldLabel}}
-          </button>
-          <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
-            {{#each gridOptionFields}}
-              <li><a href="#" class="dropdown-item">{{this.options.label}}</a></li>
-            {{/each}}
-          </ul>
-        </div>
-        <div class="big-picture-data">
-          <div class="title text-white">Projects</div>
-          <div class="data text-white">{{numberOfProjects}}</div>
-          <div class="units"></div>
-        </div>
-        <div class="big-picture-data">
-          <div class="title text-white">Tasks</div>
-          <div class="data text-white">{{totalNumberOfTasks}}</div>
-          <div class="units"></div>
+        <div class="main-part-charts-column">
+          <div id="justdo-projects-dashboard-chart-1" class="projects-chart projects-item"></div>
+          <div id="justdo-projects-dashboard-chart-2" class="projects-chart projects-item"></div>
+          <div id="justdo-projects-dashboard-chart-3" class="projects-chart projects-item"></div>
         </div>
       </div>
-      <div class="main-part-charts-column">
-        <div id="justdo-projects-dashboard-chart-1" class="projects-chart projects-item"></div>
-        <div id="justdo-projects-dashboard-chart-2" class="projects-chart projects-item"></div>
-        <div id="justdo-projects-dashboard-chart-3" class="projects-chart projects-item"></div>
+        <div class="projects-table projects-item">
+          <table>
+            <tr>
+              <th>Project</th>
+              <th>Owner</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              {{#each tableFieldsOfInterestTitles}}
+                <th width="{{columnWidthPercent}}%">
+                  {{this}}
+                </th>
+              {{/each}}
+            </tr>
+            {{#each activeProjects}}
+              {{>justdo_projects_dashboard_project_line }}
+            {{/each}}
+          </table>
+        </div>
       </div>
-    </div>
-
-
-    <div class="projects-table projects-item">
-      <table>
-        <tr>
-          <th>Project</th>
-          <th>Owner</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-<!--          <th># of subtasks</th>-->
-          {{#each tableFieldsOfInterestTitles}}
-            <th width="{{columnWidthPercent}}%">
-              {{this}}
-            </th>
-          {{/each}}
-        </tr>
-        {{#each activeProjects}}
-          {{>justdo_projects_dashboard_project_line}}
-        {{/each}}
-      </table>
-    </div>
+    {{else}}
+      <div class="dashboard-start-message">
+        <div>
+          Dashboard will be presented once one or more tasks are assigned as projects.
+        </div>
+        {{#unless isProjectsModuleEnabled}}
+          <div>
+            (Projects plugin should be enabled first)
+          </div>
+        {{/unless}}
+      </div>
+    {{/if}}
   </div>
 </template>
 
@@ -70,10 +82,15 @@
 <template name="justdo_projects_dashboard_project_line">
   <tr>
     <td>
-      {{this.title}}
+      <a href="#" class="dropdown-item px-1 d-flex align-items-center">
+        <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#briefcase"></use></svg>
+        {{cutString title 40}}
+      </a>
     </td>
     <td>
-      {{ownerName}}
+      {{#with ownerDoc}}
+        {{> justdo_avatar}}&nbsp;&nbsp;&nbsp;{{displayName}}
+      {{/with}}
     </td>
     <td>
       {{formatDate start_date}}
@@ -81,17 +98,14 @@
     <td>
       {{formatDate end_date}}
     </td>
-<!--    <td>-->
-<!--      {{numberOfSubtasks}}-->
-<!--    </td>-->
     {{#each columnsData}}
       <td>
         <div class="progress" style="margin-bottom: 0px">
           <div class="progress-bar" role="progressbar"
-               style="width: {{barProgress}}%; color: #000000; background: #{{this.bg_color}}"
+               style="width: {{barProgress}}%; color: #000000; background: #{{bg_color}}"
                aria-valuenow="barProgress" aria-valuemin="0" aria-valuemax="100">
             {{#if displayData}}
-              {{this.count}} / {{numberOfSubtasks}}
+              {{count}} / {{numberOfSubtasks}}
             {{/if}}
           </div>
         </div>
