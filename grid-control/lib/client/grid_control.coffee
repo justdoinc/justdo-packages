@@ -35,6 +35,8 @@ GridControl = (options, container, operations_container) ->
 
   @logger = Logger.get("grid-control")
 
+  @_on_destroy_procedures = []
+
   @custom_fields_manager = null
   @custom_fields_changes_computation = null
   if @options.custom_fields_manager?
@@ -1703,10 +1705,18 @@ _.extend GridControl.prototype,
       destory: destory
     }
 
+  onDestroy: (proc) ->
+    # not to be confused with @destroy, onDestroy registers procedures to be called by @destroy()
+    @_on_destroy_procedures.push proc
+
+    return
+
   destroy: ->
     if @_destroyed
       return
     @_destroyed = true
+
+    _.each @_on_destroy_procedures, (proc) -> proc()
 
     # In case init_dfd isn't resolved already, reject it
     @_init_dfd.reject()

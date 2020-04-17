@@ -72,6 +72,8 @@ GridDataCore = (options) ->
 
   @logger.debug "Init begin"
 
+  @_on_destroy_procedures = []
+
   @options = _.extend {}, default_options, options
 
   JustdoHelpers.loadEventEmitterHelperMethods(@)
@@ -461,11 +463,19 @@ _.extend GridDataCore.prototype,
 
   release: (immediate) -> @flush_manager.release()
 
+  onDestroy: (proc) ->
+    # not to be confused with @destroy, onDestroy registers procedures to be called by @destroy()
+    @_on_destroy_procedures.push proc
+
+    return
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"
 
       return
+
+    _.each @_on_destroy_procedures, (proc) -> proc()
 
     @_destroyForeignKeysTrackers()
 
