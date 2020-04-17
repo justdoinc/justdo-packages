@@ -381,7 +381,11 @@ _.extend GridControl.prototype,
       # Optimization, the user can provide his own extended_schema to avoid recalculating it
       extended_schema = @getSchemaExtendedWithCustomFields()
 
-    field_def = extended_schema[field_id]
+    if not (field_def = extended_schema[field_id])?
+      # Some fields might not have field definition in the schema (example, custom private
+      # fields used ad hoc to save state by plugins)
+
+      return []
 
     extended_dependent_fields = []
     for extended_schema_field_id, extended_schema_field_def of extended_schema
