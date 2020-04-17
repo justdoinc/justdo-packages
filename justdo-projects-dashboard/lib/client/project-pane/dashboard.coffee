@@ -186,7 +186,15 @@ Template.justdo_projects_dashboard.onCreated ->
     APP.justdo_projects_dashboard.table_part_interest.set table_interest
     self.main_part_data_rv.set {}
     return # end of autorun
-  
+
+  # Print Dashboard
+  @printDashboard = ->
+    $("body").append """<div class="print-dashboard-overlay"></div>"""
+    $(".justdo-projects-dashboard").clone().appendTo(".print-dashboard-overlay")
+    window.print()
+    $(".print-dashboard-overlay").remove()
+    return # end of Print Dashboard
+
   return # end of onCreated
 
 Template.justdo_projects_dashboard.onDestroyed ->

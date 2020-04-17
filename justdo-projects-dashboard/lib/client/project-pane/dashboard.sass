@@ -33,6 +33,24 @@
       text-align: left
       background-color: #0069d9
 
+  .projects-operations
+    margin: 0.5rem 0px
+    display: flex
+    align-items: center
+    background-color: rgba(255, 255, 255, 0.1)
+    padding: 0.5rem
+    border-radius: 4px
+    svg
+      cursor: pointer
+      &:hover
+        background-color: rgba(255, 255, 255, 0.16)
+
+  .projects-operations-divider
+    width: 1px
+    height: 80%
+    background-color: rgba(255, 255, 255, 0.16)
+    margin: 0 0.5rem
+
   .main-part-left-column
     display: flex
     margin: 1rem
@@ -41,7 +59,6 @@
 
   .big-picture-data
     padding: 0.75rem 0.5rem
-    border-top: 1px dashed rgba(255, 255, 255, 0.25)
     .title
       font-size: 15px
       text-transform: uppercase
@@ -52,6 +69,9 @@
       line-height: 44px
       text-transform: uppercase
       font-weight: bold
+
+  .big-picture-data + .big-picture-data
+    border-top: 1px dashed rgba(255, 255, 255, 0.25)
 
   .main-part-charts-column
     display: flex
@@ -106,3 +126,31 @@
   opacity: 0.35
   padding: 0 5rem
   height: 100%
+
+.print-dashboard-overlay
+  position: absolute
+  z-index: 99999
+  width: auto
+  height: auto
+  background-color: white
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+  padding: 2rem
+  overflow: auto
+  opacity: 0
+  .justdo-projects-dashboard
+    .projects-dropdown,
+    .projects-operations
+      display: none
+    .projects-item
+      box-shadow: 0 0 0 0.2rem #0069d9 !important
+    .big-picture-data
+      .title,
+      .data
+        color: black !important
+
+@media print
+  .print-dashboard-overlay
+    opacity: 1 !important
