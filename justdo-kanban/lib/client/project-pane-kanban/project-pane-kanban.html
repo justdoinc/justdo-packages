@@ -41,9 +41,9 @@
         </div>
         <div class="divider"></div>
         <!-- Kanban User Selector -->
-        <div class="kanban-member-selector {{#if activeMember}}active-member{{/if}} dropdown mr-1">
-          {{#if activeMember}}
-            <img class="kanban-filter-member-avatar" src="{{memberAvatar activeMember}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <div class="kanban-member-selector {{#if memberFilter}}active-member{{/if}} dropdown mr-1">
+          {{#if memberFilter}}
+            <img class="kanban-filter-member-avatar" src="{{memberAvatar memberFilter}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <svg class="jd-icon kanban-clear-member-filter"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
           {{else}}
             <svg class="jd-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#filter"/></svg>
@@ -112,7 +112,7 @@
     <div class="kanban-wrapper-container">
       <div class="kanban-boards">
 
-        {{#each boards}}
+        {{#each currentBoardStateVisibleBoards}}
           <div class="kanban-board">
             <div class="kanban-board-header">
               <div class="kanban-board-title">
@@ -135,7 +135,7 @@
               </div>
             </div>
             <div class="kanban-board-content">
-              {{#each tasks board_value_id}}
+              {{#each getBoardTasks board_value_id}}
                 <div class="kanban-task">
                   <div class="kanban-task-id">{{seqId}}</div>
                   <div class="kanban-task-priority" style="background-color: {{taskPriorityColor priority}}"></div>
@@ -155,7 +155,7 @@
                 </div>
               {{/each}}
               <div class="kanban-task-add">
-                <input class="form-control kanban-task-add-input" type="text" placeholder="Add new Task">
+                <textarea class="form-control kanban-task-add-input" type="text" placeholder="Add a new task"></textarea>
               </div>
             </div>
           </div>
@@ -205,8 +205,8 @@
           </button>
         </div>
         <div class="modal-body">
-          {{#each allBoards}}
-            <button type="button" class="kanban-board-add-item btn btn-primary {{boardIsHidden this}} btn-sm text-left font-weight-bold">{{boardLabel this}}</button>
+          {{#each allActiveBoardFieldValues}}
+            <button type="button" class="kanban-board-add-item btn btn-primary {{#if boardIsVisible this}}visible{{/if}} btn-sm text-left font-weight-bold">{{boardLabel this}}</button>
           {{/each}}
         </div>
       </div>
