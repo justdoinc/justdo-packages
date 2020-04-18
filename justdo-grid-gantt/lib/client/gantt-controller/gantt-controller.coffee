@@ -7,7 +7,7 @@ Template.justdo_grid_gantt_controller.onRendered ->
 
 Template.justdo_grid_gantt_controller.events
   "change #grind_dantt_controller_from": (e, tpl) ->
-    APP.justdo_grid_gantt.epoch_time_from_rv.set(APP.justdo_grid_gantt.dateStringToEpoch(e.target.value))
+    APP.justdo_grid_gantt.epoch_time_from_rv.set(APP.justdo_grid_gantt.dateStringToStartOfDayEpoch(e.target.value))
     return
 
   "change #grind_dantt_controller_to": (e, tpl) ->

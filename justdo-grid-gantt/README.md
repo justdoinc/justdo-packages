@@ -2,7 +2,7 @@
 
 * String to epoch functions:
 
-      dateStringToEpoch(date)
+      dateStringToStartOfDayEpoch(date)
       dateStringToMidDayEpoch(date)
       dateStringToEndOfDayEpoch(date)      
     

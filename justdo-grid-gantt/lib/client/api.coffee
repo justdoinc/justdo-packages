@@ -8,7 +8,7 @@ _.extend JustdoGridGantt.prototype,
     @epoch_time_from_rv = new ReactiveVar (start_of_day_epoch - 5 * @day)
     @epoch_time_to_rv = new ReactiveVar (start_of_day_epoch + 6 * @day - 1000)
     console.log ">>>>",@epoch_time_from_rv.get(), @epoch_time_to_rv.get()
-    @dateStringToEpoch = (date) ->
+    @dateStringToStartOfDayEpoch = (date) ->
       re = /^\d\d\d\d-\d\d-\d\d$/g
 
       if not re.test date
@@ -23,14 +23,14 @@ _.extend JustdoGridGantt.prototype,
       if not re.test date
         return Date.UTC(0)
       day = 1000 * 60 * 60 * 24
-      return day - 1 + self.dateStringToEpochC date
+      return day - 1 + self.dateStringToStartOfDayEpoch date
 
     @dateStringToMidDayEpoch = (date) ->
       re = /^\d\d\d\d-\d\d-\d\d$/g
       if not re.test date
         return Date.UTC(0)
       half_day = 1000 * 60 * 60 * 12
-      return half_day + self.dateStringToEpoch date
+      return half_day + self.dateStringToStartOfDayEpoch date
 
     @timeOffsetPixels = (epoch_range, time, width_in_pixels) ->
       epoch_start = epoch_range[0]

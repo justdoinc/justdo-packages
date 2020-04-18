@@ -46,17 +46,62 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     column_start_end = [0, 0]
     if not (column_start_end = @getCurrentColumnData("column_start_end"))?
       column_start_end = [APP.justdo_grid_gantt.epoch_time_from_rv.get(), APP.justdo_grid_gantt.epoch_time_to_rv.get()]
+
+    column_start_epoch = column_start_end[0]
+    column_end_epoch = column_start_end[1]
+    column_width_px = @getCurrentColumnData("column_width")
+
+    ############
+    # main bar
+    ############
+    main_bar_mark = ""
+    start_epoch = 0
+    end_epoch = 0
+
+    if doc.start_date?
+      start_epoch = APP.justdo_grid_gantt.dateStringToStartOfDayEpoch doc.start_date
+      if doc.end_date?
+        end_epoch = APP.justdo_grid_gantt.dateStringToEndOfDayEpoch doc.end_date
+        if doc.due_date? and doc.due_date == doc.end_date
+          end_epoch = APP.justdo_grid_gantt.dateStringToMidDayEpoch doc.end_date
+      else if doc.due_date?
+        end_epoch = APP.justdo_grid_gantt.dateStringToMidDayEpoch doc.due_date
+      else
+        end_epoch = APP.justdo_grid_gantt.dateStringToEndOfDayEpoch doc.start_date
+    else if doc.end_date?
+      end_epoch = APP.justdo_grid_gantt.dateStringToEndOfDayEpoch doc.end_date
+      start_epoch = APP.justdo_grid_gantt.dateStringToStartOfDayEpoch doc.end_date
+      
+      
+#    else
+#      today = moment().format("YYYY-MM-DD")
+#      start_epoch = APP.justdo_grid_gantt.dateStringToStartOfDayEpoch today
+#      end_epoch = APP.justdo_grid_gantt.dateStringToEndOfDayEpoch today
+
+    #check if bar within column range
+    if (start_epoch >= column_start_epoch and start_epoch <= column_end_epoch) or
+        (end_epoch >= column_start_epoch and end_epoch<= column_end_epoch)
+      bar_start_px = 0
+      if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, start_epoch, column_width_px))?
+        bar_start_px = offset
+      bar_end_px = column_width_px
+      if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, end_epoch, column_width_px))?
+        bar_end_px = offset
+      main_bar_mark = """<div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px"></div>"""
+
+    ############
+    # due date
+    ############
     due_date_mark = ""
     if doc.due_date?
       time = APP.justdo_grid_gantt.dateStringToMidDayEpoch doc.due_date
-      if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, time, @getCurrentColumnData("column_width")))?
-        due_date_mark = """<div class="milestone" style="left:#{offset - 5}px"></div>"""  #the -5 here is needed due to rotation
+      if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, time, column_width_px))?
+        due_date_mark = """<div class="gantt-milestone" style="left:#{offset - 5}px"></div>"""  #the -5 here is needed due to rotation
 
     formatter = """
       <div class="grid-formatter grid-gantt-formatter">
+        #{main_bar_mark}
         #{due_date_mark}
-
-
       </div>
     """
     return formatter
