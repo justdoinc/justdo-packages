@@ -453,6 +453,8 @@ _.extend GridDataCore.prototype,
 
     items_ids_with_changed_children = _.extend.apply _, returned_ops_items_ids_with_changed_children
 
+    @emit "data-changes-queue-processed", {queue: @_data_changes_queue}
+
     if structure_changed
       @emit "structure-changed", {items_ids_with_changed_children}
 
