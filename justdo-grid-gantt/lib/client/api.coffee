@@ -1,6 +1,5 @@
 _.extend JustdoGridGantt.prototype,
   _immediateInit: ->
-
     self = @
     @day =  24 * 3600 * 1000
 
@@ -38,8 +37,6 @@ _.extend JustdoGridGantt.prototype,
       if time < epoch_start or time > epoch_end or epoch_end <= epoch_start
         return undefined
       return (time - epoch_start) / (epoch_end - epoch_start) * width_in_pixels
-
-
 
   _deferredInit: ->
     if @destroyed
@@ -89,3 +86,6 @@ _.extend JustdoGridGantt.prototype,
       return
 
     return
+    
+  is_gantt_coloum_displayed_rv: new ReactiveVar false
+  

@@ -13,6 +13,9 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     column_width_changed_comp = null
     column_start_end_changed_comp = null
     Tracker.nonreactive =>
+      console.log ">>> in formatter" # Daniel - this is called twice when switching to a JustDo with the column on. Why?
+      APP.justdo_grid_gantt?.is_gantt_coloum_displayed_rv.set true
+  
       # Run in an isolated reactivity scope
       column_width_changed_comp = Tracker.autorun =>
         current_val = _.find(@getViewReactive(), (field) => field.field == @getColumnFieldId())?.width # Reactive
@@ -35,14 +38,22 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     Tracker.onInvalidate ->
       column_width_changed_comp.stop()
       column_start_end_changed_comp.stop()
+      APP.justdo_grid_gantt?.is_gantt_coloum_displayed_rv.set false
+      console.log "<<< out formatter"
       return
 
 
     return
 
   slick_grid: ->
-    {path, doc} = @getFriendlyArgs()
+    {path, doc, row} = @getFriendlyArgs()
     console.log @getFriendlyArgs()
+    if doc._id == "4Cqzm8wwqPSTx52zo"
+      console.log ">>>>", @getFriendlyArgs().grid_data.grid_tree[row]
+    
+    return
+    
+    
     column_start_end = [0, 0]
     if not (column_start_end = @getCurrentColumnData("column_start_end"))?
       column_start_end = [APP.justdo_grid_gantt.epoch_time_from_rv.get(), APP.justdo_grid_gantt.epoch_time_to_rv.get()]
