@@ -1,5 +1,8 @@
 _.extend JustdoDependencies.prototype,
   _immediateInit: ->
+    # Defined in db-migrations.coffee
+    @_setupDbMigrations()
+    
     return
 
   _deferredInit: ->

@@ -27,4 +27,12 @@
   returns "YYYY-MM-DD"  the latest end date or null if there are no
   dependencies or no dependencies with end_date
   
+* Get list of dependent tasks
+
+       dependentTasksBySeqNumber(task_obj) #client & server
+
+  returns a map of task_id to dependent type. In the future when seq id to task Id is cached
+  we should replace it with an option to get the dependent task ids or docs.
+         
+  
  

@@ -7,6 +7,13 @@ _.extend JustdoDependencies.prototype,
         label: JustdoDependencies.dependencies_field_label
         type: JustdoDependencies.dependencies_field_schema_type
         optional: true
+  
+      "#{JustdoDependencies.dependencies_mf_field_id}":
+        label: JustdoDependencies.dependencies_mf_field_label
+        type: [Object]
+        optional: true
+        blackbox: true
+        
 
     @tasks_collection.attachSchema Schema
 

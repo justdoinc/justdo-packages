@@ -68,3 +68,8 @@ _.extend JustdoDependencies.prototype,
         blocking_tasks_objs.push dependency_obj
 
     return blocking_tasks_objs
+  
+  dependentTasksBySeqNumber: (task_doc) ->
+    if (dependencies = task_doc[JustdoDependencies.dependencies_field_id])?
+      return dependencies
+    return []
