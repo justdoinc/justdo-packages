@@ -9,9 +9,7 @@ Notes:
 * All times in epoch
 
 #### Data Structure
-      task_id_to_info: # Map to relevant information including
-        task_obj:
-        grid_rows: [row #,..] # where on the grid                 
+      task_id_to_info: # Map to relevant information including                    
         gantt_data:
             earliest_child_start_time: <>
             latest_chiled_end_time: <>
@@ -25,10 +23,15 @@ Notes:
         
       task_id_to_child_tasks: {} # a dictionary of task_id to Set of direct children ids
       
+Column Related:
+
+      gantt_column_from_epoch_time_rv
+      gantt_colunm_to_epoch_time_rv
+            
+      
       
           
 #### Operations
-* An observer on tasks collection will trigger updates to the relevant data structure items
 
 
 #### API CALLS
@@ -63,7 +66,27 @@ will take place here
  
 
 #### Operations
-* __Daniel__ - I need the events fired when a task is added to the grid and when it's removed from the grid.
-  If you have also events for when the task is hidden or not (either because it is filtered or collapsed)
-  it will be great. 
+
+
+# Notes
+```
+1. Getting an up-to-date grid data of the natural tree on plugin init, and consequence updates to it:
+
+APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.items_by_id
+APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.on("data-changes-queue-processed", (queue) => {console.log("XXX", queue)})
+
+2. For the active tree, once you notice that an item state changed as a result of another item data changes:
+
+APP.modules.project_page.gridControl()._grid_data._items_ids_map_to_grid_tree_indices
+
+3. Updating a specific field_id of row r in the current grid control:
+
+field_id_to_col_id = @getFieldIdToColumnIndexMap()
+APP.modules.project_page.gridControl()._grid.updateCell(r, field_id_to_col_id[field_id])
+
+General comment, same tick caching:
+
+JustdoHelpers.sameTickCacheSet("x", {a: 13})
+JustdoHelpers.sameTickCacheGet("x")
+```
 

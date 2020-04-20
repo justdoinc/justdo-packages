@@ -14,7 +14,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     column_start_end_changed_comp = null
     Tracker.nonreactive =>
       console.log ">>> in formatter" # Daniel - this is called twice when switching to a JustDo with the column on. Why?
-      APP.justdo_grid_gantt?.is_gantt_coloum_displayed_rv.set true
+      APP.justdo_grid_gantt?.is_gantt_column_displayed_rv.set true
   
       # Run in an isolated reactivity scope
       column_width_changed_comp = Tracker.autorun =>
@@ -27,7 +27,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         return
 
       column_start_end_changed_comp = Tracker.autorun =>
-        current_val = [APP.justdo_grid_gantt.epoch_time_from_rv.get(), APP.justdo_grid_gantt.epoch_time_to_rv.get()]
+        current_val = [APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get(), APP.justdo_grid_gantt.gantt_coloum_to_epoch_time_rv.get()]
         cached_val = @getCurrentColumnData("column_start_end") or [0, 0]# non reactive
 
         if current_val[0] != cached_val[0] or current_val[1] != cached_val[1]
@@ -38,7 +38,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     Tracker.onInvalidate ->
       column_width_changed_comp.stop()
       column_start_end_changed_comp.stop()
-      APP.justdo_grid_gantt?.is_gantt_coloum_displayed_rv.set false
+      APP.justdo_grid_gantt?.is_gantt_column_displayed_rv.set false
       console.log "<<< out formatter"
       return
 
@@ -56,7 +56,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     
     column_start_end = [0, 0]
     if not (column_start_end = @getCurrentColumnData("column_start_end"))?
-      column_start_end = [APP.justdo_grid_gantt.epoch_time_from_rv.get(), APP.justdo_grid_gantt.epoch_time_to_rv.get()]
+      column_start_end = [APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get(), APP.justdo_grid_gantt.gantt_coloum_to_epoch_time_rv.get()]
 
     column_start_epoch = column_start_end[0]
     column_end_epoch = column_start_end[1]
