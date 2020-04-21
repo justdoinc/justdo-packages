@@ -33,11 +33,11 @@ getAvailableFieldTypes = ->
 
   supported_fields_ids = base_supported_fields_ids.slice()
   all_fields = gc.getSchemaExtendedWithCustomFields()
-
+  
+  custom_fields_supported_formatters = ["defaultFormatter", "unicodeDateFormatter", "keyValueFormatter", "calculatedFieldFormatter"]
+  
   for field_id, field of all_fields
-    if field.custom_field and field.grid_editable_column and (field.grid_column_formatter == "defaultFormatter" or
-        field.grid_column_formatter == "unicodeDateFormatter" or field.grid_column_formatter == "keyValueFormatter"
-    )
+    if field.custom_field and field.grid_editable_column and field.grid_column_formatter in custom_fields_supported_formatters
       supported_fields_ids.push field_id
 
   supported_fields_definitions_object =
