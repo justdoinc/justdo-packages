@@ -1,6 +1,17 @@
 Template.meetings_meetings_menu.onCreated ->
+  @meeting_search_keyword = new ReactiveVar(null)
+
   @autorun =>
     APP.meetings_manager_plugin.meetings_manager.subscribeToMeetingsList JD.activeJustdo({_id: 1})._id
+
+  @setMeetingSearchKeyword = (keyword=null) ->
+    if (not _.isString(keyword)) or (_.isString(keyword) and keyword.trim() == "")
+      keyword = null
+    else
+      keyword = keyword.trim()
+
+    @meeting_search_keyword.set(keyword)
+    return
 
 
 Template.meetings_meetings_menu.onRendered ->
@@ -38,11 +49,17 @@ Template.meetings_meetings_menu.onRendered ->
 
 Template.meetings_meetings_menu.helpers
   meetings: (status) ->
-    meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find({"project_id": JD.activeJustdo({_id: 1})._id, "status":status}).fetch()
+    searchKeyword = Template.instance().meeting_search_keyword.get()
+    if searchKeyword?
+      meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find({"project_id": JD.activeJustdo({_id: 1})._id, "status":status, "title": {$regex : ".*" + searchKeyword + ".*", $options: "i"}}).fetch()
+    else
+      meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find({"project_id": JD.activeJustdo({_id: 1})._id, "status":status}).fetch()
+
     meetings = {
       "exist": meetings.length,
       "meetings": meetings
       }
+
     return meetings
 
 
@@ -72,4 +89,17 @@ Template.meetings_meetings_menu.events
   "click .meetings-menu-item": (e, tmpl) ->
     meeting_id = @_id
     APP.meetings_manager_plugin.renderMeetingDialog(meeting_id)
+    return
+
+  "change .meeting-search-input, keyup .meeting-search-input": (e, tmpl) ->
+    tmpl.setMeetingSearchKeyword($(e.target).val())
+    return
+
+  "mouseup .btn-meeting-menu": (e, tmpl) ->
+    Meteor.defer ->
+      # Focus the search input when dropdown is opened
+      if $(".meeting-search-input").is(":visible")
+        $(".meeting-search-input").val("").trigger("change")
+        $(".meeting-search-input").focus()
+      return
     return

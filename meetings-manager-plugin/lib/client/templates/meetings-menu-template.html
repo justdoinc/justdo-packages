@@ -6,7 +6,11 @@
         <div class="meetings-menu-title">
           <span></span>
         </div>
-        <button class="meetings-menu-new btn btn-light text-primary w-100 text-nowrap"><svg class="jd-icon p-1"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg> Start a new meeting</button>
+        <div class="meeting-search-wrapper">
+          <input type="text" class="meeting-search-input form-control form-control-sm" placeholder="Meetings">
+          <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#search"></use></svg>
+        </div>
+        <button class="meetings-menu-new btn btn-light text-primary w-100 text-nowrap"><svg><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg> Start a new meeting</button>
         <div class="meetings-menu-list">
           {{#with meetings "draft"}}
             {{#if this.exist}}
