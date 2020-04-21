@@ -6,6 +6,16 @@
           {{#each this}}
             {{> recent_activity_item}}
           {{/each}}
+
+          {{#if $eq getSubscribedChannelsRecentActivityState "all"}}
+            <div class="more-items-container">
+              <span class="no-more-items text-muted">No more messages</span>
+            </div>
+          {{else}}
+            <div class="more-items-container">
+              <a href="#" class="load-more-items">Loading more messages...</a>
+            </div>
+          {{/if}}
         </div>
       </div>
       <div class="recent-activity-items-footer">
