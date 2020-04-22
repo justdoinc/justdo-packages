@@ -1,128 +1,88 @@
 _.extend JustdoGridGantt.prototype,
   _immediateInit: ->
     self = @
+    
+    @fileds_to_trigger_task_change_process = ["start_date", "end_date", "due_date"]
+    
     @day =  24 * 3600 * 1000
 
     start_of_day_epoch = moment.utc(moment().format("YYYY-MM-DD")).unix() * 1000
     @gantt_coloumn_from_epoch_time_rv = new ReactiveVar (start_of_day_epoch - 5 * @day)
     @gantt_coloumn_to_epoch_time_rv = new ReactiveVar (start_of_day_epoch + 6 * @day - 1000)
   
-    @task_id_to_info = {}
-    @seq_id_to_task_id = {}
-    @task_seqId_to_dependies = {} # a dictionary of seqId to Set of tasks ids
-    @task_id_to_child_tasks = {}  # a dictionary of task_id to Set of direct children ids
+    @task_id_to_info = {} # Map to relevant information including
+                          #   block_start_time: #indicates the beginning of the gantt block
+                          #   block_end_time: #indicates the ending of the gantt block
+                          #   milestone_time:
+                          #   earliest_child_start_time: <>
+                          #   latest_chiled_end_time: <>
+                          #   alerts: [<structure TBD>,]
+                          # (*)all times in epoch
     
-    @onTaskAdded = (task_obj) ->
-      console.log ">>>> task added", task_obj.seqId
-      self.task_id_to_info[task_obj._id] =
-        task_obj: task_obj
-        grid_rows: []
-        gantt_data:
-          earliest_child_start_time: null
-          latest_chiled_end_time: null
-          alerts: []
-      self.seq_id_to_task_id[task_obj.seqID] = task_obj._id
-      # adding parents
-      for parent_id, data of task_obj.parents
-        if not(set = self.task_id_to_child_tasks[parent_id])?
-          set = new Set()
-          self.task_id_to_child_tasks[parent_id] = set
-        set.add task_obj._id
-      # adding dependies
-      for task_seq in APP.justdo_dependencies?.dependentTasksBySeqNumber task_obj
-          if not (set = self.task_seqId_to_dependies[task_seq])?
-            set = new Set()
-            self.task_seqId_to_dependies[task_seq] = set
-          set.add task_obj._id
-      return
-  
-    @onTaskChanged = (new_task_obj, old_task_obj) ->
-      # dealing with change of parents:
-      new_task_parents = Object.keys new_task_obj.parents
-      old_task_parents = Object.keys old_task_obj.parents
-      # for parents added
-      _.each new_task_parents, (new_parent_id) ->
-        if new_parent_id not in old_task_parents
-          if not (set = self.task_id_to_child_tasks[new_parent_id])?
-            set = new Set()
-            self.task_id_to_child_tasks[new_parent_id] = set
-          set.add new_task_obj._id
-      # for parents removed
-      _.each old_task_parents, (old_parent_id) ->
-        if old_parent_id not in new_task_parents
-          if (set = self.task_id_to_child_tasks[new_parent_id])?
-            set.delete old_parent_id
-      # dependency changes
-      new_tasks_dependencies = APP.justdo_dependencies?.dependentTasksBySeqNumber new_task_obj
-      old_tasks_dependencies = APP.justdo_dependencies?.dependentTasksBySeqNumber old_task_obj
-      # for dependency added
-      _.each new_tasks_dependencies, (new_dep_seq_number) ->
-        if new_dep_seq_number not in old_tasks_dependencies
-          if not (set = self.task_seqId_to_dependies[new_dep_seq_number])?
-            set = new Set()
-            self.task_seqId_to_dependies[new_dep_seq_number] = set
-          set.add new_task_obj._id
-      # for dependent removed
-      _.each old_tasks_dependencies, (old_dep_seq_number) ->
-        if old_dep_seq_number not in new_tasks_dependencies
-          if (set = self.task_seqId_to_dependies[old_dep_seq_number])?
-            set.delete new_task_obj._id
-        
-      return
-  
-    @onTaskRemoved = (task_obj) ->
-      delete self.task_id_to_info[task_obj._id]
-      delete self.seq_id_to_task_id[task_obj.seqID]
-      # parents
-      for parent_id, data of task_obj.parents
-        if (set = self.task_id_to_child_tasks[parent_id])?
-          set.delete task_obj._id
-      #dependies
-      for task_seq in APP.justdo_dependencies?.dependentTasksBySeqNumber task_obj
-        if (set = self.task_seqId_to_dependies[task_seq])?
-          set.delete task_obj._id
-      return
-  
-    @setObserver = (justdo_id)->
-      self.stopObserver()
-      fields =
-        _id: 1
-        from_date: 1
-        end_date: 1
-        due_date: 1
-        justdo_task_dependencies: 1
-        parents: 1
-        seqId: 1
-        
-      cursor = JD.collections.Tasks.find
-        project_id: justdo_id
-      ,
-        fields: fields
-    
-      self.observer = cursor.observe
-        added: (task_obj)->
-          self.onTaskAdded task_obj
-          return
-        changed: (new_task_obj, old_task_obj)->
-          self.onTaskChanged new_task_obj, old_task_obj
-          return
-        removed: (task_obj)->
-          self.onTaskRemoved task_obj
-          return
-      console.log ">>>> observer set"
-      return
-  
-    @stopObserver = ->
-      if self.observer?
-        self.observer.stop()
-      self.observer = null
+    @resetTaskIdToInfo = ->
       self.task_id_to_info = {}
-      self.seq_id_to_task_id = {}
-      self.task_seqId_to_dependies = {}
-      self.task_id_to_child_tasks = {}
-      console.log ">>>>>> observer stopped"
       return
       
+    @initTaskIdToInfo = ->
+      self.resetTaskIdToInfo()
+      if not (core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core)?
+        return
+      for task_id, task_obj of core_data.items_by_id
+        self.onTaskChange task_obj
+      return # end of initTaskIdToInfo
+  
+    @onTaskChange = (task_obj) ->
+      if not(task_info = self.task_id_to_info[task_obj._id])?
+        task_info = {}
+        self.task_id_to_info[task_obj._id] = task_info
+      
+      old_task_info = $.extend {}, task_info
+      
+      # start time
+      if task_obj.start_date?
+        task_info.block_start_time = self.dateStringToStartOfDayEpoch task_obj.start_date
+      else
+        delete task_info.block_start_time
+        
+      # end time
+      if task_obj.end_date?
+        task_info.block_end_time = self.dateStringToEndOfDayEpoch task_obj.end_date
+      else if task_obj.due_date? and task_obj.start_date
+        task_info.block_end_time = self.dateStringToMidDayEpoch task_obj.due_date
+      else
+        delete task_info.block_end_time
+        
+      # milestone
+      if task_obj.due_date?
+        task_info.milestone_time = self.dateStringToMidDayEpoch task_obj.due_date
+      else
+        delete task_info.milestone_time
+      
+      return # end of onTaskChange
+    
+    @onTaskRemove = (task_id) ->
+      if not self.task_id_to_info[task_id]?
+        return
+      delete self.task_id_to_info[task_id]
+      return
+      
+    @processChangesQueue = (queue) =>
+      core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core
+      for [msg_type, [task_id, data]] in queue.queue
+        if msg_type == "update"
+          for field in data
+            if field in self.fileds_to_trigger_task_change_process
+              self.onTaskChange core_data.items_by_id[task_id]
+              break
+        else if msg_type == "add"
+          self.onTaskChange data
+        else if msg_type == "remove"
+          self.onTaskRemove task_id
+        else
+          console.error "justdo-grid-gantt unhandled msg type", msg_type
+        
+      return
+    
     @dateStringToStartOfDayEpoch = (date) ->
       re = /^\d\d\d\d-\d\d-\d\d$/g
 
@@ -153,26 +113,32 @@ _.extend JustdoGridGantt.prototype,
       if time < epoch_start or time > epoch_end or epoch_end <= epoch_start
         return undefined
       return (time - epoch_start) / (epoch_end - epoch_start) * width_in_pixels
-
+  
   _deferredInit: ->
     self = @
     
     if @destroyed
       return
-
+    
     @registerConfigTemplate()
     @setupCustomFeatureMaintainer()
-  
+    
     # trigger observer reset on justdo change
     Tracker.autorun =>
       if (justdo_id = JD.activeJustdo({_id: 1})?._id)?
-          self.setObserver justdo_id
+        self.initTaskIdToInfo()
+        if (core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core)?
+          core_data.on "data-changes-queue-processed", self.processChangesQueue
+          # note: (Daniel - please confirm) - when the user changes to a different JustDo, the mainGridControl object
+          # is deleted, and with it grid_data_core and the event emitter, so there is no need to explicitly call
+          # core_data.off(...)
       else
-        self.stopObserver()
+        self.resetTaskIdToInfo()
       return
-
+    
     return
-
+  
+  
   isPluginInstalledOnProjectDoc: (project_doc) ->
     return APP.projects.isPluginInstalledOnProjectDoc(JustdoGridGantt.project_custom_feature_id, project_doc)
 

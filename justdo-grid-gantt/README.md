@@ -14,14 +14,10 @@ Notes:
             earliest_child_start_time: <>
             latest_chiled_end_time: <>
             alerts: [<structure TBD>,]
-         
-      seq_id_to_task_id: # Map for quick access from the seq_id to the task_id (needed for dependencies)
       
       task_id_to_dependies: {} # a map of task_id to a Set of dependy-tasks' ids. This is not part of the 
         task_id_to_info, since the order of tasks added by the ovserver is not gurenteed to have the 
         dependies before the dependants (which will make it more complicated)  
-        
-      task_id_to_child_tasks: {} # a dictionary of task_id to Set of direct children ids
       
 Column Related:
 
