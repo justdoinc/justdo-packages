@@ -548,6 +548,7 @@ Template.justdo_projects_dashboard.helpers
 
 Template.justdo_projects_dashboard.events
   "click .justdo-projects-dashboard-owner-selector a": (e,tpl) ->
+    e.preventDefault()
     if this.name?
       $(".justdo-projects-dashboard-owner-selector button").text(this.name)
       tpl.selected_project_owner_id_rv.set this.id
@@ -559,6 +560,7 @@ Template.justdo_projects_dashboard.events
   "click .justdo-projects-dashboard-field-selector a": (e,tpl) ->
     # for now changing the main part interest will change also the table.
     # in the future we could control both independently
+    e.preventDefault()
     APP.justdo_projects_dashboard.main_part_interest.set this.id
     APP.justdo_projects_dashboard.table_part_interest.set this.id
     return
