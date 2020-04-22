@@ -115,7 +115,26 @@
         font-size: 14px
         &:last-child
           border-right: none
-      .progress-bar-container
+
+    .project-item
+      display: flex
+      white-space: nowrap
+      align-items: center
+      color: black
+      text-decoration: none
+      padding: 0.25rem
+      border-radius: 2px
+      &:hover
+        background-color: rgba(0, 0, 0, 0.04)
+      &:active
+        background-color: #007bff
+        color: white
+        svg
+          color: white
+      svg
+        margin-right: 0.25rem
+        opacity: 0.5
+        transition: none
 
 .dashboard-start-message
   font-size: 17px
