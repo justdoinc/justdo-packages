@@ -10,9 +10,9 @@
               All Members
             </button>
             <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
-              <li><a href="#" class="dropdown-item" owner-id="*">All Members</a></li>
+              <li><a href="#" class="dropdown-item px-1" owner-id="*">All Members</a></li>
               {{#each projectsOwnersList}}
-                <li><a href="#" class="dropdown-item" owner-id="{{id}}">{{name}}</a></li>
+                <li><a href="#" class="dropdown-item px-1">{{> justdo_avatar}} {{displayName}}</a></li>
               {{/each}}
             </ul>
           </div>
