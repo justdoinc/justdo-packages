@@ -24,7 +24,7 @@ _.extend JustdoDependencies.prototype,
 
     checkForInfiniteLoop = (tasks_ids, new_dependency_seq_id) ->
       # in this check we don't check for the existing of the dependency, but just if it creates an infinite loop
-      new_dependency_doc = JD.collections.Tasks.findOne {seqId: new_dependency_seq_id}
+      new_dependency_doc = JD.collections.Tasks.findOne {seqId: new_dependency_seq_id, project_id: doc.project_id}
       if new_dependency_doc
         # if the doc is already listed, get out
         if new_dependency_doc._id in tasks_ids
@@ -95,7 +95,7 @@ _.extend JustdoDependencies.prototype,
         JustdoSnackbar.show text: "Task can't be dependent on itself"
         return false
 
-      if not (JD.collections.Tasks.findOne {seqId: new_push_value})
+      if not (JD.collections.Tasks.findOne {seqId: new_push_value, project_id: doc.project_id})
         JustdoSnackbar.show text: "Task ##{new_push_value} not found."
         return false
 
@@ -120,7 +120,7 @@ _.extend JustdoDependencies.prototype,
             JustdoSnackbar.show text: "Task can't be dependent on itself"
             return false
 
-          if not (JD.collections.Tasks.findOne {seqId: new_set_value})
+          if not (JD.collections.Tasks.findOne {seqId: new_set_value, project_id: doc.project_id})
             JustdoSnackbar.show text: "Task ##{new_set_value} not found."
             return false
 
