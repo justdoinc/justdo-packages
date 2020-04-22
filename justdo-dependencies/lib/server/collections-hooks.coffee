@@ -1,9 +1,8 @@
 _.extend JustdoDependencies.prototype,
   _setupCollectionsHooks: ->
     @chatBotHooks()
-
     @projectsInstallUninstallProcedures()
-
+    @humanReadableToMFAndBackHook()
     return
 
   chatBotHooks: ->
@@ -34,7 +33,49 @@ _.extend JustdoDependencies.prototype,
       return
 
     return
-
+    
+  humanReadableToMFAndBackHook: ->
+   
+    self = @
+    self.tasks_collection.before.update (user_id, doc, fieldNames, modifier, options) ->
+      # for every change in the human-readable format, update the MF one
+      if JustdoDependencies.dependencies_field_id in fieldNames
+        if(new_dependencies = modifier.$set?[JustdoDependencies.dependencies_field_id])?
+          new_dependencies_mf = []
+          for dependency in new_dependencies
+            if(dep_obj = JD.collections.Tasks.findOne({project_id: doc.project_id, seqId: dependency, _raw_removed_date: {$exists: false}}))?
+              new_dependencies_mf.push
+                task_id: dep_obj._id
+                type: "F2S"
+          modifier.$set = modifier.$set || {};
+          modifier.$set[JustdoDependencies.dependencies_mf_field_id] = new_dependencies_mf
+  
+        # note - we do push or set but not both
+        else if(new_dependency = modifier.$push?[JustdoDependencies.dependencies_field_id])?
+          if(dep_obj = JD.collections.Tasks.findOne({project_id: doc.project_id, seqId: new_dependency, _raw_removed_date: {$exists: false}}))?
+            new_dependencies_mf = doc[JustdoDependencies.dependencies_mf_field_id] or []
+            new_dependencies_mf.push
+              task_id: dep_obj._id
+              type: "F2S"
+          modifier.$set = modifier.$set || {};
+          modifier.$set[JustdoDependencies.dependencies_mf_field_id] = new_dependencies_mf
+          
+      # for every change in the MF format, update the human-readable one
+      # note that we don't support updating both at the same time
+      else if JustdoDependencies.dependencies_mf_field_id in fieldNames
+        if(new_dependencies = modifier.$set?[JustdoDependencies.dependencies_mf_field_id])?
+          new_dependencies_mf = []
+          for dependency in new_dependencies
+            if dependency.type == "F2S"
+              task_id = dependency.task_id
+              if(dep_obj = JD.collections.Tasks.findOne({project_id: doc.project_id, _id: task_id, _raw_removed_date: {$exists: false}}))?
+                new_dependencies_mf.push dep_obj.seqId
+          modifier.$set = modifier.$set || {};
+          modifier.$set[JustdoDependencies.dependencies_field_id] = new_dependencies_mf
+        
+      return # end of collection hook
+    return
+    
   projectsInstallUninstallProcedures: ->
     self = @
 
