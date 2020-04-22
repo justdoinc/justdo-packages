@@ -1,12 +1,12 @@
 Template.meetings_meetings_menu.onCreated ->
-  @meeting_search_keyword = new ReactiveVar(null)
+  @meeting_search_keyword = new ReactiveVar ""
 
   @autorun =>
     APP.meetings_manager_plugin.meetings_manager.subscribeToMeetingsList JD.activeJustdo({_id: 1})._id
 
   @setMeetingSearchKeyword = (keyword=null) ->
     if (not _.isString(keyword)) or (_.isString(keyword) and keyword.trim() == "")
-      keyword = null
+      keyword = ""
     else
       keyword = keyword.trim()
 
@@ -49,16 +49,18 @@ Template.meetings_meetings_menu.onRendered ->
 
 Template.meetings_meetings_menu.helpers
   meetings: (status) ->
-    searchKeyword = Template.instance().meeting_search_keyword.get()
-    if searchKeyword?
-      meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find({"project_id": JD.activeJustdo({_id: 1})._id, "status":status, "title": {$regex : ".*" + searchKeyword + ".*", $options: "i"}}).fetch()
-    else
-      meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find({"project_id": JD.activeJustdo({_id: 1})._id, "status":status}).fetch()
+    search_keyword = Template.instance().meeting_search_keyword.get()
+    meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find({"project_id": JD.activeJustdo({_id: 1})._id, "status":status}).fetch()
+
+    filtered_meetings = []
+    for meeting in meetings
+      if RegExp(JustdoHelpers.escapeRegExp(search_keyword), "i").test(meeting.title)
+        filtered_meetings.push meeting
 
     meetings = {
-      "exist": meetings.length,
-      "meetings": meetings
-      }
+      "exist": filtered_meetings.length,
+      "meetings": filtered_meetings
+    }
 
     return meetings
 
