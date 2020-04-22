@@ -2,7 +2,7 @@ _.extend JustdoDependencies.prototype,
   _setupCollectionsHooks: ->
     @chatBotHooks()
     @projectsInstallUninstallProcedures()
-    @humanReadableToMFAndBackHook()
+    @integrityCheckAndHumanReadableToMFAndBackHook()
     return
 
   chatBotHooks: ->
@@ -34,12 +34,11 @@ _.extend JustdoDependencies.prototype,
 
     return
     
-  humanReadableToMFAndBackHook: ->
-   
+  integrityCheckAndHumanReadableToMFAndBackHook: ->
     self = @
-    self.tasks_collection.before.update (user_id, doc, fieldNames, modifier, options) ->
+    self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
       # for every change in the human-readable format, update the MF one
-      if JustdoDependencies.dependencies_field_id in fieldNames
+      if JustdoDependencies.dependencies_field_id in field_names
         if(new_dependencies = modifier.$set?[JustdoDependencies.dependencies_field_id])?
           new_dependencies_mf = []
           for dependency in new_dependencies
@@ -62,7 +61,7 @@ _.extend JustdoDependencies.prototype,
           
       # for every change in the MF format, update the human-readable one
       # note that we don't support updating both at the same time
-      else if JustdoDependencies.dependencies_mf_field_id in fieldNames
+      else if JustdoDependencies.dependencies_mf_field_id in field_names
         if(new_dependencies = modifier.$set?[JustdoDependencies.dependencies_mf_field_id])?
           new_dependencies_mf = []
           for dependency in new_dependencies
@@ -72,8 +71,8 @@ _.extend JustdoDependencies.prototype,
                 new_dependencies_mf.push dep_obj.seqId
           modifier.$set = modifier.$set || {};
           modifier.$set[JustdoDependencies.dependencies_field_id] = new_dependencies_mf
-        
-      return # end of collection hook
+      return self.checkDependenciesFormatBeforeUpdate doc, field_names, modifier, options
+      # end of collection hook
     return
     
   projectsInstallUninstallProcedures: ->
