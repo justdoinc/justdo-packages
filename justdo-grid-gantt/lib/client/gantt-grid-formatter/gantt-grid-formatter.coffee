@@ -88,16 +88,37 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     ############
     earliest_child_mark = ""
     if (earliest_child = task_info.earliest_child_start_time)?
-      if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, earliest_child, column_width_px))?
-        earliest_child_mark = """<div class="gantt-earliest-child" style="left:#{offset}px"></div>"""
+      if earliest_child >= column_start_epoch and earliest_child <= column_end_epoch
+        if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, earliest_child, column_width_px))?
+          earliest_child_mark = """<div class="gantt-earliest-child" style="left:#{offset}px"></div>"""
   
     ############
     # latest child
     ############
     latest_child_mark = ""
     if (latest_child = task_info.latest_child_end_time)?
-      if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, latest_child, column_width_px))?
-        latest_child_mark = """<div class="gantt-latest-child" style="left:#{offset - 8}px"></div>"""
+      if latest_child >= column_start_epoch and latest_child <= column_end_epoch
+        if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, latest_child, column_width_px))?
+          latest_child_mark = """<div class="gantt-latest-child" style="left:#{offset - 8}px"></div>"""
+  
+    ############
+    # basket border
+    ############
+    basket_border_mark = ""
+    if earliest_child? and latest_child?
+      if (earliest_child >= column_start_epoch and earliest_child <= column_end_epoch) or # start time within range
+          (latest_child >= column_start_epoch and latest_child<= column_end_epoch) or # end time within range
+          (earliest_child < column_start_epoch and latest_child > column_end_epoch) # starts before and ends after
+        
+        box_start_px = 0
+        box_end_px = column_width_px
+        if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, earliest_child, column_width_px))?
+          box_start_px = offset
+        if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, latest_child, column_width_px))?
+          box_end_px = offset
+  
+        basket_border_mark = """<div class="gantt-basket-border" style="left:#{box_start_px}px; width:#{box_end_px - box_start_px}px"></div>"""
+  
   
     ############
     # due date
@@ -109,9 +130,10 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
     formatter = """
       <div class="grid-formatter grid-gantt-formatter">
-        #{main_bar_mark}
+        #{basket_border_mark}
         #{earliest_child_mark}
         #{latest_child_mark}
+        #{main_bar_mark}
         #{due_date_mark}
       </div>
     """

@@ -79,6 +79,7 @@ _.extend JustdoGridGantt.prototype,
       if not(task_info = self.task_id_to_info[task_obj._id])?
         task_info = {}
         self.task_id_to_info[task_obj._id] = task_info
+        self.gantt_dirty_tasks.add task_obj._id
       
       old_task_info = $.extend {}, task_info
       
