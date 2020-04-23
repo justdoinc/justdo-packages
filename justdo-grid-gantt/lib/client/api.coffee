@@ -152,7 +152,7 @@ _.extend JustdoGridGantt.prototype,
           # we have 4 cases to cover: new start_time, start_time removed, start_time increased, start_time decreased
   
           # 1. new start_time
-          if start_time? and not old_start_time
+          if start_time? and not old_start_time?
             if not parent_task_info.earliest_child_start_time?
               parent_task_info.earliest_child_start_time = start_time
               parent_changed = true
@@ -160,10 +160,10 @@ _.extend JustdoGridGantt.prototype,
               if start_time < parent_task_info.earliest_child_start_time
                 parent_task_info.earliest_child_start_time = start_time
                 parent_changed = true
-              # else - do noting because both start time is new but bigger than existing parent earliest child stark
+              # else - do noting because start time is new but bigger than existing parent earliest child start
           
           # 2. start_time removed
-          else if not start_time? and old_start_time
+          else if not start_time? and old_start_time?
             if parent_task_info.earliest_child_start_time? and old_start_time <= parent_task_info.earliest_child_start_time
               parent_changed = self.recalculateEarliestChildTime parent_id
             # else do nothing because either the parent early does not exist or that the old_start time was bigger than the parent earliest child
@@ -180,7 +180,9 @@ _.extend JustdoGridGantt.prototype,
               if not parent_task_info.earliest_child_start_time?
                 parent_task_info.earliest_child_start_time = start_time
                 parent_changed = true
-              parent_changed = self.recalculateEarliestChildTime parent_id
+              else if old_start_time <= parent_task_info.earliest_child_start_time
+                parent_changed = self.recalculateEarliestChildTime parent_id
+              # else do nothing because the old_start_time was not the parent's earliest child start time
               
           else if not start_time and not old_start_time # we should never get here, so alert if we do:
             console.error "grid-gantt: unresolved start change"
@@ -188,6 +190,63 @@ _.extend JustdoGridGantt.prototype,
           if parent_changed
             self.onStartTimeChange parent_id, parent_task_info, old_parent_task_info
         
+      return
+  
+    @onEndTimeChange = (task_id, task_info, old_task_info) ->
+      self.gantt_dirty_tasks.add task_id
+      # for the value of the last child, we take the latest of the end_time and the latest_child_end_time
+      end_time = self.latestOfSelfEndAndLatestChildEnd task_info
+      old_end_time = self.latestOfSelfEndAndLatestChildEnd old_task_info
+  
+      # loop on all parents to update the latest child task
+      core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core
+      if (parents = core_data.items_by_id?[task_id]?.parents)?
+        for parent_id of parents
+          parent_changed = false
+          parent_task_info = self.getOrCreateTaskInfoObject parent_id
+          old_parent_task_info = _.extend {}, parent_task_info
+      
+          # we have 4 cases to cover: new end_time, end_time removed, end_time decreased, end_time increased
+      
+          # 1. new end_time
+          if end_time? and not old_end_time?
+            if not parent_task_info.latest_child_end_time?
+              parent_task_info.latest_child_end_time = end_time
+              parent_changed = true
+            else # parent latest child exists
+              if end_time > parent_task_info.latest_child_end_time
+                parent_task_info.latest_child_end_time = end_time
+                parent_changed = true
+            # else - do noting because end time is new but smaller than existing parent latest child end
+        
+          # 2. end_time removed
+          else if not end_time? and old_end_time?
+            if parent_task_info.latest_child_end_time? and old_end_time >= parent_task_info.latest_child_end_time
+              parent_changed = self.recalculateLatestChildTime parent_id
+            # else do nothing because either the parent early does not exist or that the old_start time was bigger than the parent earliest child
+      
+          else if end_time? and old_end_time?
+            # 3. end_time increased
+            if end_time > old_end_time
+              if not parent_task_info.latest_child_end_time? or end_time > parent_task_info.latest_child_end_time
+                parent_task_info.latest_child_end_time = end_time
+                parent_changed = true
+          
+              # 4. end_time decreased
+            else if end_time < old_end_time
+              if not parent_task_info.latest_child_end_time?
+                parent_task_info.latest_child_end_time = end_time
+                parent_changed = true
+              else if old_end_time >= parent_task_info.latest_child_end_time
+                parent_changed = self.recalculateLatestChildTime parent_id
+              # else do nothing because the old_end_time was not the parent's latest child end time
+      
+          else if not end_time and not old_end_time # we should never get here, so alert if we do:
+            console.error "grid-gantt: unresolved end change"
+      
+          if parent_changed
+            self.onEndTimeChange parent_id, parent_task_info, old_parent_task_info
+  
       return
       
     @_printDebugInfo = (task_id) ->
@@ -228,20 +287,40 @@ _.extend JustdoGridGantt.prototype,
         
       return false
   
+    @recalculateLatestChildTime = (task_id) ->
+      # returns true if value changed, otherwise false
+      task_info = self.getOrCreateTaskInfoObject task_id
+      core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core
+    
+      if (children = core_data.tree_structure[task_id])?
+        latest_child_time = undefined
+        for order, child_id of children
+          child_task_info = self.getOrCreateTaskInfoObject child_id
+          child_latest_time = self.latestOfSelfEndAndLatestChildEnd child_task_info
+          if not latest_child_time?
+            latest_child_time = child_latest_time
+          else if child_latest_time? and child_latest_time > latest_child_time
+            latest_child_time = child_latest_time
+        
+        if not task_info.latest_child_end_time? or task_info.latest_child_end_time != latest_child_time
+          task_info.latest_child_end_time = latest_child_time
+          return true
+    
+      else # no children
+        if task_info.latest_child_end_time?
+          delete task_info.latest_child_end_time
+          return true
+    
+      return false
+  
     @getOrCreateTaskInfoObject = (task_id) ->
       if not (task_info = self.task_id_to_info[task_id])?
         task_info = {}
         self.task_id_to_info[task_id] = task_info
       return task_info
       
-    @onEndTimeChange = (task_id, task_info, old_task_info) ->
-      self.gantt_dirty_tasks.add task_id
-      console.log ">>>> on end change", task_info, old_task_info
-      return
-      
     @onMilestoneTimeChange = (task_id, task_info, old_task_info) ->
       self.gantt_dirty_tasks.add task_id
-      console.log ">>>>> on milstone change", task_info, old_task_info
       return
       
     @dateStringToStartOfDayEpoch = (date) ->
@@ -287,6 +366,20 @@ _.extend JustdoGridGantt.prototype,
       else # no self_start_time
         if task_info.earliest_child_start_time?
           return task_info.earliest_child_start_time
+      return undefined
+  
+    @latestOfSelfEndAndLatestChildEnd = (task_info) ->
+      if task_info.self_end_time?
+        if task_info.latest_child_end_time?
+          if task_info.self_end_time > task_info.latest_child_end_time
+            return task_info.self_end_time
+          else
+            return task_info.latest_child_end_time
+        else
+          return task_info.self_end_time
+      else # no self_start_time
+        if task_info.latest_child_end_time?
+          return task_info.latest_child_end_time
       return undefined
     
   
