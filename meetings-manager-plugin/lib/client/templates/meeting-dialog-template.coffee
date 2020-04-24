@@ -53,6 +53,7 @@ Template.meetings_meeting_dialog.onCreated ->
   @minimized = new ReactiveVar false
   @meetings_tasks_noRender = new ReactiveVar false
   @project_id = Router.current().project_id
+  @is_editing_location = new ReactiveVar false
 
   @autorun =>
     data = Template.currentData()
@@ -389,7 +390,6 @@ Template.meetings_meeting_dialog.helpers
 
     return _.filter tasks, _.identity
 
-
   rawdate: (date) ->
     if(date?)
       return moment(date).format("YYYY-MM-DD")
@@ -467,6 +467,12 @@ Template.meetings_meeting_dialog.helpers
     if active_conversation_id? and active_conversation_id == @meeting_id
       return "active"
 
+  isEditingLocation: -> Template.instance().is_editing_location.get()
+
+  linkifyStr: (str) -> 
+    if str?
+      return linkifyStr str
+    return ""
 
 Template.meetings_meeting_dialog.events
 
@@ -721,3 +727,13 @@ Template.meetings_meeting_dialog.events
   "click .meeting-time-picker": (e, tmpl) ->
     e.stopPropagation()
     return
+
+  "click .meeting-dialog-location-text": (e, tpl)->
+    tpl.is_editing_location.set true
+    Meteor.defer ->
+      tpl.$(".meeting-dialog-location-input").focus()
+  
+  "blur .meeting-dialog-location-input": (e, tpl) ->
+    tpl.is_editing_location.set false
+    APP.meetings_manager_plugin.meetings_manager.updateMeetingMetadata tpl.data.meeting_id,
+      location: e.target.value
