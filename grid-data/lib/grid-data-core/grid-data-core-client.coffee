@@ -453,10 +453,16 @@ _.extend GridDataCore.prototype,
 
     items_ids_with_changed_children = _.extend.apply _, returned_ops_items_ids_with_changed_children
 
-    @emit "data-changes-queue-processed", {queue: @_data_changes_queue}
-
     if structure_changed
       @emit "structure-changed", {items_ids_with_changed_children}
+
+    @emit "data-changes-queue-processed", {queue: @_data_changes_queue} # Note that content changes are emitted in the
+                                                                        # _data_changes_handlers hance, it would be wrong
+                                                                        # having data-changes-queue-processed called
+                                                                        # before structure-changed.
+                                                                        #
+                                                                        # If necessary, a pre-processing event can be emitted
+                                                                        # before the loop.
 
     # Init queue
     @_data_changes_queue = []
