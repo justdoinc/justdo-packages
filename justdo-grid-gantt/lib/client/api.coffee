@@ -21,6 +21,8 @@ _.extend JustdoGridGantt.prototype,
                           #            when parents change, or when the task is removed (which at that time
                           #            we no longer have it's parents
                           # (*)all times in epoch
+    @missing_parents = new Set() # see comment in processTaskAdd
+    
     @gantt_dirty_tasks = new Set()
     
     @resetTaskIdToInfo = ->
@@ -77,9 +79,30 @@ _.extend JustdoGridGantt.prototype,
       return # end of process gantt dirty tasks
   
     @processTaskAdd = (task_obj) ->
-      task_info = self.getOrCreateTaskInfoObject task_obj._id
+      task_id = task_obj._id
+      task_info = self.getOrCreateTaskInfoObject task_id
       task_info.parents = Object.keys task_obj.parents
-      return self.processTaskChange task_obj
+      
+      # Note: a child could be added before its parent (happens in cases of multiple parents)
+      # In order to manage such cases we use a Set of missing_parents. Once such a missing parent
+      # is added, appear, the first thing that it has to do it to recalculate its first and last children
+      for parent in task_info.parents
+        if not self.task_id_to_info[parent]
+          self.missing_parents.add parent
+        
+      self.processTaskChange task_obj
+      
+      # the part where a missing parent is added
+      if self.missing_parents.has task_id
+        old_task_info = _.extend {}, task_info
+        
+        if self.recalculateEarliestChildTime task_id
+          self.processStartTimeChange task_id, task_info, old_task_info
+        if self.recalculateLatestChildTime task_id
+          self.processEndTimeChange task_id, task_info, old_task_info
+        self.missing_parents.delete task_id
+        
+      return
       
     @processTaskChange = (task_obj) ->
       if not(task_info = self.task_id_to_info[task_obj._id])?
@@ -196,6 +219,11 @@ _.extend JustdoGridGantt.prototype,
           all_parents.add parent
       
       all_parents.forEach (parent_id) ->
+        # if the parent_id is in the missing parents, we won't deal with it now, since we don't know its own
+        # parents, and won't be able to change those as well. We will process it when it's added.
+        if self.missing_parents.has parent_id
+          return # keep going on the forEach
+          
         parent_changed = false
         parent_task_info = self.getOrCreateTaskInfoObject parent_id
         old_parent_task_info = _.extend {}, parent_task_info
@@ -257,6 +285,11 @@ _.extend JustdoGridGantt.prototype,
           all_parents.add parent
   
       all_parents.forEach (parent_id) ->
+        # if the parent_id is in the missing parents, we won't deal with it now, since we don't know its own
+        # parents, and won't be able to change those as well. We will process it when it's added.
+        if self.missing_parents.has parent_id
+          return # keep going on the forEach
+        
         parent_changed = false
         parent_task_info = self.getOrCreateTaskInfoObject parent_id
         old_parent_task_info = _.extend {}, parent_task_info
@@ -437,8 +470,6 @@ _.extend JustdoGridGantt.prototype,
         if task_info.latest_child_end_time?
           return task_info.latest_child_end_time
       return undefined
-    
-  
   
   _deferredInit: ->
     self = @
@@ -448,20 +479,6 @@ _.extend JustdoGridGantt.prototype,
     
     @registerConfigTemplate()
     @setupCustomFeatureMaintainer()
-    
-    # trigger observer reset on justdo change
-    Tracker.autorun =>
-      if (justdo_id = JD.activeJustdo({_id: 1})?._id)?
-        Tracker.nonreactive =>
-          self.initTaskIdToInfo()
-        if (core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core)?
-          core_data.on "data-changes-queue-processed", self.processChangesQueue
-          # note: (Daniel - please confirm) - when the user changes to a different JustDo, the mainGridControl object
-          # is deleted, and with it grid_data_core and the event emitter, so there is no need to explicitly call
-          # core_data.off(...)
-      else
-        self.resetTaskIdToInfo()
-      return
     
     return
   
@@ -473,6 +490,7 @@ _.extend JustdoGridGantt.prototype,
     return @projects_collection.findOne({_id: project_id, "conf.custom_features": JustdoGridGantt.project_custom_feature_id})
 
   setupCustomFeatureMaintainer: ->
+    self = @
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoGridGantt.project_custom_feature_id,
         installer: =>
@@ -488,7 +506,21 @@ _.extend JustdoGridGantt.prototype,
           controller = JustdoHelpers.renderTemplateInNewNode("justdo_grid_gantt_controller")
           APP.justdo_grid_gantt.controller_node = $(controller.node)
           $("body").append(APP.justdo_grid_gantt.controller_node)
-
+  
+          # trigger observer reset on justdo change
+          self.core_data_events_triggering_computation = Tracker.autorun =>
+            if (justdo_id = JD.activeJustdo({_id: 1})?._id)?
+              Tracker.nonreactive =>
+                self.initTaskIdToInfo()
+              if (core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core)?
+                core_data.on "data-changes-queue-processed", self.processChangesQueue
+              # note: (Daniel - please confirm) - when the user changes to a different JustDo, the mainGridControl object
+              # is deleted, and with it grid_data_core and the event emitter, so there is no need to explicitly call
+              # core_data.off(...)
+            else
+              self.resetTaskIdToInfo()
+            return
+    
         destroyer: =>
           if JustdoGridGantt.add_pseudo_field
             APP.modules.project_page.removePseudoCustomFields JustdoGridGantt.pseudo_field_id
@@ -496,6 +528,9 @@ _.extend JustdoGridGantt.prototype,
           if APP.justdo_grid_gantt.controller_node?
             APP.justdo_grid_gantt.controller_node.remove()
             APP.justdo_grid_gantt.controller_node
+            
+          if self.core_data_events_triggering_computation?
+            self.core_data_events_triggering_computation.stop()
           return
 
     @onDestroy =>
