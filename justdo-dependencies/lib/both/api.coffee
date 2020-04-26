@@ -26,7 +26,7 @@ _.extend JustdoDependencies.prototype,
         JustdoSnackbar.show
           text: APP.justdo_dependencies._errors_types[error_type]
       else
-        throw @_error error_type
+        throw APP.justdo_dependencies._error error_type
       return
     
     if JustdoDependencies.dependencies_field_id not in field_names

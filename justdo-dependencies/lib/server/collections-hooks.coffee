@@ -37,8 +37,10 @@ _.extend JustdoDependencies.prototype,
   integrityCheckAndHumanReadableToMFAndBackHook: ->
     self = @
     self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
+      check_dependencies = false
       # for every change in the human-readable format, update the machine friendly one
       if JustdoDependencies.dependencies_field_id in field_names
+        check_dependencies = true
         new_dependencies_mf = []
         if not (new_dependencies = modifier.$set?[JustdoDependencies.dependencies_field_id])?
           new_dependencies = []
@@ -53,10 +55,12 @@ _.extend JustdoDependencies.prototype,
         
         modifier.$set = modifier.$set || {};
         modifier.$set[JustdoDependencies.dependencies_mf_field_id] = new_dependencies_mf
+        field_names.push JustdoDependencies.dependencies_mf_field_id
         
       # for every change in the MF format, update the human-readable one
       # note that we don't support updating both at the same time
       else if JustdoDependencies.dependencies_mf_field_id in field_names
+        check_dependencies = true
         if (new_dependencies_mf = modifier.$set?[JustdoDependencies.dependencies_mf_field_id])?
           new_dependencies = []
           for dependency_mf in new_dependencies_mf
@@ -66,7 +70,12 @@ _.extend JustdoDependencies.prototype,
                 new_dependencies.push dep_obj.seqId
           modifier.$set = modifier.$set || {};
           modifier.$set[JustdoDependencies.dependencies_field_id] = new_dependencies
-      return self.checkDependenciesFormatBeforeUpdate doc, field_names, modifier, options
+          field_names.push JustdoDependencies.dependencies_field_id
+      
+      if check_dependencies
+        return self.checkDependenciesFormatBeforeUpdate doc, field_names, modifier, options
+        
+      return true
       # end of collection hook
     return
     
