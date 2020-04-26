@@ -135,6 +135,8 @@ GridControl = (options, container, operations_container) ->
   else
     @forced_metadata_affecting_fields = {} # to avoid the need to check existence we don't set to null
 
+  @_need_double_header_height_count = 0
+
   @_load_editors()
 
   Meteor.defer =>
@@ -1958,3 +1960,37 @@ _.extend GridControl.prototype,
       return main_tab.grid_control
     
     return @
+
+  _setGridHeaderHeight: (height_px) ->
+    # If height_px is undefined, resume to default
+
+    grid_uid = @getGridUid()
+
+    style_tag_class = "#{grid_uid}-cutom-grid-header-height"
+
+    default_vertical_paddings = 4
+    vertical_paddings = (height_px - 16) / 2 + default_vertical_paddings
+
+    $(".#{style_tag_class}").remove()
+    if height_px? # if not, we just remove, i.e. resuming to default
+      $("html > head").append($("""<style class="#{style_tag_class}">.#{grid_uid} .slick-header-column { padding-top: #{vertical_paddings}px; padding-bottom: #{vertical_paddings}px; } .#{grid_uid}</style>"""));
+
+    @_grid.resizeCanvas()
+
+    return
+
+  requireDoubleHeader: ->
+    if @_need_double_header_height_count is 0
+      @_setGridHeaderHeight(32)
+
+    @_need_double_header_height_count += 1
+
+    return
+
+  releaseDoubleHeader: ->
+    @_need_double_header_height_count -= 1
+
+    if @_need_double_header_height_count is 0
+      @_setGridHeaderHeight() # Resume to default
+
+    return
