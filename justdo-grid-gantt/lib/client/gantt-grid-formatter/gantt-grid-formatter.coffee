@@ -45,11 +45,12 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
   slick_grid: ->
     {doc} = @getFriendlyArgs()
-    
     if not (cached_info = JustdoHelpers.sameTickCacheGet("column_info"))?
       column_start_end = [0, 0]
       if not (column_start_end = @getCurrentColumnData("column_start_end"))?
-        column_start_end = [APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get(), APP.justdo_grid_gantt.gantt_coloum_to_epoch_time_rv.get()]
+        start = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
+        end = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+        column_start_end = [start, end]
       column_width_px = @getCurrentColumnData("column_width")
       JustdoHelpers.sameTickCacheSet("column_info", [column_start_end, column_width_px])
     else

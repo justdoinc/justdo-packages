@@ -30,8 +30,8 @@ Column Related:
 #### Process flow
 * on JustDo change we loop through all tasks and process them one by one
 * thereafter we listen to core_data.on "data-changes-queue-processed" events and process changes
-* for every change/remove we call either onTaskChange or onTaskRemove
-* the last two break down the changes to onStartTimeChange, onEndTimeChange etc
+* for every change/remove we call either processTaskChange or processTaskRemove
+* the last two break down the changes to processStartTimeChange, processEndTimeChange etc
 * for every change, the changed task is added into a Set of tasks that were changed (gantt_dirty_tasks)
 * at the end of the init loop, or the queue processing, we process the gantt_dirty_tasks set
   to invalidate the appropriate cells

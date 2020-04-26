@@ -2,7 +2,7 @@ _.extend JustdoGridGantt.prototype,
   _immediateInit: ->
     self = @
     
-    @fileds_to_trigger_task_change_process = ["start_date", "end_date", "due_date"]
+    @fileds_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents"]
     
     @day =  24 * 3600 * 1000
 
@@ -11,12 +11,15 @@ _.extend JustdoGridGantt.prototype,
     @gantt_coloumn_to_epoch_time_rv = new ReactiveVar (start_of_day_epoch + 6 * @day - 1000)
   
     @task_id_to_info = {} # Map to relevant information including
-                          #   self_start_time: #indicates the beginning of the gantt block for the task
-                          #   self_end_time: #indicates the ending of the gantt block for the task
+                          #   self_start_time: # indicates the beginning of the gantt block for the task
+                          #   self_end_time: # indicates the ending of the gantt block for the task
                           #   milestone_time:
                           #   earliest_child_start_time: # the earliest child task start time
                           #   latest_child_end_time: # the latest child task end time
                           #   alerts: [<structure TBD>,]
+                          #   parents: an Array of the parents ids. Those need to be iterated and updated
+                          #            when parents change, or when the task is removed (which at that time
+                          #            we no longer have it's parents
                           # (*)all times in epoch
     @gantt_dirty_tasks = new Set()
     
@@ -29,7 +32,7 @@ _.extend JustdoGridGantt.prototype,
       if not (core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core)?
         return
       for task_id, task_obj of core_data.items_by_id
-        self.onTaskChange task_obj
+        self.processTaskAdd task_obj
         
       self.processGanttDirtyTasks()
       return # end of initTaskIdToInfo
@@ -40,29 +43,27 @@ _.extend JustdoGridGantt.prototype,
         if msg_type == "update"
           for field in data
             if field in self.fileds_to_trigger_task_change_process
-              self.onTaskChange core_data.items_by_id[task_id]
-              break
+              self.processTaskChange core_data.items_by_id[task_id]
         else if msg_type == "add"
-          self.onTaskChange data
+          self.processTaskAdd data
         else if msg_type == "remove"
-          self.onTaskRemove task_id
+          self.processTaskRemove task_id
+        else if msg_type == "parent_update"
+          self.processTaskParentUpdate task_id
         else
           console.error "justdo-grid-gantt unhandled msg type", msg_type
-    
+  
       self.processGanttDirtyTasks()
+      # APP.modules.project_page.gridControl()._grid_data.once "rebuild", ->
+      #   self.processGanttDirtyTasks()
+      #   return
     
       return # end of process changes queue
   
     @processGanttDirtyTasks = () ->
-      if not (column_index = JustdoHelpers.sameTickCacheGet("column_index"))?
-        gc = APP.modules.project_page.gridControl()
-        column_index = gc.getFieldIdToColumnIndexMap()[JustdoGridGantt.pseudo_field_id]
-        JustdoHelpers.sameTickCacheSet("column_index", column_index)
-        
-      if not (tree_indices = JustdoHelpers.sameTickCacheGet("tree_indices"))?
-        gc = APP.modules.project_page.gridControl()
-        tree_indices = gc._grid_data._items_ids_map_to_grid_tree_indices
-        JustdoHelpers.sameTickCacheSet("tree_indices", tree_indices)
+      gc = APP.modules.project_page.gridControl()
+      column_index = gc.getFieldIdToColumnIndexMap()[JustdoGridGantt.pseudo_field_id]
+      tree_indices = gc._grid_data._items_ids_map_to_grid_tree_indices
       
       if column_index?
         self.gantt_dirty_tasks.forEach (task_id) ->
@@ -75,13 +76,21 @@ _.extend JustdoGridGantt.prototype,
       self.gantt_dirty_tasks.clear()
       return # end of process gantt dirty tasks
   
-    @onTaskChange = (task_obj) ->
-      if not(task_info = self.task_id_to_info[task_obj._id])?
-        task_info = {}
-        self.task_id_to_info[task_obj._id] = task_info
-        self.gantt_dirty_tasks.add task_obj._id
+    @processTaskAdd = (task_obj) ->
+      task_info = self.getOrCreateTaskInfoObject task_obj._id
+      task_info.parents = Object.keys task_obj.parents
+      return self.processTaskChange task_obj
       
-      old_task_info = $.extend {}, task_info
+    @processTaskChange = (task_obj) ->
+      if not(task_info = self.task_id_to_info[task_obj._id])?
+        console.error "grid-gantt - unidentified task changed"
+        # task_info =
+        #   parents: Object.keys task_obj.parents
+        # self.task_id_to_info[task_obj._id] = task_info
+        # self.gantt_dirty_tasks.add task_obj._id
+        
+      
+      old_task_info = _.extend {}, task_info
       
       # start time
       if task_obj.start_date?
@@ -109,34 +118,71 @@ _.extend JustdoGridGantt.prototype,
         
       # checking start_time change
       if task_info.self_start_time != old_task_info.self_start_time
-        self.onStartTimeChange task_obj._id, task_info, old_task_info
+        self.processStartTimeChange task_obj._id, task_info, old_task_info
   
       # checking end_time change
       if task_info.self_end_time != old_task_info.self_end_time
-        self.onEndTimeChange task_obj._id, task_info, old_task_info
+        self.processEndTimeChange task_obj._id, task_info, old_task_info
       
       #checking milestone
       if task_info.milestone_time != old_task_info.milestone_time
-        self.onMilestoneTimeChange task_obj._id, task_info, old_task_info
+        self.processMilestoneTimeChange task_obj._id, task_info, old_task_info
       
       
-      return # end of onTaskChange
+      return # end of processTaskChange
     
-    @onTaskRemove = (task_id) ->
+    @processTaskRemove = (task_id) ->
       if not (old_task_info = self.task_id_to_info[task_id])?
         return
       
       if old_task_info.self_start_time?
-        self.onStartTimeChange task_id, {}, old_task_info
+        self.processStartTimeChange task_id, {}, old_task_info
       if old_task_info.self_end_time?
-        self.onEndTimeChange StartTimeChange task_id, {}, old_task_info
+        self.processEndTimeChange task_id, {}, old_task_info
       if old_task_info.milestone_time?
-        self.onMilestoneTimeChange() task_id, {}, old_task_info
+        self.processMilestoneTimeChange() task_id, {}, old_task_info
         
       delete self.task_id_to_info[task_id]
       return
   
-    @onStartTimeChange = (task_id, task_info, old_task_info) ->
+    @processTaskParentUpdate = (task_id) ->
+      if not (old_task_info = self.task_id_to_info[task_id])?
+        console.error "grid-gantt - task not found (parents-update)"
+      # when parents change, we need to 'touch' all the parents that were removed and all those added:
+      core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core
+      current_parents = (Object.keys core_data.items_by_id[task_id].parents) or []
+      old_parents = old_task_info.parents
+      parents_added = new Set(current_parents)
+      for parent in old_parents
+        parents_added.delete parent
+      
+      parents_removed = new Set(old_parents)
+      for parent in current_parents
+        parents_removed.delete parent
+        
+      all_changed_parents = []
+      parents_added.forEach (parent_id) ->
+        all_changed_parents.push parent_id
+      parents_removed.forEach (parent_id) ->
+        all_changed_parents.push parent_id
+        
+      # end update the cached data
+      self.task_id_to_info[task_id].parents = current_parents
+  
+      # update parents
+      for parent_id in all_changed_parents
+        parent_task_info = self.task_id_to_info[parent_id]
+        old_parent_task_info = _.extend {}, parent_task_info
+      
+        if self.recalculateEarliestChildTime parent_id
+          self.processStartTimeChange parent_id, parent_task_info, old_parent_task_info
+          
+        if self.recalculateLatestChildTime parent_id
+          self.processEndTimeChange parent_id, parent_task_info, old_parent_task_info
+          
+      return
+  
+    @processStartTimeChange = (task_id, task_info, old_task_info) ->
       self.gantt_dirty_tasks.add task_id
       # for the value of the earliest child, we take the minimum of the start_time and the earliest_child_start_time
       start_time = self.earliestOfSelfStartAndEarliestChildStart task_info
@@ -144,56 +190,60 @@ _.extend JustdoGridGantt.prototype,
       
       # loop on all parents to update the earliest child task
       core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core
-      if (parents = core_data.items_by_id?[task_id]?.parents)?
-        for parent_id of parents
-          parent_changed = false
-          parent_task_info = self.getOrCreateTaskInfoObject parent_id
-          old_parent_task_info = _.extend {}, parent_task_info
+      all_parents = new Set(task_info.parents)
+      if old_task_info.parents?
+        for parent in old_task_info.parents
+          all_parents.add parent
+      
+      all_parents.forEach (parent_id) ->
+        parent_changed = false
+        parent_task_info = self.getOrCreateTaskInfoObject parent_id
+        old_parent_task_info = _.extend {}, parent_task_info
+        
+        # we have 4 cases to cover: new start_time, start_time removed, start_time increased, start_time decreased
+
+        # 1. new start_time
+        if start_time? and not old_start_time?
+          if not parent_task_info.earliest_child_start_time?
+            parent_task_info.earliest_child_start_time = start_time
+            parent_changed = true
+          else # parent early child exists
+            if start_time < parent_task_info.earliest_child_start_time
+              parent_task_info.earliest_child_start_time = start_time
+              parent_changed = true
+            # else - do noting because start time is new but bigger than existing parent earliest child start
+        
+        # 2. start_time removed
+        else if not start_time? and old_start_time?
+          if parent_task_info.earliest_child_start_time? and old_start_time <= parent_task_info.earliest_child_start_time
+            parent_changed = self.recalculateEarliestChildTime parent_id
+          # else do nothing because either the parent early does not exist or that the old_start time was bigger than the parent earliest child
           
-          # we have 4 cases to cover: new start_time, start_time removed, start_time increased, start_time decreased
-  
-          # 1. new start_time
-          if start_time? and not old_start_time?
+        else if start_time? and old_start_time?
+          # 3. start_time decreased
+          if start_time < old_start_time
+            if not parent_task_info.earliest_child_start_time? or start_time < parent_task_info.earliest_child_start_time
+              parent_task_info.earliest_child_start_time = start_time
+              parent_changed = true
+            
+          # 4. start_time increased
+          else if start_time > old_start_time
             if not parent_task_info.earliest_child_start_time?
               parent_task_info.earliest_child_start_time = start_time
               parent_changed = true
-            else # parent early child exists
-              if start_time < parent_task_info.earliest_child_start_time
-                parent_task_info.earliest_child_start_time = start_time
-                parent_changed = true
-              # else - do noting because start time is new but bigger than existing parent earliest child start
-          
-          # 2. start_time removed
-          else if not start_time? and old_start_time?
-            if parent_task_info.earliest_child_start_time? and old_start_time <= parent_task_info.earliest_child_start_time
+            else if old_start_time <= parent_task_info.earliest_child_start_time
               parent_changed = self.recalculateEarliestChildTime parent_id
-            # else do nothing because either the parent early does not exist or that the old_start time was bigger than the parent earliest child
+            # else do nothing because the old_start_time was not the parent's earliest child start time
             
-          else if start_time? and old_start_time?
-            # 3. start_time decreased
-            if start_time < old_start_time
-              if not parent_task_info.earliest_child_start_time? or start_time < parent_task_info.earliest_child_start_time
-                parent_task_info.earliest_child_start_time = start_time
-                parent_changed = true
-              
-            # 4. start_time increased
-            else if start_time > old_start_time
-              if not parent_task_info.earliest_child_start_time?
-                parent_task_info.earliest_child_start_time = start_time
-                parent_changed = true
-              else if old_start_time <= parent_task_info.earliest_child_start_time
-                parent_changed = self.recalculateEarliestChildTime parent_id
-              # else do nothing because the old_start_time was not the parent's earliest child start time
-              
-          else if not start_time and not old_start_time # we should never get here, so alert if we do:
-            console.error "grid-gantt: unresolved start change"
-          
-          if parent_changed
-            self.onStartTimeChange parent_id, parent_task_info, old_parent_task_info
+        else if not start_time and not old_start_time # we should never get here, so alert if we do:
+          console.error "grid-gantt: unresolved start change"
+        
+        if parent_changed
+          self.processStartTimeChange parent_id, parent_task_info, old_parent_task_info
         
       return
   
-    @onEndTimeChange = (task_id, task_info, old_task_info) ->
+    @processEndTimeChange = (task_id, task_info, old_task_info) ->
       self.gantt_dirty_tasks.add task_id
       # for the value of the last child, we take the latest of the end_time and the latest_child_end_time
       end_time = self.latestOfSelfEndAndLatestChildEnd task_info
@@ -201,52 +251,56 @@ _.extend JustdoGridGantt.prototype,
   
       # loop on all parents to update the latest child task
       core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core
-      if (parents = core_data.items_by_id?[task_id]?.parents)?
-        for parent_id of parents
-          parent_changed = false
-          parent_task_info = self.getOrCreateTaskInfoObject parent_id
-          old_parent_task_info = _.extend {}, parent_task_info
+      all_parents = new Set(task_info.parents)
+      if old_task_info.parents?
+        for parent in old_task_info.parents
+          all_parents.add parent
+  
+      all_parents.forEach (parent_id) ->
+        parent_changed = false
+        parent_task_info = self.getOrCreateTaskInfoObject parent_id
+        old_parent_task_info = _.extend {}, parent_task_info
+    
+        # we have 4 cases to cover: new end_time, end_time removed, end_time decreased, end_time increased
+    
+        # 1. new end_time
+        if end_time? and not old_end_time?
+          if not parent_task_info.latest_child_end_time?
+            parent_task_info.latest_child_end_time = end_time
+            parent_changed = true
+          else # parent latest child exists
+            if end_time > parent_task_info.latest_child_end_time
+              parent_task_info.latest_child_end_time = end_time
+              parent_changed = true
+          # else - do noting because end time is new but smaller than existing parent latest child end
       
-          # we have 4 cases to cover: new end_time, end_time removed, end_time decreased, end_time increased
-      
-          # 1. new end_time
-          if end_time? and not old_end_time?
+        # 2. end_time removed
+        else if not end_time? and old_end_time?
+          if parent_task_info.latest_child_end_time? and old_end_time >= parent_task_info.latest_child_end_time
+            parent_changed = self.recalculateLatestChildTime parent_id
+          # else do nothing because either the parent early does not exist or that the old_start time was bigger than the parent earliest child
+    
+        else if end_time? and old_end_time?
+          # 3. end_time increased
+          if end_time > old_end_time
+            if not parent_task_info.latest_child_end_time? or end_time > parent_task_info.latest_child_end_time
+              parent_task_info.latest_child_end_time = end_time
+              parent_changed = true
+        
+            # 4. end_time decreased
+          else if end_time < old_end_time
             if not parent_task_info.latest_child_end_time?
               parent_task_info.latest_child_end_time = end_time
               parent_changed = true
-            else # parent latest child exists
-              if end_time > parent_task_info.latest_child_end_time
-                parent_task_info.latest_child_end_time = end_time
-                parent_changed = true
-            # else - do noting because end time is new but smaller than existing parent latest child end
-        
-          # 2. end_time removed
-          else if not end_time? and old_end_time?
-            if parent_task_info.latest_child_end_time? and old_end_time >= parent_task_info.latest_child_end_time
+            else if old_end_time >= parent_task_info.latest_child_end_time
               parent_changed = self.recalculateLatestChildTime parent_id
-            # else do nothing because either the parent early does not exist or that the old_start time was bigger than the parent earliest child
-      
-          else if end_time? and old_end_time?
-            # 3. end_time increased
-            if end_time > old_end_time
-              if not parent_task_info.latest_child_end_time? or end_time > parent_task_info.latest_child_end_time
-                parent_task_info.latest_child_end_time = end_time
-                parent_changed = true
-          
-              # 4. end_time decreased
-            else if end_time < old_end_time
-              if not parent_task_info.latest_child_end_time?
-                parent_task_info.latest_child_end_time = end_time
-                parent_changed = true
-              else if old_end_time >= parent_task_info.latest_child_end_time
-                parent_changed = self.recalculateLatestChildTime parent_id
-              # else do nothing because the old_end_time was not the parent's latest child end time
-      
-          else if not end_time and not old_end_time # we should never get here, so alert if we do:
-            console.error "grid-gantt: unresolved end change"
-      
-          if parent_changed
-            self.onEndTimeChange parent_id, parent_task_info, old_parent_task_info
+            # else do nothing because the old_end_time was not the parent's latest child end time
+    
+        else if not end_time and not old_end_time # we should never get here, so alert if we do:
+          console.error "grid-gantt: unresolved end change"
+    
+        if parent_changed
+          self.processEndTimeChange parent_id, parent_task_info, old_parent_task_info
   
       return
       
@@ -318,9 +372,10 @@ _.extend JustdoGridGantt.prototype,
       if not (task_info = self.task_id_to_info[task_id])?
         task_info = {}
         self.task_id_to_info[task_id] = task_info
+        self.gantt_dirty_tasks.add task_id
       return task_info
       
-    @onMilestoneTimeChange = (task_id, task_info, old_task_info) ->
+    @processMilestoneTimeChange = (task_id, task_info, old_task_info) ->
       self.gantt_dirty_tasks.add task_id
       return
       
@@ -397,7 +452,8 @@ _.extend JustdoGridGantt.prototype,
     # trigger observer reset on justdo change
     Tracker.autorun =>
       if (justdo_id = JD.activeJustdo({_id: 1})?._id)?
-        self.initTaskIdToInfo()
+        Tracker.nonreactive =>
+          self.initTaskIdToInfo()
         if (core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core)?
           core_data.on "data-changes-queue-processed", self.processChangesQueue
           # note: (Daniel - please confirm) - when the user changes to a different JustDo, the mainGridControl object
@@ -427,7 +483,6 @@ _.extend JustdoGridGantt.prototype,
               formatter: JustdoGridGantt.pseudo_field_formatter_id
               grid_visible_column: true
               grid_editable_column: false
-              grid_dependencies_fields: JustdoGridGantt.gantt_field_grid_dependencies_fields
               default_width: 400
 
           controller = JustdoHelpers.renderTemplateInNewNode("justdo_grid_gantt_controller")

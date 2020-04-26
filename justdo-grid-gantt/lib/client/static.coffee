@@ -10,4 +10,4 @@ _.extend JustdoGridGantt,
 
   pseudo_field_formatter_id: "ganttFormatter"
 
-  # gantt_field_grid_dependencies_fields: ["start_date", "end_date", "due_date"] # Changes to these fields will trigger invalidation to the gantt field on the grid.
+  
