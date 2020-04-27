@@ -472,7 +472,7 @@ Template.meetings_meeting_dialog.helpers
 
   linkifyStr: (str) -> 
     if str?
-      return linkifyStr str
+      return linkifyStr str # linkify already escapes html entities, so don't worry about xss here.'
     return ""
 
 Template.meetings_meeting_dialog.events
