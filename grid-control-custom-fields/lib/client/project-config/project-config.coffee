@@ -125,6 +125,13 @@ APP.executeAfterAppLibCode ->
     # catch e
     #   console.log e
 
+    # Check if a custom field with the same name already exists
+    for custom_field in custom_fields
+      if custom_field.label.toLowerCase().trim() == field_label.toLowerCase().trim()
+        JustdoSnackbar.show
+          text: "A field with the label \"#{custom_field.label}\" already exists"
+        return
+
     custom_fields.push custom_field_definition
 
     project.setProjectCustomFields custom_fields, (err) ->
@@ -188,9 +195,20 @@ APP.executeAfterAppLibCode ->
 
       custom_fields = project.getProjectCustomFields()
 
+      old_label_name = ""
+      same_label_name_found = false
       for custom_field_definition in custom_fields
         if custom_field_definition.field_id == field_id
+          old_label_name = custom_field_definition.label
           custom_field_definition.label = field_label
+        else if custom_field_definition.label.toLowerCase().trim() == field_label.toLowerCase().trim()  # check if there is a field with the same name
+          same_label_name_found = true
+
+      if same_label_name_found
+        e.target.value = old_label_name
+        JustdoSnackbar.show
+          text: "A field with the label \"#{custom_field_definition.label}\" already exists"
+        return
 
       project.setProjectCustomFields custom_fields, (err) ->
         if err?
