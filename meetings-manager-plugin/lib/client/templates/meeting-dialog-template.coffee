@@ -159,6 +159,7 @@ Template.meetings_meeting_dialog.onCreated ->
       <div class="border-bottom pb-3">
         <span class="mr-2">Date: <strong>#{moment(meeting.date).format("YYYY-MM-DD")}</strong>,</span>
         <span class="mr-2">Time: <strong>#{JustdoHelpers.xssGuard(meeting.time)}</strong></span>
+        <div class="mr-2">Location: <strong>#{JustdoHelpers.xssGuard meeting.location}</strong></div>
       </div>
       <div class="border-bottom py-3">
         <div class="h3 font-weight-bold">Invited</div>
