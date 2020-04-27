@@ -7100,18 +7100,19 @@ select.form-control {
   [type="checkbox"]:before {
     content: "";
     position: absolute;
-    left: -1.2em;
-    top: -0.9em;
+    left: 0;
+    top: 0;
     display: inline-block;
     width: 15px;
     height: 16px;
+    background-color: white;
     border: 2px solid #333;
     border-radius: 2px 8px 2px 4px / 5px 3px 5px 3px; }
   [type="checkbox"]:checked:after {
     content: "x";
     position: absolute;
-    left: -0.64em;
-    top: -0.48em;
+    left: 3px;
+    top: 3px;
     font-size: 1.5rem;
     line-height: 0.5;
     color: #333; }
@@ -7125,8 +7126,8 @@ select.form-control {
   [type="radio"]:before {
     content: "";
     position: absolute;
-    left: -1.2em;
-    top: -0.9em;
+    left: -2px;
+    top: -2px;
     display: inline-block;
     width: 16px;
     height: 16px;
@@ -7142,7 +7143,7 @@ select.form-control {
 
 .dropdown-menu {
   border-radius: 555px 25px 25px 25px/25px 25px 25px 555px;
-  overflow: hidden; }
+  overflow: auto; }
 
 .dropdown-divider {
   border-top-width: 2px; }
