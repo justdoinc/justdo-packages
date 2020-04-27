@@ -738,3 +738,16 @@ Template.meetings_meeting_dialog.events
     tpl.is_editing_location.set false
     APP.meetings_manager_plugin.meetings_manager.updateMeetingMetadata tpl.data.meeting_id,
       location: e.target.value
+  
+  "focus .meeting-dialog-location-input": (e, tpl) ->
+    $(e.target).data "old-value", e.target.value
+
+  "keydown .meeting-dialog-location-input": (e, tpl) ->
+    if e.key == "Enter"
+      e.target.blur()
+    else if e.key == "Escape"
+      e.target.value = $(e.target).data "old-value"
+      e.target.blur()
+
+  
+    
