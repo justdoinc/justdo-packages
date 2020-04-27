@@ -733,14 +733,17 @@ Template.meetings_meeting_dialog.events
     tpl.is_editing_location.set true
     Meteor.defer ->
       tpl.$(".meeting-dialog-location-input").focus()
+      return
   
   "blur .meeting-dialog-location-input": (e, tpl) ->
     tpl.is_editing_location.set false
     APP.meetings_manager_plugin.meetings_manager.updateMeetingMetadata tpl.data.meeting_id,
       location: e.target.value
+    return
   
   "focus .meeting-dialog-location-input": (e, tpl) ->
     $(e.target).data "old-value", e.target.value
+    return
 
   "keydown .meeting-dialog-location-input": (e, tpl) ->
     if e.key == "Enter"
@@ -748,6 +751,7 @@ Template.meetings_meeting_dialog.events
     else if e.key == "Escape"
       e.target.value = $(e.target).data "old-value"
       e.target.blur()
+    return
 
   
     
