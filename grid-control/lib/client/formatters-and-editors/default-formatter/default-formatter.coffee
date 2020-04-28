@@ -60,7 +60,7 @@ GridControl.installFormatter "defaultFormatter",
         linkClass: "jd-underline font-weight-bold text-body"
 
     formatter = """
-      <div class="grid-formatter default-formatter"#{if custom_style != "" then " style=\"#{custom_style}\"" else ""}#{if (caption = formatter_obj.defaultHoverCaption(friendly_args))? then " title=\"#{caption}\"" else ""} dir="auto">#{value}</div>
+      <div class="grid-formatter default-formatter"#{if custom_style != "" then " style=\"#{custom_style}\"" else ""}#{if (caption = formatter_obj.defaultHoverCaption(friendly_args))? then " title=\"#{JustdoHelpers.xssGuard(caption)}\"" else ""} dir="auto">#{value}</div>
     """
 
     return formatter
