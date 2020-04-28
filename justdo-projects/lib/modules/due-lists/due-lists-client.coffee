@@ -79,7 +79,7 @@ _.extend PACK.modules.due_lists,
 
     if conf.include_my_private_follow_ups
       _.extend query_options,
-        sort: {priority: -1, due_date: 1, follow_up: 1, "priv:follow_up"}
+        sort: {priority: -1, due_date: 1, follow_up: 1, "priv:follow_up": 1}
 
     due_list_tasks = APP.collections.Tasks.find(
       query,
