@@ -1,87 +1,9 @@
 Template.justdo_projects_dashboard.onCreated ->
   self = @
 
-  # one observer to trigger on all information that we care about
-  @observer = null
   @selected_project_owner_id_rv = new ReactiveVar null # null or owner id
 
-  @triggerProjectsReactivityForTask = (task_id) ->
-    if not (gc = APP.modules.project_page.mainGridControl())?
-      return
-    if  not(gd = gc._grid_data)?
-      return
-
-    # we need to sample the paths twice - for delete and change operations the path exists only before the timeout,
-    # for inserts, the paths exists only after
-    timeout = 500 # Daniel - what's a reasonable timeout?
-    if (paths = gd.getAllCollectionItemIdPaths(task_id))?
-      timeout = 0
-    Meteor.setTimeout ->
-      if not paths?
-        if not (paths = gd.getAllCollectionItemIdPaths(task_id))?
-          # may get to this point if remove of task happens w/in 500m of adding the task
-          return
-
-      for path in paths
-        for parent_id in path.split("/")
-          if (template_instance = APP.justdo_projects_dashboard.project_id_to_template_instance[parent_id])?
-            template_instance.is_dirty_rv.set true
-      return # end of settimeout
-    ,
-      500
-    return
-
   # the following is an autorun that clears the queue of tasks that were updated
-  @tasks_queue = []
-  @tasks_queue_is_dirty_rv = new ReactiveVar true
-  @autorun =>
-    if not self.tasks_queue_is_dirty_rv.get()
-      return
-    _.each self.tasks_queue, (task_id) ->
-      self.triggerProjectsReactivityForTask task_id # note - reactive function
-    self.tasks_queue = []
-    self.tasks_queue_is_dirty_rv.set false
-    return
-
-  @queueTaskForProjectsReactivityChecks = (task_id) ->
-    self.tasks_queue.push task_id
-    self.tasks_queue_is_dirty_rv.set true
-    return
-
-  # IMPORTANT: apparently, in meteor observers, one can't call Metero.defer or Meteor.settimeout etc.
-  # However, getAllCollectionItemIdPaths does use one of these. Therefore, I created a queue of tasks
-  # to deal with, and I trigger cleaning the queue with a dirty bit reactive var.
-  @setObserver = ->
-    self.stopObserver()
-    if (justdo_id = JD.activeJustdo({_id: 1})._id)?
-      cursor = JD.collections.Tasks.find
-        project_id: justdo_id
-      ,
-        fields: APP.justdo_projects_dashboard.fields_of_interest_rv.get()
-
-      self.observer = cursor.observeChanges
-        added: (id, fields)->
-          self.queueTaskForProjectsReactivityChecks id
-          return
-        changed: (id, fields)->
-          self.queueTaskForProjectsReactivityChecks id
-          return
-        removed: (id)->
-          self.queueTaskForProjectsReactivityChecks id
-          return
-    return
-
-  @stopObserver = ->
-    if self.observer?
-      self.observer.stop()
-      self.observer = null
-    return
-
-  # trigger observer reset on justdo change
-  @autorun =>
-    if (justdo_id = JD.activeJustdo({_id: 1})._id)?
-      self.setObserver() # note - set observer is reactive resource
-    return
 
   # set the data to collect based on the needs of the main part and the table...
   @autorun =>
@@ -197,13 +119,10 @@ Template.justdo_projects_dashboard.onCreated ->
 
   return # end of onCreated
 
-Template.justdo_projects_dashboard.onDestroyed ->
-  @stopObserver()
-  return
-
 Template.justdo_projects_dashboard.onRendered ->
+  self = @
   @autorun =>
-
+    main_part_data = self.main_part_data_rv.get()
     field_of_interest = APP.justdo_projects_dashboard.main_part_interest.get()
     grid_values =  APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()
     if not (field_options = grid_values[field_of_interest]?.grid_values)?
@@ -213,7 +132,6 @@ Template.justdo_projects_dashboard.onRendered ->
       return
 
     field_label = grid_values[field_of_interest].label
-    main_part_data = Template.instance().main_part_data_rv.get()
 
     common_charts_width = 300
 
@@ -573,6 +491,15 @@ Template.justdo_projects_dashboard_project_line.onCreated ->
 
   @collected_data_rv = new ReactiveVar {}
   @is_dirty_rv = new ReactiveVar true
+
+  @autorun (computation) =>
+    if not (gc = APP.modules.project_page.mainGridControl())?
+      return
+    if not (gd = gc._grid_data)?
+      return
+    
+    gd._grid_data_core.invalidateOnCollectionItemDescendantsChanges @data._id
+    @is_dirty_rv.set true
 
   @collectData = (grid_data, path, fields_of_interest) ->
 
