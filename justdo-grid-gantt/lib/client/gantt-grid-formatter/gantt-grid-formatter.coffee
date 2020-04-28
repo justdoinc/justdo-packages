@@ -23,6 +23,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         if current_val != cached_val
           @setCurrentColumnData("column_width", current_val)
           dep.changed()
+          APP.justdo_grid_gantt.refreshArrows()
         return
 
       column_start_end_changed_comp = Tracker.autorun =>
@@ -31,6 +32,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
         if current_val[0] != cached_val[0] or current_val[1] != cached_val[1]
           @setCurrentColumnData("column_start_end", current_val)
+          APP.justdo_grid_gantt.refreshArrows()
           dep.changed()
         return
 

@@ -5,9 +5,9 @@ Package.describe({
   git: "https://github.com/justdoinc/justdo-shared-packages/tree/master/justdo-grid-gantt"
 });
 
-client = "client"
-server = "server"
-both = [client, server]
+client = "client";
+server = "server";
+both = [client, server];
 
 Package.onUse(function (api) {
   api.versionsFrom("1.4.1.1");
@@ -61,6 +61,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/static.coffee", client);
   api.addFiles("lib/client/errors-types.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
+
+  api.addFiles("lib/client/gantt-dependencies.coffee", client);
+  api.addFiles("lib/client/gantt-dependencies.sass", client);
 
   api.addFiles("lib/client/project-conf/project-conf.sass", client);
   api.addFiles("lib/client/project-conf/project-conf.html", client);
