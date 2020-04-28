@@ -149,6 +149,8 @@ _.extend GridData.prototype,
       if section.options.expanded_on_init
         @expandPath(section.path, true)
 
+      section.options?.sectionInit?.call(@, section)
+
       sections_configuration.push section
 
     @sections_configuration = sections_configuration
