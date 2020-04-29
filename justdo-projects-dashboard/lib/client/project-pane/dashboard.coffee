@@ -498,7 +498,9 @@ Template.justdo_projects_dashboard_project_line.onCreated ->
     if not (gd = gc._grid_data)?
       return
     
-    gd._grid_data_core.invalidateOnCollectionItemDescendantsChanges @data._id
+    gd._grid_data_core.invalidateOnCollectionItemDescendantsChanges @data._id,
+      tracked_fields: ["state"]
+      
     @is_dirty_rv.set true
 
   @collectData = (grid_data, path, fields_of_interest) ->
