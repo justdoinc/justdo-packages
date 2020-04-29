@@ -99,8 +99,8 @@ _.extend JustdoGridGantt.prototype,
     if $(".justdo-grid-gantt-all-dependencies").length
       $(".justdo-grid-gantt-all-dependencies").remove()
   
-    svp = $(".slick-viewport")
-    if not svp.length
+    $slick_view_port = $(".slick-viewport")
+    if not $slick_view_port.length
       return
 
     grid_gantt_column_offset = 0
@@ -117,7 +117,7 @@ _.extend JustdoGridGantt.prototype,
       self.grid_gantt_column_index = -1
       return
       
-    svp.append """
+    $slick_view_port.append """
       <div class="justdo-grid-gantt-all-dependencies"
             style="left: #{grid_gantt_column_offset}px; width: #{self.grid_gantt_column_width}px">
       </div>
