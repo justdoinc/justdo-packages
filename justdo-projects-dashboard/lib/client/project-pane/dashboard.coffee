@@ -213,7 +213,7 @@ Template.justdo_projects_dashboard.onRendered ->
     for project_id, project_obj of main_part_data.project_objs
       projects_list.push
         id: project_id
-        title: project_obj.title
+        title: if project_obj.title? and project_obj.title != "" then project_obj.title else "##{project_obj.seqId}"
     projects_list = _.sortBy projects_list, (item) -> item.title.toUpperCase()
 
     categories = []
@@ -592,6 +592,13 @@ Template.justdo_projects_dashboard_project_line.helpers
           bg_color: color
 
     return ret
+
+  titleOrTaskSeqId: ->
+    item = Template.instance().data
+    if item.title? and item.title != ""
+      return item.title
+    else
+      return "##{item.seqId}"
 
 Template.justdo_projects_dashboard_project_line.events
   "click a": (e) ->
