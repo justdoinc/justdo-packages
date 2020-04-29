@@ -259,7 +259,7 @@ Template.justdo_projects_dashboard.onRendered ->
 
       legend:
         align: "left"
-        verticalAlign: "top"
+        verticalAlign: "bottom"
         floating: true
         y: 20
 
