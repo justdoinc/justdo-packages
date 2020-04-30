@@ -156,7 +156,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
     args: ["mousedown", ".gantt-main-bar-end-drag"]
     handler: (e) ->
-      gc = APP.modules.project_page.mainGridControl()
+      gc = APP.modules.project_page.gridControl()
       states = APP.justdo_grid_gantt.getState()
       task_id = e.target.getAttribute("task_id")
       states.task_id = task_id
@@ -167,7 +167,21 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       states.mouse_down.row = gc._grid_data.getPathGridTreeIndex(this.getEventPath(e))
       return
   ,
-    # note - this is a catch all for mouse up w/in the formatter
+    args: ["mousedown", ".slick-cell.l1"]  #Daniel - I wasn't able to add a class to the parent div of the formatter
+                                            # the l1 is hard coded, and my question is how to arr/remove it as the column
+                                            # location changes
+    handler: (e) ->
+      states = APP.justdo_grid_gantt.getState()
+      if states.end_time.is_dragging
+        return
+      states.mouse_down.x = e.clientX
+      states.mouse_down.y = e.clientY
+      states.column_range.is_dragging = true
+      states.column_range.original_from_epoch_time = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
+      states.column_range.original_to_epoch_time = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+      return
+  ,
+    # note - this is a catch all for mouse up
     args: ["mouseup", ".slick-viewport"]
     handler: (e) ->
       states = APP.justdo_grid_gantt.getState()
@@ -180,15 +194,24 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             end_date: new_end_date
         states.task_id = null
         states.end_time.is_dragging = false
+        
+      if states.column_range.is_dragging
+        states.column_range.is_dragging = false
+        
       return
   ,
-    # note - this is a catch all for mouse move w/in the formatter
+    # note - this is a catch all for mouse move
     args: ["mousemove", ".slick-viewport"]
     handler: (e) ->
       states = APP.justdo_grid_gantt.getState()
       if states.end_time.is_dragging
         delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         APP.justdo_grid_gantt.setPresentationEndTime states.task_id, states.end_time.original_time + delta_time
+        
+      if states.column_range.is_dragging
+        delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.set states.column_range.original_from_epoch_time - delta_time
+        APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.set states.column_range.original_to_epoch_time - delta_time
       return
 
   ]

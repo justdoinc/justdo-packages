@@ -14,6 +14,11 @@ _.extend JustdoGridGantt.prototype,
           end_time:
             is_dragging: false # true when dragging a task end time
             original_time: 0  # cache if we need to restore
+          column_range:  # use to drag the column content left and right to control its range
+            is_dragging: false
+            original_from_epoch_time: 0
+            original_to_epoch_time: 0
+            
   
         @_states_manager[gc_id] = state
       return state
