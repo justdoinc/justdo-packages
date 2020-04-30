@@ -499,7 +499,7 @@ Template.justdo_projects_dashboard_project_line.onCreated ->
       return
     
     gd._grid_data_core.invalidateOnCollectionItemDescendantsChanges @data._id,
-      tracked_fields: ["state"]
+      tracked_fields: [APP.justdo_projects_dashboard.table_part_interest.get()]
       
     @is_dirty_rv.set true
 
