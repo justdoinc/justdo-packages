@@ -57,8 +57,22 @@ Column Related:
   * time - represents the point of time to present
   * with_in_pixels - the length of the x axis
   
-  Returns the x offset on the time axis in pixels if time is w/in the range, otherwise 
-  returns undefined.
+  Returns the x offset on the time axis in pixels. Note that if time below thew range or 
+  above the range, it will return negative value, or value that is bigger than the 
+  column width
+
+* Pixels delta to epoch delta
+
+      pixelsDeltaToEpochDelta(delta_pixels)
+      
+  Translate offset of pixels to offset in epoch times
+  
+* updating the task-bar end time:
+
+      setPresentationEndTime(task_id, new_end_time)
+      
+  This moves the bar end to a new time. Information is not saved to the
+  database and is not persistent
   
    
  

@@ -38,8 +38,6 @@ _.extend JustdoGridGantt.prototype,
   dependencyType: (key) ->
     return key.split("_")[2]
     
-  
-  
   resetGanttDependencies: ->
     @dependencies_map = {}
     @dependents_to_keys_set = {}
@@ -104,8 +102,7 @@ _.extend JustdoGridGantt.prototype,
       return
 
     grid_gantt_column_offset = 0
-    self.grid_gantt_column_width = -1
-    self.grid_gantt_column_index = 0
+    
     for column in gc.getView()
       if column.field != "justdo_grid_gantt"
         grid_gantt_column_offset += column.width
@@ -175,23 +172,35 @@ _.extend JustdoGridGantt.prototype,
             x: p4.x
             y: p2.y
           
-          $(".justdo-grid-gantt-all-dependencies").append """
-            <div class="dependency-container">
-              <div class="line" style="#{self.lineStyle p0, p1}"></div>
-              <div class="line" style="#{self.lineStyle p1, p2}"></div>
-              <div class="line" style="#{self.lineStyle p2, p3}"></div>
-              <div class="line" style="#{self.lineStyle p3, p4}"></div>
-              <div class="line" style="#{self.lineStyle p4, p5}"></div>
-              <div class="right-arrow" style="top: #{p5.y - 3 }px; left: #{p5.x - 7}px"></div>
-            </div>
-            """
+          html = """<div class="dependency-container">"""
+          html += """<div class="line" style="#{self.lineStyle p0, p1}"></div>"""
+          if p1.x > 0 and p1.x < self.grid_gantt_column_width
+            html += """<div class="line" style="#{self.lineStyle p1, p2}"></div>"""
+          html += """<div class="line" style="#{self.lineStyle p2, p3}"></div>"""
+          if p3.x > 0 and p3.x < self.grid_gantt_column_width
+            html += """<div class="line" style="#{self.lineStyle p3, p4}"></div>"""
+          html += """<div class="line" style="#{self.lineStyle p4, p5}"></div>"""
+          if p5.x > 0 and p5.x < self.grid_gantt_column_width
+            html += """<div class="right-arrow" style="top: #{p5.y - 3 }px; left: #{p5.x - 7}px"></div>"""
+          html += "</div>"
+          
+          
+          $(".justdo-grid-gantt-all-dependencies").append html
           
     return
   
   lineStyle: (p0, p1) ->
     # horizontal line
+    self = APP.justdo_grid_gantt
     if p0.y == p1.y
-      return "left: #{Math.min p0.x, p1.x}px; top:#{p0.y}px; width:#{Math.abs(p1.x - p0.x)}px; height: 1px"
+      x0 = Math.min p0.x, p1.x
+      x1 = Math.max p0.x, p1.x
+      if x0 < 0 then x0 = 0
+      if x0 > self.grid_gantt_column_width then x0 = self.grid_gantt_column_width
+      if x1 < 0 then x1 = 0
+      if x1 > self.grid_gantt_column_width then x1 = self.grid_gantt_column_width
+      width = x1 - x0
+      return "left: #{x0}px; top:#{p0.y}px; width:#{width}px; height: 1px"
     # vertical line
     else if p0.x == p1.x
       return "left: #{p0.x}px; top:#{Math.min(p0.y, p1.y)}px; width: 1px; height: #{Math.abs(p1.y - p0.y) + 1}px"

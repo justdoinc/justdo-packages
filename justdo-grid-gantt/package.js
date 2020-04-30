@@ -61,6 +61,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/static.coffee", client);
   api.addFiles("lib/client/errors-types.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
+  api.addFiles("lib/client/states-manager.coffee", client);
 
   api.addFiles("lib/client/gantt-dependencies.coffee", client);
   api.addFiles("lib/client/gantt-dependencies.sass", client);

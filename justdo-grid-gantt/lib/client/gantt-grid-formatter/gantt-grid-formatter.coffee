@@ -41,8 +41,6 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       column_start_end_changed_comp.stop()
       APP.justdo_grid_gantt?.is_gantt_column_displayed_rv.set false
       return
-
-
     return
 
   slick_grid: ->
@@ -63,10 +61,12 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     column_end_epoch = column_start_end[1]
     
     if not (task_info = APP.justdo_grid_gantt.task_id_to_info[doc._id])?
-      return "no task info"
+      return ""
       
     ############
     # main block
+    # Following gantt-pro approach - at this stage the user will be able to change the duration while dragging the end
+    # and will be able to change the start-time while dragging the entire bar
     ############
     main_bar_mark = ""
     if (self_start_time = task_info.self_start_time)? and
@@ -81,11 +81,17 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         bar_start_px = 0
         bar_end_px = column_width_px
         if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, self_start_time, column_width_px))?
-          bar_start_px = offset
+          if offset > 0
+            bar_start_px = offset
         if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, self_end_time, column_width_px))?
-          bar_end_px = offset
+          if offset < column_width_px
+            bar_end_px = offset
           
-        main_bar_mark = """<div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px"></div>"""
+        main_bar_mark = """
+            <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task_id="#{doc._id}"></div>
+            <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task_id="#{doc._id}"></div>
+        """
+        
     ############
     # earliest child
     ############
@@ -116,9 +122,11 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         box_start_px = 0
         box_end_px = column_width_px
         if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, earliest_child, column_width_px))?
-          box_start_px = offset
+          if offset > 0
+            box_start_px = offset
         if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, latest_child, column_width_px))?
-          box_end_px = offset
+          if offset < column_width_px
+            box_end_px = offset
   
         basket_border_mark = """<div class="gantt-basket-border" style="left:#{box_start_px}px; width:#{box_end_px - box_start_px}px"></div>"""
   
@@ -129,7 +137,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     due_date_mark = ""
     if (milestone_time = task_info.milestone_time)?
       if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, milestone_time, column_width_px))?
-        due_date_mark = """<div class="gantt-milestone" style="left:#{offset - 5}px"></div>"""  #the -5 here is needed due to rotation
+        if offset >= 0 and offset <= column_width_px
+          due_date_mark = """<div class="gantt-milestone" style="left:#{offset - 5}px"></div>"""  #the -5 here is needed due to rotation
 
     formatter = """
       <div class="grid-formatter grid-gantt-formatter">
@@ -141,19 +150,47 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       </div>
     """
     return formatter
-  # return "When this # change I am being re-rendered: " + Math.ceil(Math.random() * 1000) + "; My width is: " + @getCurrentColumnData("column_width")
-
-  # REMINDER! REMINDER! REMINDER! as this formatter will evolve, definitions of events should be centralized
-  # and not redefined for every cell separately. Below is an example from the checklist formatter
+    # return "When this # change I am being re-rendered: " + Math.ceil(Math.random() * 1000) + "; My width is: " + @getCurrentColumnData("column_width")
 
   slick_grid_jquery_events: [
-  #  {
-  #     args: ["click", ".checklist-field-formatter"]
-  #     handler: (e) ->
-  #       APP.justdo_checklist_field.toggleItemState(@, @getEventPath(e), @getEventFormatterDetails(e).field_name, allowNaOnCurrentProject())
 
-  #       return
-  #   }
+    args: ["mousedown", ".gantt-main-bar-end-drag"]
+    handler: (e) ->
+      gc = APP.modules.project_page.mainGridControl()
+      states = APP.justdo_grid_gantt.getState()
+      task_id = e.target.getAttribute("task_id")
+      states.task_id = task_id
+      states.end_time.is_dragging = true
+      states.end_time.original_time = APP.justdo_grid_gantt.task_id_to_info[task_id].self_end_time
+      states.mouse_down.x = e.clientX
+      states.mouse_down.y = e.clientY
+      states.mouse_down.row = gc._grid_data.getPathGridTreeIndex(this.getEventPath(e))
+      return
+  ,
+    # note - this is a catch all for mouse up w/in the formatter
+    args: ["mouseup", ".slick-viewport"]
+    handler: (e) ->
+      states = APP.justdo_grid_gantt.getState()
+      if states.end_time.is_dragging
+        delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        new_end_epoch = states.end_time.original_time + delta_time
+        new_end_date = moment(new_end_epoch).format("YYYY-MM-DD")
+        JD.collections.Tasks.update states.task_id,
+          $set:
+            end_date: new_end_date
+        states.task_id = null
+        states.end_time.is_dragging = false
+      return
+  ,
+    # note - this is a catch all for mouse move w/in the formatter
+    args: ["mousemove", ".slick-viewport"]
+    handler: (e) ->
+      states = APP.justdo_grid_gantt.getState()
+      if states.end_time.is_dragging
+        delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        APP.justdo_grid_gantt.setPresentationEndTime states.task_id, states.end_time.original_time + delta_time
+      return
+
   ]
 
   print: (doc, field, path) ->

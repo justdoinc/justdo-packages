@@ -2,13 +2,15 @@ _.extend JustdoGridGantt.prototype,
   _immediateInit: ->
     self = @
     
-    @fileds_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents"]
+    @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents"]
     
     @day =  24 * 3600 * 1000
 
     start_of_day_epoch = moment.utc(moment().format("YYYY-MM-DD")).unix() * 1000
     @gantt_coloumn_from_epoch_time_rv = new ReactiveVar (start_of_day_epoch - 5 * @day)
     @gantt_coloumn_to_epoch_time_rv = new ReactiveVar (start_of_day_epoch + 6 * @day - 1000)
+    @grid_gantt_column_width = -1
+    @grid_gantt_column_index = 0
   
     @task_id_to_info = {} # Map to relevant information including
                           #   self_start_time: # indicates the beginning of the gantt block for the task
@@ -44,7 +46,7 @@ _.extend JustdoGridGantt.prototype,
       for [msg_type, [task_id, data]] in queue.queue
         if msg_type == "update"
           for field in data
-            if field in self.fileds_to_trigger_task_change_process
+            if field in self.fields_to_trigger_task_change_process
               self.processTaskChange core_data.items_by_id[task_id]
         else if msg_type == "add"
           self.processTaskAdd data
@@ -72,7 +74,7 @@ _.extend JustdoGridGantt.prototype,
           if task_id != "0" # this the mother of all root tasks. Daniel - I need guidance if change is needed
             if (rows = tree_indices[task_id])?
               for row in rows
-                APP.modules.project_page.gridControl()._grid.updateCell(row, column_index)
+                APP.modules.project_page.gridControl()._grid.updateCell(row, column_index, true)
           return # end of for each
       
       self.gantt_dirty_tasks.clear()
@@ -440,9 +442,16 @@ _.extend JustdoGridGantt.prototype,
     @timeOffsetPixels = (epoch_range, time, width_in_pixels) ->
       epoch_start = epoch_range[0]
       epoch_end = epoch_range[1]
-      if time < epoch_start or time > epoch_end or epoch_end <= epoch_start
+      if epoch_end <= epoch_start
         return undefined
       return (time - epoch_start) / (epoch_end - epoch_start) * width_in_pixels
+  
+    @pixelsDeltaToEpochDelta = (delta_pixels) ->
+      self.grid_gantt_column_width
+      from_epoch = self.gantt_coloumn_from_epoch_time_rv.get()
+      to_epoch = self.gantt_coloumn_to_epoch_time_rv.get()
+      return delta_pixels / self.grid_gantt_column_width * (to_epoch - from_epoch)
+    
       
     @earliestOfSelfStartAndEarliestChildStart = (task_info) ->
       if task_info.self_start_time?
@@ -471,6 +480,12 @@ _.extend JustdoGridGantt.prototype,
         if task_info.latest_child_end_time?
           return task_info.latest_child_end_time
       return undefined
+      
+    @setPresentationEndTime = (task_id, new_end_time) ->
+      self.task_id_to_info[task_id]?.self_end_time = new_end_time
+      self.gantt_dirty_tasks.add task_id
+      self.processGanttDirtyTasks()
+      return
   
   _deferredInit: ->
     self = @
