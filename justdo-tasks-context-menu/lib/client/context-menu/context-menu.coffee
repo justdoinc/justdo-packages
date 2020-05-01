@@ -1,7 +1,5 @@
-Template.tasks_context_menu.helpers
-  isAddSiblingAllowed: ->
-    return _.isEmpty(APP.modules.project_page.getUnfulfilledOpReq("addSiblingTask"))
 
+Template.tasks_context_menu.helpers
   updatedByOrCreatedBy: ->
     item_obj = @controller.getContextItemObj()
 
@@ -10,18 +8,11 @@ Template.tasks_context_menu.helpers
 
     return item_obj.updated_by or item_obj.created_by_user_id
 
-Template.tasks_context_menu.events
-  "click .new-task": ->
-    APP.modules.project_page.performOp("addSiblingTask")
+  getMainSections: -> 
+    return APP.justdo_tasks_context_menu.getMainSections()
 
-    return
+Template.tasks_context_menu.events 
+  "click .context-action-item": ->
+    if typeof @op == "function"
+      @op()
 
-  "click .new-child-task": ->
-    APP.modules.project_page.performOp("addSubTask")
-
-    return
-
-  "click .zoom-in": ->
-    APP.modules.project_page.performOp("zoomIn")
-
-    return

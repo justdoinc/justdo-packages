@@ -1,16 +1,18 @@
 <template name="tasks_context_menu">
   <ul class="dropdown-menu p-2 shadow-lg border-0">
-    {{#if isAddSiblingAllowed}}
-      <li class="dropdown-item context-action-item new-task">
-        <svg class="jd-icon jd-icon-context-action text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg> New Task
-      </li>
-    {{/if}}
-    <li class="dropdown-item context-action-item new-child-task">
-      <svg class="jd-icon jd-icon-context-action text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#corner-down-right"/></svg> New Child Task
-    </li>
-    <li class="dropdown-item context-action-item zoom-in">
-      <svg class="jd-icon jd-icon-context-action text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#zoom-in"/></svg> Zoom In
-    </li>
+    {{#each getMainSections}}
+      {{#if label}}
+        <li>Some label here</li>
+      {{/if}}
+      {{#each reactive_items_list.getList}}
+        <li class="dropdown-item context-action-item">
+          {{#if $eq icon_type "feather"}}
+            <svg class="jd-icon jd-icon-context-action text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#{{icon_val}}"/></svg> 
+          {{/if}}
+          {{label}}
+        </li>
+      {{/each}}
+    {{/each}}
     <hr class="my-2">
     <li class="more-info-items">
       <div>
