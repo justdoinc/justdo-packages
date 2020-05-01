@@ -3,6 +3,11 @@ _.extend JustdoTasksContextMenu.prototype,
 
   _immediateInit: ->
     @_context_item_id_reactive_var = new ReactiveVar(null)
+    return
+
+  _deferredInit: ->
+    if @destroyed
+      return
 
     @context_menu_template_obj =
       JustdoHelpers.renderTemplateInNewNode("tasks_context_menu", {controller: @}, "div")
@@ -10,12 +15,6 @@ _.extend JustdoTasksContextMenu.prototype,
     $(@context_menu_template_obj.node).addClass("dropdown #{@context_class}")
 
     @_setupHideConditions()
-
-    return
-
-  _deferredInit: ->
-    if @destroyed
-      return
 
     return
 
@@ -128,3 +127,5 @@ _.extend JustdoTasksContextMenu.prototype,
   getContextItemId: -> @_context_item_id_reactive_var.get()
 
   getContextItemObj: -> @tasks_collection.findOne(@getContextItemId())
+
+  
