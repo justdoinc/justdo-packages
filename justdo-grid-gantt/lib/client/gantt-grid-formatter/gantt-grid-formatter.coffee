@@ -160,8 +160,12 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   
         date_hint = ""
         if (states = APP.justdo_grid_gantt.getState())
+          # Daniel/Igor- I couldn't get the z-index to make this hint higher than the columns around it. I'll need your help w/ this one.
           if states.end_time.is_dragging
-            date_hint = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment(self_end_time).format("YYYY-MM-DD"))
+            date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(self_end_time).format("YYYY-MM-DD"))
+            date_hint = """
+                <div class="end-date-hint">#{date}</div>
+        """
         main_bar_mark = """
             <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}"></div>
             <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}">#{date_hint}</div>
@@ -260,9 +264,13 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     handler: (e) ->
       states = APP.justdo_grid_gantt.getState()
       if states.end_time.is_dragging
-        delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        if Math.abs(e.clientX - states.mouse_down.x) > 5
+          delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        else
+          delta_time = 0
+        
         new_end_epoch = states.end_time.original_time + delta_time
-        new_end_date = moment(new_end_epoch).format("YYYY-MM-DD")
+        new_end_date = moment.utc(new_end_epoch).format("YYYY-MM-DD")
         
         JD.collections.Tasks.update states.task_id,
           $set:
@@ -284,7 +292,11 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         return
         
       if states.end_time.is_dragging
-        delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        if Math.abs(e.clientX - states.mouse_down.x) > 5
+          delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        else
+          delta_time = 0
+        
         APP.justdo_grid_gantt.setPresentationEndTime states.task_id, states.end_time.original_time + delta_time
         
       if states.column_range.is_dragging
