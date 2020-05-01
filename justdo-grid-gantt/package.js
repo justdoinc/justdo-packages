@@ -5,9 +5,9 @@ Package.describe({
   git: "https://github.com/justdoinc/justdo-shared-packages/tree/master/justdo-grid-gantt"
 });
 
-client = "client";
-server = "server";
-both = [client, server];
+client = "client"
+server = "server"
+both = [client, server]
 
 Package.onUse(function (api) {
   api.versionsFrom("1.4.1.1");

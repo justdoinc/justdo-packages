@@ -1,9 +1,16 @@
+# manage hitting escape to stop mouse operations
+$("body").keyup (e) ->
+  if not (e.keyCode == 27)
+    return
+  if (grid_gantt = APP.justdo_grid_gantt)?
+    grid_gantt.resetStatesChangeOnEscape()
+  return
+
 GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   slickGridColumnStateMaintainer: ->
     # The following is responsible for full column invalidation upon column width resize.
     if not Tracker.active
       @logger.warn "slickGridColumnStateMaintainer: called outside of computation, skipping"
-
       return
 
     # Create a dependency and depend on it.
@@ -221,7 +228,6 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.set states.column_range.original_from_epoch_time - delta_time
         APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.set states.column_range.original_to_epoch_time - delta_time
       return
-
   ]
 
   print: (doc, field, path) ->

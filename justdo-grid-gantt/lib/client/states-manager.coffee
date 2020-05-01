@@ -24,4 +24,16 @@ _.extend JustdoGridGantt.prototype,
       return state
     return undefined
     
+  resetStatesChangeOnEscape: ->
+    states = @getState()
+    
+    if states.end_time.is_dragging
+      states.end_time.is_dragging = false
+      APP.justdo_grid_gantt.setPresentationEndTime states.task_id, states.end_time.original_time
+      states.task_id = null
+      
+    return
+    
+    
+    
     
