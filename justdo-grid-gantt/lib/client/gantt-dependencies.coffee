@@ -79,10 +79,13 @@ _.extend JustdoGridGantt.prototype,
     return
   
   resetDependenciesMapRowNumbers: ->
+    self = @
+    
     if not (gc = APP.modules.project_page.gridControl())?
       return
+      
     indices = gc._grid_data._items_ids_map_to_grid_tree_indices
-    self = @
+    
     for key, dependency_obj of self.dependencies_map
       dependency_obj.dependent_rows = indices[dependency_obj.dependent]
       dependency_obj.independent_rows = indices[dependency_obj.independent]
@@ -97,7 +100,7 @@ _.extend JustdoGridGantt.prototype,
     if $(".justdo-grid-gantt-all-dependencies").length
       $(".justdo-grid-gantt-all-dependencies").remove()
   
-    $slick_view_port = $(".slick-viewport")
+    $slick_view_port = $(".slick-viewport", gc.container)
     if not $slick_view_port.length
       return
 
@@ -172,6 +175,7 @@ _.extend JustdoGridGantt.prototype,
             x: p4.x
             y: p2.y
           
+          # open point from code review https://github.com/justdoinc/justdo-internal-packages/commit/bc44b60fd490862549bb3065ea40ca9e37030943#r38823927
           html = """<div class="dependency-container">"""
           html += """<div class="line" style="#{self.lineStyle p0, p1}"></div>"""
           if p1.x > 0 and p1.x < self.grid_gantt_column_width
