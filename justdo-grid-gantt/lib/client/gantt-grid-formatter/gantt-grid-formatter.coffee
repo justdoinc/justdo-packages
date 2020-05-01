@@ -86,10 +86,14 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, self_end_time, column_width_px))?
           if offset < column_width_px
             bar_end_px = offset
-          
+  
+        date_hint = ""
+        if (states = APP.justdo_grid_gantt.getState())
+          if states.end_time.is_dragging
+            date_hint = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment(self_end_time).format("YYYY-MM-DD"))
         main_bar_mark = """
             <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}"></div>
-            <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}"></div>
+            <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}">#{date_hint}</div>
         """
         
     ############
@@ -188,11 +192,14 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         new_end_epoch = states.end_time.original_time + delta_time
         new_end_date = moment(new_end_epoch).format("YYYY-MM-DD")
+        
         JD.collections.Tasks.update states.task_id,
           $set:
             end_date: new_end_date
-        states.task_id = null
+            
         states.end_time.is_dragging = false
+        APP.justdo_grid_gantt.setPresentationEndTime states.task_id, APP.justdo_grid_gantt.dateStringToEndOfDayEpoch new_end_date
+        states.task_id = null
         
       if states.column_range.is_dragging
         states.column_range.is_dragging = false
