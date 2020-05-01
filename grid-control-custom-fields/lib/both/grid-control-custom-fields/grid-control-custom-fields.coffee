@@ -505,10 +505,7 @@ _.extend GridControlCustomFields,
 
     return
 
-APP.isJustdoLabsFeaturesEnabled ->
-  GridControlCustomFields.registerCustomFieldsTypes "basic-calc", 
-    type_id: "calc"
-    label: "Derivative" # Derive from the descendants
 
-  return
-
+GridControlCustomFields.registerCustomFieldsTypes "basic-calc", 
+  type_id: "calc"
+  label: "Derivative" # Derive from the descendants
