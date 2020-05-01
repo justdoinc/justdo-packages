@@ -88,8 +88,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             bar_end_px = offset
           
         main_bar_mark = """
-            <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task_id="#{doc._id}"></div>
-            <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task_id="#{doc._id}"></div>
+            <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}"></div>
+            <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}"></div>
         """
         
     ############
@@ -156,15 +156,14 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
     args: ["mousedown", ".gantt-main-bar-end-drag"]
     handler: (e) ->
-      gc = APP.modules.project_page.gridControl()
       states = APP.justdo_grid_gantt.getState()
-      task_id = e.target.getAttribute("task_id")
+      task_id = e.target.getAttribute("task-id")
       states.task_id = task_id
       states.end_time.is_dragging = true
       states.end_time.original_time = APP.justdo_grid_gantt.task_id_to_info[task_id].self_end_time
       states.mouse_down.x = e.clientX
       states.mouse_down.y = e.clientY
-      states.mouse_down.row = gc._grid_data.getPathGridTreeIndex(this.getEventPath(e))
+      states.mouse_down.row = @getEventRow(e)
       return
   ,
     args: ["mousedown", ".slick-cell.l1"]  #Daniel - I wasn't able to add a class to the parent div of the formatter
@@ -203,7 +202,9 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     # note - this is a catch all for mouse move
     args: ["mousemove", ".slick-viewport"]
     handler: (e) ->
-      states = APP.justdo_grid_gantt.getState()
+      if not (states = APP.justdo_grid_gantt.getState())?
+        return
+        
       if states.end_time.is_dragging
         delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         APP.justdo_grid_gantt.setPresentationEndTime states.task_id, states.end_time.original_time + delta_time

@@ -1,6 +1,8 @@
 _.extend JustdoGridGantt.prototype,
   _immediateInit: ->
     self = @
+  
+    @_states_manager = {}
     
     @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents"]
     
@@ -74,7 +76,7 @@ _.extend JustdoGridGantt.prototype,
           if task_id != "0" # this the mother of all root tasks. Daniel - I need guidance if change is needed
             if (rows = tree_indices[task_id])?
               for row in rows
-                APP.modules.project_page.gridControl()._grid.updateCell(row, column_index, true)
+                APP.modules.project_page.gridControl()._grid.updateCell(row, column_index, true) # true is to avoid the same-tick updateCell block
           return # end of for each
       
       self.gantt_dirty_tasks.clear()
@@ -447,7 +449,6 @@ _.extend JustdoGridGantt.prototype,
       return (time - epoch_start) / (epoch_end - epoch_start) * width_in_pixels
   
     @pixelsDeltaToEpochDelta = (delta_pixels) ->
-      self.grid_gantt_column_width
       from_epoch = self.gantt_coloumn_from_epoch_time_rv.get()
       to_epoch = self.gantt_coloumn_to_epoch_time_rv.get()
       return delta_pixels / self.grid_gantt_column_width * (to_epoch - from_epoch)
@@ -482,7 +483,7 @@ _.extend JustdoGridGantt.prototype,
       return undefined
       
     @setPresentationEndTime = (task_id, new_end_time) ->
-      self.task_id_to_info[task_id]?.self_end_time = new_end_time
+      self.task_id_to_info[task_id].self_end_time = new_end_time
       self.gantt_dirty_tasks.add task_id
       self.processGanttDirtyTasks()
       return

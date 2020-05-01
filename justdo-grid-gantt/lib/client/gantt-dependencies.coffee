@@ -47,7 +47,7 @@ _.extend JustdoGridGantt.prototype,
     if not (dependencies_mf = task_obj.justdo_task_dependencies_mf)?
       return
       
-    self = APP.justdo_grid_gantt
+    self = @
     new_keys_set = new Set()
     for dependency in dependencies_mf
       new_keys_set.add "#{dependency.task_id}_#{task_obj._id}_#{dependency.type}"
@@ -82,7 +82,7 @@ _.extend JustdoGridGantt.prototype,
     if not (gc = APP.modules.project_page.gridControl())?
       return
     indices = gc._grid_data._items_ids_map_to_grid_tree_indices
-    self = APP.justdo_grid_gantt
+    self = @
     for key, dependency_obj of self.dependencies_map
       dependency_obj.dependent_rows = indices[dependency_obj.dependent]
       dependency_obj.independent_rows = indices[dependency_obj.independent]
@@ -90,7 +90,7 @@ _.extend JustdoGridGantt.prototype,
     
   resetDependenciesDiv: ->
     # todo: (w/ Daniel - make reactive to all kinds of changes
-    self = APP.justdo_grid_gantt
+    self = @
     if not (gc = APP.modules.project_page.gridControl())?
       return
       
@@ -123,7 +123,7 @@ _.extend JustdoGridGantt.prototype,
     return
   
   renderDependency: (dependency_obj) ->
-    self = APP.justdo_grid_gantt
+    self = @
   
     # todo - use same tick cache for gc, epoch_range,
     if not (gc = APP.modules.project_page.gridControl())?
@@ -191,7 +191,7 @@ _.extend JustdoGridGantt.prototype,
   
   lineStyle: (p0, p1) ->
     # horizontal line
-    self = APP.justdo_grid_gantt
+    self = @
     if p0.y == p1.y
       x0 = Math.min p0.x, p1.x
       x1 = Math.max p0.x, p1.x
@@ -209,7 +209,7 @@ _.extend JustdoGridGantt.prototype,
     return ""
     
   rerenderAllDependencies: ->
-    self = APP.justdo_grid_gantt
+    self = @
     
     if self.grid_gantt_column_index < 0
       return
