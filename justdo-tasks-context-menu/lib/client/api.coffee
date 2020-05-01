@@ -3,6 +3,46 @@ _.extend JustdoTasksContextMenu.prototype,
 
   _immediateInit: ->
     @_context_item_id_reactive_var = new ReactiveVar(null)
+    @all_sections_reactive_items_list = new JustdoHelpers.ReactiveItemsList()
+    @main_sections_reactive_items_list = new JustdoHelpers.ReactiveItemsList()
+
+    @registerMainSection "main",
+      position: 100
+    @registerSectionItem "main", "new-task",
+      position: 100
+      data:
+        label: "New Task"
+        op: ->
+          APP.modules.project_page.performOp("addSiblingTask")
+
+          return
+        icon_type: "feather"
+        icon_val: "plus"
+
+      listingCondition: -> _.isEmpty(APP.modules.project_page.getUnfulfilledOpReq("addSiblingTask"))
+
+    @registerSectionItem "main", "new-child-task",
+      position: 200
+      data:
+        label: "New Child Task"
+        op: ->
+          APP.modules.project_page.performOp("addSubTask")
+
+          return
+        icon_type: "feather"
+        icon_val: "corner-down-right"
+    
+    @registerSectionItem "main", "zoon-in",
+      position: 300
+      data:
+        label: "Zoom in"
+        op: ->
+          APP.modules.project_page.performOp("zoomIn")
+
+          return
+        icon_type: "feather"
+        icon_val: "zoom-in"
+    
     return
 
   _deferredInit: ->
@@ -127,5 +167,45 @@ _.extend JustdoTasksContextMenu.prototype,
   getContextItemId: -> @_context_item_id_reactive_var.get()
 
   getContextItemObj: -> @tasks_collection.findOne(@getContextItemId())
+
+  registerMainSection: (section_id, conf) ->
+    if not conf?
+        conf = {}
+
+    # XXX check conf schema
+
+    Meteor._ensure conf, "data" # It is very unlikely that we won't have data object, as it is needed to set a label for the section
+
+    # Create shallow copy to avoid affecting the original data obj provided
+    conf.data = _.extend {}, conf.data,
+      reactive_items_list: new JustdoHelpers.ReactiveItemsList()
+
+    @main_sections_reactive_items_list.registerItem section_id, conf
+    @all_sections_reactive_items_list.registerItem section_id, conf
+
+    return
+  
+  unregisterMainSection: (section_id) -> 
+    @main_sections_reactive_items_list.unregisterItem section_id
+    @all_sections_reactive_items_list.unregisterItem section_id
+    return
+
+  getMainSections: (ignore_listing_condition) -> 
+    return @main_sections_reactive_items_list.getList("default", ignore_listing_condition)
+
+  registerSectionItem: (section_id, item_id, conf) ->
+     # XXX check conf schema
+
+    if (all_sections_reactive_items_list = @all_sections_reactive_items_list.getItem(section_id, true).data.reactive_items_list)?
+      all_sections_reactive_items_list.registerItem item_id, conf
+
+    return
+  
+  unregisterSectionItem: (section_id, item_id) ->
+    if (section_reactive_items_list = @all_sections_reactive_items_list.getItem(section_id, true).data.reactive_items_list)?
+      section_reactive_items_list.unregisterItem item_id
+
+    return
+
 
   
