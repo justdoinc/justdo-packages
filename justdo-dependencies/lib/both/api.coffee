@@ -2,8 +2,15 @@ _.extend JustdoDependencies.prototype,
   _bothImmediateInit: ->
     # @_bothImmediateInit runs before the specific env's @_immediateInit()
 
-    # Add here code that should run, in the Server and Client, during the JS
-    # tick in which we create the object instance.
+    self = @
+  
+    @alertOrThrow = (error_type)->
+      if Meteor.isClient
+        JustdoSnackbar.show
+          text: self._errors_types[error_type]
+      else
+        throw self._error error_type
+      return
 
     return
 
@@ -21,14 +28,6 @@ _.extend JustdoDependencies.prototype,
   checkDependenciesFormatBeforeUpdate: (doc, field_names, modifier, options) ->
     # note: checkDependenciesFormatBeforeUpdate works on the human friendly field
 
-    alertOrThrow = (error_type)->
-      if Meteor.isClient
-        JustdoSnackbar.show
-          text: APP.justdo_dependencies._errors_types[error_type]
-      else
-        throw APP.justdo_dependencies._error error_type
-      return
-    
     if JustdoDependencies.dependencies_field_id not in field_names
       return true
       
@@ -100,29 +99,30 @@ _.extend JustdoDependencies.prototype,
       if found_one
         return true
       return false
+      
     if new_push_value
       if new_push_value in existing_dependencies
-        alertOrThrow"dependency-already-exists"
+        @alertOrThrow "dependency-already-exists"
         return false
     
       if new_push_value == doc.seqId
-        alertOrThrow"self-dependency"
+        @alertOrThrow "self-dependency"
         return false
     
       if not (JD.collections.Tasks.findOne {seqId: new_push_value, project_id: doc.project_id})
-        alertOrThrow "dependent-task-not-found"
+        @alertOrThrow "dependent-task-not-found"
         return false
     
       if checkForInfiniteLoop([doc._id], new_push_value)
-        alertOrThrow "Infinite-dependency-loop"
+        @alertOrThrow "Infinite-dependency-loop"
         return false
     
       if parentDependency doc._id, new_push_value
-        alertOrThrow "parent-dependency"
+        @alertOrThrow "parent-dependency"
         return false
     
       if child_dependency doc._id, new_push_value
-        alertOrThrow "child-dependency"
+        @alertOrThrow "child-dependency"
         return false
   
     if new_set_values
@@ -130,23 +130,23 @@ _.extend JustdoDependencies.prototype,
         if (not doc[JustdoDependencies.dependencies_field_id]?) or (new_set_value not in doc[JustdoDependencies.dependencies_field_id])
           # dealing with only new ones...
           if new_set_value == doc.seqId
-            alertOrThrow"self-dependency"
+            @alertOrThrow "self-dependency"
             return false
         
           if not (JD.collections.Tasks.findOne {seqId: new_set_value, project_id: doc.project_id, _raw_removed_date: {$exists: false}})
-            alertOrThrow"dependent-task-not-found"
+            @alertOrThrow "dependent-task-not-found"
             return false
         
           if checkForInfiniteLoop([doc._id], new_set_value)
-            alertOrThrow"Infinite-dependency-loop"
+            @alertOrThrow "Infinite-dependency-loop"
             return false
         
           if parentDependency doc._id, new_set_value
-            alertOrThrow"parent-dependency"
+            @alertOrThrow "parent-dependency"
             return false
         
           if child_dependency doc._id, new_set_value
-            alertOrThrow"child-dependency"
+            @alertOrThrow "child-dependency"
             return false
   
     return true # end of check dependencies format and integrity
