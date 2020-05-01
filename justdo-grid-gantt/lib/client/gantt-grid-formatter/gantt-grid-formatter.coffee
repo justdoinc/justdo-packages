@@ -7,6 +7,70 @@ $("body").keyup (e) ->
   return
 
 GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
+  
+  gridControlInit: ->
+    # IMPORTANT! The following code assumes that there is only a single Gantt Field formatter in any given
+    # grid control, if that will change in the future, will need to have a different approach.
+    gc = @
+    
+    redrawFormatterHeader = (field_id) ->
+      $grid_gantt_header_field = $("##{gc.getGridUid()}#{field_id}")
+      
+      # Beware of XSS
+      header_html = """
+        <div class="grid-gantt-header" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; background: red;">
+          CONTENT FROM:#{APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()} TO:#{APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()}; RENDER ID:#{Math.ceil(Math.random() * 1000)}
+        </div>
+      """
+      
+      $(".grid-gantt-header", $grid_gantt_header_field).remove() # Remove any existing header html
+      $grid_gantt_header_field.prepend(header_html)
+      $(".slick-column-name", $grid_gantt_header_field).remove()
+      
+      return
+    
+    getGanttFieldViewDef = ->
+      extended_schema = gc.getSchemaExtendedWithCustomFields()
+      
+      view = gc.getViewReactive()
+      
+      for field_def in view
+        if extended_schema[field_def.field].grid_column_formatter == JustdoGridGantt.pseudo_field_formatter_id
+          return field_def
+    
+    # The following tracker takes care of requiring the grid to have double header when
+    # we find a field that uses the formatter: JustdoGridGantt.pseudo_field_formatter_id
+    #
+    # In addition, for every view change, if we find a field that uses formatter the Gantt Field formatter
+    # we call redrawFormatterHeader(field_id) with its field_id
+    #
+    # Again, we assume at most one field is using the Gantt Field formatter
+    # double_header_requested = false
+    Tracker.autorun ->
+      if (field_def = getGanttFieldViewDef())?
+        # if not double_header_requested # If double header requested by us already, adding another request will cause redundant extra request
+        #   gc.requireDoubleHeader()
+          # double_header_requested = true
+        redrawFormatterHeader(field_def.field)
+        return
+      
+      # If no Gantt Field exists in the grid
+      # if double_header_requested
+      #   gc.releaseDoubleHeader()
+      #   double_header_requested = false
+      return
+    
+    # The following autorun triggers redraw when the gantt settings changes
+    Tracker.autorun ->
+      if APP.justdo_grid_gantt.isPluginInstalledOnProjectDoc(JD.activeJustdo())
+        APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
+        APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+        if (field_def = getGanttFieldViewDef())?
+          redrawFormatterHeader(field_def.field)
+      return
+    
+    return
+  
   slickGridColumnStateMaintainer: ->
     # The following is responsible for full column invalidation upon column width resize.
     if not Tracker.active
