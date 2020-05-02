@@ -18,7 +18,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       
       # Beware of XSS
       header_html = """
-        <div class="grid-gantt-header" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; background: red;">
+        <div class="grid-gantt-header" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; background: beige;">
           CONTENT FROM:#{APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()} TO:#{APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()}; RENDER ID:#{Math.ceil(Math.random() * 1000)}
         </div>
       """
@@ -232,7 +232,19 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     # return "When this # change I am being re-rendered: " + Math.ceil(Math.random() * 1000) + "; My width is: " + @getCurrentColumnData("column_width")
 
   slick_grid_jquery_events: [
-
+    args: ["click", ".dependency-1-2-cancel-icon"]
+    handler: (e) ->
+      dependency_container = e.target.closest(".dependency-container")
+      if (dependent = dependency_container.getAttribute("dependent-id"))? and
+          (independent = dependency_container.getAttribute("independent-id"))? and
+          (dependency_type = dependency_container.getAttribute("dependency-type"))? and
+          (dependencies = APP.justdo_dependencies)?
+        
+        if dependency_type == "F2S"
+          dependencies.removeFinishToStartDependency JD.activeJustdo()._id, independent, dependent
+      
+      return
+  ,
     args: ["mousedown", ".gantt-main-bar-end-drag"]
     handler: (e) ->
       states = APP.justdo_grid_gantt.getState()

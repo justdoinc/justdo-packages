@@ -7,12 +7,35 @@
 
     .line
       position: absolute
+      z-index: 1
+
+      &:hover
+        .dependency-1-2-cancel
+          visibility: visible
+
+    .horizontal
       border-top-style: solid
       border-top-width: 1px
       border-top-color: red
+      height: 5px
+
+    .vertical
       border-left-style: solid
       border-left-width: 1px
       border-left-color: red
+      width: 5px
+
+
+    .dependency-1-2-cancel
+      position: absolute
+      visibility: hidden
+      .jd-icon
+        width: 20px
+        height: 20px
+
+
+        //.dependency-1-2-cancel
+        //  visibility: visible
 
     .right-arrow
       position: absolute
