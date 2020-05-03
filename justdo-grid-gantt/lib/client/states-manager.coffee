@@ -17,7 +17,8 @@ _.extend JustdoGridGantt.prototype,
             original_end_time: 0
           end_time:
             is_dragging: false # true when dragging a task end time
-            original_time: 0  # cache if we need to restore
+            original_end_time: 0  # cache if we need to restore
+            original_start_time: 0
           dependencies:
             finish_to_x_independent: null
             independent_end_time: 0
@@ -36,7 +37,7 @@ _.extend JustdoGridGantt.prototype,
     
     if states.end_time.is_dragging
       states.end_time.is_dragging = false
-      APP.justdo_grid_gantt.setPresentationEndTime states.task_id, states.end_time.original_time
+      APP.justdo_grid_gantt.setPresentationEndTime states.task_id, states.end_time.original_end_time
       states.task_id = null
       
     if states.main_bar.is_dragging

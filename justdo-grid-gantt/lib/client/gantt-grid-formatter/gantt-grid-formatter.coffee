@@ -306,7 +306,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       task_id = e.target.getAttribute("task-id")
       states.task_id = task_id
       states.end_time.is_dragging = true
-      states.end_time.original_time = APP.justdo_grid_gantt.task_id_to_info[task_id].self_end_time
+      states.end_time.original_start_time = APP.justdo_grid_gantt.task_id_to_info[task_id].self_start_time
+      states.end_time.original_end_time = APP.justdo_grid_gantt.task_id_to_info[task_id].self_end_time
       states.mouse_down.x = e.clientX
       states.mouse_down.y = e.clientY
       states.mouse_down.row = @getEventRow(e)
@@ -351,9 +352,13 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         else
           delta_time = 0
+  
+        new_end_time = states.end_time.original_end_time + delta_time
+        #don't let the user drag to before of the start time
+        if new_end_time < states.end_time.original_start_time + 23 * 60 * 60 * 1000
+          new_end_time = states.end_time.original_start_time + 23 * 60 * 60 * 1000
         
-        new_end_epoch = states.end_time.original_time + delta_time
-        new_end_date = moment.utc(new_end_epoch).format("YYYY-MM-DD")
+        new_end_date = moment.utc(new_end_time).format("YYYY-MM-DD")
         
         JD.collections.Tasks.update states.task_id,
           $set:
@@ -405,8 +410,11 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         else
           delta_time = 0
-  
-        grid_gantt.setPresentationEndTime states.task_id, states.end_time.original_time + delta_time
+        new_end_time = states.end_time.original_end_time + delta_time
+        #don't let the user drag to before of the start time
+        if new_end_time < states.end_time.original_start_time + 23 * 60 * 60 * 1000
+          new_end_time = states.end_time.original_start_time + 23 * 60 * 60 * 1000
+        grid_gantt.setPresentationEndTime states.task_id, new_end_time
   
       else if states.main_bar.is_dragging
         if Math.abs(e.clientX - states.mouse_down.x) > 5
