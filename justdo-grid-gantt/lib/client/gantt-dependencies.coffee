@@ -218,7 +218,26 @@ _.extend JustdoGridGantt.prototype,
     else if p0.x == p1.x
       return "left: #{p0.x}px; top:#{Math.min(p0.y, p1.y)}px; height: #{Math.abs(p1.y - p0.y) + 1}px"
     else
-      console.error "grid-gantt line type not supported"
+      thickness = 3
+      x1 = p0.x
+      y1 = p0.y
+      
+      x2 = p1.x
+      y2 = p1.y
+      
+      length = Math.sqrt(((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1)))
+    
+      #center
+      cx = ((x1 + x2) / 2) - (length / 2)
+      cy = ((y1 + y2) / 2) - (thickness / 2)
+      
+      angle = Math.atan2((y1-y2),(x1-x2))*(180/Math.PI);
+      return """
+             padding:0px; margin:0px; height: #{thickness}px; background-color: red; line-height:1px; position:absolute;
+             left: #{cx}px; top: #{cy}px; width: #{length}px;
+             -moz-transform:rotate(#{angle}deg); -webkit-transform:rotate(#{angle}deg); -o-transform:rotate(#{angle}deg);
+             -ms-transform:rotate(#{angle}deg); transform:rotate(#{angle}deg);
+      """
     return ""
     
   rerenderAllDependencies: ->

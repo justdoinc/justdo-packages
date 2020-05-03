@@ -157,7 +157,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, self_end_time, column_width_px))?
           if offset < column_width_px
             bar_end_px = offset
-  
+           
         date_hint = ""
         if (states = APP.justdo_grid_gantt.getState())
           # Daniel/Igor- I couldn't get the z-index to make this hint higher than the columns around it. I'll need your help w/ this one.
@@ -168,7 +168,13 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         """
         main_bar_mark = """
             <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}"></div>
+            <div class="gantt-main-bar-start-drop-area" style="left:#{bar_start_px}px;"></div>
             <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}">#{date_hint}</div>
+            <div class="gantt-main-bar-F2x-dependency" style="left:#{bar_end_px}px;">
+              <svg class="jd-icon gantt-main-bar-F2x-dependency-icon">
+                <use xlink:href="/layout/icons-feather-sprite.svg#circle"/>
+              </svg>
+            </div>
         """
         
     ############
@@ -208,8 +214,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             box_end_px = offset
   
         basket_border_mark = """<div class="gantt-basket-border" style="left:#{box_start_px}px; width:#{box_end_px - box_start_px}px"></div>"""
-  
-  
+   
     ############
     # due date
     ############
@@ -220,7 +225,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           due_date_mark = """<div class="gantt-milestone" style="left:#{offset - 5}px"></div>"""  #the -5 here is needed due to rotation
 
     formatter = """
-      <div class="grid-formatter grid-gantt-formatter">
+      <div class="grid-formatter grid-gantt-formatter" task-id="#{doc._id}">
         #{basket_border_mark}
         #{earliest_child_mark}
         #{latest_child_mark}
@@ -232,6 +237,43 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     # return "When this # change I am being re-rendered: " + Math.ceil(Math.random() * 1000) + "; My width is: " + @getCurrentColumnData("column_width")
 
   slick_grid_jquery_events: [
+    args: ["mouseenter", ".gantt-main-bar-start-drop-area"]
+    handler: (e) ->
+      states = APP.justdo_grid_gantt.getState()
+      if states.dependencies.finish_to_x_independent?
+        $(e.target).css("background-color","red")
+      return
+  ,
+    args: ["mouseleave", ".gantt-main-bar-start-drop-area"]
+    handler: (e) ->
+      states = APP.justdo_grid_gantt.getState()
+      if states.dependencies.finish_to_x_independent?
+        $(e.target).css("background-color","")
+      return
+  ,
+    args: ["mouseup", ".gantt-main-bar-start-drop-area"]
+    handler: (e) ->
+      states = APP.justdo_grid_gantt.getState()
+      if (independent_id = states.dependencies.finish_to_x_independent)?
+        formatter_container = e.target.closest(".grid-gantt-formatter")
+        if (dependent_id = formatter_container.getAttribute("task-id"))? and
+            (dependencies = APP.justdo_dependencies)?
+          dependencies.addFinishToStartDependency JD.activeJustdo()._id, independent_id, dependent_id
+        $(e.target).css("cursor","")
+      return
+  ,
+    args: ["mousedown", ".gantt-main-bar-F2x-dependency-icon"]
+    handler: (e) ->
+      formatter_container = e.target.closest(".grid-gantt-formatter")
+      if (independent_id = formatter_container.getAttribute("task-id"))?
+        states = APP.justdo_grid_gantt.getState()
+        states.dependencies.finish_to_x_independent = independent_id
+        states.dependencies.independent_end_time = APP.justdo_grid_gantt.task_id_to_info[independent_id].self_end_time
+        states.mouse_down.x = e.clientX
+        states.mouse_down.y = e.clientY
+        states.mouse_down.row = @getEventRow(e)
+      return
+  ,
     args: ["click", ".dependency-1-2-cancel-icon"]
     handler: (e) ->
       dependency_container = e.target.closest(".dependency-container")
@@ -264,6 +306,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       states = APP.justdo_grid_gantt.getState()
       if states.end_time.is_dragging
         return
+      if states.dependencies.finish_to_x_independent?
+        return
       states.mouse_down.x = e.clientX
       states.mouse_down.y = e.clientY
       states.column_range.is_dragging = true
@@ -295,6 +339,9 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       if states.column_range.is_dragging
         states.column_range.is_dragging = false
         
+      if states.dependencies.finish_to_x_independent?
+        states.dependencies.finish_to_x_independent = null
+        
       return
   ,
     # note - this is a catch all for mouse move
@@ -311,10 +358,39 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         
         APP.justdo_grid_gantt.setPresentationEndTime states.task_id, states.end_time.original_time + delta_time
         
-      if states.column_range.is_dragging
+      else if states.column_range.is_dragging
         delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.set states.column_range.original_from_epoch_time - delta_time
         APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.set states.column_range.original_to_epoch_time - delta_time
+        
+      else if states.dependencies.finish_to_x_independent?
+        epoch_range = [
+          APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get(),
+          APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+        ]
+        gc = APP.modules.project_page.mainGridControl()
+        
+        # Daniel - I'll need some help here as it's not really working
+        
+        delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        independent_end_x = APP.justdo_grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time, APP.justdo_grid_gantt.grid_gantt_column_width )
+        independent_end_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
+        line_end_x = APP.justdo_grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time + delta_time, APP.justdo_grid_gantt.grid_gantt_column_width ) + 15
+        line_end_y = gc._grid.getRowTopPosition( @getEventRow(e)) + e.offsetY
+        
+        p0 =
+          x: independent_end_x
+          y: independent_end_y
+        
+        p1 =
+          x: line_end_x
+          y: line_end_y
+        
+        $( ".temporary-dependency-line" ).remove();
+        
+        html = """<div class="temporary-dependency-line" style="#{APP.justdo_grid_gantt.lineStyle p0, p1};z-index: 1"></div>"""
+        $(".justdo-grid-gantt-all-dependencies").append html
+        
       return
   ]
 
