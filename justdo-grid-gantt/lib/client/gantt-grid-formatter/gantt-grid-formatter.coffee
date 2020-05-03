@@ -259,6 +259,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         if (dependent_id = formatter_container.getAttribute("task-id"))? and
             (dependencies = APP.justdo_dependencies)?
           dependencies.addFinishToStartDependency JD.activeJustdo()._id, independent_id, dependent_id
+          states.dependencies.finish_to_x_independent = null
+          $( ".temporary-dependency-line" ).remove();
         $(e.target).css("cursor","")
       return
   ,
@@ -318,10 +320,11 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     # note - this is a catch all for mouse up
     args: ["mouseup", ".slick-viewport"]
     handler: (e) ->
-      states = APP.justdo_grid_gantt.getState()
+      grid_gantt = APP.justdo_grid_gantt
+      states = grid_gantt.getState()
       if states.end_time.is_dragging
         if Math.abs(e.clientX - states.mouse_down.x) > 5
-          delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+          delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         else
           delta_time = 0
         
@@ -333,7 +336,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             end_date: new_end_date
             
         states.end_time.is_dragging = false
-        APP.justdo_grid_gantt.setPresentationEndTime states.task_id, APP.justdo_grid_gantt.dateStringToEndOfDayEpoch new_end_date
+        grid_gantt.setPresentationEndTime states.task_id, grid_gantt.dateStringToEndOfDayEpoch new_end_date
         states.task_id = null
         
       if states.column_range.is_dragging
@@ -347,35 +350,42 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     # note - this is a catch all for mouse move
     args: ["mousemove", ".slick-viewport"]
     handler: (e) ->
-      if not (states = APP.justdo_grid_gantt.getState())?
+      grid_gantt = APP.justdo_grid_gantt
+      if not (states = grid_gantt.getState())?
         return
         
       if states.end_time.is_dragging
         if Math.abs(e.clientX - states.mouse_down.x) > 5
-          delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+          delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         else
           delta_time = 0
-        
-        APP.justdo_grid_gantt.setPresentationEndTime states.task_id, states.end_time.original_time + delta_time
+  
+        grid_gantt.setPresentationEndTime states.task_id, states.end_time.original_time + delta_time
         
       else if states.column_range.is_dragging
-        delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
-        APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.set states.column_range.original_from_epoch_time - delta_time
-        APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.set states.column_range.original_to_epoch_time - delta_time
-        
+        delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        grid_gantt.gantt_coloumn_from_epoch_time_rv.set states.column_range.original_from_epoch_time - delta_time
+        grid_gantt.gantt_coloumn_to_epoch_time_rv.set states.column_range.original_to_epoch_time - delta_time
+      
       else if states.dependencies.finish_to_x_independent?
         epoch_range = [
-          APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get(),
-          APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+          grid_gantt.gantt_coloumn_from_epoch_time_rv.get(),
+          grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
         ]
         gc = APP.modules.project_page.mainGridControl()
         
-        # Daniel - I'll need some help here as it's not really working
+        # Daniel - I'll need some help here as it's not really working - here is the problem that I face -
+        # I couldn't find a better way to calculate the Y coordinate under the cursor, relative to the $(".justdo-grid-gantt-all-dependencies"),
+        # so the best that I found was getting the event row, and offset and then derive it from there. However, when moving the
+        # mouse not over a .slick-cell (such as when I'm moving over a dependency line), the getEventRow returns null.
+        # In addition, I had to put the dependency lines on top (z-index wise) the cells, to mark the dependency-cancel
+        # button on hover. Bottom line - it's a mess. Please advise.
+      
         
-        delta_time = APP.justdo_grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
-        independent_end_x = APP.justdo_grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time, APP.justdo_grid_gantt.grid_gantt_column_width )
+        delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        independent_end_x = grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time, grid_gantt.grid_gantt_column_width )
         independent_end_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
-        line_end_x = APP.justdo_grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time + delta_time, APP.justdo_grid_gantt.grid_gantt_column_width ) + 15
+        line_end_x = grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time + delta_time, grid_gantt.grid_gantt_column_width ) + 15
         line_end_y = gc._grid.getRowTopPosition( @getEventRow(e)) + e.offsetY
         
         p0 =
@@ -387,8 +397,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           y: line_end_y
         
         $( ".temporary-dependency-line" ).remove();
-        
-        html = """<div class="temporary-dependency-line" style="#{APP.justdo_grid_gantt.lineStyle p0, p1};z-index: 1"></div>"""
+        html = """<div class="temporary-dependency-line" style="#{grid_gantt.lineStyle p0, p1};z-index: 1"></div>"""
         $(".justdo-grid-gantt-all-dependencies").append html
         
       return
