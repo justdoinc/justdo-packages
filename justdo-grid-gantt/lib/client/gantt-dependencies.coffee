@@ -136,10 +136,10 @@ _.extend JustdoGridGantt.prototype,
       self.gantt_coloumn_to_epoch_time_rv.get()
     ]
   
-    for dependent_row in dependency_obj.dependent_rows
+    for dependent_row in dependency_obj.dependent_rows or []
       dependent_box = gc._grid.getCellNodeBox dependent_row, self.grid_gantt_column_index
       dependent_task_info = self.task_id_to_info[dependency_obj.dependent]
-      for independent_row in dependency_obj.independent_rows
+      for independent_row in dependency_obj.independent_rows or []
         independent_box = gc._grid.getCellNodeBox  independent_row, self.grid_gantt_column_index
         independent_task_info = self.task_id_to_info[dependency_obj.independent]
         if dependency_obj.dependency_type == "F2S"

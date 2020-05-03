@@ -158,18 +158,29 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           if offset < column_width_px
             bar_end_px = offset
            
-        date_hint = ""
+        end_date_hint = ""
+        start_date_hint = ""
         if (states = APP.justdo_grid_gantt.getState())
           # Daniel/Igor- I couldn't get the z-index to make this hint higher than the columns around it. I'll need your help w/ this one.
           if states.end_time.is_dragging
             date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(self_end_time).format("YYYY-MM-DD"))
-            date_hint = """
+            end_date_hint = """
                 <div class="end-date-hint">#{date}</div>
-        """
+            """
+          if states.main_bar.is_dragging
+            start_date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(self_start_time).format("YYYY-MM-DD"))
+            start_date_hint = """
+                <div class="start-date-hint">#{start_date}</div>
+            """
+            day = 24 * 60 * 60 * 1000
+            end_date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(self_end_time - day).format("YYYY-MM-DD"))
+            end_date_hint = """
+                <div class="end-date-hint">#{end_date}</div>
+            """
         main_bar_mark = """
-            <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}"></div>
+            <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}">#{start_date_hint}</div>
             <div class="gantt-main-bar-start-drop-area" style="left:#{bar_start_px}px;"></div>
-            <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}">#{date_hint}</div>
+            <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}">#{end_date_hint}</div>
             <div class="gantt-main-bar-F2x-dependency" style="left:#{bar_end_px}px;">
               <svg class="jd-icon gantt-main-bar-F2x-dependency-icon">
                 <use xlink:href="/layout/icons-feather-sprite.svg#circle"/>
@@ -301,8 +312,21 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       states.mouse_down.row = @getEventRow(e)
       return
   ,
+    args: ["mousedown", ".gantt-main-bar"]
+    handler: (e) ->
+      states = APP.justdo_grid_gantt.getState()
+      task_id = e.target.getAttribute("task-id")
+      states.task_id = task_id
+      states.main_bar.is_dragging = true
+      states.main_bar.original_start_time = APP.justdo_grid_gantt.task_id_to_info[task_id].self_start_time
+      states.main_bar.original_end_time = APP.justdo_grid_gantt.task_id_to_info[task_id].self_end_time
+      states.mouse_down.x = e.clientX
+      states.mouse_down.y = e.clientY
+      states.mouse_down.row = @getEventRow(e)
+      return
+  ,
     args: ["mousedown", ".slick-cell.l1"]  #Daniel - I wasn't able to add a class to the parent div of the formatter
-                                            # the l1 is hard coded, and my question is how to arr/remove it as the column
+                                            # the l1 is hard coded, and my question is how to add/remove it as the column
                                             # location changes
     handler: (e) ->
       states = APP.justdo_grid_gantt.getState()
@@ -338,6 +362,28 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         states.end_time.is_dragging = false
         grid_gantt.setPresentationEndTime states.task_id, grid_gantt.dateStringToEndOfDayEpoch new_end_date
         states.task_id = null
+      
+      if states.main_bar.is_dragging
+        if Math.abs(e.clientX - states.mouse_down.x) > 5
+          delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        else
+          delta_time = 0
+  
+        new_start = states.main_bar.original_start_time + delta_time
+        new_start_date = moment.utc(new_start).format("YYYY-MM-DD")
+        new_start_epoch = grid_gantt.dateStringToStartOfDayEpoch(new_start_date)
+        new_end_epoch = new_start_epoch + (states.main_bar.original_end_time - states.main_bar.original_start_time)
+        new_end_date = moment.utc(new_end_epoch).format("YYYY-MM-DD")
+  
+        JD.collections.Tasks.update states.task_id,
+          $set:
+            start_date: new_start_date
+            end_date: new_end_date
+  
+        states.main_bar.is_dragging = false
+        grid_gantt.setPresentationStartTime states.task_id, grid_gantt.dateStringToStartOfDayEpoch new_end_date
+        grid_gantt.setPresentationEndTime states.task_id, grid_gantt.dateStringToEndOfDayEpoch new_end_date
+        states.task_id = null
         
       if states.column_range.is_dragging
         states.column_range.is_dragging = false
@@ -361,6 +407,15 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           delta_time = 0
   
         grid_gantt.setPresentationEndTime states.task_id, states.end_time.original_time + delta_time
+  
+      else if states.main_bar.is_dragging
+        if Math.abs(e.clientX - states.mouse_down.x) > 5
+          delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        else
+          delta_time = 0
+  
+        grid_gantt.setPresentationStartTime states.task_id, states.main_bar.original_start_time + delta_time
+        grid_gantt.setPresentationEndTime states.task_id, states.main_bar.original_end_time + delta_time
         
       else if states.column_range.is_dragging
         delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
