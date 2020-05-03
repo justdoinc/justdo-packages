@@ -47,13 +47,20 @@ _.extend JustdoDependencies.prototype,
         if (new_dependency = modifier.$push?[JustdoDependencies.dependencies_field_id])?
           new_dependencies.push new_dependency
           new_dependencies_mf = doc[JustdoDependencies.dependencies_mf_field_id] or []
-        
+  
         JD.collections.Tasks.find({project_id: doc.project_id, seqId: {$in: new_dependencies}, _raw_removed_date: {$exists: false}}).forEach (dep_obj) ->
           new_dependencies_mf.push
             task_id: dep_obj._id
             type: "F2S"
+            
+        if (removed_dependency = modifier.$pull?[JustdoDependencies.dependencies_field_id])?
+          if(removed_id = JD.collections.Tasks.findOne({project_id: doc.project_id, seqId: removed_dependency})._id)?
+            old_dependencies = doc[JustdoDependencies.dependencies_mf_field_id]
+            for dependency in old_dependencies
+              if dependency.task_id != removed_id
+                new_dependencies_mf.push dependency
         
-        modifier.$set = modifier.$set || {};
+        modifier.$set = modifier.$set or {};
         modifier.$set[JustdoDependencies.dependencies_mf_field_id] = new_dependencies_mf
         field_names.push JustdoDependencies.dependencies_mf_field_id
         
