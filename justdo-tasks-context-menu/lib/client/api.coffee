@@ -175,5 +175,13 @@ _.extend JustdoTasksContextMenu.prototype,
 
     return
 
+  # _getNestedSectionsDomainId: (section_id, nested_section_item) ->
+  #   return section_id + nested_section_item
 
-  
+  # registerNestedSection: (section_id, nested_section_item, nested_section_id, conf) ->
+  #   # Ensure section_id exists and nested_section_item exists and is, indeed nested section item
+  #   # @_registerSection(section_id, @_getNestedSectionsDomainId(section_id, nested_section_item), conf)
+  #   return
+
+  # getNestedSections: (section_id, nested_section_item) ->
+  #   return @sections_reactive_items_list.getList(@_getNestedSectionsDomainId(section_id, nested_section_item), ignore_listing_condition)
