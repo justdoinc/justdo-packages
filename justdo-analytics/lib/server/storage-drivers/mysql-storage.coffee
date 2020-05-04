@@ -117,6 +117,11 @@ getInitDBQueries = (db_name) ->
     #   KEY `byTimestamp` (`TS`)
     # ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
     # """
+    #
+    # ALTER TABLE `JDAnalytics`.`JDServersRecords` 
+    # ADD INDEX `SSID_cat_SRID` (`SSID` ASC, `cat` ASC, `SRID` ASC);
+    # ;
+
 
   ]
 
