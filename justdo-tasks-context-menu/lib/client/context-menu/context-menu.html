@@ -2,7 +2,7 @@
   <ul class="dropdown-menu p-2 shadow-lg border-0">
     {{#each getMainSections}}
       {{#if label}}
-        <li>Some label here</li>
+        <li class="context-section-label">{{label}}</li>
       {{/if}}
       {{#each reactive_items_list.getList}}
         <li class="dropdown-item context-action-item">
