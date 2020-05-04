@@ -1,4 +1,3 @@
-
 Template.tasks_context_menu.helpers
   updatedByOrCreatedBy: ->
     item_obj = @controller.getContextItemObj()
@@ -13,6 +12,8 @@ Template.tasks_context_menu.helpers
 
 Template.tasks_context_menu.events 
   "click .context-action-item": ->
-    if typeof @op == "function"
+    if _.isFunction @op
       @op()
+
+      return
 

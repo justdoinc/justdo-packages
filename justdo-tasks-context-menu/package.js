@@ -60,6 +60,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/errors-types.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
 
+  api.addFiles("lib/client/core-menu-sections/core-menu-sections.coffee", client);
+
   api.addFiles("lib/client/context-menu/context-menu.sass", client);
   api.addFiles("lib/client/context-menu/context-menu.html", client);
   api.addFiles("lib/client/context-menu/context-menu.coffee", client);

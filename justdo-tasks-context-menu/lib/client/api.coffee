@@ -6,43 +6,8 @@ _.extend JustdoTasksContextMenu.prototype,
     @all_sections_reactive_items_list = new JustdoHelpers.ReactiveItemsList()
     @main_sections_reactive_items_list = new JustdoHelpers.ReactiveItemsList()
 
-    @registerMainSection "main",
-      position: 100
-    @registerSectionItem "main", "new-task",
-      position: 100
-      data:
-        label: "New Task"
-        op: ->
-          APP.modules.project_page.performOp("addSiblingTask")
+    @setupCoreMenuSections()
 
-          return
-        icon_type: "feather"
-        icon_val: "plus"
-
-      listingCondition: -> _.isEmpty(APP.modules.project_page.getUnfulfilledOpReq("addSiblingTask"))
-
-    @registerSectionItem "main", "new-child-task",
-      position: 200
-      data:
-        label: "New Child Task"
-        op: ->
-          APP.modules.project_page.performOp("addSubTask")
-
-          return
-        icon_type: "feather"
-        icon_val: "corner-down-right"
-    
-    @registerSectionItem "main", "zoon-in",
-      position: 300
-      data:
-        label: "Zoom in"
-        op: ->
-          APP.modules.project_page.performOp("zoomIn")
-
-          return
-        icon_type: "feather"
-        icon_val: "zoom-in"
-    
     return
 
   _deferredInit: ->
