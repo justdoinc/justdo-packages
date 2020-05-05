@@ -345,6 +345,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             
         states.end_time.is_dragging = false
         grid_gantt.setPresentationEndTime states.task_id, grid_gantt.dateStringToEndOfDayEpoch new_end_date
+        # grid_gantt.updateDependentTasksBasedOnTaskMove states.task_id, XXXX, new_end_date
         states.task_id = null
       
       if states.main_bar.is_dragging
@@ -367,8 +368,9 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         states.main_bar.is_dragging = false
         grid_gantt.setPresentationStartTime states.task_id, grid_gantt.dateStringToStartOfDayEpoch new_start_date
         grid_gantt.setPresentationEndTime states.task_id, grid_gantt.dateStringToEndOfDayEpoch new_end_date
+        # grid_gantt.updateDependentTasksBasedOnTaskMove states.task_id, new_sart_date, new_end_date
         states.task_id = null
-        
+                
       if states.column_range.is_dragging
         states.column_range.is_dragging = false
         

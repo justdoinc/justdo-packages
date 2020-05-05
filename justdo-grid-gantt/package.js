@@ -66,6 +66,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/gantt-dependencies.coffee", client);
   api.addFiles("lib/client/gantt-dependencies.sass", client);
 
+  api.addFiles("lib/client/warnings-management.coffee", client);
+  api.addFiles("lib/client/warnings-management.sass", client);
+
   api.addFiles("lib/client/project-conf/project-conf.sass", client);
   api.addFiles("lib/client/project-conf/project-conf.html", client);
   api.addFiles("lib/client/project-conf/project-conf.coffee", client);

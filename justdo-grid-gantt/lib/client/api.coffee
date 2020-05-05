@@ -453,7 +453,6 @@ _.extend JustdoGridGantt.prototype,
       to_epoch = self.gantt_coloumn_to_epoch_time_rv.get()
       return delta_pixels / self.grid_gantt_column_width * (to_epoch - from_epoch)
     
-      
     @earliestOfSelfStartAndEarliestChildStart = (task_info) ->
       if task_info.self_start_time?
         if task_info.earliest_child_start_time?
@@ -492,6 +491,10 @@ _.extend JustdoGridGantt.prototype,
       self.task_id_to_info[task_id].self_start_time = new_start_time
       self.gantt_dirty_tasks.add task_id
       self.processGanttDirtyTasks()
+      return
+      
+    @updateDependentTasksBasedOnTaskMove = (task_id, new_start_date, new_end_date) ->
+      # todo: ...
       return
   
   _deferredInit: ->
