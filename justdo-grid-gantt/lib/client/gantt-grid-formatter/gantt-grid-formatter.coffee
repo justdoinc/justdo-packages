@@ -157,30 +157,11 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, self_end_time, column_width_px))?
           if offset < column_width_px
             bar_end_px = offset
-           
-        end_date_hint = ""
-        start_date_hint = ""
-        if (states = APP.justdo_grid_gantt.getState())
-          # Daniel/Igor- I couldn't get the z-index to make this hint higher than the columns around it. I'll need your help w/ this one.
-          if states.end_time.is_dragging
-            date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(self_end_time).format("YYYY-MM-DD"))
-            end_date_hint = """
-                <div class="end-date-hint">#{date}</div>
-            """
-          if states.main_bar.is_dragging
-            start_date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(self_start_time).format("YYYY-MM-DD"))
-            start_date_hint = """
-                <div class="start-date-hint">#{start_date}</div>
-            """
-            day = 24 * 60 * 60 * 1000
-            end_date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(self_end_time - day).format("YYYY-MM-DD"))
-            end_date_hint = """
-                <div class="end-date-hint">#{end_date}</div>
-            """
+        
         main_bar_mark = """
-            <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}">#{start_date_hint}</div>
+            <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}"></div>
             <div class="gantt-main-bar-start-drop-area" style="left:#{bar_start_px}px;"></div>
-            <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}">#{end_date_hint}</div>
+            <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}"></div>
             <div class="gantt-main-bar-F2x-dependency" style="left:#{bar_end_px}px;">
               <svg class="jd-icon gantt-main-bar-F2x-dependency-icon">
                 <use xlink:href="/layout/icons-feather-sprite.svg#circle"/>
@@ -326,9 +307,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       states.mouse_down.row = @getEventRow(e)
       return
   ,
-    args: ["mousedown", ".slick-cell.l1"]  #Daniel - I wasn't able to add a class to the parent div of the formatter
-                                            # the l1 is hard coded, and my question is how to add/remove it as the column
-                                            # location changes
+    args: ["mousedown", ".slick-cell.l1"]
     handler: (e) ->
       states = APP.justdo_grid_gantt.getState()
       if states.end_time.is_dragging
@@ -404,6 +383,11 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       grid_gantt = APP.justdo_grid_gantt
       if not (states = grid_gantt.getState())?
         return
+      epoch_range = [
+        grid_gantt.gantt_coloumn_from_epoch_time_rv.get(),
+        grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+      ]
+      gc = APP.modules.project_page.mainGridControl()
         
       if states.end_time.is_dragging
         if Math.abs(e.clientX - states.mouse_down.x) > 5
@@ -416,14 +400,46 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           new_end_time = states.end_time.original_start_time + 23 * 60 * 60 * 1000
         grid_gantt.setPresentationEndTime states.task_id, new_end_time
   
+        #hint:
+        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_end_time, grid_gantt.grid_gantt_column_width )
+        hint_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
+        date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_end_time).format("YYYY-MM-DD"))
+        end_date_hint = """
+                <div class="grid-gantt-date-hint" style="top: #{hint_y}px; left: #{hint_x}px">#{date}</div>
+            """
+        $(".end-date-hint").remove()
+        $(".justdo-grid-gantt-all-dependencies").append end_date_hint
+        
       else if states.main_bar.is_dragging
         if Math.abs(e.clientX - states.mouse_down.x) > 5
           delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         else
           delta_time = 0
   
-        grid_gantt.setPresentationStartTime states.task_id, states.main_bar.original_start_time + delta_time
-        grid_gantt.setPresentationEndTime states.task_id, states.main_bar.original_end_time + delta_time
+        new_start_time = states.main_bar.original_start_time + delta_time
+        grid_gantt.setPresentationStartTime states.task_id, new_start_time
+        new_end_time = states.main_bar.original_end_time + delta_time
+        grid_gantt.setPresentationEndTime states.task_id, new_end_time
+  
+        # hints:
+        # start date:
+        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_start_time, grid_gantt.grid_gantt_column_width ) - 50
+        hint_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
+        start_date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_start_time).format("YYYY-MM-DD"))
+        start_date_hint = """
+                <div class="grid-gantt-date-hint" style="top: #{hint_y}px; left: #{hint_x}px">#{start_date}</div>
+            """
+        
+        # end date:
+        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_end_time, grid_gantt.grid_gantt_column_width )
+        day = 24 * 60 * 60 * 1000
+        date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_end_time - day).format("YYYY-MM-DD"))
+        end_date_hint = """
+                <div class="grid-gantt-date-hint" style="top: #{hint_y}px; left: #{hint_x}px">#{date}</div>
+            """
+        $(".grid-gantt-date-hint").remove()
+        $(".justdo-grid-gantt-all-dependencies").append start_date_hint
+        $(".justdo-grid-gantt-all-dependencies").append end_date_hint
         
       else if states.column_range.is_dragging
         delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
@@ -431,34 +447,17 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         grid_gantt.gantt_coloumn_to_epoch_time_rv.set states.column_range.original_to_epoch_time - delta_time
       
       else if states.dependencies.finish_to_x_independent?
-        epoch_range = [
-          grid_gantt.gantt_coloumn_from_epoch_time_rv.get(),
-          grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
-        ]
-        gc = APP.modules.project_page.mainGridControl()
-        
-        # Daniel - I'll need some help here as it's not really working - here is the problem that I face -
-        # I couldn't find a better way to calculate the Y coordinate under the cursor, relative to the $(".justdo-grid-gantt-all-dependencies"),
-        # so the best that I found was getting the event row, and offset and then derive it from there. However, when moving the
-        # mouse not over a .slick-cell (such as when I'm moving over a dependency line), the getEventRow returns null.
-        # In addition, I had to put the dependency lines on top (z-index wise) the cells, to mark the dependency-cancel
-        # button on hover. Bottom line - it's a mess. Please advise.
-      
-        
-        delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         independent_end_x = grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time, grid_gantt.grid_gantt_column_width )
         independent_end_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
-        line_end_x = grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time + delta_time, grid_gantt.grid_gantt_column_width ) + 15
-        line_end_y = gc._grid.getRowTopPosition( @getEventRow(e)) + e.offsetY
         
         p0 =
           x: independent_end_x
           y: independent_end_y
         
         p1 =
-          x: line_end_x
-          y: line_end_y
-        
+          x: e.pageX - $(".justdo-grid-gantt-all-dependencies").offset().left
+          y: e.pageY - $(".justdo-grid-gantt-all-dependencies").offset().top
+  
         $( ".temporary-dependency-line" ).remove();
         html = """<div class="temporary-dependency-line" style="#{grid_gantt.lineStyle p0, p1};z-index: 1"></div>"""
         $(".justdo-grid-gantt-all-dependencies").append html

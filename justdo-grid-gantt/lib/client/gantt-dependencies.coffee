@@ -64,7 +64,7 @@ _.extend JustdoGridGantt.prototype,
     # add all keys that are new
     new_keys_set.forEach (new_key) ->
       if not prev_keys_set.has new_key
-        # todo: mark this new entry for filling in the rows numbers
+        # todo: (optimization) mark this new entry for filling in the rows numbers
         self.dependencies_map[new_key] =
           independent_rows: []
           dependent_rows: []
@@ -128,7 +128,7 @@ _.extend JustdoGridGantt.prototype,
   renderDependency: (dependency_obj) ->
     self = @
   
-    # todo - use same tick cache for gc, epoch_range,
+    # todo - (optimization) use same tick cache for gc, epoch_range,
     if not (gc = APP.modules.project_page.gridControl())?
       return
     epoch_range = [
