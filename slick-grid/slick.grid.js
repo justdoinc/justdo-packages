@@ -1796,10 +1796,10 @@ if (typeof Slick === "undefined") {
       invalidateRows([row]);
     }
 
-    function updateCell(row, cell) {
+    function updateCell(row, cell, skip_same_tick_block) {
       // In a given JS tick update a cell up to one time.
       same_tick_updated_key = uid + "-updated-cell-" + row + "-" + cell;
-      if (JustdoHelpers.sameTickCacheExists(same_tick_updated_key)) {
+      if (skip_same_tick_block !== true && JustdoHelpers.sameTickCacheExists(same_tick_updated_key)) {
         // Cell updated in the current tick already
         return;
       }
