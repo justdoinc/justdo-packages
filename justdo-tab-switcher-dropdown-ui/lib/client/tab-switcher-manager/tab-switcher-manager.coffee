@@ -111,7 +111,7 @@ _.extend TabSwitcherManager.prototype,
 
   unregisterSectionItem: (section_id, item_id) ->
     if (section_reactive_items_list = @sections_reactive_items_list.getItem(section_id, true).data.reactive_items_list)?
-      section_reactive_items_list.unregisterItem section_id
+      section_reactive_items_list.unregisterItem item_id
 
     return
 
