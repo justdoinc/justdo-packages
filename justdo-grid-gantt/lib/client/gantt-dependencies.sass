@@ -1,29 +1,44 @@
+$non-selected-arrow-z-index: 1
+$selected-arrow-z-index: 2
+
+$dependency-arrow-color: black
+$dependency-arrow-color-on-hover: red
+
+$dependency-arrows-width: 5px // this is needed to give some room for the user hover on the arrow
+
+// todo: replace constants with named vars
 .justdo-grid-gantt-all-dependencies
   position: absolute
   top: 0px
   height: 100%
 
   .dependency-container
+    &:hover
+      .dependency-1-2-cancel
+        visibility: visible
+      .line
+        border-top-color: $dependency-arrow-color-on-hover
+        border-left-color: $dependency-arrow-color-on-hover
+        z-index: $selected-arrow-z-index
+      .right-arrow
+        border-top: 6px solid $dependency-arrow-color-on-hover
+        z-index: $selected-arrow-z-index
 
     .line
       position: absolute
-      z-index: 1
-
-      &:hover
-        .dependency-1-2-cancel
-          visibility: visible
+      z-index: $non-selected-arrow-z-index
 
     .horizontal
       border-top-style: solid
       border-top-width: 1px
-      border-top-color: red
-      height: 5px
+      border-top-color: $dependency-arrow-color
+      height: $dependency-arrows-width
 
     .vertical
       border-left-style: solid
       border-left-width: 1px
-      border-left-color: red
-      width: 5px
+      border-left-color: $dependency-arrow-color
+      width: $dependency-arrows-width
 
     .dependency-1-2-cancel
       position: absolute
@@ -38,5 +53,5 @@
       height: 0
       border-left: 6px solid transparent
       border-right: 0px solid transparent
-      border-top: 6px solid red
+      border-top: 6px solid $dependency-arrow-color
       transform: rotate(45deg)
