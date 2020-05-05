@@ -365,7 +365,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             end_date: new_end_date
   
         states.main_bar.is_dragging = false
-        grid_gantt.setPresentationStartTime states.task_id, grid_gantt.dateStringToStartOfDayEpoch new_end_date
+        grid_gantt.setPresentationStartTime states.task_id, grid_gantt.dateStringToStartOfDayEpoch new_start_date
         grid_gantt.setPresentationEndTime states.task_id, grid_gantt.dateStringToEndOfDayEpoch new_end_date
         states.task_id = null
         
