@@ -80,6 +80,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/gantt-controller/gantt-controller.html", client);
   api.addFiles("lib/client/gantt-controller/gantt-controller.coffee", client);
 
+  api.addFiles("lib/client/gantt-grid-header/gantt-grid-header.html", client);
+  api.addFiles("lib/client/gantt-grid-header/gantt-grid-header.coffee", client);
+  api.addFiles("lib/client/gantt-grid-header/gantt-grid-header.sass", client);
+
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.

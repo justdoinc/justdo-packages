@@ -17,14 +17,22 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       $grid_gantt_header_field = $("##{gc.getGridUid()}#{field_id}")
       
       # Beware of XSS
-      header_html = """
-        <div class="grid-gantt-header" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; background: beige;">
-          CONTENT FROM:#{APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()} TO:#{APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()}; RENDER ID:#{Math.ceil(Math.random() * 1000)}
-        </div>
-      """
-      
+      # header_html = """
+      #   <div class="grid-gantt-header" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; background: beige;">
+      #     CONTENT FROM:#{APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()} TO:#{APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()}; RENDER ID:#{Math.ceil(Math.random() * 1000)}
+      #   </div>
+      # """
+
+      grid_gantt_header_tpl_obj =
+        JustdoHelpers.renderTemplateInNewNode(Template.justdo_grid_gantt_header)
+
+      $node = $(grid_gantt_header_tpl_obj.node)
+
+      # $node.addClass("extra-windows-button-container")
+      #      .attr("style", """width: #{@options.extra_windows_button_width}px;""")
+
       $(".grid-gantt-header", $grid_gantt_header_field).remove() # Remove any existing header html
-      $grid_gantt_header_field.prepend(header_html)
+      $grid_gantt_header_field.prepend($node)
       $(".slick-column-name", $grid_gantt_header_field).remove()
       
       return
@@ -63,8 +71,9 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     # The following autorun triggers redraw when the gantt settings changes
     Tracker.autorun ->
       if APP.justdo_grid_gantt.isPluginInstalledOnProjectDoc(JD.activeJustdo())
-        APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
-        APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+        # Daniel remove the following in the code review
+        # APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
+        # APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
         if (field_def = getGanttFieldViewDef())?
           redrawFormatterHeader(field_def.field)
       return

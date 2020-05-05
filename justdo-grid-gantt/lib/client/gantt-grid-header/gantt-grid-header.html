@@ -1,0 +1,58 @@
+<template name="justdo_grid_gantt_header">
+  <div class="grid-gantt-header">
+    <div class="grid-gantt-scale">
+      <table class="grid-gantt-scale-table {{scaleType}}">
+        <tr>
+          {{#each daysInterval}}
+            <td
+              class="{{#if isFirstOfMonth this}}is-first-day-of-month{{/if}}
+                     {{#if isStartOfWeek this}}is-monday{{/if}}
+                     {{#if isToday this}}is-today{{/if}}
+                     {{#if isWeekend this}}is-weekend{{/if}}"
+              colspan="{{#if $eq scaleType 'weeks'}}{{#if isStartOfWeek this}}7{{/if}}{{/if}}
+                       {{#if $eq scaleType 'months'}}{{#if isFirstOfMonth this}}{{getDateColspanMonth this}}{{/if}}{{/if}}">
+              {{#if isStartOfWeek this}}
+                <div class="grid-gantt-scale-label start-of-week-label">
+                  {{#if $eq scaleType "days"}}
+                    {{getMonth this}}, week {{getWeek this}}
+                  {{/if}}
+                  {{#if $eq scaleType "weeks"}}
+                    {{getYear this}}, {{getMonth this}}
+                  {{/if}}
+                </div>
+              {{/if}}
+
+              {{#if isFirstOfMonth this}}
+                <div class="grid-gantt-scale-label start-of-month-label">
+                  {{getYear this}}
+                </div>
+              {{/if}}
+
+              {{#if $eq scaleType "days"}}
+                {{getDateNumber this}}
+              {{/if}}
+              {{#if $eq scaleType "weeks"}}
+                <span class="week-label">Week</span> {{getWeek this}}
+              {{/if}}
+              {{#if $eq scaleType "months"}}
+                {{getMonth this}}
+              {{/if}}
+            </td>
+          {{/each}}
+        </tr>
+      </table>
+      <div class="grid-gantt-control">
+        <div class="grid-gantt-dropdown dropdown">
+          <div class="grid-gantt-dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{scaleType}}</div>
+          <ul class="dropdown-menu p-1 shadow border-0">
+            <li class="dropdown-item grid-gantt-scale-months">Months</li>
+            <li class="dropdown-item grid-gantt-scale-weeks">Weeks</li>
+            <li class="dropdown-item grid-gantt-scale-days">Days</li>
+          </ul>
+        </div>
+        <svg class="jd-icon grid-gantt-zoom-out"><use xlink:href="/layout/icons-feather-sprite.svg#minus"/></svg>
+        <svg class="jd-icon grid-gantt-zoom-in {{#if disableZoomIn}}disable-zoom{{/if}}" ><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+      </div>
+    </div>
+  </div>
+</template>
