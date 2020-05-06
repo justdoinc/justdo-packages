@@ -1,13 +1,14 @@
-# manage hitting escape to stop mouse operations
+# Manage hitting escape to stop mouse operations
 $("body").keyup (e) ->
   if not (e.keyCode == 27)
     return
+
   if (grid_gantt = APP.justdo_grid_gantt)?
     grid_gantt.resetStatesChangeOnEscape()
+
   return
 
 GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
-  
   gridControlInit: ->
     # IMPORTANT! The following code assumes that there is only a single Gantt Field formatter in any given
     # grid control, if that will change in the future, will need to have a different approach.
@@ -15,15 +16,11 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     
     floating_elements_container_class = "grid-gantt-floating-elements-container"
 
-    redrawFormatterHeader = (field_id) ->
-      $grid_gantt_header_field = $("##{gc.getGridUid()}#{field_id}")
-      
-      #
-      # Initiate .grid-gantt-floating-elements-container
-      #
-      destroyFormatterHeader() # ensure that we work with a resetted state
-      $grid_gantt_floating_elements_container = $("""<div class="#{floating_elements_container_class}">""")
-      $(gc.container).prepend($grid_gantt_floating_elements_container)
+    $grid_gantt_header_field = null
+    $grid_gantt_floating_elements_container = null
+    recalcGridGanttFloatingElementsContainerPosition = ->
+      if not $grid_gantt_floating_elements_container? or not $grid_gantt_header_field
+        return
 
       $grid_gantt_floating_elements_container.position
         my: "left top"
@@ -33,6 +30,35 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       $grid_gantt_floating_elements_container
         .width($grid_gantt_header_field.outerWidth())
         .height($grid_gantt_header_field.outerHeight())
+
+      return
+
+    _gridOnScrollHandler = =>
+      recalcGridGanttFloatingElementsContainerPosition()
+      return
+
+    setupGridEventsListeners = ->
+      gc._grid.onScroll.subscribe(_gridOnScrollHandler)
+      return
+
+    destroyGridEventsListeners = ->
+      gc._grid.onScroll.unsubscribe(_gridOnScrollHandler)
+      return
+
+    redrawFormatterHeader = (field_id) ->
+      $grid_gantt_header_field = $("##{gc.getGridUid()}#{field_id}", gc.container)
+
+      #
+      # Initiate .grid-gantt-floating-elements-container
+      #
+      destroyFormatterHeader() # Destroy to ensure that we work with a resetted state
+
+      setupGridEventsListeners()
+
+      $grid_gantt_floating_elements_container = $("""<div class="#{floating_elements_container_class}">""")
+      $(gc.container).prepend($grid_gantt_floating_elements_container)
+
+      recalcGridGanttFloatingElementsContainerPosition()
 
       $(".slick-column-name", $grid_gantt_header_field).remove() # Remove the column name
 
@@ -47,10 +73,11 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
       $grid_gantt_floating_elements_container.prepend($node)
 
-
       return
     
     destroyFormatterHeader = ->
+      destroyGridEventsListeners()
+
       $(".#{floating_elements_container_class}", gc.container).remove()
 
       return
@@ -63,6 +90,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       for field_def in view
         if extended_schema[field_def.field].grid_column_formatter == JustdoGridGantt.pseudo_field_formatter_id
           return field_def
+
+      return undefined
     
     # The following tracker takes care of requiring the grid to have double header when
     # we find a field that uses the formatter: JustdoGridGantt.pseudo_field_formatter_id
