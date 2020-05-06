@@ -225,7 +225,12 @@ _.extend JustdoGridGantt.prototype,
       x2 = p1.x
       y2 = p1.y
       
-      length = Math.sqrt(((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1)))
+      # note about the -5 at the end - when adding a dependency, we identify a drop target based on the mouseenter
+      # event into a specific div. There are situations in which the div that holds the line that we draw here is below
+      # the mouse pointer, and then the browser dose not identify the target div. making the line shorter (by 5 pixels)
+      # solves this issue.
+      # Daniel - there are extreme situation that this solution doesn't cover. Need to speak.
+      length = Math.sqrt(((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1))) - 5
     
       #center
       cx = ((x1 + x2) / 2) - (length / 2)

@@ -295,9 +295,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mouseleave", ".gantt-main-bar-start-drop-area"]
     handler: (e) ->
-      states = APP.justdo_grid_gantt.getState()
-      if states.dependencies.finish_to_x_independent?
-        $(e.target).css("background-color","")
+      $(e.target).css("background-color","")
       return
   ,
     args: ["mouseup", ".gantt-main-bar-start-drop-area"]
