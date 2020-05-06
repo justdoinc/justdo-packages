@@ -529,10 +529,6 @@ _.extend JustdoGridGantt.prototype,
               grid_editable_column: false
               default_width: 400
 
-          controller = JustdoHelpers.renderTemplateInNewNode("justdo_grid_gantt_controller")
-          APP.justdo_grid_gantt.controller_node = $(controller.node)
-          $("body").append(APP.justdo_grid_gantt.controller_node)
-  
           # trigger observer reset on justdo change
           self.core_data_events_triggering_computation = Tracker.autorun =>
             if (justdo_id = JD.activeJustdo({_id: 1})?._id)?
@@ -551,10 +547,6 @@ _.extend JustdoGridGantt.prototype,
           if JustdoGridGantt.add_pseudo_field
             APP.modules.project_page.removePseudoCustomFields JustdoGridGantt.pseudo_field_id
 
-          if APP.justdo_grid_gantt.controller_node?
-            APP.justdo_grid_gantt.controller_node.remove()
-            APP.justdo_grid_gantt.controller_node
-            
           if self.core_data_events_triggering_computation?
             self.core_data_events_triggering_computation.stop()
           return

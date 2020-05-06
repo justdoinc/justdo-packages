@@ -76,10 +76,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/gantt-grid-formatter/gantt-grid-formatter.sass", client);
   api.addFiles("lib/client/gantt-grid-formatter/gantt-grid-formatter.coffee", client);
 
-  api.addFiles("lib/client/gantt-controller/gantt-controller.sass", client);
-  api.addFiles("lib/client/gantt-controller/gantt-controller.html", client);
-  api.addFiles("lib/client/gantt-controller/gantt-controller.coffee", client);
-
   api.addFiles("lib/client/gantt-grid-header/gantt-grid-header.html", client);
   api.addFiles("lib/client/gantt-grid-header/gantt-grid-header.coffee", client);
   api.addFiles("lib/client/gantt-grid-header/gantt-grid-header.sass", client);
