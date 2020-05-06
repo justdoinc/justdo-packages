@@ -364,7 +364,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       states.mouse_down.row = @getEventRow(e)
       return
   ,
-    args: ["mousedown", ".slick-cell.l1"]
+    args: ["mousedown", ".grid-gantt-formatter"]
     handler: (e) ->
       states = APP.justdo_grid_gantt.getState()
       if states.end_time.is_dragging
