@@ -2,6 +2,8 @@ Template.justdo_grid_gantt_header.onCreated ->
   @scale_type = new ReactiveVar "days"
   @disable_zoom_in = new ReactiveVar false
 
+  @gc = @data.gc
+
   # Update Dates
   @updateDates = (from, to) ->
     from = moment(from).format("YYYY-MM-DD")

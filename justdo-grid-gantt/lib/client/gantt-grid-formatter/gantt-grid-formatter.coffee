@@ -13,30 +13,48 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     # grid control, if that will change in the future, will need to have a different approach.
     gc = @
     
+    floating_elements_container_class = "grid-gantt-floating-elements-container"
+
     redrawFormatterHeader = (field_id) ->
       $grid_gantt_header_field = $("##{gc.getGridUid()}#{field_id}")
       
-      # Beware of XSS
-      # header_html = """
-      #   <div class="grid-gantt-header" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; background: beige;">
-      #     CONTENT FROM:#{APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()} TO:#{APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()}; RENDER ID:#{Math.ceil(Math.random() * 1000)}
-      #   </div>
-      # """
+      #
+      # Initiate .grid-gantt-floating-elements-container
+      #
+      destroyFormatterHeader() # ensure that we work with a resetted state
+      $grid_gantt_floating_elements_container = $("""<div class="#{floating_elements_container_class}">""")
+      $(gc.container).prepend($grid_gantt_floating_elements_container)
 
+      $grid_gantt_floating_elements_container.position
+        my: "left top"
+        at: "left top"
+        of: $grid_gantt_header_field
+
+      $grid_gantt_floating_elements_container
+        .width($grid_gantt_header_field.outerWidth())
+        .height($grid_gantt_header_field.outerHeight())
+
+      $(".slick-column-name", $grid_gantt_header_field).remove() # Remove the column name
+
+      #
+      # Initiate header content
+      #
       grid_gantt_header_tpl_obj =
-        JustdoHelpers.renderTemplateInNewNode(Template.justdo_grid_gantt_header)
+        JustdoHelpers.renderTemplateInNewNode(Template.justdo_grid_gantt_header, {gc})
 
       $node = $(grid_gantt_header_tpl_obj.node)
+      $node.addClass("grid-gantt-header-viewport")
 
-      # $node.addClass("extra-windows-button-container")
-      #      .attr("style", """width: #{@options.extra_windows_button_width}px;""")
+      $grid_gantt_floating_elements_container.prepend($node)
 
-      $(".grid-gantt-header", $grid_gantt_header_field).remove() # Remove any existing header html
-      $grid_gantt_header_field.prepend($node)
-      $(".slick-column-name", $grid_gantt_header_field).remove()
-      
+
       return
     
+    destroyFormatterHeader = ->
+      $(".#{floating_elements_container_class}", gc.container).remove()
+
+      return
+
     getGanttFieldViewDef = ->
       extended_schema = gc.getSchemaExtendedWithCustomFields()
       
@@ -62,6 +80,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         redrawFormatterHeader(field_def.field)
         return
       
+      destroyFormatterHeader()
       # If no Gantt Field exists in the grid
       # if double_header_requested
       #   gc.releaseDoubleHeader()
