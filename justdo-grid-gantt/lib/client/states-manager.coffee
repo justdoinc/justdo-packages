@@ -45,6 +45,10 @@ _.extend JustdoGridGantt.prototype,
       APP.justdo_grid_gantt.setPresentationStartTime states.task_id, states.main_bar.original_start_time
       APP.justdo_grid_gantt.setPresentationEndTime states.task_id, states.main_bar.original_end_time
       states.task_id = null
+  
+    if states.dependencies.finish_to_x_independent?
+      states.dependencies.finish_to_x_independent = null
+      $(".temporary-dependency-line").remove()
       
     return
     

@@ -435,6 +435,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         
       if states.dependencies.finish_to_x_independent?
         states.dependencies.finish_to_x_independent = null
+        $(".temporary-dependency-line").remove()
         
       return
   ,
