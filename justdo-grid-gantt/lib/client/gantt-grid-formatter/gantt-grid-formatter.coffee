@@ -286,6 +286,18 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     # return "When this # change I am being re-rendered: " + Math.ceil(Math.random() * 1000) + "; My width is: " + @getCurrentColumnData("column_width")
 
   slick_grid_jquery_events: [
+    args: ["mouseenter", ".grid-gantt-formatter"]
+    handler: (e) ->
+      states = APP.justdo_grid_gantt.getState()
+      if not states.dependencies.finish_to_x_independent?
+        $(e.target).children(".gantt-main-bar-F2x-dependency").css("visibility","visible")
+      return
+  ,
+    args: ["mouseleave", ".grid-gantt-formatter"]
+    handler: (e) ->
+      $(e.target).children(".gantt-main-bar-F2x-dependency").css("visibility","hidden")
+      return
+  ,
     args: ["mouseenter", ".gantt-main-bar-start-drop-area"]
     handler: (e) ->
       states = APP.justdo_grid_gantt.getState()
