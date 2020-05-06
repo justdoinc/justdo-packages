@@ -395,13 +395,14 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           new_end_time = states.end_time.original_start_time + 23 * 60 * 60 * 1000
         
         new_end_date = moment.utc(new_end_time).format("YYYY-MM-DD")
+  
+        grid_gantt.task_id_to_info[states.task_id].self_end_time = states.end_time.original_end_time
         
         JD.collections.Tasks.update states.task_id,
           $set:
             end_date: new_end_date
             
         states.end_time.is_dragging = false
-        grid_gantt.setPresentationEndTime states.task_id, grid_gantt.dateStringToEndOfDayEpoch new_end_date
         # grid_gantt.updateDependentTasksBasedOnTaskMove states.task_id, XXXX, new_end_date
         states.task_id = null
       
@@ -417,14 +418,15 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         new_end_epoch = new_start_epoch + (states.main_bar.original_end_time - states.main_bar.original_start_time)
         new_end_date = moment.utc(new_end_epoch).format("YYYY-MM-DD")
   
+        grid_gantt.task_id_to_info[states.task_id].self_start_time = states.main_bar.original_start_time
+        grid_gantt.task_id_to_info[states.task_id].self_end_time = states.main_bar.original_end_time
+        
         JD.collections.Tasks.update states.task_id,
           $set:
             start_date: new_start_date
             end_date: new_end_date
   
         states.main_bar.is_dragging = false
-        grid_gantt.setPresentationStartTime states.task_id, grid_gantt.dateStringToStartOfDayEpoch new_start_date
-        grid_gantt.setPresentationEndTime states.task_id, grid_gantt.dateStringToEndOfDayEpoch new_end_date
         # grid_gantt.updateDependentTasksBasedOnTaskMove states.task_id, new_sart_date, new_end_date
         states.task_id = null
                 
