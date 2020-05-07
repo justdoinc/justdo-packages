@@ -1,7 +1,5 @@
 _.extend JustdoGridGantt.prototype,
   
-  
-  
   getState: ->
     if (gc_id = APP.modules.project_page.gridControl()?.getGridUid())?
       if not (state = @_states_manager[gc_id])?

@@ -173,11 +173,12 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
   slick_grid: ->
     {doc} = @getFriendlyArgs()
+    grid_gantt = APP.justdo_grid_gantt
     if not (cached_info = JustdoHelpers.sameTickCacheGet("column_info"))?
       column_start_end = [0, 0]
       if not (column_start_end = @getCurrentColumnData("column_start_end"))?
-        start = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
-        end = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+        start = grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
+        end = grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
         column_start_end = [start, end]
       column_width_px = @getCurrentColumnData("column_width")
       JustdoHelpers.sameTickCacheSet("column_info", [column_start_end, column_width_px])
@@ -188,7 +189,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     column_start_epoch = column_start_end[0]
     column_end_epoch = column_start_end[1]
     
-    if not (task_info = APP.justdo_grid_gantt.task_id_to_info[doc._id])?
+    if not (task_info = grid_gantt.task_id_to_info[doc._id])?
       return ""
       
     ############
@@ -208,10 +209,10 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         
         bar_start_px = 0
         bar_end_px = column_width_px
-        if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, self_start_time, column_width_px))?
+        if (offset = grid_gantt.timeOffsetPixels(column_start_end, self_start_time, column_width_px))?
           if offset > 0
             bar_start_px = offset
-        if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, self_end_time, column_width_px))?
+        if (offset = grid_gantt.timeOffsetPixels(column_start_end, self_end_time, column_width_px))?
           if offset < column_width_px
             bar_end_px = offset
         
@@ -232,7 +233,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     earliest_child_mark = ""
     if (earliest_child = task_info.earliest_child_start_time)?
       if earliest_child >= column_start_epoch and earliest_child <= column_end_epoch
-        if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, earliest_child, column_width_px))?
+        if (offset = grid_gantt.timeOffsetPixels(column_start_end, earliest_child, column_width_px))?
           earliest_child_mark = """<div class="gantt-earliest-child" style="left:#{offset}px"></div>"""
   
     ############
@@ -241,7 +242,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     latest_child_mark = ""
     if (latest_child = task_info.latest_child_end_time)?
       if latest_child >= column_start_epoch and latest_child <= column_end_epoch
-        if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, latest_child, column_width_px))?
+        if (offset = grid_gantt.timeOffsetPixels(column_start_end, latest_child, column_width_px))?
           latest_child_mark = """<div class="gantt-latest-child" style="left:#{offset - 8}px"></div>"""
   
     ############
@@ -255,10 +256,10 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         
         box_start_px = 0
         box_end_px = column_width_px
-        if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, earliest_child, column_width_px))?
+        if (offset = grid_gantt.timeOffsetPixels(column_start_end, earliest_child, column_width_px))?
           if offset > 0
             box_start_px = offset
-        if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, latest_child, column_width_px))?
+        if (offset = grid_gantt.timeOffsetPixels(column_start_end, latest_child, column_width_px))?
           if offset < column_width_px
             box_end_px = offset
   
@@ -269,10 +270,26 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     ############
     due_date_mark = ""
     if (milestone_time = task_info.milestone_time)?
-      if (offset = APP.justdo_grid_gantt.timeOffsetPixels(column_start_end, milestone_time, column_width_px))?
+      if (offset = grid_gantt.timeOffsetPixels(column_start_end, milestone_time, column_width_px))?
         if offset >= 0 and offset <= column_width_px
           due_date_mark = """<div class="gantt-milestone" style="left:#{offset - 5}px"></div>"""  #the -5 here is needed due to rotation
 
+    ############
+    # warning
+    ############
+    warnings_mark = ""
+    if grid_gantt.warnings_manager.hasWarnings doc._id
+      title = ""
+      for warning in grid_gantt.warnings_manager.getHumanReadableWarnings doc._id
+        title += warning + "\r\n"
+        
+      warnings_mark = """<div class="gantt-warning">
+                            <svg class="jd-icon ">
+                              <use xlink:href="/layout/icons-feather-sprite.svg#alert-triangle"/>
+                              <title>#{title}</title>
+                            </svg>
+                          </div>"""
+      
     formatter = """
       <div class="grid-formatter grid-gantt-formatter" task-id="#{doc._id}">
         #{basket_border_mark}
@@ -280,6 +297,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         #{latest_child_mark}
         #{main_bar_mark}
         #{due_date_mark}
+        #{warnings_mark}
       </div>
     """
     return formatter

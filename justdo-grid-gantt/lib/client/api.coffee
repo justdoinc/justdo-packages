@@ -107,17 +107,13 @@ _.extend JustdoGridGantt.prototype,
           self.processEndTimeChange task_id, task_info, old_task_info
         self.missing_parents.delete task_id
         
+      self.warnings_manager.checkTask task_obj
       return
       
     @processTaskChange = (task_obj) ->
       if not(task_info = self.task_id_to_info[task_obj._id])?
         console.error "grid-gantt - unidentified task changed"
-        # task_info =
-        #   parents: Object.keys task_obj.parents
-        # self.task_id_to_info[task_obj._id] = task_info
-        # self.gantt_dirty_tasks.add task_obj._id
         
-      
       old_task_info = _.extend {}, task_info
       
       # start time
@@ -155,8 +151,8 @@ _.extend JustdoGridGantt.prototype,
       #checking milestone
       if task_info.milestone_time != old_task_info.milestone_time
         self.processMilestoneTimeChange task_obj._id, task_info, old_task_info
-      
-      
+  
+      self.warnings_manager.checkTask task_obj
       return # end of processTaskChange
     
     @processTaskRemove = (task_id) ->
@@ -171,6 +167,7 @@ _.extend JustdoGridGantt.prototype,
         self.processMilestoneTimeChange() task_id, {}, old_task_info
         
       delete self.task_id_to_info[task_id]
+      self.warnings_manager.removeTask task_id
       return
   
     @processTaskParentUpdate = (task_id) ->
