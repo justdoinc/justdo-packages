@@ -127,11 +127,20 @@ Template.justdo_grid_gantt_header.helpers
 
   getGanttScaleOffset: ->
     tpl = Template.instance()
-
+    grid_gantt = APP.justdo_grid_gantt
+    
+    epoch_range = [
+      grid_gantt.gantt_coloumn_from_epoch_time_rv.get(),
+      grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+      ]
+    from = moment.utc(APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get())
     if tpl.addExtraDays()
-      return tpl.width_per_day_rv.get() * -1
-
-    return 0
+      from.subtract(tpl.extra_days_to_add_to_each_scale_side, "days")
+    from = from.format("YYYY-MM-DD")
+    from = grid_gantt.dateStringToStartOfDayEpoch from
+    offset = grid_gantt.timeOffsetPixels epoch_range, from.valueOf(), tpl.available_width
+    return offset
+    
 
 Template.justdo_grid_gantt_header.events
   "click .grid-gantt-scale-months": (e, tmpl) ->
