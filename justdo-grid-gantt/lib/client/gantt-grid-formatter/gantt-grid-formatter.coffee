@@ -413,7 +413,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             end_date: new_end_date
             
         states.end_time.is_dragging = false
-        # grid_gantt.updateDependentTasksBasedOnTaskMove states.task_id, XXXX, new_end_date
+        grid_gantt.updateDependentTasksBasedOnTaskMove states.task_id
         states.task_id = null
       
       if states.main_bar.is_dragging
@@ -437,7 +437,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             end_date: new_end_date
   
         states.main_bar.is_dragging = false
-        # grid_gantt.updateDependentTasksBasedOnTaskMove states.task_id, new_sart_date, new_end_date
+        grid_gantt.updateDependentTasksBasedOnTaskMove states.task_id
         states.task_id = null
                 
       if states.column_range.is_dragging

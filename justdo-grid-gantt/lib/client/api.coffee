@@ -493,10 +493,61 @@ _.extend JustdoGridGantt.prototype,
       self.processGanttDirtyTasks()
       return
       
-    @updateDependentTasksBasedOnTaskMove = (task_id, new_start_date, new_end_date) ->
-      # todo: ...
+    @updateDependentTasksBasedOnTaskMove = (original_task_obj_id) ->
+      # todo: this brings tasks from outside of the gantt as well, and we need to consider if to alert the user on moving
+      # those as well, or if to ignore tasks that are not in the chart... The current implementation is updating all.
+      
+      #todo: for now we just check F2S dependencies. When other types will be supported we will need to touch this code
+  
+      JD.collections.Tasks.find({"justdo_task_dependencies_mf.task_id": original_task_obj_id}).forEach (dependent) ->
+        # we need to now go over all independents tasks and find the limiting factors. This could have been done with a
+        # single find command, but since it's a client side code, and we have the tasks' ids, it is easier to go one by
+        # one. In this specific case, it's probably as effective.
+        latest_independent_date = null
+        for dependency in dependent.justdo_task_dependencies_mf
+          independent_obj = JD.collections.Tasks.findOne dependency.task_id
+          if dependency.type == "F2S"
+            if (independent_end_date = independent_obj.end_date)?
+              if not latest_independent_date? or independent_end_date > latest_independent_date
+                latest_independent_date = independent_end_date
+         
+        if latest_independent_date?
+          next_date = moment.utc(latest_independent_date)
+          next_date.add 1, 'day'
+          self.moveTaskToNewStartDate dependent, next_date.format("YYYY-MM-DD")
       return
   
+    @moveTaskToNewStartDate = (task_obj, new_start_date) ->
+      self = @
+      # Important note: in this version, we just use calendar days, we ignore weekends, holidays, vacations and personal days etc.
+      # todo - include weekends and holidays in duration,
+      # todo - don't start a task on weekend/holiday
+      set_value = {}
+      set_value.start_date = new_start_date
+      task_duration = 1
+      
+      if (prev_start_date = task_obj.start_date)?
+        if (prev_end_date = task_obj.end_date or task_obj.due_date)?
+          prev_start_date_moment = moment.utc prev_start_date
+          prev_end_date_moment = moment.utc prev_end_date
+          task_duration = prev_end_date_moment.diff prev_start_date_moment, "days"
+  
+      new_end_data_moment = moment.utc(new_start_date)
+      new_end_data_moment = new_end_data_moment.add task_duration, "days"
+      set_value.end_date = new_end_data_moment.format("YYYY-MM-DD")
+    
+      JD.collections.Tasks.update
+        _id: task_obj._id
+      ,
+        $set: set_value
+      ,
+        ->
+          # important note - must call with the _id and not the object, because the object changes by the update
+          # call, but task_obj doesn't
+          self.updateDependentTasksBasedOnTaskMove task_obj._id
+          return #end of callback
+      return
+      
   _deferredInit: ->
     self = @
     
@@ -507,7 +558,6 @@ _.extend JustdoGridGantt.prototype,
     @setupCustomFeatureMaintainer()
     
     return
-  
   
   isPluginInstalledOnProjectDoc: (project_doc) ->
     return APP.projects.isPluginInstalledOnProjectDoc(JustdoGridGantt.project_custom_feature_id, project_doc)
