@@ -493,28 +493,35 @@ _.extend JustdoGridGantt.prototype,
       self.processGanttDirtyTasks()
       return
       
-    @updateDependentTasksBasedOnTaskMove = (original_task_obj_id) ->
-      # todo: this brings tasks from outside of the gantt as well, and we need to consider if to alert the user on moving
-      # those as well, or if to ignore tasks that are not in the chart... The current implementation is updating all.
+    @updateTaskStartDateBasedOnDependencies = (dependent_obj) ->
+      # we need to now go over all independents tasks and find the limiting factors. This could have been done with a
+      # single find command, but since it's a client side code, and we have the tasks' ids, it is easier to go one by
+      # one. In this specific case, it's probably as effective.
       
       #todo: for now we just check F2S dependencies. When other types will be supported we will need to touch this code
+
+      latest_independent_date = null
+      if not (dependencies_mf = dependent_obj.justdo_task_dependencies_mf)?
+        return
+      for dependency in dependencies_mf
+        independent_obj = JD.collections.Tasks.findOne dependency.task_id
+        if dependency.type == "F2S"
+          if (independent_end_date = independent_obj.end_date)?
+            if not latest_independent_date? or independent_end_date > latest_independent_date
+              latest_independent_date = independent_end_date
   
+      if latest_independent_date?
+        next_date = moment.utc(latest_independent_date)
+        next_date.add 1, 'day'
+        next_date = next_date.format("YYYY-MM-DD")
+        if next_date != dependent_obj.start_date
+          self.moveTaskToNewStartDate dependent_obj, next_date
+      
+      return
+      
+    @updateDependentTasks = (original_task_obj_id) ->
       JD.collections.Tasks.find({"justdo_task_dependencies_mf.task_id": original_task_obj_id}).forEach (dependent) ->
-        # we need to now go over all independents tasks and find the limiting factors. This could have been done with a
-        # single find command, but since it's a client side code, and we have the tasks' ids, it is easier to go one by
-        # one. In this specific case, it's probably as effective.
-        latest_independent_date = null
-        for dependency in dependent.justdo_task_dependencies_mf
-          independent_obj = JD.collections.Tasks.findOne dependency.task_id
-          if dependency.type == "F2S"
-            if (independent_end_date = independent_obj.end_date)?
-              if not latest_independent_date? or independent_end_date > latest_independent_date
-                latest_independent_date = independent_end_date
-         
-        if latest_independent_date?
-          next_date = moment.utc(latest_independent_date)
-          next_date.add 1, 'day'
-          self.moveTaskToNewStartDate dependent, next_date.format("YYYY-MM-DD")
+        self.updateTaskStartDateBasedOnDependencies dependent
       return
   
     @moveTaskToNewStartDate = (task_obj, new_start_date) ->
@@ -544,7 +551,7 @@ _.extend JustdoGridGantt.prototype,
         ->
           # important note - must call with the _id and not the object, because the object changes by the update
           # call, but task_obj doesn't
-          self.updateDependentTasksBasedOnTaskMove task_obj._id
+          self.updateDependentTasks task_obj._id
           return #end of callback
       return
       

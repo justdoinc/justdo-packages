@@ -61,6 +61,7 @@ _.extend JustdoDependencies.prototype,
         return true
     return false
 
+  # todo - no need to have project id as a param on the client side. need to clean it up
   addFinishToStartDependency: (project_id, from_task_id, to_task_id) ->
     from_task = JD.collections.Tasks.findOne {_id: from_task_id, project_id: project_id}
     to_task = JD.collections.Tasks.findOne {_id: to_task_id, project_id: project_id}
@@ -83,6 +84,14 @@ _.extend JustdoDependencies.prototype,
         ,
           $push:
             "#{JustdoDependencies.dependencies_field_id}": from_task_seqId
+        ,
+          ->
+            # todo: reconsider if updating the dependent tasks should be part of the dependencies manager
+            # or from the gantt object. There are considerations both ways. For now, leaving it here. This means that
+            # if the gantt module is not loaded, then dependent tasks will not be automatically adjusted.
+            if (grid_gantt = APP.justdo_grid_gantt)?
+              grid_gantt.updateDependentTasks from_task_id
+            return # end of callback
 
       if ret
         JustdoSnackbar.show
@@ -121,6 +130,14 @@ _.extend JustdoDependencies.prototype,
       ,
         $pull:
           "#{JustdoDependencies.dependencies_field_id}": from_task_seqId
+      ,
+        ->
+          # todo: reconsider if updating the dependent tasks should be part of the dependencies manager
+          # see same comment above
+          if (grid_gantt = APP.justdo_grid_gantt)?
+            dependent_obj = JD.collections.Tasks.findOne to_task_id
+            grid_gantt.updateTaskStartDateBasedOnDependencies dependent_obj
+          return # end of callback
 
       JustdoSnackbar.show
         text: "Dependency removed"
