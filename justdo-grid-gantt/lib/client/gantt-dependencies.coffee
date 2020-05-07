@@ -258,8 +258,8 @@ _.extend JustdoGridGantt.prototype,
     for dependency_key, dependency_obj of self.dependencies_map
       self.renderDependency dependency_obj
     return
-    
-  refreshArrows: (from_line, to_line) ->
+
+  _refreshArrows: ->
     if not (gc = APP.modules.project_page.gridControl())?
       return
     
@@ -274,6 +274,22 @@ _.extend JustdoGridGantt.prototype,
     @resetDependenciesDiv()
     @rerenderAllDependencies()
     
+    return
+
+  refreshArrows: (options) ->
+    if not options?
+      options = {}
     
+    {defer} = options
+
+    if defer
+      Meteor.defer =>
+        @_refreshArrows()
+
+        return
+    else
+      @_refreshArrows()
+
     return
   
+    

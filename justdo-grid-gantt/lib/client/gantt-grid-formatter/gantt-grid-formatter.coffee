@@ -93,6 +93,43 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
       return undefined
     
+    _gridControlOnRebuildReady = ->
+      APP.justdo_grid_gantt.refreshArrows()
+
+      return
+
+    _gridControlOnFilterUpdated = ->
+      APP.justdo_grid_gantt.refreshArrows()
+
+      return
+
+    _epoch_tracker_computation = null
+
+    setupArrowsRefresher = ->
+      gc.on "rebuild_ready", _gridControlOnRebuildReady
+      gc.on "grid-tree-filter-updated", _gridControlOnFilterUpdated
+
+      _epoch_tracker_computation = Tracker.autorun ->
+        APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
+        APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+
+        APP.justdo_grid_gantt.refreshArrows()
+
+        return
+
+      return
+
+    destroyArrowsRefresher = ->
+      APP.justdo_grid_gantt.resetDependenciesDiv()
+
+      gc.off "rebuild_ready", _gridControlOnRebuildReady
+      gc.off "grid-tree-filter-updated", _gridControlOnFilterUpdated
+
+      _epoch_tracker_computation?.stop()
+      _epoch_tracker_computation = null
+
+      return
+
     # The following tracker takes care of requiring the grid to have double header when
     # we find a field that uses the formatter: JustdoGridGantt.pseudo_field_formatter_id
     #
@@ -107,9 +144,11 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         #   gc.requireDoubleHeader()
           # double_header_requested = true
         redrawFormatterHeader(field_def.field)
+        setupArrowsRefresher()
         return
       
       destroyFormatterHeader()
+      destroyArrowsRefresher()
       # If no Gantt Field exists in the grid
       # if double_header_requested
       #   gc.releaseDoubleHeader()
@@ -151,7 +190,6 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         if current_val != cached_val
           @setCurrentColumnData("column_width", current_val)
           dep.changed()
-          APP.justdo_grid_gantt.refreshArrows()
         return
 
       column_start_end_changed_comp = Tracker.autorun =>
@@ -160,7 +198,6 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
         if current_val[0] != cached_val[0] or current_val[1] != cached_val[1]
           @setCurrentColumnData("column_start_end", current_val)
-          APP.justdo_grid_gantt.refreshArrows()
           dep.changed()
         return
 

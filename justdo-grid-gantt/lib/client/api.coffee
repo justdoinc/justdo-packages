@@ -80,7 +80,9 @@ _.extend JustdoGridGantt.prototype,
           return # end of for each
       
       self.gantt_dirty_tasks.clear()
-      self.refreshArrows 1,10
+
+      self.refreshArrows({defer: true}) # Defer to let the grid refresh
+
       return # end of process gantt dirty tasks
   
     @processTaskAdd = (task_obj) ->
