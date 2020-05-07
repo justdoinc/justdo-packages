@@ -290,29 +290,30 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     handler: (e) ->
       states = APP.justdo_grid_gantt.getState()
       if not states.dependencies.finish_to_x_independent?
-        $(e.target).children(".gantt-main-bar-F2x-dependency").css("visibility","visible")
+        $(e.target).closest(".grid-gantt-formatter").children(".gantt-main-bar-F2x-dependency").css("visibility","visible")
       return
   ,
     args: ["mouseleave", ".grid-gantt-formatter"]
     handler: (e) ->
-      $(e.target).children(".gantt-main-bar-F2x-dependency").css("visibility","hidden")
+      $(e.target).closest(".grid-gantt-formatter").children(".gantt-main-bar-F2x-dependency").css("visibility","hidden")
       return
   ,
     args: ["mouseenter", ".gantt-main-bar-start-drop-area"]
     handler: (e) ->
       states = APP.justdo_grid_gantt.getState()
       if states.dependencies.finish_to_x_independent?
-        $(e.target).css("background-color","red")
+        $(e.target).closest(".gantt-main-bar-start-drop-area").css("background-color","red")
       return
   ,
     args: ["mouseleave", ".gantt-main-bar-start-drop-area"]
     handler: (e) ->
-      $(e.target).css("background-color","")
+      $(e.target).closest(".gantt-main-bar-start-drop-area").css("background-color","")
       return
   ,
     args: ["mouseup", ".gantt-main-bar-start-drop-area"]
     handler: (e) ->
-      states = APP.justdo_grid_gantt.getState()
+      self = APP.justdo_grid_gantt
+      states = self.getState()
       if (independent_id = states.dependencies.finish_to_x_independent)?
         formatter_container = e.target.closest(".grid-gantt-formatter")
         if (dependent_id = formatter_container.getAttribute("task-id"))? and

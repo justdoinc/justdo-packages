@@ -85,7 +85,10 @@ _.extend JustdoDependencies.prototype,
           $push:
             "#{JustdoDependencies.dependencies_field_id}": from_task_seqId
         ,
-          ->
+          (err) ->
+            if err?
+              console.error err
+              return
             # todo: reconsider if updating the dependent tasks should be part of the dependencies manager
             # or from the gantt object. There are considerations both ways. For now, leaving it here. This means that
             # if the gantt module is not loaded, then dependent tasks will not be automatically adjusted.
@@ -102,8 +105,17 @@ _.extend JustdoDependencies.prototype,
             JD.collections.Tasks.update
               _id: to_task_id
             ,
-            $pull:
-              "#{JustdoDependencies.dependencies_field_id}": from_task_seqId
+              $pull:
+                "#{JustdoDependencies.dependencies_field_id}": from_task_seqId
+            ,
+              (err) ->
+                if err?
+                  console.error err
+                  return
+                if (grid_gantt = APP.justdo_grid_gantt)?
+                  grid_gantt.updateTaskStartDateBasedOnDependencies JD.collections.Tasks.findOne to_task_id
+                return # end of callback
+            
             JustdoSnackbar.close()
             return
     return
@@ -131,7 +143,11 @@ _.extend JustdoDependencies.prototype,
         $pull:
           "#{JustdoDependencies.dependencies_field_id}": from_task_seqId
       ,
-        ->
+        (err) ->
+          if err?
+            console.error err
+            return
+            
           # todo: reconsider if updating the dependent tasks should be part of the dependencies manager
           # see same comment above
           if (grid_gantt = APP.justdo_grid_gantt)?
@@ -149,6 +165,15 @@ _.extend JustdoDependencies.prototype,
           ,
             $push:
               "#{JustdoDependencies.dependencies_field_id}": from_task_seqId
+          ,
+            (err) ->
+              if err?
+                console.error err
+                return
+              if (grid_gantt = APP.justdo_grid_gantt)?
+                grid_gantt.updateDependentTasks from_task_id
+              return # end of callback
+          
           JustdoSnackbar.close()
           return
     return

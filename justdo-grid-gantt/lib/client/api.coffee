@@ -548,7 +548,11 @@ _.extend JustdoGridGantt.prototype,
       ,
         $set: set_value
       ,
-        ->
+        (err)->
+          if err?
+            console.error err
+            return
+          
           # important note - must call with the _id and not the object, because the object changes by the update
           # call, but task_obj doesn't
           self.updateDependentTasks task_obj._id
