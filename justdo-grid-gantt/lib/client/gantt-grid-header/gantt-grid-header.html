@@ -1,6 +1,6 @@
 <template name="justdo_grid_gantt_header">
   <div class="grid-gantt-header">
-    <div class="grid-gantt-scale">
+    <div class="grid-gantt-scale" style="width: {{getScaleWidth}}; left: {{getGanttScaleOffset}}px">
       <table class="grid-gantt-scale-table {{scaleType}}">
         <tr>
           {{#each daysInterval}}
@@ -41,18 +41,18 @@
           {{/each}}
         </tr>
       </table>
-      <div class="grid-gantt-control">
-        <div class="grid-gantt-dropdown dropdown">
-          <div class="grid-gantt-dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{scaleType}}</div>
-          <ul class="dropdown-menu p-1 shadow border-0">
-            <li class="dropdown-item grid-gantt-scale-months">Months</li>
-            <li class="dropdown-item grid-gantt-scale-weeks">Weeks</li>
-            <li class="dropdown-item grid-gantt-scale-days">Days</li>
-          </ul>
-        </div>
-        <svg class="jd-icon grid-gantt-zoom-out"><use xlink:href="/layout/icons-feather-sprite.svg#minus"/></svg>
-        <svg class="jd-icon grid-gantt-zoom-in {{#if disableZoomIn}}disable-zoom{{/if}}" ><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+    </div>
+    <div class="grid-gantt-control">
+      <div class="grid-gantt-dropdown dropdown">
+        <div class="grid-gantt-dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{scaleType}}</div>
+        <ul class="dropdown-menu p-1 shadow border-0">
+          <li class="dropdown-item grid-gantt-scale-months">Months</li>
+          <li class="dropdown-item grid-gantt-scale-weeks">Weeks</li>
+          <li class="dropdown-item grid-gantt-scale-days">Days</li>
+        </ul>
       </div>
+      <svg class="jd-icon grid-gantt-zoom-out"><use xlink:href="/layout/icons-feather-sprite.svg#minus"/></svg>
+      <svg class="jd-icon grid-gantt-zoom-in {{#if disableZoomIn}}disable-zoom{{/if}}" ><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
     </div>
   </div>
 </template>

@@ -37,6 +37,24 @@ Template.justdo_grid_gantt_header.onCreated ->
     @scale_type.set "months"
     return
 
+  @width_per_day_rv = new ReactiveVar(0)
+  @available_width = 0
+  @extra_days_to_add_to_each_scale_side = 1
+  @autorun =>
+    gantt_coloumn_from_epoch_time = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
+    gantt_coloumn_to_epoch_time = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+
+    original_days_amount =
+      Math.floor((gantt_coloumn_to_epoch_time - gantt_coloumn_from_epoch_time + 1) / 1000 / 60 / 60 / 24)
+
+    @available_width = $(".grid-gantt-floating-elements-container", Template.instance().gc.container).outerWidth()
+
+    @width_per_day_rv.set((1000 * 60 * 60 * 24) / (gantt_coloumn_to_epoch_time - gantt_coloumn_from_epoch_time) * @available_width) # We divide against the original to keep the same propotion, regardless of size available to viewport
+
+    return
+
+  @addExtraDays = => @scale_type.get() == "days"
+
   return
 
 
@@ -45,13 +63,22 @@ Template.justdo_grid_gantt_header.helpers
     return Template.instance().scale_type.get()
 
   daysInterval: ->
+    tpl = Template.instance()
     days = []
-    from = moment(APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get())
-    to = moment(APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get())
+
+    gantt_coloumn_from_epoch_time = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
+    gantt_coloumn_to_epoch_time = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+
+    from = moment.utc(gantt_coloumn_from_epoch_time)
+    to = moment.utc(gantt_coloumn_to_epoch_time)
+
+    if tpl.addExtraDays()
+      from.subtract(tpl.extra_days_to_add_to_each_scale_side, "days")
+      to.add(tpl.extra_days_to_add_to_each_scale_side, "days")
 
     while from < to
-      days.push moment(from).format("YYYY-MM-DD")
-      from = moment(from).add(1, "days")
+      days.push from.format("YYYY-MM-DD")
+      from = from.add(1, "days")
     return days
 
   getDateNumber: (date) ->
@@ -90,6 +117,21 @@ Template.justdo_grid_gantt_header.helpers
   disableZoomIn: ->
     return Template.instance().disable_zoom_in.get()
 
+  getScaleWidth: ->
+    tpl = Template.instance()
+
+    if tpl.addExtraDays()
+      return tpl.available_width + ((tpl.width_per_day_rv.get() * tpl.extra_days_to_add_to_each_scale_side) * 2) + "px"
+
+    return "auto"
+
+  getGanttScaleOffset: ->
+    tpl = Template.instance()
+
+    if tpl.addExtraDays()
+      return tpl.width_per_day_rv.get() * -1
+
+    return 0
 
 Template.justdo_grid_gantt_header.events
   "click .grid-gantt-scale-months": (e, tmpl) ->
