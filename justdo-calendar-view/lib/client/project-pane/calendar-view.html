@@ -156,6 +156,10 @@
                   <td class="calendar_table_cell" date={{columnDate}} colspan={{span}}>
                     <div class="calendar_task_cell calendar_view_draggable {{dimTask}} task_cell_{{type}}" title="{{projectName}}{{task.title}} {{additionalInfo}}" task_id="{{task._id}}" task_users="{{task.users}}" type={{type}}>
                       <div class="calendar_task_info">
+                        <div class="calendar_task_state" style="background-color: {{priorityColor task.priority}}">
+                          <div class="calendar-task-state-tooltip">{{taskStateLabel task.state}}</div>
+                          <svg class="jd-task-state {{task.state}}"><use xlink:href="/layout/icons-feather-sprite.svg#jd-state-{{task.state}}"/></svg>
+                        </div>
                         {{#if showType type}}
                           <div class="calendar_task_type {{fontSizeClass}}">{{type}}</div>
                         {{/if}}

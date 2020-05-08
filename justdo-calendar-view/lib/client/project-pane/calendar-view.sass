@@ -232,7 +232,10 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
   position: absolute
   font-size: 10px
   text-transform: uppercase
+  display: flex
+  align-items: start
   top: -7px
+  left: -4px
 
 .calendar_task_type,
 .calendar_task_startDateAfterDueDate,
@@ -257,6 +260,59 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
   text-align: left
   height: 14px
   font-size: xx-small
+
+.calendar_task_state
+  border-radius: 100%
+  border: 2px solid white
+  margin-right: 4px
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25)
+  z-index: 1
+  position: relative
+  &:hover
+    .calendar-task-state-tooltip
+      display: block
+  .jd-task-state
+    stroke-width: 0
+    color: white
+    width: 16px
+    height: 16px
+    stroke: currentColor
+    stroke-linecap: round
+    stroke-linejoin: round
+    &.pending
+      fill: white
+      opacity: 0.65
+    &.in-progress
+      fill: white
+    &.done
+      stroke-width: 4px
+      fill: none
+      padding: 2px
+    &.will-not-do
+      stroke-width: 4px
+      fill: none
+      padding: 2px
+    &.on-hold
+      fill: white
+      stroke-width: 0.5
+      padding: 2px
+    &.duplicate
+      stroke-width: 3px
+      fill: none
+      padding: 2px
+
+.calendar-task-state-tooltip
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)
+  border-radius: 0.2rem
+  background-color: white
+  padding: 0px 4px
+  position: absolute
+  top: -12px
+  right: 10px
+  font-size: 12px
+  display: none
+  z-index: 10
+  text-transform: initial
 
 .calendar_header_date
   position: relative

@@ -1261,6 +1261,14 @@ Template.justdo_calendar_project_pane_user_view.helpers
 
     return ret
 
+  priorityColor: (priority) ->
+    return JustdoColorGradient.getColorRgbString priority
+
+  taskStateLabel: (state_id) ->
+    gc = APP.modules.project_page.gridControl()
+    stateLabel = gc?.getSchemaExtendedWithCustomFields().state.grid_values[state_id].txt
+    return stateLabel
+
 Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_task_cell": (e, tpl) ->
     if (task_id = $(e.target).closest(".calendar_task_cell").attr("task_id"))?
