@@ -10,6 +10,12 @@ Template.tasks_context_menu.helpers
   getMainSections: -> 
     return APP.justdo_tasks_context_menu.getMainSections()
 
+  hasNestedSections: (section) ->
+    return @is_nested_section == true and APP.justdo_tasks_context_menu.getNestedSections(section.id, @id)?.length > 0
+
+  getNestedSections: (section) ->
+    return APP.justdo_tasks_context_menu.getNestedSections section.id, @id
+
 Template.tasks_context_menu.events 
   "click .context-action-item": ->
     if _.isFunction @op

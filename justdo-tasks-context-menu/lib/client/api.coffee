@@ -132,11 +132,37 @@ _.extend JustdoTasksContextMenu.prototype,
 
   getContextItemObj: -> @tasks_collection.findOne(@getContextItemId())
 
+  _conf_scehma: new SimpleSchema
+    position: 
+      type: Number
+    data:
+      optional: true
+      type: new SimpleSchema
+        label:
+          type: String
+        op: 
+          optional: true
+          type: Function
+        is_nested_section:
+          optional: true
+          type: Boolean
+        icon_type:
+          optional: true
+          type: String
+          allowedValues: ["feather"]
+        icon_val:
+          optional: true
+          type: String
+    listingCondition:
+      optional: true
+      type: Function
+
+
   _registerSection: (section_id, domain, conf) ->
     if not conf?
         conf = {}
 
-    # XXX check conf schema
+    @_conf_scehma.validate conf
 
     Meteor._ensure conf, "data" # It is very unlikely that we won't have data object, as it is needed to set a label for the section
 
@@ -162,10 +188,13 @@ _.extend JustdoTasksContextMenu.prototype,
     return @sections_reactive_items_list.getList("main", ignore_listing_condition)
 
   registerSectionItem: (section_id, item_id, conf) ->
-     # XXX check conf schema
+    @_conf_scehma.validate conf
 
-    if (sections_reactive_items_list = @sections_reactive_items_list.getItem(section_id, true).data.reactive_items_list)?
+    if (sections_reactive_items_list = @sections_reactive_items_list.getItem(section_id, true)?.data?.reactive_items_list)?
       sections_reactive_items_list.registerItem item_id, conf
+      return
+
+    throw new Error "Section #{section_id} does not exist."
 
     return
   
@@ -175,13 +204,21 @@ _.extend JustdoTasksContextMenu.prototype,
 
     return
 
-  # _getNestedSectionsDomainId: (section_id, nested_section_item) ->
-  #   return section_id + nested_section_item
+  _getNestedSectionsDomainId: (section_id, nested_section_item) ->
+    return "#{section_id}::#{nested_section_item}"
 
-  # registerNestedSection: (section_id, nested_section_item, nested_section_id, conf) ->
-  #   # Ensure section_id exists and nested_section_item exists and is, indeed nested section item
-  #   # @_registerSection(section_id, @_getNestedSectionsDomainId(section_id, nested_section_item), conf)
-  #   return
+  registerNestedSection: (section_id, nested_section_item, nested_section_id, conf) ->
+    # Ensure section_id exists and nested_section_item exists and is, indeed nested section item
+    if (section = @sections_reactive_items_list.getItem section_id)? and 
+      (item = section.data.reactive_items_list.getItem nested_section_item)?
+        if item.data.is_nested_section == true
+          @_registerSection(nested_section_id, @_getNestedSectionsDomainId(section_id, nested_section_item), conf)
+        else
+          throw new Error "Item #{nested_section_item} must have data.is_nested_section set to true"
+    else 
+      throw new Error "Item #{@_getNestedSectionsDomainId(section_id, nested_section_item)} does not exist."
 
-  # getNestedSections: (section_id, nested_section_item) ->
-  #   return @sections_reactive_items_list.getList(@_getNestedSectionsDomainId(section_id, nested_section_item), ignore_listing_condition)
+    return
+
+  getNestedSections: (section_id, nested_section_item, ignore_listing_condition=false) ->
+    return @sections_reactive_items_list.getList(@_getNestedSectionsDomainId(section_id, nested_section_item), ignore_listing_condition)

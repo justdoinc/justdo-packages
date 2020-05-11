@@ -6,6 +6,19 @@
   .dropdown-menu
     position: relative
     margin-top: 0
+  
+  .dropdown-item
+    position: relative
+    
+  .nested-dropdown-menu
+    display: none
+    position: absolute
+    top: 0
+    left: 100%
+
+  .dropdown-item:hover > .nested-dropdown-menu
+    display: block
+    
   .jd-icon-context-action
     margin-right: 6px
     width: 20px
