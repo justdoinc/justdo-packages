@@ -60,8 +60,7 @@
   --}}
 
   <input type="text" id="project-name"
-         disabled={{#unless is_project_admin}}"disabled"{{/unless}}
-         class="{{#if project_is_untitled}}untitled{{/if}} form-control text-dark"
+         class="{{#if project_is_untitled}}untitled{{/if}} form-control text-dark {{#unless is_project_admin}}project-name-disabled{{/unless}}"
          placeholder="Untitled JustDo"
          value="{{project_title}}"
   >

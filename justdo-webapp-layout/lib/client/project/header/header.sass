@@ -22,8 +22,14 @@ $project-logo-max-width: 0 // With the introduction of the new design, we decide
   overflow: hidden
   text-overflow: ellipsis
   transition: background-color 0.2s linear
+  padding-top: 0.08rem
+  padding-bottom: 0.08rem
+  height: auto
   &:hover
     background-color: rgba(0, 0, 0, 0.04)
+
+.project-name-disabled
+  pointer-events: none
 
 .project-logo
   width: 135px // Configurable with project conf "project_logo_width"
