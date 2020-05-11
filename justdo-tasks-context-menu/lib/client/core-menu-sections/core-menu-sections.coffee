@@ -45,6 +45,10 @@ _.extend JustdoTasksContextMenu.prototype,
       position: 200
       data:
         label: "Projects"
+      listingCondition: ->
+        if not (cur_proj = APP.modules.project_page.curProj())?
+          return true 
+        return cur_proj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
     
     @registerSectionItem "projects", "set-as-a-project",
       position: 100
@@ -77,7 +81,6 @@ _.extend JustdoTasksContextMenu.prototype,
         is_nested_section: true
         icon_type: "feather"
         icon_val: "corner-right-down"
-      listingCondition: -> true
     
     @registerNestedSection "projects", "assign-to-project", "assign-to-project-items",
       position: 100
