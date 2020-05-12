@@ -11,3 +11,11 @@ _.extend JustdoHelpers,
 
   getExistingMongoCollectionObjectForDDPCollectionName: (collection_name) ->
     return @getExistingMongoCollectionStoreObject(collection_name)?._getCollection()
+
+  fieldsArrayToInclusiveFieldsProjection: (fields_arr) ->
+    res = {}
+
+    for field_id in fields_arr
+      res[field_id] = 1
+
+    return res
