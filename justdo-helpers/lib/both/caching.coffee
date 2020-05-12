@@ -14,3 +14,9 @@ _.extend JustdoHelpers,
         cache = {}
 
     return cache[key] = val
+
+  getTickUid: ->
+    if (tick_uid = @sameTickCacheGet("__tick_id"))?
+      return tick_uid
+
+    return @sameTickCacheSet("__tick_id", Random.id())
