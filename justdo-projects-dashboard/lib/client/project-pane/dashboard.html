@@ -6,24 +6,24 @@
         <div class="main-part-left-column projects-item bg-primary">
           <!-- Project Manager Dropdown -->
           <div class="dropdown projects-dropdown mb-1 justdo-projects-dashboard-owner-selector">
-            <button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-primary btn-sm px-3 py-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               All Members
             </button>
-            <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
-              <li><a href="#" class="dropdown-item px-1" owner-id="*">All Members</a></li>
+            <ul class="dropdown-menu shadow-lg border-0">
+              <li><a href="#" class="dropdown-item px-3" owner-id="*">All Members</a></li>
               {{#each projectsOwnersList}}
-                <li><a href="#" class="dropdown-item px-1">{{> justdo_avatar}} {{displayName}}</a></li>
+                <li><a href="#" class="dropdown-item px-3">{{> justdo_avatar}} {{displayName}}</a></li>
               {{/each}}
             </ul>
           </div>
           <!-- Field of Interest Dropdown -->
           <div class="dropdown projects-dropdown justdo-projects-dashboard-field-selector">
-            <button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-primary btn-sm px-3 py-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{selectedFieldLabel}}
             </button>
-            <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+            <ul class="dropdown-menu shadow-lg border-0">
               {{#each gridOptionFields}}
-                <li><a href="#" class="dropdown-item">{{options.label}}</a></li>
+                <li><a href="#" class="dropdown-item px-3">{{options.label}}</a></li>
               {{/each}}
             </ul>
           </div>
