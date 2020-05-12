@@ -37,47 +37,47 @@ findProjectName = (task_obj) ->
 # Create Wrapper (Layer) with droppable divs under the existing table
 createDroppableWrapper = ->
   $(".calendar_view_droppable_wrapper").remove()
-  leftPositionArray = []
-  topPositionArray = []
-  userIds = []
-  dateArray = []
-  heightArray = []
+  left_position_array = []
+  top_position_array = []
+  user_ids = []
+  date_array = []
+  height_array = []
   width = $(".calendar_view_date").outerWidth()
   $table = $(".calendar_view_main_table")
 
   # Get Data to create DroppableWrapper (coordinates, width, height, dates, user_id)
   for item in $(".calendar_view_date")
-    leftPositionArray.push $(item).position().left
+    left_position_array.push $(item).position().left
 
   for item in $(".calendar_table_user")
-    heightArray.push $(item).css "height"
-    topPositionArray.push $(item).position().top
+    height_array.push $(item).css "height"
+    top_position_array.push $(item).position().top
 
   for item in $(".calendar_view_date")
-    dateArray.push Blaze.getData(item)
+    date_array.push Blaze.getData(item)
 
   for item in $(".calendar_view_tasks_row")
-    userIds.push $(item).attr "user_id"
+    user_ids.push $(item).attr "user_id"
 
-  tableTop = $table.position().top
-  tableHeight = $table.height()
+  table_top = $table.position().top
+  table_height = $table.height()
 
-  userIds = _.uniq(userIds)
+  user_ids = _.uniq(user_ids)
 
   # Build and append DroppableWrapper
-  droppableWrapper = """<div class="calendar_view_droppable_wrapper" style="height:#{tableHeight}px">"""
+  droppable_wrapper = """<div class="calendar_view_droppable_wrapper" style="height:#{table_height}px">"""
 
-  for leftPosition, i in leftPositionArray
-    for height, j in heightArray
-      droppableWrapper += """
-        <div class="calendar_view_droppable_item" style="height:#{height}; width:#{width}px; left:#{leftPosition}px; top:#{topPositionArray[j] - tableTop}px">
-          <div class="calendar_view_droppable_area" user_id="#{userIds[j]}" date="#{dateArray[i]}"></div>
+  for leftPosition, i in left_position_array
+    for height, j in height_array
+      droppable_wrapper += """
+        <div class="calendar_view_droppable_item" style="height:#{height}; width:#{width}px; left:#{leftPosition}px; top:#{top_position_array[j] - table_top}px">
+          <div class="calendar_view_droppable_area" user_id="#{user_ids[j]}" date="#{date_array[i]}"></div>
         </div>
       """
 
-  droppableWrapper += """</div>"""
+  droppable_wrapper += """</div>"""
 
-  $(".calendar_view_main_table_wrapper").append droppableWrapper
+  $(".calendar_view_main_table_wrapper").append droppable_wrapper
 
   # Make Wrapper Droppable
   $('.calendar_view_droppable_area').droppable
@@ -204,7 +204,7 @@ destroyDroppableWrapper = ->
   return
 
 setDragAndDrop = ->
-  allowScroll = null
+  allow_scroll = null
   $('.calendar_view_draggable').draggable
     cursor: 'none'
     helper: 'clone'
@@ -224,14 +224,14 @@ setDragAndDrop = ->
   $('.calendar_view_scroll_cell').droppable
     tolerance: 'pointer'
     out: (e, ui) ->
-      allowScroll = false
+      allow_scroll = false
       return
     over: (e, ui) ->
-      allowScroll = true
+      allow_scroll = true
       delayAction (->
-        if allowScroll
-          $tableWrapper = $(".calendar_view_main_table_wrapper")
-          $tableWrapper.addClass "fadeOut"
+        if allow_scroll
+          $table_wrapper = $(".calendar_view_main_table_wrapper")
+          $table_wrapper.addClass "fadeOut"
           if $(e.target).hasClass "calendar_view_scroll_left_cell"
             $(e.target).click()
           if $(e.target).hasClass "calendar_view_scroll_right_cell"
@@ -239,7 +239,7 @@ setDragAndDrop = ->
 
           setTimeout (->
             createDroppableWrapper()
-            $tableWrapper.removeClass "fadeOut"
+            $table_wrapper.removeClass "fadeOut"
             return
           ), 300
       ), 300
@@ -248,13 +248,13 @@ setDragAndDrop = ->
 
 fixHeaderOnScroll = ->
   $(".calendar_view_main_table_wrapper").on "scroll", ->
-    scrollTop = $(this).scrollTop()
-    $tableHeader = $(".main_table_fixed_header")
-    tableWidth = $(".calendar_view_main_table")[0]["clientWidth"]
-    if scrollTop > 0
-      $tableHeader.width(tableWidth).show()
+    scroll_top = $(this).scrollTop()
+    $table_header = $(".main_table_fixed_header")
+    table_width = $(".calendar_view_main_table")[0]["clientWidth"]
+    if scroll_top > 0
+      $table_header.width(table_width).show()
     else
-      $tableHeader.hide()
+      $table_header.hide()
     return
   return
 
