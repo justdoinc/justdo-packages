@@ -1,6 +1,6 @@
 Template.meetings_meeting_members.helpers
-  box_grid:
-    cols: 6
+  box_grid: ->
+    cols: 16 + 1 # Meeting dialog has fixed-width 680px. 16 (users) + 1 (add user button) it's a Max count the dialog can contain
 
   primary_users: -> [@organizer_id]
 

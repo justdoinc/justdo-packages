@@ -78,7 +78,7 @@ Template.justdo_avatars_box.helpers
     primary_comps_length = components.length
 
     if primary_comps_length < max_users_to_display and not _.isEmpty @secondary_users
-      space_left = max_users_to_display - primary_comps_length 
+      space_left = max_users_to_display - primary_comps_length
 
       components.push {type: "sep"}
 
@@ -94,4 +94,13 @@ Template.justdo_avatars_box.helpers
 
     return components
 
-  button_content: -> tplProp("options").button_content
+  button_content: ->
+    tmpl_data = Template.instance().data
+    users_limit = tmpl_data.users_limit
+    users_count = tmpl_data.primary_users.length + tmpl_data.secondary_users.length
+    users_diff = users_count - users_limit
+
+    if users_diff > 0
+      return """<div class="default-avatar-box-button avatar-box-plus-users text-primary">+#{users_diff}</div>"""
+    else
+      return tplProp("options").button_content
