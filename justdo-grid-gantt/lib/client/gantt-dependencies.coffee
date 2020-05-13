@@ -138,10 +138,12 @@ _.extend JustdoGridGantt.prototype,
   
     for dependent_row in dependency_obj.dependent_rows or []
       dependent_box = gc._grid.getCellNodeBox dependent_row, self.grid_gantt_column_index
-      dependent_task_info = self.task_id_to_info[dependency_obj.dependent]
+      if not (dependent_task_info = self.task_id_to_info[dependency_obj.dependent])?
+        continue
       for independent_row in dependency_obj.independent_rows or []
         independent_box = gc._grid.getCellNodeBox  independent_row, self.grid_gantt_column_index
-        independent_task_info = self.task_id_to_info[dependency_obj.independent]
+        if not(independent_task_info = self.task_id_to_info[dependency_obj.independent])?
+          continue
         if dependency_obj.dependency_type == "F2S"
           # numbers are references to the points calculation below
           # note that the dependent may appear above or below, and as well as before or after the independent
@@ -260,6 +262,9 @@ _.extend JustdoGridGantt.prototype,
     return
 
   _refreshArrows: ->
+    # The following happens when a core data is done loading, but the grid itself is  not populated yet.
+    if _.isEmpty(@task_id_to_info)
+      return
     if not (gc = APP.modules.project_page.gridControl())?
       return
     
