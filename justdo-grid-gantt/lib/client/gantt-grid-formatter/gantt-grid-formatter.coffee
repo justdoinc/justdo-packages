@@ -1,3 +1,5 @@
+day = 24 * 60 * 60 * 1000
+
 # Manage hitting escape to stop mouse operations
 $("body").keyup (e) ->
   if not (e.keyCode == 27)
@@ -560,7 +562,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         
         # end date:
         hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_end_time, grid_gantt.grid_gantt_column_width )
-        day = 24 * 60 * 60 * 1000
+        
         date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_end_time - day).format("YYYY-MM-DD"))
         end_date_hint = """
                 <div class="grid-gantt-date-hint" style="top: #{hint_y}px; left: #{hint_x}px">#{date}</div>

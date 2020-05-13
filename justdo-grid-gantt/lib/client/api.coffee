@@ -1,3 +1,5 @@
+day =  24 * 3600 * 1000
+
 _.extend JustdoGridGantt.prototype,
   _immediateInit: ->
     self = @
@@ -6,11 +8,11 @@ _.extend JustdoGridGantt.prototype,
     
     @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents"]
     
-    @day =  24 * 3600 * 1000
+    
 
     start_of_day_epoch = moment.utc(moment().format("YYYY-MM-DD")).unix() * 1000
-    @gantt_coloumn_from_epoch_time_rv = new ReactiveVar (start_of_day_epoch - 5 * @day)
-    @gantt_coloumn_to_epoch_time_rv = new ReactiveVar (start_of_day_epoch + 6 * @day - 1000)
+    @gantt_coloumn_from_epoch_time_rv = new ReactiveVar (start_of_day_epoch - 5 * day)
+    @gantt_coloumn_to_epoch_time_rv = new ReactiveVar (start_of_day_epoch + 6 * day - 1000)
     @grid_gantt_column_width = -1
     @grid_gantt_column_index = 0
   
@@ -430,7 +432,6 @@ _.extend JustdoGridGantt.prototype,
       re = /^\d\d\d\d-\d\d-\d\d$/g
       if not re.test date
         return Date.UTC(0)
-      day = 1000 * 60 * 60 * 24
       return day - 1 + self.dateStringToStartOfDayEpoch date
 
     @dateStringToMidDayEpoch = (date) ->
