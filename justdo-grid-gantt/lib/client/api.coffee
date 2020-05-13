@@ -596,9 +596,6 @@ _.extend JustdoGridGantt.prototype,
                 self.initTaskIdToInfo()
               if (core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core)?
                 core_data.on "data-changes-queue-processed", self.processChangesQueue
-              # note: (Daniel - please confirm) - when the user changes to a different JustDo, the mainGridControl object
-              # is deleted, and with it grid_data_core and the event emitter, so there is no need to explicitly call
-              # core_data.off(...)
             else
               self.resetTaskIdToInfo()
             return
@@ -609,6 +606,9 @@ _.extend JustdoGridGantt.prototype,
 
           if self.core_data_events_triggering_computation?
             self.core_data_events_triggering_computation.stop()
+  
+          if (core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core)?
+            core_data.off "data-changes-queue-processed", self.processChangesQueue
           return
 
     @onDestroy =>
