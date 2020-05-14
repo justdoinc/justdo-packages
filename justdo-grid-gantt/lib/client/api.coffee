@@ -194,6 +194,8 @@ _.extend JustdoGridGantt.prototype,
     @processTaskParentUpdate = (task_id) ->
       if not (old_task_info = self.task_id_to_info[task_id])?
         console.error "grid-gantt - task not found (parents-update)"
+        old_task_info =
+          parents: []
       # when parents change, we need to 'touch' all the parents that were removed and all those added:
       core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core
       current_parents = (Object.keys core_data.items_by_id[task_id].parents) or []
