@@ -628,6 +628,11 @@ _.extend JustdoGridGantt.prototype,
   
           if (core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core)?
             core_data.off "data-changes-queue-processed", self.processChangesQueue
+            
+          @dependencies_map = {}
+          @dependents_to_keys_set = {}
+          @task_id_to_info = {}
+          @_states_manager = {}
           return
 
     @onDestroy =>
