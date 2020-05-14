@@ -8,11 +8,6 @@ _.extend JustdoGridGantt.prototype,
     
     @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents"]
     
-    
-
-    start_of_day_epoch = moment.utc(moment().format("YYYY-MM-DD")).unix() * 1000
-    @gantt_coloumn_from_epoch_time_rv = new ReactiveVar (start_of_day_epoch - 5 * day)
-    @gantt_coloumn_to_epoch_time_rv = new ReactiveVar (start_of_day_epoch + 6 * day - 1000)
     @grid_gantt_column_width = -1
     @grid_gantt_column_index = 0
   
@@ -30,6 +25,30 @@ _.extend JustdoGridGantt.prototype,
     @missing_parents = new Set() # see comment in processTaskAdd
     
     @gantt_dirty_tasks = new Set()
+    
+    @_epoch_range = {} # a map of grid_id to from and to epoch time to the specific grid
+    
+    @epochRange = ->
+      if not (gc_id = APP.modules.project_page.gridControl()?.getGridUid())?
+        return [0, 0]
+      if not (range = @_epoch_range[gc_id])?
+        start_of_day_epoch = moment.utc(moment().format("YYYY-MM-DD")).unix() * 1000
+        from = new ReactiveVar (start_of_day_epoch - 5 * day)
+        to = new ReactiveVar (start_of_day_epoch + 6 * day - 1000)
+        range = [from, to]
+        @_epoch_range[gc_id] = range
+      console.log ">>>> get range for gc: ", gc_id
+      return [range[0].get(), range[1].get()]
+      
+    @setEpochRange = (range) ->
+      if not (gc_id = APP.modules.project_page.gridControl()?.getGridUid())?
+        return
+      @_epoch_range[gc_id][0].set(range[0])
+      @_epoch_range[gc_id][1].set(range[1])
+      return
+    
+    
+      
     
     @resetTaskIdToInfo = ->
       self.task_id_to_info = {}
@@ -449,9 +468,8 @@ _.extend JustdoGridGantt.prototype,
       return (time - epoch_start) / (epoch_end - epoch_start) * width_in_pixels
   
     @pixelsDeltaToEpochDelta = (delta_pixels) ->
-      from_epoch = self.gantt_coloumn_from_epoch_time_rv.get()
-      to_epoch = self.gantt_coloumn_to_epoch_time_rv.get()
-      return delta_pixels / self.grid_gantt_column_width * (to_epoch - from_epoch)
+      range = self.epochRange()
+      return delta_pixels / self.grid_gantt_column_width * (range[1] - range[0])
     
     @earliestOfSelfStartAndEarliestChildStart = (task_info) ->
       if task_info.self_start_time?

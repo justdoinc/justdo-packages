@@ -131,10 +131,7 @@ _.extend JustdoGridGantt.prototype,
     # todo - (optimization) use same tick cache for gc, epoch_range,
     if not (gc = APP.modules.project_page.gridControl())?
       return
-    epoch_range = [
-      self.gantt_coloumn_from_epoch_time_rv.get(),
-      self.gantt_coloumn_to_epoch_time_rv.get()
-    ]
+    epoch_range = self.epochRange()
   
     for dependent_row in dependency_obj.dependent_rows or []
       dependent_box = gc._grid.getCellNodeBox dependent_row, self.grid_gantt_column_index

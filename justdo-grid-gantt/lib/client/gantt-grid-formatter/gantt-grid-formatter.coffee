@@ -15,6 +15,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     # IMPORTANT! The following code assumes that there is only a single Gantt Field formatter in any given
     # grid control, if that will change in the future, will need to have a different approach.
     gc = @
+    grid_gantt = APP.justdo_grid_gantt
     
     floating_elements_container_class = "grid-gantt-floating-elements-container"
 
@@ -96,12 +97,12 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       return undefined
     
     _gridControlOnRebuildReady = ->
-      APP.justdo_grid_gantt.refreshArrows()
+      grid_gantt.refreshArrows()
 
       return
 
     _gridControlOnFilterUpdated = ->
-      APP.justdo_grid_gantt.refreshArrows()
+      grid_gantt.refreshArrows()
 
       return
 
@@ -112,17 +113,14 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       gc.on "grid-tree-filter-updated", _gridControlOnFilterUpdated
 
       _epoch_tracker_computation = Tracker.autorun ->
-        APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
-        APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
-
-        APP.justdo_grid_gantt.refreshArrows()
-
+        grid_gantt.epochRange()
+        grid_gantt.refreshArrows()
         return
 
       return
 
     destroyArrowsRefresher = ->
-      APP.justdo_grid_gantt.resetDependenciesDiv()
+      grid_gantt.resetDependenciesDiv()
 
       gc.off "rebuild_ready", _gridControlOnRebuildReady
       gc.off "grid-tree-filter-updated", _gridControlOnFilterUpdated
@@ -159,7 +157,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     
     # The following autorun triggers redraw when the gantt settings changes
     Tracker.autorun ->
-      if APP.justdo_grid_gantt.isPluginInstalledOnProjectDoc(JD.activeJustdo())
+      if grid_gantt.isPluginInstalledOnProjectDoc(JD.activeJustdo())
         # Daniel remove the following in the code review
         # APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
         # APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
@@ -170,6 +168,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     return
   
   slickGridColumnStateMaintainer: ->
+    grid_gantt = APP.justdo_grid_gantt
+    
     # The following is responsible for full column invalidation upon column width resize.
     if not Tracker.active
       @logger.warn "slickGridColumnStateMaintainer: called outside of computation, skipping"
@@ -182,7 +182,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     column_width_changed_comp = null
     column_start_end_changed_comp = null
     Tracker.nonreactive =>
-      APP.justdo_grid_gantt?.is_gantt_column_displayed_rv.set true
+      grid_gantt?.is_gantt_column_displayed_rv.set true
   
       # Run in an isolated reactivity scope
       column_width_changed_comp = Tracker.autorun =>
@@ -195,7 +195,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         return
 
       column_start_end_changed_comp = Tracker.autorun =>
-        current_val = [APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get(), APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()]
+        current_val = grid_gantt.epochRange()
         cached_val = @getCurrentColumnData("column_start_end") or [0, 0]# non reactive
 
         if current_val[0] != cached_val[0] or current_val[1] != cached_val[1]
@@ -216,9 +216,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     if not (cached_info = JustdoHelpers.sameTickCacheGet("column_info"))?
       column_start_end = [0, 0]
       if not (column_start_end = @getCurrentColumnData("column_start_end"))?
-        start = grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
-        end = grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
-        column_start_end = [start, end]
+        column_start_end = grid_gantt.epochRange()
       column_width_px = @getCurrentColumnData("column_width")
       JustdoHelpers.sameTickCacheSet("column_info", [column_start_end, column_width_px])
     else
@@ -442,8 +440,10 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       states.mouse_down.x = e.clientX
       states.mouse_down.y = e.clientY
       states.column_range.is_dragging = true
-      states.column_range.original_from_epoch_time = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
-      states.column_range.original_to_epoch_time = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+      range = APP.justdo_grid_gantt.epochRange()
+      # todo: change the column_range to an array
+      states.column_range.original_from_epoch_time = range[0]
+      states.column_range.original_to_epoch_time = range[1]
       return
   ,
     # note - this is a catch all for mouse up
@@ -513,10 +513,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       grid_gantt = APP.justdo_grid_gantt
       if not (states = grid_gantt.getState())?
         return
-      epoch_range = [
-        grid_gantt.gantt_coloumn_from_epoch_time_rv.get(),
-        grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
-      ]
+      epoch_range = grid_gantt.epochRange()
       gc = APP.modules.project_page.mainGridControl()
         
       if states.end_time.is_dragging
@@ -573,8 +570,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         
       else if states.column_range.is_dragging
         delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
-        grid_gantt.gantt_coloumn_from_epoch_time_rv.set states.column_range.original_from_epoch_time - delta_time
-        grid_gantt.gantt_coloumn_to_epoch_time_rv.set states.column_range.original_to_epoch_time - delta_time
+        grid_gantt.setEpochRange [states.column_range.original_from_epoch_time - delta_time, states.column_range.original_to_epoch_time - delta_time]
       
       else if states.dependencies.finish_to_x_independent?
         independent_end_x = grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time, grid_gantt.grid_gantt_column_width )

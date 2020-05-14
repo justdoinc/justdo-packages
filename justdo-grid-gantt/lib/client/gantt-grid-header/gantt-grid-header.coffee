@@ -8,12 +8,13 @@ Template.justdo_grid_gantt_header.onCreated ->
   @updateDates = (from, to) ->
     from = moment(from).format("YYYY-MM-DD")
     to = moment(to).format("YYYY-MM-DD")
-    APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.set(APP.justdo_grid_gantt.dateStringToStartOfDayEpoch(from))
-    APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.set(APP.justdo_grid_gantt.dateStringToEndOfDayEpoch(to))
+    from_epoch = APP.justdo_grid_gantt.dateStringToStartOfDayEpoch(from)
+    to_epoch = APP.justdo_grid_gantt.dateStringToEndOfDayEpoch(to)
+    APP.justdo_grid_gantt.setEpochRange [from_epoch, to_epoch]
     return
 
   # Switch to Days
-  @switchToDays = (from = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get(), to = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()) ->
+  @switchToDays = (from = APP.justdo_grid_gantt.epochRange()[0], to = APP.justdo_grid_gantt.epochRange()[1]) ->
     from = moment(from).format("YYYY-MM-DD")
     to = moment(to).format("YYYY-MM-DD")
     @updateDates(from, to)
@@ -21,7 +22,7 @@ Template.justdo_grid_gantt_header.onCreated ->
     return
 
   # Switch to Weeks
-  @switchToWeeks = (from = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get(), to = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()) ->
+  @switchToWeeks = (from = APP.justdo_grid_gantt.epochRange()[0], to = APP.justdo_grid_gantt.epochRange()[1]) ->
     # Move "from" to the last monday and "to" to the next sunday
     from = moment(from).startOf("isoWeek").format("YYYY-MM-DD")
     to = moment(to).endOf("isoWeek").format("YYYY-MM-DD")
@@ -30,7 +31,7 @@ Template.justdo_grid_gantt_header.onCreated ->
     return
 
   # Switch to Months
-  @switchToMonths = (from = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get(), to = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()) ->
+  @switchToMonths = (from = APP.justdo_grid_gantt.epochRange()[0], to = APP.justdo_grid_gantt.epochRange()[1]) ->
     from = moment(from).startOf("month").format("YYYY-MM-DD")
     to = moment(to).endOf("month").format("YYYY-MM-DD")
     @updateDates(from, to)
@@ -41,8 +42,8 @@ Template.justdo_grid_gantt_header.onCreated ->
   @available_width = 0
   @extra_days_to_add_to_each_scale_side = 1
   @autorun =>
-    gantt_coloumn_from_epoch_time = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
-    gantt_coloumn_to_epoch_time = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+    gantt_coloumn_from_epoch_time = APP.justdo_grid_gantt.epochRange()[0]
+    gantt_coloumn_to_epoch_time = APP.justdo_grid_gantt.epochRange()[1]
 
     original_days_amount =
       Math.floor((gantt_coloumn_to_epoch_time - gantt_coloumn_from_epoch_time + 1) / 1000 / 60 / 60 / 24)
@@ -66,8 +67,8 @@ Template.justdo_grid_gantt_header.helpers
     tpl = Template.instance()
     days = []
 
-    gantt_coloumn_from_epoch_time = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
-    gantt_coloumn_to_epoch_time = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+    gantt_coloumn_from_epoch_time = APP.justdo_grid_gantt.epochRange()[0]
+    gantt_coloumn_to_epoch_time = APP.justdo_grid_gantt.epochRange()[1]
 
     from = moment.utc(gantt_coloumn_from_epoch_time)
     to = moment.utc(gantt_coloumn_to_epoch_time)
@@ -129,11 +130,12 @@ Template.justdo_grid_gantt_header.helpers
     tpl = Template.instance()
     grid_gantt = APP.justdo_grid_gantt
     
-    epoch_range = [
-      grid_gantt.gantt_coloumn_from_epoch_time_rv.get(),
-      grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
-      ]
-    from = moment.utc(APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get())
+    epoch_from = APP.justdo_grid_gantt.epochRange()[0]
+    epoch_to = APP.justdo_grid_gantt.epochRange()[1]
+    
+    epoch_range = [ epoch_from, epoch_to]
+    
+    from = moment.utc(epoch_from)
     if tpl.addExtraDays()
       from.subtract(tpl.extra_days_to_add_to_each_scale_side, "days")
     from = from.format("YYYY-MM-DD")
@@ -163,8 +165,8 @@ Template.justdo_grid_gantt_header.events
 
   "click .grid-gantt-zoom-in": (e, tmpl) ->
     scaleType = tmpl.scale_type.get()
-    from = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
-    to = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
+    from = APP.justdo_grid_gantt.epochRange()[0]
+    to = APP.justdo_grid_gantt.epochRange()[1]
     diff = moment(to).add(-1, "days").diff(moment(from), "days")
     td_width = $(".grid-gantt-scale-table td").width()
 
@@ -196,8 +198,8 @@ Template.justdo_grid_gantt_header.events
 
   "click .grid-gantt-zoom-out": (e, tmpl) ->
     scaleType = tmpl.scale_type.get()
-    from = APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
-    to = APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get() # Added One Day???
+    from = APP.justdo_grid_gantt.epochRange()[0]
+    to = APP.justdo_grid_gantt.epochRange()[1]
     diff = moment(to).add(-1, "days").diff(moment(from), "days")
     td_width = $(".grid-gantt-scale-table td").width()
 
