@@ -45,7 +45,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       return
 
     destroyGridEventsListeners = ->
-      gc._grid.onScroll.unsubscribe(_gridOnScrollHandler)
+      gc._grid?.onScroll.unsubscribe(_gridOnScrollHandler)
       return
 
     redrawFormatterHeader = (field_id) ->
@@ -86,6 +86,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       return
 
     getGanttFieldViewDef = ->
+      if not gc._grid?
+        return
       extended_schema = gc.getSchemaExtendedWithCustomFields()
       
       view = gc.getViewReactive()
