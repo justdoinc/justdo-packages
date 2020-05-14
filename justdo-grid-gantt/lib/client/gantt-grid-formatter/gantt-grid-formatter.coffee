@@ -343,7 +343,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   slick_grid_jquery_events: [
     args: ["mouseenter", ".grid-gantt-formatter"]
     handler: (e) ->
-      states = APP.justdo_grid_gantt.getState()
+      states = APP.justdo_grid_gantt.getOrCreateState()
       if not states.dependencies.finish_to_x_independent?
         $(e.target).closest(".grid-gantt-formatter").children(".gantt-main-bar-F2x-dependency").css("visibility","visible")
       return
@@ -355,7 +355,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mouseenter", ".gantt-main-bar-start-drop-area"]
     handler: (e) ->
-      states = APP.justdo_grid_gantt.getState()
+      states = APP.justdo_grid_gantt.getOrCreateState()
       if states.dependencies.finish_to_x_independent?
         $(e.target).closest(".gantt-main-bar-start-drop-area").css("background-color","red")
       return
@@ -368,13 +368,16 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     args: ["mouseup", ".gantt-main-bar-start-drop-area"]
     handler: (e) ->
       self = APP.justdo_grid_gantt
-      states = self.getState()
+      states = self.getOrCreateState()
       if (independent_id = states.dependencies.finish_to_x_independent)?
         formatter_container = e.target.closest(".grid-gantt-formatter")
         if (dependent_id = formatter_container.getAttribute("task-id"))? and
             (dependencies = APP.justdo_dependencies)?
           dependencies.addFinishToStartDependency JD.activeJustdo()._id, independent_id, dependent_id
-          states.dependencies.finish_to_x_independent = null
+          self.setState
+            dependencies:
+              finish_to_x_independent: null
+            
           $( ".temporary-dependency-line" ).remove();
         $(e.target).css("cursor","")
       return
@@ -383,12 +386,14 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     handler: (e) ->
       formatter_container = e.target.closest(".grid-gantt-formatter")
       if (independent_id = formatter_container.getAttribute("task-id"))?
-        states = APP.justdo_grid_gantt.getState()
-        states.dependencies.finish_to_x_independent = independent_id
-        states.dependencies.independent_end_time = APP.justdo_grid_gantt.task_id_to_info[independent_id].self_end_time
-        states.mouse_down.x = e.clientX
-        states.mouse_down.y = e.clientY
-        states.mouse_down.row = @getEventRow(e)
+        APP.justdo_grid_gantt.setState
+          dependencies:
+            finish_to_x_independent: independent_id
+            independent_end_time: APP.justdo_grid_gantt.task_id_to_info[independent_id].self_end_time
+          mouse_down:
+            x: e.clientX
+            y: e.clientY
+            row: @getEventRow(e)
       return
   ,
     args: ["click", ".dependency-1-2-cancel-icon"]
@@ -406,51 +411,59 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mousedown", ".gantt-main-bar-end-drag"]
     handler: (e) ->
-      states = APP.justdo_grid_gantt.getState()
       task_id = e.target.getAttribute("task-id")
-      states.task_id = task_id
-      states.end_time.is_dragging = true
-      states.end_time.original_start_time = APP.justdo_grid_gantt.task_id_to_info[task_id].self_start_time
-      states.end_time.original_end_time = APP.justdo_grid_gantt.task_id_to_info[task_id].self_end_time
-      states.mouse_down.x = e.clientX
-      states.mouse_down.y = e.clientY
-      states.mouse_down.row = @getEventRow(e)
+      APP.justdo_grid_gantt.setState
+        task_id: task_id
+        end_time:
+          is_dragging: true
+          original_start_time: APP.justdo_grid_gantt.task_id_to_info[task_id].self_start_time
+          original_end_time: APP.justdo_grid_gantt.task_id_to_info[task_id].self_end_time
+        mouse_down:
+          x: e.clientX
+          y: e.clientY
+          row: @getEventRow(e)
       return
   ,
     args: ["mousedown", ".gantt-main-bar"]
     handler: (e) ->
-      states = APP.justdo_grid_gantt.getState()
       task_id = e.target.getAttribute("task-id")
-      states.task_id = task_id
-      states.main_bar.is_dragging = true
-      states.main_bar.original_start_time = APP.justdo_grid_gantt.task_id_to_info[task_id].self_start_time
-      states.main_bar.original_end_time = APP.justdo_grid_gantt.task_id_to_info[task_id].self_end_time
-      states.mouse_down.x = e.clientX
-      states.mouse_down.y = e.clientY
-      states.mouse_down.row = @getEventRow(e)
+      APP.justdo_grid_gantt.setState
+        task_id: task_id
+        main_bar:
+          is_dragging: true
+          original_start_time: APP.justdo_grid_gantt.task_id_to_info[task_id].self_start_time
+          original_end_time: APP.justdo_grid_gantt.task_id_to_info[task_id].self_end_time
+        mouse_down:
+          x: e.clientX
+          y: e.clientY
+          row: @getEventRow(e)
       return
   ,
     args: ["mousedown", ".grid-gantt-formatter"]
     handler: (e) ->
-      states = APP.justdo_grid_gantt.getState()
-      if states.end_time.is_dragging
+      states = APP.justdo_grid_gantt.getOrCreateState()
+      if states.end_time.is_dragging or
+           states.main_bar.is_dragging or
+           states.dependencies.finish_to_x_independent?
         return
-      if states.dependencies.finish_to_x_independent?
-        return
-      states.mouse_down.x = e.clientX
-      states.mouse_down.y = e.clientY
-      states.column_range.is_dragging = true
+        
       range = APP.justdo_grid_gantt.epochRange()
       # todo: change the column_range to an array
-      states.column_range.original_from_epoch_time = range[0]
-      states.column_range.original_to_epoch_time = range[1]
+      APP.justdo_grid_gantt.setState
+        mouse_down:
+          x: e.clientX
+          y: e.clientY
+        column_range:
+          is_dragging: true
+          original_from_epoch_time: range[0]
+          original_to_epoch_time: range[1]
       return
   ,
     # note - this is a catch all for mouse up
     args: ["mouseup", ".slick-viewport"]
     handler: (e) ->
       grid_gantt = APP.justdo_grid_gantt
-      states = grid_gantt.getState()
+      states = grid_gantt.getOrCreateState()
       if states.end_time.is_dragging
         if Math.abs(e.clientX - states.mouse_down.x) > 5
           delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
@@ -469,10 +482,13 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         JD.collections.Tasks.update states.task_id,
           $set:
             end_date: new_end_date
-            
-        states.end_time.is_dragging = false
+  
+        APP.justdo_grid_gantt.setState
+          end_time:
+            is_dragging: false
         grid_gantt.updateDependentTasks states.task_id
-        states.task_id = null
+        APP.justdo_grid_gantt.setState
+          task_id: null
       
       if states.main_bar.is_dragging
         if Math.abs(e.clientX - states.mouse_down.x) > 5
@@ -494,15 +510,23 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             start_date: new_start_date
             end_date: new_end_date
   
-        states.main_bar.is_dragging = false
+        APP.justdo_grid_gantt.setState
+          main_bar:
+            is_dragging: false
         grid_gantt.updateDependentTasks states.task_id
-        states.task_id = null
+        APP.justdo_grid_gantt.setState
+          task_id: null
                 
       if states.column_range.is_dragging
-        states.column_range.is_dragging = false
+        APP.justdo_grid_gantt.setState
+          column_range:
+            is_dragging: false
         
       if states.dependencies.finish_to_x_independent?
-        states.dependencies.finish_to_x_independent = null
+        APP.justdo_grid_gantt.setState
+          dependencies:
+            finish_to_x_independent: null
+            
         $(".temporary-dependency-line").remove()
         
       return
@@ -511,10 +535,10 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     args: ["mousemove", ".slick-viewport"]
     handler: (e) ->
       grid_gantt = APP.justdo_grid_gantt
-      if not (states = grid_gantt.getState())?
+      if not (states = grid_gantt.getOrCreateState())?
         return
       epoch_range = grid_gantt.epochRange()
-      gc = APP.modules.project_page.mainGridControl()
+      gc = APP.modules.project_page.gridControl()
         
       if states.end_time.is_dragging
         if Math.abs(e.clientX - states.mouse_down.x) > 5
@@ -534,7 +558,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         end_date_hint = """
                 <div class="grid-gantt-date-hint" style="top: #{hint_y}px; left: #{hint_x}px">#{date}</div>
             """
-        $(".end-date-hint").remove()
+        $(".grid-gantt-date-hint").remove()
         $(".justdo-grid-gantt-all-dependencies").append end_date_hint
         
       else if states.main_bar.is_dragging

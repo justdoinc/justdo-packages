@@ -3,7 +3,6 @@ day =  24 * 3600 * 1000
 _.extend JustdoGridGantt.prototype,
   _immediateInit: ->
     self = @
-  
     @_states_manager = {}
     
     @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents"]
@@ -37,7 +36,6 @@ _.extend JustdoGridGantt.prototype,
         to = new ReactiveVar (start_of_day_epoch + 6 * day - 1000)
         range = [from, to]
         @_epoch_range[gc_id] = range
-      console.log ">>>> get range for gc: ", gc_id
       return [range[0].get(), range[1].get()]
       
     @setEpochRange = (range) ->

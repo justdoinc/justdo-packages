@@ -99,7 +99,7 @@ _.extend JustdoGridGantt.prototype,
       
     if $(".justdo-grid-gantt-all-dependencies").length
       $(".justdo-grid-gantt-all-dependencies").remove()
-  
+      
     $slick_view_port = $(".slick-viewport", gc.container)
     if not $slick_view_port.length
       return
@@ -251,7 +251,7 @@ _.extend JustdoGridGantt.prototype,
       return
       
     # remove all existing arrows
-    $(".justdo-grid-gantt-all-dependencies").empty()
+    $(".justdo-grid-gantt-all-dependencies .dependency-container").remove()
     
     # add dependencies one by one
     for dependency_key, dependency_obj of self.dependencies_map
@@ -273,6 +273,8 @@ _.extend JustdoGridGantt.prototype,
         @addDependentTaskToGanttDependencies task_obj
     
     @resetDependenciesMapRowNumbers()
+    # todo with Daniel - this resetDependenciesDiv should not  be called here, however, I couldn't find the right
+    # place to put it. See Task #7645: hints are removed frequently on mouse move. See comment in _refreshArrows()
     @resetDependenciesDiv()
     @rerenderAllDependencies()
     

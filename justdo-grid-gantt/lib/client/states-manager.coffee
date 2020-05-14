@@ -1,6 +1,5 @@
 _.extend JustdoGridGantt.prototype,
-  
-  getState: ->
+  getOrCreateState: ->
     if (gc_id = APP.modules.project_page.gridControl()?.getGridUid())?
       if not (state = @_states_manager[gc_id])?
         state =
@@ -24,14 +23,18 @@ _.extend JustdoGridGantt.prototype,
             is_dragging: false
             original_from_epoch_time: 0
             original_to_epoch_time: 0
-            
-  
         @_states_manager[gc_id] = state
       return state
     return undefined
     
+  setState: (options) ->
+    if (state = @getOrCreateState())?
+      _.extend state, options
+    return
+    
+  
   resetStatesChangeOnEscape: ->
-    states = @getState()
+    states = @getOrCreateState()
     
     if states.end_time.is_dragging
       states.end_time.is_dragging = false
