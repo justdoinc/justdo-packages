@@ -55,3 +55,23 @@ APP.executeAfterAppLibCode ->
       module.tab_switcher_manager.setSectionsItemsLabelFilter($(e.target).val())
 
       return
+    "keydown .dropdown-menu": (e) ->
+      $el = $(e.target)
+      if e.keyCode == 38 # Up
+        if $el.prev().hasClass "dropdown-header"
+          $el.prev().prev().focus()
+        else
+          if $el.prev().hasClass "views-search-wrapper"
+            $el.prev().find(".views-search-input").focus()
+          else
+            $el.prev().focus()
+      if e.keyCode == 40 # Down
+        if $el.hasClass "views-search-input"
+          $el.parent().next().focus()
+        else
+          if $el.next().hasClass "dropdown-header"
+            $el.next().next().focus()
+          else
+            $el.next().focus()
+
+      return
