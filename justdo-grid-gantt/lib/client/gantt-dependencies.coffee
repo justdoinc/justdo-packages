@@ -92,7 +92,8 @@ _.extend JustdoGridGantt.prototype,
     return
     
   resetDependenciesDiv: ->
-    # todo: (w/ Daniel - make reactive to all kinds of changes
+    # todo: w/ Daniel - make reactive to all kinds of changes
+    # todo: w/ Daniel - this function is called twice when changing views.
     self = @
     if not (gc = APP.modules.project_page.gridControl())?
       return
@@ -105,15 +106,16 @@ _.extend JustdoGridGantt.prototype,
       return
 
     grid_gantt_column_offset = 0
-    
+    column_found = false
     for column in gc.getView()
       if column.field != "justdo_grid_gantt"
         grid_gantt_column_offset += column.width
         self.grid_gantt_column_index += 1
       else
         self.grid_gantt_column_width = column.width
+        column_found = true
         break
-    if self.grid_gantt_column_width == -1
+    if not column_found
       self.grid_gantt_column_index = -1
       return
       
@@ -122,7 +124,7 @@ _.extend JustdoGridGantt.prototype,
             style="left: #{grid_gantt_column_offset}px; width: #{self.grid_gantt_column_width}px">
       </div>
       """
-
+    
     return
   
   renderDependency: (dependency_obj) ->
@@ -289,7 +291,6 @@ _.extend JustdoGridGantt.prototype,
     if defer
       Meteor.defer =>
         @_refreshArrows()
-
         return
     else
       @_refreshArrows()
