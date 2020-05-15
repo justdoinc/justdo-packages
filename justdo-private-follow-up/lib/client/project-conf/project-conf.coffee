@@ -5,7 +5,7 @@ _.extend JustdoPrivateFollowUp.prototype,
       module.project_config_ui.registerConfigTemplate "justdo_private_follow_up_project_config",
         section: "extensions"
         template: "justdo_private_follow_up_project_config"
-        priority: 100
+        priority: 1000
 
     return
 

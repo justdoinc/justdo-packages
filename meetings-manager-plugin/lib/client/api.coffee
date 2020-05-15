@@ -47,7 +47,7 @@ _.extend MeetingsManagerPlugin.prototype,
       module.project_config_ui.registerConfigTemplate "meetings_config",
         section: "extensions"
         template: "meetings_config"
-        priority: 100
+        priority: 1000
 
   destroy: ->
     if @destroyed

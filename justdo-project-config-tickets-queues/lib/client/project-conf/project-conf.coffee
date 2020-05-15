@@ -10,7 +10,7 @@ _.extend JustdoProjectConfigTicketsQueues.prototype,
       module.project_config_ui.registerConfigTemplate "tickets-queues",
         section: "tickets-queues"
         template: "justdo_project_config_tickets_queues_project_config"
-        priority: 100
+        priority: 1000
 
     return
 

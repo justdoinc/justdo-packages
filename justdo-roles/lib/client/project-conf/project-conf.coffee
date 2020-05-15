@@ -5,7 +5,7 @@ _.extend JustdoRoles.prototype,
       module.project_config_ui.registerConfigTemplate "justdo_roles_project_config",
         section: "extensions"
         template: "justdo_roles_project_config"
-        priority: 100
+        priority: 1000
 
     return
 
@@ -20,7 +20,7 @@ _.extend JustdoRoles.prototype,
       module.project_config_ui.registerConfigTemplate "roles-and-groups",
         section: "roles-and-groups"
         template: "justdo_roles_project_config_section"
-        priority: 100
+        priority: 1000
 
     return
 

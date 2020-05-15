@@ -5,7 +5,7 @@ _.extend JustdoFormulaFields.prototype,
       module.project_config_ui.registerConfigTemplate "justdo_formula_fields_project_config",
         section: "extensions"
         template: "justdo_formula_fields_project_config"
-        priority: 100
+        priority: 1000
 
     return
 

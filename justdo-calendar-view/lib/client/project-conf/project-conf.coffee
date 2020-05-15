@@ -5,7 +5,7 @@ _.extend JustdoCalendarView.prototype,
       module.project_config_ui.registerConfigTemplate "justdo_calendar_view_project_config",
         section: "extensions"
         template: "justdo_calendar_view_project_config"
-        priority: 100
+        priority: 600
 
     return
 

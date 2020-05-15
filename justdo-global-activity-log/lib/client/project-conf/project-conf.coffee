@@ -5,7 +5,7 @@ _.extend JustdoGlobalActivityLog.prototype,
       module.project_config_ui.registerConfigTemplate "justdo_global_activity_log_project_config",
         section: "extensions"
         template: "justdo_global_activity_log_project_config"
-        priority: 100
+        priority: 1000
 
     return
 

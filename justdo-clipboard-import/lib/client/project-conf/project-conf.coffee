@@ -5,7 +5,7 @@ _.extend JustdoClipboardImport.prototype,
       module.project_config_ui.registerConfigTemplate "justdo_clipboard_import_project_config",
         section: "extensions"
         template: "justdo_clipboard_import_project_config"
-        priority: 100
+        priority: 1000
 
     return
 

@@ -4,7 +4,7 @@ _.extend JustdoGridVisualization.prototype,
     module.project_config_ui.registerConfigTemplate "grid_visualization_config",
       section: "extensions"
       template: "grid_visualization_config"
-      priority: 100
+      priority: 1000
 
   showVisualizationButton: ->
     module_id = "grid-visualization"

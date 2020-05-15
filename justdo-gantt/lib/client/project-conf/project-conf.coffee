@@ -5,7 +5,7 @@ _.extend JustdoGantt.prototype,
       module.project_config_ui.registerConfigTemplate "justdo_gantt_project_config",
         section: "extensions"
         template: "justdo_gantt_project_config"
-        priority: 100
+        priority: 300
 
     return
 

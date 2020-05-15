@@ -11,7 +11,7 @@ APP.executeAfterAppLibCode ->
   module.project_config_ui.registerConfigTemplate "custom-fields",
     section: "custom-fields"
     template: "custom_fields_conf"
-    priority: 100
+    priority: 1000
 
   Template.custom_fields_conf.onCreated ->
     @show_add_button = new ReactiveVar(false)

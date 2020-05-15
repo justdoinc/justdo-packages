@@ -5,7 +5,7 @@ _.extend JustdoDependencies.prototype,
       module.project_config_ui.registerConfigTemplate "justdo_dependencies_project_config",
         section: "extensions"
         template: "justdo_dependencies_project_config"
-        priority: 100
+        priority: 1000
 
     return
 

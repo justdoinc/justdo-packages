@@ -8,7 +8,7 @@ _.extend JustdoBackendCalculatedFields.prototype,
       module.project_config_ui.registerConfigTemplate "backend_calculated_fields_config",
         section: "extensions"
         template: "backend_calculated_fields_config"
-        priority: 100
+        priority: 1000
 
     return
 
