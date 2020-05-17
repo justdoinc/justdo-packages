@@ -18,7 +18,31 @@ _.extend JustdoTasksContextMenu.prototype,
 
     $(@context_menu_template_obj.node).addClass("dropdown #{@context_class}")
 
+    @_setupContextMenuEvent()
+
     @_setupHideConditions()
+
+    return
+
+  _setupContextMenuEvent: ->
+    $("body").on "contextmenu", ".slick-viewport", (e) =>
+      if not (gc = APP.modules.project_page.gridControl())?
+        # Can't find the active grid obj
+        return
+
+      if not (event_item = gc.getEventItem(e))?
+        # Can't find event's item
+        return
+
+      if event_item._type?
+        # We don't show context menu for typed items
+        return
+
+      e.preventDefault()
+      gc.activateRow(gc.getEventRow(e))
+      @show(event_item._id, {of: e})
+
+      return
 
     return
 
@@ -42,8 +66,9 @@ _.extend JustdoTasksContextMenu.prototype,
 
       return
 
-    $("body").on "mouseup", =>
-      @hide()
+    $("body").on "mouseup", (e) =>
+      if e.which == 1 # 1 == left mouse click
+        @hide()
 
       return
 
