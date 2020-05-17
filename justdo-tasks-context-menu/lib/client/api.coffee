@@ -132,7 +132,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
   getContextItemObj: -> @tasks_collection.findOne(@getContextItemId())
 
-  _conf_scehma: new SimpleSchema
+  _registerSection_conf_scehma: new SimpleSchema
     position: 
       type: Number
     data:
@@ -140,29 +140,21 @@ _.extend JustdoTasksContextMenu.prototype,
       type: new SimpleSchema
         label:
           type: String
-        op: 
-          optional: true
-          type: Function
-        is_nested_section:
-          optional: true
-          type: Boolean
-        icon_type:
-          optional: true
-          type: String
-          allowedValues: ["feather"]
-        icon_val:
-          optional: true
-          type: String
     listingCondition:
       optional: true
       type: Function
 
-
   _registerSection: (section_id, domain, conf) ->
     if not conf?
-        conf = {}
+      conf = {}
 
-    @_conf_scehma.validate conf
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_registerSection_conf_scehma,
+        conf or {},
+        {self: @, throw_on_error: true}
+      )
+    conf = cleaned_val
 
     Meteor._ensure conf, "data" # It is very unlikely that we won't have data object, as it is needed to set a label for the section
 
@@ -187,8 +179,39 @@ _.extend JustdoTasksContextMenu.prototype,
   getMainSections: (ignore_listing_condition) -> 
     return @sections_reactive_items_list.getList("main", ignore_listing_condition)
 
+
+  _registerSectionItem_conf_scehma: new SimpleSchema
+    position: 
+      type: Number
+    data:
+      optional: true
+      type: new SimpleSchema
+        label:
+          type: String
+        op: 
+          optional: true
+          type: Function
+        is_nested_section:
+          optional: true
+          type: Boolean
+        icon_type:
+          optional: true
+          type: String
+          allowedValues: ["feather"] # ["user-avatar", "font-awesome"] might support these two in the future as well.
+        icon_val:
+          optional: true
+          type: String
+    listingCondition:
+      optional: true
+      type: Function
   registerSectionItem: (section_id, item_id, conf) ->
-    @_conf_scehma.validate conf
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_registerSectionItem_conf_scehma,
+        conf or {},
+        {self: @, throw_on_error: true}
+      )
+    conf = cleaned_val
 
     if (sections_reactive_items_list = @sections_reactive_items_list.getItem(section_id, true)?.data?.reactive_items_list)?
       sections_reactive_items_list.registerItem item_id, conf
