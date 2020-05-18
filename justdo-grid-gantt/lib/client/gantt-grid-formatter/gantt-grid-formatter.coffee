@@ -471,6 +471,14 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           original_to_epoch_time: range[1]
       return
   ,
+    args: ["wheel", ".grid-gantt-formatter"]
+    handler: (e) ->
+      if e.originalEvent.deltaY > 0
+        APP.justdo_grid_gantt.zoomIn()
+      else
+        APP.justdo_grid_gantt.zoomOut()
+      return false
+  ,
     # note - this is a catch all for mouse up
     args: ["mouseup", ".slick-viewport"]
     handler: (e) ->
