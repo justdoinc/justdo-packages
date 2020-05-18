@@ -1,6 +1,16 @@
 <template name="justdo_grid_gantt_header">
   <div class="grid-gantt-header">
-    {{zz}}
+    {{#each highResDivs}}
+      <div class="header-div-high-res" style="left: {{left}}px; width: {{width}}px">
+        {{title}}
+      </div>
+    {{/each}}
+    {{#each lowResDivs}}
+      <div class="header-div-low-res" style="left: {{left}}px;">
+        {{title}}
+      </div>
+      <div class="gantt-start-low-res-mark" style="left:{{left}}px"></div>
+    {{/each}}
 
     <div class="grid-gantt-control">
       <div class="grid-gantt-dropdown dropdown">
