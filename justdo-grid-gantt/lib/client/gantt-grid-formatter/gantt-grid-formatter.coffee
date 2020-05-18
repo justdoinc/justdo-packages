@@ -100,12 +100,10 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     
     _gridControlOnRebuildReady = ->
       grid_gantt.refreshArrows()
-
       return
 
     _gridControlOnFilterUpdated = ->
       grid_gantt.refreshArrows()
-
       return
 
     _epoch_tracker_computation = null
@@ -183,6 +181,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
     column_width_changed_comp = null
     column_start_end_changed_comp = null
+    grid_ready_comp = null
     Tracker.nonreactive =>
       grid_gantt?.is_gantt_column_displayed_rv.set true
   
@@ -190,12 +189,19 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       column_width_changed_comp = Tracker.autorun =>
         current_val = _.find(@getViewReactive(), (field) => field.field == @getColumnFieldId())?.width # Reactive
         cached_val = @getCurrentColumnData("column_width") # non reactive
-
+    
         if current_val != cached_val
           @setCurrentColumnData("column_width", current_val)
+          grid_gantt.setColumnWidth current_val
+          grid_gantt.resetDependenciesDiv()
           dep.changed()
         return
 
+      grid_ready_comp = Tracker.autorun =>
+        if @ready.get()
+          grid_gantt.resetDependenciesDiv()
+        return
+        
       column_start_end_changed_comp = Tracker.autorun =>
         current_val = grid_gantt.epochRange()
         cached_val = @getCurrentColumnData("column_start_end") or [0, 0]# non reactive
@@ -208,6 +214,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     Tracker.onInvalidate ->
       column_width_changed_comp.stop()
       column_start_end_changed_comp.stop()
+      grid_ready_comp.stop()
       APP.justdo_grid_gantt?.is_gantt_column_displayed_rv.set false
       return
     return
@@ -215,16 +222,19 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   slick_grid: ->
     {doc} = @getFriendlyArgs()
     grid_gantt = APP.justdo_grid_gantt
-    if not (cached_info = JustdoHelpers.sameTickCacheGet("column_info"))?
-      column_start_end = [0, 0]
-      if not (column_start_end = @getCurrentColumnData("column_start_end"))?
-        column_start_end = grid_gantt.epochRange()
-      column_width_px = @getCurrentColumnData("column_width")
-      JustdoHelpers.sameTickCacheSet("column_info", [column_start_end, column_width_px])
-    else
-      column_start_end = cached_info[0]
-      column_width_px = cached_info[1]
-      
+    # ((( LEAVING THE FOLLOWING IN UNTIL WE DEBUG THIS TOPIC
+    # if not (cached_info = JustdoHelpers.sameTickCacheGet("column_info"))?
+    #   column_start_end = [0, 0]
+    #   if not (column_start_end = @getCurrentColumnData("column_start_end"))?
+    #     column_start_end = grid_gantt.epochRange()
+    #   column_width_px = @getCurrentColumnData("column_width")
+    #   JustdoHelpers.sameTickCacheSet("column_info", [column_start_end, column_width_px])
+    # else
+    #   column_start_end = cached_info[0]
+    #   column_width_px = cached_info[1]
+  
+    column_start_end = grid_gantt.epochRange()
+    column_width_px = grid_gantt.columnWidth()
     column_start_epoch = column_start_end[0]
     column_end_epoch = column_start_end[1]
     
@@ -491,6 +501,9 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         grid_gantt.updateDependentTasks states.task_id
         APP.justdo_grid_gantt.setState
           task_id: null
+          
+        $(".grid-gantt-date-hint").remove()
+        
       
       if states.main_bar.is_dragging
         if Math.abs(e.clientX - states.mouse_down.x) > 5
@@ -518,6 +531,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         grid_gantt.updateDependentTasks states.task_id
         APP.justdo_grid_gantt.setState
           task_id: null
+        $(".grid-gantt-date-hint").remove()
                 
       if states.column_range.is_dragging
         APP.justdo_grid_gantt.setState
@@ -539,10 +553,10 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       grid_gantt = APP.justdo_grid_gantt
       if not (states = grid_gantt.getOrCreateState())?
         return
-      epoch_range = grid_gantt.epochRange()
-      gc = APP.modules.project_page.gridControl()
         
       if states.end_time.is_dragging
+        epoch_range = grid_gantt.epochRange()
+        gc = APP.modules.project_page.gridControl()
         if Math.abs(e.clientX - states.mouse_down.x) > 5
           delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         else
@@ -554,7 +568,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         grid_gantt.setPresentationEndTime states.task_id, new_end_time
   
         #hint:
-        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_end_time, grid_gantt.grid_gantt_column_width )
+        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_end_time, grid_gantt.columnWidth() )
         hint_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
         date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_end_time).format("YYYY-MM-DD"))
         end_date_hint = """
@@ -564,6 +578,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         $(".justdo-grid-gantt-all-dependencies").append end_date_hint
         
       else if states.main_bar.is_dragging
+        epoch_range = grid_gantt.epochRange()
+        gc = APP.modules.project_page.gridControl()
         if Math.abs(e.clientX - states.mouse_down.x) > 5
           delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         else
@@ -576,7 +592,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   
         # hints:
         # start date:
-        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_start_time, grid_gantt.grid_gantt_column_width ) - 50
+        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_start_time, grid_gantt.columnWidth() ) - 50
         hint_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
         start_date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_start_time).format("YYYY-MM-DD"))
         start_date_hint = """
@@ -584,7 +600,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             """
         
         # end date:
-        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_end_time, grid_gantt.grid_gantt_column_width )
+        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_end_time, grid_gantt.columnWidth() )
         
         date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_end_time - day).format("YYYY-MM-DD"))
         end_date_hint = """
@@ -599,7 +615,9 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         grid_gantt.setEpochRange [states.column_range.original_from_epoch_time - delta_time, states.column_range.original_to_epoch_time - delta_time]
       
       else if states.dependencies.finish_to_x_independent?
-        independent_end_x = grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time, grid_gantt.grid_gantt_column_width )
+        epoch_range = grid_gantt.epochRange()
+        gc = APP.modules.project_page.gridControl()
+        independent_end_x = grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time, grid_gantt.columnWidth() )
         independent_end_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
         
         p0 =

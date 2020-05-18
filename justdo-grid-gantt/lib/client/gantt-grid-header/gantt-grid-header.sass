@@ -1,103 +1,42 @@
-.grid-gantt-scale
-  background-color: white
-  width: 100%
-  height: 100%
-  left: 0
-  top: 0
-  position: absolute
+.grid-gantt-header
 
-  .grid-gantt-scale-label
-    border: 1px solid #000000
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12)
-    border-radius: 2px
-    background-color: white
-    color: black
-    padding: 0.1rem 0.2rem
-    line-height: 100%
-    text-transform: uppercase
+
+  .grid-gantt-control
     position: absolute
-    font-size: 9px
-    font-weight: bold
-    top: -11px
-    left: 0
+    right: 9px
+    bottom: -30px
+    background-color: white
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08)
+    border: 1px solid rgb(192, 192, 192)
+    border-radius: 3px
     z-index: 10
-    white-space: nowrap
-
-  .grid-gantt-scale-table
-    table-layout: fixed
-    width: 100%
-    height: 100%
-    td
-      text-align: center
-      color: #525F7F
-      font-size: 12px
-      position: relative
-    td + td
-      border-left: 1px dashed #eaeaea
-    .week-label
-      opacity: 0.6
-
-  .grid-gantt-scale-table.days
-    td.is-today
-      color: #0959e0
-      background-color: rgba(9, 89, 225, 0.04)
-    td.is-weekend
-      background-color: rgba(230, 233, 238, 0.4)
-    .start-of-month-label
-      display: none
-
-  .grid-gantt-scale-table.weeks
-    td:not(.is-monday)
-      display: none
-    .start-of-month-label
-      display: none
-
-  .grid-gantt-scale-table.months
-    td:not(.is-first-day-of-month)
-      display: none
-    .start-of-week-label
-      display: none
-
-  .disable-zoom
-    color: rgb(167, 167, 167)
-    pointer-events: none
-
-.grid-gantt-control
-  position: absolute
-  right: 9px
-  bottom: -30px
-  background-color: white
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08)
-  border: 1px solid rgb(192, 192, 192)
-  border-radius: 3px
-  z-index: 10
-  display: flex
-  align-items: center
-  pointer-events: auto
-  touch-action: auto
-  .grid-gantt-dropdown-btn
-    opacity: 0.75
-    transition: opacity 0.2s linear
-    &:hover
-      opacity: 1
-  .grid-gantt-dropdown
-    padding: 0px 8px
-    margin-right: 2px
-    border-right: 1px solid #F0F0F0
-    cursor: pointer
-    .dropdown-menu
-      min-width: 6rem
-    .dropdown-item
-      padding: 0.25rem 0.5rem
-      font-size: 13px
-      font-weight: bold
-  .jd-icon
-    margin: 2px
-    width: 20px
-    height: 20px
-    stroke-width: 2
-    cursor: pointer
-    opacity: 0.75
-    &:hover
-      background-color: rgba(0, 0, 0, 0.08)
-      opacity: 1
+    display: flex
+    align-items: center
+    pointer-events: auto
+    touch-action: auto
+    .grid-gantt-dropdown-btn
+      opacity: 0.75
+      transition: opacity 0.2s linear
+      &:hover
+        opacity: 1
+    .grid-gantt-dropdown
+      padding: 0px 8px
+      margin-right: 2px
+      border-right: 1px solid #F0F0F0
+      cursor: pointer
+      .dropdown-menu
+        min-width: 6rem
+      .dropdown-item
+        padding: 0.25rem 0.5rem
+        font-size: 13px
+        font-weight: bold
+    .jd-icon
+      margin: 2px
+      width: 20px
+      height: 20px
+      stroke-width: 2
+      cursor: pointer
+      opacity: 0.75
+      &:hover
+        background-color: rgba(0, 0, 0, 0.08)
+        opacity: 1

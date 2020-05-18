@@ -7,9 +7,6 @@ _.extend JustdoGridGantt.prototype,
     
     @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents"]
     
-    @grid_gantt_column_width = -1
-    @grid_gantt_column_index = 0
-  
     @task_id_to_info = {} # Map to relevant information including
                           #   self_start_time: # indicates the beginning of the gantt block for the task
                           #   self_end_time: # indicates the ending of the gantt block for the task
@@ -45,9 +42,43 @@ _.extend JustdoGridGantt.prototype,
       @_epoch_range[gc_id][1].set(range[1])
       return
     
-    
+    @zoomIn = () ->
+      range = self.epochRange()
+      third = (range[1] - range[0]) / 3
+      self.setEpochRange [(range[0] + third), (range[1] - third)]
+      return
       
+    @zoomOut = () ->
+      range = self.epochRange()
+      delta = range[1] - range[0]
+      self.setEpochRange [(range[0] - delta), (range[1] + delta)]
+      return
+      
+    @_columns_width = {} # map if grid_id to reactive vars of gantt column width
     
+    @setColumnWidth = (width) ->
+      if (gc_id = APP.modules.project_page.gridControl()?.getGridUid())?
+        if not self._columns_width[gc_id]?
+          self._columns_width[gc_id] = new ReactiveVar width
+        else
+          self._columns_width[gc_id].set width
+      return
+      
+    @columnWidth = () ->
+      if not (gc = APP.modules.project_page.gridControl())?
+        return -1
+      if (gc_id = gc.getGridUid())?
+        if self._columns_width[gc_id]?
+          return self._columns_width[gc_id].get()
+    
+      # in case we didn't find it cached (happens on initiation once)
+      for column in gc.getView()
+        if column.field == "justdo_grid_gantt"
+          self.setColumnWidth column.width
+          return column.width
+          
+      return -1
+      
     @resetTaskIdToInfo = ->
       self.task_id_to_info = {}
       return

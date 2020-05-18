@@ -74,7 +74,7 @@ Column Related:
   This moves the bar end to a new time. Information is not saved to the
   database and is not persistent
   
-   
+* set and get column width with setColumnWidth and columnWidth   
  
  
 ### gantt-grid-formatter
