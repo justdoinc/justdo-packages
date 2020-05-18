@@ -233,7 +233,7 @@ APP.executeAfterAppLibCode ->
         quickInsertTags: []
         charCounterCount: false
         key: env.FROALA_ACTIVATION_KEY
-        fileUploadURL: "/froala-file-upload"
+        fileUploadURL: JustdoTaskPane.froala_file_upload_route
         fileUploadMethod: "POST"
         fileMaxSize: 100 * 1024 * 1024, # 100 MB
         fileAllowedTypes: ["*"]   # XXX

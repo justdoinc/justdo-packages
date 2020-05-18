@@ -42,6 +42,8 @@ Package.onUse(function (api) {
   // Core API
   //
 
+  api.addFiles("lib/both/static.js", both);
+
   api.addFiles("lib/client/toolbar-sections-api.coffee", client);
   api.addFiles("lib/client/template-helpers.coffee", client);
   api.addFiles("lib/client/builtin-sections-to-item-types.coffee", client);
@@ -114,5 +116,5 @@ Package.onUse(function (api) {
   api.use("meteorspark:app@0.3.0", client);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", client);
 
-  api.export("JustdoTaskPane", client);
+  api.export("JustdoTaskPane", both);
 });
