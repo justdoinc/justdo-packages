@@ -35,7 +35,7 @@ first_call = true
 _.extend JustdoHelpers,
   isPocPermittedDomains: (root_url) ->
     if not root_url?
-      if not (root_url = document.location.origin)?
+      if not (root_url = document?.location?.origin)? and not (root_url = process.env.ROOT_URL)?
         return false
     
     if root_url in poc_permitted_domains
