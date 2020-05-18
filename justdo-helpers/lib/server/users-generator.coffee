@@ -1,27 +1,38 @@
-faker = require "faker"
-
 options_schema = new SimpleSchema
   project_id: 
     type: String
-  # task_ids: 
-  #   type: [String]
+
   admins_count: 
     type: Number
+
+    defaultValue: 100
+
   members_count: 
     type: Number
+
+    defaultValue: 100
+
   guests_count: 
     type: Number
 
+    defaultValue: 100
+
+lorem_arr = JustdoHelpers.lorem_ipsum_arr
+
 Meteor.methods
   "JDHelperUsersGenerator": (options) ->
-    options = _.extend {},
-      # task_ids: []
-      admins_count: 10
-      members_count: 10
-      guests_count: 10
-    , options
+    check options, Object
 
-    options_schema.validate options
+    if not JustdoHelpers.isPocPermittedDomains()
+      return
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        options_schema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
 
     if not (project = APP.collections.Projects.findOne(options.project_id))?
       throw new Error "project-not-found"
@@ -43,8 +54,8 @@ Meteor.methods
             verified: true
           ]
         profile:
-          fisrt_name: faker.name.firstName()
-          last_name: faker.name.lastName()
+          first_name: lodash.sample(lorem_arr)
+          last_name: lodash.sample(lorem_arr)
 
       dummy_users_ids.push id
 
@@ -73,14 +84,6 @@ Meteor.methods
     APP.collections.Projects.update options.project_id,
       $set:
         members: members
-
-    # Add users to tasks
-    # for task_id in options.task_ids
-    #   task = APP.collections.Tasks.findOne task_id
-    #   if task?.project_id == options.project_id
-    #     APP.collections.Tasks.update task_id,
-    #       $set: 
-    #         users: task.users.concat dummy_users_ids
 
     return
   

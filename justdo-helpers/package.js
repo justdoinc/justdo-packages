@@ -36,6 +36,7 @@ Package.onUse(function (api) {
   api.use('fourseven:scss@3.2.0', client);
 
   api.add_files("lib/init.coffee", both);
+  api.add_files("lib/both/lorem-ipsum.coffee", both);
   api.add_files("lib/both/json.coffee", both);
   api.add_files("lib/both/caching.coffee", both);
   api.add_files("lib/both/strings.coffee", both);
