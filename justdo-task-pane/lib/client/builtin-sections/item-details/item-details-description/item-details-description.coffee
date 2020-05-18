@@ -227,13 +227,23 @@ APP.executeAfterAppLibCode ->
     $("#description-editor", $container)
       .froalaEditor({
         toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
-          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"]
+          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo", "insertFile"]
         pasteImage: false
         imageUpload: false
         quickInsertTags: []
         charCounterCount: false
         key: env.FROALA_ACTIVATION_KEY
-      });
+        fileUploadURL: "/froala-file-upload"
+        fileUploadMethod: "POST"
+        fileMaxSize: 100 * 1024 * 1024, # 100 MB
+        fileAllowedTypes: ["*"]   # XXX
+      })
+      .on "froalaEditor.file.beforeUpload", (e, editor, files) ->
+        console.log "before upload"
+      .on "froalaEditor.file.uploaded", (e, editor, files) ->
+        console.log "file uploaded"
+      .on "froalaEditor.file.error", (e, editor, error, resp) ->
+        console.log error
 
     return
 
