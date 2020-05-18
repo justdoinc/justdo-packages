@@ -86,6 +86,7 @@ Package.onUse(function (api) {
   api.add_files("lib/client/xss.coffee", client);
   api.add_files("lib/client/users-generator.coffee", client);
 
+  api.add_files("lib/server/http-auth.coffee", server);
   api.add_files("lib/server/app-domains.coffee", server);
   api.add_files("lib/server/ddp.coffee", server);
   api.add_files("lib/server/network.coffee", server);
