@@ -1,7 +1,7 @@
 _.extend JustdoLegalDocsVersions,
   privacy_policy:
-    version: "1.1.0"
-    date: "2019-02-06"
+    version: "1.2.0"
+    date: "2020-05-18"
     readable_name: "Privacy Policy"
     landing_page_address: "/privacy-policy"
     signature_required: true
