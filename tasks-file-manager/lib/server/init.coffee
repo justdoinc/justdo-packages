@@ -45,7 +45,7 @@ _.extend TasksFileManager.prototype,
       try
         download_link = self.getDownloadLink task_id, file_id, user_doc._id
       catch e
-        console.log e   # debugger
+        self.logger.debug e 
         res.statusCode = 500
         res.end()
 
