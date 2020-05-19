@@ -235,15 +235,14 @@ APP.executeAfterAppLibCode ->
         key: env.FROALA_ACTIVATION_KEY
         fileUploadURL: JustdoTaskPane.froala_file_upload_route
         fileUploadMethod: "POST"
-        fileMaxSize: 100 * 1024 * 1024, # 100 MB
+        fileMaxSize: JustdoTaskPane.froala_file_upload_max_size, # can't find any env var or const in tasks-file-manager-plugins/tasks-file-manager regarding the size limit of filestack, so I use this const instead
         fileAllowedTypes: ["*"]   # XXX
+        fileUploadParams:
+          task_id: task_id
       })
-      .on "froalaEditor.file.beforeUpload", (e, editor, files) ->
-        console.log "before upload"
-      .on "froalaEditor.file.uploaded", (e, editor, files) ->
-        console.log "file uploaded"
       .on "froalaEditor.file.error", (e, editor, error, resp) ->
         console.log error
+        return
 
     return
 

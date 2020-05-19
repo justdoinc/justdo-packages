@@ -1,37 +1,58 @@
+Busboy = require "busboy"
+
 Router.route JustdoTaskPane.froala_file_upload_route, ->
-  if not (user_doc = JustdoHelpers.getUserObjFromMeteorLoginTokenCookie(@request))?
-    @response.statusCode = 403
-    @response.end "AUTH FAILED"
+  req = @request
+  res = @response
+
+  if not (user_doc = JustdoHelpers.getUserObjFromMeteorLoginTokenCookie(req))?
+    res.statusCode = 403
+    res.end "AUTH FAILED"
 
     return
 
-  file = ""
-  @request.on "data", (chunk) =>
-    file += chunk.toString() 
+  task_id_ = null
+  filename_ = null
+  mimetype_ = null
+  metadata_ = {}
+  user_id_ = user_doc._id
+  file_data_buffers = []
+  
+
+  busboy = new Busboy
+    headers: req.headers
+  
+  busboy.on "field", (fieldname, val) ->
+    if (fieldname == "task_id")
+      task_id_ = val
+    
+  busboy.on "file", (fieldname, file, filename, encoding, mimetype) ->
+    filename_ = filename
+    mimetype_ = mimetype
+    file.on "data", (data) ->
+      file_data_buffers.push data
 
     return
-
-  @request.on "end", Meteor.bindEnvironment =>
-    task_id = "59Me4d32o5GG6Bd4Y" # TODO
-    filename = "testing.txt" 
-    mimetype = "text/plain"
-    metadata = {}
-    user_id = user_doc._id
+  
+  busboy.on "finish", Meteor.bindEnvironment ->
+    file = Buffer.concat file_data_buffers
 
     try
-      result = APP.tasks_file_manager_plugin.tasks_file_manager.uploadAndRegisterFile(task_id, file, filename, mimetype, metadata, user_id)
+      result = APP.tasks_file_manager_plugin.tasks_file_manager.uploadAndRegisterFile(task_id_, file, filename_, mimetype_, metadata_, user_id_)
     catch err
       console.error "Froala uploader failed to upload file", err
 
-      @response.statusCode = 500
-      @response.end "UPLOAD FAILED"
+      res.statusCode = 500
+      res.end "UPLOAD FAILED"
 
       return
 
-    @response.statusCode = 200
-    @response.end JSON.stringify({link: "/file-stack-id/#{result.id}"})
+    res.statusCode = 200
+    res.end JSON.stringify
+      link: "#{APP.tasks_file_manager_plugin.tasks_file_manager.getFileDownloadPath task_id_, result.id}"
 
     return
+
+  req.pipe busboy
 
   return
 ,
