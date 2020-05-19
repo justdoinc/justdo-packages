@@ -1266,8 +1266,8 @@ Template.justdo_calendar_project_pane_user_view.helpers
 
   taskStateLabel: (state_id) ->
     gc = APP.modules.project_page.gridControl()
-    stateLabel = gc?.getSchemaExtendedWithCustomFields().state.grid_values[state_id].txt
-    return stateLabel
+    state_label = gc?.getSchemaExtendedWithCustomFields()?.state?.grid_values?[state_id]?.txt
+    return state_label
 
 Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_task_cell": (e, tpl) ->
