@@ -25,7 +25,7 @@ APP.executeAfterAppLibCode ->
     _init: ->
       dropdown_html = """
         <div class="dropdown owner-setter-dropdown">
-          <div class="dropdown-menu owners-dropdown-menu"></div>
+          <div class="dropdown-menu owners-dropdown-menu border-0 shadow-lg"></div>
         </div>
       """
 
@@ -75,7 +75,7 @@ APP.executeAfterAppLibCode ->
       if @current_item_owners_management_node?
         @current_item_owners_management_node.destroy()
 
-      @current_item_owners_management_node = 
+      @current_item_owners_management_node =
         APP.helpers.renderTemplateInNewNode("item_owners_management", item)
 
       $(".dropdown-menu", @$dropdown).html @current_item_owners_management_node.node
@@ -255,7 +255,7 @@ APP.executeAfterAppLibCode ->
         APP.projects.modules.owners.rejectOwnershipTransfer(item_doc._id, reject_message)
       else
         # Cancel transfer
-        doc_updates = 
+        doc_updates =
           $set:
             owner_id: item_doc.owner_id
             pending_owner_id: null

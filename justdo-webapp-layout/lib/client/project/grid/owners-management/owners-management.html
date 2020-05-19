@@ -7,7 +7,6 @@
         <div class="avatar-area">
           {{#with owner}}{{> justdo_avatar}}{{/with}}
         </div>
-
         <div class="message-area">
           <div class="action-message">Reject ownership transfer from</div>
           <div class="member-name">{{#with owner}}{{displayName}}{{/with}}</div>
@@ -17,44 +16,37 @@
       {{> item_owners_management_reject_transfer_request_input}}
 
       <div class="reject-ownership-buttons">
-        <button type="button" class="cancel-reject-button">Cancel</button>
-        <button type="button" class="cancel-transfer">Send</button>
+        <button type="button" class="btn btn-sm btn-secondary cancel-reject-button mr-1">Cancel</button>
+        <button type="button" class="btn btn-sm btn-primary cancel-transfer">Send</button>
       </div>
     {{else}}
       <div class="decisions-dialogs ownership-accept-reject-dialog">
         <div class="avatar-area">
           {{#with owner}}{{> justdo_avatar}}{{/with}}
         </div>
-
         <div class="message-area">
           <div class="action-message">Accept ownership transfer from</div>
           <div class="member-name">{{#with owner}}{{displayName}}{{/with}}</div>
         </div>
-
-        <div class="action-area">
-          <span class="approve-transfer">Accept</span><br />
-          <span class="pre-reject-button">Reject</span>
-        </div>
+        <button type="button" class="btn btn-sm btn-danger pre-reject-button mr-1">Reject</button>
+        <button type="button" class="btn btn-sm btn-primary approve-transfer">Accept</button>
       </div>
     {{/if}}
   {{else if $eq $.Meteor.userId owner_id}}
     {{#if $not pending_owner_id}}
       {{#if taskHasOtherMembers}}
         <div class="ownership-transfer-dialog">
-          <label class="search-icon">
-            <i class="fa fa-search"></i>
-          </label>
-
-          <input class="members-search-input" placeholder="Transfer ownership to...">
-
+          <div class="members-search-wrapper">
+            <input class="members-search-input form-control form-control-sm border-white" placeholder="Transfer ownership to...">
+            <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#search"></use></svg>
+          </div>
           <div class="members">
-            <div class="right-gradient"></div>
             {{#each taskMembersOtherThanMeMatchingFilter}}
               <div class="new-owner-option">
                 {{> justdo_avatar}} {{> display_name_with_graphic_unverified_warning}}
               </div>
             {{else}}
-              <div class="no-members-found">
+              <div class="no-members-found my-2 text-muted">
                 No results found
               </div>
             {{/each}}
@@ -68,13 +60,11 @@
         <div class="avatar-area">
           {{#with pending_owner}}{{> justdo_avatar}}{{/with}}
         </div>
-
         <div class="message-area">
           <div class="action-message">Cancel ownership transfer to</div>
           <div class="member-name">{{#with pending_owner}}{{displayName}}{{/with}}</div>
         </div>
-
-        <div class="action-area cancel-transfer">Cancel</div>
+        <button type="button" class="btn btn-sm btn-danger cancel-transfer">Cancel</button>
       </div>
     {{/if}}
   {{else}}
@@ -83,13 +73,11 @@
       <div class="avatar-area">
         {{#with owner}}{{> justdo_avatar}}{{/with}}
       </div>
-
       <div class="message-area">
         <div class="action-message">Take ownership from</div>
         <div class="member-name">{{#with owner}}{{displayName}}{{/with}}</div>
       </div>
-
-      <div class="action-area take-ownership">Take</div>
+      <button type="button" class="btn btn-sm btn-primary take-ownership">Take</button>
     </div>
   {{/if}}
 
