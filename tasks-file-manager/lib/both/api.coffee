@@ -88,3 +88,6 @@ _.extend TasksFileManager.prototype,
       return supported_srcs.includes src_mime 
     
     return false
+  
+  getFileDownloadPath: (task_id, file_id) ->
+    return "#{TasksFileManager.file_download_route}?task_id=#{task_id}&file_id=#{file_id}"

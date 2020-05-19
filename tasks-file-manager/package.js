@@ -46,6 +46,7 @@ Package.onUse(function (api) {
   api.use("http", server);
 
   api.add_files("lib/both/init.coffee", both);
+  api.add_files("lib/both/static.coffee", both);
   api.add_files('lib/both/errors-types.coffee', both);
   api.add_files("lib/both/api.coffee", both);
   api.add_files("lib/both/collections-schemas.coffee", both);
