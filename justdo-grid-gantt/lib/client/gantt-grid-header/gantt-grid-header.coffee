@@ -16,7 +16,7 @@ Template.justdo_grid_gantt_header.onCreated ->
   @autorun =>
     grid_gantt = APP.justdo_grid_gantt
     width = grid_gantt.columnWidth()
-    range = grid_gantt.epochRange()
+    range = grid_gantt.getEpochRange()
     
     calculateDivs = (period, periods, format) ->
       # high res
@@ -29,8 +29,9 @@ Template.justdo_grid_gantt_header.onCreated ->
         from = moment_from.valueOf()
         div_data =
           from: from
-          title: moment_from.format format
+          text: moment_from.format format
           left: grid_gantt.timeOffsetPixels range, from, width
+          title: moment_from.format "ddd, MMM Do, YYYY"
         moment_from = moment_from.add 1, periods
         div_data.to = moment_from.valueOf()
         div_data.width = (grid_gantt.timeOffsetPixels range, div_data.to, width) - div_data.left
@@ -81,7 +82,7 @@ Template.justdo_grid_gantt_header.helpers
     return Template.instance().scale_rv.get()
   
   zz: ->
-    range = APP.justdo_grid_gantt.epochRange()
+    range = APP.justdo_grid_gantt.getEpochRange()
     from = moment(range[0]).format("YYYY-MM-DD")
     to = moment(range[1]).format("YYYY-MM-DD")
     return "#{from}  - #{to} #{APP.justdo_grid_gantt.columnWidth()}"

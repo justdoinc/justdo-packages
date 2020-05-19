@@ -23,8 +23,8 @@ _.extend JustdoGridGantt.prototype,
     @gantt_dirty_tasks = new Set()
     
     @_epoch_range = {} # a map of grid_id to from and to epoch time to the specific grid
-    
-    @epochRange = ->
+  
+    @getEpochRange = ->
       if not (gc_id = APP.modules.project_page.gridControl()?.getGridUid())?
         return [0, 0]
       if not (range = @_epoch_range[gc_id])?
@@ -43,13 +43,13 @@ _.extend JustdoGridGantt.prototype,
       return
     
     @zoomIn = () ->
-      range = self.epochRange()
+      range = self.getEpochRange()
       third = (range[1] - range[0]) / 3
       self.setEpochRange [(range[0] + third), (range[1] - third)]
       return
       
     @zoomOut = () ->
-      range = self.epochRange()
+      range = self.getEpochRange()
       delta = range[1] - range[0]
       self.setEpochRange [(range[0] - delta), (range[1] + delta)]
       return
@@ -499,7 +499,7 @@ _.extend JustdoGridGantt.prototype,
       return (time - epoch_start) / (epoch_end - epoch_start) * width_in_pixels
   
     @pixelsDeltaToEpochDelta = (delta_pixels) ->
-      range = self.epochRange()
+      range = self.getEpochRange()
       return delta_pixels / self.grid_gantt_column_width * (range[1] - range[0])
     
     @earliestOfSelfStartAndEarliestChildStart = (task_info) ->

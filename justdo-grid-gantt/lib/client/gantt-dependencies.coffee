@@ -148,7 +148,7 @@ _.extend JustdoGridGantt.prototype,
     # todo - (optimization) use same tick cache for gc, epoch_range,
     if not (gc = APP.modules.project_page.gridControl())?
       return
-    epoch_range = self.epochRange()
+    epoch_range = self.getEpochRange()
   
     for dependent_row in dependency_obj.dependent_rows or []
       if not (dependent_task_info = self.task_id_to_info[dependency_obj.dependent])?
