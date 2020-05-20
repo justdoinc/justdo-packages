@@ -90,4 +90,4 @@ _.extend TasksFileManager.prototype,
     return false
   
   getFileDownloadPath: (task_id, file_id) ->
-    return "#{TasksFileManager.file_download_route}?task_id=#{task_id}&file_id=#{file_id}"
+    return "#{TasksFileManager.file_download_route}?task_id=#{encodeURIComponent task_id}&file_id=#{encodeURIComponent file_id}"

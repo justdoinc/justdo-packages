@@ -30,15 +30,21 @@ _.extend TasksFileManager.prototype,
       req = @request
       res = @response
 
+      task_id = req.query.task_id
+      file_id = req.query.file_id
+
+      try 
+        check task_id, String
+        check file_id, String
+      catch e
+        res.statusCode = 400
+        res.end "INVALID PARAMETERS"
+        
+        return
+
       if not (user_doc = JustdoHelpers.getUserObjFromMeteorLoginTokenCookie(req))?
         res.statusCode = 403
         res.end "AUTH FAILED"
-
-        return
-
-      if not (task_id = req.query.task_id)? or not (file_id = req.query.file_id)?
-        res.statusCode = 400
-        res.end "INVALID PARAMETERS"
 
         return
         
