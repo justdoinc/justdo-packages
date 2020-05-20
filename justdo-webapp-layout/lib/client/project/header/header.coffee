@@ -129,5 +129,24 @@ APP.executeAfterAppLibCode ->
 
       return
 
-      
-      
+  Template.panes_controls.helpers
+    isBottomPaneAvailable: -> not _.isEmpty APP.justdo_project_pane.getTabs()
+
+    isBottomPaneOpen: -> APP.justdo_project_pane.isExpanded()
+
+    isTaskPaneOpen: -> module.preferences.get()?.toolbar_open
+
+  Template.panes_controls.events
+    "click .task-pane-control": ->
+      toolbar_open = module.preferences.get()?.toolbar_open
+
+      module.updatePreferences({toolbar_open: not toolbar_open})
+
+      return
+
+    "click .bottom-pane-control": ->
+      if APP.justdo_project_pane.isExpanded()
+        APP.justdo_project_pane.collapse()
+      else
+        APP.justdo_project_pane.expand()
+

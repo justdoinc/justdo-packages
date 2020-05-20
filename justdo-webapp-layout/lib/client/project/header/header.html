@@ -13,6 +13,7 @@
     <div class="middle-project-header-items d-flex align-items-center">
       {{> project_operations_toolbar}}
       {{> search_comp}}
+      {{> panes_controls}}
     </div>
 
     <div class="below-project-header-items">
@@ -141,4 +142,19 @@
 
 <template name="search_comp">
   <div id="project-search-comp-container"></div>
+</template>
+
+<template name="panes_controls">
+  <div id="panes-controls" class="border-left">
+    {{#if isBottomPaneAvailable}}
+      <svg class="jd-icon jd-c-pointer text-dark bottom-pane-control {{#if isBottomPaneOpen}}control-opened{{/if}}">
+        <title>{{#if isBottomPaneOpen}}Hide Bottom Pane{{else}}Show Bottom Pane{{/if}}</title>
+        <use xlink:href="/layout/icons-feather-sprite.svg#sidebar"></use>
+      </svg>
+    {{/if}}
+    <svg class="jd-icon jd-c-pointer text-dark task-pane-control {{#if isTaskPaneOpen}}control-opened{{/if}}">
+      <title>{{#if isTaskPaneOpen}}Hide Task Pane{{else}}Show Task Pane{{/if}}</title>
+      <use xlink:href="/layout/icons-feather-sprite.svg#sidebar"></use>
+    </svg>
+  </div>
 </template>
