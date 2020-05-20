@@ -473,6 +473,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["wheel", ".grid-gantt-formatter"]
     handler: (e) ->
+      if not e.originalEvent.ctrlKey
+        return
       if e.originalEvent.deltaY > 0
         APP.justdo_grid_gantt.zoomIn()
       else
