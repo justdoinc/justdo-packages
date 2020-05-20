@@ -1272,7 +1272,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     state_label = gc?.getSchemaExtendedWithCustomFields()?.state?.grid_values?[state_id]?.txt
     return state_label
 
-  showTaskState: (calendarViewResolution) ->
+  showTaskState: ->
     if number_of_days_to_display.get() > 14
       return false
     return true
