@@ -49,6 +49,8 @@ _.extend TasksFileManager.prototype,
         res.statusCode = 500
         res.end()
 
+        return
+
       res.writeHead 301,
         Location: "#{download_link}&dl=true"
       res.end()

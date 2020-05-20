@@ -25,6 +25,8 @@ Router.route JustdoTaskPane.froala_file_upload_route, ->
     if (fieldname == "task_id")
       task_id = val
     
+    return
+    
   busboy.on "file", (_fieldname, _file, _filename, _encoding, _mimetype) ->
     filename = _filename
     mimetype = _mimetype
