@@ -500,11 +500,12 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         new_end_date = moment.utc(new_end_time).format("YYYY-MM-DD")
   
         grid_gantt.task_id_to_info[states.task_id].self_end_time = states.end_time.original_end_time
+        grid_gantt.task_ids_edited_locally.add states.task_id
         
         JD.collections.Tasks.update states.task_id,
           $set:
             end_date: new_end_date
-  
+        
         APP.justdo_grid_gantt.setState
           end_time:
             is_dragging: false
@@ -513,7 +514,6 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           task_id: null
           
         $(".grid-gantt-date-hint").remove()
-        
       
       if states.main_bar.is_dragging
         if Math.abs(e.clientX - states.mouse_down.x) > 5
@@ -529,6 +529,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   
         grid_gantt.task_id_to_info[states.task_id].self_start_time = states.main_bar.original_start_time
         grid_gantt.task_id_to_info[states.task_id].self_end_time = states.main_bar.original_end_time
+        grid_gantt.task_ids_edited_locally.add states.task_id
         
         JD.collections.Tasks.update states.task_id,
           $set:

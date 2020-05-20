@@ -23,6 +23,12 @@ _.extend JustdoGridGantt.prototype,
     @_epoch_range = {} # a map of grid_id to from and to epoch time to the specific grid
     @_columns_width = {} # map if grid_id to reactive vars of gantt column width
     
+    @task_ids_edited_locally = new Set()  # this Set is used to store task ids that were edited locally
+                                          # using the gantt column (mostly mouse control). This set is used
+                                          # to determine if a change in a task is a result of a local change,
+                                          # and if so, to update dependent tasks, or if it is a result of other
+                                          # update, in which case we don't update the dependents.
+    
     @resetTaskIdToInfo = ->
       self.task_id_to_info = {}
       return
@@ -54,10 +60,6 @@ _.extend JustdoGridGantt.prototype,
           console.error "justdo-grid-gantt unhandled msg type", msg_type
   
       self.processGanttDirtyTasks()
-      # APP.modules.project_page.gridControl()._grid_data.once "rebuild", ->
-      #   self.processGanttDirtyTasks()
-      #   return
-    
       return # end of process changes queue
   
     @processGanttDirtyTasks = () ->
@@ -268,7 +270,7 @@ _.extend JustdoGridGantt.prototype,
         
         if parent_changed
           self.processStartTimeChange parent_id, parent_task_info, old_parent_task_info
-        
+                
       return
   
     @processEndTimeChange = (task_id, task_info, old_task_info) ->
@@ -332,9 +334,13 @@ _.extend JustdoGridGantt.prototype,
         else if not end_time and not old_end_time # we should never get here, so alert if we do:
           console.error "grid-gantt: unresolved end change"
     
+        if self.task_ids_edited_locally.has task_id
+          if parent_changed
+            self.task_ids_edited_locally.add parent_id
+            self.updateDependentTasks parent_id
+          self.task_ids_edited_locally.delete task_id
         if parent_changed
           self.processEndTimeChange parent_id, parent_task_info, old_parent_task_info
-  
       return
       
     @_printDebugInfo = (task_id) ->
@@ -486,13 +492,12 @@ _.extend JustdoGridGantt.prototype,
       self.processGanttDirtyTasks()
       return
       
-    @updateTaskStartDateBasedOnDependencies = (dependent_obj) ->
+    @updateTaskStartDateBasedOnDependencies = (dependent_obj, independent_id) ->
       # we need to now go over all independents tasks and find the limiting factors. This could have been done with a
       # single find command, but since it's a client side code, and we have the tasks' ids, it is easier to go one by
       # one. In this specific case, it's probably as effective.
       
       #todo: for now we just check F2S dependencies. When other types will be supported we will need to touch this code
-
       latest_independent_date = null
       if not (dependencies_mf = dependent_obj.justdo_task_dependencies_mf)?
         return
@@ -502,19 +507,25 @@ _.extend JustdoGridGantt.prototype,
           if (independent_end_date = independent_obj.end_date)?
             if not latest_independent_date? or independent_end_date > latest_independent_date
               latest_independent_date = independent_end_date
+          if (latest_child  = @task_id_to_info[dependency.task_id]?.latest_child_end_time)?
+            independent_end_date = moment.utc(latest_child).format("YYYY-MM-DD")
+            if not latest_independent_date? or independent_end_date > latest_independent_date
+              latest_independent_date = independent_end_date
   
       if latest_independent_date?
         next_date = moment.utc(latest_independent_date)
         next_date.add 1, 'day'
         next_date = next_date.format("YYYY-MM-DD")
         if next_date != dependent_obj.start_date
+          if independent_id? and self.task_ids_edited_locally.has independent_id
+            self.task_ids_edited_locally.add dependent_obj._id
           self.moveTaskToNewStartDate dependent_obj, next_date
       
       return
       
     @updateDependentTasks = (original_task_obj_id) ->
       JD.collections.Tasks.find({"justdo_task_dependencies_mf.task_id": original_task_obj_id}).forEach (dependent) ->
-        self.updateTaskStartDateBasedOnDependencies dependent
+        self.updateTaskStartDateBasedOnDependencies dependent, original_task_obj_id
       return
   
     @moveTaskToNewStartDate = (task_obj, new_start_date) ->
@@ -535,21 +546,23 @@ _.extend JustdoGridGantt.prototype,
       new_end_data_moment = moment.utc(new_start_date)
       new_end_data_moment = new_end_data_moment.add task_duration, "days"
       set_value.end_date = new_end_data_moment.format("YYYY-MM-DD")
-    
-      JD.collections.Tasks.update
-        _id: task_obj._id
-      ,
-        $set: set_value
-      ,
-        (err)->
-          if err?
-            console.error err
-            return
-          
-          # important note - must call with the _id and not the object, because the object changes by the update
-          # call, but task_obj doesn't
-          self.updateDependentTasks task_obj._id
-          return #end of callback
+      
+      # Daniel - need your help here - w/o this defer, the database is updates but the local
+      # grid is not updating. todo: Need to understand why, and hopefully remove this defer.
+      Meteor.defer =>
+        JD.collections.Tasks.update
+          _id: task_obj._id
+        ,
+          $set: set_value
+        ,
+          (err)->
+            if err?
+              console.error err
+              return
+            # important note - must call with the _id and not the object, because the object changes by the update
+            # call, but task_obj doesn't
+            self.updateDependentTasks task_obj._id
+            return #end of callback
       return
       
   _deferredInit: ->
