@@ -227,9 +227,7 @@ APP.executeAfterAppLibCode ->
     $("#description-editor", $container)
       .froalaEditor({
         toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
-          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo", "insertFile"]
-        pasteImage: false
-        imageUpload: false
+          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo", "insertFile", "insertImage"]
         quickInsertTags: []
         charCounterCount: false
         key: env.FROALA_ACTIVATION_KEY
@@ -239,8 +237,17 @@ APP.executeAfterAppLibCode ->
         fileAllowedTypes: ["*"]   # XXX
         fileUploadParams:
           task_id: task_id
+        imageUploadURL: JustdoTaskPane.froala_file_upload_route
+        imageUploadMethod: "POST"
+        imageMaxSize: JustdoTaskPane.froala_file_upload_max_size
+        imageAllowedTypes: ["jpeg", "jpg", "png"]
+        imageUploadParams:
+          task_id: task_id
       })
       .on "froalaEditor.file.error", (e, editor, error, resp) ->
+        console.log error
+        return
+      .on "froalaEditor.image.error", (e, editor, error, resp) ->
         console.log error
         return
 
