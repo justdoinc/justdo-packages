@@ -234,7 +234,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     #   column_width_px = cached_info[1]
   
     column_start_end = grid_gantt.getEpochRange()
-    column_width_px = grid_gantt.columnWidth()
+    column_width_px = grid_gantt.getColumnWidth()
     column_start_epoch = column_start_end[0]
     column_end_epoch = column_start_end[1]
     
@@ -576,7 +576,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         grid_gantt.setPresentationEndTime states.task_id, new_end_time
   
         #hint:
-        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_end_time, grid_gantt.columnWidth() )
+        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_end_time, grid_gantt.getColumnWidth() )
         hint_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
         date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_end_time).format("YYYY-MM-DD"))
         end_date_hint = """
@@ -600,7 +600,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   
         # hints:
         # start date:
-        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_start_time, grid_gantt.columnWidth() ) - 50
+        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_start_time, grid_gantt.getColumnWidth() ) - 50
         hint_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
         start_date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_start_time).format("YYYY-MM-DD"))
         start_date_hint = """
@@ -608,7 +608,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             """
         
         # end date:
-        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_end_time, grid_gantt.columnWidth() )
+        hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_end_time, grid_gantt.getColumnWidth() )
         
         date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_end_time - day).format("YYYY-MM-DD"))
         end_date_hint = """
@@ -625,7 +625,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       else if states.dependencies.finish_to_x_independent?
         epoch_range = grid_gantt.getEpochRange()
         gc = APP.modules.project_page.gridControl()
-        independent_end_x = grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time, grid_gantt.columnWidth() )
+        independent_end_x = grid_gantt.timeOffsetPixels(epoch_range, states.dependencies.independent_end_time, grid_gantt.getColumnWidth() )
         independent_end_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
         
         p0 =

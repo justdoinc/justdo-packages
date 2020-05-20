@@ -19,66 +19,10 @@ _.extend JustdoGridGantt.prototype,
                           #            we no longer have it's parents
                           # (*)all times in epoch
     @missing_parents = new Set() # see comment in processTaskAdd
-    
     @gantt_dirty_tasks = new Set()
-    
     @_epoch_range = {} # a map of grid_id to from and to epoch time to the specific grid
-  
-    @getEpochRange = ->
-      if not (gc_id = APP.modules.project_page.gridControl()?.getGridUid())?
-        return [0, 0]
-      if not (range = @_epoch_range[gc_id])?
-        start_of_day_epoch = moment.utc(moment().format("YYYY-MM-DD")).unix() * 1000
-        from = new ReactiveVar (start_of_day_epoch - 5 * day)
-        to = new ReactiveVar (start_of_day_epoch + 6 * day - 1000)
-        range = [from, to]
-        @_epoch_range[gc_id] = range
-      return [range[0].get(), range[1].get()]
-      
-    @setEpochRange = (range) ->
-      if not (gc_id = APP.modules.project_page.gridControl()?.getGridUid())?
-        return
-      @_epoch_range[gc_id][0].set(range[0])
-      @_epoch_range[gc_id][1].set(range[1])
-      return
-    
-    @zoomIn = () ->
-      range = self.getEpochRange()
-      third = (range[1] - range[0]) / 3
-      self.setEpochRange [(range[0] + third), (range[1] - third)]
-      return
-      
-    @zoomOut = () ->
-      range = self.getEpochRange()
-      delta = range[1] - range[0]
-      self.setEpochRange [(range[0] - delta), (range[1] + delta)]
-      return
-      
     @_columns_width = {} # map if grid_id to reactive vars of gantt column width
     
-    @setColumnWidth = (width) ->
-      if (gc_id = APP.modules.project_page.gridControl()?.getGridUid())?
-        if not self._columns_width[gc_id]?
-          self._columns_width[gc_id] = new ReactiveVar width
-        else
-          self._columns_width[gc_id].set width
-      return
-      
-    @columnWidth = () ->
-      if not (gc = APP.modules.project_page.gridControl())?
-        return -1
-      if (gc_id = gc.getGridUid())?
-        if self._columns_width[gc_id]?
-          return self._columns_width[gc_id].get()
-    
-      # in case we didn't find it cached (happens on initiation once)
-      for column in gc.getView()
-        if column.field == "justdo_grid_gantt"
-          self.setColumnWidth column.width
-          return column.width
-          
-      return -1
-      
     @resetTaskIdToInfo = ->
       self.task_id_to_info = {}
       return
@@ -619,6 +563,59 @@ _.extend JustdoGridGantt.prototype,
     
     return
   
+  setColumnWidth: (width) ->
+    if (gc_id = APP.modules.project_page.gridControl()?.getGridUid())?
+      if not @_columns_width[gc_id]?
+        @_columns_width[gc_id] = new ReactiveVar width
+      else
+        @_columns_width[gc_id].set width
+    return
+  
+  getColumnWidth: ->
+    if not (gc = APP.modules.project_page.gridControl())?
+      return -1
+    if (gc_id = gc.getGridUid())?
+      if @_columns_width[gc_id]?
+        return @_columns_width[gc_id].get()
+    
+    # in case we didn't find it cached (happens on initiation once)
+    for column in gc.getView()
+      if column.field == JustdoGridGantt.pseudo_field_id
+        @setColumnWidth column.width
+        return column.width
+    
+    return -1
+    
+  zoomIn: ->
+    range = @getEpochRange()
+    third = (range[1] - range[0]) / 3
+    @setEpochRange [(range[0] + third), (range[1] - third)]
+    return
+  
+  zoomOut: ->
+    range = @getEpochRange()
+    delta = range[1] - range[0]
+    @setEpochRange [(range[0] - delta), (range[1] + delta)]
+    return
+  
+  getEpochRange: ->
+    if not (gc_id = APP.modules.project_page.gridControl()?.getGridUid())?
+      return [0, 0]
+    if not (range = @_epoch_range[gc_id])?
+      start_of_day_epoch = moment.utc(moment().format("YYYY-MM-DD")).unix() * 1000
+      from = new ReactiveVar (start_of_day_epoch - 5 * day)
+      to = new ReactiveVar (start_of_day_epoch + 6 * day - 1000)
+      range = [from, to]
+      @_epoch_range[gc_id] = range
+    return [range[0].get(), range[1].get()]
+  
+  setEpochRange: (range) ->
+    if not (gc_id = APP.modules.project_page.gridControl()?.getGridUid())?
+      return
+    @_epoch_range[gc_id][0].set(range[0])
+    @_epoch_range[gc_id][1].set(range[1])
+    return
+    
   isPluginInstalledOnProjectDoc: (project_doc) ->
     return APP.projects.isPluginInstalledOnProjectDoc(JustdoGridGantt.project_custom_feature_id, project_doc)
 

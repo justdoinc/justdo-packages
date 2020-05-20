@@ -92,7 +92,6 @@ _.extend JustdoGridGantt.prototype,
     return
   
   resetDependenciesDiv: ->
-    
     Tracker.nonreactive =>
       if not (gc = APP.modules.project_page.gridControl())?
         return
@@ -124,7 +123,7 @@ _.extend JustdoGridGantt.prototype,
     grid_gantt_column_offset = 0
     column_found = false
     for column in gc.getView()
-      if column.field != "justdo_grid_gantt"
+      if column.field != JustdoGridGantt.pseudo_field_id
         grid_gantt_column_offset += column.width
       else
         self.grid_gantt_column_width = column.width
@@ -135,7 +134,7 @@ _.extend JustdoGridGantt.prototype,
       
     $slick_view_port.append """
       <div class="justdo-grid-gantt-all-dependencies"
-            style="left: #{grid_gantt_column_offset}px; width: #{self.columnWidth()}px">
+            style="left: #{grid_gantt_column_offset}px; width: #{self.getColumnWidth()}px">
       </div>
       """
     
@@ -172,9 +171,9 @@ _.extend JustdoGridGantt.prototype,
             if not (independent_end_time = independent_task_info.latest_child_end_time)?
               continue
             
-          independent_end_x = self.timeOffsetPixels(epoch_range, independent_end_time, self.columnWidth() )
+          independent_end_x = self.timeOffsetPixels(epoch_range, independent_end_time, self.getColumnWidth())
           independent_end_y = gc._grid.getRowTopPosition(independent_row) + 15
-          dependent_start_x = self.timeOffsetPixels(epoch_range, dependent_task_info.self_start_time, self.columnWidth() )
+          dependent_start_x = self.timeOffsetPixels(epoch_range, dependent_task_info.self_start_time, self.getColumnWidth())
           dependent_start_y = gc._grid.getRowTopPosition(dependent_row) + 15
           p0 =
             x: independent_end_x
@@ -199,7 +198,7 @@ _.extend JustdoGridGantt.prototype,
           html = """<div class="dependency-container" dependent-id="#{dependency_obj.dependent}" independent-id="#{dependency_obj.independent}"
                       dependency-type="#{dependency_obj.dependency_type}">"""
           html += """<div class="line horizontal" style="#{self.lineStyle p0, p1}"></div>"""
-          if p1.x > 0 and p1.x < self.columnWidth()
+          if p1.x > 0 and p1.x < self.getColumnWidth()
             html += """<div class="line vertical" style="#{self.lineStyle p1, p2}">
                           <div class="dependency-1-2-cancel" style="top: #{(Math.abs(p1.y - p2.y) / 2)  - 14}px; left: -10px">
                             <svg class="jd-icon dependency-1-2-cancel-icon">
@@ -208,10 +207,10 @@ _.extend JustdoGridGantt.prototype,
                           </div>
                       </div>"""
           html += """<div class="line horizontal" style="#{self.lineStyle p2, p3}"></div>"""
-          if p3.x > 0 and p3.x < self.columnWidth()
+          if p3.x > 0 and p3.x < self.getColumnWidth()
             html += """<div class="line vertical" style="#{self.lineStyle p3, p4}"></div>"""
           html += """<div class="line horizontal" style="#{self.lineStyle p4, p5}"></div>"""
-          if p5.x > 0 and p5.x < self.columnWidth()
+          if p5.x > 0 and p5.x < self.getColumnWidth()
             html += """<div class="right-arrow" style="top: #{p5.y - 3 }px; left: #{p5.x - 7}px"></div>"""
           html += "</div>"
           
@@ -227,9 +226,9 @@ _.extend JustdoGridGantt.prototype,
       x0 = Math.min p0.x, p1.x
       x1 = Math.max p0.x, p1.x
       if x0 < 0 then x0 = 0
-      if x0 > self.columnWidth() then x0 = self.columnWidth()
+      if x0 > self.getColumnWidth() then x0 = self.getColumnWidth()
       if x1 < 0 then x1 = 0
-      if x1 > self.columnWidth() then x1 = self.columnWidth()
+      if x1 > self.getColumnWidth() then x1 = self.getColumnWidth()
       width = x1 - x0
       return "left: #{x0}px; top:#{p0.y}px; width:#{width}px;"
     # vertical line
@@ -267,7 +266,9 @@ _.extend JustdoGridGantt.prototype,
     self = @
     
     # remove all existing arrows
-    $(".justdo-grid-gantt-all-dependencies .dependency-container").remove()
+    gc_id = APP.modules.project_page.gridControl().getGridUid()
+    $gc_id = $(".#{gc_id}")
+    $(".justdo-grid-gantt-all-dependencies .dependency-container", $gc_id).remove()
     
     # add dependencies one by one
     for dependency_key, dependency_obj of self.dependencies_map
@@ -291,7 +292,7 @@ _.extend JustdoGridGantt.prototype,
     @resetDependenciesMapRowNumbers()
     # todo with Daniel - this resetDependenciesDiv should not  be called here, however, I couldn't find the right
     # place to put it. See Task #7645: hints are removed frequently on mouse move. See comment in _refreshArrows()
-    #@resetDependenciesDiv()
+    # @resetDependenciesDiv()
     @rerenderAllDependencies()
     
     return
