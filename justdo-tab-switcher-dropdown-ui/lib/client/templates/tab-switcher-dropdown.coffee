@@ -58,6 +58,8 @@ APP.executeAfterAppLibCode ->
     "keydown .dropdown-menu": (e) ->
       $el = $(e.target)
       if e.keyCode == 38 # Up
+        e.preventDefault()
+        
         if $el.prev().hasClass "dropdown-header"
           $el.prev().prev().focus()
         else
@@ -66,6 +68,8 @@ APP.executeAfterAppLibCode ->
           else
             $el.prev().focus()
       if e.keyCode == 40 # Down
+        e.preventDefault()
+        
         if $el.hasClass "views-search-input"
           $el.parent().next().focus()
         else
