@@ -10,11 +10,11 @@ Router.route JustdoTaskPane.froala_file_upload_route, ->
 
     return
 
-  task_id_ = null
-  filename_ = null
-  mimetype_ = null
-  metadata_ = {}
-  user_id_ = user_doc._id
+  task_id = null
+  filename = null
+  mimetype = null
+  metadata = {}
+  user_id = user_doc._id
   file_data_buffers = []
   
 
@@ -23,12 +23,12 @@ Router.route JustdoTaskPane.froala_file_upload_route, ->
   
   busboy.on "field", (fieldname, val) ->
     if (fieldname == "task_id")
-      task_id_ = val
+      task_id = val
     
-  busboy.on "file", (fieldname, file, filename, encoding, mimetype) ->
-    filename_ = filename
-    mimetype_ = mimetype
-    file.on "data", (data) ->
+  busboy.on "file", (_fieldname, _file, _filename, _encoding, _mimetype) ->
+    filename = _filename
+    mimetype = _mimetype
+    _file.on "data", (data) ->
       file_data_buffers.push data
 
     return
@@ -37,7 +37,7 @@ Router.route JustdoTaskPane.froala_file_upload_route, ->
     file = Buffer.concat file_data_buffers
 
     try
-      result = APP.tasks_file_manager_plugin.tasks_file_manager.uploadAndRegisterFile(task_id_, file, filename_, mimetype_, metadata_, user_id_)
+      result = APP.tasks_file_manager_plugin.tasks_file_manager.uploadAndRegisterFile(task_id, file, filename, mimetype, metadata, user_id)
     catch err
       console.error "Froala uploader failed to upload file", err
 
@@ -48,7 +48,7 @@ Router.route JustdoTaskPane.froala_file_upload_route, ->
 
     res.statusCode = 200
     res.end JSON.stringify
-      link: "#{APP.tasks_file_manager_plugin.tasks_file_manager.getFileDownloadPath task_id_, result.id}"
+      link: "#{APP.tasks_file_manager_plugin.tasks_file_manager.getFileDownloadPath task_id, result.id}"
 
     return
 
