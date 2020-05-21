@@ -80,26 +80,19 @@ APP.executeAfterAppLibCode ->
       return
 
     "keydown .tab-switcher-dropdown-wrapper": (e) ->
-      $el = $(e.target)
+      $dropdown_item = $(e.target).closest(".views-search-wrapper,.dropdown-item")
+
       if e.keyCode == 38 # Up
         e.preventDefault()
         
-        if $el.prev().hasClass "dropdown-header"
-          $el.prev().prev().focus()
+        if ($prev_item = $dropdown_item.prevAll(".dropdown-item").first()).length > 0
+          $prev_item.focus()
         else
-          if $el.prev().hasClass "views-search-wrapper"
-            $el.prev().find(".views-search-input").focus()
-          else
-            $el.prev().focus()
+          $(".views-search-input", $dropdown_item.closest(".tab-switcher-dropdown-wrapper")).focus()
+
       if e.keyCode == 40 # Down
         e.preventDefault()
         
-        if $el.hasClass "views-search-input"
-          $el.parent().next().focus()
-        else
-          if $el.next().hasClass "dropdown-header"
-            $el.next().next().focus()
-          else
-            $el.next().focus()
+        $dropdown_item.nextAll(".dropdown-item").first().focus()
 
       return
