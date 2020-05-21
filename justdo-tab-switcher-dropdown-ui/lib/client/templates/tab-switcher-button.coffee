@@ -1,6 +1,10 @@
 APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
+  Template.project_operations_tab_switcher.onRendered ->
+    @tab_switcher_dropdown = new share.TabSwitcherDropdown(@firstNode)
+    return
+
   Template.project_operations_tab_switcher.helpers
     ready: -> module.getCurrentTabId()?
 

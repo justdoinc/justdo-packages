@@ -1,6 +1,29 @@
 APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
+  share.TabSwitcherDropdown = JustdoHelpers.generateNewTemplateDropdown "tab-switcher-dropdown", "project_operations_tab_switcher_dropdown",
+    custom_bound_element_options:
+      close_button_html: null
+
+    updateDropdownPosition: ($connected_element) ->
+      @$dropdown
+        .position
+          of: $connected_element
+          my: "right top"
+          at: "right bottom"
+          collision: "fit fit"
+          using: (new_position, details) =>
+            target = details.target
+            element = details.element
+            element.element.addClass "animate slideIn shadow-lg"
+            element.element.css
+              top: new_position.top - 10
+              left: new_position.left + 6
+
+        $(".dropdown-menu.show").removeClass("show") # Hide active dropdown
+
+      return
+
   Template.project_operations_tab_switcher_dropdown.helpers module.template_helpers
 
   Template.project_operations_tab_switcher_dropdown.helpers
@@ -47,7 +70,7 @@ APP.executeAfterAppLibCode ->
       gcm.activateTabWithSectionsState(tab_id, sections_state)
 
       # Ensure the dropdown is closed.
-      $(e.target).closest(".dropdown-menu").removeClass("show").closest(".dropdown").removeClass("show")
+      $(e.target).closest(".tab-switcher-dropdown").removeClass("open")
 
       return
 
@@ -55,7 +78,8 @@ APP.executeAfterAppLibCode ->
       module.tab_switcher_manager.setSectionsItemsLabelFilter($(e.target).val())
 
       return
-    "keydown .dropdown-menu": (e) ->
+
+    "keydown .tab-switcher-dropdown-wrapper": (e) ->
       $el = $(e.target)
       if e.keyCode == 38 # Up
         e.preventDefault()

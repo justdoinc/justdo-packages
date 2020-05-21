@@ -1,4 +1,12 @@
-#tab-switcher
+.tab-switcher-dropdown
+  z-index: 150
+  overflow: auto
+  max-height: 400px
+  min-width: 270px
+  background-color: #ffffff
+  padding: 0.75rem
+  border-radius: 6px
+
   .views-search-wrapper
     position: relative
     margin-bottom: 5px
@@ -20,19 +28,16 @@
         stroke: currentColor
         background-color: transparent
 
-  .dropdown-menu
-    overflow: auto
-    max-height: 400px
-    left: -10px !important
+  .justdo-avatar
+    width: 24px
+    height: 24px
+    margin-right: 8px
 
-    min-width: 270px
+  .dropdown-header
+    cursor: default
+    text-transform: uppercase
+    font-size: 11px
 
-    .justdo-avatar
-      width: 24px
-      height: 24px
-      margin-right: 8px
-
-    .dropdown-header
-      cursor: default
-      text-transform: uppercase
-      font-size: 11px
+  .dropdown-item:active
+    color: unset
+    background-color: unset
