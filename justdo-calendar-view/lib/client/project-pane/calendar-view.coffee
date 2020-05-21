@@ -1262,9 +1262,12 @@ Template.justdo_calendar_project_pane_user_view.helpers
     return ret
 
   priorityColor: (priority) ->
-    # Color schema starts from 7, to make hint more visible for low priority tasks.
-    if priority < 7
-      priority = 7
+    # priority < 15 and 25 < priority < 35 contrast is too bad, the following takes care
+    # of that
+    if priority < 15
+      priority = 15
+    else if priority > 24 and priority < 35
+      priority = 35
     return JustdoColorGradient.getColorRgbString priority
 
   taskStateLabel: (state_id) ->
