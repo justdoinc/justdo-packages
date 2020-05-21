@@ -100,7 +100,7 @@ Template.tasks_file_manager_files.helpers
 
   showPrintFiles: ->
     plugin_installed = APP.justdo_files_tab_print.isPluginInstalledOnProjectDoc()
-    files_count = Template.instance().data.files.length
+    files_count = Template.instance().data.files?.length or 0
     return plugin_installed and files_count > 0
 
 
