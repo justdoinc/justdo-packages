@@ -26,6 +26,10 @@ _.extend JustdoTasksContextMenu.prototype,
 
   _setupContextMenuEvent: ->
     $("body").on "contextmenu", ".slick-viewport", (e) =>
+      if $(e.target).closest(".editable").length > 0
+        # While in edit mode, don't hijack the right click
+        return
+
       if not (gc = APP.modules.project_page.gridControl())?
         # Can't find the active grid obj
         return
