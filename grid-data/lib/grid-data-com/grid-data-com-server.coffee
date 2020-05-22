@@ -212,6 +212,8 @@ _.extend GridDataCom.prototype,
         collection.isUserBelongToItem(doc, userId)
 
   initDefaultCollectionMethods: ->
+    self = @
+
     collection = @collection
 
     _.extend collection,
@@ -356,9 +358,9 @@ _.extend GridDataCom.prototype,
         #   fields: a mongo style positive fields projection (negative isn't supported!)
         #   max_level: if undefined we will go as deep as the sub-tree goes, otherwise we won't traverse
         #             items in levels higher than the level specified (0 is the root level).
-        #   max_items: if undefined we will return as many items as we find for the sub-tree, otherwise
-        #              we will return up to max_items items. (Since we are running in batches, the actual
-        #              number can be slightly higher).
+        #   max_items: if undefined we will return as many items as we find (up to the hard limit, see below)
+        #              for the sub-tree, otherwise we will return up to max_items items. (Since we are running
+        #              in batches, the actual number can be slightly higher).
         #
         # perform_as:
         #
@@ -406,7 +408,7 @@ _.extend GridDataCom.prototype,
         if perform_as?
           root_query.users = perform_as
         addItemToRet(@findOne(root_query, {fields: fields}))
-        if items_found == max_items or _.isEmpty ret
+        if _.isEmpty ret
           return ret
 
         last_level_items = [item_id]
@@ -427,10 +429,12 @@ _.extend GridDataCom.prototype,
 
             addItemToRet(doc)
 
+            return
+
           # Note, we can't break the forEach loop above, therefore, the actual amount of items
           # returned might be slightly bigger.
           if items_found > max_items
-            return ret
+            throw self._error "max-allowed-items-reached", "Max allowed items reached"
 
           if _.isEmpty last_level_items
             break
