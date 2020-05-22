@@ -150,7 +150,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     user_tz = @getUserTimeZone(user_id)
 
-    tree_map = @tasks_collection.findSubTree task_id, {fields: {}}
+    tree_map = @tasks_collection.findSubTree task_id, {base_query: {project_id: task_doc.project_id}, fields: {}}
 
     involved_members = {}
     burndown = {}

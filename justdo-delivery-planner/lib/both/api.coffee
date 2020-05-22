@@ -23,6 +23,7 @@ _.extend JustdoDeliveryPlanner.prototype,
   _getProjectRelevantFieldsProjection: ->
     fields =
       _id: 1
+      project_id: 1
       users: 1
       start_date: 1
       "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1
