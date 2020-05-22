@@ -434,7 +434,7 @@ _.extend GridDataCom.prototype,
           # Note, we can't break the forEach loop above, therefore, the actual amount of items
           # returned might be slightly bigger.
           if items_found > max_items
-            throw self._error "max-allowed-items-reached", "Max allowed items reached"
+            throw self._error "max-allowed-items-reached", "Max allowed items reached #{max_items}"
 
           if _.isEmpty last_level_items
             break
