@@ -352,6 +352,7 @@ _.extend GridDataCom.prototype,
         #
         # options:
         #
+        #   base_query: a base mongo query on which we will add our additional sub-tree query
         #   fields: a mongo style positive fields projection (negative isn't supported!)
         #   max_level: if undefined we will go as deep as the sub-tree goes, otherwise we won't traverse
         #             items in levels higher than the level specified (0 is the root level).
@@ -396,7 +397,12 @@ _.extend GridDataCom.prototype,
 
           return
 
-        root_query = {_id: item_id}
+        if _.isObject(base_query = options?.base_query)
+          root_query = _.extend {}, base_query # Shallow copy
+        else
+          root_query = {}
+
+        root_query._id = item_id
         if perform_as?
           root_query.users = perform_as
         addItemToRet(@findOne(root_query, {fields: fields}))
@@ -405,7 +411,10 @@ _.extend GridDataCom.prototype,
 
         last_level_items = [item_id]
         for level in [0...max_level]
-          query = {}
+          if _.isObject(base_query = options?.base_query)
+            query = _.extend {}, base_query # Shallow copy
+          else
+            query = {}
 
           if perform_as?
             query.users = perform_as
