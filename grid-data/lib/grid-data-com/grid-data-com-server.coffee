@@ -370,7 +370,7 @@ _.extend GridDataCom.prototype,
         #
         #   * If item_id doesn't exist -> returns empty object
         #   * We impose hard limit of 20 to max_level
-        #   * We impose hard limit of 1000 to max_items
+        #   * We impose hard limit of 5000 to max_items
 
         mandatory_fields = {_id: 1, parents: 1}
         if not (fields = options?.fields)?
@@ -381,7 +381,7 @@ _.extend GridDataCom.prototype,
         if not (max_level = options?.max_level)? or not _.isNumber(max_level) or max_level > max_level_hard_limit or max_level < 0
           max_level = max_level_hard_limit
 
-        max_items_hard_limit = 1000
+        max_items_hard_limit = 5000
         if not (max_items = options?.max_items)? or not _.isNumber max_items or max_items > max_items_hard_limit or max_items < 1
           max_items = max_items_hard_limit
 
