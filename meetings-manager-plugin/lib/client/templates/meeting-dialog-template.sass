@@ -235,16 +235,18 @@ $meeting-padding: 2rem
     .avatar-box-button
       margin-right: 2px
       background-color: #F2F4F5
-      width: 28px
+      min-width: 28px
+      width: auto
       height: 28px
-      border-radius: 100%
-      padding: 2px
+      border-radius: 50px
     .default-avatar-box-button
       background-color: #F2F4F5
       color: $meeting_color
       transition: all 0.2s
-      width: 100%
+      width: auto
       height: 100%
+      padding: 2px 10px
+      border-radius: 50px
       background: linear-gradient(#99AABC, #99AABC), linear-gradient(#99AABC, #99AABC), #F2F4F5
       background-position: center
       background-size: 50% 2px,2px 50%
@@ -255,7 +257,7 @@ $meeting-padding: 2rem
         display: none
       &.avatar-box-plus-users
         background-size: 0
-        font-size: 14px
+        font-size: 12px
         font-weight: bold
         line-height: 24px
         text-align: center
