@@ -99,9 +99,13 @@
     <div class="meeting-dialog-location d-flex">
       <span class="meeting-dialog-location-title">Location</span>
       {{#if isEditingLocation}}
-        <input class="meeting-dialog-location-input flex-grow-1" type="text" value="{{meeting.location}}">
+        <input class="meeting-dialog-location-input flex-grow-1" placeholder="Meeting location" type="text" value="{{meeting.location}}">
       {{else}}
-        <span class="meeting-dialog-location-text flex-grow-1">{{{linkifyStr meeting.location}}}</span>
+        {{#if meeting.location}}
+          <span class="meeting-dialog-location-text flex-grow-1 text-primary">{{{linkifyStr meeting.location}}}</span>
+        {{else}}
+          <input class="meeting-dialog-location-input flex-grow-1" placeholder="Meeting location" type="text" value="{{meeting.location}}">
+        {{/if}}
       {{/if}}
     </div>
     <!-- Meeting Agenda -->
