@@ -37,12 +37,12 @@
       {{#if taskHasOtherMembers}}
         <div class="ownership-transfer-dialog">
           <div class="members-search-wrapper">
-            <input class="members-search-input form-control form-control-sm border-white" placeholder="Transfer ownership to...">
+            <input class="members-search-input form-control form-control-sm border-white ownership-dialog-item" placeholder="Transfer ownership to...">
             <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#search"></use></svg>
           </div>
           <div class="members">
             {{#each taskMembersOtherThanMeMatchingFilter}}
-              <div class="new-owner-option">
+              <div class="new-owner-option ownership-dialog-item" tabindex="0">
                 {{> justdo_avatar}} {{> display_name_with_graphic_unverified_warning}}
               </div>
             {{else}}

@@ -294,6 +294,23 @@ APP.executeAfterAppLibCode ->
 
       getEventDropdownData(e, "close")()
 
+
+    "keydown .ownership-transfer-dialog" : (e) ->
+      $el = $(e.target).closest(".ownership-dialog-item")
+      el_index = $(".ownership-dialog-item").index($el)
+
+      if e.keyCode == 38 and $(".ownership-dialog-item")[el_index - 1]
+        $(".ownership-dialog-item")[el_index - 1].focus()
+
+      if e.keyCode == 40 and $(".ownership-dialog-item")[el_index + 1]
+        $(".ownership-dialog-item")[el_index + 1].focus()
+
+      if e.keyCode == 13
+        $el.click()
+
+      return
+
+
   currentTaskMembersIdsOtherThanMe = ->
     tpl = Template.instance()
     current_task_id = tpl.data._id # Note, a user might click the ownership transfer dialog of a task other than the active one, hence we can't use activeItemObj()
