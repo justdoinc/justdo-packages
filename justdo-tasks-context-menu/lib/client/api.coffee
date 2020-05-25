@@ -42,6 +42,10 @@ _.extend JustdoTasksContextMenu.prototype,
         # We don't show context menu for typed items
         return
 
+      if $(e.target).closest("a").length > 0
+        # Don't hijack contextmenu if links are clicked
+        return
+
       e.preventDefault()
       gc.activateRow(gc.getEventRow(e))
       @show(event_item._id, {of: e})
