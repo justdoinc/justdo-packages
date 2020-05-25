@@ -300,9 +300,11 @@ APP.executeAfterAppLibCode ->
       el_index = $(".ownership-dialog-item").index($el)
 
       if e.keyCode == 38 and $(".ownership-dialog-item")[el_index - 1]
+        e.preventDefault()
         $(".ownership-dialog-item")[el_index - 1].focus()
 
       if e.keyCode == 40 and $(".ownership-dialog-item")[el_index + 1]
+        e.preventDefault()
         $(".ownership-dialog-item")[el_index + 1].focus()
 
       if e.keyCode == 13
