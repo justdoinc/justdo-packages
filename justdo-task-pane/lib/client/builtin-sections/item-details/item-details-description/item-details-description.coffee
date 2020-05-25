@@ -265,7 +265,9 @@ APP.executeAfterAppLibCode ->
     $("#description-editor", $container)
       .froalaEditor({
         toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
-          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo", "insertFile", "insertImage"]
+          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"
+          # ,"insertFile", "insertImage"
+        ]
         quickInsertTags: []
         charCounterCount: false
         key: env.FROALA_ACTIVATION_KEY
@@ -275,9 +277,9 @@ APP.executeAfterAppLibCode ->
         imageMaxSize: JustdoTaskPane.froala_file_upload_max_size
         imageAllowedTypes: ["jpeg", "jpg", "png"]
       })
-      .on "froalaEditor.file.beforeUpload", (e, editor, files) ->
-        _uploadFilesAndInsertToEditor task_id, files, editor, "file"
-        return false
+      # .on "froalaEditor.file.beforeUpload", (e, editor, files) ->
+      #   _uploadFilesAndInsertToEditor task_id, files, editor, "file"
+      #   return false
       .on "froalaEditor.file.error", (e, editor, error, resp) ->
         console.log error
         return
@@ -285,9 +287,9 @@ APP.executeAfterAppLibCode ->
         file = dataURLtoFile img.src, Random.id()
         _uploadFilesAndInsertToEditor task_id, [file], editor, "image", img
         return false
-      .on "froalaEditor.image.beforeUpload", (e, editor, images) ->
-        _uploadFilesAndInsertToEditor task_id, images, editor, "image"
-        return false
+      # .on "froalaEditor.image.beforeUpload", (e, editor, images) ->
+      #   _uploadFilesAndInsertToEditor task_id, images, editor, "image"
+      #   return false
       .on "froalaEditor.image.error", (e, editor, error, resp) ->
         console.log error
         return
