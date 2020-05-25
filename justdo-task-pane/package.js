@@ -111,8 +111,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/builtin-sections/item-settings/tickets-queue/item-settings-tickets-queue.coffee", client);
   api.addFiles("lib/client/builtin-sections/item-settings/notifications/item-settings-notifications.html", client);
 
-  api.addFiles("lib/server/froala-file-upload.coffee", server);
-
   api.use("meteorspark:app@0.3.0", client);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", client);
 

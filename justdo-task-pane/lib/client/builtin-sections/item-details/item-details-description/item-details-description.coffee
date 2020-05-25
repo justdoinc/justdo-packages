@@ -69,6 +69,8 @@ APP.executeAfterAppLibCode ->
             else
               save_state.set 3
 
+  uploading_files = new ReactiveVar 0
+
   destroy_timeout = null
   destroy_timeout_ms = 60 * 1000 # 1 min
   initDestroyTimeout = ->
@@ -164,7 +166,41 @@ APP.executeAfterAppLibCode ->
     else
       edit_mode.set(false)
       $container.removeClass("edit-mode")
+  
+  _uploadFilesAndInsertToEditor = (task_id, files, editor, type_to_insert, img_to_replace) ->
+    uploading_files.set (Tracker.nonreactive -> uploading_files.get() + 1)
+    APP.tasks_file_manager_plugin.tasks_file_manager.uploadFiles task_id, files, (err, uploaded_files) ->
+      if err?
+        console.log err
+        uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
+        return
+      
+      $img_to_replace = null
+      if img_to_replace?
+        $img_to_replace = $(img_to_replace)
 
+      for file in uploaded_files
+        file_id = file.url.substr(file.url.lastIndexOf("/")+1)
+        download_path = APP.tasks_file_manager_plugin.tasks_file_manager.getFileDownloadPath task_id, file_id
+        if type_to_insert == "image"
+          editor.image.insert download_path, false, {src: download_path}, $img_to_replace,
+            link: download_path
+        else if type_to_insert == "file"
+          editor.file.insert download_path, file.filename, null
+      
+      uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
+    return
+
+  dataURLtoFile = (dataurl, filename) ->
+    arr = dataurl.split(',')
+    mime = arr[0].match(/:(.*?);/)[1]
+    bstr = atob(arr[1])
+    n = bstr.length
+    u8arr = new Uint8Array(n)      
+    while n-- 
+      u8arr[n] = bstr.charCodeAt(n)
+    return new File([u8arr], filename, {type:mime})
+    
   current_description_editor = null
   initEditor = ->
     # Fetch the most recent version of task (for case grid-lock just released and
@@ -224,6 +260,8 @@ APP.executeAfterAppLibCode ->
         return
       )
 
+    img_to_replace_id = null
+
     $("#description-editor", $container)
       .froalaEditor({
         toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
@@ -231,22 +269,25 @@ APP.executeAfterAppLibCode ->
         quickInsertTags: []
         charCounterCount: false
         key: env.FROALA_ACTIVATION_KEY
-        fileUploadURL: JustdoTaskPane.froala_file_upload_route
-        fileUploadMethod: "POST"
+        fileUpload: true
         fileMaxSize: JustdoTaskPane.froala_file_upload_max_size, # can't find any env var or const in tasks-file-manager-plugins/tasks-file-manager regarding the size limit of filestack, so I use this const instead
         fileAllowedTypes: ["*"]   # XXX
-        fileUploadParams:
-          task_id: task_id
-        imageUploadURL: JustdoTaskPane.froala_file_upload_route
-        imageUploadMethod: "POST"
         imageMaxSize: JustdoTaskPane.froala_file_upload_max_size
         imageAllowedTypes: ["jpeg", "jpg", "png"]
-        imageUploadParams:
-          task_id: task_id
       })
+      .on "froalaEditor.file.beforeUpload", (e, editor, files) ->
+        _uploadFilesAndInsertToEditor task_id, files, editor, "file"
+        return false
       .on "froalaEditor.file.error", (e, editor, error, resp) ->
         console.log error
         return
+      .on "froalaEditor.image.beforePasteUpload", (e, editor, img) ->
+        file = dataURLtoFile img.src, Random.id()
+        _uploadFilesAndInsertToEditor task_id, [file], editor, "image", img
+        return false
+      .on "froalaEditor.image.beforeUpload", (e, editor, images) ->
+        _uploadFilesAndInsertToEditor task_id, images, editor, "image"
+        return false
       .on "froalaEditor.image.error", (e, editor, error, resp) ->
         console.log error
         return
@@ -277,6 +318,7 @@ APP.executeAfterAppLibCode ->
     edit_mode: -> edit_mode.get()
     save_state: -> save_state.get()
     description: -> @description?.replace(/\n/g, "") # We found out that new lines can break rendering, removing them has no effect on the html rendering.
+    uploading_files: -> uploading_files.get()
 
   Template.task_pane_item_details_description_lock_message.helpers
     lock: -> isLocked(@_id)

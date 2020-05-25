@@ -13,7 +13,11 @@
     {{#if $or description edit_mode}}
       <div class="description-caption">
         {{#if edit_mode}}
-          <div id="done-edit-description" class="btn btn-sm btn-primary">Done</div>
+          {{#if $eq uploading_files 0}}
+            <div id="done-edit-description" class="btn btn-sm btn-primary">Done</div>
+          {{else}}
+            <div class="btn btn-sm btn-secondary" disabled>Uploading...</div>
+          {{/if}}
 
           {{#if $eq save_state 1}}
             <span id="save-description" class="textual-controller">Save</span>
