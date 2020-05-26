@@ -116,7 +116,7 @@
           <div class="kanban-board">
             <div class="kanban-board-header">
               <div class="kanban-board-title">
-                <div class="kanban-board-count {{markCrossedLimit board_value_id}}">{{boardCount board_value_id}}</div>
+                <div class="kanban-board-count {{#if isLimitCrossed}}over-max-count{{/if}}">{{boardCount board_value_id}}</div>
                 {{boardLabel board_value_id}}
               </div>
               <div class="kanban-board-control">

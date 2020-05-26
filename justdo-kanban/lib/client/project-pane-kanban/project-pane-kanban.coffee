@@ -33,6 +33,10 @@ Template.project_pane_kanban.onCreated ->
 
   tpl.getKanbanTaskDoc = -> APP.collections.Tasks.findOne(tpl.kanban_task_id_rv.get())
   tpl.getCurrentBoardStateVisibleBoards = -> tpl.current_board_state_rv.get()?.visible_boards
+  tpl.getCurrentBoardStateVisibleBoardsBoard = (board_id) ->
+    visible_boards = tpl.getCurrentBoardStateVisibleBoards()
+
+    return _.findWhere visible_boards, {board_value_id: board_id}
   tpl.setCurrentBoardStateValue = (key, value) -> APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(tpl.kanban_task_id_rv.get(), tpl.active_board_field_id_rv.get(), key, value)
 
   tpl.members_dropdown_search_input_state_rv = new ReactiveVar null
@@ -160,24 +164,30 @@ Template.project_pane_kanban.helpers
 
     return
 
-  markCrossedLimit: (value_id) -> # STOPPED HERE
-    # kanban = Template.instance().kanban.get()
-    # if not (visible_board = _.findWhere kanban.visible_boards, {board_value_id: value_id})?
-    #   return ""
-    # if not visible_board.limit?
-    #   return ""
-    # if not (kanban_task_id = Template.instance().kanban_task_id_rv.get())?
-    #   return ""
+  isLimitCrossed: ->
+    tpl = Template.instance()
 
-    # parent_id = "parents." + kanban_task_id
+    value_id = @board_value_id
 
-    # count = JD.collections.Tasks.find({"#{parent_id}": {$exists: true}, "#{kanban.boards_field_id}": "#{value_id}"}).count()
+    if not (board = tpl.getCurrentBoardStateVisibleBoardsBoard(value_id))?
+      return false
 
-    # if count > visible_board.limit
-    #   return "over-max-count"
-    # return ""
+    if not (limit = board.limit)?
+      return false
 
-    return
+    if not (kanban_task_id = Template.instance().kanban_task_id_rv.get())?
+      return false
+
+    boards_field_id = tpl.active_board_field_id_rv.get()
+
+    parent_id = "parents." + kanban_task_id
+
+    count = JD.collections.Tasks.find({"#{parent_id}": {$exists: true}, "#{boards_field_id}": "#{value_id}"}).count()
+
+    if count > limit
+      return true
+
+    return false
 
   taskPriorityColor: (priority) ->
     return JustdoColorGradient.getColorRgbString priority
