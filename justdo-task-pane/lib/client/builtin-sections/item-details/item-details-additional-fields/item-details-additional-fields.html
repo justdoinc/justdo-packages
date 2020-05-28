@@ -4,21 +4,13 @@
       <h2>More Info</h2>
       <div class="additional-field-items-list">
         <table class="table">
-          {{#if rerenderTrigger}}
-            {{>task_pane_item_details_additional_fields_rerender_wrapper}}
-          {{else}}
-            {{>task_pane_item_details_additional_fields_rerender_wrapper}}
-          {{/if}}
+          {{#each this}}
+            {{>task_pane_item_details_additional_field}}
+          {{/each}}
         </table>
       </div>
     </section>
   {{/with}}
-</template>
-
-<template name="task_pane_item_details_additional_fields_rerender_wrapper">
-  {{#each this}}
-    {{> task_pane_item_details_additional_field}}
-  {{/each}}
 </template>
 
 <template name="task_pane_item_details_additional_field">
@@ -27,9 +19,9 @@
 
     <td class="field-value {{#if $not isEditableField}}read-only{{/if}}">
       {{#if isEditableField}}
-        {{> task_pane_item_details_additional_field_editor}}
+        {{> task_pane_item_details_additional_field_editor_rerender_wrapper field_info=this field_and_dependencies_values=getFieldAndDependenciesValues}}
       {{else}}
-        {{{formatted_value}}}
+        {{{getFormatterOutput field_info=this field_and_dependencies_values=getFieldAndDependenciesValues}}}
       {{/if}}
 
       <div class="field-actions tooltip-container">
@@ -41,6 +33,28 @@
       </div>
     </td>
   </tr>
+</template>
+
+<template name="task_pane_item_details_additional_field_editor_rerender_wrapper">
+  {{!--
+    We want to force complete re-rendering of template:
+    'task_pane_item_details_additional_field_editor' while skipping blaze
+    mechanism to avoid dom updates when it seems to it that they aren't needed.
+
+    We need it to trigger the rerendering of the editor that happens in the
+    onRendered of template task_pane_item_details_additional_field_editor as a
+    result of the invalidations that happens to getFieldAndDependenciesValues()
+
+    Note: invalidations aren't limited just to the values returned by
+    getFieldAndDependenciesValues(), as this helper might for certain fields
+    also invalidate as a result of changes those fields descendants values read
+    more in getFieldAndDependenciesValues() helper
+  --}}
+  {{#if rerenderTrigger}}
+    {{>task_pane_item_details_additional_field_editor field_info=field_info field_and_dependencies_values=field_and_dependencies_values}}
+  {{else}}
+    {{>task_pane_item_details_additional_field_editor field_info=field_info field_and_dependencies_values=field_and_dependencies_values}}
+  {{/if}}
 </template>
 
 <template name="task_pane_item_details_additional_field_editor">
