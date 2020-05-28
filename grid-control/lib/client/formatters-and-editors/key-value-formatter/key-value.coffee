@@ -21,11 +21,20 @@ getKeyValue = (schema, value, preferred_format="html") ->
       return value
 
   if (html_format = value_by_formats[preferred_format])?
-    return html_format
+    ret = html_format
   else if (txt_format = value_by_formats.txt)?
-    return txt_format
+    ret = txt_format
   else
-    return value
+    ret = value
+
+  if preferred_format == "print" and (bg_color = value_by_formats.bg_color)?
+    ret = """
+      <div class="justdo-color-picker-color-option-container justdo-color-picker-color-option-opener custom-fields-justdo-color-picker-opener">
+        <div class="justdo-color-picker-color-option border-0" style="background-color: ##{bg_color}"></div>
+      </div> #{ret}
+    """
+
+  return ret
 
 getKeyBgColor = (schema, value) ->
   {grid_values, grid_removed_values} = schema
@@ -66,6 +75,8 @@ GridControl.installFormatter "keyValueFormatter",
     """
 
     return formatter
+
+  print_formatter_produce_html: true
 
   print: (doc, field, path) ->
     {schema, value} = @getFriendlyArgs()
