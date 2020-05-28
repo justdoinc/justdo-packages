@@ -473,7 +473,27 @@ _.extend GridDataCore.prototype,
 
   release: (immediate) -> @flush_manager.release()
 
+  getAllDirectParentsItemsDocs: (items_ids) ->
+    res = []
+
+    for item_id in items_ids
+      if item_id == "0" or item_id == 0
+        # Root
+        continue
+
+      if (parents_ids = _.keys(@items_by_id[item_id]?.parents))
+        for parent_id in parents_ids
+          if (parent_doc = @items_by_id[parent_id])?
+            res.push parent_doc
+
+    # Remove parents found more than once
+    res = _.uniq res, false, (doc) -> doc._id # false is for isSorted
+
+    return res
+
   _initCollectionItemsDescendantsChangesTracker: ->
+    self = @
+
     @_collection_items_tracked_for_descendants_changes = {}
     # _collection_items_tracked_for_descendants_changes Structure:
     # {
@@ -489,26 +509,6 @@ _.extend GridDataCore.prototype,
     #     }
     #   ]
     # }
-
-    getAllDirectParentsItemsDocs = (items_ids) =>
-      res = []
-
-      # TODO: ensure each doc returns only once!
-
-      for item_id in items_ids
-        if item_id == "0" or item_id == 0
-          # Root
-          continue
-
-        if (parents_ids = _.keys(@items_by_id[item_id]?.parents))
-          for parent_id in parents_ids
-            if (parent_doc = @items_by_id[parent_id])?
-              res.push parent_doc
-
-      # Remove parents found more than once
-      res = _.uniq res, false, (doc) -> doc._id # false is for isSorted
-
-      return res
 
     announceTrackedItemChanged = (tracked_item_id, is_direct_children_changed, fields_affected) =>
       # fields_affected might be undefined, in which case we assume all the fields
@@ -544,7 +544,7 @@ _.extend GridDataCore.prototype,
       # Go up the tree, for every parent, check if it is in the
       # _collection_items_tracked_for_descendants_changes
       items_to_check = _.keys(changes.items_ids_with_changed_children)
-      while (not _.isEmpty(parents_docs = getAllDirectParentsItemsDocs(items_to_check)))
+      while (not _.isEmpty(parents_docs = self.getAllDirectParentsItemsDocs(items_to_check)))
         items_to_check = []
 
         for parent_doc in parents_docs
@@ -565,7 +565,7 @@ _.extend GridDataCore.prototype,
       # _collection_items_tracked_for_descendants_changes
       items_to_check = [item_id]
       direct_parents = true
-      while (not _.isEmpty(parents_docs = getAllDirectParentsItemsDocs(items_to_check)))
+      while (not _.isEmpty(parents_docs = self.getAllDirectParentsItemsDocs(items_to_check)))
         items_to_check = []
 
         for parent_doc in parents_docs
@@ -578,6 +578,8 @@ _.extend GridDataCore.prototype,
                                # any longer
 
       return
+
+    return
 
   invalidateOnCollectionItemDescendantsChanges: (collection_item_id, options) ->
     if not Tracker.currentComputation?
