@@ -481,15 +481,14 @@ _.extend GridDataCore.prototype,
     #     {
     #       tracker_id: A random id for this tracker, so we can remove it when it isn't needed anymore
     #       direct_children_only: false # true / false
-    #       descendants_changed_dep: new Tracker.Dependency() # reports that changes made to the queue,
-    #                                                         # can be received by getChanges
+    #       descendants_changed_dep: new Tracker.Dependency() # The Dependency that we'll call the .changed()
+    #                                                         # when descendants changed according to the
+    #                                                         # tracker options.
     #       tracked_fields: [] # Either undefined, or an array of fields, if undefined, all fields are
     #                          # tracked
     #     }
     #   ]
     # }
-
-    @_collection_items_tracked_for_descendants_changes = {}
 
     getAllDirectParentsItemsDocs = (items_ids) =>
       res = []
