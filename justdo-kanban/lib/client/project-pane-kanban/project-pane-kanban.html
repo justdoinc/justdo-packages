@@ -35,7 +35,7 @@
           </button>
           <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
             {{#each fields}}
-              <li><a href="#" class="dropdown-item js-kanban-field-item">{{fieldLabel field_id}}</a></li>
+              <li><a href="#" class="dropdown-item js-kanban-field-item">{{fieldLabel}}</a></li>
             {{/each}}
           </ul>
         </div>
@@ -67,9 +67,9 @@
               <a href="#" class="dropdown-item kanban-sort-item kanban-sort-by-date"  sortby="createdAt">
                 Created
                 {{#if sortByReverse}}
-                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-down"/></svg>
+                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"/></svg>
                 {{else}}
-                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-up"/></svg>
+                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"/></svg>
                 {{/if}}
               </a>
             </li>
@@ -77,9 +77,9 @@
               <a href="#" class="dropdown-item kanban-sort-item kanban-sort-by-priority" sortby="priority">
                 By Priority
                 {{#if sortByReverse}}
-                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-up"/></svg>
+                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"/></svg>
                 {{else}}
-                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-down"/></svg>
+                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"/></svg>
                 {{/if}}
               </a>
             </li>
@@ -87,9 +87,9 @@
               <a href="#" class="dropdown-item kanban-sort-item kanban-sort-by-due-date" sortby="due_date">
                 By Due Date
                 {{#if sortByReverse}}
-                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-up"/></svg>
+                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"/></svg>
                 {{else}}
-                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-down"/></svg>
+                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"/></svg>
                 {{/if}}
               </a>
             </li>
@@ -138,7 +138,7 @@
               {{#each getBoardTasks board_value_id}}
                 <div class="kanban-task">
                   <div class="kanban-task-id">{{seqId}}</div>
-                  <div class="kanban-task-priority" style="background-color: {{taskPriorityColor priority}}"></div>
+                  <div class="kanban-task-priority" style="background-color: {{taskPriorityColor}}"></div>
                   <img class="kanban-task-user" src="{{memberAvatar owner_id}}">
                   <div class="kanban-task-title">{{nl2br title}}</div>
                   <div class="kanban-task-control dropdown">

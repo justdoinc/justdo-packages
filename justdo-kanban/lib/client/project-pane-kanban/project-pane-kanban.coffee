@@ -164,7 +164,7 @@ Template.project_pane_kanban.helpers
 
     return
 
-  isLimitCrossed: ->
+  isLimitCrossed: -> # TESTED
     tpl = Template.instance()
 
     value_id = @board_value_id
@@ -189,10 +189,10 @@ Template.project_pane_kanban.helpers
 
     return false
 
-  taskPriorityColor: (priority) ->
-    return JustdoColorGradient.getColorRgbString priority
+  taskPriorityColor: -> # TESTED
+    return JustdoColorGradient.getColorRgbString @priority
 
-  fields: ->
+  fields: -> # TESTED
     fields = [{"field_id": "state"}]
     if JD.activeJustdo()?
       if JD.activeJustdo().custom_fields?
@@ -201,21 +201,22 @@ Template.project_pane_kanban.helpers
             fields.push {"field_id": field.field_id}
     return fields
 
-  fieldLabel: (field_id) ->
+  fieldLabel: -> # TESTED
+    field_id = @field_id
     gc = APP.modules.project_page.gridControl()
     if gc?
       label = gc.getSchemaExtendedWithCustomFields()[field_id].label
       return label
 
-  buttonFieldLabel: ->
+  buttonFieldLabel: -> # TESTED
     boards_field_id = Template.instance().active_board_field_id_rv.get()
     gc = APP.modules.project_page.gridControl()
     label = gc?.getSchemaExtendedWithCustomFields()[boards_field_id]?.label
     return label
 
-  members: ->
+  members: -> # TESTED
     members_dropdown_search_input_state_rv = Template.instance().members_dropdown_search_input_state_rv.get()
-    
+
     if (kanban_task_doc = Template.instance().getKanbanTaskDoc())?
       membersDocs = JustdoHelpers.filterUsersDocsArray(kanban_task_doc.users, members_dropdown_search_input_state_rv)
       return _.sortBy membersDocs, (member) -> JustdoHelpers.displayName(member)
@@ -223,21 +224,19 @@ Template.project_pane_kanban.helpers
   memberAvatar: (user_id) -> # TESTED
     user = Meteor.users.findOne({_id: user_id})
     if user?
-      return user.profile.profile_pic
+      return JustdoAvatar.showUserAvatarOrFallback(user)
 
-  memberName: (user_id) ->
+  memberName: (user_id) -> # TESTED
     return JustdoHelpers.displayName(user_id)
 
-  sortBy: ->
-    kanban = Template.instance().kanban.get()
-    if kanban?
-      return Object.keys(kanban.sort)[0]
+  sortBy: -> # TESTED
+    current_board_state = Template.instance().current_board_state_rv.get()
+    return Object.keys(current_board_state.sort)[0]
 
-  sortByReverse: ->
-    kanban = Template.instance().kanban.get()
-    if kanban?
-      if Object.values(kanban.sort)[0] < 0
-        return true
+  sortByReverse: -> # TESTED
+    current_board_state = Template.instance().current_board_state_rv.get()
+    if Object.values(current_board_state.sort)[0] > 0
+      return true
 
 
 # EVENTS
