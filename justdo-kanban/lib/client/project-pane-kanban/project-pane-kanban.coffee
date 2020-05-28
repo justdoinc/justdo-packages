@@ -238,6 +238,18 @@ Template.project_pane_kanban.helpers
     if Object.values(current_board_state.sort)[0] > 0
       return true
 
+  allActiveBoardFieldValues: ->
+    active_board_field_id = Template.instance().active_board_field_id_rv.get()
+    if not (active_board_field_id == "state")
+      if (active_justdo = JD.activeJustdo())?
+        for custom_field in active_justdo.custom_fields
+          if custom_field.field_id == active_board_field_id
+            custom_field.field_options.select_options.push {"label": "-----"} # Add empty option
+            return custom_field.field_options.select_options
+    else
+      console.log "need to find 'state' options"
+    return
+
 
 # EVENTS
 Template.project_pane_kanban.events
@@ -359,27 +371,26 @@ Template.project_pane_kanban.events
 
     return
 
-  "click .kanban-sort-item": (e, tpl) ->
+  "click .kanban-sort-item": (e, tpl) -> # TESTED
     e.preventDefault()
-    kanban_task_id = tpl.kanban_task_id_rv.get()
-    kanbanSortBy = $(e.currentTarget).attr "sortBy"
-    kanbanSortByReverse = Object.values(tpl.kanban.get().sort)[0]
-    if kanbanSortByReverse == -1
-      # APP.justdo_kanban.updateKanban(kanban_task_id, "sort", {"#{kanbanSortBy}": 1})
-    else
-      # APP.justdo_kanban.updateKanban(kanban_task_id, "sort", {"#{kanbanSortBy}": -1})
+    task_id = tpl.kanban_task_id_rv.get()
+    board_field_id = tpl.active_board_field_id_rv.get()
+    sort_by = $(e.currentTarget).attr "sortBy"
+    sort_by_reverse = Object.values(tpl.current_board_state_rv.get().sort)[0]
+    APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(task_id, board_field_id, "sort", {"#{sort_by}": sort_by_reverse * -1})
     return
 
-  "click .kanban-board-hide": (e, tpl) ->
-    kanban_task_id = tpl.kanban_task_id_rv.get()
+  "click .kanban-board-hide": (e, tpl) -> # TESTED
+    task_id = tpl.kanban_task_id_rv.get()
+    board_field_id = tpl.active_board_field_id_rv.get()
     board_value_id = Blaze.getData(e.target).board_value_id
-    visible_boards = tpl.kanban.get().visible_boards
+    boards = tpl.getCurrentBoardStateVisibleBoards()
 
-    visible_boards.forEach (boards, i) ->
-      if boards.board_value_id == board_value_id
-        visible_boards.splice(i, 1)
+    boards.forEach (board, i) ->
+      if board.board_value_id == board_value_id
+        boards.splice(i, 1)
 
-    # APP.justdo_kanban.updateKanban(kanban_task_id, "visible_boards", visible_boards)
+    APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(task_id, board_field_id, "visible_boards", boards)
     return
 
   "click .kanban-board-edit": (e, tpl) ->
@@ -452,4 +463,3 @@ Template.project_pane_kanban.events
     tpl.setCurrentBoardStateValue("query", {})
 
     return
-
