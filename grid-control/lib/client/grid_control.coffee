@@ -139,6 +139,8 @@ GridControl = (options, container, operations_container) ->
 
   @_load_editors()
 
+  @_initCollectionItemsDescendantsFilterAwareChangesTracker()
+
   Meteor.defer =>
     @_init()
 
@@ -1992,5 +1994,163 @@ _.extend GridControl.prototype,
 
     if @_need_double_header_height_count is 0
       @_setGridHeaderHeight() # Resume to default
+
+    return
+
+
+  _initCollectionItemsDescendantsFilterAwareChangesTracker: ->
+    self = @
+
+    @_collection_items_tracked_for_filter_aware_descendants_changes = {}
+    # _collection_items_tracked_for_filter_aware_descendants_changes Structure:
+    # {
+    #   "item_id": [ # An array because there can be more than one tracker for the same item_id
+    #     {
+    #       tracker_id: A random id for this tracker, so we can remove it when it isn't needed anymore
+    #       direct_children_only: false # true / false
+    #       descendants_changed_dep: new Tracker.Dependency() # The Dependency that we'll call the .changed()
+    #                                                         # when descendants changed according to the
+    #                                                         # tracker options.
+    #       tracked_fields: [] # Either undefined, or an array of fields, if undefined, all fields are
+    #                          # tracked
+    #     }
+    #   ]
+    # }
+    #
+    # IMPORTANT-COMMENT-REGARDING-FILTERS-AND-DIRECT-CHILDREN-BEHAVIOUR, for direct_children_only,
+    # for filter related changes, we don't have a reliable way to determine from which descendant
+    # a change event received for a certain grid visible item.
+    #
+    # We don't know whether the change came from the item itself, from a direct child, or a deeper
+    # descendant. All we can do is to avoid propagating higher than one level than the item from
+    # which it received.
+    #
+    # Bottom line: don't rely on the correctness of filter-aware direct_children_only trackers. Build
+    # your code in a way that redundant calls won't produce a bug.
+    #
+    # To learn more, see how the visible_tree_leaves_changes object returned by the grid-tree-filter-updated
+    # event is constructed. Check the file: grid-control/lib/client/plugins/grid_views/filters/filters.coffee
+    # look there for: VISIBLE_TREE_LEAVES_CHANGES_COMMENT
+
+    announceTrackedItemChanged = (tracked_item_id, is_direct_children_changed, fields_affected) =>
+      # fields_affected might be undefined, in which case we assume all the fields
+      # are affected
+
+      for tracker in @_collection_items_tracked_for_filter_aware_descendants_changes[tracked_item_id]
+        if tracker.direct_children_only and not is_direct_children_changed
+          continue
+
+        if fields_affected?
+          # When fields_affected is undefined - we assume all the fields are affected by this change,
+          # hence no need to check intersection with the tracker tracked fields.
+          if tracker.tracked_fields? and _.isEmpty(_.intersection(tracker.tracked_fields, fields_affected))
+            continue
+
+        tracker.descendants_changed_dep.changed()
+
+      return
+
+    @on "grid-tree-filter-updated", (data) =>
+      {visible_tree_leaves_changes} = data
+
+      if _.isEmpty(@_collection_items_tracked_for_filter_aware_descendants_changes)
+        # Nothing to do...
+        return
+
+      if not (visible_tree_leaves_changes = data.visible_tree_leaves_changes)?
+        # Nothing to do...
+        return
+
+      # Read the IMPORTANT-COMMENT-REGARDING-FILTERS-AND-DIRECT-CHILDREN-BEHAVIOUR above
+      # to understand why we regard all visible_tree_leaves_changes as parents, and one
+      # level above it as direct parent, well.
+      for parent_id of visible_tree_leaves_changes
+        if parent_id of @_collection_items_tracked_for_filter_aware_descendants_changes
+          announceTrackedItemChanged(parent_id, true) # true is for direct parent
+
+      # Go up the tree, for every parent, check if it is in the
+      # _collection_items_tracked_for_filter_aware_descendants_changes
+      items_to_check = _.keys(visible_tree_leaves_changes)
+      level = 0
+      while (not _.isEmpty(parents_docs = self._grid_data._grid_data_core.getAllDirectParentsItemsDocs(items_to_check)))
+        level += 1
+
+        items_to_check = []
+
+        for parent_doc in parents_docs
+          if parent_doc._id of @_collection_items_tracked_for_filter_aware_descendants_changes
+            announceTrackedItemChanged(parent_doc._id, level <= 1) # level <= 1 is to mark whether it is a direct parent. Read the IMPORTANT-COMMENT-REGARDING-FILTERS-AND-DIRECT-CHILDREN-BEHAVIOUR above to learn more about <= 1 is regarded as direct parent
+
+          items_to_check.push parent_doc._id
+
+      return
+
+    return
+
+  invalidateOnCollectionItemDescendantsChanges: (collection_item_id, options) ->
+    # If the filter_aware option is false, this method acts as a simple proxy to
+    # GridDataCore's @invalidateOnCollectionItemDescendantsChanges.
+    #
+    # Search this document for IMPORTANT-COMMENT-REGARDING-FILTERS-AND-DIRECT-CHILDREN-BEHAVIOUR
+
+    if not Tracker.currentComputation?
+      console.error "invalidateOnCollectionItemDescendantsChanges must be called inside a computation"
+
+      return
+
+    default_options =
+      direct_children_only: false
+      filters_aware: false # If set to true, changes to the collection item's descendants filter-passing
+                           # state will also trigger invalidation. Behaviour is tricky, read more by seraching
+                           # this file for: IMPORTANT-COMMENT-REGARDING-FILTERS-AND-DIRECT-CHILDREN-BEHAVIOUR
+      tracked_fields: undefined # Usage example for direct_children_only: ["title", "status"]
+                                #
+                                # Note, structure changes (add/remove parent) are considered
+                                # as changing all the fields, so even if option is set to
+                                # ["title", "status"] , add child to the tracked
+                                # collection_item_id will still trigger invalidation.
+    options = _.extend default_options, options
+
+    # We always begin from proxying the call to GridDataCore's @invalidateOnCollectionItemDescendantsChanges
+    # to handle all the non-filter-aware related tracking. GridDataCore isn't aware of filters which are
+    # defined in the grid-control level.
+
+    # Note, that GridDataCore's invalidateOnCollectionItemDescendantsChanges takes responsibility to
+    # destroy its trackers upon current computation invalidation. So, for all the non-filter-aware
+    # work we are done right here.
+    @_grid_data._grid_data_core.invalidateOnCollectionItemDescendantsChanges(collection_item_id, {tracked_fields: options.tracked_fields, direct_children_only: options.direct_children_only})
+
+    if not options.filters_aware
+      return
+
+    # if options.filters_aware is true we set the filter aware tracking.
+
+    tracker_id = Random.id()
+    tracker_dep = new Tracker.Dependency()
+
+    tracker_dep.depend()
+
+    tracker_def =
+      tracker_id: tracker_id
+      direct_children_only: options.direct_children_only or false
+      tracked_fields: options.tracked_fields or undefined
+      descendants_changed_dep: tracker_dep
+
+    if not @_collection_items_tracked_for_filter_aware_descendants_changes[collection_item_id]?
+      @_collection_items_tracked_for_filter_aware_descendants_changes[collection_item_id] = []
+    @_collection_items_tracked_for_filter_aware_descendants_changes[collection_item_id].push tracker_def
+
+    if Tracker.currentComputation?
+      Tracker.onInvalidate =>
+        # Once invalidated, remove the tracker.
+
+        @_collection_items_tracked_for_filter_aware_descendants_changes[collection_item_id] =
+          _.filter(@_collection_items_tracked_for_filter_aware_descendants_changes[collection_item_id], (_tracker_def) -> _tracker_def.tracker_id != tracker_id)
+
+        if _.isEmpty(@_collection_items_tracked_for_filter_aware_descendants_changes[collection_item_id])
+          delete @_collection_items_tracked_for_filter_aware_descendants_changes[collection_item_id]
+
+        return
+
 
     return

@@ -73,6 +73,8 @@ _.extend GridControl.prototype,
 
       filter_update_waiting = false
 
+      # VISIBLE_TREE_LEAVES_CHANGES_COMMENT
+      #
       # visible_tree_leaves_changes is an object of the form:
       #
       # {
