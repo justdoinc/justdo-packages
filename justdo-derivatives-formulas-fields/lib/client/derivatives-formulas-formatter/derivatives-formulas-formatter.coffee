@@ -1,5 +1,5 @@
 GridControl.installFormatter JustdoDerivativesFormulasFields.pseudo_field_formatter_id,
-  invalidate_ancestors_on_change: "structure-and-content"
+  invalidate_ancestors_on_change: "structure-content-and-filters"
 
   slick_grid: ->
     formatter_content = @getFriendlyArgs().options?.formula?.call(@)
