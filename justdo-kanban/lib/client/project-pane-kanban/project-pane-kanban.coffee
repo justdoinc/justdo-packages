@@ -42,7 +42,7 @@ Template.project_pane_kanban.onCreated ->
   tpl.members_dropdown_search_input_state_rv = new ReactiveVar null
 
   tpl.kanban = new ReactiveVar null
-  tpl.kanbanActiveBoardId = new ReactiveVar null
+  tpl.kanban_active_board_id = new ReactiveVar null
 
   # Tracker.autorun =>
   #   if (kanban_task_id = tpl.kanban_task_id_rv.get())?
@@ -106,9 +106,9 @@ Template.project_pane_kanban.helpers
 
     return APP.modules.project_page.gridControl()?.getSchemaExtendedWithCustomFields()?[active_board_field_id]?.grid_values[board_value_id]?.txt
 
-  boardIsVisible: (board_value_id) -> # TESTED
+  boardIsVisible: -> # TESTED
     for board in Template.instance().getCurrentBoardStateVisibleBoards()
-      if board.board_value_id == board_value_id
+      if board.board_value_id == @option_id
         return true
 
     return false
@@ -238,22 +238,20 @@ Template.project_pane_kanban.helpers
     if Object.values(current_board_state.sort)[0] > 0
       return true
 
-  allActiveBoardFieldValues: ->
+  allActiveBoardFieldValues: -> # TESTED
     active_board_field_id = Template.instance().active_board_field_id_rv.get()
-    if not (active_board_field_id == "state")
-      if (active_justdo = JD.activeJustdo())?
-        for custom_field in active_justdo.custom_fields
-          if custom_field.field_id == active_board_field_id
-            custom_field.field_options.select_options.push {"label": "-----"} # Add empty option
-            return custom_field.field_options.select_options
-    else
-      console.log "need to find 'state' options"
-    return
-
+    gc = APP.modules.project_page.gridControl()
+    boards = gc?.getSchemaExtendedWithCustomFields()[active_board_field_id]?.grid_values
+    if boards?
+      boards_with_labels = []
+      boards_id_array = Object.keys(boards)
+      for board_id in boards_id_array
+        boards_with_labels.push { "option_id": board_id, "label": boards[board_id].txt }
+      return boards_with_labels
 
 # EVENTS
 Template.project_pane_kanban.events
-  "click .kanban-board-task-add-button": (e, tpl) ->
+  "click .kanban-board-task-add-button": (e, tpl) -> # TESTED
     $kanbanBoard = $(e.currentTarget).parents(".kanban-board")
     $KanbanBoardContent = $kanbanBoard.find(".kanban-board-content")
     $task_input = $kanbanBoard.find(".kanban-task-add-input")
@@ -263,34 +261,15 @@ Template.project_pane_kanban.events
 
   "click .js-kanban-selected-task": (e, tpl) -> # TESTED
     e.preventDefault()
-
     task_id = @_id
     tpl.kanban_task_id_rv.set task_id
-
     APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)
-
     return
 
-  "click .js-kanban-field-item": (e, tpl) ->
+  "click .js-kanban-field-item": (e, tpl) -> # TESTED
     e.preventDefault()
-    kanban_task_id = tpl.kanban_task_id_rv.get()
     field_id = Blaze.getData(e.target).field_id
     APP.justdo_kanban.setTaskKanbanViewStateActiveFieldId(tpl.kanban_task_id_rv.get(), field_id)
-
-    # Remove from here
-    visible_boards = []
-
-    gc = APP.modules.project_page.gridControl()
-    board_values = gc?.getSchemaExtendedWithCustomFields()[field_id]?.grid_values
-
-    for value in Object.keys(board_values)
-      if value != ""
-        visible_boards.push {board_value_id: value, limit: JustdoKanban.default_kanban_boards_limit}
-
-    # APP.justdo_kanban.updateKanban(kanban_task_id, "boards_field_id", field_id)
-    # APP.justdo_kanban.updateKanban(kanban_task_id, "visible_boards", visible_boards)
-
-
     return
 
   "click .kanban-task": (e, tpl) -> # TESTED
@@ -298,7 +277,7 @@ Template.project_pane_kanban.events
 
     return
 
-  "keydown .kanban-task-add-input": (e, tpl) -> # NEED TO TEST SHAKE PART
+  "keydown .kanban-task-add-input": (e, tpl) -> # TESTED
     if e.which == 27 # Escape
       $(e.target).blur().val ""
 
@@ -314,10 +293,8 @@ Template.project_pane_kanban.events
 
       if not (gc = APP.modules.project_page.gridControl())?
         console.error "Couldn't find grid control, this shouldn't happen."
-
         return
 
-      board_label = gc?.getSchemaExtendedWithCustomFields()[boards_field_id].label
       task_title = $(e.target).val().trim()
 
       if task_title != ""
@@ -329,7 +306,7 @@ Template.project_pane_kanban.events
         parent_id = "parents." + kanban_task_id
         tasks_count = APP.collections.Tasks.find({"#{parent_id}": {$exists: true}, "#{boards_field_id}": "#{board_value_id}"}).count()
 
-        if board_limit > 0 and tasks_count.length > board_limit
+        if board_limit > 0 and tasks_count >= board_limit
           $kanban_board = $(e.currentTarget).parents(".kanban-board")
           $kanban_board.addClass "kanban-shake"
           setTimeout ->
@@ -337,7 +314,7 @@ Template.project_pane_kanban.events
           , 1500
 
           JustdoSnackbar.show
-            text: "'" + board_label + "' has a limit of " + board_limit + " Tasks"
+            text: "Board has a limit of " + board_limit + " Tasks"
             duration: 4000
             actionText: "Dismiss"
             onActionClick: =>
@@ -348,7 +325,7 @@ Template.project_pane_kanban.events
 
     return
 
-  "click .kanban-task-remove": (e, tpl) ->
+  "click .kanban-task-remove": (e, tpl) -> # TESTED
     $task = $(e.currentTarget).parents(".kanban-task")
     parent_task_id = tpl.kanban_task_id_rv.get()
     subtask_id = Blaze.getData(e.target)._id
@@ -366,9 +343,7 @@ Template.project_pane_kanban.events
           onActionClick: =>
             JustdoSnackbar.close()
             return
-
       return
-
     return
 
   "click .kanban-sort-item": (e, tpl) -> # TESTED
@@ -393,26 +368,27 @@ Template.project_pane_kanban.events
     APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(task_id, board_field_id, "visible_boards", boards)
     return
 
-  "click .kanban-board-edit": (e, tpl) ->
-    tpl.kanbanActiveBoardId.set Blaze.getData(e.target).board_value_id
+  "click .kanban-board-edit": (e, tpl) -> # TESTED
+    tpl.kanban_active_board_id.set Blaze.getData(e.target).board_value_id
     limit = Blaze.getData(e.target).limit
     if limit > 0
       $(".kanban-board-limit-input").val limit
     return
 
-  "click .kanban-limit-save": (e, tpl) ->
+  "click .kanban-limit-save": (e, tpl) -> # TESTED
     $kanban_limit_input = $(".kanban-board-limit-input")
-    kanban_task_id = tpl.kanban_task_id_rv.get()
-    board_id = tpl.kanbanActiveBoardId.get()
+    task_id = tpl.kanban_task_id_rv.get()
+    board_field_id = tpl.active_board_field_id_rv.get()
+    active_board_id = tpl.kanban_active_board_id.get()
     limit_val = parseInt($kanban_limit_input.val())
-    visible_boards = tpl.kanban.get().visible_boards
+    visible_boards = tpl.current_board_state_rv.get().visible_boards
 
     if limit_val > 0
       visible_boards.forEach (boards, i) ->
-        if boards.board_value_id == board_id
+        if boards.board_value_id == active_board_id
           visible_boards[i].limit = limit_val
 
-      # APP.justdo_kanban.updateKanban(kanban_task_id, "visible_boards", visible_boards)
+      APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(task_id, board_field_id, "visible_boards", visible_boards)
       $("#kanban-board-settings").modal "hide"
     else
       $kanban_limit_input.addClass "kanban-shake"
@@ -421,22 +397,24 @@ Template.project_pane_kanban.events
       , 1500
     return
 
-  "click .kanban-board-add-item": (e, tpl) ->
-    kanban_task_id = tpl.kanban_task_id_rv.get()
-    board_id = Blaze.getData(e.target)
-    kanban = tpl.kanban.get()
+  "click .kanban-board-add-item": (e, tpl) -> # TESTED
+    task_id = tpl.kanban_task_id_rv.get()
+    board_field_id = tpl.active_board_field_id_rv.get()
+    board_id = Blaze.getData(e.target).option_id
+    visible_boards = tpl.current_board_state_rv.get().visible_boards
     board_is_visible = $(e.target).hasClass "visible"
-    if kanban?
-      visible_boards = kanban.visible_boards
-      if board_is_visible
-        visible_boards.forEach (board, i) ->
-          if board.board_value_id == board_id
-            visible_boards.splice(i, 1)
-      else
-        visible_boards.push ({board_value_id: board_id, limit: JustdoKanban.default_kanban_boards_limit})
 
-      # APP.justdo_kanban.updateKanban(kanban_task_id, "visible_boards", visible_boards)
+    if board_is_visible
+      visible_boards.forEach (board, i) ->
+        if board.board_value_id == board_id
+          visible_boards.splice(i, 1)
+    else
+      visible_boards.push {"board_value_id": board_id, "limit": 100}
+
+    APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(task_id, board_field_id, "visible_boards", visible_boards)
     return
+
+
 
   "keyup .kanban-member-selector-search": (e, tpl) -> # TESTED
     value = $(e.target).val().trim()
