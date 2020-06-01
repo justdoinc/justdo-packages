@@ -278,19 +278,18 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         """
         
     ############
-    # earliest child
+    # earliest/latest child
     ############
     earliest_child_mark = ""
-    if (earliest_child = task_info.earliest_child_start_time)?
+    latest_child_mark = ""
+  
+    if (earliest_child = task_info.earliest_child_start_time)? and
+       (latest_child = task_info.latest_child_end_time)?
       if earliest_child >= column_start_epoch and earliest_child <= column_end_epoch
         if (offset = grid_gantt.timeOffsetPixels(column_start_end, earliest_child, column_width_px))?
           earliest_child_mark = """<div class="gantt-earliest-child" style="left:#{offset}px"></div>"""
   
-    ############
-    # latest child
-    ############
-    latest_child_mark = ""
-    if (latest_child = task_info.latest_child_end_time)?
+    
       if latest_child >= column_start_epoch and latest_child <= column_end_epoch
         if (offset = grid_gantt.timeOffsetPixels(column_start_end, latest_child, column_width_px))?
           latest_child_mark = """<div class="gantt-latest-child" style="left:#{offset - 8}px"></div>"""
