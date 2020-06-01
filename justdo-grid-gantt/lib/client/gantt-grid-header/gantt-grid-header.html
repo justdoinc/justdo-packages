@@ -13,16 +13,6 @@
     {{/each}}
 
     <div class="grid-gantt-control">
-      <div class="grid-gantt-dropdown dropdown">
-        <div class="grid-gantt-dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{scale}}</div>
-        <ul class="dropdown-menu p-1 shadow border-0">
-          <li class="dropdown-item grid-gantt-scale-days">Days</li>
-          <li class="dropdown-item grid-gantt-scale-weeks">Weeks</li>
-          <li class="dropdown-item grid-gantt-scale-months">Months</li>
-          <li class="dropdown-item grid-gantt-scale-quarters">Quarters</li>
-          <li class="dropdown-item grid-gantt-scale-years">Years</li>
-        </ul>
-      </div>
       <svg class="jd-icon grid-gantt-zoom-out"><use xlink:href="/layout/icons-feather-sprite.svg#minus"/></svg>
       <svg class="jd-icon grid-gantt-zoom-in {{#if disableZoomIn}}disable-zoom{{/if}}" ><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
     </div>

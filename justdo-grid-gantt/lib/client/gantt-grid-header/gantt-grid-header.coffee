@@ -7,9 +7,6 @@ minimum_pixels_per_year = 31
 Template.justdo_grid_gantt_header.onCreated ->
   self = @
   
-  
-  @scale_rv = new ReactiveVar ("Days")
-  
   @high_res_divs_rv = new ReactiveVar []
   @low_res_divs_rv = new ReactiveVar []
   
@@ -77,9 +74,6 @@ Template.justdo_grid_gantt_header.helpers
     
   lowResDivs: ->
     return Template.instance().low_res_divs_rv.get()
-
-  scale: ->
-    return Template.instance().scale_rv.get()
   
 Template.justdo_grid_gantt_header.events
   "click .grid-gantt-zoom-in": (e, tpl) ->

@@ -270,7 +270,7 @@ _.extend JustdoGridGantt.prototype,
         
         if parent_changed
           self.processStartTimeChange parent_id, parent_task_info, old_parent_task_info
-                
+          
       return
   
     @processEndTimeChange = (task_id, task_info, old_task_info) ->
