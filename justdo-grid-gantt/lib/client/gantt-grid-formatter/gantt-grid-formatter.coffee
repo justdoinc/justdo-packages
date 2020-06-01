@@ -7,6 +7,7 @@ $("body").keyup (e) ->
 
   if (grid_gantt = APP.justdo_grid_gantt)?
     grid_gantt.resetStatesChangeOnEscape()
+    $(".grid-gantt-date-hint").remove()
 
   return
 
@@ -321,7 +322,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     if (milestone_time = task_info.milestone_time)?
       if (offset = grid_gantt.timeOffsetPixels(column_start_end, milestone_time, column_width_px))?
         if offset >= 0 and offset <= column_width_px
-          due_date_mark = """<div class="gantt-milestone" style="left:#{offset - 5}px"></div>"""  #the -5 here is needed due to rotation
+          due_date_mark = """<div class="gantt-milestone" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>"""  #the -5 here is needed due to rotation
 
     ############
     # warning
@@ -436,6 +437,20 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           row: @getEventRow(e)
       return
   ,
+    args: ["mousedown", ".gantt-milestone"]
+    handler: (e) ->
+      task_id = e.target.getAttribute("task-id")
+      APP.justdo_grid_gantt.setState
+        task_id: task_id
+        milestone:
+          is_dragging: true
+          original_milestone_time: APP.justdo_grid_gantt.task_id_to_info[task_id].milestone_time
+        mouse_down:
+          x: e.clientX
+          y: e.clientY
+          row: @getEventRow(e)
+      return
+  ,
     args: ["mousedown", ".gantt-main-bar"]
     handler: (e) ->
       task_id = e.target.getAttribute("task-id")
@@ -456,6 +471,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       states = APP.justdo_grid_gantt.getOrCreateState()
       if states.end_time.is_dragging or
            states.main_bar.is_dragging or
+           states.milestone.is_dragging or
            states.dependencies.finish_to_x_independent?
         return
         
@@ -514,8 +530,28 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           task_id: null
           
         $(".grid-gantt-date-hint").remove()
+        
+      else if states.milestone.is_dragging
+        if Math.abs(e.clientX - states.mouse_down.x) > 5
+          delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        else
+          delta_time = 0
+  
+        new_milestone_time = states.milestone.original_milestone_time + delta_time
+        new_milestone_date = moment.utc(new_milestone_time).format("YYYY-MM-DD")
+  
+        JD.collections.Tasks.update states.task_id,
+          $set:
+            due_date: new_milestone_date
+  
+        APP.justdo_grid_gantt.setState
+          milestone:
+            is_dragging: false
+          task_id: null
+  
+        $(".grid-gantt-date-hint").remove()
       
-      if states.main_bar.is_dragging
+      else if states.main_bar.is_dragging
         if Math.abs(e.clientX - states.mouse_down.x) > 5
           delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         else
@@ -582,6 +618,26 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         hint_x = grid_gantt.timeOffsetPixels(epoch_range, new_end_time, grid_gantt.getColumnWidth() )
         hint_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
         date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_end_time).format("YYYY-MM-DD"))
+        end_date_hint = """
+                <div class="grid-gantt-date-hint" style="top: #{hint_y}px; left: #{hint_x}px">#{date}</div>
+            """
+        $(".grid-gantt-date-hint").remove()
+        $(".justdo-grid-gantt-all-dependencies").append end_date_hint
+  
+      else if states.milestone.is_dragging
+        epoch_range = grid_gantt.getEpochRange()
+        gc = APP.modules.project_page.gridControl()
+        if Math.abs(e.clientX - states.mouse_down.x) > 5
+          delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        else
+          delta_time = 0
+        new_milestone_time = states.milestone.original_milestone_time + delta_time
+        grid_gantt.setPresentationMilestone states.task_id, new_milestone_time
+  
+        #hint:
+        hint_x = 15 + grid_gantt.timeOffsetPixels(epoch_range, new_milestone_time, grid_gantt.getColumnWidth() )
+        hint_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
+        date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_milestone_time).format("YYYY-MM-DD"))
         end_date_hint = """
                 <div class="grid-gantt-date-hint" style="top: #{hint_y}px; left: #{hint_x}px">#{date}</div>
             """

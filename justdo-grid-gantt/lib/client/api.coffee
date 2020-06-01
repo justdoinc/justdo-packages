@@ -486,6 +486,12 @@ _.extend JustdoGridGantt.prototype,
       self.processGanttDirtyTasks()
       return
   
+    @setPresentationMilestone = (task_id, new_milestone_time) ->
+      self.task_id_to_info[task_id].milestone_time = new_milestone_time
+      self.gantt_dirty_tasks.add task_id
+      self.processGanttDirtyTasks()
+      return
+  
     @setPresentationStartTime = (task_id, new_start_time) ->
       self.task_id_to_info[task_id].self_start_time = new_start_time
       self.gantt_dirty_tasks.add task_id
