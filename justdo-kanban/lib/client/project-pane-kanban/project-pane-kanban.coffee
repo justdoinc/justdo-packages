@@ -44,6 +44,14 @@ Template.project_pane_kanban.onCreated ->
   tpl.kanban = new ReactiveVar null
   tpl.kanban_active_board_id = new ReactiveVar null
 
+  tpl.getCurrentGcFieldLabel = (field_id) ->
+    if (gc = APP.modules.project_page.gridControl())?
+      label = gc.getSchemaExtendedWithCustomFields()[field_id].label
+      return label
+
+    return ""
+
+
   # Tracker.autorun =>
   #   if (kanban_task_id = tpl.kanban_task_id_rv.get())?
   #     kanban = APP.justdo_kanban.kanbans_collection.findOne(kanban_task_id)
@@ -194,60 +202,63 @@ Template.project_pane_kanban.helpers
 
   fields: -> # TESTED
     fields = [{"field_id": "state"}]
+
     if JD.activeJustdo()?
       if JD.activeJustdo().custom_fields?
         for field in JD.activeJustdo().custom_fields
           if field.custom_field_type_id == "basic-select"
             fields.push {"field_id": field.field_id}
+
     return fields
 
   fieldLabel: -> # TESTED
-    field_id = @field_id
-    gc = APP.modules.project_page.gridControl()
-    if gc?
-      label = gc.getSchemaExtendedWithCustomFields()[field_id].label
-      return label
+    tpl = Template.instance()
+
+    return tpl.getCurrentGcFieldLabel(@field_id)
 
   buttonFieldLabel: -> # TESTED
+    tpl = Template.instance()
     boards_field_id = Template.instance().active_board_field_id_rv.get()
-    gc = APP.modules.project_page.gridControl()
-    label = gc?.getSchemaExtendedWithCustomFields()[boards_field_id]?.label
-    return label
+    return tpl.getCurrentGcFieldLabel(boards_field_id)
 
   members: -> # TESTED
-    members_dropdown_search_input_state_rv = Template.instance().members_dropdown_search_input_state_rv.get()
+    members_dropdown_search_input_state_rv =
+      Template.instance().members_dropdown_search_input_state_rv.get()
 
     if (kanban_task_doc = Template.instance().getKanbanTaskDoc())?
-      membersDocs = JustdoHelpers.filterUsersDocsArray(kanban_task_doc.users, members_dropdown_search_input_state_rv)
-      return _.sortBy membersDocs, (member) -> JustdoHelpers.displayName(member)
+      members_docs = JustdoHelpers.filterUsersDocsArray(kanban_task_doc.users, members_dropdown_search_input_state_rv)
+      return _.sortBy members_docs, (member) -> JustdoHelpers.displayName(member)
+
+    return []
 
   memberAvatar: (user_id) -> # TESTED
-    user = Meteor.users.findOne({_id: user_id})
-    if user?
-      return JustdoAvatar.showUserAvatarOrFallback(user)
+    return JustdoAvatar.showUserAvatarOrFallback(Meteor.users.findOne(user_id))
 
   memberName: (user_id) -> # TESTED
     return JustdoHelpers.displayName(user_id)
 
   sortBy: -> # TESTED
     current_board_state = Template.instance().current_board_state_rv.get()
+
     return Object.keys(current_board_state.sort)[0]
 
   sortByReverse: -> # TESTED
     current_board_state = Template.instance().current_board_state_rv.get()
     if Object.values(current_board_state.sort)[0] > 0
       return true
+    return false
 
   allActiveBoardFieldValues: -> # TESTED
     active_board_field_id = Template.instance().active_board_field_id_rv.get()
-    gc = APP.modules.project_page.gridControl()
-    boards = gc?.getSchemaExtendedWithCustomFields()[active_board_field_id]?.grid_values
-    if boards?
-      boards_with_labels = []
-      boards_id_array = Object.keys(boards)
-      for board_id in boards_id_array
-        boards_with_labels.push { "option_id": board_id, "label": boards[board_id].txt }
-      return boards_with_labels
+    field_values = []
+
+    if (schema = APP.modules?.project_page?.gridControl()?.getSchemaExtendedWithCustomFields())?
+      for value_id, value_def of schema[active_board_field_id].grid_values
+        field_values.push
+          option_id: value_id
+          label: value_def.html or value_def.txt
+
+    return field_values
 
 # EVENTS
 Template.project_pane_kanban.events
