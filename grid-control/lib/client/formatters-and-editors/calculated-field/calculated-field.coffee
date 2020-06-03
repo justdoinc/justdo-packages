@@ -1,6 +1,34 @@
 #
 # Calculated field formatter and editor
 #
+backward_compatibility_functions_regex = /^=(sum)\((.*?)\)$/i
+backwardCompatibilityTransformation = (raw_doc_value) ->
+  #
+  # Backward compatibility with sum({direct_children_only: true/false, filter_aware: true/false})
+  #
+  if _.isString(raw_doc_value) and raw_doc_value[0] == "=" and (results = backward_compatibility_functions_regex.exec(raw_doc_value))?
+    [m, function_name, options] = results
+
+    # Normalize
+    function_name = function_name.toLowerCase()
+
+    if options.trim() == ""
+      options = null
+    else
+      try
+        options = JSON.parse(options)
+      catch e
+        options = {}
+
+    default_options =
+      direct_children_only: true
+      filter_aware: false
+
+    options = _.extend {}, default_options, options
+
+    raw_doc_value = "=" + JustdoHelpers.lcFirst("""#{if options.filter_aware then "Filtered" else ""}#{if options.direct_children_only then "Children" else "Tree"}Sum()""")
+
+  return raw_doc_value
 
 #
 # Actions buttons definitions:
@@ -52,11 +80,24 @@ default_ext_buttons = []
 
 calculated_field_functions = {}
 
-share.installCalculatedFieldFunction = (function_name, func) ->
-  if not /^[a-z_0-9]+$/.test(function_name)
-    throw new Meteor.Error("invalid-calculated-field-function-name", "Calculated field function must be all lowered case underscored name /^[a-z_0-9]+$/ - #{function_name} provided")
+functions_regex = null
 
-  calculated_field_functions[function_name] = func
+updateFunctionsRegex = ->
+  funcs_settings_modifiers_prefixes = "((?:filtered)?(?:tree|children))"
+  funcs_ids_group_regex = "(#{_.keys(calculated_field_functions).join("|")})"
+  input_part_regex = "\\((.*?)\\)"
+
+  functions_regex = new RegExp(funcs_settings_modifiers_prefixes + funcs_ids_group_regex + input_part_regex, "ig")
+
+  return
+
+share.installCalculatedFieldFunction = (func_id, settings) ->
+  if not /^[a-zA-Z0-9]+$/.test(func_id)
+    throw new Meteor.Error("invalid-calculated-field-function-name", "Calculated field function must match /^[a-zA-Z0-9]+$/ - #{func_id} provided")
+
+  calculated_field_functions[func_id] = settings
+
+  updateFunctionsRegex()
 
   return
 
@@ -84,8 +125,6 @@ GridControl.installFormatter formatter_name,
   #
   # Functions
   #
-  functions_regex: /^=([a-z_0-9]+?)\((.*?)\)$/i
-
   calculatePathCalculatedFieldValue: (grid_control, field_id, path, item_obj) ->
     # Caluculate the value of field_id recursively.
     #
@@ -148,30 +187,47 @@ GridControl.installFormatter formatter_name,
       # Nothing to calculate, raw value
       return value
 
-    # Run the function
-    if not (results = @functions_regex.exec(value))?
-      return {err: "Syntax error"}
+    value = backwardCompatibilityTransformation(value)
 
-    [m, function_name, options] = results
+    value = value.substr(1)
 
-    # Normalize
-    function_name = function_name.toLowerCase()
+    if not functions_regex?
+      console.warn "No functions were set for calculatedFieldFormatter"
 
-    if function_name not of @_functions
-      return {err: "Unknown function: #{function_name}()"}
-
-    if options.trim() == ""
-      options = null
-    else
-      try
-        options = JSON.parse(options)
-      catch e
-        return {err: "couldn't parse options provided to function"}
+      return {cval: value}
 
     if not path?
       path = grid_control._grid_data.getCollectionItemIdPath(item_obj._id)
 
-    return {cval: @_functions[function_name].call(@, options, grid_control, field_id, path, item_obj)}
+    try
+      value = value.replace functions_regex, (match, func_options_str, func_id, func_args_str) =>
+        func_options_str = func_options_str.toLowerCase()
+        func_id = func_id.toLowerCase()
+
+        {func} = func_settings = calculated_field_functions[func_id]
+
+        function_options = {}
+
+        function_options.filter_aware = false
+        if func_options_str.indexOf("filtered") >= 0
+          if not func_settings.allow_filter_aware
+            throw new Error("The filters aware version of #{func_id} asked for in `#{match}' is not supported.")
+
+          function_options.filter_aware = true
+
+        function_options.direct_children_only = true
+        if func_options_str.indexOf("tree") >= 0 or func_options_str.indexOf("children") >= 0
+          if not func_settings.allow_tree_ops
+            throw new Error("The sub-tree version of #{func_id} asked for in `#{match}' is not supported.")
+
+          if func_options_str.indexOf("tree") >= 0
+            function_options.direct_children_only = false
+
+        return func.call(@, function_options, grid_control, field_id, path, item_obj)
+    catch e
+      return {err: e.message}
+
+    return {cval: value}
 
   # Defining functions for the calculated field
   #
@@ -179,10 +235,13 @@ GridControl.installFormatter formatter_name,
   # and are lookedup in the list of functions under the _functions
   # object of the formatter object.
   #
-  # The share.installCalculatedFieldFunction(func_name, func) installs
+  # The share.installCalculatedFieldFunction(func_id, settings) installs
   # functions that can be used by the users.
   #
-  # func is called with the following arguments:
+  # The functions that will actually be enabled for the user are a set of
+  # func_id suffixed functions that depends on the settings set for the func.
+  #
+  # settings.func is called with the following arguments:
   #
   #   (function_options, grid_control, field_id, path, item_obj)
   #
@@ -190,23 +249,6 @@ GridControl.installFormatter formatter_name,
   # in the path provided was parsed correctly to refer to the function
   # called with the function_options (i.e. the function can begin the
   # calculation immediately).
-  #
-  # ## The function_options argument
-  # 
-  # Functions can get as their first argument a JSON object that represents
-  # the function object - XXX in the future more types of arguments will be
-  # implemented. If no options argument provided, function_options will be
-  # simply null.
-  #
-  # If such a JSON object provided, its parsed value will be passed in the
-  # function_options argument below - never trust user provided data! make
-  # sure it is secured before working with it.
-  #
-  # Example 1: for calculated field with the value '=SUM({"filter_aware": false})'
-  # the sum function will be called with function_options set to
-  # {filter_aware: false}.
-  #
-  # Example 2: For '=SUM()' function_options will be null.
   #
   # ## Helpers
   #
@@ -225,8 +267,6 @@ GridControl.installFormatter formatter_name,
   # If an error prevented the value from being calculated return an error message
   # in a JS object with the err property set to the message you want to present to
   # the user. Example: {err: "Can't divide by 0"}
-  _functions: calculated_field_functions # Do not edit this object manualy, use
-                                         # share.installCalculatedFieldFunction
 
   getFieldValue: (friendly_args) ->
     # Note, for print, we won't have path set in friendly args, see 
@@ -355,6 +395,14 @@ GridControl.installEditorExtension
   prototype_extensions:
     actions_buttons: default_buttons
     ext_actions_buttons: default_ext_buttons
+
+    preEditDocValueTransformation: (raw_doc_value) ->
+      processed_doc_value = backwardCompatibilityTransformation(raw_doc_value)
+
+      return processed_doc_value
+
+    preDbInsertionTransformation: ->
+      return
 
     generateInputWrappingElement: ->
       $editor = $("""<div class="grid-editor cfld-editor" />""")

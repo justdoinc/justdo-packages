@@ -1,5 +1,12 @@
 share.installCalculatedFieldFunction "sum",
-  (function_options, grid_control, field_id, path, item_obj) ->
+  allow_tree_ops: true # Will let the user use the functions: treeXYZ() and childrenXYZ() where XYZ is the field function ID (e.g. treeSum()/childrenSum())
+                       # If the 'childrenXYZ' is used function_options will include the options: process_sub_tree: true, direct_children_only set to true
+                       # If the 'treeXYZ' is used function_options will include the options: process_sub_tree: true, direct_children_only set to false
+
+  allow_filter_aware: true # Will let the user use the 'filtered' prefixed version of any function already existing: e.g filteredTreeSum()
+                           # If the 'filtered' prefixed version is used, function_options will include the option: filter_aware set to true
+
+  func: (function_options, grid_control, field_id, path, item_obj) ->
     each_options = 
       expand_only: false
       filtered_tree: false
