@@ -119,7 +119,7 @@ Package.onUse(function (api) {
 
   api.add_files('lib/client/formatters-and-editors/calculated-field/calculated-field.coffee', client);
   api.add_files('lib/client/formatters-and-editors/calculated-field/calculated-field.sass', client);
-  api.add_files('lib/client/formatters-and-editors/calculated-field/functions/calculated-field-sum-func.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/calculated-field/functions/common-filter-aware-tree-op-calculator-funcs.coffee', client);
 
   api.add_files('lib/client/formatters-and-editors/default-formatter/default-formatter.coffee', client);
   api.add_files('lib/client/formatters-and-editors/default-formatter/default-formatter.sass', client);
