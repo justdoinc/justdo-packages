@@ -277,9 +277,9 @@ APP.executeAfterAppLibCode ->
         imageMaxSize: JustdoTaskPane.froala_file_upload_max_size
         imageAllowedTypes: ["jpeg", "jpg", "png"]
       })
-      # .on "froalaEditor.file.beforeUpload", (e, editor, files) ->
-      #   _uploadFilesAndInsertToEditor task_id, files, editor, "file"
-      #   return false
+      .on "froalaEditor.file.beforeUpload", (e, editor, files) ->
+        _uploadFilesAndInsertToEditor task_id, files, editor, "file"
+        return false
       .on "froalaEditor.file.error", (e, editor, error, resp) ->
         console.log error
         return
@@ -287,9 +287,9 @@ APP.executeAfterAppLibCode ->
         file = dataURLtoFile img.src, Random.id()
         _uploadFilesAndInsertToEditor task_id, [file], editor, "image", img
         return false
-      # .on "froalaEditor.image.beforeUpload", (e, editor, images) ->
-      #   _uploadFilesAndInsertToEditor task_id, images, editor, "image"
-      #   return false
+      .on "froalaEditor.image.beforeUpload", (e, editor, images) ->
+        _uploadFilesAndInsertToEditor task_id, images, editor, "image", editor.image.get()
+        return false
       .on "froalaEditor.image.error", (e, editor, error, resp) ->
         console.log error
         return
