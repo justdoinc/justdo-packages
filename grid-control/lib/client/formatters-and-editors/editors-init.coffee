@@ -204,7 +204,7 @@ base_slick_grid_editors_prototype =
     #
     # Will return undefined if it isn't set
 
-    return @getEditorDoc()[@getEditorFieldName()]
+    return @preEditDocValueTransformation(@getEditorDoc()[@getEditorFieldName()])
 
   callFormatter: (formatter_name) ->
     # Get the output of formatter for current editor_args
@@ -225,6 +225,8 @@ base_slick_grid_editors_prototype =
     @context.grid_control.saveAndExitActiveEditor()
 
     return
+
+  preEditDocValueTransformation: (raw_doc_value) -> raw_doc_value
 
   getValue: -> @serializeValue() # XXX Consider getting rid of this one.
                                  # Used by us due to wrong docs
