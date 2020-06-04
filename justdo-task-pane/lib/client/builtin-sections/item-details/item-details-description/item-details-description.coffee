@@ -268,6 +268,8 @@ APP.executeAfterAppLibCode ->
           "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"
           # ,"insertFile", "insertImage"
         ]
+        imageEditButtons: ['imageReplace', 'imageAlign', 'imageCaption', 'imageRemove', '|', 'imageLink', 'linkOpen', 
+          'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize']
         quickInsertTags: []
         charCounterCount: false
         key: env.FROALA_ACTIVATION_KEY
