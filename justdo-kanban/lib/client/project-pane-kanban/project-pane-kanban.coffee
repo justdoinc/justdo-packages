@@ -91,7 +91,11 @@ Template.project_pane_kanban.helpers
       query = _.extend {}, current_board_state.query,
         project_id: active_justdo_id
         "#{parent_id}": {$exists: true}
-        "#{active_board_field_id}": "#{board_value_id}"
+        if board_value_id == ""
+          "#{active_board_field_id}": {$exists: false}
+          "#{active_board_field_id}": null
+        else
+          "#{active_board_field_id}": "#{board_value_id}"
 
       return APP.collections.Tasks.find(query, {sort: current_board_state.sort})
 
