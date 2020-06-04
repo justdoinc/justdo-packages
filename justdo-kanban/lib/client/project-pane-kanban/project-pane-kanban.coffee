@@ -1,11 +1,4 @@
 # FUNCTIONS
-makeTasksDraggable = ->
-  $(".kanban-task").draggable
-    helper: "clone"
-    start: (event, ui) ->
-      $(ui.helper).width($(event.target).width())
-  return
-
 activeTaskId = -> JD.activeItem({_id: 1})?._id
 
 # ON CREATED
@@ -50,47 +43,6 @@ Template.project_pane_kanban.onCreated ->
       return label
 
     return ""
-
-
-  # Tracker.autorun =>
-  #   if (kanban_task_id = tpl.kanban_task_id_rv.get())?
-  #     kanban = APP.justdo_kanban.kanbans_collection.findOne(kanban_task_id)
-  #     if kanban?
-  #       tpl.kanban.set kanban[Meteor.userId()]
-
-  #     setTimeout ->
-  #       # Make Kanban Sortable
-  #       $(".kanban-boards").sortable
-  #         items: ".kanban-board"
-  #         helper: "clone"
-  #         tolerance: "pointer"
-  #         cancel: ".kanban-board-control, .kanban-task-control, .kanban-task-add"
-  #         update: ( event, ui ) ->
-  #           kanban_task_id = tpl.kanban_task_id_rv.get()
-  #           visible_boards = []
-  #           $(".kanban-board").each ->
-  #             visible_boards.push Blaze.getData($(this)[0])
-
-  #           # APP.justdo_kanban.updateKanban(kanban_task_id, "visible_boards", [])
-  #           # APP.justdo_kanban.updateKanban(kanban_task_id, "visible_boards", visible_boards)
-  #           return
-
-  #       makeTasksDraggable()
-
-  #       $(".kanban-board-content").droppable
-  #         drop: (event, ui) ->
-  #           boards_field_id = tpl.kanban.get().boards_field_id
-  #           board_value_id = Blaze.getData(event.target).board_value_id
-  #           task_id = Blaze.getData(ui.draggable[0])._id
-  #           JD.collections.Tasks.update({_id: task_id}, {$set: {"#{boards_field_id}": board_value_id}})
-
-  #           setTimeout ->
-  #             makeTasksDraggable()
-  #           , 500
-  #           return
-
-  #     , 1000
-
 
 # HELPERS
 Template.project_pane_kanban.helpers
@@ -425,8 +377,6 @@ Template.project_pane_kanban.events
     APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(task_id, board_field_id, "visible_boards", visible_boards)
     return
 
-
-
   "keyup .kanban-member-selector-search": (e, tpl) -> # TESTED
     value = $(e.target).val().trim()
 
@@ -451,4 +401,35 @@ Template.project_pane_kanban.events
 
     tpl.setCurrentBoardStateValue("query", {})
 
+    return
+
+  "mouseenter .kanban-board": (e, tpl) ->
+    $(".kanban-boards").sortable
+      items: ".kanban-board"
+      helper: "clone"
+      tolerance: "pointer"
+      cancel: ".kanban-board-control, .kanban-task-control, .kanban-task-add"
+      stop: ( event, ui ) ->
+        kanban_task_id = tpl.kanban_task_id_rv.get()
+        board_field_id = tpl.active_board_field_id_rv.get()
+        visible_boards = []
+        $(".kanban-board").each ->
+          visible_boards.push Blaze.getData($(this)[0])
+
+        $(".kanban-boards").sortable("cancel")
+        APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(kanban_task_id, board_field_id, "visible_boards", visible_boards)
+    return
+
+  "mouseenter .kanban-task": (e, tpl) ->
+    $(".kanban-task").draggable
+      helper: "clone"
+      start: (event, ui) ->
+        $(ui.helper).width($(event.target).width())
+
+    $(".kanban-board-content").droppable
+      drop: (event, ui) ->
+        boards_field_id = tpl.active_board_field_id_rv.get()
+        board_value_id = Blaze.getData(event.target).board_value_id
+        task_id = Blaze.getData(ui.draggable[0])._id
+        JD.collections.Tasks.update({_id: task_id}, {$set: {"#{boards_field_id}": board_value_id}})
     return
