@@ -358,6 +358,12 @@ _.extend GridControl.prototype,
 
       return true
 
+    @_grid.onValidationError.subscribe (e, validation_obj) =>
+      JustdoSnackbar.show
+        text: "#{validation_obj.validationResults.msg}"
+
+      return
+
     @_current_state_invalidation_protection_computation = Tracker.autorun =>
       @current_grid_tree_row.set(@_current_grid_tree_row.get())
       @current_path.set(@_current_path.get())
