@@ -1,20 +1,48 @@
 <template name="justdo_calendar_project_pane">
 
     <div class="calendar_view_header p-2">
-      <div class="calendar_view_project_selector dropdown">
-        <button class="btn btn-light btn-sm border" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Entire JustDo
-        </button>
-        <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
-          <li><a href="#" class="dropdown-item px-1" project_id="*">Entire JustDo</a></li>
-          {{#if projectsInJustDo}}
-            <hr class="my-2 border-light">
-            <li class="dropdown-header text-muted text-uppercase px-1 py-0">Projects</li>
-            {{#each projectsInJustDo}}
-              <li><a href="#" class="dropdown-item px-1" project_id={{_id}}>{{title}}</a></li>
-            {{/each}}
-          {{/if}}
-        </ul>
+      <div class="calendar_view_toolbar">
+        <div class="calendar_view_project_selector dropdown">
+          <button class="btn btn-light btn-sm border" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Entire JustDo
+          </button>
+          <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+            <li><a href="#" class="dropdown-item px-1" project_id="*">Entire JustDo</a></li>
+            {{#if projectsInJustDo}}
+              <hr class="my-2 border-light">
+              <li class="dropdown-header text-muted text-uppercase px-1 py-0">Projects</li>
+              {{#each projectsInJustDo}}
+                <li><a href="#" class="dropdown-item px-1" project_id={{_id}}>{{title}}</a></li>
+              {{/each}}
+            {{/if}}
+          </ul>
+        </div>
+        <div class="divider"></div>
+        <div class="calendar-member-selector dropdown mr-1 {{#if memberFilterIsActive}}member-filter-is-active{{/if}}">
+          <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <div class="member-filter-indicator bg-primary"></div>
+            <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#filter"/></svg>
+          </div>
+          <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+            <input class="calendar-member-selector-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search members" name="" value="">
+              <li class="calendar-current-member">
+                <a href="#" class="dropdown-item">
+                  <img class="calendar-member-avatar" src="{{currentMemberAvatar}}"> {{currentMemberName}}
+                </a>
+              </li>
+              <li class="dropdown-header text-muted text-uppercase pt-2 pb-1">Members</li>
+              {{#each members}}
+                <li>
+                  <a href="#" class="dropdown-item calendar-filter-member-item {{#if memberInFilter this}}member-in-filter{{/if}}">
+                    <div class="calendar-filter-member-info"><img class="calendar-member-avatar" src="{{memberAvatar this}}"> {{memberName this}}</div>
+                    {{#if memberInFilter this}}
+                      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
+                    {{/if}}
+                  </a>
+                </li>
+              {{/each}}
+          </ul>
+        </div>
       </div>
 
       <div class="calendar_view_project_title">

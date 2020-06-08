@@ -298,7 +298,11 @@ delayAction = do ->
 Template.justdo_calendar_project_pane.onCreated ->
   self = @
 
+  @calendar_members_filter_val = new ReactiveVar null
+  @calendar_filtered_members = new ReactiveVar []
   @justdo_level_holidays = new ReactiveVar(new Set())
+
+  delivery_planner_project_id.set "*"  # '*' for the entire JustDo
 
   # to handle highlighting the header of 'today', when the day changes...
   # could be optimized to hit once per day, but this is good enough
@@ -588,6 +592,15 @@ Template.justdo_calendar_project_pane.onCreated ->
     #end of autorun
   return # end onCreated
 
+Template.justdo_calendar_project_pane.onRendered ->
+  instance = @
+  $(".calendar-member-selector").on "shown.bs.dropdown", ->
+    $(".calendar-member-selector-search").focus().val ""
+    instance.calendar_members_filter_val.set ""
+    return
+
+  return # end onRendered
+
 Template.justdo_calendar_project_pane.helpers
   currentUserDependency: ->
     return Template.instance().project_members_to_dependency[Meteor.userId()]
@@ -609,13 +622,8 @@ Template.justdo_calendar_project_pane.helpers
     return Meteor.userId()
 
   allOtherUsers: ->
-    other_users_ids = []
-    if delivery_planner_project_id.get() == "*"
-      other_users_ids = _.difference(APP.modules.project_page.curProj().getMembersIds(), [Meteor.userId()])
-    else
-      other_users_ids = Template.instance().all_other_users.get()
-
-    return _.sortBy other_users_ids, (user_id) -> JustdoHelpers.displayName(user_id).toLowerCase()
+    filtered_members = Template.instance().calendar_filtered_members.get()
+    return _.sortBy filtered_members, (user_id) -> JustdoHelpers.displayName(user_id).toLowerCase()
 
   projectsInJustDo: ->
     project = APP.modules.project_page.project.get()
@@ -658,9 +666,56 @@ Template.justdo_calendar_project_pane.helpers
 
   weekNumber: ->
     return moment(@).isoWeek()
-    
+
 
   calendarViewResolution: -> number_of_days_to_display.get()
+
+  currentMemberAvatar: ->
+    user = Meteor.user()
+    if user?
+      return JustdoAvatar.showUserAvatarOrFallback(user)
+
+  currentMemberName: ->
+    return JustdoHelpers.displayName(Meteor.userId())
+
+  members: ->
+    tmpl = Template.instance()
+    project_id = delivery_planner_project_id.get()
+    other_users = []
+
+    if project_id == "*"
+      other_users = _.map Meteor.users.find({_id: {$ne: Meteor.userId()}},{fields: {_id:1}}).fetch(), (u)-> u._id
+    else
+      _.map APP.collections.Tasks.findOne(project_id).users, (u)->
+        if u != Meteor.userId()
+          other_users.push u
+        return
+
+    tmpl.calendar_filtered_members.set other_users
+    calendar_members_filter_val = tmpl.calendar_members_filter_val.get()
+    membersDocs = JustdoHelpers.filterUsersDocsArray(other_users, calendar_members_filter_val)
+    return _.sortBy membersDocs, (member) -> JustdoHelpers.displayName(member)
+
+  memberName: (user_id) ->
+    return JustdoHelpers.displayName(user_id)
+
+  memberAvatar: (user_id) ->
+    user = Meteor.users.findOne(user_id)
+    if user?
+      return JustdoAvatar.showUserAvatarOrFallback(user)
+
+  memberInFilter: (user_id) ->
+    tmpl = Template.instance()
+    filtered_members = tmpl.calendar_filtered_members.get()
+    return filtered_members.includes user_id
+
+  memberFilterIsActive: ->
+    tmpl = Template.instance()
+    filtered_members = tmpl.calendar_filtered_members.get()
+    if filtered_members.length > 0
+      return true
+    else
+      return false
 
 Template.justdo_calendar_project_pane.events
   "click .calendar_view_zoom_out": ->
@@ -674,7 +729,6 @@ Template.justdo_calendar_project_pane.events
     if index > 0
       number_of_days_to_display.set(config.supported_days_resolution[index - 1])
     return
-
 
   "click .expand_all": ->
     for member, state of members_collapse_state_vars
@@ -730,6 +784,7 @@ Template.justdo_calendar_project_pane.events
           other_users.push u
         return
       Template.instance().all_other_users.set(other_users)
+
     return
 
   "mouseover .calendar_view_main_table tr": (e, tmpl) ->
@@ -742,6 +797,30 @@ Template.justdo_calendar_project_pane.events
 
   "mouseleave .calendar_view_main_table tr": (e, tmpl) ->
     $(".justdo-avatar").removeClass "highlight"
+    return
+
+  "keyup .calendar-member-selector-search": (e, tmpl) ->
+    value = $(e.target).val().trim()
+    if _.isEmpty value
+      return tmpl.calendar_members_filter_val.set null
+    else
+      tmpl.calendar_members_filter_val.set value
+    return
+
+  "click .calendar-filter-member-item": (e, tmpl) ->
+    e.preventDefault()
+    e.stopPropagation()
+
+    user_id = Blaze.getData(e.target)
+    filtered_members = tmpl.calendar_filtered_members.get()
+
+    if (index = filtered_members.indexOf user_id) > -1
+      filtered_members.splice(index, 1)
+    else
+      filtered_members.push user_id
+
+    tmpl.calendar_filtered_members.set filtered_members
+
     return
 
 Template.justdo_calendar_project_pane_user_view.onCreated ->
