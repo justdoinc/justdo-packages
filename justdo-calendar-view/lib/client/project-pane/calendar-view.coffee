@@ -24,6 +24,9 @@ number_of_days_to_display = new ReactiveVar(7)
 delivery_planner_project_id = new ReactiveVar ("*") # '*' for the entire JustDo
 
 findProjectName = (task_obj) ->
+  if not task_obj?
+    return null
+    
   if task_obj["p:dp:is_project"]
     return task_obj.title
 
@@ -950,8 +953,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         if end_date <= start_date
           task_to_flat_hours_per_day[row_data.task._id] = row_data.task.planned_seconds / 3600
           return task_to_flat_hours_per_day[row_data.task._id]
-
-
+        
         user_availability = APP.justdo_resources_availability.userAvailabilityBetweenDates start_date.format("YYYY-MM-DD"),
             end_date.format("YYYY-MM-DD"), JD.activeJustdo()._id, data.user_id
 
