@@ -177,3 +177,115 @@ _.extend JustdoHelpers,
 
     return [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]
 
+_.extend JustdoHelpers,
+  escaped_chars_within_defined_block_encode_map:
+    ",": "\u000B"
+    "'": "\u000C"
+    '"': "\u000D"
+    "{": "\u000E"
+    "}": "\u000F"
+    "[": "\u000E"
+    "]": "\u000F"
+    "(": "\u0010"
+    ")": "\u0011"
+    "`": "\u0012"
+    "|": "\u0013"
+    "<": "\u0014"
+    ">": "\u0015"
+
+_.extend JustdoHelpers,
+  escaped_chars_within_defined_block_decode_map: _.invert JustdoHelpers.escaped_chars_within_defined_block_encode_map
+
+_.extend JustdoHelpers,
+  _encodeDecodeEscapedCharsWithinDefinedBlock: (op, str, escaped_blocks, options) ->
+    # Structure escaped_blocks as follows:
+    #
+    # The following assumes options.escape_char is \
+    #
+    # {
+    #   "[]": [","] # Will encode escaped ","" and will allow escaping of ] with \] .
+    #   "'": [","] # Will allow escaping of , with \, and ' with \' . If the opening and closing delimiters are the same, no need to repeat the char. We always escape the closing delimiter, so no need to mention '
+    # }
+
+    if op not in ["enc", "dec"]
+      throw new Error "Unknown op #{op}"
+
+    escaped_chars_map = JustdoHelpers.escaped_chars_within_defined_block_encode_map
+
+    default_options =
+      escape_char: "\\"
+
+    options = _.extend default_options, options
+    {escape_char} = options
+
+    for block_delimiters, encoded_chars of escaped_blocks
+      if block_delimiters.length == 1
+        opening_delimiter = closing_delimiter = block_delimiters
+      
+      if block_delimiters.length == 2
+        opening_delimiter = block_delimiters[0]
+        closing_delimiter = block_delimiters[1]
+
+      encoded_chars = encoded_chars.slice() # Shallow copy, since we are going to add the closing delimiter
+      encoded_chars.push(closing_delimiter)
+
+      encoding_regex = new RegExp("(" + JustdoHelpers.escapeRegExp(opening_delimiter) + ")" + "((?:(?:[^#{closing_delimiter.replace("]", "\\]")}]*)|(?:#{escape_char}#{JustdoHelpers.escapeRegExp(closing_delimiter)}))+)" + "(" + JustdoHelpers.escapeRegExp(closing_delimiter) + ")", "g")
+
+      str = str.replace encoding_regex, (match, opening_delimiter, content, closing_delimiter) ->
+        # Allow escaping of closing delimiter with the escaped char
+        if op == "enc"
+          content = content.replace(new RegExp(JustdoHelpers.escapeRegExp(escape_char + closing_delimiter), "g"), escape_char + escaped_chars_map[closing_delimiter])
+        else if op == "dec"
+          content = content.replace(new RegExp(JustdoHelpers.escapeRegExp(escape_char) + escaped_chars_map[closing_delimiter], "g"), escape_char + closing_delimiter)
+        for encoded_char in encoded_chars
+          # Encoded all the defined encoded chars within the enclosing delimiters
+
+          if op == "enc"
+            content = content.replace(new RegExp("#{JustdoHelpers.escapeRegExp(encoded_char)}", "g"), escaped_chars_map[encoded_char])
+          else if op == "dec"
+            content = content.replace(new RegExp("#{escaped_chars_map[encoded_char]}", "g"), encoded_char)
+
+        return opening_delimiter + content + closing_delimiter
+
+    return str
+
+  encodeEscapedCharsWithinDefinedBlock: (str, escaped_blocks, options) ->
+    return @_encodeDecodeEscapedCharsWithinDefinedBlock("enc", str, escaped_blocks, options)
+
+  decodeEscapedCharsWithinDefinedBlock: (str, escaped_blocks, options) ->
+    return @_encodeDecodeEscapedCharsWithinDefinedBlock("dec", str, escaped_blocks, options)
+
+  csvTo2DArray: (csv, options) ->
+    # Notes:
+    #
+    # * , can't be escaped.
+    # * Items can be enclosed with "" or '' in which case they can have , inside them
+
+    # Fields that aren't enclosed with quotes these lines
+    res = []
+
+    default_options =
+      remove_delimiters: true
+
+    options = _.extend default_options, options
+    {remove_delimiters} = options
+
+    escaped_blocks =
+      "'": [","]
+      '"': [","]
+
+    for line in csv.split("\n")
+      line_arr = []
+
+      for raw_field in JustdoHelpers.encodeEscapedCharsWithinDefinedBlock(line, escaped_blocks).split(",")
+        field_val = JustdoHelpers.decodeEscapedCharsWithinDefinedBlock(raw_field, escaped_blocks)
+
+        if remove_delimiters
+          field_val = field_val.replace(/^"(.*)"$/, "$1")
+          field_val = field_val.replace(/^'(.*)'$/, "$1")
+
+        line_arr.push field_val
+
+      res.push line_arr
+
+    return res
