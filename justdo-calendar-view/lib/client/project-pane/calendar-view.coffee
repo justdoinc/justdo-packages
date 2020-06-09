@@ -622,6 +622,8 @@ Template.justdo_calendar_project_pane.helpers
     if project?
       return APP.collections.Tasks.find({
           "p:dp:is_project": true
+          "p:dp:is_archived_project":
+            $not: true
           project_id: project.id
         }, {sort: {"title": 1}}).fetch()
 
