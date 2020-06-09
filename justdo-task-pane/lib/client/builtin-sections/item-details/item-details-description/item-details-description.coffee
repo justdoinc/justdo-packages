@@ -270,6 +270,10 @@ APP.executeAfterAppLibCode ->
         ]
         imageEditButtons: ['imageReplace', 'imageAlign', 'imageCaption', 'imageRemove', '|', 'imageLink', 'linkOpen', 
           'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize']
+        tableStyles:
+          "fr-no-borders": "No borders"
+          "fr-dashed-borders": "Dashed Borders"
+          "fr-alternate-rows": "Alternate Rows"
         quickInsertTags: []
         charCounterCount: false
         key: env.FROALA_ACTIVATION_KEY

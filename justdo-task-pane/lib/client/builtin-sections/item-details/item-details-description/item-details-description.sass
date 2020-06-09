@@ -12,6 +12,28 @@ $max-desc-width: 750px
     max-height: 240px
     overflow: auto
     max-width: $max-desc-width
+    
+    table
+      border-collapse:  collapse
+      th, td
+        border: 1px solid grey
+
+    .fr-solid-borders
+      th, td
+        border: 1px solid grey
+
+    .fr-dashed-borders
+      th, td
+        border: 1px dashed grey
+    
+    .fr-no-borders
+      border: none
+      th, td
+        border: none
+        
+    .fr-alternate-rows
+      tr:nth-child(even)
+        background: #f3f3f3
 
     p:last-child
       margin-bottom: 0
