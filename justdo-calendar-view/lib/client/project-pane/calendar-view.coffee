@@ -304,6 +304,20 @@ Template.justdo_calendar_project_pane.onCreated ->
 
   delivery_planner_project_id.set "*"  # '*' for the entire JustDo
 
+  @autorun =>
+    project_id = delivery_planner_project_id.get()
+    other_users = []
+    if project_id == "*"
+      other_users = _.map Meteor.users.find({_id: {$ne: Meteor.userId()}},{fields: {_id:1}}).fetch(), (u)-> u._id
+    else
+      _.map APP.collections.Tasks.findOne(project_id).users, (u)->
+        if u != Meteor.userId()
+          other_users.push u
+        return
+
+    self.calendar_filtered_members.set other_users
+    return
+
   # to handle highlighting the header of 'today', when the day changes...
   # could be optimized to hit once per day, but this is good enough
   start_of_day = new moment
@@ -691,7 +705,6 @@ Template.justdo_calendar_project_pane.helpers
           other_users.push u
         return
 
-    tmpl.calendar_filtered_members.set other_users
     calendar_members_filter_val = tmpl.calendar_members_filter_val.get()
     membersDocs = JustdoHelpers.filterUsersDocsArray(other_users, calendar_members_filter_val)
     return _.sortBy membersDocs, (member) -> JustdoHelpers.displayName(member)
