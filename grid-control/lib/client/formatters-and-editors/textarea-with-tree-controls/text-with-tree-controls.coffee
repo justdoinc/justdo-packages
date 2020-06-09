@@ -249,9 +249,11 @@ GridControl.installFormatter "textWithTreeControls",
 
     if @getCurrentColumnData("delivery_planner_plugin_enabled")
       if (is_project = doc["p:dp:is_project"])?
+        is_archived_project = doc["p:dp:is_archived_project"]
+        
         if is_project
           tree_control += """
-              <i class="fa fa-fw fa-briefcase task-is-project slick-prevent-edit" title="Task is a project" aria-hidden="true"></i>
+              <i class="fa fa-fw fa-briefcase task-is-project #{if is_archived_project then "task-is-archived-project" else ""} slick-prevent-edit" title="Task is a project" aria-hidden="true"></i>
           """
 
     if @getCurrentColumnData("checklist_plugin_enabled") and not doc._type?
