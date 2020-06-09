@@ -851,7 +851,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
     data = Template.currentData()
     data.dependency.depend()
 
-    @justdo_user_holidays = APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo()._id,\
+    @justdo_user_holidays = APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo()?._id,\
                             data.dates_to_display, Template.currentData().user_id).holidays
 
     if self.last_tasks_set_size == 0 and data.tasks_set.size == 0
@@ -1323,7 +1323,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
       return true
 
   userInitials: (userId) ->
-    initials = Meteor.users.findOne(userId).profile.first_name.charAt(0) + Meteor.users.findOne(userId).profile.last_name.charAt(0)
+    initials = Meteor.users.findOne(userId)?.profile?.first_name?.charAt(0) + Meteor.users.findOne(userId)?.profile?.last_name?.charAt(0)
     return initials
 
   userName: (user_id) ->
