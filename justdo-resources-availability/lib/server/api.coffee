@@ -40,7 +40,7 @@ _.extend JustdoResourcesAvailability.prototype,
 
     #sanitize availability structure
     sanitized_availability = {}
-
+    
     check availability.holidays, [String]
     sanitized_availability.holidays = availability.holidays
     for i in [0..6]
@@ -49,7 +49,21 @@ _.extend JustdoResourcesAvailability.prototype,
       check availability.working_days[i].holiday, Boolean
       Meteor._ensure sanitized_availability, "working_days", i
       sanitized_availability.working_days[i] = availability.working_days[i]
-
+  
+  
+    # for users, when a user sets holidays only, and all other weekdays are not set/initiated
+    # the system records all weekdays as holidays by default, and then user these 'all-holidays'
+    # and overrides the company level workdays. To fix it, if the user didn't set any workday
+    # i.e. all is holidays, we will remove the weekdays data
+    if resource_user_id?
+      found_workday = false
+      for day, data of sanitized_availability.working_days
+        if not data.holiday
+          found_workday = true
+          break
+      if not found_workday
+        sanitized_availability.working_days = {}
+        
     check executing_user_id, String
     check project_id, String
     if resource_user_id

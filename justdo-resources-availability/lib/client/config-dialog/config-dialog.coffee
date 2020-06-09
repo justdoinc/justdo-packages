@@ -16,9 +16,10 @@ Template.justdo_resources_availability_config_dialog.onCreated ->
   data = Template.currentData()
   data.has_issues = new Set()
   #if we don't have weekdays, let's set defaults
-  if not data.weekdays
+  if not data.weekdays?
     data.weekdays = {}
-    for i in [0..6]
+  for i in [0..6]
+    if not data.weekdays["#{i}"]?
       data.weekdays["#{i}"] =
         from: "08:00"
         to: "16:00"
