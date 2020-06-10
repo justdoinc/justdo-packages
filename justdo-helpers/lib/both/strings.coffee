@@ -202,9 +202,12 @@ _.extend JustdoHelpers,
     #
     # The following assumes options.escape_char is \
     #
+    # We always allow the user to escape the closing delimiter with the options.escape_char.
+    #
     # {
-    #   "[]": [","] # Will encode escaped ","" and will allow escaping of ] with \] .
-    #   "'": [","] # Will allow escaping of , with \, and ' with \' . If the opening and closing delimiters are the same, no need to repeat the char. We always escape the closing delimiter, so no need to mention '
+    #   "[]": [","] # Will encode/decode escaped "," and will allow the user to to escape ] with \] .
+    #   "'": [","] # If the opening and closing delimiters are the same, no need to repeat the char (no need to have the key set to "''").
+    #              # Will encode/decode escaped "," and will allow the user to to escape ' with \' . 
     # }
 
     if op not in ["enc", "dec"]
@@ -266,19 +269,18 @@ _.extend JustdoHelpers,
 
     default_options =
       remove_delimiters: true
+      escaped_blocks:
+        "'": [","]
+        '"': [","]
 
     options = _.extend default_options, options
-    {remove_delimiters} = options
-
-    escaped_blocks =
-      "'": [","]
-      '"': [","]
+    {remove_delimiters, escaped_blocks} = options
 
     for line in csv.split("\n")
       line_arr = []
 
       for raw_field in JustdoHelpers.encodeEscapedCharsWithinDefinedBlock(line, escaped_blocks).split(",")
-        field_val = JustdoHelpers.decodeEscapedCharsWithinDefinedBlock(raw_field, escaped_blocks)
+        field_val = JustdoHelpers.decodeEscapedCharsWithinDefinedBlock(raw_field, escaped_blocks).trim()
 
         if remove_delimiters
           field_val = field_val.replace(/^"(.*)"$/, "$1")
