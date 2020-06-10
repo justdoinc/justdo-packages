@@ -1,8 +1,24 @@
+# ON RENDERED
 Template.project_pane_kanban_board_task.onRendered ->
+  instance = @
+
+  $(".kanban-task").draggable
+    helper: "clone"
+    start: (e, ui) ->
+      $(ui.helper).width($(e.target).width())
+      $(e.target).addClass "task-dragging"
+    stop: (e, ui) ->
+      $(e.target).removeClass "task-dragging"
+
+  $(".kanban-board").droppable
+    drop: (e, ui) ->
+      data = Blaze.getData(e.target)
+      task_id = Blaze.getData(ui.draggable[0])._id
+      JD.collections.Tasks.update({_id: task_id}, {$set: {"#{data.active_board_field_id_rv}": data.board_value_id}})
 
   return
 
-
+# HELPERS
 Template.project_pane_kanban_board_task.helpers
   memberAvatar: ->
     return JustdoAvatar.showUserAvatarOrFallback(Meteor.users.findOne(@owner_id))
@@ -10,6 +26,7 @@ Template.project_pane_kanban_board_task.helpers
   taskPriorityColor: ->
     return JustdoColorGradient.getColorRgbString @priority
 
+# EVENTS
 Template.project_pane_kanban_board_task.events
   "click .kanban-task": (e, tpl) ->
     APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(@_id)
