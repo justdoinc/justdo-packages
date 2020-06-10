@@ -1,0 +1,43 @@
+.kanban-board-title
+  align-items: center
+  display: flex
+  text-transform: uppercase
+  font-size: 15px
+  font-weight: bold
+  color: black
+  user-select: none
+  align-items: flex-end
+
+.kanban-board-count
+  color: #687B8E
+  margin-right: 4px
+
+.over-max-count
+  color: red
+
+.kanban-board-limit-input
+  width: 80px !important
+
+.kanban-board-limit-save
+  margin: 0 4px
+
+.kanban-board-dropdown
+  display: flex
+  .kanban-board-dropdown-icon
+    width: 16px
+    padding: 0
+  .dropdown-item
+    align-items: center
+    font-size: 15px
+    padding: 0.25rem 0.5rem 0.25rem 0.25rem
+    cursor: pointer
+    display: flex
+    &:active
+      background-color: white
+      color: #007bff
+  .kanban-board-edit svg,
+  .kanban-board-hide svg
+    color: #687B8E
+    margin-right: 6px
+    width: 20px
+    height: 20px

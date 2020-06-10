@@ -1,0 +1,42 @@
+<template name="project_pane_kanban_board">
+  <div class="kanban-board">
+    <div class="kanban-board-header">
+      <div class="kanban-board-title">
+        <div class="kanban-board-count {{#if isLimitCrossed}}over-max-count{{/if}}">
+          {{boardCount}}
+        </div>
+        {{boardLabel}}
+      </div>
+      <div class="kanban-board-control">
+        <svg class="jd-icon kanban-board-task-add-button"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+        <div class="kanban-board-dropdown dropdown">
+          <svg class="jd-icon kanban-board-dropdown-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
+          <ul class="dropdown-menu p-2 shadow-lg border-0">
+            {{#if showLimitControl}}
+              <li class="dropdown-item">
+                <input type="text" placeholder="max limit" class="kanban-board-limit-input form-control form-control-sm" value="{{limit}}">
+                <button class="btn btn-primary btn-sm kanban-board-limit-save" type="button">Save</button>
+                <button class="btn btn-secondary btn-sm kanban-board-limit-cancel" type="button">Cancel</button>
+              </li>
+            {{else}}
+              <li class="dropdown-item kanban-board-edit">
+                <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>Edit Column
+              </li>
+              <li class="dropdown-item kanban-board-hide">
+                <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#eye-off"/></svg>Hide Column
+              </li>
+            {{/if}}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="kanban-board-content">
+      {{#each getBoardTasks}}
+        {{> project_pane_kanban_board_task}}
+      {{/each}}
+      <div class="kanban-task-add">
+        <textarea class="form-control kanban-task-add-input" type="text" placeholder="Add a new task"></textarea>
+      </div>
+    </div>
+  </div>
+</template>

@@ -112,54 +112,8 @@
     {{#if activeTask}}
     <div class="kanban-wrapper-container">
       <div class="kanban-boards">
-
         {{#each currentBoardStateVisibleBoards}}
-          <div class="kanban-board">
-            <div class="kanban-board-header">
-              <div class="kanban-board-title">
-                <div class="kanban-board-count {{#if isLimitCrossed}}over-max-count{{/if}}">{{boardCount board_value_id}}</div>
-                {{boardLabel board_value_id}}
-              </div>
-              <div class="kanban-board-control">
-                <svg class="jd-icon kanban-board-task-add-button"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
-                <div class="kanban-board-dropdown dropdown">
-                  <svg class="jd-icon kanban-board-dropdown-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
-                  <ul class="dropdown-menu p-2 shadow-lg border-0">
-                    <li class="dropdown-item kanban-board-edit" data-toggle="modal" data-target="#kanban-board-settings">
-                      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>Edit Column
-                    </li>
-                    <li class="dropdown-item kanban-board-hide">
-                      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#eye-off"/></svg>Hide Column
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="kanban-board-content">
-              {{#each getBoardTasks board_value_id}}
-                <div class="kanban-task">
-                  <div class="kanban-task-id">{{seqId}}</div>
-                  <div class="kanban-task-priority" style="background-color: {{taskPriorityColor}}"></div>
-                  <img class="kanban-task-user" src="{{memberAvatar owner_id}}">
-                  <div class="kanban-task-title">{{nl2br title}}</div>
-                  <div class="kanban-task-control dropdown">
-                    <svg class="jd-icon kanban-task-control-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
-                    <ul class="dropdown-menu p-2 shadow-lg border-0">
-                      <li class="dropdown-item kanban-task-remove">
-                        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"/></svg>Remove Task
-                      </li>
-                    </ul>
-                  </div>
-                  {{#if due_date}}
-                    <div class="kanban-task-tooltip">Due Date: {{due_date}}</div>
-                  {{/if}}
-                </div>
-              {{/each}}
-              <div class="kanban-task-add">
-                <textarea class="form-control kanban-task-add-input" type="text" placeholder="Add a new task"></textarea>
-              </div>
-            </div>
-          </div>
+          {{> project_pane_kanban_board board_value_id=board_value_id limit=limit kanban_task_id_rv=kanbanTaskIdRv active_board_field_id_rv=activeBoardFieldIdRv current_board_state_rv=currentBoardStateRv}}
         {{/each}}
         <div class="kanban-board-add text-muted" data-toggle="modal" data-target="#kanban-add-board">
           <div class="kanban-board-add-content"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg></div>
@@ -171,28 +125,6 @@
       Select a task on the main view to present a Kanban board
     </div>
     {{/if}}
-  </div>
-
-  <!-- Board Settings -->
-  <div class="modal fade" id="kanban-board-settings" data-backdrop="false" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h6 class="modal-title">Settings</h6>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="font-weight-bold text-body text-uppercase mb-2">Column limit</div>
-          <input type="text" class="kanban-board-limit-input form-control form-control-sm">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary kanban-limit-save">Save</button>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- Add Board -->
@@ -213,5 +145,4 @@
       </div>
     </div>
   </div>
-
 </template>

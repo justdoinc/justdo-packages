@@ -82,6 +82,14 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project-pane-kanban/project-pane-kanban.sass", client);
   api.addFiles("lib/client/project-pane-kanban/project-pane-kanban.coffee", client);
 
+  api.addFiles("lib/client/project-pane-kanban/project-pane-kanban-board.html", client);
+  api.addFiles("lib/client/project-pane-kanban/project-pane-kanban-board.sass", client);
+  api.addFiles("lib/client/project-pane-kanban/project-pane-kanban-board.coffee", client);
+
+  api.addFiles("lib/client/project-pane-kanban/project-pane-kanban-board-task.html", client);
+  api.addFiles("lib/client/project-pane-kanban/project-pane-kanban-board-task.sass", client);
+  api.addFiles("lib/client/project-pane-kanban/project-pane-kanban-board-task.coffee", client);
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);

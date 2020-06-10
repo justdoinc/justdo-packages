@@ -1,0 +1,19 @@
+<template name="project_pane_kanban_board_task">
+  <div class="kanban-task">
+    <div class="kanban-task-id">{{seqId}}</div>
+    <div class="kanban-task-priority" style="background-color: {{taskPriorityColor}}"></div>
+    <img class="kanban-task-user" src="{{memberAvatar}}">
+    <div class="kanban-task-title">{{nl2br title}}</div>
+    <div class="kanban-task-control dropdown">
+      <svg class="jd-icon kanban-task-control-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
+      <ul class="dropdown-menu p-2 shadow-lg border-0">
+        <li class="dropdown-item kanban-task-remove">
+          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"/></svg>Remove Task
+        </li>
+      </ul>
+    </div>
+    {{#if due_date}}
+      <div class="kanban-task-tooltip">Due Date: {{due_date}}</div>
+    {{/if}}
+  </div>
+</template>
