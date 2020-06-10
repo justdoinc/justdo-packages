@@ -141,3 +141,14 @@ Template.project_pane_kanban_board.events
         $(e.target).val ""
 
     return
+
+  "click .kanban-board-hide": (e, tpl) ->
+    board_value_id = @board_value_id
+    visible_boards = @current_board_state_rv.visible_boards
+
+    visible_boards.forEach (board, i) ->
+      if board.board_value_id == board_value_id
+        visible_boards.splice(i, 1)
+
+    APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(@kanban_task_id_rv, @active_board_field_id_rv, "visible_boards", visible_boards)
+    return

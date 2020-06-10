@@ -178,19 +178,6 @@ Template.project_pane_kanban.events
     APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(task_id, board_field_id, "sort", {"#{sort_by}": sort_by_reverse * -1})
     return
 
-  "click .kanban-board-hide": (e, tpl) -> # TESTED
-    task_id = tpl.kanban_task_id_rv.get()
-    board_field_id = tpl.active_board_field_id_rv.get()
-    board_value_id = Blaze.getData(e.target).board_value_id
-    boards = tpl.getCurrentBoardStateVisibleBoards()
-
-    boards.forEach (board, i) ->
-      if board.board_value_id == board_value_id
-        boards.splice(i, 1)
-
-    APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(task_id, board_field_id, "visible_boards", boards)
-    return
-
   "click .kanban-board-add-item": (e, tpl) -> # TESTED
     task_id = tpl.kanban_task_id_rv.get()
     board_field_id = tpl.active_board_field_id_rv.get()
