@@ -48,6 +48,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
       e.preventDefault()
       gc.activateRow(gc.getEventRow(e))
+      Tracker.flush()
       @show(event_item._id, {of: e})
 
       return
