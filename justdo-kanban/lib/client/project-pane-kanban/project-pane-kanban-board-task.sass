@@ -1,0 +1,91 @@
+.kanban-task
+  position: relative
+  margin: 8px 16px 16px 16px
+  padding: 4px
+  cursor: pointer
+  background: #FFFFFF
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12)
+  border-radius: 4px
+  display: flex
+  transition: box-shadow 0.35s, font-weight 0.35s
+  &:hover
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.12)
+  &.ui-sortable-placeholder
+    background-color: rgba(0, 0, 0, 0.02)
+    box-shadow: none
+    visibility: visible !important
+  &.ui-draggable-dragging
+    z-index: 100
+  &.task-dragging
+    opacity: 0.35
+
+.kanban-task-id
+  border: 1px solid #000000
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12)
+  border-radius: 2px
+  background-color: white
+  font-size: 9px
+  color: black
+  padding: 0 0.2rem
+  position: absolute
+  top: -8px
+  left: 0px
+
+.kanban-task-priority
+  width: 3px
+  border-radius: 2px
+  flex-shrink: 0
+
+.kanban-task-user
+  width: 22px
+  height: 22px
+  background-color: gray
+  border-radius: 100%
+  margin: 4px 6px
+  flex-shrink: 0
+
+.kanban-task-title
+  font-size: 14px
+  color: black
+  margin: 4px 8px 4px 0px
+  flex-grow: 1
+
+.kanban-task-control
+  display: flex
+  .kanban-task-control-icon
+    width: 14px
+    padding: 0
+    color: #687B8E
+    cursor: pointer
+    &:hover
+      background-color: rgba(0, 0, 0, 0.08)
+      transform: scale(1.05)
+  .dropdown-item
+    display: flex
+    align-items: center
+    font-size: 15px
+    padding: 0.25rem 0.5rem 0.25rem 0.25rem
+    cursor: pointer
+  .kanban-task-remove svg
+    color: #687B8E
+    margin-right: 6px
+    width: 20px
+    height: 20px
+
+.kanban-task-tooltip
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)
+  border-radius: 0.2rem
+  background-color: white
+  padding: 0px 4px
+  position: absolute
+  top: -8px
+  right: 20px
+  font-size: 10px
+  font-weight: bold
+  display: none
+  z-index: 10
+  text-transform: uppercase
+
+.kanban-task:hover
+  .kanban-task-tooltip
+    display: block

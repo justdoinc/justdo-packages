@@ -162,26 +162,6 @@
   overflow-x: auto
   padding: 3px 1rem 1rem 1rem
 
-.kanban-board
-  min-width: 360px
-  max-width: 360px
-  border-radius: 6px
-  background-color: #F5F5F7
-  display: flex
-  white-space: normal
-  margin-right: 16px
-  vertical-align: top
-  position: relative
-  flex: auto
-  flex-direction: column
-  transition: box-shadow 0.35s
-  &:hover
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
-  &.ui-sortable-placeholder
-    background-color: rgba(0, 0, 0, 0.02)
-    box-shadow: none
-    visibility: visible !important
-
 .kanban-board-add
   min-width: 360px
   max-width: 360px
@@ -229,76 +209,6 @@
   .null-state
     border: 1px solid
 
-.kanban-board-header
-  margin: 8px 16px
-  display: flex
-  justify-content: space-between
-  align-items: center
-
-.kanban-board-task-add-button
-  stroke-width: 2
-  padding: 3px
-
-.kanban-board-task-add-button,
-.kanban-board-dropdown-icon
-  color: #687B8E
-  cursor: pointer
-  &:hover
-    background-color: rgba(0, 0, 0, 0.08)
-    transform: scale(1.05)
-
-.kanban-board-control
-  align-items: center
-  display: flex
-
-.kanban-board-content
-  flex: auto
-  overflow: auto
-
-.kanban-task
-  position: relative
-  margin: 8px 16px 16px 16px
-  padding: 4px
-  cursor: pointer
-  background: #FFFFFF
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.12)
-  border-radius: 4px
-  display: flex
-  transition: box-shadow 0.35s, font-weight 0.35s
-  &:hover
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.12)
-  &.ui-sortable-placeholder
-    background-color: rgba(0, 0, 0, 0.02)
-    box-shadow: none
-    visibility: visible !important
-  &.ui-draggable-dragging
-    z-index: 100
-
-.kanban-task-id
-  border: 1px solid #000000
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12)
-  border-radius: 2px
-  background-color: white
-  font-size: 9px
-  color: black
-  padding: 0 0.2rem
-  position: absolute
-  top: -8px
-  left: 0px
-
-.kanban-task-priority
-  width: 3px
-  border-radius: 2px
-  flex-shrink: 0
-
-.kanban-task-user
-  width: 22px
-  height: 22px
-  background-color: gray
-  border-radius: 100%
-  margin: 4px 6px
-  flex-shrink: 0
-
 .kanban-member-avatar
   width: 22px
   height: 22px
@@ -314,62 +224,6 @@
   transition: box-shadow 0.2s linear
   &:hover
     box-shadow: 0 0 0 2px #268fff
-
-.kanban-task-title
-  font-size: 14px
-  color: black
-  margin: 4px 8px 4px 0px
-  flex-grow: 1
-
-.kanban-task-control
-  display: flex
-  .kanban-task-control-icon
-    width: 14px
-    padding: 0
-    color: #687B8E
-    cursor: pointer
-    &:hover
-      background-color: rgba(0, 0, 0, 0.08)
-      transform: scale(1.05)
-  .dropdown-item
-    display: flex
-    align-items: center
-    font-size: 15px
-    padding: 0.25rem 0.5rem 0.25rem 0.25rem
-    cursor: pointer
-  .kanban-task-remove svg
-    color: #687B8E
-    margin-right: 6px
-    width: 20px
-    height: 20px
-
-.kanban-task-tooltip
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)
-  border-radius: 0.2rem
-  background-color: white
-  padding: 0px 4px
-  position: absolute
-  top: -8px
-  right: 20px
-  font-size: 10px
-  font-weight: bold
-  display: none
-  z-index: 10
-  text-transform: uppercase
-
-.kanban-task:hover
-  .kanban-task-tooltip
-    display: block
-
-.kanban-task-add
-  margin: 16px
-
-  textarea
-    height: 40px
-    max-height: 40px
-    border: 2px dashed rgba(190, 205, 217, 0.5)
-    font-size: 15px
-    background-color: transparent
 
 #kanban-add-board,
   background-color: rgba(0, 0, 0, 0.5)
