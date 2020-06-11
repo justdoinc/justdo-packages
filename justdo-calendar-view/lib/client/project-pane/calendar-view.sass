@@ -106,6 +106,16 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
       flex-grow: 1
       align-items: center
 
+    .calendar-members-show
+      text-transform: none
+      font-weight: bold
+      font-size: 12px
+      .calendar-members-show-all,
+      .calendar-members-show-none
+        cursor: pointer
+        &:hover
+          text-decoration: underline
+
   .calendar-member-selector.member-filter-is-active
       .member-filter-indicator
         display: block

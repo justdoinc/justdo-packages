@@ -308,14 +308,11 @@ Template.justdo_calendar_project_pane.onCreated ->
     project_id = delivery_planner_project_id.get()
     other_users = []
     if project_id == "*"
-      other_users = _.map Meteor.users.find({_id: {$ne: Meteor.userId()}},{fields: {_id:1}}).fetch(), (u)-> u._id
+      other_users = _.difference(APP.modules.project_page.curProj()?.getMembersIds(), [Meteor.userId()])
     else
-      _.map APP.collections.Tasks.findOne(project_id).users, (u)->
-        if u != Meteor.userId()
-          other_users.push u
-        return
+      other_users = _.difference(APP.collections.Tasks.findOne(project_id)?.users, [Meteor.userId()])
 
-    self.calendar_filtered_members.set other_users
+    self.calendar_filtered_members.set []
     return
 
   # to handle highlighting the header of 'today', when the day changes...
@@ -331,7 +328,6 @@ Template.justdo_calendar_project_pane.onCreated ->
   ,
     1000 * 60
 
-  @all_other_users = new ReactiveVar([])
   @view_start_date = new ReactiveVar
   @view_end_date = new ReactiveVar
   active_item_id = null
@@ -698,12 +694,9 @@ Template.justdo_calendar_project_pane.helpers
     other_users = []
 
     if project_id == "*"
-      other_users = _.map Meteor.users.find({_id: {$ne: Meteor.userId()}},{fields: {_id:1}}).fetch(), (u)-> u._id
+      other_users = _.difference(APP.modules.project_page.curProj()?.getMembersIds(), [Meteor.userId()])
     else
-      _.map APP.collections.Tasks.findOne(project_id).users, (u)->
-        if u != Meteor.userId()
-          other_users.push u
-        return
+      other_users = _.difference(APP.collections.Tasks.findOne(project_id)?.users, [Meteor.userId()])
 
     calendar_members_filter_val = tmpl.calendar_members_filter_val.get()
     membersDocs = JustdoHelpers.filterUsersDocsArray(other_users, calendar_members_filter_val)
@@ -785,19 +778,6 @@ Template.justdo_calendar_project_pane.events
     project_name = $(e.currentTarget).text()
     $(".calendar_view_project_selector button").text(project_name)
     delivery_planner_project_id.set(project)
-
-    if project == "*"
-      Template.instance().all_other_users.set(
-        _.map Meteor.users.find({_id: {$ne: Meteor.userId()}},{fields: {_id:1}}).fetch(), (u)-> u._id
-      )
-    else
-      other_users = []
-      _.map APP.collections.Tasks.findOne(project).users, (u)->
-        if u != Meteor.userId()
-          other_users.push u
-        return
-      Template.instance().all_other_users.set(other_users)
-
     return
 
   "mouseover .calendar_view_main_table tr": (e, tmpl) ->
@@ -836,11 +816,29 @@ Template.justdo_calendar_project_pane.events
 
     return
 
+  "click .calendar-members-show-all": (e, tmpl) ->
+    e.stopPropagation()
+    project_id = delivery_planner_project_id.get()
+    other_users = []
+
+    if project_id == "*"
+      other_users = _.difference(APP.modules.project_page.curProj()?.getMembersIds(), [Meteor.userId()])
+    else
+      other_users = _.difference(APP.collections.Tasks.findOne(project_id)?.users, [Meteor.userId()])
+
+    tmpl.calendar_filtered_members.set other_users
+    return
+
+  "click .calendar-members-show-none": (e, tmpl) ->
+    e.stopPropagation()
+    tmpl.calendar_filtered_members.set []
+    return
+
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
   @days_matrix = new ReactiveVar([])
   @dates_workload = new ReactiveVar({})
-  @collapsed_view = new ReactiveVar (Template.currentData().user_id != Meteor.userId())
+  @collapsed_view = new ReactiveVar false
 
   members_collapse_state_vars[Template.currentData().user_id] = @collapsed_view
   @justdo_user_holidays = new Set()

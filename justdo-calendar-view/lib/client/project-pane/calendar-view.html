@@ -30,7 +30,15 @@
                   <img class="calendar-member-avatar" src="{{currentMemberAvatar}}"> {{currentMemberName}}
                 </a>
               </li>
-              <li class="dropdown-header text-muted text-uppercase pt-2 pb-1">Members</li>
+              {{#if members}}
+                <li class="dropdown-header text-muted text-uppercase pt-2 pb-1 d-flex justify-content-between align-items-center">
+                  Members
+                  <span class="calendar-members-show text-primary">Show:
+                    <span class="calendar-members-show-all">All</span>,
+                    <span class="calendar-members-show-none">None</span>
+                  </span>
+                </li>
+              {{/if}}
               {{#each members}}
                 <li>
                   <a href="#" class="dropdown-item calendar-filter-member-item {{#if memberInFilter this}}member-in-filter{{/if}}">
