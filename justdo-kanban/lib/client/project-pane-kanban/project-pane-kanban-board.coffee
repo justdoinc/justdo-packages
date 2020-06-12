@@ -16,7 +16,7 @@ Template.project_pane_kanban_board.onRendered ->
 Template.project_pane_kanban_board.helpers
   boardCount: ->
     if (boards_field_id = @active_board_field_id_rv)? and (current_kanban_task_id = @kanban_task_id_rv)?
-      tasks_count = APP.collections.Tasks.find({"parents.#{current_kanban_task_id}": {$exists: true}, "#{boards_field_id}": "#{@board_value_id}"}).count()
+      tasks_count = APP.collections.Tasks.find({"parents.#{current_kanban_task_id}": {$exists: true}, "#{boards_field_id}": "#{@board_value_id}" or {$exists: false}}).count()
 
       if tasks_count > 0
         return tasks_count
@@ -24,7 +24,11 @@ Template.project_pane_kanban_board.helpers
         return 0
 
   boardLabel: ->
-    return APP.modules.project_page.gridControl()?.getSchemaExtendedWithCustomFields()?[@active_board_field_id_rv]?.grid_values[@board_value_id]?.txt
+    label = APP.modules.project_page.gridControl()?.getSchemaExtendedWithCustomFields()?[@active_board_field_id_rv]?.grid_values[@board_value_id]?.txt
+    if label == ""
+      return "—"
+    else
+      return label
 
   getBoardTasks: ->
     if @kanban_task_id_rv? and (active_justdo_id = JD.activeJustdo({_id: 1})?._id)?
