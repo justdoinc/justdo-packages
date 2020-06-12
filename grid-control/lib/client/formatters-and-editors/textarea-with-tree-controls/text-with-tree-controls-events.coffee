@@ -196,9 +196,9 @@ _.extend PACK.Formatters.textWithTreeControls,
     {
       args: ['click', '.jd-icon-context-menu']
       handler: (e) ->
-        event_item = @getEventItem(e)
+        e.type = "contextmenu"
 
-        APP.justdo_tasks_context_menu.show(event_item._id, {of: $(e.target).closest(".jd-icon-context-menu")})
+        $(e.target).trigger(e)
 
         return
     }
