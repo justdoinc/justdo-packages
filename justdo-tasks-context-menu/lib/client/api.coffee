@@ -3,7 +3,33 @@ _.extend JustdoTasksContextMenu.prototype,
 
   _immediateInit: ->
     @_context_item_id_reactive_var = new ReactiveVar(null)
+    @_context_item_path_reactive_var = new ReactiveVar(null)
+    @_context_field_info_reactive_var = new ReactiveVar(null)
+
+    @_context_field_val_reactive_var = new ReactiveVar(null)
+    @_context_dependencies_field_val_reactive_var = new ReactiveVar(null)
+
     @sections_reactive_items_list = new JustdoHelpers.ReactiveItemsList() # The "main" domain will be used for the main sections
+
+    @field_val_and_dependencies_vals_tracker = Tracker.autorun =>
+      @updateFieldValAndDependenciesReactiveVars()
+
+      return
+
+    @onDestroy =>
+      @field_val_and_dependencies_vals_tracker.stop()
+      return
+
+    @_sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator = (item) =>
+      return [
+        @_context_item_id_reactive_var.get(),
+        @_context_item_path_reactive_var.get(),
+        @_context_field_val_reactive_var.get(),
+        @_context_dependencies_field_val_reactive_var.get(),
+        @_context_field_info_reactive_var.get()
+      ]
+
+    @sections_reactive_items_list.registerListingConditionCustomArgsGenerator @_sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator
 
     @setupCoreMenuSections()
 
@@ -24,6 +50,25 @@ _.extend JustdoTasksContextMenu.prototype,
 
     return
 
+  updateFieldValAndDependenciesReactiveVars: ->
+    if not (field_info = @_context_field_info_reactive_var.get())? or not (task_id = @_context_item_id_reactive_var.get())?
+      return
+
+    field_name = field_info.field_name
+    tasks_query_projection = {"#{field_name}": 1}
+    if (dependencies_fields = field_info.column_field_schema.grid_dependencies_fields)?
+      for dependcy_field in dependencies_fields
+        tasks_query_projection[dependcy_field] = 1
+
+    task_doc = APP.collections.Tasks.findOne(task_id, {fields: tasks_query_projection})
+
+    @_context_field_val_reactive_var.set task_doc[field_name]
+    delete task_doc[field_name]
+    delete task_doc._id
+    @_context_dependencies_field_val_reactive_var.set task_doc
+
+    return
+
   _setupContextMenuEvent: ->
     $("body").on "contextmenu", ".slick-viewport", (e) =>
       if $(e.target).closest(".editable").length > 0
@@ -38,6 +83,14 @@ _.extend JustdoTasksContextMenu.prototype,
         # Can't find event's item
         return
 
+      if not (event_path = gc.getEventPath(e))?
+        # Can't find event's path
+        return
+
+      if not (field_info = gc.getEventFormatterDetails(e))?
+        # Can't find event's field info
+        return
+
       if event_item._type?
         # We don't show context menu for typed items
         return
@@ -47,9 +100,18 @@ _.extend JustdoTasksContextMenu.prototype,
         return
 
       e.preventDefault()
+
+      @_context_item_id_reactive_var.set event_item._id
+      @_context_item_path_reactive_var.set event_path
+      @_context_field_info_reactive_var.set field_info
+
+      @updateFieldValAndDependenciesReactiveVars()
+
       gc.activateRow(gc.getEventRow(e))
+
       Tracker.flush()
-      @show(event_item._id, {of: e})
+
+      @_show({of: e})
 
       return
 
@@ -129,12 +191,7 @@ _.extend JustdoTasksContextMenu.prototype,
   $getNode: ->
     return $(@context_menu_template_obj.node)
 
-  show: (item_id, jquery_ui_position_obj) ->
-    if not item_id? or not _.isString(item_id)
-      console.error "JustdoTasksContextMenu: @show(): item_id is required"
-
-      return
-
+  _show: (jquery_ui_position_obj) ->
     if not jquery_ui_position_obj? or not _.isObject(jquery_ui_position_obj)
       jquery_ui_position_obj = {}
 
@@ -146,8 +203,6 @@ _.extend JustdoTasksContextMenu.prototype,
     jquery_ui_position_obj =
       _.extend default_jquery_ui_position_obj, jquery_ui_position_obj
 
-    @_context_item_id_reactive_var.set item_id
- 
     @$getNode()
       .addClass("show")
       .find(".dropdown-menu")
@@ -173,7 +228,7 @@ _.extend JustdoTasksContextMenu.prototype,
       optional: true
       type: new SimpleSchema
         label:
-          type: String
+          type: "skip-type-check"
     listingCondition:
       optional: true
       type: Function
@@ -197,8 +252,12 @@ _.extend JustdoTasksContextMenu.prototype,
       domain: domain
 
     # Create shallow copy to avoid affecting the original data obj provided
+
+    section_items_reactive_items_list = new JustdoHelpers.ReactiveItemsList()
+    section_items_reactive_items_list.registerListingConditionCustomArgsGenerator @_sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator
+
     conf.data = _.extend {}, conf.data,
-      reactive_items_list: new JustdoHelpers.ReactiveItemsList()
+      reactive_items_list: section_items_reactive_items_list
 
     @sections_reactive_items_list.registerItem section_id, conf
 
@@ -221,7 +280,7 @@ _.extend JustdoTasksContextMenu.prototype,
       optional: true
       type: new SimpleSchema
         label:
-          type: String
+          type: "skip-type-check"
         op: 
           optional: true
           type: Function

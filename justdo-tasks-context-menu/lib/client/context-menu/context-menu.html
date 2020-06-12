@@ -1,27 +1,29 @@
 <template name="tasks_context_menu">
   <ul class="dropdown-menu p-2 shadow-lg border-0">
     {{#each section in getMainSections}}
-      {{#if section.label}}
-        <li class="context-section-label">{{section.label}}</li>
-      {{/if}}
+      {{#with section}}
+        {{#if label}}
+          <li class="context-section-label">{{getLabelValue}}</li>
+        {{/if}}
+      {{/with}}
       {{#each section.reactive_items_list.getList}}
         <li class="dropdown-item context-action-item">
           {{#if $eq icon_type "feather"}}
             <svg class="jd-icon jd-icon-context-action text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#{{icon_val}}"/></svg> 
           {{/if}}
-          {{label}}
+          {{getLabelValue}}
           {{#if hasNestedSections section}}
             <ul class="dropdown-menu p-2 shadow-lg border-0 nested-dropdown-menu">
               {{#each getNestedSections section}}
                 {{#if label}}
-                  <li class="context-section-label">{{label}}</li>
+                  <li class="context-section-label">{{getLabelValue}}</li>
                 {{/if}}
                 {{#each reactive_items_list.getList}}
                   <li class="dropdown-item context-action-item">
                     {{#if $eq icon_type "feather"}}
                       <svg class="jd-icon jd-icon-context-action text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#{{icon_val}}"/></svg> 
                     {{/if}}
-                    {{label}}
+                    {{getLabelValue}}
                   </li>
                 {{/each}}
               {{/each}}

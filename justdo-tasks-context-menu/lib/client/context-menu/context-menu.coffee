@@ -1,3 +1,8 @@
+Template.tasks_context_menu.onCreated ->
+  @tasks_context_menu_controller = this.data.controller
+
+  return
+
 Template.tasks_context_menu.helpers
   updatedByOrCreatedBy: ->
     item_obj = @controller.getContextItemObj()
@@ -16,10 +21,26 @@ Template.tasks_context_menu.helpers
   getNestedSections: (section) ->
     return APP.justdo_tasks_context_menu.getNestedSections section.id, @id
 
+  getLabelValue: ->
+    tpl = Template.instance()
+
+    if _.isFunction @label
+      call_args = [@].concat(tpl.tasks_context_menu_controller._sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator())
+      return @label.apply(@, call_args)
+
+    if _.isString @label
+      return @label
+
+    return undefined
+
 Template.tasks_context_menu.events 
   "click .context-action-item": ->
+    tpl = Template.instance()
+
     if _.isFunction @op
-      @op()
+      call_args = [@].concat(tpl.tasks_context_menu_controller._sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator())
+      return @op.apply(@, call_args)
 
       return
 
+    return
