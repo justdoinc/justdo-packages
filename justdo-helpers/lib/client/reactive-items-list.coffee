@@ -23,6 +23,8 @@ ReactiveItemsList = ->
   @_global_listing_conditions_dep = new Tracker.Dependency()
   @_global_listing_conditions = {}
 
+  @_listingConditionCustomArgsGenerator = undefined
+
   return @
 
 _.extend ReactiveItemsList.prototype,
@@ -39,10 +41,37 @@ _.extend ReactiveItemsList.prototype,
 
     return
 
+  registerListingConditionCustomArgsGenerator: (custom_args_generator) ->
+    @_listingConditionCustomArgsGenerator = custom_args_generator
+
+    return
+
+  unregisterListingConditionCustomArgsGenerator: ->
+    @_listingConditionCustomArgsGenerator = undefined
+
+    return
+
+  _isPassingSelfAndGlobalListingConditions: (item) ->
+    listing_condition_args = [item]
+    if _.isFunction @_listingConditionCustomArgsGenerator
+      if (custom_args = @_listingConditionCustomArgsGenerator())?
+        if not _.isArray(custom_args)
+          custom_args = [custom_args]
+        listing_condition_args = listing_condition_args.concat(custom_args)
+
+    if (listingCondition = item.listingCondition)? and not listingCondition.apply(@, listing_condition_args)
+      return false
+
+    global_listing_conditions = _.values @_global_listing_conditions
+    for globalListingCondition in global_listing_conditions
+      if not globalListingCondition.apply(@, listing_condition_args)
+        return false
+
+    return true
+
   getList: (domain="default", ignore_listing_condition=false) ->
     @_global_listing_conditions_dep.depend()
-    global_listing_conditions = _.values @_global_listing_conditions
-
+    
     @_items_dep.depend()
 
     items = _.values @_items
@@ -50,15 +79,7 @@ _.extend ReactiveItemsList.prototype,
     items = _.sortBy items, "position"
 
     if not ignore_listing_condition
-      items = _.filter items, (item) ->
-        if (listingCondition = item.listingCondition)? and not listingCondition(item)
-          return false
-
-        for globalListingCondition in global_listing_conditions
-          if not globalListingCondition(item)
-            return false
-
-        return true
+      items = _.filter items, (item) => @_isPassingSelfAndGlobalListingConditions(item)
 
     items = _.map items, (item) -> _.extend {}, item.data, {id: item._id}
 
@@ -70,11 +91,13 @@ _.extend ReactiveItemsList.prototype,
     if item_id not of @_items
       return undefined
 
-    if ignore_listing_condition
-      return @_items[item_id]
+    item = @_items[item_id]
 
-    if not (listingCondition = @_items[item_id].listingCondition)? or listingCondition()
-      return @_items[item_id]
+    if ignore_listing_condition
+      return item
+
+    if @_isPassingSelfAndGlobalListingConditions(item)
+      return item
 
     return undefined
 
