@@ -40,7 +40,82 @@ _.extend JustdoTasksContextMenu.prototype,
           return
         icon_type: "feather"
         icon_val: "zoom-in"
-    
+
+    getSubtreeItemsWithDifferentVals = (task_path, field_val, field_info) ->
+      gc = APP.modules.project_page.gridControl()
+
+      subtasks_with_different_val = {}
+      gc._grid_data.each task_path, (section, item_type, item_obj) ->
+        if item_obj._type?
+          # Typed item, skip
+          return
+        
+        if item_obj[field_info.field_name] != field_val
+          subtasks_with_different_val[item_obj._id] = item_obj[field_info.field_name]
+        return
+
+      return subtasks_with_different_val
+
+    @registerSectionItem "main", "new-task",
+      position: 400
+      data:
+        label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          current_selected_value_label = field_info.column_field_schema?.grid_values?[field_val]?.txt
+
+          return "Apply #{current_selected_value_label} to subtree"
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          subtasks_with_different_val = getSubtreeItemsWithDifferentVals(task_path, field_val, field_info)
+
+          if _.isEmpty(subtasks_with_different_val)
+            return
+
+          for task_id, task_val of subtasks_with_different_val
+            APP.collections.Tasks.update task_id,
+              $set:
+                "#{field_info.field_name}": field_val
+
+          current_selected_value_label = field_info.column_field_schema?.grid_values?[field_val]?.txt
+
+          JustdoSnackbar.show
+            text: "#{_.size(subtasks_with_different_val)} subtree tasks set as #{current_selected_value_label}."
+            actionText: "Dismiss"
+            showSecondButton: true
+            secondButtonText: "Undo"
+            duration: 10000
+            onActionClick: =>
+              JustdoSnackbar.close()
+              return
+
+            onSecondButtonClick: =>
+              for task_id, task_val of subtasks_with_different_val
+                APP.collections.Tasks.update task_id,
+                  $set:
+                    "#{field_info.field_name}": task_val
+              JustdoSnackbar.close()
+              return
+
+
+          return
+        icon_type: "feather"
+        icon_val: "arrow-down-right"
+
+      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        if not field_info?
+          # Happens when initiating the context menu
+          return false
+        
+        if field_info.formatter_name != "keyValueFormatter"
+          return false
+
+        # Ensure there are *visible* children (when all children are hidden filterAwareGetPathHasChildren returns == 2),
+        # IMPORTANT we do apply the value to items that didn't pass the filter as well, it is just going to be weird
+        # product wise to show the option to apply the value to children when it isn't clear there are children.
+        gc = APP.modules.project_page.gridControl()
+        if gc._grid_data.filterAwareGetPathHasChildren(task_path) != 1
+          return false
+
+        return true
+
     # @registerMainSection "projects",
     #   position: 200
     #   data:
