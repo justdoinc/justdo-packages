@@ -260,44 +260,45 @@ APP.executeAfterAppLibCode ->
         return
       )
 
-    img_to_replace_id = null
-
-    $("#description-editor", $container)
-      .froalaEditor({
-        toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
-          "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"
-          # ,"insertFile", "insertImage"
-        ]
-        imageEditButtons: ['imageReplace', 'imageAlign', 'imageCaption', 'imageRemove', '|', 'imageLink', 'linkOpen', 
-          'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize']
-        tableStyles:
-          "fr-no-borders": "No borders"
-          "fr-dashed-borders": "Dashed Borders"
-          "fr-alternate-rows": "Alternate Rows"
-        quickInsertTags: []
-        charCounterCount: false
-        key: env.FROALA_ACTIVATION_KEY
-        fileUpload: true
-        fileMaxSize: JustdoTaskPane.froala_file_upload_max_size, # can't find any env var or const in tasks-file-manager-plugins/tasks-file-manager regarding the size limit of filestack, so I use this const instead
-        fileAllowedTypes: ["*"]   # XXX
-        imageMaxSize: JustdoTaskPane.froala_file_upload_max_size
-        imageAllowedTypes: ["jpeg", "jpg", "png"]
-      })
-      .on "froalaEditor.file.beforeUpload", (e, editor, files) ->
-        _uploadFilesAndInsertToEditor task_id, files, editor, "file"
-        return false
-      .on "froalaEditor.file.error", (e, editor, error, resp) ->
-        console.log error
-        return
-      .on "froalaEditor.image.beforePasteUpload", (e, editor, img) ->
-        file = dataURLtoFile img.src, Random.id()
-        _uploadFilesAndInsertToEditor task_id, [file], editor, "image", img
-        return false
-      .on "froalaEditor.image.beforeUpload", (e, editor, images) ->
-        _uploadFilesAndInsertToEditor task_id, images, editor, "image", editor.image.get()
-        return false
-      .on "froalaEditor.image.error", (e, editor, error, resp) ->
-        console.log error
+    APP.getEnv (env) =>
+      $("#description-editor", $container)
+        .froalaEditor({
+          toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
+            "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"
+            # ,"insertFile", "insertImage"
+          ]
+          imageEditButtons: ['imageReplace', 'imageAlign', 'imageCaption', 'imageRemove', '|', 'imageLink', 'linkOpen', 
+            'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize']
+          tableStyles:
+            "fr-no-borders": "No borders"
+            "fr-dashed-borders": "Dashed Borders"
+            "fr-alternate-rows": "Alternate Rows"
+          quickInsertTags: []
+          charCounterCount: false
+          key: env.FROALA_ACTIVATION_KEY
+          fileUpload: true
+          fileMaxSize: env.FILESTACK_MAX_FILE_SIZE_BYTES
+          fileAllowedTypes: ["*"]
+          imageMaxSize: env.FILESTACK_MAX_FILE_SIZE_BYTES
+          imageAllowedTypes: ["jpeg", "jpg", "png"]
+        })
+        .on "froalaEditor.file.beforeUpload", (e, editor, files) ->
+          _uploadFilesAndInsertToEditor task_id, files, editor, "file"
+          return false
+        .on "froalaEditor.file.error", (e, editor, error, resp) ->
+          console.log error
+          return
+        .on "froalaEditor.image.beforePasteUpload", (e, editor, img) ->
+          file = dataURLtoFile img.src, Random.id()
+          _uploadFilesAndInsertToEditor task_id, [file], editor, "image", img
+          return false
+        .on "froalaEditor.image.beforeUpload", (e, editor, images) ->
+          _uploadFilesAndInsertToEditor task_id, images, editor, "image", editor.image.get()
+          return false
+        .on "froalaEditor.image.error", (e, editor, error, resp) ->
+          console.log error
+          return
+        
         return
 
     return
