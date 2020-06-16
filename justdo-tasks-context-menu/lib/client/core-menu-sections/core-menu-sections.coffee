@@ -56,7 +56,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
       return subtasks_with_different_val
 
-    @registerSectionItem "main", "new-task",
+    @registerSectionItem "main", "apply-value-to-subtree",
       position: 400
       data:
         label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
