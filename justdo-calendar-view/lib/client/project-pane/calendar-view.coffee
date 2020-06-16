@@ -626,7 +626,14 @@ Template.justdo_calendar_project_pane.helpers
 
 
   title_date: ->
-    return "#{moment(Template.instance().view_start_date.get()).format('MMMM Do')} - #{moment(Template.instance().view_end_date.get()).format('MMMM Do')} "
+    view_resolution = number_of_days_to_display.get()
+
+    if view_resolution >= 56
+      date_format = 'MMMM Do, YYYY'
+    else
+      date_format = 'MMMM Do'
+
+    return "#{moment(Template.instance().view_start_date.get()).format(date_format)} - #{moment(Template.instance().view_end_date.get()).format(date_format)} "
 
   currentUserId: ->
     return Meteor.userId()
