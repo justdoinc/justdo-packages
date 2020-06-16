@@ -7,14 +7,17 @@ Template.project_pane_kanban_board_task.onRendered ->
     start: (e, ui) ->
       $(ui.helper).width($(e.target).width())
       $(e.target).addClass "task-dragging"
+      return
     stop: (e, ui) ->
       $(e.target).removeClass "task-dragging"
+      return
 
   $(".kanban-board").droppable
     drop: (e, ui) ->
       data = Blaze.getData(e.target)
       task_id = Blaze.getData(ui.draggable[0])._id
       JD.collections.Tasks.update({_id: task_id}, {$set: {"#{data.active_board_field_id_rv}": data.board_value_id}})
+      return
 
   return
 

@@ -5,24 +5,26 @@ Template.project_pane_kanban_board.onCreated ->
 
 # ON RENDERED
 Template.project_pane_kanban_board.onRendered ->
-  instance = @
+  tpl = @
 
   $(".kanban-board-dropdown").on "hidden.bs.dropdown", ->
-    instance.show_limit_control.set false
+    tpl.show_limit_control.set false
+    return
 
   $(".kanban-boards").sortable
     items: ".kanban-board"
     tolerance: "pointer"
     cancel: ".kanban-board-control, .kanban-task-control, .kanban-task-add"
-    deactivate: ( event, ui ) ->
+    deactivate: (event, ui) ->
       visible_boards = []
       $(".kanban-board").each ->
-        data = Blaze.getData($(this)[0])
+        data = Blaze.getData($(this).get(0))
         visible_boards.push { "board_value_id": data.board_value_id, "limit": data.limit}
+        return
 
       $(".kanban-boards").sortable "cancel"
-
-      APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(instance.data.kanban_task_id_rv, instance.data.active_board_field_id_rv, "visible_boards", visible_boards)
+      APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(tpl.data.kanban_task_id_rv, tpl.data.active_board_field_id_rv, "visible_boards", visible_boards)
+      return
 
   return
 
@@ -108,7 +110,8 @@ Template.project_pane_kanban_board.events
     else
       visible_boards = @current_board_state_rv.visible_boards
       board_value_id = @board_value_id
-      visible_boards.forEach (board, i) ->
+
+      for board, i in visible_boards
         if board.board_value_id == board_value_id
           visible_boards[i].limit = limit
 
