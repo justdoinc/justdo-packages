@@ -10,17 +10,18 @@ TemplateDropdownProto = (connected_element) ->
 
   @initiated = false
 
-  # Stop propagations o avoid the click reaching body and triggering the
-  # close event bound there
-  @$connected_element
-    .mousedown (e) =>
-      e.stopPropagation()
-    .click (e) =>
-      e.stopPropagation()
+  if @setup_basic_click_event
+    # Stop propagations to avoid the click reaching body and triggering the
+    # close event bound there
+    @$connected_element
+      .mousedown (e) =>
+        e.stopPropagation()
+      .click (e) =>
+        e.stopPropagation()
 
-      if @allowOpen()
-        if @initiated
-          @openDropdown()
+        if @allowOpen()
+          if @initiated
+            @openDropdown()
 
   @current_dropdown_node = null
 
@@ -38,6 +39,8 @@ _.extend TemplateDropdownProto.prototype,
   template_name: null
 
   template_data: undefined
+
+  setup_basic_click_event: true
 
   custom_dropdown_class: ""
   custom_dropdown_content_class: ""
