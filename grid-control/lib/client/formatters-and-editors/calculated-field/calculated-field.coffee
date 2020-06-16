@@ -101,6 +101,124 @@ share.installCalculatedFieldFunction = (func_id, settings) ->
 
   return
 
+setupContextMenuCalcFieldsControls = ->
+  tasks_collection = @collection
+
+  APP.justdo_tasks_context_menu.registerMainSection "calc-fields",
+    position: 100
+    data:
+      label: "Set function"
+
+    listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+      if not field_info?
+        # Happens when initiating the context menu
+        return false
+      
+      if field_info.formatter_name != "calculatedFieldFormatter"
+        return false
+
+      return true
+
+  APP.justdo_tasks_context_menu.registerSectionItem "calc-fields", "clear-formula",
+    position: 100
+    data:
+      label: "Clear formula"
+      op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        tasks_collection.update(task_id, {$set: {"#{field_info.field_name}": ""}})
+
+        return
+      icon_type: "none"
+    listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+      return _.isString(field_val) and field_val[0] == "="
+
+  supported_funcs = [
+    {
+      func: "sum"
+      label: "Sum"
+    }
+    {
+      func: "avg"
+      label: "Average"
+    }
+    {
+      func: "median"
+      label: "Median"
+    }
+    {
+      func: "min"
+      label: "Min"
+    }
+    {
+      func: "max"
+      label: "Max"
+    }
+    {
+      func: "count"
+      label: "Count items"
+    }
+  ]
+
+  item_position = 200 # Clear func is on 100
+  for supported_func in supported_funcs
+    {func, label} = supported_func
+
+    do (func, label) ->
+      APP.justdo_tasks_context_menu.registerSectionItem "calc-fields", func,
+        position: item_position
+        data:
+          label: label
+          is_nested_section: true
+          icon_type: "none"
+
+      APP.justdo_tasks_context_menu.registerNestedSection "calc-fields", func, "#{func}-options",
+        position: 100
+
+      APP.justdo_tasks_context_menu.registerSectionItem "#{func}-options", "#{func}-tree",
+        position: 100
+        data:
+          label: "Tree"
+          icon_type: "none"
+          op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            tasks_collection.update(task_id, {$set: {"#{field_info.field_name}": "=tree#{JustdoHelpers.ucFirst(func)}()"}})
+
+            return
+
+      APP.justdo_tasks_context_menu.registerSectionItem "#{func}-options", "#{func}-filtered-tree",
+        position: 200
+        data:
+          label: "Filtered tree"
+          icon_type: "none"
+          op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            tasks_collection.update(task_id, {$set: {"#{field_info.field_name}": "=filteredTree#{JustdoHelpers.ucFirst(func)}()"}})
+
+            return
+
+      APP.justdo_tasks_context_menu.registerSectionItem "#{func}-options", "#{func}-children",
+        position: 300
+        data:
+          label: "Children"
+          icon_type: "none"
+          op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            tasks_collection.update(task_id, {$set: {"#{field_info.field_name}": "=children#{JustdoHelpers.ucFirst(func)}()"}})
+
+            return
+
+      APP.justdo_tasks_context_menu.registerSectionItem "#{func}-options", "#{func}-filtered-children",
+        position: 400
+        data:
+          label: "Filtered children"
+          icon_type: "none"
+          op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            tasks_collection.update(task_id, {$set: {"#{field_info.field_name}": "=filteredChildren#{JustdoHelpers.ucFirst(func)}()"}})
+
+            return
+
+      return
+
+    item_position += 100
+
+  return
+
 #
 # Formatter
 #
@@ -110,6 +228,8 @@ GridControl.installFormatter formatter_name,
 
   gridControlInit: ->
     # Setup methods that are introduced as shortcuts for dealing with calculated fields
+
+    setupContextMenuCalcFieldsControls.call(@)
 
     @getItemCalculatedFieldValue = (item_id, field_id, path=undefined) =>
       # Note path is optional, but, providing it will improve performance, and
