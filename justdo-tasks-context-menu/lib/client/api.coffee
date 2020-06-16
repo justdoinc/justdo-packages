@@ -290,7 +290,7 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type:
           optional: true
           type: String
-          allowedValues: ["feather"] # ["user-avatar", "font-awesome"] might support these two in the future as well.
+          allowedValues: ["none", "feather"] # ["user-avatar", "font-awesome"] might support these two in the future as well.
         icon_val:
           optional: true
           type: String
@@ -325,8 +325,8 @@ _.extend JustdoTasksContextMenu.prototype,
 
   registerNestedSection: (section_id, nested_section_item, nested_section_id, conf) ->
     # Ensure section_id exists and nested_section_item exists and is, indeed nested section item
-    if (section = @sections_reactive_items_list.getItem section_id)? and 
-      (item = section.data.reactive_items_list.getItem nested_section_item)?
+    if (section = @sections_reactive_items_list.getItem(section_id, true))? and 
+      (item = section.data.reactive_items_list.getItem(nested_section_item, true))?
         if item.data.is_nested_section == true
           @_registerSection(nested_section_id, @_getNestedSectionsDomainId(section_id, nested_section_item), conf)
         else

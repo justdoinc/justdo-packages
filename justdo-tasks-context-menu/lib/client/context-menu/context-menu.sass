@@ -36,15 +36,48 @@
       background-color: white
       color: #212529
 
-  .context-section-label
+  .context-section-label-container
+    &:first-child
+        display: none
+
+    position: relative
+    height: 20px
+    margin-top: 0
+
     font-size: 13px
-    padding: 8px 0 4px 0
+    padding: 0
+
+    hr.my-2
+      position: absolute
+      left: 0
+      right: 0
+      top: 2px
+
+    .context-section-label
+      position: absolute
+      background: white
+      padding-right: 4px
 
   .more-info-items
     font-size: 13px
     cursor: default
     &:hover
       background-color: white
+
+  .empty-icon
+    width: 26px
+
+  .context-nested-section-item
+    padding-right: 18px
+
+    .context-nested-section-item-caret
+      display: inline-block
+      font-size: inherit
+      padding-top: 3px
+      text-rendering: auto
+      -webkit-font-smoothing: antialiased
+      position: absolute
+      right: 6px
 
   hr
     border-style: dashed
