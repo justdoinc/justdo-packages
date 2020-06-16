@@ -37,9 +37,7 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
       overflow: auto
 
     .dropdown-header
-      font-size: 11px
-      text-transform: uppercase
-      padding: 0px 6px
+      font-size: 12px
 
     .dropdown-item
       padding: 4px 6px
@@ -64,6 +62,7 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
     .jd-icon
       cursor: pointer
       padding: 4px
+      stroke-width: 2
       &:hover
         background-color: rgba(0, 0, 0, 0.08)
         transform: scale(1.05)
@@ -94,24 +93,22 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
       display: none
 
     .calendar-filter-member-item
-      opacity: 0.35
+      .calendar-filter-member-info
+        opacity: 0.35
       &.member-in-filter
-        opacity: 1
+        .calendar-filter-member-info
+          opacity: 1
 
     .calendar-filter-member-info
       display: flex
       flex-grow: 1
       align-items: center
 
-    .calendar-members-show
-      text-transform: none
-      font-weight: bold
-      font-size: 12px
-      .calendar-members-show-all,
-      .calendar-members-show-none
-        cursor: pointer
-        &:hover
-          text-decoration: underline
+    .calendar-members-show-all,
+    .calendar-members-show-none
+      cursor: pointer
+      &:hover
+        text-decoration: underline
 
   .calendar-member-selector.member-filter-is-active
       .member-filter-indicator

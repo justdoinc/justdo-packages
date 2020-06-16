@@ -23,28 +23,24 @@
             <div class="member-filter-indicator bg-primary"></div>
             <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#users"/></svg>
           </div>
-          <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+          <div class="dropdown-menu jd-p-075 shadow-lg border-0">
             <input class="calendar-member-selector-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search members" name="" value="">
               {{#if members}}
-                <li class="dropdown-header text-muted text-uppercase pt-2 pb-1 d-flex justify-content-between align-items-center">
-                  Members
-                  <span class="calendar-members-show text-primary">Show:
-                    <span class="calendar-members-show-all">All</span>,
-                    <span class="calendar-members-show-none">None</span>
-                  </span>
-                </li>
+                <div class="dropdown-header text-primary font-weight-bold px-2">
+                  Show:
+                  <span class="calendar-members-show-all">All</span>,
+                  <span class="calendar-members-show-none">None</span>
+                </div>
               {{/if}}
               {{#each members}}
-                <li>
-                  <a href="#" class="dropdown-item calendar-filter-member-item {{#if memberInFilter this}}member-in-filter{{/if}}">
-                    <div class="calendar-filter-member-info"><img class="calendar-member-avatar" src="{{memberAvatar this}}"> {{memberName this}}</div>
-                    {{#if memberInFilter this}}
-                      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
-                    {{/if}}
-                  </a>
-                </li>
+                <a href="#" class="dropdown-item calendar-filter-member-item {{#if memberInFilter this}}member-in-filter{{/if}}">
+                  <div class="calendar-filter-member-info"><img class="calendar-member-avatar" src="{{memberAvatar this}}"> {{memberName this}}</div>
+                  {{#if memberInFilter this}}
+                    <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
+                  {{/if}}
+                </a>
               {{/each}}
-          </ul>
+          </div>
         </div>
       </div>
 

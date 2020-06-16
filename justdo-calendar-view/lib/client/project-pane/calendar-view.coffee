@@ -841,6 +841,25 @@ Template.justdo_calendar_project_pane.events
     tmpl.calendar_filtered_members.set []
     return
 
+  "keydown .calendar-member-selector .dropdown-menu": (e, tmpl) ->
+    $dropdown_item = $(e.target).closest(".calendar-member-selector-search,.dropdown-item")
+
+    if e.keyCode == 38 # Up
+      e.preventDefault()
+      if ($prev_item = $dropdown_item.prevAll(".dropdown-item").first()).length > 0
+        $prev_item.focus()
+      else
+        $(".calendar-member-selector-search").focus()
+
+    if e.keyCode == 40 # Down
+      e.preventDefault()
+      $dropdown_item.nextAll(".dropdown-item").first().focus()
+
+    if e.keyCode == 27 # Escape
+      $(".calendar-member-selector .dropdown-menu").dropdown "hide"
+
+    return
+
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
   @days_matrix = new ReactiveVar([])
