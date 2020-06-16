@@ -10,7 +10,7 @@ _.extend JustdoTasksContextMenu.prototype,
       position: 100
       data:
         label: "New Task"
-        op: ->
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           APP.modules.project_page.performOp("addSiblingTask")
 
           return
@@ -23,18 +23,18 @@ _.extend JustdoTasksContextMenu.prototype,
       position: 200
       data:
         label: "New Child Task"
-        op: ->
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           APP.modules.project_page.performOp("addSubTask")
 
           return
         icon_type: "feather"
         icon_val: "corner-down-right"
     
-    @registerSectionItem "main", "zoon-in",
+    @registerSectionItem "main", "zoom-in",
       position: 300
       data:
         label: "Zoom in"
-        op: ->
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           APP.modules.project_page.performOp("zoomIn")
 
           return
