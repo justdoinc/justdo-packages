@@ -6,16 +6,16 @@
           <button class="btn btn-light btn-sm border" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Entire JustDo
           </button>
-          <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
-            <li><a href="#" class="dropdown-item px-1" project_id="*">Entire JustDo</a></li>
+          <div class="dropdown-menu jd-p-075 shadow-lg border-0">
+            <input class="calendar-view-project-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search projects">
+            <a href="#" class="dropdown-item px-1" project_id="*">Entire JustDo</a>
             {{#if projectsInJustDo}}
-              <hr class="my-2 border-light">
-              <li class="dropdown-header text-muted text-uppercase px-1 py-0">Projects</li>
+              <div class="dropdown-header text-muted text-uppercase px-1 py-2">Projects</div>
               {{#each projectsInJustDo}}
-                <li><a href="#" class="dropdown-item px-1" project_id={{_id}}>{{title}}</a></li>
+                <a href="#" class="dropdown-item px-1" project_id={{_id}}>{{title}}</a>
               {{/each}}
             {{/if}}
-          </ul>
+          </div>
         </div>
         <div class="divider"></div>
         <div class="calendar-member-selector dropdown mr-1 {{#if memberFilterIsActive}}member-filter-is-active{{/if}}">

@@ -299,6 +299,7 @@ Template.justdo_calendar_project_pane.onCreated ->
   self = @
 
   @calendar_members_filter_val = new ReactiveVar null
+  @calendar_projects_filter_val = new ReactiveVar null
   @calendar_filtered_members = new ReactiveVar []
   @justdo_level_holidays = new ReactiveVar(new Set())
 
@@ -609,6 +610,11 @@ Template.justdo_calendar_project_pane.onRendered ->
     instance.calendar_members_filter_val.set ""
     return
 
+  $(".calendar_view_project_selector").on "shown.bs.dropdown", ->
+    $(".calendar-view-project-search").focus().val ""
+    instance.calendar_projects_filter_val.set ""
+    return
+
   return # end onRendered
 
 Template.justdo_calendar_project_pane.helpers
@@ -643,14 +649,31 @@ Template.justdo_calendar_project_pane.helpers
     return _.sortBy filtered_members, (user_id) -> JustdoHelpers.displayName(user_id).toLowerCase()
 
   projectsInJustDo: ->
+    tmpl = Template.instance()
+    calendar_projects_filter_val = tmpl.calendar_projects_filter_val.get()
+
     project = APP.modules.project_page.project.get()
     if project?
-      return APP.collections.Tasks.find({
+      projects = APP.collections.Tasks.find({
           "p:dp:is_project": true
           "p:dp:is_archived_project":
             $not: true
           project_id: project.id
         }, {sort: {"title": 1}}).fetch()
+
+      if not calendar_projects_filter_val?
+        return projects
+
+      filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(calendar_projects_filter_val)}", "i")
+
+      projects = _.filter projects, (doc) ->
+
+        if filter_regexp.test(doc.title)
+          return true
+
+        return false
+
+      return projects
 
   datesToDisplay: ->
     return dates_to_display.get()
@@ -802,9 +825,17 @@ Template.justdo_calendar_project_pane.events
   "keyup .calendar-member-selector-search": (e, tmpl) ->
     value = $(e.target).val().trim()
     if _.isEmpty value
-      return tmpl.calendar_members_filter_val.set null
+      tmpl.calendar_members_filter_val.set null
     else
       tmpl.calendar_members_filter_val.set value
+    return
+
+  "keyup .calendar-view-project-search": (e, tmpl) ->
+    value = $(e.target).val().trim()
+    if _.isEmpty value
+      tmpl.calendar_projects_filter_val.set null
+    else
+      tmpl.calendar_projects_filter_val.set value
     return
 
   "click .calendar-filter-member-item": (e, tmpl) ->
