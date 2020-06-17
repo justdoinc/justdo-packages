@@ -120,7 +120,7 @@ Template.project_pane_kanban_board.events
       tpl.show_limit_control.set false
     return
 
-  "keydown .kanban-task-add-input": (e, tpl) -> # TESTED
+  "keydown .kanban-task-add-input": (e, tpl) ->
     if e.which == 27 # Escape
       $(e.target).blur().val ""
 

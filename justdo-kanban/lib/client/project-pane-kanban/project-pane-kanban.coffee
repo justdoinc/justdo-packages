@@ -45,9 +45,9 @@ Template.project_pane_kanban.onCreated ->
 
 # HELPERS
 Template.project_pane_kanban.helpers
-  isSelectedTaskCollectionItem: -> APP.modules.project_page.getActiveGridItemType() == "default" # TESTED
+  isSelectedTaskCollectionItem: -> APP.modules.project_page.getActiveGridItemType() == "default"
 
-  selectedTask: -> JD.activeItem() # TESTED
+  selectedTask: -> JD.activeItem()
 
   kanbanTaskIdRv: -> Template.instance().kanban_task_id_rv.get()
 
@@ -55,32 +55,32 @@ Template.project_pane_kanban.helpers
 
   currentBoardStateRv: -> Template.instance().current_board_state_rv.get()
 
-  activeTask: -> Template.instance().getKanbanTaskDoc() # TESTED
+  activeTask: -> Template.instance().getKanbanTaskDoc()
 
-  projects: -> # TESTED
+  projects: ->
     project = APP.modules.project_page.project.get()
     if project?
       return APP.collections.Tasks.find({ "p:dp:is_project": true, project_id: project.id }, {sort: {"title": 1}}).fetch()
 
     return
 
-  currentBoardStateVisibleBoards: -> Template.instance().getCurrentBoardStateVisibleBoards() # TESTED
+  currentBoardStateVisibleBoards: -> Template.instance().getCurrentBoardStateVisibleBoards()
 
-  boardIsVisible: -> # TESTED
+  boardIsVisible: ->
     for board in Template.instance().getCurrentBoardStateVisibleBoards()
       if board.board_value_id == @option_id
         return true
 
     return false
 
-  allActiveBoardFieldOptions: -> # TESTED
+  allActiveBoardFieldOptions: ->
     active_board_field_id = Template.instance().active_board_field_id_rv.get()
     if (boards = APP.modules.project_page.gridControl()?.getSchemaExtendedWithCustomFields()?[active_board_field_id]?.grid_values)?
       return _.keys boards
 
     return []
 
-  memberFilter: -> # TESED
+  memberFilter: ->
     current_board_state = Template.instance().current_board_state_rv.get()
 
     if _.isString(owner_id_query_val = current_board_state.query?.owner_id)
@@ -88,7 +88,7 @@ Template.project_pane_kanban.helpers
 
     return null
 
-  thisIsActiveMember: (user_id) -> # TESTED
+  thisIsActiveMember: (user_id) ->
     current_board_state = Template.instance().current_board_state_rv.get()
 
     if _.isString(owner_id_query_val = current_board_state.query?.owner_id)
@@ -96,7 +96,7 @@ Template.project_pane_kanban.helpers
 
     return false
 
-  fields: -> # TESTED
+  fields: ->
     fields = [{"field_id": "state"}]
 
     if JD.activeJustdo()?
@@ -107,17 +107,17 @@ Template.project_pane_kanban.helpers
 
     return fields
 
-  fieldLabel: -> # TESTED
+  fieldLabel: ->
     tpl = Template.instance()
 
     return tpl.getCurrentGcFieldLabel(@field_id)
 
-  buttonFieldLabel: -> # TESTED
+  buttonFieldLabel: ->
     tpl = Template.instance()
     boards_field_id = Template.instance().active_board_field_id_rv.get()
     return tpl.getCurrentGcFieldLabel(boards_field_id)
 
-  members: -> # TESTED
+  members: ->
     members_dropdown_search_input_state_rv =
       Template.instance().members_dropdown_search_input_state_rv.get()
 
@@ -127,24 +127,24 @@ Template.project_pane_kanban.helpers
 
     return []
 
-  memberAvatar: (user_id) -> # TESTED
+  memberAvatar: (user_id) ->
     return JustdoAvatar.showUserAvatarOrFallback(Meteor.users.findOne(user_id))
 
-  memberName: (user_id) -> # TESTED
+  memberName: (user_id) ->
     return JustdoHelpers.displayName(user_id)
 
-  sortBy: -> # TESTED
+  sortBy: ->
     current_board_state = Template.instance().current_board_state_rv.get()
 
     return Object.keys(current_board_state.sort)[0]
 
-  sortByReverse: -> # TESTED
+  sortByReverse: ->
     current_board_state = Template.instance().current_board_state_rv.get()
     if Object.values(current_board_state.sort)[0] > 0
       return true
     return false
 
-  allActiveBoardFieldValues: -> # TESTED
+  allActiveBoardFieldValues: ->
     active_board_field_id = Template.instance().active_board_field_id_rv.get()
     field_values = []
 
@@ -158,18 +158,18 @@ Template.project_pane_kanban.helpers
 
 # EVENTS
 Template.project_pane_kanban.events
-  "click .js-kanban-selected-task": (e, tpl) -> # TESTED
+  "click .js-kanban-selected-task": (e, tpl) ->
     e.preventDefault()
     tpl.kanban_task_id_rv.set @_id
     APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(@_id)
     return
 
-  "click .js-kanban-field-item": (e, tpl) -> # TESTED
+  "click .js-kanban-field-item": (e, tpl) ->
     e.preventDefault()
     APP.justdo_kanban.setTaskKanbanViewStateActiveFieldId(tpl.kanban_task_id_rv.get(), @field_id)
     return
 
-  "click .kanban-sort-item": (e, tpl) -> # TESTED
+  "click .kanban-sort-item": (e, tpl) ->
     e.preventDefault()
     task_id = tpl.kanban_task_id_rv.get()
     board_field_id = tpl.active_board_field_id_rv.get()
@@ -178,7 +178,7 @@ Template.project_pane_kanban.events
     APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(task_id, board_field_id, "sort", {"#{sort_by}": sort_by_reverse * -1})
     return
 
-  "click .kanban-board-add-item": (e, tpl) -> # TESTED
+  "click .kanban-board-add-item": (e, tpl) ->
     task_id = tpl.kanban_task_id_rv.get()
     board_field_id = tpl.active_board_field_id_rv.get()
     board_id = Blaze.getData(e.target).option_id
@@ -195,7 +195,7 @@ Template.project_pane_kanban.events
     APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(task_id, board_field_id, "visible_boards", visible_boards)
     return
 
-  "keyup .kanban-member-selector-search": (e, tpl) -> # TESTED
+  "keyup .kanban-member-selector-search": (e, tpl) ->
     value = $(e.target).val().trim()
 
     if _.isEmpty value
@@ -205,7 +205,7 @@ Template.project_pane_kanban.events
 
     return
 
-  "click .kanban-filter-member-item": (e, tpl) -> # TESTED
+  "click .kanban-filter-member-item": (e, tpl) ->
     e.preventDefault()
 
     user_id = Blaze.getData(e.target)
@@ -214,7 +214,7 @@ Template.project_pane_kanban.events
 
     return
 
-  "click .kanban-clear-member-filter": (e, tpl) -> # TESTED
+  "click .kanban-clear-member-filter": (e, tpl) ->
     e.preventDefault()
 
     tpl.setCurrentBoardStateValue("query", {})
