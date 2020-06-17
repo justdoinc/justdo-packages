@@ -891,6 +891,25 @@ Template.justdo_calendar_project_pane.events
 
     return
 
+  "keydown .calendar_view_project_selector .dropdown-menu": (e, tmpl) ->
+    $dropdown_item = $(e.target).closest(".calendar-view-project-search,.dropdown-item")
+
+    if e.keyCode == 38 # Up
+      e.preventDefault()
+      if ($prev_item = $dropdown_item.prevAll(".dropdown-item").first()).length > 0
+        $prev_item.focus()
+      else
+        $(".calendar-view-project-search").focus()
+
+    if e.keyCode == 40 # Down
+      e.preventDefault()
+      $dropdown_item.nextAll(".dropdown-item").first().focus()
+
+    if e.keyCode == 27 # Escape
+      $(".calendar_view_project_selector .dropdown-menu").dropdown "hide"
+
+    return
+
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
   @days_matrix = new ReactiveVar([])
