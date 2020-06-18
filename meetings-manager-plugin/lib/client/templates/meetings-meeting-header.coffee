@@ -6,4 +6,4 @@ Template.meetings_meeting_header.helpers
   when: (date) ->
     if(date?)
       return moment(date).format("D MMM YYYY")
-    return "no set"
+    return ""
