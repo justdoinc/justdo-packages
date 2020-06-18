@@ -102,25 +102,16 @@
   .dropdown-menu .dropdown-item
     display: flex
     justify-content: space-between
+    align-items: center
     .jd-icon
       pointer-events: none
       display: none
       stroke-width: 2.5
-  &.sort-by-priority
-    .kanban-sort-by-priority
-      color: #007bff
-      font-weight: bold
-      .jd-icon
-        display: block
-  &.sort-by-createdAt
-    .kanban-sort-by-date
-      color: #007bff
-      font-weight: bold
-      .jd-icon
-        display: block
-  &.sort-by-due_date
-    .kanban-sort-by-due-date
-      color: #007bff
+      width: 20px
+      height: 20px
+      padding: 0px
+
+    &.kanban-sort-active
       font-weight: bold
       .jd-icon
         display: block
