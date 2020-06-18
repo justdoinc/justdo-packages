@@ -284,3 +284,8 @@ Template.meetings_dialog_task.events
     Meteor.setTimeout =>
       Session.set "updateTaskOrder", true
     , 100
+  
+  "click .dialog-agenda-task": (e, tpl) ->
+    task_id = tpl.data.meeting_task.task_id
+    gcm = APP.modules.project_page.getCurrentGcm()
+    gcm.setPath(["main", task_id], {collection_item_id_mode: true})
