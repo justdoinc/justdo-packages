@@ -67,7 +67,7 @@ Template.project_pane_kanban_board.helpers
 
   isLimitCrossed: ->
     parent_id = "parents." + @kanban_task_id_rv
-    count = JD.collections.Tasks.find({"#{parent_id}": {$exists: true}, "#{@active_board_field_id_rv}": "#{@board_value_id}"}).count()
+    count = JD.collections.Tasks.find({"#{parent_id}": {$exists: true}, "#{@active_board_field_id_rv}": "#{@board_value_id}" or {$exists: false}}).count()
 
     if count > @limit
       return true
@@ -170,7 +170,7 @@ Template.project_pane_kanban_board.events
           "#{@active_board_field_id_rv}": @board_value_id
 
         parent_id = "parents." + @kanban_task_id_rv
-        tasks_count = APP.collections.Tasks.find({"#{parent_id}": {$exists: true}, "#{@active_board_field_id_rv}": "#{@board_value_id}"}).count()
+        tasks_count = APP.collections.Tasks.find({"#{parent_id}": {$exists: true}, "#{@active_board_field_id_rv}": "#{@board_value_id}" or {$exists: false}}).count()
 
         if @limit > 0 and tasks_count >= @limit
           $kanban_board = $(e.currentTarget).parents(".kanban-board")
