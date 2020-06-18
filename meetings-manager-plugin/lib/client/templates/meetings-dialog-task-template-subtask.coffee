@@ -20,6 +20,10 @@ Template.meetings_dialog_task_subtask.onRendered ->
   return
 
 Template.meetings_dialog_task_subtask.helpers
+  taskId: ->
+    console.log "here" + Template.instance.task_obj?._id
+    return Template.instance.task_obj?._id
+
   seqId: ->
     return Template.instance().task_obj?.seqId
 
@@ -89,7 +93,7 @@ Template.meetings_dialog_task_subtask.helpers
   taskSubjectBox: (subject) ->
     if !subject?
       subject = ""
-    return """<div class="task-subject-box flex-grow-1" contenteditable="true" placeholder="Untitled Task...">""" + subject + """</div>"""
+    return """<div class="task-subject-box flex-grow-1" contenteditable="true" placeholder="Untitled Task..." data-task-id="#{Template.instance().task_obj._id}">""" + subject + """</div>"""
 
 
 Template.meetings_dialog_task_subtask.events

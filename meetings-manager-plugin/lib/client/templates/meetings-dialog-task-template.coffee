@@ -222,7 +222,10 @@ Template.meetings_dialog_task.events
 
   "click .btn-add-task": (e, tmpl) ->
     tmpl.form.validate()
-    APP.meetings_manager_plugin.meetings_manager.addSubTaskToTask @meeting._id, @item.task_id, title: ""
+    APP.meetings_manager_plugin.meetings_manager.addSubTaskToTask @meeting._id, @item.task_id, title: "", (err, new_task_id) =>
+      if not err?
+        Meteor.defer ->
+          $("[data-task-id=\"#{new_task_id}\"].task-subject-box").focus()
 
   "keyup textarea": (e, tmpl) ->
 
