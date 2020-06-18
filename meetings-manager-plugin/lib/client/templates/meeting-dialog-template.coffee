@@ -75,6 +75,9 @@ Template.meetings_meeting_dialog.onCreated ->
 
     if cur_item?
       Forms.instance().doc "seqId", cur_item.seqId
+    
+    Meteor.defer =>
+      @$(".meeting-task-add").val(cur_item.seqId).focus()
 
   # DEPRECATED
   # Get recent locations
