@@ -83,12 +83,13 @@ $tree_control_icons_sprite_bg: url('/packages/stem-capital_grid-control/lib/clie
   top: 6px
   width: 25px
   box-sizing: content-box
-  background-color: rgb(230, 230, 230)
-  color: #3A3A3A
-  border: 1px solid silver
-  opacity: 0.85
-  border-radius: 2px
+  background-color: rgb(238, 239, 242)
+  color: #525F7F
+  border: 1px solid rgba(82, 95, 127, 0.2);
+  opacity: 1
+  border-radius: 3px
   text-align: center
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
 
   .slick-row:first-child &, .slick-row.f-first &
     top: 6px
@@ -119,6 +120,13 @@ $tree_control_icons_sprite_bg: url('/packages/stem-capital_grid-control/lib/clie
   .transfer-from-me
     background-position: 0 0
 
+.grid-tree-control-user-img
+  transition: transform 0.2s linear, box-shadow 0.2s linear
+
+  &:hover
+    transform: scale(0.95)
+    box-shadow: 0 0 0 3px rgb(225, 225, 225)
+
 .grid-tree-control-item-icons
   float: right
 
@@ -144,7 +152,7 @@ $tree_control_icons_sprite_bg: url('/packages/stem-capital_grid-control/lib/clie
   width: 6px
   height: auto
   position: absolute
-  border-radius: 0
+  border-radius: 1px
   top: 3px
   bottom: 3px
   outline: 3px solid white

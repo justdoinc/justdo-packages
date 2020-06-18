@@ -43,8 +43,8 @@
 //    to cancel the border of following active row with the css + selector
 //    to improve look.
 $row-min-height: 31px
-$horizontal-borders-colors: #C3C3C3
-$vertical-borders-colors: #C3C3C3
+$horizontal-borders-colors: rgba(195, 195, 195, 0.65)
+$vertical-borders-colors: $horizontal-borders-colors
 $active-row-border-color: #805206
 $row-border-style: 1px solid $horizontal-borders-colors
 $row-right-border-style: 1px solid $vertical-borders-colors
@@ -64,6 +64,8 @@ $standard-cell-padding-bottom: 3px
 .slick-row
   // Define borders in the row level
   border-top: $row-border-style
+
+  transition: box-shadow, background-color 0.1s linear
 
   &:first-child, &.f-first
     // Keep occupying the space, so when it'll be active, the
