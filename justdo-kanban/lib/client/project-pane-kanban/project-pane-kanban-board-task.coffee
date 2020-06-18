@@ -13,6 +13,7 @@ Template.project_pane_kanban_board_task.onRendered ->
       return
 
   $(".kanban-board").droppable
+    accept: ".kanban-task"
     drop: (e, ui) ->
       data = Blaze.getData(e.target)
       task_id = Blaze.getData(ui.draggable[0])._id
