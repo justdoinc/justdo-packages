@@ -6,26 +6,25 @@
         <button class="btn btn-light btn-sm border" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#zoom-in"/></svg>
         </button>
-        <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
-          <li class="dropdown-header text-muted mt-1">Selected task</li>
+        <div class="dropdown-menu jd-p-075 shadow-lg border-0">
+          <input class="kanban-projects-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search projects">
+          <div class="dropdown-header text-muted mt-1">Selected task</div>
           {{#if isSelectedTaskCollectionItem}}
             {{#with selectedTask}}
-              <li>
-                <a href="#" class="dropdown-item js-kanban-selected-task">
-                  {{taskCommonName}}
-                </a>
-              </li>
+              <a href="#" class="dropdown-item js-kanban-selected-task">
+                {{taskCommonName}}
+              </a>
             {{/with}}
           {{else}}
-              <li><a href="#" class="dropdown-item disable-element text-muted">No selected task</a></li>
+            <a href="#" class="dropdown-item disable-element text-muted">No selected task</a>
           {{/if}}
           {{#if projects}}
-            <li class="dropdown-header text-muted mt-2">Projects</li>
+            <div class="dropdown-header text-muted mt-2">Projects</div>
           {{/if}}
           {{#each projects}}
-            <li><a href="#" class="dropdown-item js-kanban-selected-task">{{title}}</a></li>
+            <a href="#" class="dropdown-item js-kanban-selected-task">{{taskCommonName}}</a>
           {{/each}}
-        </ul>
+        </div>
       </div>
       <div class="{{#unless activeTask}}disable-element{{/unless}} d-flex align-items-center">
         <!-- Kanban State Selector -->

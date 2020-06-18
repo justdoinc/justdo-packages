@@ -33,6 +33,7 @@ Template.project_pane_kanban.onCreated ->
   tpl.setCurrentBoardStateValue = (key, value) -> APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(tpl.kanban_task_id_rv.get(), tpl.active_board_field_id_rv.get(), key, value)
 
   tpl.members_dropdown_search_input_state_rv = new ReactiveVar null
+  tpl.projects_dropdown_search_input_state_rv = new ReactiveVar null
 
   tpl.kanban = new ReactiveVar null
 
@@ -42,6 +43,20 @@ Template.project_pane_kanban.onCreated ->
       return label
 
     return ""
+
+# ON RENDERED
+Template.project_pane_kanban.onRendered ->
+  tpl = @
+
+  $(".kanban-task-selector").on "shown.bs.dropdown", ->
+    $(".kanban-projects-search").focus()
+    return
+
+  $(".kanban-task-selector").on "hidden.bs.dropdown", ->
+    tpl.projects_dropdown_search_input_state_rv.set null
+    $(".kanban-projects-search").val ""
+
+  return
 
 # HELPERS
 Template.project_pane_kanban.helpers
@@ -59,10 +74,23 @@ Template.project_pane_kanban.helpers
 
   projects: ->
     project = APP.modules.project_page.project.get()
-    if project?
-      return APP.collections.Tasks.find({ "p:dp:is_project": true, project_id: project.id }, {sort: {"title": 1}}).fetch()
+    projects_dropdown_search_input_state_rv = Template.instance().projects_dropdown_search_input_state_rv.get()
 
-    return
+    if project?
+      projects = APP.collections.Tasks.find({ "p:dp:is_project": true, project_id: project.id, $or: [{ "p:dp:is_archived_project": false }, { "p:dp:is_archived_project": {$exists: false} }] }, {sort: {"title": 1}}).fetch()
+
+      if not projects_dropdown_search_input_state_rv?
+        return projects
+
+      filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(projects_dropdown_search_input_state_rv)}", "i")
+
+      projects = _.filter projects, (doc) ->
+        if filter_regexp.test(doc.title)
+          return true
+        return false
+
+      return projects
+
 
   currentBoardStateVisibleBoards: -> Template.instance().getCurrentBoardStateVisibleBoards()
 
@@ -199,9 +227,19 @@ Template.project_pane_kanban.events
     value = $(e.target).val().trim()
 
     if _.isEmpty value
-      return tpl.members_dropdown_search_input_state_rv.set null
+      tpl.members_dropdown_search_input_state_rv.set null
 
     tpl.members_dropdown_search_input_state_rv.set value
+
+    return
+
+  "keyup .kanban-projects-search": (e, tpl) ->
+    value = $(e.target).val().trim()
+
+    if _.isEmpty value
+      tpl.projects_dropdown_search_input_state_rv.set null
+
+    tpl.projects_dropdown_search_input_state_rv.set value
 
     return
 
@@ -218,5 +256,25 @@ Template.project_pane_kanban.events
     e.preventDefault()
 
     tpl.setCurrentBoardStateValue("query", {})
+
+    return
+
+  "keydown .kanban-task-selector .dropdown-menu": (e, tpl) ->
+    $dropdown_item = $(e.target).closest(".kanban-projects-search, .dropdown-item")
+
+    if e.which == 38 # Up
+      e.preventDefault()
+
+      if ($prev_item = $dropdown_item.prevAll(".dropdown-item").first()).length > 0
+        $prev_item.focus()
+      else
+        $(".kanban-projects-search", $dropdown_item.closest(".kanban-task-selector")).focus()
+
+    if e.which == 40 # Down
+      e.preventDefault()
+      $dropdown_item.nextAll(".dropdown-item").first().focus()
+
+    if e.which == 27 # Escape
+      $(".kanban-task-selector button").dropdown "hide"
 
     return
