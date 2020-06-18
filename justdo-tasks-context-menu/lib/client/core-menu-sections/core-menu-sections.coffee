@@ -110,7 +110,9 @@ _.extend JustdoTasksContextMenu.prototype,
         # Ensure there are *visible* children (when all children are hidden filterAwareGetPathHasChildren returns == 2),
         # IMPORTANT we do apply the value to items that didn't pass the filter as well, it is just going to be weird
         # product wise to show the option to apply the value to children when it isn't clear there are children.
-        gc = APP.modules.project_page.gridControl()
+        if not (gc = APP.modules.project_page.gridControl())?
+          return false
+        
         if gc._grid_data.filterAwareGetPathHasChildren(task_path) != 1
           return false
 
