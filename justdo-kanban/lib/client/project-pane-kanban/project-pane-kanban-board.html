@@ -13,10 +13,13 @@
           <svg class="jd-icon kanban-board-dropdown-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
           <ul class="dropdown-menu p-2 shadow-lg border-0">
             {{#if showLimitControl}}
-              <li class="dropdown-item">
-                <input type="text" placeholder="max limit" class="kanban-board-limit-input form-control form-control-sm" value="{{limit}}">
-                <button class="btn btn-primary btn-sm kanban-board-limit-save" type="button">Save</button>
-                <button class="btn btn-secondary btn-sm kanban-board-limit-cancel" type="button">Cancel</button>
+              <li>
+                <div class="kanban-board-limit-label text-muted">Max tasks limit</div>
+                <div class="d-flex">
+                  <input type="text" placeholder="Max tasks limit" class="kanban-board-limit-input form-control form-control-sm" value="{{limit}}">
+                  <button class="btn btn-primary btn-sm kanban-board-limit-save" type="button">Save</button>
+                  <button class="btn btn-secondary btn-sm kanban-board-limit-cancel" type="button">Cancel</button>
+                </div>
               </li>
             {{else}}
               <li class="dropdown-item kanban-board-edit">

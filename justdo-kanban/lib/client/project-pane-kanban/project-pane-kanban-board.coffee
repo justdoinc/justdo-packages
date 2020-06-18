@@ -120,6 +120,34 @@ Template.project_pane_kanban_board.events
       tpl.show_limit_control.set false
     return
 
+  "keydown .kanban-board-dropdown": (e, tpl) ->
+    if e.which == 27 # Escape
+      $(e.currentTarget).find(".kanban-board-dropdown-icon").dropdown "hide"
+      tpl.show_limit_control.set false
+
+    if e.which == 13 # Enter
+      $input = $(e.currentTarget).find(".kanban-board-limit-input")
+      limit = parseInt($input.val())
+
+      if limit <= 0 or isNaN(limit)
+        e.stopPropagation()
+        $input.focus().addClass "kanban-shake"
+        setTimeout -> $input.removeClass "kanban-shake", 1500
+      else
+        visible_boards = @current_board_state_rv.visible_boards
+        board_value_id = @board_value_id
+
+        for board, i in visible_boards
+          if board.board_value_id == board_value_id
+            visible_boards[i].limit = limit
+
+        APP.justdo_kanban.setTaskKanbanViewStateBoardStateValue(@kanban_task_id_rv, @active_board_field_id_rv, "visible_boards", visible_boards)
+
+        $(e.currentTarget).find(".kanban-board-dropdown-icon").dropdown "hide"
+        tpl.show_limit_control.set false
+
+    return
+
   "keydown .kanban-task-add-input": (e, tpl) ->
     if e.which == 27 # Escape
       $(e.target).blur().val ""
