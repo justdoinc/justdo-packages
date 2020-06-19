@@ -118,39 +118,166 @@ _.extend JustdoTasksContextMenu.prototype,
 
         return true
 
-    # @registerMainSection "projects",
-    #   position: 200
-    #   data:
-    #     label: "Projects"
-    #   listingCondition: ->
-    #     if not (cur_proj = APP.modules.project_page.curProj())?
-    #       return true 
-    #     return cur_proj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
-    
-    # @registerSectionItem "projects", "set-as-a-project",
-    #   position: 100
-    #   data:
-    #     label: "Set as a Project"
-    #     op: -> 
-    #       APP.justdo_delivery_planner.toggleTaskIsProject APP.modules.project_page.activeItemId()
-    #       return 
-    #     icon_type: "feather"
-    #     icon_val: "folder"
-    #   listingCondition: -> 
-    #     return (task = APP.modules.project_page.activeItemObj())? and not (task["p:dp:is_project"] == true)
-    
-    # @registerSectionItem "projects", "unset-as-a-project",
-    #   position: 200
-    #   data:
-    #     label: "Unset as a Project"
-    #     op: ->
-    #       APP.justdo_delivery_planner.toggleTaskIsProject APP.modules.project_page.activeItemId()
-    #       return
-    #     icon_type: "feather"
-    #     icon_val: "folder-minus"
-    #   listingCondition: -> 
-    #     return (task = APP.modules.project_page.activeItemObj())? and (task["p:dp:is_project"] == true)
+    @registerSectionItem "main", "reorder-children",
+      position: 500
+      data:
+        label: "Reorder children by"
+        is_nested_section: true
+        icon_type: "feather"
+        icon_val: "jd-sort"
 
+      listingCondition: ->
+        if not (gc = APP.modules.project_page?.gridControl())?
+          return false
+        return _.isEmpty(gc.sortActivePathByPriorityDesc.prereq())
+
+    @registerNestedSection "main", "reorder-children", "reorder-children-items",
+      position: 100
+
+    supported_reorderings = [
+      {
+        field_id: "priority"
+        label: "Priority"
+        order: -1 # -1 for DESC 1 for ASC
+      }
+      {
+        field_id: "title"
+        label: "Subject"
+        order: 1 # -1 for DESC 1 for ASC
+      }
+    ]
+
+    current_position = 100
+    for supported_reordering in supported_reorderings
+      {field_id, label, order} = supported_reordering
+
+      @registerSectionItem "reorder-children-items", "reorder-children-by-#{field_id}",
+        position: current_position
+        data:
+          label: label
+          op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            if not (gc = APP.modules.project_page?.gridControl())?
+              return false
+            gc._grid_data.sortChildren task_path, field_id, order
+            return
+          icon_type: "none"
+
+      current_position += 100
+
+    @registerMainSection "copy-paste",
+      position: 200
+
+    @registerSectionItem "copy-paste", "copy",
+      position: 100
+      data:
+        label: "Copy"
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          clipboard.copy
+            "text/plain": field_val or ""
+          return
+        icon_type: "feather"
+        icon_val: "copy"
+
+    @registerSectionItem "copy-paste", "paste",
+      position: 200
+      data:
+        label: "Paste"
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          # Credit: https://stackoverflow.com/questions/6413036/get-current-clipboard-content
+          navigator.clipboard.readText()
+            .then (text) =>
+              if (allowed_grid_values = field_info?.column_field_schema?.grid_values)? and
+                  text not of allowed_grid_values
+                console.warn "Value '#{text}' isn't allowed."
+
+                return
+
+              APP.collections.Tasks.update task_id,
+                $set:
+                  "#{field_info.field_name}": text
+
+              return
+            .catch (err) =>
+              console.error("Failed to read clipboard contents: ", err)
+
+          # Another approach that we might use in the future:
+          #
+          # navigator.clipboard.read()
+          #   .then (clipboard_items) =>
+          #     for clipboard_item in clipboard_items
+          #       for type in clipboard_item.types
+          #         clipboard_item.getType(type)
+          #           .then (blob) =>
+          #             console.log(blob)
+
+          return
+        icon_type: "feather"
+        icon_val: "clipboard"
+      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        if not field_info?.column_field_schema?.grid_editable_column
+          return false
+
+        if not (field_id = field_info?.field_name)?
+          return false
+
+        # If tasks locks are installed, and if so, whether the task is locked and if so, whether the current field_id is
+        # restricted when the task is locked
+        if APP.custom_justdo_tasks_locks.isPluginInstalledOnProjectDoc(JD.activeJustdo())
+          if not APP.custom_justdo_tasks_locks.isActiveUserAllowedToPerformRestrictedOperationsOnActiveTask()
+            if field_id in CustomJustdoTasksLocks.restricted_fields
+              return false
+
+        return true
+
+    @registerMainSection "projects",
+      position: 300
+      data:
+        label: "Projects"
+      listingCondition: ->
+        if not (cur_proj = APP.modules.project_page.curProj())?
+          return true 
+        return cur_proj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
+    
+    @registerSectionItem "projects", "set-as-a-project",
+      position: 100
+      data:
+        label: "Set as a Project"
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          APP.justdo_delivery_planner.toggleTaskIsProject task_id
+          return 
+        icon_type: "feather"
+        icon_val: "folder"
+      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        return dependencies_fields_vals?["p:dp:is_project"] != true
+    
+    @registerSectionItem "projects", "unset-as-a-project",
+      position: 200
+      data:
+        label: "Unset as a Project"
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          APP.justdo_delivery_planner.toggleTaskIsProject task_id
+          return
+        icon_type: "feather"
+        icon_val: "folder-minus"
+      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        return dependencies_fields_vals?["p:dp:is_project"] is true
+
+    @registerSectionItem "projects", "open-close-project",
+      position: 300
+      data:
+        label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          if dependencies_fields_vals?["p:dp:is_archived_project"]
+            return "Reopen Project"
+          else
+            return "Close Project"
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          APP.justdo_delivery_planner.toggleTaskArchivedProjectState task_id
+          return 
+        icon_type: "feather"
+        icon_val: "folder"
+      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        return dependencies_fields_vals?["p:dp:is_project"] is true
+    
     # @registerSectionItem "projects", "assign-to-project",
     #   position: 300
     #   data:
