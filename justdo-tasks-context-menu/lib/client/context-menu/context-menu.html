@@ -3,7 +3,9 @@
     {{#each section in getMainSections}}
       {{> tasks_context_section section=section}}
     {{/each}}
-    <hr class="my-2">
+    <li class="context-section-label-container label-less-section">
+      <hr class="my-2">
+    </li>
     <li class="more-info-items">
       <div>
         <div>Updated {{moFromNow controller.getContextItemObj.updatedAt}}</div>
@@ -15,7 +17,7 @@
 
 <template name="tasks_context_section">
   {{#with section}}
-    <li class="context-section-label-container">
+    <li class="context-section-label-container {{#unless label}}label-less-section{{/unless}}">
       <hr class="my-2">
       {{#if label}}
         <div class="context-section-label">
