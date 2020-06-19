@@ -62,7 +62,7 @@
         <div class="kanban-sort-selector dropdown">
           <svg class="jd-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#jd-sort"/></svg>
           <div class="dropdown-menu jd-p-075 shadow-lg border-0">
-            <a href="#" class="dropdown-item kanban-sort-item kanban-sort-by-date {{#if $eq sortBy 'createdAt'}}kanban-sort-active text-primary{{/if}}"  sortby="createdAt">
+            <a href="#" class="dropdown-item kanban-sort-item kanban-sort-by-date {{#if $eq sortBy 'createdAt'}}active{{/if}}"  sortby="createdAt">
               Created
               {{#if sortByReverse}}
                 <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"/></svg>
@@ -70,7 +70,7 @@
                 <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"/></svg>
               {{/if}}
             </a>
-            <a href="#" class="dropdown-item kanban-sort-item kanban-sort-by-priority {{#if $eq sortBy 'priority'}}kanban-sort-active text-primary{{/if}}" sortby="priority">
+            <a href="#" class="dropdown-item kanban-sort-item kanban-sort-by-priority {{#if $eq sortBy 'priority'}}active{{/if}}" sortby="priority">
               By Priority
               {{#if sortByReverse}}
                 <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"/></svg>
@@ -78,7 +78,7 @@
                 <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"/></svg>
               {{/if}}
             </a>
-            <a href="#" class="dropdown-item kanban-sort-item kanban-sort-by-due-date {{#if $eq sortBy 'due_date'}}kanban-sort-active text-primary{{/if}}" sortby="due_date">
+            <a href="#" class="dropdown-item kanban-sort-item kanban-sort-by-due-date {{#if $eq sortBy 'due_date'}}active{{/if}}" sortby="due_date">
               By Due Date
               {{#if sortByReverse}}
                 <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"/></svg>
