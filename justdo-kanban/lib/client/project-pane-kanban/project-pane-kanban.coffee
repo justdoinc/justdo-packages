@@ -56,6 +56,15 @@ Template.project_pane_kanban.onRendered ->
     tpl.projects_dropdown_search_input_state_rv.set null
     $(".kanban-projects-search").val ""
 
+  $(".kanban-member-selector").on "shown.bs.dropdown", ->
+    $(".kanban-member-selector-search").focus()
+    return
+
+  $(".kanban-member-selector").on "hidden.bs.dropdown", ->
+    tpl.members_dropdown_search_input_state_rv.set null
+    $(".kanban-member-selector-search").val ""
+    return
+
   return
 
 # HELPERS
@@ -276,5 +285,25 @@ Template.project_pane_kanban.events
 
     if e.which == 27 # Escape
       $(".kanban-task-selector button").dropdown "hide"
+
+    return
+
+  "keydown .kanban-member-selector .dropdown-menu": (e, tpl) ->
+    $dropdown_item = $(e.target).closest(".kanban-member-selector-search, .dropdown-item")
+
+    if e.which == 38 # Up
+      e.preventDefault()
+
+      if ($prev_item = $dropdown_item.prevAll(".dropdown-item").first()).length > 0
+        $prev_item.focus()
+      else
+        $(".kanban-member-selector-search", $dropdown_item.closest(".kanban-member-selector")).focus()
+
+    if e.which == 40 # Down
+      e.preventDefault()
+      $dropdown_item.nextAll(".dropdown-item").first().focus()
+
+    if e.which == 27 # Escape
+      $(".kanban-member-selector .kanban-member-selector-btn").dropdown "hide"
 
     return

@@ -42,21 +42,19 @@
         <div class="divider ml-3 mr-2"></div>
         <div class="kanban-member-selector {{#if memberFilter}}active-member{{/if}} dropdown mr-1">
           {{#if memberFilter}}
-            <img class="kanban-filter-member-avatar" src="{{memberAvatar memberFilter}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <img class="kanban-filter-member-avatar kanban-member-selector-btn" src="{{memberAvatar memberFilter}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <svg class="jd-icon kanban-clear-member-filter"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
           {{else}}
-            <svg class="jd-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#filter"/></svg>
+            <svg class="jd-icon kanban-member-selector-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#filter"/></svg>
           {{/if}}
-          <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
-            <input class="kanban-member-selector-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search members" name="" value="">
+          <div class="dropdown-menu jd-p-075 shadow-lg border-0">
+            <input class="kanban-member-selector-search form-control form-control-sm bg-light border-0" type="text" placeholder="Search members" name="" value="">
             {{#each members}}
-              <li>
-                <a href="#" class="dropdown-item kanban-filter-member-item {{#if thisIsActiveMember this}}text-primary{{/if}}">
-                  <img class="kanban-member-avatar" src="{{memberAvatar this}}"> {{memberName this}}
-                </a>
-              </li>
+              <a href="#" class="dropdown-item kanban-filter-member-item {{#if thisIsActiveMember this}}active{{/if}}">
+                <img class="kanban-member-avatar" src="{{memberAvatar this}}"> {{memberName this}}
+              </a>
             {{/each}}
-          </ul>
+          </div>
         </div>
         <!-- Kanban Sort Selector -->
         <div class="kanban-sort-selector dropdown">
