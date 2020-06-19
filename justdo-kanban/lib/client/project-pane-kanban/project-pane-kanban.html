@@ -32,11 +32,11 @@
           <button class="btn btn-light btn-sm border" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{buttonFieldLabel}}
           </button>
-          <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+          <div class="dropdown-menu jd-p-075 shadow-lg border-0">
             {{#each fields}}
-              <li><a href="#" class="dropdown-item js-kanban-field-item">{{fieldLabel}}</a></li>
+              <a href="#" class="dropdown-item js-kanban-field-item {{#if fieldIsActive}}active{{/if}}">{{fieldLabel}}</a>
             {{/each}}
-          </ul>
+          </div>
         </div>
         <!-- Kanban User Selector -->
         <div class="divider ml-3 mr-2"></div>

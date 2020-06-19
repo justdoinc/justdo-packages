@@ -144,6 +144,9 @@ Template.project_pane_kanban.helpers
 
     return fields
 
+  fieldIsActive: ->
+    return @field_id == Template.instance().active_board_field_id_rv.get()
+
   fieldLabel: ->
     tpl = Template.instance()
 

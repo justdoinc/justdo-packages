@@ -51,6 +51,8 @@
     overflow: hidden
     white-space: nowrap
     border-radius: 4px
+    &.active
+      font-weight: bold
     &:active
       background-color: white
       color: #007bff
@@ -89,8 +91,6 @@
     width: 20px
     height: 20px
     margin: 0 2px 0 4px
-  .kanban-filter-member-item.active
-    font-weight: bold
   .kanban-filter-member-item:first-of-type
     margin-top: 8px
 
@@ -116,7 +116,6 @@
       padding: 0px
 
     &.active
-      font-weight: bold
       .jd-icon
         display: block
 
