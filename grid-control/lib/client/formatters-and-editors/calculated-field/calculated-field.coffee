@@ -105,7 +105,7 @@ setupContextMenuCalcFieldsControls = ->
   tasks_collection = @collection
 
   APP.justdo_tasks_context_menu.registerMainSection "calc-fields",
-    position: 100
+    position: 250 # As of writing, that means between copy-paste and projects
     data:
       label: "Set function"
 
