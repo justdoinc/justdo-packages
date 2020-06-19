@@ -37,6 +37,20 @@ Template.required_action_card_transfer_request.events
   "click .reject": (e, tpl) ->
     APP.projects.modules.owners.rejectOwnershipTransfer(@task_id, tpl.$("textarea").val())
 
+    task = APP.collections.Tasks.findOne @task_id
+
+    JustdoSnackbar.show
+      text: "Task #{JustdoHelpers.taskCommonName(task, 20)} <strong>Rejected</strong>"
+      duration: 8000
+      actionText: "View"
+      onActionClick: =>
+        APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task._id)
+        JustdoSnackbar.close()
+
+        return
+
+    return
+
   "click .accept": ->
     update =
       $set:
@@ -44,6 +58,20 @@ Template.required_action_card_transfer_request.events
         pending_owner_id: null
 
     @projects_obj.items_collection.update(@task_id, update)
+
+    task = APP.collections.Tasks.findOne @task_id
+
+    JustdoSnackbar.show
+      text: "Task #{JustdoHelpers.taskCommonName(task, 20)} <strong>Accepted</strong>"
+      duration: 8000
+      actionText: "View"
+      onActionClick: =>
+        APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task._id)
+        JustdoSnackbar.close()
+
+        return
+
+    return
 
   "click .task-link": ->
     APP.projects.modules.required_actions.activateTaskOnMainTab(@_id)
