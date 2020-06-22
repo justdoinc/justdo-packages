@@ -59,7 +59,7 @@ Template.meetings_meeting_dialog.onCreated ->
     data = Template.currentData()
 
     APP.meetings_manager_plugin.meetings_manager.subscribeToPrivateNotesForMeeting data.meeting_id
-    APP.meetings_manager_plugin.meetings_manager.subscribeToNotesForMeeting data.meeting_id
+    @meetings_tasks_sub = APP.meetings_manager_plugin.meetings_manager.subscribeToNotesForMeeting data.meeting_id
 
   @autorun =>
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -69,15 +69,6 @@ Template.meetings_meeting_dialog.onCreated ->
 
     Tracker.autorun =>
       form.doc form.original()
-
-  @autorun =>
-    cur_item = APP.modules.project_page.activeItemObj()
-
-    if cur_item?
-      Forms.instance().doc "seqId", cur_item.seqId
-    
-    Meteor.defer =>
-      @$(".meeting-task-add").val(cur_item.seqId).focus()
 
   # DEPRECATED
   # Get recent locations
@@ -100,6 +91,21 @@ Template.meetings_meeting_dialog.onCreated ->
 
     if (current_project_id? and current_project_id != @project_id) or !current_project_id?
       $(".meetings_meeting-dialog").remove()
+
+  @autorun =>
+    cur_item = APP.modules.project_page.activeItemObj()
+    
+    if cur_item? and @meetings_tasks_sub.ready()
+      Forms.instance().doc "seqId", cur_item.seqId
+
+      Meteor.defer =>
+        match_meeting = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
+          $or: [
+            {task_id: cur_item._id},
+            {added_tasks: $elemMatch: {task_id: cur_item._id}}
+          ]
+        if not match_meeting?
+          @$(".meeting-task-add").val(cur_item.seqId).focus()
 
   @html_representation = ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -251,8 +257,6 @@ Template.meetings_meeting_dialog.onCreated ->
 
     window.open("mailto:#{emails}?subject=#{encodeURIComponent(meeting.title)} - Meeting Notes&body=#{encodeURIComponent(@plain_text_representation())}");
 
-
-
 Template.meetings_meeting_dialog.onRendered ->
   instance = this
   meeting_note_box = @$ "[name=\"note\"]"
@@ -274,10 +278,6 @@ Template.meetings_meeting_dialog.onRendered ->
     handle: ".sort-task"
     stop: (event, ui) ->
       Session.set "updateTaskOrder", true
-
-
-
-
 
   @autorun =>
     updateTaskOrder = Session.get "updateTaskOrder"
