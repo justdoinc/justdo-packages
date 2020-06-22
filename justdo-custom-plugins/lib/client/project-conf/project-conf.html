@@ -1,5 +1,11 @@
 <template name="justdo_custom_plugins_project_config">
-  <div class="project-conf-justdo-custom-plugins-config py-2 d-flex align-items-center">
+  {{#each getListedCustomPlugins}}
+    {{> justdo_custom_plugin_project_config}}
+  {{/each}}
+</template>
+
+<template name="justdo_custom_plugin_project_config">
+  <div class="project-conf-justdo-custom-plugin-config py-2 d-flex align-items-center">
     {{pluginName}}
     <div class="ml-auto">
       {{#if isModuleEnabled}}
