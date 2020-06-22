@@ -98,8 +98,12 @@ Template.meeting_container.events
       z.add(@_id)
       tmpl.$(".meeting-container").addClass "expanded"
     tmpl.expanded.set z
+  
+  "click .info-subtask": (e, tpl) ->
+    task_id = $(e.target).closest(".info-subtask").data("task-id")
 
-  # Focus on task
-  "click .info-subtask-title": (e, tmpl) ->
-    #todo: select
-    return
+    gcm = APP.modules.project_page.getCurrentGcm()
+
+    gcm.setPath(["main", "/#{task_id}/"])
+    
+    return false

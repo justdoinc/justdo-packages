@@ -39,7 +39,7 @@
                 <div class="info-title">Added tasks:</div>
                 <table>
                   {{#each this.tasks}}
-                    <tr class="info-subtask">
+                    <tr class="info-subtask" data-task-id="{{task_id}}">
                       <td class="info-subtask-seqId"><div>{{seqId}}</div></td>
                       <td class="info-subtask-title">{{title}}
                         {{#if taskNotFound}}<i class="fa fa-exclamation-triangle" aria-hidden="true" title="Task not found"></i>{{/if}}
