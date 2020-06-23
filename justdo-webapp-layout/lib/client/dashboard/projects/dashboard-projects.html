@@ -1,26 +1,37 @@
 <template name="dashboard_projects">
-  <div class="projects-list">
-    {{#each projects}}
-      {{> dashboard_projects_project_card}}
-    {{/each}}
+  <div class="dashboard-projects">
+    <div class="container">
+      <div class="dashboard-header">
+        <input class="dashboard-search-input form-control form-control-lg bg-light border-0 font-weight-bold" placeholder="Search JustDos" type="text">
+        <div class="dashboard-operations">
+          <button class="create-project btn btn-primary btn-lg font-weight-bold" type="button">Create JustDo</button>
+        </div>
+      </div>
 
-    <div class="project-card create-project">
-      <i class="fa fa-plus fa-fw"></i> Create a new JustDo
+      <div class="projects-list">
+        <div class="projects-header border-bottom">
+          JustDos
+        </div>
+        {{#if projects}}
+          {{#each projects}}
+            {{> dashboard_projects_project_card}}
+          {{/each}}
+        {{else}}
+          <div class="dashboard-empty bg-light">No projects</div>
+        {{/if}}
+      </div>
     </div>
-
-    <div style="clear: both;"></div>
   </div>
 </template>
 
 <template name="dashboard_projects_project_card">
   <a class="project-card {{#unless members}}guest{{/unless}}" href="{{pathFor route='project' data=this}}">
-    <div class="project-card-header">
-      <div class="project-card-title">
-        {{title}}
-      </div>
+    <div class="project-indicator"></div>
+    <div class="project-title">{{title}}</div>
+    {{> dashboard_projects_project_card_members}}
+    <div class="project-actions border-left">
       {{> required_actions_bell}}
     </div>
-    {{> dashboard_projects_project_card_members}}
   </a>
 </template>
 

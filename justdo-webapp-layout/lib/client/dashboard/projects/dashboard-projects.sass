@@ -1,81 +1,87 @@
 @import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
 
-.project-card
-  position: relative
-  display: block
-  float: left
-  width: 250px
-  font-family: $verdana-fallbacks
-  background-color: #eaeaea
-  border: 1px solid #ccc
-  border-radius: 3px
-  padding: 7px 10px 10px
-  margin: 16px 0 0 16px
-  cursor: pointer
+.dashboard-projects
+  flex-grow: 1
 
-  &:hover, &:focus
-    text-decoration: none
+.dashboard-header
+  margin: 32px 0
+  display: flex
 
-  &.guest
-    min-height: 90px
+.dashboard-search-input
+  &::placeholder
+    color: #B5BCC7 !important
 
-    .project-members
-      display: none
+.dashboard-empty
+  text-align: center
+  margin-top: 20px
+  padding: 100px 0
+  font-size: 17px
+  color: rgba(0, 0, 0, 0.25)
+  border-radius: 8px
 
-    .project-card-title
-      color: #555
-      margin: 0
-      padding-top: 23px
-      font-size: 17px
-      text-align: center
+.projects-header
+  padding: 4px 0px
+  font-size: 16px
+  text-transform: uppercase
+  font-weight: bold
+  color: #98A1B0
 
-.project-card-header
-  margin-bottom: 5px
-
-  .required-actions-bell
-    // .required-actions-bell full definition is in required-actions.sass
-    position: absolute
-    right: 0
-    top: 0
-    font-size: 15px
-
-  .required-actions-count
-    font-size: 10px
-    right: -4px
-    top: -4px
-
-  .many-actions
-    .required-actions-count
-      $font-size: 9px
-
-      right: -9px
-
-      font-size: $font-size
-      line-height: $font-size
-
-      padding: 4px 3px
-
-.project-card-title
-  font-size: 13px
-  color: #1C0840
-  white-space: nowrap
-  overflow: hidden
-  text-overflow: ellipsis
-  margin-right: 22px
-
-.project-members
-  background-color: #fff
-  border: 1px solid #ccc
-  border-radius: 3px
-  padding: 8px 10px
+.dashboard-operations
+  display: flex
+  margin-left: 12px
 
 .create-project
-  height: 90px
-  font-size: 16px
-  line-height: 70px
-  text-align: center
-  padding-left: 0px
-  color: #555
+  white-space: nowrap
+  text-transform: uppercase
 
+.project-card
+  display: flex
+  border-bottom: 1px dashed #E7E8EB
+  padding: 8px 8px 8px 20px
+  align-items: center
+  transition: background-color 0.35s
+  position: relative
   &:hover
-    color: #333
+    background-color: #F7F8F9
+    color: black
+    .project-indicator
+      opacity: 0.75
+
+.project-indicator
+  position: absolute
+  top: 8px
+  bottom: 8px
+  left: 0px
+  width: 4px
+  border-radius: 1px
+  background-color: #98A1B0
+  opacity: 0.25
+  transition: opacity 0.35s
+
+.project-title
+  color: #525F7F
+  font-size: 17px
+  flex-grow: 1
+  font-weight: bold
+  white-space: nowrap
+  text-overflow: ellipsis
+  overflow: hidden
+  margin-right: 12px
+
+.project-members
+  padding: 4px
+  border-radius: 100px
+  background-color: rgba(82, 95, 127, 0.08)
+  .justdo-avatars-box
+    display: flex
+  .sep
+    display: none
+
+.project-actions
+  margin-left: 16px
+  padding-left: 8px
+
+.project-card.guest
+  .project-members,
+  .project-actions
+    display: none

@@ -1,25 +1,13 @@
 @import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
 
+.app-wrapper
+  display: flex
+  flex-direction: column
+
 .page-container.page-dashboard
   padding: 0
+  flex-grow: 1
 
-  top: $navbar-height + $navbar-border-height
-  right: 0
-  bottom: 0
-  left: 0
-
-  position: absolute
-
-.dashboard-page-wrapper
-  position: relative
-
-  height: 100%
-  overflow: auto
-
-.dashboard-page-secondary-wrapper
-  position: relative
-
-  min-height: 100%
-
-.projects-list
-  padding-bottom: $footer-height + 20
+.page-dashboard
+  display: flex
+  flex-direction: column
