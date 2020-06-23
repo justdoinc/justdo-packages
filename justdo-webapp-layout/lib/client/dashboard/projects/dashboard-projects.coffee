@@ -34,6 +34,9 @@ APP.executeAfterAppLibCode ->
 
       return modified_projects
 
+    userName: ->
+      return JustdoHelpers.displayName(Meteor.user())
+
   Template.dashboard_projects.events
     "click .create-project": ->
       APP.projects.createNewProject({}, (err, project_id) -> Router.go 'project', {_id: project_id})
