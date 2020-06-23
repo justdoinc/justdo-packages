@@ -89,6 +89,8 @@ Package.onUse(function (api) {
   // file. 
 
   api.addFiles("lib/core-custom-plugins/calc-task-duration.coffee", client);
+  api.addFiles("lib/core-custom-plugins/start-date-end-date-auto-setter.coffee", client);
+  api.addFiles("lib/core-custom-plugins/start-date-end-date-readonly-non-admins.coffee", client);
 
   api.export("JustdoCustomPlugins", both);
 });
