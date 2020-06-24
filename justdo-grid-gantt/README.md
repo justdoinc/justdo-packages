@@ -77,6 +77,11 @@ Column Related:
 * set and get column width with setColumnWidth and getColumnWidth   
  
  
+* Lock and unlock editing of dates from the gantt use
+
+      lockDatesEdit()
+      unlockDatesEdit()
+ 
 ### gantt-grid-formatter
 
 This object's functions will be used to render the information from the task_id_to_info. No computations

@@ -423,6 +423,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mousedown", ".gantt-main-bar-end-drag"]
     handler: (e) ->
+      if APP.justdo_grid_gantt.canEditDates() == false
+        return
       task_id = e.target.getAttribute("task-id")
       APP.justdo_grid_gantt.setState
         task_id: task_id
@@ -438,6 +440,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mousedown", ".gantt-milestone"]
     handler: (e) ->
+      if APP.justdo_grid_gantt.canEditDates() == false
+        return
       task_id = e.target.getAttribute("task-id")
       APP.justdo_grid_gantt.setState
         task_id: task_id
@@ -452,6 +456,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mousedown", ".gantt-main-bar"]
     handler: (e) ->
+      if APP.justdo_grid_gantt.canEditDates() == false
+        return
       task_id = e.target.getAttribute("task-id")
       APP.justdo_grid_gantt.setState
         task_id: task_id

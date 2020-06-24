@@ -29,6 +29,21 @@ _.extend JustdoGridGantt.prototype,
                                           # and if so, to update dependent tasks, or if it is a result of other
                                           # update, in which case we don't update the dependents.
     
+    @_lock_dates_edit = 0
+    @lockDatesEdit = ->
+      @_lock_dates_edit += 1
+      return
+  
+    @unlockDatesEdit = ->
+      @_lock_dates_edit -= 1
+      if @_lock_dates_edit < 0
+        @_lock_dates_edit = 0
+      return
+      
+    @canEditDates = ->
+      return @_lock_dates_edit == 0
+      
+    
     @resetTaskIdToInfo = ->
       self.task_id_to_info = {}
       return
