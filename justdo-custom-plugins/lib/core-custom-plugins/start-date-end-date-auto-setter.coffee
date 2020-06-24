@@ -46,11 +46,8 @@ APP.justdo_custom_plugins.installCustomPlugin
           if (new_value = modifier["$set"]?[field_id])? or new_value == null
             parents_ids = _.keys(doc.parents)
             APP.collections.Tasks.find({_id: {$in: parents_ids}}, {fields: {_id: 1, "#{field_id}": 1}}).forEach (parent_doc) =>
-              do (parent_doc) =>
-                if (modifier = @behaviours[field_id].getNewValueModifier(parent_doc._id, field_id, parent_doc[field_id], new_value))?
-                  APP.collections.Tasks.update(parent_doc._id, modifier)
-
-                return
+              if (new_value_modifier = @behaviours[field_id].getNewValueModifier(parent_doc._id, field_id, parent_doc[field_id], new_value))?
+                APP.collections.Tasks.update(parent_doc._id, new_value_modifier)
 
               return
 
