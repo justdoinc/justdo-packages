@@ -36,20 +36,22 @@ CollectionHooks.extendCollectionInstance = function extendCollectionInstance (se
 
       self._hookAspects[method][pointcut] = []
       self[pointcut][method] = function (aspect, options) {
-        const len = self._hookAspects[method][pointcut].push({
+        const aspect_definition_obj = {
           aspect,
           options: CollectionHooks.initOptions(options, pointcut, method)
-        })
+        }
+
+        const len = self._hookAspects[method][pointcut].push(aspect_definition_obj)
 
         return {
           replace (aspect, options) {
-            self._hookAspects[method][pointcut].splice(len - 1, 1, {
+            self._hookAspects[method][pointcut].splice(self._hookAspects[method][pointcut].indexOf(aspect_definition_obj), 1, {
               aspect,
               options: CollectionHooks.initOptions(options, pointcut, method)
             })
           },
           remove () {
-            self._hookAspects[method][pointcut].splice(len - 1, 1)
+            self._hookAspects[method][pointcut].splice(self._hookAspects[method][pointcut].indexOf(aspect_definition_obj), 1)
           }
         }
       }
