@@ -78,7 +78,10 @@ _.extend JustdoGridGantt.prototype,
       return # end of process changes queue
   
     @processGanttDirtyTasks = () ->
-      gc = APP.modules.project_page.gridControl()
+      if not (gc = APP.modules.project_page.gridControl())?
+        self.gantt_dirty_tasks.clear() # todo: Amit is uncertain about this solution, need to rethink, can't explain why
+                                       # we get to this phase.
+        return
       column_index = gc.getFieldIdToColumnIndexMap()[JustdoGridGantt.pseudo_field_id]
       tree_indices = gc._grid_data._items_ids_map_to_grid_tree_indices
       
