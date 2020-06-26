@@ -60,7 +60,7 @@ _.extend JustdoTasksContextMenu.prototype,
       position: 400
       data:
         label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          current_selected_value_label = field_info.column_field_schema?.grid_values?[field_val]?.txt
+          current_selected_value_label = field_info.column_field_schema?.grid_values?[field_val]?.txt or "value"
 
           return "Apply #{current_selected_value_label} to subtree"
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
@@ -74,7 +74,7 @@ _.extend JustdoTasksContextMenu.prototype,
               $set:
                 "#{field_info.field_name}": field_val
 
-          current_selected_value_label = field_info.column_field_schema?.grid_values?[field_val]?.txt
+          current_selected_value_label = field_info.column_field_schema?.grid_values?[field_val]?.txt or "value"
 
           JustdoSnackbar.show
             text: "#{_.size(subtasks_with_different_val)} subtree tasks set as #{current_selected_value_label}."
