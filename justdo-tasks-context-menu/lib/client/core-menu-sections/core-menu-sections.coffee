@@ -184,6 +184,22 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "copy"
 
+    isFieldEditable = (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+      if not field_info?.column_field_schema?.grid_editable_column
+        return false
+
+      if not (field_id = field_info?.field_name)?
+        return false
+
+      # If tasks locks are installed, and if so, whether the task is locked and if so, whether the current field_id is
+      # restricted when the task is locked
+      if APP.custom_justdo_tasks_locks.isPluginInstalledOnProjectDoc(JD.activeJustdo())
+        if not APP.custom_justdo_tasks_locks.isActiveUserAllowedToPerformRestrictedOperationsOnActiveTask()
+          if field_id in CustomJustdoTasksLocks.restricted_fields
+            return false
+
+      return true
+
     @registerSectionItem "copy-paste", "paste",
       position: 200
       data:
@@ -219,21 +235,25 @@ _.extend JustdoTasksContextMenu.prototype,
           return
         icon_type: "feather"
         icon_val: "clipboard"
-      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-        if not field_info?.column_field_schema?.grid_editable_column
-          return false
+      listingCondition: isFieldEditable
 
-        if not (field_id = field_info?.field_name)?
-          return false
+    @registerSectionItem "copy-paste", "clear",
+      position: 300
+      data:
+        label: "Clear"
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          value_to_set = null
 
-        # If tasks locks are installed, and if so, whether the task is locked and if so, whether the current field_id is
-        # restricted when the task is locked
-        if APP.custom_justdo_tasks_locks.isPluginInstalledOnProjectDoc(JD.activeJustdo())
-          if not APP.custom_justdo_tasks_locks.isActiveUserAllowedToPerformRestrictedOperationsOnActiveTask()
-            if field_id in CustomJustdoTasksLocks.restricted_fields
-              return false
+          if field_info.field_name == "state"
+            value_to_set = "nil"
 
-        return true
+          APP.collections.Tasks.update task_id,
+            $set:
+              "#{field_info.field_name}": value_to_set
+          return
+        icon_type: "feather"
+        icon_val: "x-square"
+      listingCondition: isFieldEditable
 
     @registerMainSection "projects",
       position: 300
