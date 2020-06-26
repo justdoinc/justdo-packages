@@ -107,7 +107,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
       @updateFieldValAndDependenciesReactiveVars()
 
-      gc.activateRow(gc.getEventRow(e))
+      gc.activateRow(gc.getEventRow(e), 0, false) # false is to avoid scroll into view that will cause the viewport to horizontally jump to the grid's left
 
       Tracker.flush()
 
