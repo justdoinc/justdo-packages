@@ -149,18 +149,21 @@ _.extend JustdoTasksContextMenu.prototype,
 
     current_position = 100
     for supported_reordering in supported_reorderings
-      {field_id, label, order} = supported_reordering
+      do (supported_reordering) =>
+        {field_id, label, order} = supported_reordering
 
-      @registerSectionItem "reorder-children-items", "reorder-children-by-#{field_id}",
-        position: current_position
-        data:
-          label: label
-          op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-            if not (gc = APP.modules.project_page?.gridControl())?
-              return false
-            gc._grid_data.sortChildren task_path, field_id, order
-            return
-          icon_type: "none"
+        @registerSectionItem "reorder-children-items", "reorder-children-by-#{field_id}",
+          position: current_position
+          data:
+            label: label
+            op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+              if not (gc = APP.modules.project_page?.gridControl())?
+                return false
+              gc._grid_data.sortChildren task_path, field_id, order
+              return
+            icon_type: "none"
+            
+        return
 
       current_position += 100
 
