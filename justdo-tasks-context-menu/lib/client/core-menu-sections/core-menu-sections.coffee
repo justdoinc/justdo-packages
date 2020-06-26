@@ -69,6 +69,9 @@ _.extend JustdoTasksContextMenu.prototype,
           if _.isEmpty(subtasks_with_different_val)
             return
 
+          if field_val is undefined
+            field_val = null
+
           for task_id, task_val of subtasks_with_different_val
             APP.collections.Tasks.update task_id,
               $set:
