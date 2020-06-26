@@ -288,6 +288,7 @@ _.extend TasksFileManager.DropPane.prototype,
       APP.filestack_base.filepicker.pickAndStore {
         signature: policy.signature
         policy: policy.policy
+        services: ["COMPUTER", "DROPBOX", "FACEBOOK", "GITHUB", "GMAIL", "IMAGE_SEARCH", "URL", "WEBCAM", "GOOGLE_DRIVE", "INSTAGRAM", "FLICKR", "VIDEO", "EVERNOTE", "PICASA", "WEBDAV", "FTP", "ALFRESCO", "BOX", "SKYDRIVE", "CUSTOMSOURCE", "CLOUDDRIVE", "CONVERT", "AUDIO"]
         multiple: true
       }, @manager.getStorageLocationAndPath(@task_id), @_onSuccess.bind(@, @task_id), @_onError.bind(@, @task_id), @_onProgress.bind(@, @task_id)
 
