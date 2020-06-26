@@ -247,29 +247,23 @@ _.extend JustdoTasksContextMenu.prototype,
     @registerSectionItem "projects", "set-as-a-project",
       position: 100
       data:
-        label: "Set as a Project"
+        label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          if APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
+            return "Unset as a Project"
+          return "Set as a Project"
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           APP.justdo_delivery_planner.toggleTaskIsProject task_id
           return 
         icon_type: "feather"
-        icon_val: "folder"
+        icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          if APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
+            return "folder-minus"
+          return "folder"
       listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-        return dependencies_fields_vals?["p:dp:is_project"] != true
+        return true
     
-    @registerSectionItem "projects", "unset-as-a-project",
-      position: 200
-      data:
-        label: "Unset as a Project"
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          APP.justdo_delivery_planner.toggleTaskIsProject task_id
-          return
-        icon_type: "feather"
-        icon_val: "folder-minus"
-      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-        return dependencies_fields_vals?["p:dp:is_project"] is true
-
     @registerSectionItem "projects", "open-close-project",
-      position: 300
+      position: 200
       data:
         label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           if dependencies_fields_vals?["p:dp:is_archived_project"]

@@ -79,3 +79,16 @@ Template.tasks_context_menu_label.helpers
       return @label
 
     return undefined
+
+Template.tasks_context_menu_icon.helpers
+  getIconValValue: ->
+    tpl = Template.instance()
+
+    if _.isFunction @icon_val
+      call_args = [@].concat(tpl.closestInstance("tasks_context_menu").tasks_context_menu_controller._sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator())
+      return @icon_val.apply(@, call_args)
+
+    if _.isString @icon_val
+      return @icon_val
+
+    return undefined

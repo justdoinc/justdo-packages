@@ -293,7 +293,7 @@ _.extend JustdoTasksContextMenu.prototype,
           allowedValues: ["none", "feather"] # ["user-avatar", "font-awesome"] might support these two in the future as well.
         icon_val:
           optional: true
-          type: String
+          type: "skip-type-check"
     listingCondition:
       optional: true
       type: Function
