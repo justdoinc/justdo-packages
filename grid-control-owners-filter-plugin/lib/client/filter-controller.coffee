@@ -30,12 +30,12 @@ OwnersFilterControllerConstructor = (context) ->
 
   members_items = ""
   for member in members
-    member_item = """
+    member_item = JustdoHelpers.xssGuard("""
       <li class="member-item" member-id="#{member?._id}">
-        <img class="justdo-avatar" src="#{JustdoAvatar.showUserAvatarOrFallback(member)}" title="#{JustdoHelpers.displayName(member)}">
+        <img class="justdo-avatar" src="#{JustdoAvatar.showUserAvatarOrFallback(member)}" title="#{JustdoHelpers.xssGuard(JustdoHelpers.displayName(member))}">
         <div class="display-name">#{JustdoHelpers.displayName(member)}</div>
       </li>
-    """
+    """, {allow_html_parsing: true, enclosing_char: ""})
 
     members_items += member_item
 
