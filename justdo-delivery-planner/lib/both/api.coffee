@@ -39,7 +39,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     return _.find(APP.resource_planner.getDataTypes(), (type_def) -> type_def._id == "b:time_minutes")
 
   isTaskObjProject: (item_obj) ->
-    return item_obj[JustdoDeliveryPlanner.task_is_project_field_name]? and item_obj[JustdoDeliveryPlanner.task_is_project_field_name]
+    return item_obj?[JustdoDeliveryPlanner.task_is_project_field_name]? and item_obj[JustdoDeliveryPlanner.task_is_project_field_name]
 
   isTaskObjArchivedProject: (item_obj) ->
     return item_obj[JustdoDeliveryPlanner.task_is_archived_project_field_name]? and item_obj[JustdoDeliveryPlanner.task_is_archived_project_field_name]
