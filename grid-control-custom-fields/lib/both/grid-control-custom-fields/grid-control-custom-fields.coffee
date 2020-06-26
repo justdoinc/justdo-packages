@@ -450,13 +450,13 @@ _.extend GridControlCustomFields,
       type_id: "string"
       label: "Text"
     }
-    {
-      custom_field_type_id: "basic-number-decimal"
-      type_id: "number"
-      label: "Number"
-      custom_field_options:
-        decimal: true
-    }
+    # {
+    #   custom_field_type_id: "basic-number-decimal"
+    #   type_id: "number"
+    #   label: "Number"
+    #   custom_field_options:
+    #     decimal: true
+    # }
     {
       custom_field_type_id: "basic-date"
       type_id: "date"
@@ -508,4 +508,4 @@ _.extend GridControlCustomFields,
 
 GridControlCustomFields.registerCustomFieldsTypes "basic-calc", 
   type_id: "calc"
-  label: "Derivative" # Derive from the descendants
+  label: "Smart Numbers" # Derive from the descendants
