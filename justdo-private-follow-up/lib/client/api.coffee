@@ -6,18 +6,12 @@ _.extend JustdoPrivateFollowUp.prototype,
     if @destroyed
       return
 
-    @registerConfigTemplate()
+    # @registerConfigTemplate() Started as a plugin, became an integral part of JD.
     @setupCustomFeatureMaintainer()
 
     return
 
-  pluginEnabledForActiveProject: ->
-    project_obj = APP.modules.project_page.curProj()
-
-    if not project_obj?
-      return false
-
-    return project_obj.isCustomFeatureEnabled(JustdoPrivateFollowUp.project_custom_feature_id)
+  pluginEnabledForActiveProject: -> true # Started as a plugin, became an integral part of JD.
 
   setupCustomFeatureMaintainer: ->
     custom_feature_maintainer =
