@@ -77,6 +77,13 @@ _.extend GridControlCustomFields,
 
       optional: true
 
+    grid_default_grid_view:
+      type: Boolean
+
+      defaultValue: false
+
+      optional: true
+
     formatter:
       type: String
 
@@ -176,6 +183,7 @@ _.extend GridControlCustomFields,
         label: custom_field_definition.label
         grid_visible_column: custom_field_definition.grid_visible_column
         grid_editable_column: custom_field_definition.grid_editable_column
+        grid_default_grid_view: custom_field_definition.grid_default_grid_view
         type: GridControlCustomFields.getJsTypeForFieldType(custom_field_definition.field_type)
         optional: true # all custom fields aren't required
         custom_field: true
