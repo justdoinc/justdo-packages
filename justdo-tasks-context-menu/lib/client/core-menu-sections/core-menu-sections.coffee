@@ -250,6 +250,26 @@ _.extend JustdoTasksContextMenu.prototype,
           APP.collections.Tasks.update task_id,
             $set:
               "#{field_info.field_name}": value_to_set
+
+          JustdoSnackbar.show
+            text: "#{field_info.column_field_schema.label} cleared"
+            actionText: "Dismiss"
+            showSecondButton: true
+            secondButtonText: "Undo"
+            duration: 7000
+            onActionClick: =>
+              JustdoSnackbar.close()
+              return
+
+            onSecondButtonClick: =>
+              APP.collections.Tasks.update task_id,
+                $set:
+                  "#{field_info.field_name}": field_val
+
+              JustdoSnackbar.close()
+
+              return
+
           return
         icon_type: "feather"
         icon_val: "x-square"
