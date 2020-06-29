@@ -267,7 +267,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         grid_editable_column: true
         grid_visible_column: true
-        grid_default_grid_view: true
+        grid_default_grid_view: false
         grid_default_width: 140
 
         grid_column_formatter: "unicodeDateFollowUpDateFormatter"

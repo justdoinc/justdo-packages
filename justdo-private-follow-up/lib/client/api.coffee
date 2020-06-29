@@ -26,6 +26,7 @@ _.extend JustdoPrivateFollowUp.prototype,
             grid_editable_column: true
             editor: "UnicodeDatePrivateFollowUpDateEditor"
             default_width: 200
+            grid_default_grid_view: true
             filter_options: APP?.collections?.Tasks?.simpleSchema()?._schema?["follow_up"]?.grid_column_filter_settings?.options
 
           return
