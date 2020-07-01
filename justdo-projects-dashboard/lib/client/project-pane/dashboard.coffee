@@ -429,17 +429,19 @@ Template.justdo_projects_dashboard.helpers
     return Template.instance().main_part_data_rv.get().number_of_projects
 
   isProjectsModuleEnabled: ->
-    if (curProj = APP.modules.project_page.curProj())?
-      return curProj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
-    return false
+    return true # In Jul 2nd 2020 projects became a built-in feature
+    # if (curProj = APP.modules.project_page.curProj())?
+    #   return curProj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
+    # return false
 
   readyToDisplayCharts: ->
-    # this one blocks until there are projects loaded and highcharts is ready and the projects module is installed
-    if Template.instance().activeProjectsList().length > 0
-      if APP.justdo_highcharts._highchart_loaded_rv.get()
-        if (curProj = APP.modules.project_page.curProj())?
-          return curProj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
-    return false
+    return true # XXX this one had a purpose before, now no more, code remains commented out to help clean properly
+    # # this one blocks until there are projects loaded and highcharts is ready and the projects module is installed
+    # if Template.instance().activeProjectsList().length > 0
+    #   if APP.justdo_highcharts._highchart_loaded_rv.get()
+    #     if (curProj = APP.modules.project_page.curProj())?
+    #       return curProj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
+    # return false
 
   totalNumberOfTasks: ->
     return Template.instance().main_part_data_rv.get().total_tasks
