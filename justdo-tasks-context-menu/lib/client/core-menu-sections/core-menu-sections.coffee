@@ -292,10 +292,11 @@ _.extend JustdoTasksContextMenu.prototype,
         data:
           label: "Projects"
         listingCondition: ->
-          if not (cur_proj = APP.modules.project_page.curProj())?
-            return true 
-          return cur_proj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
-      
+          # if not (cur_proj = APP.modules.project_page.curProj())?
+          #   return true 
+          # return cur_proj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
+          return true # In Jul 2nd 2020 projects became a built-in feature
+
       APP.justdo_tasks_context_menu.registerSectionItem "projects", "set-as-a-project",
         position: 200
         data:
