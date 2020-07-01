@@ -19,34 +19,43 @@ Template.tasks_context_section.onCreated ->
   return
 
 Template.tasks_context_section.helpers
-  hasNestedSections: (section) -> @is_nested_section is true
+  hasNestedSections: -> @is_nested_section is true
 
   getNestedSections: (parent_section_id, nested_section_id) ->
     tpl = Template.instance()
 
     return APP.justdo_tasks_context_menu.getNestedSections parent_section_id, nested_section_id
 
+repositionEventMenu = (e) ->
+  $item = $(e.target).closest(".context-nested-section-item")
+
+  # Credit: https://stackoverflow.com/questions/18955334/collision-detection-in-bootstrap-dropdown
+  $menu = $item.find(".dropdown-menu")
+  if $menu != null and $menu.length == 1
+    $menu.position
+      of: $item
+      my: "left top"
+      at: "right top"
+      collision: "flipfit"
+      using: (new_position, details) =>
+        target = details.target
+        element = details.element
+
+        element.element.css
+          top: new_position.top - 8
+          left: new_position.left
+
+  return
+
 Template.tasks_context_section.events
-  "mouseover .context-nested-section-item": (e) ->
-    $item = $(e.target).closest(".context-nested-section-item")
-
-    # Credit: https://stackoverflow.com/questions/18955334/collision-detection-in-bootstrap-dropdown
-    $menu = $item.find(".dropdown-menu")
-    if $menu != null and $menu.length == 1
-      $menu.position
-        of: $item
-        my: "left top"
-        at: "right top"
-        collision: "flipfit"
-        using: (new_position, details) =>
-          target = details.target
-          element = details.element
-
-          element.element.css
-            top: new_position.top - 8
-            left: new_position.left
+  "mouseenter .context-nested-section-item": (e) ->
+    $("body").scrollTop(0)
+    
+    APP.justdo_tasks_context_menu.clearAndFocusFirstSectionFilterInMostNestedMenu()
 
     return
+
+  "mouseover .context-nested-section-item": (e) -> repositionEventMenu(e)
 
   "click .context-nested-section-item": (e) ->
     if $(e.target).closest(".context-action-item").hasClass("context-nested-section-item")
@@ -59,11 +68,26 @@ Template.tasks_context_section.events
   "click .context-action-item": (e) ->
     tpl = Template.instance()
 
-    if _.isFunction @op
-      call_args = [@].concat(tpl.closestInstance("tasks_context_menu").tasks_context_menu_controller._sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator())
-      return @op.apply(@, call_args)
+    if not @close_on_click
+      e.stopPropagation()
 
-      return
+    if $(e.target).closest(".dropdown-menu").get(0) == $(e.delegateTarget).get(0) # This to ensure that when an item is clicked in a sub-menu the dom-encolsing parent menus events handlers won't trigger the op a second time
+      if _.isFunction @op
+        call_args = [@].concat(tpl.closestInstance("tasks_context_menu").tasks_context_menu_controller._sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator())
+        return @op.apply(@, call_args)
+
+        return
+
+    return
+
+  "keyup .section-filter": (e) ->
+    filter_val = $(e.target).closest(".section-filter").val()
+
+    APP.justdo_tasks_context_menu.setSectionFilterState(@id, filter_val)
+
+    Tracker.flush() # To update UI for the new filter state
+
+    repositionEventMenu(e)
 
     return
 

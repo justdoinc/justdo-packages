@@ -18,12 +18,16 @@
     top: 0
     left: 100%
 
+    max-height: 350px
+    overflow: auto
+
   .dropdown-item:hover > .nested-dropdown-menu
     display: block
     
   .jd-icon-context-action
     margin-right: 6px
     width: 20px
+    min-width: 20px
     height: 20px
 
   .context-action-item, .more-info-items
@@ -39,9 +43,6 @@
       color: #212529
 
   .context-section-label-container
-    &:first-child
-        display: none
-
     position: relative
     height: 20px
     margin-top: 0
@@ -55,6 +56,13 @@
       right: 0
       top: 2px
 
+    &:first-child.label-less-section
+      display: none
+
+    &:first-child
+      hr.my-2
+        display: none
+
     &.label-less-section
       height: 10px
 
@@ -65,6 +73,23 @@
       position: absolute
       background: white
       padding-right: 4px
+
+  .section-filter-container
+    position: relative
+
+  .section-filter
+    position: relative
+    height: 29px
+    z-index: 1
+    padding-left: 29px
+    margin-bottom: 2px
+
+  .search-icon
+    position: absolute
+    z-index: 1
+    top: 4px
+    left: 2px
+    height: 21px
 
   .more-info-items
     font-size: 13px

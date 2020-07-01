@@ -6,6 +6,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
     @registerMainSection "main",
       position: 100
+
     @registerSectionItem "main", "new-task",
       position: 100
       data:
@@ -17,7 +18,12 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "plus"
 
-      listingCondition: -> _.isEmpty(APP.modules.project_page.getUnfulfilledOpReq("addSiblingTask"))
+      listingCondition: ->
+        unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("addSiblingTask")
+
+        delete unfulfilled_op_req.ops_locked # We ignore that lock to avoid flickering when locking ops are performed from the contextmenu
+
+        return _.isEmpty(unfulfilled_op_req)
 
     @registerSectionItem "main", "new-child-task",
       position: 200
@@ -132,7 +138,12 @@ _.extend JustdoTasksContextMenu.prototype,
       listingCondition: ->
         if not (gc = APP.modules.project_page?.gridControl())?
           return false
-        return _.isEmpty(gc.sortActivePathByPriorityDesc.prereq())
+
+        unfulfilled_op_req = gc.sortActivePathByPriorityDesc.prereq()
+
+        delete unfulfilled_op_req.ops_locked # We ignore that lock to avoid flickering when locking ops are performed from the contextmenu
+
+        return _.isEmpty(unfulfilled_op_req)
 
     @registerNestedSection "main", "reorder-children", "reorder-children-items",
       position: 100
@@ -275,138 +286,207 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_val: "x-square"
       listingCondition: isFieldEditable
 
-    @registerMainSection "projects",
-      position: 300
-      data:
-        label: "Projects"
-      listingCondition: ->
-        if not (cur_proj = APP.modules.project_page.curProj())?
-          return true 
-        return cur_proj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
-    
-    @registerSectionItem "projects", "set-as-a-project",
-      position: 100
-      data:
-        label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          if APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
-            return "Unset as a Project"
-          return "Set as a Project"
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          APP.justdo_delivery_planner.toggleTaskIsProject task_id
-          return 
-        icon_type: "feather"
-        icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          if APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
-            return "folder-minus"
-          return "folder"
-      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-        return true
-    
-    @registerSectionItem "projects", "open-close-project",
-      position: 200
-      data:
-        label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          if dependencies_fields_vals?["p:dp:is_archived_project"]
-            return "Reopen Project"
-          else
-            return "Close Project"
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          APP.justdo_delivery_planner.toggleTaskArchivedProjectState task_id
-          return 
-        icon_type: "feather"
-        icon_val: "folder"
-      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-        return dependencies_fields_vals?["p:dp:is_project"] is true
-    
-    # @registerSectionItem "projects", "assign-to-project",
-    #   position: 300
-    #   data:
-    #     label: "Assign to Project"
-    #     is_nested_section: true
-    #     icon_type: "feather"
-    #     icon_val: "corner-right-down"
-    
-    # @registerNestedSection "projects", "assign-to-project", "assign-to-project-items",
-    #   position: 100
-
-    # @_getTaskAvailableAssignProjectList = =>
-    #   if not current_project_id = APP.modules.project_page.curProj()?.id
-    #     return
-
-    #   if not (active_item_obj = APP.modules.project_page.activeItemObj())?
-    #     return
-
-    #   exclude_tasks = [active_item_obj._id].concat(_.keys active_item_obj.parents)
-
-    #   project_tasks = APP.justdo_delivery_planner.getKnownProjects(current_project_id, {active_only: true, exclude_tasks: exclude_tasks}, Meteor.userId())
-
-    #   gc = APP.modules.project_page.mainGridControl()
-
-    #   grid_data = gc?._grid_data
-
-    #   # Remove projects that are tasks to which we can't be assigned as a child due to circular
-    #   # chain.
-    #   project_tasks = _.filter project_tasks, (task) ->
-    #     for task_path in grid_data.getAllCollectionItemIdPaths(task._id)
-    #       reg = new RegExp("/#{active_item_obj._id}/")
-
-    #       if reg.test(task_path)
-    #         return false
-
-    #     return true
-
-    #   return project_tasks
-    
-    # @_addNewParentToActiveItemId = (new_parent_id, cb) ->
-    #   module = APP.modules.project_page
-    #   gc = module.gridControl()
-    #   grid_data = gc?._grid_data
-
-    #   if grid_data?
-    #     gc?.saveAndExitActiveEditor() # Exit edit mode, if any, to make sure result will appear on tree (otherwise, will show only when exit edit mode)
-
-    #     current_item_id = module.activeItemId()
-
-    #     gc._performLockingOperation (releaseOpsLock, timedout) =>
-    #       gc.addParent current_item_id, {parent: new_parent_id, order: 0}, (err) ->
-    #         releaseOpsLock()
-
-    #         cb?(err)
-    #   else
-    #     APP.logger.error "Context: couldn't retrieve grid_data object"
-
-    #   return
-
-    # project_items_to_unregister = []
-    # Tracker.autorun =>
-    #   for item in project_items_to_unregister
-    #     @unregisterSectionItem "assign-to-project-items", item
-    #   project_items_to_unregister = []
+    Meteor.defer ->
+      APP.justdo_tasks_context_menu.registerMainSection "projects",
+        position: 300
+        data:
+          label: "Projects"
+        listingCondition: ->
+          if not (cur_proj = APP.modules.project_page.curProj())?
+            return true 
+          return cur_proj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
       
-    #   if (projects_list = @_getTaskAvailableAssignProjectList())?
-    #     i = 1
-    #     for project in projects_list
-    #       @registerSectionItem "assign-to-project-items", project._id,
-    #         position: i * 100
-    #         data:
-    #           label: "##{project.seqId} #{if project.title? then project.title else ""}"
-    #           op: ->
-    #             self._addNewParentToActiveItemId project._id, (err) ->
-    #               if err?
-    #                 console.log err
-    #               return
-    #             return
-    #       project_items_to_unregister.push project._id
-    #       i = i + 1
+      APP.justdo_tasks_context_menu.registerSectionItem "projects", "set-as-a-project",
+        position: 200
+        data:
+          label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            if APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
+              return "Unset as a Project"
+            return "Set as a Project"
+          op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            APP.justdo_delivery_planner.toggleTaskIsProject task_id
+            return 
+          icon_type: "feather"
+          icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            if APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
+              return "folder-minus"
+            return "folder"
+        listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          return true
+      
+      APP.justdo_tasks_context_menu.registerSectionItem "projects", "open-close-project",
+        position: 300
+        data:
+          label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            if dependencies_fields_vals?[JustdoDeliveryPlanner.task_is_archived_project_field_name]
+              return "Reopen Project"
+            else
+              return "Close Project"
+          op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            APP.justdo_delivery_planner.toggleTaskArchivedProjectState task_id
+            return 
+          icon_type: "feather"
+          icon_val: "folder"
+        listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          return dependencies_fields_vals?[JustdoDeliveryPlanner.task_is_project_field_name] is true
+      
+      APP.justdo_tasks_context_menu.registerSectionItem "projects", "manage-projects",
+        position: 100
+        data:
+          label: "Manage Projects"
+          is_nested_section: true
+          icon_type: "feather"
+          icon_val: "corner-right-down"
+      
+        listingCondition: ->
+          # Don't present manage projects if there are no tasks set as projects yet
+          query =
+            project_id: JD.activeJustdo({_id: 1})?._id
+            "#{JustdoDeliveryPlanner.task_is_project_field_name}": true
 
-    #     if i == 1
-    #       @registerSectionItem "assign-to-project-items", "no-projects-available",
-    #         position: 100
-    #         data:
-    #           label: "No projects available for assigning."
-    #           op: -> return
-    #       project_items_to_unregister.push "no-projects-available"
+          options =
+            fields:
+              _id: 1
+              "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1
 
-    #   return
+          return APP.collections.Tasks.findOne(query, options)?
 
-    return
+      APP.justdo_tasks_context_menu.registerNestedSection "projects", "manage-projects", "manage-active-projects",
+        position: 100
+
+        data:
+          display_item_filter_ui: true
+
+      getAllJustdoActiveProjectsSortedByProjectName = (filter_state) ->
+        options = 
+          active_only: true
+          sort_by: {title: 1}
+
+        if not _.isEmpty(filter_state)
+          options.customize_query =
+            title:
+              $regex: new RegExp(filter_state, "i")
+
+        return APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdo({_id: 1})?._id, options, Meteor.userId())
+
+      addNewParentToTaskId = (task_id, new_parent_id, cb) ->
+        module = APP.modules.project_page
+        gc = module.gridControl()
+        
+        gc.saveAndExitActiveEditor() # Exit edit mode, if any, to make sure result will appear on tree (otherwise, will show only when exit edit mode)
+
+        gc._performLockingOperation (releaseOpsLock, timedout) =>
+          gc.addParent task_id, {parent: new_parent_id, order: 0}, (err) ->
+            releaseOpsLock()
+
+            cb?(err)
+
+            return
+
+          return
+
+        return
+
+      removeParent = (item_path, cb) ->
+        module = APP.modules.project_page
+        gc = module.gridControl()
+        
+        gc._performLockingOperation (releaseOpsLock, timedout) =>
+          gc._grid_data?.removeParent item_path, (err) =>
+            releaseOpsLock()
+
+            if err?
+              APP.logger.error "Error: #{err}"
+
+            return
+
+          return
+
+        return
+
+      Tracker.autorun ->
+        APP.justdo_tasks_context_menu.resetSectionItems("manage-active-projects")
+        
+        active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(APP.justdo_tasks_context_menu.getSectionFilterState("manage-active-projects"))
+
+        APP.justdo_tasks_context_menu.registerSectionItem "manage-active-projects", "no-projects-available",
+          position: 0
+          data:
+            label: "No projects are available"
+            op: -> return
+            icon_type: "none"
+
+          listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            return _.isEmpty(
+                     _.filter(active_projects_docs, (active_project_doc) -> active_project_doc._id != task_id) # Show only if there are no other projects (filter myself out, in case I am a project)
+                   )
+
+        for project_task_doc, i in active_projects_docs
+          do (project_task_doc, i) ->
+            APP.justdo_tasks_context_menu.registerSectionItem "manage-active-projects", project_task_doc._id,
+              position: i + 1
+              listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+                return task_id != item_definition._id # Don't show current task
+              data:
+                label: -> return JustdoHelpers.ellipsis(project_task_doc.title or "", 40)
+                op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+                  query =
+                    _id: task_id
+                    "parents.#{project_task_doc._id}": {$exists: true}
+
+                  options =
+                    fields:
+                      _id: 1
+                      parents: 1
+
+                  if (task_doc = APP.collections.Tasks.findOne(query, options))?
+                    performRemoveParent = ->
+                      removeParent "/#{project_task_doc._id}/#{task_id}/", (err) ->
+                        if err?
+                          console.error err
+                        return
+                    if _.size(task_doc.parents) > 1
+                      performRemoveParent()
+                    else
+                      JustdoSnackbar.show
+                        text: "This is the last parent of the task, do you want to remove the task completely?"
+                        actionText: "Dismiss"
+                        showSecondButton: true
+                        secondButtonText: "Remove"
+                        duration: 10000
+                        onActionClick: =>
+                          JustdoSnackbar.close()
+                          return
+
+                        onSecondButtonClick: =>
+                          performRemoveParent()
+
+                          JustdoSnackbar.close()
+                          return
+                  else
+                    addNewParentToTaskId task_id, project_task_doc._id, (err) ->
+                      if err?
+                        console.error err
+                      return
+
+                  return
+                icon_type: "feather"
+                icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+                  query =
+                    _id: task_id
+                    "parents.#{project_task_doc._id}": {$exists: true}
+
+                  options =
+                    fields:
+                      _id: 1
+                      parents: 1
+
+                  if APP.collections.Tasks.findOne(query, options)?
+                    return "check-square"
+                  return "square"
+
+                close_on_click: false
+
+            return
+
+      return

@@ -18,13 +18,19 @@
 <template name="tasks_context_section">
   {{#with section}}
     <li class="context-section-label-container {{#unless label}}label-less-section{{/unless}}">
-      <hr class="my-2">
+      <hr class="my-2" />
       {{#if label}}
         <div class="context-section-label">
           {{> tasks_context_menu_label}}
         </div>
       {{/if}}
     </li>
+    {{#if display_item_filter_ui}}
+      <div class="section-filter-container">
+        <input type="text" class="section-filter form-control form-control-sm" placeholder="{{display_item_filter_ui_placeholder}}">
+        <svg class="jd-icon text-secondary search-icon"><use xlink:href="/layout/icons-feather-sprite.svg#search"></use></svg>
+      </div>
+    {{/if}}
   {{/with}}
   {{#let current_section_id=section.id}}
     {{#each section.reactive_items_list.getList}}

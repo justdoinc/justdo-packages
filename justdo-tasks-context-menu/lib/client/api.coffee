@@ -113,6 +113,8 @@ _.extend JustdoTasksContextMenu.prototype,
 
       @_show({of: e})
 
+      @clearAndFocusFirstSectionFilterInMostNestedMenu()
+
       return
 
     return
@@ -228,7 +230,15 @@ _.extend JustdoTasksContextMenu.prototype,
       optional: true
       type: new SimpleSchema
         label:
-          type: "skip-type-check"
+          type: String
+          optional: true
+        display_item_filter_ui:
+          type: Boolean
+          optional: true
+        display_item_filter_ui_placeholder:
+          type: String
+          optional: true
+          defaultValue: ""
     listingCondition:
       optional: true
       type: Function
@@ -245,7 +255,7 @@ _.extend JustdoTasksContextMenu.prototype,
       )
     conf = cleaned_val
 
-    Meteor._ensure conf, "data" # It is very unlikely that we won't have data object, as it is needed to set a label for the section
+    Meteor._ensure conf, "data"
 
     # Create shallow copy to avoid affecting the original conf obj provided
     conf = _.extend {}, conf,
@@ -259,6 +269,10 @@ _.extend JustdoTasksContextMenu.prototype,
     conf.data = _.extend {}, conf.data,
       reactive_items_list: section_items_reactive_items_list
 
+    if conf.data.display_item_filter_ui
+      conf.data = _.extend {}, conf.data,
+        filter_state_rv: new ReactiveVar("")
+
     @sections_reactive_items_list.registerItem section_id, conf
 
     return
@@ -271,7 +285,6 @@ _.extend JustdoTasksContextMenu.prototype,
 
   getMainSections: (ignore_listing_condition) -> 
     return @sections_reactive_items_list.getList("main", ignore_listing_condition)
-
 
   _registerSectionItem_conf_scehma: new SimpleSchema
     position: 
@@ -291,9 +304,14 @@ _.extend JustdoTasksContextMenu.prototype,
           optional: true
           type: String
           allowedValues: ["none", "feather"] # ["user-avatar", "font-awesome"] might support these two in the future as well.
+          defaultValue: "none"
         icon_val:
           optional: true
           type: "skip-type-check"
+        close_on_click:
+          optional: true
+          type: Boolean
+          defaultValue: true
     listingCondition:
       optional: true
       type: Function
@@ -315,8 +333,14 @@ _.extend JustdoTasksContextMenu.prototype,
     return
   
   unregisterSectionItem: (section_id, item_id) ->
-    if (section_reactive_items_list = @sections_reactive_items_list.getItem(section_id, true).data.reactive_items_list)?
+    if (section_reactive_items_list = @sections_reactive_items_list.getItem(section_id, true)?.data?.reactive_items_list)?
       section_reactive_items_list.unregisterItem item_id
+
+    return
+
+  resetSectionItems: (section_id) ->
+    if (section_reactive_items_list = @sections_reactive_items_list.getItem(section_id, true)?.data?.reactive_items_list)?
+      section_reactive_items_list.unregisterAllItems()
 
     return
 
@@ -338,3 +362,47 @@ _.extend JustdoTasksContextMenu.prototype,
 
   getNestedSections: (section_id, nested_section_item, ignore_listing_condition=false) ->
     return @sections_reactive_items_list.getList(@_getNestedSectionsDomainId(section_id, nested_section_item), ignore_listing_condition)
+
+  _getSectionFilterStateRv: (section_id) ->
+    return @sections_reactive_items_list.getItem(section_id, true)?.data?.filter_state_rv
+
+  setSectionFilterState: (section_id, state) ->
+    # null and empty string are counted as no filter, strings are trimmed.
+
+    if _.isNumber(state)
+      state = "#{state}"
+
+    if not state?
+      state = ""
+
+    if not _.isString state
+      throw new Error "Invalid type"
+
+    state = state.trim()
+
+    if (filter_state_rv = @_getSectionFilterStateRv(section_id))?
+      filter_state_rv.set(state)
+
+      return
+
+    throw new Error "Section '#{section_id}' has no filter"
+
+    return
+
+  getSectionFilterState: (section_id) -> # Reactive resource
+    if (filter_state_rv = @_getSectionFilterStateRv(section_id))?
+      return filter_state_rv.get()
+
+    return ""
+
+  clearAndFocusFirstSectionFilterInMostNestedMenu: ->
+    $first_nested_menu_section_filters = $(".section-filter", $(".grid-tree-control-context-menu:visible, .nested-dropdown-menu:visible").last())
+    $first_nested_menu_first_section_filter = $first_nested_menu_section_filters.first()
+
+    # If isn't focused already
+    if not $first_nested_menu_first_section_filter.is(":focus")
+      $first_nested_menu_first_section_filter.focus()
+      $first_nested_menu_section_filters.val("") # Clear all filters in the submenu
+      $first_nested_menu_section_filters.trigger("keyup") # To update the filter reactive var
+
+    return

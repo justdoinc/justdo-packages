@@ -93,12 +93,15 @@ _.extend JustdoDeliveryPlanner.prototype,
 
       exclude_tasks: null
 
+      customize_query: {}
+
     options = _.extend default_options, options
 
-    query =
+    query = _.extend {
       "#{JustdoDeliveryPlanner.task_is_project_field_name}": true
       project_id: project_id
       users: user_id
+    }, options.customize_query
 
     if (exclude_tasks = options.exclude_tasks)?
       if _.isString exclude_tasks
