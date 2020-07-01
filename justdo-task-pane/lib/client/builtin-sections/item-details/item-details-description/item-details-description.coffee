@@ -167,23 +167,39 @@ APP.executeAfterAppLibCode ->
       edit_mode.set(false)
       $container.removeClass("edit-mode")
   
-  _uploadFilesAndInsertToEditor = (task_id, files, editor, type_to_insert, img_to_replace) ->
+  _uploadFilesAndInsertToEditor = (task_id, file_list, editor, type_to_insert, img_to_replace) ->
+    files = []
+    for i in [0...file_list.length]
+      ((i) ->
+        file_item = file_list.item(i)
+        file_item.temp_id = Random.id()
+        files.push file_item
+        reader = new FileReader()
+        reader.readAsDataURL(file_item)
+        reader.onload = -> 
+          img = editor.image.insert reader.result, true,
+            temp_id: file_item.temp_id
+          return
+        reader.onerror = (error) -> 
+          console.log error
+      )(i)
+    
     uploading_files.set (Tracker.nonreactive -> uploading_files.get() + 1)
     APP.tasks_file_manager_plugin.tasks_file_manager.uploadFiles task_id, files, (err, uploaded_files) ->
       if err?
         console.log err
         uploading_files.set (Tracker.nonreactive -> uploading_files.get() - 1)
         return
-      
-      $img_to_replace = null
-      if img_to_replace?
-        $img_to_replace = $(img_to_replace)
 
       for file in uploaded_files
         file_id = file.url.substr(file.url.lastIndexOf("/")+1)
         download_path = APP.tasks_file_manager_plugin.tasks_file_manager.getFileDownloadPath task_id, file_id
         if type_to_insert == "image"
-          editor.image.insert download_path, false, {src: download_path}, $img_to_replace,
+          if not $img_to_replace?
+            $org_img = $("[data-temp_id=\"#{file.temp_id}\"]")
+          else
+            $org_img = $(img_to_replace)
+          editor.image.insert download_path, false, {src: download_path}, $org_img,
             link: download_path
         else if type_to_insert == "file"
           editor.file.insert download_path, file.filename, null
@@ -264,8 +280,8 @@ APP.executeAfterAppLibCode ->
       $("#description-editor", $container)
         .froalaEditor({
           toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
-            "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo"
-            # ,"insertFile", "insertImage"
+            "align", "formatUL", "formatOL", "quote", "insertLink", "clearFormatting", "undo", "redo",
+            "insertFile", "insertImage"
           ]
           imageEditButtons: ['imageReplace', 'imageAlign', 'imageCaption', 'imageRemove', '|', 'imageLink', 'linkOpen', 
             'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize']
@@ -293,7 +309,7 @@ APP.executeAfterAppLibCode ->
           _uploadFilesAndInsertToEditor task_id, [file], editor, "image", img
           return false
         .on "froalaEditor.image.beforeUpload", (e, editor, images) ->
-          _uploadFilesAndInsertToEditor task_id, images, editor, "image", editor.image.get()
+          _uploadFilesAndInsertToEditor task_id, images, editor, "image", null
           return false
         .on "froalaEditor.image.error", (e, editor, error, resp) ->
           console.log error

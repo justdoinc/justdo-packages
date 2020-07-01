@@ -45,8 +45,9 @@ _.extend TasksFileManager.prototype,
           file
         ,
           upload_options
-        , (blob) =>
-            uploaded.push(blob)
+        , (uploaded_file) =>
+            uploaded_file.temp_id = file.temp_id
+            uploaded.push(uploaded_file)
 
             if uploaded.length == total_files
               @registerUploadedFiles task_id, uploaded, (err) ->
