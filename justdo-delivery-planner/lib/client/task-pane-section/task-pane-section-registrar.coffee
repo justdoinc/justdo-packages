@@ -36,7 +36,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       id: "justdo-delivery-planner"
       type: "JustdoDeliveryPlannerTaskPaneSection" # the name of the template derives from the type
       options:
-        title: "Projects"
+        title: "Planner"
       section_options: {}
 
     justdo_delivery_planner_section_position =

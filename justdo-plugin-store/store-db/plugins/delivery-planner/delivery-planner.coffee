@@ -1,9 +1,9 @@
 share.store_db.plugins.push
   id: "delivery-planner"
-  title: "Projects"
+  title: "Delivery Planner"
   short_description: "Calculate delivery dates based on resources availability"
   full_description: """
-    <p>The Projects plugin lets you associate one or more sets of tasks into a project. Then, based on the resources needed to accomplish it and their availability, project the delivery date.</p>
+    <p>The Delivery Planner plugin lets you associate one or more sets of tasks into a project. Then, based on the resources needed to accomplish it and their availability, project the delivery date.</p>
 
     <p>With this plugin you will be able to:</p>
 
