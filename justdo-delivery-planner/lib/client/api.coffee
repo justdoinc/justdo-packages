@@ -6,6 +6,8 @@ _.extend JustdoDeliveryPlanner.prototype,
     if @destroyed
       return
 
+    @registerTabSwitcherSection() # Move out of setupCustomFeatureMaintainer once Projects became a builtin feature
+
     @registerConfigTemplate()
     @registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
@@ -62,14 +64,10 @@ _.extend JustdoDeliveryPlanner.prototype,
         if (gcm = APP.modules.project_page.grid_control_mux.get())?
           installTabsOnGcm(gcm)
 
-        @registerTabSwitcherSection()
-
         return
 
       destroyer: =>
         removeGridControlMuxCreatedListener()
-
-        @unregisterTabSwitcherSection()
 
         return
 
@@ -84,15 +82,16 @@ _.extend JustdoDeliveryPlanner.prototype,
     self = @
 
     isInstalledOnCurrentProject = ->
-      cur_project = APP.modules.project_page.curProj()
+      # cur_project = APP.modules.project_page.curProj()
 
-      if not cur_project?
-        return
+      # if not cur_project?
+      #   return
 
-      return cur_project.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
+      # return cur_project.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
+      return true # In Jul 2nd 2020 projects became a built-in feature
 
     getAllJustdoActiveProjectsSortedByProjectName = ->
-      return APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdo({_id: 1})._id, {active_only: true, sort_by: {title: 1}}, Meteor.userId())
+      return APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdo({_id: 1})?._id, {active_only: true, sort_by: {title: 1}}, Meteor.userId())
 
     APP.modules.project_page.tab_switcher_manager.registerSectionItem "main", "projects",
       position: 300
