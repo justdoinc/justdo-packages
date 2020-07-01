@@ -37,7 +37,8 @@ getHeighestSeqId = ->
   return highest_seq_id
 
 getIsDeliveryPlannerPluginEnabled = ->
-  return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled("justdo_delivery_planner")
+  # return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled("justdo_delivery_planner")
+  return true # In Jul 2nd 2020 projects became a built-in feature
 
 getIsTimeTrackerPluginEnabled = ->
   # The time tracker plugin needs both itself installed, and the resource manager as dependency
