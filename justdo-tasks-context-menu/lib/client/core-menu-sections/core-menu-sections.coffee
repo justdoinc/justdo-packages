@@ -406,6 +406,9 @@ _.extend JustdoTasksContextMenu.prototype,
         return
 
       Tracker.autorun ->
+        if not (gc = APP.modules.project_page.mainGridControl())?
+          return
+
         APP.justdo_tasks_context_menu.resetSectionItems("manage-active-projects")
         
         active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(APP.justdo_tasks_context_menu.getSectionFilterState("manage-active-projects"))
@@ -473,16 +476,20 @@ _.extend JustdoTasksContextMenu.prototype,
                   return
                 icon_type: "feather"
                 icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+                  if not task_id?
+                    return
+
                   query =
                     _id: task_id
-                    "parents.#{project_task_doc._id}": {$exists: true}
 
                   options =
                     fields:
                       _id: 1
                       parents: 1
 
-                  if APP.collections.Tasks.findOne(query, options)?
+                  task_doc = APP.collections.Tasks.findOne(query, options) # We could have used gc._grid_data.items_by_id[task_id].parents, but we need reativity anyways
+
+                  if project_task_doc._id of task_doc.parents
                     return "check-square"
                   return "square"
 
