@@ -334,7 +334,7 @@ _.extend JustdoTasksContextMenu.prototype,
       APP.justdo_tasks_context_menu.registerSectionItem "projects", "manage-projects",
         position: 100
         data:
-          label: "Manage Projects"
+          label: "Assign to"
           is_nested_section: true
           icon_type: "feather"
           icon_val: "corner-right-down"
