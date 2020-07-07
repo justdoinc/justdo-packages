@@ -8,7 +8,7 @@ Template.justdo_projects_dashboard.onCreated ->
   # set the data to collect based on the needs of the main part and the table...
   @autorun =>
     main_part_interest = APP.justdo_projects_dashboard.main_part_interest.get()
-    table_part_inetest = APP.justdo_projects_dashboard.table_part_interest. get()
+    table_part_inetest = APP.justdo_projects_dashboard.table_part_interest.get()
 
     APP.justdo_projects_dashboard.fields_of_interest_rv.set
       "#{main_part_interest}" : 1
@@ -24,6 +24,7 @@ Template.justdo_projects_dashboard.onCreated ->
     main_field_obj = gc.getSchemaExtendedWithCustomFields()[main_part_interest]
     field_options[main_part_interest] = main_field_obj
     APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.set field_options
+    APP.justdo_projects_dashboard.main_part_dirty_rv.set true
     return
 
   @main_part_data_rv = new ReactiveVar {}
