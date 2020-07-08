@@ -1,6 +1,6 @@
 APP.executeAfterAppLibCode ->
   Template.tutorials_submenu_dropdown.helpers
-    tutorials: -> JustdoTutorials.getRelevantTutorialsToState()
+    tutorials: -> [] # JustdoTutorials.getRelevantTutorialsToState()
 
     zendeskEnabled: -> JustdoZendesk.enabled_rv.get()
 
