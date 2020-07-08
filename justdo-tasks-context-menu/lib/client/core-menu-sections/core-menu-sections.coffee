@@ -366,7 +366,7 @@ _.extend JustdoTasksContextMenu.prototype,
         if not _.isEmpty(filter_state)
           options.customize_query =
             title:
-              $regex: new RegExp(filter_state, "i")
+              $regex: new RegExp(JustdoHelpers.escapeRegExp(filter_state), "i")
 
         return APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdo({_id: 1})?._id, options, Meteor.userId())
 
