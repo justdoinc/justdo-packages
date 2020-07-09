@@ -55,6 +55,24 @@ Template.tasks_context_section.events
 
     return
 
+  "mouseenter .dropdown-item": (e) ->
+    $item = $(e.target)
+    $parent = $item.parents ".context-nested-section-item"
+
+    if not $parent[0]
+      $menu = $item.find(".dropdown-menu")
+
+      if $menu != null and $menu.length == 1
+        repositionEventMenu(e)
+        $item.siblings().removeClass "show-fix"
+        $item.addClass "show-fix"
+      else
+
+      if not $item.hasClass "show-fix"
+        $(".dropdown-item.show-fix").removeClass "show-fix"
+
+    return
+
   "mouseover .context-nested-section-item": (e) -> repositionEventMenu(e)
 
   "click .context-nested-section-item": (e) ->

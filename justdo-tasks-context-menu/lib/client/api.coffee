@@ -217,6 +217,9 @@ _.extend JustdoTasksContextMenu.prototype,
   hide: ->
     @$getNode().removeClass("show").find(".dropdown-menu").removeClass("show")
 
+    # "Show-fix" class is coming from tasks_context_menu and help to avoid to close dropdown submenu on mouseleave
+    @$getNode().find(".show-fix").removeClass "show-fix"
+
     return
 
   getContextItemId: -> @_context_item_id_reactive_var.get()
