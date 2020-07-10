@@ -19,3 +19,19 @@ _.extend JustdoHelpers,
       res[field_id] = 1
 
     return res
+
+  mongoQueryAddAdditionalRequiredOrStatement: (query, or_array) ->
+    # Edits query in place
+
+    if not (existing_or = query.$or)?
+      query.$or = or_array
+
+      return query
+
+    delete query.$or
+    query.$and = [
+      {$or: existing_or},
+      {$or: or_array}
+    ]
+
+    return query
