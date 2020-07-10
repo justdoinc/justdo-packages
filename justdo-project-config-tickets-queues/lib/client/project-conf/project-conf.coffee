@@ -4,7 +4,7 @@ _.extend JustdoProjectConfigTicketsQueues.prototype,
 
     APP.executeAfterAppClientCode ->
       module.project_config_ui.registerConfigSection "tickets-queues",
-        title: "Tickets Queues" # null means no title
+        title: "Ticket Queues" # null means no title
         priority: 10
 
       module.project_config_ui.registerConfigTemplate "tickets-queues",
@@ -81,7 +81,7 @@ Template.ticket_queue_conf.events
 
     APP.collections.Tasks.update @_id, {$set: {is_tickets_queue: false}}, =>
       JustdoSnackbar.show
-        text: "Task ##{task.seqId} removed from Tickets Queues"
+        text: "Task ##{task.seqId} removed from Ticket Queues"
         actionText: "Undo"
         duration: 7000
         onActionClick: =>

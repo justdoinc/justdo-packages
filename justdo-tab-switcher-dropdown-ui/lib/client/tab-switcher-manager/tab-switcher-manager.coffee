@@ -211,8 +211,8 @@ APP.executeAfterAppLibCode ->
   module.tab_switcher_manager.registerSectionItem "misc", "tickets-queues",
     position: 200
     data:
-      label: "Tickets Queues"
-      tab_id: "tickets-queues"
+      label: "Ticket Queues"
+      tab_id: "ticket-queues"
 
       icon_type: "feather"
       icon_val: "file"
