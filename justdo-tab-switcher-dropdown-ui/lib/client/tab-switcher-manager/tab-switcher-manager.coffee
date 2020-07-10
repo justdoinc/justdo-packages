@@ -129,18 +129,28 @@ APP.executeAfterAppLibCode ->
 
       icon_type: "feather"
       icon_val: "grid"
-  module.tab_switcher_manager.registerSectionItem "main", "due-list",
-    position: 200
-    data:
-      label: "My Due List"
-      tab_id: "due-list"
 
-      icon_type: "feather"
-      icon_val: "check-square"
+  Tracker.autorun (c) ->
+    # Wait for user_id to become ready
+    if not (user_id = Meteor.userId())?
+      return
 
-      tab_sections_state:
-        global:
-          owners: Meteor.userId()
+    c.stop() # Need to run only once, when the user logged-in
+
+    module.tab_switcher_manager.registerSectionItem "main", "due-list",
+      position: 200
+      data:
+        label: "My Due List"
+        tab_id: "due-list"
+
+        icon_type: "feather"
+        icon_val: "check-square"
+
+        tab_sections_state:
+          global:
+            owners: user_id
+
+    return
 
   module.tab_switcher_manager.registerSection "recently",
     position: 200
