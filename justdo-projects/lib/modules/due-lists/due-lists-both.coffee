@@ -80,11 +80,26 @@ _.extend PACK.modules,
           $in: @_getDueListsStates()
 
       if owners[0] != "*"
-        _.extend query,
-          # If first owners item is "*", it is a special case in
-          # which we don't restrict owners_ids at all
-          owner_id:
-            $in: owners
+        if owners.length > 1
+          _.extend query,
+            # If first owners item is "*", it is a special case in
+            # which we don't restrict owners_ids at all
+            owner_id:
+              $in: owners
+        else
+          # When showing a due list for a single user, regard the user as owning not only tasks
+          # that the user is actually an owner of, but also tasks that has planned hours for the
+          # user
+          _.extend query,
+            $or: [
+              {
+                owner_id:
+                  $in: owners
+              },
+              {
+                "p:rp:b:work-hours_p:b:user:#{owners[0]}": {$gt: 0}
+              }
+            ]
 
       if Meteor.isServer
         # On the server, we must limit the query to tasks user has
@@ -190,11 +205,10 @@ _.extend PACK.modules,
         # if follow_up exists, task belongs here if
         # its due_date or follow_up date are in date
 
-        _.extend query,
-          $or: [
-            {follow_up: date}
-            {due_date: date}
-          ]
+        query = JustdoHelpers.mongoQueryAddAdditionalRequiredOrStatement query, [
+          {follow_up: date},
+          {due_date: date}
+        ]
 
         if conf.include_my_private_follow_ups
           query = {
@@ -216,23 +230,24 @@ _.extend PACK.modules,
 
         if not begin_date? and not end_date?
           # At least one of follow_up/due_date has to exist
-          _.extend query,
-            $or: [
-              {
-                follow_up:
-                  $ne: null
-              }
-              {
-                due_date:
-                  $ne: null
-              }
-            ]
+          or_array = [
+            {
+              follow_up:
+                $ne: null
+            }
+            {
+              due_date:
+                $ne: null
+            }
+          ]
 
           if include_start_date
-            query.$or.push {
-                start_date:
-                  $ne: null
-              }
+            or_array.push {
+              start_date:
+                $ne: null
+            }
+
+          query = JustdoHelpers.mongoQueryAddAdditionalRequiredOrStatement query, or_array
 
           # Note we aren't having special consideration for conf.include_my_private_follow_ups
           # for that state.
@@ -245,23 +260,24 @@ _.extend PACK.modules,
             range_selector.$lte = end_date
 
           if not _.isEmpty range_selector
-            _.extend query,
-              $or: [
-                {
-                  # option 1, follow_up exists, ignore due date
-                  follow_up: range_selector
-                } 
-                {
-                  # option 2, follow_up doesn't exist, check due date
-                  follow_up: null
-                  due_date: range_selector
-                }
-              ]
+            or_array = [
+              {
+                # option 1, follow_up exists, ignore due date
+                follow_up: range_selector
+              } 
+              {
+                # option 2, follow_up doesn't exist, check due date
+                follow_up: null
+                due_date: range_selector
+              }
+            ]
 
             if include_start_date
-              query.$or.push {
-                  start_date: range_selector
-                }
+              or_array.push {
+                start_date: range_selector
+              }
+
+            query = JustdoHelpers.mongoQueryAddAdditionalRequiredOrStatement query, or_array
 
             if conf.include_my_private_follow_ups
               query = {
