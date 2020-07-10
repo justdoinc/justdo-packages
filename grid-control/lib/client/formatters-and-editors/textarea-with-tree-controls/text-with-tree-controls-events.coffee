@@ -160,6 +160,19 @@ _.extend PACK.Formatters.textWithTreeControls,
         $(".task-pane-content").scrollTop(0)
     }
     {
+      args: ['click', '.resource_planner']
+      handler: (e) ->
+        openTaskPaneAndSetTab("resource-planner")
+
+        APP.justdo_delivery_planner.taskPaneSectionSetCurrentTab("project")
+        APP.resource_planner.taskPaneSectionSetCurrentTab("summary")
+
+        # Update task pane
+        Tracker.flush()
+
+        $(".task-pane-content").scrollTop(0)
+    }
+    {
       args: ['click', '.jdt-play']
       handler: (e) ->
         event_item = @getEventItem(e)

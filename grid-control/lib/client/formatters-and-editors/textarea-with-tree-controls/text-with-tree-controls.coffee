@@ -44,6 +44,10 @@ getIsTimeTrackerPluginEnabled = ->
   # The time tracker plugin needs both itself installed, and the resource manager as dependency
   return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled(JustdoTimeTracker?.project_custom_feature_id) and APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled(JustdoResourcePlanner?.project_custom_feature_id)
 
+getIsResourcePlannerPluginEnabled = ->
+  # The time tracker plugin needs both itself installed, and the resource manager as dependency
+  return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled(JustdoResourcePlanner?.project_custom_feature_id)
+
 getIsChecklistPluginEnabled = ->
   if not JustdoChecklist?.project_custom_feature_id?
     return false
@@ -89,6 +93,7 @@ GridControl.installFormatter "textWithTreeControls",
     highest_seqId_computation = null
     is_delivery_planner_plugin_enabled_computation = null
     is_time_tracker_plugin_enabled_computation = null
+    is_resource_planner_plugin_enabled_computation = null
     is_checklist_plugin_enabled_computation = null
 
     Tracker.nonreactive =>
@@ -126,6 +131,17 @@ GridControl.installFormatter "textWithTreeControls",
 
         return
 
+      is_resource_planner_plugin_enabled_computation = Tracker.autorun =>
+        current_val = getIsResourcePlannerPluginEnabled.call(@) # Reactive
+        cached_val = @getCurrentColumnData("resource_planner_plugin_enabled") # non reactive
+
+        if current_val != cached_val
+          @setCurrentColumnData("resource_planner_plugin_enabled", current_val)
+
+          dep.changed()
+
+        return
+
       is_checklist_plugin_enabled_computation = Tracker.autorun =>
         current_val = getIsChecklistPluginEnabled.call(@) # Reactive
         cached_val = @getCurrentColumnData("checklist_plugin_enabled") # non reactive
@@ -141,6 +157,7 @@ GridControl.installFormatter "textWithTreeControls",
       highest_seqId_computation.stop()
       is_delivery_planner_plugin_enabled_computation.stop()
       is_time_tracker_plugin_enabled_computation.stop()
+      is_resource_planner_plugin_enabled_computation.stop()
       is_checklist_plugin_enabled_computation.stop()
 
       return
@@ -222,6 +239,34 @@ GridControl.installFormatter "textWithTreeControls",
       else
         tree_control += """
             <i class="fa fa-fw fa-play-circle-o jdt-play jdt-grid-icon slick-prevent-edit" title="Start working on this task" aria-hidden="true"></i>
+        """
+
+    if @getCurrentColumnData("resource_planner_plugin_enabled") and not doc._type?
+      user_has_planned_hours_for_the_task =
+        doc["p:rp:b:work-hours_p:b:user:#{Meteor.userId()}"]? and
+        doc["p:rp:b:work-hours_p:b:user:#{Meteor.userId()}"] > 0
+
+      user_has_executed_hours_for_the_task =
+        doc["p:rp:b:work-hours_e:b:user:#{Meteor.userId()}"]? and
+        doc["p:rp:b:work-hours_e:b:user:#{Meteor.userId()}"] > 0
+
+      task_has_unassigned_hours =
+        doc["p:rp:b:unassigned-work-hours"]? and
+        doc["p:rp:b:unassigned-work-hours"] > 0
+
+      task_has_planned_hours = doc["p:rp:b:work-hours_p"]? and doc["p:rp:b:work-hours_p"] > 0
+      task_has_executed_hours = doc["p:rp:b:work-hours_e"]? and doc["p:rp:b:work-hours_e"] > 0
+
+      if user_has_planned_hours_for_the_task or user_has_executed_hours_for_the_task or
+         task_has_unassigned_hours or
+         task_has_planned_hours or task_has_executed_hours
+        if user_has_planned_hours_for_the_task or user_has_executed_hours_for_the_task
+          resource_planner_classes = "task-planned-or-executed-by-current-user"
+        else
+          resource_planner_classes = ""
+
+        tree_control += """
+            <i class="fa fa-fw resource_planner fa-tasks #{resource_planner_classes} slick-prevent-edit" title="Resources" aria-hidden="true"></i>
         """
 
     if (description = doc.description)? and not _.isEmpty(description)
