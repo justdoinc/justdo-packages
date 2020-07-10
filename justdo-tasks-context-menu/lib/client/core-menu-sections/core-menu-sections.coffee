@@ -286,8 +286,9 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_val: "x-square"
       listingCondition: isFieldEditable
 
-    Meteor.defer ->
-      APP.justdo_tasks_context_menu.registerMainSection "projects",
+    do () => # Do, to emphesize that it can move out of the core-menu-sections.coffee file
+      self = @
+      self.registerMainSection "projects",
         position: 300
         data:
           label: "Projects"
@@ -297,7 +298,7 @@ _.extend JustdoTasksContextMenu.prototype,
           # return cur_proj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)
           return true # In Jul 2nd 2020 projects became a built-in feature
 
-      APP.justdo_tasks_context_menu.registerSectionItem "projects", "set-as-a-project",
+      self.registerSectionItem "projects", "set-as-a-project",
         position: 200
         data:
           label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
@@ -315,7 +316,7 @@ _.extend JustdoTasksContextMenu.prototype,
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           return true
       
-      APP.justdo_tasks_context_menu.registerSectionItem "projects", "open-close-project",
+      self.registerSectionItem "projects", "open-close-project",
         position: 300
         data:
           label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
@@ -331,7 +332,7 @@ _.extend JustdoTasksContextMenu.prototype,
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           return dependencies_fields_vals?[JustdoDeliveryPlanner.task_is_project_field_name] is true
       
-      APP.justdo_tasks_context_menu.registerSectionItem "projects", "manage-projects",
+      self.registerSectionItem "projects", "manage-projects",
         position: 100
         data:
           label: "Assign to"
@@ -352,7 +353,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
           return APP.collections.Tasks.findOne(query, options)?
 
-      APP.justdo_tasks_context_menu.registerNestedSection "projects", "manage-projects", "manage-active-projects",
+      self.registerNestedSection "projects", "manage-projects", "manage-active-projects",
         position: 100
 
         data:
@@ -409,11 +410,11 @@ _.extend JustdoTasksContextMenu.prototype,
         if not (gc = APP.modules.project_page.mainGridControl())?
           return
 
-        APP.justdo_tasks_context_menu.resetSectionItems("manage-active-projects")
+        self.resetSectionItems("manage-active-projects")
         
-        active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(APP.justdo_tasks_context_menu.getSectionFilterState("manage-active-projects"))
+        active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(self.getSectionFilterState("manage-active-projects"))
 
-        APP.justdo_tasks_context_menu.registerSectionItem "manage-active-projects", "no-projects-available",
+        self.registerSectionItem "manage-active-projects", "no-projects-available",
           position: 0
           data:
             label: "No projects are available"
@@ -427,7 +428,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
         for project_task_doc, i in active_projects_docs
           do (project_task_doc, i) ->
-            APP.justdo_tasks_context_menu.registerSectionItem "manage-active-projects", project_task_doc._id,
+            self.registerSectionItem "manage-active-projects", project_task_doc._id,
               position: i + 1
               listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
                 return task_id != item_definition._id # Don't show current task
