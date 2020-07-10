@@ -80,6 +80,9 @@ _.extend JustdoDeliveryPlanner.prototype,
   getKnownProjects: (project_id, options, user_id) ->
     # Get all the active projects known to
 
+    if not user_id?
+      return []
+
     check user_id, String
 
     default_options =
