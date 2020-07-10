@@ -1230,14 +1230,14 @@ Template.justdo_calendar_project_pane_user_view.helpers
           user_available_hours = APP.justdo_resources_availability.userAvailabilityBetweenDates(column_date, column_date,
             JD.activeJustdo()._id, Template.instance().data.user_id).available_hours
           if user_available_hours
-            workload = (daily_workload.total_hours / user_available_hours * 100).toFixed(0)
-            if workload == "0"
+            workload = Math.round(daily_workload.total_hours / user_available_hours * 100)
+            if workload == 0
               ret += "--"
             else
               color = "blue"
-              if workload >= 80 and workload < 120
+              if workload >= JustdoCalendarView.underload_level and workload < JustdoCalendarView.overload_level
                 color = "green"
-              else if workload >= 120
+              else if workload >= JustdoCalendarView.overload_level
                 color = "red"
               ret += "<span style='color: #{color}'>#{workload}% </span>"
       return ret

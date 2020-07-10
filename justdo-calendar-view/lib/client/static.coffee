@@ -4,3 +4,6 @@ _.extend JustdoCalendarView,
   plugin_human_readable_name: "justdo-calendar-view"
 
   end_date_field_id: "end_date"
+
+  underload_level: 80
+  overload_level: 120
