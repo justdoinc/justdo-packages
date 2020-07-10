@@ -17,7 +17,10 @@ _.extend JustdoTasksCollectionsManager.prototype,
         "p:checklist:is_checked",
         "p:checklist:total_count",
         "p:checklist:checked_count",
-        "p:checklist:has_partial"
+        "p:checklist:has_partial",
+        "p:rp:b:unassigned-work-hours",
+        "p:rp:b:work-hours_p",
+        "p:rp:b:work-hours_e"
       ]
 
     Schema =
