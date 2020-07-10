@@ -328,7 +328,7 @@ _.extend GridControl.prototype,
         # trigger ancestors invalidation as well.
         for dependent_field in @getAllDependentFields(field, extended_schema)
           if field_id_to_col_id[dependent_field]?
-            @_grid.updateCell(row, field_id_to_col_id[dependent_field])
+            @_grid.updateCell(row, field_id_to_col_id[dependent_field], true) # true is to allow two cells update on the same tick, an example for a case where it is necessary, set it to false, from the grid, play the time tracker play button, stop it, you'll see that it won't turn on (the private field for the running task collide with the update to the resources, resulting for a need to update twice on the same tick)
 
             if (dependent_field_formatter = extended_schema[dependent_field].grid_column_formatter)?
               # If we can determine the formatter
@@ -1807,7 +1807,7 @@ _.extend GridControl.prototype,
 
     for i in [0...@getSlickGridLength()]
       for j in columns_nth_position
-        @_grid.updateCell(i, j)
+        @_grid.updateCell(i, j, true) # true is to let more than one update on the same tick (to see a case where we must have it set to true: set it to false, enable the time tracker plugin and then enable/disable the resource planner - the on-grid indication for resources on task will be in-correct, the opposite to the resource planner installed state)
 
     return
 
