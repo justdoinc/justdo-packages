@@ -56,10 +56,10 @@ Template.tasks_context_section.events
     return
 
   "mouseenter .dropdown-item": (e) ->
-    $item = $(e.target)
+    $item = $(e.target).closest(".dropdown-item")
     $parent = $item.parents ".context-nested-section-item"
 
-    if not $parent[0]
+    if not $parent.get(0)
       $menu = $item.find(".dropdown-menu")
 
       if $menu != null and $menu.length == 1
