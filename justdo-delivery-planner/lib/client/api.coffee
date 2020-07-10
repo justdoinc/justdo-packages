@@ -6,7 +6,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     if @destroyed
       return
 
-    @registerTabSwitcherSection() # Move out of setupCustomFeatureMaintainer once Projects became a builtin feature
+    @registerTabSwitcherSection() # Moved out of setupCustomFeatureMaintainer once Projects became a builtin feature
 
     @registerConfigTemplate()
     @registerTaskPaneSection()
@@ -15,60 +15,13 @@ _.extend JustdoDeliveryPlanner.prototype,
     return
 
   setupCustomFeatureMaintainer: ->
-    installTabsOnGcm = (gcm) =>
-      if gcm.destroyed == true
-        # Nothing to do
-
-        return
-
-      if gcm._delivery_planner_tabs_installed?
-        # Already installed on this gcm (can happen when the plugin enable/disable mode is toggled)
-
-        return
-
-      for tab in @getTabsDefinitions()
-        gcm.addTab tab.id, tab.options
-
-      gcm._delivery_planner_tabs_installed = true
-
-      return
-
-    gridControlMuxCreatedCb = null
-    removeGridControlMuxCreatedListener = ->
-      if gridControlMuxCreatedCb?
-        APP.modules.project_page.removeListener "grid-control-mux-created", gridControlMuxCreatedCb
-
-        gridControlMuxCreatedCb = null
-
-        return
-
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoDeliveryPlanner.project_custom_feature_id,
 
       installer: =>
-        # We attempt to install both when the "grid-control-mux-created" event is triggered,
-        # but also immediately, if we find that a gcm exists already.
-        #
-        # The event is to have the tab installed immediately after the grid control mux is created
-        # (to have it available for urls that has it as target).
-        #
-        # The immediate install that comes after, is for case plugin been enabled after the mux
-        # been already created.
-        #
-        # Note, installTabsOnGcm have protection from duplicate installation.
-        APP.modules.project_page.on "grid-control-mux-created", gridControlMuxCreatedCb = (gcm) ->
-          installTabsOnGcm(gcm)
-
-          return
-
-        if (gcm = APP.modules.project_page.grid_control_mux.get())?
-          installTabsOnGcm(gcm)
-
         return
 
       destroyer: =>
-        removeGridControlMuxCreatedListener()
-
         return
 
     @onDestroy =>
@@ -130,6 +83,42 @@ _.extend JustdoDeliveryPlanner.prototype,
             tab_sections_state:
               global:
                 "root-item": project_task_doc._id
+
+      return
+
+    installTabsOnGcm = (gcm) =>
+      if gcm.destroyed == true
+        # Nothing to do
+
+        return
+
+      if gcm._delivery_planner_tabs_installed?
+        # Already installed on this gcm (can happen when the plugin enable/disable mode is toggled)
+
+        return
+
+      for tab in @getTabsDefinitions()
+        gcm.addTab tab.id, tab.options
+
+      gcm._delivery_planner_tabs_installed = true
+
+      return
+
+    # We attempt to install both when the "grid-control-mux-created" event is triggered,
+    # but also immediately, if we find that a gcm exists already.
+    #
+    # The event is to have the tab installed immediately after the grid control mux is created
+    # (to have it available for urls that has it as target).
+    #
+    # The immediate install that comes after, is for case plugin been enabled after the mux
+    # been already created.
+    #
+    # Note, installTabsOnGcm have protection from duplicate installation.
+    if (gcm = APP.modules.project_page.grid_control_mux.get())?
+      installTabsOnGcm(gcm)
+
+    APP.modules.project_page.on "grid-control-mux-created", gridControlMuxCreatedCb = (gcm) ->
+      installTabsOnGcm(gcm)
 
       return
 
