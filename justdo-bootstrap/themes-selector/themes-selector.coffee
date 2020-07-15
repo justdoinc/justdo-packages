@@ -25,6 +25,11 @@ Template.themes_selector.helpers
       label: "Sketchy"
     }
 
+    {
+      id: "unicorn"
+      label: "Unicorn"
+    }
+
     # {
     #   id: "superhero"
     #   label: "Superhero (Experimental Dark)"
