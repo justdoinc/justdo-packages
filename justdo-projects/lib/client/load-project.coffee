@@ -14,6 +14,9 @@ _.extend Projects.prototype,
       tasks_subscription: self.requireProjectTasksSubscription(project_id)
       tickets_queue_subscription: self.modules.tickets_queues.subscribe(project_id)
       required_actions_subscription: self.modules.required_actions.subscribe(project_id)
+
+      is_admin_rv: new ReactiveVar false # See below is_admin_computation
+
       stopped: false
 
       getProjectDoc: (options) ->
@@ -25,19 +28,7 @@ _.extend Projects.prototype,
         # is a mandatory key
         self.projects_collection.update(project_id, update_op, {removeEmptyStrings: false})
 
-      isAdmin: ->
-        res = self.projects_collection.findOne(
-          _id: project_id
-          members: 
-            $elemMatch:
-              user_id: Meteor.userId()
-              is_admin: true
-        )
-
-        if res?
-          return true
-        else
-          return false
+      isAdmin: -> @is_admin_rv.get()
 
       isGuest: -> not JD.activeJustdo({members: 1}).members?
 
@@ -57,22 +48,22 @@ _.extend Projects.prototype,
 
       getAdmins: (include_non_enrolled=true) ->
         return _.filter @getMembers(), (member) ->
-          return not member.is_guest and member.is_admin and (include_non_enrolled or Meteor.users.findOne(member.user_id)?.enrolled_member)
+          return not member.is_guest and member.is_admin and (include_non_enrolled or Meteor.users.findOne(member.user_id, {fields: {enrolled_member: 1}})?.enrolled_member)
 
       getNonAdmins: (include_non_enrolled=true) ->
         return _.filter @getMembers(), (member) ->
-          return not member.is_admin and (include_non_enrolled or Meteor.users.findOne(member.user_id)?.enrolled_member)
+          return not member.is_admin and (include_non_enrolled or Meteor.users.findOne(member.user_id, {fields: {enrolled_member: 1}})?.enrolled_member)
 
       getNonAdminsNonGuests: (include_non_enrolled=true) ->
         return _.filter @getMembers(), (member) ->
-          return not member.is_admin and (not member.is_guest? or not member.is_guest) and (include_non_enrolled or Meteor.users.findOne(member.user_id)?.enrolled_member)
+          return not member.is_admin and (not member.is_guest? or not member.is_guest) and (include_non_enrolled or Meteor.users.findOne(member.user_id, {fields: {enrolled_member: 1}})?.enrolled_member)
 
       getGuests: (include_non_enrolled=true) ->
         return _.filter @getMembers(), (member) ->
-          return member.is_guest and (include_non_enrolled or Meteor.users.findOne(member.user_id)?.enrolled_member)
+          return member.is_guest and (include_non_enrolled or Meteor.users.findOne(member.user_id, {fields: {enrolled_member: 1}})?.enrolled_member)
 
       getNonEnrolledMembers: ->
-        return _.filter @getMembers(), (member) -> not Meteor.users.findOne(member.user_id)?.enrolled_member
+        return _.filter @getMembers(), (member) -> not Meteor.users.findOne(member.user_id, {fields: {enrolled_member: 1}})?.enrolled_member
 
       isUntitled: ->
         project_title = @getProjectDoc()?.title
@@ -261,6 +252,7 @@ _.extend Projects.prototype,
           @tasks_subscription.stop()
           @tickets_queue_subscription.stop()
           @required_actions_subscription.stop()
+          @is_admin_computation.stop()
 
           self.logger.debug "Project #{project_id} subscription stopped"
 
@@ -269,5 +261,25 @@ _.extend Projects.prototype,
       prereqs:
         projectHasTicketsQueues: (prereq) =>
           self.modules.tickets_queues.opreqProjectHasTicketsQueues(prereq)
+
+    project_obj.is_admin_computation = Tracker.autorun ->
+      # Add fields, to avoid invalidation on project doc changes
+      res = self.projects_collection.findOne(
+        {
+          _id: project_id
+          members: 
+            $elemMatch:
+              user_id: Meteor.userId()
+              is_admin: true
+        },
+        {fields: {_id: 1}}
+      )
+
+      if res?
+        project_obj.is_admin_rv.set true
+      else
+        project_obj.is_admin_rv.set false
+
+      return
 
     return project_obj
