@@ -168,6 +168,8 @@ APP.executeAfterAppLibCode ->
     # the original customizations.
     field_editor.editor.moreInfoSectionCustomizationsExtensions?($field_editor_container, field_editor)
 
-    $(window).trigger("resize.autosize")
+    # The following was called before, it came up during optimization profiling as inefficient
+    # and seemed to be unnecessary 
+    # $(window).trigger("resize.autosize")
 
     return
