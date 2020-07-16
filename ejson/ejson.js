@@ -550,7 +550,22 @@ EJSON.equals = (a, b, options) => {
  * @locus Anywhere
  * @param {EJSON} val A value to copy.
  */
+
+if (Meteor.isClient) {
+  EJSON.clone_count = 0;
+  EJSON.log_values = false;
+  EJSON.log_trace = false;
+}
 EJSON.clone = v => {
+  if (Meteor.isClient) {
+    EJSON.clone_count += 1;
+    if (EJSON.log_values) {
+      console.log(v);
+    }
+    if (EJSON.log_trace) {
+      console.trace(v);
+    }
+  }
   let ret;
   if (!isObject(v)) {
     return v;
