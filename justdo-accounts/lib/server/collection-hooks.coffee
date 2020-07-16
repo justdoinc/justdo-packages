@@ -16,6 +16,8 @@ _.extend JustdoAccounts.prototype,
         # with a null-backed meteor collection.
 
         # XXX use JustdoHelpers.applyMongoModifiers()
+        #         note that we also have: JustdoHelpers.getCollection2Simulator() but it
+        #         isn't necessary here.
 
         mock_collection.remove {}
         mock_collection.insert doc
