@@ -10,6 +10,8 @@ import {
   handleError,
 } from './utils';
 
+import cloneDeep from 'lodash/cloneDeep';
+
 /**
  * @namespace
  * @summary Namespace for EJSON functions
@@ -577,11 +579,11 @@ EJSON.clone = v => {
   }
 
   if (Array.isArray(v)) {
-    return v.map(EJSON.clone);
+    return cloneDeep(v);
   }
 
   if (isArguments(v)) {
-    return Array.from(v).map(EJSON.clone);
+    return cloneDeep(v);
   }
 
   // handle general user-defined typed Objects if they have a clone method
@@ -591,9 +593,10 @@ EJSON.clone = v => {
 
   // handle other custom types
   if (EJSON._isCustomType(v)) {
-    return EJSON.fromJSONValue(EJSON.clone(EJSON.toJSONValue(v)), true);
+    return cloneDeep(v);
   }
 
+  return cloneDeep(v);
   // handle other objects
   ret = {};
   keysOf(v).forEach((key) => {
