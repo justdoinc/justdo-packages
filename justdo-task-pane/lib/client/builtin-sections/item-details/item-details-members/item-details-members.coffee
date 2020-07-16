@@ -6,7 +6,12 @@ Template.task_pane_item_details_members.helpers
 
   primary_users: -> [@owner_id]
 
-  secondary_users: -> _.without @users, @owner_id
+  secondary_users: ->
+    res = @users.slice(0, max_presented_avatars)
+    res = _.without res, @owner_id
+    res = res.slice(0, max_presented_avatars - 1) # - 1 since we already use 1 space for the owner.
+
+    return res
 
   hiddenUsersCount: ->
     hidden_users_count = @users.length - max_presented_avatars
