@@ -109,13 +109,14 @@ _.extend Projects.prototype,
       # note that this function replace grid-data-com-server.coffee's incrementChildsOrderGte
 
       query = {}
-      query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
 
-      if parent_id == "0" and (project_id = item_doc?.project_id)?
+      if (project_id = item_doc?.project_id)?
         check project_id, String
 
         query["project_id"] = project_id
 
+      query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
+      
       update_op = {$inc: {}}
       update_op["$inc"]["parents.#{parent_id}.order"] = 1
 
