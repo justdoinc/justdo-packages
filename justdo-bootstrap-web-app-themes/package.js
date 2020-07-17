@@ -20,9 +20,7 @@ Package.onUse(function (api) {
   api.addAssets("sketchy/bootstrap.css", client);
   api.addAssets("superhero/bootstrap.css", client);
 
-  // NEED TO DELETE - START
   api.addAssets("unicorn/bootstrap.css", client);
   api.addAssets("unicorn/unicorn-bg-1.jpg", client);
   api.addAssets("unicorn/unicorn-bg-2.jpg", client);
-  // END
 });
