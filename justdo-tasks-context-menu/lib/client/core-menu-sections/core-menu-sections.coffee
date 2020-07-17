@@ -35,17 +35,24 @@ _.extend JustdoTasksContextMenu.prototype,
           return
         icon_type: "feather"
         icon_val: "corner-down-right"
-    
-    @registerSectionItem "main", "zoom-in",
+
+    @registerSectionItem "main", "remove-task",
       position: 300
       data:
-        label: "Zoom in"
+        label: "Remove Task"
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          APP.modules.project_page.performOp("zoomIn")
+          APP.modules.project_page.performOp("removeTask")
 
           return
         icon_type: "feather"
-        icon_val: "zoom-in"
+        icon_val: "trash"
+
+      listingCondition: ->
+        unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("removeTask")
+
+        delete unfulfilled_op_req.ops_locked # We ignore that lock to avoid flickering when locking ops are performed from the contextmenu
+
+        return _.isEmpty(unfulfilled_op_req)
 
     getSubtreeItemsWithDifferentVals = (task_path, field_val, field_info) ->
       gc = APP.modules.project_page.gridControl()
@@ -181,8 +188,22 @@ _.extend JustdoTasksContextMenu.prototype,
 
       current_position += 100
 
-    @registerMainSection "copy-paste",
+    @registerMainSection "zoom-in",
       position: 200
+
+    @registerSectionItem "zoom-in", "zoom-in",
+      position: 100
+      data:
+        label: "Zoom in"
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          APP.modules.project_page.performOp("zoomIn")
+
+          return
+        icon_type: "feather"
+        icon_val: "zoom-in"
+
+    @registerMainSection "copy-paste",
+      position: 300
 
     @registerSectionItem "copy-paste", "copy",
       position: 100
@@ -289,7 +310,7 @@ _.extend JustdoTasksContextMenu.prototype,
     do () => # Do, to emphesize that it can move out of the core-menu-sections.coffee file
       self = @
       self.registerMainSection "projects",
-        position: 300
+        position: 400
         data:
           label: "Projects"
         listingCondition: ->
