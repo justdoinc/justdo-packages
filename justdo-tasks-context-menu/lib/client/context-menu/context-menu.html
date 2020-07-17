@@ -1,7 +1,9 @@
 <template name="tasks_context_menu">
   <ul class="dropdown-menu p-2 shadow-lg border-0">
     {{#each section in getMainSections}}
-      {{> tasks_context_section section=section}}
+      {{#if isSectionHasItems section}}
+        {{> tasks_context_section section=section}}
+      {{/if}}
     {{/each}}
     <li class="context-section-label-container label-less-section">
       <hr class="my-2">

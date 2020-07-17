@@ -15,6 +15,9 @@ Template.tasks_context_menu.helpers
 
     return item_obj.updated_by or item_obj.created_by_user_id
 
+  isSectionHasItems: (section) ->
+    return section.reactive_items_list.getList().length > 0
+
 Template.tasks_context_section.onCreated ->
   return
 
