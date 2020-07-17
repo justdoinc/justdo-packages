@@ -7,7 +7,7 @@ _.extend GridDataCom.prototype,
     if not perform_as?
       throw @_error "missing-argument", "You must provide the perform_as field"
 
-  _insertItem: (fields) ->
+  _insertItem: (fields, perform_as) ->
     task_id = Random.id()
 
     upsert_mutator = {$set: fields}
@@ -18,7 +18,18 @@ _.extend GridDataCom.prototype,
 
     Fiber.current._allow_tasks_upsert = true
     try
-      @collection.upsert({_id: task_id}, upsert_mutator, {upsert: true})
+      minimal_mutator = _.extend({}, upsert_mutator)
+      minimal_mutator.$set = _.omit(minimal_mutator.$set, "users")
+      minimal_mutator.$set.users = [perform_as]
+
+      @collection.upsert({_id: task_id}, minimal_mutator, {upsert: true})
+
+      # Note that in this stage, we don't worry about _raw_added_users_dates.
+
+      # It is very expensive for collection2 + collection hooks to process long lists
+      # of users, so we set them directly, after adding the task (+ we do it in an async
+      # fasion).
+      @collection.rawCollection().update {_id: task_id}, {$set: {users: upsert_mutator.$set.users}}, {upsert: true}
     catch e
       console.error "grid-data-com: Failed to insert document", e
 
@@ -513,7 +524,7 @@ _.extend GridDataCom.prototype,
 
     @_runGridMethodMiddlewares "addChild", "/", new_item, perform_as
 
-    return @_insertItem new_item
+    return @_insertItem new_item, perform_as
 
   addChild: (path, fields = {}, perform_as) ->
     check(path, String)
@@ -544,7 +555,7 @@ _.extend GridDataCom.prototype,
 
     @_runGridMethodMiddlewares "addChild", path, new_item, perform_as
 
-    return @_insertItem new_item
+    return @_insertItem new_item, perform_as
 
   bulkAddChild: (path, childs_fields, perform_as) ->
     check childs_fields, [Object]
@@ -594,7 +605,7 @@ _.extend GridDataCom.prototype,
 
     @collection.incrementChildsOrderGte parent_id, sibling_order, item
 
-    return @_insertItem new_item
+    return @_insertItem new_item, perform_as
 
   bulkAddSibling: (path, siblings_fields, perform_as) ->
     check siblings_fields, [Object]
