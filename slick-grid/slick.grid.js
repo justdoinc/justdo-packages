@@ -343,8 +343,8 @@ if (typeof Slick === "undefined") {
             .bind("keydown", handleKeyDown);
         $canvas
             .bind("keydown", handleKeyDown)
-            .bind("click", handleClick)
-            .bind("dblclick", handleDblClick)
+            // .bind("click", handleClick)
+            .bind("dblclick", handleClick)
             .bind("contextmenu", handleContextMenu)
             .bind("draginit", handleDragInit)
             .bind("dragstart", {distance: 3}, handleDragStart)

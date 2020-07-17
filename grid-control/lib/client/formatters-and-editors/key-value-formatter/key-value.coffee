@@ -76,6 +76,20 @@ GridControl.installFormatter "keyValueFormatter",
 
     return formatter
 
+  #
+  # Events
+  #
+  slick_grid_jquery_events: [
+    {
+      args: ["click", ".key-val-formatter"] # Click anywhere in the cell basically
+      handler: (e) ->
+        @editEventCell e, (editor_object) ->
+          return
+
+        return
+    }
+  ]
+
   print_formatter_produce_html: true
 
   print: (doc, field, path) ->
