@@ -41,7 +41,7 @@ options_schema =
           "priorityChangesTracker",
           "redundantLogsTracker",
           ["simpleTasksFieldsChangesTracker", {
-            tracked_fields: ["title", "status", "owner_id", "follow_up", "due_date", "state"]
+            tracked_fields: ["title", "status", "owner_id", "follow_up", "due_date", "state", "start_date", "end_date"]
             track_custom_fields: true
             track_pseudo_fields: true
           }]
