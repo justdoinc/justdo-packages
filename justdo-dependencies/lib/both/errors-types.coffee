@@ -19,3 +19,4 @@ _.extend JustdoDependencies.prototype,
       "child-dependency": "A task can't be dependant on any of its child-tasks, update reversed..",
       "self-dependency": "Task can't be dependent on itself",
       "dependent-task-not-found": "Task not found."
+      "updated-by-missing": "The updated_by field must be set for all tasks updates"

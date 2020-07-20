@@ -3,6 +3,8 @@ _.extend JustdoDependencies.prototype,
     @chatBotHooks()
     @projectsInstallUninstallProcedures()
     @integrityCheckAndHumanReadableToMFAndBackHook()
+    @setupChangeLogCapture()
+    
     return
 
   chatBotHooks: ->
@@ -112,4 +114,36 @@ _.extend JustdoDependencies.prototype,
 
       return
 
+    return
+
+  _extractUpdatedByFromModifierOrFail: (modifier) ->
+    # Extract the set `updated_by` field from an update operation modifier
+    # and returns it.
+    # Fails if such an item can't be found by throwing the "updated-by-missing"
+    # error.
+
+    if (updated_by = modifier?.$set?.updated_by)?
+      return updated_by
+
+    throw @_error "updated-by-missing"
+
+  setupChangeLogCapture: ->
+    self = @
+    self.tasks_collection.before.update (userId, doc, fieldNames, modifier, options) ->
+      if modifier.$set?.justdo_task_dependencies?
+        if modifier.$set.justdo_task_dependencies.length == 0
+          new_value = "N/A"
+        else
+          new_value = modifier.$set.justdo_task_dependencies.join ","          
+        
+         APP.tasks_changelog_manager.logChange
+          field: JustdoDependencies.dependencies_field_id
+          label: JustdoDependencies.dependencies_field_label
+          change_type: "update"
+          task_id: doc._id
+          by: self._extractUpdatedByFromModifierOrFail(modifier)
+          new_value: new_value
+
+      return
+    
     return
