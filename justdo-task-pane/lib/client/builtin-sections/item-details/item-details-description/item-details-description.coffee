@@ -46,7 +46,8 @@ APP.executeAfterAppLibCode ->
     if current_description_editor
       save_state.set 2
 
-      description = $("#description-editor").val()
+      description = $("#description-editor").froalaEditor("html.get")
+      description = description.replace /\n/g, "<br>"
 
       if description == ""
         op =
