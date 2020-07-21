@@ -321,7 +321,7 @@ Template.justdo_calendar_project_pane.onCreated ->
   start_of_day = new moment
   start_of_day = start_of_day.startOf('day')
   @today = new ReactiveVar(start_of_day)
-  setInterval  =>
+  @refresh_today_interval = Meteor.setInterval =>
     start_of_day = new moment
     start_of_day = start_of_day.startOf('day')
     self.today.set(start_of_day)
@@ -910,6 +910,10 @@ Template.justdo_calendar_project_pane.events
 
     return
 
+Template.justdo_calendar_project_pane.onDestroyed ->
+  if @refresh_today_interval?
+    Meteor.clearInterval @refresh_today_interval
+    
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
   @days_matrix = new ReactiveVar([])
