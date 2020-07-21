@@ -7018,10 +7018,6 @@ a.text-dark:hover, a.text-dark:focus {
 
 
 /* Custom Unicorn CSS - START */
-.brand {
-  opacity: 0 !important
-}
-
 .grid-control-tab,
 .task-pane-tab,
 .task-pane-section-item-details section,
