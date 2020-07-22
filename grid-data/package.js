@@ -97,12 +97,6 @@ Package.onTest(function(api) {
 
   api.add_files('lib/helpers.coffee', both);
 
-  api.addFiles('unittest/setup/both.coffee', client, {bare: true});
-  api.addFiles('unittest/setup/both.coffee', server);
-  api.addFiles('unittest/setup/server.coffee', server);
-  api.addFiles('unittest/setup/client.coffee', client);
-  api.addFiles('unittest/client.coffee', client);
-
   // Just so we can use it from the console for debugging...
   api.export('GridDataCore');
   api.export('GridData');
