@@ -94,6 +94,13 @@ _.extend TasksFileManager.prototype,
 
     _.each files_to_upload, (file) =>
       @logger.debug("New activity #{"file_uploaded"} by user #{user_id} - extra data: #{JSON.stringify({ title: file.title, size: file.size })}\n Message that will be presented: #{"User {{user}} uploaded a new file: {{title}} ({{size}} bytes)"}")
+      APP.tasks_changelog_manager.logChange
+        field: "files.#{file.id} upload"
+        label: "Files"
+        change_type: "custom"
+        task_id: task_id
+        by: user_id
+        message: "uploaded a new file - #{file.title}"
 
     return files_to_upload
 
@@ -436,6 +443,13 @@ _.extend TasksFileManager.prototype,
         "files.$.title": new_title
 
     @logger.debug("New activity #{"file_renamed"} by user #{user_id} - extra data: #{JSON.stringify({ new_title: new_title, old_title: file.title })}\n Message that will be presented: #{"User {{user}} renamed a file from {{old_title}} to {{new_title}}."}")
+    APP.tasks_changelog_manager.logChange
+      field: "files.#{file_id} rename"
+      label: "Files"
+      change_type: "custom"
+      task_id: task_id
+      by: user_id
+      message: "renamed a file to #{new_title}"
 
   # INTERNAL ONLY
   # Sets metadata on a file
@@ -465,6 +479,13 @@ _.extend TasksFileManager.prototype,
     APP.filestack_base.cleanupRemovedFile file, {cleanup_from_task_document: task}
 
     @logger.debug("New activity #{"file_removed"} by user #{user_id} - extra data: #{JSON.stringify({ title: file.title, size: file.size })}\n Message that will be presented: #{"User {{user}} removed a file {{title}}."}")
+    APP.tasks_changelog_manager.logChange
+      field: "files.#{file_id} remove"
+      label: "Files"
+      change_type: "custom"
+      task_id: task_id
+      by: user_id
+      message: "removed file #{file.title}"
 
   destroy: ->
     if @destroyed
