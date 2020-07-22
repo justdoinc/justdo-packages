@@ -113,7 +113,7 @@ _.extend GridDataCom.prototype,
       # `this` context is same as the Meteor.publish's
       #
       # Example:
-      # middleware: (collection, private_data_collection, options, sub_args, query, private_data_query, projection, private_data_projection) -> [query, projection]
+      # middleware: (collection, private_data_collection, options, sub_args, query, private_data_query, query_options, private_data_query_options) -> [query, query_options]
       #
       #
       # IMPORTANT! at the moment, for cases where middleware_incharge is set to false, we aren't
@@ -126,7 +126,7 @@ _.extend GridDataCom.prototype,
       # return one...)
       #
       # Example:
-      # middleware: (collection, private_data_collection, options, sub_args, query, private_data_query, projection, private_data_projection) -> collection.find query, projection
+      # middleware: (collection, private_data_collection, options, sub_args, query, private_data_query, query_options, private_data_query_options) -> collection.find query, query_options
 
     if options.unmerged_pub and not options.unmergedPublication_options?
       throw @_error "missing-required-option", "For true options.unmerged_pub, you must provide options.unmergedPublication_options"
@@ -172,16 +172,16 @@ _.extend GridDataCom.prototype,
       pub_customization_restricted_options = undefined
       if middleware?
         if options.middleware_incharge
-          return middleware.call @, self.collection, self.private_data_collection, options, _.toArray(arguments), query, private_data_query, projection, private_data_projection
+          return middleware.call @, self.collection, self.private_data_collection, options, _.toArray(arguments), query, private_data_query, query_options, private_data_query_options
         else
-          result = middleware.call @, self.collection, self.private_data_collection, options, _.toArray(arguments), query, private_data_query, projection, private_data_projection
+          result = middleware.call @, self.collection, self.private_data_collection, options, _.toArray(arguments), query, private_data_query, query_options, private_data_query_options
 
           if not result
             @ready()
 
             return
           else
-            [query, projection, pub_customization_safe_options, pub_customization_restricted_options] = result
+            [query, query_options, pub_customization_safe_options, pub_customization_restricted_options] = result
 
         if _.isObject(pub_customization_safe_options)
           # Since the middleware has access to the pub_options received as an argument
@@ -189,7 +189,7 @@ _.extend GridDataCom.prototype,
           # pub_options.
           pub_options = _.extend {}, pub_options, pub_customization_safe_options
 
-      cursor = self.collection.find query, projection
+      cursor = self.collection.find query, query_options
 
       return JustdoHelpers.customizedCursorPublish(@, cursor, pub_options, pub_customization_restricted_options)
 
@@ -355,7 +355,7 @@ _.extend GridDataCom.prototype,
         # options:
         #
         #   base_query: a base mongo query on which we will add our additional sub-tree query
-        #   fields: a mongo style positive fields projection (negative isn't supported!)
+        #   fields: a mongo style positive fields query_options (negative isn't supported!)
         #   max_level: if undefined we will go as deep as the sub-tree goes, otherwise we won't traverse
         #             items in levels higher than the level specified (0 is the root level).
         #   max_items: if undefined we will return as many items as we find (up to the hard limit, see below)
