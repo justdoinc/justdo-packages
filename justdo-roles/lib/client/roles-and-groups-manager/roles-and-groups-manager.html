@@ -1,12 +1,14 @@
 <template name="justdo_roles_and_groups_manager">
-  <ul class="nav nav-pills" role="tablist">
-    <li role="presentation" class="{{#if $eq getCurrentTab "roles"}}active{{/if}}">
-      <a href="#roles" aria-controls="roles" role="tab" data-toggle="tab">Roles</a>
-    </li>
-    <li role="presentation" class="{{#if $eq getCurrentTab "groups"}}active{{/if}}">
-      <a href="#groups" aria-controls="groups" role="tab" data-toggle="tab">Groups</a>
-    </li>
-  </ul>
+  <div class="role-and-groups-header">
+    <ul class="nav nav-pills" role="tablist">
+      <li role="presentation" class="{{#if $eq getCurrentTab "groups"}}active{{/if}}">
+        <a href="#groups" aria-controls="groups" role="tab" data-toggle="tab" class="{{#if $eq getCurrentTab "groups"}}text-primary{{else}}text-secondary{{/if}}">Groups</a>
+      </li>
+      <li role="presentation" class="{{#if $eq getCurrentTab "roles"}}active{{/if}}">
+        <a href="#roles" aria-controls="roles" role="tab" data-toggle="tab" class="{{#if $eq getCurrentTab "roles"}}text-primary{{else}}text-secondary{{/if}}">Roles</a>
+      </li>
+    </ul>
+  </div>
 
   <div class="table-container">
     <table class="jd-table">
@@ -28,23 +30,30 @@
     </th>
     {{#each roles_and_groups_manager_controller.getRegions}}
       <th region-id="{{_id}}" class="region-label-cell">
-        {{getLabel}}
-        {{#if regionalManagersEditable}}
-          <span class="edit-region-members">
-            <div class="regional-managers-controller-block">
-              <div class="regional-management"><i class="fa fa-user"></i> {{getRegionManagersCount}}</div>
+        <div class="region-label-wrapper">
+          {{getLabel}}
+          <div class="region-controls-wrapper">
+            <div class="region-controls dropdown">
+              <svg class="jd-icon jd-icon-dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
+              <ul class="dropdown-menu p-2 shadow border-0">
+                {{#if regionalManagersEditable}}
+                  <li class="dropdown-item regional-managers-controller">
+                    <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#users"></use></svg>Managers {{getRegionManagersCount}}
+                  </li>
+                {{/if}}
+                {{#if isLabelEditable}}
+                  <li class="dropdown-item edit-region-label">
+                    <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>Rename
+                  </li>
+                {{/if}}
+                {{#if userCanAddOrRemoveRegions}}
+                  <li class="dropdown-item remove-region">
+                    <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"></use></svg>Delete
+                  </li>
+                {{/if}}
+              </ul>
             </div>
-          </span>
-        {{/if}}
-
-        <div class="region-controls">
-          {{#if userCanAddOrRemoveRegions}}
-            <span class="region-control remove-region" title="Remove {{getLabel}}"><i class="fa fa-times" aria-hidden="true"></i></span>
-          {{/if}}
-
-          {{#if isLabelEditable}}
-            <span class="region-control edit-region-label"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-          {{/if}}
+          </div>
         </div>
       </th>
     {{/each}}
@@ -55,42 +64,44 @@
   {{#each roles_and_groups_manager_controller.getRoles}}
     <tr>
       <td role-id="{{_id}}" class="role-label-cell">
-        {{getLabel}}
+        <div class="role-label-wrapper">
+          {{getLabel}}
+          <div class="roles-controls dropdown">
+            <svg class="jd-icon jd-icon-dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
+            <ul class="dropdown-menu p-2 shadow border-0">
+              {{#if isLabelEditable}}
+                <li class="dropdown-item edit-role-label">
+                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>Rename
+                </li>
+              {{/if}}
 
-        <div class="roles-controls">
-          {{#if userCanAddOrRemoveRoles}}
-            <span class="region-control remove-role" title="Remove {{getLabel}}"><i class="fa fa-times" aria-hidden="true"></i></span>
-          {{/if}}
-
-          {{#if isLabelEditable}}
-            <span class="region-control edit-role-label" title="Edit name"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-          {{/if}}
+              {{#if userCanAddOrRemoveRoles}}
+                <li class="dropdown-item remove-role">
+                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"></use></svg>Delete
+                </li>
+              {{/if}}
+            </ul>
+          </div>
         </div>
       </td>
 
       {{#each getRegionsValueControllers}}
         {{#if has_value}}
           <td>
-            <div class="jdr-user-item {{#if $eq region_id 'default'}}default-reg{{/if}} {{#if $not isUserMemberOfProject}}jdr-user-item-warning{{/if}}" title="{{#if $not isUserMemberOfProject}}User removed from the project{{/if}}">
-              {{#with user}}
-                {{> justdo_avatar}} {{> display_name_with_graphic_unverified_warning}}
-              {{/with}}
-
-              <div class="cell-controls">
-                <span class="cell-control edit-role-member"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-
-                {{#if user_can_be_removed}}
-                  <span class="cell-control remove-role-member"><i class="fa fa-times" aria-hidden="true"></i></span>
-                {{/if}}
+            <div class="jdr-user-item edit-role-member {{#if $eq region_id 'default'}}default-reg{{/if}} {{#if $not isUserMemberOfProject}}jdr-user-item-warning{{/if}}" title="{{#if $not isUserMemberOfProject}}User removed from the project{{/if}}">
+              <div class="jdr-user-wrapper">
+                {{#with user}}
+                  {{> justdo_avatar}} {{> display_name_with_graphic_unverified_warning}}
+                {{/with}}
               </div>
-
+              {{#if user_can_be_removed}}
+                <svg class="jd-icon cell-control remove-role-member"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+              {{/if}}
             </div>
           </td>
         {{else}}
           <td class="empty-cell">
-            <div class="empty-cell-controls">
-              <span class="cell-control set-role-member"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-            </div>
+            <div class="empty-cell-controls set-role-member"></div>
           </td>
         {{/if}}
       {{/each}}
@@ -102,39 +113,42 @@
   {{#each roles_and_groups_manager_controller.getGroups}}
     <tr>
       <td group-id="{{_id}}" class="group-label-cell">
-        {{getLabel}}
-
-        <div class="group-controls">
-          {{#if userCanAddOrRemoveGroups}}
-            <span class="region-control remove-group" title="Remove {{getLabel}}"><i class="fa fa-times" aria-hidden="true"></i></span>
-          {{/if}}
-
-          {{#if isLabelEditable}}
-            <span class="region-control edit-group-label" title="Edit name"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-          {{/if}}
+        <div class="group-label-wrapper">
+          {{getLabel}}
+          <div class="group-controls dropdown">
+            <svg class="jd-icon jd-icon-dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
+            <ul class="dropdown-menu p-2 shadow border-0">
+              {{#if isLabelEditable}}
+                <li class="dropdown-item edit-group-label">
+                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>Rename
+                </li>
+              {{/if}}
+              {{#if userCanAddOrRemoveGroups}}
+                <li class="dropdown-item remove-group">
+                  <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"></use></svg>Delete
+                </li>
+              {{/if}}
+            </ul>
+          </div>
         </div>
       </td>
-
       {{#each getRegionsValueControllers}}
         <td>
           {{#each getUsers}}
-            <div class="jdr-user-item {{#if $eq region_id 'default'}}default-reg{{/if}} {{#if $not isUserMemberOfProject}}jdr-user-item-warning{{/if}}" title="{{#if $not isUserMemberOfProject}}User removed from the project{{/if}}">
-              {{> justdo_avatar}} {{> display_name_with_graphic_unverified_warning}}
-
-              <div class="cell-controls">
-                <span class="cell-control edit-group-member"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-
-                <span class="cell-control remove-group-member"><i class="fa fa-times" aria-hidden="true"></i></span>
+            <div class="jdr-user-item edit-group-member {{#if $eq region_id 'default'}}default-reg{{/if}} {{#if $not isUserMemberOfProject}}jdr-user-item-warning{{/if}}" title="{{#if $not isUserMemberOfProject}}User removed from the project{{/if}}">
+              <div class="jdr-user-wrapper">
+                {{> justdo_avatar}} {{> display_name_with_graphic_unverified_warning}}
               </div>
+              <svg class="jd-icon cell-control remove-group-member"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
             </div>
           {{/each}}
-
-          <div class="group-editing-controls {{#if $not has_value}}empty-group{{/if}}">
-            <span class="cell-control set-group-members" title="Set group members"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-            {{#if has_value}}
-              <span class="cell-control clear-all-group-members" title="Clear all group members"><i class="fa fa-trash" aria-hidden="true"></i></span>
-            {{/if}}
-          </div>
+          <div class="set-group-members {{#if $not has_value}}empty-group{{/if}}"></div>
+          {{#if has_value}}
+            <div class="group-members-control shadow">
+              <div class="clear-all-group-members" title="Clear all group members"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg></div>
+              <div class="set-group-members-btn" title="Set group members"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg></div>
+            </div>
+          {{/if}}
         </td>
       {{/each}}
     </tr>
@@ -144,15 +158,15 @@
 <template name="justdo_roles_and_groups_manager_footer">
   <div class="modal-footer">
     {{#if roles_and_groups_manager_controller.userCanAddOrRemoveRegions}}
-      <button class="btn add-new-region">+ Add a new region</button>
+      <button class="btn btn-primary add-new-region">+ Add a new region</button>
       {{#if $eq getCurrentTab "roles"}}
-        <button class="btn add-new-role">+ Add a new role</button>
+        <button class="btn btn-primary add-new-role">+ Add a new role</button>
       {{else if $eq getCurrentTab "groups"}}
-        <button class="btn add-new-group">+ Add a new Group</button>
+        <button class="btn btn-primary add-new-group">+ Add a new Group</button>
       {{/if}}
     {{/if}}
-    <button class="btn btn-default cancel">Cancel</button>
-    <button class="btn btn-default save">Save</button>
-    <button class="btn btn-primary-no-bootbox-auto-focus save-and-close">Save &amp; close</button>
+    <button class="btn btn-secondary cancel">Cancel</button>
+    <button class="btn btn-secondary save">Save</button>
+    <button class="btn btn-secondary save-and-close">Save &amp; close</button>
   </div>
 </template>

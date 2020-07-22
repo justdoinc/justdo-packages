@@ -602,7 +602,7 @@ APP.executeAfterAppLibCode ->
           #
           # TABS
           #
-          current_tab_rv: new ReactiveVar "roles"
+          current_tab_rv: new ReactiveVar "groups"
 
           setCurrentTab: (tab) ->
             return @current_tab_rv.set(tab)

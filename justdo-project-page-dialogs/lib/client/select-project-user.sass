@@ -1,23 +1,15 @@
 .select-project-user-dialog
-  .modal-header
-    display: none
+  .modal-dialog
+    width: 300px
+    top: 50px
+  .modal-content
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)
 
-  .modal-body
-    padding: 30px 0 29px 5px
-    font-size: 17px
-    font-family: "lato", sans-serif
-    font-weight: bold
-    margin-top: 60px
-
-  .select-project-member-dialog-title
-    display: inline-block
-
-    margin-right: 7px
-
-// Define in the top level, as the dropdown is attached to <body>
-.select-project-member-dialog-selector
-  .filter-option
-    line-height: 23px
+  // Define in the top level, as the dropdown is attached to <body>
+  .select-project-member-dialog-selector
+    width: 100% !important
+    .filter-option
+      line-height: 23px
 
 .select-project-member-dialog-selector
   &.dropdown-menu-lite-users.dropdown-menu li > a img,

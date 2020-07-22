@@ -28,7 +28,7 @@ APP.executeAfterAppLibCode ->
       default_value = "New region"
       bootbox.prompt
         title: "Pick a name for the new region"
-        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default bootbox-role-and-group"
         closeButton: false
         value: ""
 
@@ -50,7 +50,7 @@ APP.executeAfterAppLibCode ->
       default_value = "New role"
       bootbox.prompt
         title: "Pick a name for the new role"
-        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default bootbox-role-and-group"
         closeButton: false
         value: ""
 
@@ -72,7 +72,7 @@ APP.executeAfterAppLibCode ->
       default_value = "New group"
       bootbox.prompt
         title: "Pick a name for the new group"
-        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default bootbox-role-and-group"
         closeButton: false
         value: ""
 
@@ -137,7 +137,7 @@ APP.executeAfterAppLibCode ->
     "click .remove-region": (e, tpl) ->
       bootbox.confirm
         message: "Are you sure you want to remove the region?"
-        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default bootbox-role-and-group"
         closeButton: false
 
         callback: (result) =>
@@ -151,7 +151,7 @@ APP.executeAfterAppLibCode ->
     "click .edit-region-label": (e, tpl) ->
       bootbox.prompt
         title: "Pick a new name for the region"
-        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default bootbox-role-and-group"
         closeButton: false
         value: @getLabel()
 
@@ -163,8 +163,8 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .regional-managers-controller-block": (e, tpl) ->
-      managers_selector_options = 
+    "click .regional-managers-controller": (e, tpl) ->
+      managers_selector_options =
         title: "Set the #{@getLabel()} region, regional managers"
         selected_users: @getManagers()
         submit_label: "Set managers"
@@ -182,7 +182,7 @@ APP.executeAfterAppLibCode ->
     "click .remove-role": (e, tpl) ->
       bootbox.confirm
         message: "Are you sure you want to remove this role?"
-        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default bootbox-role-and-group"
         closeButton: false
 
         callback: (result) =>
@@ -196,7 +196,7 @@ APP.executeAfterAppLibCode ->
     "click .edit-role-label": (e, tpl) ->
       bootbox.prompt
         title: "Pick a new name for the role"
-        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default bootbox-role-and-group"
         closeButton: false
         value: @getLabel()
 
@@ -208,7 +208,7 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .edit-role-member": ->
+    "click .edit-role-member .jdr-user-wrapper": ->
       @setUser()
 
       return
@@ -228,7 +228,7 @@ APP.executeAfterAppLibCode ->
     "click .remove-group": (e, tpl) ->
       bootbox.confirm
         message: "Are you sure you want to remove this group?"
-        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default bootbox-role-and-group"
         closeButton: false
 
         callback: (result) =>
@@ -242,7 +242,7 @@ APP.executeAfterAppLibCode ->
     "click .edit-group-label": (e, tpl) ->
       bootbox.prompt
         title: "Pick a new name for the group"
-        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default bootbox-role-and-group"
         closeButton: false
         value: @getLabel()
 
@@ -254,12 +254,12 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .edit-group-member": ->
+    "click .edit-group-member .jdr-user-wrapper": ->
       @setUsers()
 
       return
 
-    "click .set-group-members": ->
+    "click .set-group-members, click .set-group-members-btn": (e) ->
       @setUsers()
 
       return
@@ -267,7 +267,7 @@ APP.executeAfterAppLibCode ->
     "click .clear-all-group-members": ->
       bootbox.confirm
         message: "Are you sure you want to remove all the members?"
-        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default bootbox-role-and-group"
         closeButton: false
 
         callback: (result) =>

@@ -1,31 +1,24 @@
 .roles-and-groups-manager-dialog
-  font-family: "Lato", sans-serif
+  .modal-content
+    padding: 0 2rem
 
-  $header-height: 58px
-  $modal-horizontal-paddings: 20px
   .modal-header
-    position: absolute
-    height: $header-height
-    left: 0
-    right: 0
-    padding-right: $modal-horizontal-paddings
-    padding-left: $modal-horizontal-paddings
+    padding: 1rem 0
+    align-items: center
+
+  .modal-footer
+    padding: 1rem 0
+    align-items: center
+    .btn + .btn
+      margin-left: 8px
 
   .modal-dialog
     min-width: 950px
     max-width: 1270px
-    width: 95%
-    height: 93%
-    margin-top: 2%
-
-  .modal-content
-    padding: 0 $modal-horizontal-paddings
-    max-height: 100%
-    overflow: auto
 
   .modal-body
-    margin-top: $header-height
     min-height: 260px
+    padding: 0
 
   .bootbox-body
     margin: 15px 0px
@@ -35,203 +28,189 @@
 
   .nav-pills li a
     border-radius: 2px
-    font-size: 20px
+    font-size: 15px
     font-weight: bold
-    color: #607D8B
-    padding: 5px 15px
+    padding: 8px 16px
+    text-transform: uppercase
+    text-decoration: none
 
   .nav-pills li.active a
-    color: #0F56AE
-    background-color: #D0E2FA
+    background-color: #ECF4FA
 
   .table-container
     width: 100%
     overflow: auto
 
   .jd-table
-    font-family: "Lato", sans-serif
     color: #37474F
     font-size: 14px
 
   .jd-table
     border-collapse: collapse
-
     td
       border-right: 1px dotted #E4E8E9
-      border-top: 1px solid #E4E8E9
+      border-top: 1px dotted #E4E8E9
       border-collapse: collapse
-
-      &:last-child
-        border-right: none
-
-    td
-      padding: 5px
-
-    th
-      padding: 8px 11px
-      text-align: left
-      background-color: #ECF0F1
-      border-bottom: 1px solid #E4E8E9
-      border-right: 1px dotted #90A4AE
-      color: black
+      padding: 6px
+      vertical-align: top
       position: relative
-
       &:last-child
         border-right: none
-
+    th
+      padding: 4px 0px 4px 12px
+      background-color: #ECF0F1
+      border-right: 1px solid #E4E8E9
+      border-bottom: 1px solid rgba(129, 144, 159, 0.4)
+      color: black
+      &:last-child
+        border-right: none
     tr:hover
       background-color: #eceff157
 
-  .jd-table
-    td
-      vertical-align: top
-
-  .add-new-role, .add-new-region, .add-new-group
-    float: left
-    background: rgba(187, 222, 251, 0.5) !important
-    color: #2b71cf
-
-  .regional-managers-controller-block
-    display: inline-block
-    padding: 0px 9px
-    text-align: center
-    background: #fff
-    color: #3073CC
-    border-radius: 10px
+  .region-label-wrapper,
+  .role-label-wrapper,
+  .group-label-wrapper
+    display: flex
+    justify-content: space-between
+    align-items: center
+    line-height: 100%
     font-weight: bold
-    cursor: pointer
-    user-select: none
-    font-size: 13px
-    margin-left: 3px
+    white-space: nowrap
 
-  .region-controls
-    visibility: hidden
+  .region-controls-wrapper
+    display: flex
+    padding: 0 4px 0 12px
 
-    display: inline-block
+  .role-label-wrapper,
+  .group-label-wrapper
+    padding-left: 8px
 
-    vertical-align: bottom
-
-    margin-left: 3px
-
-  .region-label-cell
-    &:hover
-      .region-controls
-        visibility: visible
-
-  .region-control,.role-control,.group-control
-    float: right
-    cursor: pointer
-    padding: 0 2px
-
-  .roles-controls
-    visibility: hidden
-
-    display: inline-block
-
-    vertical-align: bottom
-
-    margin-left: 3px
-
-  .role-label-cell
-    &:hover
-      .roles-controls
-        visibility: visible
-
+  .region-controls,
+  .roles-controls,
   .group-controls
-    visibility: hidden
+    .jd-icon-dropdown-btn
+      color: rgba(104, 123, 142, 0.6)
+      cursor: pointer
+      width: 14px
+      padding: 0
+      &:hover
+        background-color: rgba(0, 0, 0, 0.08)
 
-    display: inline-block
+    .dropdown-item
+      display: flex
+      align-items: center
+      font-size: 15px
+      padding: 0.25rem 0.5rem 0.25rem 0.25rem
+      cursor: pointer
+      svg
+        color: #687B8E
+        margin-right: 6px
+        width: 20px
+        height: 20px
 
-    vertical-align: bottom
+  .roles-controls,
+  .group-controls
+    margin-left: 4px
+    height: 28px
+    display: flex
+    align-items: center
 
-    margin-left: 3px
+  .jd-table
+    .empty-cell-controls,
+    .set-group-members
+      position: absolute
+      top: 2px
+      bottom: 2px
+      left: 2px
+      right: 2px
+      border-radius: 4px
+      background-color: white
+      cursor: pointer
+      border: 1px solid white
+      transition: all 0.12s linear
 
-  .group-label-cell
+    td:hover
+      .empty-cell-controls
+        border: 1px solid #037bfe
+        background-color: rgba(218, 238, 253, 0.25)
+      .set-group-members.empty-group
+        border: 1px solid #037bfe
+      .set-group-members
+        background-color: rgba(218, 238, 253, 0.25)
+
+      .group-members-control
+        z-index: 2
+        opacity: 1
+
+    .group-members-control
+      background-color: white
+      position: absolute
+      z-index: -1
+      top: 4px
+      right: -24px
+      padding: 2px
+      border-radius: 4px
+      opacity: 0
+      transition: opacity 0.12s linear
+      .jd-icon
+        padding: 4px
+        stroke-width: 2
+        cursor: pointer
+        &:hover
+          background-color: #ECEFF1
+
+  .jdr-user-item
+    background: #d9eefe
+    border-radius: 12px 4px 4px 12px
+    cursor: pointer
+    display: flex
+    align-items: center
+    white-space: nowrap
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0)
+    line-height: 100%
+    transition: box-shadow 0.12s linear
+    position: relative
+    z-index: 1
     &:hover
-      .group-controls
-        visibility: visible
+      box-shadow: 0 0 0 2px white, 0 0 0 4px #037bfe
 
-  .group-editing-controls
-    visibility: hidden
+    &.default-reg
+      background: rgb(236, 239, 241)
+      border-color: rgb(200, 206, 214)
+      .cell-control
+        color: rgb(176, 190, 204)
 
-    display: inline-block
+    &.jdr-user-item-warning
+      background: red
 
-    vertical-align: bottom
-
-    margin-left: 3px
-
-    line-height: 29px
-
-    &.empty-group
-      float: right
+    .justdo-avatar
+      width: 20px
+      height: 20px
+      margin-right: 4px
 
     .cell-control
       cursor: pointer
-      padding: 0 2px
-
-  td
-    &:hover
-      .group-editing-controls
-        visibility: visible
-
-  .jd-table
-    .empty-cell
-      padding: 5px 10px
-
-      .empty-cell-controls
-        visibility: hidden
-
-        float: right
-
-      .cell-control
-        cursor: pointer
-        padding: 0 2px
-
+      width: 24px
+      height: 24px
+      padding: 6px
+      color: rgb(115, 184, 234)
+      stroke-width: 3px
+      opacity: 0.5
       &:hover
-        .empty-cell-controls
-          visibility: visible
+        opacity: 1
 
-.jdr-user-item
-  background: #d9eefe
-  padding: 3px 2px 3px 6px
-  display: inline-block
-  border-radius: 2px
-  align-items: center
-  border: 1px solid rgba(0, 0, 0, 0)
-  cursor: default
+    .jdr-user-wrapper
+      display: flex
+      align-items: center
+      flex-grow: 1
+      padding: 4px 8px 4px 4px
 
-  &.default-reg
-    background: rgba(207, 216, 220, 0.5)
+  .jdr-user-item + .jdr-user-item
+    margin-top: 4px
 
-  &.jdr-user-item-warning
-    background: red
-
-  .justdo-avatar
-    width: 20px
-    height: 20px
-    margin-right: 3px
-
-  .cell-controls
-    visibility: hidden
-
-    display: inline-block
-
-    vertical-align: bottom
-
-    margin-left: 3px
-
-  &:hover
-    .cell-controls
-      visibility: visible
-
-  .cell-control
-    cursor: pointer
-    padding: 0 2px
-
-  .cell-clear
-    cursor: pointer
-    padding: 0px 5px
-    color: #6a6a6a
-
-    &:hover
-      color: #808080
+.bootbox-role-and-group
+  .modal-dialog
+    width: 300px
+    top: 50px
+  .modal-content
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)
