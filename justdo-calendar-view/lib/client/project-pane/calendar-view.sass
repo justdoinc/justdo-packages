@@ -247,8 +247,16 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
   font-size: 11px
   font-weight: bold
   color: #0349bf
-  text-align: right
+  text-align: center
   border-bottom-color: rgba(86, 99, 130, 0.4) !important
+  position: relative
+  span
+    display: block
+    overflow: hidden
+    text-overflow: ellipsis
+  &.xx_small_text:hover
+    .calendar_view_resources_tooltip
+      display: block
 
 .calendar_view_date,
 .main_table_fixed_header th
@@ -368,6 +376,7 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
   text-align: left
   height: 14px
   font-size: xx-small
+  white-space: nowrap
 
 .calendar_task_state
   border-radius: 100%
@@ -600,7 +609,8 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
 .highlighted_due_date
   background-color: #f7caca
 
-.calendar_task_tooltip
+.calendar_task_tooltip,
+.calendar_view_resources_tooltip
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)
   border-radius: 0.2rem
   background-color: white
@@ -611,6 +621,7 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
   font-size: 12px
   display: none
   z-index: 10
+  white-space: nowrap
 
 .calendar-view-14,
 .calendar-view-28,
