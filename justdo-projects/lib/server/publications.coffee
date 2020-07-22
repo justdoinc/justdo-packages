@@ -70,7 +70,7 @@ _.extend Projects.prototype,
         getCollectionsWithSyncSupport: (subscription_options) ->
           tasks: true
       middleware_incharge: true
-      middleware: (collection, private_data_collection, options, sub_args, query, private_data_query, projection, private_data_projection) ->
+      middleware: (collection, private_data_collection, options, sub_args, query, private_data_query, query_options, private_data_query_options) ->
         publish_this = @
 
         sub_options = sub_args[0]
@@ -156,14 +156,14 @@ _.extend Projects.prototype,
         # and to drop obsolete indexes (see
         # FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_INDEX/FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_WITH_RAW_UPDATED_DATE_INDEX there)
         #
-        cursor = collection.find query, projection
+        cursor = collection.find query, query_options
 
         #
         # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
         # and to drop obsolete indexes (see
         # FETCH_PROJECT_TASKS_PRIVATE_DATA_OF_SPECIFIC_USER_FROZEN_AWARE_INDEX/FETCH_PROJECT_TASKS_PRIVATE_DATA_OF_SPECIFIC_USER_FROZEN_AWARE_WITH_RAW_UPDATED_DATE_INDEX there)
         #
-        private_data_cursor = private_data_collection.find private_data_query, private_data_projection
+        private_data_cursor = private_data_collection.find private_data_query, private_data_query_options
 
         # pub_options.custom_col_name
         target_col_name = JustdoHelpers.getCollectionNameFromCursor(cursor)
