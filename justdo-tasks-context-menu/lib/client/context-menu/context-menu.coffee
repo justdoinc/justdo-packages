@@ -19,6 +19,9 @@ Template.tasks_context_menu.helpers
     return section.reactive_items_list.getList().length > 0
 
 Template.tasks_context_section.onCreated ->
+  # moveTimer used in mouseleave and mousemove events (.dropdown-item) to detect when the mouse stop
+  @moveTimer = null
+
   return
 
 Template.tasks_context_section.helpers
@@ -69,10 +72,24 @@ Template.tasks_context_section.events
         repositionEventMenu(e)
         $item.siblings().removeClass "show-fix"
         $item.addClass "show-fix"
-      else
 
-      if not $item.hasClass "show-fix"
-        $(".dropdown-item.show-fix").removeClass "show-fix"
+    return
+
+  "mousemove .dropdown-item": (e, tpl) ->
+    $item = $(e.target).closest(".dropdown-item")
+    $parent = $item.parents ".context-nested-section-item"
+
+    if not $parent.get(0)
+      clearTimeout(tpl.moveTimer)
+      tpl.moveTimer = setTimeout ->
+        if not $item.hasClass "show-fix"
+          $(".dropdown-item.show-fix").removeClass "show-fix"
+      , 100
+
+    return
+
+  "mouseleave .dropdown-item": (e, tpl) ->
+    clearTimeout(tpl.moveTimer)
 
     return
 
