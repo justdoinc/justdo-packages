@@ -918,7 +918,10 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
   @days_matrix = new ReactiveVar([])
   @dates_workload = new ReactiveVar({})
-  @collapsed_view = new ReactiveVar false
+  @collapsed_view = new ReactiveVar true
+
+  if @data.user_id == Meteor.userId()
+    @collapsed_view.set false
 
   members_collapse_state_vars[Template.currentData().user_id] = @collapsed_view
   @justdo_user_holidays = new Set()
