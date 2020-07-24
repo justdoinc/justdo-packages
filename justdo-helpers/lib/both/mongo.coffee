@@ -20,6 +20,14 @@ _.extend JustdoHelpers,
 
     return res
 
+  fieldsArrayToExclusiveFieldsProjection: (fields_arr) ->
+    res = {}
+
+    for field_id in fields_arr
+      res[field_id] = 0
+
+    return res
+
   mongoQueryAddAdditionalRequiredOrStatement: (query, or_array) ->
     # Edits query in place
 
