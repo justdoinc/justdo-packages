@@ -88,6 +88,9 @@ _.extend GridDataCom.prototype,
   setupGridPublication: (options = {}) ->
     self = this
 
+    excluded_fields = _.keys _.pick JustdoHelpers.getSimpleSchemaObjDefinition(JustdoHelpers.getCollectionSchema(@collection)), (value, key) ->
+      return value.exclude_from_tasks_grid_pub is true
+
     default_options =
       unmerged_pub: false
       unmergedPublication_options: null
@@ -144,6 +147,12 @@ _.extend GridDataCom.prototype,
 
     args.push options.name
     args.push (subscription_options, pub_options) ->
+      {respect_exclude_from_tasks_grid_pub_directive} = subscription_options
+
+      check respect_exclude_from_tasks_grid_pub_directive, Match.Maybe(Boolean)
+      if not respect_exclude_from_tasks_grid_pub_directive?
+        respect_exclude_from_tasks_grid_pub_directive = false
+
       # `this` is the Publication context, use self for GridData instance 
       if options.require_login
         if not @userId?
@@ -158,8 +167,12 @@ _.extend GridDataCom.prototype,
       private_data_query =
         user_id: @userId
         _raw_frozen: null # Exclude frozen fields (they are equivalent to removed, just recoverable).
-      projection = {}
-      private_data_projection = {}
+      if respect_exclude_from_tasks_grid_pub_directive
+        query_options = {fields: JustdoHelpers.fieldsArrayToExclusiveFieldsProjection(excluded_fields)}
+      else
+        query_options = {}
+
+      private_data_query_options = {}
 
       if options.require_login and not options.exposed_to_guests
         query.users = @userId
