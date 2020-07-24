@@ -42,6 +42,8 @@ _.extend JustdoTasksCollectionsManager.prototype,
       description:
         label: "Description"
 
+        exclude_from_tasks_grid_pub: true
+
         grid_editable_column: false
         grid_visible_column: false
 
@@ -530,6 +532,8 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       users:
         label: "Users"
+
+        exclude_from_tasks_grid_pub: true
 
         grid_editable_column: false
         grid_visible_column: false
