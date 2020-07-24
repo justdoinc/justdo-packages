@@ -286,3 +286,23 @@ SimpleSchema.extendOptions
   #
   # This is a helper property used by the grid control.
   grid_dependent_fields: Match.Optional([String])
+
+  # exclude_from_tasks_grid_pub
+  #
+  # Excludes fields in which it is set to true from the regular unmerged tasks pub (tasks_grid_um)
+  # It is used for potentially heavy fields that we don't want to pass on the wire by default,
+  # such as the description field, and *much more critically* for fields, like the users field,
+  # that are very likely to be involved in bulk actions that would translate to mass ddp broadcasting
+  # upon change.
+  # 
+  # Such bulk actions would result in the publication emitting O(m * n) messages, where m is the changed
+  # tasks count, and n stands for the active sessions that are subscribed to the publication that need
+  # to receive the update. This has the potential to disable the service, resulting in an effective
+  # non-intentional denial of service.
+  #
+  # Note that for JustDos with many users, users can also be massive, just like description (if not
+  # worse).
+  #
+  # These fields can be loaded using the tasks_augmented_fields subscription (defined as part of
+  # grid-data-com)
+  exclude_from_tasks_grid_pub: Match.Optional(Boolean)
