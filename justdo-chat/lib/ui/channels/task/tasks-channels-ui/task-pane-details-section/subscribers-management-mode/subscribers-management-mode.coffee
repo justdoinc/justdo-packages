@@ -31,7 +31,7 @@ Template.task_pane_chat_section_subscribers_management.helpers
   taskMembers: ->
     main_tpl = Template.instance().getMainTemplate()
 
-    task_members = APP.modules.project_page.activeItemObj({"users": true}).users
+    task_members = JD.activeItemUsers()
 
     task_members_doc = Meteor.users.find({_id: {$in: task_members}}).fetch()
 

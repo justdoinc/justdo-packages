@@ -23,7 +23,7 @@ getChannelSubscribersIdsIntersectionWithTaskMembersIds = (channel) ->
 
   subscribers_ids = _.map subscribers_array, (sub) -> sub.user_id
 
-  if (task_members = APP.modules.project_page.activeItemObj({"users": true})?.users)?
+  if (task_members = JD.activeItemUsers())?
     return _.intersection(subscribers_ids, task_members)
 
   return []
