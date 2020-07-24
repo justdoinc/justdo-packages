@@ -14,6 +14,7 @@ _.extend Projects.prototype,
       tasks_subscription: self.requireProjectTasksSubscription(project_id)
       tickets_queue_subscription: self.modules.tickets_queues.subscribe(project_id)
       required_actions_subscription: self.modules.required_actions.subscribe(project_id)
+      active_task_augmented_users_field_auto_subscription: self.activeTaskAugmentedUsersFieldAutoSubscription()
 
       is_admin_rv: new ReactiveVar false # See below is_admin_computation
 
@@ -252,6 +253,7 @@ _.extend Projects.prototype,
           @tasks_subscription.stop()
           @tickets_queue_subscription.stop()
           @required_actions_subscription.stop()
+          @active_task_augmented_users_field_auto_subscription.stop()
           @is_admin_computation.stop()
 
           self.logger.debug "Project #{project_id} subscription stopped"
