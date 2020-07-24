@@ -155,3 +155,67 @@ _.extend Projects.prototype,
       stop: -> releaseRequirement()
 
     return res
+
+  subscribeTasksAugmentedFields: (items_ids_array, fetched_fields_arr, options, cb) ->
+    if _.isString items_ids_array
+      items_ids_array = [items_ids_array]
+    
+    if _.isEmpty(items_ids_array)
+      fake_res =
+        ready: -> true
+        stop: -> true
+
+      if _.isFunction(cb)
+        cb()
+      else if _.isFunction(cb?.onReady)
+        cb.onReady()
+
+      return fake_res
+
+    default_options =
+      subscribe_sub_tree: false # If set to true, we will subscribe to the entire sub-trees of items_ids_array
+
+    options = _.extend default_options, options
+
+    if not options.subscribe_sub_tree
+      return @_grid_data_com.subscribeTasksAugmentedFields({_id: $in: items_ids_array}, {fetched_fields_arr: fetched_fields_arr}, cb)
+    else
+      if not (gd = APP.modules.project_page?.mainGridControl()?._grid_data)?
+        throw new Meteor.Error("Can't load grid data")
+
+      items_to_subscribe_to_set = new Set(items_ids_array)
+
+      for item_id in items_ids_array
+        path = gd.getCollectionItemIdPath(item_id)
+
+        gd.each path, (section, item_type, item_obj, item_path) =>
+          items_to_subscribe_to_set.add item_obj._id
+
+          return
+
+      items_to_subscribe_to_arr = Array.from(items_to_subscribe_to_set)
+
+      return @_grid_data_com.subscribeTasksAugmentedFields({_id: $in: items_to_subscribe_to_arr}, {fetched_fields_arr: fetched_fields_arr}, cb)
+    
+    return
+
+  subscribeActiveTaskAugmentedFields: (fetched_fields_arr, cb) ->
+    if not (active_item_id = JD.activeItemId())?
+      active_item_id = []
+
+    # We still call @subscribeTasksAugmentedFields() so it'll return the fake response and call the cb properly.
+    return @subscribeTasksAugmentedFields(active_item_id, fetched_fields_arr, cb)
+
+  activeTaskAugmentedUsersFieldAutoSubscription: ->
+    computation = Tracker.autorun =>
+      @subscribeActiveTaskAugmentedFields(["users"])
+
+      return
+
+    if Tracker.currentComputation?
+      Tracker.onInvalidate =>
+        computation.stop()
+
+        return
+
+    return computation
