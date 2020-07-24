@@ -24,5 +24,10 @@ _.extend GridDataCom.prototype,
 
     return APP.justdo_ddp_extensions.unclearedUnmergedSubscribe.apply APP.justdo_ddp_extensions, args
 
+  subscribeTasksAugmentedFields: (args...) ->
+    args.unshift "tasks_augmented_fields"
+
+    return Meteor.subscribe.apply Meteor, args
+
 # Add a shortcut to helpers
 GridDataCom.helpers = helpers

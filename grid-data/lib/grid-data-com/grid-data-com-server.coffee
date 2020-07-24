@@ -211,6 +211,64 @@ _.extend GridDataCom.prototype,
 
     return publishMethod.apply publishMethod_this, args
 
+  setupTasksAugmentedFieldsPublication: ->
+    self = @
+
+    excluded_fields = _.keys _.pick JustdoHelpers.getSimpleSchemaObjDefinition(JustdoHelpers.getCollectionSchema(@collection)), (value, key) ->
+      return value.exclude_from_tasks_grid_pub is true
+
+    Meteor.publish "tasks_augmented_fields", (tasks_selector, options) ->
+      # tasks_selector is a required object we support at the moment only the following
+      # tasks_selector structures for is checked strictly:
+      #
+      #   _id: task_id
+      #
+      #   OR 
+      #
+      #   _id: $in: task_ids_array checked to be [String]
+      #
+      # options is a required object that must have the following options:
+      #
+      #  * fetched_fields_arr with a list of fields to fetch for the selected tasks.
+      #  It is white-listed to have only fields that have the exclude_from_tasks_grid_pub options
+      #  set to true for them.
+
+      if not tasks_selector? or not options? or not _.isObject(tasks_selector) or not _.isObject(options)
+        throw self._error "invalid-argument", "tasks_selector and options arguments are required"
+
+      query = {}
+
+      query.users = @userId
+
+      if _.isString(tasks_selector._id)
+        query._id = tasks_selector._id
+      else if _.isArray(task_ids_array = tasks_selector?._id?.$in)
+        check task_ids_array, [String]
+
+        query._id =
+          $in: task_ids_array
+      else
+        throw self._error "invalid-argument", "Invalid tasks_selector"
+
+      query_options = {}
+
+      if not (fetched_fields_arr = options.fetched_fields_arr)?
+        throw self._error "invalid-argument", "the options arg must have the fetched_fields_arr option"
+      check fetched_fields_arr, [String]
+
+      fetched_fields_arr = _.intersection(fetched_fields_arr, excluded_fields)
+
+      if _.isEmpty(fetched_fields_arr)
+        throw self._error "invalid-argument", "Only fields that have the exclude_from_tasks_grid_pub option set to true for them are allowed in options.fetched_fields_arr"
+      
+      query_options.fields = JustdoHelpers.fieldsArrayToInclusiveFieldsProjection(fetched_fields_arr)
+
+      cursor = self.collection.find query, query_options
+
+      return JustdoHelpers.customizedCursorPublish(@, cursor, {custom_col_name: "tasks_augmented_fields"})
+
+    return
+
   initDefaultIndeices: ->
     @collection._ensureIndex {users: 1}
 
