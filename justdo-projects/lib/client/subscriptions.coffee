@@ -75,7 +75,7 @@ _.extend Projects.prototype,
     if project_id of open_tasks_subscriptions_handles
       handle = open_tasks_subscriptions_handles[project_id]
     else
-      options = {project_id: project_id}
+      options = {project_id: project_id, respect_exclude_from_tasks_grid_pub_directive: false}
 
       if project_id of tasks_subscription_last_sync_time
         project_last_sync_time = tasks_subscription_last_sync_time[project_id]
