@@ -1,0 +1,56 @@
+<template name="merge_justdo_cog_button">
+  <li class="dropdown-item d-flex align-items-center px-1 open-merge-justdo-dialog">
+    <svg class="jd-icon-dropdown text-secondary">
+      <use xlink:href="/layout/icons-feather-sprite.svg#download"/>
+    </svg>
+    Merge JustDos
+  </li>
+</template>
+
+<template name="merge_justdo_dialog">
+  <div class=merge-justdo-container>
+    <div>Select the justdo(s) to merge</div>
+    <input class="justdos-selector-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search justdos" name="" value="">
+    <ul class="justdos-selector">
+      {{#each justdos}}
+      <li class="justdos-filter-justdo-item d-flex justify-content-between" data-justdo-id="{{this._id}}">
+        <div class="justdos-filter-justdo-title">
+          {{this.title}}
+        </div>
+        {{#if justdoSelected this}}
+          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
+        {{/if}}
+      </li>
+    {{/each}}
+    </ul>
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="enable-extensions">
+      <label class="form-check-label" for="enable-extensions">
+        Enable extensions enabled in the above justdos
+      </label>
+    </div>
+
+  </div>
+  
+</template>
+
+<template name="merge_justdo_confirm">
+  <div class="merge-justdo-confirm-container">
+    <div>The following justdos will be <b>removed permanently</b> and merged into the current justdo:</div>
+    <ul>
+      {{#each justdos}}
+        <li>{{this.title}}</li>
+      {{/each}}
+    </ul>
+    <div>You won't be able to recover this.</div>
+    <form class="form-inline">
+      <input class="confirm-merge-box form-control" type="text" placeholder="Type 'Confirm' here to confirm merge">
+      {{#if allowConfirm}}
+        <button class="confirm-merge-button btn btn-primary">Confirm</button>
+      {{else}}
+        <button class="confirm-merge-button btn btn-secondary" disabled>Confirm</button>
+      {{/if}}
+    </form>
+</div>
+</template>

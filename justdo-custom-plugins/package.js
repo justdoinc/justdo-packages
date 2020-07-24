@@ -93,6 +93,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/core-custom-plugins/start-date-end-date-readonly-non-admins.coffee", client);
 
   api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-client.coffee", client);
+  api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-templates.html", client);
+  api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-templates.coffee", client);
+  api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-templates.sass", client);
   api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-server.coffee", server);
 
   api.export("JustdoCustomPlugins", both);

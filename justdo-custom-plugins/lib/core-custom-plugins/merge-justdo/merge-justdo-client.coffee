@@ -14,23 +14,14 @@ APP.justdo_custom_plugins.installCustomPlugin
   calculated_duration_field_label: "Duration"
 
   installer: ->
-    # Add a button FOR ADMINS ONLY next to the Cog icon -> Merge JustDos simple dialog
-    # that allows the user to choose one of the APP.collections.Projects.find() justdos
-    # to merge to.
-    #
-    # A button MERGE , must ensure with alert the user want to proceed
-    #
-    # Once the method returns take the user to the new JustDo.
-    #
-    # Remove the old one by calling:
-    # Meteor.call "removeProject", old_justdo_id, (err) ->
-    #   cb(err)
-    #   return
+    JD.registerPlaceholderItem "merge-justdo", 
+      domain: "settings-dropdown-bottom"
+      listingCondition: -> JD.active_justdo.isAdmin()
+      data:
+        template: "merge_justdo_cog_button"
 
     return
 
   destroyer: ->
-    # Remember to write proper destroyer
-
-
+    JD.unregisterPlaceholderItem "merge-justdo"
     return
