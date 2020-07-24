@@ -71,12 +71,6 @@ APP.executeAfterAppLibCode ->
 
         return
 
-      # New task should derive priority from current task,
-      # if current task has priority
-      current_task_obj = gc.getCurrentPathObj()
-      if (priority = current_task_obj?.priority)?
-        new_task_custom_fields.priority = priority
-
       gridControl().addSiblingItem(new_task_custom_fields)
 
     prereq: ->
