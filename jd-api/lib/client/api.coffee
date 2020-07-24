@@ -23,6 +23,20 @@ _.extend JD,
     # Normalize non-existence result to 'undefined'
     return undefined
 
+  subscribeItemsAugmentedFields: (items_ids_array, fetched_fields_arr, options, cb) ->
+    return APP.projects.subscribeTasksAugmentedFields(items_ids_array, fetched_fields_arr, options, cb)
+
+  subscribeActiveItemAugmentedFields: (fetched_fields_arr, cb) ->
+    return APP.projects.subscribeActiveTaskAugmentedFields(fetched_fields_arr, cb)
+
+  activeItemAugmentedFields: (fields) ->
+    if not (active_item_id = JD.activeItemId())?
+      return undefined
+
+    return APP.collections.TasksAugmentedFields.findOne(active_item_id, {fields: fields})
+
+  activeItemUsers: -> JD.activeItemAugmentedFields({users: 1})?.users or []
+
   activePath: ->
     if (active_path = APP.modules?.project_page?.activeItemPath())?
       return active_path
