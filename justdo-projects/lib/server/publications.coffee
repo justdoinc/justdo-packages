@@ -59,6 +59,8 @@ _.extend Projects.prototype,
   _setupUnmergedUserProjectsTasksPublication: ->
     self = @
 
+    @_grid_data_com.setupTasksAugmentedFieldsPublication()
+
     @_grid_data_com.setupGridPublication
       name: GridDataCom.helpers.getCollectionUnmergedPubSubName(self.items_collection)
       unmerged_pub: true
