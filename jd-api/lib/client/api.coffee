@@ -13,6 +13,9 @@ _.extend JD,
 
       return cur_proj.isAdmin()
 
+  activeItemId: ->
+    return APP.modules.project_page.activeItemId()
+
   activeItem: (fields) ->
     if (active_obj = APP.modules?.project_page?.activeItemObj(fields))?
       return active_obj
