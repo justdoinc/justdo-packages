@@ -108,6 +108,9 @@ _.extend TasksChangelogManager.prototype,
       ret_val += " decreased the task's priority (to #{activity_obj.new_value})."
       return ret_val
 
+    if activity_obj.change_type == "custom"
+      return "#{performer_name} #{activity_obj.new_value}"
+
     if activity_obj.field == "owner_id"
       if (user = JustdoHelpers.getUsersDocsByIds activity_obj.new_value)?
         return "#{JustdoHelpers.displayName(user)} became the task owner."

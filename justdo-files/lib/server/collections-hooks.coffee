@@ -21,7 +21,7 @@ _.extend JustdoFiles.prototype,
         change_type: "custom"
         task_id: file_doc.meta.task_id
         by: file_doc.userId
-        message: "uploaded file - #{file_doc.name}"
+        new_value: "uploaded file - #{file_doc.name}"
     
     self.tasks_files.collection.after.update (userId, file_doc, fieldNames, modifier, options) ->
       if (new_filename = modifier.$set?.name)?
@@ -31,7 +31,7 @@ _.extend JustdoFiles.prototype,
           change_type: "custom"
           task_id: file_doc.meta.task_id
           by: file_doc.userId
-          message: "rename a file to #{new_filename}"
+          new_value: "rename a file to #{new_filename}"
     
     self.tasks_files.collection.after.remove (user_id, file_doc) ->
       APP.tasks_changelog_manager.logChange
@@ -40,6 +40,6 @@ _.extend JustdoFiles.prototype,
         change_type: "custom"
         task_id: file_doc.meta.task_id
         by: file_doc.userId
-        message: "removed file - #{file_doc.name}"
+        new_value: "removed file - #{file_doc.name}"
     
     return

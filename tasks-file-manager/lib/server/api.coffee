@@ -100,7 +100,7 @@ _.extend TasksFileManager.prototype,
         change_type: "custom"
         task_id: task_id
         by: user_id
-        message: "uploaded a new file - #{file.title}"
+        new_value: "uploaded a new file - #{file.title}"
 
     return files_to_upload
 
@@ -449,7 +449,7 @@ _.extend TasksFileManager.prototype,
       change_type: "custom"
       task_id: task_id
       by: user_id
-      message: "renamed a file to #{new_title}"
+      new_value: "renamed a file to #{new_title}"
 
   # INTERNAL ONLY
   # Sets metadata on a file
@@ -485,7 +485,7 @@ _.extend TasksFileManager.prototype,
       change_type: "custom"
       task_id: task_id
       by: user_id
-      message: "removed file #{file.title}"
+      new_value: "removed file #{file.title}"
 
   destroy: ->
     if @destroyed
