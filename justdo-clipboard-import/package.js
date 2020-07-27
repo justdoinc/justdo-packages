@@ -15,6 +15,8 @@ Package.onUse(function (api) {
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("mongo", both);
+  api.use('peerlibrary:async@1.5.2_1', server);
+
 
   // Uncomment if you want to use NPM peer dependencies using
   // checkNpmVersions.

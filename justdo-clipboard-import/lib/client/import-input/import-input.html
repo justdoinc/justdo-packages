@@ -18,6 +18,8 @@
                   {{#each getAvailableFieldTypesArray}}
                     <li><a href="#" class="dropdown-item px-1 small" field-id="{{_id}}">{{label}}</a></li>
                   {{/each}}
+                  <div class="dropdown-divider"></div>
+                  <li><a href="#" class="dropdown-item px-1 small" field-id="task-indent-level">Indent Level</a></li>
                   {{#if isAdmin}}
                     <div class="dropdown-divider"></div>
                     <li><a href="#" class="dropdown-item px-1 small manage-columns"><svg class="jd-icon-custom-field" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg> Manage Columns</a></li>

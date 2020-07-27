@@ -72,7 +72,13 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   number_of_columns = cp_data[0].length
   project_id = JD.activeJustdo()._id
   line_number = 0
+  max_indent = -1
+  last_indent = 0
   tasks = []
+  lines_to_add = {}   # line_index:
+                      #   task: task
+                      #   indent_level: indent level
+  
   row_index = 0
   for row in cp_data
     task = {}
@@ -85,12 +91,17 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     task.project_id = project_id
     if not modal_data.rows_to_skip_set.get().has("#{row_index}")
+      indent_level = 1
       for column_num in [0..(number_of_columns - 1)]
         cell_val = row[column_num].trim()
         field_def = selected_columns_definitions[column_num]
         field_id = field_def._id
-
-        if cell_val.length > 0 and field_id != "clipboard-import-no-import"
+  
+        if cell_val.length > 0 and field_id == "task-indent-level"
+          indent_level = parseInt cell_val, 10
+          
+          
+        else if cell_val.length > 0 and field_id != "clipboard-import-no-import" and field_id != "task-indent-level"
           if field_def.type is String
             #dealing with options fields
             if field_def.grid_column_formatter == "keyValueFormatter"
@@ -142,39 +153,97 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
               return false
             task[field_id] = moment_date.format("YYYY-MM-DD")
       tasks.push task
+      
+      if max_indent < indent_level
+        max_indent = indent_level
+      if indent_level > last_indent + 1 or (last_indent == -1 and indent_level != 1) # Indent can't jump more than 1 indent level at once
+                                                                                    # and can't start with anything but 1
+        JustdoSnackbar.show
+          text: "Invalid indentation at line #{line_number} - inconsistent indentation."
+          duration: 15000
+        return false
+      last_indent = indent_level
+      lines_to_add[row_index] =
+        task: task
+        indent_level: indent_level
+        
     row_index += 1
 
   gc = APP.modules.project_page.mainGridControl()
-  gc._grid_data.bulkAddChild "/" + modal_data.parent_task_id + "/", tasks, (err, results) ->
+  
+  importLevel = (indent_level_to_import, mapSeriesCb) ->
+    parent_id = modal_data.parent_task_id
+    batches = {}  # parent_id: [tasks]
+    for line_index, line of lines_to_add
+      if line.indent_level == indent_level_to_import - 1
+        parent_id = line.task_id
+        
+      if line.indent_level == indent_level_to_import
+        if not batches[parent_id]?
+          batches[parent_id] = []
+        batches[parent_id].push line.task
+
+    async_calls = []
+    for parent_id, batch of batches
+      do (parent_id, batch) ->
+        async_calls.push (callback) ->
+          gc._grid_data.bulkAddChild "/" + parent_id + "/", batch, callback
+          return
+        return
+        
+    
+    async.parallelLimit async_calls, 5, (err, results) ->
+      result_num = 0
+      all_results = []
+      for batch_result in results
+        for item in batch_result
+          all_results.push item[0]
+          
+      for index,line of lines_to_add
+        if line.indent_level == indent_level_to_import
+          line.task_id = all_results[result_num]
+          result_num += 1
+      
+      mapSeriesCb(err, results)
+      return
+    
+    return
+  
+  async.mapSeries [1..max_indent], (n, callback) ->
+    importLevel(n, callback)
+  , (err, results) ->
+  
     if err?
       JustdoSnackbar.show
         text: "#{err}. Import aborted."
         duration: 15000
-
       return false
-
+  
     # No error
+    paths = []
+    for level in results
+      for batch in level
+        for item in batch
+          paths.unshift item[1]   # unshift is necessary. Regular push weill fail the operation as we need to start removing
+                                  # from the deepest level.
     JustdoSnackbar.show
-      text: "#{results.length} task(s) imported."
+      text: "#{paths.length} task(s) imported."
       duration: 10000
       actionText: "Undo"
       onActionClick: =>
-        paths = []
-        for result in results
-          paths.push result[1]
         gc._grid_data.bulkRemoveParents paths, (err)->
           if err
             JustdoSnackbar.show
               text: "#{err}."
               duration: 15000
           return
-
+      
         JustdoSnackbar.close()
-        return
-
+        return # end of onActionClick
+    return # end of mapSeries call back
+ 
   return true
-
-
+  
 Template.justdo_clipboard_import_activation_icon.events
   "click .justdo-clipboard-import-activation": (e, tpl)->
     # Check to see if there is a task selected
