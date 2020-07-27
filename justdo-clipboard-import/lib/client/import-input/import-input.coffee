@@ -23,10 +23,13 @@ bindTargetToPaste = (tpl)->
           cell = cell.replace /<br\/?>/g, "\n"
           cell = cell.replace /&quot;/g , '"'
           cell = cell.replace /&#39;/g, "'"
+          cell = cell.replace /&nbsp;/g, " "
+          # catch all html tags
+          cell = cell.replace /<[^>]+>/g, ""
+          # cell = cell.replace(/<span[^\x05]+style=['"]mso-spacerun:yes['"]>[^\x05]+<\/span>/g, "")
+  
           cell = cell.replace /&lt;/g, "<"
           cell = cell.replace /&gt;/g, ">"
-          cell = cell.replace(/<span[^\x05]+style=['"]mso-spacerun:yes['"]>[^\x05]+<\/span>/g, "")
-          cell = cell.replace /&nbsp;/g, " "
 
           cells.push cell
           if cell.trim().length > 0
