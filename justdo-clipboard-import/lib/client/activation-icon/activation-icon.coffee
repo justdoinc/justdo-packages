@@ -248,12 +248,17 @@ Template.justdo_clipboard_import_activation_icon.events
                 break
 
             if date_column_found and not modal_data.date_fields_date_format.get()?
+              options = _.map(getAllowedDateFormats(), (format) -> {text: format, value: format})
+              options.push
+                text: "DD MMMM YYYY"
+                value: "DD MMMM YYYY"
+                
               bootbox.prompt
                 title: "Please select dates format"
                 animate: true
                 className: "bootbox-new-design"
                 inputType: "select"
-                inputOptions: _.map(getAllowedDateFormats(), (format) -> {text: format, value: format})
+                inputOptions: options
                 value: getDefaultDateFormat()
                 callback: (date_format) ->
                   modal_data.date_fields_date_format.set(date_format)
