@@ -83,11 +83,15 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/app-integration.coffee", both);
   // // Note: app-integration need to load last, so immediateInit procedures in
   // // the server will have the access to the apis loaded after the init.coffee
-  // // file. 
+  // // file.
 
   api.addFiles("lib/core-system-updates/new-priority-style/new-priority-style.sass", client);
   api.addFiles("lib/core-system-updates/new-priority-style/new-priority-style.html", client);
   api.addFiles("lib/core-system-updates/new-priority-style/new-priority-style.coffee", both);
+
+  api.addFiles("lib/core-system-updates/v3-54-0/v3-54-0.sass", client);
+  api.addFiles("lib/core-system-updates/v3-54-0/v3-54-0.html", client);
+  api.addFiles("lib/core-system-updates/v3-54-0/v3-54-0.coffee", both);
 
   api.export("JustdoSystemUpdates", both);
 });
