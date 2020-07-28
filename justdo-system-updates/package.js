@@ -89,9 +89,15 @@ Package.onUse(function (api) {
   api.addFiles("lib/core-system-updates/new-priority-style/new-priority-style.html", client);
   api.addFiles("lib/core-system-updates/new-priority-style/new-priority-style.coffee", both);
 
+  // v3_54_0
   api.addFiles("lib/core-system-updates/v3-54-0/v3-54-0.sass", client);
   api.addFiles("lib/core-system-updates/v3-54-0/v3-54-0.html", client);
   api.addFiles("lib/core-system-updates/v3-54-0/v3-54-0.coffee", both);
+  api.addAssets("lib/core-system-updates/v3-54-0/media/media_1.png", client);
+  api.addAssets("lib/core-system-updates/v3-54-0/media/media_2.png", client);
+  api.addAssets("lib/core-system-updates/v3-54-0/media/media_3.gif", client);
+  api.addAssets("lib/core-system-updates/v3-54-0/media/media_4.gif", client);
+
 
   api.export("JustdoSystemUpdates", both);
 });
