@@ -209,6 +209,7 @@ _.extend JustdoTasksContextMenu.prototype,
       .addClass("show")
       .find(".dropdown-menu")
       .addClass("show")
+      .find(".show-fix").removeClass "show-fix" # "Show-fix" class is coming from tasks_context_menu and help to avoid to close dropdown submenu on mouseleave
 
     @$getNode().position(jquery_ui_position_obj)
 
@@ -216,9 +217,6 @@ _.extend JustdoTasksContextMenu.prototype,
 
   hide: ->
     @$getNode().removeClass("show").find(".dropdown-menu").removeClass("show")
-
-    # "Show-fix" class is coming from tasks_context_menu and help to avoid to close dropdown submenu on mouseleave
-    @$getNode().find(".show-fix").removeClass "show-fix"
 
     return
 
