@@ -156,7 +156,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       
       if max_indent < indent_level
         max_indent = indent_level
-      if indent_level > last_indent + 1 or (last_indent == -1 and indent_level != 1) # Indent can't jump more than 1 indent level at once
+      if indent_level > last_indent + 1 or indent_level <= 0 or (last_indent == -1 and indent_level != 1) # Indent can't jump more than 1 indent level at once
                                                                                     # and can't start with anything but 1
         JustdoSnackbar.show
           text: "Invalid indentation at line #{line_number} - inconsistent indentation."
