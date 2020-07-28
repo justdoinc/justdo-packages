@@ -170,7 +170,8 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     row_index += 1
 
   gc = APP.modules.project_page.mainGridControl()
-  
+  task_paths_added = []
+
   importLevel = (indent_level_to_import, mapSeriesCb) ->
     parent_id = modal_data.parent_task_id
     batches = {}  # parent_id: [tasks]
@@ -184,60 +185,64 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         batches[parent_id].push line.task
 
     async_calls = []
+    
     for parent_id, batch of batches
       do (parent_id, batch) ->
         async_calls.push (callback) ->
-          gc._grid_data.bulkAddChild "/" + parent_id + "/", batch, callback
+          gc._grid_data.bulkAddChild "/" + parent_id + "/", batch, (err, result) ->
+            if not err?
+              # For undo if failure
+              for item in result
+                task_paths_added.unshift item[1] # item[1] is the path of added task
+            callback err, result
           return
         return
         
     
     async.parallelLimit async_calls, 5, (err, results) ->
-      result_num = 0
-      all_results = []
-      for batch_result in results
-        for item in batch_result
-          all_results.push item[0]
-          
-      for index,line of lines_to_add
-        if line.indent_level == indent_level_to_import
-          line.task_id = all_results[result_num]
-          result_num += 1
+      if not err?
+        result_num = 0
+        all_results = []
+        for batch_result in results
+          for item in batch_result
+            all_results.push item[0]
+            
+        for index,line of lines_to_add
+          if line.indent_level == indent_level_to_import
+            line.task_id = all_results[result_num]
+            result_num += 1
       
       mapSeriesCb(err, results)
       return
     
     return
   
+  undoImport = () ->
+    gc._grid_data.bulkRemoveParents task_paths_added, (err)->
+      if err
+        JustdoSnackbar.show
+          text: "#{err}."
+          duration: 15000
+      return
+
   async.mapSeries [1..max_indent], (n, callback) ->
     importLevel(n, callback)
   , (err, results) ->
-  
     if err?
       JustdoSnackbar.show
         text: "#{err}. Import aborted."
         duration: 15000
+      
+      undoImport()
+
       return false
-  
-    # No error
-    paths = []
-    for level in results
-      for batch in level
-        for item in batch
-          paths.unshift item[1]   # unshift is necessary. Regular push weill fail the operation as we need to start removing
-                                  # from the deepest level.
+
     JustdoSnackbar.show
-      text: "#{paths.length} task(s) imported."
+      text: "#{task_paths_added.length} task(s) imported."
       duration: 10000
       actionText: "Undo"
       onActionClick: =>
-        gc._grid_data.bulkRemoveParents paths, (err)->
-          if err
-            JustdoSnackbar.show
-              text: "#{err}."
-              duration: 15000
-          return
-      
+        undoImport()
         JustdoSnackbar.close()
         return # end of onActionClick
     return # end of mapSeries call back
