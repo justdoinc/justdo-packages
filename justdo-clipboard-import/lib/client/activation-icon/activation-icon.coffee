@@ -9,6 +9,7 @@ base_supported_fields_ids = [
 ]
 
 fallback_date_format = "YYYY-MM-DD"
+custom_allowed_dates_formats = ["DD MMMM YYYY"]
 
 getAllowedDateFormats = ->
   return Meteor.users.simpleSchema()?.schema()?["profile.date_format"]?.allowedValues or [fallback_date_format]
@@ -75,9 +76,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   max_indent = -1
   last_indent = 0
   tasks = []
-  lines_to_add = {}   # line_index:
-                      #   task: task
-                      #   indent_level: indent level
+  lines_to_add = {} # line_index:
+                    #   task: task
+                    #   indent_level: indent level
   
   row_index = 0
   for row in cp_data
@@ -156,12 +157,15 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       
       if max_indent < indent_level
         max_indent = indent_level
-      if indent_level > last_indent + 1 or indent_level <= 0 or (last_indent == -1 and indent_level != 1) # Indent can't jump more than 1 indent level at once
-                                                                                    # and can't start with anything but 1
+
+      # Indent can't jump more than 1 indent level at once
+      # and can't start with anything but 1
+      if indent_level > last_indent + 1 or indent_level <= 0 or (last_indent == -1 and indent_level != 1)
         JustdoSnackbar.show
           text: "Invalid indentation at line #{line_number} - inconsistent indentation."
           duration: 15000
         return false
+
       last_indent = indent_level
       lines_to_add[row_index] =
         task: task
@@ -207,7 +211,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
           for item in batch_result
             all_results.push item[0]
             
-        for index,line of lines_to_add
+        for index, line of lines_to_add
           if line.indent_level == indent_level_to_import
             line.task_id = all_results[result_num]
             result_num += 1
@@ -217,12 +221,13 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     
     return
   
-  undoImport = () ->
-    gc._grid_data.bulkRemoveParents task_paths_added, (err)->
-      if err
+  undoImport = ->
+    gc._grid_data.bulkRemoveParents task_paths_added, (err) ->
+      if err?
         JustdoSnackbar.show
           text: "#{err}."
           duration: 15000
+
       return
 
   async.mapSeries [1..max_indent], (n, callback) ->
@@ -245,6 +250,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         undoImport()
         JustdoSnackbar.close()
         return # end of onActionClick
+
     return # end of mapSeries call back
  
   return true
@@ -322,11 +328,8 @@ Template.justdo_clipboard_import_activation_icon.events
                 break
 
             if date_column_found and not modal_data.date_fields_date_format.get()?
-              options = _.map(getAllowedDateFormats(), (format) -> {text: format, value: format})
-              options.push
-                text: "DD MMMM YYYY"
-                value: "DD MMMM YYYY"
-                
+              options = _.map(getAllowedDateFormats().concat(custom_allowed_dates_formats), (format) -> {text: format, value: format}).concat()
+
               bootbox.prompt
                 title: "Please select dates format"
                 animate: true
