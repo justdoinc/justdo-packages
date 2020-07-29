@@ -68,7 +68,6 @@ Meteor.methods
       update:
         $inc: 
           lastTaskSeqId: tasks_count
-      new: true
 
     lastTaskSeqId = result.value.lastTaskSeqId - tasks_count + 1
     seqIds_map = {}
