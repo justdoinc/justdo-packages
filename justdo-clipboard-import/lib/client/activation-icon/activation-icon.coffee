@@ -75,7 +75,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   line_number = 0
   max_indent = -1
   last_indent = 0
-  tasks = []
   lines_to_add = {} # line_index:
                     #   task: task
                     #   indent_level: indent level
@@ -153,8 +152,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
                 text: "Invalid date format in line #{line_number}. Import aborted."
               return false
             task[field_id] = moment_date.format("YYYY-MM-DD")
-      tasks.push task
-      
+            
       if max_indent < indent_level
         max_indent = indent_level
 
