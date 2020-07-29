@@ -41,14 +41,14 @@ Meteor.methods
       @userId
     )
 
-    nTasks = APP.collections.Tasks.find
+    tasks_count = APP.collections.Tasks.find
       project_id: src_justdo._id
     ,
       fields:
         _id: 1
     .count()
 
-    # if nTasks == 0
+    # if tasks_count == 0
     #   # Source justdo is an empty justdo
     #   bulk_write_ops.push
     #     updateOne:
@@ -67,10 +67,10 @@ Meteor.methods
         lastTaskSeqId: 1
       update:
         $inc: 
-          lastTaskSeqId: nTasks
+          lastTaskSeqId: tasks_count
       new: true
 
-    lastTaskSeqId = result.value.lastTaskSeqId - nTasks + 1
+    lastTaskSeqId = result.value.lastTaskSeqId - tasks_count + 1
     seqIds_map = {}
     tasks_with_dependencies = []
     root_order = 0
