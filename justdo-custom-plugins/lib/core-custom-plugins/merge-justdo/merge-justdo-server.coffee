@@ -143,6 +143,8 @@ Meteor.methods
             ,
               $set:
                 project_id: target_justdo_id
+        
+        return
       
       updateRawUpdatedDateInCollections = (collections) ->
         for collection in collections
@@ -152,6 +154,8 @@ Meteor.methods
             ,
               $currentDate:
                 _raw_updated_date: true
+        
+        return
 
       updateJustdoIdInCollections [
         APP.collections.RpTasksResources,
