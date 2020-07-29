@@ -75,7 +75,9 @@ getSelectedColumnsDefinitions = ->
 
   if duplicated_field_id?
     col_def = available_field_types?[0]?[duplicated_field_id]
-    return if col_def? then col_def.label else duplicated_field_id
+    return 
+      err: "duplicated-field"
+      duplicated_field: if col_def? then col_def.label else duplicated_field_id
 
   return selected_columns_definitions
 
@@ -233,8 +235,8 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   
   undoImport = ->
     # task_paths_added is reversed as we need to remove the tasks in the deepest level first
-    reverse_task_paths_added = task_paths_added.reverse() # Can't find underscore equivelent, using .reverse() here
-    gc._grid_data.bulkRemoveParents reverse_task_paths_added, (err) ->
+    task_paths_added.reverse() # Can't find underscore equivelent, using .reverse() here
+    gc._grid_data.bulkRemoveParents task_paths_added, (err) ->
       if err?
         JustdoSnackbar.show
           text: "#{err}."
@@ -326,9 +328,9 @@ Template.justdo_clipboard_import_activation_icon.events
 
             result = getSelectedColumnsDefinitions()
 
-            if typeof result == "string" 
+            if result.err == "duplicated-field"
               JustdoSnackbar.show
-                text: "More than 1 column is selected as #{result}"
+                text: "More than 1 column is selected as #{result.duplicated_field}"
               return false
             
             selected_columns_definitions = result
