@@ -197,7 +197,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             if not err?
               # For undo if failure
               for item in result
-                task_paths_added.unshift item[1] # item[1] is the path of added task
+                task_paths_added.push item[1] # item[1] is the path of added task
             callback err, result
           return
         return
@@ -222,7 +222,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     return
   
   undoImport = ->
-    gc._grid_data.bulkRemoveParents task_paths_added, (err) ->
+    # task_paths_added is reversed as we need to remove the tasks in the deepest level first
+    reverse_task_paths_added = task_paths_added.reverse() # Can't find underscore equivelent, using .reverse() here
+    gc._grid_data.bulkRemoveParents reverse_task_paths_added, (err) ->
       if err?
         JustdoSnackbar.show
           text: "#{err}."
