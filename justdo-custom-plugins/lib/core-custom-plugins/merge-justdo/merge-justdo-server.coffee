@@ -43,6 +43,8 @@ Meteor.methods
 
     tasks_count = APP.collections.Tasks.find
       project_id: src_justdo._id
+      _raw_removed_date:
+        $exists: false
     ,
       fields:
         _id: 1
@@ -97,6 +99,8 @@ Meteor.methods
 
     tasks = APP.collections.Tasks.find
       project_id: src_justdo._id
+      _raw_removed_date:
+        $exists: false
     ,
       fields:
         _id: 1
