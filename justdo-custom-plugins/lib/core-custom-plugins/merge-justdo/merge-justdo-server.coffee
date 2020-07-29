@@ -132,8 +132,7 @@ Meteor.methods
       return
 
     if bulk_write_ops.length > 0
-      APP.collections.Tasks.rawCollection().bulkWrite bulk_write_ops,
-        ordered: true
+      APP.collections.Tasks.rawCollection().bulkWrite bulk_write_ops
 
       updateJustdoIdInCollections = (collections) ->
         for collection in collections
