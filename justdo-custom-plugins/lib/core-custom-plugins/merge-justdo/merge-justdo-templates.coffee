@@ -38,21 +38,18 @@ Template.merge_justdo_dialog.onCreated ->
   tpl = @
 
   tpl.justdos_filter_text_rev = new ReactiveVar ""
-  tpl.justdos_selected_rev = new ReactiveDict()
+  tpl.justdo_selected_rev = new ReactiveVar null
 
   tpl.confirmMerge = ->
-    selected_justdo_ids = []
-    for justdo_id, is_selected of tpl.justdos_selected_rev.all()
-      if is_selected
-        selected_justdo_ids.push justdo_id
-
-    if selected_justdo_ids.length == 0
-      alert "Please select at least one justdo to be merged."
+    justdo_selected = tpl.justdo_selected_rev.get()
+    
+    if not justdo_selected?
+      alert "Please select a justdo to be merged."
       return false
       
     merge_justdo_confirm_tpl =
       JustdoHelpers.renderTemplateInNewNode Template.merge_justdo_confirm, 
-        justdo_ids: selected_justdo_ids
+        target_justdo_id: justdo_selected
         enable_extensions: tpl.$("#enable-extensions").prop "checked"
 
     bootbox.dialog
@@ -93,10 +90,10 @@ Template.merge_justdo_dialog.helpers
         title: 1
     .fetch()
 
-    return JustdoHelpers.filterJustosDocsArray justdos, Template.instance().justdos_filter_text_rev.get()
+    return JustdoHelpers.filterJustdosDocsArray justdos, Template.instance().justdos_filter_text_rev.get()
     
   justdoSelected: (justdo) ->
-    return Template.instance().justdos_selected_rev.get(justdo._id) == true
+    return Template.instance().justdo_selected_rev.get() == justdo._id
 
 Template.merge_justdo_dialog.events
   "keyup .justdos-selector-search": (e, tpl) ->
@@ -105,8 +102,7 @@ Template.merge_justdo_dialog.events
   
   "click .justdos-filter-justdo-item": (e, tpl) ->
     justdo_id = $(e.currentTarget).data "justdo-id"
-    justdo_selected = Template.instance().justdos_selected_rev.get(justdo_id) == true
-    tpl.justdos_selected_rev.set justdo_id, !justdo_selected
+    tpl.justdo_selected_rev.set justdo_id
 
     return true
 
@@ -116,14 +112,13 @@ Template.merge_justdo_confirm.onCreated ->
   tpl.is_merging_rev = new ReactiveVar false
 
   tpl.autorun ->
-    tpl.data.justdos = APP.collections.Projects.find
+    tpl.data.target_justdo = APP.collections.Projects.findOne
       _id:
-        $in: tpl.data.justdo_ids
+        tpl.data.target_justdo_id
     ,
       fields:
         _id: 1
         title: 1
-    .fetch()
   
   return
 
@@ -148,22 +143,18 @@ Template.merge_justdo_confirm.events
   
   "click .confirm-merge-button": (e, tpl) ->
     tpl.is_merging_rev.set true
-    Meteor.call "jdCustomMergeJustdo", tpl.data.justdo_ids, JD.activeJustdo()._id, (err, result) ->
+    src_justdo_id = JD.activeJustdo()._id
+    Meteor.call "jdCustomMergeJustdo", tpl.data.target_justdo_id, src_justdo_id, (err, container_task_id) ->
       if err?
         alert "Merge failed!"
         console.error err
         return
+      
+      window.location.href = "/p/#{tpl.data.target_justdo_id}#&t=main&p=/#{container_task_id}/"
+      
+      bootbox.hideAll()
 
-      Meteor.call "removeJustdos", tpl.data.justdo_ids, (err) ->
-        if err? 
-          alert "Merge failed!"
-          cosnole.error err
-          return
-
-        tpl.is_merging_rev.set false
-        bootbox.hideAll()
-
-        return
+      Meteor.call "removeProject", src_justdo_id
 
     return false
     

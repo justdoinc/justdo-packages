@@ -37,12 +37,7 @@
 
 <template name="merge_justdo_confirm">
   <div class="merge-justdo-confirm-container">
-    <div>The following justdos will be <b>removed permanently</b> and merged into the current justdo:</div>
-    <ul>
-      {{#each justdos}}
-        <li>{{this.title}}</li>
-      {{/each}}
-    </ul>
+    <div>The current justdo will be <b>removed permanently</b> and merged into "{{target_justdo.title}}".</div>
     <div>You won't be able to recover this.</div>
     <form class="form-inline">
       <input class="confirm-merge-box form-control" type="text" placeholder="Type 'Confirm' here to confirm merge">

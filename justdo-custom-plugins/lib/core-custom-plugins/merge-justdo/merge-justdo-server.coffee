@@ -1,17 +1,12 @@
 Meteor.methods
-  "jdCustomMergeJustdo": (source_justdo_ids, target_justdo_id) ->
-    check source_justdo_ids, [String]
+  "jdCustomMergeJustdo": (target_justdo_id, source_justdo_id) ->
+    check source_justdo_id, String
     check target_justdo_id, String
 
-    if source_justdo_ids.length == 0
-      throw new Error "source_justdo_ids-must-not-be-empty"
-
-    if target_justdo_id in source_justdo_ids
+    if target_justdo_id == source_justdo_id
       throw new Error "cannot-merge-self"
     
-    source_justdos = APP.collections.Projects.find
-      _id:
-        $in: source_justdo_ids
+    source_justdo = APP.collections.Projects.findOne source_justdo_id,
       members:
         $elemMatch:
           user_id: @userId
@@ -20,7 +15,6 @@ Meteor.methods
       fields:
         _id: 1
         title: 1
-    .fetch()
 
     target_justdo = APP.collections.Projects.findOne target_justdo_id,
       members:
@@ -32,114 +26,114 @@ Meteor.methods
         lastTaskSeqId: 1
     
     # Check if user is admin of all justdos
-    if not target_justdo? or source_justdos.length != source_justdo_ids.length
+    if not target_justdo? or not source_justdo?
       throw new Error "justdos-not-found"
     
     bulk_write_ops = []
 
-    for src_justdo in source_justdos
-      container_task_id = APP.projects._grid_data_com.addChild(
-        "/"
-      ,
-        project_id: target_justdo_id
-        title: "Merged from #{src_justdo.title}"
-      ,
-        @userId
-      )
+    src_justdo = source_justdo
+    container_task_id = APP.projects._grid_data_com.addChild(
+      "/"
+    ,
+      project_id: target_justdo_id
+      title: "Merged from #{src_justdo.title}"
+    ,
+      @userId
+    )
 
-      nTasks = APP.collections.Tasks.find
-        project_id: src_justdo._id
-      ,
-        fields:
-          _id: 1
-      .count()
+    nTasks = APP.collections.Tasks.find
+      project_id: src_justdo._id
+    ,
+      fields:
+        _id: 1
+    .count()
 
-      if nTasks == 0
-        # Source justdo is an empty justdo
-        bulk_write_ops.push
-          updateOne:
-            filter:
-              _id: container_task_id
-            update:
-              $set:
-                title: "Merged from #{src_justdo.title} (Empty)"
+    # if nTasks == 0
+    #   # Source justdo is an empty justdo
+    #   bulk_write_ops.push
+    #     updateOne:
+    #       filter:
+    #         _id: container_task_id
+    #       update:
+    #         $set:
+    #           title: "Merged from #{src_justdo.title} (Empty)"
 
-        continue
+    #   continue
 
-      result = APP.collections.Projects.findAndModify
-        query:
-          _id: target_justdo_id
-        fields:
-          lastTaskSeqId: 1
-        update:
-          $inc: 
-            lastTaskSeqId: nTasks
-        new: true
+    result = APP.collections.Projects.findAndModify
+      query:
+        _id: target_justdo_id
+      fields:
+        lastTaskSeqId: 1
+      update:
+        $inc: 
+          lastTaskSeqId: nTasks
+      new: true
 
-      lastTaskSeqId = result.value.lastTaskSeqId - nTasks + 1
-      seqIds_map = {}
-      tasks_with_dependencies = []
-      root_order = 0
+    lastTaskSeqId = result.value.lastTaskSeqId - nTasks + 1
+    seqIds_map = {}
+    tasks_with_dependencies = []
+    root_order = 0
 
-      tasks = APP.collections.Tasks.find
-        project_id: src_justdo._id
-      ,
-        fields:
-          _id: 1
-          seqId: 1
-          parents: 1
-          justdo_task_dependencies: 1
-        sort:
-          seqId: 1
-      .forEach (task) ->
-        seqIds_map[task.seqId] = lastTaskSeqId
-        if task.justdo_task_dependencies?
-          if task.parents?[0]?
-            task.root_order = root_order
-            root_order += 1
-          # The bulk_write_op will be added after all seqId are mapped to a new one
-          tasks_with_dependencies.push task
-          return
-        
-        bulk_write_op =     # Using bulkWrite here because every task will have a different new seqId and justdo_task_dependencies
-          updateOne:
-            filter:
-              _id: task._id
-            update:
-              $set:
-                seqId: seqIds_map[task.seqId]
-                project_id: target_justdo_id
-
+    tasks = APP.collections.Tasks.find
+      project_id: src_justdo._id
+    ,
+      fields:
+        _id: 1
+        seqId: 1
+        parents: 1
+        justdo_task_dependencies: 1
+      sort:
+        seqId: 1
+    .forEach (task) ->
+      seqIds_map[task.seqId] = lastTaskSeqId
+      if task.justdo_task_dependencies?
         if task.parents?[0]?
-          bulk_write_op.updateOne.update.$set["parents.#{container_task_id}"] = 
-            order: root_order
-          bulk_write_op.updateOne.update.$unset = 
-            "parents.0": ""
+          task.root_order = root_order
           root_order += 1
+        # The bulk_write_op will be added after all seqId are mapped to a new one
+        tasks_with_dependencies.push task
+        return
+      
+      bulk_write_op =     # Using bulkWrite here because every task will have a different new seqId and justdo_task_dependencies
+        updateOne:
+          filter:
+            _id: task._id
+          update:
+            $set:
+              seqId: seqIds_map[task.seqId]
+              project_id: target_justdo_id
 
-        bulk_write_ops.push bulk_write_op
+      if task.parents?[0]?
+        bulk_write_op.updateOne.update.$set["parents.#{container_task_id}"] = 
+          order: root_order
+        bulk_write_op.updateOne.update.$unset = 
+          "parents.0": ""
+        root_order += 1
 
-        lastTaskSeqId += 1
+      bulk_write_ops.push bulk_write_op
 
-      _.each tasks_with_dependencies, (task) ->
-        bulk_write_op =     
-          updateOne:
-            filter:
-              _id: task._id
-            update:
-              $set:
-                seqId: seqIds_map[task.seqId]
-                project_id: target_justdo_id
-                justdo_task_dependencies: _.map task.justdo_task_dependencies, (dep_seq_id) ->
-                  return seqIds_map[dep_seq_id]
+      lastTaskSeqId += 1
 
-        if task.root_order?
-          bulk_write_op.updateOne.update.$set["parents.#{container_task_id}"] = 
-            order: task.root_order
-          bulk_write_op.updateOne.update.$unset = 
-            "parents.0": ""
+    _.each tasks_with_dependencies, (task) ->
+      bulk_write_op =     
+        updateOne:
+          filter:
+            _id: task._id
+          update:
+            $set:
+              seqId: seqIds_map[task.seqId]
+              project_id: target_justdo_id
+              justdo_task_dependencies: _.map task.justdo_task_dependencies, (dep_seq_id) ->
+                return seqIds_map[dep_seq_id]
 
-        bulk_write_ops.push bulk_write_op
+      if task.root_order?
+        bulk_write_op.updateOne.update.$set["parents.#{container_task_id}"] = 
+          order: task.root_order
+        bulk_write_op.updateOne.update.$unset = 
+          "parents.0": ""
+
+      bulk_write_ops.push bulk_write_op
 
     if bulk_write_ops.length > 0
       APP.collections.Tasks.rawCollection().bulkWrite bulk_write_ops,
@@ -149,8 +143,7 @@ Meteor.methods
         for collection in collections
           if collection?
             collection.rawCollection().update
-              project_id:
-                $in: source_justdo_ids
+              project_id: source_justdo_id
             ,
               $set:
                 project_id: target_justdo_id
@@ -159,8 +152,7 @@ Meteor.methods
         for collection in collections
           if collection?
             collection.rawCollection().update
-              project_id:
-                $in: source_justdo_ids
+              project_id: source_justdo_id
             ,
               $currentDate:
                 _raw_updated_date: true
@@ -189,4 +181,4 @@ Meteor.methods
       # projects.members
       # video_call_rooms
 
-    return
+    return container_task_id
