@@ -58,12 +58,24 @@ getSelectedColumnsDefinitions = ->
 
   selected_columns_definitions = []
 
+  field_id_existance = {}
+  duplicated_field_id = null
+
   $(".justdo-clipboard-import-input-selector button[value]").each ->
     field_id = $(@).val()
+    
+    if field_id_existance[field_id]?
+      duplicated_field_id = field_id
+    else
+      field_id_existance[field_id] = true
 
     selected_columns_definitions.push(_.extend {}, available_field_types?[0]?[field_id], {_id: field_id})
 
     return
+
+  if duplicated_field_id?
+    col_def = available_field_types?[0]?[duplicated_field_id]
+    return if col_def? then col_def.label else duplicated_field_id
 
   return selected_columns_definitions
 
@@ -152,7 +164,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
                 text: "Invalid date format in line #{line_number}. Import aborted."
               return false
             task[field_id] = moment_date.format("YYYY-MM-DD")
-            
+
       if max_indent < indent_level
         max_indent = indent_level
 
@@ -312,8 +324,15 @@ Template.justdo_clipboard_import_activation_icon.events
             if number_of_columns == 0
               return true
 
-            selected_columns_definitions = getSelectedColumnsDefinitions()
+            result = getSelectedColumnsDefinitions()
 
+            if typeof result == "string" 
+              JustdoSnackbar.show
+                text: "More than 1 column is selected as #{result}"
+              return false
+            
+            selected_columns_definitions = result
+            
             # Check that all columns are selected and return false if not the case
             if selected_columns_definitions.length < (number_of_columns)
               JustdoSnackbar.show
