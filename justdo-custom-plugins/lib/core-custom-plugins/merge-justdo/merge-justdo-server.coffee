@@ -4,7 +4,7 @@ Meteor.methods
     check target_justdo_id, String
 
     if target_justdo_id == source_justdo_id
-      throw new Error "cannot-merge-self"
+      throw new Meteor.Error "cannot-merge-self"
     
     source_justdo = APP.collections.Projects.findOne source_justdo_id,
       members:
@@ -27,7 +27,7 @@ Meteor.methods
     
     # Check if user is admin of all justdos
     if not target_justdo? or not source_justdo?
-      throw new Error "justdos-not-found"
+      throw new Meteor.Error "justdos-not-found"
     
     bulk_write_ops = []
 
