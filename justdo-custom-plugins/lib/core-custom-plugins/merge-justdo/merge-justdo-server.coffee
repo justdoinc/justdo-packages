@@ -69,10 +69,31 @@ Meteor.methods
         $inc: 
           lastTaskSeqId: tasks_count
 
-    lastTaskSeqId = result.value.lastTaskSeqId - tasks_count + 1
+    lastTaskSeqId = result.value.lastTaskSeqId + 1
     seqIds_map = {}
     tasks_with_dependencies = []
     root_order = 0
+
+    craftUpdateOp = (task, task_dependencies) ->
+      update_obj = 
+        $set:
+          seqId: seqIds_map[task.seqId]
+          project_id: target_justdo_id
+      
+      if task.root_order?
+        update_obj.$set["parents.#{container_task_id}"] = 
+          order: task.root_order
+        update_obj.$unset = 
+          "parents.0": ""
+      
+      if task_dependencies?
+        update_obj.$set.justdo_task_dependencies = task_dependencies
+
+      return
+        updateOne:
+          filter:
+            _id: task._id
+          update: update_obj
 
     tasks = APP.collections.Tasks.find
       project_id: src_justdo._id
@@ -86,53 +107,29 @@ Meteor.methods
         seqId: 1
     .forEach (task) ->
       seqIds_map[task.seqId] = lastTaskSeqId
-      if task.justdo_task_dependencies?
-        if task.parents?[0]?
+      lastTaskSeqId += 1
+
+      if task.parents?[0]?
           task.root_order = root_order
           root_order += 1
+
+      if task.justdo_task_dependencies?
         # The bulk_write_op will be added after all seqId are mapped to a new one
         tasks_with_dependencies.push task
         return
-      
-      bulk_write_op =     # Using bulkWrite here because every task will have a different new seqId and justdo_task_dependencies
-        updateOne:
-          filter:
-            _id: task._id
-          update:
-            $set:
-              seqId: seqIds_map[task.seqId]
-              project_id: target_justdo_id
 
-      if task.parents?[0]?
-        bulk_write_op.updateOne.update.$set["parents.#{container_task_id}"] = 
-          order: root_order
-        bulk_write_op.updateOne.update.$unset = 
-          "parents.0": ""
-        root_order += 1
+      bulk_write_ops.push craftUpdateOp(task, root_order)  # Using bulkWrite here because every task will have a different new seqId and justdo_task_dependencies
 
-      bulk_write_ops.push bulk_write_op
-
-      lastTaskSeqId += 1
+      return
 
     _.each tasks_with_dependencies, (task) ->
-      bulk_write_op =     
-        updateOne:
-          filter:
-            _id: task._id
-          update:
-            $set:
-              seqId: seqIds_map[task.seqId]
-              project_id: target_justdo_id
-              justdo_task_dependencies: _.map task.justdo_task_dependencies, (dep_seq_id) ->
-                return seqIds_map[dep_seq_id]
+      update_op = craftUpdateOp task, _.map(task.justdo_task_dependencies, (dep_seq_id) ->
+        return seqIds_map[dep_seq_id]
+      )
+      
+      bulk_write_ops.push update_op
 
-      if task.root_order?
-        bulk_write_op.updateOne.update.$set["parents.#{container_task_id}"] = 
-          order: task.root_order
-        bulk_write_op.updateOne.update.$unset = 
-          "parents.0": ""
-
-      bulk_write_ops.push bulk_write_op
+      return
 
     if bulk_write_ops.length > 0
       APP.collections.Tasks.rawCollection().bulkWrite bulk_write_ops,
