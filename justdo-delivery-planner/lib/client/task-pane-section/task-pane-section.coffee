@@ -909,21 +909,7 @@ APP.executeAfterAppLibCode ->
 
       project_tasks = devPlanner().getKnownProjects(current_project_id, {active_only: true, exclude_tasks: exclude_tasks}, Meteor.userId())
 
-      gc = mainGridControl()
-      grid_data = gc?._grid_data
-
-      # Remove projects that are tasks to which we can't be assigned as a child due to circular
-      # chain.
-      project_tasks = _.filter project_tasks, (task) ->
-        for task_path in grid_data.getAllCollectionItemIdPaths(task._id)
-          reg = new RegExp("/#{active_item_obj._id}/")
-
-          if reg.test(task_path)
-            return false
-
-        return true
-
-      return project_tasks
+      return devPlanner().excludeProjectsCauseCircularChain project_tasks, active_item_obj._id
 
     #
     # Select picker management

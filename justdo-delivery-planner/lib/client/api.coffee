@@ -133,3 +133,22 @@ _.extend JustdoDeliveryPlanner.prototype,
     @tab_switcher_items_builder_comp = null
 
     return
+  
+  excludeProjectsCauseCircularChain: (project_tasks, task_id_to_be_added) ->
+    grid_data = APP.modules.project_page?.mainGridControl()?._grid_data
+
+    if not grid_data? or not task_id_to_be_added?
+      return project_tasks
+
+    # Remove projects that are tasks to which we can't be assigned as a child due to circular
+    # chain.
+    project_tasks = _.filter project_tasks, (task) ->
+      for task_path in grid_data.getAllCollectionItemIdPaths(task._id)
+        reg = new RegExp("/#{task_id_to_be_added}/")
+
+        if reg.test(task_path)
+          return false
+
+      return true
+
+    return project_tasks

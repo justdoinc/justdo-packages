@@ -390,8 +390,10 @@ _.extend JustdoTasksContextMenu.prototype,
             title:
               $regex: new RegExp(JustdoHelpers.escapeRegExp(filter_state), "i")
 
-        return APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdo({_id: 1})?._id, options, Meteor.userId())
+        project_tasks = APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdo({_id: 1})?._id, options, Meteor.userId())
 
+        return APP.justdo_delivery_planner.excludeProjectsCauseCircularChain project_tasks, JD.activeItemId()
+        
       addNewParentToTaskId = (task_id, new_parent_id, cb) ->
         module = APP.modules.project_page
         gc = module.gridControl()
