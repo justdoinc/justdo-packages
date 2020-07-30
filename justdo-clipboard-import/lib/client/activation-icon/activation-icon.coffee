@@ -54,6 +54,13 @@ getAvailableFieldTypes = ->
   return [supported_fields_definitions_object, supported_fields_definitions_array]
 
 getSelectedColumnsDefinitions = ->
+  # This function returns an array of column definitions
+  # If there is an error, it returns {
+  #   err: {
+  #     message: <String>
+  #   }
+  # }
+
   available_field_types = getAvailableFieldTypes()
 
   selected_columns_definitions = []
@@ -75,9 +82,10 @@ getSelectedColumnsDefinitions = ->
 
   if duplicated_field_id?
     col_def = available_field_types?[0]?[duplicated_field_id]
-    return 
-      err: "duplicated-field"
-      duplicated_field: if col_def? then col_def.label else duplicated_field_id
+    ret_val = 
+      err:
+        message: "More than 1 column is selected as #{if col_def? then col_def.label else duplicated_field_id}"
+    return ret_val
 
   return selected_columns_definitions
 
@@ -328,9 +336,9 @@ Template.justdo_clipboard_import_activation_icon.events
 
             result = getSelectedColumnsDefinitions()
 
-            if result.err == "duplicated-field"
+            if (err = result.err)?
               JustdoSnackbar.show
-                text: "More than 1 column is selected as #{result.duplicated_field}"
+                text: err.message
               return false
             
             selected_columns_definitions = result
