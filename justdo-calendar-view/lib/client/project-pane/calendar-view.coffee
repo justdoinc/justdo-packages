@@ -1081,7 +1081,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         while true
           row_is_free = true
           for column_index in [start_day_index..end_day_index]
-            if days_matrix[column_index][row_index]?
+            if days_matrix[column_index]?[row_index]?
               row_is_free = false
           if row_is_free
 
