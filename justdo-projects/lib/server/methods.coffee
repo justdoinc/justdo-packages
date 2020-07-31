@@ -34,13 +34,6 @@ _.extend Projects.prototype,
         check(project_id, String)
 
         projects_object.removeProject project_id, @userId
-      
-      removeJustdos: (justdo_ids) ->
-        check justdo_ids, [String]
-        for justdo_id in justdo_ids
-          projects_object.removeProject justdo_id, @userId
-        
-        return
 
       inviteMember: (project_id, invited_user) ->
         check(project_id, String)
