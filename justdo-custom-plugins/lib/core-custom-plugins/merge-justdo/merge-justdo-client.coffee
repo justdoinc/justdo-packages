@@ -4,14 +4,10 @@ APP.justdo_custom_plugins.installCustomPlugin
   # The following properties should be defined by all custom plugins
   custom_plugin_id: "custom_justdo_merge"
 
-  custom_plugin_readable_name: "Merge JustDos"
+  custom_plugin_readable_name: "Merge JustDo"
 
   show_in_extensions_list: true
-  #
   # / SETTINGS END
-
-  calculated_duration_field_id: "custom:justdo:task_duration"
-  calculated_duration_field_label: "Duration"
 
   installer: ->
     JD.registerPlaceholderItem "merge-justdo", 

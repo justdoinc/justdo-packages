@@ -13,6 +13,14 @@ Template.merge_justdo_cog_button.events
         return true
 
       buttons:
+        close:
+          label: "Cancel"
+
+          className: "btn-default"
+
+          callback: ->
+            return true
+
         merge:
           label: """
             <svg class="jd-icon-dropdown text-secondary">
@@ -26,13 +34,7 @@ Template.merge_justdo_cog_button.events
           callback: =>
             return merge_justdo_dialog_tpl.template_instance.confirmMerge()
 
-        close:
-          label: "Close"
-
-          className: "btn-primary"
-
-          callback: ->
-            return true
+    return
 
 Template.merge_justdo_dialog.onCreated ->
   tpl = @
@@ -44,13 +46,13 @@ Template.merge_justdo_dialog.onCreated ->
     justdo_selected = tpl.justdo_selected_rev.get()
     
     if not justdo_selected?
-      alert "Please select a justdo to be merged."
+      alert "Please select a JustDo to merge to"
+
       return false
       
     merge_justdo_confirm_tpl =
       JustdoHelpers.renderTemplateInNewNode Template.merge_justdo_confirm, 
         target_justdo_id: justdo_selected
-        enable_extensions: tpl.$("#enable-extensions").prop "checked"
 
     bootbox.dialog
       title: "Confirm Merge"
@@ -64,7 +66,7 @@ Template.merge_justdo_dialog.onCreated ->
 
       buttons:
         close:
-          label: "Close"
+          label: "Cancel"
 
           className: "btn-primary"
 
@@ -131,6 +133,8 @@ Template.merge_justdo_confirm.onCreated ->
         _id: 1
         title: 1
   
+    return
+
   return
 
 Template.merge_justdo_confirm.helpers
@@ -157,7 +161,7 @@ Template.merge_justdo_confirm.events
     src_justdo_id = JD.activeJustdo()._id
     Meteor.call "jdCustomMergeJustdo", tpl.data.target_justdo_id, src_justdo_id, (err, container_task_id) ->
       if err?
-        alert "Merge failed!"
+        alert "Merge failed! #{err.message}"
         console.error err
         return
       
@@ -168,7 +172,3 @@ Template.merge_justdo_confirm.events
       Meteor.call "removeProject", src_justdo_id
 
     return false
-    
-
-
-  

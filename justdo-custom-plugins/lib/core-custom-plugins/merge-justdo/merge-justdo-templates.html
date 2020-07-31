@@ -3,14 +3,14 @@
     <svg class="jd-icon-dropdown text-secondary">
       <use xlink:href="/layout/icons-feather-sprite.svg#download"/>
     </svg>
-    Merge JustDos
+    Merge JustDo
   </li>
 </template>
 
 <template name="merge_justdo_dialog">
   <div class=merge-justdo-container>
-    <div>Select the justdo(s) to merge</div>
-    <input class="justdos-selector-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search justdos" name="" value="">
+    <div class="font-weight-bold text-body text-uppercase mt-0 mb-2">Select target JustDo to merge to</div>
+    <input class="justdos-selector-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search JustDos" name="" value="">
     <ul class="justdos-selector">
       {{#each justdos}}
       <li class="justdos-filter-justdo-item d-flex justify-content-between" data-justdo-id="{{this._id}}">
@@ -23,22 +23,14 @@
       </li>
     {{/each}}
     </ul>
-
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="enable-extensions">
-      <label class="form-check-label" for="enable-extensions">
-        Enable extensions enabled in the above justdos
-      </label>
-    </div>
-
   </div>
   
 </template>
 
 <template name="merge_justdo_confirm">
   <div class="merge-justdo-confirm-container">
-    <div>The current justdo will be <b>removed permanently</b> and merged into "{{target_justdo.title}}".</div>
-    <div>You won't be able to recover this.</div>
+    <p>The current JustDo will be <b>removed permanently</b>. Its tasks will be merged into the JustDo: "{{target_justdo.title}}"</p>
+    <p>You won't be able to undo this operation.</p>
     <form class="form-inline">
       <input class="confirm-merge-box form-control" type="text" placeholder="Type 'Confirm' here to confirm merge">
       {{#if allowConfirm}}
