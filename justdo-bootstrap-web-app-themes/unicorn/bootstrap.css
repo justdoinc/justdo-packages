@@ -7103,7 +7103,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .slick-row.active {
-  background-color: rgba(215, 227, 246, 0.65);
+  background-color: rgba(215, 227, 246, 0.65) !important;
 }
 
 .slick-row {
@@ -7112,11 +7112,11 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .slick-row.search-result {
-  background-color: rgba(255, 82, 136, 0.16);
+  background-color: rgba(255, 82, 136, 0.16) !important;
 }
 
 .slick-row.search-result.active {
-  background-color: rgba(134, 7, 130, 0.2);
+  background-color: rgba(134, 7, 130, 0.2) !important;
 }
 
 .slick-row:last-child,
@@ -7177,41 +7177,16 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .grid-tree-control-task-id {
-  background-color: #fed763 !important;
-  color: #000000 !important;
-  font-weight: bold !important;
-  border: 2px solid rgb(232, 187, 53) !important;
-  border-radius: 6px !important;
+  background-color: #fed763;
+  color: #000000;
+  font-weight: bold;
+  border: 2px solid rgb(232, 187, 53);
+  border-radius: 6px;
 }
 
-
-
-
-
-/* Blur effect */
-.blur {
-  /* FF doesn't support blur filter, but SVG */
-  filter: url("data:image/svg+xml;utf8,<svg height='0' xmlns='http://www.w3.org/2000/svg'><filter id='svgBlur' x='-5%' y='-5%' width='110%' height='110%'><feGaussianBlur in='SourceGraphic' stdDeviation='3'/></filter></svg>#svgBlur");
-  /* filter: progid: DXImageTransform.Microsoft.Blur(PixelRadius = '3'); */
-  filter: blur(3px);
-  pointer-events: none;
-  user-select: none;
+/* high-contrast-mode */
+.high-contrast-mode .slick-row {
+  background: rgba(255, 255, 255, 0.75);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Custom Unicorn CSS - END */
