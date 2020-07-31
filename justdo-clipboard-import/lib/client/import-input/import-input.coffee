@@ -5,6 +5,7 @@ bindTargetToPaste = (tpl)->
     clipboard_data = e.originalEvent.clipboardData
     if ("text/html" in clipboard_data.types)
       data = clipboard_data.getData("text/html")
+      
 
       # Info about why we use [^\x05] can be found on: https://bugzilla.mozilla.org/show_bug.cgi?id=1579867
       tr_reg_exp = /<\s*tr[^>]*>([^\x05]*?)<\s*\/\s*tr>/g
@@ -34,9 +35,17 @@ bindTargetToPaste = (tpl)->
           cell = cell.replace /&gt;/g, ">"
 
           cells.push cell
+          
           if cell.trim().length > 0
             all_cells_are_empty = false
             row_length = processing_column_number
+
+          if (colspan = $(td[0]).attr("colspan"))?
+            colspan = parseInt colspan, 10
+            colspan -= 2
+            for i in [0..colspan]
+              cells.push ""
+              processing_column_number += 1
 
         if not all_cells_are_empty
           rows.push cells
