@@ -75,6 +75,17 @@ Template.merge_justdo_dialog.onCreated ->
 
   return
 
+filterJustdosDocsArray = (justdos_docs, niddle) ->
+  if not niddle?
+    return justdos_docs
+
+  filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(niddle)}", "i")
+
+  results = _.filter justdos_docs, (doc) ->
+    return filter_regexp.test doc.title
+
+  return results
+
 Template.merge_justdo_dialog.helpers
   justdos: -> 
     justdos = APP.collections.Projects.find 
@@ -90,7 +101,7 @@ Template.merge_justdo_dialog.helpers
         title: 1
     .fetch()
 
-    return JustdoHelpers.filterJustdosDocsArray justdos, Template.instance().justdos_filter_text_rev.get()
+    return filterJustdosDocsArray justdos, Template.instance().justdos_filter_text_rev.get()
     
   justdoSelected: (justdo) ->
     return Template.instance().justdo_selected_rev.get() == justdo._id
