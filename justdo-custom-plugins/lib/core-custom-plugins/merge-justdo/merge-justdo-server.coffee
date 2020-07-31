@@ -16,6 +16,10 @@ Meteor.methods
         _id: 1
         title: 1
 
+        custom_fields: 1
+        members: 1
+        "conf.custom_features": 1
+
     target_justdo = APP.collections.Projects.findOne target_justdo_id,
       members:
         $elemMatch:
@@ -23,6 +27,8 @@ Meteor.methods
           is_admin: true
       fields:
         _id: 1
+
+        members: 1
     
     # Check if user is admin of all justdos
     if not target_justdo? or not source_justdo?
@@ -155,13 +161,7 @@ Meteor.methods
       
       return
 
-    APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Tasks._name, "bulkWrite")
-    APP.collections.Tasks.rawCollection().bulkWrite bulk_write_ops, Meteor.bindEnvironment (err) ->
-      if err?
-        console.error("Merge operation failed (source_justdo_id: #{source_justdo_id})", err)
-
-        return
-
+    postBulkWriteOps = ->
       updateJustdoIdInCollections [
         APP.collections.RpTasksResources,
         APP.collections.JDChatChannels,
@@ -173,16 +173,45 @@ Meteor.methods
         $currentDate:
           _raw_updated_date: true
 
-      return
+    if _.isEmpty(bulk_write_ops)
+      postBulkWriteOps()
+    else
+      APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Tasks._name, "bulkWrite")
+      APP.collections.Tasks.rawCollection().bulkWrite bulk_write_ops, Meteor.bindEnvironment (err) ->
+        if err?
+          console.error("Merge operation failed (source_justdo_id: #{source_justdo_id})", err)
 
-    # We are not handling users.justdo_time_tracker_report_configs 
-    # because it might conflict with the configs set in the target justdo, also
-    # the config data simply doesn't worth to be handled with the performance overhead
+          return
 
-    # Don't do yet:
-    #
-    # * concat project.custom_fields
-    # * concat project.conf.custom_features
-    # * projects.members
+        postBulkWriteOps()
+
+        return
+
+    target_update = {}
+
+    if _.isArray(source_custom_features = source_justdo?.conf?.custom_features)
+      Meteor._ensure target_update, "$addToSet"
+      target_update.$addToSet["conf.custom_features"] = {$each: source_custom_features}
+
+    if _.isArray(source_custom_fields = source_justdo?.custom_fields)
+      Meteor._ensure target_update, "$push"
+      target_update.$push["custom_fields"] = {$each: source_custom_fields}
+
+    target_justdo_users_ids = {}
+    for member_def in target_justdo.members
+      target_justdo_users_ids[member_def.user_id] = true
+
+    members_items_to_push_to_target = []
+    for member_def in source_justdo.members
+      if member_def.user_id not of target_justdo_users_ids
+        member_def.is_admin = false # We downgrade admins when moving them to target
+        members_items_to_push_to_target.push member_def
+
+
+    if not _.isEmpty(members_items_to_push_to_target)
+      Meteor._ensure target_update, "$push"
+      target_update.$push["members"] = {$each: members_items_to_push_to_target}
+
+    APP.collections.Projects.update(target_justdo_id, target_update)
 
     return container_task_id

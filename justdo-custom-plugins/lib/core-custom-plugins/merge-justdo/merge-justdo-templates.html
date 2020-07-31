@@ -9,6 +9,12 @@
 
 <template name="merge_justdo_dialog">
   <div class=merge-justdo-container>
+    <p>The merge will move all the tasks from this JustDo to a new task that we'll create in the target JustDo. Tasks will move with their current members list and all their associated data and media.</p>
+
+    <p>As part of the process we add to the target JustDo all the Custom Fields that are defined in this JustDo, and enable all the plugins that are enabled in this JustDo.</p>
+
+    <p>All the admins that exist in this JustDo but don't exist in the target JustDo will be added as regular members. Missing Members from the target JustDo will be added as Members, and missing Guests will be added as Guests.</p>
+
     <div class="font-weight-bold text-body text-uppercase mt-0 mb-2">Select target JustDo to merge to</div>
     <input class="justdos-selector-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search JustDos" name="" value="">
     <ul class="justdos-selector">
@@ -30,7 +36,7 @@
 <template name="merge_justdo_confirm">
   <div class="merge-justdo-confirm-container">
     <p>The current JustDo will be <b>removed permanently</b>. Its tasks will be merged into the JustDo: "{{target_justdo.title}}"</p>
-    <p>You won't be able to undo this operation.</p>
+    <p>You won't be able to undo the merge.</p>
     <form class="form-inline">
       <input class="confirm-merge-box form-control" type="text" placeholder="Type 'Confirm' here to confirm merge">
       {{#if allowConfirm}}
