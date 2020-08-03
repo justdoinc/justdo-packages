@@ -626,6 +626,58 @@ _.extend GridDataCore.prototype,
 
     return
 
+  getAllItemsKnownAncestorsIdsObj: (items_ids_arr, _ancestors_obj) ->
+    # By known ancestors, we mean ancestors for which we have a reference under:
+    # @items_by_id
+    #
+    # Returns an object in which values are meaningless.
+
+    if not _ancestors_obj?
+      _ancestors_obj = {}
+
+    next_iteration_items_ids = []
+
+    for item_id in items_ids_arr
+      for parent_id of @items_by_id[item_id]?.parents
+        if parent_id of _ancestors_obj or # If already encountered -> no need to go upwards again
+           parent_id == "0" or
+           not @items_by_id[parent_id]?
+          continue
+
+        _ancestors_obj[parent_id] = true
+        next_iteration_items_ids.push parent_id
+
+    if next_iteration_items_ids.length > 0
+      @getAllItemsKnownAncestorsIdsObj(next_iteration_items_ids, _ancestors_obj)
+
+    return _ancestors_obj
+
+  getAllItemsKnownDescendantsIdsObj: (items_ids_arr, _descendants_obj) ->
+    # By known descendants, we mean descendants for which we have a reference under:
+    # @items_by_id
+    #
+    # Returns an object in which values are meaningless.
+
+    if not _descendants_obj?
+      _descendants_obj = {}
+
+    next_iteration_items_ids = []
+
+    for item_id in items_ids_arr
+      if @tree_structure[item_id]?
+        for order, child_id of @tree_structure[item_id]
+          if child_id of _descendants_obj or # If already encountered -> no need to go downwards again
+             not @items_by_id[child_id]?
+            continue
+
+          _descendants_obj[child_id] = true
+          next_iteration_items_ids.push child_id
+
+    if next_iteration_items_ids.length > 0
+      @getAllItemsKnownDescendantsIdsObj(next_iteration_items_ids, _descendants_obj)
+
+    return _descendants_obj
+
   onDestroy: (proc) ->
     # not to be confused with @destroy, onDestroy registers procedures to be called by @destroy()
     @_on_destroy_procedures.push proc
