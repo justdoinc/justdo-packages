@@ -45,7 +45,7 @@ _.extend Projects.prototype,
           if (paths = grid_data.getAllCollectionItemIdPaths(item_id))?
             for path in paths
               for path_item_id in GridData.helpers.getPathArray(path)
-                if (path_item = APP.collections.Tasks.findOne(path_item_id, {fields: {_id: 1, users: 1}}))?
+                if (path_item = APP.collections.TasksAugmentedFields.findOne(path_item_id, {fields: {_id: 1, users: 1}}))?
                   for user_id in path_item.users
                     members_ids.add user_id
 

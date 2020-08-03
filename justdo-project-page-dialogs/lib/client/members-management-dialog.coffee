@@ -96,9 +96,9 @@ APP.executeAfterAppLibCode ->
     return _.map(_.filter(reactive_var.get(), (item) -> item.proceed.get() == proceed_state), (item) -> item._id)
 
   setUsersLists = (task_id) ->
-    task_doc = APP.collections.Tasks.findOne(task_id, {fields: {users: 1}})
+    augmented_task_doc = APP.collections.TasksAugmentedFields.findOne(task_id, {fields: {users: 1}})
 
-    users = task_doc.users
+    users = augmented_task_doc.users
 
     if not (item_users = users)?
       throw module._error("unknown-data-context", "can't determine current task users")
@@ -162,6 +162,30 @@ APP.executeAfterAppLibCode ->
 
   Template.task_pane_item_details_members_editor.onCreated ->
     data = @data
+
+    # Note, for this dialog, we are not reactive for changes in the user rank in the
+    # JustDo (admin/member/guest) while the dialog is on. The assumption is that the
+    # dialog shouldn't be open for too long.
+    #
+    # For the same reason, we don't care about changes to the tree structure while
+    # the dialog is open, namely, the ancesotrs/descendants of data._id . We check
+    # it once when the dialog is opened - and that's it.
+
+    # For guests, we want derive the users showing in the dialog from members of the
+    # task's ancestors.
+    @ancestors_users_subscription = null
+    if module.curProj()?.isGuest() is true
+      ancestors_ids_arr = _.keys APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownAncestorsIdsObj([data._id])
+      @ancestors_users_subscription = APP.projects.subscribeTasksAugmentedFields(ancestors_ids_arr, ["users"])
+
+    descendants_ids_arr = _.keys APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownDescendantsIdsObj([data._id])
+    @descendants_users_subscription = APP.projects.subscribeTasksAugmentedFields(descendants_ids_arr, ["users"])
+
+    @self_users_subscription = APP.projects.subscribeTasksAugmentedFields([data._id], ["users"])
+
+    @autorun ->
+      APP.collections.TasksAugmentedFields.findOne(data._id, {fields: {description: 1}})?.description or ""
+      return
 
     @autorun ->
       setUsersLists(data._id)
@@ -305,6 +329,11 @@ APP.executeAfterAppLibCode ->
     cascade.set true
     notes.set {}
 
+    @ancestors_users_subscription?.stop()
+    @descendants_users_subscription?.stop()
+    @self_users_subscription?.stop()
+
+    return
   #
   # Editor dialog sections
   #
@@ -395,7 +424,7 @@ APP.executeAfterAppLibCode ->
       return
 
   ProjectPageDialogs.members_management_dialog.open = (task_id) ->
-    if not (task_doc = APP.collections.Tasks.findOne(task_id))?
+    if not (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1}}))?
       APP.logger.error("openMembersManagementDialog: Couldn't find task: #{task_id}")
 
       return
