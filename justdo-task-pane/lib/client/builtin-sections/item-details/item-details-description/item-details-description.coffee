@@ -1,3 +1,6 @@
+getActiveTaskDescription = ->
+  return APP.collections.TasksAugmentedFields.findOne(JD.activeItemId(), {fields: {description: 1}})?.description or ""
+
 APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
 
@@ -232,7 +235,7 @@ APP.executeAfterAppLibCode ->
 
     # Force task description to be the most recent fetched-from-collection
     # description, for case we just got out of grid lock
-    $("#description-editor", $container).val(task.description)
+    $("#description-editor", $container).val(getActiveTaskDescription())
 
     task_id =
       project_page_module.activeItemId()
@@ -262,7 +265,7 @@ APP.executeAfterAppLibCode ->
 
         save_state.set 0
 
-        editor.html.set(task.description or "")
+        editor.html.set(getActiveTaskDescription())
 
         # set change listeners
         for change_event in ["contentChanged", "keydown"]
@@ -344,6 +347,7 @@ APP.executeAfterAppLibCode ->
     save_state: -> save_state.get()
     description: -> @description?.replace(/\n/g, "") # We found out that new lines can break rendering, removing them has no effect on the html rendering.
     uploading_files: -> uploading_files.get()
+    description: -> getActiveTaskDescription()
 
   Template.task_pane_item_details_description_lock_message.helpers
     lock: -> isLocked(@_id)
@@ -352,6 +356,8 @@ APP.executeAfterAppLibCode ->
     @autorun ->
       # On every path change, destroy the editor (destroyEditor, saves current state)
       project_page_module.activeItemPath()
+
+      APP.projects.subscribeActiveTaskAugmentedFields(["description"])
 
       destroyEditor()
 
