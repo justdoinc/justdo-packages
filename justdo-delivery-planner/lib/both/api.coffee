@@ -106,6 +106,10 @@ _.extend JustdoDeliveryPlanner.prototype,
       users: user_id
     }, options.customize_query
 
+    if Meteor.isClient
+      # In the client-side Tasks docs don't have the users field.
+      delete query.users
+
     if (exclude_tasks = options.exclude_tasks)?
       if _.isString exclude_tasks
         exclude_tasks = [exclude_tasks]
