@@ -32,10 +32,10 @@ _.extend TaskChannelClient.prototype,
   findMembersMentionedInMessageThatArentSubscribers: (message) ->
     existing_subscribers_ids = _.map @getSubscribersArray(), (subscriber) -> subscriber.user_id
 
-    if not (task_doc = @tasks_collection.findOne(@task_id))?
+    if not (task_users = APP.collections.TasksAugmentedFields.findOne(@task_id, {fields: {users: 1}})?.users)?
       return []
 
-    non_subscribed_members_ids = _.difference task_doc.users, existing_subscribers_ids
+    non_subscribed_members_ids = _.difference task_users, existing_subscribers_ids
 
     if _.isEmpty non_subscribed_members_ids
       return []
@@ -80,8 +80,9 @@ _.extend TaskChannelClient.prototype,
     ownership_related_suggestions =
       _.compact(_.union([Meteor.userId(), task_doc.owner_id, task_doc.pending_owner_id]))
 
-    if task_doc.users.length == 2
-      only_two_users_related_suggestions = _.compact(task_doc.users)
+    if (task_users = APP.collections.TasksAugmentedFields.findOne(@task_id, {fields: {users: 1}})?.users)?
+      if task_users.length == 2
+        only_two_users_related_suggestions = _.compact(task_users)
 
     all_suggestions = 
       _.union(ownership_related_suggestions, only_two_users_related_suggestions)
