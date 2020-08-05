@@ -24,13 +24,12 @@ Template.project_pane_kanban.onCreated ->
 
     return
   
-  tpl.kanban_task_aug_sub = null
   @autorun =>
     kanban_task_id = tpl.kanban_task_id_rv.get()
-    if tpl.kanban_task_aug_sub?
-      tpl.kanban_task_aug_sub.stop()
     if kanban_task_id?
       JD.subscribeItemsAugmentedFields [kanban_task_id], ["users"]
+    
+    return
 
   tpl.getKanbanTaskDoc = -> APP.collections.Tasks.findOne(tpl.kanban_task_id_rv.get())
   tpl.getCurrentBoardStateVisibleBoards = -> tpl.current_board_state_rv.get()?.visible_boards
@@ -318,9 +317,3 @@ Template.project_pane_kanban.events
       $(".kanban-member-selector .kanban-member-selector-btn").dropdown "hide"
 
     return
-
-
-Template.project_pane_kanban.onDestroyed ->
-  tpl = @
-  if tpl.kanban_task_aug_sub?
-    tpl.kanban_task_aug_sub.stop()

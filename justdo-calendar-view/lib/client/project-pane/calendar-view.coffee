@@ -602,14 +602,11 @@ Template.justdo_calendar_project_pane.onCreated ->
         return
     #end of autorun
 
-  @active_project_task_aug_sub = null
   @autorun =>
     project_id = delivery_planner_project_id.get()
-    if @active_project_task_aug_sub?
-      @active_project_task_aug_sub.stop()
     if project_id? and project_id != "*"
       # project_id in this case is actually a task id
-      @active_project_task_aug_sub = JD.subscribeItemsAugmentedFields [project_id], ["users"]
+      JD.subscribeItemsAugmentedFields [project_id], ["users"]
     return
 
   return # end onCreated
@@ -924,9 +921,6 @@ Template.justdo_calendar_project_pane.events
 Template.justdo_calendar_project_pane.onDestroyed ->
   if @refresh_today_interval?
     Meteor.clearInterval @refresh_today_interval
-  
-  if @active_project_task_aug_sub?
-    @active_project_task_aug_sub.stop()
     
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
