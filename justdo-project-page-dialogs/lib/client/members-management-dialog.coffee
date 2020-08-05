@@ -184,10 +184,6 @@ APP.executeAfterAppLibCode ->
     @self_users_subscription = APP.projects.subscribeTasksAugmentedFields([data._id], ["users"])
 
     @autorun ->
-      APP.collections.TasksAugmentedFields.findOne(data._id, {fields: {description: 1}})?.description or ""
-      return
-
-    @autorun ->
       setUsersLists(data._id)
 
     @members_filter = new ReactiveVar null
