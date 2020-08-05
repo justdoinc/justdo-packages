@@ -924,6 +924,9 @@ Template.justdo_calendar_project_pane.events
 Template.justdo_calendar_project_pane.onDestroyed ->
   if @refresh_today_interval?
     Meteor.clearInterval @refresh_today_interval
+  
+  if @active_project_task_aug_sub?
+    @active_project_task_aug_sub.stop()
     
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
