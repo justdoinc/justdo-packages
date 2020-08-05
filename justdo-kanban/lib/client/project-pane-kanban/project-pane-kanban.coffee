@@ -23,6 +23,14 @@ Template.project_pane_kanban.onCreated ->
     tpl.current_board_state_rv.set(current_board_state_rv)
 
     return
+  
+  tpl.kanban_task_aug_sub = null
+  @autorun =>
+    kanban_task_id = tpl.kanban_task_id_rv.get()
+    if tpl.kanban_task_aug_sub?
+      tpl.kanban_task_aug_sub.stop()
+    if kanban_task_id?
+      JD.subscribeItemsAugmentedFields [kanban_task_id], ["users"]
 
   tpl.getKanbanTaskDoc = -> APP.collections.Tasks.findOne(tpl.kanban_task_id_rv.get())
   tpl.getCurrentBoardStateVisibleBoards = -> tpl.current_board_state_rv.get()?.visible_boards
@@ -161,7 +169,7 @@ Template.project_pane_kanban.helpers
     members_dropdown_search_input_state_rv =
       Template.instance().members_dropdown_search_input_state_rv.get()
 
-    if (kanban_task_doc = Template.instance().getKanbanTaskDoc())?
+    if (kanban_task_doc = APP.collections.TasksAugmentedFields.findOne(Template.instance().kanban_task_id_rv.get()))?
       members_docs = JustdoHelpers.filterUsersDocsArray(kanban_task_doc.users, members_dropdown_search_input_state_rv)
       return _.sortBy members_docs, (member) -> JustdoHelpers.displayName(member)
 
@@ -310,3 +318,9 @@ Template.project_pane_kanban.events
       $(".kanban-member-selector .kanban-member-selector-btn").dropdown "hide"
 
     return
+
+
+Template.project_pane_kanban.onDestroyed ->
+  tpl = @
+  if tpl.kanban_task_aug_sub?
+    tpl.kanban_task_aug_sub.stop()
