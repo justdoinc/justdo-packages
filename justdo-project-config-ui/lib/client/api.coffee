@@ -24,17 +24,30 @@ _.extend JustdoProjectConfigUI.prototype,
 
   show: (options) ->
     options = _.extend {dialog_title: "Configure this JustDo"}, options
+    sections = @getSectionsForPresentations()
+    sections_general = []
+    sections_extensions = []
+
+    for section in sections
+      if section.id == "extensions"
+        sections_extensions.push section
+      else
+        sections_general.push section
+
     template_data =
-      sections: => @getSectionsForPresentations()
+      sections: => {
+        "general": sections_general,
+        "extensions": sections_extensions
+      }
 
     message_template =
       APP.helpers.renderTemplateInNewNode(Template.project_config_dialog, template_data)
 
     bootbox.dialog
-      title: options.dialog_title
       message: message_template.node
       animate: false
       className: "project-configuration-dialog bootbox-new-design"
+      backdrop: true
 
       onEscape: ->
         return true

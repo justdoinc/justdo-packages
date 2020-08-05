@@ -1,12 +1,84 @@
-[section-id="extensions"]
-  .controller-template
-    border-top: 1px dashed rgba(0, 0, 0, 0.12)
-    .jd-icon-extension
-      cursor: pointer
-      stroke: currentColor
-      stroke-width: 2
-      stroke-linecap: round
-      stroke-linejoin: round
-      fill: none
-      width: 24px
-      height: 24px
+.project-configuration-dialog
+  .bootbox-close-button
+    position: absolute
+    right: 28px
+    top: 28px
+    z-index: 1
+
+  .modal-dialog
+    max-width: 800px
+
+  .modal-content
+    border: none
+
+  .modal-body
+    padding: 0
+
+  .project-config-container
+    height: 600px
+    padding: 0
+
+  .project-config-nav
+    border-radius: 4px 0px 0px 4px
+    padding: 0
+
+  .project-config-title,
+  .project-config-section-title
+    font-weight: bold
+    font-size: 18px
+    color: #3D495B
+    padding: 20px 27px
+
+  .project-config-section-title
+    border-bottom: 1px solid #EDF1F8
+
+  .tab-pane-container
+    display: flex
+    height: 600px
+    flex-direction: column
+
+  .project-config-section-container
+    padding: 20px 27px
+    overflow: auto
+    flex-grow: 1
+
+  .project-config-nav-link
+    font-size: 15px
+    margin: 0px 27px
+    padding: 12px 0
+    line-height: 100%
+    border-top: 1px solid #EDF1F8
+    color: #3D495B
+    opacity: 0.8
+    text-decoration: none
+    position: relative
+    &:hover
+      opacity: 1
+    &.active
+      opacity: 1
+      font-weight: bold
+      .project-config-nav-link-active
+        display: block
+
+    .project-config-nav-link-active
+      position: absolute
+      background-color: #037bfe
+      width: 4px
+      top: 0
+      height: 100%
+      left: -27px
+      display: none
+      border-radius: 0px 1px 1px 0px
+
+  [section-id="extensions"]
+    .controller-template
+      border-top: 1px dashed rgba(0, 0, 0, 0.12)
+      .jd-icon-extension
+        cursor: pointer
+        stroke: currentColor
+        stroke-width: 2
+        stroke-linecap: round
+        stroke-linejoin: round
+        fill: none
+        width: 24px
+        height: 24px
