@@ -601,6 +601,17 @@ Template.justdo_calendar_project_pane.onCreated ->
         self.onTaskRemoved id
         return
     #end of autorun
+
+  @active_project_task_aug_sub = null
+  @autorun =>
+    project_id = delivery_planner_project_id.get()
+    if @active_project_task_aug_sub?
+      @active_project_task_aug_sub.stop()
+    if project_id? and project_id != "*"
+      # project_id in this case is actually a task id
+      @active_project_task_aug_sub = JD.subscribeItemsAugmentedFields [project_id], ["users"]
+    return
+
   return # end onCreated
 
 Template.justdo_calendar_project_pane.onRendered ->
@@ -726,7 +737,7 @@ Template.justdo_calendar_project_pane.helpers
     if project_id == "*"
       other_users = _.difference(APP.modules.project_page.curProj()?.getMembersIds(), [Meteor.userId()])
     else
-      other_users = _.difference(APP.collections.Tasks.findOne(project_id)?.users, [Meteor.userId()])
+      other_users = _.difference(APP.collections.TasksAugmentedFields.findOne(project_id)?.users, [Meteor.userId()])
 
     calendar_members_filter_val = tmpl.calendar_members_filter_val.get()
     membersDocs = JustdoHelpers.filterUsersDocsArray(other_users, calendar_members_filter_val)
