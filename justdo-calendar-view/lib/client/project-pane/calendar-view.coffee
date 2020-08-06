@@ -311,7 +311,7 @@ Template.justdo_calendar_project_pane.onCreated ->
     if project_id == "*"
       other_users = _.difference(APP.modules.project_page.curProj()?.getMembersIds(), [Meteor.userId()])
     else
-      other_users = _.difference(APP.collections.Tasks.findOne(project_id)?.users, [Meteor.userId()])
+      other_users = _.difference(APP.collections.TasksAugmentedFields.findOne(project_id)?.users, [Meteor.userId()])
 
     self.calendar_filtered_members.set []
     return
@@ -870,7 +870,7 @@ Template.justdo_calendar_project_pane.events
     if project_id == "*"
       other_users = _.difference(APP.modules.project_page.curProj()?.getMembersIds(), [Meteor.userId()])
     else
-      other_users = _.difference(APP.collections.Tasks.findOne(project_id)?.users, [Meteor.userId()])
+      other_users = _.difference(APP.collections.TasksAugmentedFields.findOne(project_id)?.users, [Meteor.userId()])
 
     tmpl.calendar_filtered_members.set other_users
     return
@@ -993,7 +993,17 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         priority: 1
 
     self.dates_workload.set({})
-    APP.collections.Tasks.find({$and: [_id: {$in: Array.from(data.tasks_set)}, owner_part]}, options).forEach (task)->
+    query = {$and: [_id: {$in: Array.from(data.tasks_set)}, owner_part]}
+
+    task_ids_need_to_sub = []
+    APP.collections.Tasks.find query,
+      fields:
+        _id: 1
+    .forEach (task)->
+      task_ids_need_to_sub.push task._id
+    JD.subscribeItemsAugmentedFields task_ids_need_to_sub, ["users"]
+
+    APP.collections.Tasks.find(query, options).forEach (task)->
       task_details =
         _id: task._id
         title: task.title
@@ -1005,7 +1015,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         start_date: task.start_date
         state: task.state
         unassigned_hours: task["p:rp:b:unassigned-work-hours"]
-        users: task.users
+        users: APP.collections.TasksAugmentedFields.findOne(task._id)?.users
         "priv:follow_up": task["priv:follow_up"]
         priority: task.priority
 
