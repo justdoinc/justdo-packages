@@ -104,7 +104,7 @@ _.extend JustdoResourcesAvailability.prototype,
 
       user = Meteor.users.findOne(user_id)
       config_data =
-        title: "Workdays for #{JD.activeJustdo().title}: #{user.profile.first_name} #{user.profile.last_name}"
+        title: "Workdays for #{JD.activeJustdo({_id: 1, title: 1}).title}: #{user.profile.first_name} #{user.profile.last_name}"
         weekdays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?["#{project_id}:#{user_id}"]?.working_days
         holidays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?["#{project_id}:#{user_id}"]?.holidays
 
@@ -114,7 +114,7 @@ _.extend JustdoResourcesAvailability.prototype,
         throw "Cant find project id"
 
       config_data =
-        title: "Workdays for #{JD.activeJustdo().title}"
+        title: "Workdays for #{JD.activeJustdo({_id: 1, title: 1}).title}"
         weekdays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?[project_id]?.working_days
         holidays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?[project_id]?.holidays
 

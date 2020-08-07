@@ -176,10 +176,10 @@ createDroppableWrapper = ->
 
             #now we need to know how many working days the original owner had between start and end date.
             original_user_availability = APP.justdo_resources_availability.userAvailabilityBetweenDates original_start_date, original_end_date,
-                JD.activeJustdo()._id, calendar_view_owner_id
+                JD.activeJustdo({_id: 1})._id, calendar_view_owner_id
 
             new_start_date = e.target.attributes.date.value
-            new_end_date = APP.justdo_resources_availability.startToFinishForUser JD.activeJustdo()._id, target_user_id,
+            new_end_date = APP.justdo_resources_availability.startToFinishForUser JD.activeJustdo({_id: 1})._id, target_user_id,
               new_start_date, original_user_availability.working_days, "days"
 
             if task_obj.start_date?
@@ -939,7 +939,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
     data = Template.currentData()
     data.dependency.depend()
 
-    @justdo_user_holidays = APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo()?._id,\
+    @justdo_user_holidays = APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo({_id: 1})?._id,\
                             data.dates_to_display, Template.currentData().user_id).holidays
 
     if self.last_tasks_set_size == 0 and data.tasks_set.size == 0
@@ -1147,7 +1147,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
           return task_to_flat_hours_per_day[row_data.task._id]
         
         user_availability = APP.justdo_resources_availability.userAvailabilityBetweenDates start_date.format("YYYY-MM-DD"),
-            end_date.format("YYYY-MM-DD"), JD.activeJustdo()._id, data.user_id
+            end_date.format("YYYY-MM-DD"), JD.activeJustdo({_id: 1})._id, data.user_id
 
         if user_availability.working_days == 0
           user_availability.working_days = 1
@@ -1250,9 +1250,9 @@ Template.justdo_calendar_project_pane_user_view.helpers
       if config.bottom_line.show_flat_hours_per_day
         ret += "#{daily_workload.total_hours.toFixed(1)} H "
       if config.bottom_line.show_workload
-        if  JD.activeJustdo()._id
+        if  JD.activeJustdo({_id: 1})._id
           user_available_hours = APP.justdo_resources_availability.userAvailabilityBetweenDates(column_date, column_date,
-            JD.activeJustdo()._id, Template.instance().data.user_id).available_hours
+            JD.activeJustdo({_id: 1})._id, Template.instance().data.user_id).available_hours
           if user_available_hours
             workload = Math.round(daily_workload.total_hours / user_available_hours * 100)
             if workload == 0
@@ -1497,7 +1497,7 @@ Template.justdo_calendar_project_pane_user_view.events
 
   "click .clock": (e, tpl) ->
     if (ra = APP.justdo_resources_availability)
-      ra.displayConfigDialog JD.activeJustdo()._id, tpl.data.user_id
+      ra.displayConfigDialog JD.activeJustdo({_id: 1})._id, tpl.data.user_id
     return
 
   # "mouseover .calendar_task_cell" : (e, tpl)->

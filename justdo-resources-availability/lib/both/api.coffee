@@ -68,7 +68,11 @@ _.extend JustdoResourcesAvailability.prototype,
           justdo_workdays.days[day].to = data.to
       # next - add the user levbel workdays (where available)
       if user_id?
-        if (resourcesObj = JD.activeJustdo()?["#{JustdoResourcesAvailability.project_custom_feature_id}"]?["#{project_id}:#{user_id}"])
+        custom_feature_id = JustdoResourcesAvailability.project_custom_feature_id
+        if (resourcesObj = JD.activeJustdo(
+          _id: 1
+          "#{custom_feature_id}": 1
+        )?["#{custom_feature_id}"]?["#{project_id}:#{user_id}"])
           for holiday in resourcesObj.holidays
             justdo_workdays.holidays.push holiday
           for day, data of resourcesObj.working_days
