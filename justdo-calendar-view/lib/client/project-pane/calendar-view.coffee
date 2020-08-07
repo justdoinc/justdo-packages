@@ -516,7 +516,7 @@ Template.justdo_calendar_project_pane.onCreated ->
       d.add(1,"days")
     dates_to_display.set(dates)
     Template.instance().view_end_date.set(dates[dates.length - 1])
-    @justdo_level_holidays.set(APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo()._id, dates).holidays)
+    @justdo_level_holidays.set(APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo({_id: 1})._id, dates).holidays)
     return
 
   @autorun =>

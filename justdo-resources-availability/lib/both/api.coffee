@@ -50,7 +50,11 @@ _.extend JustdoResourcesAvailability.prototype,
       holidays: []
 
     # next - see if we have a resources object for the project
-    if (resourcesObj = JD.activeJustdo()?["#{JustdoResourcesAvailability.project_custom_feature_id}"]?[project_id])
+    custom_feature_id = JustdoResourcesAvailability.project_custom_feature_id
+    if (resourcesObj = JD.activeJustdo(
+      _id: 1,
+      "#{custom_feature_id}": 1
+    )?["#{custom_feature_id}"]?[project_id])
       # next - add the justdo level workdays (where available)
       for holiday in resourcesObj.holidays
         justdo_workdays.holidays.push holiday
