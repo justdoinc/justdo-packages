@@ -47,7 +47,6 @@ _.extend JustdoProjectConfigUI.prototype,
       message: message_template.node
       animate: false
       className: "project-configuration-dialog bootbox-new-design"
-      backdrop: true
 
       onEscape: ->
         return true
