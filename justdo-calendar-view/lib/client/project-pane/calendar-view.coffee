@@ -117,19 +117,18 @@ createDroppableWrapper = ->
         # if we change owner of a regular task, we need to transfer the planned hours to the target owner,
         # and assign all unassigned hours to the target owner
         if changing_owner and ui.draggable[0].attributes.type.value == 'R'
-          original_owner_planning_time = 0 + task_obj["p:rp:b:work-hours_p:b:user:#{calendar_view_owner_id}"]
+          if (original_owner_planning_time = task_obj["p:rp:b:work-hours_p:b:user:#{calendar_view_owner_id}"])?
+            record =
+              delta: - original_owner_planning_time
+              resource_type: "b:user:#{calendar_view_owner_id}"
+              stage: "p"
+              source: "jd-calendar-view-plugin"
+              task_id: task_obj._id
+            APP.resource_planner.rpAddTaskResourceRecord record
 
-          record =
-            delta: - original_owner_planning_time
-            resource_type: "b:user:#{calendar_view_owner_id}"
-            stage: "p"
-            source: "jd-calendar-view-plugin"
-            task_id: task_obj._id
-          APP.resource_planner.rpAddTaskResourceRecord record
-
-          record.delta = original_owner_planning_time
-          record.resource_type = "b:user:#{target_user_id}"
-          APP.resource_planner.rpAddTaskResourceRecord record
+            record.delta = original_owner_planning_time
+            record.resource_type = "b:user:#{target_user_id}"
+            APP.resource_planner.rpAddTaskResourceRecord record
 
           if (unassigned_hours = task_obj["p:rp:b:unassigned-work-hours"])?
             record.delta = unassigned_hours
