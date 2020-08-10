@@ -9,6 +9,10 @@
           <div class="project-config-nav-link-active bg-primary"></div>
           General
         </a>
+        <a class="project-config-nav-link" data-toggle="pill" href=".project-config-states" role="tab" aria-selected="false">
+          <div class="project-config-nav-link-active bg-primary"></div>
+          Custom states
+        </a>
         <a class="project-config-nav-link" data-toggle="pill" href=".project-config-extensions" role="tab" aria-selected="false">
           <div class="project-config-nav-link-active bg-primary"></div>
           Extensions
@@ -34,6 +38,14 @@
                 </div>
               {{/each}}
             </div>
+          </div>
+        </div>
+        <div class="tab-pane project-config-states fade" role="tabpanel">
+          <div class="tab-pane-container">
+            <div class="project-config-section-title">
+              Custom states
+            </div>
+            {{> project_custom_states}}
           </div>
         </div>
         <div class="tab-pane project-config-extensions fade" role="tabpanel">

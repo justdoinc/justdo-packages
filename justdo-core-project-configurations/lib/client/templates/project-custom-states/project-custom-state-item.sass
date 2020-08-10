@@ -1,0 +1,159 @@
+.project-custom-state-item
+  background-color: #F4F6F9
+  border-radius: 4px
+  display: flex
+  margin-top: 8px
+  padding: 8px 8px 8px 0px
+  display: flex
+  align-items: center
+  transition: box-shadow 0.35s
+  &:hover
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+
+  .custom-state-handle
+    cursor: grab
+    display: flex
+    align-items: center
+    opacity: 0.75
+    .jd-icon
+      padding: 2px
+      color: #B0B8C2
+      width: 20px
+      margin-left: 4px
+
+  .custom-state-label
+    flex-grow: 1
+    font-size: 15px
+    color: #3D495B
+    padding-right: 8px
+
+  .custom-state-label-text
+    display: flex
+
+  .custom-state-label-text-active
+    border-radius: 4px
+    padding-left: 4px
+    padding-right: 4px
+    transition: background-color 0.35s
+    max-width: 190px
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    &:hover
+      background-color: white
+
+  .custom-state-label-text-default
+    color: rgba(61, 73, 91, 0.5)
+    margin-left: 4px
+    cursor: help
+    position: relative
+    &:hover
+      text-decoration: underline
+
+      .custom-state-label-text-tooltip
+        display: block
+
+  .custom-state-label-text-tooltip
+    box-shadow: 0px 8px 60px rgba(0, 0, 0, 0.12)
+    border-radius: 4px
+    font-size: 13px
+    color: #3D495B
+    position: absolute
+    white-space: nowrap
+    background-color: white
+    padding: 4px 8px
+    top: -28px
+    display: none
+
+  .custom-state-label-input
+    border: none
+    background-color: white
+    border-radius: 4px
+    width: 100%
+    padding-left: 4px
+    transition: box-shadow 0.35s
+    &:focus
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+
+  .custom-state-type
+    .custom-state-type-toggle
+      height: 22px
+      background-color: rgba(61, 73, 91, 0.08)
+      border-radius: 4px
+      font-weight: bold
+      font-size: 11px
+      line-height: 22px
+      display: flex
+      align-items: center
+      color: #3D495B
+      text-transform: uppercase
+      cursor: pointer
+      padding: 0 8px
+      transition: box-shadow 0.35s
+      user-select: none
+      &:hover
+        box-shadow: 0 0 0 2px rgba(171, 178, 191, 0.5)
+      &:active
+        box-shadow: 0 0 0 2px rgba(171, 178, 191, 0.75)
+
+    .dropdown-menu
+      padding: 8px
+
+    .dropdown-item
+      padding: 0.2rem 0.65rem
+      font-size: 12px
+      text-transform: uppercase
+      cursor: pointer
+
+  .custom-state-style
+    .custom-state-style-toggle
+      width: 22px
+      height: 22px
+      border: 2px solid #FFFFFF
+      border-radius: 5px
+      margin-right: 4px
+      margin-left: 4px
+      cursor: pointer
+      transition: box-shadow 0.35s
+      &:hover
+        box-shadow: 0 0 0 2px rgba(171, 178, 191, 0.5)
+      &:active
+        box-shadow: 0 0 0 2px rgba(171, 178, 191, 0.75)
+
+    .dropdown-menu
+      right: 0 !important
+      left: auto !important
+
+  .custom-state-action
+    display: flex
+    align-items: center
+    .jd-icon
+      color: #C5CBD3
+      stroke-width: 3
+      padding: 4px
+      cursor: pointer
+      &:hover
+        color: #76869a
+        background-color: #e8edf3
+      &:active
+        color: #3f4e61
+
+.active-states
+  .custom-state-add
+    display: none
+
+.removed-states
+  .custom-state-label
+    text-decoration: line-through
+
+  .custom-state-remove
+    display: none
+
+  .custom-state-handle,
+  .custom-state-type,
+  .custom-state-style
+    opacity: 0.35
+    pointer-events: none
+
+  .custom-state-label
+    pointer-events: none

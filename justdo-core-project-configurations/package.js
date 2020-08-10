@@ -15,6 +15,7 @@ Package.onUse(function (api) {
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("templating", client);
+  api.use('fourseven:scss@3.2.0', client);
 
   api.use("raix:eventemitter@0.1.1", both);
   api.use("meteorspark:util@0.2.0", both);
@@ -37,4 +38,13 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/core-confs-ui-templates.coffee", client);
 
   api.addFiles("lib/server/core-confs-definitions.coffee", server);
+
+  api.addFiles("lib/client/templates/project-custom-states/project-custom-states.html", client);
+  api.addFiles("lib/client/templates/project-custom-states/project-custom-states.coffee", client);
+  api.addFiles("lib/client/templates/project-custom-states/project-custom-states.sass", client);
+
+  api.addFiles("lib/client/templates/project-custom-states/project-custom-state-item.html", client);
+  api.addFiles("lib/client/templates/project-custom-states/project-custom-state-item.coffee", client);
+  api.addFiles("lib/client/templates/project-custom-states/project-custom-state-item.sass", client);
+
 });
