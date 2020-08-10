@@ -63,7 +63,7 @@ APP.executeAfterAppLibCode ->
     @autorun ->
       # on change in project title
       if (project = justdoRoles().getProject())?
-        APP.page_title_manager.setPageName "#{project.getProjectDoc()?.title} Roles & Groups"
+        APP.page_title_manager.setPageName "#{project.getProjectDoc({fields: {title: 1}})?.title} Roles & Groups"
 
       return
 

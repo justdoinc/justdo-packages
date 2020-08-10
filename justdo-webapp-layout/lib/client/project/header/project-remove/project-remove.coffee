@@ -4,10 +4,8 @@ APP.executeAfterAppLibCode ->
 
   Template.project_settings_dropdown_remove_project.events
     "click #remove-project": (e) ->
-      currrent_project = curProj()
-
       currrent_project_title =
-        currrent_project.getProjectDoc().title || ""
+        JD.activeJustdo({title: 1}).title || ""
 
       currrent_project_title = currrent_project_title.trim()
 

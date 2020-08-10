@@ -93,7 +93,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   # Check that all columns have the same number of cells
   cp_data = modal_data.clipboard_data.get()
   number_of_columns = cp_data[0].length
-  project_id = JD.activeJustdo()._id
+  project_id = JD.activeJustdo({_id: 1})._id
   line_number = 0
   max_indent = -1
   last_indent = 0

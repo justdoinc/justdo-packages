@@ -5,7 +5,7 @@ APP.executeAfterAppLibCode ->
 
   Template.required_actions_dropdown.helpers
     required_actions: ->
-      projects.modules.required_actions.getCursor(curProj()?.getProjectDoc()?._id).fetch()
+      projects.modules.required_actions.getCursor(JD.activeJustdo({_id: 1})?._id).fetch()
 
   # XXX in the future will be defined as part
   # of each required action definition

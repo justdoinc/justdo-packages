@@ -81,7 +81,7 @@ APP.executeAfterAppLibCode ->
       return APP.justdo_roles?.showRolesAndGroupsManagerDialogOpenerInProjectSettingsDropdown()
 
     customJustdoSaveDefaultViewEnabled: ->
-      return APP.custom_justdo_save_default_view?.isPluginInstalledOnProjectDoc(curProj()?.getProjectDoc())
+      return APP.custom_justdo_save_default_view?.isPluginInstalledOnProjectDoc(JD.activeJustdo({conf: 1}))
 
     settingsDropdownTopItems: ->
       return JD.getPlaceholderItems("settings-dropdown-top")

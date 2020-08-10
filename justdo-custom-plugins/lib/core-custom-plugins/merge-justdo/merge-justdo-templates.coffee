@@ -92,7 +92,7 @@ Template.merge_justdo_dialog.helpers
   justdos: -> 
     justdos = APP.collections.Projects.find 
       _id: 
-        $ne: JD.activeJustdo()._id
+        $ne: JD.activeJustdo({_id: 1})._id
       members: 
         $elemMatch:
           user_id: Meteor.userId()
@@ -158,7 +158,7 @@ Template.merge_justdo_confirm.events
   
   "click .confirm-merge-button": (e, tpl) ->
     tpl.is_merging_rev.set true
-    src_justdo_id = JD.activeJustdo()._id
+    src_justdo_id = JD.activeJustdo({_id: 1})._id
     Meteor.call "jdCustomMergeJustdo", tpl.data.target_justdo_id, src_justdo_id, (err, container_task_id) ->
       if err?
         alert "Merge failed! #{err.message}"

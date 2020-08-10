@@ -21,6 +21,10 @@ _.extend Projects.prototype,
       stopped: false
 
       getProjectDoc: (options) ->
+        if not options?.fields?
+          console.error "fields option must be specified" # XXX should throw error here
+        if options?.fields? == "all-fields"
+          options.fields = undefined
         self.getProjectDoc(project_id, options)
 
       updateProjectDoc: (update_op) ->
@@ -34,10 +38,10 @@ _.extend Projects.prototype,
       isGuest: -> not JD.activeJustdo({members: 1}).members?
 
       membersCount: ->
-        @getProjectDoc()?.members?.length
+        @getProjectDoc({fields: {members: 1}})?.members?.length
 
       getMembers: ->
-        if not (project_doc = @getProjectDoc())?
+        if not (project_doc = @getProjectDoc({fields: {members: 1}}))?
           return []
 
         if (members = project_doc.members)?
@@ -67,7 +71,7 @@ _.extend Projects.prototype,
         return _.filter @getMembers(), (member) -> not Meteor.users.findOne(member.user_id, {fields: {enrolled_member: 1}})?.enrolled_member
 
       isUntitled: ->
-        project_title = @getProjectDoc()?.title
+        project_title = @getProjectDoc({fields: {title: 1}})?.title
 
         if not(project_title?) or _.isEmpty(project_title.trim()) or project_title == self._default_project_name
           return true
@@ -126,7 +130,7 @@ _.extend Projects.prototype,
         return
 
       getProjectCustomFields: ->
-        return @getProjectDoc()?.custom_fields or []
+        return @getProjectDoc({fields: {custom_fields: 1}})?.custom_fields or []
 
       getProjectConfiguration: ->
         # Returns all the projects conf and not a specific one

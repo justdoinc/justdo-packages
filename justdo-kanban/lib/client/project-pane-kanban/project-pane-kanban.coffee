@@ -143,11 +143,10 @@ Template.project_pane_kanban.helpers
   fields: ->
     fields = [{"field_id": "state"}]
 
-    if JD.activeJustdo()?
-      if JD.activeJustdo().custom_fields?
-        for field in JD.activeJustdo().custom_fields
-          if field.custom_field_type_id == "basic-select"
-            fields.push {"field_id": field.field_id}
+    if (custom_fields = JD.activeJustdo({custom_fields: 1})?.custom_fields)?
+      for field in custom_fields
+        if field.custom_field_type_id == "basic-select"
+          fields.push {"field_id": field.field_id}
 
     return fields
 

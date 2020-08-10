@@ -42,8 +42,8 @@ APP.executeAfterAppLibCode ->
 
     # on change in project title:
     this.autorun ->
-      if (current_project = module.curProj())?
-        APP.page_title_manager.setPageName current_project.getProjectDoc()?.title
+      if (current_project = JD.activeJustdo({title: 1}))?
+        APP.page_title_manager.setPageName current_project.title
 
     # on change in active task or active task title:
     this.autorun ->

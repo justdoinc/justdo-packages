@@ -158,7 +158,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     
     # The following autorun triggers redraw when the gantt settings changes
     Tracker.autorun ->
-      if grid_gantt.isPluginInstalledOnProjectDoc(JD.activeJustdo())
+      if grid_gantt.isPluginInstalledOnProjectDoc(JD.activeJustdo({conf: 1}))
         # Daniel remove the following in the code review
         # APP.justdo_grid_gantt.gantt_coloumn_from_epoch_time_rv.get()
         # APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
@@ -385,7 +385,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         formatter_container = e.target.closest(".grid-gantt-formatter")
         if (dependent_id = formatter_container.getAttribute("task-id"))? and
             (dependencies = APP.justdo_dependencies)?
-          dependencies.addFinishToStartDependency JD.activeJustdo()._id, independent_id, dependent_id
+          dependencies.addFinishToStartDependency JD.activeJustdo({_id: 1})._id, independent_id, dependent_id
           self.setState
             dependencies:
               finish_to_x_independent: null
@@ -417,7 +417,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           (dependencies = APP.justdo_dependencies)?
         
         if dependency_type == "F2S"
-          dependencies.removeFinishToStartDependency JD.activeJustdo()._id, independent, dependent
+          dependencies.removeFinishToStartDependency JD.activeJustdo({_id: 1})._id, independent, dependent
       
       return
   ,

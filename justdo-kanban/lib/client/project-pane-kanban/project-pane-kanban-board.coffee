@@ -165,7 +165,7 @@ Template.project_pane_kanban_board.events
 
       if task_title != ""
         gc?._grid_data?.addChild "/" + @kanban_task_id_rv + "/",
-          project_id: JD.activeJustdo()._id
+          project_id: JD.activeJustdo({_id: 1})._id
           title: task_title
           "#{@active_board_field_id_rv}": @board_value_id
 

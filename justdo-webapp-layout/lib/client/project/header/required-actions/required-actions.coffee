@@ -5,7 +5,7 @@ APP.executeAfterAppLibCode ->
 
   Template.project_required_actions_dropdown_comp.helpers
     current_project: ->
-      curProj()?.getProjectDoc()
+      JD.activeJustdo({_id: 1})
 
   Template.required_actions_bell.helpers
     required_actions_count: ->

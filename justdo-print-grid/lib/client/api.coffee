@@ -77,7 +77,7 @@ _.extend JustdoPrintGrid.prototype,
 
       # Create Thead
       name = JustdoHelpers.xssGuard(JustdoHelpers.displayName(Meteor.user()))
-      project_name = JustdoHelpers.xssGuard module.curProj()?.getProjectDoc()?.title
+      project_name = JustdoHelpers.xssGuard JD.activeJustdo({title: 1})?.title
       thead_colspan = cols.length + max_level + 1
       tab_title = JustdoHelpers.xssGuard gcm.getActiveTab().getTabTitle()
 
@@ -491,7 +491,7 @@ _.extend JustdoPrintGrid.prototype,
         return
 
       # Create file name
-      project_name = module.curProj()?.getProjectDoc()?.title
+      project_name = JD.activeJustdo({title: 1})?.title
       tab_title = gcm.getActiveTab().getTabTitle()
       file_name = project_name + " - " + tab_title
 

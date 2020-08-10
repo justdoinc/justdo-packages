@@ -1,11 +1,18 @@
 _.extend JD,
   activeJustdo: (fields) ->
+    if not fields
+      throw new Meteor.Error "fields parameter must be provided"
+    if fields == "all-fields"
+      fields = undefined
     if (active_obj = APP.modules?.project_page?.curProj()?.getProjectDoc({fields: fields}))?
       return active_obj
 
     # Normalize non-existence result to 'undefined'
     return undefined
 
+  activeJustdoId: ->
+    return @activeJustdo({_id: 1})._id
+    
   active_justdo:
     isAdmin: ->
       if not (cur_proj = APP.modules?.project_page?.curProj())?
