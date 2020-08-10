@@ -98,6 +98,9 @@ APP.executeAfterAppLibCode ->
   setUsersLists = (task_id) ->
     augmented_task_doc = APP.collections.TasksAugmentedFields.findOne(task_id, {fields: {users: 1}})
 
+    if not augmented_task_doc?
+      return
+
     users = augmented_task_doc.users
 
     if not (item_users = users)?
@@ -353,7 +356,7 @@ APP.executeAfterAppLibCode ->
       return JustdoHelpers.filterUsersDocsArray(action_users, members_filter)
 
     action_users_empty: ->
-      return @action_users_reactive_var.get().length == 0
+      return @action_users_reactive_var.get()?.length == 0
 
     showInviteMembersSection: ->
       if @action_id == "add-users" and (project = module.curProj()).isAdmin()
