@@ -71,7 +71,7 @@ getSelectedColumnsDefinitions = ->
   $(".justdo-clipboard-import-input-selector button[value]").each ->
     field_id = $(@).val()
     
-    if field_id_existance[field_id]?
+    if field_id_existance[field_id]? and field_id != "clipboard-import-no-import"
       duplicated_field_id = field_id
     else
       field_id_existance[field_id] = true
