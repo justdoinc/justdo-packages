@@ -78,7 +78,7 @@ Template.project_pane_kanban.onRendered ->
 Template.project_pane_kanban.helpers
   isSelectedTaskCollectionItem: -> APP.modules.project_page.getActiveGridItemType() == "default"
 
-  selectedTask: -> JD.activeItem()
+  selectedTask: -> JD.activeItem({seqId: 1, title: 1})  # taskCommonName
 
   kanbanTaskIdRv: -> Template.instance().kanban_task_id_rv.get()
 

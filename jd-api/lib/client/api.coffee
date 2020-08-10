@@ -12,7 +12,7 @@ _.extend JD,
 
   activeJustdoId: ->
     return @activeJustdo({_id: 1})._id
-    
+
   active_justdo:
     isAdmin: ->
       if not (cur_proj = APP.modules?.project_page?.curProj())?
@@ -24,6 +24,10 @@ _.extend JD,
     return APP.modules.project_page.activeItemId()
 
   activeItem: (fields) ->
+    if not fields?
+      throw new Meteor.Error "fields option must be specified"
+    if fields == "all-fields"
+      fields = undefined
     if (active_obj = APP.modules?.project_page?.activeItemObj(fields))?
       return active_obj
 

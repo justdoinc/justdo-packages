@@ -789,12 +789,12 @@ Template.justdo_gantt.helpers
     return JD.activePath() != Template.instance().gantt_top_path.get()
 
   hasSelectedTask: ->
-    if JD.activeItem()
+    if JD.activeItemId()
       return true
     return false
 
   selectedTaskTitle: ->
-    if not JD.activeItem()
+    if not JD.activeItemId()
       return ""
     ret = "##{JD.activeItem({seqId: 1}).seqId} #{JD.activeItem({title: 1}).title}"
     return JustdoHelpers.ellipsis ret, 30

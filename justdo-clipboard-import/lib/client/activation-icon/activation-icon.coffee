@@ -280,7 +280,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 Template.justdo_clipboard_import_activation_icon.events
   "click .justdo-clipboard-import-activation": (e, tpl)->
     # Check to see if there is a task selected
-    if not (JD.activePath() and JD.activeItem()._id?)
+    if not (JD.activePath() and JD.activeItemId()?)
       JustdoSnackbar.show
         text: "A task must be selected to import from the clipboard."
       return
@@ -288,7 +288,7 @@ Template.justdo_clipboard_import_activation_icon.events
     modal_data =
       dialog_state: new ReactiveVar ""
       clipboard_data: new ReactiveVar []
-      parent_task_id: JD.activeItem()._id
+      parent_task_id: JD.activeItemId()
       rows_to_skip_set: new ReactiveVar(new Set())
       getAvailableFieldTypes: getAvailableFieldTypes
       date_fields_date_format: new ReactiveVar(null)
@@ -297,7 +297,7 @@ Template.justdo_clipboard_import_activation_icon.events
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)
 
     dialog = bootbox.dialog
-      title: "Import spreadsheet data as child tasks to <i>#{JustdoHelpers.taskCommonName(JD.activeItem(), 80)}</i>"
+      title: "Import spreadsheet data as child tasks to <i>#{JustdoHelpers.taskCommonName(JD.activeItem("all-fields"), 80)}</i>"
       message: message_template.node
       animate: true
       className: "bootbox-new-design justdo-clipboard-import-dialog"
