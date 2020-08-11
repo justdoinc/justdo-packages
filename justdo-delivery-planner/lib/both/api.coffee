@@ -65,8 +65,16 @@ _.extend JustdoDeliveryPlanner.prototype,
     return not _.isEmpty item_obj[JustdoDeliveryPlanner.task_project_members_availability_field_name]
 
   getProjectsAssignedToTask: (task_id, user_id) ->
-    if not (task_doc = @tasks_collection.findOne({_id: task_id, users: user_id}))?
-      throw @_error "unknown-task"
+    task_aug = APP.collections.TasksAugmentedFields.findOne task_id, 
+      users: user_id
+    
+    if not task_aug?
+      return []
+
+    task_doc = @tasks_collection.findOne task_id,
+      fields:
+        project_id: 1
+        parents: 1
 
     parents_tasks = _.keys task_doc.parents
 

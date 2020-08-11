@@ -976,6 +976,9 @@ APP.executeAfterAppLibCode ->
       $("div.resource-select").remove()
 
       return
+    
+    @autorun =>
+      JD.subscribeActiveItemAugmentedFields ["users"]
 
   Template.delivery_planner_task_pane_assign_tab.onRendered ->
     @autorun =>

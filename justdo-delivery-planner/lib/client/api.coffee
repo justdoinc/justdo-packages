@@ -140,23 +140,10 @@ _.extend JustdoDeliveryPlanner.prototype,
     if not grid_data_core? or not task_id_to_be_added?
       return project_tasks
 
-    # ancestors_cache = {}
-    isAncestor = (task_id, task_id_to_find) ->
-      if task_id == "0" or /^direct/.test task_id
-        return false
-      
-      task = grid_data_core.items_by_id[task_id]
-      for parent_task_id, i_dont_care of task.parents
-        if parent_task_id == task_id_to_find
-          return true
-        if isAncestor parent_task_id, task_id_to_find
-          return true
-
-      return false
-
     # Remove projects that are tasks to which we can't be assigned as a child due to circular
     # chain.
     project_tasks = _.filter project_tasks, (task) ->
-      return not isAncestor task._id, task_id_to_be_added
+      ancestors = grid_data_core.getAllItemsKnownAncestorsIdsObj [task._id]
+      return not ancestors[task_id_to_be_added]?
 
     return project_tasks

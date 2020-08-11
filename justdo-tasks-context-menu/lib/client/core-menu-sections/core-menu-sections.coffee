@@ -225,7 +225,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
       # If tasks locks are installed, and if so, whether the task is locked and if so, whether the current field_id is
       # restricted when the task is locked
-      if APP.custom_justdo_tasks_locks.isPluginInstalledOnProjectDoc(JD.activeJustdo())
+      if APP.custom_justdo_tasks_locks.isPluginInstalledOnProjectDoc(JD.activeJustdo({conf: 1}))
         if not APP.custom_justdo_tasks_locks.isActiveUserAllowedToPerformRestrictedOperationsOnActiveTask()
           if field_id in CustomJustdoTasksLocks.restricted_fields
             return false
