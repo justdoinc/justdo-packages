@@ -6,5 +6,6 @@ _.extend Projects,
   """
 
   tasks_description_last_update_field_id: "description_last_update"
-
   tasks_description_last_read_field_id: "priv:description_last_read"
+
+  not_hideable_states: ["pending", "in-progress", "done", "will-not-do"]

@@ -19,3 +19,28 @@ Projects.registerAllowedConfs
       return true
     allow_change: false
     allow_unset: false
+
+CustomStateDefinitionSchema = new SimpleSchema
+  state_id:
+    label: "State ID"
+
+    type: String
+
+  txt:
+    label: "Text label"
+
+    type: String
+
+  bg_color:
+    label: "Background color"
+
+    type: String
+
+    optional: true
+
+Projects.registerAllowedConfs
+  custom_states:
+    require_admin_permission: true
+    value_matcher: [CustomStateDefinitionSchema]
+    allow_change: true
+    allow_unset: false

@@ -256,6 +256,63 @@ _.extend Projects.prototype,
 
         return
 
+      _schemaStateDefToStateDef: (state_id, schema_state_def) ->
+        state_def =
+          state_id: state_id
+          txt: schema_state_def.txt
+          bg_color: schema_state_def.bg_color
+          order: schema_state_def.order
+
+        return state_def
+
+      _sortStatesArrayByOrderRemoveOrderField: (states_array) ->
+        states_array = _.sortBy states_array, "order"
+
+        states_array = _.map states_array, (state_def) ->
+          delete state_def.order
+          return state_def
+
+        return states_array
+
+      _getDefaultCustomStates: ->
+        states_def = []
+
+        for state_id, schema_state_def of APP.collections.Tasks.simpleSchema()._schema.state.grid_values()
+          if state_id == "nil"
+            continue
+
+          states_def.push @_schemaStateDefToStateDef(state_id, schema_state_def)
+
+        states_def = @_sortStatesArrayByOrderRemoveOrderField(states_def)
+
+        return states_def
+
+      getCustomStates: ->
+        if not (custom_states = @getProjectConfigurationSetting("custom_states"))?
+          return @_getDefaultCustomStates()
+
+        return custom_states
+
+      getHiddenCustomStates: ->
+        current_custom_states_ids = _.map @getCustomStates(), (state_def) -> state_def.state_id
+
+        hidden_states_defs = []
+        for state_id, schema_state_def of APP.collections.Tasks.simpleSchema()._schema.state.grid_values()
+          if state_id in current_custom_states_ids or state_id == "nil"
+            continue
+
+          hidden_states_defs.push @_schemaStateDefToStateDef(state_id, schema_state_def)
+
+        hidden_states_defs = @_sortStatesArrayByOrderRemoveOrderField(hidden_states_defs)
+
+        return hidden_states_defs
+
+      setCustomStates: (states_array) ->
+        @configureProject
+          custom_states: states_array
+
+        return
+
       stop: ->
         if not @stopped
           @stopped = true
