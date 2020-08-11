@@ -171,6 +171,13 @@ _.extend Projects.prototype,
 
           return # Keep this return to return undefined (as required by autoValue)
 
+      "#{Projects.tasks_description_last_update_field_id}":
+        label: "Description last update date"
+
+        type: Date
+
+        optional: true
+
       createdAt:
         label: "Created"
 

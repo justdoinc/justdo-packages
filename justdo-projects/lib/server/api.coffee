@@ -1292,3 +1292,26 @@ _.extend Projects.prototype,
       @projects_collection.update project_id, query
 
     return undefined
+
+  updateTaskDescriptionReadDate: (task_id, user_id) ->
+    check task_id, String
+    check user_id, String
+
+    task_doc = APP.collections.Tasks.findOne
+      _id: task_id
+      users: user_id
+    ,
+      fields:
+        _id: 1
+        project_id: 1
+
+    if not task_doc
+      throw @error "task-not-found"
+    
+    private_fields_mutator =
+      $currentDate:
+        "#{Projects.tasks_description_last_read_field_id}": true
+
+    APP.projects._grid_data_com._upsertItemPrivateData task_doc.project_id, task_doc._id, private_fields_mutator, user_id
+
+    return

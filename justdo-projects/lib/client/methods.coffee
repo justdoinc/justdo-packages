@@ -52,3 +52,8 @@ _.extend Projects.prototype,
     Meteor.call "resendEnrollmentEmail", project_id, invited_user_id, cb
 
     return
+  
+  updateTaskDescriptionReadDate: (task_id, cb) ->
+    Meteor.call "updateTaskDescriptionReadDate", task_id, cb
+
+    return

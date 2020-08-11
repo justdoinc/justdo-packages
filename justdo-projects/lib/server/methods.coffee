@@ -125,3 +125,10 @@ _.extend Projects.prototype,
         projects_object.configureProject project_id, configuration, @userId
 
         return
+      
+      updateTaskDescriptionReadDate: (task_id) ->
+        check task_id, String
+
+        projects_object.updateTaskDescriptionReadDate task_id, @userId
+
+        return

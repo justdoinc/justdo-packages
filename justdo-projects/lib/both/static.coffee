@@ -4,3 +4,7 @@ _.extend Projects,
 
     NOTE: All past activities of tasks shared with a Guest, will be visible to the Guest.
   """
+
+  tasks_description_last_update_field_id: "description_last_update"
+
+  tasks_description_last_read_field_id: "priv:description_last_read"

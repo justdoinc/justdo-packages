@@ -8,6 +8,13 @@ APP.executeAfterAppLibCode ->
       ProjectPageDialogs.members_management_dialog.open(module.activeItemObj({_id: 1})._id)
 
       return
+    
+    "click .description-task-pane-section": (e, tpl) ->
+      task = JD.activeItem({"#{Projects.tasks_description_last_update_field_id}": 1})
+      if task?[Projects.tasks_description_last_update_field_id]?
+        APP.projects.updateTaskDescriptionReadDate task._id
+      
+      return
 
   ItemDetails = (options) ->
     module.TaskPaneSection.call @, options
