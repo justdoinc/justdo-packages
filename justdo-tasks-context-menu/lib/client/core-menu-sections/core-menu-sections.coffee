@@ -457,6 +457,7 @@ _.extend JustdoTasksContextMenu.prototype,
                 return task_id != item_definition._id # Don't show current task
               data:
                 label: -> return JustdoHelpers.ellipsis(project_task_doc.title or "", 40)
+                label_addendum_template: "manage_active_projects_jump_to_proj"
                 op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
                   query =
                     _id: task_id

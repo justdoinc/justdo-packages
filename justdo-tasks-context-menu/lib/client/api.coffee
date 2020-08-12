@@ -295,6 +295,10 @@ _.extend JustdoTasksContextMenu.prototype,
       type: new SimpleSchema
         label:
           type: "skip-type-check"
+        label_addendum_template:
+          type: String
+
+          optional: true
         op: 
           optional: true
           type: Function

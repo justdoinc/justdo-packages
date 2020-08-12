@@ -36,11 +36,11 @@
   {{/with}}
   {{#let current_section_id=section.id}}
     {{#each section.reactive_items_list.getList}}
-      <li class="dropdown-item context-action-item {{#if hasNestedSections}}context-nested-section-item{{/if}}">
+      <li class="dropdown-item context-action-item {{#if hasNestedSections}} context-nested-section-item{{/if}}">
         {{> tasks_context_menu_label}}
 
         {{#if hasNestedSections}}
-          <ul class="dropdown-menu p-2 shadow-lg border-0 nested-dropdown-menu">
+          <ul class="dropdown-menu p-2 shadow-lg border-0 nested-dropdown-menu nested-dropdown-menu-{{id}}">
             {{#each getNestedSections current_section_id id}}
               {{> tasks_context_section section=this}}
             {{/each}}
@@ -56,7 +56,7 @@
 </template>
 
 <template name="tasks_context_menu_label">
-  {{> tasks_context_menu_icon}} {{getLabelValue}}
+  {{> tasks_context_menu_icon}} {{> tasks_context_menu_label_content}}
 </template>
 
 <template name="tasks_context_menu_icon">
@@ -65,4 +65,8 @@
   {{else if $eq icon_type "none"}}
     <div class="empty-icon"></div>
   {{/if}}
+</template>
+
+<template name="tasks_context_menu_label_content">
+  {{getLabelValue}} {{#if label_addendum_template}}{{> Template.dynamic template=label_addendum_template data=getLabelAddendumDataContext}}{{/if}}
 </template>

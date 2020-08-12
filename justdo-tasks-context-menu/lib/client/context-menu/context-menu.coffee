@@ -129,7 +129,7 @@ Template.tasks_context_section.events
 
     return
 
-Template.tasks_context_menu_label.helpers
+Template.tasks_context_menu_label_content.helpers
   getLabelValue: ->
     tpl = Template.instance()
 
@@ -141,6 +141,10 @@ Template.tasks_context_menu_label.helpers
       return @label
 
     return undefined
+
+  getLabelAddendumDataContext: ->
+    tpl = Template.instance()
+    return [@].concat(tpl.closestInstance("tasks_context_menu").tasks_context_menu_controller._sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator())
 
 Template.tasks_context_menu_icon.helpers
   getIconValValue: ->

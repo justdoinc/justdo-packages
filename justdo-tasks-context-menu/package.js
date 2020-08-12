@@ -67,6 +67,12 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/context-menu/context-menu.html", client);
   api.addFiles("lib/client/context-menu/context-menu.coffee", client);
 
+  api.addFiles("lib/client/core-menu-sections/manage-active-projects-jump-to-proj/manage-active-projects-jump-to-proj.sass", client);
+  api.addFiles("lib/client/core-menu-sections/manage-active-projects-jump-to-proj/manage-active-projects-jump-to-proj.html", client);
+  api.addFiles("lib/client/core-menu-sections/manage-active-projects-jump-to-proj/manage-active-projects-jump-to-proj.coffee", client);
+
+
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", client);
