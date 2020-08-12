@@ -2,7 +2,10 @@ Template.meetings_dialog_task_subtask.onCreated ->
   self = @
   @task_subject_diverged_ra = new ReactiveVar(false)
   @autorun =>
-    self.task_obj = JD.collections.Tasks.findOne {_id: @data.task_id}
+    task_id = @data.task_id
+    JD.subscribeItemsAugmentedFields [task_id], ["users"]
+    self.task_obj = JD.collections.Tasks.findOne task_id
+    self.task_aug = APP.collections.TasksAugmentedFields.findOne task_id
   return
 
 Template.meetings_dialog_task_subtask.onRendered ->
@@ -72,8 +75,8 @@ Template.meetings_dialog_task_subtask.helpers
     return
 
   tasksUsers: ->
-    if (task_obj = Template.instance().task_obj)?
-      return Meteor.users.find {_id: {$in: task_obj.users}}
+    if (task_aug = Template.instance().task_aug)?
+      return Meteor.users.find {_id: {$in: task_aug.users}}
     return
 
   readOnly: ->
