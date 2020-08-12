@@ -269,9 +269,15 @@ GridControl.installFormatter "textWithTreeControls",
             <i class="fa fa-fw resource_planner fa-tasks #{resource_planner_classes} slick-prevent-edit" title="Resources" aria-hidden="true"></i>
         """
 
-    if (description = doc.description)? and not _.isEmpty(description)
+    if (description_last_update = doc[Projects.tasks_description_last_update_field_id])?
+      # Mark as unread if I read the description after its last update time
+      if (doc[Projects.tasks_description_last_read_field_id] or 0) < doc[Projects.tasks_description_last_update_field_id]
+        description_classes = "description-new-updates"
+      else
+        description_classes = ""
+
       tree_control += """
-          <i class="fa fa-fw fa-align-left task-description slick-prevent-edit" title="Task description" aria-hidden="true"></i>
+          <i class="fa fa-fw #{description_classes} fa-align-left task-description slick-prevent-edit" title="Task description" aria-hidden="true"></i>
       """
 
     if (last_message_date = doc[JustdoChat.tasks_chat_channel_last_message_date_field_id])?

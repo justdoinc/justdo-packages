@@ -191,6 +191,9 @@ _.extend PACK.Formatters.textWithTreeControls,
       handler: (e) ->
         openTaskPaneAndSetTab("item-details")
 
+        event_item = @getEventItem(e)
+        APP.projects.updateTaskDescriptionReadDate event_item._id
+
         # Update task pane
         Tracker.flush()
 
