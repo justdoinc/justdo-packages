@@ -383,7 +383,7 @@ _.extend JustdoTasksContextMenu.prototype,
       getAllJustdoActiveProjectsSortedByProjectName = (filter_state) ->
         options = 
           active_only: true
-          sort_by: {title: 1}
+          sort_by: {seqId: -1}
 
         if not _.isEmpty(filter_state)
           options.customize_query =
