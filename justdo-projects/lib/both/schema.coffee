@@ -71,6 +71,52 @@ _.extend Projects.prototype,
     if not _.isEmpty(validation_error = @_validateItemsSchema())
       throw @_error "validation-error"
 
+    if Meteor.isClient
+      # The following are defined mostly to have the grid_dependent_fields
+      # definition.
+      #
+      # Technically speaking the Projects.tasks_description_last_update_field_id
+      # definition should have been defined under both to protect the users
+      # from editing it from the client using the allow deny rules.
+      #
+      # The affect of users actually playing with it is so minimal that we don't
+      # bother that it isn't defined in the server.
+
+      TasksSchema = new SimpleSchema
+        "#{Projects.tasks_description_last_update_field_id}":
+          label: "Description last update date"
+
+          optional: true
+
+          type: Date
+
+          autoValue: ->
+            # Don't allow the client to edit this field
+            if not @isFromTrustedCode
+              return @unset()
+
+            return
+
+          grid_dependent_fields: ["title"]
+
+        "#{Projects.tasks_description_last_read_field_id}":
+          label: "Description last read date"
+
+          optional: true
+
+          type: Date
+
+          autoValue: ->
+            # Don't allow the client to edit this field
+            if not @isFromTrustedCode
+              return @unset()
+
+            return
+
+          grid_dependent_fields: ["title"]
+
+      @items_collection.attachSchema TasksSchema
+
     return
 
   _validateItemsSchema: ->
@@ -170,13 +216,6 @@ _.extend Projects.prototype,
               return @unset()
 
           return # Keep this return to return undefined (as required by autoValue)
-
-      "#{Projects.tasks_description_last_update_field_id}":
-        label: "Description last update date"
-
-        type: Date
-
-        optional: true
 
       createdAt:
         label: "Created"
