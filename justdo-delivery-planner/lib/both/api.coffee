@@ -64,27 +64,6 @@ _.extend JustdoDeliveryPlanner.prototype,
   taskObjHasMembersAvailabilityRecords: (item_obj) ->
     return not _.isEmpty item_obj[JustdoDeliveryPlanner.task_project_members_availability_field_name]
 
-  getProjectsAssignedToTask: (task_id, user_id) ->
-    task_aug = APP.collections.TasksAugmentedFields.findOne task_id, 
-      users: user_id
-    
-    if not task_aug?
-      return []
-
-    task_doc = @tasks_collection.findOne task_id,
-      fields:
-        project_id: 1
-        parents: 1
-
-    parents_tasks = _.keys task_doc.parents
-
-    known_projects = @getKnownProjects(task_doc.project_id, {active_only: false}, user_id)
-
-    assigned_projects = _.filter known_projects, (project_doc) ->
-      return project_doc._id in parents_tasks
-
-    return assigned_projects
-
   getKnownProjects: (project_id, options, user_id) ->
     # Get all the active projects known to
 

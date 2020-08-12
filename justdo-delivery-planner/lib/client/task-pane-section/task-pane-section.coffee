@@ -977,9 +977,6 @@ APP.executeAfterAppLibCode ->
 
       return
     
-    @autorun =>
-      JD.subscribeActiveItemAugmentedFields ["users"]
-
   Template.delivery_planner_task_pane_assign_tab.onRendered ->
     @autorun =>
       # Note, @getTaskAvailableAssignProjectList is a reactive resource, that invalidates on:

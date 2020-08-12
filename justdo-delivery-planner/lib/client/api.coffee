@@ -134,6 +134,24 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return
 
+  getProjectsAssignedToTask: (task_id) ->
+    task_doc = @tasks_collection.findOne task_id,
+      fields:
+        project_id: 1
+        parents: 1
+
+    if not task_doc?
+      return []
+
+    parents_tasks = _.keys task_doc.parents
+
+    known_projects = @getKnownProjects(task_doc.project_id, {active_only: false}, Meteor.userId())
+
+    assigned_projects = _.filter known_projects, (project_doc) ->
+      return project_doc._id in parents_tasks
+
+    return assigned_projects
+
   excludeProjectsCauseCircularChain: (project_tasks, task_id_to_be_added) ->
     grid_data_core = APP.modules.project_page?.mainGridControl()?._grid_data?._grid_data_core
 
