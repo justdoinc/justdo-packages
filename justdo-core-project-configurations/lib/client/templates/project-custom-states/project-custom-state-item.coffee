@@ -77,6 +77,9 @@ Template.project_custom_state_item.helpers
 
     return color == bg_color
 
+  showTransparentBackground: (color) ->
+    return color == "#00000000"
+
 
 # EVENTS
 Template.project_custom_state_item.events

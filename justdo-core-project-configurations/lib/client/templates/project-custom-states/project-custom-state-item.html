@@ -4,11 +4,19 @@
       <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical-double"/></svg>
     </div>
     <div class="custom-state-style dropdown">
-      <div class="custom-state-style-toggle" style="background-color: {{bg_color}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
+      <div class="custom-state-style-toggle" style="background-color: {{bg_color}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{#if showTransparentBackground bg_color}}
+          {{> bg_transparent}}
+        {{/if}}
+      </div>
       <div class="dropdown-menu animate slideIn shadow-lg border-0 mt-2">
         <div class="custom-state-style-colors-wrapper">
           {{#each colors}}
-            <div class="custom-state-style-color {{#if activeColor this}}active{{/if}}" style="background-color: {{this}}"></div>
+            <div class="custom-state-style-color {{#if activeColor this}}active{{/if}}" style="background-color: {{this}}">
+              {{#if showTransparentBackground this}}
+                {{> bg_transparent}}
+              {{/if}}
+            </div>
           {{/each}}
         </div>
       </div>
@@ -33,5 +41,19 @@
         <svg class="jd-icon custom-state-show"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
       </div>
     {{/if}}
+  </div>
+</template>
+
+<template name="bg_transparent">
+  <div class="bg-transparent">
+    <div class="bg-transparent-dark"></div>
+    <div class="bg-transparent-white"></div>
+    <div class="bg-transparent-dark"></div>
+    <div class="bg-transparent-white"></div>
+    <div class="bg-transparent-dark"></div>
+    <div class="bg-transparent-white"></div>
+    <div class="bg-transparent-dark"></div>
+    <div class="bg-transparent-white"></div>
+    <div class="bg-transparent-dark"></div>
   </div>
 </template>
