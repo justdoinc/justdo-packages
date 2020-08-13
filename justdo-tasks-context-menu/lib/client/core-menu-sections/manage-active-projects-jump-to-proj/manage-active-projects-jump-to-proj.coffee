@@ -25,11 +25,22 @@ Template.manage_active_projects_jump_to_proj.events
 
     [item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info] = @
 
-    gcm = APP.modules.project_page.getCurrentGcm()
+    project_task_id = item_data.id
 
-    # TODO activateCollectionItemIdInCurrentPathOrFallbackToMainTab isn't respecting properly
-    # item_data.id + "/"  when we are in the 3rd level.
-    gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(item_data.id + "/" + task_id)
+    # Try to find project_task_id path in the current grid
+    gc = APP.modules.project_page.gridControl()
+    if (project_path = gc?._grid_data?.getCollectionItemIdPath(project_task_id))?
+      # We found a path to project_task_id in the current tab, jump to it.
+      gc.activatePath(project_path + task_id + "/")
+    else
+      # Couldn't find in the active tab, zoom into project, and select the task
+      tab_id = "sub-tree"
+
+      gcm = APP.modules.project_page.getCurrentGcm()
+
+      gcm.activateTabWithSectionsState(tab_id, {global: {"root-item": project_task_id}})
+
+      gcm.setPath([tab_id, "/#{project_task_id}/#{task_id}/"])
 
     APP.justdo_tasks_context_menu.hide()
 
