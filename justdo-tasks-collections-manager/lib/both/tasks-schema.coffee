@@ -98,7 +98,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
             if not @isFromTrustedCode
               if @isSet
                 throw self._error "permission-denied", "Untrusted attempt to change status_by rejected"
-          
+
           return # Keep this return to return undefined (as required by autoValue)
 
       status_updated_at:
@@ -183,37 +183,37 @@ _.extend JustdoTasksCollectionsManager.prototype,
           "pending":
             txt: "Pending"
             order: 0
-
+            bg_color: "#B3E5FC"
             due_list_state: true
 
           "in-progress":
             txt: "In progress"
             order: 1
-
+            bg_color: "#03A9F4"
             due_list_state: true
 
           "done":
             txt: "Done"
             order: 2
-
+            bg_color: "#C8E6C9"
             due_list_state: false
 
           "will-not-do":
             txt: "Cancelled"
             order: 3
-
+            bg_color: "#F8BBD0"
             due_list_state: false
 
           "on-hold":
             txt: "On hold"
             order: 4
-
+            bg_color: "#CFD8DC"
             due_list_state: false
 
           "duplicate":
             txt: "Duplicate"
             order: 5
-
+            bg_color: "#FFF176"
             due_list_state: false
 
           "nil":
@@ -708,7 +708,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
               @unset()
 
               return
-            
+
             if /parents\..*?\.order/.test(_.keys(doc_id)[0])
               # Do nothing for order update resulted from move
               # of other items
@@ -794,7 +794,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
     #   defaultValue: "pending"
     #
     #   grid_values: (grid_control) ->
-    #     "pending-b": 
+    #     "pending-b":
     #       txt: "Pending B"
     #     "in-progress-b":
     #       txt: "In progress B"

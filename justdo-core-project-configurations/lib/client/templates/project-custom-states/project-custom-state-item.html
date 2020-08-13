@@ -3,44 +3,35 @@
     <div class="custom-state-handle">
       <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical-double"/></svg>
     </div>
-    <div class="custom-state-label">
-      {{#if isEditingLabel}}
-        <input class="custom-state-label-input" type="text" name="" value="{{label}}" placeholder="Type state name">
-      {{else}}
-        <div class="custom-state-label-text">
-          <div class="custom-state-label-text-active">
-            {{label}}
-          </div>
-          {{#if defaultLabel}}
-            <div class="custom-state-label-text-default">
-              <div class="custom-state-label-text-tooltip">
-                Default title for this state
-              </div>
-              {{defaultLabel}}
-            </div>
-          {{/if}}
-        </div>
-      {{/if}}
-    </div>
-    <div class="custom-state-type dropdown">
-      <div class="custom-state-type-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {{type}}
-      </div>
-      <div class="dropdown-menu dropdown-menu-right animate slideIn shadow-lg border-0 mt-2">
-        <div class="dropdown-item">Pre-work</div>
-        <div class="dropdown-item">In-progress</div>
-        <div class="dropdown-item">Post-work</div>
-      </div>
-    </div>
     <div class="custom-state-style dropdown">
       <div class="custom-state-style-toggle" style="background-color: {{bg_color}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
       <div class="dropdown-menu animate slideIn shadow-lg border-0 mt-2">
-        <!-- Colors -->
+        <div class="custom-state-style-colors-wrapper">
+          {{#each colors}}
+            <div class="custom-state-style-color {{#if activeColor this}}active{{/if}}" style="background-color: {{this}}"></div>
+          {{/each}}
+        </div>
       </div>
     </div>
-    <div class="custom-state-action">
-      <svg class="jd-icon custom-state-remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
-      <svg class="jd-icon custom-state-add"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+    <div class="custom-state-label {{#if isEditingLabel}}editing{{/if}}">
+      <input class="custom-state-label-input" type="text" name="" value="{{txt}}" placeholder="Type state name">
+      <div class="custom-state-label-text">
+        {{{textActive txt}}}
+        {{#if showDefaultLabel}}
+          <div class="custom-state-label-text-default">
+            <div class="custom-state-label-text-tooltip">
+              Default title for this state
+            </div>
+            {{defaultLabel}}
+          </div>
+        {{/if}}
+      </div>
     </div>
+    {{#if hideableState}}
+      <div class="custom-state-action">
+        <svg class="jd-icon custom-state-hide"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+        <svg class="jd-icon custom-state-show"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+      </div>
+    {{/if}}
   </div>
 </template>

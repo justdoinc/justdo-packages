@@ -6,26 +6,33 @@
           Active states
         </div>
         <div class="custom-states-section-container active-states">
-          {{#each activeStates}}
-            {{> project_custom_state_item}}
-          {{/each}}
+          {{#if activeStates}}
+            {{#each activeStates}}
+              {{> project_custom_state_item}}
+            {{/each}}
+          {{else}}
+            <div class="custom-states-empty bg-light">
+              No active states
+            </div>
+          {{/if}}
         </div>
       </div>
-      {{#if removedStates}}
       <div class="custom-states-section">
         <div class="custom-states-section-title">
-          Removed states
+          Hidden states
         </div>
-        <div class="custom-states-section-container removed-states">
-          {{#each removedStates}}
-            {{> project_custom_state_item}}
-          {{/each}}
+        <div class="custom-states-section-container hidden-states">
+          {{#if hiddenStates}}
+            {{#each hiddenStates}}
+              {{> project_custom_state_item}}
+            {{/each}}
+          {{else}}
+            <div class="custom-states-empty bg-light">
+              No hidden states
+            </div>
+          {{/if}}
         </div>
       </div>
-      {{/if}}
-    </div>
-    <div class="custom-states-input">
-      <input class="custom-states-add form-control" type="text" value="" placeholder="Add a new state">
     </div>
   </div>
 </template>

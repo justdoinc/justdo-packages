@@ -1,5 +1,5 @@
 .project-custom-state-item
-  background-color: #F4F6F9
+  background-color: #f0f4f9
   border-radius: 4px
   display: flex
   margin-top: 8px
@@ -26,16 +26,20 @@
     font-size: 15px
     color: #3D495B
     padding-right: 8px
+    padding-left: 2px
 
   .custom-state-label-text
     display: flex
+
+  .editing .custom-state-label-text
+    display: none
 
   .custom-state-label-text-active
     border-radius: 4px
     padding-left: 4px
     padding-right: 4px
     transition: background-color 0.35s
-    max-width: 190px
+    max-width: 240px
     white-space: nowrap
     overflow: hidden
     text-overflow: ellipsis
@@ -72,40 +76,22 @@
     width: 100%
     padding-left: 4px
     transition: box-shadow 0.35s
+    display: none
     &:focus
       box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
 
-  .custom-state-type
-    .custom-state-type-toggle
-      height: 22px
-      background-color: rgba(61, 73, 91, 0.08)
-      border-radius: 4px
-      font-weight: bold
-      font-size: 11px
-      line-height: 22px
-      display: flex
-      align-items: center
-      color: #3D495B
-      text-transform: uppercase
-      cursor: pointer
-      padding: 0 8px
-      transition: box-shadow 0.35s
-      user-select: none
-      &:hover
-        box-shadow: 0 0 0 2px rgba(171, 178, 191, 0.5)
-      &:active
-        box-shadow: 0 0 0 2px rgba(171, 178, 191, 0.75)
-
-    .dropdown-menu
-      padding: 8px
-
-    .dropdown-item
-      padding: 0.2rem 0.65rem
-      font-size: 12px
-      text-transform: uppercase
-      cursor: pointer
+  .editing .custom-state-label-input
+    display: block
 
   .custom-state-style
+    .dropdown-menu
+      padding: 4px
+
+    .custom-state-style-colors-wrapper
+      display: flex
+      flex-wrap: wrap
+      width: 168px
+
     .custom-state-style-toggle
       width: 22px
       height: 22px
@@ -120,9 +106,21 @@
       &:active
         box-shadow: 0 0 0 2px rgba(171, 178, 191, 0.75)
 
-    .dropdown-menu
-      right: 0 !important
-      left: auto !important
+    .custom-state-style-color
+      width: 22px
+      height: 22px
+      border: 2px solid #FFFFFF
+      border-radius: 5px
+      margin: 3px
+      cursor: pointer
+      transition: box-shadow 0.35s
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08)
+      &:hover
+        box-shadow: 0 0 0 2px rgba(171, 178, 191, 0.5)
+      &:active
+        box-shadow: 0 0 0 2px rgba(171, 178, 191, 0.75)
+      &.active
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25)
 
   .custom-state-action
     display: flex
@@ -139,14 +137,14 @@
         color: #3f4e61
 
 .active-states
-  .custom-state-add
+  .custom-state-show
     display: none
 
-.removed-states
+.hidden-states
   .custom-state-label
     text-decoration: line-through
 
-  .custom-state-remove
+  .custom-state-hide
     display: none
 
   .custom-state-handle,
