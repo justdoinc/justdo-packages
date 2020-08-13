@@ -3,28 +3,7 @@ Template.project_custom_state_item.onCreated ->
   tpl = @
   tpl.is_editing_label = new ReactiveVar false
   tpl.cur_proj = APP.modules.project_page.curProj()
-  tpl.colors = [
-    "#B3E5FC",
-    "#4FC3F7",
-    "#03A9F4",
-    "#0288D1",
-    "#F8BBD0",
-    "#F06292",
-    "#E91E63",
-    "#C2185B",
-    "#CFD8DC",
-    "#90A4AE",
-    "#607D8B",
-    "#455A64",
-    "#C8E6C9",
-    "#81C784",
-    "#4CAF50",
-    "#388E3C",
-    "#FFF9C4",
-    "#FFF176",
-    "#FFEB3B",
-    "#FBC02D",
-  ]
+  tpl.colors = ["#00000000", "#ffffff", "#d50001", "#e57c73", "#f4521e", "#f6bf25", "#33b679", "#0a8043", "#019be5", "#3f51b5" ,"#7986cb", "#8d24aa", "#616161", "#4285f4", "#000000"]
 
   # Update State Txt
   tpl.updateStateTxt = (state_id, txt) ->
