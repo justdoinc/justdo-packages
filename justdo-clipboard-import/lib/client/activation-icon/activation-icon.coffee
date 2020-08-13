@@ -297,7 +297,7 @@ Template.justdo_clipboard_import_activation_icon.events
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)
 
     dialog = bootbox.dialog
-      title: "Import spreadsheet data as child tasks to <i>#{JustdoHelpers.taskCommonName(JD.activeItem("all-fields"), 80)}</i>"
+      title: "Import spreadsheet data as child tasks to <i>#{JustdoHelpers.taskCommonName(JD.activeItem(undefined, {allow_undefined_fields: true}), 80)}</i>"
       message: message_template.node
       animate: true
       className: "bootbox-new-design justdo-clipboard-import-dialog"

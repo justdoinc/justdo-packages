@@ -21,10 +21,16 @@ _.extend Projects.prototype,
       stopped: false
 
       getProjectDoc: (options) ->
-        if not options?.fields?
-          console.error "fields option must be specified" # XXX should throw error here
-        if options?.fields? == "all-fields"
-          options.fields = undefined
+        if not options?
+          options = {}
+        if not options.fields?
+          if options.allow_undefined_fields == true
+            options.fields = undefined
+          else
+            # This line should be:
+            # throw new Meteor.Error "fields-not-specified", "Fields parameters must be provide"
+            console.error "fields option must be specified" 
+
         self.getProjectDoc(project_id, options)
 
       updateProjectDoc: (update_op) ->

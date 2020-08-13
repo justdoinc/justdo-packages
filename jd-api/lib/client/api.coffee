@@ -1,9 +1,10 @@
 _.extend JD,
-  activeJustdo: (fields) ->
-    if not fields
-      throw new Meteor.Error "fields parameter must be provided"
-    if fields == "all-fields"
-      fields = undefined
+  activeJustdo: (fields, options) ->
+    if not fields?
+      if options?.allow_undefined_fields == true
+        fields = undefined
+      else
+        throw new Meteor.Error "fields-not-specified", "Fields parameters must be provide"
     if (active_obj = APP.modules?.project_page?.curProj()?.getProjectDoc({fields: fields}))?
       return active_obj
 
@@ -11,7 +12,7 @@ _.extend JD,
     return undefined
 
   activeJustdoId: ->
-    return @activeJustdo({_id: 1})._id
+    return @activeJustdo({_id: 1})?._id
 
   active_justdo:
     isAdmin: ->
@@ -23,11 +24,12 @@ _.extend JD,
   activeItemId: ->
     return APP.modules.project_page.activeItemId()
 
-  activeItem: (fields) ->
+  activeItem: (fields, options) ->
     if not fields?
-      throw new Meteor.Error "fields option must be specified"
-    if fields == "all-fields"
-      fields = undefined
+      if options?.allow_undefined_fields == true
+        fields = undefined
+      else
+        throw new Meteor.Error "fields-not-specified", "Fields parameters must be provide"
     if (active_obj = APP.modules?.project_page?.activeItemObj(fields))?
       return active_obj
 
