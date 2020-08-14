@@ -7,7 +7,7 @@ _.extend PACK.modules,
 
     _getDueListsStates: ->
       if not @_getDueListsStates_cache?
-        if not (grid_values_defs = @items_collection?.simpleSchema?()?._schema?.state.grid_values?())?
+        if not (grid_values_defs = @items_collection?.simpleSchema?()?._schema?.state.grid_values)?
           throw _.error("cant-find-states-definitions-in-schema")
 
         @_getDueListsStates_cache = _.compact(_.map(grid_values_defs, (state_def, key) ->
