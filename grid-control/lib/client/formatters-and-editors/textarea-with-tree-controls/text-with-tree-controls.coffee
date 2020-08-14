@@ -1,5 +1,7 @@
 system_minimal_seq_id_space_on_grid = 3
 
+time_description_last_read_introduced_time_stamp = +(new Date(Date.UTC(2020, 7, 14, 0, 0, 0, 0))) # Descriptions edited before or on that time will always be regarded as read
+
 getHeighestSeqId = ->
   # Returns seqId of the item with the highest sequence id under @collection
   # has, or undefined, if no item, or no item with sequence id exists.
@@ -271,10 +273,11 @@ GridControl.installFormatter "textWithTreeControls",
 
     if (description_last_update = doc[Projects.tasks_description_last_update_field_id])?
       # Mark as unread if I read the description after its last update time
-      if (doc[Projects.tasks_description_last_read_field_id] or 0) < doc[Projects.tasks_description_last_update_field_id]
-        description_classes = "description-new-updates"
-      else
-        description_classes = ""
+      if +description_last_update > time_description_last_read_introduced_time_stamp
+        if (doc[Projects.tasks_description_last_read_field_id] or 0) < description_last_update
+          description_classes = "description-new-updates"
+        else
+          description_classes = ""
 
       tree_control += """
           <i class="fa fa-fw #{description_classes} fa-align-left task-description slick-prevent-edit" title="Task description" aria-hidden="true"></i>
