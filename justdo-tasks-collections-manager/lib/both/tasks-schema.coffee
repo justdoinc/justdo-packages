@@ -183,37 +183,31 @@ _.extend JustdoTasksCollectionsManager.prototype,
           "pending":
             txt: "Pending"
             order: 0
-            bg_color: "#00000000"
             due_list_state: true
 
           "in-progress":
             txt: "In progress"
             order: 1
-            bg_color: "#00000000"
             due_list_state: true
 
           "done":
             txt: "Done"
             order: 2
-            bg_color: "#00000000"
             due_list_state: false
 
           "will-not-do":
             txt: "Cancelled"
             order: 3
-            bg_color: "#00000000"
             due_list_state: false
 
           "on-hold":
             txt: "On hold"
             order: 4
-            bg_color: "#00000000"
             due_list_state: false
 
           "duplicate":
             txt: "Duplicate"
             order: 5
-            bg_color: "#00000000"
             due_list_state: false
 
           "nil":
