@@ -32,7 +32,7 @@ getHeighestSeqId = ->
   # return highest_seq_id_doc.seqId
 
   # This approach will work only in environments with JustDo enabled
-  highest_seq_id = APP?.modules?.project_page?.curProj()?.getProjectDoc()?.lastTaskSeqId
+  highest_seq_id = APP?.modules?.project_page?.curProj()?.getProjectDoc({fields: {lastTaskSeqId: 1}})?.lastTaskSeqId
 
   return highest_seq_id
 
