@@ -277,7 +277,7 @@ _.extend Projects.prototype,
       _getDefaultCustomStates: ->
         states_def = []
 
-        for state_id, schema_state_def of APP.collections.Tasks.simpleSchema()._schema.state.grid_values()
+        for state_id, schema_state_def of APP.collections.Tasks.simpleSchema()._schema.state.grid_values
           if state_id == "nil"
             continue
 
@@ -297,7 +297,7 @@ _.extend Projects.prototype,
         current_custom_states_ids = _.map @getCustomStates(), (state_def) -> state_def.state_id
 
         hidden_states_defs = []
-        for state_id, schema_state_def of APP.collections.Tasks.simpleSchema()._schema.state.grid_values()
+        for state_id, schema_state_def of APP.collections.Tasks.simpleSchema()._schema.state.grid_values
           if state_id in current_custom_states_ids or state_id == "nil"
             continue
 

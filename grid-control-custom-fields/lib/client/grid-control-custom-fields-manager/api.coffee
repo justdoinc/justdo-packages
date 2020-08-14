@@ -20,6 +20,29 @@ _.extend GridControlCustomFieldsManager.prototype,
           @options.custom_fields_definitions.get()
 
         @addCustomFields(new_custom_fields_definitions)
+
+        if @options.custom_states_definitions instanceof ReactiveVar
+          if (custom_states_definitions = @options.custom_states_definitions.get())? and _.isArray(custom_states_definitions)
+            state_schema = _.extend {}, APP.collections.Tasks.simpleSchema()._schema.state
+            state_schema.grid_removed_values = state_schema.grid_values # Make all the values available under removed values
+            state_schema.grid_values = {}
+
+            for state_def, index in custom_states_definitions
+              # First, copy the original value
+              state_schema.grid_values[state_def.state_id] = _.extend {}, state_schema.grid_removed_values[state_def.state_id]
+              
+              if not state_def.bg_color? or state_def.bg_color == "#00000000" # 8 0s means transparent (anything with last 2 zeros means)
+                delete state_schema.grid_values[state_def.state_id].bg_color
+              else
+                state_schema.grid_values[state_def.state_id].bg_color = state_def.bg_color
+
+              state_schema.grid_values[state_def.state_id].txt = state_def.txt
+              state_schema.grid_values[state_def.state_id].order = index
+
+            state_schema.grid_values["nil"] = _.extend {}, state_schema.grid_removed_values["nil"]
+            state_schema.grid_values["nil"].order = 100 # To ensure it'll always be last
+
+            @custom_fields_schema.state = state_schema
     else if @options.custom_fields_definitions?
       # If exists, it has to be an object, due to options init (see init.coffee)
 

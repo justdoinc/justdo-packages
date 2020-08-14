@@ -63,6 +63,17 @@ APP.executeAfterAppLibCode ->
 
           return
 
+      project_custom_states_definitions_rv = new ReactiveVar {}
+      project_custom_states_definitions_rv_update_comp = null
+      Tracker.nonreactive ->
+        project_custom_states_definitions_rv_update_comp = Tracker.autorun ->
+          custom_states = APP.collections.Projects.findOne(_project_id, {fields: {"conf.custom_states": 1}})?.conf?.custom_states
+
+          project_custom_states_definitions_rv.set(custom_states)
+
+          return
+
+
       project_removed_custom_fields_definitions_rv = new ReactiveVar {}
       project_removed_custom_fields_definitions_rv_update_comp = null
       Tracker.nonreactive ->
@@ -76,6 +87,10 @@ APP.executeAfterAppLibCode ->
 
       Tracker.onInvalidate ->
         project_custom_fields_definitions_rv_update_comp.stop()
+        project_custom_states_definitions_rv_update_comp.stop()
+        project_removed_custom_fields_definitions_rv_update_comp.stop()
+
+        return
 
       #
       # hard-code the custom fields for the permitted domains below, for POC purposes
@@ -96,6 +111,7 @@ APP.executeAfterAppLibCode ->
         use_shared_grid_control_custom_fields_manager: true
         shared_grid_control_custom_fields_manager_options:
           custom_fields_definitions: project_custom_fields_definitions_rv
+          custom_states_definitions: project_custom_states_definitions_rv
         use_shared_grid_control_removed_custom_fields_manager: true
         shared_grid_control_removed_custom_fields_manager_options:
           custom_fields_definitions: project_removed_custom_fields_definitions_rv

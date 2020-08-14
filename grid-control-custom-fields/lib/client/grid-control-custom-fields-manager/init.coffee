@@ -59,6 +59,10 @@ options_schema =
             return error_msg
 
         return
+    custom_states_definitions:
+      type: "skip-type-check"
+      
+      optional: true
 
 # options_schema
 # ==============

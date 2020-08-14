@@ -179,7 +179,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
           return undefined # in any other operation type, don't change state
 
-        grid_values: (grid_control) ->
+        grid_values:
           "pending":
             txt: "Pending"
             order: 0

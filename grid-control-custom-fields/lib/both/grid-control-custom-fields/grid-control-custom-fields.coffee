@@ -397,7 +397,7 @@ _.extend GridControlCustomFields,
   getProjectCustomFieldsDefinitions: (justdo_projects, project_id) ->
     projects_collection = justdo_projects.projects_collection
 
-    project_doc = projects_collection.findOne(project_id)
+    project_doc = projects_collection.findOne(project_id, {fields: {custom_fields: 1}})
 
     return @_customFieldsArrayDefinitionToObjectDefinition(project_doc?.custom_fields)
 
@@ -407,7 +407,7 @@ _.extend GridControlCustomFields,
   getProjectRemovedCustomFieldsDefinitions: (justdo_projects, project_id) ->
     projects_collection = justdo_projects.projects_collection
 
-    project_doc = projects_collection.findOne(project_id)
+    project_doc = projects_collection.findOne(project_id, {fields: {removed_custom_fields: 1}})
 
     return @_customFieldsArrayDefinitionToObjectDefinition(project_doc?.removed_custom_fields)
 
