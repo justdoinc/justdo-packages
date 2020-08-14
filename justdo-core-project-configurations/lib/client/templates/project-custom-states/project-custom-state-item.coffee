@@ -47,31 +47,27 @@ Template.project_custom_state_item.onRendered ->
 
   return
 
+getDefaultTextLabelForState = (state_id) ->
+  return APP.collections.Tasks.simpleSchema()._schema.state.grid_values[state_id]?.txt
+
 # HELPERS
 Template.project_custom_state_item.helpers
   isEditingLabel: ->
     return Template.instance().is_editing_label.get()
 
   showDefaultLabel: ->
-    state_id = @state_id
-    gc = APP.modules.project_page.gridControl()
-    state_label = gc?.getSchemaExtendedWithCustomFields()?.state?.grid_values?[state_id]?.txt
+    default_state_txt_label = getDefaultTextLabelForState(@state_id)
 
-    return not (state_label == @txt)
+    return default_state_txt_label? and default_state_txt_label != @txt
 
-  defaultLabel: ->
-    state_id = @state_id
-    gc = APP.modules.project_page.gridControl()
-    state_label = gc?.getSchemaExtendedWithCustomFields()?.state?.grid_values?[state_id]?.txt
-
-    return state_label
+  defaultLabel: -> getDefaultTextLabelForState(@state_id) or ""
 
   hideableState: ->
     return _.indexOf(Projects.not_hideable_states, @state_id) < 0
 
   # to ensure no flicker after text update we need to isolate div.custom-state-label-text-active
-  textActive: (txt) ->
-    return """<div class="custom-state-label-text-active">#{txt}</div>"""
+  textActive: ->
+    return """<div class="custom-state-label-text-active">#{@txt}</div>"""
 
   colors: ->
     return Template.instance().colors
