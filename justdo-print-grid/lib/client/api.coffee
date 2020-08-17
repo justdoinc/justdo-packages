@@ -111,10 +111,14 @@ _.extend JustdoPrintGrid.prototype,
 
               field = cols[j].field
               val = item_obj[cols[j].field]
+              format_value = formatWithPrintFormatter(item_obj._id, field, val, item_obj, path) or ""
+
+              if field == "state"
+                format_value = """<div class="d-flex">#{format_value}</div>"""
 
               cell.push
                 "class": "text #{field}"
-                "value": formatWithPrintFormatter(item_obj._id, field, val, item_obj, path) or ""
+                "value": format_value
                 "colspan": 1
           else
             cell.push
