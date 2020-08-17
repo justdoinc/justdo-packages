@@ -6,6 +6,9 @@ $dependency-arrow-color-on-hover: red
 
 $dependency-arrows-width: 5px // this is needed to give some room for the user hover on the arrow
 
+$today-indicator-color: rgba(128, 184, 140, 1)
+$today-indicator-width: 1px
+
 .justdo-grid-gantt-all-dependencies
   position: absolute
   top: 0px
@@ -38,6 +41,11 @@ $dependency-arrows-width: 5px // this is needed to give some room for the user h
       border-left-width: 1px
       border-left-color: $dependency-arrow-color
       width: $dependency-arrows-width
+
+    .today-indicator
+      border: none
+      width: $today-indicator-width
+      background: $today-indicator-color
 
     .dependency-1-2-cancel
       position: absolute

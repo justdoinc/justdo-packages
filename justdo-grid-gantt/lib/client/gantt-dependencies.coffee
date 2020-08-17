@@ -274,6 +274,34 @@ _.extend JustdoGridGantt.prototype,
     for dependency_key, dependency_obj of self.dependencies_map
       self.renderDependency dependency_obj
     return
+  
+  renderTodayIndicator: ->    
+    self = @
+
+    # todo - (optimization) use same tick cache for gc, epoch_range,
+    if not (gc = APP.modules.project_page.gridControl())?
+      return
+
+    epoch_range = self.getEpochRange()
+    
+    today_0000 = moment().startOf("day").add(moment().utcOffset(), "minutes").valueOf()
+    if (offset = self.timeOffsetPixels(epoch_range, today_0000, self.getColumnWidth()))? and
+      0 < offset and offset < self.getColumnWidth()
+        p0 =
+          x: offset
+          y: 0
+        p1 =
+          x: offset
+          y: $(".grid-canvas").outerHeight()
+
+        html = """
+                <div class="dependency-container">
+                  <div class="line vertical today-indicator" style="#{self.lineStyle p0, p1}">
+                  </div>
+                </div>
+                """
+
+        $(".justdo-grid-gantt-all-dependencies").append html
 
   _refreshArrows: ->
     # The following happens when a core data is done loading, but the grid itself is  not populated yet.
@@ -294,6 +322,8 @@ _.extend JustdoGridGantt.prototype,
     # place to put it. See Task #7645: hints are removed frequently on mouse move. See comment in _refreshArrows()
     # @resetDependenciesDiv()
     @rerenderAllDependencies()
+
+    @renderTodayIndicator()
     
     return
 
