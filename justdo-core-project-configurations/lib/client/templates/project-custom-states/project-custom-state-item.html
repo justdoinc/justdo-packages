@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="custom-state-label {{#if isEditingLabel}}editing{{/if}}">
-      <input class="custom-state-label-input" type="text" name="" value="{{txt}}" placeholder="Type state name">
+      <input class="custom-state-label-input" type="text" name="" value="{{txt}}" maxlength="20" placeholder="Type state name">
       <div class="custom-state-label-text">
         {{{xssGuard textActive}}}
         {{#if showDefaultLabel}}
