@@ -1,16 +1,5 @@
 day = 24 * 60 * 60 * 1000
 
-# Manage hitting escape to stop mouse operations
-$("body").keyup (e) ->
-  if not (e.keyCode == 27)
-    return
-
-  if (grid_gantt = APP.justdo_grid_gantt)?
-    grid_gantt.resetStatesChangeOnEscape()
-    $(".grid-gantt-date-hint").remove()
-
-  return
-
 GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   gridControlInit: ->
     # IMPORTANT! The following code assumes that there is only a single Gantt Field formatter in any given
@@ -41,12 +30,25 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       recalcGridGanttFloatingElementsContainerPosition()
       return
 
+    _onEscapeResetStateChangeHandler = (e) ->
+      if not (e.keyCode == 27)
+        return
+
+      if (grid_gantt = APP.justdo_grid_gantt)?
+        grid_gantt.resetStatesChangeOnEscape()
+        $(".grid-gantt-date-hint").remove()
+      
+      return
+
     setupGridEventsListeners = ->
       gc._grid.onScroll.subscribe(_gridOnScrollHandler)
+      # Manage hitting escape to stop mouse operations
+      $("body").on "keyup", _onEscapeResetStateChangeHandler
       return
 
     destroyGridEventsListeners = ->
       gc._grid?.onScroll.unsubscribe(_gridOnScrollHandler)
+      $("body").off "keyup", _onEscapeResetStateChangeHandler
       return
 
     redrawFormatterHeader = (field_id) ->
