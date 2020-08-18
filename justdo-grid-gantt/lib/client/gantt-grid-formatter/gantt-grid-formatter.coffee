@@ -475,23 +475,25 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mousedown", ".grid-gantt-formatter"]
     handler: (e) ->
-      states = APP.justdo_grid_gantt.getOrCreateState()
-      if states.end_time.is_dragging or
-           states.main_bar.is_dragging or
-           states.milestone.is_dragging or
-           states.dependencies.finish_to_x_independent?
-        return
-        
-      range = APP.justdo_grid_gantt.getEpochRange()
-      # todo: change the column_range to an array
-      APP.justdo_grid_gantt.setState
-        mouse_down:
-          x: e.clientX
-          y: e.clientY
-        column_range:
-          is_dragging: true
-          original_from_epoch_time: range[0]
-          original_to_epoch_time: range[1]
+      if e.button == 0    # left click
+        states = APP.justdo_grid_gantt.getOrCreateState()
+        if states.end_time.is_dragging or
+            states.main_bar.is_dragging or
+            states.milestone.is_dragging or
+            states.dependencies.finish_to_x_independent?
+          return
+          
+        range = APP.justdo_grid_gantt.getEpochRange()
+        # todo: change the column_range to an array
+        APP.justdo_grid_gantt.setState
+          mouse_down:
+            x: e.clientX
+            y: e.clientY
+          column_range:
+            is_dragging: true
+            original_from_epoch_time: range[0]
+            original_to_epoch_time: range[1]
+
       return
   ,
     args: ["wheel", ".grid-gantt-formatter"]
