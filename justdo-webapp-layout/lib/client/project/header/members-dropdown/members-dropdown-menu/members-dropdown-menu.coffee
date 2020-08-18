@@ -2,6 +2,29 @@ APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
   curProj = module.helpers.curProj
 
+  share.MembersDropdown = JustdoHelpers.generateNewTemplateDropdown "members-dropdown-menu", "members_dropdown_menu",
+    custom_bound_element_options:
+      close_button_html: null
+
+    updateDropdownPosition: ($connected_element) ->
+      @$dropdown
+        .position
+          of: $connected_element
+          my: "right top"
+          at: "right bottom"
+          collision: "fit fit"
+          using: (new_position, details) =>
+            target = details.target
+            element = details.element
+            element.element.addClass "animate slideIn shadow-lg"
+            element.element.css
+              top: new_position.top - 11
+              left: new_position.left
+
+        $(".dropdown-menu.show").removeClass("show") # Hide dropdown
+
+      return
+
   addMembersDropDownError = (error_message) ->
     # Currently, we show up to one error at a time
     clearMembersDropDownErrors()
@@ -79,11 +102,8 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.members_dropdown_menu.onRendered ->
-    $("#project-members-dropdown").on "show.bs.dropdown", ->
-      setTimeout (->
-        $(".members-search-input").focus()
-      ), 500
-      return
+    $(".members-search-input").focus()
+
     return
 
   Template.members_dropdown_menu.helpers module.template_helpers
