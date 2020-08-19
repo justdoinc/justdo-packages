@@ -7,7 +7,7 @@
     max-width: 720px
 
 .dashboard-header
-  margin: 32px 0
+  margin: 32px 0 12px 0
   display: flex
 
   .dashboard-search-input
@@ -20,7 +20,7 @@
 
 .dashboard-empty
   text-align: center
-  margin-top: 20px
+  margin-top: 10px
   padding: 100px 0
   font-size: 17px
   color: rgba(0, 0, 0, 0.25)
@@ -33,6 +33,7 @@
   font-weight: bold
   display: flex
   justify-content: space-between
+  color: rgba(49, 69, 99, 0.6)
 
 .create-project
   white-space: nowrap
@@ -47,29 +48,71 @@
     stroke-width: 2
     opacity: 0.5
 
-.project-card
-  display: flex
-  border-bottom: 1px dashed #E7E8EB
-  padding: 8px 8px 8px 20px
-  align-items: center
+.create-project-btn
+  position: fixed
+  right: 80px
+  bottom: 80px
+  background-color: #e7f1ff
+  padding: 4px
+  border-radius: 8px
+  cursor: pointer
+  transition: box-shadow 0.35s
+  &:hover
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+    .create-project-tooltip
+      display: block
+  svg
+    width: 50px
+    height: 50px
+    color: #037bfe
+    stroke-width: 2px
+  .create-project-tooltip
+    box-shadow: 0px 8px 60px rgba(0, 0, 0, 0.12)
+    border-radius: 4px
+    font-size: 13px
+    color: #3D495B
+    position: absolute
+    white-space: nowrap
+    background-color: white
+    padding: 4px 8px
+    right: 68px
+    top: 15px
+    display: none
+
+.project-card-wrapper
+  padding-left: 12px
+  margin-left: -12px
   transition: background-color 0.35s
-  position: relative
+  border-radius: 8px
+  transition: box-shadow 0.35s
   &:hover
     background-color: #F7F8F9
-    color: black
-    .project-indicator
-      opacity: 0.75
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+    .project-card
+      border-color: rgba(0, 0, 0, 0)
 
-.project-indicator
-  position: absolute
-  top: 8px
-  bottom: 8px
-  left: 0px
-  width: 4px
-  border-radius: 1px
-  background-color: #98A1B0
-  opacity: 0.25
-  transition: opacity 0.35s
+.project-card
+  display: flex
+  border-bottom: 1px solid rgba(231, 232, 235, 0.5)
+  align-items: center
+  position: relative
+  padding: 10px 0
+  text-decoration: none !important
+
+.project-icon
+  width: 26px
+  height: 26px
+  border-radius: 4px
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2)
+  position: relative
+  svg
+    color: white
+    stroke-width: 4px
+    position: absolute
+    right: -6px
+    top: -2px
+    width: 28px
+    height: 28px
 
 .project-title
   color: #3D495B
@@ -78,18 +121,14 @@
   white-space: nowrap
   text-overflow: ellipsis
   overflow: hidden
-  margin-right: 12px
+  margin: 0 12px
   text-decoration: none
 
 .project-members
-  padding: 4px
-  border-radius: 100px
-  background-color: rgba(82, 95, 127, 0.08)
   .justdo-avatars-box
     display: flex
   .sep
     display: none
 
 .project-actions
-  margin-left: 16px
-  padding-left: 8px
+  margin: 0 8px
