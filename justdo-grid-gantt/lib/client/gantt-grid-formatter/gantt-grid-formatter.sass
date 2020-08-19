@@ -7,7 +7,8 @@
   clip-path: inset(-200px 1px)
 
 .grid-gantt-formatter
-  height: 100%
+  height: calc(100% + 1px)
+  background: white
 
   position: absolute
   top: 0
@@ -96,6 +97,9 @@
     top: 3px
     .jd-icon
       width: 16px
+
+.grid-canvas > .slick-row:last-child .grid-gantt-formatter
+  height: 100%
 
 .grid-gantt-date-hint
   position: absolute
