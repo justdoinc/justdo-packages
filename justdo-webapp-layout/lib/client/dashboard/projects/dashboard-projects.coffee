@@ -80,3 +80,5 @@ APP.executeAfterAppLibCode ->
     primary_users: -> APP.projects.getAdminsIdsFromProjectDoc @
 
     secondary_users: -> APP.projects.getNonAdminsIdsFromProjectDoc @
+
+    user: -> Meteor.user()

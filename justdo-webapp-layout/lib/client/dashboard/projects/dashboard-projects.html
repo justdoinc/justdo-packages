@@ -1,19 +1,14 @@
 <template name="dashboard_projects">
   <div class="dashboard-projects">
     <div class="container">
-      <div class="dashboard-wellcome">
-        <h4>Wellcome back <strong>{{userName}}</strong></h4>
-      </div>
       <div class="dashboard-header">
-        <input class="dashboard-search-input form-control form-control-lg bg-light border-0 font-weight-bold" placeholder="Search JustDos" type="text">
-        <div class="dashboard-operations">
-          <button class="create-project btn btn-primary btn-lg font-weight-bold" type="button">Create JustDo</button>
-        </div>
+        <input class="dashboard-search-input form-control" placeholder="Search JustDos" type="text">
       </div>
 
       <div class="projects-list">
-        <div class="projects-header border-bottom">
+        <div class="projects-header">
           JustDos
+          <div class="create-project text-primary"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>Create JustDo</div>
         </div>
         {{#if projects}}
           {{#each projects}}
@@ -40,11 +35,17 @@
 
 <template name="dashboard_projects_project_card_members">
   <div class="project-members">
-    {{> justdo_avatars_box
-          box_grid=box_grid
-          primary_users=primary_users
-          secondary_users=secondary_users
-          show_button="on-excess"
-    }}
+    {{#if members}}
+      {{> justdo_avatars_box
+            box_grid=box_grid
+            primary_users=primary_users
+            secondary_users=secondary_users
+            show_button="on-excess"
+      }}
+    {{else}}
+      {{#with user}}
+        {{> justdo_avatar}}
+      {{/with}}
+    {{/if}}
   </div>
 </template>

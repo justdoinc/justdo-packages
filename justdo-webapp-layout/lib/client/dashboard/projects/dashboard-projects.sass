@@ -3,16 +3,20 @@
 .dashboard-projects
   flex-grow: 1
 
-.dashboard-wellcome
-  margin: 32px 0 16px 0
+  .container
+    max-width: 720px
 
 .dashboard-header
-  margin-bottom: 32px
+  margin: 32px 0
   display: flex
 
-.dashboard-search-input
-  &::placeholder
-    color: #B5BCC7 !important
+  .dashboard-search-input
+    border: none
+    background-color: rgba(83, 95, 126, 0.06)
+    border-radius: 8px
+    line-height: 38px
+    &::placeholder
+      color: #B5BCC7
 
 .dashboard-empty
   text-align: center
@@ -23,19 +27,25 @@
   border-radius: 8px
 
 .projects-header
-  padding: 4px 0px
-  font-size: 16px
+  padding: 8px 0px
+  font-size: 14px
   text-transform: uppercase
   font-weight: bold
-  color: #98A1B0
-
-.dashboard-operations
   display: flex
-  margin-left: 12px
+  justify-content: space-between
 
 .create-project
   white-space: nowrap
-  text-transform: uppercase
+  display: flex
+  align-items: center
+  line-height: 100%
+  cursor: pointer
+  &:hover
+    text-decoration: underline
+  svg
+    padding: 3px
+    stroke-width: 2
+    opacity: 0.5
 
 .project-card
   display: flex
@@ -62,14 +72,14 @@
   transition: opacity 0.35s
 
 .project-title
-  color: #525F7F
-  font-size: 17px
+  color: #3D495B
+  font-size: 16px
   flex-grow: 1
-  font-weight: bold
   white-space: nowrap
   text-overflow: ellipsis
   overflow: hidden
   margin-right: 12px
+  text-decoration: none
 
 .project-members
   padding: 4px
@@ -83,8 +93,3 @@
 .project-actions
   margin-left: 16px
   padding-left: 8px
-
-.project-card.guest
-  .project-members,
-  .project-actions
-    display: none
