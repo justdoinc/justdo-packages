@@ -30,15 +30,28 @@ _.extend JustdoDependencies.prototype,
             grid_editable_column: true
             default_width: 100
 
-          @collection_hook = APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options)=>
-            return @checkDependenciesFormatBeforeUpdate doc, field_names, modifier, options
+          APP.modules.project_page.setupPseudoCustomField JustdoDependencies.is_milestone_pseudo_field_id,
+            label: JustdoDependencies.is_milestone_pseudo_field_label
+            field_type: "select"
+            grid_visible_column: true
+            grid_editable_column: true
+            default_width: 100
+            field_options :
+              select_options : [
+                {option_id: "true", label: "Yes"},
+                {option_id: "false", label: "No"}
+              ]
             
+          @collection_hook = APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options)=>
+            return @checkDependenciesFormatBeforeUpdate(doc, field_names, modifier, options)
+
           return
 
         destroyer: =>
           APP.justdo_project_pane.unregisterTab "justdo-dependencies"
 
           APP.modules.project_page.removePseudoCustomFields JustdoDependencies.dependencies_field_id
+          APP.modules.project_page.removePseudoCustomFields JustdoDependencies.is_milestone_pseudo_field_id
 
           @collection_hook.remove()
 
