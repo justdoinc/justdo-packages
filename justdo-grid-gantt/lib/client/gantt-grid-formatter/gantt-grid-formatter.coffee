@@ -523,13 +523,16 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           new_end_time = states.end_time.original_start_time + 23 * 60 * 60 * 1000
         
         new_end_date = moment.utc(new_end_time).format("YYYY-MM-DD")
-  
-        grid_gantt.task_id_to_info[states.task_id].self_end_time = states.end_time.original_end_time
-        grid_gantt.task_ids_edited_locally.add states.task_id
-        
-        JD.collections.Tasks.update states.task_id,
-          $set:
-            end_date: new_end_date
+        old_end_date = moment.utc(states.end_time.original_end_time).format("YYYY-MM-DD")
+        if old_end_date == new_end_date
+          grid_gantt.resetStatesChangeOnEscape()
+        else
+          grid_gantt.task_id_to_info[states.task_id].self_end_time = states.end_time.original_end_time
+          grid_gantt.task_ids_edited_locally.add states.task_id
+          
+          JD.collections.Tasks.update states.task_id,
+            $set:
+              end_date: new_end_date
         
         APP.justdo_grid_gantt.setState
           end_time:
@@ -565,26 +568,32 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         else
           delta_time = 0
-  
+        
         new_start = states.main_bar.original_start_time + delta_time
         new_start_date = moment.utc(new_start).format("YYYY-MM-DD")
         new_start_epoch = grid_gantt.dateStringToStartOfDayEpoch(new_start_date)
-        new_end_epoch = new_start_epoch + (states.main_bar.original_end_time - states.main_bar.original_start_time)
-        new_end_date = moment.utc(new_end_epoch).format("YYYY-MM-DD")
-  
-        grid_gantt.task_id_to_info[states.task_id].self_start_time = states.main_bar.original_start_time
-        grid_gantt.task_id_to_info[states.task_id].self_end_time = states.main_bar.original_end_time
-        grid_gantt.task_ids_edited_locally.add states.task_id
         
-        JD.collections.Tasks.update states.task_id,
-          $set:
-            start_date: new_start_date
-            end_date: new_end_date
-  
+        if new_start_epoch == states.main_bar.original_start_time
+          grid_gantt.resetStatesChangeOnEscape()
+        else
+          new_end_epoch = new_start_epoch + (states.main_bar.original_end_time - states.main_bar.original_start_time)
+          new_end_date = moment.utc(new_end_epoch).format("YYYY-MM-DD")
+    
+          grid_gantt.task_id_to_info[states.task_id].self_start_time = states.main_bar.original_start_time
+          grid_gantt.task_id_to_info[states.task_id].self_end_time = states.main_bar.original_end_time
+          grid_gantt.task_ids_edited_locally.add states.task_id
+
+          JD.collections.Tasks.update states.task_id,
+            $set:
+              start_date: new_start_date
+              end_date: new_end_date
+
         APP.justdo_grid_gantt.setState
           main_bar:
             is_dragging: false
+        
         grid_gantt.updateDependentTasks states.task_id
+
         APP.justdo_grid_gantt.setState
           task_id: null
         $(".grid-gantt-date-hint").remove()
