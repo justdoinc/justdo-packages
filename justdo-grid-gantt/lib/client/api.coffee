@@ -150,11 +150,16 @@ _.extend JustdoGridGantt.prototype,
       else
         delete task_info.self_end_time
         
+      # if task_obj.due_date?
+      #   task_info.milestone_time = self.dateStringToMidDayEpoch task_obj.due_date
+      # else
+      #   delete task_info.milestone_time
+
       # milestone
-      if task_obj.due_date?
-        task_info.milestone_time = self.dateStringToMidDayEpoch task_obj.due_date
-      else
-        delete task_info.milestone_time
+      if task_obj[JustdoDependencies.is_milestone_pseudo_field_id] == "true"
+        task_info.milestone_time  = self.dateStringToMidDayEpoch task_obj.start_date
+        delete task_info.self_start_time
+        delete task_info.self_end_time
         
       # checking start_time change
       if task_info.self_start_time != old_task_info.self_start_time

@@ -319,11 +319,17 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     ############
     # due date
     ############
-    due_date_mark = ""
+    # due_date_mark = ""
+    # if (milestone_time = task_info.milestone_time)?
+    #   if (offset = grid_gantt.timeOffsetPixels(column_start_end, milestone_time, column_width_px))?
+    #     if offset >= 0 and offset <= column_width_px
+    #       due_date_mark = """<div class="gantt-milestone" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>"""  #the -5 here is needed due to rotation
+
+    milestone_mark = ""
     if (milestone_time = task_info.milestone_time)?
       if (offset = grid_gantt.timeOffsetPixels(column_start_end, milestone_time, column_width_px))?
         if offset >= 0 and offset <= column_width_px
-          due_date_mark = """<div class="gantt-milestone" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>"""  #the -5 here is needed due to rotation
+          milestone_mark = """<div class="gantt-milestone" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>"""  #the -5 here is needed due to rotation
 
     ############
     # warning
@@ -347,7 +353,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         #{earliest_child_mark}
         #{latest_child_mark}
         #{main_bar_mark}
-        #{due_date_mark}
+        #{milestone_mark}
         #{warnings_mark}
       </div>
     """
@@ -554,7 +560,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   
         JD.collections.Tasks.update states.task_id,
           $set:
-            due_date: new_milestone_date
+            start_date: new_milestone_date
   
         APP.justdo_grid_gantt.setState
           milestone:
