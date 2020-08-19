@@ -303,7 +303,18 @@ _.extend JustdoGridGantt.prototype,
 
         $(".justdo-grid-gantt-all-dependencies").append html
 
+  daily_refresh_timeout: null
+
   _refreshArrows: ->
+    self = @
+    
+    # Refresh daily
+    if self.daily_refresh_timeout?
+      Meteor.clearTimeout self.daily_refresh_timeout
+    self.daily_refresh_timeout = Meteor.setTimeout ->
+      self._refreshArrows()
+    , moment().startOf("day").add(1, "day") - moment()
+
     # The following happens when a core data is done loading, but the grid itself is  not populated yet.
     if _.isEmpty(@task_id_to_info)
       return
