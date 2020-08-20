@@ -705,6 +705,8 @@ _.extend JustdoGridGantt.prototype,
               ]
           
           self.setupContextMenu()
+
+          return
     
         destroyer: =>
           if JustdoGridGantt.add_pseudo_field
@@ -777,20 +779,30 @@ _.extend JustdoGridGantt.prototype,
 
       listingCondition: ->
         return self.isActiveTaskGanttMilestone()
+    
+    return
 
   unsetContextMenu: ->
     context_menu = APP.justdo_tasks_context_menu
     context_menu.unregisterSectionItem "gantt", "set-as-gantt-milestone"
     context_menu.unregisterMainSection "gantt"
+
+    return
   
+  _is_dragging_milestone_no_hint : false
   setupStartDateEndDateChangeHintForMilestones: ->
+    self = @
     APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) ->
       if doc[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
-        if modifier?.$set?.start_date or modifier?.$set?.end_date
+        if self._is_dragging_milestone_no_hint == false and (modifier?.$set?.start_date or modifier?.$set?.end_date)
           JustdoSnackbar.show
             text: "The end date will always be same as the start date because this task is set as a Gantt milestone"
+
         if modifier?.$set?.end_date
           return false
-      
-      return true
         
+        self._is_dragging_milestone_no_hint = false
+
+      return true
+      
+    return

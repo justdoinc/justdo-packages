@@ -557,7 +557,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   
         new_milestone_time = states.milestone.original_milestone_time + delta_time
         new_milestone_date = moment.utc(new_milestone_time).format("YYYY-MM-DD")
-  
+
+        APP.justdo_grid_gantt._is_dragging_milestone_no_hint = true
         JD.collections.Tasks.update states.task_id,
           $set:
             start_date: new_milestone_date
