@@ -25,13 +25,13 @@ _.extend JustdoGridGantt.prototype,
       return ret
       
     checkTask: (task_obj) ->
-      
       if not (warnings_set = @_warnings[task_obj._id])?
         warnings_set = new Set()
         @_warnings[task_obj._id] = warnings_set
       
-      if task_obj.start_date? and task_obj.end_date? and task_obj.start_date > task_obj.end_date
-        warnings_set.add "start_gt_end"
+      if task_obj[JustdoGridGantt.is_milestone_pseudo_field_id] != "true" and 
+        task_obj.start_date? and task_obj.end_date? and task_obj.start_date > task_obj.end_date
+          warnings_set.add "start_gt_end"
       else
         warnings_set.delete "start_gt_end"
       return
