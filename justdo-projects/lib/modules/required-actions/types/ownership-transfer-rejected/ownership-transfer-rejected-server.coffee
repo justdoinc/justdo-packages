@@ -11,6 +11,7 @@ _.extend PACK.required_actions_definitions,
       tracker_query = 
         # Note, when the reject ownership transfer message is dismissed,
         # all the reject_ownership_message* fields are dismissed.
+        users: @userId
         reject_ownership_message_to: @userId
 
       if project_id?
@@ -19,6 +20,8 @@ _.extend PACK.required_actions_definitions,
       tracker_query_options =
         fields:
           _id: 1
+          seqId: 1
+          title: 1
           project_id: 1
           reject_ownership_message: 1
           reject_ownership_message_by: 1
@@ -42,6 +45,14 @@ _.extend PACK.required_actions_definitions,
       # @ is the module's obj
 
       @items_collection._ensureIndex {
+        "users": 1
+        "reject_ownership_message_to": 1
+      }
+
+      @items_collection._ensureIndex {
+        "users": 1
         "project_id": 1
         "reject_ownership_message_to": 1
       }
+
+      return

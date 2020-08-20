@@ -1,14 +1,14 @@
 <template name="required_actions_dropdown">
   <div class="dropdown-menu dropdown-menu-right jd-p-075 animate slideIn shadow-lg border-0">
     <div class="required-actions-cards-area">
-      {{#if $eq 0 required_actions.length}}
+      {{#if $eq 0 requiredActions.length}}
         <div class="no-actions-card p-3 text-center text-muted">
           <div class="no-actions-message text-nowrap">
             No pending actions. Well done!
           </div>
         </div>
       {{else}}
-        {{#each required_actions}}
+        {{#each requiredActions}}
           {{> required_action_card}}
         {{/each}}
       {{/if}}

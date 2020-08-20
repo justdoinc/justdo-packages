@@ -53,8 +53,8 @@ APP.executeAfterAppLibCode ->
       template: "project_required_actions_dropdown_comp"
       template_data: {}
 
-    domain: "project-right-navbar"
-    position: 400
+    domain: "global-right-navbar"
+    position: 50
 
   Template.project_header_global_layout_header_middle.helpers project_template_helpers
 

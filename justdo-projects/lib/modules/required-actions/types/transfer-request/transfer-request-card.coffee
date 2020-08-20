@@ -1,5 +1,3 @@
-getTaskDoc = -> @projects_obj.items_collection.findOne(@task_id)
-
 Template.required_action_card_transfer_request.onCreated ->
   @state = new ReactiveVar "base"
   @show_shortcut_cue = new ReactiveVar false
@@ -8,10 +6,6 @@ Template.required_action_card_transfer_request.onCreated ->
 
 Template.required_action_card_transfer_request.helpers
   current_owner_doc: -> Meteor.users.findOne(@owner_id)
-
-  task_doc: -> getTaskDoc.call(@)
-
-  task_title: -> @title or ""
 
   getState: ->
     tpl = Template.instance()
@@ -22,6 +16,8 @@ Template.required_action_card_transfer_request.helpers
     tpl = Template.instance()
 
     return tpl.show_shortcut_cue.get()
+
+  getActionProject: -> APP.collections.Projects.findOne(@project_id, {fields: {title: 1}})
 
 Template.required_action_card_transfer_request.events
   "click .pre-reject": (e, tpl) ->
@@ -40,11 +36,12 @@ Template.required_action_card_transfer_request.events
     task = APP.collections.Tasks.findOne @task_id
 
     JustdoSnackbar.show
-      text: "Task #{JustdoHelpers.taskCommonName(task, 20)} <strong>Rejected</strong>"
+      text: "Task #{JustdoHelpers.taskCommonName({title: @title, seqId: @seqId}, 20)} <strong>Rejected</strong>"
       duration: 8000
       actionText: "View"
       onActionClick: =>
-        APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task._id)
+        APP.modules.project_page.activateTaskInProject @project_id, @task_id
+
         JustdoSnackbar.close()
 
         return
@@ -59,14 +56,13 @@ Template.required_action_card_transfer_request.events
 
     @projects_obj.items_collection.update(@task_id, update)
 
-    task = APP.collections.Tasks.findOne @task_id
-
     JustdoSnackbar.show
-      text: "Task #{JustdoHelpers.taskCommonName(task, 20)} <strong>Accepted</strong>"
+      text: "Task #{JustdoHelpers.taskCommonName({title: @title, seqId: @seqId}, 20)} <strong>Accepted</strong>"
       duration: 8000
       actionText: "View"
       onActionClick: =>
-        APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task._id)
+        APP.modules.project_page.activateTaskInProject @project_id, @task_id
+
         JustdoSnackbar.close()
 
         return
@@ -74,7 +70,9 @@ Template.required_action_card_transfer_request.events
     return
 
   "click .task-link": ->
-    APP.projects.modules.required_actions.activateTaskOnMainTab(@_id)
+    APP.modules.project_page.activateTaskInProject @project_id, @task_id
+    
+    return
 
 Template.required_action_card_transfer_request_input.onRendered ->
   self = @

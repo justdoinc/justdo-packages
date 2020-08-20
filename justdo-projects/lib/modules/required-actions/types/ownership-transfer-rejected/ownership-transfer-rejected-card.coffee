@@ -1,12 +1,8 @@
-getTaskDoc = -> @projects_obj.items_collection.findOne(@task_id)
-
 Template.required_action_card_ownership_transfer_rejected.onCreated ->
   @show_all = new ReactiveVar false
 
 Template.required_action_card_ownership_transfer_rejected.helpers
-  task_doc: -> getTaskDoc.call(@)
-
-  task_title: -> @title or ""
+  getActionProject: -> APP.collections.Projects.findOne(@project_id, {fields: {title: 1}})
 
   rejecting_user_obj: -> Meteor.users.findOne(@reject_ownership_message_by)
 
@@ -29,4 +25,6 @@ Template.required_action_card_ownership_transfer_rejected.events
     return
 
   "click .task-link": ->
-    APP.projects.modules.required_actions.activateTaskOnMainTab(@_id)
+    APP.modules.project_page.activateTaskInProject @project_id, @task_id
+
+    return

@@ -9,6 +9,7 @@ _.extend PACK.required_actions_definitions,
       self = module_obj
 
       tracker_query = 
+        users: @userId
         pending_owner_id: @userId
 
       if project_id?
@@ -16,7 +17,9 @@ _.extend PACK.required_actions_definitions,
 
       tracker_query_options = 
         fields: 
-          _id: 1 
+          _id: 1
+          seqId: 1
+          title: 1
           project_id: 1 
           owner_id: 1 
           pending_owner_id: 1 
@@ -39,4 +42,15 @@ _.extend PACK.required_actions_definitions,
     setupMongoIndices: ->
       # @ is the module's obj
 
-      @items_collection._ensureIndex {"project_id": 1, "pending_owner_id": 1}
+      @items_collection._ensureIndex {
+        "users": 1
+        "pending_owner_id": 1
+      }
+
+      @items_collection._ensureIndex {
+        "users": 1
+        "project_id": 1
+        "pending_owner_id": 1
+      }
+
+      return

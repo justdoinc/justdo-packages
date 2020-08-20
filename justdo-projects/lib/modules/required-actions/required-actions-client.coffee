@@ -11,20 +11,17 @@ _.extend PACK.modules.required_actions,
 
     return @_setSubscriptionHandle("global_required_actions", Meteor.subscribe("globalRequiredActions"))
 
-  getCursor: (project_id, options) ->
-    if query_options?
+  getCursor: (query_options) ->
+    if not query_options?
       query_options = {}
 
     default_options =
       sort:
         date: -1
 
-    query =
-      project_id: project_id
-
     query_options = _.extend {}, default_options, query_options
 
-    return @collection.find(query, query_options)
+    return @collection.find({}, query_options)
 
   # Helpers
   activateTaskOnMainTab: (task_id) ->
