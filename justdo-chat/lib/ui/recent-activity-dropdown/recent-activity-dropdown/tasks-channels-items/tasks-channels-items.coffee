@@ -1,5 +1,5 @@
 getChannelProject = (project_id) ->
-  return APP.collections.Projects.findOne(project_id)
+  return APP.collections.Projects.findOne(project_id, {fields: {title: 1}})
 
 getChannelTask = (task_id) ->
   return APP.justdo_chat.recent_activity_supplementary_pseudo_collections.tasks.findOne(task_id)
@@ -8,7 +8,7 @@ Template.recent_activity_item_task.onCreated ->
   @getDropdownInstance = => share.current_recent_activity_dropdown
 
 Template.recent_activity_item_task.helpers
-  channel_project: -> getChannelProject(@project_id)
+  channelProject: -> getChannelProject(@project_id)
 
   channel_task: -> getChannelTask(@task_id)
 
