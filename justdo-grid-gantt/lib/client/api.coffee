@@ -5,7 +5,7 @@ _.extend JustdoGridGantt.prototype,
     self = @
     @_states_manager = {}
     
-    @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents"]
+    @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents", JustdoDependencies.is_milestone_pseudo_field_id]
     
     @task_id_to_info = {} # Map to relevant information including
                           #   self_start_time: # indicates the beginning of the gantt block for the task
@@ -160,6 +160,8 @@ _.extend JustdoGridGantt.prototype,
         task_info.milestone_time  = self.dateStringToMidDayEpoch task_obj.start_date
         delete task_info.self_start_time
         delete task_info.self_end_time
+      else
+        delete task_info.milestone_time
         
       # checking start_time change
       if task_info.self_start_time != old_task_info.self_start_time

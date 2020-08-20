@@ -173,7 +173,9 @@ _.extend JustdoGridGantt.prototype,
             
           independent_end_x = self.timeOffsetPixels(epoch_range, independent_end_time, self.getColumnWidth())
           independent_end_y = gc._grid.getRowTopPosition(independent_row) + 15
-          dependent_start_x = self.timeOffsetPixels(epoch_range, dependent_task_info.self_start_time, self.getColumnWidth())
+          dependent_start_x = self.timeOffsetPixels epoch_range, 
+            if dependent_task_info.milestone_time? then dependent_task_info.milestone_time else dependent_task_info.self_start_time, 
+            self.getColumnWidth()
           dependent_start_y = gc._grid.getRowTopPosition(dependent_row) + 15
           p0 =
             x: independent_end_x
@@ -197,19 +199,19 @@ _.extend JustdoGridGantt.prototype,
           # open point from code review https://github.com/justdoinc/justdo-internal-packages/commit/bc44b60fd490862549bb3065ea40ca9e37030943#r38823927
           html = """<div class="dependency-container" dependent-id="#{dependency_obj.dependent}" independent-id="#{dependency_obj.independent}"
                       dependency-type="#{dependency_obj.dependency_type}">"""
-          html += """<div class="line horizontal" style="#{self.lineStyle p0, p1}"></div>"""
+          html += """<div class="line horizontal al1" style="#{self.lineStyle p0, p1}"></div>"""
           if p1.x > 0 and p1.x < self.getColumnWidth()
-            html += """<div class="line vertical" style="#{self.lineStyle p1, p2}">
+            html += """<div class="line vertical al2" style="#{self.lineStyle p1, p2}">
                           <div class="dependency-1-2-cancel" style="top: #{(Math.abs(p1.y - p2.y) / 2)  - 14}px; left: -10px">
                             <svg class="jd-icon dependency-1-2-cancel-icon">
                               <use xlink:href="/layout/icons-feather-sprite.svg#x-circle"/>
                             </svg>
                           </div>
                       </div>"""
-          html += """<div class="line horizontal" style="#{self.lineStyle p2, p3}"></div>"""
+          html += """<div class="line horizontal al3" style="#{self.lineStyle p2, p3}"></div>"""
           if p3.x > 0 and p3.x < self.getColumnWidth()
-            html += """<div class="line vertical" style="#{self.lineStyle p3, p4}"></div>"""
-          html += """<div class="line horizontal" style="#{self.lineStyle p4, p5}"></div>"""
+            html += """<div class="line vertical al4" style="#{self.lineStyle p3, p4}"></div>"""
+          html += """<div class="line horizontal al5" style="#{self.lineStyle p4, p5}"></div>"""
           if p5.x > 0 and p5.x < self.getColumnWidth()
             html += """<div class="right-arrow" style="top: #{p5.y - 3 }px; left: #{p5.x - 7}px"></div>"""
           html += "</div>"
