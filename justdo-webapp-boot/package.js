@@ -34,8 +34,5 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/app-logger-configuration.coffee", both);
   api.addFiles("lib/both/app-accounts.coffee", both);
 
-  api.addFiles("lib/client/ddp-monitor.coffee", client);
-  api.addFiles("lib/server/ddp-monitor.coffee", server);
-
   api.addFiles("lib/client/app-pseudo-collections.coffee", client);
 });
