@@ -143,8 +143,5 @@ _.extend TasksChangelogManager.prototype,
       return "#{performer_name} cleared #{getLabelFromFieldDefinition(field_definition)}."
 
     new_value = activity_obj.new_value
-
-    if activity_obj.field == "title" and new_value == APP.collections.Tasks.findOne(activity_obj.task_id).title
-      return "#{performer_name} set the task's subject"
-
+    
     return "#{performer_name} set #{getLabelFromFieldDefinition(field_definition)} to: #{new_value}."
