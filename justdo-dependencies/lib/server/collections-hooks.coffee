@@ -4,7 +4,6 @@ _.extend JustdoDependencies.prototype,
     @projectsInstallUninstallProcedures()
     @integrityCheckAndHumanReadableToMFAndBackHook()
     @setupChangeLogCapture()
-    @setupMilestoneRestrictions()
     
     return
 
@@ -148,19 +147,5 @@ _.extend JustdoDependencies.prototype,
       return
     
     return
-  
-  setupMilestoneRestrictions: ->
-    self = @
-    self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
-      if modifier?.$set?[JustdoDependencies.is_milestone_pseudo_field_id] == "true"
-        if not modifier.$set?
-          modifier.$set = {}
-        modifier.$set.end_date = doc.start_date
-      else if doc?[JustdoDependencies.is_milestone_pseudo_field_id] == "true"
-        if (new_start_date = modifier.$set?.start_date)?
-          modifier.$set.end_date = new_start_date
-        else if modifier.$set?.end_date?
-          return false
 
-      return true
       

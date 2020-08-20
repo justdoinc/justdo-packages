@@ -1,5 +1,3 @@
-console.log "static"
-console.log JustdoGridGantt
 _.extend JustdoGridGantt,
   project_custom_feature_id: "justdo_grid_gantt" # Use underscores
 

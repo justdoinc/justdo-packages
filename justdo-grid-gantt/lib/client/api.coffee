@@ -5,7 +5,7 @@ _.extend JustdoGridGantt.prototype,
     self = @
     @_states_manager = {}
     
-    @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents", JustdoDependencies.is_milestone_pseudo_field_id]
+    @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents", JustdoGridGantt.is_milestone_pseudo_field_id]
     
     @task_id_to_info = {} # Map to relevant information including
                           #   self_start_time: # indicates the beginning of the gantt block for the task
@@ -156,7 +156,7 @@ _.extend JustdoGridGantt.prototype,
       #   delete task_info.milestone_time
 
       # milestone
-      if task_obj[JustdoDependencies.is_milestone_pseudo_field_id] == "true"
+      if task_obj[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
         task_info.milestone_time  = self.dateStringToMidDayEpoch task_obj.start_date
         delete task_info.self_start_time
         delete task_info.self_end_time
@@ -690,11 +690,25 @@ _.extend JustdoGridGantt.prototype,
             else
               self.resetTaskIdToInfo()
             return
+          
+          APP.modules.project_page.setupPseudoCustomField JustdoGridGantt.is_milestone_pseudo_field_id,
+            label: JustdoGridGantt.is_milestone_pseudo_field_label
+            field_type: "select"
+            grid_visible_column: true
+            grid_editable_column: true
+            default_width: 100
+            field_options :
+              select_options : [
+                {option_id: "true", label: "Yes"},
+                {option_id: "false", label: "No"}
+              ]
     
         destroyer: =>
           if JustdoGridGantt.add_pseudo_field
             APP.modules.project_page.removePseudoCustomFields JustdoGridGantt.pseudo_field_id
 
+          APP.modules.project_page.removePseudoCustomFields JustdoGridGantt.is_milestone_pseudo_field_id
+          
           if self.core_data_events_triggering_computation?
             self.core_data_events_triggering_computation.stop()
   

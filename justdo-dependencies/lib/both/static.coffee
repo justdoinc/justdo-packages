@@ -21,6 +21,3 @@ _.extend JustdoDependencies,
 
   # Only tasks with the following states are considered to be non-blocking, when other tasks depends on them
   non_blocking_tasks_states: ["done"]
-
-  is_milestone_pseudo_field_id: "jddep:is_milestone"
-  is_milestone_pseudo_field_label: "Milestone"
