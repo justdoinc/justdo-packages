@@ -604,7 +604,7 @@ _.extend JustdoGridGantt.prototype,
     
     @registerConfigTemplate()
     @setupCustomFeatureMaintainer()
-    
+
     return
   
   setColumnWidth: (width) ->
@@ -702,19 +702,23 @@ _.extend JustdoGridGantt.prototype,
                 {option_id: "true", label: "Yes"},
                 {option_id: "false", label: "No"}
               ]
+          
+          self.setupContextMenu()
     
         destroyer: =>
           if JustdoGridGantt.add_pseudo_field
             APP.modules.project_page.removePseudoCustomFields JustdoGridGantt.pseudo_field_id
 
           APP.modules.project_page.removePseudoCustomFields JustdoGridGantt.is_milestone_pseudo_field_id
-          
+
           if self.core_data_events_triggering_computation?
             self.core_data_events_triggering_computation.stop()
   
           if (core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core)?
             core_data.off "data-changes-queue-processed", self.processChangesQueue
-            
+          
+          self.unsetContextMenu()
+
           @dependencies_map = {}
           @dependents_to_keys_set = {}
           @task_id_to_info = {}
@@ -730,3 +734,51 @@ _.extend JustdoGridGantt.prototype,
     
   is_gantt_column_displayed_rv: new ReactiveVar false
   
+  isActiveTaskGanttMilestone: ->
+    return JD.activeItem({"#{JustdoGridGantt.is_milestone_pseudo_field_id}": 1})?[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
+
+  setupContextMenu: ->
+    self = @
+
+    context_menu = APP.justdo_tasks_context_menu
+
+    context_menu.registerMainSection "gantt",
+      position: 400
+      data:
+        label: "Gantt"
+
+    context_menu.registerSectionItem "gantt", "set-as-gantt-milestone",
+      position: 100
+      data:
+        label: "Set as a Gantt milestone"
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          APP.collections.Tasks.update task_id,
+            $set:
+              "#{JustdoGridGantt.is_milestone_pseudo_field_id}": "true"
+          return
+        icon_type: "feather"
+        icon_val: "crosshair"
+
+      listingCondition: ->
+        return not self.isActiveTaskGanttMilestone()
+    
+    context_menu.registerSectionItem "gantt", "unset-as-gantt-milestone",
+      position: 100
+      data:
+        label: "Unset as a Gantt milestone"
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          APP.collections.Tasks.update task_id,
+            $set:
+              "#{JustdoGridGantt.is_milestone_pseudo_field_id}": "false"
+          return
+        icon_type: "feather"
+        icon_val: "x-circle"
+
+      listingCondition: ->
+        return self.isActiveTaskGanttMilestone()
+
+  unsetContextMenu: ->
+    context_menu = APP.justdo_tasks_context_menu
+    context_menu.unregisterSectionItem "gantt", "set-as-gantt-milestone"
+    context_menu.unregisterMainSection "gantt"
+        
