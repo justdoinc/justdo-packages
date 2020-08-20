@@ -21,26 +21,14 @@
     </div>
   </div>
 
-  <div class="create-project-btn create-project-js">
-    <div class="create-project-tooltip">
-      Create New JustDo
-    </div>
-    <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
-  </div>
-
 </template>
 
 <template name="dashboard_projects_project_card">
   <div class="project-card-wrapper">
     <a class="project-card {{#unless members}}guest{{/unless}}" href="{{pathFor route='project' data=this}}">
-      <div class="project-icon bg-primary">
-        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
-      </div>
+      <div class="project-icon bg-primary"></div>
       <div class="project-title">{{title}}</div>
       {{> dashboard_projects_project_card_members}}
-      <div class="project-actions">
-        {{> required_actions_bell}}
-      </div>
     </a>
   </div>
 </template>

@@ -38,11 +38,6 @@ APP.executeAfterAppLibCode ->
       return JustdoHelpers.displayName(Meteor.user())
 
   Template.dashboard_projects.events
-    "click .create-project-js": ->
-      APP.projects.createNewProject({}, (err, project_id) -> Router.go 'project', {_id: project_id})
-
-      return
-
     "keyup .dashboard-search-input": (e, tpl) ->
       value = $(e.target).val().trim()
 
