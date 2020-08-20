@@ -9,6 +9,66 @@ _.extend PACK.modules.required_actions,
   _setupPublication: ->
     self = @
 
+    Meteor.publish "globalRequiredActions", ->
+      required_actions_trackers = {} # keys are required actions types id
+
+      for type, def of PACK.required_actions_definitions
+        do (type, def) =>
+          type_custom_publication_this = Object.create(@)
+
+          _.extend type_custom_publication_this,
+            normalizedId: (id) ->
+              # Gets the arbitrary id provided by the required action tracker
+              # and returns a normalizedId
+              # Note: we add the project_id to the key to avoid collisions in
+              # case a certain task will be in more than one project and both
+              # publications will be on at once
+              return "#{type}::#{id}"
+
+            required_action_added: (id, required_action_date, data) ->
+              doc =
+                type: type
+                project_id: data.project_id
+                date: required_action_date
+
+              _.extend doc, data
+
+              @added self.required_actions_col_name, @normalizedId(id), doc
+
+              return
+
+            required_action_changed: (id, required_action_date, data) ->
+              updates =
+                date: required_action_date
+
+              _.extend updates, data
+
+              @changed self.required_actions_col_name, @normalizedId(id), updates
+
+              return
+
+            required_action_removed: (id) ->
+              @removed self.required_actions_col_name, @normalizedId(id)
+
+              return
+
+          required_actions_trackers[type] =
+            def.tracker.call type_custom_publication_this, self
+
+          return
+
+      @onStop ->
+        for required_actions_type, required_actions_tracker of required_actions_trackers
+          required_actions_tracker.stop()
+
+          delete required_actions_trackers[required_actions_type]
+
+        return
+
+      @ready()
+
+      return
+
     Meteor.publish "requiredActions", (project_id) ->
       required_actions_trackers = {} # keys are required actions types id
 

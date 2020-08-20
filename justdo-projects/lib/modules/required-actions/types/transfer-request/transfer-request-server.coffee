@@ -9,8 +9,10 @@ _.extend PACK.required_actions_definitions,
       self = module_obj
 
       tracker_query = 
-        project_id: project_id
         pending_owner_id: @userId
+
+      if project_id?
+        tracker_query.project_id = project_id
 
       tracker_query_options = 
         fields: 

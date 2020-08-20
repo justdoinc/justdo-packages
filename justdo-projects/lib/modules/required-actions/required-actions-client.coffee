@@ -2,10 +2,14 @@ _.extend PACK.modules.required_actions,
   initClient: ->
     @collection = @options.local_required_actions_collection
 
-  subscribe: (project_id) ->
-    @logger.debug "Subscribe #{project_id} required actions"
+    @subscribeGlobalRequiredActions()
 
-    return @_setSubscriptionHandle("project_required_actions", Meteor.subscribe("requiredActions", project_id))
+    return
+
+  subscribeGlobalRequiredActions: ->
+    @logger.debug "Subscribe global required actions"
+
+    return @_setSubscriptionHandle("global_required_actions", Meteor.subscribe("globalRequiredActions"))
 
   getCursor: (project_id, options) ->
     if query_options?

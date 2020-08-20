@@ -27,7 +27,7 @@ APP.executeAfterAppLibCode ->
       @members_subscription_comp =
         APP.helpers.subscribeProjectMembersInfo.call(@, project_id)
 
-      @subscribe("requiredActions", project_id)
+    return
 
   Template.dashboard_projects_project_card.onDestroyed ->
     @members_subscription_comp?.stop()

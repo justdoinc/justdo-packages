@@ -9,10 +9,12 @@ _.extend PACK.required_actions_definitions,
       self = module_obj
 
       tracker_query = 
-        project_id: project_id
         # Note, when the reject ownership transfer message is dismissed,
         # all the reject_ownership_message* fields are dismissed.
         reject_ownership_message_to: @userId
+
+      if project_id?
+        tracker_query.project_id = project_id
 
       tracker_query_options =
         fields:
