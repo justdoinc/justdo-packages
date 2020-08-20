@@ -113,19 +113,29 @@ JustdoGridGantt = (options) ->
 
   @_on_destroy_procedures = []
 
-  # React to invalidations
-  if Tracker.currentComputation?
-    Tracker.onInvalidate =>
-      @logger.debug "Enclosing computation invalidated, destroying"
-      @destroy() # defined in client/api.coffee
+  @_attachCollectionsSchemas()
 
-  # on the client, call @_immediateInit() in an isolated
-  # computation to avoid our init procedures from affecting
-  # the encapsulating computation (if any)
-  Tracker.nonreactive =>
+  if Meteor.isClient
+    # React to invalidations
+    if Tracker.currentComputation?
+      Tracker.onInvalidate =>
+        @logger.debug "Enclosing computation invalidated, destroying"
+        @destroy() # defined in client/api.coffee
+
+    # on the client, call @_immediateInit() in an isolated
+    # computation to avoid our init procedures from affecting
+    # the encapsulating computation (if any)
+    Tracker.nonreactive =>
+      @_bothImmediateInit()
+
+      @_immediateInit()
+  else
+    @_bothImmediateInit()
+
     @_immediateInit()
 
   Meteor.defer =>
+    @_bothDeferredInit()
     @_deferredInit()
 
   @logger.debug "Init done"
