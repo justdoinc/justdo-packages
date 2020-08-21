@@ -319,17 +319,25 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     ############
     # due date
     ############
-    # due_date_mark = ""
-    # if (milestone_time = task_info.milestone_time)?
-    #   if (offset = grid_gantt.timeOffsetPixels(column_start_end, milestone_time, column_width_px))?
-    #     if offset >= 0 and offset <= column_width_px
-    #       due_date_mark = """<div class="gantt-milestone" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>"""  #the -5 here is needed due to rotation
+    due_date_mark = ""
+    if (due_time = task_info.due_time)?
+      if (offset = grid_gantt.timeOffsetPixels(column_start_end, due_time, column_width_px))?
+        if offset >= 0 and offset <= column_width_px
+          due_date_mark = """
+            <div class="gantt-due-date-mark" style="left:#{offset}px" task-id="#{doc._id}">
+              <svg class="jd-icon">
+                <use xlink:href="/layout/icons-feather-sprite.svg#arrow-down"/>
+              </svg>
+            </div>""" 
 
+    ############
+    # milestone
+    ############
     milestone_mark = ""
     if (milestone_time = task_info.milestone_time)?
       if (offset = grid_gantt.timeOffsetPixels(column_start_end, milestone_time, column_width_px))?
         if offset >= 0 and offset <= column_width_px
-          milestone_mark = """<div class="gantt-milestone" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>"""  #the -5 here is needed due to rotation
+          milestone_mark ="""<div class="gantt-milestone" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>"""  #the -5 here is needed due to rotation
 
     ############
     # warning
@@ -354,6 +362,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         #{latest_child_mark}
         #{main_bar_mark}
         #{milestone_mark}
+        #{due_date_mark}
         #{warnings_mark}
       </div>
     """
@@ -491,6 +500,25 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           row: @getEventRow(e)
       return
   ,
+    args: ["mousedown", ".gantt-due-date-mark"]
+    handler: (e) ->
+      if e.button != 0    # left click
+        return 
+
+      if APP.justdo_grid_gantt.canEditDates() == false
+        return
+      task_id = $(e.target).closest(".gantt-due-date-mark").attr("task-id")
+      APP.justdo_grid_gantt.setState
+        task_id: task_id
+        due_time:
+          is_dragging: true
+          original_due_time: APP.justdo_grid_gantt.task_id_to_info[task_id].due_time
+        mouse_down:
+          x: e.clientX
+          y: e.clientY
+          row: @getEventRow(e)
+      return
+  ,
     args: ["mousedown", ".grid-gantt-formatter"]
     handler: (e) ->
       if e.button == 0    # left click
@@ -581,7 +609,27 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           task_id: null
   
         $(".grid-gantt-date-hint").remove()
-      
+
+      else if states.due_time.is_dragging
+        if Math.abs(e.clientX - states.mouse_down.x) > 5
+          delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        else
+          delta_time = 0
+  
+        new_due_time = states.due_time.original_due_time + delta_time
+        new_due_date = moment.utc(new_due_time).format("YYYY-MM-DD")
+
+        JD.collections.Tasks.update states.task_id,
+          $set:
+            due_date: new_due_date
+  
+        APP.justdo_grid_gantt.setState
+          due_time:
+            is_dragging: false
+          task_id: null
+  
+        $(".grid-gantt-date-hint").remove()
+
       else if states.main_bar.is_dragging
         if Math.abs(e.clientX - states.mouse_down.x) > 5
           delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
@@ -680,7 +728,27 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             """
         $(".grid-gantt-date-hint").remove()
         $(".justdo-grid-gantt-all-dependencies").append end_date_hint
-        
+      
+      else if states.due_time.is_dragging
+        epoch_range = grid_gantt.getEpochRange()
+        gc = APP.modules.project_page.gridControl()
+        if Math.abs(e.clientX - states.mouse_down.x) > 5
+          delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
+        else
+          delta_time = 0
+        new_due_time = states.due_time.original_due_time + delta_time
+        grid_gantt.setPresentationDueTime states.task_id, new_due_time
+  
+        #hint:
+        hint_x = 15 + grid_gantt.timeOffsetPixels(epoch_range, new_due_time, grid_gantt.getColumnWidth() )
+        hint_y = gc._grid.getRowTopPosition(states.mouse_down.row) + 15
+        date = JustdoHelpers.normalizeUnicodeDateStringAndFormatToUserPreference(moment.utc(new_due_time).format("YYYY-MM-DD"))
+        due_date_hint = """
+                <div class="grid-gantt-date-hint" style="top: #{hint_y}px; left: #{hint_x}px">#{date}</div>
+            """
+        $(".grid-gantt-date-hint").remove()
+        $(".justdo-grid-gantt-all-dependencies").append due_date_hint
+
       else if states.main_bar.is_dragging
         epoch_range = grid_gantt.getEpochRange()
         gc = APP.modules.project_page.gridControl()

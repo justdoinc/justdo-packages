@@ -140,20 +140,21 @@ _.extend JustdoGridGantt.prototype,
         
       # end time
       if task_obj.end_date?
-        if task_obj.end_date == task_obj.due_date
-          task_info.self_end_time = self.dateStringToMidDayEpoch task_obj.end_date
-        else
-          task_info.self_end_time = self.dateStringToEndOfDayEpoch task_obj.end_date
+        task_info.self_end_time = self.dateStringToEndOfDayEpoch task_obj.end_date
+      #   if task_obj.end_date == task_obj.due_date
+      #     task_info.self_end_time = self.dateStringToMidDayEpoch task_obj.end_date
+      #   else
+      #     task_info.self_end_time = self.dateStringToEndOfDayEpoch task_obj.end_date
           
-      else if task_obj.due_date? and task_obj.start_date
-        task_info.self_end_time = self.dateStringToMidDayEpoch task_obj.due_date
+      # else if task_obj.due_date? and task_obj.start_date
+      #   task_info.self_end_time = self.dateStringToMidDayEpoch task_obj.due_date
       else
         delete task_info.self_end_time
-        
-      # if task_obj.due_date?
-      #   task_info.milestone_time = self.dateStringToMidDayEpoch task_obj.due_date
-      # else
-      #   delete task_info.milestone_time
+      
+      if task_obj.due_date?
+        task_info.due_time = self.dateStringToMidDayEpoch task_obj.due_date
+      else
+        delete task_info.due_time
 
       # milestone
       if task_obj[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
@@ -174,7 +175,10 @@ _.extend JustdoGridGantt.prototype,
       #checking milestone
       if task_info.milestone_time != old_task_info.milestone_time
         self.processMilestoneTimeChange task_obj._id, task_info, old_task_info
-  
+
+      if task_info.due_time != old_task_info.due_time
+        self.processDueTimeChange task_obj._id, task_info, old_task_info
+
       self.warnings_manager.checkTask task_obj
       return # end of processTaskChange
     
@@ -442,6 +446,9 @@ _.extend JustdoGridGantt.prototype,
     @processMilestoneTimeChange = (task_id, task_info, old_task_info) ->
       self.gantt_dirty_tasks.add task_id
       return
+    
+    @processDueTimeChange = (task_id, task_info, old_task_info) ->
+      self.gantt_dirty_tasks.add task_id
       
     @dateStringToStartOfDayEpoch = (date) ->
       re = /^\d\d\d\d-\d\d-\d\d$/g
@@ -516,7 +523,13 @@ _.extend JustdoGridGantt.prototype,
       self.gantt_dirty_tasks.add task_id
       self.processGanttDirtyTasks()
       return
-  
+
+    @setPresentationDueTime = (task_id, new_due_time) ->
+      self.task_id_to_info[task_id].due_time = new_due_time
+      self.gantt_dirty_tasks.add task_id
+      self.processGanttDirtyTasks()
+      return
+
     @setPresentationStartTime = (task_id, new_start_time) ->
       self.task_id_to_info[task_id].self_start_time = new_start_time
       self.gantt_dirty_tasks.add task_id
@@ -569,7 +582,7 @@ _.extend JustdoGridGantt.prototype,
       task_duration = 1
       
       if (prev_start_date = task_obj.start_date)?
-        if (prev_end_date = task_obj.end_date or task_obj.due_date)?
+        if (prev_end_date = task_obj.end_date)?
           prev_start_date_moment = moment.utc prev_start_date
           prev_end_date_moment = moment.utc prev_end_date
           task_duration = prev_end_date_moment.diff prev_start_date_moment, "days"
@@ -794,6 +807,9 @@ _.extend JustdoGridGantt.prototype,
     self = @
     APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) ->
       if doc[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
+        if modifier?.$set?.start_date == modifier?.$set?.end_date
+          return true
+
         if self._is_dragging_milestone_no_hint == false and (modifier?.$set?.start_date or modifier?.$set?.end_date)
           JustdoSnackbar.show
             text: "The end date will always be same as the start date because this task is set as a Gantt milestone"

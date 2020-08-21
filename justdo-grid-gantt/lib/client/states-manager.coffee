@@ -19,6 +19,9 @@ _.extend JustdoGridGantt.prototype,
           milestone:
             is_dragging: false
             original_milestone_time: 0
+          due_time:
+            is_dragging: false
+            original_due_time: 0
           dependencies:
             finish_to_x_independent: null
             independent_end_time: 0
@@ -47,6 +50,11 @@ _.extend JustdoGridGantt.prototype,
     if states.milestone.is_dragging
       states.milestone.is_dragging = false
       APP.justdo_grid_gantt.setPresentationMilestone states.task_id, states.milestone.original_milestone_time
+      states.task_id = null
+    
+    if states.due_time.is_dragging
+      states.due_time.is_dragging = false
+      APP.justdo_grid_gantt.setPresentationDueTime states.task_id, states.due_time.original_due_time
       states.task_id = null
       
     if states.main_bar.is_dragging
