@@ -250,7 +250,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     # and will be able to change the start-time while dragging the entire bar
     ############
     main_bar_mark = ""
-    if (self_start_time = task_info.self_start_time)? and
+    if not task_info.milestone_time and 
+        (self_start_time = task_info.self_start_time)? and
         (self_end_time = task_info.self_end_time)? and
         self_start_time < self_end_time
       
@@ -270,7 +271,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         
         main_bar_mark = """
             <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}"></div>
-            <div class="gantt-main-bar-start-drop-area" style="left:#{bar_start_px}px;"></div>
+            <div class="gantt-start-drop-area" style="left:#{bar_start_px}px;"></div>
             <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}"></div>
             <div class="gantt-main-bar-F2x-dependency" style="left:#{bar_end_px}px;">
               <svg class="jd-icon gantt-main-bar-F2x-dependency-icon">
@@ -337,7 +338,15 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     if (milestone_time = task_info.milestone_time)?
       if (offset = grid_gantt.timeOffsetPixels(column_start_end, milestone_time, column_width_px))?
         if offset >= 0 and offset <= column_width_px
-          milestone_mark ="""<div class="gantt-milestone" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>"""  #the -5 here is needed due to rotation
+          milestone_mark ="""
+            <div class="gantt-start-drop-area gantt-milestone-start-drop-area" style="left:#{offset}px;"></div>
+            <div class="gantt-main-bar-F2x-dependency" style="left:#{offset}px;">
+              <svg class="jd-icon gantt-main-bar-F2x-dependency-icon">
+                <use xlink:href="/layout/icons-feather-sprite.svg#circle"/>
+              </svg>
+            </div>
+            <div class="gantt-milestone" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>
+          """ 
 
     ############
     # warning
@@ -382,19 +391,19 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       $(e.target).closest(".grid-gantt-formatter").children(".gantt-main-bar-F2x-dependency").css("visibility","hidden")
       return
   ,
-    args: ["mouseenter", ".gantt-main-bar-start-drop-area"]
+    args: ["mouseenter", ".gantt-start-drop-area"]
     handler: (e) ->
       states = APP.justdo_grid_gantt.getOrCreateState()
       if states.dependencies.finish_to_x_independent?
-        $(e.target).closest(".gantt-main-bar-start-drop-area").css("background-color","red")
+        $(e.target).closest(".gantt-start-drop-area").css("background-color","red")
       return
   ,
-    args: ["mouseleave", ".gantt-main-bar-start-drop-area"]
+    args: ["mouseleave", ".gantt-start-drop-area"]
     handler: (e) ->
-      $(e.target).closest(".gantt-main-bar-start-drop-area").css("background-color","")
+      $(e.target).closest(".gantt-start-drop-area").css("background-color","")
       return
   ,
-    args: ["mouseup", ".gantt-main-bar-start-drop-area"]
+    args: ["mouseup", ".gantt-start-drop-area"]
     handler: (e) ->
       self = APP.justdo_grid_gantt
       states = self.getOrCreateState()
@@ -418,10 +427,11 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
       formatter_container = e.target.closest(".grid-gantt-formatter")
       if (independent_id = formatter_container.getAttribute("task-id"))?
+        task_info = APP.justdo_grid_gantt.task_id_to_info[independent_id]
         APP.justdo_grid_gantt.setState
           dependencies:
             finish_to_x_independent: independent_id
-            independent_end_time: APP.justdo_grid_gantt.task_id_to_info[independent_id].self_end_time
+            independent_end_time: task_info.self_end_time
           mouse_down:
             x: e.clientX
             y: e.clientY
@@ -484,7 +494,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     handler: (e) ->
       if e.button != 0    # left click
         return 
-        
+
       if APP.justdo_grid_gantt.canEditDates() == false
         return
       task_id = e.target.getAttribute("task-id")

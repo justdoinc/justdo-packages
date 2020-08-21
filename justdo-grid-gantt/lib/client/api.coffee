@@ -159,8 +159,7 @@ _.extend JustdoGridGantt.prototype,
       # milestone
       if task_obj[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
         task_info.milestone_time  = self.dateStringToMidDayEpoch task_obj.start_date
-        delete task_info.self_start_time
-        delete task_info.self_end_time
+        task_info.self_start_time = task_info.self_end_time = task_info.milestone_time
       else
         delete task_info.milestone_time
         

@@ -170,12 +170,14 @@ _.extend JustdoGridGantt.prototype,
           if not (independent_end_time = independent_task_info.self_end_time)?
             if not (independent_end_time = independent_task_info.latest_child_end_time)?
               continue
-            
+          
           independent_end_x = self.timeOffsetPixels(epoch_range, independent_end_time, self.getColumnWidth())
+          if independent_task_info.milestone_time?
+            independent_end_x = independent_end_x + 5
           independent_end_y = gc._grid.getRowTopPosition(independent_row) + 15
-          dependent_start_x = self.timeOffsetPixels epoch_range, 
-            if dependent_task_info.milestone_time? then dependent_task_info.milestone_time else dependent_task_info.self_start_time, 
-            self.getColumnWidth()
+          dependent_start_x = self.timeOffsetPixels epoch_range, dependent_task_info.self_start_time, self.getColumnWidth()
+          if dependent_task_info.milestone_time?
+            dependent_start_x = dependent_start_x - 5
           dependent_start_y = gc._grid.getRowTopPosition(dependent_row) + 15
           p0 =
             x: independent_end_x
