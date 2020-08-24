@@ -271,7 +271,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         
         main_bar_mark = """
             <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}"></div>
-            <div class="gantt-start-drop-area" style="left:#{bar_start_px}px;"></div>
+            <div class="gantt-main-bar-start-drop-area gantt-start-drop-area" style="left:#{bar_start_px}px;"></div>
             <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}"></div>
             <div class="gantt-main-bar-F2x-dependency" style="left:#{bar_end_px}px;">
               <svg class="jd-icon gantt-main-bar-F2x-dependency-icon">
@@ -339,13 +339,12 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       if (offset = grid_gantt.timeOffsetPixels(column_start_end, milestone_time, column_width_px))?
         if offset >= 0 and offset <= column_width_px
           milestone_mark ="""
-            <div class="gantt-start-drop-area gantt-milestone-start-drop-area" style="left:#{offset}px;"></div>
             <div class="gantt-main-bar-F2x-dependency" style="left:#{offset}px;">
               <svg class="jd-icon gantt-main-bar-F2x-dependency-icon">
                 <use xlink:href="/layout/icons-feather-sprite.svg#circle"/>
               </svg>
             </div>
-            <div class="gantt-milestone" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>
+            <div class="gantt-milestone gantt-start-drop-area" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>
           """ 
 
     ############
