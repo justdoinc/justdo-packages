@@ -606,18 +606,30 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
         else
           delta_time = 0
-  
+
         new_milestone_time = states.milestone.original_milestone_time + delta_time
         new_milestone_date = moment.utc(new_milestone_time).format("YYYY-MM-DD")
+        old_milestone_date = moment.utc(states.milestone.original_milestone_time).format("YYYY-MM-DD")
+        if old_milestone_date == new_milestone_date
+          grid_gantt.resetStatesChangeOnEscape()
+        else
+          task_info = grid_gantt.task_id_to_info[states.task_id]
+          task_info.milestone_time = task_info.self_start_time = task_info.self_end_time = states.milestone.original_milestone_time
+          grid_gantt.task_ids_edited_locally.add states.task_id
 
-        APP.justdo_grid_gantt._is_dragging_milestone_no_hint = true
-        JD.collections.Tasks.update states.task_id,
-          $set:
-            start_date: new_milestone_date
-  
+          APP.justdo_grid_gantt._is_dragging_milestone_no_hint = true
+          JD.collections.Tasks.update states.task_id,
+            $set:
+              start_date: new_milestone_date
+              end_date: new_milestone_date
+
         APP.justdo_grid_gantt.setState
           milestone:
             is_dragging: false
+
+        grid_gantt.updateDependentTasks states.task_id
+
+        APP.justdo_grid_gantt.setState
           task_id: null
   
         $(".grid-gantt-date-hint").remove()
