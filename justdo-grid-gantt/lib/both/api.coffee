@@ -15,3 +15,8 @@ _.extend JustdoGridGantt.prototype,
 
     return
   
+  isGridGanttInstalledInJustDo: (justdo_id) ->
+    justdo_doc = APP.collections.Projects.findOne justdo_id
+    return APP.projects.isPluginInstalledOnProjectDoc(JustdoGridGantt.project_custom_feature_id, justdo_doc)
+    
+  

@@ -804,7 +804,7 @@ _.extend JustdoGridGantt.prototype,
   setupStartDateEndDateChangeHintForMilestones: ->
     self = @
     APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) ->
-      if doc[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
+      if doc[JustdoGridGantt.is_milestone_pseudo_field_id] == "true" and self.isGridGanttInstalledInJustDo JD.activeJustdoId()
         if modifier?.$set?.start_date == modifier?.$set?.end_date
           return true
 
