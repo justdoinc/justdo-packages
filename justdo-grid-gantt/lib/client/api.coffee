@@ -712,8 +712,7 @@ _.extend JustdoGridGantt.prototype,
             default_width: 100
             field_options :
               select_options : [
-                {option_id: "true", label: "Yes"},
-                {option_id: "false", label: "No"}
+                {option_id: "true", label: "Yes"}
               ]
           
           self.setupContextMenu()
@@ -784,7 +783,7 @@ _.extend JustdoGridGantt.prototype,
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           APP.collections.Tasks.update task_id,
             $set:
-              "#{JustdoGridGantt.is_milestone_pseudo_field_id}": "false"
+              "#{JustdoGridGantt.is_milestone_pseudo_field_id}": null
           return
         icon_type: "feather"
         icon_val: "x-circle"
