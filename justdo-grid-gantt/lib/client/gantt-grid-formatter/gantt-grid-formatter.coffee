@@ -477,6 +477,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
       if APP.justdo_grid_gantt.canEditDates() == false
         return
+
       task_id = e.target.getAttribute("task-id")
       APP.justdo_grid_gantt.setState
         task_id: task_id
@@ -516,6 +517,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
       if APP.justdo_grid_gantt.canEditDates() == false
         return
+
       task_id = $(e.target).closest(".gantt-due-date-mark").attr("task-id")
       APP.justdo_grid_gantt.setState
         task_id: task_id
@@ -526,7 +528,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           x: e.clientX
           y: e.clientY
           row: @getEventRow(e)
-      return
+
+      return false
   ,
     args: ["mousedown", ".grid-gantt-formatter"]
     handler: (e) ->
