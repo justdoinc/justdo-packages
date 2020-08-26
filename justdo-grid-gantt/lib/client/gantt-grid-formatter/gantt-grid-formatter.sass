@@ -6,8 +6,10 @@
 
   clip-path: inset(-200px 1px)
 
+.slick-row:first-child .grid-formatter.grid-gantt-formatter
+  padding-top: 0    // override slick default style
+
 .grid-control .grid-gantt-formatter
-  
   position: absolute
   top: 0
   bottom: 0
@@ -96,7 +98,7 @@
     border-left: 0px solid transparent
     border-right: 8px solid transparent
     border-top: 8px solid lightgray
-    margin-top: 15px
+    margin-top: 20px
 
     &.critical-path
       border-top-color: rgb(247, 125, 125)
@@ -108,7 +110,7 @@
     border-left: 8px solid transparent
     border-right: 0px solid transparent
     border-top: 8px solid lightgray
-    margin-top: 15px
+    margin-top: 20px
 
     &.critical-path
       border-top-color: rgb(247, 125, 125)
