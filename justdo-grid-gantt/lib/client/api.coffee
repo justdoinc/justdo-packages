@@ -5,7 +5,7 @@ _.extend JustdoGridGantt.prototype,
     self = @
     @_states_manager = {}
     
-    @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents", JustdoGridGantt.is_milestone_pseudo_field_id]
+    @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents", JustdoGridGantt.is_milestone_pseudo_field_id, JustdoDependencies.dependencies_mf_field_id]
     
     @task_id_to_info = {} # Map to relevant information including
                           #   self_start_time: # indicates the beginning of the gantt block for the task
@@ -17,6 +17,9 @@ _.extend JustdoGridGantt.prototype,
                           #   parents: an Array of the parents ids. Those need to be iterated and updated
                           #            when parents change, or when the task is removed (which at that time
                           #            we no longer have it's parents
+                          #   lead_to_milestones:
+                          #   critical_path_of_milestones:
+                          #   milestone_subtasks:
                           # (*)all times in epoch
     @missing_parents = new Set() # see comment in processTaskAdd
     @gantt_dirty_tasks = new Set()
@@ -54,8 +57,12 @@ _.extend JustdoGridGantt.prototype,
         return
       for task_id, task_obj of core_data.items_by_id
         self.processTaskAdd task_obj
+        if task_obj[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
+          self.dirty_milestones.add task_obj._id
         
       self.processGanttDirtyTasks()
+      self.processDirtyMilestones()
+
       return # end of initTaskIdToInfo
     
     @processChangesQueue = (queue) =>
@@ -73,7 +80,8 @@ _.extend JustdoGridGantt.prototype,
           self.processTaskParentUpdate task_id
         else
           console.error "justdo-grid-gantt unhandled msg type", msg_type
-  
+
+      self.processDirtyMilestones()
       self.processGanttDirtyTasks()
       return # end of process changes queue
   
@@ -160,9 +168,17 @@ _.extend JustdoGridGantt.prototype,
       if task_obj[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
         task_info.milestone_time  = self.dateStringToMidDayEpoch task_obj.start_date
         task_info.self_start_time = task_info.self_end_time = task_info.milestone_time
+        if not task_info.milestone_subtasks?
+          task_info.milestone_subtasks = []
       else
         delete task_info.milestone_time
-        
+
+      # dependencies
+      if (dependencies_mf = task_obj[JustdoDependencies.dependencies_mf_field_id])?
+        task_info.dependencies = _.map dependencies_mf, (dep) -> dep.task_id
+      else
+        delete task_info.dependencies
+    
       # checking start_time change
       if task_info.self_start_time != old_task_info.self_start_time
         self.processStartTimeChange task_obj._id, task_info, old_task_info
@@ -174,6 +190,13 @@ _.extend JustdoGridGantt.prototype,
       #checking milestone
       if task_info.milestone_time != old_task_info.milestone_time
         self.processMilestoneTimeChange task_obj._id, task_info, old_task_info
+        self.dirty_milestones.add task_obj._id
+
+      # check if any milestones need to be marked as dirty
+      if task_info.self_start_time != old_task_info.self_start_time or 
+          task_info.self_end_time != old_task_info.self_end_time or
+          not _.isEqual task_info.dependencies, old_task_info.dependencies
+        self.addDirtyMilestonesOfTask task_obj._id
 
       if task_info.due_time != old_task_info.due_time
         self.processDueTimeChange task_obj._id, task_info, old_task_info
@@ -191,7 +214,9 @@ _.extend JustdoGridGantt.prototype,
         self.processEndTimeChange task_id, {}, old_task_info
       if old_task_info.milestone_time?
         self.processMilestoneTimeChange() task_id, {}, old_task_info
-        
+      
+      self.addDirtyMilestonesOfTask task_id
+
       delete self.task_id_to_info[task_id]
       self.warnings_manager.removeTask task_id
       return
@@ -437,7 +462,10 @@ _.extend JustdoGridGantt.prototype,
   
     @getOrCreateTaskInfoObject = (task_id) ->
       if not (task_info = self.task_id_to_info[task_id])?
-        task_info = {}
+        task_info = {
+          lead_to_milestones: {}
+          critical_path_of_milestones: {}
+        }
         self.task_id_to_info[task_id] = task_info
         self.gantt_dirty_tasks.add task_id
       return task_info
@@ -820,3 +848,89 @@ _.extend JustdoGridGantt.prototype,
       return true
       
     return
+    
+  # --------- Critical path --------- #
+  dirty_milestones: new Set()
+
+  addDirtyMilestonesOfTask: (task_id) ->
+    self = @
+
+    for milestone_task_id of self.task_id_to_info[task_id].lead_to_milestones
+      self.dirty_milestones.add milestone_task_id
+    
+    return
+
+  processDirtyMilestones: ->
+    self = @
+
+    self.dirty_milestones.forEach (task_id) ->
+      self.recalculateCriticalPath task_id
+
+    self.dirty_milestones.clear()
+
+    return
+
+  recalculateCriticalPath: (milestone_task_id) ->
+    self = @
+    tasks_info = self.task_id_to_info
+    
+    if not (milestone_subtasks = tasks_info[milestone_task_id].milestone_subtasks)?
+      return 
+
+    # Clean up previous ciritical path info
+    for subtask_id in milestone_subtasks
+      delete tasks_info[subtask_id].lead_to_milestones[milestone_task_id]
+      delete tasks_info[subtask_id].critical_path_of_milestones[milestone_task_id]
+      self.gantt_dirty_tasks.add subtask_id
+
+    if tasks_info[milestone_task_id].milestone_time?
+      tasks_info[milestone_task_id].milestone_subtasks = []
+      self._cpBackwardPass milestone_task_id, milestone_task_id, true
+    else
+       # the task is no longer a milestone
+      delete tasks_info[milestone_task_id].milestone_subtasks
+
+    return
+
+  _cpBackwardPass: (milestone_task_id, task_id, is_cp=true) ->
+    self = @
+    tasks_info = self.task_id_to_info
+
+    self.gantt_dirty_tasks.add task_id
+
+    # Add lead_to_milestones
+    tasks_info[milestone_task_id].milestone_subtasks.push task_id
+    tasks_info[task_id].lead_to_milestones[milestone_task_id] = true
+
+    # Add critical_path_of_milestones
+    if is_cp
+      tasks_info[task_id].critical_path_of_milestones[milestone_task_id] = true
+
+    if not (task_items = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core?.items_by_id)?
+      return
+
+    if not (dependencies_mf = task_items[task_id]?.justdo_task_dependencies_mf)?
+      return
+
+    for dependency in dependencies_mf
+      self._cpBackwardPass milestone_task_id, dependency.task_id, (is_cp and self._isStartedImmediatelyAfter(task_id, dependency.task_id))
+
+    return
+  
+  _isStartedImmediatelyAfter: (dependent_id, independent_id) ->
+    self = @
+    tasks_info = self.task_id_to_info
+    end_moment = moment.utc(tasks_info[independent_id].self_end_time).startOf("day").add(1, "day")
+    start_moment = moment.utc(tasks_info[dependent_id].self_start_time).startOf("day")
+    return end_moment.isSame start_moment
+
+  isCriticalTask: (task_id) ->
+    self = @
+    return not _.isEmpty self.task_id_to_info[task_id].critical_path_of_milestones
+  
+  isCriticalEdge: (dependent_id, independent_id) ->
+    self = @
+    # common_cp_of_milestones = _.intersection _.keys(self.task_id_to_info[dependent_id].critical_path_of_milestones), _.keys(self.task_id_to_info[independent_id].critical_path_of_milestones)
+    return self.isCriticalTask(dependent_id) and self.isCriticalTask(independent_id) and self._isStartedImmediatelyAfter dependent_id, independent_id
+
+  # ------End of Critical path -------- #

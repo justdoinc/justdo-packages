@@ -198,8 +198,10 @@ _.extend JustdoGridGantt.prototype,
             x: p4.x
             y: p2.y
           
+          is_critical_path = self.isCriticalEdge dependency_obj.dependent, dependency_obj.independent
+
           # open point from code review https://github.com/justdoinc/justdo-internal-packages/commit/bc44b60fd490862549bb3065ea40ca9e37030943#r38823927
-          html = """<div class="dependency-container" dependent-id="#{dependency_obj.dependent}" independent-id="#{dependency_obj.independent}"
+          html = """<div class="dependency-container #{if is_critical_path then "critical-path" else ""}" dependent-id="#{dependency_obj.dependent}" independent-id="#{dependency_obj.independent}"
                       dependency-type="#{dependency_obj.dependency_type}">"""
           html += """<div class="line horizontal al1" style="#{self.lineStyle p0, p1}"></div>"""
           if p1.x > 0 and p1.x < self.getColumnWidth()
@@ -268,7 +270,7 @@ _.extend JustdoGridGantt.prototype,
     
   rerenderAllDependencies: ->
     self = @
-    
+
     # remove all existing arrows
     gc_id = APP.modules.project_page.gridControl().getGridUid()
     $gc_id = $(".#{gc_id}")
@@ -311,7 +313,6 @@ _.extend JustdoGridGantt.prototype,
 
   _refreshArrows: ->
     self = @
-    
     # Refresh daily
     if self.daily_refresh_timeout?
       Meteor.clearTimeout self.daily_refresh_timeout

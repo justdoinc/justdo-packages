@@ -30,6 +30,17 @@ $today-indicator-width: 1px
       position: absolute
       z-index: $non-selected-arrow-z-index
 
+    &.critical-path
+      .line
+        border-color: rgb(247, 125, 125)
+        z-index: 10
+      .right-arrow
+        border-top-color: rgb(247, 125, 125)
+        z-index: 10
+    
+    &.critical-path:hover .horizontal:before
+      background: rgb(247, 125, 125)
+
     .horizontal
       border-top-style: solid
       border-top-width: 1px

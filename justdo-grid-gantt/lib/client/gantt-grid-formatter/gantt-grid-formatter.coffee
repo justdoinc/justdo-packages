@@ -269,8 +269,18 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           if offset < column_width_px
             bar_end_px = offset
         
+        is_critical_path = grid_gantt.isCriticalTask doc._id
+        if is_critical_path
+          critical_path_milestones_text_arr = []
+          if (items_by_id = APP.modules?.project_page?.mainGridControl()?._grid_data?._grid_data_core?.items_by_id)?
+            for milestone_task_id of task_info.critical_path_of_milestones
+              critical_path_milestones_text_arr.push "##{items_by_id[milestone_task_id].seqId}"
+            critical_path_milestones_text = critical_path_milestones_text_arr.join ","
+
         main_bar_mark = """
-            <div class="gantt-main-bar" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}"></div>
+            <div class="gantt-main-bar #{if is_critical_path then "critical-path" else ""}" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}">
+              #{if is_critical_path then "<div class='critical-path-of-milestones'>Critical path of: #{critical_path_milestones_text}</div>" else ""}
+            </div>
             <div class="gantt-main-bar-start-drop-area gantt-start-drop-area" style="left:#{bar_start_px}px;"></div>
             <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}"></div>
             <div class="gantt-main-bar-F2x-dependency" style="left:#{bar_end_px}px;">
@@ -457,7 +467,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
       if APP.justdo_grid_gantt.canEditDates() == false
         return
-      task_id = e.target.getAttribute("task-id")
+      task_id = e.target.getAttribute("task-id") 
       APP.justdo_grid_gantt.setState
         task_id: task_id
         end_time:
@@ -595,6 +605,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         APP.justdo_grid_gantt.setState
           end_time:
             is_dragging: false
+        
         grid_gantt.updateDependentTasks states.task_id
         APP.justdo_grid_gantt.setState
           task_id: null

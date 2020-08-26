@@ -6,7 +6,7 @@
 
   clip-path: inset(-200px 1px)
 
-.grid-gantt-formatter
+.grid-control .grid-gantt-formatter
   
   position: absolute
   top: 0
@@ -14,6 +14,7 @@
   left: 0
   right: 0
   padding: 0
+  overflow: visible
 
   .gantt-main-bar
     position: absolute
@@ -23,6 +24,25 @@
     border: 1px solid #9ECFEF
     box-shadow: 0px 0px 2px rgba(82, 95, 127, 0.16)
     border-radius: 2px
+  
+  .gantt-main-bar.critical-path
+    background-color: rgb(247, 125, 125)
+    position: relative
+    
+    .critical-path-of-milestones
+      position: absolute
+      left: 0
+      top: -300%
+      background: black
+      color: white
+      display: none
+      font-size: 12px
+      font-weight: bold
+      white-space: nowrap
+      padding: 2px 4px
+    
+    &:hover .critical-path-of-milestones
+      display: block
 
   .gantt-main-bar-end-drag
     position: absolute
