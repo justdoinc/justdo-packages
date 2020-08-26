@@ -222,6 +222,8 @@ _.extend JustdoGridGantt.prototype,
       return
   
     @processTaskParentUpdate = (task_id) ->
+      self = @
+
       if not (old_task_info = self.task_id_to_info[task_id])?
         console.error "grid-gantt - task not found (parents-update)"
         old_task_info =
@@ -241,12 +243,20 @@ _.extend JustdoGridGantt.prototype,
       all_changed_parents = []
       parents_added.forEach (parent_id) ->
         all_changed_parents.push parent_id
+        critical_child_count = _.extend {}, old_task_info.critical_child_count
+        for milestone_task_id of old_task_info.critical_path_of_milestones
+          critical_child_count[milestone_task_id] = if critical_child_count[milestone_task_id]? then critical_child_count[milestone_task_id]+1 else 1
+        self.incCriticalChildCount parent_id, critical_child_count
       parents_removed.forEach (parent_id) ->
         all_changed_parents.push parent_id
+        critical_child_count = _.extend {}, old_task_info.critical_child_count
+        for milestone_task_id of old_task_info.critical_path_of_milestones
+          critical_child_count[milestone_task_id] = if critical_child_count[milestone_task_id]? then critical_child_count[milestone_task_id]+1 else 1
+        self.decCriticalChildCount parent_id, critical_child_count
         
       # end update the cached data
       self.task_id_to_info[task_id].parents = current_parents
-  
+
       # update parents
       for parent_id in all_changed_parents
         parent_task_info = self.task_id_to_info[parent_id]
@@ -261,6 +271,15 @@ _.extend JustdoGridGantt.prototype,
       return
   
     @processStartTimeChange = (task_id, task_info, old_task_info) ->
+      if not task_info?
+        task_info = {
+          parents: []
+        }
+      if not old_task_info?
+        old_task_info = {
+          parents: []
+        }
+
       self.gantt_dirty_tasks.add task_id
       # for the value of the earliest child, we take the minimum of the start_time and the earliest_child_start_time
       start_time = self.earliestOfSelfStartAndEarliestChildStart task_info
@@ -327,6 +346,15 @@ _.extend JustdoGridGantt.prototype,
       return
   
     @processEndTimeChange = (task_id, task_info, old_task_info) ->
+      if not task_info?
+        task_info = {
+          parents: []
+        }
+      if not old_task_info?
+        old_task_info = {
+          parents: []
+        }
+
       self.gantt_dirty_tasks.add task_id
       # for the value of the last child, we take the latest of the end_time and the latest_child_end_time
       end_time = self.latestOfSelfEndAndLatestChildEnd task_info
@@ -465,6 +493,7 @@ _.extend JustdoGridGantt.prototype,
         task_info = {
           lead_to_milestones: {}
           critical_path_of_milestones: {}
+          critical_child_count: {}
         }
         self.task_id_to_info[task_id] = task_info
         self.gantt_dirty_tasks.add task_id
@@ -880,6 +909,10 @@ _.extend JustdoGridGantt.prototype,
     # Clean up previous ciritical path info
     for subtask_id in milestone_subtasks
       delete tasks_info[subtask_id].lead_to_milestones[milestone_task_id]
+      if tasks_info[subtask_id].critical_path_of_milestones[milestone_task_id]?
+        for parent_id in tasks_info[subtask_id].parents
+          self.decCriticalChildCount parent_id,
+            "#{milestone_task_id}": 1
       delete tasks_info[subtask_id].critical_path_of_milestones[milestone_task_id]
       self.gantt_dirty_tasks.add subtask_id
 
@@ -891,7 +924,7 @@ _.extend JustdoGridGantt.prototype,
       delete tasks_info[milestone_task_id].milestone_subtasks
 
     return
-
+  
   _cpBackwardPass: (milestone_task_id, task_id, is_cp=true) ->
     self = @
     tasks_info = self.task_id_to_info
@@ -905,6 +938,9 @@ _.extend JustdoGridGantt.prototype,
     # Add critical_path_of_milestones
     if is_cp
       tasks_info[task_id].critical_path_of_milestones[milestone_task_id] = true
+      for parent_id in tasks_info[task_id].parents
+        self.incCriticalChildCount parent_id,
+          "#{milestone_task_id}": 1
 
     if not (task_items = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core?.items_by_id)?
       return
@@ -917,6 +953,54 @@ _.extend JustdoGridGantt.prototype,
 
     return
   
+  incCriticalChildCount: (task_id, counts_to_inc) ->
+    self = @
+
+    task_info = self.task_id_to_info[task_id]
+    if not task_info?
+      return
+
+    for milestone_task_id, val of counts_to_inc
+      critical_child_count = task_info.critical_child_count[milestone_task_id]
+      task_info.critical_child_count[milestone_task_id] = if critical_child_count? then critical_child_count+val else val
+
+    self.gantt_dirty_tasks.add task_id
+    
+    if (parents = task_info.parents)?
+      for parent_id in parents
+        # if the parent_id is in the missing parents, we won't deal with it now, since we don't know its own
+        # parents, and won't be able to change those as well. We will process it when it's added.
+        if self.missing_parents.has parent_id
+          return # keep going on the forEach
+          
+        self.incCriticalChildCount parent_id, counts_to_inc
+
+    return
+
+  decCriticalChildCount: (task_id, counts_to_dec) ->
+    self = @
+
+    task_info = self.task_id_to_info[task_id]
+    if not task_info?
+      return
+
+    for milestone_task_id, val of counts_to_dec
+      critical_child_count = task_info.critical_child_count[milestone_task_id]
+      task_info.critical_child_count[milestone_task_id] = if critical_child_count? then critical_child_count-val else 0
+
+    self.gantt_dirty_tasks.add task_id
+
+    if (parents = task_info.parents)?
+      for parent_id in parents
+        # if the parent_id is in the missing parents, we won't deal with it now, since we don't know its own
+        # parents, and won't be able to change those as well. We will process it when it's added.
+        if self.missing_parents.has parent_id
+          return # keep going on the forEach
+          
+        self.decCriticalChildCount parent_id, counts_to_dec
+
+    return
+
   _isStartedImmediatelyAfter: (dependent_id, independent_id) ->
     self = @
     tasks_info = self.task_id_to_info
@@ -933,4 +1017,12 @@ _.extend JustdoGridGantt.prototype,
     # common_cp_of_milestones = _.intersection _.keys(self.task_id_to_info[dependent_id].critical_path_of_milestones), _.keys(self.task_id_to_info[independent_id].critical_path_of_milestones)
     return self.isCriticalTask(dependent_id) and self.isCriticalTask(independent_id) and self._isStartedImmediatelyAfter dependent_id, independent_id
 
+  hasCriticalChild: (task_id) ->
+    self = @
+    if (critical_child_count = self.task_id_to_info[task_id]?.critical_child_count)?
+      for milestone_task_id, count of critical_child_count
+        if count > 0
+          return true
+    
+    return false
   # ------End of Critical path -------- #

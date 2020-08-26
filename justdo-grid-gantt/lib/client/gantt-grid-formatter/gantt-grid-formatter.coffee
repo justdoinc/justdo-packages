@@ -243,7 +243,9 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     
     if not (task_info = grid_gantt.task_id_to_info[doc._id])?
       return ""
-      
+    
+    has_critical_child = grid_gantt.hasCriticalChild doc._id
+    
     ############
     # main block
     # Following gantt-pro approach - at this stage the user will be able to change the duration while dragging the end
@@ -300,12 +302,12 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
        (latest_child = task_info.latest_child_end_time)?
       if earliest_child >= column_start_epoch and earliest_child <= column_end_epoch
         if (offset = grid_gantt.timeOffsetPixels(column_start_end, earliest_child, column_width_px))?
-          earliest_child_mark = """<div class="gantt-earliest-child" style="left:#{offset}px"></div>"""
+          earliest_child_mark = """<div class="gantt-earliest-child #{if has_critical_child then "critical-path" else ""}" style="left:#{offset}px"></div>"""
   
     
       if latest_child >= column_start_epoch and latest_child <= column_end_epoch
         if (offset = grid_gantt.timeOffsetPixels(column_start_end, latest_child, column_width_px))?
-          latest_child_mark = """<div class="gantt-latest-child" style="left:#{offset - 8}px"></div>"""
+          latest_child_mark = """<div class="gantt-latest-child #{if has_critical_child then "critical-path" else ""}" style="left:#{offset - 8}px"></div>"""
   
     ############
     # basket border
@@ -324,8 +326,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         if (offset = grid_gantt.timeOffsetPixels(column_start_end, latest_child, column_width_px))?
           if offset < column_width_px
             box_end_px = offset
-  
-        basket_border_mark = """<div class="gantt-basket-border" style="left:#{box_start_px}px; width:#{box_end_px - box_start_px}px"></div>"""
+
+        basket_border_mark = """<div class="gantt-basket-border #{if has_critical_child then "critical-path" else ""}" style="left:#{box_start_px}px; width:#{box_end_px - box_start_px}px"></div>"""
    
     ############
     # due date
