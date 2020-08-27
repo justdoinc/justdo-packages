@@ -30,22 +30,22 @@
   .gantt-main-bar.critical-path
     background-color: rgb(247, 125, 125)
     position: relative
-    
-    .critical-path-of-milestones
-      position: absolute
-      left: 0
-      top: -300%
-      background: black
-      color: white
-      display: none
-      font-size: 12px
-      font-weight: bold
-      white-space: nowrap
-      padding: 2px 4px
-    
+
     &:hover .critical-path-of-milestones
       display: block
-
+    
+  .critical-path-of-milestones
+    position: absolute
+    left: 0
+    top: -300%
+    background: black
+    color: white
+    display: none
+    font-size: 12px
+    font-weight: bold
+    white-space: nowrap
+    padding: 2px 4px
+  
   .gantt-main-bar-end-drag
     position: absolute
     height: 10px
@@ -90,6 +90,9 @@
 
     &.critical-path
       border-color: rgb(247, 125, 125)
+    
+    &.critical-path:hover .critical-path-of-milestones
+      display: block
 
   .gantt-earliest-child
     position: absolute

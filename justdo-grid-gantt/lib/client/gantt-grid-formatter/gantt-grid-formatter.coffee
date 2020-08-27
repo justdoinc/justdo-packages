@@ -327,7 +327,16 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           if offset < column_width_px
             box_end_px = offset
 
-        basket_border_mark = """<div class="gantt-basket-border #{if has_critical_child then "critical-path" else ""}" style="left:#{box_start_px}px; width:#{box_end_px - box_start_px}px"></div>"""
+        critical_path_milestones_text_arr = []
+        if (items_by_id = APP.modules?.project_page?.mainGridControl()?._grid_data?._grid_data_core?.items_by_id)?
+          for milestone_task_id, count of task_info.critical_child_count
+            if count > 0
+              critical_path_milestones_text_arr.push "##{items_by_id[milestone_task_id].seqId}"
+          critical_path_milestones_text = critical_path_milestones_text_arr.join ","
+
+        basket_border_mark = """<div class="gantt-basket-border #{if has_critical_child then "critical-path" else ""}" style="left:#{box_start_px}px; width:#{box_end_px - box_start_px}px">
+          #{if has_critical_child then "<div class='critical-path-of-milestones'>Contains critical path of: #{JustdoHelpers.xssGuard critical_path_milestones_text}</div>" else ""}
+        </div>"""
    
     ############
     # due date
