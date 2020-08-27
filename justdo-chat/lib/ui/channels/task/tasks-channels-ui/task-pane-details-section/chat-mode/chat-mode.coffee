@@ -135,3 +135,8 @@ Template.task_pane_chat_section_chat.events
       return
 
     return
+
+  "click .maximize-chat": (e, tpl) ->
+    $(".task-pane-section-item-details").toggleClass "show-chat"
+
+    return

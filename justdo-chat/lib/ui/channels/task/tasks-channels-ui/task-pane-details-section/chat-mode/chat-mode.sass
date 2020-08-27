@@ -3,6 +3,7 @@
 
 .task-pane-chat
   font-size: 14px
+  position: relative
   .chat-mode
     h6
       display: inline-block
@@ -10,11 +11,10 @@
     .chat-header
       user-select: none
       width: 100%
+      display: flex
+      align-items: center
 
       .subscribers-management-button-block
-        float: right
-
-        display: inline-block
         padding: 0px 9px
         text-align: center
         background: #E6EEF9
@@ -25,8 +25,6 @@
         user-select: none
 
       .open-chat-in-window-container
-        float: right
-        display: inline-block
         padding: 2px 4px 2px 7px
         text-align: center
         cursor: pointer
@@ -37,17 +35,26 @@
         background-image: url("/packages/justdoinc_justdo-chat/media/chat-sprite.png")
         width: 16px
         height: 16px
-
         background-position: 0 0
 
       .main-block
-        width: auto
-
         overflow: hidden
         text-overflow: ellipsis
         white-space: nowrap
-
+        flex-grow: 1
         padding-right: 5px
+
+      .action-block
+        display: flex
+        flex-shrink: 0
+        align-items: center
+
+      .maximize-chat
+        cursor: pointer
+        svg
+          padding: 4px
+          stroke-width: 3px
+          color: #3073CC
 
   .messages-board-viewport
     border-top: $parts-separator-border
@@ -61,17 +68,13 @@
 
   .user-subscription-toggle
     display: inline-block
-
     font-family: FontAwesome
     font-style: normal
     font-weight: normal
     text-decoration: inherit
-
     cursor: pointer
-
     width: 17px
     text-align: center
-
     font-size: 13px
 
     &::before
@@ -89,3 +92,42 @@
   .subscribers-names
     color: #636363
     font-style: italic
+
+.minimize-chat-icon
+  display: none
+
+.task-pane-section-item-details.show-chat
+  overflow: hidden
+  display: flex
+
+  section:not(.task-pane-chat)
+    display: none
+
+  .task-pane-chat
+    position: absolute
+    top: 12px
+    left: 10px
+    right: 12px
+    bottom: 12px
+    margin: 0
+    display: flex
+    overflow: hidden
+
+  .chat-mode
+    display: flex
+    flex-direction: column
+    padding-bottom: 4px
+    width: 100%
+
+  .message-editor
+    flex-shrink: 0
+
+  .messages-board-viewport
+    flex-grow: 1
+    max-height: none
+
+  .maximize-chat-icon
+    display: none
+
+  .minimize-chat-icon
+    display: block
