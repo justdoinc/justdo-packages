@@ -29,6 +29,8 @@ _.extend JustdoGridGantt.prototype,
   _setupCollectionsHooks: ->
     @setupMilestoneRestrictions()
 
+    return
+
   setupMilestoneRestrictions: ->
     self = @
     APP.collections.Projects.before.update (user_id, doc, field_names, modifier, options) ->
@@ -40,16 +42,32 @@ _.extend JustdoGridGantt.prototype,
           APP.collections.Tasks.find
             project_id: doc._id
             "#{JustdoGridGantt.is_milestone_pseudo_field_id}": "true"
+          ,
+            fields:
+              _id: 1
+              start_date: 1
+              end_date: 1
           .forEach (task) ->
-            bulk_update_ops.push
-              updateOne:
-                filter:
-                  _id: task._id
-                update:
-                  $set:
-                    end_date: task.start_date
+            if task.start_date?
+              modifier = 
+                $set:
+                  end_date: task.start_date
+            else if task.end_date?
+              modifier = 
+                $set:
+                  end_date: null
+
+            if modifier?
+              APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier modifier
+              bulk_update_ops.push
+                updateOne:
+                  filter:
+                    _id: task._id
+                  update: modifier
+              
             return
           
+          APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Tasks._name, "bulkWrite")
           APP.collections.Tasks.rawCollection().bulkWrite bulk_update_ops
 
       return
@@ -59,10 +77,14 @@ _.extend JustdoGridGantt.prototype,
         if not modifier.$set?
           modifier.$set = {}
         modifier.$set.end_date = doc.start_date
-      else if doc?[JustdoGridGantt.is_milestone_pseudo_field_id] == "true" and self.isGridGanttInstalledInJustDo doc.project_id
-        if (new_start_date = modifier.$set?.start_date)?
+      else if doc?[JustdoGridGantt.is_milestone_pseudo_field_id] == "true" and 
+          ((new_start_date = modifier.$set?.start_date) != undefined or (new_end_date = modifier.$set?.end_date) != undefined) and 
+          self.isGridGanttInstalledInJustDo doc.project_id
+        if new_start_date != undefined
           modifier.$set.end_date = new_start_date
-        else if modifier.$set?.end_date?
+        else if new_end_date != undefined
           return false
 
       return true
+    
+    return

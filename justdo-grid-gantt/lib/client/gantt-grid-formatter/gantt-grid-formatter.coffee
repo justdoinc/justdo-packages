@@ -281,7 +281,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
         main_bar_mark = """
             <div class="gantt-main-bar #{if is_critical_path then "critical-path" else ""}" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}">
-              #{if is_critical_path then "<div class='critical-path-of-milestones'>Critical path of: #{critical_path_milestones_text}</div>" else ""}
+              #{if is_critical_path then "<div class='critical-path-of-milestones'>Critical path of: #{JustdoHelpers.xssGuard critical_path_milestones_text}</div>" else ""}
             </div>
             <div class="gantt-main-bar-start-drop-area gantt-start-drop-area" style="left:#{bar_start_px}px;"></div>
             <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}"></div>
@@ -433,7 +433,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mousedown", ".gantt-main-bar-F2x-dependency-icon"]
     handler: (e) ->
-      if e.button != 0    # left click
+      if e.button != 0  # left click
         return 
 
       formatter_container = e.target.closest(".grid-gantt-formatter")
@@ -464,7 +464,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mousedown", ".gantt-main-bar-end-drag"]
     handler: (e) ->
-      if e.button != 0    # left click
+      if e.button != 0  # left click
         return 
 
       if APP.justdo_grid_gantt.canEditDates() == false
@@ -484,7 +484,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mousedown", ".gantt-milestone"]
     handler: (e) ->
-      if e.button != 0    # left click
+      if e.button != 0  # left click
         return 
 
       if APP.justdo_grid_gantt.canEditDates() == false
@@ -504,7 +504,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mousedown", ".gantt-main-bar"]
     handler: (e) ->
-      if e.button != 0    # left click
+      if e.button != 0  # left click
         return 
 
       if APP.justdo_grid_gantt.canEditDates() == false
@@ -524,7 +524,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mousedown", ".gantt-due-date-mark"]
     handler: (e) ->
-      if e.button != 0    # left click
+      if e.button != 0  # left click
         return 
 
       if APP.justdo_grid_gantt.canEditDates() == false
@@ -545,7 +545,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   ,
     args: ["mousedown", ".grid-gantt-formatter"]
     handler: (e) ->
-      if e.button == 0    # left click
+      if e.button == 0  # left click
         states = APP.justdo_grid_gantt.getOrCreateState()
         if states.end_time.is_dragging or
             states.main_bar.is_dragging or

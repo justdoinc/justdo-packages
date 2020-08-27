@@ -505,6 +505,8 @@ _.extend JustdoGridGantt.prototype,
     
     @processDueTimeChange = (task_id, task_info, old_task_info) ->
       self.gantt_dirty_tasks.add task_id
+
+      return
       
     @dateStringToStartOfDayEpoch = (date) ->
       re = /^\d\d\d\d-\d\d-\d\d$/g
@@ -673,7 +675,6 @@ _.extend JustdoGridGantt.prototype,
     
     @registerConfigTemplate()
     @setupCustomFeatureMaintainer()
-    @setupStartDateEndDateChangeHintForMilestones()
 
     return
   
@@ -772,6 +773,8 @@ _.extend JustdoGridGantt.prototype,
                 {option_id: "true", label: "Yes"}
               ]
           
+          @setupStartDateEndDateChangeHintForMilestones()
+
           self.setupContextMenu()
 
           return
@@ -788,6 +791,8 @@ _.extend JustdoGridGantt.prototype,
           if (core_data = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core)?
             core_data.off "data-changes-queue-processed", self.processChangesQueue
           
+          @cleanupStartDateEndDateChangeHintForMilestones()
+
           self.unsetContextMenu()
 
           @dependencies_map = {}
@@ -805,8 +810,11 @@ _.extend JustdoGridGantt.prototype,
     
   is_gantt_column_displayed_rv: new ReactiveVar false
   
-  isActiveTaskGanttMilestone: ->
-    return JD.activeItem({"#{JustdoGridGantt.is_milestone_pseudo_field_id}": 1})?[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
+  isTaskGanttMilestone: (task_id) ->
+    task = APP.collections.Tasks.findOne task_id,
+      fields:
+        "#{JustdoGridGantt.is_milestone_pseudo_field_id}": 1
+    return task?[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
 
   setupContextMenu: ->
     self = @
@@ -830,8 +838,8 @@ _.extend JustdoGridGantt.prototype,
         icon_type: "feather"
         icon_val: "crosshair"
 
-      listingCondition: ->
-        return not self.isActiveTaskGanttMilestone()
+      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        return not self.isTaskGanttMilestone task_id
     
     context_menu.registerSectionItem "gantt", "unset-as-gantt-milestone",
       position: 100
@@ -845,31 +853,31 @@ _.extend JustdoGridGantt.prototype,
         icon_type: "feather"
         icon_val: "x-circle"
 
-      listingCondition: ->
-        return self.isActiveTaskGanttMilestone()
+      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        return self.isTaskGanttMilestone task_id
     
     return
 
   unsetContextMenu: ->
     context_menu = APP.justdo_tasks_context_menu
-    context_menu.unregisterSectionItem "gantt", "set-as-gantt-milestone"
     context_menu.unregisterMainSection "gantt"
 
     return
   
   _is_dragging_milestone_no_hint : false
+  date_change_hint_hook_handler: null
   setupStartDateEndDateChangeHintForMilestones: ->
     self = @
-    APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) ->
+    self.date_change_hint_hook_handler = APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) ->
       if doc[JustdoGridGantt.is_milestone_pseudo_field_id] == "true" and self.isGridGanttInstalledInJustDo JD.activeJustdoId()
         if modifier?.$set?.start_date == modifier?.$set?.end_date
           return true
 
-        if self._is_dragging_milestone_no_hint == false and (modifier?.$set?.start_date or modifier?.$set?.end_date)
+        if self._is_dragging_milestone_no_hint == false and (modifier?.$set?.start_date != undefined or modifier?.$set?.end_date != undefined)
           JustdoSnackbar.show
             text: "The end date will always be same as the start date because this task is set as a Gantt milestone"
 
-        if modifier?.$set?.end_date
+        if modifier?.$set?.end_date != undefined
           return false
         
         self._is_dragging_milestone_no_hint = false
@@ -877,7 +885,13 @@ _.extend JustdoGridGantt.prototype,
       return true
       
     return
-    
+  
+  cleanupStartDateEndDateChangeHintForMilestones: ->
+    if self.date_change_hint_hook_handler?
+      self.date_change_hint_hook_handler.remove()
+
+    return
+
   # --------- Critical path --------- #
   dirty_milestones: new Set()
 
