@@ -67,8 +67,9 @@ _.extend JustdoGridGantt.prototype,
               
             return
           
-          APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Tasks._name, "bulkWrite")
-          APP.collections.Tasks.rawCollection().bulkWrite bulk_update_ops
+          if bulk_update_ops.length > 0
+            APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Tasks._name, "bulkWrite")
+            APP.collections.Tasks.rawCollection().bulkWrite bulk_update_ops
 
       return
        
@@ -78,9 +79,9 @@ _.extend JustdoGridGantt.prototype,
           modifier.$set = {}
         modifier.$set.end_date = doc.start_date
       else if doc?[JustdoGridGantt.is_milestone_pseudo_field_id] == "true" and 
-          ((new_start_date = modifier.$set?.start_date) != undefined or (new_end_date = modifier.$set?.end_date) != undefined) and 
+          ((new_start_date = modifier.$set?.start_date) isnt undefined or (new_end_date = modifier.$set?.end_date) isnt undefined) and # null means unset, undefined means no change
           self.isGridGanttInstalledInJustDo doc.project_id
-        if new_start_date != undefined
+        if new_start_date isnt undefined # null means unset, undefined means no change
           modifier.$set.end_date = new_start_date
         else if new_end_date != undefined
           return false
