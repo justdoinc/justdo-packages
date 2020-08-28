@@ -1,0 +1,53 @@
+html.download-grid-on
+  overflow: auto
+
+  .global-wrapper
+    display: none !important
+
+  .grid-control-tab.active, .slick-viewport
+    height: auto !important
+
+.download-grid-overlay
+  //
+  // General setups
+  //
+  position: absolute
+  z-index: 99999
+  background-color: white
+  width: auto
+  height: auto
+  top: 0
+  left: 0
+  padding: 2rem
+
+  //
+  // General modifications
+  //
+  .grid-control-tab
+    font-size: 15px
+
+  .download-grid-title
+    font-size: 24px
+    font-weight: bold
+    margin-bottom: 1rem
+
+  //
+  // Gantt related
+  //
+  .grid-state-button, .column-filter-button
+    display: none
+
+  .grid-gantt-control
+    display: none
+
+  .grid-gantt-floating-elements-container
+    overflow: hidden
+    height: 54px !important
+    top: -29px !important
+
+  .grid-gantt-header-viewport
+    position: relative
+    top: 30px
+
+  .grid-gantt-header
+    height: 24px

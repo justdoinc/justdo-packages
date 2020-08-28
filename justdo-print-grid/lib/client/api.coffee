@@ -647,6 +647,61 @@ _.extend JustdoPrintGrid.prototype,
             filtered_tree: true
         return
 
+      # Print visible sub-tasks
+      "click .download-as-png": ->
+        setup = ->
+          $("body").append """<div class="download-grid-overlay">
+            <div class="download-grid-title">
+              #{JustdoHelpers.xssGuard(JD.activeJustdo({title: 1}).title)}
+            </div>
+          </div>"""
+
+          $active_tab = $(".grid-control-tab.active")
+          $cloned_tab = $active_tab.clone()
+
+          # Critical to find the width before we hide the global-wrapper, otherwise
+          # width will be 0
+          grid_canvas_width = $active_tab.find(".grid-canvas").width()
+          $cloned_tab.find(".slick-viewport").width grid_canvas_width
+          $cloned_tab.find(".slick-header").width grid_canvas_width
+
+          $("html").addClass "download-grid-on"
+          $cloned_tab.appendTo ".download-grid-overlay"
+
+          return
+
+        destroy = ->
+          $("html").removeClass "download-grid-on"
+
+          $(".download-grid-overlay").remove()
+
+          return
+
+        setup()
+
+        html2canvas $(".download-grid-overlay").get(0),
+          scale: 2
+          allowTaint: false
+          useCORS: true
+          onrendered: (canvas) ->
+            destroy()
+
+            link = document.createElement('a')
+
+            link.download = "justdo-export.png"
+            link.href = canvas.toDataURL("image/png;base64")
+
+            if document.createEvent
+              e = document.createEvent("MouseEvents")
+              e.initMouseEvent "click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null
+              link.dispatchEvent e
+            else if link.fireEvent
+              link.fireEvent "onclick"
+
+            return
+
+        return
+
     # Hide and Show print buttons. Detecting browser print event for Chrome 9+ (Safari 5+ ???)
     if window.matchMedia
       mediaQueryList = window.matchMedia("print")
