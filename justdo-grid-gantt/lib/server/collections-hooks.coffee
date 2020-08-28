@@ -83,7 +83,7 @@ _.extend JustdoGridGantt.prototype,
           self.isGridGanttInstalledInJustDo doc.project_id
         if new_start_date isnt undefined # null means unset, undefined means no change
           modifier.$set.end_date = new_start_date
-        else if new_end_date != undefined
+        else if new_end_date isnt undefined # null means unset, undefined means no change
           return false
 
       return true
