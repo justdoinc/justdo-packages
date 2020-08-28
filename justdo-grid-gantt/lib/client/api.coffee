@@ -5,7 +5,10 @@ _.extend JustdoGridGantt.prototype,
     self = @
     @_states_manager = {}
     
-    @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents", JustdoGridGantt.is_milestone_pseudo_field_id, JustdoDependencies.dependencies_mf_field_id]
+    @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents", 
+      JustdoGridGantt.is_milestone_pseudo_field_id, JustdoDependencies.dependencies_mf_field_id,
+      JustdoGridGantt.progress_percentage_pseudo_field_id
+    ]
     
     @task_id_to_info = {} # Map to relevant information including
                           #   self_start_time: # indicates the beginning of the gantt block for the task
@@ -72,6 +75,7 @@ _.extend JustdoGridGantt.prototype,
           for field in data
             if field in self.fields_to_trigger_task_change_process
               self.processTaskChange core_data.items_by_id[task_id]
+              self.gantt_dirty_tasks.add task_id
         else if msg_type == "add"
           self.processTaskAdd data
         else if msg_type == "remove"
@@ -178,7 +182,12 @@ _.extend JustdoGridGantt.prototype,
         task_info.dependencies = _.map dependencies_mf, (dep) -> dep.task_id
       else
         delete task_info.dependencies
-    
+
+      if (progress_percentage = task_obj[JustdoGridGantt.progress_percentage_pseudo_field_id])?
+        task_info.progress_percentage = progress_percentage
+      else
+        delete task_info.progress_percentage
+
       # checking start_time change
       if task_info.self_start_time != old_task_info.self_start_time
         self.processStartTimeChange task_obj._id, task_info, old_task_info
@@ -189,7 +198,6 @@ _.extend JustdoGridGantt.prototype,
       
       #checking milestone
       if task_info.milestone_time != old_task_info.milestone_time
-        self.processMilestoneTimeChange task_obj._id, task_info, old_task_info
         self.dirty_milestones.add task_obj._id
 
       # check if any milestones need to be marked as dirty
@@ -197,9 +205,6 @@ _.extend JustdoGridGantt.prototype,
           task_info.self_end_time != old_task_info.self_end_time or
           not _.isEqual task_info.dependencies, old_task_info.dependencies
         self.addDirtyMilestonesOfTask task_obj._id
-
-      if task_info.due_time != old_task_info.due_time
-        self.processDueTimeChange task_obj._id, task_info, old_task_info
 
       self.warnings_manager.checkTask task_obj
       return # end of processTaskChange
@@ -499,15 +504,6 @@ _.extend JustdoGridGantt.prototype,
         self.gantt_dirty_tasks.add task_id
       return task_info
       
-    @processMilestoneTimeChange = (task_id, task_info, old_task_info) ->
-      self.gantt_dirty_tasks.add task_id
-      return
-    
-    @processDueTimeChange = (task_id, task_info, old_task_info) ->
-      self.gantt_dirty_tasks.add task_id
-
-      return
-      
     @dateStringToStartOfDayEpoch = (date) ->
       re = /^\d\d\d\d-\d\d-\d\d$/g
 
@@ -773,6 +769,13 @@ _.extend JustdoGridGantt.prototype,
                 {option_id: "true", label: "Yes"}
               ]
           
+          APP.modules.project_page.setupPseudoCustomField JustdoGridGantt.progress_percentage_pseudo_field_id,
+            label: JustdoGridGantt.progress_percentage_pseudo_field_label
+            field_type: "number"
+            grid_visible_column: true
+            grid_editable_column: true
+            default_width: 100
+          
           @setupStartDateEndDateChangeHintForMilestones()
 
           self.setupContextMenu()
@@ -784,6 +787,7 @@ _.extend JustdoGridGantt.prototype,
             APP.modules.project_page.removePseudoCustomFields JustdoGridGantt.pseudo_field_id
 
           APP.modules.project_page.removePseudoCustomFields JustdoGridGantt.is_milestone_pseudo_field_id
+          APP.modules.project_page.removePseudoCustomFields JustdoGridGantt.progress_percentage_pseudo_field_id
 
           if self.core_data_events_triggering_computation?
             self.core_data_events_triggering_computation.stop()
@@ -889,6 +893,7 @@ _.extend JustdoGridGantt.prototype,
   cleanupStartDateEndDateChangeHintForMilestones: ->
     if self.date_change_hint_hook_handler?
       self.date_change_hint_hook_handler.remove()
+      self.date_change_hint_hook_handler = null
 
     return
 

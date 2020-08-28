@@ -262,15 +262,21 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           (self_end_time >= column_start_epoch and self_end_time<= column_end_epoch) or # end time within range
           (self_start_time < column_start_epoch and self_end_time > column_end_epoch) # starts before and ends after
         
+        bar_virtual_start_px = 0
+        bar_virtual_end_px = 0
         bar_start_px = 0
         bar_end_px = column_width_px
         if (offset = grid_gantt.timeOffsetPixels(column_start_end, self_start_time, column_width_px))?
           if offset > 0
             bar_start_px = offset
+          bar_virtual_start_px = offset
         if (offset = grid_gantt.timeOffsetPixels(column_start_end, self_end_time, column_width_px))?
           if offset < column_width_px
             bar_end_px = offset
-        
+          bar_virtual_end_px = offset
+
+        bar_width = bar_end_px - bar_start_px
+
         is_critical_path = grid_gantt.isCriticalTask doc._id
         if is_critical_path
           critical_path_milestones_text_arr = []
@@ -279,9 +285,17 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
               critical_path_milestones_text_arr.push "##{items_by_id[milestone_task_id].seqId}"
             critical_path_milestones_text = critical_path_milestones_text_arr.join ","
 
+        if (progress_percentage = task_info.progress_percentage) > 0
+          percentage_bar_width = (bar_virtual_end_px - bar_virtual_start_px) * progress_percentage / 100
+          if bar_virtual_start_px < 0
+            percentage_bar_width = percentage_bar_width + bar_virtual_start_px
+          if percentage_bar_width > bar_width - 2
+            percentage_bar_width = bar_width - 2
+
         main_bar_mark = """
-            <div class="gantt-main-bar #{if is_critical_path then "critical-path" else ""}" style="left:#{bar_start_px}px; width:#{bar_end_px - bar_start_px}px" task-id="#{doc._id}">
+            <div class="gantt-main-bar #{if is_critical_path then "critical-path" else ""}" style="left:#{bar_start_px}px; width:#{bar_width}px" task-id="#{doc._id}">
               #{if is_critical_path then "<div class='critical-path-of-milestones'>Critical path of: #{JustdoHelpers.xssGuard critical_path_milestones_text}</div>" else ""}
+              #{if progress_percentage > 0 then "<div class='percentage-bar' style='width:#{percentage_bar_width}px'></div>" else ""}
             </div>
             <div class="gantt-main-bar-start-drop-area gantt-start-drop-area" style="left:#{bar_start_px}px;"></div>
             <div class="gantt-main-bar-end-drag" style="left:#{bar_end_px - 8}px;" task-id="#{doc._id}"></div>
