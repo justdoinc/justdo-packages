@@ -574,7 +574,7 @@ _.extend JustdoPrintGrid.prototype,
           return pre_nl2br_content
         else
           return JustdoHelpers.nl2br(pre_nl2br_content)
-        
+
       else
         formatter_content = printFormatter(item_doc, field, path)
         if printFormatter.html_output is true
@@ -679,26 +679,20 @@ _.extend JustdoPrintGrid.prototype,
 
         setup()
 
-        html2canvas $(".download-grid-overlay").get(0),
-          scale: 2
-          allowTaint: false
-          useCORS: true
-          onrendered: (canvas) ->
-            destroy()
+        html2canvas($(".download-grid-overlay").get(0)).then (canvas) =>
+          destroy()
 
-            link = document.createElement('a')
+          link = document.createElement('a')
 
-            link.download = "justdo-export.png"
-            link.href = canvas.toDataURL("image/png;base64")
+          link.download = "justdo-export.png"
+          link.href = canvas.toDataURL("image/png;base64")
 
-            if document.createEvent
-              e = document.createEvent("MouseEvents")
-              e.initMouseEvent "click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null
-              link.dispatchEvent e
-            else if link.fireEvent
-              link.fireEvent "onclick"
-
-            return
+          if document.createEvent
+            e = document.createEvent("MouseEvents")
+            e.initMouseEvent "click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null
+            link.dispatchEvent e
+          else if link.fireEvent
+            link.fireEvent "onclick"
 
         return
 
