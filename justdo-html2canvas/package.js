@@ -3,7 +3,7 @@ Package.describe({
 
   summary: "html2canvas",
 
-  version: "0.4.1"
+  version: "1.0.0"
 });
 
 Package.onUse(function (api) {
