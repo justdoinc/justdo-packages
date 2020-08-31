@@ -23,11 +23,12 @@ APP.justdo_custom_plugins.installCustomPlugin
 
     @collection_hook = APP.collections.Tasks.after.update (user_id, doc, field_names, modifier, options)=>
       if modifier["$set"]?["start_date"]? or modifier["$set"]?["start_date"] == null or
-          modifier["$set"]?["end_date"]? or modifier["$set"]?["end_date"] == null
-
+          modifier["$set"]?["end_date"]? or modifier["$set"]?["end_date"] == null or
+          modifier.$set?[JustdoGridGantt.is_milestone_pseudo_field_id]?
+        
         new_val = ""
-
-        if doc.start_date? and doc.end_date?
+    
+        if doc.start_date? and doc.end_date? and doc[JustdoGridGantt.is_milestone_pseudo_field_id] != "true"
           from_date = moment(doc.start_date)
           to_date = moment(doc.end_date)
           diff_days = to_date.diff(from_date, "days") + 1
@@ -43,7 +44,6 @@ APP.justdo_custom_plugins.installCustomPlugin
           APP.collections.Tasks.update(doc._id, {$set: {"#{@calculated_duration_field_id}": new_val}})
 
       return
-
 
     return
 
