@@ -82,11 +82,12 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/client/gantt-grid-formatter/gantt-grid-formatter.sass", client);
   api.addFiles("lib/client/gantt-grid-formatter/gantt-grid-formatter.coffee", client);
+  api.addFiles("lib/client/progress-percentage-formatter/progress-percentage-formatter.coffee", client);
+  api.addFiles("lib/client/progress-percentage-formatter/progress-percentage-formatter.sass", client);
 
   api.addFiles("lib/client/gantt-grid-header/gantt-grid-header.html", client);
   api.addFiles("lib/client/gantt-grid-header/gantt-grid-header.coffee", client);
   api.addFiles("lib/client/gantt-grid-header/gantt-grid-header.sass", client);
-
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.

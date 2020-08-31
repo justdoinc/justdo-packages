@@ -772,6 +772,7 @@ _.extend JustdoGridGantt.prototype,
           APP.modules.project_page.setupPseudoCustomField JustdoGridGantt.progress_percentage_pseudo_field_id,
             label: JustdoGridGantt.progress_percentage_pseudo_field_label
             field_type: "number"
+            formatter: JustdoGridGantt.progress_percentage_pseudo_field_formatter_id
             grid_visible_column: true
             grid_editable_column: true
             default_width: 100
