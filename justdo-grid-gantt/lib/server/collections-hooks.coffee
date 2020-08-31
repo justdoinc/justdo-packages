@@ -28,6 +28,7 @@ _.extend JustdoGridGantt.prototype,
   
   _setupCollectionsHooks: ->
     @setupMilestoneRestrictions()
+    @setupStateToProgressPercentageHook()
 
     return
 
@@ -87,5 +88,14 @@ _.extend JustdoGridGantt.prototype,
           return false
 
       return true
+    
+    return
+
+  setupStateToProgressPercentageHook: ->
+    APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) ->
+      if modifier?.$set?.state == "done"
+        modifier.$set[JustdoGridGantt.progress_percentage_pseudo_field_id] = 100
+        
+      return
     
     return
