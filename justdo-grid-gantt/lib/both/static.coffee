@@ -14,7 +14,7 @@ _.extend JustdoGridGantt,
   is_milestone_pseudo_field_label: "Gantt Milestone"
 
   progress_percentage_pseudo_field_id: "jgg:progress_percentage"
-  progress_percentage_pseudo_field_label: "Progress %"
+  progress_percentage_pseudo_field_label: "% Completed"
   progress_percentage_pseudo_field_formatter_id: "jgg:progress_percentage_formatter"
 
 
