@@ -252,10 +252,10 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
     # and will be able to change the start-time while dragging the entire bar
     ############
     main_bar_mark = ""
-    if not task_info.milestone_time and 
+    if (main_bar_exists = not task_info.milestone_time and 
         (self_start_time = task_info.self_start_time)? and
         (self_end_time = task_info.self_end_time)? and
-        self_start_time < self_end_time
+        self_start_time < self_end_time)
       
       #check if block within column range
       if (self_start_time >= column_start_epoch and self_start_time <= column_end_epoch) or # start time within range
@@ -332,14 +332,20 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           (latest_child >= column_start_epoch and latest_child<= column_end_epoch) or # end time within range
           (earliest_child < column_start_epoch and latest_child > column_end_epoch) # starts before and ends after
         
+        box_virtual_start_px = 0
+        box_virtual_end_px = 0
         box_start_px = 0
         box_end_px = column_width_px
         if (offset = grid_gantt.timeOffsetPixels(column_start_end, earliest_child, column_width_px))?
           if offset > 0
             box_start_px = offset
+          box_virtual_start_px = offset
         if (offset = grid_gantt.timeOffsetPixels(column_start_end, latest_child, column_width_px))?
           if offset < column_width_px
             box_end_px = offset
+          box_virtual_end_px = offset
+
+        box_width = box_end_px - box_start_px
 
         critical_path_milestones_text_arr = []
         if (items_by_id = APP.modules?.project_page?.mainGridControl()?._grid_data?._grid_data_core?.items_by_id)?
@@ -348,8 +354,16 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
               critical_path_milestones_text_arr.push "##{items_by_id[milestone_task_id].seqId}"
           critical_path_milestones_text = critical_path_milestones_text_arr.join ","
 
-        basket_border_mark = """<div class="gantt-basket-border #{if has_critical_child then "critical-path" else ""}" style="left:#{box_start_px}px; width:#{box_end_px - box_start_px}px">
+        if (progress_percentage = task_info.progress_percentage) > 0
+          percentage_bar_width = (box_virtual_end_px - box_virtual_start_px) * progress_percentage / 100
+          if box_virtual_start_px < 0
+            percentage_bar_width = percentage_bar_width + box_virtual_start_px
+          if percentage_bar_width > box_width - 2
+            percentage_bar_width = box_width - 2
+
+        basket_border_mark = """<div class="gantt-basket-border #{if has_critical_child then "critical-path" else ""}" style="left:#{box_start_px}px; width:#{box_width}px">
           #{if has_critical_child then "<div class='critical-path-of-milestones'>Contains critical path of: #{JustdoHelpers.xssGuard critical_path_milestones_text}</div>" else ""}
+          #{if not main_bar_exists and progress_percentage > 0 then "<div class='percentage-bar' style='width:#{percentage_bar_width}px'></div>" else ""}
         </div>"""
    
     ############
