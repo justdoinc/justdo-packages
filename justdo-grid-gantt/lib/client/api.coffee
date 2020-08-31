@@ -250,12 +250,16 @@ _.extend JustdoGridGantt.prototype,
         all_changed_parents.push parent_id
         critical_child_count = _.extend {}, old_task_info.critical_child_count
         for milestone_task_id of old_task_info.critical_path_of_milestones
+          if milestone_task_id == old_task_info._id
+            continue
           critical_child_count[milestone_task_id] = if critical_child_count[milestone_task_id]? then critical_child_count[milestone_task_id]+1 else 1
         self.incCriticalChildCount parent_id, critical_child_count
       parents_removed.forEach (parent_id) ->
         all_changed_parents.push parent_id
         critical_child_count = _.extend {}, old_task_info.critical_child_count
         for milestone_task_id of old_task_info.critical_path_of_milestones
+          if milestone_task_id == old_task_info._id
+            continue
           critical_child_count[milestone_task_id] = if critical_child_count[milestone_task_id]? then critical_child_count[milestone_task_id]+1 else 1
         self.decCriticalChildCount parent_id, critical_child_count
         
@@ -929,7 +933,7 @@ _.extend JustdoGridGantt.prototype,
     # Clean up previous ciritical path info
     for subtask_id in milestone_subtasks
       delete tasks_info[subtask_id].lead_to_milestones[milestone_task_id]
-      if tasks_info[subtask_id].critical_path_of_milestones[milestone_task_id]?
+      if subtask_id != milestone_task_id and tasks_info[subtask_id].critical_path_of_milestones[milestone_task_id]?
         for parent_id in tasks_info[subtask_id].parents
           self.decCriticalChildCount parent_id,
             "#{milestone_task_id}": 1
@@ -958,9 +962,10 @@ _.extend JustdoGridGantt.prototype,
     # Add critical_path_of_milestones
     if is_cp
       tasks_info[task_id].critical_path_of_milestones[milestone_task_id] = true
-      for parent_id in tasks_info[task_id].parents
-        self.incCriticalChildCount parent_id,
-          "#{milestone_task_id}": 1
+      if milestone_task_id != task_id
+        for parent_id in tasks_info[task_id].parents
+          self.incCriticalChildCount parent_id,
+            "#{milestone_task_id}": 1
 
     if not (task_items = APP.modules.project_page.mainGridControl()?._grid_data?._grid_data_core?.items_by_id)?
       return
