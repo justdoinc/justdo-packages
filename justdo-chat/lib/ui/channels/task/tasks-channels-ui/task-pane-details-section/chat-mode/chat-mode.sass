@@ -96,7 +96,7 @@
 .minimize-chat-icon
   display: none
 
-.task-pane-section-item-details.show-chat
+.task-pane-section-item-details-wrapper.chat-only-view
   overflow: hidden
   display: flex
 
@@ -112,6 +112,9 @@
     margin: 0
     display: flex
     overflow: hidden
+
+    .messages-board-viewport
+      border-top: 1px solid #d9d9d9
 
   .chat-mode
     display: flex

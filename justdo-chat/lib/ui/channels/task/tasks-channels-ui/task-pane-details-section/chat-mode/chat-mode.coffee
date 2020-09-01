@@ -1,6 +1,21 @@
+chat_only_view = new ReactiveVar false
+
 Template.task_pane_chat_section_chat.onCreated ->
   @getMainTemplate = =>
     return Template.closestInstance("task_pane_chat_section")
+
+  return
+
+Template.task_pane_chat_section_chat.onRendered ->
+  @autorun =>
+    if chat_only_view.get()
+      $(".task-pane-section-item-details-wrapper").addClass "chat-only-view"
+    else
+      $(".task-pane-section-item-details-wrapper").removeClass "chat-only-view"
+
+    return
+
+  return
 
 getTemplateChannelObject = ->
   main_tpl = Template.instance().getMainTemplate()
@@ -137,6 +152,7 @@ Template.task_pane_chat_section_chat.events
     return
 
   "click .maximize-chat": (e, tpl) ->
-    $(".task-pane-section-item-details").toggleClass "show-chat"
+    chat_only_view_val = chat_only_view.get()
+    chat_only_view.set !chat_only_view_val
 
     return
