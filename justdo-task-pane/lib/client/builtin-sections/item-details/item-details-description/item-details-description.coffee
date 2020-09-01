@@ -187,7 +187,7 @@ APP.executeAfterAppLibCode ->
           console.log error
       )(i)
     
-    uploading_files.set (Tracker.nonreactive -> uploading_files.get() + 1)
+    uploading_files.set (Tracker.nonreactive -> uploading_files.get() + 2)
     APP.tasks_file_manager_plugin.tasks_file_manager.uploadFiles task_id, files, (err, uploaded_files) ->
       if err?
         console.log err
@@ -314,6 +314,11 @@ APP.executeAfterAppLibCode ->
         .on "froalaEditor.image.beforeUpload", (e, editor, images) ->
           _uploadFilesAndInsertToEditor task_id, images, editor, "image", null
           return false
+        .on "froalaEditor.image.loaded", (e, editor, images, b, c) ->
+          for image in images
+            uploaded_files_count = (Tracker.nonreactive -> uploading_files.get())
+            if uploaded_files_count > 0 and /^http/.test image.currentSrc
+              uploading_files.set(uploaded_files_count - 1)
         .on "froalaEditor.image.error", (e, editor, error, resp) ->
           console.log error
           return
