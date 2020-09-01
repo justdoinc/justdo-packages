@@ -1,39 +1,41 @@
 <template name="task_pane_item_details_section">
-  {{#with active_item_obj "seqId,owner_id"}}
-    <section>
-      <h2>Members<span class="edit-members">edit</span></h2>
-      {{> task_pane_item_details_members}}
-    </section>
-  {{/with}}
+  <div class="task-pane-section-item-details-wrapper">
+    {{#with active_item_obj "seqId,owner_id"}}
+      <section>
+        <h2>Members<span class="edit-members">edit</span></h2>
+        {{> task_pane_item_details_members}}
+      </section>
+    {{/with}}
 
-  {{!-- Tasks locks --}}
-  {{> task_pane_tasks_locks_section_container}}
+    {{!-- Tasks locks --}}
+    {{> task_pane_tasks_locks_section_container}}
 
-  {{!-- Chat --}}
-  {{> task_pane_chat_section}}
+    {{!-- Chat --}}
+    {{> task_pane_chat_section}}
 
-  {{!-- Inbound emails --}}
-  {{> task_pane_justdo_inbound_emails_details_tab_section_section}}
+    {{!-- Inbound emails --}}
+    {{> task_pane_justdo_inbound_emails_details_tab_section_section}}
 
-  {{!-- Context --}}
-  {{#with active_item_obj "_id"}}
-    {{#if _id}}
-      {{!-- Show context if we aren't on the main grid and the current item has an _id, that is, it a collection item--}}
+    {{!-- Context --}}
+    {{#with active_item_obj "_id"}}
+      {{#if _id}}
+        {{!-- Show context if we aren't on the main grid and the current item has an _id, that is, it a collection item--}}
 
-      {{!-- We add the section tag inside the template since in that case we need more control --}}
+        {{!-- We add the section tag inside the template since in that case we need more control --}}
 
-      {{> task_pane_item_details_context}}
-    {{/if}}
-  {{/with}}
+        {{> task_pane_item_details_context}}
+      {{/if}}
+    {{/with}}
 
-  {{!-- Description --}}
-  {{#with active_item_obj "description,description_lock"}}
-    <section class="description-task-pane-section">
-      <h2>Description</h2>
-      {{> task_pane_item_details_description}}
-    </section>
-  {{/with}}
+    {{!-- Description --}}
+    {{#with active_item_obj "description,description_lock"}}
+      <section class="description-task-pane-section">
+        <h2>Description</h2>
+        {{> task_pane_item_details_description}}
+      </section>
+    {{/with}}
 
-  {{!-- Additional Fields --}}
-  {{> task_pane_item_details_additional_fields}}
+    {{!-- Additional Fields --}}
+    {{> task_pane_item_details_additional_fields}}
+  </div>
 </template>
