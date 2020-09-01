@@ -6,4 +6,7 @@ GridControl.installFormatter JustdoGridGantt.progress_percentage_pseudo_field_fo
     return ""
   
   print: ->
+    {schema, doc, path} = @getFriendlyArgs()
+    if (percentage = doc[JustdoGridGantt.progress_percentage_pseudo_field_id])?
+      return "#{percentage}%"
     return ""
