@@ -145,7 +145,13 @@ _.extend JustdoHelpers,
 
     filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(niddle)}", "i")
 
+    exist_users = {}
     results = _.filter users_docs, (doc) ->
+      if exist_users[doc._id]
+        return false
+      
+      exist_users[doc._id] = true
+      
       display_name = JustdoHelpers.displayName(doc)
 
       email = JustdoHelpers.getUserMainEmail(doc)
