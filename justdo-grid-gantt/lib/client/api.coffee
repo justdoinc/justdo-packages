@@ -615,13 +615,14 @@ _.extend JustdoGridGantt.prototype,
               latest_independent_date = independent_end_date
   
       if latest_independent_date?
-        next_date = moment.utc(latest_independent_date)
-        next_date.add 1, 'day'
-        next_date = next_date.format("YYYY-MM-DD")
-        if next_date != dependent_obj.start_date
+        if independent_obj[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
+          new_start_date = moment.utc(latest_independent_date).format("YYYY-MM-DD")
+        else 
+          new_start_date = moment.utc(latest_independent_date).add(1, "day").format("YYYY-MM-DD")
+        if new_start_date != dependent_obj.start_date
           if independent_id? and self.task_ids_edited_locally.has independent_id
             self.task_ids_edited_locally.add dependent_obj._id
-          self.moveTaskToNewStartDate dependent_obj, next_date
+          self.moveTaskToNewStartDate dependent_obj, new_start_date
       
       return
       
@@ -1029,8 +1030,17 @@ _.extend JustdoGridGantt.prototype,
   _isStartedImmediatelyAfter: (dependent_id, independent_id) ->
     self = @
     tasks_info = self.task_id_to_info
-    end_moment = moment.utc(tasks_info[independent_id].self_end_time).startOf("day").add(1, "day")
-    start_moment = moment.utc(tasks_info[dependent_id].self_start_time).startOf("day")
+    if not ((dependent_info = tasks_info[dependent_id])? and
+        dependent_info.self_start_time? and dependent_info.self_end_time?)
+      return false
+    if not ((independent_info = tasks_info[independent_id])? and
+        independent_info.self_start_time? and independent_info.self_end_time?)
+      return false
+
+    end_moment = moment.utc(independent_info.self_end_time).startOf("day")
+    if not independent_info.milestone_time?
+      end_moment.add(1, "day")
+    start_moment = moment.utc(dependent_info.self_start_time).startOf("day")
     return end_moment.isSame start_moment
 
   isCriticalTask: (task_id) ->
@@ -1039,7 +1049,6 @@ _.extend JustdoGridGantt.prototype,
   
   isCriticalEdge: (dependent_id, independent_id) ->
     self = @
-    # common_cp_of_milestones = _.intersection _.keys(self.task_id_to_info[dependent_id].critical_path_of_milestones), _.keys(self.task_id_to_info[independent_id].critical_path_of_milestones)
     return self.isCriticalTask(dependent_id) and self.isCriticalTask(independent_id) and self._isStartedImmediatelyAfter dependent_id, independent_id
 
   hasCriticalChild: (task_id) ->
