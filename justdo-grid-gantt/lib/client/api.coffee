@@ -845,7 +845,7 @@ _.extend JustdoGridGantt.prototype,
               "#{JustdoGridGantt.is_milestone_pseudo_field_id}": "true"
           return
         icon_type: "feather"
-        icon_val: "crosshair"
+        icon_val: "jd-rhombus"
 
       listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
         return not self.isTaskGanttMilestone task_id
@@ -860,7 +860,7 @@ _.extend JustdoGridGantt.prototype,
               "#{JustdoGridGantt.is_milestone_pseudo_field_id}": null
           return
         icon_type: "feather"
-        icon_val: "x-circle"
+        icon_val: "jd-x-rhombus"
 
       listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
         return self.isTaskGanttMilestone task_id
