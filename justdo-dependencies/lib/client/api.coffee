@@ -346,18 +346,21 @@ _.extend JustdoDependencies.prototype,
       return
 
     self._dependent_tasks_update_hook = APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) =>
-      if self.dependent_tasks_update_hook_enabled and (new_end_date = modifier?.$set?.end_date)? and new_end_date != doc.end_date
+      if not self.dependent_tasks_update_hook_enabled
+        return 
+      if (new_end_date = modifier?.$set?.end_date)? and new_end_date != doc.end_date
         preview = new TasksUpdatePreview()
         preview.update doc,
           end_date: new_end_date
         self.updateDependentTasks doc._id, preview
         preview.updateDb()
-      else if (new_seq_id = modifier?.$push?.justdo_task_dependencies)?
-        addNewIndependentAndRecalculateDates new_seq_id, doc
-      else if (new_seq_ids = modifier?.$set?.justdo_task_dependencies)?
-        added_seq_ids = _.difference(new_seq_ids, doc.justdo_task_dependencies)
-        for seq_id in added_seq_ids
-          addNewIndependentAndRecalculateDates seq_id, doc
+      else if doc[JustdoDependencies.is_task_dates_frozen_pseudo_field_id] != "true"
+        if (new_seq_id = modifier?.$push?.justdo_task_dependencies)?
+          addNewIndependentAndRecalculateDates new_seq_id, doc
+        else if (new_seq_ids = modifier?.$set?.justdo_task_dependencies)?
+          added_seq_ids = _.difference(new_seq_ids, doc.justdo_task_dependencies)
+          for seq_id in added_seq_ids
+            addNewIndependentAndRecalculateDates seq_id, doc
       
       return
 
@@ -373,12 +376,13 @@ _.extend JustdoDependencies.prototype,
 
     JD.collections.Tasks.find
       "justdo_task_dependencies_mf.task_id": original_task_obj_id
+      "#{JustdoDependencies.is_task_dates_frozen_pseudo_field_id}":
+        $ne: "true"
     ,
       fields:
         justdo_task_dependencies_mf: 1
         start_date: 1
         end_date: 1
-        
     .forEach (dependent) ->
       self.updateTaskStartDateBasedOnDependencies dependent, original_task_obj_id, preview
       return
