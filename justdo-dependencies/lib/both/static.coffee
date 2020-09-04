@@ -21,4 +21,6 @@ _.extend JustdoDependencies,
 
   # Only tasks with the following states are considered to be non-blocking, when other tasks depends on them
   non_blocking_tasks_states: ["done"]
+
   is_task_dates_frozen_pseudo_field_id: "jdpd:is_task_dates_frozen"
+  is_task_dates_frozen_pseudo_field_label: "Manual date changes"

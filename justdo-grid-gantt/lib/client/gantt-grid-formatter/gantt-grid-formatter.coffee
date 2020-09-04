@@ -646,7 +646,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           end_time:
             is_dragging: false
         
-        grid_gantt.updateDependentTasks states.task_id
+        # grid_gantt.updateDependentTasks states.task_id
         APP.justdo_grid_gantt.setState
           task_id: null
           
@@ -678,7 +678,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           milestone:
             is_dragging: false
 
-        grid_gantt.updateDependentTasks states.task_id
+        # grid_gantt.updateDependentTasks states.task_id
 
         APP.justdo_grid_gantt.setState
           task_id: null
@@ -734,7 +734,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           main_bar:
             is_dragging: false
         
-        grid_gantt.updateDependentTasks states.task_id
+        # grid_gantt.updateDependentTasks states.task_id
 
         APP.justdo_grid_gantt.setState
           task_id: null
