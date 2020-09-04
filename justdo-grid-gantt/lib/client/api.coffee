@@ -7,7 +7,8 @@ _.extend JustdoGridGantt.prototype,
     
     @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents", 
       JustdoGridGantt.is_milestone_pseudo_field_id, JustdoDependencies.dependencies_mf_field_id,
-      JustdoGridGantt.progress_percentage_pseudo_field_id
+      JustdoGridGantt.progress_percentage_pseudo_field_id,
+      JustdoDependencies.is_task_dates_frozen_pseudo_field_id
     ]
     
     @task_id_to_info = {} # Map to relevant information including
@@ -170,13 +171,18 @@ _.extend JustdoGridGantt.prototype,
 
       # milestone
       if task_obj[JustdoGridGantt.is_milestone_pseudo_field_id] == "true" and task_obj.start_date?
-        task_info.milestone_time  = self.dateStringToMidDayEpoch task_obj.start_date
+        task_info.milestone_time = self.dateStringToMidDayEpoch task_obj.start_date
         task_info.self_start_time = task_info.self_end_time = task_info.milestone_time
         if not task_info.milestone_subtasks?
           task_info.milestone_subtasks = []
       else
         delete task_info.milestone_time
 
+      if task_obj[JustdoDependencies.is_task_dates_frozen_pseudo_field_id] == "true"
+        task_info.is_dates_frozen = true
+      else
+        delete task_info.is_dates_frozen
+      
       # dependencies
       if (dependencies_mf = task_obj[JustdoDependencies.dependencies_mf_field_id])?
         task_info.dependencies = _.map dependencies_mf, (dep) -> dep.task_id

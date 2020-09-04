@@ -291,9 +291,10 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
             percentage_bar_width = percentage_bar_width + bar_virtual_start_px
           if percentage_bar_width > bar_width - 2
             percentage_bar_width = bar_width - 2
-
+        
         main_bar_mark = """
-            <div class="gantt-main-bar #{if is_critical_path then "critical-path" else ""}" style="left:#{bar_start_px}px; width:#{bar_width}px" task-id="#{doc._id}">
+            <div class="gantt-main-bar #{if is_critical_path then "critical-path" else ""} #{if task_info.is_dates_frozen then "frozen-dates" else ""}" 
+                style="left:#{bar_start_px}px; width:#{bar_width}px" task-id="#{doc._id}">
               #{if is_critical_path then "<div class='critical-path-of-milestones'>Critical path of: #{JustdoHelpers.xssGuard critical_path_milestones_text}</div>" else ""}
               #{if progress_percentage > 0 then "<div class='percentage-bar' style='width:#{percentage_bar_width}px'></div>" else ""}
             </div>
