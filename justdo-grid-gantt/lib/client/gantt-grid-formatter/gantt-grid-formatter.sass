@@ -28,9 +28,8 @@
     border-radius: 2px
 
     &.frozen-dates
-      background: linear-gradient(45deg, rgba(0, 153, 68, .5) 0, rgba(0, 153, 68, .5) 25%, transparent 25%, transparent 50%, rgba(0, 153, 68, .5) 50%, rgba(0, 153, 68, .5) 75%, transparent 75%, transparent)
-      background-size: 50px 50px
-
+      background: linear-gradient(-45deg, #AEDFEF 0, #AEDFEF 25%, transparent 25%, transparent 50%, #AEDFEF 50%, #AEDFEF 75%, transparent 75%, transparent)
+      background-size: 5px 5px
 
   .percentage-bar
     position: absolute
@@ -43,7 +42,12 @@
   
   .gantt-main-bar.critical-path
     background-color: rgb(247, 125, 125)
+    border-color: rgb(235, 120, 120)
     position: relative
+
+    &.frozen-dates
+      background: linear-gradient(-45deg, rgb(247, 125, 125) 0, rgb(247, 125, 125) 25%, transparent 25%, transparent 50%, rgb(247, 125, 125) 50%, rgb(247, 125, 125) 75%, transparent 75%, transparent)
+      background-size: 5px 5px
 
     &:hover .critical-path-of-milestones
       display: block
