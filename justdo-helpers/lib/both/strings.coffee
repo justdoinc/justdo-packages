@@ -123,27 +123,24 @@ _.extend JustdoHelpers,
     return size
 
   useDarkTextColorForBackground: (background_color) ->
-    # Returns true if a dark text color should be used for the provided background
-    # false otherwise.
+    # true use dark text color
+    # false use bright text color
     #
     # https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
+    # https://www.nbdtech.com/Blog/archive/2008/04/27/Calculating-the-Perceived-Brightness-of-a-Color.aspx / https://archive.is/wip/Cxuud
+    # http://alienryderflex.com/hsp.html / https://archive.is/wip/f186W
 
     [r, g, b] = JustdoHelpers.hexToRgb(background_color)
 
-    c = [ r / 255, g / 255, b / 255 ]
+    brightness =
+      Math.sqrt( .299 * Math.pow(r, 2) + .587 * Math.pow(g, 2) + .114 * Math.pow(b, 2) )
 
-    for i, x of c
-      if c[i] <= 0.03928 
-        c[i] = c[i] / 12.92
-      else
-        c[i] = Math.pow( ( c[i] + 0.055 ) / 1.055, 2.4)
+    # 0 black
+    # 255 white
+    if brightness > 200
+      return true # dark color
 
-    l = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
-
-    if ( l > 0.179 )
-      return true
-
-    return false
+    return false # bright color
 
   normalizeBgColor: (color) ->
     if not color?
