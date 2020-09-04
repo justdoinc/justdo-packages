@@ -1,6 +1,8 @@
 TasksUpdatePreview = ->
   @modifiers = {}
   @preview = {}
+  @changed_milestones = []
+  @is_grid_gantt_installed_in_justdo = {}
 
   return @
 
@@ -12,6 +14,9 @@ _.extend TasksUpdatePreview.prototype,
       @preview[task_id] = org_doc
     task = @preview[task_id]
 
+    if task[JustdoGridGantt.is_milestone_pseudo_field_id] == "true" and @_isGridGanttInstallInJustdo org_doc.project_id
+      is_milestone = true
+
     if not @modifiers[task_id]?
       @modifiers[task_id] =
         $set: {}
@@ -21,22 +26,69 @@ _.extend TasksUpdatePreview.prototype,
       task[field] = val
       modifier.$set[field] = val
     
+    if not _.isEmpty(modifier) and is_milestone
+      @changed_milestones.push task
+
     return
   
+  _isGridGanttInstallInJustdo: (justdo_id) ->
+    if not @is_grid_gantt_installed_in_justdo[justdo_id]?
+      justdo = APP.collections.Projects.findOne justdo_id,
+        fields:
+          conf: 1
+      @is_grid_gantt_installed_in_justdo[justdo_id] = if justdo? then APP.justdo_grid_gantt.isPluginInstalledOnProjectDoc(justdo) else false
+
+    return @is_grid_gantt_installed_in_justdo[justdo_id]
+
   findOne: (task_id, fields) ->
     if @preview[task_id]?
       return @preview[task_id]
     return APP.collections.Tasks.findOne task_id,
       fields: fields
 
-  updateDb: ->
+  _updateDb: ->
     # XXX Creating a bulkUpdateTasksDates can increase the performance
     APP.justdo_dependencies.dependent_tasks_update_hook_enabled = false
     for task_id, modifier of @modifiers
       APP.collections.Tasks.update task_id, modifier
     APP.justdo_dependencies.dependent_tasks_update_hook_enabled = true
 
-    return
+  updateDb: ->
+    self = @
+    if self.changed_milestones.length > 0
+      milestones_seq_ids_str = _.map(self.changed_milestones, (milestone) -> "##{milestone.seqId}").join ","
+      
+      if not window.confirm "This action will cause these milestone(s) to change: #{milestones_seq_ids_str}.\nAre you sure to continue?" # bootbox can't be used here, we need some sync code here
+        return false
+      # bootbox.dialog
+      #   title: "Confirm"
+      #   message: "This action will cause these milestone(s) to change: #{milestones_seq_ids_str}"
+      #   animate: false
+      #   className: "bootbox-new-design"
+
+      #   onEscape: ->
+      #     return true
+
+      #   buttons:
+      #     close:
+      #       label: "Cancel"
+      #       className: "btn-default"
+      #       callback: ->
+      #         return true
+
+      #     confirm:
+      #       label: "Confirm"
+      #       className: "btn-primary"
+      #       callback: =>
+      #         self._updateDb()
+
+      #         return true
+
+      self._updateDb()
+    else
+      self._updateDb()
+
+    return true
 
 _.extend JustdoDependencies.prototype,
   _immediateInit: ->
@@ -323,8 +375,8 @@ _.extend JustdoDependencies.prototype,
   dependent_tasks_update_hook_enabled: true
   setupDependentTasksUpdateHook: ->
     self = @
-    # on end date change or dependency added
-    addNewIndependentAndRecalculateDates = (new_seq_id, doc) ->
+
+    addNewIndependentAndRecalculateDates = (new_seq_id, doc, preview) ->
       new_independnent_id = (APP.collections.Tasks.findOne
         project_id: doc.project_id
         seqId: new_seq_id
@@ -334,35 +386,38 @@ _.extend JustdoDependencies.prototype,
       )?._id
 
       if new_independnent_id?
-        preview = new TasksUpdatePreview()
         if not doc.justdo_task_dependencies_mf?
           doc.justdo_task_dependencies_mf = []
         doc.justdo_task_dependencies_mf.push
           type: "F2S"
           task_id: new_independnent_id
         self.updateTaskStartDateBasedOnDependencies doc, new_independnent_id, preview
-        preview.updateDb()
       
       return
 
     self._dependent_tasks_update_hook = APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) =>
       if not self.dependent_tasks_update_hook_enabled
         return 
+      # on end date change or dependency added
       if (new_end_date = modifier?.$set?.end_date)? and new_end_date != doc.end_date
         preview = new TasksUpdatePreview()
         preview.update doc,
           end_date: new_end_date
         self.updateDependentTasks doc._id, preview
-        preview.updateDb()
       else if doc[JustdoDependencies.is_task_dates_frozen_pseudo_field_id] != "true"
+        preview = new TasksUpdatePreview()
         if (new_seq_id = modifier?.$push?.justdo_task_dependencies)?
-          addNewIndependentAndRecalculateDates new_seq_id, doc
+          addNewIndependentAndRecalculateDates new_seq_id, doc, preview
         else if (new_seq_ids = modifier?.$set?.justdo_task_dependencies)?
           added_seq_ids = _.difference(new_seq_ids, doc.justdo_task_dependencies)
           for seq_id in added_seq_ids
-            addNewIndependentAndRecalculateDates seq_id, doc
+            addNewIndependentAndRecalculateDates seq_id, doc, preview
       
-      return
+      if preview? and not preview.updateDb()
+        APP.justdo_grid_gantt.resetStatesChangeOnEscape() # XXX need to refactor this
+        return false
+      
+      return true
 
     return
   
@@ -383,6 +438,9 @@ _.extend JustdoDependencies.prototype,
         justdo_task_dependencies_mf: 1
         start_date: 1
         end_date: 1
+        "#{JustdoGridGantt.is_milestone_pseudo_field_id}": 1
+        seqId: 1
+        project_id: 1
     .forEach (dependent) ->
       self.updateTaskStartDateBasedOnDependencies dependent, original_task_obj_id, preview
       return
@@ -408,7 +466,7 @@ _.extend JustdoDependencies.prototype,
         if (independent_end_date = independent_obj.end_date)?
           if not latest_independent_date? or independent_end_date > latest_independent_date
             latest_independent_date = independent_end_date
-        if (latest_child = APP.justdo_grid_gantt.task_id_to_info[dependency.task_id]?.latest_child_end_time)?
+        if (latest_child = APP.justdo_grid_gantt.task_id_to_info[dependency.task_id]?.latest_child_end_time)? # XXX need to refactor this
           independent_end_date = moment.utc(latest_child).format("YYYY-MM-DD")
           if not latest_independent_date? or independent_end_date > latest_independent_date
             latest_independent_date = independent_end_date
