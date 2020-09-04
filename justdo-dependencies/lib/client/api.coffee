@@ -202,14 +202,7 @@ _.extend JustdoDependencies.prototype,
           (err) ->
             if err?
               console.error err
-              return
-            # todo: reconsider if updating the dependent tasks should be part of the dependencies manager
-            # or from the gantt object. There are considerations both ways. For now, leaving it here. This means that
-            # if the gantt module is not loaded, then dependent tasks will not be automatically adjusted.
-            # XXX TY
-            # if (grid_gantt = APP.justdo_grid_gantt)?
-            #   grid_gantt.updateDependentTasks from_task_id
-            return # end of callback
+            return
 
       if ret
         JustdoSnackbar.show
@@ -226,11 +219,7 @@ _.extend JustdoDependencies.prototype,
               (err) ->
                 if err?
                   console.error err
-                  return
-                # XXX TY
-                # if (grid_gantt = APP.justdo_grid_gantt)?
-                #   grid_gantt.updateTaskStartDateBasedOnDependencies JD.collections.Tasks.findOne to_task_id
-                return # end of callback
+                return
             
             JustdoSnackbar.close()
             return
@@ -262,15 +251,7 @@ _.extend JustdoDependencies.prototype,
         (err) ->
           if err?
             console.error err
-            return
-            
-          # todo: reconsider if updating the dependent tasks should be part of the dependencies manager
-          # see same comment above
-          # XXX TY
-          # if (grid_gantt = APP.justdo_grid_gantt)?
-          #   dependent_obj = JD.collections.Tasks.findOne to_task_id
-          #   grid_gantt.updateTaskStartDateBasedOnDependencies dependent_obj
-          return # end of callback
+          return
 
       JustdoSnackbar.show
         text: "Dependency removed"
@@ -286,11 +267,7 @@ _.extend JustdoDependencies.prototype,
             (err) ->
               if err?
                 console.error err
-                return
-              # XXX TY
-              # if (grid_gantt = APP.justdo_grid_gantt)?
-              #   grid_gantt.updateDependentTasks from_task_id
-              return # end of callback
+              return
           
           JustdoSnackbar.close()
           return
@@ -477,8 +454,6 @@ _.extend JustdoDependencies.prototype,
       else 
         new_start_date = moment.utc(latest_independent_date).add(1, "day").format("YYYY-MM-DD")
       if new_start_date != dependent_obj.start_date
-        # if independent_id? and self.task_ids_edited_locally.has independent_id
-        #   self.task_ids_edited_locally.add dependent_obj._id
         self.moveTaskToNewStartDate dependent_obj, new_start_date, preview
     
     return

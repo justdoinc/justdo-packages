@@ -431,9 +431,6 @@ _.extend JustdoGridGantt.prototype,
           console.error "grid-gantt: unresolved end change"
     
         if self.task_ids_edited_locally.has task_id
-          # if parent_changed
-          #   self.task_ids_edited_locally.add parent_id
-          #   self.updateDependentTasks parent_id
           self.task_ids_edited_locally.delete task_id
         if parent_changed
           self.processEndTimeChange parent_id, parent_task_info, old_parent_task_info
