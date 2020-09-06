@@ -1,4 +1,4 @@
-chat_only_view = new ReactiveVar false
+chat_only_view_rv = new ReactiveVar false
 
 Template.task_pane_chat_section_chat.onCreated ->
   @getMainTemplate = =>
@@ -8,7 +8,7 @@ Template.task_pane_chat_section_chat.onCreated ->
 
 Template.task_pane_chat_section_chat.onRendered ->
   @autorun =>
-    if chat_only_view.get()
+    if chat_only_view_rv.get()
       $(".task-pane-section-item-details-wrapper").addClass "chat-only-view"
     else
       $(".task-pane-section-item-details-wrapper").removeClass "chat-only-view"
@@ -152,7 +152,7 @@ Template.task_pane_chat_section_chat.events
     return
 
   "click .maximize-chat": (e, tpl) ->
-    chat_only_view_val = chat_only_view.get()
-    chat_only_view.set !chat_only_view_val
+    chat_only_view_rv_val = chat_only_view_rv.get()
+    chat_only_view_rv.set not chat_only_view_rv_val
 
     return
