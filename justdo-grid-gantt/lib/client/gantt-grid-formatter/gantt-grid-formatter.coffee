@@ -1,5 +1,16 @@
 day = 24 * 60 * 60 * 1000
 
+refreshDependenciesCanvasHandler = (columns) ->
+  if not (grid_gantt = APP.justdo_grid_gantt)?
+    return
+
+  for column in columns
+    if column.field == JustdoGridGantt.pseudo_field_id
+      grid_gantt.refreshDependenciesCanvas()
+      break
+
+  return
+
 GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
   gridControlInit: ->
     # IMPORTANT! The following code assumes that there is only a single Gantt Field formatter in any given
@@ -166,8 +177,23 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
         # APP.justdo_grid_gantt.gantt_coloumn_to_epoch_time_rv.get()
         if (field_def = getGanttFieldViewDef())?
           redrawFormatterHeader(field_def.field)
+
       return
     
+    if not grid_gantt.refresh_dependencies_canvas_on_column_width_changes_comp?
+      Tracker.autorun (comp) ->
+        # Refresh dependencies canvas when grid column width changes
+        if (active_gc = APP.modules.project_page.gridControl())? and grid_gantt.isPluginInstalledOnProjectDoc(JD.activeJustdo({conf: 1}))
+          if grid_gantt.prev_active_gc?
+            grid_gantt.prev_active_gc.removeListener "grid-view-change", refreshDependenciesCanvasHandler
+          
+          active_gc.on "grid-view-change", refreshDependenciesCanvasHandler
+          grid_gantt.prev_active_gc = active_gc
+        
+        grid_gantt.refresh_dependencies_canvas_on_column_width_changes_comp = comp
+
+        return
+
     return
   
   slickGridColumnStateMaintainer: ->

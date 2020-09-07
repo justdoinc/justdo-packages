@@ -6,7 +6,7 @@ _.extend JustdoGridGantt.prototype,
       jggSetProgressPercentage: (task_id, new_progress_percentage) ->
         check task_id, String
         check new_progress_percentage, Number
-        
+
         self.setProgressPercentage task_id, new_progress_percentage, @userId
 
         return

@@ -358,4 +358,10 @@ _.extend JustdoGridGantt.prototype,
 
     return
   
+  refreshDependenciesCanvas: ->
+    @resetDependenciesDiv()
+    @refreshArrows()
+
+    return
+    
     
