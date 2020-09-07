@@ -66,8 +66,11 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/schemas.coffee", both);
 
   api.addFiles("lib/server/collections-hooks.coffee", server)
+  api.addFiles("lib/server/api.coffee", server);
+  api.addFiles("lib/server/methods.coffee", server);
 
   api.addFiles("lib/client/api.coffee", client);
+  api.addFiles("lib/client/methods.coffee", client);
   api.addFiles("lib/client/states-manager.coffee", client);
 
   api.addFiles("lib/client/gantt-dependencies.coffee", client);
