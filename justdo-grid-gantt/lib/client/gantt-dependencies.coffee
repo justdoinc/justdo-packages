@@ -298,7 +298,7 @@ _.extend JustdoGridGantt.prototype,
           y: 0
         p1 =
           x: offset
-          y: $(".grid-canvas").outerHeight()
+          y: $(".grid-control-tab.active .grid-canvas").outerHeight()
 
         html = """
                 <div class="dependency-container">
