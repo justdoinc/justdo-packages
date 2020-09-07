@@ -1,3 +1,6 @@
+sync_safety_delta_ms = 0 * 60 * 1000 # 0 minutes (We'll see whether this is necessary, I tend to think it isn't -Daniel)
+getCurrentSyncTimeWithSafetyDelta = -> new Date(new Date() - sync_safety_delta_ms)
+
 _.extend Projects.prototype,
   _setupPublications: ->
     @_setupUserProjectsPublication()
@@ -149,9 +152,25 @@ _.extend Projects.prototype,
 
         query.project_id = project_id
         private_data_query.project_id = project_id
-        if sync?
-          query._raw_updated_date = {$gt: sync}
-          private_data_query._raw_updated_date = {$gt: sync}
+        if not sync?
+          sync = getCurrentSyncTimeWithSafetyDelta()
+
+          initial_payload_query = _.extend {}, query
+          initial_payload_query.$or = [
+            {_raw_updated_date: {$lte: sync}},
+            {_raw_updated_date: null}
+          ]
+          initial_payload_cursor = collection.find initial_payload_query, query_options
+
+          private_data_initial_payload_query = _.extend {}, private_data_query
+          private_data_initial_payload_query.$or = [
+            {_raw_updated_date: {$lte: sync}},
+            {_raw_updated_date: null}
+          ]
+          private_data_initial_payload_cursor = private_data_collection.find private_data_initial_payload_query, private_data_query_options
+
+        query._raw_updated_date = {$gt: sync}
+        private_data_query._raw_updated_date = {$gt: sync}
 
         #
         # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
@@ -313,6 +332,99 @@ _.extend Projects.prototype,
 
           # END if sync?
 
+        # When a task's private data is added by the observer we get its task_id from which
+        # we can derive the task id with which we should publish the fields to the client.
+        # (Reminder, the client is blind to the existence of the additional collection, to
+        # the client it seems like all fields belongs to the Tasks collection).
+        # Later on, when changed/removed updates for that private data received by the observer
+        # we won't get the task_id field again, only the private data doc id.
+        # Hence, we must keep map from private data doc id to the published task id (as set by
+        # the getItemId() for the task_id).
+        private_data_doc_id_to_task_id_map = {}
+
+        #
+        # Gather and send items initial payload, if there are such
+        #
+        if initial_payload_cursor? and private_data_initial_payload_cursor?
+          #
+          # Gather regular items payload
+          #
+          initial_payload_items = _.map initial_payload_cursor.fetch(), (data) ->
+            id = data._id
+
+            delete data._id # To keep in-line with ddp expectation that the id won't be part of the fields object
+
+            if label?
+              # If we got a label for this subscription, add the _label
+              # field.
+              data._label = label
+
+
+            # Note: we always use "changed" and not "added", to avoid our fields from replacing
+            # pre-existing fields that might had been sent already before from the regular
+            # cursor (either in this session or the previous one!)
+            #
+            # You can read more about it in the comment titled:
+            #
+            # 'Comment regarding operation used to pulish document for the first time'.
+            dataMapsExtensions(id, data, "changed")
+
+            return {id: getItemId(id), fields: data}
+
+          #
+          # Gather private data payload
+          #
+          initial_payload_private_data_items = _.map private_data_initial_payload_cursor.fetch(), (data) ->
+            id = data._id
+
+            delete data._id # To keep in-line with ddp expectation that the id won't be part of the fields object
+
+            if not data.task_id?
+              console.warn "A private data doc without a task_id field received by the private_data_tracker 'added' hook, this should never happen check why: private data doc id: #{id}"
+
+              return
+
+            # Read comment above for private_data_doc_id_to_task_id_map.
+            private_data_doc_id_to_task_id_map[id] = getItemId(data.task_id)
+
+            # Note: we always use "changed" and not "added", to avoid our fields from replacing
+            # pre-existing fields that might had been sent already before from the regular
+            # cursor (either in this session or the previous one!)
+            #
+            # You can read more about it in the comment titled:
+            #
+            # 'Comment regarding operation used to pulish document for the first time'.
+            privateDataMapsExtensions(id, data, "changed")
+
+            return {id: private_data_doc_id_to_task_id_map[id], fields: data}
+
+          # A note regarding why we wire the initial_payload_private_data_items as the Changes Journal
+          # part of the init_payload message and not as part of the initial_payload_items:
+          #
+          # My initial idea was to _.each the private_data_initial_payload_cursor.fetch() and then
+          # simply push the items to the initial_payload_items messages.
+          #
+          # The thing is, that I want to be able to implement a very efficient algo on the client side
+          # to merge the initial payload items into the pseudo mongo underlying collection data structure,
+          # one that doesn't involve looping over each item.
+          #
+          # The initial_payload_private_data_items are of change nature, and not insert nature,
+          # they are adding to the documents passed as part of the initial payload.
+          #
+          # Therefore, if we were adding them to the initial_payload, that will mean that the algo
+          # won't be able to assume each id appears only once and perform a simple merge to the underlying
+          # data structure.
+          #
+          # That's why I decided to pass the private data as the Changes Journal (and actually what triggered
+          # the Changes Journal concept to begin with, though in the future, it will allow us to do interesting
+          # caching server side, so it has a broaded place in the initial payload idea).
+          #
+          # -Daniel
+          publish_this.init_payload target_col_name, {init_payload: initial_payload_items, changes_journal: initial_payload_private_data_items, sync_id: sync}
+
+        #
+        # Initiate trackers
+        #
         tracker = cursor.observeChanges
           added: (id, data) ->
             operation = "changed"
@@ -367,16 +479,6 @@ _.extend Projects.prototype,
             publish_this.removed target_col_name, getItemId(id)
 
             return
-
-        # When a task's private data is added by the observer we get its task_id from which
-        # we can derive the task id with which we should publish the fields to the client.
-        # (Reminder, the client is blind to the existence of the additional collection, to
-        # the client it seems like all fields belongs to the Tasks collection).
-        # Later on, when changed/removed updates for that private data received by the observer
-        # we won't get the task_id field again, only the private data doc id.
-        # Hence, we must keep map from private data doc id to the published task id (as set by
-        # the getItemId() for the task_id).
-        private_data_doc_id_to_task_id_map = {}
 
         private_data_tracker = private_data_cursor.observeChanges
           added: (id, data) ->
