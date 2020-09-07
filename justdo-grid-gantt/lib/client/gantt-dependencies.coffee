@@ -150,7 +150,9 @@ _.extend JustdoGridGantt.prototype,
     epoch_range = self.getEpochRange()
   
     for dependent_row in dependency_obj.dependent_rows or []
-      if not (dependent_task_info = self.task_id_to_info[dependency_obj.dependent])?
+      if not (dependent_task_info = self.task_id_to_info[dependency_obj.dependent])? or
+          not (dependent_end_time = dependent_task_info.self_end_time or dependent_task_info.latest_child_end_time)? or
+          not (dependent_start_time = dependent_task_info.self_start_time or dependent_task_info.earliest_child_end_time)?
         continue
       for independent_row in dependency_obj.independent_rows or []
         if not(independent_task_info = self.task_id_to_info[dependency_obj.independent])?
@@ -167,9 +169,9 @@ _.extend JustdoGridGantt.prototype,
           #                  4--5 [dependent]
           #
           #
-          if not (independent_end_time = independent_task_info.self_end_time)?
-            if not (independent_end_time = independent_task_info.latest_child_end_time)?
-              continue
+          if not (independent_end_time = independent_task_info.self_end_time or independent_task_info.latest_child_end_time)? or
+              not (independent_start_time = independent_task_info.self_start_time or independent_task_info.earliest_child_start_time)?
+            continue
           
           independent_end_x = self.timeOffsetPixels(epoch_range, independent_end_time, self.getColumnWidth())
           if independent_task_info.milestone_time?
