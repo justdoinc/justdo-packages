@@ -24,6 +24,8 @@ Package.onUse(function (api) {
   api.use("aldeed:simple-schema@1.3.1", both);
   api.use("justdoinc:justdo-helpers", both);
 
+  api.use("justdoinc:justdo-analytics@1.0.0", both);
+
   api.add_files("lib/server/email.coffee", server);
   api.add_files("lib/server/templates/wrappers/email-wrapper.handlebars", server);
 

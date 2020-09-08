@@ -75,6 +75,11 @@ _.extend JustdoEmails,
       text: text
       html: html
 
+    APP.justdo_analytics.logServerRecordEncryptVal
+      cat: "comm"
+      act: "email-out"
+      val: EJSON.stringify({to, subject})
+
     Email.send email
 
     return email
