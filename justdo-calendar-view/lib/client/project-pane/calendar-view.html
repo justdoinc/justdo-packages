@@ -123,9 +123,9 @@
             <th class="calendar_view_move"></th>
           </tr>
         </thead>
-        {{> justdo_calendar_project_pane_user_view tasks_set=currentUserTasksSet dependency=currentUserDependency user_id=currentUserId dates_to_display=datesToDisplay delivery_planner_project_id=deliveryPlannerProjectId show_navigation=true}}
+        {{> justdo_calendar_project_pane_user_view members_collapse_state=membersCollapseState tasks_set=currentUserTasksSet dependency=currentUserDependency user_id=currentUserId dates_to_display=datesToDisplay delivery_planner_project_id=deliveryPlannerProjectId show_navigation=true}}
         {{#each allOtherUsers}}
-          {{> justdo_calendar_project_pane_user_view tasks_set=userTasksSet dependency=userDependency user_id=this dates_to_display=datesToDisplay show_navigation=false}}
+          {{> justdo_calendar_project_pane_user_view members_collapse_state=membersCollapseState tasks_set=userTasksSet dependency=userDependency user_id=this dates_to_display=datesToDisplay show_navigation=false}}
         {{/each}}
       </table>
     </div>

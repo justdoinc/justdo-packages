@@ -301,6 +301,7 @@ Template.justdo_calendar_project_pane.onCreated ->
   @calendar_projects_filter_val = new ReactiveVar null
   @calendar_filtered_members = new ReactiveVar []
   @justdo_level_holidays = new ReactiveVar(new Set())
+  @calendar_members_collapse_state_rv = new ReactiveVar false
 
   delivery_planner_project_id.set "*"  # '*' for the entire JustDo
 
@@ -637,6 +638,8 @@ Template.justdo_calendar_project_pane.helpers
   userTasksSet: ->
     return Template.instance().users_to_tasks[@]
 
+  membersCollapseState: ->
+    return Template.instance().calendar_members_collapse_state_rv.get()
 
   title_date: ->
     view_resolution = number_of_days_to_display.get()
@@ -773,14 +776,20 @@ Template.justdo_calendar_project_pane.events
       number_of_days_to_display.set(config.supported_days_resolution[index - 1])
     return
 
-  "click .expand_all": ->
+  "click .expand_all": (e, tpl) ->
     for member, state of members_collapse_state_vars
       state.set(false)
+
+    tpl.calendar_members_collapse_state_rv.set false
+
     return
 
-  "click .collapse_all": ->
+  "click .collapse_all": (e, tpl) ->
     for member, state of members_collapse_state_vars
       state.set(true)
+
+    tpl.calendar_members_collapse_state_rv.set true
+
     return
 
   "click .calendar-view-prev-week": ->
@@ -925,7 +934,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
   @days_matrix = new ReactiveVar([])
   @dates_workload = new ReactiveVar({})
-  @collapsed_view = new ReactiveVar true
+  @collapsed_view = new ReactiveVar @data.members_collapse_state
 
   if @data.user_id == Meteor.userId()
     @collapsed_view.set false
