@@ -165,7 +165,7 @@ _.extend JustdoGridGantt.prototype,
         delete task_info.self_end_time
       
       if task_obj.due_date?
-        task_info.due_time = self.dateStringToMidDayEpoch task_obj.due_date
+        task_info.due_time = self.dateStringToEndOfDayEpoch task_obj.due_date
       else
         delete task_info.due_time
 
