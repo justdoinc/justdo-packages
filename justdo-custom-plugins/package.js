@@ -55,6 +55,7 @@ Package.onUse(function (api) {
 
   api.use("reactive-var", both);
   api.use("tracker", client);
+  api.use("stem-capital:grid-control@0.1.0", client);
 
   api.addFiles("lib/both/analytics.coffee", both);
 
@@ -97,6 +98,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-templates.coffee", client);
   api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-templates.sass", client);
   api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-server.coffee", server);
+  api.addFiles("lib/core-custom-plugins/justdo-task-duration/justdo-task-duration.coffee", client);
+  api.addFiles("lib/core-custom-plugins/justdo-task-duration/pseudo-field-formatter.coffee", client);
+  api.addFiles("lib/core-custom-plugins/justdo-task-duration/pseudo-field-formatter.sass", client);
 
   api.export("JustdoCustomPlugins", both);
 });
