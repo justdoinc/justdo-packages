@@ -667,11 +667,21 @@ _.extend JustdoGridGantt.prototype,
   getProjectDocIfPluginInstalled: (project_id) ->
     return @projects_collection.findOne({_id: project_id, "conf.custom_features": JustdoGridGantt.project_custom_feature_id})
 
+  installRequiredPlugins: ->
+    required_plugins_ids = [JustdoDependencies.project_custom_feature_id]
+
+    if required_plugins_ids.length > 0
+      APP.modules.project_page.curProj().enableCustomFeatures required_plugins_ids
+
+    return
+
   setupCustomFeatureMaintainer: ->
     self = @
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoGridGantt.project_custom_feature_id,
         installer: =>
+          self.installRequiredPlugins()
+
           if JustdoGridGantt.add_pseudo_field
             APP.modules.project_page.setupPseudoCustomField JustdoGridGantt.pseudo_field_id,
               label: JustdoGridGantt.pseudo_field_label
