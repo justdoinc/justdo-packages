@@ -3,6 +3,7 @@ TasksUpdatePreview = ->
   @preview = {}
   @changed_milestones = []
   @is_grid_gantt_installed_in_justdo = {}
+  @frozen_tasks = {}
 
   return @
 
@@ -53,13 +54,18 @@ _.extend TasksUpdatePreview.prototype,
       APP.collections.Tasks.update task_id, modifier
     APP.justdo_dependencies.dependent_tasks_update_hook_enabled = true
 
-  updateDb: ->
+  updateDb: (is_changing_dates_of_a_frozen_task) ->
     self = @
-    if self.changed_milestones.length > 0
-      milestones_seq_ids_str = _.map(self.changed_milestones, (milestone) -> "##{milestone.seqId}").join ","
+    if not _.isEmpty self.frozen_tasks
+      tasks_seq_ids_str = _.map(self.frozen_tasks, (task) -> "##{task.seqId}").join ","
+      if is_changing_dates_of_a_frozen_task
+        confirm_msg = "You are changing a frozen task, and this action will also violate the dependencies of following frozen task(s): #{tasks_seq_ids_str}.\n\nAre you sure to continue?"
+      else
+        confirm_msg = "This action will violate the dependencies of following frozen task(s): #{tasks_seq_ids_str}.\n\nAre you sure to continue?"
       
-      if not window.confirm "This action will cause these milestone(s) to change: #{milestones_seq_ids_str}.\nAre you sure to continue?" # bootbox can't be used here, we need some sync code here
+      if not window.confirm confirm_msg # bootbox can't be used here, we need some sync code here
         return false
+
       # bootbox.dialog
       #   title: "Confirm"
       #   message: "This action will cause these milestone(s) to change: #{milestones_seq_ids_str}"
@@ -83,12 +89,17 @@ _.extend TasksUpdatePreview.prototype,
       #         self._updateDb()
 
       #         return true
-
-      self._updateDb()
-    else
-      self._updateDb()
-
+    else if is_changing_dates_of_a_frozen_task and 
+      not window.confirm "You are changing a frozen task, are you sure to continue?" # bootbox can't be used here, we need some sync code here
+        return false
+    
+    self._updateDb()
     return true
+
+  addFrozenTaskAlert: (task) ->
+    if not @frozen_tasks[task._id]
+      @frozen_tasks[task._id] = task
+    return
 
 _.extend JustdoDependencies.prototype,
   _immediateInit: ->
@@ -376,6 +387,10 @@ _.extend JustdoDependencies.prototype,
       if not self.dependent_tasks_update_hook_enabled
         return 
       # on end date change or dependency added
+      is_changing_dates_of_a_frozen_task = doc[JustdoDependencies.is_task_dates_frozen_pseudo_field_id] == "true" and 
+          ((new_start_date = modifier?.$set?.end_date)? and new_start_date != doc.start_date or
+          (new_end_date = modifier?.$set?.end_date)? and new_end_date != doc.end_date)
+          
       if (new_end_date = modifier?.$set?.end_date)? and new_end_date != doc.end_date
         preview = new TasksUpdatePreview()
         preview.update doc,
@@ -390,7 +405,7 @@ _.extend JustdoDependencies.prototype,
           for seq_id in added_seq_ids
             addNewIndependentAndRecalculateDates seq_id, doc, preview
       
-      if preview? and not preview.updateDb()
+      if preview? and not preview.updateDb(is_changing_dates_of_a_frozen_task)
         APP.justdo_grid_gantt.resetStatesChangeOnEscape() # XXX need to refactor this
         return false
       
@@ -408,8 +423,6 @@ _.extend JustdoDependencies.prototype,
 
     JD.collections.Tasks.find
       "justdo_task_dependencies_mf.task_id": original_task_obj_id
-      "#{JustdoDependencies.is_task_dates_frozen_pseudo_field_id}":
-        $ne: "true"
     ,
       fields:
         justdo_task_dependencies_mf: 1
@@ -418,8 +431,12 @@ _.extend JustdoDependencies.prototype,
         "#{JustdoGridGantt.is_milestone_pseudo_field_id}": 1
         seqId: 1
         project_id: 1
+        "#{JustdoDependencies.is_task_dates_frozen_pseudo_field_id}": 1
     .forEach (dependent) ->
-      self.updateTaskStartDateBasedOnDependencies dependent, original_task_obj_id, preview
+      if dependent[JustdoDependencies.is_task_dates_frozen_pseudo_field_id] == "true"
+        preview.addFrozenTaskAlert dependent
+      else
+        self.updateTaskStartDateBasedOnDependencies dependent, original_task_obj_id, preview
       return
     
     return
