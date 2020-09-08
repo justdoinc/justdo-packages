@@ -448,6 +448,15 @@ _.extend JustdoAnalytics.prototype,
 
     return
 
+  logServerRecordEncryptVal: (log_object) ->
+    # log_object is edited in-place
+    if log_object.val?
+      log_object.val = @_encryptWithLocalPass(@_encryptWithLocalPass(log_object.val))
+
+    @logServerRecord(log_object)
+
+    return
+
   logClientSideError: (error_type, val) ->
     check error_type, String
     check val, String
