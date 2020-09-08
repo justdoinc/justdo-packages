@@ -420,7 +420,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
                 <use xlink:href="/layout/icons-feather-sprite.svg#circle"/>
               </svg>
             </div>
-            <div class="gantt-milestone gantt-start-drop-area" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>
+            <div class="gantt-milestone gantt-start-drop-area #{if task_info.is_dates_frozen then "frozen-dates" else ""}" style="left:#{offset - 5}px" task-id="#{doc._id}"></div>
           """ 
 
     ############
