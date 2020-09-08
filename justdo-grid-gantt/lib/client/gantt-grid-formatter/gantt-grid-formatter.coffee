@@ -781,7 +781,9 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       grid_gantt = APP.justdo_grid_gantt
       if not (states = grid_gantt.getOrCreateState())?
         return
-        
+      
+      $dependencies_div = $(".grid-control-tab.active .justdo-grid-gantt-all-dependencies")
+
       if states.end_time.is_dragging
         epoch_range = grid_gantt.getEpochRange()
         gc = APP.modules.project_page.gridControl()
@@ -803,7 +805,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
                 <div class="grid-gantt-date-hint" style="top: #{hint_y}px; left: #{hint_x}px">#{date}</div>
             """
         $(".grid-gantt-date-hint").remove()
-        $(".justdo-grid-gantt-all-dependencies").append end_date_hint
+        $dependencies_div.append end_date_hint
   
       else if states.milestone.is_dragging
         epoch_range = grid_gantt.getEpochRange()
@@ -823,7 +825,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
                 <div class="grid-gantt-date-hint" style="top: #{hint_y}px; left: #{hint_x}px">#{date}</div>
             """
         $(".grid-gantt-date-hint").remove()
-        $(".justdo-grid-gantt-all-dependencies").append end_date_hint
+        $dependencies_div.append end_date_hint
       
       else if states.due_time.is_dragging
         epoch_range = grid_gantt.getEpochRange()
@@ -843,7 +845,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
                 <div class="grid-gantt-date-hint" style="top: #{hint_y}px; left: #{hint_x}px">#{date}</div>
             """
         $(".grid-gantt-date-hint").remove()
-        $(".justdo-grid-gantt-all-dependencies").append due_date_hint
+        $dependencies_div.append due_date_hint
 
       else if states.main_bar.is_dragging
         epoch_range = grid_gantt.getEpochRange()
@@ -875,8 +877,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
                 <div class="grid-gantt-date-hint" style="top: #{hint_y}px; left: #{hint_x}px">#{date}</div>
             """
         $(".grid-gantt-date-hint").remove()
-        $(".justdo-grid-gantt-all-dependencies").append start_date_hint
-        $(".justdo-grid-gantt-all-dependencies").append end_date_hint
+        $dependencies_div.append start_date_hint
+        $dependencies_div.append end_date_hint
         
       else if states.column_range.is_dragging
         delta_time = grid_gantt.pixelsDeltaToEpochDelta e.clientX - states.mouse_down.x
@@ -893,12 +895,12 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           y: independent_end_y
         
         p1 =
-          x: e.pageX - $(".justdo-grid-gantt-all-dependencies").offset().left
-          y: e.pageY - $(".justdo-grid-gantt-all-dependencies").offset().top
-  
+          x: e.pageX - $dependencies_div.offset().left
+          y: e.pageY - $dependencies_div.offset().top
+
         $( ".temporary-dependency-line" ).remove();
         html = """<div class="temporary-dependency-line" style="#{grid_gantt.lineStyle p0, p1};z-index: 1"></div>"""
-        $(".justdo-grid-gantt-all-dependencies").append html
+        $dependencies_div.append html
         
       return
   ]
