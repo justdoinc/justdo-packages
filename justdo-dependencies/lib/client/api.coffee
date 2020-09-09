@@ -480,19 +480,23 @@ _.extend JustdoDependencies.prototype,
     # Important note: in this version, we just use calendar days, we ignore weekends, holidays, vacations and personal days etc.
     # todo - include weekends and holidays in duration,
     # todo - don't start a task on weekend/holiday
-    set_value = {}
-    set_value.start_date = new_start_date
-    task_duration = 1
-    
-    if (prev_start_date = task_obj.start_date)?
-      if (prev_end_date = task_obj.end_date)?
-        prev_start_date_moment = moment.utc prev_start_date
-        prev_end_date_moment = moment.utc prev_end_date
-        task_duration = prev_end_date_moment.diff prev_start_date_moment, "days"
+    if APP.justdo_custom_plugins.justdo_task_duration.isPluginInstalled task_obj.project_id
+      set_value = APP.justdo_custom_plugins.justdo_task_duration.recalculateDatesAndDuration task_obj._id,
+        start_date: new_start_date
+    else
+      set_value = {}
+      set_value.start_date = new_start_date
+      task_duration = 1
+      
+      if (prev_start_date = task_obj.start_date)?
+        if (prev_end_date = task_obj.end_date)?
+          prev_start_date_moment = moment.utc prev_start_date
+          prev_end_date_moment = moment.utc prev_end_date
+          task_duration = prev_end_date_moment.diff prev_start_date_moment, "days"
 
-    new_end_data_moment = moment.utc(new_start_date)
-    new_end_data_moment = new_end_data_moment.add task_duration, "days"
-    set_value.end_date = new_end_data_moment.format("YYYY-MM-DD")
+      new_end_data_moment = moment.utc(new_start_date)
+      new_end_data_moment = new_end_data_moment.add task_duration, "days"
+      set_value.end_date = new_end_data_moment.format("YYYY-MM-DD")
     
     preview.update task_obj, set_value
     self.updateDependentTasks task_obj._id, preview
