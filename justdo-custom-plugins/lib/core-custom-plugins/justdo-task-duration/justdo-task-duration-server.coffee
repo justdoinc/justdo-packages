@@ -14,30 +14,31 @@ recalculateTasksDuration = (justdo_id, filters) ->
 
   is_grid_gantt_enabled = APP.justdo_grid_gantt.isGridGanttInstalledInJustDo target_justdo
 
-  APP.collections.Tasks.find filters,
-    fields:
-      _id: 1
-      start_date: 1
-      end_date: 1
-      pending_owner_id: 1
-      owner_id: 1
-      "#{JustdoCustomPlugins.justdo_task_duration_pseudo_field_id}": 1
-      "#{JustdoGridGantt.is_milestone_pseudo_field_id}": 1
-  .forEach (task) ->
-    owner_id = task.pending_owner_id or task.owner_id
-    if not task.start_date? or not task.end_date? or
-        is_grid_gantt_enabled and task[JustdoGridGantt.is_milestone_pseudo_field_id] == "true"
-      working_days = null
-    else
-      {working_days, avail_hrs} = APP.justdo_resources_availability.userAvailabilityBetweenDates task.start_date, task.end_date, justdo_id, owner_id
+  fields = _.extend {
+    _id: 1
+    start_date: 1
+    end_date: 1
+    pending_owner_id: 1
+    owner_id: 1
+    "#{JustdoCustomPlugins.justdo_task_duration_pseudo_field_id}": 1
+    "#{JustdoGridGantt.is_milestone_pseudo_field_id}": 1
+  }, APP.justdo_custom_plugins.justdo_task_duration.recalculateDatesAndDuration_getRequiredTaskFields()
 
-    if not task[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id]? and working_days == null or
-        task[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id] == working_days
+  APP.collections.Tasks.find filters,
+    fields: fields
+  .forEach (task) ->
+    changes = APP.justdo_custom_plugins.justdo_task_duration.recalculateDatesAndDuration task,
+      start_date: task.start_date
+      end_date: task.end_date
+
+    new_duration = changes?[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id]
+
+    if not changes? or not task[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id]? and new_duration == null or
+        task[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id] == new_duration
       return
 
-    APP.collections.Tasks.update task._id,  # XXX use bulkWrite can increase performance for large justdos
-      $set:
-        "#{JustdoCustomPlugins.justdo_task_duration_pseudo_field_id}": working_days
+    APP.collections.Tasks.update task._id,
+      $set: changes
 
   return
 
@@ -48,6 +49,7 @@ isJustdoTaskDurationEnabled = (justdo_id) ->
 
   return justdo? and APP.projects.isPluginInstalledOnProjectDoc(JustdoCustomPlugins.justdo_task_duration_custom_feature_id, justdo)
 
+# Catching install/uninstall of justdo_task_duration and justdo_grid_gantt
 APP.collections.Projects.after.update (user_id, doc, field_names, modifier, options) ->
   if not (new_custom_features = modifier?.$set?["conf.custom_features"])?
     return true
@@ -66,9 +68,19 @@ APP.collections.Projects.after.update (user_id, doc, field_names, modifier, opti
     recalculateTasksDuration doc._id,
       "#{JustdoGridGantt.is_milestone_pseudo_field_id}": "true"
 
+  return
+
+# Catching changes of start_date, end_date, duration of tasks
+APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) ->
+  if ((new_start_date = modifier?.$set?.start_date) isnt undefined or
+      (new_end_date = modifier?.$set?.end_date) isnt undefined or
+      (new_duration = modifier?.$set?[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id]) isnt undefined) and
+      isJustdoTaskDurationEnabled doc.project_id
+    changes = APP.justdo_custom_plugins.justdo_task_duration.recalculateDatesAndDuration doc._id, modifier.$set
   
   return
 
+# Catching set/unset of gantt_milestone of tasks
 APP.collections.Tasks.after.update (user_id, doc, field_names, modifier, options) ->
   if (new_is_milestone = modifier?.$set?[JustdoGridGantt.is_milestone_pseudo_field_id]) is undefined or
       not isJustdoTaskDurationEnabled doc.project_id
@@ -76,3 +88,5 @@ APP.collections.Tasks.after.update (user_id, doc, field_names, modifier, options
   
   recalculateTasksDuration doc.project_id,
     _id: doc._id
+  
+  return
