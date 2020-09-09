@@ -41,13 +41,11 @@ APP.justdo_custom_plugins.installCustomPlugin
 
   destroyer: ->
     self = @
-    
+
     self.collection_hook.remove()
 
     APP.justdo_resources_availability.disbleResourceAvailability JustdoCustomPlugins.justdo_task_duration_custom_feature_id
 
     APP.modules.project_page.removePseudoCustomFields JustdoCustomPlugins.justdo_task_duration_pseudo_field_id
-
-    # @collection_hook.remove()
 
     return
