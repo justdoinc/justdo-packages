@@ -52,4 +52,11 @@ APP.collections.Projects.after.update (user_id, doc, field_names, modifier, opti
   if JustdoCustomPlugins.justdo_task_duration_custom_feature_id in added_custom_features
     recalculateTasksDuration doc._id, {}
   
+  if JustdoGridGantt.project_custom_feature_id in added_custom_features or
+      JustdoGridGantt.project_custom_feature_id in removed_custom_features
+    # recalculate milestones duration
+    recalculateTasksDuration doc._id,
+      "#{JustdoGridGantt.is_milestone_pseudo_field_id}": "true"
+
+  
   return
