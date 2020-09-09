@@ -42,13 +42,6 @@ recalculateTasksDuration = (justdo_id, filters) ->
 
   return
 
-isJustdoTaskDurationEnabled = (justdo_id) ->
-  justdo = APP.collections.Projects.findOne justdo_id,
-    fields:
-      conf: 1
-
-  return justdo? and APP.projects.isPluginInstalledOnProjectDoc(JustdoCustomPlugins.justdo_task_duration_custom_feature_id, justdo)
-
 # Catching install/uninstall of justdo_task_duration and justdo_grid_gantt
 APP.collections.Projects.after.update (user_id, doc, field_names, modifier, options) ->
   if not (new_custom_features = modifier?.$set?["conf.custom_features"])?
@@ -63,29 +56,17 @@ APP.collections.Projects.after.update (user_id, doc, field_names, modifier, opti
   
   if (JustdoGridGantt.project_custom_feature_id in added_custom_features or
       JustdoGridGantt.project_custom_feature_id in removed_custom_features) and
-      isJustdoTaskDurationEnabled doc._id
+      APP.justdo_custom_plugins.justdo_task_duration.isPluginInstalled doc._id
     # recalculate milestones duration
     recalculateTasksDuration doc._id,
       "#{JustdoGridGantt.is_milestone_pseudo_field_id}": "true"
 
   return
 
-# Catching changes of start_date, end_date, duration of tasks
-APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) ->
-  if ((new_start_date = modifier?.$set?.start_date) isnt undefined or
-      (new_end_date = modifier?.$set?.end_date) isnt undefined or
-      (new_duration = modifier?.$set?[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id]) isnt undefined) and
-      isJustdoTaskDurationEnabled doc.project_id
-    changes = APP.justdo_custom_plugins.justdo_task_duration.recalculateDatesAndDuration doc._id, modifier.$set
-    if changes?
-      _.extend modifier.$set, changes
-      
-  return
-
 # Catching set/unset of gantt_milestone of tasks
 APP.collections.Tasks.after.update (user_id, doc, field_names, modifier, options) ->
   if (new_is_milestone = modifier?.$set?[JustdoGridGantt.is_milestone_pseudo_field_id]) is undefined or
-      not isJustdoTaskDurationEnabled doc.project_id
+      not APP.justdo_custom_plugins.justdo_task_duration.isPluginInstalled doc.project_id
     return
   
   recalculateTasksDuration doc.project_id,

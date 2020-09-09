@@ -100,7 +100,15 @@ APP.justdo_custom_plugins.justdo_task_duration = {
       return
 
     return keep_fields
+  
+  isPluginInstalled: (justdo_id) -> # XXX need to optimize
+    justdo = APP.collections.Projects.findOne justdo_id,
+      fields:
+        conf: 1
+
+    return justdo? and APP.projects.isPluginInstalledOnProjectDoc(JustdoCustomPlugins.justdo_task_duration_custom_feature_id, justdo)
 }
+
 
 isGridGanttEnabled = (justdo_id) ->
   return APP.justdo_grid_gantt.isGridGanttInstalledInJustDo justdo_id
