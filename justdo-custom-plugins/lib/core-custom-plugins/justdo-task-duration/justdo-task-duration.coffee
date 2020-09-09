@@ -40,6 +40,8 @@ APP.justdo_custom_plugins.installCustomPlugin
     return
 
   destroyer: ->
+    self = @
+    
     self.collection_hook.remove()
 
     APP.justdo_resources_availability.disbleResourceAvailability JustdoCustomPlugins.justdo_task_duration_custom_feature_id
