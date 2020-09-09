@@ -77,7 +77,9 @@ APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, option
       (new_duration = modifier?.$set?[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id]) isnt undefined) and
       isJustdoTaskDurationEnabled doc.project_id
     changes = APP.justdo_custom_plugins.justdo_task_duration.recalculateDatesAndDuration doc._id, modifier.$set
-  
+    if changes?
+      _.extend modifier.$set, changes
+      
   return
 
 # Catching set/unset of gantt_milestone of tasks
