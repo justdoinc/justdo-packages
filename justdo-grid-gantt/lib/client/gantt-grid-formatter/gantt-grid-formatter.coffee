@@ -533,7 +533,8 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
       if APP.justdo_grid_gantt.canEditDates() == false
         return
-      task_id = e.target.getAttribute("task-id") 
+      
+      task_id = $(e.currentTarget).attr("task-id") 
       APP.justdo_grid_gantt.setState
         task_id: task_id
         end_time:
@@ -554,7 +555,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       if APP.justdo_grid_gantt.canEditDates() == false
         return
 
-      task_id = e.target.getAttribute("task-id")
+      task_id = $(e.currentTarget).attr("task-id")
       APP.justdo_grid_gantt.setState
         task_id: task_id
         milestone:
@@ -573,7 +574,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
       if APP.justdo_grid_gantt.canEditDates() == false
         return
-      task_id = e.target.getAttribute("task-id")
+      task_id = $(e.currentTarget).attr("task-id")
       APP.justdo_grid_gantt.setState
         task_id: task_id
         main_bar:
