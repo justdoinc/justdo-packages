@@ -98,6 +98,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-templates.coffee", client);
   api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-templates.sass", client);
   api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-server.coffee", server);
+
+  api.addFiles("lib/core-custom-plugins/justdo-task-duration/justdo-task-duration-server.coffee", server);
   api.addFiles("lib/core-custom-plugins/justdo-task-duration/justdo-task-duration.coffee", client);
   api.addFiles("lib/core-custom-plugins/justdo-task-duration/pseudo-field-formatter.coffee", client);
   api.addFiles("lib/core-custom-plugins/justdo-task-duration/pseudo-field-formatter.sass", client);

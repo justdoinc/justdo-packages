@@ -6,6 +6,7 @@ _.extend JustdoResourcesAvailability.prototype,
     # tick in which we create the object instance.
 
     @setupRouter()
+    @initDefaultWorkdays()
 
     return
 
@@ -26,6 +27,19 @@ _.extend JustdoResourcesAvailability.prototype,
   getProjectDocIfPluginInstalled: (project_id) ->
     return @projects_collection.findOne({_id: project_id, "conf.custom_features": JustdoResourcesAvailability.project_custom_feature_id})
 
+  default_workdays:
+    working_days: {}
+    holidays: []
+
+  initDefaultWorkdays: ->
+    for i in [0..6]
+      @default_workdays.working_days["#{i}"] =
+        from: "08:00"
+        to: "16:00"
+        holiday: false
+    @default_workdays.working_days[0].holiday = true
+    @default_workdays.working_days[6].holiday = true
+    return
 
   # This function gets a list of dates, and then returns two sets - workdays and holidays
   # if user_id is not given, the system will return the project-level information
@@ -96,3 +110,55 @@ _.extend JustdoResourcesAvailability.prototype,
         ret.workdays[day] = justdo_workdays.days[moment(day).day()]
 
     return ret
+
+  # Given a project_id and a user id, the function will return the number of days and total hours available
+  # between the dates. dates are in the format of YYYY-MM-DD
+
+  userAvailabilityBetweenDates: (from_date, to_date, project_id, user_id)->
+    check from_date, String
+    check to_date, String
+    check project_id, String
+    check user_id, String
+
+    if not (project_obj = JD.collections.Projects.findOne(project_id))
+      return
+
+    resources_data = project_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]
+    if !(justdo_level_data  = resources_data?[project_id])
+      justdo_level_data = @default_workdays
+    if user_id
+      user_level_data = resources_data?["#{project_id}:#{user_id}"]
+
+    start_date = moment.utc(from_date)
+    end_date = moment.utc(to_date)
+    ret =
+      working_days: 0
+      available_hours: 0
+
+    while start_date <= end_date
+      date = start_date.format("YYYY-MM-DD")
+      is_holiday = false
+      if user_level_data?.holidays? and (date in user_level_data.holidays) or \
+          user_level_data?.working_days?[start_date.day()]?.holiday or \
+          justdo_level_data?.holidays and (date in justdo_level_data.holidays) or \
+          justdo_level_data?.working_days?[start_date.day()]?.holiday
+        is_holiday = true
+
+      if not is_holiday
+        ret.working_days +=1
+        ret.available_hours += @_calculateUserDayAvailability justdo_level_data, user_level_data, start_date.day()
+
+      start_date.add(1,'days')
+
+    return ret
+    
+  _calculateUserDayAvailability: (justdo_level_data, user_level_data, day_of_week)->
+    if not (from = user_level_data?.working_days?[day_of_week]?.from)
+      from = justdo_level_data?.working_days?[day_of_week]?.from
+    if not (to = user_level_data?.working_days?[day_of_week]?.to)
+      to = justdo_level_data?.working_days?[day_of_week]?.to
+    if from and to and to > from
+      from = from.split(":")
+      to = to.split(":")
+      return (( (parseInt(to[0]) * 60) + (parseInt(to[1])) - parseInt(from[0]) * 60 - parseInt(from[1]) ) / 60)
+    return 0
