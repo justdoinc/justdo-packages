@@ -41,6 +41,13 @@ recalculateTasksDuration = (justdo_id, filters) ->
 
   return
 
+isJustdoTaskDurationEnabled = (justdo_id) ->
+  justdo = APP.collections.Projects.findOne justdo_id,
+    fields:
+      conf: 1
+
+  return justdo? and APP.projects.isPluginInstalledOnProjectDoc(JustdoCustomPlugins.justdo_task_duration_custom_feature_id, justdo)
+
 APP.collections.Projects.after.update (user_id, doc, field_names, modifier, options) ->
   if not (new_custom_features = modifier?.$set?["conf.custom_features"])?
     return true
@@ -52,11 +59,20 @@ APP.collections.Projects.after.update (user_id, doc, field_names, modifier, opti
   if JustdoCustomPlugins.justdo_task_duration_custom_feature_id in added_custom_features
     recalculateTasksDuration doc._id, {}
   
-  if JustdoGridGantt.project_custom_feature_id in added_custom_features or
-      JustdoGridGantt.project_custom_feature_id in removed_custom_features
+  if (JustdoGridGantt.project_custom_feature_id in added_custom_features or
+      JustdoGridGantt.project_custom_feature_id in removed_custom_features) and
+      isJustdoTaskDurationEnabled doc._id
     # recalculate milestones duration
     recalculateTasksDuration doc._id,
       "#{JustdoGridGantt.is_milestone_pseudo_field_id}": "true"
 
   
   return
+
+APP.collections.Tasks.after.update (user_id, doc, field_names, modifier, options) ->
+  if (new_is_milestone = modifier?.$set?[JustdoGridGantt.is_milestone_pseudo_field_id]) is undefined or
+      not isJustdoTaskDurationEnabled doc.project_id
+    return
+  
+  recalculateTasksDuration doc.project_id,
+    _id: doc._id
