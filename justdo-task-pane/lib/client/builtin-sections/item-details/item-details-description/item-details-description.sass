@@ -1,6 +1,20 @@
 $max-desc-width: 750px
 #task-description-container
   font-size: 14px
+
+  .task-description-header
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding-bottom: 4px
+
+    .maximize-description
+      cursor: pointer
+      svg
+        padding: 4px
+        stroke-width: 3px
+        color: #3073CC
+
   #description-editor
     display: none
 
@@ -74,3 +88,47 @@ $max-desc-width: 750px
   .fr-box.fr-basic .fr-element
     height: 270px
     resize: vertical
+.minimize-description-icon
+  display: none
+
+.task-pane-section-item-details-wrapper.description-only-view
+  overflow: hidden
+  display: flex
+
+  .task-description-header
+    border-bottom: 1px solid #d9d9d9
+
+  section:not(.description-task-pane-section)
+    display: none
+
+  .description-task-pane-section
+    position: absolute
+    top: 12px
+    left: 10px
+    right: 12px
+    bottom: 12px
+    margin: 0
+    overflow: auto
+
+  #task-description-container
+    height: 100%
+    display: flex
+    flex-direction: column
+
+    #description
+      max-height: 100%
+
+    .fr-box,
+    .fr-wrapper
+      flex-grow: 1
+      display: flex
+      flex-direction: column
+
+    .fr-element
+      flex-grow: 1
+
+  .maximize-description-icon
+    display: none
+
+  .minimize-description-icon
+    display: block

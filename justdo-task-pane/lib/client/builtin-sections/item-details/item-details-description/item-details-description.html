@@ -1,5 +1,12 @@
 <template name="task_pane_item_details_description">
   <div id="task-description-container">
+    <div class="task-description-header">
+      <h2>Description</h2>
+      <div class="maximize-description">
+        <svg class="jd-icon minimize-description-icon"><use xlink:href="/layout/icons-feather-sprite.svg#minimize-2"/></svg>
+        <svg class="jd-icon maximize-description-icon"><use xlink:href="/layout/icons-feather-sprite.svg#maximize-2"/></svg>
+      </div>
+    </div>
     {{#if description}}
       <div id="description">{{{xssGuard description}}}</div>
     {{else}}

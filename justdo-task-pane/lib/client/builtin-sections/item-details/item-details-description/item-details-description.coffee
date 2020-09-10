@@ -1,3 +1,5 @@
+description_only_view_rv = new ReactiveVar false
+
 getActiveTaskDescription = ->
   return APP.collections.TasksAugmentedFields.findOne(JD.activeItemId(), {fields: {description: 1}})?.description or ""
 
@@ -368,6 +370,17 @@ APP.executeAfterAppLibCode ->
 
     return
 
+  Template.task_pane_item_details_description.onRendered ->
+    @autorun =>
+      if description_only_view_rv.get()
+        $(".task-pane-section-item-details-wrapper").addClass "description-only-view"
+      else
+        $(".task-pane-section-item-details-wrapper").removeClass "description-only-view"
+
+      return
+
+    return
+
   Template.task_pane_item_details_description.events
     "click #add-description": (e) ->
       initEditor()
@@ -385,6 +398,11 @@ APP.executeAfterAppLibCode ->
       e.preventDefault();
       url = $(e.target).attr "href"
       window.open(url, "_blank")
+
+    "click .maximize-description": (e, tpl) ->
+      description_only_view_rv.set not description_only_view_rv.get()
+
+      return
 
   Template.task_pane_item_details_description.onDestroyed ->
     destroyEditor() # destroyEditor takes care of saving
