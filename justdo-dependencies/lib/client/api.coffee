@@ -386,15 +386,16 @@ _.extend JustdoDependencies.prototype,
     self._dependent_tasks_update_hook = APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) =>
       if not self.dependent_tasks_update_hook_enabled
         return 
-      # on end date change or dependency added
+      
       is_changing_dates_of_a_frozen_task = doc[JustdoDependencies.is_task_dates_frozen_pseudo_field_id] == "true" and 
           ((new_start_date = modifier?.$set?.end_date)? and new_start_date != doc.start_date or
           (new_end_date = modifier?.$set?.end_date)? and new_end_date != doc.end_date)
-          
-      if (new_end_date = modifier?.$set?.end_date)? and new_end_date != doc.end_date
+      
+      # on end date change or dependency added
+      if (new_end_date = modifier?.$set?.end_date)? and new_end_date != doc.end_date or
+          doc[JustdoGridGantt.is_milestone_pseudo_field_id] isnt undefined
         preview = new TasksUpdatePreview()
-        preview.update doc,
-          end_date: new_end_date
+        preview.update doc, modifier.$set
         self.updateDependentTasks doc._id, preview
       else if doc[JustdoDependencies.is_task_dates_frozen_pseudo_field_id] != "true"
         preview = new TasksUpdatePreview()
