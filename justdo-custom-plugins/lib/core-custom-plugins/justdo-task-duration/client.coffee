@@ -27,6 +27,14 @@ APP.justdo_custom_plugins.installCustomPlugin
 
     # Catching changes of start_date, end_date, duration, is_milestone of tasks
     self.collection_hook = APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) ->
+      # XXX This is a redundant piece of code to solve the racing condition of the hooks, should be removed after refactor
+      if doc[JustdoGridGantt.is_milestone_pseudo_field_id] == "true" and
+          modifier?.$set?.start_date is undefined and 
+          modifier?.$set?.end_date isnt undefined
+        JustdoSnackbar.show
+          text: "The end_date will always be the same as the start_date because it is a milestone."
+        return false
+
       if (modifier?.$set?.start_date isnt undefined or
           modifier?.$set?.end_date isnt undefined or
           modifier?.$set?[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id] isnt undefined or
@@ -45,6 +53,8 @@ APP.justdo_custom_plugins.installCustomPlugin
         if not is_changed
           return false
 
+      return true
+    
     return
 
   destroyer: ->
