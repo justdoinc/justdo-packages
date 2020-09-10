@@ -25,17 +25,26 @@ APP.justdo_custom_plugins.installCustomPlugin
 
     APP.justdo_resources_availability.enableResourceAvailability JustdoCustomPlugins.justdo_task_duration_custom_feature_id
 
-    # Catching changes of start_date, end_date, duration of tasks
+    # Catching changes of start_date, end_date, duration, is_milestone of tasks
     self.collection_hook = APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) ->
       if (modifier?.$set?.start_date isnt undefined or
           modifier?.$set?.end_date isnt undefined or
           modifier?.$set?[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id] isnt undefined or
           modifier?.$set?[JustdoGridGantt.is_milestone_pseudo_field_id] isnt undefined) and
           APP.justdo_custom_plugins.justdo_task_duration.isPluginInstalled doc.project_id
-        changes = APP.justdo_custom_plugins.justdo_task_duration.recalculateDatesAndDuration doc._id, modifier.$set
-        if changes?
-          _.extend modifier.$set, changes
-    
+        set_values = APP.justdo_custom_plugins.justdo_task_duration.recalculateDatesAndDuration doc._id, modifier.$set
+        if set_values?
+          _.extend modifier.$set, set_values
+        
+        is_changed = false
+        for field, val of modifier.$set
+          if doc[field] != val
+            is_changed = true
+            break
+        
+        if not is_changed
+          return false
+
     return
 
   destroyer: ->
