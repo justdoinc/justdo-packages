@@ -40,8 +40,6 @@ APP.justdo_custom_plugins.justdo_task_duration = {
 
       if new_values.start_date isnt undefined
         ret.start_date = ret.end_date = new_values.start_date
-      else if new_values.end_date isnt undefined
-        ret.start_date = ret.end_date = new_values.end_date
       else if task.start_date isnt undefined
         ret.start_date = ret.end_date = task.start_date
       
