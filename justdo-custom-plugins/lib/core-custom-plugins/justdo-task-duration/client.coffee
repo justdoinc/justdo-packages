@@ -27,16 +27,15 @@ APP.justdo_custom_plugins.installCustomPlugin
 
     # Catching changes of start_date, end_date, duration of tasks
     self.collection_hook = APP.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) ->
-      if ((new_start_date = modifier?.$set?.start_date) isnt undefined or
-          (new_end_date = modifier?.$set?.end_date) isnt undefined or
-          (new_duration = modifier?.$set?[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id]) isnt undefined) and
+      if (modifier?.$set?.start_date isnt undefined or
+          modifier?.$set?.end_date isnt undefined or
+          modifier?.$set?[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id] isnt undefined or
+          modifier?.$set?[JustdoGridGantt.is_milestone_pseudo_field_id] isnt undefined) and
           APP.justdo_custom_plugins.justdo_task_duration.isPluginInstalled doc.project_id
         changes = APP.justdo_custom_plugins.justdo_task_duration.recalculateDatesAndDuration doc._id, modifier.$set
         if changes?
           _.extend modifier.$set, changes
-      
-      return
-
+    
     return
 
   destroyer: ->

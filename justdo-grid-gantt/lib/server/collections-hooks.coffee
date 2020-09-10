@@ -65,6 +65,7 @@ _.extend JustdoGridGantt.prototype,
           modifier.$set = {}
         modifier.$set.end_date = doc.start_date
       else if doc?[JustdoGridGantt.is_milestone_pseudo_field_id] == "true" and 
+          modifier.$set?[JustdoGridGantt.is_milestone_pseudo_field_id] is undefined and
           ((new_start_date = modifier.$set?.start_date) isnt undefined or (new_end_date = modifier.$set?.end_date) isnt undefined) and # null means unset, undefined means no change
           self.isGridGanttInstalledInJustDo doc.project_id
         if new_start_date isnt undefined # null means unset, undefined means no change

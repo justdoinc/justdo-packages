@@ -28,7 +28,10 @@ APP.justdo_custom_plugins.justdo_task_duration = {
     if not task?
       return null
     
-    if task[JustdoGridGantt.is_milestone_pseudo_field_id] == "true" and isGridGanttEnabled task.project_id
+    
+    if (new_values[JustdoGridGantt.is_milestone_pseudo_field_id] == "true" or 
+        new_values[JustdoGridGantt.is_milestone_pseudo_field_id] is undefined and task[JustdoGridGantt.is_milestone_pseudo_field_id] == "true") and 
+        isGridGanttEnabled task.project_id
       ret = {
         "#{JustdoCustomPlugins.justdo_task_duration_pseudo_field_id}": null
         start_date: null
@@ -98,6 +101,10 @@ APP.justdo_custom_plugins.justdo_task_duration = {
         keep_fields[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id] = _recalculateDuration task.project_id, owner_id, keep_fields
 
       return
+
+    if keep_fields[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id] <= 0
+      keep_fields[JustdoCustomPlugins.justdo_task_duration_pseudo_field_id] = null
+      keep_fields.end_date = null
 
     return keep_fields
   

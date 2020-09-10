@@ -1,3 +1,24 @@
+# Catching install/uninstall of justdo_task_duration and justdo_grid_gantt
+APP.collections.Projects.after.update (user_id, doc, field_names, modifier, options) ->
+  if not (new_custom_features = modifier?.$set?["conf.custom_features"])?
+    return true
+
+  old_custom_features = @previous?.conf?.custom_features or []
+  added_custom_features = _.difference new_custom_features, old_custom_features
+  removed_custom_features = _.difference old_custom_features, new_custom_features
+  
+  if JustdoCustomPlugins.justdo_task_duration_custom_feature_id in added_custom_features
+    recalculateTasksDuration doc._id, {}
+  
+  if (JustdoGridGantt.project_custom_feature_id in added_custom_features or
+      JustdoGridGantt.project_custom_feature_id in removed_custom_features) and
+      APP.justdo_custom_plugins.justdo_task_duration.isPluginInstalled doc._id
+    # recalculate milestones duration
+    recalculateTasksDuration doc._id,
+      "#{JustdoGridGantt.is_milestone_pseudo_field_id}": "true"
+
+  return
+
 recalculateTasksDuration = (justdo_id, filters) ->
   target_justdo = APP.collections.Projects.findOne justdo_id,
     fields:
@@ -40,36 +61,4 @@ recalculateTasksDuration = (justdo_id, filters) ->
     APP.collections.Tasks.update task._id,
       $set: changes
 
-  return
-
-# Catching install/uninstall of justdo_task_duration and justdo_grid_gantt
-APP.collections.Projects.after.update (user_id, doc, field_names, modifier, options) ->
-  if not (new_custom_features = modifier?.$set?["conf.custom_features"])?
-    return true
-
-  old_custom_features = @previous?.conf?.custom_features or []
-  added_custom_features = _.difference new_custom_features, old_custom_features
-  removed_custom_features = _.difference old_custom_features, new_custom_features
-  
-  if JustdoCustomPlugins.justdo_task_duration_custom_feature_id in added_custom_features
-    recalculateTasksDuration doc._id, {}
-  
-  if (JustdoGridGantt.project_custom_feature_id in added_custom_features or
-      JustdoGridGantt.project_custom_feature_id in removed_custom_features) and
-      APP.justdo_custom_plugins.justdo_task_duration.isPluginInstalled doc._id
-    # recalculate milestones duration
-    recalculateTasksDuration doc._id,
-      "#{JustdoGridGantt.is_milestone_pseudo_field_id}": "true"
-
-  return
-
-# Catching set/unset of gantt_milestone of tasks
-APP.collections.Tasks.after.update (user_id, doc, field_names, modifier, options) ->
-  if (new_is_milestone = modifier?.$set?[JustdoGridGantt.is_milestone_pseudo_field_id]) is undefined or
-      not APP.justdo_custom_plugins.justdo_task_duration.isPluginInstalled doc.project_id
-    return
-  
-  recalculateTasksDuration doc.project_id,
-    _id: doc._id
-  
   return
