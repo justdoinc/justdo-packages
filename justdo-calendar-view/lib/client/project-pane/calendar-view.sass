@@ -576,7 +576,6 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
   border-right-width: 4px
   position: absolute
   top: 4px
-  bottom: 4px
   left: 4px
   right: 4px
   border-radius: 4px
@@ -586,9 +585,12 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
   font-weight: bold
   font-size: 12px
   padding: 4px
+  user-select: none
 
 .collapse_user
   cursor: zoom-out
+  .calendar-user-name
+    white-space: normal
 
 .calendar_view_clock
   position: absolute
