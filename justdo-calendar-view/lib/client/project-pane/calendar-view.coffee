@@ -260,31 +260,6 @@ fixHeaderOnScroll = ->
     return
   return
 
-fixAvatarOnScroll = ->
-  avatar_fixed = false
-  $(".calendar_view_main_table_wrapper").on "scroll", ->
-    $sticky_avatar_helper = $(".sticky-avatar-helper")
-
-    $(".calendar_table_user").each (e, obj) ->
-      height = $(obj).outerHeight()
-      sticky_y = $sticky_avatar_helper[0].getBoundingClientRect().y
-      obj_y_top = obj.getBoundingClientRect().y
-      obj_y_bottom = obj_y_top + height
-      gap = 52
-
-      if obj_y_top + gap < sticky_y < obj_y_bottom - gap
-        if !avatar_fixed
-          $(obj).find(".justdo-avatar").clone().hide().appendTo($sticky_avatar_helper).fadeIn()
-          avatar_fixed = true
-
-      if obj_y_top < sticky_y < obj_y_top + gap or obj_y_bottom - gap < sticky_y < obj_y_bottom
-        if avatar_fixed
-          $sticky_avatar_helper.empty()
-          avatar_fixed = false
-      return
-    return
-  return
-
 # Delay action
 delayAction = do ->
   timer = 0
@@ -826,18 +801,6 @@ Template.justdo_calendar_project_pane.events
     delivery_planner_project_id.set(project)
     return
 
-  "mouseover .calendar_view_main_table tr": (e, tmpl) ->
-    $(".justdo-avatar").removeClass "highlight"
-    focused_tr = $(e.target).closest "tr"
-    focused_user_id = $($(focused_tr)[0]).attr "user_id"
-    focused_users_tr = $("[user_id=" + focused_user_id + "]")
-    $(focused_users_tr[0]).find(".justdo-avatar").addClass "highlight"
-    return
-
-  "mouseleave .calendar_view_main_table tr": (e, tmpl) ->
-    $(".justdo-avatar").removeClass "highlight"
-    return
-
   "keyup .calendar-member-selector-search": (e, tmpl) ->
     value = $(e.target).val().trim()
     if _.isEmpty value
@@ -1231,7 +1194,6 @@ Template.justdo_calendar_project_pane_user_view.onDestroyed ->
 Template.justdo_calendar_project_pane_user_view.onRendered ->
   setDragAndDrop()
   fixHeaderOnScroll()
-  fixAvatarOnScroll()
   return
 
 Template.justdo_calendar_project_pane_user_view.helpers

@@ -65,12 +65,11 @@
     </div>
 
     <div class="calendar_view_main_table_wrapper calendar-view-{{calendarViewResolution}}">
-      <div class="sticky-avatar-helper"></div>
       <table class="main_table_fixed_header" width="100%">
         <thead>
           <tr>
             <th class="calendar_view_user">
-              <div class="calendar_expand_collapse d-flex align-items-center">
+              <div class="calendar_expand_collapse">
                 <div title="Expand all">
                   <svg class="jd-icon expand_all"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
                 </div>
@@ -99,7 +98,7 @@
         <thead>
           <tr>
             <th class="calendar_view_user">
-              <div class="calendar_expand_collapse d-flex align-items-center">
+              <div class="calendar_expand_collapse">
                 <div title="Expand all">
                   <svg class="jd-icon expand_all"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
                 </div>
@@ -138,10 +137,8 @@
     <tr class="calendar_view_tasks_row is_collapsed" user_id={{userId}}>
       <td class="calendar_table_user">
         {{#with userObj}}
-          <div class="d-flex justify-content-center position-relative">
-            <div class="calendar_table_user_name shadow-sm rounded-sm">{{userName userId}}</div>
-            <button class="btn btn-primary jd-btn-xsm text-uppercase font-weight-bold expand_user">{{userInitials userId}}</button>
-          </div>
+          <div class="calendar_table_user_name shadow-sm rounded-sm">{{userName userId}}</div>
+          <div class="bg-primary border-primary expand_user">{{userName userId}}</div>
         {{/with}}
       </td>
       {{#if showNavigation}}
@@ -162,9 +159,7 @@
         {{#if firstRow}}
           <td class="calendar_table_user" rowspan={{numberOfRows}}>
             {{#with userObj}}
-              <div class="collapse_user">
-                {{> justdo_avatar}}
-              </div>
+              <div class="collapse_user">{{userName userId}}</div>
               <!-- <div class="calendar_view_expand_collapse" title="Collapse user">
                 <svg class="jd-icon collapse_user border border-primary shadow-sm"><use xlink:href="/layout/icons-feather-sprite.svg#minus"/></svg>
               </div> -->
