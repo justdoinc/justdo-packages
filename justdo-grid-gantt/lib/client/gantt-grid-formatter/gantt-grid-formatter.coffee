@@ -181,7 +181,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       return
     
     if not grid_gantt.refresh_dependencies_canvas_on_column_width_changes_comp?
-      Tracker.autorun (comp) ->
+      grid_gantt.refresh_dependencies_canvas_on_column_width_changes_comp = Tracker.autorun ->
         # Refresh dependencies canvas when grid column width changes
         if (active_gc = APP.modules.project_page.gridControl())? and grid_gantt.isPluginInstalledOnProjectDoc(JD.activeJustdo({conf: 1}))
           if grid_gantt.prev_active_gc?
@@ -189,8 +189,6 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
           
           active_gc.on "grid-view-change", refreshDependenciesCanvasHandler
           grid_gantt.prev_active_gc = active_gc
-        
-        grid_gantt.refresh_dependencies_canvas_on_column_width_changes_comp = comp
 
         return
 
@@ -534,7 +532,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       if APP.justdo_grid_gantt.canEditDates() == false
         return
       
-      task_id = $(e.currentTarget).attr("task-id") 
+      task_id = $(e.target).closest(".gantt-main-bar-end-drag").attr("task-id") 
       APP.justdo_grid_gantt.setState
         task_id: task_id
         end_time:
@@ -555,7 +553,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       if APP.justdo_grid_gantt.canEditDates() == false
         return
 
-      task_id = $(e.currentTarget).attr("task-id")
+      task_id = $(e.target).closest(".gantt-milestone").attr("task-id")
       APP.justdo_grid_gantt.setState
         task_id: task_id
         milestone:
@@ -574,7 +572,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
 
       if APP.justdo_grid_gantt.canEditDates() == false
         return
-      task_id = $(e.currentTarget).attr("task-id")
+      task_id = $(e.target).closest(".gantt-main-bar").attr("task-id")
       APP.justdo_grid_gantt.setState
         task_id: task_id
         main_bar:

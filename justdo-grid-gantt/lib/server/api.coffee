@@ -30,8 +30,15 @@ _.extend JustdoGridGantt.prototype,
     check new_progress_percentage, Number
     check user_id, String
 
-    task = APP.collections.Tasks.findOne task_id, 
+    if not (0 <= new_progress_percentage and new_progress_percentage <= 100)
+      throw @_error "invalid-progress-percentage"
+
+    task = APP.collections.Tasks.findOne 
+      _id: task_id
       members: user_id
+    ,
+      fields:
+        _id: 1
     
     if not task?
       throw @_error "task-not-found"

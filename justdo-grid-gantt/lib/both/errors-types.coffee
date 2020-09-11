@@ -14,3 +14,4 @@ _.extend JustdoGridGantt.prototype,
   _errors_types:
     _.extend {}, JustdoHelpers.common_errors_types,
       "task-not-found": "Task not found"
+      "invalid-progress-percentage": "Invalid progress percentage"
