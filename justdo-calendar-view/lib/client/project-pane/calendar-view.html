@@ -152,6 +152,11 @@
           {{#unless markDaysOff}}{{{xssGuard bottomLine}}}{{/unless}}
         </td>
       {{/each}}
+      {{#if showNavigation}}
+        <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell" rowspan="{{navRowspan}}">
+          <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg>
+        </td>
+      {{/if}}
     </tr>
   {{else}}
     {{#each rowNumbers}}
