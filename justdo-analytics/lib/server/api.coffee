@@ -80,7 +80,7 @@ _.extend JustdoAnalytics.prototype,
       @_local_pass = null
       server_session.devops_password_encrypted = null      
 
-    environment = _.pick process.env, ["ROOT_URL", "APP_VERSION"]
+    environment = _.pick process.env, ["ROOT_URL", "APP_VERSION", "NODE_MAX_OLD_SPACE_SIZE"]
 
     _.extend environment,
       node_version: process.version
