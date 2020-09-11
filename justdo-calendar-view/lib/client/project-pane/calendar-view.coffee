@@ -1467,6 +1467,7 @@ Template.justdo_calendar_project_pane_user_view.events
     return
 
   "click .clock": (e, tpl) ->
+    e.stopPropagation()
     if (ra = APP.justdo_resources_availability)
       ra.displayConfigDialog JD.activeJustdo({_id: 1})._id, tpl.data.user_id
     return

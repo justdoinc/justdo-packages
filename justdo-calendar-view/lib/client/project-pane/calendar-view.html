@@ -138,6 +138,9 @@
       <td class="calendar_table_user">
         {{#with userObj}}
           <div class="bg-primary border-primary expand_user">{{userName userId}}</div>
+          <div class="calendar_view_clock" title="Set Resources Availability">
+            <svg class="jd-icon clock shadow-sm"><use xlink:href="/layout/icons-feather-sprite.svg#clock"/></svg>
+          </div>
         {{/with}}
       </td>
       {{#if showNavigation}}
@@ -163,7 +166,7 @@
         {{#if firstRow}}
           <td class="calendar_table_user collapse_user" rowspan={{numberOfRows}}>
             {{#with userObj}}
-              <div class="calendar-user-name">{{userName userId}}</div>
+              <div class="calendar-user-name bg-primary border-primary">{{userName userId}}</div>
               <!-- <div class="calendar_view_expand_collapse" title="Collapse user">
                 <svg class="jd-icon collapse_user border border-primary shadow-sm"><use xlink:href="/layout/icons-feather-sprite.svg#minus"/></svg>
               </div> -->
