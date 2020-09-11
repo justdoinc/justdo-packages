@@ -9,7 +9,7 @@ share.store_db.plugins.push
 
     <ul>
       <li>Group together tasks into a single Project</li>
-      <li>Set resources availability (workdays, vacation days, working hours per day, etc.) to each of the resources associated with the project</li>
+      <li>Set users availability (workdays, vacation days, working hours per day, etc.) to each of the resources associated with the project</li>
       <li>Based on the amount of resources needed to accomplish this Project create a burn-down projection chart</li>
       <li>Capture a baseline projection for future reference</li>
       <li>Compare actual progress within the project to the baseline plan and see if you are on-schedule for delivery on time</li>
