@@ -35,7 +35,7 @@ _.extend JustdoGridGantt.prototype,
 
     task = APP.collections.Tasks.findOne 
       _id: task_id
-      members: user_id
+      users: user_id
     ,
       fields:
         _id: 1
