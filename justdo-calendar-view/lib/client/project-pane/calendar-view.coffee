@@ -713,9 +713,22 @@ Template.justdo_calendar_project_pane.helpers
     else
       other_users = _.difference(APP.collections.TasksAugmentedFields.findOne(project_id)?.users, [Meteor.userId()])
 
+    other_users_docs = []
+
+    for user_id in other_users
+      other_users_docs.push Meteor.users.findOne user_id
+
     calendar_members_filter_val = tmpl.calendar_members_filter_val.get()
-    membersDocs = JustdoHelpers.filterUsersDocsArray(other_users, calendar_members_filter_val)
-    return _.sortBy membersDocs, (member) -> JustdoHelpers.displayName(member)
+    membersDocs = JustdoHelpers.filterUsersDocsArray(other_users_docs, calendar_members_filter_val)
+
+    membersDocsSortByName = _.sortBy membersDocs, (member) -> JustdoHelpers.displayName(member)
+
+    members = []
+
+    for member_doc in membersDocsSortByName
+      members.push member_doc._id
+
+    return members
 
   memberName: (user_id) ->
     return JustdoHelpers.displayName(user_id)
