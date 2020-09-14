@@ -716,7 +716,7 @@ Template.justdo_calendar_project_pane.helpers
     other_users_docs = []
 
     for user_id in other_users
-      other_users_docs.push Meteor.users.findOne user_id
+      other_users_docs.push Meteor.users.findOne(user_id, { _id: 1 })
 
     calendar_members_filter_val = tmpl.calendar_members_filter_val.get()
     membersDocs = JustdoHelpers.filterUsersDocsArray(other_users_docs, calendar_members_filter_val)
