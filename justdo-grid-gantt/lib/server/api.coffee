@@ -25,28 +25,4 @@ _.extend JustdoGridGantt.prototype,
 
     return
 
-  setProgressPercentage: (task_id, new_progress_percentage, user_id) ->
-    check task_id, String
-    check new_progress_percentage, Number
-    check user_id, String
-
-    if not (0 <= new_progress_percentage and new_progress_percentage <= 100)
-      throw @_error "invalid-progress-percentage"
-
-    task = APP.collections.Tasks.findOne 
-      _id: task_id
-      users: user_id
-    ,
-      fields:
-        _id: 1
-    
-    if not task?
-      throw @_error "task-not-found"
-    
-    APP.collections.Tasks.update task_id,
-      $set:
-        "#{JustdoGridGantt.progress_percentage_pseudo_field_id}": new_progress_percentage
-    
-    return
-
   
