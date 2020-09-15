@@ -12,11 +12,4 @@ _.extend JustdoDependencies.prototype,
   # as the base for all the packages based on
   # justdo-package-skeleton >= 0.0.4
   _errors_types:
-    _.extend {}, JustdoHelpers.common_errors_types,
-      "dependency-already-exists": "This dependency already exists",
-      "Infinite-dependency-loop": "Infinite dependency loop identified, update reversed..",
-      "parent-dependency": "A task can't be dependant on any of its parents, update reversed..",
-      "child-dependency": "A task can't be dependant on any of its child-tasks, update reversed..",
-      "self-dependency": "Task can't be dependent on itself",
-      "dependent-task-not-found": "Task not found."
-      "updated-by-missing": "The updated_by field must be set for all tasks updates"
+    _.extend {}, JustdoHelpers.common_errors_types, {}
