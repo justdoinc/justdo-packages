@@ -71,26 +71,10 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
-  api.addFiles("lib/client/states-manager.coffee", client);
-
-  api.addFiles("lib/client/gantt-dependencies.coffee", client);
-  api.addFiles("lib/client/gantt-dependencies.sass", client);
-
-  api.addFiles("lib/client/warnings-management.coffee", client);
-  api.addFiles("lib/client/warnings-management.sass", client);
 
   api.addFiles("lib/client/project-conf/project-conf.sass", client);
   api.addFiles("lib/client/project-conf/project-conf.html", client);
   api.addFiles("lib/client/project-conf/project-conf.coffee", client);
-
-  api.addFiles("lib/client/gantt-grid-formatter/gantt-grid-formatter.sass", client);
-  api.addFiles("lib/client/gantt-grid-formatter/gantt-grid-formatter.coffee", client);
-  api.addFiles("lib/client/progress-percentage-formatter/progress-percentage-formatter.coffee", client);
-  api.addFiles("lib/client/progress-percentage-formatter/progress-percentage-formatter.sass", client);
-
-  api.addFiles("lib/client/gantt-grid-header/gantt-grid-header.html", client);
-  api.addFiles("lib/client/gantt-grid-header/gantt-grid-header.coffee", client);
-  api.addFiles("lib/client/gantt-grid-header/gantt-grid-header.sass", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
