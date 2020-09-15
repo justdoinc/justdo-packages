@@ -163,6 +163,27 @@ _.extend GridDataCom.prototype,
       if not pub_options?
         pub_options = {}
 
+      if options.unmerged_pub
+        # Set 0 as the default value for @unmerged_pub_ddp_extensions_version .
+        #
+        # By default the supported @unmerged_pub_ddp_extensions_version is assumed to be the current
+        # version. Here for the grid's unmerged pub, we let the subscription's pub_options to set the
+        # value for the @unmerged_pub_ddp_extensions_version , and we fallback to 0 (i.e no support)
+        # if we didn't receive one.
+        #
+        # Fallingback to 0 is necessary since this subscription introduced prior to the introduction
+        # of the ddp extensions, so we need to support backward compatibility for clients that still
+        # don't support these extensions (i.e Mobile).
+        #
+        # For unmerged pubs that introduced after the introduction of the ddp extensions we don't
+        # need to support backward compatibility, hence we assume that by default that the most
+        # recent version of the publications ddp extensions are supported.
+        if not pub_options.unmerged_pub_ddp_extensions_version? or not _.isNumber pub_options.unmerged_pub_ddp_extensions_version
+          pub_options.unmerged_pub_ddp_extensions_version = 0 # 0 means no support for unmerged_pub_ddp_extensions
+                                                              # value picked for backward compatibility.
+
+        @unmerged_pub_ddp_extensions_version = pub_options.unmerged_pub_ddp_extensions_version
+
       query = {}
       private_data_query =
         user_id: @userId
