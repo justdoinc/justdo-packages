@@ -9,7 +9,7 @@ _.extend JustdoDependencies.prototype,
 
     return
 
-module_id = JustdoPlanningUtilities.project_custom_feature_id
+module_id = JustdoDependencies.project_custom_feature_id
 
 curProj = -> APP.modules.project_page.curProj()
 

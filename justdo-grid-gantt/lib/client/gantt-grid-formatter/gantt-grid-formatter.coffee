@@ -483,7 +483,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       if (independent_id = states.dependencies.finish_to_x_independent)?
         formatter_container = e.target.closest(".grid-gantt-formatter")
         if (dependent_id = formatter_container.getAttribute("task-id"))? and
-            (dependencies = APP.justdo_dependencies)?
+            (dependencies = APP.justdo_planning_utilities)?
           dependencies.addFinishToStartDependency JD.activeJustdo({_id: 1})._id, independent_id, dependent_id
           self.setState
             dependencies:
@@ -517,7 +517,7 @@ GridControl.installFormatter JustdoGridGantt.pseudo_field_formatter_id,
       if (dependent = dependency_container.getAttribute("dependent-id"))? and
           (independent = dependency_container.getAttribute("independent-id"))? and
           (dependency_type = dependency_container.getAttribute("dependency-type"))? and
-          (dependencies = APP.justdo_dependencies)?
+          (dependencies = APP.justdo_planning_utilities)?
         
         if dependency_type == "F2S"
           dependencies.removeFinishToStartDependency JD.activeJustdo({_id: 1})._id, independent, dependent
