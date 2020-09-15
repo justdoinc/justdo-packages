@@ -6,9 +6,9 @@ _.extend JustdoGridGantt.prototype,
     @_states_manager = {}
     
     @fields_to_trigger_task_change_process = ["start_date", "end_date", "due_date", "parents", 
-      JustdoGridGantt.is_milestone_pseudo_field_id, JustdoDependencies.dependencies_mf_field_id,
+      JustdoGridGantt.is_milestone_pseudo_field_id, JustdoPlanningUtilities.dependencies_mf_field_id,
       JustdoGridGantt.progress_percentage_pseudo_field_id,
-      JustdoDependencies.is_task_dates_frozen_pseudo_field_id
+      JustdoPlanningUtilities.is_task_dates_frozen_pseudo_field_id
     ]
     
     @task_id_to_info = {} # Map to relevant information including
@@ -178,13 +178,13 @@ _.extend JustdoGridGantt.prototype,
       else
         delete task_info.milestone_time
 
-      if task_obj[JustdoDependencies.is_task_dates_frozen_pseudo_field_id] == "true"
+      if task_obj[JustdoPlanningUtilities.is_task_dates_frozen_pseudo_field_id] == "true"
         task_info.is_dates_frozen = true
       else
         delete task_info.is_dates_frozen
       
       # dependencies
-      if (dependencies_mf = task_obj[JustdoDependencies.dependencies_mf_field_id])?
+      if (dependencies_mf = task_obj[JustdoPlanningUtilities.dependencies_mf_field_id])?
         task_info.dependencies = _.map dependencies_mf, (dep) -> dep.task_id
       else
         delete task_info.dependencies
@@ -668,7 +668,7 @@ _.extend JustdoGridGantt.prototype,
     return @projects_collection.findOne({_id: project_id, "conf.custom_features": JustdoGridGantt.project_custom_feature_id})
 
   installRequiredPlugins: ->
-    required_plugins_ids = [JustdoDependencies.project_custom_feature_id]
+    required_plugins_ids = [JustdoPlanningUtilities.project_custom_feature_id]
 
     if required_plugins_ids.length > 0
       APP.modules.project_page.curProj().enableCustomFeatures required_plugins_ids

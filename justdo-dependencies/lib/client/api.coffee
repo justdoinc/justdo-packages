@@ -14,7 +14,7 @@ _.extend JustdoDependencies.prototype,
   setupCustomFeatureMaintainer: ->
     self = @
     custom_feature_maintainer =
-      APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoDependencies.project_custom_feature_id,
+      APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoPlanningUtilities.project_custom_feature_id,
         installer: =>
 
           return

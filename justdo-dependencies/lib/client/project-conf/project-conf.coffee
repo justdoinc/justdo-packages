@@ -9,7 +9,7 @@ _.extend JustdoDependencies.prototype,
 
     return
 
-module_id = JustdoDependencies.project_custom_feature_id
+module_id = JustdoPlanningUtilities.project_custom_feature_id
 
 curProj = -> APP.modules.project_page.curProj()
 
@@ -18,7 +18,7 @@ Template.justdo_dependencies_project_config.helpers
     return curProj().isCustomFeatureEnabled(module_id)
 
   pluginName: ->
-    return JustdoDependencies.plugin_human_readable_name
+    return JustdoPlanningUtilities.plugin_human_readable_name
 
 Template.justdo_dependencies_project_config.events
   "click .project-conf-justdo-dependencies-config": ->
