@@ -349,10 +349,9 @@ _.extend Projects.prototype,
           #
           # Gather regular items payload
           #
-          initial_payload_items = _.map initial_payload_cursor.fetch(), (data) ->
+          initial_payload_items = {}
+          initial_payload_cursor.forEach (data) ->
             id = data._id
-
-            delete data._id # To keep in-line with ddp expectation that the id won't be part of the fields object
 
             if label?
               # If we got a label for this subscription, add the _label
@@ -369,7 +368,7 @@ _.extend Projects.prototype,
             # 'Comment regarding operation used to pulish document for the first time'.
             dataMapsExtensions(id, data, "changed")
 
-            return {id: getItemId(id), fields: data}
+            initial_payload_items[id] = data
 
           #
           # Gather private data payload
@@ -396,7 +395,7 @@ _.extend Projects.prototype,
             # 'Comment regarding operation used to pulish document for the first time'.
             privateDataMapsExtensions(id, data, "changed")
 
-            return {id: private_data_doc_id_to_task_id_map[id], fields: data}
+            return [private_data_doc_id_to_task_id_map[id], data]
 
           # A note regarding why we wire the initial_payload_private_data_items as the Changes Journal
           # part of the init_payload message and not as part of the initial_payload_items:
