@@ -18,7 +18,7 @@ Template.justdo_dependencies_project_config.helpers
     return curProj().isCustomFeatureEnabled(module_id)
 
   pluginName: ->
-    return JustdoPlanningUtilities.plugin_human_readable_name
+    return JustdoDependencies.plugin_human_readable_name
 
 Template.justdo_dependencies_project_config.events
   "click .project-conf-justdo-dependencies-config": ->
