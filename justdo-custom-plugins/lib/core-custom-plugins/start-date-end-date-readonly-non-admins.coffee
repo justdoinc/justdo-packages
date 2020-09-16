@@ -23,7 +23,7 @@ APP.justdo_custom_plugins.installCustomPlugin
         return
 
       grid_gantt_locked = false # We need that flag because a user might stop being a non-admin during a session.
-      APP.justdo_grid_gantt.unlockDatesEdit()
+      APP.justdo_planning_utilities.unlockDatesEdit()
       
       return
 
@@ -33,7 +33,7 @@ APP.justdo_custom_plugins.installCustomPlugin
         return
 
       grid_gantt_locked = true # We need that flag because a user might stop being a non-admin during a session.
-      APP.justdo_grid_gantt.lockDatesEdit()
+      APP.justdo_planning_utilities.lockDatesEdit()
 
       return
 
