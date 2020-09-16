@@ -86,6 +86,36 @@ export default class LocalCollection {
     return this.find(selector, options).fetch()[0];
   }
 
+  // The following is a JustDo extension to local_collection
+  insertInitialPayload(docs, callback) {
+    Object.assign(this._docs._map, docs);
+
+    const queriesToRecompute = [];
+
+    // trigger live queries that match
+    Object.keys(this.queries).forEach(qid => {
+      queriesToRecompute.push(qid); // Just recompute all queries, instead of testing for every item which queries it affects.
+    });
+
+    queriesToRecompute.forEach(qid => {
+      if (this.queries[qid]) {
+        this._recomputeResults(this.queries[qid]);
+      }
+    });
+
+    this._observeQueue.drain();
+
+    // Defer because the caller likely doesn't expect the callback to be run
+    // immediately.
+    if (callback) {
+      Meteor.defer(() => {
+        callback(null);
+      });
+    }
+
+    return;
+  }
+
   // XXX possibly enforce that 'undefined' does not appear (we assume
   // this in our handling of null and $exists)
   insert(doc, callback) {
