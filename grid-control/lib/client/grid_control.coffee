@@ -1521,7 +1521,7 @@ _.extend GridControl.prototype,
 
   unregisterMetadataGenerator: (cb) ->
     @_init_dfd.done =>
-      @_grid_data.unregisterMetadataGenerator(cb)
+      @_grid_data?.unregisterMetadataGenerator(cb)
       @_grid.invalidate()
 
   #
@@ -1843,8 +1843,7 @@ _.extend GridControl.prototype,
   #
   getFriendlyCellArgs: (row, cell) ->
     field = @getCellField(cell)
-    doc = @_grid_data.getItem(row)
-
+    doc = @_grid_data?.getItem(row)
     grid_column_info = @_grid.getColumns()[cell]
 
     extended_schema = @getSchemaExtendedWithCustomFields()
@@ -1862,9 +1861,9 @@ _.extend GridControl.prototype,
 
       row: row
       cell: cell
-      path: @_grid_data.getItemPath row
+      path: @_grid_data?.getItemPath row
 
-      value: doc[field]
+      value: doc?[field]
       field: field
 
       grid_control: @
