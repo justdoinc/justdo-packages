@@ -168,7 +168,13 @@ Template.project_pane_kanban.helpers
       Template.instance().members_dropdown_search_input_state_rv.get()
 
     if (kanban_task_doc = APP.collections.TasksAugmentedFields.findOne(Template.instance().kanban_task_id_rv.get()))?
-      members_docs = JustdoHelpers.filterUsersDocsArray(kanban_task_doc.users, members_dropdown_search_input_state_rv)
+      kanban_user_docs = []
+
+      for user_id in kanban_task_doc.users
+        kanban_user_docs.push Meteor.users.findOne(user_id, { _id: 1 })
+
+      members_docs = JustdoHelpers.filterUsersDocsArray(kanban_user_docs, members_dropdown_search_input_state_rv)
+
       return _.sortBy members_docs, (member) -> JustdoHelpers.displayName(member)
 
     return []
@@ -264,7 +270,7 @@ Template.project_pane_kanban.events
   "click .kanban-filter-member-item": (e, tpl) ->
     e.preventDefault()
 
-    user_id = Blaze.getData(e.target)
+    user_id = Blaze.getData(e.target)._id
 
     tpl.setCurrentBoardStateValue("query", {owner_id: user_id})
 
