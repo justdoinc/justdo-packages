@@ -1,5 +1,7 @@
 _.extend JustdoTasksCollectionsManager.prototype,
   _attachTasksCollectionSchema: ->
+    self = @
+    
     # Note: default order of columns derived from the fields order of definition
     # below
 
@@ -765,6 +767,10 @@ _.extend JustdoTasksCollectionsManager.prototype,
         autoValue: ->
           # If the code is not from trusted code unset the update
           if not @isFromTrustedCode
+            for affected_key of @affectedKeys()
+              if affected_key.indexOf("_secret") > -1
+               throw self._error "permission-denied", "Untrusted attempt to change the _secret subdocument rejected"
+               
             if @isSet
               console.warn "Untrusted attempt to change the task's _secret field rejected"
 
