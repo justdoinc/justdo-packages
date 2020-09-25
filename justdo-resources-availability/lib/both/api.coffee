@@ -114,13 +114,13 @@ _.extend JustdoResourcesAvailability.prototype,
   # Given a project_id and a user id, the function will return the number of days and total hours available
   # between the dates. dates are in the format of YYYY-MM-DD
 
-  userAvailabilityBetweenDates: (from_date, to_date, project_id, user_id)->
+  userAvailabilityBetweenDates: (from_date, to_date, project_id_or_doc, user_id)->
     check from_date, String
     check to_date, String
-    check project_id, String
+    check project_id_or_doc, Match.OneOf String, Object
     check user_id, String
 
-    {justdo_level_data, user_level_data} = @_getAvailabilityData project_id, user_id
+    {justdo_level_data, user_level_data} = @_getAvailabilityData project_id_or_doc, user_id
 
     start_date = moment.utc(from_date)
     end_date = moment.utc(to_date)
@@ -156,8 +156,8 @@ _.extend JustdoResourcesAvailability.prototype,
       return (( (parseInt(to[0]) * 60) + (parseInt(to[1])) - parseInt(from[0]) * 60 - parseInt(from[1]) ) / 60)
     return 0
   
-  startToFinishForUser: (project_id, user_id, start_date, amount, type, reverse=false)->
-    check project_id, String
+  startToFinishForUser: (project_id_or_doc, user_id, start_date, amount, type, reverse=false)->
+    check project_id_or_doc, Match.OneOf String, Object
     check user_id, String
     check start_date, String
     check amount, Number
@@ -165,7 +165,7 @@ _.extend JustdoResourcesAvailability.prototype,
     if type not in ["hours", "days"]
       throw "incompatible-type"
 
-    {justdo_level_data, user_level_data} = @_getAvailabilityData project_id, user_id
+    {justdo_level_data, user_level_data} = @_getAvailabilityData project_id_or_doc, user_id
 
     start_date = moment.utc(start_date)
     max_count = 10000
@@ -196,26 +196,25 @@ _.extend JustdoResourcesAvailability.prototype,
 
     return start_date.format("YYYY-MM-DD")
   
-  finishToStartForUser: (project_id, user_id, start_date, amount, type) ->
-    return @startToFinishForUser project_id, user_id, start_date, amount, type, true
+  finishToStartForUser: (project_id_or_doc, user_id, start_date, amount, type) ->
+    return @startToFinishForUser project_id_or_doc, user_id, start_date, amount, type, true
 
-  _getAvailabilityData: (project_id, user_id) ->
-    project_obj = JustdoHelpers.sameTickCacheGet "justdo_doc_with_res_availablity"
-
-    if not project_obj?
+  _getAvailabilityData: (project_id_or_doc, user_id) ->
+    if _.isString project_id_or_doc
+      project_id = project_id_or_doc
       project_obj = JD.collections.Projects.findOne
         _id: project_id
         members: 
           $elemMatch:
             user_id: user_id
       ,
-        fields:
-          "#{JustdoResourcesAvailability.project_custom_feature_id}": 1
+        fields: @_getAvailabilityData_getRequiredJustdoFields()
+          
+    else
+      project_obj = project_id_or_doc
       
-      if not project_obj?
-        return
-
-      JustdoHelpers.sameTickCacheGet "justdo_doc_with_res_availablity", project_obj
+    if not project_obj?
+      return
 
     resources_data = project_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]
     if !(justdo_level_data  = resources_data?[project_id])
@@ -226,5 +225,10 @@ _.extend JustdoResourcesAvailability.prototype,
     return {
       justdo_level_data: justdo_level_data
       user_level_data: user_level_data
+    }
+  
+  _getAvailabilityData_getRequiredJustdoFields: ->
+    return {
+      "#{JustdoResourcesAvailability.project_custom_feature_id}": 1
     }
     
