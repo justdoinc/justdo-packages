@@ -133,53 +133,6 @@ _.extend JustdoResourcesAvailability.prototype,
 
     return
 
-  startToFinishForUser: (project_id, user_id, start_date, amount, type)->
-    check project_id, String
-    check user_id, String
-    check start_date, String
-    check amount, Number
-    check type, String
-    if type not in ["hours", "days"]
-      throw "incompatible-type"
-
-    if not (project_obj = JD.collections.Projects.findOne(project_id))
-      return
-
-    resources_data = project_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]
-    if !(justdo_level_data  = resources_data?[project_id])
-      justdo_level_data = @default_workdays
-    if user_id
-      user_level_data = resources_data?["#{project_id}:#{user_id}"]
-
-    start_date = moment.utc(start_date)
-    max_count = 10000
-    while true
-      date = start_date.format("YYYY-MM-DD")
-      is_holiday = false
-      if user_level_data?.holidays? and (date in user_level_data.holidays) or \
-        user_level_data?.working_days?[start_date.day()]?.holiday or \
-        justdo_level_data?.holidays and (date in justdo_level_data.holidays) or \
-        justdo_level_data?.working_days?[start_date.day()]?.holiday
-        is_holiday = true
-
-      if not is_holiday
-        if type == "days"
-          amount -= 1
-        else if type == "hours"
-          amount -= @_calculateUserDayAvailability justdo_level_data, user_level_data, start_date.day()
-
-      if amount > 0
-        start_date.add(1, 'days')
-      else
-        break
-
-      #should never happen, but just in case...
-      max_count -= 1
-      if max_count == 0
-        throw "infinite-loop"
-
-    return start_date.format("YYYY-MM-DD")
-
   justdoLevelDateOffset: (project_id, from_date, offset_days) ->
     check project_id, String
     check from_date, String

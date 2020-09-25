@@ -120,14 +120,7 @@ _.extend JustdoResourcesAvailability.prototype,
     check project_id, String
     check user_id, String
 
-    if not (project_obj = JD.collections.Projects.findOne(project_id))
-      return
-
-    resources_data = project_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]
-    if !(justdo_level_data  = resources_data?[project_id])
-      justdo_level_data = @default_workdays
-    if user_id
-      user_level_data = resources_data?["#{project_id}:#{user_id}"]
+    {justdo_level_data, user_level_data} = @_getAvailabilityData project_id, user_id
 
     start_date = moment.utc(from_date)
     end_date = moment.utc(to_date)
@@ -162,3 +155,76 @@ _.extend JustdoResourcesAvailability.prototype,
       to = to.split(":")
       return (( (parseInt(to[0]) * 60) + (parseInt(to[1])) - parseInt(from[0]) * 60 - parseInt(from[1]) ) / 60)
     return 0
+  
+  startToFinishForUser: (project_id, user_id, start_date, amount, type, reverse=false)->
+    check project_id, String
+    check user_id, String
+    check start_date, String
+    check amount, Number
+    check type, String
+    if type not in ["hours", "days"]
+      throw "incompatible-type"
+
+    {justdo_level_data, user_level_data} = @_getAvailabilityData project_id, user_id
+
+    start_date = moment.utc(start_date)
+    max_count = 10000
+    while true
+      date = start_date.format("YYYY-MM-DD")
+      is_holiday = false
+      if user_level_data?.holidays? and (date in user_level_data.holidays) or \
+        user_level_data?.working_days?[start_date.day()]?.holiday or \
+        justdo_level_data?.holidays and (date in justdo_level_data.holidays) or \
+        justdo_level_data?.working_days?[start_date.day()]?.holiday
+        is_holiday = true
+
+      if not is_holiday
+        if type == "days"
+          amount -= 1
+        else if type == "hours"
+          amount -= @_calculateUserDayAvailability justdo_level_data, user_level_data, start_date.day()
+
+      if amount > 0
+        start_date.add((if reverse then -1 else 1), 'days')
+      else
+        break
+
+      #should never happen, but just in case...
+      max_count -= 1
+      if max_count == 0
+        throw "infinite-loop"
+
+    return start_date.format("YYYY-MM-DD")
+  
+  finishToStartForUser: (project_id, user_id, start_date, amount, type) ->
+    return @startToFinishForUser project_id, user_id, start_date, amount, type, true
+
+  _getAvailabilityData: (project_id, user_id) ->
+    project_obj = JustdoHelpers.sameTickCacheGet "justdo_doc_with_res_availablity"
+
+    if not project_obj?
+      project_obj = JD.collections.Projects.findOne
+        _id: project_id
+        members: 
+          $elemMatch:
+            user_id: user_id
+      ,
+        fields:
+          "#{JustdoResourcesAvailability.project_custom_feature_id}": 1
+      
+      if not project_obj?
+        return
+
+      JustdoHelpers.sameTickCacheGet "justdo_doc_with_res_availablity", project_obj
+
+    resources_data = project_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]
+    if !(justdo_level_data  = resources_data?[project_id])
+      justdo_level_data = @default_workdays
+    
+    user_level_data = resources_data?["#{project_id}:#{user_id}"]
+
+    return {
+      justdo_level_data: justdo_level_data
+      user_level_data: user_level_data
+    }
+    
