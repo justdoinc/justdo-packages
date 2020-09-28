@@ -3,14 +3,6 @@ _.extend JustdoDependencies.prototype,
     # @_bothImmediateInit runs before the specific env's @_immediateInit()
 
     self = @
-  
-    @alertOrThrow = (error_type)->
-      if Meteor.isClient
-        JustdoSnackbar.show
-          text: self._errors_types[error_type]
-      else
-        throw self._error error_type
-      return
 
     return
 
