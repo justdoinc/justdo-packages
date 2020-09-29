@@ -169,13 +169,13 @@ _.extend JustdoResourcesAvailability.prototype,
 
     start_date = moment.utc(start_date)
     max_count = 10000
+
     while true
       date = start_date.format("YYYY-MM-DD")
       is_holiday = false
       if user_level_data?.holidays? and (date in user_level_data.holidays) or \
-        user_level_data?.working_days?[start_date.day()]?.holiday or \
         justdo_level_data?.holidays and (date in justdo_level_data.holidays) or \
-        justdo_level_data?.working_days?[start_date.day()]?.holiday
+        (user_level_data or justdo_level_data)?.working_days?[start_date.day()]?.holiday
         is_holiday = true
 
       if not is_holiday
