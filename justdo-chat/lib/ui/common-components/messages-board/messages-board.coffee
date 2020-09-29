@@ -114,7 +114,9 @@ Template.common_chat_messages_board_message_card.helpers
 
     body = linkifyStr(body, {nl2br: true}) # linkify already escapes html entities, so don't worry about xss here.
 
-    return body
+    body = APP.justdo_chat.linkTaskId(body)
+
+    return JustdoHelpers.xssGuard body, {allow_html_parsing: true, enclosing_char: ""}
 
 Template.common_chat_messages_board_message_card.onRendered ->
   $message_card = @$(".message-card")
@@ -162,3 +164,23 @@ Template.common_chat_messages_board_message_card.onRendered ->
     common_chat_messages_board_tpl.scrollToBottom()
 
   return
+
+Template.common_chat_messages_board_message_card.events
+  "click .task-link": (e, tmpl) ->
+    e.preventDefault()
+
+    seq_id = parseInt($(e.target).closest(".task-link").text().trim().substr(1), 10)
+
+    active_project_id = JD.activeJustdo({_id: 1})?._id
+
+    if not (project_id = APP.collections.JDChatChannels.findOne(@channel_id, {fields: {project_id: 1}})?.project_id)?
+      return
+
+    task_id = APP.collections.Tasks.findOne({project_id: project_id, seqId: seq_id}, {fields: {_id: 1}})?._id
+
+    if project_id == active_project_id
+      APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)
+    else
+      APP.modules.project_page.activateTaskInProject(project_id, task_id)
+
+    return

@@ -534,6 +534,12 @@ _.extend JustdoChat.prototype,
 
     return data
 
+  linkTaskId: (msg_body) ->
+    return msg_body.replace /(^|\s|\W)#([0-9]{1,6})(?=($|[\s.,;]))/g, (match, spaces, task_id) ->
+      task_seq_id = parseInt(task_id, 10)
+
+      return """#{spaces}<a class="task-link" href="#">##{task_id}</a>"""
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"
