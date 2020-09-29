@@ -28,6 +28,9 @@ _.extend JustdoAccounts.prototype,
       pick_options = 
         policy: policy.policy
         signature: policy.signature
+        storeLocation: 'S3'
+        storePath: @_getAvatarUploadPath Meteor.userId()
+        storeAccess: 'public'
         maxFiles: 1
         maxSize: 5 * 1024 * 1024 # 5 mega byte
         multiple: false
