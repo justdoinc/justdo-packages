@@ -6,7 +6,7 @@ _.extend JustdoResourcesAvailability.prototype,
   _publishResourceAvailability: ->
     self = @
     Meteor.publish "jd-resource-availability", (project_id) ->
-      user_id = self.userId
+      user_id = @userId
       project = APP.collections.Projects.findOne {_id: project_id }
       if not project?
         throw self._error "not-project-member"
