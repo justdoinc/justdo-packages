@@ -10,6 +10,17 @@ _.extend PACK.modules.owners,
 
     _.extend @,
       rejectOwnershipTransfer: (task_id, reject_message) ->
+        # XXX As the recalculation of duration caused by ownership transfer is done on the client side at this point,
+        # need to add code here trigger hook for recalculation here,
+        # if the recalculation is moved to server side in the future, this piece of code should be removed
+        if APP.justdo_planning_utilities.isPluginInstalledOnJustdo JD.activeJustdoId()
+          result = APP.collections.Tasks.update task_id,
+            $set:
+              pending_owner_id: null
+          
+          if result != 1
+            return 
+
         Meteor.call "rejectOwnershipTransfer", task_id, reject_message
 
         return 
