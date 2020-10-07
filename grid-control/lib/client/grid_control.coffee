@@ -916,7 +916,10 @@ _.extend GridControl.prototype,
 
             @logger.debug "Column #{column_id} state maintainer trigger column recalculation"
 
-            @invalidateColumns([column_id])
+            Tracker.nonreactive =>
+              @invalidateColumns([column_id])
+
+              return
 
           columnStateMaintainer({column_id: column_id})
 
