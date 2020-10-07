@@ -47,7 +47,11 @@ _.extend JustdoHelpers,
 
     log_message = "[#{type}] #{message}"
     if details?
-      log_message += " #{JSON.stringify details}"
+      try
+        log_message += " #{JSON.stringify details}"
+      catch e
+        # We'll fail to stringify if details is a complex object, in such a case we just avoid adding it to the log_message.
+        undefined
 
     @logger.error(log_message)
 
