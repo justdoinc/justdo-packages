@@ -39,6 +39,7 @@ APP.getEnv (env) ->
     APP.justdo_analytics =
       JA: -> return
       logServerRecord: -> return
+      logServerRecordEncryptVal: -> return
       logMongoRawConnectionOp: -> return
       JAReportClientSideError: -> return
 
