@@ -124,16 +124,49 @@ _.extend JustdoResourcesAvailability.prototype,
 
     start_date = moment.utc(from_date)
     end_date = moment.utc(to_date)
+
+    # days_between = end_date.diff(start_date, "days") + 1
+    # weeks_between = Math.floor(days_between / 7)
+    # days_remainder = days_between % 7
+    
+    # total_workdays = 0
+    # total_workhours = 0
+    # workdays_per_week = 0
+    # workhours_per_week = 0
+    # workdays_data = user_level_data or justdo_level_data
+    # start_date_weekday = start_date.weekday()
+    # for i in [0...6]
+    #   j = (i+start_date_weekday)%7
+    #   if not workdays_data.working_days[j].holiday
+    #     workdays_per_week = workdays_per_week + 1
+    #     workhours_per_week = workhours_per_week + @_calculateUserDayAvailability justdo_level_data, user_level_data, j
+    #   if i == days_remainder - 1
+    #     total_workdays = total_workdays + workdays_per_week
+    #     total_workhours = total_workhours + workhours_per_week
+    
+    # total_workdays = total_workdays + weeks_between  * workdays_per_week
+    # total_workhours = total_workhours + weeks_between * workhours_per_week
+
+    # ret = {
+    #   working_days: total_workdays
+    #   available_hours: total_workhours
+    # }
+
     ret =
       working_days: 0
       available_hours: 0
+    
+    if not _.isEmpty user_level_data?.working_days
+        use_data = user_level_data
+      else
+        use_data = justdo_level_data
 
     while start_date <= end_date
       date = start_date.format("YYYY-MM-DD")
       is_holiday = false
       if user_level_data?.holidays? and (date in user_level_data.holidays) or \
         justdo_level_data?.holidays and (date in justdo_level_data.holidays) or \
-        (user_level_data or justdo_level_data)?.working_days?[start_date.day()]?.holiday
+        use_data?.working_days?[start_date.day()]?.holiday
         is_holiday = true
 
       if not is_holiday
@@ -172,9 +205,15 @@ _.extend JustdoResourcesAvailability.prototype,
     while true
       date = start_date.format("YYYY-MM-DD")
       is_holiday = false
+
+      if not _.isEmpty user_level_data?.working_days
+        use_data = user_level_data
+      else
+        use_data = justdo_level_data
+
       if user_level_data?.holidays? and (date in user_level_data.holidays) or \
         justdo_level_data?.holidays and (date in justdo_level_data.holidays) or \
-        (user_level_data or justdo_level_data)?.working_days?[start_date.day()]?.holiday
+        use_data?.working_days?[start_date.day()]?.holiday
         is_holiday = true
 
       if not is_holiday
@@ -191,8 +230,9 @@ _.extend JustdoResourcesAvailability.prototype,
       #should never happen, but just in case...
       max_count -= 1
       if max_count == 0
-        throw "infinite-loop"
-
+        console.log "No working days for this user and justdo"
+        return null
+    
     return start_date.format("YYYY-MM-DD")
   
   finishToStartForUser: (project_id_or_doc, user_id, start_date, amount, type) ->
@@ -200,9 +240,8 @@ _.extend JustdoResourcesAvailability.prototype,
 
   _getAvailabilityData: (project_id_or_doc, user_id) ->
     if _.isString project_id_or_doc
-      project_id = project_id_or_doc
       project_obj = JD.collections.Projects.findOne
-        _id: project_id
+        _id: project_id_or_doc
         members: 
           $elemMatch:
             user_id: user_id
@@ -211,12 +250,14 @@ _.extend JustdoResourcesAvailability.prototype,
           
     else
       project_obj = project_id_or_doc
-      
+
     if not project_obj?
       return
 
+    project_id = project_obj._id
+
     resources_data = project_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]
-    if !(justdo_level_data  = resources_data?[project_id])
+    if not (justdo_level_data = resources_data?[project_id])?
       justdo_level_data = @default_workdays
     
     user_level_data = resources_data?["#{project_id}:#{user_id}"]
