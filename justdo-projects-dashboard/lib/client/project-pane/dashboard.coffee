@@ -165,7 +165,10 @@ Template.justdo_projects_dashboard.onRendered ->
         color = "#ebead1"
 
       if option.bg_color?
-        color = "##{option.bg_color}"
+        if /^#/.test option.bg_color
+          color = "#{option.bg_color}"
+        else
+          color = "##{option.bg_color}"
 
       if count > 0
         series_obj =
@@ -240,7 +243,10 @@ Template.justdo_projects_dashboard.onRendered ->
           animation: false
 
         if option.bg_color?
-          series_obj.color = "##{option.bg_color}"
+          if /^#/.test option.bg_color
+            series_obj.color = "#{option.bg_color}"
+          else
+            series_obj.color = "##{option.bg_color}"
 
         series.push series_obj
 
@@ -342,7 +348,10 @@ Template.justdo_projects_dashboard.onRendered ->
           data: data
           animation: false
         if option.bg_color?
-          series_obj.color = "##{option.bg_color}"
+          if /^#/.test option.bg_color
+            series_obj.color = "#{option.bg_color}"
+          else
+            series_obj.color = "##{option.bg_color}"
         series.push series_obj
 
     chart =
