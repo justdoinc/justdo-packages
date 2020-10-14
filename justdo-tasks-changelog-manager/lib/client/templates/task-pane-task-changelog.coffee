@@ -19,7 +19,26 @@ Template.task_pane_task_changelog.helpers
       sort:
         when: -1
 
-    return APP.collections.TasksChangelog.find query, options
+    logs = []
+    logs_time = {}
+
+    APP.collections.TasksChangelog.find(query, options).forEach (log) ->
+      log_type_id = "#{log.task_id}-#{log.field}-#{log.by}"
+      if (newer_logs_time = logs_time[log_type_id])?
+        for newer_time in newer_logs_time
+          if moment(newer_time).diff(moment(log.when), "minute") < 2
+            return
+      
+      logs.push log
+      
+      if not logs_time[log_type_id]?
+        logs_time[log_type_id] = []
+      
+      logs_time[log_type_id].push log.when
+      
+      return
+    
+    return logs
 
   dataLoaded: -> current_handle?.ready()
 
