@@ -21,6 +21,7 @@ _.extend PACK.builtin_trackers,
         new_value: newParentId
         change_type: 'moved_to_task'
         task_id: etc.item._id
+        project_id: etc.item.project_id
         by: perform_as
 
       self.logChange(obj)

@@ -72,6 +72,12 @@ _.extend TasksChangelogManager.prototype,
     if not obj.by?
       throw @_error "by-field-required"
 
+    if not obj.project_id?
+      obj.project_id = APP.collections.Tasks.findOne obj.task_id,
+        fields:
+          project_id: 1
+      ?.project_id
+      
     @changelog_collection.insert obj, (err) =>
       if err?
         @logger.error(err)

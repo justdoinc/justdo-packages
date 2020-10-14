@@ -48,23 +48,25 @@ _.extend PACK.builtin_trackers,
 
       return field in tracked_fields
 
-    addFieldUpdateLog = (performed_by, task_id, field, field_label, new_value) ->
+    addFieldUpdateLog = (performed_by, task_id, field, field_label, new_value, project_id) ->
       self.logChange
         field: field
         label: field_label # XXX should be removed
         new_value: new_value
         task_id: task_id
+        project_id: project_id
         by: performed_by
 
       return
 
-    addClearedFieldLog = (performed_by, task_id, field, field_label) ->
+    addClearedFieldLog = (performed_by, task_id, field, field_label, project_id) ->
       self.logChange
         field: field
         label: field_label # XXX should be removed
         new_value: ""
         change_type: "unset"
         task_id: task_id
+        project_id: project_id
         by: performed_by
 
       return
@@ -88,11 +90,11 @@ _.extend PACK.builtin_trackers,
 
           if not new_value?
             # Value got cleared
-            addClearedFieldLog(performed_by, task_id, field, field_label)
+            addClearedFieldLog(performed_by, task_id, field, field_label, project_id)
 
             continue
           else
-            addFieldUpdateLog(performed_by, task_id, field, field_label, new_value)
+            addFieldUpdateLog(performed_by, task_id, field, field_label, new_value, project_id)
 
             continue
 
@@ -107,7 +109,7 @@ _.extend PACK.builtin_trackers,
 
           performed_by = self._extractUpdatedByFromModifierOrFail(modifier)
 
-          addClearedFieldLog(performed_by, task_id, field, field_label)
+          addClearedFieldLog(performed_by, task_id, field, field_label, project_id)
 
           continue
 

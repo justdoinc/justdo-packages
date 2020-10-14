@@ -50,5 +50,10 @@ _.extend TasksChangelogManager.prototype,
       task_id:
         label: "Task ID"
         type: String
+      
+      project_id:
+        label: "Project ID"
+        type: String
+        optional: true
 
     @changelog_collection.attachSchema changelog_schema

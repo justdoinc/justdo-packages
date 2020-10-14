@@ -167,6 +167,7 @@ Meteor.methods
         APP.collections.JDChatChannels,
         APP.collections.Formulas,
         APP.meetings_manager_plugin?.meetings_manager?.meetings
+        APP.collections.TasksChangelog
       ], null
 
       updateJustdoIdInCollections [APP.collections.TasksPrivateData],

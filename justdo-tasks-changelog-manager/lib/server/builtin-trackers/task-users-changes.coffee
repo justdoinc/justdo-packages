@@ -12,6 +12,7 @@ _.extend PACK.builtin_trackers,
           label: 'Users'
           change_type: 'users_change'
           task_id: doc._id
+          project_id: doc.project_id
           by: self._extractUpdatedByFromModifierOrFail(modifier)
 
         if modifier.$pull?.users?.$in?

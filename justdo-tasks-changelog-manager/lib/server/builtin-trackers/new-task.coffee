@@ -12,6 +12,7 @@ _.extend PACK.builtin_trackers,
           new_value: doc._id
           change_type: "created"
           task_id: doc._id
+          project_id: doc.project_id
           users_added: doc.users
           by: doc.created_by_user_id
 
