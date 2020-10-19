@@ -112,11 +112,11 @@ _.extend Projects.prototype,
 
                     options.sync = getCurrentSyncTimeWithSafetyDelta()
 
-                    new_params = [options]
+                    existing_params[0] = options
 
                     self.logger.debug "Update open subscription sync option for followup reconnection #{sub_name}"
 
-                    return new_params
+                    return existing_params
 
             return
 
