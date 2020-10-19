@@ -419,7 +419,7 @@ _.extend Projects.prototype,
           # caching server side, so it has a broaded place in the initial payload idea).
           #
           # -Daniel
-          publish_this.initPayload target_col_name, {init_payload: initial_payload_items, changes_journal: initial_payload_private_data_items, sync_id: JSON.stringify(sync)}
+          publish_this.initPayload target_col_name, {init_payload: initial_payload_items, changes_journal: initial_payload_private_data_items, sync_id: sync}
 
         #
         # Initiate trackers
