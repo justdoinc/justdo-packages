@@ -56,6 +56,32 @@ _.extend Projects.prototype,
         
         # The duration recalculation will be triggered automatically in hooks defined in justdo-planning-utilties/lib/server/collections-hooks.coffee
         return
+      
+      addProjectIdToChangeLogCollection: ->
+        bulk_update_ops = []
+
+        APP.collections.TasksChangelog.find {},
+          fields:
+            _id: 1
+            task_id: 1
+        .forEach (change_log) ->
+          project_id = APP.collections.Tasks.findOne change_log.task_id,
+            fields:
+              project_id: 1
+          ?.project_id
+
+          if project_id?
+            bulk_update_ops.push
+              updateOne:
+                filter:
+                  _id: change_log._id
+                update:
+                  $set:
+                    project_id: project_id
+          
+        if bulk_update_ops.length > 0
+          APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.TasksChangelog._name, "bulkWrite")
+          APP.collections.TasksChangelog.rawCollection().bulkWrite bulk_update_ops
     
     # A temporary hook to block justdos with > 1000 tasks to enable justdo-planning-utilties
     # APP.collections.Projects.before.update (user_id, doc, field_names, modifier, options) ->
