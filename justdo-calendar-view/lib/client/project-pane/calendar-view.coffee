@@ -553,6 +553,7 @@ Template.justdo_calendar_project_pane.onCreated ->
       {$and: [
         {start_date: {$lt: first_date_to_display}},
         {due_date: {$gt: last_date_to_display}}
+        {end_date: {$exists: false}}  # we will mark a task between start and due only if it has no end_date
       ]}
     ]
 
