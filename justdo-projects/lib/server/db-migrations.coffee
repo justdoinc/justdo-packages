@@ -1,5 +1,42 @@
 # Keep here code used for db migrations
 
+update_changelog_batch_size = 100 
+update_changelog_batch_cooldown = 1000
+
+updateChangeLogsBatch = (batch_no) ->
+    # 1,500,000 change logs in total
+    #   150,000 tasks in total
+    #        10 change logs on each task on average
+
+    bulk_update_ops = []
+    APP.collections.Tasks.find {},
+      fields:
+        _id: 1 
+        project_id: 1
+      skip: batch_no * update_changelog_batch_size
+      limit: update_changelog_batch_size
+    .forEach (task) ->
+      bulk_update_ops.push
+        updateMany:
+          filter:
+            task_id: task._id
+            project_id:
+              $exists: false
+          update:
+            $set:
+              project_id: task.project_id
+      
+    if bulk_update_ops.length > 0
+      console.log "Updating changlog batch #{batch_no}"
+      APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.TasksChangelog._name, "bulkWrite")
+      APP.collections.TasksChangelog.rawCollection().bulkWrite bulk_update_ops
+      console.log "Updated, cooldown..."
+      Meteor.setTimeout ->
+        updateChangeLogsBatch(batch_no+1)
+      , update_changelog_batch_cooldown
+    
+    return
+
 _.extend Projects.prototype,
   _setupDbMigrations: ->
     projects_object = @
@@ -58,31 +95,105 @@ _.extend Projects.prototype,
         return
       
       addProjectIdToChangeLogCollection: ->
-        bulk_update_ops = []
+        updateChangeLogsBatch(0)
 
-        APP.collections.TasksChangelog.find {},
-          fields:
-            _id: 1
-            task_id: 1
-        .forEach (change_log) ->
-          project_id = APP.collections.Tasks.findOne change_log.task_id,
-            fields:
-              project_id: 1
-          ?.project_id
-
-          if project_id?
-            bulk_update_ops.push
-              updateOne:
-                filter:
-                  _id: change_log._id
-                update:
-                  $set:
-                    project_id: project_id
+        return
           
-        if bulk_update_ops.length > 0
-          APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.TasksChangelog._name, "bulkWrite")
-          APP.collections.TasksChangelog.rawCollection().bulkWrite bulk_update_ops
-    
+        # return APP.collections.TasksChangelog.rawCollection().distinct("task_id",
+        #   project_id:
+        #     $exists: false
+        # ).then (task_ids) ->
+        #   bulk_update_ops = []
+
+        #   for task_id in task_ids   # 150,000 tasks in total
+        #     project_id = APP.collections.Tasks.findOne task_id,
+        #       fields:
+        #         project_id: 1
+        #     ?.project_id
+
+        #     console.log task_id, project_id
+
+        #     if project_id?
+        #       bulk_update_ops.push
+        #         updateMany:
+        #           filter:
+        #             task_id: task_id
+        #             project_id:
+        #               $exists: false
+        #           update:
+        #             $set:
+        #               project_id: project_id
+
+
+        #   console.log JSON.stringify(bulk_update_ops)
+
+        #   if bulk_update_ops.length > 0
+        #     APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.TasksChangelog._name, "bulkWrite")
+        #     APP.collections.TasksChangelog.rawCollection().bulkWrite bulk_update_ops
+
+        # task_id_to_project_id = {}
+        # batch_count = 0
+        # bulk_update_ops = []
+
+        # APP.collections.TasksChangelog.find 
+        #   project_id:
+        #     $exists: false
+        # ,
+        #   fields:
+        #     _id: 1
+        #     task_id: 1
+        # .forEach (change_log) ->
+        #   if not (project_id = task_id_to_project_id[change_log.task_id])?
+        #     project_id = APP.collections.Tasks.findOne change_log.task_id,
+        #       fields:
+        #         project_id: 1
+        #     ?.project_id
+
+        #     task_id_to_project_id[change_log.task_id] = project_id
+
+        #   if project_id?
+        #     bulk_update_ops.push
+        #       updateOne:
+        #         filter:
+        #           _id: change_log._id
+        #         update:
+        #           $set:
+        #             project_id: project_id
+            
+        #   if bulk_update_ops.length >= 100000
+        #     console.log "Updating batch #{++batch_count}"
+        #     APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.TasksChangelog._name, "bulkWrite")
+        #     APP.collections.TasksChangelog.rawCollection().bulkWrite bulk_update_ops
+        #     bulk_update_ops = []
+        #     console.log "Updated batch #{batch_count}"
+
+        # if bulk_update_ops.length > 0
+        #   console.log "Updating last batch"
+        #   APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.TasksChangelog._name, "bulkWrite")
+        #   APP.collections.TasksChangelog.rawCollection().bulkWrite bulk_update_ops
+        #   console.log "Updated last batch"
+
+      icl: ->
+        change_logs = []
+        for i in [0...2000000]
+          change_logs.push {
+            _id: Random.id()
+            task_id: "sggqAr9NGPYY6rhZQ"
+          }
+
+          if change_logs.length >= 100000
+            console.log "inserting #{i}"
+            APP.collections.TasksChangelog.rawCollection().insertMany change_logs
+            console.log "#{i} inserted"
+            change_logs = []
+
+        if change_logs.length > 0
+          console.log "inserting last"
+          APP.collections.TasksChangelog.rawCollection().insertMany change_logs
+          console.log "inserted"
+
+        return
+
     # A temporary hook to block justdos with > 1000 tasks to enable justdo-planning-utilties
     # APP.collections.Projects.before.update (user_id, doc, field_names, modifier, options) ->
     #   if not (new_custom_features = modifier?.$set?["conf.custom_features"])?
