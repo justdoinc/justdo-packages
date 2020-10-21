@@ -643,7 +643,7 @@ Template.justdo_calendar_project_pane.helpers
       projects = APP.collections.Tasks.find({
           "p:dp:is_project": true
           "p:dp:is_archived_project":
-            $not: true
+            $ne: true
           project_id: project.id
         }, {sort: {"title": 1}}).fetch()
 
