@@ -1463,8 +1463,9 @@ Template.justdo_calendar_project_pane_user_view.helpers
 Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_task_cell": (e, tpl) ->
     if (task_id = $(e.target).closest(".calendar_task_cell").attr("task_id"))?
-      gcm = APP.modules.project_page.getCurrentGcm()
-      gcm.setPath(["main", task_id], {collection_item_id_mode: true})
+      if (gcm = APP.modules?.project_page?.getCurrentGcm())?
+        gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)
+
       return
     return
   "click .calendar_meeting": (e, tpl) ->
