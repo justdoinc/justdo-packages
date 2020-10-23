@@ -22,6 +22,7 @@ members_collapse_state_vars = {}
 dates_to_display = new ReactiveVar([])
 number_of_days_to_display = new ReactiveVar(7)
 delivery_planner_project_id = new ReactiveVar ("*") # '*' for the entire JustDo
+sub_tree_task_ids = new ReactiveVar []
 
 findProjectName = (task_obj) ->
   if not task_obj?
@@ -582,7 +583,12 @@ Template.justdo_calendar_project_pane.onCreated ->
     project_id = delivery_planner_project_id.get()
     if project_id? and project_id != "*"
       # project_id in this case is actually a task id
-      JD.subscribeItemsAugmentedFields [project_id], ["users"]
+      descendants = APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownDescendantsIdsObj([project_id])
+      task_ids = _.keys(descendants)
+      task_ids.push project_id
+      sub_tree_task_ids.set task_ids
+      JD.subscribeItemsAugmentedFields task_ids, ["users"]
+
     return
 
   return # end onCreated
@@ -712,7 +718,25 @@ Template.justdo_calendar_project_pane.helpers
     if project_id == "*"
       other_users = _.difference(APP.modules.project_page.curProj()?.getMembersIds(), [Meteor.userId()])
     else
-      other_users = _.difference(APP.collections.TasksAugmentedFields.findOne(project_id)?.users, [Meteor.userId()])
+      task_ids = sub_tree_task_ids.get()
+
+      other_users = new Set()
+      
+      APP.collections.TasksAugmentedFields.find
+        _id:
+          $in: task_ids
+      ,
+        fields:
+          users: 1
+      .forEach (task) ->
+        if task.users?
+          for user_id in task.users
+            other_users.add user_id
+
+        return
+
+      other_users.delete Meteor.userId()
+      other_users = Array.from other_users
 
     other_users_docs = []
 
