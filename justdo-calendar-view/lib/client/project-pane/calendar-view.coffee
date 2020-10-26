@@ -1083,6 +1083,16 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
           end_date = task.due_date
         else
           end_date = task.start_date
+          
+        # Dealing with cases where start and end dates are out of the view, but due date is w/in.
+        if ((
+              (start_date < first_date_to_display and end_date < first_date_to_display) or
+              (start_date > last_date_to_display and end_date > last_date_to_display )
+            ) and task.due_date >= first_date_to_display and task.due_date <= last_date_to_display
+        )
+          start_date = task.due_date
+          end_date = task.due_date
+          
 
         start_day_index = data.dates_to_display.indexOf(start_date)
         if start_day_index == -1 and start_date < data.dates_to_display[0]
@@ -1131,7 +1141,9 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
             break
           row_index++
-
+          # end of while true
+        # end of dealing with regular tasks
+      
       #now we need to loop over all days, and for each day count the total working hours
 
       dates_workload = {}
