@@ -193,8 +193,11 @@ Tinytest.add('minimongo - basics', test => {
   test.equal(c.find({c: noop}).count(), 1);
   test.equal(c.find({a: noop, c: 'c'}).count(), 0);
 
+
   // Regression test for #4260
   // Only insert enumerable, own properties from the object
+  //
+  // There's a JustDo deviation here, see below
   c.remove({});
   function Thing() {
     this.a = 1;
@@ -208,8 +211,15 @@ Tinytest.add('minimongo - basics', test => {
   const after = c.findOne();
   test.equal(after.a, 1);
   test.equal(after.b, undefined);
-  test.equal(after.c, undefined);
-  test.equal(after.d, undefined);
+
+  // The following two are JustDo deviation from the original expectation to see in both of them
+  // undefined. In JustDo we use lodash.deepClone for cloning objects when calling EJSON.clone()
+  // lodash.deepClone is faster than the original implementaion used by EJSON, but, it perserves
+  // the original __proto__ of the object, which I (Daniel C.) don't care much about.
+  //
+  // Note, for non-enumerables like after.b we act as expected.
+  test.equal(after.c, Thing.prototype.c);
+  test.equal(after.d, Thing.prototype.d);
 });
 
 Tinytest.add('minimongo - error - no options', test => {
