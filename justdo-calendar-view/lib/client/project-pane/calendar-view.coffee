@@ -525,6 +525,7 @@ Template.justdo_calendar_project_pane.onCreated ->
     first_date_to_display = dates[0]
     last_date_to_display = dates[dates.length-1]
 
+    
     dates_part = [
       #regular followup date
       {follow_up: {$in: dates}},
@@ -645,6 +646,7 @@ Template.justdo_calendar_project_pane.helpers
     calendar_projects_filter_val = tmpl.calendar_projects_filter_val.get()
 
     project = APP.modules.project_page.project.get()
+    
     if project?
       projects = APP.collections.Tasks.find({
           "p:dp:is_project": true
@@ -653,10 +655,10 @@ Template.justdo_calendar_project_pane.helpers
           project_id: project.id
         }, {sort: {"title": 1}}).fetch()
 
-      if not calendar_projects_filter_val?
+      if not calendar_projects_filter_val? or calendar_projects_filter_val == ""
         return projects
 
-      filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(calendar_projects_filter_val)}", "i")
+      filter_regexp = new RegExp("#{JustdoHelpers.escapeRegExp(calendar_projects_filter_val)}", "i")
 
       projects = _.filter projects, (doc) ->
 
@@ -1066,6 +1068,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
          (task.due_date? and task.due_date >= first_date_to_display and task.due_date <= last_date_to_display) or
          (task.start_date? and task.end_date? and task.start_date < first_date_to_display and task.end_date > last_date_to_display) or
          (task.start_date? and task.due_date? and task.start_date < first_date_to_display and task.due_date > last_date_to_display)
+        
         start_date = ""
         starts_before_view = false
         if task.start_date?
@@ -1124,7 +1127,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
             task_details.planned_seconds = task[planned_seconds_field]
             task_details.executed_seconds = task[executed_seconds_field]
-
+            
             days_matrix[start_day_index][row_index] =
               task: task_details
               type: 'R' # F for followup, P for private followup, R for regular
