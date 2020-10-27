@@ -9,8 +9,6 @@ client = "client"
 server = "server"
 both = [client, server]
 Package.onUse(function (api) {
-  api.versionsFrom("1.1.0.3");
-
   api.use("underscore", both);
   api.use("coffeescript", both);
   api.use("tracker", both);
@@ -56,6 +54,7 @@ Package.onUse(function (api) {
   api.add_files("lib/both/xss.coffee", both);
   api.add_files("lib/both/control-flows.coffee", both);
   api.add_files("lib/both/mongo.coffee", both);
+  api.add_files("lib/both/objects.coffee", both);
   api.add_files("lib/both/debug-tracker.coffee", both);
   api.add_files("lib/both/computed-reactive-var.coffee", both);
   api.add_files("lib/both/flush-manager.coffee", both);
