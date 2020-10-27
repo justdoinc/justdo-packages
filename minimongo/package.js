@@ -20,6 +20,7 @@ Package.onUse(api => {
     'id-map',
     'mongo-id',
     'ordered-dict',
+    'underscore',
     'random',
     'tracker'
   ]);

@@ -1903,14 +1903,45 @@ const invalidCharMsg = {
   '\0': 'contain null bytes'
 };
 
+// deepStructureObjectKeysTraverse
+//
+// IMPORTANT this is the coffee-compiled version of deepStructureObjectKeysTraverse
+// from the justdo-helpers package, included here due to problematic circular dependencies
+// that prevented us from using it from there (XXX maybe try to resolve it one day).
+//
+// If you found a reason to change deepStructureObjectKeysTraverse below, change also
+// the justdo-helpers version, and vice versa. Daniel C.
+function deepStructureObjectKeysTraverse(structure, cb) {
+  var i, item, key, len, val;
+  // Traverse structure, for every object key found, calls cb with it. 
+  if (_.isArray(structure)) {
+    for (i = 0, len = structure.length; i < len; i++) {
+      item = structure[i];
+      deepStructureObjectKeysTraverse(item, cb);
+    }
+  } else if (_.isObject(structure)) {
+    for (key in structure) {
+      val = structure[key];
+      cb(key);
+      if (_.isObject(val)) {
+        deepStructureObjectKeysTraverse(val, cb);
+      }
+    }
+  }
+}
+
 // checks if all field names in an object are valid
 function assertHasValidFieldNames(doc) {
-  if (doc && typeof doc === 'object') {
-    JSON.stringify(doc, (key, value) => {
-      assertIsValidFieldName(key);
-      return value;
-    });
-  }
+  // The following is a JustDo deviation that optimize runtime by 60%.
+  deepStructureObjectKeysTraverse(doc, (key) => {assertIsValidFieldName(key)});
+
+  // The original meteor/meteor code:
+  // if (doc && typeof doc === 'object') {
+  //   JSON.stringify(doc, (key, value) => {
+  //     assertIsValidFieldName(key);
+  //     return value;
+  //   });
+  // }
 }
 
 function assertIsValidFieldName(key) {
