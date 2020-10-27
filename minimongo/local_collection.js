@@ -1933,6 +1933,8 @@ function deepStructureObjectKeysTraverse(structure, cb) {
 // checks if all field names in an object are valid
 function assertHasValidFieldNames(doc) {
   // The following is a JustDo deviation that optimize runtime by 60%.
+  //
+  // See: https://jsben.ch/HBDXV
   deepStructureObjectKeysTraverse(doc, (key) => {assertIsValidFieldName(key)});
 
   // The original meteor/meteor code:
