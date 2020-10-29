@@ -30,6 +30,7 @@ JustdoAccounts = (options) ->
 
   Meteor.defer =>
     @_deferredInit()
+    @_setupPasswordRequirements()
 
   @logger.debug "Init done"
 
