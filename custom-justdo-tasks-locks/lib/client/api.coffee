@@ -77,20 +77,33 @@ _.extend CustomJustdoTasksLocks.prototype,
             if Meteor.userId() in locking_users
               # Nothing to do, already locking
               return
-
-            @toggleTaskLockedState doc._id, (err) =>
-              JustdoSnackbar.show
-                text: "Task locked"
-                actionText: "Unlock"
-                onActionClick: =>
-                  @toggleTaskLockedState doc._id
-
-                  JustdoSnackbar.close()
-
-                  return
-
+  
+            JustdoSnackbar.show
+              text: "Lock Task?"
+              actionText: "Yes"
+              onActionClick: =>
+                @toggleTaskLockedState doc._id, (err) =>
+                  if err?
+                    JustdoSnackbar.show
+                      text: "Failed to lock task."
+                  else
+                    JustdoSnackbar.show
+                      text: "Task locked"
+                      actionText: "Dismiss"
+                      onActionClick: =>
+                        JustdoSnackbar.close()
+                        return
+                        
+                      showSecondButton: true
+                      secondButtonText: "Unlock"
+                      onSecondButtonClick: =>
+                        @toggleTaskLockedState doc._id
+                        JustdoSnackbar.close()
+                        return
+                    return
+                JustdoSnackbar.close()
+                return
             return
-
           return
 
         destroyer: =>
