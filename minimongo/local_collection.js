@@ -1911,8 +1911,11 @@ const invalidCharMsg = {
 //
 // If you found a reason to change deepStructureObjectKeysTraverse below, change also
 // the justdo-helpers version, and vice versa. Daniel C.
+var deepStructureObjectKeysTraverse,
+  hasProp = {}.hasOwnProperty;
+
 function deepStructureObjectKeysTraverse(structure, cb) {
-  var i, item, key, len, val;
+  var i, item, key, len, value;
   // Traverse structure, for every object key found, calls cb with it. 
   if (_.isArray(structure)) {
     for (i = 0, len = structure.length; i < len; i++) {
@@ -1921,10 +1924,11 @@ function deepStructureObjectKeysTraverse(structure, cb) {
     }
   } else if (_.isObject(structure)) {
     for (key in structure) {
-      val = structure[key];
+      if (!hasProp.call(structure, key)) continue;
+      value = structure[key];
       cb(key);
-      if (_.isObject(val)) {
-        deepStructureObjectKeysTraverse(val, cb);
+      if (_.isObject(value)) {
+        deepStructureObjectKeysTraverse(value, cb);
       }
     }
   }

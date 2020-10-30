@@ -193,6 +193,7 @@ Tinytest.add('minimongo - basics', test => {
   test.equal(c.find({c: noop}).count(), 1);
   test.equal(c.find({a: noop, c: 'c'}).count(), 0);
 
+  let before, after;
 
   // Regression test for #4260
   // Only insert enumerable, own properties from the object
@@ -206,9 +207,9 @@ Tinytest.add('minimongo - basics', test => {
   }
   Thing.prototype.c = 3;
   Thing.prototype.d = () => null;
-  const before = new Thing();
+  before = new Thing();
   c.insert(before);
-  const after = c.findOne();
+  after = c.findOne();
   test.equal(after.a, 1);
   test.equal(after.b, undefined);
 
@@ -220,6 +221,30 @@ Tinytest.add('minimongo - basics', test => {
   // Note, for non-enumerables like after.b we act as expected.
   test.equal(after.c, Thing.prototype.c);
   test.equal(after.d, Thing.prototype.d);
+
+  // Regression test for infinite loop when unnecessarily looping over prototype
+  // in assertHasValidFieldNames()
+  //
+  // (Resulted from deepStructureObjectKeysTraverse() not checking for hasOwnProperty)
+  //
+  // 2020-10-30 Daniel C.
+  c.remove({});
+
+  // flatpickr, tempered with Date prototype and inserted an enumerable function to it
+  // in a way similar to the following, that led to an infinite loop when deepStructureObjectKeysTraverse
+  // started looping over the function prototype that has circular references.
+  // This is what first brought the regression to our attention.
+  // Daniel C.
+  Date.prototype.fp_incr = function () {return};
+
+  Date.prototype.fp_incr.date = Date.prototype
+
+  before = {a: new Date()};
+
+  c.insert(before);
+  after = c.findOne();
+
+  test.equal(before.a, after.a);
 });
 
 Tinytest.add('minimongo - error - no options', test => {
