@@ -163,6 +163,21 @@ APP.executeAfterAppLibCode ->
 
     return
 
+  hasSubSubTasks = (task_id) ->
+    if not (grid_data_core = APP.modules.project_page.gridData()?._grid_data_core)
+      return false
+    for i, subtask_id of grid_data_core.tree_structure[task_id]
+      if grid_data_core.tree_structure[subtask_id]?
+        return true
+    
+    return false
+  
+  getDescendantsCount = (task_id) ->
+    if not (grid_data_core = APP.modules.project_page.gridData()?._grid_data_core)
+      return 0
+
+    return _.keys(grid_data_core.getAllItemsKnownDescendantsIdsObj([task_id])).length
+  
   Template.task_pane_item_details_members_editor.onCreated ->
     data = @data
 
@@ -465,68 +480,91 @@ APP.executeAfterAppLibCode ->
               # Nothing to do
               return true
 
-            grid_control = module.gridControl()
-            grid_data = grid_control._grid_data
+            execMembersEdit = ->
+              grid_control = module.gridControl()
+              grid_data = grid_control._grid_data
 
-            active_item_obj = module.activeItemObjFromCollection({owner_id: 1, pending_owner_id: 1})
+              active_item_obj = module.activeItemObjFromCollection({owner_id: 1, pending_owner_id: 1})
 
-            items_to_edit = [task_doc._id]
-            items_to_assume_ownership_of = []
-            items_to_cancel_ownership_transfer_of = []
+              items_to_edit = [task_doc._id]
+              items_to_assume_ownership_of = []
+              items_to_cancel_ownership_transfer_of = []
 
-            if active_item_obj.owner_id in members_to_remove
-              items_to_assume_ownership_of.push active_item_obj._id
+              if active_item_obj.owner_id in members_to_remove
+                items_to_assume_ownership_of.push active_item_obj._id
 
-            if active_item_obj.pending_owner_id in members_to_remove
-              items_to_cancel_ownership_transfer_of.push active_item_obj._id
+              if active_item_obj.pending_owner_id in members_to_remove
+                items_to_cancel_ownership_transfer_of.push active_item_obj._id
 
-            if cascade.get()
-              # If changes are applied to sub-tasks
-              tree_traversing_options =
-                expand_only: false
-                filtered_tree: false
+              if cascade.get()
+                # If changes are applied to sub-tasks
+                tree_traversing_options =
+                  expand_only: false
+                  filtered_tree: false
 
-              grid_data.each module.activeItemPath(), tree_traversing_options, (section, item_type, item_obj, path, expand_state) ->
-                items_to_edit.push item_obj._id
+                grid_data.each module.activeItemPath(), tree_traversing_options, (section, item_type, item_obj, path, expand_state) ->
+                  items_to_edit.push item_obj._id
 
-                if item_obj.owner_id in members_to_remove
-                  items_to_assume_ownership_of.push item_obj._id
+                  if item_obj.owner_id in members_to_remove
+                    items_to_assume_ownership_of.push item_obj._id
 
-                if item_obj.pending_owner_id in members_to_remove
-                  items_to_cancel_ownership_transfer_of.push item_obj._id
+                  if item_obj.pending_owner_id in members_to_remove
+                    items_to_cancel_ownership_transfer_of.push item_obj._id
 
-            if not _.isEmpty members_to_remove
-              members_remove_modifier =
-                $pull:
-                  users:
-                    $in: members_to_remove
+              if not _.isEmpty members_to_remove
+                members_remove_modifier =
+                  $pull:
+                    users:
+                      $in: members_to_remove
 
-              project.bulkUpdate items_to_edit, members_remove_modifier
+                project.bulkUpdate items_to_edit, members_remove_modifier
 
-            if not _.isEmpty members_to_add
-              members_add_modifier =
-                $push:
-                  users:
-                    $each: members_to_add
+              if not _.isEmpty members_to_add
+                members_add_modifier =
+                  $push:
+                    users:
+                      $each: members_to_add
 
-              project.bulkUpdate items_to_edit, members_add_modifier
+                project.bulkUpdate items_to_edit, members_add_modifier
 
-            if not _.isEmpty items_to_assume_ownership_of
-              ownership_update_modifier =
-                $set:
-                  owner_id: Meteor.userId()
-                  pending_owner_id: null
+              if not _.isEmpty items_to_assume_ownership_of
+                ownership_update_modifier =
+                  $set:
+                    owner_id: Meteor.userId()
+                    pending_owner_id: null
 
-              project.bulkUpdate items_to_assume_ownership_of, ownership_update_modifier
+                project.bulkUpdate items_to_assume_ownership_of, ownership_update_modifier
 
-            if not _.isEmpty items_to_cancel_ownership_transfer_of
-              ownership_transfer_cancel_modifier =
-                $set:
-                  pending_owner_id: null
+              if not _.isEmpty items_to_cancel_ownership_transfer_of
+                ownership_transfer_cancel_modifier =
+                  $set:
+                    pending_owner_id: null
 
-              project.bulkUpdate items_to_cancel_ownership_transfer_of, ownership_transfer_cancel_modifier
+                project.bulkUpdate items_to_cancel_ownership_transfer_of, ownership_transfer_cancel_modifier
 
-            return true
+              return true
+            
+            task_id = JD.activeItemId()
+            if cascade.get() == true and hasSubSubTasks(task_id) and 
+                (tasks_count = getDescendantsCount(task_id)+1) > ProjectPageDialogs.EDIT_MEMBER_CONFIRM_TASK_COUNT
+              bootbox.confirm
+                className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+                title: "Confirm edit members"
+                message: JustdoHelpers.renderTemplateInNewNode(Template.confirm_edit_members_dialog, {
+                  members_to_remove: if members_to_remove.length > 0 then members_to_remove else null
+                  members_to_add: if members_to_add.length > 0 then members_to_add else null
+                  tasks_count: tasks_count
+                }).node
+                callback: (result) ->
+                  if result
+                    execMembersEdit()
+                    bootbox.hideAll()
+                  return true
+              return false
+            else
+              execMembersEdit()
+            
+            return true      
 
     $(".members-editor-dialog .members-search-input").focus()
 

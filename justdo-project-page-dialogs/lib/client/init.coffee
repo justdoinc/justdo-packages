@@ -1,1 +1,3 @@
-ProjectPageDialogs = {}
+ProjectPageDialogs = {
+  EDIT_MEMBER_CONFIRM_TASK_COUNT: 20
+}

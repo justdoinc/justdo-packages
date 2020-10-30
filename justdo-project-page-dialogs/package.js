@@ -90,5 +90,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/select-multiple-project-users.sass", client);
   api.addFiles("lib/client/select-multiple-project-users.coffee", client);
 
+  api.addFiles("lib/client/confirm-edit-members-dialog.html", client);
+  api.addFiles("lib/client/confirm-edit-members-dialog.sass", client);
+  api.addFiles("lib/client/confirm-edit-members-dialog.coffee", client);
+
   api.export("ProjectPageDialogs", client);
 });

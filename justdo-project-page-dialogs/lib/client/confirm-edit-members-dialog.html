@@ -1,0 +1,27 @@
+<template name="confirm_edit_members_dialog">
+  <div class="confirm-edit-members-dialog">
+    {{#if members_to_remove}}
+      <p style="font-size: 15px">
+        <svg class="jd-icon text-primary confirm-edit-icon">
+          <use xlink:href="/layout/icons-feather-sprite.svg#user-x"></use>
+        </svg>
+        You are about to remove <i>{{usersText members_to_remove}}</i> from <b><i class="text-danger">{{tasks_count}}</i></b> tasks
+        <br>
+        <b> As a result, you'll become the owner of all the {{tasks_count}} tasks owned by these users .</b>
+      </p>
+    {{/if}}
+
+    {{#if members_to_add}}
+      <p style="font-size: 15px; margin-top: 24px;">
+        <svg class="jd-icon text-primary confirm-edit-icon">
+          <use xlink:href="/layout/icons-feather-sprite.svg#user-plus"></use>
+        </svg>
+        You are about to grant access to <b><i class="text-danger">{{tasks_count}}</i></b> tasks to: <i>{{usersText members_to_add}}</i>
+      </p>
+    {{/if}}
+
+    <p style="font-size: 15px; margin-top: 48px;">
+      Please Confirm.
+    </p>
+  </div>
+</template>
