@@ -5,10 +5,10 @@ _.extend JustdoHelpers,
       for item in structure
         deepStructureObjectKeysTraverse(item, cb)
     else if _.isObject(structure)
-      for key, val of structure
+      for own key, value of structure
         cb(key)
         
-        if _.isObject(val)
-          deepStructureObjectKeysTraverse(val, cb)
+        if _.isObject(value)
+          deepStructureObjectKeysTraverse(value, cb)
           
     return
