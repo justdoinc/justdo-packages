@@ -438,7 +438,7 @@ APP.executeAfterAppLibCode ->
       return
 
   ProjectPageDialogs.members_management_dialog.open = (task_id) ->
-    if not (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1}}))?
+    if not (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {seqId: 1, owner_id: 1}}))?
       APP.logger.error("openMembersManagementDialog: Couldn't find task: #{task_id}")
 
       return
