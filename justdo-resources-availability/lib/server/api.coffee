@@ -37,7 +37,6 @@ _.extend JustdoResourcesAvailability.prototype,
     return
 
   saveResourceAvailability: (project_id, availability, resource_user_id, task_id, executing_user_id) ->
-
     #sanitize availability structure
     sanitized_availability = {}
     
@@ -92,6 +91,10 @@ _.extend JustdoResourcesAvailability.prototype,
         key += ":" + task_id
 
       all_resources[key] = sanitized_availability
+
+      if not resource_user_id and not @atLeastOneWorkingDay sanitized_availability.working_days
+        sanitized_availability.working_days = @default_workdays.working_days
+
       op = {$set: {"#{resource_availability_field}": all_resources}}
 
       APP.collections.Projects.update(project_id, op)

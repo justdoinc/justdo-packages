@@ -271,4 +271,11 @@ _.extend JustdoResourcesAvailability.prototype,
     return {
       "#{JustdoResourcesAvailability.project_custom_feature_id}": 1
     }
+  
+  atLeastOneWorkingDay: (weekdays) ->
+    for i, weekday of weekdays
+      if weekday.holiday == false
+        return true
+    
+    return false
     

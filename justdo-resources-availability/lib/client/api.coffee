@@ -59,6 +59,8 @@ _.extend JustdoResourcesAvailability.prototype,
   # The following will open the resources config dialog.
   # if user_id is provided - then for the user in the current JustDo, else - for the entire JustDo
   displayConfigDialog: (project_id, user_id, task_id)->
+    self = @
+
     if not project_id
       project_id = JD.activeJustdo({_id: 1})._id
 
@@ -113,6 +115,11 @@ _.extend JustdoResourcesAvailability.prototype,
           label: dialog_button_label
           className: "btn-primary resources_availability_close_dialog_button"
           callback: ->
+            if not user_id? and self.atLeastOneWorkingDay(config_data.weekdays) == false
+              JustdoSnackbar.show
+                text: "There must at least be one working day on JustDo level."
+              return false
+
             if config_data.has_issues.size > 0
               return false
 
