@@ -188,15 +188,13 @@ Template.meetings_meeting_dialog.onCreated ->
   @print_me = ->
     #preps
     $("body").append """<div class="print-meeting-mode-overlay"></div>"""
-    prev_overflow =  $("html").css("overflow")
-    $("html").css "overflow", "auto"
-
     $(".print-meeting-mode-overlay").html @html_representation()
 
     printAndClean = ->
+      $("html").addClass "print-meeting"
       window.print()
-      $("html").css "overflow", prev_overflow
       $(".print-meeting-mode-overlay").remove()
+      $("html").removeClass "print-meeting"
 
     img = document.querySelector('img.thead-logo')
     if img.complete
