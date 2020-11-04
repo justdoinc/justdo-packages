@@ -3,11 +3,6 @@ _.extend Projects.prototype,
   _setupDbMigrations: ->
     projects_object = @
 
-    APP.collections.Tasks.before.update (user_id, doc, fields, modifier) ->
-      console.log modifier
-
-      return
-
     # **IMPORTANT** Unsecure - uncomment only when needed.
     Meteor.methods
       # addTasksSeqIndices: ->
