@@ -3,6 +3,11 @@ _.extend Projects.prototype,
   _setupDbMigrations: ->
     projects_object = @
 
+    APP.collections.Tasks.before.update (user_id, doc, fields, modifier) ->
+      console.log modifier
+
+      return
+
     # **IMPORTANT** Unsecure - uncomment only when needed.
     Meteor.methods
       # addTasksSeqIndices: ->
@@ -55,7 +60,45 @@ _.extend Projects.prototype,
         
         # The duration recalculation will be triggered automatically in hooks defined in justdo-planning-utilties/lib/server/collections-hooks.coffee
         return
+      
+      removedInvalidDependencies: (justdo_id) ->
+        check justdo_id, Match.Maybe String
 
+        if justdo_id?
+          query =
+            project_id: justdo_id
+        else
+          query = {}
+
+        APP.collections.Tasks.find(query).forEach (task) ->
+          if (deps = task.justdo_task_dependencies_mf)?
+            for dep in deps
+              if not APP.collections.Tasks.findOne(dep.task_id, {fields: {_id: 1}})?
+                APP.collections.Tasks.update task._id,
+                  $pull:
+                    justdo_task_dependencies_mf:
+                      task_id: dep.task_id
+                  
+          if (seq_deps = task.justdo_task_dependencies)?
+            for seq_id in seq_deps
+              APP.justdo_planning_utilities.integrityCheckAndHumanReadableToMFAndBackHook_enabled = false
+              if not APP.collections.Tasks.findOne(
+                project_id: task.project_id
+                seqId: seq_id
+              ,
+                fields: 
+                  _id: 1
+              )?
+                APP.collections.Tasks.update task._id,
+                  $pull:
+                    justdo_task_dependencies: seq_id
+              
+              APP.justdo_planning_utilities.integrityCheckAndHumanReadableToMFAndBackHook_enabled = true
+          
+          return
+        
+        return
+            
     add_project_id_to_changelog_in_progress = false
     Meteor.methods
       addProjectIdToChangeLogCollection: ->
@@ -155,5 +198,5 @@ _.extend Projects.prototype,
           return
 
         return
-
+      
     return
