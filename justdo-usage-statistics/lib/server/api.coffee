@@ -154,10 +154,37 @@ _.extend JustdoUsageStatistics.prototype,
 
             return
 
+        if self.isCategoryEnabled("users")
+          usage_statistics.users =
+            Meteor.users.find {},
+              fields:
+                "profile.first_name": 1
+                "profile.last_name": 1
+                emails: 1
+                invited_by: 1
+                createdAt: 1
+            .fetch()
+
+        if self.isCategoryEnabled("justdos")
+          usage_statistics.justdos =
+            APP.collections.Projects.find {},
+              fields:
+                title: 1
+                members: 1
+                access_restriction_type: 1
+                lastTaskSeqId: 1
+                createdAt: 1
+                updatedAt: 1
+                conf: 1
+                custom_fields: 1
+                removed_custom_fields: 1
+            .fetch()
+
         returned_val =
           key: self.devops_password_encrypted
           stats: self._encryptWithLocalPass(EJSON.stringify(usage_statistics))
 
         return returned_val
+
 
     return
