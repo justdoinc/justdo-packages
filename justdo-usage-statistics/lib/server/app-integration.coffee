@@ -23,8 +23,14 @@ APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
 
-  options = 
+  options =
     devops_public_key: (env.DEVOPS_PUBLIC_KEY or "").replace(/\\n/g, "\n").trim()
+    usage_statistics_level: env.JUSTDO_USAGE_STATISTICS or "basic"
+
+  if options.usage_statistics_level.trim() == "none"
+    APP.logger.debug "[justdo-usage-statistics] Disabled"
+
+    return
 
   APP.justdo_usage_statistics = new JustdoUsageStatistics(options)
 

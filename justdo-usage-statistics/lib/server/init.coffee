@@ -2,6 +2,12 @@ default_options = {}
 
 options_schema =
   server:
+    usage_statistics_level:
+      type: String
+      optional: false
+      bind_to_instance: true
+      defaultValue: "basic"
+
     devops_public_key:
       type: String
       optional: true
@@ -73,7 +79,7 @@ JustdoUsageStatistics = (options) ->
   # Developer, avoid changing this constuctor, to do stuff on init
   # for both server & client, use below the: @_bothImmediateInit()
 
-  EventEmitter.call this
+  EventEmitter.call @
 
   @destroyed = false
 
