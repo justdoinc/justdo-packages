@@ -473,7 +473,7 @@ _.extend GridDataCom.prototype,
         if not (max_level = options?.max_level)? or not _.isNumber(max_level) or max_level > max_level_hard_limit or max_level < 0
           max_level = max_level_hard_limit
 
-        max_items_hard_limit = 5000
+        max_items_hard_limit = 1000000
         if not (max_items = options?.max_items)? or not _.isNumber max_items or max_items > max_items_hard_limit or max_items < 1
           max_items = max_items_hard_limit
 
