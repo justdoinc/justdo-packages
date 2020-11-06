@@ -6,6 +6,7 @@ base_supported_fields_ids = [
   "end_date"
   "due_date"
   "priority"
+  "state"
 ]
 
 fallback_date_format = "YYYY-MM-DD"
