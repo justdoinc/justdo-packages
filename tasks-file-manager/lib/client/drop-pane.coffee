@@ -86,8 +86,7 @@ _.extend TasksFileManager.DropPane.prototype,
       try
         e.stopPropagation()
         e.preventDefault()
-      catch err
-        console.error(err)
+        # From a paste event, e won't have stopPropagation and preventDefault
 
       try
         if @_isFolderDropped(e)
@@ -154,38 +153,39 @@ _.extend TasksFileManager.DropPane.prototype,
     `
 
   _uploadDroppedFiles: (files) ->
-    task_id = @task_id
+    @policy_ready_promise.then =>
+      task_id = @task_id
 
-    upload_options =
-      signature: @_policy.signature
-      policy: @_policy.policy
+      upload_options =
+        signature: @_policy.signature
+        policy: @_policy.policy
 
-    _.extend upload_options, @manager.getStorageLocationAndPath(task_id)
+      _.extend upload_options, @manager.getStorageLocationAndPath(task_id)
 
-    total_files = files.length
-    progresses = []
-    uploaded = []
+      total_files = files.length
+      progresses = []
+      uploaded = []
 
-    _.each files, (file, i) =>
-      APP.filestack_base.filepicker.store(
-        file
-      ,
-        upload_options
-      , (blob) =>
-          uploaded.push(blob)
+      _.each files, (file, i) =>
+        APP.filestack_base.filepicker.store(
+          file
+        ,
+          upload_options
+        , (blob) =>
+            uploaded.push(blob)
 
-          if uploaded.length == total_files
-            @_onSuccess task_id, uploaded
-      , (error) =>
-          @_onError task_id, "UploadError", error.toString()
-      ,
-        (progress) =>
+            if uploaded.length == total_files
+              @_onSuccess task_id, uploaded
+        , (error) =>
+            @_onError task_id, "UploadError", error.toString()
+        ,
+          (progress) =>
 
-          progresses[i] = progress
-          total_progress = (_.reduce progresses, (a, b) => (a || 0) + (b || 0)) / total_files
+            progresses[i] = progress
+            total_progress = (_.reduce progresses, (a, b) => (a || 0) + (b || 0)) / total_files
 
-          @_onProgress task_id, total_progress
-    )
+            @_onProgress task_id, total_progress
+      )
 
   # Refreshes the security token necessary to upload files to filestack, this
   # method is called periodically after you init the pane using `initPane`.
@@ -193,25 +193,27 @@ _.extend TasksFileManager.DropPane.prototype,
     if @destroyed
       return
 
-    @manager.getUploadPolicy @task_id, (error, policy) =>
-      if error
-        # I considered adding some retry logic here and not setting the error
-        # state and message until after n number of retries have been reached,
-        # however, I believe that meteor already handles network errors, and
-        # any other error is probably an actual error.
-        @_status.set "error"
-        @_error.set error
+    @policy_ready_promise = new Promise (resolve, reject) =>
+      @manager.getUploadPolicy @task_id, (error, policy) =>
+        if error
+          # I considered adding some retry logic here and not setting the error
+          # state and message until after n number of retries have been reached,
+          # however, I believe that meteor already handles network errors, and
+          # any other error is probably an actual error.
+          @_status.set "error"
+          @_error.set error
+          return
+
+        if not policy
+          @_status.set "loading"
+          @_error.set null
+          return
+
+        @_policy = policy
+        @refreshPane()
+        resolve()
+
         return
-
-      if not policy
-        @_status.set "loading"
-        @_error.set null
-        return
-
-      @_policy = policy
-      @refreshPane()
-
-      return
 
     return
 
