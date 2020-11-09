@@ -12,12 +12,10 @@ _.extend TasksFileManager.prototype,
 
     for item in items
       # Skip content if not image
-      if "image" in item.type
-        continue
-
-      # Retrieve image on clipboard as blob
-      blob = item.getAsFile()
-      JustdoHelpers.callCb callback, blob
+      if /image/.test item.type
+        # Retrieve image on clipboard as blob
+        blob = item.getAsFile()
+        JustdoHelpers.callCb callback, blob
 
     return
 
@@ -26,7 +24,7 @@ _.extend TasksFileManager.prototype,
     restricted_targets = ["#task-description-container"]
 
     window.addEventListener "paste", (e) =>
-      if JustdoHelpers.currentPageName() == "project" and e.clipboardData.files.length > 0
+      if JustdoHelpers.currentPageName() == "project"
         if (gc = APP.modules.project_page.gridControl())? and (current_row = gc.getCurrentRow())?
           if gc._grid_data.getItemIsCollectionItem(current_row)
             if $(e.target).closest(restricted_targets.join(",")).length
