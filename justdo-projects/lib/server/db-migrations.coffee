@@ -71,42 +71,74 @@ _.extend Projects.prototype,
         # The duration recalculation will be triggered automatically in hooks defined in justdo-planning-utilties/lib/server/collections-hooks.coffee
         return
       
-      removedInvalidDependencies: (justdo_id) ->
-        check justdo_id, Match.Maybe String
+      removeInvalidDependencies: ->
+        if not self.lockMigrationScript "removeInvalidDependencies"
+          return 
 
-        if justdo_id?
-          query =
-            project_id: justdo_id
-        else
-          query = {}
+        task_id_exists_cache = {}
+        taskIdExists = (task_id) ->
+          if not task_id_exists_cache[task_id]?
+            task_id_exists_cache[task_id] = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1}})?
+          return task_id_exists_cache[task_id]
 
-        APP.collections.Tasks.find(query).forEach (task) ->
+        task_seqId_exists_cache = {}
+        taskSeqIdExists = (justdo_id, seqId) ->
+          key = "#{justdo_id}:#{seqId}"
+          if not task_seqId_exists_cache[key]?
+            task_seqId_exists_cache[key] = APP.collections.Tasks.findOne(
+              project_id: justdo_id
+              seqId: seqId
+            ,
+              fields: 
+                _id: 1
+            )?
+          return task_seqId_exists_cache[key]
+        
+        bulk_update_ops = []
+
+        APP.collections.Tasks.find
+          $or: [{
+            justdo_task_dependencies:
+              $exists: true
+              $ne: []
+          },{
+            justdo_task_dependencies_mf:
+              $exists: true
+              $ne: []
+          }]
+        .forEach (task) ->
+          pull = {}
+
           if (deps = task.justdo_task_dependencies_mf)?
             for dep in deps
-              if not APP.collections.Tasks.findOne(dep.task_id, {fields: {_id: 1}})?
-                APP.collections.Tasks.update task._id,
-                  $pull:
-                    justdo_task_dependencies_mf:
-                      task_id: dep.task_id
+              if not taskIdExists dep.task_id
+                pull.justdo_task_dependencies_mf =
+                  task_id: dep.task_id
                   
           if (seq_deps = task.justdo_task_dependencies)?
             for seq_id in seq_deps
-              APP.justdo_planning_utilities.integrityCheckAndHumanReadableToMFAndBackHook_enabled = false
-              if not APP.collections.Tasks.findOne(
-                project_id: task.project_id
-                seqId: seq_id
-              ,
-                fields: 
-                  _id: 1
-              )?
-                APP.collections.Tasks.update task._id,
-                  $pull:
-                    justdo_task_dependencies: seq_id
+              # APP.justdo_planning_utilities.integrityCheckAndHumanReadableToMFAndBackHook_enabled = false
+              if not taskSeqIdExists task.project_id, seq_id
+                pull.justdo_task_dependencies = seq_id
               
-              APP.justdo_planning_utilities.integrityCheckAndHumanReadableToMFAndBackHook_enabled = true
+              # APP.justdo_planning_utilities.integrityCheckAndHumanReadableToMFAndBackHook_enabled = true
           
+          if not _.isEmpty pull
+            bulk_update_ops.push
+              updateOne:
+                filter:
+                  _id: task._id
+                update:
+                  $pull: pull
+
           return
         
+        if bulk_update_ops.length > 0
+          APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Tasks._name, "bulkWrite")
+          APP.collections.Tasks.rawCollection().bulkWrite bulk_update_ops
+
+        self.unlockMigrationScript "removeInvalidDependencies"
+
         return
             
     add_project_id_to_changelog_in_progress = false
