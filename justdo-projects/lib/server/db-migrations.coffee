@@ -1,7 +1,22 @@
 # Keep here code used for db migrations
 _.extend Projects.prototype,
+  locked_migration_scripts: {}
+  lockMigrationScript: (script_name) ->
+    if @locked_migration_scripts[script_name]?
+      console.warn "Migration script #{script_name} is already running"
+      return false
+
+    @locked_migration_scripts[script_name] = moment.now()
+    return true
+    
+  unlockMigrationScript: (script_name) ->
+    delete @locked_migration_scripts[script_name]
+
+    return
+      
   _setupDbMigrations: ->
     projects_object = @
+    self = @
 
     # **IMPORTANT** Unsecure - uncomment only when needed.
     Meteor.methods
