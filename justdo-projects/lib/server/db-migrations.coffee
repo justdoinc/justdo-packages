@@ -76,9 +76,12 @@ _.extend Projects.prototype,
           return 
 
         task_id_exists_cache = {}
+        queries_count = 0
+
         taskIdExists = (task_id) ->
           if not task_id_exists_cache[task_id]?
             task_id_exists_cache[task_id] = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1}})?
+            queries_count += 1
           return task_id_exists_cache[task_id]
 
         task_seqId_exists_cache = {}
@@ -92,10 +95,13 @@ _.extend Projects.prototype,
               fields: 
                 _id: 1
             )?
+            queries_count += 1
+
           return task_seqId_exists_cache[key]
         
         bulk_update_ops = []
 
+        queries_count += 1
         APP.collections.Tasks.find
           $or: [{
             justdo_task_dependencies:
@@ -107,29 +113,42 @@ _.extend Projects.prototype,
               $ne: []
           }]
         .forEach (task) ->
-          pull = {}
+          set_modifier = {}
 
           if (deps = task.justdo_task_dependencies_mf)?
+            sanitized_deps = []
+            need_update = false
             for dep in deps
-              if not taskIdExists dep.task_id
-                pull.justdo_task_dependencies_mf =
-                  task_id: dep.task_id
+              if taskIdExists dep.task_id
+                sanitized_deps.push dep
+              else
+                need_update = true
+            
+            if need_update
+              set_modifier.justdo_task_dependencies_mf = sanitized_deps
                   
           if (seq_deps = task.justdo_task_dependencies)?
+            sanitized_seq_ids = []
+            need_update = false
             for seq_id in seq_deps
               # APP.justdo_planning_utilities.integrityCheckAndHumanReadableToMFAndBackHook_enabled = false
-              if not taskSeqIdExists task.project_id, seq_id
-                pull.justdo_task_dependencies = seq_id
+              if taskSeqIdExists task.project_id, seq_id
+                sanitized_seq_ids.push seq_id
+              else
+                need_update = true
+            
+            if need_update
+              set_modifier.justdo_task_dependencies = sanitized_seq_ids
               
               # APP.justdo_planning_utilities.integrityCheckAndHumanReadableToMFAndBackHook_enabled = true
           
-          if not _.isEmpty pull
+          if not _.isEmpty set_modifier
             bulk_update_ops.push
               updateOne:
                 filter:
                   _id: task._id
                 update:
-                  $pull: pull
+                  $set: set_modifier
 
           return
         
@@ -138,6 +157,9 @@ _.extend Projects.prototype,
           APP.collections.Tasks.rawCollection().bulkWrite bulk_update_ops
 
         self.unlockMigrationScript "removeInvalidDependencies"
+
+        self.logger.debug "Queried #{queries_count} times."
+        self.logger.debug "Updated #{bulk_update_ops.length} tasks with invalid dependencies."
 
         return
             
