@@ -7,6 +7,8 @@ _.extend JustdoCalendarView.prototype,
         template: "justdo_calendar_view_project_config"
         priority: 600
 
+      return
+
     return
 
 module_id = JustdoCalendarView.project_custom_feature_id
@@ -24,7 +26,11 @@ Template.justdo_calendar_view_project_config.events
   "click .project-conf-justdo-calendar-view-config": ->
     proj = curProj()
 
+    return
+
     if proj.isCustomFeatureEnabled(module_id)
       curProj().disableCustomFeatures(module_id)
     else
       curProj().enableCustomFeatures(module_id)
+
+    return

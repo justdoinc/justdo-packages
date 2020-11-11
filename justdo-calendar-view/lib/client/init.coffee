@@ -78,7 +78,7 @@ JustdoCalendarView = (options) ->
   # Developer, avoid changing this constuctor, to do stuff on init
   # for use below the: @_immediateInit()
 
-  EventEmitter.call this
+  EventEmitter.call @
 
   @destroyed = false
 
@@ -118,6 +118,8 @@ JustdoCalendarView = (options) ->
     Tracker.onInvalidate =>
       @logger.debug "Enclosing computation invalidated, destroying"
       @destroy() # defined in client/api.coffee
+
+      return
 
   # on the client, call @_immediateInit() in an isolated
   # computation to avoid our init procedures from affecting

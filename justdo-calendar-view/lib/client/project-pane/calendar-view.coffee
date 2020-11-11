@@ -9,7 +9,6 @@ config =
   days_resolution_small_step: [1,  3,  7, 14]
   days_resolution_big_step:   [7, 14, 21, 42]
 
-
 # setting the following 5 functions as global here to make it easy to call them from justdo_calendar_project_pane_user_view
 onSetScrollLeft = -> return
 onClickScrollLeft = -> return
@@ -27,7 +26,7 @@ sub_tree_task_ids = new ReactiveVar []
 findProjectName = (task_obj) ->
   if not task_obj?
     return null
-    
+
   if task_obj["p:dp:is_project"]
     return task_obj.title
 
@@ -84,7 +83,7 @@ createDroppableWrapper = ->
   $(".calendar_view_main_table_wrapper").append droppable_wrapper
 
   # Make Wrapper Droppable
-  $('.calendar_view_droppable_area').droppable
+  $(".calendar_view_droppable_area").droppable
     tolerance: "pointer"
     classes: "ui-droppable-hover": "highlight"
     drop: (e, ui) ->
@@ -105,22 +104,22 @@ createDroppableWrapper = ->
           changing_owner = true
 
         # for changing followups or regular tasks (but not private followup), we also allow to change the owner
-        if changing_owner and (ui.draggable[0].attributes.type.value == 'F' or ui.draggable[0].attributes.type.value == 'R')
+        if changing_owner and (ui.draggable[0].attributes.type.value == "F" or ui.draggable[0].attributes.type.value == "R")
           if Meteor.userId() == target_user_id
-            set_param['owner_id'] = target_user_id
-            set_param['pending_owner_id'] = null
+            set_param["owner_id"] = target_user_id
+            set_param["pending_owner_id"] = null
           #if we return a task with pending owner to prev owner
           else if task_obj.owner_id == target_user_id and task_obj.pending_owner_id?
-            set_param['pending_owner_id'] = null
+            set_param["pending_owner_id"] = null
           else
-            set_param['pending_owner_id'] = target_user_id
+            set_param["pending_owner_id"] = target_user_id
 
         # if we change owner of a regular task, we need to transfer the planned hours to the target owner,
         # and assign all unassigned hours to the target owner
-        if changing_owner and ui.draggable[0].attributes.type.value == 'R'
+        if changing_owner and ui.draggable[0].attributes.type.value == "R"
           if (original_owner_planning_time = task_obj["p:rp:b:work-hours_p:b:user:#{calendar_view_owner_id}"])?
             record =
-              delta: - original_owner_planning_time
+              delta: -original_owner_planning_time
               resource_type: "b:user:#{calendar_view_owner_id}"
               stage: "p"
               source: "jd-calendar-view-plugin"
@@ -136,8 +135,7 @@ createDroppableWrapper = ->
             APP.resource_planner.rpAddTaskResourceRecord record
             set_param["p:rp:b:unassigned-work-hours"] = 0
 
-
-        if ui.draggable[0].attributes.class.value.indexOf("calendar_view_draggable")>=0
+        if ui.draggable[0].attributes.class.value.indexOf("calendar_view_draggable") >= 0
           #dealing with Followups
           if ui.draggable[0].attributes.type.value == "F"
             set_param["follow_up"] = e.target.attributes.date.value
@@ -154,7 +152,7 @@ createDroppableWrapper = ->
           # Important notice - moving tasks around is performed now based on users' workdays, and not based on their
           # available hours. This is following Ofer's style. Future compatible wise - we can do it based on hours needed.
 
-          else if ui.draggable[0].attributes.type.value == 'R'
+          else if ui.draggable[0].attributes.type.value == "R"
             # Note: from the query definitions we must have at least one of start or end or due dates.
 
             # if there is only due-date (i.e. no start and no end date)
@@ -164,16 +162,13 @@ createDroppableWrapper = ->
                 APP.collections.Tasks.update(task_id, {$set: set_param})
               return
 
-
             original_start_date = task_obj.start_date
-            if !original_start_date
+            if not original_start_date
               original_start_date = task_obj.end_date
 
             original_end_date = task_obj.end_date
-            if !original_end_date
+            if not original_end_date
               original_end_date = task_obj.start_date
-
-
 
             #now we need to know how many working days the original owner had between start and end date.
             original_user_availability = APP.justdo_resources_availability.userAvailabilityBetweenDates original_start_date, original_end_date,
@@ -184,10 +179,10 @@ createDroppableWrapper = ->
               new_start_date, original_user_availability.working_days, "days"
 
             if task_obj.start_date?
-              set_param['start_date'] = new_start_date
+              set_param["start_date"] = new_start_date
 
             if task_obj.end_date?
-              set_param['end_date'] = new_end_date
+              set_param["end_date"] = new_end_date
 
             if (task_id = ui.helper[0]?.attributes?.task_id?.value)?
               APP.collections.Tasks.update(task_id, {$set: set_param})
@@ -208,9 +203,9 @@ destroyDroppableWrapper = ->
 
 setDragAndDrop = ->
   allow_scroll = null
-  $('.calendar_view_draggable').draggable
-    cursor: 'none'
-    helper: 'clone'
+  $(".calendar_view_draggable").draggable
+    cursor: "none"
+    helper: "clone"
     zIndex: 100
     refreshPositions: true
     start: (e, ui) ->
@@ -224,8 +219,8 @@ setDragAndDrop = ->
       destroyDroppableWrapper()
       return
 
-  $('.calendar_view_scroll_cell').droppable
-    tolerance: 'pointer'
+  $(".calendar_view_scroll_cell").droppable
+    tolerance: "pointer"
     out: (e, ui) ->
       allow_scroll = false
       return
@@ -251,7 +246,7 @@ setDragAndDrop = ->
 
 fixHeaderOnScroll = ->
   $(".calendar_view_main_table_wrapper").on "scroll", ->
-    scroll_top = $(this).scrollTop()
+    scroll_top = $(@).scrollTop()
     $table_header = $(".main_table_fixed_header")
     table_width = $(".calendar_view_main_table")[0]["clientWidth"]
     if scroll_top > 0
@@ -268,7 +263,7 @@ delayAction = do ->
     clearTimeout timer
     timer = setTimeout(callback, ms)
     return
-
+  return
 
 Template.justdo_calendar_project_pane.onCreated ->
   self = @
@@ -295,11 +290,11 @@ Template.justdo_calendar_project_pane.onCreated ->
   # to handle highlighting the header of 'today', when the day changes...
   # could be optimized to hit once per day, but this is good enough
   start_of_day = new moment
-  start_of_day = start_of_day.startOf('day')
+  start_of_day = start_of_day.startOf("day")
   @today = new ReactiveVar(start_of_day)
   @refresh_today_interval = Meteor.setInterval =>
     start_of_day = new moment
-    start_of_day = start_of_day.startOf('day')
+    start_of_day = start_of_day.startOf("day")
     self.today.set(start_of_day)
     return
   ,
@@ -310,7 +305,7 @@ Template.justdo_calendar_project_pane.onCreated ->
   active_item_id = null
 
   #calculate the first day to display based on the beginning of the week of the user
-  @resetFirstDay = (date)->
+  @resetFirstDay = (date) ->
     d = new Date(date)
     dow = d.getDay()
     user_first_day_of_week = 1
@@ -328,7 +323,7 @@ Template.justdo_calendar_project_pane.onCreated ->
   #scrolling left and right control flow
   @scroll_left_right_handler = null
 
-  @setToPrevWeek = (keep_scroll_handler)->
+  @setToPrevWeek = (keep_scroll_handler) ->
     d = self.view_start_date.get()
     dow = d.getDay()
     index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
@@ -336,20 +331,20 @@ Template.justdo_calendar_project_pane.onCreated ->
     d.setDate(d.getDate() - step_size)
     self.view_start_date.set(d)
 
-    if !keep_scroll_handler and self.scroll_left_right_handler
+    if not keep_scroll_handler and self.scroll_left_right_handler
       clearInterval(self.scroll_left_right_handler)
     return
 
   onClickScrollLeft = @setToPrevWeek
 
-  @setToNextWeek = (keep_scroll_handler)->
+  @setToNextWeek = (keep_scroll_handler) ->
     d = self.view_start_date.get()
     index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
     step_size = config.days_resolution_big_step[index]
     d.setDate(d.getDate() + step_size)
     self.view_start_date.set(d)
 
-    if !keep_scroll_handler and self.scroll_left_right_handler
+    if not keep_scroll_handler and self.scroll_left_right_handler
       clearInterval(self.scroll_left_right_handler)
     return
 
@@ -386,7 +381,7 @@ Template.justdo_calendar_project_pane.onCreated ->
   findSelectedTask = (taskId) ->
     $activeTask = $(".calendar_task_cell[task_id=#{taskId}]")
     if $activeTask[0]?
-      $(".tab-justdo-calendar-container").animate { scrollTop: $activeTask.position().top - 30 }, 500
+      $(".tab-justdo-calendar-container").animate {scrollTop: $activeTask.position().top - 30}, 500
       $activeTask.addClass "show_cell"
       setTimeout (->
         $activeTask.removeClass "show_cell"
@@ -398,16 +393,15 @@ Template.justdo_calendar_project_pane.onCreated ->
   #todo: check with Daniel how to ensure plugins dependencies during load time.
   #todo: once we apply project filters, take the workdays from the project record.
 
-
   user_first_day_of_week = 1
   if Meteor.user().profile?.first_day_of_week?
     user_first_day_of_week = Meteor.user().profile.first_day_of_week
   user_first_day_of_week -= 1
-  if(user_first_day_of_week<0)
-    user_first_day_of_week=6
+  if(user_first_day_of_week < 0)
+    user_first_day_of_week = 6
   user_first_day_of_week -= 1
-  if(user_first_day_of_week<0)
-    user_first_day_of_week=6
+  if(user_first_day_of_week < 0)
+    user_first_day_of_week = 6
 
   # commenting out for now, as it's UX is not good. -AL
   #@autorun =>
@@ -419,8 +413,8 @@ Template.justdo_calendar_project_pane.onCreated ->
   @users_to_tasks = {}
   @project_members_to_dependency = {}
 
-  @onTaskAddedOrChanged = (task_id, fields)->
-    if !(task = APP.collections.Tasks.findOne(task_id))?
+  @onTaskAddedOrChanged = (task_id, fields) ->
+    if not (task = APP.collections.Tasks.findOne(task_id))?
       return
 
     #############
@@ -434,7 +428,7 @@ Template.justdo_calendar_project_pane.onCreated ->
       current_users.add Meteor.userId()
 
     # dealing with users that have planned or executed times
-    for k,v of task
+    for k, v of task
       if k.indexOf("p:rp:b:work-hours_p:b:user:") == 0
         current_users.add k.substr(27)
       if k.indexOf("p:rp:b:work-hours_e:b:user:") == 0
@@ -447,22 +441,21 @@ Template.justdo_calendar_project_pane.onCreated ->
     else #check if current and prev are the same, if so, nothing to do now...
       if prev_users.size == current_users.size
         found_difference = false
-        prev_users.forEach (prev_user_id)->
+        prev_users.forEach (prev_user_id) ->
           if not current_users.has(prev_user_id)
             found_difference = true
         if not found_difference
           return
 
-
     # we know that the lists diverged. so now, remove users that are on the prev list and not on the
     # current list
-    prev_users.forEach (prev_user_id)->
+    prev_users.forEach (prev_user_id) ->
       if not current_users.has(prev_user_id) #i.e. a user was on the task before and now he is not there
         if (user_to_tasks = self.users_to_tasks[prev_user_id])
           user_to_tasks.delete task_id
           self.project_members_to_dependency[prev_user_id].changed()
     # in a similar way, add the users that are on the new list and were not on the prev list
-    current_users.forEach (current_user_id)->
+    current_users.forEach (current_user_id) ->
       if not prev_users.has(current_user_id)
         if not self.users_to_tasks[current_user_id]
           self.users_to_tasks[current_user_id] = new Set()
@@ -473,10 +466,10 @@ Template.justdo_calendar_project_pane.onCreated ->
 
     return
 
-  @onTaskRemoved = (task_id)->
-    if !(users = self.tasks_to_users[task_id])
+  @onTaskRemoved = (task_id) ->
+    if not (users = self.tasks_to_users[task_id])
       return
-    users.forEach (user_id)->
+    users.forEach (user_id) ->
       if (user_to_tasks = self.users_to_tasks[user_id])
         user_to_tasks.delete task_id
         self.project_members_to_dependency[user_id].changed()
@@ -488,9 +481,9 @@ Template.justdo_calendar_project_pane.onCreated ->
   @autorun =>
     dates = []
     d = moment(new Date(Template.instance().view_start_date.get()))
-    for i in [0..(number_of_days_to_display.get()-1)]
+    for i in [0..(number_of_days_to_display.get() - 1)]
       dates.push(d.format("YYYY-MM-DD"))
-      d.add(1,"days")
+      d.add(1, "days")
     dates_to_display.set(dates)
     Template.instance().view_end_date.set(dates[dates.length - 1])
     @justdo_level_holidays.set(APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo({_id: 1})._id, dates).holidays)
@@ -502,12 +495,12 @@ Template.justdo_calendar_project_pane.onCreated ->
     for member in all_members
       if not self.project_members_to_dependency[member]
         self.project_members_to_dependency[member] = new Tracker.Dependency()
-      if !self.users_to_tasks[member]
+      if not self.users_to_tasks[member]
         self.users_to_tasks[member] = new Set()
       else if self.users_to_tasks[member].size > 0
         self.project_members_to_dependency[member].changed()
         self.users_to_tasks[member].clear()
-      self.tasks_to_users={}
+      self.tasks_to_users = {}
 
     include_tasks = []
     project_id = delivery_planner_project_id.get()
@@ -523,14 +516,13 @@ Template.justdo_calendar_project_pane.onCreated ->
     dates = dates_to_display.get()
 
     first_date_to_display = dates[0]
-    last_date_to_display = dates[dates.length-1]
+    last_date_to_display = dates[dates.length - 1]
 
-    
     dates_part = [
       #regular followup date
       {follow_up: {$in: dates}},
       #private followup date
-      {'priv:follow_up': {$in: dates}},
+      {"priv:follow_up": {$in: dates}},
       #end date in between the dates
       {$and: [
         {end_date: {$gte: first_date_to_display}},
@@ -579,6 +571,7 @@ Template.justdo_calendar_project_pane.onCreated ->
         self.onTaskRemoved id
         return
     #end of autorun
+    return
 
   @autorun =>
     project_id = delivery_planner_project_id.get()
@@ -628,9 +621,9 @@ Template.justdo_calendar_project_pane.helpers
     view_resolution = number_of_days_to_display.get()
 
     if view_resolution >= 56
-      date_format = 'MMMM Do, YYYY'
+      date_format = "MMMM Do, YYYY"
     else
-      date_format = 'MMMM Do'
+      date_format = "MMMM Do"
 
     return "#{moment(Template.instance().view_start_date.get()).format(date_format)} - #{moment(Template.instance().view_end_date.get()).format(date_format)} "
 
@@ -646,14 +639,14 @@ Template.justdo_calendar_project_pane.helpers
     calendar_projects_filter_val = tmpl.calendar_projects_filter_val.get()
 
     project = APP.modules.project_page.project.get()
-    
+
     if project?
       projects = APP.collections.Tasks.find({
-          "p:dp:is_project": true
-          "p:dp:is_archived_project":
-            $ne: true
-          project_id: project.id
-        }, {sort: {"title": 1}}).fetch()
+        "p:dp:is_project": true
+        "p:dp:is_archived_project":
+          $ne: true
+        project_id: project.id
+      }, {sort: {"title": 1}}).fetch()
 
       if not calendar_projects_filter_val? or calendar_projects_filter_val == ""
         return projects
@@ -701,7 +694,6 @@ Template.justdo_calendar_project_pane.helpers
   weekNumber: ->
     return moment(@).isoWeek()
 
-
   calendarViewResolution: -> number_of_days_to_display.get()
 
   currentMemberAvatar: ->
@@ -723,7 +715,7 @@ Template.justdo_calendar_project_pane.helpers
       task_ids = sub_tree_task_ids.get()
 
       other_users = new Set()
-      
+
       APP.collections.TasksAugmentedFields.find
         _id:
           $in: task_ids
@@ -743,7 +735,7 @@ Template.justdo_calendar_project_pane.helpers
     other_users_docs = []
 
     for user_id in other_users
-      other_users_docs.push Meteor.users.findOne(user_id, { _id: 1 })
+      other_users_docs.push Meteor.users.findOne(user_id, {_id: 1})
 
     calendar_members_filter_val = tmpl.calendar_members_filter_val.get()
     membersDocs = JustdoHelpers.filterUsersDocsArray(other_users_docs, calendar_members_filter_val)
@@ -781,7 +773,7 @@ Template.justdo_calendar_project_pane.helpers
 Template.justdo_calendar_project_pane.events
   "click .calendar_view_zoom_out": ->
     index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
-    if index < config.supported_days_resolution.length-1
+    if index < config.supported_days_resolution.length - 1
       number_of_days_to_display.set(config.supported_days_resolution[index + 1])
     return
 
@@ -932,7 +924,7 @@ Template.justdo_calendar_project_pane.events
 Template.justdo_calendar_project_pane.onDestroyed ->
   if @refresh_today_interval?
     Meteor.clearInterval @refresh_today_interval
-    
+
 Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
   @days_matrix = new ReactiveVar([])
@@ -951,15 +943,13 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
     data = Template.currentData()
     data.dependency.depend()
 
-    @justdo_user_holidays = APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo({_id: 1})?._id,\
+    @justdo_user_holidays = APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo({_id: 1})?._id, \
                             data.dates_to_display, Template.currentData().user_id).holidays
 
     if self.last_tasks_set_size == 0 and data.tasks_set.size == 0
       return
 
     self.last_tasks_set_size = data.tasks_set.size
-
-
 
     #days_matrix is eventually a matrix that represents the table that we are going to display,
     # where each column represents a day and each cell holds a task in such a way that we could later
@@ -971,7 +961,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
     self.days_matrix.set(days_matrix)
 
     first_date_to_display = data.dates_to_display[0]
-    last_date_to_display = data.dates_to_display[data.dates_to_display.length-1]
+    last_date_to_display = data.dates_to_display[data.dates_to_display.length - 1]
 
     planned_seconds_field = "p:rp:b:work-hours_p:b:user:#{data.user_id}"
     executed_seconds_field = "p:rp:b:work-hours_e:b:user:#{data.user_id}"
@@ -981,7 +971,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         {owner_id:  data.user_id}, #user is owner, and there is no pending owner
         {pending_owner_id: data.user_id}, #user is the pending owner
         {"#{planned_seconds_field}": {$gt: 0}}, #user has planned hours on the task
-        {'priv:follow_up': {$exists: true}}
+        {"priv:follow_up": {$exists: true}}
         ]
 
     options =
@@ -1010,11 +1000,11 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
     APP.collections.Tasks.find query,
       fields:
         _id: 1
-    .forEach (task)->
+    .forEach (task) ->
       task_ids_need_to_sub.push task._id
     JD.subscribeItemsAugmentedFields task_ids_need_to_sub, ["users"]
 
-    APP.collections.Tasks.find(query, options).forEach (task)->
+    APP.collections.Tasks.find(query, options).forEach (task) ->
       task_details =
         _id: task._id
         title: task.title
@@ -1034,33 +1024,33 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
       if task.follow_up and
             (task.owner_id == data.user_id or task.pending_owner_id == data.user_id) and
-            data.dates_to_display.indexOf(task.follow_up) >-1
+            data.dates_to_display.indexOf(task.follow_up) > -1
         day_index = data.dates_to_display.indexOf(task.follow_up)
         day_column = days_matrix[day_index]
         row_index = 0
         while true
-          if !day_column[row_index]?
+          if not day_column[row_index]?
 
             day_column[row_index] =
               task: task_details
-              type: 'F'# F for followup, P for private followup, R for regular
+              type: "F"# F for followup, P for private followup, R for regular
               span: 1
             break
-          row_index++
+          row_index += 1
 
       #deal with private followups
-      if task['priv:follow_up'] and data.dates_to_display.indexOf(task['priv:follow_up']) >-1 and data.user_id == Meteor.userId()
-        day_index = data.dates_to_display.indexOf(task['priv:follow_up'])
+      if task["priv:follow_up"] and data.dates_to_display.indexOf(task["priv:follow_up"]) > -1 and data.user_id == Meteor.userId()
+        day_index = data.dates_to_display.indexOf(task["priv:follow_up"])
         day_column = days_matrix[day_index]
         row_index = 0
         while true
-          if !day_column[row_index]?
+          if not day_column[row_index]?
             day_column[row_index] =
               task: task_details
-              type: 'P' # F for followup, P for private followup, R for regular
+              type: "P" # F for followup, P for private followup, R for regular
               span: 1
             break
-          row_index++
+          row_index += 1
 
       #deal with regular tasks
       if (task.start_date? and task.start_date >= first_date_to_display and task.start_date <= last_date_to_display) or
@@ -1068,7 +1058,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
          (task.due_date? and task.due_date >= first_date_to_display and task.due_date <= last_date_to_display) or
          (task.start_date? and task.end_date? and task.start_date < first_date_to_display and task.end_date > last_date_to_display) or
          (task.start_date? and task.due_date? and task.start_date < first_date_to_display and task.due_date > last_date_to_display)
-        
+
         start_date = ""
         starts_before_view = false
         if task.start_date?
@@ -1086,24 +1076,23 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
           end_date = task.due_date
         else
           end_date = task.start_date
-          
+
         # Dealing with cases where start and end dates are out of the view, but due date is w/in.
         if ((
-              (start_date < first_date_to_display and end_date < first_date_to_display) or
-              (start_date > last_date_to_display and end_date > last_date_to_display )
-            ) and task.due_date >= first_date_to_display and task.due_date <= last_date_to_display
+          (start_date < first_date_to_display and end_date < first_date_to_display) or
+          (start_date > last_date_to_display and end_date > last_date_to_display )
+          ) and task.due_date >= first_date_to_display and task.due_date <= last_date_to_display
         )
           start_date = task.due_date
           end_date = task.due_date
-          
 
         start_day_index = data.dates_to_display.indexOf(start_date)
         if start_day_index == -1 and start_date < data.dates_to_display[0]
           start_day_index = 0
           starts_before_view = true
         end_day_index = data.dates_to_display.indexOf(end_date)
-        if end_day_index == -1 and end_date > data.dates_to_display[data.dates_to_display.length-1]
-          end_day_index = data.dates_to_display.length-1
+        if end_day_index == -1 and end_date > data.dates_to_display[data.dates_to_display.length - 1]
+          end_day_index = data.dates_to_display.length - 1
           ends_after_view = true
 
         # deal in situations where the start date is after the due date...
@@ -1127,26 +1116,26 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
             task_details.planned_seconds = task[planned_seconds_field]
             task_details.executed_seconds = task[executed_seconds_field]
-            
+
             days_matrix[start_day_index][row_index] =
               task: task_details
-              type: 'R' # F for followup, P for private followup, R for regular
-              span: end_day_index-start_day_index + 1
+              type: "R" # F for followup, P for private followup, R for regular
+              span: end_day_index - start_day_index + 1
               starts_before_view: starts_before_view
               ends_after_view: ends_after_view
               start_date_after_due_date: start_date_after_due_date
 
             if start_day_index != end_day_index
-              for i in [start_day_index+1..end_day_index]
+              for i in [start_day_index + 1..end_day_index]
                 days_matrix[i][row_index] =
                   task: task_details
-                  type: 't' # F for followup, P for private followup, R for regular, t for cont task
+                  type: "t" # F for followup, P for private followup, R for regular, t for cont task
 
             break
-          row_index++
+          row_index += 1
           # end of while true
         # end of dealing with regular tasks
-      
+
       #now we need to loop over all days, and for each day count the total working hours
 
       dates_workload = {}
@@ -1154,7 +1143,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
       task_to_flat_hours_per_day = {} # this is a cache var to hold hours per day for each task,
                                       # based on flat distribution of planned hours over workdays.
                                       # We clear it and repopulate it when working on the dates_workload
-      flatHoursPerDay = (row_data)->
+      flatHoursPerDay = (row_data) ->
         # Optimization: avoid calculations for tasks that don't have planned_seconds.
         if not row_data.task.planned_seconds? or row_data.task.planned_seconds == 0
           return 0
@@ -1163,14 +1152,14 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
           return task_to_flat_hours_per_day[row_data.task._id]
         start_date = moment(row_data.task.start_date)
         end_date = moment(row_data.task.end_date)
-        if !row_data.task.start_date
+        if not row_data.task.start_date
           start_date = end_date
-        if !row_data.task.end_date
+        if not row_data.task.end_date
           end_date = start_date
         if end_date <= start_date
           task_to_flat_hours_per_day[row_data.task._id] = row_data.task.planned_seconds / 3600
           return task_to_flat_hours_per_day[row_data.task._id]
-        
+
         user_availability = APP.justdo_resources_availability.userAvailabilityBetweenDates start_date.format("YYYY-MM-DD"),
             end_date.format("YYYY-MM-DD"), JD.activeJustdo({_id: 1})._id, data.user_id
 
@@ -1184,19 +1173,19 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
           task_id = null
 
           #due to tasks placements, there might be empty rows in the column. we will avoid those:
-          if !row?
+          if not row?
             continue
 
           if row.type == "R" or row.type == "t"
             date = data.dates_to_display[column_index]
             Meteor._ensure dates_workload, date
             #calcualte number of tasks:
-            if !dates_workload[date].number_of_tasks
+            if not dates_workload[date].number_of_tasks
               dates_workload[date].number_of_tasks = 0
-            dates_workload[date].number_of_tasks++
+            dates_workload[date].number_of_tasks += 1
 
             #calculate number of hours, assuming flat distribution of task's time over workdays
-            if !dates_workload[date].total_hours
+            if not dates_workload[date].total_hours
               dates_workload[date].total_hours = 0
             dates_workload[date].total_hours += flatHoursPerDay(row)
 
@@ -1231,7 +1220,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
     # Set drag and drop after user info has been expanded
     @autorun =>
-      if !@collapsed_view.get()
+      if not @collapsed_view.get()
         setTimeout (->
           setDragAndDrop()
           return
@@ -1240,9 +1229,11 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
     return
 
+  return
+
 Template.justdo_calendar_project_pane_user_view.onDestroyed ->
-    delete members_collapse_state_vars[Template.currentData().user_id]
-    return
+  delete members_collapse_state_vars[Template.currentData().user_id]
+  return
 
 Template.justdo_calendar_project_pane_user_view.onRendered ->
   setDragAndDrop()
@@ -1264,7 +1255,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     return Template.instance().collapsed_view.get()
 
   bottomLine: ->
-    column_date = Template.instance().data.dates_to_display[this]
+    column_date = Template.instance().data.dates_to_display[@]
     workload = Template.instance().dates_workload.get()
 
     if( daily_workload = workload[column_date])
@@ -1301,7 +1292,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
   dimTask: ->
     if (@task?.pending_owner_id? and @task.owner_id == Template.instance().data.user_id) or
       (Template.instance().data.user_id == Meteor.userId() and @task.owner_id != Meteor.userId() and @task["priv:follow_up"]? )
-          return "dim_task"
+        return "dim_task"
 
     return ""
 
@@ -1317,14 +1308,14 @@ Template.justdo_calendar_project_pane_user_view.helpers
       if days_matrix[i]?.length > ret
         ret = days_matrix[i].length
 
-    return [0..ret-1]
+    return [0..ret - 1]
 
   # NEED TO FIX IN THE FUTURE: Helper has to return the number of all possible rows
   navRowspan: ->
     return 9999
 
   firstRow: ->
-    return (@+1)==1
+    return (@ + 1) == 1
 
   markDaysOff: ->
     column_date = Template.instance().data.dates_to_display[@]
@@ -1333,7 +1324,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     return ""
 
   colNumbers: ->
-    return [0..Template.instance().data.dates_to_display.length-1]
+    return [0..Template.instance().data.dates_to_display.length - 1]
 
   numberOfRows: ->
     days_matrix = Template.instance().days_matrix.get()
@@ -1344,7 +1335,6 @@ Template.justdo_calendar_project_pane_user_view.helpers
     ret += 1 # we need one more row for resources
     return ret
 
-
   userObj: ->
     return  Meteor.users.findOne(Template.instance().data.user_id)
 
@@ -1353,7 +1343,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     row_num = Template.parentData()
     matrix = Template.instance().days_matrix.get()
 
-    if (info=matrix[col_num]?[row_num])
+    if (info = matrix[col_num]?[row_num])
       if info.task?
         return info.task._id
     return ""
@@ -1368,20 +1358,19 @@ Template.justdo_calendar_project_pane_user_view.helpers
         return true
     return false
 
-
   startsBeforeView: ->
-    return @starts_before_view and @type == 'R'
+    return @starts_before_view and @type == "R"
 
   endsAfterView: ->
-    return @ends_after_view and @type == 'R'
+    return @ends_after_view and @type == "R"
 
   skipTD: ->
     col_num = @
     row_num = Template.parentData()
     matrix = Template.instance().days_matrix.get()
 
-    if (info=matrix[col_num]?[row_num])
-      return info.type == 't'
+    if (info = matrix[col_num]?[row_num])
+      return info.type == "t"
     return false
 
   cellData: ->
@@ -1396,14 +1385,14 @@ Template.justdo_calendar_project_pane_user_view.helpers
   unassignedHours: ->
     if @type == "R" and @task.unassigned_hours > 0 and @task.owner_id == Template.instance().data.user_id
       seconds = @task.unassigned_hours
-      minutes = Math.floor(seconds/60)
-      hours = Math.floor(minutes/60)
-      mins = minutes - hours*60
+      minutes = Math.floor(seconds / 60)
+      hours = Math.floor(minutes / 60)
+      mins = minutes - hours * 60
       return "#{hours}:#{JustdoHelpers.padString(mins, 2)} H unassigned"
     return ""
 
   hasDueDate: ->
-    if @type == 'R' and @task.due_date
+    if @type == "R" and @task.due_date
       return true
     return false
 
@@ -1411,26 +1400,26 @@ Template.justdo_calendar_project_pane_user_view.helpers
     return "Due: #{@task.due_date}"
 
   highlightPastDueDate: ->
-    if @task.due_date < moment().format("YYYY-MM-DD") and (@task.state in ['pending', 'in-progress', 'on-hold','duplicate'])
+    if @task.due_date < moment().format("YYYY-MM-DD") and (@task.state in ["pending", "in-progress", "on-hold", "duplicate"])
       return "highlighted_due_date"
     return ""
 
   plannedHours: ->
-    if @type == 'R' and @task.planned_seconds > 0
+    if @type == "R" and @task.planned_seconds > 0
       seconds = @task.planned_seconds
       overtime = false
-      ### the following is in case that someday we will want to display (config base) the time left
-      if @task.executed_seconds
-        seconds -= @task.executed_seconds
+      # the following is in case that someday we will want to display (config base) the time left
+      # if @task.executed_seconds
+      #   seconds -= @task.executed_seconds
+      #
+      # if seconds < 0
+      #   seconds = -seconds
+      #   overtime = true
 
-      if seconds < 0
-        seconds = -seconds
-        overtime = true
-      ###
-      minutes = Math.floor(seconds/60)
-      hours = Math.floor(minutes/60)
-      mins = minutes - hours*60
-      if ! overtime
+      minutes = Math.floor(seconds / 60)
+      hours = Math.floor(minutes / 60)
+      mins = minutes - hours * 60
+      if not overtime
         return "#{hours}:#{JustdoHelpers.padString(mins, 2)} H planned"
       return "#{hours}:#{JustdoHelpers.padString(mins, 2)} H overtime"
     return ""
@@ -1472,9 +1461,9 @@ Template.justdo_calendar_project_pane_user_view.helpers
       ret += "\nPriority: #{@task.priority}"
     if @task.planned_seconds
       seconds = @task.planned_seconds
-      minutes = Math.floor(seconds/60)
-      hours = Math.floor(minutes/60)
-      mins = minutes - hours*60
+      minutes = Math.floor(seconds / 60)
+      hours = Math.floor(minutes / 60)
+      mins = minutes - hours * 60
       ret += "\nPlanned: #{hours}:#{JustdoHelpers.padString(mins, 2)} hours"
 
     return ret
@@ -1497,7 +1486,6 @@ Template.justdo_calendar_project_pane_user_view.helpers
     if number_of_days_to_display.get() > 14
       return false
     return true
-
 
 Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_task_cell": (e, tpl) ->
@@ -1530,24 +1518,24 @@ Template.justdo_calendar_project_pane_user_view.events
   #   if (elm = $(e.target).find(".fa-map-marker")[0])
   #     elm.style.visibility = 'visible'
   #   return
-
-  ### for now I think that it's better not to have the hover events -AL
-  "mouseover .calendar_view_scroll_left_cell" : (e, tpl)->
-    onSetScrollLeft()
-    return
-
-  "mouseout .calendar_view_scroll_left_cell" : (e, tpl)->
-    onUnsetScrollLeftRight()
-    return
-
-  "mouseover .calendar_view_scroll_right_cell" : (e, tpl)->
-    onSetScrollRight()
-    return
-
-  "mouseout .calendar_view_scroll_right_cell" : (e, tpl)->
-    onUnsetScrollLeftRight()
-    return
-  ###
+  #
+  # for now I think that it's better not to have the hover events -AL
+  # "mouseover .calendar_view_scroll_left_cell" : (e, tpl)->
+  #   onSetScrollLeft()
+  #   return
+  #
+  # "mouseout .calendar_view_scroll_left_cell" : (e, tpl)->
+  #   onUnsetScrollLeftRight()
+  #   return
+  #
+  # "mouseover .calendar_view_scroll_right_cell" : (e, tpl)->
+  #   onSetScrollRight()
+  #   return
+  #
+  # "mouseout .calendar_view_scroll_right_cell" : (e, tpl)->
+  #   onUnsetScrollLeftRight()
+  #   return
+  #
 
   "click .calendar_view_scroll_left_cell" : (e, tpl) ->
     onClickScrollLeft()
