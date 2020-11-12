@@ -191,6 +191,20 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       lines_to_add[row_index] =
         task: task
         indent_level: indent_level
+
+    if task[JustdoPlanningUtilities.is_milestone_pseudo_field_id] == "true"
+      if task.start_date? and task.end_date? and task.start_date != task.end_date
+        JustdoSnackbar.show
+          text: "Task #{task.title} at line #{line_number} is a milestone, it can only have the same Start Date and End Date."
+          duration: 15000
+
+        return false
+      
+      else if task.start_date? and not task.end_date?
+        task.end_date = task.start_date
+      
+      else if task.end_date? and not task.start_date?
+        task.start_date = task.end_date
         
     row_index += 1
 
