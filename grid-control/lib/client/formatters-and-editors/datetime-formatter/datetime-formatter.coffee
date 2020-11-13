@@ -1,5 +1,5 @@
 GridControl.installFormatter "datetimeFormatter",
-  getDateTimeString: (value) -> JustdoHelpers.getDateTimeStringInUserPreferenceFormatNonReactive(value)
+  getDateTimeString: (value) -> JustdoHelpers.getDateTimeStringInUserPreferenceFormat(value, undefined, true) # undefined is to use the default show_seconds; true is to use the non-reactive version
 
   slickGridColumnStateMaintainer: ->
     if not Tracker.active
