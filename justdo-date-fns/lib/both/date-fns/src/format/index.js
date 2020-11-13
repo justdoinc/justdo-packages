@@ -114,6 +114,24 @@ function format (dirtyDate, dirtyFormatStr, dirtyOptions) {
   return formatFn(date)
 }
 
+format.getFormatFn = function getFormatFn (dirtyFormatStr, dirtyOptions) {
+  var formatStr = dirtyFormatStr ? String(dirtyFormatStr) : 'YYYY-MM-DDTHH:mm:ss.SSSZ'
+  var options = dirtyOptions || {}
+
+  var locale = options.locale
+  var localeFormatters = enLocale.format.formatters
+  var formattingTokensRegExp = enLocale.format.formattingTokensRegExp
+  if (locale && locale.format && locale.format.formatters) {
+    localeFormatters = locale.format.formatters
+
+    if (locale.format.formattingTokensRegExp) {
+      formattingTokensRegExp = locale.format.formattingTokensRegExp
+    }
+  }
+
+  return buildFormatFn(formatStr, localeFormatters, formattingTokensRegExp)
+}
+
 var formatters = {
   // Month: 1, 2, ..., 12
   'M': function (date) {
