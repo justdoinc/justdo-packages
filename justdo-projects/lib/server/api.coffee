@@ -711,6 +711,7 @@ _.extend Projects.prototype,
 
           # new_members_invites_proxy conf
           if (new_members_invites_proxy = project_doc.conf?.new_members_invites_proxy)?
+            invited_user_email = to
             to = new_members_invites_proxy
             _.extend template_data,
               # original_recepient will be hidden in the email body
