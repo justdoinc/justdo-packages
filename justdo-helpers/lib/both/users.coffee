@@ -71,6 +71,8 @@ _.extend JustdoHelpers,
     # Fallback to the raw_data_moment_format
     return raw_data_moment_format
 
+  getUserPreferredDateFormatNonReactive: JustdoHelpers.generateSameTickCachedProcedure("getUserPreferredDateFormatNonReactive", (args...) -> JustdoHelpers.getUserPreferredDateFormat(...args))
+
   getUserPreferredUseAmPm: ->
     # Reactive resource!
     if (preferred_use_am_pm = Meteor.user()?.profile?.use_am_pm)?
@@ -127,17 +129,26 @@ _.extend JustdoHelpers,
     else
       return "LT"
 
-  getDateTimeStringInUserPreferenceFormat: (date, show_seconds) ->
-    user_preferred_date_format = JustdoHelpers.getUserPreferredDateFormat.call(@)
-    time_string_in_user_preference_format = JustdoHelpers.getTimeStringInUserPreferenceFormat.call(@, show_seconds)
+  getTimeStringInUserPreferenceFormatNonReactive: JustdoHelpers.generateSameTickCachedProcedure("getTimeStringInUserPreferenceFormatNonReactive", (args...) -> JustdoHelpers.getTimeStringInUserPreferenceFormat(...args))
+
+  getDateTimeStringInUserPreferenceFormat: (date, show_seconds, non_reactive=false) ->
+    if non_reactive
+      user_preferred_date_format = JustdoHelpers.getUserPreferredDateFormatNonReactive.call(@)
+      time_string_in_user_preference_format = JustdoHelpers.getTimeStringInUserPreferenceFormatNonReactive.call(@, show_seconds)
+    else
+      user_preferred_date_format = JustdoHelpers.getUserPreferredDateFormat.call(@)
+      time_string_in_user_preference_format = JustdoHelpers.getTimeStringInUserPreferenceFormat.call(@, show_seconds)
 
     if not date? or date == ""
       return ""
 
-    return moment(date).format("#{user_preferred_date_format} #{time_string_in_user_preference_format}")
+    format = "#{user_preferred_date_format} #{time_string_in_user_preference_format}"
 
-  getDateTimeStringInUserPreferenceFormatNonReactive: (date, show_seconds) ->
-    return Tracker.nonreactive => JustdoHelpers.getDateTimeStringInUserPreferenceFormat(date, show_seconds)
+    formatter_fn_same_tick_cache_key = "getDateTimeStringInUserPreferenceFormat:#{show_seconds}"
+    if not (dateFormatterFn = JustdoHelpers.sameTickCacheGet(formatter_fn_same_tick_cache_key))?
+      dateFormatterFn = JustdoHelpers.sameTickCacheSet(formatter_fn_same_tick_cache_key, JustdoDateFns.getFormatFn(format))
+    
+    return dateFormatterFn(date)
 
   filterUsersDocsArray: (users_docs, niddle) ->
     if not niddle?
