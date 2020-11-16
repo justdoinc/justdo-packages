@@ -202,110 +202,110 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "zoom-in"
 
-    @registerMainSection "copy-paste",
-      position: 300
+    # @registerMainSection "copy-paste",
+    #   position: 300
 
-    @registerSectionItem "copy-paste", "copy",
-      position: 100
-      data:
-        label: "Copy"
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          clipboard.copy
-            "text/plain": field_val or ""
-          return
-        icon_type: "feather"
-        icon_val: "copy"
+    # @registerSectionItem "copy-paste", "copy",
+    #   position: 100
+    #   data:
+    #     label: "Copy"
+    #     op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+    #       clipboard.copy
+    #         "text/plain": field_val or ""
+    #       return
+    #     icon_type: "feather"
+    #     icon_val: "copy"
 
-    isFieldEditable = (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-      if not field_info?.column_field_schema?.grid_editable_column
-        return false
+    # isFieldEditable = (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+    #   if not field_info?.column_field_schema?.grid_editable_column
+    #     return false
 
-      if not (field_id = field_info?.field_name)?
-        return false
+    #   if not (field_id = field_info?.field_name)?
+    #     return false
 
-      # If tasks locks are installed, and if so, whether the task is locked and if so, whether the current field_id is
-      # restricted when the task is locked
-      if APP.custom_justdo_tasks_locks.isPluginInstalledOnProjectDoc(JD.activeJustdo({conf: 1}))
-        if not APP.custom_justdo_tasks_locks.isActiveUserAllowedToPerformRestrictedOperationsOnActiveTask()
-          if field_id in CustomJustdoTasksLocks.restricted_fields
-            return false
+    #   # If tasks locks are installed, and if so, whether the task is locked and if so, whether the current field_id is
+    #   # restricted when the task is locked
+    #   if APP.custom_justdo_tasks_locks.isPluginInstalledOnProjectDoc(JD.activeJustdo({conf: 1}))
+    #     if not APP.custom_justdo_tasks_locks.isActiveUserAllowedToPerformRestrictedOperationsOnActiveTask()
+    #       if field_id in CustomJustdoTasksLocks.restricted_fields
+    #         return false
 
-      return true
+    #   return true
 
-    @registerSectionItem "copy-paste", "paste",
-      position: 200
-      data:
-        label: "Paste"
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          # Credit: https://stackoverflow.com/questions/6413036/get-current-clipboard-content
-          navigator.clipboard.readText()
-            .then (text) =>
-              if (allowed_grid_values = field_info?.column_field_schema?.grid_values)? and
-                  text not of allowed_grid_values
-                console.warn "Value '#{text}' isn't allowed."
+    # @registerSectionItem "copy-paste", "paste",
+    #   position: 200
+    #   data:
+    #     label: "Paste"
+    #     op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+    #       # Credit: https://stackoverflow.com/questions/6413036/get-current-clipboard-content
+    #       navigator.clipboard.readText()
+    #         .then (text) =>
+    #           if (allowed_grid_values = field_info?.column_field_schema?.grid_values)? and
+    #               text not of allowed_grid_values
+    #             console.warn "Value '#{text}' isn't allowed."
 
-                return
+    #             return
 
-              APP.collections.Tasks.update task_id,
-                $set:
-                  "#{field_info.field_name}": text
+    #           APP.collections.Tasks.update task_id,
+    #             $set:
+    #               "#{field_info.field_name}": text
 
-              return
-            .catch (err) =>
-              console.error("Failed to read clipboard contents: ", err)
+    #           return
+    #         .catch (err) =>
+    #           console.error("Failed to read clipboard contents: ", err)
 
-          # Another approach that we might use in the future:
-          #
-          # navigator.clipboard.read()
-          #   .then (clipboard_items) =>
-          #     for clipboard_item in clipboard_items
-          #       for type in clipboard_item.types
-          #         clipboard_item.getType(type)
-          #           .then (blob) =>
-          #             console.log(blob)
+    #       # Another approach that we might use in the future:
+    #       #
+    #       # navigator.clipboard.read()
+    #       #   .then (clipboard_items) =>
+    #       #     for clipboard_item in clipboard_items
+    #       #       for type in clipboard_item.types
+    #       #         clipboard_item.getType(type)
+    #       #           .then (blob) =>
+    #       #             console.log(blob)
 
-          return
-        icon_type: "feather"
-        icon_val: "clipboard"
-      listingCondition: isFieldEditable
+    #       return
+    #     icon_type: "feather"
+    #     icon_val: "clipboard"
+    #   listingCondition: isFieldEditable
 
-    @registerSectionItem "copy-paste", "clear",
-      position: 300
-      data:
-        label: "Clear"
-        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          value_to_set = null
+    # @registerSectionItem "copy-paste", "clear",
+    #   position: 300
+    #   data:
+    #     label: "Clear"
+    #     op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+    #       value_to_set = null
 
-          if field_info.field_name == "state"
-            value_to_set = "nil"
+    #       if field_info.field_name == "state"
+    #         value_to_set = "nil"
 
-          APP.collections.Tasks.update task_id,
-            $set:
-              "#{field_info.field_name}": value_to_set
+    #       APP.collections.Tasks.update task_id,
+    #         $set:
+    #           "#{field_info.field_name}": value_to_set
 
-          JustdoSnackbar.show
-            text: "#{field_info.column_field_schema.label} cleared"
-            actionText: "Dismiss"
-            showSecondButton: true
-            secondButtonText: "Undo"
-            duration: 7000
-            onActionClick: =>
-              JustdoSnackbar.close()
-              return
+    #       JustdoSnackbar.show
+    #         text: "#{field_info.column_field_schema.label} cleared"
+    #         actionText: "Dismiss"
+    #         showSecondButton: true
+    #         secondButtonText: "Undo"
+    #         duration: 7000
+    #         onActionClick: =>
+    #           JustdoSnackbar.close()
+    #           return
 
-            onSecondButtonClick: =>
-              APP.collections.Tasks.update task_id,
-                $set:
-                  "#{field_info.field_name}": field_val
+    #         onSecondButtonClick: =>
+    #           APP.collections.Tasks.update task_id,
+    #             $set:
+    #               "#{field_info.field_name}": field_val
 
-              JustdoSnackbar.close()
+    #           JustdoSnackbar.close()
 
-              return
+    #           return
 
-          return
-        icon_type: "feather"
-        icon_val: "x-square"
-      listingCondition: isFieldEditable
+    #       return
+    #     icon_type: "feather"
+    #     icon_val: "x-square"
+    #   listingCondition: isFieldEditable
 
     do () => # Do, to emphesize that it can move out of the core-menu-sections.coffee file
       self = @
