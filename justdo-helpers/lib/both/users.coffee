@@ -109,7 +109,8 @@ _.extend JustdoHelpers,
 
   getTimeStringInUserPreferenceFormat: (show_seconds=true) ->
     # Reactive resource!
-    user_preferred_use_am_pm_format = JustdoHelpers.getUserPreferredUseAmPm.call(@)
+    if not (user_preferred_use_am_pm_format = JustdoHelpers.getUserPreferredUseAmPm.call(@))?
+      user_preferred_use_am_pm_format = false # Use 24 hours clock by default
 
     if user_preferred_use_am_pm_format is true
       if show_seconds
