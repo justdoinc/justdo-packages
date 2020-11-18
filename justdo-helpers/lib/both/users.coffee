@@ -159,10 +159,11 @@ _.extend JustdoHelpers,
 
     exist_users = {}
     results = _.filter users_docs, (doc) ->
-      if exist_users[doc._id]
+      key = if _.isString(doc) then doc else doc._id
+      if exist_users[key]
         return false
       
-      exist_users[doc._id] = true
+      exist_users[key] = true
       
       display_name = JustdoHelpers.displayName(doc)
 
