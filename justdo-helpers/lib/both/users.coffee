@@ -175,6 +175,15 @@ _.extend JustdoHelpers,
       return false
 
     return results
+  
+  filterUsersIdsArray: (user_ids, niddle) ->
+    user_docs = @getUsersDocsByIds user_ids,
+      fields:
+        _id: 1
+        profile: 1
+        emails: 1
+
+    return @filterUsersDocsArray user_docs, niddle
 
   friendlyDateFormat: (date) ->
     moment_date = moment(date)
