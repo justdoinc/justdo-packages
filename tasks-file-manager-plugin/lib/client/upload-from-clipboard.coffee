@@ -21,7 +21,7 @@ _.extend TasksFileManager.prototype,
 
   _setupPasteEventListener: ->
     # If any of the restricted targets is currently focused, we skip the paste procedure
-    restricted_targets = ["#task-description-container"]
+    restricted_targets = ["#task-description-container", "textarea,input"]
 
     window.addEventListener "paste", (e) =>
       if JustdoHelpers.currentPageName() == "project"
