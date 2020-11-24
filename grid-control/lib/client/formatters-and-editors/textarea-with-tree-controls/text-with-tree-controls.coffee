@@ -94,6 +94,7 @@ GridControl.installFormatter "textWithTreeControls",
 
     highest_seqId_computation = null
     is_delivery_planner_plugin_enabled_computation = null
+    is_justdo_planning_utilities_plugin_enabled_computation = null
     is_time_tracker_plugin_enabled_computation = null
     is_resource_planner_plugin_enabled_computation = null
     is_checklist_plugin_enabled_computation = null
@@ -118,6 +119,15 @@ GridControl.installFormatter "textWithTreeControls",
         if current_val != cached_val
           @setCurrentColumnData("delivery_planner_plugin_enabled", current_val)
 
+          dep.changed()
+
+        return
+
+      is_justdo_planning_utilities_plugin_enabled_computation = Tracker.autorun =>
+        current_val = APP.justdo_planning_utilities.isPluginInstalledOnJustdo JD.activeJustdoId() # Reactive
+        cached_val = @getCurrentColumnData("justdo_planning_utilities_plugin_enabled") # non reactive
+        if current_val != cached_val
+          @setCurrentColumnData("justdo_planning_utilities_plugin_enabled", current_val)
           dep.changed()
 
         return
@@ -158,6 +168,7 @@ GridControl.installFormatter "textWithTreeControls",
     Tracker.onInvalidate ->
       highest_seqId_computation.stop()
       is_delivery_planner_plugin_enabled_computation.stop()
+      is_justdo_planning_utilities_plugin_enabled_computation.stop()
       is_time_tracker_plugin_enabled_computation.stop()
       is_resource_planner_plugin_enabled_computation.stop()
       is_checklist_plugin_enabled_computation.stop()
@@ -243,6 +254,15 @@ GridControl.installFormatter "textWithTreeControls",
             <i class="fa fa-fw fa-play-circle-o jdt-play jdt-grid-icon slick-prevent-edit" title="Start working on this task" aria-hidden="true"></i>
         """
 
+    if @getCurrentColumnData("justdo_planning_utilities_plugin_enabled")
+      if doc[JustdoPlanningUtilities?.is_milestone_pseudo_field_id] == "true"
+        tree_control +=  """
+          <svg class="jd-icon ongrid-jd-icon text-secondary slick-prevent-edit">
+            <title>Gantt Milestone</title>
+            <use xlink:href="/layout/icons-feather-sprite.svg#jd-rhombus" class="slick-prevent-edit"></use>
+          </svg>
+        """
+
     if @getCurrentColumnData("resource_planner_plugin_enabled") and not doc._type?
       user_has_planned_hours_for_the_task =
         doc["p:rp:b:work-hours_p:b:user:#{Meteor.userId()}"]? and
@@ -315,7 +335,7 @@ GridControl.installFormatter "textWithTreeControls",
       tree_control += APP.justdo_checklist.getOnGridCheckMarkHtml(doc, path)
 
     tree_control += """
-      <svg class="jd-icon jd-icon-context-menu jd-c-pointer text-secondary slick-prevent-edit">
+      <svg class="jd-icon jd-icon-context-menu ongrid-jd-icon jd-c-pointer text-secondary slick-prevent-edit">
         <use xlink:href="/layout/icons-feather-sprite.svg#more-vertical" class="slick-prevent-edit"></use>
       </svg>
     """
