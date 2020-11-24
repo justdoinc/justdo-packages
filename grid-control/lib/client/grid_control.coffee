@@ -788,7 +788,8 @@ _.extend GridControl.prototype,
             if not dependency_def.grid_dependent_fields?
               dependency_def.grid_dependent_fields = []
 
-            dependency_def.grid_dependent_fields.push(dependent_field_name)
+            if dependency_def.grid_dependent_fields.indexOf(dependent_field_name) == -1
+              dependency_def.grid_dependent_fields.push(dependent_field_name)
 
     @fixed_fields = fixed_fields
     @schema = schema
