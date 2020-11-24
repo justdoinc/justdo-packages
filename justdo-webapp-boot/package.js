@@ -35,4 +35,5 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/app-accounts.coffee", both);
 
   api.addFiles("lib/client/app-pseudo-collections.coffee", client);
+  api.addFiles("lib/client/errors-handler.coffee", client);
 });
