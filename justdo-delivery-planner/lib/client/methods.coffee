@@ -1,13 +1,9 @@
 _.extend JustdoDeliveryPlanner.prototype,
   toggleTaskIsProject: (task_id, cb) ->
-    Meteor.call "jdpToggleTaskIsProject", task_id, (err) ->
-      if err?
-        JustdoSnackbar.show
-          text: "Operation rejected. #{err.reason}"
-        console.error err
-      return
-      
+    Meteor.call "jdpToggleTaskIsProject", task_id, cb
 
+    return
+      
   commitProjectPlan: (project_task_id, cb) ->
     Meteor.call "jdpCommitProjectPlan", project_task_id, cb
 
