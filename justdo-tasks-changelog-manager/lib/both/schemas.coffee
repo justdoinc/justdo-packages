@@ -55,5 +55,11 @@ _.extend TasksChangelogManager.prototype,
         label: "Project ID"
         type: String
         optional: true
+      
+      created_doc:
+        label: "Created Doc"
+        type: Object
+        optional: true
+        blackbox: true
 
     @changelog_collection.attachSchema changelog_schema

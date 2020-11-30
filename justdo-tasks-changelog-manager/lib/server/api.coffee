@@ -77,7 +77,7 @@ _.extend TasksChangelogManager.prototype,
         fields:
           project_id: 1
       ?.project_id
-      
+
     @changelog_collection.insert obj, (err) =>
       if err?
         @logger.error(err)

@@ -15,6 +15,7 @@ _.extend PACK.builtin_trackers,
           project_id: doc.project_id
           users_added: doc.users
           by: doc.created_by_user_id
+          created_doc: doc
 
         self.logChange(obj)
 
