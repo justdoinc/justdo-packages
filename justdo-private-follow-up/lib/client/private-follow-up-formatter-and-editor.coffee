@@ -40,7 +40,7 @@ ext_actions_buttons = [
 
         editor_object.setInputValue(null)
 
-        suggestUndoClear(editor_object.context?.grid_control?.collection, editor_object.context?.item?._id, editor_object.context?.field_name, editor_object.context?.label, cleared_value)
+        suggestUndoClear(editor_object.context?.grid_control?.collection, editor_object.context?.item?._id, editor_object.context?.field_name, editor_object.context?.field_schema?.label, cleared_value)
 
         editor_object.saveAndExit()
 
