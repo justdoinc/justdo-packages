@@ -206,9 +206,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       else if task.end_date? and not task.start_date?
         task.start_date = task.end_date
         
-    if task["state"] == "done"
-      task["jgg:progress_percentage"] = 100
-        
     row_index += 1
 
   gc = APP.modules.project_page.mainGridControl()
