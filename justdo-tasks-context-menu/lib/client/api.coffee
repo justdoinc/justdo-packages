@@ -201,6 +201,7 @@ _.extend JustdoTasksContextMenu.prototype,
       my: "left top"
       at: "left bottom"
       of: "body"
+      collision: "none flipfit"
 
     jquery_ui_position_obj =
       _.extend default_jquery_ui_position_obj, jquery_ui_position_obj
