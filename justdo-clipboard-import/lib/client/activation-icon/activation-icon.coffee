@@ -116,7 +116,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     if not modal_data.rows_to_skip_set.get().has("#{row_index}")
       indent_level = 1
       for column_num in [0..(number_of_columns - 1)]
-        cell_val = row[column_num].trim()
+        cell_val = row[column_num].replace(/[\u200B-\u200D\uFEFF]/g, '').trim() # 'replace' is used to remove zero-width white space
         field_def = selected_columns_definitions[column_num]
         field_id = field_def._id
   
