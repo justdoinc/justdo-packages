@@ -59,5 +59,7 @@ Package.onUse(function (api) {
   api.add_files("lib/client/collection-hooks.coffee", client);
   api.add_files("lib/client/methods.coffee", client);
 
+  api.use("meteorspark:app@0.3.0", both);
+
   api.export("JustdoAccounts", both);
 });
