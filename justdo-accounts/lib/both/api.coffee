@@ -21,7 +21,7 @@ _.extend JustdoAccounts.prototype,
         validate: (password) -> /([\d])/i.test(password)
       ,
         code: "missing-special-sign"
-        reason: "Password must have at least one special character"
+        reason: "Password must have at least one special character (*@!#$%&-_+=[]\\|;:'\")"
         validate: (password) -> /[*@!#$%&\-\_\+\=\[\]\\\|;:'"/?,<.>()^~{}]+/.test(password)
       ,
         code: "atleast-one-lowercase"
