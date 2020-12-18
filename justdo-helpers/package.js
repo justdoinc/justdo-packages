@@ -67,6 +67,7 @@ Package.onUse(function (api) {
   api.add_files("lib/both/get-app-version.coffee", both);
   api.add_files("lib/both/handlers-registrar.coffee", both);
   api.add_files("lib/both/ddp-helpers.coffee", both);
+  api.add_files("lib/both/reactive-items-list.coffee", both);
 
   api.add_files("lib/client/blaze-extensions.coffee", client);
   api.add_files("lib/client/blaze.coffee", client);
@@ -82,7 +83,6 @@ Package.onUse(function (api) {
   api.add_files("lib/client/tab-visibility.coffee", client);
   api.add_files("lib/client/tasks-generator.coffee", client);
   api.add_files("lib/client/query-string.js", client);
-  api.add_files("lib/client/reactive-items-list.coffee", client);
   api.add_files("lib/client/reactivity-utils.coffee", client);
   api.add_files("lib/client/xss.coffee", client);
   api.add_files("lib/client/users-generator.coffee", client);
