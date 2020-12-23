@@ -90,5 +90,7 @@ Package.onUse(function (api) {
   // the server will have the access to the apis loaded after the init.coffee
   // file. 
 
+
+  api.export("TasksCollectionConstructor", both);
   api.export("JustdoTasksCollectionsManager", both);
 });
