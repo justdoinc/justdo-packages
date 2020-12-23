@@ -31,7 +31,7 @@ const hasOwn = Object.prototype.hasOwnProperty;
 // http://docs.mongodb.org/manual/reference/operators/#update
 const ALLOWED_UPDATE_OPERATIONS = {
   $inc:1, $set:1, $unset:1, $addToSet:1, $pop:1, $pullAll:1, $pull:1,
-  $pushAll:1, $push:1, $bit:1
+  $pushAll:1, $push:1, $bit:1, $currentDate: 1
 };
 
 TasksCollectionConstructor = function () {
