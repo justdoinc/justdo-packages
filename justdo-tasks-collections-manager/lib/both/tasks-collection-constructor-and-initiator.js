@@ -40,6 +40,8 @@ TasksCollectionConstructor = function () {
   return this;
 };
 
+TasksCollectionConstructor.ALLOWED_UPDATE_OPERATIONS = ALLOWED_UPDATE_OPERATIONS
+
 Util.inherits(TasksCollectionConstructor, Mongo.Collection);
 
 _.extend(TasksCollectionConstructor.prototype, {
