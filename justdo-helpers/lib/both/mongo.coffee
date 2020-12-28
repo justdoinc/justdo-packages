@@ -44,6 +44,21 @@ _.extend JustdoHelpers,
 
     return query
 
+  getFieldsInvolvedInUpdateOperation: (modifier) ->
+    # We know for sure that TasksCollectionConstructor.ALLOWED_UPDATE_OPERATIONS are the
+    # only possible operators, since
+    # justdo-tasks-collections-manager/lib/both/tasks-collection-constructor-and-initiator.js
+    # will throw an exception otherwise.
+
+    fields = new Set()
+
+    for allowed_operator of TasksCollectionConstructor.ALLOWED_UPDATE_OPERATIONS
+      if modifier[allowed_operator]?
+        for field_id of modifier[allowed_operator]
+          fields.add field_id
+
+    return Array.from(fields)
+
 _mock_collections_cache = {}
 _.extend JustdoHelpers,
   getCollection2Simulator: (collection, cb) ->
