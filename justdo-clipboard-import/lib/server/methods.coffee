@@ -2,6 +2,10 @@ _.extend JustdoClipboardImport.prototype,
   _setupMethods: ->
     self = @
 
-    Meteor.methods {}
+    Meteor.methods
+      "clearupTempImportId": (temp_import_ids) ->
+        self.clearupTempImportId temp_import_ids, @userId
+
+        return
 
     return

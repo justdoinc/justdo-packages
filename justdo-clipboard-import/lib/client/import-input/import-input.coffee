@@ -28,7 +28,7 @@ bindTargetToPaste = (tpl)->
           cell = cell.replace /&amp;/g, "&"
           
           # catch all html tags
-          cell = cell.replace(/<span[^\x05]+style=['"]mso-spacerun:yes['"]>[^\x05]+<\/span>/g, "")
+          cell = cell.replace(/<span[^\x05]+?style=['"]mso-spacerun:yes['"]>[^\x05]+?<\/span>/g, "")
           cell = cell.replace /<[^>]+>/g, ""
           
           cell = cell.replace /&lt;/g, "<"
@@ -148,12 +148,15 @@ Template.justdo_clipboard_import_input.events
     e.preventDefault()
 
     field_id = $(e.currentTarget)[0].getAttribute("field-id")
-    field_label = "-- skip column --"
-    if field_id != "clipboard-import-no-import"
-      if field_id == "task-indent-level"
-        field_label = "Indent Level"
-      else
-        field_label = Template.instance().getAvailableFieldTypes()?[0]?[field_id]?.label
+    
+    if field_id == "clipboard-import-no-import"
+      field_label = "-- skip column --"
+    else if field_id == "task-indent-level"
+      field_label = "Indent Level"
+    else if field_id == "clipboard-import-index"
+      field_label = "Index"
+    else
+      field_label = Template.instance().getAvailableFieldTypes()?[0]?[field_id]?.label
 
     $(e.currentTarget).closest(".justdo-clipboard-import-input-selector").find("button")
       .text(field_label)

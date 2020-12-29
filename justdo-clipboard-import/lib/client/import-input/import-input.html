@@ -15,6 +15,7 @@
                 </button>
                 <div class="dropdown-menu p-1 shadow-lg border-0 dropdown-field-selector" aria-labelledby="justdo-clipboard-import-input-{{this}}">
                   <li><a href="#" class="dropdown-item px-1 small" field-id="clipboard-import-no-import">-- Skip Column --</a></li>
+                  <li><a href="#" class="dropdown-item px-1 small" field-id="clipboard-import-index">Index(won't be imported)</a></li>
                   {{#each getAvailableFieldTypesArray}}
                     <li><a href="#" class="dropdown-item px-1 small" field-id="{{_id}}">{{label}}</a></li>
                   {{/each}}

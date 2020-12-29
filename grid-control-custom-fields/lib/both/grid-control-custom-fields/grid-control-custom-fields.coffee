@@ -30,7 +30,7 @@ _.extend GridControlCustomFields,
       type: String
 
       # Update getJsTypeForFieldType() if you change the list of allowed values
-      allowedValues: ["string", "strings_array", "number", "numbers_array", "date", "boolean", "select", "calc"]
+      allowedValues: ["string", "strings_array", "number", "numbers_array", "date", "boolean", "select", "calc", "objects_array"]
 
     field_options:
       type: Object
@@ -132,6 +132,11 @@ _.extend GridControlCustomFields,
       type: Boolean
 
       optional: true
+    
+    blackbox:
+      type: Boolean
+
+      optional: true
 
   getJsTypeForFieldType: (field_type) ->
     if field_type == "string"
@@ -150,6 +155,8 @@ _.extend GridControlCustomFields,
       return Boolean
     else if field_type == "select"
       return String
+    else if field_type == "objects_array"
+      return [Object]
     else
       # We should never get here since custom_field_definition_schema won't pass validation if
       # field_type isn't one of the above
@@ -187,6 +194,9 @@ _.extend GridControlCustomFields,
         type: GridControlCustomFields.getJsTypeForFieldType(custom_field_definition.field_type)
         optional: true # all custom fields aren't required
         custom_field: true
+      
+      if custom_field_definition.blackbox == true
+        custom_field_schema.blackbox = true
 
       if (grid_column_formatter_options = custom_field_definition.grid_column_formatter_options)?
         custom_field_schema.grid_column_formatter_options = grid_column_formatter_options

@@ -10,7 +10,7 @@ base_supported_fields_ids = [
 ]
 
 fallback_date_format = "YYYY-MM-DD"
-custom_allowed_dates_formats = ["DD MMMM YYYY"]
+custom_allowed_dates_formats = ["DD MMMM YYYY", "Others"]
 
 getAllowedDateFormats = ->
   return Meteor.users.simpleSchema()?.schema()?["profile.date_format"]?.allowedValues or [fallback_date_format]
@@ -36,7 +36,7 @@ getAvailableFieldTypes = ->
   supported_fields_ids = base_supported_fields_ids.slice()
   all_fields = gc.getSchemaExtendedWithCustomFields()
   
-  custom_fields_supported_formatters = ["defaultFormatter", "unicodeDateFormatter", "keyValueFormatter", "calculatedFieldFormatter"]
+  custom_fields_supported_formatters = ["defaultFormatter", "unicodeDateFormatter", "keyValueFormatter", "calculatedFieldFormatter", JustdoPlanningUtilities.dependencies_formatter_id]
   
   for field_id, field of all_fields
     if field.custom_field and field.grid_editable_column and field.grid_column_formatter in custom_fields_supported_formatters
@@ -103,6 +103,16 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
                     #   indent_level: indent level
   
   row_index = 0
+
+  import_idx_to_temp_import_id_map = {}
+  dependencies_strs = {}
+
+  index_column = null
+  for col_def, i in selected_columns_definitions
+    if col_def._id == "clipboard-import-index"
+      index_column = i
+      break
+  
   for row in cp_data
     task = {}
     line_number += 1
@@ -115,15 +125,25 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     task.project_id = project_id
     if not modal_data.rows_to_skip_set.get().has("#{row_index}")
       indent_level = 1
+
+      if index_column?
+         # Allways handle "clipboard-import-index" column first
+        cell_val = row[index_column].trim()
+        temp_import_id = Random.id()
+        task["jci:temp_import_id"] = temp_import_id
+        import_idx_to_temp_import_id_map[cell_val] = temp_import_id
+
       for column_num in [0..(number_of_columns - 1)]
         cell_val = row[column_num].replace(/[\u200B-\u200D\uFEFF]/g, '').trim() # 'replace' is used to remove zero-width white space
         field_def = selected_columns_definitions[column_num]
         field_id = field_def._id
-  
-        if cell_val.length > 0 and field_id == "task-indent-level"
+
+        if field_id == "clipboard-import-index" # Do nothing, "clipboard-import-index" is already handled above
+        else if cell_val.length > 0 and field_id == "task-indent-level"
           indent_level = parseInt cell_val, 10
-          
-          
+        else if field_id == JustdoPlanningUtilities.dependencies_mf_field_id
+          if cell_val != ""
+            dependencies_strs[task["jci:temp_import_id"]] = cell_val # XXX temp_import_id can be null
         else if cell_val.length > 0 and field_id != "clipboard-import-no-import" and field_id != "task-indent-level"
           if field_def.type is String
             #dealing with options fields
@@ -169,7 +189,11 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
           # If we have a date field, check that the date is formatted properly, and transform to internal format
           if isDateFieldDef(field_def)
-            moment_date = moment.utc cell_val, modal_data.date_fields_date_format.get()
+            date_fields_date_format = modal_data.date_fields_date_format.get()
+            if date_fields_date_format == "Others"
+              moment_date = moment.utc cell_val
+            else
+              moment_date = moment.utc cell_val, date_fields_date_format
             if not moment_date.isValid()
               JustdoSnackbar.show
                 text: "Invalid date format in line #{line_number}. Import aborted."
@@ -205,7 +229,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       
       else if task.end_date? and not task.start_date?
         task.start_date = task.end_date
-        
+    
     row_index += 1
 
   gc = APP.modules.project_page.mainGridControl()
@@ -256,6 +280,40 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     
     return
   
+  import_idx_to_task_id = (import_idx) ->
+    return APP.collections.Tasks.findOne(
+      "jci:temp_import_id": import_idx_to_temp_import_id_map[import_idx]
+    ,
+      fields:
+        _id: 1
+    )?._id
+
+  temp_import_id_task_id = (temp_import_id) ->
+    return APP.collections.Tasks.findOne(
+      "jci:temp_import_id": temp_import_id
+    ,
+      fields:
+        _id: 1
+    )?._id
+
+  importDependencies = ->
+    for temp_import_id, deps_str of dependencies_strs
+      if not (deps = APP.justdo_planning_utilities.parseDependenciesStr deps_str, project_id, import_idx_to_task_id)?
+        return false
+      
+      APP.justdo_planning_utilities.dependent_tasks_update_hook_enabled = false
+      APP.collections.Tasks.update temp_import_id_task_id(temp_import_id),
+        $set:
+          "#{JustdoPlanningUtilities.dependencies_mf_field_id}": deps
+      APP.justdo_planning_utilities.dependent_tasks_update_hook_enabled = true
+
+    return true
+
+  clearupTempImportId = ->
+    Meteor.call "clearupTempImportId", _.values import_idx_to_temp_import_id_map
+
+    return true
+
   undoImport = ->
     # task_paths_added is reversed as we need to remove the tasks in the deepest level first
     task_paths_added.reverse() # Can't find underscore equivelent, using .reverse() here
@@ -270,9 +328,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   async.mapSeries [1..max_indent], (n, callback) ->
     importLevel(n, callback)
   , (err, results) ->
-    if err?
+    if err? or not importDependencies() or not clearupTempImportId()
       JustdoSnackbar.show
-        text: "#{err}. Import aborted."
+        text: "#{err.reason or "Incorrect dependenc(ies) found."}. Import aborted."
         duration: 15000
       
       undoImport()

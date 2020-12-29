@@ -37,3 +37,23 @@ _.extend JustdoClipboardImport.prototype,
     # console.log "Plugin #{JustdoFormulaFields.project_custom_feature_id} removed from project #{project_doc._id}"
 
     return
+  
+  clearupTempImportId: (temp_import_ids, user_id) ->
+    check temp_import_ids, [String]
+    check user_id, String
+
+    APP.collections.Tasks.update
+      "jci:temp_import_id":
+        $in: temp_import_ids
+      users: user_id
+    ,
+      $unset:
+        "jci:temp_import_id": ""
+    ,
+      multi: true
+    
+    return
+    
+
+      
+        
