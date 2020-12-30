@@ -887,6 +887,8 @@ _.extend GridDataCom.prototype,
     if not (parent = @collection.getItemByPathIfUserBelong path, perform_as)?
       throw @_error "unknown-path"
 
+    @_runGridMethodMiddlewares "sortChildren", perform_as, {path, parent, field, sort_order}
+
     query = {}
     query["parents.#{parent._id}"] = {$exists: true}
 
