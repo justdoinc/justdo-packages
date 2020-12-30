@@ -81,7 +81,7 @@
     </div>
   {{/if}}
 
-  {{#if permissionToEditMemebers}}
+  {{#if hasPermissionToEditMemebers}}
     {{#if $neq getState "pre-reject"}}
       {{!-- Only for the pre-reject state we don't show the membership management area--}}
       <div class="manage-members">
