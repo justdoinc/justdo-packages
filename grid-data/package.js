@@ -37,7 +37,7 @@ Package.onUse(function (api) {
   api.add_files('lib/grid-data-core/grid-data-core-errors.coffee', client);
 
   // GridData
-  api.add_files('lib/grid-data/grid-data.coffee', client);
+  api.add_files('lib/grid-data/grid-data.coffee', both);
 
   // GridDataCom
   api.add_files('lib/grid-data-com/grid-data-com-client.coffee', client);
