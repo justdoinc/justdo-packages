@@ -11,7 +11,9 @@
       <div id="description">{{{xssGuard description}}}</div>
     {{else}}
       {{#if $not edit_mode}}
-        <span id="add-description" class="textual-controller description-caption"><i class="fa fa-align-left"></i> Add Task Description</span> {{> task_pane_item_details_description_lock_message}}
+        {{#if permissionToEdit}}
+          <span id="add-description" class="textual-controller description-caption"><i class="fa fa-align-left"></i> Add Task Description</span> {{> task_pane_item_details_description_lock_message}}
+        {{/if}}
       {{/if}}
     {{/if}}
 
