@@ -333,6 +333,11 @@ APP.executeAfterAppLibCode ->
     return JustdoHelpers.getUsersDocsByIds(currentTaskMembersIdsOtherThanMe())
 
   Template.item_owners_management.helpers
+    permissionToEditMemebers: ->
+      if (item_id = JD.activeItemId())?
+        return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.users",item_id)
+      return false
+    
     getState: ->
       tpl = Template.instance()
 

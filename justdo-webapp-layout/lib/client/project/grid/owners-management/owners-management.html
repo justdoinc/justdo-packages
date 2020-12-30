@@ -81,15 +81,17 @@
     </div>
   {{/if}}
 
-  {{#if $neq getState "pre-reject"}}
-    {{!-- Only for the pre-reject state we don't show the membership management area--}}
-    <div class="manage-members">
-      {{#if taskHasOtherMembers}}
-        Edit Task Members
-      {{else}}
-        Share Task
-      {{/if}}
-    </div>
+  {{#if permissionToEditMemebers}}
+    {{#if $neq getState "pre-reject"}}
+      {{!-- Only for the pre-reject state we don't show the membership management area--}}
+      <div class="manage-members">
+        {{#if taskHasOtherMembers}}
+          Edit Task Members
+        {{else}}
+          Share Task
+        {{/if}}
+      </div>
+    {{/if}}
   {{/if}}
 </template>
 
