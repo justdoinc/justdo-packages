@@ -355,7 +355,7 @@ APP.executeAfterAppLibCode ->
     description: -> @description?.replace(/\n/g, "") # We found out that new lines can break rendering, removing them has no effect on the html rendering.
     uploading_files: -> uploading_files.get()
     description: -> getActiveTaskDescription()
-    permissionToEdit: ->
+    hasPermissionToEdit: ->
       if (item_id = JD.activeItemId())?
         return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.description",item_id)
       return false

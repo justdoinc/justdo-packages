@@ -2,7 +2,7 @@
   <div class="task-pane-section-item-details-wrapper">
     {{#with active_item_obj "seqId,owner_id"}}
       <section>
-        <h2>Members{{#if permissionToEditMemebers}}<span class="edit-members">edit</span>{{/if}}</h2>
+        <h2>Members{{#if hasPermissionToEditMemebers}}<span class="edit-members">edit</span>{{/if}}</h2>
         {{> task_pane_item_details_members}}
       </section>
     {{/with}}
