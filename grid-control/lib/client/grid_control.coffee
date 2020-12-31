@@ -1007,6 +1007,9 @@ _.extend GridControl.prototype,
     columns
 
   _getDefaultView: ->
+    if GridControl.forced_base_default_view?
+      return GridControl.forced_base_default_view
+    
     view = []
 
     extended_schema = @getSchemaExtendedWithCustomFields()
