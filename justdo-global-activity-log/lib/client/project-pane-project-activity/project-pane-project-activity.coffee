@@ -111,8 +111,7 @@ Template.global_activity_log_project_pane_project_activity.helpers
 Template.global_activity_log_project_pane_project_activity.events
   "click .project-log": ->
     gcm = APP.modules.project_page.getCurrentGcm()
-
-    gcm.setPath(["main", "/#{@.task_id}/"])
+    gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(@.task_id)
 
     return
 

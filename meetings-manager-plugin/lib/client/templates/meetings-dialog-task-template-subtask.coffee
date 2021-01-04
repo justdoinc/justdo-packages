@@ -154,5 +154,5 @@ Template.meetings_dialog_task_subtask.events
   "click .task-subject-box, click .task-priority": (e, tmpl) ->
     task_id = tmpl.data.task_id
     gcm = APP.modules.project_page.getCurrentGcm()
-    gcm.setPath(["main", task_id], {collection_item_id_mode: true})
+    gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)
     return

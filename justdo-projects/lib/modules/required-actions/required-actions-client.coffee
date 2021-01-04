@@ -27,6 +27,6 @@ _.extend PACK.modules.required_actions,
   activateTaskOnMainTab: (task_id) ->
     gcm = APP.modules.project_page.getCurrentGcm()
 
-    gcm.setPath(["main", "/#{task_id}/"])
+    gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)
 
     return
