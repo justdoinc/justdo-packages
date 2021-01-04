@@ -77,8 +77,6 @@ bindTargetToPaste = (tpl)->
 Template.justdo_clipboard_import_input.onCreated ->
   self = @
 
-  @showIntro = new ReactiveVar false
-
   @getAvailableFieldTypes = @data.getAvailableFieldTypes
 
   Meteor.defer ->
@@ -123,9 +121,6 @@ Template.justdo_clipboard_import_input.helpers
   getAvailableFieldTypesArray: ->
     return Template.instance().getAvailableFieldTypes()[1]
 
-  showIntro: ->
-    return Template.instance().showIntro.get()
-
   importRow: (index) ->
     rows_to_skip = Template.instance().data.rows_to_skip_set.get()
     if rows_to_skip.has "#{index}"
@@ -161,18 +156,6 @@ Template.justdo_clipboard_import_input.events
     $(e.currentTarget).closest(".justdo-clipboard-import-input-selector").find("button")
       .text(field_label)
       .val(field_id)
-
-    return
-
-  "click .show-intro": (e) ->
-    e.preventDefault()
-    Template.instance().showIntro.set true
-
-    return
-
-  "click .hide-intro": (e) ->
-    e.preventDefault()
-    Template.instance().showIntro.set false
 
     return
 

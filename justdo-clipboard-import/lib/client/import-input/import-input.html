@@ -48,13 +48,9 @@
                 placeholder="Copy content from your spreadsheet and paste it here to create tasks.
 The first column is regarded as the Subject."></textarea>
     </div>
+    <small><i>Limited to 100 tasks</i></small>
     <div class="justdo-clipboard-import-intro text-center mt-3 position-relative">
-      {{#if showIntro}}
-        <img class="rounded shadow-sm border w-100 mb-3" src="/packages/justdoinc_justdo-clipboard-import/lib/assets/intro-import-spreadsheet.gif">
-        <a href="#" class="hide-intro">Hide Intro</a>
-      {{else}}
-        <a href="#" class="show-intro">How it Works?</a>
-      {{/if}}
+      <a href="https://support.justdo.com/hc/en-us/articles/360015993900-How-to-Import-Tasks-from-a-Spreadsheet" target="_blank">How Does it Work?</a>
     </div>
   {{/if}}
 </template>
