@@ -129,7 +129,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       if index_column?
          # Allways handle "clipboard-import-index" column first
         cell_val = row[index_column].trim()
-        temp_import_id = Random.id()
+        temp_import_id = "#{Random.id()}_L#{line_number}"
         task["jci:temp_import_id"] = temp_import_id
         import_idx_to_temp_import_id_map[cell_val] = temp_import_id
 
@@ -281,6 +281,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     return
   
   import_idx_to_task_id = (import_idx) ->
+    if not import_idx_to_temp_import_id_map[import_idx]?
+      return null
+
     return APP.collections.Tasks.findOne(
       "jci:temp_import_id": import_idx_to_temp_import_id_map[import_idx]
     ,
@@ -299,7 +302,8 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   importDependencies = ->
     for temp_import_id, deps_str of dependencies_strs
       if not (deps = APP.justdo_planning_utilities.parseDependenciesStr deps_str, project_id, import_idx_to_task_id)?
-        return false
+        line_number = temp_import_id.split("_L")[1]
+        throw new Meteor.Error "invalid dependency", "Invalid dependency(#{deps_str}) found in line #{line_number}"
       
       APP.justdo_planning_utilities.dependent_tasks_update_hook_enabled = false
       APP.collections.Tasks.update temp_import_id_task_id(temp_import_id),
@@ -328,9 +332,21 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   async.mapSeries [1..max_indent], (n, callback) ->
     importLevel(n, callback)
   , (err, results) ->
-    if err? or not importDependencies() or not clearupTempImportId()
+    if err? 
       JustdoSnackbar.show
-        text: "#{err.reason or "Incorrect dependenc(ies) found."}. Import aborted."
+        text: "#{err?.reason or "Incorrect dependenc(ies) found."}. Import aborted."
+        duration: 15000
+      
+      undoImport()
+
+      return false
+
+    try 
+      importDependencies() 
+      clearupTempImportId()
+    catch err
+      JustdoSnackbar.show
+        text: "#{err.reason}. Import aborted."
         duration: 15000
       
       undoImport()
