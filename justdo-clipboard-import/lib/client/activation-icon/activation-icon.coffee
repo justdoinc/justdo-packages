@@ -324,7 +324,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     gc._grid_data.bulkRemoveParents task_paths_added, (err) ->
       if err?
         JustdoSnackbar.show
-          text: "#{err}."
+          text: "#{err.reason}. Undo failed."
           duration: 15000
 
       return
