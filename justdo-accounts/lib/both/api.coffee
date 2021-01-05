@@ -33,8 +33,11 @@ _.extend JustdoAccounts.prototype,
         validate: (password) -> /[A-Z]/.test(password)
       ,
         code: "too-similar"
-        reason: "Password is too similar to your first name, last name or email."
+        reason: "Password must not include your name, or parts of your email"
         validate: (password, user_inputs) ->
+          if password.trim().length == 0
+            return false
+          
           if _.isString(user_inputs)
             user_inputs = [user_inputs]
 
