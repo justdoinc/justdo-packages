@@ -10,10 +10,15 @@ Template.justdo_projects_dashboard.onCreated ->
     main_part_interest = APP.justdo_projects_dashboard.main_part_interest.get()
     table_part_inetest = APP.justdo_projects_dashboard.table_part_interest.get()
 
+    if main_part_interest == ""
+      main_part_interest = "state"
+      
+    if table_part_inetest == ""
+      table_part_inetest = "state"
+    
     APP.justdo_projects_dashboard.fields_of_interest_rv.set
       "#{main_part_interest}" : 1
       "#{table_part_inetest}" : 1
-
 
     field_options = {}
     if not (gc = APP.modules.project_page.mainGridControl())?
@@ -516,7 +521,6 @@ Template.justdo_projects_dashboard_project_line.onCreated ->
     @is_dirty_rv.set true
 
   @collectData = (grid_data, path, fields_of_interest) ->
-
     # in the collected data, the .fields is in the form of
     # .fields:
     #   <field_id>:
@@ -543,7 +547,6 @@ Template.justdo_projects_dashboard_project_line.onCreated ->
   @autorun =>
     # trigger reactivity and transform to our needs
     fields_of_interest = {}
-
     for field_id, field_data of APP.justdo_projects_dashboard.fields_of_interest_rv.get()
       fields_of_interest[field_id] =
         undefined: 0
