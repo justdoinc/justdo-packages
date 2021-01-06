@@ -56,6 +56,10 @@ _.extend CustomJustdoTasksLocks.prototype,
           #
           prereq_installer_comp = Tracker.autorun =>
             if (gc = APP.modules.project_page.gridControl())?
+              if gc._lock_task_before_edit_cell_hooks_registered is true
+                return
+              gc._lock_task_before_edit_cell_hooks_registered = true
+
               gc.registerCustomGridOperationPreReq("removeActivePath", removeActivePathCustomPreReq)
 
               gc.register "BeforeEditCell", beforeEditHandler
