@@ -65,7 +65,7 @@ Template.meetings_dialog_task_subtask.helpers
     dueDate = Template.instance().task_obj?.due_date
     if dueDate?
       return moment(new Date(dueDate)).format("D MMM YYYY")
-    return "Due Date"
+    return APP.collections.Tasks.simpleSchema()._schema["due_date"].label
 
   taskOwner: ->
     if (task_obj = Template.instance().task_obj)
