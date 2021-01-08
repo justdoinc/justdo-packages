@@ -11,7 +11,7 @@
       <div id="description">{{{xssGuard description}}}</div>
     {{else}}
       {{#if $not edit_mode}}
-        {{#if hasPermissionToEdit}}
+        {{#if checkCurrentTaskPermissions "task-field-edit.description"}}
           <span id="add-description" class="textual-controller description-caption"><i class="fa fa-align-left"></i> Add Task Description</span> {{> task_pane_item_details_description_lock_message}}
         {{/if}}
       {{/if}}
@@ -44,7 +44,7 @@
             Save failed, try again: <span id="save-description" class="textual-controller">Save</span>
           {{/if}}
         {{else}}
-          {{#if hasPermissionToEdit}}
+          {{#if checkCurrentTaskPermissions "task-field-edit.description"}}
             <span id="edit-description" class="textual-controller"><i class="fa fa-pencil-square-o"></i> Edit Description</span> {{>task_pane_item_details_description_lock_message}}
           {{/if}}
         {{/if}}
