@@ -126,8 +126,11 @@ _.extend PACK.modules.tickets_queues,
     # Set owner
     task_fields.owner_id = user_id
 
-    # seqid setting and other operations/validations are taken care by the addChild middlewares
-    @_grid_data_com._runGridMethodMiddlewares "addChild", "/#{parent_id}/", task_fields, user_id
+    APP.justdo_permissions.runCbInIgnoredPermissionsScope =>
+      # seqid setting and other operations/validations are taken care by the addChild middlewares
+      @_grid_data_com._runGridMethodMiddlewares "addChild", "/#{parent_id}/", task_fields, user_id
+
+      return
 
     return @_grid_data_com._insertItem task_fields
 

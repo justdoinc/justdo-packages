@@ -69,6 +69,11 @@ _.extend Projects.prototype,
   # Project membership verification requirement management
   #
   skipMemberVerification: (cb) ->
+    # XXX Developers please notice that we got a JustDo helper
+    # for this feature now see fiber-var.coffee .
+    #
+    # If you are willing to test thoroughly can change the code here
+    # to use fiber-var.
     Fiber.current.skip_member_verification = true
     cb()
     delete Fiber.current.skip_member_verification
