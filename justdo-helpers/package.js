@@ -45,6 +45,7 @@ Package.onUse(function (api) {
   api.add_files("lib/both/platform-details.coffee", both);
   api.add_files("lib/both/poc-permitted-domains.coffee", both);
   api.add_files("lib/both/event-emitter-helpers.coffee", both);
+  api.add_files("lib/both/fiber-var.coffee", both);
   api.add_files("lib/both/constructors_tools.coffee", both);
   api.add_files("lib/both/prereq.coffee", both);
   api.add_files("lib/both/profiling.coffee", both);
