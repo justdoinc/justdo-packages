@@ -104,6 +104,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   
   row_index = 0
 
+  temp_import_ids = []
   import_idx_to_temp_import_id_map = {}
   dependencies_strs = {}
 
@@ -126,11 +127,13 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     if not modal_data.rows_to_skip_set.get().has("#{row_index}")
       indent_level = 1
 
+      temp_import_id = "#{Random.id()}_L#{line_number}"
+      task["jci:temp_import_id"] = temp_import_id
+      temp_import_ids.push temp_import_id
+
       if index_column?
          # Allways handle "clipboard-import-index" column first
         cell_val = row[index_column].trim()
-        temp_import_id = "#{Random.id()}_L#{line_number}"
-        task["jci:temp_import_id"] = temp_import_id
         import_idx_to_temp_import_id_map[cell_val] = temp_import_id
 
       for column_num in [0..(number_of_columns - 1)]
@@ -235,6 +238,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   gc = APP.modules.project_page.mainGridControl()
   task_paths_added = []
 
+
   importLevel = (indent_level_to_import, mapSeriesCb) ->
     parent_id = modal_data.parent_task_id
     batches = {}  # parent_id: [tasks]
@@ -253,7 +257,16 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       do (parent_id, batch) ->
         async_calls.push (callback) ->
           gc._grid_data.bulkAddChild "/" + parent_id + "/", batch, (err, result) ->
-            if not err?
+            if err?
+              APP.collections.Tasks.find
+                "jci:temp_import_id": 
+                  $in: _.map batch, (task) -> task["jci:temp_import_id"]
+              ,
+                fields:
+                  _id: 1
+              .forEach (task) ->
+                task_paths_added.push "/#{parent_id}/#{task._id}"
+            else
               # For undo if failure
               for item in result
                 task_paths_added.push item[1] # item[1] is the path of added task
@@ -314,13 +327,14 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     return true
 
   clearupTempImportId = ->
-    Meteor.call "clearupTempImportId", _.values import_idx_to_temp_import_id_map
+    Meteor.call "clearupTempImportId", temp_import_ids
 
     return true
 
-  undoImport = ->
+  undoImport = ->          
     # task_paths_added is reversed as we need to remove the tasks in the deepest level first
     task_paths_added.reverse() # Can't find underscore equivelent, using .reverse() here
+
     gc._grid_data.bulkRemoveParents task_paths_added, (err) ->
       if err?
         JustdoSnackbar.show
