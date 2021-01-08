@@ -36,6 +36,13 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "corner-down-right"
 
+      listingCondition: ->
+        unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("addSubTask")
+
+        delete unfulfilled_op_req.ops_locked # We ignore that lock to avoid flickering when locking ops are performed from the contextmenu
+
+        return _.isEmpty(unfulfilled_op_req)
+
     @registerSectionItem "main", "remove-task",
       position: 300
       data:
