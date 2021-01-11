@@ -176,7 +176,19 @@ _.extend JustdoResourcesAvailability.prototype,
       start_date.add(1,'days')
 
     return ret
+  
+  getWorkdaysPerWeekOfJustdo: (justdo_id) ->
+    avail_data = @_getAvailabilityData justdo_id, Meteor.userId()
+    if not (working_days = avail_data?.justdo_level_data?.working_days)?
+      return null
     
+    working_days_per_week = 0
+    for day, day_obj of working_days
+      if day_obj.holiday == false
+        working_days_per_week += 1
+    
+    return working_days_per_week
+        
   _calculateUserDayAvailability: (justdo_level_data, user_level_data, day_of_week)->
     if not (from = user_level_data?.working_days?[day_of_week]?.from)
       from = justdo_level_data?.working_days?[day_of_week]?.from
