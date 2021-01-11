@@ -6,15 +6,16 @@
         <div class="main-part-left-column projects-item bg-primary">
           <!-- Project Manager Dropdown -->
           <div class="dropdown projects-dropdown mb-1 justdo-projects-dashboard-owner-selector">
-            <button class="btn btn-primary btn-sm px-3 py-2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-primary btn-sm px-3 py-2 member-selector-dropdown-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               All Members
             </button>
-            <ul class="dropdown-menu shadow-lg border-0">
-              <li><a href="#" class="dropdown-item px-3" owner-id="*">All Members</a></li>
+            <div class="dropdown-menu shadow-lg border-0 member-selector-dropdown">
+              {{> member_list_widget members=projectsOwnersList onMemberClick=onMemberClick special_options=membersSpeicalOptions}}
+              <!-- <li><a href="#" class="dropdown-item px-3" owner-id="*">All Members</a></li>
               {{#each projectsOwnersList}}
                 <li><a href="#" class="dropdown-item px-3">{{> justdo_avatar}} {{displayName}}</a></li>
-              {{/each}}
-            </ul>
+              {{/each}} -->
+            </div>
           </div>
           <!-- Field of Interest Dropdown -->
           <div class="dropdown projects-dropdown justdo-projects-dashboard-field-selector">

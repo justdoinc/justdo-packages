@@ -123,6 +123,18 @@ Template.justdo_projects_dashboard.onCreated ->
     $(".print-dashboard-overlay").remove()
     return # end of Print Dashboard
 
+  @onMemberClick = (user_id) ->
+    tpl = self
+
+    if user_id == "all-members"
+      $(".justdo-projects-dashboard-owner-selector button").text("All Members")
+      tpl.selected_project_owner_id_rv.set null
+    else
+      $(".justdo-projects-dashboard-owner-selector button").text(JustdoHelpers.displayName(user_id))
+      tpl.selected_project_owner_id_rv.set user_id
+
+    return
+
   return # end of onCreated
 
 Template.justdo_projects_dashboard.onRendered ->
@@ -409,6 +421,15 @@ Template.justdo_projects_dashboard.onRendered ->
   return
 
 Template.justdo_projects_dashboard.helpers
+  onMemberClick: ->
+    return Template.instance().onMemberClick
+
+  membersSpeicalOptions: ->
+    return [{
+      _id: "all-members"
+      label: "All Members"
+    }]
+
   selectedFieldLabel: ->
     main_part_interest = APP.justdo_projects_dashboard.main_part_interest.get()
     field_options = APP.justdo_projects_dashboard.field_ids_to_grid_values_rv.get()[main_part_interest]
@@ -436,7 +457,7 @@ Template.justdo_projects_dashboard.helpers
       if not owners_set.has owner_id
         owners_set.add owner_id
         owner = Meteor.users.findOne owner_id
-        owners_list.push owner
+        owners_list.push owner_id
     return owners_list
     # return _.sortBy owners_list, name
 
@@ -482,16 +503,16 @@ Template.justdo_projects_dashboard.helpers
 
 
 Template.justdo_projects_dashboard.events
-  "click .justdo-projects-dashboard-owner-selector a": (e,tpl) ->
-    e.preventDefault()
-    user_object = Blaze.getData(e.target)
-    if user_object?
-      $(".justdo-projects-dashboard-owner-selector button").text(JustdoHelpers.displayName(user_object._id))
-      tpl.selected_project_owner_id_rv.set user_object._id
-    else
-      $(".justdo-projects-dashboard-owner-selector button").text("All Members")
-      tpl.selected_project_owner_id_rv.set null
-    return
+  # "click .justdo-projects-dashboard-owner-selector a": (e,tpl) ->
+  #   e.preventDefault()
+  #   user_object = Blaze.getData(e.target)
+  #   if user_object?
+  #     $(".justdo-projects-dashboard-owner-selector button").text(JustdoHelpers.displayName(user_object._id))
+  #     tpl.selected_project_owner_id_rv.set user_object._id
+  #   else
+  #     $(".justdo-projects-dashboard-owner-selector button").text("All Members")
+  #     tpl.selected_project_owner_id_rv.set null
+  #   return
 
   "click .justdo-projects-dashboard-field-selector a": (e,tpl) ->
     # for now changing the main part interest will change also the table.
@@ -499,6 +520,10 @@ Template.justdo_projects_dashboard.events
     e.preventDefault()
     APP.justdo_projects_dashboard.main_part_interest.set this.id
     APP.justdo_projects_dashboard.table_part_interest.set this.id
+    return
+  
+  "click .member-selector-dropdown-button": (e, tpl) ->
+
     return
 
 Template.justdo_projects_dashboard_project_line.onCreated ->
@@ -623,3 +648,5 @@ Template.justdo_projects_dashboard_project_line.events
     gcm = APP.modules.project_page.getCurrentGcm()
     gcm.activateTabWithSectionsState "sub-tree", {global: {"root-item": this._id}}
     return
+  
+  
