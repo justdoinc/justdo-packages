@@ -94,5 +94,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/confirm-edit-members-dialog.sass", client);
   api.addFiles("lib/client/confirm-edit-members-dialog.coffee", client);
 
+  api.addFiles("lib/client/member-list-widget.html", client);
+  api.addFiles("lib/client/member-list-widget.sass", client);
+  api.addFiles("lib/client/member-list-widget.coffee", client);
+
   api.export("ProjectPageDialogs", client);
 });

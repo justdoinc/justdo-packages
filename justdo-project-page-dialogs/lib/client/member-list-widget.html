@@ -1,0 +1,10 @@
+<template name="member_list_widget">
+  <div class="member-list-widget">
+    <input class="search-box form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search members" name="" value="">
+      {{#each members}}
+        <a href="#" class="dropdown-item member-item" data-user-id="{{this._id}}">
+          <div class="member-item-info"><img class="member-item-avatar" src="{{memberAvatar this}}"> {{memberName this}}</div>
+        </a>
+      {{/each}}
+  </div>
+</template>
