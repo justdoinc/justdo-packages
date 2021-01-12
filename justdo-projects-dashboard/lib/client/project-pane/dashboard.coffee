@@ -2,6 +2,7 @@ Template.justdo_projects_dashboard.onCreated ->
   self = @
 
   @selected_project_owner_id_rv = new ReactiveVar null # null or owner id
+  @member_list_widget_funct_caller_rv = new ReactiveVar null
 
   # the following is an autorun that clears the queue of tasks that were updated
 
@@ -418,6 +419,12 @@ Template.justdo_projects_dashboard.onRendered ->
 
     Highcharts.chart "justdo-projects-dashboard-chart-3", chart
     return # end of autorun
+  
+  @$(".projects-dropdown").on "show.bs.dropdown", ->
+    self.member_list_widget_funct_caller_rv.set ["clearSearch"]
+
+    return
+
   return
 
 Template.justdo_projects_dashboard.helpers
@@ -429,6 +436,9 @@ Template.justdo_projects_dashboard.helpers
       _id: "all-members"
       label: "All Members"
     }]
+
+  memberListWidgetFunctionCaller: ->
+    return Template.instance().member_list_widget_funct_caller_rv
 
   selectedFieldLabel: ->
     main_part_interest = APP.justdo_projects_dashboard.main_part_interest.get()
@@ -520,10 +530,6 @@ Template.justdo_projects_dashboard.events
     e.preventDefault()
     APP.justdo_projects_dashboard.main_part_interest.set this.id
     APP.justdo_projects_dashboard.table_part_interest.set this.id
-    return
-  
-  "click .member-selector-dropdown-button": (e, tpl) ->
-
     return
 
 Template.justdo_projects_dashboard_project_line.onCreated ->

@@ -3,6 +3,12 @@ Template.member_list_widget.onCreated ->
   tpl.members_rv = new ReactiveVar []
   tpl.members_search_niddle_rv = new ReactiveVar ""
 
+  @clearSearch = ->
+    tpl.$(".search-box").val ""
+    tpl.members_search_niddle_rv.set ""
+    
+    return
+
   @autorun ->
     tpl_data = Template.currentData()
     search_niddle = tpl.members_search_niddle_rv.get()
@@ -17,11 +23,19 @@ Template.member_list_widget.onCreated ->
     tpl.members_rv.set special_options.concat(members)
 
     return
-
-  @clearSearch = ->
-    tpl.members_search_niddle_rv.set ""
-
+  
+  @autorun ->
+    tpl_data = Template.currentData()
+    
+    function_caller = tpl_data?.function_caller_rv?.get()
+    
+    if function_caller?
+      tpl[function_caller[0]].apply tpl, function_caller.slice(1)
+      
+      tpl_data.function_caller_rv.set null
+    
     return
+
 
   return
 
