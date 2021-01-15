@@ -104,6 +104,11 @@ _.extend GridControlCustomFields,
 
       optional: true
 
+    default_frozen_column:
+      type: Boolean
+
+      optional: true
+
     grid_column_formatter_options:
       type: Object
 
@@ -212,6 +217,9 @@ _.extend GridControlCustomFields,
 
       if (default_width = custom_field_definition.default_width)?
         custom_field_schema.grid_default_width = default_width
+
+      if (default_frozen_column = custom_field_definition.default_frozen_column)?
+        custom_field_schema.grid_default_frozen_column = default_frozen_column
 
       if (decimal = custom_field_definition.decimal)?
         custom_field_schema.decimal = decimal
