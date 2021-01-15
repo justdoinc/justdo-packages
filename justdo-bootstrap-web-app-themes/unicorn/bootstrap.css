@@ -7185,8 +7185,140 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 /* high-contrast-mode */
-.high-contrast-mode .slick-row {
-  background: rgba(255, 255, 255, 0.75);
+
+/*
+Source code of the below lines until: END A4BF4
+
+$grid-background: #fafbfe
+$active-row-background-color: #e1ebf9
+$search-result-background-color: #f6dceb
+$active-row-and-search-result-background-color: #ddc8e5
+$section-items-background-color: #f8f8f8
+$active-section-items-background-color: #f8f8f8
+$active-editable-background-color: #ccd7f2
+$active-row-and-search-result-editable-cell-background-color: #cfbde1
+
+.frozen-columns-mode
+  .slick-row
+    background: transparent
+
+  .slick-row.active
+    background-color: $active-row-background-color !important
+
+  .slick-viewport
+    background-color: $grid-background
+
+  .slick-row.search-result
+    background-color: $search-result-background-color !important
+
+  .slick-row.search-result.active
+    background-color: $active-row-and-search-result-background-color !important
+
+  .frozen
+    background-color: $grid-background
+
+    &.active
+      background-color: $active-row-background-color !important
+      
+      &.editable
+        background-color: $active-editable-background-color !important
+
+    &.search-result.active
+      background-color: $active-row-and-search-result-background-color
+
+  #grid-control-mux & .type-section-item
+    background-color: $section-items-background-color
+
+    &.active
+      background-color: $active-section-items-background-color
+
+    .frozen
+      background-color: $section-items-background-color
+
+      &.active
+        background-color: $active-section-items-background-color
+
+    &.search-result
+      background-color: $search-result-background-color
+
+      .frozen
+        background-color: $search-result-background-color
+
+        &.active
+          background-color: $active-row-and-search-result-background-color !important
+
+  .search-result
+    background-color: $search-result-background-color
+
+    .frozen
+      background-color: $search-result-background-color
+
+      &.active
+        background-color: $active-row-and-search-result-background-color !important
+
+        &.editable
+          background-color: $active-row-and-search-result-editable-cell-background-color !important
+*/
+.frozen-columns-mode .slick-row {
+  background: transparent;
 }
+.frozen-columns-mode .slick-row.active {
+  background-color: #e1ebf9 !important;
+}
+.frozen-columns-mode .slick-viewport {
+  background-color: #fafbfe;
+}
+.frozen-columns-mode .slick-row.search-result {
+  background-color: #f6dceb !important;
+}
+.frozen-columns-mode .slick-row.search-result.active {
+  background-color: #ddc8e5 !important;
+}
+.frozen-columns-mode .frozen {
+  background-color: #fafbfe;
+}
+.frozen-columns-mode .frozen.active {
+  background-color: #e1ebf9 !important;
+}
+.frozen-columns-mode .frozen.active.editable {
+  background-color: #ccd7f2 !important;
+}
+.frozen-columns-mode .frozen.search-result.active {
+  background-color: #ddc8e5;
+}
+#grid-control-mux .frozen-columns-mode .type-section-item {
+  background-color: #f8f8f8;
+}
+#grid-control-mux .frozen-columns-mode .type-section-item.active {
+  background-color: #f8f8f8;
+}
+#grid-control-mux .frozen-columns-mode .type-section-item .frozen {
+  background-color: #f8f8f8;
+}
+#grid-control-mux .frozen-columns-mode .type-section-item .frozen.active {
+  background-color: #f8f8f8;
+}
+#grid-control-mux .frozen-columns-mode .type-section-item.search-result {
+  background-color: #f6dceb;
+}
+#grid-control-mux .frozen-columns-mode .type-section-item.search-result .frozen {
+  background-color: #f6dceb;
+}
+#grid-control-mux .frozen-columns-mode .type-section-item.search-result .frozen.active {
+  background-color: #ddc8e5 !important;
+}
+.frozen-columns-mode .search-result {
+  background-color: #f6dceb;
+}
+.frozen-columns-mode .search-result .frozen {
+  background-color: #f6dceb;
+}
+.frozen-columns-mode .search-result .frozen.active {
+  background-color: #ddc8e5 !important;
+}
+.frozen-columns-mode .search-result .frozen.active.editable {
+  background-color: #cfbde1 !important;
+}
+/* END A4BF4 */
 
 /* Custom Unicorn CSS - END */
