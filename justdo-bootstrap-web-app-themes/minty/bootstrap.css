@@ -7188,3 +7188,9 @@ legend {
 .list-group-item h5,
 .list-group-item h6 {
   color: inherit; }
+
+/* Custom Minty CSS - START */
+
+.btn-default:hover, .btn-default { color: #888; }
+
+/* Custom Minty CSS - END */
