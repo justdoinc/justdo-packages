@@ -46,6 +46,10 @@ $row-min-height: 31px
 $horizontal-borders-colors: rgba(195, 195, 195, 0.65)
 $vertical-borders-colors: $horizontal-borders-colors
 $active-row-border-color: #805206
+$active-row-background-color: #d7e3f6
+$active-editable-background-color: #ccd7f2
+$section-items-background-color: #f8f8f8
+$active-section-items-background-color: #e8edf4
 $row-border-style: 1px solid $horizontal-borders-colors
 $row-right-border-style: 1px solid $vertical-borders-colors
 $row-hidden-border-style: 1px solid transparent
@@ -81,7 +85,7 @@ $standard-cell-padding-bottom: 3px
     border-bottom: $row-border-style
 
   &.active
-    background-color: #d7e3f6
+    background-color: $active-row-background-color
 
 .grid-control
   .grid-formatter, .grid-editor
@@ -126,3 +130,43 @@ $standard-cell-padding-bottom: 3px
   position: static
   display: table
   width: 100%
+
+  .grid-tree-control-item-icons
+    display: none
+
+.frozen-columns-mode
+  .frozen
+    position: sticky
+
+    top: 0 !important
+    left: 0 !important
+
+    z-index: 101 // 100 is the z-index of active cells
+
+    background-color: white
+
+  .active
+    .frozen
+      background-color: $active-row-background-color
+
+      &.editable
+        background-color: $active-editable-background-color
+
+  #grid-control-mux & .type-section-item
+    display: flex
+
+    background-color: $section-items-background-color
+        
+    &.active
+      background-color: $active-section-items-background-color
+
+    .frozen
+      border-right: 0 none
+
+      background-color: $section-items-background-color
+
+      &.active
+        background-color: $active-section-items-background-color
+
+
+

@@ -126,7 +126,8 @@ if (typeof Slick === "undefined") {
       headerCssClass: null,
       defaultSortAsc: true,
       focusable: true,
-      selectable: true
+      selectable: true,
+      frozen: false
     };
 
     // scroller
@@ -264,7 +265,7 @@ if (typeof Slick === "undefined") {
       $focusSink = $("<div tabIndex='0' hideFocus style='position:fixed;width:0;height:0;top:0;left:0;outline:0;'></div>").appendTo($container);
 
       $headerScroller = $("<div class='slick-header ui-state-default' style='overflow:hidden;position:relative;' />").appendTo($container);
-      $headers = $("<div class='slick-header-columns' style='left:-1000px' />").appendTo($headerScroller);
+      $headers = $("<div class='slick-header-columns' style='left: 0' />").appendTo($headerScroller);
       $headers.width(getHeadersWidth());
 
       $headerRowScroller = $("<div class='slick-headerrow ui-state-default' style='overflow:hidden;position:relative;' />").appendTo($container);
@@ -939,7 +940,7 @@ if (typeof Slick === "undefined") {
       $style = $("<style type='text/css' rel='stylesheet' />").appendTo($("head"));
       var rowHeight = (options.rowHeight - cellHeightDiff);
       var rules = [
-        "." + uid + " .slick-header-column { left: 1000px; }",
+        "." + uid + " .slick-header-column { left: 0; }",
         "." + uid + " .slick-top-panel { height:" + options.topPanelHeight + "px; }",
         "." + uid + " .slick-headerrow-columns { height:" + options.headerRowHeight + "px; }",
         "." + uid + " .slick-cell { height:" + rowHeight + "px; }",
@@ -1628,6 +1629,7 @@ if (typeof Slick === "undefined") {
 
       var m = columns[cell];
       var cellCss = "slick-cell l" + cell + " r" + Math.min(columns.length - 1, cell + colspan - 1) +
+          (m.frozen ? " frozen" : "");
           (m.cssClass ? " " + m.cssClass : "");
       if (row === activeRow && cell === activeCell) {
         cellCss += (" active");

@@ -61,16 +61,47 @@ _.extend GridControl.prototype,
       }
     ]
 
+    # At the moment we only support the first column freeze/unfreeze
+    if @getView()[0].frozen is true
+      freeze_unfreeze_column = [
+        {
+          text: "Unfreeze Column"
+          action: (e) =>
+            current_view = @getView()
+
+            delete current_view[0].frozen
+
+            @setView(current_view)
+
+            return
+        }
+      ]
+    else
+      freeze_unfreeze_column = [
+        {
+          text: "Freeze Column"
+          action: (e) =>
+            current_view = @getView()
+
+            current_view[0].frozen = true
+
+            @setView(current_view)
+
+            return
+        }
+      ]
+
     $(@_getColumnsManagerContextMenuSelector("first")).remove() 
     $grid_control_cmenu_target = $(".slick-header-column:first", @container)
     if append_fields_submenu.length > 0
       # context-menu for grid-control column
       context.attach $grid_control_cmenu_target,
         id: @_getColumnsManagerContextMenuId("first")
-        data: append_fields_menu
+        data: append_fields_menu.concat freeze_unfreeze_column
     else
-      $grid_control_cmenu_target.bind "contextmenu", (e) ->
-        e.preventDefault()
+      context.attach $grid_control_cmenu_target,
+        id: @_getColumnsManagerContextMenuId("first")
+        data: [].concat freeze_unfreeze_column
 
     $grid_control_cmenu_target.bind "mousedown", (e) ->
       return setColumnIndexOfLastOpenedCmenu(e, 0)

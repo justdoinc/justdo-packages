@@ -56,6 +56,15 @@ SimpleSchema.extendOptions
   # If undefined, SlickGrid defaults' are used
   grid_default_width: Match.Optional(Number)
 
+  # grid_default_frozen_column:
+  #
+  # Frozen/not frozen in the default grid-view.
+  #
+  # If set to true, the field will be frozen in place if the SlickGrid defaults' are used
+  #
+  # Note that a field can't be frozen if the field before it isn't frozen
+  grid_default_frozen_column: Match.Optional(Boolean)
+
   # grid_fixed_size_column:
   #
   # If true, the provided grid_default_width will be used as the fixed width size of the column, the user

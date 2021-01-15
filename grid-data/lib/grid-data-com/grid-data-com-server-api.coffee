@@ -897,8 +897,10 @@ _.extend GridDataCom.prototype,
     if sort_order != 1
       sort[field] = -1
 
-    order = 0
-    @collection.find(query, {sort: sort}).forEach (child) =>
+    order = -1
+
+    APP.justdo_analytics.logMongoRawConnectionOp @collection._name, "find", query
+    @collection.rawCollection().find(query).collation({locale: "en"}).sort(sort).forEach Meteor.bindEnvironment (child) =>
       # IMPORTANT!!!
       #
       # If you change the following modifiers in the future
@@ -906,6 +908,8 @@ _.extend GridDataCom.prototype,
       #
       # Make sure your changes doesn't compromise security without collection2's
       # schema restrictions!
+
+      order += 1
 
       set = {$set: {}}
       set.$set["parents.#{parent._id}.order"] = order
@@ -920,7 +924,9 @@ _.extend GridDataCom.prototype,
         if err?
           @logger.error "sortChildren: failed to change item order #{JSON.stringify(err)}"
 
-      order += 1
+        return
+
+      return
 
     return
 

@@ -128,6 +128,8 @@ GridControl = (options, container, operations_container) ->
   @_view_changes_dependency = new Tracker.Dependency()
   @on "grid-view-change", => @_view_changes_dependency.changed()
 
+  @_setupFrozenColumnsMaintainer()
+
   @_columns_data = {}
 
   if @options.forced_metadata_affecting_fields
@@ -444,6 +446,103 @@ _.extend GridControl.prototype,
         return false
 
     return columns_ids_of_formatter_type_affected_by_fields_array
+
+  _setupFrozenColumnsMaintainer: ->
+    _frozen_columns_mode = false
+    _frozen_columns_mode_rv = new ReactiveVar _frozen_columns_mode
+
+    @isFrozenColumnsMode = -> _frozen_columns_mode_rv.get()
+
+    $current_css_block = null
+
+    container_class_name = "frozen-columns-mode"
+
+    getHeaderColumnSelector = (column_field_id) =>
+      grid_uid = @getGridUid()
+
+      return """##{grid_uid + column_field_id}.slick-header-column"""
+
+    slickGridOnScrollFn = (e, scrolls) =>
+      # e might be null, don't use it
+
+      # At the moment we support only the first column freeze, hence "title"
+      $(getHeaderColumnSelector("title")).css("left", "#{scrolls.scrollLeft}px")
+
+      return
+
+    initSlickGridOnScrollFnEffect = =>
+      return slickGridOnScrollFn(null, {
+        scrollTop: $(".slick-viewport", @container).scrollTop()
+        scrollLeft: $(".slick-viewport", @container).scrollLeft()
+      })
+
+    clearSlickGridOnScrollFnEffect = ->
+      $(getHeaderColumnSelector("title")).css("left", "")
+
+      return
+
+    updateFrozenColumnsMode = (new_view) =>
+      $current_css_block?.remove()
+
+      frozen_columns_css = ""
+
+      for column in new_view
+        if column.frozen is true
+          frozen_columns_css += """#{getHeaderColumnSelector(column.field)} {z-index: 2;} """ # 1 is the grid gantt's z-index, we want to be above it
+
+      $current_css_block = JustdoHelpers.loadCssBlock frozen_columns_css
+
+      @container.addClass container_class_name
+
+      if not _frozen_columns_mode
+        # If we are entering frozen columns mode, meaning, if before this call
+        # to updateFrozenColumnsMode we were not in a frozen columns mode
+        # setup the slick grid event
+        initSlickGridOnScrollFnEffect()
+        @_grid.onScroll.subscribe(slickGridOnScrollFn)
+
+      _frozen_columns_mode = true
+      _frozen_columns_mode_rv.set _frozen_columns_mode
+
+      return
+
+    exitFrozenColumnsMode = =>
+      if $current_css_block?
+        $current_css_block.remove()
+        $current_css_block = null
+
+      @container.removeClass container_class_name
+
+      @_grid.onScroll.unsubscribe(slickGridOnScrollFn)
+      clearSlickGridOnScrollFnEffect()
+
+      _frozen_columns_mode = false
+      _frozen_columns_mode_rv.set _frozen_columns_mode
+
+      return
+
+    viewChangeCb = (new_view) =>
+      if not new_view? # @on "init" doesn't pass the new_view argument
+        new_view = @getView()
+
+      if new_view[0].frozen isnt true # the _validateView ensures that if there are frozen fields, they are all in the beginning.
+        exitFrozenColumnsMode()
+
+        return
+      
+      updateFrozenColumnsMode(new_view)
+
+      return
+
+    @on "init", viewChangeCb
+    @on "grid-view-change", viewChangeCb
+
+    @onDestroy ->
+      exitFrozenColumnsMode()
+      
+      return
+
+    return
 
   _invalidateItemAncestorsFieldsOfFormatterType: (items_ids, formatter_type, options) ->
     # This method looks for columns that uses formatter_type, it invalidates all the
@@ -847,7 +946,8 @@ _.extend GridControl.prototype,
 
     fixed_fields = @fixed_fields.slice() # copy
 
-    for column in view      
+    frozen_column_allowed = true
+    for column in view
       field_name = column.field
 
       if (current_fixed_field = fixed_fields.shift())? and current_fixed_field != field_name
@@ -864,6 +964,34 @@ _.extend GridControl.prototype,
       field_def = extended_schema[field_name]
       if not field_def.grid_visible_column
         err "Provided view has a column for non-visible field `#{field_name}`"        
+
+      if column.frozen? and not _.isBoolean column.frozen
+        err "Provided view has a column with invalid 'frozen' property value, must be a Boolean"
+
+      if frozen_column_allowed
+        if not column.frozen? or not column.frozen
+          # Once the first non-frozen column found, all the rest can't be frozen
+          frozen_column_allowed = false
+        else
+          # This else blocks, for now, the ability to have more than one frozen field.
+          #
+          # The reason for this limit is the current {position: sticky} based implementation
+          # of the frozen column that doesn't work well when there's more than one frozen column.
+          #
+          # In the future, when frozen columns are implemented differently, just remove this else
+          # to allow more frozen columns.
+          #
+          # More issues to handle with more than one frozen columns:
+          #
+          # (0. The above mentioned issue with sticky position).
+          # 1. The drag and drop of header columns should be limited for the second column on (for
+          # the first column we get that for free).
+          # 2. The frozen columns headers position calculation when scrolling left right should be
+          # calculated beyond the first column that is the only one calculated today. 
+          frozen_column_allowed = false
+      else
+        if column.frozen is true
+          err "Provided view has a frozen column in a place where frozen columns aren't allowed `#{field_name}`"
 
     return true
 
@@ -972,6 +1100,11 @@ _.extend GridControl.prototype,
       else if field_def.grid_default_width?
         column.width = field_def.grid_default_width
 
+      if column_def.frozen is true
+        column.frozen = column_def.frozen
+      else if field_def.grid_default_frozen_column is true
+        column.frozen = field_def.grid_default_frozen_column
+
       if field_def.grid_fixed_size_column? and field_def.grid_fixed_size_column
         column.resizable = false
         column.minWidth = 0
@@ -1021,6 +1154,9 @@ _.extend GridControl.prototype,
 
         if field_def.grid_default_width?
           field_view.width = field_def.grid_default_width
+
+        if field_def.grid_default_frozen_column is true
+          field_view.frozen = field_def.grid_default_frozen_column
 
         # Uncomment for testing purpose to have filters active on load
         # if field_def.grid_column_filter_settings?
@@ -1092,11 +1228,15 @@ _.extend GridControl.prototype,
     view = _.map columns, (column) ->
       # If a column has no field we regard it as a misc column like the row handler
       if column.field?
-        return {
+        ret =
           field: column.field
           width: column.width
           filter: column.filter_state
-        }
+
+        if column.frozen is true
+          ret.frozen = column.frozen
+        
+        return ret
 
       return false
 
