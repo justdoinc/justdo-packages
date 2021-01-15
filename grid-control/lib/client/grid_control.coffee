@@ -513,7 +513,7 @@ _.extend GridControl.prototype,
 
       @container.removeClass container_class_name
 
-      @_grid.onScroll.unsubscribe(slickGridOnScrollFn)
+      @_grid?.onScroll.unsubscribe(slickGridOnScrollFn)
       clearSlickGridOnScrollFnEffect()
 
       _frozen_columns_mode = false
@@ -1748,7 +1748,7 @@ _.extend GridControl.prototype,
 
     @editing_locked = false
 
-    @_grid.onClick.unsubscribe(@_gridEditLockFn)
+    @_grid?.onClick.unsubscribe(@_gridEditLockFn)
 
     return
 
