@@ -65,11 +65,13 @@ $active-shadow-color-v: rgba(160, 75, 162, 0.82)
 $standard-cell-padding-top: 5px
 $standard-cell-padding-bottom: 3px
 
+$cells-and-rows-design-transition: box-shadow, background-color 0.1s linear
+
 .slick-row
   // Define borders in the row level
   border-top: $row-border-style
 
-  transition: box-shadow, background-color 0.1s linear
+  transition: $cells-and-rows-design-transition
 
   &:first-child, &.f-first
     // Keep occupying the space, so when it'll be active, the
@@ -136,6 +138,8 @@ $standard-cell-padding-bottom: 3px
 
 .frozen-columns-mode
   .frozen
+    transition: $cells-and-rows-design-transition
+
     position: sticky
 
     top: 0 !important
