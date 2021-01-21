@@ -29,7 +29,20 @@ _.extend GridDataCom.prototype,
       # It is very expensive for collection2 + collection hooks to process long lists
       # of users, so we set them directly, after adding the task (+ we do it in an async
       # fasion).
-      @collection.rawCollection().update {_id: task_id}, {$set: {users: upsert_mutator.$set.users}}, {upsert: true}
+      query =
+        _id: task_id
+      update =
+        $set:
+          users: upsert_mutator.$set.users
+
+      APP.justdo_analytics.logMongoRawConnectionOp(@collection._name, "update", query, update)
+      @collection.rawCollection().update query, update, {upsert: true}, Meteor.bindEnvironment (err) =>
+        if err?
+          throw err
+        
+        @emit "item-insert-completed", task_id
+
+        return
     catch e
       console.error "grid-data-com: Failed to insert document", e
 
