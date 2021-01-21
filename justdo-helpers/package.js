@@ -69,6 +69,7 @@ Package.onUse(function (api) {
   api.add_files("lib/both/handlers-registrar.coffee", both);
   api.add_files("lib/both/ddp-helpers.coffee", both);
   api.add_files("lib/both/reactive-items-list.coffee", both);
+  api.add_files("lib/both/middlewares.coffee", both);
 
   api.add_files("lib/client/blaze-extensions.coffee", client);
   api.add_files("lib/client/blaze.coffee", client);
