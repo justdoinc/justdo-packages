@@ -235,6 +235,10 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     
     row_index += 1
 
+  
+  if APP.justdo_clipboard_import.middlewaresQueueSync.run("pre-import", lines_to_add) == false
+    return false
+
   gc = APP.modules.project_page.mainGridControl()
   task_paths_added = []
 

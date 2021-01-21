@@ -5,6 +5,7 @@ _.extend JustdoClipboardImport.prototype,
     # Add here code that should run, in the Server and Client, during the JS
     # tick in which we create the object instance.
 
+    @middlewaresQueueSync = JustdoHelpers.middlewaresQueueSync()
     return
 
   _bothDeferredInit: ->
