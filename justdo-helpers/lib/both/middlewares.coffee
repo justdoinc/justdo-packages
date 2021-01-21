@@ -44,15 +44,15 @@ _.extend MiddlewaresQueueSync.prototype,
   run: (middleware_name, ...args) ->
     if (handlers = @middlewares[middleware_name])?
       iterator = handlers.values()
-      while (handler = iterator.next()) && !handler.done
+      while (handler = iterator.next()) and not handler.done
         if handler.value(...args) == false
           return false
     
     return true
 
 _.extend JustdoHelpers,
-  middlewaresQueueAsync: ->
+  generateMiddlewaresQueueAsync: ->
     return new MiddlewaresQueueAsync()
   
-  middlewaresQueueSync: ->
+  generateMiddlewaresQueueSync: ->
     return new MiddlewaresQueueSync()
