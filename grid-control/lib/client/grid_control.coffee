@@ -366,6 +366,11 @@ _.extend GridControl.prototype,
 
       return
 
+    @_grid.onScroll.subscribe (e, scrolls) =>
+      @emit "viewport-scroll", {scrollLeft: scrolls.scrollLeft, scrollTop: scrolls.scrollTop}
+
+      return
+
     @_current_state_invalidation_protection_computation = Tracker.autorun =>
       @current_grid_tree_row.set(@_current_grid_tree_row.get())
       @current_path.set(@_current_path.get())
@@ -453,6 +458,43 @@ _.extend GridControl.prototype,
 
     @isFrozenColumnsMode = -> _frozen_columns_mode_rv.get()
 
+    @getColumnWidthHiddenByFrozenColumnsNonReactive = (column_field_id) ->
+      # Returns 0 if:
+      #
+      #   We aren't in frozen mode, or
+      #   If we are in frozen mode but no part of the column is hidden by the frozen columns, or
+      #   Column_id is frozen itself, or
+      #   column_field_id isn't in the current view
+      #
+      # Otherwise, returns the width in pxs hidden by the frozen columns.
+      if not _frozen_columns_mode
+        return 0
+
+      current_scroll_left = @getViewportScrollLeft()
+
+      width_occupied_by_frozen_columns = 0
+      total_width_of_preceding_columns = 0
+      target_column_width = 0
+      for column in @getView()
+        if column.frozen is true
+          if column.field == column_field_id
+            return 0 # Frozen column can't be hidden, just return 0
+
+          width_occupied_by_frozen_columns += column.width
+
+        if column.field == column_field_id
+          target_column_width = column.width
+          break
+
+        total_width_of_preceding_columns += column.width
+
+      hidden_px = -total_width_of_preceding_columns + current_scroll_left + width_occupied_by_frozen_columns
+
+      if hidden_px <= 0
+        return 0
+
+      return Math.min(hidden_px, target_column_width)
+
     $current_css_block = null
 
     container_class_name = "frozen-columns-mode"
@@ -472,8 +514,8 @@ _.extend GridControl.prototype,
 
     initSlickGridOnScrollFnEffect = =>
       return slickGridOnScrollFn(null, {
-        scrollTop: $(".slick-viewport", @container).scrollTop()
-        scrollLeft: $(".slick-viewport", @container).scrollLeft()
+        scrollTop: @getViewportScrollTop()
+        scrollLeft: @getViewportScrollLeft()
       })
 
     clearSlickGridOnScrollFnEffect = ->
@@ -2306,3 +2348,7 @@ _.extend GridControl.prototype,
 
 
     return
+
+  getViewportScrollTop: -> $(".slick-viewport", @container).scrollTop()
+
+  getViewportScrollLeft: -> $(".slick-viewport", @container).scrollLeft()
