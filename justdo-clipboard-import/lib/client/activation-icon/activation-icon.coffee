@@ -236,7 +236,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     row_index += 1
 
   
-  if APP.justdo_clipboard_import.middlewaresQueueSync.run("pre-import", lines_to_add) == false
+  if not APP.justdo_clipboard_import.middlewares_queue_sync.run("pre-import", lines_to_add) 
     return false
 
   gc = APP.modules.project_page.mainGridControl()
