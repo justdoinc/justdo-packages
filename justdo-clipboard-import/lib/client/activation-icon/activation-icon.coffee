@@ -335,15 +335,23 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     return true
 
-  undoImport = ->          
+  undoImport = (trials=0) ->          
     # task_paths_added is reversed as we need to remove the tasks in the deepest level first
-    task_paths_added.reverse() # Can't find underscore equivelent, using .reverse() here
+    if trials == 0
+      task_paths_added.reverse() # Can't find underscore equivelent, using .reverse() here
 
-    gc._grid_data.bulkRemoveParents task_paths_added, (err) ->
+    paths_to_remove = JustdoHelpers.getRemoveParentsRecursivePaths task_paths_added
+
+    APP.justdo_clipboard_import.middlewares_queue_sync.run "pre-undo-import", paths_to_remove
+
+    APP.modules.project_page.gridControl()._grid_data.bulkRemoveParents paths_to_remove, (err) ->
       if err?
-        JustdoSnackbar.show
-          text: "#{err.reason}. Undo failed."
-          duration: 15000
+        if trials == 0
+          undoImport 1  # Try again just in case the client database are not updated fast enough
+        else
+          JustdoSnackbar.show
+            text: "#{err.reason}. Undo failed."
+            duration: 15000
 
       return
 
