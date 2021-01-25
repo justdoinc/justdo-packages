@@ -79,7 +79,7 @@ ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_op
         cancel:
           label: "Cancel"
 
-          className: "btn-default"
+          className: "btn-light"
 
           callback: ->
             return true
@@ -188,13 +188,15 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
       cancel:
         label: "Cancel"
 
-        className: "btn-default"
+        className: "btn-light"
 
         callback: ->
           return true
 
       resubmit:
         label: "Resend Invitation Email"
+
+        className: "btn-light"
 
         callback: =>
           submit_attempted_rv.set(true)
@@ -255,7 +257,7 @@ initInvitedMembersDialog = (data, options) ->
       cancel:
         label: "Cancel"
 
-        className: "btn-default"
+        className: "btn-light"
 
         callback: ->
           return true

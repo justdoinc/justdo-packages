@@ -23,7 +23,7 @@ ProjectPageDialogs.selectMultipleProjectUsers = (options, cb) ->
       cancel:
         label: "Cancel"
 
-        className: "btn-default"
+        className: "btn-light"
 
         callback: ->
           cb(null)
