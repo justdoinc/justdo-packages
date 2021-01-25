@@ -123,7 +123,7 @@ _.extend PACK.modules.owners,
                 cancel:
                   label: "Cancel"
 
-                  className: "btn-default"
+                  className: "btn-light"
 
                   callback: ->
                     complete()
