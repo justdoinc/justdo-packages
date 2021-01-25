@@ -512,6 +512,26 @@ _.extend GridControl.prototype,
 
       return
 
+    slickGridOnEditCellFn = (e, details) =>
+      column_field_id = details.column.field
+
+      if (hidden_pixels = @getColumnWidthHiddenByFrozenColumnsNonReactive(column_field_id)) > 0
+        total_width_of_preceding_columns = 0
+        width_occupied_by_frozen_columns = 0
+
+        for column in @getView()
+          if column.frozen is true
+            width_occupied_by_frozen_columns += column.width
+
+          if column.field == column_field_id
+            break
+
+          total_width_of_preceding_columns += column.width
+
+        @setViewportScrollLeft(total_width_of_preceding_columns - width_occupied_by_frozen_columns)
+
+      return
+
     initSlickGridOnScrollFnEffect = =>
       return slickGridOnScrollFn(null, {
         scrollTop: @getViewportScrollTop()
@@ -542,6 +562,7 @@ _.extend GridControl.prototype,
         # setup the slick grid event
         initSlickGridOnScrollFnEffect()
         @_grid.onScroll.subscribe(slickGridOnScrollFn)
+        @_grid.onEditCell.subscribe(slickGridOnEditCellFn)
 
       _frozen_columns_mode = true
       _frozen_columns_mode_rv.set _frozen_columns_mode
@@ -556,6 +577,7 @@ _.extend GridControl.prototype,
       @container.removeClass container_class_name
 
       @_grid?.onScroll.unsubscribe(slickGridOnScrollFn)
+      @_grid?.onEditCell.unsubscribe(slickGridOnEditCellFn)
       clearSlickGridOnScrollFnEffect()
 
       _frozen_columns_mode = false
