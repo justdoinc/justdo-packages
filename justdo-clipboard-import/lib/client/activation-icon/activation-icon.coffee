@@ -337,10 +337,22 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
   undoImport = (trials=0) ->          
     # task_paths_added is reversed as we need to remove the tasks in the deepest level first
-    if trials == 0
-      task_paths_added.reverse() # Can't find underscore equivelent, using .reverse() here
+    # if trials == 0
+    #   task_paths_added.reverse() # Can't find underscore equivelent, using .reverse() here
 
-    paths_to_remove = JustdoHelpers.getRemoveParentsRecursivePaths task_paths_added
+    paths_to_remove = new Set()
+   
+    for path_added in task_paths_added
+      if paths_to_remove.has path_added
+        continue
+      
+      paths_to_remove.add path_added
+
+      APP.modules.project_page.mainGridControl()._grid_data.each path_added, (section, item_type, item_obj, path) ->
+        if section.id == "main"
+          paths_to_remove.add path
+    
+    paths_to_remove = Array.from(paths_to_remove).reverse()
 
     APP.justdo_clipboard_import.middlewares_queue_sync.run "pre-undo-import", paths_to_remove
 
