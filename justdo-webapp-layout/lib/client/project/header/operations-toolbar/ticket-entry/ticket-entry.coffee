@@ -32,7 +32,7 @@ APP.executeAfterAppLibCode ->
           cancel:
             label: "Cancel"
 
-            className: "btn-default"
+            className: "btn-light"
 
             callback: =>
               preBootboxDestroyProcedures()
