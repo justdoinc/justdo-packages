@@ -33,8 +33,14 @@
               {{else}}
                 <div class="actions d-flex">
                   <svg class="file-direct-download-link jd-icon text-secondary mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#download"/></svg>
-                  <svg class="file-rename-link jd-icon text-secondary mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>
-                  <svg class="file-remove-link jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"/></svg>
+
+                  {{#if isAllowedToRenameFile}}
+                    <svg class="file-rename-link jd-icon text-secondary mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>
+                  {{/if}}
+
+                  {{#if isAllowedToRemoveFile}}
+                    <svg class="file-remove-link jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"/></svg>
+                  {{/if}}
                 </div>
               {{/if}}
             </div>

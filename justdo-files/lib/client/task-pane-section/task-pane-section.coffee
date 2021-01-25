@@ -66,6 +66,19 @@ Template.justdo_files_gallery.helpers
   noFiles: ->
     return APP.justdo_files.tasks_files.find({"meta.task_id": APP.modules.project_page.activeItemId()}).count() == 0
 
+  isAllowedToRenameFile: ->
+    if @file.userId == Meteor.userId()
+      return true
+
+    return APP.justdo_permissions.checkTaskPermissions("justdo-files.rename-file-by-non-uploader", JD.activeItemId())
+
+  isAllowedToRemoveFile: ->
+    if @file.userId == Meteor.userId()
+      return true
+
+    return APP.justdo_permissions.checkTaskPermissions("justdo-files.remove-file-by-non-uploader", JD.activeItemId())
+
+
 Template.justdo_files_gallery.events
   "click .file-download-link": (e, tmpl) ->
     e.preventDefault()

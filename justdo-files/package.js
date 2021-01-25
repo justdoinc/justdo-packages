@@ -53,11 +53,15 @@ Package.onUse(function (api) {
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
+  api.use("justdoinc:justdo-permissions", both);
+
   api.use("reactive-var", both);
   api.use("tracker", client);
 
   api.use("ostrio:files@1.11.2", both);
   
+  api.addFiles("lib/both/permissions.coffee", both);
+
   api.addFiles("lib/both/init.coffee", both);
   api.addFiles("lib/both/static.coffee", both);
   api.addFiles("lib/both/errors-types.coffee", both);

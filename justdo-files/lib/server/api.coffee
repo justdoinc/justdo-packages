@@ -128,6 +128,9 @@ _.extend JustdoFiles.prototype,
     if not @isUserAllowedToAccessTasksFiles(task_id, user_id)
       throw @_error "unknown-file"
 
+    if file_obj.userId != user_id
+      APP.justdo_permissions.requireTaskPermissions("justdo-files.remove-file-by-non-uploader", task_id, user_id)
+
     @tasks_files.remove(file_id)
 
     return
@@ -150,6 +153,9 @@ _.extend JustdoFiles.prototype,
 
       if not @isUserAllowedToAccessTasksFiles(task_id, user_id)
         throw @_error "unknown-file"
+
+      if file_obj.userId != user_id
+        APP.justdo_permissions.requireTaskPermissions("justdo-files.rename-file-by-non-uploader", task_id, user_id)
 
       new_filename_split = new_filename.split "."
       new_ext = if new_filename_split.length <= 1 then "" else new_filename_split[new_filename_split.length-1]
