@@ -2350,5 +2350,7 @@ _.extend GridControl.prototype,
     return
 
   getViewportScrollTop: -> $(".slick-viewport", @container).scrollTop()
+  setViewportScrollTop: (offset) -> $(".slick-viewport", @container).scrollTop(offset)
 
   getViewportScrollLeft: -> $(".slick-viewport", @container).scrollLeft()
+  setViewportScrollLeft: (offset) -> $(".slick-viewport", @container).scrollLeft(offset)
