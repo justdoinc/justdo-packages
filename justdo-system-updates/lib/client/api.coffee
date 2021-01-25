@@ -78,7 +78,7 @@ _.extend JustdoSystemUpdates.prototype,
         read_later:
           label: "Read Later"
 
-          className: "btn-default"
+          className: "btn-light"
 
           callback: =>
             showLater()
