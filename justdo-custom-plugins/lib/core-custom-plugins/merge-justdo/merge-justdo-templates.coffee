@@ -16,7 +16,7 @@ Template.merge_justdo_cog_button.events
         close:
           label: "Cancel"
 
-          className: "btn-default"
+          className: "btn-light"
 
           callback: ->
             return true
