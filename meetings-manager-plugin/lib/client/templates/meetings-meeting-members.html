@@ -55,7 +55,7 @@
 </template>
 
 <template name="meetings_meeting_members_editor_user_btn">
-  <button class="btn user-btn action-btn {{#if proceed.get}}proceed bg-light{{else}}dont-proceed{{/if}}" type="button" title="{{btn_title}}">
+  <button class="btn user-btn action-btn text-body {{#if proceed.get}}proceed bg-light{{else}}dont-proceed{{/if}}" type="button" title="{{btn_title}}">
     <div class="flex-grow-1">
       {{#with user_doc}}{{> gtpl_user_profile_pic}}{{/with}} <span>{{displayName user_doc}}</span>
     </div>
