@@ -27,7 +27,7 @@ Template.meetings_meeting_members.events
         cancel:
           label: "Cancel"
 
-          className: "btn-default"
+          className: "btn-light"
 
           callback: ->
             return true
