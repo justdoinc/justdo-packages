@@ -40,7 +40,10 @@ Template.required_action_card_transfer_request.events
       duration: 8000
       actionText: "View"
       onActionClick: =>
-        APP.modules.project_page.activateTaskInProject @project_id, @task_id
+        if JD.activeJustdoId()?
+          APP.modules?.project_page?.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab (@task_id)
+        else
+          APP.modules?.project_page?.activateTaskInProject @project_id, @task_id
 
         JustdoSnackbar.close()
 
@@ -61,7 +64,10 @@ Template.required_action_card_transfer_request.events
       duration: 8000
       actionText: "View"
       onActionClick: =>
-        APP.modules.project_page.activateTaskInProject @project_id, @task_id
+        if JD.activeJustdoId()?
+          APP.modules?.project_page?.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab (@task_id)
+        else
+          APP.modules?.project_page?.activateTaskInProject @project_id, @task_id
 
         JustdoSnackbar.close()
 
@@ -70,7 +76,10 @@ Template.required_action_card_transfer_request.events
     return
 
   "click .task-link": ->
-    APP.modules.project_page.activateTaskInProject @project_id, @task_id
+    if JD.activeJustdoId()?
+      APP.modules?.project_page?.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab (@task_id)
+    else
+      APP.modules?.project_page?.activateTaskInProject @project_id, @task_id
     
     return
 

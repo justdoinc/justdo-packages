@@ -354,7 +354,8 @@ APP.executeAfterAppLibCode ->
 
   Template.task_pane_item_details_context_per_path.events
     "click .idc-context-item" : (e) ->
-      gcm = module.getCurrentGcm()
-      gcm.activateTab("main")
-      gc = gcm?.getAllTabs()?.main?.grid_control
-      gc.activatePath(@path)
+      if not APP.modules?.project_page?.gridControl()?.activatePath(@path)
+        gcm = module.getCurrentGcm()
+        gcm.activateTab("main")
+        gc = gcm?.getAllTabs()?.main?.grid_control
+        gc.activatePath(@path)
