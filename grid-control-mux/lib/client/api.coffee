@@ -653,9 +653,12 @@ _.extend GridControlMux.prototype,
       # To activate the tab
       Tracker.flush()
 
+    @getActiveTabNonReactive()?.grid_control?.forceItemsPassCurrentFilter item_id, =>
       # Second attempt after switching to the main tab
       activatePath()
 
+      return
+    
     return
 
   getActiveGridControl: (require_ready=false) ->
