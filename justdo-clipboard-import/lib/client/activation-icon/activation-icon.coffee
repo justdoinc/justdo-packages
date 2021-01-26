@@ -83,7 +83,7 @@ getSelectedColumnsDefinitions = ->
 
   if duplicated_field_id?
     col_def = available_field_types?[0]?[duplicated_field_id]
-    ret_val = 
+    ret_val =
       err:
         message: "More than 1 column is selected as #{if col_def? then col_def.label else duplicated_field_id}"
     return ret_val
@@ -132,12 +132,12 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       temp_import_ids.push temp_import_id
 
       if index_column?
-         # Allways handle "clipboard-import-index" column first
+        # Allways handle "clipboard-import-index" column first
         cell_val = row[index_column].trim()
         import_idx_to_temp_import_id_map[cell_val] = temp_import_id
 
       for column_num in [0..(number_of_columns - 1)]
-        cell_val = row[column_num].replace(/[\u200B-\u200D\uFEFF]/g, '').trim() # 'replace' is used to remove zero-width white space
+        cell_val = row[column_num].replace(/[\u200B-\u200D\uFEFF]/g, "").trim() # 'replace' is used to remove zero-width white space
         field_def = selected_columns_definitions[column_num]
         field_id = field_def._id
 
@@ -235,13 +235,11 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     
     row_index += 1
 
-  
-  if not APP.justdo_clipboard_import.middlewares_queue_sync.run("pre-import", lines_to_add) 
+  if not APP.justdo_clipboard_import.middlewares_queue_sync.run("pre-import", lines_to_add)
     return false
 
   gc = APP.modules.project_page.mainGridControl()
   task_paths_added = []
-
 
   importLevel = (indent_level_to_import, mapSeriesCb) ->
     parent_id = modal_data.parent_task_id
@@ -263,22 +261,25 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
           gc._grid_data.bulkAddChild "/" + parent_id + "/", batch, (err, result) ->
             if err?
               APP.collections.Tasks.find
-                "jci:temp_import_id": 
+                "jci:temp_import_id":
                   $in: _.map batch, (task) -> task["jci:temp_import_id"]
               ,
                 fields:
                   _id: 1
               .forEach (task) ->
                 task_paths_added.push "/#{parent_id}/#{task._id}"
+                return
             else
               # For undo if failure
               for item in result
                 task_paths_added.push item[1] # item[1] is the path of added task
             callback err, result
+
+            return
+
           return
         return
         
-    
     async.parallelLimit async_calls, 5, (err, results) ->
       if not err?
         result_num = 0
@@ -335,10 +336,8 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     return true
 
-  undoImport = (trials=0) ->          
+  undoImport = (trials = 0) ->
     # task_paths_added is reversed as we need to remove the tasks in the deepest level first
-    # if trials == 0
-    #   task_paths_added.reverse() # Can't find underscore equivelent, using .reverse() here
 
     paths_to_remove = new Set()
    
@@ -349,8 +348,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       paths_to_remove.add path_added
 
       APP.modules.project_page.mainGridControl()._grid_data.each path_added, (section, item_type, item_obj, path) ->
-        if section.id == "main"
-          paths_to_remove.add path
+        paths_to_remove.add path
     
     paths_to_remove = Array.from(paths_to_remove).reverse()
 
@@ -366,11 +364,13 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             duration: 15000
 
       return
+    
+    return
 
   async.mapSeries [1..max_indent], (n, callback) ->
     importLevel(n, callback)
   , (err, results) ->
-    if err? 
+    if err?
       JustdoSnackbar.show
         text: "#{err?.reason or "Incorrect dependenc(ies) found."}. Import aborted."
         duration: 15000
@@ -379,8 +379,8 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
       return false
 
-    try 
-      importDependencies() 
+    try
+      importDependencies()
       clearupTempImportId()
     catch err
       JustdoSnackbar.show
@@ -405,7 +405,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   return true
   
 Template.justdo_clipboard_import_activation_icon.events
-  "click .justdo-clipboard-import-activation": (e, tpl)->
+  "click .justdo-clipboard-import-activation": (e, tpl) ->
     # Check to see if there is a task selected
     if not (JD.activePath() and JD.activeItemId()?)
       JustdoSnackbar.show
