@@ -322,6 +322,13 @@ GridControl.installFormatter "textWithTreeControls",
             <i class="fa fa-fw fa-paperclip task-files slick-prevent-edit" title="#{files.length} files" aria-hidden="true"></i>
         """
 
+    if (justdo_files_count = doc[JustdoFiles.files_count_task_doc_field_id])?
+      justdo_files_count = parseInt(justdo_files_count, 10) # Don't open an XSS chance.
+      if justdo_files_count > 0
+        tree_control += """
+            <i class="fa fa-fw fa-paperclip justdo-files slick-prevent-edit" title="#{justdo_files_count} files" aria-hidden="true"></i>
+        """
+
     if @getCurrentColumnData("delivery_planner_plugin_enabled")
       if (is_project = doc["p:dp:is_project"])?
         is_archived_project = doc["p:dp:is_archived_project"]

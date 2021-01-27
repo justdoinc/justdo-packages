@@ -125,6 +125,16 @@ _.extend PACK.Formatters.textWithTreeControls,
         $(".task-pane-content").scrollTop(0)
     }
     {
+      args: ['click', '.justdo-files']
+      handler: (e) ->
+        openTaskPaneAndSetTab("justdo-files")
+
+        # Update task pane
+        Tracker.flush()
+
+        $(".task-pane-content").scrollTop(0)
+    }
+    {
       args: ['click', '.chat-messages']
       handler: (e) ->
         openTaskPaneAndSetTab("item-details")
