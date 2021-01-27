@@ -20,6 +20,36 @@ _.extend Projects.prototype,
 
     # **IMPORTANT** Unsecure - uncomment only when needed.
     Meteor.methods
+      addJustdoFilesTaskFilesCount: ->
+        if not APP.justdo_files?
+          console.error "JustDo Files isn't installed on this environment"
+
+          return
+
+        if not self.lockMigrationScript "addJustdoFilesTaskFilesCount"
+          return
+
+        tasks_ids_to_files_count = {}
+        APP.justdo_files.tasks_files.find().forEach (file_doc) ->
+          task_id = file_doc.meta.task_id
+
+          if task_id not of tasks_ids_to_files_count
+            tasks_ids_to_files_count[task_id] = 0
+
+          tasks_ids_to_files_count[task_id] += 1
+
+          return
+
+        APP.justdo_permissions.runCbInIgnoredPermissionsScope =>
+          for task_id, task_files_count of tasks_ids_to_files_count
+            JD.collections.Tasks.update(task_id, {$set: {"#{JustdoFiles.files_count_task_doc_field_id}": task_files_count}})
+
+          return
+
+        self.unlockMigrationScript "addJustdoFilesTaskFilesCount"
+
+        return
+
       # addTasksSeqIndices: ->
       #   # Add to each task a seqId by order of creation (do nothing if already has seqID)
       #   projects_object.projects_collection.find({}).forEach (project) ->
@@ -38,130 +68,130 @@ _.extend Projects.prototype,
 
       #   return
       
-      migrateToJPU: (justdo_id) ->
-        check justdo_id, Match.Maybe String
+      # migrateToJPU: (justdo_id) ->
+      #   check justdo_id, Match.Maybe String
 
-        enableJPUIfNeeded = (project) ->
-          if not (plugins_list = project?.conf?.custom_features)
-            return
+      #   enableJPUIfNeeded = (project) ->
+      #     if not (plugins_list = project?.conf?.custom_features)
+      #       return
             
-          for plugin_id in plugins_list
-            if plugin_id in JustdoPlanningUtilities.legecy_plugin_ids
-              plugins_list.push JustdoPlanningUtilities.project_custom_feature_id
-              APP.collections.Projects.update project._id,
-                $set:
-                  "conf.custom_features": plugins_list
+      #     for plugin_id in plugins_list
+      #       if plugin_id in JustdoPlanningUtilities.legecy_plugin_ids
+      #         plugins_list.push JustdoPlanningUtilities.project_custom_feature_id
+      #         APP.collections.Projects.update project._id,
+      #           $set:
+      #             "conf.custom_features": plugins_list
                   
-              return
+      #         return
           
-          return
+      #     return
 
-        if justdo_id?
-          enableJPUIfNeeded APP.collections.Projects.findOne justdo_id
-        else
-          APP.collections.Projects.find {},
-            fields:
-              _id: 1
-              conf: 1
-          .forEach (project) ->
-            enableJPUIfNeeded project
+      #   if justdo_id?
+      #     enableJPUIfNeeded APP.collections.Projects.findOne justdo_id
+      #   else
+      #     APP.collections.Projects.find {},
+      #       fields:
+      #         _id: 1
+      #         conf: 1
+      #     .forEach (project) ->
+      #       enableJPUIfNeeded project
             
-            return
+      #       return
         
-        # The duration recalculation will be triggered automatically in hooks defined in justdo-planning-utilties/lib/server/collections-hooks.coffee
-        return
+      #   # The duration recalculation will be triggered automatically in hooks defined in justdo-planning-utilties/lib/server/collections-hooks.coffee
+      #   return
       
-      removeInvalidDependencies: ->
-        if not self.lockMigrationScript "removeInvalidDependencies"
-          return 
+      # removeInvalidDependencies: ->
+      #   if not self.lockMigrationScript "removeInvalidDependencies"
+      #     return 
 
-        task_id_exists_cache = {}
-        queries_count = 0
+      #   task_id_exists_cache = {}
+      #   queries_count = 0
 
-        taskIdExists = (task_id) ->
-          if not task_id_exists_cache[task_id]?
-            task_id_exists_cache[task_id] = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1}})?
-            queries_count += 1
-          return task_id_exists_cache[task_id]
+      #   taskIdExists = (task_id) ->
+      #     if not task_id_exists_cache[task_id]?
+      #       task_id_exists_cache[task_id] = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1}})?
+      #       queries_count += 1
+      #     return task_id_exists_cache[task_id]
 
-        task_seqId_exists_cache = {}
-        taskSeqIdExists = (justdo_id, seqId) ->
-          key = "#{justdo_id}:#{seqId}"
-          if not task_seqId_exists_cache[key]?
-            task_seqId_exists_cache[key] = APP.collections.Tasks.findOne(
-              project_id: justdo_id
-              seqId: seqId
-            ,
-              fields: 
-                _id: 1
-            )?
-            queries_count += 1
+      #   task_seqId_exists_cache = {}
+      #   taskSeqIdExists = (justdo_id, seqId) ->
+      #     key = "#{justdo_id}:#{seqId}"
+      #     if not task_seqId_exists_cache[key]?
+      #       task_seqId_exists_cache[key] = APP.collections.Tasks.findOne(
+      #         project_id: justdo_id
+      #         seqId: seqId
+      #       ,
+      #         fields: 
+      #           _id: 1
+      #       )?
+      #       queries_count += 1
 
-          return task_seqId_exists_cache[key]
+      #     return task_seqId_exists_cache[key]
         
-        bulk_update_ops = []
+      #   bulk_update_ops = []
 
-        queries_count += 1
-        APP.collections.Tasks.find
-          $or: [{
-            justdo_task_dependencies:
-              $exists: true
-              $ne: []
-          },{
-            justdo_task_dependencies_mf:
-              $exists: true
-              $ne: []
-          }]
-        .forEach (task) ->
-          set_modifier = {}
+      #   queries_count += 1
+      #   APP.collections.Tasks.find
+      #     $or: [{
+      #       justdo_task_dependencies:
+      #         $exists: true
+      #         $ne: []
+      #     },{
+      #       justdo_task_dependencies_mf:
+      #         $exists: true
+      #         $ne: []
+      #     }]
+      #   .forEach (task) ->
+      #     set_modifier = {}
 
-          if (deps = task.justdo_task_dependencies_mf)?
-            sanitized_deps = []
-            need_update = false
-            for dep in deps
-              if taskIdExists dep.task_id
-                sanitized_deps.push dep
-              else
-                need_update = true
+      #     if (deps = task.justdo_task_dependencies_mf)?
+      #       sanitized_deps = []
+      #       need_update = false
+      #       for dep in deps
+      #         if taskIdExists dep.task_id
+      #           sanitized_deps.push dep
+      #         else
+      #           need_update = true
             
-            if need_update
-              set_modifier.justdo_task_dependencies_mf = sanitized_deps
+      #       if need_update
+      #         set_modifier.justdo_task_dependencies_mf = sanitized_deps
                   
-          if (seq_deps = task.justdo_task_dependencies)?
-            sanitized_seq_ids = []
-            need_update = false
-            for seq_id in seq_deps
-              # APP.justdo_planning_utilities.integrityCheckAndHumanReadableToMFAndBackHook_enabled = false
-              if taskSeqIdExists task.project_id, seq_id
-                sanitized_seq_ids.push seq_id
-              else
-                need_update = true
+      #     if (seq_deps = task.justdo_task_dependencies)?
+      #       sanitized_seq_ids = []
+      #       need_update = false
+      #       for seq_id in seq_deps
+      #         # APP.justdo_planning_utilities.integrityCheckAndHumanReadableToMFAndBackHook_enabled = false
+      #         if taskSeqIdExists task.project_id, seq_id
+      #           sanitized_seq_ids.push seq_id
+      #         else
+      #           need_update = true
             
-            if need_update
-              set_modifier.justdo_task_dependencies = sanitized_seq_ids
+      #       if need_update
+      #         set_modifier.justdo_task_dependencies = sanitized_seq_ids
               
-              # APP.justdo_planning_utilities.integrityCheckAndHumanReadableToMFAndBackHook_enabled = true
+      #         # APP.justdo_planning_utilities.integrityCheckAndHumanReadableToMFAndBackHook_enabled = true
           
-          if not _.isEmpty set_modifier
-            bulk_update_ops.push
-              updateOne:
-                filter:
-                  _id: task._id
-                update:
-                  $set: set_modifier
+      #     if not _.isEmpty set_modifier
+      #       bulk_update_ops.push
+      #         updateOne:
+      #           filter:
+      #             _id: task._id
+      #           update:
+      #             $set: set_modifier
 
-          return
+      #     return
         
-        if bulk_update_ops.length > 0
-          APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Tasks._name, "bulkWrite")
-          APP.collections.Tasks.rawCollection().bulkWrite bulk_update_ops
+      #   if bulk_update_ops.length > 0
+      #     APP.justdo_analytics.logMongoRawConnectionOp(APP.collections.Tasks._name, "bulkWrite")
+      #     APP.collections.Tasks.rawCollection().bulkWrite bulk_update_ops
 
-        self.unlockMigrationScript "removeInvalidDependencies"
+      #   self.unlockMigrationScript "removeInvalidDependencies"
 
-        self.logger.debug "Queried #{queries_count} times."
-        self.logger.debug "Updated #{bulk_update_ops.length} tasks with invalid dependencies."
+      #   self.logger.debug "Queried #{queries_count} times."
+      #   self.logger.debug "Updated #{bulk_update_ops.length} tasks with invalid dependencies."
 
-        return
+      #   return
             
     add_project_id_to_changelog_in_progress = false
     Meteor.methods

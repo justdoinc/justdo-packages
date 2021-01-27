@@ -36,8 +36,15 @@ _.extend JustdoFiles.prototype,
       id: "justdo-files"
       type: "JustdoFilesTaskPaneSection" # the name of the template derives from the type
       options:
-        title: "FILES"
-        titleInfo: -> "" # Can be a reactive resource
+        title: "Files"
+        titleInfo: ->
+          if not (active_item_obj = module.activeItemObj({"#{JustdoFiles.files_count_task_doc_field_id}": 1}))?
+            return ""
+
+          if not (files_count = active_item_obj[JustdoFiles.files_count_task_doc_field_id]) or files_count <= 0
+            return ""
+          
+          return "(#{parseInt(files_count, 10)})"
       section_options: {}
 
     justdo_files_section_position =

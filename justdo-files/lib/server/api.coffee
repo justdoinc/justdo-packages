@@ -87,6 +87,12 @@ _.extend JustdoFiles.prototype,
             # Remove the temporary file, now that we stored it in mongodb
             tasks_files_this.unlink tasks_files_this.collection.findOne file._id
 
+            if (task_id = file?.meta?.task_id)?
+              APP.justdo_permissions.runCbInIgnoredPermissionsScope =>
+                justdo_files_this.tasks_collection.update(task_id, {$inc: {"#{JustdoFiles.files_count_task_doc_field_id}": 1}})
+
+                return
+
           return
 
         return
@@ -132,6 +138,11 @@ _.extend JustdoFiles.prototype,
       APP.justdo_permissions.requireTaskPermissions("justdo-files.remove-file-by-non-uploader", task_id, user_id)
 
     @tasks_files.remove(file_id)
+
+    APP.justdo_permissions.runCbInIgnoredPermissionsScope =>
+      @tasks_collection.update(task_id, {$inc: {"#{JustdoFiles.files_count_task_doc_field_id}": -1}})
+
+      return
 
     return
 
