@@ -89,7 +89,7 @@ Meteor.methods
         parent_next_order[parent] = 0
       
       return_val = parent_next_order[parent]
-      parent_next_order += 1
+      parent_next_order[parent] += 1
       return return_val
 
     addChildrenToParents = (parents, level) ->
