@@ -3,20 +3,30 @@ options_schema = new SimpleSchema
     type: String
   max_levels:
     type: Number
+    defaultValue: 10
   max_items_to_add:
+    # If we add max_items_to_add tasks, we will stop adding more tasks immediately
     type: Number
+    defaultValue: 1000
   min_items_per_parent:
     type: Number
+    defaultValue: 1
   max_items_per_parent:
     type: Number
+    defaultValue: 10
   parents:
     type: [String]
+    defaultValue: ["0"]
   max_words_in_title:
     type: Number
+    defaultValue: 20 # 0 means no title will be set by us
   max_words_in_status:
     type: Number
-  fields:
+    defaultValue: 20 # 0 means no title will be set by us
+  custom_fields:
     type: Object
+    blackbox: true
+    defaultValue: {}
 
 lorem_arr = JustdoHelpers.lorem_ipsum_arr
 
@@ -26,7 +36,14 @@ Meteor.methods
 
     check user_id, String
     check options, Object
-    options_schema.validate options
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        options_schema,
+        options or {},
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
 
     if not JustdoHelpers.isPocPermittedDomains()
       return
@@ -34,15 +51,13 @@ Meteor.methods
     if not (project = APP.collections.Projects.findOne(options.project_id))?
       throw new Error "project-not-found"
 
-    {max_levels, min_items_per_parent, max_items_per_parent, parents, fields} = options
-    
     items_added = 0
     all_tasks = []
     parent_next_order = {}
 
     fetch_parents_last_order_promises = []
 
-    for parent in parents
+    for parent in options.parents
       do (parent) ->
         fetch_parents_last_order_promises.push(APP.collections.Tasks.rawCollection().aggregate([{
           $match:
@@ -62,27 +77,46 @@ Meteor.methods
 
         return
 
-    addNecessaryFields = (child_fields, parent) ->
-      now = new Date()
-      child_fields._id = Random.id()
-      child_fields._raw_added_users_dates =
-        "#{user_id}": now
-      child_fields._raw_updated_date = now
-      child_fields.createdAt = now
-      child_fields.created_by_user_id = user_id
-      child_fields.owner_id = user_id
-      child_fields.parents =
-        "#{parent}":
-          order: getParentLastOrder parent
-      priority = 0
-      child_fields.project_id = options.project_id
-      # seqId will be added later
-      child_fields.state = "nil"
-      child_fields.updatedAt = now
-      child_fields.users = [user_id]
-      child_fields.users_updated_at = now
+    now = new Date() # A single now for all the created tasks
+    generateTaskDocForParent = (parent) ->
+      # Note seqId will be added later
 
-      return
+      fallback_fields = # Will be set only if weren't been set already by custom_fields
+        owner_id: user_id
+        priority: 0
+        state: "nil"
+
+      forced_fields =
+        _id: Random.id()
+        
+        users: [user_id]
+        users_updated_at: now
+        _raw_added_users_dates:
+          "#{user_id}": now
+        
+        _raw_updated_date: now
+
+        createdAt: now
+
+        created_by_user_id: user_id
+
+        parents:
+          "#{parent}":
+            order: getParentLastOrder parent
+
+        project_id: options.project_id
+
+        updatedAt: now
+
+      fields = _.extend fallback_fields, options.custom_fields, forced_fields
+
+      # Add neccessary fields
+      for field_name in ["title", "status"]
+        # Set only if aren't set already
+        if not fields[field_name]? and options["max_words_in_#{field_name}"] != 0
+          fields[field_name] = lodash.sampleSize(lorem_arr, lodash.random(1, options["max_words_in_#{field_name}"])).join(" ")
+      
+      return fields
 
     getParentLastOrder = (parent) ->
       if not parent_next_order[parent]?
@@ -99,16 +133,11 @@ Meteor.methods
       added_children_ids = []
       
       for parent in parents
-        children_count = lodash.random(min_items_per_parent, max_items_per_parent)
+        children_count = lodash.random(options.min_items_per_parent, options.max_items_per_parent)
         i = 0
         while i < children_count
-          child_fields = _.extend {}, fields # Create a copy
-          addNecessaryFields child_fields, parent
-          # add neccessary fields
-          for field_name in ["title", "status"]
-            if not child_fields[field_name]? and options["max_words_in_#{field_name}"] != 0
-              child_fields[field_name] = lodash.sampleSize(lorem_arr, lodash.random(1, options["max_words_in_#{field_name}"])).join(" ")
-          
+          child_fields = generateTaskDocForParent parent
+
           added_children_ids.push child_fields._id
           all_tasks.push child_fields
           if (items_added += 1) == options.max_items_to_add
@@ -122,7 +151,7 @@ Meteor.methods
     
     await Promise.all(fetch_parents_last_order_promises)
     
-    addChildrenToParents parents, max_levels
+    addChildrenToParents options.parents, options.max_levels
     
     # allocate seqId
     result = APP.collections.Projects.findAndModify
