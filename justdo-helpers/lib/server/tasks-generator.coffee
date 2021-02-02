@@ -128,7 +128,7 @@ Meteor.methods
       forced_fields =
         _id: Random.id()
         
-        users: [user_id]
+        users: _.union [user_id], options.custom_fields?.users
         users_updated_at: now
         _raw_added_users_dates:
           "#{user_id}": now
