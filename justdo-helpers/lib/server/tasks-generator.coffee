@@ -1,4 +1,4 @@
-range_allowed_value_types = ["date", "float", "integer"]
+range_allowed_value_types = ["date-string", "float", "integer"]
 
 options_schema = new SimpleSchema
   project_id:
@@ -35,6 +35,9 @@ lorem_arr = JustdoHelpers.lorem_ipsum_arr
 pad0 = (num) ->
   return "#{num}".padStart(2, 0)
 
+throwInvalidCustomFieldErr = (field_name, msg) ->
+  throw new Meteor.Error "invalid-custom-fields", "For #{field_name}, #{msg}"
+
 Meteor.methods
   "JDHelpersTasksGenerator": (options) ->
     user_id = @userId
@@ -52,18 +55,18 @@ Meteor.methods
 
     # Validate and pre-process custom_fields
     if options.custom_fields?
-      for field_name, field_def in options.custom_fields
-        if _.isObject field_def
+      for field_name, field_def of options.custom_fields
+        if not _.isArray(field_def) and _.isObject(field_def)
           if not field_def.type?
-            throw new Meteor.error "invalid-custom-fields", "For #{field_name}, type option not specified"
+            throwInvalidCustomFieldErr field_name, "type option not specified"
           if field_def.type == "random-value"
             if not _.isArray(field_def.allowed_values) or field_def.allowed_values.length == 0
-              throw new Meteor.error "invalid-custom-fields", "For #{field_name}, allowed_values option not specifid"
+              throwInvalidCustomFieldErr field_name, "allowed_values option not specifid"
           else if field_def.type == "range"
             if not (field_def.value_type in range_allowed_value_types)
-              throw new Meteor.error "invalid_custom_fields", "For #{field_name}, value_type option must be in #{range_allowed_value_types}"
+              throwInvalidCustomFieldErr field_name, "value_type option must be in #{range_allowed_value_types}"
             if not _.isArray(field_def.range) or field_def.range.length != 2
-              throw new Meteor.error "invalid_custom_fields", "For #{field_name}, range option must be an array with length of 2"
+              throwInvalidCustomFieldErr field_name, "range option must be an array with length of 2"
 
             min = field_def.range[0]
             max = field_def.range[1]
@@ -79,7 +82,7 @@ Meteor.methods
               max = Math.floor max
             
             if max < min
-              throw new Meteor.error "invalid_custom_fields", "For #{field_name}, range option is invalid"
+              throwInvalidCustomFieldErr field_name, "range option is invalid"
 
             field_def.range[0] = min
             field_def.range[1] = max
