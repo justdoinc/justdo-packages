@@ -1,3 +1,5 @@
+range_allowed_value_types = ["date", "float", "integer"]
+
 options_schema = new SimpleSchema
   project_id:
     type: String
@@ -30,6 +32,9 @@ options_schema = new SimpleSchema
 
 lorem_arr = JustdoHelpers.lorem_ipsum_arr
 
+pad0 = (num) ->
+  return "#{num}".padStart(2, 0)
+
 Meteor.methods
   "JDHelpersTasksGenerator": (options) ->
     user_id = @userId
@@ -44,6 +49,40 @@ Meteor.methods
         {self: @, throw_on_error: true}
       )
     options = cleaned_val
+
+    # Validate and pre-process custom_fields
+    if options.custom_fields?
+      for field_name, field_def in options.custom_fields
+        if _.isObject field_def
+          if not field_def.type?
+            throw new Meteor.error "invalid-custom-fields", "For #{field_name}, type option not specified"
+          if field_def.type == "random-value"
+            if not _.isArray(field_def.allowed_values) or field_def.allowed_values.length == 0
+              throw new Meteor.error "invalid-custom-fields", "For #{field_name}, allowed_values option not specifid"
+          else if field_def.type == "range"
+            if not (field_def.value_type in range_allowed_value_types)
+              throw new Meteor.error "invalid_custom_fields", "For #{field_name}, value_type option must be in #{range_allowed_value_types}"
+            if not _.isArray(field_def.range) or field_def.range.length != 2
+              throw new Meteor.error "invalid_custom_fields", "For #{field_name}, range option must be an array with length of 2"
+
+            min = field_def.range[0]
+            max = field_def.range[1]
+            # XXX error if max < min
+            if field_def.value_type == "date-string"
+              if not min or min < 0
+                min = 0
+              min = moment.utc(min).startOf("day").toDate().getTime()
+              max = moment.utc(max).startOf("day").toDate().getTime()
+            else if field_def.value_type == "float"
+            else if field_def.value_type == "integer"
+              min = Math.ceil min
+              max = Math.floor max
+            
+            if max < min
+              throw new Meteor.error "invalid_custom_fields", "For #{field_name}, range option is invalid"
+
+            field_def.range[0] = min
+            field_def.range[1] = max
 
     if not JustdoHelpers.isPocPermittedDomains()
       return
@@ -108,7 +147,28 @@ Meteor.methods
 
         updatedAt: now
 
-      fields = _.extend fallback_fields, options.custom_fields, forced_fields
+      custom_fields = {}
+      for field_name, field_def of options.custom_fields
+        if not _.isObject field_def
+          custom_fields[field_name] = field_def
+        else
+          if field_def.chance_empty? and Random.fraction() < field_def.chance_empty
+            continue
+
+          if field_def.type == "random-value"
+            custom_fields[field_name] = Random.choice field_def.allowed_values
+          else if field_def.type == "range"
+            min = field_def.range[0]
+            max = field_def.range[1]
+            if field_def.value_type == "date-string"
+              rand_date = moment.utc(Math.floor(Random.fraction() * (max - min) + min))
+              custom_fields[field_name] = "#{pad0(rand_date.year())}-#{pad0(rand_date.month()+1)}-#{pad0(rand_date.date())}"
+            else if field_def.value_type == "float"
+              custom_fields[field_name] = Random.fraction() * (max - min) + min
+            else if field_def.value_type == "integer"
+              custom_fields[field_name] = Math.floor(Random.fraction() * (max - min) + min)
+
+      fields = _.extend fallback_fields, custom_fields, forced_fields
 
       # Add neccessary fields
       for field_name in ["title", "status"]
