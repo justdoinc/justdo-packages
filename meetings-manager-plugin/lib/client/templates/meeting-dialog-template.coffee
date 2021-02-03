@@ -161,12 +161,15 @@ Template.meetings_meeting_dialog.onCreated ->
       bottomNote = JustdoHelpers.xssGuard bottomNote
       bottomNote = "<div dir='auto' class='print-meeting-mode-note'>" + bottomNote.replace(re, "</div><div dir='auto'>") + "</div>"
 
+    meeting_date = "Date not set"
+    if meeting.date?
+      meeting_date = moment(meeting.date).format("YYYY-MM-DD")
 
     ret = """
       <img src="/layout/logos-ext/justdo_logo_with_text_normal.png" alt="justDo" class="thead-logo">
       <h3 class="font-weight-bold mt-4">#{JustdoHelpers.xssGuard meeting.title}</h3>
       <div class="border-bottom pb-3">
-        <span class="mr-2">Date: <strong>#{moment(meeting.date).format("YYYY-MM-DD")}</strong>,</span>
+        <span class="mr-2">Date: <strong> #{meeting_date}</strong>,</span>
         <span class="mr-2">Time: <strong>#{JustdoHelpers.xssGuard(meeting.time)}</strong></span>
         <div class="mr-2">Location: <strong>#{JustdoHelpers.xssGuard meeting.location}</strong></div>
       </div>
