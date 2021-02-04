@@ -164,9 +164,30 @@ APP.executeAfterAppLibCode ->
   getEventDropdownData = (e, data_label) ->
     $(e.target).closest(".dropdown").data(data_label)
 
+  currentTaskMembersIdsOtherThanMe = ->
+    tpl = Template.instance()
+
+    if not (users = JD.activeItemUsers())?
+      module.logger.warn "Can't find the active task users"
+
+      return null
+
+    return _.without users, Meteor.userId()
+
+  currentTaskMembersDocsOtherThanMe = ->
+    return JustdoHelpers.getUsersDocsByIds(currentTaskMembersIdsOtherThanMe())
+
   Template.item_owners_management.onCreated ->
     @state = new ReactiveVar "base"
     @current_members_filter = new ReactiveVar null
+    @task_has_other_members = new ReactiveVar false
+
+    @autorun =>
+      @task_has_other_members.set "loading"
+      JD.subscribeItemsAugmentedFields JD.activeItemId(), ["users"], {}, =>
+        @task_has_other_members.set(not _.isEmpty currentTaskMembersIdsOtherThanMe())
+
+        return 
 
   Template.item_owners_management.onRendered ->
     if ($members_search_input = $(".members-search-input")).length > 0
@@ -318,20 +339,6 @@ APP.executeAfterAppLibCode ->
 
       return
 
-
-  currentTaskMembersIdsOtherThanMe = ->
-    tpl = Template.instance()
-
-    if not (users = JD.activeItemUsers())?
-      module.logger.warn "Can't find the active task users"
-
-      return null
-
-    return _.without users, Meteor.userId()
-
-  currentTaskMembersDocsOtherThanMe = ->
-    return JustdoHelpers.getUsersDocsByIds(currentTaskMembersIdsOtherThanMe())
-
   Template.item_owners_management.helpers
     hasPermissionToEditMemebers: ->
       if (item_id = JD.activeItemId())?
@@ -344,7 +351,7 @@ APP.executeAfterAppLibCode ->
       return tpl.state.get()
 
     taskHasOtherMembers: ->
-      return not _.isEmpty currentTaskMembersIdsOtherThanMe()
+      return Template.instance().task_has_other_members.get()
 
     taskMembersOtherThanMeMatchingFilter: ->
       tpl = Template.instance()
