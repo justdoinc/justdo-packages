@@ -30,6 +30,26 @@ Template.themes_selector.helpers
       label: "Unicorn"
     }
 
+    {
+      id: "solid"
+      label: "Solid"
+    }
+
+    {
+      id: "solid-blue"
+      label: "Solid Blue"
+    }
+
+    {
+      id: "solid-dark"
+      label: "Solid Dark"
+    }
+
+    {
+      id: "solid-dark-green"
+      label: "Solid Dark Green"
+    }
+
     # {
     #   id: "superhero"
     #   label: "Superhero (Experimental Dark)"
