@@ -84,6 +84,17 @@ Meteor.methods
 
             field_def.range[0] = min
             field_def.range[1] = max
+          else if field_def.type == "lorem-ipsum"
+            if not field_def.min_words?
+              field_def.min_words = 1
+            if not field_def.max_words?
+              field_def.max_words = 100
+            if field_def.min_words < 0
+              throwInvalidCustomFieldErr field_name, "min_words cannot be < 0"
+            if field_def.max_words < 0
+              throwInvalidCustomFieldErr field_name, 'max_words cannot be < 0'
+            if field_def.min_words > field_def.max_words
+              throwInvalidCustomFieldErr field_name, "min_words cannot be greater than max_word"
 
     if not JustdoHelpers.isPocPermittedDomains()
       return
@@ -170,7 +181,8 @@ Meteor.methods
               custom_fields[field_name] = Random.fraction() * (max - min) + min
             else if field_def.value_type == "integer"
               custom_fields[field_name] = Math.floor(Random.fraction() * (max - min) + min)
-
+          else if field_def.type == "lorem-ipsum"
+              custom_fields[field_name] = lodash.sampleSize(lorem_arr, lodash.random(field_def.min_word, field_def.max_words)).join(" ")
       fields = _.extend fallback_fields, custom_fields
 
       for user in fields.users
