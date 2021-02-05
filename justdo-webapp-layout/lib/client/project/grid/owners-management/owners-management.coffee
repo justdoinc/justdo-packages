@@ -189,6 +189,8 @@ APP.executeAfterAppLibCode ->
           @task_has_other_members_rv.set "no"
         else
           @task_has_other_members_rv.set "yes"
+          Tracker.flush()
+          @$(".members-search-input").focus()
 
         return 
 
