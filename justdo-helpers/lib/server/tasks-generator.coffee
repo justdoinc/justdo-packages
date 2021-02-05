@@ -33,7 +33,7 @@ options_schema = new SimpleSchema
 lorem_arr = JustdoHelpers.lorem_ipsum_arr
 
 pad0 = (num) ->
-  return "#{num}".padStart(2, 0)
+  return JustdoHelpers.padString num, 2
 
 throwInvalidCustomFieldErr = (field_name, msg) ->
   throw new Meteor.Error "invalid-custom-fields", "For #{field_name}, #{msg}"
@@ -57,8 +57,6 @@ Meteor.methods
     if options.custom_fields?
       for field_name, field_def of options.custom_fields
         if not _.isArray(field_def) and _.isObject(field_def)
-          if not field_def.type?
-            throwInvalidCustomFieldErr field_name, "type option not specified"
           if field_def.type == "random-value"
             if not _.isArray(field_def.allowed_values) or field_def.allowed_values.length == 0
               throwInvalidCustomFieldErr field_name, "allowed_values option not specifid"
@@ -127,14 +125,13 @@ Meteor.methods
         owner_id: user_id
         priority: 0
         state: "nil"
+        users: [user_id]
 
       forced_fields =
         _id: Random.id()
         
-        users: _.union [user_id], options.custom_fields?.users
         users_updated_at: now
-        _raw_added_users_dates:
-          "#{user_id}": now
+        _raw_added_users_dates: {}  # Will be set properly later
         
         _raw_updated_date: now
 
@@ -149,10 +146,13 @@ Meteor.methods
         project_id: options.project_id
 
         updatedAt: now
+ 
 
       custom_fields = {}
       for field_name, field_def of options.custom_fields
-        if not _.isObject field_def
+        if field_name == "users"
+          custom_fields.users = _.union [user_id], field_def
+        else if not _.isObject(field_def) or not field_def.type?
           custom_fields[field_name] = field_def
         else
           if field_def.chance_empty? and Random.fraction() < field_def.chance_empty
@@ -171,7 +171,12 @@ Meteor.methods
             else if field_def.value_type == "integer"
               custom_fields[field_name] = Math.floor(Random.fraction() * (max - min) + min)
 
-      fields = _.extend fallback_fields, custom_fields, forced_fields
+      fields = _.extend fallback_fields, custom_fields
+
+      for user in fields.users
+        forced_fields._raw_added_users_dates[user] = now
+      
+      fields = _.extend fields, forced_fields
 
       # Add neccessary fields
       for field_name in ["title", "status"]
