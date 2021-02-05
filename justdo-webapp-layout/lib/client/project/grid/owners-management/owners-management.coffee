@@ -180,12 +180,15 @@ APP.executeAfterAppLibCode ->
   Template.item_owners_management.onCreated ->
     @state = new ReactiveVar "base"
     @current_members_filter = new ReactiveVar null
-    @task_has_other_members = new ReactiveVar false
+    @task_has_other_members_rv = new ReactiveVar false
 
     @autorun =>
-      @task_has_other_members.set "loading"
+      @task_has_other_members_rv.set "loading"
       JD.subscribeItemsAugmentedFields JD.activeItemId(), ["users"], {}, =>
-        @task_has_other_members.set(not _.isEmpty currentTaskMembersIdsOtherThanMe())
+        if _.isEmpty currentTaskMembersIdsOtherThanMe()
+          @task_has_other_members_rv.set "no"
+        else
+          @task_has_other_members_rv.set "yes"
 
         return 
 
@@ -351,7 +354,7 @@ APP.executeAfterAppLibCode ->
       return tpl.state.get()
 
     taskHasOtherMembers: ->
-      return Template.instance().task_has_other_members.get()
+      return Template.instance().task_has_other_members_rv.get()
 
     taskMembersOtherThanMeMatchingFilter: ->
       tpl = Template.instance()

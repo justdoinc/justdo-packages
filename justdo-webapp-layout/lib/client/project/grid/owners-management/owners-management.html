@@ -35,8 +35,8 @@
   {{else if $eq $.Meteor.userId owner_id}}
     {{#if $not pending_owner_id}}
       {{#if $eq taskHasOtherMembers "loading"}}
-        <div class="only-member-message">Loading...</div>
-      {{else if $eq taskHasOtherMembers true}}
+        <div class="loading-message">Loading...</div>
+      {{else if $eq taskHasOtherMembers "yes"}}
         <div class="ownership-transfer-dialog">
           <div class="members-search-wrapper">
             <input class="members-search-input form-control form-control-sm border-white ownership-dialog-item" placeholder="Transfer ownership to...">
