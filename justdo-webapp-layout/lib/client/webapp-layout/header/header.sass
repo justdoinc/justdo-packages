@@ -167,11 +167,18 @@ nav.navbar
     font-size: 15px
 
 .brand
-  display: block
-  background: url(/layout/logos-ext/justdo_logo.svg) no-repeat transparent
-  background-size: contain
-  width: 100px
-  height: 26px
+  display: flex
+
+  .jd-logo-svg
+    width: 100px
+    height: 20px
+    .jd-logo-part-1
+      fill: #027bff
+    .jd-logo-part-2
+      fill: #ffffff
+    .jd-logo-part-3
+      fill: #027bff
+
 
 #forgot-password-link, #signup-link
   padding: 0 2px
