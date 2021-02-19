@@ -55,14 +55,6 @@ Template.project_pane_kanban.onCreated ->
 Template.project_pane_kanban.onRendered ->
   tpl = @
 
-  $(".kanban-task-selector").on "shown.bs.dropdown", ->
-    $(".kanban-projects-search").focus()
-    return
-
-  $(".kanban-task-selector").on "hidden.bs.dropdown", ->
-    tpl.projects_dropdown_search_input_state_rv.set null
-    $(".kanban-projects-search").val ""
-
   $(".kanban-member-selector").on "shown.bs.dropdown", ->
     $(".kanban-member-selector-search").focus()
     return
