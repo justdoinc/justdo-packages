@@ -102,5 +102,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/tasks-list-widget.sass", client);
   api.addFiles("lib/client/tasks-list-widget.coffee", client);
 
+  api.addFiles("lib/client/members-multi-selector-widget.html", client);
+  api.addFiles("lib/client/members-multi-selector-widget.sass", client);
+  api.addFiles("lib/client/members-multi-selector-widget.coffee", client);
+
   api.export("ProjectPageDialogs", client);
 });

@@ -1,0 +1,28 @@
+<template name="members_multi_selector_widget">
+  <div class="calendar-member-selector dropdown mr-1 {{#if memberFilterIsActive}}member-filter-is-active{{/if}}">
+    <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <div class="member-filter-indicator bg-primary"></div>
+      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#users"/></svg>
+    </div>
+    <div class="dropdown-menu jd-p-075 shadow-lg border-0">
+      <input class="calendar-member-selector-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search members" name="" value="">
+        {{#with filteredMembers this.members}}
+          {{#if $gt this.length 0}}
+            <div class="dropdown-header text-primary font-weight-bold px-2">
+              Show:
+              <span class="calendar-members-show-all">All</span>,
+              <span class="calendar-members-show-none">None</span>
+            </div>
+          {{/if}}
+          {{#each this}}
+            <a href="#" class="dropdown-item calendar-filter-member-item {{#if memberInFilter this}}member-in-filter{{/if}}">
+              <div class="calendar-filter-member-info"><img class="calendar-member-avatar" src="{{memberAvatar this}}"> {{memberName this}}</div>
+              {{#if memberInFilter this}}
+                <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
+              {{/if}}
+            </a>
+          {{/each}}
+        {{/with}}
+    </div>
+  </div>
+</template>

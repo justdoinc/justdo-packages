@@ -268,7 +268,6 @@ delayAction = do ->
 Template.justdo_calendar_project_pane.onCreated ->
   self = @
 
-  @calendar_members_filter_val = new ReactiveVar null
   @calendar_projects_filter_val = new ReactiveVar null
   @calendar_filtered_members = new ReactiveVar []
   @justdo_level_holidays = new ReactiveVar(new Set())
@@ -589,10 +588,6 @@ Template.justdo_calendar_project_pane.onCreated ->
 
 Template.justdo_calendar_project_pane.onRendered ->
   instance = @
-  $(".calendar-member-selector").on "shown.bs.dropdown", ->
-    $(".calendar-member-selector-search").focus().val ""
-    instance.calendar_members_filter_val.set ""
-    return
 
   $(".calendar_view_project_selector").on "shown.bs.dropdown", ->
     $(".calendar-view-project-search").focus().val ""
@@ -602,6 +597,8 @@ Template.justdo_calendar_project_pane.onRendered ->
   return # end onRendered
 
 Template.justdo_calendar_project_pane.helpers
+  onSelectedMembersChange: -> Template.instance().calendar_filtered_members.set.bind Template.instance().calendar_filtered_members
+
   currentUserDependency: ->
     return Template.instance().project_members_to_dependency[Meteor.userId()]
 
@@ -737,8 +734,7 @@ Template.justdo_calendar_project_pane.helpers
     for user_id in other_users
       other_users_docs.push Meteor.users.findOne(user_id, {_id: 1})
 
-    calendar_members_filter_val = tmpl.calendar_members_filter_val.get()
-    membersDocs = JustdoHelpers.filterUsersDocsArray(other_users_docs, calendar_members_filter_val)
+    membersDocs = other_users_docs
 
     membersDocsSortByName = _.sortBy membersDocs, (member) -> JustdoHelpers.displayName(member)
 
@@ -748,27 +744,6 @@ Template.justdo_calendar_project_pane.helpers
       members.push member_doc._id
 
     return members
-
-  memberName: (user_id) ->
-    return JustdoHelpers.displayName(user_id)
-
-  memberAvatar: (user_id) ->
-    user = Meteor.users.findOne(user_id)
-    if user?
-      return JustdoAvatar.showUserAvatarOrFallback(user)
-
-  memberInFilter: (user_id) ->
-    tmpl = Template.instance()
-    filtered_members = tmpl.calendar_filtered_members.get()
-    return filtered_members.includes user_id
-
-  memberFilterIsActive: ->
-    tmpl = Template.instance()
-    filtered_members = tmpl.calendar_filtered_members.get()
-    if filtered_members.length > 0
-      return true
-    else
-      return false
 
 Template.justdo_calendar_project_pane.events
   "click .calendar_view_zoom_out": ->
@@ -833,14 +808,6 @@ Template.justdo_calendar_project_pane.events
     delivery_planner_project_id.set(project)
     return
 
-  "keyup .calendar-member-selector-search": (e, tmpl) ->
-    value = $(e.target).val().trim()
-    if _.isEmpty value
-      tmpl.calendar_members_filter_val.set null
-    else
-      tmpl.calendar_members_filter_val.set value
-    return
-
   "keyup .calendar-view-project-search": (e, tmpl) ->
     value = $(e.target).val().trim()
     if _.isEmpty value
@@ -862,43 +829,6 @@ Template.justdo_calendar_project_pane.events
       filtered_members.push user_id
 
     tmpl.calendar_filtered_members.set filtered_members
-
-    return
-
-  "click .calendar-members-show-all": (e, tmpl) ->
-    e.stopPropagation()
-    project_id = delivery_planner_project_id.get()
-    other_users = []
-
-    if project_id == "*"
-      other_users = _.difference(APP.modules.project_page.curProj()?.getMembersIds(), [Meteor.userId()])
-    else
-      other_users = _.difference(APP.collections.TasksAugmentedFields.findOne(project_id)?.users, [Meteor.userId()])
-
-    tmpl.calendar_filtered_members.set other_users
-    return
-
-  "click .calendar-members-show-none": (e, tmpl) ->
-    e.stopPropagation()
-    tmpl.calendar_filtered_members.set []
-    return
-
-  "keydown .calendar-member-selector .dropdown-menu": (e, tmpl) ->
-    $dropdown_item = $(e.target).closest(".calendar-member-selector-search,.dropdown-item")
-
-    if e.keyCode == 38 # Up
-      e.preventDefault()
-      if ($prev_item = $dropdown_item.prevAll(".dropdown-item").first()).length > 0
-        $prev_item.focus()
-      else
-        $(".calendar-member-selector-search").focus()
-
-    if e.keyCode == 40 # Down
-      e.preventDefault()
-      $dropdown_item.nextAll(".dropdown-item").first().focus()
-
-    if e.keyCode == 27 # Escape
-      $(".calendar-member-selector .dropdown-menu").dropdown "hide"
 
     return
 
