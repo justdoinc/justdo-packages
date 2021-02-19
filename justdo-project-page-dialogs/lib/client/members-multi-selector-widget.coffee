@@ -2,12 +2,14 @@ Template.members_multi_selector_widget.onCreated ->
   tpl = @
 
   tpl.search_input_rv = new ReactiveVar null
-  tpl.filtered_members_rv = new ReactiveVar null
+  tpl.filtered_members_rv = new ReactiveVar null  # member ids array
 
   tpl.autorun ->
     members = Template.currentData().members
     if members? and not (Tracker.nonreactive -> tpl.filtered_members_rv.get())?
-      tpl.filtered_members_rv.set members
+      tpl.filtered_members_rv.set members.slice()
+    
+    return
 
   tpl.autorun ->
     filtered_members = tpl.filtered_members_rv.get()
@@ -32,23 +34,22 @@ Template.members_multi_selector_widget.helpers
   filteredMembers: (members) ->    
     tpl = Template.instance()
 
-    if not (search_input = tpl.search_input_rv.get())?
-      return members
+    search_input = tpl.search_input_rv.get()
 
     return JustdoHelpers.filterUsersIdsArray(members, search_input)
 
-  memberInFilter: (user_id) ->
+  memberInFilter: (user) ->
     tpl = Template.instance()
     filtered_members = tpl.filtered_members_rv.get()
-    return filtered_members.includes user_id
+    return filtered_members.includes user._id
 
-  memberAvatar: (user_id) ->
-    user = Meteor.users.findOne(user_id)
+  memberAvatar: (user) ->
+    user = Meteor.users.findOne(user._id)
     if user?
       return JustdoAvatar.showUserAvatarOrFallback(user)
   
-  memberName: (user_id) ->
-    return JustdoHelpers.displayName(user_id)
+  memberName: (user) ->
+    return JustdoHelpers.displayName(user._id)
 
   memberFilterIsActive: ->
     tpl = Template.instance()
@@ -89,7 +90,8 @@ Template.members_multi_selector_widget.events
   "click .calendar-members-show-all": (e, tpl) ->
     e.stopPropagation()
 
-    tpl.filtered_members_rv.set tpl.data.members
+    tpl.filtered_members_rv.set tpl.data.members.slice()
+    
     return
   
   "click .calendar-members-show-none": (e, tpl) ->
@@ -101,7 +103,7 @@ Template.members_multi_selector_widget.events
     e.preventDefault()
     e.stopPropagation()
 
-    user_id = Blaze.getData(e.target)
+    user_id = Blaze.getData(e.target)._id
     filtered_members = tpl.filtered_members_rv.get()
 
     if (index = filtered_members.indexOf user_id) > -1
