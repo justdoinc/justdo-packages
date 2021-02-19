@@ -1,0 +1,27 @@
+<template name="tasks_list_widget">
+  <div class="tasks-list-widget dropdown">
+    <button class="btn btn-light btn-sm border" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#zoom-in"/></svg>
+    </button>
+    <div class="dropdown-menu jd-p-075 shadow-lg border-0">
+      <input class="tasks-list-widget-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search projects">
+
+      {{#each sections}}
+        {{#with filterTasks}}
+          {{#if $gt this.filtered_tasks.length 0}}
+            <div class="dropdown-header text-muted mt-1">{{this.title}}</div>
+            {{#each this.filtered_tasks}}
+              <a href="#" class="dropdown-item js-kanban-selected-task">
+                {{#if $eq this.special_option true}}
+                  {{this.title}}
+                {{else}}
+                  {{taskCommonName}}
+                {{/if}}
+              </a>
+            {{/each}}
+          {{/if}}
+        {{/with}}
+      {{/each}}
+    </div>
+  </div>
+</template>

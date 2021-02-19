@@ -1,0 +1,40 @@
+.tasks-list-widget,
+  button
+    text-transform: uppercase
+    font-weight: bold
+    max-width: 260px
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
+  .dropdown-menu
+    max-height: 200px
+    overflow: auto
+  .dropdown-header
+    font-size: 11px
+    text-transform: uppercase
+    padding: 0px 6px
+  .dropdown-item
+    padding: 4px 6px
+    font-size: 15px
+    max-width: 260px
+    text-overflow: ellipsis
+    overflow: hidden
+    white-space: nowrap
+    border-radius: 4px
+    &.active
+      font-weight: bold
+    &:active
+      background-color: white
+      color: #007bff
+  .jd-icon
+    cursor: pointer
+    padding: 4px
+    stroke-width: 2
+    &:hover
+      background-color: rgba(0, 0, 0, 0.08)
+      transform: scale(1.05)
+
+.tasks-list-widget
+  button
+    .jd-icon
+      pointer-events: none

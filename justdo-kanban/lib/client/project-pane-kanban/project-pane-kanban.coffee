@@ -76,9 +76,26 @@ Template.project_pane_kanban.onRendered ->
 
 # HELPERS
 Template.project_pane_kanban.helpers
-  isSelectedTaskCollectionItem: -> APP.modules.project_page.getActiveGridItemType() == "default"
+  tasksList: ->
+    active_task = JD.activeItem({_id: 1, seqId: 1, title: 1})
+    if active_task? and APP.modules.project_page.getActiveGridItemType() == "default"
+      active_task = [active_task]
+    else
+      active_task = []
 
-  selectedTask: -> JD.activeItem({seqId: 1, title: 1})  # taskCommonName
+    project = APP.modules.project_page.project.get()
+    if project?
+      projects = APP.collections.Tasks.find({ "p:dp:is_project": true, project_id: project.id, $or: [{ "p:dp:is_archived_project": false }, { "p:dp:is_archived_project": {$exists: false} }] }, {sort: {"title": 1}}).fetch()
+    else
+      projects = []
+
+    return [{
+      title: "Selected task"
+      tasks:  active_task
+    }, {
+      title: "Projects"
+      tasks: projects
+    }]
 
   kanbanTaskIdRv: -> Template.instance().kanban_task_id_rv.get()
 
@@ -87,26 +104,6 @@ Template.project_pane_kanban.helpers
   currentBoardStateRv: -> Template.instance().current_board_state_rv.get()
 
   activeTask: -> Template.instance().getKanbanTaskDoc()
-
-  projects: ->
-    project = APP.modules.project_page.project.get()
-    projects_dropdown_search_input_state_rv = Template.instance().projects_dropdown_search_input_state_rv.get()
-
-    if project?
-      projects = APP.collections.Tasks.find({ "p:dp:is_project": true, project_id: project.id, $or: [{ "p:dp:is_archived_project": false }, { "p:dp:is_archived_project": {$exists: false} }] }, {sort: {"title": 1}}).fetch()
-
-      if not projects_dropdown_search_input_state_rv?
-        return projects
-
-      filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(projects_dropdown_search_input_state_rv)}", "i")
-
-      projects = _.filter projects, (doc) ->
-        if filter_regexp.test(doc.title)
-          return true
-        return false
-
-      return projects
-
 
   currentBoardStateVisibleBoards: -> Template.instance().getCurrentBoardStateVisibleBoards()
 

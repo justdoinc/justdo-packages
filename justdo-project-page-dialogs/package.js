@@ -98,5 +98,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/member-list-widget.sass", client);
   api.addFiles("lib/client/member-list-widget.coffee", client);
 
+  api.addFiles("lib/client/tasks-list-widget.html", client);
+  api.addFiles("lib/client/tasks-list-widget.sass", client);
+  api.addFiles("lib/client/tasks-list-widget.coffee", client);
+
   api.export("ProjectPageDialogs", client);
 });

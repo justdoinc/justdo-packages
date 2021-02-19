@@ -2,7 +2,12 @@
   <div class="kanban-toolbar">
     <div class="kanban-toolbar-operations-left">
       <!-- Kanban Task Selector -->
-      <div class="kanban-task-selector dropdown">
+      {{> tasks_list_widget 
+        sections=tasksList
+        onItemClick=onContextTaskSelect
+      }}
+
+      <!-- <div class="kanban-task-selector dropdown">
         <button class="btn btn-light btn-sm border" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#zoom-in"/></svg>
         </button>
@@ -25,7 +30,8 @@
             <a href="#" class="dropdown-item js-kanban-selected-task">{{taskCommonName}}</a>
           {{/each}}
         </div>
-      </div>
+      </div> -->
+      
       <div class="{{#unless activeTask}}disable-element{{/unless}} d-flex align-items-center">
         <!-- Kanban State Selector -->
         <div class="kanban-state-selector dropdown ml-2">
