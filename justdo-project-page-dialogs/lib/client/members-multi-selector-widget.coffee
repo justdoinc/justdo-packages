@@ -7,7 +7,10 @@ Template.members_multi_selector_widget.onCreated ->
   tpl.autorun ->
     members = Template.currentData().members
     if members? and not (Tracker.nonreactive -> tpl.filtered_members_rv.get())?
-      tpl.filtered_members_rv.set members.slice()
+      if (default_selected_members = (Tracker.nonreactive -> Template.currentData().default_selected_members))?
+        tpl.filtered_members_rv.set default_selected_members
+      else
+        tpl.filtered_members_rv.set members.slice()
     
     return
 
