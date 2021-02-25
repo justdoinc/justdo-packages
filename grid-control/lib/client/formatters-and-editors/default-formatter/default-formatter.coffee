@@ -7,6 +7,8 @@ formatDecimals = (decimal) ->
 GridControl.installFormatter "defaultFormatter",
   defaultHoverCaption: (friendly_args) -> undefined
 
+  defaultFooter: (friendly_args) -> undefined
+
   valueTransformation: (value) -> value
 
   slick_grid: ->
@@ -60,7 +62,7 @@ GridControl.installFormatter "defaultFormatter",
         linkClass: "jd-underline font-weight-bold text-body"
 
     formatter = """
-      <div class="grid-formatter default-formatter"#{if custom_style != "" then " style=\"#{custom_style}\"" else ""}#{if (caption = formatter_obj.defaultHoverCaption(friendly_args))? then " title=\"#{JustdoHelpers.xssGuard(caption)}\"" else ""} dir="auto">#{value}</div>
+      <div class="grid-formatter default-formatter"#{if custom_style != "" then " style=\"#{custom_style}\"" else ""}#{if (caption = formatter_obj.defaultHoverCaption(friendly_args))? then " title=\"#{JustdoHelpers.xssGuard(caption)}\"" else ""} dir="auto">#{value}#{if (footer = formatter_obj.defaultFooter(friendly_args))? then """<div class="default-formatter-footer text-muted">#{JustdoHelpers.xssGuard(footer)}</div>""" else ""}</div>
     """
 
     return formatter
