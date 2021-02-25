@@ -117,6 +117,8 @@ APP.executeAfterAppLibCode ->
     isEmptyResults: (filter) ->
       empty = _.isEmpty(module.template_helpers.project_enrolled_admins_sorted_by_first_name(filter)) and
         _.isEmpty(module.template_helpers.project_enrolled_regular_members_sorted_by_first_name(filter)) and
+        _.isEmpty(module.template_helpers.project_enrolled_guests_sorted_by_first_name(filter)) and
+        _.isEmpty(module.template_helpers.project_non_enrolled_guests_sorted_by_first_name(filter)) and
         _.isEmpty(module.template_helpers.project_non_enrolled_members_sorted_by_first_name(filter))
 
       return empty
