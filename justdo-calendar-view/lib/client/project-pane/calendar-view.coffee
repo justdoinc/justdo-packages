@@ -597,7 +597,12 @@ Template.justdo_calendar_project_pane.onRendered ->
   return # end onRendered
 
 Template.justdo_calendar_project_pane.helpers
-  onSelectedMembersChange: -> Template.instance().calendar_filtered_members.set.bind Template.instance().calendar_filtered_members
+  onSelectedMembersChange: ->
+    tpl = Template.instance()
+    return (members) ->
+      tpl.calendar_filtered_members.set members
+
+      return
 
   currentUserDependency: ->
     return Template.instance().project_members_to_dependency[Meteor.userId()]
@@ -732,7 +737,8 @@ Template.justdo_calendar_project_pane.helpers
     other_users_docs = []
 
     for user_id in other_users
-      other_users_docs.push Meteor.users.findOne(user_id, {_id: 1})
+      if (user_doc = Meteor.users.findOne(user_id, {_id: 1}))?
+        other_users_docs.push user_doc
 
     membersDocs = other_users_docs
 
