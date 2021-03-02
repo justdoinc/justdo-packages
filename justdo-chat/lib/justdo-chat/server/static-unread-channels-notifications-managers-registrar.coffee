@@ -195,7 +195,8 @@ _.extend JustdoChat,
 
         Meteor.users.attachSchema user_conf_field_schema
 
-    conf._interval = null
+    conf._is_running = false
+    conf._timeout = null
 
     # Define the job we will register on @_setupUnreadChannelsNotificationsJobs() see jobs-definitions.coffee
     conf.job = ->
@@ -203,7 +204,16 @@ _.extend JustdoChat,
 
       justdo_chat = @
 
+      conf._is_running = true
+      if conf._timeout?
+        clearTimeout conf._timeout
+        conf._timeout = null
+
       proc = =>
+        if not conf._is_running
+          # If the job stopped, don't begin.
+          return
+
         proc_date = new Date()
 
         min_iv_unread = JustdoHelpers.getDateMsOffset(-1 * conf.min_unread_period_ms, proc_date)
@@ -338,10 +348,20 @@ _.extend JustdoChat,
                          #
                          # It should be used by sendNotificationCb to avoid redundant calls to the db.
 
+        if not conf._is_running
+          # If the job already stopped don't begin processing.
+          return
+
         processed_channels = 0
         notifications_sent = 0
         channel_access_rejected = 0
         channels_with_subscribers_need_processing_cursor.forEach (channel_doc) ->
+          if not conf._is_running
+            # If the job already stopped for this node, don't continue the process. Leave it to the
+            # next appointed job processor (this is actually critical to prevent two servers working
+            # on the same job resulting in duplicate messages).
+            return
+
           processed_channels += 1
 
           subscribers_need_processing_user_ids = []
@@ -499,15 +519,22 @@ _.extend JustdoChat,
         if processed_channels > 0
           justdo_chat.logger.info "Unread channels notifications - #{conf.notification_type} - processed_channels: #{processed_channels}; notifications_sent: #{notifications_sent} ; channel_access_rejected: #{channel_access_rejected} - DONE"
 
+        if conf._is_running
+          conf._timeout = Meteor.setTimeout proc, conf.polling_interval_ms
+        
         return
 
-      conf._interval = Meteor.setInterval proc, conf.polling_interval_ms
+      proc()
+
+      return
 
     conf.stopJob = ->
-      Meteor.clearInterval conf._interval
+      conf._is_running = false
 
-      conf._interval = null
-
+      if conf._timeout?
+        Meteor.clearTimeout conf._timeout
+        conf._timeout = null
+      
       return
 
     share.unread_channels_notifications_conf[conf.notification_type] = conf
