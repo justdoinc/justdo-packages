@@ -14,3 +14,4 @@ _.extend JustdoFiles.prototype,
   _errors_types:
     _.extend {}, JustdoHelpers.common_errors_types,
       "unknown-file": "Unknown file"
+      "no-fiber": "There is no fiber running"

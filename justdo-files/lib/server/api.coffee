@@ -3,6 +3,8 @@ import fs from "fs"
 import { MongoInternals } from "meteor/mongo"
 import JSZip from "jszip"
 
+Fiber = Npm.require "fibers"
+
 _.extend JustdoFiles.prototype,
   _immediateInit: ->
     @gfs = Grid MongoInternals.defaultRemoteCollectionDriver().mongo.db, MongoInternals.NpmModule
@@ -241,3 +243,39 @@ _.extend JustdoFiles.prototype,
         @response.end "Access denied!"
 
     , {where: "server"}
+
+  uploadAndRegisterFile: (task_id, file_blob, filename, mimetype, metadata, user_id) ->
+    file_opts =
+      fileName: filename
+      type: mimetype
+      meta:
+        source: "maildo"
+        task_id: task_id
+      userId: user_id
+
+    fiber = Fiber.current
+    if not (fiber = Fiber.current)?
+      throw @_error "no-fiber"
+
+    @tasks_files.write file_blob, file_opts, (err, file) ->
+      fiber.run({err, file})
+
+      return
+    , true # true is for onAfterUpload to be called
+    {err, file} = Fiber.yield()
+
+    if err?
+      throw err
+
+    return_obj =
+      _id: file._id
+      title: file.name
+      url: @tasks_files.findOne(file._id).link() # XXX this should be removed, should rely only on link()
+      size: file.size
+      type: file.type
+      metadata: metadata
+      user_uploaded: file.user_id
+      date_uploaded: new Date()
+      storage_type: "justdo-files"
+
+    return return_obj
