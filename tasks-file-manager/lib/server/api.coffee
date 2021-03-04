@@ -130,7 +130,7 @@ _.extend TasksFileManager.prototype,
 
     results = @registerUploadedFiles task_id, [file], user_id
 
-    return results[0]
+    return _.extend {}, results[0], {storage_type: "filestack"}
 
   getUploadPolicy: (task_id, user_id) ->
     task = @requireTaskDoc(task_id, user_id)
