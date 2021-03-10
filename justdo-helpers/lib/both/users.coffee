@@ -62,7 +62,7 @@ _.extend JustdoHelpers,
 
   getUserPreferredDateFormat: ->
     # Reactive resource!
-    if (preferred_date_format = Meteor.user()?.profile?.date_format)?
+    if (preferred_date_format = Meteor.users.findOne(Meteor.userId(), {fields: {'profile.date_format': 1}})?.profile?.date_format)?
       return preferred_date_format
 
     if (default_date_format = JustdoHelpers.getCollectionSchemaForField(Meteor.users, "profile.date_format").defaultValue)?
