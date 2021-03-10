@@ -54,6 +54,8 @@ _.extend GridControl.prototype,
           action: (e) =>
             @addFieldToView(field, column_index_of_last_opened_cmenu + 1)
 
+    append_fields_submenu = _.sortBy(append_fields_submenu, "text")
+
     append_fields_menu = [
       {
         text: 'Add Column'
