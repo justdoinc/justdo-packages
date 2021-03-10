@@ -171,3 +171,30 @@ classes should alter those!
     z-index: 1;
   }
 }
+
+.column-name-tooltip {
+  position: absolute;
+  background-color: white;
+  z-index: 10;
+  opacity: 0;
+  -webkit-transition: opacity 0.35s;
+  -moz-transition: opacity 0.35s;
+  -o-transition: opacity 0.35s;
+  transition: opacity 0.35s;
+  -webkit-box-shadow: 0 0px 3px rgba(171, 178, 191, 0.5);
+  -moz-box-shadow: 0 0px 3px rgba(171, 178, 191, 0.5);
+  box-shadow: 0 0px 3px rgba(171, 178, 191, 0.5);
+  pointer-events: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 10px;
+  padding: 4px 6px;
+  line-height: 100%;
+  border-radius: 4px;
+  color: #3D495B;
+  white-space: nowrap;
+}
+
+.column-name-tooltip.show {
+  opacity: 1;
+}
