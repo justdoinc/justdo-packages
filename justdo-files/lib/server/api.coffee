@@ -270,7 +270,6 @@ _.extend JustdoFiles.prototype,
     return_obj =
       _id: file._id
       title: file.name
-      url: @tasks_files.findOne(file._id).link() # XXX this should be removed, should rely only on link()
       size: file.size
       type: file.type
       metadata: metadata

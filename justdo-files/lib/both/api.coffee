@@ -38,6 +38,14 @@ _.extend JustdoFiles.prototype,
 
     return true
 
+  isFileExist: (file_id) ->
+    check file_id, String
+    return @tasks_files.findOne(file_id)?
+
+  getShareableLink: (file_id) ->
+     check file_id, String
+     return @tasks_files.findOne(file_id).link()
+
   _getMaxFileSizeInMb: -> Math.floor(@options.max_file_size * 0.00000095367432)
 
   _setupFilesCollection: ->

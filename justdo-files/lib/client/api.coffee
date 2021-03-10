@@ -36,7 +36,7 @@ _.extend JustdoFiles.prototype,
 
             callback: =>
               # Start download
-              APP.justdo_files.downloadFile file._id
+              @downloadFile file._id
 
           close:
             label: "Close"
@@ -48,7 +48,8 @@ _.extend JustdoFiles.prototype,
 
     else
       # Start download
-      APP.justdo_files.downloadFile file._id
+      @downloadFile file._id
 
   downloadFile: (file_id) ->
-    window.location.href = APP.justdo_files.tasks_files.findOne(file_id).link()
+    check file_id, String
+    window.location.href = @tasks_files.findOne(file_id).link()
