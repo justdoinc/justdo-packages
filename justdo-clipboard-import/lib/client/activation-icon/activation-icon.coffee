@@ -16,7 +16,7 @@ getAllowedDateFormats = ->
   return Meteor.users.simpleSchema()?.schema()?["profile.date_format"]?.allowedValues or [fallback_date_format]
 
 getDefaultDateFormat = ->
-  return Meteor.user()?.profile?.date_format or Meteor.users.simpleSchema()?.schema()?["profile.date_format"]?.defaultValue or fallback_date_format
+  return JustdoHelpers.getUserPreferredDateFormat()
 
 isDateFieldDef = (field_def) ->
   return field_def.grid_column_formatter == "unicodeDateFormatter"
