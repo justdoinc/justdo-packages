@@ -7062,6 +7062,10 @@ a.text-dark:hover, a.text-dark:focus {
   fill: #ffffff !important;
 }
 
+.sub-logo {
+  fill: #ffffff !important;
+}
+
 .grid-control-tab,
 .task-pane-tab,
 .task-pane-section-item-details section,
