@@ -25,26 +25,7 @@ Package.onUse(function (api) {
   api.addAssets("unicorn/unicorn-bg-2.jpg", client);
 
   api.addAssets("solid/bootstrap.css", client);
-  api.addAssets("solid/font/segoe_ui_bold_italic.woff", client);
-  api.addAssets("solid/font/segoe_ui_bold.woff", client);
-  api.addAssets("solid/font/segoe_ui_italic.woff", client);
-  api.addAssets("solid/font/segoe_ui.woff", client);
-
   api.addAssets("solid-blue/bootstrap.css", client);
-  api.addAssets("solid-blue/font/segoe_ui_bold_italic.woff", client);
-  api.addAssets("solid-blue/font/segoe_ui_bold.woff", client);
-  api.addAssets("solid-blue/font/segoe_ui_italic.woff", client);
-  api.addAssets("solid-blue/font/segoe_ui.woff", client);
-
   api.addAssets("solid-dark/bootstrap.css", client);
-  api.addAssets("solid-dark/font/segoe_ui_bold_italic.woff", client);
-  api.addAssets("solid-dark/font/segoe_ui_bold.woff", client);
-  api.addAssets("solid-dark/font/segoe_ui_italic.woff", client);
-  api.addAssets("solid-dark/font/segoe_ui.woff", client);
-
   api.addAssets("solid-dark-green/bootstrap.css", client);
-  api.addAssets("solid-dark-green/font/segoe_ui_bold_italic.woff", client);
-  api.addAssets("solid-dark-green/font/segoe_ui_bold.woff", client);
-  api.addAssets("solid-dark-green/font/segoe_ui_italic.woff", client);
-  api.addAssets("solid-dark-green/font/segoe_ui.woff", client);
 });
