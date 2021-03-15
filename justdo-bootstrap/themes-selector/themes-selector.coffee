@@ -50,6 +50,11 @@ Template.themes_selector.helpers
       label: "Solid Dark Green"
     }
 
+    {
+      id: "solid-dark-blue"
+      label: "Solid Dark Blue"
+    }
+
     # {
     #   id: "superhero"
     #   label: "Superhero (Experimental Dark)"
