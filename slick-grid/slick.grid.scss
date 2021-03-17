@@ -35,6 +35,12 @@ classes should alter those!
   float: left;
 }
 
+.slick-header-column.ui-state-default .slick-column-name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+}
+
 .slick-headerrow-column.ui-state-default {
   padding: 4px;
 }

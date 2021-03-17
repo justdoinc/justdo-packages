@@ -629,9 +629,19 @@ if (typeof Slick === "undefined") {
         var column_name_el_top = $column_name_el.offset().top;
         var column_name_el_left = $column_name_el.offset().left;
 
-        $column_name_tooltip.text($column_name_el.text());
-        $column_name_tooltip.offset({ top: column_name_el_top - 20, left: column_name_el_left - 8 });
-        $column_name_tooltip.addClass("show")
+        // text-overflow ellipsis detection
+        var $column_name_el_clone = $column_name_el
+                                      .clone()
+                                      .css({display: "inline", width: "auto", visibility: "hidden"})
+                                      .appendTo("body");
+
+        if ($column_name_el_clone.width() > $column_name_el.width()) {
+          $column_name_tooltip.text($column_name_el.text());
+          $column_name_tooltip.offset({ top: column_name_el_top - 20, left: column_name_el_left - 8 });
+          $column_name_tooltip.addClass("show")
+        }
+
+        $column_name_el_clone.remove();
       }).mouseleave(function() {
         $column_name_tooltip.removeClass("show");
       })
