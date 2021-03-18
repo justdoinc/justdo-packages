@@ -323,6 +323,7 @@ if (typeof Slick === "undefined") {
 
         updateColumnCaches();
         createColumnHeaders();
+        createColumnTooltip();
         setupColumnSort();
         createCssRules();
         resizeCanvas();
