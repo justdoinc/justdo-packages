@@ -1,17 +1,15 @@
-$project-pane-header-height: 30px // Important! if you change this one, search the entire code for other places in which it is set
-
 .tab-justdo-calendar-container
-  height: 100%
-  padding-bottom: $project-pane-header-height
-  overflow: hidden
+  display: flex
+  flex-direction: column
 
 .calendar_view_header
   display: flex
   justify-content: space-between
-  position: fixed
   width: 100%
   background-color: white
   z-index: 200
+  padding: 16px
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05)
 
 .calendar_view_toolbar
   display: flex
@@ -22,6 +20,10 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
     height: 24px
     background: #E8EBEE
     margin: 0px 8px 0px 16px
+
+.calendar_view_project_title
+  font-size: 17px
+  font-weight: bold
 
 .calendar_view_project_selector
   button
@@ -185,10 +187,10 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
 .calendar_view_main_table_wrapper
   position: relative
   transition: opacity 0.3s
-  top: 47px
   padding-bottom: 80px
-  height: 100%
   overflow: auto
+  display: flex
+  flex-grow: 1
   &.fadeOut
     opacity: 0
 
