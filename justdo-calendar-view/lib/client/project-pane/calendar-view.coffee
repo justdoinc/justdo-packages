@@ -23,6 +23,22 @@ number_of_days_to_display = new ReactiveVar(7)
 delivery_planner_project_id = new ReactiveVar ("*") # '*' for the entire JustDo
 sub_tree_task_ids = new ReactiveVar []
 
+addResourceRecord = (record, task_id) ->
+  record = _.extend {}, record
+  sub = JD.subscribeItemsAugmentedFields [task_id], ["users"], {}, ->
+    res_obj = APP.resource_planner.generateTaskResourcesObject
+      task_id: task_id, 
+      grid_control: APP.modules.project_page.gridControl()
+      project_object: APP.modules.project_page.curProj()
+    res_obj.addResourceRecord record, {}, ->
+      sub.stop()
+
+      return
+    
+    return
+  
+  return
+
 findProjectName = (task_obj) ->
   if not task_obj?
     return null
@@ -124,15 +140,16 @@ createDroppableWrapper = ->
               stage: "p"
               source: "jd-calendar-view-plugin"
               task_id: task_obj._id
-            APP.resource_planner.rpAddTaskResourceRecord record
+            
+            addResourceRecord record, task_obj._id
 
             record.delta = original_owner_planning_time
             record.resource_type = "b:user:#{target_user_id}"
-            APP.resource_planner.rpAddTaskResourceRecord record
+            addResourceRecord record, task_obj._id
 
           if (unassigned_hours = task_obj["p:rp:b:unassigned-work-hours"])?
             record.delta = unassigned_hours
-            APP.resource_planner.rpAddTaskResourceRecord record
+            addResourceRecord record, task_obj._id
             set_param["p:rp:b:unassigned-work-hours"] = 0
 
         if ui.draggable[0].attributes.class.value.indexOf("calendar_view_draggable") >= 0
@@ -928,6 +945,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         "p:rp:b:unassigned-work-hours": 1
         "users": 1
         priority: 1
+        "#{JustdoPlanningUtilities.load_percent_field_id}": 1
 
     self.dates_workload.set({})
     query = {$and: [_id: {$in: Array.from(data.tasks_set)}, owner_part]}
@@ -955,6 +973,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         users: APP.collections.TasksAugmentedFields.findOne(task._id)?.users
         "priv:follow_up": task["priv:follow_up"]
         priority: task.priority
+        load_percent: task[JustdoPlanningUtilities.load_percent_field_id]
 
       #deal with  regular followups
 
@@ -1105,6 +1124,8 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
         return task_to_flat_hours_per_day[row_data.task._id]
 
       for column_index of days_matrix
+        date = data.dates_to_display[column_index]
+
         for row in days_matrix[column_index]
           task_id = null
 
@@ -1113,17 +1134,21 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
             continue
 
           if row.type == "R" or row.type == "t"
-            date = data.dates_to_display[column_index]
             Meteor._ensure dates_workload, date
             #calcualte number of tasks:
             if not dates_workload[date].number_of_tasks
               dates_workload[date].number_of_tasks = 0
             dates_workload[date].number_of_tasks += 1
 
-            #calculate number of hours, assuming flat distribution of task's time over workdays
-            if not dates_workload[date].total_hours
-              dates_workload[date].total_hours = 0
-            dates_workload[date].total_hours += flatHoursPerDay(row)
+            if row.task.load_percent?
+              if not dates_workload[date].total_load_percent?
+                dates_workload[date].total_load_percent = 0
+              dates_workload[date].total_load_percent += row.task.load_percent
+            else
+              #calculate number of hours, assuming flat distribution of task's time over workdays
+              if not dates_workload[date].total_hours
+                dates_workload[date].total_hours = 0
+              dates_workload[date].total_hours += flatHoursPerDay(row)
 
       self.days_matrix.set(days_matrix)
       self.dates_workload.set(dates_workload)
@@ -1192,29 +1217,28 @@ Template.justdo_calendar_project_pane_user_view.helpers
 
   bottomLine: ->
     column_date = Template.instance().data.dates_to_display[@]
-    workload = Template.instance().dates_workload.get()
+    dates_workload = Template.instance().dates_workload.get()
 
-    if( daily_workload = workload[column_date])
+    if( daily_workload = dates_workload[column_date])
       ret = ""
       if config.bottom_line.show_number_of_tasks
         ret += "#{daily_workload.number_of_tasks} task(s) "
       if config.bottom_line.show_flat_hours_per_day
         ret += "#{daily_workload.total_hours.toFixed(1)} H "
       if config.bottom_line.show_workload
-        if  JD.activeJustdo({_id: 1})._id
+        workload = 0
+        if daily_workload.total_load_percent?
+          workload += daily_workload.total_load_percent
+
+        if daily_workload.total_hours? and JD.activeJustdo({_id: 1})._id
           user_available_hours = APP.justdo_resources_availability.userAvailabilityBetweenDates(column_date, column_date,
             JD.activeJustdo({_id: 1})._id, Template.instance().data.user_id).available_hours
           if user_available_hours
-            workload = Math.round(daily_workload.total_hours / user_available_hours * 100)
-            if workload == 0
-              ret += "--"
-            else
-              color = "blue"
-              if workload >= JustdoCalendarView.underload_level and workload < JustdoCalendarView.overload_level
-                color = "green"
-              else if workload >= JustdoCalendarView.overload_level
-                color = "red"
-              ret += "<span style='color: #{color}'>#{workload}% </span>"
+            workload += Math.round(daily_workload.total_hours / user_available_hours * 100)
+        if workload == 0
+          ret += "--"
+        else
+          ret += _bottomLinePercentHtml workload
       return ret
 
     return "--"
@@ -1422,6 +1446,14 @@ Template.justdo_calendar_project_pane_user_view.helpers
     if number_of_days_to_display.get() > 14
       return false
     return true
+
+_bottomLinePercentHtml = (workload) ->
+  color = "blue"
+  if workload >= JustdoCalendarView.underload_level and workload < JustdoCalendarView.overload_level
+    color = "green"
+  else if workload >= JustdoCalendarView.overload_level
+    color = "red"
+  return "<span style='color: #{color}'>#{workload}% </span>"
 
 Template.justdo_calendar_project_pane_user_view.events
   "click .calendar_task_cell": (e, tpl) ->

@@ -157,9 +157,9 @@ _.extend JustdoResourcesAvailability.prototype,
       available_hours: 0
     
     if not _.isEmpty user_level_data?.working_days
-        use_data = user_level_data
-      else
-        use_data = justdo_level_data
+      use_data = user_level_data
+    else
+      use_data = justdo_level_data
 
     while start_date <= end_date
       date = start_date.format("YYYY-MM-DD")
@@ -249,6 +249,66 @@ _.extend JustdoResourcesAvailability.prototype,
   
   finishToStartForUser: (project_id_or_doc, user_id, start_date, amount, type) ->
     return @startToFinishForUser project_id_or_doc, user_id, start_date, amount, type, true
+
+  getUserAvgWorkHoursPerDay: (user_id, project_id_or_doc) ->
+    {justdo_level_data, user_level_data} = @_getAvailabilityData project_id_or_doc, user_id
+    
+    if not _.isEmpty user_level_data?.working_days
+      use_data = user_level_data
+    else
+      use_data = justdo_level_data
+
+    total_hours = 0
+    days = 0
+    for day_of_week, obj of use_data.working_days
+      total_hours += @_calculateUserDayAvailability justdo_level_data, user_level_data, day_of_week
+      days += 1
+
+    return total_hours / days
+
+  userWorkdays: (user_id, start_date, project_id_or_doc) ->
+    self = @
+    return {
+      [Symbol.iterator]: () ->
+        {justdo_level_data, user_level_data} = self._getAvailabilityData project_id_or_doc, user_id
+
+        i_date = moment(start_date)
+
+        if not _.isEmpty user_level_data?.working_days
+          use_data = user_level_data
+        else
+          use_data = justdo_level_data
+
+        first = true
+
+        return {
+          next: () =>
+            if first
+              first = false
+            else
+              i_date.add 1, "days"
+
+            while true
+              date = i_date.format("YYYY-MM-DD")
+              is_holiday = false
+
+              if user_level_data?.holidays? and (date in user_level_data.holidays) or \
+                justdo_level_data?.holidays and (date in justdo_level_data.holidays) or \
+                use_data?.working_days?[i_date.day()]?.holiday
+                is_holiday = true
+
+              if not is_holiday
+                return {
+                  value: {
+                    date: i_date
+                    available_hours: self._calculateUserDayAvailability justdo_level_data, user_level_data, i_date.day()
+                  }
+                  done: false
+                };
+
+              i_date.add 1, "days"
+        }
+    }
 
   _getAvailabilityData: (project_id_or_doc, user_id) ->
     if _.isString project_id_or_doc
