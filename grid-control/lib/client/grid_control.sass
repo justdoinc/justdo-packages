@@ -65,13 +65,9 @@ $active-shadow-color-v: rgba(160, 75, 162, 0.82)
 $standard-cell-padding-top: 5px
 $standard-cell-padding-bottom: 3px
 
-$cells-and-rows-design-transition: box-shadow, background-color 0.1s linear
-
 .slick-row
   // Define borders in the row level
   border-top: $row-border-style
-
-  transition: $cells-and-rows-design-transition
 
   &:first-child, &.f-first
     // Keep occupying the space, so when it'll be active, the
@@ -138,15 +134,10 @@ $cells-and-rows-design-transition: box-shadow, background-color 0.1s linear
 
 .frozen-columns-mode
   .frozen
-    transition: $cells-and-rows-design-transition
-
     position: sticky
-
     top: 0 !important
     left: 0 !important
-
     z-index: 101 // 100 is the z-index of active cells
-
     background-color: white
 
   .active
@@ -160,7 +151,7 @@ $cells-and-rows-design-transition: box-shadow, background-color 0.1s linear
     display: flex
 
     background-color: $section-items-background-color
-        
+
     &.active
       background-color: $active-section-items-background-color
 
@@ -171,6 +162,3 @@ $cells-and-rows-design-transition: box-shadow, background-color 0.1s linear
 
       &.active
         background-color: $active-section-items-background-color
-
-
-
