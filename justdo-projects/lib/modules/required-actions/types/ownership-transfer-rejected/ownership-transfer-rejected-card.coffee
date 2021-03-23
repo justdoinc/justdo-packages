@@ -25,7 +25,7 @@ Template.required_action_card_ownership_transfer_rejected.events
     return
 
   "click .task-link": ->
-    if JD.activeJustdoId()?
+    if JD.activeJustdoId()? and JD.activeJustdoId() == @project_id
       APP.modules?.project_page?.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab @task_id
     else
       APP.modules?.project_page?.activateTaskInProject @project_id, @task_id
