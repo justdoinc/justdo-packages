@@ -759,7 +759,7 @@ Template.justdo_calendar_project_pane.helpers
 
     membersDocs = other_users_docs
 
-    membersDocsSortByName = _.sortBy membersDocs, (member) -> JustdoHelpers.displayName(member)
+    membersDocsSortByName = JustdoHelpers.filterUsersDocsArray(membersDocs, null)
 
     members = []
 
