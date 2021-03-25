@@ -373,7 +373,7 @@ APP.executeAfterAppLibCode ->
 
       task_members_docs = JustdoHelpers.filterUsersDocsArray(task_members, current_members_filter)
 
-      return _.sortBy task_members_docs, (member) -> JustdoHelpers.displayName(member)
+      return task_members_docs
 
   Template.item_owners_management_reject_transfer_request_input.onRendered ->
     $textarea = @$("textarea")
