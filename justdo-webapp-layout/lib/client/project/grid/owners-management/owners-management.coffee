@@ -184,15 +184,16 @@ APP.executeAfterAppLibCode ->
 
     @autorun =>
       @task_has_other_members_rv.set "loading"
-      JD.subscribeItemsAugmentedFields JD.activeItemId(), ["users"], {}, Meteor.defer => # Meteor.defer is used to ensure Tracker.flush() won't be called in the autorun tick.
-        if _.isEmpty currentTaskMembersIdsOtherThanMe()
-          @task_has_other_members_rv.set "no"
-        else
-          @task_has_other_members_rv.set "yes"
-          Tracker.flush()
-          @$(".members-search-input").focus()
+      JD.subscribeItemsAugmentedFields JD.activeItemId(), ["users"], {}, =>
+        Meteor.defer => # Meteor.defer is used to ensure Tracker.flush() won't be called in the autorun tick.
+          if _.isEmpty currentTaskMembersIdsOtherThanMe()
+            @task_has_other_members_rv.set "no"
+          else
+            @task_has_other_members_rv.set "yes"
+            Tracker.flush()
+            @$(".members-search-input").focus()
 
-        return 
+          return 
 
   Template.item_owners_management.onRendered ->
     if ($members_search_input = $(".members-search-input")).length > 0
