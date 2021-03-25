@@ -152,29 +152,29 @@ _.extend JustdoHelpers,
     return dateFormatterFn(date)
 
   filterUsersDocsArray: (users_docs, niddle) ->
-    if not niddle?
-      return users_docs
+    if niddle?
+      filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(niddle)}", "i")
 
-    filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(niddle)}", "i")
+      exist_users = {}
+      users_docs = _.filter users_docs, (doc) ->
+        key = if _.isString(doc) then doc else doc._id
+        if exist_users[key]
+          return false
+        
+        exist_users[key] = true
+        
+        display_name = JustdoHelpers.displayName(doc)
 
-    exist_users = {}
-    results = _.filter users_docs, (doc) ->
-      key = if _.isString(doc) then doc else doc._id
-      if exist_users[key]
+        email = JustdoHelpers.getUserMainEmail(doc)
+
+        if filter_regexp.test(display_name) or filter_regexp.test(email)
+          return true
+
         return false
-      
-      exist_users[key] = true
-      
-      display_name = JustdoHelpers.displayName(doc)
 
-      email = JustdoHelpers.getUserMainEmail(doc)
-
-      if filter_regexp.test(display_name) or filter_regexp.test(email)
-        return true
-
-      return false
-
-    return results
+    users_docs = _.sortBy users_docs, (user_doc) -> JustdoHelpers.displayName(user_doc).toLowerCase()
+    
+    return users_docs
   
   filterUsersIdsArray: (user_ids, niddle) ->
     user_docs = @getUsersDocsByIds user_ids,
