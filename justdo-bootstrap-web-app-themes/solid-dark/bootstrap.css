@@ -7113,6 +7113,11 @@ a.text-dark:hover, a.text-dark:focus {
   transform: scale(1) !important;
 }
 
+.navbar .return-arrow .jd-icon,
+.navbar .return-arrow .jd-icon:hover {
+  stroke: black !important;
+}
+
 .jd-priority-slider-handle {
   box-shadow: none !important;
 }
