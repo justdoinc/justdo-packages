@@ -85,7 +85,7 @@ APP.executeAfterAppLibCode ->
     editor_tpl = Template.closestInstance "task_pane_item_details_members_editor"
     members_filter = editor_tpl.members_filter.get()
 
-    members = JustdoHelpers.filterUsersDocsArray(members, members_filter, true)
+    members = JustdoHelpers.filterUsersDocsArray(members, members_filter, {sort: true})
 
     for member in members
       member.proceed.set state
@@ -368,7 +368,7 @@ APP.executeAfterAppLibCode ->
       editor_tpl = Template.closestInstance "task_pane_item_details_members_editor"
       members_filter = editor_tpl.members_filter.get()
 
-      return JustdoHelpers.filterUsersDocsArray(action_users, members_filter, true)
+      return JustdoHelpers.filterUsersDocsArray(action_users, members_filter, {sort: true})
 
     action_users_empty: ->
       return @action_users_reactive_var.get()?.length == 0

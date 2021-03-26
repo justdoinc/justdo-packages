@@ -162,7 +162,7 @@ Template.project_pane_kanban.helpers
       for user_id in kanban_task_doc.users
         kanban_user_docs.push Meteor.users.findOne(user_id, { _id: 1 })
 
-      return JustdoHelpers.filterUsersDocsArray(kanban_user_docs, members_dropdown_search_input_state_rv, true)
+      return JustdoHelpers.filterUsersDocsArray(kanban_user_docs, members_dropdown_search_input_state_rv, {sort: true})
 
     return []
 

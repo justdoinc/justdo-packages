@@ -173,7 +173,7 @@ _setProceedStateForAllMembersInReactiveVarFilterAware = (reactive_var, state) ->
   parent_tpl = Template.closestInstance "users_diff_confirmation"
   members_filter = parent_tpl.members_filter.get()
 
-  members = JustdoHelpers.filterUsersDocsArray(members, members_filter, true)
+  members = JustdoHelpers.filterUsersDocsArray(members, members_filter, {sort: true})
 
   for member in members
     member.proceed.set state
@@ -317,7 +317,7 @@ Template.users_diff_action_section.helpers
     parent_tpl = Template.closestInstance "users_diff_confirmation"
     members_filter = parent_tpl.members_filter.get()
 
-    return JustdoHelpers.filterUsersDocsArray(action_members, members_filter, true)
+    return JustdoHelpers.filterUsersDocsArray(action_members, members_filter, {sort: true})
   section_width_trigger: ->
     if not members_to_add.get()? or not members_to_remove.get()?
       return true
