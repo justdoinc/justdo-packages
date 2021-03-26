@@ -72,7 +72,7 @@ _getUsersDocsByIdsWithProceedFlag = (members_array, default_proceed_val=true) ->
   for member in members
     member.proceed = new ReactiveVar default_proceed_val
 
-  return JustdoHelpers.filterUsersDocsArray members, null
+  return JustdoHelpers.sortUsersDocsArray members
 
 _setProceedStateForAllUsersInReactiveVar = (reactive_var, state) ->
   members = reactive_var.get()
