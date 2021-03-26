@@ -62,7 +62,7 @@ _.extend JustdoHelpers,
 
   getUserPreferredDateFormat: ->
     # Reactive resource!
-    if (preferred_date_format = Meteor.users.findOne(Meteor.userId(), {fields: {'profile.date_format': 1}})?.profile?.date_format)?
+    if (preferred_date_format = Meteor.user()?.profile?.date_format)?
       return preferred_date_format
 
     if (default_date_format = JustdoHelpers.getCollectionSchemaForField(Meteor.users, "profile.date_format").defaultValue)?
@@ -151,7 +151,7 @@ _.extend JustdoHelpers,
     
     return dateFormatterFn(date)
 
-  filterUsersDocsArray: (users_docs, niddle) ->
+  filterUsersDocsArray: (users_docs, niddle, sort=false) ->
     if niddle?
       filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(niddle)}", "i")
 
@@ -171,19 +171,26 @@ _.extend JustdoHelpers,
           return true
 
         return false
-
-    users_docs = _.sortBy users_docs, (user_doc) -> JustdoHelpers.displayName(user_doc).toLowerCase()
     
+    if sort
+      users_docs = @sortUsersDocsArray users_docs
+  
     return users_docs
   
-  filterUsersIdsArray: (user_ids, niddle) ->
+  filterUsersIdsArray: (user_ids, niddle, sort) ->
     user_docs = @getUsersDocsByIds user_ids,
       fields:
         _id: 1
         profile: 1
         emails: 1
 
-    return @filterUsersDocsArray user_docs, niddle
+    return @filterUsersDocsArray user_docs, niddle, sort
+
+  sortUsersDocsArray: (users_docs, comp) ->
+    if not comp?
+      comp = (user_doc) -> JustdoHelpers.displayName(user_doc).toLowerCase()
+    
+    return _.sortBy users_docs, comp
 
   friendlyDateFormat: (date) ->
     moment_date = moment(date)
