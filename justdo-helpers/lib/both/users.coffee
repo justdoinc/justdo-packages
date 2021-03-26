@@ -151,7 +151,8 @@ _.extend JustdoHelpers,
     
     return dateFormatterFn(date)
 
-  filterUsersDocsArray: (users_docs, niddle, sort=false) ->
+  filterUsersDocsArray: (users_docs, niddle, options) ->
+    options = _.extend {sort: false}, options
     if niddle?
       filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(niddle)}", "i")
 
@@ -172,19 +173,19 @@ _.extend JustdoHelpers,
 
         return false
     
-    if sort
+    if options.sort
       users_docs = @sortUsersDocsArray users_docs
   
     return users_docs
   
-  filterUsersIdsArray: (user_ids, niddle, sort) ->
+  filterUsersIdsArray: (user_ids, niddle, options) ->
     user_docs = @getUsersDocsByIds user_ids,
       fields:
         _id: 1
         profile: 1
         emails: 1
 
-    return @filterUsersDocsArray user_docs, niddle, sort
+    return @filterUsersDocsArray user_docs, niddle, options
 
   sortUsersDocsArray: (users_docs, comp) ->
     if not comp?
