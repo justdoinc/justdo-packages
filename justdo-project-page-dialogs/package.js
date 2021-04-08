@@ -106,5 +106,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/members-multi-selector-widget.sass", client);
   api.addFiles("lib/client/members-multi-selector-widget.coffee", client);
 
+  api.addFiles("lib/client/project-context-tooltip.html", client);
+  api.addFiles("lib/client/project-context-tooltip.coffee", client);
+  api.addFiles("lib/client/project-context-tooltip.sass", client);
+  
   api.export("ProjectPageDialogs", client);
 });
