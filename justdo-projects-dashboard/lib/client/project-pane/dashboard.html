@@ -105,13 +105,17 @@
     </td>
     {{#each columnsData}}
       <td>
-        <div class="progress" style="margin-bottom: 0px">
-          <div class="progress-bar" role="progressbar"
-               style="width: {{barProgress}}%; color: #000000; background: #{{bg_color}}"
-               aria-valuenow="barProgress" aria-valuemin="0" aria-valuemax="100">
-            {{#if displayData}}
+        <div class="progress-wrapper">
+          {{#if displayData}}
+            <div class="progress-bar-label">
               {{count}} / {{numberOfSubtasks}}
-            {{/if}}
+            </div>
+          {{/if}}
+          <div class="progress" style="margin-bottom: 0px">
+            <div class="progress-bar" role="progressbar"
+                 style="width: {{barProgress}}%; background: #{{bg_color}}"
+                 aria-valuenow="barProgress" aria-valuemin="0" aria-valuemax="100">
+            </div>
           </div>
         </div>
       </td>
