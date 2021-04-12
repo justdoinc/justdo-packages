@@ -56,6 +56,8 @@ Package.onUse(function (api) {
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
+  api.use("stem-capital:projects@0.1.0", both);
+  
   api.use("reactive-var", both);
   api.use("tracker", client);
 

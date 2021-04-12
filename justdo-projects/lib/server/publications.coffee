@@ -160,14 +160,31 @@ _.extend Projects.prototype,
             {_raw_updated_date: {$lte: sync}},
             {_raw_updated_date: null}
           ]
-          initial_payload_cursor = collection.find initial_payload_query, query_options
 
           private_data_initial_payload_query = _.extend {}, private_data_query
           private_data_initial_payload_query.$or = [
             {_raw_updated_date: {$lte: sync}},
             {_raw_updated_date: null}
           ]
-          private_data_initial_payload_cursor = private_data_collection.find private_data_initial_payload_query, private_data_query_options
+
+          # There's no need to add the forbidden fields to the initial payload
+          for forbidden_field_id in Projects.tasks_forbidden_fields
+            query_options.fields[forbidden_field_id] = 0
+
+          if pub_options.init_payload_raw_cursors_mode
+            init_payload_query_options = _.extend {raw: true}, query_options
+            init_payload_private_data_query_options = _.extend {raw: true}, private_data_query_options
+
+            if not init_payload_private_data_query_options.fields?
+              init_payload_private_data_query_options.fields = {}
+            for forbidden_field_id in Projects.tasks_private_fields_docs_initial_payload_redundant_fields
+              init_payload_private_data_query_options.fields[forbidden_field_id] = 0
+
+            initial_payload_cursor = collection.rawCollection().find initial_payload_query, init_payload_query_options
+            private_data_initial_payload_cursor = private_data_collection.rawCollection().find private_data_initial_payload_query, init_payload_private_data_query_options
+          else
+            initial_payload_cursor = collection.find initial_payload_query, query_options
+            private_data_initial_payload_cursor = private_data_collection.find private_data_initial_payload_query, private_data_query_options
 
         query._raw_updated_date = {$gt: sync}
         private_data_query._raw_updated_date = {$gt: sync}
@@ -285,6 +302,7 @@ _.extend Projects.prototype,
           delete data.user_id
           delete data.task_id
           delete data.project_id
+          # IF YOU ADD MORE FIELDS HERE ADD THEM ALSO TO: Projects.tasks_private_fields_docs_initial_payload_redundant_fields
 
           _removePrivateDataDocsRawFields(data)
 
@@ -346,80 +364,89 @@ _.extend Projects.prototype,
         # Gather and send items initial payload, if there are such
         #
         if initial_payload_cursor? and private_data_initial_payload_cursor?
-          #
-          # Gather regular items payload
-          #
-          initial_payload_items = {}
-          initial_payload_cursor.forEach (data) ->
-            id = data._id
-
-            if label?
-              # If we got a label for this subscription, add the _label
-              # field.
-              data._label = label
-
-
-            # Note: we always use "changed" and not "added", to avoid our fields from replacing
-            # pre-existing fields that might had been sent already before from the regular
-            # cursor (either in this session or the previous one!)
+          if pub_options.init_payload_raw_cursors_mode
+            publish_this.initPayload target_col_name,
+              init_payload: initial_payload_cursor
+              changes_journal: private_data_initial_payload_cursor
+              sync_id: sync
+          else
             #
-            # You can read more about it in the comment titled:
+            # Gather regular items payload
             #
-            # 'Comment regarding operation used to pulish document for the first time'.
-            dataMapsExtensions(id, data, "changed")
+            initial_payload_items = {}
+            initial_payload_cursor.forEach (data) ->
+              id = data._id
 
-            initial_payload_items[id] = data
+              if label?
+                # If we got a label for this subscription, add the _label
+                # field.
+                data._label = label
 
-          #
-          # Gather private data payload
-          #
-          initial_payload_private_data_items = _.map private_data_initial_payload_cursor.fetch(), (data) ->
-            id = data._id
 
-            delete data._id # To keep in-line with ddp expectation that the id won't be part of the fields object
+              # Note: we always use "changed" and not "added", to avoid our fields from replacing
+              # pre-existing fields that might had been sent already before from the regular
+              # cursor (either in this session or the previous one!)
+              #
+              # You can read more about it in the comment titled:
+              #
+              # 'Comment regarding operation used to pulish document for the first time'.
+              dataMapsExtensions(id, data, "changed")
 
-            if not data.task_id?
-              console.warn "A private data doc without a task_id field received by the private_data_tracker 'added' hook, this should never happen check why: private data doc id: #{id}"
+              initial_payload_items[id] = data
 
-              return
-
-            # Read comment above for private_data_doc_id_to_task_id_map.
-            private_data_doc_id_to_task_id_map[id] = getItemId(data.task_id)
-
-            # Note: we always use "changed" and not "added", to avoid our fields from replacing
-            # pre-existing fields that might had been sent already before from the regular
-            # cursor (either in this session or the previous one!)
             #
-            # You can read more about it in the comment titled:
+            # Gather private data payload
             #
-            # 'Comment regarding operation used to pulish document for the first time'.
-            privateDataMapsExtensions(id, data, "changed")
+            initial_payload_private_data_items = _.map private_data_initial_payload_cursor.fetch(), (data) ->
+              id = data._id
 
-            return [private_data_doc_id_to_task_id_map[id], data]
+              delete data._id # To keep in-line with ddp expectation that the id won't be part of the fields object
 
-          # A note regarding why we wire the initial_payload_private_data_items as the Changes Journal
-          # part of the init_payload message and not as part of the initial_payload_items:
-          #
-          # My initial idea was to _.each the private_data_initial_payload_cursor.fetch() and then
-          # simply push the items to the initial_payload_items messages.
-          #
-          # The thing is, that I want to be able to implement a very efficient algo on the client side
-          # to merge the initial payload items into the pseudo mongo underlying collection data structure,
-          # one that doesn't involve looping over each item.
-          #
-          # The initial_payload_private_data_items are of change nature, and not insert nature,
-          # they are adding to the documents passed as part of the initial payload.
-          #
-          # Therefore, if we were adding them to the initial_payload, that will mean that the algo
-          # won't be able to assume each id appears only once and perform a simple merge to the underlying
-          # data structure.
-          #
-          # That's why I decided to pass the private data as the Changes Journal (and actually what triggered
-          # the Changes Journal concept to begin with, though in the future, it will allow us to do interesting
-          # caching server side, so it has a broaded place in the initial payload idea).
-          #
-          # -Daniel
-          publish_this.initPayload target_col_name, {init_payload: initial_payload_items, changes_journal: initial_payload_private_data_items, sync_id: sync}
+              if not data.task_id?
+                console.warn "A private data doc without a task_id field received by the private_data_tracker 'added' hook, this should never happen check why: private data doc id: #{id}"
+
+                return
+
+              # Read comment above for private_data_doc_id_to_task_id_map.
+              private_data_doc_id_to_task_id_map[id] = getItemId(data.task_id)
+
+              # Note: we always use "changed" and not "added", to avoid our fields from replacing
+              # pre-existing fields that might had been sent already before from the regular
+              # cursor (either in this session or the previous one!)
+              #
+              # You can read more about it in the comment titled:
+              #
+              # 'Comment regarding operation used to pulish document for the first time'.
+              privateDataMapsExtensions(id, data, "changed")
+
+              return [private_data_doc_id_to_task_id_map[id], data]
+
+            # A note regarding why we wire the initial_payload_private_data_items as the Changes Journal
+            # part of the init_payload message and not as part of the initial_payload_items:
+            #
+            # My initial idea was to _.each the private_data_initial_payload_cursor.fetch() and then
+            # simply push the items to the initial_payload_items messages.
+            #
+            # The thing is, that I want to be able to implement a very efficient algo on the client side
+            # to merge the initial payload items into the pseudo mongo underlying collection data structure,
+            # one that doesn't involve looping over each item.
+            #
+            # The initial_payload_private_data_items are of change nature, and not insert nature,
+            # they are adding to the documents passed as part of the initial payload.
+            #
+            # Therefore, if we were adding them to the initial_payload, that will mean that the algo
+            # won't be able to assume each id appears only once and perform a simple merge to the underlying
+            # data structure.
+            #
+            # That's why I decided to pass the private data as the Changes Journal (and actually what triggered
+            # the Changes Journal concept to begin with, though in the future, it will allow us to do interesting
+            # caching server side, so it has a broaded place in the initial payload idea).
+            #
+            # -Daniel
+            publish_this.initPayload target_col_name,
+              init_payload: initial_payload_items
+              changes_journal: initial_payload_private_data_items
+              sync_id: sync
 
         #
         # Initiate trackers

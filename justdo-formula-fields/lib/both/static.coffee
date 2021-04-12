@@ -40,8 +40,6 @@ JustdoFormulaFields.formula_human_readable_fields_components_matcher_regex =
 # (we use object for quick access, values are completely ignored!)
 JustdoFormulaFields.forbidden_fields = 
   "_id": null
-  "_raw_updated_date": null
-  "_raw_added_users_dates": null
-  "_raw_removed_users_dates": null
-  "_raw_removed_users": null
-  "_raw_removed_date": null
+
+for forbidden_field_id in Projects.tasks_forbidden_fields
+  JustdoFormulaFields.forbidden_fields[forbidden_field_id] = null

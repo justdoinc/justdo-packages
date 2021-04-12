@@ -72,75 +72,207 @@ _.extend Projects.prototype,
       required_tasks_subscriptions_count[project_id] = 0
     required_tasks_subscriptions_count[project_id] += 1
 
+    ongoing_http_request_rv = new ReactiveVar(false)
+
+    # State 1: An http-load/subscription of this JustDo is already in-progress/established.
+    #          Just use the existing one.
     if project_id of open_tasks_subscriptions_handles
       handle = open_tasks_subscriptions_handles[project_id]
+    # State 2: An http-load/subscription isn't in-progress/established.
     else
+      # STATE 2.X BEGIN
       options = {project_id: project_id, respect_exclude_from_tasks_grid_pub_directive: true}
 
-      if project_id of tasks_subscription_last_sync_time
-        project_last_sync_time = tasks_subscription_last_sync_time[project_id]
+      # Two ways to produce an handle in the following State 2.1/2.2
 
-        options.sync = project_last_sync_time
+      if project_id not of tasks_subscription_last_sync_time
+        # STATE 2.1 BEGIN
 
-      # If the handle needed by @requireProjectTasksSubscription() created inside a computation
-      # we don't want the computation invalidation to stop the subscription for others that might
-      # still need it. See below `Tracker.currentComputation?` to see what we are doing in such
-      # a case.
-      meteor_connection_tracker = null
-      handle = Tracker.nonreactive ->
-        return self._grid_data_com.subscribeDefaultGridSubscription options,
-          onReady: ->
-            delete tasks_subscription_last_sync_time[project_id]
+        # State 2.1: We never subscribed before to this JustDo, load first the JustDo using http-load.
 
-            last_state_is_connected = true
-            meteor_connection_tracker = Tracker.autorun ->
-              if last_state_is_connected != Meteor.status().connected
-                new_state_is_connected = Meteor.status().connected
-                last_state_is_connected = new_state_is_connected
+        handle = Tracker.nonreactive -> # Run in a nonreactive scope to ensure no reactive resource below affects the caller
+          stopped = false
+          subscription_handle = null # This will hold the handle from a followup call to requireProjectTasksSubscription
+                                     # that will enter state 2.2 following the http init-payload load.
 
-                if new_state_is_connected == false
-                  self.logger.debug "DDP disconnection detected"
+          ready = false
+          ready_dep = new Tracker.Dependency()
 
-                  sub_name = GridDataCom.helpers.getCollectionUnmergedPubSubName(self.items_collection)
-                  JustdoHelpers.replaceDdpSubscriptionParamsToBeUsedInReconnection sub_name, (err, existing_params) ->
-                    if err?
-                      self.logger.error "Couldn't replace subscription params"
-
-                      return
-
-                    options = _.extend {}, existing_params[0] # shallow copy
-
-                    options.sync = getCurrentSyncTimeWithSafetyDelta()
-
-                    existing_params[0] = options
-
-                    self.logger.debug "Update open subscription sync option for followup reconnection #{sub_name}"
-
-                    return existing_params
-
-            return
-
-          onStop: (err) ->
-            if err?
-              releaseRequirement() # call releaseRequirement, so it won't be able to be called again, and to clear the required_tasks_subscriptions_count for this project_id
-            else
-              tasks_subscription_last_sync_time[project_id] = getCurrentSyncTimeWithSafetyDelta()
-
+          deleteFakeHandleFromHandlersRegistry = ->
             delete open_tasks_subscriptions_handles[project_id]
+            return
+
+          fake_subscription_handle =
+            ready: ->
+              ready_dep.depend()
+
+              return ready
+
+            stop: _.once ->
+              stopped = true
+              
+              releaseRequirement() # call releaseRequirement, so it won't be able to be called again, and to clear the required_tasks_subscriptions_count for this project_id
+                                   # Note, there's no risk of calling it more than once, it can run only once.
+
+              if not subscription_handle?
+                # Only if subscription_handle isn't established yet delete the handler, otherwise,
+                # the handler is already the handler of the subscription_handle, and it should
+                # be deleted by it (when we'll call subscription_handle.stop() for that case).
+                deleteFakeHandleFromHandlersRegistry()
+              else
+                # If subscription_handle established, pass the request to stop to it.
+                subscription_handle.stop()
+
+              return
+
+          ongoing_http_request_rv.set(true)
+          self._grid_data_com.loadDefaultGridFromHttpPreReadyPayload options, {max_age: Projects.grid_init_payload_cache_max_age_seconds}, (err, init_payload_sync_id) ->
+            ongoing_http_request_rv.set(false)
+            if err?
+              console.error "FATAL: couldn't load project tasks"
+
+              # Call the stop to allow a followup call with the same project_id (otherwise followup calls will get stuck on State 1)
+              fake_subscription_handle.stop()
+
+              return
+
+            ready = true
+            ready_dep.changed()
+
+            # Even if we got the stop request, set the tasks_subscription_last_sync_time[project_id]
+            # so subsequent requests will not get again to State 2.1
+            if init_payload_sync_id?
+              tasks_subscription_last_sync_time[project_id] = init_payload_sync_id
+            else
+              # This case shouldn't happen
+              console.warn "loadDefaultGridFromHttpPreReadyPayload returned with no init_payload_sync_id"
+              tasks_subscription_last_sync_time[project_id] = new Date(TimeSync.getServerTime() - sync_safety_delta_ms)
+
+            if stopped
+              # Stopped already by the user/or as a result of a failure, don't proceed to establish subscription.
+              return
+
+            # Initial payload loaded using http, prepare for calling requireProjectTasksSubscription again
+            # to establish the ddp subscription with the sync in accordance with the sync value we got
+            # in the initial payload.
+            
+            # Set sync and delete the fake handler so the following request to requireProjectTasksSubscription()
+            # will get to State 2.2
+
+            deleteFakeHandleFromHandlersRegistry()
+
+            # COMMENT:REQUIRED_TASKS_SUBSCRIPTIONS_COUNT_MANAGEMENT
+            #
+            # We subtract 1 from the required_tasks_subscriptions_count[project_id] since the following call to
+            # self.requireProjectTasksSubscription(project_id) will increase the count by 1, which means
+            # that there'll be 1 extra required_tasks_subscriptions_count for this project id for the same
+            # request, that will prevent releaseRequirement to call the handle stop upon call, because it will think
+            # there are more resources that need this subscription. This will keep the subscription running
+            # forever.
+            required_tasks_subscriptions_count[project_id] -= 1
+
+            subscription_handle = self.requireProjectTasksSubscription(project_id)
 
             return
+
+          return fake_subscription_handle
+        # STATE 2.1 END
+      else
+        # STATE 2.2 BEGIN
+
+        # State 2.2: We subscribed before to this JustDo, re-subscribe assuming the initial payload already received.
+
+        options.sync = tasks_subscription_last_sync_time[project_id] # The if statement we are in ensures tasks_subscription_last_sync_time[project_id] existence
+
+        # If the handle needed by @requireProjectTasksSubscription() created inside a computation
+        # we don't want the computation invalidation to stop the subscription for others that might
+        # still need it. See below `Tracker.currentComputation?` to see what we are doing in such
+        # a case.
+        meteor_connection_tracker = null
+        handle = Tracker.nonreactive ->
+          return self._grid_data_com.subscribeDefaultGridSubscription options,
+            onReady: ->
+              delete tasks_subscription_last_sync_time[project_id]
+
+              last_state_is_connected = true
+              meteor_connection_tracker = Tracker.autorun ->
+                if last_state_is_connected != Meteor.status().connected
+                  new_state_is_connected = Meteor.status().connected
+                  last_state_is_connected = new_state_is_connected
+
+                  if new_state_is_connected == false
+                    self.logger.debug "DDP disconnection detected"
+
+                    sub_name = GridDataCom.helpers.getCollectionUnmergedPubSubName(self.items_collection)
+                    JustdoHelpers.replaceDdpSubscriptionParamsToBeUsedInReconnection sub_name, (err, existing_params) ->
+                      if err?
+                        self.logger.error "Couldn't replace subscription params"
+
+                        return
+
+                      options = _.extend {}, existing_params[0] # shallow copy
+
+                      options.sync = getCurrentSyncTimeWithSafetyDelta()
+
+                      existing_params[0] = options
+
+                      self.logger.debug "Update open subscription sync option for followup reconnection #{sub_name}"
+
+                      return existing_params
+
+              return
+
+            onStop: (err) ->
+              if err?
+                releaseRequirement() # call releaseRequirement, so it won't be able to be called again, and to clear the required_tasks_subscriptions_count for this project_id
+              else
+                tasks_subscription_last_sync_time[project_id] = getCurrentSyncTimeWithSafetyDelta()
+
+              delete open_tasks_subscriptions_handles[project_id]
+
+              return
+
+        # STATE 2.2 END
 
       open_tasks_subscriptions_handles[project_id] = handle
 
+      # STATE 2.X END
+
     releaseRequirement = _.once ->
-      required_tasks_subscriptions_count[project_id] -= 1
+      release = ->
+        required_tasks_subscriptions_count[project_id] -= 1
 
-      if required_tasks_subscriptions_count[project_id] == 0
-        delete required_tasks_subscriptions_count[project_id]
+        if required_tasks_subscriptions_count[project_id] <= 0
+          # Search for comment REQUIRED_TASKS_SUBSCRIPTIONS_COUNT_MANAGEMENT above for how negative cases might happen
+          required_tasks_subscriptions_count[project_id] = 0
 
-        handle?.stop()
+          handle?.stop()
 
-        meteor_connection_tracker?.stop()
+          meteor_connection_tracker?.stop()
+
+        return
+
+      if not (Tracker.nonreactive -> ongoing_http_request_rv.get())
+        # If there's no ongoing http request, release right now.
+        return release()
+
+      Tracker.nonreactive ->
+        Tracker.autorun (c) ->
+          # If there is an ongoing http request, wait for it to finish loading,
+          # and only then release this will prevent multiple http requests in
+          # cases like:
+          #
+          # a = APP.projects.requireProjectTasksSubscription("z859T82wEmGz7igyx")
+          # a.stop()
+          # b = APP.projects.requireProjectTasksSubscription("z859T82wEmGz7igyx")
+          # b.stop()
+          #
+          # Critical for slow connections.
+          if ongoing_http_request_rv.get() is false
+            c.stop()
+            release()
+
+          return
 
       return
 
