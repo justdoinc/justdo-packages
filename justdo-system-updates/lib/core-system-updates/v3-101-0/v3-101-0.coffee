@@ -5,4 +5,4 @@ JustdoSystemUpdates.registerSystemUpdate
 
   template: "v3_101_0_system_update"
 
-  show_to_users_registered_before: new Date(Date.UTC(2021, 4, 9, 0, 0))
+  show_to_users_registered_before: new Date(Date.UTC(2021, 3, 13, 0, 0))
