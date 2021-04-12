@@ -11,6 +11,12 @@ GridDataCom = (collection) ->
 Util.inherits GridDataCom, EventEmitter
 
 _.extend GridDataCom.prototype,
+  loadDefaultGridFromHttpPreReadyPayload: (subscription_options, http_options, cb) ->
+    APP.justdo_ddp_extensions.loadHttpPreReadyPayloadToMiniMongoStore "tasks_grid_um",
+      [subscription_options, {"unmerged_pub_ddp_extensions_version": 1, "init_payload_raw_cursors_mode": true}], http_options, cb
+
+    return
+
   subscribeDefaultGridSubscription: (subscription_options, subscription_callbacks) ->
     # subscribeDefaultGridSubscription: (arg1, arg2, ..., subscription_callbacks)
     #
