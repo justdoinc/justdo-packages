@@ -14,6 +14,8 @@ Package.onUse(function (api) {
   // Switch themes with: APP.bootstrap_themes_manager.setTheme("sketchy")
 
   api.addAssets("default/bootstrap.css", client);
+
+  api.addAssets("classic/bootstrap.css", client);
   api.addAssets("cerulean/bootstrap.css", client);
   api.addAssets("minty/bootstrap.css", client);
   api.addAssets("sandstone/bootstrap.css", client);
