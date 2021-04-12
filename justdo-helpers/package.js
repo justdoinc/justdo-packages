@@ -5,6 +5,8 @@ Package.describe({
   git: "https://github.com/justdoinc/justdo-shared-packages/tree/master/justdo-helpers"
 });
 
+Npm.depends({"cookie": "0.4.1"})
+
 client = "client"
 server = "server"
 both = [client, server]
@@ -18,6 +20,7 @@ Package.onUse(function (api) {
   api.use("blaze", client, {weak: true});
   api.use("templating", client, {weak: true});
   api.use("ecmascript", both);
+  api.use("random", both);
 
   api.use("raix:eventemitter@0.1.1", both);
   api.use("meteorspark:util@0.1.0", both);
@@ -92,11 +95,16 @@ Package.onUse(function (api) {
 
   api.add_files("lib/server/http-auth.coffee", server);
   api.add_files("lib/server/app-domains.coffee", server);
+  api.add_files("lib/server/bson-to-json.coffee", server);
+  api.add_files("lib/server/cookie.coffee", server);
   api.add_files("lib/server/ddp.coffee", server);
+  api.add_files("lib/server/fibers.coffee", server);
+  api.add_files("lib/server/ddp-socket.coffee", server);
   api.add_files("lib/server/network.coffee", server);
   api.add_files("lib/server/cpu.coffee", server);
   api.add_files("lib/server/users-generator.coffee", server);
   api.add_files("lib/server/tasks-generator.coffee", server);
+  api.add_files("lib/server/url.coffee", server);
 
   api.export("JustdoHelpers", both);
 });

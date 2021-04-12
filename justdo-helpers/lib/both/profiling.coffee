@@ -11,7 +11,7 @@ _.extend JustdoHelpers,
   timeProfileAverage: (times, op) ->
     aggr = 0
 
-    for i in [0..times]
+    for i in [0...times]
       aggr += @timeProfile(op)
 
     return aggr / times

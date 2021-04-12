@@ -12,3 +12,4 @@ _.extend JustdoHelpers,
     "missing-argument": "Missing argument"
     "login-required": "This operation requires login"
     "unknown-user": "Unknown user"
+    "no-fiber": "No fiber found"
