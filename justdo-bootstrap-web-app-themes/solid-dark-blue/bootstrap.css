@@ -7217,11 +7217,11 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .slick-row.active {
-  background-color: rgba(3, 169, 244, 0.16);
+  background-color: rgba(var(--color-primary), 0.08);
 }
 
 .slick-row.search-result.active {
-  background: linear-gradient(to right, rgba(3, 169, 244, 0.16) 0%, rgba(3, 169, 244, 0.16) 100%), linear-gradient(to right, #fffce5 0%, #fffce5 100%);
+  background: linear-gradient(to right, rgba(var(--color-primary), 0.12) 0%, rgba(var(--color-primary), 0.12) 100%), linear-gradient(to right, #fffce5 0%, #fffce5 100%);
 }
 
 .grid-control .slick-cell.editable {
@@ -7236,15 +7236,15 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .frozen-columns-mode .slick-row.active {
-  background-color: rgba(3, 169, 244, 0.16) !important;
+  background-color: rgba(var(--color-primary), 0.08) !important;
 }
-
-.frozen-columns-mode .frozen.active,
 .frozen-columns-mode .active .frozen {
-  background: linear-gradient(to right, rgba(3, 169, 244, 0.16) 0%, rgba(3, 169, 244, 0.16) 100%), linear-gradient(to right, #ffffff 0%, #ffffff 100%);
+  background: linear-gradient(to right, rgba(var(--color-primary), 0.08) 0%, rgba(var(--color-primary), 0.08) 100%), linear-gradient(to right, #ffffff 0%, #ffffff 100%);
 }
-
+.frozen-columns-mode .frozen.active {
+  background: linear-gradient(to right, rgba(var(--color-primary), 0.08) 0%, rgba(var(--color-primary), 0.08) 100%), linear-gradient(to right, #ffffff 0%, #ffffff 100%);
+}
 .frozen-columns-mode .search-result.active .frozen,
 .frozen-columns-mode .search-result .frozen.active {
-  background: linear-gradient(to right, rgba(3, 169, 244, 0.16) 0%, rgba(3, 169, 244, 0.16) 100%), linear-gradient(to right, #fffce5 0%, #fffce5 100%);
+  background: linear-gradient(to right, rgba(var(--color-primary), 0.12) 0%, rgba(var(--color-primary), 0.12) 100%), linear-gradient(to right, #fffce5 0%, #fffce5 100%);
 }
