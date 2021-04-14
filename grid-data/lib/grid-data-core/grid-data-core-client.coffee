@@ -195,13 +195,15 @@ _.extend GridDataCore.prototype,
 
       return [structure_changed, items_ids_with_changed_children]
 
-    foreign_key_fields_update: (id, foreign_key_fields) ->
-      # console.log "foreign_key_fields_update", id, foreign_key_fields
+    foreign_keys_fields_update: (id, foreign_keys_fields_updates) ->
+      # console.log "foreign_keys_fields_update", id, foreign_keys_fields_updates
+      #
+      # To keep things consistent, we still pass id as the first arg, it will always be "0"
 
       structure_changed = false
       items_ids_with_changed_children = {}
 
-      @emit "content-changed", id, foreign_key_fields
+      @emit "bulk-foreign-keys-updates", foreign_keys_fields_updates
 
       return [structure_changed, items_ids_with_changed_children]
 
@@ -376,6 +378,19 @@ _.extend GridDataCore.prototype,
       tracker_init = false
 
   _initForeignKeysTrackers: ->
+    @_foreign_keys_fields_updates_flush_manager = new JustdoHelpers.FlushManager
+      min_flush_delay: 10
+
+    foreign_keys_fields_updates = {}
+    @_foreign_keys_fields_updates_flush_manager.on "flush", =>
+      @_data_changes_queue.push ["foreign_keys_fields_update", ["0", foreign_keys_fields_updates]]
+      foreign_keys_fields_updates = {}
+
+      @flush_manager.setNeedFlush()
+
+      return
+
+
     if not @_destroyed and not @_foreign_keys_trackers?
       foreign_keys_trackers = {}
 
@@ -391,16 +406,14 @@ _.extend GridDataCore.prototype,
             tracker_init = true
             changesCb = (id) =>
               if not tracker_init
-                affected_rows_query = {}
-                affected_rows_query[field_name] = id
+                if not foreign_keys_fields_updates[field_name]?
+                  foreign_keys_fields_updates[field_name] = {}
 
-                affected_items = @collection.find(affected_rows_query, {fields: {_id: 1}}).fetch()
+                foreign_keys_fields_updates[field_name][id] = true
 
-                if affected_items.length > 0
-                  for item in affected_items
-                    @_data_changes_queue.push ["foreign_key_fields_update", [item._id, [field_name]]]
+                @_foreign_keys_fields_updates_flush_manager.setNeedFlush()
 
-                  @flush_manager.setNeedFlush()
+              return
 
             foreign_keys_trackers[field_name] =
               field_def.grid_foreign_key_collection().find({}, tracker_cursor_options).observeChanges

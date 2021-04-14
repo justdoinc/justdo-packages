@@ -145,6 +145,16 @@ _.extend GridData.prototype,
         for row in @_items_ids_map_to_grid_tree_indices[item_id]
           @emit "grid-item-changed", row, changed_fields_array
 
+      return
+
+    @_grid_data_core.on "bulk-foreign-keys-updates", (foreign_keys_fields_updates) =>
+      for grid_tree_task_details, grid_row_index in @grid_tree
+        for field_id, foreign_key_updated_vals of foreign_keys_fields_updates
+          if grid_tree_task_details[0][field_id] of foreign_key_updated_vals
+            @emit "grid-item-changed", grid_row_index, [field_id]
+
+      return
+
   # XXX Base the flush process on JustdoHelpers.FlushManager
   _idle_time_ms_before_set_need_flush: 0
   _set_need_flush_timeout: null
