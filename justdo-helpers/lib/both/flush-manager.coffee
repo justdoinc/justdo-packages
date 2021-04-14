@@ -38,6 +38,9 @@ FlushManager = (options) ->
 
   @destroyed = false
 
+  @_flush_manager_id = Random.id()
+  @_same_tick_cache_key = "flush-manager::#{@_flush_manager_id}"
+
   @logger = Logger.get("flush-manager")
 
   @logger.debug "Init begin"
@@ -81,6 +84,12 @@ _.extend FlushManager.prototype,
   _deferredInit: ->
     return
 
+  _isFlushRequestedInThisTick: ->
+    return JustdoHelpers.sameTickCacheExists(@_same_tick_cache_key)
+
+  _setFlushRequestedInThisTick: ->
+    return JustdoHelpers.sameTickCacheSet(@_same_tick_cache_key, true)
+
   setNeedFlush: ->
     if @destroyed
       return
@@ -89,6 +98,12 @@ _.extend FlushManager.prototype,
       @_flush_blocked_by_lock = true
 
       return
+
+    # If already requested in this tick, nothing to do ...
+    if @_isFlushRequestedInThisTick()
+      return
+
+    @_setFlushRequestedInThisTick()
 
     if @_set_need_flush_timeout?
       clearTimeout @_set_need_flush_timeout
