@@ -59,7 +59,7 @@ _.extend Projects.prototype,
 
   _subscribeUserGuestProjects: -> @_setSubscriptionHandle "guest_projects", Meteor.subscribe("userProjects", true)
 
-  requireProjectTasksSubscription: (project_id) ->
+  requireProjectTasksSubscription: (project_id, force_init_payload_over_ddp) ->
     self = @
 
     # Returns .ready() which is a proxy to the subscription .ready()
@@ -85,7 +85,7 @@ _.extend Projects.prototype,
 
       # Two ways to produce an handle in the following State 2.1/2.2
 
-      if project_id not of tasks_subscription_last_sync_time
+      if not force_init_payload_over_ddp and (project_id not of tasks_subscription_last_sync_time)
         # STATE 2.1 BEGIN
 
         # State 2.1: We never subscribed before to this JustDo, load first the JustDo using http-load.
@@ -128,13 +128,13 @@ _.extend Projects.prototype,
           ongoing_http_request_rv.set(true)
           self._grid_data_com.loadDefaultGridFromHttpPreReadyPayload options, {max_age: Projects.grid_init_payload_cache_max_age_seconds}, (err, init_payload_sync_id) ->
             ongoing_http_request_rv.set(false)
+
+            failed = false
+
             if err?
-              console.error "FATAL: couldn't load project tasks"
+              failed = true
 
-              # Call the stop to allow a followup call with the same project_id (otherwise followup calls will get stuck on State 1)
-              fake_subscription_handle.stop()
-
-              return
+              console.error "FATAL: couldn't load project tasks - falling back to ddp based init-payload retrieval"
 
             ready = true
             ready_dep.changed()
@@ -144,9 +144,18 @@ _.extend Projects.prototype,
             if init_payload_sync_id?
               tasks_subscription_last_sync_time[project_id] = init_payload_sync_id
             else
-              # This case shouldn't happen
-              console.warn "loadDefaultGridFromHttpPreReadyPayload returned with no init_payload_sync_id"
-              tasks_subscription_last_sync_time[project_id] = new Date(TimeSync.getServerTime() - sync_safety_delta_ms)
+              if not failed
+                # If we didn't fail, and for whatever reason we don't have an init_payload_sync_id
+                # use current time - safety delta as the init_payload_sync_id
+                #
+                # This case is theoretical, and as of writing I can't think of a situation where it might
+                # happen. (Daniel C.)
+                #
+                # If we did fail - we don't want to set tasks_subscription_last_sync_time[project_id]
+                # at all, so the ddp subscription will be called without the sync param and will receive
+                # the init payload.
+                console.warn "loadDefaultGridFromHttpPreReadyPayload returned with no init_payload_sync_id"
+                tasks_subscription_last_sync_time[project_id] = new Date(TimeSync.getServerTime() - sync_safety_delta_ms)
 
             if stopped
               # Stopped already by the user/or as a result of a failure, don't proceed to establish subscription.
@@ -171,7 +180,7 @@ _.extend Projects.prototype,
             # forever.
             required_tasks_subscriptions_count[project_id] -= 1
 
-            subscription_handle = self.requireProjectTasksSubscription(project_id)
+            subscription_handle = self.requireProjectTasksSubscription(project_id, failed) # If failed is true we will force the followup attempt to go through ddp
 
             return
 
@@ -182,7 +191,10 @@ _.extend Projects.prototype,
 
         # State 2.2: We subscribed before to this JustDo, re-subscribe assuming the initial payload already received.
 
-        options.sync = tasks_subscription_last_sync_time[project_id] # The if statement we are in ensures tasks_subscription_last_sync_time[project_id] existence
+        if tasks_subscription_last_sync_time[project_id]?
+          # Note, this can happen when force_init_payload_over_ddp is set to true
+          # force_init_payload_over_ddp will be set to true, if we failed to obtain the payload over http
+          options.sync = tasks_subscription_last_sync_time[project_id] # The if statement we are in ensures tasks_subscription_last_sync_time[project_id] existence
 
         # If the handle needed by @requireProjectTasksSubscription() created inside a computation
         # we don't want the computation invalidation to stop the subscription for others that might
