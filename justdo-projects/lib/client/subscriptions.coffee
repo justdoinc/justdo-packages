@@ -136,6 +136,13 @@ _.extend Projects.prototype,
 
               console.error "FATAL: couldn't load project tasks - falling back to ddp based init-payload retrieval"
 
+              # It is important to show some indication so at least a developer will know this
+              # is the cause for the slowness and not a slow internet connection (which might be
+              # the first assumption)
+              JustdoSnackbar.show
+                text: "Loading this JustDo is taking a bit longer than usual, but it should be ready soon"
+                duration: 7000
+
             ready = true
             ready_dep.changed()
 
