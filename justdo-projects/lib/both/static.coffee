@@ -16,4 +16,4 @@ _.extend Projects,
 
   tasks_private_fields_docs_initial_payload_redundant_fields: ["_id", "project_id", "user_id", "_raw_updated_date"]
 
-  grid_init_payload_cache_max_age_seconds: 60 * 15
+  grid_init_payload_cache_max_age_seconds: 60 * 60 * 24 # 1 day
