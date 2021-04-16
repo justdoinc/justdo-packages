@@ -1,4 +1,4 @@
-clearJob = null
+clear_job = null
 cache = {}
 
 _.extend JustdoHelpers,
@@ -9,9 +9,11 @@ _.extend JustdoHelpers,
     return cache[key]
 
   sameTickCacheSet: (key, val) ->
-    if not clearJob?
-      clearJob = Meteor.defer ->
+    if not clear_job?
+      clear_job = setTimeout ->
         cache = {}
+        clear_job = null
+      , 0
 
     return cache[key] = val
 
