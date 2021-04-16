@@ -85,10 +85,13 @@ _.extend FlushManager.prototype,
     return
 
   _isFlushRequestedInThisTick: ->
-    return JustdoHelpers.sameTickCacheExists(@_same_tick_cache_key)
+    return JustdoHelpers.sameTickCacheGet(@_same_tick_cache_key)?
 
   _setFlushRequestedInThisTick: ->
     return JustdoHelpers.sameTickCacheSet(@_same_tick_cache_key, true)
+
+  _unsetFlushRequestedInThisTick: ->
+    return JustdoHelpers.sameTickCacheSet(@_same_tick_cache_key, null)
 
   setNeedFlush: ->
     if @destroyed
@@ -154,6 +157,8 @@ _.extend FlushManager.prototype,
     if @destroyed
       return
     
+    @_unsetFlushRequestedInThisTick()
+
     @emit "flush"
     @flush_dependency.changed()
 
