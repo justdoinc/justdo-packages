@@ -244,24 +244,27 @@ APP.executeAfterAppLibCode ->
     "click .idc-task-context-delete": ->
       item_path = @valueOf() # valueOf returns the String primitive value attached to this
 
-      if not (gc = module.gridControl())?
-        APP.logger.warn "Couldn't find grid control"
+      if not (gc = module.mainGridControl())?
+        APP.logger.warn "Couldn't find the main grid control"
 
       bootbox.confirm
         message: "<b>Are you sure you want to remove the task from this parent?</b>"
         callback: (result) =>
-          if result
-            # If we remove the active path, we want to use the regular remove
-            # op to use its post remove logic (selecting next task, etc.)
-            if module.activeItemPath() == item_path
-              return gc.removeActivePath()
+          if not result
+            return
 
-            gc._performLockingOperation (releaseOpsLock, timedout) =>
-              gc._grid_data?.removeParent item_path, (err) =>
-                releaseOpsLock()
+          gc._performLockingOperation (releaseOpsLock, timedout) =>
+            gc._grid_data?.removeParent item_path, (err) =>
+              releaseOpsLock()
 
-                if err?
-                  APP.logger.error "Error: #{err}"
+              if err?
+                APP.logger.error "Error: #{err}"
+
+              return
+              
+            return
+
+          return
 
       return
 
