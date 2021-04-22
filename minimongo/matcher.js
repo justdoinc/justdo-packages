@@ -55,7 +55,7 @@ export default class Matcher {
   }
 
   documentMatches(doc) {
-    if (doc !== Object(doc)) {
+    if (typeof doc !== "object") {
       throw Error('documentMatches needs a document');
     }
 
