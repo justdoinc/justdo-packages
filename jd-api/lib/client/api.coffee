@@ -29,7 +29,7 @@ _.extend JD,
       if options?.allow_undefined_fields == true
         fields = undefined
       else
-        throw new Meteor.Error "fields-not-specified", "Fields parameters must be provide"
+        throw new Meteor.Error "fields-not-specified", "The fields argument must be provided"
     if (active_obj = APP.modules?.project_page?.activeItemObj(fields))?
       return active_obj
 
