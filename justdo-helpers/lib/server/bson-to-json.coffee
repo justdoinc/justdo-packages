@@ -1,7 +1,7 @@
 import { checkNpmVersions } from "meteor/tmeasday:check-npm-versions"
 
 checkNpmVersions({
-  'bson-to-json': '1.0.x'
+  'bson-to-json': '2.0.x'
 }, 'justdoinc:justdo-helpers')
 
 bsonToJson = require("bson-to-json")
