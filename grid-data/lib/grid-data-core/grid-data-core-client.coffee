@@ -338,8 +338,9 @@ _.extend GridDataCore.prototype,
       # so, any data existing prior init will be taken by it,
       # tracker_init var is here to avoid adding this data
       # second time.
-      tracker_init = true
+      tracker_init = true # With _suppress_initial this is now redundant, but kept since _suppress_initial isn't documented and behaviour might change in the future
       @_items_tracker = @collection.find(@tasks_query).observeChanges
+        _suppress_initial: true
         added: (id, doc) =>
           # @logger.debug "Tracker: Item added #{id}"
 
