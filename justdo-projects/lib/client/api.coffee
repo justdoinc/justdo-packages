@@ -1,6 +1,6 @@
 _.extend Projects.prototype,
   userRequirePostRegistrationInit: ->
-    if (user = Meteor.user())? and (post_reg_init = user.justdo_projects?.post_reg_init)? and post_reg_init == false
+    if (user = Meteor.user({fields: {"justdo_projects.post_reg_init": 1}}))? and (post_reg_init = user.justdo_projects?.post_reg_init)? and post_reg_init == false
       return true
 
     return false
