@@ -69,19 +69,14 @@ export default class LocalCollection {
 
     sameTickStatsInc("minimongo-find", 1);
 
-    // Coffeescript:
-    //
-    // if Tracker.currentComputation and not options.fields? and options.allow_undefined_fields isnt true
-    //   console.error("[OPTIMIZATION ISSUE] fields option wasn't provided for a cursor that initiated inside a computation", {name: this.name, selector, options});
     if (Tracker.currentComputation && (options.fields == null) && options.allow_undefined_fields !== true) {
       reportOptimizationIssue("fields option wasn't provided for a cursor that initiated inside a computation", {
         name: this.name,
         selector,
         options
       });
+      console.trace();
     }
-
-    // console.info("minimongo find", this.name, selector, options);
 
     const cursor = new LocalCollection.Cursor(this, selector, options);
 
@@ -89,6 +84,8 @@ export default class LocalCollection {
       sameTickStatsInc("minimongo-find-by-id", 1);
     } else {
       sameTickStatsInc("minimongo-find-not-by-id", 1);
+
+      // console.info("minimongo find", this.name, selector, options);
     }
 
     return cursor;

@@ -1,22 +1,23 @@
 import LocalCollection from './local_collection.js';
 
 export let sameTickStatsInc = function () {return};
-setTimeout(function () {
-  if (Meteor.isClient) {
-    sameTickStatsInc = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsInc;
-  } else {
-    sameTickStatsInc = function () {return};
-  }  
-}, 0);
+export let reportOptimizationIssue = function (message, data) {
+  console.error("[OPTIMIZATION ISSUE - EARLY TICK]", message, data);
+  return;
+};
+if (Meteor.isClient) {
+  let interval_id = setInterval(function () {
+    if (typeof Package["justdoinc:justdo-helpers"] !== "undefined") {
+      sameTickStatsInc = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsInc;
+      reportOptimizationIssue = Package["justdoinc:justdo-helpers"].JustdoHelpers.reportOptimizationIssue;
 
-export let reportOptimizationIssue = function () {return};
-setTimeout(function () {
-  if (Meteor.isClient) {
-    reportOptimizationIssue = Package["justdoinc:justdo-helpers"].JustdoHelpers.reportOptimizationIssue;
-  } else {
-    reportOptimizationIssue = function () {return};
-  }  
-}, 0);
+      clearInterval(interval_id);
+    }
+  }, 10);
+} else {
+  sameTickStatsInc = function () {return};
+  reportOptimizationIssue = function () {return};
+}
 
 export const hasOwn = Object.prototype.hasOwnProperty;
 
