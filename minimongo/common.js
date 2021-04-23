@@ -1,5 +1,23 @@
 import LocalCollection from './local_collection.js';
 
+export let sameTickStatsInc = function () {return};
+setTimeout(function () {
+  if (Meteor.isClient) {
+    sameTickStatsInc = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsInc;
+  } else {
+    sameTickStatsInc = function () {return};
+  }  
+}, 0);
+
+export let reportOptimizationIssue = function () {return};
+setTimeout(function () {
+  if (Meteor.isClient) {
+    reportOptimizationIssue = Package["justdoinc:justdo-helpers"].JustdoHelpers.reportOptimizationIssue;
+  } else {
+    reportOptimizationIssue = function () {return};
+  }  
+}, 0);
+
 export const hasOwn = Object.prototype.hasOwnProperty;
 
 // Each element selector contains:

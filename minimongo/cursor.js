@@ -1,5 +1,5 @@
 import LocalCollection from './local_collection.js';
-import { hasOwn } from './common.js';
+import { hasOwn, sameTickStatsInc } from './common.js';
 
 // Cursor: a specification for a particular subset of documents, w/ a defined
 // order, limit, and offset.  creating a Cursor with LocalCollection.find(),
@@ -442,7 +442,12 @@ export default class Cursor {
       }
     }
 
+    let total_scanned_docs = 0;
+    let docs_scan_start = new Date();
+
     this.collection._docs.forEach((doc, id) => {
+      total_scanned_docs += 1;
+
       const matchResult = this.matcher.documentMatches(doc);
 
       if (matchResult.result) {
@@ -472,13 +477,28 @@ export default class Cursor {
       );
     });
 
+    let scan_time = (new Date()) - docs_scan_start;
+    let col_name = "unknown-collection";
+    if (typeof this.collection.name !== "undefined") {
+      col_name = this.collection.name;
+    }
+
+    sameTickStatsInc("minimongo-find-not-by-id-total-time-ms", scan_time);
+    sameTickStatsInc("minimongo-find-not-by-id-total-time-ms::collection:" + col_name, scan_time);
+    sameTickStatsInc("minimongo-find-not-by-id-total-scanned-docs", total_scanned_docs);
+    sameTickStatsInc("minimongo-find-not-by-id-total-scanned-docs::collection:" + col_name, total_scanned_docs);
+
     if (!options.ordered) {
       return results;
     }
 
+    let sort_time_start = new Date();
     if (this.sorter) {
       results.sort(this.sorter.getComparator({distances}));
     }
+    let sort_time = (new Date()) - sort_time_start;
+    sameTickStatsInc("minimongo-find-not-by-id-total-sort-time", sort_time);
+    sameTickStatsInc("minimongo-find-not-by-id-total-sort-time::collection:" + col_name, sort_time);
 
     // Return the full set of results if there is no skip or limit or if we're
     // ignoring them

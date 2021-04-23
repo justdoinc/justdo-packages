@@ -7,6 +7,8 @@ import {
   isOperatorObject,
   populateDocumentWithQueryFields,
   projectionDetails,
+  sameTickStatsInc,
+  reportOptimizationIssue,
 } from './common.js';
 
 // XXX type checking on selectors (graceful error if malformed)
@@ -65,7 +67,31 @@ export default class LocalCollection {
       selector = {};
     }
 
-    return new LocalCollection.Cursor(this, selector, options);
+    sameTickStatsInc("minimongo-find", 1);
+
+    // Coffeescript:
+    //
+    // if Tracker.currentComputation and not options.fields? and options.allow_undefined_fields isnt true
+    //   console.error("[OPTIMIZATION ISSUE] fields option wasn't provided for a cursor that initiated inside a computation", {name: this.name, selector, options});
+    if (Tracker.currentComputation && (options.fields == null) && options.allow_undefined_fields !== true) {
+      reportOptimizationIssue("fields option wasn't provided for a cursor that initiated inside a computation", {
+        name: this.name,
+        selector,
+        options
+      });
+    }
+
+    // console.info("minimongo find", this.name, selector, options);
+
+    const cursor = new LocalCollection.Cursor(this, selector, options);
+
+    if (cursor.matcher.isSimple()) {
+      sameTickStatsInc("minimongo-find-by-id", 1);
+    } else {
+      sameTickStatsInc("minimongo-find-not-by-id", 1);
+    }
+
+    return cursor;
   }
 
   findOne(selector, options = {}) {
