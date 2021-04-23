@@ -81,9 +81,9 @@ export class AccountsCommon {
    * @summary Get the current user record, or `null` if no user is logged in. A reactive data source.
    * @locus Anywhere
    */
-  user() {
+  user(options) {
     const userId = this.userId();
-    return userId ? this.users.findOne(userId) : null;
+    return userId ? this.users.findOne(userId, options) : null;
   }
 
   // Set up config for the accounts system. Call this on both the client
@@ -302,7 +302,7 @@ Meteor.userId = () => Accounts.userId();
  * @locus Anywhere but publish functions
  * @importFromPackage meteor
  */
-Meteor.user = () => Accounts.user();
+Meteor.user = (options) => Accounts.user(options);
 
 // how long (in days) until a login token expires
 const DEFAULT_LOGIN_EXPIRATION_DAYS = 90;

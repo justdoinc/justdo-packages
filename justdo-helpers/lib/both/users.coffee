@@ -39,7 +39,7 @@ _.extend JustdoHelpers,
     return name
 
   currentUserMainEmail: ->
-    return JustdoHelpers.getUserMainEmail(Meteor.user())
+    return JustdoHelpers.getUserMainEmail(Meteor.user({fields: {emails: 1}}))
 
   getUserMainEmail: (user_obj) ->
     return user_obj?.emails?[0]?.address
