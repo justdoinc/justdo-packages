@@ -45,15 +45,22 @@ export class IdMap {
 
   // Iterates over the items in the map. Return `false` to break the loop.
   forEach(iterator) {
-    // don't use _.each, because we can't break out of it.
-    var keys = Object.keys(this._map);
-    for (var i = 0; i < keys.length; i++) {
-      var breakIfFalse = iterator.call(
-        null,
-        this._map[keys[i]],
-        this._idParse(keys[i])
-      );
-      if (breakIfFalse === false) {
+    // The original forEach code was inefficient and replaced by JustDo to the following
+    // coffeescript code:
+    //
+    // forEach = (iterator) ->
+    //   for key, val of this._map
+    //     if (iterator.call(null, val, this._idParse(key))) is false
+    //       return
+
+    //   return
+    
+    // auto-generated see source code above
+    var key, ref, val;
+    ref = this._map;
+    for (key in ref) {
+      val = ref[key];
+      if ((iterator.call(null, val, this._idParse(key))) === false) {
         return;
       }
     }
