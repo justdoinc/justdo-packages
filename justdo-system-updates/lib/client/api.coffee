@@ -17,7 +17,7 @@ _.extend JustdoSystemUpdates.prototype,
       return
     
     # Assumes the user is logged in.
-    cur_user = Meteor.user()
+    cur_user = Meteor.user({fields: {createdAt: 1, "profile.read_system_updates": 1}})
 
     if not cur_user.profile?
       # If profile isn't ready yet (I don't know if this case might really happen, but bug reports from users might suggest it D.C)

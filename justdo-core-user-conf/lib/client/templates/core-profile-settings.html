@@ -1,10 +1,10 @@
 <template name="core_user_conf_core_profile_settings">
   <div class="form-group my-2">
     <label for="first-name-core-setting">{{first_name_label}}</label>
-    <input type="text" id="first-name-core-setting" class="form-control form-control-sm first-name-core-setting" value="{{logged_user.profile.first_name}}">
+    <input type="text" id="first-name-core-setting" class="form-control form-control-sm first-name-core-setting" value="{{logged_user_first_name_last_name.profile.first_name}}">
   </div>
   <div class="form-group my-2">
     <label for="last-name-core-setting">{{last_name_label}}</label>
-    <input type="text" id="last-name-core-setting" class="form-control form-control-sm last-name-core-setting" value="{{logged_user.profile.last_name}}">
+    <input type="text" id="last-name-core-setting" class="form-control form-control-sm last-name-core-setting" value="{{logged_user_first_name_last_name.profile.last_name}}">
   </div>
 </template>

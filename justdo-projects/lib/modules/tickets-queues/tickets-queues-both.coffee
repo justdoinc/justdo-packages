@@ -1,5 +1,12 @@
 _.extend PACK.modules,
   tickets_queues:
+    published_fields:
+      _id: 1
+      seqId: 1
+      title: 1
+      owner_id: 1
+      project_id: 1
+      
     initBoth: ->
       @attachSchema()
 

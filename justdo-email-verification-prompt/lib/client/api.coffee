@@ -61,7 +61,7 @@ _.extend JustdoEmailVerificationPrompt.prototype,
     previous_all_emails_verified_val = undefined
 
     @_all_emails_verified_tracker = Tracker.autorun =>
-      if not (user = Meteor.user())
+      if not (user = Meteor.user({fields: {createdAt: 1, all_emails_verified: 1}}))
         pre_init = true
         previous_all_emails_verified_val = undefined
 
@@ -124,13 +124,13 @@ _.extend JustdoEmailVerificationPrompt.prototype,
     return
 
   showEmailVerificationRequiredDialog: ->
-    if Meteor.user()?.all_emails_verified isnt false
+    if Meteor.user({fields: {all_emails_verified: 1}})?.all_emails_verified isnt false
       console.error "All the user's emails are verified, no need to show the verification required dialog"
 
       return
 
     data =
-      current_email: -> Meteor.user()?.emails[0].address
+      current_email: -> Meteor.user({fields: {emails: 1}})?.emails[0].address
 
     message_template =
       JustdoHelpers.renderTemplateInNewNode(Template.email_verification_required_dialog, data)

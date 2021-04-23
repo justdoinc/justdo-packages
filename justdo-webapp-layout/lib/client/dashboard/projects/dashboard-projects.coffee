@@ -14,7 +14,7 @@ APP.executeAfterAppLibCode ->
       projects_search_input_rv = Template.instance().projects_search_input_rv.get()
       default_title = JustdoHelpers.getCollectionSchemaForField(APP.collections.Projects, "title")?.defaultValue
 
-      projects = APP.collections.Projects.find({}, {sort: {createdAt: 1}}).fetch()
+      projects = APP.collections.Projects.find({}, {sort: {createdAt: 1}, fields: {_id: 1, title: 1, members: 1}}).fetch()
 
       modified_projects = _.map projects, (project) ->
         if not project.title? or project.title == ""

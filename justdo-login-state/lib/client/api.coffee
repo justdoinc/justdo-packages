@@ -157,7 +157,7 @@ _.extend JustdoLoginState.prototype,
           if Meteor.userId()?
             # If we have userId, we keep the loading state until
             # user obj is ready
-            if not (user = Meteor.user())?
+            if not (user = Meteor.user({fields: {_id: 1, emails: 1}}))?
               setUserState(["loading"])
             else
               # If Meteor.user is not null, we got a user

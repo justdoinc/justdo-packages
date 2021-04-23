@@ -18,7 +18,7 @@ _.extend PACK.modules.tickets_queues,
     Tracker.autorun =>
       @_tickets_queues_cache = {}
 
-      @collection.find().forEach (ticket_queue_doc) =>
+      @collection.find({}, {fields: @published_fields}).forEach (ticket_queue_doc) =>
         @_tickets_queues_cache[ticket_queue_doc._id] = ticket_queue_doc
 
         return

@@ -6,7 +6,7 @@ Template.core_user_conf_core_profile_settings.helpers
 
   last_name_label: -> getUserSchemaForField("profile.last_name").label
 
-  logged_user: -> Meteor.user()
+  logged_user_first_name_last_name: -> Meteor.user({fields: {"profile.first_name": 1, "profile.last_name": 1}})
 
 updateFirstName = (new_first_name) ->
   Meteor.users.update Meteor.userId(),

@@ -22,13 +22,7 @@ _.extend PACK.modules.tickets_queues,
             is_tickets_queue: true
 
           tracker_query_options =
-            fields:
-              _id: 1
-              seqId: 1
-              title: 1
-              owner_id: 1
-              users: 1
-              project_id: 1
+            fields: self.published_fields
 
           tickets_queues_tracker = self.items_collection.find(tracker_query, tracker_query_options).observeChanges
             added: (id, fields) =>

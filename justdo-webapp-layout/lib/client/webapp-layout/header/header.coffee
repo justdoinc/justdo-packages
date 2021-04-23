@@ -14,7 +14,7 @@ APP.executeAfterAppLibCode ->
 
       return Math.max(min_project_container_width, window_dim) - 1
 
-    projects: -> APP.collections.Projects.find({}, {sort: {createdAt: 1}}).fetch()
+    projects: -> APP.collections.Projects.find({}, {fields: {_id: 1, title: 1}, sort: {createdAt: 1}}).fetch()
 
     middleHeaderTemplate: -> main_module.getCustomHeaderTemplate("middle")
 
