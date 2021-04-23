@@ -973,12 +973,16 @@ export function makeLookupFunction(key, options = {}) {
   );
 
   const omitUnnecessaryFields = result => {
+    // Before delete of the unnecessary fields was used.
+    // It turned out to be quite slow, so I switched it to undefined
+    // Daniel C.
+    // https://stackoverflow.com/questions/43594092/slow-delete-of-object-properties-in-js-in-v8/44008788
     if (!result.dontIterate) {
-      delete result.dontIterate;
+      result.dontIterate = undefined;
     }
 
     if (result.arrayIndices && !result.arrayIndices.length) {
-      delete result.arrayIndices;
+      result.arrayIndices = undefined;
     }
 
     return result;
