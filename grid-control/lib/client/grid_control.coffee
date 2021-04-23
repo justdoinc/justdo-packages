@@ -13,6 +13,7 @@ GridControl = (options, container, operations_container) ->
                                            # Changes to field will trigger row invalidations
                                            # regardless on its schema's grid_effects_metadata_rendering
                                            # setting
+    preInit: -> return
 
   @options = _.extend {}, default_options, options
 
@@ -142,6 +143,8 @@ GridControl = (options, container, operations_container) ->
   @_load_editors()
 
   @_initCollectionItemsDescendantsFilterAwareChangesTracker()
+
+  @options.preInit.call(@)
 
   Meteor.defer =>
     @_init()
