@@ -196,7 +196,7 @@ _.extend JustdoChatBottomWindowsManager.prototype,
       sort = -1
 
     current_order =
-      APP.collections.JDChatBottomWindowsChannels.findOne({}, {sort: {order: sort}})?.order
+      APP.collections.JDChatBottomWindowsChannels.findOne({}, {sort: {order: sort}, allow_undefined_fields: true})?.order
 
     if not current_order?
       order = 0
@@ -257,7 +257,7 @@ _.extend JustdoChatBottomWindowsManager.prototype,
   _setupBottomWindowsTracker: ->
     @_bottomWindowsTracker = Tracker.autorun =>
       bottom_windows_channels =
-        APP.collections.JDChatBottomWindowsChannels.find({}, {sort: {order: 1}}).fetch()
+        APP.collections.JDChatBottomWindowsChannels.find({}, {sort: {order: 1}, allow_undefined_fields: true}).fetch()
 
       bottom_windows_defs = []
       for bottom_window_channel in bottom_windows_channels

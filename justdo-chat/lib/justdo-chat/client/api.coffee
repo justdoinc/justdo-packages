@@ -518,7 +518,7 @@ _.extend JustdoChat.prototype,
 
     # Returns null if we can't determine the count.
 
-    if not (subscribed_unread_channels_count_doc = APP.collections.JDChatInfo.findOne("subscribed_unread_channels_count"))?
+    if not (subscribed_unread_channels_count_doc = APP.collections.JDChatInfo.findOne("subscribed_unread_channels_count", {allow_undefined_fields: true}))?
       return null
 
     return subscribed_unread_channels_count_doc.count
