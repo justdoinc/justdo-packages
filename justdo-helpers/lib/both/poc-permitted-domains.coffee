@@ -30,6 +30,11 @@ poc_permitted_domains = [
   "https://alpha-local.justdo.com", "https://app-local-beta.justdo.com",
 ]
 
+beta_domains = [
+  # beta
+  "https://beta.justdo.today", "https://app-beta.justdo.today"
+]
+
 first_call = true
 
 _.extend JustdoHelpers,
@@ -46,3 +51,9 @@ _.extend JustdoHelpers,
       return true
 
     return false
+
+  isPocPermittedDomainsOrBeta: (root_url) ->
+    if root_url in beta_domains
+      return true
+
+    return JustdoHelpers.isPocPermittedDomains(root_url)

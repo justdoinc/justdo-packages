@@ -41,12 +41,12 @@ Package.onUse(function (api) {
   api.add_files("lib/init.coffee", both);
   api.add_files("lib/both/lorem-ipsum.coffee", both);
   api.add_files("lib/both/json.coffee", both);
+  api.add_files("lib/both/poc-permitted-domains.coffee", both);
   api.add_files("lib/both/caching.coffee", both);
   api.add_files("lib/both/strings.coffee", both);
   api.add_files("lib/both/date.coffee", both);
   api.add_files("lib/both/modules.coffee", both);
   api.add_files("lib/both/platform-details.coffee", both);
-  api.add_files("lib/both/poc-permitted-domains.coffee", both);
   api.add_files("lib/both/event-emitter-helpers.coffee", both);
   api.add_files("lib/both/fiber-var.coffee", both);
   api.add_files("lib/both/constructors_tools.coffee", both);
