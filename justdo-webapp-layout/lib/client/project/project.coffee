@@ -48,7 +48,7 @@ APP.executeAfterAppLibCode ->
     # on change in active task or active task title:
     this.autorun ->
       if (active_task = module.activeItemId())?
-        APP.page_title_manager.setSectionName APP.collections.Tasks.findOne(active_task)?.title
+        APP.page_title_manager.setSectionName APP.collections.Tasks.findOne(active_task, {fields: {title: 1}})?.title
       else
         APP.page_title_manager.setSectionName ""
 
