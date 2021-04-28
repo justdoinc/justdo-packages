@@ -7162,7 +7162,7 @@ a.text-dark:hover, a.text-dark:focus {
 .grid-tree-control-task-id {
   background-color: #f3f2f1;
   color: #5e5e5e;
-  border: 1px solid #c9c7c7;
+  border: 1px solid rgba(201, 199, 199, 0.65);
   box-shadow: none;
 }
 
@@ -7213,7 +7213,7 @@ a.text-dark:hover, a.text-dark:focus {
 .slick-row,
 .grid-control .slick-cell,
 .grid-control .null-state {
-  border-color: #c9c7c7;
+  border-color: rgba(201, 199, 199, 0.65);
 }
 
 .slick-row.active {
