@@ -7162,7 +7162,7 @@ a.text-dark:hover, a.text-dark:focus {
 .grid-tree-control-task-id {
   background-color: #f3f2f1;
   color: #5e5e5e;
-  border: 1px solid #dfdfdf;
+  border: 1px solid #c9c7c7;
   box-shadow: none;
 }
 
@@ -7213,11 +7213,11 @@ a.text-dark:hover, a.text-dark:focus {
 .slick-row,
 .grid-control .slick-cell,
 .grid-control .null-state {
-  border-color: #dfdfdf;
+  border-color: #c9c7c7;
 }
 
 .slick-row.active {
-  background-color: rgba(var(--color-primary), 0.12);
+  background-color: rgba(var(--color-primary), 0.16);
 }
 
 .slick-row.search-result.active {
@@ -7236,13 +7236,13 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .frozen-columns-mode .slick-row.active {
-  background-color: rgba(var(--color-primary), 0.12) !important;
+  background-color: rgba(var(--color-primary), 0.16) !important;
 }
 .frozen-columns-mode .active .frozen {
-  background: linear-gradient(to right, rgba(var(--color-primary), 0.12) 0%, rgba(var(--color-primary), 0.12) 100%), linear-gradient(to right, #ffffff 0%, #ffffff 100%);
+  background: linear-gradient(to right, rgba(var(--color-primary), 0.16) 0%, rgba(var(--color-primary), 0.16) 100%), linear-gradient(to right, #ffffff 0%, #ffffff 100%);
 }
 .frozen-columns-mode .frozen.active {
-  background: linear-gradient(to right, rgba(var(--color-primary), 0.12) 0%, rgba(var(--color-primary), 0.12) 100%), linear-gradient(to right, #ffffff 0%, #ffffff 100%);
+  background: linear-gradient(to right, rgba(var(--color-primary), 0.16) 0%, rgba(var(--color-primary), 0.16) 100%), linear-gradient(to right, #ffffff 0%, #ffffff 100%);
 }
 .frozen-columns-mode .search-result.active .frozen,
 .frozen-columns-mode .search-result .frozen.active {
