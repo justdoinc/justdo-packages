@@ -15,6 +15,15 @@ extractUserAvatarParams = (user_doc) ->
   return {profile_pic, email, first_name, last_name, options}
 
 _.extend JustdoAvatar,
+  avatar_required_fields:
+    "_id": 1
+    "emails": 1
+    "profile.avatar_bg": 1
+    "profile.avatar_fg": 1
+    "profile.first_name": 1
+    "profile.last_name": 1
+    "profile.profile_pic": 1
+
   # check if an avatar exists, if not generate initials avatar, fallback to anonymous for non English inputs
   showAvatarOrFallback: (avatar_url, email, first_name, last_name, options) ->
     if avatar_url?

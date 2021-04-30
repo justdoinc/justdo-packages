@@ -60,12 +60,12 @@ Template.justdo_avatars_box.onCreated ->
   if @max_users_to_display < 0
     @max_users_to_display = 0
 
-normalizeUsersInput = (users) ->
+normalizeUsersInput = (users, max_users) ->
   if _.isEmpty users
     return users
 
   if _.isString users[0] # we assume single type
-    users = JustdoHelpers.getUsersDocsByIds(users)
+    users = JustdoHelpers.getUsersDocsByIds(users, {limit: max_users, fields: JustdoAvatar.avatar_required_fields, allow_undefined_fields: true}, false)
 
   return users
 
@@ -73,18 +73,16 @@ tplProp = JustdoHelpers.tplProp
 Template.justdo_avatars_box.helpers
   box_components: ->
     max_users_to_display = tplProp("max_users_to_display")
-    primary_users = normalizeUsersInput(@primary_users)
-    components = primary_users.slice(0, max_users_to_display)
+    components = normalizeUsersInput(@primary_users, max_users_to_display)
     primary_comps_length = components.length
 
     if primary_comps_length < max_users_to_display and not _.isEmpty @secondary_users
       space_left = max_users_to_display - primary_comps_length
 
-      components.push {type: "sep"}
 
-      secondary_users = normalizeUsersInput(@secondary_users)
-
-      components = components.concat secondary_users.slice(0, space_left)
+      if not _.isEmpty(secondary_users = normalizeUsersInput(@secondary_users, space_left))
+        components.push {type: "sep"}
+        components = components.concat secondary_users
 
     if tplProp("show_button")
       components.push {type: "btn"}
