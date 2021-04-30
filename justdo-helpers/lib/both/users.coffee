@@ -1,6 +1,10 @@
 raw_data_moment_format = "YYYY-MM-DD"
 
 _.extend JustdoHelpers,
+  display_name_required_fields:
+    "profile.first_name": 1
+    "profile.last_name": 1
+
   displayName: (user) ->
     # user:
     #
@@ -14,7 +18,7 @@ _.extend JustdoHelpers,
 
     if _.isString user
       user_id = user
-      user = Meteor.users.findOne user_id
+      user = Meteor.users.findOne user_id, {fields: JustdoHelpers.display_name_required_fields}
 
       if not user?
         return ""
@@ -150,7 +154,7 @@ _.extend JustdoHelpers,
 
   getUserPreferredUseAmPm: ->
     # Reactive resource!
-    if (preferred_use_am_pm = Meteor.user()?.profile?.use_am_pm)?
+    if (preferred_use_am_pm = Meteor.user({fields: {"profile.use_am_pm": 1}})?.profile?.use_am_pm)?
       return preferred_use_am_pm
 
     if (default_use_am_pm = JustdoHelpers.getCollectionSchemaForField(Meteor.users, "profile.use_am_pm").defaultValue)?
@@ -319,7 +323,7 @@ _.extend JustdoHelpers,
       return false
 
     if _.isString user
-      user_doc = Meteor.users.findOne(user)
+      user_doc = Meteor.users.findOne(user, {fields: {all_emails_verified: 1}})
     else if _.isObject user
       user_doc = user
     else
