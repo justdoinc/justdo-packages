@@ -12,6 +12,28 @@ import {
 
 import cloneDeep from 'lodash/cloneDeep';
 
+// Note, exactly the same code is present in:
+// justdo-internal-packages/minimongo/common.js
+let sameTickStatsInc = function () {return};
+let reportOptimizationIssue = function (message, data) {
+  console.error("[OPTIMIZATION ISSUE - EARLY TICK]", message, data);
+  return;
+};
+if (Meteor.isClient) {
+  let interval_id = setInterval(function () {
+    if (typeof Package["justdoinc:justdo-helpers"] !== "undefined") {
+      sameTickStatsInc = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsInc;
+      reportOptimizationIssue = Package["justdoinc:justdo-helpers"].JustdoHelpers.reportOptimizationIssue;
+
+      clearInterval(interval_id);
+    }
+  }, 10);
+} else {
+  sameTickStatsInc = function () {return};
+  reportOptimizationIssue = function () {return};
+}
+
+
 /**
  * @namespace
  * @summary Namespace for EJSON functions
@@ -412,6 +434,10 @@ EJSON.stringify = handleError((item, options) => {
  * @param {String} str A string to parse into an EJSON value.
  */
 EJSON.parse = item => {
+  if (Meteor.isClient) {
+    sameTickStatsInc("ejson-parse", 1);
+  }
+
   if (typeof item !== 'string') {
     throw new Error('EJSON.parse argument should be a string');
   }
@@ -551,20 +577,9 @@ EJSON.equals = (a, b, options) => {
  * @param {EJSON} val A value to copy.
  */
 
-if (Meteor.isClient) {
-  EJSON.clone_count = 0;
-  EJSON.log_values = false;
-  EJSON.log_trace = false;
-}
 EJSON.clone = v => {
   if (Meteor.isClient) {
-    EJSON.clone_count += 1;
-    if (EJSON.log_values) {
-      console.log(v);
-    }
-    if (EJSON.log_trace) {
-      console.trace(v);
-    }
+    sameTickStatsInc("ejson-clone", 1);
   }
   let ret;
   if (!isObject(v)) {
