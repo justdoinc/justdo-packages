@@ -82,8 +82,8 @@
       return loginButtonsSession.get('dropdownVisible');
     },
 
-    user: function() {
-      return Meteor.user();
+    userAvatarFields: function() {
+      return Meteor.user({fields: JustdoAvatar.avatar_required_fields});
     },
 
     userHasProfilePic: function() {

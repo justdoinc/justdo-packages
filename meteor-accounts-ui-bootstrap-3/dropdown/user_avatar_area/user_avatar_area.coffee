@@ -3,10 +3,12 @@ Template._loginDropdownAvatarArea.helpers
     return APP.accounts.isAvatarUploadEnabled()
 
   userHasProfilePic: ->
-    return JustdoHelpers.userHasProfilePic(Meteor.user())
+    return JustdoHelpers.userHasProfilePic(Meteor.user({fields: {"profile.profile_pic": 1}}))
 
   getProfilePic: ->
     return JustdoAvatar.showUserAvatarOrFallback(@)
+
+  currentUserAvatarFields: -> Meteor.user({fields: JustdoAvatar.avatar_required_fields})
 
 activeUploadProcess = ->
   return $(".dropdown-avatar").hasClass("loading")

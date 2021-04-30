@@ -22,6 +22,10 @@
     }
   });
 
+  Template._loginButtons.helpers({
+    currentUser: function () {return Meteor.user({fields: {_id: 1}})}
+  });
+
   //
   // loginButtonLoggedOut template
   //
