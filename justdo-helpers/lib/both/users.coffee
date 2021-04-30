@@ -44,7 +44,71 @@ _.extend JustdoHelpers,
   getUserMainEmail: (user_obj) ->
     return user_obj?.emails?[0]?.address
 
-  getUsersDocsByIds: (users_ids, find_options) ->
+  _getUsersDocsByIds: (users_ids, find_options, options) ->
+      limit = find_options?.limit
+
+      if not _.isArray(users_ids)
+        users_ids = [users_ids]
+
+      if options.ret_type == "array"
+        ret = []
+      else if options.ret_type == "object"
+        ret = {}
+      else
+        throw new Error "Unknown ret_type #{ret_type}"
+
+      missing_ids = []
+
+      found_ids = 0
+      consecutive_missing_ids_count = 0
+      break_if_consecutive_missing_ids_count = limit
+      # A missing id can mean two things:
+      #
+      # 1) DDP didn't provide the user doc yet
+      # 2) Unknown id.
+      #
+      # by findOne()ing the users ids requested we creating a demand for them.
+      #
+      # See: initEncounteredUsersIdsTracker/initEncounteredUsersIdsPublicBasicUsersInfoFetcher
+      #
+      # That demand will request those ids from the server.
+      #
+      # In early stages, we might know only the Meteor.userId().
+      #
+      # Hence if a 10k users_ids array will receive, that will translate to 10k
+      # users requests.
+      # 
+      # If we need only a very few users (e.g. if there's a limit) we don't want
+      # to request the server for 10k users, but only for few.
+      #
+      # Since an unkown user_id should be a quite rare case, we assume that
+      # when looping over the users_ids if a row of consecutive missing ids encountered
+      # it is likely that these uesrs were never requested from the server before. Hence
+      # we break the loop to begin the wait to the ddp to retreive them.
+
+      for user_id in users_ids
+        if (user_doc = Meteor.users.findOne(user_id, find_options))?
+          consecutive_missing_ids_count = 0
+          found_ids += 1
+          
+          if options.ret_type == "array"
+            ret.push user_doc
+          else
+            ret[user_id] = user_doc
+        else
+          consecutive_missing_ids_count += 1
+          missing_ids.push user_id
+
+          if break_if_consecutive_missing_ids_count?
+            if consecutive_missing_ids_count >= break_if_consecutive_missing_ids_count
+              break
+
+        if found_ids == limit
+          break
+
+      return [ret, missing_ids]
+
+  getUsersDocsByIds: (users_ids, find_options, options) ->
     # Reactive resource
 
     # IMPORTANT: 1. Ids order won't be maintained in returned array
@@ -52,13 +116,24 @@ _.extend JustdoHelpers,
 
     # user can be either a single user id provided as string or an array 
 
-    if not _.isArray(users_ids)
-      return Meteor.users.findOne(users_ids)
+    default_options =
+      user_fields_reactivity: false # The default is non-reactive !!!
+      missing_users_ractivity: true
+      ret_type: "array" # can be "array" or "object"
 
-    if _.isEmpty users_ids
-      return []
+    options = _.extend default_options, options
 
-    return Meteor.users.find({_id: {$in: users_ids}}, find_options).fetch()
+    if options.user_fields_reactivity
+      return @_getUsersDocsByIds(users_ids, find_options, options)[0]
+    else
+      [ret, missing_ids] = Tracker.nonreactive =>
+        return @_getUsersDocsByIds(users_ids, find_options, options)
+
+      # Setup reactivity for case the missing_ids will show up
+      if missing_ids.length > 0 and options.missing_users_ractivity
+        @_getUsersDocsByIds(missing_ids, find_options, options)
+
+      return ret
 
   getUserPreferredDateFormat: ->
     # Reactive resource!
