@@ -14,6 +14,11 @@ TabSwitcherManager = ->
 
   return @
 
+itemsSource = ->
+  if @itemsGenerator?
+    return @itemsGenerator()
+  return @reactive_items_list.getList("default", true)
+
 _.extend TabSwitcherManager.prototype,
   setSectionsItemsLabelFilter: (keyword=null) ->
     if (not _.isString(keyword)) or (_.isString(keyword) and keyword.trim() == "")
@@ -34,6 +39,8 @@ _.extend TabSwitcherManager.prototype,
     # Create shallow copy to avoid affecting the original data obj provided
     conf.data = _.extend {}, conf.data,
       reactive_items_list: new JustdoHelpers.ReactiveItemsList()
+
+      itemsSource: itemsSource
 
     conf.data.reactive_items_list.registerGlobalListingCondition "label-filter", (item) =>
       if (sections_items_label_filter_keyword = @sections_items_label_filter_keyword_rv.get())?
@@ -78,7 +85,7 @@ _.extend TabSwitcherManager.prototype,
       return loading_tab_icon
 
     for section in @getSections(true)
-      for tab in section.reactive_items_list.getList("default", true)
+      for tab in section.itemsSource()
         tab_sections_state = tab.tab_sections_state or {}
 
         # Since the tab itself might set sections states in addition to those defined for it in the
@@ -224,39 +231,35 @@ APP.executeAfterAppLibCode ->
     data:
       label: "Members Due Lists"
 
+      itemsGenerator: ->
+        res = [
+          {
+            label: "All Members Due List"
+            tab_id: "due-list"
+
+            icon_type: "feather"
+            icon_val: "users"
+
+            tab_sections_state:
+              global:
+                owners: "*"
+          }
+        ]
+
+        for member_user_doc, i in APP.modules.project_page.template_helpers.project_all_members_except_me_sorted_by_first_name()
+          res.push
+            label: JustdoHelpers.displayName(member_user_doc)
+            tab_id: "due-list"
+
+            icon_type: "user-avatar"
+            icon_val: member_user_doc
+
+            tab_sections_state:
+              global:
+                owners: member_user_doc.user_id
+
+        return res
+
     listingCondition: -> APP.modules.project_page.template_helpers.project_all_members_except_me().length > 0
-
-  Tracker.autorun ->
-    # Rebuild the members-due-lists section upon changes to the JustDo members list.
-    module.tab_switcher_manager.resetSectionItems("members-due-lists")
-
-    module.tab_switcher_manager.registerSectionItem "members-due-lists", "all-members-due-list",
-      position: 0
-      data:
-        label: "All Members Due List"
-        tab_id: "due-list"
-
-        icon_type: "feather"
-        icon_val: "users"
-
-        tab_sections_state:
-          global:
-            owners: "*"
-
-    for member_user_doc, i in APP.modules.project_page.template_helpers.project_all_members_except_me_sorted_by_first_name()
-      module.tab_switcher_manager.registerSectionItem "members-due-lists", member_user_doc.user_id,
-        position: i + 1 # 0 is for the All Members Due List
-        data:
-          label: JustdoHelpers.displayName(member_user_doc)
-          tab_id: "due-list"
-
-          icon_type: "user-avatar"
-          icon_val: member_user_doc
-
-          tab_sections_state:
-            global:
-              owners: member_user_doc.user_id
-
-    return
 
   return
