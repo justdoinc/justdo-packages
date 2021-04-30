@@ -73,7 +73,7 @@ Template.task_pane_chat_section_chat.helpers
     if not channel_ready_and_exists # and not channel.isProposedSubscribersEmulationMode() # if we are under proposed subscribers emulation mode, non-existing channel might have pseudo users so we treat it like existing
       return false
 
-    channel_doc = channel.getMessagesSubscriptionChannelDoc()
+    channel_doc = channel.getMessagesSubscriptionChannelDoc({fields: {_id: 1}})
 
     channel_has_subscribers = not _.isEmpty(channel.getSubscribersArray())
 
@@ -108,10 +108,9 @@ Template.task_pane_chat_section_chat.helpers
 
       subscribers_ids = subscribers_ids.slice(0, limit) # take up to limit
 
-    task_members_doc = Meteor.users.find({_id: {$in: subscribers_ids}}).fetch()
-
+    task_members_doc = JustdoHelpers.getUsersDocsByIds(subscribers_ids, {limit: limit, fields: JustdoHelpers.display_name_required_fields})
     if subscribers_includes_logged_in_user
-      task_members_doc.push Meteor.user()
+      task_members_doc.push Meteor.user({fields: JustdoHelpers.display_name_required_fields})
 
     subscribers_names = _.map(task_members_doc, (user_obj) -> JustdoHelpers.displayName(user_obj))
 

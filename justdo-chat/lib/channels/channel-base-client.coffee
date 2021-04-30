@@ -317,11 +317,11 @@ _.extend ChannelBaseClient.prototype,
 
     return
 
-  getMessagesSubscriptionChannelDoc: ->
-    return @_getChannelsCollection().findOne(@getChannelIdentifier())
+  getMessagesSubscriptionChannelDoc: (query_options) ->
+    return @_getChannelsCollection().findOne(@getChannelIdentifier(), query_options)
 
   getMessagesSubscriptionChannelDocId: ->
-    return @getMessagesSubscriptionChannelDoc()?._id
+    return @getMessagesSubscriptionChannelDoc({fields: {_id: 1}})?._id
 
   getMessagesSubscriptionCursorInNaturalOrder: ->
     # Returns null if we can't come up with the channel_id == things aren't ready
@@ -329,7 +329,7 @@ _.extend ChannelBaseClient.prototype,
     if not (channel_id = @getMessagesSubscriptionChannelDocId())?
       return null
 
-    return @_getMessagesCollection().find({channel_id: channel_id}, {sort: {createdAt: 1}})
+    return @_getMessagesCollection().find({channel_id: channel_id}, {sort: {createdAt: 1}, allow_undefined_fields: true})
 
   enterFocusMode: ->
     if @_is_focused
@@ -372,7 +372,7 @@ _.extend ChannelBaseClient.prototype,
     if not (channel_id = @getMessagesSubscriptionChannelDocId())?
       return false
 
-    return @_getMessagesCollection().findOne({channel_id: channel_id})?
+    return @_getMessagesCollection().findOne({channel_id: channel_id}, {fields: {_id: 1}})?
 
   getChannelMessagesSubscriptionState: ->
     # 5 potential returned values
@@ -390,7 +390,7 @@ _.extend ChannelBaseClient.prototype,
     if @_initial_subscription_ready.get() == false
       return "initial-not-ready"
 
-    if not (channel_doc = @getMessagesSubscriptionChannelDoc())?
+    if not (channel_doc = @getMessagesSubscriptionChannelDoc({fields: {messages_count: 1}}))?
       return "no-channel-doc"
 
     if not (subscription_limit = @_active_channel_messages_subscription_options?.limit)?
@@ -476,7 +476,7 @@ _.extend ChannelBaseClient.prototype,
     # proposed-subscribers-emulation mode, if we can't come up with one
     # return undefined.
 
-    if (channel_doc = @getMessagesSubscriptionChannelDoc())?
+    if (channel_doc = @getMessagesSubscriptionChannelDoc({fields: {subscribers: 1}}))?
       return channel_doc.subscribers
 
     # ONLY IF THE CHANNEL DOC DOESN'T EXIST, AND UNDER proposed-subscribers-emulation mode:
@@ -510,7 +510,7 @@ _.extend ChannelBaseClient.prototype,
     #
     # Returns undefined also when the channel isn't ready/doesn't exist
 
-    if (channel_doc = @getMessagesSubscriptionChannelDoc())?
+    if (channel_doc = @getMessagesSubscriptionChannelDoc({fields: {unread: 1}}))?
       if user_id == Meteor.userId() and (unread = channel_doc.unread)?
         # Special case, if we got the unread property, the subscription that populated
         # the collection is the recent activity publication: see subscribedChannelsRecentActivityPublicationHandler()
