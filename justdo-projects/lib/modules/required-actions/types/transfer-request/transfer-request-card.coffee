@@ -5,7 +5,7 @@ Template.required_action_card_transfer_request.onCreated ->
   return
 
 Template.required_action_card_transfer_request.helpers
-  current_owner_doc: -> Meteor.users.findOne(@owner_id)
+  current_owner_doc: -> Meteor.users.findOne(@owner_id, {allow_undefined_fields: true})
 
   getState: ->
     tpl = Template.instance()

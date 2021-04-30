@@ -4,7 +4,7 @@ Template.required_action_card_ownership_transfer_rejected.onCreated ->
 Template.required_action_card_ownership_transfer_rejected.helpers
   getActionProject: -> APP.collections.Projects.findOne(@project_id, {fields: {title: 1}})
 
-  rejecting_user_obj: -> Meteor.users.findOne(@reject_ownership_message_by)
+  rejecting_user_obj: -> Meteor.users.findOne(@reject_ownership_message_by, {allow_undefined_fields: true})
 
   showReadMore: -> @reject_ownership_message.length > 80
 

@@ -19,6 +19,8 @@ Template.task_pane_task_changelog.helpers
       sort:
         when: -1
 
+      allow_undefined_fields: true
+
     logs = []
     logs_time = {}
 
@@ -51,7 +53,8 @@ Template.task_pane_task_changelog.events
 
 
 Template.task_pane_task_changelog_record.helpers
-  changingUser: -> APP.helpers.getUsersDocsByIds @by
+  changingUser: ->
+    return APP.helpers.getUsersDocsByIds(@by, {fields: JustdoAvatar.avatar_required_fields})[0]
 
   formatedLabel: ->
     if @change_type == 'moved_to_task' \

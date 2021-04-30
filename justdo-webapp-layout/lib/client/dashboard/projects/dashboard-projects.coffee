@@ -81,4 +81,4 @@ APP.executeAfterAppLibCode ->
 
     secondary_users: -> APP.projects.getNonAdminsIdsFromProjectDoc @
 
-    user: -> Meteor.user()
+    userAvatarFields: -> Meteor.user({fields: JustdoAvatar.avatar_required_fields})

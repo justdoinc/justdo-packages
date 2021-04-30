@@ -283,7 +283,7 @@ APP.executeAfterAppLibCode ->
     # Check whether the direct parent_path of the current path is known to us
     parent_path = path_array[path_array.length - 2]
 
-    parent_is_known = APP.collections.Tasks.findOne(parent_path)?
+    parent_is_known = APP.collections.Tasks.findOne(parent_path, {fields: {_id: 1}})?
 
     return parent_is_known
 

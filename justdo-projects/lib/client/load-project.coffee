@@ -234,7 +234,7 @@ _.extend Projects.prototype,
 
       isSubscribedToDailyEmail: ->
         daily_email_projects_array =
-          Meteor.user()?.justdo_projects?.daily_email_projects_array
+          Meteor.user({fields: {"justdo_projects.daily_email_projects_array": 1}})?.justdo_projects?.daily_email_projects_array
 
         if _.isArray(daily_email_projects_array) and @id in daily_email_projects_array
           return true
@@ -243,7 +243,7 @@ _.extend Projects.prototype,
 
       isSubscribedToEmailNotifications: ->
         prevent_notifications_for_array =
-          Meteor.user()?.justdo_projects?.prevent_notifications_for
+          Meteor.user({fields: {"justdo_projects.prevent_notifications_for": 1}})?.justdo_projects?.prevent_notifications_for
 
         if not _.isArray(prevent_notifications_for_array) or @id not in prevent_notifications_for_array
           return true

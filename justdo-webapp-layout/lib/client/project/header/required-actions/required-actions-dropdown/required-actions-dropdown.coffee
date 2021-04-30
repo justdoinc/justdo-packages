@@ -4,8 +4,9 @@ APP.executeAfterAppLibCode ->
   projects = APP.projects
 
   Template.required_actions_dropdown.helpers
-    requiredActions: ->
-      projects.modules.required_actions.getCursor().fetch()
+    requiredActions: -> projects.modules.required_actions.getCursor({allow_undefined_fields: true, sort: {date: -1}}).fetch()
+
+    requiredActionsCount: -> projects.modules.required_actions.getCursor({fields: {_id: 1}}).count()
 
   # XXX in the future will be defined as part
   # of each required action definition

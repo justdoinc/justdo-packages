@@ -15,10 +15,7 @@ _.extend PACK.modules.required_actions,
     if not query_options?
       query_options = {}
 
-    default_options =
-      sort:
-        date: -1
-
+    default_options = {}
     query_options = _.extend {}, default_options, query_options
 
     return @collection.find({}, query_options)

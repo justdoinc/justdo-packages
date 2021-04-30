@@ -168,7 +168,7 @@ _.extend JustdoTasksContextMenu.prototype,
     # Hide if the context item id isn't exists (example if it gets removed by another user).
     Tracker.autorun =>
       if (active_item_id = @_context_item_id_reactive_var.get())?
-        if not APP.collections.Tasks.findOne(active_item_id)?
+        if not APP.collections.Tasks.findOne(active_item_id, {fields: {_id: 1}})?
           @hide()
 
       return
