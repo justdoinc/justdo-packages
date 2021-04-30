@@ -402,6 +402,11 @@ export default class Cursor {
     // for example)
     const applySkipLimit = options.applySkipLimit !== false;
 
+    let col_name = "unknown-collection";
+    if (typeof this.collection.name !== "undefined") {
+      col_name = this.collection.name;
+    }
+
     // XXX use OrderedDict instead of array, and make IdMap and OrderedDict
     // compatible
     const results = options.ordered ? [] : new LocalCollection._IdMap;
@@ -423,6 +428,9 @@ export default class Cursor {
           results.set(this._selectorId, selectedDoc);
         }
       }
+
+      sameTickStatsInc("minimongo-find-by-id-total-scanned-docs", 1);
+      sameTickStatsInc("minimongo-find-by-id-total-scanned-docs::collection:" + col_name, 1);
 
       return results;
     }
@@ -478,10 +486,6 @@ export default class Cursor {
     });
 
     let scan_time = (new Date()) - docs_scan_start;
-    let col_name = "unknown-collection";
-    if (typeof this.collection.name !== "undefined") {
-      col_name = this.collection.name;
-    }
 
     sameTickStatsInc("minimongo-find-not-by-id-total-time-ms", scan_time);
     sameTickStatsInc("minimongo-find-not-by-id-total-time-ms::collection:" + col_name, scan_time);

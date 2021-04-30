@@ -1,5 +1,7 @@
 import LocalCollection from './local_collection.js';
 
+// Note, exactly the same code is present in:
+// justdo-shared-packages/ejson/ejson.js
 export let sameTickStatsInc = function () {return};
 export let reportOptimizationIssue = function (message, data) {
   console.error("[OPTIMIZATION ISSUE - EARLY TICK]", message, data);
