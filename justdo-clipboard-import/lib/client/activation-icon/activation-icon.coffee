@@ -153,12 +153,12 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             if field_def.grid_column_formatter == "keyValueFormatter"
               val = null
               for key, defs of field_def.grid_values
-                if defs?.txt?.trim()?.toLowerCase() == cell_val.trim().toLowerCase()
+                # we had cases when copy from Excel (even though it was not in the data) added \r\n  and double space... so clearing these out.
+                if defs?.txt?.trim()?.replace(/(\r\n|\n|\r)/gm, "").replace(/\s\s+/g, ' ').toLowerCase() == cell_val.trim().replace(/(\r\n|\n|\r)/gm, "").replace(/\s\s+/g, ' ').toLowerCase()
                   val = key
                   break
               if val == null
                 $(".justdo-clipboard-import-table tr:nth-child(#{line_number + 1})").effect("highlight", {}, 3000)
-
                 JustdoSnackbar.show
                   text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} - not a valid option. Import aborted."
                   duration: 15000
