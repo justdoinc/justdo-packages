@@ -74,8 +74,6 @@ export default class LocalCollection {
 
     sameTickStatsInc("minimongo-find", 1);
 
-    sameTickStatsPushToArray("minimongo-find-queries::collection:" + this.name, [selector, options, {stack: (new Error()).stack}])
-
     if (Tracker.currentComputation && (options.fields == null) && options.allow_undefined_fields !== true) {
       reportOptimizationIssue("fields option wasn't provided for a cursor that initiated inside a computation", {
         name: this.name,
@@ -83,16 +81,20 @@ export default class LocalCollection {
         options
       });
       console.trace();
+      
+      sameTickStatsInc("minimongo-find-without-fields-options::collection:" + this.name, 1);
     }
 
     const cursor = new LocalCollection.Cursor(this, selector, options);
 
-    if (cursor.matcher.isSimple()) {
+    if (cursor._selectorId) {
       sameTickStatsInc("minimongo-find-by-id", 1);
+
+      sameTickStatsPushToArray("minimongo-find-queries-by-id::collection:" + this.name, [selector, options, {stack: (new Error()).stack}])
     } else {
       sameTickStatsInc("minimongo-find-not-by-id", 1);
 
-      // console.info("minimongo find", this.name, selector, options);
+      sameTickStatsPushToArray("minimongo-find-queries-not-by-id::collection:" + this.name, [selector, options, {stack: (new Error()).stack}])
     }
 
     return cursor;
