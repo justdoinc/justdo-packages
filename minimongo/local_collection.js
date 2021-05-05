@@ -36,6 +36,8 @@ export default class LocalCollection {
     //  selector, sorter, (callbacks): functions
     this.queries = Object.create(null);
 
+    this.queries_count = 0;
+
     // null if not saving originals; an IdMap from id to original document value
     // if saving originals. See comments before saveOriginals().
     this._savedOriginals = null;
@@ -71,6 +73,8 @@ export default class LocalCollection {
     }
 
     sameTickStatsInc("minimongo-find", 1);
+
+    sameTickStatsPushToArray("minimongo-find-queries::collection:" + this.name, [selector, options, {stack: (new Error()).stack}])
 
     if (Tracker.currentComputation && (options.fields == null) && options.allow_undefined_fields !== true) {
       reportOptimizationIssue("fields option wasn't provided for a cursor that initiated inside a computation", {

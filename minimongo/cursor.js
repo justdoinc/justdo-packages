@@ -263,11 +263,22 @@ export default class Cursor {
 
     let qid;
 
+    let col_name = this.colNameForStats();
+
     // Non-reactive queries call added[Before] and then never call anything
     // else.
     if (this.reactive) {
       qid = this.collection.next_qid++;
       this.collection.queries[qid] = query;
+
+      this.collection.queries_count += 1;
+
+      sameTickStatsAddToDict("minimongo-reactive-observer-registered-queries::collection:" + col_name, qid - 1, {selector: query.matcher._selector, query: query, ordered: ordered, _suppress_initial: options._suppress_initial});
+
+      sameTickStatsInc("minimongo-reactive-observer-registered", 1);
+      sameTickStatsInc("minimongo-reactive-observer-registered::collection:" + col_name + ":ordered:" + (ordered ? "1" : "0"), 1);
+
+      sameTickStatsSetVal("minimongo-reactive-observer-total-running::collection:" + col_name, this.collection.queries_count);
     }
 
     query.results = this._getRawObjects({ordered, distances: query.distances});
@@ -330,6 +341,12 @@ export default class Cursor {
       stop: () => {
         if (this.reactive) {
           delete this.collection.queries[qid];
+
+          this.collection.queries_count -= 1;
+          sameTickStatsSetVal("minimongo-reactive-observer-total-running::collection:" + col_name, this.collection.queries_count);
+
+          sameTickStatsInc("minimongo-reactive-observer-deregistered", 1);
+          sameTickStatsInc("minimongo-reactive-observer-deregistered::collection:" + col_name + ":ordered:" + (ordered ? "1" : "0"), 1);
         }
       }
     });
@@ -385,6 +402,15 @@ export default class Cursor {
     return this.collection.name;
   }
 
+  colNameForStats() {
+    let col_name = "unknown-collection";
+    if (typeof this.collection.name !== "undefined") {
+      col_name = this.collection.name;
+    }
+
+    return col_name;
+  }
+
   // Returns a collection of matching objects, but doesn't deep copy them.
   //
   // If ordered is set, returns a sorted array, respecting sorter, skip, and
@@ -409,10 +435,7 @@ export default class Cursor {
     // for example)
     const applySkipLimit = options.applySkipLimit !== false;
 
-    let col_name = "unknown-collection";
-    if (typeof this.collection.name !== "undefined") {
-      col_name = this.collection.name;
-    }
+    let col_name = this.colNameForStats();
 
     // XXX use OrderedDict instead of array, and make IdMap and OrderedDict
     // compatible
