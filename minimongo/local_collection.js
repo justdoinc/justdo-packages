@@ -103,15 +103,21 @@ export default class LocalCollection {
       selector = {};
     }
 
-    // NOTE: by setting limit 1 here, we end up using very inefficient
-    // code that recomputes the whole query on each update. The upside is
-    // that when you reactively depend on a findOne you only get
-    // invalidated when the found object changes, not any object in the
-    // collection. Most findOne will be by id, which has a fast path, so
-    // this might not be a big deal. In most cases, invalidation causes
-    // the called to re-query anyway, so this should be a net performance
-    // improvement.
-    options.limit = 1;
+    // Considering the comment above from the original mini-mongo code, I
+    // still decided to avoid adding the limit for queries that involves
+    // _id only, there is still redundant overhead to the options.limit
+    // addition that I wish to avoid.
+    if (typeof selector !== "string" && (_.size(selector) !== 1 || typeof selector._id !== "string")) {
+      // NOTE: by setting limit 1 here, we end up using very inefficient
+      // code that recomputes the whole query on each update. The upside is
+      // that when you reactively depend on a findOne you only get
+      // invalidated when the found object changes, not any object in the
+      // collection. Most findOne will be by id, which has a fast path, so
+      // this might not be a big deal. In most cases, invalidation causes
+      // the called to re-query anyway, so this should be a net performance
+      // improvement.
+      options.limit = 1;
+    }
 
     return this.find(selector, options).fetch()[0];
   }
