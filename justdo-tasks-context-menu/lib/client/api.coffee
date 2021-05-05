@@ -223,7 +223,11 @@ _.extend JustdoTasksContextMenu.prototype,
 
   getContextItemId: -> @_context_item_id_reactive_var.get()
 
-  getContextItemObj: (fields) -> @tasks_collection.findOne(@getContextItemId(), {fields})
+  getContextItemObj: (fields) ->
+    if (context_item_id = @getContextItemId())?
+      @tasks_collection.findOne(context_item_id, {fields})
+    else
+      return undefined
 
   _registerSection_conf_scehma: new SimpleSchema
     position: 

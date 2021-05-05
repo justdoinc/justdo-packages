@@ -330,7 +330,7 @@ _.extend JustdoTasksContextMenu.prototype,
         position: 200
         data:
           label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-            if APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
+            if task_id? and APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
               return "Unset as a Project"
             return "Set as a Project"
           op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
@@ -338,7 +338,7 @@ _.extend JustdoTasksContextMenu.prototype,
             return 
           icon_type: "feather"
           icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-            if APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
+            if task_id? and APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
               return "folder-minus"
             return "folder"
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
@@ -370,8 +370,11 @@ _.extend JustdoTasksContextMenu.prototype,
       
         listingCondition: ->
           # Don't present manage projects if there are no tasks set as projects yet
+          if not (current_justdo_id = JD.activeJustdo({_id: 1})?._id)?
+            return
+
           query =
-            project_id: JD.activeJustdo({_id: 1})?._id
+            project_id: current_justdo_id
             "#{JustdoDeliveryPlanner.task_is_project_field_name}": true
 
           options =
