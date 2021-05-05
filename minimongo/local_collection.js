@@ -8,6 +8,9 @@ import {
   populateDocumentWithQueryFields,
   projectionDetails,
   sameTickStatsInc,
+  sameTickStatsSetVal,
+  sameTickStatsPushToArray,
+  sameTickStatsAddToDict,
   reportOptimizationIssue,
 } from './common.js';
 

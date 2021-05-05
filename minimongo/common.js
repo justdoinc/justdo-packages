@@ -3,14 +3,21 @@ import LocalCollection from './local_collection.js';
 // Note, exactly the same code is present in:
 // justdo-shared-packages/ejson/ejson.js
 export let sameTickStatsInc = function () {return};
+export let sameTickStatsSetVal = function () {return};
+export let sameTickStatsPushToArray = function () {return};
+export let sameTickStatsAddToDict = function () {return};
 export let reportOptimizationIssue = function (message, data) {
   console.error("[OPTIMIZATION ISSUE - EARLY TICK]", message, data);
   return;
 };
+
 if (Meteor.isClient) {
   let interval_id = setInterval(function () {
     if (typeof Package["justdoinc:justdo-helpers"] !== "undefined") {
       sameTickStatsInc = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsInc;
+      sameTickStatsSetVal = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsSetVal;
+      sameTickStatsPushToArray = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsPushToArray;
+      sameTickStatsAddToDict = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsAddToDict;
       reportOptimizationIssue = Package["justdoinc:justdo-helpers"].JustdoHelpers.reportOptimizationIssue;
 
       clearInterval(interval_id);
@@ -18,6 +25,9 @@ if (Meteor.isClient) {
   }, 10);
 } else {
   sameTickStatsInc = function () {return};
+  sameTickStatsSetVal = function () {return};
+  sameTickStatsPushToArray = function () {return};
+  sameTickStatsAddToDict = function () {return};
   reportOptimizationIssue = function () {return};
 }
 

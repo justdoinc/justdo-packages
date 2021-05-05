@@ -1,5 +1,12 @@
 import LocalCollection from './local_collection.js';
-import { hasOwn, sameTickStatsInc } from './common.js';
+import {
+  hasOwn,
+  sameTickStatsInc,
+  sameTickStatsSetVal,
+  sameTickStatsPushToArray,
+  sameTickStatsAddToDict,
+  reportOptimizationIssue,
+} from './common.js';
 
 // Cursor: a specification for a particular subset of documents, w/ a defined
 // order, limit, and offset.  creating a Cursor with LocalCollection.find(),
