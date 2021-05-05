@@ -49,9 +49,18 @@ _.extend JustdoHelpers,
     return user_obj?.emails?[0]?.address
 
   _getUsersDocsByIds: (users_ids, find_options, options) ->
-      limit = find_options?.limit
+      if (limit = find_options?.limit)?
+        find_options = _.extend(find_options)
 
+        find_options.limit = undefined # faster than delete
+
+      return_first = false
       if not _.isArray(users_ids)
+        return_first = true
+
+        if options.ret_type == "object"
+          throw new Error "When a single user id is provided for the users_ids args the ret_type can't be 'object'"
+        
         users_ids = [users_ids]
 
       if options.ret_type == "array"
@@ -109,6 +118,9 @@ _.extend JustdoHelpers,
 
         if found_ids == limit
           break
+
+      if return_first
+        ret = ret[0]
 
       return [ret, missing_ids]
 
