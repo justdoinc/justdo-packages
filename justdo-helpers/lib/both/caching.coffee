@@ -86,6 +86,18 @@ thresholds =
     message: (val) -> "There were #{val} minimongo finds in the same tick"
     break_if_threshold_reached: undefined
 
+  "minimongo-find-without-fields-options":
+    threshold_type: "prefix"
+    threshold: 1
+    message: (val) -> "There were #{val} minimongo finds without the fields options in the same tick"
+    break_if_threshold_reached: undefined
+
+  "minimongo-find-not-by-id":
+    threshold_type: "regular"
+    threshold: 10
+    message: (val) -> "There were #{val} minimongo finds not-by-id in the same tick"
+    break_if_threshold_reached: undefined
+
   "same-tick-cache-clear-time":
     threshold_type: "regular"
     threshold: 200
@@ -196,7 +208,7 @@ _.extend JustdoHelpers,
       if (break_type = threshold_def.break_if_threshold_reached)?
         if (stats[key] >= threshold_def.threshold)
           if break_type == "once"
-            once_key = "same-tick-stats-once-threshold-reported" + key
+            once_key = "same-tick-stats-once-threshold-reported::" + key
 
             if JustdoHelpers.sameTickCacheExists(once_key)
               return
