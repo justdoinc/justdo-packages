@@ -15,14 +15,21 @@ import cloneDeep from 'lodash/cloneDeep';
 // Note, exactly the same code is present in:
 // justdo-internal-packages/minimongo/common.js
 let sameTickStatsInc = function () {return};
+let sameTickStatsSetVal = function () {return};
+let sameTickStatsPushToArray = function () {return};
+let sameTickStatsAddToDict = function () {return};
 let reportOptimizationIssue = function (message, data) {
   console.error("[OPTIMIZATION ISSUE - EARLY TICK]", message, data);
   return;
 };
+
 if (Meteor.isClient) {
   let interval_id = setInterval(function () {
     if (typeof Package["justdoinc:justdo-helpers"] !== "undefined") {
       sameTickStatsInc = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsInc;
+      sameTickStatsSetVal = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsSetVal;
+      sameTickStatsPushToArray = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsPushToArray;
+      sameTickStatsAddToDict = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsAddToDict;
       reportOptimizationIssue = Package["justdoinc:justdo-helpers"].JustdoHelpers.reportOptimizationIssue;
 
       clearInterval(interval_id);
@@ -30,6 +37,9 @@ if (Meteor.isClient) {
   }, 10);
 } else {
   sameTickStatsInc = function () {return};
+  sameTickStatsSetVal = function () {return};
+  sameTickStatsPushToArray = function () {return};
+  sameTickStatsAddToDict = function () {return};
   reportOptimizationIssue = function () {return};
 }
 
