@@ -402,10 +402,15 @@ EJSON._adjustTypesFromJSONValue = adjustTypesFromJSONValue;
  * @locus Anywhere
  * @param {JSONCompatible} val A value to deserialize into EJSON.
  */
-EJSON.fromJSONValue = item => {
+EJSON.fromJSONValue = (item, allow_edit_in_place) => {
   let changed = fromJSONValueHelper(item);
   if (changed === item && isObject(item)) {
-    changed = EJSON.clone(item);
+
+    if (allow_edit_in_place !== true) {
+      changed = EJSON.clone(item);
+    }
+    changed = item;
+
     adjustTypesFromJSONValue(changed);
   }
   return changed;
@@ -451,7 +456,7 @@ EJSON.parse = item => {
   if (typeof item !== 'string') {
     throw new Error('EJSON.parse argument should be a string');
   }
-  return EJSON.fromJSONValue(JSON.parse(item));
+  return EJSON.fromJSONValue(JSON.parse(item), true);
 };
 
 /**
