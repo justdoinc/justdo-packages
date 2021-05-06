@@ -350,13 +350,14 @@ _.extend GridDataCom.prototype,
 
         return collection.findOne(query, {fields: {_id: 1}})?
 
-      getChildrenCount: (item_id, item_doc=null) ->
+      getChildrenCount: (item_id, item_doc=null, query_options) ->
         # item_doc serves the same purpose new_child_fields serves in
         # @getNewChildOrder, read comment there in its entirety
         # including XXX section
         query = {}
         query["parents.#{item_id}.order"] = {$gte: 0}
-        return collection.find(query, {fields: {_id: 1}}).count()
+        query_options = _.extend {}, query_options, {fields: {_id: 1}}
+        return collection.find(query, query_options).count()
 
       getNewChildOrder: (parent_id, new_child_fields=null) ->
         # Note: this @getNewChildOrder() does nothing with new_child_fields

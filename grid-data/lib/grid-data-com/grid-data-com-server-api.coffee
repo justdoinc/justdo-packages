@@ -649,7 +649,7 @@ _.extend GridDataCom.prototype,
       # Remove last parent, and the item itself.
       # We don't allow removing an item with children
 
-      if @collection.getChildrenCount(item._id, item) > 0
+      if @collection.getChildrenCount(item._id, item, {limit: 1}) > 0 # Limit since we don't need to count all of them...
         throw @_error "operation-blocked", 'Can\'t remove the last parent of an item that has sub-items. (You might not see sub-items you aren\'t member of)'
 
       @_runGridMethodMiddlewares "removeParent", path, perform_as,
