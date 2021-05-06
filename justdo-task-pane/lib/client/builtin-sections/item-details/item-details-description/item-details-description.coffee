@@ -176,7 +176,7 @@ APP.executeAfterAppLibCode ->
     files = []
     for i in [0...file_list.length]
       ((i) ->
-        file_item = file_list.item(i)
+        file_item = file_list.item?(i) or file_list[i] 
         file_item.temp_id = Random.id()
         files.push file_item
         reader = new FileReader()
