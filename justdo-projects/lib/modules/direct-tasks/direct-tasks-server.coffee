@@ -116,7 +116,7 @@ _.extend PACK.modules.direct_tasks,
 
     # Note that by this point task_fields.project_id must be set !
     parent_id = "#{@direct_tasks_prefix}#{target.user_id}"
-    new_task_order = @items_collection.getNewChildOrder(parent_id, task_fields, {limit_to_task_project_id: true})
+    new_task_order = @items_collection.getNewChildOrder(parent_id, task_fields)
 
     parents = {}
     parents[parent_id] =

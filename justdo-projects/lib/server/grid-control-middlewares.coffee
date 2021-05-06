@@ -66,22 +66,15 @@ _.extend Projects.prototype,
       # XXX read getNewChildOrder documentation at
       # grid-data-com-server.coffee
 
-      # Options:
-      #
-      # The options arg can be undefined, if set, should be an object that can have these props:
-      #
-      #   limit_to_task_project_id: true/false (defualt false): By default, we restrict the search
-      #     for the current highest child order sibling to the current project_id, only if the parent_id 
-      #     is "0" since this pseudo parent_id is shared among all projects. If you introduce new pseudo
-      #     parents ids, it is likely that you'll want to limit the search for them as well.
-
       query = {}
       sort = {}
       query["parents.#{parent_id}.order"] = {$gte: 0}
-      if (parent_id == "0" or options?.limit_to_task_project_id) and (project_id = new_child_fields?.project_id)?
+      if (project_id = new_child_fields?.project_id)?
         check project_id, String
 
         query["project_id"] = project_id
+      else
+        console.warn "getNewChildOrder: new_child_fields.project_id isn't available. This cause a substantial hit to getNewChildOrder performance"
 
       sort["parents.#{parent_id}.order"] = -1
 
