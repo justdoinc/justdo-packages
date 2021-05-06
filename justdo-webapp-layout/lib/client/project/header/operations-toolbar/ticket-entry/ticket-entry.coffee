@@ -297,7 +297,16 @@ APP.executeAfterAppLibCode ->
         quickInsertTags: []
         charCounterCount: false
         key: env.FROALA_ACTIVATION_KEY
-      });
+      })
+      .on "froalaEditor.image.beforePasteUpload", (e, editor, img) ->
+        return false
+      .on "froalaEditor.image.beforeUpload", (e, editor, images) ->
+        return false
+      .on "froalaEditor.image.loaded", (e, editor, images, b, c) ->
+        return false
+      .on "froalaEditor.image.error", (e, editor, error, resp) ->
+        console.log error
+        return
 
     priority_slider = Template.justdo_priority_slider.getInstance "ticket-entry-priority-slider"
     priority_slider.onChange (value) ->
