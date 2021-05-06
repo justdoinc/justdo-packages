@@ -60,31 +60,28 @@ _.extend JustdoDeliveryPlanner.prototype,
       data:
         label: "Projects"
 
+        itemsGenerator: ->
+          res = []
+
+          for project_task_doc, i in getAllJustdoActiveProjectsSortedByProjectName()
+            res.push
+              _id: project_task_doc._id
+
+              label: project_task_doc.title
+              tab_id: "sub-tree"
+
+              icon_type: "feather"
+              icon_val: "briefcase"
+
+              tab_sections_state:
+                global:
+                  "root-item": project_task_doc._id
+
+          return res
+
       listingCondition: ->
         if isInstalledOnCurrentProject() and getAllJustdoActiveProjectsSortedByProjectName().length > 0
           return true
-
-    if self.tab_switcher_items_builder_comp?
-      self.tab_switcher_items_builder_comp.stop()
-
-    self.tab_switcher_items_builder_comp = Tracker.autorun ->
-      APP.modules.project_page.tab_switcher_manager.resetSectionItems("projects")
-      
-      for project_task_doc, i in getAllJustdoActiveProjectsSortedByProjectName()
-        APP.modules.project_page.tab_switcher_manager.registerSectionItem "projects", project_task_doc._id,
-          position: i
-          data:
-            label: project_task_doc.title
-            tab_id: "sub-tree"
-
-            icon_type: "feather"
-            icon_val: "briefcase"
-
-            tab_sections_state:
-              global:
-                "root-item": project_task_doc._id
-
-      return
 
     installTabsOnGcm = (gcm) =>
       if gcm.destroyed == true
@@ -128,9 +125,6 @@ _.extend JustdoDeliveryPlanner.prototype,
     APP.modules.project_page.tab_switcher_manager.unregisterSectionItem "main", "projects"
 
     APP.modules.project_page.tab_switcher_manager.unregisterSection "projects"
-
-    @tab_switcher_items_builder_comp?.stop()
-    @tab_switcher_items_builder_comp = null
 
     return
 
