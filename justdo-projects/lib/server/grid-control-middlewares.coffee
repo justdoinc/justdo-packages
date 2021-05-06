@@ -86,17 +86,21 @@ _.extend Projects.prototype,
 
       return new_order
 
-    @items_collection.getChildrenCount = (item_id, item_doc=null) ->
+    @items_collection.getChildrenCount = (item_id, item_doc=null, query_options) ->
       query = {}
 
       query["parents.#{item_id}.order"] = {$gte: 0}
 
-      if item_id == "0" and (project_id = item_doc?.project_id)?
+      if not (project_id = item_doc?.project_id)?
+        console.warn "getChildrenCount: item_doc.project_id isn't available. This cause a substantial hit to getChildrenCount performance"
+      else
         check project_id, String
 
         query["project_id"] = project_id
 
-      return @find(query).count()
+      query_options = _.extend {}, query_options, {fields: {_id: 1}}
+
+      return @find(query, query_options).count()
 
     @items_collection.incrementChildsOrderGte = (parent_id, min_order_to_inc, item_doc=null) ->
       # note that this function replace grid-data-com-server.coffee's incrementChildsOrderGte
