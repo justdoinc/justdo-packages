@@ -367,7 +367,7 @@ _.extend JustdoTasksContextMenu.prototype,
           is_nested_section: true
           icon_type: "feather"
           icon_val: "corner-right-down"
-      
+
         listingCondition: ->
           # Don't present manage projects if there are no tasks set as projects yet
           if not (current_justdo_id = JD.activeJustdo({_id: 1})?._id)?
@@ -383,12 +383,6 @@ _.extend JustdoTasksContextMenu.prototype,
               "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1
 
           return APP.collections.Tasks.findOne(query, options)?
-
-      self.registerNestedSection "projects", "manage-projects", "manage-active-projects",
-        position: 100
-
-        data:
-          display_item_filter_ui: true
 
       getAllJustdoActiveProjectsSortedByProjectName = (filter_state) ->
         options = 
@@ -439,97 +433,95 @@ _.extend JustdoTasksContextMenu.prototype,
 
         return
 
-      Tracker.autorun ->
-        if not (gc = APP.modules.project_page.mainGridControl())?
-          return
+      self.registerNestedSection "projects", "manage-projects", "manage-active-projects",
+        position: 100
 
-        self.resetSectionItems("manage-active-projects")
-        
-        active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(self.getSectionFilterState("manage-active-projects"))
+        data:
+          display_item_filter_ui: true
 
-        self.registerSectionItem "manage-active-projects", "no-projects-available",
-          position: 0
-          data:
-            label: "No projects are available"
-            op: -> return
-            icon_type: "none"
+          itemsGenerator: ->
+            res = []
 
-          listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-            return _.isEmpty(
-                     _.filter(active_projects_docs, (active_project_doc) -> active_project_doc._id != task_id) # Show only if there are no other projects (filter myself out, in case I am a project)
-                   )
+            active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(self.getSectionFilterState("manage-active-projects"))
 
-        for project_task_doc, i in active_projects_docs
-          do (project_task_doc, i) ->
-            self.registerSectionItem "manage-active-projects", project_task_doc._id,
-              position: i + 1
-              listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-                return task_id != item_definition._id # Don't show current task
-              data:
-                label: -> return JustdoHelpers.ellipsis(project_task_doc.title or "", 40)
-                label_addendum_template: "manage_active_projects_jump_to_proj"
-                op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-                  query =
-                    _id: task_id
-                    "parents.#{project_task_doc._id}": {$exists: true}
+            active_item_id = JD.activeItemId()
 
-                  options =
-                    fields:
-                      _id: 1
-                      parents: 1
+            if _.isEmpty(_.filter(active_projects_docs, (active_project_doc) -> active_project_doc._id != active_item_id)) # Show only if there are no other projects (filter myself out, in case I am a project)
+              res.push
+                label: "No projects are available"
+                op: -> return
+                icon_type: "none"
 
-                  if (task_doc = APP.collections.Tasks.findOne(query, options))?
-                    performRemoveParent = ->
-                      removeParent "/#{project_task_doc._id}/#{task_id}/", (err) ->
-                        if err?
-                          console.error err
-                        return
-                    if _.size(task_doc.parents) > 1
-                      performRemoveParent()
-                    else
-                      JustdoSnackbar.show
-                        text: "This is the last parent of the task, do you want to remove the task completely?"
-                        actionText: "Dismiss"
-                        showSecondButton: true
-                        secondButtonText: "Remove"
-                        duration: 10000
-                        onActionClick: =>
-                          JustdoSnackbar.close()
-                          return
+            for project_task_doc, i in active_projects_docs
+              do (project_task_doc, i) ->
+                if project_task_doc._id != active_item_id # Don't show current task
+                  res.push
+                    id: project_task_doc._id
 
-                        onSecondButtonClick: =>
+                    label: -> return JustdoHelpers.ellipsis(project_task_doc.title or "", 40)
+                    label_addendum_template: "manage_active_projects_jump_to_proj"
+                    op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+                      query =
+                        _id: task_id
+                        "parents.#{project_task_doc._id}": {$exists: true}
+
+                      options =
+                        fields:
+                          _id: 1
+                          parents: 1
+
+                      if (task_doc = APP.collections.Tasks.findOne(query, options))?
+                        performRemoveParent = ->
+                          removeParent "/#{project_task_doc._id}/#{task_id}/", (err) ->
+                            if err?
+                              console.error err
+                            return
+                        if _.size(task_doc.parents) > 1
                           performRemoveParent()
+                        else
+                          JustdoSnackbar.show
+                            text: "This is the last parent of the task, do you want to remove the task completely?"
+                            actionText: "Dismiss"
+                            showSecondButton: true
+                            secondButtonText: "Remove"
+                            duration: 10000
+                            onActionClick: =>
+                              JustdoSnackbar.close()
+                              return
 
-                          JustdoSnackbar.close()
+                            onSecondButtonClick: =>
+                              performRemoveParent()
+
+                              JustdoSnackbar.close()
+                              return
+                      else
+                        addNewParentToTaskId task_id, project_task_doc._id, (err) ->
+                          if err?
+                            console.error err
                           return
-                  else
-                    addNewParentToTaskId task_id, project_task_doc._id, (err) ->
-                      if err?
-                        console.error err
+
                       return
+                    icon_type: "feather"
+                    icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+                      if not task_id?
+                        return
 
-                  return
-                icon_type: "feather"
-                icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-                  if not task_id?
-                    return
+                      query =
+                        _id: task_id
 
-                  query =
-                    _id: task_id
+                      options =
+                        fields:
+                          _id: 1
+                          parents: 1
 
-                  options =
-                    fields:
-                      _id: 1
-                      parents: 1
+                      task_doc = APP.collections.Tasks.findOne(query, options) # We could have used gc._grid_data.items_by_id[task_id].parents, but we need reativity anyways
 
-                  task_doc = APP.collections.Tasks.findOne(query, options) # We could have used gc._grid_data.items_by_id[task_id].parents, but we need reativity anyways
+                      if project_task_doc._id of task_doc.parents
+                        return "check-square"
+                      return "square"
 
-                  if project_task_doc._id of task_doc.parents
-                    return "check-square"
-                  return "square"
+                    close_on_click: false
 
-                close_on_click: false
-
-            return
+            return res
 
       return

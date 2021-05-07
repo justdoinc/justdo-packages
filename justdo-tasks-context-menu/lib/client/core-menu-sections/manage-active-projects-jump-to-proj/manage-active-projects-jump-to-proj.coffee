@@ -17,6 +17,7 @@ Template.manage_active_projects_jump_to_proj.helpers
 
     if item_data.id of task_doc.parents
       return true
+    
     return false
 
 Template.manage_active_projects_jump_to_proj.events

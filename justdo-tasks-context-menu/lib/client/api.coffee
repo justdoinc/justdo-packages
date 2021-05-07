@@ -1,3 +1,8 @@
+itemsSource = (section_id="default", ignore_listing_condition) ->
+  if @itemsGenerator?
+    return @itemsGenerator()
+  return @reactive_items_list.getList(section_id, ignore_listing_condition)
+
 _.extend JustdoTasksContextMenu.prototype,
   context_class: "grid-tree-control-context-menu"
 
@@ -49,6 +54,19 @@ _.extend JustdoTasksContextMenu.prototype,
     @_setupHideConditions()
 
     return
+
+  sectionsItemsSource: (section_id, nested_section_item, ignore_listing_condition) ->
+    nested_section_def = _.find this.getMainSections(ignore_listing_condition), (section_def) -> section_def.id == section_id
+
+    nested_section_items = nested_section_def.itemsSource("default", ignore_listing_condition)
+
+    nested_section_item_def = _.find nested_section_items, (section_def) -> section_def.id == nested_section_item
+
+    if (itemsGenerator = nested_section_item_def.itemsGenerator)?
+      debugger
+      return itemsGenerator()
+    else
+      return @sections_reactive_items_list.getList(@_getNestedSectionsDomainId(section_id, nested_section_item), ignore_listing_condition)
 
   updateFieldValAndDependenciesReactiveVars: ->
     if not (field_info = @_context_field_info_reactive_var.get())? or not (task_id = @_context_item_id_reactive_var.get())?
@@ -245,6 +263,9 @@ _.extend JustdoTasksContextMenu.prototype,
           type: String
           optional: true
           defaultValue: ""
+        itemsGenerator:
+          optional: true
+          type: Function
     listingCondition:
       optional: true
       type: Function
@@ -274,6 +295,8 @@ _.extend JustdoTasksContextMenu.prototype,
 
     conf.data = _.extend {}, conf.data,
       reactive_items_list: section_items_reactive_items_list
+
+      itemsSource: itemsSource
 
     if conf.data.display_item_filter_ui
       conf.data = _.extend {}, conf.data,
@@ -322,6 +345,10 @@ _.extend JustdoTasksContextMenu.prototype,
           optional: true
           type: Boolean
           defaultValue: true
+        itemsGenerator:
+          optional: true
+          type: Function
+
     listingCondition:
       optional: true
       type: Function
@@ -371,7 +398,7 @@ _.extend JustdoTasksContextMenu.prototype,
     return
 
   getNestedSections: (section_id, nested_section_item, ignore_listing_condition=false) ->
-    return @sections_reactive_items_list.getList(@_getNestedSectionsDomainId(section_id, nested_section_item), ignore_listing_condition)
+    return @sectionsItemsSource(section_id, nested_section_item, ignore_listing_condition)
 
   _getSectionFilterStateRv: (section_id) ->
     return @sections_reactive_items_list.getItem(section_id, true)?.data?.filter_state_rv

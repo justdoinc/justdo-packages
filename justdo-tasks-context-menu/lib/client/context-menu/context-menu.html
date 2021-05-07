@@ -35,7 +35,7 @@
     {{/if}}
   {{/with}}
   {{#let current_section_id=section.id}}
-    {{#each section.reactive_items_list.getList}}
+    {{#each section.itemsSource}}
       <li class="dropdown-item context-action-item {{#if hasNestedSections}} context-nested-section-item{{/if}}">
         {{> tasks_context_menu_label}}
 
