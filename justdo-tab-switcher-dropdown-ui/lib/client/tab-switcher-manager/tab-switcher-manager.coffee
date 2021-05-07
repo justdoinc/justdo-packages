@@ -14,10 +14,10 @@ TabSwitcherManager = ->
 
   return @
 
-itemsSource = ->
+itemsSource = (ignore_listing_condition) ->
   if @itemsGenerator?
     return @itemsGenerator()
-  return @reactive_items_list.getList("default", true)
+  return @reactive_items_list.getList("default", ignore_listing_condition)
 
 _.extend TabSwitcherManager.prototype,
   setSectionsItemsLabelFilter: (keyword=null) ->
@@ -85,7 +85,7 @@ _.extend TabSwitcherManager.prototype,
       return loading_tab_icon
 
     for section in @getSections(true)
-      for tab in section.itemsSource()
+      for tab in section.itemsSource(true)
         tab_sections_state = tab.tab_sections_state or {}
 
         # Since the tab itself might set sections states in addition to those defined for it in the
