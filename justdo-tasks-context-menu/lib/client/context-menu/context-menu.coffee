@@ -4,6 +4,9 @@ Template.tasks_context_menu.onCreated ->
   return
 
 Template.tasks_context_menu.helpers
+  isVisible: ->
+    return APP.justdo_tasks_context_menu.isVisible()
+    
   getMainSections: -> 
     return APP.justdo_tasks_context_menu.getMainSections()
 

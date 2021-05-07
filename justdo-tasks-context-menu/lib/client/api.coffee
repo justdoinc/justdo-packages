@@ -7,6 +7,8 @@ _.extend JustdoTasksContextMenu.prototype,
   context_class: "grid-tree-control-context-menu"
 
   _immediateInit: ->
+    @is_visible = new ReactiveVar(false)
+
     @_context_item_id_reactive_var = new ReactiveVar(null)
     @_context_item_path_reactive_var = new ReactiveVar(null)
     @_context_field_info_reactive_var = new ReactiveVar(null)
@@ -62,8 +64,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
     nested_section_item_def = _.find nested_section_items, (section_def) -> section_def.id == nested_section_item
 
-    if (itemsGenerator = nested_section_item_def.itemsGenerator)?
-      debugger
+    if (itemsGenerator = nested_section_item_def?.itemsGenerator)?
       return itemsGenerator()
     else
       return @sections_reactive_items_list.getList(@_getNestedSectionsDomainId(section_id, nested_section_item), ignore_listing_condition)
@@ -211,7 +212,14 @@ _.extend JustdoTasksContextMenu.prototype,
   $getNode: ->
     return $(@context_menu_template_obj.node)
 
+  isVisible: ->
+    return @is_visible.get()
+
   _show: (jquery_ui_position_obj) ->
+    @is_visible.set(true)
+
+    Tracker.flush()
+
     if not jquery_ui_position_obj? or not _.isObject(jquery_ui_position_obj)
       jquery_ui_position_obj = {}
 
@@ -235,6 +243,8 @@ _.extend JustdoTasksContextMenu.prototype,
     return
 
   hide: ->
+    @is_visible.set(false)
+
     @$getNode().removeClass("show").find(".dropdown-menu").removeClass("show")
 
     return

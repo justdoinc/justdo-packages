@@ -1,20 +1,22 @@
 <template name="tasks_context_menu">
-  <ul class="dropdown-menu p-2 shadow-lg border-0">
-    {{#each section in getMainSections}}
-      {{#if isSectionHasItems section}}
-        {{> tasks_context_section section=section}}
-      {{/if}}
-    {{/each}}
-    <li class="context-section-label-container label-less-section">
-      <hr class="my-2">
-    </li>
-    <li class="more-info-items">
-      <div>
-        <div>Updated {{moFromNow controller.updatedAt}}</div>
-        <div class="text-secondary">by {{displayName updatedByOrCreatedBy}}</div>
-      </div>
-    </li>
-  </ul>
+  {{#if isVisible}}
+    <ul class="dropdown-menu p-2 shadow-lg border-0">
+      {{#each section in getMainSections}}
+        {{#if isSectionHasItems section}}
+          {{> tasks_context_section section=section}}
+        {{/if}}
+      {{/each}}
+      <li class="context-section-label-container label-less-section">
+        <hr class="my-2">
+      </li>
+      <li class="more-info-items">
+        <div>
+          <div>Updated {{moFromNow controller.updatedAt}}</div>
+          <div class="text-secondary">by {{displayName updatedByOrCreatedBy}}</div>
+        </div>
+      </li>
+    </ul>
+  {{/if}}
 </template>
 
 <template name="tasks_context_section">
