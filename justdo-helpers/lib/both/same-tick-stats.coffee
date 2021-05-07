@@ -1,7 +1,9 @@
 JustdoHelpers.report_all_stats = false
+JustdoHelpers.report_optimization_issues = false
 JustdoHelpers.allow_break_if_threshold_reached = false
 if JustdoHelpers.isPocPermittedDomainsOrBeta()
   JustdoHelpers.report_all_stats = true
+  JustdoHelpers.report_optimization_issues = true
   JustdoHelpers.allow_break_if_threshold_reached = true
 
 stats_key = "__stats"
@@ -114,7 +116,9 @@ JustdoHelpers.registerSameTickCachePreClearProcedure ->
 
 _.extend JustdoHelpers,
   reportOptimizationIssue: (message, data) ->
-    console.error "[OPTIMIZATION ISSUE] #{message}", data
+    if JustdoHelpers.report_optimization_issues
+      console.error "[OPTIMIZATION ISSUE] #{message}", data
+
     return
 
   reportSameTickStatsOptimizationIssue: (message) ->
