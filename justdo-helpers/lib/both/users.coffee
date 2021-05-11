@@ -48,109 +48,6 @@ _.extend JustdoHelpers,
   getUserMainEmail: (user_obj) ->
     return user_obj?.emails?[0]?.address
 
-  _getUsersDocsByIds: (users_ids, find_options, options) ->
-      if (limit = find_options?.limit)?
-        find_options = _.extend(find_options)
-
-        find_options.limit = undefined # faster than delete
-
-      return_first = false
-      if not _.isArray(users_ids)
-        return_first = true
-
-        if options.ret_type == "object"
-          throw new Error "When a single user id is provided for the users_ids args the ret_type can't be 'object'"
-        
-        users_ids = [users_ids]
-
-      if options.ret_type == "array"
-        ret = []
-      else if options.ret_type == "object"
-        ret = {}
-      else
-        throw new Error "Unknown ret_type #{ret_type}"
-
-      missing_ids = []
-
-      found_ids = 0
-      consecutive_missing_ids_count = 0
-      break_if_consecutive_missing_ids_count = limit
-      # A missing id can mean two things:
-      #
-      # 1) DDP didn't provide the user doc yet
-      # 2) Unknown id.
-      #
-      # by findOne()ing the users ids requested we creating a demand for them.
-      #
-      # See: initEncounteredUsersIdsTracker/initEncounteredUsersIdsPublicBasicUsersInfoFetcher
-      #
-      # That demand will request those ids from the server.
-      #
-      # In early stages, we might know only the Meteor.userId().
-      #
-      # Hence if a 10k users_ids array will receive, that will translate to 10k
-      # users requests.
-      # 
-      # If we need only a very few users (e.g. if there's a limit) we don't want
-      # to request the server for 10k users, but only for few.
-      #
-      # Since an unkown user_id should be a quite rare case, we assume that
-      # when looping over the users_ids if a row of consecutive missing ids encountered
-      # it is likely that these uesrs were never requested from the server before. Hence
-      # we break the loop to begin the wait to the ddp to retreive them.
-
-      for user_id in users_ids
-        if (user_doc = Meteor.users.findOne(user_id, find_options))?
-          consecutive_missing_ids_count = 0
-          found_ids += 1
-          
-          if options.ret_type == "array"
-            ret.push user_doc
-          else
-            ret[user_id] = user_doc
-        else
-          consecutive_missing_ids_count += 1
-          missing_ids.push user_id
-
-          if break_if_consecutive_missing_ids_count?
-            if consecutive_missing_ids_count >= break_if_consecutive_missing_ids_count
-              break
-
-        if found_ids == limit
-          break
-
-      if return_first
-        ret = ret[0]
-
-      return [ret, missing_ids]
-
-  getUsersDocsByIds: (users_ids, find_options, options) ->
-    # Reactive resource
-
-    # IMPORTANT: 1. Ids order won't be maintained in returned array
-    #            2. If a user isn't known to the client, the returned array won't contain info about this
-
-    # user can be either a single user id provided as string or an array 
-
-    default_options =
-      user_fields_reactivity: false # The default is non-reactive !!!
-      missing_users_ractivity: true
-      ret_type: "array" # can be "array" or "object"
-
-    options = _.extend default_options, options
-
-    if options.user_fields_reactivity
-      return @_getUsersDocsByIds(users_ids, find_options, options)[0]
-    else
-      [ret, missing_ids] = Tracker.nonreactive =>
-        return @_getUsersDocsByIds(users_ids, find_options, options)
-
-      # Setup reactivity for case the missing_ids will show up
-      if missing_ids.length > 0 and options.missing_users_ractivity
-        @_getUsersDocsByIds(missing_ids, find_options, options)
-
-      return ret
-
   getUserPreferredDateFormat: ->
     # Reactive resource!
     if (preferred_date_format = Meteor.users.findOne(Meteor.userId(), {fields: {'profile.date_format': 1}})?.profile?.date_format)?
@@ -269,15 +166,6 @@ _.extend JustdoHelpers,
   
     return users_docs
   
-  filterUsersIdsArray: (user_ids, niddle, options) ->
-    user_docs = @getUsersDocsByIds user_ids,
-      fields:
-        _id: 1
-        profile: 1
-        emails: 1
-
-    return @filterUsersDocsArray user_docs, niddle, options
-
   sortUsersDocsArray: (users_docs, comp) ->
     if not comp?
       comp = (user_doc) -> JustdoHelpers.displayName(user_doc).toLowerCase()
