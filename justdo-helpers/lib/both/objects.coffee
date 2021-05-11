@@ -12,3 +12,14 @@ _.extend JustdoHelpers,
           deepStructureObjectKeysTraverse(value, cb)
           
     return
+  
+  objectDeepInherit: (o) ->
+    o = Object.create(o)
+
+    for key, val of o
+      if val? and typeof val == "object"
+        o[key] = JustdoHelpers.objectDeepInherit(val)
+      else
+        o[key] = val
+
+    return o
