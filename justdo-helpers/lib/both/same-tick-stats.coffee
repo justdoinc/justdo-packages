@@ -36,7 +36,7 @@ thresholds =
 
   "minimongo-find":
     threshold_type: "regular"
-    threshold: 10
+    threshold: 25
     message: (val) -> "There were #{val} minimongo finds in the same tick"
     break_if_threshold_reached: undefined
 
