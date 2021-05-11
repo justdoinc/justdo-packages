@@ -25,6 +25,10 @@ export class IdMap extends EventEmitter {
     this.emit("after-set", id, value);
   }
 
+  bulkSet(docs) {
+    Object.assign(this._map, docs);
+
+    this.emit("after-bulkSet", docs);
   }
 
   remove(id) {
