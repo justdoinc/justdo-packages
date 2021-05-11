@@ -111,6 +111,9 @@ _.extend JustdoHelpers,
 
     return @_getUsersDocsByIds(users_ids, find_options, options)[0]
 
+  getUserDocById: (user_id, options) ->
+    return JustdoHelpers.getUsersDocsByIds(user_id, {}, options)
+
   filterUsersIdsArray: (user_ids, niddle, options) ->
     user_docs = @getUsersDocsByIds user_ids,
       fields:
