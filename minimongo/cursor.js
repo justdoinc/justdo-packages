@@ -136,15 +136,20 @@ export default class Cursor {
    *                        `callback`.
    */
   forEach(callback, thisArg) {
-    if (this.reactive) {
-      this._depend({
-        addedBefore: true,
-        removed: true,
-        changed: true,
-        movedBefore: true});
+    if (typeof this._selectorId !== "undefined") {
+      // If find by id
+      depend_options = {added: true, removed: true, changed: true};
+      get_raw_objects_options = {ordered: false};
+    } else {
+      depend_options = {addedBefore: true, removed: true, changed: true, movedBefore: true};
+      get_raw_objects_options = {ordered: true};
     }
 
-    this._getRawObjects({ordered: true}).forEach((element, i) => {
+    if (this.reactive) {
+      this._depend(depend_options);
+    }
+
+    this._getRawObjects(get_raw_objects_options).forEach((element, i) => {
       // This doubles as a clone operation.
       element = this._projectionFn(element);
 
@@ -273,7 +278,7 @@ export default class Cursor {
 
       this.collection.queries_count += 1;
 
-      sameTickStatsAddToDict("minimongo-reactive-observer-registered-queries::collection:" + col_name, qid - 1, {selector: query.matcher._selector, query: query, ordered: ordered, _suppress_initial: options._suppress_initial});
+      sameTickStatsAddToDict("minimongo-reactive-observer-registered-queries::collection:" + col_name, qid - 1, {selector: query.matcher._selector, query: query, fields: this.fields, ordered: ordered, _suppress_initial: options._suppress_initial});
 
       sameTickStatsInc("minimongo-reactive-observer-registered", 1);
       sameTickStatsInc("minimongo-reactive-observer-registered::collection:" + col_name + ":ordered:" + (ordered ? "1" : "0"), 1);
