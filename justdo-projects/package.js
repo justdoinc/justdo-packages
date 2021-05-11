@@ -15,6 +15,7 @@ Package.onUse(function (api) {
   api.use('underscore', both);
   api.use('templating', client);
   api.use('check', both);
+  api.use('reactive-dict', both);
   api.use("tracker", client);
 
   api.use('stevezhu:lodash@4.16.4', both);

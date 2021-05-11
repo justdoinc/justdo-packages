@@ -61,33 +61,43 @@ _.extend Projects.prototype,
     return members_ids
 
   initEncounteredUsersIdsTracker: ->
+    self = @
+
     @_encountered_users = new Set()
     @_encountered_users_dep = new Tracker.Dependency()
 
-    addEncounteredUsersIdsFromSelector = (selector) =>
-      if not selector?
-        return
-
-      pre_size = @_encountered_users.size
-
-      if (user_id = selector._id)?
-        if _.isString(user_id)
-          @_encountered_users.add(user_id)
-
-        if _.isObject(user_id)
-          if (users_ids = user_id.$in)?
-            for user_id in users_ids
-              @_encountered_users.add(user_id)
-
-      if pre_size < @_encountered_users.size
-        @_encountered_users_dep.changed()
-
-      return
-
-    Meteor.users.before.findOne (userId, selector, options) -> addEncounteredUsersIdsFromSelector(selector)
-    Meteor.users.before.find (userId, selector, options) -> addEncounteredUsersIdsFromSelector(selector)
+    Meteor.users.before.findOne (userId, selector, options) -> self.addEncounteredUsersIdsFromSelector(selector)
+    Meteor.users.before.find (userId, selector, options) -> self.addEncounteredUsersIdsFromSelector(selector)
 
     return
+
+  addEncounteredUsersIdsFromSelector: (selector) ->
+    if not selector?
+      return
+
+    pre_size = @_encountered_users.size
+
+    if (user_id = selector._id)?
+      if _.isString(user_id)
+        @_encountered_users.add(user_id)
+
+      if _.isObject(user_id)
+        if (users_ids = user_id.$in)?
+          for user_id in users_ids
+            @_encountered_users.add(user_id)
+
+    if pre_size < @_encountered_users.size
+      @_encountered_users_dep.changed()
+
+    return
+
+  addRequiredUsers: (users_array) ->
+    if _.isString(users_array)
+      users_array = [users_array]
+
+    @addEncounteredUsersIdsFromSelector({_id: {$in: users_array}})
+
+    return 
 
   initEncounteredUsersIdsPublicBasicUsersInfoFetcher: ->
     if @_encountered_users_fetcher_comp?

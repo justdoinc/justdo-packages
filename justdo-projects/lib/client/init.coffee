@@ -9,6 +9,8 @@ _.extend Projects.prototype,
     # Defined in hash-requests.coffee
     @_setupHashRequests()
 
-    # Guests related
+    # Users related
     @initEncounteredUsersIdsTracker()
     @initEncounteredUsersIdsPublicBasicUsersInfoFetcher()
+
+    return
