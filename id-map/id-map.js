@@ -1,7 +1,8 @@
 const hasOwn = Object.prototype.hasOwnProperty;
 
-export class IdMap {
+export class IdMap extends EventEmitter {
   constructor(idStringify, idParse) {
+    super();
     this.clear();
     this._idStringify = idStringify || JSON.stringify;
     this._idParse = idParse || JSON.parse;
@@ -20,6 +21,10 @@ export class IdMap {
   set(id, value) {
     var key = this._idStringify(id);
     this._map[key] = value;
+
+    this.emit("after-set", id, value);
+  }
+
   }
 
   remove(id) {
