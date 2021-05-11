@@ -54,7 +54,7 @@ Template.task_pane_task_changelog.events
 
 Template.task_pane_task_changelog_record.helpers
   changingUser: ->
-    return APP.helpers.getUsersDocsByIds(@by, {fields: JustdoAvatar.avatar_required_fields})[0]
+    return APP.helpers.getUserDocById(@by, {user_fields_reactivity: false, missing_users_ractivity: true, get_docs_by_reference: true})
 
   formatedLabel: ->
     if @change_type == 'moved_to_task' \
