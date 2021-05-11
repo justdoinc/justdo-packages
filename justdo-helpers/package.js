@@ -17,6 +17,7 @@ Package.onUse(function (api) {
   api.use("check", both);
   api.use("reactive-var", client);
   api.use("mongo", both);
+  api.use("minimongo", both);
   api.use("blaze", client, {weak: true});
   api.use("templating", client, {weak: true});
   api.use("ecmascript", both);
@@ -75,6 +76,7 @@ Package.onUse(function (api) {
   api.add_files("lib/both/reactive-items-list.coffee", both);
   api.add_files("lib/both/middlewares.coffee", both);
 
+  api.add_files("lib/client/minimongo.coffee", client);
   api.add_files("lib/client/blaze-extensions.coffee", client);
   api.add_files("lib/client/blaze.coffee", client);
   api.add_files("lib/client/bound-element.sass", client);
