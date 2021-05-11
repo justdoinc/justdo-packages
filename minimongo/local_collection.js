@@ -126,7 +126,7 @@ export default class LocalCollection {
 
   // The following is a JustDo extension to local_collection
   insertInitialPayload(docs, callback) {
-    Object.assign(this._docs._map, docs);
+    this._docs.bulkSet(docs);
 
     const queriesToRecompute = [];
 
