@@ -6,6 +6,8 @@ if JustdoHelpers.isPocPermittedDomainsOrBeta()
   JustdoHelpers.report_optimization_issues = true
   JustdoHelpers.allow_break_if_threshold_reached = true
 
+temporary_sensitivity_decrease_factor = 5
+
 stats_key = "__stats"
 
 thresholds =
@@ -24,19 +26,19 @@ thresholds =
 
   "ejson-clone":
     threshold_type: "regular"
-    threshold: 50
+    threshold: 50 * temporary_sensitivity_decrease_factor
     message: (val) -> "There were #{val} EJSON.clone calls in the same tick"
     break_if_threshold_reached: "once" # Set to "once" / "always" or use undefined to avoid
 
   "ejson-parse":
     threshold_type: "regular"
-    threshold: 10
+    threshold: 10 * temporary_sensitivity_decrease_factor
     message: (val) -> "There were #{val} EJSON.parse calls in the same tick"
     break_if_threshold_reached: undefined
 
   "minimongo-find":
     threshold_type: "regular"
-    threshold: 25
+    threshold: 25 * temporary_sensitivity_decrease_factor
     message: (val) -> "There were #{val} minimongo finds in the same tick"
     break_if_threshold_reached: undefined
 
@@ -48,13 +50,13 @@ thresholds =
 
   "minimongo-find-not-by-id":
     threshold_type: "regular"
-    threshold: 10
+    threshold: 10 * temporary_sensitivity_decrease_factor
     message: (val) -> "There were #{val} minimongo finds not-by-id in the same tick"
     break_if_threshold_reached: undefined
 
   "same-tick-cache-clear-time":
     threshold_type: "regular"
-    threshold: 200
+    threshold: 250
     message: (val) -> "A tick took more than #{val} ms to execute" # "at least", because clear_setupped_time isn't set immediately when the tick start
     break_if_threshold_reached: undefined
 
@@ -78,7 +80,7 @@ thresholds =
 
   "minimongo-reactive-observer-registered":
     threshold_type: "prefix"
-    threshold: 10
+    threshold: 20 * temporary_sensitivity_decrease_factor
     message: (val, key) ->
       collection_name = JustdoHelpers._getSameTickStatsTrimmedVal(key)?.split(":")?[1]
 
@@ -91,7 +93,7 @@ thresholds =
 
   "minimongo-reactive-observer-total-running":
     threshold_type: "prefix"
-    threshold: 10
+    threshold: 30 * temporary_sensitivity_decrease_factor
     message: (val, key) ->
       collection_name = JustdoHelpers._getSameTickStatsTrimmedVal(key)?.split(":")?[1]
 
