@@ -101,10 +101,17 @@ _.extend JustdoHelpers,
     if not (collection_watchers_construct = _invalidate_once_ids_become_exist_db[col_id])?
       collection_watchers_construct = 
         events_hooks:
-          set: (id, value) ->
+          "after-set": (id, value) ->
             for watcher_id, watcher_def of collection_watchers_construct.tracked_ids_watchers
               if id of watcher_def.tracked_ids
                 watcher_def.dep.changed()
+
+            return
+
+          "after-bulkSet": (docs) ->
+            # Upon bulkSet just mark all as changed
+            for watcher_id, watcher_def of collection_watchers_construct.tracked_ids_watchers
+              watcher_def.dep.changed()
 
             return
 
@@ -114,8 +121,8 @@ _.extend JustdoHelpers,
 
       _invalidate_once_ids_become_exist_db[col_id] = collection_watchers_construct
 
-      # For unmerged pubs this code will need an update for after-bulkUpdate
-      JustdoHelpers.getCollectionIdMap(collection).on "after-set", collection_watchers_construct.events_hooks.set
+      for hook_id, hook of collection_watchers_construct.events_hooks
+        JustdoHelpers.getCollectionIdMap(collection).on hook_id, collection_watchers_construct.events_hooks[hook_id]
 
     watcher_id = (collection_watchers_construct.tracked_ids_watchers_registered += 1)
 
@@ -130,7 +137,8 @@ _.extend JustdoHelpers,
       delete collection_watchers_construct.tracked_ids_watchers[watcher_id]
 
       if _.isEmpty(collection_watchers_construct.tracked_ids_watchers)
-        JustdoHelpers.getCollectionIdMap(collection).off "set", collection_watchers_construct.events_hooks.set
+        for hook_id, hook of collection_watchers_construct.events_hooks
+          JustdoHelpers.getCollectionIdMap(collection).off hook_id, collection_watchers_construct.events_hooks[hook_id]
 
         delete _invalidate_once_ids_become_exist_db[col_id]
       
