@@ -1,3 +1,6 @@
+isUserIdEnrolled = (user_id) ->
+  return JustdoHelpers.getUserDocById(user_id, {get_docs_by_reference: true})?.enrolled_member
+
 _.extend Projects.prototype,
   loadProject: (project_id) ->
     self = @
@@ -58,19 +61,19 @@ _.extend Projects.prototype,
 
       getAdmins: (include_non_enrolled=true) ->
         return _.filter @getMembers(), (member) ->
-          return not member.is_guest and member.is_admin and (include_non_enrolled or Meteor.users.findOne(member.user_id, {fields: {enrolled_member: 1}})?.enrolled_member)
+          return not member.is_guest and member.is_admin and (include_non_enrolled or isUserIdEnrolled(member.user_id))
 
       getNonAdmins: (include_non_enrolled=true) ->
         return _.filter @getMembers(), (member) ->
-          return not member.is_admin and (include_non_enrolled or Meteor.users.findOne(member.user_id, {fields: {enrolled_member: 1}})?.enrolled_member)
+          return not member.is_admin and (include_non_enrolled or isUserIdEnrolled(member.user_id))
 
       getNonAdminsNonGuests: (include_non_enrolled=true) ->
         return _.filter @getMembers(), (member) ->
-          return not member.is_admin and (not member.is_guest? or not member.is_guest) and (include_non_enrolled or Meteor.users.findOne(member.user_id, {fields: {enrolled_member: 1}})?.enrolled_member)
+          return not member.is_admin and (not member.is_guest? or not member.is_guest) and (include_non_enrolled or isUserIdEnrolled(member.user_id))
 
       getGuests: (include_non_enrolled=true) ->
         return _.filter @getMembers(), (member) ->
-          return member.is_guest and (include_non_enrolled or Meteor.users.findOne(member.user_id, {fields: {enrolled_member: 1}})?.enrolled_member)
+          return member.is_guest and (include_non_enrolled or isUserIdEnrolled(member.user_id))
 
       getNonEnrolledMembers: ->
         return _.filter @getMembers(), (member) -> not Meteor.users.findOne(member.user_id, {fields: {enrolled_member: 1}})?.enrolled_member
