@@ -263,7 +263,8 @@ export default class Cursor {
       ordered,
       projectionFn: this._projectionFn,
       resultsSnapshot: null,
-      sorter: ordered && this.sorter
+      sorter: ordered && this.sorter,
+      trace: (new Error()).stack
     };
 
     let qid;
