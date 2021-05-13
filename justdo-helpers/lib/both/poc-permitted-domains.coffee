@@ -37,10 +37,16 @@ beta_domains = [
 
 first_call = true
 
+getCurrentUrl = ->
+  if not (root_url = document?.location?.origin)? and not (root_url = process.env.ROOT_URL)?
+    return undefined
+
+  return root_url
+
 _.extend JustdoHelpers,
   isPocPermittedDomains: (root_url) ->
     if not root_url?
-      if not (root_url = document?.location?.origin)? and not (root_url = process.env.ROOT_URL)?
+      if not (root_url = getCurrentUrl())?
         return false
     
     if root_url in poc_permitted_domains
@@ -53,6 +59,10 @@ _.extend JustdoHelpers,
     return false
 
   isPocPermittedDomainsOrBeta: (root_url) ->
+    if not root_url?
+      if not (root_url = getCurrentUrl())?
+        return false
+
     if root_url in beta_domains
       return true
 
