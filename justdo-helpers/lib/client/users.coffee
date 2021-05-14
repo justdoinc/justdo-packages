@@ -115,10 +115,6 @@ _.extend JustdoHelpers,
     return JustdoHelpers.getUsersDocsByIds(user_id, {}, options)
 
   filterUsersIdsArray: (user_ids, niddle, options) ->
-    user_docs = @getUsersDocsByIds user_ids,
-      fields:
-        _id: 1
-        profile: 1
-        emails: 1
+    user_docs = @getUsersDocsByIds user_ids, {user_fields_reactivity: false, missing_users_ractivity: true, ret_type: "array", get_docs_by_reference: true}
 
     return @filterUsersDocsArray user_docs, niddle, options
