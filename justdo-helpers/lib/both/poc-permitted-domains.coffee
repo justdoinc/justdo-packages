@@ -1,19 +1,4 @@
 poc_permitted_domains = [
-  # alpha
-  "https://alpha.justdo.today", "https://app-alpha.justdo.today",
-  "https://alpha-beta.justdo.today", "https://app-alpha-beta.justdo.today",
-
-  # Daniel's
-  "http://daniel-dev.justdo.today:3000", "http://daniel-dev.justdo.today:4000",
-
-  # local http
-  "http://local.justdo.today", "http://app-local.justdo.today",
-  "http://alpha-local.justdo.today", "http://app-local-beta.justdo.today",
-
-  # local https
-  "https://local.justdo.today", "https://app-local.justdo.today",
-  "https://alpha-local.justdo.today", "https://app-local-beta.justdo.today",
-
   # alpha .com
   "https://alpha.justdo.com", "https://app-alpha.justdo.com",
   "https://alpha-beta.justdo.com", "https://app-alpha-beta.justdo.com",
@@ -32,7 +17,7 @@ poc_permitted_domains = [
 
 beta_domains = [
   # beta
-  "https://beta.justdo.today", "https://app-beta.justdo.today"
+  "https://beta.justdo.com", "https://app-beta.justdo.com"
 ]
 
 first_call = true
