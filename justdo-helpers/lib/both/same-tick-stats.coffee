@@ -116,14 +116,16 @@ JustdoHelpers.registerSameTickCachePreClearProcedure ->
     return
 
   for stat_key, val of stats
-    if (threshold_def = thresholds[stat_key])? or (threshold_def = thresholds[JustdoHelpers._getSameTickStatsTrimmedKey(stat_key)])?
-      if _.isFunction threshold_def.threshold
-        if (message = threshold_def.threshold(val))?
-          JustdoHelpers.reportSameTickStatsOptimizationIssue(message)
-      else
-        if val >= threshold_def.threshold
-          JustdoHelpers.reportSameTickStatsOptimizationIssue(threshold_def.message(val, stat_key))
+    if not (threshold_def = thresholds[stat_key])?
+      if not (threshold_def = thresholds[JustdoHelpers._getSameTickStatsTrimmedKey(stat_key)])? or threshold_def?.threshold_type != "prefix"
+        continue
 
+    if _.isFunction threshold_def.threshold
+      if (message = threshold_def.threshold(val))?
+        JustdoHelpers.reportSameTickStatsOptimizationIssue(message)
+    else
+      if val >= threshold_def.threshold
+        JustdoHelpers.reportSameTickStatsOptimizationIssue(threshold_def.message(val, stat_key))
 
   if JustdoHelpers.report_all_stats
     console.log "STATS", stats
