@@ -102,6 +102,13 @@ thresholds =
       return "More than #{val} reactive observers are running on collection: #{collection_name}"
     break_if_threshold_reached: undefined
 
+  "minimongo-pause-observer-stats":
+    threshold_type: "prefix"
+    threshold: (val) ->
+      if val.total_clones > 50
+        return "Pausing the observers of a collection involved #{val.total_clones} clones"
+    break_if_threshold_reached: "once"
+
 JustdoHelpers.registerSameTickCachePreClearProcedure ->
   stats = JustdoHelpers.sameTickCacheGet(stats_key)
 
