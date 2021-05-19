@@ -257,7 +257,7 @@ export default class LocalCollection {
     // Set the 'paused' flag such that new observer messages don't fire.
     this.paused = true;
 
-    const stats = {total_queries: 0, total_clones: 0, total_clones_time: 0, queries: {}}
+    const stats = {total_queries: 0, total_clones: 0, total_clones_time: 0, queries: {}};
     // Take a snapshot of the query results for each query.
     Object.keys(this.queries).forEach(qid => {
       const query = this.queries[qid];
@@ -388,8 +388,12 @@ export default class LocalCollection {
     // observer methods won't actually fire when we trigger them.
     this.paused = false;
 
+    const stats = {total_queries: 0, total_clones: 0, total_compare_time: 0, queries: {}};
     Object.keys(this.queries).forEach(qid => {
       const query = this.queries[qid];
+
+      let pre_resume_clones = sameTickStatsGetVal("ejson-clone") || 0;
+      let compare_start = new Date();
 
       if (query.dirty) {
         query.dirty = false;
@@ -409,10 +413,22 @@ export default class LocalCollection {
         );
       }
 
+      let clones_done = (sameTickStatsGetVal("ejson-clone") || 0) - pre_resume_clones;
+      let compare_time = (new Date()) - compare_start;
+
+      stats.total_clones += clones_done;
+      stats.total_compare_time += compare_time;
+
+      stats.total_queries += 1;
+
+      stats.queries[qid] = {query: query, clones: clones_done, compare_time: compare_time};
+
       query.resultsSnapshot = null;
     });
 
     this._observeQueue.drain();
+
+    sameTickStatsSetVal("minimongo-resume-observer-stats::collection:" + this.name, stats);
   }
 
   retrieveOriginals() {
