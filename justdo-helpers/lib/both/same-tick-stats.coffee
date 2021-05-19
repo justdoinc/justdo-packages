@@ -105,8 +105,17 @@ thresholds =
   "minimongo-pause-observer-stats":
     threshold_type: "prefix"
     threshold: (val) ->
+      message = ""
+      if val.total_clones_time > 25
+        message += "Pausing the observers of a collection took #{val.total_clones_time}ms. "
       if val.total_clones > 50
-        return "Pausing the observers of a collection involved #{val.total_clones} clones"
+        message += "Pausing the observers of a collection involved #{val.total_clones} clones. "
+
+      if message.length == 0
+        return undefined
+
+      return message
+
     break_if_threshold_reached: "once"
 
 JustdoHelpers.registerSameTickCachePreClearProcedure ->
