@@ -122,10 +122,10 @@ JustdoHelpers.registerSameTickCachePreClearProcedure ->
 
     if _.isFunction threshold_def.threshold
       if (message = threshold_def.threshold(val))?
-        JustdoHelpers.reportSameTickStatsOptimizationIssue(message)
+        JustdoHelpers.reportSameTickStatsOptimizationIssue(message + " (#{stat_key})")
     else
       if val >= threshold_def.threshold
-        JustdoHelpers.reportSameTickStatsOptimizationIssue(threshold_def.message(val, stat_key))
+        JustdoHelpers.reportSameTickStatsOptimizationIssue(threshold_def.message(val, stat_key) + " (#{stat_key})")
 
   if JustdoHelpers.report_all_stats
     console.log "STATS", stats
@@ -198,7 +198,7 @@ _.extend JustdoHelpers,
 
           JustdoHelpers.sameTickCacheSet(once_key, true)
 
-        JustdoHelpers.reportSameTickStatsOptimizationIssue("[THRESHOLD BREAK] " + message)
+        JustdoHelpers.reportSameTickStatsOptimizationIssue("[THRESHOLD BREAK] " + message + " (#{key})")
         debugger
 
     return
