@@ -178,6 +178,11 @@ _.extend JustdoHelpers,
 
     return
 
+  sameTickStatsGetVal: (key) ->
+    stats = JustdoHelpers._getSameTickStatsObject()
+
+    return stats[key]
+
   sameTickStatsSetVal: (key, val) ->
     stats = JustdoHelpers._getSameTickStatsObject()
 
