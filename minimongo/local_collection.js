@@ -7,6 +7,7 @@ import {
   isOperatorObject,
   populateDocumentWithQueryFields,
   projectionDetails,
+  sameTickStatsGetVal,
   sameTickStatsInc,
   sameTickStatsSetVal,
   sameTickStatsPushToArray,
@@ -126,22 +127,9 @@ export default class LocalCollection {
 
   // The following is a JustDo extension to local_collection
   insertInitialPayload(docs, callback) {
-    this._docs.bulkSet(docs);
-
-    const queriesToRecompute = [];
-
-    // trigger live queries that match
-    Object.keys(this.queries).forEach(qid => {
-      queriesToRecompute.push(qid); // Just recompute all queries, instead of testing for every item which queries it affects.
+    this.performOperationDirectlyOnIdMap(() => {
+      this._docs.bulkSet(docs);
     });
-
-    queriesToRecompute.forEach(qid => {
-      if (this.queries[qid]) {
-        this._recomputeResults(this.queries[qid]);
-      }
-    });
-
-    this._observeQueue.drain();
 
     // Defer because the caller likely doesn't expect the callback to be run
     // immediately.
@@ -152,6 +140,44 @@ export default class LocalCollection {
     }
 
     return;
+  }
+
+  performOperationDirectlyOnIdMap(massOp) {
+    // Note, this method isn't useful if you are using ._collection.remove/update/insert
+    //
+    // e.g self.items_collection._collection.remove({
+    //       project_id: id
+    //     });
+    //
+    // in such case use: this.performOperationOnUnderlyingMinimongo()
+    //
+    // Otherwise the op/s will already update the queries.results and recompute results will have no meaning.
+
+    massOp();
+
+    this.recomputeAllQueries();
+
+    return;
+  }
+
+  recomputeAllQueries() {
+    let qid;
+
+    for (qid in this.queries) {
+      this._recomputeResults(this.queries[qid]);
+    }
+
+    this._observeQueue.drain(); // I am not really sure whether this one is actually needed (But has no observable impact on performance). Daniel C.
+  }
+
+  performOperationOnUnderlyingMinimongo(operation) {
+    this.pauseObservers();
+
+    operation();
+
+    this.resumeObservers();
+
+    this._observeQueue.drain(); // I am not really sure whether this one is actually needed (But has no observable impact on performance). Daniel C.
   }
 
   // XXX possibly enforce that 'undefined' does not appear (we assume
@@ -231,11 +257,26 @@ export default class LocalCollection {
     // Set the 'paused' flag such that new observer messages don't fire.
     this.paused = true;
 
+    const stats = {total_queries: 0, total_clones: 0, total_clones_time: 0, queries: {}}
     // Take a snapshot of the query results for each query.
     Object.keys(this.queries).forEach(qid => {
       const query = this.queries[qid];
+
+      let pre_pause_clones = sameTickStatsGetVal("ejson-clone") || 0;
+      let clone_start = new Date();
       query.resultsSnapshot = EJSON.clone(query.results);
+      let clones_done = (sameTickStatsGetVal("ejson-clone") || 0) - pre_pause_clones;
+      let clone_time = (new Date()) - clone_start;
+
+      stats.total_clones += clones_done;
+      stats.total_clones_time += clone_time;
+
+      stats.total_queries += 1;
+
+      stats.queries[qid] = {query: query, clones: clones_done, clone_time: clone_time};
     });
+
+    sameTickStatsSetVal("minimongo-pause-observer-stats::collection:" + this.name, stats);
   }
 
   remove(selector, callback) {
