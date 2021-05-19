@@ -19,8 +19,10 @@ thresholds =
   #                                       # For prefix we trim everything after the ::
   #                                       # Note that message will be called with both message(val, key) ->
   #                                       # so it can be customized for the specific key that triggered it
-  #   threshold: 50
-  #   message: (val) -> "There were #{val} EJSON.clone calls in the same tick"
+  #   threshold: 50 / Function            # If is function, undefined will be regarded as a non-breached threshold,
+  #                                       # a non undefined value will be used as the message (instead of the message
+  #                                       # option that is ignored if a function is used to define the threshold)
+  #   message: (val) -> "There were #{val} EJSON.clone calls in the same tick" # Ignored if threshold is a function
   #   break_if_threshold_reached: "once" # Set to "once" / "always" or use undefined to avoid break.
   #                                      # break will happen only if JustdoHelpers.allow_break_if_threshold_reached is true
 
@@ -108,8 +110,13 @@ JustdoHelpers.registerSameTickCachePreClearProcedure ->
 
   for stat_key, val of stats
     if (threshold_def = thresholds[stat_key])? or (threshold_def = thresholds[JustdoHelpers._getSameTickStatsTrimmedKey(stat_key)])?
-      if val >= threshold_def.threshold
-        JustdoHelpers.reportSameTickStatsOptimizationIssue(threshold_def.message(val, stat_key))
+      if _.isFunction threshold_def.threshold
+        if (message = threshold_def.threshold(val))?
+          JustdoHelpers.reportSameTickStatsOptimizationIssue(message)
+      else
+        if val >= threshold_def.threshold
+          JustdoHelpers.reportSameTickStatsOptimizationIssue(threshold_def.message(val, stat_key))
+
 
   if JustdoHelpers.report_all_stats
     console.log "STATS", stats
@@ -164,17 +171,26 @@ _.extend JustdoHelpers,
         return
 
       if (break_type = threshold_def.break_if_threshold_reached)?
-        if (stats[key] >= threshold_def.threshold)
-          if break_type == "once"
-            once_key = "same-tick-stats-once-threshold-reported::" + key
+        val = stats[key]
+        if _.isFunction threshold_def.threshold
+          message = threshold_def.threshold(val)
+        else
+          if (val >= threshold_def.threshold)
+            message = threshold_def.message(val, key)
 
-            if JustdoHelpers.sameTickCacheExists(once_key)
-              return
+        if not message?
+          return
 
-            JustdoHelpers.sameTickCacheSet(once_key, true)
+        if break_type == "once"
+          once_key = "same-tick-stats-once-threshold-reported::" + key
 
-          JustdoHelpers.reportSameTickStatsOptimizationIssue("[THRESHOLD BREAK] " + threshold_def.message(stats[key], key))
-          debugger
+          if JustdoHelpers.sameTickCacheExists(once_key)
+            return
+
+          JustdoHelpers.sameTickCacheSet(once_key, true)
+
+        JustdoHelpers.reportSameTickStatsOptimizationIssue("[THRESHOLD BREAK] " + message)
+        debugger
 
     return
 
