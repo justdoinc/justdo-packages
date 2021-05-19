@@ -43,7 +43,7 @@ _.extend Projects.prototype,
 
       isAdmin: -> @is_admin_rv.get()
 
-      isGuest: -> not JD.activeJustdo({members: 1}).members?
+      isGuest: -> not JD.activeJustdo({members: 1})?.members?
 
       membersCount: ->
         @getProjectDoc({fields: {members: 1}})?.members?.length

@@ -23,7 +23,7 @@ _.extend Projects.prototype,
                                                              # to an array.
     }, options
 
-    if not (members = @getProjectDoc(project_id, {fields: {members: 1}}).members)?
+    if not (members = @getProjectDoc(project_id, {fields: {members: 1}})?.members)?
       #
       # The user is a guest of this JustDo, the following happens only for guests
       #
