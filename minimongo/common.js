@@ -2,6 +2,7 @@ import LocalCollection from './local_collection.js';
 
 // Note, exactly the same code is present in:
 // justdo-shared-packages/ejson/ejson.js
+export let sameTickStatsGetVal = function () {return};
 export let sameTickStatsInc = function () {return};
 export let sameTickStatsSetVal = function () {return};
 export let sameTickStatsPushToArray = function () {return};
@@ -14,6 +15,7 @@ export let reportOptimizationIssue = function (message, data) {
 if (Meteor.isClient) {
   let interval_id = setInterval(function () {
     if (typeof Package["justdoinc:justdo-helpers"] !== "undefined") {
+      sameTickStatsGetVal = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsGetVal;
       sameTickStatsInc = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsInc;
       sameTickStatsSetVal = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsSetVal;
       sameTickStatsPushToArray = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsPushToArray;
@@ -24,6 +26,7 @@ if (Meteor.isClient) {
     }
   }, 10);
 } else {
+  sameTickStatsGetVal = function () {return};
   sameTickStatsInc = function () {return};
   sameTickStatsSetVal = function () {return};
   sameTickStatsPushToArray = function () {return};
