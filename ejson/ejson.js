@@ -14,6 +14,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 // Note, exactly the same code is present in:
 // justdo-internal-packages/minimongo/common.js
+let sameTickStatsGetVal = function () {return};
 let sameTickStatsInc = function () {return};
 let sameTickStatsSetVal = function () {return};
 let sameTickStatsPushToArray = function () {return};
@@ -26,6 +27,7 @@ let reportOptimizationIssue = function (message, data) {
 if (Meteor.isClient) {
   let interval_id = setInterval(function () {
     if (typeof Package["justdoinc:justdo-helpers"] !== "undefined") {
+      sameTickStatsGetVal = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsGetVal;
       sameTickStatsInc = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsInc;
       sameTickStatsSetVal = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsSetVal;
       sameTickStatsPushToArray = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsPushToArray;
@@ -36,6 +38,7 @@ if (Meteor.isClient) {
     }
   }, 10);
 } else {
+  sameTickStatsGetVal = function () {return};
   sameTickStatsInc = function () {return};
   sameTickStatsSetVal = function () {return};
   sameTickStatsPushToArray = function () {return};
