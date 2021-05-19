@@ -31,14 +31,16 @@ _.extend Projects.prototype,
   _setupProjectRemovalProcedures: ->
     self = @
 
-    self.projects_collection.find({}).observeChanges
-      removed: (id) ->
-        # Remove from the storage tasks of the removed project.
+    JustdoHelpers.getCollectionIdMap(self.projects_collection).on "after-remove", (id) ->
+      # Remove from the storage tasks of the removed project.
+      self.items_collection._collection.performOperationOnUnderlyingMinimongo ->
         self.items_collection._collection.remove({project_id: id})
 
-        delete tasks_subscription_last_sync_time[id]
-
         return
+
+      delete tasks_subscription_last_sync_time[id]
+
+      return
 
     return
 
