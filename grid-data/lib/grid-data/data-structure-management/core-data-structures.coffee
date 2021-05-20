@@ -56,8 +56,6 @@ _.extend GridData.prototype,
     @_typed_items_paths_map_to_grid_tree_indices = {} # {path: index in grid_tree}
     @_expanded_paths = {} # if path is a key of @_expanded_paths it is expanded regardless of its value
 
-    @_ignore_change_in_fields = []
-
     # We collect from the "structure-changed" event information about items ids with changed children.
     #
     # We buffer these changes into the @_items_ids_with_changed_children_buffer object.
