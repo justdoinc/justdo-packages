@@ -10,6 +10,20 @@ temporary_sensitivity_decrease_factor = 5
 
 stats_key = "__stats"
 
+pauseResumeThreshold = (val) ->
+  message = ""
+  if val.total_clones_time > 25
+    message += "Pausing/Resuming the observers of a collection took #{val.total_clones_time}ms. "
+  if val.total_clones > 50
+    message += "Pausing/Resuming the observers of a collection involved #{val.total_clones} clones. "
+  if val.total_compare_time > 50
+    message += "Resuming the observers of a collection took #{val.total_compare_time}ms. "
+
+  if message.length == 0
+    return undefined
+
+  return message
+
 thresholds =
   # Example:
   # 
@@ -104,18 +118,12 @@ thresholds =
 
   "minimongo-pause-observer-stats":
     threshold_type: "prefix"
-    threshold: (val) ->
-      message = ""
-      if val.total_clones_time > 25
-        message += "Pausing the observers of a collection took #{val.total_clones_time}ms. "
-      if val.total_clones > 50
-        message += "Pausing the observers of a collection involved #{val.total_clones} clones. "
+    threshold: pauseResumeThreshold
+    break_if_threshold_reached: "once"
 
-      if message.length == 0
-        return undefined
-
-      return message
-
+  "minimongo-resume-observer-stats":
+    threshold_type: "prefix"
+    threshold: pauseResumeThreshold
     break_if_threshold_reached: "once"
 
 JustdoHelpers.registerSameTickCachePreClearProcedure ->
