@@ -93,6 +93,74 @@ export class IdMap extends EventEmitter {
     return def;
   }
 
+  unsetDocFields(id, fields) {
+    var key = this._idStringify(id);
+
+    if (!(key in this._map)) {
+      // Do nothing, unknown key
+      return;
+    }
+
+    // COFFEE
+    // removed_fields = []
+
+    // for field in fields
+    //   if field of this._map[key]
+    //     removed_fields.push field
+    //     delete this._map[key][field]
+        
+    // if removed_fields.length > 0
+    //   this.emit("after-unset-doc-fields", key, removed_fields)
+
+    var field, i, len, removed_fields;
+
+    removed_fields = [];
+
+    for (i = 0, len = fields.length; i < len; i++) {
+      field = fields[i];
+      if (field in this._map[key]) {
+        removed_fields.push(field);
+        delete this._map[key][field];
+      }
+    }
+
+    if (removed_fields.length > 0) {
+      this.emit("after-unsetDocFields", key, removed_fields);
+    }
+  }
+
+  setDocFields(id, fields) {
+    var key = this._idStringify(id);
+
+    // COFFEE
+    // edited_fields = {}
+    //
+    // for field, val of fields
+    //   if field != "_id" and (not EJSON.equals(val, this._map[key][field]))
+    //     edited_fields[field] = val
+    //
+    // if Object.keys(edited_fields).length != 0
+    //   Object.assign(this._map[key], edited_fields)
+    //
+    //   this.emit("after-set-doc-fields", key, edited_fields)
+
+    var edited_fields, field, val;
+
+    edited_fields = {};
+
+    for (field in fields) {
+      val = fields[field];
+      if (field !== "_id" && (!EJSON.equals(val, this._map[key][field]))) {
+        edited_fields[field] = val;
+      }
+    }
+
+    if (Object.keys(edited_fields).length !== 0) {
+      Object.assign(this._map[key], edited_fields);
+      this.emit("after-setDocFields", key, edited_fields);
+    }
+  }
+
   // Assumes that values are EJSON-cloneable, and that we don't need to clone
   // IDs (ie, that nobody is going to mutate an ObjectId).
   clone() {
