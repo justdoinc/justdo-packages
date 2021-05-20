@@ -106,6 +106,9 @@ _.extend GridDataCore.prototype,
     if not (@tasks_query = @options.tasks_query)?
       @tasks_query = {}
 
+    if not (_.isEmpty(@tasks_query) or (_.size(@tasks_query) == 1 and "project_id" of @tasks_query))
+      throw @_error "invalid-options", "At the moment only tasks_query={} or task_query={project_id: XXX} are supported"
+
     if not (schema = @collection.simpleSchema())?
       throw @_error "schemaless-collection"
 
@@ -166,6 +169,23 @@ _.extend GridDataCore.prototype,
 
       return [structure_changed, items_ids_with_changed_children]
 
+    unset_fields: (id, fields_ids) ->
+      # console.log "unset_fields", id, fields_ids
+
+      # No need to update filters on update, since if the update affect
+      # the filter the filter tracker will recognize it and trigger
+      # its update
+
+      structure_changed = false
+      items_ids_with_changed_children = {}
+
+      for field_id in fields_ids
+        delete @items_by_id[id][field_id]
+
+      @emit "content-changed", id, fields_ids
+
+      return [structure_changed, items_ids_with_changed_children]
+
     update: (id, fields) ->
       # console.log "update", id, fields
 
@@ -176,22 +196,9 @@ _.extend GridDataCore.prototype,
       structure_changed = false
       items_ids_with_changed_children = {}
 
-      # update items_by_id[id] without replacing it with a
-      # new object (make use of original object). 
-      old_item = @items_by_id[id]
-      item = @collection.findOne(id)
+      Object.assign(@items_by_id[id], fields)
 
-      # If by the time we are flushing, item doesn't
-      # exist anymore, no point to update it.
-      # If old_item doesn't exist, something weird happened...
-      if old_item? and item?
-        for field in fields
-          @items_by_id[id][field] = item[field]
-
-        for removed_field in _.difference(_.keys(@items_by_id[id]), _.keys(item))
-          delete @items_by_id[id][removed_field]
-
-        @emit "content-changed", id, fields 
+      @emit "content-changed", id, Object.keys(fields)
 
       return [structure_changed, items_ids_with_changed_children]
 
@@ -333,50 +340,86 @@ _.extend GridDataCore.prototype,
       @flush()
 
   _initItemsTracker: ->
-    if not @destroyed and not @_items_tracker
-      # The first time we build the tree is with @_initDataStructure()
-      # so, any data existing prior init will be taken by it,
-      # tracker_init var is here to avoid adding this data
-      # second time.
-      tracker_init = true # With _suppress_initial this is now redundant, but kept since _suppress_initial isn't documented and behaviour might change in the future
-      @_items_tracker = @collection.find(@tasks_query).observeChanges
-        _suppress_initial: true
-        added: (id, doc) =>
-          # @logger.debug "Tracker: Item added #{id}"
+    if not @destroyed and not @_collection_id_map_events_listeners?
+      isDocMatchedByTasksQuery = (doc) => not @tasks_query.project_id? or doc.project_id == @tasks_query.project_id
 
-          if not tracker_init
-            doc._id = id
-            @_data_changes_queue.push ["add", [id, doc]]
+      @_collection_id_map_events_listeners =
+        "after-set": (id, value) =>
+          if not isDocMatchedByTasksQuery(value)
+            return
 
-            @flush_manager.setNeedFlush()
-
-        changed: (id, fields_changes) =>
-          # @logger.debug "Tracker: Item changed #{id}"
-
-          fields = _.difference(_.keys(fields_changes), @_ignore_change_in_fields) # remove ignored fields
-
-          # Take care of parents changes
-          if "parents" in fields
-            @_data_changes_queue.push ["parent_update", [id, fields_changes.parents]]
-
-            @flush_manager.setNeedFlush()
-
-            fields = _.without(fields, "parents") # remove parents field
-
-          # Regular changes
-          if fields.length != 0
-            @_data_changes_queue.push ["update", [id, fields]]
-
-            @flush_manager.setNeedFlush()
-
-        removed: (id) =>
-          # @logger.debug "Tracker: Item removed #{id}"
-
-          @_data_changes_queue.push ["remove", [id]]
+          @_data_changes_queue.push ["add", [id, EJSON.clone(value)]]
 
           @flush_manager.setNeedFlush()
 
-      tracker_init = false
+          return
+
+        "after-remove": (id) =>
+          # Note, we don't check isDocMatchedByTasksQuery, if we got an item under @items_by_id
+          # the item with that id already passed that test before.
+          if id of @items_by_id
+            @_data_changes_queue.push ["remove", [id]]
+
+            @flush_manager.setNeedFlush()
+
+          return
+
+        "after-unsetDocFields": (id, removed_fields) =>
+          if id not of @items_by_id
+            # Update isn't related to us
+            return
+
+          @_data_changes_queue.push ["unset_fields", [id, removed_fields]]
+
+          @flush_manager.setNeedFlush()
+
+          return
+
+        "after-setDocFields": (id, fields_changes) =>
+          # console.log "after-set-doc-fields", id, fields_changes
+
+          # @logger.debug "Tracker: Item changed #{id}"
+
+          if id not of @items_by_id
+            # Update isn't related to us
+            return
+
+          # Take care of parents changes
+          if "parents" of fields_changes
+            @_data_changes_queue.push ["parent_update", [id,  fields_changes.parents]]
+
+            @flush_manager.setNeedFlush()
+
+          changed_fields = _.omit(fields_changes, "parents")
+
+          # Regular changes
+          if not _.isEmpty(changed_fields)
+            @_data_changes_queue.push ["update", [id, changed_fields]]
+
+            @flush_manager.setNeedFlush()
+
+          return
+
+        "after-bulkSet": (docs) =>
+          # Just proxy to the others
+          for doc_id, doc of docs
+            if doc_id of @items_by_id
+              @_collection_id_map_events_listeners["after-setDocFields"](doc_id, doc)
+            else
+              @_collection_id_map_events_listeners["after-set"](doc_id, doc)
+
+          return
+
+      for listener_id, listener of @_collection_id_map_events_listeners
+        JustdoHelpers.getCollectionIdMap(@collection).on listener_id, listener
+
+      @onDestroy =>
+        for listener_id, listener of @_collection_id_map_events_listeners
+          JustdoHelpers.getCollectionIdMap(@collection).off listener_id, listener
+
+        return
+
+      return
 
   _initForeignKeysTrackers: ->
     @_foreign_keys_fields_updates_flush_manager = new JustdoHelpers.FlushManager
