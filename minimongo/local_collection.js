@@ -657,7 +657,7 @@ export default class LocalCollection {
 
     const old_doc = EJSON.clone(doc);
 
-    LocalCollection._modify(doc, mod, {arrayIndices});
+    LocalCollection._modify(doc, mod, {arrayIndices, id_map: this._docs});
 
     Object.keys(this.queries).forEach(qid => {
       const query = this.queries[qid];
@@ -1309,19 +1309,50 @@ LocalCollection._modify = (doc, modifier, options = {}) => {
     assertHasValidFieldNames(modifier);
   }
 
-  // move new document into place.
-  Object.keys(doc).forEach(key => {
-    // Note: this used to be for (var key in doc) however, this does not
-    // work right in Opera. Deleting from a doc while iterating over it
-    // would sometimes cause opera to skip some keys.
-    if (key !== '_id') {
-      delete doc[key];
-    }
-  });
+  if (typeof options.id_map !== "undefined") {
+    // ORIGINAL COFFEE CODE FOR THE FOLLOWING
+    //
+    // keys_to_remove = []
+    //
+    // for old_key of doc
+    //   if old_key not of newDoc
+    //     keys_to_remove.push(old_key)
+    //
+    // if not _.isEmpty keys_to_remove
+    //   options.id_map.unsetDocFields(newDoc._id, keys_to_remove);
 
-  Object.keys(newDoc).forEach(key => {
-    doc[key] = newDoc[key];
-  });
+    let keys_to_remove, old_key;
+
+    keys_to_remove = [];
+
+    for (old_key in doc) {
+      if (!(old_key in newDoc)) {
+        keys_to_remove.push(old_key);
+      }
+    }
+
+    if (!_.isEmpty(keys_to_remove)) {
+      options.id_map.unsetDocFields(newDoc._id, keys_to_remove);
+    }
+  } else {
+    // move new document into place.
+    Object.keys(doc).forEach(key => {
+      // Note: this used to be for (var key in doc) however, this does not
+      // work right in Opera. Deleting from a doc while iterating over it
+      // would sometimes cause opera to skip some keys.
+      if (key !== '_id') {
+        delete doc[key];
+      }
+    });
+  }
+
+  if (typeof options.id_map !== "undefined") {
+    options.id_map.setDocFields(newDoc._id, newDoc);
+  } else {
+    Object.keys(newDoc).forEach(key => {
+      doc[key] = newDoc[key];
+    });
+  }
 };
 
 LocalCollection._observeFromObserveChanges = (cursor, observeCallbacks) => {
