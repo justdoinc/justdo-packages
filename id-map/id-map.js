@@ -22,7 +22,7 @@ export class IdMap extends EventEmitter {
     var key = this._idStringify(id);
     this._map[key] = value;
 
-    this.emit("after-set", id, value);
+    this.emit("after-set", key, value);
   }
 
   bulkSet(docs) {
