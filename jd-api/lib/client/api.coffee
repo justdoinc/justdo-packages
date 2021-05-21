@@ -48,7 +48,7 @@ _.extend JD,
 
     return APP.collections.TasksAugmentedFields.findOne(active_item_id, {fields: fields})
 
-  activeItemUsers: -> JD.activeItemAugmentedFields({users: 1})?.users or []
+  activeItemUsers: -> _.uniq(JD.activeItemAugmentedFields({users: 1})?.users or [])
 
   activePath: ->
     if (active_path = APP.modules?.project_page?.activeItemPath())?

@@ -101,7 +101,7 @@ APP.executeAfterAppLibCode ->
     if not augmented_task_doc?
       return
 
-    users = augmented_task_doc.users
+    users = _.uniq(augmented_task_doc.users or [])
 
     if not (item_users = users)?
       throw module._error("unknown-data-context", "can't determine current task users")
