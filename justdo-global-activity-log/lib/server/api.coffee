@@ -1,5 +1,5 @@
-default_global_changelog_tasks_limit = 100
-default_global_changelog_changelogs_limit = 50
+default_global_changelog_tasks_limit = JustdoGlobalActivityLog.default_global_changelog_tasks_limit
+default_global_changelog_changelogs_limit = JustdoGlobalActivityLog.default_global_changelog_changelogs_limit
 
 _.extend JustdoGlobalActivityLog.prototype,
   _immediateInit: ->
@@ -45,7 +45,6 @@ _.extend JustdoGlobalActivityLog.prototype,
       defaultValue: default_global_changelog_tasks_limit
 
       min: 1
-      max: 100
 
     changelogs_limit:
       type: Number
@@ -53,7 +52,6 @@ _.extend JustdoGlobalActivityLog.prototype,
       defaultValue: default_global_changelog_changelogs_limit
 
       min: 1
-      max: 500
 
     include_performing_user:
       type: Boolean
