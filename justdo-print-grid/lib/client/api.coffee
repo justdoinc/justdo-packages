@@ -581,7 +581,7 @@ _.extend JustdoPrintGrid.prototype,
           # Html content, which in the context of a csv file, is meaningless.
           #
           # In such cases, we strip away all the html tags from the formatter output
-          return formatter_content.replace(/(<([^>]+)>)/ig, "")
+          return formatter_content.replace(/(<([^>]+)>)/ig, "").trim()
         else
           return formatter_content
 
