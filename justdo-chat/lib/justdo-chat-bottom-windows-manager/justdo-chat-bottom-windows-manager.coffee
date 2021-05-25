@@ -156,7 +156,7 @@ _.extend JustdoChatBottomWindowsManager.prototype,
     @bottom_windows_wireframe = new BottomWindowsWireframe
       right_margin: 30
       left_margin: 30
-      open_window_width: 290
+      open_window_width: 328
       min_window_width: 120
       width_between_windows: 7
       width_between_windows_to_extra_windows_button: 10
