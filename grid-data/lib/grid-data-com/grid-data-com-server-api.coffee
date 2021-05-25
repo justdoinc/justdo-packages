@@ -137,10 +137,16 @@ _.extend GridDataCom.prototype,
     added_users = []
     removed_users = []
 
-    if (pushed_users = modifier.$push?.users?.$each)?
+    if (pushed_users = modifier.$push?.users)?
+      if pushed_users?.$each?
+        pushed_users = pushed_users.$each
+
       added_users = added_users.concat(pushed_users)
 
-    if (pulled_users = modifier.$pull?.users?.$in)?
+    if (pulled_users = modifier.$pull?.users)?
+      if pulled_users?.$in?
+        pulled_users = pulled_users.$in
+
       removed_users = removed_users.concat(pulled_users)
 
     if (users = modifier.$set?.users)?
