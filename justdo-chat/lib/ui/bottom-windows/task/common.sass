@@ -1,6 +1,7 @@
 @import "{justdoinc:justdo-chat}/lib/ui/bottom-windows/task/vars.scss"
 
-$close-chat-width: 26px
+$close-chat-width: 19px
+$minimize-chat-width: 24px
 
 .chat-window
   position: absolute
@@ -22,9 +23,8 @@ $close-chat-width: 26px
     .chat-header
       animation: non-active-unread-chat-window ($time-for-each-unread-blinking-color * 2) infinite
 
-  .close-chat 
+  .close-chat, .minimize-chat
     position: absolute
-    right: 0
     top: 0
 
     font-size: 12px
@@ -32,10 +32,24 @@ $close-chat-width: 26px
     cursor: pointer
     height: 100%
 
-    width: $close-chat-width
     text-align: center
 
     line-height: 30px
+
+  .close-chat
+    right: 0
+    padding-right: 5px
+    width: $close-chat-width
+  .minimize-chat
+    right: 22px
+    top: 0px
+
+    width: $minimize-chat-width
+
+    font-size: 9px
+    padding-right: 3px
+    padding-left: 11px
+    padding-top: 1px
 
   .header-title
     user-select: none
@@ -54,7 +68,7 @@ $close-chat-width: 26px
     height: 100%
 
     padding-left: 10px
-    padding-right: $close-chat-width
+    padding-right: $close-chat-width + $minimize-chat-width
 
 .window-active
   .chat-header
@@ -64,7 +78,7 @@ $close-chat-width: 26px
     .chat-header
       animation: active-unread-chat-window ($time-for-each-unread-blinking-color * 2) infinite
 
-  .close-chat
+  .close-chat, .minimize-chat
     color: rgba(255, 255, 255, 0.80)
 
   .chat-header

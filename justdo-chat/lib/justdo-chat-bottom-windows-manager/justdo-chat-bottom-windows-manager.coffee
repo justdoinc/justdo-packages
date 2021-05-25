@@ -237,6 +237,11 @@ _.extend JustdoChatBottomWindowsManager.prototype,
 
     return @_setBottomWindow(channel_type, channel_identifier, {order: order, state: "open"}, onComplete)
 
+  minimizeWindow: (channel_type, channel_identifier, options) ->
+    options = _.extend {onComplete: undefined}, options
+
+    return @_setBottomWindow(channel_type, channel_identifier, {state: "min"}, options.onComplete)
+
   removeWindow: (channel_type, channel_identifier) ->
     return @_removeBottomWindow(channel_type, channel_identifier)
 
@@ -279,7 +284,7 @@ _.extend JustdoChatBottomWindowsManager.prototype,
   _getWindowDefForBottomWindowChannelDoc: (bottom_window_channel) ->
     if (channel_type = bottom_window_channel.channel_type) == "task"
       open_template = "chat_bottom_windows_task_open"
-      min_template = "chat_bottom_windows_task_min"
+      min_template = undefined # If one day, instead of showing the minimized chat windows in the Extra Windows button, you'd want to show it as an actual minimized button in the tray use "chat_bottom_windows_task_min" instead of undefined.
 
       template_data = 
         project_id: bottom_window_channel.project_id

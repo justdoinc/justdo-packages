@@ -3,7 +3,8 @@
     <div class="chat-window open-chat-window {{#if isFocused}}window-active{{/if}} {{#if hasUnreadMessages}}window-unread{{/if}}">
       <div class="chat-header">
         <div class="header-title">#{{getTask.seqId}}{{#with getTask.title}}: {{this}}{{/with}}</div>
-        <div class="close-chat"><i class="fa fa-times" aria-hidden="true"></i></div>
+        <div class="minimize-chat" title="Minimize Chat"><i class="fa fa-window-minimize" aria-hidden="true"></i></div>
+        <div class="close-chat" title="Close Chat"><i class="fa fa-times" aria-hidden="true"></i></div>
       </div>
 
       {{> common_chat_messages_board getChannelObject=getTaskChatObject request_authors_details=true messages_authors_collection=getMessagesAuthorsCollection}}

@@ -80,6 +80,11 @@ Template.chat_bottom_windows_task_open.events
     APP.justdo_chat._justdo_chat_bottom_windows_manager.removeWindow "task", {task_id: @task_id}
 
     return
+    
+  "click .minimize-chat": ->
+    APP.justdo_chat._justdo_chat_bottom_windows_manager.minimizeWindow "task", {task_id: @task_id}
+
+    return
 
   "click .header-title": ->
     activateTask = =>
