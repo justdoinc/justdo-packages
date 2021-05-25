@@ -38,7 +38,7 @@ _.extend BottomWindowsWireframe.prototype,
     #
     #     window_def: # The window def as provided to @setWindows()
     #
-    #     rendered_state: "pre-render"/"insufficient-space"/"min"/"open"/"pre-removal" # Holds the current rendered state, might be in-consistent
+    #     rendered_state: "pre-render"/"insufficient-space"/"min"/"min-with-no-template"/"open"/"pre-removal" # Holds the current rendered state, might be in-consistent
     #                                                       # with window_def.window_state, if there's not enough space to
     #                                                       # render, or if renderWindow haven't been called yet since
     #                                                       # the last setWindows() call.
@@ -139,11 +139,14 @@ _.extend BottomWindowsWireframe.prototype,
     return window_arrangement_def
 
   _updateExtraWindows: ->
-    # If we had no space for the last item, space exhausted
-    space_exhausted =
-      @_current_windows_arrangement[@_current_windows_arrangement.length - 1]?.rendered_state == "insufficient-space"
+    extra_windows = _.filter @_current_windows_arrangement, (window_arrangement_def) =>
+      if window_arrangement_def.rendered_state == "insufficient-space"
+        return true
 
-    if not space_exhausted
+      return @_isMinimizedWindowWithoutMinimizedTemplate(window_arrangement_def.window_def)
+
+    # If we there are no window to the Extra Windows section
+    if _.isEmpty(extra_windows)
       if @extra_windows_btn_tpl_obj?
         @extra_windows_btn_tpl_obj.destroy()
         @extra_windows_btn_tpl_obj = null
@@ -165,9 +168,8 @@ _.extend BottomWindowsWireframe.prototype,
       @$container.append $node
 
     extra_windows_ids = []
-    for window_arrangement_def in @_current_windows_arrangement
-      if window_arrangement_def.rendered_state == "insufficient-space"
-        extra_windows_ids.push window_arrangement_def.id
+    for window_arrangement_def in extra_windows
+      extra_windows_ids.push window_arrangement_def.id
 
     @extra_windows_ids_rv.set extra_windows_ids
 
@@ -192,7 +194,8 @@ _.extend BottomWindowsWireframe.prototype,
     #      window_state: "min/open" # The desired state for the window, if space permits.
     #
     #      open_template: String # the template to use when the window is open
-    #      min_template: String , the template to use when the window is minimized
+    #      min_template: String or undefined # The template to use when the window is minimized
+    #                                        # if undefined the window will be part of the Extra windows 
     #
     #      data: # The data object to provide to the open_template/min_template .
     #            # Important! changes to data fields that aren't listed under
@@ -348,10 +351,12 @@ _.extend BottomWindowsWireframe.prototype,
         #     @$container.append($node)
         else
           @$container.find("> div:eq(#{i - 1})").after($node)
-      else
-        break # we reached the end of rendered items in @_current_windows_arrangement
+
+    @$container.append($(".extra-windows-button-container", @$container))
 
     return
+
+  _isMinimizedWindowWithoutMinimizedTemplate: (window_def) -> window_def.window_state == "min" and not window_def.min_template?
 
   _renderWindows: ->
     @_removeRemovedWindowsFromCurrentWindowsArrangement()
@@ -365,6 +370,11 @@ _.extend BottomWindowsWireframe.prototype,
 
     for window_arrangement_def, i in @_current_windows_arrangement
       {id, window_def} = window_arrangement_def
+
+      if @_isMinimizedWindowWithoutMinimizedTemplate(window_def)
+        @_destroyWindowTemplate(window_arrangement_def, "min-with-no-template")
+
+        continue
 
       # If space exhausted already, no point calculating space sufficiancy again
       if not space_exhausted
@@ -400,7 +410,7 @@ _.extend BottomWindowsWireframe.prototype,
       else
         available_width -= space_required
 
-        if window_arrangement_def.rendered_state in ["pre-render", "insufficient-space"] or window_arrangement_def.re_render_required
+        if window_arrangement_def.rendered_state in ["pre-render", "insufficient-space", "min-with-no-template"] or window_arrangement_def.re_render_required
           # If the window weren't rendered before, or, if re-rendering required
           @_rerenderWindowTemplate(window_arrangement_def, i)
         else
