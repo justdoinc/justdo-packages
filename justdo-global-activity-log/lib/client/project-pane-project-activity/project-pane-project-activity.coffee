@@ -147,7 +147,6 @@ Template.global_activity_log_project_pane_project_activity.events
 
   "scroll .tab-project-activity": (e, tpl)->
     more_item_container_position = $(".tab-project-activity .more-items-container").position().top - $(".tab-project-activity").height()
-    updated_logs_count = APP.collections.JDGlobalChangelog.find().count()
 
     # New subscription is created when
     # 1. Project pane is scrolled to the bottom
@@ -155,11 +154,13 @@ Template.global_activity_log_project_pane_project_activity.events
     # (as .scroll is sensitive and can trigger the following code thousands of times)
     # 3. JDGlobalChangelog collection is updated after previous subscription has finished loading
     # (as we don't want to keep increasing changelog_tasks_limit and changelog_changelogs_limit when there's no new logs)
-    if (more_item_container_position < 10) and (not tpl.loading_more_item) and (updated_logs_count > tpl.logs_count)
-      tpl.loading_new_logs.set true
-      tpl.logs_count = updated_logs_count
-      tpl.changelog_tasks_limit += JustdoGlobalActivityLog.default_global_changelog_tasks_limit
-      tpl.changelog_changelogs_limit += JustdoGlobalActivityLog.default_global_changelog_changelogs_limit
-      tpl.refreshChangelogSubscription()
+    if (more_item_container_position < 10) and (not tpl.loading_more_item)
+      updated_logs_count = APP.collections.JDGlobalChangelog.find().count()
+      if updated_logs_count > tpl.logs_count
+        tpl.loading_new_logs.set true
+        tpl.logs_count = updated_logs_count
+        tpl.changelog_tasks_limit += JustdoGlobalActivityLog.default_global_changelog_tasks_limit
+        tpl.changelog_changelogs_limit += JustdoGlobalActivityLog.default_global_changelog_changelogs_limit
+        tpl.refreshChangelogSubscription()
 
     return
