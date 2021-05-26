@@ -58,7 +58,6 @@ Template.global_activity_log_project_pane_project_activity.onCreated ->
 
       tpl.global_changelog_subscription = APP.justdo_global_activity_log.subscribeGlobalChangelog
         projects: [project_id]
-        include_performing_user: true # Dev only
         tasks_limit: tpl.changelog_tasks_limit
         changelogs_limit: tpl.changelog_changelogs_limit
 
