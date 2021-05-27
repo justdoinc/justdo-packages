@@ -5,7 +5,6 @@ bindTargetToPaste = (tpl)->
     clipboard_data = e.originalEvent.clipboardData
     if ("text/html" in clipboard_data.types)
       data = clipboard_data.getData("text/html")
-      
 
       # Info about why we use [^\x05] can be found on: https://bugzilla.mozilla.org/show_bug.cgi?id=1579867
       tr_reg_exp = /<\s*tr[^>]*>([^\x05]*?)<\s*\/\s*tr>/g
@@ -21,21 +20,22 @@ bindTargetToPaste = (tpl)->
           processing_column_number += 1
           cell = td[1]
 
+          cell = cell.replace /\r\n/g, ""
           cell = cell.replace /<br\/?>/g, "\n"
           cell = cell.replace /&quot;/g , '"'
           cell = cell.replace /&#39;/g, "'"
           cell = cell.replace /&nbsp;/g, " "
           cell = cell.replace /&amp;/g, "&"
-          
+
           # catch all html tags
           cell = cell.replace(/<span[^\x05]+?style=['"]mso-spacerun:yes['"]>[^\x05]+?<\/span>/g, "")
           cell = cell.replace /<[^>]+>/g, ""
-          
+
           cell = cell.replace /&lt;/g, "<"
           cell = cell.replace /&gt;/g, ">"
 
           cells.push cell
-          
+
           if cell.trim().length > 0
             all_cells_are_empty = false
             row_length = processing_column_number
@@ -132,7 +132,7 @@ Template.justdo_clipboard_import_input.helpers
       return false
 
     return cur_proj.isAdmin()
-  
+
   importLimit: -> JustdoClipboardImport.import_limit
 
 Template.justdo_clipboard_import_input.events
@@ -145,7 +145,7 @@ Template.justdo_clipboard_import_input.events
     e.preventDefault()
 
     field_id = $(e.currentTarget)[0].getAttribute("field-id")
-    
+
     if field_id == "clipboard-import-no-import"
       field_label = "-- skip column --"
     else if field_id == "task-indent-level"
