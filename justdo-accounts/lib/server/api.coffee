@@ -191,6 +191,10 @@ _.extend JustdoAccounts.prototype,
       _.extend extra_fields,
         invited_by: inviting_user_id
 
+    check options.users_allowed_to_edit_pre_enrollment, Match.Maybe([String])
+    if options.users_allowed_to_edit_pre_enrollment? and not _.isEmpty(options.users_allowed_to_edit_pre_enrollment)
+      Meteor.users.update(created_user_id, {$set: {users_allowed_to_edit_pre_enrollment: options.users_allowed_to_edit_pre_enrollment}})
+
     if not _.isEmpty extra_fields
       Meteor.users.update(created_user_id, {$set: extra_fields})
 
@@ -482,6 +486,7 @@ _.extend JustdoAccounts.prototype,
 
       "services.password.reset.reason": 1
       "invited_by": 1
+      "users_allowed_to_edit_pre_enrollment": 1
 
     if options?.additional_fields?
       _.extend fields, options.additional_fields
@@ -600,6 +605,7 @@ _.extend JustdoAccounts.prototype,
         # Remove the invited_by field that is published only in specific cases where
         # the user isn't enrolled, see below.
         delete data.invited_by
+        delete data.users_allowed_to_edit_pre_enrollment
 
         return
 
@@ -613,6 +619,9 @@ _.extend JustdoAccounts.prototype,
     if data.invited_by != requesting_user
       # We don't want to leak invited_by info to those that doesn't need it.
       delete data.invited_by
+
+    if _.isArray(data.users_allowed_to_edit_pre_enrollment) and requesting_user not in data.users_allowed_to_edit_pre_enrollment
+      delete data.users_allowed_to_edit_pre_enrollment
 
     if password?.reset?.reason == "enroll"
       data.enrolled_member = false
@@ -635,11 +644,15 @@ _.extend JustdoAccounts.prototype,
   editPreEnrollmentUserData: (user_id, data, requesting_user) ->
     user = @getUserById(user_id)
 
-    if user.invited_by != requesting_user
-      throw @_error "permission-denied", "Only the user that invited a member, can edit its details."
-
     if user.services?.password?.reset?.reason != "enroll"
       throw @_error "permission-denied", "Details can be edited, only for unregistered members, member #{first_name} #{last_name} registered already."
+
+    users_allowed_to_edit_pre_enrollment = (user.users_allowed_to_edit_pre_enrollment or []).slice() # slice to avoid edit by reference
+    if _.isString(user.invited_by)
+      users_allowed_to_edit_pre_enrollment.push user.invited_by
+
+    if not requesting_user? or not requesting_user in users_allowed_to_edit_pre_enrollment
+      throw @_error "permission-denied", "Only the user that invited a member, can edit its details."
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(

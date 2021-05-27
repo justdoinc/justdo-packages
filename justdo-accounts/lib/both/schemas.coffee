@@ -22,6 +22,11 @@ _.extend JustdoAccounts.prototype,
 
         type: String
 
+      users_allowed_to_edit_pre_enrollment:
+        optional: true
+
+        type: [String]
+
       services:
         optional: true
 
