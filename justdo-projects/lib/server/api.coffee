@@ -453,6 +453,8 @@ _.extend Projects.prototype,
     #
     #     add_as_guest: false (default) / true
     #
+    #     users_allowed_to_edit_pre_enrollment: undefined / [] # Optional array of users
+    #
     #     profile: {
     #       *Optional*
     #
@@ -543,6 +545,7 @@ _.extend Projects.prototype,
       create_user_options = {
         email: invited_user_email
         profile: new_invited_user_profile
+        users_allowed_to_edit_pre_enrollment: invited_user.users_allowed_to_edit_pre_enrollment
       }
       invited_user_id = @createUser(create_user_options, inviting_user_id)
       invited_user_doc = Meteor.users.findOne({_id: invited_user_id})
@@ -619,8 +622,12 @@ _.extend Projects.prototype,
     if invited_user_doc.services?.password?.reset?.reason != "enroll"
       throw @_error "memebr-already-enrolled", "Member already enrolled"
 
-    if invited_user_doc.invited_by != inviting_user_id
-      throw @_error "permission-denied", "Only the inviting member can issue a new enrollement email"
+    users_allowed_to_edit_pre_enrollment = (invited_user_doc.users_allowed_to_edit_pre_enrollment or []).slice() # slice to avoid edit by reference
+    if _.isString(invited_user_doc.invited_by)
+      users_allowed_to_edit_pre_enrollment.push invited_user_doc.invited_by
+
+    if inviting_user_id not in users_allowed_to_edit_pre_enrollment
+      throw @_error "permission-denied", "User is not allowed to issue a new enrollement email"
 
     @_sendProjectInvite(project_doc, inviting_user_doc, invited_user_doc, {send_push_notification: false, send_invitation_email: true})
 

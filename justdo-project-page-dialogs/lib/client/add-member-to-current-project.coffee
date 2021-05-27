@@ -99,7 +99,8 @@ ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_op
 
               email = email_rv.get()
 
-              getCurrentProject().inviteMember {email: email, profile: profile, add_as_guest: invited_members_dialog_options.add_as_guest}, (err, user_id) ->
+              users_allowed_to_edit_pre_enrollment = _.map APP.modules.project_page.curProj().getAdmins(), (user_def) => user_def.user_id
+              getCurrentProject().inviteMember {email: email, profile: profile, add_as_guest: invited_members_dialog_options.add_as_guest, users_allowed_to_edit_pre_enrollment: users_allowed_to_edit_pre_enrollment}, (err, user_id) ->
                 if err
                   if err.error == "member-already-exists"
                     error_message = "#{ucFirstInviteeTerm(invited_members_dialog_options.add_as_guest)} <i>#{JustdoHelpers.xssGuard(JustdoHelpers.displayName(Meteor.users.findOne({"emails.address": email})))}</i> (#{email}) already exist in this project."
