@@ -447,9 +447,21 @@ GridControl.installFormatter "textWithTreeControls",
           transfer_type = "transfer-from-me"
 
         tree_control += """
-          <div class="transfer-owner #{transfer_type} slick-prevent-edit"></div>
+          <div class="transfer-owner #{transfer_type} slick-prevent-edit">
+            <svg><use xlink:href="/layout/icons-feather-sprite.svg#arrow-right"></use></svg>
+          </div>
         """
 
+      # IF TASK HAS NO OWNER - Start
+      # transfer_type = "transfer-no-owner"
+
+      # tree_control += """
+      #   <div class="transfer-owner #{transfer_type} slick-prevent-edit">
+      #     <svg><use xlink:href="/layout/icons-feather-sprite.svg#jd-alert"></use></svg>
+      #   </div>
+      # """
+
+      # IF TASK HAS NO OWNER - END
 
       tree_control += """
         </div>
