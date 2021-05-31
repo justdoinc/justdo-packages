@@ -956,40 +956,59 @@ _.extend Projects.prototype,
 
     @projects_collection.update project_id, update
 
-    #
-    # Take care of removing pending transfer requests to the user in the project tasks
-    #
-    remove_pending_ownership_transfer_query =
-      users: member_id
-      project_id: project_id
-      pending_owner_id: member_id
+    bulk_updates_on_tasks_collections = [
+      {
+        #
+        # Take care of removing pending transfer requests to the user in the project tasks
+        #
+        update_description: "remove pending ownership transfer query" # Used just when reporting errors
 
-    update_pending_ownership_transfer_query =
-      $set:
-        pending_owner_id: null
+        query:
+          users: member_id
+          project_id: project_id
+          pending_owner_id: member_id
 
-    @_grid_data_com._bulkUpdateFromSecureSource remove_pending_ownership_transfer_query, update_pending_ownership_transfer_query, (err) =>
-      if not err?
+        mutator:
+          $set:
+            pending_owner_id: null
+      }
+
+      {
         # Remove member from all the project's tasks that has it
 
         #
         # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
         # and to drop obsolete indexes (see FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_INDEX there)
         #
-        query =
+        update_description: "remove member from all the project's tasks that has it" # Used just when reporting errors
+
+        query:
           users: member_id
           project_id: project_id
 
-        update =
+        mutator:
           $pull:
             users: member_id
+      }
+    ]
 
-        @_grid_data_com._bulkUpdateFromSecureSource query, update, (err) =>
-          @_grid_data_com._freezeAllProjectPrivateDataDocsForUsersIds(project_id, [member_id])
+    bulk_updates_on_tasks_collections_async_series_tasks = _.map bulk_updates_on_tasks_collections, (task_def) =>
+      return (cb) => @_grid_data_com._bulkUpdateFromSecureSource task_def.query, task_def.mutator, (err) =>
+        if err?
+          console.error("removeMember failed during op: #{task_def.update_description}", err)
 
-          @processHandlers("AfterRemoveMember", project_id, member_id, user_id)
+        cb(err)
 
-          return
+        return
+
+    async.series bulk_updates_on_tasks_collections_async_series_tasks, (err) =>
+      if err?
+        # If failed do nothing, errors already printed
+        return
+
+      @_grid_data_com._freezeAllProjectPrivateDataDocsForUsersIds(project_id, [member_id])
+
+      @processHandlers("AfterRemoveMember", project_id, member_id, user_id)
 
       return
 

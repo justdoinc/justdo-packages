@@ -18,6 +18,8 @@ Package.onUse(function (api) {
   api.use('reactive-dict', both);
   api.use("tracker", client);
 
+  api.use('peerlibrary:async@1.5.2_1', server);
+
   api.use('stevezhu:lodash@4.16.4', both);
   api.use('aldeed:simple-schema@1.3.1', both);
   api.use('aldeed:collection2@2.3.2', both);
