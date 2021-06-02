@@ -14,6 +14,7 @@ _.extend PACK.builtin_trackers,
           field: key
           label: self.tasks_collection.simpleSchema()._schema[key].label
           new_value: new_priority
+          old_value: doc[key]
           task_id: doc._id
           project_id: doc.project_id
           by: self._extractUpdatedByFromModifierOrFail(modifier)

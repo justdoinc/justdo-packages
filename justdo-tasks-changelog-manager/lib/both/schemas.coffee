@@ -37,6 +37,21 @@ _.extend TasksChangelogManager.prototype,
         type: String
         optional: true
 
+      old_value:
+        label: "Old Value"
+        type: String
+        optional: true
+
+      undone:
+        label: "Undone"
+        type: Boolean
+        optional: true
+
+      undone_on:
+        label: "Undone time"
+        type: Date
+        optional: true
+
       users_added:
         label: "Users Added"
         type: [String]
