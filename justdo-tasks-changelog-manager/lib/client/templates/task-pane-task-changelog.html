@@ -28,11 +28,40 @@
       <div class="image mr-2 mt-1">{{#with changingUser}}{{> justdo_avatar}}{{/with}}</div>
       <div class="content">
         {{#if involvesAnotherTask}}
-          <div class="data text-body has-parent" jd-tt="task-info?id={{new_value}}&show-title=true">{{formatedValue}}</div>
+          <div class="data text-body has-parent {{#if undone}}undone{{/if}}" jd-tt="task-info?id={{new_value}}&show-title=true">
+
+            {{formatedValue}}
+
+            {{#if $and ($not undone) undoable}}
+              <svg class="undo jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#rotate-ccw"/></svg>
+            {{/if}}
+
+          </div>
+
         {{else}}
-          <div class="data text-body">{{formatedValue}}</div>
+          <div class="data text-body {{#if undone}}undone{{/if}}">
+
+            {{formatedValue}}
+
+            {{#if $and ($not undone) undoable}}
+              <svg class="undo jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#rotate-ccw"/></svg>
+            {{/if}}
+
+          </div>
         {{/if}}
-        <small class="date text-muted">{{userDateFormat when}}</small>
+
+        {{#if undoable}}
+          <small class="date text-muted">
+            Was {{oldValue}}
+            {{#if undone}}
+             - reverted on {{userDateFormat undone_on}}
+            {{/if}}
+            .
+          </small>
+          <br>
+        {{/if}}
+
+        <small class="date text-muted {{#if undone}}undone{{/if}}">{{userDateFormat when}}</small>
       </div>
     </div>
   {{/unless}}

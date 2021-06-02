@@ -67,6 +67,10 @@ Template.task_pane_task_changelog_record.helpers
     return ops_involve_another_task.includes @change_type
 
   formatedValue: -> APP.tasks_changelog_manager.getActivityMessage(@)
+  # undo-able, not undoable.
+  undoable: -> (@old_value? or @old_value is null) and (@by is Meteor.userId())
+
+  oldValue: ->APP.tasks_changelog_manager.getOldValueMessage @
 
   filtered: ->
     # if the filter is off, nothing is filtered
@@ -76,3 +80,7 @@ Template.task_pane_task_changelog_record.helpers
     if @field == "status"
       return false
     return true
+
+Template.task_pane_task_changelog_record.events
+  "click .undo": (e, tpl) ->
+    APP.tasks_changelog_manager.undoChange @

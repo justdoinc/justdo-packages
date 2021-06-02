@@ -10,3 +10,5 @@ _.extend TasksChangelogManager.prototype,
     @logger.debug "Destroyed"
 
     return
+
+  undoChange: (activity_obj) -> Meteor.call "undoChange", activity_obj
