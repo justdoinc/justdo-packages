@@ -16,6 +16,8 @@ default_options =
 Template.justdo_avatars_box.onCreated ->
   @options = _.extend {}, default_options, Template.currentData()
 
+  @controller = @options.controller
+
   @max_users_to_display = null # null means unlimited
   if @options.box_grid?.cols?
     @options.box_dim = null # ignore box_dim if box_grid provided
@@ -71,6 +73,9 @@ normalizeUsersInput = (users, max_users) ->
 
 tplProp = JustdoHelpers.tplProp
 Template.justdo_avatars_box.helpers
+  controller: ->
+    return tplProp("controller")
+
   box_components: ->
     max_users_to_display = tplProp("max_users_to_display")
     components = normalizeUsersInput(@primary_users, max_users_to_display)
@@ -102,3 +107,11 @@ Template.justdo_avatars_box.helpers
       return """<div class="default-avatar-box-button avatar-box-plus-users text-primary">+#{users_diff}</div>"""
     else
       return tplProp("options").button_content
+
+Template.justdo_avatars_box_avatar.onCreated ->
+  @controller = Template.currentData().controller
+
+  return
+
+Template.justdo_avatars_box_avatar.helpers
+  containersCustomContentGenerator: -> tplProp("controller").containersCustomContentGenerator(@)

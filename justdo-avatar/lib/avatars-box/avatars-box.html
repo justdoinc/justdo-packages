@@ -39,6 +39,12 @@
   button_content: (string) html to put inside the button default to
                   font awesome "fa-ellipsis-h" element
 
+  controller: an object.
+
+  controller.containersCustomContentGenerator: (function) if a function is set
+      it will be called with the user object. Output will be printed
+      as html content
+
   --}}
 
   <div class="justdo-avatars-box">
@@ -51,7 +57,7 @@
           {{> justdo_avatars_box_button button_content=button_content}}
         {{/if}}
       {{else}}
-        {{> justdo_avatars_box_avatar user=this}}
+        {{> justdo_avatars_box_avatar user=this controller=controller}}
       {{/if}}
     {{/each}}
     <div class="clearfix"></div>
@@ -62,12 +68,14 @@
   <div class="cont {{#if user.last}}last{{/if}}">
     {{#with user}}
       {{> justdo_avatar}}
+
+      {{{xssGuard containersCustomContentGenerator}}}
     {{/with}}
   </div>
 </template>
 
 <template name="justdo_avatars_box_button">
   <div class="avatar-box-button">
-    {{{button_content}}}
+    {{{xssGuard button_content}}}
   </div>
 </template>
