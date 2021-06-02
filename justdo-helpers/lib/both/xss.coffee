@@ -97,6 +97,11 @@ _.extend JustdoHelpers,
       s: true # Add Strike-through to allowed tags
       dir: true
       div: true
+      svg: true
+      use: true
+
+    selfClosingTags =
+      use: true
 
     allowed_attributes = 
       all_elements: [
@@ -104,6 +109,10 @@ _.extend JustdoHelpers,
         'style'
         'id'
         'dir'
+        'title'
+      ]
+      use: [
+        'href'
       ]
       a: [
         'href'
@@ -132,6 +141,7 @@ _.extend JustdoHelpers,
       uni_html_options =
         customTags: customTags
         allowed_attributes: allowed_attributes
+        selfClosingTags: selfClosingTags
 
       if options.allowEmptyTags? # If set to undefined we will not pass this option at all, to use the defaults
         uni_html_options.allowEmptyTags = options.allowEmptyTags
