@@ -86,3 +86,10 @@ _.extend JustdoHelpers,
               return cb.apply(@, arguments)
 
           return
+
+if (templating = Package.templating)?
+  {Template} = templating
+  
+  Template.registerHelper "debugger", (input) ->
+    debugger
+    return "DEBUGGER"
