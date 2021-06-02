@@ -226,14 +226,17 @@ APP.executeAfterAppLibCode ->
       item_doc = template.data
 
       if new_owner_doc._id == Meteor.userId()
+        # Equiv to take ownership
         APP.collections.Tasks.update item_doc._id,
           $set:
             owner_id: new_owner_doc._id
             pending_owner_id: null
+            is_removed_owner: null
       else
         APP.collections.Tasks.update item_doc._id,
           $set:
-            owner_id: Meteor.userId() # The one that request the transfer become the owner
+            owner_id: Meteor.userId() # The one that request the transfer becomes the owner
+            is_removed_owner: null
             pending_owner_id: new_owner_doc._id
 
       temp_subtree_users_subscription = JD.subscribeItemsAugmentedFields item_doc._id, ["users"], {subscribe_sub_tree: true}, ->
@@ -270,8 +273,8 @@ APP.executeAfterAppLibCode ->
                 onActionClick: =>
                   for task_id in child_tasks
                     APP.collections.Tasks.update task_id,
-                      $unset:
-                        pending_owner_id: ""
+                      $set:
+                        pending_owner_id: null
                   JustdoSnackbar.close()
                   return
               return
@@ -314,6 +317,7 @@ APP.executeAfterAppLibCode ->
         $set:
           owner_id: Meteor.userId()
           pending_owner_id: null
+          is_removed_owner: null
 
       getEventDropdownData(e, "close")()
 
@@ -324,6 +328,7 @@ APP.executeAfterAppLibCode ->
         $set:
           owner_id: Meteor.userId()
           pending_owner_id: null
+          is_removed_owner: null
 
       getEventDropdownData(e, "close")()
 

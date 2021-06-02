@@ -76,7 +76,7 @@
         {{#with owner}}{{> justdo_avatar}}{{/with}}
       </div>
       <div class="message-area">
-        <div class="action-message">Take ownership from</div>
+        <div class="action-message">{{#if is_removed_owner}}Take ownership from removed owner{{else}}Take ownership from{{/if}}</div>
         <div class="member-name">{{#with owner}}{{displayName}}{{/with}}</div>
       </div>
       <button type="button" class="btn btn-sm btn-primary take-ownership">Take</button>

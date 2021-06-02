@@ -206,6 +206,7 @@ EventsAPI =
       $set:
         owner_id: @user user
         pending_owner_id: null
+        is_removed_owner: null
     APP.projects._grid_data_com.updateItem task_id, update, perform_as
 
   setPendingOwner: (task_id, user, perform_as) ->

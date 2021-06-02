@@ -16,6 +16,11 @@ _.extend PACK.modules,
             "profile.last_name": 1
             "profile.profile_pic": 1
 
+        is_removed_owner:
+          label: "Is removed owner"
+          optional: true
+          type: String
+
         pending_owner_id:
           label: "Pending Owner"
           optional: true

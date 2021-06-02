@@ -990,6 +990,20 @@ _.extend Projects.prototype,
           $pull:
             users: member_id
       }
+
+      {
+        # Set the is_removed_owner field to true on all the tasks that the removed user owned
+
+        update_description: "set the is_removed_owner flag on owned tasks" # Used just when reporting errors
+
+        query:
+          project_id: project_id
+          owner_id: member_id
+
+        mutator:
+          $set:
+            is_removed_owner: true
+      }
     ]
 
     bulk_updates_on_tasks_collections_async_series_tasks = _.map bulk_updates_on_tasks_collections, (task_def) =>

@@ -113,6 +113,7 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
                   $set:
                     owner_id: Meteor.userId()
                     pending_owner_id: null
+                    is_removed_owner: null
 
                 project.bulkUpdate items_to_assume_ownership_of, ownership_update_modifier, cb
 

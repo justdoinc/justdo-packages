@@ -13,6 +13,15 @@ Template.task_pane_item_details_members.helpers
 
     return res
 
+  controller:
+    containersCustomContentGenerator: (user_doc) ->
+      task_doc = JD.activeItem({owner_id: 1, is_removed_owner: 1})
+
+      if task_doc?.owner_id == user_doc._id and task_doc?.is_removed_owner is true
+        return """<div title="The task owner is no longer a member of the task" class="justdo-avatar-badge justdo-avatar-transfer-no-owner"><svg><use href="/layout/icons-feather-sprite.svg#jd-alert"></use></svg></div>"""
+
+      return
+
   hiddenUsersCount: ->
     hidden_users_count = JD.activeItemUsers().length - max_presented_avatars
 
