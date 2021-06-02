@@ -166,7 +166,6 @@ _.extend TasksChangelogManager.prototype,
       if not (new_value_txt_label = field_definition.grid_values?[activity_obj.new_value]?.txt)?
         if not (new_value_txt_label = field_definition.grid_removed_values?[activity_obj.new_value]?.txt)?
           new_value_txt_label = "Unknown"
-
       return "#{performer_name} set #{getLabelFromFieldDefinition(field_definition)} to: #{new_value_txt_label}."
 
     # and the generic case:
@@ -174,5 +173,27 @@ _.extend TasksChangelogManager.prototype,
       return "#{performer_name} cleared #{getLabelFromFieldDefinition(field_definition)}."
 
     new_value = activity_obj.new_value
-    
+
     return "#{performer_name} set #{getLabelFromFieldDefinition(field_definition)} to: #{new_value}."
+
+  getOldValueMessage: (activity_obj) ->
+    old_value = activity_obj.old_value
+    
+    if (old_value is null) or (old_value is "nil")
+      return "empty"
+
+    if not (schema = APP.modules.project_page.gridControl()?.getSchemaExtendedWithCustomFields(true))?
+      return "..."
+
+    field_definition = schema[activity_obj.field]
+
+    if field_definition.grid_column_formatter is "unicodeDateFormatter"
+      return moment(new Date(old_value)).format('LL.')
+
+    if field_definition.grid_column_formatter is "keyValueFormatter"
+      if not (old_value_txt_label = field_definition.grid_values?[old_value]?.txt)?
+        if not (old_value_txt_label = field_definition.grid_removed_values?[old_value]?.txt)?
+          old_value_txt_label = "Unknown"
+      return old_value_txt_label
+
+    return old_value
