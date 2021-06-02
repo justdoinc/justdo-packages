@@ -3,7 +3,7 @@ _.extend TasksChangelogManager.prototype,
     self = @
 
     Meteor.methods
-      "undoChange": (activity_obj) ->
+      "undo": (activity_obj) ->
         check activity_obj, Object
 
         # Only allow the change maker to undo changes

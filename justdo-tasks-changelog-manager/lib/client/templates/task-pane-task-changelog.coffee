@@ -94,4 +94,4 @@ Template.task_pane_task_changelog_record.helpers
 
 Template.task_pane_task_changelog_record.events
   "click .undo": (e, tpl) ->
-    APP.tasks_changelog_manager.undoChange @
+    APP.tasks_changelog_manager.undo @

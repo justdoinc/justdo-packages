@@ -11,4 +11,4 @@ _.extend TasksChangelogManager.prototype,
 
     return
 
-  undoChange: (activity_obj) -> Meteor.call "undoChange", activity_obj
+  undo: (activity_obj) -> Meteor.call "undo", activity_obj
