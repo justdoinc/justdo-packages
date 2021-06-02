@@ -23,20 +23,29 @@ Template.task_pane_task_changelog.helpers
 
     logs = []
     logs_time = {}
+    fields_changed_by_others = []
 
     APP.collections.TasksChangelog.find(query, options).forEach (log) ->
       log_type_id = "#{log.task_id}-#{log.field}-#{log.by}"
+      # If a field is changed by the same user within 2 mins, don't display that log.
       if (newer_logs_time = logs_time[log_type_id])?
         for newer_time in newer_logs_time
           if moment(newer_time).diff(moment(log.when), "minute") < 2
             return
 
-      logs.push log
-
       if not logs_time[log_type_id]?
         logs_time[log_type_id] = []
 
       logs_time[log_type_id].push log.when
+
+      # Since the data is sorted by time, we store changed fields inside an array
+      # and disable undo function for logs where the field was changed by someone else.
+      if fields_changed_by_others.includes log.field
+        log.undo_disabled = true
+      else
+        fields_changed_by_others.push log.field
+
+      logs.push log
 
       return
 
@@ -70,7 +79,7 @@ Template.task_pane_task_changelog_record.helpers
 
   formatedValue: -> APP.tasks_changelog_manager.getActivityMessage(@)
   # undo-able, not undoable.
-  undoable: -> (@old_value? or @old_value is null) and (@by is Meteor.userId())
+  undoable: -> not @undo_disabled and (@old_value? or @old_value is null) and (@by is Meteor.userId())
 
   oldValue: ->APP.tasks_changelog_manager.getOldValueMessage @
 
