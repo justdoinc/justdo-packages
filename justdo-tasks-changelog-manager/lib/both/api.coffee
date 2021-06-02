@@ -145,13 +145,13 @@ _.extend TasksChangelogManager.prototype,
         return "#{JustdoHelpers.displayName(user)} became owner."
       return "Task owner changed."
 
-    if activity_obj.field == "due_date" or activity_obj.field == "follow_up"
-      return "#{performer_name} set #{JustdoHelpers.ucFirst(activity_obj.label)} to #{moment(new Date(activity_obj.new_value)).format('LL.')}"
-
     if not (schema = APP.modules.project_page.gridControl()?.getSchemaExtendedWithCustomFields(true))?
       return "Loading..."
 
-    getLabelFromFieldDefinition = (field_definition) ->
+    field_definition = schema[activity_obj.field]
+
+    # Get display label of field name
+    getLabelFromFieldDefinition = ->
       label = JustdoHelpers.ucFirst(field_definition.label)
 
       if field_definition.obsolete? and field_definition.obsolete == true
@@ -159,8 +159,10 @@ _.extend TasksChangelogManager.prototype,
 
       return label
 
-    field_definition = schema[activity_obj.field]
-    if field_definition.grid_column_formatter == "keyValueFormatter"
+    if field_definition.grid_column_formatter is "unicodeDateFormatter"
+      return "#{performer_name} set #{JustdoHelpers.ucFirst(activity_obj.label)} to #{moment(new Date(activity_obj.new_value)).format('LL.')}"
+
+    if field_definition.grid_column_formatter is "keyValueFormatter"
       if not (new_value_txt_label = field_definition.grid_values?[activity_obj.new_value]?.txt)?
         if not (new_value_txt_label = field_definition.grid_removed_values?[activity_obj.new_value]?.txt)?
           new_value_txt_label = "Unknown"
