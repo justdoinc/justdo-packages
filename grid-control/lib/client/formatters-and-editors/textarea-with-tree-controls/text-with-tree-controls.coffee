@@ -424,6 +424,8 @@ GridControl.installFormatter "textWithTreeControls",
 
         title += " &rarr; " + pending_owner_display_name
 
+      if doc.is_removed_owner is true
+        title += " - the task owner is no longer a member of this task"
 
       tree_control += """
         <div class="grid-tree-control-user slick-prevent-edit"
@@ -439,29 +441,23 @@ GridControl.installFormatter "textWithTreeControls",
                       height: #{owner_id_width}px;">
       """
 
-      if pending_owner_id?
-        transfer_type = "transfer-non-related"
-        if Meteor.userId() == pending_owner_id
-          transfer_type = "transfer-to-me"
-        else if Meteor.userId() == owner_id
-          transfer_type = "transfer-from-me"
+      if pending_owner_id? or doc.is_removed_owner is true
+        if doc.is_removed_owner is true
+          sprite_icon = "jd-alert"
+          transfer_type = "transfer-no-owner"
+        else
+          sprite_icon = "arrow-right"
+          transfer_type = "transfer-non-related"
+          if Meteor.userId() == pending_owner_id
+            transfer_type = "transfer-to-me"
+          else if Meteor.userId() == owner_id
+            transfer_type = "transfer-from-me"
 
         tree_control += """
           <div class="transfer-owner #{transfer_type} slick-prevent-edit">
-            <svg><use xlink:href="/layout/icons-feather-sprite.svg#arrow-right"></use></svg>
+            <svg><use xlink:href="/layout/icons-feather-sprite.svg##{sprite_icon}"></use></svg>
           </div>
         """
-
-      # IF TASK HAS NO OWNER - Start
-      # transfer_type = "transfer-no-owner"
-
-      # tree_control += """
-      #   <div class="transfer-owner #{transfer_type} slick-prevent-edit">
-      #     <svg><use xlink:href="/layout/icons-feather-sprite.svg#jd-alert"></use></svg>
-      #   </div>
-      # """
-
-      # IF TASK HAS NO OWNER - END
 
       tree_control += """
         </div>

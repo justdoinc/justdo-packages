@@ -986,6 +986,7 @@ _.extend GridDataCom.prototype,
         $set:
           owner_id: String
           pending_owner_id: null
+          is_removed_owner: null
       }
       {
         $set:
