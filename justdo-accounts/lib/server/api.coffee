@@ -651,7 +651,7 @@ _.extend JustdoAccounts.prototype,
     if _.isString(user.invited_by)
       users_allowed_to_edit_pre_enrollment.push user.invited_by
 
-    if not requesting_user? or not requesting_user in users_allowed_to_edit_pre_enrollment
+    if not requesting_user? or requesting_user not in users_allowed_to_edit_pre_enrollment
       throw @_error "permission-denied", "Only the user that invited a member, can edit its details."
 
     {cleaned_val} =
