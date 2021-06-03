@@ -658,12 +658,17 @@ _.extend Projects.prototype,
     if invited_user_doc.services?.password?.reset?.reason != "enroll"
       throw @_error "memebr-already-enrolled", "Member already enrolled"
 
-    users_allowed_to_edit_pre_enrollment = (invited_user_doc.users_allowed_to_edit_pre_enrollment or []).slice() # slice to avoid edit by reference
-    if _.isString(invited_user_doc.invited_by)
-      users_allowed_to_edit_pre_enrollment.push invited_user_doc.invited_by
+    # The following code allows only users that are allowed to edit the invited_user_id pre enrollment
+    # to re-issue a new enrollment email.
+    #
+    # On June 2nd 2021 we (Galit and Daniel) decided to remove this requirement.
+    #
+    # users_allowed_to_edit_pre_enrollment = (invited_user_doc.users_allowed_to_edit_pre_enrollment or []).slice() # slice to avoid edit by reference
+    # if _.isString(invited_user_doc.invited_by)
+    #   users_allowed_to_edit_pre_enrollment.push invited_user_doc.invited_by
 
-    if inviting_user_id not in users_allowed_to_edit_pre_enrollment
-      throw @_error "permission-denied", "User is not allowed to issue a new enrollement email"
+    # if inviting_user_id not in users_allowed_to_edit_pre_enrollment
+    #   throw @_error "permission-denied", "User is not allowed to issue a new enrollement email"
 
     @_sendProjectInvite(project_doc, inviting_user_doc, invited_user_doc, {send_push_notification: false, send_invitation_email: true})
 

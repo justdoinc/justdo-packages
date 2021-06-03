@@ -3,7 +3,7 @@
     <div class="form-group {{#if isInvalidEmail}}has-error{{/if}}">
       <label for="new-user-email" class="control-label">Email</label>
       <div>
-        <input id="new-user-email" class="form-control" value="{{email}}">
+        <input id="new-user-email" class="form-control" value="{{email}}" disabled="{{#if view_only}}disabled{{/if}}">
       </div>
     </div>
   </div>
@@ -11,13 +11,13 @@
     <div class="form-group col {{#if isInvalidFirstName}}has-error{{/if}}">
       <label for="new-user-first-name" class="control-label">First Name</label>
       <div>
-        <input id="new-user-first-name" class="form-control" value="{{first_name}}">
+        <input id="new-user-first-name" class="form-control" value="{{first_name}}" disabled="{{#if view_only}}disabled{{/if}}">
       </div>
     </div>
     <div class="form-group col {{#if isInvalidLastName}}has-error{{/if}}">
       <label for="new-user-last-name" class="control-label">Last Name</label>
       <div>
-        <input id="new-user-last-name" class="form-control" value="{{last_name}}">
+        <input id="new-user-last-name" class="form-control" value="{{last_name}}" disabled="{{#if view_only}}disabled{{/if}}">
       </div>
     </div>
   </div>

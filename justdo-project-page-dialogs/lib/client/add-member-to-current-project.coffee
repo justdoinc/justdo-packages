@@ -150,6 +150,22 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
 
   invited_members_dialog_options = _.extend {add_as_guest: false}, invited_members_dialog_options
 
+  resendEnrollmentEmail = (cb) ->
+    APP.projects.resendEnrollmentEmail getCurrentProject()?.id, user_id, (err) ->
+      if err?
+        bootbox.alert
+          message: err.reason
+          className: "bootbox-new-design members-management-alerts"
+          closeButton: false
+
+        return
+
+      JustdoHelpers.callCb cb
+
+      return
+
+    return
+
   processEditRequest = (options) ->
     options = _.extend {force_enrollment_email_resend: false}, options
 
@@ -164,15 +180,7 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
           return
 
         if options.force_enrollment_email_resend or result.email_changed
-          APP.projects.resendEnrollmentEmail getCurrentProject()?.id, user_id, (err) ->
-            if err?
-              bootbox.alert
-                message: err.reason
-                className: "bootbox-new-design members-management-alerts"
-                closeButton: false
-
-              return
-
+          resendEnrollmentEmail (err) ->
             dialog.data("bs.modal").hide()
 
             return
@@ -183,44 +191,61 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
 
     return
 
+  user_allowed_to_edit = false
+  if (user_doc = Meteor.users.findOne(user_id, {fields: {invited_by: 1, users_allowed_to_edit_pre_enrollment: 1}}))?
+    users_allowed_to_edit_pre_enrollment = (user_doc.users_allowed_to_edit_pre_enrollment or []).slice() # slice to avoid edit by reference
+    if _.isString(user_doc.invited_by)
+      users_allowed_to_edit_pre_enrollment.push user_doc.invited_by
+
+    user_allowed_to_edit = Meteor.userId() in users_allowed_to_edit_pre_enrollment
+
+  buttons = 
+    cancel:
+      label: "Cancel"
+
+      className: "btn-light"
+
+      callback: ->
+        return true
+
+    resubmit:
+      label: "Resend Invitation Email"
+
+      className: "btn-light"
+
+      callback: =>
+        submit_attempted_rv.set(true)
+
+        Tracker.flush() # So input validation checks in Template autorun will run following submit_attempted_rv change
+
+        if user_allowed_to_edit
+          processEditRequest({force_enrollment_email_resend: true})
+        else
+          resendEnrollmentEmail ->
+            dialog.data("bs.modal").hide()
+
+            return
+        return false
+
+  if user_allowed_to_edit
+    buttons.submit =
+      label: "Update"
+
+      className: "btn-primary"
+
+      callback: =>
+        submit_attempted_rv.set(true)
+
+        Tracker.flush() # So input validation checks in Template autorun will run following submit_attempted_rv change
+
+        processEditRequest({force_enrollment_email_resend: false})
+
+        return false
+
   invited_members_dialog_options = _.extend {}, invited_members_dialog_options,
     title: "Edit invited #{inviteeTerm(invited_members_dialog_options.add_as_guest)}'s details"
-    buttons:
-      cancel:
-        label: "Cancel"
-
-        className: "btn-light"
-
-        callback: ->
-          return true
-
-      resubmit:
-        label: "Resend Invitation Email"
-
-        className: "btn-light"
-
-        callback: =>
-          submit_attempted_rv.set(true)
-
-          Tracker.flush() # So input validation checks in Template autorun will run following submit_attempted_rv change
-
-          processEditRequest({force_enrollment_email_resend: true})
-
-          return false
-
-      submit:
-        label: "Update"
-
-        className: "btn-primary"
-
-        callback: =>
-          submit_attempted_rv.set(true)
-
-          Tracker.flush() # So input validation checks in Template autorun will run following submit_attempted_rv change
-
-          processEditRequest({force_enrollment_email_resend: false})
-
-          return false
+    view_only: not user_allowed_to_edit
+    buttons: buttons
 
   dialog = initInvitedMembersDialog {email: user.emails?[0]?.address, first_name: user.profile?.first_name,  last_name: user.profile?.last_name}, invited_members_dialog_options
 
@@ -254,6 +279,7 @@ initInvitedMembersDialog = (data, options) ->
     title: "SET TITLE"
     add_as_guest: false
     custom_classes: ""
+    view_only: false
     buttons:
       cancel:
         label: "Cancel"
@@ -267,7 +293,7 @@ initInvitedMembersDialog = (data, options) ->
 
   initReactiveVars(data)
 
-  _.extend data, {add_as_guest: options.add_as_guest}
+  _.extend data, {add_as_guest: options.add_as_guest, view_only: options.view_only}
 
   message_template =
     APP.helpers.renderTemplateInNewNode(Template.invite_new_user_dialog, data)
