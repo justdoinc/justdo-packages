@@ -597,6 +597,42 @@ _.extend Projects.prototype,
         removed_members:
           user_id: invited_user_id
 
+    # Share with the added members all the tasks that belonged only to him/her before
+    # (relevant only for users that removed from the JustDo and brought back)
+    tasks_that_belonged_before_only_to_that_user_and_now_remained_with_no_user = []
+    APP.collections.Tasks.find({owner_id: invited_user_id, is_removed_owner: true, users: []}, {fields: {_id: 1}}).forEach (task) ->
+      tasks_that_belonged_before_only_to_that_user_and_now_remained_with_no_user.push task._id
+    if not _.isEmpty tasks_that_belonged_before_only_to_that_user_and_now_remained_with_no_user
+      selector =
+        _id:
+          $in: tasks_that_belonged_before_only_to_that_user_and_now_remained_with_no_user
+        project_id: project_id
+
+      mutator =
+        $push:
+          users:
+            $each: [invited_user_id]
+      
+      # @_bulkUpdate(project_id, tasks_that_belonged_before_only_to_that_user_and_now_remained_with_no_user, mutator, invited_user_id)
+      # Note, we can't reuse @bulkUpdate like the code in the above line that does for us things like unfreezing private fields, and query preparation
+      # @bulkUpdate is very strict about who can use, and in the choice of adding less secure options to it, and having
+      # a less DRY code, I sided with less DRY code. Daniel C.
+
+      @_grid_data_com._bulkUpdateFromSecureSource selector, mutator, Meteor.bindEnvironment (err) =>
+        if err?
+          console.error(err)
+
+          return
+
+        # Unfreeze private data fields
+        @_grid_data_com._setPrivateDataDocsFreezeState([invited_user_id], tasks_that_belonged_before_only_to_that_user_and_now_remained_with_no_user, false)
+
+        # Remove the is_removed_owner flag from the tasks the user got back
+        # Don't use the following code, it is much less efficient! (since we know for sure the flag needs to be removed from these tasks...) @_grid_data_com._removeIsRemovedOwnerForTasksBelongingTo(tasks_that_belonged_before_only_to_that_user_and_now_remained_with_no_user, invited_user_id)
+        @_grid_data_com._removeIsRemovedOwnerForTasks(tasks_that_belonged_before_only_to_that_user_and_now_remained_with_no_user)
+
+        return
+
     return invited_user_id
 
   resendEnrollmentEmail: (project_id, invited_user_id, inviting_user_id) ->
@@ -918,9 +954,14 @@ _.extend Projects.prototype,
 
     if not _.isEmpty added_users
       @_grid_data_com._setPrivateDataDocsFreezeState(added_users, items_ids, false)
+      # Important, if you change the logic here, note that in the process of inviteMember
+      # we also call @_setPrivateDataDocsFreezeState()
 
     if not _.isEmpty removed_users
       @_grid_data_com._setPrivateDataDocsFreezeState(removed_users, items_ids, true)
+      # Important, if you change the logic here, note that in the process of removeMember
+      # we do something similar using a slight different API: _freezeAllProjectPrivateDataDocsForUsersIds
+
 
     return @_grid_data_com._bulkUpdateFromSecureSource selector, modifier, cb
 
