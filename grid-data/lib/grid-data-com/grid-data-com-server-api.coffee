@@ -472,6 +472,33 @@ _.extend GridDataCom.prototype,
 
     return {no_changes_to_public_task, mutator, private_fields_mutator}
 
+  _removeIsRemovedOwnerForTasksBelongingTo: (tasks_ids, owners_ids) ->
+    if not _.isArray tasks_ids
+      tasks_ids = [tasks_ids]
+
+    if not _.isArray owners_ids
+      owners_ids = [owners_ids]
+
+    check tasks_ids, [String]
+    check owners_ids, [String]
+
+    remove_is_owner_flag_from_tasks_ids = []
+    # INDEX:IS_REMOVED_OWNER_FETCHING_INDEX
+    @collection.find({_id: {$in: tasks_ids}, is_removed_owner: true, owner_id: {$in: owners_ids}}, {fields: {owner_id: 1, users: 1}}).forEach (doc) ->
+      if doc.owner_id in doc.users
+        remove_is_owner_flag_from_tasks_ids.push(doc._id)
+
+      return
+
+    @_removeIsRemovedOwnerForTasks(remove_is_owner_flag_from_tasks_ids)
+
+    return
+
+  _removeIsRemovedOwnerForTasks: (tasks_ids) ->
+    @_bulkUpdateFromSecureSource({_id: {$in: tasks_ids}}, {$set: {is_removed_owner: null}})
+
+    return
+
   setupGridCollectionWritesProxies: ->
     # We make the existance of the @private_data_collection transparent to the client
     # private fields defined for the user are published in the tasks_grid_um pulication
