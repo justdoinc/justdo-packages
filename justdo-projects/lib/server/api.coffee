@@ -962,8 +962,15 @@ _.extend Projects.prototype,
       # Important, if you change the logic here, note that in the process of removeMember
       # we do something similar using a slight different API: _freezeAllProjectPrivateDataDocsForUsersIds
 
+    @_grid_data_com._bulkUpdateFromSecureSource selector, modifier, Meteor.bindEnvironment (err) =>
+      if err?
+        console.error(err)
+      else
+        @_grid_data_com._removeIsRemovedOwnerForTasksBelongingTo(items_ids, added_users)
 
-    return @_grid_data_com._bulkUpdateFromSecureSource selector, modifier, cb
+      JustdoHelpers.callCb cb, err
+
+    return
 
   removeMember: (project_id, member_id, user_id) ->
     if user_id != member_id # user can remove himself from project even if not admin
