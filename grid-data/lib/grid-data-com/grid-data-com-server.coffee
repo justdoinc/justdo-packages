@@ -293,6 +293,11 @@ _.extend GridDataCom.prototype,
   initDefaultIndeices: ->
     @collection._ensureIndex {users: 1}
 
+    # INDEX:IS_REMOVED_OWNER_FETCHING_INDEX
+    @collection._ensureIndex {_id: 1, is_removed_owner: 1, owner_id: 1}
+
+    return
+
   initDefaultGridAllowDenyRules: ->
     collection = @collection
 
