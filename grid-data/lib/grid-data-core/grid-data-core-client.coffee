@@ -459,6 +459,7 @@ _.extend GridDataCore.prototype,
 
             foreign_keys_trackers[field_name] =
               field_def.grid_foreign_key_collection().find({}, tracker_cursor_options).observeChanges
+                _suppress_initial: true
                 added: changesCb
                 changed: changesCb
                 removed: changesCb
