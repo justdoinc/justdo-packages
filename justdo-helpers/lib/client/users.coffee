@@ -118,3 +118,14 @@ _.extend JustdoHelpers,
     user_docs = @getUsersDocsByIds user_ids, {}, {user_fields_reactivity: false, missing_users_ractivity: true, ret_type: "array", get_docs_by_reference: true}
 
     return @filterUsersDocsArray user_docs, niddle, filter_options
+
+  getUsersDocsFromProjectMembersArray: (project_members_array, find_options, options) ->
+    # Search the code for: 'augment_members_field' if you edit this one, the two might be DRYed
+    members_users_ids = _.map project_members_array, (member_doc) -> member_doc.user_id
+
+    return JustdoHelpers.getUsersDocsByIds(members_users_ids, find_options, options)
+
+  getFilteredUsersDocsFromProjectMembersArray: (project_members_array, niddle, filter_options) ->
+    user_docs = @getUsersDocsFromProjectMembersArray project_members_array, {}, {user_fields_reactivity: false, missing_users_ractivity: true, ret_type: "array", get_docs_by_reference: true}
+
+    return @filterUsersDocsArray user_docs, niddle, filter_options
