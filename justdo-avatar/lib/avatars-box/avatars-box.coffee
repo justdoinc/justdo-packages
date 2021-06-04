@@ -114,4 +114,4 @@ Template.justdo_avatars_box_avatar.onCreated ->
   return
 
 Template.justdo_avatars_box_avatar.helpers
-  containersCustomContentGenerator: -> tplProp("controller").containersCustomContentGenerator(@)
+  containersCustomContentGenerator: -> tplProp("controller")?.containersCustomContentGenerator(@)
