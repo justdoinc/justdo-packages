@@ -122,9 +122,7 @@ _.extend GridDataCore.prototype,
     # @_data_changes_queue stores the data changes that will be applied in the
     # next flush.
     # Items are in the form: ["type", update]
-    @_data_changes_queue = [] 
-
-    @_items_tracker = null
+    @_data_changes_queue = []
 
     @flush_manager = new JustdoHelpers.FlushManager
       min_flush_delay: 80
@@ -750,8 +748,6 @@ _.extend GridDataCore.prototype,
     _.each @_on_destroy_procedures, (proc) -> proc()
 
     @_destroyForeignKeysTrackers()
-
-    @_items_tracker.stop()
 
     @flush_manager.destroy()
 
