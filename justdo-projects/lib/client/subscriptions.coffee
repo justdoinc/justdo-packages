@@ -3,28 +3,49 @@ if not _.isObject(Meteor.connection._subscriptions)
   # and report about it with alert
   alert("Meteor.connection._subscriptions is not an object")
 
-# tasks_subscription_last_sync_time keys are projects_ids to which we had subscription/s before,
-# to which, right now, we have no subscriptions at all.
-#
-# If a new tasks subscription will be created for these projects, it'll be created with the 
-# sync option set to the last time we had a subscription, minus sync_safety_delta_ms.
-tasks_subscription_last_sync_time = {}
 sync_safety_delta_ms = 2 * 60 * 1000 # 2 minutes
-# open_tasks_subscriptions_handles keys are projects ids, values are the subscriptions
-# handles
-open_tasks_subscriptions_handles = {}
-# required_tasks_subscriptions_count counts the requests for @requireProjectTasksSubscription
-# calls that haven't been stopped or invalidated.
-# Keys are projects ids values is the count. When value reach 0 we remove the key and unsubscribe
-# the respective handle under open_tasks_subscriptions_handles.
-required_tasks_subscriptions_count = {}
 
 getCurrentSyncTimeWithSafetyDelta = -> new Date(TimeSync.getServerTime() - sync_safety_delta_ms)
 
 _.extend Projects.prototype,
   _setupSubscriptions: ->
+    # @open_tasks_subscriptions_handles keys are projects ids, values are the subscriptions
+    # handles
+    @open_tasks_subscriptions_handles = {}
+    # @required_tasks_subscriptions_count counts the requests for @requireProjectTasksSubscription
+    # calls that haven't been stopped or invalidated.
+    # Keys are projects ids values is the count. When value reach 0 we remove the key and unsubscribe
+    # the respective handle under @open_tasks_subscriptions_handles.
+    @required_tasks_subscriptions_count = {}
+
+    # @tasks_subscription_last_sync_time keys are projects_ids to which we had subscription/s before,
+    # to which, right now, we have no subscriptions at all.
+    #
+    # If a new tasks subscription will be created for these projects, it'll be created with the 
+    # sync option set to the last time we had a subscription, minus sync_safety_delta_ms.
+    @tasks_subscription_last_sync_time = {}
+    @projects_with_processed_init_payload = new ReactiveDict()
+
     @_subscribeUserProjects()
     @_subscribeUserGuestProjects()
+
+    return
+
+  setProjectInitPayloadSyncId: (project_id, sync_id) ->
+    # When we are entering State 2.2 we `delete @tasks_subscription_last_sync_time[project_id]` for
+    # the duration of the subscription, hence, the existence of @tasks_subscription_last_sync_time[project_id]
+    # is not an indicator for whether we loaded project_id before !!!
+
+    if not (previous_state = Tracker.nonreactive => @projects_with_processed_init_payload.get(project_id))? or previous_state is false
+      @projects_with_processed_init_payload.set(project_id, true)
+      @emit "project-init-payload-processed", project_id # Note you can also use @awaitProjectInitPayloadProcessed(project_id, cb)
+
+    @tasks_subscription_last_sync_time[project_id] = sync_id
+
+    return
+
+  markProjectAsRemovedFromMinimongo: (project_id) ->
+    @projects_with_processed_init_payload.set(project_id, false)
 
     return
 
@@ -38,7 +59,8 @@ _.extend Projects.prototype,
 
         return
 
-      delete tasks_subscription_last_sync_time[id]
+      delete self.tasks_subscription_last_sync_time[id]
+      self.markProjectAsRemovedFromMinimongo(project_id)
 
       return
 
@@ -70,16 +92,16 @@ _.extend Projects.prototype,
     # get invalidated, we unsubscribe the project tasks subscription.
     self.logger.debug "Subscribe #{project_id}"
 
-    if not required_tasks_subscriptions_count[project_id]?
-      required_tasks_subscriptions_count[project_id] = 0
-    required_tasks_subscriptions_count[project_id] += 1
+    if not self.required_tasks_subscriptions_count[project_id]?
+      self.required_tasks_subscriptions_count[project_id] = 0
+    self.required_tasks_subscriptions_count[project_id] += 1
 
     ongoing_http_request_rv = new ReactiveVar(false)
 
     # State 1: An http-load/subscription of this JustDo is already in-progress/established.
     #          Just use the existing one.
-    if project_id of open_tasks_subscriptions_handles
-      handle = open_tasks_subscriptions_handles[project_id]
+    if project_id of self.open_tasks_subscriptions_handles
+      handle = self.open_tasks_subscriptions_handles[project_id]
     # State 2: An http-load/subscription isn't in-progress/established.
     else
       # STATE 2.X BEGIN
@@ -87,7 +109,7 @@ _.extend Projects.prototype,
 
       # Two ways to produce an handle in the following State 2.1/2.2
 
-      if not force_init_payload_over_ddp and (project_id not of tasks_subscription_last_sync_time)
+      if not force_init_payload_over_ddp and (project_id not of self.tasks_subscription_last_sync_time)
         # STATE 2.1 BEGIN
 
         # State 2.1: We never subscribed before to this JustDo, load first the JustDo using http-load.
@@ -101,7 +123,7 @@ _.extend Projects.prototype,
           ready_dep = new Tracker.Dependency()
 
           deleteFakeHandleFromHandlersRegistry = ->
-            delete open_tasks_subscriptions_handles[project_id]
+            delete self.open_tasks_subscriptions_handles[project_id]
             return
 
           fake_subscription_handle =
@@ -113,7 +135,7 @@ _.extend Projects.prototype,
             stop: _.once ->
               stopped = true
               
-              releaseRequirement() # call releaseRequirement, so it won't be able to be called again, and to clear the required_tasks_subscriptions_count for this project_id
+              releaseRequirement() # call releaseRequirement, so it won't be able to be called again, and to clear the self.required_tasks_subscriptions_count for this project_id
                                    # Note, there's no risk of calling it more than once, it can run only once.
 
               if not subscription_handle?
@@ -148,10 +170,10 @@ _.extend Projects.prototype,
             ready = true
             ready_dep.changed()
 
-            # Even if we got the stop request, set the tasks_subscription_last_sync_time[project_id]
+            # Even if we got the stop request, set the self.tasks_subscription_last_sync_time[project_id]
             # so subsequent requests will not get again to State 2.1
             if init_payload_sync_id?
-              tasks_subscription_last_sync_time[project_id] = init_payload_sync_id
+              self.setProjectInitPayloadSyncId(project_id, init_payload_sync_id)
             else
               if not failed
                 # If we didn't fail, and for whatever reason we don't have an init_payload_sync_id
@@ -160,11 +182,11 @@ _.extend Projects.prototype,
                 # This case is theoretical, and as of writing I can't think of a situation where it might
                 # happen. (Daniel C.)
                 #
-                # If we did fail - we don't want to set tasks_subscription_last_sync_time[project_id]
+                # If we did fail - we don't want to set self.tasks_subscription_last_sync_time[project_id]
                 # at all, so the ddp subscription will be called without the sync param and will receive
                 # the init payload.
                 console.warn "loadDefaultGridFromHttpPreReadyPayload returned with no init_payload_sync_id"
-                tasks_subscription_last_sync_time[project_id] = new Date(TimeSync.getServerTime() - sync_safety_delta_ms)
+                self.setProjectInitPayloadSyncId(project_id, new Date(TimeSync.getServerTime() - sync_safety_delta_ms))
 
             if stopped
               # Stopped already by the user/or as a result of a failure, don't proceed to establish subscription.
@@ -181,13 +203,13 @@ _.extend Projects.prototype,
 
             # COMMENT:REQUIRED_TASKS_SUBSCRIPTIONS_COUNT_MANAGEMENT
             #
-            # We subtract 1 from the required_tasks_subscriptions_count[project_id] since the following call to
+            # We subtract 1 from the self.required_tasks_subscriptions_count[project_id] since the following call to
             # self.requireProjectTasksSubscription(project_id) will increase the count by 1, which means
-            # that there'll be 1 extra required_tasks_subscriptions_count for this project id for the same
+            # that there'll be 1 extra self.required_tasks_subscriptions_count for this project id for the same
             # request, that will prevent releaseRequirement to call the handle stop upon call, because it will think
             # there are more resources that need this subscription. This will keep the subscription running
             # forever.
-            required_tasks_subscriptions_count[project_id] -= 1
+            self.required_tasks_subscriptions_count[project_id] -= 1
 
             subscription_handle = self.requireProjectTasksSubscription(project_id, failed) # If failed is true we will force the followup attempt to go through ddp
 
@@ -200,10 +222,10 @@ _.extend Projects.prototype,
 
         # State 2.2: We subscribed before to this JustDo, re-subscribe assuming the initial payload already received.
 
-        if tasks_subscription_last_sync_time[project_id]?
+        if self.tasks_subscription_last_sync_time[project_id]?
           # Note, this can happen when force_init_payload_over_ddp is set to true
           # force_init_payload_over_ddp will be set to true, if we failed to obtain the payload over http
-          options.sync = tasks_subscription_last_sync_time[project_id] # The if statement we are in ensures tasks_subscription_last_sync_time[project_id] existence
+          options.sync = self.tasks_subscription_last_sync_time[project_id] # The if statement we are in ensures self.tasks_subscription_last_sync_time[project_id] existence
 
         # If the handle needed by @requireProjectTasksSubscription() created inside a computation
         # we don't want the computation invalidation to stop the subscription for others that might
@@ -213,7 +235,7 @@ _.extend Projects.prototype,
         handle = Tracker.nonreactive ->
           return self._grid_data_com.subscribeDefaultGridSubscription options,
             onReady: ->
-              delete tasks_subscription_last_sync_time[project_id]
+              delete self.tasks_subscription_last_sync_time[project_id]
 
               last_state_is_connected = true
               meteor_connection_tracker = Tracker.autorun ->
@@ -245,27 +267,27 @@ _.extend Projects.prototype,
 
             onStop: (err) ->
               if err?
-                releaseRequirement() # call releaseRequirement, so it won't be able to be called again, and to clear the required_tasks_subscriptions_count for this project_id
+                releaseRequirement() # call releaseRequirement, so it won't be able to be called again, and to clear the self.required_tasks_subscriptions_count for this project_id
               else
-                tasks_subscription_last_sync_time[project_id] = getCurrentSyncTimeWithSafetyDelta()
+                self.setProjectInitPayloadSyncId(project_id, getCurrentSyncTimeWithSafetyDelta())
 
-              delete open_tasks_subscriptions_handles[project_id]
+              delete self.open_tasks_subscriptions_handles[project_id]
 
               return
 
         # STATE 2.2 END
 
-      open_tasks_subscriptions_handles[project_id] = handle
+      self.open_tasks_subscriptions_handles[project_id] = handle
 
       # STATE 2.X END
 
     releaseRequirement = _.once ->
       release = ->
-        required_tasks_subscriptions_count[project_id] -= 1
+        self.required_tasks_subscriptions_count[project_id] -= 1
 
-        if required_tasks_subscriptions_count[project_id] <= 0
+        if self.required_tasks_subscriptions_count[project_id] <= 0
           # Search for comment REQUIRED_TASKS_SUBSCRIPTIONS_COUNT_MANAGEMENT above for how negative cases might happen
-          required_tasks_subscriptions_count[project_id] = 0
+          self.required_tasks_subscriptions_count[project_id] = 0
 
           handle?.stop()
 
@@ -372,3 +394,28 @@ _.extend Projects.prototype,
         return
 
     return computation
+
+  isProjectInitPayloadProcessed: (project_id) -> @projects_with_processed_init_payload.get(project_id)
+
+  awaitProjectInitPayloadProcessed: (project_id, cb) ->
+    # Calls cb once project_id's init payload loaded to minimongo.
+    #
+    # Notes:
+    #
+    # 1. This is a NON REACTIVE method
+    # 2. cb can be called either in the current tick or in a future tick!
+
+    Tracker.nonreactive =>
+      Tracker.autorun (c) =>
+        if @isProjectInitPayloadProcessed(project_id)
+          JustdoHelpers.callCb(cb)
+
+          c.stop()
+
+          return
+
+        return
+
+      return
+
+    return
