@@ -11,4 +11,11 @@ _.extend TasksChangelogManager.prototype,
 
     return
 
-  undo: (activity_obj) -> Meteor.call "undo", activity_obj
+  undo: (activity_obj) ->
+    @tasks_collection.update activity_obj.task_id,
+      $set:
+        [activity_obj.field]: activity_obj.old_value
+
+    Meteor.call "undo", activity_obj
+
+    return

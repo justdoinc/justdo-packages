@@ -10,11 +10,6 @@ _.extend TasksChangelogManager.prototype,
         if activity_obj.by isnt @userId
           return
 
-        # collection.direct used to bypass collection hook
-        self.tasks_collection.direct.update activity_obj.task_id,
-          $set:
-            [activity_obj.field]: activity_obj.old_value
-
         self.changelog_collection.update activity_obj._id,
           $set:
             undone: true
