@@ -5,7 +5,7 @@ TabSwitcherManager = ->
 
   @sections_reactive_items_list.registerGlobalListingCondition "sections-label-filter", (item) =>
     if (sections_items_label_filter_keyword = @sections_items_label_filter_keyword_rv.get())?
-      if _.isEmpty(item.data.reactive_items_list.getList())
+      if _.isEmpty(item.data.itemsSource(@, false))
         return false
       else
         return true
@@ -14,12 +14,25 @@ TabSwitcherManager = ->
 
   return @
 
-itemsSource = (ignore_listing_condition) ->
+itemsSource = (tab_switcher_manager, ignore_listing_condition) ->
   if @itemsGenerator?
-    return @itemsGenerator()
+    items = @itemsGenerator()
+
+    if ignore_listing_condition
+      return items
+
+    items = _.filter items, (item_data) => tab_switcher_manager.isPassingFilter(item_data)
+
+    return items
   return @reactive_items_list.getList("default", ignore_listing_condition)
 
 _.extend TabSwitcherManager.prototype,
+  isPassingFilter: (item_data) ->
+    if (sections_items_label_filter_keyword = @sections_items_label_filter_keyword_rv.get())?
+      return RegExp(JustdoHelpers.escapeRegExp(sections_items_label_filter_keyword), "i").test(item_data.label)
+
+    return true
+
   setSectionsItemsLabelFilter: (keyword=null) ->
     if (not _.isString(keyword)) or (_.isString(keyword) and keyword.trim() == "")
       keyword = null
@@ -42,11 +55,7 @@ _.extend TabSwitcherManager.prototype,
 
       itemsSource: itemsSource
 
-    conf.data.reactive_items_list.registerGlobalListingCondition "label-filter", (item) =>
-      if (sections_items_label_filter_keyword = @sections_items_label_filter_keyword_rv.get())?
-        return RegExp(JustdoHelpers.escapeRegExp(sections_items_label_filter_keyword), "i").test(item.data.label)
-
-      return true
+    conf.data.reactive_items_list.registerGlobalListingCondition "label-filter", (item) => @isPassingFilter(item.data)
 
     @sections_reactive_items_list.registerItem section_id, conf
 
@@ -85,7 +94,7 @@ _.extend TabSwitcherManager.prototype,
       return loading_tab_icon
 
     for section in @getSections(true)
-      for tab in section.itemsSource(true)
+      for tab in section.itemsSource(@, true)
         tab_sections_state = tab.tab_sections_state or {}
 
         # Since the tab itself might set sections states in addition to those defined for it in the

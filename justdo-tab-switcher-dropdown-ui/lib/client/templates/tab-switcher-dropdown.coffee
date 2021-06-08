@@ -37,6 +37,9 @@ APP.executeAfterAppLibCode ->
 
       return tab_attributes
 
+    itemsSource: ->
+      return @itemsSource(module.tab_switcher_manager)
+
   sections_vars_attributes_prefix = "data-sv-"
   Template.project_operations_tab_switcher_dropdown.events
     "click a": (e) ->
