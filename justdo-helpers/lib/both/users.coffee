@@ -193,8 +193,23 @@ _.extend JustdoHelpers,
     
     return
 
-  sortUsersDocsArrayByDisplayName: (users_docs) ->
-    return _.sortBy users_docs, (user_doc) -> JustdoHelpers.displayName(user_doc).toLowerCase()
+  sortUsersDocsArrayByDisplayName: (users_docs, options) ->
+    if options?.logged_in_user_first is true
+      user_id = Tracker.nonreactive -> Meteor.userId()
+
+      return _.sortBy users_docs, (user_doc) ->
+        if user_id is user_doc._id
+          return "" # "" to ensure it is smaller than all the rest
+
+        display_name = JustdoHelpers.displayName(user_doc).toLowerCase()
+
+        if display_name == ""
+          # To ensure no conflict with the "" we returned for the logged in user.
+          return " "
+
+        return display_name
+    else
+      return _.sortBy users_docs, (user_doc) -> JustdoHelpers.displayName(user_doc).toLowerCase()
 
   userHasProfilePic: (user_doc) ->
     identifying_prefix = "http" # If profile pic beings with this string, we assume the user has a profile pic
