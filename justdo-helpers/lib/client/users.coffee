@@ -1,5 +1,7 @@
 _.extend JustdoHelpers,
-  _getUsersDocsByIds: (users_ids, find_options, options) ->
+  _getUsersDocsByIds: (users_ids, options) ->
+    find_options = options?.find_options or {}
+
     if (limit = find_options?.limit)?
       find_options = _.extend(find_options)
 
@@ -17,7 +19,7 @@ _.extend JustdoHelpers,
       users_ids = [users_ids]
 
     if not options.user_fields_reactivity and find_options?.fields?
-      throw new Error "If the options.user_fields_reactivity is set to false the find_options.fields can't be set, we return the entire doc using JustdoHelpers.objectDeepInherit since it is much faster than returning parts of the user object"
+      throw new Error "If the options.user_fields_reactivity is set to false the options.find_options.fields can't be set, we return the entire doc using JustdoHelpers.objectDeepInherit since it is much faster than returning parts of the user object"
 
     if options.user_fields_reactivity and options?.get_docs_by_reference
       throw new Error "If the options.user_fields_reactivity is set to true the options.get_docs_by_reference can't be set to true"
@@ -93,7 +95,7 @@ _.extend JustdoHelpers,
 
     return [ret, missing_ids]
 
-  getUsersDocsByIds: (users_ids, find_options, options) ->
+  getUsersDocsByIds: (users_ids, options) ->
     # Might be a reactive resource depending on options
 
     # IMPORTANT: 1. Ids order might not be maintained in returned array
@@ -106,26 +108,27 @@ _.extend JustdoHelpers,
       missing_users_ractivity: true
       ret_type: "array" # can be "array" or "object"
       get_docs_by_reference: false
+      find_options: {}
 
     options = _.extend default_options, options
 
-    return @_getUsersDocsByIds(users_ids, find_options, options)[0]
+    return @_getUsersDocsByIds(users_ids, options)[0]
 
   getUserDocById: (user_id, options) ->
-    return JustdoHelpers.getUsersDocsByIds(user_id, {}, options)
+    return JustdoHelpers.getUsersDocsByIds(user_id, options)
 
   filterUsersIdsArray: (user_ids, niddle, filter_options) ->
-    user_docs = @getUsersDocsByIds user_ids, {}, {user_fields_reactivity: false, missing_users_ractivity: true, ret_type: "array", get_docs_by_reference: true}
+    user_docs = @getUsersDocsByIds user_ids, {user_fields_reactivity: false, missing_users_ractivity: true, ret_type: "array", get_docs_by_reference: true}
 
     return @filterUsersDocsArray user_docs, niddle, filter_options
 
-  getUsersDocsFromProjectMembersArray: (project_members_array, find_options, options) ->
+  getUsersDocsFromProjectMembersArray: (project_members_array, options) ->
     # Search the code for: 'augment_members_field' if you edit this one, the two might be DRYed
     members_users_ids = _.map project_members_array, (member_doc) -> member_doc.user_id
 
-    return JustdoHelpers.getUsersDocsByIds(members_users_ids, find_options, options)
+    return JustdoHelpers.getUsersDocsByIds(members_users_ids, options)
 
   getFilteredUsersDocsFromProjectMembersArray: (project_members_array, niddle, filter_options) ->
-    user_docs = @getUsersDocsFromProjectMembersArray project_members_array, {}, {user_fields_reactivity: false, missing_users_ractivity: true, ret_type: "array", get_docs_by_reference: true}
+    user_docs = @getUsersDocsFromProjectMembersArray project_members_array, {user_fields_reactivity: false, missing_users_ractivity: true, ret_type: "array", get_docs_by_reference: true}
 
     return @filterUsersDocsArray user_docs, niddle, filter_options
