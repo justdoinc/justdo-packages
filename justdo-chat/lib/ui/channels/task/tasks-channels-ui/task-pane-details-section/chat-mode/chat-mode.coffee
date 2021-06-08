@@ -108,7 +108,7 @@ Template.task_pane_chat_section_chat.helpers
 
       subscribers_ids = subscribers_ids.slice(0, limit) # take up to limit
 
-    task_members_doc = JustdoHelpers.getUsersDocsByIds(subscribers_ids, {limit: limit}, {ret_type: "array", user_fields_reactivity: false, missing_users_ractivity: true, get_docs_by_reference: true})
+    task_members_doc = JustdoHelpers.getUsersDocsByIds(subscribers_ids, {ret_type: "array", user_fields_reactivity: false, missing_users_ractivity: true, get_docs_by_reference: true, find_options: {limit: limit}})
     if subscribers_includes_logged_in_user
       task_members_doc.push Meteor.user({fields: JustdoHelpers.display_name_required_fields})
 
