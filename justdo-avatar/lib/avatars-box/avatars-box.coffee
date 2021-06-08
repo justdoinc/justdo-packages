@@ -67,7 +67,7 @@ normalizeUsersInput = (users, max_users) ->
     return users
 
   if _.isString users[0] # we assume single type
-    users = JustdoHelpers.getUsersDocsByIds(users, {limit: max_users}, {user_fields_reactivity: false, missing_users_ractivity: true, get_docs_by_reference: true})
+    users = JustdoHelpers.getUsersDocsByIds(users, {find_options: {limit: max_users}, user_fields_reactivity: false, missing_users_ractivity: true, get_docs_by_reference: true})
 
   return users
 
