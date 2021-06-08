@@ -1,6 +1,20 @@
+chat_window_required_fields =
+  title: 1
+  seqId: 1
+
 Template.chat_bottom_windows_task_open.onCreated ->
   @getTaskDoc = (options) =>
-    return APP.justdo_chat.bottom_windows_supplementary_pseudo_collections.tasks.findOne({_id: @data.task_id})
+    # Try first to get the document from the tasks collection, in case we got it loaded there.
+    #
+    # Unlikee bottom_windows_supplementary_pseudo_collections.tasks , the tasks collection will
+    # get updated while the tasks subscription is running, so it worth while to attempt to obtain
+    # first the doc from there.
+    #
+    # (If the task's JustDo isn't/wasn't loaded before, the task won't be there).
+    if (tasks_collection_doc = APP.collections.Tasks.findOne({_id: @data.task_id}, {fields: chat_window_required_fields}))?
+      return tasks_collection_doc
+
+    return APP.justdo_chat.bottom_windows_supplementary_pseudo_collections.tasks.findOne({_id: @data.task_id}, {fields: chat_window_required_fields})
 
   @getProjectDoc = (options) =>
     return APP.collections.Projects.findOne({_id: @data.project_id})
