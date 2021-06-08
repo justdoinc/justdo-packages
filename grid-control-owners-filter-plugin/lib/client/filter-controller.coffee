@@ -1,6 +1,16 @@
 getCurrentProjectMembersIds = ->
-  current_project = APP.modules.project_page.curProj()
+  if not (current_project = APP.modules.project_page.curProj())?
+    return []
+
   return current_project.getMembersIds()
+
+getCurrentProjectMembersDocsSortedByDisplayNameWithLoggedInUserFirst = ->
+  if not (current_project = APP.modules.project_page.curProj())?
+    return []
+  
+  members_docs = current_project.getMembersDocs()
+
+  return JustdoHelpers.sortUsersDocsArrayByDisplayName(members_docs, {logged_in_user_first: true})
 
 #
 # Filter controller constructor
@@ -16,29 +26,6 @@ OwnersFilterControllerConstructor = (context) ->
 
   @controller = $("""<div class="owners-filter-controller" />""")
 
-  members_ids = getCurrentProjectMembersIds()
-
-  # Move current user to the beginning of the list
-  cur_user_id = Meteor.userId()
-  members_ids = _.without members_ids, cur_user_id
-  members_ids.unshift(cur_user_id)
-
-  members = _.map members_ids, (member_id) ->
-    return Meteor.users.findOne(member_id)
-
-  members = JustdoHelpers.sortUsersDocsArrayByDisplayName(members)
-
-  members_items = ""
-  for member in members
-    member_item = """<li class="member-item" member-id="#{JustdoHelpers.xssGuard(member?._id, {enclosing_char: '"'})}">""" # Not part of xssGuard below, because xssGuard removes member-id
-    member_item += JustdoHelpers.xssGuard("""
-        <img class="justdo-avatar" src="#{JustdoAvatar.showUserAvatarOrFallback(member)}" title="#{JustdoHelpers.xssGuard(JustdoHelpers.displayName(member))}">
-        <div class="display-name">#{JustdoHelpers.displayName(member)}</div>
-    """, {allow_html_parsing: true, enclosing_char: ""})
-    member_item += """</li>"""
-
-    members_items += member_item
-
   # note, the reason why we seperate the ul for the dropdown-header is that
   # the vertical scroll of the members ul, when there are many members, go
   # over the x button that close the filter controller.
@@ -52,12 +39,17 @@ OwnersFilterControllerConstructor = (context) ->
       <input class="owners-search-input" placeholder="Filter Tasks Owners">
     </div>
 
-    <ul>
-      #{members_items}
-    </ul>
+    <ul class="owners-filter-controller-members"></ul>
 
     <div class="no-results" style="display: none">No results found</div>
   """)
+
+  @members_computation = Tracker.autorun =>
+    @members = getCurrentProjectMembersDocsSortedByDisplayNameWithLoggedInUserFirst()
+
+    @renderMembers()
+
+    return
 
   $(@controller).on "keyup", ".owners-search-input", (e) =>
     value = $(e.target).val().trim()
@@ -66,7 +58,7 @@ OwnersFilterControllerConstructor = (context) ->
       $(".member-item", @controller).removeClass("filtered-out")
       $(".no-results", @controller).hide()
     else
-      members_passing_filter = JustdoHelpers.filterUsersDocsArray(members, value)
+      members_passing_filter = JustdoHelpers.filterUsersDocsArray(@members, value)
 
       members_ids_passing_filter = {}
 
@@ -114,6 +106,22 @@ OwnersFilterControllerConstructor = (context) ->
   return @
 
 _.extend OwnersFilterControllerConstructor.prototype,
+  renderMembers: ->
+    members_items = ""
+    for member in @members
+      member_item = """<li class="member-item" member-id="#{JustdoHelpers.xssGuard(member?._id, {enclosing_char: '"'})}">""" # Not part of xssGuard below, because xssGuard removes member-id
+      member_item += JustdoHelpers.xssGuard("""
+          <img class="justdo-avatar" src="#{JustdoAvatar.showUserAvatarOrFallback(member)}" title="#{JustdoHelpers.xssGuard(JustdoHelpers.displayName(member))}">
+          <div class="display-name">#{JustdoHelpers.displayName(member)}</div>
+      """, {allow_html_parsing: true, enclosing_char: ""})
+      member_item += """</li>"""
+
+      members_items += member_item
+
+    $(".owners-filter-controller-members", @controller).html(members_items)
+
+    return
+
   refresh_state: ->
     filter_state = @column_filter_state_ops.getColumnFilter()
 
@@ -127,6 +135,14 @@ _.extend OwnersFilterControllerConstructor.prototype,
 
   destroy: ->
     @grid_control.removeListener "filter-change", @filter_change_listener
+
+    @controller.remove()
+
+    @members_computation.stop()
+
+    @members = [] # release from GC
+
+    return
 
 #
 # stateToQuery
