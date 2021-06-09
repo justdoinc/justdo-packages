@@ -147,6 +147,10 @@ $standard-cell-padding-bottom: 3px
       &.editable
         background-color: $active-editable-background-color
 
+  .full-row-colspan
+    .frozen
+      z-index: 0 // fixed issue #10748
+
   #grid-control-mux & .type-section-item
     display: flex
 
