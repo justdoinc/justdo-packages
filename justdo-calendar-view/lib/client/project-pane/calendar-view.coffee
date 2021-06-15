@@ -1230,7 +1230,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
         if daily_workload.total_load_percent?
           workload += daily_workload.total_load_percent
 
-        if daily_workload.total_hours? and JD.activeJustdo({_id: 1})._id
+        if daily_workload.total_hours? and JD.activeJustdo({_id: 1})?._id
           user_available_hours = APP.justdo_resources_availability.userAvailabilityBetweenDates(column_date, column_date,
             JD.activeJustdo({_id: 1})._id, Template.instance().data.user_id).available_hours
           if user_available_hours
