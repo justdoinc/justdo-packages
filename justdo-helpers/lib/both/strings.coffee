@@ -59,7 +59,7 @@ _.extend JustdoHelpers,
     if not str?
       return ""
 
-    if not max_length?
+    if not max_length? or max_length is 0
       return str
 
     if str.length <= max_length
