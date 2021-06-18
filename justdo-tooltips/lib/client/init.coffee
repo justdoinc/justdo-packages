@@ -1,7 +1,14 @@
 default_options = {}
 
 options_schema =
-  client: {}
+  client:
+    tooltip_container_selector:
+      type: String
+      defaultValue: "body"
+
+    tooltip_element_id:
+      type: String
+      defaultValue: "jd-tt"
 
 # options_schema
 # ==============

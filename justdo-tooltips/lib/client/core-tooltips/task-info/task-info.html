@@ -1,0 +1,19 @@
+<template name="task_info_tooltip">
+  {{#if showTaskTitle}}
+    <div class="task-title">
+      {{taskCommonName}}
+    </div>
+  {{/if}}
+  <div class="projects bg-light">
+    <div class="sub-section-title">Projects</div>
+    {{#each taskProjects}}
+      <div class="projects-item task" task-id="{{_id}}">
+        {{projectCommonName this}}
+      </div>
+    {{else}}
+      <div class="projects-item">
+        This task doesn't belong to any project
+      </div>
+    {{/each}}
+  </div>
+</template>

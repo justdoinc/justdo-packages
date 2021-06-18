@@ -33,13 +33,14 @@ Package.onUse(function (api) {
   //   checkNpmVersions({
   //     'colors': '1.1.x'
   //   }, 'justdoinc:justdo-tooltips')
-  // api.use("ecmascript", both);
+  api.use("ecmascript", both);
   // api.use("tmeasday:check-npm-versions@0.3.1", both);
 
   // api.use("stevezhu:lodash@4.17.2", client);
   api.use("templating", client);
   api.use('fourseven:scss@3.2.0', client);
 
+  api.use("aldeed:simple-schema@1.5.3", both);
   api.use("raix:eventemitter@0.1.1", client);
   api.use("meteorspark:util@0.2.0", client);
   api.use("meteorspark:logger@0.3.0", client);
@@ -59,6 +60,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/static.coffee", client);
   api.addFiles("lib/client/errors-types.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
+  api.addFiles("lib/client/tooltips-registrar.coffee", client);
+  
+  api.addFiles("lib/client/justdo-tooltips.sass", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
@@ -68,6 +72,10 @@ Package.onUse(function (api) {
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
   // file. 
+
+  api.addFiles("lib/client/core-tooltips/task-info/task-info.html", client);
+  api.addFiles("lib/client/core-tooltips/task-info/task-info.sass", client);
+  api.addFiles("lib/client/core-tooltips/task-info/task-info.coffee", client);
 
   api.export("JustdoTooltips", client);
 });
