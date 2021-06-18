@@ -382,7 +382,7 @@ GridControl.installFormatter "textWithTreeControls",
       tree_control += """
           <span class="label label-primary grid-tree-control-task-id slick-prevent-edit cell-handle"
                  style="left: #{index_left}px;
-                        width: #{index_width}px;">
+                        width: #{index_width}px;" jd-tt="task-info?id=#{doc._id}">
             #{index}
           </span>
       """
