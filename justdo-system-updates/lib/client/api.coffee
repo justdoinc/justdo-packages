@@ -68,6 +68,7 @@ _.extend JustdoSystemUpdates.prototype,
       title: system_update_def.title
       message: system_update_template.node
       className: "members-update-dialog bootbox-new-design"
+      focused_element: ""
 
       onEscape: ->
         markAsRead()
