@@ -4,6 +4,8 @@ _.extend JustdoTooltips.prototype,
 
     @registered_tooltips = {}
 
+    @_is_enabled = true
+
     return
 
   _deferredInit: ->
@@ -23,6 +25,8 @@ _.extend JustdoTooltips.prototype,
   tooltip_conf_prefix: "tt-"
 
   getTooltipDef: (tooltip_id) -> @registered_tooltips[tooltip_id]
+
+  isEnabled: -> @_is_enabled
 
   _initStateMachine: ->
     self = @
@@ -283,6 +287,9 @@ _.extend JustdoTooltips.prototype,
     self = @
 
     $container.on "mousedown", (e) ->
+      if not self.isEnabled()
+        return
+
       $target = $(e.target)
 
       if self.getState() is "nil"
@@ -296,6 +303,9 @@ _.extend JustdoTooltips.prototype,
       return
 
     $container.on "mouseenter", "[jd-tt]", (e) ->
+      if not self.isEnabled()
+        return
+
       $target_container = $(e.target)
 
       jd_tt_attr = $target_container.attr("jd-tt")
@@ -307,16 +317,25 @@ _.extend JustdoTooltips.prototype,
       return
 
     $container.on "mouseleave", "[jd-tt]", (e) ->
+      if not self.isEnabled()
+        return
+
       self.state_machine.trigger("insignificant-area")
 
       return
 
     $container.on "mouseenter", ".jd-tt-container", (e) ->
+      if not self.isEnabled()
+        return
+
       self.state_machine.trigger("in-tooltip")
 
       return
 
     $container.on "mouseleave", ".jd-tt-container", (e) ->
+      if not self.isEnabled()
+        return
+
       self.state_machine.trigger("insignificant-area")
 
       return
@@ -389,5 +408,15 @@ _.extend JustdoTooltips.prototype,
         my: configured_tooltip_def["pos_my"]
         at: configured_tooltip_def["pos_at"]
         collision: configured_tooltip_def["pos_collision"]
+
+    return
+
+  disable: ->
+    @_is_enabled = false
+
+    return
+
+  enable: ->
+    @_is_enabled = true
 
     return
