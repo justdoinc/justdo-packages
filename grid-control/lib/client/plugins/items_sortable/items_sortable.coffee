@@ -633,6 +633,18 @@ _.extend PACK.Plugins,
         @_sortable("option", "items", default_sortable_items_selector)
         @_sortable("refresh")
 
+      lockGrid = =>
+        @_grid_data._lock()
+        APP.justdo_tooltips.disable()
+
+        return
+
+      releaseGrid = (force_immediate_flush=false) =>
+        @_grid_data._release(force_immediate_flush)
+        APP.justdo_tooltips.enable()
+        
+        return
+
       #
       # Sortable
       #
@@ -662,7 +674,7 @@ _.extend PACK.Plugins,
           # Don't allow grid data updates while sorting to avoid getting
           # dragged item, its information, and actual DOM element to
           # get out of-sync with the grid.
-          @_grid_data._lock()
+          lockGrid()
 
           initSortState()
           initCancelTracker()
@@ -739,7 +751,7 @@ _.extend PACK.Plugins,
 
             updateNewLevelMode(true)
 
-            @_grid_data._release()
+            releaseGrid()
           else if dragged_row_extended_details.natural_collection_info.parent_id == placeholder_position.parent_id and
                 dragged_row_extended_details.natural_collection_info.order == placeholder_position.order
             # If position didn't change
@@ -754,7 +766,7 @@ _.extend PACK.Plugins,
             updateNewLevelMode(true)
 
             # Just release flush
-            @_grid_data._release()
+            releaseGrid()
           else
             # If position changed
 
@@ -797,8 +809,7 @@ _.extend PACK.Plugins,
                 unmarkDraggedRowWaitingForServer()
                 enableDraggedRowEditing()
 
-                # Release flush and flush right-away before re-enabling sortable
-                @_grid_data._release true # true means flush right-away
+                releaseGrid(true) # Release flush and flush right-away before re-enabling sortable
 
                 releaseOpsLock()
 
