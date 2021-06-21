@@ -366,12 +366,17 @@ _.extend JustdoTooltips.prototype,
 
     return {tooltip_conf, raw_tooltip_template_options}
 
+  closeTooltip: ->
+    @state_machine.trigger("terminate-tooltip-request")
+
+    return
+
   renderTooltip: ->
     {tooltip_id, configured_tooltip_def, tooltip_template_options} = @state_machine.getStateAttr()
 
     tooltip_controller =
       closeTooltip: =>
-        @state_machine.trigger("terminate-tooltip-request")
+        @closeTooltip()
 
         return
 
@@ -398,6 +403,11 @@ _.extend JustdoTooltips.prototype,
       return
 
     {$target_container, configured_tooltip_def, tooltip_template_obj} = @state_machine.getStateAttr()
+
+    if not $target_container.is(":visible")
+      @closeTooltip()
+      
+      return
 
     if not tooltip_template_obj?.$node?
       return
