@@ -25,7 +25,7 @@
         <li role="presentation" tab-id="project" class="delivery-planner-tab {{#if $eq currentTab "project"}}active{{/if}}"><a href="#">Project {{#if isArchived}}(closed){{/if}}</a></li>
       {{/if}}
 
-      <li role="presentation" tab-id="assign" class="delivery-planner-tab {{#if $eq currentTab "assign"}}active{{/if}}"><a href="#">Assign to Projects</a></li>
+      <li role="presentation" tab-id="assign" class="delivery-planner-tab {{#if $eq currentTab "assign"}}active{{/if}}"><a href="#">Add to Projects</a></li>
     </ul>
 
     <div class="resource-planner-tab {{currentTab}}">
@@ -41,7 +41,7 @@
 <template name="delivery_planner_task_pane_project_tab">
   <section>
     <div class="d-flex align-items-center justify-content-between dp-project-setting">
-      <div class="setting-label">{{#if isArchived}}Reopen{{else}}Close{{/if}} project <span class="archive-project-more-info" title="Closed projects aren't showing in the tasks' 'Assign to Project' tab, and are showing separately from the active, non-closed, projects in the grid."><i class="fa fa-question-circle fa-fw"></i></span></div>
+      <div class="setting-label">{{#if isArchived}}Reopen{{else}}Close{{/if}} project <span class="archive-project-more-info" title="Closed projects aren't showing in the tasks' 'Add to Project' tab, and are showing separately from the active, non-closed, projects in the grid."><i class="fa fa-question-circle fa-fw"></i></span></div>
       <div class="setting-controller">
         <div class="btn btn-outline-secondary btn-sm dp-archive-project">{{#if isArchived}}Reopen{{else}}Close{{/if}}</div>
       </div>
@@ -256,7 +256,7 @@
   </section>
 
   <section class="assign-to-project-section">
-    <h2>Assign to projects</h2>
+    <h2>Add to projects</h2>
 
     {{#with availableProjects}}
       <div class="project-add-wrapper">
