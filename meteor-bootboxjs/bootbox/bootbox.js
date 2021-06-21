@@ -82,7 +82,9 @@
     // show the dialog immediately by default
     show: true,
     // dialog container
-    container: "body"
+    container: "body",
+    // focused element
+    focused_element: ".btn-primary:first"
   };
 
   // our public object; augmented after our private API
@@ -674,9 +676,10 @@
       }
     });
     */
-
     dialog.on("shown.bs.modal", function() {
-      dialog.find(".btn-primary:first").focus();
+      if (options.focused_element !== "") {
+        dialog.find(options.focused_element).focus();
+      }
     });
 
     /**
