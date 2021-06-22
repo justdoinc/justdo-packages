@@ -82,7 +82,7 @@ Template.task_info_tooltip.events
   "click .task": ->
     {tooltip_controller, options} = Template.instance()
 
-    APP.modules?.project_page?.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab @_id
+    APP.modules?.project_page?.getCurrentGcm()?.activateCollectionItemUnderSpecificAncestorOrFallbackToMainTab @_id, options["id"]
 
     tooltip_controller.closeTooltip()
 
