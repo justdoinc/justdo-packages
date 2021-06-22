@@ -661,6 +661,50 @@ _.extend GridControlMux.prototype,
     
     return
 
+  getCollectionItemPathUnderSpecificAncestorOrFallbackToMainTab: (ancestor_id, item_id) ->
+    current_gc = @getActiveTabNonReactive()?.grid_control
+    
+    grids_to_scan = [current_gc]
+
+    if current_gc.grid_control_mux_tab_id != "main"
+      grids_to_scan.push @getMainGridControl()
+
+    found_path = null
+    found_path_tab = null
+    found_path_ancestor_distance = null
+    for gc in grids_to_scan
+      for item_path in gc._grid_data.getAllCollectionItemIdPaths(item_id)
+        item_path_array = item_path.substr(1, item_path.length - 2).split("/")
+        if (ancestor_level = item_path_array.indexOf(ancestor_id)) != -1
+          ancestor_distance_from_item = -1 * (ancestor_level - (item_path_array.length - 1))
+
+          if ancestor_distance_from_item == 0
+            # We won't find better than this, just return.
+            return {tab_id: gc.grid_control_mux_tab_id, path: item_path}
+          else
+            if not found_path_ancestor_distance? or (found_path_ancestor_distance > ancestor_distance_from_item)
+              found_path = item_path
+              found_path_tab = gc.grid_control_mux_tab_id
+              found_path_ancestor_distance = ancestor_distance_from_item
+
+    return {tab_id: found_path_tab, path: found_path}
+
+  activateCollectionItemUnderSpecificAncestorOrFallbackToMainTab: (ancestor_id, item_id) ->
+    {tab_id, path} = @getCollectionItemPathUnderSpecificAncestorOrFallbackToMainTab(ancestor_id, item_id)
+
+    current_gc = @getActiveTabNonReactive()?.grid_control
+
+    if current_gc.grid_control_mux_tab_id != tab_id
+      @activateTab(tab_id)
+
+      # To activate the tab
+      Tracker.flush()
+
+    @getActiveTabNonReactive()?.grid_control?.activatePath(path, 0)
+
+    return
+
+
   getActiveGridControl: (require_ready=false) ->
     # Returns the grid control object of the current active tab
     #
