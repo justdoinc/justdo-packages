@@ -1,4 +1,4 @@
-.calendar-member-selector
+.members-multi-selector
   button
     text-transform: uppercase
     font-weight: bold
@@ -42,14 +42,14 @@
       background-color: rgba(0, 0, 0, 0.08)
       transform: scale(1.05)
 
-  .calendar-member-selector-search
+  .members-multi-selector-search
     padding: 0px 10px
     color: black
     min-width: 180px
     &::placeholder
       opacity: 0.5
 
-  .calendar-member-avatar
+  .members-selector-member-avatar
     width: 22px
     height: 22px
     border-radius: 100%
@@ -67,32 +67,32 @@
     z-index: 1
     display: none
 
-  .calendar-filter-member-item
-    .calendar-filter-member-info
+  .members-selector-filter-member-item
+    .members-selector-filter-member-info
       opacity: 0.35
     &.member-in-filter
-      .calendar-filter-member-info
+      .members-selector-filter-member-info
         opacity: 1
 
-  .calendar-filter-member-info
+  .members-selector-filter-member-info
     display: flex
     flex-grow: 1
     align-items: center
 
-  .calendar-members-show-all,
-  .calendar-members-show-none
+  .members-selector-show-all,
+  .members-selector-show-none
     cursor: pointer
     &:hover
       text-decoration: underline
   
-  .calendar-member-selector-search
+  .members-multi-selector-search
     padding: 0px 10px
     color: black
     min-width: 180px
     &::placeholder
       opacity: 0.5
 
-.calendar-member-selector.member-filter-is-active
+.members-multi-selector.member-filter-is-active
   .member-filter-indicator
     display: block
 

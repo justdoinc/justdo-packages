@@ -3,6 +3,7 @@ Template.members_multi_selector_widget.onCreated ->
 
   tpl.search_input_rv = new ReactiveVar null
   tpl.filtered_members_rv = new ReactiveVar null  # member ids array
+  tpl.show_dropdown_menu_rv = new ReactiveVar false
 
   tpl.autorun ->
     members = Template.currentData().members
@@ -26,14 +27,24 @@ Template.members_multi_selector_widget.onCreated ->
 
 Template.members_multi_selector_widget.onRendered ->
   tpl = @
-  $(".calendar-member-selector").on "shown.bs.dropdown", ->
-    $(".calendar-member-selector-search").focus().val ""
+  $(".members-multi-selector").on "show.bs.dropdown", ->
+    tpl.show_dropdown_menu_rv.set true
+    return
+
+  $(".members-multi-selector").on "shown.bs.dropdown", ->
+    $(".members-multi-selector-search").focus().val ""
     tpl.search_input_rv.set null
+    return
+  
+  $(".members-multi-selector").on "hidden.bs.dropdown", ->
+    tpl.show_dropdown_menu_rv.set false
     return
 
   return
 
 Template.members_multi_selector_widget.helpers
+  showDropdownMenu: -> Template.instance().show_dropdown_menu_rv.get()
+
   filteredMembers: (members) ->    
     tpl = Template.instance()
 
@@ -63,7 +74,7 @@ Template.members_multi_selector_widget.helpers
       return false
 
 Template.members_multi_selector_widget.events
-  "keyup .calendar-member-selector-search": (e, tpl) ->
+  "keyup .members-multi-selector-search": (e, tpl) ->
     value = $(e.target).val().trim()
     if _.isEmpty value
       tpl.search_input_rv.set null
@@ -71,38 +82,38 @@ Template.members_multi_selector_widget.events
       tpl.search_input_rv.set value
     return
 
-  "keydown .calendar-member-selector .dropdown-menu": (e, tpl) ->
-    $dropdown_item = $(e.target).closest(".calendar-member-selector-search,.dropdown-item")
+  "keydown .members-multi-selector .dropdown-menu": (e, tpl) ->
+    $dropdown_item = $(e.target).closest(".members-multi-selector-search,.dropdown-item")
 
     if e.keyCode == 38 # Up
       e.preventDefault()
       if ($prev_item = $dropdown_item.prevAll(".dropdown-item").first()).length > 0
         $prev_item.focus()
       else
-        $(".calendar-member-selector-search").focus()
+        $(".members-multi-selector-search").focus()
 
     if e.keyCode == 40 # Down
       e.preventDefault()
       $dropdown_item.nextAll(".dropdown-item").first().focus()
 
     if e.keyCode == 27 # Escape
-      $(".calendar-member-selector .dropdown-menu").dropdown "hide"
+      $(".members-multi-selector .dropdown-menu").dropdown "hide"
 
     return
   
-  "click .calendar-members-show-all": (e, tpl) ->
+  "click .members-selector-show-all": (e, tpl) ->
     e.stopPropagation()
 
     tpl.filtered_members_rv.set tpl.data.members.slice()
     
     return
   
-  "click .calendar-members-show-none": (e, tpl) ->
+  "click .members-selector-show-none": (e, tpl) ->
     e.stopPropagation()
     tpl.filtered_members_rv.set []
     return
   
-  "click .calendar-filter-member-item": (e, tpl) ->
+  "click .members-selector-filter-member-item": (e, tpl) ->
     e.preventDefault()
     e.stopPropagation()
 
@@ -117,3 +128,4 @@ Template.members_multi_selector_widget.events
     tpl.filtered_members_rv.set filtered_members
 
     return
+    
