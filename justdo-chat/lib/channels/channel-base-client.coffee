@@ -231,10 +231,10 @@ _.extend ChannelBaseClient.prototype,
 
     return @justdo_chat._justdo_chat_bottom_windows_manager.makeWindowVisible @channel_type, @getChannelIdentifier(), {onComplete: cb}
 
-  removeWindow: ->
+  removeWindow: (cb) ->
     # A proxy to ease calling to the method under the bottom windows manager with the same name
 
-    return @justdo_chat._justdo_chat_bottom_windows_manager.removeWindow(@channel_type, @getChannelIdentifier())
+    return @justdo_chat._justdo_chat_bottom_windows_manager.removeWindow(@channel_type, @getChannelIdentifier(), cb)
 
   _channel_messages_subscription: null
   _active_channel_messages_subscription_options: null

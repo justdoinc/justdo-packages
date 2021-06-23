@@ -242,8 +242,8 @@ _.extend JustdoChatBottomWindowsManager.prototype,
 
     return @_setBottomWindow(channel_type, channel_identifier, {state: "min"}, options.onComplete)
 
-  removeWindow: (channel_type, channel_identifier) ->
-    return @_removeBottomWindow(channel_type, channel_identifier)
+  removeWindow: (channel_type, channel_identifier, cb) ->
+    return @_removeBottomWindow(channel_type, channel_identifier, cb)
 
   _setBottomWindow: (channel_type, channel_identifier, window_settings, cb) ->
     # This method is a low-level proxy method to the DDP method that sets/updates a bottom window
