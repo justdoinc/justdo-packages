@@ -109,9 +109,6 @@ Package.onUse(function (api) {
   api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls.coffee', client);
   api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls-events.coffee', client);
   api.add_files('lib/client/formatters-and-editors/textarea-with-tree-controls/text-with-tree-controls.sass', client);
-  api.addAssets('lib/client/formatters-and-editors/textarea-with-tree-controls/media/expand.gif', client);
-  api.addAssets('lib/client/formatters-and-editors/textarea-with-tree-controls/media/collapse.gif', client);
-  api.addAssets('lib/client/formatters-and-editors/textarea-with-tree-controls/media/tree-control-icons-sprite.png', client);
 
   api.add_files('lib/client/formatters-and-editors/unicode-date/unicode-date.coffee', client);
   api.add_files('lib/client/formatters-and-editors/unicode-date/unicode-date.sass', client);

@@ -185,10 +185,13 @@ GridControl.installFormatter "textWithTreeControls",
     expand_state = @_grid_data.getItemExpandState row
 
     state = ""
+    svg_icon_name = ""
     if expand_state == 1
       state = "expand"
+      svg_icon_name = "minus"
     else if expand_state == 0
       state = "_collapse" # .collapse is part of the bs4 framework, hence, we can't use the same name.
+      svg_icon_name = "plus"
 
     if not value?
       value = ""
@@ -234,7 +237,9 @@ GridControl.installFormatter "textWithTreeControls",
 
     tree_control += """
       <div class="grid-tree-control-toggle slick-prevent-edit #{state}"
-           style="left: #{toggle_indentation}px;"></div>
+           style="left: #{toggle_indentation}px;">
+           <svg><use xlink:href="/layout/icons-feather-sprite.svg##{svg_icon_name}"></use></svg>
+      </div>
     """
 
     current_left_pos += indentation_margin + toggle_margin_left + toggle_width + toggle_margin_right

@@ -1,5 +1,3 @@
-$tree_control_icons_sprite_bg: url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/textarea-with-tree-controls/media/tree-control-icons-sprite.png') no-repeat center center
-
 .text-tree-control
   position: relative
   width: 100%
@@ -17,32 +15,19 @@ $tree_control_icons_sprite_bg: url('/packages/stem-capital_grid-control/lib/clie
 
 .grid-tree-control-toggle
   display: none
-  height: 23px
-  width: 20px
+  height: 12px
+  width: 16px
   position: absolute
-  top: 4px
+  top: 10px
+  padding-left: 4px
 
   .slick-row:first-child &, .slick-row.f-first &
-    top: 4px
-
-=expandIcon()
-  // background: $tree_control_icons_sprite_bg
-  // background-position: -3px -125px
-
-  // We end up using the following since the border contrast is better
-  background: url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/textarea-with-tree-controls/media/expand.gif') no-repeat center center
-
-=collapseIcon()
-  // background: $tree_control_icons_sprite_bg
-  // background-position: -3px -98px
-
-  // We end up using the following since the border contrast is better
-  background: url('/packages/stem-capital_grid-control/lib/client/formatters-and-editors/textarea-with-tree-controls/media/collapse.gif') no-repeat center center
+    top: 10px
 
 .grid-tree-control-toggle
   // .collapse is part of the bs4 framework, hence, we can't use the same name.
   &._collapse, &.expand
-    display: block
+    display: flex
 
     .f-leaf &
       // If is a leaf under current filter
@@ -51,29 +36,32 @@ $tree_control_icons_sprite_bg: url('/packages/stem-capital_grid-control/lib/clie
     .f-leaf.sortable-new-level-mode-parent &
       display: block
 
-      +collapseIcon()
+  svg
+    stroke: currentColor
+    stroke-linecap: round
+    stroke-linejoin: round
+    stroke-width: 3
+    fill: none
+    width: 100%
+    height: 100%
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 0px 6px rgba(0, 0, 0, 0.1)
+    transition: all 0.2s linear
+    background-color: white
+    border-radius: 2px
+    border: 1px solid #546e7a
+    color: #546e7a
+    &:hover
+      transform: scale(1.1)
 
   .sortable-new-level-mode-parent &, .f-leaf.sortable-new-level-mode-parent &
     // for case without filter it's a leaf
     display: block
-    +collapseIcon()
 
   &._collapse
-    +expandIcon()
-
     cursor: zoom-in
-    cursor: -webkit-zoom-in
-    cursor: -moz-zoom-in
-    cursor: ms-zoom-in
 
   &.expand
-
-    +collapseIcon()
-
     cursor: zoom-out
-    cursor: -webkit-zoom-out
-    cursor: -moz-zoom-out
-    cursor: -ms-zoom-out
 
 .grid-tree-control-task-id
   position: absolute

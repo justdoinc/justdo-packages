@@ -10,14 +10,14 @@ setupCollapseAllButton = (grid_control) ->
 
   options = _.extend {}, default_options, grid_control.options # apply actual options passed by the user
 
-  $el = $("""<div class="grid-state-button collapse-grid-button" title="Collapse all tree" />""")
+  $el = $("""<div class="grid-state-button collapse-grid-button" title="Collapse all tree"><svg><use xlink:href="/layout/icons-feather-sprite.svg#minus"></use></svg></div>""")
     .click =>
       grid_control._grid_data.collapseAllPaths()
 
   $(".slick-header-column:first", grid_control.container)
     .prepend($el)
 
-  $el = $("""<div class="grid-state-button expand-grid-button" title="Expand all tree" />""")
+  $el = $("""<div class="grid-state-button expand-grid-button" title="Expand all tree"><svg><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg></div>""")
     .click =>
       i = 0
 
