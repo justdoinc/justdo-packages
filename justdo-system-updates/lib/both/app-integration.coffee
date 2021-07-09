@@ -22,4 +22,9 @@
 APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
-  APP.justdo_system_updates = new JustdoSystemUpdates()
+  allow_updates_modal = (env.ALLOW_UPDATES_MODAL or "true") is "true"
+  
+  if allow_updates_modal
+    APP.justdo_system_updates = new JustdoSystemUpdates()
+
+  return
