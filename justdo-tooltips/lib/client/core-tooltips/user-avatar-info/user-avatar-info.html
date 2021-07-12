@@ -1,0 +1,25 @@
+<template name="user_avatar_info_tooltip">
+  <div class="avatar-container">
+    <img class="avatar" src="{{userAvatar}}">
+    <div class="user-online"></div>
+  </div>
+  <div class="info">
+    <div class="name">
+      {{userName}}
+    </div>
+    <div class="sub-info">
+      <div class="online-status">
+        Online
+      </div>
+      {{#if showEmail}}
+        <div class="dot"></div>
+        <div class="mail" title="{{userEmail}}">
+          {{userEmail}}
+        </div>
+      {{/if}}
+    </div>
+    <div class="actions">
+      <a href="#" class="send-message">Send message</a>
+    </div>
+  </div>
+</template>

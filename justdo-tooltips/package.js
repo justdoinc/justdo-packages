@@ -61,7 +61,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/errors-types.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/tooltips-registrar.coffee", client);
-  
+
   api.addFiles("lib/client/justdo-tooltips.sass", client);
 
   // Uncomment only in packages that integrate with the main applications
@@ -71,11 +71,15 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/app-integration.coffee", client);
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
-  // file. 
+  // file.
 
   api.addFiles("lib/client/core-tooltips/task-info/task-info.html", client);
   api.addFiles("lib/client/core-tooltips/task-info/task-info.sass", client);
   api.addFiles("lib/client/core-tooltips/task-info/task-info.coffee", client);
+
+  api.addFiles("lib/client/core-tooltips/user-avatar-info/user-avatar-info.html", client);
+  api.addFiles("lib/client/core-tooltips/user-avatar-info/user-avatar-info.sass", client);
+  api.addFiles("lib/client/core-tooltips/user-avatar-info/user-avatar-info.coffee", client);
 
   api.export("JustdoTooltips", client);
 });

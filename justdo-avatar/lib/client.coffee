@@ -127,3 +127,6 @@ Template.justdo_avatar.helpers
         title += " #{@last_name}"
 
       return title
+
+  user_id: ->
+    return @_id
