@@ -12,7 +12,7 @@ APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
   module.CustomFieldSelectOptionsEditor = JustdoHelpers.generateNewTemplateDropdown "custom-field-select-options-editor", "custom_field_conf_select_options_editor",
-    custom_dropdown_class: "dropdown-menu shadow-lg border-0 p-3"
+    custom_dropdown_class: "dropdown-menu shadow-lg border-0 py-3"
     custom_bound_element_options:
       close_button_html: null
 
@@ -131,7 +131,8 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.custom_field_conf_select_options_editor.onCreated ->
-    @show_add_button = new ReactiveVar(false)
+    @show_add_button = new ReactiveVar false
+    @show_sort_button = new ReactiveVar false
 
     @new_option_color_picker_dropdown_controller =
       generatePickerDropdown(default_option_color)
@@ -157,6 +158,9 @@ APP.executeAfterAppLibCode ->
     $options_list = @view.templateInstance().$(".custom-field-options")
 
     if field_options?
+      if field_options.select_options.length > 5
+        @show_sort_button.set true
+
       for option_def in field_options.select_options
         {option_id, label, bg_color} = option_def
 
@@ -210,9 +214,17 @@ APP.executeAfterAppLibCode ->
 
       return tpl.new_option_color_picker_dropdown_controller
 
+    showSortButton: ->
+      tpl = Template.instance()
+
+      return tpl.show_sort_button.get()
+
   Template.custom_field_conf_select_options_editor.events
     "click .add-option": (e, tpl) ->
       addOption(tpl)
+
+      if $(".custom-field-option").length > 5
+        tpl.show_sort_button.set true
 
       return
 
@@ -222,11 +234,17 @@ APP.executeAfterAppLibCode ->
       if e.keyCode == 13
         addOption(tpl)
 
+        if $(".custom-field-option").length > 5
+          tpl.show_sort_button.set true
+
       return
 
     "click .remove-option": (e, tpl) ->
       if confirm("Are you sure you want to remove this option?")
         $(e.target).closest(".custom-field-option").remove()
+
+        if $(".custom-field-option").length <= 5
+          tpl.show_sort_button.set false
 
       return
 

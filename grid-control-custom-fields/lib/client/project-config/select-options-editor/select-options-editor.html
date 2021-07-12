@@ -12,7 +12,11 @@
     <svg class="jd-icon-custom-field text-primary add-option" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
   </div>
   <div class="custom-field-select-options-footer">
-    <div class="sort-alphabetically text-primary">Sort alphabetically</div>
+    <div>
+      {{#if showSortButton}}
+        <div class="sort-alphabetically text-primary">Sort by Name</div>
+      {{/if}}
+    </div>
     <div>
       <button type="button" class="btn btn-primary btn-sm font-weight-bold cancel mr-1">CANCEL</button>
       <button type="button" class="btn btn-primary btn-sm font-weight-bold save">SAVE</button>
