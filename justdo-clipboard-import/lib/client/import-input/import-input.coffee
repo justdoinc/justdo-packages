@@ -53,9 +53,9 @@ bindTargetToPaste = (tpl)->
             longest_row_length = row_length
 
       #limit max number of rows to import
-      if rows.length > 100
+      if rows.length > JustdoClipboardImport.import_limit
         JustdoSnackbar.show
-          text: "Too many rows, you may copy up to 100 rows."
+          text: "Too many rows, you may copy up to #{JustdoClipboardImport.import_limit} rows."
         return
 
       #trim all rows according to the longest row. This handles cases where the entire row is copied to
@@ -132,6 +132,8 @@ Template.justdo_clipboard_import_input.helpers
       return false
 
     return cur_proj.isAdmin()
+  
+  importLimit: -> JustdoClipboardImport.import_limit
 
 Template.justdo_clipboard_import_input.events
   "keyup .justdo-clipboard-import-paste-target": (e, tpl)->

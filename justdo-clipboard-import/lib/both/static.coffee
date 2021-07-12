@@ -11,3 +11,5 @@ _.extend JustdoClipboardImport,
   pseudo_field_type: "string"
 
   custom_page_label: "justdo-clipboard-import"
+
+  import_limit: 500
