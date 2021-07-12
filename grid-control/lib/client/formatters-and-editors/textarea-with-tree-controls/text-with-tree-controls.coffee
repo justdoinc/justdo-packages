@@ -389,6 +389,10 @@ GridControl.installFormatter "textWithTreeControls",
                  style="left: #{index_left}px;
                         width: #{index_width}px;" jd-tt="task-info?id=#{doc._id}">
             #{index}
+
+            <div class="grid-tree-control-task-favorite">
+              <svg><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
+            </div>
           </span>
       """
 
