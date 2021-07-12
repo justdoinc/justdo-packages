@@ -261,3 +261,18 @@ APP.executeAfterAppLibCode ->
       $options_editor.data("close")()
 
       return
+
+    "click .sort-alphabetically": (e, tpl) ->
+      options = []
+      options_content = $(e.target).closest(".custom-field-select-options-editor-content")
+
+      options_content.find(".custom-field-option").each ->
+        options.push $(this)
+
+      options.sort (a, b) ->
+        $(a).find(".option-label").val().toUpperCase().localeCompare $(b).find(".option-label").val().toUpperCase()
+
+      for option in options
+        options_content.find(".custom-field-options").append option
+
+      return
