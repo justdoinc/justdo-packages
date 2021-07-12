@@ -167,3 +167,10 @@ APP.executeAfterAppLibCode ->
       gc = gridControl()
 
       return gc._opreqActivePathIsCollectionItem(gc._opreqGridReady())
+
+  module.setNullaryOperation "addToFavorites",
+    human_description: "Add to Favorites"
+    op: ->
+      console.log "Add Task to Favorites"
+    prereq: ->
+      return

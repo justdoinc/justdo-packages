@@ -43,6 +43,20 @@ _.extend JustdoTasksContextMenu.prototype,
 
         return _.isEmpty(unfulfilled_op_req)
 
+    @registerSectionItem "main", "add-to-favorites",
+      position: 250
+      data:
+        label: "Add to Favorites"
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          APP.modules.project_page.performOp("addToFavorites")
+
+          return
+        icon_type: "feather"
+        icon_val: "star"
+
+      listingCondition: ->
+        return true
+
     @registerSectionItem "main", "remove-task",
       position: 300
       data:

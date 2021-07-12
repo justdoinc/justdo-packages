@@ -146,6 +146,15 @@ APP.executeAfterAppLibCode ->
       icon_type: "feather"
       icon_val: "grid"
 
+  module.tab_switcher_manager.registerSectionItem "main", "my-favorites",
+    position: 150
+    data:
+      label: "My Favorites"
+      tab_id: "favorites"
+
+      icon_type: "feather"
+      icon_val: "star"
+
   Tracker.autorun (c) ->
     # Wait for user_id to become ready
     if not (user_id = Meteor.userId())?
