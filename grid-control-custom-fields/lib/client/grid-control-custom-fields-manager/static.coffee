@@ -1,0 +1,2 @@
+_.extend GridControlCustomFieldsManager,
+  min_items_to_show_sort_by_name_in_options_editor: 5

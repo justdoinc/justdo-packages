@@ -61,6 +61,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/simple-schema-extensions.coffee", both);
 
   api.addFiles("lib/client/grid-control-custom-fields-manager/init.coffee", client);
+  api.addFiles("lib/client/grid-control-custom-fields-manager/static.coffee", client);
   api.addFiles("lib/client/grid-control-custom-fields-manager/errors-types.coffee", client);
   api.addFiles("lib/client/grid-control-custom-fields-manager/api.coffee", client);
 
