@@ -55,6 +55,42 @@ _.extend TasksChangelogManager.prototype,
       #else - task is unknown to the user
       return "Transferred."
 
+    if activity_obj.change_type == "add_parent"
+      if activity_obj.new_value == "0"
+        return "#{performer_name} added the task as a top level task."
+
+      if (task = APP.collections.Tasks.findOne activity_obj.new_value)?
+        ret_val = "#{performer_name} added the task to task ##{task.seqId}"
+        if task.title?
+          ret_val = "#{ret_val} #{task.title}"
+        if ret_val.length > 53
+          ret_val = ret_val.substring(0,50) + "..."
+        if ret_val.slice(-1) != "."
+          ret_val += "."
+        return ret_val
+
+
+      #else - task is unknown to the user
+      return "Added parent."
+    
+    if activity_obj.change_type == "remove_parent"
+      if activity_obj.new_value == "0"
+        return "#{performer_name} removed the task as a top level task."
+
+      if (task = APP.collections.Tasks.findOne activity_obj.new_value)?
+        ret_val = "#{performer_name} removed the task from task ##{task.seqId}"
+        if task.title?
+          ret_val = "#{ret_val} #{task.title}"
+        if ret_val.length > 53
+          ret_val = ret_val.substring(0,50) + "..."
+        if ret_val.slice(-1) != "."
+          ret_val += "."
+        return ret_val
+
+
+      #else - task is unknown to the user
+      return "Removed parent."
+
     if activity_obj.change_type == "users_change"
       ret_val = "#{performer_name}"
 

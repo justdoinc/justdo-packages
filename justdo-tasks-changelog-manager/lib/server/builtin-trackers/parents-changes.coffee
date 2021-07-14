@@ -27,3 +27,43 @@ _.extend PACK.builtin_trackers,
       self.logChange(obj)
 
       return true
+    
+    self.justdo_projects_obj._grid_data_com.setGridMethodMiddleware "addParent", (perform_as, etc) ->
+      newParentId = ''
+      if etc.new_parent_item?
+        newParentId = etc.new_parent_item._id
+      else if etc.new_location.parent == '0'  # if moving to the root
+        newParentId = 0
+      else
+        return true # (as requested) - don't break the code, although we should never get here.
+
+      obj =
+        field: 'parents'
+        label: 'Parents'
+        new_value: newParentId
+        change_type: 'add_parent'
+        task_id: etc.item._id
+        project_id: etc.item.project_id
+        by: perform_as
+
+      self.logChange(obj)
+
+      return true
+    
+    self.justdo_projects_obj._grid_data_com.setGridMethodMiddleware "removeParent", (path, perform_as, etc) ->
+      removed_parent = etc.parent_id or ""
+      if removed_parent == '0'  # if moving to the root
+        newParentId = 0
+
+      obj =
+        field: 'parents'
+        label: 'Parents'
+        new_value: removed_parent
+        change_type: 'remove_parent'
+        task_id: etc.item._id
+        project_id: etc.item.project_id
+        by: perform_as
+
+      self.logChange(obj)
+
+      return true

@@ -26,7 +26,7 @@ _.extend TasksChangelogManager.prototype,
       change_type:
         label: "Change Type"
         type: String
-        allowedValues: ["update", "moved_to_task", "created", "users_change", "unset", "priority_increased", "priority_decreased", "custom"]
+        allowedValues: ["update", "moved_to_task", "add_parent", "remove_parent", "created", "users_change", "unset", "priority_increased", "priority_decreased", "custom"]
         autoValue: ->
           if @field('change_type').value?
             return @field('change_type').value
