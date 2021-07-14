@@ -223,7 +223,7 @@ APP.executeAfterAppLibCode ->
     "click .add-option": (e, tpl) ->
       addOption(tpl)
 
-      if $(".custom-field-option").length > 5
+      if $(".custom-field-option").length > GridControlCustomFieldsManager.min_items_to_show_sort_by_name_in_options_editor
         tpl.show_sort_button.set true
 
       return
@@ -234,7 +234,7 @@ APP.executeAfterAppLibCode ->
       if e.keyCode == 13
         addOption(tpl)
 
-        if $(".custom-field-option").length > 5
+        if $(".custom-field-option").length > GridControlCustomFieldsManager.min_items_to_show_sort_by_name_in_options_editor
           tpl.show_sort_button.set true
 
       return
@@ -243,7 +243,7 @@ APP.executeAfterAppLibCode ->
       if confirm("Are you sure you want to remove this option?")
         $(e.target).closest(".custom-field-option").remove()
 
-        if $(".custom-field-option").length <= 5
+        if $(".custom-field-option").length <= GridControlCustomFieldsManager.min_items_to_show_sort_by_name_in_options_editor
           tpl.show_sort_button.set false
 
       return
@@ -284,11 +284,11 @@ APP.executeAfterAppLibCode ->
       options = []
       options_content = $(e.target).closest(".custom-field-select-options-editor-content")
 
-      options_content.find(".custom-field-option").each ->
-        options.push $(this)
+      for option in options_content.find(".custom-field-option")
+        options.push $(option)
 
       options.sort (a, b) ->
-        $(a).find(".option-label").val().toUpperCase().localeCompare $(b).find(".option-label").val().toUpperCase()
+        return $(a).find(".option-label").val().toUpperCase().localeCompare $(b).find(".option-label").val().toUpperCase()
 
       for option in options
         options_content.find(".custom-field-options").append option
