@@ -1027,7 +1027,7 @@
       if (this.options.liveSearch) {
         searchbox =
           '<div class="bs-searchbox">' +
-            '<input type="text" class="form-control" autocomplete="off"' +
+            '<input type="text" class="form-control form-control-sm" autocomplete="off"' +
               (
                 this.options.liveSearchPlaceholder === null ? ''
                 :
@@ -2567,7 +2567,7 @@
           that.createView(true);
 
           if (!searchMatch.length) {
-            noResults.className = 'no-results';
+            noResults.className = 'no-results text-muted';
             noResults.innerHTML = that.options.noneResultsText.replace('{0}', '"' + htmlEscape(searchValue) + '"');
             that.$menuInner[0].firstChild.appendChild(noResults);
           }

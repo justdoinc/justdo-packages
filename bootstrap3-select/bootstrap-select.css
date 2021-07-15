@@ -235,6 +235,7 @@ select.selectpicker {
   width: 100%;
 }
 .bootstrap-select .dropdown-menu {
+  border: none;
   min-width: 100%;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -255,6 +256,9 @@ select.selectpicker {
 }
 .bootstrap-select .dropdown-menu li {
   position: relative;
+}
+.bootstrap-select .dropdown-menu li + li {
+  margin-top: 2px;
 }
 .bootstrap-select .dropdown-menu li.active small {
   color: rgba(255, 255, 255, 0.5) !important;
@@ -300,10 +304,13 @@ select.selectpicker {
           box-sizing: border-box;
 }
 .bootstrap-select .no-results {
-  padding: 3px;
+  padding: 4px 8px;
   background: #f5f5f5;
-  margin: 0 5px;
+  font-size: 14px;
   white-space: nowrap;
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .bootstrap-select.fit-width .dropdown-toggle .filter-option {
   position: static;
@@ -394,7 +401,6 @@ select.selectpicker {
 .bootstrap-select.show-menu-arrow.show > .dropdown-toggle .filter-option:after {
   display: block;
 }
-.bs-searchbox,
 .bs-actionsbox,
 .bs-donebutton {
   padding: 4px 8px;
@@ -418,9 +424,13 @@ select.selectpicker {
 .bs-donebutton .btn-group button {
   width: 100%;
 }
+.bs-searchbox {
+  margin-bottom: 8px;
+}
 .bs-searchbox + .bs-actionsbox {
   padding: 0 8px 4px;
 }
+
 .bs-searchbox .form-control {
   margin-bottom: 0;
   width: 100%;
