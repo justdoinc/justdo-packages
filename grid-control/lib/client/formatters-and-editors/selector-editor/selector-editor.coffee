@@ -1,5 +1,7 @@
 # Check README.md to learn more about editors definitions
 
+minimum_items_to_show_search = 3
+
 getKeyBgColor = (grid_values, value) ->
   if not grid_values?
     grid_values = {}
@@ -70,10 +72,16 @@ GridControl.installEditor "SelectorEditor",
 
     @$select = $(".selector-editor", @context.container)
 
+    show_live_search = false
+
+    if options?
+      show_live_search = options.length > minimum_items_to_show_search
+
     @$select.selectpicker
       width: "100%"
       sanitize: false
       size: 8
+      liveSearch: show_live_search
 
     @$select.selectpicker("refresh")
     @$select.selectpicker("render")
