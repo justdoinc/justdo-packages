@@ -1887,6 +1887,11 @@ _.extend GridControl.prototype,
 
       return
 
+    reloadEditorValueFromMinimongo = =>
+      editor.loadValue(@collection.findOne(item_id, {fields: {"#{field_id}": 1}})) # don't use item, for case the item changed by someone else, while we were editing it.
+
+      return
+
     cancel = =>
       # We don't deal here with a case where the editor was generated without item_id
       # we assume this method won't be called in such case.
@@ -1895,7 +1900,7 @@ _.extend GridControl.prototype,
       if destroyed
         return
 
-      editor.loadValue(@collection.findOne(item_id, {fields: {"#{field_id}": 1}})) # don't use item, for case the item changed by someone else, while we were editing it.
+      reloadEditorValueFromMinimongo()
 
       return
 
@@ -1911,7 +1916,8 @@ _.extend GridControl.prototype,
 
         update.$set[field_id] = editor.serializeValue()
 
-        @collection.update item_id, update
+        if (items_updated_count = @collection.update(item_id, update)) == 0
+          reloadEditorValueFromMinimongo()
 
       return
 
