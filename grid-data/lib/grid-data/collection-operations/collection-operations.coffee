@@ -38,7 +38,7 @@ _.extend GridData.prototype,
 
     if executed is false or executed is 0
       # executed is false if edit blocked by events hooks
-      @_grid_data_core._data_changes_handlers.update.call(@_grid_data_core, item_id, [col_field])
+      @_grid_data_core._data_changes_handlers.update.call(@_grid_data_core, item_id, {"#{col_field}": @collection.findOne(item_id, {fields: {"#{col_field}": 1}})?[col_field]})
       
       edit_failed(@_error "edit-blocked-by-hook", "Edit blocked by hook")
 
