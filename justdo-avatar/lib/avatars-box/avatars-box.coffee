@@ -92,9 +92,6 @@ Template.justdo_avatars_box.helpers
     if tplProp("show_button")
       components.push {type: "btn"}
 
-    if (last_item_obj = _.last components)?
-      last_item_obj.last = true
-
     return components
 
   button_content: ->

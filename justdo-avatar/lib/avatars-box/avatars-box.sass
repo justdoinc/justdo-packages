@@ -29,7 +29,8 @@
 .justdo-avatars-box
   $avatar-width: 30px
   $avatar-height: 30px
-  $avatar-margin-right: 5px
+  $avatar-margin-right: 4px
+  $avatar-margin-left: 4px
   $avatar-margin-bottom: 0
 
   .avatar-box-button
@@ -39,17 +40,14 @@
   .cont
     height: $avatar-height
     width: $avatar-width
-    margin-right: $avatar-margin-right
     margin-bottom: $avatar-margin-bottom
 
-    &.last
-      margin-right: 0
-      margin-bottom: 0
+  .cont + .cont
+    margin-left: $avatar-margin-left
 
   .sep
     height: $avatar-height
-    margin-left: -1 * ceil($avatar-margin-right / 2)
-
+    margin: 0 4px
     width: 1px
     background-color: #dedede
     display: inline-block
