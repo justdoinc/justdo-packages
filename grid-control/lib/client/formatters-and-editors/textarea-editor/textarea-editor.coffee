@@ -114,8 +114,6 @@ GridControl.installEditor "TextareaEditor",
     $firstNode.find("textarea")
       .keydown (e) ->
         if e.which == 13 and not e.shiftKey
-          field_editor.save()
-
           $(e.target).blur()
 
           return
