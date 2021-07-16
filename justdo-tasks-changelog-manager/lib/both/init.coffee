@@ -110,3 +110,6 @@ Util.inherits TasksChangelogManager, EventEmitter
 
 _.extend TasksChangelogManager.prototype,
   _error: JustdoHelpers.constructor_error
+
+_.extend TasksChangelogManager,
+  task_name_ellipsis_words: 53

@@ -37,59 +37,52 @@ _.extend TasksChangelogManager.prototype,
 
       return ret_val + "."
 
-    if activity_obj.change_type == "moved_to_task"
+    parentChangeMsg = (activity_obj, op) ->
       if activity_obj.new_value == "0"
-        return "#{performer_name} made the task a top level task."
+        op_name = ""
+        if op == "add"
+          op_name = "added"
+        else if op == "remove"
+          op_name = "removed"
+        else if op == "move"
+          op_name = "made"
+        return "#{performer_name} #{op_name} the task as a top level task."
 
-      if (task = APP.collections.Tasks.findOne activity_obj.new_value)?
-        ret_val = "#{performer_name} transferred the task to task ##{task.seqId}"
+      if (task = APP.collections.Tasks.findOne(activity_obj.new_value, {fields: {seqId: 1, title: 1}}))?
+        op_name = ""
+        if op == "add"
+          op_name = "added"
+        else if op == "remove"
+          op_name = "removed"
+        else if op == "move"
+          op_name = "transferred"
+        ret_val = "#{performer_name} #{op_name} the task #{if op == "remove" then "from" else "to"} task ##{task.seqId}"
         if task.title?
           ret_val = "#{ret_val} #{task.title}"
-        if ret_val.length > 53
+        if ret_val.length > TasksChangelogManager.task_name_ellipsis_words
           ret_val = ret_val.substring(0,50) + "..."
         if ret_val.slice(-1) != "."
           ret_val += "."
         return ret_val
 
+      # else - task is unknown to the user
+      op_name = ""
+      if op == "add"
+        op_name = "Added"
+      else if op == "remove"
+        op_name = "Removed"
+      else if op == "move"
+        op_name = "Transfer"
+      return "#{op_name} a parent."
 
-      #else - task is unknown to the user
-      return "Transferred."
+    if activity_obj.change_type == "moved_to_task"
+      return parentChangeMsg(activity_obj, "move")
 
     if activity_obj.change_type == "add_parent"
-      if activity_obj.new_value == "0"
-        return "#{performer_name} added the task as a top level task."
-
-      if (task = APP.collections.Tasks.findOne activity_obj.new_value)?
-        ret_val = "#{performer_name} added the task to task ##{task.seqId}"
-        if task.title?
-          ret_val = "#{ret_val} #{task.title}"
-        if ret_val.length > 53
-          ret_val = ret_val.substring(0,50) + "..."
-        if ret_val.slice(-1) != "."
-          ret_val += "."
-        return ret_val
-
-
-      #else - task is unknown to the user
-      return "Added parent."
+      return parentChangeMsg(activity_obj, "add")
     
     if activity_obj.change_type == "remove_parent"
-      if activity_obj.new_value == "0"
-        return "#{performer_name} removed the task as a top level task."
-
-      if (task = APP.collections.Tasks.findOne activity_obj.new_value)?
-        ret_val = "#{performer_name} removed the task from task ##{task.seqId}"
-        if task.title?
-          ret_val = "#{ret_val} #{task.title}"
-        if ret_val.length > 53
-          ret_val = ret_val.substring(0,50) + "..."
-        if ret_val.slice(-1) != "."
-          ret_val += "."
-        return ret_val
-
-
-      #else - task is unknown to the user
-      return "Removed parent."
+      return parentChangeMsg(activity_obj, "remove")
 
     if activity_obj.change_type == "users_change"
       ret_val = "#{performer_name}"
