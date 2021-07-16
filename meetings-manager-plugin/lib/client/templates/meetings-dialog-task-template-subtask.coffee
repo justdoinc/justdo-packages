@@ -8,23 +8,22 @@ Template.meetings_dialog_task_subtask.onCreated ->
     self.task_aug = APP.collections.TasksAugmentedFields.findOne task_id
   return
 
-Template.meetings_dialog_task_subtask.onRendered ->
-  instance = this
-
-  $(".task-due-date").datepicker
-    dateFormat: "yy-mm-dd"
-    onSelect: (date) ->
-      tmpl = Blaze.getView($(this)[0]).parentView._templateInstance
-      if tmpl.task_obj
-        if tmpl.data.may_edit
-          JD.collections.Tasks.update {_id: tmpl.task_obj._id}, {$set: {due_date: date}}
-      return
-
-  return
-
 Template.meetings_dialog_task_subtask.helpers
+  onRerender: ->  # A hack to bind handlers on template rerendered
+    tpl = Template.instance()
+    Meteor.defer ->
+      tpl.$(".task-due-date").datepicker
+        dateFormat: "yy-mm-dd"
+        onSelect: (date) ->
+          tmpl = Blaze.getView($(tpl)[0]).parentView._templateInstance
+          if tmpl.task_obj
+            if tmpl.data.may_edit
+              JD.collections.Tasks.update {_id: tmpl.task_obj._id}, {$set: {due_date: date}}
+          return
+
+    return
+
   taskId: ->
-    console.log "here" + Template.instance.task_obj?._id
     return Template.instance.task_obj?._id
 
   seqId: ->
@@ -63,9 +62,12 @@ Template.meetings_dialog_task_subtask.helpers
 
   dueDate: ->
     dueDate = Template.instance().task_obj?.due_date
+    date_format = Meteor.user().profile.date_format
     if dueDate?
-      return moment(new Date(dueDate)).format("D MMM YYYY")
-    return APP.collections.Tasks.simpleSchema()._schema["due_date"].label
+      return moment(dueDate).format(date_format)
+    return null
+    
+  dueDateLabel: ->APP.collections.Tasks.simpleSchema()._schema["due_date"].label
 
   taskOwner: ->
     if (task_obj = Template.instance().task_obj)
@@ -98,6 +100,21 @@ Template.meetings_dialog_task_subtask.helpers
       subject = ""
     return """<div class="task-subject-box flex-grow-1" contenteditable="true" placeholder="Untitled Task..." data-task-id="#{Template.instance().task_obj._id}">""" + subject + """</div>"""
 
+  onSaveMeetingNote: ->
+    meeting_task_id = this.meeting_task_id
+    added_task_id = this.task_id
+    return (changes) =>
+      changes =
+        note_lock: changes.lock
+        note: changes.content
+        
+      APP.meetings_manager_plugin.meetings_manager.updateAddedTaskNote meeting_task_id, added_task_id, changes, (err) ->
+        if err?
+          console.error err
+
+        return
+      
+      return
 
 Template.meetings_dialog_task_subtask.events
   "blur .task-subject-box": (e, tpl) ->
@@ -151,7 +168,7 @@ Template.meetings_dialog_task_subtask.events
         return
     return
 
-  "click .task-subject-box, click .task-priority": (e, tmpl) ->
+  "click .task-subject-box, click .task-priority, click .task-seqId-box": (e, tmpl) ->
     task_id = tmpl.data.task_id
     gcm = APP.modules.project_page.getCurrentGcm()
     gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)

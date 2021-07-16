@@ -21,6 +21,9 @@ $meeting-padding: 2rem
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175)
   border-radius: 0.25rem
 
+  .meetings-meeting-scrollable-area
+    overflow-y: auto
+
   .meeting-dialog-header
     position: relative
     padding: .75rem 0.75rem .25rem 0.75rem
@@ -35,9 +38,6 @@ $meeting-padding: 2rem
     color: $meeting_color
     &:hover
       opacity: 1
-
-  .meeting-tasks-list
-    width: 615px
 
   .meeting-dialog-state
     background-color: #687B8E
@@ -74,12 +74,11 @@ $meeting-padding: 2rem
 
   .meeting-dialog-title
     border: none
-    font-size: 22px
-    font-weight: bold
+    padding-left: 0px
+    font-size: 20px
     text-overflow: ellipsis
     overflow: hidden
     margin-right: 2rem
-    border-radius: 2px
     transition: all 0.35s
     &:focus
       outline: 0
@@ -111,6 +110,7 @@ $meeting-padding: 2rem
   .meeting-time-wrapper
     position: relative
     padding: 1px 4px
+    margin-left: 4px
     border-radius: 2px
     transition: background-color 0.35s
     &:hover
@@ -119,6 +119,10 @@ $meeting-padding: 2rem
         text-decoration: underline
     .meeting-time-label
       cursor: pointer
+    .meeting-time-input::placeholder
+      opacity: .5
+      font-size: 12px
+
     .meeting-time
       position: absolute
       background-color: red
@@ -217,7 +221,6 @@ $meeting-padding: 2rem
     border-top: 1px solid #f3f4f5
 
   .meeting-members
-    display: flex
     .item-members
       margin: 0
     .justdo-avatars-box
@@ -313,6 +316,16 @@ $meeting-padding: 2rem
     overflow: auto
     flex-grow: 1
 
+  .meeting-note-container
+    margin: 0 2rem
+    padding: 0.5rem 0
+    border-bottom: 1px solid #f3f4f5
+
+    .meeting-note-title
+      font-size: 16px
+      font-weight: bold
+      margin-right: 8px
+
   .meeting-dialog-agenda-title
     font-size: 16px
     font-weight: bold
@@ -324,6 +337,9 @@ $meeting-padding: 2rem
     justify-content: space-between
 
   .meeting-dialog-add-task
+    width: 40px
+    height: 40px
+    margin-right: 12px
     cursor: pointer
     &:hover
       background-color: rgba(243, 244, 245, 0.5)
@@ -331,15 +347,13 @@ $meeting-padding: 2rem
   .meeting-dialog-add-task-wrapper
     position: relative
     cursor: pointer
-    margin: 0.5rem 0
-    width: 615px
+    width: 100%
 
   .meeting-task-add
     border: 2px dashed rgba(190, 205, 217, 0.5)
     border-radius: 4px
     height: 45px
     line-height: 45px
-    margin: 1rem 0
     cursor: pointer
     font-size: 15px
     &::placeholder

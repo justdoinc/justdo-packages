@@ -6,23 +6,25 @@ Template.task_pane_meetings_manager_section.onCreated ->
 
   meetings_manager = APP.meetings_manager_plugin.meetings_manager
 
-  @autorun ->
-    task_id = APP.modules.project_page.activeItemId()
-    meetings_manager.subscribeToNotesForTask task_id
-    meetings_manager.subscribeToPrivateNotesForTask task_id
-    meetings_manager.subscribeToMeetingsForTask task_id
+  # @autorun ->
+  #   task_id = APP.modules.project_page.activeItemId()
+  #   meetings_manager.subscribeToNotesForTask task_id
+  #   meetings_manager.subscribeToPrivateNotesForTask task_id
+  #   meetings_manager.subscribeToMeetingsForTask task_id
 
 
 Template.task_pane_meetings_manager_section.helpers
-
+  meetingCreatedThisTask: ->
+    task = APP.modules.project_page.activeItemObj()
+    return meetings_manager.meetings.find({_id: task.created_from_meeting_id}).fetch()
   meetings: (status) ->
     meetings = meetings_manager.meetings.find({"status": status}).fetch()
-    task_id = APP.modules.project_page.activeItemId()
+    task = APP.modules.project_page.activeItemObj()
 
     meetings = _.filter meetings, (meeting) ->
       found_meeting = meetings_manager.meetings_tasks.findOne
         meeting_id: meeting._id
-        task_id: task_id
+        task_id: task._id
       return found_meeting?
 
     meetings = {
@@ -34,17 +36,17 @@ Template.task_pane_meetings_manager_section.helpers
 
   meetingsExist: ->
     meetings = meetings_manager.meetings.find().fetch()
-    task_id = APP.modules.project_page.activeItemId()
+    task = APP.modules.project_page.activeItemObj()
 
     meetings = _.filter meetings, (meeting) ->
+      if task.created_from_meeting_id == meeting._id
+        return true
       found_meeting = meetings_manager.meetings_tasks.findOne
         meeting_id: meeting._id
-        task_id: task_id
+        task_id: task._id
       return found_meeting?
 
     return meetings?.length
-
-
 
 Template.task_pane_meetings_manager_section.events
   'click .meetings-toolbar-create': (e, tmpl) ->
@@ -56,7 +58,7 @@ Template.task_pane_meetings_manager_section.events
     # TODO: Loading indicator?
 
     meetings_manager.createMeeting
-      title: "Ad-Hoc Re: " + task.title
+      title: task.title or "(Title)"
       project_id: task.project_id
       date: new Date()
       time: "" + new Date()
@@ -74,3 +76,27 @@ Template.task_pane_meetings_manager_section.events
   #
   # "click .note .aside": (e, tmpl) ->
   #   APP.meetings_manager_plugin.renderMeetingDialog @meeting_id
+
+  'click .meetings-toolbar-schedule': (e, tmpl) ->
+    e.preventDefault()
+
+    task_id = APP.modules.project_page.activeItemId()
+    task = APP.collections.Tasks.findOne task_id
+
+    meetings_manager.createMeeting
+      title: task.title or "(Title)"
+      project_id: task.project_id
+      status: "draft"
+    , (err, meeting_id) ->
+      if err?
+        console.log err
+        JustdoSnackbar.show
+          text: "Internal Server Error. Please try again."
+        return
+
+      meetings_manager.addTaskToMeeting meeting_id, { task_id: task_id }
+      APP.meetings_manager_plugin.renderMeetingDialog(meeting_id)
+
+      return
+
+    return

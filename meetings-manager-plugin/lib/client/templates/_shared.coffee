@@ -6,7 +6,7 @@ Template.meetings_status_indicator.helpers
       return "orange"
     if @status == "in-progress"
       return "green"
-    if @status == "adjourned"
+    if @status == "ended"
       return "black"
     if @status == "cancelled"
       return "red"

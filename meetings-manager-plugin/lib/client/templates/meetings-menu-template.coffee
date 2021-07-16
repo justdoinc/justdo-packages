@@ -1,9 +1,6 @@
 Template.meetings_meetings_menu.onCreated ->
   @meeting_search_keyword = new ReactiveVar ""
 
-  @autorun =>
-    APP.meetings_manager_plugin.meetings_manager.subscribeToMeetingsList JD.activeJustdo({_id: 1})._id
-
   @setMeetingSearchKeyword = (keyword=null) ->
     if (not _.isString(keyword)) or (_.isString(keyword) and keyword.trim() == "")
       keyword = ""
@@ -15,7 +12,7 @@ Template.meetings_meetings_menu.onCreated ->
 
 
 Template.meetings_meetings_menu.onRendered ->
-
+  self = @
   # Scroll event for .meetings-menu
   # On scroll show fixed section with current section title
   last_scroll_top = 0
@@ -46,6 +43,15 @@ Template.meetings_meetings_menu.onRendered ->
         if title_position > 0 and title_position < 25
           fixed_section_title.html $(section_title[index]).html()
 
+  $(".meetings-menu").on "show.bs.dropdown", ->
+    if not self.meetings_list_sub?
+      self.meetings_list_sub = APP.meetings_manager_plugin.meetings_manager.subscribeToMeetingsList JD.activeJustdo({_id: 1})._id
+    return
+
+Template.meetings_meetings_menu.onDestroyed ->
+  if @meetings_list_sub?
+    @meetings_list_sub.stop()
+  return
 
 Template.meetings_meetings_menu.helpers
   meetings: (status) ->
@@ -66,7 +72,7 @@ Template.meetings_meetings_menu.helpers
 
 
 Template.meetings_meetings_menu.events
-  "click .meetings-menu-new": (e, tmpl) ->
+  "click .meetings-menu-schedule": (e, tmpl) ->
     e.preventDefault()
 
     name = 'Untitled Meeting'
@@ -87,6 +93,24 @@ Template.meetings_meetings_menu.events
       return
     return
 
+  "click .meetings-menu-start": (e, tmpl) ->
+    e.preventDefault()
+
+    name = 'Untitled Meeting'
+    project_id = JD.activeJustdo({_id: 1})._id
+
+    APP.meetings_manager_plugin.meetings_manager.createMeeting
+      title: name
+      project_id: project_id
+      date: new Date()
+      time: "" + new Date()
+      status: "in-progress"
+    , (err, meeting_id) ->
+      APP.meetings_manager_plugin.renderMeetingDialog(meeting_id)
+
+      return
+    
+    return
 
   "click .meetings-menu-item": (e, tmpl) ->
     meeting_id = @_id

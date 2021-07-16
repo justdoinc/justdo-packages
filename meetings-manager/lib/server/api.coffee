@@ -45,7 +45,6 @@ _.extend MeetingsManager.prototype,
     @_requireObject fields, "fields should be an object"
     @_requireMeetingMember meeting_id, true, user_id
     @_requireValidatedPartialObject fields, @meeting_metadata_schema
-
     @meetings.update { _id: meeting_id }, { $set: fields }
 
 
@@ -68,7 +67,7 @@ _.extend MeetingsManager.prototype,
           user_id: user_id
           date: new Date()
 
-    if new_status == "adjourned"
+    if new_status == "ended"
       update.$push =
         end:
           user_id: user_id
@@ -250,6 +249,7 @@ _.extend MeetingsManager.prototype,
     ,
       project_id: meeting.project_id
       title: task_fields.title
+      created_from_meeting_id: meeting_id
     ,
       user_id
     )
@@ -406,6 +406,32 @@ _.extend MeetingsManager.prototype,
 
     return project
 
+  hasAccessToMeeting: (meeting_id, user_id) ->
+    self = @
+    meeting = self.meetings.findOne meeting_id,
+      fields:
+        users: 1
+        tasks: 1
+    
+    if not meeting?
+      return false
+
+    if user_id in meeting.users
+      return true
+    
+    filtered_tasks = self.filterAccessableMeetingTasks meeting.tasks, user_id
+    return filtered_tasks?.length > 0
+
+  _isTaskMember: (task_id, user_id) ->
+    task = @tasks.findOne
+      _id: task_id
+      users: user_id
+    ,
+      fields:
+        _id: 1
+        
+    return task?
+
   _requireTaskMember: (task_id, user_id) ->
     task = @tasks.findOne { _id: task_id }
 
@@ -510,6 +536,71 @@ _.extend MeetingsManager.prototype,
       getAutoValues: false # Don't use autovalue, because this is supposed to be a partial update
 
     schema.validate obj
+
+  deleteMeeting: (meeting_id, user_id) ->
+    check meeting_id, String
+    check user_id, String
+
+    meeting = @meetings.findOne meeting_id,
+      fields:
+        organizer_id: 1
+        project_id: 1
+    
+    project = APP.collections.Projects.findOne 
+      _id: meeting.project_id
+    ,
+      fields:
+        _id: 1
+        conf: 1
+        members: 1
+    
+    is_admin = false
+    for member in project.members
+      if member.user_id == user_id and member.is_admin
+        is_admin = true
+        break
+
+    if project.conf.block_meetings_deletion == true or
+        (meeting.organizer_id != user_id and not is_admin)
+      throw @error "no-permission"
+
+    @meetings.remove meeting_id
+
+    return
+
+  updateAddedTaskNote: (meeting_task_id, added_task_id, changes, user_id) ->
+    check meeting_task_id, String
+    check added_task_id, String
+    check changes, Object
+    check user_id, String
+
+    set_modifier = {}
+    for field, val of changes
+      set_modifier["added_tasks.$.#{field}"] = val
+
+    @meetings_tasks.update
+      _id: meeting_task_id
+      "added_tasks.task_id": added_task_id
+    ,
+      $set: set_modifier
+
+    return
+
+  filterAccessableMeetingTasks: (tasks, user_id) ->
+    task_ids = _.map tasks, (task) -> task.task_id
+    accessable_task_ids = []
+    APP.collections.Tasks.find
+      _id:
+        $in: task_ids
+      users: user_id
+    ,
+      fields:
+        _id: 1
+    .forEach (task) ->
+      accessable_task_ids.push task._id
+      return
+    
+    return _.filter tasks, (task) -> task.task_id in accessable_task_ids
 
   destroy: ->
     if @destroyed

@@ -14,3 +14,20 @@ Template.meetings_config.events
       curProj().disableCustomFeatures(module_id)
     else
       curProj().enableCustomFeatures(module_id)
+
+  "click .settings-btn": ->
+    APP.meetings_manager_plugin.openSettingsDialog()
+    return false
+
+
+Template.meetings_settings.helpers
+  isAllowMeetingsDeletion: ->
+    return not APP.modules.project_page.curProj()?.getProjectConfiguration()?.block_meetings_deletion
+
+Template.meetings_settings.events
+  "change .allow-meetings-deletion": (e, tpl) ->
+
+    APP.modules.project_page.curProj().configureProject
+      block_meetings_deletion: not e.target.checked
+
+    return

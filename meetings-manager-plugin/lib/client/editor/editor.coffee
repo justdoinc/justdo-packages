@@ -7,11 +7,13 @@ Template.locking_text_editor.onCreated ->
   @content = new ReactiveVar ""
   @disabled = new ReactiveVar false
   @lock = new ReactiveVar null
+  @editable = new ReactiveVar true
 
   @autorun =>
     data = Template.currentData()
     @disabled.set data.disabled
     @lock.set data.lock
+    @editable.set data.editable
 
   @autorun =>
     status = @status.get()
@@ -43,8 +45,41 @@ Template.locking_text_editor.onCreated ->
   @idle_save_timer = null
 
   @beginEditing = =>
+    if not @editable.get()
+      return
     @status.set "editing"
     @data.onSave { lock: { user_id: Meteor.userId(), date: TimeSync.getServerTime() } }
+
+    Tracker.flush()
+    APP.getEnv (env) =>
+      @$(".note-froala").froalaEditor({
+        toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontSize",
+          "align", "formatOL", "formatUOL", "undo", "redo",
+        ]
+        imageEditButtons: ['imageReplace', 'imageAlign', 'imageCaption', 'imageRemove', '|', 'imageLink', 'linkOpen', 
+          'linkEdit', 'linkRemove', '-', 'imageDisplay', 'imageStyle', 'imageAlt', 'imageSize']
+        tableStyles:
+          "fr-no-borders": "No borders"
+          "fr-dashed-borders": "Dashed Borders"
+          "fr-alternate-rows": "Alternate Rows"
+        quickInsertTags: []
+        charCounterCount: false
+        key: env.FROALA_ACTIVATION_KEY
+      })
+      .on "froalaEditor.blur", (e, editor) =>
+        if editor.core.isEmpty()
+          content = ""
+        else
+          content = editor.html.get()
+
+        @endEditing(content)
+        editor.destroy()
+        return
+      .on "froalaEditor.contentChanged", (e, editor) =>
+        @autosave(editor.html.get())
+
+      @$(".note-froala").froalaEditor "html.set", @data.content
+      @$(".note-froala").froalaEditor "events.focus"
 
   @keepLockCallback = () =>
     @data.onSave { lock: { user_id: Meteor.userId(), date: TimeSync.getServerTime() } }
@@ -85,7 +120,7 @@ Template.locking_text_editor.helpers
   editing: ->
     tmpl = Template.instance()
     status = tmpl.status.get()
-    return status == "editing" or status == "ready"
+    return status == "editing"
 
   locked: ->
     tmpl = Template.instance()
@@ -116,30 +151,8 @@ Template.locking_text_editor.helpers
     return status == "locked" and "locking-text-editor-locked"
 
 Template.locking_text_editor.events
-  "focus textarea": (e, tmpl) ->
-    tmpl.beginEditing()
+  "click .note-box": (e, tmpl) ->
+    tmpl.beginEditing tmpl
 
-  "keypress textarea": (e, tmpl) ->
-    # Use a set timeout to capture the updated value (which is set after this
-    # event is done firing)
-    Meteor.setTimeout =>
-      tmpl.autosave($(e.currentTarget).val())
-    ,
-      1
-
-  "blur textarea": (e, tmpl) ->
-    tmpl.endEditing($(e.currentTarget).val())
-
-
-Template.locking_text_editor_textarea.onRendered ->
-  @$('textarea').autosize()
-
-Template.locking_text_editor_textarea.helpers
-  content: ->
-    tmpl = Template.instance()
-    Meteor.setTimeout =>
-      tmpl.$('textarea').trigger('autosize.resize')
-    ,
-      1
-
-    return @content
+  # "blur textarea": (e, tmpl) ->
+  #   tmpl.endEditing($(e.currentTarget).val())

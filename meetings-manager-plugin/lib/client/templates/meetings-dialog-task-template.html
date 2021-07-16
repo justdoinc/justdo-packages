@@ -7,11 +7,13 @@
       <!-- Seq id, task title, task-controls -->
       <div class="d-flex align-items-start">
         <div class="dialog-agenda-task d-flex flex-grow-1 pr-4">
-          <div class="dialog-task-seqId text-primary">{{item.seqId}}.</div>
-          <div class="dialog-task-title">{{nl2br task.title}}</div>
+          <a href="">
+            <span class="dialog-task-seqId text-primary">{{item.seqId}}.</span>
+            <span class="dialog-task-title" href="">{{nl2br task.title}}</span>
+          </a>
         </div>
         <!-- {{#with lookupUser task.owner_id}} ({{displayName}}) {{/with}} -->
-        {{#if allowSortingNotes}}
+        {{#if $and allowSortingNotes isAttendee}}
           <div class="task-controls-container dropdown d-flex">
             <svg class="jd-icon task-controls-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
             <ul class="dropdown-menu dropdown-menu-right shadow-lg p-2 border-0">
@@ -71,15 +73,15 @@
 
       <!-- Task summary -->
       {{#if displayTaskNote}}
-        {{> locking_text_editor content=meeting_task.note class="note" placeholder="Task's note" lock=meeting_task.note_lock disabled=mayNotEditTaskNote onSave=onSaveTaskNote}}
+        {{> locking_text_editor content=meeting_task.note class="note" placeholder="[Click to edit note]" lock=meeting_task.note_lock disabled=mayNotEditTaskNote onSave=onSaveTaskNote editable=isAttendee}}
       {{/if}}
 
       <!-- Added tasks -->
       {{#if meeting_task.added_tasks}}
         <div class="task-added-tasks">
-          {{#each meeting_task.added_tasks}}
-            {{#with lookupTask}}
-              {{> meetings_dialog_task_subtask task_id=this._id parent_task_id=taskId meeting_id=meetingId may_edit=mayEditChildTask}}
+          {{#each added_task in meeting_task.added_tasks}}
+            {{#with lookupTask added_task}}
+              {{> meetings_dialog_task_subtask task_id=this._id note=this.meeting_note lock=this.meeting_note_lock meeting_task_id=meetingTaskId parent_task_id=taskId meeting_id=meetingId may_edit=($and mayEditChildTask isAttendee)}}
             {{/with}}
           {{/each}}
         </div>

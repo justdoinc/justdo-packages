@@ -2,8 +2,19 @@
   {{#with active_item_obj "_id"}}
     <div class="meetings-toolbar-header">
       <span class="meetings-toolbar-title">Related meetings</span>
-      <span class="meetings-toolbar-create"><span>+</span> Ad-Hoc Meeting</span>
+      <div class="meetings-toolbar-new-container">
+        <div class="meetings-toolbar-schedule"><span>+</span> Schedule a Meeting</div>
+        <div class="meetings-toolbar-create"><span>+</span> Start a Meeting</div>
+      </div>
     </div>
+    {{#with meetingCreatedThisTask}}
+      <section>
+        <span class="meetings-toolbar-section-title">This task was created in the following meeting:</span>
+        {{#each this}}
+          {{> meeting_container}}
+        {{/each}}
+      </section>
+    {{/with}}
     {{#if meetingsExist}}
       {{#with meetings "draft"}}
         {{#if this.exist}}
@@ -35,7 +46,7 @@
           </section>
         {{/if}}
       {{/with}}
-      {{#with meetings "adjourned"}}
+      {{#with meetings "ended"}}
         {{#if this.exist}}
           <section>
             <span class="meetings-toolbar-section-title">Meetings done</span>

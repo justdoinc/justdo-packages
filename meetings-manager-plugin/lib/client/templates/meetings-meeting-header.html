@@ -1,4 +1,4 @@
 <template name="meetings_meeting_header">
-  <div class="title flex-grow-1 mr-3">{{title}}</div>
+  <div class="title flex-grow-1 mr-3">{{$or title "[Meeting title hidden]"}}</div>
   <small class="text-muted text-nowrap">{{when this.date}}</small>
 </template>

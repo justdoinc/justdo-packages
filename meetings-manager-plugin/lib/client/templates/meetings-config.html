@@ -3,6 +3,9 @@
     Meetings
     <div class="ml-auto">
       {{#if isModuleEnabled}}
+        <span class="settings-btn">
+          <svg class="jd-icon-extension text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg>
+        </span>
         <svg class="jd-icon-extension text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
       {{else}}
         <svg class="jd-icon-extension text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
@@ -10,3 +13,10 @@
     </div>
   </div>
 </template>
+
+<template name="meetings_settings">
+  <div class="meetings-settings">
+    <label><input class="allow-meetings-deletion" type="checkbox" checked="{{isAllowMeetingsDeletion}}" value="1">Allow meetings deletion</label>
+  </div>
+</template>
+

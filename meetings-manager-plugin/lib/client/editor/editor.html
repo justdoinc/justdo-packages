@@ -1,11 +1,16 @@
 <template name="locking_text_editor">
   <div class="{{class}} {{editing_class}} {{locked_class}} locking-text-editor">
     {{#if editing}}
-      {{> locking_text_editor_textarea placeholder=placeholder content=content}}
+      <div class="note-froala"></div>
+      <!-- {{> locking_text_editor_textarea placeholder=placeholder content=content}} -->
     {{else}}
-      {{#if content}}
-        <pre class="note-box">{{content}}</pre>
-      {{/if}}
+      <div class="note-box">
+        {{#if content}}
+          {{{xssGuard content}}}
+        {{else}}
+          {{placeholder}}
+        {{/if}}
+      </div>
     {{/if}}
     {{#if locked}}
       <div class="text-editor-locked">
@@ -19,8 +24,4 @@
       <!--</div>-->
     <!--{{/if}}-->
   </div>
-</template>
-
-<template name="locking_text_editor_textarea">
-  <textarea placeholder={{placeholder}} class="note-box form-control">{{content}}</textarea>
 </template>

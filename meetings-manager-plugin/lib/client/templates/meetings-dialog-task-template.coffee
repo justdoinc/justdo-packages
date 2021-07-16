@@ -54,9 +54,12 @@ Template.meetings_dialog_task.onRendered ->
     @meeting_status.set m.status
 
 Template.meetings_dialog_task.helpers
+  isAttendee: ->
+    return Meteor.userId() in Template.instance().data.meeting.users
+
   allowAddingNotes: ->
     status = Template.instance().meeting_status.get()
-    if (status == "adjourned" or status == "cancelled" or status == "draft")
+    if (status == "ended" or status == "cancelled" or status == "draft")
       return false
     return true
 
@@ -74,7 +77,7 @@ Template.meetings_dialog_task.helpers
 
   isReadOnly: ->
     status = Template.instance().meeting_status.get()
-    if (status == "adjourned" or status == "cancelled")
+    if (status == "ended" or status == "cancelled")
       return "readonly"
     return ""
 
@@ -89,6 +92,9 @@ Template.meetings_dialog_task.helpers
 
   taskId: ->
     return Template.instance().data.item.task_id
+
+  meetingTaskId: ->
+    return Template.instance().data.meeting_task._id
 
   onSaveTaskNote: ->
     tmpl = Template.instance()
@@ -142,9 +148,11 @@ Template.meetings_dialog_task.helpers
 
     # XXX added tasks
 
-  lookupTask: () ->
-    APP.collections.Tasks.findOne @task_id
-
+  lookupTask: (added_task) ->
+    task = APP.collections.Tasks.findOne added_task.task_id
+    task.meeting_note = added_task.note
+    task.meeting_note_lock = added_task.note_lock
+    return task
 
   hasOwnNote: () ->
     if _.findWhere (@meeting_task?.user_notes || []), { user_id: Meteor.userId() }
@@ -173,7 +181,7 @@ Template.meetings_dialog_task.helpers
     return @meeting.organizer_id == Meteor.userId() or not @meeting.locked
 
   mayEditChildTask: () ->
-    return Template.instance().data.meeting.status != "adjourned"
+    return Template.instance().data.meeting.status != "ended"
 
   index: () ->
     return (@item.task_order + 1)

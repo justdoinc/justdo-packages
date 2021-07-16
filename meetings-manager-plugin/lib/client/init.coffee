@@ -49,5 +49,6 @@ _.extend MeetingsManagerPlugin.prototype,
         @removeMeetingsMenu()
 
     @registerTaskPaneSection()
-
+    @setupContextMenu()
+    
     return

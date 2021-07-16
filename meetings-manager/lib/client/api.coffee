@@ -76,27 +76,15 @@ _.extend MeetingsManager.prototype,
 
     Meteor.subscribe "meetings_meetings_list", project_id
 
-  subscribeToNotesForMeeting: (meeting_id) ->
-
-    Meteor.subscribe "meetings_notes_for_meeting", meeting_id
-
-  subscribeToPrivateNotesForMeeting: (meeting_id) ->
-
-    Meteor.subscribe "meetings_private_note_for_meeting", meeting_id
+  subscribeToMeeting: (meeting_id) ->
+    if not meeting_id?
+      return
+    return Meteor.subscribe "meetings_meeting", meeting_id
 
   subscribeToMeetingsForTask: (task_id) ->
-
-    Meteor.subscribe "meetings_meetings_for_task", task_id
-
-  subscribeToNotesForTask: (task_id) ->
-
-    Tracker.autorun =>
-      _.each @meetings.find().fetch(), (meeting) =>
-        Meteor.subscribe "meetings_notes_for_task", task_id, meeting._id
-
-  subscribeToPrivateNotesForTask: (task_id) ->
-
-    Meteor.subscribe "meetings_private_note_for_task", task_id
+    if not task_id?
+      return
+    return Meteor.subscribe "meetings_meetings_for_task", task_id
 
   destroy: ->
     if @destroyed

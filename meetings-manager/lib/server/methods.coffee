@@ -80,5 +80,16 @@ _.extend MeetingsManager.prototype,
         user_id = @userId
         self.updateMeetingPrivacy meeting_id, isPrivate, user_id
 
+      meetings_deleteMeeting: (meeting_id) ->
+        user_id = @userId
+        self.deleteMeeting meeting_id, user_id
+        
+        return
+
+      meetings_updateAddedTaskNote: (meeting_task_id, added_task_id, changes) ->
+        user_id = @userId
+        self.updateAddedTaskNote meeting_task_id, added_task_id, changes, user_id
+        
+        return
 
     return

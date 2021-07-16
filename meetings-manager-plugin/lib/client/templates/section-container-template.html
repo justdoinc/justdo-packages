@@ -18,15 +18,7 @@
                   <div class="info-title">Meeting note:</div>
                 {{/if}}
               {{/if}}
-              <div class="info-text">{{nl2br note}}</div>
-            </div>
-          </td>
-        </tr>
-      {{else}}
-        <tr>
-          <td>
-            <div class="meeting-container-section">
-              <div class="info-title no-notes">No notes</div>
+              <div class="info-text">{{{xssGuard note}}}</div>
             </div>
           </td>
         </tr>
@@ -46,8 +38,11 @@
                         {{#unless taskNotFound}}
                           {{#if taskDiverged}}<i class="fa fa-exclamation-triangle" aria-hidden="true" title="Task subject changed"></i>{{/if}}
                         {{/unless}}
-
                       </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>{{{xssGuard note}}}</td>
                     </tr>
                   {{/each}}
                 </table>
@@ -57,7 +52,9 @@
         {{/if}}
       {{/with}}
       </table>
-      <span class="meeting-all-notes">Display meeting notes</span>
+      {{#if title}}
+        <span class="meeting-all-notes">Display meeting notes</span>
+      {{/if}}
     {{/if}}
   </div>
 </template>

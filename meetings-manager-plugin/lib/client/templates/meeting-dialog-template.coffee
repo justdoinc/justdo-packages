@@ -21,6 +21,10 @@ showSnackbar = (message) ->
       JustdoSnackbar.close()
       return
 
+setMeetingTime = (tpl, date) ->
+  tpl.$(".meeting-time").val(date).change()
+  return
+
 setMeetingHours = (tmpl, hours) ->
   meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
     _id: tmpl.data.meeting_id
@@ -54,12 +58,29 @@ Template.meetings_meeting_dialog.onCreated ->
   @meetings_tasks_noRender = new ReactiveVar false
   @project_id = Router.current().project_id
   @is_editing_location = new ReactiveVar false
+  @logo_data_url = null
+  @meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
+    _id: Template.currentData().meeting_id
+
+  toDataURL = (url, callback) ->
+    xhr = new XMLHttpRequest();
+    xhr.onload = ->
+      reader = new FileReader();
+      reader.onloadend = ->
+        callback(reader.result);
+      reader.readAsDataURL(xhr.response);
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+
+  toDataURL "/layout/logos-ext/justdo_logo_with_text_normal.png", (data_url) =>
+    @logo_data_url = data_url
 
   @autorun =>
     data = Template.currentData()
+    @meeting_sub = APP.meetings_manager_plugin.meetings_manager.subscribeToMeeting data.meeting_id
 
-    APP.meetings_manager_plugin.meetings_manager.subscribeToPrivateNotesForMeeting data.meeting_id
-    @meetings_tasks_sub = APP.meetings_manager_plugin.meetings_manager.subscribeToNotesForMeeting data.meeting_id
+    return
 
   @autorun =>
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -69,20 +90,6 @@ Template.meetings_meeting_dialog.onCreated ->
 
     Tracker.autorun =>
       form.doc form.original()
-
-  # DEPRECATED
-  # Get recent locations
-  # locations = []
-  # meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find().fetch()
-  # meetings = _.sortBy(meetings, "updatedAt").reverse()
-  #
-  # $(meetings).each ->
-  #   if this.location? and _.indexOf(locations, this.location) < 0
-  #     locations.push this.location
-  #     if locations.length >= 5
-  #       return false
-  #
-  # Template.currentData().locations = locations
 
   # Get current project_id
   @autorun =>
@@ -95,7 +102,7 @@ Template.meetings_meeting_dialog.onCreated ->
   @autorun =>
     cur_item = APP.modules.project_page.activeItemObj()
     
-    if cur_item? and @meetings_tasks_sub.ready()
+    if cur_item? and @meeting_sub?.ready()
       Forms.instance().doc "seqId", cur_item.seqId
 
       Meteor.defer =>
@@ -116,6 +123,8 @@ Template.meetings_meeting_dialog.onCreated ->
     for user_id in meeting.users
       user = Meteor.users.findOne user_id
       attended_html += """<span class="mr-2">#{JustdoHelpers.xssGuard user.profile.first_name} #{JustdoHelpers.xssGuard user.profile.last_name},</span>"""
+    if not _.isEmpty(meeting.other_attendees)
+      attended_html += """<span class="mr-2">#{JustdoHelpers.xssGuard meeting.other_attendees}</span>"""
 
     attended_html = attended_html.substring(0, attended_html.length - 8) + "</span>"
 
@@ -123,7 +132,7 @@ Template.meetings_meeting_dialog.onCreated ->
     tasks_html = ""
     tasks = _.sortBy meeting.tasks, 'task_order'
     for item in tasks
-      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><h5 class="font-weight-bold"><span class="bg-light border px-2 rounded mr-1">#{item.seqId}</span> #{JustdoHelpers.xssGuard item.title}</h5>"""
+      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><h5 class="font-weight-bold">#{JustdoHelpers.xssGuard item.title}, <span class="bg-light border px-2 rounded mr-1">id: #{item.seqId}</span> </h5>"""
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
@@ -138,7 +147,7 @@ Template.meetings_meeting_dialog.onCreated ->
               user_id = task_obj.pending_owner_id
             user = Meteor.users.findOne user_id
             user_name = """<span class="mr-2">#{JustdoHelpers.xssGuard user.profile.first_name} #{JustdoHelpers.xssGuard user.profile.last_name},</span>"""
-          tasks_html += """<li><span class="bg-light border px-2 rounded mr-1">#{task_added.seqId}</span> #{user_name} #{JustdoHelpers.xssGuard task_added.title}</li>"""
+          tasks_html += """<li>#{user_name} #{JustdoHelpers.xssGuard task_added.title}, <span class="bg-light border px-2 rounded mr-1">id: #{task_added.seqId}</span> </li>"""
         tasks_html += "</ul>"
 
       if meeting_task?.note?
@@ -146,7 +155,7 @@ Template.meetings_meeting_dialog.onCreated ->
         key = "12Q97yh66tryb5"
         re =new RegExp(key,'g')
         note = meeting_task.note.replace /\n/g, key
-        note = JustdoHelpers.xssGuard note
+        note = JustdoHelpers.xssGuard note, {allow_html_parsing: true, enclosing_char: ""}
         note = """<div dir="auto" class="print-meeting-mode-note">""" + note.replace(re, "</div><div dir='auto'>") + "</div>"
         tasks_html += note
 
@@ -158,7 +167,7 @@ Template.meetings_meeting_dialog.onCreated ->
       re =new RegExp(key,'g')
       bottomNote = meeting.note
       bottomNote = bottomNote.replace /\n/g, key
-      bottomNote = JustdoHelpers.xssGuard bottomNote
+      bottomNote = JustdoHelpers.xssGuard bottomNote, {allow_html_parsing: true, enclosing_char: ""}
       bottomNote = "<div dir='auto' class='print-meeting-mode-note'>" + bottomNote.replace(re, "</div><div dir='auto'>") + "</div>"
 
     meeting_date = "Date not set"
@@ -166,7 +175,7 @@ Template.meetings_meeting_dialog.onCreated ->
       meeting_date = moment(meeting.date).format("YYYY-MM-DD")
 
     ret = """
-      <img src="/layout/logos-ext/justdo_logo_with_text_normal.png" alt="justDo" class="thead-logo">
+      <img src="#{@logo_data_url}" class="thead-logo" alt="JustDo" width="100"/>
       <h3 class="font-weight-bold mt-4">#{JustdoHelpers.xssGuard meeting.title}</h3>
       <div class="border-bottom pb-3">
         <span class="mr-2">Date: <strong> #{meeting_date}</strong>,</span>
@@ -174,18 +183,23 @@ Template.meetings_meeting_dialog.onCreated ->
         <div class="mr-2">Location: <strong>#{JustdoHelpers.xssGuard meeting.location}</strong></div>
       </div>
       <div class="border-bottom py-3">
-        <div class="h3 font-weight-bold">Invited</div>
+        <div class="h3 font-weight-bold">Attendees</div>
         #{attended_html}
       </div>
       <div class="border-bottom py-3">
         <div class="h3 font-weight-bold">Meeting Notes</div>
         #{tasks_html}
       </div>
-      <div class="py-3">
-        <div class="h3 font-weight-bold">Other Notes</div>
-        #{bottomNote}
-      </div>
       """
+    
+    if meeting.note?
+      ret += """
+        <div class="py-3">
+          <div class="h3 font-weight-bold">Other Notes</div>
+          #{bottomNote}
+        </div>
+      """
+      
     return ret
 
   @print_me = ->
@@ -212,6 +226,32 @@ Template.meetings_meeting_dialog.onCreated ->
       "text/plain": @plain_text_representation()
       "text/html": @html_representation()
 
+  @delete_me = ->
+    total_added_tasks = 0
+    APP.meetings_manager_plugin.meetings_manager.meetings_tasks.find
+      meeting_id: @data.meeting_id,
+    ,
+      fields:
+        added_tasks: 1
+    .forEach (meeting_task) ->
+      if meeting_task.added_tasks?.length?
+        total_added_tasks += meeting_task.added_tasks.length
+      
+      return
+    msg = "Are you sure you want to delete this meeting?"
+    if total_added_tasks > 0
+      msg += " (#{total_added_tasks} #{if total_added_tasks == 1 then "task" else "tasks"} that was created in this meeting won't be deleted)"
+
+    bootbox.confirm msg, (result) =>
+      if result
+        APP.meetings_manager_plugin.meetings_manager.deleteMeeting @data.meeting_id
+        APP.meetings_manager_plugin.removeMeetingDialog()
+
+      return
+    
+    return
+
+
   @plain_text_representation = ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: Template.currentData().meeting_id
@@ -219,17 +259,20 @@ Template.meetings_meeting_dialog.onCreated ->
     ret = "#{meeting.title} - Meeting Notes\n"
     ret += "#{moment(meeting.date).format("YYYY-MM-DD")} #{meeting.time} #{meeting.location}\n"
 
-    ret += "Invited:\n"
+    ret += "Attendees:\n"
 
     for user_id in meeting.users
       user = Meteor.users.findOne user_id
       ret += "* #{user.profile.first_name} #{user.profile.last_name}\n"
+    
+    if not _.isEmpty(meeting.other_attendees)
+      ret += "* #{meeting.other_attendees}\n"
 
     ret+= "\n"
     ret += "Agenda Notes:\n\n"
     tasks = _.sortBy meeting.tasks, 'task_order'
     for item in tasks
-      ret += "#{item.seqId} #{item.title}\n"
+      ret += "#{item.title}, id: #{item.seqId}\n"
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
@@ -237,14 +280,14 @@ Template.meetings_meeting_dialog.onCreated ->
       if meeting_task?.added_tasks?.length > 0
         ret += "Tasks Added:\n"
         for task_added in meeting_task.added_tasks
-          ret += "*#{task_added.seqId} #{task_added.title}\n"
+          ret += "*#{task_added.title}, id: #{task_added.seqId}\n"
 
       if meeting_task?.note?
-        ret += "Notes:\n#{meeting_task.note}\n"
+        ret += "Notes:\n#{meeting_task.note.replace(/<[^>]*>/g, '')}\n"
       ret += "\n"
 
     if meeting.note?
-      ret += "Other Notes:\n#{meeting.note}\n"
+      ret += "Other Notes:\n#{meeting.note.replace(/<[^>]*>/g, '')}\n"
     return ret.replace /\n/g,"\n"
 
   @email_me = ->
@@ -254,7 +297,7 @@ Template.meetings_meeting_dialog.onCreated ->
     emails=""
     for user_id in meeting.users
       user = Meteor.users.findOne user_id
-      emails += "#{user.emails[0].address},"
+      emails += "#{user.emails[0].address};"
 
     window.open("mailto:#{emails}?subject=#{encodeURIComponent(meeting.title)} - Meeting Notes&body=#{encodeURIComponent(@plain_text_representation())}");
 
@@ -262,23 +305,26 @@ Template.meetings_meeting_dialog.onRendered ->
   instance = this
   meeting_note_box = @$ "[name=\"note\"]"
   meeting_note_box.autosize()
-  meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
-    _id: Template.currentData().meeting_id
+  meeting = @meeting
+
+  @$(".meetings_meeting-dialog").resizable
+    handles: "e, w"
+    minWidth: 680
 
   @$(".meetings_meeting-dialog").draggable
     containment: ".global-wrapper"
     handle: ".meeting-dialog-header"
-
-  @$(".meeting-date").datepicker
-    "minDate": 0,
-    "defaultDate": meeting.date
-    "dateFormat": "yy-mm-dd"
 
   # Make tasks sortable
   @$(".meeting-tasks-list").sortable
     handle: ".sort-task"
     stop: (event, ui) ->
       Session.set "updateTaskOrder", true
+
+  @$(".meeting-time-wrapper").on 'shown.bs.dropdown', =>
+    @$(".meeting-time-input").val("")
+    @$(".meeting-time-input").focus()
+    return
 
   @autorun =>
     updateTaskOrder = Session.get "updateTaskOrder"
@@ -288,6 +334,27 @@ Template.meetings_meeting_dialog.onRendered ->
 
 
 Template.meetings_meeting_dialog.helpers
+  onSetDateRerender: ->
+    tpl = Template.instance()
+    Meteor.defer ->
+      tpl.$(".meeting-date").datepicker
+        "defaultDate": tpl.meeting.date
+        "dateFormat": "yy-mm-dd"
+      
+      return
+
+    return
+
+  displayName: JustdoHelpers.displayName
+  isAllowMeetingsDeletion: ->
+    meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
+      _id: @meeting_id
+    ,
+      fields:
+        organizer_id: 1
+
+    return not APP.modules.project_page.curProj()?.getProjectConfiguration()?.block_meetings_deletion and
+      (Meteor.userId() == meeting.organizer_id or APP.modules.project_page.curProj()?.is_admin_rv.get())
 
   meeting: -> APP.meetings_manager_plugin.meetings_manager.meetings.findOne
     _id: @meeting_id
@@ -321,16 +388,32 @@ Template.meetings_meeting_dialog.helpers
 
   mayEdit: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
-      _id: @meeting_id
+      _id: @meeting_id or @_id
+    
+    user_id = Meteor.userId()
 
-    return meeting.organizer_id == Meteor.userId() or not meeting.locked
+    return meeting.status != "ended" and 
+      (meeting.organizer_id == user_id or 
+      (not meeting.locked and user_id in meeting.users))
+
+  mayEditFooter: ->
+    meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
+      _id: @meeting_id
+    
+    user_id = Meteor.userId()
+
+    return meeting.organizer_id == user_id or 
+      (not meeting.locked and user_id in meeting.users)
 
   mayEditAgenda: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: @meeting_id
 
-    return (meeting.status != "adjourned") and (meeting.status != "canceled") and
-            (meeting.organizer_id == Meteor.userId() or not meeting.locked)
+    user_id = Meteor.userId()
+
+    return (meeting.status != "ended") and (meeting.status != "canceled") and
+      (meeting.organizer_id == user_id or 
+      (not meeting.locked and user_id in meeting.users))
 
   onSaveMeetingNote: ->
     tmpl = Template.instance()
@@ -370,7 +453,6 @@ Template.meetings_meeting_dialog.helpers
     return Template.instance().meetings_tasks_noRender.get()
 
   tasks: ->
-
     meeting_id = @meeting_id
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: meeting_id
@@ -465,6 +547,10 @@ Template.meetings_meeting_dialog.helpers
 
     if meeting.status == "draft"
       return false
+
+    if meeting.status == "ended" and !meeting.note?
+      return false
+
     return true
 
   conversationClass: ->
@@ -491,9 +577,14 @@ Template.meetings_meeting_dialog.events
     tmpl.copy_me()
     showSnackbar("Meeting details copied to clipboard.")
 
+  "click .meeting-delete": (e, tpl) ->
+    tpl.delete_me()
+
+    return
+
   "click .meeting-dialog-add-task": (e, tmpl) ->
-    $(".meeting-dialog-agenda").animate { scrollTop: $(".meeting-task-add").offset().top }, 500
-    $(".meeting-task-add").focus()
+    $task_no_input = tmpl.$(".meeting-task-add")
+    $task_no_input.focus()
     return
 
   "documentChange .meeting-dialog-info, documentChange .meeting-note": (e, tmpl, doc, changes) ->
@@ -622,7 +713,7 @@ Template.meetings_meeting_dialog.events
     doc = tmpl.form.doc()
     tmpl.form.validate("status")
 
-    APP.meetings_manager_plugin.meetings_manager.updateMeetingStatus doc._id, "adjourned", (err) =>
+    APP.meetings_manager_plugin.meetings_manager.updateMeetingStatus doc._id, "ended", (err) =>
       if err
         # Invalidate the form and show the user an error.
         tmpl.form.invalidate [{ error: err, name: "status", message: "Update status failed: " + err }]
@@ -709,20 +800,14 @@ Template.meetings_meeting_dialog.events
         Session.set "active-conversation-id", false
     , 300
 
-  "click .meeting-time-hours-wrapper .meeting-time-up": (e, tmpl) ->
-    setMeetingHours(tmpl, 1)
-    return
+  "change .meeting-time-input": (e, tpl) ->
+    $target = $(e.target).closest(".meeting-time-input")
+    val = $target.val()
+    date = moment(val, "HH:mm").toDate()
+    if not isNaN date.getTime()
+      setMeetingTime tpl, date
 
-  "click .meeting-time-hours-wrapper .meeting-time-down": (e, tmpl) ->
-    setMeetingHours(tmpl, -1)
-    return
-
-  "click .meeting-time-minutes-wrapper .meeting-time-up": (e, tmpl) ->
-    setMeetingMinutes(tmpl, 15)
-    return
-
-  "click .meeting-time-minutes-wrapper .meeting-time-down": (e, tmpl) ->
-    setMeetingMinutes(tmpl, -15)
+    $target.closest(".meeting-time-wrapper").dropdown("toggle")
     return
 
   "click .meeting-time-am-pm": (e, tmpl) ->

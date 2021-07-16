@@ -1,3 +1,14 @@
+isAttendee = (meeting) ->
+  return Meteor.userId() in meeting.users
+
+Template.meetings_meeting_members.onCreated ->
+  @editable_rv = new ReactiveVar true
+  @autorun =>
+    @editable_rv.set Template.currentData().editable
+    return
+  
+  return
+
 Template.meetings_meeting_members.helpers
   box_grid: ->
     cols: 16 + 1 # Meeting dialog has fixed-width 680px. 16 (users) + 1 (add user button) it's a Max count the dialog can contain
@@ -6,16 +17,25 @@ Template.meetings_meeting_members.helpers
 
   secondary_users: -> _.without @users, @organizer_id
 
-  show_button: -> if not @locked or @organizer_id == Meteor.userId() then "always" else "never"
+  show_button: -> 
+    return if Template.instance().editable_rv.get() then "always" else "never"
+
+  isAttendee: ->
+    return isAttendee(@)
+  
+  isEditable: -> Template.instance().editable_rv.get()
 
 Template.meetings_meeting_members.events
   "click .avatar-box-button": (e, tmpl) ->
-    template_data = tmpl.data
+    if not tmpl.data.editable
+      return
+
+    template_data = tmpl.data.meeting
     message_template =
       APP.helpers.renderTemplateInNewNode(Template.meetings_meeting_members_editor, template_data)
 
     bootbox.dialog
-      title: "Edit Meeting Participants"
+      title: "Meeting Attendees"
       message: message_template.node
       animate: false
       className: "members-editor-dialog bootbox-new-design"
@@ -57,7 +77,7 @@ users_to_add = new ReactiveVar null
 cascade = new ReactiveVar true
 notes = new ReactiveVar {}, JustdoHelpers.jsonComp
 
-_getUsersDocsByIdsWithProceedFlag = (members_array, default_proceed_val=true) ->
+_getUsersDocsByIdsWithProceedFlag = (members_array, search_text, default_proceed_val=true) ->
   # Returns APP.helpers.getUsersDocsByIds(members_array) output with
   # a `proceed` property assigned to each user doc.
   # The `proceed` property will have a reactive variable initiated to
@@ -68,11 +88,13 @@ _getUsersDocsByIdsWithProceedFlag = (members_array, default_proceed_val=true) ->
   # se we don't need to worry about reactivity and its consequence on proceed
   # values upon invalidations
   members = APP.helpers.getUsersDocsByIds(members_array)
+  members = JustdoHelpers.filterUsersDocsArray members, search_text
+  members = JustdoHelpers.sortUsersDocsArrayByDisplayName members
 
   for member in members
     member.proceed = new ReactiveVar default_proceed_val
 
-  return JustdoHelpers.sortUsersDocsArray members
+  return members
 
 _setProceedStateForAllUsersInReactiveVar = (reactive_var, state) ->
   members = reactive_var.get()
@@ -88,6 +110,8 @@ Template.meetings_meeting_members_editor.onCreated ->
 
   module = APP.modules.project_page
 
+  @members_search_rv = new ReactiveVar ""
+
   if not (item_users = data.users)?
     throw module._error("unknown-data-context", "can't determine current task user")
   _users_to_keep = _.without item_users, Meteor.userId(), data.organizer_id
@@ -96,8 +120,10 @@ Template.meetings_meeting_members_editor.onCreated ->
     throw module._error("unknown-data-context", "can't determine project members")
   _users_to_add = _.difference project_members, item_users
 
-  users_to_keep.set _getUsersDocsByIdsWithProceedFlag(_users_to_keep, true)
-  users_to_add.set _getUsersDocsByIdsWithProceedFlag(_users_to_add, false)
+  @autorun =>
+    search_text = @members_search_rv.get()
+    users_to_keep.set _getUsersDocsByIdsWithProceedFlag(_users_to_keep, search_text, true)
+    users_to_add.set _getUsersDocsByIdsWithProceedFlag(_users_to_add, search_text, false)
   cascade.set true
   notes.set {}
 
@@ -109,22 +135,22 @@ Template.meetings_meeting_members_editor.helpers
   sections: ->
     [
       {
-        action_id: "keep-users"
-        caption: "Current Participants:"
-        action_users_reactive_var: users_to_keep
-        proceed_message: "Keep"
-        dont_proceed_message: "Remove"
-        proceed_status_fa_icon: null
-        dont_proceed_status_fa_icon: "fa-times"
-      },
-      {
         action_id: "add-users"
-        caption: "Add Participants:"
+        caption: "Not Attending"
         action_users_reactive_var: users_to_add
         proceed_message: "Add"
         dont_proceed_message: "Don't add"
         proceed_status_fa_icon: "fa-check"
         dont_proceed_status_fa_icon: null
+      },
+      {
+        action_id: "keep-users"
+        caption: "Attending"
+        action_users_reactive_var: users_to_keep
+        proceed_message: "Keep"
+        dont_proceed_message: "Remove"
+        proceed_status_fa_icon: null
+        dont_proceed_status_fa_icon: "fa-times"
       }
     ]
   cascade: -> cascade.get()
@@ -140,6 +166,16 @@ Template.meetings_meeting_members_editor.events
       cascade.set true
     else
       cascade.set false
+
+  "keyup .members-search-input": (e, tpl) ->
+    value = $(e.target).val().trim()
+
+    if _.isEmpty value
+      return tpl.members_search_rv.set(null)
+    else
+      tpl.members_search_rv.set(value)
+
+    return
 
 Template.meetings_meeting_members_editor.onDestroyed ->
   users_to_keep.set null

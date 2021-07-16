@@ -10,7 +10,8 @@
           <input type="text" class="meeting-search-input form-control form-control-sm" placeholder="Meetings">
           <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#search"></use></svg>
         </div>
-        <button class="meetings-menu-new btn btn-light text-primary w-100 text-nowrap"><svg><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg> Start a new meeting</button>
+        <button class="meetings-menu-schedule btn btn-light text-primary text-nowrap meeting-menu-button"><svg><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg> Schedule </button>
+        <button class="meetings-menu-start btn btn-light text-primary text-nowrap meeting-menu-button"><svg><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg> Start </button>
         <div class="meetings-menu-list">
           {{#with meetings "draft"}}
             {{#if this.exist}}
@@ -48,10 +49,10 @@
               </section>
             {{/if}}
           {{/with}}
-          {{#with meetings "adjourned"}}
+          {{#with meetings "ended"}}
             {{#if this.exist}}
-              <section class="meetings-menu-list-adjourned">
-                <div class="meetings-menu-section-title text-muted text-uppercase py-1">Meetings done</div>
+              <section class="meetings-menu-list-end">
+                <div class="meetings-menu-section-title text-muted text-uppercase py-1">Ended</div>
                 {{#each this.meetings}}
                   <div class="meetings-menu-item d-flex align-items-center bg-light py-1 px-2">
                     {{> meetings_meeting_header}}

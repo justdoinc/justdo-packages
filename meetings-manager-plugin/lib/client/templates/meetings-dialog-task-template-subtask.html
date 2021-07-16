@@ -1,40 +1,51 @@
 <template name="meetings_dialog_task_subtask">
-  <div class="sub-task d-flex align-items-start">
-    <div class="dropdown">
-      <button {{disabled}} class="sub-task-user-selector" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        {{#with taskOwner}}
-          {{> justdo_avatar}}
-        {{/with}}
-      </button>
-      <div class="dropdown-menu shadow-lg p-2 border-0">
-        {{#each tasksUsers}}
-          <button class="dropdown-item select-pending-owner" user_id="{{this._id}}" type="button">{{this.profile.first_name}} {{this.profile.last_name}}</button>
-        {{/each}}
+  <div class="sub-task">
+    <div class="d-flex align-items-start">
+      <div class="dropdown">
+        <button {{disabled}} class="sub-task-user-selector" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{#with taskOwner}}
+            {{> justdo_avatar}}
+          {{/with}}
+        </button>
+        <div class="dropdown-menu shadow-lg p-2 border-0">
+          {{#each tasksUsers}}
+            <button class="dropdown-item select-pending-owner" user_id="{{this._id}}" type="button">{{this.profile.first_name}} {{this.profile.last_name}}</button>
+          {{/each}}
+        </div>
       </div>
-    </div>
-
-    <div class="task-priority flex-shrink-0" style="background-color: {{taskPriority}}"></div>
-    <div class="task-seqId-box flex-shrink-0 text-primary">{{seqId}}.</div>
-    {{#if allowAddingTasks}}
-      {{{taskSubjectBox subject}}}
-    {{else}}
-      <div class="task-subject-box flex-grow-1" placeholder="Untitled Task..." data-task-id="{{taskId}}">{{nl2br subject}}</div>
-    {{/if}}
-    {{#if allowAddingTasks}}
-      <div class="d-flex align-items-center flex-shrink-0">
+  
+      <div class="task-priority flex-shrink-0" style="background-color: {{taskPriority}}"></div>
+      <div class="task-seqId-box flex-shrink-0 text-primary"><a href="">{{seqId}}.</a></div>
+      {{#if $and allowAddingTasks}}
+        {{{taskSubjectBox subject}}}
+      {{else}}
+        <div class="task-subject-box flex-grow-1" placeholder="Untitled Task..." data-task-id="{{taskId}}">{{nl2br subject}}</div>
+      {{/if}}
+      {{#if allowAddingTasks}}
+        <div class="d-flex align-items-center flex-shrink-0">
+          <div class="task-due-date-wrapper">
+            <div class="task-due-date-label">
+              {{$or dueDate dueDateLabel}}
+            </div>
+            <input class="task-due-date" type="text" value="">
+          </div>
+          <div class="task-controls-container dropdown d-flex">
+            <svg class="jd-icon task-controls-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
+            <ul class="dropdown-menu dropdown-menu-right shadow-lg p-2 border-0">
+              <li class="dropdown-item d-flex align-items-center remove-sub-task">
+                <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>Remove Task
+              </li>
+            </ul>
+          </div>
+        </div>
+      {{else}}
         <div class="task-due-date-wrapper">
           <div class="task-due-date-label">{{dueDate}}</div>
           <input class="task-due-date" type="text" value="">
         </div>
-        <div class="task-controls-container dropdown d-flex">
-          <svg class="jd-icon task-controls-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
-          <ul class="dropdown-menu dropdown-menu-right shadow-lg p-2 border-0">
-            <li class="dropdown-item d-flex align-items-center remove-sub-task">
-              <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>Remove Task
-            </li>
-          </ul>
-        </div>
-      </div>
-    {{/if}}
+      {{/if}}
+    </div>
+    {{> locking_text_editor content=this.note class="note" placeholder="[Click to edit note]" lock=this.lock disabled=false onSave=onSaveMeetingNote editable=may_edit}}
   </div>
+  {{onRerender}}
 </template>

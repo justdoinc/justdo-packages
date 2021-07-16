@@ -34,6 +34,11 @@ _.extend MeetingsManager.prototype,
         type: Object
         optional: true
         blackbox: true
+      
+      other_attendees:
+        label: "Other attendees"
+        type: String
+        optional: true
 
     @meetings.attachSchema @meeting_metadata_schema
 
@@ -69,7 +74,7 @@ _.extend MeetingsManager.prototype,
           if not @isSet and @isInsert
             return []
           return
-
+      
       tasks:
         label: "Tasks"
         type: [Object]
@@ -84,7 +89,7 @@ _.extend MeetingsManager.prototype,
       status:
         label: "Status"
         type: String
-        allowedValues: ["draft", "pending", "in-progress", "adjourned", "cancelled", "duplicate"]
+        allowedValues: ["draft", "pending", "in-progress", "ended", "cancelled", "duplicate"]
 
       start:
         label: "Start Times"

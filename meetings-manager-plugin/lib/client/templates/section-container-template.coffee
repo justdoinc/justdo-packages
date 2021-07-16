@@ -4,15 +4,10 @@ Template.meeting_container.onCreated ->
   meetings_manager = APP.meetings_manager_plugin.meetings_manager
   @expanded = new ReactiveVar(new Set())
 
-  @autorun ->
-    task_id = APP.modules.project_page.activeItemId()
-    meetings_manager.subscribeToNotesForTask task_id
-    meetings_manager.subscribeToPrivateNotesForTask task_id
-    meetings_manager.subscribeToMeetingsForTask task_id
-
 Template.meeting_container.helpers
 
   notes: ->
+    
     task_id = APP.modules.project_page.activeItemId()
     meeting_id = @_id
     notes = []
@@ -52,7 +47,13 @@ Template.meeting_container.helpers
   addedTasks: ->
     task_id = APP.modules.project_page.activeItemId()
     meeting_id = @_id
-    added_tasks = meetings_manager.meetings_tasks.find({ task_id: task_id, meeting_id: meeting_id }).fetch()
+    added_tasks = meetings_manager.meetings_tasks.find
+      meeting_id: meeting_id
+      $or: [
+        {task_id: task_id},
+        {"added_tasks.task_id": task_id}
+      ]
+    .fetch()
 
     added_tasks = {
       "exist": added_tasks[0]?.added_tasks.length,

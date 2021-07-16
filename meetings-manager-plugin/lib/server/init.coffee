@@ -18,4 +18,11 @@ _.extend MeetingsManagerPlugin.prototype,
     # Defined in collections-indexes.coffee
     @_ensureIndexesExists()
 
+    Projects.registerAllowedConfs
+      "block_meetings_deletion":
+        require_admin_permission: true
+        value_matcher: Boolean
+        allow_change: true
+        allow_unset: true
+
     return
