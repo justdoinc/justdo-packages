@@ -10,6 +10,17 @@ getValueFromHtmlValue = (html_value) -> if html_value != empty_state_representin
 WhiteListFilterControllerConstructor = (context) ->
   GridControl.FilterController.call this
 
+  @once "insterted-to-dom", =>
+    Meteor.defer =>
+      # No clue why, but focusing on the same tick as the init tick messes up
+      # with the positioning of the dropdown. (As of 2021-07-21 in Chrome). Daniel C.
+
+      @controller_search.focus()
+
+      return
+
+    return
+
   @grid_control = context.grid_control
   @column_settings = context.column_settings
   @column_filter_state_ops = context.column_filter_state_ops
@@ -17,26 +28,46 @@ WhiteListFilterControllerConstructor = (context) ->
   @filter_change_listener = => @refresh_state()
 
   @grid_control.on "filter-change", @filter_change_listener
+  
+  @controller = $("""<div style="max-height: 292px; overflow: scroll"></div>""")
 
-  @controller = $("<ul class='fa-ul whitelist-alike-filter-dropdown-ul' />")
+  @controller_search = $("""<input type="text" style="width: 85%">""")
 
-  for value, value_options of @column_settings.values
-    if (html = value_options.html)?
-      if value_options.skip_xss_guard
-        # Future ready for the day we'll allow users
-        # to define custom values.
-        # By adding this I'm forcing development to take
-        # xss into account
-        label = html
+  @controller_ul = $("""<ul class="fa-ul whitelist-alike-filter-dropdown-ul" />""")
+
+  @controller.append(@controller_search)
+  @controller.append(@controller_ul)
+
+  populateOptionsList = =>
+    search_text = @controller_search.val().toLowerCase()
+    @controller_ul.empty()
+    for value, value_options of @column_settings.values
+      if (html = value_options.html)?
+        if value_options.skip_xss_guard
+          # Future ready for the day we'll allow users
+          # to define custom values.
+          # By adding this I'm forcing development to take
+          # xss into account
+          label = html
+        else
+          # Prefer the html label
+          label = JustdoHelpers.xssGuard(html, {allow_html_parsing: true, enclosing_char: ''})
       else
-        # Prefer the html label
-        label = JustdoHelpers.xssGuard(html, {allow_html_parsing: true, enclosing_char: ''})
-    else
-      label = value_options.txt
+        label = value_options.txt
 
-    @controller.append("<li value='#{JustdoHelpers.xssGuard(getHtmlValue(value), {allow_html_parsing: true, enclosing_char: "'"})}'><i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i> #{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})}</li>")
+      if label.toLowerCase().indexOf(search_text) >= 0
+        @controller_ul.append("<li value='#{JustdoHelpers.xssGuard(getHtmlValue(value), {allow_html_parsing: true, enclosing_char: "'"})}'><i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i> #{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})}</li>")
 
-  $(@controller).on "click", "li", (e) =>
+    return
+
+  populateOptionsList()
+
+  $(@controller_search).on "keyup", (e) =>
+    populateOptionsList()
+    @refresh_state()
+    return
+
+  $(@controller_ul).on "click", "li", (e) =>
     filter_state = @column_filter_state_ops.getColumnFilter()
     $el = $(e.target).closest("li")
 
