@@ -18,6 +18,11 @@ getCurrentProjectMembersDocsSortedByDisplayNameWithLoggedInUserFirst = ->
 OwnersFilterControllerConstructor = (context) ->
   GridControl.FilterController.call this
 
+  @once "insterted-to-dom", =>
+    $(".owners-search-input").focus()
+
+    return
+
   @grid_control = context.grid_control
   @column_settings = context.column_settings
   @column_filter_state_ops = context.column_filter_state_ops
