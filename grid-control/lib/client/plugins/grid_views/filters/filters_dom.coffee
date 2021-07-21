@@ -36,15 +36,15 @@ _.extend GridControl.prototype,
 
         if column_settings.filter_settings?
           $filter_control =
-            $("<div class='column-filter-button' id='#{column_settings.field}-filter-button' />")
+            $("""<div class="column-filter-button" id="#{column_settings.field}-filter-button" />""")
 
           do ($filter_control) =>
             # the context menu plugin blocks stops the propagation of the contextmenu
             # event, therefore we need to catch it here too
-            $el.on 'contextmenu', => @_closeFiltersDropdown()
+            $el.on "contextmenu", => @_closeFiltersDropdown()
 
             $filter_control
-              .html('<i class=\'fa fa-filter\'></i>')
+              .html("""<i class="fa fa-filter"></i>""")
               .mousedown (e) =>
                 e.stopPropagation()
               .click (e) =>
@@ -107,11 +107,11 @@ _.extend GridControl.prototype,
       @_current_filter_controller =
         new PACK.filters_controllers[filter_type](controller_context)
 
-      controller_container = $("<div class='#{column_settings.filter_settings.type}-controller filter-controller-container' />")
+      controller_container = $("""<div class="#{column_settings.filter_settings.type}-controller filter-controller-container" />""")
         .html(@_current_filter_controller.controller)
 
       dropdown_controls = """
-        <div role='separator' class='dropdown-divider mt-0'></div>
+        <div role="separator" class="dropdown-divider mt-0"></div>
         <div class="dropdown-filter-controls-container">
           <button type="button" class="btn btn-light border jd-btn-xsm close-dropdown">Close</button>
           <button type="button" class="btn btn-light border jd-btn-xsm clear">Clear</button>
