@@ -67,6 +67,8 @@ default_filter_options =
 # Filter controller constructor
 #
 DatesFilterControllerConstructor = (context) ->
+  GridControl.FilterController.call this
+
   @grid_control = context.grid_control
   @column_settings = context.column_settings
   @column_filter_state_ops = context.column_filter_state_ops
@@ -149,6 +151,8 @@ DatesFilterControllerConstructor = (context) ->
   @refresh_state()
 
   return @
+
+Util.inherits DatesFilterControllerConstructor, GridControl.FilterController
 
 _.extend DatesFilterControllerConstructor.prototype,
   refresh_state: ->

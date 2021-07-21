@@ -16,6 +16,8 @@ getCurrentProjectMembersDocsSortedByDisplayNameWithLoggedInUserFirst = ->
 # Filter controller constructor
 #
 OwnersFilterControllerConstructor = (context) ->
+  GridControl.FilterController.call this
+
   @grid_control = context.grid_control
   @column_settings = context.column_settings
   @column_filter_state_ops = context.column_filter_state_ops
@@ -104,6 +106,8 @@ OwnersFilterControllerConstructor = (context) ->
   @refresh_state()
 
   return @
+
+Util.inherits OwnersFilterControllerConstructor, GridControl.FilterController
 
 _.extend OwnersFilterControllerConstructor.prototype,
   renderMembers: ->
