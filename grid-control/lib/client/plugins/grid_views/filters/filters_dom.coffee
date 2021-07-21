@@ -129,6 +129,10 @@ _.extend GridControl.prototype,
       $(".column-filter-dropdown .clear", @$filter_dropdown).click =>
         @clearColumnFilter(column_settings.field)
 
+      @_current_filter_controller.emit "insterted-to-dom"
+
+      return
+
   _filtersDropdownClosedHandler: ->
     @_grid_data.clearFilterIndependentItems()
 

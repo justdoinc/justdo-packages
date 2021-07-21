@@ -37,6 +37,8 @@ default_grid_ranges = [
 # Filter controller constructor
 #
 NumericFilterControllerConstructor = (context) ->
+  GridControl.FilterController.call this
+
   @grid_control = context.grid_control
   @column_settings = context.column_settings
   @column_filter_state_ops = context.column_filter_state_ops
@@ -116,6 +118,8 @@ NumericFilterControllerConstructor = (context) ->
   @refresh_state()
 
   return @
+
+Util.inherits NumericFilterControllerConstructor, GridControl.FilterController
 
 _.extend NumericFilterControllerConstructor.prototype,
   refresh_state: ->

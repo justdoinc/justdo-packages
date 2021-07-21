@@ -448,6 +448,18 @@ _.extend GridControl.prototype,
 
     @logger.warn "Filter didn't set. column_id #{column_id} is not present in the grid"
 
+GridControl.FilterController = ->
+  EventEmitter.call this
+
+  return @
+
+Util.inherits GridControl.FilterController, EventEmitter
+
+_.extend GridControl.FilterController,
+  destroy: ->
+    # Developer, you need to implement this one.
+    return
+
 # Note, static method.
 GridControl.installFilterType = (filter_type_id, definition) ->
   # Arguments:
