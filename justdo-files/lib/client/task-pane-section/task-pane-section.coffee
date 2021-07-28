@@ -24,8 +24,8 @@ Template.justdo_files_gallery.onCreated ->
     return
 
 Template.justdo_files_gallery.helpers
-  files: -> APP.justdo_files.tasks_files.find({"meta.task_id": APP.modules.project_page.activeItemId()})
-  
+  files: -> APP.justdo_files.tasks_files.find({"meta.task_id": APP.modules.project_page.activeItemId()}, {sort: {"meta.upload_date": -1}})
+
   typeClass: -> Template.instance().getTypeCssClass(@file.type)
   
   renaming: -> Template.instance().renaming.get() == @file._id
