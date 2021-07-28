@@ -26,7 +26,7 @@ Template.meetings_meeting_members.helpers
   isEditable: -> Template.instance().editable_rv.get()
 
 Template.meetings_meeting_members.events
-  "click .avatar-box-button": (e, tmpl) ->
+  "click .edit-members-button": (e, tmpl) ->
     if not tmpl.data.editable
       return
 
