@@ -28,26 +28,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
       ]
 
     Schema =
-      # NOTE: jdr_mitigation_plan and jdr_contingency_plan are placed here temporarily
-      # due to exclude_from_tasks_grid_pub option cannot be parsed in Justdo Risks package's schema.coffee
-      jdr_mitigation_plan:
-        label: "Mitigation Plan"
-        exclude_from_tasks_grid_pub: true
-        grid_editable_column: false
-        grid_visible_column: false
-        type: String
-        optional: true
-        grid_search_when_out_of_view: true
-
-      jdr_contingency_plan:
-        label: "Contingency Plan"
-        exclude_from_tasks_grid_pub: true
-        grid_editable_column: false
-        grid_visible_column: false
-        type: String
-        optional: true
-        grid_search_when_out_of_view: true
-
       title:
         label: "Subject"
 
