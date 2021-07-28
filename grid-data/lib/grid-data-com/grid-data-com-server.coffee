@@ -28,6 +28,11 @@ GridDataCom = (collection, private_data_collection) ->
 
   @_grid_methods_middlewares = {}
 
+  @excluded_fields = []
+  @excluded_fields_projection = {}
+
+  @setupExcludedFieldsMaintainer()
+
   return @
 
 Util.inherits GridDataCom, EventEmitter
@@ -83,13 +88,27 @@ _.extend GridDataCom.prototype,
       perform_as_arg_position: 2
       unblock_method_invocation: false
 
-  disabled_methods: ["updateItem"] 
+  disabled_methods: ["updateItem"]
+
+  setupExcludedFieldsMaintainer: ->
+    updateExcluededFields = =>
+      @excluded_fields = _.keys _.pick JustdoHelpers.getSimpleSchemaObjDefinition(JustdoHelpers.getCollectionSchema(@collection)), (value, key) ->
+        return value.exclude_from_tasks_grid_pub is true
+
+      @excluded_fields_projection = JustdoHelpers.fieldsArrayToExclusiveFieldsProjection(@excluded_fields)
+
+      return
+
+    Collection2.on "schema.attached", (collection, ss, options) =>
+      if collection is @collection
+        updateExcluededFields()
+
+      return
+
+    return
 
   setupGridPublication: (options = {}) ->
     self = this
-
-    excluded_fields = _.keys _.pick JustdoHelpers.getSimpleSchemaObjDefinition(JustdoHelpers.getCollectionSchema(@collection)), (value, key) ->
-      return value.exclude_from_tasks_grid_pub is true
 
     default_options =
       unmerged_pub: false
@@ -189,7 +208,7 @@ _.extend GridDataCom.prototype,
         user_id: @userId
         _raw_frozen: null # Exclude frozen fields (they are equivalent to removed, just recoverable).
       if respect_exclude_from_tasks_grid_pub_directive
-        query_options = {fields: JustdoHelpers.fieldsArrayToExclusiveFieldsProjection(excluded_fields)}
+        query_options = {fields: _.extend {}, self.excluded_fields_projection}
       else
         query_options = {}
 
@@ -235,9 +254,6 @@ _.extend GridDataCom.prototype,
   setupTasksAugmentedFieldsPublication: ->
     self = @
 
-    excluded_fields = _.keys _.pick JustdoHelpers.getSimpleSchemaObjDefinition(JustdoHelpers.getCollectionSchema(@collection)), (value, key) ->
-      return value.exclude_from_tasks_grid_pub is true
-
     Meteor.publish "tasks_augmented_fields", (tasks_selector, options) ->
       # tasks_selector is a required object we support at the moment only the following
       # tasks_selector structures for is checked strictly:
@@ -277,7 +293,7 @@ _.extend GridDataCom.prototype,
         throw self._error "invalid-argument", "the options arg must have the fetched_fields_arr option"
       check fetched_fields_arr, [String]
 
-      fetched_fields_arr = _.intersection(fetched_fields_arr, excluded_fields)
+      fetched_fields_arr = _.intersection(fetched_fields_arr, self.excluded_fields)
 
       if _.isEmpty(fetched_fields_arr)
         throw self._error "invalid-argument", "Only fields that have the exclude_from_tasks_grid_pub option set to true for them are allowed in options.fetched_fields_arr"
