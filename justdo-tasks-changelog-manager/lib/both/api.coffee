@@ -73,7 +73,7 @@ _.extend TasksChangelogManager.prototype,
         op_name = "Removed"
       else if op == "move"
         op_name = "Transfer"
-      return "#{op_name} a parent."
+      return "#{op_name} a parent (not shared with you)"
 
     if activity_obj.change_type == "moved_to_task"
       return parentChangeMsg(activity_obj, "move")
