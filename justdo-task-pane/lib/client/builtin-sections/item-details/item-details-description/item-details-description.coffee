@@ -364,7 +364,7 @@ APP.executeAfterAppLibCode ->
       # On every path change, destroy the editor (destroyEditor, saves current state)
       project_page_module.activeItemPath()
 
-      APP.projects.subscribeActiveTaskAugmentedFields(["description"])
+      @task_descrioption_sub_handle = APP.projects.subscribeActiveTaskAugmentedFields(["description"])
 
       destroyEditor()
 
@@ -406,3 +406,4 @@ APP.executeAfterAppLibCode ->
 
   Template.task_pane_item_details_description.onDestroyed ->
     destroyEditor() # destroyEditor takes care of saving
+    @task_descrioption_sub_handle.stop()
