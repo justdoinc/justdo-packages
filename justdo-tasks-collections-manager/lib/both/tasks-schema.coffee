@@ -17,6 +17,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         "p:dp:is_project",
         "p:dp:is_archived_project",
         "priv:jdt:running_since",
+        "priv:favorite",
         "p:checklist:is_checklist",
         "p:checklist:is_checked",
         "p:checklist:total_count",
@@ -779,6 +780,13 @@ _.extend JustdoTasksCollectionsManager.prototype,
               return @unset()
 
           return # Keep this return to return undefined (as required by autoValue)
+
+      "priv:favorite":
+        label: "Favorite"
+
+        type: Date
+
+        optional: true
 
     # We use this to debug multi filters at once behavior - don't remove
     #

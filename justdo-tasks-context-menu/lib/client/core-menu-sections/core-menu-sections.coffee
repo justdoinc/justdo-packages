@@ -46,16 +46,42 @@ _.extend JustdoTasksContextMenu.prototype,
     @registerSectionItem "main", "add-to-favorites",
       position: 250
       data:
-        label: "Add to Favorites"
+        label: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          if not (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "priv:favorite": 1}}))?
+            # This should never happen
+            return ""
+
+          if task_doc["priv:favorite"]?
+            return "Remove from favorites"
+          else
+            return "Add to favorites"
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          APP.modules.project_page.performOp("addToFavorites")
+          if not (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "priv:favorite": 1}}))?
+            # This should never happen
+            return
+
+          if task_doc["priv:favorite"]?
+            APP.modules.project_page.performOp("removeFromFavorites")
+          else
+            APP.modules.project_page.performOp("addToFavorites")
 
           return
         icon_type: "feather"
         icon_val: "star"
 
-      listingCondition: ->
-        return true
+      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        if not (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "priv:favorite": 1}}))?
+          # This should never happen
+          return
+
+        if task_doc["priv:favorite"]?
+          unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("removeFromFavorites")
+        else
+          unfulfilled_op_req = APP.modules.project_page.getUnfulfilledOpReq("addToFavorites")
+
+        delete unfulfilled_op_req.ops_locked # We ignore that lock to avoid flickering when locking ops are performed from the contextmenu
+
+        return _.isEmpty(unfulfilled_op_req)
 
     @registerSectionItem "main", "remove-task",
       position: 300

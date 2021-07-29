@@ -171,6 +171,25 @@ APP.executeAfterAppLibCode ->
   module.setNullaryOperation "addToFavorites",
     human_description: "Add to Favorites"
     op: ->
-      console.log "Add Task to Favorites"
-    prereq: ->
+      active_item_id = module.activeItemId()
+
+      JD.collections.Tasks.update(active_item_id, {$set: {"priv:favorite": new Date(TimeSync.getServerTime())}})
+
       return
+    prereq: ->
+      gc = gridControl()
+
+      return gc._opreqActivePathIsCollectionItem(gc._opreqGridReady())
+
+  module.setNullaryOperation "removeFromFavorites",
+    human_description: "Remove from Favorites"
+    op: ->
+      active_item_id = module.activeItemId()
+
+      JD.collections.Tasks.update(active_item_id, {$set: {"priv:favorite": null}})
+
+      return
+    prereq: ->
+      gc = gridControl()
+
+      return gc._opreqActivePathIsCollectionItem(gc._opreqGridReady())
