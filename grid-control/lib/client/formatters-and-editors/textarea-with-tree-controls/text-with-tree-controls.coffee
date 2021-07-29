@@ -385,16 +385,23 @@ GridControl.installFormatter "textWithTreeControls",
       index_left = current_left_pos
 
       tree_control += """
-          <span class="label label-primary grid-tree-control-task-id slick-prevent-edit cell-handle"
-                 style="left: #{index_left}px;
-                        width: #{index_width}px;" jd-tt="task-info?id=#{doc._id}">
-            #{index}
-
-            <div class="grid-tree-control-task-favorite">
-              <svg><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
-            </div>
-          </span>
+        <span class="label label-primary grid-tree-control-task-id slick-prevent-edit cell-handle"
+               style="left: #{index_left}px;
+                      width: #{index_width}px;" jd-tt="task-info?id=#{doc._id}">
+          #{index}
       """
+
+      if doc["priv:favorite"]?
+        tree_control += """
+          <div class="grid-tree-control-task-favorite">
+            <svg><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
+          </div>
+        """
+
+      tree_control += """
+        </span>
+      """
+
 
       current_left_pos += index_outer_width + index_margin_right
 
