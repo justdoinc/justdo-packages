@@ -62,7 +62,7 @@ _.extend Projects.prototype,
       getMembersDocs: (get_project_members_ids_options, get_users_docs_by_ids_options) ->
         members_ids = @getMembersIds(get_project_members_ids_options)
 
-        get_users_docs_by_ids_options = _.extend {user_fields_reactivity: false, missing_users_ractivity: true, ret_type: "array", get_docs_by_reference: true}, get_users_docs_by_ids_options
+        get_users_docs_by_ids_options = _.extend {user_fields_reactivity: false, missing_users_reactivity: true, ret_type: "array", get_docs_by_reference: true}, get_users_docs_by_ids_options
 
         members_docs = JustdoHelpers.getUsersDocsByIds(members_ids, get_users_docs_by_ids_options)
 
