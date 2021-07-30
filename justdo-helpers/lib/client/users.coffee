@@ -24,13 +24,13 @@ _.extend JustdoHelpers,
     if options.user_fields_reactivity and options?.get_docs_by_reference
       throw new Error "If the options.user_fields_reactivity is set to true the options.get_docs_by_reference can't be set to true"
 
-    if not options.missing_users_ractivity and options.user_fields_reactivity
-      throw new Error "If the options.missing_users_ractivity is set to false the options.user_fields_reactivity can't be true"
+    if not options.missing_users_reactivity and options.user_fields_reactivity
+      throw new Error "If the options.missing_users_reactivity is set to false the options.user_fields_reactivity can't be true"
 
     if not options.user_fields_reactivity
       [ret, missing_ids] = JustdoHelpers.nonReactiveFullDocFindById(Meteor.users, users_ids, {limit: limit, ret_type: options.ret_type, break_if_consecutive_missing_ids_count: break_if_consecutive_missing_ids_count, get_docs_by_reference: options.get_docs_by_reference})
 
-      if options.missing_users_ractivity and not _.isEmpty(missing_ids)
+      if options.missing_users_reactivity and not _.isEmpty(missing_ids)
         APP.projects.addRequiredUsers(missing_ids)
 
         JustdoHelpers.invalidateOnceIdsBecomeExist(Meteor.users, missing_ids)
@@ -105,7 +105,7 @@ _.extend JustdoHelpers,
 
     default_options =
       user_fields_reactivity: false # The default is non-reactive! Changing to reactive will harm performance significantly
-      missing_users_ractivity: true
+      missing_users_reactivity: true
       ret_type: "array" # can be "array" or "object"
       get_docs_by_reference: false
       find_options: {}
@@ -118,7 +118,7 @@ _.extend JustdoHelpers,
     return JustdoHelpers.getUsersDocsByIds(user_id, options)
 
   filterUsersIdsArray: (user_ids, niddle, filter_options) ->
-    user_docs = @getUsersDocsByIds user_ids, {user_fields_reactivity: false, missing_users_ractivity: true, ret_type: "array", get_docs_by_reference: true}
+    user_docs = @getUsersDocsByIds user_ids, {user_fields_reactivity: false, missing_users_reactivity: true, ret_type: "array", get_docs_by_reference: true}
 
     return @filterUsersDocsArray user_docs, niddle, filter_options
 
@@ -129,6 +129,6 @@ _.extend JustdoHelpers,
     return JustdoHelpers.getUsersDocsByIds(members_users_ids, options)
 
   getFilteredUsersDocsFromProjectMembersArray: (project_members_array, niddle, filter_options) ->
-    user_docs = @getUsersDocsFromProjectMembersArray project_members_array, {user_fields_reactivity: false, missing_users_ractivity: true, ret_type: "array", get_docs_by_reference: true}
+    user_docs = @getUsersDocsFromProjectMembersArray project_members_array, {user_fields_reactivity: false, missing_users_reactivity: true, ret_type: "array", get_docs_by_reference: true}
 
     return @filterUsersDocsArray user_docs, niddle, filter_options
