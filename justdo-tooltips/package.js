@@ -77,9 +77,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/core-tooltips/task-info/task-info.sass", client);
   api.addFiles("lib/client/core-tooltips/task-info/task-info.coffee", client);
 
-  api.addFiles("lib/client/core-tooltips/user-avatar-info/user-avatar-info.html", client);
-  api.addFiles("lib/client/core-tooltips/user-avatar-info/user-avatar-info.sass", client);
-  api.addFiles("lib/client/core-tooltips/user-avatar-info/user-avatar-info.coffee", client);
+  api.addFiles("lib/client/core-tooltips/user-info/user-info.html", client);
+  api.addFiles("lib/client/core-tooltips/user-info/user-info.sass", client);
+  api.addFiles("lib/client/core-tooltips/user-info/user-info.coffee", client);
 
   api.export("JustdoTooltips", client);
 });

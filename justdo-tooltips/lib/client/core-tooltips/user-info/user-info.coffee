@@ -1,8 +1,8 @@
 APP.justdo_tooltips.registerTooltip
-  id: "user-avatar-info"
-  template: "user_avatar_info_tooltip"
+  id: "user-info"
+  template: "user_info_tooltip"
 
-Template.user_avatar_info_tooltip.helpers
+Template.user_info_tooltip.helpers
   userName: ->
 
     return JustdoHelpers.displayName(@options.id)
@@ -22,7 +22,7 @@ Template.user_avatar_info_tooltip.helpers
     if user?
       return user.emails[0].address
 
-Template.user_avatar_info_tooltip.events
+Template.user_info_tooltip.events
   "click .send-message": ->
     Template.instance().data.tooltip_controller.closeTooltip()
 
