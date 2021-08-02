@@ -1,22 +1,16 @@
 .task-pane-header
   overflow: hidden
   background-color: #f8f8f8
-  font-family: Verdana, Arial, sans-serif
-
   user-select: none
-
   color: #555
   font-size: 13px
-
   position: relative
 
 .task-pane-header-task-priority
   width: 100%
-
   top: 0
   left: 0
   right: 0
-
   height: 3px
 
 .task-pane-header-title
@@ -43,7 +37,6 @@
     .fa
       color: black
 
-
   &:hover
     .copy-to-clipboard
       display: inline-block
@@ -63,36 +56,24 @@
       display: inline-block
 
 $tab-height: 29px
+
 .task-pane-tab
+  display: flex
+  align-items: center
   float: left
-
-  font-weight: 600
-
-  text-transform: uppercase
-  font-size: 12px
-  font-family: "Lato", sans-serif
-
   line-height: $tab-height
   height: $tab-height
-
-  text-align: center
   cursor: pointer
-
-  padding: 0 14px
+  padding: 0 12px
+  border-bottom: 2px solid rgba(255, 255, 255, 0%)
 
   &:hover
     border-bottom: 2px solid #DDD
 
-  &.active
-    color: #000
-    border-bottom: 2px solid #19649b
-
 .task-pane-settings-btn
   float: right
-
   cursor: pointer
   padding: 0 5px
-
   line-height: $tab-height
 
   .no-tabs &
