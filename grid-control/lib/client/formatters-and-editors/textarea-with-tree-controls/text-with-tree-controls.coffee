@@ -192,6 +192,8 @@ GridControl.installFormatter "textWithTreeControls",
     else if expand_state == 0
       state = "_collapse" # .collapse is part of the bs4 framework, hence, we can't use the same name.
       svg_icon_name = "plus"
+    else if expand_state == -1
+      svg_icon_name = "minus"
 
     if not value?
       value = ""
