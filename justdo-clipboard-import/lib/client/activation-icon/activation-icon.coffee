@@ -10,7 +10,8 @@ base_supported_fields_ids = [
 ]
 
 fallback_date_format = "YYYY-MM-DD"
-custom_allowed_dates_formats = ["DD MMMM YYYY", "Others"]
+custom_allowed_dates_formats = ["MMM DD YYYY" ,"DD MMMM YYYY", "Others"]
+
 columns_definition_local_storage_key = "jci_columns_definition"
 row_index_local_storage_key = "jci_row_index"
 
