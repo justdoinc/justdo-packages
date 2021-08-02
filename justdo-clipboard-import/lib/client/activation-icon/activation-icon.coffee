@@ -216,6 +216,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             if not moment_date.isValid()
               JustdoSnackbar.show
                 text: "Invalid date format in line #{line_number}. Import aborted."
+              modal_data.date_fields_date_format.set null
               return false
             task[field_id] = moment_date.format("YYYY-MM-DD")
 
