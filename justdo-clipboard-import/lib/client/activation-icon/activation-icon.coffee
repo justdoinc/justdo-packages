@@ -1,13 +1,18 @@
-# The order below will also serve as the ordering in the dropdown
-base_supported_fields_ids = [
+# The order below will also serve as the ordering in the dropdown, sorted alphabetically
+# The location of non_sorted_field_ids are fixed to top, the rest is sorted
+non_sorted_field_ids = [
   "title"
-  "status"
   "start_date"
   "end_date"
   "due_date"
+]
+base_supported_fields_ids = [
+  "status"
   "priority"
   "state"
-]
+].sort (a, b) -> return a.localeCompare b # localeCompare is used instead simply sort() to ignore case differences
+
+base_supported_fields_ids = non_sorted_field_ids.concat base_supported_fields_ids
 
 fallback_date_format = "YYYY-MM-DD"
 custom_allowed_dates_formats = ["MMM DD YYYY" ,"DD MMMM YYYY", "Others"]
