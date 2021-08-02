@@ -498,7 +498,7 @@ Template.justdo_clipboard_import_activation_icon.events
               options = _.map(getAllowedDateFormats().concat(custom_allowed_dates_formats), (format) -> {text: format, value: format}).concat()
 
               bootbox.prompt
-                title: "Please select dates format"
+                title: "Please select source date format"
                 animate: true
                 className: "bootbox-new-design"
                 inputType: "select"
