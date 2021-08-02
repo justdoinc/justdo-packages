@@ -38,9 +38,9 @@ getAvailableFieldTypes = ->
 
   supported_fields_ids = base_supported_fields_ids.slice()
   all_fields = gc.getSchemaExtendedWithCustomFields()
-  
+
   custom_fields_supported_formatters = ["defaultFormatter", "unicodeDateFormatter", "keyValueFormatter", "calculatedFieldFormatter", JustdoPlanningUtilities.dependencies_formatter_id]
-  
+
   for field_id, field of all_fields
     if field.custom_field and field.grid_editable_column and field.grid_column_formatter in custom_fields_supported_formatters
       supported_fields_ids.push field_id
@@ -75,7 +75,7 @@ getSelectedColumnsDefinitions = ->
 
   $(".justdo-clipboard-import-input-selector button[value]").each ->
     field_id = $(@).val()
-    
+
     if field_id_existance[field_id]? and field_id != "clipboard-import-no-import"
       duplicated_field_id = field_id
     else
@@ -107,7 +107,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   lines_to_add = {} # line_index:
                     #   task: task
                     #   indent_level: indent level
-  
+
   row_index = 0
 
   temp_import_ids = []
@@ -119,7 +119,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     if col_def._id == "clipboard-import-index"
       index_column = i
       break
-  
+
   for row in cp_data
     task = {}
     line_number += 1
@@ -232,13 +232,13 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
           duration: 15000
 
         return false
-      
+
       else if task.start_date? and not task.end_date?
         task.end_date = task.start_date
-      
+
       else if task.end_date? and not task.start_date?
         task.start_date = task.end_date
-    
+
     row_index += 1
 
   if not APP.justdo_clipboard_import.middlewares_queue_sync.run("pre-import", lines_to_add)
@@ -253,14 +253,14 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     for line_index, line of lines_to_add
       if line.indent_level == indent_level_to_import - 1
         parent_id = line.task_id
-        
+
       if line.indent_level == indent_level_to_import
         if not batches[parent_id]?
           batches[parent_id] = []
         batches[parent_id].push line.task
 
     async_calls = []
-    
+
     for parent_id, batch of batches
       do (parent_id, batch) ->
         async_calls.push (callback) ->
@@ -285,7 +285,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
           return
         return
-        
+
     async.parallelLimit async_calls, 5, (err, results) ->
       if not err?
         result_num = 0
@@ -293,17 +293,17 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         for batch_result in results
           for item in batch_result
             all_results.push item[0]
-            
+
         for index, line of lines_to_add
           if line.indent_level == indent_level_to_import
             line.task_id = all_results[result_num]
             result_num += 1
-      
+
       mapSeriesCb(err, results)
       return
-    
+
     return
-  
+
   import_idx_to_task_id = (import_idx) ->
     if not import_idx_to_temp_import_id_map[import_idx]?
       return null
@@ -328,7 +328,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       if not (deps = APP.justdo_planning_utilities.parseDependenciesStr deps_str, project_id, import_idx_to_task_id)?
         line_number = temp_import_id.split("_L")[1]
         throw new Meteor.Error "invalid dependency", "Invalid dependency(#{deps_str}) found in line #{line_number}"
-      
+
       APP.justdo_planning_utilities.dependent_tasks_update_hook_enabled = false
       APP.collections.Tasks.update temp_import_id_task_id(temp_import_id),
         $set:
@@ -346,16 +346,16 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     # task_paths_added is reversed as we need to remove the tasks in the deepest level first
 
     paths_to_remove = new Set()
-   
+
     for path_added in task_paths_added
       if paths_to_remove.has path_added
         continue
-      
+
       paths_to_remove.add path_added
 
       APP.modules.project_page.mainGridControl()._grid_data.each path_added, (section, item_type, item_obj, path) ->
         paths_to_remove.add path
-    
+
     paths_to_remove = Array.from(paths_to_remove).reverse()
 
     APP.justdo_clipboard_import.middlewares_queue_sync.run "pre-undo-import", paths_to_remove
@@ -370,7 +370,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             duration: 15000
 
       return
-    
+
     return
 
   async.mapSeries [1..max_indent], (n, callback) ->
@@ -380,7 +380,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       JustdoSnackbar.show
         text: "#{err?.reason or "Incorrect dependenc(ies) found."}. Import aborted."
         duration: 15000
-      
+
       undoImport()
 
       return false
@@ -392,24 +392,29 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       JustdoSnackbar.show
         text: "#{err.reason}. Import aborted."
         duration: 15000
-      
+
       undoImport()
 
       return false
 
     JustdoSnackbar.show
       text: "#{task_paths_added.length} task(s) imported."
-      duration: 10000
+      duration: 1000 * 60 * 2 # 2 mins
       actionText: "Undo"
+      showSecondButton: true
+      secondButtonText: "Dismiss"
       onActionClick: =>
         undoImport()
         JustdoSnackbar.close()
         return # end of onActionClick
+      onSecondButtonClick: =>
+        JustdoSnackbar.close()
+        return # end of onSecondButtonClick
 
     return # end of mapSeries call back
- 
+
   return true
-  
+
 Template.justdo_clipboard_import_activation_icon.events
   "click .justdo-clipboard-import-activation": (e, tpl) ->
     # Check to see if there is a task selected
@@ -477,9 +482,9 @@ Template.justdo_clipboard_import_activation_icon.events
                 text: err.message
               $(".justdo-clipboard-import-main-button").prop "disabled", false
               return false
-            
+
             selected_columns_definitions = result
-            
+
             # Check that all columns are selected and return false if not the case
             if selected_columns_definitions.length < (number_of_columns)
               JustdoSnackbar.show
