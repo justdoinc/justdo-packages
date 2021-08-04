@@ -313,6 +313,15 @@ _.extend GridControlMux.prototype,
       active: false
       removable: options.removable
       grid_control_container: null
+
+      getTabURI: ->
+        uri = tab_id
+
+        if (global_sections_state = @grid_control?._grid_data?._sections_state?.global)? and not _.isEmpty(global_sections_state)
+          uri += "?" + _.map(_.keys(global_sections_state).sort(), (key) -> encodeURIComponent(key) + "=" + encodeURIComponent(global_sections_state[key].get())).join("&")
+
+        return uri
+
       getTabTitle: =>
         if (tabTitleGenerator = options.tabTitleGenerator)?
           if _.isString tabTitleGenerator
