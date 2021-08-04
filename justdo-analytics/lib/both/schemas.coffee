@@ -188,6 +188,17 @@ ReceivedLogObjectSchema = new SimpleSchema
 
     max: 17
 
+ASIDObjectSchema = new SimpleSchema
+  # The following is not a full definition, it is partial for the definition required
+  # by justdo-user-active-position
+  SSID:
+    label: "Server Session ID"
+
+    type: String
+
+    min: 15
+    max: 30
+
 # Note: static binding
 
 JustdoAnalytics.schemas_consts =
@@ -204,3 +215,4 @@ JustdoAnalytics.schemas =
   LogsRegistrarActionsSchema: LogsRegistrarActionsSchema
   ConnectIdentificationObjectSchema: ConnectIdentificationObjectSchema
   ReceivedLogObjectSchema: ReceivedLogObjectSchema
+  ASIDObjectSchema: ASIDObjectSchema
