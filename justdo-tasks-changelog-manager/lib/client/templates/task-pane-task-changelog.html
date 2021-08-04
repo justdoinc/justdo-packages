@@ -27,7 +27,11 @@
     <div class="record d-flex py-2">
       <div class="image mr-2 mt-1">{{#with changingUser}}{{> justdo_avatar}}{{/with}}</div>
       <div class="content">
-        <div class="data text-body">{{formatedValue}}</div>
+        {{#if involvesAnotherTask}}
+          <div class="data text-body" jd-tt="task-info?id={{new_value}}&show-title=true">{{formatedValue}}</div>
+        {{else}}
+          <div class="data text-body">{{formatedValue}}</div>
+        {{/if}}
         <small class="date text-muted">{{userDateFormat when}}</small>
       </div>
     </div>

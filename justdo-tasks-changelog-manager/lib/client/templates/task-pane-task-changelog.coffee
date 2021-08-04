@@ -65,6 +65,10 @@ Template.task_pane_task_changelog_record.helpers
 
     return JustdoHelpers.ucFirst(@label)
 
+  involvesAnotherTask: ->
+    ops_involve_another_task = ["moved_to_task", "add_parent", "remove_parent"]
+    return ops_involve_another_task.includes @change_type
+
   formatedValue: -> APP.tasks_changelog_manager.getActivityMessage(@)
 
   filtered: ->
