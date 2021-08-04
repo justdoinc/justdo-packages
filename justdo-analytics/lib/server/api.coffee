@@ -321,6 +321,8 @@ _.extend JustdoAnalytics.prototype,
 
     return
 
+  getSSID: -> @_SSID
+
   isClientConnected: (connection=null) ->
     # We consider the client to be connected if @connect() was called
     # for the current connection, and resulted in the write of

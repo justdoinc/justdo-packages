@@ -43,4 +43,11 @@ APP.getEnv (env) ->
       logMongoRawConnectionOp: -> return
       JAReportClientSideError: -> return
 
+    if Meteor.isClient
+      APP.justdo_analytics.getClientStateValues = (cb) -> JustdoAnalytics.prototype.getClientStateValues(cb) # We make that facility available even when JD Analytics is disabled. Is in use by justdo-user-active-position which is enabled even when analytics is disabled.
+
+    if Meteor.isServer
+      APP.justdo_analytics._SSID = JustdoAnalytics.prototype._generateServerSessionId()
+      APP.justdo_analytics.getSSID = JustdoAnalytics.prototype.getSSID
+
   return
