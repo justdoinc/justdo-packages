@@ -30,38 +30,35 @@ Template.task_pane_task_changelog.helpers
         for newer_time in newer_logs_time
           if moment(newer_time).diff(moment(log.when), "minute") < 2
             return
-      
+
       logs.push log
-      
+
       if not logs_time[log_type_id]?
         logs_time[log_type_id] = []
-      
+
       logs_time[log_type_id].push log.when
-      
+
       return
-    
+
     return logs
 
   dataLoaded: -> current_handle?.ready()
 
-  filterForStatusChanges: ->
-    return filter_for_status_changes.get()
+  filterForStatusChanges: -> filter_for_status_changes.get()
 
 Template.task_pane_task_changelog.events
   "click .filter-toggle" : (e) ->
     filter_for_status_changes.set(not filter_for_status_changes.get())
 
-
 Template.task_pane_task_changelog_record.helpers
-  changingUser: ->
-    return APP.helpers.getUserDocById(@by, {user_fields_reactivity: false, missing_users_reactivity: true, get_docs_by_reference: true})
+  changingUser: -> APP.helpers.getUserDocById(@by, {user_fields_reactivity: false, missing_users_reactivity: true, get_docs_by_reference: true})
 
   formatedLabel: ->
-    if @change_type == 'moved_to_task' \
-        or @change_type == 'users_change' \
-        or @field == 'owner_id' \
-        or @change_type == 'created'
-      return ''
+    if @change_type == "moved_to_task" \
+        or @change_type == "users_change" \
+        or @field == "owner_id" \
+        or @change_type == "created"
+      return ""
 
     return JustdoHelpers.ucFirst(@label)
 
@@ -79,4 +76,3 @@ Template.task_pane_task_changelog_record.helpers
     if @field == "status"
       return false
     return true
-
