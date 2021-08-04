@@ -360,7 +360,7 @@ APP.executeAfterAppLibCode ->
     lock: -> isLocked(@_id)
 
   Template.task_pane_item_details_description.onCreated ->
-    @autorun ->
+    @autorun =>
       # On every path change, destroy the editor (destroyEditor, saves current state)
       project_page_module.activeItemPath()
 
