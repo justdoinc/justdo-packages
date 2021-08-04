@@ -354,14 +354,18 @@ _.extend GridControl.prototype,
 
       return
 
-    @_grid.onEditCell.subscribe =>
+    @_grid.onEditCell.subscribe (e, details) =>
       # lock grid data while editing the cell
       @_grid_data._lock()
 
+      @emit "edit-cell", {field: details.column.field, details, e}
+
       return true
 
-    @_grid.onCellEditorDestroy.subscribe =>
+    @_grid.onCellEditorDestroy.subscribe (e, details) =>
       @_grid_data?._release(true)
+
+      @emit "cell-editor-destroyed", {e, details}
 
       return true
 
