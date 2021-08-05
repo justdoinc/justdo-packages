@@ -12,9 +12,6 @@ base_supported_fields_ids = [
 fallback_date_format = "YYYY-MM-DD"
 custom_allowed_dates_formats = ["MMM DD YYYY" ,"DD MMMM YYYY", "Others"]
 
-columns_definition_local_storage_key = "jci_columns_definition"
-row_index_local_storage_key = "jci_row_index"
-
 getAllowedDateFormats = ->
   return Meteor.users.simpleSchema()?.schema()?["profile.date_format"]?.allowedValues or [fallback_date_format]
 
@@ -68,7 +65,6 @@ getSelectedColumnsDefinitions = ->
   available_field_types = getAvailableFieldTypes()
 
   selected_columns_definitions = []
-  selected_columns_definitions_keys = [] # For saving selected fields in Amplify
 
   field_id_existance = {}
   duplicated_field_id = null
@@ -91,8 +87,6 @@ getSelectedColumnsDefinitions = ->
       err:
         message: "More than 1 column is selected as #{if col_def? then col_def.label else duplicated_field_id}"
     return ret_val
-
-  amplify.store columns_definition_local_storage_key, selected_columns_definitions_keys
 
   return selected_columns_definitions
 
@@ -430,8 +424,6 @@ Template.justdo_clipboard_import_activation_icon.events
       rows_to_skip_set: new ReactiveVar(new Set())
       getAvailableFieldTypes: getAvailableFieldTypes
       date_fields_date_format: new ReactiveVar(null)
-      columns_definition_local_storage_key: columns_definition_local_storage_key
-      row_index_local_storage_key: row_index_local_storage_key
 
     message_template =
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)

@@ -78,11 +78,6 @@ Template.justdo_clipboard_import_input.onCreated ->
   self = @
 
   @getAvailableFieldTypes = @data.getAvailableFieldTypes
-  # Special type of fields that isn't supported in grid and doesn't require import
-  @special_fields_map =
-    "clipboard-import-no-import": "-- skip column --"
-    "task-indent-level": "Indent Level"
-    "clipboard-import-index": "Index"
 
   Meteor.defer ->
     self.data.dialog_state.set "wait_for_paste"
@@ -151,10 +146,14 @@ Template.justdo_clipboard_import_input.events
 
     field_id = $(e.currentTarget)[0].getAttribute("field-id")
 
-    # Look for field_label in special_fields_map first
-    field_label = tpl.special_fields_map[field_id]
-    if not field_label?
-      field_label = tpl.getAvailableFieldTypes()?[0]?[field_id]?.label
+    if field_id == "clipboard-import-no-import"
+      field_label = "-- skip column --"
+    else if field_id == "task-indent-level"
+      field_label = "Indent Level"
+    else if field_id == "clipboard-import-index"
+      field_label = "Index"
+    else
+      field_label = Template.instance().getAvailableFieldTypes()?[0]?[field_id]?.label
 
     $(e.currentTarget).closest(".justdo-clipboard-import-input-selector").find("button")
       .text(field_label)
@@ -168,31 +167,13 @@ Template.justdo_clipboard_import_input.events
     return
 
   "change .import-row-checkbox": (e, tpl) ->
-    rows_to_skip = tpl.data.rows_to_skip_set.get()
+    rows_to_skip = Template.instance().data.rows_to_skip_set.get()
 
     if e.target.checked
       rows_to_skip.delete e.target.getAttribute("row-index")
     else
       rows_to_skip.add e.target.getAttribute("row-index")
 
-    tpl.data.rows_to_skip_set.set rows_to_skip
-
-    # Convert rows_to_skip_set to array before saving to Amplify
-    amplify.store tpl.data.row_index_local_storage_key, Array.from(tpl.data.rows_to_skip_set.get())
-
-    return
-
-  "click .justdo-clipboard-import-use-saved-def": (e, tpl) ->
-    e.preventDefault()
-    $(e.currentTarget).closest(".justdo-clipboard-import-use-saved-def").hide()
-
-    stored_fields_definitions = amplify.store tpl.data.columns_definition_local_storage_key
-    if stored_fields_definitions?
-      $(".justdo-clipboard-import-input-selector").each (i) ->
-        $(this).find("a[field-id=#{stored_fields_definitions[i]}]").click()
-
-    stored_row_indexes = amplify.store tpl.data.row_index_local_storage_key
-    for row_index in stored_row_indexes
-      $(".import-row-checkbox[row-index=#{row_index}]").click()
+    Template.instance().data.rows_to_skip_set.set rows_to_skip
 
     return

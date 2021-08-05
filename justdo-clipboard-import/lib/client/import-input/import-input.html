@@ -1,11 +1,8 @@
 <template name="justdo_clipboard_import_input">
   {{#if rows}}{{!-- Only if there are rows to present print the following--}}
     <div class="justdo-clipboard-import-table-container">
-      <button class="justdo-clipboard-import-use-saved-def btn btn-sm btn-outline-secondary float-right" type="button">
-        Use the same config as last time
-      </button>
-
       <table class="justdo-clipboard-import-table table table-sm">
+
         <tr>
           <td class="bg-light import-column-header">
             Import
@@ -46,9 +43,11 @@
       </table>
     </div>
   {{else}}
-    <textarea class="form-control justdo-clipboard-import-paste-target"
-              placeholder="Copy content from your spreadsheet and paste it here to create tasks.
+    <div>
+      <textarea class="form-control justdo-clipboard-import-paste-target"
+                placeholder="Copy content from your spreadsheet and paste it here to create tasks.
 The first column is regarded as the Subject."></textarea>
+    </div>
     <small><i>Limited to {{importLimit}} tasks</i></small>
     <div class="justdo-clipboard-import-intro text-center mt-3 position-relative">
       <a href="https://support.justdo.com/hc/en-us/articles/360015993900-How-to-Import-Tasks-from-a-Spreadsheet" target="_blank">How Does it Work?</a>
