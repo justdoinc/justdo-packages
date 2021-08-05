@@ -30,6 +30,6 @@
 
 <template name="task_pane_tab">
   <div class="task-pane-tab {{#if $eq toolbar_selected_section_id id}}active{{/if}}">
-    {{options.title}} {{{options.titleInfo}}}
+    {{options.title}} {{{xssGuard options.titleInfo}}}
   </div>
 </template>
