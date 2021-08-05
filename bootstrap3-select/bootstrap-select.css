@@ -241,6 +241,9 @@ select.selectpicker {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
+.bootstrap-select .dropdown-menu > .inner {
+  -ms-overflow-style: none;
+}
 .bootstrap-select .dropdown-menu > .inner:focus {
   outline: none !important;
 }
