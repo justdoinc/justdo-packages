@@ -306,7 +306,7 @@ _.extend JustdoTooltips.prototype,
       if not self.isEnabled()
         return
 
-      $target_container = $(e.target)
+      $target_container = $(e.target).closest("[jd-tt]")
 
       jd_tt_attr = $target_container.attr("jd-tt")
 
