@@ -129,7 +129,13 @@ _.extend GridControl.prototype,
       $(".column-filter-dropdown .clear", @$filter_dropdown).click =>
         @clearColumnFilter(column_settings.field)
 
-      @_current_filter_controller.emit "insterted-to-dom"
+      Meteor.defer =>
+        # No clue why, but focusing on the same tick as the init tick messes up
+        # with the positioning of the dropdown. (As of 2021-07-21 in Chrome). Daniel C.
+
+        @_current_filter_controller.emit "insterted-to-dom"
+
+        return
 
       return
 
@@ -148,6 +154,7 @@ _.extend GridControl.prototype,
         my: "left top"
         at: "left bottom"
         collision: "fit fit"
+
         using: (new_position, details) =>
           target = details.target
           element = details.element
@@ -164,3 +171,7 @@ _.extend GridControl.prototype,
           element.element.css
             top: new_position.top
             left: new_position.left
+
+          return
+
+    return

@@ -11,13 +11,7 @@ WhiteListFilterControllerConstructor = (context) ->
   GridControl.FilterController.call this
 
   @once "insterted-to-dom", =>
-    Meteor.defer =>
-      # No clue why, but focusing on the same tick as the init tick messes up
-      # with the positioning of the dropdown. (As of 2021-07-21 in Chrome). Daniel C.
-
-      @controller_search.focus()
-
-      return
+    @controller_search.focus()
 
     return
 
@@ -31,7 +25,7 @@ WhiteListFilterControllerConstructor = (context) ->
   
   @controller = $("""<div style="max-height: 292px; overflow: scroll"></div>""")
 
-  @controller_search = $("""<input type="text" style="width: 85%">""")
+  @controller_search = $("""<input type="text" style="width: 85%" placeholder="Filter Options">""")
 
   @controller_ul = $("""<ul class="fa-ul whitelist-alike-filter-dropdown-ul" />""")
 
