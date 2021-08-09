@@ -346,9 +346,10 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         continue
 
       paths_to_remove.add path_added
-
-      APP.modules.project_page.mainGridControl()._grid_data.each path_added, (section, item_type, item_obj, path) ->
-        paths_to_remove.add path
+      
+      # By TY -  The next 2 lines of code looks redundant to me and causes #11141, not sure if it is here for another reason, thus, commenting it out now
+      # APP.modules.project_page.mainGridControl()._grid_data.each path_added, (section, item_type, item_obj, path) ->
+      #   paths_to_remove.add path
 
     paths_to_remove = Array.from(paths_to_remove).reverse()
 
