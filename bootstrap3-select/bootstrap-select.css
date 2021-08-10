@@ -243,6 +243,7 @@ select.selectpicker {
 }
 .bootstrap-select .dropdown-menu > .inner {
   -ms-overflow-style: none;
+  padding: 0 8px;
 }
 .bootstrap-select .dropdown-menu > .inner:focus {
   outline: none !important;
@@ -428,7 +429,7 @@ select.selectpicker {
   width: 100%;
 }
 .bs-searchbox {
-  margin-bottom: 8px;
+  margin: 0 8px 8px 8px;
 }
 .bs-searchbox + .bs-actionsbox {
   padding: 0 8px 4px;
