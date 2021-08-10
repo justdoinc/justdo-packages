@@ -83,20 +83,24 @@
     </div>
   {{/if}}
 
-  {{#if $neq taskHasOtherMembers "loading"}}
-    {{#if hasPermissionToEditMemebers}}
-      {{#if $neq getState "pre-reject"}}
-        {{!-- Only for the pre-reject state we don't show the membership management area--}}
-        <div class="manage-members">
+  <div class="manage-members">
+    {{#if $neq taskHasOtherMembers "loading"}}
+      {{#if hasPermissionToEditMemebers}}
+        {{#if $neq getState "pre-reject"}}
+          {{!-- Only for the pre-reject state we don't show the membership management area--}}
           {{#if taskHasOtherMembers}}
             Edit Task Members
           {{else}}
             Share Task
           {{/if}}
-        </div>
+        {{/if}}
       {{/if}}
+    {{else}}
+      <div class="manage-members-loading">
+        Loading...
+      </div>
     {{/if}}
-  {{/if}}
+  </div>
 </template>
 
 <template name="item_owners_management_reject_transfer_request_input">
