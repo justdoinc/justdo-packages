@@ -16,7 +16,7 @@ _.extend GridControl.prototype,
   _initFiltersDropdown: ->
     filter_dropdown_html = """
       <div class="dropdown column-filter-dropdown-container">
-        <div class="dropdown-menu column-filter-dropdown shadow-lg"></div>
+        <div class="dropdown-menu column-filter-dropdown border-0 shadow-lg"></div>
       </div>
     """
 

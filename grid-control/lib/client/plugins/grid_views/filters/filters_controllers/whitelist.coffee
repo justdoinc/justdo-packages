@@ -22,15 +22,18 @@ WhiteListFilterControllerConstructor = (context) ->
   @filter_change_listener = => @refresh_state()
 
   @grid_control.on "filter-change", @filter_change_listener
-  
-  @controller = $("""<div style="max-height: 292px; overflow: scroll"></div>""")
 
-  @controller_search = $("""<input type="text" style="width: 85%" placeholder="Filter Options">""")
+  @controller = $("""<div></div>""")
+
+  @controller_search = $("""<input type="text" class="form-control form-control-sm" style="width: auto;margin: 0.5rem;" placeholder="Filter Options">""")
+
+  @controller_ul_wrapper = $("""<div class="filter-dropdown-list-wrapper">""")
 
   @controller_ul = $("""<ul class="fa-ul whitelist-alike-filter-dropdown-ul" />""")
 
   @controller.append(@controller_search)
-  @controller.append(@controller_ul)
+  @controller.append(@controller_ul_wrapper)
+  @controller_ul_wrapper.append(@controller_ul)
 
   populateOptionsList = =>
     search_text = @controller_search.val().toLowerCase()
