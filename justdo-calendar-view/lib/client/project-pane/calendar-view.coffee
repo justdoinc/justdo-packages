@@ -1140,7 +1140,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
               dates_workload[date].number_of_tasks = 0
             dates_workload[date].number_of_tasks += 1
 
-            if row.task.load_percent?
+            if row.task.owner_id == self.data.user_id and row.task.load_percent?
               if not dates_workload[date].total_load_percent?
                 dates_workload[date].total_load_percent = 0
               dates_workload[date].total_load_percent += row.task.load_percent
