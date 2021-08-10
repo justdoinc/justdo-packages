@@ -36,19 +36,17 @@ OwnersFilterControllerConstructor = (context) ->
   # note, the reason why we seperate the ul for the dropdown-header is that
   # the vertical scroll of the members ul, when there are many members, go
   # over the x button that close the filter controller.
-  # (we might avoid this title at all, if we didn't have this issue) 
+  # (we might avoid this title at all, if we didn't have this issue)
   @controller.append("""
     <div class="owners-search">
-      <label class="search-icon">
-        <i class="fa fa-search"></i>
-      </label>
-
-      <input class="owners-search-input" placeholder="Filter Tasks Owners">
+      <input class="owners-search-input form-control form-control-sm" placeholder="Filter Tasks Owners">
     </div>
 
-    <ul class="owners-filter-controller-members"></ul>
+    <div class="owners-filter-controller-members-wrapper">
+      <ul class="owners-filter-controller-members"></ul>
+    </div>
 
-    <div class="no-results" style="display: none">No results found</div>
+    <div class="no-results text-muted" style="display: none">No results found</div>
   """)
 
   @members_computation = Tracker.autorun =>
