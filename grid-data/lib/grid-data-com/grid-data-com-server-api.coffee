@@ -137,6 +137,12 @@ _.extend GridDataCom.prototype,
     added_users = []
     removed_users = []
 
+    if (add_to_set_users = modifier.$addToSet?.users)?
+      if add_to_set_users?.$each?
+        add_to_set_users = add_to_set_users.$each
+
+      added_users = added_users.concat(add_to_set_users)
+
     if (pushed_users = modifier.$push?.users)?
       if pushed_users?.$each?
         pushed_users = pushed_users.$each
@@ -1005,7 +1011,12 @@ _.extend GridDataCom.prototype,
             $in: [String]
       }
       {
-        $push:
+        $push: # Kept for legacy code in mobiles. It is converted to addToSet later
+          users:
+            $each: [String]
+      }
+      {
+        $addToSet:
           users:
             $each: [String]
       }
@@ -1021,6 +1032,21 @@ _.extend GridDataCom.prototype,
       }
     ]
     check(modifier, Match.OneOf.apply(Match, allowed_modifiers))
+
+    # IMPORTANT
+    # IMPORTANT A lot of the code here is repeated under justdo-internal-packages/justdo-projects/lib/server/api.coffee ~line 940
+    # IMPORTANT
+    if modifier.$push?.users?
+      # We transition from $push to $addToSet to avoid duplicates (e.g. if A->B are tasks B has users a, b
+      # but A only user a if b is added to A $push will add it another time to B)
+      if modifier.$addToSet?.users?
+        throw @_error "operation-blocked", "bulkUpdate doesn't support both $push.users and $addToSet.users in the same call"
+
+      Meteor._ensure(modifier, "$addToSet")
+
+      modifier.$addToSet.users = modifier.$push.users
+
+      delete modifier.$push
 
     @_isPerformAsProvided(perform_as)
 
@@ -1047,7 +1073,7 @@ _.extend GridDataCom.prototype,
     added_users = []
     removed_users = []
 
-    if (pushed_users = modifier.$push?.users?.$each)?
+    if (pushed_users = modifier.$addToSet?.users?.$each)?
       added_users = added_users.concat(pushed_users)
 
     if (pulled_users = modifier.$pull?.users?.$in)?
