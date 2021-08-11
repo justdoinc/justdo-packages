@@ -117,6 +117,18 @@ Template.meetings_dialog_task_subtask.helpers
       return
 
 Template.meetings_dialog_task_subtask.events
+  "keydown .task-subject-box": (e, tpl) ->
+    if e.shiftKey == false and e.key == "Enter"
+      $(e.target).closest(".task-subject-box").blur()
+      return false
+    else if e.key == "Escape"
+      $input = $(e.target).closest(".task-subject-box")
+      $input.text tpl.task_obj.title
+      $input.blur()
+      return false
+
+    return
+
   "blur .task-subject-box": (e, tpl) ->
     if tpl.task_obj
       subject = $(e.target).text()
