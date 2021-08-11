@@ -185,18 +185,27 @@ _.extend MeetingsManager.prototype,
       , user_id
 
       meetings_selector = 
-        $or: [{
-          "tasks.task_id": task_id,
+        $and: [{
           $or: [
-            private:
-              $ne: true
+            "status":
+              $ne: "draft"
           ,
-            users: user_id
+            "organizer_id": user_id
           ]
+        },{
+          $or: [{
+            "tasks.task_id": task_id,
+            $or: [
+              private:
+                $ne: true
+            ,
+              users: user_id
+            ]
+          }]
         }]
 
       if task.created_from_meeting_id?
-        meetings_selector.$or.push {
+        meetings_selector.$and[1].$or.push {
           _id: task.created_from_meeting_id
         }
 
@@ -209,6 +218,20 @@ _.extend MeetingsManager.prototype,
           date: 1
           private: 1
 
+      hideFieldsForAddedTasks = (fields) ->
+        ret = {
+          _id: fields._id
+          meeting_id: fields.meeting_id
+        }
+
+        if fields.added_tasks
+          ret.added_tasks = []
+          for added_task in fields.added_tasks
+            if added_task.task_id == task_id
+              ret.added_tasks.push added_task
+
+        return  ret
+        
       meetings_tasks_obs = null
       meeting_ids = new Set()
 
