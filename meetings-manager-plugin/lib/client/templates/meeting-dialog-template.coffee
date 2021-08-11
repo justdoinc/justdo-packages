@@ -665,7 +665,7 @@ Template.meetings_meeting_dialog.events
 
             # Log an error using the logger
             APP.meetings_manager_plugin.logger.error err
-            showSnackbar(err.message)
+            showSnackbar(err.reason)
 
           else
             tmpl.form.set "seqId", ""
