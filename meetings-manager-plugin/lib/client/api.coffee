@@ -106,7 +106,7 @@ _.extend MeetingsManagerPlugin.prototype,
       APP.helpers.renderTemplateInNewNode(Template.meetings_settings, {})
 
     bootbox.dialog
-      title: "Meetings Settings"
+      title: "Meeting Settings"
       message: message_template.node
       animate: false
       className: "meetings-settings-dialog bootbox-new-design"
