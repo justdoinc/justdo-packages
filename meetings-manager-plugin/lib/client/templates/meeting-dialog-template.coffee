@@ -820,6 +820,13 @@ Template.meetings_meeting_dialog.events
         Session.set "active-conversation-id", false
     , 300
 
+  "keyup .meeting-time-input": (e, tpl) ->
+    if e.key == "Escape"
+      $(e.target).closest(".meeting-time-input").val ""
+      $(e.target).closest(".meeting-time-wrapper").dropdown("toggle")
+    
+    return
+
   "change .meeting-time-input": (e, tpl) ->
     $target = $(e.target).closest(".meeting-time-input")
     val = $target.val()
