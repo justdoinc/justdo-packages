@@ -57,7 +57,7 @@ Template.task_pane_meetings_manager_section.events
     # TODO: Loading indicator?
 
     meetings_manager.createMeeting
-      title: task.title or "(Title)"
+      title: task.title or "Untitled Meeting"
       project_id: task.project_id
       date: new Date()
       time: "" + new Date()
@@ -83,7 +83,7 @@ Template.task_pane_meetings_manager_section.events
     task = APP.collections.Tasks.findOne task_id
 
     meetings_manager.createMeeting
-      title: task.title or "(Title)"
+      title: task.title or "Untitled Meeting"
       project_id: task.project_id
       status: "draft"
     , (err, meeting_id) ->
