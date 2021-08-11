@@ -15,10 +15,10 @@ Template.meetings_dialog_task_subtask.helpers
       tpl.$(".task-due-date").datepicker
         dateFormat: "yy-mm-dd"
         onSelect: (date) ->
-          tmpl = Blaze.getView($(tpl)[0]).parentView._templateInstance
-          if tmpl.task_obj
-            if tmpl.data.may_edit
-              JD.collections.Tasks.update {_id: tmpl.task_obj._id}, {$set: {due_date: date}}
+          data = tpl.view.parentView.dataVar.get()
+          if data.task_id?
+            if data.may_edit
+              JD.collections.Tasks.update {_id: data.task_id}, {$set: {due_date: date}}
           return
 
     return
