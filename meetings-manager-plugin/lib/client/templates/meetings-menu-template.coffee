@@ -47,10 +47,17 @@ Template.meetings_meetings_menu.onRendered ->
     if not self.meetings_list_sub?
       self.meetings_list_sub = APP.meetings_manager_plugin.meetings_manager.subscribeToMeetingsList JD.activeJustdo({_id: 1})._id
     return
-
+  
+  $(".meetings-menu").on "hidden.bs.dropdown", ->
+    if self.meetings_list_sub?
+      self.meetings_list_sub.stop()
+      self.meetings_list_sub = null
+    return 
+  
 Template.meetings_meetings_menu.onDestroyed ->
   if @meetings_list_sub?
     @meetings_list_sub.stop()
+    @meetings_list_sub = null
   return
 
 Template.meetings_meetings_menu.helpers
