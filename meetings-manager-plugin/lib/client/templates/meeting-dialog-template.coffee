@@ -257,7 +257,16 @@ Template.meetings_meeting_dialog.onCreated ->
       _id: Template.currentData().meeting_id
 
     ret = "#{meeting.title} - Meeting Notes\n"
-    ret += "#{moment(meeting.date).format("YYYY-MM-DD")} #{meeting.time} #{meeting.location}\n"
+    if meeting.date?
+      ret += "#{moment(meeting.date).format("YYYY-MM-DD")}"
+    
+    if meeting.time?
+      ret += meeting.time
+
+    if meeting.location?
+      ret += meeting.location
+    
+    ret += "\n"
 
     ret += "Attendees:\n"
 
