@@ -803,7 +803,7 @@ Template.meetings_meeting_dialog.events
   "change .meeting-time-input": (e, tpl) ->
     $target = $(e.target).closest(".meeting-time-input")
     val = $target.val()
-    date = moment(val, "HH:mm").toDate()
+    date = moment(val, "HH:mmA").toDate()
     if not isNaN date.getTime()
       setMeetingTime tpl, date
 
