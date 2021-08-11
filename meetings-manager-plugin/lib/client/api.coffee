@@ -116,7 +116,7 @@ _.extend MeetingsManagerPlugin.prototype,
 
       buttons:
         submit:
-          label: "OK"
+          label: "Close"
           callback: =>
             return true
     
