@@ -149,16 +149,85 @@ _.extend MeetingsManager.prototype,
           status: 1
           date: 1
           private: 1
-      
-      meetings_obs = self._createSimpleObserver cursor, self.meetings._name, sub
 
-      meeting_ids = []
-      self.meetings.find meetings_selector,
-        fields:
-          _id: 1
-      .forEach (meeting) ->
-        meeting_ids.push meeting._id
+      meetings_tasks_obs = null
+      resetMeetingTasksObserver = () ->
+        meeting_ids_arr = Array.from meeting_ids
+        if meetings_tasks_obs?
+          meetings_tasks_obs.stop()
+
+        meeting_task = self.meetings_tasks.findOne
+          meeting_id:
+            $in: meeting_ids_arr
+          "added_tasks.task_id": task_id
+        ,
+          fields:
+            _id: 1
+            task_id: 1
+
+        agenda_task_id = meeting_task?.task_id or task_id
+
+        if self._isTaskMember agenda_task_id, user_id
+          cursor = self.meetings_tasks.find
+            meeting_id:
+              $in: meeting_ids_arr
+            task_id: agenda_task_id
+          meetings_tasks_obs = self._createSimpleObserver cursor, self.meetings_tasks._name, sub
+        else
+          meetings_tasks_obs = self.meetings_tasks.find
+            meeting_id:
+              $in: meeting_ids_arr
+            "added_tasks.task_id": task_id
+          ,
+            fields:
+              _id: 1
+              meeting_id: 1
+              task_id: 1
+              added_tasks: 1
+          .observeChanges
+            added: (id, fields) =>
+              fields = hideFieldsForAddedTasks fields
+              sub.added self.meetings_tasks._name, id, fields
+
+              return
+            
+            changed: (id, fields) =>
+              fields = hideFieldsForAddedTasks fields
+              sub.changed self.meetings_tasks._name, id, fields
+              
+              return
+            
+            removed: (id) =>
+              sub.removed self.meetings_tasks._name, id
+              return
+        
         return
+
+      meeting_ids = new Set()
+      is_init = true
+      meetings_obs = cursor.observeChanges
+        added: (id, fields) =>
+          sub.added self.meetings._name, id, fields
+          meeting_ids.add id
+          if not is_init
+            resetMeetingTasksObserver()
+          return
+        
+        changed: (id, fields) =>
+          sub.changed self.meetings._name, id, fields
+          
+          return
+        
+        removed: (id) =>
+          sub.removed self.meetings._name, id
+          meeting_ids.delete id
+          if not is_init
+            resetMeetingTasksObserver()
+
+          return
+
+      is_init = false
+      resetMeetingTasksObserver()
 
       # meetings_tasks collection
       hideFieldsForAddedTasks = (fields) ->
@@ -175,51 +244,6 @@ _.extend MeetingsManager.prototype,
 
         return  ret
       
-      meeting_task = self.meetings_tasks.findOne
-        meeting_id:
-          $in: meeting_ids
-        "added_tasks.task_id": task_id
-      ,
-        fields:
-          _id: 1
-          task_id: 1
-
-      agenda_task_id = meeting_task?.task_id or task_id
-
-      if self._isTaskMember agenda_task_id, user_id
-        cursor = self.meetings_tasks.find
-          meeting_id:
-            $in: meeting_ids
-          task_id: agenda_task_id
-        meetings_tasks_obs = self._createSimpleObserver cursor, self.meetings_tasks._name, sub
-      else
-        meetings_tasks_obs = self.meetings_tasks.find
-          meeting_id:
-            $in: meeting_ids
-          "added_tasks.task_id": task_id
-        ,
-          fields:
-            _id: 1
-            meeting_id: 1
-            task_id: 1
-            added_tasks: 1
-        .observeChanges
-          added: (id, fields) =>
-            fields = hideFieldsForAddedTasks fields
-            sub.added self.meetings_tasks._name, id, fields
-
-            return
-          
-          changed: (id, fields) =>
-            fields = hideFieldsForAddedTasks fields
-            sub.changed self.meetings_tasks._name, id, fields
-            
-            return
-          
-          removed: (id) =>
-            sub.removed self.meetings_tasks._name, id
-            return
-
       # meetings_private_notes
       cursor = self.meetings_private_notes.find
         task_id: task_id
