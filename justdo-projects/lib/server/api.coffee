@@ -236,7 +236,7 @@ _.extend Projects.prototype,
         }
       ]
       conf:
-        custom_features: ["justdo_private_follow_up"]
+        custom_features: ["justdo_private_follow_up", "justdo_planning_utilities", "justdo_projects_health", "justdo_inbound_emails", "justdo_calendar_view", "justdo_clipboard_import", "justdo-item-duplicate-control", "meetings_module"]
 
     project_id = @projects_collection.insert project
 
