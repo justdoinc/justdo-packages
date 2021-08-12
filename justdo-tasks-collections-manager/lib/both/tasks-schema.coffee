@@ -66,7 +66,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         blackbox: true
 
       status:
-        label: "Status / Notes"
+        label: "Notes"
 
         grid_editable_column: true
         grid_visible_column: true
