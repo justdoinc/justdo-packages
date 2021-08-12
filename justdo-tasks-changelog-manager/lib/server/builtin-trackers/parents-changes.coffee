@@ -18,6 +18,7 @@ _.extend PACK.builtin_trackers,
       log_obj =
         field: "parents"
         label: "Parents"
+        old_value: etc.current_parent_id
         new_value: new_parent_id
         change_type: "moved_to_task"
         task_id: etc.item._id

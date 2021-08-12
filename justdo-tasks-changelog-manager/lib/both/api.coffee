@@ -38,7 +38,9 @@ _.extend TasksChangelogManager.prototype,
       return ret_val + "."
 
     parentChangeMsg = (activity_obj, op) ->
-      if activity_obj.new_value == "0"
+      old_parent = APP.collections.Tasks.findOne(activity_obj.old_value, {fields: {seqId: 1}})
+
+      if activity_obj.new_value is "0"
         op_name = ""
         if op == "add"
           op_name = "added"
@@ -46,7 +48,10 @@ _.extend TasksChangelogManager.prototype,
           op_name = "removed"
         else if op == "move"
           op_name = "made"
-        return "#{performer_name} #{op_name} the task as a top level task."
+        ret_val = "#{performer_name} #{op_name} the task as a top level task"
+        if old_parent?
+          ret_val += " (Was under ##{old_parent.seqId})"
+        return ret_val + "."
 
       if (task = APP.collections.Tasks.findOne(activity_obj.new_value, {fields: {seqId: 1, title: 1}}))?
         op_name = ""
@@ -56,7 +61,15 @@ _.extend TasksChangelogManager.prototype,
           op_name = "removed"
         else if op == "move"
           op_name = "transferred"
-        ret_val = "#{performer_name} #{op_name} the task #{if op == "remove" then "from" else "to"} task ##{task.seqId}"
+          # If operation type is transfer and the original parent is accessible, return the "from-to" message
+          # No task title is added for both tasks since the message template is already roughly 50 chars long,
+          # which is approaching the current ellipsis limit 53 chars.
+          if old_parent?
+            ret_val = "#{performer_name} transferred the task from task ##{old_parent.seqId} to task ##{task.seqId}."
+            return ret_val
+
+        # Otherwise we only show seqId of the new parent, and add its title
+        ret_val = "#{performer_name} #{op_name} the task #{if op is "remove" then "from" else "to"} task ##{task.seqId}"
         if task.title?
           ret_val = "#{ret_val} #{task.title}"
         if ret_val.length > TasksChangelogManager.task_name_ellipsis_words

@@ -32,6 +32,11 @@ _.extend TasksChangelogManager.prototype,
             return @field('change_type').value
           return "update"
 
+      old_value:
+        label: "Old Value"
+        type: String
+        optional: true
+
       new_value:
         label: "New Value"
         type: String
