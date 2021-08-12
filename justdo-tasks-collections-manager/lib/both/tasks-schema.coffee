@@ -84,7 +84,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_column_editor: "TextareaEditor"
 
       status_by:
-        label: "Status / Notes By"
+        label: "Notes By"
 
         grid_editable_column: false
         grid_visible_column: false
@@ -116,7 +116,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
           return # Keep this return to return undefined (as required by autoValue)
 
       status_updated_at:
-        label: "Status / Notes Updated At"
+        label: "Notes Updated At"
 
         grid_editable_column: false
         grid_visible_column: false
