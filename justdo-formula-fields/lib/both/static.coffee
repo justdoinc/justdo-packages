@@ -1,6 +1,6 @@
 _.extend JustdoFormulaFields,
   project_custom_feature_id: "justdo_formula_fields" # Use underscores
-  plugin_human_readable_name: "JustDo Formulas"
+  plugin_human_readable_name: "Formulas"
   custom_field_type_id: "formula-field"
 
   # The following is relevant to all fields (including client side pseudo fields,

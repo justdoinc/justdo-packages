@@ -1,9 +1,9 @@
 share.store_db.plugins.push
   id: "justdo-formulas"
-  title: "JustDo Formulas"
+  title: "Formulas"
   short_description: "Calculated custom fields"
   full_description: """
-    <p>With JustDo Formulas you can set Custom Fields that will be calculated according to other task fields.</p>
+    <p>With Formulas you can set Custom Fields that will be calculated according to other task fields.</p>
 
     <p>For example, if you have a column named: Budget in which you set the budget given for a task, and a field called Execution in which you maintain the amount already executed out of the budget, with this plugin, you can set a new field that will maintain: {Execution} / {Budget}.</p>
 
