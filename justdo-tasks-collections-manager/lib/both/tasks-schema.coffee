@@ -100,20 +100,21 @@ _.extend JustdoTasksCollectionsManager.prototype,
         autoValue: ->
           # Automatically set the status_by to the logged
           # in user id, upon updates to the status.
-          status = @field("status")
-          if status.isSet
-            if status.value == null
-              return {$set: null}
-            else
-              if not @isSet
-                return @userId
-          else
-            # Don't allow changing the status_by if we don't update the status
-            if not @isFromTrustedCode
-              if @isSet
-                throw self._error "permission-denied", "Untrusted attempt to change status_by rejected"
 
-          return # Keep this return to return undefined (as required by autoValue)
+          if @isFromTrustedCode and @isSet
+            # We don't interfere with trust code attempt to set a specific value
+            return undefined
+          
+          status = @field("status")
+
+          if not status.isSet and @isSet
+            # Don't allow setting this value directly
+            throw self._error "permission-denied", "Untrusted attempt to change status_by rejected"
+
+          if status.isSet
+            return @userId
+
+          return undefined
 
       status_updated_at:
         label: "Notes Updated At"
@@ -137,8 +138,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
             if not @isFromTrustedCode
               if @isSet
                 throw self._error "permission-denied", "Untrusted attempt to change status_updated_at rejected"
-
-                # return @unset()
 
           return # Keep this return to return undefined (as required by autoValue)
 
