@@ -44,6 +44,8 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         grid_column_editor: "TextareaWithTreeControlsEditor"
 
+        grid_default_frozen_column: true
+
       description:
         label: "Description"
 
