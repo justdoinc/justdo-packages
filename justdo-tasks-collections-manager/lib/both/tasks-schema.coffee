@@ -75,6 +75,8 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_default_grid_view: true
         grid_default_width: 196
 
+        grid_dependencies_fields: ["status_by"]
+
         type: String
         optional: true
 
@@ -89,6 +91,11 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         type: String
         optional: true
+
+        grid_foreign_key_collection: -> Meteor.users
+        grid_foreign_key_collection_relevant_fields:
+          "profile.first_name": 1
+          "profile.last_name": 1
 
         autoValue: ->
           # Automatically set the status_by to the logged
