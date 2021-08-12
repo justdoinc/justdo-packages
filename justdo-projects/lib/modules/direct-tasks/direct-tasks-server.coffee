@@ -135,4 +135,4 @@ _.extend PACK.modules.direct_tasks,
     # seqid setting and other operations/validations are taken care by the addChild middlewares
     @_grid_data_com._runGridMethodMiddlewares "addChild", "/#{parent_id}/", task_fields, sending_user
 
-    return @_grid_data_com._insertItem task_fields
+    return @_grid_data_com._insertItem task_fields, sending_user
