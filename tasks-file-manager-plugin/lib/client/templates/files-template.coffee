@@ -54,10 +54,15 @@ DISPLAYED_FILE_TYPES = {
 }
 
 Template.tasks_file_manager_files.helpers
-  files: -> Template.instance().data.files.sort (f1, f2) -> f2.date_uploaded - f1.date_uploaded
   renaming: -> Template.instance().renaming.get() == this.file.id
   deletion: -> Template.instance().deletion.get() == this.file.id
   size: -> JustdoHelpers.bytesToHumanReadable(this.file.size)
+
+  files: ->
+    if (files_arr = Template.instance().data.files)?
+      return files_arr.sort (f1, f2) -> f2.date_uploaded - f1.date_uploaded
+    return
+
   displayedFileType: (mine_type) ->
     if (name = DISPLAYED_FILE_TYPES[mine_type])?
       return name
