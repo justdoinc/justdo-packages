@@ -1,6 +1,6 @@
 share.store_db.plugins.push
   id: "justdo-activity"
-  title: "JustDo Activity"
+  title: "Activity Log"
   short_description: "Real time updates about members activities"
   full_description: """
     Enable this plugin to see in real time what people are doing within JustDo. You will be able to choose between monitoring all updates to JustDo or filter for status changes only. Use this plugin to stay on top of things on a day by day basis, or catch up and see what has been done after being away from the system. Think of it as a systems monitoring tool, but for our human colleagues rather than systems and servers.

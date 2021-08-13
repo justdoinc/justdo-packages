@@ -1,9 +1,9 @@
 share.store_db.plugins.push
   id: "justdo-checklist"
-  title: "JustDo Checklist"
+  title: "Checklists"
   short_description: "Add a checklist functionality and statistics to tasks"
   full_description: """
-    JustDo Checklist is the ultimate solution for complicated and nested checklists management.<br>
+    Checklists is the ultimate solution for complicated and nested checklists management.<br>
     When this plugin is installed, you can turn any subtree into a checklist. Information about
     'checked' tasks is collected up the tree hierarchy, and provides a real-time view about how
     many of the tasks have been checked.
@@ -26,7 +26,7 @@ share.store_db.plugins.push
   title: "JustDo Tree Checklist"
   short_description: "Adds checklist functionality to the Subject field"
   full_description: """
-    JustDo Checklist is the ultimate solution for complicated and nested checklists management.<br>
+    Checklists is the ultimate solution for complicated and nested checklists management.<br>
     When this plugin is installed, you can turn any subtree into a checklist. Information about
     'checked' tasks is collected up the tree hierarchy, and provides a real-time view about how
     many of the tasks have been checked.

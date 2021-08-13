@@ -63,7 +63,7 @@ _.extend JustdoDeliveryPlanner.prototype,
             )
             removable: true
             activate_on_init: false
-            tabTitleGenerator: "Delivery Planner"
+            tabTitleGenerator: "Resource Tracking"
         }
       ] 
 

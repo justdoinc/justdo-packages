@@ -1,9 +1,9 @@
 share.store_db.plugins.push
   id: "justdo-calendar-view"
-  title: "JustDo's Calendar View"
+  title: "Calendar"
   short_description: "View and control your & other members workload."
   full_description: """
-    <p>JustDo's Calendar View is a power-tool that presents team-members' tasks in a calendar (weekly/monthly) format.
+    <p>Calendar is a power-tool that presents team-members' tasks in a calendar (weekly/monthly) format.
     With this plugin you will be able to:
     </p>
 

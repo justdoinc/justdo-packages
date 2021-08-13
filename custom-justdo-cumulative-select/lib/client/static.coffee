@@ -1,7 +1,7 @@
 _.extend CustomJustdoCumulativeSelect,
   project_custom_feature_id: "justdo_checklist_fields" # Use underscores
 
-  plugin_human_readable_name: "JustDo Checklist"
+  plugin_human_readable_name: "Checklists"
 
   custom_field_type_id: "checklist-field"
 
