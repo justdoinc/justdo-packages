@@ -14,53 +14,58 @@ default_options =
   button_content: '<div class="default-avatar-box-button"><i class="fa fa-ellipsis-h"></i></div>'
 
 Template.justdo_avatars_box.onCreated ->
-  @options = _.extend {}, default_options, Template.currentData()
+  @autorun =>
+    @options = _.extend {}, default_options, Template.currentData()
 
-  @controller = @options.controller
+    @controller = @options.controller
 
-  @max_users_to_display = null # null means unlimited
-  if @options.box_grid?.cols?
-    @options.box_dim = null # ignore box_dim if box_grid provided
+    @max_users_to_display = null # null means unlimited
+    if @options.box_grid?.cols?
+      @options.box_dim = null # ignore box_dim if box_grid provided
 
-    cols = @options.box_grid.cols
-    rows = @options.box_grid.rows
-    if not rows?
-      rows = 1
+      cols = @options.box_grid.cols
+      rows = @options.box_grid.rows
+      if not rows?
+        rows = 1
 
-    @max_users_to_display = cols * rows
-  else if @options.box_dim?.width?
-    avatar_outer_width =
-      (@options.avatar_dim.width + @options.avatar_dim.margin_right)
+      @max_users_to_display = cols * rows
+    else if @options.box_dim?.width?
+      avatar_outer_width =
+        (@options.avatar_dim.width + @options.avatar_dim.margin_right)
 
-    users_per_row = Math.floor(@options.box_dim.width / avatar_outer_width)
+      users_per_row = Math.floor(@options.box_dim.width / avatar_outer_width)
 
-    users_per_col = 1
-    if @options.box_dim?.height?
-      avatar_outer_height =
-        (@options.avatar_dim.height + @options.avatar_dim.margin_bottom)
+      users_per_col = 1
+      if @options.box_dim?.height?
+        avatar_outer_height =
+          (@options.avatar_dim.height + @options.avatar_dim.margin_bottom)
 
-      users_per_col = Math.floor(@options.box_dim.height / avatar_outer_height)
+        users_per_col = Math.floor(@options.box_dim.height / avatar_outer_height)
 
-    @max_users_to_display = users_per_row * users_per_col
+      @max_users_to_display = users_per_row * users_per_col
 
-  @show_button = false
-  show_button_op = @options.show_button
-  if show_button_op == "always"
-    @max_users_to_display -= 1
-
-    @show_button = true
-  if show_button_op == "on-excess"
-    users_count = @options.primary_users.length
-    if @options.secondary_users?
-      users_count += @options.secondary_users.length
-
-    if users_count > @max_users_to_display
+    @show_button = false
+    show_button_op = @options.show_button
+    if show_button_op == "always"
       @max_users_to_display -= 1
 
       @show_button = true
+    if show_button_op == "on-excess"
+      users_count = @options.primary_users.length
+      if @options.secondary_users?
+        users_count += @options.secondary_users.length
 
-  if @max_users_to_display < 0
-    @max_users_to_display = 0
+      if users_count > @max_users_to_display
+        @max_users_to_display -= 1
+
+        @show_button = true
+
+    if @max_users_to_display < 0
+      @max_users_to_display = 0
+    
+    return
+  
+  return
 
 normalizeUsersInput = (users, max_users) ->
   if _.isEmpty users
@@ -77,6 +82,7 @@ Template.justdo_avatars_box.helpers
     return tplProp("controller")
 
   box_components: ->
+    Template.currentData()
     max_users_to_display = tplProp("max_users_to_display")
     components = normalizeUsersInput(@primary_users, max_users_to_display)
     primary_comps_length = components.length
