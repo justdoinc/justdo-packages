@@ -118,12 +118,10 @@ _.extend MeetingsManager.prototype,
       check task_id, String
       check user_id, String
 
-      self._requireTaskMember task_id, user_id
-
-      # meetings collection
-      task = APP.collections.Tasks.findOne task_id,
-        fields:
-          created_from_meeting_id: 1
+      task = self._requireTaskMember task_id, 
+        _id: 1
+        created_from_meeting_id: 1
+      , user_id
 
       meetings_selector = 
         $or: [{

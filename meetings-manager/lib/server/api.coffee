@@ -432,8 +432,14 @@ _.extend MeetingsManager.prototype,
         
     return task?
 
-  _requireTaskMember: (task_id, user_id) ->
-    task = @tasks.findOne { _id: task_id }
+  _requireTaskMember: (task_id, fields, user_id) ->
+    check fields, Object
+    
+    fields = _.extend {}, fields,
+      _id: 1
+      users: 1
+      
+    task = @tasks.findOne { _id: task_id }, {fields: fields}
 
     if not task?
       throw @_error "not-task-member"
