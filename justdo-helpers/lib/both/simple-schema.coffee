@@ -192,3 +192,44 @@ _.extend JustdoHelpers,
 
   getSimpleSchemaObjDefinition: (simple_schema_obj) ->
     return simple_schema_obj._schema
+
+  dependentAutoValue: (options) ->
+    check options.self, Object
+    check options.dependent_field_id, String
+    # autoValue has two args: self(schema obj) and dependent_field(obj)
+    # This helper takes care of converting dependent_field_id to dependent_field obj,
+    # hence do not assume the second arg as
+    check options.autoValue, Function
+    check options.onError, Function
+    # onDependencyCleared is triggered when the dependent_field is cleared
+    if options.onDependencyCleared?
+      check options.onDependencyCleared, Function
+    if options.allow_trusted_source_forced_val?
+      check options.allow_trusted_source_forced_val, Boolean
+    if options.allow_empty_string?
+      check options.allow_empty_string, Boolean
+
+    {self, dependent_field_id, autoValue, onDependencyCleared=null, allow_trusted_source_forced_val=true, allow_empty_string=false, onError} = options
+
+    # Allow changes if set from trusted source
+    if allow_trusted_source_forced_val and self.isFromTrustedCode and self.isSet
+      return
+
+    # Empty string in a update query yields $unset operator and can bypass autovalue.
+    # We actively preventing this from happening unless explicitly enabled.
+    if not allow_empty_string and self.operator is "$unset"
+      return self.unset()
+
+    dependent_field = self.field dependent_field_id
+
+    if dependent_field.isSet
+      if onDependencyCleared? and dependent_field.value is null
+        return onDependencyCleared self, dependent_field
+      return autoValue self, dependent_field
+
+    # If dependent_field isn't set and changes are made from untrusted source, reject the change.
+    if self.isSet
+      throw onError()
+
+    # We should never get to here. But just in case we do, block all updates attempted.
+    return self.unset()
