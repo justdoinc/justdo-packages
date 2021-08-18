@@ -43,6 +43,13 @@ saveImportConfig = (selected_columns_definitions) ->
   amplify.store storage_key, import_config
   return
 
+scrollToAndHighlightProblematicRow = (line_number) ->
+  problematic_row = $(".justdo-clipboard-import-table tr:nth-child(#{line_number + 1})")
+  # problematic_row is a jQuery element, scrollIntoView() is native js method
+  problematic_row[0].scrollIntoView({behavior: "smooth", block: "center"})
+  problematic_row.effect("highlight", {}, 3000)
+  return
+
 getAvailableFieldTypes = ->
   # Reactive resource
   #
@@ -185,7 +192,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
                   val = key
                   break
               if val == null
-                $(".justdo-clipboard-import-table tr:nth-child(#{line_number + 1})").effect("highlight", {}, 3000)
+                scrollToAndHighlightProblematicRow line_number
                 JustdoSnackbar.show
                   text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} - not a valid option. Import aborted."
                   duration: 15000
@@ -210,6 +217,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
                 out_of_range = true
 
             if out_of_range
+              scrollToAndHighlightProblematicRow line_number
               JustdoSnackbar.show
                 text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} (must be between #{field_def.min} and #{field_def.max}). Import aborted."
 
@@ -225,6 +233,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             else
               moment_date = moment.utc cell_val, date_fields_date_format
             if not moment_date.isValid()
+              scrollToAndHighlightProblematicRow line_number
               JustdoSnackbar.show
                 text: "Invalid date format in line #{line_number}. Import aborted."
               modal_data.date_fields_date_format.set null
@@ -237,6 +246,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       # Indent can't jump more than 1 indent level at once
       # and can't start with anything but 1
       if indent_level > last_indent + 1 or indent_level <= 0 or (last_indent == -1 and indent_level != 1)
+        scrollToAndHighlightProblematicRow line_number
         JustdoSnackbar.show
           text: "Invalid indentation at line #{line_number} - inconsistent indentation."
           duration: 15000
@@ -354,6 +364,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     for temp_import_id, deps_str of dependencies_strs
       if not (deps = APP.justdo_planning_utilities.parseDependenciesStr deps_str, project_id, import_idx_to_task_id)?
         line_number = temp_import_id.split("_L")[1]
+        scrollToAndHighlightProblematicRow line_number
         throw new Meteor.Error "invalid dependency", "Invalid dependency(#{deps_str}) found in line #{line_number}"
 
       APP.justdo_planning_utilities.dependent_tasks_update_hook_enabled = false
