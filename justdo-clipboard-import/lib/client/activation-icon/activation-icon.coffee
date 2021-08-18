@@ -264,7 +264,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   task_paths_added = []
 
   importLevel = (indent_level_to_import, mapSeriesCb) ->
-    parent_id = modal_data.parent_task_id
+    parent_id = modal_data.parent_task_id or "0"
     batches = {}  # parent_id: [tasks]
     for line_index, line of lines_to_add
       if line.indent_level == indent_level_to_import - 1
@@ -280,7 +280,12 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     for parent_id, batch of batches
       do (parent_id, batch) ->
         async_calls.push (callback) ->
-          gc._grid_data.bulkAddChild "/" + parent_id + "/", batch, (err, result) ->
+          if parent_id is "0"
+            path_to_insert = "/"
+          else
+            path_to_insert = "/#{parent_id}/"
+
+          gc._grid_data.bulkAddChild path_to_insert, batch, (err, result) ->
             if err?
               APP.collections.Tasks.find
                 "jci:temp_import_id":
@@ -289,7 +294,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
                 fields:
                   _id: 1
               .forEach (task) ->
-                task_paths_added.push "/#{parent_id}/#{task._id}"
+                task_paths_added.push path_to_insert + task._id
                 return
             else
               # For undo if failure
@@ -436,16 +441,11 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
 Template.justdo_clipboard_import_activation_icon.events
   "click .justdo-clipboard-import-activation": (e, tpl) ->
-    # Check to see if there is a task selected
-    if not (JD.activePath() and JD.activeItemId()?)
-      JustdoSnackbar.show
-        text: "A task must be selected to import from the clipboard."
-      return
-
+    parent_task_id = JD.activeItemId()
     modal_data =
       dialog_state: new ReactiveVar ""
       clipboard_data: new ReactiveVar []
-      parent_task_id: JD.activeItemId()
+      parent_task_id: parent_task_id
       rows_to_skip_set: new ReactiveVar(new Set())
       getAvailableFieldTypes: getAvailableFieldTypes
       date_fields_date_format: new ReactiveVar(null)
@@ -454,8 +454,14 @@ Template.justdo_clipboard_import_activation_icon.events
     message_template =
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)
 
+    # Use task name if a task is selected; Use project name if isn't
+    if parent_task_id?
+      task_or_project_name = JustdoHelpers.taskCommonName(JD.activeItem(undefined, {allow_undefined_fields: true}), 80)
+    else
+      task_or_project_name = "#{JD.activeJustdo({title: 1})?.title}"
+
     dialog = bootbox.dialog
-      title: "Import spreadsheet data as child tasks to <i>#{JustdoHelpers.taskCommonName(JD.activeItem(undefined, {allow_undefined_fields: true}), 80)}</i>"
+      title: "Import spreadsheet data as child tasks to <i>#{task_or_project_name}</i>"
       message: message_template.node
       animate: true
       className: "bootbox-new-design justdo-clipboard-import-dialog"
