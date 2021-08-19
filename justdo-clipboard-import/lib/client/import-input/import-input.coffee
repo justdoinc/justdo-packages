@@ -1,3 +1,14 @@
+loadSavedImportConfig = (tpl) ->
+  saved_import_config = amplify.store tpl.data.import_config_local_storage_key
+  if saved_import_config?
+    # if ({rows} = saved_import_config)?
+    #   for row_index in rows
+    #     $(".import-row-checkbox[row-index=#{row_index}]").click()
+    if ({cols} = saved_import_config)?
+      $(".justdo-clipboard-import-input-selector").each (i) ->
+        $(this).find("a[field-id=#{cols[i]}]").click()
+  return
+
 bindTargetToPaste = (tpl)->
   $(".justdo-clipboard-import-paste-target").bind "paste", (e) ->
     e.stopPropagation()
@@ -67,17 +78,26 @@ bindTargetToPaste = (tpl)->
         tpl.data.clipboard_data.set rows
         tpl.data.dialog_state.set "has_data"
         $(".justdo-clipboard-import-main-button").html("Import")
+        Tracker.afterFlush ->
+          loadSavedImportConfig tpl
+          return
       else
         JustdoSnackbar.show
           text: "Couldn't find tabular information in the clipboard."
 
     return
+
   return
 
 Template.justdo_clipboard_import_input.onCreated ->
   self = @
 
   @getAvailableFieldTypes = @data.getAvailableFieldTypes
+  # Special type of fields that isn't supported in grid and doesn't require import
+  @special_fields_map =
+    "clipboard-import-no-import": "-- skip column --"
+    "task-indent-level": "Indent Level"
+    "clipboard-import-index": "Index"
 
   Meteor.defer ->
     self.data.dialog_state.set "wait_for_paste"
@@ -146,14 +166,9 @@ Template.justdo_clipboard_import_input.events
 
     field_id = $(e.currentTarget)[0].getAttribute("field-id")
 
-    if field_id == "clipboard-import-no-import"
-      field_label = "-- skip column --"
-    else if field_id == "task-indent-level"
-      field_label = "Indent Level"
-    else if field_id == "clipboard-import-index"
-      field_label = "Index"
-    else
-      field_label = Template.instance().getAvailableFieldTypes()?[0]?[field_id]?.label
+    # Look for field_label in special_fields_map first
+    if not (field_label = tpl.special_fields_map[field_id])?
+      field_label = tpl.getAvailableFieldTypes()?[0]?[field_id]?.label
 
     $(e.currentTarget).closest(".justdo-clipboard-import-input-selector").find("button")
       .text(field_label)
@@ -167,13 +182,15 @@ Template.justdo_clipboard_import_input.events
     return
 
   "change .import-row-checkbox": (e, tpl) ->
-    rows_to_skip = Template.instance().data.rows_to_skip_set.get()
+    rows_to_skip = tpl.data.rows_to_skip_set.get()
 
     if e.target.checked
       rows_to_skip.delete e.target.getAttribute("row-index")
     else
       rows_to_skip.add e.target.getAttribute("row-index")
 
-    Template.instance().data.rows_to_skip_set.set rows_to_skip
+    tpl.data.rows_to_skip_set.set rows_to_skip
+
+    return
 
     return

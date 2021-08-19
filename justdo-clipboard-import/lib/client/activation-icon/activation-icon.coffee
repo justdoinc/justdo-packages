@@ -90,7 +90,7 @@ getSelectedColumnsDefinitions = ->
 
   return selected_columns_definitions
 
-testDataAndImport = (modal_data, selected_columns_definitions) ->
+testDataAndImport = (modal_data, selected_columns_definitions, import_config_local_storage_key) ->
   # Check that all columns have the same number of cells
   cp_data = modal_data.clipboard_data.get()
   number_of_columns = cp_data[0].length
@@ -368,6 +368,16 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     return
 
+  saveImportConfig = ->
+    import_config =
+      rows: Array.from modal_data.rows_to_skip_set.get()
+      cols: []
+    for col_def in selected_columns_definitions
+      import_config.cols.push col_def._id
+
+    amplify.store import_config_local_storage_key, import_config
+    return
+
   async.mapSeries [1..max_indent], (n, callback) ->
     importLevel(n, callback)
   , (err, results) ->
@@ -392,6 +402,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
       return false
 
+    saveImportConfig()
     JustdoSnackbar.show
       text: "#{task_paths_added.length} task(s) imported."
       duration: 1000 * 60 * 2 # 2 mins
@@ -408,7 +419,13 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     return # end of mapSeries call back
 
+
   return true
+
+Template.justdo_clipboard_import_activation_icon.onCreated ->
+  @import_config_local_storage_key = "jci-last-selection::#{Meteor.userId()}"
+  
+  return
 
 Template.justdo_clipboard_import_activation_icon.events
   "click .justdo-clipboard-import-activation": (e, tpl) ->
@@ -425,6 +442,7 @@ Template.justdo_clipboard_import_activation_icon.events
       rows_to_skip_set: new ReactiveVar(new Set())
       getAvailableFieldTypes: getAvailableFieldTypes
       date_fields_date_format: new ReactiveVar(null)
+      import_config_local_storage_key: tpl.import_config_local_storage_key
 
     message_template =
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)
@@ -502,10 +520,10 @@ Template.justdo_clipboard_import_activation_icon.events
                 inputType: "select"
                 inputOptions: options
                 value: getDefaultDateFormat()
-                callback: (date_format) ->
+                callback: (date_format) =>
                   modal_data.date_fields_date_format.set(date_format)
 
-                  if testDataAndImport modal_data, selected_columns_definitions
+                  if testDataAndImport modal_data, selected_columns_definitions, tpl.import_config_local_storage_key
                     bootbox.hideAll()
 
                   return true
@@ -513,7 +531,7 @@ Template.justdo_clipboard_import_activation_icon.events
               $(".justdo-clipboard-import-main-button").prop "disabled", false
               return false
 
-            if testDataAndImport modal_data, selected_columns_definitions
+            if testDataAndImport modal_data, selected_columns_definitions, tpl.import_config_local_storage_key
               return true
 
             $(".justdo-clipboard-import-main-button").prop "disabled", false
