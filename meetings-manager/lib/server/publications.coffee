@@ -1,4 +1,24 @@
 _.extend MeetingsManager.prototype,
+  _filterAddedTasks: (fields, user_id) ->
+    if fields.added_tasks?.length > 0
+      task_ids = _.map fields.added_tasks, (added_task) -> added_task.task_id
+      accessible_task_ids = []
+      APP.collections.Tasks.find
+        _id:
+          $in: task_ids
+        users: user_id
+      ,
+        fields:
+          _id: 1
+      .forEach (task) ->
+        accessible_task_ids.push task._id
+        return
+      
+      fields.added_tasks = _.filter fields.added_tasks, (added_task) -> 
+        return added_task.task_id in accessible_task_ids
+
+    return fields
+
   _createSimpleObserver: (cursor, collection_name, sub) ->
     return cursor.observeChanges
       added: (id, fields) =>
@@ -73,8 +93,49 @@ _.extend MeetingsManager.prototype,
 
       cursor = self.meetings_tasks.find
         meeting_id: meeting_id
-      meetings_tasks_obs = self._createSimpleObserver cursor, self.meetings_tasks._name, sub
+      
+      init = true
+      meetings_tasks_obs = cursor.observeChanges
+        added: (id, fields) =>
+          if not init and self._isTaskMember fields.task_id, user_id
+            sub.added self.meetings_tasks._name, id, self._filterAddedTasks(fields)
 
+          return
+        
+        changed: (id, fields) =>
+          if not init and self._isTaskMember fields.task_id, user_id
+            sub.changed self.meetings_tasks._name, id, self._filterAddedTasks(fields)
+          
+          return
+        
+        removed: (id) =>
+          if not init and self._isTaskMember fields.task_id, user_id
+            sub.removed self.meetings_tasks._name, id
+
+          return
+      
+      # init optimization
+      meetings_tasks = cursor.fetch()
+      meetings_tasks_ids = _.map meetings_tasks, (meeting_task) -> meeting_task.task_id
+      accessible_task_ids = []
+      APP.collections.Tasks.find
+        _id:
+          $in: meetings_tasks_ids
+        users: user_id
+      ,
+        fields:
+          _id: 1
+      .forEach (task) ->
+        accessible_task_ids.push task._id
+        return
+
+      for meeting_task in meetings_tasks
+        if meeting_task.task_id in accessible_task_ids
+          meeting_task_id = meeting_task._id
+          delete meeting_task._id
+          sub.added self.meetings_tasks._name, meeting_task_id, self._filterAddedTasks(meeting_task)
+      init = false
+        
       cursor = self.meetings_private_notes.find
         meeting_id: meeting_id
         user_id: user_id
@@ -149,59 +210,33 @@ _.extend MeetingsManager.prototype,
           private: 1
 
       meetings_tasks_obs = null
+      meeting_ids = new Set()
+
       resetMeetingTasksObserver = () ->
         meeting_ids_arr = Array.from meeting_ids
         if meetings_tasks_obs?
           meetings_tasks_obs.stop()
 
-        meeting_task = self.meetings_tasks.findOne
+        cursor = self.meetings_tasks.find
           meeting_id:
             $in: meeting_ids_arr
-          "added_tasks.task_id": task_id
-        ,
-          fields:
-            _id: 1
-            task_id: 1
+          task_id: task_id
 
-        agenda_task_id = meeting_task?.task_id or task_id
+        meetings_tasks_obs = cursor.observeChanges
+          added: (id, fields) =>
+            sub.added self.meetings_tasks._name, id, self._filterAddedTasks(fields, user_id)
 
-        if self._isTaskMember agenda_task_id, user_id
-          cursor = self.meetings_tasks.find
-            meeting_id:
-              $in: meeting_ids_arr
-            task_id: agenda_task_id
-          meetings_tasks_obs = self._createSimpleObserver cursor, self.meetings_tasks._name, sub
-        else
-          meetings_tasks_obs = self.meetings_tasks.find
-            meeting_id:
-              $in: meeting_ids_arr
-            "added_tasks.task_id": task_id
-          ,
-            fields:
-              _id: 1
-              meeting_id: 1
-              task_id: 1
-              added_tasks: 1
-          .observeChanges
-            added: (id, fields) =>
-              fields = hideFieldsForAddedTasks fields
-              sub.added self.meetings_tasks._name, id, fields
-
-              return
+            return
+          
+          changed: (id, fields) =>
+            sub.changed self.meetings_tasks._name, id, self._filterAddedTasks(fields, user_id)
             
-            changed: (id, fields) =>
-              fields = hideFieldsForAddedTasks fields
-              sub.changed self.meetings_tasks._name, id, fields
-              
-              return
-            
-            removed: (id) =>
-              sub.removed self.meetings_tasks._name, id
-              return
-        
-        return
+            return
+          
+          removed: (id) =>
+            sub.removed self.meetings_tasks._name, id
+            return
 
-      meeting_ids = new Set()
       is_init = true
       meetings_obs = cursor.observeChanges
         added: (id, fields) =>
@@ -226,21 +261,6 @@ _.extend MeetingsManager.prototype,
 
       is_init = false
       resetMeetingTasksObserver()
-
-      # meetings_tasks collection
-      hideFieldsForAddedTasks = (fields) ->
-        ret = {
-          _id: fields._id
-          meeting_id: fields.meeting_id
-        }
-
-        if fields.added_tasks
-          ret.added_tasks = []
-          for added_task in fields.added_tasks
-            if added_task.task_id == task_id
-              ret.added_tasks.push added_task
-
-        return  ret
       
       # meetings_private_notes
       cursor = self.meetings_private_notes.find
@@ -257,4 +277,3 @@ _.extend MeetingsManager.prototype,
       sub.ready()
 
       return
-
