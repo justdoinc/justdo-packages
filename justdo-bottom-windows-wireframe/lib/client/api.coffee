@@ -426,15 +426,23 @@ _.extend BottomWindowsWireframe.prototype,
     if @_custom_window_dim_tracker?
       # Already setupped
       return
-    
+
     @_custom_window_dim_tracker = Tracker.autorun =>
-      if "n" in APP.modules.main.custom_window_dim_gravity.get() and 
-          (custom_win_height = APP.modules.main.custom_window_dim_offset.get().height) != 0
-        @$container.css({bottom: custom_win_height})
 
-        return
+      # Stick chat to the Project-pane TOP
 
-      @$container.css({bottom: ""})
+      # if "n" in APP.modules.main.custom_window_dim_gravity.get() and
+      #     (custom_win_height = APP.modules.main.custom_window_dim_offset.get().height) != 0
+      #   @$container.css({bottom: custom_win_height})
+      #
+      #   return
+
+      # Stick chat to the window BOTTOM
+      if APP.justdo_project_pane.isExpanded()
+        @$container.css({bottom: 0})
+      else
+        custom_win_height = APP.modules.main.custom_window_dim_offset.get().height
+        @$container.css({bottom: custom_win_height = APP.modules.main.custom_window_dim_offset.get().height})
 
       return
 
