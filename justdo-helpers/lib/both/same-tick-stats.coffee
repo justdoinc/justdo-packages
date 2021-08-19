@@ -2,9 +2,9 @@ JustdoHelpers.report_all_stats = false
 JustdoHelpers.report_optimization_issues = false
 JustdoHelpers.allow_break_if_threshold_reached = false
 if JustdoHelpers.isPocPermittedDomainsOrBeta()
-  JustdoHelpers.report_all_stats = true
-  JustdoHelpers.report_optimization_issues = true
-  JustdoHelpers.allow_break_if_threshold_reached = true
+  JustdoHelpers.report_all_stats = false
+  JustdoHelpers.report_optimization_issues = false
+  JustdoHelpers.allow_break_if_threshold_reached = false
 
 temporary_sensitivity_decrease_factor = 5
 
