@@ -10,6 +10,7 @@ base_supported_fields_ids = [
   "status"
   "priority"
   "state"
+  "description"
 ].sort (a, b) -> return a.localeCompare b # localeCompare is used instead simply sort() to ignore case differences
 
 base_supported_fields_ids = non_sorted_field_ids.concat base_supported_fields_ids
@@ -170,7 +171,12 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             dependencies_strs[task["jci:temp_import_id"]] = cell_val # XXX temp_import_id can be null
         else if cell_val.length > 0 and field_id != "clipboard-import-no-import" and field_id != "task-indent-level"
           if field_def.type is String
-            #dealing with options fields
+
+            # Newlines in description will be converted into <br> to display correctly
+            if field_id is "description"
+              cell_val = JustdoHelpers.nl2br cell_val
+
+            # Dealing with options fields
             if field_def.grid_column_formatter == "keyValueFormatter"
               val = null
               for key, defs of field_def.grid_values
