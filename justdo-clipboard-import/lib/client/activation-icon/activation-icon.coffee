@@ -551,12 +551,13 @@ Template.justdo_clipboard_import_activation_icon.events
                 inputOptions: options
                 value: getDefaultDateFormat()
                 callback: (date_format) =>
-                  modal_data.date_fields_date_format.set(date_format)
+                  if date_format?
+                    modal_data.date_fields_date_format.set(date_format)
 
-                  if testDataAndImport modal_data, selected_columns_definitions
-                    bootbox.hideAll()
+                    if testDataAndImport modal_data, selected_columns_definitions
+                      bootbox.hideAll()
 
-                  return true
+                    return true
 
               $(".justdo-clipboard-import-main-button").prop "disabled", false
               return false
