@@ -70,5 +70,6 @@ Package.onUse(function(api) {
   api.addFiles("assets/js/third_party/image_tui.min.js", "client");
   api.addFiles("assets/js/third_party/spell_checker.min.js", "client");
 
+  api.addFiles("justdo-modifications.js", "client");
   api.addFiles("justdo-modifications.sass", "client");
 });

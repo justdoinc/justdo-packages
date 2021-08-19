@@ -1,0 +1,1 @@
+$.FroalaEditor.DEFAULTS.enter = $.FroalaEditor.ENTER_BR
