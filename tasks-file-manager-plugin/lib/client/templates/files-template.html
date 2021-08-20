@@ -1,10 +1,4 @@
 <template name="tasks_file_manager_files">
-  {{#if showPrintFiles}}
-    <div class="tasks-file-manager-print d-flex align-items-center bg-light p-1 rounded mb-1">
-      <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#printer"></use></svg>
-      <span class="text-body text-uppercase font-weight-bold jd-c-pointer ml-1">Print Files</span>
-    </div>
-  {{/if}}
   <div class="tasks-file-manager-files">
     {{#each files}}
       {{#with task=.. file=.}}

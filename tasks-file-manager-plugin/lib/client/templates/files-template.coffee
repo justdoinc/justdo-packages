@@ -104,12 +104,6 @@ Template.tasks_file_manager_files.helpers
   typeClass: ->
     return Template.instance().getTypeCssClass(@file.type)
 
-  showPrintFiles: ->
-    plugin_installed = APP.justdo_files_tab_print.isPluginInstalledOnProjectDoc()
-    files_count = Template.instance().data.files?.length or 0
-    return plugin_installed and files_count > 0
-
-
 Template.tasks_file_manager_files.events
   "click .file-download-link": (e, tmpl) ->
     e.preventDefault()
