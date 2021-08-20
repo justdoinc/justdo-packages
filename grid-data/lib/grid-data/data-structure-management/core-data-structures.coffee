@@ -66,9 +66,11 @@ _.extend GridData.prototype,
 
     @once "_perform_deferred_procedures", -> @_initCoreStructuresManagers()
 
-  _initCoreStructuresManagers: ->
     @_initGridDataCoreIntegration()
 
+    return
+
+  _initCoreStructuresManagers: ->
     @_init_flush_orchestrator()
 
     @_init_rebuild_orchestrator()

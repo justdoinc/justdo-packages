@@ -146,8 +146,7 @@ GridControl = (options, container, operations_container) ->
 
   @options.preInit.call(@)
 
-  Meteor.defer =>
-    @_init()
+  @_immediateInit()
 
   if Tracker.currentComputation?
     Tracker.onInvalidate =>
@@ -163,7 +162,7 @@ _.extend GridControl.prototype,
   # the grid_control instance as this upon successful init (just before "init" event emittion).
   _init_hooks: {}
 
-  _init: ->
+  _immediateInit: ->
     if @_initialized or @_destroyed
       return
 
