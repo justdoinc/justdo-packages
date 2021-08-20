@@ -48,8 +48,8 @@ _.extend TasksFileManagerPlugin.prototype,
 
           if not (files = active_item_obj.files) or files.length <= 0
             return ""
-          
-          return "(#{parseInt(files.length, 10)})"
+
+          return "#{parseInt(files.length, 10)}"
       section_options: {}
 
     tasks_file_manager_section_position =

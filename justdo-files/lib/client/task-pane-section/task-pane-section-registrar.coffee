@@ -43,8 +43,8 @@ _.extend JustdoFiles.prototype,
 
           if not (files_count = active_item_obj[JustdoFiles.files_count_task_doc_field_id]) or files_count <= 0
             return ""
-          
-          return "(#{parseInt(files_count, 10)})"
+
+          return "#{parseInt(files_count, 10)}"
       section_options: {}
 
     justdo_files_section_position =
