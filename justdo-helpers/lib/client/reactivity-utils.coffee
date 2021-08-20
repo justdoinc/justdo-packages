@@ -34,3 +34,28 @@ _.extend JustdoHelpers,
       return
 
     return value
+
+  awaitValueFromReactiveResource: (options) ->
+    # Calls options.cb() a single time once options.reactiveResource() returns a value that when
+    # passed as the first argument to options.evaluator(val), true is returned.
+    #
+    # Notes:
+    #
+    # 1. This is a NON REACTIVE method
+    # 2. options.cb can be called either in the current tick or in a future tick!
+
+    Tracker.nonreactive =>
+      Tracker.autorun (c) =>
+        returned_val = options.reactiveResource()
+        if Tracker.nonreactive -> options.evaluator(returned_val) is true
+          Tracker.nonreactive -> JustdoHelpers.callCb(options.cb)
+
+          c.stop()
+
+          return
+
+        return
+
+      return
+
+    return
