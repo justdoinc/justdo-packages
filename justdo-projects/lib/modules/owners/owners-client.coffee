@@ -113,7 +113,7 @@ _.extend PACK.modules.owners,
               bootbox.dialog
                 title: "Reject Ownership Transfer"
                 message: message_template.node
-                className: "ownership-hr-rejection-dialog"
+                className: "ownership-hr-rejection-dialog bootbox-new-design"
 
                 onEscape: ->
                   complete()
