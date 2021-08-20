@@ -25,6 +25,7 @@ _.extend Projects.prototype,
     # sync option set to the last time we had a subscription, minus sync_safety_delta_ms.
     @tasks_subscription_last_sync_time = {}
     @projects_with_processed_init_payload = new ReactiveDict()
+    @projects_with_received_first_ddp_sync_ready_msg = new ReactiveDict()
 
     @_subscribeUserProjects()
     @_subscribeUserGuestProjects()
@@ -41,6 +42,11 @@ _.extend Projects.prototype,
       @emit "project-init-payload-processed", project_id # Note you can also use @awaitProjectInitPayloadProcessed(project_id, cb)
 
     @tasks_subscription_last_sync_time[project_id] = sync_id
+
+    return
+
+  setProjecFirstDdpSyncReadyMsgReacived: (project_id) ->
+    @projects_with_received_first_ddp_sync_ready_msg.set(project_id, true)
 
     return
 
@@ -235,6 +241,8 @@ _.extend Projects.prototype,
         handle = Tracker.nonreactive ->
           return self._grid_data_com.subscribeDefaultGridSubscription options,
             onReady: ->
+              self.setProjecFirstDdpSyncReadyMsgReacived(project_id)
+
               delete self.tasks_subscription_last_sync_time[project_id]
 
               last_state_is_connected = true
@@ -405,17 +413,24 @@ _.extend Projects.prototype,
     # 1. This is a NON REACTIVE method
     # 2. cb can be called either in the current tick or in a future tick!
 
-    Tracker.nonreactive =>
-      Tracker.autorun (c) =>
-        if @isProjectInitPayloadProcessed(project_id)
-          JustdoHelpers.callCb(cb)
+    JustdoHelpers.awaitValueFromReactiveResource
+      reactiveResource: => @isProjectInitPayloadProcessed(project_id) is true
 
-          c.stop()
+      evaluator: (val) -> val
 
-          return
+      cb: cb
 
-        return
+    return
 
-      return
+  isProjectFirstDdpSyncGotReadyMsg: (project_id) ->
+    return @projects_with_received_first_ddp_sync_ready_msg.get(project_id)
+
+  awaitProjectFirstDdpSyncReadyMsg: (project_id, cb) ->
+    JustdoHelpers.awaitValueFromReactiveResource
+      reactiveResource: => @isProjectFirstDdpSyncGotReadyMsg(project_id) is true
+
+      evaluator: (val) -> val is true
+
+      cb: cb
 
     return

@@ -59,95 +59,96 @@ _.extend PACK.modules.owners,
 
     project_subscription = APP.projects.requireProjectTasksSubscription(project_id)
 
-    Tracker.nonreactive =>
-      Tracker.autorun (c) =>
-        complete = ->
-          project_subscription.stop()
-          c.stop()
-
-          return
-
-        if project_subscription.ready()
-          if not (task = @items_collection.findOne(task_id))?
-            bootbox.alert("Couldn't find the task to #{type}.")
-
-            complete()
+    APP.projects.awaitProjectFirstDdpSyncReadyMsg project_id, =>
+      Tracker.nonreactive =>
+        Tracker.autorun (c) =>
+          complete = ->
+            project_subscription.stop()
+            c.stop()
 
             return
 
-          if pending_owner_id != task.pending_owner_id
-            # If the user is no longer the pending owner, do nothing.
-            complete()
+          if project_subscription.ready()
+            if not (task = @items_collection.findOne(task_id))?
+              bootbox.alert("Couldn't find the task to #{type}.")
 
-            # Present an alert notifying the user that the task is no longer pending transfer only
-            # when the user wants to approve the ownership transfer, and isn't the current owner
-            # alredady.
-            if type == "approve" and Meteor.userId() != task.owner_id
-              bootbox.alert("Task ##{task.seqId} is no longer pending transfer to you.")
+              complete()
 
+              return
 
+            if pending_owner_id != task.pending_owner_id
+              # If the user is no longer the pending owner, do nothing.
+              complete()
 
-            return
-
-          if type == "approve"
-            update = 
-              $set:
-                owner_id: Meteor.userId()
-                pending_owner_id: null
-
-            @items_collection.update(task_id, update)
-
-            bootbox.alert("Ownership transfer of task ##{task.seqId} approved.")
-
-            complete()
-
-            return
-          else
-            data =
-              task: @items_collection.findOne(task_id)
-
-            message_template =
-              APP.helpers.renderTemplateInNewNode(Template.ownership_rejection_hash_request_bootbox, data)
-
-            bootbox.dialog
-              title: "Reject Ownership Transfer"
-              message: message_template.node
-              className: "ownership-hr-rejection-dialog"
-
-              onEscape: ->
-                complete()
-
-                return true
-
-              buttons:
-                cancel:
-                  label: "Cancel"
-
-                  className: "btn-light"
-
-                  callback: ->
-                    complete()
-
-                    return true
-
-                continue:
-                  label: "Send"
-
-                  callback: =>
-                    reject_message = $(".hr-ownership-rejection-message").val()
-
-                    APP.projects.modules.owners.rejectOwnershipTransfer(task_id, reject_message)
-
-                    complete()
-
-                    return true
+              # Present an alert notifying the user that the task is no longer pending transfer only
+              # when the user wants to approve the ownership transfer, and isn't the current owner
+              # alredady.
+              if type == "approve" and Meteor.userId() != task.owner_id
+                bootbox.alert("Task ##{task.seqId} is no longer pending transfer to you.")
 
 
 
-            return
+              return
 
-          return 
+            if type == "approve"
+              update = 
+                $set:
+                  owner_id: Meteor.userId()
+                  pending_owner_id: null
 
+              @items_collection.update(task_id, update)
+
+              bootbox.alert("Ownership transfer of task ##{task.seqId} approved.")
+
+              complete()
+
+              return
+            else
+              data =
+                task: @items_collection.findOne(task_id)
+
+              message_template =
+                APP.helpers.renderTemplateInNewNode(Template.ownership_rejection_hash_request_bootbox, data)
+
+              bootbox.dialog
+                title: "Reject Ownership Transfer"
+                message: message_template.node
+                className: "ownership-hr-rejection-dialog"
+
+                onEscape: ->
+                  complete()
+
+                  return true
+
+                buttons:
+                  cancel:
+                    label: "Cancel"
+
+                    className: "btn-light"
+
+                    callback: ->
+                      complete()
+
+                      return true
+
+                  continue:
+                    label: "Send"
+
+                    callback: =>
+                      reject_message = $(".hr-ownership-rejection-message").val()
+
+                      APP.projects.modules.owners.rejectOwnershipTransfer(task_id, reject_message)
+
+                      complete()
+
+                      return true
+
+
+
+              return
+
+            return 
+      return
     return
 
   _setupHashRequests: ->
