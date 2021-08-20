@@ -105,7 +105,7 @@ _.extend JustdoAvatar,
 
     return "data:image/svg+xml;base64,#{svg_html}"
 
-Template.justdo_avatar.helpers
+justdo_avatar_helpers =
   avatar_url: ->
     if _.isObject @profile
       # We assume that if profile is object we are within a Meteor.users
@@ -130,3 +130,7 @@ Template.justdo_avatar.helpers
 
   user_id: ->
     return @_id
+
+Template.justdo_avatar.helpers justdo_avatar_helpers
+
+Template.justdo_avatar_no_tooltip.helpers justdo_avatar_helpers
