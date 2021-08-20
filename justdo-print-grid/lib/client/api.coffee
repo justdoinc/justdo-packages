@@ -477,7 +477,7 @@ _.extend JustdoPrintGrid.prototype,
 
               rowCSV.push formatWithPrintFormatter(item_id, field_name, val, item_doc, path, true) or ""
 
-            rowCSV.push row[1], row[2]
+            rowCSV.push row[1]+1, row[2]
 
         else # Section title
           section_title = JustdoHelpers.xssGuard(row[0].title)
