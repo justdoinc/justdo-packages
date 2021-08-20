@@ -19,7 +19,7 @@ _.extend PACK.Formatters.textWithTreeControls,
       # active editor - event defined below under:
       # ['click', '.grid-tree-control-toggle'] will take
       # control in that case.
-      if $(e.target).hasClass("grid-tree-control-toggle")
+      if $(e.target).closest(".grid-tree-control-toggle").length > 0
         save_and_exit_not_prevented = @saveAndExitActiveEditor()
 
         if save_and_exit_not_prevented
