@@ -1,53 +1,55 @@
 <template name="justdo_clipboard_import_input">
-  {{#if rows}}{{!-- Only if there are rows to present print the following--}}
-    <div class="justdo-clipboard-import-table-container">
-      <table class="justdo-clipboard-import-table table table-sm">
-        <tr>
-          <td class="bg-light import-column-header">
-            Import
-          </td>
-          {{#each numberOfColumns}}
-            <th class="bg-light">
-              <div class="dropdown justdo-clipboard-import-input-selector">
-                <button class="btn btn-sm btn-secondary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Select
-                </button>
-                <div class="dropdown-menu p-1 shadow-lg border-0 dropdown-field-selector" aria-labelledby="justdo-clipboard-import-input-{{this}}">
-                  <li><a href="#" class="dropdown-item px-1 small" field-id="clipboard-import-no-import">-- Skip Column --</a></li>
-                  <li><a href="#" class="dropdown-item px-1 small" field-id="clipboard-import-index">Index(won't be imported)</a></li>
-                  {{#each getAvailableFieldTypesArray}}
-                    <li><a href="#" class="dropdown-item px-1 small" field-id="{{_id}}">{{label}}</a></li>
-                  {{/each}}
-                  <div class="dropdown-divider"></div>
-                  <li><a href="#" class="dropdown-item px-1 small" field-id="task-indent-level">Indent Level</a></li>
-                  {{#if isAdmin}}
-                    <div class="dropdown-divider"></div>
-                    <li><a href="#" class="dropdown-item px-1 small manage-columns"><svg class="jd-icon-custom-field" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg> Manage Columns</a></li>
-                  {{/if}}
-                </div>
-              </div>
-            </th>
-          {{/each}}
-        </tr>
-        {{#each rows}}
-          <tr class="{{#unless importRow @index}}skip-row{{/unless}}">
-            <td class="first-column">
-              <input type="checkbox" class="import-row-checkbox" row-index="{{@index}}" checked="checked">
+  <div class="justdo-clipboard-import-container">
+    {{#if rows}}{{!-- Only if there are rows to present print the following--}}
+      <div class="justdo-clipboard-import-table-container">
+        <table class="justdo-clipboard-import-table table table-sm">
+          <tr>
+            <td class="bg-light import-column-header">
+              Import
             </td>
-            {{#each this}}
-              <td>{{nl2br this}}</td>
+            {{#each numberOfColumns}}
+              <th class="bg-light">
+                <div class="dropdown justdo-clipboard-import-input-selector">
+                  <button class="btn btn-sm btn-secondary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Select
+                  </button>
+                  <div class="dropdown-menu p-1 shadow-lg border-0 dropdown-field-selector" aria-labelledby="justdo-clipboard-import-input-{{this}}">
+                    <li><a href="#" class="dropdown-item px-1 small" field-id="clipboard-import-no-import">-- Skip Column --</a></li>
+                    <li><a href="#" class="dropdown-item px-1 small" field-id="clipboard-import-index">Index(won't be imported)</a></li>
+                    {{#each getAvailableFieldTypesArray}}
+                      <li><a href="#" class="dropdown-item px-1 small" field-id="{{_id}}">{{label}}</a></li>
+                    {{/each}}
+                    <div class="dropdown-divider"></div>
+                    <li><a href="#" class="dropdown-item px-1 small" field-id="task-indent-level">Indent Level</a></li>
+                    {{#if isAdmin}}
+                      <div class="dropdown-divider"></div>
+                      <li><a href="#" class="dropdown-item px-1 small manage-columns"><svg class="jd-icon-custom-field" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg> Manage Columns</a></li>
+                    {{/if}}
+                  </div>
+                </div>
+              </th>
             {{/each}}
           </tr>
-        {{/each}}
-      </table>
-    </div>
-  {{else}}
-    <textarea class="form-control justdo-clipboard-import-paste-target"
-              placeholder="Copy content from your spreadsheet and paste it here to create tasks.
-The first column is regarded as the Subject."></textarea>
-    <small><i>Limited to {{importLimit}} tasks</i></small>
-    <div class="justdo-clipboard-import-intro text-center mt-3 position-relative">
-      <a href="https://support.justdo.com/hc/en-us/articles/360015993900-How-to-Import-Tasks-from-a-Spreadsheet" target="_blank">How Does it Work?</a>
-    </div>
-  {{/if}}
+            {{#each rows}}
+              <tr class="{{#unless importRow @index}}skip-row{{/unless}}">
+                <td class="first-column">
+                  <input type="checkbox" class="import-row-checkbox" row-index="{{@index}}" checked="checked">
+                </td>
+                {{#each this}}
+                  <td>{{nl2br this}}</td>
+                {{/each}}
+              </tr>
+            {{/each}}
+          </table>
+      </div>
+    {{else}}
+      <textarea class="form-control justdo-clipboard-import-paste-target"
+                placeholder="Copy content from your spreadsheet and paste it here to create tasks.
+  The first column is regarded as the Subject."></textarea>
+      <small><i>Limited to {{importLimit}} tasks</i></small>
+      <div class="justdo-clipboard-import-intro text-center mt-3 position-relative">
+        <a href="https://support.justdo.com/hc/en-us/articles/360015993900-How-to-Import-Tasks-from-a-Spreadsheet" target="_blank">How Does it Work?</a>
+      </div>
+    {{/if}}
+  </div>
 </template>

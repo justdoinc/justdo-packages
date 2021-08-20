@@ -1,6 +1,23 @@
+.justdo-clipboard-import-dialog
+  .modal-dialog
+    margin: 1.75rem 0.75rem
+  .modal-content
+    top: 3vh
+    left: 2vw
+    width: 95vw
+    height: 90vh
+
+  .bootbox-body
+    height: 100%
+    & > div:first-child
+      height: 100%
+
+.justdo-clipboard-import-container
+  height: 100%
+
 .justdo-clipboard-import-table-container
+  height: calc(90vh - 163px)
   min-height: 200px // Need enough height for the field selector dropdown to show well
-  max-height: 320px
   overflow: auto
 
 .justdo-clipboard-import-table.table
@@ -42,7 +59,9 @@
   user-select: none
 
 .form-control.justdo-clipboard-import-paste-target
-  height: 160px
+  width: 100%
+  height: 90%
+  resize: none
 
 .dropdown-field-selector
   height: 155px
