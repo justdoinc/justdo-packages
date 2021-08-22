@@ -87,7 +87,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/import-input/import-input.sass", client);
   api.addFiles("lib/client/import-input/import-input.html", client);
   api.addFiles("lib/client/import-input/import-input.coffee", client);
-
+  
+  api.addFiles("lib/client/import-input/import-input-selector.sass", client);
+  api.addFiles("lib/client/import-input/import-input-selector.html", client);
+  api.addFiles("lib/client/import-input/import-input-selector.coffee", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
@@ -96,7 +99,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/app-integration.coffee", both);
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
-  // file. 
+  // file.
 
   api.addAssets("lib/assets/intro-import-spreadsheet.gif", client);
 
