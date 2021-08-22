@@ -105,11 +105,6 @@ Template.justdo_clipboard_import_input.onCreated ->
   self = @
 
   @getAvailableFieldTypes = @data.getAvailableFieldTypes
-  # Special type of fields that isn't supported in grid and doesn't require import
-  @special_fields_map =
-    "clipboard-import-no-import": "-- skip column --"
-    "task-indent-level": "Indent Level"
-    "clipboard-import-index": "Index"
 
   Meteor.defer ->
     self.data.dialog_state.set "wait_for_paste"
@@ -150,20 +145,11 @@ Template.justdo_clipboard_import_input.helpers
 
     return [1..Template.instance().data.clipboard_data.get()[0].length]
 
-  getAvailableFieldTypesArray: ->
-    return Template.instance().getAvailableFieldTypes()[1]
-
   importRow: (index) ->
     rows_to_skip = Template.instance().data.rows_to_skip_set.get()
     if rows_to_skip.has "#{index}"
       return false
     return true
-
-  isAdmin: ->
-    if not (cur_proj = APP.modules?.project_page?.curProj())?
-      return false
-
-    return cur_proj.isAdmin()
 
   importLimit: -> JustdoClipboardImport.import_limit
 
@@ -172,26 +158,6 @@ Template.justdo_clipboard_import_input.events
     $(".justdo-clipboard-import-paste-target").val("")
 
     return false
-
-  "click .justdo-clipboard-import-input-selector a[field-id]": (e, tpl) ->
-    e.preventDefault()
-
-    field_id = $(e.currentTarget)[0].getAttribute("field-id")
-
-    # Look for field_label in special_fields_map first
-    if not (field_label = tpl.special_fields_map[field_id])?
-      field_label = tpl.getAvailableFieldTypes()?[0]?[field_id]?.label
-
-    $(e.currentTarget).closest(".justdo-clipboard-import-input-selector").find("button")
-      .text(field_label)
-      .val(field_id)
-
-    return
-
-  "click .manage-columns": ->
-    APP.modules.project_page.project_config_ui.showCustomFieldsConfigurationOnly()
-
-    return
 
   "change .import-row-checkbox": (e, tpl) ->
     rows_to_skip = tpl.data.rows_to_skip_set.get()
