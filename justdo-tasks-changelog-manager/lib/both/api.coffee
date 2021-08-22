@@ -142,7 +142,7 @@ _.extend TasksChangelogManager.prototype,
 
     if activity_obj.field == "owner_id"
       if (user = JustdoHelpers.getUsersDocsByIds activity_obj.new_value)?
-        return "#{JustdoHelpers.displayName(user)} took ownership."
+        return "#{JustdoHelpers.displayName(user)} became owner."
       return "Task owner changed."
 
     if activity_obj.field == "due_date" or activity_obj.field == "follow_up"
