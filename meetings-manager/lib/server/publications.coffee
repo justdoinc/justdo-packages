@@ -103,13 +103,13 @@ _.extend MeetingsManager.prototype,
           return
         
         changed: (id, fields) =>
-          if not init and self._isTaskMember fields.task_id, user_id
+          if not init
             sub.changed self.meetings_tasks._name, id, self._filterAddedTasks(fields)
           
           return
         
         removed: (id) =>
-          if not init and self._isTaskMember fields.task_id, user_id
+          if not init
             sub.removed self.meetings_tasks._name, id
 
           return
