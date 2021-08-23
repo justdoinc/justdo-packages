@@ -198,7 +198,7 @@ _.extend JustdoHelpers,
     check options.dependent_field_id, String
     # autoValue has two args: self(schema obj) and dependent_field(obj)
     # This helper takes care of converting dependent_field_id to dependent_field obj,
-    # hence do not assume the second arg as
+    # so it's not necessary to call @field("dependent_field_id")
     check options.autoValue, Function
     check options.onError, Function
     # onDependencyCleared is triggered when the dependent_field is cleared
@@ -215,8 +215,8 @@ _.extend JustdoHelpers,
     if allow_trusted_source_forced_val and self.isFromTrustedCode and self.isSet
       return
 
-    # Empty string in a update query yields $unset operator and can bypass autovalue.
-    # We actively preventing this from happening unless explicitly enabled.
+    # Empty string in an update query yields $unset operator and can bypass autovalue.
+    # We prevent this from happening unless explicitly enabled.
     if not allow_empty_string and self.operator is "$unset"
       return self.unset()
 
