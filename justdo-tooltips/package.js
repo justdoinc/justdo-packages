@@ -81,5 +81,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/core-tooltips/user-info/user-info.sass", client);
   api.addFiles("lib/client/core-tooltips/user-info/user-info.coffee", client);
 
+  api.addFiles("lib/client/core-tooltips/expand-grid/expand-grid.html", client);
+  api.addFiles("lib/client/core-tooltips/expand-grid/expand-grid.sass", client);
+  api.addFiles("lib/client/core-tooltips/expand-grid/expand-grid.coffee", client);
+
   api.export("JustdoTooltips", client);
 });
