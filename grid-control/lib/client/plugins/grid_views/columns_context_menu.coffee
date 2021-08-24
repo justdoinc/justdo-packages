@@ -71,7 +71,7 @@ _.extend GridControl.prototype,
           action: (e) =>
             current_view = @getView()
 
-            delete current_view[0].frozen
+            current_view[0].frozen = false
 
             @setView(current_view)
 

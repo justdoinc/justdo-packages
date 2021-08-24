@@ -1173,9 +1173,9 @@ _.extend GridControl.prototype,
       else if field_def.grid_default_width?
         column.width = field_def.grid_default_width
 
-      if column_def.frozen is true
+      if column_def.frozen?
         column.frozen = column_def.frozen
-      else if field_def.grid_default_frozen_column is true
+      else if field_def.grid_default_frozen_column?
         column.frozen = field_def.grid_default_frozen_column
 
       if field_def.grid_fixed_size_column? and field_def.grid_fixed_size_column
