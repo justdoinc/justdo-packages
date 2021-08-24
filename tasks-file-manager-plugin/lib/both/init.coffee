@@ -171,7 +171,11 @@ _.extend TasksFileManagerPlugin.prototype,
 
     if Meteor.isClient
       @filestackReadyDfd = new $.Deferred()
-      @tasks_file_manager.once "filestack-ready", =>
+
+      if APP.filestack_base.isInitiated()
         @filestackReadyDfd.resolve()
+      else
+        APP.filestack_base.once "filestack-ready", =>
+          @filestackReadyDfd.resolve()
 
     return

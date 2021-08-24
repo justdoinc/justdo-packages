@@ -2,7 +2,9 @@ _.extend TasksFileManager.prototype,
   filesForTask: (task_id) -> @tasks_collection.findOne({ _id: task_id }).files
 
   getShareableLink: (task_id, file_id, root) ->
-    download_hash = "&hr-id=download-file&hr-file-id=#{encodeURIComponent(file_id)}&hr-task-id=#{encodeURIComponent(task_id)}";
+    project_id = Tracker.nonreactive => @tasks_collection.findOne({_id: task_id})?.project_id
+
+    download_hash = "&hr-id=download-file&hr-file-id=#{encodeURIComponent(file_id)}&hr-task-id=#{encodeURIComponent(task_id)}&hr-project-id=#{encodeURIComponent(project_id)}";
     if root == "/"
       return  Meteor.absoluteUrl "#" + download_hash
 
