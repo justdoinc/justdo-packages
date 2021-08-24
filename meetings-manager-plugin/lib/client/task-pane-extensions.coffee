@@ -41,30 +41,30 @@ _.extend MeetingsManagerPlugin.prototype,
       type: "MeetingsManager" # the name of the template derives from the type
       options:
         title: "Meetings"
-        titleInfo: ->
-          task = JD.activeItem({_id: 1, tasks: 1, created_from_meeting_id: 1})
-          selector = 
-            $or: [{"tasks.task_id": task._id}]
+        # titleInfo: ->
+        #   task = JD.activeItem({_id: 1, tasks: 1, created_from_meeting_id: 1})
+        #   selector = 
+        #     $or: [{"tasks.task_id": task._id}]
           
-          meeting_ids = new Set()
-          self.meetings_manager.meetings_tasks.find
-            task_id: task._id
-          ,
-            fields:
-              meeting_id: 1
-          .forEach (meeting_task) ->
-            meeting_ids.add meeting_task.meeting_id
-            return
+        #   meeting_ids = new Set()
+        #   self.meetings_manager.meetings_tasks.find
+        #     task_id: task._id
+        #   ,
+        #     fields:
+        #       meeting_id: 1
+        #   .forEach (meeting_task) ->
+        #     meeting_ids.add meeting_task.meeting_id
+        #     return
 
-          if task.created_from_meeting_id?
-            meeting_created = self.meetings_manager.meetings.findOne(task.created_from_meeting_id, {fields: {_id: 1}})
-            if meeting_created?
-              meeting_ids.add meeting_created._id          
+        #   if task.created_from_meeting_id?
+        #     meeting_created = self.meetings_manager.meetings.findOne(task.created_from_meeting_id, {fields: {_id: 1}})
+        #     if meeting_created?
+        #       meeting_ids.add meeting_created._id          
 
-          if meeting_ids.size > 0
-            return "(#{meeting_ids.size})"
+        #   if meeting_ids.size > 0
+        #     return "(#{meeting_ids.size})"
           
-          return ""
+        #   return ""
           
       section_options: {}
 
@@ -75,14 +75,14 @@ _.extend MeetingsManagerPlugin.prototype,
       enabled = APP.modules.project_page.curProj()?.isCustomFeatureEnabled("meetings_module")
 
       if enabled
-        if not self.meetings_for_task_comp?
-          Tracker.nonreactive =>
-            self.meetings_for_task_comp = Tracker.autorun =>
-              task_id = JD.activeItemId()
-              self.meetings_manager.subscribeToMeetingsForTask task_id
-              return
+        # if not self.meetings_for_task_comp?
+        #   Tracker.nonreactive =>
+        #     self.meetings_for_task_comp = Tracker.autorun =>
+        #       task_id = JD.activeItemId()
+        #       self.meetings_manager.subscribeToMeetingsForTask task_id
+        #       return
 
-            return
+        #     return
 
         if not _.any(task_pane_sections, (section) => section.id == "meetings-manager")
           if meetings_manager_section_position != -1
@@ -94,9 +94,9 @@ _.extend MeetingsManagerPlugin.prototype,
           APP.modules.project_page.invalidateItemsTypesSettings()
 
       else
-        if self.meetings_for_task_comp?
-          self.meetings_for_task_comp.stop()
-          self.meetings_for_task_comp = null
+        # if self.meetings_for_task_comp?
+        #   self.meetings_for_task_comp.stop()
+        #   self.meetings_for_task_comp = null
         index = -1
         _.find task_pane_sections, (section, i) =>
           if section.id == "meetings-manager"

@@ -6,12 +6,11 @@ Template.task_pane_meetings_manager_section.onCreated ->
 
   meetings_manager = APP.meetings_manager_plugin.meetings_manager
 
-  # @autorun ->
-  #   task_id = APP.modules.project_page.activeItemId()
-  #   meetings_manager.subscribeToNotesForTask task_id
-  #   meetings_manager.subscribeToPrivateNotesForTask task_id
-  #   meetings_manager.subscribeToMeetingsForTask task_id
+  @autorun ->
+    task_id = APP.modules.project_page.activeItemId()
+    meetings_manager.subscribeToMeetingsForTask task_id
 
+    return
 
 Template.task_pane_meetings_manager_section.helpers
   meetingCreatedThisTask: ->
