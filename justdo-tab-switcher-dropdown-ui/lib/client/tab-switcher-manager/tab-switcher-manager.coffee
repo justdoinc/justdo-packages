@@ -237,7 +237,7 @@ APP.executeAfterAppLibCode ->
     position: 200
     data:
       label: "Ticket Queues"
-      tab_id: "ticket-queues"
+      tab_id: "tickets-queues"
 
       icon_type: "feather"
       icon_val: "file"
