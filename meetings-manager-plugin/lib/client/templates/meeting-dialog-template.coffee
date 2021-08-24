@@ -322,8 +322,15 @@ Template.meetings_meeting_dialog.onRendered ->
       Session.set "updateTaskOrder", true
 
   @$(".meeting-time-wrapper").on 'shown.bs.dropdown', =>
-    @$(".meeting-time-input").val("")
-    @$(".meeting-time-input").focus()
+    $meeting_time_input = @$(".meeting-time-input")
+    if _.isEmpty($meeting_time_input.val())
+      use_am_pm = Meteor.user().profile.use_am_pm
+      if use_am_pm
+        $meeting_time_input.val(moment().format("h:mm A"))
+      else
+        $meeting_time_input.val(moment().format("HH:mm"))
+    $meeting_time_input.select()
+    $meeting_time_input.focus()
     return
 
   @autorun =>
@@ -491,7 +498,11 @@ Template.meetings_meeting_dialog.helpers
   # NEED TO CHANGE: We need to retrieve meeting time from Date !
   rawTime: (time) ->
     if (time?)
-      return moment(new Date(time)).format("HH:mm")
+      use_am_pm = Meteor.user().profile.use_am_pm
+      if use_am_pm
+        return moment(new Date(time)).format("h:mm A")
+      else
+        return moment(new Date(time)).format("HH:mm")
     return ""
 
   labelTime: (time) ->
