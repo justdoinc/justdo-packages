@@ -112,7 +112,7 @@
         <div class="meeting-note-container">
           <div class="meeting-note-title">General meeting notes</div>
           <div class="meeting-note">
-            {{> locking_text_editor content=meeting.note class="note" placeholder="Note" lock=meeting.note_lock disabled=mayNotEditMeetingNote onSave=onSaveMeetingNote editable=mayEdit}}
+            {{> locking_text_editor content=meeting.note class="note" placeholder="[Click to edit note]" lock=meeting.note_lock disabled=mayNotEditMeetingNote onSave=onSaveMeetingNote editable=mayEdit}}
           </div>
         </div>
       {{/if}}
