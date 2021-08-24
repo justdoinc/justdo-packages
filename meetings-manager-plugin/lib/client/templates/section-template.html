@@ -19,7 +19,7 @@
       {{#with meetings "draft"}}
         {{#if this.exist}}
           <section>
-            <span class="meetings-toolbar-section-title">Meetings unpublished</span>
+            <span class="meetings-toolbar-section-title">Unpublished</span>
             {{#each this.meetings}}
               {{> meeting_container}}
             {{/each}}
@@ -29,7 +29,7 @@
       {{#with meetings "pending"}}
         {{#if this.exist}}
           <section>
-            <span class="meetings-toolbar-section-title">Meetings pending</span>
+            <span class="meetings-toolbar-section-title">Published</span>
             {{#each this.meetings}}
               {{> meeting_container}}
             {{/each}}
@@ -39,7 +39,7 @@
       {{#with meetings "in-progress"}}
         {{#if this.exist}}
           <section>
-            <span class="meetings-toolbar-section-title">Meetings in progress</span>
+            <span class="meetings-toolbar-section-title">In progress</span>
             {{#each this.meetings}}
               {{> meeting_container}}
             {{/each}}

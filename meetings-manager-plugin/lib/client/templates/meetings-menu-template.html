@@ -16,7 +16,7 @@
           {{#with meetings "draft"}}
             {{#if this.exist}}
               <section class="meetings-menu-list-draft">
-                <div class="meetings-menu-section-title text-muted text-uppercase py-1">Meetings unpublished</div>
+                <div class="meetings-menu-section-title text-muted text-uppercase py-1">Unpublished</div>
                 {{#each this.meetings}}
                   <div class="meetings-menu-item d-flex align-items-center bg-light py-1 px-2">
                     {{> meetings_meeting_header}}
@@ -28,7 +28,7 @@
           {{#with meetings "pending"}}
             {{#if this.exist}}
               <section class="meetings-menu-list-pending">
-                <div class="meetings-menu-section-title text-muted text-uppercase py-1">Meetings pending</div>
+                <div class="meetings-menu-section-title text-muted text-uppercase py-1">Published</div>
                 {{#each this.meetings}}
                   <div class="meetings-menu-item d-flex align-items-center bg-light py-1 px-2">
                     {{> meetings_meeting_header}}
@@ -40,7 +40,7 @@
           {{#with meetings "in-progress"}}
             {{#if this.exist}}
               <section class="meetings-menu-list-in-progress">
-                <div class="meetings-menu-section-title text-muted text-uppercase py-1">Meetings in progress</div>
+                <div class="meetings-menu-section-title text-muted text-uppercase py-1">In progress</div>
                 {{#each this.meetings}}
                   <div class="meetings-menu-item d-flex align-items-center bg-light py-1 px-2">
                     {{> meetings_meeting_header}}
