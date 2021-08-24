@@ -712,13 +712,6 @@ Template.justdo_calendar_project_pane.helpers
 
   calendarViewResolution: -> number_of_days_to_display.get()
 
-  currentMemberAvatar: ->
-    user = Meteor.user()
-    if user?
-      return JustdoAvatar.showUserAvatarOrFallback(user)
-
-  currentMemberName: ->
-    return JustdoHelpers.displayName(Meteor.userId())
 
   members: ->
     tmpl = Template.instance()
