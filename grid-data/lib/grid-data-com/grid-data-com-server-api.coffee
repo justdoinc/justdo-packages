@@ -8,6 +8,8 @@ _.extend GridDataCom.prototype,
       throw @_error "missing-argument", "You must provide the perform_as field"
 
   _insertItem: (fields, perform_as) ->
+    check perform_as, String
+
     task_id = Random.id()
 
     upsert_mutator = {$set: fields}
