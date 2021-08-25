@@ -53,14 +53,18 @@ setMeetingMinutes = (tmpl, minutes) ->
 
 
 Template.meetings_meeting_dialog.onCreated ->
+  @autorun =>
+    data = Template.currentData()
+    @meeting_sub = APP.meetings_manager_plugin.meetings_manager.subscribeToMeeting data.meeting_id
+
+    return
+    
   @note_out_of_date = new ReactiveVar false
   @minimized = new ReactiveVar false
   @meetings_tasks_noRender = new ReactiveVar false
   @project_id = Router.current().project_id
   @is_editing_location = new ReactiveVar false
   @logo_data_url = null
-  @meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
-    _id: Template.currentData().meeting_id
 
   toDataURL = (url, callback) ->
     xhr = new XMLHttpRequest();
@@ -76,11 +80,7 @@ Template.meetings_meeting_dialog.onCreated ->
   toDataURL "/layout/logos-ext/justdo_logo_with_text_normal.png", (data_url) =>
     @logo_data_url = data_url
 
-  @autorun =>
-    data = Template.currentData()
-    @meeting_sub = APP.meetings_manager_plugin.meetings_manager.subscribeToMeeting data.meeting_id
-
-    return
+  
 
   @autorun =>
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -344,9 +344,18 @@ Template.meetings_meeting_dialog.helpers
   onSetDateRerender: ->
     tpl = Template.instance()
     Meteor.defer ->
-      tpl.$(".meeting-date").datepicker
-        "defaultDate": tpl.meeting.date
-        "dateFormat": "yy-mm-dd"
+      Tracker.autorun (comp) ->
+        meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
+          _id: tpl.data.meeting_id
+        ,
+          fields:
+            date: 1
+        
+        if meeting?
+          tpl.$(".meeting-date").datepicker
+            "defaultDate": meeting.date
+            "dateFormat": "yy-mm-dd"
+          comp.stop()
       
       return
 
