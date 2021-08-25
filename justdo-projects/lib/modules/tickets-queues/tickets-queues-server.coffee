@@ -80,7 +80,14 @@ _.extend PACK.modules.tickets_queues,
     check user_id, String
     project = @requireUserIsMemberOfProject target.project_id, user_id
 
-    tq = @_grid_data_com.collection.findOne(target.tq, {fields: {_id: 1, users: 1}})
+    tq = @_grid_data_com.collection.findOne(target.tq, {fields: {_id: 1, users: 1, owner_id: 1}})
+
+    if not task_fields.pending_owner_id?
+      if tq.owner_id == user_id
+        if "pending_owner_id" of task_fields
+          delete task_fields.pending_owner_id # delete it for case it is null
+        else
+          task_fields.pending_owner_id = tq.owner_id
 
     if not tq?
       throw new Meteor.Error("unknown-ticket-queue", "Ticket Queue #{target.tq} unknown")
@@ -126,7 +133,7 @@ _.extend PACK.modules.tickets_queues,
 
       return
 
-    return @_grid_data_com._insertItem task_fields
+    return @_grid_data_com._insertItem task_fields, user_id
 
   _setupIndices: ->
     @items_collection._ensureIndex {"is_tickets_queue": 1, "project_id": 1}
