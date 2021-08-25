@@ -213,6 +213,21 @@ _.extend JustdoTasksContextMenu.prototype,
         label: "Subject"
         order: 1 # -1 for DESC 1 for ASC
       }
+      {
+        field_id: "start_date"
+        label: "Start Date"
+        order: 1 # -1 for DESC 1 for ASC
+      }
+      {
+        field_id: "end_date"
+        label: "End Date"
+        order: 1 # -1 for DESC 1 for ASC
+      }
+      {
+        field_id: "due_date"
+        label: "Due Date"
+        order: 1 # -1 for DESC 1 for ASC
+      }
     ]
 
     current_position = 100
