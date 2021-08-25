@@ -953,32 +953,49 @@ _.extend GridDataCom.prototype,
 
     order = -1
 
-    APP.justdo_analytics.logMongoRawConnectionOp @collection._name, "find", query
-    @collection.rawCollection().find(query).collation({locale: "en"}).sort(sort).forEach Meteor.bindEnvironment (child) =>
-      # IMPORTANT!!!
-      #
-      # If you change the following modifiers in the future
-      # pay strong attention to the fact that we are bypassing collection2.
-      #
-      # Make sure your changes doesn't compromise security without collection2's
-      # schema restrictions!
+    null_queries = [{"#{field}": {$ne: null}}, {"#{field}": null}]
 
-      order += 1
+    async.eachSeries null_queries, Meteor.bindEnvironment((null_query, asyncCb) =>
+      current_query = _.extend {}, query, null_query
+      APP.justdo_analytics.logMongoRawConnectionOp @collection._name, "find", current_query
+      pending_updates = 0
+      @collection.rawCollection().find(current_query).collation({locale: "en"}).sort(sort).forEach(Meteor.bindEnvironment((child) =>
+        # IMPORTANT!!!
+        #
+        # If you change the following modifiers in the future
+        # pay strong attention to the fact that we are bypassing collection2.
+        #
+        # Make sure your changes doesn't compromise security without collection2's
+        # schema restrictions!
 
-      set = {$set: {}}
-      set.$set["parents.#{parent._id}.order"] = order
+        order += 1
 
-      # We don't want tasks which their order had been changed by the
-      # sortChildren by command to show in the recently changed items.
-      # We do so by so skipping collection2 procedures.
-      # Result was very messy and counter-productive as a result of this action
-      # in the recently updated view.
+        set = {$set: {}}
+        set.$set["parents.#{parent._id}.order"] = order
 
-      @collection.update child._id, set, {bypassCollection2: true}, (err) =>
-        if err?
-          @logger.error "sortChildren: failed to change item order #{JSON.stringify(err)}"
+        # We don't want tasks which their order had been changed by the
+        # sortChildren by command to show in the recently changed items.
+        # We do so by so skipping collection2 procedures.
+        # Result was very messy and counter-productive as a result of this action
+        # in the recently updated view.
+
+        pending_updates += 1
+        @collection.update child._id, set, {bypassCollection2: true}, (err) =>
+          pending_updates -= 1
+          if err?
+            @logger.error "sortChildren: failed to change item order #{JSON.stringify(err)}"
+
+          if pending_updates == 0
+            asyncCb()
+
+          return
 
         return
+      )) # End bindEnvironment, End forEach
+
+      return) # End outer bindEnvironment
+    , Meteor.bindEnvironment ->
+      # console.log "ALL completed"
 
       return
 
