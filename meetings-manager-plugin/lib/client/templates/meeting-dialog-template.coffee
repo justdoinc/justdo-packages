@@ -377,9 +377,11 @@ Template.meetings_meeting_dialog.helpers
     ,
       fields:
         organizer_id: 1
+        status: 1
 
-    return not APP.modules.project_page.curProj()?.getProjectConfiguration()?.block_meetings_deletion and
-      (Meteor.userId() == meeting.organizer_id or APP.modules.project_page.curProj()?.is_admin_rv.get())
+    return meeting.status == "draft" or 
+      (not APP.modules.project_page.curProj()?.getProjectConfiguration()?.block_meetings_deletion and
+        (Meteor.userId() == meeting.organizer_id or APP.modules.project_page.curProj()?.is_admin_rv.get()))
 
   meeting: -> APP.meetings_manager_plugin.meetings_manager.meetings.findOne
     _id: @meeting_id

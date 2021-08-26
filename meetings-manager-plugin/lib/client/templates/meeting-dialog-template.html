@@ -138,9 +138,6 @@
       <div class="meeting-dialog-footer">
         <div class="d-flex align-items-center justify-content-end py-4">
           {{#if mayEditFooter}}
-            {{#if showDiscardButton}}
-              <button type="button" class="btn btn-secondary btn-sm text-uppercase font-weight-bold btn-cancel-meeting mr-2">Discard</button>
-            {{/if}}
             {{#if $eq meeting.status "draft"}}
               <button type="button" class="btn btn-primary btn-sm text-uppercase font-weight-bold btn-publish-meeting">Publish</button>
             {{/if}}
