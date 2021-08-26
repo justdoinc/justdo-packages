@@ -1,5 +1,5 @@
 ColorsPickerDropdown = JustdoHelpers.generateNewTemplateDropdown "justdo-color-picker-dropdown", "justdo_color_picker_dropdown_content",
-  custom_dropdown_class: "dropdown-menu justdo-color-picker-dropdown-container animate slideIn shadow-lg border-0 p-3"
+  custom_dropdown_class: "dropdown-menu justdo-color-picker-dropdown-container animate slideIn shadow-lg border-0"
   custom_bound_element_options:
     close_button_html: null
 
