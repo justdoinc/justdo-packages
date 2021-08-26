@@ -186,32 +186,37 @@ _.extend GridData.prototype,
 
         return performOp()
 
-      item_users = @items_by_id[item_id].users
-      new_parent_item_users = @items_by_id[new_parent_item_id].users
+      augmented_fields_sub = JD.subscribeItemsAugmentedFields [item_id, new_parent_item_id], ["users"], {}, =>
+        item_users = APP.collections.TasksAugmentedFields.findOne(item_id).users
+        new_parent_item_users = APP.collections.TasksAugmentedFields.findOne(new_parent_item_id).users
 
-      diff =
-        alien: _.difference new_parent_item_users, item_users
-        # absent: _.difference item_users, new_parent_item_users # We decided not to suggest removing members absent in the parent task when adding new parent
+        augmented_fields_sub.stop()
 
-      if _.isEmpty(diff.absent) and _.isEmpty(diff.alien)
-        # no diff perform op right away
+        diff =
+          alien: _.difference new_parent_item_users, item_users
+          # absent: _.difference item_users, new_parent_item_users # We decided not to suggest removing members absent in the parent task when adding new parent
 
-        @logger.debug "usersDiffConfirmationCb skipped, no diff"
+        if _.isEmpty(diff.absent) and _.isEmpty(diff.alien)
+          # no diff perform op right away
 
-        return performOp()
+          @logger.debug "usersDiffConfirmationCb skipped, no diff"
 
-      proceed = ->
-        return performOp()
+          return performOp()
 
-      cancel = =>
-        @logger.debug "addParent cancelled by usersDiffConfirmationCb"
+        proceed = ->
+          return performOp()
 
-        # call cb with error
-        helpers.callCb cb, @_error("operation-cancelled", "addParent operation cancelled by usersDiffConfirmationCb")
+        cancel = =>
+          @logger.debug "addParent cancelled by usersDiffConfirmationCb"
+
+          # call cb with error
+          helpers.callCb cb, @_error("operation-cancelled", "addParent operation cancelled by usersDiffConfirmationCb")
+
+          return
+
+        usersDiffConfirmationCb(item_id, new_parent_item_id, diff, proceed, cancel)
 
         return
-
-      usersDiffConfirmationCb(item_id, new_parent_item_id, diff, proceed, cancel)
 
     return
 
@@ -330,32 +335,37 @@ _.extend GridData.prototype,
 
         return performOp()
 
-      path_item_users = @items_by_id[path_item_id].users
-      new_parent_item_users = @items_by_id[new_parent_item_id].users
+      augmented_fields_sub = JD.subscribeItemsAugmentedFields [path_item_id, new_parent_item_id], ["users"], {}, =>
+        path_item_users = APP.collections.TasksAugmentedFields.findOne(path_item_id).users
+        new_parent_item_users = APP.collections.TasksAugmentedFields.findOne(new_parent_item_id).users
 
-      diff =
-        absent: _.difference path_item_users, new_parent_item_users
-        alien: _.difference new_parent_item_users, path_item_users
+        augmented_fields_sub.stop()
+        
+        diff =
+          absent: _.difference path_item_users, new_parent_item_users
+          alien: _.difference new_parent_item_users, path_item_users
 
-      if _.isEmpty(diff.absent) and _.isEmpty(diff.alien)
-        # no diff perform op right away
+        if _.isEmpty(diff.absent) and _.isEmpty(diff.alien)
+          # no diff perform op right away
 
-        @logger.debug "usersDiffConfirmationCb skipped, no diff"
+          @logger.debug "usersDiffConfirmationCb skipped, no diff"
 
-        return performOp()
+          return performOp()
 
-      proceed = ->
-        return performOp()
+        proceed = ->
+          return performOp()
 
-      cancel = =>
-        @logger.debug "movePath cancelled by usersDiffConfirmationCb"
+        cancel = =>
+          @logger.debug "movePath cancelled by usersDiffConfirmationCb"
 
-        # call cb with error
-        helpers.callCb cb, @_error("operation-cancelled", "movePath operation cancelled by usersDiffConfirmationCb")
+          # call cb with error
+          helpers.callCb cb, @_error("operation-cancelled", "movePath operation cancelled by usersDiffConfirmationCb")
+
+          return
+
+        usersDiffConfirmationCb(path_item_id, new_parent_item_id, diff, proceed, cancel)
 
         return
-
-      usersDiffConfirmationCb(path_item_id, new_parent_item_id, diff, proceed, cancel)
 
     return
 
