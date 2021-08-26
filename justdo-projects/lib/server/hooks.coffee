@@ -4,7 +4,6 @@ _.extend Projects.prototype,
 
     setDescriptionLastUpdate = (user_id, task_doc) ->
       update =
-        description_lock: null
         $currentDate:
           "#{Projects.tasks_description_last_update_field_id}": true
 
