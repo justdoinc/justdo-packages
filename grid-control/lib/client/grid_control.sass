@@ -60,7 +60,7 @@ $active-shadow-color-v: rgba(160, 75, 162, 0.82)
 // $active-shadow-color-h: #D8361A
 // $active-shadow-color-v: rgba(216, 54, 26, 0.67)
 // Header cells paddings dictates the default editor/formatter
-// horizontal paddings 
+// horizontal paddings
 
 $standard-cell-padding-top: 5px
 $standard-cell-padding-bottom: 3px
@@ -92,6 +92,17 @@ $standard-cell-padding-bottom: 3px
     padding: $standard-cell-padding-top 5px $standard-cell-padding-bottom
     overflow: hidden
     min-height: $row-min-height
+
+  .grid-formatter.key-val-formatter
+    padding: 4px
+    .key-val-wrapper
+      border-radius: 3px
+      line-height: 100%
+      padding: 4px
+      display: flex
+      align-items: center
+
+
 
   .slick-cell
     // Cancel all transparent borders

@@ -67,8 +67,10 @@ GridControl.installFormatter "keyValueFormatter",
       custom_style = ''
 
     formatter = """
-      <div class="grid-formatter key-val-formatter" #{custom_style}>
+      <div class="grid-formatter key-val-formatter">
+        <div class="key-val-wrapper" #{custom_style}>
         #{JustdoHelpers.xssGuard(getKeyValue(schema, value), {allow_html_parsing: true, enclosing_char: ''})}
+        </div>
       </div>
     """
 
