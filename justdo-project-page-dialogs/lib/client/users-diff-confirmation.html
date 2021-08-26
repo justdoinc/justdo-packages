@@ -33,7 +33,7 @@
   <div class="members-list-container {{#if action_members}}{{#if section_width_trigger}}full-width{{/if}}{{else}}hide-container{{/if}}">
       <div class="{{#if $not perform_action}}avoid-action{{/if}} members-update-dialog-{{action_id}}-section">
         <div class="bulk-select-section">
-          {{section_label}}<br />
+          {{{xssGuard section_label}}}<br />
           <div class="bulk-select-label">{{proceed_message}}:</div> <div class="select-all">All</div> <div class="select-none">None</div>
         </div>
         <div class="members-diff">

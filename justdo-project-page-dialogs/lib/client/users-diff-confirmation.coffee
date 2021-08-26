@@ -5,82 +5,71 @@ getProjectPageModule = -> APP.modules.project_page
 
 ProjectPageDialogs.JustdoTaskMembersDiffDialog =
   usersDiffConfirmationCb: (item_id, target_id, diff, confirm, cancel, options) ->
-    options = _.extend {action_name: "move"}, (options or {})
+    required_users_info = diff.absent.concat(diff.alien)
+    APP.projects.ensureUsersPublicBasicUsersInfoLoaded required_users_info, ->
+      options = _.extend {action_name: "move"}, (options or {})
 
-    data =
-      item_id: item_id
-      target_id: target_id
-      absent: if _.isEmpty diff.absent then null else diff.absent
-      alien: if _.isEmpty diff.alien then null else diff.alien
-      action_name: options.action_name
+      data =
+        item_id: item_id
+        target_id: target_id
+        absent: if _.isEmpty diff.absent then null else diff.absent
+        alien: if _.isEmpty diff.alien then null else diff.alien
+        action_name: options.action_name
 
-    message_template =
-      JustdoHelpers.renderTemplateInNewNode(Template.users_diff_confirmation, data)
+      message_template =
+        JustdoHelpers.renderTemplateInNewNode(Template.users_diff_confirmation, data)
 
-    bootbox.dialog
-      title: "Members Update"
-      message: message_template.node
-      className: "members-update-dialog bootbox-new-design"
+      bootbox.dialog
+        title: "Members Update"
+        message: message_template.node
+        className: "members-update-dialog bootbox-new-design"
 
-      onEscape: ->
-        cancel()
+        onEscape: ->
+          cancel()
 
-        return true
+          return true
 
-      buttons:
-        cancel:
-          label: "Cancel"
+        buttons:
+          cancel:
+            label: "Cancel"
 
-          className: "btn-light"
+            className: "btn-light"
 
-          callback: ->
-            cancel()
+            callback: ->
+              cancel()
 
-            return true
+              return true
 
-        continue:
-          label: "Save"
+          continue:
+            label: "Save"
 
-          callback: =>
-            module = getProjectPageModule()
-            project = module.curProj()
+            callback: =>
+              module = getProjectPageModule()
+              project = module.curProj()
 
-            grid_control = module.gridControl()
-            grid_data = module.gridData()
+              grid_control = module.gridControl()
+              grid_data = module.gridData()
 
-            # Note we set {each_options: {expand_only: true}} since
-            # grid_control.getPathObjNonReactive works on visible items only
-            item_path = grid_data.getCollectionItemIdPath(item_id, {each_options: {expand_only: true}})
-            item_obj = grid_control.getPathObjNonReactive(item_path)
+              # Note we set {each_options: {expand_only: true}} since
+              # grid_control.getPathObjNonReactive works on visible items only
+              item_path = grid_data.getCollectionItemIdPath(item_id, {each_options: {expand_only: true}})
+              item_obj = grid_control.getPathObjNonReactive(item_path)
 
-            members_ids_to_remove = []
-            if perform_removals.get()
-              members_ids_to_remove = _getProceedMembersIdsInReactiveVar members_to_remove
+              members_ids_to_remove = []
+              if perform_removals.get()
+                members_ids_to_remove = _getProceedMembersIdsInReactiveVar members_to_remove
 
-            members_ids_to_add = []
-            if perform_additions.get()
-              members_ids_to_add = _getProceedMembersIdsInReactiveVar members_to_add
+              members_ids_to_add = []
+              if perform_additions.get()
+                members_ids_to_add = _getProceedMembersIdsInReactiveVar members_to_add
 
-            if _.isEmpty(members_ids_to_remove) and _.isEmpty(members_ids_to_add)
-              # Nothing to do
-              return confirm()
+              if _.isEmpty(members_ids_to_remove) and _.isEmpty(members_ids_to_add)
+                # Nothing to do
+                return confirm()
 
-            items_to_edit = [item_id]
-            items_to_assume_ownership_of = []
-            items_to_cancel_ownership_transfer_of = []
-
-            if item_obj.owner_id in members_ids_to_remove
-              items_to_assume_ownership_of.push item_obj._id
-
-            if item_obj.pending_owner_id in members_ids_to_remove
-              items_to_cancel_ownership_transfer_of.push item_obj._id
-
-            tree_traversing_options =
-              expand_only: false
-              filtered_tree: false
-
-            grid_data.each item_path, tree_traversing_options, (section, item_type, item_obj, path, expand_state) ->
-              items_to_edit.push item_obj._id
+              items_to_edit = [item_id]
+              items_to_assume_ownership_of = []
+              items_to_cancel_ownership_transfer_of = []
 
               if item_obj.owner_id in members_ids_to_remove
                 items_to_assume_ownership_of.push item_obj._id
@@ -88,59 +77,73 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
               if item_obj.pending_owner_id in members_ids_to_remove
                 items_to_cancel_ownership_transfer_of.push item_obj._id
 
-            bulk_updates = []
-            if not _.isEmpty members_ids_to_remove
-              bulk_updates.push (cb) ->
-                members_remove_modifier =
-                  $pull:
-                    users:
-                      $in: members_ids_to_remove
+              tree_traversing_options =
+                expand_only: false
+                filtered_tree: false
 
-                project.bulkUpdate items_to_edit, members_remove_modifier, cb
+              grid_data.each item_path, tree_traversing_options, (section, item_type, item_obj, path, expand_state) ->
+                items_to_edit.push item_obj._id
 
-            if not _.isEmpty members_ids_to_add
-              bulk_updates.push (cb) ->
-                members_add_modifier =
-                  $push:
-                    users:
-                      $each: members_ids_to_add
+                if item_obj.owner_id in members_ids_to_remove
+                  items_to_assume_ownership_of.push item_obj._id
 
-                project.bulkUpdate items_to_edit, members_add_modifier, cb
+                if item_obj.pending_owner_id in members_ids_to_remove
+                  items_to_cancel_ownership_transfer_of.push item_obj._id
 
-            if not _.isEmpty items_to_assume_ownership_of
-              bulk_updates.push (cb) ->
-                ownership_update_modifier =
-                  $set:
-                    owner_id: Meteor.userId()
-                    pending_owner_id: null
-                    is_removed_owner: null
+              bulk_updates = []
+              if not _.isEmpty members_ids_to_remove
+                bulk_updates.push (cb) ->
+                  members_remove_modifier =
+                    $pull:
+                      users:
+                        $in: members_ids_to_remove
 
-                project.bulkUpdate items_to_assume_ownership_of, ownership_update_modifier, cb
+                  project.bulkUpdate items_to_edit, members_remove_modifier, cb
 
-            if not _.isEmpty items_to_cancel_ownership_transfer_of
-              bulk_updates.push (cb) ->
-                ownership_transfer_cancel_modifier =
-                  $set:
-                    pending_owner_id: null
+              if not _.isEmpty members_ids_to_add
+                bulk_updates.push (cb) ->
+                  members_add_modifier =
+                    $push:
+                      users:
+                        $each: members_ids_to_add
 
-                project.bulkUpdate items_to_cancel_ownership_transfer_of, ownership_transfer_cancel_modifier, cb
+                  project.bulkUpdate items_to_edit, members_add_modifier, cb
 
-            async.each bulk_updates,
-              (bulk_update, cb) ->
-                bulk_update(cb)
-              ,
-              (err) ->
-                module = getProjectPageModule()
+              if not _.isEmpty items_to_assume_ownership_of
+                bulk_updates.push (cb) ->
+                  ownership_update_modifier =
+                    $set:
+                      owner_id: Meteor.userId()
+                      pending_owner_id: null
+                      is_removed_owner: null
 
-                if err?
-                  module.logger.error "Failed to update members"
-                  console.log err
+                  project.bulkUpdate items_to_assume_ownership_of, ownership_update_modifier, cb
 
-                  return confirm() # We confirm anyway, since we don't have a way to handle partial success and its consequences
-                else
-                  return confirm()
+              if not _.isEmpty items_to_cancel_ownership_transfer_of
+                bulk_updates.push (cb) ->
+                  ownership_transfer_cancel_modifier =
+                    $set:
+                      pending_owner_id: null
 
-            return
+                  project.bulkUpdate items_to_cancel_ownership_transfer_of, ownership_transfer_cancel_modifier, cb
+
+              async.each bulk_updates,
+                (bulk_update, cb) ->
+                  bulk_update(cb)
+                ,
+                (err) ->
+                  module = getProjectPageModule()
+
+                  if err?
+                    module.logger.error "Failed to update members"
+                    console.log err
+
+                    return confirm() # We confirm anyway, since we don't have a way to handle partial success and its consequences
+                  else
+                    return confirm()
+
+              return
+      return # ensureUsersPublicBasicUsersInfoLoaded
 
 # Note: we assume only one confirmation dialog at a time
 perform_additions = new ReactiveVar true
@@ -244,7 +247,7 @@ Template.users_diff_confirmation.helpers
     [
       {
         action_id: "add-aliens"
-        section_label: "The following members will be added:"
+        section_label: "The following members <b>will be <u>ADDED</u></b>:"
         proceed_action_reactive_var: perform_additions
         action_members_reactive_var: members_to_add
         proceed_message: "Add"
@@ -254,7 +257,7 @@ Template.users_diff_confirmation.helpers
       },
       {
         action_id: "remove-absents"
-        section_label: "The following members will be removed:"
+        section_label: "The following members <b>will be <u>REMOVED</u></b>:"
         proceed_action_reactive_var: perform_removals
         action_members_reactive_var: members_to_remove
         proceed_message: "Remove"
