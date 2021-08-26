@@ -112,3 +112,28 @@ _.extend Projects.prototype,
     
     return
 
+  ensureUsersPublicBasicUsersInfoLoaded: (users_array, cb) ->
+    # cb is called only once attempt to retreive users_array information is completed
+    
+    if _.isString(users_array)
+      users_array = [users_array]
+
+    @addRequiredUsers(users_array)
+
+    temporary_public_basic_user_info_subscription = Meteor.subscribe "publicBasicUsersInfo", Array.from(@_encountered_users)
+    # temporary because the _encountered_users_fetcher_comp will take care of maintaing users_array
+    # users in the publicBasicUsersInfo publication merge box following unsubscription
+
+    JustdoHelpers.awaitValueFromReactiveResource
+      reactiveResource: => temporary_public_basic_user_info_subscription.ready()
+
+      evaluator: (val) -> val is true
+
+      cb: ->
+        temporary_public_basic_user_info_subscription.stop()
+
+        JustdoHelpers.callCb(cb)
+
+        return
+
+    return
