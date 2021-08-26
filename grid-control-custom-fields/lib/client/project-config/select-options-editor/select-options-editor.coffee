@@ -190,7 +190,7 @@ APP.executeAfterAppLibCode ->
 
     option_id = Random.id()
 
-    option_background_color = Random.choice(available_colors)
+    option_background_color = default_option_color
 
     $custom_field_options = tpl.$(".custom-field-options")
     appendOptionToEditor($custom_field_options, option_id, option_label, option_background_color)
