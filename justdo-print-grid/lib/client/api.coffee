@@ -302,19 +302,30 @@ _.extend JustdoPrintGrid.prototype,
       print_modal_buttons = """
         <div class="print-modal-buttons">
           <div class="print-tasks">
-            <i class="fa fa-print fa-2x"></i>
+            <svg class="jd-icon jd-c-pointer">
+              <use xlink:href="/layout/icons-feather-sprite.svg#printer"></use>
+              <title>Print</title>
+            </svg>
           </div>
           <div class="separator"></div>
           <div class="export-tasks">
-            <i class="fa fa-file-excel-o fa-2x"></i>
+            <svg class="jd-icon jd-c-pointer">
+              <use xlink:href="/layout/icons-feather-sprite.svg#download"></use>
+              <title>Export CSV</title>
+            </svg>
           </div>
           <div class="separator"></div>
           <div class="print-mode-settings">
-            <i class="fa fa-cog settings-button fa-2x"></i>
+            <svg class="jd-icon jd-c-pointer">
+              <use xlink:href="/layout/icons-feather-sprite.svg#settings"></use>
+              <title>Columns settings</title>
+            </svg>
           </div>
           <div class="separator"></div>
           <div class="close-print-grid-mode">
-            <i class="fa fa-times fa-2x"></i>
+            <svg class="jd-icon jd-c-pointer">
+              <use xlink:href="/layout/icons-feather-sprite.svg#x"></use>
+            </svg>
           </div>
         </div>
       """
