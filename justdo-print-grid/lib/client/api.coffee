@@ -324,13 +324,14 @@ _.extend JustdoPrintGrid.prototype,
 
       # Create print settings popup
       print_settings = """
-        <div class="print-settings">
+        <div class="print-settings jd-p-075 shadow-lg">
           <div class="modal-header d-flex align-items-center">
-            <h5 class="modal-title">Columns options</h5>
+            <div class="modal-title">Columns options</div>
             <button class="bootbox-close-button close">×</button>
           </div>
           <ul></ul>
           <div class="modal-footer">
+            <label class="print-settings-select-all"><input type="checkbox">Select all</label>
             <button class="btn btn-primary print-settings-apply">Apply</button>
           </div>
         </div>
@@ -354,7 +355,13 @@ _.extend JustdoPrintGrid.prototype,
           if schema[property]?.grid_visible_column == true
             label = schema[property].label
             checked_attr = checkVisibility(property)
-            li += """<li><label class="sortable-item"><input type="checkbox" #{checked_attr} field-name="#{JustdoHelpers.xssGuard(property)}">#{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})}</label><span class="sortable-aria"><span></li>"""
+            li += """<li>
+                      <span class="sortable-aria">
+                        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical-double"></use></svg>
+                      </span>
+                      <label class="sortable-item"><input type="checkbox" #{checked_attr} field-name="#{JustdoHelpers.xssGuard(property)}"><div class="sortable-item-text">#{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})}</div></label>
+                     </li>
+                  """
 
         $(".print-settings ul").html li
         $(".print-settings ul li").first().addClass "locked"
@@ -385,6 +392,17 @@ _.extend JustdoPrintGrid.prototype,
       # Close print settings
       $(".print-settings .close").on "click", ->
         closePrintSettngs()
+        return
+
+      # Select all columns
+      $(".print-settings-select-all").on "click", (e) ->
+        checked_status = $(e.currentTarget).find("input").is(":checked")
+
+        if checked_status
+          $(".print-settings .sortable-item input").prop("checked", true)
+        else
+          $(".print-settings .sortable-item input").prop("checked", false)
+
         return
 
       # Apply print settings
