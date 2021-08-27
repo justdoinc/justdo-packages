@@ -324,7 +324,7 @@ _.extend GridControl.prototype,
 
         if field_id_to_col_id[field]?
           # Invalidate field column if in present grid
-          @_grid.updateCell(row, field_id_to_col_id[field])
+          @_grid.updateCell(row, field_id_to_col_id[field], true) # true is to allow the same cell to update twice on the same tick
 
         # When grid-data informs us that a field data updated in the db (the "grid-item-changed" event),
         # even if that field doesn't exist in the grid (hidden column) trigger invalidation to all its
