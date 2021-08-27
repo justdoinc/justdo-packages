@@ -505,8 +505,9 @@ Template.meetings_meeting_dialog.helpers
     return _.filter tasks, _.identity
 
   rawdate: (date) ->
+    date_format = Meteor.user().profile.date_format
     if(date?)
-      return moment(date).format("YYYY-MM-DD")
+      return moment(date).format(date_format)
     return ""
 
   labelDate: (date) ->
