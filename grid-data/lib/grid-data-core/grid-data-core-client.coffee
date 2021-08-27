@@ -123,6 +123,7 @@ _.extend GridDataCore.prototype,
     # next flush.
     # Items are in the form: ["type", update]
     @_data_changes_queue = []
+    @_new_items_pending_insert = {}
 
     @flush_manager = new JustdoHelpers.FlushManager
       min_flush_delay: 80
@@ -337,6 +338,18 @@ _.extend GridDataCore.prototype,
     @flush_manager.on "flush", =>
       @flush()
 
+      return
+
+  updateRelatedToOurTasksQuery: (id) ->
+    # Note, after-set is the only place where we explicitly check for whether an update is related to our
+    # tasks query using isDocMatchedByTasksQuery() is done.
+    #
+    # Following after-set we assume that if an item is under @items_by_id or under @_new_items_pending_insert
+    # the item with that id already passed that test before.
+    if id of @items_by_id or id of @_new_items_pending_insert
+      return true
+    return false
+
   _initItemsTracker: ->
     if not @destroyed and not @_collection_id_map_events_listeners?
       isDocMatchedByTasksQuery = (doc) => not @tasks_query.project_id? or doc.project_id == @tasks_query.project_id
@@ -347,24 +360,26 @@ _.extend GridDataCore.prototype,
             return
 
           @_data_changes_queue.push ["add", [id, EJSON.clone(value)]]
+          @_new_items_pending_insert[id] = true
 
           @flush_manager.setNeedFlush()
 
           return
 
         "after-remove": (id) =>
-          # Note, we don't check isDocMatchedByTasksQuery, if we got an item under @items_by_id
-          # the item with that id already passed that test before.
-          if id of @items_by_id
-            @_data_changes_queue.push ["remove", [id]]
+          if not @updateRelatedToOurTasksQuery(id)
+            # Update isn't related to the tasks query we track
+            return
 
-            @flush_manager.setNeedFlush()
+          @_data_changes_queue.push ["remove", [id]]
+
+          @flush_manager.setNeedFlush()
 
           return
 
         "after-unsetDocFields": (id, removed_fields) =>
-          if id not of @items_by_id
-            # Update isn't related to us
+          if not @updateRelatedToOurTasksQuery(id)
+            # Update isn't related to the tasks query we track
             return
 
           @_data_changes_queue.push ["unset_fields", [id, removed_fields]]
@@ -378,8 +393,8 @@ _.extend GridDataCore.prototype,
 
           # @logger.debug "Tracker: Item changed #{id}"
 
-          if id not of @items_by_id
-            # Update isn't related to us
+          if not @updateRelatedToOurTasksQuery(id)
+            # Update isn't related to the tasks query we track
             return
 
           # Take care of parents changes
@@ -525,6 +540,7 @@ _.extend GridDataCore.prototype,
       console.error "grid-data: A hook attached to 'data-changes-queue-processed' raised an exception", e
 
     @_data_changes_queue = []
+    @_new_items_pending_insert = {}
 
     @logger.debug "Flush: done"
 
