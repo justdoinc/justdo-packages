@@ -562,14 +562,15 @@ Template.justdo_projects_dashboard_project_line.onCreated ->
       fields: fields_of_interest
 
     grid_data.each path, (section, item_type, item_obj) ->
-      collected_data.tasks_count += 1
-      for field_id, field_data of collected_data.fields
-        if not (field_value = item_obj[field_id])?
-          field_data.undefined += 1
-        else
-          if not field_data[field_value]?
-            field_data[field_value] = 0
-          field_data[field_value] += 1
+      if JustdoProjectsDashboard.taskExcluder item_obj
+        collected_data.tasks_count += 1
+        for field_id, field_data of collected_data.fields
+          if not (field_value = item_obj[field_id])?
+            field_data.undefined += 1
+          else
+            if not field_data[field_value]?
+              field_data[field_value] = 0
+            field_data[field_value] += 1
       return #and of each grid_data iterator
     self.collected_data_rv.set collected_data
     APP.justdo_projects_dashboard.main_part_dirty_rv.set true
