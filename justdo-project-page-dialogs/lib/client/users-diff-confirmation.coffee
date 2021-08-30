@@ -5,7 +5,7 @@ getProjectPageModule = -> APP.modules.project_page
 
 ProjectPageDialogs.JustdoTaskMembersDiffDialog =
   usersDiffConfirmationCb: (item_id, target_id, diff, confirm, cancel, options) ->
-    required_users_info = diff.absent.concat(diff.alien)
+    required_users_info = _.union(diff.absent, diff.alien)
     APP.projects.ensureUsersPublicBasicUsersInfoLoaded required_users_info, ->
       options = _.extend {action_name: "move"}, (options or {})
 
