@@ -84,6 +84,10 @@ Template.justdo_color_picker_dropdown_content.onRendered ->
 
   return
 
+Template.justdo_color_picker_dropdown.helpers
+  showTransparentBackground: (color) ->
+    return color == "ffffff"
+
 Template.justdo_color_picker_dropdown_content.helpers
   isSelectedColor: ->
     tpl = Template.instance()
@@ -92,22 +96,13 @@ Template.justdo_color_picker_dropdown_content.helpers
 
     return current_color == tpl.color_picker_controller.getSelectedColor()
 
-  contrastClasses: ->
-    current_color = String(@)
-
-    contrast_classes = ""
-
-    if current_color.toLowerCase() == "ffffff"
-      contrast_classes += "justdo-color-picker-white-bg-border-required"
-
-    return contrast_classes
-
-
   colorArrays: ->
     color_arrays = []
     available_colors = @.color_picker_controller.options.available_colors
 
     color_array = []
+
+    # chunk - is a number of colors in one vertical palette
     chunk = 6
     i = 0
     while i < available_colors.length
@@ -115,9 +110,10 @@ Template.justdo_color_picker_dropdown_content.helpers
       color_arrays.push color_array
       i += chunk
 
-    console.log color_arrays
-
     return color_arrays
+
+  showTransparentBackground: (color) ->
+    return color == "ffffff"
 
 Template.justdo_color_picker_dropdown_content.events
   "click .justdo-color-picker-color-option": (e, tpl) ->

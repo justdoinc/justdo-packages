@@ -1,6 +1,10 @@
 <template name="justdo_color_picker_dropdown">
   <div class="justdo-color-picker-color-option-opener {{color_picker_controller.options.opener_custom_class}}" title="{{color_picker_controller.options.label}}">
-    <div class="justdo-color-picker-color-option" style="background-color: #{{color_picker_controller.getSelectedColor}}"></div>
+    <div class="justdo-color-picker-color-option" style="background-color: #{{color_picker_controller.getSelectedColor}}">
+      {{#if showTransparentBackground color_picker_controller.getSelectedColor}}
+        {{> justdo_color_picker_color_option_transparent}}
+      {{/if}}
+    </div>
   </div>
 </template>
 
@@ -13,11 +17,29 @@
       <div class="justdo-color-picker-colors-palette">
           {{#each this}}
             <div class="{{#if isSelectedColor}}justdo-color-picker-color-option-selected{{/if}}">
-              <svg class="justdo-color-picker-color-option-check" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
-              <div class="justdo-color-picker-color-option {{contrastClasses}}" style="background-color: #{{this}}"></div>
+              <svg class="justdo-color-picker-color-option-check {{#if showTransparentBackground this}}dark{{/if}}" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+                <div class="justdo-color-picker-color-option" style="background-color: #{{this}}">
+                  {{#if showTransparentBackground this}}
+                    {{> justdo_color_picker_color_option_transparent}}
+                  {{/if}}
+                </div>
             </div>
           {{/each}}
       </div>
     {{/each}}
+  </div>
+</template>
+
+<template name="justdo_color_picker_color_option_transparent">
+  <div class="justdo-color-picker-color-option-transparent">
+    <div class="bg-transparent-dark"></div>
+    <div class="bg-transparent-white"></div>
+    <div class="bg-transparent-dark"></div>
+    <div class="bg-transparent-white"></div>
+    <div class="bg-transparent-dark"></div>
+    <div class="bg-transparent-white"></div>
+    <div class="bg-transparent-dark"></div>
+    <div class="bg-transparent-white"></div>
+    <div class="bg-transparent-dark"></div>
   </div>
 </template>
