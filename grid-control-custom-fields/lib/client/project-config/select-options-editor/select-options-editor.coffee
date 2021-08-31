@@ -1,5 +1,9 @@
 default_option_color = "ffffff"
-available_colors = ["ffffff", "d50001", "e57c73", "f4521e", "f6bf25", "33b679", "0a8043", "019be5", "3f51b5" ,"7986cb", "8d24aa", "616161", "4285f4", "000000"]
+available_colors = [
+  "f44336", "ffcdd2", "e57373", "f44336", "d32f2f", "b71c1c", "6f0505",
+  "9c27b0", "e1bee7", "ba68c8", "9c27b0", "7b1fa2", "4a148c", "2a0656"
+
+]
 
 generatePickerDropdown = (selected_color) ->
   return new JustdoColorPickerDropdownController

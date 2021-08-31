@@ -102,6 +102,23 @@ Template.justdo_color_picker_dropdown_content.helpers
 
     return contrast_classes
 
+
+  colorArrays: ->
+    color_arrays = []
+    available_colors = @.color_picker_controller.options.available_colors
+
+    color_array = []
+    chunk = 7
+    i = 0
+    while i < available_colors.length
+      color_array = available_colors.slice(i, i + chunk)
+      color_arrays.push color_array
+      i += chunk
+
+    console.log color_arrays
+
+    return color_arrays
+
 Template.justdo_color_picker_dropdown_content.events
   "click .justdo-color-picker-color-option": (e, tpl) ->
     selected_color = String(@)
