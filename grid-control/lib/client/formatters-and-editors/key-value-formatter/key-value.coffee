@@ -29,7 +29,7 @@ getKeyValue = (schema, value, preferred_format="html") ->
 
   if preferred_format == "print" and (bg_color = value_by_formats.bg_color)?
     ret = """
-      <div class="justdo-color-picker-color-option-container justdo-color-picker-color-option-opener custom-fields-justdo-color-picker-opener">
+      <div class="justdo-color-picker-color-option-opener custom-fields-justdo-color-picker-opener">
         <div class="justdo-color-picker-color-option border-0" style="background-color: ##{bg_color.replace(/^#/, "")}"></div>
       </div> #{ret}
     """
