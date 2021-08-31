@@ -44,10 +44,10 @@ saveImportConfig = (selected_columns_definitions) ->
   return
 
 scrollToAndHighlightProblematicRow = (line_number) ->
-  problematic_row = $(".justdo-clipboard-import-table tr:nth-child(#{line_number + 1})")
+  $problematic_row = $(".justdo-clipboard-import-table tr:nth-child(#{line_number + 1})")
   # problematic_row is a jQuery element, scrollIntoView() is native js method
-  problematic_row[0].scrollIntoView({behavior: "smooth", block: "center"})
-  problematic_row.effect("highlight", {}, 3000)
+  $problematic_row.get(0).scrollIntoView({behavior: "smooth", block: "center"})
+  $problematic_row.effect("highlight", {}, 3000)
   return
 
 getAvailableFieldTypes = ->
@@ -259,6 +259,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     if task[JustdoPlanningUtilities.is_milestone_pseudo_field_id] == "true"
       if task.start_date? and task.end_date? and task.start_date != task.end_date
+        scrollToAndHighlightProblematicRow line_number
         JustdoSnackbar.show
           text: "Task #{task.title} at line #{line_number} is a milestone, it can only have the same Start Date and End Date."
           duration: 15000
