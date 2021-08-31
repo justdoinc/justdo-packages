@@ -22,12 +22,32 @@
   border-radius: 5px
   margin: 3px
   cursor: pointer
-  transition: box-shadow 0.35s
+  transition: all 0.35s
   box-shadow: 0 0px 3px rgba(171, 178, 191, 0.5)
   &:hover
     box-shadow: 0 0 0 2px rgba(171, 178, 191, 0.5)
-  &.justdo-color-picker-color-option-selected
+    transform: scale(1.1)
+
+.justdo-color-picker-color-option-check
+  position: absolute
+  stroke: white
+  stroke-width: 3px
+  stroke-linecap: round
+  stroke-linejoin: round
+  fill: none
+  width: 16px
+  height: 16px
+  opacity: 0.75
+  display: none
+
+.justdo-color-picker-color-option-selected
+  display: flex
+  align-items: center
+  justify-content: center
+  .justdo-color-picker-color-option
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25)
+  .justdo-color-picker-color-option-check
+    display: flex
 
 .justdo-color-picker-white-bg-border-required
   border: 1px solid #9f9f9f

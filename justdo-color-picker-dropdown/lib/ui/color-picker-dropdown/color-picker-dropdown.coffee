@@ -108,7 +108,7 @@ Template.justdo_color_picker_dropdown_content.helpers
     available_colors = @.color_picker_controller.options.available_colors
 
     color_array = []
-    chunk = 7
+    chunk = 6
     i = 0
     while i < available_colors.length
       color_array = available_colors.slice(i, i + chunk)

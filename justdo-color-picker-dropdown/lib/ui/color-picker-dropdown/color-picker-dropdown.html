@@ -12,7 +12,10 @@
     {{#each colorArrays}}
       <div class="justdo-color-picker-colors-palette">
           {{#each this}}
-            <div class="justdo-color-picker-color-option {{contrastClasses}} {{#if isSelectedColor}}justdo-color-picker-color-option-selected{{/if}}" style="background-color: #{{this}}"></div>
+            <div class="{{#if isSelectedColor}}justdo-color-picker-color-option-selected{{/if}}">
+              <svg class="justdo-color-picker-color-option-check" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+              <div class="justdo-color-picker-color-option {{contrastClasses}}" style="background-color: #{{this}}"></div>
+            </div>
           {{/each}}
       </div>
     {{/each}}
