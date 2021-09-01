@@ -86,7 +86,7 @@ Template.justdo_color_picker_dropdown_content.onRendered ->
 
 Template.justdo_color_picker_dropdown.helpers
   showTransparentBackground: (color) ->
-    return color == "ffffff"
+    return color == "00000000"
 
 Template.justdo_color_picker_dropdown_content.helpers
   isSelectedColor: ->
@@ -113,7 +113,17 @@ Template.justdo_color_picker_dropdown_content.helpers
     return color_arrays
 
   showTransparentBackground: (color) ->
-    return color == "ffffff"
+    return color == "00000000"
+
+  contrastClasses: ->
+    current_color = String(@)
+
+    contrast_classes = ""
+
+    if current_color.toLowerCase() == "ffffff" or current_color.toLowerCase() == "00000000"
+      contrast_classes += "justdo-color-picker-contrast-required"
+
+    return contrast_classes
 
 Template.justdo_color_picker_dropdown_content.events
   "click .justdo-color-picker-color-option": (e, tpl) ->

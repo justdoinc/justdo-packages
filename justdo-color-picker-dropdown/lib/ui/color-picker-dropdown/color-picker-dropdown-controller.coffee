@@ -1,11 +1,11 @@
 JustdoColorPickerDropdownControllerOptionsSchema = new SimpleSchema
   available_colors:
     type: [String]
-    defaultValue: ["ffffff", "d50001", "e57c73", "f4521e", "f6bf25", "33b679", "0a8043", "019be5", "3f51b5" ,"7986cb", "8d24aa", "616161", "4285f4", "000000"]
+    defaultValue: ["00000000", "ffffff", "d50001", "e57c73", "f4521e", "f6bf25", "33b679", "0a8043", "019be5", "3f51b5" ,"7986cb", "8d24aa", "616161", "4285f4", "000000"]
 
   default_color:
     type: String
-    defaultValue: "ffffff"
+    defaultValue: "00000000"
 
   label:
     type: String

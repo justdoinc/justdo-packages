@@ -1,6 +1,6 @@
-default_option_color = "ffffff"
+default_option_color = "00000000"
 available_colors = [
-  "ffffff", "cfd8dc", "90a4ae", "455a64", "37474f", "000000",
+  "00000000", "ffffff", "90a4ae", "455a64", "37474f", "000000",
   "f44336", "ffcdd2", "fb9797", "d32f2f", "b71c1c", "6f0505",
   "9D4EDD", "E0AAFF", "C77DFF", "7B2CBF", "5A189A", "3C096C",
   "3f51b5", "c5cae9", "7986cb", "303f9f", "1a237e", "080f5d",
