@@ -16,16 +16,19 @@ bindTargetToPaste = (tpl)->
     clipboard_data = e.originalEvent.clipboardData
     if ("text/html" in clipboard_data.types)
       data = clipboard_data.getData("text/html")
+      date_text = clipboard_data.getData("text/plain").split("\r\n").map (row) -> row.split "\t"
 
       # Info about why we use [^\x05] can be found on: https://bugzilla.mozilla.org/show_bug.cgi?id=1579867
       tr_reg_exp = /<\s*tr[^>]*>([^\x05]*?)<\s*\/\s*tr>/g
       td_reg_exp = /<\s*td[^>]*>([^\x05]*?)<\s*\/\s*td>/g
       longest_row_length = 0
       rows = []
+      processing_row_number = 0
       while ((tr = tr_reg_exp.exec(data)) != null)
         cells = []
         row_length = 0
         all_cells_are_empty = true
+        processing_row_number += 1
         processing_column_number = 0
         while ((td = td_reg_exp.exec(tr[1])) != null)
           processing_column_number += 1
@@ -44,6 +47,10 @@ bindTargetToPaste = (tpl)->
 
           cell = cell.replace /&lt;/g, "<"
           cell = cell.replace /&gt;/g, ">"
+
+          cell_from_text = date_text[processing_row_number-1][processing_column_number-1]
+          if cell isnt cell_from_text
+            cell = cell_from_text
 
           cells.push cell
 
