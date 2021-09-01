@@ -1,12 +1,13 @@
 <template name="project">
+  <div class="page-container-header">
+    {{> project_header}}
+  </div>
   <div class="project-container {{toolbar_position}}-toolbar  {{#if isToolbarOpen}}open-toolbar{{else}}closed-toolbar{{/if}} {{#if is_project_admin}}project-admin{{/if}}">
     {{!--
       toolbar related helpers above are defined in the
       justdoinc:justdo-task-pane package
     --}}
     <div id="project-main">{{!-- Project page main area --}}
-      {{> project_header}}
-
       {{> project_grid_container}}{{!-- Defined under grid/grid.html--}}
     </div>
 

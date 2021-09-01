@@ -20,6 +20,9 @@
                 {{> global_loader message="Initiating..."}}
               {{else}}
                 <div class="page-container page-{{currentPageName}}">
+                  <div class="page-container-header">
+                    <div></div>
+                  </div>
                   {{> yield}}
                 </div>
               {{/if}}
