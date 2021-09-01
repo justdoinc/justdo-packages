@@ -22,7 +22,13 @@ _.extend JD,
       return cur_proj.isAdmin()
 
   activeItemId: ->
-    return APP.modules.project_page.activeItemId()
+    if not (active_item_id = APP.modules.project_page.activeItemId())?
+      return null
+
+    if not APP.collections.Tasks.findOne(active_item_id, {fields: {_id: 1}})?
+      return null
+
+    return active_item_id
 
   activeItem: (fields, options) ->
     if not fields?
