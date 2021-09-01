@@ -146,7 +146,7 @@ _.extend JustdoHelpers,
     if not color?
       return "transparent"
 
-    if color.toLowerCase() == "ffffff"
+    if color.toLowerCase() == "00000000"
       return "transparent"
 
     if color.toLowerCase() == "transparent"
