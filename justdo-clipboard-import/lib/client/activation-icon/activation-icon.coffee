@@ -125,6 +125,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   number_of_columns = cp_data[0].length
   project_id = JD.activeJustdo({_id: 1})._id
   line_number = 0
+  base_indent = -1
   max_indent = -1
   last_indent = 0
   lines_to_add = {} # line_index:
@@ -173,6 +174,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         if field_id == "clipboard-import-index" # Do nothing, "clipboard-import-index" is already handled above
         else if cell_val.length > 0 and field_id == "task-indent-level"
           indent_level = parseInt cell_val, 10
+          if base_indent < 0
+            base_indent = indent_level
+            last_indent = indent_level
         else if field_id == JustdoPlanningUtilities.dependencies_mf_field_id
           if cell_val != ""
             dependencies_strs[task["jci:temp_import_id"]] = cell_val # XXX temp_import_id can be null
@@ -245,7 +249,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
       # Indent can't jump more than 1 indent level at once
       # and can't start with anything but 1
-      if indent_level > last_indent + 1 or indent_level <= 0 or (last_indent == -1 and indent_level != 1)
+      if indent_level > last_indent + 1 or indent_level <= 0 or (last_indent == -1 and indent_level != 1) or indent_level < base_indent
         scrollToAndHighlightProblematicRow line_number
         JustdoSnackbar.show
           text: "Invalid indentation at line #{line_number} - inconsistent indentation."
