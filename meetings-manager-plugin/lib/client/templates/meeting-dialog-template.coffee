@@ -107,6 +107,7 @@ Template.meetings_meeting_dialog.onCreated ->
 
       Meteor.defer =>
         match_meeting = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
+          _id: @data.meeting_id
           $or: [
             {task_id: cur_item._id},
             {added_tasks: $elemMatch: {task_id: cur_item._id}}
