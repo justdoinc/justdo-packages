@@ -709,7 +709,7 @@ Template.justdo_calendar_project_pane.helpers
 
   calendarViewResolution: -> number_of_days_to_display.get()
 
-  default_selected_members: -> calendar_filtered_members_rv.get()
+  defaultSelectedMembers: -> calendar_filtered_members_rv.get()
 
   members: ->
     tmpl = Template.instance()
