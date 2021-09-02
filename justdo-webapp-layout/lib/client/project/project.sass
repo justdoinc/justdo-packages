@@ -1,17 +1,37 @@
+@import "{justdoinc:justdo-webapp-layout}/lib/client/global-sass/global-vars.sass"
+
 .page-container.page-project
   // Cancel default page-container paddings
   padding: 0
 
-.project-container
-  width: 100%
+.page-container-header
   position: relative
+  z-index: 1
+
+.project-container
+  position: relative
+  z-index: 0
+
+  width: 100%
+
   .dropdown-menu
     overflow: hidden
+  background-color: #f3f2f1 // Igor remove this line to the appropriate place in the Solid template
+
+  margin-top: -1 * $project-header-height
+
+.page-container-header
+  height: $project-header-height
+  padding: 0 12px
 
 #project-main
   padding: 0 15px
+  padding-top: $project-header-height // XXX
 
-.project-container, #project-main
+.below-project-header-items
+  overflow: auto
+
+#project-main
   overflow: hidden
 
 //
@@ -20,6 +40,7 @@
 
 #task-pane
   z-index: 10
+  top: 0
 
 .right-toolbar, .left-toolbar
   #project-main
@@ -42,7 +63,7 @@
 
 .right-toolbar, .left-toolbar
   #task-pane
-    top: 0
+    top: $project-header-height // XXX
     bottom: 0
 
 .right-toolbar

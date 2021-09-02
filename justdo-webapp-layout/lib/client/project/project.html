@@ -8,6 +8,16 @@
       justdoinc:justdo-task-pane package
     --}}
     <div id="project-main">{{!-- Project page main area --}}
+      <div class="below-project-header-items">
+        {{#each belowProjectHeaderItems}}
+          {{#if template}}
+            {{> Template.dynamic template=template data=template_data}}
+          {{else if html}}
+            {{{html}}}
+          {{/if}}
+        {{/each}}
+      </div>
+      
       {{> project_grid_container}}{{!-- Defined under grid/grid.html--}}
     </div>
 

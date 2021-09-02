@@ -79,3 +79,7 @@ APP.executeAfterAppLibCode ->
     APP.logger.debug "project template destroyed"
 
   Template.project.helpers module.template_helpers
+
+  Template.project.helpers
+    belowProjectHeaderItems: ->
+      return JD.getPlaceholderItems("below-project-header")

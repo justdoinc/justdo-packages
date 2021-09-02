@@ -9,13 +9,6 @@ APP.executeAfterAppLibCode ->
   #
   Template.project_header.helpers project_template_helpers
 
-  Template.project_header.helpers
-    aboveProjectHeaderItems: ->
-      return JD.getPlaceholderItems("above-project-header")
-
-    belowProjectHeaderItems: ->
-      return JD.getPlaceholderItems("below-project-header")
-
   #
   # project_header_global_layout_header_right, project_header_global_layout_header_middle templates
   #
