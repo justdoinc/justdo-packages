@@ -56,7 +56,21 @@ APP.executeAfterAppLibCode ->
       # find item type
       current_row = grid_control.getCurrentRowNonReactive()
       current_item_type = grid_control._grid_data.getItemType(current_row)
+
       if not current_item_type?
+        if not JD.activeItemId()?
+          # Sometimes, the grid internal data structure might be out-dated for few ticks, until the updates
+          # from the minimongo observer are processed by it.
+          # 
+          # That means that if an item is removed, it might still be regarded by the grid data structure as existing, while
+          # if plugins developers would try to access it from the minimongo it wouldn't be there - and execeptions
+          # and bugs (and confusion) will follow.
+          # 
+          # JD.activeItemId() is looking in minimongo for the active item, and will return null if the active item
+          # isn't there. In such cases, we don't want to load the "default" task pane to avoid plugins developers
+          # to run into the issue described in the previous paragraph.
+          return "fallback"
+
         current_item_type = "default"
       if not (current_item_type of module.items_types_settings)
         if current_item_type is "ticket-queue-caption"
