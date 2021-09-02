@@ -49,7 +49,7 @@ _.extend TasksFileManagerPlugin.prototype,
           if not (files = active_item_obj.files) or files.length <= 0
             return ""
 
-          return "#{parseInt(files.length, 10)}"
+          return """<div class="task-pane-tab-title-info bg-primary text-white">#{parseInt(files.length, 10)}</div>"""
       section_options: {}
 
     tasks_file_manager_section_position =
