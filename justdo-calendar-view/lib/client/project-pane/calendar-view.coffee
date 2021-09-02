@@ -18,6 +18,13 @@ onUnsetScrollLeftRight = -> return
 
 members_collapse_state_vars = {}
 
+calendar_projects_filter_val_rv = new ReactiveVar null
+calendar_filtered_members_rv = new ReactiveVar []
+calendar_members_collapse_state_rv = new ReactiveVar false
+
+view_start_date_rv = new ReactiveVar
+view_end_date_rv = new ReactiveVar
+
 dates_to_display = new ReactiveVar([])
 number_of_days_to_display = new ReactiveVar(7)
 delivery_planner_project_id = new ReactiveVar ("*") # '*' for the entire JustDo
@@ -281,11 +288,7 @@ delayAction = do ->
 
 Template.justdo_calendar_project_pane.onCreated ->
   self = @
-
-  @calendar_projects_filter_val = new ReactiveVar null
-  @calendar_filtered_members = new ReactiveVar []
-  @justdo_level_holidays = new ReactiveVar(new Set())
-  @calendar_members_collapse_state_rv = new ReactiveVar false
+  @justdo_level_holidays_rv = new ReactiveVar(new Set())
 
   delivery_planner_project_id.set "*"  # '*' for the entire JustDo
 
@@ -297,7 +300,6 @@ Template.justdo_calendar_project_pane.onCreated ->
     else
       other_users = _.difference(APP.collections.TasksAugmentedFields.findOne(project_id)?.users, [Meteor.userId()])
 
-    self.calendar_filtered_members.set []
     return
 
   # to handle highlighting the header of 'today', when the day changes...
@@ -313,8 +315,6 @@ Template.justdo_calendar_project_pane.onCreated ->
   ,
     1000 * 60
 
-  @view_start_date = new ReactiveVar
-  @view_end_date = new ReactiveVar
   active_item_id = null
 
   #calculate the first day to display based on the beginning of the week of the user
@@ -328,21 +328,22 @@ Template.justdo_calendar_project_pane.onCreated ->
     if dow < user_first_day_of_week
       dow += 7
     d.setDate(d.getDate() - (dow - user_first_day_of_week))
-    @view_start_date.set(d)
+    view_start_date_rv.set(d)
     return
 
-  @resetFirstDay(new Date)
+  if not view_start_date_rv.get()?
+    @resetFirstDay(new Date)
 
   #scrolling left and right control flow
   @scroll_left_right_handler = null
 
   @setToPrevWeek = (keep_scroll_handler) ->
-    d = self.view_start_date.get()
+    d = view_start_date_rv.get()
     dow = d.getDay()
     index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
     step_size = config.days_resolution_big_step[index]
     d.setDate(d.getDate() - step_size)
-    self.view_start_date.set(d)
+    view_start_date_rv.set(d)
 
     if not keep_scroll_handler and self.scroll_left_right_handler
       clearInterval(self.scroll_left_right_handler)
@@ -351,11 +352,11 @@ Template.justdo_calendar_project_pane.onCreated ->
   onClickScrollLeft = @setToPrevWeek
 
   @setToNextWeek = (keep_scroll_handler) ->
-    d = self.view_start_date.get()
+    d = view_start_date_rv.get()
     index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
     step_size = config.days_resolution_big_step[index]
     d.setDate(d.getDate() + step_size)
-    self.view_start_date.set(d)
+    view_start_date_rv.set(d)
 
     if not keep_scroll_handler and self.scroll_left_right_handler
       clearInterval(self.scroll_left_right_handler)
@@ -493,13 +494,13 @@ Template.justdo_calendar_project_pane.onCreated ->
   # Handle dates to display
   @autorun =>
     dates = []
-    d = moment(new Date(Template.instance().view_start_date.get()))
+    d = moment(new Date(view_start_date_rv.get()))
     for i in [0..(number_of_days_to_display.get() - 1)]
       dates.push(d.format("YYYY-MM-DD"))
       d.add(1, "days")
     dates_to_display.set(dates)
-    Template.instance().view_end_date.set(dates[dates.length - 1])
-    @justdo_level_holidays.set(APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo({_id: 1})._id, dates).holidays)
+    view_end_date_rv.set(dates[dates.length - 1])
+    self.justdo_level_holidays_rv.set(APP.justdo_resources_availability?.workdaysAndHolidaysFor(JD.activeJustdo({_id: 1})._id, dates).holidays)
     return
 
   @autorun =>
@@ -605,16 +606,15 @@ Template.justdo_calendar_project_pane.onRendered ->
 
   $(".calendar_view_project_selector").on "shown.bs.dropdown", ->
     $(".calendar-view-project-search").focus().val ""
-    instance.calendar_projects_filter_val.set ""
+    calendar_projects_filter_val_rv.set ""
     return
 
   return # end onRendered
 
 Template.justdo_calendar_project_pane.helpers
   onSelectedMembersChange: ->
-    tpl = Template.instance()
     return (members) ->
-      tpl.calendar_filtered_members.set members
+      calendar_filtered_members_rv.set members
 
       return
 
@@ -630,9 +630,6 @@ Template.justdo_calendar_project_pane.helpers
   userTasksSet: ->
     return Template.instance().users_to_tasks[@]
 
-  membersCollapseState: ->
-    return Template.instance().calendar_members_collapse_state_rv.get()
-
   title_date: ->
     view_resolution = number_of_days_to_display.get()
 
@@ -641,18 +638,18 @@ Template.justdo_calendar_project_pane.helpers
     else
       date_format = "MMMM Do"
 
-    return "#{moment(Template.instance().view_start_date.get()).format(date_format)} - #{moment(Template.instance().view_end_date.get()).format(date_format)} "
+    return "#{moment(view_start_date_rv.get()).format(date_format)} - #{moment(view_end_date_rv.get()).format(date_format)} "
 
   currentUserId: ->
     return Meteor.userId()
 
   allOtherUsers: ->
-    filtered_members = Template.instance().calendar_filtered_members.get()
+    filtered_members = calendar_filtered_members_rv.get()
     return _.sortBy filtered_members, (user_id) -> JustdoHelpers.displayName(user_id).toLowerCase()
 
   projectsInJustDo: ->
     tmpl = Template.instance()
-    calendar_projects_filter_val = tmpl.calendar_projects_filter_val.get()
+    calendar_projects_filter_val = calendar_projects_filter_val_rv.get()
 
     project = APP.modules.project_page.project.get()
 
@@ -700,7 +697,7 @@ Template.justdo_calendar_project_pane.helpers
     return false
 
   isHoliday: (date) ->
-    if Template.instance().justdo_level_holidays.get().has(date)
+    if Template.instance().justdo_level_holidays_rv.get().has(date)
       return "is_holiday"
     return ""
 
@@ -712,7 +709,7 @@ Template.justdo_calendar_project_pane.helpers
 
   calendarViewResolution: -> number_of_days_to_display.get()
 
-  default_selected_members: -> []
+  default_selected_members: -> calendar_filtered_members_rv.get()
 
   members: ->
     tmpl = Template.instance()
@@ -776,7 +773,7 @@ Template.justdo_calendar_project_pane.events
     for member, state of members_collapse_state_vars
       state.set(false)
 
-    tpl.calendar_members_collapse_state_rv.set false
+    calendar_members_collapse_state_rv.set false
 
     return
 
@@ -784,7 +781,7 @@ Template.justdo_calendar_project_pane.events
     for member, state of members_collapse_state_vars
       state.set(true)
 
-    tpl.calendar_members_collapse_state_rv.set true
+    calendar_members_collapse_state_rv.set true
 
     return
 
@@ -793,17 +790,17 @@ Template.justdo_calendar_project_pane.events
     return
 
   "click .calendar-view-prev-day": ->
-    d = Template.instance().view_start_date.get()
+    d = view_start_date_rv.get()
     index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
     d.setDate(d.getDate() - config.days_resolution_small_step[index])
-    Template.instance().view_start_date.set(d)
+    view_start_date_rv.set(d)
     return
 
   "click .calendar-view-next-day": ->
-    d = Template.instance().view_start_date.get()
+    d = view_start_date_rv.get()
     index = config.supported_days_resolution.indexOf number_of_days_to_display.get()
     d.setDate(d.getDate() + config.days_resolution_small_step[index])
-    Template.instance().view_start_date.set(d)
+    view_start_date_rv.set(d)
 
     return
 
@@ -825,12 +822,9 @@ Template.justdo_calendar_project_pane.events
   "keyup .calendar-view-project-search": (e, tmpl) ->
     value = $(e.target).val().trim()
     if _.isEmpty value
-      tmpl.calendar_projects_filter_val.set null
+      tmpl.calendar_projects_filter_val_rv.set null
     else
-      tmpl.calendar_projects_filter_val.set value
-    return
-
-
+      tmpl.calendar_projects_filter_val_rv.set value
     return
 
   "keydown .calendar_view_project_selector .dropdown-menu": (e, tmpl) ->
@@ -860,12 +854,8 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
   self = @
   @days_matrix = new ReactiveVar([])
   @dates_workload = new ReactiveVar({})
-  @collapsed_view = new ReactiveVar @data.members_collapse_state
 
-  if @data.user_id == Meteor.userId()
-    @collapsed_view.set false
-
-  members_collapse_state_vars[Template.currentData().user_id] = @collapsed_view
+  members_collapse_state_vars[Template.currentData().user_id] = calendar_members_collapse_state_rv
   @justdo_user_holidays = new Set()
 
   @last_tasks_set_size = 0
@@ -1159,7 +1149,7 @@ Template.justdo_calendar_project_pane_user_view.onCreated ->
 
     # Set drag and drop after user info has been expanded
     @autorun =>
-      if not @collapsed_view.get()
+      if not calendar_members_collapse_state_rv.get()
         setTimeout (->
           setDragAndDrop()
           return
@@ -1191,7 +1181,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     return "xx_small_text"
 
   isCollapsed: ->
-    return Template.instance().collapsed_view.get()
+    return calendar_members_collapse_state_rv.get()
 
   bottomLine: ->
     column_date = Template.instance().data.dates_to_display[@]
@@ -1447,11 +1437,11 @@ Template.justdo_calendar_project_pane_user_view.events
     return
 
   "click .expand_user": (e, tpl) ->
-    tpl.collapsed_view.set(false)
+    calendar_members_collapse_state_rv.set(false)
     return
 
   "click .collapse_user": (e, tpl) ->
-    tpl.collapsed_view.set(true)
+    calendar_members_collapse_state_rv.set(true)
     return
 
   "click .clock": (e, tpl) ->
