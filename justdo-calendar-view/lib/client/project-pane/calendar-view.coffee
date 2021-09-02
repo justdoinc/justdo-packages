@@ -830,19 +830,6 @@ Template.justdo_calendar_project_pane.events
       tmpl.calendar_projects_filter_val.set value
     return
 
-  "click .calendar-filter-member-item": (e, tmpl) ->
-    e.preventDefault()
-    e.stopPropagation()
-
-    user_id = Blaze.getData(e.target)
-    filtered_members = tmpl.calendar_filtered_members.get()
-
-    if (index = filtered_members.indexOf user_id) > -1
-      filtered_members.splice(index, 1)
-    else
-      filtered_members.push user_id
-
-    tmpl.calendar_filtered_members.set filtered_members
 
     return
 
