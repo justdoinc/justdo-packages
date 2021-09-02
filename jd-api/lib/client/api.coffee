@@ -36,7 +36,9 @@ _.extend JD,
         fields = undefined
       else
         throw new Meteor.Error "fields-not-specified", "The fields argument must be provided"
-    if (active_obj = APP.modules?.project_page?.activeItemObj(fields))?
+    if (active_obj = APP.modules?.project_page?.activeItemObj(fields, false))? # false, is to avoid using the grid data structure, to ensure we'll have reactivity for the selected fields.
+                                                                               # Further, when an item is removed the grid data structure might update
+                                                                               # few ticks later, which can a pitfall for developers.
       return active_obj
 
     # Normalize non-existence result to 'undefined'
