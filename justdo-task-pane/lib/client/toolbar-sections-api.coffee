@@ -58,9 +58,16 @@ APP.executeAfterAppLibCode ->
       current_item_type = grid_control._grid_data.getItemType(current_row)
       if not current_item_type?
         current_item_type = "default"
-
       if not (current_item_type of module.items_types_settings)
-        current_item_type = "fallback"
+        if current_item_type is "ticket-queue-caption"
+          if JD.activeItemId()?
+            # A ticket queue whose task item shared with the current user -> show normal task pane
+            current_item_type = "default"
+          else
+            # A ticket queue whose task item isn't shared with the current user -> show fallback
+            current_item_type = "fallback"
+        else # An unknown current_item_type that we don't have special treatment for
+          current_item_type = "fallback"
 
       return current_item_type
 
