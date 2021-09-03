@@ -16,7 +16,7 @@ bindTargetToPaste = (tpl)->
     clipboard_data = e.originalEvent.clipboardData
     if ("text/html" in clipboard_data.types)
       data = clipboard_data.getData("text/html")
-      date_text = clipboard_data.getData("text/plain").split("\r\n").map (row) -> row.split "\t"
+      data_text = clipboard_data.getData("text/plain").split("\r\n").map (row) -> row.split "\t"
 
       # Info about why we use [^\x05] can be found on: https://bugzilla.mozilla.org/show_bug.cgi?id=1579867
       tr_reg_exp = /<\s*tr[^>]*>([^\x05]*?)<\s*\/\s*tr>/g
@@ -49,9 +49,13 @@ bindTargetToPaste = (tpl)->
           cell = cell.replace /&gt;/g, ">"
 
           all_hashes_regexp = /#+$/
-          cell_from_text = date_text[processing_row_number-1][processing_column_number-1]
-          if (all_hashes_regexp.test cell) and (cell isnt cell_from_text)
-            cell = cell_from_text
+
+          if (all_hashes_regexp.test cell)
+            # Copying cell value from Excel with very short cell length might yield "#####"
+            # We'll use the value from text (instead of from html) for the actual value in those cases
+            cell_from_text = data_text[processing_row_number-1][processing_column_number-1]
+            if (cell isnt cell_from_text)
+              cell = cell_from_text
 
           cells.push cell
 
