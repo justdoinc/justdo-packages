@@ -215,6 +215,9 @@ select.selectpicker {
 .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
   overflow: hidden;
 }
+.slick-cell .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
+  margin-top: 3px;
+}
 .bootstrap-select .dropdown-toggle .filter-expand {
   width: 0 !important;
   float: left;
