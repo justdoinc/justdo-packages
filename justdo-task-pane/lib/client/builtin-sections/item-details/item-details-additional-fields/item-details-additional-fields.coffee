@@ -95,7 +95,7 @@ APP.executeAfterAppLibCode ->
       # sub items affects the value, and, potentially more).
 
       if not (current_item_id = module.activeItemId())?
-        return
+        return {}
 
       gc = APP.modules.project_page.gridControl()
 
@@ -111,7 +111,7 @@ APP.executeAfterAppLibCode ->
           filters_aware: @field_invalidate_ancestors_on_change == "structure-content-and-filters"
         gc.invalidateOnCollectionItemDescendantsChanges(current_item_id, options)
 
-      return gc.collection.findOne(current_item_id, {fields: JustdoHelpers.fieldsArrayToInclusiveFieldsProjection(field_plus_dependencies)})
+      return gc.collection.findOne(current_item_id, {fields: JustdoHelpers.fieldsArrayToInclusiveFieldsProjection(field_plus_dependencies)}) or {}
 
   Template.task_pane_item_details_additional_field.events
     "click .add-to-grid": (e) ->
