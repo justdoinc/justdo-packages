@@ -1,9 +1,3 @@
-TEMPORARY_MESSAGES = {}
-# Temporary messages are messages the user started typing but didn't save yet,
-# we provide a layer to store and get such temp messages for channels to prevent
-# data loss when the user temporarily hide/remove dom elements that holds chat
-# inputs.
-
 ChannelBaseClient = (options) ->
   # derived from skeleton-version: v0.0.11-onepage_skeleton
 
@@ -154,6 +148,9 @@ _.extend ChannelBaseClient.prototype,
     @logger.debug "Destroyed"
 
     return
+
+  _getLocalStorageKey: ->
+    return "jdc-saved-editor-content::#{Meteor.userId()}"
 
   _getChannelSerializedIdentifier: ->
     return @channel_type + "::" + _.map(@getChannelIdentifier(), (val ,key) => key + ":" + val).sort().join("|")
@@ -594,11 +591,29 @@ _.extend ChannelBaseClient.prototype,
   isProposedSubscribersEmulationMode: ->
     return @getChannelMessagesSubscriptionState() == "no-channel-doc" and "proposed-subscribers-emulation" in @_getModes()
 
-  saveTempMessage: (message) -> TEMPORARY_MESSAGES[@_getChannelSerializedIdentifier()] = message
+  getAllLocallySavedMessages: (key) ->
+    if not key?
+      key =  @_getLocalStorageKey()
+    return amplify.store(key) or {}
 
-  getTempMessage: -> TEMPORARY_MESSAGES[@_getChannelSerializedIdentifier()]
+  saveTempMessage: (message) ->
+    local_storage_key = @_getLocalStorageKey()
+    stored_message = @getAllLocallySavedMessages local_storage_key
+    stored_message[@_getChannelSerializedIdentifier()] = message
+    amplify.store local_storage_key, stored_message
+    return
 
-  clearTempMessage: -> delete TEMPORARY_MESSAGES[@_getChannelSerializedIdentifier()]
+  getTempMessage: ->
+    if (stored_message = @getAllLocallySavedMessages()?[@_getChannelSerializedIdentifier()])?
+      return stored_message
+    return ""
+
+  clearTempMessage: ->
+    local_storage_key = @_getLocalStorageKey()
+    stored_message = @getAllLocallySavedMessages local_storage_key
+    delete stored_message[@_getChannelSerializedIdentifier()]
+    amplify.store local_storage_key, stored_message
+    return
 
   #
   #
