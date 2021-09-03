@@ -48,8 +48,9 @@ bindTargetToPaste = (tpl)->
           cell = cell.replace /&lt;/g, "<"
           cell = cell.replace /&gt;/g, ">"
 
+          all_hashes_regexp = /#+$/
           cell_from_text = date_text[processing_row_number-1][processing_column_number-1]
-          if cell isnt cell_from_text
+          if (all_hashes_regexp.test cell) and (cell isnt cell_from_text)
             cell = cell_from_text
 
           cells.push cell
