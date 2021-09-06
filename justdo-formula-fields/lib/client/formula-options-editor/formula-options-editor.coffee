@@ -1,12 +1,10 @@
-default_option_color = "ffffff"
-available_colors = ["ffffff", "d50001", "e57c73", "f4521e", "f6bf25", "33b679", "0a8043", "019be5", "3f51b5" ,"7986cb", "8d24aa", "616161", "4285f4", "000000"]
+default_option_color = "00000000"
 
 generatePickerDropdown = (selected_color) ->
   return new JustdoColorPickerDropdownController
     label: "Pick a background color"
     opener_custom_class: "custom-fields-justdo-color-picker-opener"
     default_color: selected_color
-    available_colors: available_colors
 
 APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
@@ -236,7 +234,7 @@ APP.executeAfterAppLibCode ->
     # option_background_color =
     #   tpl.new_option_color_picker_dropdown_controller.getSelectedColor()
 
-    option_background_color = Random.choice(available_colors)
+    option_background_color = default_option_color
 
     $custom_field_options = tpl.$(".custom-field-options")
     appendOptionToEditor($custom_field_options, option_id, option_label, range, option_background_color)
