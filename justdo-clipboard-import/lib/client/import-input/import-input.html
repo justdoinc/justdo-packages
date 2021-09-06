@@ -13,17 +13,17 @@
               </th>
             {{/each}}
           </tr>
-            {{#each rows}}
-              <tr class="{{#unless importRow @index}}skip-row{{/unless}}">
-                <td class="first-column">
-                  <input type="checkbox" class="import-row-checkbox" row-index="{{@index}}" checked="checked">
-                </td>
-                {{#each this}}
-                  <td>{{nl2br this}}</td>
-                {{/each}}
-              </tr>
-            {{/each}}
-          </table>
+          {{#each rows}}
+            <tr class="{{#unless importRow @index}}skip-row{{/unless}}">
+              <td class="first-column">
+                <input type="checkbox" class="import-row-checkbox" row-index="{{@index}}" checked="checked">
+              </td>
+              {{#each this}}
+                <td>{{nl2br this}}</td>
+              {{/each}}
+            </tr>
+          {{/each}}
+        </table>
       </div>
     {{else}}
       <textarea class="form-control justdo-clipboard-import-paste-target"
