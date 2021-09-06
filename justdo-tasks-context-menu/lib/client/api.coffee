@@ -79,7 +79,8 @@ _.extend JustdoTasksContextMenu.prototype,
       for dependcy_field in dependencies_fields
         tasks_query_projection[dependcy_field] = 1
 
-    task_doc = APP.collections.Tasks.findOne(task_id, {fields: tasks_query_projection})
+    if not (task_doc = APP.collections.Tasks.findOne(task_id, {fields: tasks_query_projection}))?
+      return
 
     @_context_field_val_reactive_var.set task_doc[field_name]
     delete task_doc[field_name]
