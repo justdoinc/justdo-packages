@@ -290,8 +290,6 @@ Template.justdo_calendar_project_pane.onCreated ->
   self = @
   @justdo_level_holidays_rv = new ReactiveVar(new Set())
 
-  delivery_planner_project_id.set "*"  # '*' for the entire JustDo
-
   @autorun =>
     project_id = delivery_planner_project_id.get()
     other_users = []
@@ -299,6 +297,9 @@ Template.justdo_calendar_project_pane.onCreated ->
       other_users = _.difference(APP.modules.project_page.curProj()?.getMembersIds(), [Meteor.userId()])
     else
       other_users = _.difference(APP.collections.TasksAugmentedFields.findOne(project_id)?.users, [Meteor.userId()])
+      {title="", seqId} = APP.collections.Tasks.findOne(project_id, {fields: {title: 1, seqId: 1}})
+
+      $(".calendar_view_project_selector button").text("##{seqId}: #{title}")
 
     return
 
