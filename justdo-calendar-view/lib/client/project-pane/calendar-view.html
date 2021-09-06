@@ -8,12 +8,14 @@
           <div class="dropdown-menu jd-p-075 shadow-lg border-0">
             <input class="calendar-view-project-search form-control form-control-sm mb-2 bg-light border-0" type="text" placeholder="Search projects">
             <a href="#" class="dropdown-item px-1" project_id="*">Entire JustDo</a>
-            {{#if projectsInJustDo}}
-              <div class="dropdown-header text-muted text-uppercase px-1 py-2">Projects</div>
-              {{#each projectsInJustDo}}
-                <a href="#" class="dropdown-item px-1" project_id={{_id}}>{{taskCommonName}}</a>
-              {{/each}}
-            {{/if}}
+            {{#with projectsInJustDo}}
+              {{#if this}}
+                <div class="dropdown-header text-muted text-uppercase px-1 py-2">Projects</div>
+                {{#each this}}
+                  <a href="#" class="dropdown-item px-1" project_id={{_id}}>{{taskCommonName}}</a>
+                {{/each}}
+              {{/if}}
+            {{/with}}
           </div>
         </div>
         <div class="divider"></div>
