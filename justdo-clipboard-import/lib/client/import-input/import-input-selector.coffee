@@ -1,11 +1,35 @@
 Template.justdo_clipboard_import_input_selector.onCreated ->
   self = @
   self.search_input_rv = new ReactiveVar null
-  # Special type of fields that isn't supported in grid and doesn't require import
-  self.special_fields_map =
-    "clipboard-import-no-import": "-- skip column --"
-    "task-indent-level": "Indent Level"
-    "clipboard-import-index": "Index"
+  self.available_field_types_crv = JustdoHelpers.newComputedReactiveVar null, ->
+   available_field_types = Template.parentData(1).getAvailableFieldTypes()
+   # To maintain certain options at top/bottom, we manipulate the array and object of available field types explicitly.
+   # available_field_types[0] is an object
+   _.extend available_field_types[0],
+    "clipboard-import-no-import":
+      label: "-- skip column --"
+      _id: "clipboard-import-no-import"
+
+    "clipboard-import-index":
+       label: "Index"
+       _id: "clipboard-import-index"
+
+     "task-indent-level":
+       label: "Indent Level"
+       _id: "task-indent-level"
+
+   # available_field_types[0] is an array
+   available_field_types[1].unshift # unshift = prepend
+     label: "-- skip column --"
+     _id: "clipboard-import-no-import"
+   ,
+     label: "Index"
+     _id: "clipboard-import-index"
+   available_field_types[1].push
+     label: "Indent Level"
+     _id: "task-indent-level"
+
+   return available_field_types
 
   return
 
@@ -23,12 +47,11 @@ Template.justdo_clipboard_import_input_selector.onRendered ->
   return
 
 Template.justdo_clipboard_import_input_selector.helpers
-  notInSearchMode: -> _.isEmpty Template.instance().search_input_rv.get()
-
   getAvailableFieldTypesArray: ->
-    fields = Template.parentData(1).getAvailableFieldTypes()[1]
+    tpl = Template.instance()
+    fields = tpl.available_field_types_crv.get()[1]
 
-    if not (search_input = Template.instance().search_input_rv.get())?
+    if not (search_input = tpl.search_input_rv.get())?
       filtered_fields = fields
     else
       filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_input)}", "i")
@@ -47,10 +70,8 @@ Template.justdo_clipboard_import_input_selector.events
     e.preventDefault()
 
     field_id = $(e.currentTarget)[0].getAttribute("field-id")
-
-    # Look for field_label in special_fields_map first
-    if not (field_label = tpl.special_fields_map[field_id])?
-      field_label = Template.parentData(1).getAvailableFieldTypes()?[0]?[field_id]?.label
+    available_field_types_crv = tpl.available_field_types_crv.get()[0]
+    field_label = available_field_types_crv[field_id].label
 
     $(e.currentTarget).closest(".justdo-clipboard-import-input-selector").find("button")
       .text(field_label)
