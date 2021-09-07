@@ -8,7 +8,12 @@ APP.executeAfterAppLibCode ->
       if (item_id = JD.activeItemId())?
         return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.users",item_id)
       return false
-  
+
+    activeItemNotNull: ->
+      return APP.collections.Tasks.findOne(JD.activeItemId(),
+        fields: 
+          _id: 1
+      )?
   
   Template.task_pane_item_details_section.events
     "click .edit-members": (e, tpl) ->

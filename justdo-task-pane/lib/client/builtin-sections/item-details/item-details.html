@@ -35,6 +35,8 @@
     {{/with}}
 
     {{!-- Additional Fields --}}
-    {{> task_pane_item_details_additional_fields}}
+    {{#if activeItemNotNull}}
+      {{> task_pane_item_details_additional_fields}}
+    {{/if}}
   </div>
 </template>
