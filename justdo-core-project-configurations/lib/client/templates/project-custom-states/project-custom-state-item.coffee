@@ -1,9 +1,16 @@
+default_option_color = "00000000"
+
+generatePickerDropdown = (selected_color) ->
+  return new JustdoColorPickerDropdownController
+    label: "Pick a background color"
+    opener_custom_class: "custom-fields-justdo-color-picker-opener"
+    default_color: selected_color
+
 # ON CREATED
 Template.project_custom_state_item.onCreated ->
   tpl = @
   tpl.is_editing_label = new ReactiveVar false
   tpl.cur_proj = APP.modules.project_page.curProj()
-  tpl.colors = ["#00000000", "#ffffff", "#d50001", "#e57c73", "#f4521e", "#f6bf25", "#33b679", "#0a8043", "#019be5", "#3f51b5" ,"#7986cb", "#8d24aa", "#616161", "#4285f4", "#000000"]
 
   # Update State Txt
   tpl.updateStateTxt = (state_id, txt) ->
@@ -27,6 +34,30 @@ Template.project_custom_state_item.onCreated ->
 Template.project_custom_state_item.onRendered ->
   tpl = @
 
+  tpl.new_option_color_picker_dropdown_controller = generatePickerDropdown(tpl.data.bg_color)
+  custom_state_style_node = tpl.find ".custom-state-style"
+
+  $(custom_state_style_node).data("color_picker_controller", tpl.new_option_color_picker_dropdown_controller)
+
+  color_picker_dropdown_node =
+    APP.helpers.renderTemplateInNewNode("justdo_color_picker_dropdown", {color_picker_controller: tpl.new_option_color_picker_dropdown_controller})
+
+  $(custom_state_style_node).html color_picker_dropdown_node.node
+
+  @autorun =>
+    selected_color = tpl.new_option_color_picker_dropdown_controller._selected_color_rv.get()
+
+    if tpl.data.bg_color != selected_color
+      cur_proj = APP.modules.project_page.curProj()
+      state_id = tpl.data.state_id
+      custom_states = cur_proj.getCustomStates()
+
+      for state in custom_states
+        if state.state_id == state_id
+          state.bg_color = selected_color
+
+      cur_proj.setCustomStates custom_states
+
   $(".active-states").sortable
     items: ".project-custom-state-item"
     handle: ".custom-state-handle"
@@ -41,7 +72,6 @@ Template.project_custom_state_item.onRendered ->
       $(".active-states").sortable "cancel"
       Deps.flush()
       tpl.cur_proj.setCustomStates custom_states
-
 
       return
 
@@ -68,18 +98,6 @@ Template.project_custom_state_item.helpers
   # to ensure no flicker after text update we need to isolate div.custom-state-label-text-active
   textActive: ->
     return """<div class="custom-state-label-text-active">#{@txt}</div>"""
-
-  colors: ->
-    return Template.instance().colors
-
-  activeColor: (color) ->
-    bg_color = Template.instance().data.bg_color
-
-    return color == bg_color
-
-  showTransparentBackground: (color) ->
-    return not color? or color == "#00000000"
-
 
 # EVENTS
 Template.project_custom_state_item.events
@@ -130,20 +148,6 @@ Template.project_custom_state_item.events
     state = tpl.data
     custom_states = cur_proj.getCustomStates()
     custom_states.push state
-
-    cur_proj.setCustomStates custom_states
-
-    return
-
-  "click .custom-state-style-color": (e, tpl) ->
-    bg_color = @.substring()
-    cur_proj = APP.modules.project_page.curProj()
-    state_id = tpl.data.state_id
-    custom_states = cur_proj.getCustomStates()
-
-    for state in custom_states
-      if state.state_id == state_id
-        state.bg_color = bg_color
 
     cur_proj.setCustomStates custom_states
 
