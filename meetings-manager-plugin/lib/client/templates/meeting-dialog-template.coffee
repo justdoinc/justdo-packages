@@ -526,7 +526,7 @@ Template.meetings_meeting_dialog.helpers
 
   # NEED TO CHANGE: We need to retrieve meeting time from Date !
   rawTime: (time) ->
-    if (time?)
+    if not _.isEmpty(time)
       use_am_pm = Meteor.user().profile.use_am_pm
       if use_am_pm
         return moment(new Date(time)).format("h:mm A")
@@ -536,7 +536,7 @@ Template.meetings_meeting_dialog.helpers
 
   labelTime: (time) ->
     use_am_pm = Meteor.user().profile.use_am_pm
-    if (time?)
+    if not _.isEmpty(time)
       if use_am_pm
         return moment(new Date(time)).format("h:mm A")
       else
@@ -845,7 +845,7 @@ Template.meetings_meeting_dialog.events
 
   "keyup .meeting-time-input": (e, tpl) ->
     if e.key == "Escape"
-      $(e.target).closest(".meeting-time-input").val ""
+      $(e.target).closest(".meeting-time-input").val "cancel"
       $(e.target).closest(".meeting-time-input").blur();
     else if e.key == "Enter"
       $(e.target).closest(".meeting-time-input").blur();
@@ -853,13 +853,15 @@ Template.meetings_meeting_dialog.events
     return
 
   "blur .meeting-time-input": (e, tpl) ->
-    console.log "blur"
     $target = $(e.target).closest(".meeting-time-input")
     val = $target.val()
-    date = moment(val, "HH:mmA").toDate()
-    if not isNaN date.getTime()
-      setMeetingTime tpl, date
-
+    if val == ""
+      setMeetingTime tpl, null
+    else
+      date = moment(val, "HH:mmA").toDate()
+      if not isNaN date.getTime()
+        setMeetingTime tpl, date
+    $target.val ""
     $target.closest(".meeting-time-wrapper").dropdown("toggle")
     return
 
