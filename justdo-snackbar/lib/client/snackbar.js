@@ -40,6 +40,7 @@
         textColor: '#FFFFFF',
         width: 'auto',
         showAction: true,
+        showDismissButton: false,
         actionText: 'Dismiss',
         actionTextColor: '#4CAF50',
         showSecondButton: false,
@@ -129,6 +130,17 @@
                 options.onActionClick(Snackbar.snackbar);
             });
             Snackbar.snackbar.appendChild(actionButton);
+        }
+
+        if (options.showDismissButton) {
+            var dismissButton = document.createElement('button');
+            dismissButton.className = 'action ml-0';
+            dismissButton.innerHTML = '<svg class="jd-icon" style="stroke-width: 2;"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>';
+            dismissButton.style.color = options.secondButtonTextColor;
+            dismissButton.addEventListener('click', function() {
+                Snackbar.close()
+            });
+            Snackbar.snackbar.appendChild(dismissButton);
         }
 
         if (options.duration) {
