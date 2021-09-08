@@ -184,6 +184,18 @@ _.extend MeetingsManager.prototype,
         created_from_meeting_id: 1
       , user_id
 
+      task_included_in_meeting_condition = {
+        $or: [{
+          "tasks.task_id": task_id,
+          $or: [
+            private:
+              $ne: true
+          ,
+            users: user_id
+          ]
+        }]
+      }
+
       meetings_selector = 
         $and: [{
           $or: [
@@ -192,20 +204,10 @@ _.extend MeetingsManager.prototype,
           ,
             "organizer_id": user_id
           ]
-        },{
-          $or: [{
-            "tasks.task_id": task_id,
-            $or: [
-              private:
-                $ne: true
-            ,
-              users: user_id
-            ]
-          }]
-        }]
+        }, task_included_in_meeting_condition]
 
       if task.created_from_meeting_id?
-        meetings_selector.$and[1].$or.push {
+        task_included_in_meeting_condition.$or.push {
           _id: task.created_from_meeting_id
         }
 
