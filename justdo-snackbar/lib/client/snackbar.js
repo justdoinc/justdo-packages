@@ -134,7 +134,7 @@
 
         if (options.showDismissButton) {
             var dismissButton = document.createElement('button');
-            dismissButton.className = 'action ml-0';
+            dismissButton.className = 'action';
             dismissButton.innerHTML = '<svg class="jd-icon" style="stroke-width: 2;"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>';
             dismissButton.style.color = options.secondButtonTextColor;
             dismissButton.addEventListener('click', function() {
