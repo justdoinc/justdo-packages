@@ -203,6 +203,13 @@ Template.meetings_meeting_dialog.onCreated ->
       
     return ret
 
+  @refresh = =>
+    new_meeting_sub = APP.meetings_manager_plugin.meetings_manager.subscribeToMeeting Template.currentData().meeting_id, =>
+      if @meeting_sub?
+        @meeting_sub.stop();
+      @meeting_sub = new_meeting_sub;
+    return
+
   @print_me = ->
     #preps
     $("body").append """<div class="print-meeting-mode-overlay"></div>"""
@@ -599,6 +606,9 @@ Template.meetings_meeting_dialog.helpers
     return ""
 
 Template.meetings_meeting_dialog.events
+  "click .meeting-refresh": (e, tpl) ->
+    tpl.refresh();
+    return
 
   'click .meeting-print' : (e, tmpl) ->
     tmpl.print_me()

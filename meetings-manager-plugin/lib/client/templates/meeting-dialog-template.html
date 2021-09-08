@@ -4,6 +4,11 @@
     <div class="meeting-dialog-header">
       <div class="meeting-dialog-state shadow-sm rounded-sm {{#if $eq meeting.status 'pending'}}bg-primary{{/if}} {{#if $eq meeting.status 'in-progress'}}bg-success{{/if}}">{{meeting.status}}</div>
       <div class="meeting-dialog-actions shadow-sm rounded d-flex align-items-center">
+        <svg class="jd-icon meeting-refresh">
+          <use xlink:href="/layout/icons-feather-sprite.svg#refresh-cw"/>
+          <title>Refresh</title>
+        </svg>
+        <div class="meeting-dialog-divider bg-secondary"></div>
         <svg class="jd-icon meeting-print">
           <use xlink:href="/layout/icons-feather-sprite.svg#printer"/>
           <title>Print meeting</title>

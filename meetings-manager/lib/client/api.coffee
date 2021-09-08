@@ -76,10 +76,10 @@ _.extend MeetingsManager.prototype,
 
     Meteor.subscribe "meetings_meetings_list", project_id
 
-  subscribeToMeeting: (meeting_id) ->
+  subscribeToMeeting: (meeting_id, cb) ->
     if not meeting_id?
       return
-    return Meteor.subscribe "meetings_meeting", meeting_id
+    return Meteor.subscribe "meetings_meeting", meeting_id, cb
 
   subscribeToMeetingsForTask: (task_id) ->
     if not task_id?
