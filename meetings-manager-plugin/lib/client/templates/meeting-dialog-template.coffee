@@ -113,7 +113,7 @@ Template.meetings_meeting_dialog.onCreated ->
             {added_tasks: $elemMatch: {task_id: cur_item._id}}
           ]
         if not match_meeting?
-          @$(".meeting-task-add").val(cur_item.seqId).focus()
+          @$(".meeting-task-add").val(cur_item.seqId)
 
   @html_representation = ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
