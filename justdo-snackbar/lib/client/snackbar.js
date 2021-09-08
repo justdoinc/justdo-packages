@@ -41,7 +41,7 @@
         width: 'auto',
         showAction: true,
         showDismissButton: false,
-        actionText: 'Dismiss',
+        actionText: '<svg class="jd-icon" style="stroke-width: 2;"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>',
         actionTextColor: '#4CAF50',
         showSecondButton: false,
         secondButtonText: '',
