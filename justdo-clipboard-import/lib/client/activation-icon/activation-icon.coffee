@@ -486,13 +486,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     JustdoSnackbar.show
       text: "#{task_paths_added.length} task(s) imported."
       duration: 1000 * 60 * 2 # 2 mins
-      actionText: "<svg class='jd-icon' style='stroke-width: 2;'><use xlink:href='/layout/icons-feather-sprite.svg#x'/></svg>"
-      showSecondButton: true
-      secondButtonText: "Undo"
+      actionText: "Undo"
+      showDismissButton: true
       onActionClick: =>
-        JustdoSnackbar.close()
-        return # end of onSecondButtonClick
-      onSecondButtonClick: =>
         undoImport()
         JustdoSnackbar.close()
         return # end of onActionClick
