@@ -836,11 +836,14 @@ Template.meetings_meeting_dialog.events
   "keyup .meeting-time-input": (e, tpl) ->
     if e.key == "Escape"
       $(e.target).closest(".meeting-time-input").val ""
-      $(e.target).closest(".meeting-time-wrapper").dropdown("toggle")
+      $(e.target).closest(".meeting-time-input").blur();
+    else if e.key == "Enter"
+      $(e.target).closest(".meeting-time-input").blur();
     
     return
 
-  "change .meeting-time-input": (e, tpl) ->
+  "blur .meeting-time-input": (e, tpl) ->
+    console.log "blur"
     $target = $(e.target).closest(".meeting-time-input")
     val = $target.val()
     date = moment(val, "HH:mmA").toDate()
