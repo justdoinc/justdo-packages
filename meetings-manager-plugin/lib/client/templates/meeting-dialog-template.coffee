@@ -173,7 +173,7 @@ Template.meetings_meeting_dialog.onCreated ->
 
     meeting_date = "Date not set"
     if meeting.date?
-      meeting_date = moment(meeting.date).format("YYYY-MM-DD")
+      meeting_date = moment(meeting.date).format(JustdoHelpers.getUserPreferredDateFormat())
 
     ret = """
       <img src="#{@logo_data_url}" class="thead-logo" alt="JustDo" width="100"/>
@@ -259,7 +259,7 @@ Template.meetings_meeting_dialog.onCreated ->
 
     ret = "#{meeting.title} - Meeting Notes\n"
     if meeting.date?
-      ret += "#{moment(meeting.date).format("YYYY-MM-DD")}"
+      ret += "#{moment(meeting.date).format(JustdoHelpers.getUserPreferredDateFormat())}"
     
     if meeting.time?
       ret += meeting.time
