@@ -19,6 +19,7 @@ showAddNewMemberToTaskReminder = ->
     text: "Member added successfully.<br />Add the member to tasks you want to share."
     actionText: "Learn More"
     duration: 10000
+    showDismissButton: true
     onActionClick: ->
       window.open("https://support.justdo.com/hc/en-us/articles/115003577233")
 

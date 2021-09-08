@@ -85,6 +85,7 @@ _.extend CustomJustdoTasksLocks.prototype,
             JustdoSnackbar.show
               text: "Lock Task?"
               actionText: "Yes"
+              showDismissButton: true
               onActionClick: =>
                 @toggleTaskLockedState doc._id, (err) =>
                   if err?
@@ -93,17 +94,13 @@ _.extend CustomJustdoTasksLocks.prototype,
                   else
                     JustdoSnackbar.show
                       text: "Task locked"
-                      actionText: "Dismiss"
+                      actionText: "Unlock"
+                      showDismissButton: true
                       onActionClick: =>
-                        JustdoSnackbar.close()
-                        return
-                        
-                      showSecondButton: true
-                      secondButtonText: "Unlock"
-                      onSecondButtonClick: =>
                         @toggleTaskLockedState doc._id
                         JustdoSnackbar.close()
                         return
+
                     return
                 JustdoSnackbar.close()
                 return

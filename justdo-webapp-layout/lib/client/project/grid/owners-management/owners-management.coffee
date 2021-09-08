@@ -260,6 +260,7 @@ APP.executeAfterAppLibCode ->
             text: "Transfer ownership of #{child_tasks.length} child-tasks as well?"
             actionText: "Transfer"
             duration: 10000
+            showDismissButton: true
             onActionClick: =>
               for task_id in child_tasks
                 APP.collections.Tasks.update task_id,
@@ -270,6 +271,7 @@ APP.executeAfterAppLibCode ->
                 text: "Transfer ownership of #{child_tasks.length} child-tasks processed."
                 actionText: "UNDO"
                 duration: 10000
+                showDismissButton: true
                 onActionClick: =>
                   for task_id in child_tasks
                     APP.collections.Tasks.update task_id,

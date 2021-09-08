@@ -16,10 +16,6 @@ showSnackbar = (message) ->
   JustdoSnackbar.show
     text: message
     duration: 4000
-    actionText: "Dismiss"
-    onActionClick: =>
-      JustdoSnackbar.close()
-      return
 
 setMeetingTime = (tpl, date) ->
   tpl.$(".meeting-time").val(date).change()
@@ -896,6 +892,3 @@ Template.meetings_meeting_dialog.events
       e.target.value = $(e.target).data "old-value"
       e.target.blur()
     return
-
-  
-    

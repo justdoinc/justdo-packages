@@ -206,11 +206,8 @@ createDroppableWrapper = ->
       else # Task not acceptable
         JustdoSnackbar.show
           text: "Ownership transfer is not possible due to permissions"
-          actionText: "Close"
           duration: 5000
-          onActionClick: =>
-            JustdoSnackbar.close()
-            return
+
       return #end of drop
   return
 

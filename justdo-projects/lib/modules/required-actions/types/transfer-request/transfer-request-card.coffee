@@ -38,6 +38,7 @@ Template.required_action_card_transfer_request.events
     JustdoSnackbar.show
       text: "Task #{JustdoHelpers.taskCommonName({title: @title, seqId: @seqId}, 20)} <strong>Rejected</strong>"
       duration: 8000
+      showDismissButton: true
       actionText: "View"
       onActionClick: =>
         if JD.activeJustdoId()?
@@ -62,6 +63,7 @@ Template.required_action_card_transfer_request.events
     JustdoSnackbar.show
       text: "Task #{JustdoHelpers.taskCommonName({title: @title, seqId: @seqId}, 20)} <strong>Accepted</strong>"
       duration: 8000
+      showDismissButton: true
       actionText: "View"
       onActionClick: =>
         if JD.activeJustdoId()?

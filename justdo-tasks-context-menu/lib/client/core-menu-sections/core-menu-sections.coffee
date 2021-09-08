@@ -141,14 +141,10 @@ _.extend JustdoTasksContextMenu.prototype,
 
           JustdoSnackbar.show
             text: "#{_.size(subtasks_with_different_val)} subtree tasks set as #{current_selected_value_label}."
-            actionText: "Dismiss"
             showSecondButton: true
             secondButtonText: "Undo"
             duration: 10000
-            onActionClick: =>
-              JustdoSnackbar.close()
-              return
-
+            showDismissButton: true
             onSecondButtonClick: =>
               for task_id, task_val of subtasks_with_different_val
                 APP.collections.Tasks.update task_id,
@@ -347,14 +343,10 @@ _.extend JustdoTasksContextMenu.prototype,
 
     #       JustdoSnackbar.show
     #         text: "#{field_info.column_field_schema.label} cleared"
-    #         actionText: "Dismiss"
     #         showSecondButton: true
     #         secondButtonText: "Undo"
     #         duration: 7000
-    #         onActionClick: =>
-    #           JustdoSnackbar.close()
-    #           return
-
+    #         showDismissButton: true
     #         onSecondButtonClick: =>
     #           APP.collections.Tasks.update task_id,
     #             $set:
@@ -536,14 +528,10 @@ _.extend JustdoTasksContextMenu.prototype,
                         else
                           JustdoSnackbar.show
                             text: "This is the last parent of the task, do you want to remove the task completely?"
-                            actionText: "Dismiss"
                             showSecondButton: true
                             secondButtonText: "Remove"
                             duration: 10000
-                            onActionClick: =>
-                              JustdoSnackbar.close()
-                              return
-
+                            showDismissButton: true
                             onSecondButtonClick: =>
                               performRemoveParent()
 
@@ -579,4 +567,3 @@ _.extend JustdoTasksContextMenu.prototype,
 
             return res
 
-      return

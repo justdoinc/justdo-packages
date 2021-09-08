@@ -44,9 +44,5 @@ Template.project_pane_kanban_board_task.events
         JustdoSnackbar.show
           text: error.reason
           duration: 4000
-          actionText: "Dismiss"
-          onActionClick: =>
-            JustdoSnackbar.close()
-            return
       return
     return

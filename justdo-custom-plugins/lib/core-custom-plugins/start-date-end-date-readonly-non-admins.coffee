@@ -66,8 +66,6 @@ APP.justdo_custom_plugins.installCustomPlugin
           if field_id of $set_modifier
             JustdoSnackbar.show
               text: "This field is editable only by admins"
-              actionText: "Dismiss"
-              onActionClick: => return
 
             return false
 

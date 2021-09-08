@@ -84,6 +84,7 @@ APP.executeAfterAppLibCode ->
                   text: title
                   duration: 7000
                   actionText: "View"
+                  showDismissButton: true
                   onActionClick: =>
                     JustdoSnackbar.close()
 

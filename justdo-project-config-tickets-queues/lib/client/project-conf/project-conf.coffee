@@ -82,6 +82,7 @@ Template.ticket_queue_conf.events
     APP.collections.Tasks.update @_id, {$set: {is_tickets_queue: false}}, =>
       JustdoSnackbar.show
         text: "Task ##{task.seqId} removed from Ticket Queues"
+        showDismissButton: true
         actionText: "Undo"
         duration: 7000
         onActionClick: =>

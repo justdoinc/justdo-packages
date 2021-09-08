@@ -182,10 +182,6 @@ Template.project_pane_kanban_board.events
           JustdoSnackbar.show
             text: "Board has a limit of " + @limit + " Tasks"
             duration: 4000
-            actionText: "Dismiss"
-            onActionClick: =>
-              JustdoSnackbar.close()
-              return
 
         $(e.target).val ""
 
