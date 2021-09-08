@@ -133,7 +133,7 @@ Template.meetings_meeting_dialog.onCreated ->
     tasks_html = ""
     tasks = _.sortBy meeting.tasks, 'task_order'
     for item in tasks
-      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><h5 class="font-weight-bold">#{JustdoHelpers.xssGuard item.title}, <span class="bg-light border px-2 rounded mr-1">id: #{item.seqId}</span> </h5>"""
+      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><h5 class="font-weight-bold">#{JustdoHelpers.xssGuard item.title}, <span class="bg-light border px-2 rounded mr-1">##{item.seqId}</span> </h5>"""
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
@@ -148,7 +148,7 @@ Template.meetings_meeting_dialog.onCreated ->
               user_id = task_obj.pending_owner_id
             user = Meteor.users.findOne user_id
             user_name = """<span class="mr-2">#{JustdoHelpers.xssGuard user.profile.first_name} #{JustdoHelpers.xssGuard user.profile.last_name},</span>"""
-          tasks_html += """<li>#{user_name} #{JustdoHelpers.xssGuard task_added.title}, <span class="bg-light border px-2 rounded mr-1">id: #{task_added.seqId}</span> </li>"""
+          tasks_html += """<li>#{user_name} #{JustdoHelpers.xssGuard task_added.title}, <span class="bg-light border px-2 rounded mr-1">##{task_added.seqId}</span> </li>"""
         tasks_html += "</ul>"
 
       if meeting_task?.note?
@@ -289,7 +289,7 @@ Template.meetings_meeting_dialog.onCreated ->
     ret += "Agenda Notes:\n\n"
     tasks = _.sortBy meeting.tasks, 'task_order'
     for item in tasks
-      ret += "#{item.title}, id: #{item.seqId}\n"
+      ret += "#{item.title}, ##{item.seqId}\n"
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
@@ -297,7 +297,7 @@ Template.meetings_meeting_dialog.onCreated ->
       if meeting_task?.added_tasks?.length > 0
         ret += "Tasks Added:\n"
         for task_added in meeting_task.added_tasks
-          ret += "*#{task_added.title}, id: #{task_added.seqId}\n"
+          ret += "*#{task_added.title}, ##{task_added.seqId}\n"
 
       if meeting_task?.note?
         ret += "Notes:\n#{meeting_task.note.replace(/<[^>]*>/g, '')}\n"
