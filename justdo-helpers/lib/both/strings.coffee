@@ -288,3 +288,13 @@ _.extend JustdoHelpers,
       res.push line_arr
 
     return res
+
+  getNonEmptyValuesFromCsv: (csv) ->
+    csv = csv or ""
+
+    if not _.isString(csv)
+      csv = ""
+
+    trimmed_values = _.map csv.split(","), (conf) -> conf.trim()
+
+    return _.compact(trimmed_values)
