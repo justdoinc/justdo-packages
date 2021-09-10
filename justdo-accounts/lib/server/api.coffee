@@ -488,6 +488,8 @@ _.extend JustdoAccounts.prototype,
       "invited_by": 1
       "users_allowed_to_edit_pre_enrollment": 1
 
+      "site_admin.is_site_admin": 1
+
     if options?.additional_fields?
       _.extend fields, options.additional_fields
     
