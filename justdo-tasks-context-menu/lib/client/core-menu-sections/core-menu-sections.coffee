@@ -141,11 +141,10 @@ _.extend JustdoTasksContextMenu.prototype,
 
           JustdoSnackbar.show
             text: "#{_.size(subtasks_with_different_val)} subtree tasks set as #{current_selected_value_label}."
-            showSecondButton: true
-            secondButtonText: "Undo"
-            duration: 10000
             showDismissButton: true
-            onSecondButtonClick: =>
+            actionText: "Undo"
+            duration: 10000
+            onActionClick: =>
               for task_id, task_val of subtasks_with_different_val
                 APP.collections.Tasks.update task_id,
                   $set:
@@ -528,13 +527,11 @@ _.extend JustdoTasksContextMenu.prototype,
                         else
                           JustdoSnackbar.show
                             text: "This is the last parent of the task, do you want to remove the task completely?"
-                            showSecondButton: true
-                            secondButtonText: "Remove"
-                            duration: 10000
                             showDismissButton: true
-                            onSecondButtonClick: =>
+                            actionText: "Remove"
+                            duration: 10000
+                            onActionClick: =>
                               performRemoveParent()
-
                               JustdoSnackbar.close()
                               return
                       else
