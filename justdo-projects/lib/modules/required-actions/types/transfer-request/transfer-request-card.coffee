@@ -1,3 +1,13 @@
+jumpToTask = (project_id, task_id) ->
+  # If the target task exsists in the current JustDo, simply point to that task
+  if JustdoHelpers.currentPageName() == "project" and Router.current().project_id == project_id
+    APP.modules?.project_page?.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab task_id
+    return
+
+  # Else we have to move to that JustDo before opening that task
+  APP.modules?.project_page?.activateTaskInProject project_id, task_id
+  return
+
 Template.required_action_card_transfer_request.onCreated ->
   @state = new ReactiveVar "base"
   @show_shortcut_cue = new ReactiveVar false
@@ -41,11 +51,7 @@ Template.required_action_card_transfer_request.events
       showDismissButton: true
       actionText: "View"
       onActionClick: =>
-        if JD.activeJustdoId()?
-          APP.modules?.project_page?.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab (@task_id)
-        else
-          APP.modules?.project_page?.activateTaskInProject @project_id, @task_id
-
+        jumpToTask(@project_id, @task_id)
         JustdoSnackbar.close()
 
         return
@@ -66,11 +72,7 @@ Template.required_action_card_transfer_request.events
       showDismissButton: true
       actionText: "View"
       onActionClick: =>
-        if JD.activeJustdoId()?
-          APP.modules?.project_page?.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab (@task_id)
-        else
-          APP.modules?.project_page?.activateTaskInProject @project_id, @task_id
-
+        jumpToTask(@project_id, @task_id)
         JustdoSnackbar.close()
 
         return
@@ -82,7 +84,7 @@ Template.required_action_card_transfer_request.events
       APP.modules?.project_page?.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab (@task_id)
     else
       APP.modules?.project_page?.activateTaskInProject @project_id, @task_id
-    
+
     return
 
 Template.required_action_card_transfer_request_input.onRendered ->
