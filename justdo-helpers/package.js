@@ -109,6 +109,7 @@ Package.onUse(function (api) {
   api.add_files("lib/server/network.coffee", server);
   api.add_files("lib/server/cpu.coffee", server);
   api.add_files("lib/server/users-generator.coffee", server);
+  api.add_files("lib/server/users.coffee", server);
   api.add_files("lib/server/tasks-generator.coffee", server);
   api.add_files("lib/server/url.coffee", server);
 
