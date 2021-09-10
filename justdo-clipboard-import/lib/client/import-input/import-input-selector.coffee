@@ -41,6 +41,7 @@ Template.justdo_clipboard_import_input_selector.onRendered ->
     return
 
   $(".justdo-clipboard-import-input-selector").on "hidden.bs.dropdown", ->
+    self.search_input_rv.set null
     $(".clipboard-import-selector-search").val null
     return
 
