@@ -3,11 +3,13 @@ _.extend JustdoProjectsDashboard,
 
   plugin_human_readable_name: "Project Dashboard"
 
-  # taskExcluder will return true by default to show all tasks in the Dashboard
-  # If certain tasks are meant to be excluded, implement and overwrite this method in the relavent plugin's static.coffee
+  # Use taskExcluder to exclude tasks from the Project Dashboard count.
+  # Return false for tasks that you want to filter out.
   taskExcluder: (task_obj) -> true
 
-JustdoProjectsDashboard.taskExcluder = (task_obj) ->
-  if task_obj.stm_document_type is "issues" or task_obj.stm_document_type is "risks"
-    return false
-  return true
+# Another example for taskExcluder:
+#
+# JustdoProjectsDashboard.taskExcluder = (task_obj) ->
+#   if task_obj.stm_document_type is "issues" or task_obj.stm_document_type is "risks"
+#     return false
+#   return true
