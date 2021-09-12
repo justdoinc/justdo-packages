@@ -299,8 +299,6 @@ Template.justdo_calendar_project_pane.onCreated ->
       other_users = _.difference(APP.collections.TasksAugmentedFields.findOne(project_id)?.users, [Meteor.userId()])
       {title="", seqId} = APP.collections.Tasks.findOne(project_id, {fields: {title: 1, seqId: 1}})
 
-      $(".calendar_view_project_selector button").text("##{seqId}: #{title}")
-
     return
 
   # to handle highlighting the header of 'today', when the day changes...
@@ -682,6 +680,14 @@ Template.justdo_calendar_project_pane.helpers
   deliveryPlannerProjectId: ->
     return delivery_planner_project_id.get()
 
+  activeTaskSeqIdAndDisplayname: ->
+    active_task_id = delivery_planner_project_id.get()
+    if active_task_id is "*"
+      return "Entire JustDo"
+
+    active_task = APP.collections.Tasks.findOne(active_task_id, {fields: {seqId: 1, title: 1}})
+    return JustdoHelpers.taskCommonName active_task
+
   formatDate: (viewResolution) ->
     date = moment.utc(@, "YYYY-MM-DD")
     if number_of_days_to_display.get() == 7
@@ -815,8 +821,6 @@ Template.justdo_calendar_project_pane.events
 
   "click .calendar_view_project_selector a": (e) ->
     project = $(e.currentTarget).attr "project_id"
-    project_name = $(e.currentTarget).text()
-    $(".calendar_view_project_selector button").text(project_name)
     delivery_planner_project_id.set(project)
     return
 
