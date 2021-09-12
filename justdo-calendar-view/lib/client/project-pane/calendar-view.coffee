@@ -28,7 +28,7 @@ view_end_date_rv = new ReactiveVar
 dates_to_display = new ReactiveVar([])
 number_of_days_to_display = new ReactiveVar(7)
 delivery_planner_project_id = new ReactiveVar ("*") # '*' for the entire JustDo
-sub_tree_task_ids = new ReactiveVar []
+project_and_descendants_members = new ReactiveVar []
 
 addResourceRecord = (record, task_id) ->
   record = _.extend {}, record
@@ -590,12 +590,33 @@ Template.justdo_calendar_project_pane.onCreated ->
     project_id = delivery_planner_project_id.get()
     if project_id? and project_id != "*"
       # project_id in this case is actually a task id
+      # Get the child task id first
       descendants = APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownDescendantsIdsObj([project_id])
       task_ids = _.keys(descendants)
       task_ids.push project_id
-      sub_tree_task_ids.set task_ids
-      JD.subscribeItemsAugmentedFields task_ids, ["users"]
 
+      # Get the list of available members
+      JD.subscribeItemsAugmentedFields task_ids, ["users"]
+      # If a project is selected, get the members of the selected project and childs
+      other_users = new Set()
+      APP.collections.TasksAugmentedFields.find
+        _id:
+          $in: task_ids
+      ,
+        fields:
+          users: 1
+      .forEach (task) ->
+        if task.users?
+          for user_id in task.users
+            other_users.add user_id
+        return
+      other_users.delete Meteor.userId()
+      project_and_descendants_members.set Array.from other_users
+
+      return
+
+    # If no project is selected, simply return all members under current JustDo, except the current user
+    project_and_descendants_members.set _.difference(APP.modules.project_page.curProj()?.getMembersIds(), [Meteor.userId()])
     return
 
   return # end onCreated
@@ -643,7 +664,7 @@ Template.justdo_calendar_project_pane.helpers
     return Meteor.userId()
 
   allOtherUsers: ->
-    filtered_members = calendar_filtered_members_rv.get()
+    filtered_members = _.intersection(calendar_filtered_members_rv.get(), project_and_descendants_members.get())
     return _.sortBy filtered_members, (user_id) -> JustdoHelpers.displayName(user_id).toLowerCase()
 
   projectsInJustDo: ->
@@ -716,48 +737,20 @@ Template.justdo_calendar_project_pane.helpers
 
   calendarViewResolution: -> number_of_days_to_display.get()
 
-  defaultSelectedMembers: -> calendar_filtered_members_rv.get()
+  defaultSelectedMembers: -> Tracker.nonreactive => calendar_filtered_members_rv.get()
 
   members: ->
-    tmpl = Template.instance()
-    project_id = delivery_planner_project_id.get()
-    other_users = []
-
-    if project_id == "*"
-      other_users = _.difference(APP.modules.project_page.curProj()?.getMembersIds(), [Meteor.userId()])
-    else
-      task_ids = sub_tree_task_ids.get()
-
-      other_users = new Set()
-
-      APP.collections.TasksAugmentedFields.find
-        _id:
-          $in: task_ids
-      ,
-        fields:
-          users: 1
-      .forEach (task) ->
-        if task.users?
-          for user_id in task.users
-            other_users.add user_id
-
-        return
-
-      other_users.delete Meteor.userId()
-      other_users = Array.from other_users
+    other_users = project_and_descendants_members.get()
 
     other_users_docs = []
-
     for user_id in other_users
       if (user_doc = Meteor.users.findOne(user_id, {_id: 1}))?
         other_users_docs.push user_doc
 
     membersDocs = other_users_docs
-
     membersDocsSortByName = JustdoHelpers.sortUsersDocsArray membersDocs
 
     members = []
-
     for member_doc in membersDocsSortByName
       members.push member_doc._id
 
