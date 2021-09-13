@@ -125,6 +125,16 @@ Template.justdo_color_picker_dropdown_content.helpers
 
     return contrast_classes
 
+  selectedColor: ->
+    return @color_picker_controller.getSelectedColor()
+
+  notFromAvailableColors: ->
+    selected_color = @color_picker_controller._selected_color_rv.get()
+    selected_color = selected_color.replace("#", "")
+    available_colors = @color_picker_controller.options.available_colors
+
+    return not available_colors.includes selected_color
+
 Template.justdo_color_picker_dropdown_content.events
   "click .justdo-color-picker-color-option": (e, tpl) ->
     selected_color = String(@)
