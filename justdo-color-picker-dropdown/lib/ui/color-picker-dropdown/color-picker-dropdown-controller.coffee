@@ -48,7 +48,10 @@ Util.inherits JustdoColorPickerDropdownController, EventEmitter
 
 _.extend JustdoColorPickerDropdownController.prototype,
   getSelectedColor: ->
-    return @_selected_color_rv.get()
+    selected_color = @_selected_color_rv.get()
+    selected_color = selected_color.replace("#", "")
+
+    return selected_color
 
   setSelectedColor: (color) ->
     return @_selected_color_rv.set(color)
