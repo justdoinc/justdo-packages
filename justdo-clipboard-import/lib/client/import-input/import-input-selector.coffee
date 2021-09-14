@@ -1,8 +1,9 @@
 Template.justdo_clipboard_import_input_selector.onCreated ->
   self = @
   self.search_input_rv = new ReactiveVar null
+  self.parent_data = Template.parentData(1)
   self.available_field_types_crv = JustdoHelpers.newComputedReactiveVar null, ->
-   available_field_types = Template.parentData(1).getAvailableFieldTypes()
+   available_field_types = self.parent_data.getAvailableFieldTypes()
    # To maintain certain options at top/bottom, we manipulate the array and object of available field types explicitly.
    # available_field_types[0] is an object
    _.extend available_field_types[0],
