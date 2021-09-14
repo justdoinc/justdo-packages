@@ -99,10 +99,6 @@ Template.justdo_clipboard_import_input_selector.events
   "keydown .justdo-clipboard-import-input-selector .dropdown-menu": (e, tpl) ->
     $dropdown_item = $(e.target).closest(".clipboard-import-selector-search, .dropdown-item")
 
-    if e.which == 13 # Enter
-      e.preventDefault()
-      $dropdown_item.nextAll(".dropdown-item").first().click()
-
     if e.which == 38 # Up
       e.preventDefault()
 
