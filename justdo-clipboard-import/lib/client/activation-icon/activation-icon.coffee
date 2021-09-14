@@ -136,6 +136,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
   row_index = 0
 
   temp_import_ids = []
+  owner_id_to_temp_import_id_map = {}
   import_idx_to_temp_import_id_map = {}
   dependencies_strs = {}
 
@@ -168,11 +169,21 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         import_idx_to_temp_import_id_map[cell_val] = temp_import_id
 
       for column_num in [0..(number_of_columns - 1)]
-        cell_val = row[column_num].replace(/[\u200B-\u200D\uFEFF]/g, "").trim() # 'replace' is used to remove zero-width white space
+        if (_.isString(cell_val = row[column_num]))
+          cell_val = cell_val.replace(/[\u200B-\u200D\uFEFF]/g, "").trim() # 'replace' is used to remove zero-width white space
+        else
+          cell_val.import_value = cell_val.import_value.replace(/[\u200B-\u200D\uFEFF]/g, "").trim()
+
         field_def = selected_columns_definitions[column_num]
         field_id = field_def._id
 
         if field_id == "clipboard-import-index" # Do nothing, "clipboard-import-index" is already handled above
+        else if field_id == "owner_id"
+          if (user_id = cell_val.import_value)?
+            if (owner_id_to_temp_import_id_map[user_id])?
+              owner_id_to_temp_import_id_map[user_id].push temp_import_id
+            else
+             owner_id_to_temp_import_id_map[user_id] = [temp_import_id]
         else if cell_val.length > 0 and field_id == "task-indent-level"
           indent_level = parseInt cell_val, 10
           if base_indent < 0
@@ -359,12 +370,26 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     )?._id
 
   temp_import_id_task_id = (temp_import_id) ->
-    return APP.collections.Tasks.findOne(
-      "jci:temp_import_id": temp_import_id
-    ,
-      fields:
-        _id: 1
-    )?._id
+    if _.isString temp_import_id
+      return APP.collections.Tasks.findOne(
+        "jci:temp_import_id": temp_import_id
+      ,
+        fields:
+          _id: 1
+      )?._id
+
+    if _.isArray temp_import_id
+      task_ids = APP.collections.Tasks.find(
+        "jci:temp_import_id":
+          $in: temp_import_id
+      ,
+        fields:
+          _id: 1
+      ).fetch()
+
+      task_ids = _.map task_ids, (task) -> task._id
+
+      return task_ids
 
   importDependencies = ->
     for temp_import_id, deps_str of dependencies_strs
@@ -380,6 +405,20 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       APP.justdo_planning_utilities.dependent_tasks_update_hook_enabled = true
 
     return true
+
+  importOwners = ->
+    if _.isEmpty owner_id_to_temp_import_id_map
+      return
+
+    for user_id, temp_task_ids of owner_id_to_temp_import_id_map
+      task_ids = temp_import_id_task_id temp_task_ids
+      transfer_owner_modifier =
+        $set:
+          owner_id: user_id
+          pending_owner_id: null
+      APP.modules.project_page.curProj().bulkUpdate(task_ids, transfer_owner_modifier)
+
+    return
 
   clearupTempImportId = ->
     Meteor.call "clearupTempImportId", temp_import_ids
@@ -432,6 +471,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     try
       importDependencies()
+      importOwners()
       clearupTempImportId()
     catch err
       JustdoSnackbar.show
