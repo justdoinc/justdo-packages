@@ -2,7 +2,6 @@
   <div class="project-header d-flex flex-column">
     <div class="middle-project-header-items d-flex align-items-center">
       {{> project_operations_toolbar}}
-      {{> search_comp}}
       {{> panes_controls}}
     </div>
   </div>
@@ -121,11 +120,13 @@
 </template>
 
 <template name="search_comp">
+  <div class="project-header-toolbar-divider ml-1 mr-3"></div>
   <div id="project-search-comp-container"></div>
+  <div class="project-header-toolbar-divider mx-3"></div>
 </template>
 
 <template name="panes_controls">
-  <div id="panes-controls" class="border-left">
+  <div id="panes-controls">
     {{#if isBottomPaneAvailable}}
       <svg class="jd-icon jd-c-pointer text-dark bottom-pane-control {{#if isBottomPaneOpen}}control-opened{{/if}}">
         <title>{{#if isBottomPaneOpen}}Hide JustDo Pane{{else}}Show JustDo Pane{{/if}}</title>
