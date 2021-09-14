@@ -86,10 +86,9 @@ Template.justdo_clipboard_import_input_selector.events
       $(".data-cell[data-col-index=#{col_index}]").each (row_index, data_cell) ->
         if (old_value = clipboard_data[row_index][col_index].old_value)?
           clipboard_data[row_index][col_index] = old_value
+        $(data_cell).children(".owner-id-alert").remove()
 
       clipboard_data_rv.set(clipboard_data)
-
-      $(".owner-id-alert").remove()
 
     corresponding_selector_button
       .text(field_label)
