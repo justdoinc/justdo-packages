@@ -79,6 +79,41 @@ Template.justdo_clipboard_import_input_selector.events
       .text(field_label)
       .val(field_id)
 
+    # The following block is dedicated to handle task owner import by email
+    if field_id == "owner_id"
+      col_index = $(e.currentTarget).closest(".bg-light").data("col-index")
+
+      # Load all docs of users from current JustDo
+      APP.projects.ensureAllMembersPublicBasicUsersInfoLoaded ->
+        clipboard_data_rv = tpl.parent_data.clipboard_data
+        clipboard_data = clipboard_data_rv.get()
+
+        # Check if the email belongs to a user and change the cell text to that user's display name
+        $(".data-cell[data-col-index=#{col_index}]").each (row_index, data_cell) ->
+          $data_cell = $(data_cell)
+
+          if (email_address = $data_cell.text()) and (JustdoHelpers.common_regexps.email.test email_address)
+            display_name_required_fields =
+              "profile.first_name": 1
+              "profile.last_name": 1
+            if (user_doc = Meteor.users.findOne {"emails.address": email_address}, {fields: display_name_required_fields})
+              clipboard_data[row_index][col_index] =
+                old_value: $data_cell.text()
+                new_value: user_doc._id
+                display_value: JustdoHelpers.displayName(user_doc)
+              return
+            # If no user doc found, we put a warning icon next to the cell data indicating that the email does not belong to a member
+            user_not_found_icon = """<svg class="jd-icon owner-id-alert"><use xlink:href="/layout/icons-feather-sprite.svg#alert-triangle"/></svg>"""
+            $data_cell.prepend(user_not_found_icon)
+            return
+
+          not_email_icon = """<svg class="jd-icon owner-id-alert"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"/></svg>"""
+          $data_cell.prepend(not_email_icon)
+          return
+
+        clipboard_data_rv.set(clipboard_data)
+
+        return
     return
 
   "click .manage-columns": ->
