@@ -114,7 +114,7 @@ Template.justdo_clipboard_import_input_selector.events
             if (user_doc = Meteor.users.findOne {"emails.address": email_address}, {fields: display_name_required_fields})
               clipboard_data[row_index][col_index] =
                 old_value: $data_cell.text()
-                new_value: user_doc._id
+                import_value: user_doc._id
                 display_value: JustdoHelpers.displayName(user_doc)
               return
             # If no user doc found, we put a warning icon next to the cell data indicating that the email does not belong to a member
