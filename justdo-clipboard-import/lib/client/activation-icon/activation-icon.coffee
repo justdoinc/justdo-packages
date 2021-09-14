@@ -7,6 +7,7 @@ non_sorted_field_ids = [
   "due_date"
 ]
 base_supported_fields_ids = [
+  "owner_id"
   "status"
   "priority"
   "state"
