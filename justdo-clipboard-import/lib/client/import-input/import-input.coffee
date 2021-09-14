@@ -153,6 +153,8 @@ Template.justdo_clipboard_import_input.helpers
 
   importLimit: -> JustdoClipboardImport.import_limit
 
+  isObject: (cell_data) -> _.isObject cell_data
+
 Template.justdo_clipboard_import_input.events
   "keyup .justdo-clipboard-import-paste-target": (e, tpl)->
     $(".justdo-clipboard-import-paste-target").val("")

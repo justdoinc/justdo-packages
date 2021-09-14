@@ -8,7 +8,7 @@
               Import
             </td>
             {{#each numberOfColumns}}
-              <th class="bg-light">
+              <th class="bg-light" data-col-index="{{@index}}">
                 {{> justdo_clipboard_import_input_selector}}
               </th>
             {{/each}}
@@ -19,7 +19,11 @@
                 <input type="checkbox" class="import-row-checkbox" row-index="{{@index}}" checked="checked">
               </td>
               {{#each this}}
-                <td>{{nl2br this}}</td>
+                {{#if isObject this}}
+                  <td class="data-cell" jd-tt="user-info?id={{this.new_value}}" data-col-index="{{@index}}">{{this.display_value}}</td>
+                {{else}}
+                  <td class="data-cell" data-col-index="{{@index}}">{{nl2br this}}</td>
+                {{/if}}
               {{/each}}
             </tr>
           {{/each}}
