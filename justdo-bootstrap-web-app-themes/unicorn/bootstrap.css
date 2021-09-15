@@ -7155,7 +7155,7 @@ a.text-dark:hover, a.text-dark:focus {
   color: white !important;
 }
 
-.column-filter-active::before {
+.column-filter-active-wrapper .column-filter-button::before {
   content: "";
   position: absolute;
   width: 7px;
