@@ -2,8 +2,18 @@ raw_data_moment_format = "YYYY-MM-DD"
 
 _.extend JustdoHelpers,
   display_name_required_fields:
+    "_id": 1
     "profile.first_name": 1
     "profile.last_name": 1
+
+  avatar_required_fields:
+    "_id": 1
+    "emails": 1
+    "profile.avatar_bg": 1
+    "profile.avatar_fg": 1
+    "profile.first_name": 1
+    "profile.last_name": 1
+    "profile.profile_pic": 1
 
   displayName: (user) ->
     # user:
