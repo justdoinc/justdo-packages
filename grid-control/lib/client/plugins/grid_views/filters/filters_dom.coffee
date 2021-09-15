@@ -64,11 +64,11 @@ _.extend GridControl.prototype,
 
   _updateFilterStateIndicator: ->
     filters_state = @_getViewFiltersState()
-    active_filter_class = "column-filter-active"
 
     column_filter_button = $(".column-filter-button", @container)
     if not filters_state?
-      column_filter_button.removeClass(active_filter_class)
+      column_filter_button.parent().removeClass("column-filter-active-wrapper")
+      column_filter_button.parent().find(".slick-column-name").removeClass("bg-primary")
     else
       column_filter_button.each (i, el) =>
         $el = $(el)
@@ -77,9 +77,11 @@ _.extend GridControl.prototype,
         column_id = column_settings.id
 
         if column_id of filters_state
-          $el.addClass(active_filter_class)
+          $el.parent().addClass("column-filter-active-wrapper")
+          $el.parent().find(".slick-column-name").addClass("bg-primary")
         else
-          $el.removeClass(active_filter_class)
+          $el.parent().removeClass("column-filter-active-wrapper")
+          $el.parent().find(".slick-column-name").removeClass("bg-primary")
 
   _openFiltersDropdown: (element_type, $connected_element) ->
     @$filter_dropdown.data("open")(element_type, $connected_element)
