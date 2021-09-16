@@ -42,14 +42,14 @@ _.extend MeetingsManager.prototype,
       sub = @
       user_id = @userId
 
-      if not self.hasAccessToMeeting meeting_id, user_id
+      if not (meeting = self.getMeetingIfAccessible meeting_id, user_id)?
         throw self._error "meeting-not-found"
 
       cursor = self.meetings.find
         _id: meeting_id
       ,
         fields: undefined
-          
+      
 
       filterTasks = (meeting_id, fields, is_changed) ->
         if is_changed
@@ -59,7 +59,10 @@ _.extend MeetingsManager.prototype,
         else
           meeting = fields
 
-        filtered_tasks = self.filterAccessableMeetingTasks meeting.tasks, user_id
+        if user_id in meeting.users
+          filtered_tasks = self.filterAccessableMeetingTasks(meeting.tasks, user_id, "supress_fields")
+        else
+          filtered_tasks = self.filterAccessableMeetingTasks(meeting.tasks, user_id, "remove")
 
         if (not user_id in meeting.users) and filtered_tasks.length == 0 
           return {
@@ -97,14 +100,14 @@ _.extend MeetingsManager.prototype,
       init = true
       meetings_tasks_obs = cursor.observeChanges
         added: (id, fields) =>
-          if not init and self._isTaskMember fields.task_id, user_id
-            sub.added self.meetings_tasks._name, id, self._filterAddedTasks(fields)
+          if not init and (user_id in meeting.users or self._isTaskMember(fields.task_id, user_id))
+            sub.added self.meetings_tasks._name, id, self._filterAddedTasks(fields, user_id)
 
           return
         
         changed: (id, fields) =>
           if not init
-            sub.changed self.meetings_tasks._name, id, self._filterAddedTasks(fields)
+            sub.changed self.meetings_tasks._name, id, self._filterAddedTasks(fields, user_id)
           
           return
         
@@ -130,10 +133,10 @@ _.extend MeetingsManager.prototype,
         return
 
       for meeting_task in meetings_tasks
-        if meeting_task.task_id in accessible_task_ids
+        if (user_id in meeting.users) or (meeting_task.task_id in accessible_task_ids)
           meeting_task_id = meeting_task._id
           delete meeting_task._id
-          sub.added self.meetings_tasks._name, meeting_task_id, self._filterAddedTasks(meeting_task)
+          sub.added self.meetings_tasks._name, meeting_task_id, self._filterAddedTasks(meeting_task, user_id)
       init = false
         
       cursor = self.meetings_private_notes.find

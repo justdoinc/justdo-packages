@@ -406,7 +406,7 @@ _.extend MeetingsManager.prototype,
 
     return project
 
-  hasAccessToMeeting: (meeting_id, user_id) ->
+  getMeetingIfAccessible: (meeting_id, user_id) ->
     self = @
     meeting = self.meetings.findOne meeting_id,
       fields:
@@ -414,13 +414,16 @@ _.extend MeetingsManager.prototype,
         tasks: 1
     
     if not meeting?
-      return false
+      return null
 
     if user_id in meeting.users
-      return true
+      return meeting
     
-    filtered_tasks = self.filterAccessableMeetingTasks meeting.tasks, user_id
-    return filtered_tasks?.length > 0
+    filtered_tasks = self.filterAccessableMeetingTasks meeting.tasks, user_id, "remove"
+    if filtered_tasks?.length > 0
+      return meeting
+    
+    return null
 
   _isTaskMember: (task_id, user_id) ->
     task = @tasks.findOne
@@ -592,7 +595,7 @@ _.extend MeetingsManager.prototype,
 
     return
 
-  filterAccessableMeetingTasks: (tasks, user_id) ->
+  filterAccessableMeetingTasks: (tasks, user_id, action="remove") ->
     task_ids = _.map tasks, (task) -> task.task_id
     accessable_task_ids = []
     APP.collections.Tasks.find
@@ -606,7 +609,17 @@ _.extend MeetingsManager.prototype,
       accessable_task_ids.push task._id
       return
     
-    return _.filter tasks, (task) -> task.task_id in accessable_task_ids
+    filtered_tasks = null
+
+    if action == "remove"
+      filtered_tasks = _.filter tasks, (task) -> task.task_id in accessable_task_ids
+    else if action == "supress_fields"
+      filtered_tasks = _.map tasks, (task) -> 
+        if not (task.task_id in accessable_task_ids)
+          delete task.title
+        return task
+    
+    return filtered_tasks
 
   destroy: ->
     if @destroyed

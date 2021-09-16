@@ -429,7 +429,7 @@ Template.meetings_meeting_dialog.helpers
 
     return meeting.status != "ended" and 
       (meeting.organizer_id == user_id or 
-      (not meeting.locked and user_id in meeting.users))
+      (not meeting.locked and meeting.users? and user_id in meeting.users))
 
   mayEditFooter: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -438,7 +438,7 @@ Template.meetings_meeting_dialog.helpers
     user_id = Meteor.userId()
 
     return meeting.organizer_id == user_id or 
-      (not meeting.locked and user_id in meeting.users)
+      (not meeting.locked and meeting.users and user_id in meeting.users)
 
   mayEditAgenda: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -448,7 +448,7 @@ Template.meetings_meeting_dialog.helpers
 
     return (meeting.status != "ended") and (meeting.status != "canceled") and
       (meeting.organizer_id == user_id or 
-      (not meeting.locked and user_id in meeting.users))
+      (not meeting.locked and meeting.users and user_id in meeting.users))
 
   onSaveMeetingNote: ->
     tmpl = Template.instance()

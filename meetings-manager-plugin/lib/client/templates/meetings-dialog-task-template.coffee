@@ -294,6 +294,8 @@ Template.meetings_dialog_task.events
     , 100
   
   "click .dialog-agenda-task": (e, tpl) ->
-    task_id = tpl.data.meeting_task.task_id
-    gcm = APP.modules.project_page.getCurrentGcm()
-    gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)
+    if (task_id = tpl.data?.meeting_task?.task_id)?
+      gcm = APP.modules.project_page.getCurrentGcm()
+      gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)
+    
+    return
