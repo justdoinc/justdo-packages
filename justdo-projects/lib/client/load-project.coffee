@@ -362,3 +362,8 @@ _.extend Projects.prototype,
       return
 
     return project_obj
+
+  ensureAllMembersPublicBasicUsersInfoLoaded: (cb) ->
+    members = @getProjectMembersIds JD.activeJustdoId()
+    @ensureUsersPublicBasicUsersInfoLoaded members, cb
+    return
