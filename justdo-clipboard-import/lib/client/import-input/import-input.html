@@ -19,8 +19,10 @@
                 <input type="checkbox" class="import-row-checkbox" row-index="{{@index}}" checked="checked">
               </td>
               {{#each this}}
-                {{#if isObject this}}
-                  <td class="data-cell" jd-tt="user-info?id={{this.import_value}}" data-col-index="{{@index}}">{{this.display_value}}</td>
+                {{#if isUserObject this}}
+                  {{#with this.user_obj}}
+                    <td class="data-cell" data-col-index="{{@index}}">{{> justdo_avatar}} {{displayName}}</td>
+                  {{/with}}
                 {{else}}
                   <td class="data-cell" data-col-index="{{@index}}">{{nl2br this}}</td>
                 {{/if}}

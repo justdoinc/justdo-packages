@@ -108,22 +108,19 @@ Template.justdo_clipboard_import_input_selector.events
           $data_cell = $(data_cell)
 
           if (email_address = $data_cell.text()) and (JustdoHelpers.common_regexps.email.test email_address)
-            display_name_required_fields =
-              "profile.first_name": 1
-              "profile.last_name": 1
-            if (user_doc = Meteor.users.findOne {"emails.address": email_address}, {fields: display_name_required_fields})
+            if (user_doc = Meteor.users.findOne {"emails.address": email_address}, {fields: JustdoHelpers.avatar_required_fields})
               clipboard_data[row_index][col_index] =
                 old_value: $data_cell.text()
                 import_value: user_doc._id
-                display_value: JustdoHelpers.displayName(user_doc)
+                user_obj: user_doc
               return
             # If no user doc found, we put a warning icon next to the cell data indicating that the email does not belong to a member
             user_not_found_icon = """<svg class="jd-icon owner-id-alert"><use xlink:href="/layout/icons-feather-sprite.svg#alert-triangle"/></svg>"""
-            $data_cell.prepend(user_not_found_icon)
+            $data_cell.prepend(user_not_found_icon) # No user input is used here, hence no xssGuard
             return
 
           not_email_icon = """<svg class="jd-icon owner-id-alert"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"/></svg>"""
-          $data_cell.prepend(not_email_icon)
+          $data_cell.prepend(not_email_icon) # No user input is used here, hence no xssGuard
           return
 
         clipboard_data_rv.set(clipboard_data)

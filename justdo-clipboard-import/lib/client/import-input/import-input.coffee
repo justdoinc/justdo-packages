@@ -153,7 +153,7 @@ Template.justdo_clipboard_import_input.helpers
 
   importLimit: -> JustdoClipboardImport.import_limit
 
-  isObject: (cell_data) -> _.isObject cell_data
+  isUserObject: (cell_data) -> _.isObject(cell_data) and cell_data.user_obj?
 
 Template.justdo_clipboard_import_input.events
   "keyup .justdo-clipboard-import-paste-target": (e, tpl)->
