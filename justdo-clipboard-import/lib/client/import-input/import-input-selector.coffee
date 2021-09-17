@@ -75,10 +75,10 @@ Template.justdo_clipboard_import_input_selector.events
     available_field_types_crv = tpl.available_field_types_crv.get()[0]
     field_label = available_field_types_crv[field_id].label
 
-    corresponding_selector_button = $(e.currentTarget).closest(".justdo-clipboard-import-input-selector").find("button")
+    $corresponding_selector_button = $(e.currentTarget).closest(".justdo-clipboard-import-input-selector").find("button")
 
     # If this column was previously set to owner_id, we revert the cell data back to original here (see why below)
-    if corresponding_selector_button.val() == "owner_id"
+    if $corresponding_selector_button.val() == "owner_id"
       clipboard_data_rv = tpl.parent_data.clipboard_data
       clipboard_data = clipboard_data_rv.get()
       col_index = $(e.currentTarget).closest(".bg-light").data("col-index")
@@ -90,7 +90,7 @@ Template.justdo_clipboard_import_input_selector.events
 
       clipboard_data_rv.set(clipboard_data)
 
-    corresponding_selector_button
+    $corresponding_selector_button
       .text(field_label)
       .val(field_id)
 
