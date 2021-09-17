@@ -3,6 +3,8 @@
     <div class="middle-project-header-items d-flex align-items-center">
       {{> project_operations_toolbar}}
       {{> panes_controls}}
+      <div class="project-header-toolbar-divider ml-2 mr-2"></div>
+      {{> right_project_header}}
     </div>
   </div>
 </template>
@@ -48,7 +50,7 @@
 
 <template name="project_settings">
   <div id="project-settings-dropdown" class="dropdown project-header-button">
-    <div id="settingsDropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <div id="settingsDropdown" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       <svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg>
     </div>
 
@@ -138,4 +140,14 @@
       <use xlink:href="/layout/icons-feather-sprite.svg#sidebar"></use>
     </svg>
   </div>
+</template>
+
+<template name="right_project_header">
+  {{#if loginStateIs "logged-in"}}
+    <div class="d-flex align-items-center">
+      {{#with rightHeaderTemplate}}
+        {{> UI.dynamic template=rightHeaderTemplate}}
+      {{/with}}
+    </div>
+  {{/if}}
 </template>

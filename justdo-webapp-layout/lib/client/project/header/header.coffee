@@ -1,5 +1,6 @@
 APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
+  main_module = APP.modules.main
   curProj = module.helpers.curProj
 
   project_template_helpers = APP.modules.project_page.template_helpers
@@ -143,3 +144,5 @@ APP.executeAfterAppLibCode ->
       else
         APP.justdo_project_pane.expand()
 
+  Template.right_project_header.helpers
+    rightHeaderTemplate: -> main_module.getCustomHeaderTemplate("right")

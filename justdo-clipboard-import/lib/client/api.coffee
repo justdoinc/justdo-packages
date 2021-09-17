@@ -16,7 +16,8 @@ _.extend JustdoClipboardImport.prototype,
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoClipboardImport.project_custom_feature_id,
         installer: =>
           JD.registerPlaceholderItem  "#{JustdoClipboardImport.project_custom_feature_id}:activation-icon", {
-            domain: "global-right-navbar"
+            domain: "project-right-navbar"
+            position: 380
             listingCondition: () => return true
             data:
               template: "justdo_clipboard_import_activation_icon"

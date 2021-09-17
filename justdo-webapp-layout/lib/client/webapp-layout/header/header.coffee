@@ -18,8 +18,6 @@ APP.executeAfterAppLibCode ->
 
     middleHeaderTemplate: -> main_module.getCustomHeaderTemplate("middle")
 
-    rightHeaderTemplate: -> main_module.getCustomHeaderTemplate("right")
-
     drawerPagesMenuItems: -> JD.getPlaceholderItems("drawer-pages")
 
     drawerBottomMenuItems: -> JD.getPlaceholderItems("drawer-bottom")
