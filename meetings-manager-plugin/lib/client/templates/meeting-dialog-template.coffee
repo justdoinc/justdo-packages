@@ -47,6 +47,36 @@ setMeetingMinutes = (tmpl, minutes) ->
   $(".meeting-time").val(new Date(time.setMinutes(time.getMinutes() + minutes))).change()
   return
 
+addTaskToAgenda = (tmpl) ->
+
+  tmpl.form.validate("seqId")
+  if tmpl.form.isValid("seqId")
+
+    doc = tmpl.form.doc()
+    changes = { seqId: doc.seqId }
+
+    if not changes.seqId
+      return
+
+    APP.meetings_manager_plugin.meetings_manager.addTaskToMeeting doc._id, changes, (err) =>
+      if err
+        # Invalidate the form and show the user an error.
+        tmpl.form.invalidate [{ error: err, name: "seqId", message: "Adding task failed: " + err }]
+        tmpl.form.set "seqId", ""
+        Meteor.setTimeout ->
+            tmpl?.form?.validate("seqId")
+          , 3000
+
+        # Log an error using the logger
+        APP.meetings_manager_plugin.logger.error err
+        showSnackbar(err.reason)
+
+      else
+        tmpl.form.set "seqId", ""
+
+  $(".meeting-task-add").val ""
+
+  return
 
 Template.meetings_meeting_dialog.onCreated ->
   @autorun =>
@@ -676,32 +706,13 @@ Template.meetings_meeting_dialog.events
       # NOTE, Calling validate here clears out any existing errors so that if the
       # last call to validate created a server-inserted error, that error will be
       # hidden.
-      tmpl.form.validate("seqId")
-      if tmpl.form.isValid("seqId")
+      addTaskToAgenda(tmpl)
 
-        doc = tmpl.form.doc()
-        changes = { seqId: doc.seqId }
+    return
 
-        if not changes.seqId
-          return
+  "click .meeting-task-add-btn": (e, tmpl) ->
+    addTaskToAgenda(tmpl)
 
-        APP.meetings_manager_plugin.meetings_manager.addTaskToMeeting doc._id, changes, (err) =>
-          if err
-            # Invalidate the form and show the user an error.
-            tmpl.form.invalidate [{ error: err, name: "seqId", message: "Adding task failed: " + err }]
-            tmpl.form.set "seqId", ""
-            Meteor.setTimeout ->
-                tmpl?.form?.validate("seqId")
-              , 3000
-
-            # Log an error using the logger
-            APP.meetings_manager_plugin.logger.error err
-            showSnackbar(err.reason)
-
-          else
-            tmpl.form.set "seqId", ""
-
-      $(".meeting-task-add").val ""
     return
 
 
