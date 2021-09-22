@@ -29,7 +29,9 @@ Template.task_pane_chat_section_subscribers_management.onCreated ->
 
 Template.task_pane_chat_section_subscribers_management.helpers
   taskMembers: ->
-    main_tpl = Template.instance().getMainTemplate()
+    tpl = Template.instance()
+
+    main_tpl = tpl.getMainTemplate()
 
     task_members = JD.activeItemUsers()
 
@@ -37,7 +39,19 @@ Template.task_pane_chat_section_subscribers_management.helpers
 
     task_members_doc = JustdoHelpers.sortUsersDocsArrayByDisplayName(task_members_doc)
 
-    return task_members_doc
+    subscribed_members = []
+
+    for member in task_members_doc
+      if member._id of tpl.getSubscribersHash()
+        subscribed_members.push member
+
+    unsubscribed_members = task_members_doc.filter((member) ->
+      subscribed_members.indexOf(member) < 0
+    )
+
+    task_members = [].concat(subscribed_members).concat(unsubscribed_members)
+
+    return task_members
 
   isSubscriber: ->
     tpl = Template.instance()
