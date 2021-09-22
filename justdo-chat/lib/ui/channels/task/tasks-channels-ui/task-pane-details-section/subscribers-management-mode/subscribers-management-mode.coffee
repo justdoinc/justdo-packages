@@ -1,4 +1,7 @@
 Template.task_pane_chat_section_subscribers_management.onCreated ->
+  @members_search_val_rv = new ReactiveVar null
+  @selected_subscribed_users_ids_rv = new ReactiveVar null
+
   @getMainTemplate = =>
     return Template.closestInstance("task_pane_chat_section")
 
@@ -7,7 +10,7 @@ Template.task_pane_chat_section_subscribers_management.onCreated ->
     # We calculate @subscribers_hash only once, in a non-reactive fashion.
     if @subscribers_hash? and use_cache
       return @subscribers_hash
-    
+
     return Tracker.nonreactive =>
       main_tpl = @getMainTemplate()
 
@@ -25,11 +28,15 @@ Template.task_pane_chat_section_subscribers_management.onCreated ->
 
       return @subscribers_hash
 
+  @selected_subscribed_users_ids_rv.set Object.keys(@getSubscribersHash())
+
   return
 
 Template.task_pane_chat_section_subscribers_management.helpers
   taskMembers: ->
     tpl = Template.instance()
+
+    members_search_val_rv = tpl.members_search_val_rv.get()
 
     main_tpl = tpl.getMainTemplate()
 
@@ -38,6 +45,7 @@ Template.task_pane_chat_section_subscribers_management.helpers
     task_members_doc = Meteor.users.find({_id: {$in: task_members}}).fetch()
 
     task_members_doc = JustdoHelpers.sortUsersDocsArrayByDisplayName(task_members_doc)
+    task_members_doc = JustdoHelpers.filterUsersDocsArray(task_members_doc, members_search_val_rv, {sort: true})
 
     subscribed_members = []
 
@@ -72,9 +80,7 @@ Template.task_pane_chat_section_subscribers_management.events
   "click .sm-save": (e, tpl) ->
     main_tpl = tpl.getMainTemplate()
 
-    selected_subscribed_users_ids = []
-    tpl.$(".subscribed").each ->
-      selected_subscribed_users_ids.push $(@).attr("user-id")
+    selected_subscribed_users_ids = tpl.selected_subscribed_users_ids_rv.get()
 
     channel = main_tpl.getTaskChatObject()
 
@@ -99,5 +105,25 @@ Template.task_pane_chat_section_subscribers_management.events
 
   "click .user-card": (e, tpl) ->
     $(e.target).closest(".user-card").find(".subscribe-state").toggleClass("subscribed unsubscribed")
+
+    selected_subscribed_users_ids_rv = tpl.selected_subscribed_users_ids_rv.get()
+    selected_user_id = $(e.currentTarget).find(".subscribe-state").attr("user-id")
+
+    if selected_subscribed_users_ids_rv.includes selected_user_id
+      selected_subscribed_users_ids_rv.splice(selected_subscribed_users_ids_rv.indexOf(selected_user_id), 1)
+    else
+      selected_subscribed_users_ids_rv.push selected_user_id
+
+    tpl.selected_subscribed_users_ids_rv.set selected_subscribed_users_ids_rv
+
+    return
+
+  "keyup .subscribers-search": (e, tpl) ->
+    value = $(e.target).val().trim()
+
+    if _.isEmpty value
+      tpl.members_search_val_rv.set null
+
+    tpl.members_search_val_rv.set value
 
     return
