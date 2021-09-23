@@ -12,14 +12,18 @@ Template.expand_grid_tooltip.helpers
 
 Template.expand_grid_tooltip.events
   "click .expand-grid-all": (e, tpl) ->
-    console.log "Expand all"
+    gc = APP.modules.project_page.gridControl()
+
+    gc.expandDepth()
 
     return
 
   "click .expand-grid-level": (e, tpl) ->
-    level = $(e.currentTarget).attr "level"
+    level = parseInt($(e.currentTarget).attr("level"), 10)
 
-    console.log level
+    gc = APP.modules.project_page.gridControl()
+
+    gc.expandDepth({depth: level})
 
     return
 
