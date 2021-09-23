@@ -20,6 +20,14 @@ _.extend Projects.prototype,
 
     # **IMPORTANT** Unsecure - uncomment only when needed.
     Meteor.methods
+      updateAjournedMeetingsStatus: ->
+        APP.meetings_manager_plugin.meetings_manager.meetings.update
+          status: "adjourned"
+        ,
+          $set:
+            status: "ended"
+        ,
+          multi: true
       addJustdoFilesTaskFilesCount: ->
         if not APP.justdo_files?
           console.error "JustDo Files isn't installed on this environment"
