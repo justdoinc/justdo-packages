@@ -371,10 +371,12 @@ _.extend GridData.prototype,
     @_structure_changes_queue.push ["collapse_all_paths"]
     @_set_need_flush()
 
-  expandPassedFilterPaths: ->
-    @_structure_changes_queue.push ["expand_passed_filter_paths"]
+  expandPassedFilterPaths: (depth) ->
+    @_structure_changes_queue.push ["expand_passed_filter_paths", [depth]]
 
     @_set_need_flush()
+
+    return
 
   toggleItem: (index) ->
     if @_inExpandedPaths(@getItemPath index) # XXX shouldn't use filters aware op

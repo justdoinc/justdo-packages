@@ -1,8 +1,5 @@
 default_options = {
-  expand_all_max: 1000
-  expand_all_error_snackbar_text: "To many items to expand the entire tree"
-  expand_all_error_snackbar_action_text: "Dismiss"
-  expand_all_error_snackbar_on_action_click: -> JustdoSnackbar.close()
+  expand_all_max: 75
 }
 
 setupCollapseAllButton = (grid_control) ->
@@ -17,30 +14,9 @@ setupCollapseAllButton = (grid_control) ->
   $(".slick-header-column:first", grid_control.container)
     .prepend($el)
 
-  $el = $("""<div class="grid-state-button expand-grid-button" title="Expand all tree"><svg><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg></div>""")
+  $el = $("""<div class="grid-state-button expand-grid-button" jd-tt="expand-grid"><svg><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg></div>""")
     .click =>
-      i = 0
-
-      failed = false
-      grid_control._grid_data.each "/", {filtered_tree: true, expand_only: false}, =>
-        i += 1
-
-        if i > options.expand_all_max
-          failed = true
-
-          return -2
-
-        return
-
-      if failed
-        JustdoSnackbar.show
-          text: options.expand_all_error_snackbar_text
-          actionText: options.expand_all_error_snackbar_action_text
-          onActionClick: options.expand_all_error_snackbar_on_action_click
-
-        return
-
-      grid_control._grid_data.expandPassedFilterPaths()
+      grid_control.expandDepth({max_items: options.expand_all_max})
 
       return
 

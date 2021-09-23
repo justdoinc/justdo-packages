@@ -422,7 +422,7 @@ _.extend GridData.prototype,
 
       return rebuild_tree
 
-    expand_passed_filter_paths: ->
+    expand_passed_filter_paths: (depth) ->
       # expand all the paths that passed the filter.
       rebuild_tree = true
 
@@ -444,6 +444,9 @@ _.extend GridData.prototype,
 
         last_path_level = path_level
         last_path = path
+
+        if depth? and path_level == depth
+          return -1
 
         return
 

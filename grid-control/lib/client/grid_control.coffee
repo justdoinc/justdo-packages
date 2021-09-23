@@ -2391,3 +2391,53 @@ _.extend GridControl.prototype,
 
   getViewportScrollLeft: -> $(".slick-viewport", @container).scrollLeft()
   setViewportScrollLeft: (offset) -> $(".slick-viewport", @container).scrollLeft(offset)
+
+  countTasks: (options) ->
+    default_options =
+      depth: undefined
+      filtered_tree: true
+      max_items: 1000
+
+    options = _.extend default_options, options
+
+    limit_reached = false
+    tasks_count = 0
+    @_grid_data.each "/", {filtered_tree: options.filtered_tree, expand_only: false}, (_1, _2, _3, path) =>
+      path_level = GridData.helpers.getPathLevel(path)
+
+      tasks_count += 1
+
+      if tasks_count > options.max_items
+        limit_reached = true
+
+        return -2
+
+      if options.depth? and path_level == options.depth
+        return -1
+
+      return
+
+    return {tasks_count, limit_reached}
+
+  expandDepth: (options) ->
+    default_options =
+      depth: undefined # undefined is unlimited
+      filtered_tree: true
+      max_items: 1000
+
+    options = _.extend default_options, options
+
+    if options.filtered_tree is false
+      throw @_error "not-supported", "false options.filtered_tree isn't supported yet"
+
+    if @countTasks(options).limit_reached
+      JustdoSnackbar.show
+        text: "Too many items to expand"
+        actionText: "Dismiss"
+        onActionClick: -> JustdoSnackbar.close()
+
+      return
+
+    @_grid_data.expandPassedFilterPaths(options.depth)
+
+    return
