@@ -17,7 +17,9 @@ Template.expand_grid_tooltip.events
     return
 
   "click .expand-grid-level": (e, tpl) ->
-    console.log "Expand level"
+    level = $(e.currentTarget).attr "level"
+
+    console.log level
 
     return
 
