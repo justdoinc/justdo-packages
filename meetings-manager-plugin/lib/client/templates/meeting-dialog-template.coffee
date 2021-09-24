@@ -129,7 +129,7 @@ Template.meetings_meeting_dialog.onCreated ->
     tasks_html = ""
     tasks = _.sortBy meeting.tasks, 'task_order'
     for item in tasks
-      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><h5 class="font-weight-bold">#{JustdoHelpers.xssGuard item.title}, <span class="bg-light border px-2 rounded mr-1">##{item.seqId}</span> </h5>"""
+      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><div class="font-weight-bold">#{JustdoHelpers.xssGuard item.title}, <span class="bg-light border px-2 rounded mr-1">##{item.seqId}</span> </div>"""
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
@@ -154,7 +154,7 @@ Template.meetings_meeting_dialog.onCreated ->
         note = meeting_task.note.replace /\n/g, key
         note = JustdoHelpers.xssGuard note, {allow_html_parsing: true, enclosing_char: ""}
         note = """<div dir="auto" class="print-meeting-mode-note">""" + note.replace(re, "</div><div dir='auto'>") + "</div>"
-        tasks_html += note
+        tasks_html += "<i>" + note + "</i>"
 
       tasks_html += "</div>"
 
@@ -172,28 +172,43 @@ Template.meetings_meeting_dialog.onCreated ->
       meeting_date = moment(meeting.date).format(JustdoHelpers.getUserPreferredDateFormat())
 
     ret = """
-      <img src="#{@logo_data_url}" class="thead-logo" alt="JustDo" width="100"/>
+      <img src="#{@logo_data_url}" class="thead-logo" alt="JustDo" width="100px"/>
       <h3 class="font-weight-bold mt-4">#{JustdoHelpers.xssGuard meeting.title}</h3>
-      <div class="border-bottom pb-3">
-        <span class="mr-2">Date: <strong> #{meeting_date}</strong>,</span>
-        <span class="mr-2">Time: <strong>#{JustdoHelpers.xssGuard(meeting.time)}</strong></span>
-        <div class="mr-2">Location: <strong>#{JustdoHelpers.xssGuard meeting.location}</strong></div>
+      <div>
+        <span>Date: <strong> #{meeting_date}</strong></span>
+    """
+
+    if meeting.time?
+      meeting_time = ""
+      use_am_pm = Meteor.user().profile.use_am_pm
+      if use_am_pm
+        meeting_time = moment(meeting.time).format("h:mm A")
+      else
+        meeting_time = moment(meeting.time).format("HH:mm")
+
+      ret += """<span>, &nbsp</span><span class="mr-2">Time: <strong>#{JustdoHelpers.xssGuard(meeting_time)}</strong></span>"""
+
+    if meeting.location?
+      ret += """<div class="mr-2">Location: <strong>#{JustdoHelpers.xssGuard meeting.location}</strong></div>"""
+
+    ret += """
       </div>
-      <div class="border-bottom py-3">
-        <div class="h3 font-weight-bold">Attendees</div>
-        #{attended_html}
+      <div>
+        <div>Attendees: <strong>#{attended_html}</strong></div>
       </div>
-      <div class="border-bottom py-3">
-        <div class="h3 font-weight-bold">Meeting Notes</div>
+      <hr>
+      <div class="py-1">
+        <div class="h3 font-weight-bold"><strong>Meeting Notes</strong></div>
         #{tasks_html}
       </div>
+      <hr>
       """
     
     if meeting.note?
       ret += """
-        <div class="py-3">
-          <div class="h3 font-weight-bold">Other Notes</div>
-          #{bottomNote}
+        <div class="py-1">
+          <div class="h3 font-weight-bold"><strong>Other Notes</strong></div>
+          <i>#{bottomNote}</i>
         </div>
       """
       
