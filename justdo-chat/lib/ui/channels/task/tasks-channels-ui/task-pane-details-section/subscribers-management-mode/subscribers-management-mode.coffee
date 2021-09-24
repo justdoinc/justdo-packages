@@ -32,6 +32,11 @@ Template.task_pane_chat_section_subscribers_management.onCreated ->
 
   return
 
+Template.task_pane_chat_section_subscribers_management.onRendered ->
+  $(".subscribers-search").focus()
+  
+  return
+
 Template.task_pane_chat_section_subscribers_management.helpers
   taskMembers: ->
     tpl = Template.instance()
