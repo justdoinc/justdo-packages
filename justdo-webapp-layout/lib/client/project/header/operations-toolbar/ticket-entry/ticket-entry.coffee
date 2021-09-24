@@ -106,7 +106,7 @@ APP.executeAfterAppLibCode ->
                     (err, task_id) ->
                       # XXX see above note, can't rely on new_item_path
                       if err?
-                        project_page_module.logger.error "add direct task failed: #{err}"
+                        project_page_module.logger.error "Failed: #{err}"
 
                         releaseOpsLock()
 
@@ -117,34 +117,6 @@ APP.executeAfterAppLibCode ->
                       releaseOpsLock()
 
                       return
-
-                if destination_type == "direct-task"
-                  direct_task_parent_id = selected_destination_id.get()
-
-                  direct_task_parent_id_user = direct_task_parent_id.substr(7)
-
-                  Meteor.call "newDirectTask",
-                              {
-                                project_id: project_page_module.helpers.curProj().id,
-                                user_id: direct_task_parent_id_user
-                              },
-                              task_fields,
-                              (err, task_id) ->
-                                # XXX see above note, can't rely on new_item_path
-                                if err?
-                                  project_page_module.logger.error "add direct task failed: #{err}"
-
-                                  releaseOpsLock()
-
-                                  return
-
-                                activateItemId(task_id, {destination_title})
-
-                                releaseOpsLock()
-
-                                return
-
-                  releaseOpsLock()
 
               preBootboxDestroyProcedures()
 
@@ -172,7 +144,6 @@ APP.executeAfterAppLibCode ->
   getSelectedTicketsQueueDoc = -> APP.collections.TicketsQueues.findOne selected_destination_id.get()
 
   tickets_queues_reactive_var = null
-  direct_task_reactive_var = null
   selected_destination_users_reactive_var = null
   selected_destination_type_reactive_var = null
   Template.ticket_entry.onCreated ->
@@ -182,51 +153,18 @@ APP.executeAfterAppLibCode ->
     tickets_queues_reactive_var = APP.helpers.newComputedReactiveVar "tickets_queues", ->
       return APP.collections.TicketsQueues.find({}, {sort: {title: 1}}).fetch()
 
-    direct_task_reactive_var = APP.helpers.newComputedReactiveVar "direct_tasks_parents", ->
-      project_members_ids = project_page_module.helpers.curProj().getMembersIds()
-
-      cur_user_id = Meteor.userId()
-
-      current_user_doc = APP.helpers.getUsersDocsByIds([cur_user_id])
-      other_users_docs = JustdoHelpers.sortUsersDocsArrayByDisplayName(APP.helpers.getUsersDocsByIds(_.without(project_members_ids, cur_user_id)))
-
-      project_members_docs = current_user_doc.concat(other_users_docs)
-
-      direct_tasks = _.map project_members_docs, (memeber_doc) ->
-        direct_task = {
-          direct_task_id: "direct:#{memeber_doc._id}"
-          title: if memeber_doc._id == cur_user_id then "My Direct Tasks" else JustdoHelpers.displayName(memeber_doc)
-          memeber_doc: memeber_doc
-        }
-
-        direct_task.data_content = JustdoHelpers.xssGuard("""#{JustdoAvatar.getAvatarHtml(direct_task.memeber_doc)}<span class="option-img-text">#{JustdoHelpers.ellipsis(direct_task.title, max_printed_task_title)}</span>""", {allow_html_parsing: true, enclosing_char: ""})
-
-        return direct_task
-
-      return direct_tasks
-
     selected_destination_type_reactive_var = APP.helpers.newComputedReactiveVar "selected_destination_type", ->
       destination_id = selected_destination_id.get()
 
       if not destination_id?
         return "none"
-      if destination_id.substr(0, 7) == "direct:"
-        return "direct-task"
 
       return "ticket-queue"
 
     selected_destination_users_reactive_var = APP.helpers.newComputedReactiveVar "selected_destination_users", ->
       destination_type = selected_destination_type_reactive_var.get()
 
-      if destination_type == "direct-task"
-        destination_id = selected_destination_id.get()
-
-        if not destination_id?
-          return [] # can happen, when selected_destination_type_reactive_var is pending update
-
-        destination_user_id = destination_id.substr(7)
-        return [Meteor.users.findOne(destination_user_id)]
-      else # for readability
+      if destination_type == "ticket-queue"
         if not selected_destination_id.get()?
           return []
 
@@ -259,18 +197,6 @@ APP.executeAfterAppLibCode ->
 
         if destination_type == "ticket-queue"
           if selected_destination_id.get() not in _.map(tickets_queues_reactive_var.get(), (queue) -> queue._id)
-            # If selected ticket queue removed as ticket queue
-            selected_destination_id.set(null)
-            $("#ticket-queue-id").val("")
-
-        $("#ticket-queue-id").selectpicker("refresh")
-
-    direct_task_reactive_var.on "computed", ->
-      Meteor.defer =>
-        destination_type = selected_destination_type_reactive_var.get()
-
-        if destination_type == "direct-task"
-          if selected_destination_id.get() not in _.map(direct_task_reactive_var.get(), (direct_task_parent) -> direct_task_parent.direct_task_id)
             # If selected ticket queue removed as ticket queue
             selected_destination_id.set(null)
             $("#ticket-queue-id").val("")
@@ -316,9 +242,6 @@ APP.executeAfterAppLibCode ->
     tickets_queues_reactive_var.stop()
     tickets_queues_reactive_var = null
 
-    direct_task_reactive_var.stop()
-    direct_task_reactive_var = null
-
     selected_destination_users_reactive_var.stop()
     selected_destination_users_reactive_var = null
 
@@ -328,7 +251,6 @@ APP.executeAfterAppLibCode ->
     initReactiveVars()
 
   Template.ticket_entry.helpers
-    direct_tasks: -> direct_task_reactive_var.get()
     tickets_queues: -> tickets_queues_reactive_var.get()
     selected_destination_id: -> selected_destination_id.get()
     selected_destination_type: -> selected_destination_type_reactive_var.get()

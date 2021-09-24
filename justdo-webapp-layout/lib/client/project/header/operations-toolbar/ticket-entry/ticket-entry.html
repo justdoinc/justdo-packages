@@ -14,14 +14,6 @@
                 {{/each}}
               </optgroup>
             {{/with}}
-
-            {{#with direct_tasks}}
-              <optgroup label="Direct Tasks">
-                {{#each this}}
-                  <option value="{{direct_task_id}}" data-content="{{data_content}}"></option>
-                {{/each}}
-              </optgroup>
-            {{/with}}
           </select>
         </div>
       </div>
@@ -32,15 +24,10 @@
           <label for="ticket-assigned-user-id">Owner</label>
           <div class="{{#if $not selected_destination_id}}no-tq-selected{{/if}}">
             <select id="ticket-assigned-user-id" class="dropdown-menu-lite dropdown-menu-lite-users ticket-owner-select" disabled="{{#if $not selected_destination_id}}disabled{{/if}}">
-              {{#if $eq selected_destination_type "direct-task"}}
+              {{#if $eq selected_destination_type "ticket-queue"}}
                 {{#each selected_destination_users}}
                   <option value="{{_id}}">{{> gtpl_user_profile_pic}}<span class="option-img-text">{{cutString displayName max_printed_display_name}}</span></option>
                 {{/each}}
-              {{else}}
-                  <option value="" selected="selected">Select Owner</option>
-                  {{#each selected_destination_users}}
-                    <option value="{{_id}}">{{> gtpl_user_profile_pic}}<span class="option-img-text">{{cutString displayName max_printed_display_name}}{{#if isCategoryManager}} (Queue Manager){{/if}}</span></option>
-                  {{/each}}
               {{/if}}
             </select>
           </div>
