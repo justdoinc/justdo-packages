@@ -15,11 +15,13 @@ Template.members_multi_selector_widget.onCreated ->
     
     return
 
-  tpl.autorun ->
-    filtered_members = tpl.filtered_members_rv.get()
+  if tpl.data.onItemsChange?
+    tpl.autorun ->
+      filtered_members = tpl.filtered_members_rv.get()
 
-    if tpl.data.onItemsChange?
       tpl.data.onItemsChange filtered_members
+
+      return
     
     return
 
@@ -37,7 +39,7 @@ Template.members_multi_selector_widget.onRendered ->
     return
   
   $(".members-multi-selector").on "hidden.bs.dropdown", ->
-    tpl.show_dropdown_menu_rv.set false
+    # tpl.show_dropdown_menu_rv.set false - NOTE once we loaded the dropdown to the dom, no point of removing it
     return
 
   return
