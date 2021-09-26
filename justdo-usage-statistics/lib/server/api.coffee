@@ -180,6 +180,14 @@ _.extend JustdoUsageStatistics.prototype,
                 removed_custom_fields: 1
             .fetch()
 
+
+        if self.isCategoryEnabled("active-positions-ledger")
+          usage_statistics.active_positions_ledger =
+            APP.collections.UsersActivePositionsLedger.find
+              time:
+                $gt: new Date(new Date().setDate(new Date().getDate() - usage_statistics.days_back))
+            .fetch()
+
         returned_val =
           key: self.devops_password_encrypted
           stats: self._encryptWithLocalPass(EJSON.stringify(usage_statistics))
