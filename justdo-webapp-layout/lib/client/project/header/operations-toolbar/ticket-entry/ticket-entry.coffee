@@ -147,9 +147,16 @@ APP.executeAfterAppLibCode ->
   tickets_queues_reactive_var = null
   selected_destination_users_reactive_var = null
   selected_destination_type_reactive_var = null
+  task_user_subscription_handler = null
+
   Template.ticket_entry.onCreated ->
     # Init reactive vars
     initReactiveVars()
+
+    # Subscribe to task augmented fields when changing destination task for displaying task owner options
+    @autorun ->
+      task_user_subscription_handler?.stop()
+      task_user_subscription_handler = JD.subscribeItemsAugmentedFields selected_destination_id.get(), ["users"]
 
     tickets_queues_reactive_var = APP.helpers.newComputedReactiveVar "tickets_queues", ->
       return APP.collections.TicketsQueues.find({}, {sort: {title: 1}}).fetch()
@@ -175,7 +182,8 @@ APP.executeAfterAppLibCode ->
           return []
 
         owner_doc = APP.helpers.getUsersDocsByIds([selected_tickets_queue_doc.owner_id])
-        other_users_docs = APP.helpers.getUsersDocsByIds(_.without(selected_tickets_queue_doc.users, selected_tickets_queue_doc.owner_id))
+        tickets_queue_users = APP.collections.TasksAugmentedFields.findOne(selected_tickets_queue_doc._id, {fields: {users: 1}})?.users
+        other_users_docs = APP.helpers.getUsersDocsByIds(_.without(tickets_queue_users, selected_tickets_queue_doc.owner_id))
 
         return owner_doc.concat(other_users_docs)
 
