@@ -275,7 +275,6 @@ Template.meetings_meeting_dialog.onCreated ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: Template.currentData().meeting_id
 
-    debugger
     ret = "#{meeting.title}\n"
     if meeting.date?
       ret += "#{moment(meeting.date).format(JustdoHelpers.getUserPreferredDateFormat())} "
