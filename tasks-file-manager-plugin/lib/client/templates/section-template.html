@@ -1,13 +1,12 @@
 <template name="task_pane_tasks_file_manager_section">
 
-    {{#with active_item_obj "_id,files.id,files.title,files.size,files.type,files.user_uploaded,files.date_uploaded"}}
-      {{> tasks_file_manager_files files=files task_id=_id project_id=current_project_id}}
-    {{/with}}
-
     {{#with active_item_obj "_id,files.id"}}
       {{> tasks_file_manager_file_upload files=files task_id=_id project_id=current_project_id}}
     {{/with}}
 
+    {{#with active_item_obj "_id,files.id,files.title,files.size,files.type,files.user_uploaded,files.date_uploaded"}}
+      {{> tasks_file_manager_files files=files task_id=_id project_id=current_project_id}}
+    {{/with}}
 
   {{!--
 

@@ -1,10 +1,15 @@
 <template name="task_pane_justdo_files_task_pane_section_section">
-  {{>justdo_files_gallery}}
   {{> justdo_files_uploader}}
+  
+  {{>justdo_files_gallery}}
 </template>
 
 <template name="justdo_files_gallery">
   <div class="justdo-files-gallery">
+    {{#if $not noFiles}}
+      <button class="btn btn-secondary btn-sm w-100 mb-2 dl-all-files">Download all files as .zip</button>
+    {{/if}}
+
     {{#each files}}
       {{#with task=.. file=.}}
         <div class="file pb-2">
@@ -65,10 +70,6 @@
         </div>
       {{/with}}
     {{/each}}
-
-    {{#if $not noFiles}}
-      <button class="btn btn-secondary btn-sm w-100 mb-2 dl-all-files">Download all files as .zip</button>
-    {{/if}}
   </div>
 </template>
 
