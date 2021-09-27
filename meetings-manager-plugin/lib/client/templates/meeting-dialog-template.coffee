@@ -672,7 +672,7 @@ Template.meetings_meeting_dialog.events
 
     return
 
-  "click .meeting-dialog-add-task": (e, tmpl) ->
+  "click .meeting-dialog-add-task, click .meeting-task-add-text": (e, tmpl) ->
     $task_no_input = tmpl.$(".meeting-task-add")
     $task_no_input.focus()
     return
