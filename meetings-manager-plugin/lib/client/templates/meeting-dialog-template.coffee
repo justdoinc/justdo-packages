@@ -129,13 +129,13 @@ Template.meetings_meeting_dialog.onCreated ->
     tasks_html = ""
     tasks = _.sortBy meeting.tasks, 'task_order'
     for item in tasks
-      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><div class="font-weight-bold">#{JustdoHelpers.xssGuard item.title}, <span class="bg-light border px-2 rounded mr-1">##{item.seqId}</span> </div>"""
+      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><div class="font-weight-bold"><a href="#{JustdoHelpers.getTaskUrl(@project_id, item.task_id)}">##{item.seqId}: #{JustdoHelpers.xssGuard item.title}</a></div>"""
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
 
       if meeting_task?.added_tasks?.length > 0
-        tasks_html += """<div class="mt-3 mb-2 font-weight-bold">Tasks Added:</div><ul>"""
+        tasks_html += """<div class="mt-3 mb-2 font-weight-bold">Child Tasks Added:</div><ul>"""
         for task_added in meeting_task.added_tasks
           user_name = ""
           if (task_obj = JD.collections.Tasks.findOne task_added.task_id)?
@@ -198,7 +198,7 @@ Template.meetings_meeting_dialog.onCreated ->
       </div>
       <hr>
       <div class="py-1">
-        <div class="h3 font-weight-bold"><strong>Meeting Notes</strong></div>
+        <div class="h3 font-weight-bold"><strong>Agenda:</strong></div>
         #{tasks_html}
       </div>
       <hr>
@@ -207,7 +207,7 @@ Template.meetings_meeting_dialog.onCreated ->
     if meeting.note?
       ret += """
         <div class="py-1">
-          <div class="h3 font-weight-bold"><strong>Other Notes</strong></div>
+          <div class="h3 font-weight-bold"><strong>General Meeting Notes</strong></div>
           <i>#{bottomNote}</i>
         </div>
       """
@@ -275,19 +275,27 @@ Template.meetings_meeting_dialog.onCreated ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: Template.currentData().meeting_id
 
-    ret = "#{meeting.title} - Meeting Notes\n"
+    debugger
+    ret = "#{meeting.title}\n"
     if meeting.date?
-      ret += "#{moment(meeting.date).format(JustdoHelpers.getUserPreferredDateFormat())}"
+      ret += "#{moment(meeting.date).format(JustdoHelpers.getUserPreferredDateFormat())} "
     
     if meeting.time?
-      ret += meeting.time
+      meeting_time = ""
+      use_am_pm = Meteor.user().profile.use_am_pm
+      if use_am_pm
+        meeting_time = moment(meeting.time).format("h:mm A")
+      else
+        meeting_time = moment(meeting.time).format("HH:mm")
+
+      ret += meeting_time
 
     if meeting.location?
-      ret += meeting.location
+      ret += "\n\nLocation: " + meeting.location
     
-    ret += "\n"
+    ret += "\n\n"
 
-    ret += "Attendees:\n"
+    ret += "Attendees:\n\n"
 
     for user_id in meeting.users
       user = Meteor.users.findOne user_id
@@ -297,16 +305,16 @@ Template.meetings_meeting_dialog.onCreated ->
       ret += "* #{meeting.other_attendees}\n"
 
     ret+= "\n"
-    ret += "Agenda Notes:\n\n"
+    ret += "Agenda:\n\n"
     tasks = _.sortBy meeting.tasks, 'task_order'
     for item in tasks
-      ret += "#{item.title}, ##{item.seqId}\n"
+      ret += "##{item.seqId}: #{item.title}\n"
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
 
       if meeting_task?.added_tasks?.length > 0
-        ret += "Tasks Added:\n"
+        ret += "Child Tasks Added:\n"
         for task_added in meeting_task.added_tasks
           ret += "*#{task_added.title}, ##{task_added.seqId}\n"
 
@@ -315,7 +323,7 @@ Template.meetings_meeting_dialog.onCreated ->
       ret += "\n"
 
     if meeting.note?
-      ret += "Other Notes:\n#{meeting.note.replace(/<[^>]*>/g, '')}\n"
+      ret += "General Meeting Notes:\n\n#{meeting.note.replace(/<[^>]*>/g, '')}\n"
     return ret.replace /\n/g,"\n"
 
   @email_me = ->
@@ -354,7 +362,7 @@ Template.meetings_meeting_dialog.onRendered ->
     if _.isEmpty($meeting_time_input.val())
       use_am_pm = Meteor.user().profile.use_am_pm
       if use_am_pm
-        $meeting_time_input.val(moment().format("h:mm A"))
+        $meeting_time_input.val(moment().format("h:mm"))
       else
         $meeting_time_input.val(moment().format("HH:mm"))
     $meeting_time_input.select()
