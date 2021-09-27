@@ -2433,8 +2433,6 @@ _.extend GridControl.prototype,
     if @countTasks(options).limit_reached
       JustdoSnackbar.show
         text: "Too many items to expand"
-        actionText: "Dismiss"
-        onActionClick: -> JustdoSnackbar.close()
 
       return
 
