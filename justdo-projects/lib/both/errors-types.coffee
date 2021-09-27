@@ -25,4 +25,4 @@ _.extend Projects.prototype,
       "illegal-reject-message-setting-attempt": "Illegal attempt to set reject ownership message"
       "permission-denied": "Permission Denied"
       "not-task-member": "User isn't task member"
-      "memebr-already-enrolled": "Member already enrolled"
+      "memebr-already-enrolled": "Member already enrolled"      "forbidden": "Forbidden"

@@ -850,6 +850,9 @@ _.extend Projects.prototype,
   downgradeAdmin: (project_id, member_id, user_id) ->
     @requireProjectAdmin(project_id, user_id)
 
+    if not @processHandlers("BeforeDowngradeAdmin", project_id, member_id, user_id)
+      throw @_error "forbidden", "Admin downgrade denied"
+
     project = @projects_collection.findOne project_id
 
     admins = _.filter project?.members, (member) -> member.is_admin
@@ -1015,6 +1018,9 @@ _.extend Projects.prototype,
 
     if admins_that_completed_enrollment_count == 0
       throw @_error "cant-remove-last-project-admin"
+
+    if not @processHandlers("BeforeRemoveMember", project_id, member_id, user_id)
+      throw @_error "forbidden", "Member removal denied"
 
     # The following is a bit confusing:
     # user_id is the inviting user. member_id is the member we are adding
