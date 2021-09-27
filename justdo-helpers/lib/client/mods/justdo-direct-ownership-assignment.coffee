@@ -12,7 +12,6 @@ _.extend JustdoHelpers,
         JustdoSnackbar.show
           text: "Direct ownership assignment activated."
           duration: 4000
-          actionText: "Dismiss"
     else
       if hook?
         hook.remove()
@@ -20,5 +19,4 @@ _.extend JustdoHelpers,
         JustdoSnackbar.show
           text: "Direct ownership assignment deactivated."
           duration: 4000
-          actionText: "Dismiss"
     return
