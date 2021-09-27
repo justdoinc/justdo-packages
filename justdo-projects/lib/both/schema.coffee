@@ -14,6 +14,8 @@ MembersObjectsSchema = new SimpleSchema
 
     type: Boolean
 
+    optional: true
+
   invited_at:
     label: "Invited At"
 
