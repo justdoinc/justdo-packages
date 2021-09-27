@@ -109,6 +109,9 @@
         $p.innerHTML = options.text;
         Snackbar.snackbar.appendChild($p);
         Snackbar.snackbar.style.background = options.backgroundColor;
+        var $buttonWrapper = document.createElement('div');
+        $buttonWrapper.className = "snackbar-button-wrapper";
+        Snackbar.snackbar.appendChild($buttonWrapper); // Wrapper for buttons
 
         if (options.showSecondButton) {
             var secondButton = document.createElement('button');
@@ -118,7 +121,7 @@
             secondButton.addEventListener('click', function() {
                 options.onSecondButtonClick(Snackbar.snackbar);
             });
-            Snackbar.snackbar.appendChild(secondButton);
+            $buttonWrapper.appendChild(secondButton);
         }
 
         if (options.showAction) {
@@ -129,7 +132,7 @@
             actionButton.addEventListener('click', function() {
                 options.onActionClick(Snackbar.snackbar);
             });
-            Snackbar.snackbar.appendChild(actionButton);
+            $buttonWrapper.appendChild(actionButton);
         }
 
         if (options.showDismissButton) {
@@ -140,7 +143,7 @@
             dismissButton.addEventListener('click', function() {
                 Snackbar.close()
             });
-            Snackbar.snackbar.appendChild(dismissButton);
+            $buttonWrapper.appendChild(dismissButton);
         }
 
         if (options.duration) {
