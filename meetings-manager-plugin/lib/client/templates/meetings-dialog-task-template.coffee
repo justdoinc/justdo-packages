@@ -4,6 +4,31 @@ Template.meetings_dialog_task.onCreated ->
   @expanded = new ReactiveVar()
   @meeting_status = new ReactiveVar()
 
+  @autorun =>
+    # In order to solve the jquery-ui sortable compatibility issue, this template cannot reply on the template data passed by its parent anymore
+    # However, the legacy code in this template is relying on the template data(Template.currentData(), this, etc.) too heavily.
+    # Thus, this autorun is created as a hack to update the Template.currentData() by itself.
+    item = Template.instance().data
+    if item.item?
+      item = item.item
+    meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
+      _id: item.id
+    data =
+      item: item
+      meeting: Tracker.nonreactive => APP.meetings_manager_plugin.meetings_manager.meetings.findOne(meeting_task?.meeting_id)
+      task: APP.collections.Tasks.findOne
+        _id: item.task_id
+      meeting_task: meeting_task
+      private_note: APP.meetings_manager_plugin.meetings_manager.meetings_private_notes.findOne
+        meeting_id: meeting_task?.meeting_id
+        task_id: item.task_id
+      task_order: item.task_order
+
+    Template.instance().data = data
+    Blaze.getView('with').dataVar.set(data)
+
+    return
+
 Template.meetings_dialog_task.onRendered ->
   task_note_box = @$("[name=\"task_note\"]")
   task_note_box.autosize()
@@ -29,7 +54,7 @@ Template.meetings_dialog_task.onRendered ->
       own_note_box.trigger('autosize.resize');
 
     private_note = data.private_note
-    if private_note and private_note.note?
+    if private_note and private_note?.note?
       private_note_box = @$("[name=\"private_note\"]")
       private_note_box.autosize()
       if private_note_box.length == 0
@@ -43,19 +68,19 @@ Template.meetings_dialog_task.onRendered ->
           @update_notes(data)
         return
 
-      private_note_box.val private_note.note
+      private_note_box.val private_note?.note
       private_note_box.trigger('autosize.resize');
   @autorun =>
     @update_notes Template.currentData()
 
   @autorun =>
     m = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
-      _id: Template.parentData().meeting_id
-    @meeting_status.set m.status
+      _id: Template.currentData().meeting?._id
+    @meeting_status.set m?.status
 
 Template.meetings_dialog_task.helpers
   isAttendee: ->
-    return Meteor.userId() in Template.instance().data.meeting.users
+    return Template.instance().data.meeting?.users and Meteor.userId() in Template.instance().data.meeting?.users
 
   allowAddingNotes: ->
     status = Template.instance().meeting_status.get()
@@ -88,19 +113,19 @@ Template.meetings_dialog_task.helpers
     return true
 
   meetingId: ->
-    return Template.instance().data.meeting._id
+    return Template.instance().data.meeting?._id
 
   taskId: ->
     return Template.instance().data.item.task_id
 
   meetingTaskId: ->
-    return Template.instance().data.meeting_task._id
+    return Template.instance().data.meeting_task?._id
 
   onSaveTaskNote: ->
     tmpl = Template.instance()
     (changes) =>
       APP.meetings_manager_plugin.meetings_manager.setNoteForTask(
-        tmpl.data.meeting._id,
+        tmpl.data.meeting?._id,
         tmpl.data.item.task_id,
         {
           note: changes.content
@@ -128,7 +153,7 @@ Template.meetings_dialog_task.helpers
     if @meeting_task?.note
       result =
         is_summary: true
-        note: @meeting_task.note
+        note: @meeting_task?.note
       return result
 
     for user_note in (@meeting_task?.user_notes || [])
@@ -143,7 +168,7 @@ Template.meetings_dialog_task.helpers
       result =
         is_note: true
         is_private_note: true
-        note: @private_note.note
+        note: @private_note?.note
       return result
 
     # XXX added tasks
@@ -178,10 +203,10 @@ Template.meetings_dialog_task.helpers
     if not @task? then return { disabled: true }
 
   mayEdit: () ->
-    return @meeting.organizer_id == Meteor.userId() or not @meeting.locked
+    return @meeting?.organizer_id == Meteor.userId() or not @meeting?.locked
 
   mayEditChildTask: () ->
-    return Template.instance().data.meeting.status != "ended"
+    return Template.instance().data.meeting?.status != "ended"
 
   index: () ->
     return (@item.task_order + 1)
@@ -202,7 +227,7 @@ Template.meetings_dialog_task.events
     tmpl.form.validate()
 
     APP.meetings_manager_plugin.meetings_manager.addUserNoteToTask(
-      this.meeting._id,
+      this.meeting?._id,
       this.item.task_id,
       # This object would contain the note's initial fields, but we don't
       # currently provide an UI for that, so it's just empty for now.
@@ -218,7 +243,7 @@ Template.meetings_dialog_task.events
     tmpl.form.validate()
 
     APP.meetings_manager_plugin.meetings_manager.addPrivateNoteToTask(
-      this.meeting._id,
+      this.meeting?._id,
       this.item.task_id,
       # This object would contain the note's initial fields, but we don't
       # currently provide an UI for that, so it's just empty for now.
@@ -230,7 +255,7 @@ Template.meetings_dialog_task.events
 
   "click .btn-add-task": (e, tmpl) ->
     tmpl.form.validate()
-    APP.meetings_manager_plugin.meetings_manager.addSubTaskToTask @meeting._id, @item.task_id, title: "", (err, new_task_id) =>
+    APP.meetings_manager_plugin.meetings_manager.addSubTaskToTask @meeting?._id, @item.task_id, title: "", (err, new_task_id) =>
       if not err?
         Meteor.defer ->
           $("[data-task-id=\"#{new_task_id}\"].task-subject-box").focus()
@@ -259,7 +284,7 @@ Template.meetings_dialog_task.events
     if user_note?
 
       APP.meetings_manager_plugin.meetings_manager.setUserNoteForTask(
-        tmpl.data.meeting._id,
+        tmpl.data.meeting?._id,
         tmpl.data.item.task_id,
         {
           note: user_note
@@ -274,7 +299,7 @@ Template.meetings_dialog_task.events
     if private_note?
 
       APP.meetings_manager_plugin.meetings_manager.setPrivateNoteForTask(
-        tmpl.data.meeting._id,
+        tmpl.data.meeting?._id,
         tmpl.data.item.task_id,
         {
           note: private_note
@@ -285,8 +310,8 @@ Template.meetings_dialog_task.events
       )
 
   "click .remove-task": (e, tmpl) ->
-    meeting_id = tmpl.data.meeting._id
-    task_id = tmpl.data.meeting_task.task_id
+    meeting_id = tmpl.data.meeting?._id
+    task_id = tmpl.data.meeting_task?.task_id
     APP.meetings_manager_plugin.meetings_manager.removeTaskFromMeeting meeting_id, task_id
 
     Meteor.setTimeout =>

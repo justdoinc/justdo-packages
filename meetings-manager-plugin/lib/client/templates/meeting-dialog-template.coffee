@@ -374,6 +374,30 @@ Template.meetings_meeting_dialog.onRendered ->
       saveTasksOrder(instance)
       Session.set "updateTaskOrder", false
 
+  @autorun =>
+    # In order to be compatible with jquery-ui sortable, we need to manually add agenda tasks with the new order to the sortable
+    # instead of rendering them directly in the html file
+
+    meeting_id = Template.currentData().meeting_id
+    meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
+      _id: meeting_id
+    ,
+      fields:
+        tasks: 1
+    
+    if not meeting?.tasks?
+      return
+
+    tasks = _.sortBy meeting.tasks, 'task_order'
+    # tasks = _.filter tasks, _.identity
+
+    $meeting_tasks_list = $(".meeting-tasks-list")
+    $meeting_tasks_list.empty()
+
+    _.forEach tasks, (item) ->
+      Blaze.renderWithData(Template.meetings_dialog_task, item, $meeting_tasks_list[0])
+
+    return
 
 Template.meetings_meeting_dialog.helpers
   onSetDateRerender: ->
@@ -504,31 +528,6 @@ Template.meetings_meeting_dialog.helpers
 
   noRander: ->
     return Template.instance().meetings_tasks_noRender.get()
-
-  tasks: ->
-    meeting_id = @meeting_id
-    meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
-      _id: meeting_id
-
-    tasks = _.sortBy meeting.tasks, 'task_order'
-
-    tasks = _.map tasks, (item) ->
-      task =
-        item: item
-        meeting: meeting
-        task: APP.collections.Tasks.findOne
-          _id: item.task_id
-        meeting_task: APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
-          _id: item.id
-        private_note: APP.meetings_manager_plugin.meetings_manager.meetings_private_notes.findOne
-          meeting_id: meeting_id
-          task_id: item.task_id
-
-        task_order: item.task_order
-
-      return task
-
-    return _.filter tasks, _.identity
 
   rawdate: (date) ->
     date_format = Meteor.user().profile.date_format
