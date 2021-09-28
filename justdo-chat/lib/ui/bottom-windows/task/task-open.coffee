@@ -89,6 +89,9 @@ Template.chat_bottom_windows_task_open.helpers
 
     return tpl.task_channel_object.getChannelSubscriberDoc(Meteor.userId())?.unread
 
+  taskURL: ->
+    return JustdoHelpers.getTaskUrl(@project_id, @task_id)
+
 Template.chat_bottom_windows_task_open.events
   "click .close-chat": ->
     APP.justdo_chat._justdo_chat_bottom_windows_manager.removeWindow "task", {task_id: @task_id}
@@ -100,7 +103,9 @@ Template.chat_bottom_windows_task_open.events
 
     return
 
-  "click .header-title": ->
+  "click .header-title": (e) ->
+    e.preventDefault()
+
     activateTask = =>
       gcm = APP.modules.project_page.getCurrentGcm()
 

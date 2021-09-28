@@ -6,11 +6,11 @@
       <div class="item-header d-flex align-items-center">
         <div class="main-block">
           <div class="task-details text-nowrap pr-3">
-            <span class="project text-primary"><strong>{{#with channelProject}}{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}{{/with}}:</strong>
+            <a href="{{taskURL}}" class="project text-primary"><strong>{{#with channelProject}}{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}{{/with}}:</strong>
               {{#with channel_task}}
                 #{{seqId}} - {{title}}
               {{/with}}
-            </span>
+            </a>
           </div>
         </div>
         <div class="date-block text-nowrap ml-auto mr-0">

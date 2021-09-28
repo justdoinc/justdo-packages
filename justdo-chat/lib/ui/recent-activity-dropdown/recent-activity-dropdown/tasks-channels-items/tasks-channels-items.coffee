@@ -33,6 +33,10 @@ Template.recent_activity_item_task.helpers
 
     return APP.collections.JDChatRecentActivityAuthorsDetails.findOne(author_id)
 
+  taskURL: ->
+    return JustdoHelpers.getTaskUrl(@project_id, @task_id)
+
+
 getTaskChannelObjectForTaskId = (task_id) ->
   channel_obj = APP.justdo_chat.generateClientChannelObject "task", { # channel conf
     tasks_collection: APP.justdo_chat.recent_activity_supplementary_pseudo_collections.tasks
@@ -131,3 +135,7 @@ Template.recent_activity_item_task.events
 
     return
 
+  "click .recent-activity-item-task .project": (e) ->
+    e.preventDefault()
+
+    return

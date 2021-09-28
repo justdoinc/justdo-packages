@@ -2,7 +2,7 @@
   <div class="open-chat-window-container jdc-basic-design">
     <div class="chat-window open-chat-window {{#if isFocused}}window-active{{/if}} {{#if hasUnreadMessages}}window-unread{{/if}}">
       <div class="chat-header">
-        <div class="header-title">#{{getTask.seqId}}{{#with getTask.title}}: {{this}}{{/with}}</div>
+        <a href="{{taskURL}}" class="header-title">#{{getTask.seqId}}{{#with getTask.title}}: {{this}}{{/with}}</a>
         <div class="minimize-chat" title="Minimize Chat"><i class="fa fa-window-minimize" aria-hidden="true"></i></div>
         <div class="close-chat" title="Close Chat"><i class="fa fa-times" aria-hidden="true"></i></div>
       </div>
