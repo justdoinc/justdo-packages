@@ -8,7 +8,7 @@
       </div>
       <div class="card-details">
         {{#with current_owner_doc}}{{displayName}}{{/with}} wants to transfer ownership of task
-        <a href="javascript:return void(0);" class="task-link text-primary"><strong>{{#with getActionProject}}{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}{{/with}}:</strong> #{{seqId}} - {{cutString title 80}}</a>
+        <a href="{{taskURL}}" class="task-link text-primary"><strong>{{#with getActionProject}}{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}{{/with}}:</strong> #{{seqId}} - {{cutString title 80}}</a>
          to you
       </div>
       {{#if $eq getState "pre-reject"}}

@@ -29,6 +29,9 @@ Template.required_action_card_transfer_request.helpers
 
   getActionProject: -> APP.collections.Projects.findOne(@project_id, {fields: {title: 1}})
 
+  taskURL: ->
+    return JustdoHelpers.getTaskUrl(@project_id, @task_id)
+
 Template.required_action_card_transfer_request.events
   "click .pre-reject": (e, tpl) ->
     tpl.state.set("pre-reject")
@@ -79,7 +82,9 @@ Template.required_action_card_transfer_request.events
 
     return
 
-  "click .task-link": ->
+  "click .task-link": (e) ->
+    e.preventDefault()
+
     if JD.activeJustdoId()? and JD.activeJustdoId() == @project_id
       APP.modules?.project_page?.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab (@task_id)
     else

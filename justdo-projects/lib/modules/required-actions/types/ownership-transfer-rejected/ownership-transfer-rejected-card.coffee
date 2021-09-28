@@ -13,6 +13,9 @@ Template.required_action_card_ownership_transfer_rejected.helpers
 
     return tpl.show_all.get()
 
+  taskURL: ->
+    return JustdoHelpers.getTaskUrl(@project_id, @task_id)
+
 Template.required_action_card_ownership_transfer_rejected.events
   "click .dismiss": (e, tpl) ->
     APP.projects.modules.owners.dismissOwnershipTransfer(@task_id)
@@ -24,7 +27,9 @@ Template.required_action_card_ownership_transfer_rejected.events
 
     return
 
-  "click .task-link": ->
+  "click .task-link": (e) ->
+    e.preventDefault()
+
     if JD.activeJustdoId()? and JD.activeJustdoId() == @project_id
       APP.modules?.project_page?.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab @task_id
     else

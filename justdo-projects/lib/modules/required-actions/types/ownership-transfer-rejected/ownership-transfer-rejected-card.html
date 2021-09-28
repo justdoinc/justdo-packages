@@ -8,7 +8,7 @@
       </div>
       <div class="card-details">
         {{#with rejecting_user_obj}}{{displayName}}{{/with}} rejected your ownership transfer request for task
-        <a href="javascript:return void(0);" class="task-link text-primary"><strong>{{#with getActionProject}}{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}{{/with}}:</strong> #{{seqId}} - {{cutString title 80}}</a>
+        <a href="{{taskURL}}" class="task-link text-primary"><strong>{{#with getActionProject}}{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}{{/with}}:</strong> #{{seqId}} - {{cutString title 80}}</a>
         {{#if reject_ownership_message}}
           <div class="reject-message-box my-1 pl-2">
             {{#if showAll}}
