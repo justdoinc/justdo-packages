@@ -346,7 +346,7 @@ _.extend GridControl.prototype,
     # today's values - when date change we need to reproduce the
     # query for the new date, even though @_getViewFiltersState()
     # is the same.
-    if force == false and JSON.sortify(new_state) == JSON.sortify(@_filters_state)
+    if force == false and JustdoHelpers.jsonSortify(new_state) == JustdoHelpers.jsonSortify(@_filters_state)
       @logger.debug "_updateFilterState: no change to filters state"
 
       return

@@ -2,7 +2,7 @@ helpers = share.helpers
 
 _.extend GridData.prototype,
   _initFilters: ->
-    @filter = new ReactiveVar(null, (a, b) -> JSON.sortify(a) == JSON.sortify(b))
+    @filter = new ReactiveVar(null, (a, b) -> JustdoHelpers.jsonSortify(a) == JustdoHelpers.jsonSortify(b))
     # item_ids present in @filter_independent_items array will always pass the filter
     @filter_independent_items = new ReactiveVar(null, (a, b) -> JSON.stringify(a) == JSON.stringify(b))
     @_filter_tracker = null

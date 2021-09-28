@@ -1295,7 +1295,7 @@ if (typeof Slick === "undefined") {
       _.each(new_columns = _.map(columns_definition, _.clone), function(col) {delete col.previousWidth;});
 
       // Check whether anything changed
-      if (JSON.sortify(current_columns) == JSON.sortify(new_columns)) {
+      if (JustdoHelpers.jsonSortify(current_columns) == JustdoHelpers.jsonSortify(new_columns)) {
         logger.debug("setColumn: Nothing changed");
 
         return null;
@@ -1317,7 +1317,7 @@ if (typeof Slick === "undefined") {
       var current_ex_filters_ex_width, new_ex_filters_ex_width;
       _.each(current_ex_filters_ex_width = _.map(current_columns, _.clone), function(col) {delete col.filter_state; delete col.width;});
       _.each(new_ex_filters_ex_width = _.map(new_columns, _.clone), function(col) {delete col.filter_state; delete col.width;});
-      if (JSON.sortify(current_ex_filters_ex_width) == JSON.sortify(new_ex_filters_ex_width)) {
+      if (JustdoHelpers.jsonSortify(current_ex_filters_ex_width) == JustdoHelpers.jsonSortify(new_ex_filters_ex_width)) {
         logger.debug("setColumn: Only filters or width states changed");
 
         var current_ex_filters, new_ex_filters;
@@ -1325,7 +1325,7 @@ if (typeof Slick === "undefined") {
         _.each(new_ex_filters = _.map(new_columns, _.clone), function(col) {delete col.filter_state;});
 
         // Check whether only filters changed
-        if (JSON.sortify(current_ex_filters) == JSON.sortify(new_ex_filters)) {
+        if (JustdoHelpers.jsonSortify(current_ex_filters) == JustdoHelpers.jsonSortify(new_ex_filters)) {
           // Only filters updated, nothing to do in the SlickGrid level
           logger.debug("setColumn: Only filters updated");
 
