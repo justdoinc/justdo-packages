@@ -7,7 +7,7 @@ _.extend JustdoTaskType.prototype,
       return
 
     @registerConfigTemplate()
-    @registerTaskPaneSection()
+    # @registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
 
     return

@@ -25,7 +25,6 @@ _.extend JustdoTaskType.prototype,
 
   performInstallProcedures: (project_doc, user_id) ->
     # Called when plugin installed for project project_doc._id
-    console.log "Plugin #{JustdoTaskType.project_custom_feature_id} installed on project #{project_doc._id}"
 
     return
 
@@ -33,7 +32,5 @@ _.extend JustdoTaskType.prototype,
     # Called when plugin uninstalled from project project_doc._id
 
     # Note, isn't called on project removal
-
-    console.log "Plugin #{JustdoTaskType.project_custom_feature_id} removed from project #{project_doc._id}"
 
     return
