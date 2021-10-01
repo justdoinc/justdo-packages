@@ -205,7 +205,7 @@ Template.meetings_meeting_dialog.onCreated ->
       <img src="#{@logo_data_url}" class="thead-logo" alt="JustDo" width="100px"/>
       <h3 class="font-weight-bold mt-4">#{JustdoHelpers.xssGuard meeting.title}</h3>
       <div>
-        <span>Date: <strong> #{meeting_date}</strong></span>
+       <span>Date: <strong> #{meeting_date}</strong></span>
     """
 
     if meeting.time?
