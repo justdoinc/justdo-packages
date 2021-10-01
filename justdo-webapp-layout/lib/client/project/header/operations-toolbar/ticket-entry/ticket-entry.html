@@ -10,7 +10,11 @@
             {{#with tickets_queues}}
               <optgroup label="Ticket Queues">
                 {{#each this}}
-                  <option value="{{_id}}">{{cutString title max_printed_task_title}}</option>
+                  {{#if title}}
+                    <option value="{{_id}}">#{{seqId}}: {{cutString title max_printed_task_title}}</option>
+                  {{else}}
+                    <option value="{{_id}}">#{{seqId}}</option>
+                  {{/if}}
                 {{/each}}
               </optgroup>
             {{/with}}
