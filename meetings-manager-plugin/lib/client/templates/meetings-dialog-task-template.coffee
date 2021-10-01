@@ -25,16 +25,18 @@ Template.meetings_dialog_task.onCreated ->
       task_order: item.task_order
 
     Template.instance().data = data
-    Blaze.getView('with').dataVar.set(data)
+    Blaze.getView("with").dataVar.set(data)
 
     return
+
+  return
 
 Template.meetings_dialog_task.onRendered ->
   task_note_box = @$("[name=\"task_note\"]")
   task_note_box.autosize()
 
   @update_notes = (data) =>
-    own_note = _.findWhere (data.meeting_task?.user_notes || []), { user_id: Meteor.userId() }
+    own_note = _.findWhere (data.meeting_task?.user_notes or []), {user_id: Meteor.userId()}
     if own_note and own_note.note?
       own_note_box = @$("[name=\"user_notes.#{Meteor.userId()}\"]")
       own_note_box.autosize()
@@ -51,7 +53,7 @@ Template.meetings_dialog_task.onRendered ->
         return
 
       own_note_box.val own_note.note
-      own_note_box.trigger('autosize.resize');
+      own_note_box.trigger("autosize.resize")
 
     private_note = data.private_note
     if private_note and private_note?.note?
@@ -69,7 +71,7 @@ Template.meetings_dialog_task.onRendered ->
         return
 
       private_note_box.val private_note?.note
-      private_note_box.trigger('autosize.resize');
+      private_note_box.trigger("autosize.resize")
   @autorun =>
     @update_notes Template.currentData()
 
@@ -77,6 +79,9 @@ Template.meetings_dialog_task.onRendered ->
     m = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: Template.currentData().meeting?._id
     @meeting_status.set m?.status
+    return
+
+  return
 
 Template.meetings_dialog_task.helpers
   isAttendee: ->
@@ -123,7 +128,7 @@ Template.meetings_dialog_task.helpers
 
   onSaveTaskNote: ->
     tmpl = Template.instance()
-    (changes) =>
+    return (changes) =>
       APP.meetings_manager_plugin.meetings_manager.setNoteForTask(
         tmpl.data.meeting?._id,
         tmpl.data.item.task_id,
@@ -133,7 +138,7 @@ Template.meetings_dialog_task.helpers
         },
         (error) ->
           if error?
-            tmpl.form.invalidate [{ error: error, message: error + '', name: "task_note" }]
+            tmpl.form.invalidate [{error: error, message: error + "", name: "task_note"}]
       )
 
   lookupUser: (user_id) ->  Meteor.users.findOne user_id
@@ -142,13 +147,13 @@ Template.meetings_dialog_task.helpers
 
   expanded: -> Template.instance().expanded.get()
 
-  userNotes: () -> @meeting_task?.user_notes
+  userNotes: -> @meeting_task?.user_notes
 
   isSelf: (user_id) -> user_id == Meteor.userId()
 
-  notesForUser: () -> @note
+  notesForUser: -> @note
 
-  detailsExcerpt: () ->
+  detailsExcerpt: ->
 
     if @meeting_task?.note
       result =
@@ -156,7 +161,7 @@ Template.meetings_dialog_task.helpers
         note: @meeting_task?.note
       return result
 
-    for user_note in (@meeting_task?.user_notes || [])
+    for user_note in (@meeting_task?.user_notes or [])
       if user_note.note?
         result =
           is_note: true
@@ -179,36 +184,36 @@ Template.meetings_dialog_task.helpers
     task.meeting_note_lock = added_task.note_lock
     return task
 
-  hasOwnNote: () ->
-    if _.findWhere (@meeting_task?.user_notes || []), { user_id: Meteor.userId() }
+  hasOwnNote: ->
+    if _.findWhere (@meeting_task?.user_notes or []), {user_id: Meteor.userId()}
       return true
     return false
 
-  hasPrivateNote: () ->
+  hasPrivateNote: ->
     if @private_note?
       return true
     return false
 
-  hasNoAccessToTask: () ->
+  hasNoAccessToTask: ->
     if not @task?
       return true
     return false
 
-  disabledIfOwnNote: () ->
-    if _.findWhere (@meeting_task?.user_notes || []), { user_id: Meteor.userId() } then { disabled: true }
+  disabledIfOwnNote: ->
+    if _.findWhere (@meeting_task?.user_notes or []), {user_id: Meteor.userId()} then {disabled: true}
 
-  disabledIfOwnPrivateNote: () -> if @private_note? then { disabled: true }
+  disabledIfOwnPrivateNote: -> if @private_note? then {disabled: true}
 
-  disabledIfNoAccessToTask: () ->
-    if not @task? then return { disabled: true }
+  disabledIfNoAccessToTask: ->
+    if not @task? then return {disabled: true}
 
-  mayEdit: () ->
+  mayEdit: ->
     return @meeting?.organizer_id == Meteor.userId() or not @meeting?.locked
 
-  mayEditChildTask: () ->
+  mayEditChildTask: ->
     return Template.instance().data.meeting?.status != "ended"
 
-  index: () ->
+  index: ->
     return (@item.task_order + 1)
 
 Template.meetings_dialog_task.events
@@ -227,31 +232,35 @@ Template.meetings_dialog_task.events
     tmpl.form.validate()
 
     APP.meetings_manager_plugin.meetings_manager.addUserNoteToTask(
-      this.meeting?._id,
-      this.item.task_id,
+      @meeting?._id,
+      @item.task_id,
       # This object would contain the note's initial fields, but we don't
       # currently provide an UI for that, so it's just empty for now.
       {},
       (error) ->
         if error?
-          tmpl.form.invalidate [{ error: error, message: error + '', name: "user_notes.#{Meteor.userId()}" }]
+          tmpl.form.invalidate [{error: error, message: error + "", name: "user_notes.#{Meteor.userId()}"}]
     )
 
     tmpl.expanded.set true
+
+    return
 
   "click .btn-add-private-note": (e, tmpl) ->
     tmpl.form.validate()
 
     APP.meetings_manager_plugin.meetings_manager.addPrivateNoteToTask(
-      this.meeting?._id,
-      this.item.task_id,
+      @meeting?._id,
+      @item.task_id,
       # This object would contain the note's initial fields, but we don't
       # currently provide an UI for that, so it's just empty for now.
       {},
       (error) ->
         if error?
-          tmpl.form.invalidate [{ error: error, message: error + '', name: "private_note" }]
+          tmpl.form.invalidate [{error: error, message: error + "", name: "private_note"}]
     )
+
+    return
 
   "click .btn-add-task": (e, tmpl) ->
     tmpl.form.validate()
@@ -259,22 +268,24 @@ Template.meetings_dialog_task.events
       if not err?
         Meteor.defer ->
           $("[data-task-id=\"#{new_task_id}\"].task-subject-box").focus()
+    return
 
   "keyup textarea": (e, tmpl) ->
-
     refresh = (target) ->
-        $(target).trigger 'change'
+      $(target).trigger "change"
 
     name = e.currentTarget.name
-    tmpl._throttled_refresh = tmpl._throttled_refresh || {}
-    tmpl._throttled_refresh[name] = tmpl._throttled_refresh[name] || _.throttle refresh, 100
+    tmpl._throttled_refresh = tmpl._throttled_refresh or {}
+    tmpl._throttled_refresh[name] = tmpl._throttled_refresh[name] or _.throttle refresh, 100
 
     Meteor.setTimeout =>
       tmpl._throttled_refresh[name](e.currentTarget)
     , 0
 
+    return
+
   "documentChange": (e, tmpl, doc, changes) ->
-    e.preventDefault();
+    e.preventDefault()
 
     tmpl.form.validate()
 
@@ -282,7 +293,6 @@ Template.meetings_dialog_task.events
     user_note = changes["user_notes.#{user_id}"]
 
     if user_note?
-
       APP.meetings_manager_plugin.meetings_manager.setUserNoteForTask(
         tmpl.data.meeting?._id,
         tmpl.data.item.task_id,
@@ -291,13 +301,12 @@ Template.meetings_dialog_task.events
         },
         (error) ->
           if error?
-            tmpl.form.invalidate [{ error: error, message: error + '', name: "user_notes.#{user_id}" }]
+            tmpl.form.invalidate [{error: error, message: error + "", name: "user_notes.#{user_id}"}]
       )
 
     private_note = changes["private_note"]
 
     if private_note?
-
       APP.meetings_manager_plugin.meetings_manager.setPrivateNoteForTask(
         tmpl.data.meeting?._id,
         tmpl.data.item.task_id,
@@ -306,8 +315,10 @@ Template.meetings_dialog_task.events
         },
         (error) ->
           if error?
-            tmpl.form.invalidate [{ error: error, message: error + '', name: "private_note" }]
+            tmpl.form.invalidate [{error: error, message: error + "", name: "private_note"}]
       )
+
+    return
 
   "click .remove-task": (e, tmpl) ->
     meeting_id = tmpl.data.meeting?._id
@@ -317,11 +328,13 @@ Template.meetings_dialog_task.events
     Meteor.setTimeout =>
       Session.set "updateTaskOrder", true
     , 100
-  
+
+    return
+
   "click .dialog-agenda-task": (e, tpl) ->
     e.preventDefault()
     if (task_id = tpl.data?.meeting_task?.task_id)?
       gcm = APP.modules.project_page.getCurrentGcm()
       gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)
-    
+
     return
