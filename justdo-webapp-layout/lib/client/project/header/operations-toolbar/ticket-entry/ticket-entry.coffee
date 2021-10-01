@@ -118,11 +118,12 @@ APP.executeAfterAppLibCode ->
                       releaseOpsLock()
 
                       return
-
+                return
               preBootboxDestroyProcedures()
 
               return true
 
+      return
     prereq: ->
       return {}
 
@@ -141,6 +142,7 @@ APP.executeAfterAppLibCode ->
     description.set ""
     priority.set 0
     submit_attempted.set false
+    return
 
   getSelectedTicketsQueueDoc = -> APP.collections.TicketsQueues.findOne selected_destination_id.get()
 
@@ -187,6 +189,8 @@ APP.executeAfterAppLibCode ->
 
         return owner_doc.concat(other_users_docs)
 
+    return
+
   Template.ticket_entry.onRendered ->
     for selector in target_select_pickers
       $(selector)
@@ -212,6 +216,8 @@ APP.executeAfterAppLibCode ->
 
         $("#ticket-queue-id").selectpicker("refresh")
 
+        return
+
     selected_destination_users_reactive_var.on "computed", ->
       Meteor.defer =>
         if selected_owner.get() not in _.map(selected_destination_users_reactive_var.get(), (user) -> user._id)
@@ -222,6 +228,7 @@ APP.executeAfterAppLibCode ->
         # Select the first option, which is the ticket owner, by default
         $("#ticket-assigned-user-id")[0].selectedIndex = 0
         $("#ticket-assigned-user-id").selectpicker("refresh")
+        return
 
     $("#ticket-content").froalaEditor({
         toolbarButtons: ["bold", "italic", "underline", "strikeThrough", "color", "insertTable", "fontFamily", "fontSize",
@@ -249,6 +256,8 @@ APP.executeAfterAppLibCode ->
     priority_slider.onChange (value) ->
       priority.set value
 
+    return
+
   Template.ticket_entry.onDestroyed ->
     tickets_queues_reactive_var.stop()
     tickets_queues_reactive_var = null
@@ -260,6 +269,7 @@ APP.executeAfterAppLibCode ->
     selected_destination_type_reactive_var = null
 
     initReactiveVars()
+    return
 
   Template.ticket_entry.helpers
     isTicketOwner: (index) ->
@@ -291,6 +301,7 @@ APP.executeAfterAppLibCode ->
       # init owner selector
       selected_owner.set(null)
       $('#ticket-assigned-user-id').val("")
+      return
 
     "change #ticket-assigned-user-id": ->
       user_id = $('#ticket-assigned-user-id').val()
@@ -299,6 +310,9 @@ APP.executeAfterAppLibCode ->
         user_id = null
 
       selected_owner.set(user_id)
+      return
 
     "keyup #ticket-title": (e) ->
       title.set($(e.target).val().trim())
+
+  return
