@@ -26,11 +26,11 @@
             <select id="ticket-assigned-user-id" class="dropdown-menu-lite dropdown-menu-lite-users ticket-owner-select" disabled="{{#if $not selected_destination_id}}disabled{{/if}}">
               {{#if $eq selected_destination_type "ticket-queue"}}
                 {{#each selected_destination_users}}
-                  <option value="{{_id}}" {{addSelectedIfOwner}}>
+                  <option value="{{_id}}">
                     {{> gtpl_user_profile_pic}}
                     <span class="option-img-text">
                       {{cutString displayName max_printed_display_name}}
-                      {{#if $eq @index 0}}
+                      {{#if isTicketOwner @index}}
                         (Ticket Owner)
                       {{/if}}
                     </span>

@@ -219,6 +219,8 @@ APP.executeAfterAppLibCode ->
           selected_owner.set(null)
           $("#ticket-assigned-user-id").val("")
 
+        # Select the first option, which is the ticket owner, by default
+        $("#ticket-assigned-user-id")[0].selectedIndex = 0
         $("#ticket-assigned-user-id").selectpicker("refresh")
 
     $("#ticket-content").froalaEditor({
@@ -260,6 +262,10 @@ APP.executeAfterAppLibCode ->
     initReactiveVars()
 
   Template.ticket_entry.helpers
+    isTicketOwner: (index) ->
+      if index is 0
+        return true
+      return false
     tickets_queues: -> tickets_queues_reactive_var.get()
     selected_destination_id: -> selected_destination_id.get()
     selected_destination_type: -> selected_destination_type_reactive_var.get()
@@ -277,7 +283,6 @@ APP.executeAfterAppLibCode ->
 
     isInvalidTitle: -> submit_attempted.get() and _.isEmpty(title.get())
     isInvalidTicketsQueue: -> submit_attempted.get() and not selected_destination_id.get()?
-
 
   Template.ticket_entry.events
     "change #ticket-queue-id": ->
