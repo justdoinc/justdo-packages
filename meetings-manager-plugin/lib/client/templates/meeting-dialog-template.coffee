@@ -216,13 +216,12 @@ Template.meetings_meeting_dialog.onCreated ->
       else
         meeting_time = moment(meeting.time).format("HH:mm")
 
-      ret += """<span>, &nbsp</span><span class="mr-2">Time: <strong>#{JustdoHelpers.xssGuard(meeting_time)}</strong></span>"""
+      ret += """<span>, &nbsp</span><span class="mr-2">Time: <strong>#{JustdoHelpers.xssGuard(meeting_time)}</strong></span></div>"""
 
     if meeting.location?
       ret += """<div class="mr-2">Location: <strong>#{JustdoHelpers.xssGuard meeting.location}</strong></div>"""
 
     ret += """
-      </div>
       <div>
         <div>Attendees: <strong>#{attended_html}</strong></div>
       </div>
