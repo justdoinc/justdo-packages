@@ -156,6 +156,7 @@ APP.executeAfterAppLibCode ->
     # Subscribe to task augmented fields when changing destination task for displaying task owner options
     @autorun ->
       task_user_subscription_handler = JD.subscribeItemsAugmentedFields selected_destination_id.get(), ["users"]
+      return
 
     tickets_queues_reactive_var = APP.helpers.newComputedReactiveVar "tickets_queues", ->
       return APP.collections.TicketsQueues.find({}, {sort: {title: 1}}).fetch()
