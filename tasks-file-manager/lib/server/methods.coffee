@@ -39,7 +39,9 @@ _.extend TasksFileManager.prototype,
 
         self.requireLogin @userId
 
-        return self.getPreviewDownloadLink task_id, file_id, version, options, @userId
+        return self.getDownloadLink task_id, file_id, @userId
+
+        # return self.getPreviewDownloadLink task_id, file_id, version, options, @userId
 
       tfm_RenameFile: (task_id, file_id, newTitle) ->
         check task_id, String
