@@ -3,7 +3,7 @@ _.extend JustdoTaskType,
 
   plugin_human_readable_name: "Task Type"
 
-  plugin_integral_part_of_justdo: true # If set to true, there's no need to install this plugin. It won't show in the JustDo settings.
+  plugin_integral_part_of_justdo: false # If set to true, there's no need to install this plugin. It won't show in the JustDo settings.
 
   core_categories: [
     {
