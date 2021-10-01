@@ -98,6 +98,9 @@ Package.onUse(function (api) {
   api.add_files('lib/client/formatters-and-editors/formatters-init.coffee', client);
   api.add_files('lib/client/formatters-and-editors/editors-init.coffee', client);
 
+  api.add_files('lib/client/formatters-and-editors/tags-field/tags-field.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/tags-field/tags-field.sass', client);
+
   api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.coffee', client);
   api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.sass', client);
 
