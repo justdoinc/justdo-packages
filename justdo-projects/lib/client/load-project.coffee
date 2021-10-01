@@ -225,6 +225,9 @@ _.extend Projects.prototype,
         return 
 
       isCustomFeatureEnabled: (feature) ->
+        if feature is "INTEGRAL"
+          return true
+
         # !!!IMPORTANT!!!
         # Reactivity triggered on any change to project
         # configuration!

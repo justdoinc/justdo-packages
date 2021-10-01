@@ -20,6 +20,9 @@ Template.justdo_task_type_project_config.helpers
   pluginName: ->
     return JustdoTaskType.plugin_human_readable_name
 
+  showConfig: ->
+    return not JustdoTaskType.plugin_integral_part_of_justdo
+
 Template.justdo_task_type_project_config.events
   "click .project-conf-justdo-task-type-config": ->
     proj = curProj()

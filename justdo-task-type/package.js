@@ -54,7 +54,7 @@ Package.onUse(function (api) {
   api.use("matb33:collection-hooks@0.8.4", both);
 
   api.use("reactive-var", both);
-  api.use("tracker", client);
+  api.use("tracker", both);
 
   api.addFiles("lib/both/analytics.coffee", both);
 
@@ -78,11 +78,11 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project-conf/project-conf.html", client);
   api.addFiles("lib/client/project-conf/project-conf.coffee", client);
 
-  api.addFiles("lib/client/task-pane-section/task-pane-section-registrar.coffee", client);
+  // api.addFiles("lib/client/task-pane-section/task-pane-section-registrar.coffee", client);
 
-  api.addFiles("lib/client/task-pane-section/task-pane-section.sass", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.html", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.coffee", client);
+  // api.addFiles("lib/client/task-pane-section/task-pane-section.sass", client);
+  // api.addFiles("lib/client/task-pane-section/task-pane-section.html", client);
+  // api.addFiles("lib/client/task-pane-section/task-pane-section.coffee", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
@@ -91,7 +91,11 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/app-integration.coffee", both);
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
-  // file. 
+  // file.
+
+  // Core generators
+  api.addFiles("lib/core-generators/task-alerts/task-alerts.coffee", both);
+  api.addFiles("lib/core-generators/task-types/project.coffee", both);
 
   api.export("JustdoTaskType", both);
 });

@@ -3,9 +3,15 @@ _.extend JustdoTaskType,
 
   plugin_human_readable_name: "Task Type"
 
-  task_pane_tab_label: "Task Type"
+  plugin_integral_part_of_justdo: true # If set to true, there's no need to install this plugin. It won't show in the JustDo settings.
 
-  add_pseudo_field: true
-  pseudo_field_id: "justdo_task_type"
-  pseudo_field_label: "Task Type"
-  pseudo_field_type: "string"
+  core_categories: [
+    {
+      category_id: "default"
+      label: "Types"
+    }
+    # {
+    #   category_id: "task-alerts"
+    #   label: "Alerts"
+    # }
+  ]
