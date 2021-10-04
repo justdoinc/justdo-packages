@@ -236,7 +236,7 @@ _.extend JustdoTasksContextMenu.prototype,
         @registerSectionItem "reorder-children-items", "reorder-children-by-#{field_id}",
           position: current_position
           data:
-            label: if label then label else getLabelForFieldId(field_id)
+            label: -> if label then label else getLabelForFieldId(field_id)
             op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
               if not (gc = APP.modules.project_page?.gridControl())?
                 return false
