@@ -7265,17 +7265,11 @@ $active-row-and-search-result-editable-cell-background-color: #cfbde1
 .frozen-columns-mode .slick-row.active {
   background-color: #e1ebf9 !important;
 }
-.frozen-columns-mode .slick-viewport {
-  background-color: #fafbfe;
-}
 .frozen-columns-mode .slick-row.search-result {
   background-color: #f6dceb !important;
 }
 .frozen-columns-mode .slick-row.search-result.active {
   background-color: #ddc8e5 !important;
-}
-.frozen-columns-mode .frozen {
-  background-color: #fafbfe;
 }
 .frozen-columns-mode .frozen.active {
   background-color: #e1ebf9 !important;
