@@ -197,30 +197,33 @@ _.extend JustdoTasksContextMenu.prototype,
     @registerNestedSection "main", "reorder-children", "reorder-children-items",
       position: 100
 
+    getLabelForFieldId = (field_id) ->
+      return JustdoHelpers.getCollectionSchemaForField(APP.collections.Tasks, field_id)?.label or field_id
+
     supported_reorderings = [
       {
         field_id: "priority"
-        label: "Priority"
+        # label: "Priority #{Math.random()}" # <- YOU ARE ALLOWED TO SET CUSTOM LABEL
         order: -1 # -1 for DESC 1 for ASC
       }
       {
         field_id: "title"
-        label: "Subject"
+        # label: "Subject"
         order: 1 # -1 for DESC 1 for ASC
       }
       {
         field_id: "start_date"
-        label: "Start Date"
+        # label: "Start Date"
         order: 1 # -1 for DESC 1 for ASC
       }
       {
         field_id: "end_date"
-        label: "End Date"
+        # label: "End Date"
         order: 1 # -1 for DESC 1 for ASC
       }
       {
         field_id: "due_date"
-        label: "Due Date"
+        # label: "Due Date"
         order: 1 # -1 for DESC 1 for ASC
       }
     ]
@@ -233,7 +236,7 @@ _.extend JustdoTasksContextMenu.prototype,
         @registerSectionItem "reorder-children-items", "reorder-children-by-#{field_id}",
           position: current_position
           data:
-            label: label
+            label: if label then label else getLabelForFieldId(field_id)
             op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
               if not (gc = APP.modules.project_page?.gridControl())?
                 return false
