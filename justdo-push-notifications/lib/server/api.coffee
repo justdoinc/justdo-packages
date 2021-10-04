@@ -182,6 +182,17 @@ _.extend JustdoPushNotifications.prototype,
             body: message.data.message
 
         if token_obj.network_id == "fcm"
+          # A message received from the Android developer:
+
+          # From firebase documentation:
+          # In cases where the message is data-only and the device is in the background or quit, both Android & iOS treat the message as low priority and will ignore it (i.e. no event will be sent). You can however increase the priority by setting the priority to high (Android) and content-available to true(iOS) properties on the payload.
+
+          # in iOS, you are using the Notification + Data type so this isn't an issue, apps will keep receiving notifications in background / closed.
+
+          # for Android, since you are using the data-only. the OS will ignore it. 
+
+          # https://rnfirebase.io/messaging/usage#message-handlers
+
           message.priority = "high"
 
         return_value.push
