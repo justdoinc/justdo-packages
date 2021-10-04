@@ -23,10 +23,6 @@ APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
 
-  options =
-    projects_collection: APP.collections.Projects
-    tasks_collection: APP.collections.Tasks
-
-  APP.justdo_cert_maintainer = new JustdoCertMaintainer(options)
+  APP.justdo_cert_maintainer = new JustdoCertMaintainer
 
   return

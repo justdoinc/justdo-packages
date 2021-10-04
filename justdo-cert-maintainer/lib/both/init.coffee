@@ -1,17 +1,6 @@
 default_options = {}
 
-options_schema =
-  both:
-    projects_collection:
-      type: "skip-type-check"
-      optional: false
-      bind_to_instance: true
-
-    tasks_collection:
-      type: "skip-type-check"
-      optional: false
-      bind_to_instance: true
-
+options_schema = null
 # options_schema
 # ==============
 #
@@ -72,7 +61,7 @@ options_schema =
 #         optional: true
 #         defaultValue: 30
 
-JustdoCertMaintainer = (options) ->
+JustdoCertMaintainer = ->
   # skeleton-version: v3.0.1
 
   # Developer, avoid changing this constuctor, to do stuff on init
@@ -89,33 +78,9 @@ JustdoCertMaintainer = (options) ->
 
   @_on_destroy_procedures = []
 
-  @options = _.extend {}, default_options, options
-  if not _.isEmpty(options_schema)
-    # If options_schema is set, use it to apply strict structure on
-    # @options.
-    #
-    # Clean and validate @options according to options_schema.
-    # invalid-options error will be thrown for invalid options.
-    # Takes care of binding options with bind_to_instance to
-    # the instance.
-    @options =
-      JustdoHelpers.loadOptionsWithSchema(
-        options_schema, @options, {
-          self: @
-          additional_schema: # Adds the `events' option to the permitted fields
-            events:
-              type: Object
-              blackbox: true
-              optional: true
-        }
-      )
-
   JustdoHelpers.loadEventEmitterHelperMethods(@)
-  @loadEventsFromOptions() # loads @options.events, if exists
 
   @_on_destroy_procedures = []
-
-  @_attachCollectionsSchemas()
 
   if Meteor.isClient
     # React to invalidations

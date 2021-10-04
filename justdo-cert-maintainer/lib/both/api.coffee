@@ -5,8 +5,6 @@ _.extend JustdoCertMaintainer.prototype,
     # Add here code that should run, in the Server and Client, during the JS
     # tick in which we create the object instance.
 
-    @setupRouter()
-
     return
 
   _bothDeferredInit: ->
@@ -19,9 +17,3 @@ _.extend JustdoCertMaintainer.prototype,
       return
 
     return
-
-  isPluginInstalledOnProjectDoc: (project_doc) ->
-    return APP.projects.isPluginInstalledOnProjectDoc(JustdoCertMaintainer.project_custom_feature_id, project_doc)
-
-  getProjectDocIfPluginInstalled: (project_id) ->
-    return @projects_collection.findOne({_id: project_id, "conf.custom_features": JustdoCertMaintainer.project_custom_feature_id})
