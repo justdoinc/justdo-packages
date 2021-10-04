@@ -5,7 +5,7 @@ _.extend JustdoTaskType.prototype,
       module.project_config_ui.registerConfigTemplate "justdo_task_type_project_config",
         section: "extensions"
         template: "justdo_task_type_project_config"
-        priority: 100
+        priority: 10000
 
     return
 
