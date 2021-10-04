@@ -18,13 +18,14 @@ _.extend JustdoCertMaintainer.prototype,
     last_updated_regex = /[A-Z][a-z]{2}\,.*GMT/ # Not strict, but works
     last_updated = cert.match(last_updated_regex)?[0]
     last_updated = new Date(last_updated).toGMTString()
-    # console.log path.join @certificate_storage_path, @certificate_name
 
+    # If-Modified-Since prevents downloading the same file
     HTTP.get pem_fetch_endpoint, {headers: {"If-Modified-Since": last_updated}}, (e, r) ->
       if r.statusCode is 200
         {content} = r
-        fs.writeFileSync "/plugins/justdo-cert-maintainer/lib/assets/cacert.pem", (r.headers["last-modified"] + "\n" + content)
+        fs.writeFileSync "/plugins/justdo-cert-maintainer/lib/assets/cacert.pem", ("## Last updated: " + r.headers["last-modified"] + "\n" + content)
         https.globalAgent.options.ca = [content]
 
+      return
 
     return
