@@ -181,6 +181,9 @@ _.extend JustdoPushNotifications.prototype,
             title: message.data.title
             body: message.data.message
 
+        if token_obj.network_id == "fcm"
+          message.priority = "high"
+
         return_value.push
           pn_deferred: APP.justdo_firebase.send(message)
           user_id: user_doc._id
