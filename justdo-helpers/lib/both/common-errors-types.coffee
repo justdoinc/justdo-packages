@@ -13,3 +13,4 @@ _.extend JustdoHelpers,
     "login-required": "This operation requires login"
     "unknown-user": "Unknown user"
     "no-fiber": "No fiber found"
+    "permission-denied": "Permission denied"
