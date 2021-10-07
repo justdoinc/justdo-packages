@@ -125,7 +125,12 @@ APP.executeAfterAppLibCode ->
 
       return
     prereq: ->
-      return {}
+      prereq = JustdoHelpers.prepareOpreqArgs()
+
+      if not APP.collections.TicketsQueues.findOne({}, {fields: {_id: 1}})?
+        prereq.no_tickets = "No ticket queues are set for this JustDo"
+
+      return prereq
 
   formIsValid = -> selected_destination_id.get()? and not _.isEmpty(title.get())
 
