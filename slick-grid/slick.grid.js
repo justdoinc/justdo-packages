@@ -620,12 +620,12 @@ if (typeof Slick === "undefined") {
     }
 
     function createColumnTooltip() {
-      $(".column-name-tooltip").remove();
-      $("#grid-control-main").append("<div class='column-name-tooltip'></div>");
+      $(".column-name-tooltip", $container).remove();
+      $container.append("<div class='column-name-tooltip'></div>");
 
-      var $column_name_tooltip = $(".column-name-tooltip");
+      var $column_name_tooltip = $(".column-name-tooltip", $container);
 
-      $(".slick-header-column").mouseenter(function() {
+      $(".slick-header-column", $container).mouseenter(function() {
         var $column_name_el = $(this).find(".slick-column-name");
         var column_name_el_top = $column_name_el.offset().top;
         var column_name_el_left = $column_name_el.offset().left;
@@ -638,7 +638,7 @@ if (typeof Slick === "undefined") {
 
         if ($column_name_el_clone.width() > $column_name_el.width()) {
           $column_name_tooltip.text($column_name_el.text());
-          $column_name_tooltip.offset({ top: column_name_el_top - 20, left: column_name_el_left - 8 });
+          $column_name_tooltip.offset({ top: column_name_el_top - 11, left: column_name_el_left - 8 });
           $column_name_tooltip.addClass("show")
         }
 
