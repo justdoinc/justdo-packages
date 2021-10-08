@@ -10,7 +10,7 @@ _.extend JustdoTasksContextMenu.prototype,
     @registerSectionItem "main", "new-task",
       position: 100
       data:
-        label: "New Task"
+        label: "New Sibling Task"
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           APP.modules.project_page.performOp("addSiblingTask")
 
