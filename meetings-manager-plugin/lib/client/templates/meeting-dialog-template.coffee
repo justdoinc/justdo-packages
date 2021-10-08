@@ -372,7 +372,7 @@ Template.meetings_meeting_dialog.onRendered ->
   meeting = @meeting
 
   @$(".meetings_meeting-dialog").resizable
-    handles: "e, w"
+    handles: "e, w, s, n, se, sw, ne, nw"
     minWidth: 680
 
   @$(".meetings_meeting-dialog").draggable
