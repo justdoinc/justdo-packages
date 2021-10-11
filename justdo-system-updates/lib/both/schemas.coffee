@@ -20,4 +20,8 @@ _.extend JustdoSystemUpdates.prototype,
         type: [read_system_updates]
         optional: true
 
+      "profile.show_system_updates":
+        type: Boolean
+        optional: true
+
     return
