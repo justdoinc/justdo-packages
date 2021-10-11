@@ -7,6 +7,8 @@ _.extend JustdoSystemUpdates.prototype,
       if login_state_sym == "logged-in" and Tracker.nonreactive => @isEnabled()
         @_presentPendingMessages()
 
+      return
+
     return
 
   messages_presented: false
@@ -15,7 +17,7 @@ _.extend JustdoSystemUpdates.prototype,
       # Once messages presented - that's it for this session
 
       return
-    
+
     # Assumes the user is logged in.
     cur_user = Meteor.user({fields: {createdAt: 1, "profile.read_system_updates": 1}})
 
@@ -35,11 +37,11 @@ _.extend JustdoSystemUpdates.prototype,
 
         continue
 
-      if (show_to_users_registered_before = system_update_def.show_to_users_registered_before)?
-        if cur_user.createdAt >= show_to_users_registered_before
-          # User registered after the time the message is relevant.
-
-          continue
+      # if (show_to_users_registered_before = system_update_def.show_to_users_registered_before)?
+      #   if cur_user.createdAt >= show_to_users_registered_before
+      #     # User registered after the time the message is relevant.
+      #
+      #     continue
 
       # XXX For now we assume up to 1 message will be relevant at a time
       @_displayUpdate(system_update_id)
@@ -89,12 +91,10 @@ _.extend JustdoSystemUpdates.prototype,
         ok:
           label: "OK"
 
-
           callback: ->
             markAsRead()
 
             return true
-
 
     return
 
@@ -118,6 +118,8 @@ _.extend JustdoSystemUpdates.prototype,
         section: "show-system-updates"
         template: "justdo_system_updates_config"
         priority: 100
+
+      return
 
     return
 
