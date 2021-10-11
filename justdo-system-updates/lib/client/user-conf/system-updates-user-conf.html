@@ -1,0 +1,12 @@
+<template name="justdo_system_updates_config">
+  <div class="justdo-system-updates-config d-flex">
+    <div>
+      {{#if enabled}}
+        <svg class="jd-icon-user-settings text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+      {{else}}
+        <svg class="jd-icon-user-settings text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+      {{/if}}
+    </div>
+    <div>Show system updates</div>
+  </div>
+</template>
