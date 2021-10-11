@@ -582,7 +582,13 @@ Template.justdo_clipboard_import_activation_icon.events
                 break
 
             if date_column_found and not modal_data.date_fields_date_format.get()?
-              options = _.map(getAllowedDateFormats().concat(custom_allowed_dates_formats), (format) -> {text: format, value: format}).concat()
+              options = _.map getAllowedDateFormats().concat(custom_allowed_dates_formats), (format) ->
+                if format == "Others"
+                  return {text: format, value: format}
+
+                this_year = new Date().getFullYear()
+                demo_date = moment(new Date(this_year, 2, 14)).format(format) # JS months count from 0 to 11, so it's 14th March, (current year)
+                return {text: "#{demo_date} (#{format})", value: format}
 
               bootbox.prompt
                 title: "Please select source date format"
