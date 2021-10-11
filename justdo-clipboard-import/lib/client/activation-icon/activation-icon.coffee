@@ -17,7 +17,7 @@ base_supported_fields_ids = [
 base_supported_fields_ids = non_sorted_field_ids.concat base_supported_fields_ids
 
 fallback_date_format = "YYYY-MM-DD"
-custom_allowed_dates_formats = ["MMM DD YYYY" ,"DD MMMM YYYY", "Others"]
+custom_allowed_dates_formats = ["MMM DD YYYY", "DD MMMM YYYY", "Others"]
 
 getLocalStorageKey = ->
   return "jci-last-selection::#{Meteor.userId()}"
@@ -183,7 +183,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             if (owner_id_to_temp_import_id_map[user_id])?
               owner_id_to_temp_import_id_map[user_id].push temp_import_id
             else
-             owner_id_to_temp_import_id_map[user_id] = [temp_import_id]
+              owner_id_to_temp_import_id_map[user_id] = [temp_import_id]
         else if cell_val.length > 0 and field_id == "task-indent-level"
           indent_level = parseInt cell_val, 10
           if base_indent < 0
@@ -204,7 +204,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
               val = null
               for key, defs of field_def.grid_values
                 # we had cases when copy from Excel (even though it was not in the data) added \r\n  and double space... so clearing these out.
-                if defs?.txt?.trim()?.replace(/(\r\n|\n|\r)/gm, "").replace(/\s\s+/g, ' ').toLowerCase() == cell_val.trim().replace(/(\r\n|\n|\r)/gm, "").replace(/\s\s+/g, ' ').toLowerCase()
+                if defs?.txt?.trim()?.replace(/(\r\n|\n|\r)/gm, "").replace(/\s\s+/g, " ").toLowerCase() == cell_val.trim().replace(/(\r\n|\n|\r)/gm, "").replace(/\s\s+/g, " ").toLowerCase()
                   val = key
                   break
               if val == null
@@ -494,7 +494,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         return # end of onActionClick
 
     return # end of mapSeries call back
-
 
   return true
 
