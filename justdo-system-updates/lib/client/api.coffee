@@ -4,7 +4,7 @@ _.extend JustdoSystemUpdates.prototype,
       login_state = APP.login_state.getLoginState()
       login_state_sym = login_state[0]
 
-      if login_state_sym == "logged-in"
+      if login_state_sym == "logged-in" and Tracker.nonreactive => @isEnabled()
         @_presentPendingMessages()
 
     return
@@ -102,6 +102,23 @@ _.extend JustdoSystemUpdates.prototype,
     if @destroyed
       return
 
+    @_setupUserConfigUi()
+
+    return
+
+  _setupUserConfigUi: ->
+    APP.executeAfterAppLibCode ->
+      module = APP.modules.main
+
+      module.user_config_ui.registerConfigSection "show-system-updates",
+        title: "Display system updates"
+        priority: 1000
+
+      module.user_config_ui.registerConfigTemplate "show-system-updates-setter",
+        section: "show-system-updates"
+        template: "justdo_system_updates_config"
+        priority: 100
+
     return
 
   destroy: ->
@@ -116,4 +133,17 @@ _.extend JustdoSystemUpdates.prototype,
 
     @logger.debug "Destroyed"
 
+    return
+
+  isEnabled: ->
+    user_profile = Meteor.user({fields: {profile: 1}}).profile
+    # Only disable showing system updates when show_system_updates is explicitly set to disabled
+    if user_profile.show_system_updates? and not user_profile.show_system_updates
+      return false
+    return true
+
+  toggleDisplayOption: ->
+    if not (show_system_updates = Meteor.user({fields: {"profile.show_system_updates": 1}}).profile.show_system_updates)?
+      show_system_updates = true
+    Meteor.users.update(Meteor.userId(), {$set: {"profile.show_system_updates": not show_system_updates}})
     return
