@@ -45,3 +45,14 @@ _.extend JustdoHelpers,
       installCurrentUnicodeDateReactiveCrv()
 
     return currentUnicodeDateReactiveCrv.getSync()
+
+  getAllowedDateFormatsWithExample: (options) ->
+    fallback_date_format = ["YYYY-MM-DD"]
+
+    if not (allowed_date_formats = JustdoHelpers.getCollectionSchemaForField(Meteor.users, "profile.date_format")?.allowedValues)?
+      allowed_date_formats = fallback_date_format
+
+    if options?.custom_date_formats?
+      return allowed_date_formats.concat options.custom_date_formats
+
+    return allowed_date_formats
