@@ -3,7 +3,7 @@
     <label for="date-format-date-time-setting">{{date_format_label}}</label>
     <select type="text" id="date-format-date-time-setting" class="form-control form-control-sm date-format-date-time-setting">
       {{#each allowed_date_formats}}
-        <option value="{{this}}" {{isSelected this user_date_format}}>{{this}}</option>
+        <option value="{{this.value}}" {{isSelected this.value user_date_format}}>{{this.text}}</option>
       {{/each}}
     </select>
   </div>

@@ -14,11 +14,7 @@ Template.core_user_conf_core_time_settings.helpers
 
     return user_date_format
 
-  allowed_date_formats: ->
-    if not (allowed_date_formats = getUserSchemaForField("profile.date_format")?.allowedValues)?
-      return ["YYYY-MM-DD"]
-
-    return allowed_date_formats
+  allowed_date_formats: JustdoHelpers.getAllowedDateFormatsWithExample
 
   #
   # Time format
