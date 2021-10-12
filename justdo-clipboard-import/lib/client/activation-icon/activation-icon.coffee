@@ -16,14 +16,10 @@ base_supported_fields_ids = [
 
 base_supported_fields_ids = non_sorted_field_ids.concat base_supported_fields_ids
 
-fallback_date_format = "YYYY-MM-DD"
 custom_allowed_dates_formats = ["MMM DD YYYY", "DD MMMM YYYY", "Others"]
 
 getLocalStorageKey = ->
   return "jci-last-selection::#{Meteor.userId()}"
-
-getAllowedDateFormats = ->
-  return Meteor.users.simpleSchema()?.schema()?["profile.date_format"]?.allowedValues or [fallback_date_format]
 
 getDefaultDateFormat = ->
   return JustdoHelpers.getUserPreferredDateFormat()
@@ -581,13 +577,7 @@ Template.justdo_clipboard_import_activation_icon.events
                 break
 
             if date_column_found and not modal_data.date_fields_date_format.get()?
-              options = _.map getAllowedDateFormats().concat(custom_allowed_dates_formats), (format) ->
-                if format == "Others"
-                  return {text: format, value: format}
-
-                this_year = new Date().getFullYear()
-                demo_date = moment(new Date(this_year, 2, 14)).format(format) # JS months count from 0 to 11, so it's 14th March, (current year)
-                return {text: "#{demo_date} (#{format})", value: format}
+              options = JustdoHelpers.getAllowedDateFormatsWithExample({custom_date_formats: custom_allowed_dates_formats})
 
               bootbox.prompt
                 title: "Please select source date format"
