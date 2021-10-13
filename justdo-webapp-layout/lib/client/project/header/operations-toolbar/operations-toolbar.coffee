@@ -18,3 +18,12 @@ Template.project_operations_toolbar.onRendered ->
     return
 
   return
+
+
+Template.project_operations_toolbar.helpers
+  displayPrioritySlider: ->
+    if not (item_id = JD.activeItemId())?
+      # If no item is selected - display
+      return true
+
+    return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.priority", item_id)
