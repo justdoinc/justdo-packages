@@ -391,7 +391,7 @@ _.extend JustdoTasksContextMenu.prototype,
               return "folder-minus"
             return "folder"
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          return true
+          return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_project", task_id)
       
       self.registerSectionItem "projects", "open-close-project",
         position: 300
@@ -407,7 +407,8 @@ _.extend JustdoTasksContextMenu.prototype,
           icon_type: "feather"
           icon_val: "folder"
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          return dependencies_fields_vals?[JustdoDeliveryPlanner.task_is_project_field_name] is true
+          return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_archived_project", task_id) and
+                    dependencies_fields_vals?[JustdoDeliveryPlanner.task_is_project_field_name] is true
       
       self.registerSectionItem "projects", "manage-projects",
         position: 100
