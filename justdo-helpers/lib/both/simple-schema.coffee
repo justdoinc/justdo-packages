@@ -193,71 +193,60 @@ _.extend JustdoHelpers,
   getSimpleSchemaObjDefinition: (simple_schema_obj) ->
     return simple_schema_obj._schema
 
-  # dependentAutoValue: (options) ->
-  #   # Options should be of the form:
+  generateDependentAutoValue: (options) ->
+    # Options should be of the form:
 
-  #   # {
-  #   #   self: # The simple schema self
-  #   #   field_id: # (String) the field we define auto value for
-  #     dependent_field_id: # (String) the field on which we depend
-  #     autoValue: (self, dependent_field_val) -> here you can assume that security checks been done, and just process the required auto value
-  #     onDependencyCleared: -> called when the dependency is cleared
-  #     allow_trusted_source_forced_val: true/false # default true
-  #     allow_empty_string: XXX document
-  #   # }
+    # {
+    #   self: # The simple schema self
+    #   field_id: # (String) the field we define auto value for
+    #   dependent_field_id: # (String) the field on which we depend
+    #   autoValue: (self, dependent_field_val) -> here you can assume that security checks been done, and just process the required auto value
+    #   onDependencyCleared: -> called when the dependency is cleared
+    #   allow_trusted_source_forced_val: true/false # default true
+    #   allow_empty_string: XXX document
+    # }
 
-  #   # XXX get to a point where we can write:
-  #   #
-  #   # autoValue: generateDependentAutoValue
-  #   #   field_id: # (String) the field we define auto value for
-  #   #   dependent_field_id: # (String) the field on which we depend
-  #   #   autoValue: (self, dependent_field_val) -> here you can assume that security checks been done, and just process the required auto value
-  #   #   onDependencyCleared: -> called when the dependency is cleared
-  #   #   allow_trusted_source_forced_val: true/false # default true
-  #   #   allow_empty_string: XXX document
+    # XXX get to a point where we can write:
+    #
+    # autoValue: generateDependentAutoValue
+    #   field_id: # (String) the field we define auto value for
+    #   dependent_field_id: # (String) the field on which we depend
+    #   autoValue: (self, dependent_field_val) -> here you can assume that security checks been done, and just process the required auto value
+    #   onDependencyCleared: -> called when the dependency is cleared
+    #   allow_trusted_source_forced_val: true/false # default true
+    #   allow_empty_string: true/false, allow this field to be unset by updating with empty string "" # default false
 
-  #   # XXX ensure that status_by works exactly as today following the change (incl. empty string)
+    # XXX ensure that status_by works exactly as today following the change (incl. empty string)
 
-  #   # XXX remove all the checks below
-  #   check options.self, Object
-  #   check options.dependent_field_id, String
-  #   # autoValue has two args: self(schema obj) and dependent_field(obj)
-  #   # This helper takes care of converting dependent_field_id to dependent_field obj,
-  #   # so it's not necessary to call @field("dependent_field_id")
-  #   check options.autoValue, Function
-  #   check options.onError, Function
-  #   # onDependencyCleared is triggered when the dependent_field is cleared
-  #   if options.onDependencyCleared?
-  #     check options.onDependencyCleared, Function
-  #   if options.allow_trusted_source_forced_val?
-  #     check options.allow_trusted_source_forced_val, Boolean
-  #   if options.allow_empty_string?
-  #     check options.allow_empty_string, Boolean
+    if not (allow_trusted_source_forced_val = options.allow_trusted_source_forced_val)?
+      allow_trusted_source_forced_val = true
 
-  #   # XXX Dont deconstruct the options
-  #   {self, dependent_field_id, autoValue, onDependencyCleared=null, allow_trusted_source_forced_val=true, allow_empty_string=false, onError} = options
+    if not (allow_empty_string = options.allow_empty_string)?
+      allow_empty_string = false
 
-  #   # Allow changes if set from trusted source
-  #   if allow_trusted_source_forced_val and self.isFromTrustedCode and self.isSet
-  #     return
+    return ->
+      # Allow changes if set from trusted source
+      if allow_trusted_source_forced_val and @isFromTrustedCode and @isSet
+        return
 
-  #   # Empty string in an update query yields $unset operator and can bypass autovalue.
-  #   # We prevent this from happening unless explicitly enabled.
-  #   if not allow_empty_string and self.operator is "$unset"
-  #     return self.unset()
+      # Empty string in an update query yields $unset operator and can bypass autovalue.
+      # We prevent this from happening unless explicitly enabled.
+      if not allow_empty_string and @operator is "$unset"
+        return @unset()
 
-  #   dependent_field = self.field dependent_field_id
+      dependent_field = @field options.dependent_field_id
 
-  #   # XXX This check should be done on the first line of code of this method
-  #   # right after it you can use extend to apply default.
-  #   if dependent_field.isSet
-  #     if onDependencyCleared? and dependent_field.value is null # XXX consider also $unset
-  #       return onDependencyCleared self, dependent_field
-  #     return autoValue self, dependent_field
+      # XXX This check should be done on the first line of code of this method
+      # right after it you can use extend to apply default.
 
-  #   # If dependent_field isn't set and changes are made from untrusted source, reject the change.
-  #   if self.isSet
-  #     throw new Meteor.Error("permission-denied", "Untrusted attempt to change #{field_id} rejected", details)
+      if dependent_field.isSet
+        if options.onDependencyCleared? and (dependent_field.value is null or dependent_field.operator is "$unset")
+          return options.onDependencyCleared @, dependent_field.value
+        return options.autoValue @, dependent_field.value
 
-  #   # We should never get to here. But just in case we do, block all updates attempted.
-  #   return self.unset()
+      # If dependent_field isn't set and changes are made from untrusted source, reject the change.
+      if @isSet
+        throw new Meteor.Error("permission-denied", "Untrusted attempt to change #{options.field_id} rejected")
+
+      # We should never get to here. But just in case we do, block all updates attempted.
+      return @unset()
