@@ -6,7 +6,7 @@ APP.executeAfterAppLibCode ->
   Template.task_pane_item_details_section.helpers
     hasPermissionToEditMemebers: ->
       if (item_id = JD.activeItemId())?
-        return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.users",item_id)
+        return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.users", item_id)
       return false
 
     activeItemNotNull: ->
