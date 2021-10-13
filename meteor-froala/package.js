@@ -29,7 +29,7 @@ Package.onUse(function(api) {
   api.addFiles("assets/css/plugins/table.min.css", "client");
   api.addFiles("assets/css/plugins/video.min.css", "client");
   api.addFiles("assets/css/third_party/embedly.min.css", "client");
-  api.addFiles("assets/css/third_party/spell_checker.min.css", "client");
+  // api.addFiles("assets/css/third_party/spell_checker.min.css", "client");
   api.addFiles("assets/css/third_party/image_tui.min.css", "client");
   api.addFiles("assets/js/froala_editor.min.js", "client");
   api.addFiles("assets/js/plugins/align.min.js", "client");
@@ -68,7 +68,7 @@ Package.onUse(function(api) {
   api.addFiles("assets/js/third_party/font_awesome.min.js", "client");
   api.addFiles("assets/js/third_party/image_aviary.min.js", "client");
   api.addFiles("assets/js/third_party/image_tui.min.js", "client");
-  api.addFiles("assets/js/third_party/spell_checker.min.js", "client");
+  // api.addFiles("assets/js/third_party/spell_checker.min.js", "client");
 
   api.addFiles("justdo-modifications.js", "client");
   api.addFiles("justdo-modifications.sass", "client");
