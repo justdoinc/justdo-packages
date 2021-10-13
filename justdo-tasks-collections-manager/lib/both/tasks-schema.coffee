@@ -97,24 +97,12 @@ _.extend JustdoTasksCollectionsManager.prototype,
           "profile.first_name": 1
           "profile.last_name": 1
 
-        autoValue: ->
-          # Automatically set the status_by to the logged
-          # in user id, upon updates to the status.
-
-          if @isFromTrustedCode and @isSet
-            # We don't interfere with trust code attempt to set a specific value
-            return undefined
-          
-          status = @field("status")
-
-          if not status.isSet and @isSet
-            # Don't allow setting this value directly
-            throw self._error "permission-denied", "Untrusted attempt to change status_by rejected"
-
-          if status.isSet
-            return @userId
-
-          return undefined
+        autoValue: JustdoHelpers.generateDependentAutoValue({
+          field_id: "status_by"
+          dependent_field_id: "status"
+          autoValue: (self) -> return self.userId
+          onDependencyCleared: -> return null
+          })
 
       status_updated_at:
         label: "Notes Updated At"
@@ -125,21 +113,12 @@ _.extend JustdoTasksCollectionsManager.prototype,
         type: Date
         optional: true
 
-        autoValue: ->
-          status = @field("status")
-
-          if status.isSet
-            if status.value == null
-              return {$set: null}
-            else
-              return new Date()
-          else
-            # If the code is not from trusted code unset the update
-            if not @isFromTrustedCode
-              if @isSet
-                throw self._error "permission-denied", "Untrusted attempt to change status_updated_at rejected"
-
-          return # Keep this return to return undefined (as required by autoValue)
+        autoValue: JustdoHelpers.generateDependentAutoValue({
+          field_id: "status_updated_at"
+          dependent_field_id: "status"
+          autoValue: -> return new Date
+          onDependencyCleared: -> return null
+          })
 
       state:
         label: "State"
