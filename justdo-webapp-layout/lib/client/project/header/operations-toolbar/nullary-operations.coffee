@@ -51,7 +51,7 @@ APP.executeAfterAppLibCode ->
     return false
 
   module.setNullaryOperation "addSiblingTask",
-    human_description: "New Task"
+    human_description: "New Sibling Task"
     keyboard_shortcut: "alt+enter"
     alternative_shortcuts: ["alt+plus"]
     template:
