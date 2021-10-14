@@ -4,7 +4,7 @@ _.extend JustdoSystemUpdates.prototype,
       login_state = APP.login_state.getLoginState()
       login_state_sym = login_state[0]
 
-      if login_state_sym == "logged-in" and Tracker.nonreactive => @isEnabled()
+      if login_state_sym == "logged-in" and @isEnabledForLoggedInUser()
         @_presentPendingMessages()
 
       return
@@ -37,11 +37,11 @@ _.extend JustdoSystemUpdates.prototype,
 
         continue
 
-      # if (show_to_users_registered_before = system_update_def.show_to_users_registered_before)?
-      #   if cur_user.createdAt >= show_to_users_registered_before
-      #     # User registered after the time the message is relevant.
-      #
-      #     continue
+      if (show_to_users_registered_before = system_update_def.show_to_users_registered_before)?
+        if cur_user.createdAt >= show_to_users_registered_before
+          # User registered after the time the message is relevant.
+      
+          continue
 
       # XXX For now we assume up to 1 message will be relevant at a time
       @_displayUpdate(system_update_id)
@@ -137,15 +137,19 @@ _.extend JustdoSystemUpdates.prototype,
 
     return
 
-  isEnabled: ->
-    user_profile = Meteor.user({fields: {profile: 1}}).profile
+  isEnabledForLoggedInUser: ->
     # Only disable showing system updates when show_system_updates is explicitly set to disabled
+    user_profile = Meteor.user({fields: {"profile.show_system_updates": 1}}).profile
+
     if user_profile.show_system_updates? and not user_profile.show_system_updates
       return false
+
     return true
 
   toggleDisplayOption: ->
     if not (show_system_updates = Meteor.user({fields: {"profile.show_system_updates": 1}}).profile.show_system_updates)?
       show_system_updates = true
+
     Meteor.users.update(Meteor.userId(), {$set: {"profile.show_system_updates": not show_system_updates}})
+    
     return
