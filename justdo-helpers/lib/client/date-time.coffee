@@ -53,6 +53,14 @@ _.extend JustdoHelpers,
       allowed_date_formats = fallback_date_format
 
     if options?.custom_date_formats?
-      return allowed_date_formats.concat options.custom_date_formats
+      allowed_date_formats = allowed_date_formats.concat options.custom_date_formats
+
+    current_year = new Date().getFullYear()
+    allowed_date_formats = _.map allowed_date_formats, (format) ->
+      if format is "Others"
+        return {text: format, value: format}
+
+      demo_date = moment(new Date(current_year, 2, 14)).format(format) # JS months count from 0 to 11, so it's 14th March, (current year)
+      return {text: "#{demo_date} (#{format})", value: format}
 
     return allowed_date_formats
