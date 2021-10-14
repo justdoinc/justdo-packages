@@ -194,30 +194,6 @@ _.extend JustdoHelpers,
     return simple_schema_obj._schema
 
   generateDependentAutoValue: (options) ->
-    # Options should be of the form:
-
-    # {
-    #   self: # The simple schema self
-    #   field_id: # (String) the field we define auto value for
-    #   dependent_field_id: # (String) the field on which we depend
-    #   autoValue: (self, dependent_field_val) -> here you can assume that security checks been done, and just process the required auto value
-    #   onDependencyCleared: -> called when the dependency is cleared
-    #   allow_trusted_source_forced_val: true/false # default true
-    #   allow_empty_string: XXX document
-    # }
-
-    # XXX get to a point where we can write:
-    #
-    # autoValue: generateDependentAutoValue
-    #   field_id: # (String) the field we define auto value for
-    #   dependent_field_id: # (String) the field on which we depend
-    #   autoValue: (self, dependent_field_val) -> here you can assume that security checks been done, and just process the required auto value
-    #   onDependencyCleared: -> called when the dependency is cleared
-    #   allow_trusted_source_forced_val: true/false # default true
-    #   allow_empty_string: true/false, allow this field to be unset by updating with empty string "" # default false
-
-    # XXX ensure that status_by works exactly as today following the change (incl. empty string)
-
     if not (allow_trusted_source_forced_val = options.allow_trusted_source_forced_val)?
       allow_trusted_source_forced_val = true
 
@@ -235,9 +211,6 @@ _.extend JustdoHelpers,
         return @unset()
 
       dependent_field = @field options.dependent_field_id
-
-      # XXX This check should be done on the first line of code of this method
-      # right after it you can use extend to apply default.
 
       if dependent_field.isSet
         if options.onDependencyCleared? and (dependent_field.value is null or dependent_field.operator is "$unset")
