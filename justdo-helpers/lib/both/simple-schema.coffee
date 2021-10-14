@@ -194,6 +194,14 @@ _.extend JustdoHelpers,
     return simple_schema_obj._schema
 
   generateDependentAutoValue: (options) ->
+    # autoValue: generateDependentAutoValue
+    #   field_id: # (String) the field we define auto value for
+    #   dependent_field_id: # (String) the field on which we depend
+    #   autoValue: (self, dependent_field_val) -> here you can assume that security checks been done, and just process the required auto value
+    #   onDependencyCleared: -> called when the dependency is cleared ($set to null or $unset)
+    #   allow_trusted_source_forced_val: true/false # default true
+    #   allow_empty_string: true/false, allow this field to be unset by updating with empty string "" # default false
+
     if not (allow_trusted_source_forced_val = options.allow_trusted_source_forced_val)?
       allow_trusted_source_forced_val = true
 
