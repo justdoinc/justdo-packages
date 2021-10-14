@@ -43,7 +43,8 @@ Template.task_pane_task_changelog.helpers
       if fields_changed_by_others.includes log.field
         log.undo_disabled = true
       else
-        fields_changed_by_others.push log.field
+        if log.by isnt Meteor.userId()
+          fields_changed_by_others.push log.field
 
       logs.push log
 
