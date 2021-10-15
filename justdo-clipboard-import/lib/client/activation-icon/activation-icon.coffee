@@ -240,7 +240,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
           # If we have a date field, check that the date is formatted properly, and transform to internal format
           if isDateFieldDef(field_def)
             date_fields_date_format = modal_data.date_fields_date_format.get()
-            if date_fields_date_format == "Others"
+            if date_fields_date_format == "Others" # By not passing date format we let moment.js guess the date format (it's usually correct)
               moment_date = moment.utc cell_val
             else
               moment_date = moment.utc cell_val, date_fields_date_format
