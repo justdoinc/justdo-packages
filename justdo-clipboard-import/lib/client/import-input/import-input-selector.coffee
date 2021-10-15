@@ -115,11 +115,11 @@ Template.justdo_clipboard_import_input_selector.events
                 user_obj: user_doc
               return
             # If no user doc found, we put a warning icon next to the cell data indicating that the email does not belong to a member
-            user_not_found_icon = """<span title="User not found in the current JustDo, invite the user first." class="raw-tooltip"><svg class="jd-icon owner-id-alert"><use xlink:href="/layout/icons-feather-sprite.svg#alert-triangle"/></svg></span>"""
+            user_not_found_icon = """<span title="User not found in the current JustDo, invite the user first." class="raw-tooltip owner-id-alert"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#alert-triangle"/></svg></span>"""
             $data_cell.prepend(user_not_found_icon) # No user input is used here, hence no xssGuard
             return
 
-          not_email_icon = """<span title="Invalid email" class="raw-tooltip"><svg class="jd-icon owner-id-alert"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"/></svg></span>"""
+          not_email_icon = """<span title="Invalid email" class="raw-tooltip owner-id-alert"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"/></svg></span>"""
           $data_cell.prepend(not_email_icon) # No user input is used here, hence no xssGuard
           return
 
