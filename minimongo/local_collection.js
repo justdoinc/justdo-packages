@@ -81,7 +81,7 @@ export default class LocalCollection {
         selector,
         options
       });
-      console.trace();
+      // console.trace(); Uncomment to get a better trace of source.
       
       sameTickStatsInc("minimongo-find-without-fields-options::collection:" + this.name, 1);
     }
