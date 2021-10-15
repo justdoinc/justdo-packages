@@ -70,9 +70,7 @@ Template.task_pane_task_changelog_record.helpers
         or @change_type == "created"
       return ""
 
-    return JustdoHelpers.ucFirst @label
-
-  formatedValue: -> APP.tasks_changelog_manager.getActivityMessage @
+    return JustdoHelpers.ucFirst(@label)
 
   involvesAnotherTask: ->
     ops_involve_another_task = ["moved_to_task", "add_parent", "remove_parent"]

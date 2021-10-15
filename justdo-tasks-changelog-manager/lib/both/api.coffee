@@ -1,8 +1,8 @@
 _.extend TasksChangelogManager.prototype,
   getActivityMessage: (activity_obj) ->
-    performer_name = if activity_obj.by is Meteor.userId() then "You" else "#{JustdoHelpers.displayName(APP.helpers.getUsersDocsByIds activity_obj.by)}"
+    performer_name = if activity_obj.by == Meteor.userId() then "You" else "#{JustdoHelpers.displayName(APP.helpers.getUsersDocsByIds activity_obj.by)}"
 
-    if activity_obj.change_type is "created"
+    if activity_obj.change_type == "created"
       ret_val = "#{performer_name}"
 
       ret_val += " created the task"
@@ -10,7 +10,7 @@ _.extend TasksChangelogManager.prototype,
       creator_index = activity_obj.users_added.indexOf(activity_obj.by)
       if creator_index > -1
         users.splice(creator_index, 1)
-      if users.length is 0
+      if users.length == 0
         return ret_val + "."
 
       #list the first 3 users
@@ -19,17 +19,17 @@ _.extend TasksChangelogManager.prototype,
 
       for i in [1..users.length]
         if i > 1
-          if users.length >= i
-            if users.length is i
+          if users.length >=i
+            if users.length == i
               ret_val += " and"
             else
               ret_val += ","
-        if users[i-1] is Meteor.userId()
+        if users[i-1] == Meteor.userId()
           ret_val += " you"
         else
           ret_val += " #{JustdoHelpers.displayName(APP.helpers.getUsersDocsByIds users[i-1])}"
 
-        if i is 3 and users.length > 3
+        if i == 3 and users.length > 3
           ret_val += " and #{users.length-3} other user" #todo: add a tooltip or some other method to display all other users
           if users.length >4
             ret_val += "s"
@@ -80,11 +80,11 @@ _.extend TasksChangelogManager.prototype,
 
     if activity_obj.change_type == "add_parent"
       return parentChangeMsg(activity_obj, "add")
-
+    
     if activity_obj.change_type == "remove_parent"
       return parentChangeMsg(activity_obj, "remove")
 
-    if activity_obj.change_type is "users_change"
+    if activity_obj.change_type == "users_change"
       ret_val = "#{performer_name}"
 
       if activity_obj.users_added?
@@ -93,11 +93,11 @@ _.extend TasksChangelogManager.prototype,
           ret_val += "the following users:"
         for i in [1..activity_obj.users_added.length]
           if i > 1 and activity_obj.users_added.length >= i
-            if activity_obj.users_added.length is i
+            if activity_obj.users_added.length == i
               ret_val += " and"
             else
               ret_val +=","
-          if activity_obj.users_added[i-1] is Meteor.userId()
+          if activity_obj.users_added[i-1] == Meteor.userId()
             ret_val += " you"
           else
             ret_val += " #{JustdoHelpers.displayName(APP.helpers.getUsersDocsByIds activity_obj.users_added[i-1])}"
@@ -111,36 +111,36 @@ _.extend TasksChangelogManager.prototype,
           ret_val += "the following users:"
         for i in [1..activity_obj.users_removed.length]
           if i > 1 and activity_obj.users_removed.length >= i
-            if activity_obj.users_removed.length is i
+            if activity_obj.users_removed.length == i
               ret_val += " and"
             else
               ret_val +=","
-          if activity_obj.users_removed[i-1] is Meteor.userId()
+          if activity_obj.users_removed[i-1] == Meteor.userId()
             ret_val += " you"
           else
             ret_val += " #{JustdoHelpers.displayName(APP.helpers.getUsersDocsByIds activity_obj.users_removed[i-1])}"
 
       return ret_val + "."
 
-    if activity_obj.change_type is "unset"
+    if activity_obj.change_type == "unset"
       return "#{performer_name} cleared the task's #{JustdoHelpers.ucFirst(activity_obj.label)}."
 
-    if activity_obj.change_type is "priority_increased"
+    if activity_obj.change_type == "priority_increased"
       ret_val = "#{performer_name}"
 
       ret_val += " increased the task's priority (to #{activity_obj.new_value})."
       return ret_val
 
-    if activity_obj.change_type is "priority_decreased"
+    if activity_obj.change_type == "priority_decreased"
       ret_val = "#{performer_name}"
 
       ret_val += " decreased the task's priority (to #{activity_obj.new_value})."
       return ret_val
 
-    if activity_obj.change_type is "custom"
+    if activity_obj.change_type == "custom"
       return "#{performer_name} #{activity_obj.new_value}"
 
-    if activity_obj.field is "owner_id"
+    if activity_obj.field == "owner_id"
       if (user = JustdoHelpers.getUsersDocsByIds activity_obj.new_value)?
         return "#{JustdoHelpers.displayName(user)} became owner."
       return "Task owner changed."
@@ -154,7 +154,7 @@ _.extend TasksChangelogManager.prototype,
     getLabelFromFieldDefinition = ->
       label = JustdoHelpers.ucFirst(field_definition.label)
 
-      if field_definition.obsolete? and field_definition.obsolete is true
+      if field_definition.obsolete? and field_definition.obsolete == true
         label += " (removed field)"
 
       return label
@@ -169,7 +169,7 @@ _.extend TasksChangelogManager.prototype,
       return "#{performer_name} set #{getLabelFromFieldDefinition(field_definition)} to: #{new_value_txt_label}."
 
     # and the generic case:
-    if activity_obj.new_value.length is 0
+    if activity_obj.new_value.length == 0
       return "#{performer_name} cleared #{getLabelFromFieldDefinition(field_definition)}."
 
     new_value = activity_obj.new_value
@@ -178,7 +178,7 @@ _.extend TasksChangelogManager.prototype,
 
   getOldValueMessage: (activity_obj) ->
     old_value = activity_obj.old_value
-
+    
     if (old_value is null) or (old_value is "nil")
       return "empty"
 
