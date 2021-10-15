@@ -380,6 +380,17 @@ _.extend GridControl.prototype,
 
       return
 
+    @_grid.onViewUpdated.subscribe (e, performed_update) =>
+      # Note, not all the view changes will trigger this, e.g change of field width from the header
+      @once "grid-view-change", -> # grid-view-change will always be called following onViewUpdated
+        Meteor.defer => # Defer to allow the filters to take effect, in case that filters changed
+          # This one is mainly to bring back the row to the view following filters change
+          performed_update.ensureActiveCellKeptInViewPort()
+          return
+        return
+
+      return
+
     @_current_state_invalidation_protection_computation = Tracker.autorun =>
       @current_grid_tree_row.set(@_current_grid_tree_row.get())
       @current_path.set(@_current_path.get())

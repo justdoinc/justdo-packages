@@ -1276,6 +1276,46 @@ if (typeof Slick === "undefined") {
       // null: nothing changed.
       // true: header DOM had to be rebuilt
       // false: No DOM change
+
+      // Save the current scrollTop
+      var viewport_scroll_top = $viewport[0].scrollTop;
+      var viewport_bottom_position = viewport_scroll_top + $viewport.height();
+
+      // Find whether right now the activated row (if any) is visible on the viewport
+      var is_active_cell_in_viewport = false;
+      var active_cell_node = getActiveCellNode();
+      if (active_cell_node !== null) {
+        var $active_cell_node = $(active_cell_node);
+        var active_cell_top = $active_cell_node.position().top;
+        var active_cell_bottom = active_cell_top + $active_cell_node.height();
+
+        if (active_cell_bottom >= viewport_scroll_top && active_cell_top <= viewport_bottom_position) {
+          is_active_cell_in_viewport = true;
+        }
+      }
+
+      var ensureActiveCellKeptInViewPort = function () {
+        // If the active cell was in the viewport and now is outside the viewport
+        // bring it back to the viewport, to the same offset it been in before.
+        if (is_active_cell_in_viewport === true) {
+          var new_active_cell_node = getActiveCellNode();
+          if (new_active_cell_node !== null) {
+            var $new_active_cell_node = $(new_active_cell_node);
+            var new_active_cell_top = $new_active_cell_node.position().top;
+            var new_active_cell_bottom = new_active_cell_top + $new_active_cell_node.height();
+
+            var new_viewport_scroll_top = $viewport[0].scrollTop;
+            var new_viewport_bottom_position = new_viewport_scroll_top + $viewport.height();
+
+            if (new_active_cell_bottom < new_viewport_scroll_top || new_active_cell_top > new_viewport_bottom_position) {
+              var prev_offset = viewport_scroll_top - active_cell_top;
+
+              scrollTo(new_active_cell_top + prev_offset); // minus vals are taken care of by scrollTo
+            }
+          }
+        }
+      };
+
       var current_columns_definition = columns;
 
       // Apply defaults
@@ -1294,9 +1334,12 @@ if (typeof Slick === "undefined") {
       _.each(current_columns = _.map(current_columns_definition, _.clone), function(col) {delete col.previousWidth;});
       _.each(new_columns = _.map(columns_definition, _.clone), function(col) {delete col.previousWidth;});
 
-      // Check whether anything changed
+      // Check whether other than widths anything changed
       if (JustdoHelpers.jsonSortify(current_columns) == JustdoHelpers.jsonSortify(new_columns)) {
         logger.debug("setColumn: Nothing changed");
+
+        ensureActiveCellKeptInViewPort();
+        trigger(self.onViewUpdated, {header_rerendered: false, all_rows_invalidated: false, ensureActiveCellKeptInViewPort: ensureActiveCellKeptInViewPort});
 
         return null;
       }
@@ -1329,6 +1372,8 @@ if (typeof Slick === "undefined") {
           // Only filters updated, nothing to do in the SlickGrid level
           logger.debug("setColumn: Only filters updated");
 
+          ensureActiveCellKeptInViewPort();
+          trigger(self.onViewUpdated, {header_rerendered: false, all_rows_invalidated: false, ensureActiveCellKeptInViewPort: ensureActiveCellKeptInViewPort});
           return false; // false means header didn't rerender
         }
 
@@ -1340,7 +1385,7 @@ if (typeof Slick === "undefined") {
 
       if (initialized) {
         if (full_render_needed) {
-          invalidateAllRows();          
+          invalidateAllRows();
         }
 
         createColumnHeaders();
@@ -1351,6 +1396,11 @@ if (typeof Slick === "undefined") {
         applyColumnWidths();
         handleScroll();
       }
+
+      scrollTo(viewport_scroll_top);
+
+      ensureActiveCellKeptInViewPort();
+      trigger(self.onViewUpdated, {header_rerendered: true, all_rows_invalidated: full_render_needed, ensureActiveCellKeptInViewPort: ensureActiveCellKeptInViewPort});
 
       return true; // true means header rerender
     }
@@ -3845,6 +3895,7 @@ if (typeof Slick === "undefined") {
       "onDragEnd": new Slick.Event(),
       "onSelectedRowsChanged": new Slick.Event(),
       "onCellCssStylesChanged": new Slick.Event(),
+      "onViewUpdated": new Slick.Event(),
 
       // Methods
       "registerPlugin": registerPlugin,
