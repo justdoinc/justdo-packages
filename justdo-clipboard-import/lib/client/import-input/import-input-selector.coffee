@@ -107,7 +107,7 @@ Template.justdo_clipboard_import_input_selector.events
         $(".data-cell[data-col-index=#{col_index}]").each (row_index, data_cell) ->
           $data_cell = $(data_cell)
 
-          if (email_address = $data_cell.text()) and (JustdoHelpers.common_regexps.email.test email_address)
+          if (email_address = $data_cell.text().toLowerCase()) and (JustdoHelpers.common_regexps.email.test email_address)
             if (user_doc = Meteor.users.findOne {"emails.address": email_address}, {fields: JustdoHelpers.avatar_required_fields})
               clipboard_data[row_index][col_index] =
                 old_value: $data_cell.text()
