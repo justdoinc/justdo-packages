@@ -95,6 +95,13 @@ _.extend JustdoHelpers,
 
     return string.replace(/\n/g, "<br>")
 
+  br2nl: (string, options) ->
+    if typeof string != "string"
+      string = ""
+    if options.strip_trailing_br
+      string = string.replace(/(<br>)*$/g, "")
+    return string.replace(/<br>/g, "\n")
+
   getHtmlBodyContent: (html_str) ->
     # The first implementation was the following badly unoptimized regex:
     # return html_str.replace(/(.|[\r\n])*<body.*?>/i, "").replace(/<\/body>(.|[\r\n])*/i, "")
