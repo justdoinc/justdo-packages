@@ -55,11 +55,21 @@ Template.task_pane_task_changelog_record.helpers
 
     return JustdoHelpers.ucFirst @label
 
-  formatedValue: -> APP.tasks_changelog_manager.getActivityMessage @
-
-  involvesAnotherTask: ->
+  formatedValue: ->
     ops_involve_another_task = ["moved_to_task", "add_parent", "remove_parent"]
-    return ops_involve_another_task.includes @change_type
+    formatted_msg = APP.tasks_changelog_manager.getActivityMessage(@)
+
+    if ops_involve_another_task.includes @change_type
+      seqId_regex = new RegExp "#\\d+", "g"
+      seqIds_to_replace = formatted_msg.match seqId_regex
+
+      if @old_value? and @old_value isnt "0"
+        formatted_msg = formatted_msg.replace seqIds_to_replace.shift(), """<span class="has-parent" jd-tt="task-info?id=#{@old_value}&show-title=true">$&</span>"""
+
+      if @new_value isnt "0"
+        formatted_msg = formatted_msg.replace seqIds_to_replace.shift(), """<span class="has-parent" jd-tt="task-info?id=#{@new_value}&show-title=true">$&</span>"""
+
+    return formatted_msg
 
   # undo-able, not undoable.
   undoable: -> not @undo_disabled and (@old_value? or @old_value is null)

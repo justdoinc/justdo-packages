@@ -27,28 +27,15 @@
     <div class="record d-flex py-2">
       <div class="image mr-2 mt-1">{{#with changingUser}}{{> justdo_avatar}}{{/with}}</div>
       <div class="content">
-        {{#if involvesAnotherTask}}
-          <div class="data text-body has-parent {{#if undone}}undone{{/if}}" jd-tt="task-info?id={{new_value}}&show-title=true">
+        <div class="data text-body {{#if undone}}undone{{/if}}">
 
-            {{formatedValue}}
+          {{formatedValue}}
 
-            {{#if $and ($not undone) undoable}}
-              <span title="Undo change"><svg class="undo jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#rotate-ccw"/></svg></span>
-            {{/if}}
+          {{#if $and ($not undone) undoable}}
+            <span title="Undo change"><svg class="undo jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#rotate-ccw"/></svg></span>
+          {{/if}}
 
-          </div>
-
-        {{else}}
-          <div class="data text-body {{#if undone}}undone{{/if}}">
-
-            {{formatedValue}}
-
-            {{#if $and ($not undone) undoable}}
-              <span title="Undo change"><svg class="undo jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#rotate-ccw"/></svg></span>
-            {{/if}}
-
-          </div>
-        {{/if}}
+        </div>
 
         {{#if undoable}}
           <small class="date text-muted">
