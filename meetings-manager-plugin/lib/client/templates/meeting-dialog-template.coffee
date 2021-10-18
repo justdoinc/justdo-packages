@@ -176,10 +176,9 @@ Template.meetings_meeting_dialog.onCreated ->
         tasks_html += "</ul>"
 
       if meeting_task?.note?
-
         key = "12Q97yh66tryb5"
-        re =new RegExp(key,'g')
-        note = meeting_task.note.replace /\n/g, key
+        re = new RegExp(key,'g')
+        note = meeting_task.note.replace /<br>/g, key
         note = JustdoHelpers.xssGuard note, {allow_html_parsing: true, enclosing_char: ""}
         note = """<div dir="auto" class="print-meeting-mode-note">""" + note.replace(re, "</div><div dir='auto'>") + "</div>"
         tasks_html += "<i>" + note + "</i>"
@@ -189,9 +188,9 @@ Template.meetings_meeting_dialog.onCreated ->
     bottomNote = "None"
     if meeting.note?
       key = "12Q97yh66tryb5"
-      re =new RegExp(key,'g')
+      re = new RegExp(key,'g')
       bottomNote = meeting.note
-      bottomNote = bottomNote.replace /\n/g, key
+      bottomNote = bottomNote.replace /<br>/g, key
       bottomNote = JustdoHelpers.xssGuard bottomNote, {allow_html_parsing: true, enclosing_char: ""}
       bottomNote = "<div dir='auto' class='print-meeting-mode-note'>" + bottomNote.replace(re, "</div><div dir='auto'>") + "</div>"
 
