@@ -172,7 +172,7 @@ Template.meetings_meeting_dialog.onCreated ->
               user_id = task_obj.pending_owner_id
             user = Meteor.users.findOne user_id
             user_name = """<span class="mr-2">#{JustdoHelpers.xssGuard user.profile.first_name} #{JustdoHelpers.xssGuard user.profile.last_name},</span>"""
-          tasks_html += """<li>#{user_name} #{JustdoHelpers.xssGuard task_added.title}, <span class="bg-light border px-2 rounded mr-1">##{task_added.seqId}</span> </li>"""
+          tasks_html += """<li>#{user_name} #{JustdoHelpers.xssGuard task_added.title}, <span class="bg-light border px-2 rounded mr-1"><a href="#{JustdoHelpers.getTaskUrl(@project_id, task_added.task_id)}">##{task_added.seqId}</a></span> </li>"""
         tasks_html += "</ul>"
 
       if meeting_task?.note?
