@@ -99,8 +99,8 @@ Template.meetings_meeting_dialog.onCreated ->
       reader.onloadend = ->
         callback(reader.result);
       reader.readAsDataURL(xhr.response);
-    xhr.open('GET', url);
-    xhr.responseType = 'blob';
+    xhr.open("GET", url);
+    xhr.responseType = "blob";
     xhr.send();
 
   toDataURL "/layout/logos-ext/justdo_logo_with_text_normal.png", (data_url) =>
@@ -155,7 +155,7 @@ Template.meetings_meeting_dialog.onCreated ->
 
     #tasks:
     tasks_html = ""
-    tasks = _.sortBy meeting.tasks, 'task_order'
+    tasks = _.sortBy meeting.tasks, "task_order"
     for item in tasks
       tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><div class="font-weight-bold"><a href="#{JustdoHelpers.getTaskUrl(@project_id, item.task_id)}">##{item.seqId}: #{JustdoHelpers.xssGuard item.title}</a></div>"""
 
@@ -177,20 +177,20 @@ Template.meetings_meeting_dialog.onCreated ->
             tasks_html += "<br>Due date: #{moment(task_obj.due_date).format(JustdoHelpers.getUserPreferredDateFormat())}"
           if task_added.note?
             key = "12Q97yh66tryb5"
-            re = new RegExp(key,'g')
+            re = new RegExp(key,"g")
             note = "Notes: " + task_added.note.replace /<br>/g, key
             note = JustdoHelpers.xssGuard note, {allow_html_parsing: true, enclosing_char: ""}
-            note = "<div dir='auto' class='print-meeting-mode-note'>" + note.replace(re, "</div><div dir='auto'>") + "</div>"
+            note = """<div dir="auto" class="print-meeting-mode-note">""" + note.replace(re, """</div><div dir="auto">""") + "</div>"
             tasks_html += "<i>" + note + "</i>"
           tasks_html += "</li>"
         tasks_html += "</ul>"
 
       if meeting_task?.note?
         key = "12Q97yh66tryb5"
-        re = new RegExp(key,'g')
+        re = new RegExp(key,"g")
         note = meeting_task.note.replace /<br>/g, key
         note = JustdoHelpers.xssGuard note, {allow_html_parsing: true, enclosing_char: ""}
-        note = """<div dir="auto" class="print-meeting-mode-note">""" + note.replace(re, "</div><div dir='auto'>") + "</div>"
+        note = """<div dir="auto" class="print-meeting-mode-note">""" + note.replace(re, """</div><div dir="auto">""") + "</div>"
         tasks_html += "<i>" + note + "</i>"
 
       tasks_html += "</div>"
@@ -198,11 +198,11 @@ Template.meetings_meeting_dialog.onCreated ->
     bottomNote = "None"
     if meeting.note?
       key = "12Q97yh66tryb5"
-      re = new RegExp(key,'g')
+      re = new RegExp(key,"g")
       bottomNote = meeting.note
       bottomNote = bottomNote.replace /<br>/g, key
       bottomNote = JustdoHelpers.xssGuard bottomNote, {allow_html_parsing: true, enclosing_char: ""}
-      bottomNote = "<div dir='auto' class='print-meeting-mode-note'>" + bottomNote.replace(re, "</div><div dir='auto'>") + "</div>"
+      bottomNote = """<div dir="auto" class="print-meeting-mode-note">""" + bottomNote.replace(re, """</div><div dir="auto">""") + "</div>"
 
     meeting_date = "Date not set"
     if meeting.date?
@@ -268,13 +268,13 @@ Template.meetings_meeting_dialog.onCreated ->
       $(".print-meeting-mode-overlay").remove()
       $("html").removeClass "print-meeting"
 
-    img = document.querySelector('img.thead-logo')
+    img = document.querySelector("img.thead-logo")
     if img.complete
       printAndClean()
     else
-      img.addEventListener 'load', printAndClean
+      img.addEventListener "load", printAndClean
 
-    img.addEventListener 'error', printAndClean
+    img.addEventListener "error", printAndClean
 
   @copy_me = ->
     clipboard.copy
@@ -341,7 +341,7 @@ Template.meetings_meeting_dialog.onCreated ->
 
     ret+= "\n"
     ret += "Agenda:\n"
-    tasks = _.sortBy meeting.tasks, 'task_order'
+    tasks = _.sortBy meeting.tasks, "task_order"
     for item in tasks
       ret += "\n##{item.seqId}: #{item.title}\n"
 
@@ -355,16 +355,16 @@ Template.meetings_meeting_dialog.onCreated ->
           if (child_task_due_date = APP.collections.Tasks.findOne(task_added.task_id, {fields: due_date: 1}?.due_date))?
             ret += "Due date: #{moment(child_task_due_date).format(JustdoHelpers.getUserPreferredDateFormat())}\n"
           if (task_added.note?)
-            note = JustdoHelpers.br2nl(task_added.note, {strip_trailing_br: true}).replace(/<[^>]*>/g, '')
+            note = JustdoHelpers.br2nl(task_added.note, {strip_trailing_br: true}).replace(/<[^>]*>/g, "")
             ret += "Notes: #{note}\n"
 
       if meeting_task?.note?
-        note = JustdoHelpers.br2nl(meeting_task.note, {strip_trailing_br: true}).replace(/<[^>]*>/g, '')
+        note = JustdoHelpers.br2nl(meeting_task.note, {strip_trailing_br: true}).replace(/<[^>]*>/g, "")
         ret += "Notes:\n#{note}\n"
       ret += "\n"
 
     if meeting.note?
-      note = JustdoHelpers.br2nl(meeting.note, {strip_trailing_br: true}).replace(/<[^>]*>/g, '')
+      note = JustdoHelpers.br2nl(meeting.note, {strip_trailing_br: true}).replace(/<[^>]*>/g, "")
       ret += "General Meeting Notes:\n#{note}\n"
     return ret
 
@@ -399,7 +399,7 @@ Template.meetings_meeting_dialog.onRendered ->
     stop: (event, ui) ->
       Session.set "updateTaskOrder", true
 
-  @$(".meeting-time-wrapper").on 'shown.bs.dropdown', =>
+  @$(".meeting-time-wrapper").on "shown.bs.dropdown", =>
     $meeting_time_input = @$(".meeting-time-input")
     if _.isEmpty($meeting_time_input.val())
       use_am_pm = Meteor.user().profile.use_am_pm
@@ -427,11 +427,11 @@ Template.meetings_meeting_dialog.onRendered ->
     ,
       fields:
         tasks: 1
-    
+
     if not meeting?.tasks?
       return
 
-    tasks = _.sortBy meeting.tasks, 'task_order'
+    tasks = _.sortBy meeting.tasks, "task_order"
     # tasks = _.filter tasks, _.identity
 
     $meeting_tasks_list = $(".meeting-tasks-list")
@@ -670,13 +670,13 @@ Template.meetings_meeting_dialog.events
     tpl.refresh();
     return
 
-  'click .meeting-print' : (e, tmpl) ->
+  "click .meeting-print" : (e, tmpl) ->
     tmpl.print_me()
 
-  'click .meeting-email': (e, tmpl) ->
+  "click .meeting-email": (e, tmpl) ->
     tmpl.email_me()
 
-  'click .meeting-copy': (e, tmpl) ->
+  "click .meeting-copy": (e, tmpl) ->
     tmpl.copy_me()
     showSnackbar("Meeting details copied to clipboard.")
 
@@ -730,7 +730,7 @@ Template.meetings_meeting_dialog.events
 
 
 
-  'click .meeting-lock': (e, tmpl) ->
+  "click .meeting-lock": (e, tmpl) ->
     # Clear out any existing errors related to the locked status
     tmpl.form.validate("locked")
 
@@ -746,7 +746,7 @@ Template.meetings_meeting_dialog.events
         APP.meetings_manager_plugin.logger.error err
         showSnackbar(err.message)
 
-  'click .meeting-private': (e, tmpl) ->
+  "click .meeting-private": (e, tmpl) ->
     # Clear out any existing errors related to the locked status
     tmpl.form.validate("private")
 
@@ -763,7 +763,7 @@ Template.meetings_meeting_dialog.events
         showSnackbar(err.message)
 
 
-  'click .btn-publish-meeting': (e, tmpl) ->
+  "click .btn-publish-meeting": (e, tmpl) ->
     # Clear out any existing errors related to the locked status
     doc = tmpl.form.doc()
     tmpl.form.validate("status")
@@ -777,7 +777,7 @@ Template.meetings_meeting_dialog.events
         APP.meetings_manager_plugin.logger.error err
         showSnackbar(err.message)
 
-  'click .btn-start-meeting': (e, tmpl) ->
+  "click .btn-start-meeting": (e, tmpl) ->
     # Clear out any existing errors related to the locked status
     doc = tmpl.form.doc()
     tmpl.form.validate("status")
@@ -792,7 +792,7 @@ Template.meetings_meeting_dialog.events
         showSnackbar(err.message)
 
 
-  'click .btn-end-meeting': (e, tmpl) ->
+  "click .btn-end-meeting": (e, tmpl) ->
     # Clear out any existing errors related to the locked status
     doc = tmpl.form.doc()
     tmpl.form.validate("status")
@@ -832,12 +832,12 @@ Template.meetings_meeting_dialog.events
         JustdoSnackbar.close()
         return
 
-  'click .meeting-dialog-close': (e, tmpl) ->
+  "click .meeting-dialog-close": (e, tmpl) ->
     APP.meetings_manager_plugin.removeMeetingDialog()
 
   "keypress [name=\"note\"]": (e, tmpl) ->
     refresh = (target) ->
-        $(target).trigger 'change'
+        $(target).trigger "change"
 
     name = e.currentTarget.name
     tmpl._throttled_refresh = tmpl._throttled_refresh || {}
