@@ -352,6 +352,11 @@ Template.meetings_meeting_dialog.onCreated ->
         ret += "Child Tasks Added:\n"
         for task_added in meeting_task.added_tasks
           ret += "*#{task_added.title}, ##{task_added.seqId}\n"
+          if (child_task_due_date = APP.collections.Tasks.findOne(task_added.task_id, {fields: due_date: 1}?.due_date))?
+            ret += "Due date: #{moment(child_task_due_date).format(JustdoHelpers.getUserPreferredDateFormat())}\n"
+          if (task_added.note?)
+            note = JustdoHelpers.br2nl(task_added.note, {strip_trailing_br: true}).replace(/<[^>]*>/g, '')
+            ret += "Notes: #{note}"
 
       if meeting_task?.note?
         ret += "Notes:\n#{meeting_task.note.replace(/<[^>]*>/g, '')}\n"
