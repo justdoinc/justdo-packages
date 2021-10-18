@@ -359,12 +359,14 @@ Template.meetings_meeting_dialog.onCreated ->
             ret += "Notes: #{note}"
 
       if meeting_task?.note?
-        ret += "Notes:\n#{meeting_task.note.replace(/<[^>]*>/g, '')}\n"
+        note = JustdoHelpers.br2nl(meeting_task.note, {strip_trailing_br: true}).replace(/<[^>]*>/g, '')
+        ret += "Notes:\n#{note}\n"
       ret += "\n"
 
     if meeting.note?
-      ret += "General Meeting Notes:\n\n#{meeting.note.replace(/<[^>]*>/g, '')}\n"
-    return ret.replace /\n/g,"\n"
+      note = JustdoHelpers.br2nl(meeting.note, {strip_trailing_br: true}).replace(/<[^>]*>/g, '')
+      ret += "General Meeting Notes:\n\n#{note}\n"
+    return ret
 
   @email_me = ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
