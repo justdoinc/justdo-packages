@@ -172,7 +172,17 @@ Template.meetings_meeting_dialog.onCreated ->
               user_id = task_obj.pending_owner_id
             user = Meteor.users.findOne user_id
             user_name = """<span class="mr-2">#{JustdoHelpers.xssGuard user.profile.first_name} #{JustdoHelpers.xssGuard user.profile.last_name},</span>"""
-          tasks_html += """<li>#{user_name} #{JustdoHelpers.xssGuard task_added.title}, <span class="bg-light border px-2 rounded mr-1"><a href="#{JustdoHelpers.getTaskUrl(@project_id, task_added.task_id)}">##{task_added.seqId}</a></span> </li>"""
+          tasks_html += """<li>#{user_name} #{JustdoHelpers.xssGuard task_added.title}, <span class="bg-light border px-2 rounded mr-1"><a href="#{JustdoHelpers.getTaskUrl(@project_id, task_added.task_id)}">##{task_added.seqId}</a></span>"""
+          if task_obj.due_date?
+            tasks_html += "<br>Due date: #{moment(task_obj.due_date).format(JustdoHelpers.getUserPreferredDateFormat())}"
+          if task_added.note?
+            key = "12Q97yh66tryb5"
+            re = new RegExp(key,'g')
+            note = "Notes: " + task_added.note.replace /<br>/g, key
+            note = JustdoHelpers.xssGuard note, {allow_html_parsing: true, enclosing_char: ""}
+            note = "<div dir='auto' class='print-meeting-mode-note'>" + note.replace(re, "</div><div dir='auto'>") + "</div>"
+            tasks_html += "<i>" + note + "</i>"
+          tasks_html += "</li>"
         tasks_html += "</ul>"
 
       if meeting_task?.note?
