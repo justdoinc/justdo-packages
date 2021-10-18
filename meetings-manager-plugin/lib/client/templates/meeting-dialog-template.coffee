@@ -335,23 +335,23 @@ Template.meetings_meeting_dialog.onCreated ->
     for user_id in meeting.users
       user = Meteor.users.findOne user_id
       ret += "* #{user.profile.first_name} #{user.profile.last_name}\n"
-    
+
     if not _.isEmpty(meeting.other_attendees)
       ret += "* #{meeting.other_attendees}\n"
 
     ret+= "\n"
-    ret += "Agenda:\n\n"
+    ret += "Agenda:\n"
     tasks = _.sortBy meeting.tasks, 'task_order'
     for item in tasks
-      ret += "##{item.seqId}: #{item.title}\n"
+      ret += "\n##{item.seqId}: #{item.title}\n"
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
 
       if meeting_task?.added_tasks?.length > 0
-        ret += "Child Tasks Added:\n"
+        ret += "\nChild Tasks Added:\n"
         for task_added in meeting_task.added_tasks
-          ret += "*#{task_added.title}, ##{task_added.seqId}\n"
+          ret += "\n*#{task_added.title}, ##{task_added.seqId}\n"
           if (child_task_due_date = APP.collections.Tasks.findOne(task_added.task_id, {fields: due_date: 1}?.due_date))?
             ret += "Due date: #{moment(child_task_due_date).format(JustdoHelpers.getUserPreferredDateFormat())}\n"
           if (task_added.note?)
