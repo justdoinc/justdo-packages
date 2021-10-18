@@ -153,8 +153,6 @@ Template.meetings_meeting_dialog.onCreated ->
     if not _.isEmpty(meeting.other_attendees)
       attended_html += """<span class="mr-2">#{JustdoHelpers.xssGuard meeting.other_attendees}</span>"""
 
-    attended_html = attended_html.substring(0, attended_html.length - 8) + "</span>"
-
     #tasks:
     tasks_html = ""
     tasks = _.sortBy meeting.tasks, 'task_order'
