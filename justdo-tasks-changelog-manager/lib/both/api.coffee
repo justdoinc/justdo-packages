@@ -178,12 +178,12 @@ _.extend TasksChangelogManager.prototype,
 
   getHumanReadableOldValue: (activity_obj) ->
     old_value = activity_obj.old_value
-    
-    if (old_value is null) or (old_value is "nil")
+
+    if not old_value? or (old_value is null)
       return "empty"
 
     if not (schema = APP.modules.project_page.gridControl()?.getSchemaExtendedWithCustomFields(true))?
-      return "..."
+      return "..." # Loading
 
     field_definition = schema[activity_obj.field]
 

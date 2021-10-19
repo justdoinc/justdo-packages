@@ -86,7 +86,7 @@ _.extend PACK.builtin_trackers,
 
           performed_by = self._extractUpdatedByFromModifierOrFail(modifier)
 
-          old_value = doc[field] or null
+          old_value = doc[field] or null # We'll set to null if the field hasn't been set before.
 
           if old_value? and old_value is new_value
             # in this case there is no change in the new_value of the field.
