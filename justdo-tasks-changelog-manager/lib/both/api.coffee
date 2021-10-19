@@ -176,7 +176,7 @@ _.extend TasksChangelogManager.prototype,
 
     return "#{performer_name} set #{getLabelFromFieldDefinition(field_definition)} to: #{new_value}."
 
-  getOldValueMessage: (activity_obj) ->
+  getHumanReadableOldValue: (activity_obj) ->
     old_value = activity_obj.old_value
     
     if (old_value is null) or (old_value is "nil")

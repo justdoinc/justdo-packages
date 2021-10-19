@@ -3,10 +3,8 @@ _.extend TasksChangelogManager.prototype,
     self = @
 
     Meteor.methods
-      "undo": (activity_obj) ->
-        check activity_obj.by, String
-        check activity_obj._id, String
-        check activity_obj.change_type, String
+      "undoActivity": (activity_id) ->
+        check activity_id, String
 
         # Only allow the change maker to undo changes
         if activity_obj.by isnt @userId

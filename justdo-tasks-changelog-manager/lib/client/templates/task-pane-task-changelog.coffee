@@ -82,7 +82,7 @@ Template.task_pane_task_changelog_record.helpers
   # undo-able, not undoable.
   undoable: -> not @undo_disabled and (@old_value? or @old_value is null) and (@by is Meteor.userId())
 
-  oldValue: ->APP.tasks_changelog_manager.getOldValueMessage @
+  oldValue: -> APP.tasks_changelog_manager.getHumanReadableOldValue @
 
   filtered: ->
     # if the filter is off, nothing is filtered
@@ -95,4 +95,5 @@ Template.task_pane_task_changelog_record.helpers
 
 Template.task_pane_task_changelog_record.events
   "click .undo": (e, tpl) ->
-    APP.tasks_changelog_manager.undo @
+    APP.tasks_changelog_manager.undoActivity @
+    return

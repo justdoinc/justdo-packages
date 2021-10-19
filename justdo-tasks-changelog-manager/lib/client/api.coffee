@@ -11,7 +11,7 @@ _.extend TasksChangelogManager.prototype,
 
     return
 
-  undo: (activity_obj) ->
+  undoActivity: (activity_obj) ->
     # Operation: set the changed field to it's old value
     op =
       $set:
@@ -19,7 +19,7 @@ _.extend TasksChangelogManager.prototype,
 
     @tasks_collection.update activity_obj.task_id, op, (err, result) ->
       if not err?
-        Meteor.call "undo", activity_obj
+        Meteor.call "undoActivity", activity_obj
         return
 
       console.error err
