@@ -53,7 +53,7 @@ _.extend TasksChangelogManager.prototype,
     throw @_error "updated-by-missing"
 
   setupPseudoCustomFieldTrackedBySimpleTasksFieldsChangesTracker: (field, label) ->
-    @_pseudo_custom_fields_tracked_by_simple_tasks_fields_changes_tracker[field] = 
+    @_pseudo_custom_fields_tracked_by_simple_tasks_fields_changes_tracker[field] =
       label: label
 
     return
@@ -81,6 +81,8 @@ _.extend TasksChangelogManager.prototype,
     @changelog_collection.insert obj, (err) =>
       if err?
         @logger.error(err)
+
+    return
 
   destroy: ->
     if @destroyed
