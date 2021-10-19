@@ -15,3 +15,4 @@ _.extend TasksChangelogManager.prototype,
     _.extend {}, JustdoHelpers.common_errors_types,
       "by-field-required": "Every changelog item must include the `by` field"
       "updated-by-missing": "The updated_by field must be set for all tasks updates"
+      "permission-denied": "Permission denied"
