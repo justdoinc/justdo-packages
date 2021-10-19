@@ -19,9 +19,8 @@ _.extend TasksChangelogManager.prototype,
 
     @tasks_collection.update activity_obj.task_id, op, (err, result) ->
       if not err?
-        Meteor.call "undoActivity", activity_obj
+        Meteor.call "undoActivity", activity_obj._id
         return
-
       console.error err
       return
 

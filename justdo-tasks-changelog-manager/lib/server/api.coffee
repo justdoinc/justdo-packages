@@ -93,3 +93,19 @@ _.extend TasksChangelogManager.prototype,
     @logger.debug "Destroyed"
 
     return
+
+  undoActivity: (activity_log_id, performing_user_id) ->
+    changelog_obj = @changelog_collection.findOne activity_log_id, {fields: {change_type: 1, task_id: 1}}
+
+    task_users = @tasks_collection.findOne(changelog_obj.task_id, {fields: {users: 1}})?.users
+    if performing_user_id not in task_users
+      throw @_error "permission-denied", "Only task member can undo changes"
+
+    @changelog_collection.update activity_log_id,
+      $set:
+        undone: true
+        undone_on: new Date
+        undone_by: performing_user_id
+        change_type: changelog_obj.change_type
+
+    return
