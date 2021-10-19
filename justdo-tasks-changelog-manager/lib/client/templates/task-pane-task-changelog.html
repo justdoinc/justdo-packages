@@ -54,7 +54,7 @@
           <small class="date text-muted">
             Was: {{oldValue}}
             {{#if undone}}
-             - reverted on {{userDateFormat undone_on}}
+             <br>Reverted on {{userDateFormat undone_on}} by <span jd-tt="user-info?id={{undone_by}}">{{displayName undone_by}}</span>
             {{/if}}
             .
           </small>

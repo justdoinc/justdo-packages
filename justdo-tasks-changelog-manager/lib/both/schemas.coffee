@@ -48,9 +48,14 @@ _.extend TasksChangelogManager.prototype,
         optional: true
 
       undone_on:
-        label: "Undone time"
+        label: "Undone On"
         type: Date
         optional: true
+
+      undone_by:
+        label: "Undone By"
+        type: String
+        optional: true    
 
       users_added:
         label: "Users Added"
