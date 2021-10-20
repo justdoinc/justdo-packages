@@ -87,7 +87,9 @@ Template.global_activity_log_project_pane_project_activity.helpers
     if not getStatusFilterState()
       query.field = "status"
 
-    return APP.collections.JDGlobalChangelog.find(query, {sort: {when: -1}}).fetch()
+    logs = APP.collections.JDGlobalChangelog.find(query, {sort: {when: -1}}).fetch()
+
+    return TasksChangelogManager.getFilteredActivityLogByTime logs
 
   getActivityMessage: ->
     return JustdoHelpers.ellipsis(APP.tasks_changelog_manager.getActivityMessage(@), 150)
