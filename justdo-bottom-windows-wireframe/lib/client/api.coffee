@@ -12,6 +12,7 @@ _.extend BottomWindowsWireframe.prototype,
       return
 
     @extra_windows_btn_tpl_obj = null
+    @chat_windows_hide_btn = null
     @extra_windows_ids_rv = new ReactiveVar null, (a, b) -> JSON.stringify(a) == JSON.stringify(b)
                             # Will be null, if there are no extra windows that aren't showing due to insufficient space
                             # Will be an array of windows ids otherwise.
@@ -368,6 +369,8 @@ _.extend BottomWindowsWireframe.prototype,
     space_required_for_extra_windows_button_and_left_margin = 
       @options.width_between_windows_to_extra_windows_button + @options.extra_windows_button_width + @options.left_margin
 
+    chat_windows_hide_btn_show = false
+
     for window_arrangement_def, i in @_current_windows_arrangement
       {id, window_def} = window_arrangement_def
 
@@ -419,6 +422,43 @@ _.extend BottomWindowsWireframe.prototype,
     @_updateExtraWindows()
 
     @_ensureCorrectWindowsArrangement()
+
+    # Show chat_windows_hide_btn if there is an opened chat window
+    for window_arrangement_def in @_current_windows_arrangement
+      if window_arrangement_def.rendered_state == "open"
+        chat_windows_hide_btn_show = true
+        break
+
+    if chat_windows_hide_btn_show
+      @_renderChatWindowsHideBtn()
+    else
+      @_removeChatWindowsHideBtn()
+
+    return
+
+  _renderChatWindowsHideBtn: ->
+    $(".bottom-windows").removeClass "chats-hidden"
+
+    if not @chat_windows_hide_btn?
+      @chat_windows_hide_btn = $("""
+        <svg class="bottom-windows-hide bg-primary jd-c-pointer">
+          <use class="bottom-windows-hide-down" xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use>
+          <use class="bottom-windows-hide-up" xlink:href="/layout/icons-feather-sprite.svg#chevron-up"></use>
+        </svg>
+      """)
+      @$container.append @chat_windows_hide_btn
+
+      @chat_windows_hide_btn.on "click", ->
+        $(".bottom-windows").toggleClass "chats-hidden"
+
+        return
+
+    return
+
+  _removeChatWindowsHideBtn: ->
+    $(".bottom-windows-hide").remove()
+    @chat_windows_hide_btn = null
+    $(".bottom-windows").removeClass "chats-hidden"
 
     return
 
