@@ -170,6 +170,27 @@ _.extend GridControlCustomFields,
 
       return String
 
+  getFieldTypeForJSType: (js_type) ->
+    if js_type == String
+      return "string" # Note that "date", "calc" and "select" are also String
+    if _.isArray(js_type) and js_type[0] == String
+      return "strings_array"
+    else if js_type == Number
+      return "number"
+    else if _.isArray(js_type) and js_type[0] == Number
+      return "numbers_array"
+    else if js_type == Boolean
+      return "boolean"
+    else if _.isArray(js_type) and js_type[0] == Object
+      return "objects_array"
+    else
+      # We should never get here since custom_field_definition_schema won't pass validation if
+      # js_type isn't one of the above
+
+      console.warn "Uknown js_type #{js_type} provided to getFieldTypeForJSType"
+
+      return String
+
   getCleanCustomFieldsDefinitionAndDerivedSchema: (custom_fields_definitions) ->
     error = (type, message) ->
       message = "[grid-custom-fields] #{message}"
