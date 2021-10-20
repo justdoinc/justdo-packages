@@ -158,9 +158,9 @@ _.extend JustdoChatBottomWindowsManager.prototype,
       left_margin: 30
       open_window_width: 328
       min_window_width: 120
-      width_between_windows: 7
+      width_between_windows: 8
       width_between_windows_to_extra_windows_button: 10
-      extra_windows_button_width: 40
+      extra_windows_button_width: 35
 
       extra_windows_button_template: "chat_bottom_windows_extra_windows_button"
 
