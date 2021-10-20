@@ -103,7 +103,7 @@ Template.meetings_meeting_dialog.onCreated ->
     xhr.responseType = "blob";
     xhr.send();
 
-  toDataURL "/layout/logos-ext/justdo_logo_with_text_normal.png", (data_url) =>
+  toDataURL "/layout/logos-ext/justdo_logo_for_emails.png", (data_url) =>
     @logo_data_url = data_url
 
   
