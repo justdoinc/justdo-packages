@@ -213,7 +213,7 @@ _.extend JustdoResourcesAvailability.prototype,
       return (( (parseInt(to[0]) * 60) + (parseInt(to[1])) - parseInt(from[0]) * 60 - parseInt(from[1]) ) / 60)
     return 0
   
-  startToFinishForUser: (project_id_or_doc, user_id, start_date, amount, type, reverse=false)->
+  startToFinishForUser: (project_id_or_doc, user_id, start_date, amount, type)->
     check project_id_or_doc, Match.OneOf String, Object
     check user_id, String
     check start_date, String
@@ -226,8 +226,11 @@ _.extend JustdoResourcesAvailability.prototype,
 
     start_date = moment.utc(start_date)
     max_count = 10000
-
-    while true
+    
+    reverse = amount < 0
+    amount = Math.abs(amount)
+      
+    while amount > 0
       date = start_date.format("YYYY-MM-DD")
       is_holiday = false
 
@@ -247,10 +250,7 @@ _.extend JustdoResourcesAvailability.prototype,
         else if type == "hours"
           amount -= @_calculateUserDayAvailability justdo_level_data, user_level_data, start_date.day()
 
-      if amount > 0
-        start_date.add((if reverse then -1 else 1), 'days')
-      else
-        break
+      start_date.add((if reverse then -1 else 1), 'days')
 
       #should never happen, but just in case...
       max_count -= 1
@@ -261,8 +261,49 @@ _.extend JustdoResourcesAvailability.prototype,
     return start_date.format("YYYY-MM-DD")
   
   finishToStartForUser: (project_id_or_doc, user_id, start_date, amount, type) ->
-    return @startToFinishForUser project_id_or_doc, user_id, start_date, amount, type, true
+    return @startToFinishForUser project_id_or_doc, user_id, start_date, -amount, type
 
+  nextWorkingDayForUser: (project_id_or_doc, user_id, start_date, amount) ->
+    check project_id_or_doc, Match.OneOf String, Object
+    check user_id, String
+    check start_date, String
+    check amount, Number
+
+    {justdo_level_data, user_level_data} = @_getAvailabilityData project_id_or_doc, user_id
+
+    start_date = moment.utc(start_date)
+    max_count = 10000
+    
+    reverse = amount < 0
+    amount = Math.abs(amount)
+      
+    while amount > 0
+      start_date.add((if reverse then -1 else 1), 'days')
+
+      date = start_date.format("YYYY-MM-DD")
+      is_holiday = false
+
+      if not _.isEmpty user_level_data?.working_days
+        use_data = user_level_data
+      else
+        use_data = justdo_level_data
+
+      if user_level_data?.holidays? and (date in user_level_data.holidays) or \
+        justdo_level_data?.holidays and (date in justdo_level_data.holidays) or \
+        use_data?.working_days?[start_date.day()]?.holiday
+        is_holiday = true
+
+      if not is_holiday
+        amount -= 1
+
+      #should never happen, but just in case...
+      max_count -= 1
+      if max_count == 0
+        console.log "No working days for this user and justdo"
+        return null
+    
+    return start_date.format("YYYY-MM-DD")
+    
   getUserAvgWorkHoursPerDay: (user_id, project_id_or_doc) ->
     {justdo_level_data, user_level_data} = @_getAvailabilityData project_id_or_doc, user_id
     
