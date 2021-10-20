@@ -22,7 +22,7 @@ Template.task_pane_task_changelog.helpers
       allow_undefined_fields: true
 
     newer_log_exists = []
-    logs = TasksChangelogManager.getFilteredActivityLogByTime APP.collections.TasksChangelog.find(query, options).fetch()
+    logs = TasksChangelogManager.getFilteredActivityLogByTime APP.collections.TasksChangelog.find(query, options)
 
     _.map logs, (log) ->
       # Since the data is sorted by time, we store changed fields inside an array
