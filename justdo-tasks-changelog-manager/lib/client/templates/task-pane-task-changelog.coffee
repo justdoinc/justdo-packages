@@ -72,7 +72,7 @@ Template.task_pane_task_changelog_record.helpers
     return formatted_msg
 
   # undo-able, not undoable.
-  undoable: -> not @undo_disabled and (@old_value? or @old_value is null)
+  undoable: -> not @undo_disabled and (@old_value? or @old_value is null) and @change_type isnt "moved_to_task"
 
   oldValue: -> APP.tasks_changelog_manager.getHumanReadableOldValue @
 

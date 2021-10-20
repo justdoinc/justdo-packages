@@ -29,7 +29,7 @@
       <div class="content">
         <div class="data text-body {{#if undone}}undone{{/if}}">
 
-          {{formatedValue}}
+          {{{xssGuard formatedValue}}}
 
           {{#if $and ($not undone) undoable}}
             <span title="Undo change"><svg class="undo jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#rotate-ccw"/></svg></span>
