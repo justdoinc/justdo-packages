@@ -21,33 +21,17 @@ Template.task_pane_task_changelog.helpers
 
       allow_undefined_fields: true
 
-    logs = []
-    logs_time = {}
     newer_log_exists = []
+    logs = TasksChangelogManager.getFilteredActivityLogByTime APP.collections.TasksChangelog.find(query, options).fetch()
 
-    APP.collections.TasksChangelog.find(query, options).forEach (log) ->
-      log_type_id = "#{log.task_id}-#{log.field}-#{log.by}"
-      # If a field is changed by the same user within 2 mins, don't display that log.
-      if (newer_logs_time = logs_time[log_type_id])?
-        for newer_time in newer_logs_time
-          if moment(newer_time).diff(moment(log.when), "minute") < 2
-            return
-
-      if not logs_time[log_type_id]?
-        logs_time[log_type_id] = []
-
-      logs_time[log_type_id].push log.when
-
+    _.map logs, (log) ->
       # Since the data is sorted by time, we store changed fields inside an array
       # and only show undo button on the newest changelog of the same field.
       if newer_log_exists.includes log.field
         log.undo_disabled = true
       else
         newer_log_exists.push log.field
-
-      logs.push log
-
-      return
+      return log
 
     return logs
 
