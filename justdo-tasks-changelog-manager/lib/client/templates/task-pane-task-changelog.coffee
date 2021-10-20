@@ -64,10 +64,10 @@ Template.task_pane_task_changelog_record.helpers
       seqIds_to_replace = formatted_msg.match seqId_regex
 
       if @old_value? and @old_value isnt "0"
-        formatted_msg = formatted_msg.replace seqIds_to_replace.shift(), """<span class="has-parent" jd-tt="task-info?id=#{@old_value}&show-title=true">$&</span>"""
+        formatted_msg = formatted_msg.replace seqIds_to_replace.shift(), """<span jd-tt="task-info?id=#{@old_value}&show-title=true">$&</span>"""
 
       if @new_value isnt "0"
-        formatted_msg = formatted_msg.replace seqIds_to_replace.shift(), """<span class="has-parent" jd-tt="task-info?id=#{@new_value}&show-title=true">$&</span>"""
+        formatted_msg = formatted_msg.replace seqIds_to_replace.shift(), """<span jd-tt="task-info?id=#{@new_value}&show-title=true">$&</span>"""
 
     return formatted_msg
 
