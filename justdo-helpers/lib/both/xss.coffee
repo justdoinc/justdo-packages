@@ -110,6 +110,7 @@ _.extend JustdoHelpers,
         'id'
         'dir'
         'title'
+        'jd-tt'
       ]
       use: [
         'href'
