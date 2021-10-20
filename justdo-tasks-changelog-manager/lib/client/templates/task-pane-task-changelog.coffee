@@ -24,14 +24,14 @@ Template.task_pane_task_changelog.helpers
     newer_log_exists = []
     logs = TasksChangelogManager.getFilteredActivityLogByTime APP.collections.TasksChangelog.find(query, options)
 
-    _.map logs, (log) ->
+    logs.forEach (log) ->
       # Since the data is sorted by time, we store changed fields inside an array
       # and only show undo button on the newest changelog of the same field.
-      if newer_log_exists.includes log.field
+      if log.field in newer_log_exists and not log.undone
         log.undo_disabled = true
       else
         newer_log_exists.push log.field
-      return log
+      return
 
     return logs
 
