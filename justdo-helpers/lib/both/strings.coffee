@@ -99,9 +99,9 @@ _.extend JustdoHelpers,
     if typeof string != "string"
       string = ""
 
-    string = string.replace(/<br *\/?>/g, "\n")
+    string = string.replace(/<br\s*\/?\s*>/g, "\n")
 
-    if options.strip_trailing_br
+    if options?.strip_trailing_br
       string = string.trimEnd()
 
     return string
