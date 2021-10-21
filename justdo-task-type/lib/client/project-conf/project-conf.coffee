@@ -21,7 +21,11 @@ Template.justdo_task_type_project_config.helpers
     return JustdoTaskType.plugin_human_readable_name
 
   showConfig: ->
-    return not JustdoTaskType.plugin_integral_part_of_justdo
+    # The AND clause is to only allow disabling the plugin where it was already installed
+    # following a decision to wait with making this plugin available under our general release
+    # See task: #11776: Don't allow enabling the Task Type plugin from the JustDo settings
+    # (allow only deselect where it is already enabled)
+    return (not JustdoTaskType.plugin_integral_part_of_justdo) and curProj().isCustomFeatureEnabled(module_id)
 
 Template.justdo_task_type_project_config.events
   "click .project-conf-justdo-task-type-config": ->
