@@ -65,11 +65,11 @@ _.extend TasksChangelogManager.prototype,
           # No task title is added for both tasks since the message template is already roughly 50 chars long,
           # which is approaching the current ellipsis limit 53 chars.
           if old_parent?
-            ret_val = "#{performer_name} transferred the task from task ##{old_parent.seqId} to task ##{task.seqId}."
+            ret_val = "#{performer_name} transferred from ##{old_parent.seqId} to ##{task.seqId}."
             return ret_val
 
         # Otherwise we only show seqId of the new parent, and add its title
-        ret_val = "#{performer_name} #{op_name} the task #{if op is "remove" then "from" else "to"} task ##{task.seqId}"
+        ret_val = "#{performer_name} #{op_name} #{if op is "remove" then "from" else "to"} ##{task.seqId}"
         if task.title?
           ret_val = "#{ret_val} #{task.title}"
         if ret_val.length > TasksChangelogManager.task_name_ellipsis_words

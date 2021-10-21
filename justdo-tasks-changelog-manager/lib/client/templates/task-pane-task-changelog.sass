@@ -13,7 +13,14 @@
       font-size: 15px
       overflow: hidden
       text-overflow: ellipsis
-  [jd-tt]:hover
+  [jd-tt]
     text-decoration: underline
+    text-decoration-style: dotted
+    text-decoration-color: #aaa
+    text-decoration-thickness: from-font
+    cursor: default
+    &:hover
+      text-decoration-color: #fff
+      text-decoration: underline
   .undone
     text-decoration: line-through
