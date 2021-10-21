@@ -56,10 +56,9 @@ Template.task_pane_task_changelog_record.helpers
     return JustdoHelpers.ucFirst @label
 
   formatedValue: ->
-    ops_involve_another_task = ["moved_to_task", "add_parent", "remove_parent"]
     formatted_msg = APP.tasks_changelog_manager.getActivityMessage(@)
 
-    if ops_involve_another_task.includes @change_type
+    if @change_type in TasksChangelogManager.ops_involve_another_task 
       seqId_regex = new RegExp "#\\d+", "g"
       seqIds_to_replace = formatted_msg.match seqId_regex
 
@@ -72,7 +71,7 @@ Template.task_pane_task_changelog_record.helpers
     return formatted_msg
 
   # undo-able, not undoable.
-  undoable: -> not @undo_disabled and (@old_value? or @old_value is null) and @change_type isnt "moved_to_task"
+  undoable: -> not @undo_disabled and (@old_value? or @old_value is null) and @change_type not in TasksChangelogManager.not_undoable_ops
 
   oldValue: -> APP.tasks_changelog_manager.getHumanReadableOldValue @
 
