@@ -98,9 +98,13 @@ _.extend JustdoHelpers,
   br2nl: (string, options) ->
     if typeof string != "string"
       string = ""
+
+    string = string.replace(/<br *\/?>/g, "\n")
+
     if options.strip_trailing_br
-      string = string.replace(/(<br>)*$/g, "")
-    return string.replace(/<br>/g, "\n")
+      string = string.trimEnd()
+
+    return string
 
   getHtmlBodyContent: (html_str) ->
     # The first implementation was the following badly unoptimized regex:
