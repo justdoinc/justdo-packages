@@ -77,6 +77,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/core-tooltips/task-info/task-info.sass", client);
   api.addFiles("lib/client/core-tooltips/task-info/task-info.coffee", client);
 
+  api.addFiles("lib/client/core-tooltips/html-tooltip/html-tooltip.html", client);
+  api.addFiles("lib/client/core-tooltips/html-tooltip/html-tooltip.sass", client);
+  api.addFiles("lib/client/core-tooltips/html-tooltip/html-tooltip.coffee", client);
+
   api.addFiles("lib/client/core-tooltips/user-info/user-info.html", client);
   api.addFiles("lib/client/core-tooltips/user-info/user-info.sass", client);
   api.addFiles("lib/client/core-tooltips/user-info/user-info.coffee", client);
