@@ -109,6 +109,20 @@ _.extend GridControlCustomFields,
 
       optional: true
 
+    grid_column_custom_value_generator:
+      type: Function
+
+      blackbox: true
+
+      optional: true
+
+    grid_column_custom_storage_mechanism:
+      type: Function
+
+      blackbox: true
+
+      optional: true
+
     grid_column_formatter_options:
       type: Object
 
@@ -241,6 +255,12 @@ _.extend GridControlCustomFields,
 
       if (default_frozen_column = custom_field_definition.default_frozen_column)?
         custom_field_schema.grid_default_frozen_column = default_frozen_column
+
+      if (grid_column_custom_value_generator = custom_field_definition.grid_column_custom_value_generator)?
+        custom_field_schema.grid_column_custom_value_generator = grid_column_custom_value_generator
+
+      if (grid_column_custom_storage_mechanism = custom_field_definition.grid_column_custom_storage_mechanism)?
+        custom_field_schema.grid_column_custom_storage_mechanism = grid_column_custom_storage_mechanism
 
       if (decimal = custom_field_definition.decimal)?
         custom_field_schema.decimal = decimal
