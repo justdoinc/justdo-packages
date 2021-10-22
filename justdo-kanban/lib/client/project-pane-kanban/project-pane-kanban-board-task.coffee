@@ -15,9 +15,22 @@ Template.project_pane_kanban_board_task.onRendered ->
   $(".kanban-board").droppable
     accept: ".kanban-task"
     drop: (e, ui) ->
+      update_board = true
+
       data = Blaze.getData(e.target)
       task_id = Blaze.getData(ui.draggable[0])._id
-      JD.collections.Tasks.update({_id: task_id}, {$set: {"#{data.active_board_field_id_rv}": data.board_value_id}})
+
+      board_tasks = $(@).find(".kanban-task")
+
+      # No need to update the board if the task dropped to the same board
+      for task in board_tasks
+        if Blaze.getData(task)._id == task_id
+          update_board = false
+          break
+
+      if update_board
+        JD.collections.Tasks.update({_id: task_id}, {$set: {"#{data.active_board_field_id_rv}": data.board_value_id}})
+
       return
 
   return
