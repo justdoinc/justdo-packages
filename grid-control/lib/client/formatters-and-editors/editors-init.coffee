@@ -204,6 +204,12 @@ base_slick_grid_editors_prototype =
     #
     # Will return undefined if it isn't set
 
+    if (valueGenerator = @context.schema.grid_column_custom_value_generator)?
+      # We use getFriendlyArgsForDocFieldAndPath and not getFriendlyCellArgs since the field might not be inside the grid (might be in the More Info section of the Task pane)
+      friendly_args = @context.grid_control.getFriendlyArgsForDocFieldAndPath(@context.item, @context.field_name, Tracker.nonreactive => @context.grid_control.getCurrentPath())
+
+      return valueGenerator(friendly_args)
+
     return @preEditDocValueTransformation(@getEditorDoc()[@getEditorFieldName()])
 
   callFormatter: (formatter_name) ->

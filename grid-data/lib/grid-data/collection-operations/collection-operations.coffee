@@ -5,7 +5,7 @@ _.extend GridData.prototype,
   getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
 
   edit: (edit_req) ->
-    [row, cell, grid, item] = [edit_req.row, edit_req.cell, edit_req.grid, edit_req.item]
+    {row, cell, grid, item} = edit_req
 
     item_id = item._id
 

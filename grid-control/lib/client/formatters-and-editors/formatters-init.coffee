@@ -431,6 +431,8 @@ print_formatters_extended_context_properties =
 
     schema = @getSchemaExtendedWithCustomFields()[field]
 
+    formatter_options = schema?.grid_column_formatter_options or {}
+
     args =
       # See notes on self in slick_grid_formatters_extended_context_properties
       self: @
@@ -440,7 +442,8 @@ print_formatters_extended_context_properties =
       value: doc[field]
       path: path
 
-      options: schema?.grid_column_formatter_options or {}
+      options: formatter_options # DEPRECATED
+      formatter_options: formatter_options # options should be considered deprecated
 
       schema: schema
 
@@ -455,6 +458,9 @@ print_formatters_extended_context_properties =
       # getFriendlyArgs
       formatter_obj: PACK.Formatters[@formatter_name]
 
+    if (valueGenerator = schema?.grid_column_custom_value_generator)?
+      args.value = valueGenerator(args)
+      
     return args
 
   getRealSchema: ->

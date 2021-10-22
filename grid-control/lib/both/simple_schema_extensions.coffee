@@ -65,6 +65,27 @@ SimpleSchema.extendOptions
   # Note that a field can't be frozen if the field before it isn't frozen
   grid_default_frozen_column: Match.Optional(Boolean)
 
+  # grid_column_custom_value_generator:
+  #
+  # If present, expected to be a function that receives as its first parameter the same
+  # output returned by grid formatter's @getFriendlyArgs(). The value returned by it, will
+  # be used by the field's grid/print formatters and the field editor as if it was the value
+  # stored in the DB for the field.
+  grid_column_custom_value_generator: Match.Optional(Function)
+
+  # grid_column_custom_storage_mechanism:
+  #
+  # If present, expected to be a function that receives as its first parameter the same
+  # output returned by grid formatter's @getFriendlyArgs(), the second parameter the
+  # serialized value needs to be stored.
+  #
+  # It is expected to perform a save to a storage. The storage can be anything, remote
+  # API, custom field of the underlying grid's collection, local storage - any use case
+  # required.
+  #
+  # Should return false if the procedure failed.
+  grid_column_custom_storage_mechanism: Match.Optional(Function)
+
   # grid_fixed_size_column:
   #
   # If true, the provided grid_default_width will be used as the fixed width size of the column, the user

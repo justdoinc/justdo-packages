@@ -350,7 +350,23 @@ _.extend GridControl.prototype,
       console.error @_error "edit-failed", err
 
     @_grid.onCellChange.subscribe (e, edit_req) =>
-      @_grid_data.edit(edit_req)
+      edited_item = edit_req.item # This item object will have the edited field with the new value
+
+      current_item = this._grid_data.grid_tree[edit_req.row][0]
+      path = this._grid_data.grid_tree[edit_req.row][2]
+
+      field_id = @getCellField(edit_req.cell)
+
+      friendly_args = @getFriendlyArgsForDocFieldAndPath(current_item, field_id, path)
+
+      # Note this isn't the only place where we respect customStorageMechanism
+      # search for grid_column_custom_storage_mechanism to find other places if
+      # you change anything
+      if (customStorageMechanism = friendly_args.schema.grid_column_custom_storage_mechanism)?
+        if not customStorageMechanism(friendly_args, edited_item[field_id])
+          @_grid.updateCell(edit_req.row, edit_req.cell, true)
+      else
+        @_grid_data.edit(edit_req)
 
       return
 
@@ -1926,10 +1942,19 @@ _.extend GridControl.prototype,
       if destroyed
         return
 
-      if editor.isValueChanged()
+      if not editor.isValueChanged()
+        return
+
+      serialize_value = editor.serializeValue()
+
+      if (customStorageMechanism = editor.context.schema.grid_column_custom_storage_mechanism)?
+        friendly_args = @getFriendlyArgsForDocFieldAndPath(editor.context.item, editor.context.field_name, Tracker.nonreactive => editor.context.grid_control.getCurrentPath())
+        if not customStorageMechanism(friendly_args, serialize_value)
+          reloadEditorValueFromMinimongo()
+      else
         update = {$set: {}}
 
-        update.$set[field_id] = editor.serializeValue()
+        update.$set[field_id] = serialize_value
 
         if (items_updated_count = @collection.update(item_id, update)) == 0
           reloadEditorValueFromMinimongo()
@@ -2119,6 +2144,9 @@ _.extend GridControl.prototype,
       # inheritence (see unicode_date as a usage example)
       formatter_obj: PACK.Formatters[@formatter_name]
 
+    if (valueGenerator = schema?.grid_column_custom_value_generator)?
+      friendly_args.value = valueGenerator(friendly_args)
+
     return friendly_args
 
   getFriendlyArgsForDocFieldAndPath: (doc, field, path) ->
@@ -2162,6 +2190,9 @@ _.extend GridControl.prototype,
       # only to keep orginzation but to allow formatters
       # inheritence (see unicode_date as a usage example)
       formatter_obj: PACK.Formatters[@formatter_name]
+
+    if (valueGenerator = schema?.grid_column_custom_value_generator)?
+      friendly_args.value = valueGenerator(friendly_args)
 
     return friendly_args
 

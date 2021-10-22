@@ -1299,7 +1299,15 @@ if (typeof Slick === "undefined") {
         // bring it back to the viewport, to the same offset it been in before.
         if (is_active_cell_in_viewport === true) {
           var new_active_cell_node = getActiveCellNode();
-          if (new_active_cell_node !== null) {
+
+          if (typeof new_active_cell_node !== "undefined" && new_active_cell_node !== null && typeof activeRow !== "undefined" && activeRow !== null) {
+            // If the cell got cleared up (e.g. if we edited a cell and immediately after hided its column),
+            // getActiveCellNode() will return undefined, in such a case, use the first cell in the same row,
+            // if the row is still selected.
+            new_active_cell_node = getCellNode(activeRow, 0);
+          }
+          
+          if (typeof new_active_cell_node !== "undefined" && new_active_cell_node !== null) {
             var $new_active_cell_node = $(new_active_cell_node);
             var new_active_cell_top = $new_active_cell_node.position().top;
             var new_active_cell_bottom = new_active_cell_top + $new_active_cell_node.height();
