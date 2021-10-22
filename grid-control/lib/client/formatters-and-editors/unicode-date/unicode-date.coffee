@@ -120,7 +120,8 @@ GridControl.installFormatter "unicodeDateFormatter",
   # Formatters
   #
   slick_grid: ->
-    {formatter_obj, value} = @getFriendlyArgs()
+    friendly_args = @getFriendlyArgs()
+    {formatter_obj, value, formatter_options} = friendly_args
 
     # We can't tell for sure whether slickGridColumnStateMaintainer is the
     # only one to affect the column cache, therefore, we don't rely on it
@@ -158,9 +159,24 @@ GridControl.installFormatter "unicodeDateFormatter",
           </div>
         """
 
+    custom_classes = ""
+    if (customClasses = friendly_args.formatter_options?.customClasses)
+      custom_classes = customClasses(friendly_args) or ""
+
+    html_comment = undefined
+    if (htmlCommentGenerator = friendly_args.formatter_options?.htmlCommentGenerator)
+      html_comment = htmlCommentGenerator(friendly_args)
+
+      if not _.isString(html_comment) or html_comment.trim() == ""
+        html_comment = undefined
+
+    comment_jd_tt = ""
+    if html_comment?
+       comment_jd_tt = """ jd-tt="html?tt-pos_my=left%20top&tt-pos_at=right%2B2px%20top&html=#{encodeURIComponent(html_comment)}" """
+
     formatter = """
-      <div class="grid-formatter uni-date-formatter">
-        #{formatter_content}#{formatter_buttons}
+      <div class="grid-formatter uni-date-formatter #{custom_classes}"#{comment_jd_tt}>
+        #{formatter_content}#{formatter_buttons}#{if html_comment? then """<div class="comment-indicator">◥</div>""" else ""}
       </div>
     """
 
