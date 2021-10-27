@@ -72,8 +72,6 @@ _.extend TasksChangelogManager.prototype,
         ret_val = "#{performer_name} #{op_name} #{if op is "remove" then "from" else "to"} ##{task.seqId}"
         if task.title?
           ret_val = "#{ret_val} #{task.title}"
-        if ret_val.length > TasksChangelogManager.task_name_ellipsis_words
-          ret_val = ret_val.substring(0,TasksChangelogManager.task_name_ellipsis_words - 3) + "..."
         if ret_val.slice(-1) != "."
           ret_val += "."
         return ret_val
