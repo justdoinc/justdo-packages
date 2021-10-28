@@ -441,7 +441,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     APP.justdo_clipboard_import.middlewares_queue_sync.run "pre-undo-import", paths_to_remove
 
     APP.modules.project_page.gridControl()._grid_data.bulkRemoveParents paths_to_remove, (err) ->
-      if err?
+      if err? and err.error != "unknown-path"
         if trials == 0
           undoImport 1  # Try again just in case the client database are not updated fast enough
         else
