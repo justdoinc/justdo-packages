@@ -700,7 +700,9 @@ _.extend JustdoPrintGrid.prototype,
           svg_elements = $cloned_tab.find("svg")
 
           for svg in svg_elements
-            svg_id = $(svg).find("use").attr("xlink:href").split("#")[1]
+            if not (svg_id = $(svg).find("use").attr("xlink:href")?.split("#")[1])?
+              continue
+            
             svg_icon = null
 
             if svg_id == "minus"
