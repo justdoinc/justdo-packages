@@ -13,7 +13,7 @@
 
 <template name="chat_bottom_windows_extra_windows_button_item">
   <li class="dropdown-item d-flex align-items-center px-1">
-    <div class="window-title flex-grow-1">{{{xssGuard title}}}</div>
+    <div class="window-title flex-grow-1" title="{{removeHtml title}}">{{{xssGuard title}}}</div>
     <div class="close-window">
       <svg class="close-window-icon jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
     </div>

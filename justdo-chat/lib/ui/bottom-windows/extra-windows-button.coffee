@@ -15,6 +15,9 @@ Template.chat_bottom_windows_extra_windows_button_item.events
 
     return
 
+Template.chat_bottom_windows_extra_windows_button_item.helpers
+  removeHtml: (val) -> return val.replace(/<.*?>/g, "")
+
 Template.chat_bottom_windows_extra_windows_button_item.onDestroyed =>
   # If the chat-extra-windows-button is shown, update its position upon removal
   $(".chat-extra-windows-button.show .chat-extra-windows-icon").dropdown("update")
