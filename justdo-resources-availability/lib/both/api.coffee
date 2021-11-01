@@ -230,7 +230,7 @@ _.extend JustdoResourcesAvailability.prototype,
     reverse = amount < 0
     amount = Math.abs(amount)
       
-    while amount > 0
+    while true
       date = start_date.format("YYYY-MM-DD")
       is_holiday = false
 
@@ -250,7 +250,10 @@ _.extend JustdoResourcesAvailability.prototype,
         else if type == "hours"
           amount -= @_calculateUserDayAvailability justdo_level_data, user_level_data, start_date.day()
 
-      start_date.add((if reverse then -1 else 1), 'days')
+      if amount > 0
+        start_date.add((if reverse then -1 else 1), 'days')
+      else
+        break
 
       #should never happen, but just in case...
       max_count -= 1
