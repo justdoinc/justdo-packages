@@ -6,7 +6,7 @@ loadSavedImportConfig = (tpl) ->
     #     $(".import-row-checkbox[row-index=#{row_index}]").click()
     if ({cols} = saved_import_config)?
       $(".justdo-clipboard-import-input-selector").each (i) ->
-        $(this).find("a[field-id=#{cols[i]}]").click()
+        $(this).find("a[field-id='#{cols[i]}']").click()
   return
 
 bindTargetToPaste = (tpl)->
