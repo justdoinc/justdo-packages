@@ -5,6 +5,8 @@ non_sorted_field_ids = [
   "start_date"
   "end_date"
   "due_date"
+  "jpu:basket_start_date_formatter" # These two are relevant only when the Gantt is enabled, they are kept here just to have them high on the selection, they will clear out if the gantt is disabled
+  "jpu:basket_end_date_formatter"
 ]
 base_supported_fields_ids = [
   "owner_id"
@@ -75,7 +77,7 @@ getAvailableFieldTypes = ->
     # (E.g when the gantt is on we replace the built-in start_date/end_date with more sophisticated
     # fields, when we do that, we disable the start_date/end_date fields)
 
-    if all_fields[field_id].grid_editable_column
+    if all_fields[field_id]?.grid_editable_column
       return true
 
     return false
