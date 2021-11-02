@@ -48,6 +48,9 @@ APP.executeAfterAppLibCode ->
 
       additional_fields = []
       for field_id in fields_missing_from_view
+        if extended_schema[field_id].grid_more_info_visible_column is false
+          continue
+        
         additional_field = 
           field_id: field_id
           label: extended_schema[field_id].label

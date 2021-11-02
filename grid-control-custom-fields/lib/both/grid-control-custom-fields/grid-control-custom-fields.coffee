@@ -70,6 +70,20 @@ _.extend GridControlCustomFields,
 
       optional: true
 
+    grid_more_info_visible_column:
+      type: Boolean
+
+      defaultValue: true
+
+      optional: true
+
+    grid_printable_column:
+      type: Boolean
+
+      defaultValue: true
+
+      optional: true
+
     grid_editable_column:
       type: Boolean
 
@@ -237,6 +251,12 @@ _.extend GridControlCustomFields,
       
       if custom_field_definition.blackbox == true
         custom_field_schema.blackbox = true
+
+      if (grid_more_info_visible_column = custom_field_definition.grid_more_info_visible_column)?
+        custom_field_schema.grid_more_info_visible_column = grid_more_info_visible_column
+
+      if (grid_printable_column = custom_field_definition.grid_printable_column)?
+        custom_field_schema.grid_printable_column = grid_printable_column
 
       if (grid_column_formatter_options = custom_field_definition.grid_column_formatter_options)?
         custom_field_schema.grid_column_formatter_options = grid_column_formatter_options

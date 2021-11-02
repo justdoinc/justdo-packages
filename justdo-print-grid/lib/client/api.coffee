@@ -364,6 +364,9 @@ _.extend JustdoPrintGrid.prototype,
         schema = gc.getSchemaExtendedWithCustomFields()
         for property of schema
           if schema[property]?.grid_visible_column == true
+            if schema[property]?.grid_printable_column is false
+              continue
+              
             label = schema[property].label
             checked_attr = checkVisibility(property)
             li += """<li>
