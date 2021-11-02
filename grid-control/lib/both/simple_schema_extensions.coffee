@@ -9,6 +9,20 @@ SimpleSchema.extendOptions
   # If undefined considered as false
   grid_visible_column: Match.Optional(Boolean)
 
+  # grid_more_info_visible_column:
+  #
+  # If false the field won't show in the More Info section.
+  #
+  # If undefined considered as true; if grid_visible_column is false this option is ignored
+  grid_more_info_visible_column: Match.Optional(Boolean)
+
+  # grid_printable_column:
+  #
+  # If false it won't be possible to add that column in the print/export wizard.
+  #
+  # If undefined considered as true; if grid_visible_column is false this option is ignored
+  grid_printable_column: Match.Optional(Boolean)
+
   # grid_editable_column:
   #
   # If true, allow editing this field using slick grid editor 
