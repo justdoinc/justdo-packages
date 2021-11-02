@@ -239,6 +239,11 @@ _.extend JustdoPrintGrid.prototype,
       # Getting cols from getView
       cols = gc.getView()
 
+      schema = gc.getSchemaExtendedWithCustomFields()
+
+      # Don't include fields that aren't printable
+      cols = cols.filter (col_def) -> schema[col_def.field]?.grid_printable_column isnt false
+
       # Function to get English state name
       states = gc.schema.state.grid_values
 
