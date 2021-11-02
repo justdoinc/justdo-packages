@@ -299,6 +299,7 @@ _.extend GridControlCustomFields,
 
         if not custom_field_schema.grid_visible_column
           custom_field_schema.grid_column_formatter = null
+          formatter_type = null
         else
           if not (formatter_type = custom_field_definition.formatter)?
             if custom_field_definition.field_type == "select"
