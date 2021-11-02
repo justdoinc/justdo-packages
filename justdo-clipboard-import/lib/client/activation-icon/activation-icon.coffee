@@ -25,7 +25,15 @@ getDefaultDateFormat = ->
   return JustdoHelpers.getUserPreferredDateFormat()
 
 isDateFieldDef = (field_def) ->
-  return field_def.grid_column_formatter == "unicodeDateFormatter"
+  date_formatters = ["unicodeDateFormatter"]
+
+  if field_def.grid_column_formatter in date_formatters
+    return true
+
+  if (original_extended_formatter_name = GridControl.Formatters[field_def.grid_column_formatter]?.original_extended_formatter_name)? and original_extended_formatter_name in date_formatters
+    return true
+
+  return false
 
 saveImportConfig = (selected_columns_definitions) ->
   storage_key = getLocalStorageKey()
@@ -62,10 +70,24 @@ getAvailableFieldTypes = ->
   supported_fields_ids = base_supported_fields_ids.slice()
   all_fields = gc.getSchemaExtendedWithCustomFields()
 
+  supported_fields_ids = supported_fields_ids.filter (field_id) ->
+    # Remove from base_supported_fields_ids all those fields that aren't editable any longer.
+    # (E.g when the gantt is on we replace the built-in start_date/end_date with more sophisticated
+    # fields, when we do that, we disable the start_date/end_date fields)
+
+    if all_fields[field_id].grid_editable_column
+      return true
+
+    return false
+
   custom_fields_supported_formatters = ["defaultFormatter", "unicodeDateFormatter", "keyValueFormatter", "calculatedFieldFormatter", JustdoPlanningUtilities.dependencies_formatter_id]
 
   for field_id, field of all_fields
     if field.custom_field and field.grid_editable_column and field.grid_column_formatter in custom_fields_supported_formatters
+      supported_fields_ids.push field_id
+
+    else if (original_extended_formatter_name = GridControl.Formatters[field.grid_column_formatter]?.original_extended_formatter_name)? and original_extended_formatter_name in custom_fields_supported_formatters
+      # If this is a formatter that extends one of the formatters that we are supporting, allow it to be available for selection
       supported_fields_ids.push field_id
 
   supported_fields_definitions_object =
@@ -171,7 +193,16 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
           cell_val.import_value = cell_val.import_value.replace(/[\u200B-\u200D\uFEFF]/g, "").trim()
 
         field_def = selected_columns_definitions[column_num]
-        field_id = field_def._id
+
+        if isDateFieldDef(field_def) and (underlying_field_id = field_def.grid_column_formatter_options?.underlying_field_id)?
+          # For the unicode date fields (those that returns true for isDateFieldDef) we support the case
+          # where underlying_field_id is defined in the formatter option.
+          #
+          # XXX A better solution would support the more general concept of grid_column_custom_storage_mechanism.
+          # but since at the moment only the date fields are using this mechanism, we implement only that case.
+          field_id = underlying_field_id
+        else
+          field_id = field_def._id
 
         if field_id == "clipboard-import-index" # Do nothing, "clipboard-import-index" is already handled above
         else if field_id == "owner_id"
