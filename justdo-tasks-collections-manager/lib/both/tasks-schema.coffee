@@ -73,6 +73,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_editable_column: true
         grid_visible_column: true
         grid_default_grid_view: true
+        grid_default_grid_view_position: 100
         grid_default_width: 196
 
         grid_dependencies_fields: ["status_by"]
@@ -126,6 +127,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_editable_column: true
         grid_visible_column: true
         grid_default_grid_view: true
+        grid_default_grid_view_position: 200
         grid_default_width: 122
 
         type: String
@@ -310,6 +312,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_editable_column: true
         grid_visible_column: true
         grid_default_grid_view: true
+        grid_default_grid_view_position: 300
         grid_default_width: 122
 
         grid_column_formatter: "unicodeDateFormatter"
@@ -349,6 +352,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_editable_column: true
         grid_visible_column: true
         grid_default_grid_view: true
+        grid_default_grid_view_position: 400
         grid_default_width: 122
 
         grid_column_formatter: "unicodeDateFormatter"
