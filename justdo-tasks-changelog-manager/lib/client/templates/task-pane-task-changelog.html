@@ -27,14 +27,8 @@
     <div class="record d-flex py-2">
       <div class="image mr-2 mt-1">{{#with changingUser}}{{> justdo_avatar}}{{/with}}</div>
       <div class="content">
-        <div class="text-body {{#if undone}}undone{{/if}}">
-
+        <div class="data text-body {{#if undone}}undone{{/if}}">
           {{{xssGuard formatedValue}}}
-
-          {{#if $and ($not undone) undoable}}
-            <span title="Undo change"><svg class="undo jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#rotate-ccw"/></svg></span>
-          {{/if}}
-
         </div>
 
         {{#if undoable}}
@@ -47,8 +41,12 @@
           </small>
           <br>
         {{/if}}
-
-        <small class="date text-muted {{#if undone}}undone{{/if}}">{{userDateFormat when}}</small>
+        <div class="d-flex">
+          <small class="date text-muted {{#if undone}}undone{{/if}}">{{userDateFormat when}}</small>
+          {{#if $and ($not undone) undoable}}
+            <small class="undo text-primary">Undo</small>
+          {{/if}}
+        </div>
       </div>
     </div>
   {{/unless}}
