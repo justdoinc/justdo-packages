@@ -1258,11 +1258,24 @@ _.extend GridControl.prototype,
         if field_def.grid_default_frozen_column is true
           field_view.frozen = field_def.grid_default_frozen_column
 
+        if (grid_default_grid_view_position = field_def.grid_default_grid_view_position)?
+          field_view.position = field_def.grid_default_grid_view_position
+        else
+          field_view.position = 100
+
         # Uncomment for testing purpose to have filters active on load
         # if field_def.grid_column_filter_settings?
         #   field_view.filter = ["done"]
 
         view.push field_view
+
+    ordered_view = []
+    first_item = view.shift()
+
+    ordered_view = _.sortBy view, "position"
+    ordered_view.unshift(first_item)
+
+    _.map ordered_view, (field_view) -> delete field_view.position
 
     # Example of adding fields to the default view conditionally
     #
@@ -1280,7 +1293,7 @@ _.extend GridControl.prototype,
 
     #   view.splice(private_field_position, 0, {field: "priv:follow_up", width: 142})
 
-    return view
+    return ordered_view
 
   setView: (view) ->
     view = view.slice() # shallow copy

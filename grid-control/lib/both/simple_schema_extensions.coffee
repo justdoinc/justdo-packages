@@ -63,6 +63,16 @@ SimpleSchema.extendOptions
   # If undefined considered as false
   grid_default_grid_view: Match.Optional(Boolean)
 
+  # grid_default_grid_view_position:
+  #
+  # Ignored for fields that aren't in the default view
+  #
+  # Important: Since the first visible field has a special meaning (it holds the grid controls),
+  # it will always be the first column.
+  #
+  # If undefined and is in the default view, will be given the value: 100
+  grid_default_grid_view_position: Match.Optional(Number)
+
   # grid_default_width:
   #
   # Width in the default grid-view.
