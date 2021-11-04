@@ -196,6 +196,9 @@ _.extend TasksChangelogManager.prototype,
     if not old_value? or (old_value is null)
       return "empty"
 
+    if activity_obj.field == "owner_id"
+      return JustdoHelpers.displayName old_value
+
     if not (schema = APP.modules.project_page.gridControl()?.getSchemaExtendedWithCustomFields(true))?
       return "..." # Loading
 
