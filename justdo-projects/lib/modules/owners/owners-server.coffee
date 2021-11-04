@@ -246,6 +246,14 @@ _.extend PACK.modules.owners,
             reject_ownership_message: reject_message
             pending_owner_id: null
 
+        APP.tasks_changelog_manager.logChange
+          field: "pending_owner_id"
+          label: "Transfer request (Rejected)"
+          change_type: "transfer_rejected"
+          task_id: task_id
+          by: @userId
+          new_value: null
+
         self.items_collection.update(task_id, update, {removeEmptyStrings: false})
 
         return
