@@ -1295,11 +1295,34 @@ _.extend GridControl.prototype,
 
     return ordered_view
 
+  getViewFieldsSubstitutionMap: ->
+    allowed_fields = @getSchemaExtendedWithCustomFields()
+
+    substituting_fields = {}
+
+    _.each allowed_fields, (allowed_field, field_id) ->
+      if allowed_field.grid_column_substitue_field?
+        substituting_fields[allowed_field.grid_column_substitue_field] = field_id
+
+      return
+
+
+    return substituting_fields
+
   setView: (view) ->
     view = view.slice() # shallow copy
 
     # Ignore columns that aren't part of the schema or the custom fields definition
     allowed_fields = @getSchemaExtendedWithCustomFields()
+
+    # Perform translation to substitute fields
+    substituting_fields = @getViewFieldsSubstitutionMap()
+
+    _.each view, (field_def) ->
+      if field_def.field of substituting_fields
+        field_def.field = substituting_fields[field_def.field]
+
+      return
 
     view = _.filter view, (column) ->
       if column.field not of allowed_fields

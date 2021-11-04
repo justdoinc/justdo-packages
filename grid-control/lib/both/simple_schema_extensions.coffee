@@ -110,6 +110,16 @@ SimpleSchema.extendOptions
   # Should return false if the procedure failed.
   grid_column_custom_storage_mechanism: Match.Optional(Function)
 
+  # grid_column_substitue_field:
+  #
+  # If present, expected to be another existing field name.
+  #
+  # Affects *only* the process of setting/loading views to grid tabs. In which case,
+  # if grid_column_substitue_field is set and the field name under grid_column_substitue_field
+  # is in the view that is being set/loaded - we will replace that field with the current
+  # field.
+  grid_column_substitue_field: Match.Optional(String)
+
   # grid_fixed_size_column:
   #
   # If true, the provided grid_default_width will be used as the fixed width size of the column, the user
