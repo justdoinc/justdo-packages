@@ -113,9 +113,15 @@ _.extend Projects.prototype,
         query["project_id"] = project_id
 
       query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
-      
+      query["parents2"] =
+        $elemMatch:
+          parent: parent_id
+          order:
+            $gte: min_order_to_inc
+
       update_op = {$inc: {}}
       update_op["$inc"]["parents.#{parent_id}.order"] = 1
+      update_op["$inc"]["parents2.$.order"] = 1
 
       update_op["$currentDate"] = {_raw_updated_date: true}
 
