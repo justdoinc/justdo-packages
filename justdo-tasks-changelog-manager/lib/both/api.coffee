@@ -152,7 +152,7 @@ _.extend TasksChangelogManager.prototype,
       return "#{performer_name} #{activity_obj.new_value}"
 
     if activity_obj.change_type == "transfer_rejected"
-      return "#{performer_name} rejected transfer request."
+      return "#{performer_name} rejected the ownership transfer request."
 
     if activity_obj.field == "owner_id"
       if (user = JustdoHelpers.getUsersDocsByIds activity_obj.new_value)?
