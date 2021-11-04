@@ -111,17 +111,30 @@ _.extend JustdoResourcesAvailability.prototype,
 
     return ret
 
+
+  justdoAvailabilityBetweenDates: (from_date, to_date, project_id_or_doc, user_id) ->
+    return @userAvailabilityBetweenDates(from_date, to_date, project_id_or_doc, user_id, {
+      always_use_justdo_level_data: true
+    })
+
   # Given a project_id and a user id, the function will return the number of days and total hours available
   # between the dates. dates are in the format of YYYY-MM-DD
 
-  userAvailabilityBetweenDates: (from_date, to_date, project_id_or_doc, user_id)->
+  userAvailabilityBetweenDates: (from_date, to_date, project_id_or_doc, user_id, options)->
     check from_date, String
     check to_date, String
     check project_id_or_doc, Match.OneOf String, Object
     check user_id, String
+    
+    options = _.extend {
+      always_use_justdo_level_data: false
+    }, options
 
     {justdo_level_data, user_level_data} = @_getAvailabilityData project_id_or_doc, user_id
 
+    if options.always_use_justdo_level_data
+      user_level_data = null
+    
     start_date = moment.utc(from_date)
     end_date = moment.utc(to_date)
 
