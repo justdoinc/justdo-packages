@@ -144,6 +144,13 @@ _.extend GridControlCustomFields,
 
       optional: true
 
+    grid_column_substitue_field:
+      type: String
+
+      defaultValue: null
+
+      optional: true
+
     grid_column_formatter_options:
       type: Object
 
@@ -291,6 +298,9 @@ _.extend GridControlCustomFields,
 
       if (grid_column_custom_storage_mechanism = custom_field_definition.grid_column_custom_storage_mechanism)?
         custom_field_schema.grid_column_custom_storage_mechanism = grid_column_custom_storage_mechanism
+
+      if (grid_column_substitue_field = custom_field_definition.grid_column_substitue_field)?
+        custom_field_schema.grid_column_substitue_field = grid_column_substitue_field
 
       if (decimal = custom_field_definition.decimal)?
         custom_field_schema.decimal = decimal
