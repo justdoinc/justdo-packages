@@ -95,6 +95,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/jquery_events/activate_on_click.coffee', client);
 
   // Formatters & Editors
+  api.add_files('lib/client/formatters-and-editors/common-fomatters-and-editors.sass', client);
   api.add_files('lib/client/formatters-and-editors/formatters-init.coffee', client);
   api.add_files('lib/client/formatters-and-editors/editors-init.coffee', client);
 
