@@ -106,6 +106,7 @@ _.extend Projects.prototype,
       # note that this function replace grid-data-com-server.coffee's incrementChildsOrderGte
 
       query = {}
+      parents2_query = {}
 
       if (project_id = item_doc?.project_id)?
         check project_id, String
@@ -113,21 +114,35 @@ _.extend Projects.prototype,
         query["project_id"] = project_id
 
       query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
-      query["parents2"] =
+      parents2_query["parents2"] =
         $elemMatch:
           parent: parent_id
           order:
             $gte: min_order_to_inc
 
       update_op = {$inc: {}}
+      parents2_update_op = {$inc: {}}
       update_op["$inc"]["parents.#{parent_id}.order"] = 1
-      update_op["$inc"]["parents2.$.order"] = 1
+      parents2_update_op["$inc"]["parents2.$.order"] = 1
 
       update_op["$currentDate"] = {_raw_updated_date: true}
 
       performIncrementChildsOrderGte = (cb) =>
         # Use rawCollection here, skip collection2/hooks
         APP.justdo_analytics.logMongoRawConnectionOp(@_name, "update", update_op, {multi: true})
+        # During conversion period, parents2 may not exist for all tasks documents
+        # We optionally attempt to update parents2 in this stage.
+        @rawCollection().update parents2_query, parents2_update_op, {multi: true}, Meteor.bindEnvironment (err) ->
+          if err?
+            console.error(err)
+
+            cb(err)
+
+            return
+
+          cb()
+
+          return
         return @rawCollection().update query, update_op, {multi: true}, Meteor.bindEnvironment (err) ->
           if err?
             console.error(err)
