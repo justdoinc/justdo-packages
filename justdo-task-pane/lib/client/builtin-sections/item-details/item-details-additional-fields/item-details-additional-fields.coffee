@@ -71,7 +71,13 @@ APP.executeAfterAppLibCode ->
       if not gc.isEditableField(@field_id)
         return false
 
-      current_item_obj = module.activeItemObj({"#{@field_id}": 1, "#{CustomJustdoTasksLocks.locking_users_task_field}": 1})
+      fields_to_fetch = {"#{@field_id}": 1, "#{CustomJustdoTasksLocks.locking_users_task_field}": 1}
+
+      if (grid_dependencies_fields = gc.getSchemaExtendedWithCustomFields()?[@field_id]?.grid_dependencies_fields)?
+        for dep_field_id in grid_dependencies_fields
+          fields_to_fetch[dep_field_id] = 1
+
+      current_item_obj = module.activeItemObj(fields_to_fetch)
       current_item_path = module.activeItemPath()
 
       if not current_item_obj? or not current_item_path?
