@@ -35,7 +35,7 @@ toggleStatusFilterState = ->
 
 Template.global_activity_log_project_pane_project_activity.onCreated ->
   @counter = 0
-  @loading_new_logs = new ReactiveVar true # To facilitate "Loading more messages" on initial load
+  @loading_new_logs = new ReactiveVar false
   most_recent_updated_at = null
   @recent_updatedat_task_tracker = Tracker.autorun =>
     if (doc = APP.collections.Tasks.findOne({}, {sort: {updatedAt: -1, fields: {updatedAt: 1}}}))?
@@ -45,13 +45,12 @@ Template.global_activity_log_project_pane_project_activity.onCreated ->
 
   tpl = @
   @logs_count = 0
-  @loading_more_item = false
   @changelog_tasks_limit = JustdoGlobalActivityLog.default_global_changelog_tasks_limit
   @changelog_changelogs_limit = JustdoGlobalActivityLog.default_global_changelog_changelogs_limit
   @refreshChangelogSubscription = ->
-    if (project_id = APP.modules.project_page.curProj().id)? and not tpl.loading_more_item
+    if (project_id = APP.modules.project_page.curProj().id)? and not tpl.loading_new_logs.get()
       # Prevent double calling of this function
-      tpl.loading_more_item = true
+      tpl.loading_new_logs.set true
 
       previous_global_changelog_subscription = tpl.global_changelog_subscription
       previous_subscription_tracker = tpl.current_subscription_tracker
@@ -64,7 +63,6 @@ Template.global_activity_log_project_pane_project_activity.onCreated ->
       tpl.current_subscription_tracker = Tracker.autorun ->
         if tpl.global_changelog_subscription.ready()
           # Allow next call of refreshChangelogSubscription
-          tpl.loading_more_item = false
           tpl.loading_new_logs.set false
 
       # stop after the new subscription established to use mergebox to avoid even sending
@@ -90,7 +88,6 @@ Template.global_activity_log_project_pane_project_activity.onCreated ->
 
     return
   , 1000
-
 
   return
 
@@ -133,7 +130,11 @@ Template.global_activity_log_project_pane_project_activity.helpers
 
   isActiveStatusFilter: -> getStatusFilterState()
 
-  loadingNewLogs: -> Template.instance().loading_new_logs.get()
+  loadingNewLogs: ->
+    tpl = Template.instance()
+    # On first call loading_new_logs is false, so the "loading more" message will not show
+    # That's why we check for existance of global_changelog_subscription (which does not exists on first call)
+    return tpl.loading_new_logs.get() or not tpl.global_changelog_subscription?
 
 Template.global_activity_log_project_pane_project_activity.events
   "click .project-log": ->
@@ -155,10 +156,9 @@ Template.global_activity_log_project_pane_project_activity.events
     # (as .scroll is sensitive and can trigger the following code thousands of times)
     # 3. JDGlobalChangelog collection is updated after previous subscription has finished loading
     # (as we don't want to keep increasing changelog_tasks_limit and changelog_changelogs_limit when there's no new logs)
-    if at_bottom and not tpl.loading_more_item
+    if at_bottom and not tpl.loading_new_logs.get()
       updated_logs_count = APP.collections.JDGlobalChangelog.find().count()
       if updated_logs_count > tpl.logs_count
-        tpl.loading_new_logs.set true
         tpl.logs_count = updated_logs_count
         tpl.changelog_tasks_limit += JustdoGlobalActivityLog.default_global_changelog_tasks_limit
         tpl.changelog_changelogs_limit += JustdoGlobalActivityLog.default_global_changelog_changelogs_limit
