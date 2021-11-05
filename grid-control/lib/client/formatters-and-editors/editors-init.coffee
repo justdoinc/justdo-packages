@@ -126,6 +126,14 @@ base_slick_grid_editors_prototype =
   isValueChanged: ->
     field_doc_value = @getEditorFieldValueFromDoc()
 
+    if (@context.schema?.grid_column_custom_value_generator)?
+      # When a grid_column_custom_value_generator is set for a field, we always regard the value
+      # as edited when the user exits edit mode on grid, to allow the case of manually entering a
+      # value that before was auto-calculated.
+      #
+      # COMMENT_RE_CUSTOM_VALUE_GENERATOR_AND_CELL_EDIT_MODE
+      return true
+
     if field_doc_value?
       return field_doc_value != @serializeValue()
     else

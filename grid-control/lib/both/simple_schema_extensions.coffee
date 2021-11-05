@@ -95,6 +95,10 @@ SimpleSchema.extendOptions
   # output returned by grid formatter's @getFriendlyArgs(). The value returned by it, will
   # be used by the field's grid/print formatters and the field editor as if it was the value
   # stored in the DB for the field.
+  #
+  # When a grid_column_custom_value_generator is set for a field, we always regard the value
+  # as edited when the user exits edit mode on grid, to allow the case of manually entering a
+  # value that before was auto-calculated. Search the code for: COMMENT_RE_CUSTOM_VALUE_GENERATOR_AND_CELL_EDIT_MODE
   grid_column_custom_value_generator: Match.Optional(Function)
 
   # grid_column_custom_storage_mechanism:
