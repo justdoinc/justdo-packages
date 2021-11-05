@@ -77,9 +77,9 @@ GridControl.installFormatter "defaultFormatter",
        comment_jd_tt = """ jd-tt="html?tt-pos_my=left%20top&tt-pos_at=right%2B2px%20top&html=#{encodeURIComponent(html_comment)}" """
 
     formatter = """
-      <div class="grid-formatter default-formatter #{custom_classes} "#{if custom_style != "" then " style=\"#{custom_style}\"" else ""}#{if (caption = formatter_obj.defaultHoverCaption(friendly_args))? then " title=\"#{JustdoHelpers.xssGuard(caption)}\"" else ""} dir="auto" #{comment_jd_tt}>#{value}#{if (footer = formatter_obj.defaultFooter(friendly_args))? then """<div class="default-formatter-footer text-muted">
+      <div class="grid-formatter default-formatter #{custom_classes} "#{if custom_style != "" then " style=\"#{custom_style}\"" else ""}#{if (caption = formatter_obj.defaultHoverCaption(friendly_args))? then " title=\"#{JustdoHelpers.xssGuard(caption)}\"" else ""} dir="auto">#{value}#{if (footer = formatter_obj.defaultFooter(friendly_args))? then """<div class="default-formatter-footer text-muted">
         #{JustdoHelpers.xssGuard(footer)}</div>""" else ""}
-        #{if html_comment? then """<div class="comment-indicator">◥</div>""" else ""}
+        #{if html_comment? then """<div class="comment-indicator" #{comment_jd_tt}>◥</div>""" else ""}
       </div>
     """
 

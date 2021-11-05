@@ -175,8 +175,8 @@ GridControl.installFormatter "unicodeDateFormatter",
        comment_jd_tt = """ jd-tt="html?tt-pos_my=left%20top&tt-pos_at=right%2B2px%20top&html=#{encodeURIComponent(html_comment)}" """
 
     formatter = """
-      <div class="grid-formatter uni-date-formatter #{custom_classes}"#{comment_jd_tt}>
-        #{formatter_content}#{formatter_buttons}#{if html_comment? then """<div class="comment-indicator">◥</div>""" else ""}
+      <div class="grid-formatter uni-date-formatter #{custom_classes}">
+        #{formatter_content}#{formatter_buttons}#{if html_comment? then """<div class="comment-indicator" #{comment_jd_tt}>◥</div>""" else ""}
       </div>
     """
 
