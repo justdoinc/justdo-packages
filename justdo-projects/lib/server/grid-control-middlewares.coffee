@@ -132,17 +132,8 @@ _.extend Projects.prototype,
         APP.justdo_analytics.logMongoRawConnectionOp(@_name, "update", update_op, {multi: true})
         # During conversion period, parents2 may not exist for all tasks documents
         # We optionally attempt to update parents2 in this stage.
-        @rawCollection().update parents2_query, parents2_update_op, {multi: true}, Meteor.bindEnvironment (err) ->
-          if err?
-            console.error(err)
+        @rawCollection().update parents2_query, parents2_update_op, {multi: true}
 
-            cb(err)
-
-            return
-
-          cb()
-
-          return
         return @rawCollection().update query, update_op, {multi: true}, Meteor.bindEnvironment (err) ->
           if err?
             console.error(err)
