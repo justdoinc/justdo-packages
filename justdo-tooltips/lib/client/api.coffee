@@ -174,6 +174,7 @@ _.extend JustdoTooltips.prototype,
         "show-tooltip":
           allowed_next_states:
             "showing-tooltip-in-target": {} # Show tooltip
+            "nil": {}
 
           stateSetter: ->
             {tooltip_id, raw_options} = @getStateAttr()
