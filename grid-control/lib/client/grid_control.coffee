@@ -1330,6 +1330,8 @@ _.extend GridControl.prototype,
 
       return true
 
+    view = lodash.uniqBy(view, "field") # Since we introduced the concept of substituting_fields, we might have duplicate for the same field
+
     @_validateView(view)
 
     columns = @_getColumnsStructureFromView view
