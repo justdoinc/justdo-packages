@@ -1,0 +1,12 @@
+<template name="justdo_quick_notes_project_config">
+  <div class="project-conf-justdo-quick-notes-config py-2 d-flex align-items-center">
+    {{pluginName}}
+    <div class="ml-auto">
+      {{#if isModuleEnabled}}
+        <svg class="jd-icon-extension text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+      {{else}}
+        <svg class="jd-icon-extension text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+      {{/if}}
+    </div>
+  </div>
+</template>
