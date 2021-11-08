@@ -1,1 +1,0 @@
-Template.task_pane_justdo_quick_notes_task_pane_section_section.helpers {}
