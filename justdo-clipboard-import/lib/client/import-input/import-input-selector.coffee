@@ -12,23 +12,17 @@ Template.justdo_clipboard_import_input_selector.onCreated ->
       _id: "clipboard-import-no-import"
 
     "clipboard-import-index":
-       label: "Index"
+       label: "Original Index (will not be imported)"
        _id: "clipboard-import-index"
 
      "task-indent-level":
        label: "Indent Level"
        _id: "task-indent-level"
 
-   # available_field_types[0] is an array
-   available_field_types[1].unshift # unshift = prepend
-     label: "-- skip column --"
-     _id: "clipboard-import-no-import"
-   ,
-     label: "Index"
-     _id: "clipboard-import-index"
-   available_field_types[1].push
-     label: "Indent Level"
-     _id: "task-indent-level"
+   # available_field_types[1] is an array
+   # unshift = prepend
+   available_field_types[1].unshift available_field_types[0]["clipboard-import-no-import"], available_field_types[0]["clipboard-import-index"]
+   available_field_types[1].push available_field_types[0]["task-indent-level"]
 
    return available_field_types
 

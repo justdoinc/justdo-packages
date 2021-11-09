@@ -1,6 +1,7 @@
 # The order below will also serve as the ordering in the dropdown, sorted alphabetically
 # The location of non_sorted_field_ids are fixed to top, the rest is sorted
 non_sorted_field_ids = [
+  "justdo_task_dependencies_mf" # Replace with JustdoPlanningUtilities.dependencies_mf_field_id after changing the load order of JustdoPlanningUtilities before this package
   "title"
   "start_date"
   "end_date"
