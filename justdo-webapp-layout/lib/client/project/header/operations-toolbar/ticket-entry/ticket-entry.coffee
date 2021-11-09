@@ -57,7 +57,7 @@ APP.executeAfterAppLibCode ->
               grid_control = project_page_module.gridControl(false)
               grid_data = grid_control._grid_data
 
-              # XXX Note that we don't provide path to addChild. addChild will transform
+              # XXX Note that we don't provide path to addChild when destination_type is "ticket-queue". addChild will transform
               # the queue id to a path under root in the path normalization process:
               # "/tickets_queue_id/". This might stop working in future API changes
               # as addChild isn't meant to be used this way.
@@ -118,6 +118,21 @@ APP.executeAfterAppLibCode ->
                       releaseOpsLock()
 
                       return
+
+                if destination_type == "projects"
+                  task_fields.project_id = JD.activeJustdoId()
+                  grid_data.addChild "/#{selected_destination_id.get()}/", task_fields, (err, task_id) ->
+                    if err?
+                      project_page_module.logger.error "Failed: #{err}"
+
+                      releaseOpsLock()
+
+                    activateItemId(task_id, {destination_title})
+
+                    releaseOpsLock()
+
+                    return
+
                 return
               preBootboxDestroyProcedures()
 
@@ -152,6 +167,7 @@ APP.executeAfterAppLibCode ->
   getSelectedTicketsQueueDoc = -> APP.collections.TicketsQueues.findOne selected_destination_id.get()
 
   tickets_queues_reactive_var = null
+  projects_reactive_var = null
   selected_destination_users_reactive_var = null
   selected_destination_type_reactive_var = null
   task_user_subscription_handler = null
@@ -168,31 +184,47 @@ APP.executeAfterAppLibCode ->
     tickets_queues_reactive_var = APP.helpers.newComputedReactiveVar "tickets_queues", ->
       return APP.collections.TicketsQueues.find({}, {sort: {title: 1}}).fetch()
 
+    projects_reactive_var = APP.helpers.newComputedReactiveVar "projects", ->
+      query =
+        project_id: JD.activeJustdoId()
+        "p:dp:is_project": true
+        # A task is considered as a project if is_project is true and is_archived_project is false/ does not exists
+        "p:dp:is_archived_project":
+          $ne: true
+      return APP.collections.Tasks.find(query)
+
     selected_destination_type_reactive_var = APP.helpers.newComputedReactiveVar "selected_destination_type", ->
       destination_id = selected_destination_id.get()
 
       if not destination_id?
         return "none"
 
+      destination_task_doc = APP.collections.Tasks.findOne(destination_id, {fields: {"p:dp:is_project": 1, "p:dp:is_archived_project": 1}})
+      if destination_task_doc["p:dp:is_project"] and not destination_task_doc["p:dp:is_archived_project"]
+        return "projects"
+
       return "ticket-queue"
 
     selected_destination_users_reactive_var = APP.helpers.newComputedReactiveVar "selected_destination_users", ->
       destination_type = selected_destination_type_reactive_var.get()
 
+      if not (selected_destination = selected_destination_id.get())?
+        return []
+
+      if destination_type == "projects"
+        selected_destination_doc = APP.collections.Tasks.findOne selected_destination
+
       if destination_type == "ticket-queue"
-        if not selected_destination_id.get()?
-          return []
+        selected_destination_doc = getSelectedTicketsQueueDoc()
 
-        selected_tickets_queue_doc = getSelectedTicketsQueueDoc()
+      if not selected_destination_doc?
+        return []
 
-        if not selected_tickets_queue_doc?
-          return []
+      owner_doc = APP.helpers.getUsersDocsByIds([selected_destination_doc.owner_id])
+      tickets_queue_users = APP.collections.TasksAugmentedFields.findOne(selected_destination_doc._id, {fields: {users: 1}})?.users
+      other_users_docs = APP.helpers.getUsersDocsByIds(_.without(tickets_queue_users, selected_destination_doc.owner_id))
 
-        owner_doc = APP.helpers.getUsersDocsByIds([selected_tickets_queue_doc.owner_id])
-        tickets_queue_users = APP.collections.TasksAugmentedFields.findOne(selected_tickets_queue_doc._id, {fields: {users: 1}})?.users
-        other_users_docs = APP.helpers.getUsersDocsByIds(_.without(tickets_queue_users, selected_tickets_queue_doc.owner_id))
-
-        return owner_doc.concat(other_users_docs)
+      return owner_doc.concat(other_users_docs)
 
     return
 
@@ -222,6 +254,21 @@ APP.executeAfterAppLibCode ->
         $("#ticket-queue-id").selectpicker("refresh")
 
         return
+
+    projects_reactive_var.on "computed", ->
+      Meteor.defer =>
+        destination_type = selected_destination_type_reactive_var.get()
+
+        if destination_type == "projects"
+          if selected_destination_id.get() not in _.map(projects_reactive_var.get(), (queue) -> project._id)
+            # If selected ticket queue removed as ticket queue
+            selected_destination_id.set(null)
+            $("#ticket-queue-id").val("")
+
+        $("#ticket-queue-id").selectpicker("refresh")
+
+        return
+
 
     selected_destination_users_reactive_var.on "computed", ->
       Meteor.defer =>
@@ -267,6 +314,9 @@ APP.executeAfterAppLibCode ->
     tickets_queues_reactive_var.stop()
     tickets_queues_reactive_var = null
 
+    projects_reactive_var.stop()
+    projects_reactive_var = null
+
     selected_destination_users_reactive_var.stop()
     selected_destination_users_reactive_var = null
 
@@ -277,13 +327,15 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.ticket_entry.helpers
-    isTicketOwner: (index) ->
+    isTaskOwner: (index) ->
       if index is 0
         return true
       return false
     tickets_queues: -> tickets_queues_reactive_var.get()
+    projects: -> projects_reactive_var.get()
     selected_destination_id: -> selected_destination_id.get()
     selected_destination_type: -> selected_destination_type_reactive_var.get()
+    selected_destination_type_has_users: -> selected_destination_type_reactive_var.get() in ["ticket-queue", "projects"]
     selected_destination_users: -> selected_destination_users_reactive_var.get()
     max_printed_task_title: max_printed_task_title
     max_printed_display_name: 40

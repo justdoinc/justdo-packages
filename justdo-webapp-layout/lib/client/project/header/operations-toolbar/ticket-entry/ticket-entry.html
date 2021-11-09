@@ -18,34 +18,48 @@
                 {{/each}}
               </optgroup>
             {{/with}}
+
+            {{#with projects}}
+              <optgroup label="Projects">
+                {{#each this}}
+                  {{#if title}}
+                    <option value="{{_id}}">#{{seqId}}: {{cutString title max_printed_task_title}}</option>
+                  {{else}}
+                    <option value="{{_id}}">#{{seqId}}</option>
+                  {{/if}}
+                {{/each}}
+              </optgroup>
+            {{/with}}
+
           </select>
         </div>
       </div>
     </div>
-    {{#if $eq selected_destination_type "ticket-queue"}}
+
+    {{#if selected_destination_type_has_users}}
       <div class="col-sm-5 pl-0 owner-selector-container">
         <div class="form-group">
           <label for="ticket-assigned-user-id">Owner</label>
           <div class="{{#if $not selected_destination_id}}no-tq-selected{{/if}}">
             <select id="ticket-assigned-user-id" class="dropdown-menu-lite dropdown-menu-lite-users ticket-owner-select" disabled="{{#if $not selected_destination_id}}disabled{{/if}}">
-              {{#if $eq selected_destination_type "ticket-queue"}}
                 {{#each selected_destination_users}}
                   <option value="{{_id}}">
                     {{> gtpl_user_profile_pic}}
                     <span class="option-img-text">
                       {{cutString displayName max_printed_display_name}}
-                      {{#if isTicketOwner @index}}
-                        (Ticket Owner)
+                      {{#if isTaskOwner @index}}
+                        {{#if $eq selected_destination_type "ticket-queue"}}(Ticket Owner){{/if}}
+                        {{#if $eq selected_destination_type "projects"}}(Project Owner){{/if}}
                       {{/if}}
                     </span>
                   </option>
                 {{/each}}
-              {{/if}}
             </select>
           </div>
         </div>
       </div>
     {{/if}}
+
   </div>
 
   <div class="form-group title-container {{#if isInvalidTitle}}has-error{{/if}}">
