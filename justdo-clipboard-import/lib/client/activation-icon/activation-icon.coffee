@@ -426,7 +426,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     for temp_import_id, deps_str of dependencies_strs
       if not (deps = APP.justdo_planning_utilities.parseDependenciesStr deps_str, project_id, import_idx_to_task_id)?
         line_number = temp_import_id.split("_L")[1]
-        scrollToAndHighlightProblematicRow line_number
         throw new Meteor.Error "invalid dependency", "Invalid dependency(#{deps_str}) found in line #{line_number}"
 
       APP.justdo_planning_utilities.dependent_tasks_update_hook_enabled = false
