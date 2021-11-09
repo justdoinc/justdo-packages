@@ -86,12 +86,13 @@ getAvailableFieldTypes = ->
   custom_fields_supported_formatters = ["defaultFormatter", "unicodeDateFormatter", "keyValueFormatter", "calculatedFieldFormatter", JustdoPlanningUtilities.dependencies_formatter_id]
 
   for field_id, field of all_fields
-    if field.custom_field and field.grid_editable_column and field.grid_column_formatter in custom_fields_supported_formatters
-      supported_fields_ids.push field_id
+    if field_id not in supported_fields_ids
+      if field.custom_field and field.grid_editable_column and field.grid_column_formatter in custom_fields_supported_formatters
+        supported_fields_ids.push field_id
 
-    else if (original_extended_formatter_name = GridControl.Formatters[field.grid_column_formatter]?.original_extended_formatter_name)? and original_extended_formatter_name in custom_fields_supported_formatters
-      # If this is a formatter that extends one of the formatters that we are supporting, allow it to be available for selection
-      supported_fields_ids.push field_id
+      else if (original_extended_formatter_name = GridControl.Formatters[field.grid_column_formatter]?.original_extended_formatter_name)? and original_extended_formatter_name in custom_fields_supported_formatters
+        # If this is a formatter that extends one of the formatters that we are supporting, allow it to be available for selection
+        supported_fields_ids.push field_id
 
   supported_fields_definitions_object =
     _.pick all_fields, supported_fields_ids
