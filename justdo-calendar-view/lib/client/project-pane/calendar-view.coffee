@@ -820,9 +820,9 @@ Template.justdo_calendar_project_pane.events
   "keyup .calendar-view-project-search": (e, tmpl) ->
     value = $(e.target).val().trim()
     if _.isEmpty value
-      tmpl.calendar_projects_filter_val_rv.set null
+      calendar_projects_filter_val_rv.set null
     else
-      tmpl.calendar_projects_filter_val_rv.set value
+      calendar_projects_filter_val_rv.set value
     return
 
   "keydown .calendar_view_project_selector .dropdown-menu": (e, tmpl) ->
