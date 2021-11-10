@@ -89,7 +89,6 @@ bindTargetToPaste = (tpl)->
       if rows.length > 0
         tpl.data.clipboard_data.set rows
         tpl.data.dialog_state.set "has_data"
-        $(".justdo-clipboard-import-main-button").html("Import")
         Tracker.afterFlush ->
           loadSavedImportConfig tpl
           return
@@ -117,6 +116,9 @@ Template.justdo_clipboard_import_input.onCreated ->
     if state == "wait_for_paste"
       $(".justdo-clipboard-import-paste-target").css("display", "")
       $(".justdo-clipboard-import-table").css("display", "none")
+      $(".justdo-clipboard-import-main-button")
+        .html "Cancel"
+        .prop "disabled", false
 
       Meteor.defer ->
         bindTargetToPaste self
@@ -126,6 +128,9 @@ Template.justdo_clipboard_import_input.onCreated ->
     else if state == "has_data"
       $(".justdo-clipboard-import-paste-target").css("display", "none")
       $(".justdo-clipboard-import-table").css("display", "")
+      $(".justdo-clipboard-import-main-button")
+        .html "Import"
+        .prop "disabled", false
     else if state == "importing"
       $(".justdo-clipboard-import-paste-target").css("display", "none")
       $(".justdo-clipboard-import-table").css("display", "")
@@ -135,6 +140,9 @@ Template.justdo_clipboard_import_input.onCreated ->
     else
       $(".justdo-clipboard-import-paste-target").css("display", "none")
       $(".justdo-clipboard-import-table").css("display", "none")
+      $(".justdo-clipboard-import-main-button")
+        .html "Cancel"
+        .prop "disabled", false
     return
   return
 

@@ -571,7 +571,6 @@ Template.justdo_clipboard_import_activation_icon.events
             modal_data.dialog_state.set "wait_for_paste"
             modal_data.clipboard_data.set []
             modal_data.rows_to_skip_set.set(new Set())
-            $(".justdo-clipboard-import-main-button").html("Cancel")
 
             Meteor.defer ->
               $(".justdo-clipboard-import-paste-target").focus()
@@ -582,7 +581,6 @@ Template.justdo_clipboard_import_activation_icon.events
           label: "Cancel"
           className: "btn-primary justdo-clipboard-import-main-button"
           callback: =>
-            $(".justdo-clipboard-import-main-button").prop "disabled", true
             cp_data = modal_data.clipboard_data.get()
             if cp_data.length == 0
               return true
@@ -596,7 +594,6 @@ Template.justdo_clipboard_import_activation_icon.events
             if (err = result.err)?
               JustdoSnackbar.show
                 text: err.message
-              $(".justdo-clipboard-import-main-button").prop "disabled", false
               return false
 
             selected_columns_definitions = result
@@ -605,7 +602,6 @@ Template.justdo_clipboard_import_activation_icon.events
             if selected_columns_definitions.length < (number_of_columns)
               JustdoSnackbar.show
                 text: "Please select all columns fields."
-              $(".justdo-clipboard-import-main-button").prop "disabled", false
               return false
 
             # Manage dates - ask for input format
@@ -634,13 +630,11 @@ Template.justdo_clipboard_import_activation_icon.events
 
                     return true
 
-              $(".justdo-clipboard-import-main-button").prop "disabled", false
               return false
 
             if testDataAndImport modal_data, selected_columns_definitions
               return true
 
-            $(".justdo-clipboard-import-main-button").prop "disabled", false
             return false
 
     dialog.on "shown.bs.modal", (e) ->
