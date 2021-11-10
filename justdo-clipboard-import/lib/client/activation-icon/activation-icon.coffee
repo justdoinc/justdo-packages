@@ -147,6 +147,7 @@ getSelectedColumnsDefinitions = ->
   return selected_columns_definitions
 
 testDataAndImport = (modal_data, selected_columns_definitions) ->
+  modal_data.dialog_state.set "importing"
   # Check that all columns have the same number of cells
   cp_data = modal_data.clipboard_data.get()
   number_of_columns = cp_data[0].length

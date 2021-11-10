@@ -126,6 +126,12 @@ Template.justdo_clipboard_import_input.onCreated ->
     else if state == "has_data"
       $(".justdo-clipboard-import-paste-target").css("display", "none")
       $(".justdo-clipboard-import-table").css("display", "")
+    else if state == "importing"
+      $(".justdo-clipboard-import-paste-target").css("display", "none")
+      $(".justdo-clipboard-import-table").css("display", "")
+      $(".justdo-clipboard-import-main-button")
+        .html "Importing..."
+        .prop "disabled", true
     else
       $(".justdo-clipboard-import-paste-target").css("display", "none")
       $(".justdo-clipboard-import-table").css("display", "none")
@@ -134,13 +140,13 @@ Template.justdo_clipboard_import_input.onCreated ->
 
 Template.justdo_clipboard_import_input.helpers
   rows: ->
-    if not ("has_data" == Template.instance().data.dialog_state.get())
+    if (Template.instance().data.dialog_state.get() not in ["has_data", "importing"])
       return []
 
     return Template.instance().data.clipboard_data.get()
 
   numberOfColumns: ->
-    if not ("has_data" == Template.instance().data.dialog_state.get())
+    if (Template.instance().data.dialog_state.get() not in ["has_data", "importing"])
       return []
 
     return [1..Template.instance().data.clipboard_data.get()[0].length]
