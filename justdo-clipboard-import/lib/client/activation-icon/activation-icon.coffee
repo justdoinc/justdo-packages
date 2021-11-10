@@ -42,6 +42,21 @@ isDateFieldDef = (field_def) ->
 
   return false
 
+showErrorInSnackbarAndRevertState = (options) ->
+  options.dialog_state.set "has_data"
+
+  if not options.snackbar_duration?
+    options.snackbar_duration = 5000
+
+  JustdoSnackbar.show
+    text: options.snackbar_message
+    duration: options.snackbar_duration
+
+  if options.problematic_row?
+    scrollToAndHighlightProblematicRow options.problematic_row
+
+  return
+
 saveImportConfig = (selected_columns_definitions) ->
   storage_key = getLocalStorageKey()
 
@@ -177,9 +192,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     task = {}
     line_number += 1
     if row.length != number_of_columns
-      JustdoSnackbar.show
-        text: "Mismatch in number of columns on different rows. Import aborted."
-
+      showErrorInSnackbarAndRevertState
+        dialog_state: modal_data.dialog_state
+        snackbar_message: "Mismatch in number of columns on different rows. Import aborted."
       return false
 
     task.project_id = project_id
@@ -244,10 +259,12 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
                   val = key
                   break
               if val == null
-                scrollToAndHighlightProblematicRow line_number
-                JustdoSnackbar.show
-                  text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} - not a valid option. Import aborted."
-                  duration: 15000
+                showErrorInSnackbarAndRevertState
+                  dialog_state: modal_data.dialog_state
+                  snackbar_message: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} - not a valid option. Import aborted."
+                  snackbar_duration: 15000
+                  problematic_row: line_number
+
                 return false
               task[field_id] = val
             else
@@ -269,10 +286,10 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
                 out_of_range = true
 
             if out_of_range
-              scrollToAndHighlightProblematicRow line_number
-              JustdoSnackbar.show
-                text: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} (must be between #{field_def.min} and #{field_def.max}). Import aborted."
-
+              showErrorInSnackbarAndRevertState
+                dialog_state: modal_data.dialog_state
+                snackbar_message: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} (must be between #{field_def.min} and #{field_def.max}). Import aborted."
+                problematic_row: line_number
               return false
 
             task[field_id] = cell_val
@@ -285,10 +302,13 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             else
               moment_date = moment.utc cell_val, date_fields_date_format
             if not moment_date.isValid()
-              scrollToAndHighlightProblematicRow line_number
-              JustdoSnackbar.show
-                text: "Invalid date format in line #{line_number}. Import aborted."
+              showErrorInSnackbarAndRevertState
+                dialog_state: modal_data.dialog_state
+                snackbar_message: "Invalid date format in line #{line_number}. Import aborted."
+                problematic_row: line_number
+
               modal_data.date_fields_date_format.set null
+
               return false
             task[field_id] = moment_date.format("YYYY-MM-DD")
 
@@ -298,10 +318,12 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       # Indent can't jump more than 1 indent level at once
       # and can't start with anything but 1
       if indent_level > last_indent + 1 or indent_level <= 0 or (last_indent == -1 and indent_level != 1) or indent_level < base_indent
-        scrollToAndHighlightProblematicRow line_number
-        JustdoSnackbar.show
-          text: "Invalid indentation at line #{line_number} - inconsistent indentation."
-          duration: 15000
+        showErrorInSnackbarAndRevertState
+          dialog_state: modal_data.dialog_state
+          snackbar_message: "Invalid indentation at line #{line_number} - inconsistent indentation."
+          snackbar_duration: 15000
+          problematic_row: line_number
+
         return false
 
       last_indent = indent_level
@@ -311,11 +333,11 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     if task[JustdoPlanningUtilities.is_milestone_pseudo_field_id] == "true"
       if task.start_date? and task.end_date? and task.start_date != task.end_date
-        scrollToAndHighlightProblematicRow line_number
-        JustdoSnackbar.show
-          text: "Task #{task.title} at line #{line_number} is a milestone, it can only have the same Start Date and End Date."
-          duration: 15000
-
+        showErrorInSnackbarAndRevertState
+          dialog_state: modal_data.dialog_state
+          snackbar_message: "Task #{task.title} at line #{line_number} is a milestone, it can only have the same Start Date and End Date."
+          snackbar_duration: 15000
+          problematic_row: line_number
         return false
 
       else if task.start_date? and not task.end_date?
@@ -431,7 +453,8 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     for temp_import_id, deps_str of dependencies_strs
       if not (deps = APP.justdo_planning_utilities.parseDependenciesStr deps_str, project_id, import_idx_to_task_id)?
         line_number = temp_import_id.split("_L")[1]
-        throw new Meteor.Error "invalid dependency", "Invalid dependency(#{deps_str}) found in line #{line_number}"
+        scrollToAndHighlightProblematicRow line_number
+        throw new Meteor.Error "invalid dependency", "Invalid dependency (#{deps_str}) found in line #{line_number}"
 
       APP.justdo_planning_utilities.dependent_tasks_update_hook_enabled = false
       APP.collections.Tasks.update temp_import_id_task_id(temp_import_id),
@@ -496,9 +519,10 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     importLevel(n, callback)
   , (err, results) ->
     if err?
-      JustdoSnackbar.show
-        text: "#{err?.reason or "Incorrect dependenc(ies) found."}. Import aborted."
-        duration: 15000
+      showErrorInSnackbarAndRevertState
+        dialog_state: modal_data.dialog_state
+        snackbar_message: "#{err?.reason or "Incorrect dependenc(ies) found."}. Import aborted."
+        snackbar_duration: 15000
 
       undoImport()
 
@@ -509,9 +533,10 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       importOwners()
       clearupTempImportId()
     catch err
-      JustdoSnackbar.show
-        text: "#{err.reason}. Import aborted."
-        duration: 15000
+      showErrorInSnackbarAndRevertState
+        dialog_state: modal_data.dialog_state
+        snackbar_message: "#{err.reason}. Import aborted."
+        snackbar_duration: 15000
 
       undoImport()
 
