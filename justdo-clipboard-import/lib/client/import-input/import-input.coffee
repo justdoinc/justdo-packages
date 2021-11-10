@@ -9,7 +9,7 @@ loadSavedImportConfig = (tpl) ->
         $(this).find("a[field-id='#{cols[i]}']").click()
   return
 
-bindTargetToPaste = (tpl)->
+bindTargetToPaste = (tpl) ->
   $(".justdo-clipboard-import-paste-target").bind "paste", (e) ->
     e.stopPropagation()
     e.preventDefault()
