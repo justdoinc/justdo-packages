@@ -78,6 +78,14 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project-conf/project-conf.html", client);
   api.addFiles("lib/client/project-conf/project-conf.coffee", client);
 
+  api.addFiles("lib/client/activation-icon/activation-icon.sass", client);
+  api.addFiles("lib/client/activation-icon/activation-icon.html", client);
+  api.addFiles("lib/client/activation-icon/activation-icon.coffee", client);
+
+  api.addFiles("lib/client/dropdown/dropdown.sass", client);
+  api.addFiles("lib/client/dropdown/dropdown.html", client);
+  api.addFiles("lib/client/dropdown/dropdown.coffee", client);
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);
@@ -85,7 +93,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/app-integration.coffee", both);
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
-  // file. 
+  // file.
 
   api.export("JustdoQuickNotes", both);
 });

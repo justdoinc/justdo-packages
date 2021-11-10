@@ -1,0 +1,15 @@
+<template name="justdo_quick_notes_activation_icon">
+  <div class="project-header-button justdo-quick-notes-activation {{#if $eq activeNotesCount 0}}no-unread{{else}}has-unread{{/if}} {{#if $eq activeNotesCount 0}}{{else if $lte activeNotesCount 9}}single-digit{{else if $lte activeNotesCount 99}}double-digit{{else}}off-the-charts{{/if}} {{activeNotesCount}}">
+    <svg class="jd-icon jd-c-pointer text-dark">
+      <use xlink:href="/layout/icons-feather-sprite.svg#bookmark"></use>
+      <title>Quick notes</title>
+    </svg>
+    <div class="unread-count">
+      {{#if $lte activeNotesCount 99}}
+        {{activeNotesCount}}
+      {{else}}
+        99+
+      {{/if}}
+    </div>
+  </div>
+</template>

@@ -1,0 +1,35 @@
+<template name="justdo_quick_notes_dropdown">
+  <div class="quick-notes-section active">
+    <div class="section-title">My Quick Notes</div>
+
+    {{#each quckNotes}}
+      {{#unless completed}}
+        {{> justdo_quick_notes_item}}
+      {{/unless}}
+    {{/each}}
+
+  </div>
+
+  <div class="quick-notes-section completed">
+    <div class="section-title">Completed (5)</div>
+
+    {{#each quckNotes}}
+      {{#if completed}}
+        {{> justdo_quick_notes_item}}
+      {{/if}}
+    {{/each}}
+
+
+  </div>
+</template>
+
+<template name="justdo_quick_notes_item">
+  <div class="quick-note">
+    <div class="quick-note-mark">
+      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#circle"></use></svg>
+    </div>
+    <div class="quick-note-title">
+      {{title}}
+    </div>
+  </div>
+</template>
