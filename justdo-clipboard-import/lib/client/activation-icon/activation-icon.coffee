@@ -543,6 +543,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       return false
 
     saveImportConfig selected_columns_definitions
+    bootbox.hideAll()
     JustdoSnackbar.show
       text: "#{task_paths_added.length} task(s) imported."
       duration: 1000 * 60 * 2 # 2 mins
@@ -649,16 +650,13 @@ Template.justdo_clipboard_import_activation_icon.events
                 callback: (date_format) =>
                   if date_format?
                     modal_data.date_fields_date_format.set(date_format)
-
-                    if testDataAndImport modal_data, selected_columns_definitions
-                      bootbox.hideAll()
+                    testDataAndImport modal_data, selected_columns_definitions
 
                     return true
 
               return false
 
-            if testDataAndImport modal_data, selected_columns_definitions
-              return true
+            testDataAndImport modal_data, selected_columns_definitions
 
             return false
 
