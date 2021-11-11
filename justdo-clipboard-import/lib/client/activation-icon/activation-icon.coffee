@@ -17,6 +17,10 @@ base_supported_fields_ids = [
   "description"
 ].sort (a, b) -> return a.localeCompare b # localeCompare is used instead simply sort() to ignore case differences
 
+noneditable_importable_fields = [
+  "owner_id"
+]
+
 base_supported_fields_ids = non_sorted_field_ids.concat base_supported_fields_ids
 
 custom_allowed_dates_formats = ["MMM DD YYYY", "DD MMMM YYYY", "Others"]
@@ -78,7 +82,7 @@ getAvailableFieldTypes = ->
     # (E.g when the gantt is on we replace the built-in start_date/end_date with more sophisticated
     # fields, when we do that, we disable the start_date/end_date fields)
 
-    if all_fields[field_id]?.grid_editable_column
+    if all_fields[field_id]?.grid_editable_column or field_id in noneditable_importable_fields
       return true
 
     return false
