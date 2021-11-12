@@ -12,4 +12,4 @@ _.extend JustdoClipboardImport,
 
   custom_page_label: "justdo-clipboard-import"
 
-  import_limit: 500
+  import_limit: 1000
