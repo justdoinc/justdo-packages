@@ -153,6 +153,9 @@ Template.justdo_clipboard_import_input.helpers
 
   hasData: -> Template.instance().data.dialog_state.get() in ["has_data", "importing"]
 
+  importing: -> Template.instance().data.dialog_state.get() is "importing"
+
+  importHelperMessage: -> Template.instance().data.import_helper_message.get()
 
   rows: ->
     return Template.instance().data.clipboard_data.get()

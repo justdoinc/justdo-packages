@@ -44,6 +44,7 @@ isDateFieldDef = (field_def) ->
 
 showErrorInSnackbarAndRevertState = (options) ->
   options.dialog_state.set "has_data"
+  $("#progressbar .ui-progressbar-value").css "background", "#e91e63"
 
   if not options.snackbar_duration?
     options.snackbar_duration = 5000
@@ -68,6 +69,14 @@ saveImportConfig = (selected_columns_definitions) ->
     import_config.cols.push col_def._id
 
   amplify.store storage_key, import_config
+  return
+
+setProgressbarValue = (processed_lines, total_lines) ->
+  options =
+    value: processed_lines
+  if total_lines?
+    options.max = total_lines
+  $("#progressbar").progressbar options
   return
 
 scrollToAndHighlightProblematicRow = (line_number) ->
@@ -164,6 +173,7 @@ getSelectedColumnsDefinitions = ->
 
 testDataAndImport = (modal_data, selected_columns_definitions) ->
   modal_data.dialog_state.set "importing"
+  modal_data.import_helper_message.set "Preparing..."
   saveImportConfig selected_columns_definitions
   # Check that all columns have the same number of cells
   cp_data = modal_data.clipboard_data.get()
@@ -355,6 +365,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
   gc = APP.modules.project_page.mainGridControl()
   task_paths_added = []
+  import_progress = 0
 
   importLevel = (indent_level_to_import, mapSeriesCb) ->
     parent_id = modal_data.parent_task_id or "0"
@@ -379,6 +390,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             path_to_insert = "/#{parent_id}/"
 
           gc._grid_data.bulkAddChild path_to_insert, batch, (err, result) ->
+            import_progress += batch.length
+            setProgressbarValue import_progress, line_number
+            modal_data.import_helper_message.set "#{import_progress}/#{line_number}"
             if err?
               APP.collections.Tasks.find
                 "jci:temp_import_id":
@@ -452,6 +466,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       return task_ids
 
   importDependencies = ->
+    modal_data.import_helper_message.set "Importing dependencies..."
     for temp_import_id, deps_str of dependencies_strs
       if not (deps = APP.justdo_planning_utilities.parseDependenciesStr deps_str, project_id, import_idx_to_task_id)?
         line_number = temp_import_id.split("_L")[1]
@@ -467,6 +482,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     return true
 
   importOwners = ->
+    modal_data.import_helper_message.set "Importing Owners..."
     if _.isEmpty owner_id_to_temp_import_id_map
       return
 
@@ -570,6 +586,7 @@ Template.justdo_clipboard_import_activation_icon.events
       getAvailableFieldTypes: getAvailableFieldTypes
       date_fields_date_format: new ReactiveVar(null)
       import_config_local_storage_key: getLocalStorageKey()
+      import_helper_message: new ReactiveVar "Preparing..."
 
     message_template =
       JustdoHelpers.renderTemplateInNewNode(Template.justdo_clipboard_import_input, modal_data)
@@ -581,7 +598,7 @@ Template.justdo_clipboard_import_activation_icon.events
       task_or_project_name = "#{JD.activeJustdo({title: 1})?.title}"
 
     dialog = bootbox.dialog
-      title: "Import spreadsheet data as child tasks to <i>#{task_or_project_name}</i>"
+      title: """Import spreadsheet data as child tasks to <i>#{task_or_project_name}</i><div id="progressbar"></div>"""
       message: message_template.node
       animate: true
       scrollable: true

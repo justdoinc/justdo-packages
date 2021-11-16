@@ -13,9 +13,15 @@
       <div class="justdo-clipboard-import-table-container">
         <table class="justdo-clipboard-import-table table table-sm">
           <tr>
-            <td class="bg-light import-column-header">
-              Import
-            </td>
+            {{#if importing}}
+              <td class="bg-light import-column-header">
+                {{importHelperMessage}}
+              </td>
+            {{else}}
+              <td class="bg-light import-column-header">
+                Import
+              </td>
+            {{/if}}
             {{#each numberOfColumns}}
               <th class="bg-light" data-col-index="{{@index}}">
                 {{> justdo_clipboard_import_input_selector}}
