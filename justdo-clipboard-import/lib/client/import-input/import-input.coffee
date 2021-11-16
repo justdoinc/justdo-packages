@@ -92,9 +92,11 @@ bindTargetToPaste = (tpl) ->
         Tracker.afterFlush ->
           loadSavedImportConfig tpl
           return
-      else
-        JustdoSnackbar.show
-          text: "Couldn't find tabular information in the clipboard."
+        return
+    else
+      tpl.data.dialog_state.set "wait_for_paste"
+      JustdoSnackbar.show
+        text: "Couldn't find tabular information in the clipboard."
 
     return
 
@@ -112,10 +114,7 @@ Template.justdo_clipboard_import_input.onCreated ->
 
   @autorun =>
     state = Template.instance().data.dialog_state.get()
-
     if state == "wait_for_paste"
-      $(".justdo-clipboard-import-paste-target").css("display", "")
-      $(".justdo-clipboard-import-table").css("display", "none")
       $(".justdo-clipboard-import-main-button")
         .html "Cancel"
         .prop "disabled", false
@@ -124,23 +123,15 @@ Template.justdo_clipboard_import_input.onCreated ->
         bindTargetToPaste self
 
         return
-
     else if state == "has_data"
-      $(".justdo-clipboard-import-paste-target").css("display", "none")
-      $(".justdo-clipboard-import-table").css("display", "")
       $(".justdo-clipboard-import-main-button")
         .html "Import"
         .prop "disabled", false
     else if state == "importing"
-      $(".justdo-clipboard-import-paste-target").css("display", "none")
-      $(".justdo-clipboard-import-table").css("display", "")
       $(".justdo-clipboard-import-main-button")
-        .html "Importing..."
         .html """<i class="fa fa-spinner fa-spin"></i>"""
         .prop "disabled", true
     else
-      $(".justdo-clipboard-import-paste-target").css("display", "none")
-      $(".justdo-clipboard-import-table").css("display", "none")
       $(".justdo-clipboard-import-main-button")
         .html "Cancel"
         .prop "disabled", false
