@@ -147,16 +147,17 @@ Template.justdo_clipboard_import_input.onCreated ->
   return
 
 Template.justdo_clipboard_import_input.helpers
-  rows: ->
-    if (Template.instance().data.dialog_state.get() not in ["has_data", "importing"])
-      return []
+  waitingForPaste: -> Template.instance().data.dialog_state.get() is "wait_for_paste"
 
+  pasteTargetPlaceholder: -> "Copy content from your spreadsheet and paste it here to create tasks.\nThe first column is regarded as the Subject."
+
+  hasData: -> Template.instance().data.dialog_state.get() in ["has_data", "importing"]
+
+
+  rows: ->
     return Template.instance().data.clipboard_data.get()
 
   numberOfColumns: ->
-    if (Template.instance().data.dialog_state.get() not in ["has_data", "importing"])
-      return []
-
     return [1..Template.instance().data.clipboard_data.get()[0].length]
 
   importRow: (index) ->
