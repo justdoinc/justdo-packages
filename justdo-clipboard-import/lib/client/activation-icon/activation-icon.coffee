@@ -84,7 +84,7 @@ scrollToAndHighlightProblematicRow = (line_number) ->
   $problematic_row = $(".justdo-clipboard-import-table tr:nth-child(#{line_number + 1})")
   # problematic_row is a jQuery element, scrollIntoView() is native js method
   $problematic_row.get(0).scrollIntoView({behavior: "smooth", block: "center"})
-  $problematic_row.effect("highlight", {}, 3000)
+  $problematic_row.effect("highlight", {}, 10000)
   return
 
 getAvailableFieldTypes = ->
