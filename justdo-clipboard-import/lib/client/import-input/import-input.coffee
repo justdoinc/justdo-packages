@@ -136,6 +136,7 @@ Template.justdo_clipboard_import_input.onCreated ->
       $(".justdo-clipboard-import-table").css("display", "")
       $(".justdo-clipboard-import-main-button")
         .html "Importing..."
+        .html """<i class="fa fa-spinner fa-spin"></i>"""
         .prop "disabled", true
     else
       $(".justdo-clipboard-import-paste-target").css("display", "none")
