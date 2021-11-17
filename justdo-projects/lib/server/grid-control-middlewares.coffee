@@ -105,36 +105,51 @@ _.extend Projects.prototype,
     @items_collection.incrementChildsOrderGte = (parent_id, min_order_to_inc, item_doc=null) ->
       # note that this function replace grid-data-com-server.coffee's incrementChildsOrderGte
 
+      #
+      # parents update
+      #
       query = {}
-      parents2_query = {}
-
       if (project_id = item_doc?.project_id)?
         check project_id, String
 
         query["project_id"] = project_id
 
       query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
+
+      update_op = {$inc: {}}
+      update_op["$inc"]["parents.#{parent_id}.order"] = 1
+
+      update_op["$currentDate"] = {_raw_updated_date: true}
+
+      #
+      # parents2 update
+      #
+      parents2_query = {}
       parents2_query["parents2"] =
+        # During conversion period, parents2 may not exist for all tasks documents
+        # We opportunistically attempt to update parents2 in this stage.
         $elemMatch:
           parent: parent_id
           order:
             $gte: min_order_to_inc
 
-      update_op = {$inc: {}}
       parents2_update_op = {$inc: {}}
-      update_op["$inc"]["parents.#{parent_id}.order"] = 1
       parents2_update_op["$inc"]["parents2.$.order"] = 1
 
-      update_op["$currentDate"] = {_raw_updated_date: true}
-
       performIncrementChildsOrderGte = (cb) =>
-        # Use rawCollection here, skip collection2/hooks
-        APP.justdo_analytics.logMongoRawConnectionOp(@_name, "update", update_op, {multi: true})
-        # During conversion period, parents2 may not exist for all tasks documents
-        # We optionally attempt to update parents2 in this stage.
-        @rawCollection().update parents2_query, parents2_update_op, {multi: true}
+        # We use rawCollection here, skip collection2/hooks
+        async.parallel [
+          (cb) =>
+            APP.justdo_analytics.logMongoRawConnectionOp(@_name, "update", parents2_query, parents2_update_op, {multi: true})
+            @rawCollection().update parents2_query, parents2_update_op, {multi: true}, cb
 
-        return @rawCollection().update query, update_op, {multi: true}, Meteor.bindEnvironment (err) ->
+            return
+          (cb) =>
+            APP.justdo_analytics.logMongoRawConnectionOp(@_name, "update", query, update_op, {multi: true})
+            @rawCollection().update query, update_op, {multi: true}, cb
+
+            return
+        ], (err) ->
           if err?
             console.error(err)
 
@@ -145,6 +160,8 @@ _.extend Projects.prototype,
           cb()
 
           return
+
+        return
 
       Meteor.wrapAsync(performIncrementChildsOrderGte)()
 
