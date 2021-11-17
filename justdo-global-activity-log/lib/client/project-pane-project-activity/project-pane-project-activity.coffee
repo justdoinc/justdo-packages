@@ -66,7 +66,6 @@ Template.global_activity_log_project_pane_project_activity.onCreated ->
       tpl.loading_new_logs.set true
 
       previous_global_changelog_subscription = tpl.global_changelog_subscription
-      previous_subscription_tracker = tpl.current_subscription_tracker
 
       options =
         projects: [project_id]
@@ -79,7 +78,7 @@ Template.global_activity_log_project_pane_project_activity.onCreated ->
 
       tpl.global_changelog_subscription = APP.justdo_global_activity_log.subscribeGlobalChangelog options
 
-      tpl.current_subscription_tracker = Tracker.autorun ->
+      tpl.autorun (computation) ->
         if tpl.global_changelog_subscription.ready()
           # Allow next call of refreshChangelogSubscription
           tpl.loading_new_logs.set false
@@ -87,7 +86,7 @@ Template.global_activity_log_project_pane_project_activity.onCreated ->
           # stop after the new subscription established to use mergebox to avoid even sending
           # docs we already have
           previous_global_changelog_subscription?.stop()
-          previous_subscription_tracker?.stop()
+          computation.stop()
 
   @autorun ->
     notes_dep.depend()
