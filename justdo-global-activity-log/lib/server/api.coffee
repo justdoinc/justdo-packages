@@ -66,6 +66,10 @@ _.extend JustdoGlobalActivityLog.prototype,
 
       defaultValue: null
 
+    query_field:
+      type: [String]
+      optional: true
+
   globalChangelogPublicationHandler: (publish_this, options, performing_user_id) ->
     @requireUserProvided(performing_user_id)
 
@@ -101,13 +105,11 @@ _.extend JustdoGlobalActivityLog.prototype,
     tasks_query =
       users: performing_user_id
       project_id: project_id
-      updated_by: performing_user_id
 
     if (changelog_time_frame_ms = options.changelog_time_frame_ms)?
       tasks_query.updatedAt = {$gte: JustdoHelpers.getDateMsOffset(-1 * changelog_time_frame_ms)}
 
     tasks_options =
-      limit: Math.ceil(options.tasks_limit / 2)
       fields:
         _id: 1
       sort:
@@ -115,12 +117,6 @@ _.extend JustdoGlobalActivityLog.prototype,
 
     recently_updated_tasks_ids =
       @tasks_collection.find(tasks_query, tasks_options).map (task) -> task._id
-
-    tasks_query.updated_by = {$ne: performing_user_id}
-
-    recently_updated_tasks_ids = recently_updated_tasks_ids.concat(
-      @tasks_collection.find(tasks_query, tasks_options).map (task) -> task._id
-    )
 
     changelog_query =
       task_id: {$in: recently_updated_tasks_ids}
@@ -131,6 +127,9 @@ _.extend JustdoGlobalActivityLog.prototype,
 
     if not options.include_performing_user
       changelog_query.by = {$ne: performing_user_id}
+
+    if options.query_field
+      changelog_query.field = {$in: options.query_field}
 
     changelog_options =
       limit: options.changelogs_limit

@@ -68,20 +68,32 @@ Template.global_activity_log_project_pane_project_activity.onCreated ->
       previous_global_changelog_subscription = tpl.global_changelog_subscription
       previous_subscription_tracker = tpl.current_subscription_tracker
 
-      tpl.global_changelog_subscription = APP.justdo_global_activity_log.subscribeGlobalChangelog
+      options =
         projects: [project_id]
         tasks_limit: tpl.changelog_tasks_limit
         changelogs_limit: tpl.changelog_changelogs_limit
+        include_performing_user: getShowMyChangesState()
+
+      if getNotesFilterState()
+        options.query_field = ["status"]
+
+      tpl.global_changelog_subscription = APP.justdo_global_activity_log.subscribeGlobalChangelog options
 
       tpl.current_subscription_tracker = Tracker.autorun ->
         if tpl.global_changelog_subscription.ready()
           # Allow next call of refreshChangelogSubscription
           tpl.loading_new_logs.set false
 
-      # stop after the new subscription established to use mergebox to avoid even sending
-      # docs we already have
-      previous_global_changelog_subscription?.stop()
-      previous_subscription_tracker?.stop()
+          # stop after the new subscription established to use mergebox to avoid even sending
+          # docs we already have
+          previous_global_changelog_subscription?.stop()
+          previous_subscription_tracker?.stop()
+
+  @autorun ->
+    notes_dep.depend()
+    show_my_changes_dep.depend()
+    Tracker.nonreactive -> tpl.refreshChangelogSubscription()
+    return
 
   min_time_between_updates = 10 * 1000 # 10 seconds
   last_update = null
@@ -116,9 +128,6 @@ Template.global_activity_log_project_pane_project_activity.onDestroyed ->
 Template.global_activity_log_project_pane_project_activity.helpers
   activities: ->
     query = {}
-
-    if not getStatusFilterState()
-      query.field = "status"
 
     logs_cursor = APP.collections.JDGlobalChangelog.find(query, {sort: {when: -1}})
 
