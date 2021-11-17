@@ -19,17 +19,30 @@ Template.global_activity_log_project_pane_project_activity_container.helpers
 
     return tpl.project_template_refresher.get()
 
-status_filter_amplify_key = "project-pane-project-activity-filter-status"
-default_status_filter_state = false
+notes_filter_amplify_key = "project-pane-project-activity-filter-status"
+show_my_changes_amplify_key = "project-pane-project-activity-show-my-changes"
+default_notes_filter_state = false
+default_show_my_changes_state = false
 
-status_dep = new Tracker.Dependency()
-getStatusFilterState = ->
-  status_dep.depend()
+notes_dep = new Tracker.Dependency()
+getNotesFilterState = ->
+  notes_dep.depend()
 
-  return if (state = amplify.store(status_filter_amplify_key))? then state else default_status_filter_state
-toggleStatusFilterState = ->
-  status_dep.changed()
-  amplify.store(status_filter_amplify_key, not getStatusFilterState())
+  return if (state = amplify.store(notes_filter_amplify_key))? then state else default_notes_filter_state
+toggleNotesFilterState = ->
+  notes_dep.changed()
+  amplify.store(notes_filter_amplify_key, not getNotesFilterState())
+
+  return
+
+show_my_changes_dep = new Tracker.Dependency()
+getShowMyChangesState = ->
+  show_my_changes_dep.depend()
+
+  return if (state = amplify.store(show_my_changes_amplify_key))? then state else default_show_my_changes_state
+toggleShowMyChangesState = ->
+  show_my_changes_dep.changed()
+  amplify.store(show_my_changes_amplify_key, not getShowMyChangesState())
 
   return
 
@@ -128,7 +141,9 @@ Template.global_activity_log_project_pane_project_activity.helpers
 
   negativeDateOrNow: -> JustdoHelpers.negativeDateOrNow(@when)
 
-  isActiveStatusFilter: -> getStatusFilterState()
+  isActiveMyChangesFilter: -> not getShowMyChangesState()
+
+  isActiveNotesFilter: -> not getNotesFilterState()
 
   loadingNewLogs: ->
     tpl = Template.instance()
@@ -143,8 +158,11 @@ Template.global_activity_log_project_pane_project_activity.events
 
     return
 
-  "click .filter-toggle": ->
-    toggleStatusFilterState()
+  "click .show-my-changes": (e, tpl) ->
+    toggleShowMyChangesState()
+
+  "click .show-notes-only": (e, tpl) ->
+    toggleNotesFilterState()
 
   "scroll .tab-project-activity": (e, tpl) ->
     activity_tab = $(e.currentTarget).closest ".tab-project-activity"

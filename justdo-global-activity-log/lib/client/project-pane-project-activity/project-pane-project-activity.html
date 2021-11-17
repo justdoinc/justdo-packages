@@ -9,9 +9,19 @@
 <template name="global_activity_log_project_pane_project_activity">
   <div class="tab-project-activity">
 
-    <div class="filter-toggle px-3 d-flex align-items-center justify-content-end">
+    <div class="filter-toggle show-my-changes px-3 d-flex align-items-center justify-content-end">
       <div class="mr-1">
-        {{#if isActiveStatusFilter}}
+        {{#if isActiveMyChangesFilter}}
+          <svg class="jd-icon text-secondary mr-0"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+        {{else}}
+          <svg class="jd-icon text-primary mr-0"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+        {{/if}}
+      </div>Show my changes as well
+    </div>
+
+    <div class="filter-toggle show-notes-only px-3 d-flex align-items-center justify-content-end">
+      <div class="mr-1">
+        {{#if isActiveNotesFilter}}
           <svg class="jd-icon text-secondary mr-0"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
         {{else}}
           <svg class="jd-icon text-primary mr-0"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
