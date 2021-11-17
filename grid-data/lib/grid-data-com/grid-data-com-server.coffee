@@ -414,10 +414,29 @@ _.extend GridDataCom.prototype,
         # item_doc serves the same purpose new_child_fields serves in
         # @getNewChildOrder, read comment there in its entirety
         # including XXX section
+
+        #
+        # parents update
+        #
         query = {}
         query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
         update_op = {$inc: {}}
         update_op["$inc"]["parents.#{parent_id}.order"] = 1
+
+        #
+        # parents2 update
+        #
+        parents2_query = {}
+        parents2_query["parents2"] =
+          $elemMatch:
+            parent: parent_id
+            order:
+              $gte: min_order_to_inc
+
+        parents2_update_op = {$inc: {}}
+        parents2_update_op["$inc"]["parents2.$.order"] = 1
+
+        collection.update parents2_query, parents2_update_op, {multi: true, bypassCollection2: true}
 
         return collection.update query, update_op, {multi: true, bypassCollection2: true}
 

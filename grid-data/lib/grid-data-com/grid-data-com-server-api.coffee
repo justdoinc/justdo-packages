@@ -561,6 +561,10 @@ _.extend GridDataCom.prototype,
 
     return
 
+  _addParents2: (item) ->
+    item.parents2 = _.map item.parents, (parent_obj, parent_id) -> return {parent: parent_id, order: parent_obj.order}
+    @collection.update item._id, {$set: {parents2: item.parents2}}
+    return item
 
   # Allow adding root child without going through the addChild method
   # to allow adding a root child to a specific non-logged-in user 
@@ -569,11 +573,15 @@ _.extend GridDataCom.prototype,
 
     @_isPerformAsProvided(perform_as)
 
+    order = @collection.getNewChildOrder("0", fields)
     new_item = _.extend {}, fields,
       parents:
         "0":
-          order:
-            @collection.getNewChildOrder("0", fields)
+          order: order
+      parents2: [
+        parent: "0"
+        order: order
+      ]
       users: [perform_as]
 
     @_runGridMethodMiddlewares "addChild", "/", new_item, perform_as
@@ -604,8 +612,18 @@ _.extend GridDataCom.prototype,
 
       users.push(perform_as)
 
-    new_item = _.extend {}, fields, {parents: {}, users: users}
-    new_item.parents[item._id] = {order: @collection.getNewChildOrder(item._id, fields)}
+    order = @collection.getNewChildOrder(item._id, fields)
+    new_item = _.extend {}, fields,
+      users: users
+      parents:
+        [item._id]:
+          order: order
+      parents2: [
+        {
+          parent: item._id
+          order: order
+        }
+      ]
 
     @_runGridMethodMiddlewares "addChild", path, new_item, perform_as
 
@@ -652,8 +670,17 @@ _.extend GridDataCom.prototype,
 
     sibling_order = item.parents[parent_id].order + 1
 
-    new_item = _.extend {}, fields, {parents: {}, users: users}
-    new_item.parents[parent_id] = {order: sibling_order}
+    new_item = _.extend {}, fields,
+      users: users
+      parents:
+        [parent_id]:
+          order: sibling_order
+      parents2: [
+        {
+          parent: parent_id
+          order: sibling_order
+        }
+      ]
 
     @_runGridMethodMiddlewares "addSibling", path, new_item, perform_as
 
@@ -702,9 +729,14 @@ _.extend GridDataCom.prototype,
 
       @collection.remove item._id
     else
+      if not item.parents2?
+        item = @_addParents2 item
+
       # Remove parent
-      update_op = {$unset: {}}
+      update_op = {$unset: {}, $pull: {}}
       update_op.$unset["parents.#{parent_id}"] = ""
+      update_op.$pull.parents2 = {parent: parent_id}
+
 
       @_runGridMethodMiddlewares "removeParent", path, perform_as,
         # the etc obj
@@ -779,9 +811,13 @@ _.extend GridDataCom.prototype,
     if not new_parent_order?
       new_parent_order = @collection.getNewChildOrder(new_parent_id, item)
 
+    if not item.parents2?
+      item = @_addParents2 item
+
     # Add new parent update operation object
-    set_new_parent_update_op = {$set: {}}
+    set_new_parent_update_op = {$set: {}, $addToSet: {}}
     set_new_parent_update_op.$set["parents.#{new_parent_id}"] = {order: new_parent_order}
+    set_new_parent_update_op.$addToSet.parents2 = {parent: new_parent_id, order: new_parent_order}
 
     @_runGridMethodMiddlewares "addParent", perform_as,
       # the etc obj
@@ -877,13 +913,29 @@ _.extend GridDataCom.prototype,
     if not ("order" of new_location)
       new_location.order = @collection.getNewChildOrder(new_location.parent, item)
 
+    if not item.parents2?
+      item = @_addParents2 item
+
     # Remove current parent op prepeation
-    remove_current_parent_update_op = {$unset: {}}
+    remove_current_parent_update_op = {$unset: {}, $pull: {}}
     remove_current_parent_update_op.$unset["parents.#{current_parent_id}"] = ""
+    remove_current_parent_update_op.$pull.parents2 = {parent: {$in: [current_parent_id]}}
+
+    # If the new parent is already a parent of this task,
+    # we remove the old record first to prevent duplicate parents.
+    for parent_obj in item.parents2
+      if parent_obj.parent == current_parent_id
+        # current_parent_id is always removed, we don't want to add it twice to the array
+        continue
+
+      if parent_obj.parent == new_location.parent
+        remove_current_parent_update_op.$pull.parents2.parent.$in.push new_location.parent
+        break
 
     # Add to new parent op prepeation
-    set_new_parent_update_op = {$set: {}}
+    set_new_parent_update_op = {$set: {}, $addToSet: {}}
     set_new_parent_update_op.$set["parents.#{new_location.parent}"] = {order: new_location.order}
+    set_new_parent_update_op.$addToSet.parents2 = {parent: new_location.parent, order: new_location.order}
 
     # Check if an item exist already in new_location order
     item_in_new_location = @collection.getChildreOfOrder(new_location.parent, new_location.order, item)
