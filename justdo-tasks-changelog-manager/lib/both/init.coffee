@@ -40,6 +40,7 @@ options_schema =
           "taskUsersChangesTracker",
           "priorityChangesTracker",
           "redundantLogsTracker",
+          "pendingOwnershipTransferTracker",
           ["simpleTasksFieldsChangesTracker", {
             tracked_fields: ["title", "status", "owner_id", "follow_up", "due_date", "state", "start_date", "end_date"]
             track_custom_fields: true

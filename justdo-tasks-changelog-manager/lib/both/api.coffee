@@ -151,6 +151,9 @@ _.extend TasksChangelogManager.prototype,
     if activity_obj.change_type == "custom"
       return "#{performer_name} #{activity_obj.new_value}"
 
+    if activity_obj.change_type == "trasnfer_pending"
+      return "#{performer_name} asked #{JustdoHelpers.displayName activity_obj.new_value} to become owner of this task."
+
     if activity_obj.change_type == "transfer_rejected"
       return "#{performer_name} rejected the ownership transfer request."
 
