@@ -96,7 +96,6 @@ APP.executeAfterAppLibCode ->
 
               grid_control._performLockingOperation (releaseOpsLock, timedout) =>
                 destination_title = $("div.ticket-category-select button")?.attr("title")
-
                 if destination_type == "ticket-queue"
                   Meteor.call "newTQTicket",
                     {
@@ -167,7 +166,6 @@ APP.executeAfterAppLibCode ->
   getSelectedTicketsQueueDoc = -> APP.collections.TicketsQueues.findOne selected_destination_id.get()
 
   tickets_queues_reactive_var = null
-  projects_reactive_var = null
   selected_destination_users_reactive_var = null
   selected_destination_type_reactive_var = null
   task_user_subscription_handler = null
@@ -183,15 +181,6 @@ APP.executeAfterAppLibCode ->
 
     tickets_queues_reactive_var = APP.helpers.newComputedReactiveVar "tickets_queues", ->
       return APP.collections.TicketsQueues.find({}, {sort: {title: 1}}).fetch()
-
-    projects_reactive_var = APP.helpers.newComputedReactiveVar "projects", ->
-      query =
-        project_id: JD.activeJustdoId()
-        "p:dp:is_project": true
-        # A task is considered as a project if is_project is true and is_archived_project is false/ does not exists
-        "p:dp:is_archived_project":
-          $ne: true
-      return APP.collections.Tasks.find(query)
 
     selected_destination_type_reactive_var = APP.helpers.newComputedReactiveVar "selected_destination_type", ->
       destination_id = selected_destination_id.get()
@@ -255,21 +244,6 @@ APP.executeAfterAppLibCode ->
 
         return
 
-    projects_reactive_var.on "computed", ->
-      Meteor.defer =>
-        destination_type = selected_destination_type_reactive_var.get()
-
-        if destination_type == "projects"
-          if selected_destination_id.get() not in _.map(projects_reactive_var.get(), (queue) -> project._id)
-            # If selected ticket queue removed as ticket queue
-            selected_destination_id.set(null)
-            $("#ticket-queue-id").val("")
-
-        $("#ticket-queue-id").selectpicker("refresh")
-
-        return
-
-
     selected_destination_users_reactive_var.on "computed", ->
       Meteor.defer =>
         if selected_owner.get() not in _.map(selected_destination_users_reactive_var.get(), (user) -> user._id)
@@ -314,9 +288,6 @@ APP.executeAfterAppLibCode ->
     tickets_queues_reactive_var.stop()
     tickets_queues_reactive_var = null
 
-    projects_reactive_var.stop()
-    projects_reactive_var = null
-
     selected_destination_users_reactive_var.stop()
     selected_destination_users_reactive_var = null
 
@@ -332,7 +303,11 @@ APP.executeAfterAppLibCode ->
         return true
       return false
     tickets_queues: -> tickets_queues_reactive_var.get()
-    projects: -> projects_reactive_var.get()
+    projects: ->
+      projects = APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdoId, {active_only: true}, Meteor.userId())
+      Meteor.defer =>
+        $("#ticket-queue-id").selectpicker("refresh")
+      return projects
     selected_destination_id: -> selected_destination_id.get()
     selected_destination_type: -> selected_destination_type_reactive_var.get()
     selected_destination_type_has_users: -> selected_destination_type_reactive_var.get() in ["ticket-queue", "projects"]
