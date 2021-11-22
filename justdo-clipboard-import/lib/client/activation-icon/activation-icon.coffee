@@ -81,11 +81,17 @@ setProgressbarValue = (processed_lines, total_lines) ->
   return
 
 scrollToAndHighlightProblematicRow = (line_number) ->
-  line_number = parseInt line_number, 10
-  $problematic_row = $(".justdo-clipboard-import-table tr:nth-child(#{line_number + 1})")
-  # problematic_row is a jQuery element, scrollIntoView() is native js method
-  $problematic_row.get(0).scrollIntoView({behavior: "smooth", block: "center"})
-  $problematic_row.effect("highlight", {}, 10000)
+  # The try-catch is here to ignore the error generated
+  # by jQuerying elements that does not exist, to facilitate displaying error message in snackbar.
+  # e.g. The modal is closed already when error occurs in importDependencies/importOwners
+  try
+    line_number = parseInt line_number, 10
+    $problematic_row = $(".justdo-clipboard-import-table tr:nth-child(#{line_number + 1})")
+    # problematic_row is a jQuery element, scrollIntoView() is native js method
+    $problematic_row.get(0).scrollIntoView({behavior: "smooth", block: "center"})
+    $problematic_row.effect("highlight", {}, 10000)
+  catch
+    return
   return
 
 getAvailableFieldTypes = ->
@@ -605,7 +611,11 @@ Template.justdo_clipboard_import_activation_icon.events
       scrollable: true
       className: "bootbox-new-design justdo-clipboard-import-dialog"
 
-      onEscape: ->
+      onEscape: =>
+        if modal_data.dialog_state.get() == "importing"
+          JustdoSnackbar.show
+            text: "Importing in the background..."
+
         return true
 
       buttons:
@@ -672,10 +682,8 @@ Template.justdo_clipboard_import_activation_icon.events
                     testDataAndImport modal_data, selected_columns_definitions
 
                     return true
-
-              return false
-
-            testDataAndImport modal_data, selected_columns_definitions
+            else
+              testDataAndImport modal_data, selected_columns_definitions
 
             return false
 
