@@ -113,29 +113,26 @@ Template.justdo_clipboard_import_input.onCreated ->
     return
 
   @autorun =>
+    # All buttons should be enabled by default.
+    $(".justdo-clipboard-import-main-button, .justdo-import-clipboard-data-reset-button, .col-def-selector, .import-row-checkbox").prop "disabled", false
     state = Template.instance().data.dialog_state.get()
+
     if state == "wait_for_paste"
-      $(".justdo-clipboard-import-main-button")
-        .html "Cancel"
-        .prop "disabled", false
-
-      Meteor.defer ->
+      $(".justdo-clipboard-import-main-button").html "Cancel"
+      $("#progressbar").hide()
+      Meteor.defer =>
         bindTargetToPaste self
-
         return
     else if state == "has_data"
-      $(".justdo-clipboard-import-main-button")
-        .html "Import"
-        .prop "disabled", false
+      $(".justdo-clipboard-import-main-button").html "Import"
     else if state == "importing"
-      $(".justdo-clipboard-import-main-button")
-        .html """<i class="fa fa-spinner fa-spin"></i>"""
-        .prop "disabled", true
+      $(".justdo-clipboard-import-main-button, .justdo-import-clipboard-data-reset-button, .col-def-selector, .import-row-checkbox").prop "disabled", true
+      $(".justdo-clipboard-import-main-button").prop "disabled", true
     else
-      $(".justdo-clipboard-import-main-button")
-        .html "Cancel"
-        .prop "disabled", false
+      $(".justdo-clipboard-import-main-button").html "Cancel"
+      $("#progressbar").hide()
     return
+
   return
 
 Template.justdo_clipboard_import_input.helpers

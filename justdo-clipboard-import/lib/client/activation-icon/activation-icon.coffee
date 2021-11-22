@@ -77,6 +77,7 @@ setProgressbarValue = (processed_lines, total_lines) ->
   if total_lines?
     options.max = total_lines
   $("#progressbar").progressbar options
+  $("#progressbar").show()
   return
 
 scrollToAndHighlightProblematicRow = (line_number) ->
