@@ -11,17 +11,17 @@
 
     {{#if hasData}}
       <div class="justdo-clipboard-import-table-container">
+        {{#if importing}}
+          <div class="import-helper-message">
+            {{importHelperMessage}}
+          </div>
+        {{/if}}
+
         <table class="justdo-clipboard-import-table table table-sm">
           <tr>
-            {{#if importing}}
-              <td class="bg-light import-column-header">
-                {{importHelperMessage}}
-              </td>
-            {{else}}
-              <td class="bg-light import-column-header">
-                Import
-              </td>
-            {{/if}}
+            <td class="bg-light import-column-header">
+              Import
+            </td>
             {{#each numberOfColumns}}
               <th class="bg-light" data-col-index="{{@index}}">
                 {{> justdo_clipboard_import_input_selector}}

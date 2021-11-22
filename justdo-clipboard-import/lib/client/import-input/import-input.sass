@@ -6,28 +6,53 @@
     left: 2vw
     width: 95vw
     height: 90vh
-
   .bootbox-body
     height: 100%
     & > div:first-child
       height: 100%
+
+  .modal-header
+    position: relative
+    #progressbar
+      position: absolute
+      width: 100%
+      left: 0px
+      right: 0px
+      bottom: -1px
+      border: none
+      border-radius: 0px
+      height: 3px
+      background-color: transparent
+      .ui-widget-header
+        border: none
+        border-radius: 0px
+        margin: 0px
+        background: #3667a1
 
 .justdo-clipboard-import-container
   height: 100%
 
 .modal-title
   width: 100%
-  #progressbar
-    border: none
-    margin-top: 2px
-    max-height: 15px
-    .ui-widget-header
-      border: none
 
 .justdo-clipboard-import-table-container
   height: calc(90vh - 163px)
   min-height: 200px // Need enough height for the field selector dropdown to show well
   overflow: auto
+  
+  .import-helper-message
+    position: absolute
+    z-index: 1
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background-color: rgba(255, 255, 255, 0.85)
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 15px
+    font-weight: bold
 
 .justdo-clipboard-import-table.table
   th
