@@ -540,6 +540,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     return
 
+  modal_data.import_helper_message.set "Importing..."
   async.mapSeries [1..max_indent], (n, callback) ->
     importLevel(n, callback)
   , (err, results) ->
