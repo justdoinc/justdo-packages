@@ -13,11 +13,11 @@
 </template>
 
 <template name="justdo_project_pane_expanded_header">
-  <div class="justdo-project-pane-header d-flex align-items-center justify-content-between bg-light">
-    <div class="justdo-project-pane-tabs d-flex px-3">
+  <div class="justdo-project-pane-header bg-light">
+    <div class="justdo-project-pane-tabs">
       {{#each getTabs}}
-        <div class="position-relative text-center">
-          <div tab-id="{{tab_id}}" class="project-pane-tab px-3 py-2 text-body text-uppercase font-weight-bold h-100 d-flex align-items-center {{#if $eq getActiveTabId tab_id}}active{{/if}}">
+        <div class="project-pane-tab-wrapper">
+          <div tab-id="{{tab_id}}" class="project-pane-tab {{#if $eq getActiveTabId tab_id}}active{{/if}}">
             {{tab_label}}
             <div class="active-tab-bottom-border bg-primary"></div>
           </div>

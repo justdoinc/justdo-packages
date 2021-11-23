@@ -34,9 +34,22 @@ $project-pane-header-height: 30px // Important! if you change this one, search t
   border-top: 1px solid rgba(0, 0, 0, 0.08)
   border-bottom: 1px solid rgba(0, 0, 0, 0.04)
 
+  .justdo-project-pane-tabs
+    display: flex
+    padding: 0px 16px
+    flex-grow: 1
+
+  .project-pane-tab-wrapper
+    position: relative
+
   .project-pane-tab
-    font-size: 12px
     cursor: pointer
+    display: flex
+    align-items: center
+    white-space: nowrap
+    height: 34px
+    padding: 0px 16px
+    font-size: 15px
     &:hover
       .active-tab-bottom-border
         visibility: visible
