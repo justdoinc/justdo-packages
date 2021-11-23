@@ -220,6 +220,8 @@ APP.executeAfterAppLibCode ->
             $(e.target).focus()
           , 0
 
+    @selectpicker_loaded = true
+
     tickets_queues_reactive_var.on "computed", ->
       Meteor.defer =>
         destination_type = selected_destination_type_reactive_var.get()
@@ -291,9 +293,14 @@ APP.executeAfterAppLibCode ->
       return false
     tickets_queues: -> tickets_queues_reactive_var.get()
     projects: ->
+      tpl = Template.instance()
+
       projects = APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdoId, {active_only: true}, Meteor.userId())
       Meteor.defer =>
-        $("#ticket-queue-id").selectpicker("refresh")
+        if tpl.selectpicker_loaded
+          $("#ticket-queue-id").selectpicker("refresh")
+
+        return
       return projects
     selected_destination_id: -> selected_destination_id.get()
     selected_destination_type: -> selected_destination_type_reactive_var.get()
