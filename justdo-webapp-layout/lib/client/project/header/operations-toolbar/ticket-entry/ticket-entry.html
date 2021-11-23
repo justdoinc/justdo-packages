@@ -11,9 +11,9 @@
               <optgroup label="Ticket Queues">
                 {{#each this}}
                   {{#if title}}
-                    <option value="{{_id}}">#{{seqId}}: {{cutString title max_printed_task_title}}</option>
+                    <option value="ticket-queue::{{_id}}">#{{seqId}}: {{cutString title max_printed_task_title}}</option>
                   {{else}}
-                    <option value="{{_id}}">#{{seqId}}</option>
+                    <option value="ticket-queue::{{_id}}">#{{seqId}}</option>
                   {{/if}}
                 {{/each}}
               </optgroup>
@@ -23,9 +23,9 @@
               <optgroup label="Projects">
                 {{#each this}}
                   {{#if title}}
-                    <option value="{{_id}}">#{{seqId}}: {{cutString title max_printed_task_title}}</option>
+                    <option value="projects::{{_id}}">#{{seqId}}: {{cutString title max_printed_task_title}}</option>
                   {{else}}
-                    <option value="{{_id}}">#{{seqId}}</option>
+                    <option value="projects::{{_id}}">#{{seqId}}</option>
                   {{/if}}
                 {{/each}}
               </optgroup>

@@ -149,6 +149,7 @@ APP.executeAfterAppLibCode ->
   formIsValid = -> selected_destination_id.get()? and not _.isEmpty(title.get())
 
   selected_destination_id = new ReactiveVar null
+  selected_destination_type_reactive_var = new ReactiveVar null
   title = new ReactiveVar null
   selected_owner = new ReactiveVar null
   description = new ReactiveVar null
@@ -156,6 +157,7 @@ APP.executeAfterAppLibCode ->
   submit_attempted = new ReactiveVar null
   initReactiveVars = ->
     selected_destination_id.set null
+    selected_destination_type_reactive_var.set null
     title.set ""
     selected_owner.set null
     description.set ""
@@ -167,7 +169,6 @@ APP.executeAfterAppLibCode ->
 
   tickets_queues_reactive_var = null
   selected_destination_users_reactive_var = null
-  selected_destination_type_reactive_var = null
   task_user_subscription_handler = null
 
   Template.ticket_entry.onCreated ->
@@ -181,18 +182,6 @@ APP.executeAfterAppLibCode ->
 
     tickets_queues_reactive_var = APP.helpers.newComputedReactiveVar "tickets_queues", ->
       return APP.collections.TicketsQueues.find({}, {sort: {title: 1}}).fetch()
-
-    selected_destination_type_reactive_var = APP.helpers.newComputedReactiveVar "selected_destination_type", ->
-      destination_id = selected_destination_id.get()
-
-      if not destination_id?
-        return "none"
-
-      destination_task_doc = APP.collections.Tasks.findOne(destination_id, {fields: {"p:dp:is_project": 1, "p:dp:is_archived_project": 1}})
-      if destination_task_doc["p:dp:is_project"] and not destination_task_doc["p:dp:is_archived_project"]
-        return "projects"
-
-      return "ticket-queue"
 
     selected_destination_users_reactive_var = APP.helpers.newComputedReactiveVar "selected_destination_users", ->
       destination_type = selected_destination_type_reactive_var.get()
@@ -291,9 +280,6 @@ APP.executeAfterAppLibCode ->
     selected_destination_users_reactive_var.stop()
     selected_destination_users_reactive_var = null
 
-    selected_destination_type_reactive_var.stop()
-    selected_destination_type_reactive_var = null
-
     initReactiveVars()
     return
 
@@ -328,7 +314,9 @@ APP.executeAfterAppLibCode ->
 
   Template.ticket_entry.events
     "change #ticket-queue-id": ->
-      selected_destination_id.set($('#ticket-queue-id').val())
+      [destination_type, task_id] = $('#ticket-queue-id').val().split("::")
+      selected_destination_type_reactive_var.set(destination_type)
+      selected_destination_id.set(task_id)
 
       # init owner selector
       selected_owner.set(null)
