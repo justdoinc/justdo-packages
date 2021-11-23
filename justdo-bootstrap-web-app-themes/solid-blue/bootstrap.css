@@ -7203,13 +7203,6 @@ a.text-dark:hover, a.text-dark:focus {
   background-image: none;
 }
 
-.justdo-project-pane-header .project-pane-tab {
-  font-size: 14px;
-  height: 34px !important;
-  text-transform: none !important;
-  font-weight: 400 !important;
-}
-
 .slick-row,
 .grid-control .slick-cell,
 .grid-control .null-state {
