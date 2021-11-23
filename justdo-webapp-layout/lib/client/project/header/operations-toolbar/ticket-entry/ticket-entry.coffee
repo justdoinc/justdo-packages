@@ -198,6 +198,7 @@ APP.executeAfterAppLibCode ->
       if not selected_destination_doc?
         return []
 
+      selected_owner.set selected_destination_doc.owner_id
       owner_doc = APP.helpers.getUsersDocsByIds([selected_destination_doc.owner_id])
       tickets_queue_users = APP.collections.TasksAugmentedFields.findOne(selected_destination_doc._id, {fields: {users: 1}})?.users
       other_users_docs = APP.helpers.getUsersDocsByIds(_.without(tickets_queue_users, selected_destination_doc.owner_id))
@@ -317,10 +318,6 @@ APP.executeAfterAppLibCode ->
       [destination_type, task_id] = $('#ticket-queue-id').val().split("::")
       selected_destination_type_reactive_var.set(destination_type)
       selected_destination_id.set(task_id)
-
-      # init owner selector
-      selected_owner.set(null)
-      $('#ticket-assigned-user-id').val("")
       return
 
     "change #ticket-assigned-user-id": ->
