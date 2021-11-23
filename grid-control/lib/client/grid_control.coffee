@@ -2519,3 +2519,46 @@ _.extend GridControl.prototype,
     @_grid_data.expandPassedFilterPaths(options.depth)
 
     return
+
+  restoreGridDataItemFieldValueFromCollection: (items_ids, fields_ids) ->
+    # Revert the field value in the grid-data level to its value in the Collection level.
+    #
+    # For the original motivation to this function see the video under bug: Task #12001: Auto-manual-value formatter isn't behaving correctly when change is blocked by a collection hook
+
+    if _.isString(items_ids)
+      items_ids = [items_ids]
+
+    if _.isString(fields_ids)
+      fields_ids = [fields_ids]
+
+    check items_ids, [String]
+    check fields_ids, [String]
+
+    # We keep this one as a separate cb, just to keep it inline with edit() under 
+    # /Users/theosp/justdo/justdo-devops/nodes/justdo-web-app/justdo-web-app/modules/justdo.gridctrl/packages/grid-data/lib/grid-data/collection-operations/collection-operations.coffee
+    # That we followed.
+    edit_failed = (err) =>
+      # XXX We used to think we need the following, now it seems
+      # that following a code refactor it became redundant.
+      # (was very hacky, so it's very good)
+      #
+      # See related topic: observeChanges doesn't revert failed edits
+      # See: https://github.com/meteor/meteor/issues/4282
+      # @_data_changes_queue.push ["update", [item_id, [col_field]]] # NEED REWRITE
+
+      @_grid_data._set_need_flush()
+
+      @_grid_data.emit "edit-failed", err
+
+      return
+
+    for item_id in items_ids
+      update_request = {}
+
+      for field_id in fields_ids
+        update_request[field_id] = @collection.findOne(item_id, {fields: {[field_id]: 1}})?[field_id]
+
+      @_grid_data._grid_data_core._data_changes_handlers.update.call(@_grid_data._grid_data_core, item_id, update_request)
+      edit_failed(@_error "edit-blocked-by-hook", "Edit blocked by hook")
+
+    return
