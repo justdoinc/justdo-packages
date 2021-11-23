@@ -615,7 +615,8 @@ Template.justdo_clipboard_import_activation_icon.events
       onEscape: =>
         if modal_data.dialog_state.get() == "importing"
           JustdoSnackbar.show
-            text: "Importing in the background..."
+            text: "Importing in the progress..."
+            duration: 1000 * 20 # 20 secs
 
         return true
 
