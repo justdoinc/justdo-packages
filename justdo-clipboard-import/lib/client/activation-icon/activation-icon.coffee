@@ -570,7 +570,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     bootbox.hideAll()
     JustdoSnackbar.show
-      text: "#{task_paths_added.length} task(s) imported."
+      text: "#{task_paths_added.length} task#{if task_paths_added.length > 1 then "s" else ""} imported."
       duration: 1000 * 60 * 2 # 2 mins
       actionText: "Undo"
       showDismissButton: true
