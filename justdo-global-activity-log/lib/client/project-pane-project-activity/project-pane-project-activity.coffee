@@ -167,10 +167,14 @@ Template.global_activity_log_project_pane_project_activity.events
     return
 
   "click .show-my-changes": (e, tpl) ->
-    toggleShowMyChangesState()
+    if tpl.global_changelog_subscription?.ready()
+      toggleShowMyChangesState()
+    return
 
   "click .show-notes-only": (e, tpl) ->
-    toggleNotesFilterState()
+    if tpl.global_changelog_subscription?.ready()
+      toggleNotesFilterState()
+    return
 
   "scroll .tab-project-activity": (e, tpl) ->
     activity_tab = $(e.currentTarget).closest ".tab-project-activity"
