@@ -1,5 +1,68 @@
+$list-title-height: 40px
+
 .quick-notes-dropdown-content
-  width: 280px
+  height: 500px
+
+  .quick-notes-wrapper
+    display: flex
+    flex-direction: column
+    height: 500px
+
+  .quick-notes-list-title
+    margin: 0px 16px
+    font-weight: bold
+    color: black
+    font-size: 15px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    flex-basis: $list-title-height
+    flex-grow: 0
+    flex-shrink: 0
+
+  .quick-notes-list
+    display: flex
+    flex-direction: column
+    padding: 0 16px
+    &.active
+      // background-color: #ffab91
+      flex-grow: 1
+      overflow: auto
+    &.completed
+      // background-color: #accad7
+      overflow: auto
+      flex-grow: 1
+
+  .quick-notes-completed-wrapper
+    display: flex
+    flex-direction: column
+    flex-grow: 0
+    flex-shrink: 0
+    flex-basis: $list-title-height
+    overflow: hidden
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.08)
+    transition: flex-basis 0.3s cubic-bezier(0.25, 0.1, 0.25, 1)
+    &.show
+      flex-basis: 240px
+      overflow: auto
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.12)
+      .quick-notes-list-title
+        border-bottom: 1px solid #EDF1F8
+
+    .quick-notes-list-title
+      cursor: pointer
+
+  .quick-notes-add
+    margin: 0px 16px
+    border: none
+    padding: 6px 0px
+    border-top: 1px solid #EDF1F8
+    border-bottom: 1px solid #EDF1F8
+    font-size: 14px
+    &:focus
+      outline: none
+    &::placeholder
+      color: #BECDD9
 
   .quick-note
     display: flex
@@ -7,14 +70,46 @@
     border-top: 1px solid #EDF1F8
     padding: 8px 0
     cursor: pointer
+    width: 280px
+    &:first-child
+      border-top: none
+    &:hover
+      background-color: #f8f9fa
+      .quick-note-delete
+        display: block
+    &.mouse-down
+      cursor: grabbing
+
+  .quick-note.done
+    .quick-note-title
+      color: #3D495B
+      text-decoration: line-through
+      opacity: 0.5
+    .quick-note-mark
+      opacity: 0.5
 
   .quick-note-mark
     display: flex
-    margin-right: 4px
     .jd-icon
       width: 16px
       height: 16px
       padding: 0px
 
   .quick-note-title
-    font-size: 15px
+    font-size: 14px
+    flex-grow: 1
+    margin: 0px 8px
+    &:focus
+      outline: none
+      background-color: #f8f9fa
+
+  .quick-note-delete
+    width: 16px
+    height: 16px
+    padding: 0
+    display: none
+    transition: transform 0.25s
+    opacity: 0.9
+    &:hover
+      transform: scale(1.05)
+      opacity: 1
