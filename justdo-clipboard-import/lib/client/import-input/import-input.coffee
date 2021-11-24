@@ -114,7 +114,7 @@ Template.justdo_clipboard_import_input.onCreated ->
 
   @autorun =>
     # All buttons should be enabled by default.
-    $(".justdo-clipboard-import-main-button, .justdo-import-clipboard-data-reset-button, .col-def-selector, .import-row-checkbox").prop "disabled", false
+    $(".justdo-clipboard-import-main-button, .justdo-import-clipboard-data-reset-button, .col-def-selector, .import-row-checkbox, .justdo-clipboard-import-dialog .close").prop "disabled", false
     state = Template.instance().data.dialog_state.get()
 
     if state == "wait_for_paste"
@@ -126,7 +126,7 @@ Template.justdo_clipboard_import_input.onCreated ->
     else if state == "has_data"
       $(".justdo-clipboard-import-main-button").html "Import"
     else if state == "importing"
-      $(".justdo-clipboard-import-main-button, .justdo-import-clipboard-data-reset-button, .col-def-selector, .import-row-checkbox").prop "disabled", true
+      $(".justdo-clipboard-import-main-button, .justdo-import-clipboard-data-reset-button, .col-def-selector, .import-row-checkbox, .justdo-clipboard-import-dialog .close").prop "disabled", true
       $(".justdo-clipboard-import-main-button").prop "disabled", true
     else
       $(".justdo-clipboard-import-main-button").html "Cancel"
