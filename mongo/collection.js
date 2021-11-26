@@ -570,18 +570,29 @@ Object.assign(Mongo.Collection.prototype, {
 
     const wrappedCallback = wrapCallback(callback);
 
-    if (this._isRemoteCollection()) {
-      const args = [
-        selector,
-        modifier,
-        options
-      ];
+    const fields_by_update_type = JustdoHelpers.getFieldsByUpdateTypeFromModifier(this, modifier);
 
-      return this._callMutatorMethod("update", args, wrappedCallback);
+    if (fields_by_update_type.regular.length > 0 && fields_by_update_type.client_only.length > 0) {
+      throw new Error("A mix of client-only fields (" + fields_by_update_type.client_only.join(", ") + ") and regular fields (" + fields_by_update_type.regular.join(", ") + ") received in the same update request. At the moment, such a call is not supported. Please separate the update to a client-side only fields update and to a regular fields only update.");
     }
 
-    // it's my collection.  descend into the collection object
-    // and propagate any exception.
+    if (Meteor.isServer && fields_by_update_type.client_only.length > 0) {
+      throw new Error("We don't allow update of client-only fields in the server side: " + fields_by_update_type.client_only.join(", "));
+    }
+
+    if (Meteor.isServer || (Meteor.isClient && fields_by_update_type.client_only.length == 0)) {
+      if (this._isRemoteCollection()) {
+        const args = [
+          selector,
+          modifier,
+          options
+        ];
+
+        return this._callMutatorMethod("update", args, wrappedCallback);
+      }
+    }
+
+    // It's my collection. descend into the collection object and propagate any exception.
     try {
       // If the user provided a callback and the collection implements this
       // operation asynchronously, then queryRet will be undefined, and the
