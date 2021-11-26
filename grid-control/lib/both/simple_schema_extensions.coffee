@@ -374,3 +374,14 @@ SimpleSchema.extendOptions
   # These fields can be loaded using the tasks_augmented_fields subscription (defined as part of
   # grid-data-com)
   exclude_from_tasks_grid_pub: Match.Optional(Boolean)
+
+  # client_only
+  #
+  # If a field is set to client_only, when it is set in insert/update operations
+  # we won't send the request to the server but only update the client side minimongo
+  # storage.
+  #
+  # Use cases for client_only fields are ususally calculated values that we want
+  # to catch for a specific task. Using them we can enjoy the reactivity aspect of minimongo
+  # the ability to query using the regular find(). Hooks are supported as well.
+  client_only: Match.Optional(Boolean)
