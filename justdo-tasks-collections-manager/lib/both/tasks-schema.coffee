@@ -710,19 +710,29 @@ _.extend JustdoTasksCollectionsManager.prototype,
               # of other items
               return
 
+          other_affected_keys = _.without(_.values(this.affectedKeys()), "updatedAt")
+
           if Meteor.isClient
             # Do not set the updatedAt if only private fields are updated.
             #
             # We do the following only for the client side, since the server takes
             # that case into account in other places, and avoid updating the updatedAt
             # if only private fields are updated
-            other_affected_keys = _.without(_.values(this.affectedKeys()), "updatedAt")
             other_non_private_affected_keys = _.filter other_affected_keys, (key) -> key.substr(0, 5) != "priv:"
 
             if _.isEmpty other_non_private_affected_keys
               @unset()
 
               return
+
+          # If client-only fields are updated, don't add updatedAt. At the moment attempt to change client-only
+          # fields in the server will be blocked, so no point of considering the case of client-only fields edited
+          # in the server side.
+          fields_by_update_type = JustdoHelpers.getFieldsByUpdateType(self.tasks_collection, other_affected_keys)
+          if fields_by_update_type.client_only.length > 0
+            @unset()
+
+            return
 
           if this.isUpdate
             return new Date()

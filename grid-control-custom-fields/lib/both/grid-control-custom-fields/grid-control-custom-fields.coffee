@@ -175,6 +175,11 @@ _.extend GridControlCustomFields,
 
       optional: true
 
+    client_only:
+      type: Boolean
+
+      optional: true
+
     disabled:
       type: Boolean
 
@@ -286,6 +291,9 @@ _.extend GridControlCustomFields,
 
       if (grid_dependent_fields = custom_field_definition.grid_dependent_fields)?
         custom_field_schema.grid_dependent_fields = grid_dependent_fields
+
+      if (client_only = custom_field_definition.client_only)?
+        custom_field_schema.client_only = client_only
 
       if (default_width = custom_field_definition.default_width)?
         custom_field_schema.grid_default_width = default_width
