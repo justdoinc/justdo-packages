@@ -100,8 +100,10 @@ _.extend GridControl.prototype,
         return
 
       controller_context =
+        column_id: column_id
         grid_control: @
-        column_settings: column_settings
+        column_settings: column_settings # AVOID USING THIS ONE. Use only column_schema_definition (column_settings isn't part of _columnsFilterStateToQuery output)
+        column_schema_definition: @getSchemaExtendedWithCustomFields()?[column_id]
         column_filter_state_ops:
           getColumnFilter: => @getColumnFilter(column_id)
           setColumnFilter: (column_filter_state) => @setColumnFilter(column_id, column_filter_state)

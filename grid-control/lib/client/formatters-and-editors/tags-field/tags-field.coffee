@@ -10,7 +10,7 @@ GridControl.installFormatter "tagsFormatter",
 
     formatter_options = schema.grid_column_formatter_options
 
-    if (valuesGenerator = formatter_options.valuesGenerator)?
+    if (valuesGenerator = formatter_options?.valuesGenerator)?
       value = valuesGenerator(doc)
     else
       value = field_value
@@ -19,7 +19,7 @@ GridControl.installFormatter "tagsFormatter",
 
     if _.isArray(value) and value.length > 0
       for tag in value
-        if (propertiesGenerator = formatter_options.propertiesGenerator)?
+        if (propertiesGenerator = formatter_options?.propertiesGenerator)?
           properties = propertiesGenerator(tag)
 
           {text, bg_color, fg_color} = properties
@@ -57,7 +57,7 @@ GridControl.installFormatter "tagsFormatter",
 
     formatter_options = schema.grid_column_formatter_options
 
-    if (valuesGenerator = formatter_options.valuesGenerator)?
+    if (valuesGenerator = formatter_options?.valuesGenerator)?
       value = valuesGenerator(doc)
     else
       value = field_value
@@ -66,7 +66,7 @@ GridControl.installFormatter "tagsFormatter",
 
     if _.isArray(value) and value.length > 0
       for tag in value
-        if (propertiesGenerator = formatter_options.propertiesGenerator)?
+        if (propertiesGenerator = formatter_options?.propertiesGenerator)?
           properties = propertiesGenerator(tag)
 
           {text} = properties
