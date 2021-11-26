@@ -1,3 +1,11 @@
+getByField = (userId, doc) ->
+  # userId will be undefined in cases where the task got created/modified as a result
+  # of an automatic server-side procedures.
+  #
+  # Example: task created by MailDo when an email received spawned a task.
+
+  return userId or doc.created_by_user_id or doc.owner_id
+
 _.extend PACK.builtin_trackers,
   pendingOwnershipTransferTracker: ->
     self = @
@@ -10,7 +18,7 @@ _.extend PACK.builtin_trackers,
           new_value: pending_owner_id
           change_type: "trasnfer_pending"
           task_id: doc._id
-          by: userId
+          by: getByField(userId, doc)
 
         self.logChange obj
 
@@ -24,7 +32,7 @@ _.extend PACK.builtin_trackers,
           new_value: pending_owner_id
           change_type: "trasnfer_pending"
           task_id: doc._id
-          by: userId
+          by: getByField(userId, doc)
 
         self.logChange obj
 
