@@ -88,6 +88,9 @@ _.extend JustdoTaskType.prototype,
     propertiesGenerator:
       type: Function
 
+    possible_tags:
+      type: [String]
+
   registerTaskTypesGenerator: (category, id, def) ->
     def = _.extend {}, def, {id, category}
 
@@ -156,10 +159,28 @@ _.extend JustdoTaskType.prototype,
 
     types_generators = @_getTypesGenerators(category)
 
-    task_types = []
-
     for type_generator_id, type_generator of types_generators
       if (properties = type_generator.propertiesGenerator(tag))?
         return properties
 
     return {}
+
+  getCategoryFilterOptions: (category) ->
+    if not category?
+      category = "default"
+
+    types_generators = @_getTypesGenerators(category)
+
+    filter_options = {}
+
+    for type_generator_id, type_generator of types_generators
+      for tag in type_generator.possible_tags
+        if not (tag_properties = type_generator.propertiesGenerator(tag))?
+          throw @_error "unknown-tag", "An unknown tag '#{tag}' listed as a possible_tags for type generator id: #{type_generator_id} under the category: #{category}"
+
+        filter_options[tag] =
+          txt: tag_properties.text
+          order: tag_properties.filter_list_order or 0
+          customFilterQuery: tag_properties.customFilterQuery
+
+    return filter_options

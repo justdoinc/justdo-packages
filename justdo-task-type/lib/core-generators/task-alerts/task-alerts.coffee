@@ -2,10 +2,16 @@ tags_properties =
   "start-date":
     text: "Start date bigger than end date"
 
+    filter_list_order: 0
+
   "due-date":
     text: "Due date after end date"
 
+    filter_list_order: 100
+
 APP.justdo_task_type.registerTaskTypesGenerator "task-alerts", "core-issues",
+  possible_tags: ["start-date"]
+
   required_task_fields_to_determine:
     "start_date": 1
     "end_date": 1
@@ -22,6 +28,8 @@ APP.justdo_task_type.registerTaskTypesGenerator "task-alerts", "core-issues",
   propertiesGenerator: (tag) -> tags_properties[tag]
 
 APP.justdo_task_type.registerTaskTypesGenerator "task-alerts", "due-date",
+  possible_tags: ["due-date"]
+
   required_task_fields_to_determine:
     "due_date": 1
     "end_date": 1

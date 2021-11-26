@@ -14,3 +14,4 @@ _.extend JustdoTaskType.prototype,
   _errors_types:
     _.extend {}, JustdoHelpers.common_errors_types,
       "type-generator-id-already-exist": "Type generator id already exist"
+      "unknown-tag": "Unknown tag"

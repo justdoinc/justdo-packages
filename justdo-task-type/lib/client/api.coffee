@@ -74,6 +74,12 @@ _.extend JustdoTaskType.prototype,
 
           propertiesGenerator: (tag) =>
             return @getTagProperties(category, tag)
+        client_only: true
+
+        filter_type: "whitelist"
+        filter_options:
+          filter_values: =>
+            return @getCategoryFilterOptions(category)
 
       return
 
