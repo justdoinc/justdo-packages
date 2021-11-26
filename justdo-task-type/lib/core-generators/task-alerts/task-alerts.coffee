@@ -4,11 +4,17 @@ tags_properties =
 
     filter_list_order: 0
 
+    customFilterQuery: (filter_state_id, column_state_definitions, context) ->
+      return {$where: "this.end_date < this.start_date"}
+
   "due-date":
     text: "Due date after end date"
 
     filter_list_order: 100
 
+    customFilterQuery: (filter_state_id, column_state_definitions, context) ->
+      return {$where: "this.end_date < this.due_date"}
+    
 APP.justdo_task_type.registerTaskTypesGenerator "task-alerts", "core-issues",
   possible_tags: ["start-date"]
 
