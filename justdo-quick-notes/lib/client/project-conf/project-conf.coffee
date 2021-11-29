@@ -6,6 +6,7 @@ _.extend JustdoQuickNotes.prototype,
         section: "extensions"
         template: "justdo_quick_notes_project_config"
         priority: 100
+      return
 
     return
 
@@ -28,3 +29,4 @@ Template.justdo_quick_notes_project_config.events
       curProj().disableCustomFeatures(module_id)
     else
       curProj().enableCustomFeatures(module_id)
+    return

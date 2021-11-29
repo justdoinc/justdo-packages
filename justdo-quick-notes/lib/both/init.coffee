@@ -12,6 +12,11 @@ options_schema =
       optional: false
       bind_to_instance: true
 
+    quick_notes_collection:
+      type: "skip-type-check"
+      optional: false
+      bind_to_instance: true
+
 # options_schema
 # ==============
 #
