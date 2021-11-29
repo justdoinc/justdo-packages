@@ -1,2 +1,44 @@
 _.extend JustdoQuickNotes.prototype,
-  _setupPublications: -> return
+  _setupPublications: ->
+    @_publishQuickNotes()
+
+    return
+
+  _publishQuickNotes: ->
+    self = @
+
+    Meteor.publish "nonCompletedQuickNotes", ->
+      if not @userId?
+        @ready() # No quick notes for anonymous
+        return
+
+      query =
+        user_id: @userId
+        completed: null
+        deleted: null
+
+      options =
+        sort:
+          order: -1
+
+      return self.quick_notes_collection.find query, options
+
+    Meteor.publish "completedQuickNotes", (completed_note_limit = JustdoQuickNotes.completed_note_limit) ->
+      if not @userId?
+        @ready() # No quick notes for anonymous
+        return
+
+      query =
+        user_id: @userId
+        completed:
+          $exists: true
+        deleted: null
+
+      options =
+        sort:
+          order: -1
+        limit: completed_note_limit
+
+      return self.quick_notes_collection.find query, options
+
+    return
