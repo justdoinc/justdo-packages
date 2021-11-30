@@ -290,13 +290,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
               task[field_id] = cell_val
 
           if field_def.type is Number
-            if field_id == "priority" && cell_val % 1 isnt 0
-              showErrorInSnackbarAndRevertState
-                dialog_state: modal_data.dialog_state
-                snackbar_message: "Priority must be integer. Import aborted."
-                problematic_row: line_number
-              return false
-
             # TODO: Look for: '_available_field_types' under justdo-internal-packages/grid-control-custom-fields/lib/both/grid-control-custom-fields/grid-control-custom-fields.coffee
             # in the future, the information on whether we need to use parseFloat or parseInt() should be taken from the relevant definition.
             cell_val = parseFloat(cell_val.trim())
@@ -317,6 +310,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
                 snackbar_message: "Invalid #{field_def.label} value #{cell_val} in line #{line_number} (must be between #{field_def.min} and #{field_def.max}). Import aborted."
                 problematic_row: line_number
               return false
+
+            if field_id == "priority" && cell_val % 1 isnt 0
+              cell_val = Math.round cell_val
 
             task[field_id] = cell_val
 
