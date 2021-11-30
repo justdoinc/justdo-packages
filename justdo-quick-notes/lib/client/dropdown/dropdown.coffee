@@ -22,6 +22,37 @@ share.QuickNotesDropdown = JustdoHelpers.generateNewTemplateDropdown "quick-note
     return
 
 
+addNewTaskByDetectingParentFromPoint = (e) ->
+  element = undefined
+  elements = []
+  old_visibility = []
+  loop
+    element = document.elementFromPoint(e.pageX, e.pageY)
+    if !element or element == document.documentElement
+      break
+    elements.push element
+    old_visibility.push element.style.visibility
+    element.style.visibility = "hidden"
+    # Temporarily hide the element (without changing the layout)
+
+  k = 0
+
+  while k < elements.length
+    elements[k].style.visibility = old_visibility[k]
+    k++
+  elements.reverse()
+
+  $row = $(elements).filter(".slick-row")
+  $task_id = $row.find(".grid-tree-control-task-id").attr("jd-tt").split("=")[1]
+
+  console.log $task_id
+
+  APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab($task_id)
+  APP.modules.project_page.performOp("addSubTask")
+
+  return
+
+
 # !!!!! Bug with MEMBERS DROPDOWN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 Template.justdo_quick_notes_dropdown.onCreated ->
@@ -71,6 +102,8 @@ Template.justdo_quick_notes_dropdown.events
 
 
 Template.justdo_quick_notes_item.onRendered ->
+
+
   $(".quick-note").draggable
     cursor: "none"
     helper: "clone"
@@ -82,22 +115,53 @@ Template.justdo_quick_notes_item.onRendered ->
       # Append an element to the table to avoid destruction when updating the table
       #$(ui.helper).appendTo(".calendar_view_main_table_wrapper")
       #createDroppableWrapper()
+
+      $(".quick-note").droppable
+        tolerance: "pointer"
+        drop: (e, ui) ->
+          console.log "sort stop"
+
+          return
+
+      $(".slick-row").droppable
+        tolerance: "pointer"
+        drop: (e, ui) ->
+          $task_id = $(e.target).find(".grid-tree-control-task-id").attr("jd-tt").split("=")[1]
+
+          APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab($task_id)
+          APP.modules.project_page.performOp("addSubTask")
+
+          return
+
       return
+
     stop: (e, ui) ->
-      #destroyDroppableWrapper()
+      # Approach 1 - Add task by detecting elementFromPoint
+      # addNewTaskByDetectingParentFromPoint(e)
+
+      $(".slick-row").droppable("destroy")
+
       return
 
   return
 
 
 Template.justdo_quick_notes_item.events
+  "mouseenter .quick-note, mouseleave .quick-note": (e, tpl) ->
+    $(e.currentTarget).removeClass "mouse-down"
+    $(e.currentTarget).draggable disabled: false
+
+    return
+
   "mousedown .quick-note": (e, tpl) ->
     $(e.currentTarget).addClass "mouse-down"
 
     return
 
-  "mouseup .quick-note, mouseleave .quick-note": (e, tpl) ->
+  "mouseup .quick-note": (e, tpl) ->
     $(e.currentTarget).removeClass "mouse-down"
+    $(e.currentTarget).draggable disabled: true
+    $(e.currentTarget).find(".quick-note-title").focus()
 
     return
 
