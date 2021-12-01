@@ -89,5 +89,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/core-tooltips/expand-grid/expand-grid.sass", client);
   api.addFiles("lib/client/core-tooltips/expand-grid/expand-grid.coffee", client);
 
+  api.addFiles("lib/client/core-tooltips/gantt-info/gantt-info.html", client);
+  api.addFiles("lib/client/core-tooltips/gantt-info/gantt-info.sass", client);
+  api.addFiles("lib/client/core-tooltips/gantt-info/gantt-info.coffee", client);
+
   api.export("JustdoTooltips", client);
 });
