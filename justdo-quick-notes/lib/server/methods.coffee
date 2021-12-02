@@ -12,8 +12,8 @@ _.extend JustdoQuickNotes.prototype,
 
       "editQuickNote": (quick_note_id, new_title) ->
         check @userId, String
-        check new_title, String
         check quick_note_id, String
+        check new_title, Match.Maybe String
 
         self.editQuickNote quick_note_id, new_title, @userId
         return
@@ -21,8 +21,7 @@ _.extend JustdoQuickNotes.prototype,
       "reorderQuickNote": (target_quick_note_id, put_after_quick_note_id) ->
         check @userId, String
         check target_quick_note_id, String
-        if put_after_quick_note_id?
-          check put_after_quick_note_id, String
+        check put_after_quick_note_id, Match.Maybe String
 
         self.reorderQuickNote target_quick_note_id, put_after_quick_note_id, @userId
         return

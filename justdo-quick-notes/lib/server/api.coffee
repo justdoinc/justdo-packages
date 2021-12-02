@@ -56,7 +56,7 @@ _.extend JustdoQuickNotes.prototype,
   editQuickNote: (quick_note_id, new_title, user_id) ->
     check user_id, String
     check quick_note_id, String
-    check new_title, String
+    check new_title, Match.Maybe String
 
     # Below is to ensure quick_note_id is valid and the note belongs to user_id
     # Error will be thrown by requireQuickNoteDoc() if any of the two is invalid.
@@ -70,8 +70,7 @@ _.extend JustdoQuickNotes.prototype,
   reorderQuickNote: (target_quick_note_id, put_after_quick_note_id, user_id) ->
     check user_id, String
     check target_quick_note_id, String
-    if put_after_quick_note_id?
-      check put_after_quick_note_id, String
+    check put_after_quick_note_id, Match.Maybe String
 
     if not target_quick_note_id?
       throw @_error "missing-argument", "Target quick note ID must be provided"
