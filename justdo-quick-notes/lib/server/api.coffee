@@ -34,12 +34,16 @@ _.extend JustdoQuickNotes.prototype,
 
     return
 
-  requireQuickNoteDoc: (quick_note_id, user_id, fields={_id: 1}) ->
+  getQuickNoteDoc: (quick_note_id, user_id, fields) ->
     check user_id, String
     check quick_note_id, String
     check fields, Object
 
-    if not (quick_note_doc = @quick_notes_collection.findOne({_id: quick_note_id, user_id: user_id}, {fields: fields}))?
+    return @quick_notes_collection.findOne {_id: quick_note_id, user_id: user_id}, {fields: fields}
+
+  requireQuickNoteDoc: (quick_note_id, user_id, fields={_id: 1}) ->
+    # Checks on parameter will be performed in getQuickNoteDoc()
+    if not (quick_note_doc = @getQuickNoteDoc quick_note_id, user_id, fields)?
       throw @_error "unknown-quick-note", "Unknown Quick Note"
     return quick_note_doc
 
