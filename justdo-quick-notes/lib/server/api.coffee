@@ -167,4 +167,5 @@ _.extend JustdoQuickNotes.prototype,
 
     @quick_notes_collection.update quick_note_id, quick_note_op
 
-    return created_task_id
+    path_to_created_task = "#{parent_path}/#{created_task_id}/"
+    return path_to_created_task
