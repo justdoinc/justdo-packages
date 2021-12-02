@@ -91,10 +91,13 @@ _.extend JustdoQuickNotes.prototype,
     if not target_quick_note_id?
       throw @_error "missing-argument", "Target quick note ID must be provided"
 
+    if target_quick_note_id is put_after_quick_note_id
+      throw @_error "invalid-argument", "You cannot put a quick note after itself"
+
     # Check if target quick note exists and user has access to this quick note
     @requireQuickNoteDoc target_quick_note_id, user_id
 
-    # Putting the target quick note to top
+    # Putting the target quick note to the top
     if not put_after_quick_note_id?
       @quick_notes_collection.update target_quick_note_id,
         $set:
@@ -102,14 +105,33 @@ _.extend JustdoQuickNotes.prototype,
       return
 
     put_after_quick_note_order = @requireQuickNoteDoc(put_after_quick_note_id, user_id, {order: 1}).order
-    # Putting the target quick note after "put after quick note"
-    @quick_notes_collection.update target_quick_note_id,
-      $set:
-        order: put_after_quick_note_order - 1
-    return
 
+    put_before_quick_note_query =
+      _id:
+        $ne: target_quick_note_id
+      user_id: user_id
+      order:
+        $lt: put_after_quick_note_order
 
+    put_before_quick_note_options =
+      sort:
+        order: -1
+      limit: 1
 
+    put_before_quick_note_order = @quick_notes_collection.findOne(put_before_quick_note_query, put_before_quick_note_options)?.order
+
+    # If put_before_quick_note exists, squeeze target_quick_note in between put_before_quick_note and put_after_quick_note
+    if put_before_quick_note_order?
+      target_quick_note_update_op =
+        $set:
+          order: Math.floor((put_before_quick_note_order + put_after_quick_note_order) / 2)
+    # Else we're putting the target_quick_note to the bottom
+    else
+      target_quick_note_update_op =
+        $set:
+          order: put_after_quick_note_order - 100000
+
+    @quick_notes_collection.update target_quick_note_id, target_quick_note_update_op
     return
 
   createTaskFromQuickNote: (quick_note_id, project_id, parent_path="/", order=0, user_id) ->
