@@ -112,14 +112,14 @@ _.extend JustdoQuickNotes.prototype,
 
     return
 
-  createTaskFromQuickNote: (quick_note_id, project_id, parent_id="/", order=0, user_id) ->
-    if parent_id is 0 or parent_id is "0"
-      parent_id = "/"
+  createTaskFromQuickNote: (quick_note_id, project_id, parent_path="/", order=0, user_id) ->
+    if parent_path is 0 or parent_path is "0"
+      parent_path = "/"
 
     check user_id, String
     check quick_note_id, String
     check project_id, String
-    check parent_id, String
+    check parent_path, String
     check order, Number
 
     quick_note_doc = @requireQuickNoteDoc(quick_note_id, user_id, {title: 1, created_task_id: 1})
@@ -134,7 +134,8 @@ _.extend JustdoQuickNotes.prototype,
       title: quick_note_doc.title
       _created_from_quick_note: quick_note_id
 
-    if not (created_task_id = APP.projects._grid_data_com.addChild parent_id, task_fields, user_id)?
+    # Check on whether user is a member of the parent task is performed inside addChild()
+    if not (created_task_id = APP.projects._grid_data_com.addChild parent_path, task_fields, user_id)?
       throw @_error "add-task-failed", "Failed to create task from Quick Note"
 
     quick_note_op =
