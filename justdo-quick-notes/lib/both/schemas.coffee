@@ -5,8 +5,6 @@ _.extend JustdoQuickNotes.prototype,
         label: "Created On"
         type: Date
         autoValue: ->
-          console.log @isInsert
-          console.log @isUpsert
           if @isInsert
             return new Date()
           else if @isUpsert
@@ -25,15 +23,15 @@ _.extend JustdoQuickNotes.prototype,
         optional: true
 
       title:
-        label: "Note Title"
+        label: "Quick Note Title"
         type: String
 
       user_id:
-        label: "Note Owner"
+        label: "Quick Note Owner"
         type: String
 
       order:
-        label: "Note Order"
+        label: "Quick Note Order"
         type: Number
 
       created_task_id:
