@@ -57,18 +57,30 @@ _.extend JustdoQuickNotes.prototype,
       order: _.now()
     return
 
-  editQuickNote: (quick_note_id, new_title, user_id) ->
+  editQuickNote: (quick_note_id, new_title, completed, user_id) ->
     check user_id, String
     check quick_note_id, String
     check new_title, Match.Maybe String
+    check completed, Match.Maybe Boolean
+
+    if not (new_title? or completed?)
+      throw @_error "missing-argument", "There is nothing to edit"
 
     # Below is to ensure quick_note_id is valid and the note belongs to user_id
     # Error will be thrown by requireQuickNoteDoc() if any of the two is invalid.
     @requireQuickNoteDoc quick_note_id, user_id
 
-    @quick_notes_collection.update quick_note_id,
-        $set:
-          title: new_title
+    op =
+      $set: {}
+    if new_title?
+      op.$set.title = new_title
+    if completed?
+      if completed
+        op.$set.completed = new Date()
+      else
+        op.$set.completed = null
+
+    @quick_notes_collection.update quick_note_id, op
     return
 
   reorderQuickNote: (target_quick_note_id, put_after_quick_note_id, user_id) ->
@@ -96,16 +108,8 @@ _.extend JustdoQuickNotes.prototype,
         order: put_after_quick_note_order - 1
     return
 
-  markQuickNoteAsCompleted: (quick_note_id, user_id) ->
-    check user_id, String
-    check quick_note_id, String
 
-    # Check if target quick note exists and user has access to this quick note
-    @requireQuickNoteDoc quick_note_id, user_id
 
-    @quick_notes_collection.update quick_note_id,
-      $set:
-        completed: new Date
     return
 
   createTaskFromQuickNote: (quick_note_id, project_id, parent_id="/", order=0, user_id) ->
