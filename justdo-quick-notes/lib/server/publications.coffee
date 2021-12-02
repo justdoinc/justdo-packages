@@ -7,7 +7,7 @@ _.extend JustdoQuickNotes.prototype,
   _publishQuickNotes: ->
     self = @
 
-    Meteor.publish "nonCompletedQuickNotes", ->
+    Meteor.publish "activeQuickNotes", (active_note_limit = 0) ->
       if not @userId?
         @ready() # No quick notes for anonymous
         return
@@ -20,6 +20,7 @@ _.extend JustdoQuickNotes.prototype,
       options =
         sort:
           order: -1
+        limit: active_note_limit
 
       return self.quick_notes_collection.find query, options
 

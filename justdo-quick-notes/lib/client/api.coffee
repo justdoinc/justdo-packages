@@ -13,7 +13,7 @@ _.extend JustdoQuickNotes.prototype,
     return
 
   _setupSubscriptions: ->
-    @_non_completed_quick_notes_subscription = Meteor.subscribe "nonCompletedQuickNotes"
+    @_non_completed_quick_notes_subscription = Meteor.subscribe "activeQuickNotes"
     @_completed_quick_notes_subscription = Meteor.subscribe "completedQuickNotes"
     return
 
