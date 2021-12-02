@@ -12,6 +12,15 @@ _.extend JustdoQuickNotes.prototype,
           else
             @unset()
 
+      updated_at:
+        label: "Quick Note Updated At"
+        type: Date
+        optional: true
+        denyInsert: true
+        autoValue: ->
+          if @isUpdate
+            return new Date()
+
       completed:
         label: "Completed On"
         type: Date
