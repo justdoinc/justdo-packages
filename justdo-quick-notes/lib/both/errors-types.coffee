@@ -15,4 +15,5 @@ _.extend JustdoQuickNotes.prototype,
     _.extend {}, JustdoHelpers.common_errors_types,
       "add-task-failed": "Failed to create task from Quick Note"
       "unknown-quick-note": "Unknown Quick Note"
+      "task-not-found": "Task not found"
       "task-created-already": "A task was already created from this Quick Note"

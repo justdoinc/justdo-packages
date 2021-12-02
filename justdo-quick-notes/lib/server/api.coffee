@@ -169,3 +169,18 @@ _.extend JustdoQuickNotes.prototype,
 
     path_to_created_task = "#{parent_path}/#{created_task_id}/"
     return path_to_created_task
+
+  undoCreateTaskFromQuickNote: (path_to_created_task, user_id) ->
+    check user_id, String
+    check path_to_created_task, String
+
+    APP.projects._grid_data_com.removeParent path_to_created_task, user_id
+
+    task_id = GridDataCom.helpers.getPathItemId path_to_created_task
+
+    @quick_notes_collection.update {created_task_id: task_id}, 
+      $set:
+        created_task_id: null
+        deleted: null
+
+    return
