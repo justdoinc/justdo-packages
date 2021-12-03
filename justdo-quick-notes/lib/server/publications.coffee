@@ -24,7 +24,7 @@ _.extend JustdoQuickNotes.prototype,
 
       return self.quick_notes_collection.find query, options
 
-    Meteor.publish "completedQuickNotes", (completed_note_limit = JustdoQuickNotes.completed_note_limit) ->
+    Meteor.publish "completedQuickNotes", (completed_note_limit = JustdoQuickNotes.completed_note_default_query_limit) ->
       if not @userId?
         @ready() # No quick notes for anonymous
         return
