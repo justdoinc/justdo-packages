@@ -524,12 +524,17 @@ _.extend GridDataCore.prototype,
 
     items_ids_with_changed_children = _.extend.apply _, returned_ops_items_ids_with_changed_children
 
+    processed_data_changes_queue = @_data_changes_queue
+
+    @_data_changes_queue = []
+    @_new_items_pending_insert = {}
+
     if structure_changed
       @emit "structure-changed", {items_ids_with_changed_children}
 
     # Init queue
     try
-      @emit "data-changes-queue-processed", {queue: @_data_changes_queue} # Note that content changes are emitted in the
+      @emit "data-changes-queue-processed", {queue: processed_data_changes_queue} # Note that content changes are emitted in the
                                                                           # _data_changes_handlers hance, it would be wrong
                                                                           # having data-changes-queue-processed called
                                                                           # before structure-changed.
@@ -538,9 +543,6 @@ _.extend GridDataCore.prototype,
                                                                           # before the loop.
     catch e
       console.error "grid-data: A hook attached to 'data-changes-queue-processed' raised an exception", e
-
-    @_data_changes_queue = []
-    @_new_items_pending_insert = {}
 
     @logger.debug "Flush: done"
 
