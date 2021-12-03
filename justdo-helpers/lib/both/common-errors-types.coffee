@@ -12,5 +12,6 @@ _.extend JustdoHelpers,
     "missing-argument": "Missing argument"
     "login-required": "This operation requires login"
     "unknown-user": "Unknown user"
+    "unknown-task": "Unknown task"
     "no-fiber": "No fiber found"
     "permission-denied": "Permission denied"
