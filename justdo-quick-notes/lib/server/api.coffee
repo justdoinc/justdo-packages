@@ -67,30 +67,46 @@ _.extend JustdoQuickNotes.prototype,
     @quick_notes_collection.insert options
     return
 
-  editQuickNote: (quick_note_id, new_title, completed, user_id) ->
+  _editQuickNoteOptionsSchema: new SimpleSchema
+    title:
+      type: String
+      optional: true
+
+    completed:
+      type: Boolean
+      optional: true
+
+    deleted:
+      type: Boolean
+      optional: true
+  editQuickNote: (quick_note_id, options, user_id) ->
     check user_id, String
     check quick_note_id, String
-    check new_title, Match.Maybe String
-    check completed, Match.Maybe Boolean
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_editQuickNoteOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
 
-    if not (new_title? or completed?)
+    if _.isEmpty options
       throw @_error "missing-argument", "There is nothing to edit"
+
+    # In db, completed and deleted are stored as a date
+    # If a client wants to set either of these as true, we'll convert the option from boolean to date here
+    for option in ["completed", "deleted"]
+      if options[option]?
+        if options[option]
+          options[option] = new Date()
+        else
+          options[option] = null
 
     # Below is to ensure quick_note_id is valid and the note belongs to user_id
     # Error will be thrown by requireQuickNoteDoc() if any of the two is invalid.
     @requireQuickNoteDoc quick_note_id, user_id
 
-    op =
-      $set: {}
-    if new_title?
-      op.$set.title = new_title
-    if completed?
-      if completed
-        op.$set.completed = new Date()
-      else
-        op.$set.completed = null
-
-    @quick_notes_collection.update quick_note_id, op
+    @quick_notes_collection.update quick_note_id, {$set: options}
     return
 
   reorderQuickNote: (target_quick_note_id, put_after_quick_note_id, user_id) ->

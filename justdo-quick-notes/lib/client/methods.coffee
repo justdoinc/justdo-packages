@@ -3,8 +3,8 @@ _.extend JustdoQuickNotes.prototype,
     Meteor.call "addQuickNote", options, cb
     return
 
-  editQuickNote: (quick_note_id, new_title, completed, cb) ->
-    Meteor.call "editQuickNote", quick_note_id, new_title, completed, cb
+  editQuickNote: (quick_note_id, options, cb) ->
+    Meteor.call "editQuickNote", quick_note_id, options, cb
     return
 
   reorderQuickNote: (target_quick_note_id, put_after_quick_note_id, cb) ->

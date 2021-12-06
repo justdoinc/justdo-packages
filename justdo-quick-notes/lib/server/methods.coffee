@@ -10,13 +10,12 @@ _.extend JustdoQuickNotes.prototype,
         self.addQuickNote options, @userId
         return
 
-      "editQuickNote": (quick_note_id, new_title, completed) ->
+      "editQuickNote": (quick_note_id, options) ->
         check @userId, String
         check quick_note_id, String
-        check new_title, Match.Maybe String
-        check completed, Match.Maybe Boolean
+        # Check on options will be performed in self.editQuickNote()
 
-        self.editQuickNote quick_note_id, new_title, completed, @userId
+        self.editQuickNote quick_note_id, options, @userId
         return
 
       "reorderQuickNote": (target_quick_note_id, put_after_quick_note_id) ->
