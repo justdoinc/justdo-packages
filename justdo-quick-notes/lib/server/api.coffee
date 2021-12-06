@@ -1,3 +1,8 @@
+# When attempting to reorder a quick note at the bottom,
+# we take the order of (old) the quick note at the bottom and minus this constant,
+# then use it as the order of the target quick note
+space_between_the_last_quick_note = 100000
+
 _.extend JustdoQuickNotes.prototype,
   _immediateInit: ->
     return
@@ -132,6 +137,10 @@ _.extend JustdoQuickNotes.prototype,
 
     put_after_quick_note_order = @requireQuickNoteDoc(put_after_quick_note_id, user_id, {order: 1}).order
 
+    #
+    # IMPORTANT, if you change put_before_quick_note_query, don't forget to update the collections-indexes.coffee
+    # and to drop obsolete indexes (see QUICK_NOTES_REORDER_PUT_BEFORE_QUERY_INDEX)
+    #
     put_before_quick_note_query =
       _id:
         $ne: target_quick_note_id
@@ -155,7 +164,7 @@ _.extend JustdoQuickNotes.prototype,
     else
       target_quick_note_update_op =
         $set:
-          order: put_after_quick_note_order - 100000
+          order: put_after_quick_note_order - space_between_the_last_quick_note
 
     @quick_notes_collection.update target_quick_note_id, target_quick_note_update_op
     return
