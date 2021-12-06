@@ -3,4 +3,4 @@ _.extend JustdoQuickNotes,
 
   plugin_human_readable_name: "Quick Notes"
 
-  completed_note_default_query_limit: 25
+  completed_quick_notes_subscription_limit: 25

@@ -7,39 +7,49 @@ _.extend JustdoQuickNotes.prototype,
   _publishQuickNotes: ->
     self = @
 
-    Meteor.publish "activeQuickNotes", (active_note_limit = 0) ->
+    Meteor.publish "activeQuickNotes", (options) ->
       if not @userId?
         @ready() # No quick notes for anonymous
         return
 
-      query =
+      #
+      # NOTE: active_quick_notes_query is using QUICK_NOTES_REORDER_PUT_BEFORE_QUERY_INDEX (user_id)
+      #
+      active_quick_notes_query =
         user_id: @userId
         completed: null
         deleted: null
 
-      options =
+      active_quick_notes_options =
         sort:
           order: -1
-        limit: active_note_limit
 
-      return self.quick_notes_collection.find query, options
+      if options.limit?
+        active_quick_notes_options.limit = options.limit
 
-    Meteor.publish "completedQuickNotes", (completed_note_limit = JustdoQuickNotes.completed_note_default_query_limit) ->
+      return self.quick_notes_collection.find active_quick_notes_query, active_quick_notes_options
+
+    Meteor.publish "completedQuickNotes", (options) ->
       if not @userId?
         @ready() # No quick notes for anonymous
         return
 
-      query =
+      #
+      # NOTE: completed_quick_notes_query is using QUICK_NOTES_REORDER_PUT_BEFORE_QUERY_INDEX (user_id)
+      #
+      completed_quick_notes_query =
         user_id: @userId
         completed:
           $exists: true
         deleted: null
 
-      options =
+      completed_quick_notes_options =
         sort:
           order: -1
-        limit: completed_note_limit
 
-      return self.quick_notes_collection.find query, options
+      if options.limit?
+        completed_quick_notes_options.limit = options.limit
+
+      return self.quick_notes_collection.find completed_quick_notes_query, completed_quick_notes_options
 
     return
