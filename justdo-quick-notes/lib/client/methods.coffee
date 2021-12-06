@@ -15,6 +15,6 @@ _.extend JustdoQuickNotes.prototype,
     Meteor.call "createTaskFromQuickNote", quick_note_id, project_id, parent_path, order, cb
     return
 
-  undoCreateTaskFromQuickNote: (path_to_created_task, cb) ->
-    Meteor.call "undoCreateTaskFromQuickNote", path_to_created_task, cb
+  undoCreateTaskFromQuickNote: (path_to_created_task, project_id, cb) ->
+    Meteor.call "undoCreateTaskFromQuickNote", path_to_created_task, project_id, cb
     return
