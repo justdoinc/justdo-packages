@@ -598,45 +598,54 @@ Object.assign(Mongo.Collection.prototype, {
       // operation asynchronously, then queryRet will be undefined, and the
       // result will be returned through the callback instead.
 
-      // The following hook is used to determine which fields changed as a result of the
-      // modifier.
-      //
-      // We need to determine those fields, to ensure that if there are ongoing updates
-      // that are pending response from the server, we will update the expected doc post-update
-      // to include the modified value of the client-only fields modified.
-      //
-      // If we won't do so, the following operation called on the same tick, *will not
-      // result* in an update of the client-only field.
-      //
-      //   APP.collections.Tasks.update("SyGxoMgisZPZYteXE", {$set: {status: "123"}})
-      //   APP.collections.Tasks.update("SyGxoMgisZPZYteXE", {$set: {CLIENT_ONLY_FIELD: "123"}})
-
-      var hook_called = false; // The hook won't be called if the modification didn't result in
-                               // an actual change, in which case, we need to clear the hook after
-                               // the .update() call to avoid it from firing for an irrelevant
-                               // change
-
-      var edited_key = undefined; // Will stay undefined if the hook won't be called.
-      var edited_fields = undefined; // Will stay undefined if the hook won't be called.
-      var afterSetDocFieldsHook = function (key, _edited_fields) {
-        hook_called = true;
-
-        edited_fields = _edited_fields;
-        edited_key = key;
-      }
-
-      this._collection._docs.once("after-setDocFields", afterSetDocFieldsHook);
-
-      ret_val = this._collection.update(
-        selector, modifier, options, wrappedCallback);
-
-      if (hook_called) {
-        Object.assign(Meteor.connection._serverDocuments[this._name].get(edited_key).document, edited_fields);
+      if (!Meteor.isClient) {
+        // On the server, there's no need to give consideration for client-only fields,
+        // just execute the update.
+        return this._collection.update(
+          selector, modifier, options, wrappedCallback);
       } else {
-        this._collection._docs.off("after-setDocFields", afterSetDocFieldsHook);
-      }
+        // Client-side execution with consideration to client-only fields:
+        //
+        // The following hook is used to determine which fields changed as a result of the
+        // modifier.
+        //
+        // We need to determine those fields, to ensure that if there are ongoing updates
+        // that are pending response from the server, we will update the expected doc post-update
+        // to include the modified value of the client-only fields modified.
+        //
+        // If we won't do so, the following operation called on the same tick, *will not
+        // result* in an update of the client-only field.
+        //
+        //   APP.collections.Tasks.update("SyGxoMgisZPZYteXE", {$set: {status: "123"}})
+        //   APP.collections.Tasks.update("SyGxoMgisZPZYteXE", {$set: {CLIENT_ONLY_FIELD: "123"}})
 
-      return ret_val;
+        var hook_called = false; // The hook won't be called if the modification didn't result in
+                                 // an actual change, in which case, we need to clear the hook after
+                                 // the .update() call to avoid it from firing for an irrelevant
+                                 // change
+
+        var edited_key = undefined; // Will stay undefined if the hook won't be called.
+        var edited_fields = undefined; // Will stay undefined if the hook won't be called.
+        var afterSetDocFieldsHook = function (key, _edited_fields) {
+          hook_called = true;
+
+          edited_fields = _edited_fields;
+          edited_key = key;
+        }
+
+        // this._collection._docs.once("after-setDocFields", afterSetDocFieldsHook);
+
+        ret_val = this._collection.update(
+          selector, modifier, options, wrappedCallback);
+
+        if (hook_called) {
+          Object.assign(Meteor.connection._serverDocuments[this._name].get(edited_key).document, edited_fields);
+        } else {
+          this._collection._docs.off("after-setDocFields", afterSetDocFieldsHook);
+        }
+
+        return ret_val;
+      }
     } catch (e) {
       if (callback) {
         callback(e);
