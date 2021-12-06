@@ -3,11 +3,11 @@ _.extend JustdoQuickNotes.prototype,
     self = @
 
     Meteor.methods
-      "addQuickNote": (title) ->
+      "addQuickNote": (options) ->
         check @userId, String
-        check title, String
+        # Check on options will be performed in self.addQuickNote()
 
-        self.addQuickNote title, @userId
+        self.addQuickNote options, @userId
         return
 
       "editQuickNote": (quick_note_id, new_title, completed) ->
