@@ -163,6 +163,7 @@ _.extend JustdoUsageStatistics.prototype,
                 emails: 1
                 invited_by: 1
                 createdAt: 1
+                deactivated: 1
             .fetch()
 
         if self.isCategoryEnabled("justdos")
