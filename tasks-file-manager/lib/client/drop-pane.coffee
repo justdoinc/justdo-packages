@@ -153,39 +153,64 @@ _.extend TasksFileManager.DropPane.prototype,
     `
 
   _uploadDroppedFiles: (files) ->
-    @policy_ready_promise.then =>
-      task_id = @task_id
 
-      upload_options =
-        signature: @_policy.signature
-        policy: @_policy.policy
+    max_file_size = 100 # in Mb
+    aborted_files = []
 
-      _.extend upload_options, @manager.getStorageLocationAndPath(task_id)
+    for file in files
+      file_size = file.size * 0.000001
 
-      total_files = files.length
-      progresses = []
-      uploaded = []
+      if file_size > max_file_size
+        aborted_files.push file
 
-      _.each files, (file, i) =>
-        APP.filestack_base.filepicker.store(
-          file
-        ,
-          upload_options
-        , (blob) =>
-            uploaded.push(blob)
+    files = _.difference(files, aborted_files)
 
-            if uploaded.length == total_files
-              @_onSuccess task_id, uploaded
-        , (error) =>
-            @_onError task_id, "UploadError", error.toString()
-        ,
-          (progress) =>
+    if files.length == 0
+      @resetPane()
 
-            progresses[i] = progress
-            total_progress = (_.reduce progresses, (a, b) => (a || 0) + (b || 0)) / total_files
+    if aborted_files.length > 0
+      aborted_files_names = "The following files won't be uploaded (The maximum file size is 100Mb):<br><br>"
 
-            @_onProgress task_id, total_progress
-      )
+      for aborted_file, index in aborted_files
+        aborted_files_names += "#{index + 1}. #{aborted_file.name}<br>"
+
+      JustdoSnackbar.show
+        text: aborted_files_names
+
+    if files.length > 0
+      @policy_ready_promise.then =>
+        task_id = @task_id
+
+        upload_options =
+          signature: @_policy.signature
+          policy: @_policy.policy
+
+        _.extend upload_options, @manager.getStorageLocationAndPath(task_id)
+
+        total_files = files.length
+        progresses = []
+        uploaded = []
+
+        _.each files, (file, i) =>
+          APP.filestack_base.filepicker.store(
+            file
+          ,
+            upload_options
+          , (blob) =>
+              uploaded.push(blob)
+
+              if uploaded.length == total_files
+                @_onSuccess task_id, uploaded
+          , (error) =>
+              @_onError task_id, "UploadError", error.toString()
+          ,
+            (progress) =>
+
+              progresses[i] = progress
+              total_progress = (_.reduce progresses, (a, b) => (a || 0) + (b || 0)) / total_files
+
+              @_onProgress task_id, total_progress
+        )
 
   # Refreshes the security token necessary to upload files to filestack, this
   # method is called periodically after you init the pane using `initPane`.
