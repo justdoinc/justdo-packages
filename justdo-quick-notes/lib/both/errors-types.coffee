@@ -16,4 +16,3 @@ _.extend JustdoQuickNotes.prototype,
       "add-task-failed": "Failed to create task from Quick Note"
       "unknown-quick-note": "Unknown Quick Note"
       "task-created-already": "A task was already created from this Quick Note"
-      "publication-name-needed": "Please specify which publication to subscribe to"

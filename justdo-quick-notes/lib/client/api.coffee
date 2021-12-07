@@ -40,7 +40,7 @@ _.extend JustdoQuickNotes.prototype,
   # refreshSubscription() takes care of subscribing to publications with options, and stopping the previous subscription
   _refreshSubscription: (publication_name, current_subscription, options, onSubscriptionReadyCb) ->
     if not publication_name?
-      throw @_error "publication-name-not-found", "Please specify which publication to subscribe to"
+      throw @_error "invalid-argument", "Please specify which publication to subscribe to"
 
     if not current_subscription?
       return Meteor.subscribe publication_name, options
