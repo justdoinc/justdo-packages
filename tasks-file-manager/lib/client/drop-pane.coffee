@@ -154,12 +154,10 @@ _.extend TasksFileManager.DropPane.prototype,
 
   _uploadDroppedFiles: (files) ->
 
-    max_file_size = 100 # in Mb
+    max_file_size = env.FILESTACK_MAX_FILE_SIZE_BYTES
     aborted_files = []
 
     for file in files
-      file_size = file.size * 0.000001
-
       if file_size > max_file_size
         aborted_files.push file
 
@@ -169,7 +167,7 @@ _.extend TasksFileManager.DropPane.prototype,
       @resetPane()
 
     if aborted_files.length > 0
-      aborted_files_names = "The following files won't be uploaded (The maximum file size is 100Mb):<br><br>"
+      aborted_files_names = "The following files won't be uploaded (The maximum file size is #{max_file_size / 1048576}Mb):<br><br>"
 
       for aborted_file, index in aborted_files
         aborted_files_names += "#{index + 1}. #{aborted_file.name}<br>"
