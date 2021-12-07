@@ -158,7 +158,7 @@ _.extend TasksFileManager.DropPane.prototype,
     aborted_files = []
 
     for file in files
-      if file_size > max_file_size
+      if file.size > max_file_size
         aborted_files.push file
 
     files = _.difference(files, aborted_files)
