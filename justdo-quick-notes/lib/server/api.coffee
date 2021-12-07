@@ -204,9 +204,20 @@ _.extend JustdoQuickNotes.prototype,
       title: quick_note_doc.title
       _created_from_quick_note: quick_note_id
 
+    grid_data = APP.projects._grid_data_com
+
     # Check on whether user is a member of the parent task is performed inside addChild()
-    if not (created_task_id = APP.projects._grid_data_com.addChild parent_path, task_fields, user_id)?
+    if not (created_task_id = grid_data.addChild parent_path, task_fields, user_id)?
       throw @_error "add-task-failed", "Failed to create task from Quick Note"
+
+    if ((parent_id = GridDataCom.helpers.getPathItemId parent_path) is "/")
+      parent_id = "0"
+
+    created_task_path = parent_path + created_task_id + "/"
+
+    if order?
+      # Move the order of the created task
+      grid_data.movePath created_task_path, {parent: parent_id, order: order}, user_id
 
     quick_note_op =
       $set:
@@ -215,8 +226,7 @@ _.extend JustdoQuickNotes.prototype,
 
     @quick_notes_collection.update quick_note_id, quick_note_op
 
-    path_to_created_task = "#{parent_path}/#{created_task_id}/"
-    return path_to_created_task
+    return created_task_path
 
   undoCreateTaskFromQuickNote: (path_to_created_task, project_id, user_id) ->
     check user_id, String
