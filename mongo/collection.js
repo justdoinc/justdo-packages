@@ -633,13 +633,22 @@ Object.assign(Mongo.Collection.prototype, {
           edited_key = key;
         }
 
-        // this._collection._docs.once("after-setDocFields", afterSetDocFieldsHook);
+        this._collection._docs.once("after-setDocFields", afterSetDocFieldsHook);
 
         ret_val = this._collection.update(
           selector, modifier, options, wrappedCallback);
 
         if (hook_called) {
-          Object.assign(Meteor.connection._serverDocuments[this._name].get(edited_key).document, edited_fields);
+          // The following resulted from CoffeeScript:
+          //
+          // if (corresponding_server_doc = Meteor.connection._serverDocuments?[this._name]?.get(edited_key)?.document)?
+          //   Object.assign(corresponding_server_doc, edited_fields)
+
+          var corresponding_server_doc, ref, ref1, ref2;
+
+          if ((corresponding_server_doc = (ref = Meteor.connection._serverDocuments) != null ? (ref1 = ref[this._name]) != null ? (ref2 = ref1.get(edited_key)) != null ? ref2.document : void 0 : void 0 : void 0) != null) {
+            Object.assign(corresponding_server_doc, edited_fields);
+          }
         } else {
           this._collection._docs.off("after-setDocFields", afterSetDocFieldsHook);
         }
