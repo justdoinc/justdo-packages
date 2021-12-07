@@ -144,6 +144,7 @@ _.extend JustdoQuickNotes.prototype,
     put_before_quick_note_query =
       _id:
         $ne: target_quick_note_id
+      deleted: null
       user_id: user_id
       order:
         $lt: put_after_quick_note_order
