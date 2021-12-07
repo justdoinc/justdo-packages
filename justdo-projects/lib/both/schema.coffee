@@ -241,6 +241,11 @@ _.extend Projects.prototype,
           if this.isUpdate
             return new Date()
 
+      timezone:
+        label: "Project Timezone"
+
+        type: String
+
     @projects_collection.attachSchema Schema
 
   _attachUserProfileCollectionSchema: ->

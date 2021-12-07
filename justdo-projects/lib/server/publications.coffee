@@ -25,6 +25,8 @@ _.extend Projects.prototype,
 
       "createdAt": 1
 
+      "timezone": 1
+
     non_guests_published_fields = _.extend {}, guests_published_fields,
       "members.user_id": 1
       "members.is_admin": 1
