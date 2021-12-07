@@ -33,7 +33,7 @@ _.extend JustdoQuickNotes.prototype,
     return
 
   # refreshSubscription() takes care of subscribing to publications with options, and stopping the previous subscription
-  _refreshSubscription: (publication_name, current_subscription, options, onSubscriptionReadyCb) ->
+  _refreshSubscription: (publication_name, current_subscription, options, cb) ->
     if not publication_name?
       throw @_error "invalid-argument", "Please specify which publication to subscribe to"
 
@@ -41,17 +41,24 @@ _.extend JustdoQuickNotes.prototype,
       return Meteor.subscribe publication_name, options
 
     prev_subscription = current_subscription
-    current_subscription = Meteor.subscribe publication_name, options
+    current_subscription = Meteor.subscribe publication_name, options, cb
+
+    # In case this function is called inside a reactive computation,
+    # stop the previous subscription upon the invalidation of the outer computation
+    if Tracker.currentComputation?
+      Tracker.onInvalidate =>
+        prev_subscription.stop()
 
     Tracker.autorun (computation) ->
       if current_subscription.ready()
-        onSubscriptionReadyCb?()
         prev_subscription.stop()
         computation.stop()
       return
 
     return current_subscription
 
+  # cb is passed directly to the callback of Meteor.subscribe
+  # It could either be an object {onReady:(), onStop: ()} or simply a function (which is called on ready)
   subscribeActiveQuickNotes: (options, cb) ->
     if @destroyed
       return
@@ -60,10 +67,12 @@ _.extend JustdoQuickNotes.prototype,
       limit: 0
     options = _.defaults options, default_options
 
-    @active_quick_notes_subscription = @_refreshSubscription "activeQuickNotes", @active_quick_notes_subscription, options, onSubscriptionReadyCb
+    @active_quick_notes_subscription = @_refreshSubscription "activeQuickNotes", @active_quick_notes_subscription, options, cb
 
     return @active_quick_notes_subscription
 
+  # cb is passed directly to the callback of Meteor.subscribe
+  # It could either be an object {onReady:(), onStop: ()} or simply a function (which is called on ready)
   subscribeCompletedQuickNotes: (options, cb) ->
     if @destroyed
       return
@@ -72,7 +81,7 @@ _.extend JustdoQuickNotes.prototype,
       limit: JustdoQuickNotes.completed_quick_notes_subscription_limit
     options = _.defaults options, default_options
 
-    @completed_quick_notes_subscription = @_refreshSubscription "completedQuickNotes", @completed_quick_notes_subscription, options, onSubscriptionReadyCb
+    @completed_quick_notes_subscription = @_refreshSubscription "completedQuickNotes", @completed_quick_notes_subscription, options, cb
 
     return @completed_quick_notes_subscription
 
