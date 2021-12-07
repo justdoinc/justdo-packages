@@ -32,11 +32,6 @@ _.extend JustdoQuickNotes.prototype,
 
     return
 
-  _initSubscriptionLimit: ->
-    @active_quick_notes_subscription_limit = 0
-    @completed_quick_notes_subscription_limit = JustdoQuickNotes.completed_quick_notes_subscription_limit
-    return
-
   # refreshSubscription() takes care of subscribing to publications with options, and stopping the previous subscription
   _refreshSubscription: (publication_name, current_subscription, options, onSubscriptionReadyCb) ->
     if not publication_name?
@@ -57,27 +52,25 @@ _.extend JustdoQuickNotes.prototype,
 
     return current_subscription
 
-  subscribeActiveQuickNotes: (options = {}, onSubscriptionReadyCb) ->
+  subscribeActiveQuickNotes: (options, cb) ->
     if @destroyed
       return
 
-    if options.limit?
-      @active_quick_notes_subscription_limit = options.limit
-    else
-      options.limit = @active_quick_notes_subscription_limit
+    default_options =
+      limit: 0
+    options = _.defaults options, default_options
 
     @active_quick_notes_subscription = @_refreshSubscription "activeQuickNotes", @active_quick_notes_subscription, options, onSubscriptionReadyCb
 
     return @active_quick_notes_subscription
 
-  subscribeCompletedQuickNotes: (options = {}, onSubscriptionReadyCb) ->
+  subscribeCompletedQuickNotes: (options, cb) ->
     if @destroyed
       return
 
-    if options.limit?
-      @completed_quick_notes_subscription_limit = options.limit
-    else
-      options.limit = JustdoQuickNotes.completed_quick_notes_subscription_limit
+    default_options =
+      limit: JustdoQuickNotes.completed_quick_notes_subscription_limit
+    options = _.defaults options, default_options
 
     @completed_quick_notes_subscription = @_refreshSubscription "completedQuickNotes", @completed_quick_notes_subscription, options, onSubscriptionReadyCb
 
