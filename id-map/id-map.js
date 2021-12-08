@@ -35,9 +35,11 @@ export class IdMap extends EventEmitter {
     var key = this._idStringify(id);
 
     if (key in this._map) {
+      var removed_doc = this._map[key];
+
       delete this._map[key];
 
-      this.emit("after-remove", key);
+      this.emit("after-remove", key, removed_doc);
     }
   }
 
