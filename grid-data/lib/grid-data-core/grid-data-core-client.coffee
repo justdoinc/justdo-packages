@@ -366,12 +366,12 @@ _.extend GridDataCore.prototype,
 
           return
 
-        "after-remove": (id) =>
+        "after-remove": (id, removed_doc) =>
           if not @updateRelatedToOurTasksQuery(id)
             # Update isn't related to the tasks query we track
             return
 
-          @_data_changes_queue.push ["remove", [id]]
+          @_data_changes_queue.push ["remove", [id, removed_doc]]
 
           @flush_manager.setNeedFlush()
 
@@ -388,7 +388,7 @@ _.extend GridDataCore.prototype,
 
           return
 
-        "after-setDocFields": (id, fields_changes) =>
+        "after-setDocFields": (id, fields_changes, changed_field_old_values) =>
           # console.log "after-set-doc-fields", id, fields_changes
 
           # @logger.debug "Tracker: Item changed #{id}"
@@ -399,15 +399,16 @@ _.extend GridDataCore.prototype,
 
           # Take care of parents changes
           if "parents" of fields_changes
-            @_data_changes_queue.push ["parent_update", [id,  fields_changes.parents]]
+            @_data_changes_queue.push ["parent_update", [id, fields_changes.parents, changed_field_old_values.parents]]
 
             @flush_manager.setNeedFlush()
 
-          changed_fields = _.omit(fields_changes, "parents")
+          changed_fields = _.omit(fields_changes, "parents") # Note in this process we are creating a new object from fields_changes
+          changed_field_old_values = _.omit(changed_field_old_values, "parents") # Note in this process we are creating a new object from changed_field_old_values
 
           # Regular changes
           if not _.isEmpty(changed_fields)
-            @_data_changes_queue.push ["update", [id, changed_fields]]
+            @_data_changes_queue.push ["update", [id, changed_fields, changed_field_old_values]]
 
             @flush_manager.setNeedFlush()
 
