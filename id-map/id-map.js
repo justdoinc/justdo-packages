@@ -135,31 +135,36 @@ export class IdMap extends EventEmitter {
     var key = this._idStringify(id);
 
     // COFFEE
+    // previous_edited_fields_values = {}
     // edited_fields = {}
-    //
+    
     // for field, val of fields
     //   if field != "_id" and (not EJSON.equals(val, this._map[key][field]))
+    //     previous_edited_fields_values[field] = this._map[key][field]
     //     edited_fields[field] = val
-    //
+    
     // if Object.keys(edited_fields).length != 0
     //   Object.assign(this._map[key], edited_fields)
-    //
-    //   this.emit("after-set-doc-fields", key, edited_fields)
+    
+    //   this.emit("after-setDocFields", key, edited_fields, previous_edited_fields_values)
 
-    var edited_fields, field, val;
+    var edited_fields, field, previous_edited_fields_values, val;
+
+    previous_edited_fields_values = {};
 
     edited_fields = {};
 
     for (field in fields) {
       val = fields[field];
       if (field !== "_id" && (!EJSON.equals(val, this._map[key][field]))) {
+        previous_edited_fields_values[field] = this._map[key][field];
         edited_fields[field] = val;
       }
     }
 
     if (Object.keys(edited_fields).length !== 0) {
       Object.assign(this._map[key], edited_fields);
-      this.emit("after-setDocFields", key, edited_fields);
+      this.emit("after-setDocFields", key, edited_fields, previous_edited_fields_values);
     }
   }
 
