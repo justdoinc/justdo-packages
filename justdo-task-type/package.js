@@ -93,9 +93,5 @@ Package.onUse(function (api) {
   // the server will have the access to the apis loaded after the init.coffee
   // file.
 
-  // Core generators
-  api.addFiles("lib/core-generators/task-alerts/task-alerts.coffee", both);
-  api.addFiles("lib/core-generators/task-types/project.coffee", both);
-
   api.export("JustdoTaskType", both);
 });
