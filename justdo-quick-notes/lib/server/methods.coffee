@@ -26,12 +26,14 @@ _.extend JustdoQuickNotes.prototype,
         self.reorderQuickNote target_quick_note_id, put_after_quick_note_id, @userId
         return
 
-      "createTaskFromQuickNote": (quick_note_id, options) ->
+      "createTaskFromQuickNote": (quick_note_id, project_id, parent_path, order) ->
         check @userId, String
         check quick_note_id, String
-        # Check on options will be performed in self.createTaskFromQuickNote()
+        check project_id, String
+        check parent_path, String
+        check order, Number
 
-        return self.createTaskFromQuickNote quick_note_id, options, @userId
+        return self.createTaskFromQuickNote quick_note_id, project_id, parent_path, order, @userId
 
       "undoCreateTaskFromQuickNote": (path_to_created_task, project_id) ->
         check @userId, String

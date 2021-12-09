@@ -170,27 +170,11 @@ _.extend JustdoQuickNotes.prototype,
     @quick_notes_collection.update target_quick_note_id, target_quick_note_update_op
     return
 
-  _createTaskFromQuickNoteOptionsSchema: new SimpleSchema
-    project_id:
-      type: String
-
-    parent_path:
-      type: String
-      defaultValue: "/"
-
-    order:
-      type: Number
-      optional: true
-  createTaskFromQuickNote: (quick_note_id, options, user_id) ->
+  createTaskFromQuickNote: (quick_note_id, project_id, parent_path, order, user_id) ->
     check user_id, String
     check quick_note_id, String
-    {cleaned_val} =
-      JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_createTaskFromQuickNoteOptionsSchema,
-        options,
-        {self: @, throw_on_error: true}
-      )
-    {project_id, parent_path, order} = cleaned_val
+    check project_id, String
+    check order, Number
 
     quick_note_doc = @requireQuickNoteDoc(quick_note_id, user_id, {title: 1, created_task_id: 1})
     if quick_note_doc.created_task_id?
