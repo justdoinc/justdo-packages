@@ -212,20 +212,26 @@ _.extend JustdoQuickNotes.prototype,
 
     return created_task_path
 
-  undoCreateTaskFromQuickNote: (path_to_created_task, project_id, user_id) ->
+  undoCreateTaskFromQuickNote: (quick_note_id, user_id) ->
     check user_id, String
-    check path_to_created_task, String
+    check quick_note_id, String
 
-    # Check if user is a member of this project
-    APP.projects.requireUserIsMemberOfProject project_id, user_id
+    # One could simply use quick_note_id to query for task doc,
+    # but since we'll need requireQuickNoteDoc() to check if the quick note belongs to the user,
+    # the created_task_id is obtained for better query performance on the tasks collection
+    if not (task_id = @requireQuickNoteDoc(quick_note_id, user_id, {created_task_id: 1}).created_task_id)?
+      throw @_error "invalid-argument", "No task was created by this Quick Note"
 
-    task_id = GridDataCom.helpers.getPathItemId path_to_created_task
-    if not (quick_note_doc = @quick_notes_collection.findOne({user_id: user_id, created_task_id: task_id}, {_id: 1}))?
-      throw @_error "unknown-quick-note", "Unknown Quick Note"
+    if not (task_parent = _.keys @tasks_collection.findOne(task_id, {fields: {parents: 1}})?.parents)?
+      throw @_error "task-not-found", "Task not found"
 
+    if (task_parent.length > 1)
+      throw @_error "cannot-undo", "Undo not supported for this task"
+
+    path_to_created_task = "/#{task_parent[0]}/#{task_id}/"
     APP.projects._grid_data_com.removeParent path_to_created_task, user_id
 
-    @quick_notes_collection.update quick_note_doc._id,
+    @quick_notes_collection.update quick_note_id,
       $set:
         created_task_id: null
         deleted: null

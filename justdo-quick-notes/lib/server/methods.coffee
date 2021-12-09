@@ -35,11 +35,11 @@ _.extend JustdoQuickNotes.prototype,
 
         return self.createTaskFromQuickNote quick_note_id, project_id, parent_path, order, @userId
 
-      "undoCreateTaskFromQuickNote": (path_to_created_task, project_id) ->
+      "undoCreateTaskFromQuickNote": (quick_note_id) ->
         check @userId, String
-        check path_to_created_task, String
+        check quick_note_id, String
 
-        self.undoCreateTaskFromQuickNote path_to_created_task, project_id, @userId
+        self.undoCreateTaskFromQuickNote quick_note_id, @userId
         return
         
     return

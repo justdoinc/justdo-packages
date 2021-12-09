@@ -16,3 +16,5 @@ _.extend JustdoQuickNotes.prototype,
       "add-task-failed": "Failed to create task from Quick Note"
       "unknown-quick-note": "Unknown Quick Note"
       "task-created-already": "A task was already created from this Quick Note"
+      "task-not-found": "Task not found"
+      "cannot-undo": "Undo not supported for this task"
