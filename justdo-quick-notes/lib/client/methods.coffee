@@ -1,6 +1,6 @@
 _.extend JustdoQuickNotes.prototype,
-  addQuickNote: (options, cb) ->
-    Meteor.call "addQuickNote", options, cb
+  addQuickNote: (fields, cb) ->
+    Meteor.call "addQuickNote", fields, cb
     return
 
   editQuickNote: (quick_note_id, options, cb) ->

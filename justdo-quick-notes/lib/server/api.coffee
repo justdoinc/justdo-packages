@@ -52,24 +52,24 @@ _.extend JustdoQuickNotes.prototype,
       throw @_error "unknown-quick-note", "Unknown Quick Note"
     return quick_note_doc
 
-  _addQuickNoteOptionsSchema: new SimpleSchema
+  _addQuickNoteFieldsSchema: new SimpleSchema
     title:
       type: String
-  addQuickNote: (options, user_id) ->
+  addQuickNote: (fields, user_id) ->
     check user_id, String
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_addQuickNoteOptionsSchema,
-        options,
+        @_addQuickNoteFieldsSchema,
+        fields,
         {self: @, throw_on_error: true}
       )
-    options = cleaned_val
+    fields = cleaned_val
 
-    _.extend options,
+    _.extend fields,
       user_id: user_id
       order: _.now()
 
-    @quick_notes_collection.insert options
+    @quick_notes_collection.insert fields
     return
 
   _editQuickNoteOptionsSchema: new SimpleSchema
