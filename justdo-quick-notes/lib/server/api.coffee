@@ -210,7 +210,7 @@ _.extend JustdoQuickNotes.prototype,
 
     @quick_notes_collection.update quick_note_id, quick_note_op
 
-    return created_task_path
+    return created_task_id
 
   undoCreateTaskFromQuickNote: (quick_note_id, user_id) ->
     check user_id, String
