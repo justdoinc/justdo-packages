@@ -48,6 +48,7 @@ _.extend JustdoQuickNotes.prototype,
     if Tracker.currentComputation?
       Tracker.onInvalidate =>
         prev_subscription.stop()
+        return
 
     Tracker.autorun (computation) ->
       if current_subscription.ready()
@@ -65,7 +66,7 @@ _.extend JustdoQuickNotes.prototype,
 
     default_options =
       limit: 0
-    options = _.defaults options, default_options
+    options = _.extend default_options, options
 
     @active_quick_notes_subscription = @_refreshSubscription "activeQuickNotes", @active_quick_notes_subscription, options, cb
 
