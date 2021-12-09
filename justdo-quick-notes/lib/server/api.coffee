@@ -170,11 +170,12 @@ _.extend JustdoQuickNotes.prototype,
     @quick_notes_collection.update target_quick_note_id, target_quick_note_update_op
     return
 
-  createTaskFromQuickNote: (quick_note_id, project_id, parent_path, order, user_id) ->
-    check user_id, String
+  createTaskFromQuickNote: (quick_note_id, project_id, parent_id, order=0, user_id) ->
     check quick_note_id, String
     check project_id, String
+    check parent_id, String
     check order, Number
+    check user_id, String
 
     quick_note_doc = @requireQuickNoteDoc(quick_note_id, user_id, {title: 1, created_task_id: 1})
     if quick_note_doc.created_task_id?
@@ -191,17 +192,21 @@ _.extend JustdoQuickNotes.prototype,
     grid_data = APP.projects._grid_data_com
 
     # Check on whether user is a member of the parent task is performed inside addChild()
-    if not (created_task_id = grid_data.addChild parent_path, task_fields, user_id)?
+    if parent_id is "0"
+      target_path = "/"
+    else
+      target_path = "/#{parent_id}/"
+
+    if not (created_task_id = grid_data.addChild target_path, task_fields, user_id)?
       throw @_error "add-task-failed", "Failed to create task from Quick Note"
 
-    if ((parent_id = GridDataCom.helpers.getPathItemId parent_path) is "/")
-      parent_id = "0"
+    if parent_id is "0"
+      created_task_path = "/#{created_task_id}/"
+    else
+      created_task_path = "/#{parent_id}/#{created_task_id}/"
 
-    created_task_path = parent_path + created_task_id + "/"
-
-    if order?
-      # Move the order of the created task
-      grid_data.movePath created_task_path, {parent: parent_id, order: order}, user_id
+    # Move the order of the created task
+    grid_data.movePath created_task_path, {parent: parent_id, order: order}, user_id
 
     quick_note_op =
       $set:
@@ -222,7 +227,7 @@ _.extend JustdoQuickNotes.prototype,
     if not (task_id = @requireQuickNoteDoc(quick_note_id, user_id, {created_task_id: 1}).created_task_id)?
       throw @_error "invalid-argument", "No task was created by this Quick Note"
 
-    if not (task_parent = _.keys @tasks_collection.findOne(task_id, {fields: {parents: 1}})?.parents)?
+    if not (task_parent = _.keys @tasks_collection.findOne({_id: task_id, users: user_id}, {fields: {parents: 1}})?.parents)?
       throw @_error "task-not-found", "Task not found"
 
     if (task_parent.length > 1)
