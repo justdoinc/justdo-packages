@@ -167,7 +167,7 @@ _.extend TasksFileManager.DropPane.prototype,
       @resetPane()
 
     if aborted_files.length > 0
-      aborted_files_names = "The following files won't be uploaded (The maximum file size is #{max_file_size / 1048576}Mb):<br><br>"
+      aborted_files_names = "The following files won't be uploaded (The maximum file size is #{parseInt(max_file_size / 1048576, 10)}Mb):<br><br>"
 
       for aborted_file, index in aborted_files
         aborted_files_names += "#{index + 1}. #{aborted_file.name}<br>"
