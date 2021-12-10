@@ -35,6 +35,11 @@ _.extend JustdoJobsProcessor.prototype,
     group_uid = res[1]
     group_version = parseInt(res[2], 10)
 
+    forced_responsibility = JustdoJobsProcessor.forced_responsibility["#{group_uid}::#{group_version}"]
+    for job_id of forced_responsibility
+      @registered_jobs[job_id] = forced_responsibility[job_id]
+      @jobs_under_responsibility[job_id] = {args: []}
+
     our_recent_flag = null
     recent_flag_found = null
     we_in_control = false
