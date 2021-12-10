@@ -265,6 +265,12 @@ export class AccountsServer extends AccountsCommon {
   // database and doesn't need to be inserted again.  (It's used by the
   // "resume" login handler).
   _loginUser(methodInvocation, userId, stampedLoginToken) {
+    // If the user is deactivated, prevent the user from logging in.
+    if (Meteor.users.findOne(userId, {fields: {deactivated: 1}}).deactivated){
+      this.logoutAllClients([userId]);
+      throw new Meteor.Error("account-deactivated", "Account is deactivated");
+    }
+
     if (! stampedLoginToken) {
       stampedLoginToken = this._generateStampedLoginToken();
       this._insertLoginToken(userId, stampedLoginToken);
@@ -495,6 +501,28 @@ export class AccountsServer extends AccountsCommon {
       }
     });
   };
+
+
+  // Deletes all loginTokens of all users in usersIds
+  //
+  // For new-style hashed token, this will cause all connections
+  // associated with the token to be closed.
+  //
+  // Any connections associated with old-style unhashed tokens will be
+  // in the process of becoming associated with hashed tokens and then
+  // they'll get closed.
+  logoutAllClients(usersIds) {
+    check(usersIds, [String]);
+    this.users.update({
+      _id: {
+        $in: usersIds
+      }
+    }, {
+      $set: {
+        "services.resume.loginTokens": []
+      }
+    });
+  }
 
   _initServerMethods() {
     // The methods created in this function need to be created here so that
