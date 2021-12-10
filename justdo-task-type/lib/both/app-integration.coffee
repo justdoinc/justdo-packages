@@ -5,4 +5,6 @@ APP.getEnv (env) ->
 
   APP.justdo_task_type = new JustdoTaskType(options)
 
+  APP.emit("justdo-task-type-initiated")
+
   return
