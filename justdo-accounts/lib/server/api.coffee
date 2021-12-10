@@ -725,6 +725,44 @@ _.extend JustdoAccounts.prototype,
 
     return
 
+  deactivateUser: (users_ids) ->
+    if _.isString users_ids
+      users_ids = [users_ids]
+
+    check users_ids, [String]
+
+    query =
+      _id:
+        $in: users_ids
+
+    update =
+      $set:
+        deactivated: true
+
+    Meteor.users.update(query, update, {multi: true})
+
+    Accounts.logoutAllClients users_ids
+
+    return
+
+  reactivateUser: (users_ids) ->
+    if _.isString users_ids
+      users_ids = [users_ids]
+
+    check users_ids, [String]
+
+    query =
+      _id:
+        $in: users_ids
+
+    update =
+      $unset:
+        deactivated: ""
+
+    Meteor.users.update(query, update, {multi: true})
+
+    return
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"

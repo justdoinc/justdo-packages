@@ -38,6 +38,11 @@ _.extend JustdoAccounts.prototype,
 
         type: Object
 
+      deactivated:
+        optional: true
+
+        type: Boolean
+
       "signed_legal_docs.terms_conditions":
         optional: true
 

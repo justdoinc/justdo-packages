@@ -103,3 +103,12 @@ _.extend JustdoAccounts.prototype,
         }
 
     return undefined
+
+  isUserDeactivated: (user) ->
+    # If user is already an object, assume a user object, and avoid request to minimongo
+    if _.isObject user
+      return user.deactivated
+
+    check user, String
+
+    return Meteor.users.findOne({_id: user, deactivated: true}, {fields: {_id: 1}})?
