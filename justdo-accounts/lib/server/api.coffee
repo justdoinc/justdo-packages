@@ -725,7 +725,7 @@ _.extend JustdoAccounts.prototype,
 
     return
 
-  deactivateUser: (users_ids) ->
+  deactivateUsers: (users_ids) ->
     if _.isString users_ids
       users_ids = [users_ids]
 
@@ -745,7 +745,7 @@ _.extend JustdoAccounts.prototype,
 
     return
 
-  reactivateUser: (users_ids) ->
+  reactivateUsers: (users_ids) ->
     if _.isString users_ids
       users_ids = [users_ids]
 

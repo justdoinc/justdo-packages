@@ -106,9 +106,11 @@ _.extend JustdoAccounts.prototype,
 
   isUserDeactivated: (user) ->
     # If user is already an object, assume a user object, and avoid request to minimongo
-    if _.isObject user
-      return user.deactivated
+    if _.isString user
+      if not (user = Meteor.users.findOne({_id: user}, {fields: {_id: 1, deactivated: 1}}))?
+        throw new Meteor.Error("unknown-user")
 
-    check user, String
+    if not user? or not _.isObject(user)
+      throw new Meteor.Error("invalid-argument")
 
-    return Meteor.users.findOne({_id: user, deactivated: true}, {fields: {_id: 1}})?
+    return user.deactivated is true
