@@ -21,75 +21,29 @@ share.QuickNotesDropdown = JustdoHelpers.generateNewTemplateDropdown "quick-note
 
     return
 
-
-addNewTaskByDetectingParentFromPoint = (e) ->
-  element = undefined
-  elements = []
-  old_visibility = []
-  loop
-    element = document.elementFromPoint(e.pageX, e.pageY)
-    if !element or element == document.documentElement
-      break
-    elements.push element
-    old_visibility.push element.style.visibility
-    element.style.visibility = "hidden"
-    # Temporarily hide the element (without changing the layout)
-
-  k = 0
-
-  while k < elements.length
-    elements[k].style.visibility = old_visibility[k]
-    k++
-  elements.reverse()
-
-  $row = $(elements).filter(".slick-row")
-  $task_id = $row.find(".grid-tree-control-task-id").attr("jd-tt").split("=")[1]
-
-  console.log $task_id
-
-  APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab($task_id)
-  APP.modules.project_page.performOp("addSubTask")
-
-  return
-
-
 # !!!!! Bug with MEMBERS DROPDOWN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 Template.justdo_quick_notes_dropdown.onCreated ->
   @showCompleted = new ReactiveVar false
+  @completedQuickNotesLimit = new ReactiveVar 20
 
-  @quickNotes = [
-    { title: "Seoul", completed: true },
-    { title: "Berlin", completed: true },
-    { title: "Moscow", completed: true },
-    { title: "Hong Kong", completed: false },
-    { title: "Paris", completed: false },
-    { title: "Perth", completed: false },
-    { title: "Kuala Lumpur", completed: true },
-    { title: "New York", completed: false },
-    { title: "London", completed: false },
-    { title: "Rome", completed: false },
-    { title: "Barselona", completed: true },
-    { title: "Amsterdam", completed: false },
-    { title: "Los Angeles", completed: false },
-    { title: "Nice", completed: false },
-    { title: "Marsel", completed: false },
-    { title: "Kuala Lumpur", completed: true },
-    { title: "New York", completed: false },
-    { title: "London", completed: false },
-    { title: "Rome", completed: false },
-    { title: "Barselona", completed: true },
-    { title: "Amsterdam", completed: false },
-    { title: "Los Angeles", completed: false },
-    { title: "Nice", completed: true },
-    { title: "Marsel", completed: false }
-  ]
+  active_quick_notes_sub = APP.justdo_quick_notes.subscribeActiveQuickNotes()
+  completed_quick_notes_sub = APP.justdo_quick_notes.subscribeCompletedQuickNotes({limit: @completedQuickNotesLimit.get()})
+
+  return
+
+Template.justdo_quick_notes_dropdown.onRendered ->
+  $(".quick-notes-list.completed").on "scroll", ->
+    if $(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight
+      console.log "end reached"
+
+    return
 
   return
 
 Template.justdo_quick_notes_dropdown.helpers
   quckNotes: ->
-    return Template.instance().quickNotes
+    return APP.collections.QuickNotes.find({}, {sort: {order: -1}}).fetch()
 
   showCompleted: ->
     return Template.instance().showCompleted.get()
@@ -97,6 +51,18 @@ Template.justdo_quick_notes_dropdown.helpers
 Template.justdo_quick_notes_dropdown.events
   "click .quick-notes-completed-wrapper .quick-notes-list-title": (e, tpl) ->
     tpl.showCompleted.set !tpl.showCompleted.get()
+
+    return
+
+  "keydown .quick-note-new": (e, tpl) ->
+    if e.key == "Enter"
+      e.preventDefault()
+
+      $quick_note_new_el = $(e.target)
+      note_title = $quick_note_new_el.text().trim()
+      APP.justdo_quick_notes.addQuickNote({title: note_title})
+
+      $quick_note_new_el.empty()
 
     return
 
@@ -126,19 +92,38 @@ Template.justdo_quick_notes_item.onRendered ->
       $(".slick-row").droppable
         tolerance: "pointer"
         drop: (e, ui) ->
-          $task_id = $(e.target).find(".grid-tree-control-task-id").attr("jd-tt").split("=")[1]
+          task_id = $(e.target).find(".grid-tree-control-task-id").attr("jd-tt").split("=")[1]
+          quick_note = Blaze.getData(ui.draggable[0])
 
-          APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab($task_id)
-          APP.modules.project_page.performOp("addSubTask")
+          APP.justdo_quick_notes.createTaskFromQuickNote quick_note._id, JD.activeJustdoId(), "/#{task_id}/", 0, (error, result) =>
+            if error?
+              JustdoSnackbar.show
+                text: error.reason
+            else
+              # !!! NEED TO UPDATE - api cb returns /parent_id//task_id/
+              console.log result
+
+              JustdoSnackbar.show
+                text: "Task has been created"
+                duration: 5000
+                actionText: "Undo"
+                showDismissButton: true
+                onActionClick: =>
+                  # APP.justdo_quick_notes.undoCreateTaskFromQuickNote result, JD.activeJustdoId(), "/#{task_id}/", (error, result) =>
+                  #   if error?
+                  #     JustdoSnackbar.show
+                  #       text: error.reason
+                  #   else
+                  #     JustdoSnackbar.close()
+                  return
+
+            return
 
           return
 
       return
 
     stop: (e, ui) ->
-      # Approach 1 - Add task by detecting elementFromPoint
-      # addNewTaskByDetectingParentFromPoint(e)
-
       $(".slick-row").droppable("destroy")
 
       return
@@ -161,10 +146,70 @@ Template.justdo_quick_notes_item.events
   "mouseup .quick-note": (e, tpl) ->
     $(e.currentTarget).removeClass "mouse-down"
     $(e.currentTarget).draggable disabled: true
-    $(e.currentTarget).find(".quick-note-title").focus()
+
+    $title = $(e.currentTarget).find(".quick-note-title")
+    $title.focus()
+
+    if not $title.hasClass "active"
+      if typeof window.getSelection != "undefined" && typeof document.createRange != "undefined"
+        range = document.createRange()
+        range.selectNodeContents($title[0])
+        range.collapse(false)
+        sel = window.getSelection()
+        sel.removeAllRanges()
+        sel.addRange(range)
+        $title.addClass "active"
+
+      else if typeof document.body.createTextRange != "undefined"
+        textRange = document.body.createTextRange()
+        textRange.moveToElementText($title[0])
+        textRange.collapse(false)
+        textRange.select()
+        $title.addClass "active"
 
     return
 
+
+  "blur .quick-note-title": (e, tpl) ->
+    $el = $(e.currentTarget)
+    $el.removeClass "active"
+
+    note_id = @._id
+    new_note_title = $el.text().trim()
+
+    APP.justdo_quick_notes.editQuickNote note_id, {title: new_note_title}, (error) =>
+      if error?
+        JustdoSnackbar.show
+          text: error.reason
+
+    return
+
+  "click .quick-note-mark": (e, tpl) ->
+    $el = $(e.currentTarget)
+    note = @
+    completed = null
+
+    if note.completed?
+      completed = false
+    else
+      completed = true
+
+    $el.addClass("switching-to-complete")
+
+    setTimeout ->
+      $el.removeClass("switching-to-complete").addClass("completed")
+    , 600
+
+    setTimeout ->
+      APP.justdo_quick_notes.editQuickNote note._id, {completed: completed}, (error) =>
+        if error?
+          JustdoSnackbar.show
+            text: error.reason
+
+        return
+    , 1200
+
+    return
 
 
 

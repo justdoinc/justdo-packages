@@ -1,5 +1,10 @@
 share.justdo_quick_notes_dropdown = null
 
+Template.justdo_quick_notes_activation_icon.onCreated ->
+  active_quick_notes_sub = APP.justdo_quick_notes.subscribeActiveQuickNotes()
+
+  return
+
 Template.justdo_quick_notes_activation_icon.onRendered ->
   @justdo_quick_notes_dropdown = new share.QuickNotesDropdown(@firstNode) # defined in ./dropdown/dropdown.coffee
 
@@ -16,4 +21,4 @@ Template.justdo_quick_notes_activation_icon.onDestroyed ->
 
 Template.justdo_quick_notes_activation_icon.helpers
   activeNotesCount: ->
-    return 5
+    return APP.collections.QuickNotes.find({$and:[{completed:null }]}).fetch().length

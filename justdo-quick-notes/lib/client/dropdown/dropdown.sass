@@ -1,5 +1,8 @@
 $list-title-height: 40px
 
+.quick-notes-dropdown
+  z-index: 150
+
 .slick-row.ui-droppable-hover
   .slick-cell.l0.r0
     z-index: 102
@@ -54,19 +57,21 @@ $list-title-height: 40px
     flex-direction: column
     padding: 0 16px
     &.active
-      // background-color: #ffab91
       flex-grow: 1
       overflow: auto
     &.completed
-      // background-color: #accad7
       overflow: auto
       flex-grow: 1
 
   .quick-note-add-wrapper
     padding: 0 16px
-    .quick-note
-      border-top: 1px solid #EDF1F8
+    margin-top: 4px
+    .quick-note-new
+      display: flex
+      align-items: start
       border-bottom: 1px solid #EDF1F8
+      padding: 8px 0
+      width: 280px
 
   .quick-notes-completed-wrapper
     display: flex
@@ -86,15 +91,6 @@ $list-title-height: 40px
 
     .quick-notes-list-title
       cursor: pointer
-
-  .quick-note-new
-    display: flex
-    align-items: start
-    border-top: 1px solid #EDF1F8
-    border-bottom: 1px solid #EDF1F8
-    padding: 8px 0
-    width: 280px
-
 
   .quick-note
     display: flex
@@ -136,24 +132,28 @@ $list-title-height: 40px
   .quick-note-mark
     display: flex
     height: 22px
+    width: 18px
     align-items: center
+    position: relative
+    flex-shrink: 0
+    .jd-icon
+      position: absolute
+      width: 18px
+      height: 18px
+      padding: 0px
+      stroke-width: 2.5
+      background-color: white
+      border-radius: 100%
+      z-index: 3
+      &.quick-note-mark-check
+        opacity: 0
+      &.quick-note-mark-circle
+        color: rgba(49, 69, 99, 0.6)
     .circular
       height: 18px
       width: 18px
       position: relative
-      .jd-icon
-        position: absolute
-        z-index: 0
-        width: 18px
-        height: 18px
-        padding: 0px
-        stroke-width: 2.5
-        // color: rgba(49, 69, 99, 0.6)
-        color: #08c116
-        background-color: white
-        border-radius: 100%
-        opacity: 0
-        z-index: 3
+      display: none
       .circle-bg
         width: 14px
         height: 14px
@@ -178,41 +178,54 @@ $list-title-height: 40px
         clip: rect(0px, 9px, 18px, 0px)
         background: #08c116
 
-
-      .circle .left .quick-note-progress
-        z-index: 1
-        animation: left 0.2s linear both
-
-      @keyframes left
-        100%
-          transform: rotate(180deg)
-
       .circle .right
         transform: rotate(180deg)
         z-index: 1
 
-      .circle .right .quick-note-progress
-        animation: right 0.2s linear both
-        animation-delay: 0.2s
+      .circle .left .quick-note-progress
+        z-index: 1
+        animation: animate-check-circle 0.2s linear both
 
-      @keyframes right
+      .circle .right .quick-note-progress
+        animation: animate-check-circle 0.2s linear both
+        animation-delay: 0.12s
+
+      @keyframes animate-check-circle
         100%
           transform: rotate(180deg)
 
+  .quick-note-mark
+    &.switching-to-complete
+      .circular
+        display: block
+      .quick-note-mark-circle
+        opacity: 0
+      .quick-note-mark-check
+        opacity: 0 !important
+    &.completed
+      .quick-note-mark-check
+        color: #08c116 !important
+        opacity: 1
+      .quick-note-mark-circle
+        opacity: 0
 
-
+  .quick-note-mark:hover
+    .quick-note-mark-check
+      color: rgba(49, 69, 99, 0.6)
+      opacity: 1
+    .quick-note-mark-circle
+      opacity: 0
 
   .quick-note-add
     font-size: 14px
     flex-grow: 1
-    margin: 0px 8px
+    cursor: pointer
     &:focus
       outline: none
       background-color: white
     &[placeholder]:empty::before
       content: attr(placeholder)
       color: #99aabb
-
     &[placeholder]:empty:focus::before
       content: ""
 

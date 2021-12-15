@@ -1,12 +1,8 @@
 <template name="justdo_quick_notes_dropdown">
   <div class="quick-notes-wrapper">
-    <div class="quick-notes-list-title">My Quick Notes</div>
     <div class="quick-note-add-wrapper">
       <div class="quick-note-new">
-        <div class="quick-note-mark">
-          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if completed}}check-circle{{else}}circle{{/if}}"></use></svg>
-        </div>
-        <div class="quick-note-add" contenteditable="true" tabindex="0" placeholder="Quick note"></div>
+        <div class="quick-note-add" contenteditable="true" tabindex="0" placeholder="Add a quick note"></div>
       </div>
     </div>
 
@@ -20,7 +16,7 @@
 
     <div class="quick-notes-completed-wrapper {{#if showCompleted}}show{{/if}}">
       <div class="quick-notes-list-title">
-        Completed (5)
+        Completed
         <div>
           <svg class="quick-notes-completed-toggle jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if showCompleted}}chevron-down{{else}}chevron-up{{/if}}"></use></svg>
           <svg class="quick-notes-completed-more jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
@@ -40,21 +36,26 @@
 <template name="justdo_quick_notes_item">
   <div class="quick-note {{#if completed}}done{{/if}}">
     <div class="quick-note-mark">
-
-      <div class="circular">
-        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#{{#if completed}}check-circle{{else}}check-circle{{/if}}"></use></svg>
-        <div class="circle-bg"></div>
-        <div class="circle">
-          <div class="quick-note-bar left">
-            <div class="quick-note-progress"></div>
-          </div>
-          <div class="quick-note-bar right">
-            <div class="quick-note-progress"></div>
+      {{#if completed}}
+        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#check-circle"></use></svg>
+        <svg class="jd-icon quick-note-mark-circle"><use xlink:href="/layout/icons-feather-sprite.svg#circle"></use></svg>
+      {{else}}
+        <svg class="jd-icon quick-note-mark-check"><use xlink:href="/layout/icons-feather-sprite.svg#check-circle"></use></svg>
+        <svg class="jd-icon quick-note-mark-circle"><use xlink:href="/layout/icons-feather-sprite.svg#circle"></use></svg>
+        <div class="circular">
+          <div class="circle-bg"></div>
+          <div class="circle">
+            <div class="quick-note-bar left">
+              <div class="quick-note-progress"></div>
+            </div>
+            <div class="quick-note-bar right">
+              <div class="quick-note-progress"></div>
+            </div>
           </div>
         </div>
-      </div>
+      {{/if}}
     </div>
-    <div class="quick-note-title" contenteditable="true" tabindex="0">
+    <div class="quick-note-title" contenteditable="{{#if completed}}false{{else}}true{{/if}}" tabindex="0">
       {{title}}
     </div>
     <!-- <svg class="quick-note-delete jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"></use></svg> -->

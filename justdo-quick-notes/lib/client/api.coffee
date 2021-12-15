@@ -21,18 +21,17 @@ _.extend JustdoQuickNotes.prototype,
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoQuickNotes.project_custom_feature_id,
         installer: =>
-          JD.registerPlaceholderItem  "#{JustdoQuickNotes.project_custom_feature_id}:activation-icon", {
-            domain: "project-right-navbar"
-            position: 400
-            listingCondition: () => return true
+          JD.registerPlaceholderItem "quick-notes",
             data:
               template: "justdo_quick_notes_activation_icon"
               template_data: {}
-          }
+
+            domain: "global-right-navbar"
+            position: 150
           return
 
         destroyer: =>
-          JD.unregisterPlaceholderItem "#{JustdoQuickNotes.project_custom_feature_id}:activation-icon"
+          JD.unregisterPlaceholderItem "quick-notes"
           return
 
     @onDestroy =>
