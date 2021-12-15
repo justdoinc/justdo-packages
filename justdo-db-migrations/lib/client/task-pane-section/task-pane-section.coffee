@@ -1,0 +1,1 @@
+Template.task_pane_justdo_db_migrations_task_pane_section_section.helpers {}
