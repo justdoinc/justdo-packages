@@ -60,13 +60,11 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/both/init.coffee", both);
   api.addFiles("lib/both/static.coffee", both);
-  api.addFiles("lib/both/router.coffee", both);
   api.addFiles("lib/both/errors-types.coffee", both);
   api.addFiles("lib/both/api.coffee", both);
   api.addFiles("lib/both/schemas.coffee", both);
 
   api.addFiles("lib/server/api.coffee", server);
-  api.addFiles("lib/server/allow-deny.coffee", server);
   api.addFiles("lib/server/collections-hooks.coffee", server);
   api.addFiles("lib/server/collections-indexes.coffee", server);
   api.addFiles("lib/server/methods.coffee", server);
@@ -74,20 +72,6 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
-
-  api.addFiles("lib/client/project-conf/project-conf.sass", client);
-  api.addFiles("lib/client/project-conf/project-conf.html", client);
-  api.addFiles("lib/client/project-conf/project-conf.coffee", client);
-
-  api.addFiles("lib/client/plugin-page/plugin-page.sass", client);
-  api.addFiles("lib/client/plugin-page/plugin-page.html", client);
-  api.addFiles("lib/client/plugin-page/plugin-page.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/task-pane-section-registrar.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/task-pane-section.sass", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.html", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.coffee", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.

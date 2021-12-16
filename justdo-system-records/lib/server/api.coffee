@@ -12,9 +12,6 @@ _.extend JustdoSystemRecords.prototype,
     # Defined in publications.coffee
     @_setupPublications()
 
-    # Defined in allow-deny.coffee
-    @_setupAllowDenyRules()
-
     # Defined in collections-hooks.coffee
     @_setupCollectionsHooks()
 
@@ -23,17 +20,5 @@ _.extend JustdoSystemRecords.prototype,
 
     return
 
-  performInstallProcedures: (project_doc, user_id) ->
-    # Called when plugin installed for project project_doc._id
-    console.log "Plugin #{JustdoSystemRecords.project_custom_feature_id} installed on project #{project_doc._id}"
-
     return
 
-  performUninstallProcedures: (project_doc, user_id) ->
-    # Called when plugin uninstalled from project project_doc._id
-
-    # Note, isn't called on project removal
-
-    console.log "Plugin #{JustdoSystemRecords.project_custom_feature_id} removed from project #{project_doc._id}"
-
-    return
