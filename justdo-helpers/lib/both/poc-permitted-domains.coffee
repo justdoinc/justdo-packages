@@ -43,6 +43,11 @@ _.extend JustdoHelpers,
 
     return false
 
+  requirePocPermittedDomains: (root_url) ->
+    if not @isPocPermittedDomains root_url
+      throw new Meteor.Error not-supported , "Supported only from POC permitted domains"
+    return
+
   isPocPermittedDomainsOrBeta: (root_url) ->
     if not root_url?
       if not (root_url = getCurrentUrl())?
