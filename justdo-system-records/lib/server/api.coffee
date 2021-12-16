@@ -25,4 +25,4 @@ _.extend JustdoSystemRecords.prototype,
     return
 
   getRecord: (id) ->
-    return @system_records_collection.findOne(id, {fields: {_id: 1}})?
+    return @system_records_collection.findOne(id)
