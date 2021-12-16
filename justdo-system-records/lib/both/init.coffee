@@ -2,6 +2,11 @@ default_options = {}
 
 options_schema =
   both:
+    system_records_collection:
+      type: "skip-type-check"
+      optional: true
+      bind_to_instance: true
+
     projects_collection:
       type: "skip-type-check"
       optional: false

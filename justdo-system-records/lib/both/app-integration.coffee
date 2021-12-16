@@ -19,14 +19,13 @@
 # this package, or even if you use them inside the constructor, you need to wait for
 # them to be ready, and it is better done here.
 
-APP.getEnv (env) ->
-  # If an env variable affect this package load, check its value here
-  # remember env vars are Strings
+options =
+  projects_collection: APP.collections.Projects
+  tasks_collection: APP.collections.Tasks
 
-  options =
-    projects_collection: APP.collections.Projects
-    tasks_collection: APP.collections.Tasks
+APP.collections.SystemRecords = new Mongo.Collection "system_records"
+options.system_records_collection = APP.collections.SystemRecords
 
-  APP.justdo_system_records = new JustdoSystemRecords(options)
+APP.justdo_system_records = new JustdoSystemRecords(options)
 
-  return
+return

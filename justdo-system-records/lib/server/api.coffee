@@ -20,5 +20,9 @@ _.extend JustdoSystemRecords.prototype,
 
     return
 
+  setRecord: (id, doc={}) ->
+    @system_records_collection.upsert id, doc
     return
 
+  getRecord: (id) ->
+    return @system_records_collection.findOne(id, {fields: {_id: 1}})?
