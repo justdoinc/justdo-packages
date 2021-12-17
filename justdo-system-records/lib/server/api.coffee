@@ -20,8 +20,12 @@ _.extend JustdoSystemRecords.prototype,
 
     return
 
-  setRecord: (id, doc={}) ->
+  setRecord: (id, doc) ->
+    if not doc?
+      doc = {}
+
     @system_records_collection.upsert id, doc
+
     return
 
   getRecord: (id) ->
