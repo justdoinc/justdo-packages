@@ -2847,7 +2847,12 @@ if (typeof Slick === "undefined") {
     function getCellFromEvent(e) {
       var $cell = $(e.target).closest(".slick-cell", $canvas);
       if (!$cell.length) {
-        return null;
+        var $row = $(e.target).closest(".slick-row", $canvas);
+        if (!$row.length) {
+          return null;
+        }
+
+        $cell = $row.find(".slick-cell.l0");
       }
 
       var row = getRowFromNode($cell[0].parentNode);
