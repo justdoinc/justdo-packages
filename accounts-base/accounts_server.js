@@ -271,6 +271,16 @@ export class AccountsServer extends AccountsCommon {
       throw new Meteor.Error("account-deactivated", "Account is deactivated");
     }
 
+    try {
+      APP.emit("pre-login", userId);
+    } catch (e) {
+      // If any pre-login handler throw an error, we consider the
+      // user as forbidden.
+      this.logoutAllClients([userId]);
+
+      throw e;
+    }
+
     if (! stampedLoginToken) {
       stampedLoginToken = this._generateStampedLoginToken();
       this._insertLoginToken(userId, stampedLoginToken);

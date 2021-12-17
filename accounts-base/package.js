@@ -4,6 +4,7 @@ Package.describe({
 });
 
 Package.onUse(api => {
+  api.use('meteorspark:app@0.3.0', ['client', 'server']);
   api.use('ecmascript', ['client', 'server']);
   api.use('ddp-rate-limiter');
   api.use('localstorage', 'client');
