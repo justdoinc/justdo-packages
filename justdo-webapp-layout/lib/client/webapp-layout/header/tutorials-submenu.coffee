@@ -1,4 +1,11 @@
 APP.executeAfterAppLibCode ->
+  Template.tutorials_submenu.helpers
+    showHelpDropdown: ->
+      if (ui_customizations = APP.env_rv.get()?.UI_CUSTOMIZATIONS)?
+        return ui_customizations.indexOf("no-help") == -1
+
+      return true
+
   Template.tutorials_submenu_dropdown.helpers
     tutorials: -> [] # JustdoTutorials.getRelevantTutorialsToState()
 
@@ -7,6 +14,7 @@ APP.executeAfterAppLibCode ->
     zendeskHost: ->
       host = JustdoZendesk.host # called only if zendeskEnabled returns true, so safe to assume existence
       return "https://#{host}/"
+
 
   Template.tutorials_submenu_dropdown.events
     "click .support-center": (e) ->

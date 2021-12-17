@@ -1,12 +1,14 @@
 <template name="tutorials_submenu">
-  <div class="nav-tutorials dropdown project-header-button">
-    <div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <svg class="jd-icon jd-c-pointer text-dark tutorials-dropdown"><use xlink:href="/layout/icons-feather-sprite.svg#help-circle"/></svg>
+  {{#if showHelpDropdown}}
+    <div class="nav-tutorials dropdown project-header-button">
+      <div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <svg class="jd-icon jd-c-pointer text-dark tutorials-dropdown"><use xlink:href="/layout/icons-feather-sprite.svg#help-circle"/></svg>
+      </div>
+      <ul class="dropdown-menu dropdown-menu-right jd-p-075 animate slideIn shadow-lg border-0">
+        {{> tutorials_submenu_dropdown}}
+      </ul>
     </div>
-    <ul class="dropdown-menu dropdown-menu-right jd-p-075 animate slideIn shadow-lg border-0">
-      {{> tutorials_submenu_dropdown}}
-    </ul>
-  </div>
+  {{/if}}
 </template>
 
 <template name="tutorials_submenu_dropdown">

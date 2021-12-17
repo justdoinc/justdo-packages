@@ -1,5 +1,7 @@
 <template name="plugins_store_button">
-  <div id="project-plugins-store-button">
-    <button class="btn btn-light btn-sm shadow-sm font-weight-bold border-primary text-primary" type="button" aria-haspopup="true" aria-expanded="true">STORE</button>
-  </div>
+  {{#if showStore}}
+    <div id="project-plugins-store-button">
+      <button class="btn btn-light btn-sm shadow-sm font-weight-bold border-primary text-primary" type="button" aria-haspopup="true" aria-expanded="true">STORE</button>
+    </div>
+  {{/if}}
 </template>

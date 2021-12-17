@@ -10,6 +10,13 @@ APP.executeAfterAppLibCode ->
 
   Template.plugins_store_button.helpers module.template_helpers
 
+  Template.plugins_store_button.helpers
+    showStore: ->
+      if (ui_customizations = APP.env_rv.get()?.UI_CUSTOMIZATIONS)?
+        return ui_customizations.indexOf("no-store") == -1
+
+      return true
+
   Template.plugins_store_button.events
     "click #project-plugins-store-button": ->
       data =
