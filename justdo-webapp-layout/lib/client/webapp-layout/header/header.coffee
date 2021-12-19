@@ -46,7 +46,13 @@ APP.executeAfterAppLibCode ->
       $(".global-wrapper").addClass "drawer-open"
 
     "click .create-new-project":(e, tmpl) ->
-      APP.projects.createNewProject({}, (err, project_id) -> Router.go "project", {_id: project_id})
+      APP.projects.createNewProject({}, (err, project_id) ->
+        if err?
+          JustdoSnackbar.show
+            text: err.reason
+          return
+        Router.go "project", {_id: project_id})
+
       $(".global-wrapper").removeClass "drawer-open"
 
     "click .project-item, click .drawer .drawer-footer a, click .pages-section a, click .drawer-backdrop":(e, tmpl) ->

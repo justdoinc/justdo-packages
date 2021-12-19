@@ -39,7 +39,12 @@ APP.executeAfterAppLibCode ->
 
   Template.dashboard_projects.events
     "click .create-project-js": ->
-      APP.projects.createNewProject({}, (err, project_id) -> Router.go 'project', {_id: project_id})
+      APP.projects.createNewProject({}, (err, project_id) ->
+        if err?
+          JustdoSnackbar.show
+            text: err.reason
+          return
+        Router.go "project", {_id: project_id})
 
       return
 
