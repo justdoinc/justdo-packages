@@ -27,5 +27,3 @@ APP.collections.SystemRecords = new Mongo.Collection "system_records"
 options.system_records_collection = APP.collections.SystemRecords
 
 APP.justdo_system_records = new JustdoSystemRecords(options)
-
-return
