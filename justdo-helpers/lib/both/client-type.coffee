@@ -5,3 +5,5 @@ _.extend JustdoHelpers,
       client_type = "landing-app"
     else
       client_type = "web-app"
+
+    return client_type
