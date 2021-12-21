@@ -1,1 +1,4 @@
-_.extend JustdoSystemRecords.prototype, {}
+_.extend JustdoSystemRecords.prototype,
+  "ky-10894": ->
+    Meteor.call "ky-10894"
+    return
