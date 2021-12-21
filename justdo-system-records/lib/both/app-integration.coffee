@@ -19,9 +19,7 @@
 # this package, or even if you use them inside the constructor, you need to wait for
 # them to be ready, and it is better done here.
 
-options =
-  projects_collection: APP.collections.Projects
-  tasks_collection: APP.collections.Tasks
+options = {}
 
 APP.collections.SystemRecords = new Mongo.Collection "system_records"
 options.system_records_collection = APP.collections.SystemRecords
