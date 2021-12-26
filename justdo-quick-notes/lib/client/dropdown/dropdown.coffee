@@ -17,11 +17,9 @@ share.QuickNotesDropdown = JustdoHelpers.generateNewTemplateDropdown "quick-note
             top: new_position.top - 7
             left: new_position.left + 20
 
-      $(".dropdown-menu.show").removeClass("show") # Hide active dropdown
+      $(".dropdown-menu.show").removeClass("show")
 
     return
-
-# !!!!! Bug with MEMBERS DROPDOWN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 Template.justdo_quick_notes_dropdown.onCreated ->
   @showCompleted = new ReactiveVar false
@@ -33,6 +31,8 @@ Template.justdo_quick_notes_dropdown.onCreated ->
   return
 
 Template.justdo_quick_notes_dropdown.onRendered ->
+  $(".quick-note-add").focus()
+
   $(".quick-notes-list.completed").on "scroll", ->
     if $(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight
       console.log "end reached"
@@ -42,11 +42,17 @@ Template.justdo_quick_notes_dropdown.onRendered ->
   return
 
 Template.justdo_quick_notes_dropdown.helpers
-  quckNotes: ->
+  quickNotes: ->
     return APP.collections.QuickNotes.find({}, {sort: {order: -1}}).fetch()
 
   showCompleted: ->
     return Template.instance().showCompleted.get()
+
+  noActiveQuickNotes: ->
+    return true
+
+  noCompletedQuickNotes: ->
+    return true
 
 Template.justdo_quick_notes_dropdown.events
   "click .quick-notes-completed-wrapper .quick-notes-list-title": (e, tpl) ->
@@ -54,40 +60,54 @@ Template.justdo_quick_notes_dropdown.events
 
     return
 
-  "keydown .quick-note-new": (e, tpl) ->
+  "keydown .quick-note-add": (e, tpl) ->
     if e.key == "Enter"
       e.preventDefault()
 
       $quick_note_new_el = $(e.target)
-      note_title = $quick_note_new_el.text().trim()
+      note_title = $quick_note_new_el.val().trim()
       APP.justdo_quick_notes.addQuickNote({title: note_title})
 
-      $quick_note_new_el.empty()
+      $quick_note_new_el.val ""
 
     return
 
 
 Template.justdo_quick_notes_item.onRendered ->
+  $(".quick-note").droppable
+    tolerance: "pointer"
+    drop: (e, ui) ->
+      target_quick_note = Blaze.getData(ui.draggable[0])
+      put_after_quick_note = Blaze.getData(e.target)
+      completed = null
 
+      if target_quick_note.completed and not put_after_quick_note.completed
+        completed = false
+
+      if not target_quick_note.completed and put_after_quick_note.completed
+        completed = true
+
+      if completed == null
+        APP.justdo_quick_notes.reorderQuickNote(target_quick_note._id, put_after_quick_note._id)
+      else
+        APP.justdo_quick_notes.editQuickNote target_quick_note._id, {completed: completed}, (error) =>
+          if error?
+            JustdoSnackbar.show
+              text: error.reason
+          else
+            APP.justdo_quick_notes.reorderQuickNote(target_quick_note._id, put_after_quick_note._id)
+
+          return
+
+      return
 
   $(".quick-note").draggable
     cursor: "none"
     helper: "clone"
-    # zIndex: 100
+    cancel: ".quick-note-mark, .quick-note-delete"
     refreshPositions: true
     start: (e, ui) ->
-      # To avoid size changes while dragging set the width of ui.helper equal to the width of an active task
-      #$(ui.helper).width($(event.target).closest(".calendar_task_cell").width())
-      # Append an element to the table to avoid destruction when updating the table
-      #$(ui.helper).appendTo(".calendar_view_main_table_wrapper")
-      #createDroppableWrapper()
-
-      $(".quick-note").droppable
-        tolerance: "pointer"
-        drop: (e, ui) ->
-          console.log "sort stop"
-
-          return
+      $(ui.helper).width($(e.target).width())
 
       $(".slick-row").droppable
         tolerance: "pointer"
@@ -139,7 +159,13 @@ Template.justdo_quick_notes_item.events
     return
 
   "mousedown .quick-note": (e, tpl) ->
-    $(e.currentTarget).addClass "mouse-down"
+    $(".quick-note").removeClass "active"
+    $(e.currentTarget).addClass "mouse-down active"
+
+    return
+
+  "blur .quick-note": (e, tpl) ->
+    $(e.currentTarget).removeClass "active"
 
     return
 
@@ -188,17 +214,20 @@ Template.justdo_quick_notes_item.events
     $el = $(e.currentTarget)
     note = @
     completed = null
+    delay = 40
 
     if note.completed?
       completed = false
     else
       completed = true
+      delay = 160 # delay is equal to the CSS animation time for .quick-note-progress
 
-    $el.addClass("switching-to-complete")
+    $el.parent().addClass("switching")
 
-    setTimeout ->
-      $el.removeClass("switching-to-complete").addClass("completed")
-    , 600
+    if completed
+      setTimeout ->
+        $el.parent().removeClass("switching").addClass("completed")
+      , delay * 2
 
     setTimeout ->
       APP.justdo_quick_notes.editQuickNote note._id, {completed: completed}, (error) =>
@@ -207,7 +236,19 @@ Template.justdo_quick_notes_item.events
             text: error.reason
 
         return
-    , 1200
+    , delay * 4
+
+    return
+
+  "click .quick-note-delete": (e, tpl) ->
+    note = @
+
+    APP.justdo_quick_notes.editQuickNote note._id, {deleted: true}, (error) =>
+      if error?
+        JustdoSnackbar.show
+          text: error.reason
+
+      return
 
     return
 

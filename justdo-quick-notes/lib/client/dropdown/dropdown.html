@@ -1,13 +1,9 @@
 <template name="justdo_quick_notes_dropdown">
   <div class="quick-notes-wrapper">
-    <div class="quick-note-add-wrapper">
-      <div class="quick-note-new">
-        <div class="quick-note-add" contenteditable="true" tabindex="0" placeholder="Add a quick note"></div>
-      </div>
-    </div>
+    <input class="quick-note-add form-control form-control-sm" type="text" placeholder="Add a quick note">
 
     <div class="quick-notes-list active">
-      {{#each quckNotes}}
+      {{#each quickNotes}}
         {{#unless completed}}
           {{> justdo_quick_notes_item}}
         {{/unless}}
@@ -23,7 +19,7 @@
         </div>
       </div>
       <div class="quick-notes-list completed">
-        {{#each quckNotes}}
+        {{#each quickNotes}}
           {{#if completed}}
             {{> justdo_quick_notes_item}}
           {{/if}}
@@ -35,12 +31,10 @@
 
 <template name="justdo_quick_notes_item">
   <div class="quick-note {{#if completed}}done{{/if}}">
+    <div class="quick-note-highlighter bg-primary"></div>
     <div class="quick-note-mark">
-      {{#if completed}}
-        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#check-circle"></use></svg>
-        <svg class="jd-icon quick-note-mark-circle"><use xlink:href="/layout/icons-feather-sprite.svg#circle"></use></svg>
-      {{else}}
-        <svg class="jd-icon quick-note-mark-check"><use xlink:href="/layout/icons-feather-sprite.svg#check-circle"></use></svg>
+      <svg class="jd-icon quick-note-mark-check"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+      {{#unless completed}}
         <svg class="jd-icon quick-note-mark-circle"><use xlink:href="/layout/icons-feather-sprite.svg#circle"></use></svg>
         <div class="circular">
           <div class="circle-bg"></div>
@@ -53,11 +47,11 @@
             </div>
           </div>
         </div>
-      {{/if}}
+      {{/unless}}
     </div>
-    <div class="quick-note-title" contenteditable="{{#if completed}}false{{else}}true{{/if}}" tabindex="0">
+    <div class="quick-note-title" contenteditable="{{#if completed}}false{{else}}true{{/if}}" spellcheck="false" tabindex="0">
       {{title}}
     </div>
-    <!-- <svg class="quick-note-delete jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash-2"></use></svg> -->
+    <svg class="quick-note-delete jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
   </div>
 </template>
