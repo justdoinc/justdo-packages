@@ -3,6 +3,7 @@
     <input class="quick-note-add form-control form-control-sm" type="text" placeholder="Add a quick note">
     <div class="quick-notes-list active">
       {{#if activeQuickNotesExist}}
+        <div class="quick-note-zero"></div>
         {{#each quickNotes}}
           {{#unless completed}}
             {{> justdo_quick_notes_item}}
@@ -24,6 +25,7 @@
       </div>
       <div class="quick-notes-list completed">
         {{#if completedQuickNotesExist}}
+          <div class="quick-note-zero"></div>
           {{#each quickNotes}}
             {{#if completed}}
               {{> justdo_quick_notes_item}}

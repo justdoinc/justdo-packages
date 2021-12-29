@@ -121,6 +121,32 @@ Template.justdo_quick_notes_item.onRendered ->
 
       return
 
+  $(".quick-note-zero").droppable
+    tolerance: "pointer"
+    drop: (e, ui) ->
+      target_quick_note = Blaze.getData(ui.draggable[0])
+      completed = null
+
+      if $(e.target).parent().hasClass "active"
+        completed = false
+
+      if $(e.target).parent().hasClass "completed"
+        completed = true
+
+      if completed == null
+        APP.justdo_quick_notes.reorderQuickNote(target_quick_note._id)
+      else
+        APP.justdo_quick_notes.editQuickNote target_quick_note._id, {completed: completed}, (error) =>
+          if error?
+            JustdoSnackbar.show
+              text: error.reason
+          else
+            APP.justdo_quick_notes.reorderQuickNote(target_quick_note._id)
+
+          return
+
+      return
+
   $(".quick-note").draggable
     cursor: "none"
     helper: "clone"
