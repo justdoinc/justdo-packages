@@ -213,17 +213,9 @@ _.extend Projects.prototype,
   #
   # Project life-cycle
   #
-  requireUserAllowedToCreateJustDo: (user_id) ->
-    #
-    # Interface for other plugins to define a custom predicate
-    # that allows certain user to create new JustDo only
-    # Defaulted to true
-    #
-    return true
-
   createNewProject: (options, user_id) ->
     @requireLogin(user_id)
-    @requireUserAllowedToCreateJustDo(user_id)
+    APP.emit "pre-create-new-justdo", user_id
 
     if not options?
       options = {}
@@ -450,15 +442,7 @@ _.extend Projects.prototype,
   #
   # Project membership management
   #
-  requrieUserInvitable: (invited_user_obj) ->
-    # Interface for other plugins to define a custom predicate
-    # that allows certain user to be invited
-    # Defaulted to true
-    #
-    return true
-
   inviteMember: (project_id, invited_user, user_id) ->
-    @requrieUserInvitable invited_user
     # Adds invited_user as a member of project_id.
     #
     # If user_id is set, we'll consider him the inviting user,
@@ -504,6 +488,8 @@ _.extend Projects.prototype,
     #
     inviting_user_id = user_id # readability
     # inviting_user_id = undefined # keep for testing purposes
+
+    APP.emit "pre-invite-member-to-justdo", invited_user
 
     if not _.isObject(invited_user) or not invited_user.email?
       throw @_error("invalid-argument", "No email provided in invited_user arg")
