@@ -68,7 +68,12 @@ Template.justdo_quick_notes_dropdown.helpers
 
 Template.justdo_quick_notes_dropdown.events
   "click .quick-notes-completed-wrapper .quick-notes-list-title": (e, tpl) ->
-    tpl.showCompleted.set !tpl.showCompleted.get()
+    if not $(e.target).hasClass "quick-notes-completed-more"
+      if tpl.showCompleted.get()
+        tpl.showCompleted.set false
+        $(".quick-notes-completed-dropdown-menu").removeClass "open"
+      else
+        tpl.showCompleted.set true
 
     return
 
@@ -81,6 +86,27 @@ Template.justdo_quick_notes_dropdown.events
       APP.justdo_quick_notes.addQuickNote({title: note_title})
 
       $quick_note_new_el.val ""
+
+    return
+
+  "click .quick-notes-completed-more": (e, tpl) ->
+    if not tpl.showCompleted.get()
+      tpl.showCompleted.set true
+    else
+      $(".quick-notes-completed-dropdown-menu").toggleClass "open"
+
+    return
+
+  "click .quick-notes-wrapper": (e, tpl) ->
+    if not $(e.target).hasClass "quick-notes-completed-more"
+      $(".quick-notes-completed-dropdown-menu").removeClass "open"
+
+    return
+
+  "click .quick-notes-completed-delete": (e, tpl) ->
+    console.log "Delete all completed"
+
+    $(".quick-notes-completed-dropdown-menu").removeClass "open"
 
     return
 
@@ -155,7 +181,7 @@ Template.justdo_quick_notes_item.onRendered ->
     start: (e, ui) ->
       $(ui.helper).width($(e.target).width())
 
-      $(".slick-row").droppable
+      $(".slick-cell.l0.r0").droppable
         tolerance: "pointer"
         drop: (e, ui) ->
           # NEED TO UPDATE
@@ -193,7 +219,7 @@ Template.justdo_quick_notes_item.onRendered ->
       return
 
     stop: (e, ui) ->
-      $(".slick-row").droppable("destroy")
+      $(".slick-cell.l0.r0").droppable("destroy")
 
       return
 

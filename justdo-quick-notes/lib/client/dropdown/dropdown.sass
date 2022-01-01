@@ -3,24 +3,23 @@ $list-title-height: 40px
 .quick-notes-dropdown
   z-index: 150
 
-.slick-row.ui-droppable-hover
-  .slick-cell.l0.r0
-    z-index: 102
-    box-shadow: 0 0 0 8px white
-    border-radius: 1px
-    border-right-color: transparent
-    &:after
-      content: ""
-      position: absolute
-      width: auto
-      height: auto
-      bottom: -5px
-      top: -5px
-      left: 12px
-      right: -6px
-      border-radius: 5px
-      background-color: rgba(10, 133, 212, 0.08)
-      border: 2px dashed rgba(8, 133, 212, 0.5)
+.slick-cell.ui-droppable-hover
+  z-index: 102
+  box-shadow: 0 0 0 8px white
+  border-radius: 1px
+  border-right-color: transparent
+  &:after
+    content: ""
+    position: absolute
+    width: auto
+    height: auto
+    bottom: -5px
+    top: -5px
+    left: 12px
+    right: -6px
+    border-radius: 5px
+    background-color: rgba(10, 133, 212, 0.08)
+    border: 2px dashed rgba(8, 133, 212, 0.5)
 
 .quick-notes-dropdown-content
   .quick-notes-wrapper
@@ -45,6 +44,28 @@ $list-title-height: 40px
     .quick-notes-completed-toggle
       width: 18px
       height: 20px
+    .quick-notes-completed-dropdown
+      height: 20px
+      width: 14px
+      display: flex
+      align-items: center
+      margin-left: 4px
+      position: relative
+      user-select: none
+      .quick-notes-completed-dropdown-menu
+        position: absolute
+        top: 8px
+        right: 0
+        padding: 8px
+        z-index: 11
+        display: none
+        &.open
+          display: block
+      .quick-notes-completed-delete
+        white-space: nowrap
+        padding: 4px 8px
+        &:hover
+          background-color: #f8f9fa
     .quick-notes-completed-more
       width: 14px
       height: 20px
