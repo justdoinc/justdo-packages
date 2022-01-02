@@ -94,6 +94,7 @@ Package.onUse(function (api) {
   // file.
 
   api.addFiles("lib/core-generators/task-types/project.coffee", both);
+  api.addFiles("lib/core-generators/task-types/no-owner.coffee", both);
 
   api.export("JustdoTaskType", both);
 });
