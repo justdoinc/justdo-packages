@@ -11,8 +11,10 @@ APP.on "justdo-task-type-initiated", ->
   APP.justdo_task_type.registerTaskTypesGenerator "default", "no_owner",
     possible_tags: ["no_owner"]
 
+    conditional_tags: ["no_owner"]
+
     required_task_fields_to_determine:
-      is_removed_owner: 1
+      is_removed_owner: true
 
     generator: (task_obj) ->
       tags = []

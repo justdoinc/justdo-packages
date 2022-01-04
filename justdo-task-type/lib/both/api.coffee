@@ -9,7 +9,6 @@ _.extend JustdoTaskType.prototype,
     @_merged_required_fields_cache = {} # Cache to avoid the need to recalculate each time
     @types_generators_and_merged_required_fields_cache_dep = new Tracker.Dependency()
 
-
     return
 
   _bothDeferredInit: ->
@@ -90,6 +89,10 @@ _.extend JustdoTaskType.prototype,
 
     possible_tags:
       type: [String]
+
+    conditional_tags:
+      type: [String]
+      optional: true
 
   registerTaskTypesGenerator: (category, id, def) ->
     def = _.extend {}, def, {id, category}
@@ -174,7 +177,20 @@ _.extend JustdoTaskType.prototype,
     filter_options = {}
 
     for type_generator_id, type_generator of types_generators
-      for tag in type_generator.possible_tags
+      possible_tags = type_generator.possible_tags
+
+      if (conditional_tags = type_generator.conditional_tags)?
+        tags_to_ignore = new Set()
+
+        for conditional_tag in conditional_tags
+          current_project_has_conditional_tag_query = _.extend {project_id: JD.activeJustdoId()}, type_generator.required_task_fields_to_determine
+
+          if @tasks_collection.find(current_project_has_conditional_tag_query).count() is 0
+            tags_to_ignore.add conditional_tag
+
+        possible_tags = _.filter possible_tags, (tag) -> return not tags_to_ignore.has tag
+
+      for tag in possible_tags
         if not (tag_properties = type_generator.propertiesGenerator(tag))?
           throw @_error "unknown-tag", "An unknown tag '#{tag}' listed as a possible_tags for type generator id: #{type_generator_id} under the category: #{category}"
 
