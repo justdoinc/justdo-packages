@@ -215,7 +215,7 @@ _.extend Projects.prototype,
   #
   createNewProject: (options, user_id) ->
     @requireLogin(user_id)
-    APP.emit "pre-create-new-justdo", user_id
+    @emit "pre-create-new-justdo", user_id
 
     if not options?
       options = {}
@@ -489,7 +489,7 @@ _.extend Projects.prototype,
     inviting_user_id = user_id # readability
     # inviting_user_id = undefined # keep for testing purposes
 
-    APP.emit "pre-invite-member-to-justdo", invited_user
+    @emit "pre-invite-member-to-justdo", invited_user
 
     if not _.isObject(invited_user) or not invited_user.email?
       throw @_error("invalid-argument", "No email provided in invited_user arg")
