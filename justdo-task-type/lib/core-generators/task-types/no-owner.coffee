@@ -1,6 +1,6 @@
 APP.on "justdo-task-type-initiated", ->
   tags_properties =
-    "no_owner":
+    "no-owner":
       text: "No Owner"
 
       filter_list_order: 90
@@ -8,10 +8,10 @@ APP.on "justdo-task-type-initiated", ->
       customFilterQuery: (filter_state_id, column_state_definitions, context) ->
         return {is_removed_owner: true}
 
-  APP.justdo_task_type.registerTaskTypesGenerator "default", "no_owner",
-    possible_tags: ["no_owner"]
+  APP.justdo_task_type.registerTaskTypesGenerator "default", "no-owner",
+    possible_tags: []
 
-    conditional_tags: ["no_owner"]
+    conditional_tags: ["no-owner"]
 
     required_task_fields_to_determine:
       is_removed_owner: true
@@ -20,7 +20,7 @@ APP.on "justdo-task-type-initiated", ->
       tags = []
 
       if task_obj.is_removed_owner is true
-        tags.push "no_owner"
+        tags.push "no-owner"
 
       return tags
 
