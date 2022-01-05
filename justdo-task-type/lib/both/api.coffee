@@ -89,6 +89,7 @@ _.extend JustdoTaskType.prototype,
 
     possible_tags:
       type: [String]
+      optional: true
 
     conditional_tags:
       type: [String]
@@ -177,18 +178,14 @@ _.extend JustdoTaskType.prototype,
     filter_options = {}
 
     for type_generator_id, type_generator of types_generators
-      possible_tags = type_generator.possible_tags
+      possible_tags = [...type_generator.possible_tags] # New array, prevents modifying the original type_generator.possible_tags
 
       if (conditional_tags = type_generator.conditional_tags)?
-        tags_to_ignore = new Set()
-
         for conditional_tag in conditional_tags
-          current_project_has_conditional_tag_query = _.extend {project_id: JD.activeJustdoId()}, type_generator.required_task_fields_to_determine
-
-          if @tasks_collection.find(current_project_has_conditional_tag_query).count() is 0
-            tags_to_ignore.add conditional_tag
-
-        possible_tags = _.filter possible_tags, (tag) -> return not tags_to_ignore.has tag
+          if (custom_filter_query = type_generator.propertiesGenerator(conditional_tag)?.customFilterQuery())?
+            current_project_has_conditional_tag_query = _.extend {project_id: JD.activeJustdoId()}, custom_filter_query
+            if @tasks_collection.findOne(current_project_has_conditional_tag_query, type_generator.required_task_fields_to_determine)?
+              possible_tags.push conditional_tag
 
       for tag in possible_tags
         if not (tag_properties = type_generator.propertiesGenerator(tag))?

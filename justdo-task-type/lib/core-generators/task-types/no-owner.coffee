@@ -14,7 +14,7 @@ APP.on "justdo-task-type-initiated", ->
     conditional_tags: ["no-owner"]
 
     required_task_fields_to_determine:
-      is_removed_owner: true
+      is_removed_owner: 1
 
     generator: (task_obj) ->
       tags = []
