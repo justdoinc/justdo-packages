@@ -42,6 +42,8 @@ Package.onUse(function (api) {
   api.use("templating", client);
   api.use('fourseven:scss@3.2.0', client);
 
+  api.use("justdoinc:justdo-analytics@1.0.0", both);
+
   api.use("aldeed:simple-schema@1.5.3", both);
   api.use('aldeed:collection2@2.3.2', both);
   api.use("raix:eventemitter@0.1.1", both);
