@@ -178,7 +178,7 @@ _.extend JustdoTaskType.prototype,
     filter_options = {}
 
     for type_generator_id, type_generator of types_generators
-      possible_tags = [...type_generator.possible_tags] # New array, prevents modifying the original type_generator.possible_tags
+      possible_tags = type_generator.possible_tags.slice() # New array, prevents modifying the original type generator.possible_tags
 
       if (conditional_tags = type_generator.conditional_tags)?
         for conditional_tag in conditional_tags
