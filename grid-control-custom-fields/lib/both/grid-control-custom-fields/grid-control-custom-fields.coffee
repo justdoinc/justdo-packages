@@ -144,6 +144,13 @@ _.extend GridControlCustomFields,
 
       optional: true
 
+    grid_column_manual_and_auto_values_getter:
+      type: Function
+
+      blackbox: true
+
+      optional: true
+
     grid_column_substitue_field:
       type: String
 
@@ -306,6 +313,9 @@ _.extend GridControlCustomFields,
 
       if (grid_column_custom_storage_mechanism = custom_field_definition.grid_column_custom_storage_mechanism)?
         custom_field_schema.grid_column_custom_storage_mechanism = grid_column_custom_storage_mechanism
+
+      if (grid_column_manual_and_auto_values_getter = custom_field_definition.grid_column_manual_and_auto_values_getter)?
+        custom_field_schema.grid_column_manual_and_auto_values_getter = grid_column_manual_and_auto_values_getter
 
       if (grid_column_substitue_field = custom_field_definition.grid_column_substitue_field)?
         custom_field_schema.grid_column_substitue_field = grid_column_substitue_field
