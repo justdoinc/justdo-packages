@@ -114,6 +114,19 @@ SimpleSchema.extendOptions
   # Should return false if the procedure failed.
   grid_column_custom_storage_mechanism: Match.Optional(Function)
 
+  # grid_column_manual_and_auto_values_getter:
+  #
+  # If exists will hold a function that will get a doc object (with at least the _id and the grid_dependencies_fields)
+  # as a parameter and will return an object of the form : {manual_value: , auto_value: }
+  #
+  # It is meant to be used as a simpler API to access the value returned by grid_column_custom_value_generator
+  # and to determine the underlying value by resources that aren't the grid.
+  #
+  # For example, the clipboard import, can use it determine whether the imported value is the same as the calculated
+  # value for fields that has the grid_column_manual_and_auto_values_getter defined and avoid saving the calucluated
+  # value as a manual one. #12125
+  grid_column_manual_and_auto_values_getter: Match.Optional(Function)
+
   # grid_column_substitue_field:
   #
   # If present, expected to be another existing field name.
