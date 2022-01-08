@@ -181,8 +181,13 @@ _.extend JustdoTaskType.prototype,
       possible_tags = type_generator.possible_tags.slice() # New array, prevents modifying the original type generator.possible_tags
 
       if (conditional_tags = type_generator.conditional_tags)?
+        active_filter_state  = APP.modules.project_page.mainGridControl()?._filters_state?["task-type::#{category}"] or []
         for conditional_tag in conditional_tags
-          if (custom_filter_query = type_generator.propertiesGenerator(conditional_tag)?.customFilterQuery())?
+          # If conditional tag is active, show regardless of whether tag exist in tasks of current JustDo
+          if conditional_tag in active_filter_state
+            possible_tags.push conditional_tag
+          # If any task under current JustDo has this conditional tag, show filter option
+          else if (custom_filter_query = type_generator.propertiesGenerator(conditional_tag)?.customFilterQuery())?
             current_project_has_conditional_tag_query = _.extend {project_id: JD.activeJustdoId()}, custom_filter_query
             if @tasks_collection.findOne(current_project_has_conditional_tag_query, type_generator.required_task_fields_to_determine)?
               possible_tags.push conditional_tag
