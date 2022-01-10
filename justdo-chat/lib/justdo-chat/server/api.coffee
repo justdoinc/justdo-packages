@@ -1094,7 +1094,7 @@ _.extend JustdoChat.prototype,
       bot_definition.msgs_types[msg_type] = msg_obj
 
       if msg_obj.data_schema.type?
-        throw @_error "Bot #{bot_id} registratino, 'type' is not allowed property in bot's data schema"
+        throw @_error "Bot #{bot_id} registration, 'type' is not allowed property in bot's data schema"
 
       msg_obj.data_schema = new SimpleSchema _.extend {}, msg_obj.data_schema, {type: {type: String, label: "Message type", optional: false, allowedValues: [msg_type]}}
 
@@ -1113,6 +1113,30 @@ _.extend JustdoChat.prototype,
       delete msg_obj.data_schema
 
     @_bots_public_info[bot_id] = bot_public_info
+
+    return
+
+  registerBotMessagesTypes: (bot_id, messages) ->
+    bot_definition = @_bots_definitions[bot_id]
+    for msg_type, msg_obj of messages
+      msg_obj = _.extend {}, msg_obj
+      bot_definition.msgs_types[msg_type] = msg_obj
+
+      if msg_obj.data_schema.type?
+        throw @_error "Bot #{bot_id} registration, 'type' is not allowed property in bot's data schema"
+
+      msg_obj.data_schema = new SimpleSchema _.extend {}, msg_obj.data_schema, {type: {type: String, label: "Message type", optional: false, allowedValues: [msg_type]}}
+
+    #
+    # Build bot info
+    #
+    bot_public_info = @_bots_public_info[bot_id]
+
+    for msg_type, msg_obj of messages
+      msg_obj = _.extend {}, msg_obj
+      bot_public_info.msgs_types[msg_type] = msg_obj
+
+      delete msg_obj.data_schema
 
     return
 
