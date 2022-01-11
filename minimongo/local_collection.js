@@ -47,6 +47,14 @@ export default class LocalCollection {
     this.paused = false;
   }
 
+  getDocNonReactive(doc_id) {
+    return this._docs._map[doc_id];
+  }
+
+  setDocFields(doc_id, fields) {
+    return this._docs.setDocFields(doc_id, fields);
+  }
+
   // options may include sort, skip, limit, reactive
   // sort may be any of these forms:
   //     {a: 1, b: -1}
