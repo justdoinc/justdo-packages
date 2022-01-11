@@ -188,7 +188,7 @@ Template.justdo_quick_notes_item.onRendered ->
           task_id = $(e.target).find(".grid-tree-control-task-id").attr("jd-tt").split("=")[1]
           quick_note = Blaze.getData(ui.draggable[0])
 
-          APP.justdo_quick_notes.createTaskFromQuickNote quick_note._id, JD.activeJustdoId(), "/#{task_id}/", 0, (error, new_task_id) =>
+          APP.justdo_quick_notes.createTaskFromQuickNote quick_note._id, JD.activeJustdoId(), task_id, 0, (error, new_task_id) =>
             if error?
               JustdoSnackbar.show
                 text: error.reason
