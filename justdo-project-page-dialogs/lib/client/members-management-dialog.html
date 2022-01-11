@@ -68,7 +68,8 @@
       {{> gtpl_user_profile_pic}} <div class="display-name d-flex align-items-center">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
     {{#if proceed.get}}
-      <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+      <svg class="jd-icon text-secondary user-check"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
+      <svg class="jd-icon text-secondary user-x"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
     {{else}}
       <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
     {{/if}}
