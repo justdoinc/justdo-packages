@@ -8,4 +8,9 @@ _.extend JustdoClipboardImport.prototype,
 
         return
 
+      "cleanUpDuplicatedManualValue": (task_ids, field_to_clear) ->
+        self.cleanUpDuplicatedManualValue task_ids, field_to_clear, @userId
+
+        return
+
     return

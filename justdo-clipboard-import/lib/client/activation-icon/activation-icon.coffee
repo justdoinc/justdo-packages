@@ -506,6 +506,40 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     return
 
+  cleanUpDuplicatedManualValue = ->
+
+    imported_columns_ids = _.map selected_columns_definitions, (col_def) -> col_def._id
+    
+    # First pick: get cols with grid dependency fields
+    # Second pick: get cols that were imported
+    schema_columns_with_auto_field_obj = _.pick gc.getSchemaExtendedWithCustomFields(), (col_schema) -> col_schema.grid_column_manual_and_auto_values_getter?
+    schema_columns_with_auto_field_obj = _.pick schema_columns_with_auto_field_obj, imported_columns_ids
+    # If imported cols doesn't include cols with grid dependency fields, simply return
+
+    if _.isEmpty schema_columns_with_auto_field_obj
+      return
+
+    imported_tasks_with_auto_value_fields_query = 
+      "jci:temp_import_id":
+        $in: temp_import_ids
+      created_by_user_id: Meteor.userId()
+    imported_tasks_with_auto_value_fields_fields = {}
+    for col_id, col_schema of schema_columns_with_auto_field_obj
+      _.extend imported_tasks_with_auto_value_fields_fields, JustdoHelpers.fieldsArrayToInclusiveFieldsProjection col_schema.grid_dependencies_fields
+    imported_tasks_with_auto_value_fields = APP.collections.Tasks.find(imported_tasks_with_auto_value_fields_query, {fields: imported_tasks_with_auto_value_fields_fields}).fetch()
+
+    for col_id, col_schema of schema_columns_with_auto_field_obj
+      tasks_with_same_manual_val_and_auto_val = []
+
+      for imported_task in imported_tasks_with_auto_value_fields
+        {manual_value, auto_value} = col_schema.grid_column_manual_and_auto_values_getter imported_task
+        if manual_value is auto_value
+          tasks_with_same_manual_val_and_auto_val.push imported_task._id
+
+      Meteor.call "cleanUpDuplicatedManualValue", tasks_with_same_manual_val_and_auto_val, col_id
+
+    return
+
   clearupTempImportId = ->
     Meteor.call "clearupTempImportId", temp_import_ids
 
@@ -560,6 +594,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     try
       importDependencies()
       importOwners()
+      cleanUpDuplicatedManualValue()
       clearupTempImportId()
     catch err
       showErrorInSnackbarAndRevertState

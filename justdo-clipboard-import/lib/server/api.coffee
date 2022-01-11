@@ -53,7 +53,16 @@ _.extend JustdoClipboardImport.prototype,
       multi: true
     
     return
-    
 
-      
-        
+  cleanUpDuplicatedManualValue: (task_ids, field_to_clear, user_id) ->
+    @tasks_collection.update
+      _id: 
+        $in: task_ids
+      users: user_id
+    ,
+      $unset:
+        [field_to_clear]: ""
+    ,
+      multi: true
+
+    return
