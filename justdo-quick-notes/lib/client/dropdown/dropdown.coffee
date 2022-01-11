@@ -339,21 +339,3 @@ Template.justdo_quick_notes_item.events
       return
 
     return
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ---------
