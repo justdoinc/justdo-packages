@@ -227,7 +227,7 @@ Template.justdo_quick_notes_item.onRendered ->
 
 Template.justdo_quick_notes_item.helpers
   nonReactiveTitle: ->
-    return Template.instance().non_reactive_title
+    return Template.instance().non_reactive_title.replace(/\n/g, "<br>")
 
 Template.justdo_quick_notes_item.events
   "mouseenter .quick-note, mouseleave .quick-note": (e, tpl) ->
@@ -274,7 +274,7 @@ Template.justdo_quick_notes_item.events
     return
 
   "keydown .quick-note-title": (e, tpl) ->
-    if e.key == "Enter"
+    if e.key == "Enter" and !e.shiftKey
       e.preventDefault()
       $(e.currentTarget).blur()
 
@@ -285,7 +285,11 @@ Template.justdo_quick_notes_item.events
     $el.removeClass "active"
 
     note_id = @._id
-    new_note_title = $el.text().trim()
+
+    regexSpace = new RegExp(/&nbsp;/g)
+    regexBr = new RegExp(/<br\s*[\/]?>/gi)
+
+    new_note_title = $el.html().trim().replace(regexBr, "\n").replace(regexSpace, " ")
 
     APP.justdo_quick_notes.editQuickNote note_id, {title: new_note_title}, (error) =>
       if error?
