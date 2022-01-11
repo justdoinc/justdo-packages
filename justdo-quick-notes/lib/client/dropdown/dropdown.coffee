@@ -22,20 +22,32 @@ share.QuickNotesDropdown = JustdoHelpers.generateNewTemplateDropdown "quick-note
     return
 
 Template.justdo_quick_notes_dropdown.onCreated ->
-  @showCompleted = new ReactiveVar false
-  @completedQuickNotesLimit = new ReactiveVar 20
+  tpl = @
+  tpl.showCompleted = new ReactiveVar false
+  tpl.completedQuickNotesLimit = new ReactiveVar 10
 
   active_quick_notes_sub = APP.justdo_quick_notes.subscribeActiveQuickNotes()
-  completed_quick_notes_sub = APP.justdo_quick_notes.subscribeCompletedQuickNotes({limit: @completedQuickNotesLimit.get()})
+
+  @autorun ->
+    APP.justdo_quick_notes.subscribeCompletedQuickNotes({limit: tpl.completedQuickNotesLimit.get()})
+
+    return
 
   return
 
 Template.justdo_quick_notes_dropdown.onRendered ->
+  tpl = @
+
   $(".quick-note-add").focus()
 
   $(".quick-notes-list.completed").on "scroll", ->
     if $(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight
-      console.log "end reached"
+
+      completed_quick_notes_count = APP.collections.QuickNotes.find({completed: {$ne:null}}).fetch().length
+      completed_quick_notes_limit = tpl.completedQuickNotesLimit.get()
+
+      if completed_quick_notes_limit <= completed_quick_notes_count
+        tpl.completedQuickNotesLimit.set completed_quick_notes_limit + 10
 
     return
 
@@ -48,11 +60,11 @@ Template.justdo_quick_notes_dropdown.helpers
   showCompleted: ->
     return Template.instance().showCompleted.get()
 
-  noActiveQuickNotes: ->
-    return true
+  activeQuickNotesExist: ->
+    return APP.collections.QuickNotes.find({$and:[{completed:null }]}).fetch().length
 
-  noCompletedQuickNotes: ->
-    return true
+  completedQuickNotesExist: ->
+    return APP.collections.QuickNotes.find({completed: {$ne:null}}).fetch().length
 
 Template.justdo_quick_notes_dropdown.events
   "click .quick-notes-completed-wrapper .quick-notes-list-title": (e, tpl) ->
@@ -72,6 +84,14 @@ Template.justdo_quick_notes_dropdown.events
 
     return
 
+Template.justdo_quick_notes_item.onCreated ->
+  # The non-reactive title helps to avoid issues with reactivity
+  # When we change the note title and save it, reactivity kicks in,
+  # and the title in contenteditable randomly gets duplicated
+
+  @non_reactive_title = @data.title
+
+  return
 
 Template.justdo_quick_notes_item.onRendered ->
   $(".quick-note").droppable
@@ -112,16 +132,18 @@ Template.justdo_quick_notes_item.onRendered ->
       $(".slick-row").droppable
         tolerance: "pointer"
         drop: (e, ui) ->
+          # NEED TO UPDATE
           task_id = $(e.target).find(".grid-tree-control-task-id").attr("jd-tt").split("=")[1]
           quick_note = Blaze.getData(ui.draggable[0])
 
-          APP.justdo_quick_notes.createTaskFromQuickNote quick_note._id, JD.activeJustdoId(), "/#{task_id}/", 0, (error, result) =>
+          APP.justdo_quick_notes.createTaskFromQuickNote quick_note._id, JD.activeJustdoId(), "/#{task_id}/", 0, (error, new_task_id) =>
             if error?
               JustdoSnackbar.show
                 text: error.reason
             else
-              # !!! NEED TO UPDATE - api cb returns /parent_id//task_id/
-              console.log result
+
+              APP.modules.project_page.mainGridControl()._grid_data.once "rebuild", ->
+                APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(new_task_id)
 
               JustdoSnackbar.show
                 text: "Task has been created"
@@ -129,12 +151,13 @@ Template.justdo_quick_notes_item.onRendered ->
                 actionText: "Undo"
                 showDismissButton: true
                 onActionClick: =>
-                  # APP.justdo_quick_notes.undoCreateTaskFromQuickNote result, JD.activeJustdoId(), "/#{task_id}/", (error, result) =>
-                  #   if error?
-                  #     JustdoSnackbar.show
-                  #       text: error.reason
-                  #   else
-                  #     JustdoSnackbar.close()
+                  APP.justdo_quick_notes.undoCreateTaskFromQuickNote quick_note._id, JD.activeJustdoId(), "/#{task_id}/", (error) =>
+                    if error?
+                      JustdoSnackbar.show
+                        text: error.reason
+
+                  JustdoSnackbar.close()
+
                   return
 
             return
@@ -150,6 +173,9 @@ Template.justdo_quick_notes_item.onRendered ->
 
   return
 
+Template.justdo_quick_notes_item.helpers
+  nonReactiveTitle: ->
+    return Template.instance().non_reactive_title
 
 Template.justdo_quick_notes_item.events
   "mouseenter .quick-note, mouseleave .quick-note": (e, tpl) ->
@@ -195,6 +221,12 @@ Template.justdo_quick_notes_item.events
 
     return
 
+  "keydown .quick-note-title": (e, tpl) ->
+    if e.key == "Enter"
+      e.preventDefault()
+      $(e.currentTarget).blur()
+
+    return
 
   "blur .quick-note-title": (e, tpl) ->
     $el = $(e.currentTarget)

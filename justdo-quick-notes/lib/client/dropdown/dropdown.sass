@@ -60,6 +60,14 @@ $list-title-height: 40px
       overflow: auto
       flex-grow: 1
 
+  .quick-notes-list-empty
+    height: 100%
+    display: flex
+    align-items: center
+    justify-content: center
+    color: rgba(49, 69, 99, 0.25)
+    font-size: 15px
+
   .quick-notes-completed-wrapper
     display: flex
     flex-direction: column
@@ -84,8 +92,7 @@ $list-title-height: 40px
     align-items: start
     padding: 8px 20px
     cursor: pointer
-    transition: box-shadow, transform 0.25s
-    transform: scale(1)
+    transition: box-shadow 0.25s
     position: relative
     &::after
       content: ""
@@ -105,7 +112,6 @@ $list-title-height: 40px
         opacity: 0.5
     &.mouse-down
       cursor: grabbing
-      transform: scale(0.99)
     &.active
       background-color: #f8f9fa
       .quick-note-highlighter
