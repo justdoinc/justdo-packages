@@ -25,6 +25,9 @@ APP.executeAfterAppLibCode ->
     drawerProjectsListTop: ->
       return drawer_brand_height + drawer_top_menu_padding_top + drawer_top_menu_padding_bottom + (drawer_top_menu_item_height * (JD.getPlaceholderItems("drawer-pages").length + 1)) # + 1 is for the for the built-in projects list title
 
+    justDoVersion: ->
+      return APP.env_rv.get()?.APP_VERSION
+
   JD.registerPlaceholderItem "justdo-chat-recent-activity",
     data:
       template: "justdo_chat_recent_activity_button"

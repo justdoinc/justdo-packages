@@ -58,14 +58,19 @@
       </div>
     {{/with}}
 
-    <div class="drawer-footer px-0 py-3 d-flex justify-content-center bg-white">
-      {{#each drawerBottomMenuItems}}
-        {{#if template}}
-          {{> Template.dynamic template=template data=template_data}}
-        {{else if html}}
-          {{{html}}}
-        {{/if}}
-      {{/each}}
+    <div class="drawer-footer px-0 py-3 bg-white">
+      <div class="drawer-footer-links">
+        {{#each drawerBottomMenuItems}}
+          {{#if template}}
+            {{> Template.dynamic template=template data=template_data}}
+          {{else if html}}
+            {{{html}}}
+          {{/if}}
+        {{/each}}
+      </div>
+      <div class="drawer-jd-version">
+        {{justDoVersion}}
+      </div>
     </div>
   </div>
   <div class="drawer-backdrop"></div>
