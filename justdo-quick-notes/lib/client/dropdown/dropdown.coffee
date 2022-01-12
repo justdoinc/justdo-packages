@@ -43,7 +43,7 @@ Template.justdo_quick_notes_dropdown.onRendered ->
   $(".quick-notes-list.completed").on "scroll", ->
     if $(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight
 
-      completed_quick_notes_count = APP.collections.QuickNotes.find({completed: {$ne:null}}).fetch().length
+      completed_quick_notes_count = APP.collections.QuickNotes.find({completed: {$ne:null}}).count()
       completed_quick_notes_limit = tpl.completedQuickNotesLimit.get()
 
       if completed_quick_notes_limit <= completed_quick_notes_count
@@ -61,10 +61,10 @@ Template.justdo_quick_notes_dropdown.helpers
     return Template.instance().showCompleted.get()
 
   activeQuickNotesExist: ->
-    return APP.collections.QuickNotes.find({$and:[{completed:null }]}).fetch().length
+    return APP.collections.QuickNotes.find({completed: null}).count()
 
   completedQuickNotesExist: ->
-    return APP.collections.QuickNotes.find({completed: {$ne:null}}).fetch().length
+    return APP.collections.QuickNotes.find({completed: {$ne:null}}).count()
 
 Template.justdo_quick_notes_dropdown.events
   "click .quick-notes-completed-wrapper .quick-notes-list-title": (e, tpl) ->
