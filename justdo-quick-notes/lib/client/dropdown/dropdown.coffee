@@ -255,6 +255,7 @@ Template.justdo_quick_notes_item.events
       $el.children(".quick-note-title").attr("contenteditable", true)
       $el.draggable disabled: true
       $title = $el.find(".quick-note-title")
+      tpl.prev_note_title = $title.html()
       $title.focus()
 
       # Move text cursor to end of string
@@ -294,12 +295,20 @@ Template.justdo_quick_notes_item.events
     regex_space = new RegExp(/&nbsp;/g)
     regex_br = new RegExp(/<br\s*[\/]?>/gi)
 
-    new_note_title = $el.html().trim().replace(regexBr, "\n").replace(regexSpace, " ")
+    prev_note_title = tpl.prev_note_title.trim().replace(regex_br, "\n").replace(regex_space, " ")
+    new_note_title = $el.html().trim().replace(regex_br, "\n").replace(regex_space, " ")
 
-    APP.justdo_quick_notes.editQuickNote note_id, {title: new_note_title}, (error) =>
-      if error?
-        JustdoSnackbar.show
-          text: error.reason
+    if _.isEmpty new_note_title.trim()
+      tpl.non_reactive_title = tpl.prev_note_title
+      JustdoSnackbar.show
+        text: "Quick note title cannot be empty"
+      return
+
+    if new_note_title isnt prev_note_title
+      APP.justdo_quick_notes.editQuickNote note_id, {title: new_note_title}, (error) =>
+        if error?
+          JustdoSnackbar.show
+            text: error.reason
 
     return
 
