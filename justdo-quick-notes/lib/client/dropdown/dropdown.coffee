@@ -248,11 +248,7 @@ Template.justdo_quick_notes_item.events
 
     return
 
-  "mouseup .quick-note": (e, tpl) ->
-    $(e.currentTarget).removeClass "mouse-down"
-    $(e.currentTarget).draggable disabled: true
 
-    $title = $(e.currentTarget).find(".quick-note-title")
     $title.focus()
 
     if not $title.hasClass "active"
@@ -271,6 +267,13 @@ Template.justdo_quick_notes_item.events
         textRange.collapse(false)
         textRange.select()
         $title.addClass "active"
+  # The following is only relavent to editing quick note title
+  "mouseup .quick-note-editable": (e, tpl) ->
+    if ($el = $ e.currentTarget).hasClass "mouse-down"
+      $el.removeClass "mouse-down"
+      $el.children(".quick-note-title").attr("contenteditable", true)
+      $el.draggable disabled: true
+      $title = $el.find(".quick-note-title")
 
     return
 
@@ -283,6 +286,7 @@ Template.justdo_quick_notes_item.events
 
   "blur .quick-note-title": (e, tpl) ->
     $el = $(e.currentTarget)
+    $el.attr "contenteditable", false
     $el.removeClass "active"
 
     note_id = @._id

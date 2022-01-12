@@ -49,7 +49,7 @@
 </template>
 
 <template name="justdo_quick_notes_item">
-  <div class="quick-note {{#if completed}}done{{/if}}">
+  <div class="quick-note {{#if completed}}done{{else}}quick-note-editable{{/if}}">
     <div class="quick-note-highlighter bg-primary"></div>
     <div class="quick-note-mark">
       <svg class="jd-icon quick-note-mark-check"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
@@ -68,7 +68,7 @@
         </div>
       {{/unless}}
     </div>
-    <div class="quick-note-title" contenteditable="{{#if completed}}false{{else}}true{{/if}}" spellcheck="false" tabindex="0">
+    <div class="quick-note-title" contenteditable="false" spellcheck="false" tabindex="0">
       {{{nonReactiveTitle}}}
     </div>
     <svg class="quick-note-delete jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
