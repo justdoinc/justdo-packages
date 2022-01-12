@@ -231,8 +231,9 @@ Template.justdo_quick_notes_item.helpers
 
 Template.justdo_quick_notes_item.events
   "mouseenter .quick-note, mouseleave .quick-note": (e, tpl) ->
-    $(e.currentTarget).removeClass "mouse-down"
-    $(e.currentTarget).draggable disabled: false
+    if not ($el = $ e.currentTarget).hasClass "active"
+      $(e.currentTarget).removeClass "mouse-down"
+      $(e.currentTarget).draggable disabled: false
 
     return
 
@@ -286,8 +287,8 @@ Template.justdo_quick_notes_item.events
 
     note_id = @._id
 
-    regexSpace = new RegExp(/&nbsp;/g)
-    regexBr = new RegExp(/<br\s*[\/]?>/gi)
+    regex_space = new RegExp(/&nbsp;/g)
+    regex_br = new RegExp(/<br\s*[\/]?>/gi)
 
     new_note_title = $el.html().trim().replace(regexBr, "\n").replace(regexSpace, " ")
 
