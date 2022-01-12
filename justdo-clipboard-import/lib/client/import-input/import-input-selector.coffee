@@ -50,7 +50,7 @@ Template.justdo_clipboard_import_input_selector.helpers
     if not (search_input = tpl.search_input_rv.get())?
       filtered_fields = fields
     else
-      filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_input)}", "i")
+      filter_regexp = new RegExp(JustdoHelpers.escapeRegExp(search_input), "i")
       filtered_fields = _.filter fields, (doc) ->  filter_regexp.test(doc.label)
 
     return filtered_fields
