@@ -248,25 +248,6 @@ Template.justdo_quick_notes_item.events
 
     return
 
-
-    $title.focus()
-
-    if not $title.hasClass "active"
-      if typeof window.getSelection != "undefined" && typeof document.createRange != "undefined"
-        range = document.createRange()
-        range.selectNodeContents($title[0])
-        range.collapse(false)
-        sel = window.getSelection()
-        sel.removeAllRanges()
-        sel.addRange(range)
-        $title.addClass "active"
-
-      else if typeof document.body.createTextRange != "undefined"
-        textRange = document.body.createTextRange()
-        textRange.moveToElementText($title[0])
-        textRange.collapse(false)
-        textRange.select()
-        $title.addClass "active"
   # The following is only relavent to editing quick note title
   "mouseup .quick-note-editable": (e, tpl) ->
     if ($el = $ e.currentTarget).hasClass "mouse-down"
@@ -274,6 +255,25 @@ Template.justdo_quick_notes_item.events
       $el.children(".quick-note-title").attr("contenteditable", true)
       $el.draggable disabled: true
       $title = $el.find(".quick-note-title")
+      $title.focus()
+
+      # Move text cursor to end of string
+      if not $title.hasClass "active"
+        if window.getSelection? document.createRange?
+          range = document.createRange()
+          range.selectNodeContents($title[0])
+          range.collapse(false)
+          sel = window.getSelection()
+          sel.removeAllRanges()
+          sel.addRange(range)
+          $title.addClass "active"
+
+        else if document.body.createTextRange?
+          text_range = document.body.createTextRange()
+          text_range.moveToElementText($title[0])
+          text_range.collapse(false)
+          text_range.select()
+          $title.addClass "active"
 
     return
 
