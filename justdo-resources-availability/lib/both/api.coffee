@@ -381,7 +381,10 @@ _.extend JustdoResourcesAvailability.prototype,
       project_obj = project_id_or_doc
 
     if not project_obj?
-      return
+      return {
+        justdo_level_data: @default_workdays
+        user_level_data: null
+      }
 
     project_id = project_obj._id
 
