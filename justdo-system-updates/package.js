@@ -76,7 +76,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/user-conf/system-updates-user-conf.sass", client);
   api.addFiles("lib/client/user-conf/system-updates-user-conf.html", client);
   api.addFiles("lib/client/user-conf/system-updates-user-conf.coffee", client);
-  
+
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
@@ -158,6 +158,12 @@ Package.onUse(function (api) {
   api.addFiles("lib/core-system-updates/v3-110/v3-110.coffee", both);
   api.addAssets("lib/core-system-updates/v3-110/media/image_1.jpeg", client);
   api.addAssets("lib/core-system-updates/v3-110/media/image_2.gif", client);
+
+  // v3_113
+  api.addFiles("lib/core-system-updates/v3-113/v3-113.sass", client);
+  api.addFiles("lib/core-system-updates/v3-113/v3-113.html", client);
+  api.addFiles("lib/core-system-updates/v3-113/v3-113.coffee", both);
+  api.addAssets("lib/core-system-updates/v3-113/media/image1.png", client);
 
   api.export("JustdoSystemUpdates", both);
 });
