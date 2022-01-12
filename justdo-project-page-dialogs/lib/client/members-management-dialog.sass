@@ -80,13 +80,10 @@ $add-users-section-margin-bottom-when-invite-members-displayed: 2px
     background-color: #F4F8FD
     padding-left: 10px
 
-    .proceed
-      .user-check
-        display: none
-
     .dont-proceed
       background-color: #E4EDF9
-
+      .user-plus
+        display: none
       .display-name
         opacity: .8
         text-decoration: line-through
@@ -104,15 +101,15 @@ $add-users-section-margin-bottom-when-invite-members-displayed: 2px
       padding-left: 9px
 
   .members-editor-dialog-add-users-section
+    .user-x
+      display: none
+      
     .proceed
       background-color: #E4EDF9
       .display-name
         font-weight: bold
 
       .toggle
-        display: none
-
-      .user-x
         display: none
 
       &:hover
