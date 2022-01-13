@@ -523,20 +523,24 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       "jci:temp_import_id":
         $in: temp_import_ids
       created_by_user_id: Meteor.userId()
-    imported_tasks_with_auto_value_fields_fields = {}
+    auto_value_fields_and_dependencies = {}
     for col_id, col_schema of schema_columns_with_auto_field_obj
-      _.extend imported_tasks_with_auto_value_fields_fields, JustdoHelpers.fieldsArrayToInclusiveFieldsProjection col_schema.grid_dependencies_fields
-    imported_tasks_with_auto_value_fields = APP.collections.Tasks.find(imported_tasks_with_auto_value_fields_query, {fields: imported_tasks_with_auto_value_fields_fields}).fetch()
+      _.extend auto_value_fields_and_dependencies, JustdoHelpers.fieldsArrayToInclusiveFieldsProjection col_schema.grid_dependencies_fields
 
-    for col_id, col_schema of schema_columns_with_auto_field_obj
-      tasks_with_same_manual_val_and_auto_val = []
+    imported_task_ids = APP.collections.Tasks.find(imported_tasks_with_auto_value_fields_query, {fields: {_id: 1}}).map (task_doc) -> return task_doc._id
 
-      for imported_task in imported_tasks_with_auto_value_fields
-        {manual_value, auto_value} = col_schema.grid_column_manual_and_auto_values_getter imported_task
-        if manual_value is auto_value
-          tasks_with_same_manual_val_and_auto_val.push imported_task._id
+    Meteor.setTimeout ->
+      imported_tasks_with_auto_value_fields_and_dependencies = APP.collections.Tasks.find({_id: {$in: imported_task_ids}}, {fields: auto_value_fields_and_dependencies}).fetch()
+      for col_id, col_schema of schema_columns_with_auto_field_obj
+        tasks_with_same_manual_val_and_auto_val = []
 
-      Meteor.call "cleanUpDuplicatedManualValue", tasks_with_same_manual_val_and_auto_val, col_id
+        for imported_task in imported_tasks_with_auto_value_fields_and_dependencies
+          {manual_value, auto_value} = col_schema.grid_column_manual_and_auto_values_getter imported_task
+          if manual_value? and manual_value is auto_value
+            tasks_with_same_manual_val_and_auto_val.push imported_task._id
+
+        Meteor.call "cleanUpDuplicatedManualValue", tasks_with_same_manual_val_and_auto_val, col_id
+    , 0
 
     return
 
