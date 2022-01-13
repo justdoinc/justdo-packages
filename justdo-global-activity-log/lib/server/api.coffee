@@ -107,13 +107,13 @@ _.extend JustdoGlobalActivityLog.prototype,
       project_id: project_id
 
     if (changelog_time_frame_ms = options.changelog_time_frame_ms)?
-      tasks_query.updatedAt = {$gte: JustdoHelpers.getDateMsOffset(-1 * changelog_time_frame_ms)}
+      tasks_query._raw_updated_date = {$gte: JustdoHelpers.getDateMsOffset(-1 * changelog_time_frame_ms)}
 
     tasks_options =
       fields:
         _id: 1
       sort:
-        updatedAt: -1
+        _raw_updated_date: -1
 
     recently_updated_tasks_ids =
       @tasks_collection.find(tasks_query, tasks_options).map (task) -> task._id
