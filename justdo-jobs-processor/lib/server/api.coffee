@@ -175,7 +175,9 @@ _.extend JustdoJobsProcessor.prototype,
       if job_id of @jobs_under_responsibility
         @logger.info "Running job: #{job_id}"
 
-        job_def.jobInit.apply(@, @jobs_under_responsibility[job_id].args)
+        Meteor.defer =>
+          job_def.jobInit.apply(@, @jobs_under_responsibility[job_id].args)
+          return
 
     return
 
