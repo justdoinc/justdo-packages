@@ -489,8 +489,6 @@ _.extend Projects.prototype,
     inviting_user_id = user_id # readability
     # inviting_user_id = undefined # keep for testing purposes
 
-    @emit "pre-invite-member-to-justdo", invited_user
-
     if not _.isObject(invited_user) or not invited_user.email?
       throw @_error("invalid-argument", "No email provided in invited_user arg")
     invited_user_email = invited_user.email
@@ -545,6 +543,7 @@ _.extend Projects.prototype,
     #
     # Note: we know in this point that either user exists or landing_app_root_url exists
     if not invited_user_doc?
+      @emit "pre-invite-member-to-justdo", invited_user
       # New user
       create_user_options = {
         email: invited_user_email
