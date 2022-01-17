@@ -52,9 +52,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/static.coffee", server);
   api.addFiles("lib/server/api.coffee", server);
   api.addFiles("lib/server/errors-types.coffee", server);
-  api.addFiles("lib/server/schemas.coffee", server);
-  api.addFiles("lib/server/allow-deny.coffee", server);
-  api.addFiles("lib/server/collections-hooks.coffee", server);
   api.addFiles("lib/server/collections-indexes.coffee", server);
 
   // Uncomment only in packages that integrate with the main applications

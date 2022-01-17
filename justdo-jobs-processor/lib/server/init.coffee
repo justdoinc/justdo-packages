@@ -116,8 +116,6 @@ JustdoJobsProcessor = (options) ->
 
   @_on_destroy_procedures = []
 
-  @_attachCollectionsSchemas()
-
   @_immediateInit()
 
   Meteor.defer =>
