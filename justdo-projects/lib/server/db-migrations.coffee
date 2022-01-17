@@ -300,5 +300,26 @@ _.extend Projects.prototype,
           return
 
         return
-      
+    
+    Meteor.methods
+      addTimezoneToAllJustdos: ->
+        APP.collections.Projects.find
+          timezone:
+            $eq: null
+        ,
+          fields:
+            _id: 1
+            members: 1
+        .forEach (justdo) ->
+          first_admin = _.find(justdo.members, (member) -> member.is_admin)
+          admin_user = Meteor.users.findOne first_admin.user_id,
+            fields:
+              "profile.timezone": 1
+          APP.collections.Projects.update justdo._id,
+            $set:
+              timezone: admin_user.profile.timezone
+          console.log("Adding timezone #{admin_user.profile.timezone} to #{justdo._id}")
+          return
+
+        return
     return
