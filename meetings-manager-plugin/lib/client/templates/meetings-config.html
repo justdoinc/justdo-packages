@@ -1,14 +1,12 @@
 <template name="meetings_config">
   <div class="project-conf-meetings-config py-2 d-flex align-items-center">
     Meetings
-    <div class="ml-auto">
+    <div class="project-conf-meetings-actions">
       {{#if isModuleEnabled}}
-        <span class="settings-btn">
-          <svg class="jd-icon-extension text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg>
-        </span>
+        <div class="settings-btn text-primary">settings</div>
         <svg class="jd-icon-extension text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
       {{else}}
-        <svg class="jd-icon-extension text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+        <svg class="jd-icon-extension"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
       {{/if}}
     </div>
   </div>
@@ -19,4 +17,3 @@
     <label><input class="allow-meetings-deletion" type="checkbox" checked="{{isAllowMeetingsDeletion}}" value="1">Allow meeting deletion</label>
   </div>
 </template>
-
