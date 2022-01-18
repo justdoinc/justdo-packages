@@ -152,6 +152,7 @@ _.extend Projects.prototype,
 
         req_user_id = query.users
 
+        console.log "HERE 1", {query, private_data_query} # Added for debugging due to weird logs found on production, will be removed post investigation
         query.project_id = project_id
         private_data_query.project_id = project_id
         if not sync?
@@ -188,6 +189,7 @@ _.extend Projects.prototype,
             initial_payload_cursor = collection.find initial_payload_query, query_options
             private_data_initial_payload_cursor = private_data_collection.find private_data_initial_payload_query, private_data_query_options
 
+        console.log "HERE 2", {query, private_data_query} # Added for debugging due to weird logs found on production, will be removed post investigation
         query._raw_updated_date = {$gt: sync}
         private_data_query._raw_updated_date = {$gt: sync}
 
