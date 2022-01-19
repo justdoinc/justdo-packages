@@ -152,6 +152,8 @@ _.extend JustdoAccounts.prototype,
 
     user_obj = @getUserByEmail(options.email)
     if not user_obj?
+      APP.emit("before-create-user", options)
+
       created_user_id = Accounts.createUser options
     else
       if @userCompletedRegistration(user_obj)
