@@ -543,7 +543,7 @@ _.extend Projects.prototype,
     #
     # Note: we know in this point that either user exists or landing_app_root_url exists
     if not invited_user_doc?
-      @emit "pre-invite-member-to-justdo", invited_user
+      @emit "pre-invite-new-user-member-to-justdo", invited_user
       # New user
       create_user_options = {
         email: invited_user_email
