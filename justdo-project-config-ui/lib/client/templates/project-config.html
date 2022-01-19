@@ -56,7 +56,6 @@
             <div class="project-config-section-container">
               {{#each sections.extensions}}
                 <div class="mb-3" section-id="{{id}}">
-                  {{#if title}}<div class="h6 font-weight-bold text-primary text-uppercase">{{title}}</div>{{/if}}
                   {{#each templates}}
                     <div class="controller-template" controller-template-id="{{id}}">
                       {{> UI.dynamic template=template}}
