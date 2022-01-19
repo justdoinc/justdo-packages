@@ -1,5 +1,6 @@
 <template name="justdo_global_activity_log_project_config">
-  <div class="project-conf-justdo-global-activity-log-config py-2 d-flex align-items-center">
+  <div class="controller-template-extension-item project-conf-justdo-global-activity-log-config">
+    <div class="controller-template-extension-indicator {{#if isModuleEnabled}}bg-primary{{/if}}"></div>
     Activity Log
     <div class="ml-auto">
       {{#if isModuleEnabled}}

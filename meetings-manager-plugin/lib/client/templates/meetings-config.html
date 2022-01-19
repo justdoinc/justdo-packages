@@ -1,5 +1,6 @@
 <template name="meetings_config">
-  <div class="project-conf-meetings-config py-2 d-flex align-items-center">
+  <div class="controller-template-extension-item project-conf-meetings-config">
+    <div class="controller-template-extension-indicator {{#if isModuleEnabled}}bg-primary{{/if}}"></div>
     Meetings
     <div class="project-conf-meetings-actions">
       {{#if isModuleEnabled}}

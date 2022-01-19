@@ -1,6 +1,7 @@
 <template name="justdo_task_type_project_config">
   {{#if showConfig}}
-    <div class="project-conf-justdo-task-type-config py-2 d-flex align-items-center">
+    <div class="controller-template-extension-item project-conf-justdo-task-type-config">
+      <div class="controller-template-extension-indicator {{#if isModuleEnabled}}bg-primary{{/if}}"></div>
       {{pluginName}}
       <div class="ml-auto">
         {{#if isModuleEnabled}}

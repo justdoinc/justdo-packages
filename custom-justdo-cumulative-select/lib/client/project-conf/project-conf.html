@@ -1,5 +1,6 @@
 <template name="custom_justdo_cumulative_select_project_config">
-  <div class="project-conf-custom-justdo-cumulative-select-config py-2 d-flex align-items-center">
+  <div class="controller-template-extension-item project-conf-custom-justdo-cumulative-select-config">
+    <div class="controller-template-extension-indicator {{#if isModuleEnabled}}bg-primary{{/if}}"></div>
     {{pluginName}}
     <div class="ml-auto">
       {{#if isModuleEnabled}}

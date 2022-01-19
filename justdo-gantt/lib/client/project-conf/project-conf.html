@@ -1,5 +1,6 @@
 <template name="justdo_gantt_project_config">
-  <div class="project-conf-justdo-gantt-config py-2 d-flex align-items-center">
+  <div class="controller-template-extension-item project-conf-justdo-gantt-config">
+    <div class="controller-template-extension-indicator {{#if isModuleEnabled}}bg-primary{{/if}}"></div>
     {{pluginName}}
     <div class="ml-auto">
       {{#if isModuleEnabled}}

@@ -38,7 +38,7 @@
     flex-direction: column
 
   .project-config-section-container
-    padding: 20px 27px
+    padding: 12px 27px 20px 27px
     overflow: auto
     flex-grow: 1
 
@@ -72,11 +72,26 @@
   [section-id="extensions"]
     .controller-template
       border-top: 1px solid #EDF1F8
-      font-size: 15px
-      padding-right: 12px
-      color: #3D495B
+      position: relative
+      cursor: pointer
+      user-select: none
       &:hover
         background-color: #f8f9fa
+      .controller-template-extension-item
+        padding: 8px 8px 8px 12px
+        font-size: 15px
+        color: #3D495B
+        display: flex
+        align-items: center
+      .controller-template-extension-indicator
+        position: absolute
+        left: 0
+        top: 6px
+        bottom: 6px
+        height: auto
+        width: 3px
+        border-radius: 2px
+        background-color: rgba(49, 69, 99, 0.12)
       .jd-icon-extension
         cursor: pointer
         stroke: currentColor
@@ -86,7 +101,7 @@
         fill: none
         width: 24px
         height: 24px
-        color: rgba(49, 69, 99, 0.5)
+        color: rgba(49, 69, 99, 0.35)
 
       &:first-child
         border-top: 0 none
