@@ -131,10 +131,13 @@ SimpleSchema.extendOptions
   #
   # If present, expected to be another existing field name.
   #
-  # Affects *only* the process of setting/loading views to grid tabs. In which case,
+  # Used to affects only the process of setting/loading views to grid tabs. In which case,
   # if grid_column_substitue_field is set and the field name under grid_column_substitue_field
   # is in the view that is being set/loaded - we will replace that field with the current
   # field.
+  #
+  # As of 2022-01-20 it also affect the process of clearing manual values that are equal to the
+  # auto values in the process of clipboard import.
   grid_column_substitue_field: Match.Optional(String)
 
   # grid_fixed_size_column:
