@@ -470,6 +470,99 @@ _.extend GridDataCom.prototype,
 
         return parents_situation
 
+      findAllAncestors: (task_ids, options, perform_as, _all_ancestors) ->
+        # Returns the documents of all the ancestors of task_ids.
+        #
+        # Returns an object with the found items ids in the form:
+        #
+        # {
+        #   found_item_id: doc
+        # }
+        #
+        # (task_ids won't be part of the returned object).
+        #
+        # options:
+        #
+        #   fields: a mongo style positive fields query_options (negative isn't supported!)
+        #           by default we take only _id and parents, those fields are also minimal output
+        #           that can't be excluded.
+        #
+        #   include_original_task_ids: false by default
+        #           
+        # perform_as:
+        #
+        #   If is set, we limit the ancestors tree traversing to items that perform_as is their user of.
+        #
+        # Notes:
+        #
+        #   * If one of the task_ids doesn't exist, it will have no effect (if none exist empty obj will be returned).
+
+        if _.isString(task_ids)
+          task_ids = [task_ids]
+
+        if _.isEmpty(task_ids)
+          return _all_ancestors or {}
+
+        if not _all_ancestors?
+          is_first_time = true
+
+          # Init options for recursive calls
+          default_options =
+            include_original_task_ids: false
+            fields: {}
+
+          # Clone options with the default options
+          options = _.extend default_options, options
+
+          # Starting from the second time include the requested fields in the output
+          # in the first time we don't need them because we don't include the documents
+          # of the tasks_ids requested
+          options.fields = _.extend({
+            _id: 1
+            parents: 1
+          }, options.fields)
+
+          # Init _all_ancestors
+          _all_ancestors = {}
+
+          # in the first time we ask only for _id and parents, read comments above for more info
+          query_fields = {
+            _id: 1
+            parents: 1
+          }
+
+          if options.include_original_task_ids
+            # by calling findAllAncestors with _all_ancestors set this call won't be regarded
+            # as the first one and will include the documents of tasks_ids
+            return @findAllAncestors(task_ids, options, perform_as, _all_ancestors)
+        else
+          is_first_time = false
+
+          query_fields = options.fields
+
+        query = 
+          _id:
+            $in: task_ids
+
+        if perform_as?
+          query.users = perform_as
+
+        query_options =
+          fields: query_fields
+
+        unknown_parent_ids_found_in_current_level = []
+        APP.collections.Tasks.find(query, query_options).forEach (task) ->
+          if not is_first_time # Prevent the first batch of tasks being added to the result(They are the tasks themselves, not ancestors)
+            _all_ancestors[task._id] = task
+          for parent_id of task.parents
+            if not _all_ancestors[parent_id]?
+              unknown_parent_ids_found_in_current_level.push(parent_id)
+
+          return
+
+        @findAllAncestors(unknown_parent_ids_found_in_current_level, options, perform_as, _all_ancestors)
+
+        return _all_ancestors 
 
       findSubTree: (item_id, options, perform_as) ->
         # Finds all tasks of the sub-tree whose root is item_id.
