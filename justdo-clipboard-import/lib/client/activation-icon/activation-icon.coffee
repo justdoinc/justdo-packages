@@ -544,7 +544,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         if manual_value? and manual_value is auto_value
           tasks_with_same_manual_val_and_auto_val.push imported_task._id
 
-      Meteor.call "cleanUpDuplicatedManualValue", tasks_with_same_manual_val_and_auto_val, col_id
+      field_to_clear = if col_schema.grid_column_substitue_field? then col_schema.grid_column_substitue_field else col_id
+
+      Meteor.call "cleanUpDuplicatedManualValue", tasks_with_same_manual_val_and_auto_val, field_to_clear
 
 
     return
