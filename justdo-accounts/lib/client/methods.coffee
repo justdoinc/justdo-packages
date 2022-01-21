@@ -11,6 +11,11 @@ _.extend JustdoAccounts.prototype,
   getUserPublicInfo: (options, cb) ->
     Meteor.call "getUserPublicInfo", options, cb
 
+  getFirstLastNameByEmails: (emails, options, cb) ->
+    Meteor.call "getFirstLastNameByEmails", emails, options, cb
+
+    return
+
   userExists: (email, cb) ->
     Meteor.call "userExists", email, cb
 

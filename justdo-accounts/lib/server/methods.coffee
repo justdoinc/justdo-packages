@@ -13,6 +13,11 @@ _.extend JustdoAccounts.prototype,
 
         return accounts_object.getUserPublicInfo options, @userId
 
+      getFirstLastNameByEmails: (emails, options) ->
+        # Checks for emails and options are done inside the api
+
+        return accounts_object.getFirstLastNameByEmails emails, options, @userId
+
       userExists: (email) ->
         check(email, String)
 

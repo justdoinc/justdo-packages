@@ -75,6 +75,28 @@ _.extend JustdoAccounts.prototype,
 
     return {profile: picked_profile}
 
+  getFirstLastNameByEmails: (emails, options, perform_as) ->
+    # perform_as and options are for potential future uses, as of now they are ignored
+
+    if _.isString emails 
+      emails = [emails]
+
+    check emails, [String]
+    check options, Object
+
+    users_docs = JustdoHelpers.getUsersByEmail(emails, {query_options: {fields: {"emails.address": 1, "profile.first_name": 1, "profile.last_name": 1}}})
+
+    result = {}
+
+    for user_doc in users_docs
+      for email_def in user_doc.emails
+        if emails.indexOf(email_def.address) > -1
+          result[email_def.address] =
+            first_name: user_doc.profile.first_name
+            last_name: user_doc.profile.last_name
+
+    return result
+
   userCompletedRegistration: (user_obj) ->
     if @_passwordSetInUserObj(user_obj)
       return true
