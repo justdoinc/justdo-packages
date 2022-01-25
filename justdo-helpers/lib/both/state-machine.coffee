@@ -4,7 +4,11 @@ StateMachine = (conf) ->
   @logger = Logger.get("justdo-state-machine")
 
   @state_id = null
+  @state_id_dep = new Tracker.Dependency()
+
   @state_attributes = {}
+  @state_attributes_dep = new Tracker.Dependency()
+
   @map = conf.states_map
 
   @events = conf.events
@@ -38,20 +42,33 @@ _.extend StateMachine.prototype,
 
   getState: -> @state_id
 
+  getStateReactive: ->
+    @state_id_dep.depend()
+
+    return @getState()
+
   getStateAttr: -> @state_attributes
+
+  getStateAttrReactive: ->
+    @state_attributes_dep.depend()
+
+    return @getStateAttr()
 
   replaceStateAttr: (new_state_attr) ->
     @state_attributes = _.extend {}, new_state_attr
+    @state_attributes_dep.changed()
 
     return
 
   clearStateAttr: ->
     @replaceStateAttr({})
+    @state_attributes_dep.changed()
 
     return
 
   extendStateAttr: (state_attr) ->
     _.extend(@state_attributes, state_attr)
+    @state_attributes_dep.changed()
 
     return
 
@@ -83,6 +100,7 @@ _.extend StateMachine.prototype,
 
     # Enter the target state
     @state_id = target_state_id
+    @state_id_dep.changed()
     target_state_def.stateSetter.call(@, state_options)
 
     return
