@@ -17,14 +17,15 @@ _.extend PACK.GridOperations,
 
         # find next/prev paths
         next_path = prev_path = null
+        
         next_item = @_grid_data.filterAwareGetNextItem(active_item_row)
+        prev_item = @_grid_data.filterAwareGetPreviousItem(active_item_row)
+
         if next_item?
           next_path = @_grid_data.getItemPath(next_item)
-        else # If we couldn't find next item, try to find previous item
-          prev_item = @_grid_data.filterAwareGetPreviousItem(active_item_row)
 
-          if prev_item?
-            prev_path = @_grid_data.getItemPath(prev_item)
+        if prev_item?
+          prev_path = @_grid_data.getItemPath(prev_item)
 
         @_grid_data.removeParent active_path, (err) =>
           if err?
@@ -41,10 +42,22 @@ _.extend PACK.GridOperations,
 
           callCb cb, err
 
-          if next_path?
-            @activatePath(next_path)
-          else if prev_path?
-            @activatePath(prev_path)
+          active_level = GridData.helpers.getPathLevel(active_path)
+
+          if next_path? or prev_path?
+            # If at least one of next/prev paths exists, decide which one to pick
+            if not next_path?
+              @activatePath(prev_path)
+            else if not prev_path?
+              @activatePath(next_path)
+
+            prev_item_level = GridData.helpers.getPathLevel(prev_path)
+            next_item_level = GridData.helpers.getPathLevel(next_path)
+
+            if active_level == next_item_level
+              @activatePath(next_path)
+            else
+              @activatePath(prev_path)
 
           # Release lock only after activation of next path to
           # avoid any chance of refering to removed path in
