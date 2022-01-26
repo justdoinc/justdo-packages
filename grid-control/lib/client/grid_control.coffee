@@ -15,6 +15,10 @@ GridControl = (options, container, operations_container) ->
                                            # setting
     preInit: -> return
 
+  # Different number than @getGridUid(), it uses for ops that are necessary pre-grid-init
+  # (before the grid init @getGridUid() will return null)
+  @grid_control_uid = Random.id()
+
   @options = _.extend {}, default_options, options
 
   JustdoHelpers.loadEventEmitterHelperMethods(@)
@@ -996,6 +1000,11 @@ _.extend GridControl.prototype,
     return schema
 
   getSchemaExtendedWithCustomFields: (include_removed_fields = false) ->
+    same_tick_cache_id = "getSchemaExtendedWithCustomFields-#{include_removed_fields}-#{@grid_control_uid}"
+
+    if (sametick_cached_schema = JustdoHelpers.sameTickCacheGet(same_tick_cache_id))?
+      return sametick_cached_schema
+
     schema = _.extend {}, @schema # shallow copy schema
 
     if not @custom_fields_manager?
@@ -1031,6 +1040,8 @@ _.extend GridControl.prototype,
         removed_custom_fields_schema[custom_field_id].obsolete = true
 
       _.extend schema, removed_custom_fields_schema
+
+    JustdoHelpers.sameTickCacheSet(same_tick_cache_id, schema)
 
     return schema
 
