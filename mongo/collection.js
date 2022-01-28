@@ -604,7 +604,9 @@ Object.assign(Mongo.Collection.prototype, {
         return this._collection.update(
           selector, modifier, options, wrappedCallback);
       } else {
-        // Client-side execution with consideration to client-only fields:
+        // Client-side execution with consideration to client-only fields: CLIENT-SITE-EXEC-CLIENT-ONLY-FIELDS
+        // (see also similar procedures taken under justdo-internal-packages/minimongo/local_collection.js
+        // setDocFields() )
         //
         // The following hook is used to determine which fields changed as a result of the
         // modifier.
