@@ -26,6 +26,8 @@ export class IdMap extends EventEmitter {
   }
 
   bulkSet(docs) {
+    this.emit("before-bulkSet", docs);
+
     Object.assign(this._map, docs);
 
     this.emit("after-bulkSet", docs);
@@ -36,6 +38,8 @@ export class IdMap extends EventEmitter {
 
     if (key in this._map) {
       var removed_doc = this._map[key];
+
+      this.emit("before-remove", key, removed_doc);
 
       delete this._map[key];
 
@@ -104,17 +108,27 @@ export class IdMap extends EventEmitter {
     }
 
     // COFFEE
-    // removed_fields = []
+    // unsetDocFields = (id, fields) ->
+    //   removed_fields = []
 
-    // for field in fields
-    //   if field of this._map[key]
-    //     removed_fields.push field
+    //   for field in fields
+    //     if field of this._map[key]
+    //       removed_fields.push field
+
+    //   if removed_fields.length == 0
+    //     # Nothing changed
+    //     return
+
+    //   this.emit("before-unset-doc-fields", key, removed_fields)
+      
+    //   for field in removed_fields
     //     delete this._map[key][field]
-        
-    // if removed_fields.length > 0
-    //   this.emit("after-unset-doc-fields", key, removed_fields)
 
-    var field, i, len, removed_fields;
+    //   this.emit("after-unset-doc-fields", key, removed_fields)
+      
+    //   return
+
+    var field, i, j, len, len1, removed_fields;
 
     removed_fields = [];
 
@@ -122,38 +136,50 @@ export class IdMap extends EventEmitter {
       field = fields[i];
       if (field in this._map[key]) {
         removed_fields.push(field);
-        delete this._map[key][field];
       }
     }
 
-    if (removed_fields.length > 0) {
-      this.emit("after-unsetDocFields", key, removed_fields);
+    if (removed_fields.length === 0) {
+      // Nothing changed
+      return;
     }
+    
+    this.emit("before-unset-doc-fields", key, removed_fields);
+
+    for (j = 0, len1 = removed_fields.length; j < len1; j++) {
+      field = removed_fields[j];
+      delete this._map[key][field];
+    }
+
+    this.emit("after-unset-doc-fields", key, removed_fields);
   }
 
   setDocFields(id, fields) {
     var key = this._idStringify(id);
 
     // COFFEE
-    // previous_edited_fields_values = {}
-    // edited_fields = {}
-    
-    // for field, val of fields
-    //   if field != "_id" and (not EJSON.equals(val, this._map[key][field]))
-    //     previous_edited_fields_values[field] = this._map[key][field]
-    //     edited_fields[field] = val
-    
-    // if Object.keys(edited_fields).length != 0
-    //   Object.assign(this._map[key], edited_fields)
-    
-    //   this.emit("after-setDocFields", key, edited_fields, previous_edited_fields_values)
+    // setDocFields = (id, fields) ->
+    //   previous_edited_fields_values = {}
+      
+    //   edited_fields = {}
+
+    //   for field, val of fields
+    //     if field != "_id" and (not EJSON.equals(val, this._map[key][field]))
+    //       previous_edited_fields_values[field] = this._map[key][field]
+    //       edited_fields[field] = val
+
+    //   if Object.keys(edited_fields).length != 0
+    //     this.emit("before-setDocFields", key, edited_fields, previous_edited_fields_values)
+        
+    //     Object.assign(this._map[key], edited_fields)
+
+    //     this.emit("after-setDocFields", key, edited_fields, previous_edited_fields_values)
+
+    //   return
 
     var edited_fields, field, previous_edited_fields_values, val;
-
     previous_edited_fields_values = {};
-
     edited_fields = {};
-
     for (field in fields) {
       val = fields[field];
       if (field !== "_id" && (!EJSON.equals(val, this._map[key][field]))) {
@@ -161,8 +187,8 @@ export class IdMap extends EventEmitter {
         edited_fields[field] = val;
       }
     }
-
     if (Object.keys(edited_fields).length !== 0) {
+      this.emit("before-setDocFields", key, edited_fields, previous_edited_fields_values);
       Object.assign(this._map[key], edited_fields);
       this.emit("after-setDocFields", key, edited_fields, previous_edited_fields_values);
     }
