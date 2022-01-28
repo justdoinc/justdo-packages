@@ -124,6 +124,7 @@ _.extend GridDataCore.prototype,
     # Items are in the form: ["type", update]
     @_data_changes_queue = []
     @_new_items_pending_insert = {}
+    @_frozen_items_in_items_by_id = {}
 
     @flush_manager = new JustdoHelpers.FlushManager
       min_flush_delay: 80
@@ -143,6 +144,10 @@ _.extend GridDataCore.prototype,
   _deferredInit: ->
     return
 
+  itemInsertedInCurrentFlushBatch: (id) ->
+    # Read comment "ITEMS BY ID MAINTANANCE" under "after-set"
+    return id of @_new_items_pending_insert
+
   _data_changes_handlers:
     add: (id, doc) ->
       # console.log "add", id, doc
@@ -151,8 +156,6 @@ _.extend GridDataCore.prototype,
       structure_changed = true
       items_ids_with_changed_children = {}
 
-      # Update @items_by_id
-      @items_by_id[id] = doc
       delete @detaching_items_ids[id]
 
       # Update tree structure
@@ -178,8 +181,10 @@ _.extend GridDataCore.prototype,
       structure_changed = false
       items_ids_with_changed_children = {}
 
-      for field_id in fields_ids
-        delete @items_by_id[id][field_id]
+      if not @itemInsertedInCurrentFlushBatch(id)
+        # See below COMMENT-REGARDING-EDITING-FROZEN-DOCUMENTS
+        for field_id in fields_ids
+          delete @items_by_id[id][field_id]
 
       @emit "content-changed", id, fields_ids
 
@@ -195,7 +200,9 @@ _.extend GridDataCore.prototype,
       structure_changed = false
       items_ids_with_changed_children = {}
 
-      Object.assign(@items_by_id[id], fields)
+      if not @itemInsertedInCurrentFlushBatch(id)
+        # See below COMMENT-REGARDING-EDITING-FROZEN-DOCUMENTS
+        Object.assign(@items_by_id[id], fields)
 
       @emit "content-changed", id, Object.keys(fields)
 
@@ -213,15 +220,21 @@ _.extend GridDataCore.prototype,
 
       return [structure_changed, items_ids_with_changed_children]
 
-    remove: (id) ->
+    remove: (id, removed_doc) ->
       # console.log "remove", id
 
       # Item removal always changes tree structure
       structure_changed = true
       items_ids_with_changed_children = {}
 
-      # Update @items_by_id
-      item_obj = @items_by_id[id]
+      item_obj = removed_doc # Before, we used here @items_by_id[id], but in cases where the id
+                             # removed is @itemInsertedInCurrentFlushBatch(id) we won't have
+                             # a frozen copy for it, in which case, @items_by_id[id] will already
+                             # be undefined for it (since it been removed from the underlying id-map)
+                             # we therefore use instead removed_doc, which should be fine to our
+                             # needs, since even if in the trace of updates for that document
+                             # there were updates to parents (which the details about we use later)
+                             # those updates been processed by parent_update according to the new_parents_fields
 
       if id of @tree_structure
         @detaching_items_ids[id] = true
@@ -240,7 +253,8 @@ _.extend GridDataCore.prototype,
             delete @tree_structure[parent_id]
             delete @detaching_items_ids[parent_id]
 
-      delete @items_by_id[id]
+      @_removeFrozenItemByIdItem(id) # <- call @_removeFrozenItemByIdItem without waiting for the flush to finish, to ensure items_by_id reflects the state correctly
+                                     # note, no issue with calling _removeFrozenItemByIdItem twice for the same item id.
 
       return [structure_changed, items_ids_with_changed_children]
 
@@ -254,8 +268,9 @@ _.extend GridDataCore.prototype,
       prev_item_obj = @items_by_id[item_id]
       prev_parents_obj = prev_item_obj.parents
 
-      # Update parents
-      @items_by_id[item_id].parents = new_parents_field
+      if not @itemInsertedInCurrentFlushBatch(item_id)
+        # Update parents see COMMENT-REGARDING-EDITING-FROZEN-DOCUMENTS
+        @items_by_id[item_id].parents = new_parents_field
 
       for parent_id, new_parent_data of new_parents_field
         new_order = new_parent_data.order
@@ -316,12 +331,14 @@ _.extend GridDataCore.prototype,
       return [structure_changed, items_ids_with_changed_children]
 
   _initDataStructure: ->
-    @items_by_id = {}
+    @items_by_id = Object.create(JustdoHelpers.getCollectionIdMap(APP.collections.Tasks)._map)
     @tree_structure = {}
     @detaching_items_ids = {}
 
-    for item in @collection.find(@tasks_query).fetch()
-      @items_by_id[item._id] = item
+    for item_id, item of @items_by_id
+      if not @isDocMatchedByTasksQuery(item)
+        continue
+
       delete @detaching_items_ids[item._id]
 
       for parent_id, parent_metadata of item.parents
@@ -334,57 +351,226 @@ _.extend GridDataCore.prototype,
         if parent_metadata.order? and _.isNumber parent_metadata.order
           @tree_structure[parent_id][parent_metadata.order] = item._id
 
+    return
+
   _initFlushProcedures: ->
     @flush_manager.on "flush", =>
       @flush()
 
       return
 
-  updateRelatedToOurTasksQuery: (id) ->
-    # Note, after-set is the only place where we explicitly check for whether an update is related to our
-    # tasks query using isDocMatchedByTasksQuery() is done.
-    #
-    # Following after-set we assume that if an item is under @items_by_id or under @_new_items_pending_insert
-    # the item with that id already passed that test before.
-    if id of @items_by_id or id of @_new_items_pending_insert
+  isDocMatchedByTasksQuery: (doc) ->
+    return doc? and (not @tasks_query.project_id? or doc.project_id == @tasks_query.project_id)
+
+  isDocIdRelatedToTasksQuery: (id) ->
+    if id of @_new_items_pending_insert
       return true
-    return false
+
+    return @isDocMatchedByTasksQuery(@items_by_id[id])
+
+  itemsByIdHasOwnProperty: (item_id) ->
+    # Id-maps object is created using this._map = Object.create(null);
+    # hence it doesn't have hasOwnProperty in its prototype.
+    return Object.hasOwnProperty.call(@items_by_id, item_id)
+
+  _freezeItemByIdItemState: (item_id, item_value_to_freeze, ejson_clone_necessary=false) ->
+    # Grids are updated upon processing of stream of changes by grid-data-core, they aren't
+    # updated as soon as changes arrive from the DDP.
+    #
+    # That processing of changes received from the DDP is called the flush process of the grid-data-core.
+    #
+    # @items_by_id is expected to represent the items state as of the last flush and not the most active
+    # state reported by the DDP. Since changes to the grid are happening between flushes to the grid-data-core,
+    # developers can rely on @items_by_id to avoid quirks resulting from access to unprocessed data.
+    #
+    # For example, imagine that a certain task's title been updated. Until the following flush, in the grid,
+    # that task will appear with the previous, now-outdated, title. If before the flush a certain process
+    # will want to present the user information about the title, say an alert(), if it will access the title
+    # by using Tasks.findOne(task-id).title it will show the user the new title that isn't in-line
+    # with what is shown in the grid. But using @items_by_id the developer is promised to receive the accurate
+    # last processed value, and hence, the one the user expects to see in any given moment.
+    #
+    # Starting from v3.113.29 items_by_id is a mere prototypical inheritance of the Tasks collection's id-map
+    # created using Object.create and , preventing the need clone each task document to maintain its state in
+    # the time of the flush. Before, such clones, led to the allocation of the memory space for the tasks involved
+    # in the grid twice (one extra copy to the one already existing under the collection's id-map). By using
+    # inheritance, we save the memory and the time it takes to maintain that useless copies.
+    #
+    # To accomodate that change in data structure, once a change from the ddp arrives for a certain
+    # item we need to freeze that item's previous value so attempts to access it using items_by_id[item_id]
+    # won't show the new value (temporarily preventing the access to the inherited id-map document by placing
+    # a document of the same id in items_by_id level).
+    #
+    # _freezeItemByIdItemState facilitates that process, it receives an item_id and a value to freeze.
+    # Until the followup call to @_removeFrozenItemByIdItem() with the same item_id calls to items_by_id[item_id]
+    # will return item_value_to_freeze.
+    #
+    # In practice we will call @_removeFrozenItemByIdItem() after the full flush process. For the items ids
+    # we processed.
+    #
+    # COMMENT-REGARDING-EDITING-FROZEN-DOCUMENTS During the flush itself we will actually update the frozen
+    # documents with changes, the reason for that is that potentially, a stream of updates
+    # received for the same document: e.g 1) Update title 2) remove docuemnt ; in such case before 2 is processed
+    # the document in items_by_id should reflect the document with the changed title. If we were to
+    # simply call _removeFrozenItemByIdItem() on the first change that updated title, items_by_id for the item
+    # would have actually become undefined (since in the real underlying id-map it is already removed), and
+    # that will produce bugs in the grid level that would expect to find a document.
+    #
+    # It is important to note that we create the copy to the item doc on the first request to freeze it, the assumption
+    # is that between flushes, that document can't change anyway, and worst, by allowing more than one freeze
+    # we might even receive a wrong document value to freeze.
+    #
+    # in the processing of the id map events, for each event a comment: ITEMS BY ID MAINTANANCE
+    # is left before the processing.
+    #
+    # Read also comment "ITEMS BY ID MAINTANANCE" under "after-set"
+
+    # Additional arguments:
+    # 
+    # ejson_clone_necessary: set to true, if a clone is necessary, if you know that the document provided
+    # by reference isn't going to change from now on - prefer avoiding copying it - to save the time and memory
+    # involved in the process.
+
+    # Returned value:
+    #
+    # Returns nothing to avoid confusion in case that the item_value_to_freeze didn't replace an already
+    # existing value.
+
+    if @_new_items_pending_insert[item_id]?
+      # Item for which a freeze request received is for an item we didn't process its insert yet,
+      # hence we don't need freeze it. Read "ITEMS BY ID MAINTANANCE" comment under "after-set"
+
+      return
+
+    if @itemsByIdHasOwnProperty(item_id)
+      # Nothing to do, read comment above.
+
+      return
+
+    if ejson_clone_necessary
+      item_value_to_freeze = EJSON.clone(item_value_to_freeze)
+
+    @_frozen_items_in_items_by_id[item_id] = true
+    @items_by_id[item_id] = item_value_to_freeze
+
+    return
+
+  _freezeItemByIdItemStateSelf: (item_id) ->
+    # A handy shortcut
+    if @_new_items_pending_insert[item_id]?
+      # Read comment under @_freezeItemByIdItemState() where we check for the same condition
+      # to understand why we ignore it.
+
+      return
+
+    if not @items_by_id[item_id]?
+      # Nothing to do.
+      return
+
+    @_freezeItemByIdItemState(item_id, @items_by_id[item_id], true)
+
+    return
+
+  _removeFrozenItemByIdItem: (item_id) ->
+    # Read above detailed explanation regarding the purpose of this method under _freezeItemByIdItemState()
+
+    if @itemsByIdHasOwnProperty(item_id) # Deleting from an object is an expensive process in js, avoid it unless it is really necessary
+      delete @items_by_id[item_id]
+
+    return
+
+  _removeAllFrozenItems: ->
+    for frozen_item_id of @_frozen_items_in_items_by_id
+      # console.log "HERE frozen item loop" <- uncomment to track optimization issues.
+      @_removeFrozenItemByIdItem(frozen_item_id)
+    
+    @_frozen_items_in_items_by_id = {}
+
+    return
 
   _initItemsTracker: ->
     if not @destroyed and not @_collection_id_map_events_listeners?
-      isDocMatchedByTasksQuery = (doc) => not @tasks_query.project_id? or doc.project_id == @tasks_query.project_id
-
       @_collection_id_map_events_listeners =
         "after-set": (id, value) =>
-          if not isDocMatchedByTasksQuery(value)
+          if not @isDocMatchedByTasksQuery(value)
             return
 
-          @_data_changes_queue.push ["add", [id, EJSON.clone(value)]]
+          @_data_changes_queue.push ["add", [id, value]]
           @_new_items_pending_insert[id] = true
 
+          # ITEMS BY ID MAINTANANCE:
+          #
+          # We do Nothing.
+          #
+          # We DO NOT prevent access to newly added items, since there shouldn't be a case where a grid that
+          # isn't aware of their existence (pre-flush) will attempt to access their value.
+          #
+          # By avoid adding a @_freezeItemByIdItemState(id, null, false) we save the time that it will take
+          # to delete this document from the items_by_id level later.
+          #
+          # Please note that because of this choice, we ensure before the processing of every update
+          # that the its target item isn't in @_new_items_pending_insert using @itemInsertedInCurrentFlushBatch()
+
           @flush_manager.setNeedFlush()
+
+          return
+
+        "before-remove": (id, removed_doc) =>
+          if not @isDocIdRelatedToTasksQuery(id)
+            return
+
+          # ITEMS BY ID MAINTANANCE:
+          @_freezeItemByIdItemState(id, removed_doc, false) # false is to avoid cloning this removed_doc, it isn't going to change.
+
+          # The actual processing is happening under after-remove
 
           return
 
         "after-remove": (id, removed_doc) =>
-          if not @updateRelatedToOurTasksQuery(id)
-            # Update isn't related to the tasks query we track
+          if not @isDocIdRelatedToTasksQuery(id)
             return
 
           @_data_changes_queue.push ["remove", [id, removed_doc]]
+
+          # ITEMS BY ID MAINTANANCE:
+          # Taken care of under "before-remove"
 
           @flush_manager.setNeedFlush()
 
           return
 
+        "before-unset-doc-fields": (id, removed_fields) =>
+          if not @isDocIdRelatedToTasksQuery(id)
+            return
+
+          # ITEMS BY ID MAINTANANCE:
+          @_freezeItemByIdItemStateSelf(id)
+
+          # The actual processing is happening under after-unsetDocFields
+
+          return
+
         "after-unsetDocFields": (id, removed_fields) =>
-          if not @updateRelatedToOurTasksQuery(id)
-            # Update isn't related to the tasks query we track
+          if not @isDocIdRelatedToTasksQuery(id)
             return
 
           @_data_changes_queue.push ["unset_fields", [id, removed_fields]]
 
+          # ITEMS BY ID MAINTANANCE:
+          # Taken care of under "before-unset-doc-fields"
+
           @flush_manager.setNeedFlush()
+
+          return
+
+        "before-setDocFields": (id, fields_changes, changed_field_old_values) =>
+          if not @isDocIdRelatedToTasksQuery(id)
+            return
+
+          # ITEMS BY ID MAINTANANCE:
+          @_freezeItemByIdItemStateSelf(id)
+
+          # The actual processing is happening under after-setDocFields
 
           return
 
@@ -393,8 +579,7 @@ _.extend GridDataCore.prototype,
 
           # @logger.debug "Tracker: Item changed #{id}"
 
-          if not @updateRelatedToOurTasksQuery(id)
-            # Update isn't related to the tasks query we track
+          if not @isDocIdRelatedToTasksQuery(id)
             return
 
           # Take care of parents changes
@@ -412,6 +597,26 @@ _.extend GridDataCore.prototype,
 
             @flush_manager.setNeedFlush()
 
+          # ITEMS BY ID MAINTANANCE:
+          # Taken care of under "before-setDocFields"
+
+          return
+
+        "before-bulkSet": (docs) =>
+          if @items_by_id.empty()
+            # If no items are in items_by_id, no chance that before-setDocFields below will be fired, hence nothing to do.
+            #
+            # (Optimizes, the initial load, avoids redundant extra loop over docs).
+            return
+
+          # ITEMS BY ID MAINTANANCE:
+          # Just proxy to the others
+          for doc_id, doc of docs
+            if doc_id of @items_by_id
+              @_collection_id_map_events_listeners["before-setDocFields"](doc_id, doc)
+            # else <- there's no handling of before-set, so nothing to do in that case.
+            #   @_collection_id_map_events_listeners["before-set"](doc_id, doc)
+
           return
 
         "after-bulkSet": (docs) =>
@@ -421,6 +626,9 @@ _.extend GridDataCore.prototype,
               @_collection_id_map_events_listeners["after-setDocFields"](doc_id, doc)
             else
               @_collection_id_map_events_listeners["after-set"](doc_id, doc)
+
+          # ITEMS BY ID MAINTANANCE:
+          # Taken care of under "before-bulkSet"
 
           return
 
@@ -529,6 +737,7 @@ _.extend GridDataCore.prototype,
 
     @_data_changes_queue = []
     @_new_items_pending_insert = {}
+    @_removeAllFrozenItems()
 
     if structure_changed
       @emit "structure-changed", {items_ids_with_changed_children}
