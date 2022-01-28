@@ -66,7 +66,7 @@ _.extend Projects.prototype,
         return
 
       delete self.tasks_subscription_last_sync_time[id]
-      self.markProjectAsRemovedFromMinimongo(project_id)
+      self.markProjectAsRemovedFromMinimongo(id)
 
       return
 
