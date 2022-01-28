@@ -290,6 +290,15 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
               task[field_id] = cell_val
 
           if field_def.type is Number
+            if isNaN cell_val
+                showErrorInSnackbarAndRevertState
+                  dialog_state: modal_data.dialog_state
+                  snackbar_message: "Invalid value \"#{cell_val}\" in line #{line_number} - should be a number. Import aborted."
+                  snackbar_duration: 15000
+                  problematic_row: line_number
+
+                return false
+
             # TODO: Look for: '_available_field_types' under justdo-internal-packages/grid-control-custom-fields/lib/both/grid-control-custom-fields/grid-control-custom-fields.coffee
             # in the future, the information on whether we need to use parseFloat or parseInt() should be taken from the relevant definition.
             cell_val = parseFloat(cell_val.trim())
