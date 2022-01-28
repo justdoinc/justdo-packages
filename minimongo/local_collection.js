@@ -52,6 +52,19 @@ export default class LocalCollection {
   }
 
   setDocFields(doc_id, fields) {
+    // The following resulted from CoffeeScript:
+    //
+    // if (corresponding_server_doc = Meteor.connection._serverDocuments?[this.name]?.get(doc_id)?.document)?
+    //   Object.assign(corresponding_server_doc, fields)
+
+    var corresponding_server_doc, ref, ref1, ref2;
+
+    if ((corresponding_server_doc = (ref = Meteor.connection._serverDocuments) != null ? (ref1 = ref[this.name]) != null ? (ref2 = ref1.get(doc_id)) != null ? ref2.document : void 0 : void 0 : void 0) != null) {
+      Object.assign(corresponding_server_doc, fields);
+    }
+    // The purpose of the above line is the same as the code under: 
+    // justdo-shared-packages/mongo/collection.js look for CLIENT-SITE-EXEC-CLIENT-ONLY-FIELDS
+
     return this._docs.setDocFields(doc_id, fields);
   }
 
