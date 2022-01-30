@@ -10,7 +10,7 @@ loadSavedImportConfig = (tpl) ->
   return
 
 bindTargetToPaste = (tpl) ->
-  $(".justdo-clipboard-import-paste-target").bind "paste", (e) ->
+  $(".justdo-clipboard-import-dialog").bind "paste", (e) ->
     e.stopPropagation()
     e.preventDefault()
     clipboard_data = e.originalEvent.clipboardData
