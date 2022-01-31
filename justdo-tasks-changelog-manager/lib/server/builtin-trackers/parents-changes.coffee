@@ -52,6 +52,10 @@ _.extend PACK.builtin_trackers,
       return true
     
     self.justdo_projects_obj._grid_data_com.setGridMethodMiddleware "removeParent", (path, perform_as, etc) ->
+      # IMPORTANT, note that etc.item.parents will not necessarily be synced with the current state of
+      # the db. I.e a parent might be removed already. That will happen in the case of bulk remove of more
+      # than one parent of the same item.
+      
       removed_parent = etc.parent_id or ""
       if removed_parent == "0"  # if moving to the root
         new_parent_id = 0

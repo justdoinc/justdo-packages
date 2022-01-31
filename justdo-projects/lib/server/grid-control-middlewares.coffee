@@ -27,6 +27,10 @@ _.extend Projects.prototype,
     @_grid_data_com.setGridMethodMiddleware "addSibling", new_item_middleware
 
     @_grid_data_com.setGridMethodMiddleware "removeParent", (path, perform_as, etc) ->
+      # IMPORTANT, note that etc.item.parents will not necessarily be synced with the current state of
+      # the db. I.e a parent might be removed already. That will happen in the case of bulk remove of more
+      # than one parent of the same item.
+      
       if (update_op = etc.update_op)?
         # If the item is removed completly (last parent removed) update_op won't
         # be defined
