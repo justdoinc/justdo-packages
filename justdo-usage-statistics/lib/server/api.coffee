@@ -154,7 +154,7 @@ _.extend JustdoUsageStatistics.prototype,
 
             return
 
-        if self.isCategoryEnabled("users")
+        if self.isCategoryEnabled("basic")
           usage_statistics.users =
             Meteor.users.find {},
               fields:
@@ -166,7 +166,7 @@ _.extend JustdoUsageStatistics.prototype,
                 deactivated: 1
             .fetch()
 
-        if self.isCategoryEnabled("justdos")
+        if self.isCategoryEnabled("basic")
           usage_statistics.justdos =
             APP.collections.Projects.find {},
               fields:
