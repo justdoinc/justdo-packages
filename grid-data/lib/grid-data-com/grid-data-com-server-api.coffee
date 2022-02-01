@@ -699,53 +699,139 @@ _.extend GridDataCom.prototype,
 
     return results
 
-  removeParent: (path, perform_as) ->
-    check(path, String)
-
+  removeParent: (paths, perform_as) ->
+    if _.isString(paths)
+      paths = [paths]
+    check(paths, [String])
     @_isPerformAsProvided(perform_as)
 
-    if not (item = @collection.getItemByPathIfUserBelong path, perform_as)?
-      throw @_error "unknown-path"
+    item_ids = new Set()
+    paths_to_item_ids_map = {}
+    for path in paths
+      if not (parent_id = helpers.getPathParentId(path))?
+        throw @_error "invalid-argument", "Unknown parent for path: #{path}"
 
-    parent_id = helpers.getPathParentId(path)
+      item_id = helpers.getPathItemId(path)
+      paths_to_item_ids_map["#{parent_id}/#{item_id}"] = {
+        parent_id: parent_id
+        item_id: item_id
+        org_path: path
+      }
+      item_ids.add(item_id)
+      # XXX what if path is invalid?
 
-    if not (parent_id of item.parents)
-      throw @_error "unknown-parent", "#{parent_id} isn't a parent of #{item._id}"
+    items = @collection.find
+      _id:
+        $in: Array.from(item_ids)
+      users: perform_as
+    ,
+      fields:
+        _id: 1
+        parents: 1
+        parents2: 1
+        project_id: 1 # This is only for potential optimization later, when parents2 will become integral part of JD we will remove it.
+    .fetch()
 
-    # Perform removal
-    if _.size(item.parents) == 1
-      # Remove last parent, and the item itself.
-      # We don't allow removing an item with children
+    if items.length != item_ids.size
+      # one of the path doesn't exist or user doesn't have access
+      throw @_error "unknow-path"
 
-      if @collection.getChildrenCount(item._id, item, {limit: 1}) > 0 # Limit since we don't need to count all of them...
-        throw @_error "operation-blocked", 'Can\'t remove the last parent of an item that has sub-items. (You might not see sub-items you aren\'t member of)'
-
-      @_runGridMethodMiddlewares "removeParent", path, perform_as,
-        # the etc obj
-        item: item 
-        parent_id: parent_id,
-        no_more_parents: true
-        update_op: undefined
-
-      @collection.remove item._id
-    else
-      if not item.parents2?
-        item = @_addParents2 item
-
-      # Remove parent
-      update_op = {$unset: {}, $pull: {}}
-      update_op.$unset["parents.#{parent_id}"] = ""
-      update_op.$pull.parents2 = {parent: parent_id}
+    items_map = {} # This one is used an access shortcut to avoid the need to traverse the returned array
+    simulated_item_parents = {}
+    for item in items
+      items_map[item._id] = item
+      simulated_item_parents[item._id] = EJSON.clone(item.parents) # We are copying the items.parents here since
+                                                                   # we are going to edit them to simulate the
+                                                                   # result prior to execution.
 
 
-      @_runGridMethodMiddlewares "removeParent", path, perform_as,
-        # the etc obj
-        item: item 
-        parent_id: parent_id,
-        no_more_parents: false
-        update_op: update_op
+    for path, {parent_id, item_id} of paths_to_item_ids_map
+      parents = simulated_item_parents[item_id]
+      if not (parent_id of parents)
+        # Verify that the list of parents for item_id received from the server
+        # actually has parent_id in it.
+        throw @_error "unknown-parent", "#{parent_id} isn't a parent of #{item_id}"
 
-      @collection.update item._id, update_op
+    # Simulate the update to get a view of how the parents and children look likes after the update
+    children_to_be_removed = {}
+    for path, {parent_id, item_id} of paths_to_item_ids_map
+      parents = simulated_item_parents[item_id]
+      delete parents[parent_id]
+      if not children_to_be_removed[parent_id]?
+        children_to_be_removed[parent_id] = new Set()
+      children_to_be_removed[parent_id].add(item_id)
+    
+    # Check if there are task going to be removed but still have children after the update
+    parents_existence_tests = []
+    get_has_children_common_options = {}
+
+    # We DONT do the following since we want to find not only children known by perform_as
+    # but all the children.
+    #
+    # if perform_as?
+    #   get_has_children_common_options.user_id = perform_as
+
+    project_id = null
+    for path, {parent_id, item_id} of paths_to_item_ids_map
+      parents = simulated_item_parents[item_id]
+      test_custom_options = 
+        except_task_ids: Array.from(children_to_be_removed[item_id] or [])
+
+      if (_project_id = items_map[item_id].project_id)?
+        if project_id? and project_id != _project_id
+          throw @_error "operation-blocked", "Can't remove parents of items from different projects in the same operation"
+
+        project_id = _project_id
+
+      if _.size(parents) == 0
+        parents_existence_tests.push {item_id, options: test_custom_options}
+
+    if project_id?
+      # This is done for optimization
+      get_has_children_common_options.custom_query = {project_id: _project_id} # limit the search to make use of the project_id index - otherwise can take long seconds when the db has millions of tasks.
+
+    if not _.isEmpty parents_existence_tests
+      if @collection.getHasChildrenMulti(parents_existence_tests, get_has_children_common_options)
+        throw @_error "operation-blocked", "Can't remove the last parent of an item that has sub-items. (You might not see sub-items you aren't member of)"
+
+    # Perform the actual update
+    removed_item_ids = new Set() # To prevent multiple removal of the same item
+    for path, {parent_id, item_id, org_path} of paths_to_item_ids_map
+      item = items_map[item_id]
+      if _.size(simulated_item_parents[item_id]) == 0 # We found out in the simulation that an actual remove is necessary
+        if not removed_item_ids.has(item_id)
+          @_runGridMethodMiddlewares "removeParent", org_path, perform_as,
+            # the etc obj
+            item: item 
+            parent_id: parent_id,
+            no_more_parents: true
+            update_op: undefined
+
+          @collection.remove item._id
+          removed_item_ids.add(item_id)
+      else # We found out in the simulation that this is only a removal of one of the parents
+        if not item.parents2?
+          item = @_addParents2(item)
+
+        # Remove parent
+        update_op = {$unset: {}, $pull: {}}
+        update_op.$unset["parents.#{parent_id}"] = ""
+        update_op.$pull.parents2 = {parent: parent_id}
+        @_runGridMethodMiddlewares "removeParent", org_path, perform_as,
+          # The etc object.
+
+          # Note that the same item can be in multiple etc object in this loop.
+          # E.g if more that one parent removed for the same item.
+          # In such case the developer hooking to the removeParent would have to
+          # take into account that item.parents might be out of sync, since some
+          # parents are already removed.
+
+          item: item
+          parent_id: parent_id,
+          no_more_parents: false
+          update_op: update_op
+
+        @collection.update item._id, update_op
 
     return
   
@@ -753,8 +839,10 @@ _.extend GridDataCom.prototype,
     check paths, [String]
 
     # All the security measures are handled by @removeParent
-    for path in paths
-      @removeParent path, perform_as
+    # for path in paths
+    #   @removeParent path, perform_as
+
+    @removeParent paths, perform_as
 
     return
 

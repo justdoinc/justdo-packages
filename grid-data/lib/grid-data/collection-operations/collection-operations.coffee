@@ -114,13 +114,19 @@ _.extend GridData.prototype,
 
     return
 
-  removeParent: (path, cb) ->
+  removeParent: (paths, cb) ->
     # If cb provided, cb will be called with the following args when excution
     # completed:
     # cb(err)
-    path = helpers.normalizePath(path)
-    Meteor.call @getCollectionMethodName("removeParent"), path, (err) ->
+    if _.isString(paths)
+      paths = [paths]
+
+    paths = _.map paths, (paths) -> helpers.normalizePath(paths)
+
+    Meteor.call @getCollectionMethodName("removeParent"), paths, (err) ->
       helpers.callCb cb, err
+
+    return
 
   bulkRemoveParents: (paths, cb) ->
     # If cb provided, cb will be called with the following args when excution

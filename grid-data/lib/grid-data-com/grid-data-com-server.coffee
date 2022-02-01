@@ -352,22 +352,86 @@ _.extend GridDataCom.prototype,
         else
           return null
 
-      getHasChildren: (item_id, item_doc=null, options) ->
+      getHasChildren: (item_id, options) ->
         # Supported options:
         # * user_id (default: undefined) will limit the search only to items to which user_id
         #   has access to
+        # * except_task_ids (default: undefined) if provided as an array of items ids,
+        #   we will ignore those children, when deciding whether item_id has children.
+        #   (in other words, the method will answer the question: "Does item_id has children
+        #    other than options.except_task_ids?")
+        # * custom_query: if provided, will be merged into the query, usually will be used
+        #   to increase performance.
 
-        # item_doc serves the same purpose new_child_fields serves in
-        # @getNewChildOrder, read comment there in its entirety
-        # including XXX section
+        if not options?
+          options = {}
 
-        options = options or {}
+        test =
+          item_id: item_id
+
+        if options.except_task_ids?
+          test.except_task_ids = options.except_task_ids
+
+        common_options = {}
+        if options.user_id?
+          common_options.user_id = options.user_id
+
+        if options.custom_query?
+          common_options.custom_query = options.custom_query
+
+        return @getHasChildrenMulti([test], common_options)
+
+      getHasChildrenMulti: (tests, common_options) ->
+        # tests should be of the form:
+        # [{item_id: item_id, options: custom_option_for_test}, ...]
+        #
+        # Supported common_options:
+        #
+        # * user_id (default: undefined) will limit the search only to items to which user_id
+        #   has access to
+        # * custom_query: if provided, will be merged into the test query, usually will be used
+        #   to increase performance.
+        #
+        # Supported custom_option_for_test:
+        #
+        # * except_task_ids (default: undefined) if provided as an array of items ids,
+        #   we will ignore those children, when deciding whether item_id has children.
+        #   (in other words, the method will answer the question: "Does item_id has children
+        #    other than options.except_task_ids?")
+
+        common_options = common_options or {}
 
         query = {}
-        query["parents.#{item_id}.order"] = {$gte: 0}
 
-        if (user_id = options.user_id)?
+        if (custom_query = common_options.custom_query)?
+          _.extend query, custom_query # Do the extend before query.users = user_id to avoid a hack vector.
+
+        if (user_id = common_options.user_id)?
           query.users = user_id
+
+        tests_queries = []
+
+        for test in tests
+          test_query = {}
+
+          if not (test_options = test.options)?
+            test_options = {}
+
+          test_query["parents.#{test.item_id}.order"] = {$exists: true}
+
+          if (except_task_ids = test_options.except_task_ids)?
+            check except_task_ids, [String]
+            if not _.isEmpty(except_task_ids)
+              test_query._id = {
+                $nin: except_task_ids
+              }
+
+          tests_queries.push test_query
+
+        if _.isEmpty tests_queries
+          return false # Doesn't have children, since there are no tests.
+
+        query.$or = tests_queries
 
         return collection.findOne(query, {fields: {_id: 1}})?
 
