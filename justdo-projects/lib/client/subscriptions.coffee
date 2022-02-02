@@ -5,7 +5,8 @@ if not _.isObject(Meteor.connection._subscriptions)
 
 sync_safety_delta_ms = 2 * 60 * 1000 # 2 minutes
 
-getCurrentSyncTimeWithSafetyDelta = -> new Date(TimeSync.getServerTime() - sync_safety_delta_ms)
+getCurrentSyncTimeWithSafetyDelta = ->
+  return new Date(JustdoHelpers.getLastReceivedDdpMessageServerTimeOrNow() - sync_safety_delta_ms)
 
 _.extend Projects.prototype,
   _setupSubscriptions: ->
