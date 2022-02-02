@@ -163,9 +163,7 @@ Meteor.setInterval(function() {
     // resync on major client clock changes
     // based on http://stackoverflow.com/a/3367542/1656818
     log("Clock discrepancy detected. Attempting re-sync.");
-    // Refuse to compute server time.
-    SyncInternals.offset = undefined;
-    SyncInternals.offsetDep.changed();
+
     TimeSync.resync();
   }
 
