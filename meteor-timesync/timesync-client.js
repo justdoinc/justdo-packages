@@ -86,17 +86,31 @@ var updateOffset = function() {
   });
 };
 
-TimeSync.getServerTime = function(clientTime) {
-  // XXX redesign is needed: might return undefined during the
-  // sync process, when sync_failed is false, which developers
-  // might find unexpected.
+TimeSync.getServerTime = function(date_object_in_client_time) {
+  // COFFEESCRIPT Code:
+  //
+  // TimeSync.getServerTime = (date_object_in_client_time) ->
+  //   SyncInternals.offsetDep.depend()
+  //
+  //   # If we don't know the offset, we can't provide the server time.
+  //   if not TimeSync.isSynced()?
+  //     return undefined
+  //
+  //   if not (client_time = date_object_in_client_time?.getTime())?
+  //     client_time = Date.now()
+  //
+  //   return client_time + SyncInternals.offset
 
-  SyncInternals.offsetDep.depend()
-
+  var client_time;
+  SyncInternals.offsetDep.depend();
   // If we don't know the offset, we can't provide the server time.
-  if ( !TimeSync.isSynced() ) return undefined;
-
-  return Date.now() + SyncInternals.offset;
+  if (TimeSync.isSynced() == null) {
+    return void 0;
+  }
+  if ((client_time = date_object_in_client_time != null ? date_object_in_client_time.getTime() : void 0) == null) {
+    client_time = Date.now();
+  }
+  return client_time + SyncInternals.offset;
 };
 
 TimeSync.getServerOffset = function() {
