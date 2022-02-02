@@ -354,3 +354,19 @@ _.extend JustdoHelpers,
     subscription.params = new_params
 
     return
+
+  getLastReceivedDdpMessageTime: ->
+    return Meteor.connection.last_ddp_message_date_obj?.getTime()
+
+  getLastReceivedDdpMessageServerTime: ->
+    if not (last_ddp_message_date_obj = Meteor.connection.last_ddp_message_date_obj)?
+      return undefined # Will happen only if no ddp message ever received
+
+    return TimeSync.getServerTime(last_ddp_message_date_obj)
+
+  getLastReceivedDdpMessageServerTimeOrNow: ->
+    if not (last_received_ddp_message_server_time = JustdoHelpers.getLastReceivedDdpMessageServerTime())?
+      # Will be undefined only if no message ever received, so the following is highly unlikely to ever happen
+      last_received_ddp_message_server_time = TimeSync.getServerTime()
+
+    return last_received_ddp_message_server_time
