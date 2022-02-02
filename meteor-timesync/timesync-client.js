@@ -19,6 +19,8 @@ var tickCheckTolerance = 5000;
 
 var defaultInterval = 1000;
 
+var resync_interval_ms = 10 * 60 * 1000;
+
 // Internal values, exported for testing
 SyncInternals = {
   offset: undefined,
@@ -134,7 +136,7 @@ var resyncIntervalId = null;
 TimeSync.resync = function() {
   if (resyncIntervalId !== null) Meteor.clearInterval(resyncIntervalId);
   updateOffset();
-  resyncIntervalId = Meteor.setInterval(updateOffset, 10 * 60 * 1000);
+  resyncIntervalId = Meteor.setInterval(updateOffset, resync_interval_ms);
 };
 
 // Run this as soon as we load, even before Meteor.startup()
