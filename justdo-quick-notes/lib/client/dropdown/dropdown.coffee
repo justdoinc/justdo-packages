@@ -30,7 +30,7 @@ Template.justdo_quick_notes_dropdown.onCreated ->
   tpl.addQuickNote = ($el) ->
     note_title = $el.val().trim()
     APP.justdo_quick_notes.addQuickNote({title: note_title})
-    $el.val ""
+    $el.focus().val ""
 
     tpl.showAddButton.set false
 
