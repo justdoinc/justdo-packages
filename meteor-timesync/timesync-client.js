@@ -59,8 +59,6 @@ if (Meteor.isCordova) {
 }
 
 var updateOffset = function() {
-  attempts = 0;
-
   var t0 = Date.now();
 
   HTTP.get(syncUrl, function(err, response) {
