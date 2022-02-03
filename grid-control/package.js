@@ -88,6 +88,8 @@ Package.onUse(function (api) {
   api.add_files('lib/client/plugins/cell_editing_timeout/cell_editing_timeout.coffee', client);
   api.add_files('lib/client/plugins/collapse_all/collapse_all.sass', client);
   api.add_files('lib/client/plugins/collapse_all/collapse_all.coffee', client);
+  api.add_files('lib/client/plugins/multi_select/multi_select.sass', client);
+  api.add_files('lib/client/plugins/multi_select/multi_select.coffee', client);
 
   // jquery_events
   api.add_files('lib/client/jquery_events/init.coffee', client);

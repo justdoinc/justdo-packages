@@ -2573,3 +2573,12 @@ _.extend GridControl.prototype,
       edit_failed(@_error "edit-blocked-by-hook", "Edit blocked by hook")
 
     return
+
+  getRowNodeIndex: ($row) ->
+    return @_grid.getRowFromNode($row.get(0).rowNode)
+
+  getRowNode: (row_index) ->
+    if not (row_node = @_grid.getRowNode(row_index).rowNode)?
+      return undefined
+
+    return $(row_node)
