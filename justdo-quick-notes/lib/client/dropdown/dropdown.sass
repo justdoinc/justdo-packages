@@ -280,15 +280,35 @@ $list-title-height: 40px
         .quick-note-mark-circle
           opacity: 0
 
+  .quick-note-add-wrapper
+    position: relative
+    display: flex
+
+  .quick-note-add-btn
+    position: absolute
+    right: 20px
+    bottom: 9px
+    font-size: 15px
+    font-weight: bold
+    cursor: pointer
+    opacity: 0
+    pointer-events: none
+    transition: opacity 0.25s
+    &.show
+      opacity: 0.75
+      pointer-events: auto
+    &.show:hover
+      opacity: 1
+
   .quick-note-add
     font-size: 15px
     border-top: none
     border-left: none
     border-right: none
     margin: 0px 20px
-    width: auto
+    width: 100%
     height: auto
-    padding: 16px 0px 8px 0px
+    padding: 16px 40px 8px 0px
     &:focus
       outline: none
 

@@ -25,6 +25,16 @@ Template.justdo_quick_notes_dropdown.onCreated ->
   tpl = @
   tpl.showCompleted = new ReactiveVar false
   tpl.completedQuickNotesLimit = new ReactiveVar 10
+  tpl.showAddButton = new ReactiveVar false
+
+  tpl.addQuickNote = ($el) ->
+    note_title = $el.val().trim()
+    APP.justdo_quick_notes.addQuickNote({title: note_title})
+    $el.val ""
+
+    tpl.showAddButton.set false
+
+    return
 
   active_quick_notes_sub = APP.justdo_quick_notes.subscribeActiveQuickNotes()
 
@@ -66,6 +76,9 @@ Template.justdo_quick_notes_dropdown.helpers
   completedQuickNotesExist: ->
     return APP.collections.QuickNotes.find({completed: {$ne:null}}).count()
 
+  showAddButton: ->
+    return Template.instance().showAddButton.get()
+
 Template.justdo_quick_notes_dropdown.events
   "click .quick-notes-completed-wrapper .quick-notes-list-title": (e, tpl) ->
     if not $(e.target).hasClass "quick-notes-completed-more"
@@ -80,12 +93,23 @@ Template.justdo_quick_notes_dropdown.events
   "keydown .quick-note-add": (e, tpl) ->
     if e.key == "Enter"
       e.preventDefault()
+      tpl.addQuickNote $(e.target)
 
-      $quick_note_new_el = $(e.target)
-      note_title = $quick_note_new_el.val().trim()
-      APP.justdo_quick_notes.addQuickNote({title: note_title})
+    return
 
-      $quick_note_new_el.val ""
+  "keyup .quick-note-add": (e, tpl) ->
+    $quick_note_add_input = $(e.target)
+
+    if $quick_note_add_input.val()
+      tpl.showAddButton.set true
+    else
+      tpl.showAddButton.set false
+
+    return
+
+  "click .quick-note-add-btn": (e, tpl) ->
+    $quick_note_add_input = $(".quick-note-add")
+    tpl.addQuickNote $quick_note_add_input
 
     return
 
