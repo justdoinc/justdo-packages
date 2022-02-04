@@ -49,5 +49,9 @@ _.extend JustdoFirebase.prototype,
   isEnabled: -> true
 
   send: (message, cb) ->
-    return @fcm.send message, JustdoHelpers.runInFiber(cb)
+    JustdoHelpers.runInFiber =>
+      @fcm.send message, Meteor.bindEnvironment(cb)
 
+      return
+
+    return
