@@ -36,8 +36,12 @@ _.extend JustdoSystemRecords.prototype,
   _maintainBuiltinSystemRecords: ->
     # Maintain installed-versions
 
-    # if (app_version = process.env?.APP_VERSION)?
-    #   ensure version is included already in the installed-versions system-record otherwise add it.
+    if (app_version = process.env?.APP_VERSION)?
+      if not @system_records_collection.findOne({_id: "installed-versions", full: app_version})?
+        @system_records_collection.upsert "installed-versions",
+          $addToSet:
+            semver: app_version.match(JustdoSystemRecords.semver_regex)[0]
+            full: app_version
 
     return
 
@@ -50,4 +54,16 @@ _.extend JustdoSystemRecords.prototype,
     # E.g. of valid version: "v3.113.20", "3.113.20". 
     # E.g. of invalid version: "v3.113.20-stm"
     
-    return
+    version = version.trim()
+    if not JustdoSystemRecords.semver_regex.test version
+      throw @_error "invalid-argument", "Input should be in the format of semetic versioning https://semver.org/"
+
+    if version[0] isnt "v"
+      version = "v" + version
+
+    query =
+      _id: "installed-versions"
+      semver:
+        $lte: version.match(JustdoSystemRecords.semver_regex)[0]
+
+    return @system_records_collection.findOne(query)?
