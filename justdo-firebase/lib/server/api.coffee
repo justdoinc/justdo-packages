@@ -48,5 +48,9 @@ _.extend JustdoFirebase.prototype,
 
   isEnabled: -> true
 
-  send: (message) ->
-    return @fcm.send(message)
+  send: (message, cb) ->
+    if not _.isFunction(cb)
+      return @fcm.send message
+    
+    return @fcm.send message, Meteor.wrapAsync(cb)
+

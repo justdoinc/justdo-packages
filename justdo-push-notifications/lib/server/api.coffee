@@ -195,8 +195,15 @@ _.extend JustdoPushNotifications.prototype,
 
           message.priority = "high"
 
+        APP.justdo_firebase.send (err, response) ->
+          if err?
+              console.log("Something has gone wrong!", err)
+          else
+              console.log("Successfully sent with response: ", response)
+
+          return
+
         return_value.push
-          pn_deferred: APP.justdo_firebase.send(message)
           user_id: user_doc._id
           device_id: device_id
           network_id: token_obj.network_id
