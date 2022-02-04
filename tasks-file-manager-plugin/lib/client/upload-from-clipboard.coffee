@@ -21,6 +21,8 @@ _.extend TasksFileManager.prototype,
 
   _setupPasteEventListener: ->
     # If any of the restricted targets is currently focused, we skip the paste procedure
+    # "i" was added since if we click on any item on toolbar that triggers a popup (e.g. clipboard import, meetings)
+    # the event target will be "i" instead of the popup itself.
     restricted_targets = ["#task-description-container", "textarea", "input", ".no-paste-to-upload", ".bootbox", ".modal", ".modal-backdrop", "i"]
 
     window.addEventListener "paste", (e) =>
