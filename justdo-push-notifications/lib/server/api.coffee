@@ -195,7 +195,7 @@ _.extend JustdoPushNotifications.prototype,
 
           message.priority = "high"
 
-        APP.justdo_firebase.send (err, response) ->
+        APP.justdo_firebase.send message, (err, response) ->
           if err?
               console.log("Something has gone wrong!", err)
           else
