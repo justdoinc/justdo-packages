@@ -195,12 +195,15 @@ _.extend JustdoPushNotifications.prototype,
 
           message.priority = "high"
 
-        APP.justdo_firebase.send message, (err, response) ->
-          if err?
-              console.log("Something has gone wrong!", err)
-          else
-              console.log("Successfully sent with response: ", response)
+        do (message) =>
+          APP.justdo_firebase.send message, (err, response) =>
+            if err?
+              if err == "NotRegistered"
+                console.log "NOT REGISTERED!!!", message, message.to, err, response
+              else
+                console.log("Something has gone wrong!", err, response)
 
+            return
           return
 
         return_value.push
