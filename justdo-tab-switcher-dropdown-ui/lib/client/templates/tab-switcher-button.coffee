@@ -23,3 +23,7 @@ APP.executeAfterAppLibCode ->
         return
 
       return
+
+  Template.project_operations_tab_switcher.onDestroyed ->
+    @tab_switcher_dropdown?.destroy()
+    return
