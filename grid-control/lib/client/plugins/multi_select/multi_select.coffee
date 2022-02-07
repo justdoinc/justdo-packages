@@ -163,6 +163,19 @@ _.extend PACK.Plugins,
 
         return
 
+      self.setupExitMultiSelectHooks = ->
+        APP.on "doc-esc-click", exitMultiSelectMode
+
+        return
+
+      self.destroyExitMultiSelectHooks = ->
+        APP.off "doc-esc-click", exitMultiSelectMode
+
+        return
+
+      self.setupExitMultiSelectHooks()
+
+      # Deal with clicks
       $(".grid-canvas", self.container).on "click", ".slick-row", (e) ->
         if not isShiftKeyPressed(e)
           exitMultiSelectMode()
@@ -224,7 +237,9 @@ _.extend PACK.Plugins,
 
     destroy: ->
       # Note: @ is the real grid_control object
+      self = @
 
       self.multi_select_previous_row_trail_maintainer_computation.stop()
+      self.destroyExitMultiSelectHooks()
 
       return
