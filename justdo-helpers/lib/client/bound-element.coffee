@@ -85,7 +85,7 @@ _.extend JustdoHelpers,
       $element.trigger($.Event('show.boundelement'))
 
       if options.close_bootstrap_dropdowns_on_open
-        $('.dropdown.open:not(.bound-element,.grid-bound-element)').removeClass('open')
+        $('.dropdown.open:not(.bound-element,.grid-bound-element)').removeClass(open_class)
 
       $element.addClass(open_class)
 
@@ -157,16 +157,16 @@ _.extend JustdoHelpers,
     $element.data "destroy", destroy = _.once =>
       # Release all events bindings to document
       if options.close_on_esc
-        $(document).off 'keydown', closeOnEsc
+        APP.off "doc-esc-click", closeOnEsc
 
       if options.close_on_click_outside
-        $(document).off 'click', close
+        APP.off "doc-click", close
 
       if options.close_on_bootstrap_dropdown_show
-        $(document).off 'show.bs.dropdown', close
+        APP.off "doc-bootstrap-dropdown-show", close
 
       if options.close_on_bound_elements_show
-        $(document).off 'show.boundelement', close
+        APP.off "doc-bound-element-show", close
 
       if options.close_on_mousedown_outside
         $(document).off 'mousedown', documentMousedownHandler
@@ -206,21 +206,20 @@ _.extend JustdoHelpers,
     # Events handling
     #
     if options.close_on_bootstrap_dropdown_show
-      $(document).on 'show.bs.dropdown', close  
+      APP.on "doc-bootstrap-dropdown-show", close
 
     if options.close_on_bound_elements_show
-      $(document).on 'show.boundelement', close
+      APP.on "doc-bound-element-show", close
 
     closeOnEsc = (e) ->
-      e = e || window.event
-      if e.keyCode == 27
-        close(e)
+      close(e)
+      return
 
     if options.close_on_esc
-      $(document).on 'keydown', closeOnEsc
+      APP.on "doc-esc-click", closeOnEsc
 
     if options.close_on_click_outside
-      $(document).on 'click', close
+      APP.on "doc-click", close
 
       $element.click (e) ->
         # Don't bubble clicks up, to avoid closing the element

@@ -98,6 +98,7 @@ Package.onUse(function (api) {
   api.add_files("lib/client/reactivity-utils.coffee", client);
   api.add_files("lib/client/xss.coffee", client);
   api.add_files("lib/client/users-generator.coffee", client);
+  api.add_files("lib/client/justdo-events-standardization.coffee", client);
   api.add_files("lib/client/mods/justdo-direct-ownership-assignment.coffee", client);
 
   api.add_files("lib/server/http-auth.coffee", server);
