@@ -106,7 +106,7 @@ _.extend Projects.prototype,
 
       return @find(query, query_options).count()
 
-    @items_collection.incrementChildsOrderGte = (parent_id, min_order_to_inc, item_doc=null) ->
+    @items_collection.incrementChildsOrderGte = (parent_id, min_order_to_inc, item_doc=null, inc_count=1) ->
       # note that this function replace grid-data-com-server.coffee's incrementChildsOrderGte
 
       #
@@ -121,7 +121,7 @@ _.extend Projects.prototype,
       query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
 
       update_op = {$inc: {}}
-      update_op["$inc"]["parents.#{parent_id}.order"] = 1
+      update_op["$inc"]["parents.#{parent_id}.order"] = inc_count
 
       update_op["$currentDate"] = {_raw_updated_date: true}
 
@@ -138,7 +138,7 @@ _.extend Projects.prototype,
             $gte: min_order_to_inc
 
       parents2_update_op = {$inc: {}}
-      parents2_update_op["$inc"]["parents2.$.order"] = 1
+      parents2_update_op["$inc"]["parents2.$.order"] = inc_count
 
       performIncrementChildsOrderGte = (cb) =>
         # We use rawCollection here, skip collection2/hooks
