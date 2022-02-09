@@ -98,8 +98,14 @@ _.extend JustdoGlobalActivityLog.prototype,
       fields:
         _id: 1
       sort:
-        _raw_updated_date: -1
+        updatedAt: -1
+      limit:
+        options.tasks_limit
 
+    #
+    # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+    # and to drop obsolete indexes (see FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_RECENTLY_UPDATED there)
+    #
     recently_updated_tasks_ids =
       @tasks_collection.find(tasks_query, tasks_options).map (task) -> task._id
 
