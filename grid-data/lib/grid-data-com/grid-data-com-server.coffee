@@ -474,7 +474,11 @@ _.extend GridDataCom.prototype,
 
         return new_order
 
-      incrementChildsOrderGte: (parent_id, min_order_to_inc, item_doc=null) ->
+      incrementChildsOrderGte: (parent_id, min_order_to_inc, item_doc=null, inc_count=1) ->
+        check parent_id, String
+        check min_order_to_inc, Number
+        check inc_count, Number
+
         # item_doc serves the same purpose new_child_fields serves in
         # @getNewChildOrder, read comment there in its entirety
         # including XXX section
@@ -485,7 +489,7 @@ _.extend GridDataCom.prototype,
         query = {}
         query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
         update_op = {$inc: {}}
-        update_op["$inc"]["parents.#{parent_id}.order"] = 1
+        update_op["$inc"]["parents.#{parent_id}.order"] = inc_count
 
         #
         # parents2 update
@@ -498,7 +502,7 @@ _.extend GridDataCom.prototype,
               $gte: min_order_to_inc
 
         parents2_update_op = {$inc: {}}
-        parents2_update_op["$inc"]["parents2.$.order"] = 1
+        parents2_update_op["$inc"]["parents2.$.order"] = inc_count
 
         collection.update parents2_query, parents2_update_op, {multi: true, bypassCollection2: true}
 
