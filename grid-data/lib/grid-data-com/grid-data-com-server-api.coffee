@@ -794,8 +794,9 @@ _.extend GridDataCom.prototype,
       if @collection.getHasChildrenMulti(parents_existence_tests, get_has_children_common_options)
         throw @_error "operation-blocked", "Can't remove the last parent of an item that has sub-items. (You might not see sub-items you aren't member of)"
 
-    # Perform the actual update
-    removed_item_ids = new Set() # To prevent multiple removal of the same item
+    # Run before middlewares
+    removed_item_ids = new Set() # We initialize removed_item_ids here, and later again, the reason is to make a
+                                 # precise simulation for the removed_item_ids updates performed in the loop.
     for path, {parent_id, item_id, org_path} of paths_to_item_ids_map
       item = items_map[item_id]
       if _.size(simulated_item_parents[item_id]) == 0 # We found out in the simulation that an actual remove is necessary
@@ -807,7 +808,6 @@ _.extend GridDataCom.prototype,
             no_more_parents: true
             update_op: undefined
 
-          @collection.remove item._id
           removed_item_ids.add(item_id)
       else # We found out in the simulation that this is only a removal of one of the parents
         if not item.parents2?
@@ -819,19 +819,52 @@ _.extend GridDataCom.prototype,
         update_op.$pull.parents2 = {parent: parent_id}
         @_runGridMethodMiddlewares "removeParent", org_path, perform_as,
           # The etc object.
-
-          # Note that the same item can be in multiple etc object in this loop.
-          # E.g if more that one parent removed for the same item.
-          # In such case the developer hooking to the removeParent would have to
-          # take into account that item.parents might be out of sync, since some
-          # parents are already removed.
-
           item: item
           parent_id: parent_id,
           no_more_parents: false
           update_op: update_op
 
+    removed_item_ids = new Set() # To prevent multiple removal of the same item
+    # Perform the actual update
+    for path, {parent_id, item_id, org_path} of paths_to_item_ids_map
+      item = items_map[item_id]
+      if _.size(simulated_item_parents[item_id]) == 0 # We found out in the simulation that an actual remove is necessary
+        if not removed_item_ids.has(item_id)
+          @collection.remove item._id
+          removed_item_ids.add(item_id)
+          try
+            console.log "HERE", "afterRemoveParent", "type 1"
+            @_runGridMethodMiddlewares "afterRemoveParent", org_path, perform_as,
+              # the etc obj
+              item: item 
+              parent_id: parent_id,
+              no_more_parents: true
+              update_op: undefined
+          catch e
+            console.error "afterRemoveParent hook raised an exception", e
+      else # We found out in the simulation that this is only a removal of one of the parents
+        # Remove parent
+        update_op = {$unset: {}, $pull: {}}
+        update_op.$unset["parents.#{parent_id}"] = ""
+        update_op.$pull.parents2 = {parent: parent_id}
         @collection.update item._id, update_op
+        try
+          console.log "HERE", "afterRemoveParent", "type 2"
+          @_runGridMethodMiddlewares "afterRemoveParent", org_path, perform_as,
+            # The etc object.
+
+            # Note that the same item can be in multiple etc object in this loop.
+            # E.g if more that one parent removed for the same item.
+            # In such case the developer hooking to the removeParent would have to
+            # take into account that item.parents might be out of sync, since some
+            # parents are already removed.
+
+            item: item
+            parent_id: parent_id,
+            no_more_parents: false
+            update_op: update_op
+        catch e
+          console.error "afterRemoveParent hook raised an exception", e
 
     return
   
