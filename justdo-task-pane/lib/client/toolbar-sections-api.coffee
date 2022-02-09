@@ -55,7 +55,10 @@ APP.executeAfterAppLibCode ->
 
       # find item type
       current_row = grid_control.getCurrentRowNonReactive()
-      current_item_type = grid_control._grid_data.getItemType(current_row)
+      if grid_control.isMultiSelectMode()
+        return "multi-select"
+      else
+        current_item_type = grid_control._grid_data.getItemType(current_row)
 
       if not current_item_type?
         if not JD.activeItemId()?

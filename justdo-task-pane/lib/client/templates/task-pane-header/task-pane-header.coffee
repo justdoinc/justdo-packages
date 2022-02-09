@@ -19,11 +19,22 @@ APP.executeAfterAppLibCode ->
 
   Template.task_pane_header.helpers module.template_helpers
   Template.task_pane_header.helpers
-    title: -> getItemTitle()
+    title: ->
+      if APP.modules.project_page.getActiveGridItemType() == "multi-select"
+        return undefined
 
-    seq_id: -> module.activeItemObj({seqId: 1})?.seqId
+      return getItemTitle()
+
+    seq_id: ->
+      if APP.modules.project_page.getActiveGridItemType() == "multi-select"
+        return undefined
+
+      return module.activeItemObj({seqId: 1})?.seqId
 
     getPriorityColor: ->
+      if APP.modules.project_page.getActiveGridItemType() == "multi-select"
+        return null
+
       if not (priority = module.activeItemObj({priority: 1})?.priority)?
         return null
 

@@ -34,5 +34,8 @@ APP.executeAfterAppLibCode ->
       "section-item":
         task_pane_sections: []
 
+      "multi-select":
+        task_pane_sections: []
+
       "fallback": # fallback will be used for unknown types
         task_pane_sections: []
