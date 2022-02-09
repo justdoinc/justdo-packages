@@ -76,7 +76,7 @@ _.extend PACK.GridOperations,
           # following operations
           releaseOpsLock()
 
-    prereq: -> @_opreqUnlocked(@_opreqGridReady())
+    prereq: -> @_opreqNotMultiSelectMode(@_opreqUnlocked(@_opreqGridReady()))
 
   addSubItem:
     op: (fields, cb) -> @addItem @getCurrentPath(), fields, true, cb

@@ -43,6 +43,14 @@ _.extend GridControl.prototype,
 
     return prereq
 
+  _opreqNotMultiSelectMode: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    if @isMultiSelectMode()
+      prereq.multi_select_mode_not_supported = "This operation can't be performed when more than one item is selected"
+
+    return prereq
+
   _opreqActivePath: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 

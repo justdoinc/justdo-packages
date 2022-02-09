@@ -110,6 +110,12 @@ setupContextMenuCalcFieldsControls = ->
       label: "Set function"
 
     listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+      if not (gc = APP.modules.project_page?.gridControl())?
+        return false
+
+      if gc.isMultiSelectMode()
+        return false
+
       if not field_info?
         # Happens when initiating the context menu
         return false
