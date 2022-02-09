@@ -850,9 +850,6 @@ _.extend GridDataCom.prototype,
     # the middlewares.
     #
 
-    if method_name not of @methods_definitions
-      throw @_error "unknown-method-name", "Unknown method name: #{method_name}, use one of: #{_.keys(@methods_definitions).join(", ")}"
-
     if not _.isFunction middleware
       throw @_error "wrong-type", "Middleware has to be a function"
 
