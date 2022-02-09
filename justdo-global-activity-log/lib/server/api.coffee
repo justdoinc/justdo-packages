@@ -27,18 +27,6 @@ _.extend JustdoGlobalActivityLog.prototype,
     return
 
   _globalChangelogPublicationHandlerOptionsSchema: new SimpleSchema
-    changelog_time_frame_ms:
-      # Set to null/undefined if you don't want any time_frame limit for the
-      # returned Changelog items
-
-      type: Number
-
-      min: 60 * 1000 # 1 min
-
-      optional: true
-
-      defaultValue: null # 5 * 24 * 60 * 60 * 1000 # 5 days
-
     tasks_limit:
       type: Number
 
@@ -106,9 +94,6 @@ _.extend JustdoGlobalActivityLog.prototype,
       users: performing_user_id
       project_id: project_id
 
-    if (changelog_time_frame_ms = options.changelog_time_frame_ms)?
-      tasks_query._raw_updated_date = {$gte: JustdoHelpers.getDateMsOffset(-1 * changelog_time_frame_ms)}
-
     tasks_options =
       fields:
         _id: 1
@@ -121,9 +106,6 @@ _.extend JustdoGlobalActivityLog.prototype,
     changelog_query =
       task_id: {$in: recently_updated_tasks_ids}
       change_type: {$ne: "users_change"}
-
-    if (changelog_time_frame_ms = options.changelog_time_frame_ms)?
-      changelog_query.when = {$gte: JustdoHelpers.getDateMsOffset(-1 * changelog_time_frame_ms)}
 
     if not options.include_performing_user
       changelog_query.by = {$ne: performing_user_id}
