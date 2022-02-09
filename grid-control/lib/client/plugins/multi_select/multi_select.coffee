@@ -55,7 +55,8 @@ _.extend PACK.Plugins,
           # clearAllMultiSelectDomChanges() is expensive to do redundantly
           clearAllMultiSelectDomChanges()
           multi_select_mode_rv.set(false)
-        return 
+        return
+      self.exitMultiSelectMode = exitMultiSelectMode
 
       enterMultiSelectMode = ->
         multi_select_mode_rv.set(true)
