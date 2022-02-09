@@ -8,20 +8,6 @@ clearMultiSelected = ->
 clearAllMultiSelectDomChanges = ->
   clearMultiSelected()
 
-  # # Enable unused project-operations-button
-  # $("#ticket-entry").removeClass "disabled"
-  # $("#add-sibling-task").removeClass "disabled"
-  # $("#add-sub-task").removeClass "disabled"
-  # $("#duplicate-active-item").removeClass "disabled"
-  # $("#change-row-style").removeClass "disabled"
-
-  # # Add old ID
-  # $("#multi-remove-task").attr "id", "remove-task"
-  # $("#multi-move-left").attr "id", "move-left"
-  # $("#multi-move-right").attr "id", "move-right"
-  # $("#multi-move-up").attr "id", "move-up"
-  # $("#multi-move-down").attr "id", "move-down"
-
   return
 
 #
