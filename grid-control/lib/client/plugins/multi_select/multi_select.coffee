@@ -1,15 +1,6 @@
 isShiftKeyPressed = (e) ->
   return e.originalEvent.shiftKey is true
 
-clearMultiSelected = ->
-  $(".slick-row").removeClass "multi-selected"
-  return
-
-clearAllMultiSelectDomChanges = ->
-  clearMultiSelected()
-
-  return
-
 #
 # Sortable helper
 #
@@ -18,6 +9,15 @@ _.extend PACK.Plugins,
     init: ->
       # Note: @ is the real grid_control object
       self = @
+
+      clearMultiSelected = ->
+        $(".slick-row", self.container).removeClass "multi-selected"
+        return
+
+      clearAllMultiSelectDomChanges = ->
+        clearMultiSelected()
+
+        return
 
       $current_row_node = null
       $previous_row_node = null
