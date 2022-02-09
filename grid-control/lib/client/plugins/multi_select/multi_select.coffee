@@ -163,13 +163,24 @@ _.extend PACK.Plugins,
 
         return
 
+      multi_select_exit_if_item_activated_outside_computation = null
       self.setupExitMultiSelectHooks = ->
         APP.on "doc-esc-click", exitMultiSelectMode
+
+        multi_select_exit_if_item_activated_outside_computation = Tracker.autorun ->
+          if self.isMultiSelectMode()
+            if (current_path = self.getCurrentPath())?
+              if current_path not in self.getFilterPassingMultiSelectedPathsArray()
+                exitMultiSelectMode()
+
+          return
 
         return
 
       self.destroyExitMultiSelectHooks = ->
         APP.off "doc-esc-click", exitMultiSelectMode
+
+        multi_select_exit_if_item_activated_outside_computation.stop()
 
         return
 
