@@ -108,6 +108,9 @@ _.extend Projects.prototype,
 
     @items_collection.incrementChildsOrderGte = (parent_id, min_order_to_inc, item_doc=null, inc_count=1) ->
       # note that this function replace grid-data-com-server.coffee's incrementChildsOrderGte
+      check parent_id, String
+      check min_order_to_inc, Number
+      check inc_count, Number
 
       #
       # parents update
