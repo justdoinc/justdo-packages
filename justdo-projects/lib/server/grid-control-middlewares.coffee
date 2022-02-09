@@ -26,7 +26,8 @@ _.extend Projects.prototype,
 
     @_grid_data_com.setGridMethodMiddleware "addSibling", new_item_middleware
 
-    @_grid_data_com.setGridMethodMiddleware "removeParent", (path, perform_as, etc) ->
+    @_grid_data_com.setGridMethodMiddleware "beforeRemoveParent", (path, perform_as, etc) ->
+      console.log 'before!!!'
       # IMPORTANT, note that etc.item.parents will not necessarily be synced with the current state of
       # the db. I.e a parent might be removed already. That will happen in the case of bulk remove of more
       # than one parent of the same item.
@@ -54,7 +55,7 @@ _.extend Projects.prototype,
 
       return true
 
-    @_grid_data_com.setGridMethodMiddleware "movePath", (path, perform_as, etc) ->
+    @_grid_data_com.setGridMethodMiddleware "beforeMovePath", (path, perform_as, etc) ->
       for update_op_field_name in ["remove_current_parent_update_op", "set_new_parent_update_op"]
         update_op = etc[update_op_field_name]
         Meteor._ensure update_op, "$set"
