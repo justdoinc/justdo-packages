@@ -45,7 +45,7 @@ APP.executeAfterAppLibCode ->
     prereq: ->
       gc = gridControl()
 
-      return gc._opreqActivePathIsCollectionItem(gc._opreqUnlocked(gc._opreqGridReady()))
+      return gc._opreqActivePathIsCollectionItem(gc._opreqNotMultiSelectMode(gc._opreqUnlocked(gc._opreqGridReady())))
 
   Template.rows_styling_control.helpers
     showSection: ->

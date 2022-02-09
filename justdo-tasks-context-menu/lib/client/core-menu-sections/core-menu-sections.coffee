@@ -70,6 +70,12 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_val: "star"
 
       listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+        if not (gc = APP.modules.project_page?.gridControl())?
+          return false
+
+        if gc.isMultiSelectMode()
+          return false
+
         if not (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "priv:favorite": 1}}))?
           # This should never happen
           return
@@ -86,7 +92,15 @@ _.extend JustdoTasksContextMenu.prototype,
     @registerSectionItem "main", "remove-task",
       position: 300
       data:
-        label: "Remove Task"
+        label: ->
+          if not (gc = APP.modules.project_page?.gridControl())?
+            return false
+
+          if gc.isMultiSelectMode()
+            return "Remove Tasks"
+
+          return "Remove Task"
+
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           APP.modules.project_page.performOp("removeTask")
 
@@ -188,6 +202,9 @@ _.extend JustdoTasksContextMenu.prototype,
         if not (gc = APP.modules.project_page?.gridControl())?
           return false
 
+        if gc.isMultiSelectMode()
+          return false
+
         unfulfilled_op_req = gc.sortActivePathByPriorityDesc.prereq()
 
         delete unfulfilled_op_req.ops_locked # We ignore that lock to avoid flickering when locking ops are performed from the contextmenu
@@ -250,6 +267,14 @@ _.extend JustdoTasksContextMenu.prototype,
 
     @registerMainSection "zoom-in",
       position: 200
+      listingCondition: ->
+        if not (gc = APP.modules.project_page?.gridControl())?
+          return false
+
+        if gc.isMultiSelectMode()
+          return false
+
+        return true
 
     @registerSectionItem "zoom-in", "zoom-in",
       position: 100
@@ -370,6 +395,12 @@ _.extend JustdoTasksContextMenu.prototype,
         data:
           label: "Projects"
         listingCondition: ->
+          if not (gc = APP.modules.project_page?.gridControl())?
+            return false
+
+          if gc.isMultiSelectMode()
+            return false
+
           # if not (cur_proj = APP.modules.project_page.curProj())?
           #   return true 
           # return cur_proj.isCustomFeatureEnabled(JustdoDeliveryPlanner.project_custom_feature_id)

@@ -72,6 +72,12 @@ _.extend MeetingsManagerPlugin.prototype,
       data:
         label: "Meetings"
       listingCondition: ->
+        if not (gc = APP.modules.project_page?.gridControl())?
+          return false
+
+        if gc.isMultiSelectMode()
+          return false
+
         return APP.modules.project_page.curProj()?.isCustomFeatureEnabled("meetings_module")
 
     APP.justdo_tasks_context_menu.registerSectionItem "meetings", "start-meeting",

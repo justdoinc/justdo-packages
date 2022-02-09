@@ -644,6 +644,10 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
 Template.justdo_clipboard_import_activation_icon.events
   "click .justdo-clipboard-import-activation": (e, tpl) ->
+    # Exit multi-select mode if we are in one
+    gc = APP.modules.project_page.gridControl()
+    gc.exitMultiSelectMode()
+
     parent_task_id = JD.activeItemId()
     modal_data =
       dialog_state: new ReactiveVar ""

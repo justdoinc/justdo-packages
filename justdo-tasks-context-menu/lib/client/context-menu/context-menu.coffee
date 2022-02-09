@@ -6,7 +6,13 @@ Template.tasks_context_menu.onCreated ->
 Template.tasks_context_menu.helpers
   isVisible: ->
     return APP.justdo_tasks_context_menu.isVisible()
-    
+
+  isMultiSelect: ->
+    if not (gc = APP.modules.project_page?.gridControl())?
+      return false
+
+    return gc.isMultiSelectMode()
+
   getMainSections: -> 
     return APP.justdo_tasks_context_menu.getMainSections()
 

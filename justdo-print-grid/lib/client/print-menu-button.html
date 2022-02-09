@@ -5,9 +5,12 @@
       <li class="dropdown-header px-1 py-0"><small class="text-uppercase font-weight-bold">Print JustDo</small></li>
       <li class="dropdown-item d-flex align-items-center px-1 all-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#align-justify"/></svg> Entire JustDo</li>
       <li class="dropdown-item d-flex align-items-center px-1 visible-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-tasks-all"/></svg> Visible Tasks</li>
-      <li class="dropdown-header px-1 pb-0 selected-task-section"><small class="text-uppercase font-weight-bold">Print Current Task</small></li>
-      <li class="dropdown-item d-flex align-items-center px-1 all-sub-tasks selected-task-section"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-all-subtasks"/></svg> All Child Tasks</li>
-      <li class="dropdown-item d-flex align-items-center px-1 visible-sub-tasks selected-task-section"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-all-visible-subtasks"/></svg> Visible Child Tasks</li>
+      
+      {{#if taskIsSelectedNotInMultiSelectMode}}
+        <li class="dropdown-header px-1 pb-0"><small class="text-uppercase font-weight-bold">Print Current Task</small></li>
+        <li class="dropdown-item d-flex align-items-center px-1 all-sub-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-all-subtasks"/></svg> All Child Tasks</li>
+        <li class="dropdown-item d-flex align-items-center px-1 visible-sub-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-all-visible-subtasks"/></svg> Visible Child Tasks</li>
+      {{/if}}
 
       <li class="dropdown-header px-1 py-0"><small class="text-uppercase font-weight-bold">Download</small></li>
       <li class="dropdown-item d-flex align-items-center px-1 download-as-png"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#download"/></svg> Download as PNG</li>

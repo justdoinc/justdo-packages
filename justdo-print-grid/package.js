@@ -35,6 +35,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/print-grid.sass", client);
   api.addFiles("lib/client/print-menu-button.html", client);
+  api.addFiles("lib/client/print-menu-button.coffee", client);
 
   api.addFiles("lib/client/download-grid-on-styles/download-grid-on-styles.sass", client);
 

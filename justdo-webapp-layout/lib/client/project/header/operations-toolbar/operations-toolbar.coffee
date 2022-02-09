@@ -9,7 +9,10 @@ Template.project_operations_toolbar.onRendered ->
     return
 
   @autorun =>
-    if (task = APP.modules.project_page.activeItemObj())?
+    if not (gc = APP.modules.project_page.gridControl())?
+      return
+
+    if not gc.isMultiSelectMode() and (task = APP.modules.project_page.activeItemObj())?
       priority_slider.enable()
       priority_slider.setValue task.priority, false
     else

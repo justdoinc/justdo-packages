@@ -11,8 +11,11 @@
       </li>
       <li class="more-info-items">
         <div>
-          <div>Updated {{moFromNow updatedAt}}</div>
-          <div class="text-secondary">by {{displayName updatedByOrCreatedBy}}</div>
+          {{#if isMultiSelect}}
+          {{else}}
+            <div>Updated {{moFromNow updatedAt}}</div>
+            <div class="text-secondary">by {{displayName updatedByOrCreatedBy}}</div>
+          {{/if}}
         </div>
       </li>
     </ul>

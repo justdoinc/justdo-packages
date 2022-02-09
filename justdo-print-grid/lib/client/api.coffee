@@ -640,10 +640,7 @@ _.extend JustdoPrintGrid.prototype,
     Template.print_menu_button.events
       "click .print-dropdown": ->
         path = getCurrentTaskPath()
-        if path?
-          $(".selected-task-section").css "display", "block"
-        else
-          $(".selected-task-section").css "display", "none"
+
         return
 
       # Print visible tasks
