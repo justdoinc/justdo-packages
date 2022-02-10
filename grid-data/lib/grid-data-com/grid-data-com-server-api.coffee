@@ -801,7 +801,7 @@ _.extend GridDataCom.prototype,
       item = items_map[item_id]
       if _.size(simulated_item_parents[item_id]) == 0 # We found out in the simulation that an actual remove is necessary
         if not removed_item_ids.has(item_id)
-          @_runGridMethodMiddlewares "removeParent", org_path, perform_as,
+          @_runGridMethodMiddlewares "beforeRemoveParent", org_path, perform_as,
             # the etc obj
             item: item 
             parent_id: parent_id,
@@ -817,7 +817,7 @@ _.extend GridDataCom.prototype,
         update_op = {$unset: {}, $pull: {}}
         update_op.$unset["parents.#{parent_id}"] = ""
         update_op.$pull.parents2 = {parent: parent_id}
-        @_runGridMethodMiddlewares "removeParent", org_path, perform_as,
+        @_runGridMethodMiddlewares "beforeRemoveParent", org_path, perform_as,
           # The etc object.
           item: item
           parent_id: parent_id,
@@ -833,7 +833,6 @@ _.extend GridDataCom.prototype,
           @collection.remove item._id
           removed_item_ids.add(item_id)
           try
-            console.log "HERE", "afterRemoveParent", "type 1"
             @_runGridMethodMiddlewares "afterRemoveParent", org_path, perform_as,
               # the etc obj
               item: item 
@@ -849,7 +848,6 @@ _.extend GridDataCom.prototype,
         update_op.$pull.parents2 = {parent: parent_id}
         @collection.update item._id, update_op
         try
-          console.log "HERE", "afterRemoveParent", "type 2"
           @_runGridMethodMiddlewares "afterRemoveParent", org_path, perform_as,
             # The etc object.
 
