@@ -2,7 +2,7 @@ _.extend PACK.builtin_trackers,
   parentsChangesTracker: ->
     self = @
 
-    self.justdo_projects_obj._grid_data_com.setGridMethodMiddleware "afterMovePath", (path, perform_as, etc) ->
+    self.justdo_projects_obj._grid_data_com.setGridMethodMiddleware "movePath", (path, perform_as, etc) ->
       new_parent_id = ""
       if etc.new_parent_item?
         new_parent_id = etc.new_parent_item._id
