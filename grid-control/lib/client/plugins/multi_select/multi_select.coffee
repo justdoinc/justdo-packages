@@ -1,6 +1,9 @@
 isShiftKeyPressed = (e) ->
   return e.originalEvent.shiftKey is true
 
+isMetaKeyPressed = (e) ->
+  return e.originalEvent.ctrlKey or e.originalEvent.metaKey
+
 #
 # Sortable helper
 #
@@ -106,11 +109,31 @@ _.extend PACK.Plugins,
         multi_selected_paths = paths_array
         multi_selected_paths_dep.changed()
 
-        if _.isEmpty(multi_selected_paths) or multi_selected_paths.length == 1
+        if _.isEmpty(multi_selected_paths)
+          exitMultiSelectMode()
+        else if multi_selected_paths.length == 1
+          # If we exit multi select mode due to last task reached in selection - activate that task, that's the user's expectation in terms of beaviour
+          self.activatePath(multi_selected_paths[0])
           exitMultiSelectMode()
         else
           enterMultiSelectMode()
           renderMultiSelectedPaths()
+
+        return
+
+      togglePathSelection = (path) ->
+        # ASSUMES SANITIZED/VERIFIED/CORRECT INPUTS
+
+        if not self.isMultiSelectMode()
+          return
+
+        current_selection = getMultiSelectedPathsArray()
+
+        if path in current_selection
+          setMultiSelectedPathsFromArray(_.without(current_selection, path))
+        else
+          current_selection.push(path)
+          setMultiSelectedPathsFromArray(current_selection)
 
         return
 
@@ -178,10 +201,14 @@ _.extend PACK.Plugins,
         return
 
       multi_select_exit_if_item_activated_outside_computation = null
+      is_processing_meta_key = false
       self.setupExitMultiSelectHooks = ->
         APP.on "doc-esc-click", exitMultiSelectMode
 
         multi_select_exit_if_item_activated_outside_computation = Tracker.autorun ->
+          if is_processing_meta_key
+            return
+
           if self.isMultiSelectMode()
             if (current_path = self.getCurrentPath())?
               if current_path not in self.getFilterPassingMultiSelectedPathsArray()
@@ -235,16 +262,65 @@ _.extend PACK.Plugins,
 
       # Deal with clicks
       $(".grid-canvas", self.container).on "click", ".slick-row", (e) ->
-        if not isShiftKeyPressed(e)
+        if $(e.target).closest(".grid-tree-control-toggle").length > 0
+          # Click on expand/collapse shouldn't exit multi-select mode
+          return
+
+        if not isShiftKeyPressed(e) and not isMetaKeyPressed(e)
           exitMultiSelectMode()
 
           return
 
-        # By this stage, we know that the Shift key is pressed.
+        # By this stage, we know that either the Shift key or the Meta key is pressed.
 
         # Let the autorun process the click (necessary to update $current_row_node, $previous_row_node)
+        if isMetaKeyPressed(e)
+          is_processing_meta_key = true
+          # While we flush the click, to avoid exiting the multi-select mode due to
+          # clicking outside of selection, we set the is_processing_meta_key flag to
+          # true
         Tracker.flush()
+        if isMetaKeyPressed(e)
+          is_processing_meta_key = false
 
+        #
+        # Process meta-key press
+        #
+        if isMetaKeyPressed(e)
+          current_row_index = null
+          current_path = null
+          origin_row_index = null
+          origin_path = null
+
+          if $current_row_node?
+            current_row_index = self.getRowNodeIndex($current_row_node)
+
+            if current_row_index?
+              current_path = self._grid_data.getItemPath(current_row_index)
+
+          if $previous_row_node?
+            origin_row_index = self.getRowNodeIndex($previous_row_node)
+
+            if origin_row_index?
+              origin_path = self._grid_data.getItemPath(origin_row_index)
+
+          if not self.isMultiSelectMode()
+            if current_row_index? and origin_row_index? and self._grid_data.getItemPassFilter(current_row_index) and self._grid_data.getItemPassFilter(origin_row_index)
+              # Current/Origin are visible, enter multi-select mode, with both
+
+              setMultiSelectedPathsFromArray([origin_path, current_path])
+
+              return
+
+          if self._grid_data.getItemPassFilter(current_row_index)
+            togglePathSelection(current_path)
+            return
+
+          return
+
+        #
+        # Process the shift-key press
+        #
         if not ($multi_select_origin_node = determineOriginRow())?
           # We had no previously selected row, impossible to get into multi-select mode
 
