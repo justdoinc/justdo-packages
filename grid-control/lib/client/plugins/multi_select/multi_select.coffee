@@ -106,7 +106,7 @@ _.extend PACK.Plugins,
         multi_selected_paths = paths_array
         multi_selected_paths_dep.changed()
 
-        if _.isEmpty(multi_selected_paths)
+        if _.isEmpty(multi_selected_paths) or multi_selected_paths.length == 1
           exitMultiSelectMode()
         else
           enterMultiSelectMode()
