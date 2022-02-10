@@ -121,6 +121,11 @@ _.extend Projects.prototype,
         check project_id, String
 
         query["project_id"] = project_id
+      else
+        # IMPORTANT Regardless, if parent 0 is given, it will never make sense to increment all the tasks under root from all JustDos.
+        # So, even when performance will allow not providing item_doc.project_id we'll still
+        # not allow inc of parent 0 to all projects.
+        throw projects_object._error "not-supported", "Due to performance issue we don't support incrementChildsOrderGte without item_doc.project_id"
 
       query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
 
