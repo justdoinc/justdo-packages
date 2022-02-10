@@ -140,6 +140,33 @@ _.extend PACK.Plugins,
 
         return
 
+      updateMultiSelectedPaths = ->
+        if (is_filter_enabled = self._grid_data.filter.get())
+          if not (grid_tree_filter_state = self._grid_data._grid_tree_filter_state)?
+            # If the filter is enabled but _grid_tree_filter_state isn't set, it means the filter
+            # wasn't updated yet, do nothing, another event will be triggered later in which
+            # we will update the selected paths correctly.
+            #
+            # It happens when grid-view-change event fires following filter update, before grid-tree-filter-updated fires
+            return
+
+        updated_paths = []
+        for path in getMultiSelectedPathsArray()
+          if not (row_index = self._grid_data.getPathGridTreeIndex(path))?
+            # Path isn't in the visible tree any more
+            continue
+
+          if is_filter_enabled
+            # Check if the path still pass the filter
+            if grid_tree_filter_state[row_index][0] == 0 # Path doesn't pass the filter any longer
+              continue
+
+          updated_paths.push(path)
+
+        setMultiSelectedPathsFromArray(updated_paths)
+
+        return
+
       renderMultiSelectedPaths = ->
         clearMultiSelected()
 
@@ -172,6 +199,39 @@ _.extend PACK.Plugins,
         return
 
       self.setupExitMultiSelectHooks()
+
+      self.setupRefreshMultiSelectStateHooks = ->
+        self.on "grid-tree-filter-updated", (filters_state, query) ->
+          if not self.isMultiSelectMode()
+            return
+
+          updateMultiSelectedPaths()
+
+          return
+
+        self.on "grid-view-change", (view) ->
+          if not self.isMultiSelectMode()
+            return
+
+          updateMultiSelectedPaths()
+
+          return
+
+        self.on "rebuild_ready", (rebuild_info) ->
+          if not self.isMultiSelectMode()
+            return
+
+          updateMultiSelectedPaths()
+
+          return
+
+        return
+
+      self.destroyRefreshMultiSelectStateHooks = ->
+        # At the moment, nothing to destroy, all events are on the grid control object level
+        return
+
+      self.setupRefreshMultiSelectStateHooks()
 
       # Deal with clicks
       $(".grid-canvas", self.container).on "click", ".slick-row", (e) ->
@@ -239,5 +299,6 @@ _.extend PACK.Plugins,
 
       self.multi_select_previous_row_trail_maintainer_computation.stop()
       self.destroyExitMultiSelectHooks()
+      self.destroyRefreshMultiSelectStateHooks()
 
       return
