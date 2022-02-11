@@ -18,9 +18,34 @@ _.extend JustdoDbMigrations.prototype,
     # Defined in collections-indexes.coffee
     @_ensureIndexesExists()
 
-    return
+    # Defined in jobs.coffee
+    @_setupJobs()
 
     return
 
+  _registerMigrationScriptSchema: new SimpleSchema
+    runScript:
+      type: Function
+    stopScript:
+      type: Function
+    minimum_version:
+      type: String
+  registerMigrationScript: (migration_script_id, options) ->
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_registerMigrationScriptSchema,
+        options or {},
+        {self: @, throw_on_error: true}
+      )
+    {runScript, stopScript, minimum_version} = cleaned_val
+
+    if not @registered_migration_scripts?
+      @registered_migration_scripts = []
+
+    if APP.justdo_system_records.wereLteVersionInstalled minimum_version
+      @registered_migration_scripts.push
+        id: migration_script_id
+        jobInit: runScript
+        jobStop: stopScript
 
     return
