@@ -60,6 +60,7 @@ _.extend PACK.Plugins,
           # clearAllMultiSelectDomChanges() is expensive to do redundantly
           clearAllMultiSelectDomChanges()
           multi_select_mode_rv.set(false)
+          updateIsConsecutive() # Will set is_consecutive_rv to false since the multi select is false
           self.container.addClass("not-multi-select")
           self.container.removeClass("multi-select")
         return
@@ -74,14 +75,75 @@ _.extend PACK.Plugins,
       self.isMultiSelectMode = ->
         return multi_select_mode_rv.get()
 
+      is_consecutive_rv = new ReactiveVar(false)
       self.isMultiSelectConsecutiveSelect = ->
+        # Consecutive means - no (filter-aware) gap between the items + same indent level
         self._grid_data.invalidateOnRebuild()
         self._grid_data.filter.get() # Become reactive to filters changes
 
-        # XXX when we'll allow non-consecutive selection, this one will be a reactive resource
-        # That will return false if the selection isn't consecutive
-        
-        return true
+        return is_consecutive_rv.get()
+
+      updateIsConsecutive = ->
+        if not self.isMultiSelectMode()
+          is_consecutive_rv.set(false)
+
+          return
+
+        selected_items_rows = []
+        for path in multi_selected_paths
+          row_index = self._grid_data.getPathGridTreeIndex(path)
+
+          selected_items_rows.push row_index
+
+        selected_items_rows.sort((a, b) -> return a - b)
+
+        if (is_filter_enabled = self._grid_data.filter.get())
+          if not (grid_tree_filter_state = self._grid_data._grid_tree_filter_state)?
+            # See comment in this file: COMMENT_RE_GRID_TREE_FILTER_STATE
+            return
+
+          # We scan from the last selected_items_rows
+          indent_level_of_first_item = self._grid_data.grid_tree[selected_items_rows[selected_items_rows.length - 1]][1]
+          grid_tree_filter_state_pointer = selected_items_rows.pop()
+          while (current_row_to_check = selected_items_rows.pop())
+            # Ensure that the previous item is the previous visible item in the filtered tree
+            grid_tree_filter_state_pointer -= 1
+            while grid_tree_filter_state_pointer >= 0 and grid_tree_filter_state[grid_tree_filter_state_pointer][0] == 0
+              grid_tree_filter_state_pointer -= 1
+            if current_row_to_check != grid_tree_filter_state_pointer
+              is_consecutive_rv.set(false)
+
+              return
+
+            if indent_level_of_first_item != self._grid_data.grid_tree[current_row_to_check][1]
+              is_consecutive_rv.set(false)
+
+              return
+
+          is_consecutive_rv.set(true)
+
+          return
+        else # Filter mode is off
+          indent_level_of_first_item = self._grid_data.grid_tree[selected_items_rows[0]][1]
+
+          if (selected_items_rows[0] + selected_items_rows.length - 1) != selected_items_rows[selected_items_rows.length - 1]
+            # Optimization, no chance of consecutive in that case
+            is_consecutive_rv.set(false)
+
+            return
+
+          # By this point we know that the numbers are consecutive.
+          for i in [selected_items_rows[0]..(selected_items_rows[0] + selected_items_rows.length - 1)]
+            if self._grid_data.grid_tree[i][1] != indent_level_of_first_item
+              is_consecutive_rv.set(false)
+
+              return
+
+          is_consecutive_rv.set(true)
+
+          return
+
+        return
 
       multi_selected_paths = []
       multi_selected_paths_dep = new Tracker.Dependency()
@@ -130,6 +192,7 @@ _.extend PACK.Plugins,
           exitMultiSelectMode()
         else
           enterMultiSelectMode()
+          updateIsConsecutive()
           renderMultiSelectedPaths()
 
         return
@@ -179,6 +242,8 @@ _.extend PACK.Plugins,
       updateMultiSelectedPaths = ->
         if (is_filter_enabled = self._grid_data.filter.get())
           if not (grid_tree_filter_state = self._grid_data._grid_tree_filter_state)?
+            # COMMENT_RE_GRID_TREE_FILTER_STATE
+            #
             # If the filter is enabled but _grid_tree_filter_state isn't set, it means the filter
             # wasn't updated yet, do nothing, another event will be triggered later in which
             # we will update the selected paths correctly.
