@@ -27,6 +27,7 @@ APP.getEnv (env) ->
     projects_collection: APP.collections.Projects
     tasks_collection: APP.collections.Tasks
 
-  APP.justdo_db_migrations = new JustdoDbMigrations(options)
+  if Meteor.isServer
+    APP.justdo_db_migrations = new JustdoDbMigrations(options)
 
   return
