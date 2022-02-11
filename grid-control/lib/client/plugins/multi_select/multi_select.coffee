@@ -300,16 +300,19 @@ _.extend PACK.Plugins,
 
       multi_select_exit_if_item_activated_outside_computation = null
       is_processing_meta_key = false
+      is_processing_shift_key = false
       self.setupExitMultiSelectHooks = ->
         APP.on "doc-esc-click", exitMultiSelectMode
 
         multi_select_exit_if_item_activated_outside_computation = Tracker.autorun ->
-          if is_processing_meta_key
-            return
-
+          # Exit if current path changed and is outside the selection (the user clicked without shift/meta on a row outside the selection)
           if self.isMultiSelectMode()
             if (current_path = self.getCurrentPath())?
-              if current_path not in self.getFilterPassingMultiSelectedPathsArray()
+              if current_path not in (Tracker.nonreactive -> self.getFilterPassingMultiSelectedPathsArray()) # Nonreactive since we don't want to be reactive to changes in selection, only for changes in active task
+                # Put the following if after all the reactive resources ifs (otherwise we'll lose reactivity after the first time the condition will encounter)
+                if is_processing_meta_key or is_processing_shift_key
+                  return
+                  
                 exitMultiSelectMode()
 
           return
@@ -377,10 +380,14 @@ _.extend PACK.Plugins,
           # While we flush the click, to avoid exiting the multi-select mode due to
           # clicking outside of selection, we set the is_processing_meta_key flag to
           # true
+        if isShiftKeyPressed(e)
+          is_processing_shift_key = true
+          # Same purpose as is_processing_meta_key
         Tracker.flush()
         if isMetaKeyPressed(e)
           is_processing_meta_key = false
-
+        if isShiftKeyPressed(e)
+          is_processing_shift_key = false
         #
         # Process meta-key press
         #
