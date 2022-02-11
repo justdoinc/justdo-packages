@@ -74,6 +74,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
+  api.addFiles("lib/client/pseudo-collections.coffee", client);
+
   api.addFiles("lib/client/project-conf/project-conf.sass", client);
   api.addFiles("lib/client/project-conf/project-conf.html", client);
   api.addFiles("lib/client/project-conf/project-conf.coffee", client);
