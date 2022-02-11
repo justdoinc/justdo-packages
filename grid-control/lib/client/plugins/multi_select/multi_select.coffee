@@ -95,7 +95,27 @@ _.extend PACK.Plugins,
 
           selected_items_rows.push row_index
 
+        selected_items_rows_before_sort = selected_items_rows.slice()
         selected_items_rows.sort((a, b) -> return a - b)
+        selected_items_rows_copy = EJSON.clone(selected_items_rows) # We are popping items from selected_items_rows later
+        multi_selected_paths_isnt_ordered =
+          EJSON.equals(selected_items_rows_before_sort, selected_items_rows)
+
+        setConsecutiveMode = ->
+          is_consecutive_rv.set(true)
+
+          # If selected items are consecutive, ensure that they are stored in their order
+          # under: multi_selected_paths (to make it easy for the developers to access
+          # the first/last item)
+          if not multi_selected_paths_isnt_ordered
+            sorted_paths = []
+            for row_index in selected_items_rows_copy
+              if (item_path = self._grid_data.getItemPath(row_index))?
+                sorted_paths.push item_path
+
+            setMultiSelectedPathsFromArray(sorted_paths)
+
+          return
 
         if (is_filter_enabled = self._grid_data.filter.get())
           if not (grid_tree_filter_state = self._grid_data._grid_tree_filter_state)?
@@ -120,7 +140,7 @@ _.extend PACK.Plugins,
 
               return
 
-          is_consecutive_rv.set(true)
+          setConsecutiveMode()
 
           return
         else # Filter mode is off
@@ -139,7 +159,7 @@ _.extend PACK.Plugins,
 
               return
 
-          is_consecutive_rv.set(true)
+          setConsecutiveMode()
 
           return
 
