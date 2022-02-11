@@ -7209,11 +7209,11 @@ a.text-dark:hover, a.text-dark:focus {
   border-color: rgba(201, 199, 199, 1);
 }
 
-.slick-row.active {
+.not-multi-select .slick-row.active {
   background-color: rgba(var(--color-primary), 0.16);
 }
 
-.slick-row.search-result.active {
+.not-multi-select .slick-row.search-result.active {
   background: linear-gradient(to right, rgba(var(--color-primary), 0.16) 0%, rgba(var(--color-primary), 0.16) 100%), linear-gradient(to right, #fffce5 0%, #fffce5 100%);
 }
 
@@ -7228,16 +7228,16 @@ a.text-dark:hover, a.text-dark:focus {
   bottom: 4px !important;
 }
 
-.frozen-columns-mode .slick-row.active {
+.not-multi-select.frozen-columns-mode .slick-row.active {
   background-color: rgba(var(--color-primary), 0.16) !important;
 }
-.frozen-columns-mode .active .frozen {
+.not-multi-select.frozen-columns-mode .active .frozen {
   background: linear-gradient(to right, rgba(var(--color-primary), 0.16) 0%, rgba(var(--color-primary), 0.16) 100%), linear-gradient(to right, #ffffff 0%, #ffffff 100%);
 }
-.frozen-columns-mode .frozen.active {
+.not-multi-select.frozen-columns-mode .frozen.active {
   background: linear-gradient(to right, rgba(var(--color-primary), 0.16) 0%, rgba(var(--color-primary), 0.16) 100%), linear-gradient(to right, #ffffff 0%, #ffffff 100%);
 }
-.frozen-columns-mode .search-result.active .frozen,
-.frozen-columns-mode .search-result .frozen.active {
+.not-multi-select.frozen-columns-mode .search-result.active .frozen,
+.not-multi-select.frozen-columns-mode .search-result .frozen.active {
   background: linear-gradient(to right, rgba(var(--color-primary), 0.16) 0%, rgba(var(--color-primary), 0.16) 100%), linear-gradient(to right, #fffce5 0%, #fffce5 100%);
 }
