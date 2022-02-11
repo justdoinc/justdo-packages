@@ -1,7 +1,7 @@
 share.justdo_quick_notes_dropdown = null
 
 Template.justdo_quick_notes_activation_icon.onCreated ->
-  active_quick_notes_sub = APP.justdo_quick_notes.subscribeActiveQuickNotes()
+  APP.justdo_quick_notes.subscribeQuickNotesInfo()
 
   return
 
@@ -17,8 +17,10 @@ Template.justdo_quick_notes_activation_icon.onDestroyed ->
     @justdo_quick_notes_dropdown.destroy()
     @justdo_quick_notes_dropdown = null
 
+  APP.justdo_quick_notes.unsubscribeQuickNotesInfo()
+
   return
 
 Template.justdo_quick_notes_activation_icon.helpers
   activeNotesCount: ->
-    return APP.collections.QuickNotes.find({$and:[{completed:null }]}).fetch().length
+    return APP.collections.QuickNotesInfo.findOne("active_quick_notes_count", {count: 1}).count

@@ -66,6 +66,12 @@ _.extend JustdoQuickNotes.prototype,
 
     return current_subscription
 
+  subscribeQuickNotesInfo: (cb) ->
+    if @quick_notes_info_subscribtion?
+      @quick_notes_info_subscribtion.stop()
+    @quick_notes_info_subscribtion = Meteor.subscribe "quickNotesInfo", cb
+    return @quick_notes_info_subscribtion
+
   # cb is passed directly to the callback of Meteor.subscribe
   # It could either be an object {onReady:(), onStop: ()} or simply a function (which is called on ready)
   subscribeActiveQuickNotes: (options, cb) ->
@@ -93,6 +99,12 @@ _.extend JustdoQuickNotes.prototype,
     @completed_quick_notes_subscription = @_refreshSubscription "completedQuickNotes", @completed_quick_notes_subscription, options, cb
 
     return @completed_quick_notes_subscription
+
+  unsubscribeQuickNotesInfo: ->
+    if @quick_notes_info_subscribtion?
+      @quick_notes_info_subscribtion.stop()
+      @quick_notes_info_subscribtion = null
+    return
 
   unsubscribeActiveQuickNotes: ->
     if @active_quick_notes_subscription?
