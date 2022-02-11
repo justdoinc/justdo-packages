@@ -13,6 +13,8 @@ _.extend PACK.Plugins,
       # Note: @ is the real grid_control object
       self = @
 
+      self.container.addClass("not-multi-select")
+
       clearMultiSelected = ->
         $(".slick-row", self.container).removeClass "multi-selected"
         return
@@ -58,11 +60,15 @@ _.extend PACK.Plugins,
           # clearAllMultiSelectDomChanges() is expensive to do redundantly
           clearAllMultiSelectDomChanges()
           multi_select_mode_rv.set(false)
+          self.container.addClass("not-multi-select")
+          self.container.removeClass("multi-select")
         return
       self.exitMultiSelectMode = exitMultiSelectMode
 
       enterMultiSelectMode = ->
         multi_select_mode_rv.set(true)
+        self.container.removeClass("not-multi-select")
+        self.container.addClass("multi-select")
         return
 
       self.isMultiSelectMode = ->
