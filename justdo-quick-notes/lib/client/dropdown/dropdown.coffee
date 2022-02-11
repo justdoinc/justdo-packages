@@ -36,10 +36,15 @@ Template.justdo_quick_notes_dropdown.onCreated ->
 
     return
 
-  active_quick_notes_sub = APP.justdo_quick_notes.subscribeActiveQuickNotes()
+  # Subscription handles are managed by API.
+  # To unsub simply call unsubscribeActiveQuickNotes()
+  APP.justdo_quick_notes.subscribeActiveQuickNotes()
 
   @autorun ->
-    APP.justdo_quick_notes.subscribeCompletedQuickNotes({limit: tpl.completedQuickNotesLimit.get()})
+    if tpl.showCompleted.get()
+      APP.justdo_quick_notes.subscribeCompletedQuickNotes({limit: tpl.completedQuickNotesLimit.get()})
+    else
+      APP.justdo_quick_notes.unsubscribeCompletedQuickNotes()
 
     return
 
@@ -133,6 +138,10 @@ Template.justdo_quick_notes_dropdown.events
     $(".quick-notes-completed-dropdown-menu").removeClass "open"
 
     return
+
+Template.justdo_quick_notes_dropdown.onDestroyed ->
+  APP.justdo_quick_notes.unsubscribeActiveQuickNotes()
+  APP.justdo_quick_notes.unsubscribeCompletedQuickNotes()
 
 Template.justdo_quick_notes_item.onCreated ->
   # The non-reactive title helps to avoid issues with reactivity
