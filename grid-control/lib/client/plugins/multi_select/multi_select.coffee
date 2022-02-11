@@ -112,7 +112,14 @@ _.extend PACK.Plugins,
           # by preventing double treatment for case we are already empty, infinite loop is prevented.
           return
 
-        multi_selected_paths = paths_array
+        cleaned_paths_array = []
+        for path in paths_array
+          if (path_row_index = self._grid_data.getPathGridTreeIndex(path))?
+            if self._grid_data.getItemIsCollectionItem(path_row_index)
+              # Don't allow selecting non-collection items (like section items)
+              cleaned_paths_array.push path
+
+        multi_selected_paths = cleaned_paths_array
         multi_selected_paths_dep.changed()
 
         if _.isEmpty(multi_selected_paths)
