@@ -76,10 +76,10 @@ Template.justdo_quick_notes_dropdown.helpers
     return Template.instance().showCompleted.get()
 
   activeQuickNotesExist: ->
-    return APP.collections.QuickNotes.find({completed: null}).count()
+    return APP.collections.QuickNotesInfo.findOne("active_quick_notes_count", {count: 1})?.count
 
   completedQuickNotesExist: ->
-    return APP.collections.QuickNotes.find({completed: {$ne:null}}).count()
+    return APP.collections.QuickNotesInfo.findOne("completed_quick_notes_count", {count: 1})?.count
 
   showAddButton: ->
     return Template.instance().showAddButton.get()

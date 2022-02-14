@@ -37,35 +37,63 @@ _.extend JustdoQuickNotes.prototype,
 
       publish_this = @
 
-      active_quick_notes_query =
+      quick_notes_query =
         user_id: @userId
-        completed: null
         deleted: null
 
       # For displaying active quick note count in toolbar, we'll display 99+ for more than 99 quick notes.
       # Thus we only need up to 100.
-      active_quick_notes_cursor = self.quick_notes_collection.find active_quick_notes_query, {limit: 100}
+      quick_notes_cursor = self.quick_notes_collection.find quick_notes_query, {limit: 100}
 
-      count = 0
+      active_quick_notes_count = 0
+      completed_quick_notes_count = 0
       initial = true
-      active_quick_notes_count_tracker = active_quick_notes_cursor.observeChanges
-        added: (id, data) ->
-          count += 1
+
+      quick_notes_count_tracker = quick_notes_cursor.observe
+        added: (doc) ->
+          if doc.completed
+            completed_quick_notes_count += 1
+          else
+            active_quick_notes_count += 1
 
           if not initial
-            publish_this.changed "quick_notes_info", "active_quick_notes_count", {count: count}
+            publish_this.changed "quick_notes_info", "completed_quick_notes_count", {count: completed_quick_notes_count}
+            publish_this.changed "quick_notes_info", "active_quick_notes_count", {count: active_quick_notes_count}
 
-        removed: (id) ->
-          count -= 1
+          return
+
+        changed: (new_doc, old_doc) ->
+          if new_doc.completed and not old_doc.completed
+            completed_quick_notes_count += 1
+            active_quick_notes_count -= 1
+          if not new_doc.completed and old_doc.completed
+            completed_quick_notes_count -= 1
+            active_quick_notes_count += 1
+
+          publish_this.changed "quick_notes_info", "completed_quick_notes_count", {count: completed_quick_notes_count}
+          publish_this.changed "quick_notes_info", "active_quick_notes_count", {count: active_quick_notes_count}
+
+          return
+
+        removed: (old_doc) ->
+          if old_doc.completed
+            completed_quick_notes_count -= 1
+          else
+            active_quick_notes_count -= 1
 
           if not initial
-            publish_this.changed "quick_notes_info", "active_quick_notes_count", {count: count}
+            publish_this.changed "quick_notes_info", "completed_quick_notes_count", {count: completed_quick_notes_count}
+            publish_this.changed "quick_notes_info", "active_quick_notes_count", {count: active_quick_notes_count}
+
+          return
 
       initial = false
-      publish_this.added "quick_notes_info", "active_quick_notes_count", {count: count}
+
+      publish_this.added "quick_notes_info", "completed_quick_notes_count", {count: completed_quick_notes_count}
+      publish_this.added "quick_notes_info", "active_quick_notes_count", {count: active_quick_notes_count}
 
       publish_this.onStop ->
-        active_quick_notes_count_tracker.stop()
+        quick_notes_count_tracker.stop()
 
       publish_this.ready()
 
