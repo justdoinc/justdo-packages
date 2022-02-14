@@ -82,7 +82,7 @@ _.extend JustdoQuickNotes.prototype,
       completed_quick_notes_query =
         user_id: @userId
         completed:
-          $exists: true
+          $ne: null
         deleted: null
 
       completed_quick_notes_options =
