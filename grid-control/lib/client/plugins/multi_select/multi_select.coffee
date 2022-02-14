@@ -75,6 +75,8 @@ _.extend PACK.Plugins,
       self.isMultiSelectMode = ->
         return multi_select_mode_rv.get()
 
+      consecutive_upper_boundary_path = new ReactiveVar(null)
+      consecutive_lower_boundary_path = new ReactiveVar(null)
       is_consecutive_rv = new ReactiveVar(false)
       self.isMultiSelectConsecutiveSelect = ->
         # Consecutive means - no (filter-aware) gap between the items + same indent level
@@ -83,9 +85,45 @@ _.extend PACK.Plugins,
 
         return is_consecutive_rv.get()
 
+      self.getMultiSelectConsecutiveSelectBoundaries = ->
+        return [consecutive_upper_boundary_path.get(), consecutive_lower_boundary_path.get()]
+
       updateIsConsecutive = ->
-        if not self.isMultiSelectMode()
+        setNonConsecutiveMode = ->
           is_consecutive_rv.set(false)
+          consecutive_upper_boundary_path.set(null)
+          consecutive_lower_boundary_path.set(null)
+
+          return
+
+        if not self.isMultiSelectMode()
+          setNonConsecutiveMode()
+
+          return
+
+        multi_selected_paths_isnt_ordered = false
+        selected_items_rows_copy = null
+        setConsecutiveMode = ->
+          is_consecutive_rv.set(true)
+
+          # If selected items are consecutive, ensure that they are stored in their order
+          # under: multi_selected_paths (to make it easy for the developers to access
+          # the first/last item)
+          if not multi_selected_paths_isnt_ordered
+            sorted_paths = []
+            for row_index in selected_items_rows_copy
+              if (item_path = self._grid_data.getItemPath(row_index))?
+                sorted_paths.push item_path
+
+            setMultiSelectedPathsFromArray(sorted_paths)
+          else
+            sorted_paths = self.getFilterPassingMultiSelectedPathsArray()
+
+          previous_path = self._grid_data.filterAwareGetPreviousPath(sorted_paths[0])
+          next_path = self._grid_data.filterAwareGetNextPath(sorted_paths[sorted_paths.length - 1])
+
+          consecutive_upper_boundary_path.set(previous_path)
+          consecutive_lower_boundary_path.set(next_path)
 
           return
 
@@ -101,21 +139,6 @@ _.extend PACK.Plugins,
         multi_selected_paths_isnt_ordered =
           EJSON.equals(selected_items_rows_before_sort, selected_items_rows)
 
-        setConsecutiveMode = ->
-          is_consecutive_rv.set(true)
-
-          # If selected items are consecutive, ensure that they are stored in their order
-          # under: multi_selected_paths (to make it easy for the developers to access
-          # the first/last item)
-          if not multi_selected_paths_isnt_ordered
-            sorted_paths = []
-            for row_index in selected_items_rows_copy
-              if (item_path = self._grid_data.getItemPath(row_index))?
-                sorted_paths.push item_path
-
-            setMultiSelectedPathsFromArray(sorted_paths)
-
-          return
 
         if (is_filter_enabled = self._grid_data.filter.get())
           if not (grid_tree_filter_state = self._grid_data._grid_tree_filter_state)?
@@ -131,12 +154,12 @@ _.extend PACK.Plugins,
             while grid_tree_filter_state_pointer >= 0 and grid_tree_filter_state[grid_tree_filter_state_pointer][0] == 0
               grid_tree_filter_state_pointer -= 1
             if current_row_to_check != grid_tree_filter_state_pointer
-              is_consecutive_rv.set(false)
+              setNonConsecutiveMode()
 
               return
 
             if indent_level_of_first_item != self._grid_data.grid_tree[current_row_to_check][1]
-              is_consecutive_rv.set(false)
+              setNonConsecutiveMode()
 
               return
 
@@ -148,14 +171,14 @@ _.extend PACK.Plugins,
 
           if (selected_items_rows[0] + selected_items_rows.length - 1) != selected_items_rows[selected_items_rows.length - 1]
             # Optimization, no chance of consecutive in that case
-            is_consecutive_rv.set(false)
+            setNonConsecutiveMode()
 
             return
 
           # By this point we know that the numbers are consecutive.
           for i in [selected_items_rows[0]..(selected_items_rows[0] + selected_items_rows.length - 1)]
             if self._grid_data.grid_tree[i][1] != indent_level_of_first_item
-              is_consecutive_rv.set(false)
+              setNonConsecutiveMode()
 
               return
 
