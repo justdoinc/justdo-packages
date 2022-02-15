@@ -4,6 +4,16 @@ Template.meeting_container.onCreated ->
   meetings_manager = APP.meetings_manager_plugin.meetings_manager
   @expanded = new ReactiveVar(new Set())
 
+  meeting_id = @data._id
+  @meeting_sub = APP.meetings_manager_plugin.meetings_manager.subscribeToMeeting meeting_id
+
+  return
+
+Template.meeting_container.onDestroyed ->
+  @meeting_sub.stop()
+
+  return
+
 Template.meeting_container.helpers
 
   notes: ->
