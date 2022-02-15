@@ -729,7 +729,7 @@ _.extend GridDataCom.prototype,
         _id: 1
         parents: 1
         parents2: 1
-        project_id: 1 # This is only for potential optimization later, when parents2 will become integral part of JD we will remove it.
+        project_id: 1 # *This one is used by middlewares* and later on for optimizations.
     .fetch()
 
     if items.length != item_ids.size
@@ -1054,7 +1054,7 @@ _.extend GridDataCom.prototype,
         _id: 1
         parents: 1
         parents2: 1
-        project_id: 1 # This is only for potential optimization later, when parents2 will become integral part of JD we will remove it.
+        project_id: 1 # *This one is used by middlewares* and later on for optimizations.
     .forEach (item) ->
       items_map[item._id] = item
       if project_id == null
