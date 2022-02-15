@@ -57,9 +57,9 @@ _.extend Projects.prototype,
 
     @_grid_data_com.setGridMethodMiddleware "beforeMovePath", (path, perform_as, etc) ->
       for update_op_field_name in ["remove_current_parent_update_op", "set_new_parent_update_op"]
-        update_op = etc[update_op_field_name]
-        Meteor._ensure update_op, "$set"
-        update_op.$set.updated_by = perform_as
+        if (update_op = etc[update_op_field_name])?
+          Meteor._ensure update_op, "$set"
+          update_op.$set.updated_by = perform_as
 
       return true
 
