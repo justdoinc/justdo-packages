@@ -228,9 +228,12 @@ _.extend GridData.prototype,
     if not path?
       return null
     
+    if path == "/"
+      return null
+
     if (index = @_typed_items_paths_map_to_grid_tree_indices[path])?
       return index
-    else if (potential_indices = @_items_ids_map_to_grid_tree_indices[helpers.getPathItemId(path)])?
+    else if (path_item_id = helpers.getPathItemId(path))? and (potential_indices = @_items_ids_map_to_grid_tree_indices[path_item_id])?
       for index in potential_indices
         if @grid_tree[index][2] == path
           return index
