@@ -65,17 +65,7 @@ _.extend PACK.GridOperations,
           releaseOpsLock()
 
     prereq: ->
-      pre_requirements = 
-        @_opreqActivePathLevelPermitted(@_opreqActivePathIsLeafOrHaveMultipleParents(@_opreqUnlocked(@_opreqGridReady())))
-
-      if "active_path_level_not_permitted" of pre_requirements
-        current_row = @getCurrentRow()
-
-        grid_data = @_grid_data
-        section = grid_data.getItemSection(current_row)
-
-        if (removeSpecialCase = section.options?.permitted_depth_removeSpecialCase)? and
-           removeSpecialCase.call(@, current_row)
-              delete pre_requirements.active_path_level_not_permitted
+      pre_requirements = @_opreqActivePathIsLeafOrHaveMultipleParents(@_opreqUnlocked(@_opreqGridReady()))
+      pre_requirements = @_opreqActivePathLevelPermitted(pre_requirements, "remove")
 
       return pre_requirements

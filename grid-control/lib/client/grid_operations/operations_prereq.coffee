@@ -87,8 +87,31 @@ _.extend GridControl.prototype,
 
     return prereq
 
-  _opreqActivePathLevelPermitted: (prereq) ->
+  _opreqActivePathLevelPermitted: (prereq, operation_id) ->
     prereq = prepareOpreqArgs(prereq)
+
+    if @isMultiSelectMode()
+      #
+      # Deal first with the case of multi-select
+      #
+      for path in @getFilterPassingMultiSelectedPathsArray()
+        path_row = @_grid_data.getPathGridTreeIndex(path)
+        
+        if @_grid_data.getItemRelativeDepthPermitted(path_row) is -1
+          if operation_id is "remove"
+
+            grid_data = @_grid_data
+            section = grid_data.getItemSection(path_row)
+
+            if (removeSpecialCase = section.options?.permitted_depth_removeSpecialCase)? and
+               removeSpecialCase.call(@, path_row)
+                  continue
+
+          prereq.selected_path_level_not_permitted = ""
+
+          break
+
+      return prereq
 
     # If there's no active path - just return the active prereq message
     # note: @_opreqActivePath is reactive resource
@@ -98,6 +121,17 @@ _.extend GridControl.prototype,
 
     if @_grid_data.getItemRelativeDepthPermitted(@getCurrentRow()) is -1
       prereq.active_path_level_not_permitted = ""
+
+    if operation_id is "remove"
+      if "active_path_level_not_permitted" of prereq
+        current_row = @getCurrentRow()
+
+        grid_data = @_grid_data
+        section = grid_data.getItemSection(current_row)
+
+        if (removeSpecialCase = section.options?.permitted_depth_removeSpecialCase)? and
+           removeSpecialCase.call(@, current_row)
+              delete prereq.active_path_level_not_permitted
 
     return prereq
 
@@ -135,6 +169,32 @@ _.extend GridControl.prototype,
   _opreqActivePathIsLeaf: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
+    if @isMultiSelectMode()
+      #
+      # Deal first with the case of multi-select
+      #
+
+      for path in @getFilterPassingMultiSelectedPathsArray()
+        path_has_children = @_grid_data.filterAwareGetPathHasChildren(path)
+
+        if path_has_children == 0
+          continue
+
+        item_id = GridData.helpers.getPathItemId(path)
+        item = @collection.findOne(item_id, {fields: {title: 1, seqId: 1}})
+
+        if path_has_children == 1
+          prereq.selected_path_is_not_leaf = "Can't perform operation. The following task has a Child Task: #{JustdoHelpers.taskCommonName(item, 50)}"
+
+          break
+
+        if path_has_children == 2
+          prereq.selected_path_is_not_leaf_all_child_filtered = "Can't perform operation. The following task has a filtered Child Task: #{JustdoHelpers.taskCommonName(item, 50)}"
+
+          break
+
+      return prereq
+
     # If there's no active path - just return the active prereq message
     if not _.isEmpty(active_path_prereq = @_opreqActivePath())
       _.extend(prereq, active_path_prereq)
@@ -151,6 +211,36 @@ _.extend GridControl.prototype,
 
   _opreqActivePathIsLeafOrHaveMultipleParents: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
+
+    if @isMultiSelectMode()
+      #
+      # Deal first with the case of multi-select
+      #
+
+      for path in @getFilterPassingMultiSelectedPathsArray()
+        item_id = GridData.helpers.getPathItemId(path)
+
+        if @_grid_data.getAllCollectionItemIdPaths(item_id)?.length > 1
+          continue
+
+        path_has_children = @_grid_data.filterAwareGetPathHasChildren(path)
+
+        if path_has_children == 0
+          continue
+
+        item = @collection.findOne(item_id, {fields: {title: 1, seqId: 1}})
+
+        if path_has_children == 1
+          prereq.selected_path_is_not_leaf = "Can't perform operation. The following task has a Child Task: #{JustdoHelpers.taskCommonName(item, 50)}"
+
+          break
+
+        if path_has_children == 2
+          prereq.selected_path_is_not_leaf_all_child_filtered = "Can't perform operation. The following task has a filtered Child Task: #{JustdoHelpers.taskCommonName(item, 50)}"
+
+          break
+
+      return prereq
 
     # If there's no active path - just return the active prereq message
     if not _.isEmpty(active_path_prereq = @_opreqActivePath())
