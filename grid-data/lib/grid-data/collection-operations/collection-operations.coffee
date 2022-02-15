@@ -226,7 +226,7 @@ _.extend GridData.prototype,
 
     return
 
-  movePath: (path, new_location, cb, usersDiffConfirmationCb) ->
+  movePath: (paths, new_location, cb, usersDiffConfirmationCb) ->
     # Put path in the position provided in new_location.
 
     # new_location can be either object of the form:
@@ -247,9 +247,14 @@ _.extend GridData.prototype,
 
     # If cb provided, cb will be called when excution completed:
     # cb args will be determined by new_location type:
-    # if new_location is an array: cb(err, new_path)
-    #   new_path we will determine new_location based on new_position_path and relation.
+    # if new_location is an array: cb(err, new_paths)
+    #   new_paths we will determine new_location based on new_position_path and relation.
+    #   it will be an array of paths if paths provided as an Array of strings, if it was
+    #   provided as a string it will be a string for the new path.
     # if new_location is an object: cb(err)
+
+    # IMPORTANT usersDiffConfirmationCb is supported only if either a single path
+    # is provided in the paths array or a String path is provided.
 
     # if usersDiffConfirmationCb is provided, if users of path and
     # provided new_location aren't the same the move operation will be
@@ -268,19 +273,35 @@ _.extend GridData.prototype,
     #   proceed: a callback, if called, move operation will continue
     #   cancel: a callback, if called, move operation will cancel
     # if new location is the root we ignore usersDiffConfirmationCb
-    path = helpers.normalizePath(path)
-    path_relative_path = @getPathRelativePath(path)
 
+    # Originally, movePath worked with a single string path, string_path_provided is used
+    # to maintain backward-compatibility.
+    string_path_provided = false
+    if _.isString(paths)
+      string_path_provided = true
+      paths = [paths]
+    
+    check paths, [String]
+
+    if paths.length > 1
+      @logger.debug "movePath: more than one path provided, usersDiffConfirmationCb skipped"
+      usersDiffConfirmationCb = null
+      
+    relative_paths = _.map(paths, (path) => @getPathRelativePath(helpers.normalizePath(path)))
     new_location_type = null
     new_location_obj = null
-    new_path = null
+    new_paths = null
     if not _.isArray new_location
       new_location_type = "object"
       new_location_obj = new_location
     else
       new_location_type = "array"
 
-      path_details = @getPathNaturalCollectionTreeInfo path
+      paths_items_ids = _.map paths, (path) =>
+        if not (path_details = @getPathNaturalCollectionTreeInfo(path))?
+          throw new Error "movePath: provided path #{path} is unknown"
+
+        return path_details.item_id
 
       [position_path, relation] = new_location
       position_path = helpers.normalizePath(position_path)
@@ -295,7 +316,7 @@ _.extend GridData.prototype,
         if relation == 0
           new_location_obj.order = 0
 
-        new_path = "/#{path_details.item_id}/"
+        new_paths = _.map paths_items_ids, (item_id) => "/#{item_id}/"
       else if relation in [0, 2]
         new_location_obj =
           parent: position_path_details.item_id
@@ -303,7 +324,7 @@ _.extend GridData.prototype,
         if relation == 0
           new_location_obj.order = 0
 
-        new_path = "#{position_path}#{path_details.item_id}/"
+        new_paths = _.map paths_items_ids, (item_id) => "#{position_path}#{item_id}/"
       else # relation -1 or 1
         new_location_obj =
           parent: position_path_details.parent_id
@@ -312,15 +333,17 @@ _.extend GridData.prototype,
         if relation == 1
           new_location_obj.order += 1
 
-        new_path = "#{helpers.getParentPath(position_path)}#{path_details.item_id}/"
-
+        new_paths = _.map paths_items_ids, (item_id) => "#{helpers.getParentPath(position_path)}#{item_id}/"
     performOp = =>
-      Meteor.call @getCollectionMethodName("movePath"), path_relative_path, new_location_obj, (err) ->
+      Meteor.call @getCollectionMethodName("movePath"), relative_paths, new_location_obj, (err) ->
         if new_location_type == "object"
           helpers.callCb cb, err
         else
           if not err?
-            helpers.callCb cb, err, new_path
+            if string_path_provided
+              helpers.callCb cb, err, new_paths[0] # For backward-compatibility
+            else
+              helpers.callCb cb, err, new_paths
           else
             helpers.callCb cb, err
 
@@ -328,6 +351,7 @@ _.extend GridData.prototype,
       # Perform operation right away.
       return performOp()
     else
+      path = paths[0] # Only a single path is supported for usersDiffConfirmationCb therefore, we can assume that paths[0] is the only one.
       path_item_id = helpers.getPathItemId(path)
       new_parent_item_id = new_location_obj.parent
 
