@@ -162,14 +162,16 @@ $standard-cell-padding-bottom: 3px
 
     background-color: $section-items-background-color
 
-    &.active
-      background-color: $active-section-items-background-color
-
     .frozen
       border-right: 0 none
 
       background-color: $section-items-background-color
 
+  #grid-control-mux &.not-multi-select .type-section-item
+    &.active
+      background-color: $active-section-items-background-color
+
+    .frozen
       &.active
         background-color: $active-section-items-background-color
 
