@@ -80,7 +80,7 @@ _.extend PACK.GridOperations,
 
   addSubItem:
     op: (fields, cb) -> @addItem @getCurrentPath(), fields, true, cb
-    prereq: -> @_opreqActivePathChildrenLevelPermitted(@_opreqActivePathIsCollectionItem(@addItem.prereq()))
+    prereq: -> @_opreqNotMultiSelectMode(@_opreqActivePathChildrenLevelPermitted(@_opreqActivePathIsCollectionItem(@addItem.prereq())))
 
   addSiblingItem:
     op: (fields, cb) ->
@@ -99,6 +99,9 @@ _.extend PACK.GridOperations,
         @addItem tree_root_item_path, fields, true, cb
 
     prereq: ->
+      if not _.isEmpty(pre_req = @_opreqNotMultiSelectMode())
+        return pre_req
+
       active_path = @getCurrentPath()
 
       if active_path?
