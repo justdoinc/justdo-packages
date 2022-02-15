@@ -43,6 +43,16 @@ _.extend GridControl.prototype,
 
     return prereq
 
+  _opreqSingleSelectModeOrConsecutiveMultiSelect: (prereq) ->
+    prereq = prepareOpreqArgs(prereq)
+
+    if not @isMultiSelectMode() or @isMultiSelectConsecutiveSelect()
+      return prereq
+
+    prereq.multi_select_non_consecutive_not_supported = "This operation is allowed only when a consecutive items are selected"
+
+    return prereq
+
   _opreqNotMultiSelectMode: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
@@ -61,6 +71,20 @@ _.extend GridControl.prototype,
 
   _opreqActivePathIsCollectionItem: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
+
+    if @isMultiSelectMode()
+      #
+      # Deal first with the case of multi-select
+      #
+      for path in @getFilterPassingMultiSelectedPathsArray()
+        path_row = @_grid_data.getPathGridTreeIndex(path)
+        
+        if not @_grid_data.getItemIsCollectionItem(path_row)
+          prereq.selected_isnt_collection_item = ""
+
+          break
+
+      return prereq
 
     # If there's no active path - just return the active prereq message
     # note: @_opreqActivePath is reactive resource
@@ -138,6 +162,24 @@ _.extend GridControl.prototype,
   _opreqActivePathParentLevelPermitted: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
+    if @isMultiSelectMode()
+      #
+      # Deal first with the case of multi-select
+      #
+
+      # If the selection isn't consecutive - this prereq isn't supported
+      if not _.isEmpty(consecutive_prereq = @_opreqSingleSelectModeOrConsecutiveMultiSelect())
+        _.extend(prereq, consecutive_prereq)
+        return prereq
+
+      first_selected_item_path = @getFilterPassingMultiSelectedPathsArray()[0]
+      first_selected_item_path_row = @_grid_data.getPathGridTreeIndex(first_selected_item_path)
+      
+      if @_grid_data.getItemRelativeDepthPermitted(first_selected_item_path_row, -1) is -1
+        prereq.active_path_parent_level_not_permitted = ""
+
+      return prereq
+
     # If there's no active path - just return the active prereq message
     # note: @_opreqActivePath is reactive resource
     if not _.isEmpty(active_path_prereq = @_opreqActivePath())
@@ -151,6 +193,30 @@ _.extend GridControl.prototype,
 
   _opreqActivePathPrevItemLevelPermitted: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
+
+    if @isMultiSelectMode()
+      #
+      # Deal first with the case of multi-select
+      #
+
+      # If the selection isn't consecutive - this prereq isn't supported
+      if not _.isEmpty(consecutive_prereq = @_opreqSingleSelectModeOrConsecutiveMultiSelect())
+        _.extend(prereq, consecutive_prereq)
+        return prereq
+
+      boundaries = @getMultiSelectConsecutiveSelectBoundaries()
+
+      if not (previous_path = boundaries[0])? # There's no item after the current selection
+        prereq.active_path_prev_item_level_not_permitted = "No item before the selected items"
+
+        return prereq
+
+      previous_path_row = @_grid_data.getPathGridTreeIndex(previous_path)
+
+      if not previous_path_row? or @_grid_data.getItemRelativeDepthPermitted(previous_path_row) == -1
+        prereq.active_path_prev_item_level_not_permitted = "No item before the selected items in permitted lower level"
+
+      return prereq
 
     # If there's no prev path - just return the active_path_item_isnt_first_prereq message
     # note @_opreqActiveItemIsntSectionFirstItem also takes care of making sure there's
@@ -273,6 +339,30 @@ _.extend GridControl.prototype,
   _opreqItemInLteLevelExistFollowingActiveInPermittedLevel: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
+    if @isMultiSelectMode()
+      #
+      # Deal first with the case of multi-select
+      #
+
+      # If the selection isn't consecutive - this prereq isn't supported
+      if not _.isEmpty(consecutive_prereq = @_opreqSingleSelectModeOrConsecutiveMultiSelect())
+        _.extend(prereq, consecutive_prereq)
+        return prereq
+
+      boundaries = @getMultiSelectConsecutiveSelectBoundaries()
+
+      if not (following_path = boundaries[1])? # There's no item after the current selection
+        prereq.no_permitted_lte_level_path_follows_active = "No item follows the selected items"
+
+        return prereq
+
+      following_path_row = @_grid_data.getPathGridTreeIndex(following_path)
+
+      if not following_path_row? or @_grid_data.getItemRelativeDepthPermitted(following_path_row) == -1
+        prereq.no_permitted_lte_level_path_follows_active = "No item follows the selected items in permitted lower level"
+
+      return prereq
+
     # If there's no active path - just return the active prereq message 
     if not _.isEmpty(active_path_prereq = @_opreqActivePath())
       _.extend(prereq, active_path_prereq)
@@ -286,6 +376,25 @@ _.extend GridControl.prototype,
 
   _opreqActiveItemIsntSectionFirstItem: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
+
+    if @isMultiSelectMode()
+      #
+      # Deal first with the case of multi-select
+      #
+
+      # If the selection isn't consecutive - this prereq isn't supported
+      if not _.isEmpty(consecutive_prereq = @_opreqSingleSelectModeOrConsecutiveMultiSelect())
+        _.extend(prereq, consecutive_prereq)
+        return prereq
+
+      first_selected_item_path = @getFilterPassingMultiSelectedPathsArray()[0]
+
+      previous_path = @_grid_data.filterAwareGetPreviousPath(first_selected_item_path)
+
+      if not previous_path? or previous_path of @_grid_data.section_path_to_section # if no previous path, or if prev path is the section item
+        prereq.first_selected_item_is_first = "Can't perform this operation when the first item is selected"
+
+      return prereq
 
     # If there's no active path - just return the active prereq message 
     if not _.isEmpty(active_path_prereq = @_opreqActivePath())
@@ -301,6 +410,25 @@ _.extend GridControl.prototype,
   _opreqActiveItemIsntSectionTopLevel: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
 
+    if @isMultiSelectMode()
+      #
+      # Deal first with the case of multi-select
+      #
+
+      # If the selection isn't consecutive - this prereq isn't supported
+      if not _.isEmpty(consecutive_prereq = @_opreqSingleSelectModeOrConsecutiveMultiSelect())
+        _.extend(prereq, consecutive_prereq)
+        return prereq
+
+      first_selected_item_path = @getFilterPassingMultiSelectedPathsArray()[0]
+
+      first_selected_item_path_row = @_grid_data.getPathGridTreeIndex(first_selected_item_path)
+
+      if @_grid_data.getItemNormalizedLevel(first_selected_item_path_row) == 0
+        prereq.top_level_item = "Can't perform this operation on first level items"
+
+      return prereq
+
     # If there's no active path - just return the active prereq message 
     if not _.isEmpty(active_path_prereq = @_opreqActivePath())
       _.extend(prereq, active_path_prereq)
@@ -313,6 +441,25 @@ _.extend GridControl.prototype,
 
   _opreqActivePathPrevItemInGteLevel: (prereq) ->
     prereq = prepareOpreqArgs(prereq)
+
+    if @isMultiSelectMode()
+      #
+      # Deal first with the case of multi-select
+      #
+
+      # If the selection isn't consecutive - this prereq isn't supported
+      if not _.isEmpty(consecutive_prereq = @_opreqSingleSelectModeOrConsecutiveMultiSelect())
+        _.extend(prereq, consecutive_prereq)
+        return prereq
+
+      first_selected_item_path = @getFilterPassingMultiSelectedPathsArray()[0]
+      first_selected_item_path_level = GridData.helpers.getPathLevel first_selected_item_path
+      prev_path_level = GridData.helpers.getPathLevel @_grid_data.filterAwareGetPreviousPath(first_selected_item_path)
+
+      if first_selected_item_path_level > prev_path_level
+        prereq.prev_item_not_deeper = "Can't perform this operation when previous item isn't in a deeper level"
+
+      return prereq
 
     # If there's no prev path - just return the active_path_item_isnt_first_prereq message
     # note @_opreqActiveItemIsntSectionFirstItem also takes care of making sure there's

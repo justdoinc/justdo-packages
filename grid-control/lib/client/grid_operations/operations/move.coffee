@@ -48,9 +48,11 @@ _.extend PACK.GridOperations,
     prereq: ->
       @_opreqActivePathLevelPermitted(
         @_opreqItemInLteLevelExistFollowingActiveInPermittedLevel(
-          @_opreqActivePathIsCollectionItem(
-            @_opreqUnlocked(
-                @_opreqGridReady()
+          @_opreqSingleSelectModeOrConsecutiveMultiSelect(
+            @_opreqActivePathIsCollectionItem(
+              @_opreqUnlocked(
+                  @_opreqGridReady()
+              )
             )
           )
         )
@@ -98,9 +100,11 @@ _.extend PACK.GridOperations,
       @_opreqActivePathLevelPermitted(
         @_opreqActivePathPrevItemLevelPermitted(
           @_opreqActiveItemIsntSectionFirstItem(
-            @_opreqActivePathIsCollectionItem(
-              @_opreqUnlocked(
-                  @_opreqGridReady()
+            @_opreqSingleSelectModeOrConsecutiveMultiSelect(
+              @_opreqActivePathIsCollectionItem(
+                @_opreqUnlocked(
+                    @_opreqGridReady()
+                )
               )
             )
           )
@@ -144,9 +148,11 @@ _.extend PACK.GridOperations,
     prereq: ->
       @_opreqActivePathParentLevelPermitted(
         @_opreqActiveItemIsntSectionTopLevel(
-          @_opreqActivePathIsCollectionItem(
-            @_opreqUnlocked(
-                @_opreqGridReady()
+          @_opreqSingleSelectModeOrConsecutiveMultiSelect(
+            @_opreqActivePathIsCollectionItem(
+              @_opreqUnlocked(
+                  @_opreqGridReady()
+              )
             )
           )
         )
@@ -206,9 +212,11 @@ _.extend PACK.GridOperations,
     prereq: ->
       @_opreqActivePathLevelPermitted(
         @_opreqActivePathPrevItemInGteLevel(
-          @_opreqActivePathIsCollectionItem(
-            @_opreqUnlocked(
-                @_opreqGridReady()
+          @_opreqSingleSelectModeOrConsecutiveMultiSelect(
+            @_opreqActivePathIsCollectionItem(
+              @_opreqUnlocked(
+                  @_opreqGridReady()
+              )
             )
           )
         )
