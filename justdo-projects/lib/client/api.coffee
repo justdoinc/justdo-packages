@@ -137,3 +137,13 @@ _.extend Projects.prototype,
         return
 
     return
+
+  sortCustomFields: (sort_criteria) ->
+    check sort_criteria, String
+    if _.isEmpty sort_criteria
+      throw @_error "invalid-argument", "Sort criteria cannot be empty"
+
+    sorted_custom_fields = _.sortBy JD.activeJustdo({custom_fields: 1})?.custom_fields, sort_criteria
+    @projects_collection.update JD.activeJustdoId(), {$set: {custom_fields: sorted_custom_fields}}
+
+    return

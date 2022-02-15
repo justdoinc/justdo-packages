@@ -81,9 +81,9 @@ APP.executeAfterAppLibCode ->
 
       return tpl.show_add_button.get()
     customFields: ->
-      project_custom_fields = module.curProj()?.getProjectCustomFields()
-
-      return project_custom_fields
+      return module.curProj()?.getProjectCustomFields()
+    showCustomFieldsSortOption: ->
+      return module.curProj()?.getProjectCustomFields().length >= 5
 
   addCustomField = ->
     project = module.curProj()
@@ -216,6 +216,11 @@ APP.executeAfterAppLibCode ->
 
           return
 
+      return
+
+    "click .sort-custom-fields": (e, tpl) ->
+      sort_type = $(e.target.closest(".sort-custom-fields")).attr "sort-criteria"
+      APP.projects.sortCustomFields sort_type
       return
 
   customFieldObjectToCustomFieldTypeDef = (custom_field_def) ->
