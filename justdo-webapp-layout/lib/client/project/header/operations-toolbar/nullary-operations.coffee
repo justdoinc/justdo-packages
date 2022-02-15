@@ -74,8 +74,8 @@ APP.executeAfterAppLibCode ->
       gridControl().addSiblingItem(new_task_custom_fields)
 
     prereq: ->
-      if isActiveItemSectionHeaderUnderMainTab()
-        return {} # add new task is allowed in such a case
+      if not gridControl().isMultiSelectMode() and isActiveItemSectionHeaderUnderMainTab()
+        return {} # add new task is allowed in such a case, otherwise, if someone sees only the Shared With Me he won't be able to add tasks to the root once it is activated
 
       return gridControl().addSiblingItem.prereq()
 
