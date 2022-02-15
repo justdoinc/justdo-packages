@@ -225,6 +225,9 @@ _.extend GridData.prototype,
     # Returns path index in @grid_tree (even if filtered out)
     #
     # null if path doesn't exist in the current @grid_tree
+    if not path?
+      return null
+    
     if (index = @_typed_items_paths_map_to_grid_tree_indices[path])?
       return index
     else if (potential_indices = @_items_ids_map_to_grid_tree_indices[helpers.getPathItemId(path)])?
