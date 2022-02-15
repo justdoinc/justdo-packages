@@ -145,10 +145,27 @@ _.extend CustomJustdoTasksLocks.prototype,
     return Meteor.userId() in @getActiveTaskDocLockingUsersIds()
 
   isActiveUserAllowedToPerformRestrictedOperationsOnActiveTask: ->
-    if not (task_doc = APP.modules.project_page.activeItemObj())?
+    if not (gc = APP.modules.project_page.gridControl())?
       return false
 
-    return @isUserAllowedToPerformRestrictedOperationsOnTaskDoc(task_doc, Meteor.userId())
+    current_user = Meteor.userId()
+
+    if gc.isMultiSelectMode()
+      #
+      # Deal first with the case of multi-select
+      #
+      for path in gc.getFilterPassingMultiSelectedPathsArray()
+        task_id = GridData.helpers.getPathItemId(path)
+        
+        if not @isUserAllowedToPerformRestrictedOperationsOnTaskDoc(task_id, current_user)
+          return false
+
+      return true
+
+    if not (task_id = APP.modules.project_page.activeItemId())?
+      return false
+
+    return @isUserAllowedToPerformRestrictedOperationsOnTaskDoc(task_id, current_user)
 
   getActiveTaskDocLockingUsersDocs: ->
     return JustdoHelpers.getUsersDocsByIds(@getActiveTaskDocLockingUsersIds())

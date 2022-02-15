@@ -28,6 +28,12 @@ _.extend CustomJustdoTasksLocks.prototype,
     if not task_doc?
       return []
 
+    if _.isString task_doc
+      task_doc = APP.collections.Tasks.findOne(task_doc, {fields: {[CustomJustdoTasksLocks.locking_users_task_field]: 1}})
+      
+      if not task_doc?
+        throw @_error "unknown-task"
+
     if not (locking_users_ids = task_doc[CustomJustdoTasksLocks.locking_users_task_field])?
       return []
 
