@@ -567,8 +567,8 @@ _.extend GridDataCom.prototype,
 
         if _.isString(task_ids)
           task_ids = [task_ids]
-
-        if _.isEmpty(task_ids)
+      
+        if _.isEmpty(task_ids) or (task_ids.length == 1 and task_ids[0] == "0")
           return _all_ancestors or {}
 
         if not _all_ancestors?
