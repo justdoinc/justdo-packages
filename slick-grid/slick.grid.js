@@ -2288,6 +2288,10 @@ if (typeof Slick === "undefined") {
           cacheEntry.cellNodesByColumnIdx[colIndex] = node;
         }
         cacheEntry.cellRenderQueue = [];
+
+        if (processedRow === activeRow) {
+          activeCellNode = getCellNode(processedRow, activeCell || 0);
+        }
       }
     }
 
