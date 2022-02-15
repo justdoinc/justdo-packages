@@ -4,30 +4,38 @@ _.extend PACK.GridOperations,
   removeActivePath:
     op: (cb) ->
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        active_path = @getCurrentPath()
-        active_item_row = @getCurrentRow()
+        is_multi_select = @isMultiSelectMode()
 
-        active_item_section = @_grid_data.getItemSection(active_item_row)
-        if active_item_section.id == "my-direct-tasks"
-          # Special case for the my-direct-tasks section
-          # replace the /my-direct-task/ part of the path with the actual
-          # parent we want to remove.
-          active_path =
-            active_path.replace(active_item_section.path, "/direct:#{Meteor.userId()}/")
+        if not is_multi_select
+          active_path = @getCurrentPath()
+          active_item_row = @getCurrentRow()
 
-        # find next/prev paths
-        next_path = prev_path = null
-        
-        next_item = @_grid_data.filterAwareGetNextItem(active_item_row)
-        prev_item = @_grid_data.filterAwareGetPreviousItem(active_item_row)
+          active_item_section = @_grid_data.getItemSection(active_item_row)
+          if active_item_section.id == "my-direct-tasks"
+            # Special case for the my-direct-tasks section
+            # replace the /my-direct-task/ part of the path with the actual
+            # parent we want to remove.
+            active_path =
+              active_path.replace(active_item_section.path, "/direct:#{Meteor.userId()}/")
 
-        if next_item?
-          next_path = @_grid_data.getItemPath(next_item)
+          # find next/prev paths
+          next_path = prev_path = null
+          
+          next_item = @_grid_data.filterAwareGetNextItem(active_item_row)
+          prev_item = @_grid_data.filterAwareGetPreviousItem(active_item_row)
 
-        if prev_item?
-          prev_path = @_grid_data.getItemPath(prev_item)
+          if next_item?
+            next_path = @_grid_data.getItemPath(next_item)
 
-        @_grid_data.removeParent active_path, (err) =>
+          if prev_item?
+            prev_path = @_grid_data.getItemPath(prev_item)
+
+        if is_multi_select
+          paths_to_remove = @getFilterPassingMultiSelectedPathsArray()
+        else
+          paths_to_remove = [active_path]
+
+        @_grid_data.removeParent paths_to_remove, (err) =>
           if err?
             @logger.error "removeActivePath failed: #{err}"
 
@@ -42,22 +50,23 @@ _.extend PACK.GridOperations,
 
           callCb cb, err
 
-          active_level = GridData.helpers.getPathLevel(active_path)
+          if not is_multi_select
+            active_level = GridData.helpers.getPathLevel(active_path)
 
-          if next_path? or prev_path?
-            # If at least one of next/prev paths exists, decide which one to pick
-            if not next_path?
-              @activatePath(prev_path)
-            else if not prev_path?
-              @activatePath(next_path)
+            if next_path? or prev_path?
+              # If at least one of next/prev paths exists, decide which one to pick
+              if not next_path?
+                @activatePath(prev_path)
+              else if not prev_path?
+                @activatePath(next_path)
 
-            prev_item_level = GridData.helpers.getPathLevel(prev_path)
-            next_item_level = GridData.helpers.getPathLevel(next_path)
+              prev_item_level = GridData.helpers.getPathLevel(prev_path)
+              next_item_level = GridData.helpers.getPathLevel(next_path)
 
-            if active_level == next_item_level
-              @activatePath(next_path)
-            else
-              @activatePath(prev_path)
+              if active_level == next_item_level
+                @activatePath(next_path)
+              else
+                @activatePath(prev_path)
 
           # Release lock only after activation of next path to
           # avoid any chance of refering to removed path in

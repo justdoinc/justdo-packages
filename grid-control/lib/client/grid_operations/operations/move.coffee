@@ -6,7 +6,13 @@ _.extend PACK.GridOperations,
   moveActivePathDown:
     op: (cb) ->
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        active_path = @getCurrentPath()
+        is_multi_select = @isMultiSelectMode()
+
+        if is_multi_select
+          selected_items = @getFilterPassingMultiSelectedPathsArray()
+          active_path = selected_items[selected_items.length - 1] # if multi-select consider active_path as the last item of the consecutive selection
+        else
+          active_path = @getCurrentPath()
 
         next_path = @_grid_data.filterAwareGetNextLteLevelPath(active_path)
 
@@ -18,8 +24,13 @@ _.extend PACK.GridOperations,
           relation_to_next_path = -1
           next_path = @_grid_data.filterAwareGetNextPath(next_path)
 
+        if is_multi_select
+          paths_to_move = @getFilterPassingMultiSelectedPathsArray()
+        else
+          paths_to_move = [active_path]
+
         @_grid_data._lock()
-        @movePath active_path, [next_path, relation_to_next_path], (err, new_path) =>
+        @movePath paths_to_move, [next_path, relation_to_next_path], (err, new_paths) =>
           @_grid_data._release()
           if err?
             @logger.error "moveActivePath failed: #{err}"
@@ -36,7 +47,10 @@ _.extend PACK.GridOperations,
           # Flush to make sure DOM is up-to-date before the call to cb
           @_grid_data._flushAndRebuild()
 
-          @activatePath new_path
+          if is_multi_select
+            @setMultiSelectedPathsFromArray new_paths
+          else
+            @activatePath new_paths[0]
 
           callCb cb, err
 
@@ -61,7 +75,13 @@ _.extend PACK.GridOperations,
   moveActivePathUp:
     op: (cb) ->
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        active_path = @getCurrentPath()
+        is_multi_select = @isMultiSelectMode()
+
+        if is_multi_select
+          selected_items = @getFilterPassingMultiSelectedPathsArray()
+          active_path = selected_items[0] # if multi-select consider active_path as the first item of the consecutive selection
+        else
+          active_path = @getCurrentPath()
 
         prev_path = @_grid_data.filterAwareGetPreviousPath(active_path)
 
@@ -69,8 +89,13 @@ _.extend PACK.GridOperations,
         if getPathLevel(active_path) < getPathLevel(prev_path)
           relation_to_prev_path = 1
 
+        if is_multi_select
+          paths_to_move = @getFilterPassingMultiSelectedPathsArray()
+        else
+          paths_to_move = [active_path]
+
         @_grid_data._lock()
-        @movePath active_path, [prev_path, relation_to_prev_path], (err, new_path) =>
+        @movePath paths_to_move, [prev_path, relation_to_prev_path], (err, new_paths) =>
           @_grid_data._release()
           if err?
             @logger.error "moveActivePath failed: #{err}"
@@ -87,7 +112,10 @@ _.extend PACK.GridOperations,
           # Flush to make sure DOM is up-to-date before the call to cb
           @_grid_data._flushAndRebuild()
 
-          @activatePath new_path
+          if is_multi_select
+            @setMultiSelectedPathsFromArray new_paths
+          else
+            @activatePath new_paths[0]
 
           callCb cb, err
 
@@ -114,12 +142,23 @@ _.extend PACK.GridOperations,
   moveActivePathLeft:
     op: (cb) ->
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        active_path = @getCurrentPath()
+        is_multi_select = @isMultiSelectMode()
+
+        if is_multi_select
+          selected_items = @getFilterPassingMultiSelectedPathsArray()
+          active_path = selected_items[0] # if multi-select consider active_path as the first item of the consecutive selection
+        else
+          active_path = @getCurrentPath()
 
         parent_path = GridData.helpers.getParentPath(active_path)
 
+        if is_multi_select
+          paths_to_move = @getFilterPassingMultiSelectedPathsArray()
+        else
+          paths_to_move = [active_path]
+
         @_grid_data._lock()
-        @movePath active_path, [parent_path, 1], (err, new_path) =>
+        @movePath paths_to_move, [parent_path, 1], (err, new_paths) =>
           @_grid_data._release()
           if err?
             @logger.error "moveActivePath failed: #{err}"
@@ -136,7 +175,10 @@ _.extend PACK.GridOperations,
           # Flush to make sure DOM is up-to-date before the call to cb
           @_grid_data._flushAndRebuild()
 
-          @activatePath new_path
+          if is_multi_select
+            @setMultiSelectedPathsFromArray new_paths
+          else
+            @activatePath new_paths[0]
 
           callCb cb, err
 
@@ -161,7 +203,14 @@ _.extend PACK.GridOperations,
   moveActivePathRight:
     op: (cb) ->
       @_performLockingOperation (releaseOpsLock, timedout) =>
-        active_path = @getCurrentPath()
+        is_multi_select = @isMultiSelectMode()
+
+        if is_multi_select
+          selected_items = @getFilterPassingMultiSelectedPathsArray()
+          active_path = selected_items[0] # if multi-select consider active_path as the first item of the consecutive selection
+        else
+          active_path = @getCurrentPath()
+
         prev_path = @_grid_data.filterAwareGetPreviousPath(active_path)
 
         active_path_level = getPathLevel(active_path)
@@ -180,8 +229,13 @@ _.extend PACK.GridOperations,
           for i in [0..active_path_level]
             target_path += prev_path_array[i] + "/"
 
+        if is_multi_select
+          paths_to_move = @getFilterPassingMultiSelectedPathsArray()
+        else
+          paths_to_move = [active_path]
+
         @_grid_data._lock()
-        @movePath active_path, [target_path, relation], (err, new_path) =>
+        @movePath paths_to_move, [target_path, relation], (err, new_paths) =>
           @_grid_data._release()
           if err?
             @logger.error "moveActivePath failed: #{err}"
@@ -200,7 +254,10 @@ _.extend PACK.GridOperations,
           # Flush to make sure DOM is up-to-date before the call to cb
           @_grid_data._flushAndRebuild()
 
-          @activatePath new_path
+          if is_multi_select
+            @setMultiSelectedPathsFromArray new_paths
+          else
+            @activatePath new_paths[0]
 
           callCb cb, err
 

@@ -239,6 +239,7 @@ _.extend PACK.Plugins,
           renderMultiSelectedPaths()
 
         return
+      self.setMultiSelectedPathsFromArray = setMultiSelectedPathsFromArray
 
       togglePathSelection = (path) ->
         # ASSUMES SANITIZED/VERIFIED/CORRECT INPUTS
