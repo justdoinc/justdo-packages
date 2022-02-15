@@ -1648,6 +1648,11 @@ _.extend GridControl.prototype,
     @_grid.setActiveCell(row, cell, scroll_into_view)
 
   activatePath: (path, cell=0, options) ->
+    if not path?
+      @logger.debug "activatePath: no path provided"
+      
+      return
+    
     if not options?
       options = {}
 
