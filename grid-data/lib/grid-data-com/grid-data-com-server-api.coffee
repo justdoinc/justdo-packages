@@ -996,8 +996,11 @@ _.extend GridDataCom.prototype,
 
     return
 
-  movePath: (path, new_location, perform_as) ->
-    check(path, String)
+  movePath: (paths, new_location, perform_as) ->
+    if _.isString(paths)
+      paths = [paths]
+
+    check(paths, [String])
     check(new_location, {
       parent: Match.Maybe(String)
       order: Match.Maybe(Number)
@@ -1010,18 +1013,12 @@ _.extend GridDataCom.prototype,
         # if new_location doens't have information for new location
         throw @_error "missing-argument", 'Error: Can\'t move path: new_location argument lack information for new location'
 
-    if not (item = @collection.getItemByPathIfUserBelong path, perform_as)?
-      throw @_error "unknown-path"
-
-    current_parent_id = helpers.getPathParentId(path)
-
     if not ("parent" of new_location)
-      # If parent is not provided in new_location we assume change of order under same item
-      new_location.parent = current_parent_id
-
-    if current_parent_id != new_location.parent
-      if @collection.isAncestor(new_location.parent, item._id)
-        throw @_error "infinite-loop", "Error: Can\'t move path: #{item._id} is an ancestor of #{new_location.parent}"
+      if (paths.length == 1)
+        # If parent is not provided in new_location we assume change of order under same item (only for single path cases)
+        new_location.parent = helpers.getPathParentId(paths[0])
+      else
+        throw @_error "missing-argument", 'Error: Can\'t move path: new_location argument needs the "parent" property specified when multi paths are moved'
 
     new_parent_item = null
     if new_location.parent != "0"
@@ -1032,70 +1029,127 @@ _.extend GridDataCom.prototype,
     if not ("order" of new_location)
       new_location.order = @collection.getNewChildOrder(new_location.parent, item)
 
-    if not item.parents2?
-      item = @_addParents2 item
+    item_ids = new Set()
+    paths_map = {}
+    for path in paths
+      if not (parent_id = helpers.getPathParentId(path))?
+        throw @_error "invalid-argument", "Unknown parent for path: #{path}"
 
-    # Remove current parent op prepeation
-    remove_current_parent_update_op = {$unset: {}, $pull: {}}
-    remove_current_parent_update_op.$unset["parents.#{current_parent_id}"] = ""
-    remove_current_parent_update_op.$pull.parents2 = {parent: {$in: [current_parent_id]}}
+      item_id = helpers.getPathItemId(path)
+      paths_map["#{parent_id}/#{item_id}"] = {
+        parent_id: parent_id
+        item_id: item_id
+        org_path: path
+      }
+      item_ids.add(item_id)
+    
+    items_map = {}
+    project_id = null
+    @collection.find
+      _id:
+        $in: Array.from(item_ids)
+      users: perform_as
+    ,
+      fields:
+        _id: 1
+        parents: 1
+        parents2: 1
+        project_id: 1 # This is only for potential optimization later, when parents2 will become integral part of JD we will remove it.
+    .forEach (item) ->
+      items_map[item._id] = item
+      if project_id == null
+        project_id = item.project_id
+      else if item.project_id != project_id
+        throw @_error "invalid-argument", "All paths must be in the same JustDo."
+      return
 
-    # If the new parent is already a parent of this task,
-    # we remove the old record first to prevent duplicate parents.
-    for parent_obj in item.parents2
-      if parent_obj.parent == current_parent_id
-        # current_parent_id is always removed, we don't want to add it twice to the array
-        continue
+    if new_parent_item? and new_parent_item.project_id != project_id
+      throw @_error "invalid-argument", "New parent must be in the same JustDo as the paths."
 
-      if parent_obj.parent == new_location.parent
-        remove_current_parent_update_op.$pull.parents2.parent.$in.push new_location.parent
-        break
+    if _.keys(items_map).length != item_ids.size
+      # one of the path doesn't exist or user doesn't have access
+      throw @_error "unknow-path"
 
-    # Add to new parent op prepeation
-    set_new_parent_update_op = {$set: {}, $addToSet: {}}
-    set_new_parent_update_op.$set["parents.#{new_location.parent}"] = {order: new_location.order}
-    set_new_parent_update_op.$addToSet.parents2 = {parent: new_location.parent, order: new_location.order}
+    new_parent_ancestors = @collection.findAllAncestors(new_location.parent, {
+      include_original_task_ids: true
+    })
 
-    # Check if an item exist already in new_location order
-    item_in_new_location = @collection.getChildreOfOrder(new_location.parent, new_location.order, item)
+    for path, path_info of paths_map
+      item = items_map[path_info.item_id]
+      if not item.parents[path_info.parent_id]?
+        throw @_error "unknown-path", "Unknow path: #{path_info.org_path}"
 
-    # We used to have the following optimization but we found out that 
-    # it doesn't work well.
-    #
-    # If an item has multiple parents and you try to move it from one parent
-    # to another one in which it is in, under the same order, it should
-    # combine into one with the one in the new location.
-    #
-    # With this optimization, the original position won't remove and
-    # client will show wrong tree representation post-drop to the new
-    # position, as in reality with this optimization we don't  perform
-    # any action but the user actually changed the tree structure.
-    #
-    # if item_in_new_location? and item_in_new_location._id == item._id
-    #   # There's already an item in the new location, the same item..., nothing to do.
-    #   return
+      if new_parent_ancestors[path_info.item_id]?
+        throw @_error "infinite-loop", "Error: Can\'t move path: #{path_info.item_id} is an ancestor of #{new_location.parent}"
 
-    @_runGridMethodMiddlewares "movePath", path, perform_as,
-      # the etc obj
-      new_location: _.extend {}, new_location
-      item: item
-      current_parent_id: current_parent_id
-      new_parent_item: new_parent_item
-      remove_current_parent_update_op: remove_current_parent_update_op
-      set_new_parent_update_op: set_new_parent_update_op
+    items_to_be_added_to_new_parent = new Set() # To prevent the same item being added the same parent with more than once with different orders.
+    next_order = new_location.order
+    for path, path_info of paths_map
+      item = items_map[path_info.item_id]
+      if not item.parents2?
+        item = @_addParents2 item
+      current_parent_id = path_info.parent_id
+      # Remove current parent op prepeation
+      remove_current_parent_update_op = {$unset: {}, $pull: {}}
+      remove_current_parent_update_op.$unset["parents.#{current_parent_id}"] = ""
+      remove_current_parent_update_op.$pull.parents2 = {parent: {$in: [current_parent_id]}}
 
-    if item_in_new_location?
-      # if there's an item in the new location.
-      # Note we check above that it isn't the same item. We don't use sub if since
-      # we want to run the middlewares only when we are sure the operation is ready
-      # to be performed. 
-      @collection.incrementChildsOrderGte new_location.parent, new_location.order, item
+      # If the new parent is already a parent of this task,
+      # we remove the old record first to prevent duplicate parents.
+      for parent_obj in item.parents2
+        if parent_obj.parent == current_parent_id
+          # current_parent_id is always removed, we don't want to add it twice to the array
+          continue
 
-    # Remove current parent
-    @collection.update item._id, remove_current_parent_update_op
+        if parent_obj.parent == new_location.parent
+          remove_current_parent_update_op.$pull.parents2.parent.$in.push new_location.parent
+          break
 
-    # Add to new parent
-    @collection.update item._id, set_new_parent_update_op
+      if items_to_be_added_to_new_parent.has(path_info.item_id)
+        # The item has already been added the new parent with a different order, no need to add once more
+        set_new_parent_update_op = null
+      else
+        items_to_be_added_to_new_parent.add(path_info.item_id)
+        set_new_parent_update_op = {$set: {}, $addToSet: {}}
+        set_new_parent_update_op.$set["parents.#{new_location.parent}"] = {order: next_order}
+        set_new_parent_update_op.$addToSet.parents2 = {parent: new_location.parent, order: next_order}
+        next_order = next_order + 1
+
+      @_runGridMethodMiddlewares "beforeMovePath", path_info.org_path, perform_as,
+        # the etc obj
+        new_location: _.extend {}, new_location
+        item: item
+        current_parent_id: current_parent_id
+        new_parent_item: new_parent_item
+        remove_current_parent_update_op: remove_current_parent_update_op
+        set_new_parent_update_op: set_new_parent_update_op
+
+      path_info.remove_current_parent_update_op = remove_current_parent_update_op
+      path_info.set_new_parent_update_op = set_new_parent_update_op
+
+    @collection.incrementChildsOrderGte new_location.parent, new_location.order, {
+      project_id: project_id
+    }, _.size(items_map)
+
+    for path, path_info of paths_map
+      # Remove current parent
+      @collection.update path_info.item_id, path_info.remove_current_parent_update_op
+
+      if path_info.set_new_parent_update_op?
+        # Add to new parent
+        @collection.update path_info.item_id, path_info.set_new_parent_update_op
+
+      try
+        @_runGridMethodMiddlewares "afterMovePath", path_info.org_path, perform_as,
+          # the etc obj
+          new_location: _.extend {}, new_location
+          item: items_map[path_info.item_id]
+          current_parent_id: path_info.parent_id
+          new_parent_item: new_parent_item
+          remove_current_parent_update_op: path_info.remove_current_parent_update_op
+          set_new_parent_update_op: path_info.set_new_parent_update_op
+      catch e
+        console.error "afterMovePath hook raised an exception", e
 
     return
 
