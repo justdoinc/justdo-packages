@@ -455,7 +455,7 @@ Template.meetings_meeting_dialog.helpers
         
         if meeting?
           tpl.$(".meeting-date").datepicker
-            "defaultDate": meeting.date
+            "defaultDate": meeting?.date
             "dateFormat": "yy-mm-dd"
           comp.stop()
       
@@ -472,9 +472,9 @@ Template.meetings_meeting_dialog.helpers
         organizer_id: 1
         status: 1
 
-    return meeting.status == "draft" or 
+    return meeting?.status == "draft" or
       (not APP.modules.project_page.curProj()?.getProjectConfiguration()?.block_meetings_deletion and
-        (Meteor.userId() == meeting.organizer_id or APP.modules.project_page.curProj()?.is_admin_rv.get()))
+        (Meteor.userId() == meeting?.organizer_id or APP.modules.project_page.curProj()?.is_admin_rv.get()))
 
   meeting: -> APP.meetings_manager_plugin.meetings_manager.meetings.findOne
     _id: @meeting_id
@@ -482,26 +482,26 @@ Template.meetings_meeting_dialog.helpers
   meeting_title: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: @meeting_id
-    if meeting.title == "Untitled Meeting"
+    if meeting?.title == "Untitled Meeting"
       return ""
-    return meeting.title
+    return meeting?.title
 
   meeting_title_raw: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: @meeting_id
-    return meeting.title
+    return meeting?.title
 
   mayLock: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
      _id: @meeting_id
 
-    return meeting.organizer_id == Meteor.userId()
+    return meeting?.organizer_id == Meteor.userId()
 
   mayLockClass: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: @meeting_id
 
-    if meeting.organizer_id == Meteor.userId() then "may-edit"
+    if meeting?.organizer_id == Meteor.userId() then "may-edit"
 
   note_out_of_date: ->
     Template.instance().note_out_of_date.get()
@@ -512,9 +512,9 @@ Template.meetings_meeting_dialog.helpers
     
     user_id = Meteor.userId()
 
-    return meeting.status != "ended" and 
-      (meeting.organizer_id == user_id or 
-      (not meeting.locked and meeting.users? and user_id in meeting.users))
+    return meeting?.status != "ended" and
+      (meeting?.organizer_id == user_id or
+      (not meeting?.locked and meeting?.users? and user_id in meeting?.users))
 
   mayEditFooter: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -522,8 +522,8 @@ Template.meetings_meeting_dialog.helpers
     
     user_id = Meteor.userId()
 
-    return meeting.organizer_id == user_id or 
-      (not meeting.locked and meeting.users and user_id in meeting.users)
+    return meeting?.organizer_id == user_id or
+      (not meeting?.locked and meeting?.users and user_id in meeting?.users)
 
   mayEditAgenda: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -531,9 +531,9 @@ Template.meetings_meeting_dialog.helpers
 
     user_id = Meteor.userId()
 
-    return (meeting.status != "ended") and (meeting.status != "canceled") and
-      (meeting.organizer_id == user_id or 
-      (not meeting.locked and meeting.users and user_id in meeting.users))
+    return (meeting?.status != "ended") and (meeting?.status != "canceled") and
+      (meeting?.organizer_id == user_id or
+      (not meeting?.locked and meeting?.users and user_id in meeting?.users))
 
   onSaveMeetingNote: ->
     tmpl = Template.instance()
@@ -557,8 +557,8 @@ Template.meetings_meeting_dialog.helpers
       _id: @meeting_id
 
     return not (
-      (meeting.status == "in-progress" or meeting.status == "pending") and
-      (meeting.organizer_id == Meteor.userId() or not meeting.locked)
+      (meeting?.status == "in-progress" or meeting?.status == "pending") and
+      (meeting?.organizer_id == Meteor.userId() or not meeting?.locked)
     )
 
   lookupUser: ->
@@ -637,7 +637,7 @@ Template.meetings_meeting_dialog.helpers
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: @meeting_id
 
-    if (meeting.status == "draft" or meeting.status == "pending")
+    if (meeting?.status == "draft" or meeting?.status == "pending")
       return true
     return false
 
@@ -645,10 +645,10 @@ Template.meetings_meeting_dialog.helpers
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: @meeting_id
 
-    if meeting.status == "draft"
+    if meeting?.status == "draft"
       return false
 
-    if meeting.status == "ended" and !meeting.note?
+    if meeting?.status == "ended" and !meeting?.note?
       return false
 
     return true
