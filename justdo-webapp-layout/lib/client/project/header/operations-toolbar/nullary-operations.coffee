@@ -99,7 +99,7 @@ APP.executeAfterAppLibCode ->
          (not current_task_obj.createdAt? or (current_task_obj.createdAt) > new Date(TimeSync.getServerTime(null) - (5 * 60 * 1000)))
         performAction()
       else
-        if gc.isMultiSelectMode()
+        if not gc.isMultiSelectMode()
           message = """<div class="modal-alert-message">Are you sure you want to remove task <i>##{current_task_obj.seqId}: #{JustdoHelpers.xssGuard(JustdoHelpers.ellipsis(current_task_obj.title, 80))}</i>?</div>"""
         else
           message = """<div class="modal-alert-message">Are you sure you want to remove these tasks?</div>"""
