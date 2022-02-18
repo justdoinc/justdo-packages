@@ -1092,18 +1092,27 @@ _.extend GridDataCom.prototype,
       # Remove current parent op prepeation
       remove_current_parent_update_op = {$unset: {}, $pull: {}}
       remove_current_parent_update_op.$unset["parents.#{current_parent_id}"] = ""
-      remove_current_parent_update_op.$pull.parents2 = {parent: {$in: [current_parent_id]}}
+      if path_info.parent_id == new_location.parent and items_to_be_added_to_new_parent.has(path_info.item_id)
+        # if this is a change of order within the same parent, and the item has already been added to the new parent,
+        # it means parent2 already have the correct order,
+        # thus, no need to touch parent2 anymore, otherwise will corrupt the parent2 array
+        delete remove_current_parent_update_op.$pull
+      else
+        remove_current_parent_update_op.$pull.parents2 = {parent: {$in: [current_parent_id]}}
 
-      # If the new parent is already a parent of this task,
-      # we remove the old record first to prevent duplicate parents.
-      for parent_obj in item.parents2
-        if parent_obj.parent == current_parent_id
-          # current_parent_id is always removed, we don't want to add it twice to the array
-          continue
+        # if items_to_be_added_to_new_parent.has(path_info.item_id) is true, set_new_parent_update_op will be null,
+        # no need to remove the old record first, otherwise will corrupt the parent2 array
+        if not items_to_be_added_to_new_parent.has(path_info.item_id)
+          # If the new parent is already a parent of this task,
+          # we remove the old record first to prevent duplicate parents.
+          for parent_obj in item.parents2
+            if parent_obj.parent == current_parent_id
+              # current_parent_id is always removed, we don't want to add it twice to the array
+              continue
 
-        if parent_obj.parent == new_location.parent
-          remove_current_parent_update_op.$pull.parents2.parent.$in.push new_location.parent
-          break
+            if parent_obj.parent == new_location.parent
+              remove_current_parent_update_op.$pull.parents2.parent.$in.push new_location.parent
+              break
 
       if items_to_be_added_to_new_parent.has(path_info.item_id)
         # The item has already been added the new parent with a different order, no need to add once more
