@@ -88,7 +88,7 @@ _.extend MeetingsManagerPlugin.prototype,
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           task = APP.collections.Tasks.findOne task_id
           APP.meetings_manager_plugin.meetings_manager.createMeeting
-            title: task.title
+            title: task.title or "Untitled Meeting"
             project_id: task.project_id
             date: new Date()
             time: "" + new Date()
