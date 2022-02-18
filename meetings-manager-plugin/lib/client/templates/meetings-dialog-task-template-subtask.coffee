@@ -181,6 +181,7 @@ Template.meetings_dialog_task_subtask.events
     return
 
   "click .task-subject-box, click .task-priority, click .task-seqId-box": (e, tmpl) ->
+    e.preventDefault()
     task_id = tmpl.data.task_id
     gcm = APP.modules.project_page.getCurrentGcm()
     gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id)
