@@ -40,12 +40,19 @@ _.extend JustdoSystemRecords.prototype,
   _maintainBuiltinSystemRecords: ->
     # Maintain installed-versions
 
-    if (app_version = process.env?.APP_VERSION)?
-      if not @system_records_collection.findOne({_id: "installed-versions", full: app_version}, {fields: {_id: 1}})?
-        @system_records_collection.upsert "installed-versions",
-          $addToSet:
-            semver: app_version.match(JustdoSystemRecords.semver_regex)[0]
-            full: app_version
+    if not (app_version = process.env?.APP_VERSION)?
+      return
+
+    if not JustdoSystemRecords.semver_regex_strict.test app_version
+      @logger.warn "System record installed-versions weren't updated, unknown format found in env var APP_VERSION: #{app_version}"
+
+      return
+
+    if not @system_records_collection.findOne({_id: "installed-versions", full: app_version}, {fields: {_id: 1}})?
+      @system_records_collection.upsert "installed-versions",
+        $addToSet:
+          semver: app_version.match(JustdoSystemRecords.semver_regex)[0]
+          full: app_version
 
     return
 
@@ -59,7 +66,7 @@ _.extend JustdoSystemRecords.prototype,
     # E.g. of invalid version: "v3.113.20-stm"
     
     version = version.trim()
-    if not JustdoSystemRecords.semver_regex.test version
+    if not JustdoSystemRecords.semver_regex_strict.test version
       throw @_error "invalid-argument", "Input should be in the format of semetic versioning https://semver.org/"
 
     if version[0] isnt "v"
