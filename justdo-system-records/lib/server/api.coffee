@@ -23,6 +23,8 @@ _.extend JustdoSystemRecords.prototype,
     return
 
   setRecord: (id, doc) ->
+    check id, String
+
     if not doc?
       doc = {}
 
@@ -31,13 +33,15 @@ _.extend JustdoSystemRecords.prototype,
     return
 
   getRecord: (id) ->
+    check id, String
+    
     return @system_records_collection.findOne(id)
 
   _maintainBuiltinSystemRecords: ->
     # Maintain installed-versions
 
     if (app_version = process.env?.APP_VERSION)?
-      if not @system_records_collection.findOne({_id: "installed-versions", full: app_version})?
+      if not @system_records_collection.findOne({_id: "installed-versions", full: app_version}, {fields: {_id: 1}})?
         @system_records_collection.upsert "installed-versions",
           $addToSet:
             semver: app_version.match(JustdoSystemRecords.semver_regex)[0]
@@ -64,6 +68,6 @@ _.extend JustdoSystemRecords.prototype,
     query =
       _id: "installed-versions"
       semver:
-        $lte: version.match(JustdoSystemRecords.semver_regex)[0]
+        $lte: version
 
-    return @system_records_collection.findOne(query)?
+    return @system_records_collection.findOne(query, {fields: {_id: 1}})?
