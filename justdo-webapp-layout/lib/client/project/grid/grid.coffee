@@ -1,3 +1,5 @@
+first_grid_loaded = false
+
 APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
@@ -116,6 +118,15 @@ APP.executeAfterAppLibCode ->
         shared_grid_control_removed_custom_fields_manager_options:
           custom_fields_definitions: project_removed_custom_fields_definitions_rv
       module.grid_control_mux.set grid_control_mux
+
+      if not first_grid_loaded
+        grid_control_mux.once "tab-ready", (tab) ->
+          first_grid_loaded = true
+          tab.grid_control._grid_data._grid_data_core.once "data-changes-queue-processed", ->
+            time_to_load_first_grid_tab_since_js_parsing_started = (new Date() - window.js_started)
+            console.info "[Project Page Module] Time to load first grid tab since js parsing started: #{time_to_load_first_grid_tab_since_js_parsing_started}ms"
+
+          return
 
       APP.modules.project_page.emit "grid-control-mux-created", grid_control_mux
 
