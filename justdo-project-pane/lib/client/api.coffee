@@ -16,6 +16,25 @@ _.extend JustdoProjectPane.prototype,
     if @destroyed
       return
 
+    # The code below closes the project pane upon switching JustDo,
+    # when the performance issue is addressed, this section can be remoed.
+    @previous_proj_id = JD.activeJustdoId()
+    @project_pane_auto_collapse_handler = Tracker.autorun =>
+      # activeJustdoId will be undefined upon page load. We want to keep the user preferred pane status upon reload.
+      if not @previous_proj_id?
+        @previous_proj_id = JD.activeJustdoId()
+        return
+
+      # Collapses project pane upon swiching JustDo.
+      if @previous_proj_id isnt JD.activeJustdoId()
+        @collapse()
+        @previous_proj_id = JD.activeJustdoId()
+
+      return
+    @onDestroy =>
+      @project_pane_auto_collapse_handler.stop()
+      return
+
     return
 
   _pane_state_schema: new SimpleSchema
