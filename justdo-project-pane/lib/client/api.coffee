@@ -20,11 +20,6 @@ _.extend JustdoProjectPane.prototype,
     # when the performance issue is addressed, this section can be remoed.
     @previous_proj_id = JD.activeJustdoId()
     @project_pane_auto_collapse_handler = Tracker.autorun =>
-      # activeJustdoId will be undefined upon page load. We want to keep the user preferred pane status upon reload.
-      if not @previous_proj_id?
-        @previous_proj_id = JD.activeJustdoId()
-        return
-
       # Collapses project pane upon swiching JustDo.
       if @previous_proj_id isnt JD.activeJustdoId()
         @collapse()
