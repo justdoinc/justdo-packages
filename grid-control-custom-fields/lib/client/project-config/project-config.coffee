@@ -74,6 +74,7 @@ APP.executeAfterAppLibCode ->
 
     return
 
+  getProjectCustomFields = -> module.curProj()?.getProjectCustomFields()
   Template.custom_fields_conf.helpers
     getFieldTypes: -> GridControlCustomFields.getAvailableCustomFieldsTypes()
     showAddButton: ->
@@ -81,9 +82,9 @@ APP.executeAfterAppLibCode ->
 
       return tpl.show_add_button.get()
     customFields: ->
-      return module.curProj()?.getProjectCustomFields()
+      return getProjectCustomFields()
     showCustomFieldsSortOption: ->
-      return module.curProj()?.getProjectCustomFields().length >= 5
+      return getProjectCustomFields().length >= 5
 
   addCustomField = ->
     project = module.curProj()
