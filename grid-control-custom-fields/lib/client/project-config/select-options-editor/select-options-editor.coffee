@@ -285,8 +285,8 @@ APP.executeAfterAppLibCode ->
       for option in options_content.find(".custom-field-option")
         options.push $(option)
 
-      options.sort (a, b) ->
-        return $(a).find(".option-label").val().toUpperCase().localeCompare $(b).find(".option-label").val().toUpperCase()
+      options = JustdoHelpers.localeAwareSortCaseInsensitive options, (option) =>
+        return $(option).find(".option-label").val()
 
       for option in options
         options_content.find(".custom-field-options").append option
