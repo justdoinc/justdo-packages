@@ -309,3 +309,20 @@ _.extend JustdoHelpers,
     trimmed_values = _.map csv.split(","), (conf) -> conf.trim()
 
     return _.compact(trimmed_values)
+
+  localeAwareSortCaseInsensitive: (array, valueExtractor) ->
+    array = array.slice() # Shallow copy.
+
+    array.sort (a, b) ->
+      if _.isFunction(valueExtractor)
+        a = valueExtractor(a)
+        b = valueExtractor(b)
+
+      res = a.toUpperCase().localeCompare(b.toUpperCase())
+      if res != 0
+        return res
+
+      if res == 0
+        return a.localeCompare(b) * -1 # put the upper before
+
+    return array
