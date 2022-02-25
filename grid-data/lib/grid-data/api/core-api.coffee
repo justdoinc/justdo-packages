@@ -13,7 +13,46 @@ _.extend GridData.prototype,
   # The basic slick grid api
   #
   getLength: -> @grid_tree.length
-  getItem: (index) -> @grid_tree[index][0]
+
+  getItem: (index) ->
+    # items_by_id might not be the same as the collection's id-map which is what item_val is referencing.
+    #
+    # We decide in this method what is the actual value we should regard.
+
+    grid_tree_stored_item = @grid_tree[index][0]
+
+    if not (grid_tree_stored_item_id = grid_tree_stored_item._id)?
+      # Just return the stored object as is, it can't be a collection item, so no point
+      # of testing whether it is up-to-date.
+
+      return grid_tree_stored_item
+
+    items_by_id_value = @items_by_id[grid_tree_stored_item_id]
+
+    if not @getItemIsTyped(index)
+      # I anticipate 99.99% of the cases to fall into this category. Daniel C.
+
+      # If not typed-item - return the value from @items_by_id
+      return items_by_id_value
+
+    # Typed item
+    if not @getItemIsCollectionItem(index)
+      return grid_tree_stored_item
+
+    # To avoid any potential discrepancies between the object originally stored and the
+    # object that is now in items_by_id (e.g. maybe the original object will be completely
+    # replaced, and not just edited in place in future implementations) , just create a new
+    # reference.
+    # 
+    # The alternative would have been to check @_grid_data_core.itemsByIdHasOwnProperty(item_id)
+    # and only if there was an overriden value for items_by_id to create a new object. But again,
+    # that might not be future proof.
+    #
+    # Very few items in a grid will ever need it, so performance isn't a concern. 
+    new_item = Object.create(items_by_id_value)
+    new_item._type = grid_tree_stored_item._type
+
+    return new_item
 
   getItemExcludingMetadataLayer: (index) ->
     # Typed items, has a data layer. Created in:
