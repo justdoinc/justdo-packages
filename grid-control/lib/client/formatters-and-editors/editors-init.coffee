@@ -116,13 +116,6 @@ base_slick_grid_editors_prototype =
 
     return
 
-  applyValue: (item, state) ->
-    # Slick grid requires this one, to be defined for every
-    # editor...
-    item[@getEditorFieldName()] = state
-
-    return
-
   isValueChanged: ->
     field_doc_value = @getEditorFieldValueFromDoc()
 

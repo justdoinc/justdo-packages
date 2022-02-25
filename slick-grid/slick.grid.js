@@ -3757,7 +3757,6 @@ if (typeof Slick === "undefined") {
                 serializedValue: currentEditor.serializeValue(),
                 prevSerializedValue: serializedEditorValue,
                 execute: function () {
-                  this.editor.applyValue(item, this.serializedValue);
                   updateRow(this.row, this.cell);
                   trigger(self.onCellChange, {
                     row: activeRow,
