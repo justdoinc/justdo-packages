@@ -492,6 +492,16 @@ _.extend GridDataCore.prototype,
     if not @destroyed and not @_collection_id_map_events_listeners?
       @_collection_id_map_events_listeners =
         "after-set": (id, value) =>
+          if not value.parents?
+            # If a docuemnt received without a parents object we skip it since we assume
+            # that it is either a private-fields transmission, or augmented fields that
+            # received before the task object itself.
+            #
+            # Later on, when we will get the update for that object that will include
+            # parents we will treat that update as the initial add. See below
+            # COMMENT_REGARDING_SET_WITHOUT_PARENTS
+            return
+
           if not @isDocMatchedByTasksQuery(value)
             return
 
@@ -584,6 +594,18 @@ _.extend GridDataCore.prototype,
 
           # Take care of parents changes
           if "parents" of fields_changes
+            if not changed_field_old_values.parents?
+              # COMMENT_REGARDING_SET_WITHOUT_PARENTS
+              #
+              # Updates for privated fields created this object before the actual task received
+              # treat this update as a simple add
+              #
+              # We send to after-set not only the fields_changes but all the fields so the private/augmented fields
+              # received earlier will also be included in the queue produced (otherwise those fields will never go
+              # through the queue and that might produce quirks)
+              @_collection_id_map_events_listeners["after-set"](id, JustdoHelpers.getCollectionIdMap(@collection).get(id))
+              return
+
             @_data_changes_queue.push ["parent_update", [id, fields_changes.parents, changed_field_old_values.parents]]
 
             @flush_manager.setNeedFlush()
