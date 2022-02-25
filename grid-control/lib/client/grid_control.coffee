@@ -354,23 +354,23 @@ _.extend GridControl.prototype,
       console.error @_error "edit-failed", err
 
     @_grid.onCellChange.subscribe (e, edit_req) =>
-      edited_item = edit_req.item # This item object will have the edited field with the new value
+      {new_value, row, cell} = edit_req
 
-      current_item = this._grid_data.grid_tree[edit_req.row][0]
+      field = @getCellField(cell)
+
+      current_item = this._grid_data.getItem(row)
       path = this._grid_data.grid_tree[edit_req.row][2]
 
-      field_id = @getCellField(edit_req.cell)
-
-      friendly_args = @getFriendlyArgsForDocFieldAndPath(current_item, field_id, path)
+      friendly_args = @getFriendlyArgsForDocFieldAndPath(current_item, field, path)
 
       # Note this isn't the only place where we respect customStorageMechanism
       # search for grid_column_custom_storage_mechanism to find other places if
       # you change anything
       if (customStorageMechanism = friendly_args.schema.grid_column_custom_storage_mechanism)?
-        if not customStorageMechanism(friendly_args, edited_item[field_id])
-          @_grid.updateCell(edit_req.row, edit_req.cell, true)
+        if not customStorageMechanism(friendly_args, new_value)
+          @_grid.updateCell(row, cell, true)
       else
-        @_grid_data.edit(edit_req)
+        @_grid_data.edit(current_item._id, field, new_value)
 
       return
 

@@ -4,16 +4,10 @@ _.extend GridData.prototype,
   # ** Misc. **
   getCollectionMethodName: (name) -> helpers.getCollectionMethodName(@collection, name)
 
-  edit: (edit_req) ->
-    {row, cell, grid, item} = edit_req
-
-    item_id = item._id
-
-    col_field = grid.getColumns()[cell].id
-    new_value = item[col_field]
-
-    update = {$set: {}}
-    update["$set"][col_field] = new_value
+  edit: (item_id, field, value) ->
+    update =
+      $set:
+        [field]: value
 
     edit_failed = (err) =>
       # XXX We used to think we need the following, now it seems
@@ -28,8 +22,8 @@ _.extend GridData.prototype,
 
       @emit "edit-failed", err
 
-    executed = @collection.update item._id, update, (err) =>
-      if err
+    executed = @collection.update item_id, update, (err) =>
+      if err?
         edit_failed(err)
 
         return false
@@ -38,7 +32,7 @@ _.extend GridData.prototype,
 
     if executed is false or executed is 0
       # executed is false if edit blocked by events hooks
-      @_grid_data_core._data_changes_handlers.update.call(@_grid_data_core, item_id, {"#{col_field}": @collection.findOne(item_id, {fields: {"#{col_field}": 1}})?[col_field]})
+      @_grid_data_core._data_changes_handlers.update.call(@_grid_data_core, item_id, {"#{field}": @collection.findOne(item_id, {fields: {"#{field}": 1}})?[field]})
       
       edit_failed(@_error "edit-blocked-by-hook", "Edit blocked by hook")
 

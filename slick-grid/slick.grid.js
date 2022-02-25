@@ -3761,16 +3761,15 @@ if (typeof Slick === "undefined") {
                   trigger(self.onCellChange, {
                     row: activeRow,
                     cell: activeCell,
-                    item: item
+                    new_value: this.serializedValue
                   });
                 },
                 undo: function () {
-                  this.editor.applyValue(item, this.prevSerializedValue);
                   updateRow(this.row);
                   trigger(self.onCellChange, {
                     row: activeRow,
                     cell: activeCell,
-                    item: item
+                    new_value: this.serializedValue
                   });
                 }
               };
