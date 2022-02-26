@@ -77,13 +77,20 @@ _.extend JustdoDbMigrations.prototype,
         @logProgress("Marked as completed")
 
         return
+      allowedToContinue: ->
+        return self.registered_migration_scripts[migration_script_id].allowed_to_continue
 
     return run_script_this
 
   _getHaltScriptThis: (migration_script_id) ->
+    self = @
+
     halt_script_this = @_getCommonThis(migration_script_id)
 
-    _.extend halt_script_this, {}
+    _.extend halt_script_this,
+      disallowToContinue: ->
+        self.registered_migration_scripts[migration_script_id].allowed_to_continue = false
+        return
 
     return halt_script_this
 
@@ -108,6 +115,7 @@ _.extend JustdoDbMigrations.prototype,
       throw @_error "invalid-argument", "runMigrationScriptRunScript was called for a migration script that is already running: #{migration_script_id}"
 
     migration_script_def = @registered_migration_scripts[migration_script_id]
+    migration_script_def.allowed_to_continue = true
 
     run_script_this = @_getRunScriptThis(migration_script_id)
 
