@@ -57,8 +57,6 @@ _.extend JustdoDbMigrations.prototype,
   _getCommonThis: (migration_script_id) ->
     self = @
 
-    migration_script_def = @registered_migration_scripts[migration_script_id]
-
     common_script_this =
       logProgress: (message) ->
         return self.logger.info "[#{migration_script_id}] #{message}"
@@ -73,9 +71,13 @@ _.extend JustdoDbMigrations.prototype,
     _.extend run_script_this,
       markAsCompleted: ->
         self._markMigrationScriptAsNotRunning(migration_script_id)
-
+        update =
+          $addToSet:
+            completed_migrations:
+              migration_id: migration_script_id
+              completed_time: new Date()
+        APP.collections.SystemRecords.upsert "completed-migrations", update
         @logProgress("Marked as completed")
-
         return
       allowedToContinue: ->
         return self.registered_migration_scripts[migration_script_id].allowed_to_continue
@@ -107,12 +109,22 @@ _.extend JustdoDbMigrations.prototype,
   isMigrationScriptAsNotRunning: (migration_script_id) ->
     return @running_scripts_ids[migration_script_id]?
 
+  isMigrationScriptMarkedAsComplete: (migration_script_id) ->
+    query =
+      _id: "completed-migrations"
+      "completed_migrations.migration_id": migration_script_id
+    return APP.collections.SystemRecords.findOne(query, {fields: {_id: 1}})?
+
   runMigrationScriptRunScript: (migration_script_id) ->
     if not migration_script_id of @registered_migration_scripts
       throw @_error "invalid-argument", "Unkown migration_script_id #{migration_script_id}"
 
     if @isMigrationScriptAsNotRunning(migration_script_id)
       throw @_error "invalid-argument", "runMigrationScriptRunScript was called for a migration script that is already running: #{migration_script_id}"
+
+    if @isMigrationScriptMarkedAsComplete(migration_script_id)
+      @logger.info "Migration script \"#{migration_script_id}\" has been executed before. Skipping."
+      return
 
     migration_script_def = @registered_migration_scripts[migration_script_id]
     migration_script_def.allowed_to_continue = true
