@@ -4,3 +4,6 @@ _.extend JustdoJobsProcessor,
   # forced_responsibility:
   #   "main::1":
   #     "justdo-chat-email-notifications": {args: []}
+  forced_responsibility:
+    "main::1":
+      "db-migrations": {args: []}

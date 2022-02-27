@@ -43,7 +43,7 @@ _.extend JustdoSystemRecords.prototype,
     if not (app_version = process.env?.APP_VERSION)?
       return
 
-    if not JustdoSystemRecords.semver_regex_strict.test app_version
+    if not JustdoSystemRecords.semver_regex.test app_version
       @logger.warn "System record installed-versions weren't updated, unknown format found in env var APP_VERSION: #{app_version}"
 
       return
