@@ -84,7 +84,7 @@ Template.meetings_meeting_dialog.onCreated ->
     @meeting_sub = APP.meetings_manager_plugin.meetings_manager.subscribeToMeeting data.meeting_id
 
     return
-    
+
   @note_out_of_date = new ReactiveVar false
   @minimized = new ReactiveVar false
   @meetings_tasks_noRender = new ReactiveVar false
@@ -106,7 +106,7 @@ Template.meetings_meeting_dialog.onCreated ->
   toDataURL "/layout/logos-ext/justdo_logo_for_emails.png", (data_url) =>
     @logo_data_url = data_url
 
-  
+
 
   @autorun =>
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
@@ -127,7 +127,7 @@ Template.meetings_meeting_dialog.onCreated ->
 
   @autorun =>
     cur_item = APP.modules.project_page.activeItemObj()
-    
+
     if cur_item? and @meeting_sub?.ready()
       Forms.instance().doc "seqId", cur_item.seqId
 
@@ -157,7 +157,8 @@ Template.meetings_meeting_dialog.onCreated ->
     tasks_html = ""
     tasks = _.sortBy meeting.tasks, "task_order"
     for item in tasks
-      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><div class="font-weight-bold"><a href="#{JustdoHelpers.getTaskUrl(@project_id, item.task_id)}">##{item.seqId}: #{JustdoHelpers.xssGuard item.title}</a></div>"""
+      owner_id = APP.collections.Tasks.findOne(item.task_id, {fields: {owner_id: 1}})?.owner_id
+      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><div class="font-weight-bold"><a href="#{JustdoHelpers.getTaskUrl(@project_id, item.task_id)}">##{item.seqId}: #{JustdoHelpers.xssGuard(item.title) or "Untitled Task"}</a><span> (#{JustdoHelpers.xssGuard(JustdoHelpers.displayName owner_id)})</span></div>"""
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
@@ -171,8 +172,8 @@ Template.meetings_meeting_dialog.onCreated ->
             if task_obj.pending_owner_id
               user_id = task_obj.pending_owner_id
             user = Meteor.users.findOne user_id
-            user_name = """<span class="mr-2">#{JustdoHelpers.xssGuard user.profile.first_name} #{JustdoHelpers.xssGuard user.profile.last_name},</span>"""
-          tasks_html += """<li>#{user_name} #{JustdoHelpers.xssGuard task_added.title}, <span class="bg-light border px-2 rounded mr-1"><a href="#{JustdoHelpers.getTaskUrl(@project_id, task_added.task_id)}">##{task_added.seqId}</a></span>"""
+            user_name = """<span class="mr-2"> (#{JustdoHelpers.xssGuard user.profile.first_name} #{JustdoHelpers.xssGuard user.profile.last_name})</span>"""
+          tasks_html += """<li><span class="bg-light border px-2 rounded mr-1"><a href="#{JustdoHelpers.getTaskUrl(@project_id, task_added.task_id)}">##{task_added.seqId}: #{JustdoHelpers.xssGuard(task_added.title) or "Untitled Task"}</a></span>#{user_name}"""
           if task_obj.due_date?
             tasks_html += "<br>Due date: #{moment(task_obj.due_date).format(JustdoHelpers.getUserPreferredDateFormat())}"
           if task_added.note?
@@ -191,9 +192,9 @@ Template.meetings_meeting_dialog.onCreated ->
         note = meeting_task.note.replace /<br>/g, key
         note = JustdoHelpers.xssGuard note, {allow_html_parsing: true, enclosing_char: ""}
         note = """<div dir="auto" class="print-meeting-mode-note">""" + note.replace(re, """</div><div dir="auto">""") + "</div>"
-        tasks_html += "<i>" + note + "</i>"
+        tasks_html += "<i>Notes:<br>" + note + "</i>"
 
-      tasks_html += "</div>"
+      tasks_html += "</div><br>"
 
     bottomNote = "None"
     if meeting.note?
@@ -239,7 +240,7 @@ Template.meetings_meeting_dialog.onCreated ->
       </div>
       <hr>
       """
-    
+
     if meeting.note?
       ret += """
         <div class="py-1">
@@ -247,7 +248,7 @@ Template.meetings_meeting_dialog.onCreated ->
           <i>#{bottomNote}</i>
         </div>
       """
-      
+
     return ret
 
   @refresh = =>
@@ -291,7 +292,7 @@ Template.meetings_meeting_dialog.onCreated ->
     .forEach (meeting_task) ->
       if meeting_task.added_tasks?.length?
         total_added_tasks += meeting_task.added_tasks.length
-      
+
       return
     msg = "Are you sure you want to delete this meeting?"
     if total_added_tasks > 0
@@ -303,7 +304,7 @@ Template.meetings_meeting_dialog.onCreated ->
         APP.meetings_manager_plugin.removeMeetingDialog()
 
       return
-    
+
     return
 
 
@@ -314,7 +315,7 @@ Template.meetings_meeting_dialog.onCreated ->
     ret = "#{meeting.title}\n"
     if meeting.date?
       ret += "#{moment(meeting.date).format(JustdoHelpers.getUserPreferredDateFormat())} "
-    
+
     if meeting.time?
       meeting_time = ""
       use_am_pm = Meteor.user().profile.use_am_pm
@@ -327,7 +328,7 @@ Template.meetings_meeting_dialog.onCreated ->
 
     if meeting.location?
       ret += "\n\nLocation: " + meeting.location
-    
+
     ret += "\n\n"
 
     ret += "Attendees:\n\n"
@@ -343,7 +344,9 @@ Template.meetings_meeting_dialog.onCreated ->
     ret += "Agenda:\n"
     tasks = _.sortBy meeting.tasks, "task_order"
     for item in tasks
-      ret += "\n##{item.seqId}: #{item.title}\n"
+      owner_id = APP.collections.Tasks.findOne(item.task_id, {fields: {owner_id: 1}}).owner_id
+
+      ret += "\n##{item.seqId}: #{item.title or "Untitled Task"} (#{JustdoHelpers.displayName(owner_id)})\n"
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
@@ -351,12 +354,13 @@ Template.meetings_meeting_dialog.onCreated ->
       if meeting_task?.added_tasks?.length > 0
         ret += "\nChild Tasks Added for ##{item.seqId}:\n"
         for task_added in meeting_task.added_tasks
-          ret += "\n*#{task_added.title}, ##{task_added.seqId}\n"
-          if (child_task_due_date = APP.collections.Tasks.findOne(task_added.task_id, {fields: due_date: 1})?.due_date)?
-            ret += "Due date: #{moment(child_task_due_date).format(JustdoHelpers.getUserPreferredDateFormat())}\n"
+          task_obj = APP.collections.Tasks.findOne(task_added.task_id, {fields: {owner_id: 1, due_date: 1}})
+          ret += "  - ##{task_added.seqId}: #{task_added.title or "Untitled Task"} (#{JustdoHelpers.displayName(task_obj.owner_id)})\n"
+          if (child_task_due_date = task_obj.due_date)?
+            ret += "    Due date: #{moment(child_task_due_date).format(JustdoHelpers.getUserPreferredDateFormat())}\n"
           if (task_added.note?)
             note = JustdoHelpers.br2nl(task_added.note, {strip_trailing_br: true}).replace(/<[^>]*>/g, "")
-            ret += "Notes: #{note}\n"
+            ret += "    Notes: #{note.replaceAll("\n", "\n    ")}\n"
 
       if meeting_task?.note?
         note = JustdoHelpers.br2nl(meeting_task.note, {strip_trailing_br: true}).replace(/<[^>]*>/g, "")
@@ -452,13 +456,13 @@ Template.meetings_meeting_dialog.helpers
         ,
           fields:
             date: 1
-        
+
         if meeting?
           tpl.$(".meeting-date").datepicker
             "defaultDate": meeting?.date
             "dateFormat": "yy-mm-dd"
           comp.stop()
-      
+
       return
 
     return
@@ -509,7 +513,7 @@ Template.meetings_meeting_dialog.helpers
   mayEdit: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: @meeting_id or @_id
-    
+
     user_id = Meteor.userId()
 
     return meeting?.status != "ended" and
@@ -519,7 +523,7 @@ Template.meetings_meeting_dialog.helpers
   mayEditFooter: ->
     meeting = APP.meetings_manager_plugin.meetings_manager.meetings.findOne
       _id: @meeting_id
-    
+
     user_id = Meteor.userId()
 
     return meeting?.organizer_id == user_id or
@@ -660,7 +664,7 @@ Template.meetings_meeting_dialog.helpers
 
   isEditingLocation: -> Template.instance().is_editing_location.get()
 
-  linkifyStr: (str) -> 
+  linkifyStr: (str) ->
     if str?
       return linkifyStr str # linkify already escapes html entities, so don't worry about xss here.'
     return ""
@@ -890,7 +894,7 @@ Template.meetings_meeting_dialog.events
       $(e.target).closest(".meeting-time-input").blur();
     else if e.key == "Enter"
       $(e.target).closest(".meeting-time-input").blur();
-    
+
     return
 
   "blur .meeting-time-input": (e, tpl) ->
@@ -919,13 +923,13 @@ Template.meetings_meeting_dialog.events
     Meteor.defer ->
       tpl.$(".meeting-dialog-location-input").focus()
       return
-  
+
   "blur .meeting-dialog-location-input": (e, tpl) ->
     tpl.is_editing_location.set false
     APP.meetings_manager_plugin.meetings_manager.updateMeetingMetadata tpl.data.meeting_id,
       location: e.target.value
     return
-  
+
   "focus .meeting-dialog-location-input": (e, tpl) ->
     $(e.target).data "old-value", e.target.value
     return
