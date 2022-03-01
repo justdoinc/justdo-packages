@@ -216,6 +216,8 @@ Template.justdo_quick_notes_item.onRendered ->
 
       $(".slick-cell.l0.r0").droppable
         tolerance: "pointer"
+        addClasses: false
+        hoverClass: "quick-note-droppable-cell"
         drop: (e, ui) ->
           # NEED TO UPDATE
           task_id = $(e.target).find(".grid-tree-control-task-id").attr("jd-tt").split("=")[1]
