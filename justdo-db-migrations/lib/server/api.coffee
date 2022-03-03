@@ -49,6 +49,7 @@ _.extend JustdoDbMigrations.prototype,
         id: migration_script_id
         runScript: runScript
         haltScript: haltScript
+        allowed_to_continue: null
     else
       @logger.info "NOTE #{migration_script_id} migration script skipped. A version smaller than: #{run_if_lte_version_installed} weren't installed in this environment."
 
@@ -58,8 +59,9 @@ _.extend JustdoDbMigrations.prototype,
     self = @
 
     common_script_this =
-      logProgress: (message) ->
-        return self.logger.info "[#{migration_script_id}] #{message}"
+      logProgress: (...message) ->
+        message.unshift("[#{migration_script_id}]")
+        return self.logger.info.apply self.logger, message
 
     return common_script_this
 
@@ -79,8 +81,13 @@ _.extend JustdoDbMigrations.prototype,
         APP.collections.SystemRecords.upsert "completed-migrations", update
         @logProgress("Marked as completed")
         return
-      allowedToContinue: ->
+      isAllowedToContinue: ->
         return self.registered_migration_scripts[migration_script_id].allowed_to_continue
+      halt: ->
+        if self.isMigrationScriptMarkedAsNotRunning(migration_script_id)
+          self.runMigrationScriptHaltScript(migration_script_id)
+
+        return
 
     return run_script_this
 
@@ -89,10 +96,7 @@ _.extend JustdoDbMigrations.prototype,
 
     halt_script_this = @_getCommonThis(migration_script_id)
 
-    _.extend halt_script_this,
-      disallowToContinue: ->
-        self.registered_migration_scripts[migration_script_id].allowed_to_continue = false
-        return
+    _.extend halt_script_this, {} 
 
     return halt_script_this
 
@@ -106,7 +110,7 @@ _.extend JustdoDbMigrations.prototype,
 
     return
 
-  isMigrationScriptAsNotRunning: (migration_script_id) ->
+  isMigrationScriptMarkedAsNotRunning: (migration_script_id) ->
     return @running_scripts_ids[migration_script_id]?
 
   isMigrationScriptMarkedAsComplete: (migration_script_id) ->
@@ -119,7 +123,7 @@ _.extend JustdoDbMigrations.prototype,
     if not migration_script_id of @registered_migration_scripts
       throw @_error "invalid-argument", "Unkown migration_script_id #{migration_script_id}"
 
-    if @isMigrationScriptAsNotRunning(migration_script_id)
+    if @isMigrationScriptMarkedAsNotRunning(migration_script_id)
       throw @_error "invalid-argument", "runMigrationScriptRunScript was called for a migration script that is already running: #{migration_script_id}"
 
     if @isMigrationScriptMarkedAsComplete(migration_script_id)
@@ -141,7 +145,7 @@ _.extend JustdoDbMigrations.prototype,
     if not migration_script_id of @registered_migration_scripts
       throw @_error "invalid-argument", "Unkown migration_script_id #{migration_script_id}"
 
-    if not @isMigrationScriptAsNotRunning(migration_script_id)
+    if not @isMigrationScriptMarkedAsNotRunning(migration_script_id)
       throw @_error "invalid-argument", "runMigrationScriptHaltScript was called for a migration script that isn't running: #{migration_script_id}"
 
     migration_script_def = @registered_migration_scripts[migration_script_id]
@@ -149,6 +153,7 @@ _.extend JustdoDbMigrations.prototype,
     halt_script_this = @_getHaltScriptThis(migration_script_id)
 
     @logger.info "Halt migration script: #{migration_script_id}."
+    @registered_migration_scripts[migration_script_id].allowed_to_continue = false
     migration_script_def.haltScript.call(halt_script_this)
     @_markMigrationScriptAsNotRunning(migration_script_id)
 
@@ -164,6 +169,8 @@ _.extend JustdoDbMigrations.prototype,
         @runMigrationScriptRunScript(migration_script_id)
       catch e
         @logger.error "Failed to run runScript of migration script #{migration_script_id}", e
+
+        @_markMigrationScriptAsNotRunning(migration_script_id)
 
     return
 

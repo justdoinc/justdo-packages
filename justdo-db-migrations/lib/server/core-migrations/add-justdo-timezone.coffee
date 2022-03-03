@@ -1,6 +1,17 @@
+batch_timeout = null
+clearTimeout = ->
+  if batch_timeout?
+    Meteor.clearTimeout batch_timeout
+    batch_timeout = null
+
+    @logProgress "Batch processing timeout cleared"
+
+  return
+
 APP.justdo_db_migrations.registerMigrationScript "justdo-timezone",
   runScript: ->
-    batch_size = 300
+    batch_size = 100
+    delay_between_batches = 1000
     user_id_to_timezone = {} # Caches queried admin timezones
 
     fallback_timezone = moment.tz.guess()
@@ -29,7 +40,24 @@ APP.justdo_db_migrations.registerMigrationScript "justdo-timezone",
     initial_affected_docs_count = projects_without_timezone_cursor.count() # Note: count ignores limit
     @logProgress "Total documents to be updated: #{initial_affected_docs_count}"
 
-    while projects_without_timezone_cursor.count() > 0 and @allowedToContinue()
+    processBatchWrapper = => 
+      try
+        processBatch()
+      catch e
+        @logProgress "Error found halt the script", e
+
+        @halt()
+
+      return
+
+    processBatch = =>
+      if not @isAllowedToContinue()
+        return
+
+      if projects_without_timezone_cursor.count() == 0
+        @markAsCompleted()
+        return
+
       timezone_to_project = {}
 
       projects_without_timezone_cursor.forEach (project) ->
@@ -64,14 +92,23 @@ APP.justdo_db_migrations.registerMigrationScript "justdo-timezone",
 
       @logProgress "#{num_processed}/#{initial_affected_docs_count} documents updated"
 
-    if projects_without_timezone_cursor.count() is 0
-      @markAsCompleted()
+      @logProgress "Waiting #{delay_between_batches / 1000}sec before starting the next batch"
+      batch_timeout = Meteor.setTimeout =>
+        processBatchWrapper()
+      , delay_between_batches
+
+      return
+
+    Meteor.defer ->
+      # To avoid running in the original tick that called the necessary db-migrations, defer the run
+      processBatchWrapper()
+
+      return
 
     return
 
   haltScript: ->
-    @logProgress "Halted"
-    @disallowToContinue()
+    clearTimeout.call(@)
 
     return
 
