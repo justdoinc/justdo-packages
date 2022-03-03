@@ -16,6 +16,8 @@ Package.onUse(function (api) {
   api.use("underscore", both);
   api.use("mongo", both);
 
+  api.use("momentjs:moment", both);
+
   // Uncomment if you want to use NPM peer dependencies using
   // checkNpmVersions.
   //
@@ -83,8 +85,8 @@ Package.onUse(function (api) {
   // file. 
 
   api.addFiles("lib/server/core-migrations/add-justdo-timezone.coffee", server);
-  api.addFiles("lib/server/core-migrations/add-parents2.coffee", server);
-  api.addFiles("lib/server/core-migrations/check-parents2.coffee", server);
+  // api.addFiles("lib/server/core-migrations/add-parents2.coffee", server);
+  // api.addFiles("lib/server/core-migrations/check-parents2.coffee", server);
 
   api.export("JustdoDbMigrations", both);
 });
