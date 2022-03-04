@@ -200,7 +200,7 @@ APP.executeAfterAppLibCode ->
         file_id = file.url.substr(file.url.lastIndexOf("/")+1)
         download_path = APP.tasks_file_manager_plugin.tasks_file_manager.getFileDownloadPath task_id, file_id
         if type_to_insert == "image"
-          if not $img_to_replace?
+          if not img_to_replace?
             $org_img = $("[data-temp_id=\"#{file.temp_id}\"]")
           else
             $org_img = $(img_to_replace)
