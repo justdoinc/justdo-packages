@@ -23,6 +23,8 @@ Package.onUse(function (api) {
   api.use("ecmascript", both);
   api.use("random", both);
 
+  api.use("justdoinc:justdo-core-helpers@1.0.0", both);
+
   api.use("raix:eventemitter@0.1.1", both);
   api.use("meteorspark:util@0.1.0", both);
   api.use("meteorspark:logger@0.3.0", both);
