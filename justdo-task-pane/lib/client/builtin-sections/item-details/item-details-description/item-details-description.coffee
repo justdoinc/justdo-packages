@@ -181,9 +181,10 @@ APP.executeAfterAppLibCode ->
         files.push file_item
         reader = new FileReader()
         reader.readAsDataURL(file_item)
-        reader.onload = -> 
-          img = editor.image.insert reader.result, true,
-            temp_id: file_item.temp_id
+        reader.onload = ->
+          if type_to_insert is "image" and not img_to_replace?
+            img = editor.image.insert reader.result, true,
+              temp_id: file_item.temp_id
           return
         reader.onerror = (error) -> 
           console.log error
