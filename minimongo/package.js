@@ -10,6 +10,8 @@ Package.onUse(api => {
   api.export('MinimongoTest', { testOnly: true });
   api.export('MinimongoError', { testOnly: true });
 
+  api.use("justdoinc:justdo-core-helpers@1.0.0", both);
+
   api.use([
     // This package is used to get diff results on arrays and objects
     'diff-sequence',

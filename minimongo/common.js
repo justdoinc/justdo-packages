@@ -1,5 +1,7 @@
 import LocalCollection from './local_collection.js';
 
+// XXX written before the intro of justdo-core-helpers, can move to core-justdo-helpers
+
 // Note, exactly the same code is present in:
 // justdo-shared-packages/ejson/ejson.js
 export let sameTickStatsGetVal = function () {return};
@@ -15,6 +17,7 @@ export let reportOptimizationIssue = function (message, data) {
 if (Meteor.isClient) {
   let interval_id = setInterval(function () {
     if (typeof Package["justdoinc:justdo-helpers"] !== "undefined") {
+
       sameTickStatsGetVal = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsGetVal;
       sameTickStatsInc = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsInc;
       sameTickStatsSetVal = Package["justdoinc:justdo-helpers"].JustdoHelpers.sameTickStatsSetVal;

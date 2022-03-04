@@ -20,6 +20,8 @@ import {
 // LocalCollection: a set of documents that supports queries and modifiers.
 export default class LocalCollection {
   constructor(name) {
+    var self = this;
+
     this.name = name;
     // _id -> document (also containing id)
     this._docs = new LocalCollection._IdMap;
@@ -45,28 +47,85 @@ export default class LocalCollection {
 
     // True when observers are paused and we should not send callbacks.
     this.paused = false;
+
+    this.set_doc_fields_calls_since_last_flush = 0;
+    this.set_doc_fields_max_direct_update_calls_per_flush = 50;
+    this.set_doc_fields_reactivity_flush_manager = new JustdoCoreHelpers.FlushManager({min_flush_delay: 20});
+
+    this.set_doc_fields_reactivity_flush_manager.on("flush", function () {
+      self.flushSetDocFieldsReactivity();
+    });
   }
 
   getDocNonReactive(doc_id) {
     return this._docs._map[doc_id];
   }
 
+  flushSetDocFieldsReactivity() {
+    if (this.set_doc_fields_calls_since_last_flush > this.set_doc_fields_max_direct_update_calls_per_flush) {
+      this.recomputeAllQueries();
+    }
+
+    this.set_doc_fields_calls_since_last_flush = 0;
+  }
+
+  requestSetDocFieldsDirectUpdate() {
+    // The following resulted from CoffeeScript:
+    //
+    // requestSetDocFieldsDirectUpdate = () ->
+    //   @set_doc_fields_reactivity_flush_manager.setNeedFlush() # setNeedFlush is optimized for same-tick calls. We call setNeedFlush even if max reached since we don't want that there'll be an opertunity for un-necessary flushing.
+    //
+    //   if @set_doc_fields_calls_since_last_flush < @set_doc_fields_max_direct_update_calls_per_flush
+    //     @set_doc_fields_calls_since_last_flush += 1
+    //
+    //     return true
+    //
+    //   return false
+
+    this.set_doc_fields_calls_since_last_flush += 1;
+
+    this.set_doc_fields_reactivity_flush_manager.setNeedFlush(); // setNeedFlush is optimized for same-tick calls. We call setNeedFlush even if max reached since we don't want that there'll be an opertunity for un-necessary flushing.
+    if (this.set_doc_fields_calls_since_last_flush <= this.set_doc_fields_max_direct_update_calls_per_flush) {
+      return true;
+    }
+    return false;
+  };
+
+
   setDocFields(doc_id, fields) {
     // The following resulted from CoffeeScript:
     //
-    // if (corresponding_server_doc = Meteor.connection._serverDocuments?[this.name]?.get(doc_id)?.document)?
-    //   Object.assign(corresponding_server_doc, fields)
+    // setDocFields = (doc_id, fields) ->
+    //   if this.requestSetDocFieldsDirectUpdate()
+    //     this.update(doc_id, {$set: fields})
+        
+    //     return
+
+    //   if (corresponding_server_doc = Meteor.connection._serverDocuments?[this.name]?.get(doc_id)?.document)?
+    //     Object.assign(corresponding_server_doc, fields)
+    //   # The purpose of the above line is the same as the code under: 
+    //   # justdo-shared-packages/mongo/collection.js look for CLIENT-SITE-EXEC-CLIENT-ONLY-FIELDS
+
+    //   this._docs.setDocFields(doc_id, fields)
+      
+    //   return
 
     var corresponding_server_doc, ref, ref1, ref2;
-
+    if (this.requestSetDocFieldsDirectUpdate()) {
+      this.update(doc_id, {
+        $set: fields
+      });
+      return;
+    }
+    
     if ((corresponding_server_doc = (ref = Meteor.connection._serverDocuments) != null ? (ref1 = ref[this.name]) != null ? (ref2 = ref1.get(doc_id)) != null ? ref2.document : void 0 : void 0 : void 0) != null) {
       Object.assign(corresponding_server_doc, fields);
     }
     // The purpose of the above line is the same as the code under: 
     // justdo-shared-packages/mongo/collection.js look for CLIENT-SITE-EXEC-CLIENT-ONLY-FIELDS
 
-    return this._docs.setDocFields(doc_id, fields);
-  }
+    this._docs.setDocFields(doc_id, fields);
+  };
 
   // options may include sort, skip, limit, reactive
   // sort may be any of these forms:
