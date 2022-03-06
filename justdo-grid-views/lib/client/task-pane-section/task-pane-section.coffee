@@ -1,1 +1,0 @@
-Template.task_pane_justdo_grid_views_task_pane_section_section.helpers {}
