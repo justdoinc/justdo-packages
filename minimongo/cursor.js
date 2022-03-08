@@ -16,6 +16,7 @@ export default class Cursor {
     this.collection = collection;
     this.sorter = null;
     this.matcher = new Minimongo.Matcher(selector);
+    this.selector = EJSON.clone(selector);
 
     if (LocalCollection._selectorIsIdPerhapsAsObject(selector)) {
       // stash for fast _id and { _id }
@@ -489,7 +490,7 @@ export default class Cursor {
     let total_scanned_docs = 0;
     let docs_scan_start = new Date();
 
-    this.collection._docs.forEach((doc, id) => {
+    let iterator = (doc, id) => {
       total_scanned_docs += 1;
 
       const matchResult = this.matcher.documentMatches(doc);
@@ -519,7 +520,10 @@ export default class Cursor {
         this.sorter ||
         results.length !== this.limit
       );
-    });
+    };
+
+    this.collection._eachPossiblyMatchingDoc(this.selector, iterator);
+    // this.collection._docs.forEach(iterator); # Original code
 
     let scan_time = (new Date()) - docs_scan_start;
 
