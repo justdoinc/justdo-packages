@@ -1,16 +1,16 @@
 _.extend JustdoGridViews.prototype,
+  _grid_views_hierachy_schema:
+    type:
+      label: "Grid View share type"
+      type: String
+      allowedValues: ["site", "justdo"]
+
+    justdo_id:
+      label: "ID of Justdo that shares the Grid View"
+      type: String
+      optional: true
+      
   _attachCollectionsSchemas: ->
-    grid_views_hierachy_schema =
-      type:
-        label: "Grid View share type"
-        type: String
-        optional: true
-
-      justdo_id:
-        label: "ID of Justdo that shares the Grid View"
-        type: String
-        optional: true
-
     grid_views_schema =
       user_id:
         label: "User ID"
@@ -51,7 +51,7 @@ _.extend JustdoGridViews.prototype,
 
       hierarchy:
         label: "Grid View hierachy"
-        type: new SimpleSchema grid_views_hierachy_schema
+        type: new SimpleSchema @_grid_views_hierachy_schema
         optional: true
 
     @grid_views_collection.attachSchema grid_views_schema
