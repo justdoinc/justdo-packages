@@ -205,9 +205,6 @@ _.extend JustdoAccounts.prototype,
         $unset:
           "services.password.reset": 1
 
-    if options.email in APP.justdo_site_admins.site_admins_emails
-      APP.justdo_site_admins.setUsersAsSiteAdmins created_user_id
-
     if signed_legal_docs?
       @signLegalDocs(signed_legal_docs, created_user_id)
 
