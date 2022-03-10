@@ -8,10 +8,11 @@ _.extend TasksFileManager.prototype,
   #
   # Throw errors by: throw @_error("error-type", "Custom message")
   _errors_types:
-    "login-required": "Login required"
-    "task-not-found": "Task not found"
-    "file-not-found": "File not found"
-    "file-url-invalid": "File url is not a filestack url"
-    "api-key-required": "Filestack API key required"
-    "api-secret-required": "Filestack API secret required"
-    "api-version-not-supported": "API version not supported"
+    _.extend {}, JustdoHelpers.common_errors_types,
+      "login-required": "Login required"
+      "task-not-found": "Task not found"
+      "file-not-found": "File not found"
+      "file-url-invalid": "File url is not a filestack url"
+      "api-key-required": "Filestack API key required"
+      "api-secret-required": "Filestack API secret required"
+      "api-version-not-supported": "API version not supported"

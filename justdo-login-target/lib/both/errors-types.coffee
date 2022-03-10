@@ -3,4 +3,5 @@ _.extend JustdoLoginTarget.prototype,
   # if an error of type other than the following will be used
   # The value is the default message
   _errors_types:
-    "target-url-forbidden": "Target url forbidden"
+    _.extend {}, JustdoHelpers.common_errors_types,
+      "target-url-forbidden": "Target url forbidden"
