@@ -63,6 +63,10 @@ _.extend JustdoDbMigrations.prototype,
         message.unshift("[#{migration_script_id}]")
         return self.logger.info.apply self.logger, message
 
+      logWarning: (...message) ->
+        message.unshift("[#{migration_script_id}] Warning:")
+        return self.logger.warn.apply self.logger, message
+
     return common_script_this
 
   _getRunScriptThis: (migration_script_id) ->

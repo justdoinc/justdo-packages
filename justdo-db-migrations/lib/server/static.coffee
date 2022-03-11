@@ -126,6 +126,8 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
           return
 
+        @logProgress "Start batch"
+
         num_processed += options.batchProcessor.call migration_functions_this, pending_migration_set_cursor
 
         @logProgress "#{num_processed}/#{initial_affected_docs_count} documents updated"
