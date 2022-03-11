@@ -1,5 +1,6 @@
 common_batched_migration_options =
   delay_between_batches: 1000
+  batch_size: 100
 
   collection: APP.collections.Projects
 
@@ -11,22 +12,26 @@ common_batched_migration_options =
         is_admin: true
 
   pending_migration_set_query_options:
-    members:
-      $elemMatch:
-        is_admin: true
-    limit: 100
+    fields:
+      members:
+        $elemMatch:
+          is_admin: true
 
   custom_options:
-    user_id_to_timezone: {} # Caches queried admin timezones
     fallback_timezone: moment.tz.guess()
 
-  batchProcessor: (cursor, collection, options) ->
+  initProcedures: ->
+    @shared.user_id_to_timezone = {}
+
+    return
+
+  batchProcessor: (cursor) ->
     num_processed = 0
     timezone_to_project = {}
 
-    cursor.forEach (project) ->
+    cursor.forEach (project) =>
       admin_id = project.members[0].user_id
-      if not (timezone = options.user_id_to_timezone[admin_id])?
+      if not (timezone = @shared.user_id_to_timezone[admin_id])?
         admin = Meteor.users.findOne
           _id: admin_id
           "profile.timezone":
@@ -35,9 +40,9 @@ common_batched_migration_options =
           fields:
             "profile.timezone": 1
 
-        timezone = admin?.profile?.timezone or options.fallback_timezone
+        timezone = admin?.profile?.timezone or @options.fallback_timezone
 
-        options.user_id_to_timezone[admin_id] = timezone
+        @shared.user_id_to_timezone[admin_id] = timezone
 
       if timezone_to_project[timezone]?
         timezone_to_project[timezone].push project._id
@@ -45,7 +50,7 @@ common_batched_migration_options =
         timezone_to_project[timezone] = [project._id]
 
     for timezone, project_ids of timezone_to_project
-      num_processed += collection.update
+      num_processed += @collection.update
         _id:
           $in: project_ids
       ,
@@ -55,5 +60,10 @@ common_batched_migration_options =
         multi: true
 
     return num_processed
+
+  terminationProcedures: ->
+    @shared.user_id_to_timezone = null # Ensure GC cleanup
+
+    return
 
 APP.justdo_db_migrations.registerMigrationScript "justdo-timezone", JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)

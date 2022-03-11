@@ -1,3 +1,8 @@
+# THE FOLLOWING IS OUTDATED.
+
+
+
+
 ###
  # There are two ways to register a migration script.
  # For common migration script (i.e. Query for certain documents and insert/update back to the database),
