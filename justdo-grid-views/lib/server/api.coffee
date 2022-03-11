@@ -58,3 +58,28 @@ _.extend JustdoGridViews.prototype,
 
     return true
 
+  upsert: (grid_view_id, options, user_id) ->
+    if _.isEmpty options
+      throw @_error "missing-argument", "There's nothing to update/insert"
+
+    # Update
+    if grid_view_id?
+      @requireUserAllowedToEditGridView grid_view_id, user_id
+      modifier = _.omit options, "hierarchy"
+      if options.hierarchy?
+        for field_id, field_val of options.hierarchy
+          modifier["hierarchy.#{field_id}"] = field_val
+      return @grid_views_collection.update grid_view_id, modifier
+    # Insert
+    else
+      if options.hierarchy?.justdo_id?
+        if options.shared
+          # Only Justdo admins can share Views
+          APP.projects.requireProjectAdmin options.hierarchy.justdo_id, user_id
+        else
+          # Only Justdo member can create a view under the Justdo
+          APP.projects.requireUserIsMemberOfProject options.hierarchy.justdo_id, user_id
+      options.user_id = user_id
+      return @grid_views_collection.insert options
+
+    return
