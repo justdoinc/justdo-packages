@@ -1,26 +1,35 @@
 common_batched_migration_options =
-  delay_between_batches: 1000
+  delay_between_batches: 1000 * 10
+  batch_size: 10000
 
   collection: APP.collections.Tasks
 
   pending_migration_set_query:
-    parents2:
-      $exists: false
+    parents2: null
+    corrupted_parents: null
+    _raw_removed_date: null
+    parents: {$ne: null}
 
   pending_migration_set_query_options:
     fields:
       parents: 1
-    limit: 300
-
-  batchProcessor: (tasks_cursor, tasks_collection) ->
+  
+  batchProcessor: (tasks_cursor) ->
     num_processed = 0
-    tasks_cursor.forEach (task) ->
-      {_id, parents} = task
+    tasks_cursor.forEach (task) =>
       parents2 = []
-      for parent_id, order_obj of parents
+      for parent_id, order_obj of task.parents
+        if order_obj is null
+          @logWarning "Task #{task._id} had a parent with corrupted parents def object - renaming the parents field to 'corrupted_parents'"
+
+          num_processed += 1
+          @collection.rawCollection().update {_id: task._id}, {$set: {corrupted_parents: task.parents}, $unset: {parents: 1}}
+
+          return
+
         parents2.push {parent: "#{parent_id}", order: order_obj.order}
 
-      num_processed += tasks_collection.update _id, {$set: {parents2: parents2}}
+      num_processed += @collection.direct.update({_id: task._id}, {$set: {parents2: parents2}}, {bypassCollection2: true})
 
     return num_processed
 
