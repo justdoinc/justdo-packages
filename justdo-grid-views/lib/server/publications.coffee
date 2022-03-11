@@ -13,7 +13,7 @@ _.extend JustdoGridViews.prototype,
 
       {cleaned_val} =
         JustdoHelpers.simpleSchemaCleanAndValidate(
-          @_grid_views_hierachy_schema, # Defined in schemas.coffee
+          @_grid_views_hierarchy_schema, # Defined in schemas.coffee
           options,
           {self: @, throw_on_error: true}
         )
@@ -28,7 +28,7 @@ _.extend JustdoGridViews.prototype,
           },
           {
             shared: true
-            "hierachy.justdo_id": justdo_id
+            "hierarchy.justdo_id": justdo_id
           }
         ]
 

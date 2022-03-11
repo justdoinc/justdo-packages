@@ -1,5 +1,5 @@
 _.extend JustdoGridViews.prototype,
-  _grid_views_hierachy_schema:
+  _grid_views_hierarchy_schema:
     type:
       label: "Grid View share type"
       type: String
@@ -44,14 +44,15 @@ _.extend JustdoGridViews.prototype,
       deleted:
         label: "Grid View deleted"
         type: Boolean
+        optional: true
 
       view:
         label: "Saved Grid View"
         type: [Object]
 
       hierarchy:
-        label: "Grid View hierachy"
-        type: new SimpleSchema @_grid_views_hierachy_schema
+        label: "Grid View hierarchy"
+        type: new SimpleSchema @_grid_views_hierarchy_schema
         optional: true
 
     @grid_views_collection.attachSchema grid_views_schema
