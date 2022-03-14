@@ -4,7 +4,7 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       type: SimpleSchema.Integer
 
     batch_size:
-      label: "" # XXX
+      label: "Size of migration per batch"
       type: SimpleSchema.Integer
 
     collection:
@@ -33,7 +33,7 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       optional: true
 
     initProcedures:
-      label: "" # XXX
+      label: "Migration script and variable init function"
       type: Function
       blackbox: true
       optional: true
@@ -44,7 +44,7 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       blackbox: true
 
     terminationProcedures:
-      label: "" # XXX
+      label: "Destroyer function for variables created in initProcedures"
       type: Function
       blackbox: true
       optional: true
