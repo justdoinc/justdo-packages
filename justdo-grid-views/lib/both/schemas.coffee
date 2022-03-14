@@ -49,10 +49,16 @@ _.extend JustdoGridViews.prototype,
       view:
         label: "Saved Grid View"
         type: [Object]
+        blackbox: true
 
       hierarchy:
         label: "Grid View hierarchy"
         type: new SimpleSchema @_grid_views_hierarchy_schema
+        optional: true
+
+      shared:
+        label: "Is Grid View shared"
+        type: Boolean
         optional: true
 
     @grid_views_collection.attachSchema grid_views_schema
