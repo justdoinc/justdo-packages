@@ -24,7 +24,10 @@ _.extend JustdoGridViews.prototype,
     grid_view_obj = @grid_views_collection.findOne({_id: grid_view_id}, {fields: {shared: 1, hierarchy: 1, user_id: 1}})
 
     if grid_view_obj.user_id is user_id
-      return true
+      if grid_view_obj.hierarchy.type is "site"
+        return true
+      # If user owns the grid view, the user must also be a member of the Justdo tied to the grid view to access
+      return APP.projects.getProjectIfUserIsMember(grid_view_obj.hierarchy.justdo_id, user_id)?
 
     if grid_view_obj.shared
       if grid_view_obj.hierarchy.type is "site"
@@ -45,8 +48,12 @@ _.extend JustdoGridViews.prototype,
     grid_view_obj = @grid_views_collection.findOne({_id: grid_view_id}, {fields: {shared: 1, hierarchy: 1, user_id: 1}})
 
     if grid_view_obj.user_id is user_id
+      if grid_view_obj.hierarchy.type is "site"
+        return true
+      # If user owns the grid view, the user must also be a member of the Justdo tied to the grid view to edit
       return APP.projects.getProjectIfUserIsMember(grid_view_obj.hierarchy.justdo_id, user_id)?
 
+    # If the grid view is tied to a JustDo, admin status is required to edit the grid view
     if grid_view_obj.shared and grid_view_obj.hierarchy.type is "justdo"
         return APP.projects.isProjectAdmin(grid_view_obj.hierarchy.justdo_id, user_id)
 
