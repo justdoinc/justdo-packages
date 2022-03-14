@@ -17,3 +17,9 @@ _.extend Projects,
   tasks_private_fields_docs_initial_payload_redundant_fields: ["_id", "project_id", "user_id", "_raw_updated_date"]
 
   grid_init_payload_cache_max_age_seconds: 60 * 60 * 24 # 1 day
+
+  max_concurrent_tasks_pages_requests: 10
+
+  page_count_rounding_factor: 1000 # Explained in justdo-projects/lib/server/grid-control-middlewares.coffee
+
+  max_page_size: 10000

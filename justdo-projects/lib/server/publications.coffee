@@ -142,13 +142,22 @@ _.extend Projects.prototype,
         # # General notes regarding tasks private data docs available under the Changelog
         # of the webapp for version v1.117.0
 
-        {project_id, get_parents_as_string, sync} = sub_options
+        {project_id, get_parents_as_string, sync, paginated} = sub_options
         # Validate options
         if not project_id?
           throw self._error "missing-argument", "You must specify the list of project_ids you want to subscribe to"
         check project_id, String
         check get_parents_as_string, Match.Maybe(Boolean)
         check sync, Match.Maybe(Date)
+
+        check paginated, Match.Maybe([Number])
+
+        if paginated?
+          if sync?
+            throw self._error "invalid-argument", "The paginated subscription option is not supported together with the sync option"
+
+          if not pub_options.init_payload_raw_cursors_mode
+            throw self._error "invalid-argument", "The paginated subscription option is only supported for the init_payload_raw_cursors_mode"
 
         req_user_id = query.users
 
@@ -183,8 +192,165 @@ _.extend Projects.prototype,
             for forbidden_field_id in Projects.tasks_private_fields_docs_initial_payload_redundant_fields
               init_payload_private_data_query_options.fields[forbidden_field_id] = 0
 
+            if paginated?
+              # ## Pagination model:
+              #
+              # Unlike usual pagination models, our model is based on creating fixed-sized segments in the
+              # data-set (i.e the project's tasks). That means that each page might have a different amount
+              # of pages.
+              #
+              # We are segmenting pages based on their seqId. A number that we know that for sure will be there
+              # for every task, and it is very easy to segent the data based on.
+              #
+              # The last page, will include the the private fields and might have more pages
+              # than the max_page_size, since we'll let it exceed the limit to capture all the items that
+              # aren't covered by the boundaries resulting from (max_page_size * total_pages).
+              #
+              # Example:
+              #
+              # Task 1
+              # Task 2
+              # Task 3
+              # Task 4
+              # Task 5
+              #
+              # max_page_size = 2, total_pages = 2
+              #
+              # Page 1:
+              # Task 1
+              # Task 2
+              # + All the private fields.
+              #
+              # Page 2:
+              # Task 3
+              # Task 4
+              # Task 5 < Included even though max_page_size is 2.
+              #
+              # Each of the pages will return with the usual sync_id, the subscription to sync the
+              # data should be requested with the minimum of all the sync_ids of all the pages received.
+              # That will promise that the data will for sure be up-to-date for all the tasks.
+              #
+              #
+              # ## Considerations made when planning the pagination system:
+              #
+              # The following was the original idea for the pagination model
+              # I figured that it won't work so I (Daniel) didn't proceed with it. But the text
+              # is good to understand the consideration made me when planning the pagination model.
+              #
+              # The original idea was to rely only on the amount of tasks in the project that can be
+              # derived from the last_seq_id from the project publication, to decide how many pages to
+              # request.
+              #
+              # That had the drawback that for users with very little tasks, for which one page is enough
+              # we might still request many pages redundently (think a project with 1m tasks, a user that
+              # has only one task in it).
+              #
+              # Second, and more seriously, it became very challenging to ensure that the pages content
+              # won't change as we request them - leading for some tasks to never receive.
+              #
+              # Comments that added to the text below after it was abandoned were added inside []
+              #
+              # // OBSOLETE COMMENT 1. Pages consistency and time-stamp: < THIS IS AN ABANDONED IDEA !
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT When paginating, a crucial challenge is to ensure that the pages content won't change
+              # // OBSOLETE COMMENT as we create them.
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT E.g Imagine that we were to query for the tasks belonging to user X.
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT Let's say that the page size is 3 tasks, and that in total that user belongs to 4 tasks.
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT First page sent to user:
+              # // OBSOLETE COMMENT Task 1
+              # // OBSOLETE COMMENT Task 22
+              # // OBSOLETE COMMENT Task 53
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT Second page, not requested yet:
+              # // OBSOLETE COMMENT Task 40
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT Now think of the following scenario, before the request for the 2nd page, the user got
+              # // OBSOLETE COMMENT removed from task 22 - either due to loss of access (removed from users array), or due to
+              # // OBSOLETE COMMENT actual removal of that task.
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT When the 2nd page will be queried, it'll return nothing, since task 40 is now on the first
+              # // OBSOLETE COMMENT page.
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT First page:
+              # // OBSOLETE COMMENT Task 1
+              # // OBSOLETE COMMENT Task 53
+              # // OBSOLETE COMMENT Task 40
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT Second page:
+              # // OBSOLETE COMMENT Nil
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT In that scenario, the user that requested the 2 pages - will actually miss 1 task.
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT The purpose of the pagination_timestamp is to overcome this and promise consistency
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT We request in the query pages to which we were either added before the pagination_timestamp
+              # // OBSOLETE COMMENT or those to which we lost access (either due to removal, or due to loss of permission),
+              # // OBSOLETE COMMENT *after* the pagination_timestamp. [Here you can see that things starts getting complex already]
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT This way, each page provided by the DB will be consistent in content. When we'll prepare those
+              # // OBSOLETE COMMENT pages for submission we'll ensure to remove the tasks to which the user lost access to.
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT Going back to the previous example the result will be:
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT First page requested:
+              # // OBSOLETE COMMENT 
+              # // OBSOLETE COMMENT   First page sent to user:
+              # // OBSOLETE COMMENT   Task 1
+              # // OBSOLETE COMMENT   Task 22
+              # // OBSOLETE COMMENT   Task 53
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT   Second page, not requested yet:
+              # // OBSOLETE COMMENT   Task 40
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT Second page requested:
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT    First page:
+              # // OBSOLETE COMMENT    Task 1
+              # // OBSOLETE COMMENT    Task 22
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT    Second page:
+              # // OBSOLETE COMMENT    Task 40
+              # // OBSOLETE COMMENT
+              # // OBSOLETE COMMENT Note that in that case if the first page will be requested 2nd time it'll be sent without Task 3.
+
+              check paginated, [Number]
+
+              [max_page_size, total_pages, current_page] = paginated
+
+              max_page_size = Math.round(max_page_size)
+              total_pages = Math.round(total_pages)
+              current_page = Math.round(current_page)
+
+              if max_page_size < Projects.page_count_rounding_factor or max_page_size > Projects.max_page_size
+                throw self._error "invalid-argument", "provided max_page_size isn't supported"
+
+              if total_pages <= 1
+                throw self._error "invalid-argument", "provided total_pages isn't supported"
+
+              if current_page < 0 or current_page > total_pages - 1
+                throw self._error "invalid-argument", "provided current_page isn't supported"
+
+              is_last_page = current_page == total_pages - 1
+
+              first_seq_id_inclusive = current_page * max_page_size
+              last_seq_id_exclusive = null
+              if not is_last_page
+                # We don't limit the max page seqId in the last page
+                last_seq_id_exclusive = first_seq_id_inclusive + max_page_size
+
+              initial_payload_query.seqId = {$gte: first_seq_id_inclusive}
+
+              if last_seq_id_exclusive?
+                initial_payload_query.seqId.$lt = last_seq_id_exclusive
+
             initial_payload_cursor = collection.rawCollection().find initial_payload_query, init_payload_query_options
-            private_data_initial_payload_cursor = private_data_collection.rawCollection().find private_data_initial_payload_query, init_payload_private_data_query_options
+            if not paginated? or is_last_page
+              private_data_initial_payload_cursor = private_data_collection.rawCollection().find private_data_initial_payload_query, init_payload_private_data_query_options
+            else
+              private_data_initial_payload_cursor = "SKIP"
           else
             initial_payload_cursor = collection.find initial_payload_query, query_options
             private_data_initial_payload_cursor = private_data_collection.find private_data_initial_payload_query, private_data_query_options
@@ -370,7 +536,7 @@ _.extend Projects.prototype,
           if pub_options.init_payload_raw_cursors_mode
             publish_this.initPayload target_col_name,
               init_payload: initial_payload_cursor
-              changes_journal: private_data_initial_payload_cursor
+              changes_journal: if private_data_initial_payload_cursor is "SKIP" then undefined else private_data_initial_payload_cursor # When pagination is used we include the private data only in the last page
               sync_id: sync
           else
             #
