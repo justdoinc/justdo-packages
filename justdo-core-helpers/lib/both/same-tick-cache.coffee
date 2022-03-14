@@ -4,6 +4,9 @@ cache = {}
 pre_clean_procedures = []
 
 _.extend JustdoCoreHelpers,
+  sameTickCachePurge: ->
+    return cache = {}
+
   sameTickCacheExists: (key) ->
     return key of cache
 
@@ -19,11 +22,15 @@ _.extend JustdoCoreHelpers,
         for proc in pre_clean_procedures
           proc(cache)
 
-        cache = {}
+        JustdoCoreHelpers.sameTickCachePurge()
         clear_job = null
       , 0
 
     return cache[key] = val
+
+  sameTickCacheUnset: (key) ->
+    delete cache[key]
+    return
 
   getTickUid: ->
     if (tick_uid = @sameTickCacheGet("__tick_id"))?
