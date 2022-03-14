@@ -39,7 +39,7 @@ _.extend JustdoGridViews.prototype,
     return false
 
   requireUserHasAccessToGridView: (grid_view_id, user_id) ->
-    if not isUserHaveAccessToGridView grid_view_id, user_id
+    if not @isUserHaveAccessToGridView grid_view_id, user_id
       throw @_error "invalid-argument", "Grid View not found"
 
     return true
@@ -60,7 +60,7 @@ _.extend JustdoGridViews.prototype,
     return false
 
   requireUserAllowedToEditGridView: (grid_view_id, user_id) ->
-    if not isUserAllowedToEditGridView grid_view_id, user_id
+    if not @isUserAllowedToEditGridView grid_view_id, user_id
       throw @_error "permission-denied", "Not allowed to edit Grid View"
 
     return true
@@ -72,11 +72,13 @@ _.extend JustdoGridViews.prototype,
     # Update
     if grid_view_id?
       @requireUserAllowedToEditGridView grid_view_id, user_id
+
       modifier = _.omit options, "hierarchy"
       if options.hierarchy?
         for field_id, field_val of options.hierarchy
           modifier["hierarchy.#{field_id}"] = field_val
-      return @grid_views_collection.update grid_view_id, modifier
+
+      return @grid_views_collection.update grid_view_id, {$set: modifier}
     # Insert
     else
       if options.hierarchy?.justdo_id?
@@ -87,6 +89,7 @@ _.extend JustdoGridViews.prototype,
           # Only Justdo member can create a view under the Justdo
           APP.projects.requireUserIsMemberOfProject options.hierarchy.justdo_id, user_id
       options.user_id = user_id
+
       return @grid_views_collection.insert options
 
     return
