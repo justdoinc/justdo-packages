@@ -59,6 +59,7 @@ GridControl = (options, container, operations_container) ->
           first_comp = false
 
         return
+    @setupGetSchemaExtendedWithCustomFieldsSameTickCacheClear()
 
   @on "custom_fields_changed", =>
     @_destroyColumnsManagerContextMenu()
@@ -999,8 +1000,24 @@ _.extend GridControl.prototype,
 
     return schema
 
+  getSchemaExtendedWithCustomFieldsSameTickCacheId: (include_removed_fields = false) ->
+    return "getSchemaExtendedWithCustomFields-#{include_removed_fields}-#{@grid_control_uid}"
+
+    return 
+
+  setupGetSchemaExtendedWithCustomFieldsSameTickCacheClear: ->
+    @custom_fields_manager.on "custom-fields-updated", =>
+      for include_removed_fields in [true, false]
+        same_tick_cache_id = @getSchemaExtendedWithCustomFieldsSameTickCacheId(include_removed_fields)
+
+        JustdoCoreHelpers.sameTickCacheUnset(same_tick_cache_id)
+
+      return
+
+    return
+
   getSchemaExtendedWithCustomFields: (include_removed_fields = false) ->
-    same_tick_cache_id = "getSchemaExtendedWithCustomFields-#{include_removed_fields}-#{@grid_control_uid}"
+    same_tick_cache_id = @getSchemaExtendedWithCustomFieldsSameTickCacheId(include_removed_fields)
 
     if (sametick_cached_schema = JustdoHelpers.sameTickCacheGet(same_tick_cache_id))?
       return sametick_cached_schema
