@@ -177,6 +177,8 @@ _.extend JustdoAccounts.prototype,
       APP.emit("before-create-user", options)
 
       created_user_id = Accounts.createUser options
+
+      APP.emit("after-create-user", {email: options.email, created_user_id: created_user_id})
     else
       if @userCompletedRegistration(user_obj)
         # If the user already completed the registration process using
