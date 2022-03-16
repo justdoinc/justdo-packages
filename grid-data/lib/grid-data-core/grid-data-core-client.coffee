@@ -348,6 +348,11 @@ _.extend GridDataCore.prototype,
           if parent_id != "0" and not (parent_id of @items_by_id)
             @detaching_items_ids[parent_id] = true
 
+        if not parent_metadata?
+          console.error "A corrupted parent object found, ignoring parent"
+          
+          continue
+
         if parent_metadata.order? and _.isNumber parent_metadata.order
           @tree_structure[parent_id][parent_metadata.order] = item._id
 
