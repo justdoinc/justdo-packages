@@ -8,14 +8,14 @@ _.extend JustdoGridViews.prototype,
 
     return
 
-  subscribeGridViews: (justdo_id, cb) ->
+  subscribeGridViews: (options, cb) ->
     if @destroyed
       return
 
     if @grid_views_subscription?
       @grid_views_subscription.stop()
 
-    @grid_views_subscription = Meteor.subscribe "gridViews", justdo_id, cb
+    @grid_views_subscription = Meteor.subscribe "gridViews", options, cb
 
     return @grid_views_subscription
 
