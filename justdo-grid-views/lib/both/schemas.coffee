@@ -32,6 +32,7 @@ _.extend JustdoGridViews.prototype,
       title:
         label: "Grid View title"
         type: String
+        optional: true
 
       deleted:
         label: "Grid View deleted"
@@ -40,8 +41,7 @@ _.extend JustdoGridViews.prototype,
 
       view:
         label: "Saved Grid View"
-        type: [Object] # XXX Make an EJSON
-        blackbox: true
+        type: String # Stringified EJSON
 
       hierarchy:
         label: "Grid View hierarchy"
@@ -56,6 +56,10 @@ _.extend JustdoGridViews.prototype,
         label: "Justdo ID"
         type: String
         optional: true
+        autoValue: ->
+          if @field("hierarchy.type").value is "justdo"
+            return
+          return @unset()
 
       shared:
         label: "Is Grid View shared"
