@@ -19,6 +19,6 @@ _.extend JustdoGridViews.prototype,
 
     return @grid_views_subscription
 
-  unSubscribeGridViews: ->
-    @grid_views_subscription.stop()
+  unsubscribeGridViews: ->
+    @grid_views_subscription?.stop()
     return

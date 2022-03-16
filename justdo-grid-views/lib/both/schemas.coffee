@@ -27,6 +27,8 @@ _.extend JustdoGridViews.prototype,
           else
             @unset()
 
+          return
+
       updated:
         label: "Grid View updated on"
         type: Date
@@ -48,7 +50,7 @@ _.extend JustdoGridViews.prototype,
 
       view:
         label: "Saved Grid View"
-        type: [Object]
+        type: [Object] # XXX Make an EJSON
         blackbox: true
 
       hierarchy:
