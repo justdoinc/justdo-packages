@@ -41,35 +41,94 @@ _.extend JustdoGridViews.prototype,
 
     return true
 
-  upsert: (grid_view_id, options, user_id) ->
-    # XXX Check options better
+  _insertGridViewOptionsSchema: new SimpleSchema
+    title:
+      type: String
+      optional: true
 
-    if _.isEmpty options
+    deleted:
+      type: Boolean
+      optional: true
+
+    hierarchy:
+      type: Object
+
+    "hierarchy.type":
+      type: String
+      allowedValues: ["site", "justdo"]
+
+    "hierarchy.justdo_id":
+      type: String
+      optional: true
+      autoValue: ->
+        if @field("hierarchy.type").value is "justdo"
+          return
+        return @unset()
+
+    view:
+      type: String
+
+    shared:
+      type: Boolean
+      optional: true
+  _insertGridView: (options, user_id) ->
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_insertGridViewOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+
+    if cleaned_val.type is "justdo"
+      if cleaned_val.shared
+        # Only Justdo admins can share Views
+        APP.projects.requireProjectAdmin options.hierarchy.justdo_id, user_id
+      else
+        # Only Justdo member can create a view under the Justdo
+        APP.projects.requireUserIsMemberOfProject options.hierarchy.justdo_id, user_id
+
+    cleaned_val.user_id = user_id
+
+    return @grid_views_collection.insert cleaned_val
+
+  _updateGridViewOptionsSchema = new SimpleSchema
+    title:
+      type: String
+      optional: true
+
+    deleted:
+      type: Boolean
+      optional: true
+
+    view:
+      type: String
+
+    shared:
+      type: Boolean
+      optional: true
+  _updateGridView: (grid_view_id, options) ->
+    @requireUserAllowedToEditGridView grid_view_id, user_id
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_updateGridViewOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+
+    if _.isEmpty cleaned_val
       throw @_error "missing-argument", "There's nothing to update/insert"
 
-    # Update
-    if grid_view_id?
-      @requireUserAllowedToEditGridView grid_view_id, user_id
+    return @grid_views_collection.update grid_view_id, {$set: cleaned_val}
 
-      modifier = _.omit options, "hierarchy"
-      if options.hierarchy?
-        # XXX hierarchy overrides fully.
-        for field_id, field_val of options.hierarchy
-          modifier["hierarchy.#{field_id}"] = field_val
+  upsert: (grid_view_id, options, user_id) ->
+    # Checks on options will be performed in the corresponding APIs
+    check grid_view_id, Match.Maybe String
+    check user_id, String
 
-      return @grid_views_collection.update grid_view_id, {$set: modifier}
-    # Insert
-    else
-      # XXX Need to check for type, the hierarchy existence must be obvious
-      if options.hierarchy?.justdo_id?
-        if options.shared
-          # Only Justdo admins can share Views
-          APP.projects.requireProjectAdmin options.hierarchy.justdo_id, user_id
-        else
-          # Only Justdo member can create a view under the Justdo
-          APP.projects.requireUserIsMemberOfProject options.hierarchy.justdo_id, user_id
-      options.user_id = user_id
+    # insert
+    if not grid_view_id?
+      return @_insertGridView options, user_id
 
-      return @grid_views_collection.insert options
-
-    return
+    # update
+    return @_updateGridView grid_view_id, options, user_id
