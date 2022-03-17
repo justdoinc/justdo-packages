@@ -91,7 +91,7 @@ _.extend JustdoGridViews.prototype,
 
     return @grid_views_collection.insert cleaned_val
 
-  _updateGridViewOptionsSchema = new SimpleSchema
+  _updateGridViewOptionsSchema: new SimpleSchema
     title:
       type: String
       optional: true
@@ -106,7 +106,7 @@ _.extend JustdoGridViews.prototype,
     shared:
       type: Boolean
       optional: true
-  _updateGridView: (grid_view_id, options) ->
+  _updateGridView: (grid_view_id, options, user_id) ->
     @requireUserAllowedToEditGridView grid_view_id, user_id
 
     {cleaned_val} =
