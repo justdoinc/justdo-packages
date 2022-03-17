@@ -41,36 +41,7 @@ _.extend JustdoGridViews.prototype,
 
     return true
 
-  _insertGridViewOptionsSchema: new SimpleSchema
-    title:
-      type: String
-      optional: true
-
-    deleted:
-      type: Boolean
-      optional: true
-
-    hierarchy:
-      type: Object
-
-    "hierarchy.type":
-      type: String
-      allowedValues: ["site", "justdo"]
-
-    "hierarchy.justdo_id":
-      type: String
-      optional: true
-      autoValue: ->
-        if @field("hierarchy.type").value is "justdo"
-          return
-        return @unset()
-
-    view:
-      type: String
-
-    shared:
-      type: Boolean
-      optional: true
+  _insertGridViewOptionsSchema: new SimpleSchema(JustdoGridViews.prototype._grid_views_schema).omit "user_id", "created", "updated"
   _insertGridView: (options, user_id) ->
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -91,21 +62,10 @@ _.extend JustdoGridViews.prototype,
 
     return @grid_views_collection.insert cleaned_val
 
-  _updateGridViewOptionsSchema: new SimpleSchema
-    title:
-      type: String
-      optional: true
 
-    deleted:
-      type: Boolean
-      optional: true
 
-    view:
-      type: String
-
-    shared:
-      type: Boolean
-      optional: true
+  # Upon creating a schema object with an array of objects passed, the object will be extended.
+  _updateGridViewOptionsSchema: new SimpleSchema([JustdoGridViews.prototype._grid_views_schema, {view: {optional: true}}]).pick "view", "title", "deleted", "shared"
   _updateGridView: (grid_view_id, options, user_id) ->
     @requireUserAllowedToEditGridView grid_view_id, user_id
 
