@@ -9,8 +9,7 @@ _.extend JustdoGridViews.prototype,
     Meteor.publish "gridViews", (options) ->
       # Right now this publication deals ONLY with the case of type = justdo, the rest will be done in the future.
       if not @userId?
-        @ready() # No views for anons
-        return
+        throw @_error "login-required"
 
       {type, justdo_id} = options
       check type, String
