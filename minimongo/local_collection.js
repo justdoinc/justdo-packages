@@ -57,10 +57,6 @@ export default class LocalCollection {
     });
   }
 
-  getDocNonReactive(doc_id) {
-    return this._docs._map[doc_id];
-  }
-
   flushSetDocFieldsReactivity() {
     if (this.set_doc_fields_calls_since_last_flush > this.set_doc_fields_max_direct_update_calls_per_flush) {
       this.recomputeAllQueries();
@@ -89,42 +85,6 @@ export default class LocalCollection {
       return true;
     }
     return false;
-  };
-
-
-  setDocFields(doc_id, fields) {
-    // The following resulted from CoffeeScript:
-    //
-    // setDocFields = (doc_id, fields) ->
-    //   if this.requestSetDocFieldsDirectUpdate()
-    //     this.update(doc_id, {$set: fields})
-        
-    //     return
-
-    //   if (corresponding_server_doc = Meteor.connection._serverDocuments?[this.name]?.get(doc_id)?.document)?
-    //     Object.assign(corresponding_server_doc, fields)
-    //   # The purpose of the above line is the same as the code under: 
-    //   # justdo-shared-packages/mongo/collection.js look for CLIENT-SITE-EXEC-CLIENT-ONLY-FIELDS
-
-    //   this._docs.setDocFields(doc_id, fields)
-      
-    //   return
-
-    var corresponding_server_doc, ref, ref1, ref2;
-    if (this.requestSetDocFieldsDirectUpdate()) {
-      this.update(doc_id, {
-        $set: fields
-      });
-      return;
-    }
-    
-    if ((corresponding_server_doc = (ref = Meteor.connection._serverDocuments) != null ? (ref1 = ref[this.name]) != null ? (ref2 = ref1.get(doc_id)) != null ? ref2.document : void 0 : void 0 : void 0) != null) {
-      Object.assign(corresponding_server_doc, fields);
-    }
-    // The purpose of the above line is the same as the code under: 
-    // justdo-shared-packages/mongo/collection.js look for CLIENT-SITE-EXEC-CLIENT-ONLY-FIELDS
-
-    this._docs.setDocFields(doc_id, fields);
   };
 
   // options may include sort, skip, limit, reactive
