@@ -49,20 +49,19 @@ _.extend JustdoGridViews.prototype,
         options,
         {self: @, throw_on_error: true}
       )
+    options = cleaned_val
 
-    if cleaned_val.type is "justdo"
-      if cleaned_val.shared
+    if options.type is "justdo"
+      if options.shared
         # Only Justdo admins can share Views
         APP.projects.requireProjectAdmin options.hierarchy.justdo_id, user_id
       else
         # Only Justdo member can create a view under the Justdo
         APP.projects.requireUserIsMemberOfProject options.hierarchy.justdo_id, user_id
 
-    cleaned_val.user_id = user_id
+    options.user_id = user_id
 
-    return @grid_views_collection.insert cleaned_val
-
-
+    return @grid_views_collection.insert options
 
   # Upon creating a schema object with an array of objects passed, the object will be extended.
   _updateGridViewOptionsSchema: new SimpleSchema([JustdoGridViews.prototype._grid_views_schema, {view: {optional: true}}]).pick "view", "title", "deleted", "shared"
@@ -75,11 +74,12 @@ _.extend JustdoGridViews.prototype,
         options,
         {self: @, throw_on_error: true}
       )
+    options = cleaned_val
 
-    if _.isEmpty cleaned_val
+    if _.isEmpty options
       throw @_error "missing-argument", "There's nothing to update/insert"
 
-    return @grid_views_collection.update grid_view_id, {$set: cleaned_val}
+    return @grid_views_collection.update grid_view_id, {$set: options}
 
   upsert: (grid_view_id, options, user_id) ->
     # Checks on options will be performed in the corresponding APIs
