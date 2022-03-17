@@ -20,6 +20,8 @@ _.extend JustdoGridViews.prototype,
       grid_views_query =
         "hierarchy.type": "justdo"
         "hierarchy.justdo_id": justdo_id
+        deleted:
+          $ne: true
         $or: [
           {
             user_id: @userId
