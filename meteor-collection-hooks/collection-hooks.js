@@ -25,12 +25,6 @@ export const CollectionHooks = {
 }
 
 CollectionHooks.extendCollectionInstance = function extendCollectionInstance (self, constructor) {
-  if (Meteor.isClient) {
-    // Proxies
-    self.getDocNonReactive = self._collection.getDocNonReactive.bind(self._collection);
-    self.setDocFields = self._collection.setDocFields.bind(self._collection);
-  }
-
   // Offer a public API to allow the user to define aspects
   // Example: collection.before.insert(func);
   ['before', 'after'].forEach(function (pointcut) {
