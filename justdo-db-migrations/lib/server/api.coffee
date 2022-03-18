@@ -141,7 +141,22 @@ _.extend JustdoDbMigrations.prototype,
 
     @_markMigrationScriptAsRunning(migration_script_id)
     @logger.info "Run migration script: #{migration_script_id}."
-    migration_script_def.runScript.call(run_script_this)
+    
+    # For the runScript it is possible that the developer of a migration script
+    # might write a pseudo-blocking while loops that will finish only when the script
+    # will complete its run, for that reason, it is critical to call in defer
+    # to allow runMigrationScriptRunScript to finish and other processes to continue.
+    #
+    # (By pseudo-blocking, I mean processes that looks like blocking, but actually aren't
+    # really thanks to Fibers).
+    Meteor.defer =>
+      try
+        migration_script_def.runScript.call(run_script_this)
+      catch e
+        @logger.error "Failed to run runScript of migration script #{migration_script_id}", e
+
+        @_markMigrationScriptAsNotRunning(migration_script_id)
+      return
 
     return
 
