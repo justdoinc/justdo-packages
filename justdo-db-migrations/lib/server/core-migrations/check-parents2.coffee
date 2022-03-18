@@ -7,8 +7,6 @@ APP.justdo_db_migrations.registerMigrationScript "check-parents2",
     num_processed = 0
 
     query =
-      updatedAt:
-        $gt: APP.justdo_system_records.getRecord("checked-parents2-tasks")?.previous_checkpoint or new Date null # 1970-01-01T00:00:00.000Z
       parents:
         $exists: true
       parents2:
@@ -19,10 +17,14 @@ APP.justdo_db_migrations.registerMigrationScript "check-parents2",
       fields:
         parents: 1
         parents2: 1
-        updatedAt: 1
+        createdAt: 1
       sort:
-        updatedAt: 1
+        createdAt: 1
       limit: batch_size
+
+    if (previous_checkpoint = APP.justdo_system_records.getRecord("checked-parents2-tasks")?.previous_checkpoint)?
+      query.createdAt =
+        $gt: previous_checkpoint
 
     tasks_collection_cursor = APP.collections.Tasks.find(query, options)
     @logProgress "Total documents to be checked: #{initial_affected_docs_count = tasks_collection_cursor.count()}"
@@ -33,7 +35,7 @@ APP.justdo_db_migrations.registerMigrationScript "check-parents2",
 
       tasks_collection_cursor.forEach (task) ->
         num_processed += 1
-        current_checkpoint = task.updatedAt
+        current_checkpoint = task.createdAt
 
         {parents, parents2} = task
         if _.size(parents) isnt _.size(parents2)
@@ -58,13 +60,12 @@ APP.justdo_db_migrations.registerMigrationScript "check-parents2",
 
       @logProgress "#{num_processed}/#{initial_affected_docs_count} documents checked"
 
-      query.updatedAt.$gt = current_checkpoint
+      query.createdAt =
+        $gt: current_checkpoint
       tasks_collection_cursor = APP.collections.Tasks.find(query, options)
 
     if tasks_collection_cursor.count() is 0
       @markAsCompleted()
-    else if not @isAllowedToContinue()
-      @halt()
 
     return
 
