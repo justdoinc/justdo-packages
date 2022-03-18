@@ -1,7 +1,7 @@
-batch_size = 300
-
 APP.justdo_db_migrations.registerMigrationScript "check-parents2",
   runScript: ->
+    batch_size = 300
+
     # The two var below are solely for logging progress
     initial_affected_docs_count = 0
     num_processed = 0
@@ -9,8 +9,11 @@ APP.justdo_db_migrations.registerMigrationScript "check-parents2",
     query =
       _id:
         $nin: APP.justdo_system_records.getRecord("checked-parents2-tasks")?.checked_task_ids or []
+      parents:
+        $exists: true
       parents2:
         $exists: true
+      _raw_removed_date: null
 
     options =
       fields:
@@ -21,7 +24,7 @@ APP.justdo_db_migrations.registerMigrationScript "check-parents2",
     tasks_collection_cursor = APP.collections.Tasks.find(query, options)
     @logProgress "Total documents to be checked: #{initial_affected_docs_count = tasks_collection_cursor.count()}"
 
-    while tasks_collection_cursor.count() > 0 and @allowedToContinue()
+    while tasks_collection_cursor.count() > 0 and @isAllowedToContinue()
       checked_task_ids = []
       tasks_ids_with_problems = []
 
@@ -41,7 +44,6 @@ APP.justdo_db_migrations.registerMigrationScript "check-parents2",
       @logProgress "#{num_processed}/#{initial_affected_docs_count} documents checked"
       query._id.$nin = APP.justdo_system_records.getRecord("checked-parents2-tasks")?.checked_task_ids or []
       tasks_collection_cursor = APP.collections.Tasks.find(query, options)
-
 
     return
 
