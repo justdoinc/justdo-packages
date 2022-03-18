@@ -1,6 +1,6 @@
 APP.justdo_db_migrations.registerMigrationScript "check-parents2",
   runScript: ->
-    batch_size = 300
+    batch_size = 1000
 
     # The two var below are solely for logging progress
     initial_affected_docs_count = 0
@@ -8,26 +8,26 @@ APP.justdo_db_migrations.registerMigrationScript "check-parents2",
 
     query =
       parents:
-        $exists: true
+        $ne: null
       parents2:
-        $exists: true
+        $ne: null
       _raw_removed_date: null
+
+    if (previous_checkpoint = APP.justdo_system_records.getRecord("checked-parents2-tasks")?.previous_checkpoint)?
+      query._id = {$gt: previous_checkpoint}
 
     options =
       fields:
         parents: 1
         parents2: 1
-        createdAt: 1
       sort:
-        createdAt: 1
+        _id: 1
       limit: batch_size
 
-    if (previous_checkpoint = APP.justdo_system_records.getRecord("checked-parents2-tasks")?.previous_checkpoint)?
-      query.createdAt =
-        $gt: previous_checkpoint
-
     tasks_collection_cursor = APP.collections.Tasks.find(query, options)
-    @logProgress "Total documents to be checked: #{initial_affected_docs_count = tasks_collection_cursor.count()}"
+
+    initial_affected_docs_count = tasks_collection_cursor.count()
+    @logProgress "Total documents to be checked: #{initial_affected_docs_count}"
 
     while tasks_collection_cursor.count() > 0 and @isAllowedToContinue()
       tasks_ids_with_problems = []
@@ -35,7 +35,7 @@ APP.justdo_db_migrations.registerMigrationScript "check-parents2",
 
       tasks_collection_cursor.forEach (task) ->
         num_processed += 1
-        current_checkpoint = task.createdAt
+        current_checkpoint = task._id
 
         {parents, parents2} = task
         if _.size(parents) isnt _.size(parents2)
@@ -60,9 +60,10 @@ APP.justdo_db_migrations.registerMigrationScript "check-parents2",
 
       @logProgress "#{num_processed}/#{initial_affected_docs_count} documents checked"
 
-      query.createdAt =
-        $gt: current_checkpoint
+      query._id = {$gt: current_checkpoint}
+
       tasks_collection_cursor = APP.collections.Tasks.find(query, options)
+
 
     if tasks_collection_cursor.count() is 0
       @markAsCompleted()
