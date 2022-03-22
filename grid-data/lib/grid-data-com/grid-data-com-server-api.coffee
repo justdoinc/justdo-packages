@@ -1443,3 +1443,39 @@ _.extend GridDataCom.prototype,
       contexts = _.filter contexts, (context) -> context[0]._id != -1 or context.length > 2
 
     return contexts
+
+  countItems: (method_options, perform_as) ->
+    @_isPerformAsProvided(perform_as)
+    check perform_as, String
+
+    result = {}
+    query =
+      users: perform_as
+      _raw_removed_date: null
+    count_options = {}
+
+    if not method_options? or not _.isObject(method_options)
+      throw @_error "invalid-argument", "countItems method_options expected to be an object"
+
+    @_runGridMethodMiddlewares "beforeCountItems", perform_as,
+      # the etc obj
+      {query, count_options, method_options, result}
+
+    # The following is an extra security check, to ensure that there will be no chance
+    # that by some bypass we will allow counting beyond a specific project
+    if not query.project_id?
+      throw @_error "not-supported", "countItems called in an unsupported manner"
+    check query.project_id, String
+
+    count_promise = @collection.rawCollection().count(query, count_options)
+
+    count_promise = count_promise.then (count) =>
+      result.count = count
+
+      @_runGridMethodMiddlewares "afterCountItems", perform_as,
+        # the etc obj
+        {query, count_options, method_options, result}
+
+      return result
+
+    return count_promise

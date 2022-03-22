@@ -404,3 +404,4 @@ _.extend GridData.prototype,
 
     Meteor.call @getCollectionMethodName("bulkUpdate"), items_ids, modifier, (err, changed_items_count) ->
       helpers.callCb cb, err, changed_items_count
+

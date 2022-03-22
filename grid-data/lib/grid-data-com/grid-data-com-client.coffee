@@ -11,6 +11,14 @@ GridDataCom = (collection) ->
 Util.inherits GridDataCom, EventEmitter
 
 _.extend GridDataCom.prototype,
+  countItems: (options, cb) ->
+    Meteor.call GridData.helpers.getCollectionMethodName(@collection, "countItems"), options, (err, items_count) ->
+      helpers.callCb cb, err, items_count
+
+      return
+
+    return
+
   loadDefaultGridFromHttpPreReadyPayload: (subscription_options, http_options, cb) ->
     APP.justdo_ddp_extensions.loadHttpPreReadyPayloadToMiniMongoStore "tasks_grid_um",
       [subscription_options, {"unmerged_pub_ddp_extensions_version": 1, "init_payload_raw_cursors_mode": true}], http_options, cb

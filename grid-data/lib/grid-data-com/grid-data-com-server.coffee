@@ -87,6 +87,9 @@ _.extend GridDataCom.prototype,
     getContexts:
       perform_as_arg_position: 2
       unblock_method_invocation: false
+    countItems:
+      perform_as_arg_position: 1
+      unblock_method_invocation: true
 
   disabled_methods: ["updateItem"]
 
