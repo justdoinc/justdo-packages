@@ -526,6 +526,18 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         blackbox: true
 
+      parents2:
+        label: "Parents 2"
+
+        grid_editable_column: false
+        grid_visible_column: false
+
+        type: [Object]
+
+        blackbox: true
+
+        exclude_from_tasks_grid_pub: true
+
       users:
         label: "Users"
 
