@@ -4,16 +4,21 @@ common_batched_migration_options =
 
   collection: APP.collections.Tasks
 
-  pending_migration_set_query:
-    parents2: null
-    corrupted_parents: null
-    _raw_removed_date: null
-    parents: {$ne: null}
+  queryGenerator: ->
+    query =
+      parents2: null
+      corrupted_parents: null
+      _raw_removed_date: null
+      parents: {$ne: null}
 
-  pending_migration_set_query_options:
-    fields:
-      parents: 1
-  
+    query_options =
+      fields:
+        parents: 1
+    return {query, query_options}
+  static_query: true
+
+  mark_as_completed_upon_batches_exhaustion: true
+
   batchProcessor: (tasks_cursor) ->
     num_processed = 0
     tasks_cursor.forEach (task) =>

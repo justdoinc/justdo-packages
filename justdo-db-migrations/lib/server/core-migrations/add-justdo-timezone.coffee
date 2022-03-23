@@ -4,18 +4,23 @@ common_batched_migration_options =
 
   collection: APP.collections.Projects
 
-  pending_migration_set_query:
-    timezone:
-      $exists: false
-    members:
-      $elemMatch:
-        is_admin: true
-
-  pending_migration_set_query_options:
-    fields:
+  queryGenerator: ->
+    query =
+      timezone:
+        $exists: false
       members:
         $elemMatch:
           is_admin: true
+
+    query_options =
+      fields:
+        members:
+          $elemMatch:
+            is_admin: true
+    return {query, query_options}
+  static_query: true
+
+  mark_as_completed_upon_batches_exhaustion: true
 
   custom_options:
     fallback_timezone: moment.tz.guess()
