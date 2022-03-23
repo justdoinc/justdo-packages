@@ -179,7 +179,12 @@ _.extend GridControlSearch.prototype,
     else if String(@current_term).trim() != ""
       @logger.debug "Refresh search results"
 
-      search_pattern = JustdoHelpers.escapeRegExp(@current_term)
+      # For #seqId, search for both tasks in which the seqId is exactly seqId and tasks with the string #seqId
+      if (res = /^#([0-9]{1,10})\s*$/i.exec(@current_term))?
+        search_pattern = "(^#{res[1]}$|##{res[1]})"
+        fields.push "seqId"
+      else
+        search_pattern = JustdoHelpers.escapeRegExp(@current_term)
 
     if search_pattern?
       search_regexp = new RegExp(search_pattern, "i")
