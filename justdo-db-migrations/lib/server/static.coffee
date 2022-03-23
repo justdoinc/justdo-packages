@@ -182,7 +182,6 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
       # Check every interval if startingCondition is set
       if options.startingCondition?
         check_starting_condition_interval = Meteor.setInterval ->
-          console.log options.startingCondition()
           if options.startingCondition()
             Meteor.clearInterval check_starting_condition_interval
             script.call self
