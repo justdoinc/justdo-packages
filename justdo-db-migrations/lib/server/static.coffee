@@ -60,6 +60,8 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
     mark_as_completed_upon_batches_exhaustion:
       label: "Should this migration mark itself as completed upon completion"
       type: Boolean
+      optional: true
+      defaultValue: true
 
     delay_before_checking_for_new_batches:
       label: "Interval between checks for new migration batches."
@@ -102,6 +104,16 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
     return
 
+  check_starting_condition_interval = null
+  clearStartingConditionInterval = ->
+    if check_starting_condition_interval?
+      Meteor.clearInterval check_starting_condition_interval
+      check_starting_condition_interval = null
+
+      @logProgress "Starting condition interval cleared"
+
+    return
+
   migration_script_obj =
     runScript: ->
       self = @
@@ -111,7 +123,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
         query_options.limit = options.batch_size
         return options.collection.find(query, query_options)
 
-      script = ->
+      scriptWrapper = ->
         pending_migration_set_cursor = getCursor()
 
         # The two var below are solely for logging progress
@@ -179,22 +191,24 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           return
         return
 
-      # Check every interval if startingCondition is set
-      if options.startingCondition?
+      callScriptWrapper = -> scriptWrapper.call self
+      if options.startingCondition? and not options.startingCondition()
+        # If we got a startingCondition and it isn't met yet, then setup an interval to wait for it.
         check_starting_condition_interval = Meteor.setInterval ->
           if options.startingCondition()
-            Meteor.clearInterval check_starting_condition_interval
-            script.call self
+            clearStartingConditionInterval.call(self)
+            callScriptWrapper()
           else
             self.logProgress "Starting condition not met. Checking again in #{options.starting_condition_interval_between_checks / 1000} secs."
         , options.starting_condition_interval_between_checks
       else
-        script.call self
+        callScriptWrapper()
 
       return
 
     haltScript: ->
       clearTimeout.call(@)
+      clearStartingConditionInterval.call(@)
 
       runTerminationProcedures(@)
 
