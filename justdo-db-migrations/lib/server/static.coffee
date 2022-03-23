@@ -15,16 +15,13 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       type: String
       optional: true
 
-    pending_migration_set_query:
-      label: "Query of documents for migraiton"
-      type: Object
-      blackbox: true
+    queryGenerator:
+      label: "Query and query options generator"
+      type: Function
 
-    pending_migration_set_query_options:
-      label: "Query options of documents for migraiton"
-      type: Object
-      blackbox: true
-      optional: true
+    static_query:
+      label: "Should the cursor be updated before every batch"
+      type: Boolean
 
     custom_options:
       label: "Custom options for migration script"
@@ -107,19 +104,15 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
   migration_script_obj =
     runScript: ->
-      pending_migration_set_query_options = _.extend {}, options.pending_migration_set_query_options, {limit: options.batch_size}
-      pending_migration_set_cursor = options.collection.find(options.pending_migration_set_query, pending_migration_set_query_options)
+      self = @
 
-      # The two var below are solely for logging progress
-      initial_affected_docs_count = 0
-      num_processed = 0
+      getCursor = ->
+        {query, query_options} = options.queryGenerator()
+        query_options.limit = options.batch_size
+        return options.collection.find(query, query_options)
 
-      initial_affected_docs_count = pending_migration_set_cursor.count() # Note: count ignores limit
-      @logProgress "Total documents to be updated: #{initial_affected_docs_count}."
-      expected_batches = Math.ceil(initial_affected_docs_count / options.batch_size)
-      @logProgress "Expected batches: #{expected_batches}."
-      @logProgress "Expected time to complete: #{Math.round((expected_batches * options.delay_between_batches) / 1000 / 60)} minutes."
       script = ->
+        pending_migration_set_cursor = getCursor()
 
         # The two var below are solely for logging progress
         initial_affected_docs_count = 0
@@ -150,6 +143,8 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           if not @isAllowedToContinue()
             return
 
+          if not options.static_query
+            pending_migration_set_cursor = getCursor()
 
           if pending_migration_set_cursor.count() == 0
             if options.mark_as_completed_upon_batches_exhaustion
