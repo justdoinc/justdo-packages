@@ -49,6 +49,26 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       blackbox: true
       optional: true
 
+    startingCondition:
+      label: "Migration script starting condition"
+      type: Function
+      blackbox: true
+      optional: true
+
+    starting_condition_interval_between_checks:
+      label: "Interval between checks for starting condition"
+      type: SimpleSchema.Integer
+      optional: true
+
+    mark_as_completed_upon_batches_exhaustion:
+      label: "Should this migration mark itself as completed upon completion"
+      type: Boolean
+
+    delay_before_checking_for_new_batches:
+      label: "Interval between checks for new migration batches."
+      type: SimpleSchema.Integer
+      optional: true
+
 JustdoDbMigrations.commonBatchedMigration = (options) ->
   {cleaned_val} =
     JustdoHelpers.simpleSchemaCleanAndValidate(
@@ -99,51 +119,83 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
       expected_batches = Math.ceil(initial_affected_docs_count / options.batch_size)
       @logProgress "Expected batches: #{expected_batches}."
       @logProgress "Expected time to complete: #{Math.round((expected_batches * options.delay_between_batches) / 1000 / 60)} minutes."
+      script = ->
 
-      migration_functions_this = getMigrationFunctionsThis(@)
+        # The two var below are solely for logging progress
+        initial_affected_docs_count = 0
+        num_processed = 0
 
-      if _.isFunction options.initProcedures
-        options.initProcedures.call migration_functions_this
+        initial_affected_docs_count = pending_migration_set_cursor.count() # Note: count ignores limit
+        @logProgress "Total documents to be updated: #{initial_affected_docs_count}."
+        expected_batches = Math.ceil(initial_affected_docs_count / options.batch_size)
+        @logProgress "Expected batches: #{expected_batches}."
+        @logProgress "Expected time to complete: #{Math.round((expected_batches * options.delay_between_batches) / 1000 / 60)} minutes."
 
-      processBatchWrapper = =>
-        try
-          processBatch()
-        catch e
-          @logProgress "Error found halt the script", e
+        migration_functions_this = getMigrationFunctionsThis(@)
 
-          @halt()
+        if _.isFunction options.initProcedures
+          options.initProcedures.call migration_functions_this
 
-        return
+        processBatchWrapper = =>
+          try
+            processBatch()
+          catch e
+            @logProgress "Error found halt the script", e
 
-      processBatch = =>
-        if not @isAllowedToContinue()
+            @halt()
+
           return
 
-        if pending_migration_set_cursor.count() == 0
-          @markAsCompleted()
+        processBatch = =>
+          if not @isAllowedToContinue()
+            return
 
-          runTerminationProcedures(@)
 
-          return
+          if pending_migration_set_cursor.count() == 0
+            if options.mark_as_completed_upon_batches_exhaustion
+              @markAsCompleted()
 
-        @logProgress "Start batch"
+              runTerminationProcedures(@)
 
-        num_processed += options.batchProcessor.call migration_functions_this, pending_migration_set_cursor
+              return
 
-        @logProgress "#{num_processed}/#{initial_affected_docs_count} documents updated"
+            @logProgress "Waiting #{options.delay_before_checking_for_new_batches / 1000}sec before checking for new batches"
+            batch_timeout = Meteor.setTimeout =>
+              processBatchWrapper()
+            , options.delay_before_checking_for_new_batches
+          else
+            @logProgress "Start batch"
 
-        @logProgress "Waiting #{options.delay_between_batches / 1000}sec before starting the next batch"
-        batch_timeout = Meteor.setTimeout =>
+            num_processed += options.batchProcessor.call migration_functions_this, pending_migration_set_cursor
+
+            @logProgress "#{num_processed}/#{initial_affected_docs_count} documents updated"
+
+            @logProgress "Waiting #{options.delay_between_batches / 1000}sec before starting the next batch"
+            batch_timeout = Meteor.setTimeout =>
+              processBatchWrapper()
+            , options.delay_between_batches
+
+            return
+
+        Meteor.defer ->
+          # To avoid running in the original tick that called the necessary db-migrations, defer the run
           processBatchWrapper()
-        , options.delay_between_batches
 
+          return
         return
 
-      Meteor.defer ->
-        # To avoid running in the original tick that called the necessary db-migrations, defer the run
-        processBatchWrapper()
-
-        return
+      # Check every interval if startingCondition is set
+      if options.startingCondition?
+        check_starting_condition_interval = Meteor.setInterval ->
+          console.log options.startingCondition()
+          if options.startingCondition()
+            Meteor.clearInterval check_starting_condition_interval
+            script.call self
+          else
+            self.logProgress "Starting condition not met. Checking again in #{options.starting_condition_interval_between_checks / 1000} secs."
+        , options.starting_condition_interval_between_checks
+      else
+        script.call self
 
       return
 
