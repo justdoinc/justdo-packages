@@ -227,25 +227,26 @@ Template.justdo_quick_notes_item.onRendered ->
             if error?
               JustdoSnackbar.show
                 text: error.reason
-            else
 
-              APP.modules.project_page.mainGridControl()._grid_data.once "rebuild", ->
-                APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(new_task_id)
+              return
 
-              JustdoSnackbar.show
-                text: "Task has been created"
-                duration: 5000
-                actionText: "Undo"
-                showDismissButton: true
-                onActionClick: =>
-                  APP.justdo_quick_notes.undoCreateTaskFromQuickNote quick_note._id, JD.activeJustdoId(), "/#{task_id}/", (error) =>
-                    if error?
-                      JustdoSnackbar.show
-                        text: error.reason
+            APP.modules.project_page.mainGridControl()._grid_data.once "rebuild", ->
+              APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(new_task_id)
 
-                  JustdoSnackbar.close()
+            JustdoSnackbar.show
+              text: "Task has been created"
+              duration: 5000
+              actionText: "Undo"
+              showDismissButton: true
+              onActionClick: =>
+                APP.justdo_quick_notes.undoCreateTaskFromQuickNote quick_note._id, JD.activeJustdoId(), "/#{task_id}/", (error) =>
+                  if error?
+                    JustdoSnackbar.show
+                      text: error.reason
 
-                  return
+                JustdoSnackbar.close()
+
+                return
 
             return
 
