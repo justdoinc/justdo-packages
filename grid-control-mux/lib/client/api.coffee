@@ -654,6 +654,10 @@ _.extend GridControlMux.prototype,
     return @_current_path_crv.getSync()
 
   activateCollectionItemIdInCurrentPathOrFallbackToMainTab: (item_id) ->
+    if not @getMainGridControl().getCollectionItemById(item_id)
+      console.warn "activateCollectionItemIdInCurrentPathOrFallbackToMainTab called with an unknown item_id: #{item_id}"
+      return
+
     activatePath = => @getActiveTabNonReactive()?.grid_control?.activatePath("/" + item_id + "/", 0, {smart_guess: true})
 
     if not activatePath()

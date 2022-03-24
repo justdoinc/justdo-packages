@@ -2604,3 +2604,6 @@ _.extend GridControl.prototype,
       return undefined
 
     return $(row_node)
+
+  getCollectionItemById: (item_id) ->
+    return @_grid_data.items_by_id[item_id]
