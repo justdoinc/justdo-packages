@@ -77,7 +77,7 @@ users_to_add = new ReactiveVar null
 cascade = new ReactiveVar true
 notes = new ReactiveVar {}, JustdoHelpers.jsonComp
 
-_getUsersDocsByIdsWithProceedFlag = (members_array, search_text, default_proceed_val=true) ->
+_getUsersDocsByIdsWithProceedFlag = (members_array, default_proceed_val=true) ->
   # Returns APP.helpers.getUsersDocsByIds(members_array) output with
   # a `proceed` property assigned to each user doc.
   # The `proceed` property will have a reactive variable initiated to
@@ -88,7 +88,6 @@ _getUsersDocsByIdsWithProceedFlag = (members_array, search_text, default_proceed
   # se we don't need to worry about reactivity and its consequence on proceed
   # values upon invalidations
   members = APP.helpers.getUsersDocsByIds(members_array)
-  members = JustdoHelpers.filterUsersDocsArray members, search_text
   members = JustdoHelpers.sortUsersDocsArrayByDisplayName members
 
   for member in members
@@ -115,15 +114,18 @@ Template.meetings_meeting_members_editor.onCreated ->
   if not (item_users = data.users)?
     throw module._error("unknown-data-context", "can't determine current task user")
   _users_to_keep = _.without item_users, Meteor.userId(), data.organizer_id
+  users_to_keep.set _getUsersDocsByIdsWithProceedFlag(_users_to_keep, true)
+
 
   if not (project_members = (project = module.curProj())?.getMembersIds())?
     throw module._error("unknown-data-context", "can't determine project members")
   _users_to_add = _.difference project_members, item_users
+  users_to_add.set _getUsersDocsByIdsWithProceedFlag(_users_to_add, false)
 
   @autorun =>
     search_text = @members_search_rv.get()
-    users_to_keep.set _getUsersDocsByIdsWithProceedFlag(_users_to_keep, search_text, true)
-    users_to_add.set _getUsersDocsByIdsWithProceedFlag(_users_to_add, search_text, false)
+    users_to_keep.set JustdoHelpers.filterUsersDocsArray (Tracker.nonreactive -> users_to_keep.get()), search_text
+    users_to_add.set JustdoHelpers.filterUsersDocsArray (Tracker.nonreactive -> users_to_add.get()), search_text
   cascade.set true
   notes.set {}
 
