@@ -74,6 +74,7 @@ Template.meetings_meeting_members.events
 # Note: we assume only one confirmation dialog at a time
 users_to_keep = new ReactiveVar null
 users_to_add = new ReactiveVar null
+members_search_rv = new ReactiveVar ""
 cascade = new ReactiveVar true
 notes = new ReactiveVar {}, JustdoHelpers.jsonComp
 
@@ -83,10 +84,6 @@ _getUsersDocsByIdsWithProceedFlag = (members_array, default_proceed_val=true) ->
   # The `proceed` property will have a reactive variable initiated to
   # default_proceed_val value
 
-
-  # Note, _getUsersDocsByIdsWithProceedFlag is called outside of a computation
-  # se we don't need to worry about reactivity and its consequence on proceed
-  # values upon invalidations
   members = APP.helpers.getUsersDocsByIds(members_array)
   members = JustdoHelpers.sortUsersDocsArrayByDisplayName members
 
@@ -96,10 +93,10 @@ _getUsersDocsByIdsWithProceedFlag = (members_array, default_proceed_val=true) ->
   return members
 
 _setProceedStateForAllUsersInReactiveVar = (reactive_var, state) ->
-  members = reactive_var.get()
-
+  members = JustdoHelpers.filterUsersDocsArray reactive_var.get(), members_search_rv.get()
   for member in members
     member.proceed.set state
+  return
 
 _getMembersIdsInReactiveVarByProceedState = (reactive_var, proceed_state=true) ->
   return _.map(_.filter(reactive_var.get(), (item) -> item.proceed.get() == proceed_state), (item) -> item._id)
@@ -109,23 +106,20 @@ Template.meetings_meeting_members_editor.onCreated ->
 
   module = APP.modules.project_page
 
-  @members_search_rv = new ReactiveVar ""
-
   if not (item_users = data.users)?
     throw module._error("unknown-data-context", "can't determine current task user")
   _users_to_keep = _.without item_users, Meteor.userId(), data.organizer_id
-  users_to_keep.set _getUsersDocsByIdsWithProceedFlag(_users_to_keep, true)
-
 
   if not (project_members = (project = module.curProj())?.getMembersIds())?
     throw module._error("unknown-data-context", "can't determine project members")
   _users_to_add = _.difference project_members, item_users
-  users_to_add.set _getUsersDocsByIdsWithProceedFlag(_users_to_add, false)
 
+  # _getUsersDocsByIdsWithProceedFlag calls getUsersDocsByIds, which establishes a subscription on members collection
+  # The initial return value of getUsersDocsByIds will be empty, as it takes time for member documents to be sent over the wire
+  # Hence the autorun
   @autorun =>
-    search_text = @members_search_rv.get()
-    users_to_keep.set JustdoHelpers.filterUsersDocsArray (Tracker.nonreactive -> users_to_keep.get()), search_text
-    users_to_add.set JustdoHelpers.filterUsersDocsArray (Tracker.nonreactive -> users_to_add.get()), search_text
+    users_to_keep.set _getUsersDocsByIdsWithProceedFlag(_users_to_keep, true)
+    users_to_add.set _getUsersDocsByIdsWithProceedFlag(_users_to_add, false)
   cascade.set true
   notes.set {}
 
@@ -173,15 +167,16 @@ Template.meetings_meeting_members_editor.events
     value = $(e.target).val().trim()
 
     if _.isEmpty value
-      return tpl.members_search_rv.set(null)
+      return members_search_rv.set(null)
     else
-      tpl.members_search_rv.set(value)
+      members_search_rv.set(value)
 
     return
 
 Template.meetings_meeting_members_editor.onDestroyed ->
   users_to_keep.set null
   users_to_add.set null
+  members_search_rv.set null
   cascade.set true
   notes.set {}
 
@@ -190,7 +185,7 @@ Template.meetings_meeting_members_editor.onDestroyed ->
 #
 Template.meetings_meeting_members_editor_section.helpers
   perform_action: -> @proceed_action_reactive_var.get()
-  action_users: -> @action_users_reactive_var.get()
+  action_users: -> JustdoHelpers.filterUsersDocsArray @action_users_reactive_var.get(), members_search_rv.get()
 
 Template.meetings_meeting_members_editor_section.events
   "click .select-all": ->
