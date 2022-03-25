@@ -23,4 +23,4 @@ Template.justdo_quick_notes_activation_icon.onDestroyed ->
 
 Template.justdo_quick_notes_activation_icon.helpers
   activeNotesCount: ->
-    return APP.collections.QuickNotesInfo.findOne("active_quick_notes_count", {count: 1})?.count
+    return APP.collections.QuickNotesInfo.findOne("active_quick_notes_count", {count: 1})?.count or 0
