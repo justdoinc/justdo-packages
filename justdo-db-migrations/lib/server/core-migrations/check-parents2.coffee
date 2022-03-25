@@ -1,19 +1,16 @@
 common_batched_migration_options =
-  starting_condition_interval_between_checks: 1000 * 60 # Miliseconds, relevant only if startingCondition is not null
-
-  startingCondition: -> # default null
+  starting_condition_interval_between_checks: 1000 * 60
+  startingCondition: ->
     return APP.justdo_db_migrations.isMigrationScriptMarkedAsComplete "add-parents2"
 
-  mark_as_completed_upon_batches_exhaustion: true # default to true
+  mark_as_completed_upon_batches_exhaustion: true
 
   delay_between_batches: 1000 * 10
   batch_size: 10000
 
   collection: APP.collections.Tasks
 
-  static_query: false # If set to false, the initial queryGenerator will be used to generate all the batches.
-                      # If set to true we will call queryGenerator before every call to batchProcessor to create a new cursor
-                      # for each batch with the returned query and query_options.
+  static_query: false
   queryGenerator: ->
     query =
       parents2:

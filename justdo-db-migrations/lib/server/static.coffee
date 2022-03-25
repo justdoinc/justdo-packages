@@ -19,6 +19,9 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       label: "Query and query options generator"
       type: Function
 
+    # If set to false, the initial queryGenerator will be used to generate all the batches.
+    # If set to true we will call queryGenerator before every call to batchProcessor to create a new cursor
+    # for each batch with the returned query and query_options.
     static_query:
       label: "Should the cursor be updated before every batch"
       type: Boolean
@@ -46,23 +49,27 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       blackbox: true
       optional: true
 
+    # Default null
     startingCondition:
       label: "Migration script starting condition"
       type: Function
       blackbox: true
       optional: true
 
+    # Miliseconds, relevant only if startingCondition is set
     starting_condition_interval_between_checks:
-      label: "Interval between checks for starting condition" # Relevant only if startingCondition is set.
+      label: "Interval between checks for starting condition"
       type: SimpleSchema.Integer
       defaultValue: 1000 * 60
 
+    # Default true
     mark_as_completed_upon_batches_exhaustion:
       label: "Should this migration mark itself as completed upon completion"
       type: Boolean
       optional: true
       defaultValue: true
 
+    # Miliseconds, relevant only if mark_as_completed_upon_batches_exhaustion is false
     delay_before_checking_for_new_batches:
       label: "Interval between checks for new migration batches."
       type: SimpleSchema.Integer
