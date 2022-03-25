@@ -12,6 +12,9 @@ _.extend JustdoTasksCollectionsManager.prototype,
     # FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_RECENTLY_UPDATED (In use by other packages)
     @tasks_collection._ensureIndex {"project_id": 1, "users": 1, "updatedAt": -1}
 
+    # FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_BY_SEQID_ASC (In use by other packages)
+    @tasks_collection._ensureIndex {"project_id": 1, "users": 1, "seqId": 1}
+
     # FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_WITH_RAW_UPDATED_DATE_INDEX
     @tasks_collection._ensureIndex {"project_id": 1, "users": 1, "_raw_updated_date": 1}
 
