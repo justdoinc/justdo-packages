@@ -53,9 +53,9 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       optional: true
 
     starting_condition_interval_between_checks:
-      label: "Interval between checks for starting condition"
+      label: "Interval between checks for starting condition" # Relevant only if startingCondition is set.
       type: SimpleSchema.Integer
-      optional: true
+      defaultValue: 1000 * 60
 
     mark_as_completed_upon_batches_exhaustion:
       label: "Should this migration mark itself as completed upon completion"
