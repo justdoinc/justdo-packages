@@ -230,8 +230,19 @@ Template.justdo_quick_notes_item.onRendered ->
 
               return
 
-            APP.modules.project_page.mainGridControl()._grid_data.once "rebuild", ->
+            rebuildProc = ->
+              main_gc = APP.modules.project_page.mainGridControl()
+              if not main_gc.getCollectionItemById(new_task_id)?
+                # Item isn't yet part of the grid
+                return
+
               APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(new_task_id)
+
+              main_gc._grid_data.off "rebuild", rebuildProc
+
+              return
+
+            APP.modules.project_page.mainGridControl()._grid_data.on "rebuild", rebuildProc
 
             JustdoSnackbar.show
               text: "Task has been created"
