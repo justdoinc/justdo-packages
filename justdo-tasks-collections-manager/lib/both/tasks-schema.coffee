@@ -625,6 +625,8 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_editable_column: false
         grid_visible_column: false
 
+        exclude_from_tasks_grid_pub: true
+
         type: Date
 
         optional: true
