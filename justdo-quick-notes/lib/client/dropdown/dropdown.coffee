@@ -133,8 +133,6 @@ Template.justdo_quick_notes_dropdown.events
     return
 
   "click .quick-notes-completed-delete": (e, tpl) ->
-    console.log "Delete all completed"
-
     $(".quick-notes-completed-dropdown-menu").removeClass "open"
 
     return
@@ -223,26 +221,39 @@ Template.justdo_quick_notes_item.onRendered ->
           task_id = $(e.target).find(".grid-tree-control-task-id").attr("jd-tt").split("=")[1]
           quick_note = Blaze.getData(ui.draggable[0])
 
-          APP.justdo_quick_notes.createTaskFromQuickNote quick_note._id, JD.activeJustdoId(), task_id, 0, (error, new_task_id) =>
+          new_task_id = null
+          main_gc = APP.modules.project_page.mainGridControl()
+          removeRebuildProc = ->
+            main_gc._grid_data.off "rebuild", rebuildProc
+            return
+
+          rebuildProc = ->
+            if not new_task_id?
+              # We don't have the new_task_id yet
+              return
+            
+            if not main_gc.getCollectionItemById(new_task_id)?
+              # Item isn't yet part of the grid
+              return
+
+            APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(new_task_id)
+
+            removeRebuildProc()
+
+            return
+
+          APP.modules.project_page.mainGridControl()._grid_data.on "rebuild", rebuildProc
+
+          APP.justdo_quick_notes.createTaskFromQuickNote quick_note._id, JD.activeJustdoId(), task_id, 0, (error, _new_task_id) =>
+            new_task_id = _new_task_id # To apply the value to the closure var
+
             if error?
               JustdoSnackbar.show
                 text: error.reason
 
-              return
-
-            rebuildProc = ->
-              main_gc = APP.modules.project_page.mainGridControl()
-              if not main_gc.getCollectionItemById(new_task_id)?
-                # Item isn't yet part of the grid
-                return
-
-              APP.modules.project_page.getCurrentGcm()?.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(new_task_id)
-
-              main_gc._grid_data.off "rebuild", rebuildProc
+              removeRebuildProc()
 
               return
-
-            APP.modules.project_page.mainGridControl()._grid_data.on "rebuild", rebuildProc
 
             JustdoSnackbar.show
               text: "Task has been created"
