@@ -206,7 +206,9 @@ _.extend JustdoQuickNotes.prototype,
       created_task_path = "/#{parent_id}/#{created_task_id}/"
 
     # Move the order of the created task
-    grid_data.movePath created_task_path, {parent: parent_id, order: order}, user_id
+    add_task_existing_parents = APP.collections.Tasks.findOne(created_task_id, {fields: {parents: 1}}).parents
+    if add_task_existing_parents[parent_id].order != order
+      grid_data.movePath created_task_path, {parent: parent_id, order: order}, user_id
 
     quick_note_op =
       $set:
