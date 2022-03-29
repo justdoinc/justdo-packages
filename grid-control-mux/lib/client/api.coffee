@@ -653,25 +653,41 @@ _.extend GridControlMux.prototype,
 
     return @_current_path_crv.getSync()
 
-  activateCollectionItemIdInCurrentPathOrFallbackToMainTab: (item_id) ->
+  activateCollectionItemIdInCurrentPathOrFallbackToMainTab: (item_id, cb) -> # cb simply called with true/false no err cb(true) means succeed cb(false) means failed
     if not @getMainGridControl().getCollectionItemById(item_id)
       console.warn "activateCollectionItemIdInCurrentPathOrFallbackToMainTab called with an unknown item_id: #{item_id}"
+
+      JustdoHelpers.callCb(cb, false)
+
       return
 
-    activatePath = => @getActiveTabNonReactive()?.grid_control?.activatePath("/" + item_id + "/", 0, {smart_guess: true})
+    activateCollectionItemIdInCurrentTab = (readyCb) =>
+      return @getActiveTabNonReactive()?.grid_control?.activateCollectionItemId(item_id, 0, {force_pass_filter: true, readyCb: readyCb})
 
-    if not activatePath()
+    activateCollectionItemIdInCurrentTab (res) =>
+      if res is true
+        JustdoHelpers.callCb(cb, true)
+
+        return
+
+      # Attempt to look for the path in the current tab failed, attempt in the main tab
+
       @activateTab("main")
+      if not Tracker.inFlush()
+        # To complete the tab activation
+        Tracker.flush()
 
-      # To activate the tab
-      Tracker.flush()
+        activateCollectionItemIdInCurrentTab cb
+      else
+        # To complete the tab activation
 
-    @getActiveTabNonReactive()?.grid_control?.forceItemsPassCurrentFilter item_id, =>
-      # Second attempt after switching to the main tab
-      activatePath()
+        Meteor.defer =>
+          Tracker.flush()
+
+          activateCollectionItemIdInCurrentTab cb
 
       return
-    
+
     return
 
   getCollectionItemPathUnderSpecificAncestorOrFallbackToMainTab: (ancestor_id, item_id) ->
