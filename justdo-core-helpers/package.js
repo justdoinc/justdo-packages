@@ -29,6 +29,7 @@ Package.onUse(function (api) {
   api.add_files("lib/both/constructors_tools.coffee", both);
   api.add_files("lib/both/event-emitter-helpers.coffee", both);
   api.add_files("lib/both/flush-manager.coffee", both);
+  api.add_files("lib/both/profiling.coffee", both);
 
   api.export("JustdoCoreHelpers", both);
 });
