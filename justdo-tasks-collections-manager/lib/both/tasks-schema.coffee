@@ -568,6 +568,9 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       created_by_user_id:
         label: "Created by user ID"
+        
+        exclude_from_tasks_grid_pub: true
+
         grid_editable_column: false
         grid_visible_column: false
         optional: true

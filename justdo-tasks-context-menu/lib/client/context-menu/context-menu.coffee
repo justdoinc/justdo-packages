@@ -16,14 +16,6 @@ Template.tasks_context_menu.helpers
   getMainSections: -> 
     return APP.justdo_tasks_context_menu.getMainSections()
 
-  updatedByOrCreatedBy: ->
-    item_obj = @controller.getContextItemObj({updated_by: 1, created_by_user_id: 1})
-
-    if not item_obj?
-      return false
-
-    return item_obj.updated_by or item_obj.created_by_user_id
-
   updatedAt: ->
     return @controller.getContextItemObj({updatedAt: 1})?.updatedAt
 

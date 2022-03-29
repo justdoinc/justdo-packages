@@ -95,7 +95,6 @@ APP.executeAfterAppLibCode ->
       # don't ask for confirmation before remove
       if (not current_task_obj.title? or current_task_obj.title == "") and
          (not current_task_obj.status? or current_task_obj.status == "") and
-         (not current_task_obj.created_by_user_id? or current_task_obj.created_by_user_id == Meteor.userId()) and
          (not current_task_obj.createdAt? or (current_task_obj.createdAt) > new Date(TimeSync.getServerTime(null) - (5 * 60 * 1000)))
         performAction()
       else
