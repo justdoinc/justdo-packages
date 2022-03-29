@@ -1742,9 +1742,9 @@ _.extend GridControl.prototype,
     options = _.extend {force_pass_filter: false, readyCb: null}, options
 
     activate = =>
-      @activatePath(@_grid_data.getCollectionItemIdPath(item_id), cell, options)
+      result = @activatePath(@_grid_data.getCollectionItemIdPath(item_id), cell, options)
 
-      JustdoHelpers.callCb options.readyCb
+      JustdoHelpers.callCb options.readyCb, result
 
       return
 
