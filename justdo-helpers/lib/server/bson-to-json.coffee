@@ -7,7 +7,9 @@ checkNpmVersions({
 bsonToJson = require("bson-to-json")
 JustdoHelpers.bsonToJson = bsonToJson
 
-JustdoHelpers.sendCustomJsonStructure = (cursor, writable_stream, transcoder_options, prefixGenerator, suffixGenerator) ->
+JustdoHelpers.sendCustomJsonStructure = (options) ->
+  {cursor, writable_stream, transcoder_options, prefixGenerator, suffixGenerator} = options
+
   # The following a forked version of bson-to-json's .send() that is based on fibers
   # instead of promises + some changes other changes for our use cases.
 
