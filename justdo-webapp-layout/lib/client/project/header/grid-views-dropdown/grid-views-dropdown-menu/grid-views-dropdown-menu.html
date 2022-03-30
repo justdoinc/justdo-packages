@@ -1,0 +1,18 @@
+<template name="grid_views_dropdown_menu">
+  <div class="grid-views-search-wrapper d-flex align-items-center">
+    <input type="text" class="grid-views-search-input form-control form-control-sm" placeholder="Search views">
+  </div>
+  {{#each gridViews}}
+    <div class="dropdown-item px-1">
+      <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#layout"></use></svg>
+      <div class="dropdown-item-label">{{title}}</div>
+      <div class="dropdown-item-settings">
+        <svg class="jd-icon text-secondary">
+          <use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use>
+        </svg>
+      </div>
+    </div>
+  {{/each}}
+  <hr>
+  <button class="btn btn-primary btn-sm grid-views-add" type="button">add current view</button>
+</template>
