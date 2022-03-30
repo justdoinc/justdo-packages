@@ -96,7 +96,7 @@ _.extend PACK.modules.tickets_queues,
 
     # Shallow copy task_fields
     task_fields = _.extend {}, task_fields
-    restricted_fields = ["project_id", "parents", "users", "seqId",
+    restricted_fields = ["project_id", "parents", "parents2", "users", "seqId",
                          "owner_id", "pending_owner_updated_at"]
     # Note, further restrictions are set in the tasks Schema
     for restricted_field in restricted_fields
@@ -119,6 +119,11 @@ _.extend PACK.modules.tickets_queues,
     parents[parent_id] =
       order: new_task_order
     task_fields.parents = parents
+    parents2 = []
+    parents2.push
+      parent: parent_id
+      order: new_task_order
+    task_fields.parents2 = parents2
 
     # Set the new task users
     target_users = _.uniq(tq.users.concat(user_id))
