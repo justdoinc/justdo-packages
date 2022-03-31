@@ -531,7 +531,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     imported_tasks_with_auto_value_fields_query = 
       "jci:temp_import_id":
         $in: temp_import_ids
-      created_by_user_id: Meteor.userId()
     auto_value_fields_and_dependencies = {}
     for col_id, col_schema of schema_columns_with_auto_field_obj
       _.extend auto_value_fields_and_dependencies, JustdoHelpers.fieldsArrayToInclusiveFieldsProjection col_schema.grid_dependencies_fields
