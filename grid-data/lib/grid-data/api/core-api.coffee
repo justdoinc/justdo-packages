@@ -29,6 +29,13 @@ _.extend GridData.prototype,
 
     items_by_id_value = @items_by_id[grid_tree_stored_item_id]
 
+    if not items_by_id_value?
+      # We might hit that edge case in cases like the tickets queue.
+      #
+      # The item details isn't part of the Tasks collection for users with which the Tickets
+      # Queue task isn't shared with, therefore it won't be part of the @items_by_id .
+      items_by_id_value = grid_tree_stored_item
+
     if not @getItemIsTyped(index)
       # I anticipate 99.99% of the cases to fall into this category. Daniel C.
 
