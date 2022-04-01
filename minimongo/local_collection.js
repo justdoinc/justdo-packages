@@ -166,9 +166,14 @@ export default class LocalCollection {
   }
 
   // The following is a JustDo extension to local_collection
-  insertInitialPayload(docs, callback) {
+  insertInitialPayload(docs, options, callback) {
+    var bulk_set_options = {};
+    if (options.set_id_from_key === true) {
+      bulk_set_options.set_id_from_key = true;
+    }
+
     this.performOperationDirectlyOnIdMap(() => {
-      this._docs.bulkSet(docs);
+      this._docs.bulkSet(docs, bulk_set_options);
     });
 
     // Defer because the caller likely doesn't expect the callback to be run
