@@ -25,11 +25,59 @@ export class IdMap extends EventEmitter {
     this.emit("after-set", key, value);
   }
 
-  bulkSet(docs) {
+  bulkSet(docs, options) {
+    //
+    // !IMPORTANT! We are editing the provided docs IN PLACE
+    //
+
+    // NOTE
+    // The original forEach code was inefficient and replaced by JustDo to the following
+    // coffeescript code:
+    //
+    // forEach = (iterator) ->
+    //   for key, val of this._map
+    //     if (iterator.call(null, val, this._idParse(key))) is false
+    //       return
+    //   return
+    // /END NOTE
+
+    // options:
+    //
+    // set_id_from_key: true/false ; (default true) if set to false, we don't assume docs has _id ; we'll add the _id based on the doc key in the docs object
+
+    // NOT IMPLEMENTED YET:
+    // NOT IMPLEMENTED YET: schema: [field_def1, field_def2, ...] # (default unset) if set, docs that will include _s: [val1, val2, ...]
+    // NOT IMPLEMENTED YET:                                         will result in the addition of the fields according the schema definition
+    // NOT IMPLEMENTED YET:                                         provided. the _s will be removed once modification is completed. If _s
+    // NOT IMPLEMENTED YET:                                         can't be found in a doc, we simply skip it.
+    // NOT IMPLEMENTED YET: field_def should be of the form: {
+    // NOT IMPLEMENTED YET:   field_id: "field_id"
+    // NOT IMPLEMENTED YET:   type: "date"/"auto"
+    // NOT IMPLEMENTED YET: }
+    
+    // auto-generated see source code above
+    // bulkSet = (docs, options) ->
+    //   if options?.set_id_from_key is true
+    //     for doc_id, doc of docs
+    //       docs[doc_id]._id = doc_id
+      
+    //   @emit("before-bulkSet", docs)
+      
+    //   Object.assign(@_map, docs)
+
+    //   @emit("after-bulkSet", docs)
+
+    //   return
+
+    var doc, doc_id;
+    if ((options != null ? options.set_id_from_key : void 0) === true) {
+      for (doc_id in docs) {
+        doc = docs[doc_id];
+        docs[doc_id]._id = doc_id;
+      }
+    }
     this.emit("before-bulkSet", docs);
-
     Object.assign(this._map, docs);
-
     this.emit("after-bulkSet", docs);
   }
 
