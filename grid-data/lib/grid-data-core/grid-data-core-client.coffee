@@ -754,7 +754,8 @@ _.extend GridDataCore.prototype,
       # @logger.debug "Flush: Process #{type}: #{JSON.stringify args}"
       [op_changed_structure, op_items_ids_with_changed_children] = @_data_changes_handlers[type].apply @, args
       structure_changed = structure_changed || op_changed_structure
-      returned_ops_items_ids_with_changed_children.push op_items_ids_with_changed_children
+      if not _.isEmpty(op_items_ids_with_changed_children)
+        returned_ops_items_ids_with_changed_children.push op_items_ids_with_changed_children
 
       # @logger.debug "Flush: process data changes - done; structure_changed = #{structure_changed}"
 
