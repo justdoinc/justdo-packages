@@ -1,18 +1,53 @@
 <template name="grid_views_dropdown_menu">
-  <div class="grid-views-search-wrapper d-flex align-items-center">
-    <input type="text" class="grid-views-search-input form-control form-control-sm" placeholder="Search views">
-  </div>
-  {{#each gridViews}}
-    <div class="dropdown-item px-1">
-      <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#layout"></use></svg>
-      <div class="dropdown-item-label">{{title}}</div>
-      <div class="dropdown-item-settings">
-        <svg class="jd-icon text-secondary">
-          <use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use>
-        </svg>
-      </div>
+  <div class="grid-views-dropdown-menu-wrapper">
+    <div class="grid-views-search-wrapper d-flex align-items-center">
+      <input type="text" class="grid-views-search-input form-control form-control-sm" placeholder="Search views">
     </div>
-  {{/each}}
-  <hr>
-  <button class="btn btn-primary btn-sm grid-views-add" type="button">add current view</button>
+    {{#if gridViews}}
+      {{#each gridViews}}
+        <div class="dropdown-item grid-view-item px-1">
+          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#layout"></use></svg>
+          {{#if showRenameInput}}
+            <input class="dropdown-item-rename-input" type="text" name="" value="{{title}}">
+          {{else}}
+            <div class="dropdown-item-label">
+              {{title}}
+              {{#if shared}}
+                <div class="dropdown-item-shared">shared</div>
+              {{/if}}
+            </div>
+          {{/if}}
+          <div class="dropdown-item-settings">
+            <svg class="jd-icon text-secondary">
+              <use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use>
+            </svg>
+          </div>
+        </div>
+      {{/each}}
+    {{else}}
+      <div class="grid-views-empty text-muted">
+        No views
+      </div>
+    {{/if}}
+    <hr>
+    <button class="btn btn-primary btn-sm grid-views-add" type="button">add current view</button>
+
+    {{#with activeView}}
+      <div class="grid-view-settings-dropdown shadow-lg animate slideIn shadow-lg">
+        <div class="grid-view-rename dropdown-item px-1">
+          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>
+          <div class="dropdown-item-label">Rename</div>
+        </div>
+        <div class="grid-view-share dropdown-item px-1">
+          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#share"></use></svg>
+          <div class="dropdown-item-label">{{#if this.shared}}Unshare{{else}}Share{{/if}}</div>
+        </div>
+        <div class="grid-view-delete dropdown-item px-1">
+          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
+          <div class="dropdown-item-label">Remove</div>
+        </div>
+      </div>
+    {{/with}}
+
+  </div>
 </template>

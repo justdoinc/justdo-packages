@@ -1,10 +1,13 @@
 .grid-views-dropdown-menu
   padding: 12px
   background-color: white
+
   .grid-views-dropdown-menu-content
-    min-width: 200px
+    min-width: 260px
+
   .grid-views-search-wrapper
     margin-bottom: 8px
+
   .dropdown-item
     cursor: pointer
     display: flex
@@ -12,9 +15,32 @@
     &:hover
       .dropdown-item-settings
         opacity: 1
+
+    .jd-icon-dropdown
+      flex-shrink: 0
+
   .dropdown-item-label
     display: flex
     flex-grow: 1
+
+  .grid-view-item
+    .dropdown-item-label
+      justify-content: space-between
+      .dropdown-item-shared
+        font-size: 11px
+        text-transform: uppercase
+        font-weight: bold
+        padding-right: 4px
+        padding-left: 20px
+        display: flex
+        align-items: center
+        color: rgba(49, 69, 99, 0.6)
+
+  .dropdown-item-rename-input
+    border: none
+    width: 100%
+    padding: 0
+
   .dropdown-item-settings
     display: flex
     align-items: center
@@ -24,11 +50,35 @@
       padding: 0
       width: 14px
       height: 20px
+      flex-shrink: 0
+      &:hover
+        background-color: rgba(206, 212, 217, 0.5)
+
   hr
     border-style: dashed
     margin: 8px 0
+
   .grid-views-add
     font-weight: bold
     text-transform: uppercase
-    margin-top: 8px
+    margin-top: 4px
     width: 100%
+
+  .grid-view-settings-dropdown
+    position: absolute
+    padding: 8px
+    width: 120px
+    background-color: white
+    display: none
+    &.open
+      display: inline-block
+    .dropdown-item
+      font-size: 15px
+      .jd-icon-dropdown
+        margin-right: 6px
+        padding: 2px
+
+
+  .grid-views-empty
+    padding: 16px
+    text-align: center
