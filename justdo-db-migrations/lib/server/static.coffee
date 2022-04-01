@@ -134,14 +134,13 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
         pending_migration_set_cursor = getCursor()
 
         # The two var below are solely for logging progress
-        initial_affected_docs_count = 0
         num_processed = 0
-
-        initial_affected_docs_count = pending_migration_set_cursor.count() # Note: count ignores limit
-        @logProgress "Total documents to be updated: #{initial_affected_docs_count}."
-        expected_batches = Math.ceil(initial_affected_docs_count / options.batch_size)
-        @logProgress "Expected batches: #{expected_batches}."
-        @logProgress "Expected time to complete: #{Math.round((expected_batches * options.delay_between_batches) / 1000 / 60)} minutes."
+        if options.mark_as_completed_upon_batches_exhaustion
+          initial_affected_docs_count = pending_migration_set_cursor.count() # Note: count ignores limit
+          @logProgress "Total documents to be updated: #{initial_affected_docs_count}."
+          expected_batches = Math.ceil(initial_affected_docs_count / options.batch_size)
+          @logProgress "Expected batches: #{expected_batches}."
+          @logProgress "Expected time to complete: #{Math.round((expected_batches * options.delay_between_batches) / 1000 / 60)} minutes."
 
         migration_functions_this = getMigrationFunctionsThis(@)
 
@@ -182,7 +181,11 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
             num_processed += options.batchProcessor.call migration_functions_this, pending_migration_set_cursor
 
-            @logProgress "#{num_processed}/#{initial_affected_docs_count} documents updated"
+            if options.mark_as_completed_upon_batches_exhaustion
+              @logProgress "#{num_processed}/#{initial_affected_docs_count} documents processed"
+            else
+              @logProgress "#{num_processed} documents processed"
+              num_processed = 0
 
             @logProgress "Waiting #{options.delay_between_batches / 1000}sec before starting the next batch"
             batch_timeout = Meteor.setTimeout =>
