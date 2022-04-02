@@ -26,6 +26,7 @@ APP.executeAfterAppLibCode ->
     tpl = @
     tpl.active_grid_view_rv = new ReactiveVar {}
     tpl.rename_grid_view_id_rv = new ReactiveVar null
+    tpl.search_val_rv = new ReactiveVar null
 
     tpl.updateViewTitle = ->
       active_view = tpl.active_grid_view_rv.get()
@@ -44,7 +45,13 @@ APP.executeAfterAppLibCode ->
 
   Template.grid_views_dropdown_menu.helpers
     gridViews: ->
-      return APP.collections.GridViews.find().fetch()
+      views = APP.collections.GridViews.find().fetch()
+
+      if (search_val = Template.instance().search_val_rv.get())?
+        filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_val)}", "i")
+        views = _.filter views, (view) -> filter_regexp.test(view.title)
+
+      return views
 
     activeView: ->
       return Template.instance().active_grid_view_rv.get()
@@ -53,7 +60,24 @@ APP.executeAfterAppLibCode ->
       return Template.instance().rename_grid_view_id_rv.get() == @_id
 
   Template.grid_views_dropdown_menu.events
+    "keyup .grid-views-search-input": (e, tpl) ->
+      search_val = $(".grid-views-search-input").val().trim()
+
+      if _.isEmpty search_val
+        tpl.search_val_rv.set null
+
+      tpl.search_val_rv.set search_val
+
+      return
+
+    "focus .grid-views-search-input": (e, tpl) ->
+      tpl.rename_grid_view_id_rv.set null
+
+      return
+
     "click .grid-views-add": (e, tpl) ->
+      tpl.rename_grid_view_id_rv.set null
+
       APP.justdo_grid_views.upsert null, {
         title: "View, " + moment(new Date()).format("MMM D") + ", " + moment(new Date()).format("HH:mm")
         shared: true
@@ -71,16 +95,16 @@ APP.executeAfterAppLibCode ->
     "click .grid-view-item .dropdown-item-label": (e, tpl) ->
       view = EJSON.parse @view
       APP.modules.project_page.mainGridControl().setView view
-
       $(".grid-views-dropdown-menu").removeClass "open"
 
       return
 
     "click .dropdown-item-settings": (e, tpl) ->
+      tpl.rename_grid_view_id_rv.set null
+      
       $el = $(e.target).closest ".dropdown-item-settings"
       position_left = $el.position().left
       position_top = $el.position().top
-
       $(".grid-view-settings-dropdown").css({top: position_top, left: position_left}).addClass "open"
 
       return
