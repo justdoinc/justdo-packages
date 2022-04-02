@@ -23,8 +23,17 @@ APP.executeAfterAppLibCode ->
       return
 
   Template.grid_views_dropdown_menu.onCreated ->
-    @active_grid_view_rv = new ReactiveVar null
-    @rename_grid_view_id_rv = new ReactiveVar null
+    tpl = @
+    tpl.active_grid_view_rv = new ReactiveVar {}
+    tpl.rename_grid_view_id_rv = new ReactiveVar null
+
+    tpl.updateViewTitle = ->
+      active_view = tpl.active_grid_view_rv.get()
+      new_title = $(".dropdown-item-rename-input").val()
+      APP.justdo_grid_views.upsert active_view._id, {title: new_title}
+      tpl.rename_grid_view_id_rv.set null
+
+      return
 
     return
 
@@ -46,7 +55,7 @@ APP.executeAfterAppLibCode ->
   Template.grid_views_dropdown_menu.events
     "click .grid-views-add": (e, tpl) ->
       APP.justdo_grid_views.upsert null, {
-        title: "View, " + moment(new Date()).format("MMM d") + ", " + moment(new Date()).format("HH:mm")
+        title: "View, " + moment(new Date()).format("MMM D") + ", " + moment(new Date()).format("HH:mm")
         shared: true
         hierarchy: {type: "justdo", justdo_id: JD.activeJustdoId()}
         view: APP.modules.project_page.mainGridControl().getView()
@@ -62,14 +71,16 @@ APP.executeAfterAppLibCode ->
     "click .grid-view-item .dropdown-item-label": (e, tpl) ->
       view = EJSON.parse @view
       APP.modules.project_page.mainGridControl().setView view
+
       $(".grid-views-dropdown-menu").removeClass "open"
 
       return
 
     "click .dropdown-item-settings": (e, tpl) ->
-      $el = $(e.currentTarget).closest ".dropdown-item-settings"
+      $el = $(e.target).closest ".dropdown-item-settings"
       position_left = $el.position().left
       position_top = $el.position().top
+
       $(".grid-view-settings-dropdown").css({top: position_top, left: position_left}).addClass "open"
 
       return
@@ -82,15 +93,6 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .grid-view-rename": (e, tpl) ->
-      active_view = tpl.active_grid_view_rv.get()
-      tpl.rename_grid_view_id_rv.set active_view._id
-
-      Meteor.defer ->
-        tpl.$(".dropdown-item-rename-input").focus()
-
-      return
-
     "click .grid-view-share": (e, tpl) ->
       active_view = tpl.active_grid_view_rv.get()
       APP.justdo_grid_views.upsert active_view._id, {shared: !active_view.shared}
@@ -100,6 +102,31 @@ APP.executeAfterAppLibCode ->
     "click .grid-view-delete": (e, tpl) ->
       active_view = tpl.active_grid_view_rv.get()
       APP.justdo_grid_views.upsert active_view._id, {deleted: true}
+
+      return
+
+    "click .grid-view-rename": (e, tpl) ->
+      active_view = tpl.active_grid_view_rv.get()
+      tpl.rename_grid_view_id_rv.set active_view._id
+
+      Meteor.defer ->
+        tpl.$(".dropdown-item-rename-input").focus()
+
+      return
+
+    "keydown .dropdown-item-rename-input": (e, tpl) ->
+      if e.key == "Enter"
+        tpl.updateViewTitle()
+
+      return
+
+    "click .dropdown-item-rename-save": (e, tpl) ->
+      tpl.updateViewTitle()
+
+      return
+
+    "click .dropdown-item-rename-cancel": (e, tpl) ->
+      tpl.rename_grid_view_id_rv.set null
 
       return
 

@@ -3,7 +3,7 @@
   background-color: white
 
   .grid-views-dropdown-menu-content
-    min-width: 260px
+    min-width: 300px
 
   .grid-views-search-wrapper
     margin-bottom: 8px
@@ -22,6 +22,7 @@
   .dropdown-item-label
     display: flex
     flex-grow: 1
+    height: 24px
 
   .grid-view-item
     .dropdown-item-label
@@ -36,10 +37,32 @@
         align-items: center
         color: rgba(49, 69, 99, 0.6)
 
+  .dropdown-item-rename
+    display: flex
+    flex-grow: 1
+
   .dropdown-item-rename-input
-    border: none
     width: 100%
-    padding: 0
+    height: 24px
+    font-size: 16px
+    padding: 0 0 0 4px
+
+  .dropdown-item-rename-actions
+    display: flex
+    padding: 0 4px 0 8px
+    .jd-icon
+      margin: 0px
+      cursor: pointer
+      display: block
+      padding: 4px
+      stroke-width: 2
+      color: #535f7e
+      background-color: rgba(0, 0, 0, 0.04)
+      transition: all 0.2s linear
+      &:hover
+        transform: scale(1.05)
+        stroke: black
+        background-color: rgba(0, 0, 0, 0.08)
 
   .dropdown-item-settings
     display: flex
@@ -77,7 +100,6 @@
       .jd-icon-dropdown
         margin-right: 6px
         padding: 2px
-
 
   .grid-views-empty
     padding: 16px

@@ -8,7 +8,13 @@
         <div class="dropdown-item grid-view-item px-1">
           <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#layout"></use></svg>
           {{#if showRenameInput}}
-            <input class="dropdown-item-rename-input" type="text" name="" value="{{title}}">
+            <div class="dropdown-item-rename">
+              <input class="dropdown-item-rename-input form-control form-control-sm" type="text" placeholder="Type view title" value="{{title}}">
+              <div class="dropdown-item-rename-actions">
+                <svg class="dropdown-item-rename-save jd-icon mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+                <svg class="dropdown-item-rename-cancel jd-icon "><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+              </div>
+            </div>
           {{else}}
             <div class="dropdown-item-label">
               {{title}}
