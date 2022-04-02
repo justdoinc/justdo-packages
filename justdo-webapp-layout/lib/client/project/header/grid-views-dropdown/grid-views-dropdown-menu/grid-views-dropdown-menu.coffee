@@ -83,7 +83,15 @@ APP.executeAfterAppLibCode ->
         shared: true
         hierarchy: {type: "justdo", justdo_id: JD.activeJustdoId()}
         view: APP.modules.project_page.mainGridControl().getView()
-      }
+      }, (error) =>
+        if error
+          console.log error.reason
+        else
+          Meteor.defer ->
+            $views_wrapper = $(".dropdown-items-wrapper")
+            $views_wrapper.animate { scrollTop: $views_wrapper.prop("scrollHeight")}, 500
+
+        return
 
       return
 
@@ -101,7 +109,7 @@ APP.executeAfterAppLibCode ->
 
     "click .dropdown-item-settings": (e, tpl) ->
       tpl.rename_grid_view_id_rv.set null
-      
+
       $el = $(e.target).closest ".dropdown-item-settings"
       position_left = $el.position().left
       position_top = $el.position().top

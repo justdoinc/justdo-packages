@@ -1,12 +1,18 @@
 .grid-views-dropdown-menu
-  padding: 12px
+  padding: 12px 0
   background-color: white
+  z-index: 150
 
   .grid-views-dropdown-menu-content
-    min-width: 300px
+    min-width: 320px
 
   .grid-views-search-wrapper
-    margin-bottom: 8px
+    margin: 0px 12px 8px 12px
+
+  .dropdown-items-wrapper
+    max-height: 320px
+    overflow: auto
+    padding: 0 12px
 
   .dropdown-item
     cursor: pointer
@@ -42,7 +48,7 @@
     flex-grow: 1
 
   .dropdown-item-rename-input
-    width: 100%
+    width: 180px
     height: 24px
     font-size: 16px
     padding: 0 0 0 4px
@@ -104,3 +110,6 @@
   .grid-views-empty
     padding: 16px
     text-align: center
+
+  .dropdown-footer
+    margin: 0 12px
