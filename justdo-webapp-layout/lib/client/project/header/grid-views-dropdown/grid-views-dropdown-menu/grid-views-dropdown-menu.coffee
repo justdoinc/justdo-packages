@@ -80,7 +80,7 @@ APP.executeAfterAppLibCode ->
 
       APP.justdo_grid_views.upsert null, {
         title: "View, " + moment(new Date()).format("MMM D") + ", " + moment(new Date()).format("HH:mm")
-        shared: true
+        shared: false
         hierarchy: {type: "justdo", justdo_id: JD.activeJustdoId()}
         view: APP.modules.project_page.mainGridControl().getView()
       }, (error) =>
@@ -141,7 +141,23 @@ APP.executeAfterAppLibCode ->
 
     "click .grid-view-delete": (e, tpl) ->
       active_view = tpl.active_grid_view_rv.get()
-      APP.justdo_grid_views.upsert active_view._id, {deleted: true}
+      APP.justdo_grid_views.upsert active_view._id, {deleted: true}, (error) =>
+        if error
+          console.log error.reason
+        else
+          JustdoSnackbar.show
+            text: "View has been removed"
+            duration: 5000
+            actionText: "Undo"
+            showDismissButton: true
+            onActionClick: =>
+              APP.justdo_grid_views.upsert active_view._id, {deleted: false}
+
+              JustdoSnackbar.close()
+
+              return
+
+        return
 
       return
 
