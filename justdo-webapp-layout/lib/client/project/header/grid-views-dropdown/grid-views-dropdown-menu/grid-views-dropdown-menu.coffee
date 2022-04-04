@@ -107,6 +107,14 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    "keydown .grid-view-item": (e, tpl) ->
+      if e.key == "Enter" and $(e.target).hasClass "grid-view-item"
+        view = EJSON.parse @view
+        APP.modules.project_page.mainGridControl().setView view
+        $(".grid-views-dropdown-menu").removeClass "open"
+
+      return
+
     "click .dropdown-item-settings": (e, tpl) ->
       tpl.rename_grid_view_id_rv.set null
 
@@ -159,6 +167,27 @@ APP.executeAfterAppLibCode ->
 
     "click .dropdown-item-rename-cancel": (e, tpl) ->
       tpl.rename_grid_view_id_rv.set null
+
+      return
+
+    "keydown .grid-views-dropdown-menu-wrapper": (e, tpl) ->
+      $dropdown_item = $(e.target).closest(".grid-views-search-input, .grid-view-item")
+
+      if e.key == "ArrowUp"
+        e.preventDefault()
+
+        if ($prev_item = $dropdown_item.prevAll(".grid-view-item").first()).length > 0
+          $prev_item.focus()
+        else
+          $(".grid-views-search-input").focus()
+
+      if e.key == "ArrowDown"
+        e.preventDefault()
+
+        if $dropdown_item.hasClass "grid-views-search-input"
+          $(".dropdown-items-wrapper .grid-view-item").first().focus()
+        else
+          $dropdown_item.nextAll(".grid-view-item").first().focus()
 
       return
 
