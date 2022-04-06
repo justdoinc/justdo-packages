@@ -82,7 +82,7 @@ APP.executeAfterAppLibCode ->
         title: "View, " + moment(new Date()).format("MMM D") + ", " + moment(new Date()).format("HH:mm")
         shared: false
         hierarchy: {type: "justdo", justdo_id: JD.activeJustdoId()}
-        view: APP.modules.project_page.mainGridControl().getView()
+        view: APP.modules.project_page.gridControl().getView()
       }, (error) =>
         if error
           console.log error.reason
@@ -102,7 +102,7 @@ APP.executeAfterAppLibCode ->
 
     "click .grid-view-item .dropdown-item-label": (e, tpl) ->
       view = EJSON.parse @view
-      APP.modules.project_page.mainGridControl().setView view
+      APP.modules.project_page.gridControl().setView view
       $(".grid-views-dropdown-menu").removeClass "open"
 
       return
@@ -110,7 +110,7 @@ APP.executeAfterAppLibCode ->
     "keydown .grid-view-item": (e, tpl) ->
       if e.key == "Enter" and $(e.target).hasClass "grid-view-item"
         view = EJSON.parse @view
-        APP.modules.project_page.mainGridControl().setView view
+        APP.modules.project_page.gridControl().setView view
         $(".grid-views-dropdown-menu").removeClass "open"
 
       return
