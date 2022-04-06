@@ -17,7 +17,7 @@ APP.executeAfterAppLibCode ->
             element.element.css
               top: new_position.top - 11
               left: new_position.left
-
+            return
         $(".dropdown-menu.show").removeClass("show")
 
       return
@@ -57,7 +57,7 @@ APP.executeAfterAppLibCode ->
       return Template.instance().active_grid_view_rv.get()
 
     showRenameInput: ->
-      return Template.instance().rename_grid_view_id_rv.get() == @_id
+      return Template.instance().rename_grid_view_id_rv.get() is @_id
 
     allowedToEdit: ->
       if @user_id is Meteor.userId()
@@ -98,8 +98,8 @@ APP.executeAfterAppLibCode ->
         else
           Meteor.defer ->
             $views_wrapper = $(".dropdown-items-wrapper")
-            $views_wrapper.animate { scrollTop: $views_wrapper.prop("scrollHeight")}, 500
-
+            $views_wrapper.animate {scrollTop: $views_wrapper.prop("scrollHeight")}, 500
+            return
         return
 
       return
@@ -144,7 +144,7 @@ APP.executeAfterAppLibCode ->
 
     "click .grid-view-share": (e, tpl) ->
       active_view = tpl.active_grid_view_rv.get()
-      APP.justdo_grid_views.upsert active_view._id, {shared: !active_view.shared}
+      APP.justdo_grid_views.upsert active_view._id, {shared: not active_view.shared}
 
       return
 
