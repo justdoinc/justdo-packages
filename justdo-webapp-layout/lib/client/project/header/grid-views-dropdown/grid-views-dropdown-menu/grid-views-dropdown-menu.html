@@ -24,11 +24,13 @@
                 {{/if}}
               </div>
             {{/if}}
-            <div class="dropdown-item-settings">
-              <svg class="jd-icon text-secondary">
-                <use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use>
-              </svg>
-            </div>
+            {{#if allowedToEdit}}
+              <div class="dropdown-item-settings">
+                <svg class="jd-icon text-secondary">
+                  <use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use>
+                </svg>
+              </div>
+            {{/if}}
           </div>
         {{/each}}
       {{else}}

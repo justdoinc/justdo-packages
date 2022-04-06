@@ -59,6 +59,15 @@ APP.executeAfterAppLibCode ->
     showRenameInput: ->
       return Template.instance().rename_grid_view_id_rv.get() == @_id
 
+    allowedToEdit: ->
+      if @user_id is Meteor.userId()
+        return true
+
+      if (project_doc = APP.collections.Projects.findOne(@hierarchy?.justdo_id, {fields: {members: 1}}))?
+        return APP.projects.isAdminOfProjectDoc project_doc, Meteor.userId()
+
+      return false
+
   Template.grid_views_dropdown_menu.events
     "keyup .grid-views-search-input": (e, tpl) ->
       search_val = $(".grid-views-search-input").val().trim()
