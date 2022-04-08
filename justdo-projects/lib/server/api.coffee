@@ -880,6 +880,53 @@ _.extend Projects.prototype,
 
     return
 
+  registerCustomCompoundBulkUpdate: (type_id, opsGenerator) ->
+    if @custom_compound_bulk_update[type_id]?
+      throw @_error "invalid-argument", "A custom compound bulk update with the type: #{type_id} is already set"
+
+    @custom_compound_bulk_update[type_id] =
+      opsGenerator: opsGenerator
+
+    return
+
+  customCompoundBulkUpdate: (project_id, type_id, payload, user_id) ->
+    if not @custom_compound_bulk_update[type_id]?
+      throw @_error "invalid-argument", "Unknown custom compound bulk update type: #{type_id}"
+
+    ops = @custom_compound_bulk_update[type_id].opsGenerator(payload)
+
+    JustdoHelpers.runCbInFiberScope "skip-allowed_bulk_update_modifiers-check", true, =>
+      @compoundBulkUpdate(project_id, ops, user_id)
+      return
+
+    return
+
+  compoundBulkUpdate: (project_id, ops, user_id) ->
+    # compoundBulkUpdate is just a wrapper proxy for bulkUpdate, we won't introduce events handlers for it.
+    #
+    # ops is of the form:
+    #
+    # [[item_id, modifier], ...] OR
+    # [[[items_ids], modifier], ...]
+
+    if not _.isArray ops
+      throw @_error "invalid-argument", "ops must be an array"
+
+    # Rest of argument validation will be handled by bulkUpdate
+
+    for op in ops
+      if not _.isArray op
+        throw @_error "invalid-argument", "ops must be an array of arrays"
+
+      [items_ids, modifier] = op
+
+      if _.isString items_ids
+        items_ids = [items_ids]
+
+      @bulkUpdate(project_id, items_ids, modifier, user_id)
+
+    return
+
   bulkUpdate: (project_id, items_ids, modifier, user_id) ->
     check project_id, String
     check items_ids, [String]
@@ -910,35 +957,12 @@ _.extend Projects.prototype,
     #
     # Validate inputs
     #
-
-    # To avoid security risk, we are whitelisting the allowed bulkUpdates
-    allowed_modifiers = [
-      {
-        $pull:
-          users:
-            $in: [String]
-      }
-      {
-        $push: # Kept for legacy code in mobiles. It is converted to addToSet later
-          users:
-            $each: [String]
-      }
-      {
-        $addToSet:
-          users:
-            $each: [String]
-      }
-      {
-        $set:
-          owner_id: String
-          pending_owner_id: null
-      }
-      {
-        $set:
-          pending_owner_id: null
-      }
-    ]
-    check(modifier, Match.OneOf.apply(Match, allowed_modifiers))
+    if JustdoHelpers.getFiberVar("skip-allowed_bulk_update_modifiers-check") isnt true
+      # To avoid security risk, we are whitelisting the allowed bulkUpdates
+      try
+        check(modifier, Match.OneOf.apply(Match, @allowed_bulk_update_modifiers))
+      catch e
+        throw @_error "invalid-argument", "_bulkUpdateWithCb: modifier provided isn't allowed", modifier
     
     # IMPORTANT
     # IMPORTANT A lot of the code here is repeated under grid-data/lib/grid-data-com/grid-data-com-server-api.coffee ~line 1036

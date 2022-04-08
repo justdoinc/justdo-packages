@@ -121,6 +121,18 @@ _.extend Projects.prototype,
 
         return
 
+      compoundBulkUpdate: (ops, cb) -> 
+        Meteor.call "compoundBulkUpdate", @id, ops, (err) ->
+          return JustdoHelpers.callCb cb, err
+
+        return
+
+      customCompoundBulkUpdate: (type_id, payload, cb) -> 
+        Meteor.call "customCompoundBulkUpdate", @id, type_id, payload, (err) ->
+          return JustdoHelpers.callCb cb, err
+
+        return
+
       removeMember: (member_id, cb) -> 
         Meteor.call "removeMember", @id, member_id, (err) ->
           cb(err)

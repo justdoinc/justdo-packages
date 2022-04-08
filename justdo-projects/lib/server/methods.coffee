@@ -86,6 +86,24 @@ _.extend Projects.prototype,
 
         return
 
+      compoundBulkUpdate: (project_id, ops) ->
+        check project_id, String
+        # ops is thoroughly verified by projects_object.compoundBulkUpdate
+
+        projects_object.compoundBulkUpdate project_id, ops, @userId
+
+        return
+
+      customCompoundBulkUpdate: (project_id, type_id, payload) ->
+        check project_id, String
+        check type_id, String
+        # payload is thoroughly verified by projects_object.customCompoundBulkUpdate
+
+        # IMPORTANT!!! DO NOT CALL HERE this.unblock() since we use fiber var to bypass bulk update's modifier validation.
+
+        projects_object.customCompoundBulkUpdate project_id, type_id, payload, @userId
+
+        return
       postRegInit: ->
         projects_object.postRegInit @userId
 

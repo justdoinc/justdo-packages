@@ -26,6 +26,36 @@ Projects = (options) ->
   @_grid_data_com = new GridDataCom @items_collection, @items_private_data_collection
   GridControlCustomFields.enableJustdoCustomFieldsForJustdoProject(@)
 
+  @custom_compound_bulk_update = {}
+
+  # To avoid security risk, we are whitelisting the allowed bulkUpdates
+  @allowed_bulk_update_modifiers = [
+    {
+      $pull:
+        users:
+          $in: [String]
+    }
+    {
+      $push: # Kept for legacy code in mobiles. It is converted to addToSet later
+        users:
+          $each: [String]
+    }
+    {
+      $addToSet:
+        users:
+          $each: [String]
+    }
+    {
+      $set:
+        owner_id: String
+        pending_owner_id: null
+    }
+    {
+      $set:
+        pending_owner_id: null
+    }
+  ]
+
   # env (server/client) specific init
   @_init()
 
