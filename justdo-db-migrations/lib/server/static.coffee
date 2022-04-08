@@ -70,6 +70,7 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       defaultValue: true
 
     # Miliseconds, relevant only if mark_as_completed_upon_batches_exhaustion is false
+    # This is the time that we will wait if the last batch had 0 results.
     delay_before_checking_for_new_batches:
       label: "Interval between checks for new migration batches."
       type: SimpleSchema.Integer
