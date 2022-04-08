@@ -9,6 +9,7 @@ APP.executeAfterAppLibCode ->
   main_module = APP.modules.main
 
   Template.project.created = ->
+    main_module.setCustomHeaderTemplate("left", "project_header_global_layout_header_left")
     main_module.setCustomHeaderTemplate("middle", "project_header_global_layout_header_middle")
     main_module.setCustomHeaderTemplate("right", "project_header_global_layout_header_right")
 

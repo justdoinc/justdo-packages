@@ -11,12 +11,25 @@ APP.executeAfterAppLibCode ->
   Template.project_header.helpers project_template_helpers
 
   #
-  # project_header_global_layout_header_right, project_header_global_layout_header_middle templates
+  # project_header_global_layout_header_right, project_header_global_layout_header_middle, project_header_global_layout_header_left templates
   #
   Template.project_header_global_layout_header_right.helpers project_template_helpers
   Template.project_header_global_layout_header_right.helpers
     rightNavbarItems: ->
       return JD.getPlaceholderItems("project-right-navbar").reverse()
+
+  Template.project_header_global_layout_header_left.helpers project_template_helpers
+  Template.project_header_global_layout_header_left.helpers
+    leftNavbarItems: ->
+      return JD.getPlaceholderItems("project-left-navbar").reverse()
+
+  JD.registerPlaceholderItem "grid-views-dropdown-button",
+    data:
+      template: "grid_views_dropdown_button"
+      template_data: {}
+
+    domain: "project-left-navbar"
+    position: 100
 
   JD.registerPlaceholderItem "members-dropdown-button",
     data:
@@ -41,14 +54,6 @@ APP.executeAfterAppLibCode ->
 
     domain: "project-right-navbar"
     position: 300
-
-  JD.registerPlaceholderItem "grid-views-dropdown-button",
-    data:
-      template: "grid_views_dropdown_button"
-      template_data: {}
-
-    domain: "project-right-navbar"
-    position: 400
 
   JD.registerPlaceholderItem "project-required-actions-dropdown-comp",
     data:
@@ -155,3 +160,6 @@ APP.executeAfterAppLibCode ->
 
   Template.right_project_header.helpers
     rightHeaderTemplate: -> main_module.getCustomHeaderTemplate("right")
+
+  Template.left_project_header.helpers
+    leftHeaderTemplate: -> main_module.getCustomHeaderTemplate("left")
