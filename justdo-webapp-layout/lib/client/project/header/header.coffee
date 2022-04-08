@@ -42,6 +42,14 @@ APP.executeAfterAppLibCode ->
     domain: "project-right-navbar"
     position: 300
 
+  JD.registerPlaceholderItem "grid-views-dropdown-button",
+    data:
+      template: "grid_views_dropdown_button"
+      template_data: {}
+
+    domain: "project-right-navbar"
+    position: 400
+
   JD.registerPlaceholderItem "project-required-actions-dropdown-comp",
     data:
       template: "project_required_actions_dropdown_comp"
@@ -49,6 +57,7 @@ APP.executeAfterAppLibCode ->
 
     domain: "global-right-navbar"
     position: 50
+
 
   Template.project_header_global_layout_header_middle.helpers project_template_helpers
 
