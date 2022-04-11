@@ -487,17 +487,26 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
   importDependencies = ->
     modal_data.import_helper_message.set "Importing dependencies..."
+    custom_bulk_update_payload = {}
     for temp_import_id, deps_str of dependencies_strs
       if not (deps = APP.justdo_planning_utilities.parseDependenciesStr deps_str, project_id, import_idx_to_task_id)?
         line_number = temp_import_id.split("_L")[1]
         scrollToAndHighlightProblematicRow line_number
         throw new Meteor.Error "invalid dependency", "Invalid dependency (#{deps_str}) found in line #{line_number}"
 
-      APP.justdo_planning_utilities.dependent_tasks_update_hook_enabled = false
-      APP.collections.Tasks.update temp_import_id_task_id(temp_import_id),
-        $set:
-          "#{JustdoPlanningUtilities.dependencies_mf_field_id}": deps
+      deps_payload = []
+      for dep in deps
+        dep_payload = [dep.task_id, dep.type]
+        if dep.lag?
+          dep_payload.push(dep.lag)
+        deps_payload.push(dep_payload)
+
+      custom_bulk_update_payload[temp_import_id_task_id(temp_import_id)] = deps_payload
+
+    APP.justdo_planning_utilities.dependent_tasks_update_hook_enabled = false
+    APP.modules.project_page.curProj().customCompoundBulkUpdate("deps-update", custom_bulk_update_payload, ->
       APP.justdo_planning_utilities.dependent_tasks_update_hook_enabled = true
+    )
 
     return true
 
