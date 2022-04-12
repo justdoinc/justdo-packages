@@ -20,12 +20,13 @@ common_batched_migration_options =
   mark_as_completed_upon_batches_exhaustion: true
 
   batchProcessor: (tasks_cursor) ->
+    self = @
     num_processed = 0
     tasks_cursor.forEach (task) =>
       parents2 = []
       for parent_id, order_obj of task.parents
         if order_obj is null
-          @logWarning "Task #{task._id} had a parent with corrupted parents def object - renaming the parents field to 'corrupted_parents'"
+          self.logWarning "Task #{task._id} had a parent with corrupted parents def object - renaming the parents field to 'corrupted_parents'"
 
           num_processed += 1
           @collection.rawCollection().update {_id: task._id}, {$set: {corrupted_parents: task.parents}, $unset: {parents: 1}}

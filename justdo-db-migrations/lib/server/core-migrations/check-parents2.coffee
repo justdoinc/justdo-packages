@@ -37,6 +37,7 @@ common_batched_migration_options =
     return {query, query_options}
 
   batchProcessor: (tasks_collection_cursor) ->
+    self = @
     tasks_ids_with_problems = []
     # Note that current_checkpoint is being used by check-parents2(this script), and it holds task id
     current_checkpoint = null
@@ -51,17 +52,11 @@ common_batched_migration_options =
       current_checkpoint = task._id
       last_raw_updated_date = Math.max last_raw_updated_date, task._raw_updated_date
 
-      {parents, parents2} = task
-      if _.size(parents) isnt _.size(parents2)
-        console.error "The two parent objects of #{task._id} are not consistent."
-        tasks_ids_with_problems.push task._id
-        return
 
-      for parent2_obj in parents2
-        if parents[parent2_obj?.parent]?.order isnt parent2_obj?.order
-          console.error "The two parent objects of #{task._id} are not consistent."
-          tasks_ids_with_problems.push task._id
-          break
+      if not APP.projects._grid_data_com._checkParents2 task
+        self.logWarning "The two parent objects of #{task._id} are not consistent. A new parents2 object is being created."
+        tasks_ids_with_problems.push task._id
+        APP.projects._grid_data_com._addParents2 task
 
       return
 
