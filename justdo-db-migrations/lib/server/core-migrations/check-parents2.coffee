@@ -20,6 +20,8 @@ common_batched_migration_options =
       corrupted_parents: null
       _raw_removed_date: null
 
+    # To avoid re-cheking the same batch of documents again and again, the cursor is sorted by the task id.
+    # We store the last checked task id in system-records and use it as the starting point of the next batch of documents
     if (previous_checkpoint = APP.justdo_system_records.getRecord("checked-parents2-tasks")?.previous_checkpoint)?
       query._id =
         $gt: previous_checkpoint
@@ -36,8 +38,12 @@ common_batched_migration_options =
 
   batchProcessor: (tasks_collection_cursor) ->
     tasks_ids_with_problems = []
+    # Note that current_checkpoint is being used by check-parents2(this script), and it holds task id
     current_checkpoint = null
     last_raw_updated_date = null
+    # Note that last_raw_updated_date is being used by maintain-parents2 ONLY, and it holds a date
+    # After check-parents2 finished executing, the most recent _raw_updated_date will be saved into system-records
+    # And used by maintain-parents2 to query for documents updated after being checked by check-parents2
     num_processed = 0
 
     tasks_collection_cursor.forEach (task) ->
