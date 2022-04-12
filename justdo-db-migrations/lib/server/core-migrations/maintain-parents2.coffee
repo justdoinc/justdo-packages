@@ -5,9 +5,9 @@ common_batched_migration_options =
     return (APP.justdo_db_migrations.isMigrationScriptMarkedAsComplete "add-parents2") and (APP.justdo_db_migrations.isMigrationScriptMarkedAsComplete "check-parents2")
 
   mark_as_completed_upon_batches_exhaustion: false
-  delay_before_checking_for_new_batches: 1000
+  delay_before_checking_for_new_batches: 1000 * 3
 
-  delay_between_batches: 1000 * 10
+  delay_between_batches: 1000
   batch_size: 10000
 
   collection: APP.collections.Tasks

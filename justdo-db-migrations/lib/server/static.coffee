@@ -39,7 +39,7 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       optional: true
 
     batchProcessor:
-      label: "Migration function to be called"
+      label: "Migration function to be called, should return the Number of processed documents"
       type: Function
       blackbox: true
 
