@@ -44,7 +44,7 @@ common_batched_migration_options =
     # Note that last_raw_updated_date is being used by maintain-parents2 ONLY, and it holds a date
     # After check-parents2 finished executing, the most recent _raw_updated_date will be saved into system-records
     # And used by maintain-parents2 to query for documents updated after being checked by check-parents2
-    last_raw_updated_date = APP.justdo_system_records.getRecord("checked-parents2-tasks")?.previous_checkpoint or null
+    last_raw_updated_date = APP.justdo_system_records.getRecord("maintain-parents2-tasks")?.previous_checkpoint or null
     num_processed = 0
 
     tasks_collection_cursor.forEach (task) ->
