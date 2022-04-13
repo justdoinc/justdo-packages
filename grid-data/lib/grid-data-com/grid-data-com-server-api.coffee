@@ -561,10 +561,28 @@ _.extend GridDataCom.prototype,
 
     return
 
-  _addParents2: (item) ->
+  _addParents2: (item, direct_update=false) ->
     item.parents2 = _.map item.parents, (parent_obj, parent_id) -> return {parent: parent_id, order: parent_obj.order}
-    @collection.update item._id, {$set: {parents2: item.parents2}}
+    
+    if direct_update
+      @collection.direct.update item._id, {$set: {parents2: item.parents2}}, {bypassCollection2: true}
+    else
+      @collection.update item._id, {$set: {parents2: item.parents2}}
+
     return item
+
+  checkParents2: (item) ->
+    # Returns true if parents and parents2 fields are set in item and consistent with one another.
+    # False otherwise.
+
+    if _.size(item.parents) isnt _.size(item.parents2)
+      return false
+
+    for parent2 in item.parents2
+      if item.parents[parent2?.parent]?.order isnt parent2?.order
+        return false
+
+    return true
 
   # Allow adding root child without going through the addChild method
   # to allow adding a root child to a specific non-logged-in user 
