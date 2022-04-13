@@ -574,7 +574,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     return true
 
-  undoImport = (trials = 0) ->
+  undoImport = (trials = 0, show_err=false) ->
     # task_paths_added is reversed as we need to remove the tasks in the deepest level first
 
     paths_to_remove = new Set()
@@ -597,9 +597,12 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       if err? and err.error != "unknown-path"
         if trials == 0
           undoImport 1  # Try again just in case the client database are not updated fast enough
-        else
+        else if show_err
+          error_text = "Undo failed."
+          if err.reason?
+            error_text = "#{err.reason}. #{error_text}"
           JustdoSnackbar.show
-            text: "#{err.reason}. Undo failed."
+            text: error_text
             duration: 15000
 
       return
@@ -642,7 +645,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       actionText: "Undo"
       showDismissButton: true
       onActionClick: =>
-        undoImport()
+        undoImport(0, true)
         JustdoSnackbar.close()
         return # end of onActionClick
 
