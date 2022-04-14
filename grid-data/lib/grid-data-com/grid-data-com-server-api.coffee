@@ -752,7 +752,7 @@ _.extend GridDataCom.prototype,
 
     if items.length != item_ids.size
       # one of the path doesn't exist or user doesn't have access
-      throw @_error "unknow-path"
+      throw @_error "unknown-path"
 
     items_map = {} # This one is used an access shortcut to avoid the need to traverse the returned array
     simulated_item_parents = {}
@@ -1086,7 +1086,7 @@ _.extend GridDataCom.prototype,
 
     if _.keys(items_map).length != item_ids.size
       # one of the path doesn't exist or user doesn't have access
-      throw @_error "unknow-path"
+      throw @_error "unknown-path"
 
     new_parent_ancestors = @collection.findAllAncestors(new_location.parent, {
       include_original_task_ids: true
