@@ -401,3 +401,10 @@ SimpleSchema.extendOptions
   # to catch for a specific task. Using them we can enjoy the reactivity aspect of minimongo
   # the ability to query using the regular find(). Hooks are supported as well.
   client_only: Match.Optional(Boolean)
+
+  # custom_clipboard_import_label
+  #
+  # If set, the clipboard import plugin, will display that label instead of the original
+  # label (useful when we want to proivde hints/instructions).
+  custom_clipboard_import_label: Match.Optional(String)
+
