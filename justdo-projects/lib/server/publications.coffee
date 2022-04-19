@@ -152,6 +152,18 @@ _.extend Projects.prototype,
 
         check paginated, Match.Maybe([Number])
 
+        {allow_init_payload_forced_column_value_directive} = pub_options
+
+        check allow_init_payload_forced_column_value_directive, Match.Maybe(Boolean)
+
+        init_payload_forced_column_value = undefined
+
+        if not allow_init_payload_forced_column_value_directive?
+          allow_init_payload_forced_column_value_directive = false
+
+        if allow_init_payload_forced_column_value_directive and not pub_options.init_payload_raw_cursors_mode
+          throw self._error "invalid-argument", "The allow_init_payload_forced_column_value_directive publication option is only supported for the init_payload_raw_cursors_mode"
+
         if paginated?
           if sync?
             throw self._error "invalid-argument", "The paginated subscription option is not supported together with the sync option"
@@ -184,6 +196,12 @@ _.extend Projects.prototype,
             query_options.fields[forbidden_field_id] = 0
 
           if pub_options.init_payload_raw_cursors_mode
+            if allow_init_payload_forced_column_value_directive
+              Meteor._ensure query_options, "fields"
+              query_options.fields.project_id = 0 # The project_id is obvious from the request.
+
+              init_payload_forced_column_value = {project_id: query.project_id}
+
             init_payload_query_options = _.extend {raw: true}, query_options
             init_payload_private_data_query_options = _.extend {raw: true}, private_data_query_options
 
@@ -534,10 +552,15 @@ _.extend Projects.prototype,
         #
         if initial_payload_cursor? and private_data_initial_payload_cursor?
           if pub_options.init_payload_raw_cursors_mode
-            publish_this.initPayload target_col_name,
+            init_payload_msg_items =
               init_payload: initial_payload_cursor
               changes_journal: if private_data_initial_payload_cursor is "SKIP" then undefined else private_data_initial_payload_cursor # When pagination is used we include the private data only in the last page
               sync_id: sync
+
+            if init_payload_forced_column_value?
+              init_payload_msg_items.forced_column_value = init_payload_forced_column_value
+
+            publish_this.initPayload target_col_name, init_payload_msg_items
           else
             #
             # Gather regular items payload

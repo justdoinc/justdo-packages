@@ -172,6 +172,10 @@ export default class LocalCollection {
       bulk_set_options.set_id_from_key = true;
     }
 
+    if (typeof options.forced_column_value !== "undefined") {
+      bulk_set_options.forced_column_value = options.forced_column_value;
+    }
+
     this.performOperationDirectlyOnIdMap(() => {
       this._docs.bulkSet(docs, bulk_set_options);
     });
