@@ -21,7 +21,7 @@ _.extend GridDataCom.prototype,
 
   loadDefaultGridFromHttpPreReadyPayload: (subscription_options, http_options, cb) ->
     APP.justdo_ddp_extensions.loadHttpPreReadyPayloadToMiniMongoStore "tasks_grid_um",
-      [subscription_options, {"unmerged_pub_ddp_extensions_version": 1, "init_payload_raw_cursors_mode": true, "skip_id_transcoding": true}], http_options, cb
+      [subscription_options, {"unmerged_pub_ddp_extensions_version": 1, "init_payload_raw_cursors_mode": true, "skip_id_transcoding": true, "allow_init_payload_forced_column_value_directive": true}], http_options, cb
 
     return
 
