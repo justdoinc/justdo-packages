@@ -120,6 +120,16 @@ _.extend GridControlCustomFields,
 
       optional: true
 
+    min:
+      type: Number
+
+      optional: true
+
+    max:
+      type: Number
+
+      optional: true
+
     default_width:
       type: Number
 
@@ -322,6 +332,12 @@ _.extend GridControlCustomFields,
 
       if (decimal = custom_field_definition.decimal)?
         custom_field_schema.decimal = decimal
+
+      if (min = custom_field_definition.min)?
+        custom_field_schema.min = min
+
+      if (max = custom_field_definition.max)?
+        custom_field_schema.max = max
 
       if (disabled = custom_field_definition.disabled)?
         custom_field_schema.disabled = disabled
