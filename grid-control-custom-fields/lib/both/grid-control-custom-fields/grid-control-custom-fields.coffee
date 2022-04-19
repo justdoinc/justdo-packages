@@ -130,6 +130,11 @@ _.extend GridControlCustomFields,
 
       optional: true
 
+    custom_clipboard_import_label:
+      type: String
+
+      optional: true    
+
     default_width:
       type: Number
 
@@ -338,6 +343,9 @@ _.extend GridControlCustomFields,
 
       if (max = custom_field_definition.max)?
         custom_field_schema.max = max
+
+      if (custom_clipboard_import_label = custom_field_definition.custom_clipboard_import_label)?
+        custom_field_schema.custom_clipboard_import_label = custom_clipboard_import_label
 
       if (disabled = custom_field_definition.disabled)?
         custom_field_schema.disabled = disabled
