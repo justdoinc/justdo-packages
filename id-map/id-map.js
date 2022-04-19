@@ -57,23 +57,42 @@ export class IdMap extends EventEmitter {
     
     // auto-generated see source code above
     // bulkSet = (docs, options) ->
-    //   if options?.set_id_from_key is true
+    //   set_id_from_key = options?.set_id_from_key is true
+    //   forced_column_value_in_force = _.isObject(options.forced_column_value) and not _.isEmpty(options.forced_column_value)
+      
+    //   if true in [set_id_from_key, forced_column_value_in_force]
     //     for doc_id, doc of docs
-    //       docs[doc_id]._id = doc_id
-      
+    //       if set_id_from_key
+    //         docs[doc_id]._id = doc_id
+          
+    //       if forced_column_value_in_force
+    //         for key, val of options.forced_column_value
+    //           docs[doc_id][key] = val
+
     //   @emit("before-bulkSet", docs)
-      
+
     //   Object.assign(@_map, docs)
 
     //   @emit("after-bulkSet", docs)
 
     //   return
 
-    var doc, doc_id;
-    if ((options != null ? options.set_id_from_key : void 0) === true) {
+    var doc, doc_id, forced_column_value_in_force, key, ref, set_id_from_key, val;
+    set_id_from_key = (options != null ? options.set_id_from_key : void 0) === true;
+    forced_column_value_in_force = _.isObject(options.forced_column_value) && !_.isEmpty(options.forced_column_value);
+    if (true === set_id_from_key || true === forced_column_value_in_force) {
       for (doc_id in docs) {
         doc = docs[doc_id];
-        docs[doc_id]._id = doc_id;
+        if (set_id_from_key) {
+          docs[doc_id]._id = doc_id;
+        }
+        if (forced_column_value_in_force) {
+          ref = options.forced_column_value;
+          for (key in ref) {
+            val = ref[key];
+            docs[doc_id][key] = val;
+          }
+        }
       }
     }
     this.emit("before-bulkSet", docs);
