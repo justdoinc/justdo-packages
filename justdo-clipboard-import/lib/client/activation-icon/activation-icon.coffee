@@ -23,6 +23,10 @@ noneditable_importable_fields = [
 
 base_supported_fields_ids = non_sorted_field_ids.concat base_supported_fields_ids
 
+excluded_field_ids = [
+  JustdoPlanningUtilities.task_duration_pseudo_field_id # XXX Duration is expected to be re-enabled in the future
+]
+
 custom_allowed_dates_formats = ["MMM DD YYYY", "DD MMMM YYYY", "Others"]
 
 getLocalStorageKey = ->
@@ -122,7 +126,7 @@ getAvailableFieldTypes = ->
   custom_fields_supported_formatters = ["defaultFormatter", "unicodeDateFormatter", "keyValueFormatter", "calculatedFieldFormatter", JustdoPlanningUtilities.dependencies_formatter_id]
 
   for field_id, field of all_fields
-    if field_id not in supported_fields_ids
+    if field_id not in supported_fields_ids and field_id not in excluded_field_ids
       if field.custom_field and field.grid_editable_column and field.grid_column_formatter in custom_fields_supported_formatters
         supported_fields_ids.push field_id
 
