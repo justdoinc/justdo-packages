@@ -66,13 +66,16 @@ Template.justdo_clipboard_import_input_selector.helpers
 
     return cur_proj.isAdmin()
 
+  getClipboardImportLabel: ->
+    return @custom_clipboard_import_label or @label
+
 Template.justdo_clipboard_import_input_selector.events
   "click .justdo-clipboard-import-input-selector a[field-id]": (e, tpl) ->
     e.preventDefault()
 
     field_id = $(e.currentTarget)[0].getAttribute("field-id")
     available_field_types_crv = tpl.available_field_types_crv.get()[0]
-    field_label = available_field_types_crv[field_id].label
+    field_label = available_field_types_crv[field_id].custom_clipboard_import_label or available_field_types_crv[field_id].label
 
     $corresponding_selector_button = $(e.currentTarget).closest(".justdo-clipboard-import-input-selector").find("button")
 

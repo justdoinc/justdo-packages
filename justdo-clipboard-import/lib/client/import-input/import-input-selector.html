@@ -6,7 +6,7 @@
     <div class="dropdown-menu jd-p-075 shadow-lg border-0 dropdown-field-selector" aria-labelledby="justdo-clipboard-import-input-{{this}}">
       <input class="clipboard-import-selector-search form-control form-control-sm bg-light border-0" type="text" placeholder="Search" name="" value="">
       {{#each getAvailableFieldTypesArray}}
-        <a href="#" class="dropdown-item px-1" field-id="{{_id}}">{{label}}</a>
+        <a href="#" class="dropdown-item px-1" field-id="{{_id}}">{{getClipboardImportLabel}}</a>
       {{/each}}
       {{#if isAdmin}}
         <a href="#" class="dropdown-item px-1 manage-columns d-flex"><svg class="jd-icon-custom-field" aria-hidden="true"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg> Manage Columns</a>
