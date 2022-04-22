@@ -53,7 +53,7 @@ common_batched_migration_options =
       last_raw_updated_date = Math.max last_raw_updated_date, task._raw_updated_date
 
 
-      if not APP.projects._grid_data_com._checkParents2 task
+      if not APP.projects._grid_data_com.checkParents2 task
         self.logWarning "The two parent objects of #{task._id} are not consistent. A new parents2 object is being created."
         tasks_ids_with_problems.push task._id
         APP.projects._grid_data_com._addParents2 task
