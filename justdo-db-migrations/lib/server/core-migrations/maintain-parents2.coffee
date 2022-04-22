@@ -34,7 +34,6 @@ common_batched_migration_options =
 
   batchProcessor: (tasks_collection_cursor) ->
     self = @
-    tasks_ids_with_problems = []
     current_checkpoint = APP.justdo_system_records.getRecord("maintain-parents2-tasks").previous_checkpoint + 1
     num_processed = 0
 
@@ -44,15 +43,11 @@ common_batched_migration_options =
 
       if not APP.projects._grid_data_com.checkParents2 task
         self.logWarning "The two parent objects of #{task._id} are not consistent. A new parents2 object is being created."
-        tasks_ids_with_problems.push task._id
         APP.projects._grid_data_com._addParents2 task
 
       return
 
     APP.collections.SystemRecords.upsert "maintain-parents2-tasks",
-      $addToSet:
-        tasks_ids_with_problems:
-          $each: tasks_ids_with_problems
       $set:
         previous_checkpoint: current_checkpoint
 

@@ -38,7 +38,6 @@ common_batched_migration_options =
 
   batchProcessor: (tasks_collection_cursor) ->
     self = @
-    tasks_ids_with_problems = []
     # Note that current_checkpoint is being used by check-parents2(this script), and it holds task id
     current_checkpoint = null
     # Note that last_raw_updated_date is being used by maintain-parents2 ONLY, and it holds a date
@@ -52,18 +51,13 @@ common_batched_migration_options =
       current_checkpoint = task._id
       last_raw_updated_date = Math.max last_raw_updated_date, task._raw_updated_date
 
-
       if not APP.projects._grid_data_com.checkParents2 task
         self.logWarning "The two parent objects of #{task._id} are not consistent. A new parents2 object is being created."
-        tasks_ids_with_problems.push task._id
         APP.projects._grid_data_com._addParents2 task
 
       return
 
     APP.collections.SystemRecords.upsert "checked-parents2-tasks",
-      $addToSet:
-        tasks_ids_with_problems:
-          $each: tasks_ids_with_problems
       $set:
         previous_checkpoint: current_checkpoint
 
