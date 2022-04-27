@@ -1,3 +1,26 @@
+getEpochDate = ->
+  return new Date(0)
+
+getDatePlusOneMs = (date) ->
+  # Will use epoch if date is undefined/null or isn't a date
+  if not _.isDate(date)
+    date = getEpochDate()
+
+    return date
+
+  return new Date(date.valueOf() + 1)
+
+getPreviousCheckpointOrEpoch = ->
+  previous_checkpoint = APP.justdo_system_records.getRecord("maintain-parents2-tasks")?.previous_checkpoint
+
+  if not _.isDate(previous_checkpoint)
+    return getEpochDate()
+
+  return previous_checkpoint
+
+getPreviousCheckpointOrEpochPlusOneMs = ->
+  return getDatePlusOneMs(getPreviousCheckpointOrEpoch())
+
 common_batched_migration_options =
   starting_condition_interval_between_checks: 1000 * 60
 
@@ -21,7 +44,7 @@ common_batched_migration_options =
         $ne: null
       corrupted_parents: null
       _raw_updated_date:
-        $gte: new Date APP.justdo_system_records.getRecord("maintain-parents2-tasks").previous_checkpoint + 1
+        $gte: getPreviousCheckpointOrEpochPlusOneMs()
       _raw_removed_date: null
 
     query_options =
@@ -34,12 +57,12 @@ common_batched_migration_options =
 
   batchProcessor: (tasks_collection_cursor) ->
     self = @
-    current_checkpoint = APP.justdo_system_records.getRecord("maintain-parents2-tasks").previous_checkpoint + 1
+    current_checkpoint = getPreviousCheckpointOrEpochPlusOneMs()
     num_processed = 0
 
     tasks_collection_cursor.forEach (task) ->
       num_processed += 1
-      current_checkpoint = Math.max current_checkpoint, task._raw_updated_date
+      current_checkpoint = JustdoHelpers.datesMax(current_checkpoint, task._raw_updated_date)
 
       if not APP.projects._grid_data_com.checkParents2 task
         self.logWarning "The two parent objects of #{task._id} are not consistent. A new parents2 object is being created."

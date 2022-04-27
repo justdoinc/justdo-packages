@@ -86,8 +86,9 @@ Package.onUse(function (api) {
   // file. 
 
   api.addFiles("lib/server/core-migrations/add-justdo-timezone.coffee", server);
-  // api.addFiles("lib/server/core-migrations/add-parents2.coffee", server);
-  // api.addFiles("lib/server/core-migrations/check-parents2.coffee", server);
+  api.addFiles("lib/server/core-migrations/add-parents2.coffee", server);
+  api.addFiles("lib/server/core-migrations/check-parents2.coffee", server);
+  api.addFiles("lib/server/core-migrations/maintain-parents2.coffee", server);
 
   api.export("JustdoDbMigrations", both);
 });
