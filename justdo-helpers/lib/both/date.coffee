@@ -19,3 +19,8 @@ _.extend JustdoHelpers,
       return new Date()
 
     return date
+
+  datesMax: (...dates) ->
+    dates = _.map dates, (date) -> date?.valueOf() or 0
+
+    return new Date(Math.max(...dates))
