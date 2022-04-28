@@ -173,7 +173,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
               return
 
-            @logProgress "Waiting #{options.delay_before_checking_for_new_batches / 1000}sec before checking for new batches"
+            # @logProgress "Waiting #{options.delay_before_checking_for_new_batches / 1000}sec before checking for new batches"
             batch_timeout = Meteor.setTimeout =>
               processBatchWrapper()
             , options.delay_before_checking_for_new_batches
