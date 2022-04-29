@@ -82,5 +82,12 @@ Package.onUse(function (api) {
   // the server will have the access to the apis loaded after the init.coffee
   // file.
 
+  api.addFiles("lib/client/grid-views-dropdown/grid-views-dropdown-button/grid-views-dropdown-button.coffee", "client");
+  api.addFiles("lib/client/grid-views-dropdown/grid-views-dropdown-button/grid-views-dropdown-button.html", "client");
+  api.addFiles("lib/client/grid-views-dropdown/grid-views-dropdown-button/grid-views-dropdown-button.sass", "client");
+  api.addFiles("lib/client/grid-views-dropdown/grid-views-dropdown-menu/grid-views-dropdown-menu.coffee", "client");
+  api.addFiles("lib/client/grid-views-dropdown/grid-views-dropdown-menu/grid-views-dropdown-menu.html", "client");
+  api.addFiles("lib/client/grid-views-dropdown/grid-views-dropdown-menu/grid-views-dropdown-menu.sass", "client");
+
   api.export("JustdoGridViews", both);
 });

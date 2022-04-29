@@ -5,7 +5,8 @@ _.extend JustdoGridViews.prototype,
   _deferredInit: ->
     if @destroyed
       return
-
+    @registerProjectHeaderButton()
+    
     return
 
   subscribeGridViews: (options, cb) ->
@@ -22,3 +23,12 @@ _.extend JustdoGridViews.prototype,
   unsubscribeGridViews: ->
     @grid_views_subscription?.stop()
     return
+
+  registerProjectHeaderButton: ->
+    JD.registerPlaceholderItem "grid-views-dropdown-button",
+      data:
+        template: "grid_views_dropdown_button"
+        template_data: {}
+
+      domain: "project-left-navbar"
+      position: 100

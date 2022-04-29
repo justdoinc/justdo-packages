@@ -23,14 +23,6 @@ APP.executeAfterAppLibCode ->
     leftNavbarItems: ->
       return JD.getPlaceholderItems("project-left-navbar").reverse()
 
-  JD.registerPlaceholderItem "grid-views-dropdown-button",
-    data:
-      template: "grid_views_dropdown_button"
-      template_data: {}
-
-    domain: "project-left-navbar"
-    position: 100
-
   JD.registerPlaceholderItem "members-dropdown-button",
     data:
       template: "members_dropdown_button"

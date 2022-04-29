@@ -125,12 +125,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project/header/required-actions/required-actions.coffee", "client");
   api.addFiles("lib/client/project/header/required-actions/required-actions.html", "client");
   api.addFiles("lib/client/project/header/required-actions/required-actions.sass", "client");
-  api.addFiles("lib/client/project/header/grid-views-dropdown/grid-views-dropdown-button/grid-views-dropdown-button.coffee", "client");
-  api.addFiles("lib/client/project/header/grid-views-dropdown/grid-views-dropdown-button/grid-views-dropdown-button.html", "client");
-  api.addFiles("lib/client/project/header/grid-views-dropdown/grid-views-dropdown-button/grid-views-dropdown-button.sass", "client");
-  api.addFiles("lib/client/project/header/grid-views-dropdown/grid-views-dropdown-menu/grid-views-dropdown-menu.coffee", "client");
-  api.addFiles("lib/client/project/header/grid-views-dropdown/grid-views-dropdown-menu/grid-views-dropdown-menu.html", "client");
-  api.addFiles("lib/client/project/header/grid-views-dropdown/grid-views-dropdown-menu/grid-views-dropdown-menu.sass", "client");
   api.addFiles("lib/client/project/project.coffee", "client");
   api.addFiles("lib/client/project/project.html", "client");
   api.addFiles("lib/client/project/project.sass", "client");
