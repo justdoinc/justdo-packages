@@ -790,6 +790,41 @@ _.extend GridDataCore.prototype,
 
   release: (immediate) -> @flush_manager.release()
 
+  getAllCollectionPaths: (item_id) ->
+    # These are not grid tree paths - but the path created from the natural parents structure
+
+    if not @items_by_id[item_id]?
+      return []
+
+    collection_paths = [[item_id, "/#{item_id}/"]]
+    collection_paths_edited = true
+    while collection_paths_edited
+      collection_paths_edited = false
+      new_collection_paths = []
+
+      for collection_path in collection_paths
+        [current_root, current_path] = collection_path
+
+        if current_root == "0" or current_root == "s"
+          new_collection_paths.push collection_path
+          continue
+
+        all_parents_docs = @getAllDirectParentsItemsDocs([current_root])
+
+        if _.isNumber(@items_by_id[current_root]?.parents?["0"]?.order)
+          new_collection_paths.push ["0", current_path]
+        else if _.isEmpty(all_parents_docs)
+          new_collection_paths.push ["s", "/s#{current_path}"]
+
+        for parent_doc in all_parents_docs   
+          parent_id = parent_doc._id     
+          collection_paths_edited = true
+          new_collection_paths.push [parent_id, "/#{parent_id}#{current_path}"]
+
+      collection_paths = new_collection_paths
+
+    return _.map collection_paths, (collection_path) -> collection_path[1]
+
   getAllDirectParentsItemsDocs: (items_ids) ->
     res = []
 
