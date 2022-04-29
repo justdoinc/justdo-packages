@@ -6,6 +6,9 @@ _.extend JustdoTasksCollectionsManager.prototype,
     return
 
   _ensureIndicesExistsForTasksCollection: ->
+    # FETCH_PROJECT_TASKS_BASED_ON_PARENTS2_PARENT / FETCH_PROJECT_TASKS_BASED_ON_PARENTS2_PARENT_AND_ORDER
+    @tasks_collection._ensureIndex {"project_id": 1, "parents2.parent": 1}
+
     # FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_INDEX
     @tasks_collection._ensureIndex {"project_id": 1, "users": 1}
 

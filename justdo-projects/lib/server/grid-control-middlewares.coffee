@@ -2,6 +2,12 @@ _.extend Projects.prototype,
   _setupGridControlMiddlewares: ->
     projects_object = @
 
+    requireProjectIdProvided = (item_doc) ->
+      if not (project_id = item_doc?.project_id)? or not _.isString(project_id)
+        throw @_error "invalid-argument", "item_doc now must be provided with the project_id field set to a String"
+
+      return project_id
+
     extendNewItemFields = (new_item_fields, project_doc, perform_as) ->
       new_item_fields.seqId =
         projects_object.allocateNewTaskSeqId project_doc._id
@@ -171,37 +177,30 @@ _.extend Projects.prototype,
       # XXX read getNewChildOrder documentation at
       # grid-data-com-server.coffee
 
-      query = {}
-      sort = {}
-      query["parents.#{parent_id}.order"] = {$gte: 0}
-      if (project_id = new_child_fields?.project_id)?
-        check project_id, String
+      project_id = requireProjectIdProvided(new_child_fields)
 
-        query["project_id"] = project_id
-      else
-        console.warn "getNewChildOrder: new_child_fields.project_id isn't available. This cause a substantial hit to getNewChildOrder performance"
+      query =
+        "project_id": project_id
+        "parents2.parent": parent_id
 
-      sort["parents.#{parent_id}.order"] = -1
-
+      sort =
+        "parents.#{parent_id}.order": -1
+      
       current_max_order_child = @findOne(query, {sort: sort})
-      if current_max_order_child?
-        new_order = current_max_order_child.parents[parent_id].order + 1
-      else
-        new_order = 0
+
+      new_order = (current_max_order_child?.parents?[parent_id]?.order + 1) or 0
 
       return new_order
 
     @items_collection.getChildrenCount = (item_id, item_doc=null, query_options) ->
-      query = {}
+      if not item_doc?
+        item_doc = @findOne(item_id, {project_id: 1})
 
-      query["parents.#{item_id}.order"] = {$gte: 0}
+      project_id = requireProjectIdProvided(item_doc)
 
-      if not (project_id = item_doc?.project_id)?
-        console.warn "getChildrenCount: item_doc.project_id isn't available. This cause a substantial hit to getChildrenCount performance"
-      else
-        check project_id, String
-
-        query["project_id"] = project_id
+      query =
+        "project_id": project_id
+        "parents2.parent": item_id
 
       query_options = _.extend {}, query_options, {fields: {_id: 1}}
 
@@ -213,56 +212,28 @@ _.extend Projects.prototype,
       check min_order_to_inc, Number
       check inc_count, Number
 
-      #
-      # parents update
-      #
-      query = {}
-      if (project_id = item_doc?.project_id)?
-        check project_id, String
+      project_id = requireProjectIdProvided(item_doc)
 
-        query["project_id"] = project_id
-      else
-        # IMPORTANT Regardless, if parent 0 is given, it will never make sense to increment all the tasks under root from all JustDos.
-        # So, even when performance will allow not providing item_doc.project_id we'll still
-        # not allow inc of parent 0 to all projects.
-        throw projects_object._error "not-supported", "Due to performance issue we don't support incrementChildsOrderGte without item_doc.project_id"
+      query =
+        project_id: project_id
+        parents2:
+          # During conversion period, parents2 may not exist for all tasks documents
+          # We opportunistically attempt to update parents2 in this stage.
+          $elemMatch:
+            parent: parent_id
+            order:
+              $gte: min_order_to_inc
 
-      query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
-
-      update_op = {$inc: {}}
-      update_op["$inc"]["parents.#{parent_id}.order"] = inc_count
-
-      update_op["$currentDate"] = {_raw_updated_date: true}
-
-      #
-      # parents2 update
-      #
-      parents2_query = {}
-      parents2_query["parents2"] =
-        # During conversion period, parents2 may not exist for all tasks documents
-        # We opportunistically attempt to update parents2 in this stage.
-        $elemMatch:
-          parent: parent_id
-          order:
-            $gte: min_order_to_inc
-
-      parents2_update_op = {$inc: {}}
-      parents2_update_op["$inc"]["parents2.$.order"] = inc_count
+      update_op =
+        $inc:
+          "parents2.$.order": inc_count
+          "parents.#{parent_id}.order": inc_count
+        $currentDate:
+          _raw_updated_date: true
 
       performIncrementChildsOrderGte = (cb) =>
-        # We use rawCollection here, skip collection2/hooks
-        async.parallel [
-          (cb) =>
-            APP.justdo_analytics.logMongoRawConnectionOp(@_name, "update", parents2_query, parents2_update_op, {multi: true})
-            @rawCollection().update parents2_query, parents2_update_op, {multi: true}, cb
-
-            return
-          (cb) =>
-            APP.justdo_analytics.logMongoRawConnectionOp(@_name, "update", query, update_op, {multi: true})
-            @rawCollection().update query, update_op, {multi: true}, cb
-
-            return
-        ], (err) ->
+        APP.justdo_analytics.logMongoRawConnectionOp(@_name, "update", query, update_op, {multi: true})
+        @rawCollection().update query, update_op, {multi: true}, (err) ->
           if err?
             console.error(err)
 
@@ -281,12 +252,13 @@ _.extend Projects.prototype,
       return
 
     @items_collection.getChildreOfOrder = (item_id, order, item_doc=null) ->
-      query = {}
-      query["parents.#{item_id}.order"] = order
+      project_id = requireProjectIdProvided(item_doc)
 
-      if item_id == "0" and (project_id = item_doc?.project_id)?
-        check project_id, String
-
-        query["project_id"] = project_id
+      query =
+        "project_id": project_id
+        "parents2":
+          $elemMatch:
+            parent: item_id
+            order: order
 
       return @findOne(query)
