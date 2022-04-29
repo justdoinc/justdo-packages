@@ -23,8 +23,6 @@ APP.executeAfterAppLibCode ->
       return
 
   Template.grid_views_dropdown_menu.onCreated ->
-    APP.justdo_grid_views.subscribeGridViews({type: "justdo", justdo_id: JD.activeJustdoId()})
-
     tpl = @
     tpl.active_grid_view_rv = new ReactiveVar {}
     tpl.rename_grid_view_id_rv = new ReactiveVar null
@@ -43,10 +41,6 @@ APP.executeAfterAppLibCode ->
   Template.grid_views_dropdown_menu.onRendered ->
     $(".grid-views-search-input").focus()
 
-    return
-
-  Template.grid_views_dropdown_menu.onDestroyed ->
-    APP.justdo_grid_views.unsubscribeGridViews()
     return
 
   Template.grid_views_dropdown_menu.helpers
