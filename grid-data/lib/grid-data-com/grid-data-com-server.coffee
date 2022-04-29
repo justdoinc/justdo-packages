@@ -420,7 +420,8 @@ _.extend GridDataCom.prototype,
           if not (test_options = test.options)?
             test_options = {}
 
-          test_query["parents.#{test.item_id}.order"] = {$exists: true}
+          # INDEX:FETCH_TASKS_BASED_ON_PARENTS2_PARENT
+          test_query["parents2.parent"] = test.item_id
 
           if (except_task_ids = test_options.except_task_ids)?
             check except_task_ids, [String]
@@ -439,15 +440,25 @@ _.extend GridDataCom.prototype,
         return collection.findOne(query, {fields: {_id: 1}})?
 
       getChildrenCount: (item_id, item_doc=null, query_options) ->
+        throw self._error "not-supported", "Support for the non-project-aware getChildrenCount removed"
+        # Implementation moved to justdo-projects/lib/server/grid-control-middlewares.coffee
+
+        return
+
         # item_doc serves the same purpose new_child_fields serves in
         # @getNewChildOrder, read comment there in its entirety
         # including XXX section
-        query = {}
-        query["parents.#{item_id}.order"] = {$gte: 0}
-        query_options = _.extend {}, query_options, {fields: {_id: 1}}
-        return collection.find(query, query_options).count()
+        # query = {}
+        # query["parents.#{item_id}.order"] = {$gte: 0}
+        # query_options = _.extend {}, query_options, {fields: {_id: 1}}
+        # return collection.find(query, query_options).count()
 
       getNewChildOrder: (parent_id, new_child_fields=null) ->
+        throw self._error "not-supported", "Support for the non-project-aware getNewChildOrder removed"
+        # Implementation moved to justdo-projects/lib/server/grid-control-middlewares.coffee
+
+        return
+
         # Note: this @getNewChildOrder() does nothing with new_child_fields
         # but, custom methods that will replace it might need information
         # about the new_child_fields.
@@ -464,61 +475,83 @@ _.extend GridDataCom.prototype,
         # of project_id concept, should introduce to grid-data.
         # Following such implementation the new_child_fields argument above
         # will become redundant and should be removed.
-        query = {}
-        sort = {}
-        query["parents.#{parent_id}.order"] = {$gte: 0}
-        sort["parents.#{parent_id}.order"] = -1
 
-        current_max_order_child = collection.findOne(query, {sort: sort})
-        if current_max_order_child?
-          new_order = current_max_order_child.parents[parent_id].order + 1
-        else
-          new_order = 0
+        # query = {}
+        # sort = {}
+        # query["parents.#{parent_id}.order"] = {$gte: 0}
+        # sort["parents.#{parent_id}.order"] = -1
 
-        return new_order
+        # query =
+        #   $elemMatch:
+        #     parent: parent_id
+        #     order:
+        #       $gte: min_order_to_inc
+        #   parents2:
+        #     parent: parent_id
+
+        # sort:
+        #   "parents2.$.order": -1
+
+        # current_max_order_child = collection.findOne(query, {sort: sort})
+        # if current_max_order_child?
+        #   new_order = current_max_order_child.parents[parent_id].order + 1
+        # else
+        #   new_order = 0
+
+        # return new_order
 
       incrementChildsOrderGte: (parent_id, min_order_to_inc, item_doc=null, inc_count=1) ->
-        check parent_id, String
-        check min_order_to_inc, Number
-        check inc_count, Number
+        throw self._error "not-supported", "Support for the non-project-aware incrementChildsOrderGte removed"
+        # Implementation moved to justdo-projects/lib/server/grid-control-middlewares.coffee
 
-        # item_doc serves the same purpose new_child_fields serves in
-        # @getNewChildOrder, read comment there in its entirety
-        # including XXX section
+        return
 
-        #
-        # parents update
-        #
-        query = {}
-        query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
-        update_op = {$inc: {}}
-        update_op["$inc"]["parents.#{parent_id}.order"] = inc_count
+        # check parent_id, String
+        # check min_order_to_inc, Number
+        # check inc_count, Number
 
-        #
-        # parents2 update
-        #
-        parents2_query = {}
-        parents2_query["parents2"] =
-          $elemMatch:
-            parent: parent_id
-            order:
-              $gte: min_order_to_inc
+        # # item_doc serves the same purpose new_child_fields serves in
+        # # @getNewChildOrder, read comment there in its entirety
+        # # including XXX section
 
-        parents2_update_op = {$inc: {}}
-        parents2_update_op["$inc"]["parents2.$.order"] = inc_count
+        # #
+        # # parents update
+        # #
+        # query = {}
+        # query["parents.#{parent_id}.order"] = {$gte: min_order_to_inc}
+        # update_op = {$inc: {}}
+        # update_op["$inc"]["parents.#{parent_id}.order"] = inc_count
 
-        collection.update parents2_query, parents2_update_op, {multi: true, bypassCollection2: true}
+        # #
+        # # parents2 update
+        # #
+        # parents2_query = {}
+        # parents2_query["parents2"] =
+        #   $elemMatch:
+        #     parent: parent_id
+        #     order:
+        #       $gte: min_order_to_inc
 
-        return collection.update query, update_op, {multi: true, bypassCollection2: true}
+        # parents2_update_op = {$inc: {}}
+        # parents2_update_op["$inc"]["parents2.$.order"] = inc_count
+
+        # collection.update parents2_query, parents2_update_op, {multi: true, bypassCollection2: true}
+
+        # return collection.update query, update_op, {multi: true, bypassCollection2: true}
 
       getChildreOfOrder: (item_id, order, item_doc=null) ->
-        # item_doc serves the same purpose new_child_fields serves in
-        # @getNewChildOrder, read comment there in its entirety
-        # including XXX section
-        query = {}
-        query["parents.#{item_id}.order"] = order
+        throw self._error "not-supported", "Support for the non-project-aware getChildreOfOrder removed"
+        # Implementation moved to justdo-projects/lib/server/grid-control-middlewares.coffee
+
+        return
         
-        return collection.findOne(query)
+        # # item_doc serves the same purpose new_child_fields serves in
+        # # @getNewChildOrder, read comment there in its entirety
+        # # including XXX section
+        # query = {}
+        # query["parents.#{item_id}.order"] = order
+        
+        # return collection.findOne(query)
 
       isAncestor: (item_id, potential_ancestor_id) ->
         # Returns true if potential_ancestor_id is ancestor of item_id or the same item
