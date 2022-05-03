@@ -49,10 +49,12 @@
           <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>
           <div class="dropdown-item-label">Rename</div>
         </div>
-        <div class="grid-view-share dropdown-item px-1">
-          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#share"></use></svg>
-          <div class="dropdown-item-label">{{#if this.shared}}Unshare{{else}}Share{{/if}}</div>
-        </div>
+        {{#if isProjectAdmin}}
+          <div class="grid-view-share dropdown-item px-1">
+            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#share"></use></svg>
+            <div class="dropdown-item-label">{{#if this.shared}}Unshare{{else}}Share{{/if}}</div>
+          </div>
+        {{/if}}
         <div class="grid-view-delete dropdown-item px-1">
           <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
           <div class="dropdown-item-label">Remove</div>
