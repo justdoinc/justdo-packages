@@ -186,7 +186,7 @@ _.extend TasksChangelogManager.prototype,
       return "#{performer_name} set #{getLabelFromFieldDefinition(field_definition)} to: #{new_value_txt_label}."
 
     # and the generic case:
-    if activity_obj.new_value.length == 0
+    if not activity_obj.new_value? or activity_obj.new_value.length == 0
       return "#{performer_name} cleared #{getLabelFromFieldDefinition(field_definition)}."
 
     new_value = activity_obj.new_value
