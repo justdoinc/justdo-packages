@@ -491,6 +491,28 @@ _.extend GridData.prototype,
     if item_id == "0"
       return "/"
 
+    # sub_paths = {}
+    # all_paths = @_grid_data_core.getAllCollectionPaths(item_id)
+    # for path in all_paths
+    #   path_parts = path.slice(1, -1).split("/")
+
+    #   for sub_part, i in path_parts
+    #     if not sub_paths[sub_part]?
+    #       sub_paths[sub_part] = []
+    #     sub_paths[sub_part].push path_parts.slice(i + 1).join("/") + "/"
+
+    # new_paths = []
+    # for section_def in @sections
+    #   section_def.section_manager._each "/", {expand_only: false}, (section, item_type, item_obj, path, expand_state) =>
+    #     if item_obj._id of sub_paths
+    #       for sub_part_path in sub_paths[item_obj._id]
+    #         console.log {sub_paths, sub_part_path, item_obj}
+    #         new_paths.push "#{section_def.path}#{item_obj._id}/#{sub_part_path}"
+
+    #     return -1
+
+    # new_paths = _.uniq(new_paths)
+    
     paths = []
     @_each "/", {expand_only: false, filtered_tree: false}, (section, item_type, item_obj, path, expand_state) ->
       if item_obj._id == item_id
@@ -500,6 +522,8 @@ _.extend GridData.prototype,
         ret_val = undefined
         JustdoHelpers.sameTickCacheSet(same_tick_cache_key_id, ret_val)
         return ret_val
+
+    # console.log "HERE", paths.sort(), new_paths.sort(), EJSON.equals(paths.sort(), new_paths.sort())
 
     if _.isEmpty paths
       paths = undefined
