@@ -10,7 +10,10 @@ APP.executeAfterAppLibCode ->
       return false
 
     activeItemNotNull: ->
-      return APP.collections.Tasks.findOne(JD.activeItemId(),
+      if not (active_item_id = JD.activeItemId())?
+        return false
+      
+      return APP.collections.Tasks.findOne(active_item_id,
         fields: 
           _id: 1
       )?
