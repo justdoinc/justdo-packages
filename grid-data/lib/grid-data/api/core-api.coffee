@@ -464,6 +464,21 @@ _.extend GridData.prototype,
 
     if item_id == "0"
       return "/"
+    
+    if each_options.expand_only is false and each_options.filtered_tree is false
+      # Following optimizations, @getAllCollectionItemIdPaths() performance are much better
+      # then attempting full tree traversing for search.
+      #
+      # The two options that aren't supported at the moment, should be quite easy to
+      # implement, once we have a bit more time. -Daniel
+
+      optimized_item_path = @getAllCollectionItemIdPaths(item_id, true)?[0] or null
+
+      return optimized_item_path
+
+    #
+    # Fallback for old alg if expand_only or filtered_tree aren't false (the performance of the following is much worse, but those options are *rarely* used).
+    #
 
     item_path = null
     @_each "/", each_options, (section, item_type, item_obj, path, expand_state) ->
@@ -471,10 +486,10 @@ _.extend GridData.prototype,
         item_path = path
 
         return -2
-    
+
     return item_path
 
-  getAllCollectionItemIdPaths: (item_id) ->
+  getAllCollectionItemIdPaths: (item_id, return_first=false) ->
     # Returns an array with all the paths in @grid_tree that leads to the
     # requested item_id of @collection, in their order in the tree.
     #
@@ -491,44 +506,65 @@ _.extend GridData.prototype,
     if item_id == "0"
       return "/"
 
-    # sub_paths = {}
-    # all_paths = @_grid_data_core.getAllCollectionPaths(item_id)
-    # for path in all_paths
-    #   path_parts = path.slice(1, -1).split("/")
+    sub_paths = {}
+    all_paths = @_grid_data_core.getAllCollectionPaths(item_id)
+    for path in all_paths
+      path_parts = path.slice(1, -1).split("/")
 
-    #   for sub_part, i in path_parts
-    #     if not sub_paths[sub_part]?
-    #       sub_paths[sub_part] = []
-    #     sub_paths[sub_part].push path_parts.slice(i + 1).join("/") + "/"
+      for sub_part, i in path_parts
+        if not sub_paths[sub_part]?
+          sub_paths[sub_part] = []
+        sub_paths[sub_part].push path_parts.slice(i + 1).join("/")
 
-    # new_paths = []
-    # for section_def in @sections
-    #   section_def.section_manager._each "/", {expand_only: false}, (section, item_type, item_obj, path, expand_state) =>
-    #     if item_obj._id of sub_paths
-    #       for sub_part_path in sub_paths[item_obj._id]
-    #         console.log {sub_paths, sub_part_path, item_obj}
-    #         new_paths.push "#{section_def.path}#{item_obj._id}/#{sub_part_path}"
-
-    #     return -1
-
-    # new_paths = _.uniq(new_paths)
-    
-    paths = []
+    optimized_new_paths = []
     @_each "/", {expand_only: false, filtered_tree: false}, (section, item_type, item_obj, path, expand_state) ->
-      if item_obj._id == item_id
-        paths.push(path)
+      if item_obj._id of sub_paths
+        for sub_part_path in sub_paths[item_obj._id]
+          # console.log {sub_paths, sub_part_path, item_obj}
+          optimized_new_paths.push "#{path}#{if sub_part_path == "" then "" else "#{sub_part_path}/"}"
 
-        # Let the each keep running
-        ret_val = undefined
-        JustdoHelpers.sameTickCacheSet(same_tick_cache_key_id, ret_val)
-        return ret_val
+          if return_first
+            return -2
 
-    # console.log "HERE", paths.sort(), new_paths.sort(), EJSON.equals(paths.sort(), new_paths.sort())
+      # Step into, *ONLY* if this is a section item, we scan only the root items of each section item.
+      # Note that @_each is more optimized then section_def.section_manager._each, hence we use it instead
+      # of a loop of the form:
+      #
+      # new_paths = []
+      # for section_def in @sections
+      #   section_def.section_manager._each "/", {expand_only: false}, (section, item_type, item_obj, path, expand_state) =>
+      #     if item_obj._id of sub_paths
+      #       for sub_part_path in sub_paths[item_obj._id]
+      #         # console.log {sub_paths, sub_part_path, item_obj}
+      #         new_paths.push "#{section_def.path}#{item_obj._id}/#{if sub_part_path == "" then "" else "#{sub_part_path}/"}"
+      #
+      #     return -1
 
-    if _.isEmpty paths
-      paths = undefined
+      # new_paths = _.uniq(new_paths)
+      #
+      # The old, non-optimized way, used to be:
+      #
+      # paths = []
+      # console.log "OLD", JustdoHelpers.timeProfile =>
+      #   @_each "/", {expand_only: false, filtered_tree: false}, (section, item_type, item_obj, path, expand_state) ->
+      #     if item_obj._id == item_id
+      #       paths.push(path)
 
-    ret_val = paths
+      #     return
+
+      # return
+
+      if section.path == path
+        return 1
+
+      return -1
+
+    optimized_new_paths = _.uniq(optimized_new_paths)
+
+    if _.isEmpty optimized_new_paths
+      optimized_new_paths = undefined
+
+    ret_val = optimized_new_paths
     JustdoHelpers.sameTickCacheSet(same_tick_cache_key_id, ret_val)
     return ret_val
 
