@@ -512,6 +512,7 @@ _.extend JustdoAccounts.prototype,
 
       "services.password.reset.reason": 1
       "invited_by": 1
+      "is_proxy": 1
       "users_allowed_to_edit_pre_enrollment": 1
 
       "site_admin.is_site_admin": 1
