@@ -584,6 +584,16 @@ _.extend GridDataCom.prototype,
 
     return true
 
+  ensureParents2: (item, direct_update) ->
+    if not @checkParents2(item)
+      if item.parents2?
+        # If there was no parents2 at all, no point to bother logging about it.
+        console.warn "The two parent objects of #{item._id} are not consistent. A new parents2 object is being created."
+
+      return @_addParents2(item, direct_update)
+
+    return item
+
   # Allow adding root child without going through the addChild method
   # to allow adding a root child to a specific non-logged-in user 
   addRootChild: (fields, perform_as) ->
@@ -667,6 +677,11 @@ _.extend GridDataCom.prototype,
 
     if not (item = @collection.getItemByPathIfUserBelong path, perform_as)?
       throw @_error "unknown-path"
+
+    # If a discrapency caused the order written under parents2 of item to be +1 the value written under parents
+    # the result will be that item's order itself will advance when we'll call later incrementChildsOrderGte
+    # and result in item and the new sibling to have the same order. Daniel C. #13264
+    item = @ensureParents2(item, true)
 
     parent_id = helpers.getPathParentId(path)
 
