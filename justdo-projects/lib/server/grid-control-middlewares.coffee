@@ -3,7 +3,7 @@ _.extend Projects.prototype,
     projects_object = @
 
     requireProjectIdProvided = (item_doc) ->
-      if not (project_id = item_doc?.project_id)? or not _.isString(project_id)
+      if not (project_id = item_doc?.project_id)? or not _.isString(project_id) or project_id.trim() == ""
         throw @_error "invalid-argument", "item_doc now must be provided with the project_id field set to a String"
 
       return project_id

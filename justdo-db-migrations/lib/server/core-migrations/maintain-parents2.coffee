@@ -64,9 +64,7 @@ common_batched_migration_options =
       num_processed += 1
       current_checkpoint = JustdoHelpers.datesMax(current_checkpoint, task._raw_updated_date)
 
-      if not APP.projects._grid_data_com.checkParents2 task
-        self.logWarning "The two parent objects of #{task._id} are not consistent. A new parents2 object is being created."
-        APP.projects._grid_data_com._addParents2 task
+      APP.projects._grid_data_com.ensureParents2 task, true
 
       return
 
