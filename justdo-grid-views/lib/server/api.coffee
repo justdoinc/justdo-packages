@@ -40,7 +40,7 @@ _.extend JustdoGridViews.prototype,
     return true
 
   isUserAllowedToEditGridView: (grid_view_id, user_id) ->
-    grid_view_obj = @grid_views_collection.findOne({_id: grid_view_id}, {fields: {shared: 1, hierarchy: 1, user_id: 1}})
+    grid_view_obj = @grid_views_collection.findOne(grid_view_id, {fields: {shared: 1, hierarchy: 1, user_id: 1}})
 
     if not grid_view_obj?
       throw @_error "grid-view-not-found", "Grid view does not exist"

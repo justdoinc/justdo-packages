@@ -67,13 +67,12 @@ APP.executeAfterAppLibCode ->
         return true
 
       if (project_doc = APP.collections.Projects.findOne(@hierarchy?.justdo_id, {fields: {members: 1}}))?
-        return APP.projects.isAdminOfProjectDoc project_doc, Meteor.userId()
+        return JD.active_justdo.isAdmin()
 
       return false
 
     isProjectAdmin: ->
-      if (project_doc = JD.activeJustdo({members: 1}))?
-        return APP.projects.isAdminOfProjectDoc project_doc, Meteor.userId()
+      return JD.active_justdo.isAdmin()
 
   Template.grid_views_dropdown_menu.events
     "keyup .grid-views-search-input": (e, tpl) ->
