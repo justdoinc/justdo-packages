@@ -217,7 +217,7 @@ _.extend PACK.GridOperations,
         prev_path_level = getPathLevel(prev_path)
 
         if active_path_level == prev_path_level
-          # Prev item is either collapsed or child-less - put as first
+          # Prev item is either collapsed or child-less - put as last
           relation = 2
           target_path = prev_path
         else
