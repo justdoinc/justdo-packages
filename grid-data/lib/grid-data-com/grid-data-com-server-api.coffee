@@ -1059,9 +1059,6 @@ _.extend GridDataCom.prototype,
       if not(new_parent_item? and @collection.isUserBelongToItem(new_parent_item, perform_as))
         throw @_error "unknown-path", 'Error: Can\'t move path: new parent doesn\'t exist' # we don't indicate existance in case no permission
 
-    if not ("order" of new_location)
-      new_location.order = @collection.getNewChildOrder(new_location.parent, item)
-
     item_ids = new Set()
     paths_map = {}
     for path in paths
@@ -1098,6 +1095,9 @@ _.extend GridDataCom.prototype,
 
     if new_parent_item? and new_parent_item.project_id != project_id
       throw @_error "invalid-argument", "New parent must be in the same JustDo as the paths."
+
+    if not ("order" of new_location)
+      new_location.order = @collection.getNewChildOrder(new_location.parent, {project_id: project_id})
 
     if _.keys(items_map).length != item_ids.size
       # one of the path doesn't exist or user doesn't have access
