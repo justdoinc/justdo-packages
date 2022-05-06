@@ -20,6 +20,25 @@ _.extend JustdoGridViews.prototype,
 
     return
 
+  # Despite grid view owner can edit/delete grid views, only Justdo admins can share/unshare grid views (if the hierarchy is "justdo")
+  # hence there are two seperate APIs for checking edit rights and share rights.
+  isUserAllowedToShareGridView: (grid_view_id, user_id) ->
+    grid_view_obj = @grid_views_collection.findOne(grid_view_id, {fields: {shared: 1, hierarchy: 1, user_id: 1}})
+
+    if not grid_view_obj?
+      throw @_error "grid-view-not-found", "Grid view does not exist"
+
+    if grid_view_obj.hierarchy?.type is "justdo" and (grid_view_obj.shared or grid_view_obj.user_id is user_id) 
+      return APP.projects.isProjectAdmin(grid_view_obj.hierarchy.justdo_id, user_id)
+
+    return false
+
+  requireUserAllowedToShareGridView: (grid_view_id, user_id) ->
+    if not @isUserAllowedToShareGridView grid_view_id, user_id
+      throw @_error "permission-denied", "Not allowed to share Grid View"
+
+    return true
+
   isUserAllowedToEditGridView: (grid_view_id, user_id) ->
     grid_view_obj = @grid_views_collection.findOne({_id: grid_view_id}, {fields: {shared: 1, hierarchy: 1, user_id: 1}})
 
@@ -57,7 +76,7 @@ _.extend JustdoGridViews.prototype,
     if options.type is "justdo"
       if options.shared
         # Only Justdo admins can share Views
-        APP.projects.requireProjectAdmin options.hierarchy.justdo_id, user_id
+        @requireUserAllowedToShareGridView options.hierarchy.justdo_id, user_id
       else
         # Only Justdo member can create a view under the Justdo
         APP.projects.requireUserIsMemberOfProject options.hierarchy.justdo_id, user_id
@@ -81,6 +100,9 @@ _.extend JustdoGridViews.prototype,
 
     if _.isEmpty options
       throw @_error "missing-argument", "There's nothing to update/insert"
+
+    if options.shared?
+      @requireUserAllowedToShareGridView grid_view_id, user_id
 
     return @grid_views_collection.update grid_view_id, {$set: options}
 
