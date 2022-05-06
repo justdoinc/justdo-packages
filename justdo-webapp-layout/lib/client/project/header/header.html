@@ -1,9 +1,11 @@
 <template name="project_header">
   <div class="project-header d-flex flex-column">
     <div class="middle-project-header-items d-flex align-items-center">
+      <!-- Toolbar on the left -->
       {{> project_operations_toolbar}}
+
+      <!-- Toolbar on the right -->
       {{> left_project_header}}
-      <div class="project-header-toolbar-divider"></div>
       {{> panes_controls}}
       <div class="project-header-toolbar-divider"></div>
       {{> right_project_header}}
@@ -162,12 +164,16 @@
 
 <template name="project_header_global_layout_header_left">
   <div class="project-page-global-layout-header-left d-flex align-items-center">
-      {{#each leftNavbarItems}}
-        {{#if template}}
-          {{> Template.dynamic template=template data=template_data}}
-        {{else if html}}
-          {{{html}}}
-        {{/if}}
-      {{/each}}
-    </div>
+    {{#each leftNavbarItems}}
+      {{#if template}}
+        {{> Template.dynamic template=template data=template_data}}
+      {{else if html}}
+        {{{html}}}
+      {{/if}}
+    {{/each}}
+
+    {{#if leftNavbarItems.length}}
+      <div class="project-header-toolbar-divider"></div>
+    {{/if}}
+  </div>
 </template>
