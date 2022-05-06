@@ -5,18 +5,38 @@ _.extend JustdoGridViews.prototype,
   _deferredInit: ->
     if @destroyed
       return
+
     @registerProjectHeaderButton()
-    
+
+    # An autorun to unsubscribe grid views when changing Justdo
+    @unsubscribe_grid_view_upon_project_change_handler = Tracker.autorun =>
+      JD.activeJustdoId()
+      @unsubscribeGridViews()
+      return
+
+    @onDestroy =>
+      @unsubscribe_grid_view_upon_project_change_handler.stop()
+
     return
 
   subscribeGridViews: (options, cb) ->
     if @destroyed
       return
 
-    if @grid_views_subscription?
-      @grid_views_subscription.stop()
+    # If there is no active subscription, create a new one and attempt to stop the previous one
+    # Note that subscriptions will be stopped by whenever active justdo changes, as specified in above autorun.
+    if not @grid_views_subscription?.ready()
+      @unsubscribeGridViews()
+      @grid_views_subscription = Meteor.subscribe "gridViews", options, cb
 
-    @grid_views_subscription = Meteor.subscribe "gridViews", options, cb
+    # Subsequent calls will refresh the subscription duration
+    if @grid_view_subscription_stop_delay_handler?
+      Meteor.clearTimeout @grid_view_subscription_stop_delay_handler
+
+    # Subscription will expire after grid_view_subscription_stop_delay_ms.
+    @grid_view_subscription_stop_delay_handler = Meteor.setTimeout =>
+      @unsubscribeGridViews()
+    , JustdoGridViews.grid_view_subscription_stop_delay_ms
 
     return @grid_views_subscription
 

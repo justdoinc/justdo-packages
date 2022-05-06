@@ -24,6 +24,9 @@ APP.executeAfterAppLibCode ->
 
   Template.grid_views_dropdown_menu.onCreated ->
     tpl = @
+
+    APP.justdo_grid_views.subscribeGridViews({type: "justdo", justdo_id: JD.activeJustdoId()})
+
     tpl.active_grid_view_rv = new ReactiveVar {}
     tpl.rename_grid_view_id_rv = new ReactiveVar null
     tpl.search_val_rv = new ReactiveVar null
