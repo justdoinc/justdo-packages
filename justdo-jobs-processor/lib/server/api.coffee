@@ -60,7 +60,7 @@ _.extend JustdoJobsProcessor.prototype,
         @logger.info "In take control interval - Skip 'Ensure control interval' process"
         return
 
-      @ensureStillInControl()
+      @ensureStillInControl(true)
 
       return
     , @keep_control_loop_interval
@@ -142,12 +142,12 @@ _.extend JustdoJobsProcessor.prototype,
 
     completeTakeControl = =>
       doIfControlEnsured =>
-        @runJobs()
-
         @in_take_control_process = false
         @we_in_control = true
         @logger.info "Control received"
         APP.justdo_analytics.logServerRecord {cat: "jobs-processor", act: "control-taken"}
+
+        @runJobs()
 
         return
 
@@ -171,27 +171,36 @@ _.extend JustdoJobsProcessor.prototype,
 
     return
 
-  ensureStillInControl: ->
-    # @logger.debug "Ensure control interval (in control)"
+  ensureStillInControl: (update_owner_flag=false) ->
+    @logger.debug "Ensure control interval (in control)"
 
     if not (processor_group_doc = JustdoJobsProcessor.jobs_processor_collection.findOne({_id: @group_uid}, {jd_analytics_skip_logging: true}))?
+      console.log "LOSE CONTROL TYPE 1"
       @loseControl()
 
       return false
     else if processor_group_doc.owner_flag == @our_recent_flag
-      @our_recent_flag = Random.id()
+      if not update_owner_flag
+        console.log "ENSURE - NO FLAGS UPDATE"
+        return true
+      else
+        console.log "ENSURE - FLAGS UPDATE"
 
-      JustdoJobsProcessor.jobs_processor_collection.update @group_uid,
-        {
-          $set:
-            owner_flag: @our_recent_flag
-          $currentDate:
-            updated: true
-        },
-        {upsert: true, jd_analytics_skip_logging: true}
+        @our_recent_flag = Random.id()
+        console.log "NEW @our_recent_flag #{@our_recent_flag}"
 
-      return true
+        JustdoJobsProcessor.jobs_processor_collection.update @group_uid,
+          {
+            $set:
+              owner_flag: @our_recent_flag
+            $currentDate:
+              updated: true
+          },
+          {upsert: true, jd_analytics_skip_logging: true}
+
+        return true
     else
+      console.log "LOSE CONTROL TYPE 2", {a: processor_group_doc.owner_flag, b: @our_recent_flag}
       @loseControl()
 
       return false
@@ -240,6 +249,7 @@ _.extend JustdoJobsProcessor.prototype,
     return
 
   stopJobs: ->
+    console.trace()
     @logger.info "Stop Jobs"
 
     for job_id, job_def of @registered_jobs
