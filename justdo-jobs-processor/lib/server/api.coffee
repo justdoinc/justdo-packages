@@ -56,6 +56,10 @@ _.extend JustdoJobsProcessor.prototype,
       if not @we_in_control
         return
 
+      if @in_take_control_process is true
+        @logger.info "In take control interval - Skip 'Ensure control interval' process"
+        return
+
       @ensureStillInControl()
 
       return
@@ -66,6 +70,10 @@ _.extend JustdoJobsProcessor.prototype,
     #
     Meteor.setInterval =>
       if @we_in_control
+        return
+
+      if @in_take_control_process is true
+        @logger.info "In take control interval - Skip 'Take control interval' process"
         return
 
       # @logger.debug "Take control interval (not in control)"
