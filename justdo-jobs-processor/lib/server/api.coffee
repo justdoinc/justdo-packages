@@ -9,6 +9,8 @@ _.extend JustdoJobsProcessor.prototype,
     @running_jobs = {}
     @our_recent_flag = null
     @in_take_control_process = false
+    @flag_update_in_progress = false
+    @our_recent_flag_being_replaced = null
 
     if not (configuration_string = @options.configuration_string)?
       @logger.info "No (or empty) configuration string, no job will be initiated"
@@ -172,22 +174,29 @@ _.extend JustdoJobsProcessor.prototype,
     return
 
   ensureStillInControl: (update_owner_flag=false) ->
-    @logger.debug "Ensure control interval (in control)"
+    # @logger.debug "Ensure control interval (in control)"
 
     if not (processor_group_doc = JustdoJobsProcessor.jobs_processor_collection.findOne({_id: @group_uid}, {jd_analytics_skip_logging: true}))?
-      console.log "LOSE CONTROL TYPE 1"
+      console.log "HERE LOSE CONTROL TYPE 1"
       @loseControl()
 
       return false
-    else if processor_group_doc.owner_flag == @our_recent_flag
+    else if processor_group_doc.owner_flag in [@our_recent_flag, @our_recent_flag_being_replaced]
       if not update_owner_flag
-        console.log "ENSURE - NO FLAGS UPDATE"
+        console.log "HERE ENSURE - NO FLAGS UPDATE"
         return true
       else
-        console.log "ENSURE - FLAGS UPDATE"
+        console.log "HERE ENSURE - FLAGS UPDATE"
+        if @flag_update_in_progress
+          @logger.warn "A request to ensureStillInControl with update_owner_flag=true received while already in the process of updating a flag - this should never happen!"
 
+          # Consider as true in such a case, don't update flag while the update is in-progress
+          return true
+        
+        @flag_update_in_progress = true
+        @our_recent_flag_being_replaced = @our_recent_flag
         @our_recent_flag = Random.id()
-        console.log "NEW @our_recent_flag #{@our_recent_flag}"
+        console.log "HERE NEW @our_recent_flag #{@our_recent_flag}; @our_recent_flag_being_replaced: #{@our_recent_flag_being_replaced}"
 
         JustdoJobsProcessor.jobs_processor_collection.update @group_uid,
           {
@@ -198,9 +207,13 @@ _.extend JustdoJobsProcessor.prototype,
           },
           {upsert: true, jd_analytics_skip_logging: true}
 
+        @flag_update_in_progress = false
+        # Don't init @our_recent_flag_being_replaced to null ; to avoid race conditions in which the previous flag will be received from the db - even though we already out of @flag_update_in_progress
+
         return true
     else
-      console.log "LOSE CONTROL TYPE 2", {a: processor_group_doc.owner_flag, b: @our_recent_flag}
+      console.log {"@flag_update_in_progress": @flag_update_in_progress, "processor_group_doc.owner_flag": processor_group_doc.owner_flag, "@our_recent_flag": @our_recent_flag, "@our_recent_flag_being_replaced": @our_recent_flag_being_replaced}
+      console.log "HERE LOSE CONTROL TYPE 2", {a: processor_group_doc.owner_flag, b: @our_recent_flag}
       @loseControl()
 
       return false
@@ -249,7 +262,6 @@ _.extend JustdoJobsProcessor.prototype,
     return
 
   stopJobs: ->
-    console.trace()
     @logger.info "Stop Jobs"
 
     for job_id, job_def of @registered_jobs
