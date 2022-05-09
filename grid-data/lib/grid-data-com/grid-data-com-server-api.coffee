@@ -565,10 +565,8 @@ _.extend GridDataCom.prototype,
     item.parents2 = _.map item.parents, (parent_obj, parent_id) -> return {parent: parent_id, order: parent_obj.order}
     
     if direct_update
-      console.log "HERE C001A", {fibre_id: JustdoHelpers.getFiberId()}, {direct_update, item}
       @collection.direct.update item._id, {$set: {parents2: item.parents2}}, {bypassCollection2: true}
     else
-      console.log "HERE C001B", {fibre_id: JustdoHelpers.getFiberId()}, {direct_update, _id: item._id, update: {$set: {parents2: item.parents2}}}
       @collection.update item._id, {$set: {parents2: item.parents2}}
 
     return item
