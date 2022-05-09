@@ -28,6 +28,17 @@ _.extend JustdoHelpers,
 
     return
 
+  getFiberId: ->
+    id_key = "___id"
+
+    if not @getCurrentFiber()?
+      return undefined
+
+    if not @isFiberVarExists(id_key)
+      @setFiberVar(id_key, Random.id())
+
+    return @getFiberVar(id_key)
+
   runCbInFiberScope: (var_name, var_value, cb) ->
     # Set var_name to var_value for the invocation of cb, and sets var_name to its
     # original value afterwards.
