@@ -195,11 +195,13 @@ _.extend JustdoPushNotifications.prototype,
 
           message.priority = "high"
 
-        do (message) =>
+        do (message, token_obj) =>
           APP.justdo_firebase.send message, (err, response) =>
             if err?
               if err == "NotRegistered"
                 console.log "NOT REGISTERED!!!", message, message.to, err, response
+                console.log "UNREGISTER", typeof @manageToken, {action: "unregister", network_id: token_obj.network_id, token_obj: token_obj, user_id: message.data.recipient}
+                @manageToken("unregister", token_obj.network_id, token_obj, message.data.recipient)
               else
                 console.log("Something has gone wrong!", err, response)
 
