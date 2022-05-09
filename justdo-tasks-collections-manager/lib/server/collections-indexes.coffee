@@ -27,6 +27,10 @@ _.extend JustdoTasksCollectionsManager.prototype,
     # FETCH_PROJECT_NON_REMOVED_TASKS_INDEX (In use by other packages)
     @tasks_collection._ensureIndex {"project_id": 1, "_raw_removed_date": 1}
 
+    # FETCH_TASKS_BY_RAW_UPDATED_DATE_INDEX (In use by other packages)
+    @tasks_collection._ensureIndex {"_raw_updated_date" : -1}
+    
+
     return
 
   _ensureIndicesExistsForTasksPrivateDataCollection: ->

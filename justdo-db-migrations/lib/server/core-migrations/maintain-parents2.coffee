@@ -37,14 +37,15 @@ common_batched_migration_options =
 
   static_query: false
   queryGenerator: ->
+    # FETCH_TASKS_BY_RAW_UPDATED_DATE_INDEX
     query =
+      _raw_updated_date:
+        $gte: getPreviousCheckpointOrEpochPlusOneMs()
       parents2:
         $ne: null
       parents:
         $ne: null
       corrupted_parents: null
-      _raw_updated_date:
-        $gte: getPreviousCheckpointOrEpochPlusOneMs()
       _raw_removed_date: null
 
     query_options =
@@ -53,6 +54,8 @@ common_batched_migration_options =
         parents2: 1
         _raw_updated_date: 1
 
+    console.log "HERE A000", {fibre_id: JustdoHelpers.getFiberId()}, {query, query_options}
+
     return {query, query_options}
 
   batchProcessor: (tasks_collection_cursor) ->
@@ -60,17 +63,25 @@ common_batched_migration_options =
     current_checkpoint = getPreviousCheckpointOrEpochPlusOneMs()
     num_processed = 0
 
+    console.log "HERE A001", {fibre_id: JustdoHelpers.getFiberId()}, {current_checkpoint}
+
     tasks_collection_cursor.forEach (task) ->
       num_processed += 1
       current_checkpoint = JustdoHelpers.datesMax(current_checkpoint, task._raw_updated_date)
 
+      console.log "HERE A010", {fibre_id: JustdoHelpers.getFiberId()}, {task}
       APP.projects._grid_data_com.ensureParents2 task, true
+      console.log "HERE A011", {fibre_id: JustdoHelpers.getFiberId()}, {task}
 
       return
+
+    console.log "HERE A002", {fibre_id: JustdoHelpers.getFiberId()}
 
     APP.collections.SystemRecords.upsert "maintain-parents2-tasks",
       $set:
         previous_checkpoint: current_checkpoint
+
+    console.log "HERE A003", {fibre_id: JustdoHelpers.getFiberId()}
 
     return num_processed
 
