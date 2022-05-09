@@ -70,8 +70,10 @@ common_batched_migration_options =
       current_checkpoint = JustdoHelpers.datesMax(current_checkpoint, task._raw_updated_date)
 
       console.log "HERE A010", {fibre_id: JustdoHelpers.getFiberId()}, {task}
+      more_details = APP.collections.Tasks.findOne(task._id) # REMOVE ME! Added for testings
+      console.log "HERE A010 - extra details :: ", more_details._id, " :: ", more_details.title, more_details
       APP.projects._grid_data_com.ensureParents2 task, true
-      console.log "HERE A011", {fibre_id: JustdoHelpers.getFiberId()}, {task}
+      console.log "HERE A011", {fibre_id: JustdoHelpers.getFiberId()}, {task, title: APP.collections.Tasks.findOne(task._id, {fields: {title: 1}})}
 
       return
 
