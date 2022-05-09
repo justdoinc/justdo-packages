@@ -93,7 +93,6 @@ _.extend TasksFileManager.prototype,
           $each: files_to_upload
 
     _.each files_to_upload, (file) =>
-      @logger.debug("New activity #{"file_uploaded"} by user #{user_id} - extra data: #{JSON.stringify({ title: file.title, size: file.size })}\n Message that will be presented: #{"User {{user}} uploaded a new file: {{title}} ({{size}} bytes)"}")
       APP.tasks_changelog_manager.logChange
         field: "files.#{file.id} upload"
         label: "Files"
@@ -442,7 +441,6 @@ _.extend TasksFileManager.prototype,
       $set:
         "files.$.title": new_title
 
-    @logger.debug("New activity #{"file_renamed"} by user #{user_id} - extra data: #{JSON.stringify({ new_title: new_title, old_title: file.title })}\n Message that will be presented: #{"User {{user}} renamed a file from {{old_title}} to {{new_title}}."}")
     APP.tasks_changelog_manager.logChange
       field: "files.#{file_id} rename"
       label: "Files"
@@ -478,7 +476,6 @@ _.extend TasksFileManager.prototype,
     # Remove the file from our file store (filestack/s3)
     APP.filestack_base.cleanupRemovedFile file, {cleanup_from_task_document: task}
 
-    @logger.debug("New activity #{"file_removed"} by user #{user_id} - extra data: #{JSON.stringify({ title: file.title, size: file.size })}\n Message that will be presented: #{"User {{user}} removed a file {{title}}."}")
     APP.tasks_changelog_manager.logChange
       field: "files.#{file_id} remove"
       label: "Files"
