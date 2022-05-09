@@ -150,9 +150,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
         processBatchWrapper = =>
           try
-            console.log "HERE B005", {fibre_id: JustdoHelpers.getFiberId()}
             processBatch()
-            console.log "HERE B006", {fibre_id: JustdoHelpers.getFiberId()}
           catch e
             @logProgress "Error found halt the script", e
 
@@ -167,9 +165,7 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
           if not options.static_query
             pending_migration_set_cursor = getCursor()
 
-          console.log "HERE B000 PRE COUNT", {fibre_id: JustdoHelpers.getFiberId()}
           if pending_migration_set_cursor.count() == 0
-            console.log "HERE B001A POST COUNT", {fibre_id: JustdoHelpers.getFiberId()}
             if options.mark_as_completed_upon_batches_exhaustion
               @markAsCompleted()
 
@@ -182,12 +178,9 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
               processBatchWrapper()
             , options.delay_before_checking_for_new_batches
           else
-            console.log "HERE B001B POST COUNT", {fibre_id: JustdoHelpers.getFiberId()}
             @logProgress "Start batch"
 
-            console.log "HERE B002", {fibre_id: JustdoHelpers.getFiberId()}
             num_processed += options.batchProcessor.call migration_functions_this, pending_migration_set_cursor
-            console.log "HERE B003", {fibre_id: JustdoHelpers.getFiberId()}
 
             if options.mark_as_completed_upon_batches_exhaustion
               @logProgress "#{num_processed}/#{initial_affected_docs_count} documents processed"

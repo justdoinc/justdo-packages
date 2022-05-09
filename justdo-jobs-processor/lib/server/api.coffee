@@ -177,16 +177,13 @@ _.extend JustdoJobsProcessor.prototype,
     # @logger.debug "Ensure control interval (in control)"
 
     if not (processor_group_doc = JustdoJobsProcessor.jobs_processor_collection.findOne({_id: @group_uid}, {jd_analytics_skip_logging: true}))?
-      console.log "HERE LOSE CONTROL TYPE 1", {fibre_id: JustdoHelpers.getFiberId()}
       @loseControl()
 
       return false
     else if processor_group_doc.owner_flag in [@our_recent_flag, @our_recent_flag_being_replaced]
       if not update_owner_flag
-        console.log "HERE ENSURE - NO FLAGS UPDATE", {fibre_id: JustdoHelpers.getFiberId()}
         return true
       else
-        console.log "HERE ENSURE - FLAGS UPDATE", {fibre_id: JustdoHelpers.getFiberId()}
         if @flag_update_in_progress
           @logger.warn "A request to ensureStillInControl with update_owner_flag=true received while already in the process of updating a flag - this should never happen!"
 
@@ -196,7 +193,6 @@ _.extend JustdoJobsProcessor.prototype,
         @flag_update_in_progress = true
         @our_recent_flag_being_replaced = @our_recent_flag
         @our_recent_flag = Random.id()
-        console.log "HERE NEW @our_recent_flag #{@our_recent_flag}; @our_recent_flag_being_replaced: #{@our_recent_flag_being_replaced}", {fibre_id: JustdoHelpers.getFiberId()}
 
         JustdoJobsProcessor.jobs_processor_collection.update @group_uid,
           {
@@ -212,8 +208,6 @@ _.extend JustdoJobsProcessor.prototype,
 
         return true
     else
-      console.log {"@flag_update_in_progress": @flag_update_in_progress, "processor_group_doc.owner_flag": processor_group_doc.owner_flag, "@our_recent_flag": @our_recent_flag, "@our_recent_flag_being_replaced": @our_recent_flag_being_replaced}, {fibre_id: JustdoHelpers.getFiberId()}
-      console.log "HERE LOSE CONTROL TYPE 2", {a: processor_group_doc.owner_flag, b: @our_recent_flag}, {fibre_id: JustdoHelpers.getFiberId()}
       @loseControl()
 
       return false
