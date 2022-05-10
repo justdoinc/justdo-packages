@@ -180,72 +180,105 @@ _.extend Projects.prototype,
 
               return
 
-            async.timesLimit total_pages, Projects.max_concurrent_tasks_pages_requests, requestIteratee, (err, result) ->
-              ongoing_http_request_rv.set(false)
-
+            # Comment regarding the load of the last page last if more than one page:
+            #
+            # If there is more than one page we must load the last page last because it includes the changes_journal
+            # that requires the documents it edits to exist already in minimongo.
+            single_page_or_all_pages_except_last = if total_pages == 1 then 1 else (total_pages - 1)
+            async.timesLimit single_page_or_all_pages_except_last, Projects.max_concurrent_tasks_pages_requests, requestIteratee, (err, results) ->
               failed = false
+              init_payload_sync_id = undefined
 
-              if err?
-                failed = true
+              processResults = (err, results) ->
+                if err?
+                  failed = true
+                  init_payload_sync_id = undefined # Critical, for case the load of the last page failed and the first pages weren't!
 
-                console.error "FATAL: couldn't load project tasks - falling back to ddp based init-payload retrieval", err
+                  console.error "FATAL: couldn't load project tasks - falling back to ddp based init-payload retrieval", err
 
-                # It is important to show some indication so at least a developer will know this
-                # is the cause for the slowness and not a slow internet connection (which might be
-                # the first assumption)
-                JustdoSnackbar.show
-                  text: "Loading this JustDo is taking a bit longer than usual, but it should be ready soon"
-                  duration: 7000
-              else
-                init_payload_sync_id = _.min(result)
+                  # It is important to show some indication so at least a developer will know this
+                  # is the cause for the slowness and not a slow internet connection (which might be
+                  # the first assumption)
+                  JustdoSnackbar.show
+                    text: "Loading this JustDo is taking a bit longer than usual, but it should be ready soon"
+                    duration: 7000
+                else
+                  init_payload_sync_id = JustdoHelpers.datesMin(init_payload_sync_id, ...results) # No issue calling datesMin with init_payload_sync_id=undefined it will simply be ignored.
 
-              ready = true
-              ready_dep.changed()
-
-              # Even if we got the stop request, set the self.tasks_subscription_last_sync_time[project_id]
-              # so subsequent requests will not get again to State 2.1
-              if init_payload_sync_id?
-                self.setProjectInitPayloadSyncId(project_id, init_payload_sync_id)
-              else
-                if not failed
-                  # If we didn't fail, and for whatever reason we don't have an init_payload_sync_id
-                  # use current time - safety delta as the init_payload_sync_id
-                  #
-                  # This case is theoretical, and as of writing I can't think of a situation where it might
-                  # happen. (Daniel C.)
-                  #
-                  # If we did fail - we don't want to set self.tasks_subscription_last_sync_time[project_id]
-                  # at all, so the ddp subscription will be called without the sync param and will receive
-                  # the init payload.
-                  console.warn "loadDefaultGridFromHttpPreReadyPayload returned with no init_payload_sync_id"
-                  self.setProjectInitPayloadSyncId(project_id, new Date(TimeSync.getServerTime() - sync_safety_delta_ms))
-
-              if stopped
-                # Stopped already by the user/or as a result of a failure, don't proceed to establish subscription.
                 return
 
-              # Initial payload loaded using http, prepare for calling requireProjectTasksSubscription again
-              # to establish the ddp subscription with the sync in accordance with the sync value we got
-              # in the initial payload.
+              processResults(err, results)
+
+              # Keep reading below after finalizeProcedures definition ends.
+              finalizeProcedures = ->
+                ongoing_http_request_rv.set(false)
+
+                ready = true
+                ready_dep.changed()
+
+                # Even if we got the stop request, set the self.tasks_subscription_last_sync_time[project_id]
+                # so subsequent requests will not get again to State 2.1
+                if init_payload_sync_id?
+                  self.setProjectInitPayloadSyncId(project_id, init_payload_sync_id)
+                else
+                  if not failed
+                    # If we didn't fail, and for whatever reason we don't have an init_payload_sync_id
+                    # use current time - safety delta as the init_payload_sync_id
+                    #
+                    # This case is theoretical, and as of writing I can't think of a situation where it might
+                    # happen. (Daniel C.)
+                    #
+                    # If we did fail - we don't want to set self.tasks_subscription_last_sync_time[project_id]
+                    # at all, so the ddp subscription will be called without the sync param and will receive
+                    # the init payload.
+                    console.warn "loadDefaultGridFromHttpPreReadyPayload returned with no init_payload_sync_id"
+                    self.setProjectInitPayloadSyncId(project_id, new Date(TimeSync.getServerTime() - sync_safety_delta_ms))
+
+                if stopped
+                  # Stopped already by the user/or as a result of a failure, don't proceed to establish subscription.
+                  return
+
+                # Initial payload loaded using http, prepare for calling requireProjectTasksSubscription again
+                # to establish the ddp subscription with the sync in accordance with the sync value we got
+                # in the initial payload.
+                
+                # Set sync and delete the fake handler so the following request to requireProjectTasksSubscription()
+                # will get to State 2.2
+
+                deleteFakeHandleFromHandlersRegistry()
+
+                # COMMENT:REQUIRED_TASKS_SUBSCRIPTIONS_COUNT_MANAGEMENT
+                #
+                # We subtract 1 from the self.required_tasks_subscriptions_count[project_id] since the following call to
+                # self.requireProjectTasksSubscription(project_id) will increase the count by 1, which means
+                # that there'll be 1 extra self.required_tasks_subscriptions_count for this project id for the same
+                # request, that will prevent releaseRequirement to call the handle stop upon call, because it will think
+                # there are more resources that need this subscription. This will keep the subscription running
+                # forever.
+                self.required_tasks_subscriptions_count[project_id] -= 1
+
+                subscription_handle = self.requireProjectTasksSubscription(project_id, failed) # If failed is true we will force the followup attempt to go through ddp
+
+                return # /finalizeProcedures
               
-              # Set sync and delete the fake handler so the following request to requireProjectTasksSubscription()
-              # will get to State 2.2
+              if failed # break to 'if / else if' for readability
+                finalizeProcedures()
+              else if total_pages == 1
+                finalizeProcedures()
+              else
+                # See above: Comment regarding the load of the last page last if more than one page
+                last_page = total_pages - 1
+                requestIteratee last_page, (err, last_page_init_payload_sync_id) ->
+                  processResults(err, [last_page_init_payload_sync_id])
 
-              deleteFakeHandleFromHandlersRegistry()
+                  finalizeProcedures()
 
-              # COMMENT:REQUIRED_TASKS_SUBSCRIPTIONS_COUNT_MANAGEMENT
-              #
-              # We subtract 1 from the self.required_tasks_subscriptions_count[project_id] since the following call to
-              # self.requireProjectTasksSubscription(project_id) will increase the count by 1, which means
-              # that there'll be 1 extra self.required_tasks_subscriptions_count for this project id for the same
-              # request, that will prevent releaseRequirement to call the handle stop upon call, because it will think
-              # there are more resources that need this subscription. This will keep the subscription running
-              # forever.
-              self.required_tasks_subscriptions_count[project_id] -= 1
+                  return
 
-              subscription_handle = self.requireProjectTasksSubscription(project_id, failed) # If failed is true we will force the followup attempt to go through ddp
+                return
 
               return
+
             return
 
           return fake_subscription_handle
