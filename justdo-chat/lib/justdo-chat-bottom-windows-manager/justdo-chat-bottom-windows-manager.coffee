@@ -328,6 +328,9 @@ _.extend JustdoChatBottomWindowsManager.prototype,
     # adds an extra property 'title' with the window proposed title.
     extra_windows_ids = @bottom_windows_wireframe.getExtraWindows()
 
+    if not extra_windows_ids?
+      return []
+
     extra_windows_defs = []
     for bottom_window_def in @_current_bottom_windows_defs
       if bottom_window_def.id in extra_windows_ids
