@@ -275,7 +275,7 @@ _.extend JustdoResourcesAvailability.prototype,
   finishToStartForUser: (project_id_or_doc, user_id, start_date, amount, type) ->
     return @startToFinishForUser project_id_or_doc, user_id, start_date, -amount, type
 
-  nextWorkingDayForUser: (project_id_or_doc, user_id, start_date, amount, inclusive=false) ->
+  nextWorkingDayForUser: (project_id_or_doc, user_id, start_date, amount) ->
     check project_id_or_doc, Match.OneOf String, Object
     check user_id, String
     check start_date, String
@@ -288,9 +288,6 @@ _.extend JustdoResourcesAvailability.prototype,
     
     reverse = amount < 0
     amount = Math.abs(amount)
-
-    if inclusive
-      amount -= 1
         
     while amount > 0
       start_date.add((if reverse then -1 else 1), 'days')
