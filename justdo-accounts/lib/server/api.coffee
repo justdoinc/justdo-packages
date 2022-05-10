@@ -155,6 +155,9 @@ _.extend JustdoAccounts.prototype,
       if not options.email? or not JustdoHelpers.common_regexps.email.test(options.email)
         throw @_error("invalid-email")
 
+      if Accounts.findUserByEmail(options.email)?
+        throw @_error("user-already-exists")
+
       APP.emit("before-create-user", options)
       created_user_id = Accounts.createUser options
       created_user_ids.push created_user_id
