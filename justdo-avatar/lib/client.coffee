@@ -10,7 +10,7 @@ extractUserAvatarParams = (user_doc) ->
   first_name = profile.first_name
   last_name = profile.last_name
 
-  options = {avatar_bg: profile.avatar_bg, avatar_fg: profile.avatar_fg}
+  options = {avatar_bg: profile.avatar_bg, avatar_fg: profile.avatar_fg, is_proxy: user_doc.is_proxy}
 
   return {profile_pic, email, first_name, last_name, options}
 
@@ -83,18 +83,38 @@ _.extend JustdoAvatar,
       "font-size": "#{Settings.font_size}px"
     )
 
-    svg = $("<svg></svg>").attr(
+    svg = ""
+    svg_cx = Settings.svg_width / 2
+    svg_cy = Settings.svg_height / 2
+    svg_r = Settings.svg_width / 2
+    svg_r_offset = 2
+
+    if options.is_proxy
+      svg += """
+        <svg>
+          <circle cx="#{svg_cx}" cy="#{svg_cy}" r="#{svg_r}" fill="none"
+            style="
+              stroke: #546e7a;
+              stroke-width: 3px;
+              stroke-dasharray: 2 5;
+              stroke-linecap: round;
+              stroke-linejoin: round;" />
+          <circle cx="#{svg_cx}" cy="#{svg_cy}" r="#{svg_r - svg_r_offset}" fill="#{avatar_bg}"
+            style="stroke: white; stroke-width: 1.5px;" />
+        </svg>
+      """
+    else
+      svg += """<svg><circle cx="#{svg_cx}" cy="#{svg_cy}" r="#{svg_r}" fill="#{avatar_bg}" /></svg>"""
+
+    $svg = $(svg).attr(
       "xmlns": "http://www.w3.org/2000/svg"
       "pointer-events": "none"
       "width": Settings.svg_width
       "height": Settings.svg_height
-    ).css(
-      "background-color": avatar_bg
-      "border-radius": "50%"
-      "-moz-border-radius": "50%"
     )
-    svg.append element
-    svg_html = window.btoa(unescape(encodeURIComponent($("<div>").append(svg.clone()).html())))
+
+    $svg.append element
+    svg_html = window.btoa(unescape(encodeURIComponent($("<div>").append($svg.clone()).html())))
 
     return "data:image/svg+xml;base64,#{svg_html}"
 
