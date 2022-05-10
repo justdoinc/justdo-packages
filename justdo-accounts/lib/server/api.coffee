@@ -140,6 +140,36 @@ _.extend JustdoAccounts.prototype,
 
     return @getUserPublicInfo({email: email})?
 
+  createProxyUsers: (options_arr, inviting_user_id) ->
+    created_user_ids = []
+
+    _.each options_arr, (options) ->
+      if not (profile = options.profile)?
+        throw @_error("profile-missing")
+
+      check(JustdoAccounts.user_profile_schema.clean(profile), JustdoAccounts.user_profile_schema)
+
+      if options.username?
+        throw @_error("username-not-supported")
+
+      if not options.email? or not JustdoHelpers.common_regexps.email.test(options.email)
+        throw @_error("invalid-email")
+
+      APP.emit("before-create-user", options)
+      created_user_id = Accounts.createUser options
+      created_user_ids.push created_user_id
+      APP.emit("after-create-user", {email: options.email, created_user_id: created_user_id})
+
+      extra_fields =
+        is_proxy: true
+      if inviting_user_id?
+        extra_fields.invited_by = inviting_user_id
+      Meteor.users.update(created_user_id, {$set: extra_fields})
+
+      return
+
+    return created_user_ids
+
   createUser: (options, inviting_user_id) ->
     # Creates and initiate a new user with the given options
     #

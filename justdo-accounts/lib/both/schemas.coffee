@@ -43,6 +43,11 @@ _.extend JustdoAccounts.prototype,
 
         type: Boolean
 
+      is_proxy:
+        optional: true
+
+        type: Boolean
+
       "signed_legal_docs.terms_conditions":
         optional: true
 

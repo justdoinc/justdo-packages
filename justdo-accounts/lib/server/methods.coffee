@@ -23,6 +23,13 @@ _.extend JustdoAccounts.prototype,
 
         return accounts_object.userExists email, @userId
 
+      justdoAccountsCreateProxyUsers: (options_arr) ->
+        # Validation on options_arr is performed under createProxyUsers
+        if _.isEmpty options_arr
+          throw accounts_object._error("missing-argument")
+
+        return accounts_object.createProxyUsers options_arr, @userId
+
       justdoAccountsCreateUser: (options) ->
         # For justdoAccountsCreateUser requests received from client, password
         # option must be set, and must not be plain text

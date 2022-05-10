@@ -19,6 +19,10 @@ _.extend JustdoAccounts.prototype,
   userExists: (email, cb) ->
     Meteor.call "userExists", email, cb
 
+  createProxyUsers: (options, cb) ->
+    Meteor.call "justdoAccountsCreateProxyUsers", options, cb
+    return
+
   createUser: (options, cb) ->
     # The following is mostly a coffee version of Account.createUser
     # version v1.1.0.3-justdo-meteor-future-1
