@@ -98,6 +98,14 @@ _.extend JustdoEmails,
 
     check(options, build_and_send_options_schema)
 
+    if options.to.split("@")[1] in forbidden_email_domains or is_proxy_user
+      console.warn "An email to a forbidden email domain skipped (#{options.to})"
+      return
+
+    if Meteor.users.findOne({"emails.address": options.to}, {fields: {is_proxy: true}})?.is_proxy
+      console.warn "An email to a proxy account skipped (#{options.to})"
+      return
+
     # The check above ensures template exists
     template_name = options.template
     template = getTemplate(template_name)
@@ -118,10 +126,6 @@ _.extend JustdoEmails,
     template_html = template(template_data)
 
     email_html = JustdoEmails._buildEmail template_html
-
-    if options.to.split("@")[1] in forbidden_email_domains
-      console.warn "An email to a forbidden email domain skipped (#{options.to})"
-      return
 
     return JustdoEmails._send options.to, subject, email_html
 
