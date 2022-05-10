@@ -24,3 +24,11 @@ _.extend JustdoHelpers,
     dates = _.map dates, (date) -> date?.valueOf() or 0
 
     return new Date(Math.max(...dates))
+
+  datesMin: (...dates) ->
+    dates = _.filter(_.map(dates, (date) -> date?.valueOf() or 0), (date) -> date != 0)
+
+    if _.isEmpty(dates)
+      dates = [0]
+
+    return new Date(Math.min(...dates))
