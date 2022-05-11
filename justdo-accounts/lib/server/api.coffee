@@ -140,34 +140,36 @@ _.extend JustdoAccounts.prototype,
 
     return @getUserPublicInfo({email: email})?
 
-  createProxyUsers: (options_arr, inviting_user_id) ->
+  createProxyUsers: (users_arr, inviting_user_id) ->
+    check users_arr, Array
     created_user_ids = []
 
-    _.each options_arr, (options) ->
-      if not (profile = options.profile)?
+    # Checking phase
+    for user_doc in users_arr
+      if not (profile = user_doc.profile)?
         throw @_error("profile-missing")
 
       check(JustdoAccounts.user_profile_schema.clean(profile), JustdoAccounts.user_profile_schema)
 
-      if options.username?
+      if user_doc.username?
         throw @_error("username-not-supported")
 
-      if not options.email? or not JustdoHelpers.common_regexps.email.test(options.email)
+      if not user_doc.email? or not JustdoHelpers.common_regexps.email.test(user_doc.email)
         throw @_error("invalid-email")
 
-      if Accounts.findUserByEmail(options.email)?
+      if Accounts.findUserByEmail(user_doc.email)?
         throw @_error("user-already-exists")
 
-      APP.emit("before-create-user", options)
-      created_user_id = Accounts.createUser options
+    for user_doc in users_arr
+      APP.emit("before-create-user", user_doc)
+      created_user_id = Accounts.createUser user_doc
       created_user_ids.push created_user_id
-      APP.emit("after-create-user", {email: options.email, created_user_id: created_user_id})
-
       extra_fields =
         is_proxy: true
       if inviting_user_id?
         extra_fields.invited_by = inviting_user_id
       Meteor.users.update(created_user_id, {$set: extra_fields})
+      APP.emit("after-create-user", {email: user_doc.email, created_user_id: created_user_id})
 
       return
 
