@@ -149,7 +149,13 @@ _.extend JustdoAccounts.prototype,
       if not (profile = user_doc.profile)?
         throw @_error("profile-missing")
 
-      check(JustdoAccounts.user_profile_schema.clean(profile), JustdoAccounts.user_profile_schema)
+      {cleaned_val} =
+        JustdoHelpers.simpleSchemaCleanAndValidate(
+          JustdoAccounts.user_profile_schema,
+          profile,
+          {self: @, throw_on_error: true}
+        )
+      user_doc.profile = cleaned_val
 
       if user_doc.username?
         throw @_error("username-not-supported")
