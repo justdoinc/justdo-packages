@@ -21,11 +21,13 @@
       </div>
     </div>
   </div>
-  <div class="form-row">
-    <div class="form-group col">
-      <input id="is-proxy-user" type="checkbox" class="check-input" value="{{is_proxy}}" disabled="{{#if view_only}}disabled{{/if}}">
-      <label for="is-proxy-user" class="check-label">Add as a proxy user</label>
+  {{#if isProxyUserEnabled}}
+    <div class="form-row">
+      <div class="form-group col">
+        <input id="is-proxy-user" type="checkbox" class="check-input" value="{{is_proxy}}" disabled="{{#if view_only}}disabled{{/if}}">
+        <label for="is-proxy-user" class="check-label">Add as a proxy user</label>
+      </div>
     </div>
-  </div>
+  {{/if}}
   <p>If no invitation email will be received by the new {{inviteeTerm}}, please ensure correct email entered, and ask the new {{inviteeTerm}} to check the spam folder.</p>
 </template>

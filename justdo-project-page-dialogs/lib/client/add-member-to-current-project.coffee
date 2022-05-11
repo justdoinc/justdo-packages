@@ -343,6 +343,7 @@ Template.invite_new_user_dialog.helpers
   isInvalidFirstName: -> not first_name_is_valid_rv.get()
   isInvalidLastName: -> not last_name_is_valid_rv.get()
   inviteeTerm: -> inviteeTerm(@add_as_guest)
+  isProxyUserEnabled: -> APP.justdo_site_admins?.siteAdminFeatureEnabled "proxy-users"
 
 Template.invite_new_user_dialog.events
   "keyup #new-user-email, change #new-user-email": (e) ->
