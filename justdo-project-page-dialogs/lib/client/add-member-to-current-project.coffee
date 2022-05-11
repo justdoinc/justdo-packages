@@ -100,6 +100,10 @@ ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_op
 
               email = email_rv.get()
 
+              if is_proxy_rv.get()
+                Meteor.wrapAsync(APP.accounts.createProxyUsers)([{email: email, profile: profile}])
+                invited_members_dialog_options.add_as_guest = false
+
               users_allowed_to_edit_pre_enrollment = _.map APP.modules.project_page.curProj().getAdmins(), (user_def) => user_def.user_id
               getCurrentProject().inviteMember {email: email, profile: profile, add_as_guest: invited_members_dialog_options.add_as_guest, users_allowed_to_edit_pre_enrollment: users_allowed_to_edit_pre_enrollment}, (err, user_id) ->
                 if err
@@ -248,7 +252,7 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
     view_only: not user_allowed_to_edit
     buttons: buttons
 
-  dialog = initInvitedMembersDialog {email: user.emails?[0]?.address, first_name: user.profile?.first_name,  last_name: user.profile?.last_name}, invited_members_dialog_options
+  dialog = initInvitedMembersDialog {email: user.emails?[0]?.address, first_name: user.profile?.first_name,  last_name: user.profile?.last_name, is_proxy: user.is_proxy}, invited_members_dialog_options
 
   return
 
@@ -262,9 +266,10 @@ email_rv = new ReactiveVar()
 email_is_valid_rv = new ReactiveVar()
 last_name_rv = new ReactiveVar()
 last_name_is_valid_rv = new ReactiveVar()
+is_proxy_rv = new ReactiveVar()
 submit_attempted_rv = new ReactiveVar()
 initReactiveVars = (init_vals) ->
-  {email, first_name, last_name} = init_vals
+  {email, first_name, last_name, is_proxy} = init_vals
 
   first_name_rv.set first_name or ""
   first_name_is_valid_rv.set false
@@ -272,7 +277,7 @@ initReactiveVars = (init_vals) ->
   email_is_valid_rv.set false
   last_name_rv.set last_name or ""
   last_name_is_valid_rv.set false
-
+  is_proxy_rv.set is_proxy or false
   submit_attempted_rv.set false
 
 initInvitedMembersDialog = (data, options) ->
@@ -359,4 +364,8 @@ Template.invite_new_user_dialog.events
     if e.which == 13
       $(".modal-footer .btn-primary").click()
 
+    return
+
+  "change #is-proxy-user": (e) ->
+    is_proxy_rv.set e.currentTarget.checked
     return
