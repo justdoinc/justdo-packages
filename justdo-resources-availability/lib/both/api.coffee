@@ -121,14 +121,20 @@ _.extend JustdoResourcesAvailability.prototype,
   # between the dates. dates are in the format of YYYY-MM-DD
 
   userAvailabilityBetweenDates: (from_date, to_date, project_id_or_doc, user_id, options)->
-    check from_date, String
-    check to_date, String
+    check from_date, Match.Maybe String
+    check to_date, Match.Maybe String
     check project_id_or_doc, Match.OneOf String, Object
     check user_id, String
     
     options = _.extend {
       always_use_justdo_level_data: false
     }, options
+
+    if not from_date? or not to_date?
+      return {
+        working_days: null
+        available_hours: null
+      }
 
     {justdo_level_data, user_level_data} = @_getAvailabilityData project_id_or_doc, user_id
 
@@ -216,12 +222,15 @@ _.extend JustdoResourcesAvailability.prototype,
   startToFinishForUser: (project_id_or_doc, user_id, start_date, amount, type)->
     check project_id_or_doc, Match.OneOf String, Object
     check user_id, String
-    check start_date, String
-    check amount, Number
+    check start_date, Match.Maybe String
+    check amount, Match.Maybe Number
     check type, String
     if type not in ["hours", "days"]
       throw "incompatible-type"
 
+    if not start_date? or not amount?
+      return null
+      
     {justdo_level_data, user_level_data} = @_getAvailabilityData project_id_or_doc, user_id
 
     start_date = moment.utc(start_date)
