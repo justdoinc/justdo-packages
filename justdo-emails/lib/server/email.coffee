@@ -98,11 +98,11 @@ _.extend JustdoEmails,
 
     check(options, build_and_send_options_schema)
 
-    if options.to.split("@")[1] in forbidden_email_domains or is_proxy_user
+    if options.to.split("@")[1] in forbidden_email_domains
       console.warn "An email to a forbidden email domain skipped (#{options.to})"
       return
 
-    if Meteor.users.findOne({"emails.address": options.to}, {fields: {is_proxy: true}})?.is_proxy
+    if Meteor.users.findOne({"emails.address": options.to, is_proxy: true}, {fields: {_id: 1}})?
       console.warn "An email to a proxy account skipped (#{options.to})"
       return
 
