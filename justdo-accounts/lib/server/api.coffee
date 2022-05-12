@@ -140,13 +140,13 @@ _.extend JustdoAccounts.prototype,
 
     return @getUserPublicInfo({email: email})?
 
-  createProxyUsers: (users_arr, inviting_user_id) ->
-    check users_arr, Array
+  createProxyUsers: (users_options, inviting_user_id) ->
+    check users_options, Array
     created_user_ids = []
 
     # Checking phase
-    for user_doc in users_arr
-      if not (profile = user_doc.profile)?
+    for user_options in users_options
+      if not (profile = user_options.profile)?
         throw @_error("profile-missing")
 
       {cleaned_val} =
@@ -155,29 +155,25 @@ _.extend JustdoAccounts.prototype,
           profile,
           {self: @, throw_on_error: true}
         )
-      user_doc.profile = cleaned_val
+      user_options.profile = cleaned_val
 
-      if user_doc.username?
+      if user_options.username?
         throw @_error("username-not-supported")
 
-      if not user_doc.email? or not JustdoHelpers.common_regexps.email.test(user_doc.email)
+      if not user_options.email? or not JustdoHelpers.common_regexps.email.test(user_options.email)
         throw @_error("invalid-email")
 
-      if Accounts.findUserByEmail(user_doc.email)?
+      if Accounts.findUserByEmail(user_options.email)?
         throw @_error("user-already-exists")
 
-    for user_doc in users_arr
-      APP.emit("before-create-user", user_doc)
-      created_user_id = Accounts.createUser user_doc
-      created_user_ids.push created_user_id
-      extra_fields =
-        is_proxy: true
+    for user_options in users_options
       if inviting_user_id?
-        extra_fields.invited_by = inviting_user_id
-      Meteor.users.update(created_user_id, {$set: extra_fields})
-      APP.emit("after-create-user", {email: user_doc.email, created_user_id: created_user_id})
-
-      return
+        user_options.invited_by = inviting_user_id
+      user_options.is_proxy = true
+      APP.emit("before-create-user", user_options)
+      created_user_id = Accounts.createUser user_options
+      created_user_ids.push created_user_id
+      APP.emit("after-create-user", {email: user_options.email, created_user_id: created_user_id})
 
     return created_user_ids
 
@@ -215,6 +211,8 @@ _.extend JustdoAccounts.prototype,
 
     user_obj = @getUserByEmail(options.email)
     if not user_obj?
+      if inviting_user_id?
+        options.invited_by = inviting_user_id
       APP.emit("before-create-user", options)
 
       created_user_id = Accounts.createUser options
@@ -252,11 +250,6 @@ _.extend JustdoAccounts.prototype,
       @signLegalDocs(signed_legal_docs, created_user_id)
 
     extra_fields = _.extend {}, @options.new_accounts_custom_fields
-    if inviting_user_id?
-      # XXX in the future, consider whether if user existed
-      # without passowrd, whether we want to remove his invited_by
-      _.extend extra_fields,
-        invited_by: inviting_user_id
 
     check options.users_allowed_to_edit_pre_enrollment, Match.Maybe([String])
     if options.users_allowed_to_edit_pre_enrollment? and not _.isEmpty(options.users_allowed_to_edit_pre_enrollment)
