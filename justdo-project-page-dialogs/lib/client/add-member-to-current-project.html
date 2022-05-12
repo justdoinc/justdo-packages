@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-  {{#if isProxyUserEnabled}}
+  {{#if $and isProxyUserEnabled ($not view_only)}}
     <div class="invite-proxy">
       <div class="invite-proxy-check">
         <input id="is-proxy-user" type="checkbox" class="check-input" value="{{is_proxy}}" disabled="{{#if view_only}}disabled{{/if}}">
