@@ -1109,6 +1109,14 @@ export class AccountsServer extends AccountsCommon {
       ...user,
     };
 
+    // We explicitly allow these attributes to be passed along with the new user doc.
+    if (_.isString(options.invited_by)) {
+      user.invited_by = options.invited_by
+    }
+    if (_.isBoolean(options.is_proxy)) {
+      user.is_proxy = options.is_proxy
+    }
+
     if (user.services) {
       Object.keys(user.services).forEach(service =>
         pinEncryptedFieldsToUser(user.services[service], user._id)
