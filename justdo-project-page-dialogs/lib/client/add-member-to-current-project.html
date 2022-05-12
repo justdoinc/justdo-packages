@@ -22,12 +22,20 @@
     </div>
   </div>
   {{#if isProxyUserEnabled}}
-    <div class="form-row">
-      <div class="form-group col">
+    <div class="invite-proxy">
+      <div class="invite-proxy-check">
         <input id="is-proxy-user" type="checkbox" class="check-input" value="{{is_proxy}}" disabled="{{#if view_only}}disabled{{/if}}">
-        <label for="is-proxy-user" class="check-label">Add as a proxy user</label>
+        <label for="is-proxy-user" class="check-label mb-0">Set as a proxy user</label>
+      </div>
+      <div class="invite-proxy-info">
+        <span class="text-primary">?</span>
+        <div class="invite-proxy-info-tooltip">
+          Proxy users represent Members that can be added to JustDo but unlike Members, task ownership will be transferred to them automatically without their approval, yet those users can be set as a Member anytime by users with a Site Admin role or if they register to JustDo
+        </div>
       </div>
     </div>
   {{/if}}
-  <p>If no invitation email will be received by the new {{inviteeTerm}}, please ensure correct email entered, and ask the new {{inviteeTerm}} to check the spam folder.</p>
+  <div class="invite-new-user-info bg-light">
+    If no invitation email will be received by the new {{inviteeTerm}}, please ensure correct email entered, and ask the new {{inviteeTerm}} to check the spam folder.
+  </div>
 </template>
