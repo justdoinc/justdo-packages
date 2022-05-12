@@ -233,12 +233,18 @@ APP.executeAfterAppLibCode ->
             pending_owner_id: null
             is_removed_owner: null
       else
-        APP.collections.Tasks.update item_doc._id,
-          $set:
+        # Tasks are transferred to proxy users directly
+        modifier =
+          $set: {}
+        if new_owner_doc.is_proxy
+          modifier.$set =
+            owner_id: new_owner_doc._id
+        else
+          modifier.$set =
             owner_id: Meteor.userId() # The one that request the transfer becomes the owner
             is_removed_owner: null
             pending_owner_id: new_owner_doc._id
-
+        APP.collections.Tasks.update item_doc._id, modifier
       temp_subtree_users_subscription = JD.subscribeItemsAugmentedFields item_doc._id, ["users"], {subscribe_sub_tree: true}, ->
         temp_subtree_users_subscription.stop() # Stop immediately, we need the data only for a short while.
 
@@ -263,9 +269,15 @@ APP.executeAfterAppLibCode ->
             showDismissButton: true
             onActionClick: =>
               for task_id in child_tasks
-                APP.collections.Tasks.update task_id,
-                  $set:
+                modifier =
+                  $set: {}
+                if new_owner_doc.is_proxy
+                  modifier.$set =
+                    owner_id: new_owner_doc._id
+                else
+                  modifier.$set =
                     pending_owner_id: new_owner_doc._id
+                APP.collections.Tasks.update task_id, modifier
 
               JustdoSnackbar.show
                 text: "Transfer ownership of #{child_tasks.length} child-tasks processed."
@@ -274,9 +286,15 @@ APP.executeAfterAppLibCode ->
                 showDismissButton: true
                 onActionClick: =>
                   for task_id in child_tasks
-                    APP.collections.Tasks.update task_id,
-                      $set:
+                    modifier =
+                      $set: {}
+                    if new_owner_doc.is_proxy
+                      modifier.$set =
+                        owner_id: Meteor.userId()
+                    else
+                      modifier.$set =
                         pending_owner_id: null
+                    APP.collections.Tasks.update task_id, modifier
                   JustdoSnackbar.close()
                   return
               return
