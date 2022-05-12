@@ -14,6 +14,7 @@ _.extend JustdoHelpers,
     "profile.first_name": 1
     "profile.last_name": 1
     "profile.profile_pic": 1
+    "is_proxy": 1
 
   displayName: (user) ->
     # user:
