@@ -38,7 +38,9 @@
       </div>
     </div>
   {{/if}}
-  <div class="invite-new-user-info bg-light">
-    If no invitation email will be received by the new {{inviteeTerm}}, please ensure correct email entered, and ask the new {{inviteeTerm}} to check the spam folder.
-  </div>
+  {{#if $not isProxyUserOptionChecked}}
+    <div class="invite-new-user-info bg-light">
+      If no invitation email will be received by the new {{inviteeTerm}}, please ensure correct email entered, and ask the new {{inviteeTerm}} to check the spam folder.
+    </div>
+  {{/if}}
 </template>
