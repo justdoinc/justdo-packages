@@ -76,6 +76,7 @@ ProjectPageDialogs.addMemberToCurrentProject = (email, invited_members_dialog_op
 
     invited_members_dialog_options = _.extend {}, invited_members_dialog_options,
       title: "Add a New #{ucFirstInviteeTerm(invited_members_dialog_options.add_as_guest)}"
+      edit_state: false
       buttons:
         cancel:
           label: "Cancel"
@@ -249,6 +250,7 @@ ProjectPageDialogs.editEnrolledMember = (user_id, invited_members_dialog_options
   invited_members_dialog_options = _.extend {}, invited_members_dialog_options,
     title: "Edit invited #{inviteeTerm(invited_members_dialog_options.add_as_guest)}'s details"
     view_only: not user_allowed_to_edit
+    edit_state: true
     buttons: buttons
 
   dialog = initInvitedMembersDialog {email: user.emails?[0]?.address, first_name: user.profile?.first_name,  last_name: user.profile?.last_name, is_proxy: user.is_proxy}, invited_members_dialog_options
@@ -298,7 +300,7 @@ initInvitedMembersDialog = (data, options) ->
 
   initReactiveVars(data)
 
-  _.extend data, {add_as_guest: options.add_as_guest, view_only: options.view_only}
+  _.extend data, {add_as_guest: options.add_as_guest, view_only: options.view_only, edit_state: options.edit_state}
 
   message_template =
     APP.helpers.renderTemplateInNewNode(Template.invite_new_user_dialog, data)
