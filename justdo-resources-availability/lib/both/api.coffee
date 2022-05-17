@@ -128,6 +128,8 @@ _.extend JustdoResourcesAvailability.prototype,
     
     options = _.extend {
       always_use_justdo_level_data: false
+      include_start_date: true
+      include_end_date: true
     }, options
 
     if not from_date? or not to_date?
@@ -140,36 +142,6 @@ _.extend JustdoResourcesAvailability.prototype,
 
     if options.always_use_justdo_level_data
       user_level_data = null
-    
-    start_date = moment.utc(from_date)
-    end_date = moment.utc(to_date)
-
-    # days_between = end_date.diff(start_date, "days") + 1
-    # weeks_between = Math.floor(days_between / 7)
-    # days_remainder = days_between % 7
-    
-    # total_workdays = 0
-    # total_workhours = 0
-    # workdays_per_week = 0
-    # workhours_per_week = 0
-    # workdays_data = user_level_data or justdo_level_data
-    # start_date_weekday = start_date.weekday()
-    # for i in [0...6]
-    #   j = (i+start_date_weekday)%7
-    #   if not workdays_data.working_days[j].holiday
-    #     workdays_per_week = workdays_per_week + 1
-    #     workhours_per_week = workhours_per_week + @_calculateUserDayAvailability justdo_level_data, user_level_data, j
-    #   if i == days_remainder - 1
-    #     total_workdays = total_workdays + workdays_per_week
-    #     total_workhours = total_workhours + workhours_per_week
-    
-    # total_workdays = total_workdays + weeks_between  * workdays_per_week
-    # total_workhours = total_workhours + weeks_between * workhours_per_week
-
-    # ret = {
-    #   working_days: total_workdays
-    #   available_hours: total_workhours
-    # }
 
     ret =
       working_days: 0
@@ -179,8 +151,40 @@ _.extend JustdoResourcesAvailability.prototype,
       use_data = user_level_data
     else
       use_data = justdo_level_data
+    
+    start_date = moment.utc(from_date)
+    end_date = moment.utc(to_date)
 
-    while start_date <= end_date
+    if end_date < start_date
+      reverse = true
+
+    nextStartDate = ->
+      if reverse
+        start_date.add(-1, 'days')
+      else
+        start_date.add(1, 'days')
+      return
+    
+    prevEndDate = ->
+      if reverse
+        end_date.add(1, 'days')
+      else
+        end_date.add(-1, 'days')
+      return
+
+    loopCondition = ->
+      if reverse
+        return start_date >= end_date
+      else
+        return start_date <= end_date
+        
+    if not options.include_start_date
+      nextStartDate()
+    
+    if not options.include_end_date
+      prevEndDate()
+    
+    while loopCondition()
       date = start_date.format("YYYY-MM-DD")
       is_holiday = false
       if user_level_data?.holidays? and (date in user_level_data.holidays) or \
@@ -192,7 +196,11 @@ _.extend JustdoResourcesAvailability.prototype,
         ret.working_days +=1
         ret.available_hours += @_calculateUserDayAvailability justdo_level_data, user_level_data, start_date.day()
 
-      start_date.add(1,'days')
+      nextStartDate()
+
+    if reverse
+      ret.working_days = -ret.working_days
+      ret.available_hours = -ret.available_hours
 
     return ret
   
