@@ -164,6 +164,7 @@ _.extend JustdoUsageStatistics.prototype,
                 invited_by: 1
                 createdAt: 1
                 deactivated: 1
+                is_proxy: 1
             .fetch()
 
         if self.isCategoryEnabled("basic")
