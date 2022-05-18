@@ -265,7 +265,7 @@ export class AccountsServer extends AccountsCommon {
   // database and doesn't need to be inserted again.  (It's used by the
   // "resume" login handler).
   _loginUser(methodInvocation, userId, stampedLoginToken) {
-    user_flags = Meteor.users.findOne(userId, {fields: {deactivated: 1, is_proxy: 1}})
+    var user_flags = Meteor.users.findOne(userId, {fields: {deactivated: 1, is_proxy: 1}});
 
     // If the user is deactivated, prevent the user from logging in.
     if (user_flags.deactivated) {
@@ -284,8 +284,8 @@ export class AccountsServer extends AccountsCommon {
     }
 
     // If a proxy user logs in, unset is_proxy flag and consider the user as normal user.
-    if (user_flags.is_proxy){
-      Meteor.users.update(userId, {$unset: {is_proxy: 1}})
+    if (user_flags.is_proxy) {
+      Meteor.users.update(userId, {$unset: {is_proxy: 1}});
     }
 
     if (! stampedLoginToken) {
