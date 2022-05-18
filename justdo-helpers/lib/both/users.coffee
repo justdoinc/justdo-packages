@@ -249,10 +249,14 @@ _.extend JustdoHelpers,
       return false
 
     if _.isString user
-      user_doc = Meteor.users.findOne(user, {fields: {all_emails_verified: 1}})
+      user_doc = Meteor.users.findOne(user, {fields: {all_emails_verified: 1, is_proxy: 1}})
     else if _.isObject user
       user_doc = user
     else
       user_doc = @
+
+    # Don't show email unverified warning for proxy users
+    if user_doc.is_proxy
+      return true
 
     return user_doc.all_emails_verified or false
