@@ -599,3 +599,4 @@ _.extend JustdoTasksContextMenu.prototype,
 
             return res
 
+          limit_rendered_items: true

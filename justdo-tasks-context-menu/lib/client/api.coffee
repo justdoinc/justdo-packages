@@ -277,6 +277,9 @@ _.extend JustdoTasksContextMenu.prototype,
         itemsGenerator:
           optional: true
           type: Function
+        limit_rendered_items:
+          type: Boolean
+          optional: true
     listingCondition:
       optional: true
       type: Function
