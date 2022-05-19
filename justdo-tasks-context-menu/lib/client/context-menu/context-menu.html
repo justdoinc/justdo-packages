@@ -39,15 +39,17 @@
     {{/if}}
   {{/with}}
   {{#let current_section_id=section.id}}
-    {{#each section.itemsSource}}
+    {{#each getSectionItems}}
       <li class="dropdown-item context-action-item {{#if hasNestedSections}} context-nested-section-item{{/if}}">
         {{> tasks_context_menu_label}}
 
         {{#if hasNestedSections}}
           <ul class="dropdown-menu p-2 shadow-lg border-0 nested-dropdown-menu nested-dropdown-menu-{{id}}">
-            {{#each getNestedSections current_section_id id}}
-              {{> tasks_context_section section=this}}
-            {{/each}}
+            {{#let dropdown_menu_id=id}}
+              {{#each getNestedSections current_section_id dropdown_menu_id}}
+                {{> tasks_context_section section=this dropdown_menu_id=dropdown_menu_id}}
+              {{/each}}
+            {{/let}}
           </ul>
 
           <div class="context-nested-section-item-caret">

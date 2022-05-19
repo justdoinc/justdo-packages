@@ -25,16 +25,59 @@ Template.tasks_context_menu.helpers
 Template.tasks_context_section.onCreated ->
   # moveTimer used in mouseleave and mousemove events (.dropdown-item) to detect when the mouse stop
   @moveTimer = null
+  @section_rendered = new ReactiveVar false
 
   return
+
+Template.tasks_context_section.onRendered ->
+  @section_rendered.set true
+  if @data.section.limit_rendered_items
+    # Initialize rv and event handler for scroll-to-show
+    @items_render_limit_rv = new ReactiveVar JustdoTasksContextMenu.default_nested_section_subitems_render_limit
+    @total_items_rv = new ReactiveVar 0
+    @scrolled_to_bottom = false
+    @increaseItemsRenderLimit = =>
+      @items_render_limit_rv.set @items_render_limit_rv.get() + JustdoTasksContextMenu.default_nested_section_subitems_render_limit
+      return
+
+    @$dropdown_menu = $(".nested-dropdown-menu-#{@data.dropdown_menu_id}")
+    @$load_more_button = $(".show-more-dropdown-items-#{@data.section.id}")
+
+    @event_handlers =
+      dropdown_menu_scroll_handler: $dropdown_menu.scroll (e) =>
+        scrolled_to_bottom = ($dropdown_menu[0].scrollHeight - $dropdown_menu.scrollTop()) <= $dropdown_menu.outerHeight() + $load_more_button.outerHeight()
+
+        if scrolled_to_bottom and not @already_scrolled_to_bottom
+          @already_scrolled_to_bottom = true
+          @increaseItemsRenderLimit()
+
+        if not scrolled_to_bottom
+          @already_scrolled_to_bottom = false
 
 Template.tasks_context_section.helpers
   hasNestedSections: -> @is_nested_section is true
 
   getNestedSections: (parent_section_id, nested_section_id) ->
+    return APP.justdo_tasks_context_menu.getNestedSections parent_section_id, nested_section_id
+
+  getSectionItems: ->
     tpl = Template.instance()
 
-    return APP.justdo_tasks_context_menu.getNestedSections parent_section_id, nested_section_id
+    if tpl.section_rendered.get()
+      section_items = @section.itemsSource()
+
+      if tpl.data.section.limit_rendered_items
+        tpl.total_items_rv.set section_items.length
+        section_items = section_items.slice 0, tpl.items_render_limit_rv.get()
+
+      return section_items
+
+    return []
+
+Template.tasks_context_section.onDestroyed ->
+  @$dropdown_menu?.off "scroll"
+  @$load_more_button?.off "click"
+  return
 
 repositionEventMenu = (e) ->
   $item = $(e.target).closest(".context-nested-section-item")
