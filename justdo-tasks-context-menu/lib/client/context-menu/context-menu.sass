@@ -23,13 +23,18 @@
     left: 100%
     max-height: 350px
     overflow: auto
+    flex-direction: column
+
+    .dropdown-items-wrapper
+      overflow: auto
+      margin-top: 4px
 
   .show-fix .nested-dropdown-menu
-    display: block
+    display: flex
 
   .dropdown-item:hover > .nested-dropdown-menu
-    display: block
-    
+    display: flex
+
   .jd-icon-context-action
     margin-right: 6px
     width: 20px

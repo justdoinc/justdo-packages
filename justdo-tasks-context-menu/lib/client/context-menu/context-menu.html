@@ -39,25 +39,27 @@
     {{/if}}
   {{/with}}
   {{#let current_section_id=section.id}}
-    {{#each getSectionItems}}
-      <li class="dropdown-item context-action-item {{#if hasNestedSections}} context-nested-section-item{{/if}}">
-        {{> tasks_context_menu_label}}
+    <div class="dropdown-items-wrapper">
+      {{#each getSectionItems}}
+        <li class="dropdown-item context-action-item {{#if hasNestedSections}} context-nested-section-item{{/if}}">
+          {{> tasks_context_menu_label}}
 
-        {{#if hasNestedSections}}
-          <ul class="dropdown-menu p-2 shadow-lg border-0 nested-dropdown-menu nested-dropdown-menu-{{id}}">
-            {{#let dropdown_menu_id=id}}
-              {{#each getNestedSections current_section_id dropdown_menu_id}}
-                {{> tasks_context_section section=this dropdown_menu_id=dropdown_menu_id}}
-              {{/each}}
-            {{/let}}
-          </ul>
+          {{#if hasNestedSections}}
+            <div class="dropdown-menu p-2 shadow-lg border-0 nested-dropdown-menu nested-dropdown-menu-{{id}}">
+              {{#let dropdown_menu_id=id}}
+                {{#each getNestedSections current_section_id dropdown_menu_id}}
+                  {{> tasks_context_section section=this dropdown_menu_id=dropdown_menu_id}}
+                {{/each}}
+              {{/let}}
+            </div>
 
-          <div class="context-nested-section-item-caret">
-            <i class="fa fa-caret-right"></i>
-          </div>
-        {{/if}}
-      </li>
-    {{/each}}
+            <div class="context-nested-section-item-caret">
+              <i class="fa fa-caret-right"></i>
+            </div>
+          {{/if}}
+        </li>
+      {{/each}}
+    </div>
   {{/let}}
 </template>
 

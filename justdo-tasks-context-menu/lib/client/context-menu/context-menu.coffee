@@ -128,7 +128,7 @@ Template.tasks_context_section.events
 
       if $menu != null and $menu.length == 1
         repositionEventMenu(e)
-        $item.siblings().removeClass "show-fix"
+        $(".dropdown-item.show-fix").removeClass "show-fix"
         $item.addClass "show-fix"
 
     return
