@@ -42,8 +42,9 @@
     <div class="dropdown-items-wrapper">
       {{#each getSectionItems}}
         <li class="dropdown-item context-action-item {{#if hasNestedSections}} context-nested-section-item{{/if}}">
-          {{> tasks_context_menu_label}}
-
+          <div class="dropdown-item-label-wrapper">
+            {{> tasks_context_menu_label}}
+          </div>
           {{#if hasNestedSections}}
             <div class="dropdown-menu p-2 shadow-lg border-0 nested-dropdown-menu nested-dropdown-menu-{{id}}">
               {{#let dropdown_menu_id=id}}
