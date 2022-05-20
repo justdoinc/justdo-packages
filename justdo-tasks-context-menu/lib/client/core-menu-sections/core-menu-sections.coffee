@@ -520,6 +520,8 @@ _.extend JustdoTasksContextMenu.prototype,
         data:
           display_item_filter_ui: true
 
+          limit_rendered_items: true
+
           itemsGenerator: ->
             res = []
 
@@ -598,5 +600,3 @@ _.extend JustdoTasksContextMenu.prototype,
                     close_on_click: false
 
             return res
-
-          limit_rendered_items: true

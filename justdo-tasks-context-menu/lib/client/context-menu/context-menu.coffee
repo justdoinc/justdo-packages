@@ -1,3 +1,5 @@
+close_to_bottom_range = 50
+
 Template.tasks_context_menu.onCreated ->
   @tasks_context_menu_controller = @data.controller
 
@@ -25,34 +27,52 @@ Template.tasks_context_menu.helpers
 Template.tasks_context_section.onCreated ->
   # moveTimer used in mouseleave and mousemove events (.dropdown-item) to detect when the mouse stop
   @moveTimer = null
-  @section_rendered = new ReactiveVar false
+
+  @isLimitRenderedItems = =>
+    return @data.section.limit_rendered_items
+
+  if not @isLimitRenderedItems()
+    @resetItemsRenderLimit = => return
+  else
+    @last_close_to_bottom_threshold = 0
+
+    @items_render_limit_rv = new ReactiveVar 0
+    @resetItemsRenderLimit = =>
+      @items_render_limit_rv.set @data.section.limit_rendered_items_initial_items
+      @last_close_to_bottom_threshold = 0
+
+      return
 
   return
 
 Template.tasks_context_section.onRendered ->
-  @section_rendered.set true
-  if @data.section.limit_rendered_items
+  if @isLimitRenderedItems()
     # Initialize rv and event handler for scroll-to-show
-    @items_render_limit_rv = new ReactiveVar JustdoTasksContextMenu.default_nested_section_subitems_render_limit
-    @total_items_rv = new ReactiveVar 0
-    @scrolled_to_bottom = false
+
+    @resetItemsRenderLimit()
+
     @increaseItemsRenderLimit = =>
-      @items_render_limit_rv.set @items_render_limit_rv.get() + JustdoTasksContextMenu.default_nested_section_subitems_render_limit
+      @items_render_limit_rv.set @items_render_limit_rv.get() + @data.section.limit_rendered_items_load_more_items
       return
 
-    @$dropdown_menu = $(".nested-dropdown-menu-#{@data.dropdown_menu_id}")
-    @$load_more_button = $(".show-more-dropdown-items-#{@data.section.id}")
+    $dropdown_menu = $(".nested-dropdown-menu-#{@data.dropdown_menu_id}")
 
-    @event_handlers =
-      dropdown_menu_scroll_handler: $dropdown_menu.scroll (e) =>
-        scrolled_to_bottom = ($dropdown_menu[0].scrollHeight - $dropdown_menu.scrollTop()) <= $dropdown_menu.outerHeight() + $load_more_button.outerHeight()
+    getCurrentCloseToBottomThreshold = ->
+      return $dropdown_menu.get(0).scrollHeight - close_to_bottom_range
 
-        if scrolled_to_bottom and not @already_scrolled_to_bottom
-          @already_scrolled_to_bottom = true
+    $dropdown_menu.scroll (e) =>
+      is_close_to_bottom = getCurrentCloseToBottomThreshold() <= $dropdown_menu.outerHeight() + $dropdown_menu.scrollTop()
+
+      if is_close_to_bottom
+        current_close_to_bottom_threshold = getCurrentCloseToBottomThreshold()
+
+        if current_close_to_bottom_threshold > @last_close_to_bottom_threshold
+          @last_close_to_bottom_threshold = current_close_to_bottom_threshold
           @increaseItemsRenderLimit()
 
-        if not scrolled_to_bottom
-          @already_scrolled_to_bottom = false
+      return
+
+  return
 
 Template.tasks_context_section.helpers
   hasNestedSections: -> @is_nested_section is true
@@ -63,21 +83,12 @@ Template.tasks_context_section.helpers
   getSectionItems: ->
     tpl = Template.instance()
 
-    if tpl.section_rendered.get()
-      section_items = @section.itemsSource()
+    section_items = @section.itemsSource()
 
-      if tpl.data.section.limit_rendered_items
-        tpl.total_items_rv.set section_items.length
-        section_items = section_items.slice 0, tpl.items_render_limit_rv.get()
+    if tpl.isLimitRenderedItems()
+      section_items = section_items.slice 0, tpl.items_render_limit_rv.get()
 
-      return section_items
-
-    return []
-
-Template.tasks_context_section.onDestroyed ->
-  @$dropdown_menu?.off "scroll"
-  @$load_more_button?.off "click"
-  return
+    return section_items
 
 repositionEventMenu = (e) ->
   $item = $(e.target).closest(".context-nested-section-item")
@@ -165,7 +176,9 @@ Template.tasks_context_section.events
 
     return
 
-  "keyup .section-filter": (e) ->
+  "keyup .section-filter": (e, tpl) ->
+    tpl.resetItemsRenderLimit()
+
     filter_val = $(e.target).closest(".section-filter").val()
 
     APP.justdo_tasks_context_menu.setSectionFilterState(@id, filter_val)

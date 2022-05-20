@@ -280,6 +280,15 @@ _.extend JustdoTasksContextMenu.prototype,
         limit_rendered_items:
           type: Boolean
           optional: true
+          defaultValue: false
+        limit_rendered_items_initial_items:
+          type: Number
+          optional: true
+          defaultValue: 40
+        limit_rendered_items_load_more_items:
+          type: Number
+          optional: true
+          defaultValue: 40
     listingCondition:
       optional: true
       type: Function
