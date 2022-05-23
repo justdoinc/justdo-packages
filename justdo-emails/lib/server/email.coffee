@@ -102,7 +102,9 @@ _.extend JustdoEmails,
       console.warn "An email to a forbidden email domain skipped (#{options.to})"
       return
 
-    if Meteor.users.findOne({"emails.address": options.to, is_proxy: true}, {fields: {_id: 1}})?
+    # Forbid proxy users from receiving any emails
+    # Except for verification and password reset, as we force them to verify their email and setting up first password by clicking password recovery
+    if Meteor.users.findOne({"emails.address": options.to, is_proxy: true}, {fields: {_id: 1}})? and options.template not in ["email-verification", "password-recovery"]
       console.warn "An email to a proxy account skipped (#{options.to})"
       return
 
