@@ -60,9 +60,14 @@ _.extend JustdoAccounts.prototype,
     if not (user_obj = @getUserByEmail(options.email))?
       return null
 
-    if options.ignore_invited
+    if options.ignore_invited and not user_obj.is_proxy
+      # ignore_invited #
       # If set to true, we will regard users that been invited but haven't
       # registered yet as non-existing.
+
+      # is_proxy #
+      # Treat proxy users as existing user without profile object,
+      # so that landing app will force them to setup their first password by clicking "Forgot password"
 
       if not @userCompletedRegistration(user_obj)
         return null
