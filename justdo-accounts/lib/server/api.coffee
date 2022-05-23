@@ -225,7 +225,7 @@ _.extend JustdoAccounts.prototype,
 
       APP.emit("after-create-user", {email: options.email, created_user_id: created_user_id})
     else
-      if @userCompletedRegistration(user_obj)
+      if @userCompletedRegistration(user_obj) or user_obj.is_proxy
         # If the user already completed the registration process using
         # password or OAuth services that we support, don't allow using
         # the createUser process to affect the user doc.
