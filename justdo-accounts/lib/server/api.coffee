@@ -135,7 +135,8 @@ _.extend JustdoAccounts.prototype,
       throw @_error("unknown-user")
 
     if @userCompletedRegistration(user_obj)
-      if not @_passwordSetInUserObj(user_obj)
+      # Show password prompt for proxy users and force them to click "Forget Password" to setup their first password.
+      if not @_passwordSetInUserObj(user_obj) and not user_obj.is_proxy
         return false
 
     return true
