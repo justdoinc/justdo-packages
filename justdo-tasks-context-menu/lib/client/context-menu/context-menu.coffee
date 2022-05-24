@@ -55,7 +55,7 @@ Template.tasks_context_section.onRendered ->
       @items_render_limit_rv.set @items_render_limit_rv.get() + @data.section.limit_rendered_items_load_more_items
       return
 
-    $dropdown_menu = $(".nested-dropdown-menu-#{@data.dropdown_menu_id}")
+    $dropdown_menu = $(".nested-dropdown-menu-#{@data.dropdown_menu_id} .dropdown-items-wrapper")
 
     getCurrentCloseToBottomThreshold = ->
       return $dropdown_menu.get(0).scrollHeight - close_to_bottom_range
