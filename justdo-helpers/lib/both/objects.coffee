@@ -23,3 +23,16 @@ _.extend JustdoHelpers,
         o[key] = val
 
     return o
+  
+  eqSets: (set_a, set_b) ->
+    if set_a.size != set_b.size
+      return false
+    
+    iterator = set_a.entries()
+    
+    while not (entry = iterator.next()).done
+      if not set_b.has(entry.value[0])
+        return false
+    
+    return true
+    
