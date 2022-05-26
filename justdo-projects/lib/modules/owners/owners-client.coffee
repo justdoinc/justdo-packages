@@ -14,7 +14,8 @@ _.extend PACK.modules.owners,
         # need to add code here do recalculation here,
         # if the recalculation is moved to server side in the future, this piece of code should be removed
         if APP.justdo_planning_utilities.isPluginInstalledOnJustdo JD.activeJustdoId()
-          set_values = APP.justdo_planning_utilities.recalculateDatesAndDuration task_id,
+          recal = APP.justdo_planning_utilities.createDatesRecalculation()
+          set_values = recal.getRecalculatedDatesAndDuration task_id,
             pending_owner_id: null
           
           delete set_values.pending_owner_id
