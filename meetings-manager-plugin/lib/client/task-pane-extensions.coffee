@@ -41,30 +41,20 @@ _.extend MeetingsManagerPlugin.prototype,
       type: "MeetingsManager" # the name of the template derives from the type
       options:
         title: "Meetings"
-        # titleInfo: ->
-        #   task = JD.activeItem({_id: 1, tasks: 1, created_from_meeting_id: 1})
-        #   selector = 
-        #     $or: [{"tasks.task_id": task._id}]
-          
-        #   meeting_ids = new Set()
-        #   self.meetings_manager.meetings_tasks.find
-        #     task_id: task._id
-        #   ,
-        #     fields:
-        #       meeting_id: 1
-        #   .forEach (meeting_task) ->
-        #     meeting_ids.add meeting_task.meeting_id
-        #     return
+        titleInfo: ->
+          task_id = JD.activeItemId()
+          task = APP.collections.Tasks.findOne task_id # XXX for some reason, fields here doesn't work
+          meeting_ids = new Set(task[[MeetingsManagerPlugin.task_meetings_cache_field_id]])
 
-        #   if task.created_from_meeting_id?
-        #     meeting_created = self.meetings_manager.meetings.findOne(task.created_from_meeting_id, {fields: {_id: 1}})
-        #     if meeting_created?
-        #       meeting_ids.add meeting_created._id          
+          if task.created_from_meeting_id?
+            meeting_created = self.meetings_manager.meetings.findOne(task.created_from_meeting_id, {fields: {_id: 1}})
+            if meeting_created?
+              meeting_ids.add meeting_created._id          
 
-        #   if meeting_ids.size > 0
-        #     return "(#{meeting_ids.size})"
+          if meeting_ids.size > 0
+            return "(#{meeting_ids.size})"
           
-        #   return ""
+          return ""
           
       section_options: {}
 

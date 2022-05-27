@@ -91,5 +91,14 @@ _.extend MeetingsManager.prototype,
         self.updateAddedTaskNote meeting_task_id, added_task_id, changes, user_id
         
         return
+      
+      meetings_recalTaskMeetingsCache: (task_id) ->
+        user_id = @userId
+        
+        task = self._requireTaskMember task_id, {_id: 1}, user_id
+
+        self.recalTaskMeetingsCache task_id
+
+        return
 
     return

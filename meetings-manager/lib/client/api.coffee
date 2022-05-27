@@ -82,9 +82,35 @@ _.extend MeetingsManager.prototype,
     return Meteor.subscribe "meetings_meeting", meeting_id, cb
 
   subscribeToMeetingsForTask: (task_id) ->
+    self = @
+
     if not task_id?
       return
-    return Meteor.subscribe "meetings_meetings_for_task", task_id
+    return Meteor.subscribe "meetings_meetings_for_task", task_id, ->
+      debugger
+      meeting_ids = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.find
+        task_id: task_id
+      ,
+        fields:
+          meeting_id: 1
+      .map (meeting_task) ->
+        return meeting_task.meeting_id
+      meeting_ids = new Set(meeting_ids)
+
+      task = APP.collections.Tasks.findOne task_id,
+        fields:
+          [MeetingsManagerPlugin.task_meetings_cache_field_id]: 1
+      cached_meeting_ids = new Set(task[MeetingsManagerPlugin.task_meetings_cache_field_id])
+
+      if not JustdoHelpers.eqSets(meeting_ids, cached_meeting_ids)
+        self.recalTaskMeetingsCache task_id
+      
+      return
+
+  recalTaskMeetingsCache: (task_id) ->
+    Meteor.call "meetings_recalTaskMeetingsCache", task_id
+
+    return
 
   destroy: ->
     if @destroyed

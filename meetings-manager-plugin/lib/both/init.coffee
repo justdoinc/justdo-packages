@@ -152,3 +152,6 @@ _.extend MeetingsManagerPlugin.prototype,
     # tick in which we created the object instance.
 
     return
+
+_.extend MeetingsManagerPlugin,
+  task_meetings_cache_field_id: "p:m:meetings"

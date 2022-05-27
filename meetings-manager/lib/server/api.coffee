@@ -49,6 +49,7 @@ _.extend MeetingsManager.prototype,
 
 
   updateMeetingStatus: (meeting_id, new_status, user_id) ->
+    self = @
     @_requireString meeting_id, "meeting_id should be a string"
     @_requireString new_status, "new_status should be a string"
     meeting = @_requireMeetingMember meeting_id, true, user_id
@@ -74,6 +75,16 @@ _.extend MeetingsManager.prototype,
           date: new Date()
 
     @meetings.update { _id: meeting_id }, update
+    @meetings_tasks.find
+      meeting_id: meeting_id
+    ,
+      fields:
+        task_id: 1
+    .map (meeting_task) ->
+      self.recalTaskMeetingsCache(meeting_task.task_id)
+      return
+
+    return
 
   addTaskToMeeting: (meeting_id, task_fields, user_id) ->
     @_requireString meeting_id, "meeting_id should be a string"
@@ -100,6 +111,8 @@ _.extend MeetingsManager.prototype,
           added_by_user: user_id
           added_at: new Date
           task_order: meeting.tasks.length
+
+    @recalTaskMeetingsCache(task._id)
 
     return meeting_task_id
 
@@ -144,6 +157,8 @@ _.extend MeetingsManager.prototype,
         "tasks":
           task_id: task_id
 
+    @recalTaskMeetingsCache(task_id)
+        
     return true
 
 
@@ -166,6 +181,35 @@ _.extend MeetingsManager.prototype,
       $set: {"tasks.$.task_order": order}
 
     return true
+
+  recalTaskMeetingsCache: (task_id) ->
+    self = @
+    
+    all_meeting_ids = self.meetings_tasks.find(
+      task_id: task_id
+    ,
+      fields:
+        meeting_id: 1
+    ).map (meeting_task) ->
+      return meeting_task.meeting_id
+
+    meeting_ids = self.meetings.find
+      _id:
+        $in: all_meeting_ids
+      status:
+        $nin: ["draft"]
+    ,
+      fields:
+        _id: 1
+        status: 1
+    .map (meeting) ->
+      return meeting._id
+
+    APP.collections.Tasks.update task_id,
+      $set:
+        [MeetingsManagerPlugin.task_meetings_cache_field_id]: meeting_ids
+
+    return
 
 # obsolete:
   moveMeetingTask: (meeting_id, task_id, move_direction, user_id) ->
@@ -547,6 +591,8 @@ _.extend MeetingsManager.prototype,
     schema.validate obj
 
   deleteMeeting: (meeting_id, user_id) ->
+    self = @
+
     check meeting_id, String
     check user_id, String
 
@@ -574,6 +620,15 @@ _.extend MeetingsManager.prototype,
       throw @error "no-permission"
 
     @meetings.remove meeting_id
+
+    @meetings_tasks.find
+      meeting_id: meeting_id
+    ,
+      fields:
+        task_id: 1
+    .map (meeting_task) ->
+      self.recalTaskMeetingsCache(meeting_task.task_id)
+      return
 
     return
 

@@ -217,3 +217,9 @@ _.extend MeetingsManager.prototype,
         optional: true
         autoValue: ->
           return new Date()
+    
+    APP.collections.Tasks.attachSchema
+      [MeetingsManagerPlugin.task_meetings_cache_field_id]:
+        label: "Meetings Cache"
+        type: [String]
+        optional: true
