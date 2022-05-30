@@ -89,7 +89,7 @@ _.extend JustdoAvatar,
     svg_r = Settings.svg_width / 2
     svg_r_offset = 2
 
-    if options.is_proxy
+    if options?.is_proxy
       svg += """
         <svg>
           <circle cx="#{svg_cx}" cy="#{svg_cy}" r="#{svg_r}" fill="none"
