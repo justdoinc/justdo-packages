@@ -196,8 +196,8 @@ APP.executeAfterAppLibCode ->
       ancestors_ids_arr = _.keys APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownAncestorsIdsObj([data._id])
       @ancestors_users_subscription = APP.projects.subscribeTasksAugmentedFields(ancestors_ids_arr, ["users"])
 
-    descendants_ids_arr = _.keys APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownDescendantsIdsObj([data._id])
-    @descendants_users_subscription = APP.projects.subscribeTasksAugmentedFields(descendants_ids_arr, ["users"])
+    # descendants_ids_arr = _.keys APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownDescendantsIdsObj([data._id])
+    # @descendants_users_subscription = APP.projects.subscribeTasksAugmentedFields(descendants_ids_arr, ["users"])
 
     @self_users_subscription = APP.projects.subscribeTasksAugmentedFields([data._id], ["users"])
 
@@ -344,7 +344,7 @@ APP.executeAfterAppLibCode ->
     notes.set {}
 
     @ancestors_users_subscription?.stop()
-    @descendants_users_subscription?.stop()
+    # @descendants_users_subscription?.stop()
     @self_users_subscription?.stop()
 
     return
