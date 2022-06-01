@@ -293,6 +293,14 @@ _.extend GridDataSectionManager.prototype,
         node_child_orders = (_.keys item_node).sort(numSort)
 
         for child_order in node_child_orders
+          if (order_overridden_items = @grid_data._grid_data_core.order_overridden_items[item_id]?[child_order])?
+            for overriden_child_id in order_overridden_items
+              traversting_res = @_naturalCollectionTreeTraversing(overriden_child_id, item_path, options, iteratee, true)
+
+              if traversting_res is false
+                # If we received false, it means iteratee wants the traversing to stop
+                return false
+
           traversting_res = @_naturalCollectionTreeTraversing(item_node[child_order], item_path, options, iteratee, true)
 
           if traversting_res is false
