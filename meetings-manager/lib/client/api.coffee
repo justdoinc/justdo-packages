@@ -87,7 +87,8 @@ _.extend MeetingsManager.prototype,
     if not task_id?
       return
     return Meteor.subscribe "meetings_meetings_for_task", task_id, ->
-      debugger
+      # If upon subscription, we found out that there's a discrepancy between the cached count
+      # and the actual count - we ask the sever to recalculate.
       meeting_ids = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.find
         task_id: task_id
       ,

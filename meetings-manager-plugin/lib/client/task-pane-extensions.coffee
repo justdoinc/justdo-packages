@@ -43,8 +43,9 @@ _.extend MeetingsManagerPlugin.prototype,
         title: "Meetings"
         titleInfo: ->
           task_id = JD.activeItemId()
-          task = APP.collections.Tasks.findOne task_id # XXX for some reason, fields here doesn't work
-          meeting_ids = new Set(task[[MeetingsManagerPlugin.task_meetings_cache_field_id]])
+
+          task = APP.collections.Tasks.findOne task_id, {fields: {[MeetingsManagerPlugin.task_meetings_cache_field_id]: 1}}
+          meeting_ids = new Set(task[MeetingsManagerPlugin.task_meetings_cache_field_id])
 
           if task.created_from_meeting_id?
             meeting_created = self.meetings_manager.meetings.findOne(task.created_from_meeting_id, {fields: {_id: 1}})
