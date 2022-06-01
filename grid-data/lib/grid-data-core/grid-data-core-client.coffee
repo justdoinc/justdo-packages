@@ -117,6 +117,7 @@ _.extend GridDataCore.prototype,
 
     @items_by_id = null
     @tree_structure = null
+    @order_overridden_items = {}
     @detaching_items_ids = null
 
     # @_data_changes_queue stores the data changes that will be applied in the
@@ -164,7 +165,11 @@ _.extend GridDataCore.prototype,
 
         if not @tree_structure[parent_id]?
           @tree_structure[parent_id] = {}
-        @tree_structure[parent_id][parent_metadata.order] = id
+        
+        if @tree_structure[parent_id][parent_metadata.order]? # There is already an item with the same order
+          @_addItemIdToOrderOverriddenItems(id, parent_id, parent_metadata.order)
+        else
+          @tree_structure[parent_id][parent_metadata.order] = id
 
         if parent_id != "0" and not (parent_id of @items_by_id)
           @detaching_items_ids[parent_id] = true
@@ -247,7 +252,15 @@ _.extend GridDataCore.prototype,
         if @tree_structure[parent_id]?
           # Make sure still pointing to item
           if @tree_structure[parent_id][parent_metadata.order] == id
-            delete @tree_structure[parent_id][parent_metadata.order]
+            # Check if there is a order_overridden_item with the same order, if so, bring it back to tree_structure
+            if (order_overridden_item_ids = @order_overridden_items[parent_id]?[parent_metadata.order])?.length > 0
+              @tree_structure[parent_id][parent_metadata.order] = order_overridden_item_ids.pop()
+              if order_overridden_item_ids.length == 0
+                delete @order_overridden_items[parent_id][parent_metadata.order]
+              if _.isEmpty(@order_overridden_items[parent_id])
+                delete @order_overridden_items[parent_id]
+            else
+              delete @tree_structure[parent_id][parent_metadata.order]
 
           if _.isEmpty @tree_structure[parent_id]
             delete @tree_structure[parent_id]
@@ -287,10 +300,13 @@ _.extend GridDataCore.prototype,
 
             structure_changed = true
 
-            @tree_structure[parent_id][new_order] = item_id
-            # XXX Is it possible that the following won't be true?
-            if @tree_structure[parent_id][prev_order] == item_id
-              delete @tree_structure[parent_id][prev_order]
+            if @tree_structure[parent_id][new_order]? # There is alreay an item with the same order
+              @_addItemIdToOrderOverriddenItems(item_id, parent_id, new_order)
+            else
+              @tree_structure[parent_id][new_order] = item_id
+              # XXX Is it possible that the following won't be true?
+              if @tree_structure[parent_id][prev_order] == item_id
+                delete @tree_structure[parent_id][prev_order]
         else
           # New parent - update tree structure
           # console.log "Case 3 - New parent", item_id, parent_id
@@ -330,6 +346,15 @@ _.extend GridDataCore.prototype,
 
       return [structure_changed, items_ids_with_changed_children]
 
+  _addItemIdToOrderOverriddenItems: (item_id, parent_id, order) ->
+    if not @order_overridden_items[parent_id]?
+      @order_overridden_items[parent_id] = {}
+    if not @order_overridden_items[parent_id][order]?
+      @order_overridden_items[parent_id][order] = []
+    @order_overridden_items[parent_id][order].push(item_id)
+    
+    return
+
   _initDataStructure: ->
     @items_by_id = Object.create(JustdoHelpers.getCollectionIdMap(APP.collections.Tasks)._map)
     @tree_structure = {}
@@ -354,7 +379,10 @@ _.extend GridDataCore.prototype,
           continue
 
         if parent_metadata.order? and _.isNumber parent_metadata.order
-          @tree_structure[parent_id][parent_metadata.order] = item._id
+          if @tree_structure[parent_id][parent_metadata.order]? # There is already an item with the same order
+            @_addItemIdToOrderOverriddenItems(item._id, parent_id, parent_metadata.order)
+          else
+            @tree_structure[parent_id][parent_metadata.order] = item._id
 
     return
 
