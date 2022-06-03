@@ -58,8 +58,8 @@ _.extend MeetingsManagerPlugin.prototype,
               meeting_ids.add meeting_created._id          
 
           if meeting_ids.size > 0
-            return "(#{meeting_ids.size})"
-          
+            return """<div class="task-pane-tab-title-info bg-primary text-white">#{meeting_ids.size}</div>"""
+
           return ""
           
       section_options: {}
