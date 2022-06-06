@@ -679,7 +679,10 @@ _.extend JustdoAccounts.prototype,
 
       return
 
-    if not data.services?.password? # _enrolledFlagTransform is the only transformation that uses the services.password sub-document.
+    if (password = data.services?.password)?
+      delete data.services.password # _enrolledFlagTransform is the only transformation that uses the services.password sub-document.
+
+    if not password?
       if data.all_emails_verified isnt true # If data.all_emails_verified is true, it is obvious the user completed enrollment (using the oauth flow), even if he doesn't have data.services?.password
         # Remove the invited_by field that is published only in specific cases where
         # the user isn't enrolled, see below.
@@ -687,10 +690,6 @@ _.extend JustdoAccounts.prototype,
         delete data.users_allowed_to_edit_pre_enrollment
 
         return
-
-    password = data.services.password
-
-    delete data.services.password
 
     if _.isEmpty data.services
       delete data.services
