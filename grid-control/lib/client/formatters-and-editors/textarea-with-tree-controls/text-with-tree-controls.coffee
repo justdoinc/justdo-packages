@@ -261,6 +261,14 @@ GridControl.installFormatter "textWithTreeControls",
             <i class="fa fa-fw fa-play-circle-o jdt-play jdt-grid-icon slick-prevent-edit" title="Start working on this task" aria-hidden="true"></i>
         """
 
+    if @getCurrentColumnData("time_tracker_plugin_enabled") and not doc._type?
+      if doc[MeetingsManagerPlugin.task_meetings_cache_field_id]?
+        meeting_ids = new Set(doc[MeetingsManagerPlugin.task_meetings_cache_field_id])
+
+        if meeting_ids.size > 0
+          tree_control += """<div class="icon-meetings-count lick-prevent-edit"><svg class="btn-meeting-menu jd-icon jd-c-pointer text-dark" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#jd-meetings"></use></svg> #{meeting_ids.size}</div>"""
+
+
     if @getCurrentColumnData("justdo_planning_utilities_plugin_enabled")
       if doc[JustdoPlanningUtilities?.is_milestone_pseudo_field_id] == "true"
         tree_control +=  """
