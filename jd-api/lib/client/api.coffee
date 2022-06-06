@@ -65,8 +65,8 @@ _.extend JD,
     # Normalize non-existence result to 'undefined'
     return undefined
 
-  registerPlaceholderItem: (...args) -> APP.modules.main.registerPlaceholderItem.apply(APP.modules.main, args)
+  registerPlaceholderItem: (...args) -> APP.modules?.main?.registerPlaceholderItem?.apply(APP.modules?.main, args)
 
-  unregisterPlaceholderItem: (...args) -> APP.modules.main.unregisterPlaceholderItem.apply(APP.modules.main, args)
+  unregisterPlaceholderItem: (...args) -> APP.modules?.main?.unregisterPlaceholderItem?.apply(APP.modules?.main, args)
 
-  getPlaceholderItems: (...args) -> APP.modules.main.getPlaceholderItems.apply(APP.modules.main, args)
+  getPlaceholderItems: (...args) -> APP.modules?.main?.getPlaceholderItems?.apply(APP.modules?.main, args)
