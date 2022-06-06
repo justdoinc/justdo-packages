@@ -44,7 +44,12 @@ _.extend MeetingsManagerPlugin.prototype,
         titleInfo: ->
           task_id = JD.activeItemId()
 
-          task = APP.collections.Tasks.findOne task_id, {fields: {[MeetingsManagerPlugin.task_meetings_cache_field_id]: 1}}
+          if not task_id?
+            return
+
+          if not (task = APP.collections.Tasks.findOne task_id, {fields: {[MeetingsManagerPlugin.task_meetings_cache_field_id]: 1}})?
+            return
+            
           meeting_ids = new Set(task[MeetingsManagerPlugin.task_meetings_cache_field_id])
 
           if task.created_from_meeting_id?
