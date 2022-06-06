@@ -167,7 +167,7 @@ _.extend GridDataCore.prototype,
           @tree_structure[parent_id] = {}
         
         if @tree_structure[parent_id][parent_metadata.order]? # There is already an item with the same order
-          @_addItemIdToOrderOverriddenItems(id, parent_id, parent_metadata.order)
+          @addItemIdToOrderOverriddenItems(id, parent_id, parent_metadata.order)
         else
           @tree_structure[parent_id][parent_metadata.order] = id
 
@@ -226,7 +226,7 @@ _.extend GridDataCore.prototype,
       return [structure_changed, items_ids_with_changed_children]
 
     remove: (id, removed_doc) ->
-      # console.log "remove", id
+      # console.log "remove", id, removed_doc
 
       # Item removal always changes tree structure
       structure_changed = true
@@ -253,15 +253,9 @@ _.extend GridDataCore.prototype,
           # Make sure still pointing to item
           if @tree_structure[parent_id][parent_metadata.order] == id
             # Check if there is a order_overridden_item with the same order, if so, bring it back to tree_structure
-            if (order_overridden_item_ids = @order_overridden_items[parent_id]?[parent_metadata.order])?.length > 0
-              @tree_structure[parent_id][parent_metadata.order] = order_overridden_item_ids.pop()
-              if order_overridden_item_ids.length == 0
-                delete @order_overridden_items[parent_id][parent_metadata.order]
-              if _.isEmpty(@order_overridden_items[parent_id])
-                delete @order_overridden_items[parent_id]
-            else
-              delete @tree_structure[parent_id][parent_metadata.order]
-
+            delete @tree_structure[parent_id][parent_metadata.order]
+            @restoreFromOrderOverriddeItemsIfExist(parent_id, parent_metadata.order)
+          @removeItemIdFromOrderOverriddeItems(parent_id, parent_metadata.order, id)
           if _.isEmpty @tree_structure[parent_id]
             delete @tree_structure[parent_id]
             delete @detaching_items_ids[parent_id]
@@ -301,12 +295,15 @@ _.extend GridDataCore.prototype,
             structure_changed = true
 
             if @tree_structure[parent_id][new_order]? # There is alreay an item with the same order
-              @_addItemIdToOrderOverriddenItems(item_id, parent_id, new_order)
+              @addItemIdToOrderOverriddenItems(item_id, parent_id, new_order)
             else
               @tree_structure[parent_id][new_order] = item_id
-              # XXX Is it possible that the following won't be true?
-              if @tree_structure[parent_id][prev_order] == item_id
-                delete @tree_structure[parent_id][prev_order]
+            
+            if @tree_structure[parent_id][prev_order] == item_id
+              delete @tree_structure[parent_id][prev_order]
+              @restoreFromOrderOverriddeItemsIfExist(parent_id, prev_order)
+            if @getOrderOverriddenItems(parent_id, prev_order)?.has(item_id)  # item was in order_overridden_items (could be an else if but just to be safe)
+              @removeItemIdFromOrderOverriddeItems(parent_id, prev_order, item_id)
         else
           # New parent - update tree structure
           # console.log "Case 3 - New parent", item_id, parent_id
@@ -321,7 +318,10 @@ _.extend GridDataCore.prototype,
             if parent_id != "0" and not (parent_id of @items_by_id)
               @detaching_items_ids[parent_id] = true
 
-          @tree_structure[parent_id][new_order] = item_id
+          if @tree_structure[parent_id][new_order]? # There is alreay an item with the same order
+            @addItemIdToOrderOverriddenItems(item_id, parent_id, new_order)
+          else
+            @tree_structure[parent_id][new_order] = item_id
 
       for parent_id, prev_parent_obj of prev_parents_obj
         prev_order = prev_parent_obj.order
@@ -339,6 +339,9 @@ _.extend GridDataCore.prototype,
           # XXX can this situation happen?
           if @tree_structure[parent_id][prev_order] == item_id
             delete @tree_structure[parent_id][prev_order]
+            @restoreFromOrderOverriddeItemsIfExist(parent_id, prev_order)
+
+          @removeItemIdFromOrderOverriddeItems(parent_id, prev_order, item_id)  
 
           if _.isEmpty @tree_structure[parent_id]
             delete @tree_structure[parent_id]
@@ -346,12 +349,31 @@ _.extend GridDataCore.prototype,
 
       return [structure_changed, items_ids_with_changed_children]
 
-  _addItemIdToOrderOverriddenItems: (item_id, parent_id, order) ->
-    if not @order_overridden_items[parent_id]?
-      @order_overridden_items[parent_id] = {}
-    if not @order_overridden_items[parent_id][order]?
-      @order_overridden_items[parent_id][order] = []
-    @order_overridden_items[parent_id][order].push(item_id)
+  addItemIdToOrderOverriddenItems: (item_id, parent_id, order) ->
+    key = "#{parent_id}:#{order}"
+    if not @order_overridden_items[key]?
+      @order_overridden_items[key] = new Set()
+
+    @order_overridden_items[key].add(item_id)
+    
+    return
+
+  getOrderOverriddenItems: (parent_id, order) ->
+    return @order_overridden_items["#{parent_id}:#{order}"]
+
+  removeItemIdFromOrderOverriddeItems: (parent_id, order, item_id) ->
+    if (order_overridden_item_ids = @getOrderOverriddenItems(parent_id, order))?
+      order_overridden_item_ids.delete(item_id)
+      if order_overridden_item_ids.size == 0
+        delete @order_overridden_items["#{parent_id}:#{order}"]
+    
+    return
+  
+  restoreFromOrderOverriddeItemsIfExist: (parent_id, order) ->
+    if (order_overridden_item_ids = @getOrderOverriddenItems(parent_id, order))?.size > 0
+      order_overridden_item_id = order_overridden_item_ids.entries().next().value[0] # deque the first overridden item
+      @tree_structure[parent_id][order] = order_overridden_item_id
+      @removeItemIdFromOrderOverriddeItems(parent_id, order, order_overridden_item_id)
     
     return
 
@@ -380,7 +402,7 @@ _.extend GridDataCore.prototype,
 
         if parent_metadata.order? and _.isNumber parent_metadata.order
           if @tree_structure[parent_id][parent_metadata.order]? # There is already an item with the same order
-            @_addItemIdToOrderOverriddenItems(item._id, parent_id, parent_metadata.order)
+            @addItemIdToOrderOverriddenItems(item._id, parent_id, parent_metadata.order)
           else
             @tree_structure[parent_id][parent_metadata.order] = item._id
 
