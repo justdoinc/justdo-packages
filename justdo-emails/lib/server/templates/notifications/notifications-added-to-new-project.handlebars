@@ -1,65 +1,159 @@
+<!-- Header -->
 <tr>
-  <td valign="top" style="padding-top:40px;padding-bottom:40px;">
-    <table cellpadding="0" cellspacing="0" width="100%">
-      <tr>
-        <td valign="top" style="padding-bottom:40px; font-family: 'lato', Arial, sans-serif;font-size:26px;font-weight:bold;line-height:26px;color:#333333;">
-          Hi {{invited_user_doc.profile.first_name}},
-        </td>
-      </tr>
-      <tr>
-        <td valign="top" style="padding-bottom:20px;font-family:'lato',Arial,sans-serif;color:#68757B!important;font-size:16px;line-height:1.5em;">
-          {{main_email_line}}<a href="{{link}}" style="text-decoration:none;color:#2B71CF">{{project_doc.title}}</a>
-        </td>
-      </tr>
-      {{#if note}}
+  <td bgcolor="#ffffff" align="center" style="padding: 15px;">
+    <!--[if (gte mso 9)|(IE)]>
+        <table role="presentation" align="center" border="0" cellspacing="0" cellpadding="0" width="500">
         <tr>
-          <td valign="top" style="padding-bottom:20px;font-family:'lato',Arial,sans-serif;color:#68757B!important;font-size:16px;line-height:1.5em;">
-            {{note}}
-          </td>
-        </tr>
-      {{/if}}
+        <td align="center" valign="top" width="500">
+        <![endif]-->
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="responsive-table">
       <tr>
         <td>
-          <table cellspacing="0" cellpadding="0" width="100%" bgcolor="#ffffff">
+          <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td style="width:240px;height:42px;user-select: none;">
-                <div><!--[if mso]>
-                  <v:rect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{link}}" style="v-text-anchor:middle;width:240px;height:42px;" stroke="f" fillcolor="#2B71CF">
-                    <w:anchorlock/>
-                    <center>
-                  <![endif]-->
-                  <a href="{{link}}" style="background-color:#2B71CF;color:#ffffff;display:inline-block;font-family:'lato',Arial,sans-serif;font-size:16px;padding: 8px 16px;text-decoration:none;-webkit-text-size-adjust:none;border-radius:2px;user-select: none;">Open in JustDo</a>
-                  <!--[if mso]>
-                    </center>
-                  </v:rect>
-                <![endif]-->
-                </div>
+              <td align="left" style="font-size: 20px; font-weight: bold; font-family: Helvetica, Arial, sans-serif; color: #333333; padding-top: 32px;" class="padding-copy">Hi {{invited_user_doc.profile.first_name}},</td>
+            </tr>
+            <tr>
+              <td align="left" style="padding: 12px 0 0 0; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: #68757B;" class="padding-copy">{{main_email_line}}<a href="{{link}}" style="text-decoration:none;color:#2B71CF">{{project_doc.title}}</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!--[if (gte mso 9)|(IE)]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+  </td>
+</tr>
+{{#if note}}
+<!-- Content -->
+<tr>
+  <td bgcolor="#ffffff" align="center" style="padding: 0px" class="padding-content">
+    <!--[if (gte mso 9)|(IE)]>
+        <table role="presentation" align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+        <tr>
+        <td align="center" valign="top" width="500">
+        <![endif]-->
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="responsive-table">
+      <tr>
+        <td bgcolor="#f4f7fa" style="padding: 15px; border-radius: 3px">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+              <td valign="top" class="mobile-wrapper">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100%;" align="left">
+                  <tr>
+                    <td>
+                      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                        <tr>
+                          <td align="left" style="font-family: Helvetica, Arial, sans-serif; font-size: 16px;">
+                            {{note}}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
               </td>
             </tr>
           </table>
         </td>
       </tr>
-      {{#if is_enrollment}}
-        <tr>
-          <td style="padding-top:20px;font-family:'lato',Arial,sans-serif;color:#68757B!important;font-size:16px;line-height:1.5em;">
-            If you are not getting into the JustDo application after clicking the link above please copy the following url to your address bar:<br>
-            <p style="color:#2B71CF;text-decoration:none">{{link}}</p>
-          </td>
-        </tr>
-      {{/if}}
     </table>
+    <!--[if (gte mso 9)|(IE)]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
   </td>
 </tr>
+{{/if}}
+<!-- Target Buttons -->
 <tr>
-  <td valign="top" style="font-size:15px;padding-top:10px;border-top:1px solid #f0f0f0;font-family:'lato',Arial,sans-serif;color:#68757B;line-height:1.5em;">
-    <h4 style="margin:0;padding:0;font-size:16px;color:#333333;">Having any issue? reply this email for support.</h4>
-    {{#if original_recepient}}<br>Deliver to: {{original_recepient}}{{/if}}
+  <td bgcolor="#ffffff" align="center">
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="500" class="responsive-table">
+      <tr>
+        <td>
+          <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="center">
+                <!-- BULLETPROOF BUTTON -->
+                <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td align="center" style="padding-top: 32px; padding-bottom: 32px;" class="padding">
+                      <table role="presentation" border="0" cellspacing="0" cellpadding="0" class="mobile-button-container" width="100%">
+                        <tr>
+                          <td align="center" style="border-radius: 3px; color: #ffffff; padding: 12px" bgcolor="#2B71CF">
+                            <a href="{{link}}" target="_blank" style="font-size: 16px; width: 100%; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; display: inline-block;" class="mobile-button">Open in JustDo</a>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!--[if (gte mso 9)|(IE)]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
   </td>
 </tr>
 {{#if is_enrollment}}
 <tr>
-  <td valign="top" style="font-size:15px;padding-top:10px;font-family:'lato',Arial,sans-serif;color:#68757B;line-height:1.5em;">
-    <h4 style="margin:0;padding:0;font-size:16px;color:#333333;">Don't want to join this JustDo? please ignore this email.</h4>
+  <td bgcolor="#ffffff" align="center" style="padding: 15px;">
+    <!--[if (gte mso 9)|(IE)]>
+        <table role="presentation" align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+        <tr>
+        <td align="center" valign="top" width="500">
+        <![endif]-->
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="responsive-table">
+      <tr>
+        <td>
+          <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="left" style="padding: 12px 0 0 0; font-size: 16px; line-height: 25px; font-family: Helvetica, Arial, sans-serif; color: #68757B;" class="padding-copy">If you are not getting into the JustDo application after clicking the link above please copy the following url to your address bar:<br>
+              <p style="color:#2B71CF;text-decoration:none">{{link}}</p></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!--[if (gte mso 9)|(IE)]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
   </td>
 </tr>
 {{/if}}
+<!-- Footer -->
+<tr>
+  <td bgcolor="#ffffff" align="center" style="padding: 8px 0px 32px 0px;" class="padding-footer">
+    <!--[if (gte mso 9)|(IE)]>
+        <table role="presentation" align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+        <tr>
+        <td align="center" valign="top" width="500">
+        <![endif]-->
+    <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width: 500px;" class="responsive-table">
+      <tr>
+        <td align="center" style="font-size: 12px; line-height: 20px; font-family: Helvetica, Arial, sans-serif; color:#68757B;">
+            Having any issues? Reply to this email for support.<br>
+            {{#if original_recepient}}Deliver to: {{original_recepient}}{{/if}}<br>
+            Don't want to join this JustDo? please ignore this email.
+        </td>
+      </tr>
+    </table>
+    <!--[if (gte mso 9)|(IE)]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+  </td>
+</tr>

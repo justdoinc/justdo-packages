@@ -1,54 +1,173 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{{app_name}}</title>
-  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-  <style type="text/css" media="screen">
+  <title>JustDo</title>
+  <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <style type="text/css">
+    body,
+    table,
+    td,
+    a {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
 
+    /* Prevent WebKit and Windows mobile changing default text sizes */
+    table,
     td {
-      border-collapse: collapse;
-      vertical-align: top;
-      text-align: left;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
     }
 
-    .wrap {
-      width: 600px;
-      padding: 35px;
-      background-color: #ffffff;
+    /* Remove spacing between tables in Outlook 2007 and up */
+    img {
+      -ms-interpolation-mode: bicubic;
     }
 
-  </style>
-  <style type="text/css" media="only screen and (max-width: 600px)">
-    @media only screen and (max-width: 600px) {
-        table[class="wrap"] {
+    /* Allow smoother rendering of resized image in Internet Explorer */
+
+    /* RESET STYLES */
+    img {
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+    }
+
+    table {
+      border-collapse: collapse !important;
+    }
+
+    body {
+      height: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+    }
+
+    /* iOS BLUE LINKS */
+    a[x-apple-data-detectors] {
+      color: inherit !important;
+      text-decoration: none !important;
+      font-size: inherit !important;
+      font-family: inherit !important;
+      font-weight: inherit !important;
+      line-height: inherit !important;
+    }
+
+    /* MOBILE STYLES */
+    @media screen and (max-width: 525px) {
+
+      /* ALLOWS FOR FLUID TABLES */
+      .wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      /* ADJUSTS LAYOUT OF LOGO IMAGE */
+      .logo img {
+        margin: 0 auto !important;
+      }
+
+      /* USE THESE CLASSES TO HIDE CONTENT ON MOBILE */
+      .mobile-hide {
+        display: none !important;
+      }
+
+      .img-max {
+        max-width: 100% !important;
+        width: 100% !important;
+        height: auto !important;
+      }
+
+      /* FULL-WIDTH TABLES */
+      .responsive-table {
         width: 100% !important;
       }
+
+      /* UTILITY CLASSES FOR ADJUSTING PADDING ON MOBILE */
+      .padding {
+        padding: 5px 5% !important;
+      }
+
+      .padding-content {
+        padding: 10px 5% 25px 5% !important;
+      }
+
+
+      .padding-footer {
+        padding: 25px 5% !important;
+      }
+
+      .padding-meta {
+        padding: 30px 5% 0px 5% !important;
+        text-align: center;
+      }
+
+      .padding-copy {
+        padding: 10px 5% 10px 5% !important;
+        text-align: center;
+      }
+
+      .no-padding {
+        padding: 0 !important;
+      }
+
+      .section-padding {
+        padding: 50px 15px 50px 15px !important;
+      }
+
+      /* ADJUST BUTTONS ON MOBILE */
+      .mobile-button-container {
+        margin: 0 auto;
+        width: 100% !important;
+      }
+
+      .mobile-button {
+        padding: 0px !important;
+        border: 0 !important;
+        font-size: 16px !important;
+        display: block !important;
+      }
+
+    }
+
+    /* ANDROID CENTER FIX */
+    div[style*="margin: 16px 0;"] {
+      margin: 0 !important;
     }
   </style>
 </head>
 
-<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="#ffffff" style="margin:0;padding:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;">
-  <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="margin:0;padding:0;width:100%!important;">
+<body style="margin: 0 !important; padding: 0 !important;">
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
-      <td align="center" valign="top" width="100%">
-        <table cellpadding="0" cellspacing="0" width="600" class="wrap">
+      <td bgcolor="#ffffff" align="center">
+        <!--[if (gte mso 9)|(IE)]>
+            <table role="presentation" align="center" border="0" cellspacing="0" cellpadding="0" width="500">
+            <tr>
+            <td align="center" valign="top" width="500">
+            <![endif]-->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px;" class="wrapper">
           <tr>
-            <td valign="top">
-              <table cellpadding="0" cellspacing="0" style="width:100% !important;">
-                <tr>
-                 <td height="40" valign="top" style="border-bottom: 1px solid #F0F0F0;">
-                    <img width="100" src="{{logo_path}}" alt="logo">
-                  </td>
-                </tr>
-                {{{body}}}
-              </table>
+            <td align="left" valign="top" style="padding: 32px 0px 20px 0px; border-bottom: 1px solid #e6eaed;" class="logo">
+              <a href="https://justdo.com" target="_blank" style="text-decoration: none;">
+                <img alt="JustDo" src="{{logo_path}}" width="120" height="24" style="display: block; font-family: Helvetica, Arial, sans-serif; color: #2B71CF; font-weight: bold; font-size: 20px;" border="0">
+              </a>
             </td>
           </tr>
         </table>
+        <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
       </td>
     </tr>
+    {{{body}}}
   </table>
 </body>
 </html>
