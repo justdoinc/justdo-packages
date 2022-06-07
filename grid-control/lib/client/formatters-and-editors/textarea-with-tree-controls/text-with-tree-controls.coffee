@@ -56,6 +56,11 @@ getIsChecklistPluginEnabled = ->
 
   return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled(JustdoChecklist?.project_custom_feature_id)
 
+getIsMeetingsPluginEnabled = ->
+  custom_features = APP?.modules?.project_page?.curProj()?.getProjectConfiguration()?.custom_features
+
+  return custom_features.indexOf("meetings_module") > -1
+
 getMinimalSeqIdSpace = ->
   # Returns the maximum between 3 and the the digits count of the item
   # returned from getHeighestSeqId.
@@ -98,6 +103,7 @@ GridControl.installFormatter "textWithTreeControls",
     is_time_tracker_plugin_enabled_computation = null
     is_resource_planner_plugin_enabled_computation = null
     is_checklist_plugin_enabled_computation = null
+    is_meetings_plugin_enabled_computation = null
 
     Tracker.nonreactive =>
       # Run in an isolated reactivity scope
@@ -165,6 +171,17 @@ GridControl.installFormatter "textWithTreeControls",
 
         return
 
+      is_meetings_plugin_enabled_computation = Tracker.autorun =>
+        current_val = getIsMeetingsPluginEnabled.call(@) # Reactive
+        cached_val = @getCurrentColumnData("meetings_plugin_enabled") # non reactive
+
+        if current_val != cached_val
+          @setCurrentColumnData("meetings_plugin_enabled", current_val)
+
+          dep.changed()
+
+        return
+
     Tracker.onInvalidate ->
       highest_seqId_computation.stop()
       is_delivery_planner_plugin_enabled_computation.stop()
@@ -172,6 +189,7 @@ GridControl.installFormatter "textWithTreeControls",
       is_time_tracker_plugin_enabled_computation.stop()
       is_resource_planner_plugin_enabled_computation.stop()
       is_checklist_plugin_enabled_computation.stop()
+      is_meetings_plugin_enabled_computation.stop()
 
       return
 
@@ -261,13 +279,16 @@ GridControl.installFormatter "textWithTreeControls",
             <i class="fa fa-fw fa-play-circle-o jdt-play jdt-grid-icon slick-prevent-edit" title="Start working on this task" aria-hidden="true"></i>
         """
 
-    if @getCurrentColumnData("time_tracker_plugin_enabled") and not doc._type?
+    if @getCurrentColumnData("meetings_plugin_enabled") and not doc._type?
       if doc[MeetingsManagerPlugin.task_meetings_cache_field_id]?
         meeting_ids = new Set(doc[MeetingsManagerPlugin.task_meetings_cache_field_id])
 
         if meeting_ids.size > 0
-          tree_control += """<div class="icon-meetings-count lick-prevent-edit"><svg class="btn-meeting-menu jd-icon jd-c-pointer text-dark" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><use xlink:href="/layout/icons-feather-sprite.svg#jd-meetings"></use></svg> #{meeting_ids.size}</div>"""
-
+          tree_control += """
+            <svg class="task-meetings slick-prevent-edit jd-c-pointer text-dark">
+              <title>Meetings</title>
+              <use xlink:href="/layout/icons-feather-sprite.svg#jd-meetings" class="slick-prevent-edit"></use>
+            </svg>"""
 
     if @getCurrentColumnData("justdo_planning_utilities_plugin_enabled")
       if doc[JustdoPlanningUtilities?.is_milestone_pseudo_field_id] == "true"
