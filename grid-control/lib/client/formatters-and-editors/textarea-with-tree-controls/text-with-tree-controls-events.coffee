@@ -213,6 +213,16 @@ _.extend PACK.Formatters.textWithTreeControls,
         $task_pane_content.scrollTop($description_section_top_edge)
     }
     {
+      args: ['click', '.task-meetings']
+      handler: (e) ->
+        openTaskPaneAndSetTab("meetings-manager")
+
+        # Update task pane
+        Tracker.flush()
+
+        $(".task-pane-content").scrollTop(0)
+    }
+    {
       args: ['click', '.jdch-check']
       handler: (e) ->
         event_item = @getEventItem(e)
