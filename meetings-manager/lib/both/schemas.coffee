@@ -223,3 +223,5 @@ _.extend MeetingsManager.prototype,
         label: "Meetings Cache"
         type: [String]
         optional: true
+
+        grid_dependent_fields: ["title"]
