@@ -189,6 +189,7 @@ _.extend NaturalCollectionSubtreeSection.prototype,
     if not @rootItems? or not (root_items = @_rootItems())?
       # If @rootItems isn't set, or if root_items returned null
       current_node = tree_structure[@options.tree_root_item_id]
+      current_node_id = @options.tree_root_item_id
     else
       # If is a sub-trees section, check whether relative_path's top level item
       # is part of our @rootItems
@@ -228,6 +229,7 @@ _.extend NaturalCollectionSubtreeSection.prototype,
         return true
 
       current_node = tree_structure[top_level_item_id]
+      current_node_id = top_level_item_id
 
     if not current_node?
       return false
@@ -239,11 +241,29 @@ _.extend NaturalCollectionSubtreeSection.prototype,
       for order, item_id of current_node
         if item_id == cur_id
           next_node = tree_structure[cur_id]
+          next_node_id = cur_id
 
           break
+      
+      if not next_node?
+        # node not found in tree_structure, check if it exists in order_overridden_items
+        
+        # XXX From TY: this for loop can be optimized if we change the structure of order_overridden_items
+        # back to order_overridden_items[parent_id][order] instead of order_overridden_items['parent_id:order'].
+        #
+        # However, the chance we'll run into this for loop and the size of order_overridden_items is big
+        # is pretty low.
+        # 
+        # So, I'm leaving it as it for now.
+        for key, items of @grid_data._grid_data_core.order_overridden_items
+          if key.substring(0, key.indexOf(":")) == current_node_id and items.has(cur_id)
+            next_node = tree_structure[cur_id]
+            next_node_id = cur_id
+            break
 
       if next_node?
         current_node = next_node
+        current_node_id = next_node_id
       else if not(next_node is null) and path_array.length == 0
         # Do nothing, path is a leaf, while loop is done here
       else
