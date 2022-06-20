@@ -97,8 +97,6 @@ GridControl.installEditor "SelectorEditor",
 
       saveAndExitActiveEditor = @context.grid_control.saveAndExitActiveEditor()
 
-
-      # --------- Start
       if saveAndExitActiveEditor
         if @context.field_name == "state" and @doc.state == "done" and field_value != "done" # field_value is the original value pre-selection.
           $active_cell = $(@context.container)
@@ -119,17 +117,38 @@ GridControl.installEditor "SelectorEditor",
 
             if current_item?._id == @context.item?._id and current_item.state == "done" and "state" in update_fields
               Meteor.defer =>
+
+                # Salute animation
+
+                # $active_cell.append """
+                #   <div class="state-done-animation salute">
+                #     <lottie-player
+                #       background="transparent"
+                #       style="width: initial; height: 123px; position: absolute; top: -50px; right: 0"
+                #       src="/layout/lottie/task-done-salute.json"
+                #       speed="0.5"
+                #       autoplay="true">
+                #     </lottie-player>
+                #   </div>
+                # """
+
+                # Check animation
+
                 $active_cell.append """
-                  <div class="state-done-animation">
+                  <div class="state-done-animation check">
                     <lottie-player
                       background="transparent"
-                      style="width: initial; height: 123px; position: absolute; top: -50px; right: 0"
-                      src="/layout/lottie/task-done.json"
+                      style="width: 45px; height: 45px; position: absolute; top: -20px; right: -20px;"
+                      src="/layout/lottie/task-done-check.json"
                       speed="0.5"
                       autoplay="true">
                     </lottie-player>
                   </div>
                 """
+
+                setTimeout ->
+                  $(".state-done-animation").remove()
+                , 3000
 
                 removeUpdateDetector()
 
@@ -138,9 +157,6 @@ GridControl.installEditor "SelectorEditor",
             return
 
           @context.grid_control._grid_data.on "grid-item-changed", updateDetector
-
-
-      # --------- End
 
       return
 
