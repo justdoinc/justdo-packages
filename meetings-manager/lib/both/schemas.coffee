@@ -190,11 +190,6 @@ _.extend MeetingsManager.prototype,
         optional: true
         autoValue: ->
           return new Date()
-      
-      is_meetings_cache_migration_script_executed:
-        label: "Meetings Cache Migration Script Executed"
-        type: Boolean
-        optional: true
 
     @meetings_private_notes.attachSchema
       meeting_id:

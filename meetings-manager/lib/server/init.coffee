@@ -11,17 +11,19 @@ _.extend MeetingsManager.prototype,
 
       queryGenerator: ->
         query =
-          is_meetings_cache_migration_script_executed:
-            $ne: true
+          _id:
+            $gt: APP.justdo_system_records.getRecord("task-meetings-cache-field-migration-last-id")?.value or ""
 
         query_options = 
           fields:
             _id: 1
             task_id: 1
+          sort:
+            _id: 1
             
         return {query, query_options}
 
-      static_query: true
+      static_query: false
 
       mark_as_completed_upon_batches_exhaustion: true
 
@@ -32,12 +34,12 @@ _.extend MeetingsManager.prototype,
 
       batchProcessor: (cursor) ->
         num_processed = 0
-        meeting_task_ids = []
+        last_meeting_task_id = null
         task_ids = new Set()
 
         cursor.forEach (meeting_task) ->
           task_ids.add(meeting_task.task_id)
-          meeting_task_ids.push meeting_task._id
+          last_meeting_task_id = meeting_task._id
           num_processed += 1
           return
         
@@ -46,15 +48,10 @@ _.extend MeetingsManager.prototype,
 
           return
         
-        self.meetings_tasks.update
-          _id:
-            $in: meeting_task_ids
-        ,
-          $set:
-            is_meetings_cache_migration_script_executed: true
-        ,
-          multi: true
-        
+        APP.justdo_system_records.setRecord("task-meetings-cache-field-migration-last-id", 
+          value: last_meeting_task_id
+        )
+
         return num_processed
 
       terminationProcedures: ->
