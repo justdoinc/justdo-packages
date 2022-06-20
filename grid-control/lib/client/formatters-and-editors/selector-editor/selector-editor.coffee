@@ -94,7 +94,53 @@ GridControl.installEditor "SelectorEditor",
       $(@context.grid.getCanvasNode()).parent()
 
     @$select.on "change-request-processed", =>
-      @context.grid_control.saveAndExitActiveEditor()
+
+      saveAndExitActiveEditor = @context.grid_control.saveAndExitActiveEditor()
+
+
+      # --------- Start
+      if saveAndExitActiveEditor
+        if @context.field_name == "state" and @doc.state == "done" and field_value != "done" # field_value is the original value pre-selection.
+          $active_cell = $(@context.container)
+
+          removeUpdateDetector = =>
+            @context.grid_control._grid_data.off "grid-item-changed", updateDetector
+
+            return
+
+          max_before_give_up = 10
+          updateDetector = (item_row, update_fields) =>
+            if (max_before_give_up -= 1) < 0
+              removeUpdateDetector()
+
+              return
+
+            current_item = @context.grid_control._grid_data.getItem(item_row)
+
+            if current_item?._id == @context.item?._id and current_item.state == "done" and "state" in update_fields
+              Meteor.defer =>
+                $active_cell.append """
+                  <div class="state-done-animation">
+                    <lottie-player
+                      background="transparent"
+                      style="width: initial; height: 123px; position: absolute; top: -50px; right: 0"
+                      src="/layout/lottie/task-done.json"
+                      speed="0.5"
+                      autoplay="true">
+                    </lottie-player>
+                  </div>
+                """
+
+                removeUpdateDetector()
+
+                return
+
+            return
+
+          @context.grid_control._grid_data.on "grid-item-changed", updateDetector
+
+
+      # --------- End
 
       return
 
