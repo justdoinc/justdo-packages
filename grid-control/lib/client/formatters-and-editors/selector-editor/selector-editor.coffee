@@ -147,7 +147,7 @@ GridControl.installEditor "SelectorEditor",
                 """
 
                 setTimeout ->
-                  $(".state-done-animation").remove()
+                  $active_cell.find(".state-done-animation").remove()
                 , 3000
 
                 removeUpdateDetector()
