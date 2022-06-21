@@ -199,11 +199,10 @@ APP.executeAfterAppLibCode ->
         return []
 
       selected_owner.set selected_destination_doc.owner_id
-      owner_doc = APP.helpers.getUsersDocsByIds([selected_destination_doc.owner_id])
       tickets_queue_users = APP.collections.TasksAugmentedFields.findOne(selected_destination_doc._id, {fields: {users: 1}})?.users
-      other_users_docs = APP.helpers.getUsersDocsByIds(_.without(tickets_queue_users, selected_destination_doc.owner_id))
-
-      return owner_doc.concat(other_users_docs)
+      tickets_queue_users.push(selected_destination_doc.owner_id)
+      tickets_queue_users = _.uniq(tickets_queue_users)
+      return APP.helpers.getUsersDocsByIds(tickets_queue_users)
 
     return
 
