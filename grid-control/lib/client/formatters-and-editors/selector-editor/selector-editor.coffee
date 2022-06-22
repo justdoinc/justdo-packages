@@ -140,7 +140,7 @@ GridControl.installEditor "SelectorEditor",
                       background="transparent"
                       style="width: 45px; height: 45px; position: absolute; top: -20px; right: -20px;"
                       src="/layout/lottie/task-done-check.json"
-                      speed="0.5"
+                      speed="1"
                       autoplay="true">
                     </lottie-player>
                   </div>
@@ -148,7 +148,7 @@ GridControl.installEditor "SelectorEditor",
 
                 setTimeout ->
                   $active_cell.find(".state-done-animation").fadeOut()
-                , 3000
+                , 1500
 
                 removeUpdateDetector()
 
