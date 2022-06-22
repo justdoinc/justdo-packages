@@ -487,9 +487,6 @@
   width: auto
   text-align: left
   white-space: nowrap
-  overflow: hidden
-  border-right-style: solid
-  border-right-width: 4px
   position: absolute
   top: 4px
   left: 4px
@@ -502,6 +499,21 @@
   font-size: 12px
   padding: 4px
   user-select: none
+
+.calendar-user-name.is-proxy
+  opacity: 0.85
+  &::before
+    content: ""
+    position: absolute
+    width: auto
+    height: auto
+    border: 1px dashed #092835
+    top: -2px
+    left: -2px
+    right: -2px
+    bottom: -2px
+    border-radius: 5px
+
 
 .collapse_user
   cursor: zoom-out

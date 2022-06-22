@@ -1363,8 +1363,11 @@ Template.justdo_calendar_project_pane_user_view.helpers
     initials = Meteor.users.findOne(userId)?.profile?.first_name?.charAt(0) + Meteor.users.findOne(userId)?.profile?.last_name?.charAt(0)
     return initials
 
-  userName: (user_id) ->
-    return  JustdoHelpers.displayName(user_id)
+  userName: ->
+    return  JustdoHelpers.displayName(@_id)
+
+  userIsProxy: ->
+    return @is_proxy
 
   projectName: ->
     # if this is a project, no need to append anything
