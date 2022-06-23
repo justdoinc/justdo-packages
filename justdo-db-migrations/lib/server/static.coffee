@@ -234,7 +234,7 @@ JustdoDbMigrations.docExpiryMigration = (options) ->
     delay_between_batches,
     batch_size,
     collection, 
-    days_to_expire, 
+    ttl, 
     created_at_field,
     exec_interval,
     last_run_record_name
@@ -244,19 +244,22 @@ JustdoDbMigrations.docExpiryMigration = (options) ->
     starting_condition_interval_between_checks: exec_interval
 
     startingCondition: ->
+      # In the worst case, a server that took control in (exec_interval - 1) will expire documents in ((exec_interval * 2) - 1)
       last_run = APP.justdo_system_records.getRecord(last_run_record_name)?.value
 
-      return not last_run? or (moment() - last_run >= exec_interval)
+      return not last_run? or (new Date() - last_run >= exec_interval)
 
     delay_between_batches: delay_between_batches
     batch_size: batch_size
 
     collection: collection
 
+    exp_date = new Date()
+    exp_date.setMilliseconds(exp_date.getMilliseconds() + ttl)
     queryGenerator: ->
       query =
         [created_at_field]:
-          $lte: moment().add(-days_to_expire, 'days').toDate()
+          $lte: exp_date
 
       query_options =
         fields:
