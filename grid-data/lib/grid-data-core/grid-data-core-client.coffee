@@ -428,7 +428,7 @@ _.extend GridDataCore.prototype,
     # hence it doesn't have hasOwnProperty in its prototype.
     return Object.hasOwnProperty.call(@items_by_id, item_id)
 
-  _freezeItemByIdItemState: (item_id, item_value_to_freeze, ejson_clone_necessary=false) ->
+  _freezeItemByIdItemState: (item_id, item_value_to_freeze, ejson_clone_necessary=false, force_freeze_for_items_inserted_in_current_flush=false) ->
     # Grids are updated upon processing of stream of changes by grid-data-core, they aren't
     # updated as soon as changes arrive from the DDP.
     #
@@ -491,11 +491,14 @@ _.extend GridDataCore.prototype,
     # Returns nothing to avoid confusion in case that the item_value_to_freeze didn't replace an already
     # existing value.
 
-    if @_new_items_pending_insert[item_id]?
+    if not force_freeze_for_items_inserted_in_current_flush and @_new_items_pending_insert[item_id]?
       # Item for which a freeze request received is for an item we didn't process its insert yet,
       # hence we don't need freeze it. Read "ITEMS BY ID MAINTANANCE" comment under "after-set"
 
       return
+
+    if force_freeze_for_items_inserted_in_current_flush and item_id of @_new_items_pending_insert
+      delete @_new_items_pending_insert[item_id]
 
     if @itemsByIdHasOwnProperty(item_id)
       # Nothing to do, read comment above.
@@ -510,19 +513,12 @@ _.extend GridDataCore.prototype,
 
     return
 
-  _freezeItemByIdItemStateSelf: (item_id) ->
-    # A handy shortcut
-    if @_new_items_pending_insert[item_id]?
-      # Read comment under @_freezeItemByIdItemState() where we check for the same condition
-      # to understand why we ignore it.
-
-      return
-
+  _freezeItemByIdItemStateSelf: (item_id, force_freeze_for_items_inserted_in_current_flush) ->
     if not @items_by_id[item_id]?
       # Nothing to do.
       return
 
-    @_freezeItemByIdItemState(item_id, @items_by_id[item_id], true)
+    @_freezeItemByIdItemState(item_id, @items_by_id[item_id], true, force_freeze_for_items_inserted_in_current_flush)
 
     return
 
@@ -633,7 +629,12 @@ _.extend GridDataCore.prototype,
             return
 
           # ITEMS BY ID MAINTANANCE:
-          @_freezeItemByIdItemStateSelf(id)
+          if "parents" of fields_changes
+            # Unlike fields like title, if parents changed, we have to track the changes carefully even if 
+            # the item inserted in the current flush - to update the tree structure correctly.
+            @_freezeItemByIdItemStateSelf(id, true)
+          else
+            @_freezeItemByIdItemStateSelf(id)
 
           # The actual processing is happening under after-setDocFields
 
