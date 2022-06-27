@@ -262,7 +262,7 @@ JustdoDbMigrations.docExpiryMigration = (options) ->
 
     queryGenerator: ->
       exp_date = new Date()
-      exp_date.setMilliseconds(exp_date.getMilliseconds() + ttl)
+      exp_date.setMilliseconds(exp_date.getMilliseconds() - ttl)
       query =
         [created_at_field]:
           $lte: exp_date
