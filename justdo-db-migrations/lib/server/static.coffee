@@ -62,6 +62,12 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       type: SimpleSchema.Integer
       defaultValue: 1000 * 60
 
+    # NOT IMPLEMENTED
+    onBatchesExaustion:
+      label: "Relevant only if mark_as_completed_upon_batches_exhaustion is false, will run once we can't find more items to process, before beginning the 'delay_before_checking_for_new_batches'"
+      type: Function
+      optional: true
+
     # Default true
     mark_as_completed_upon_batches_exhaustion:
       label: "Should this migration mark itself as completed upon completion"
