@@ -244,7 +244,8 @@ JustdoDbMigrations.docExpiryMigration = (options) ->
     ttl, 
     created_at_field,
     exec_interval,
-    last_run_record_name
+    last_run_record_name, 
+    batchProcessor
   } = options
 
   common_batched_migration_options =
@@ -284,7 +285,7 @@ JustdoDbMigrations.docExpiryMigration = (options) ->
     initProcedures: ->
       return
 
-    batchProcessor: (cursor) ->
+    batchProcessor: batchProcessor or (cursor) ->
       expired_doc_ids = []
       cursor.forEach (doc) =>
         expired_doc_ids.push(doc._id)
