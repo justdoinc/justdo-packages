@@ -62,7 +62,6 @@ commonBatchedMigrationOptionsSchema = new SimpleSchema
       type: SimpleSchema.Integer
       defaultValue: 1000 * 60
 
-    # NOT IMPLEMENTED
     onBatchesExaustion:
       label: "Relevant only if mark_as_completed_upon_batches_exhaustion is false, will run once we can't find more items to process, before beginning the 'delay_before_checking_for_new_batches'"
       type: Function
@@ -180,6 +179,8 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
               return
 
             # @logProgress "Waiting #{options.delay_before_checking_for_new_batches / 1000}sec before checking for new batches"
+            if options.onBatchesExaustion?
+              options.onBatchesExaustion()
             batch_timeout = Meteor.setTimeout =>
               processBatchWrapper()
             , options.delay_before_checking_for_new_batches
@@ -293,11 +294,12 @@ JustdoDbMigrations.docExpiryMigration = (options) ->
         _id:
           $in: expired_doc_ids
 
+      return expired_doc_ids.length
+
+    onBatchesExaustion: ->
       APP.justdo_system_records.setRecord last_run_record_name,
         value: new Date()
-
-
-      return expired_doc_ids.length
+      return
 
     terminationProcedures: ->
       return
