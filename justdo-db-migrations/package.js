@@ -43,6 +43,8 @@ Package.onUse(function (api) {
   api.use("templating", client);
   api.use('fourseven:scss@3.2.0', client);
 
+  api.use("accounts-base@1.2.14", both);
+
   api.use("aldeed:simple-schema@1.5.3", both);
   api.use('aldeed:collection2@2.3.2', both);
   api.use("raix:eventemitter@0.1.1", both);
@@ -89,6 +91,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/core-migrations/add-parents2.coffee", server);
   api.addFiles("lib/server/core-migrations/check-parents2.coffee", server);
   api.addFiles("lib/server/core-migrations/maintain-parents2.coffee", server);
+  api.addFiles("lib/server/core-migrations/user-login-resume-expiry.coffee", server);
 
   api.export("JustdoDbMigrations", both);
 });
