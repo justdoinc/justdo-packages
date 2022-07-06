@@ -157,8 +157,12 @@ Template.meetings_dialog_task_subtask.events
         $unset: "pending_owner_id"
       return
     #else
-    JD.collections.Tasks.update _id: tpl.task_obj._id,
-      $set: {pending_owner_id: selected_user_id}
+    if APP.justdo_site_admins.isProxyUser(selected_user_id)
+      JD.collections.Tasks.update _id: tpl.task_obj._id,
+        $set: {owner_id: selected_user_id}
+    else
+      JD.collections.Tasks.update _id: tpl.task_obj._id,
+        $set: {pending_owner_id: selected_user_id}
     return
 
   "click .remove-sub-task": (e, tmpl) ->
