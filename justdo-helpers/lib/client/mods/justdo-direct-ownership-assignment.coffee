@@ -8,7 +8,7 @@ _.extend JustdoHelpers,
     if enable
       if not hook?
         hook = JD.collections.Tasks.before.update (user_id, doc, field_names, modifier, options) ->
-          if modifier.$set?.pending_owner_id != null
+          if modifier.$set?.pending_owner_id?
             modifier.$set.owner_id = modifier.$set?.pending_owner_id
             delete modifier.$set?.pending_owner_id
             return
