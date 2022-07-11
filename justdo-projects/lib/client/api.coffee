@@ -149,3 +149,31 @@ _.extend Projects.prototype,
     @projects_collection.update JD.activeJustdoId(), {$set: {custom_fields: sorted_custom_fields}}
 
     return
+  
+  createNewJustdoWithSameSettings: ->
+    APP.justdo_grid_views.subscribeGridViews({type: "justdo", justdo_id: JD.activeJustdoId()}, (err) ->
+      if err?
+        console.error(err)
+        return
+      
+      grid_views = APP.collections.GridViews.find
+        "hierarchy.justdo_id": JD.activeJustdoId()
+      ,
+        fields:
+          view: 1
+          title: 1
+          shared: 1
+      .fetch()
+
+      conf = APP.modules.project_page.curProj().getProjectConfiguration()
+      APP.projects.createNewProject({
+        conf: conf
+        grid_views: grid_views
+      }, (err, project_id) ->
+        if err?
+          JustdoSnackbar.show
+            text: err.reason
+          return
+        Router.go "project", {_id: project_id})
+    )
+    return

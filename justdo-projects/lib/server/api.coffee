@@ -222,11 +222,17 @@ _.extend Projects.prototype,
 
     check options,
       init_first_task: Match.Maybe(Boolean) # if true we'll create first task for the project automatically
+      conf: Match.Maybe(Object)
+      grid_views: Match.Maybe([Object])
 
     default_options =
       init_first_task: true
 
     options = _.extend default_options, options
+
+    conf = options.conf or {
+      custom_features: ["justdo_private_follow_up", "justdo_planning_utilities", "justdo_projects_health", "justdo_inbound_emails", "justdo_calendar_view", "justdo_clipboard_import", "justdo-item-duplicate-control", "meetings_module"]
+    }
 
     project = 
       title: @_default_project_name
@@ -236,12 +242,20 @@ _.extend Projects.prototype,
           is_admin: true
         }
       ]
-      conf:
-        custom_features: ["justdo_private_follow_up", "justdo_planning_utilities", "justdo_projects_health", "justdo_inbound_emails", "justdo_calendar_view", "justdo_clipboard_import", "justdo-item-duplicate-control", "meetings_module"]
+      conf: conf
       timezone: APP.justdo_delivery_planner.getUserTimeZone user_id
 
     project_id = @projects_collection.insert project
 
+    if options.grid_views?
+      for grid_view in options.grid_views
+        grid_view.type = "justdo"
+        grid_view.hierarchy = {
+          type: "justdo"
+          justdo_id: project_id
+        }
+        APP.justdo_grid_views.upsert(null, grid_view, user_id)
+    
     if options.init_first_task
       @skipMemberVerification =>
         first_doc = {
@@ -255,7 +269,6 @@ _.extend Projects.prototype,
           owner_id: user_id
         }
         @_grid_data_com.addRootChild first_doc, user_id
-
 
     return project_id
 

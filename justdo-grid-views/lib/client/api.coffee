@@ -28,7 +28,9 @@ _.extend JustdoGridViews.prototype,
     if not @grid_views_subscription?.ready()
       @unsubscribeGridViews()
       @grid_views_subscription = Meteor.subscribe "gridViews", options, cb
-
+    else
+      JustdoHelpers.callCb(cb)
+      
     # Subsequent calls will refresh the subscription duration
     if @grid_view_subscription_stop_delay_handler?
       Meteor.clearTimeout @grid_view_subscription_stop_delay_handler
