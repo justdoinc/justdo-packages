@@ -650,7 +650,7 @@ _.extend GridDataCore.prototype,
 
           # Take care of parents changes
           if "parents" of fields_changes
-            if not changed_field_old_values.parents?
+            if not changed_field_old_values? or not changed_field_old_values.parents?
               # COMMENT_REGARDING_SET_WITHOUT_PARENTS
               #
               # Updates for privated fields created this object before the actual task received
@@ -681,7 +681,7 @@ _.extend GridDataCore.prototype,
           return
 
         "before-bulkSet": (docs) =>
-          if @items_by_id.empty()
+          if _.isEmpty(@items_by_id)
             # If no items are in items_by_id, no chance that before-setDocFields below will be fired, hence nothing to do.
             #
             # (Optimizes, the initial load, avoids redundant extra loop over docs).
