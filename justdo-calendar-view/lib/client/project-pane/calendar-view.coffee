@@ -134,6 +134,9 @@ createDroppableWrapper = ->
           #if we return a task with pending owner to prev owner
           else if task_obj.owner_id == target_user_id and task_obj.pending_owner_id?
             set_param["pending_owner_id"] = null
+          else if APP.justdo_site_admins?.isProxyUser(target_user_id)
+            set_param["pending_owner_id"] = null
+            set_param["owner_id"] = target_user_id
           else
             set_param["pending_owner_id"] = target_user_id
 
