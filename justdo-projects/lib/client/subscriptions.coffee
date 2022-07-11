@@ -196,12 +196,11 @@ _.extend Projects.prototype,
 
                   console.error "FATAL: couldn't load project tasks - falling back to ddp based init-payload retrieval", err
 
-                  # It is important to show some indication so at least a developer will know this
-                  # is the cause for the slowness and not a slow internet connection (which might be
-                  # the first assumption)
-                  JustdoSnackbar.show
-                    text: "Loading this JustDo is taking a bit longer than usual, but it should be ready soon"
-                    duration: 7000
+                  bootbox.alert
+                    message: "<h3 class='mb-4'>Sorry for the interruption</h3><p>We failed to load JustDo. Please reload the page to try again.</p><p>Please contact support if the problem doesn't resolve.</p>"
+                    className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+                    closeButton: false
+
                 else
                   init_payload_sync_id = JustdoHelpers.datesMin(init_payload_sync_id, ...results) # No issue calling datesMin with init_payload_sync_id=undefined it will simply be ignored.
 
@@ -257,7 +256,8 @@ _.extend Projects.prototype,
                 # forever.
                 self.required_tasks_subscriptions_count[project_id] -= 1
 
-                subscription_handle = self.requireProjectTasksSubscription(project_id, failed) # If failed is true we will force the followup attempt to go through ddp
+                if not failed # We don't subscribe anymore in case of failure (we used to, as a way to fallback to DDP). See task: Task #14250: Prevent fallback to ddp when http load failed. Ddp fallback on big JustDos is so intensive that it can cause service disruption.
+                  subscription_handle = self.requireProjectTasksSubscription(project_id, failed) # If failed is true we will force the followup attempt to go through ddp
 
                 return # /finalizeProcedures
               
