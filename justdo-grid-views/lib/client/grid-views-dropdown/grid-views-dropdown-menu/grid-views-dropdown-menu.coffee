@@ -105,7 +105,16 @@ APP.executeAfterAppLibCode ->
           Meteor.defer ->
             $views_wrapper = $(".dropdown-items-wrapper")
             $views_wrapper.animate {scrollTop: $views_wrapper.prop("scrollHeight")}, 500
+
+            active_view = APP.collections.GridViews.find({"user_id": Meteor.userId()}, {"sort": {"created": -1}, "limit": 1}).fetch()
+            tpl.active_grid_view_rv.set active_view[0]
+            tpl.rename_grid_view_id_rv.set active_view[0]._id
+
+            Meteor.defer ->
+              tpl.$(".dropdown-item-rename-input").focus()
+
             return
+
         return
 
       return
