@@ -39,6 +39,22 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    tpl.updateView = ->
+      active_view = tpl.active_grid_view_rv.get()
+      current_view = APP.modules.project_page.gridControl().getView()
+      APP.justdo_grid_views.upsert active_view._id, {view: current_view}, (error) =>
+        if error
+          console.log error.reason
+        else
+          JustdoSnackbar.show
+            text: "#{active_view.title} has been updated to current"
+            duration: 5000
+            showDismissButton: true
+
+        return
+
+      return
+
     return
 
   Template.grid_views_dropdown_menu.onRendered ->
@@ -228,6 +244,11 @@ APP.executeAfterAppLibCode ->
           $(".dropdown-items-wrapper .grid-view-item").first().focus()
         else
           $dropdown_item.nextAll(".grid-view-item").first().focus()
+
+      return
+
+    "click .grid-view-update": (e, tpl) ->
+      tpl.updateView()
 
       return
 
