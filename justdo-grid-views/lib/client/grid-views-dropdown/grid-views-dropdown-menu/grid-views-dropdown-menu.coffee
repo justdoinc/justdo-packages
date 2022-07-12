@@ -127,7 +127,9 @@ APP.executeAfterAppLibCode ->
             tpl.rename_grid_view_id_rv.set active_view[0]._id
 
             Meteor.defer ->
-              tpl.$(".dropdown-item-rename-input").focus()
+              $rename_input = tpl.$(".dropdown-item-rename-input")
+              $rename_input[0].setSelectionRange(0, $rename_input.val().length)
+              $rename_input.focus()
 
             return
 
