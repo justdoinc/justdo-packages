@@ -170,15 +170,17 @@ _.extend JustdoFormulaFields.prototype,
           throw new Meteor.Error "option-not-supported", "At the moment we aren't supporting the false state of the option: skip_if_fields_are_missing"
         
         mathjs_eval_args = {}
-
+        eval_needed = false
         for field, symbol of field_to_symbol
           if not (val = doc[field])?
-            return null
+            mathjs_eval_args[symbol] = 0
+            continue
 
           if not _.isNumber(val)
             if _.isString(val)
               if _.isEmpty(val)
-                return null
+                  mathjs_eval_args[symbol] = 0
+                  continue
 
               val = parseFloat(val)
 
@@ -187,9 +189,13 @@ _.extend JustdoFormulaFields.prototype,
             else
               return null # we don't support other cases
 
+          eval_needed = true
           mathjs_eval_args[symbol] = val
 
-        return code.eval(mathjs_eval_args)
+        if eval_needed
+          return code.eval(mathjs_eval_args)
+        else
+          return null
 
     return ret
 

@@ -170,42 +170,25 @@ _.extend JustdoFormulaFields.prototype,
       return
     else
       # This one is actually partially using the FETCH_PROJECT_NON_REMOVED_TASKS_INDEX index
+      or_query = [{ # Find existing cases where a value is already set in the formula field
+        "#{custom_field_id}": {$ne: null}
+      }]
+
+      for dep_field in dependent_fields
+        or_query.push {
+          [dep_field]: {$ne: null}
+        }
+
       tasks_to_update_query =
         $and:
           [
             project_id: project_id,
             _raw_removed_date: null,
-            $or:
-              [
-                { # Find existing cases where a value is already set in the formula field
-                  "#{custom_field_id}": {$ne: null}
-                },
-                # Find all the docs that has all the involved fields set
-                @_createSameValueObjectFromArray(dependent_fields, {$ne: null})
-              ]
+            $or: or_query
           ]
-
+        
       fields_projection = _.extend @_createSameValueObjectFromArray(dependent_fields, 1), {_id: 1, "#{custom_field_id}": 1}
       @tasks_collection.find(tasks_to_update_query, {fields: fields_projection}).forEach (task_doc) ->
-        # If any of the dependent field isn't set, we need to clear the formula field for it
-        # (due to the way we structure the query, our formula field must be set here).
-        for dependent_field in dependent_fields
-          if dependent_field not of task_doc or not task_doc[dependent_field]?
-            update_query = {_id: task_doc._id}
-            update_modifier = {$set: {"#{custom_field_id}": null}}
-
-            APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(update_modifier)
-
-            APP.justdo_analytics.logMongoRawConnectionOp(self.tasks_collection._name, "update", update_query, update_modifier)
-            raw_tasks_collection.update update_query, update_modifier, Meteor.bindEnvironment (err) ->
-              if err?
-                console.error(err)
-
-              return
-
-            return # Here, by returning, we are breaking the loop and moving to the next doc.
-
-        # END for loop, by here we know we got all the dependent fields.
         try
           calculated_value = processed_formula.eval(task_doc)
         catch e
