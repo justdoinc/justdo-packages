@@ -11,6 +11,7 @@
 
   .dropdown-items-wrapper
     max-height: 320px
+    width: 360px
     overflow: auto
     padding: 0 12px
 
@@ -36,15 +37,23 @@
   .grid-view-item
     .dropdown-item-label
       justify-content: space-between
-      .dropdown-item-shared
-        font-size: 11px
-        text-transform: uppercase
-        font-weight: bold
-        padding-right: 4px
-        padding-left: 20px
-        display: flex
-        align-items: center
-        color: rgba(49, 69, 99, 0.6)
+      display: flex
+      min-width: 0
+      padding-right: 8px
+      span
+        text-overflow: ellipsis
+        white-space: nowrap
+        overflow: hidden
+
+    .dropdown-item-shared
+      font-size: 11px
+      text-transform: uppercase
+      font-weight: bold
+      padding-right: 4px
+      padding-left: 8px
+      display: flex
+      align-items: center
+      color: rgba(49, 69, 99, 0.6)
 
   .dropdown-item-rename
     display: flex

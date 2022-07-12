@@ -18,11 +18,11 @@
               </div>
             {{else}}
               <div class="dropdown-item-label">
-                {{title}}
-                {{#if shared}}
-                  <div class="dropdown-item-shared">shared</div>
-                {{/if}}
+                <span>{{title}}</span>
               </div>
+              {{#if shared}}
+                <div class="dropdown-item-shared">shared</div>
+              {{/if}}
             {{/if}}
             {{#if allowedToEdit}}
               <div class="dropdown-item-settings">
