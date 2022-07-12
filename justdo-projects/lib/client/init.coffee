@@ -13,4 +13,13 @@ _.extend Projects.prototype,
     @initEncounteredUsersIdsTracker()
     @initEncounteredUsersIdsPublicBasicUsersInfoFetcher()
 
+    APP.executeAfterAppClientCode ->
+      console.log 'register'
+      APP.modules.project_page.project_config_ui.registerConfigTemplate "create-new-justdo-with-same-settings",
+        section: "create-new-justdo-with-same-settings"
+        template: "create_new_justdo_with_same_settings"
+        priority: 1001
+
+      return
+
     return
