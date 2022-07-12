@@ -1,8 +1,10 @@
 <template name="grid_views_dropdown_menu">
   <div class="grid-views-dropdown-menu-wrapper">
-    <div class="grid-views-search-wrapper d-flex align-items-center">
-      <input type="text" class="grid-views-search-input form-control form-control-sm" placeholder="Search views">
-    </div>
+    {{#if gridViews}}
+      <div class="grid-views-search-wrapper d-flex align-items-center">
+        <input type="text" class="grid-views-search-input form-control form-control-sm" placeholder="Search views">
+      </div>
+    {{/if}}
     <div class="dropdown-items-wrapper">
       {{#if gridViews}}
         {{#each gridViews}}
