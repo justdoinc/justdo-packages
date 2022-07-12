@@ -49,7 +49,6 @@ APP.executeAfterAppLibCode ->
           JustdoSnackbar.show
             text: "#{active_view.title} has been updated to current"
             duration: 5000
-            showDismissButton: true
 
         return
 
