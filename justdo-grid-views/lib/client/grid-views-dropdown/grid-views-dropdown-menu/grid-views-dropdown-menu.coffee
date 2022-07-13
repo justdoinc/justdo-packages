@@ -42,6 +42,8 @@ APP.executeAfterAppLibCode ->
     tpl.updateView = ->
       active_view = tpl.active_grid_view_rv.get()
       current_view = APP.modules.project_page.gridControl().getView()
+      roll_back_view = view = EJSON.parse active_view.view
+
       APP.justdo_grid_views.upsert active_view._id, {view: current_view}, (error) =>
         if error
           console.log error.reason
@@ -49,6 +51,14 @@ APP.executeAfterAppLibCode ->
           JustdoSnackbar.show
             text: "#{active_view.title} has been updated to current"
             duration: 5000
+            actionText: "Undo"
+            showDismissButton: true
+            onActionClick: =>
+              APP.justdo_grid_views.upsert active_view._id, {view: roll_back_view}
+
+              JustdoSnackbar.close()
+
+              return
 
         return
 
