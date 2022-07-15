@@ -162,6 +162,16 @@ _.extend Projects.prototype,
               console.error "Failed to load pagination recommendation from countItems, avoiding pagination"
               pagination_recommendation = {use: false}
 
+            if env.SUPPORT_JUSTDO_LOAD_PAGINATION isnt "true"
+              # At first, I (Daniel) hoped to provide pagination to all envs, it truned out to be too
+              # resource intensive on the server side due to the multi-connections that are formed straining
+              # requests from other clients to the point of DOS.
+              #
+              # As such it became a feature that is disabled by default and can be enabled in environments
+              # where the /ddp/pre-ready-payload/ endpoint can be deligated to a server whose sole responsibility
+              # is to handle /ddp/pre-ready-payload/ http requests.
+              pagination_recommendation = {use: false}
+
             if pagination_recommendation.use is false or pagination_recommendation.total_pages <= 1
               total_pages = 1
             else
