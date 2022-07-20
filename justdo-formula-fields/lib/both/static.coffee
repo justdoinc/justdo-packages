@@ -16,7 +16,7 @@ _.extend JustdoFormulaFields,
 
   max_allowed_chars_in_processed_mathjs_formula: 50
 
-  max_allowed_fields_placeholders: 5
+  max_allowed_fields_placeholders: 15
 
 # Note, we don't support subdocuments, so . isn't part of the allowed symbols
 # IMPORTANT!!! DO NOT INCLUDE {} in the pattern!
