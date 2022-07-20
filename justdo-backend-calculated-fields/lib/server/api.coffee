@@ -3,7 +3,7 @@ consequent_tasks_counter_prop_name_ddp_connection = "backend_calc_field_conseque
 # Subsequent task changes are series of task changes that the time passed between each
 # one of them isn't longer than time_since_last_call_to_reset_subsequent_tasks_counter_ms
 time_since_last_call_to_reset_subsequent_tasks_counter_ms = 1 * 1000
-max_permitted_handled_subsequent_task_changes_per_connection = 50
+max_permitted_handled_subsequent_task_changes_per_connection = JustdoClipboardImport.import_limit
 updateSubsequentTaskLimiterAndThrowIfLimitExceeded = ->
   op_mem_space = JustdoHelpers.getDdpConnectionObjectOrTickObject()
 
