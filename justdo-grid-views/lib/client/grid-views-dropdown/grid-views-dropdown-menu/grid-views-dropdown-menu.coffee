@@ -1,3 +1,5 @@
+cancel_down = false
+
 APP.executeAfterAppLibCode ->
   share.GridViewsDropdown = JustdoHelpers.generateNewTemplateDropdown "grid-views-dropdown-menu", "grid_views_dropdown_menu",
     custom_bound_element_options:
@@ -227,8 +229,20 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .dropdown-item-rename-save": (e, tpl) ->
-      tpl.updateViewTitle()
+    "click .dropdown-item-rename-save, focusout .dropdown-item-rename-input": (e, tpl) ->
+      if not cancel_down
+        tpl.updateViewTitle()
+
+      return
+
+    "mousedown .dropdown-item-rename-cancel": (e, tpl) ->
+      cancel_down = true
+
+      return
+
+    "mouseup .dropdown-item-rename-cancel": (e, tpl) ->
+      cancel_down = false
+      
 
       return
 
