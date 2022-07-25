@@ -306,3 +306,75 @@ JustdoDbMigrations.docExpiryMigration = (options) ->
       return
 
   return JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
+
+JustdoDbMigrations.perpetualMaintainer = (options) ->
+  batch_processor_ran = false
+  margin_of_safety_if_batch_processor_didnt_run = Math.min(2 * 1000, options.exec_interval) # The minimum between the full interval and 2 seconds.
+
+  common_batched_migration_options =
+    delay_between_batches: options.delay_between_batches
+    batch_size: options.batch_size
+
+    collection: options.collection
+
+    queryGenerator: ->
+      query = options.queryGenerator()
+
+      if not (last_checkpoint = APP.justdo_system_records.getRecord(options.checkpoint_record_name)?.value)?
+        last_checkpoint = JustdoHelpers.getEpochDate()
+
+      query[options.updated_at_field] =
+        $gte: last_checkpoint
+
+      query_options =
+        fields:
+          _id: 1
+          [options.updated_at_field]: 1
+
+        sort:
+          [options.updated_at_field]: 1
+
+      if options.custom_fields_to_fetch?
+        _.extend query_options.fields, options.custom_fields_to_fetch
+
+      return {query, query_options}
+
+    static_query: false
+
+    mark_as_completed_upon_batches_exhaustion: false
+    delay_before_checking_for_new_batches: options.exec_interval
+
+    batchProcessor: (cursor) ->
+      batch_processor_ran = true
+      checkpoint_val = null
+      num_processed = 0
+
+      cursor.forEach (doc) =>
+        num_processed += 1
+        checkpoint_val = doc[options.updated_at_field]
+
+        options.batchProcessorForEach(doc)
+
+        return
+
+      if checkpoint_val?
+        APP.justdo_system_records.setRecord options.checkpoint_record_name,
+          value: checkpoint_val
+
+      return num_processed
+
+    onBatchesExaustion: ->
+      if batch_processor_ran
+        batch_processor_ran = false
+      else
+        # If we didn't find any document to process, just set the checkpoint to NOW - margin_of_safety_if_batch_processor_didnt_run
+        # to reduce the amount of docs scanned next time.
+
+        default_checkpoint = JustdoHelpers.getDateMsOffset(-1 * margin_of_safety_if_batch_processor_didnt_run)
+
+        APP.justdo_system_records.setRecord options.checkpoint_record_name,
+          value: default_checkpoint
+
+      return
+
+  return JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)

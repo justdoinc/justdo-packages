@@ -1,5 +1,4 @@
-getEpochDate = ->
-  return new Date(0)
+getEpochDate = JustdoHelpers.getEpochDate
 
 getDatePlusOneMs = (date) ->
   # Will use epoch if date is undefined/null or isn't a date
