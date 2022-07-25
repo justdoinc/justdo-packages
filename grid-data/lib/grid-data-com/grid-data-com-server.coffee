@@ -223,6 +223,11 @@ _.extend GridDataCom.prototype,
       if options.require_login and not options.exposed_to_guests
         query.users = @userId
 
+      query._raw_removed_date = null # This is necessary for extreme rare cases identified that caused the task
+                                     # to be removed but the users field to be non-empty (not sure exactly what
+                                     # causes this edge case, perhaps, a remove of a task when a big batch users
+                                     # updates is being executed). Related to #14294
+
       middleware = options.middleware
       pub_customization_safe_options = undefined
       pub_customization_restricted_options = undefined
