@@ -1,4 +1,9 @@
 _.extend JustdoHelpers,
+  getDateTimestamp: (date) -> date.valueOf()
+
+  getEpochDate: ->
+    return new Date(0)
+
   getDateMsOffset: (ms_offset, date) ->
     # Returns a new date offsetted ms_offset milliseconds from date
     # if date isn't provided, we'll use the current date
@@ -8,7 +13,7 @@ _.extend JustdoHelpers,
 
     date = new Date(date)
 
-    date.setMilliseconds(date.getMilliseconds() + ms_offset)
+    date.setMilliseconds(date.getMilliseconds() + (ms_offset or 0))
 
     return date
 
