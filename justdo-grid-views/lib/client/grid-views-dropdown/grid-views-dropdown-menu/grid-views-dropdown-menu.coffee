@@ -52,7 +52,7 @@ APP.executeAfterAppLibCode ->
         else
           JustdoSnackbar.show
             text: "#{active_view.title} has been updated to current"
-            duration: 5000
+            duration: 15000
             actionText: "Undo"
             showDismissButton: true
             onActionClick: =>
