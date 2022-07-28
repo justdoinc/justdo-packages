@@ -8,7 +8,7 @@ APP.justdo_db_migrations.registerMigrationScript migration_name, JustdoDbMigrati
   delayed_updated_at_field: 60 * 1000
   queryGenerator: ->
     return {"jci:temp_import_id" : {$ne: null}}
-  exec_interval: 5 * 1000 # 5 seconds
+  exec_interval: 2 * 60 * 1000 # 2 mins, DON'T SET THIS TO BELOW delayed_updated_at_field
   checkpoint_record_name: "#{migration_name}-checkpoint"
   custom_fields_to_fetch: {}
   batchProcessorForEach: (doc) ->

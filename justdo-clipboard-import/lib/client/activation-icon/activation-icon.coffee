@@ -643,7 +643,6 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       importDependencies()
       importOwners()
       cleanUpDuplicatedManualValue()
-      clearupTempImportId()
     catch err
       showErrorInSnackbarAndRevertState
         dialog_state: modal_data.dialog_state
@@ -653,6 +652,8 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       undoImport()
 
       return false
+    # finally
+    #   clearupTempImportId()
 
     bootbox.hideAll()
     JustdoSnackbar.show

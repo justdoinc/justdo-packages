@@ -326,6 +326,11 @@ JustdoDbMigrations.perpetualMaintainer = (options) ->
       query[options.updated_at_field] =
         $gte: last_checkpoint
 
+      if (delayed_updated_at_field = options.delayed_updated_at_field)?
+        lt_time = new Date()
+        lt_time.setMilliseconds(-delayed_updated_at_field)
+        query[options.updated_at_field].$lt = lt_time
+      
       query_options =
         fields:
           _id: 1
