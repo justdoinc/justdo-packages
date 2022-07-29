@@ -652,8 +652,8 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       undoImport()
 
       return false
-    # finally
-    #   clearupTempImportId()
+    finally
+      clearupTempImportId()
 
     bootbox.hideAll()
     JustdoSnackbar.show
