@@ -311,6 +311,9 @@ JustdoDbMigrations.perpetualMaintainer = (options) ->
   batch_processor_ran = false
   margin_of_safety_if_batch_processor_didnt_run = Math.min(2 * 1000, options.exec_interval) # The minimum between the full interval and 2 seconds.
 
+  if (delayed_updated_at_field = options.delayed_updated_at_field)?
+    margin_of_safety_if_batch_processor_didnt_run += delayed_updated_at_field
+
   common_batched_migration_options =
     delay_between_batches: options.delay_between_batches
     batch_size: options.batch_size
@@ -327,8 +330,7 @@ JustdoDbMigrations.perpetualMaintainer = (options) ->
         $gte: last_checkpoint
 
       if (delayed_updated_at_field = options.delayed_updated_at_field)?
-        lt_time = new Date()
-        lt_time.setMilliseconds(-delayed_updated_at_field)
+        lt_time = JustdoHelpers.getDateMsOffset(-1 * delayed_updated_at_field)
         query[options.updated_at_field].$lt = lt_time
       
       query_options =

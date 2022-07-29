@@ -1,14 +1,14 @@
 migration_name = "remove-residual-temp-import-id"
 
 APP.justdo_db_migrations.registerMigrationScript migration_name, JustdoDbMigrations.perpetualMaintainer
-  delay_between_batches: 15000
-  batch_size: 1000
+  delay_between_batches: 3000
+  batch_size: 100
   collection: APP.collections.Tasks
   updated_at_field: "_raw_updated_date"
-  delayed_updated_at_field: 60 * 1000
+  delayed_updated_at_field: 1000 * 60 * 2 # Delay to avoid interrupting on-going active clipboard imports.
   queryGenerator: ->
     return {"jci:temp_import_id" : {$ne: null}}
-  exec_interval: 2 * 60 * 1000 # 2 mins, DON'T SET THIS TO BELOW delayed_updated_at_field
+  exec_interval: 5 * 1000
   checkpoint_record_name: "#{migration_name}-checkpoint"
   custom_fields_to_fetch: {}
   batchProcessorForEach: (doc) ->
