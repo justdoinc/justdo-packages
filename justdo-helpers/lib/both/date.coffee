@@ -1,5 +1,5 @@
 _.extend JustdoHelpers,
-  getDateTimestamp: (date) -> date.valueOf()
+  getDateTimestamp: (date) -> (date or (new Date())).valueOf()
 
   getEpochDate: ->
     return new Date(0)
