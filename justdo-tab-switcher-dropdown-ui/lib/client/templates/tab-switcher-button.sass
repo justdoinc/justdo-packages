@@ -25,12 +25,14 @@
       margin-right: -4px
 
 .tab-switcher-dropdown-wrapper
-  .dropdown-item-label
-    max-width: 320px
-    overflow: hidden
-    white-space: nowrap
-    text-overflow: ellipsis
+  .dropdown-item
+    white-space: normal
+    &:active
+      background-color: white
+      color: #212529
 
-  .dropdown-item:active
-    background-color: white
-    color: #212529
+    .jd-icon-dropdown
+      margin-top: 2px
+
+    .dropdown-item-label
+      width: 320px
