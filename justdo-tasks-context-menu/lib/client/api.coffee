@@ -58,7 +58,9 @@ _.extend JustdoTasksContextMenu.prototype,
     return
 
   sectionsItemsSource: (section_id, nested_section_item, ignore_listing_condition) ->
-    nested_section_def = _.find this.getMainSections(ignore_listing_condition), (section_def) -> section_def.id == section_id
+    if not (nested_section_def = _.find this.getMainSections(ignore_listing_condition), (section_def) -> section_def.id == section_id)?
+      console.info "Couldn't identify nested_section_def"
+      return
 
     nested_section_items = nested_section_def.itemsSource("default", ignore_listing_condition)
 
