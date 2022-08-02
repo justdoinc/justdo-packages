@@ -395,6 +395,7 @@ _.extend GridDataCom.prototype,
           self._setPrivateDataDocsFreezeState(removed_users, [doc._id], true)
 
         console.warn "A task `users' field been updated using a direct call to the collections .update() method, it is highly recommanded to use the tasks_bulkUpdate ddp method or GridDataCom's bulkUpdate api, as they employ a far more efficient procedure."
+        console.trace()
 
       return
 
