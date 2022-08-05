@@ -46,6 +46,7 @@ Package.onUse(function (api) {
   api.add_files("lib/both/lorem-ipsum.coffee", both);
   api.add_files("lib/both/json.coffee", both);
   api.add_files("lib/both/poc-permitted-domains.coffee", both);
+  api.add_files("lib/both/pointed-limited-stack.coffee", both);
   api.add_files("lib/both/same-tick-cache.coffee", both);
   api.add_files("lib/both/same-tick-stats.coffee", both);
   api.add_files("lib/both/strings.coffee", both);
