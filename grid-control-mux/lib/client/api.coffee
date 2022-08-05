@@ -387,6 +387,14 @@ _.extend GridControlMux.prototype,
 
     @_grid_controls_tabs_dependency.changed()
 
+    grid_control.on "section-state-var-set", (section_id, var_name, new_val, regard_as_default_value) =>
+      @emit "section-state-var-set", tab, section_id, var_name, new_val, regard_as_default_value
+      return
+
+    grid_control.on "row-activated", (row, cell, scroll_into_view, resulted_from_smart_guess) =>
+      @emit "row-activated", tab, row, cell, scroll_into_view, resulted_from_smart_guess
+      return
+
     grid_control.once "ready", =>
 
       if (Tracker.nonreactive => @isItemsSubscriptionReady())
@@ -770,7 +778,7 @@ _.extend GridControlMux.prototype,
     else
       return gc._grid_data.exportSectionsState()
 
-  setActiveGridControlSectionsState: (new_sections_state, replace) ->
+  setActiveGridControlSectionsState: (new_sections_state, replace, regard_as_default_value=false) ->
     # Updates the state of the current grid's sections
     # state object
     #
@@ -782,7 +790,7 @@ _.extend GridControlMux.prototype,
 
     gc = null
     setSectionsState = =>
-      gc._grid_data.setSectionsState(new_sections_state)
+      gc._grid_data.setSectionsState(new_sections_state, replace, regard_as_default_value)
 
       @logger.debug("setActiveGridControlSectionsState: updated")
 
@@ -813,7 +821,7 @@ _.extend GridControlMux.prototype,
                     # state (e.g. print) from delay disable/enable
                     # mode update until flush.
 
-    @setActiveGridControlSectionsState(sections_state, true) # true is to replace any existing section state vars
+    @setActiveGridControlSectionsState(sections_state, true, true) # true is to replace any existing section state vars
 
     return
 

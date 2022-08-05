@@ -172,7 +172,7 @@ _.extend GridData.prototype,
   stateVarExist: (section_id, var_name) ->
     return @_sections_state[section_id]?[var_name]?
 
-  setStateVar: (section_id, var_name, new_val) ->
+  setStateVar: (section_id, var_name, new_val, regard_as_default_value=false) ->
     # Use section_id = "global" for global sections state
     #
     # All state vars are reactive vars that uses the default
@@ -231,12 +231,12 @@ _.extend GridData.prototype,
     else
       @_sections_state[section_id][var_name].set(new_val)
 
-    @emit "section-state-var-set", section_id, var_name
+    @emit "section-state-var-set", section_id, var_name, new_val, regard_as_default_value
 
     return
 
-  unsetStateVar: (section_id, var_name) ->
-    @setStateVar section_id, var_name, null
+  unsetStateVar: (section_id, var_name, regard_as_default_value=false) ->
+    @setStateVar section_id, var_name, null, regard_as_default_value
 
   getStateVar: (section_id, var_name, default_val) ->
     # If var_name doesn't exist, we init it with default_val
@@ -257,7 +257,7 @@ _.extend GridData.prototype,
 
         return undefined
       else # default_val provided, use it as init value
-        @setStateVar(section_id, var_name, default_val)
+        @setStateVar(section_id, var_name, default_val, true)
 
     return @_sections_state[section_id][var_name].get()
 
@@ -288,7 +288,7 @@ _.extend GridData.prototype,
 
     return export_obj
 
-  setSectionsState: (state_obj, replace=true) ->
+  setSectionsState: (state_obj, replace=true, regard_as_default_value=false) ->
     # If replace is true, the new_sections_state will be used instead of the
     # current sections state.
     # If replace is false, only listed sections state vars will
@@ -302,12 +302,12 @@ _.extend GridData.prototype,
           if not state_obj[section_id]?[var_name]?
             # If a current section var is no longer listed
             # in the new state_obj, remove it.
-            @unsetStateVar section_id, var_name
+            @unsetStateVar section_id, var_name, regard_as_default_value
 
     # Update new sections state values
     for section_id, section_state of state_obj
       for var_name, var_value of section_state
-        @setStateVar section_id, var_name, var_value
+        @setStateVar section_id, var_name, var_value, regard_as_default_value
 
     return
 

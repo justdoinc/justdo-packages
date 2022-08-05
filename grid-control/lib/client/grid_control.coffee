@@ -354,6 +354,10 @@ _.extend GridControl.prototype,
     @_grid_data.on "edit-failed", (err) =>
       console.error @_error "edit-failed", err
 
+    @_grid_data.on "section-state-var-set", (section_id, var_name, new_val, regard_as_default_value) =>
+      @emit "section-state-var-set", section_id, var_name, new_val, regard_as_default_value
+      return
+
     @_grid.onCellChange.subscribe (e, edit_req) =>
       {new_value, row, cell} = edit_req
 
@@ -1661,8 +1665,12 @@ _.extend GridControl.prototype,
   #
   # activate row/path
   #
-  activateRow: (row, cell = 0, scroll_into_view = true) ->
+  activateRow: (row, cell = 0, scroll_into_view = true, resulted_from_smart_guess=false) ->
     @_grid.setActiveCell(row, cell, scroll_into_view)
+
+    @emit "row-activated", row, cell, scroll_into_view, resulted_from_smart_guess
+
+    return
 
   activatePath: (path, cell=0, options) ->
     if not path?
@@ -1688,6 +1696,8 @@ _.extend GridControl.prototype,
     # Return true if path activated successfuly, false otherwise
     path = GridData.helpers.normalizePath path
 
+    resulted_from_smart_guess = false
+
     if options.smart_guess and not @_grid_data.pathExist path
       @logger.debug "activatePath: path `#{path}` doesn't exist, attempting smart-guess"
 
@@ -1695,6 +1705,8 @@ _.extend GridControl.prototype,
 
       if (alt_path = @_grid_data.getCollectionItemIdPath(potential_item_id))?
         @logger.debug "activatePath: smart-guess: alternative path found #{alt_path}"
+
+        resulted_from_smart_guess = true
 
         path = alt_path
       else
@@ -1730,7 +1742,7 @@ _.extend GridControl.prototype,
       else
         row = @_grid_data.getPathGridTreeIndex(path)
 
-        @activateRow(row, cell, options.scroll_into_view)
+        @activateRow(row, cell, options.scroll_into_view, resulted_from_smart_guess)
     else
       @logger.debug "activatePath: path `#{path}` doesn't exist"
 
