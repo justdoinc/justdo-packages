@@ -1,6 +1,10 @@
 _.extend JustdoHelpers,
   getDateTimestamp: (date) -> (date or (new Date())).valueOf()
 
+  datesMsDiff: (date1, date2)->
+    # Returns ms value of: date1 - date2
+    return JustdoHelpers.getDateTimestamp(date1) - JustdoHelpers.getDateTimestamp(date2)
+
   getEpochDate: ->
     return new Date(0)
 
