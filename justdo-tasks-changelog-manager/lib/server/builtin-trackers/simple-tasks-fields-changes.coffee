@@ -77,6 +77,14 @@ _.extend PACK.builtin_trackers,
       task_id = doc._id
       project_id = doc.project_id
 
+      # This is a temporary bandage to a data corruption edge case detected starting from v3.128.23
+      # See #14388 , #14387
+      for field in ["project_id", "owner_id", "pending_owner_id", "jgg:is_milestone", "end_date", "start_date"]
+        if modifier?.$set?[field] is "1"
+          console.log {userId, doc, fieldNames, modifier, options}
+          console.trace()
+          throw new Error("Data corruption scenario detected!")
+
       if modifier.$set?
         for field, new_value of modifier.$set
           if not isTrackedField(project_id, field)
