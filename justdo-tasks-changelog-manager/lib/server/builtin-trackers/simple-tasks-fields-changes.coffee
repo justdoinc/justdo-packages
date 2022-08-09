@@ -79,6 +79,14 @@ _.extend PACK.builtin_trackers,
 
       # This is a temporary bandage to a data corruption edge case detected starting from v3.128.23
       # See #14388 , #14387
+      #
+      # The root cause fixed in commit:
+      # https://github.com/justdoinc/justdo-internal-packages/commit/6e6179b606de9508f1540182e3674da152932d5e
+      #
+      # To be on the very safe side, we keep the bandage in place for a while.
+      #
+      # Assuming non of the following logs will show in the next few weeks, we will remove the bandage
+      # from here.
       for field in ["project_id", "owner_id", "pending_owner_id", "jgg:is_milestone", "end_date", "start_date"]
         if modifier?.$set?[field] is "1"
           console.log {userId, doc, fieldNames, modifier, options}
