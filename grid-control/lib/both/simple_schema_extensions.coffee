@@ -32,6 +32,19 @@ SimpleSchema.extendOptions
   # If undefined considered as false
   grid_editable_column: Match.Optional(Boolean)
 
+  # user_editable_column:
+  #
+  # AT THE MOMENT WE ONLY LOG WARNINGS AND NOT REJECTING UPDATES THAT EDIT user_editable_column: false
+  #
+  # If unset, considered same as `grid_editable_column`.
+  #
+  # If set to false attempts to edit will be rejected by the server.
+  #
+  # Use for fields that aren't showing in the grid, but are still editable by the users
+  # for example, the Risk Contingency plan that is editable only from the task pane.
+  # Another example is the description field.
+  user_editable_column: Match.Optional(Boolean)
+
   # grid_pre_grid_control_column:
   #
   # By default grid control requires the first visible column to have a formatter

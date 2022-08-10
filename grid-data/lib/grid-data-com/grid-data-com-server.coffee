@@ -330,7 +330,18 @@ _.extend GridDataCom.prototype,
         # Keep the following for testing, helps to test
         # behavior on update failure
         # return false
-        collection.isUserBelongToItem(doc, userId)
+        if not collection.isUserBelongToItem(doc, userId)
+          return false
+
+        schema = JustdoHelpers.getCollectionSchema(collection)._schema
+        for field_id in fieldNames
+          if schema[field_id]?.grid_editable_column is false and schema[field_id]?.user_editable_column is false
+            console.warn "grid-data-com: a request to edit the field #{field_id} received, but it is not a grid_editable_column and not a user_editable_column"
+            # Once you remove the warning and reject the updates, remove the comment from 
+            # "AT THE MOMENT WE ONLY LOG WARNINGS AND NOT REJECTING UPDATES THAT EDIT user_editable_column: false"
+            # grid-control/lib/both/simple_schema_extensions.coffee
+
+        return true
 
   initDefaultCollectionMethods: ->
     self = @
