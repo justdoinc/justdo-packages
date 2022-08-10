@@ -52,6 +52,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         exclude_from_tasks_grid_pub: true
 
         grid_editable_column: false
+        user_editable_column: true
         grid_visible_column: false
 
         type: String
@@ -61,6 +62,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       description_lock:
         grid_editable_column: false
+        user_editable_column: true
         grid_visible_column: false
 
         type: Object
@@ -252,6 +254,9 @@ _.extend JustdoTasksCollectionsManager.prototype,
         optional: true
 
         autoValue: ->
+          if Meteor.isClient
+            return
+
           @unset() # Ignore any data requested by the user, only if we return non-undefined
                    # value it will be set
 
@@ -698,6 +703,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         label: "Updated"
 
         grid_editable_column: false
+        user_editable_column: true # Not really user editable field, once a allow/deny update received with it, we set it to the server time below
         grid_visible_column: true
         grid_default_grid_view: false
         grid_default_width: 160
