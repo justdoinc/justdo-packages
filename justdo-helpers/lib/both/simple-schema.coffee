@@ -232,6 +232,9 @@ _.extend JustdoHelpers,
       allow_empty_string = false
 
     return ->
+      if Meteor.isClient
+        return
+      
       # Allow changes if set from trusted source
       if allow_trusted_source_forced_val and @isFromTrustedCode and @isSet
         return
