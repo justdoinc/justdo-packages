@@ -223,6 +223,7 @@ _.extend Projects.prototype,
     check options,
       init_first_task: Match.Maybe(Boolean) # if true we'll create first task for the project automatically
       conf: Match.Maybe(Object)
+      custom_fields: Match.Maybe([Object])
       grid_views: Match.Maybe([Object])
 
     default_options =
@@ -244,6 +245,9 @@ _.extend Projects.prototype,
       ]
       conf: conf
       timezone: APP.justdo_delivery_planner.getUserTimeZone user_id
+
+    if options.custom_fields?
+      project.custom_fields = options.custom_fields
 
     project_id = @projects_collection.insert project
 

@@ -164,10 +164,11 @@ _.extend Projects.prototype,
           title: 1
           shared: 1
       .fetch()
-
-      conf = APP.modules.project_page.curProj().getProjectConfiguration()
+      
+      cur_proj = APP.modules.project_page.curProj()
       APP.projects.createNewProject({
-        conf: conf
+        conf: cur_proj.getProjectConfiguration()
+        custom_fields: cur_proj.getProjectCustomFields()
         grid_views: grid_views
       }, (err, project_id) ->
         if err?
