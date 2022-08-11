@@ -155,21 +155,11 @@ _.extend Projects.prototype,
       if err?
         console.error(err)
         return
-      
-      grid_views = APP.collections.GridViews.find
-        "hierarchy.justdo_id": JD.activeJustdoId()
-      ,
-        fields:
-          view: 1
-          title: 1
-          shared: 1
-      .fetch()
-      
+
       cur_proj = APP.modules.project_page.curProj()
       APP.projects.createNewProject({
         conf: cur_proj.getProjectConfiguration()
-        custom_fields: cur_proj.getProjectCustomFields()
-        grid_views: grid_views
+        derive_custom_fields_and_grid_views_from_project_id: cur_proj.id
       }, (err, project_id) ->
         if err?
           JustdoSnackbar.show

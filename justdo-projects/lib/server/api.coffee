@@ -224,7 +224,10 @@ _.extend Projects.prototype,
       init_first_task: Match.Maybe(Boolean) # if true we'll create first task for the project automatically
       conf: Match.Maybe(Object)
       custom_fields: Match.Maybe([Object])
-      grid_views: Match.Maybe([Object])
+      derive_custom_fields_and_grid_views_from_project_id: Match.Maybe(String)
+
+    if options.custom_fields? and options.derive_custom_fields_and_grid_views_from_project_id?
+      throw @_error "invalid-parameters", "Options custom_fields and derive_custom_fields_and_grid_views_from_project_id cannot exist at the same time"
 
     default_options =
       init_first_task: true
@@ -248,18 +251,34 @@ _.extend Projects.prototype,
 
     if options.custom_fields?
       project.custom_fields = options.custom_fields
+    
+    if options.derive_custom_fields_and_grid_views_from_project_id?
+      org_project = APP.collections.Projects.findOne options.derive_custom_fields_and_grid_views_from_project_id,
+        fields:
+          custom_fields: 1
+      if org_project?.custom_fields?
+        project.custom_fields = org_project.custom_fields
+
+      grid_views = APP.collections.GridViews.find
+        "hierarchy.justdo_id": options.derive_custom_fields_and_grid_views_from_project_id
+      ,
+        fields:
+          view: 1
+          title: 1
+          shared: 1
+      .fetch()
 
     project_id = @projects_collection.insert project
-
-    if options.grid_views?
-      for grid_view in options.grid_views
+    
+    if grid_views?
+      for grid_view in grid_views
         grid_view.type = "justdo"
         grid_view.hierarchy = {
           type: "justdo"
           justdo_id: project_id
         }
         APP.justdo_grid_views.upsert(null, grid_view, user_id)
-    
+
     if options.init_first_task
       @skipMemberVerification =>
         first_doc = {
