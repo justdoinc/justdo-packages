@@ -28,7 +28,7 @@ Template.task_pane_meetings_manager_section.helpers
 
     meetings = {
       "exist": meetings.length,
-      "meetings": _.sortBy(meetings, "date")
+      "meetings": _.sortBy(meetings, "date").reverse()
       }
 
     return meetings
