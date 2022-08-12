@@ -53,15 +53,15 @@ _.extend JustdoJiraIntegration.prototype,
         return
 
       # Created by Jira or during project mount process. Ignore.
-      if doc.jira_issue_key or doc.jira_sprint_mountpoint_id or doc.jira_fix_version_mountpoint_id or doc.jira_last_updated
+      if doc.jira_issue_id or doc.jira_sprint_mountpoint_id or doc.jira_fix_version_mountpoint_id or doc.jira_last_updated
         return
 
+      # XXX Multi-parent situation is NOT handled yet!
       parent_task_id = doc.parents2[0].parent
-      # Only one exists at max, as the parent task cannot be Jira project mountpoint and Jira issue at the same time
-      jira_project_key = self.getJiraProjectKeyFromJustdoIdAndMountedTaskId justdo_id, parent_task_id
-      parent_task = self.tasks_collection.findOne(parent_task_id, {fields: {jira_issue_key: 1, jira_issue_type: 1, jira_sprint: 1}})
+      parent_task = self.tasks_collection.findOne(parent_task_id, {fields: {jira_issue_id: 1, jira_project_id: 1, jira_issue_type: 1, jira_sprint: 1}})
 
-      if not jira_project_key? and not parent_task?.jira_issue_key?
+      # If jira_project_id doesn't exist, assume the task is created outside of mountpoint.
+      if not (jira_project_id = parent_task?.jira_project_id)?
         return
 
       task_creater_email = Meteor.users.findOne(user_id, {fields: {emails: 1}})?.emails?[0]?.address
@@ -71,7 +71,7 @@ _.extend JustdoJiraIntegration.prototype,
       req =
         fields:
           project:
-            key: jira_project_key
+            id: jira_project_id
           summary: doc.title or "#{justdo_id}:#{task_id}"
           issuetype:
             name: "Task"
@@ -85,30 +85,30 @@ _.extend JustdoJiraIntegration.prototype,
           accountId: jira_account_id
 
       # If task is added under a Jira issue, add parent before creating task in Jira
-      if (parent_issue_key = parent_task?.jira_issue_key)?
-        jira_project_key = parent_issue_key.split("-")[0]
-        req.fields.project.key = jira_project_key
+      if (parent_issue_id = parent_task?.jira_issue_id)?
         if parent_task.jira_issue_type is "Subtask"
           # XXX Todo: Block the operation. Subtasks can't have child tasks.
           # XXX Or move the newly created task back to jira_project_mountpoint
-          jira_project_mountpoint = self.getJustdosIdsAndTasksIdsfromMountedJiraProjectKey(jira_project_key).task_id
+          console.log "The issue is created under a subtask and is forbidden."
         else
           # The behaviour for adding subtask is similar for Jira cloud and Jira server
+          # XXX Custom issue type is not handled
           if parent_task.jira_issue_type in ["Story", "Task", "Bug"]
             req.fields.issuetype.name = "Sub-task"
             req.fields.parent =
-              key: parent_issue_key
+              id: parent_issue_id
           else
             # Jira Cloud
             if self.clients[jira_server_id].v2.config.host.includes "api.atlassian.com"
               req.fields.parent =
-                key: parent_issue_key
+                id: parent_issue_id
             # Jira Server
             else
-              req.fields[JustdoJiraIntegration.epic_link_custom_field_id] = parent_issue_key
+              req.fields[JustdoJiraIntegration.epic_link_custom_field_id] = parent_issue_id
 
       self.clients[jira_server_id].v2.issues.createIssue req
         .then (res) ->
+          # Log reporter change only if the user created this task is also a Jira user (detected by email).
           if jira_account_id?
             APP.tasks_changelog_manager.logChange
               field: "jira_issue_reporter"
@@ -121,7 +121,7 @@ _.extend JustdoJiraIntegration.prototype,
           task_title = "Task ##{res.key.split("-")[1]}"
 
           summary_update_req =
-            issueIdOrKey: res.key
+            issueIdOrKey: res.id
             fields:
               summary: task_title
               [JustdoJiraIntegration.last_updated_custom_field_id]: new Date()
@@ -133,11 +133,17 @@ _.extend JustdoJiraIntegration.prototype,
             $set:
               title: task_title
               jira_issue_key: res.key
+              jira_issue_id: res.id
+              jira_project_id: req.fields.project.id
               jira_issue_type: req.fields.issuetype.name
               jira_issue_reporter: user_id
               jira_last_updated: new Date()
+
+          # A subtask will always have the same sprint as its parent.
+          # addParent() is not necessary as the parent task should already be under the correct sprint parent.
           if req.fields.issuetype.name is "Subtask" and not _.isEmpty parent_task.jira_sprint
             ops.$set.jira_sprint = parent_task.jira_sprint
+
           self.tasks_collection.update task_id, ops
           return
         .catch (e) ->
@@ -194,33 +200,35 @@ _.extend JustdoJiraIntegration.prototype,
 
       # Updates toward an issue
       # XXX Try ignore sending back changes from Justdo in Jira's webhook config (likely will involve JQL)
-      if (jira_issue_key = doc.jira_issue_key)?
+      if (jira_issue_id = doc.jira_issue_id)?
         {fields, transition} = await self._mapJustdoFieldsToJiraFields justdo_id, doc, modifier
 
         # XXX The statement below handles parent change. Consider putting them into field map.
+        # XXX multi-parent is NOT handled!
         if (added_parent_id = modifier.$addToSet?.parents2?.parent)?
-          # If parent_issue_key is found, assume Jira parent add/change
-          parent_issue_key = self.tasks_collection.findOne(added_parent_id, {fields: {jira_issue_key: 1}})?.jira_issue_key
+          # If parent_issue_id is found, assume Jira parent add/change
+          parent_task = self.tasks_collection.findOne(added_parent_id, {fields: {jira_issue_id: 1, jira_mountpoint_type: 1}})
+          parent_issue_id = parent_task.jira_issue_id
 
-          # If parent_issue_key isnt found, and the destination task_id is the mountpoint of current Jira project, assume Jira parent removal
-          if not parent_issue_key? and (added_parent_id is self.getJustdosIdsAndTasksIdsfromMountedJiraProjectKey(jira_issue_key.split("-")[0]).task_id)
-            parent_issue_key = null
+          # If parent_issue_id isnt found, and the destination task_id is the mountpoint of current Jira project, assume Jira parent removal
+          if not parent_issue_id? and parent_task.jira_mountpoint_type is "roadmap"
+            parent_issue_id = null
 
           # Send update to jira only when the parent change is within the project mountpoint
-          if _.isString(parent_issue_key) or _.isNull(parent_issue_key)
+          if _.isString(parent_issue_id) or _.isNull(parent_issue_id)
             # Jira Cloud
             if client.v2.config.host.includes "api.atlassian.com"
               fields.parent =
-                key: parent_issue_key
+                key: parent_issue_id
             # Jira server
             else
-              fields[JustdoJiraIntegration.epic_link_custom_field_id] = parent_issue_key
+              fields[JustdoJiraIntegration.epic_link_custom_field_id] = parent_issue_id
 
         if not _.isEmpty fields
           fields[JustdoJiraIntegration.last_updated_custom_field_id] = new Date()
 
           req =
-            issueIdOrKey: jira_issue_key
+            issueIdOrKey: jira_issue_id
             fields: fields
 
           client.v2.issues.editIssue req
@@ -232,7 +240,7 @@ _.extend JustdoJiraIntegration.prototype,
         # XXX Despite it will not cause an infinite loop, it still need to be addressed.
         if not _.isEmpty transition
           req =
-            issueIdOrKey: jira_issue_key
+            issueIdOrKey: jira_issue_id
             transition: transition
 
           self.clients[jira_server_id].v2.issues.doTransition req
@@ -250,11 +258,11 @@ _.extend JustdoJiraIntegration.prototype,
       if not self.isJiraIntegrationInstalledOnJustdo justdo_id
         return
 
-      jira_issue_key = doc.jira_issue_key
-      if not jira_issue_key?
+      jira_issue_id = doc.jira_issue_id
+      if not jira_issue_id?
         return
-      self.deleted_issue_keys.add jira_issue_key
-      self.getJiraClientForJustdo(doc.project_id).v2.issues.deleteIssue {issueIdOrKey: jira_issue_key}
+      self.deleted_issue_ids.add jira_issue_id
+      self.getJiraClientForJustdo(doc.project_id).v2.issues.deleteIssue {issueIdOrKey: jira_issue_id}
         .then (res) -> console.log res
         .catch (err) -> console.error err.response.data
 

@@ -41,7 +41,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     @clients = {}
 
-    @deleted_issue_keys = new Set()
+    @deleted_issue_ids = new Set()
 
     # XXX if oauth1 in use
     @oauth_token_to_justdo_id = {}
@@ -188,11 +188,15 @@ _.extend JustdoJiraIntegration.prototype,
     # XXX Use schema for checking options?
 
     jira_issue_key = jira_issue_body.key
+    jira_issue_id = jira_issue_body.id
+    jira_project_id = jira_issue_body.fields.project.id
     justdo_admin_id = @_getJustdoAdmin justdo_id
 
     task_fields =
       project_id: justdo_id
       jira_issue_key: jira_issue_key
+      jira_issue_id: jira_issue_id
+      jira_project_id: jira_project_id
       jira_last_updated: new Date()
 
     _.extend task_fields, await @_mapJiraFieldsToJustdoFields justdo_id, {issue: jira_issue_body}
@@ -234,7 +238,7 @@ _.extend JustdoJiraIntegration.prototype,
             gc.addParent created_task_id, {parent: options.fix_versions_mountpoints[fix_version]}, task_owner_id
 
     console.log jira_issue_key, "created_task_id", created_task_id
-    @setJustdoIdandTaskIdToJiraIssue justdo_id, created_task_id, jira_issue_key
+    @setJustdoIdandTaskIdToJiraIssue justdo_id, created_task_id, jira_issue_id
     return created_task_id
 
   jiraWebhookEventHandlers:
@@ -243,7 +247,7 @@ _.extend JustdoJiraIntegration.prototype,
       # Created from Justdo. Ignore.
       if fields[JustdoJiraIntegration.project_id_custom_field_id] or fields[JustdoJiraIntegration.task_id_custom_field_id]
         return
-      jira_issue_key = req_body.issue.key
+      jira_issue_id = req_body.issue.id
       jira_project_id = req_body.issue.fields.project.id
 
       if not _.isEmpty (mounted_justdo_and_task = @getJustdosIdsAndTasksIdsfromMountedJiraProjectId jira_project_id)
@@ -254,7 +258,7 @@ _.extend JustdoJiraIntegration.prototype,
 
         path_to_add = "/#{task_id}/"
         if fields.parent?
-          parent_id = @tasks_collection.findOne({jira_issue_key: fields.parent.key}, {fields: {_id: 1}})._id
+          parent_id = @tasks_collection.findOne({jira_issue_id: fields.parent.id}, {fields: {_id: 1}})._id
           path_to_add = "/#{parent_id}/"
 
         user_ids_to_be_added_to_task = new Set()
@@ -274,7 +278,7 @@ _.extend JustdoJiraIntegration.prototype,
       {fields} = req_body.issue
       {[JustdoJiraIntegration.task_id_custom_field_id]:task_id, [JustdoJiraIntegration.project_id_custom_field_id]:justdo_id} = fields
       if not task_id?
-        task = @tasks_collection.findOne({jira_issue_key: req_body.issue.key}, {fields: {project_id: 1}})
+        task = @tasks_collection.findOne({jira_issue_id: req_body.issue.id}, {fields: {project_id: 1}})
         {_id:task_id, project_id:justdo_id} = task
 
       if not @isJiraIntegrationInstalledOnJustdo justdo_id
@@ -302,8 +306,8 @@ _.extend JustdoJiraIntegration.prototype,
         # Change/Add parent
         if (new_parent_issue_id = changed_issue_parent.to)?
           if (parent_issue = fields.parent)?
-            new_parent_issue_key = parent_issue.key
-            new_parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_key: new_parent_issue_key}, {fields: {_id: 1}})._id
+            new_parent_issue_id = parent_issue.id
+            new_parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_id: new_parent_issue_id}, {fields: {_id: 1}})._id
           else
             client = @getJiraClientForJustdo(justdo_id)
             new_parent_issue = await client.v2.issues.getIssue({issueIdOrKey: new_parent_issue_id})
@@ -342,7 +346,7 @@ _.extend JustdoJiraIntegration.prototype,
         return
 
       # Task deletion from Justdo. Ignore.
-      if @deleted_issue_keys.delete req_body.issue.key
+      if @deleted_issue_ids.delete req_body.issue.id
         return
 
       @tasks_collection.remove task_id
@@ -777,7 +781,7 @@ _.extend JustdoJiraIntegration.prototype,
         @addJiraProjectMembersToJustdo justdo_id, jira_user_emails
 
         # Add task members to the mounted task
-        @tasks_collection.update task_id, {$set: {jira_project_key: jira_project_key, jira_mountpoint_type: "root"}, $addToSet: {users: {$each: user_ids_to_be_added_to_child_tasks}}}
+        @tasks_collection.update task_id, {$set: {jira_project_id: jira_project_id, jira_mountpoint_type: "root"}, $addToSet: {users: {$each: user_ids_to_be_added_to_child_tasks}}}
 
         # Setup mountpoints for sprints and fix versions
         gc = APP.projects._grid_data_com
@@ -793,11 +797,11 @@ _.extend JustdoJiraIntegration.prototype,
 
         # Create the three special task that groups all the sprints and fix versions, and all the tasks
         # roadmap_mountpoint currently holds all the issues
-        roadmap_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Roadmap", project_id: justdo_id, jira_project_key: jira_project_key, jira_mountpoint_type: "roadmap", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
+        roadmap_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Roadmap", project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "roadmap", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
         # XXX Might need some special treatment for these two tasks and their child
         # XXX Like bolding the title, prevent removal, etc etc
-        sprints_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Sprints", project_id: justdo_id, jira_project_key: jira_project_key, jira_mountpoint_type: "sprints", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
-        fix_versions_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Fix Versions", project_id: justdo_id, jira_project_key: jira_project_key, jira_mountpoint_type: "fix_versions", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
+        sprints_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Sprints", project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
+        fix_versions_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Fix Versions", project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
         # Since the row style data cannot be inserted along addChild, we perform the update here.
         @tasks_collection.update {_id: {$in: [roadmap_mountpoint_task_id, sprints_mountpoint_task_id, fix_versions_mountpoint_task_id]}}, {$set: {"jrs:style": {bold: true}}}, {multi: true}
 
@@ -854,15 +858,16 @@ _.extend JustdoJiraIntegration.prototype,
             {issues} = res
             while (issue = issues.shift())?
               issue_fields = issue.fields
-              parent_key = null
+              parent_id = null
               path_to_add = "/#{task_id}/#{roadmap_mountpoint_task_id}/"
 
-              if (parent = issue_fields.parent)? or (parent_key = issue_fields[JustdoJiraIntegration.epic_link_custom_field_id])?
-                if not parent_key?
-                  parent_key = parent.key
+              # Jira cloud uses fields.parent, while Jira server uses epic_link (which the logic is removed due to migrating to project_id instead of project_key).
+              # XXX Seems Jira cloud also has an epic link field. Consider using that instead of the parent structure.
+              if (parent = issue_fields.parent)?
+                parent_id = parent.id
                 # XXX Hardcoded users length in query. Better approach is needed to determine whether the parent task is added completely along with its users.
-                # if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_key: parent_key}, {fields: {_id: 1}})?._id)?
-                if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_key: parent_key, "users.1": {$exists: true}}, {fields: {_id: 1}})?._id)?
+                # if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_id: parent_id}, {fields: {_id: 1}})?._id)?
+                if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_id: parent_id, "users.1": {$exists: true}}, {fields: {_id: 1}})?._id)?
                   issues.push issue
                   continue
                 path_to_add = "/#{parent_task_id}/"
@@ -891,11 +896,7 @@ _.extend JustdoJiraIntegration.prototype,
     tasks_query =
       project_id: justdo_id
       $or: [
-        jira_project_key: jira_project_key
-      ,
-        jira_issue_key:
-          $regex: "#{jira_project_key}-\\d"
-          $options: "i"
+        jira_project_id: jira_project_id
       ,
         jira_sprint_mountpoint_id:
           $in: all_sprint_ids_under_jira_project
@@ -907,7 +908,9 @@ _.extend JustdoJiraIntegration.prototype,
       $set:
         updated_by: user_id
         jira_project_key: null
+        jira_project_id: null
         jira_issue_key: null
+        jira_issue_id: null
         jira_mountpoint_type: null
         jira_sprint_mountpoint_id: null
         jira_fix_version_mountpoint_id: null
@@ -937,14 +940,10 @@ _.extend JustdoJiraIntegration.prototype,
     all_sprint_ids_under_jira_project = _.map all_sprints_and_fix_versions_under_jira_project.sprints, (sprint) -> sprint.id
     all_fix_version_ids_under_jira_project = _.map all_sprints_and_fix_versions_under_jira_project.fix_versions, (fix_version) -> fix_version.id
 
-    # Remove issue keys under this Jira Project under this Justdo
+    # Remove issue ids under this Jira Project under this Justdo
     tasks_query =
       $or: [
-        jira_project_key: jira_project_key
-      ,
-        jira_issue_key:
-          $regex: "#{jira_project_key}-\\d"
-          $options: "i"
+        jira_project_id: jira_project_id
       ,
         jira_sprint_mountpoint_id:
           $in: all_sprint_ids_under_jira_project
@@ -957,6 +956,7 @@ _.extend JustdoJiraIntegration.prototype,
         updated_by: user_id
         jira_project_id: null
         jira_issue_key: null
+        jira_issue_id: null
         jira_sprint_mountpoint_id: null
         jira_fix_version_mountpoint_id: null
         jira_mountpoint_type: null
