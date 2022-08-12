@@ -11,10 +11,10 @@ _.extend JustdoJiraIntegration.prototype,
     Meteor.call "getAvailableJiraProjects", justdo_id, cb
     return
 
-  mountTaskWithJiraProject: (task_id, jira_project_key, jira_project_id, cb) ->
-    Meteor.call "mountTaskWithJiraProject", task_id, jira_project_key, jira_project_id, cb
+  mountTaskWithJiraProject: (task_id, jira_project_id, cb) ->
+    Meteor.call "mountTaskWithJiraProject", task_id, jira_project_id, cb
     return
 
-  unmountTaskWithJiraProject: (justdo_id, jira_project_key, cb) ->
-    Meteor.call "unmountTaskWithJiraProject", justdo_id, jira_project_key, cb
+  unmountTaskWithJiraProject: (justdo_id, jira_project_id, cb) ->
+    Meteor.call "unmountTaskWithJiraProject", justdo_id, jira_project_id, cb
     return

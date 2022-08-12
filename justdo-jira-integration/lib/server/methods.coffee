@@ -18,14 +18,14 @@ _.extend JustdoJiraIntegration.prototype,
         check @userId, String
         return self.getAvailableJiraProjects justdo_id, @userId
 
-      mountTaskWithJiraProject: (task_id, jira_project_key, jira_project_id) ->
+      mountTaskWithJiraProject: (task_id, jira_project_id) ->
         check task_id, String
-        check jira_project_key, String
+        check jira_project_id, String
         check @userId, String
-        return self.mountTaskWithJiraProject task_id, jira_project_key, jira_project_id, @userId
+        return self.mountTaskWithJiraProject task_id, jira_project_id, @userId
 
-      unmountTaskWithJiraProject: (justdo_id, jira_project_key) ->
+      unmountTaskWithJiraProject: (justdo_id, jira_project_id) ->
         check justdo_id, String
-        check jira_project_key, String
+        check jira_project_id, String
         check @userId, String
-        return self.unmountTaskWithJiraProject justdo_id, jira_project_key, @userId
+        return self.unmountTaskWithJiraProject justdo_id, jira_project_id, @userId

@@ -4,7 +4,7 @@
   {{else}}
     {{#with mountedJiraProject}}
       Mounted to Jira project {{this}}
-      <a href="#" class="unmount-jira-project" data-project-key="{{this}}">(unmount)</a>
+      <a href="#" class="unmount-jira-project" data-project-id="{{this}}">(unmount)</a>
     {{else}}
       {{#if taskIsMountable}}
         <div class="jira-projects">

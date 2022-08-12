@@ -17,9 +17,9 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.helpers
     return
 
   mountedJiraProject: ->
-    active_task = JD.activeItem({jira_project_key: 1, jira_mountpoint_type: 1})
+    active_task = JD.activeItem({jira_project_id: 1, jira_mountpoint_type: 1})
     if active_task.jira_mountpoint_type is "root"
-      return active_task.jira_project_key
+      return active_task.jira_project_id
     return
 
   taskIsMountable: ->
@@ -37,7 +37,7 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.events
     jira_project_key = $(e.currentTarget).closest(".jira-project").data "project-key"
     jira_project_id = $(e.currentTarget).closest(".jira-project").data "project-id"
     $(e.target.closest(".jira-projects")).html "Mounting project #{jira_project_key}..."
-    APP.justdo_jira_integration.mountTaskWithJiraProject JD.activeItemId(), jira_project_key, jira_project_id
+    APP.justdo_jira_integration.mountTaskWithJiraProject JD.activeItemId(), jira_project_id.toString()
 
     return
 
@@ -45,5 +45,6 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.events
     e.preventDefault()
     e.stopPropagation()
 
-    jira_project_key = $(e.currentTarget).closest(".unmount-jira-project").data "project-key"
-    APP.justdo_jira_integration.unmountTaskWithJiraProject JD.activeJustdoId(), jira_project_key
+    jira_project_id = $(e.currentTarget).closest(".unmount-jira-project").data "project-id"
+
+    APP.justdo_jira_integration.unmountTaskWithJiraProject JD.activeJustdoId(), jira_project_id.toString()

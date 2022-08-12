@@ -244,8 +244,9 @@ _.extend JustdoJiraIntegration.prototype,
       if fields[JustdoJiraIntegration.project_id_custom_field_id] or fields[JustdoJiraIntegration.task_id_custom_field_id]
         return
       jira_issue_key = req_body.issue.key
-      jira_project_key = jira_issue_key.split("-")[0]
-      if not _.isEmpty (mounted_justdo_and_task = @getJustdosIdsAndTasksIdsfromMountedJiraProjectKey jira_project_key)
+      jira_project_id = req_body.issue.fields.project.id
+
+      if not _.isEmpty (mounted_justdo_and_task = @getJustdosIdsAndTasksIdsfromMountedJiraProjectId jira_project_id)
         {justdo_id, task_id} = mounted_justdo_and_task
 
         if not @isJiraIntegrationInstalledOnJustdo justdo_id
@@ -258,7 +259,7 @@ _.extend JustdoJiraIntegration.prototype,
 
         user_ids_to_be_added_to_task = new Set()
         user_ids_to_be_added_to_task.add @_getJustdoAdmin justdo_id
-        jira_user_emails = @getAllJiraProjectMembers(jira_project_key).map (user) ->
+        jira_user_emails = @getAllJiraProjectMembers(jira_project_id).map (user) ->
           user_ids_to_be_added_to_task.add Accounts.findUserByEmail(user.email)?._id
           return user.email
         user_ids_to_be_added_to_task = Array.from user_ids_to_be_added_to_task
@@ -280,7 +281,8 @@ _.extend JustdoJiraIntegration.prototype,
         return
 
       grid_data = APP.projects._grid_data_com
-      jira_project_mountpoint = @getJustdosIdsAndTasksIdsfromMountedJiraProjectKey(fields.project.key).task_id
+
+      jira_project_mountpoint = @getJustdosIdsAndTasksIdsfromMountedJiraProjectId(fields.project.id).task_id
 
       if (_.find req_body.changelog.items, (item) -> item.field is "issuetype" and item.toString is "Epic")?
         # Move all child tasks to root level of mounted project
@@ -348,13 +350,14 @@ _.extend JustdoJiraIntegration.prototype,
       return
     "jira:version_created": (req_body) ->
       fix_version = req_body.version
+      jira_project_id = fix_version.projectId
 
       # If the Jira project isn't mounted, ignore.
-      if not (jira_project_key = @getJiraProjectKeyByIdIfMounted fix_version.projectId)?
+      if not (jira_doc_id = @isJiraProjectMounted jira_project_id)?
         return
 
       tasks_query =
-        jira_project_key: jira_project_key
+        jira_project_id: jira_project_id
         jira_mountpoint_type: "fix_versions"
       tasks_options =
         project_id: 1
@@ -367,19 +370,17 @@ _.extend JustdoJiraIntegration.prototype,
           due_date: fix_version.releaseDate
         APP.projects._grid_data_com.addChild "/#{fix_versions_mountpiont_task_doc._id}/", task_fields, @_getJustdoAdmin fix_versions_mountpiont_task_doc.project_id
 
-      jira_query =
-        "jira_projects.#{jira_project_key}":
-          $ne: null
       jira_ops =
         $addToSet:
-          "jira_projects.#{jira_project_key}.fix_versions": fix_version
-      @jira_collection.update jira_query, jira_ops
+          "jira_projects.#{jira_project_id}.fix_versions": fix_version
+      @jira_collection.update jira_doc_id, jira_ops
       return
     "jira:version_updated": (req_body) ->
       fix_version = req_body.version
+      jira_project_id = fix_version.projectId
 
       # If the Jira project isn't mounted, ignore.
-      if not (jira_project_key = @getJiraProjectKeyByIdIfMounted fix_version.projectId)?
+      if not (jira_doc_id = @isJiraProjectMounted jira_project_id)?
         return
 
       tasks_query =
@@ -395,12 +396,10 @@ _.extend JustdoJiraIntegration.prototype,
           updated_by: @_getJustdoAdmin justdo_id
       @tasks_collection.update tasks_query, tasks_ops
 
-      jira_query =
-        "mounted_projects.#{jira_project_key}.fix_versions.id": fix_version.id
       jira_ops =
         $set:
-          "mounted_projects.#{jira_project_key}.fix_versions.$": fix_version
-      @jira_collection.update jira_query, jira_ops
+          "mounted_projects.#{jira_project_id}.fix_versions.$": fix_version
+      @jira_collection.update jira_doc_id, jira_ops
 
       return
     "sprint_created": (req_body) ->
@@ -417,10 +416,10 @@ _.extend JustdoJiraIntegration.prototype,
             $addToSet: {}
 
           _.each res.values, (jira_project) =>
-            jira_project_key = jira_project.key
+            jira_project_id = jira_project.id
 
             tasks_query =
-              jira_project_key: jira_project_key
+              jira_project_id: jira_project_id
               jira_mountpoint_type: "sprints"
             tasks_options =
               project_id: 1
@@ -434,9 +433,9 @@ _.extend JustdoJiraIntegration.prototype,
               APP.projects._grid_data_com.addChild "/#{sprint_mountpiont_task_doc._id}/", task_fields, @_getJustdoAdmin sprint_mountpiont_task_doc.project_id
 
             query.$or.push
-              "jira_projects.#{jira_project_key}":
+              "jira_projects.#{jira_project_id}":
                 $ne: null
-            ops.$addToSet["jira_projects.#{jira_project_key}.sprints"] = sprint
+            ops.$addToSet["jira_projects.#{jira_project_id}.sprints"] = sprint
 
           @jira_collection.update query, ops
 
@@ -477,12 +476,12 @@ _.extend JustdoJiraIntegration.prototype,
           # Updates Jira collection
           _.each res.values, (project_info) =>
             jira_query.$or.push
-              "jira_projects.#{project_info.key}.sprints.id": id
+              "jira_projects.#{project_info.id}.sprints.id": id
             _.extend jira_ops.$set,
-              "jira_projects.#{project_info.key}.sprints.$.name": name
-              "jira_projects.#{project_info.key}.sprints.$.startDate": startDate or null
-              "jira_projects.#{project_info.key}.sprints.$.endDate": endDate or null
-              "jira_projects.#{project_info.key}.sprints.$.originBoardId": originBoardId
+              "jira_projects.#{project_info.id}.sprints.$.name": name
+              "jira_projects.#{project_info.id}.sprints.$.startDate": startDate or null
+              "jira_projects.#{project_info.id}.sprints.$.endDate": endDate or null
+              "jira_projects.#{project_info.id}.sprints.$.originBoardId": originBoardId
 
           @jira_collection.update jira_query, jira_ops
           return
@@ -606,12 +605,12 @@ _.extend JustdoJiraIntegration.prototype,
 
       # Fetch all fix versions and sprints, then store in db
       justdo_ids_mounted_to_this_jira_server = @jira_collection.findOne("server_info.id": credentials.server_info.id, {fields: {justdo_ids: 1}})?.justdo_ids
-      all_mounted_jira_project_keys_set = @getAllMountedJiraProjectKeysAsSetByJustdoIds justdo_ids_mounted_to_this_jira_server
+      all_mounted_jira_project_ids_set = @getAllMountedJiraProjectIdsAsSetByJustdoIds justdo_ids_mounted_to_this_jira_server
 
-      all_mounted_jira_project_keys_set.forEach (jira_project_key) =>
-        @fetchAndStoreAllSprintsUnderJiraProject jira_project_key, _.extend {}, options, {client: client.agile}
-        @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_key, _.extend {}, options, {client: client.v2}
-        @fetchAndStoreAllUsersUnderJiraProject jira_project_key, _.extend {}, options, {client: client.v2}
+      all_mounted_jira_project_ids_set.forEach (jira_project_id) =>
+        @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, _.extend {}, options, {client: client.agile}
+        @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, _.extend {}, options, {client: client.v2}
+        @fetchAndStoreAllUsersUnderJiraProject jira_project_id, _.extend {}, options, {client: client.v2}
 
       return
 
@@ -741,7 +740,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
-  mountTaskWithJiraProject: (task_id, jira_project_key, jira_project_id, user_id) ->
+  mountTaskWithJiraProject: (task_id, jira_project_id, user_id) ->
     justdo_id = APP.collections.Tasks.findOne(task_id, {fields: {project_id: 1}})?.project_id
     if not @isJiraIntegrationInstalledOnJustdo justdo_id
       throw @_error "not-supported", "Jira integration is not installed on this project: #{justdo_id}"
@@ -754,14 +753,14 @@ _.extend JustdoJiraIntegration.prototype,
     Promise
       .all [
         # Ensure all project members is either normal or proxy users, and add them as member to the target Justdo.
-        @fetchAndStoreAllUsersUnderJiraProject jira_project_key, {justdo_id: justdo_id, client: client.v2}
+        @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2}
         # Fetch all sprints and fixed versions under the current Jira project
-        @fetchAndStoreAllSprintsUnderJiraProject jira_project_key, {justdo_id: justdo_id, client: client.agile}
-        @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_key, {justdo_id: justdo_id, client: client.v2}
+        @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.agile}
+        @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2}
       ]
       .then =>
         # Remove previous mountpoint record of the same Jira project, and clear all issue keys in relevant to that mountpoint.
-        @unmountAllTasksRelevantToJiraProject jira_project_key, user_id
+        @unmountAllTasksRelevantToJiraProject jira_project_id, user_id
 
         justdo_admin_id = @_getJustdoAdmin justdo_id
         # XXX If the Justdo admin is guarenteed to also be a member of the moutned Jira project,
@@ -769,7 +768,7 @@ _.extend JustdoJiraIntegration.prototype,
         # Get an array of user_ids of Jira project members to be inserted in tasks created from Jira issue
         user_ids_to_be_added_to_child_tasks = new Set()
         user_ids_to_be_added_to_child_tasks.add justdo_admin_id
-        jira_user_emails = @getAllJiraProjectMembers(jira_project_key).map (user) ->
+        jira_user_emails = @getAllJiraProjectMembers(jira_project_id).map (user) ->
           user_ids_to_be_added_to_child_tasks.add Accounts.findUserByEmail(user.email)?._id
           return user.email
         user_ids_to_be_added_to_child_tasks = Array.from user_ids_to_be_added_to_child_tasks
@@ -784,13 +783,13 @@ _.extend JustdoJiraIntegration.prototype,
         gc = APP.projects._grid_data_com
 
         jira_query =
-          "jira_projects.#{jira_project_key}":
+          "jira_projects.#{jira_project_id}":
             $ne: null
         jira_query_options =
           fields:
-            "jira_projects.#{jira_project_key}": 1
+            "jira_projects.#{jira_project_id}": 1
         jira_project_sprints_and_fix_versions = @jira_collection.findOne(jira_query, jira_query_options)
-        jira_project_sprints_and_fix_versions = jira_project_sprints_and_fix_versions?.jira_projects?[jira_project_key]
+        jira_project_sprints_and_fix_versions = jira_project_sprints_and_fix_versions?.jira_projects?[jira_project_id]
 
         # Create the three special task that groups all the sprints and fix versions, and all the tasks
         # roadmap_mountpoint currently holds all the issues
@@ -847,7 +846,7 @@ _.extend JustdoJiraIntegration.prototype,
         # Both works the same way except the latter one uses POST to support a larger query
         # For consistency with future development, only searchForIssuesUsingJqlPost() is used.
         issue_search_body =
-          jql: "project=#{jira_project_key} order by issuetype asc"
+          jql: "project=#{jira_project_id} order by issuetype asc"
           maxResults: 300
           fields: @getAllRelevantJiraFieldIds()
         client.v2.issueSearch.searchForIssuesUsingJqlPost issue_search_body
@@ -877,14 +876,14 @@ _.extend JustdoJiraIntegration.prototype,
     return
 
   # Unmounts a single task/Jira project pair
-  unmountTaskWithJiraProject: (justdo_id, jira_project_key, user_id) ->
+  unmountTaskWithJiraProject: (justdo_id, jira_project_id, user_id) ->
     if not @isJiraIntegrationInstalledOnJustdo justdo_id
       throw @_error "not-supported", "Jira integration is not installed on this project: #{justdo_id}"
 
     if not APP.projects.isProjectAdmin justdo_id, user_id
       throw @_error "permission-denied"
 
-    all_sprints_and_fix_versions_under_jira_project = @getAllStoredSprintsAndFixVersionsByJiraProjectKey jira_project_key
+    all_sprints_and_fix_versions_under_jira_project = @getAllStoredSprintsAndFixVersionsByJiraProjectId jira_project_id
     all_sprint_ids_under_jira_project = _.map all_sprints_and_fix_versions_under_jira_project.sprints, (sprint) -> sprint.id
     all_fix_version_ids_under_jira_project = _.map all_sprints_and_fix_versions_under_jira_project.fix_versions, (fix_version) -> fix_version.id
 
@@ -923,18 +922,18 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_query =
       justdo_ids: justdo_id
-      "jira_projects.#{jira_project_key}":
+      "jira_projects.#{jira_project_id}":
         $ne: null
     jira_ops =
       $unset:
-        "jira_projects.#{jira_project_key}": 1
+        "jira_projects.#{jira_project_id}": 1
     @jira_collection.update jira_query, jira_ops
 
     return
 
-  # Unmounts all task/Jira project pair under jira_project_key
-  unmountAllTasksRelevantToJiraProject: (jira_project_key, user_id) ->
-    all_sprints_and_fix_versions_under_jira_project = @getAllStoredSprintsAndFixVersionsByJiraProjectKey jira_project_key
+  # Unmounts all task/Jira project pair under jira_project_id
+  unmountAllTasksRelevantToJiraProject: (jira_project_id, user_id) ->
+    all_sprints_and_fix_versions_under_jira_project = @getAllStoredSprintsAndFixVersionsByJiraProjectId jira_project_id
     all_sprint_ids_under_jira_project = _.map all_sprints_and_fix_versions_under_jira_project.sprints, (sprint) -> sprint.id
     all_fix_version_ids_under_jira_project = _.map all_sprints_and_fix_versions_under_jira_project.fix_versions, (fix_version) -> fix_version.id
 
@@ -956,7 +955,7 @@ _.extend JustdoJiraIntegration.prototype,
     tasks_ops =
       $set:
         updated_by: user_id
-        jira_project_key: null
+        jira_project_id: null
         jira_issue_key: null
         jira_sprint_mountpoint_id: null
         jira_fix_version_mountpoint_id: null
@@ -1006,32 +1005,23 @@ _.extend JustdoJiraIntegration.prototype,
     .catch (err) -> console.error err.data
     return
 
-  getJustdosIdsAndTasksIdsfromMountedJiraProjectKey: (jira_project_key) ->
+  getJustdosIdsAndTasksIdsfromMountedJiraProjectId: (jira_project_id) ->
     query =
-      "justdo_jira_integration.mounted_tasks.jira_project_key": jira_project_key
+      jira_project_id: jira_project_id
+      jira_mountpoint_type: "roadmap"
     query_option =
       fields:
-        "justdo_jira_integration.mounted_tasks.$": 1
+        project_id: 1
+        jira_project_id: 1
 
-    mounted_project = @projects_collection.findOne(query, query_option)
-    if mounted_project?
-      mounted_task = mounted_project.justdo_jira_integration.mounted_tasks[0]
+    mounted_task = @tasks_collection.findOne(query, query_option)
+    if mounted_task?
       return_obj =
-        justdo_id: mounted_project._id
-        task_id: mounted_task.task_id
-        jira_project_key: mounted_task.jira_project_key
+        justdo_id: mounted_task.project_id
+        task_id: mounted_task._id
+        jira_project_id: mounted_task.jira_project_id
       return return_obj
     return
-
-  # XXX If we don't support mounting the same Jira project over mulitple tasks, only taks_id is needed
-  getJiraProjectKeyFromJustdoIdAndMountedTaskId: (justdo_id, task_id) ->
-    query =
-      _id: justdo_id
-      "justdo_jira_integration.mounted_tasks.task_id": task_id
-    query_option =
-      fields:
-        "justdo_jira_integration.mounted_tasks.$": 1
-    return @projects_collection.findOne(query, query_option)?.justdo_jira_integration?.mounted_tasks?[0]?.jira_project_key
 
   # Since sprints are associated with boards instead of Jira project,
   # we will have to fetch all associated Jira projects via API call.
@@ -1058,7 +1048,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     return client.board.getProjects {boardId: board_id}
 
-  fetchAndStoreAllFixVersionsUnderJiraProject: (jira_project_key, options) ->
+  fetchAndStoreAllFixVersionsUnderJiraProject: (jira_project_id, options) ->
     # XXX As this method is called upon server restart, maybe move the checkings to methods.coffee?
     {client, justdo_id, jira_server_id} = options
     if not client?
@@ -1066,7 +1056,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_server_id = @getJiraServerIdFromApiClient client
 
-    client.projectVersions.getProjectVersions({projectIdOrKey: jira_project_key})
+    client.projectVersions.getProjectVersions({projectIdOrKey: jira_project_id})
       .then (fix_versions) =>
         for fix_version in fix_versions
           fix_version.id = parseInt fix_version.id
@@ -1074,14 +1064,14 @@ _.extend JustdoJiraIntegration.prototype,
           "server_info.id": jira_server_id
         ops =
           $set:
-            "jira_projects.#{jira_project_key}.fix_versions": fix_versions
+            "jira_projects.#{jira_project_id}.fix_versions": fix_versions
         @jira_collection.update query, ops
         return
       .catch (err) -> console.error err
 
     return
 
-  fetchAndStoreAllSprintsUnderJiraProject: (jira_project_key, options) ->
+  fetchAndStoreAllSprintsUnderJiraProject: (jira_project_id, options) ->
     # XXX As this method is called upon server restart, maybe move the checkings to methods.coffee?
     {client, justdo_id, jira_server_id} = options
     if not client?
@@ -1089,7 +1079,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_server_id = @getJiraServerIdFromApiClient client
 
-    boards = await @getAllBoardsAssociatedToJiraProject jira_project_key, {client}
+    boards = await @getAllBoardsAssociatedToJiraProject jira_project_id, {client}
 
     promises = []
 
@@ -1101,7 +1091,7 @@ _.extend JustdoJiraIntegration.prototype,
             "server_info.id": jira_server_id
           ops =
             $set:
-              "jira_projects.#{jira_project_key}.sprints": sprints.values
+              "jira_projects.#{jira_project_id}.sprints": sprints.values
           @jira_collection.update query, ops
           return
         .catch (err) -> console.error err
@@ -1110,14 +1100,14 @@ _.extend JustdoJiraIntegration.prototype,
     return Promise.all promises
 
   # Also creates proxy users for emails that aren't registered in Justdo
-  fetchAndStoreAllUsersUnderJiraProject: (jira_project_key, options) ->
+  fetchAndStoreAllUsersUnderJiraProject: (jira_project_id, options) ->
     {client, justdo_id} = options
     if not client?
       client = @getJiraClientForJustdo(justdo_id).v2
 
     jira_server_id = @getJiraServerIdFromApiClient client
 
-    users_info = await client.userSearch.findAssignableUsers {project: jira_project_key}
+    users_info = await client.userSearch.findAssignableUsers {project: jira_project_id}
     jira_accounts = []
     proxy_users_to_be_created = []
 
@@ -1148,7 +1138,7 @@ _.extend JustdoJiraIntegration.prototype,
       "server_info.id": jira_server_id
     ops =
       $set:
-        "jira_projects.#{jira_project_key}.jira_accounts": jira_accounts
+        "jira_projects.#{jira_project_id}.jira_accounts": jira_accounts
     @jira_collection.update query, ops
 
     return
@@ -1177,33 +1167,32 @@ _.extend JustdoJiraIntegration.prototype,
       throw @_error "client-not-found"
     return client
 
-  getAllMountedJiraProjectKeysAsSetByJustdoIds: (justdo_ids) ->
+  getAllMountedJiraProjectIdsAsSetByJustdoIds: (justdo_ids) ->
     check justdo_ids, [String]
 
-    all_mounted_jira_project_keys = new Set()
+    all_mounted_jira_project_ids = new Set()
+
     query =
-      _id:
+      justdo_ids:
         $in: justdo_ids
-      "justdo_jira_integration.mounted_tasks.jira_project_key":
-        $exists: true
     query_options =
       fields:
-        "justdo_jira_integration.mounted_tasks.jira_project_key": 1
-    @projects_collection.find(query, query_options).forEach (project_doc) ->
-      for mounted_task in project_doc.justdo_jira_integration.mounted_tasks
-        if not all_mounted_jira_project_keys.has mounted_task.jira_project_key
-          all_mounted_jira_project_keys.add mounted_task.jira_project_key
+        jira_projects: 1
+    @jira_collection.find(query, query_options).forEach (jira_doc) ->
+      for jira_project_id of jira_doc.jira_projects
+        all_mounted_jira_project_ids.add jira_project_id
       return
 
-    return all_mounted_jira_project_keys
+    return all_mounted_jira_project_ids
 
-  getJiraProjectKeyByIdIfMounted: (jira_project_id) ->
+  isJiraProjectMounted: (jira_project_id) ->
     query =
-      "justdo_jira_integration.mounted_tasks.jira_project_id": "#{jira_project_id}"
+      "jira_project.#{jira_project_id}":
+        $ne: null
     query_options =
       fields:
-        "justdo_jira_integration.mounted_tasks.$": 1
-    return @projects_collection.findOne(query, query_options)?.justdo_jira_integration?.mounted_tasks?[0]?.jira_project_key
+        _id: 1
+    return @jira_collection.findOne(query, query_options)._id
 
   # XXX for demo only
   _getHarcodedEmailByAccountId: (jira_account_id) ->
@@ -1217,16 +1206,16 @@ _.extend JustdoJiraIntegration.prototype,
 
     return users[jira_account_id] or "#{jira_account_id}@justdo.com"
 
-  getAllJiraProjectMembers: (jira_project_key) ->
+  getAllJiraProjectMembers: (jira_project_id) ->
     jira_query =
-      "jira_projects.#{jira_project_key}":
+      "jira_projects.#{jira_project_id}":
         $ne: null
     jira_options =
       fields:
-        "jira_projects.#{jira_project_key}.jira_accounts.email": 1
-        "jira_projects.#{jira_project_key}.jira_accounts.display_name": 1
-        "jira_projects.#{jira_project_key}.jira_accounts.locale": 1
-    return @jira_collection.findOne(jira_query, jira_options)?.jira_projects?[jira_project_key]?.jira_accounts
+        "jira_projects.#{jira_project_id}.jira_accounts.email": 1
+        "jira_projects.#{jira_project_id}.jira_accounts.display_name": 1
+        "jira_projects.#{jira_project_id}.jira_accounts.locale": 1
+    return @jira_collection.findOne(jira_query, jira_options)?.jira_projects?[jira_project_id]?.jira_accounts
 
   addJiraProjectMembersToJustdo: (justdo_id, emails) ->
     for email in emails
@@ -1237,18 +1226,18 @@ _.extend JustdoJiraIntegration.prototype,
           throw e
     return
 
-  getJustdoUserIdByJiraAccountId: (jira_project_key, jira_account_id) ->
+  getJustdoUserIdByJiraAccountId: (jira_project_id, jira_account_id) ->
     query =
-      "jira_projects.#{jira_project_key}.jira_accounts.jira_account_id": jira_account_id
+      "jira_projects.#{jira_project_id}.jira_accounts.jira_account_id": jira_account_id
     query_options =
       fields:
-        "jira_projects.#{jira_project_key}.jira_accounts.$": 1
+        "jira_projects.#{jira_project_id}.jira_accounts.$": 1
 
-    user_email = @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_key]?.jira_accounts?[0]?.email
+    user_email = @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.jira_accounts?[0]?.email
     return Accounts.findUserByEmail(user_email)._id
 
-  getAllStoredSprintsAndFixVersionsByJiraProjectKey: (jira_project_key) ->
-    return @jira_collection.findOne({"jira_projects.#{jira_project_key}": {$ne: null}}, {fields: {"jira_projects.#{jira_project_key}": 1}})?.jira_projects?[jira_project_key]
+  getAllStoredSprintsAndFixVersionsByJiraProjectId: (jira_project_id) ->
+    return @jira_collection.findOne({"jira_projects.#{jira_project_id}": {$ne: null}}, {fields: {"jira_projects.#{jira_project_id}": 1}})?.jira_projects?[jira_project_id]
 
   getClientByHost: (host) ->
     jira_doc = @jira_collection.findOne({"server_info.url": host}, {fields: {"server_info": 1}})
