@@ -1,19 +1,3 @@
-projects_collection_jira_object_schema = new SimpleSchema
-  mounted_tasks:
-    label: "Map of mounted tasks to Jira projects"
-    type: Array
-    optional: true
-  "mounted_tasks.$":
-    label: "Pair of task_id and jira_project_key"
-    type: Object
-    optional: true
-  "mounted_tasks.$.task_id":
-    type: String
-  "mounted_tasks.$.jira_project_key":
-    type: String
-  "mounted_tasks.$.jira_project_id":
-    type: String
-
 jira_collection_server_info_schema = new SimpleSchema
   id:
     label: "Jira instance ID"
@@ -38,15 +22,19 @@ jira_collection_server_info_schema = new SimpleSchema
 
 _.extend JustdoJiraIntegration.prototype,
   _attachCollectionsSchemas: ->
-    projects_collection_schema =
-      justdo_jira_integration:
-        type: projects_collection_jira_object_schema
-        optional: true
-    @projects_collection.attachSchema projects_collection_schema
-
     tasks_collection_schema =
       jira_issue_key:
         label: "Jira issue key"
+        type: String
+        optional: true
+
+      jira_issue_id:
+        label: "Jira issue ID"
+        type: String
+        optional: true
+
+      jira_project_id:
+        label: "Jira project ID"
         type: String
         optional: true
 
