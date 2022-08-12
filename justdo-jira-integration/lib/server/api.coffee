@@ -125,9 +125,6 @@ _.extend JustdoJiraIntegration.prototype,
         else
           field_val = changed_item.to
 
-        # if (field_map = JustdoJiraIntegration.justdo_field_to_jira_field_map[justdo_field_name].map)?
-        #   field_val = _.findKey field_map, (val) -> val is field_val
-
         fields_map.$set[justdo_field_name] = field_val
     # issue_created
     else
@@ -836,15 +833,6 @@ _.extend JustdoJiraIntegration.prototype,
               task_fields.due_date = moment(fix_version.releaseDate).format("YYYY-MM-DD")
             fix_versions_to_mountpoint_task_id[fix_version.name] = gc.addChild "/#{fix_versions_mountpoint_task_id}/", task_fields, justdo_admin_id
 
-        # Create new mountpoint record in projects collection
-        ops =
-          $addToSet:
-            "justdo_jira_integration.mounted_tasks":
-              task_id: roadmap_mountpoint_task_id
-              jira_project_key: jira_project_key
-              jira_project_id: jira_project_id
-        @projects_collection.update justdo_id, ops
-
         # Search for all issues under the Jira project and create tasks in Justdo
         # issueSearch has searchForIssuesUsingJql() and searchForIssuesUsingJqlPost()
         # Both works the same way except the latter one uses POST to support a larger query
@@ -916,13 +904,6 @@ _.extend JustdoJiraIntegration.prototype,
         jira_fix_version_mountpoint_id: null
     @tasks_collection.update tasks_query, tasks_ops, {multi: true}
 
-    # Remove mountpoint record in projects collection
-    justdo_ops =
-      $pull:
-        "justdo_jira_integration.mounted_tasks":
-          jira_project_key: jira_project_key
-    @projects_collection.update justdo_id, justdo_ops
-
     jira_query =
       justdo_ids: justdo_id
       "jira_projects.#{jira_project_id}":
@@ -962,15 +943,6 @@ _.extend JustdoJiraIntegration.prototype,
         jira_mountpoint_type: null
 
     @tasks_collection.update tasks_query, tasks_ops, {multi: true}
-
-    # Remove mountpoint record in projects collection
-    justdo_query =
-      "justdo_jira_integration.mounted_tasks.jira_project_key": jira_project_key
-    justdo_ops =
-      $pull:
-        "justdo_jira_integration.mounted_tasks":
-          jira_project_key: jira_project_key
-    @projects_collection.update justdo_query, justdo_ops, {multi: true}
 
     return
 
