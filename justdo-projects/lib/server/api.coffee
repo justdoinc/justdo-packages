@@ -252,7 +252,7 @@ _.extend Projects.prototype,
     if options.custom_fields?
       project.custom_fields = options.custom_fields
     
-    if options.derive_custom_fields_and_grid_views_from_project_id?
+    if options.derive_custom_fields_and_grid_views_from_project_id? and @requireProjectAdmin(options.derive_custom_fields_and_grid_views_from_project_id, user_id)
       org_project = APP.collections.Projects.findOne options.derive_custom_fields_and_grid_views_from_project_id,
         fields:
           custom_fields: 1
