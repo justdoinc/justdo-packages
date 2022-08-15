@@ -91,6 +91,13 @@ _.extend GridControlCustomFields,
 
       optional: true
 
+    user_editable_column:
+      type: Boolean
+
+      defaultValue: true
+
+      optional: true
+
     grid_default_grid_view:
       type: Boolean
 
@@ -285,6 +292,7 @@ _.extend GridControlCustomFields,
         label: custom_field_definition.label
         grid_visible_column: custom_field_definition.grid_visible_column
         grid_editable_column: custom_field_definition.grid_editable_column
+        user_editable_column: custom_field_definition.user_editable_column
         grid_default_grid_view: custom_field_definition.grid_default_grid_view
         type: GridControlCustomFields.getJsTypeForFieldType(custom_field_definition.field_type)
         optional: true # all custom fields aren't required
