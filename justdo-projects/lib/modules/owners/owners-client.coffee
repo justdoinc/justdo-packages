@@ -13,15 +13,13 @@ _.extend PACK.modules.owners,
         # XXX As the recalculation of duration caused by ownership transfer is done on the client side at this point,
         # need to add code here do recalculation here,
         # if the recalculation is moved to server side in the future, this piece of code should be removed
-        if APP.justdo_planning_utilities.isPluginInstalledOnJustdo JD.activeJustdoId()
+        if APP.justdo_planning_utilities.isPluginInstalledOnJustdo JD.activeJustdoId() and
+            (task = APP.collections.Tasks.findOne task_id, {fields: undefined})? # If task can't be found in mini-mongo, it is likely in a different JustDo hence, no need to update any pseudo fields related to planning utilities
           recal = APP.justdo_planning_utilities.createDatesRecalculation()
           set_values = recal.getRecalculatedDatesAndDuration task_id,
             pending_owner_id: null
           
           delete set_values.pending_owner_id
-          
-          task = APP.collections.Tasks.findOne task_id,
-            fields: undefined
           
           for field, new_val of set_values
             if new_val != task[field]
