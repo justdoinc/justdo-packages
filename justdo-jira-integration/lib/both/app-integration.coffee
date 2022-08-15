@@ -22,9 +22,10 @@
 APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
-  if env.JIRA_INTEGRATION_TYPE.toLowerCase() not in ["cloud", "server"]
-    return
+  if env.JIRA_INTEGRATION_TYPE not in ["cloud", "server"]
+    console.info "Jira integration isn't enabled"
 
+    return
 
   APP.collections.Jira = new Mongo.Collection "jira"
 
@@ -35,19 +36,18 @@ APP.getEnv (env) ->
 
   # XXX To be fetched from env vars
   if Meteor.isServer
-
-    if env.JIRA_INTEGRATION_TYPE.toLowerCase() is "cloud"
+    if env.JIRA_INTEGRATION_TYPE is "cloud"
       _.extend options,
         # Jira Cloud relavent credentials
         client_id: env.JIRA_INTEGRATION_OAUTH_CLIENT_ID
         client_secret: env.JIRA_INTEGRATION_OAUTH_CLIENT_SECRET
         get_oauth_token_endpoint: "https://auth.atlassian.com/oauth/token"
 
-    if env.JIRA_INTEGRATION_TYPE.toLowerCase() is "server"
+    if env.JIRA_INTEGRATION_TYPE is "server"
       _.extend options,
         # Jira Server relavent credentials
         jira_server_host: env.JIRA_INTEGRATION_SERVER_HOST
-        consumer_key: "OAuthKey"
+        consumer_key: env.JIRA_INTEGRATION_OAUTH_CLIENT_ID
         private_key: env.JIRA_INTEGRATION_OAUTH_SECRET
 
   APP.justdo_jira_integration = new JustdoJiraIntegration(options)
