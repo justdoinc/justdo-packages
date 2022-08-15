@@ -1,0 +1,20 @@
+<template name="justdo_jira_integration_project_setting">
+  <div class="jira-login-button">
+    <!-- {{#if OAuth1LoginLink}}
+      <a href="{{OAuth1LoginLink}}" target="_blank">Log In to JIRA Server</a>
+    {{else}}
+      <span>Loading...</span>
+    {{/if}}
+    <br> -->
+    {{#with serverInfo}}
+      <div>
+        Logged in to Jira domain <a href="{{url}}">{{name}}</a>
+      </div>
+    {{/with}}
+    {{#if OAuth2LoginLink}}
+      <a href="{{OAuth2LoginLink}}" target="_blank">Log In to JIRA Cloud</a>
+    {{else}}
+      <span>Loading...</span>
+    {{/if}}
+  </div>
+</template>

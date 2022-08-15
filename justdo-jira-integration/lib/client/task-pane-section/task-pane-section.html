@@ -1,0 +1,25 @@
+<template name="task_pane_justdo_jira_integration_task_pane_section_section">
+  {{#with issueUrl}}
+    Link to Jira Issue: <a href="{{this}}" target="_blank">{{this}}</a>
+  {{else}}
+    {{#with mountedJiraProject}}
+      Mounted to Jira project {{this}}
+      <a href="#" class="unmount-jira-project" data-project-key="{{this}}">(unmount)</a>
+    {{else}}
+      {{#if taskIsMountable}}
+        <div class="jira-projects">
+          <h3>Select a project to mount</h3>
+          <ul>
+
+            {{#each availableProjects}}
+              <li class="jira-project" data-project-id="{{id}}" data-project-key="{{key}}"><a href="#">{{name}}({{key}})</a></li>
+
+            {{else}}
+            <div class="">Loading...</div>
+            {{/each}}
+          </ul>
+        </div>
+      {{/if}}
+    {{/with}}
+  {{/with}}
+</template>

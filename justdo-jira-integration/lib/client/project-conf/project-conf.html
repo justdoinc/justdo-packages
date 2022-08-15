@@ -1,0 +1,14 @@
+<template name="justdo_jira_integration_project_config">
+  <div class="project-conf-justdo-jira-integration-config controller-template-extension-item">
+    <div class="controller-template-extension-indicator {{#if isModuleEnabled}}bg-primary{{/if}}"></div>
+    {{pluginName}}
+    <div class="project-conf-jira-integration-actions">
+      {{#if isModuleEnabled}}
+        <div class="settings-btn text-primary">settings</div>
+        <svg class="jd-icon-extension text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+      {{else}}
+        <svg class="jd-icon-extension"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+      {{/if}}
+    </div>
+  </div>
+</template>
