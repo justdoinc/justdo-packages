@@ -26,18 +26,18 @@ _.extend JustdoDbMigrations.prototype,
 
       process_status_details:
         type: new SimpleSchema
-          processed: # Successfully processed ids if set to 3 the ids_to_update[0], ids_to_update[1], ids_to_update[2] can be assumed as properly processed
+          processed: # Successfully processed ids. For example: if set to 3 the: ids_to_update[0], ids_to_update[1] and ids_to_update[2] can be assumed as *properly* processed.
             type: Number
             defaultValue: 0
 
           created_at:
             type: Date
 
-          started_at: # The moment the process_status changed from "pending" to "in-progres"
+          started_at: # The moment the process_status changed from "pending" to "in-progress"
             type: Date
             optional: true
 
-          closed_at: # The moment the process_status changed from "pending" to "done"/"error"/"terminated"
+          closed_at: # The moment the process_status changed from "pending"/"in-progress" to "done"/"error"/"terminated"
             type: Date
             optional: true
 
@@ -47,7 +47,7 @@ _.extend JustdoDbMigrations.prototype,
             optional: true
 
           terminated_by: # Will appear only if process_status is "terminated"
-            type: String
+            type: String # Similar to created_by: null/undefined means created by a server process.
             optional: true
 
     return
