@@ -5,11 +5,13 @@ _.extend JustdoChecklist.prototype,
         label: "Is it a checklist"
         type: Boolean
         optional: true
+        user_editable_column: true
 
       "p:checklist:is_checked":
         label: "checklist checked"
         type: Boolean
         optional: true
+        user_editable_column: true
 
       "p:checklist:total_count":
         label: "number of leafs"
