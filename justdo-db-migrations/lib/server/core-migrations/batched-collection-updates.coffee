@@ -1,11 +1,6 @@
 job_batch_size = 1
 
 common_batched_migration_options =
-  # starting_condition_interval_between_checks: 1000 * 60
-
-  # startingCondition: ->
-  #   return (APP.justdo_db_migrations.isMigrationScriptMarkedAsComplete "add-parents2") and (APP.justdo_db_migrations.isMigrationScriptMarkedAsComplete "check-parents2")
-
   mark_as_completed_upon_batches_exhaustion: false
   delay_before_checking_for_new_batches: 1000 * 3
 

@@ -226,21 +226,16 @@ _.extend JustdoDbMigrations.prototype,
 
   registerBatchedCollectionUpdatesType: (type_id, options) ->
     check type_id, String
-    @batch_collection_updates_type_def_schema.validate(options)
 
-    @batched_collection_updates_types[type_id] = {
-      collection: options.collection
-      use_raw_collection: options.use_raw_collection
-      meta_data_schema: options.meta_data_schema
-      forced_query_fields: options.forced_query_fields
-    }
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @batch_collection_updates_type_def_schema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
 
-    # @...types.type_id: {
-    #   collection: 
-    #   meta_data_schema: options.meta_data_schema
-    #   forced_query_fields: (meta_data, collection, docs_ids, modifier, user_id) ->
-    #     return {users: user_id}
-    # }
+    @batched_collection_updates_types[type_id] = options
 
     return
 

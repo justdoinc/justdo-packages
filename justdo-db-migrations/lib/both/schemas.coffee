@@ -1,50 +1,53 @@
 _.extend JustdoDbMigrations.prototype,
   _attachCollectionsSchemas: -> 
-    APP.collections.DBMigrationBatchedCollectionUpdates.attachSchema new SimpleSchema
-      created_by:# "DANIEL", <- null will mean server operation, otherwise a userId
+    @batched_collection_updates_collection.attachSchema new SimpleSchema
+      created_by: # null/undefined means created by a server process.
         type: String
         optional: true
       
-      type:
+      type: # One of the registered types
         type: String
 
-      # ERADACTED (we'll get from the types registrar) : collection: "tasks" # <- for security we'll have hard limit for which collections can be updated using this mechanism
       meta_data:
         type: Object
         blackbox: true
 
       ids_to_update:
         type: [String]
-      
-      modifier:
-        type: String # modifier cannot be saved to mongodb directly, need to convert to String first
-      #{$addToSet: {users: {$each: ["DONALD WU"]}}}
 
-      process_status: # "" # "pending", "in-progress", "done", "error"
+      modifier:
         type: String
 
-      process_status_details: 
+      process_status:
+        type: String
+        allowedValues: ["pending", "in-progress", "done", "error", "terminated"]
+        # "error" is a terminal state, once a job reached it, it can't turn back
+        # "terminated" is for cases where the user requested the job to be terminated.
+
+      process_status_details:
         type: new SimpleSchema
-          processed:
+          processed: # Successfully processed ids if set to 3 the ids_to_update[0], ids_to_update[1], ids_to_update[2] can be assumed as properly processed
             type: Number
             defaultValue: 0
 
+          created_at:
+            type: Date
+
+          started_at: # The moment the process_status changed from "pending" to "in-progres"
+            type: Date
+            optional: true
+
+          closed_at: # The moment the process_status changed from "pending" to "done"/"error"/"terminated"
+            type: Date
+            optional: true
+
+          error_data: # Will appear only if process_status is "error", will have both error trace to help figure cause, and details to help come up with a user readable message
+            type: String
+            blackbox: true
+            optional: true
+
+          terminated_by: # Will appear only if process_status is "terminated"
+            type: String
+            optional: true
+
     return
-
-# Phase 1 take the naive approach: process all the jobs in every run of the "migration" but give each up to 1000 per cycle.
-
-# DBMigrationBatchedCollectionUpdates
-# {
-#     type: "users-update", <- Arbitrary value representing the type of the operation
-#     created_by: "DANIEL", <- null will mean server operation, otherwise a userId
-#     # ERADACTED (we'll get from the types registrar) : collection: "tasks" # <- for security we'll have hard limit for which collections can be updated using this mechanism
-#     meta_data: { # Specific to type, in that case "users-update"
-#         project_id: "XXX"
-#     }
-#     ids_to_update: [0, 1 ..., ],
-#     batch_operation: {$addToSet: {users: {$each: ["DONALD WU"]}}}
-#     process_status: "" # "pending", "in-progress", "done", "error"
-#     process_status_details: {
-#         processed: 1000
-#     }
-# }
