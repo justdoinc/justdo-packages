@@ -20,5 +20,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     # JIRA_COLLECTION_MOUNTED_JUSTDO_IDS_INDEX
     @jira_collection.rawCollection().createIndex({justdo_ids: 1})
+    # PROJECTS_COLLECTION_JIRA_DOC_ID_INDEX
+    @jira_collection.rawCollection().createIndex({[JustdoJiraIntegration.projects_collection_jira_doc_id]: 1})
 
     return

@@ -134,6 +134,13 @@ _.extend JustdoJiraIntegration.prototype,
         optional: true
     @tasks_collection.attachSchema tasks_collection_schema
 
+    projects_collection_schema =
+      [JustdoJiraIntegration.projects_collection_jira_doc_id]:
+        label: "ID of associated Jira document"
+        type: String
+        optional: true
+    @projects_collection.attachSchema projects_collection_schema
+
     # The reason we have another collection and not using system-records is to be
     # future ready for multiple Jira connections per installation.
     jira_collection_schema =

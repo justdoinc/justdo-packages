@@ -39,6 +39,8 @@ _.extend JustdoJiraIntegration.prototype,
 
     @_setupInvertedFieldMap()
 
+    @_registerAllowedConfs()
+
     @clients = {}
 
     @deleted_issue_ids = new Set()
@@ -68,6 +70,15 @@ _.extend JustdoJiraIntegration.prototype,
       _id: justdo_id
       "conf.custom_features": "justdo_jira_integration"
     return @projects_collection.findOne(query, {fields: {_id: 1}})?
+
+  _registerAllowedConfs: ->
+    Projects.registerAllowedConfs
+      [JustdoJiraIntegration.projects_collection_jira_doc_id]:
+        require_admin_permission: true
+        value_matcher: String
+        allow_change: true
+        allow_unset: false
+    return
 
   _getJustdoAdmin: (justdo_id) ->
     return @projects_collection.findOne({_id: justdo_id, "members.is_admin": true}, {fields: {"members.$.user_id": 1}}).members[0].user_id
@@ -708,7 +719,10 @@ _.extend JustdoJiraIntegration.prototype,
             if err?
               console.error err.response
               return
-            self._parseAndStoreJiraCredentials res, {justdo_id}
+
+            jira_server_id = await self._parseAndStoreJiraCredentials res
+            jira_doc_id = self.jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {_id: 1}})._id
+            self.projects_collection.update justdo_id, {$set: {[JustdoJiraIntegration.projects_collection_jira_doc_id]: jira_doc_id}}
             return
 
     # Route for webhook

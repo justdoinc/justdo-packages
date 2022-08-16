@@ -6,3 +6,5 @@ _.extend JustdoJiraIntegration,
   task_pane_tab_label: "Jira"
 
   custom_page_label: "Jira Integration"
+
+  projects_collection_jira_doc_id: "justdo_jira:id"
