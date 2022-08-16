@@ -335,11 +335,12 @@ _.extend GridDataCom.prototype,
 
         schema = JustdoHelpers.getCollectionSchema(collection)._schema
         for field_id in fieldNames
-          if schema[field_id]?.grid_editable_column is false and schema[field_id]?.user_editable_column is false
-            console.warn "grid-data-com: a request to edit the field #{field_id} received, but it is not a grid_editable_column and not a user_editable_column"
-            # Once you remove the warning and reject the updates, remove the comment from 
-            # "AT THE MOMENT WE ONLY LOG WARNINGS AND NOT REJECTING UPDATES THAT EDIT user_editable_column: false"
-            # grid-control/lib/both/simple_schema_extensions.coffee
+          if schema[field_id]? # Only if a schema is available for the field, we are testing whether or not it is editable, all the fields without a schema, are considered Custom Fields
+            if not GridData.helpers.isFieldDefUserEditable(field_id, schema[field_id], true) # true is to allow exceptions for some fields that we allow over the wire, even though they aren't editable by the user, read the comment under isFieldDefUserEditable definition for more details
+              console.warn "grid-data-com: a request to edit the field #{field_id} received, but it is not considered a column a user can edit" # (grid_editable_column is false/undefined and user_editable_column is false/undefined)
+              # Once you remove the warning and reject the updates, remove the comment from 
+              # "AT THE MOMENT WE ONLY LOG WARNINGS AND NOT REJECTING UPDATES THAT EDIT user_editable_column: false"
+              # grid-control/lib/both/simple_schema_extensions.coffee
 
         return true
 

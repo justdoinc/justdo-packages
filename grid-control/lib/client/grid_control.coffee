@@ -2619,3 +2619,5 @@ _.extend GridControl.prototype,
 
   getCollectionItemById: (item_id) ->
     return @_grid_data.items_by_id[item_id]
+
+  isFieldDefUserEditable: GridData.helpers.isFieldDefUserEditable

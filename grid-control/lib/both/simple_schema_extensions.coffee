@@ -34,7 +34,7 @@ SimpleSchema.extendOptions
 
   # user_editable_column:
   #
-  # AT THE MOMENT WE ONLY LOG WARNINGS AND NOT REJECTING UPDATES THAT EDIT user_editable_column: false
+  # IMPORTANT! AT THE MOMENT WE ONLY LOG WARNINGS AND NOT REJECTING UPDATES THAT EDIT user_editable_column: false
   #
   # If unset, considered same as `grid_editable_column`.
   #
