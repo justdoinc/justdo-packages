@@ -825,9 +825,9 @@ _.extend JustdoJiraIntegration.prototype,
               title: fix_version.name
               jira_fix_version_mountpoint_id: fix_version.id
               jira_last_updated: new Date()
-            if fix_version.start_date?
+            if fix_version.startDate?
               task_fields.start_date = moment(fix_version.startDate).format("YYYY-MM-DD")
-            if fix_version.due_date?
+            if fix_version.releaseDate?
               task_fields.due_date = moment(fix_version.releaseDate).format("YYYY-MM-DD")
             fix_versions_to_mountpoint_task_id[fix_version.name] = gc.addChild "/#{fix_versions_mountpoint_task_id}/", task_fields, justdo_admin_id
 
