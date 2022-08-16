@@ -21,6 +21,7 @@ _.extend JustdoJiraIntegration,
   start_date_custom_field_id: start_date_custom_field_id
   end_date_custom_field_id: end_date_custom_field_id
   story_point_estimate_custom_field_id: story_point_estimate_custom_field_id
+  sprint_custom_field_id: sprint_custom_field_id
 
   # XXX Maybe implement a two-way map inside JustdoHelpers?
 
