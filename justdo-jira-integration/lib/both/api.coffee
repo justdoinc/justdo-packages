@@ -18,7 +18,6 @@ _.extend JustdoJiraIntegration.prototype,
     if @destroyed
       return
 
-
     return
 
   isPluginInstalledOnProjectDoc: (project_doc) ->
