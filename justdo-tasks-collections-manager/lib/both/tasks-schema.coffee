@@ -45,7 +45,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_column_editor: "TextareaWithTreeControlsEditor"
 
         grid_default_frozen_column: true
-        user_editable_column: true
 
       description:
         label: "Description"
@@ -77,7 +76,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_default_grid_view: true
         grid_default_grid_view_position: 100
         grid_default_width: 196
-        user_editable_column: true
 
         grid_dependencies_fields: ["status_by"]
 
@@ -132,7 +130,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_default_grid_view: true
         grid_default_grid_view_position: 200
         grid_default_width: 122
-        user_editable_column: true
 
         type: String
         optional: true
@@ -273,7 +270,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         grid_editable_column: true
         grid_visible_column: true
-        user_editable_column: true
         grid_default_grid_view: false
         grid_default_width: 140
 
@@ -322,7 +318,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         grid_editable_column: true
         grid_visible_column: true
-        user_editable_column: true
         grid_default_grid_view: true
         grid_default_grid_view_position: 300
         grid_default_width: 122
@@ -363,7 +358,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         grid_editable_column: true
         grid_visible_column: true
-        user_editable_column: true
         grid_default_grid_view: true
         grid_default_grid_view_position: 400
         grid_default_width: 122
@@ -410,7 +404,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         grid_editable_column: true
         grid_visible_column: true
-        user_editable_column: true
         grid_default_grid_view: false
         grid_default_width: 122
 
@@ -458,7 +451,6 @@ _.extend JustdoTasksCollectionsManager.prototype,
         label: "Priority"
         grid_editable_column: true
         grid_visible_column: true
-        user_editable_column: true
         grid_default_grid_view: false
         grid_default_width: 51
 
@@ -719,7 +711,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         label: "Updated"
 
         grid_editable_column: false
-        user_editable_column: true # Not really user editable field, once a allow/deny update received with it, we set it to the server time below
+        user_editable_column: false
         grid_visible_column: true
         grid_default_grid_view: false
         grid_default_width: 160
