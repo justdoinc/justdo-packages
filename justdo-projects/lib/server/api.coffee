@@ -266,6 +266,7 @@ _.extend Projects.prototype,
           view: 1
           title: 1
           shared: 1
+          user_id: 1
       .fetch()
 
     project_id = @projects_collection.insert project
@@ -277,7 +278,7 @@ _.extend Projects.prototype,
           type: "justdo"
           justdo_id: project_id
         }
-        APP.justdo_grid_views.upsert(null, grid_view, user_id)
+        APP.justdo_grid_views.upsert(null, grid_view, grid_view.user_id)
 
     if options.init_first_task
       @skipMemberVerification =>
