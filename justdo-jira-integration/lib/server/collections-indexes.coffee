@@ -18,8 +18,6 @@ _.extend JustdoJiraIntegration.prototype,
     # PROJECTS_COLLECTION_MOUNTED_TASK_ID_INDEX
     @projects_collection.rawCollection().createIndex({"justdo_jira_integration.mounted_tasks.task_id": 1})
 
-    # JIRA_COLLECTION_MOUNTED_JUSTDO_IDS_INDEX
-    @jira_collection.rawCollection().createIndex({justdo_ids: 1})
     # PROJECTS_COLLECTION_JIRA_DOC_ID_INDEX
     @jira_collection.rawCollection().createIndex({[JustdoJiraIntegration.projects_collection_jira_doc_id]: 1})
 

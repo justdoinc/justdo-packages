@@ -8,18 +8,17 @@ _.extend JustdoJiraIntegration.prototype,
 
       check justdo_id, String
 
-      jira_collection_query =
-        justdo_ids: justdo_id
+      jira_doc_id = self.projects_collection.findOne(justdo_id, {fields: {[JustdoJiraIntegration.projects_collection_jira_doc_id]: 1}})?[JustdoJiraIntegration.projects_collection_jira_doc_id]
+
       jira_collection_query_options =
         fields:
-          "justdo_ids.$": 1
           "server_info.url": 1
           "server_info.name": 1
           "server_info.avatarUrl": 1
           "jira_projects": 1
-      return self.jira_collection.find jira_collection_query, jira_collection_query_options
+      return self.jira_collection.find jira_doc_id, jira_collection_query_options
 
-    Meteor.publish "jiraMountpoints", (justdo_id) ->
+    Meteor.publish "projectsCollectionJiraDocId", (justdo_id) ->
       if not @userId
         @ready()
 
@@ -27,7 +26,7 @@ _.extend JustdoJiraIntegration.prototype,
 
       query_options =
         fields:
-          "justdo_jira_integration.mounted_tasks": 1
+          [JustdoJiraIntegration.projects_collection_jira_doc_id]: 1
 
       return self.projects_collection.find justdo_id, query_options
 

@@ -15,7 +15,7 @@ _.extend JustdoJiraIntegration.prototype,
       @jira_collection_subscription = Meteor.subscribe "jiraCollection", justdo_id
 
       @justdo_mountpoints_subscription?.stop?()
-      @justdo_mountpoints_subscription = Meteor.subscribe "jiraMountpoints", justdo_id
+      @justdo_mountpoints_subscription = Meteor.subscribe "projectsCollectionJiraDocId", justdo_id
 
     @registered_pseudo_custom_fields = []
     @registerConfigTemplate()

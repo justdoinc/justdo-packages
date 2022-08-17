@@ -30,12 +30,12 @@ _.extend JustdoJiraIntegration.prototype,
 
       jira_issue_id:
         label: "Jira issue ID"
-        type: String
+        type: Number
         optional: true
 
       jira_project_id:
         label: "Jira project ID"
-        type: String
+        type: Number
         optional: true
 
       jira_last_updated:
@@ -147,10 +147,6 @@ _.extend JustdoJiraIntegration.prototype,
       server_info:
         label: "Jira instance metadata"
         type: jira_collection_server_info_schema
-        optional: true
-      justdo_ids:
-        label: "Justdo IDs that are associated to this Jira instance"
-        type: [String]
         optional: true
       access_token:
         label: "Jira OAuth access token"
