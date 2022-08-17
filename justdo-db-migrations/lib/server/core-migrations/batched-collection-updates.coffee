@@ -41,8 +41,10 @@ common_batched_migration_options =
 
       if job.process_status_details.processed + job_batch_size >= job.ids_to_update.length
         job_update.$set.process_status = "done"
+        job_update.$set["process_status_details.closed_at"] = new Date()
       else if job.process_status == "pending"
         job_update.$set.process_status = "in-progress"
+        job_update.$set["process_status_details.started_at"] = new Date()
       
       type_def = APP.justdo_db_migrations.batched_collection_updates_types[job.type]
 
@@ -53,16 +55,21 @@ common_batched_migration_options =
         }, modifier, {multi: true}, (err) ->
           delete job_update.$set["process_status_details.processed"]
           job_update.$set.process_status = "error"
+          job_update.$set["process_status_details.closed_at"] = new Date()
+          job_update.$set["process_status_details.error_data"] = JSON.stringify(err)
+
       else 
         try
           type_def.collection.update
             _id:
               $in: ids_to_update
           , modifier, {multi: true}
-        catch
+        catch e
           delete job_update.$set["process_status_details.processed"]
           job_update.$set.process_status = "error"
-      
+          job_update.$set["process_status_details.closed_at"] = new Date()
+          job_update.$set["process_status_details.error_data"] = JSON.stringify(err)
+          
       num_processed += ids_to_update.length
       APP.collections.DBMigrationBatchedCollectionUpdates.update job._id, job_update
 

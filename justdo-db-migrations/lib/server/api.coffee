@@ -263,12 +263,19 @@ _.extend JustdoDbMigrations.prototype,
       process_status: "pending"
       process_status_details:
         processed: 0
+        created_at: new Date()
 
     return job_id
 
   deregisterBatchedCollectionUpdatesJob: (job_id, user_id) ->
     # Will remove the job but will do NOTHING with items already processed.
-    APP.collection.DBMigrationBatchedCollectionUpdates.remove job_id
+    APP.collection.DBMigrationBatchedCollectionUpdates.update job_id,
+      $set:
+        process_status: "terminated"
+        "process_status_details.closed_at": new Date()
+        "process_status_details.terminated_by": user_id
+
+
 
     return
 
