@@ -152,9 +152,17 @@ _.extend JustdoJiraIntegration.prototype,
         label: "Jira OAuth access token"
         type: String
         optional: true
+      access_token_updated:
+        label: "Time of last access token update"
+        type: Date
+        optional: true
       refresh_token:
         label: "Jira OAuth refresh token"
         type: String
+        optional: true
+      refresh_token_updated:
+        label: "Time of last refresh token update"
+        type: Date
         optional: true
       jira_projects:
         label: "Mounted Jira projects and their metadata"
