@@ -21,4 +21,4 @@ Template.justdo_jira_integration_project_setting.helpers
   OAuth2LoginLink: -> Template.instance().OAuth2_login_link_rv.get()
 
   serverInfo: ->
-    return APP.collections.Jira.findOne({justdo_ids: JD.activeJustdoId()}, {fields: {server_info: 1}})?.server_info
+    return APP.justdo_jira_integration.getJiraServerInfoFromJustdoId JD.activeJustdoId()

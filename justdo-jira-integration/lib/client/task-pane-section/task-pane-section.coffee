@@ -4,7 +4,7 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.onCreated -
   @autorun =>
     # Just to get the reactivity upon choosing a new task or performing new Jira login, in case the previous load failed.
     JD.activeItemId()
-    APP.collections.Jira.findOne({justdo_ids: JD.activeJustdoId()}, {fields: {_id: 1}})
+    APP.collections.Jira.findOne()
     APP.justdo_jira_integration.getAvailableJiraProjects JD.activeJustdoId(), (err, available_projects) => @available_jira_projects_rv.set available_projects
     return
 

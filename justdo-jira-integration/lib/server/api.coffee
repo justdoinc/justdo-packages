@@ -275,7 +275,7 @@ _.extend JustdoJiraIntegration.prototype,
           user_ids_to_be_added_to_task.add Accounts.findUserByEmail(user.email)?._id
           return user.email
         user_ids_to_be_added_to_task = Array.from user_ids_to_be_added_to_task
-        @_createTaskFromJiraIssue justdo_id, path_to_add, req_body.issue, user_ids_to_be_added_to_task
+        @_createTaskFromJiraIssue justdo_id, path_to_add, req_body.issue
 
       return
     "jira:issue_updated": (req_body) ->
@@ -373,7 +373,7 @@ _.extend JustdoJiraIntegration.prototype,
         jira_mountpoint_type: "fix_versions"
       tasks_options =
         project_id: 1
-      if (fix_versions_mountpiont_task_doc = @tasks_collection.findOne tasks_query, tasks_options)?
+      if (fix_versions_mountpiont_task_doc = @tasks_collection.findOne(tasks_query, tasks_options))?
         task_fields =
           project_id: fix_versions_mountpiont_task_doc.project_id
           title: fix_version.name
@@ -408,10 +408,13 @@ _.extend JustdoJiraIntegration.prototype,
           updated_by: @_getJustdoAdmin justdo_id
       @tasks_collection.update tasks_query, tasks_ops
 
+      jira_query =
+        _id: jira_doc_id
+        "jira_projects.#{jira_project_id}.fix_versions.id": parseInt fix_version.id
       jira_ops =
         $set:
-          "mounted_projects.#{jira_project_id}.fix_versions.$": fix_version
-      @jira_collection.update jira_doc_id, jira_ops
+          "jira_projects.#{jira_project_id}.fix_versions.$": fix_version
+      @jira_collection.update jira_query, jira_ops
 
       return
     "sprint_created": (req_body) ->
@@ -574,11 +577,7 @@ _.extend JustdoJiraIntegration.prototype,
       @refreshJiraAccessToken doc.server_info?.id
       return
 
-  _parseAndStoreJiraCredentials: (res, options) ->
-    if not options.justdo_id? and not options.jira_server_id?
-      throw @_error "missing-parameter"
-
-    justdo_id = options.justdo_id
+  _parseAndStoreJiraCredentials: (res) ->
     if res.statusCode is 200
       {access_token, refresh_token} = res.data
 
@@ -594,14 +593,6 @@ _.extend JustdoJiraIntegration.prototype,
         "server_info.id": credentials.server_info.id
       ops =
         $set: credentials
-      # justdo_id is provided when a new login toward Jira is performed,
-      # and not required during access token refresh upon server restart.
-      if justdo_id?
-        # Since one Justdo can only log into one jira server at a time, we remove all the previous associations.
-        @jira_collection.update {justdo_ids: justdo_id}, {$pull: {justdo_ids: justdo_id}}, {multi: true}
-
-        ops.$addToSet =
-          justdo_ids: justdo_id
 
       @jira_collection.upsert query, ops
 
@@ -616,15 +607,13 @@ _.extend JustdoJiraIntegration.prototype,
       client = @clients[credentials.server_info.id]
 
       # Fetch all fix versions and sprints, then store in db
-      justdo_ids_mounted_to_this_jira_server = @jira_collection.findOne("server_info.id": credentials.server_info.id, {fields: {justdo_ids: 1}})?.justdo_ids
-      all_mounted_jira_project_ids_set = @getAllMountedJiraProjectIdsAsSetByJustdoIds justdo_ids_mounted_to_this_jira_server
+      mounted_jira_projects = @jira_collection.findOne("server_info.id": credentials.server_info.id, {fields: {jira_projects: 1}})?.jira_projects
+      for jira_project_id of mounted_jira_projects
+        @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {client: client.agile}
+        @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {client: client.v2}
+        @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {client: client.v2}
 
-      all_mounted_jira_project_ids_set.forEach (jira_project_id) =>
-        @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, _.extend {}, options, {client: client.agile}
-        @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, _.extend {}, options, {client: client.v2}
-        @fetchAndStoreAllUsersUnderJiraProject jira_project_id, _.extend {}, options, {client: client.v2}
-
-      return
+      return credentials.server_info.id
 
   setupJiraRoutes: ->
     self = @
@@ -750,7 +739,7 @@ _.extend JustdoJiraIntegration.prototype,
         if err?
           console.error err.response
           return
-        @_parseAndStoreJiraCredentials res, {jira_server_id}
+        @_parseAndStoreJiraCredentials res
         return
 
     return
@@ -919,9 +908,7 @@ _.extend JustdoJiraIntegration.prototype,
     @tasks_collection.update tasks_query, tasks_ops, {multi: true}
 
     jira_query =
-      justdo_ids: justdo_id
-      "jira_projects.#{jira_project_id}":
-        $ne: null
+      _id: @getJiraServerInfoFromJustdoId(justdo_id).id
     jira_ops =
       $unset:
         "jira_projects.#{jira_project_id}": 1
@@ -1036,9 +1023,9 @@ _.extend JustdoJiraIntegration.prototype,
 
   fetchAndStoreAllFixVersionsUnderJiraProject: (jira_project_id, options) ->
     # XXX As this method is called upon server restart, maybe move the checkings to methods.coffee?
-    {client, justdo_id, jira_server_id} = options
+    {client} = options
     if not client?
-      client = @getJiraClientForJustdo(justdo_id).v2
+      throw @_error "client-not-found"
 
     jira_server_id = @getJiraServerIdFromApiClient client
 
@@ -1059,9 +1046,9 @@ _.extend JustdoJiraIntegration.prototype,
 
   fetchAndStoreAllSprintsUnderJiraProject: (jira_project_id, options) ->
     # XXX As this method is called upon server restart, maybe move the checkings to methods.coffee?
-    {client, justdo_id, jira_server_id} = options
+    {client} = options
     if not client?
-      client = @getJiraClientForJustdo(justdo_id).agile
+      throw @_error "client-not-found"
 
     jira_server_id = @getJiraServerIdFromApiClient client
 
@@ -1087,9 +1074,9 @@ _.extend JustdoJiraIntegration.prototype,
 
   # Also creates proxy users for emails that aren't registered in Justdo
   fetchAndStoreAllUsersUnderJiraProject: (jira_project_id, options) ->
-    {client, justdo_id} = options
+    {client} = options
     if not client?
-      client = @getJiraClientForJustdo(justdo_id).v2
+      throw @_error "client-not-found"
 
     jira_server_id = @getJiraServerIdFromApiClient client
 
@@ -1139,10 +1126,6 @@ _.extend JustdoJiraIntegration.prototype,
       query = {accountId: options.account_id}
     return await client.v2.userSearch.findUsers query
 
-  getJiraServerInfoFromJustdoId: (justdo_id) ->
-    check justdo_id, String
-    return @jira_collection.findOne({justdo_ids: justdo_id}, {fields: {server_info: 1}})?.server_info
-
   getJiraServerIdFromApiClient: (client) ->
     return client?.config?.host?.replace "https://api.atlassian.com/ex/jira/", ""
 
@@ -1152,24 +1135,6 @@ _.extend JustdoJiraIntegration.prototype,
     if not (client = @clients?[jira_server_id])?
       throw @_error "client-not-found"
     return client
-
-  getAllMountedJiraProjectIdsAsSetByJustdoIds: (justdo_ids) ->
-    check justdo_ids, [String]
-
-    all_mounted_jira_project_ids = new Set()
-
-    query =
-      justdo_ids:
-        $in: justdo_ids
-    query_options =
-      fields:
-        jira_projects: 1
-    @jira_collection.find(query, query_options).forEach (jira_doc) ->
-      for jira_project_id of jira_doc.jira_projects
-        all_mounted_jira_project_ids.add jira_project_id
-      return
-
-    return all_mounted_jira_project_ids
 
   isJiraProjectMounted: (jira_project_id) ->
     query =
