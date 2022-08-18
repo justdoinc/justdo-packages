@@ -17,7 +17,9 @@ poc_permitted_domains = [
 
 beta_domains = [
   # beta
-  "https://beta.justdo.com", "https://app-beta.justdo.com"
+  "https://beta.justdo.com", "https://app-beta.justdo.com",
+  # test22
+  "https://test22.justdo.com", "https://app-test22.justdo.com"
 ]
 
 first_call = true
@@ -45,7 +47,7 @@ _.extend JustdoHelpers,
 
   requirePocPermittedDomains: (root_url) ->
     if not @isPocPermittedDomains root_url
-      throw new Meteor.Error not-supported , "Supported only from POC permitted domains"
+      throw new Meteor.Error "not-supported", "Supported only from POC permitted domains"
     return
 
   isPocPermittedDomainsOrBeta: (root_url) ->
