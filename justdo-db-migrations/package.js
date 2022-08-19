@@ -15,9 +15,8 @@ Package.onUse(function (api) {
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("mongo", both);
-
-  api.use("momentjs:moment", both);
-
+  api.use("check", both);
+  
   // Uncomment if you want to use NPM peer dependencies using
   // checkNpmVersions.
   //
@@ -58,6 +57,8 @@ Package.onUse(function (api) {
 
   api.use("momentjs:moment", both);
   api.use("risul:moment-timezone@0.5.0_5", both);
+
+  api.use("justdoinc:justdo-jobs-processor", both);
 
   api.use("reactive-var", both);
   api.use("tracker", client);
