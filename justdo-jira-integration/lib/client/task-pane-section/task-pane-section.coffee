@@ -43,7 +43,7 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.events
     jira_project_key = $(e.currentTarget).closest(".jira-project").data "project-key"
     jira_project_id = $(e.currentTarget).closest(".jira-project").data "project-id"
     $(e.target.closest(".jira-projects")).html "Mounting project #{jira_project_key}..."
-    APP.justdo_jira_integration.mountTaskWithJiraProject JD.activeItemId(), jira_project_id.toString()
+    APP.justdo_jira_integration.mountTaskWithJiraProject JD.activeItemId(), jira_project_id
 
     return
 
@@ -53,4 +53,4 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.events
 
     jira_project_id = $(e.currentTarget).closest(".unmount-jira-project").data "project-id"
 
-    APP.justdo_jira_integration.unmountTaskWithJiraProject JD.activeJustdoId(), jira_project_id.toString()
+    APP.justdo_jira_integration.unmountTaskWithJiraProject JD.activeJustdoId(), jira_project_id

@@ -916,6 +916,8 @@ _.extend JustdoJiraIntegration.prototype,
 
   # Unmounts a single task/Jira project pair
   unmountTaskWithJiraProject: (justdo_id, jira_project_id, user_id) ->
+    jira_project_id = parseInt jira_project_id
+
     if not @isJiraIntegrationInstalledOnJustdo justdo_id
       throw @_error "not-supported", "Jira integration is not installed on this project: #{justdo_id}"
 
@@ -961,6 +963,8 @@ _.extend JustdoJiraIntegration.prototype,
 
   # Unmounts all task/Jira project pair under jira_project_id
   unmountAllTasksRelevantToJiraProject: (jira_project_id, user_id) ->
+    jira_project_id = parseInt jira_project_id
+
     all_sprints_and_fix_versions_under_jira_project = @getAllStoredSprintsAndFixVersionsByJiraProjectId jira_project_id
     all_sprint_ids_under_jira_project = _.map all_sprints_and_fix_versions_under_jira_project.sprints, (sprint) -> sprint.id
     all_fix_version_ids_under_jira_project = _.map all_sprints_and_fix_versions_under_jira_project.fix_versions, (fix_version) -> fix_version.id
