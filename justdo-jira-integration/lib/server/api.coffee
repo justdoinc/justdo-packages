@@ -30,18 +30,13 @@ _.extend JustdoJiraIntegration.prototype,
 
     @setupJiraRoutes()
 
-    @_setupJiraClientForAllJustdosWithRefreshToken()
-    # XXX This setInterval ensures the oauth login remain valid after its 1 hour lifespan, runs every 1 hour.
-    # XXX Currently for demo only and will be integrated with db-migration package.
-    Meteor.setInterval =>
-      @_setupJiraClientForAllJustdosWithRefreshToken()
-    , 3600000
+    @clients = {}
+
+    @_registerDbMigrationScriptForRefreshingAccessToken()
 
     @_setupInvertedFieldMap()
 
     @_registerAllowedConfs()
-
-    @clients = {}
 
     @deleted_issue_ids = new Set()
 
@@ -571,10 +566,41 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
+  _registerDbMigrationScriptForRefreshingAccessToken: ->
+    self = @
+
+    common_batched_migration_options =
+      delay_before_checking_for_new_batches: JustdoJiraIntegration.access_token_update_rate_ms
+      delay_between_batches: 5000
+      mark_as_completed_upon_batches_exhaustion: false
+      batch_size: 1
+      collection: APP.collections.Jira
+      static_query: false
+      queryGenerator: ->
+        query =
+          refresh_token:
+            $ne: null
+          access_token_updated:
+            $lte: new Date(new Date() - JustdoJiraIntegration.access_token_update_rate_ms)
+        query_options =
+          fields:
+            refresh_token: 1
+            server_info: 1
+        return {query, query_options}
+      batchProcessor: (jira_collection_cursor) ->
+        num_processed = 0
+        jira_collection_cursor.forEach (jira_doc) ->
+          self.refreshJiraAccessToken jira_doc
+          num_processed += 1
+
+        return num_processed
+
+    APP.justdo_db_migrations.registerMigrationScript "refresh-jira-api-token", JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
+
   _setupJiraClientForAllJustdosWithRefreshToken: ->
-    @jira_collection.find({refresh_token: {$exists: true}}, {fields: {server_info: 1}}).forEach (doc) =>
+    @jira_collection.find({refresh_token: {$exists: true}}, {fields: {server_info: 1, refresh_token: 1}}).forEach (doc) =>
       console.log "Refreshing Jira OAuth2 access token for Jira server #{doc.server_info?.name}"
-      @refreshJiraAccessToken doc.server_info?.id
+      @refreshJiraAccessToken doc
       return
 
   _parseAndStoreJiraCredentials: (res) ->
@@ -592,7 +618,12 @@ _.extend JustdoJiraIntegration.prototype,
       query =
         "server_info.id": credentials.server_info.id
       ops =
-        $set: credentials
+        $set:
+          access_token: credentials.access_token
+          refresh_token: credentials.refresh_token
+          server_info: credentials.server_info
+          access_token_updated: new Date()
+          refresh_token_updated: new Date()
 
       @jira_collection.upsert query, ops
 
@@ -724,23 +755,23 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
-  refreshJiraAccessToken: (jira_server_id) ->
+  refreshJiraAccessToken: (jira_doc) ->
     self = @
-    if (refresh_token = @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {refresh_token: 1}})?.refresh_token)?
-      req =
-        headers:
-          "Content-Type": "application/json"
-        data:
-          grant_type: "refresh_token"
-          refresh_token: refresh_token
-          client_id: @client_id
-          client_secret: @client_secret
-      HTTP.post self.get_oauth_token_endpoint, req, (err, res) =>
-        if err?
-          console.error err.response
-          return
-        @_parseAndStoreJiraCredentials res
+
+    req =
+      headers:
+        "Content-Type": "application/json"
+      data:
+        grant_type: "refresh_token"
+        refresh_token: jira_doc.refresh_token
+        client_id: @client_id
+        client_secret: @client_secret
+    HTTP.post self.get_oauth_token_endpoint, req, (err, res) =>
+      if err?
+        console.error err.response
         return
+      @_parseAndStoreJiraCredentials res
+      return
 
     return
 
