@@ -953,7 +953,7 @@ _.extend JustdoJiraIntegration.prototype,
     @tasks_collection.update tasks_query, tasks_ops, {multi: true}
 
     jira_query =
-      _id: @getJiraServerInfoFromJustdoId(justdo_id).id
+      "server_info.id": @getJiraServerInfoFromJustdoId(justdo_id).id
     jira_ops =
       $unset:
         "jira_projects.#{jira_project_id}": 1
