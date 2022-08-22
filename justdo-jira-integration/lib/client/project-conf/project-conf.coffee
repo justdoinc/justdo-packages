@@ -25,7 +25,16 @@ Template.justdo_jira_integration_project_config.events
     proj = curProj()
 
     if proj.isCustomFeatureEnabled(module_id)
-      curProj().disableCustomFeatures(module_id)
+      APP.justdo_jira_integration.isJustdoMountedWithJiraProject JD.activeJustdoId(), (err, is_mounted) ->
+        if err?
+          console.error err
+        if is_mounted
+          JustdoSnackbar.show
+            text: "This JustDo has an active Jira mountpoint. Please unmount before disabling this plugin."
+            duration: 10000
+        else
+          curProj().disableCustomFeatures(module_id)
+        return
     else
       curProj().enableCustomFeatures(module_id)
 

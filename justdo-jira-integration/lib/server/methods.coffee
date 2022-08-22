@@ -29,3 +29,7 @@ _.extend JustdoJiraIntegration.prototype,
         check jira_project_id, String
         check @userId, String
         return self.unmountTaskWithJiraProject justdo_id, jira_project_id, @userId
+
+      isJustdoMountedWithJiraProject: (justdo_id) ->
+        check justdo_id, String
+        return self.isJustdoMountedWithJiraProject justdo_id

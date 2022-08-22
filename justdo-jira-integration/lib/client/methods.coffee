@@ -18,3 +18,7 @@ _.extend JustdoJiraIntegration.prototype,
   unmountTaskWithJiraProject: (justdo_id, jira_project_id, cb) ->
     Meteor.call "unmountTaskWithJiraProject", justdo_id, jira_project_id, cb
     return
+
+  isJustdoMountedWithJiraProject: (justdo_id, cb) ->
+    Meteor.call "isJustdoMountedWithJiraProject", justdo_id, cb
+    return

@@ -1241,3 +1241,19 @@ _.extend JustdoJiraIntegration.prototype,
   getAllRelevantJiraFieldIds: ->
     relevant_field_ids = _.map JustdoJiraIntegration.justdo_field_to_jira_field_map, (field) -> field.id or field.name
     return relevant_field_ids.concat ["project", "parent", "assignee", JustdoJiraIntegration.task_id_custom_field_id, JustdoJiraIntegration.project_id_custom_field_id, JustdoJiraIntegration.last_updated_custom_field_id]
+
+  isJustdoMountedWithJiraProject: (justdo_id) ->
+    query =
+      project_id: justdo_id
+      $or: [
+        jira_issue_id:
+          $ne: null
+      ,
+        jira_project_id:
+          $ne: null
+      ,
+        jira_mountpoint_type:
+          $ne: null
+      ]
+
+    return @tasks_collection.find(query).count() > 0
