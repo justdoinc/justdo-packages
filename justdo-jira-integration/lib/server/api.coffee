@@ -609,9 +609,9 @@ _.extend JustdoJiraIntegration.prototype,
     APP.justdo_db_migrations.registerMigrationScript "refresh-jira-api-token", JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
 
   _setupJiraClientForAllJustdosWithRefreshToken: ->
-    @jira_collection.find({refresh_token: {$exists: true}}, {fields: {server_info: 1, refresh_token: 1}}).forEach (doc) =>
-      console.log "Refreshing Jira OAuth2 access token for Jira server #{doc.server_info?.name}"
-      @refreshJiraAccessToken doc
+    @jira_collection.find({refresh_token: {$exists: true}}, {fields: {server_info: 1, refresh_token: 1}}).forEach (jira_doc) =>
+      console.log "Refreshing Jira OAuth2 access token for Jira server #{jira_doc.server_info?.name}"
+      @refreshJiraAccessToken jira_doc
       return
 
   _parseAndStoreJiraCredentials: (res) ->
