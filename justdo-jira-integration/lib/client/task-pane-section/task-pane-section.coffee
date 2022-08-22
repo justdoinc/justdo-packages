@@ -31,7 +31,7 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.helpers
   taskIsMountable: ->
     active_task = JD.activeItem({jira_project_key: 1, jira_issue_key: 1, jira_mountpoint_type: 1, jira_sprint_mountpoint_id: 1, jira_fix_version_mountpoint_id: 1})
     delete active_task._id
-    return _.isEmpty active_task
+    return _.every active_task, (field_val) -> _.isEmpty field_val
 
   availableProjects: -> Template.instance().available_jira_projects_rv.get()
 
