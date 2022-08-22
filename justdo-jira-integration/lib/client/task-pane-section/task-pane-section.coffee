@@ -19,7 +19,13 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.helpers
   mountedJiraProject: ->
     active_task = JD.activeItem({jira_project_id: 1, jira_mountpoint_type: 1})
     if active_task.jira_mountpoint_type is "root"
-      return active_task.jira_project_id
+      jira_project_id = active_task.jira_project_id
+      query =
+        "jira_projects.#{jira_project_id}":
+          $ne: null
+      query_options =
+        "jira_projects.#{jira_project_id}": 1
+      return APP.collections.Jira.findOne(query, query_options)?.jira_projects?[jira_project_id]?.key
     return
 
   taskIsMountable: ->

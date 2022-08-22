@@ -794,6 +794,7 @@ _.extend JustdoJiraIntegration.prototype,
     if not APP.projects.isProjectAdmin justdo_id, user_id
       throw @_error "permission-denied"
 
+    @fetchJiraProjectKeyById justdo_id, jira_project_id
     client = @getJiraClientForJustdo justdo_id
 
     Promise
@@ -1000,11 +1001,18 @@ _.extend JustdoJiraIntegration.prototype,
 
     return projects
 
-  getJiraProjectByIdOrKey: (justdo_id, project_id_or_key) ->
+  fetchJiraProjectKeyById: (justdo_id, jira_project_id) ->
     client = @getJiraClientForJustdo(justdo_id).v2
-    project = await client.projects.getProject {projectIdOrKey: project_id_or_key}
-
-    return project
+    client.projects.getProject {projectIdOrKey: jira_project_id}
+      .then (res) =>
+        query =
+          "server_info.id": @getJiraServerIdFromApiClient client
+        ops =
+          $set:
+            "jira_projects.#{jira_project_id}.key": res.key
+        @jira_collection.update query, ops
+        return
+    return
 
   setJustdoIdandTaskIdToJiraIssue: (justdo_id, task_id, issue_id_or_key) ->
     # XXX Need to think of how to store and fetch Jira customfields ids for task_id and justdo_id
