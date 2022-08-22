@@ -8,5 +8,3 @@ _.extend JustdoJiraIntegration,
   custom_page_label: "Jira Integration"
 
   projects_collection_jira_doc_id: "justdo_jira:id"
-
-  acces_token_update_rate_ms: 1000 * 60 * 50  # 50 mins

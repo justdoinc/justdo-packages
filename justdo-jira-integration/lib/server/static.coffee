@@ -4,6 +4,8 @@ sprint_custom_field_id = "customfield_10020"
 story_point_estimate_custom_field_id = "customfield_10016"
 
 _.extend JustdoJiraIntegration,
+  access_token_update_rate_ms: 1000 * 60 * 50  # 50 mins
+
   # XXX Try to search for custom field ids using Jira API and store it in DB
 
   # XXX For IT only
