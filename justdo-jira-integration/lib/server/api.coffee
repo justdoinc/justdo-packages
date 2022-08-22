@@ -32,6 +32,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     @clients = {}
 
+    @_setupJiraClientForAllJustdosWithRefreshToken()
     @_registerDbMigrationScriptForRefreshingAccessToken()
 
     @_setupInvertedFieldMap()
