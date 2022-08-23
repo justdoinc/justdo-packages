@@ -25,7 +25,8 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.helpers
           $ne: null
       query_options =
         "jira_projects.#{jira_project_id}": 1
-      return APP.collections.Jira.findOne(query, query_options)?.jira_projects?[jira_project_id]?.key
+      jira_project_key = APP.collections.Jira.findOne(query, query_options)?.jira_projects?[jira_project_id]?.key
+      return {jira_project_key, jira_project_id}
     return
 
   taskIsMountable: ->

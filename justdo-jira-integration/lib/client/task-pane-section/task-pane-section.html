@@ -3,8 +3,8 @@
     Link to Jira Issue: <a href="{{this}}" target="_blank">{{this}}</a>
   {{else}}
     {{#with mountedJiraProject}}
-      Mounted to Jira project {{this}}
-      <a href="#" class="unmount-jira-project" data-project-id="{{this}}">(unmount)</a>
+      Mounted to Jira project {{jira_project_key}}
+      <a href="#" class="unmount-jira-project" data-project-id="{{jira_project_id}}">(unmount)</a>
     {{else}}
       {{#if taskIsMountable}}
         <div class="jira-projects">
