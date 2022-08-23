@@ -24,6 +24,10 @@ _.extend Projects.prototype,
       APP.modules.project_page.project_config_ui.registerConfigTemplate "create-new-justdo-with-same-settings",
         section: "operations"
         template: "create_new_justdo_with_same_settings"
+      module = APP.modules.project_page
+      module.project_config_ui.registerConfigTemplate "create_new_justdo_with_same_settings_project_config",
+        section: "extensions"
+        template: "create_new_justdo_with_same_settings_project_config"
         priority: 100
 
       return
