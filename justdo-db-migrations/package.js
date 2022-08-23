@@ -71,6 +71,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/api.coffee", both);
   api.addFiles("lib/both/schemas.coffee", both);
 
+  api.addFiles("lib/server/core-batched-collection-updates-types.coffee", server);
+
   api.addFiles("lib/server/static.coffee", server);
   api.addFiles("lib/server/api.coffee", server);
   api.addFiles("lib/server/collections-hooks.coffee", server);
@@ -90,7 +92,6 @@ Package.onUse(function (api) {
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
   // file. 
-
   api.addFiles("lib/server/core-migrations/add-justdo-timezone.coffee", server);
   api.addFiles("lib/server/core-migrations/add-parents2.coffee", server);
   api.addFiles("lib/server/core-migrations/check-parents2.coffee", server);

@@ -12,6 +12,8 @@ _.extend JustdoDbMigrations.prototype,
     if @destroyed
       return
 
+    @_registerCoreCollectionUpdatesTypes()
+
     # Defined in methods.coffee
     @_setupMethods()
 
@@ -26,12 +28,6 @@ _.extend JustdoDbMigrations.prototype,
 
     # Defined in jobs.coffee
     @_setupJobs()
-
-    # XXX this shouldn't be here
-    APP.justdo_db_migrations.registerBatchedCollectionUpdatesType "grid-bulk-update-from-secure-source", {
-      collection: APP.collections.Tasks
-      use_raw_collection: true
-    }
 
     return
 
@@ -210,7 +206,7 @@ _.extend JustdoDbMigrations.prototype,
 
     return
 
-  batch_collection_updates_type_def_schema: new SimpleSchema
+  _registerBatchedCollectionUpdatesTypeSchema: new SimpleSchema
     collection:
       type: Mongo.Collection
     use_raw_collection:
@@ -223,13 +219,12 @@ _.extend JustdoDbMigrations.prototype,
       type: Object
       blackbox: true
       optional: true
-
   registerBatchedCollectionUpdatesType: (type_id, options) ->
     check type_id, String
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @batch_collection_updates_type_def_schema,
+        @_registerBatchedCollectionUpdatesTypeSchema,
         options,
         {self: @, throw_on_error: true}
       )
@@ -267,15 +262,12 @@ _.extend JustdoDbMigrations.prototype,
 
     return job_id
 
-  deregisterBatchedCollectionUpdatesJob: (job_id, user_id) ->
-    # Will remove the job but will do NOTHING with items already processed.
+  terminateBatchedCollectionUpdatesJob: (job_id, user_id) ->
     APP.collection.DBMigrationBatchedCollectionUpdates.update job_id,
       $set:
         process_status: "terminated"
         "process_status_details.closed_at": new Date()
         "process_status_details.terminated_by": user_id
-
-
 
     return
 

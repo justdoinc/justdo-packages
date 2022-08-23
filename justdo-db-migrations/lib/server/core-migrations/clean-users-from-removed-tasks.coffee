@@ -6,6 +6,9 @@ APP.executeAfterAppLibCode ->
     collection: APP.collections.Tasks
     updated_at_field: "_raw_updated_date"
     queryGenerator: ->
+      # IMPORTANT!!! this is a JustdoDbMigrations.perpetualMaintainer and not a JustdoDbMigrations.commonBatchedMigration .
+      # The queryGenerator of a perpetualMaintainer receives only the query and no query options.
+      # Here you can define custom fields to fetch under custom_fields_to_fetch.
       return {_raw_removed_date: {$ne: null}, users: {$ne: []}}
     exec_interval: 5 * 1000 # 5 seconds
     checkpoint_record_name: "#{migration_name}-checkpoint"

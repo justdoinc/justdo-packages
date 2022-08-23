@@ -30,6 +30,10 @@ _.extend JustdoDbMigrations.prototype,
             type: Number
             defaultValue: 0
 
+          last_processed: # The date of the last time we processed docs for this job
+            type: Date
+            optional: true
+
           created_at:
             type: Date
 

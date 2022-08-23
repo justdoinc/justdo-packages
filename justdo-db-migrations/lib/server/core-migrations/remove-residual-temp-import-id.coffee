@@ -8,6 +8,9 @@ APP.executeAfterAppLibCode ->
     updated_at_field: "_raw_updated_date"
     delayed_updated_at_field: 1000 * 60 * 2 # Delay to avoid interrupting on-going active clipboard imports.
     queryGenerator: ->
+      # IMPORTANT!!! this is a JustdoDbMigrations.perpetualMaintainer and not a JustdoDbMigrations.commonBatchedMigration .
+      # The queryGenerator of a perpetualMaintainer receives only the query and no query options.
+      # Here you can define custom fields to fetch under custom_fields_to_fetch.
       return {"jci:temp_import_id" : {$ne: null}}
     exec_interval: 5 * 1000
     checkpoint_record_name: "#{migration_name}-checkpoint"
