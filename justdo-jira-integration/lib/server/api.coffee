@@ -794,11 +794,11 @@ _.extend JustdoJiraIntegration.prototype,
 
         # Create the three special task that groups all the sprints and fix versions, and all the tasks
         # roadmap_mountpoint currently holds all the issues
-        roadmap_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Roadmap", project_id: justdo_id, jira_project_key: jira_project_key, jira_mountpoint_type: "roadmap", jira_last_updated: new Date()}, justdo_admin_id
+        roadmap_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Roadmap", project_id: justdo_id, jira_project_key: jira_project_key, jira_mountpoint_type: "roadmap", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
         # XXX Might need some special treatment for these two tasks and their child
         # XXX Like bolding the title, prevent removal, etc etc
-        sprints_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Sprints", project_id: justdo_id, jira_project_key: jira_project_key, jira_mountpoint_type: "sprints", jira_last_updated: new Date()}, justdo_admin_id
-        fix_versions_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Fix Versions", project_id: justdo_id, jira_project_key: jira_project_key, jira_mountpoint_type: "fix_versions", jira_last_updated: new Date()}, justdo_admin_id
+        sprints_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Sprints", project_id: justdo_id, jira_project_key: jira_project_key, jira_mountpoint_type: "sprints", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
+        fix_versions_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Fix Versions", project_id: justdo_id, jira_project_key: jira_project_key, jira_mountpoint_type: "fix_versions", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
         # Since the row style data cannot be inserted along addChild, we perform the update here.
         @tasks_collection.update {_id: {$in: [roadmap_mountpoint_task_id, sprints_mountpoint_task_id, fix_versions_mountpoint_task_id]}}, {$set: {"jrs:style": {bold: true}}}, {multi: true}
 
@@ -810,6 +810,7 @@ _.extend JustdoJiraIntegration.prototype,
               project_id: justdo_id
               title: sprint.name
               jira_sprint_mountpoint_id: sprint.id
+              state: "nil"
               jira_last_updated: new Date()
             if sprint.startDate?
               task_fields.start_date = moment(sprint.startDate).format("YYYY-MM-DD")
@@ -824,6 +825,7 @@ _.extend JustdoJiraIntegration.prototype,
               project_id: justdo_id
               title: fix_version.name
               jira_fix_version_mountpoint_id: fix_version.id
+              state: "nil"
               jira_last_updated: new Date()
             if fix_version.startDate?
               task_fields.start_date = moment(fix_version.startDate).format("YYYY-MM-DD")
