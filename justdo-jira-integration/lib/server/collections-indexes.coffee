@@ -16,6 +16,6 @@ _.extend JustdoJiraIntegration.prototype,
     @tasks_collection.rawCollection().createIndex({jira_fix_version_mountpoint_id: 1})
 
     # PROJECTS_COLLECTION_JIRA_DOC_ID_INDEX
-    @jira_collection.rawCollection().createIndex({[JustdoJiraIntegration.projects_collection_jira_doc_id]: 1})
+    @jira_collection.rawCollection().createIndex({"conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": 1})
 
     return

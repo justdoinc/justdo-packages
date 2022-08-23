@@ -28,5 +28,5 @@ _.extend JustdoJiraIntegration.prototype,
 
   getJiraServerInfoFromJustdoId: (justdo_id) ->
     check justdo_id, String
-    jira_doc_id = @projects_collection.findOne(justdo_id, {fields: {[JustdoJiraIntegration.projects_collection_jira_doc_id]: 1}})?[JustdoJiraIntegration.projects_collection_jira_doc_id]
+    jira_doc_id = @projects_collection.findOne(justdo_id, {fields: {"conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": 1}})?.conf?[JustdoJiraIntegration.projects_collection_jira_doc_id]
     return @jira_collection.findOne(jira_doc_id, {fields: {server_info: 1}})?.server_info

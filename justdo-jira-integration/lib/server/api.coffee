@@ -753,7 +753,7 @@ _.extend JustdoJiraIntegration.prototype,
 
             jira_server_id = await self._parseAndStoreJiraCredentials res
             jira_doc_id = self.jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {_id: 1}})._id
-            self.projects_collection.update justdo_id, {$set: {[JustdoJiraIntegration.projects_collection_jira_doc_id]: jira_doc_id}}
+            APP.projects.configureProject justdo_id, {[JustdoJiraIntegration.projects_collection_jira_doc_id]: jira_doc_id}, self._getJustdoAdmin justdo_id
             return
 
     # Route for webhook
