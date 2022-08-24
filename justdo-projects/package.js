@@ -88,6 +88,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.sass", client);
   api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.html", client);
   api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.coffee", client);
+  api.addFiles("lib/client/create-new-justdo-with-same-settings.html", client);
+  api.addFiles("lib/client/create-new-justdo-with-same-settings.coffee", client);
 
   api.addFiles("lib/client/create-new-justdo-with-same-settings-project-config.html", client);
   api.addFiles("lib/client/create-new-justdo-with-same-settings-project-config.coffee", client);
