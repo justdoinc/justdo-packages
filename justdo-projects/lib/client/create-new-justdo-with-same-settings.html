@@ -1,3 +1,5 @@
 <template name="create_new_justdo_with_same_settings">
-  <button class="create-justdo-same-settings btn btn-light">Create a new JustDo with the same settings</button>
+  {{#if createNewJustdoWithSameSettingsEnabled}}
+    <button class="create-justdo-same-settings btn btn-light">Create a new JustDo with the same settings</button>
+  {{/if}}
 </template>
