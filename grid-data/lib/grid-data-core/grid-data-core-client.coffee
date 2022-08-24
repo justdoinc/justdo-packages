@@ -295,7 +295,11 @@ _.extend GridDataCore.prototype,
             structure_changed = true
 
             if @tree_structure[parent_id][new_order]? # There is alreay an item with the same order
-              @addItemIdToOrderOverriddenItems(item_id, parent_id, new_order)
+              if @tree_structure[parent_id][new_order] isnt item_id # Only if the item wasn't there already (can happen in case of multi-parents)
+                @addItemIdToOrderOverriddenItems(item_id, parent_id, new_order)
+              else # The item was already there, nothing to do
+                structure_changed = false
+                console.log "[grid-data-core] attempt to add same item to same parent/order prevented" # console.log and not debugger, is used intentionally, since we want to catch that case in prod as well.
             else
               @tree_structure[parent_id][new_order] = item_id
             
@@ -319,7 +323,11 @@ _.extend GridDataCore.prototype,
               @detaching_items_ids[parent_id] = true
 
           if @tree_structure[parent_id][new_order]? # There is alreay an item with the same order
-            @addItemIdToOrderOverriddenItems(item_id, parent_id, new_order)
+            if @tree_structure[parent_id][new_order] isnt item_id # Only if the item wasn't there already (can happen in case of multi-parents)
+              @addItemIdToOrderOverriddenItems(item_id, parent_id, new_order)
+            else # The item was already there, nothing to do
+              structure_changed = false
+              console.log "[grid-data-core] attempt to add same item to same parent/order prevented" # console.log and not debugger, is used intentionally, since we want to catch that case in prod as well.
           else
             @tree_structure[parent_id][new_order] = item_id
 
