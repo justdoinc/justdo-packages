@@ -56,3 +56,15 @@ _.extend JustdoCoreHelpers,
     @logger.error(log_message)
 
     return new Meteor.Error(type, message, details)
+
+  performIfPlguinInstalledAndConditionIsMet: (project_id, options) ->
+    if not options.is_complex_condition? or options.is_complex_condition is false
+      if options.condition() is true
+        if APP.projects.isPluginInstalledOnProjectId(this.constructor.project_custom_feature_id, project_id)
+          return options.operation()
+    else
+      if APP.projects.isPluginInstalledOnProjectId(this.constructor.project_custom_feature_id, project_id)
+        if options.condition() is true
+          return options.operation()
+
+    return
