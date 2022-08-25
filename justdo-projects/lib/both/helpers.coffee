@@ -28,6 +28,16 @@ _.extend Projects.prototype,
   getNonAdminsIdsFromProjectDoc: (project_doc) ->
     @getAdminsIdsFromProjectDoc project_doc, true
 
+  isPluginInstalledOnProjectId: (custom_feature_id, project_id) ->
+    project_doc = APP.collections.Projects.findOne project_id,
+      fields:
+        conf: 1
+        
+    if not project_doc?
+      return false
+
+    return @isPluginInstalledOnProjectDoc(JustdoPlanningUtilities.project_custom_feature_id, project_doc)
+
   isPluginInstalledOnProjectDoc: (custom_feature_id, project_doc) ->
     if not project_doc? and Meteor.isClient
       project_doc = APP?.modules?.project_page?.curProj()?.getProjectDoc({fields: {conf: 1}})
