@@ -589,14 +589,11 @@ _.extend JustdoJiraIntegration.prototype,
       static_query: false
       queryGenerator: ->
         query =
-          refresh_token:
-            $ne: null
           access_token_updated:
-            $lte: new Date(new Date() - JustdoJiraIntegration.access_token_update_rate_ms)
+            $lte: JustdoHelpers.getDateMsOffset(-1 * JustdoJiraIntegration.access_token_update_rate_ms)
         query_options =
           fields:
             refresh_token: 1
-            server_info: 1
         return {query, query_options}
       batchProcessor: (jira_collection_cursor) ->
         num_processed = 0
@@ -748,7 +745,7 @@ _.extend JustdoJiraIntegration.prototype,
           get_oauth_token_req.data.code = code
           HTTP.post self.get_oauth_token_endpoint, get_oauth_token_req, (err, res) ->
             if err?
-              console.error err.response
+              console.error "[justdo-jira-integration] Failed to get access token", err.response
               return
 
             jira_server_id = await self._parseAndStoreJiraCredentials res
@@ -768,6 +765,8 @@ _.extend JustdoJiraIntegration.prototype,
 
   refreshJiraAccessToken: (jira_doc) ->
     self = @
+    if _.isString jira_doc
+      jira_doc = @jira_collection.findOne jira_doc, {fields: {refresh_token: 1}}
 
     req =
       headers:
@@ -779,7 +778,7 @@ _.extend JustdoJiraIntegration.prototype,
         client_secret: @client_secret
     HTTP.post self.get_oauth_token_endpoint, req, (err, res) =>
       if err?
-        console.error err.response
+        console.error "[justdo-jira-integration] Failed to refresh access token", err.response
         return
       @_parseAndStoreJiraCredentials res
       return
