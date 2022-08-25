@@ -541,7 +541,7 @@ _.extend JustdoTasksContextMenu.prototype,
                   res.push
                     id: project_task_doc._id
 
-                    label: -> return JustdoHelpers.ellipsis(project_task_doc.title or "", 40)
+                    label: -> return project_task_doc.title or ""
                     label_addendum_template: "manage_active_projects_jump_to_proj"
                     op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
                       query =
