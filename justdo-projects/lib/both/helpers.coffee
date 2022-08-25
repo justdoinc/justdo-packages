@@ -36,13 +36,13 @@ _.extend Projects.prototype,
     if not project_doc?
       return false
 
-    return @isPluginInstalledOnProjectDoc(JustdoPlanningUtilities.project_custom_feature_id, project_doc)
+    return @isPluginInstalledOnProjectDoc(custom_feature_id, project_doc)
 
   isPluginInstalledOnProjectDoc: (custom_feature_id, project_doc) ->
     if not project_doc? and Meteor.isClient
       project_doc = APP?.modules?.project_page?.curProj()?.getProjectDoc({fields: {conf: 1}})
 
     if _.isArray(custom_features = project_doc?.conf?.custom_features)
-      return custom_feature_id in project_doc?.conf?.custom_features
+      return custom_feature_id in custom_features
 
     return false
