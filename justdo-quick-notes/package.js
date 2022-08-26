@@ -76,10 +76,6 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/client/pseudo-collections.coffee", client);
 
-  api.addFiles("lib/client/project-conf/project-conf.sass", client);
-  api.addFiles("lib/client/project-conf/project-conf.html", client);
-  api.addFiles("lib/client/project-conf/project-conf.coffee", client);
-
   api.addFiles("lib/client/activation-icon/activation-icon.sass", client);
   api.addFiles("lib/client/activation-icon/activation-icon.html", client);
   api.addFiles("lib/client/activation-icon/activation-icon.coffee", client);

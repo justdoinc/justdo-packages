@@ -7,7 +7,6 @@ _.extend JustdoQuickNotes.prototype,
       return
 
     self = @
-    @registerConfigTemplate()
     @setupCustomFeatureMaintainer()
     @onDestroy =>
       self.unsubscribeActiveQuickNotes()
