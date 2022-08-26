@@ -1,48 +1,256 @@
 .invite-new-user-dialog
-  form
-    margin-top: 14px
-    margin-bottom: 14px
+  .modal-dialog
+    width: 820px
+    max-width: 820px
 
-  .target-row .form-group
-    margin-bottom: 0
+  .modal-content
+    border: none
+    border-radius: 0
 
-.invite-new-user-dialog-inner-wrapper
-  padding: 4px 3px 17px
+  .modal-header
+    padding: 16px 24px
+    border: none
 
-.invite-new-user-info
-  color: #525F7F
-  font-size: 15px
-  padding: 8px 12px
+  .modal-body
+    padding: 0px 24px 24px 24px
 
-.invite-proxy
-  margin-bottom: 16px
-  font-size: 15px
-  display: flex
+  .modal-footer
+    border: none
+    padding: 20px 0 0 0
+    .next,
+    .invite
+      margin-left: 8px
+      width: 70px
+    .next
+      pointer-events: none
+      opacity: 0.25
+      &.active
+        pointer-events: all
+        opacity: 1
 
-.invite-proxy-check
-  display: flex
-  align-items: center
-  #is-proxy-user
-    margin-right: 4px
+  .invite-new-wrapper
+    position: relative
+    height: 680px
+    overflow: hidden
 
-.invite-proxy-info
-  position: relative
-  span
+  .step-one,
+  .step-two
+    position: absolute
+    display: flex
+    flex-direction: column
+    height: 100%
+    width: 100%
+    transition: left 0.35s
+
+  .step-one
+    left: 0%
+
+  .step-two
+    left: 100%
+    pointer-events: none
+    visibility: hidden
+
+  .show-select-projects
+    .step-one
+      left: -100%
+      pointer-events: none
+    .step-two
+      left: 0%
+      pointer-events: auto
+      visibility: visible
+
+  .step-content
+    position: relative
+    display: flex
+    flex-direction: column
+    height: 100%
+
+  .step-title
+    font-size: 15px
+    color: #3D495B
+    padding: 12px 16px
+    font-weight: bold
+
+  .users-email-input-wrapper
+    margin-bottom: 12px
+    position: relative
+    display: flex
+    align-items: center
+    .users-email-input
+      padding: 12px 80px 12px 12px
+    .users-email-add
+      text-transform: uppercase
+      font-weight: bold
+      border: none
+      position: absolute
+      right: 4px
+      opacity: 0
+      transition: opacity 0.25s
+      &:focus
+        box-shadow: none
+      &.show
+        opacity: 1
+
+  .users-section
+    display: flex
+    height: 100%
+    background-color: #f8f9fa
+    border-radius: 4px
+    flex-direction: column
+    overflow: hidden
+
+  .users-section + .users-section
+    margin-top: 12px
+
+  .users-table-header
+    display: flex
+    justify-content: space-between
+    margin: 0 16px
+    padding: 16px 0
+    border-bottom: 1px dashed #dee2e6
+
+  .users-table-header-title
+    color: black
+    font-weight: bold
+    font-size: 12px
+    text-transform: uppercase
+    display: flex
+    align-items: center
+
+  .users-table-header-roles
+    font-weight: bold
+    font-size: 13px
+    display: flex
+    color: rgba(49, 69, 99, 0.75)
+
+  .toolbar-role-item
+    opacity: 0.75
+    cursor: pointer
+    margin-left: 6px
     text-decoration: underline
-    font-size: 14px
-    margin-left: 4px
-    cursor: help
-  &:hover
-    .invite-proxy-info-tooltip
-      display: flex
+    &:hover
+      text-decoration: underline
+      opacity: 1
 
-.invite-proxy-info-tooltip
-  width: 360px
-  background-color: white
-  color: #4E5B71
-  box-shadow: 0px 8px 60px rgba(0, 0, 0, 0.12)
-  border-radius: 4px
-  padding: 12px 16px
-  font-size: 14px
-  position: absolute
-  display: none
+  .users-table-wrapper
+    overflow: auto
+    display: flex
+    flex-grow: 1
+    padding: 0 16px
+
+  .users-table
+    height: 0px
+    thead
+      border-bottom: 1px dashed #dee2e6
+    th
+      font-size: 11px
+      color: rgba(49, 69, 99, 0.6)
+      text-transform: uppercase
+      font-weight: bold
+      border: none
+      vertical-align: middle
+      padding: 8px 8px 8px 0px
+      &.type
+        width: 100px
+      &.full-name
+        width: 260px
+    td
+      padding: 8px 0px
+      font-size: 14px
+      vertical-align: middle
+      border-top: 1px dashed #dee2e6
+      border-bottom: 1px dashed #dee2e6
+
+  .users-table-item
+    .user-type-select
+      border: none
+      cursor: pointer
+      background: none
+      &:hover
+        text-decoration: underline
+      &:focus
+        outline: none
+    .user-first-name-input
+      margin-right: 4px
+      width: 120px
+      height: 28px
+    .user-last-name-input
+      width: 120px
+      height: 28px
+    .user-email-wrapper
+      display: flex
+      align-items: center
+      justify-content: space-between
+      padding-right: 12px
+    .user-email
+      width: 320px
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
+    .user-delete
+      opacity: 0
+      width: 16px
+      height: 22px
+      padding: 0
+      stroke-width: 3
+      display: flex
+      flex-basis: 16px
+      flex-shrink: 0
+      transition: all 0.25s
+      cursor: pointer
+      &:hover
+        opacity: 1 !important
+
+  .users-table-item:hover
+    .user-delete
+      opacity: 0.5
+
+  .user-role-dropdown
+    position: absolute
+    padding: 8px
+    width: 120px
+    background-color: white
+    display: none
+    &.open
+      display: inline-block
+    .dropdown-item
+      font-size: 15px
+      cursor: pointer
+
+  .users-wrapper-empty
+    color: rgba(49, 69, 99, 0.35)
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 100%
+    height: 100%
+    background-color: #f8f9fa
+    border-radius: 4px
+
+  .tasks-list
+    overflow: auto
+    padding: 0 16px
+    .no-tasks
+      font-size: 14px
+      color: rgba(49, 69, 99, 0.25)
+
+  .tasks-list-subtitle
+    font-size: 11px
+    color: rgba(49, 69, 99, 0.6)
+    text-transform: uppercase
+    font-weight: bold
+    margin-bottom: 8px
+
+  .task-item
+    background-color: #e4e8ef
+    border-radius: 2px
+    margin-bottom: 8px
+    padding: 8px 12px
+    cursor: pointer
+    transition: all 0.35s
+    color: black
+    &:hover
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25)
+    &.selected
+      box-shadow: 0 0 0 1px white, 0 0 0 3px #0a85d4
+      background-color: #dff1ff

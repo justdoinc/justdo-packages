@@ -50,13 +50,9 @@
     {{/if}}
 
     {{#if showInviteMembersSection}}
-      <div class="invite-members-section">
-        {{> add_as_guest_toggle controller=add_as_guest_toggle_controller}}
-
+      <div class="invite-members-section bg-light">
         <div class="invite-members-section-caption">Invite new members</div>
-
-        <input type="text" placeholder="{{#if isAddAsGuest}}Guest's{{else}}Member's{{/if}} Email">
-        <button type="button" name="button">Invite</button>
+        <button class="show-add-members-dialog btn btn-primary btn-sm" type="button">Invite</button>
       </div>
     {{/if}}
   </div>

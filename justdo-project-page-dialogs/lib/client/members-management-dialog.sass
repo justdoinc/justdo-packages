@@ -129,62 +129,20 @@ $add-users-section-margin-bottom-when-invite-members-displayed: 2px
       height: $members-section-height - $invite-members-section-height - $add-users-section-margin-bottom-when-invite-members-displayed
 
   .invite-members-section
-    background: #F5F5F5
-    border-radius: 2px
-    padding: 5px 9px
     height: $invite-members-section-height
     position: relative
-    margin-right: 2px
+    margin-right: 8px
     font-size: 14px
+    padding: 4px 8px
 
-    .invite-members-section-caption, .add-as-guest-toggle-wrapper
-      padding-bottom: 5px
-      margin-bottom: 5px
+    .invite-members-section-caption
+      margin-bottom: 4px
       font-weight: 600
       color: #3D495B
       user-select: none
 
-    .add-as-guest-caption
-      padding-left: 1px
-
-    .add-as-guest-more-info
-      cursor: default
-
-    .invite-members-section-caption
-      border-bottom: 1px solid #EAEAEA
-
-    .add-as-guest-toggle-wrapper
-      font-size: 11px
-
-    .add-as-guest-more-info
-      font-size: 12px
-
-    input
-      width: 212px
-      border: 0px
-      background-color: #f7f7f7
-      &:focus
-        outline: none
-      &::-webkit-input-placeholder
-        color: #5a83ba
-      &::-moz-placeholder
-        color: #5a83ba
-      &:-ms-input-placeholder
-        color: #5a83ba
-      &:-moz-placeholder
-        color: #5a83ba
-      &::-ms-clear
-        display: none
-
-    button
-      position: absolute
-      right: 5px
-      border: 0px
-      background: none
-      font-weight: 600
-      color: #2B71CF
-      &:focus
-        outline: none
+    .show-add-members-dialog
+      width: 100%
 
 .members-editor-dialog
   .modal-dialog

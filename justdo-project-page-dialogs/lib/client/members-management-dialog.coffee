@@ -2,53 +2,6 @@ ProjectPageDialogs.members_management_dialog = {}
 
 JustdoHelpers.setupHandlersRegistry(ProjectPageDialogs.members_management_dialog)
 
-addFilledUser = (add_as_guest) ->
-  email_input = $(".invite-members-section input")
-
-  email = email_input.val().trim().toLowerCase()
-
-  postSuccessProcedures = -> 
-    # Success procedures
-    email_input.val("") # clear input
-
-    return
-
-  ProjectPageDialogs.addMemberToCurrentProject email, {add_as_guest: add_as_guest, custom_classes: "opened-by-members-managment-dialog"}, (err, user_id) ->
-    if $(".members-search-input").val().length > 0
-      $(".members-search-input").val("").keyup()
-
-    Tracker.flush()
-    
-    JustdoHelpers.newComputedReactiveVar null, (crv) ->
-      if $(".members-editor-dialog").length == 0
-        # Stop crv when the dropdown menu is closed
-        crv.stop()
-
-        return
-
-      user_item = $(".user-btn[user-id='#{user_id}']")
-      if user_item.length > 0
-        target = user_item.get(0)
-        $(".members-editor-dialog-add-users-section").get(0).scrollTop = target.offsetTop
-
-        user_item.click()
-
-        # Stop crv when the member found
-        crv.stop()
-
-      return
-    ,
-      recomp_interval: 100 # Check every 100ms whether user opened the dropdown
-
-    if err?
-      alert err.reason
-
-      return
-    
-    postSuccessProcedures()
-
-    return
-
 APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
@@ -301,8 +254,8 @@ APP.executeAfterAppLibCode ->
       ancestors_ids_arr = _.keys APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownAncestorsIdsObj([data._id])
       @ancestors_users_subscription = APP.projects.subscribeTasksAugmentedFields(ancestors_ids_arr, ["users"])
 
-    # descendants_ids_arr = _.keys APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownDescendantsIdsObj([data._id])
-    # @descendants_users_subscription = APP.projects.subscribeTasksAugmentedFields(descendants_ids_arr, ["users"])
+    descendants_ids_arr = _.keys APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownDescendantsIdsObj([data._id])
+    @descendants_users_subscription = APP.projects.subscribeTasksAugmentedFields(descendants_ids_arr, ["users"])
 
     @self_users_subscription = APP.projects.subscribeTasksAugmentedFields([data._id], ["users"])
 
@@ -454,19 +407,13 @@ APP.executeAfterAppLibCode ->
     notes.set {}
 
     @ancestors_users_subscription?.stop()
-    # @descendants_users_subscription?.stop()
+    @descendants_users_subscription?.stop()
     @self_users_subscription?.stop()
 
     return
   #
   # Editor dialog sections
   #
-  Template.task_pane_item_details_members_editor_section.onCreated ->
-    @add_as_guest_toggle_controller = new Template.add_as_guest_toggle.Controller()
-
-    @isAddAsGuest = -> @add_as_guest_toggle_controller.isAddAsGuest()
-
-    return
 
   Template.task_pane_item_details_members_editor_section.helpers
     perform_action: ->
@@ -493,9 +440,6 @@ APP.executeAfterAppLibCode ->
 
       return false
 
-    isAddAsGuest: -> Template.instance().isAddAsGuest()
-
-    add_as_guest_toggle_controller: -> Template.instance().add_as_guest_toggle_controller
 
   Template.task_pane_item_details_members_editor_section.events
     "click .select-all": ->
@@ -504,12 +448,8 @@ APP.executeAfterAppLibCode ->
     "click .select-none": ->
       _setProceedStateForAllUsersInReactiveVarExcludingFiltered @action_users_reactive_var, false
 
-    "click .invite-members-section button": (e, tpl) ->
-      addFilledUser(tpl.isAddAsGuest())
-   
-    "keypress .invite-members-section input": (e, tpl) ->
-      if e.keyCode == 13
-        addFilledUser(tpl.isAddAsGuest())
+    "click .show-add-members-dialog": (e, tpl) ->
+      ProjectPageDialogs.showMemberDialog()
 
   #
   # Editor dialog section user button

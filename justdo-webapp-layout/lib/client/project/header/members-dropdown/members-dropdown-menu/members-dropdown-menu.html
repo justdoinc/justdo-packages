@@ -53,13 +53,9 @@
     {{#if is_project_admin}}
       <div class="add-project-members">
         <div class="dropdown-header text-muted text-uppercase px-0 pb-2">
-          {{> add_as_guest_toggle controller=add_as_guest_toggle_controller}}
           Invite New Members
         </div>
-        <div class="add-members-comp d-flex align-items-center">
-          <input type="text" class="form-control form-control-sm mr-2" placeholder="{{#if isAddAsGuest}}Guest{{else}}Member{{/if}}'s Email">
-          <button class="btn btn-primary btn-sm font-weight-bold text-uppercase" type="button">Invite</button>
-        </div>
+        <button class="show-add-members-dialog btn btn-primary btn-sm" type="button">Invite</button>
       </div>
     {{/if}}
 </template>

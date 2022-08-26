@@ -47,57 +47,8 @@ APP.executeAfterAppLibCode ->
   clearMembersDropDownErrors = ->
     $(".members-dropdown-menu .alert").remove()
 
-  addFilledUser = (add_as_guest) ->
-    clearMembersDropDownErrors()
-
-    email_input = $(".add-members-comp input")
-
-    email = email_input.val().trim().toLowerCase()
-
-    postSuccessProcedures = ->
-      # Success procedures
-      clearMembersDropDownErrors()
-      email_input.val("") # clear input
-
-    ProjectPageDialogs.addMemberToCurrentProject email, {add_as_guest: add_as_guest}, (err, user_id) ->
-      if $(".members-search-input").val().length > 0
-        $(".members-search-input").val("").keyup()
-
-      Tracker.flush()
-
-      JustdoHelpers.newComputedReactiveVar null, (crv) ->
-        if $(".members-dropdown-menu:visible").length == 0
-          # Stop crv when the dropdown menu is closed
-          crv.stop()
-
-          return
-
-        user_item = $(".member-item[user-id='#{user_id}']")
-        if user_item.length > 0
-          user_item.get(0).scrollIntoView()
-
-          # Stop crv when the member found
-          crv.stop()
-
-        return
-      ,
-        recomp_interval: 100 # Check every 100ms whether user opened the dropdown
-
-      if err?
-        addMembersDropDownError err.reason
-
-        return
-
-      postSuccessProcedures()
-
-      return
-
   Template.members_dropdown_menu.onCreated ->
     @members_filter = new ReactiveVar null
-
-    @add_as_guest_toggle_controller = new Template.add_as_guest_toggle.Controller()
-
-    @isAddAsGuest = -> @add_as_guest_toggle_controller.isAddAsGuest()
 
     return
 
@@ -123,19 +74,9 @@ APP.executeAfterAppLibCode ->
 
       return empty
 
-    add_as_guest_toggle_controller: -> Template.instance().add_as_guest_toggle_controller
-
-    isAddAsGuest: -> Template.instance().isAddAsGuest()
-
   Template.members_dropdown_menu.events
-    "click .add-members-comp button": (e, tpl) ->
-      addFilledUser(tpl.isAddAsGuest())
-
-      return
-
-    "keypress .add-members-comp input": (e, tpl) ->
-      if e.keyCode == 13
-        addFilledUser(tpl.isAddAsGuest())
+    "click .show-add-members-dialog": (e, tpl) ->
+      ProjectPageDialogs.showMemberDialog()
 
       return
 
