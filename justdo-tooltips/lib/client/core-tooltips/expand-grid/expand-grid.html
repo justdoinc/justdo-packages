@@ -1,11 +1,11 @@
 <template name="expand_grid_tooltip">
   <div class="dropdown expand-grid-dropdown">
     <div class="dropdown-menu p-2 shadow-lg border-0 show">
-      <div class="dropdown-item expand-grid-level">Expand all tasks</div>
+      <div class="dropdown-item expand-grid-item expand-grid-level">Expand all tasks</div>
       {{#if levels}}
-        <div class="dropdown-item dropdown-submenu">
+        <div class="dropdown-item expand-grid-item dropdown-submenu">
           Expand levels
-          <div class="dropdown-menu p-2 shadow-lg border-0">
+          <div class="dropdown-menu levels-menu p-2 shadow-lg border-0">
             {{#each levels}}
               <div class="dropdown-item expand-grid-level" level="{{this}}">{{this}}</div>
             {{/each}}

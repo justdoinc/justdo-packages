@@ -1,7 +1,7 @@
 APP.justdo_tooltips.registerTooltip
   id: "expand-grid"
-
   template: "expand_grid_tooltip"
+  hide_delay: 350
 
 Template.expand_grid_tooltip.onCreated ->
   @tooltip_controller = @data.tooltip_controller
@@ -29,5 +29,15 @@ Template.expand_grid_tooltip.events
 
   "click .dropdown-item": (e, tpl) ->
     tpl.tooltip_controller.closeTooltip()
+
+    return
+
+  "mouseenter .expand-grid-item": (e, tpl) ->
+    $item = $(e.target).closest(".expand-grid-item")
+
+    if $item.hasClass "dropdown-submenu"
+      $(".expand-grid-dropdown .levels-menu").fadeIn()
+    else
+      $(".expand-grid-dropdown .levels-menu").fadeOut()
 
     return
