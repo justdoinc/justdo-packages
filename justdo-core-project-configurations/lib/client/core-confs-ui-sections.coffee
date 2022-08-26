@@ -8,6 +8,10 @@ APP.executeAfterAppLibCode ->
     title: null # null means no title
     priority: 10
 
+  module.project_config_ui.registerConfigSection "operations",
+    title: "Operations" # null means no title
+    priority: 20
+
   module.project_config_ui.registerConfigSection "appearance",
     title: "Appearance"
     priority: 100

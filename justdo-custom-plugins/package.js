@@ -99,5 +99,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-templates.sass", client);
   api.addFiles("lib/core-custom-plugins/merge-justdo/merge-justdo-server.coffee", server);
 
+  api.addFiles("lib/core-custom-plugins/clone-justdo/clone-justdo.sass", client);
+  api.addFiles("lib/core-custom-plugins/clone-justdo/clone-justdo.html", client);
+  api.addFiles("lib/core-custom-plugins/clone-justdo/clone-justdo.coffee", client);
+
   api.export("JustdoCustomPlugins", both);
 });

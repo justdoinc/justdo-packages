@@ -77,6 +77,9 @@
       user-select: none
       &:hover
         background-color: #f8f9fa
+      &[controller-template-id="justdo_custom_plugins_project_config"] // special case justdo_custom_plugins_project_config aggregates multiple plugins
+        &:hover
+          background-color: transparent
       .controller-template-extension-item
         padding: 8px 8px 8px 12px
         font-size: 15px
