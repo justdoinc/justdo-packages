@@ -1,14 +1,23 @@
-.jump-to-task-in-proj
-  position: absolute
-  right: -4px
-  top: 0px
-
 .nested-dropdown-menu-manage-projects.nested-dropdown-menu
-  .context-action-item
-    padding-right: 26px
-    .dropdown-item-label-wrapper
+  .dropdown-item-label-wrapper
+    display: flex
+    white-space: initial
+    width: 320px
+    .jd-icon-context-action
+      margin-top: 2px
+    .jump-to-task-in-proj
       display: flex
-      white-space: initial
-      width: 320px
+      margin-left: auto
+      opacity: 0
+      pointer-events: none
+      padding-left: 8px
       .jd-icon-context-action
-        margin-top: 2px
+        margin-right: 0
+        transition: all 0.2s linear
+        cursor: pointer
+        &:hover
+          stroke: black
+          background-color: rgba(0, 0, 0, 0.08)
+      &.show
+        opacity: 1
+        pointer-events: all
