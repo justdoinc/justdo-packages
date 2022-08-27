@@ -897,7 +897,7 @@ _.extend JustdoJiraIntegration.prototype,
               # Jira cloud uses fields.parent, while Jira server uses epic_link (which the logic is removed due to migrating to project_id instead of project_key).
               # XXX Seems Jira cloud also has an epic link field. Consider using that instead of the parent structure.
               if (parent = issue_fields.parent)?
-                parent_id = parent.id
+                parent_id = parseInt parent.id
                 # XXX Hardcoded users length in query. Better approach is needed to determine whether the parent task is added completely along with its users.
                 # if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_id: parent_id}, {fields: {_id: 1}})?._id)?
                 if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_id: parent_id, "users.1": {$exists: true}}, {fields: {_id: 1}})?._id)?
