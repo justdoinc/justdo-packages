@@ -209,21 +209,23 @@ _.extend JustdoJiraIntegration.prototype,
         if (added_parent_id = modifier.$addToSet?.parents2?.parent)?
           # If parent_issue_id is found, assume Jira parent add/change
           parent_task = self.tasks_collection.findOne(added_parent_id, {fields: {jira_issue_id: 1, jira_mountpoint_type: 1}})
-          parent_issue_id = parent_task.jira_issue_id
+          if (parent_issue_id = parent_task?.jira_issue_id)?
 
-          # If parent_issue_id isnt found, and the destination task_id is the mountpoint of current Jira project, assume Jira parent removal
-          if not parent_issue_id? and parent_task.jira_mountpoint_type is "roadmap"
-            parent_issue_id = null
+            # If parent_issue_id isnt found, and the destination task_id is the mountpoint of current Jira project, assume Jira parent removal
+            if not parent_issue_id? and parent_task.jira_mountpoint_type is "roadmap"
+              parent_issue_id = null
 
-          # Send update to jira only when the parent change is within the project mountpoint
-          if _.isString(parent_issue_id) or _.isNull(parent_issue_id)
-            # Jira Cloud
-            if client.v2.config.host.includes "api.atlassian.com"
-              fields.parent =
-                key: parent_issue_id
-            # Jira server
-            else
-              fields[JustdoJiraIntegration.epic_link_custom_field_id] = parent_issue_id
+            # Send update to jira only when the parent change is within the project mountpoint
+            if parent_issue_id? or _.isNull(parent_issue_id)
+              if _.isNumber parent_issue_id
+                parent_issue_id = "#{parent_issue_id}"
+              # Jira Cloud
+              if client.v2.config.host.includes "api.atlassian.com"
+                fields.parent =
+                  id: parent_issue_id
+              # Jira server
+              else
+                fields[JustdoJiraIntegration.epic_link_custom_field_id] = parent_issue_id
 
         if not _.isEmpty fields
           fields[JustdoJiraIntegration.last_updated_custom_field_id] = new Date()
