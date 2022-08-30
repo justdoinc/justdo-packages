@@ -47,6 +47,7 @@ _.extend JustdoJiraIntegration.prototype,
         label: "Issue Type"
         type: String
         optional: true
+        allowedValues: ["Epic", "Story", "Task", "Bug", "Sub-task"]
         grid_editable_column: true
         grid_visible_column: true
         grid_column_filter_settings:
