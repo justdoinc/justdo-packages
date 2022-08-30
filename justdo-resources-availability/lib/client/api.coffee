@@ -123,15 +123,11 @@ _.extend JustdoResourcesAvailability.prototype,
             if config_data.has_issues.size > 0
               return false
 
-            all_holidays = $(".availability_config_dialog_holidays")[0].value
-            all_holidays = all_holidays.replace(/\n/g, " ")
-            all_holidays = all_holidays.replace(/,/g, " ")
-            all_holidays = all_holidays.replace(/\s\s+/g, ' ')
-            all_holidays = all_holidays.trim()
-            all_holidays = all_holidays.split(" ")
+            holidays_str = $(".availability_config_dialog_holidays")[0].value
+            expanded_all_holidays = self.parseHolidaysString(holidays_str)
 
             Meteor.call "jdraSaveResourceAvailability", \
-                    project_id,{working_days: config_data.weekdays, holidays: all_holidays},\
+                    project_id,{working_days: config_data.weekdays, holidays: expanded_all_holidays},\
                     user_id, task_id, (err, ret)->
               return
 
@@ -218,3 +214,36 @@ _.extend JustdoResourcesAvailability.prototype,
     if reverse_offset
       return -count
     return count
+  
+  parseHolidaysString: (holidays_str) ->
+    holidays_str = holidays_str.replace(/\s*--\s*/g, "--") 
+    holidays_str = holidays_str.replace(/\n/g, " ")
+    holidays_str = holidays_str.replace(/,/g, " ")
+    holidays_str = holidays_str.replace(/\s\s+/g, ' ')
+    holidays_str = holidays_str.trim()
+    if holidays_str == ""
+      return []
+
+    all_holidays = holidays_str.split(" ")
+
+    expanded_all_holidays = new Set()
+    for holiday in all_holidays
+      if holiday.indexOf('--') >= 0
+        holiday_split = holiday.split("--")
+        if (holiday_split.length != 2)
+          return false
+        if (start = holiday_split[0]) == "" or (end = holiday_split[1]) == ""
+          return false
+        i = moment(start, "YYYY-MM-DD", true)
+        end = moment(end, "YYYY-MM-DD", true)
+        if not i.isValid() or not end.isValid() or i > end
+          return false
+        while i <= end
+          expanded_all_holidays.add(i.format("YYYY-MM-DD"))
+          i = i.add(1, "day")
+      else if holiday != "" and moment(holiday , "YYYY-MM-DD", true).isValid()
+        expanded_all_holidays.add(holiday)
+      else
+        return false
+    
+    return Array.from(expanded_all_holidays)

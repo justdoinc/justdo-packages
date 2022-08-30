@@ -55,19 +55,13 @@ Template.justdo_resources_availability_config_dialog.events
     has_issues = Template.currentData().has_issues
 #    data_holidays = Template.currentData().holidays
     Meteor.defer =>
-      val = $(e.target).val().trim()
-      val = val.replace(/\n/g, ",");
-      val = val.replace(/,,/g, ",");
-      all_dates = val.split(",")
+      if APP.justdo_resources_availability.parseHolidaysString($(e.target).val().trim()) == false
+        holidays_string_is_valid.set(false)
+        has_issues.add "issue_with_holidays"
+      else
+        holidays_string_is_valid.set(true)
+        has_issues.delete "issue_with_holidays"
 
-      for date in all_dates
-        date = date.trim()
-        if date!="" and moment(date , "YYYY-MM-DD", true).isValid() == false
-          holidays_string_is_valid.set(false)
-          has_issues.add "issue_with_holidays"
-          return
-      holidays_string_is_valid.set(true)
-      has_issues.delete "issue_with_holidays"
       return
     return
 
