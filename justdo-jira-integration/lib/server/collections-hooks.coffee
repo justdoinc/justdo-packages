@@ -46,15 +46,16 @@ _.extend JustdoJiraIntegration.prototype,
       if not (task_id = selector?._id)?
         return
 
+      # Created by Jira or during project mount process. Ignore.
+      if doc.jira_issue_id or doc.jira_sprint_mountpoint_id or doc.jira_fix_version_mountpoint_id or doc.jira_last_updated
+        return
+
       justdo_id = doc.project_id
-      jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id
 
       if not self.isJiraIntegrationInstalledOnJustdo justdo_id
         return
 
-      # Created by Jira or during project mount process. Ignore.
-      if doc.jira_issue_id or doc.jira_sprint_mountpoint_id or doc.jira_fix_version_mountpoint_id or doc.jira_last_updated
-        return
+      jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id
 
       # XXX Multi-parent situation is NOT handled yet!
       parent_task_id = doc.parents2[0].parent
@@ -152,7 +153,6 @@ _.extend JustdoJiraIntegration.prototype,
 
     self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
       justdo_id = doc.project_id
-      jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id
 
       if modifier.$set?.jira_last_updated?
         return
@@ -160,6 +160,7 @@ _.extend JustdoJiraIntegration.prototype,
       if not self.isJiraIntegrationInstalledOnJustdo justdo_id
         return
 
+      jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id
       client = self.clients[jira_server_id]
 
       # Updates toward a specific sprint
