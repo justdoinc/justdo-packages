@@ -163,45 +163,15 @@ _.extend JustdoJiraIntegration.prototype,
       jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id
       client = self.clients[jira_server_id]
 
-      # Updates toward a specific sprint
-      if (jira_sprint_id = doc.jira_sprint_mountpoint_id)? and not _.isEmpty(supported_fields = _.pick modifier.$set, ["start_date", "end_date", "title"])
-        {start_date, end_date, title} = supported_fields
-        req =
-          sprintId: jira_sprint_id
-        if start_date?
-          req.startDate = start_date
-        if end_date?
-          req.endDate = end_date
-        if title?
-          req.name = title
-
-        client.agile.sprint.partiallyUpdateSprint req
-        .then (res) -> console.log res
-        .catch (err) -> console.error err.response.data
-        return
-
-      # Updates toward a specific fix version
-      if (jira_fix_version_id = doc.jira_fix_version_mountpoint_id)? and not _.isEmpty(supported_fields = _.pick modifier.$set, ["start_date", "due_date", "title", "description"])
-        {start_date, due_date, title, description} = supported_fields
-        req =
-          id: jira_fix_version_id
-        if start_date?
-          req.startDate = start_date
-        if due_date?
-          req.releaseDate = due_date
-        if title?
-          req.name = title
-        if description?
-          req.description = description
-
-        client.v2.projectVersions.updateVersion req
-        .then (res) -> console.log res
-        .catch (err) -> console.error err.response.data
-        return
-
       # Updates toward an issue
       # XXX Try ignore sending back changes from Justdo in Jira's webhook config (likely will involve JQL)
       if (jira_issue_id = doc.jira_issue_id)?
+        # Issues must have a type
+        if _.isNull modifier?.$set?.jira_issue_type
+          delete modifier.$set.jira_issue_type
+        if modifier?.$unset?.jira_issue_type?
+          delete modifier.$unset.jira_issue_type
+
         {fields, transition} = await self._mapJustdoFieldsToJiraFields justdo_id, doc, modifier
 
         # XXX The statement below handles parent change. Consider putting them into field map.
@@ -252,13 +222,46 @@ _.extend JustdoJiraIntegration.prototype,
 
         return
 
-      return
+      # Only issues can have issuetype
+      # * All other Jira fields are not handled as they are not editable on the grid.
+      if modifier?.$set?.jira_issue_type?
+        delete modifier.$set.jira_issue_type
 
+      # Updates toward a specific sprint
+      if (jira_sprint_id = doc.jira_sprint_mountpoint_id)? and not _.isEmpty(supported_fields = _.pick modifier.$set, ["start_date", "end_date", "title"])
+        {start_date, end_date, title} = supported_fields
+        req =
+          sprintId: jira_sprint_id
+        if start_date?
+          req.startDate = start_date
+        if end_date?
+          req.endDate = end_date
+        if title?
+          req.name = title
 
+        client.agile.sprint.partiallyUpdateSprint req
+          .then (res) -> console.log res
+          .catch (err) -> console.error err.response.data
         return
 
+      # Updates toward a specific fix version
+      if (jira_fix_version_id = doc.jira_fix_version_mountpoint_id)? and not _.isEmpty(supported_fields = _.pick modifier.$set, ["start_date", "due_date", "title", "description"])
+        {start_date, due_date, title, description} = supported_fields
+        req =
+          id: jira_fix_version_id
+        if start_date?
+          req.startDate = start_date
+        if due_date?
+          req.releaseDate = due_date
+        if title?
+          req.name = title
+        if description?
+          req.description = description
+
+        client.v2.projectVersions.updateVersion req
         .then (res) -> console.log res
         .catch (err) -> console.error err.response.data
+        return
 
       return
 
