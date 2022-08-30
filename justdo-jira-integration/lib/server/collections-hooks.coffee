@@ -97,15 +97,15 @@ _.extend JustdoJiraIntegration.prototype,
           if parent_task.jira_issue_type in ["Story", "Task", "Bug"]
             req.fields.issuetype.name = "Sub-task"
             req.fields.parent =
-              id: parent_issue_id
+              id: "#{parent_issue_id}"
           else
             # Jira Cloud
             if self.clients[jira_server_id].v2.config.host.includes "api.atlassian.com"
               req.fields.parent =
-                id: parent_issue_id
+                id: "#{parent_issue_id}"
             # Jira Server
             else
-              req.fields[JustdoJiraIntegration.epic_link_custom_field_id] = parent_issue_id
+              req.fields[JustdoJiraIntegration.epic_link_custom_field_id] = "#{parent_issue_id}"
 
       self.clients[jira_server_id].v2.issues.createIssue req
         .then (res) ->
