@@ -25,6 +25,9 @@ _.extend JustdoJiraIntegration.prototype,
     # Defined in collections-hooks.coffee
     @_setupCollectionsHooks()
 
+    # Defined in grid-control-middlewares.coffee
+    @_setupGridMiddlewares()
+
     # Defined in collections-indexes.coffee
     @_ensureIndexesExists()
 

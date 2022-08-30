@@ -251,18 +251,9 @@ _.extend JustdoJiraIntegration.prototype,
 
       return
 
-    self.tasks_collection.before.remove (user_id, doc) ->
-      justdo_id = doc.project_id
-      jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id
 
-      if not self.isJiraIntegrationInstalledOnJustdo justdo_id
         return
 
-      jira_issue_id = doc.jira_issue_id
-      if not jira_issue_id?
-        return
-      self.deleted_issue_ids.add jira_issue_id
-      self.getJiraClientForJustdo(doc.project_id).v2.issues.deleteIssue {issueIdOrKey: jira_issue_id}
         .then (res) -> console.log res
         .catch (err) -> console.error err.response.data
 
