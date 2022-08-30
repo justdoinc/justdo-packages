@@ -853,6 +853,7 @@ _.extend JustdoJiraIntegration.prototype,
           for sprint in jira_project_sprints_and_fix_versions.sprints
             task_fields =
               project_id: justdo_id
+              jira_project_id: jira_project_id
               title: sprint.name
               jira_sprint_mountpoint_id: sprint.id
               state: "nil"
@@ -868,6 +869,7 @@ _.extend JustdoJiraIntegration.prototype,
           for fix_version in jira_project_sprints_and_fix_versions.fix_versions
             task_fields =
               project_id: justdo_id
+              jira_project_id: jira_project_id
               title: fix_version.name
               jira_fix_version_mountpoint_id: fix_version.id
               state: "nil"
