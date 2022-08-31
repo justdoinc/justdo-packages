@@ -427,6 +427,35 @@ _.extend GridControl.prototype,
 
   clearColumnFilter: (column_id) -> @setColumnFilter(column_id, null)
 
+  selectAllColumnFilters: (column_id) ->
+    fields_schema = APP.modules.project_page.gridControl().getSchemaExtendedWithCustomFields()
+    filter_values = null
+
+    if (grid_values = fields_schema[column_id].grid_values)?
+      filter_values = Object.keys fields_schema[column_id].grid_values
+    else
+      relative_ranges = []
+
+      if (filter_options = fields_schema[column_id].grid_column_filter_settings.options.filter_options)?
+        for filter in filter_options
+          relative_ranges.push filter.id
+
+        filter_values = {"relative_ranges": relative_ranges}
+
+    console.log "-----"
+    console.log filter_values
+
+    view = @getView()
+
+    for column_view in view
+      if column_view.field == column_id
+        console.log column_view.filter
+        column_view.filter = filter_values
+
+        @setView view
+
+    return
+
   getColumnFilter: (column_id) ->
     for column_view in @getView()
       if column_view.field == column_id

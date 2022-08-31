@@ -119,6 +119,7 @@ _.extend GridControl.prototype,
         <div class="dropdown-filter-controls-container">
           <button type="button" class="btn btn-light border jd-btn-xsm close-dropdown">Close</button>
           <button type="button" class="btn btn-light border jd-btn-xsm clear">Clear</button>
+          <button type="button" class="btn btn-light border jd-btn-xsm all">All</button>
           <div style="clear: both"></div>
         </div>
       """
@@ -132,6 +133,10 @@ _.extend GridControl.prototype,
 
       $(".column-filter-dropdown .clear", @$filter_dropdown).click =>
         @clearColumnFilter(column_settings.field)
+
+      $(".column-filter-dropdown .all", @$filter_dropdown).click =>
+        @selectAllColumnFilters(column_settings.field)
+
 
       Meteor.defer =>
         # No clue why, but focusing on the same tick as the init tick messes up
