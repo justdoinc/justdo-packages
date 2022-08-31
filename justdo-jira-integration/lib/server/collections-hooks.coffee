@@ -152,6 +152,28 @@ _.extend JustdoJiraIntegration.prototype,
       return
 
     self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
+      # Hardcoded mountpoint tasks has fixed title and cannot be changed (except for the root mountpoint).
+      if doc.jira_mountpoint_type? and doc.jira_mountpoint_type isnt "root" and modifier?.$set?.title?
+        delete modifier.$set.title
+
+      # Issues must have an issuetype
+      if (jira_issue_id = doc.jira_issue_id)?
+        # Client side $unset operations will be translated to $set: {[field]: null}
+        # Hence there're two conditions
+        if _.isNull modifier?.$set?.jira_issue_type
+          delete modifier.$set.jira_issue_type
+        if modifier?.$unset?.jira_issue_type?
+          delete modifier.$unset.jira_issue_type
+      else
+        # Only issues can have issuetype
+        # * All other Jira fields are not handled as they are not editable on the grid.
+        if modifier?.$set?.jira_issue_type?
+          delete modifier.$set.jira_issue_type
+      return
+
+    # NOTE: As this hook contains async function calls, this hook is async and changing the modifier will NOT have any effect.
+    # If you wish to change the modifier, use the hook above.
+    self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
       justdo_id = doc.project_id
 
       if modifier.$set?.jira_last_updated?
@@ -166,12 +188,6 @@ _.extend JustdoJiraIntegration.prototype,
       # Updates toward an issue
       # XXX Try ignore sending back changes from Justdo in Jira's webhook config (likely will involve JQL)
       if (jira_issue_id = doc.jira_issue_id)?
-        # Issues must have a type
-        if _.isNull modifier?.$set?.jira_issue_type
-          delete modifier.$set.jira_issue_type
-        if modifier?.$unset?.jira_issue_type?
-          delete modifier.$unset.jira_issue_type
-
         {fields, transition} = await self._mapJustdoFieldsToJiraFields justdo_id, doc, modifier
 
         # XXX The statement below handles parent change. Consider putting them into field map.
@@ -221,11 +237,6 @@ _.extend JustdoJiraIntegration.prototype,
             .catch (err) -> console.error err.response.data
 
         return
-
-      # Only issues can have issuetype
-      # * All other Jira fields are not handled as they are not editable on the grid.
-      if modifier?.$set?.jira_issue_type?
-        delete modifier.$set.jira_issue_type
 
       # Updates toward a specific sprint
       if (jira_sprint_id = doc.jira_sprint_mountpoint_id)? and not _.isEmpty(supported_fields = _.pick modifier.$set, ["start_date", "end_date", "title"])
