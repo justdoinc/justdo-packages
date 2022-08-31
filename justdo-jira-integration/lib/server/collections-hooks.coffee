@@ -259,8 +259,8 @@ _.extend JustdoJiraIntegration.prototype,
           req.description = description
 
         client.v2.projectVersions.updateVersion req
-        .then (res) -> console.log res
-        .catch (err) -> console.error err.response.data
+          .then (res) -> console.log res
+          .catch (err) -> console.error err.response.data
         return
 
       return
