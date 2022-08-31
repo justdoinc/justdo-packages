@@ -427,4 +427,25 @@ _.extend JustdoResourcesAvailability.prototype,
         return true
     
     return false
+  
+  includesUserHoliday: (project_id, user_id, start_date, end_date) ->
+    if not start_date? or not end_date?
+      return false
+
+    {justdo_level_data, user_level_data} = @_getAvailabilityData(project_id, user_id)
+    if not user_level_data?.holidays?
+      return false
+    
+    i = moment(start_date)
+    end = moment(end_date)
+    
+    if not i.isValid() or not end.isValid() or i > end
+      return false
+
+    while (i <= end)
+      if (i.format("YYYY-MM-DD") in user_level_data.holidays)
+        return true
+      i = i.add(1, "day")
+
+    return false
     
