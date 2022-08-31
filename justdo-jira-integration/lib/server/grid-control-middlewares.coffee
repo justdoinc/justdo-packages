@@ -24,9 +24,8 @@ _.extend JustdoJiraIntegration.prototype,
       jira_issue_id: 1
 
     isPathUnderJiraTree = (path) =>
-      task_ids = GridData.helpers.getPathArray path
-      task_ids.pop()
-      return @tasks_collection.find(_.extend {_id: {$in: task_ids}}, jira_relevant_task_query).count() > 0
+      parent_id = GridData.helpers.getPathParentId path
+      return @tasks_collection.findOne(_.extend {_id: parent_id}, jira_relevant_task_query, {fields: {_id: 1}})?
 
     APP.projects._grid_data_com.setGridMethodMiddleware "addParent", (perform_as, etc) ->
       task = etc.item
@@ -56,6 +55,10 @@ _.extend JustdoJiraIntegration.prototype,
       # Tasks under these three mountpoint types are hard-coded tasks and thus the parent cannot be removed.
       # XXX Do we want to support removing a sprint/fix-version by deleting the task?
       if parent_task.jira_mountpoint_type in ["root", "sprints", "fix_versions"]
+        return
+
+      # In multi-parent scenario, block attempt to remove roadmap parent.
+      if parent_task.jira_mountpoint_type is "roadmap" and not etc.no_more_parents
         return
 
       # Removing a task/issue that's either under roadmap or under another task/issue will delete the task/issue.
