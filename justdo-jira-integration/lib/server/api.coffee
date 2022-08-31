@@ -362,7 +362,7 @@ _.extend JustdoJiraIntegration.prototype,
         return
 
       # Task deletion from Justdo. Ignore.
-      if @deleted_issue_ids.delete req_body.issue.id
+      if @deleted_issue_ids.delete parseInt req_body.issue.id
         return
 
       @tasks_collection.remove task_id
