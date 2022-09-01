@@ -215,6 +215,10 @@ columnFilterStateToQuery = (column_filter_state, context) ->
 
   return query
 
+getSelectAllFilterState = (context) ->
+  return {ranges: _.map(context.column_schema_definition.grid_ranges, (range) -> range.id)}
+
 GridControl.installFilterType "numeric-filter",
   controller_constructor: NumericFilterControllerConstructor
   column_filter_state_to_query: columnFilterStateToQuery
+  getSelectAllFilterState: getSelectAllFilterState

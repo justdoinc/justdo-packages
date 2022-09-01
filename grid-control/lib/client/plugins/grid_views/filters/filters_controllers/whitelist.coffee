@@ -124,6 +124,11 @@ WhiteListFilterControllerConstructor = (context) ->
 Util.inherits WhiteListFilterControllerConstructor, GridControl.FilterController
 
 _.extend WhiteListFilterControllerConstructor.prototype,
+  allow_select_all: true
+
+  getSelectAllFilterState: ->
+    return
+
   refresh_state: ->
     filter_state = @column_filter_state_ops.getColumnFilter()
 
@@ -180,6 +185,10 @@ columnFilterStateToQuery = (column_filter_state, context) ->
 
   return query
 
+getSelectAllFilterState = (context) ->
+  return _.keys(context.column_schema_definition.grid_values)
+
 GridControl.installFilterType "whitelist",
   controller_constructor: WhiteListFilterControllerConstructor
   column_filter_state_to_query: columnFilterStateToQuery
+  getSelectAllFilterState: getSelectAllFilterState

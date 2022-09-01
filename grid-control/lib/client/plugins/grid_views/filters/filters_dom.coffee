@@ -119,7 +119,14 @@ _.extend GridControl.prototype,
         <div class="dropdown-filter-controls-container">
           <button type="button" class="btn btn-light border jd-btn-xsm close-dropdown">Close</button>
           <button type="button" class="btn btn-light border jd-btn-xsm clear">Clear</button>
+      """
+
+      if _.isFunction(PACK.filters_getSelectAllFilterState[filter_type])
+        dropdown_controls += """
           <button type="button" class="btn btn-light border jd-btn-xsm all">All</button>
+        """
+
+      dropdown_controls += """
           <div style="clear: both"></div>
         </div>
       """

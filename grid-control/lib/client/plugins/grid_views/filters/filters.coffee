@@ -1,5 +1,6 @@
 PACK.filters_controllers = {}
 PACK.filters_types_state_to_query_transformations = {}
+PACK.filters_getSelectAllFilterState = {}
 
 row_filter_state_classes = ["f-first", "f-last", "f-passed", "f-leaf", "f-inner-node"]
 
@@ -428,49 +429,31 @@ _.extend GridControl.prototype,
   clearColumnFilter: (column_id) -> @setColumnFilter(column_id, null)
 
   selectAllColumnFilters: (column_id) ->
-    fields_schema = APP.modules.project_page.gridControl().getSchemaExtendedWithCustomFields()
-    filter_values = null
-    relative_ranges = []
+    extended_schema = @getSchemaExtendedWithCustomFields()
+    column_settings = extended_schema[column_id]
+    filter_settings = column_settings.grid_column_filter_settings
 
-    # Subject
-    if column_id == "title"
-      members = APP.modules.project_page.curProj().getMembersDocs()
+    if not (filter_type = filter_settings?.type)?
+      @logger.warn "column_id #{column_id} can't be filtered"
 
-      for member in members
-        relative_ranges.push member._id
+      return
 
-      filter_values = relative_ranges
+    filter_getSelectAllFilterState = PACK.filters_getSelectAllFilterState[filter_type]
+    if not (getSelectAllFilterState = PACK.filters_getSelectAllFilterState[filter_type])?
+      @logger.warn "Couldn't find the getSelectAllFilterState for filter type: #{filter_type}"
 
-    # All filters with nil option
-    else if (grid_values = fields_schema[column_id].grid_values)?
-      filter_values = Object.keys fields_schema[column_id].grid_values
-      filter_values.push null
+      return
 
-    # Follow up, Due Date, Created, Updated, Custom - Date, Private Follow Up
-    else if (filter_options = fields_schema[column_id].grid_column_filter_settings?.options?.filter_options)?
-      for filter in filter_options
-        relative_ranges.push filter.id
+    context =
+      column_id: column_id
+      grid_control: @
+      column_schema_definition: column_settings
 
-      filter_values = {"relative_ranges": relative_ranges}
+    select_all_filter_state = getSelectAllFilterState(context)
 
-    # Priority, Formula
-    else if (grid_ranges = fields_schema[column_id].grid_ranges)?
-      for range in grid_ranges
-        relative_ranges.push range.id
+    console.log select_all_filter_state
 
-      filter_values = {"ranges": relative_ranges}
-
-    # Status indicator, Types
-    else if (filter_values = fields_schema[column_id].grid_column_filter_settings?.options?.filter_values())?
-      filter_values = Object.keys filter_values
-
-    # Replace the existing state
-    view = @getView()
-
-    for column_view in view
-      if column_view.field == column_id
-        column_view.filter = filter_values
-        @setView view
+    @setColumnFilter(column_id, select_all_filter_state)
 
     return
 
@@ -570,8 +553,19 @@ GridControl.installFilterType = (filter_type_id, definition) ->
   #   with the other columns filters.
   #
   #   Note, you can return *any* query object you want, even one that affect other fields.
+  #
+  # ## getSelectAllFilterState
+  #
+  #   If set, we will show additional button in the filter ui that allows the user to select all.
+  #
+  #   The function gets the context like column_filter_state_to_query. and should return
+  #   the filter state value that represents the state where all the options are selected/widest
+  #   range is selected.
+  #
+  #   If isn't set, we won't show the Select All button.
 
   PACK.filters_controllers[filter_type_id] = definition.controller_constructor
   PACK.filters_types_state_to_query_transformations[filter_type_id] = definition.column_filter_state_to_query
+  PACK.filters_getSelectAllFilterState[filter_type_id] = definition.getSelectAllFilterState
 
   return
