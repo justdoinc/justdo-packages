@@ -467,7 +467,6 @@ _.extend JustdoJiraIntegration.prototype,
         .catch (err) -> console.error err
       return
     "sprint_updated": (req_body) ->
-      # TODO: Update sprint name
       {id, name, startDate, endDate, originBoardId} = req_body.sprint
 
       tasks_query =

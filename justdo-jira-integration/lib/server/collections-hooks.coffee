@@ -151,6 +151,7 @@ _.extend JustdoJiraIntegration.prototype,
           console.error e.response.data
       return
 
+    # NOTE: This hook is solely for changing the modifier.
     self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
       # Hardcoded mountpoint tasks has fixed title and cannot be changed (except for the root mountpoint).
       if doc.jira_mountpoint_type? and doc.jira_mountpoint_type isnt "root" and modifier?.$set?.title?
@@ -196,7 +197,6 @@ _.extend JustdoJiraIntegration.prototype,
           # If parent_issue_id is found, assume Jira parent add/change
           parent_task = self.tasks_collection.findOne(added_parent_id, {fields: {jira_issue_id: 1, jira_mountpoint_type: 1}})
           if (parent_issue_id = parent_task?.jira_issue_id)?
-
             # If parent_issue_id isnt found, and the destination task_id is the mountpoint of current Jira project, assume Jira parent removal
             if not parent_issue_id? and parent_task.jira_mountpoint_type is "roadmap"
               parent_issue_id = null
