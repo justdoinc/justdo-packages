@@ -430,28 +430,46 @@ _.extend GridControl.prototype,
   selectAllColumnFilters: (column_id) ->
     fields_schema = APP.modules.project_page.gridControl().getSchemaExtendedWithCustomFields()
     filter_values = null
+    relative_ranges = []
 
-    if (grid_values = fields_schema[column_id].grid_values)?
+    # Subject
+    if column_id == "title"
+      members = APP.modules.project_page.curProj().getMembersDocs()
+
+      for member in members
+        relative_ranges.push member._id
+
+      filter_values = relative_ranges
+
+    # All filters with nil option
+    else if (grid_values = fields_schema[column_id].grid_values)?
       filter_values = Object.keys fields_schema[column_id].grid_values
-    else
-      relative_ranges = []
+      filter_values.push null
 
-      if (filter_options = fields_schema[column_id].grid_column_filter_settings.options.filter_options)?
-        for filter in filter_options
-          relative_ranges.push filter.id
+    # Follow up, Due Date, Created, Updated, Custom - Date, Private Follow Up
+    else if (filter_options = fields_schema[column_id].grid_column_filter_settings?.options?.filter_options)?
+      for filter in filter_options
+        relative_ranges.push filter.id
 
-        filter_values = {"relative_ranges": relative_ranges}
+      filter_values = {"relative_ranges": relative_ranges}
 
-    console.log "-----"
-    console.log filter_values
+    # Priority, Formula
+    else if (grid_ranges = fields_schema[column_id].grid_ranges)?
+      for range in grid_ranges
+        relative_ranges.push range.id
 
+      filter_values = {"ranges": relative_ranges}
+
+    # Status indicator, Types
+    else if (filter_values = fields_schema[column_id].grid_column_filter_settings?.options?.filter_values())?
+      filter_values = Object.keys filter_values
+
+    # Replace the existing state
     view = @getView()
 
     for column_view in view
       if column_view.field == column_id
-        console.log column_view.filter
         column_view.filter = filter_values
-
         @setView view
 
     return
