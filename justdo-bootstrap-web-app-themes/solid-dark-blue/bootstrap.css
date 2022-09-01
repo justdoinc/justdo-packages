@@ -7241,3 +7241,7 @@ a.text-dark:hover, a.text-dark:focus {
 .not-multi-select.frozen-columns-mode .search-result .frozen.active {
   background: linear-gradient(to right, rgba(var(--color-primary), 0.16) 0%, rgba(var(--color-primary), 0.16) 100%), linear-gradient(to right, #fffce5 0%, #fffce5 100%);
 }
+
+.bg-selected {
+  background-color: rgba(var(--color-primary), 0.16) !important;
+}
