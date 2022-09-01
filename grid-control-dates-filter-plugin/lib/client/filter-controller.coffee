@@ -251,9 +251,24 @@ columnFilterStateToQuery = (column_filter_state, context) ->
 
   return query
 
+getSelectAllFilterState = (context) ->
+  result = {relative_ranges: []} # At the moment, only relative-range filter options are supported.
+
+  filter_options = context.column_schema_definition.grid_column_filter_settings.options.filter_options
+  for filter_option in filter_options
+    if filter_option.type != "relative-range"
+      console.error "Unknown filter_option type: filter_option.type"
+
+      return
+
+    result.relative_ranges.push filter_option.id
+
+  return result
+
 GridControl.installFilterType "dates-filter",
   controller_constructor: DatesFilterControllerConstructor
   column_filter_state_to_query: columnFilterStateToQuery
+  getSelectAllFilterState: getSelectAllFilterState
 
 installDateFiltersQueryUpdater = (grid_control) ->
   # Note! we install only one updater per grid control no matter

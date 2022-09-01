@@ -185,9 +185,13 @@ columnFilterStateToQuery = (column_filter_state, context) ->
 
   return query
 
+getSelectAllFilterState = (context) ->
+  return _.map getCurrentProjectMembersDocsSortedByDisplayNameWithLoggedInUserFirst(), (user_doc) -> user_doc._id
+
 GridControl.installFilterType "owners-filter",
   controller_constructor: OwnersFilterControllerConstructor
   column_filter_state_to_query: columnFilterStateToQuery
+  getSelectAllFilterState: getSelectAllFilterState
 
 installOwnersFiltersQueryUpdater = (grid_control) ->
   # Note! we install only one updater per grid control no matter
