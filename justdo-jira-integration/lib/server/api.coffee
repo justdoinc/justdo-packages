@@ -43,6 +43,7 @@ _.extend JustdoJiraIntegration.prototype,
     @_registerAllowedConfs()
 
     @deleted_issue_ids = new Set()
+    @removed_sprint_parent_issue_pairs = new Set()
 
     # XXX if oauth1 in use
     @oauth_token_to_justdo_id = {}
