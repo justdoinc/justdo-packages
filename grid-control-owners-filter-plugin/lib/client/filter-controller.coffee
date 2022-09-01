@@ -133,12 +133,12 @@ _.extend OwnersFilterControllerConstructor.prototype,
     filter_state = @column_filter_state_ops.getColumnFilter()
 
     # Remove the selected class from all items
-    $(".member-item", @controller).removeClass("selected")
+    $(".member-item", @controller).removeClass("selected bg-selected")
     if not filter_state?
       return
 
     for member_id in filter_state
-      $("[member-id=#{member_id}]", @controller).addClass("selected")
+      $("[member-id=#{member_id}]", @controller).addClass("selected bg-selected")
 
   destroy: ->
     @grid_control.removeListener "filter-change", @filter_change_listener
