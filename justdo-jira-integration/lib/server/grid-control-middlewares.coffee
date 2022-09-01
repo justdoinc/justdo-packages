@@ -23,9 +23,10 @@ _.extend JustdoJiraIntegration.prototype,
       jira_project_id: 1
       jira_issue_id: 1
 
-    isPathUnderJiraTree = (path) =>
+    getParentDocIfPathIsUnderJiraTree = (path) =>
       parent_id = GridData.helpers.getPathParentId path
-      return @tasks_collection.findOne(_.extend {_id: parent_id}, jira_relevant_task_query, {fields: {_id: 1}})?
+      query = _.extend {_id: parent_id}, jira_relevant_task_query
+      return @tasks_collection.findOne(query, {fields: jira_relevant_task_fields})
 
     APP.projects._grid_data_com.setGridMethodMiddleware "addParent", (perform_as, etc) ->
       task = etc.item
@@ -127,7 +128,7 @@ _.extend JustdoJiraIntegration.prototype,
         if task.jira_issue_type in ["Sub-task", "Subtask"] and (new_parent_task?.jira_mountpoint_type is "roadmap" or new_parent_task?.jira_sprint_mountpoint_id? or new_parent_task.jira_fix_version_mountpoint_id?)
           return
 
-        if isPathUnderJiraTree path
+        if (old_parent_task = getParentDocIfPathIsUnderJiraTree path)?
           # Block attempts to move mounted task/issue outside of the tree
           if not new_parent_task?.jira_project_id?
             return
