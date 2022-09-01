@@ -549,7 +549,7 @@ _.extend JustdoJiraIntegration.prototype,
       audience: "api.atlassian.com"
       client_id: @client_id
       redirect_uri: "#{process.env.ROOT_URL}/jira/oAuthCallback"
-      scope: "offline_access read:board-scope.admin:jira-software read:project:jira write:sprint:jira-software read:board-scope:jira-software read:issue-details:jira read:sprint:jira-software read:jira-work manage:jira-project manage:jira-configuration read:jira-user write:jira-work manage:jira-webhook manage:jira-data-provider"
+      scope: "offline_access write:board-scope:jira-software read:board-scope.admin:jira-software read:project:jira write:sprint:jira-software read:board-scope:jira-software read:issue-details:jira read:sprint:jira-software read:jira-work manage:jira-project manage:jira-configuration read:jira-user write:jira-work manage:jira-webhook manage:jira-data-provider"
       state: justdo_id
       response_type: "code"
       prompt: "consent"
