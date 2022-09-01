@@ -79,11 +79,16 @@ _.extend JustdoJiraIntegration,
             try
               gc.removeParent "/#{old_sprint_mountpoint._id}/#{task_doc._id}/", justdo_admin_id
             catch e
-              console.error e
+              if e.error isnt "unknown-parent"
+                throw e
 
           # Add sprint
           if (new_sprint_mountpoint = @tasks_collection.findOne({jira_sprint_mountpoint_id: parseInt field.to}, {fields: {_id: 1}}))?
-            gc.addParent task_doc._id, {parent: new_sprint_mountpoint._id}, justdo_admin_id
+            try
+              gc.addParent task_doc._id, {parent: new_sprint_mountpoint._id}, justdo_admin_id
+            catch e
+              if e.error isnt "parent-already-exists"
+                throw e
 
           # Update sprint field for subtasks
           if req_body.issue.fields.issuetype.name isnt "Epic"
@@ -136,9 +141,14 @@ _.extend JustdoJiraIntegration,
               try
                 gc.removeParent "/#{old_fix_version_mountpoint._id}/#{task_doc._id}/", justdo_admin_id
               catch e
-                console.error e
+                if e.error isnt "unknown-parent"
+                  throw e
             if new_fix_version_mountpoint?
-              gc.addParent task_doc._id, {parent: new_fix_version_mountpoint._id}, justdo_admin_id
+              try
+                gc.addParent task_doc._id, {parent: new_fix_version_mountpoint._id}, justdo_admin_id
+              catch e
+                if e.error isnt "parent-already-exists"
+                  throw e
 
             return
     due_date:
