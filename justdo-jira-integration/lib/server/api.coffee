@@ -1278,3 +1278,36 @@ _.extend JustdoJiraIntegration.prototype,
       ]
 
     return @tasks_collection.find(query).count() > 0
+
+  assignIssueToSprint: (jira_issue_id, jira_sprint_id, justdo_id) ->
+    client = @getJiraClientForJustdo(justdo_id).agile
+    req =
+      sprintId: jira_sprint_id
+      issues: [jira_issue_id]
+    client.sprint.moveIssuesToSprintAndRank req
+      .catch (err) -> console.error "[justdo-jira-integration] Assign issue to sprint failed" ,err.response.data
+    return
+
+  updateIssueFixVersion: (jira_issue_id, ops, justdo_id) ->
+    ops = _.pick ops, "add", "remove"
+    client = @getJiraClientForJustdo(justdo_id).v2
+
+    req =
+      issueIdOrKey: jira_issue_id
+      update:
+        fixVersions: []
+
+    for op_type, fix_version_ids of ops
+      if _.isString(fix_version_ids) or _.isNumber(fix_version_ids)
+        req.update.fixVersions.push
+          [op_type]:
+            id: "#{fix_version_ids}"
+      if _.isArray fix_version_ids
+        for fix_version_id in fix_version_ids
+          req.update.fixVersions.push
+            [op_type]:
+              id: "#{fix_version_id}"
+
+    client.issues.editIssue req
+      .catch (err) -> console.error "[justdo-jira-integration] Assign issue to fix version failed" ,err.response.data
+    return
