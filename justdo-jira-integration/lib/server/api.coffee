@@ -1036,6 +1036,8 @@ _.extend JustdoJiraIntegration.prototype,
     return
 
   getJustdosIdsAndTasksIdsfromMountedJiraProjectId: (jira_project_id) ->
+    if _.isString jira_project_id
+      jira_project_id = parseInt jira_project_id
     query =
       jira_project_id: jira_project_id
       jira_mountpoint_type: "roadmap"
@@ -1235,6 +1237,9 @@ _.extend JustdoJiraIntegration.prototype,
     return
 
   getJustdoUserIdByJiraAccountId: (jira_project_id, jira_account_id) ->
+    if _.isString jira_project_id
+      jira_project_id = parseInt jira_project_id
+
     query =
       "jira_projects.#{jira_project_id}.jira_accounts.jira_account_id": jira_account_id
     query_options =

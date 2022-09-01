@@ -68,10 +68,11 @@ _.extend JustdoJiraIntegration,
             return field[0].name
 
           # Move from old sprint parent to new sprint parent if the sprint is created as a task
+          jira_issue_id = parseInt req_body.issue.id
           gc = APP.projects._grid_data_com
           justdo_admin_id = @_getJustdoAdmin req_body.issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
           # XXX Chance for optimization
-          task_doc = @tasks_collection.findOne({jira_issue_id: req_body.issue.id}, {fields: {parents2: 1}})
+          task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {parents2: 1}})
 
           # Remove sprint
           if (old_sprint_mountpoint = @tasks_collection.findOne({jira_sprint_mountpoint_id: parseInt field.from}, {fields: {_id: 1}}))?
@@ -105,6 +106,7 @@ _.extend JustdoJiraIntegration,
           if _.isArray field
             return _.map field, (fix_version) -> fix_version.name
           else
+            jira_issue_id = parseInt req_body.issue.id
             gc = APP.projects._grid_data_com
             justdo_admin_id = @_getJustdoAdmin req_body.issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
             ops = {}
@@ -113,7 +115,7 @@ _.extend JustdoJiraIntegration,
               old_fix_version_mountpoint = @tasks_collection.findOne({jira_fix_version_mountpoint_id: parseInt field.from}, {fields: {_id: 1}})
               ops.$pull =
                 jira_fix_version: field.fromString
-            task_doc = @tasks_collection.findOne({jira_issue_id: req_body.issue.id}, {fields: {parents2: 1}})
+            task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {parents2: 1}})
             if _.isString field.to
               new_fix_version_mountpoint = @tasks_collection.findOne({jira_fix_version_mountpoint_id: parseInt field.to}, {fields: {_id: 1}})
               ops.$addToSet =
@@ -186,7 +188,7 @@ _.extend JustdoJiraIntegration,
           #   throw @_error "jira-account-not-found"
 
           client.issues.assignIssue({issueIdOrKey: req_body.jira_issue_id, accountId: jira_account_id})
-          .catch (err) -> console.error err
+            .catch (err) -> console.error err
 
         if destination is "justdo"
           # Remove any pending ownership transfer
@@ -196,8 +198,9 @@ _.extend JustdoJiraIntegration,
           if not (jira_account_id = field?.to or field?.accountId)?
             return @_getJustdoAdmin justdo_id
 
+          jira_project_id = parseInt req_body.issue.fields.project.id
           # This if statement shouldn't happen as we already fetched all users.
-          if not (justdo_user_id = @getJustdoUserIdByJiraAccountId req_body.issue.fields.project.id, jira_account_id)?
+          if not (justdo_user_id = @getJustdoUserIdByJiraAccountId jira_project_id, jira_account_id)?
             return @_getJustdoAdmin justdo_id
 
           return justdo_user_id
@@ -205,8 +208,9 @@ _.extend JustdoJiraIntegration,
       id: "reporter"
       mapper: (justdo_id, field, destination, req_body) ->
         if destination is "justdo"
+          jira_project_id = parseInt req_body.issue.fields.project.id
           jira_account_id = field.accountId or field.to
-          user_id = @getJustdoUserIdByJiraAccountId req_body.issue.fields.project.id, jira_account_id
+          user_id = @getJustdoUserIdByJiraAccountId jira_project_id, jira_account_id
           # If field.to exists, an issue update is performed and task_id is already in place.
           # Therefore we update activity log in place.
           # If field.accountId exists instead, a new task is being created
