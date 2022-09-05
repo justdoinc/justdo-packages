@@ -203,4 +203,9 @@ _.extend JustdoJiraIntegration.prototype,
             @updateIssueFixVersion jira_issue_id, {remove: old_fix_version_id, add: new_fix_version_id}, task.project_id
             return true
 
+      # Move path to individual sprint/fix-version is not supported. Use addParent() instead.
+      # Sprint/fix-version swap cases has already been handled.
+      if new_parent_task?.jira_sprint_mountpoint_id? or new_parent_task?.jira_fix_version_mountpoint_id?
+        return
+
       return true
