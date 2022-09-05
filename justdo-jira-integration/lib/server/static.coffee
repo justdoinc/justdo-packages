@@ -69,7 +69,7 @@ _.extend JustdoJiraIntegration,
 
           # Move from old sprint parent to new sprint parent if the sprint is created as a task
           jira_issue_id = parseInt req_body.issue.id
-          gc = APP.projects._grid_data_com
+          grid_data = APP.projects._grid_data_com
           justdo_admin_id = @_getJustdoAdmin req_body.issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
           # XXX Chance for optimization
           task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {parents2: 1}})
@@ -77,18 +77,20 @@ _.extend JustdoJiraIntegration,
           # Remove sprint
           if (old_sprint_mountpoint = @tasks_collection.findOne({jira_sprint_mountpoint_id: parseInt field.from}, {fields: {_id: 1}}))?
             try
-              gc.removeParent "/#{old_sprint_mountpoint._id}/#{task_doc._id}/", justdo_admin_id
+              grid_data.removeParent "/#{old_sprint_mountpoint._id}/#{task_doc._id}/", justdo_admin_id
             catch e
               if e.error isnt "unknown-parent"
-                throw e
+                console.trace()
+                console.error e
 
           # Add sprint
           if (new_sprint_mountpoint = @tasks_collection.findOne({jira_sprint_mountpoint_id: parseInt field.to}, {fields: {_id: 1}}))?
             try
-              gc.addParent task_doc._id, {parent: new_sprint_mountpoint._id}, justdo_admin_id
+              grid_data.addParent task_doc._id, {parent: new_sprint_mountpoint._id}, justdo_admin_id
             catch e
               if e.error isnt "parent-already-exists"
-                throw e
+                console.trace()
+                console.error e
 
           # Update sprint field for subtasks
           if req_body.issue.fields.issuetype.name isnt "Epic"
@@ -112,7 +114,7 @@ _.extend JustdoJiraIntegration,
             return _.map field, (fix_version) -> fix_version.name
           else
             jira_issue_id = parseInt req_body.issue.id
-            gc = APP.projects._grid_data_com
+            grid_data = APP.projects._grid_data_com
             justdo_admin_id = @_getJustdoAdmin req_body.issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
             ops = {}
 
@@ -139,16 +141,18 @@ _.extend JustdoJiraIntegration,
 
             if old_fix_version_mountpoint?
               try
-                gc.removeParent "/#{old_fix_version_mountpoint._id}/#{task_doc._id}/", justdo_admin_id
+                grid_data.removeParent "/#{old_fix_version_mountpoint._id}/#{task_doc._id}/", justdo_admin_id
               catch e
                 if e.error isnt "unknown-parent"
-                  throw e
+                  console.trace()
+                  console.error e
             if new_fix_version_mountpoint?
               try
-                gc.addParent task_doc._id, {parent: new_fix_version_mountpoint._id}, justdo_admin_id
+                grid_data.addParent task_doc._id, {parent: new_fix_version_mountpoint._id}, justdo_admin_id
               catch e
                 if e.error isnt "parent-already-exists"
-                  throw e
+                  console.trace()
+                  console.error e
 
             return
     due_date:
