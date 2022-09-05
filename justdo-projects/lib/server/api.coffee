@@ -992,7 +992,11 @@ _.extend Projects.prototype,
       return
 
     cb = (err) =>
-      @processHandlers("AfterBulkUpdateExecution", project_id, items_ids, modifier, user_id, err)
+      # IMPORTANT the following rendered **OBSOLETE** once we begun transition to batched-collection-updates,
+      # the time in which the bulk update will actually complete execution is - unknown.
+      # At the time of obsoleting the hook, it wasn't in use by anyone, making the decision straight forward.
+      #
+      # @processHandlers("AfterBulkUpdateExecution", project_id, items_ids, modifier, user_id, err)
       return
 
     return @_bulkUpdateWithCb(project_id, items_ids, modifier, cb, user_id)
