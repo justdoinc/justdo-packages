@@ -43,7 +43,6 @@ _.extend JustdoJiraIntegration.prototype,
             field_type: "select"
             grid_visible_column: true
             grid_editable_column: true
-            default_width: 200
             field_options:
               select_options: [
                 option_id: "Epic"
