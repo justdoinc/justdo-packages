@@ -158,7 +158,7 @@ _.extend JustdoJiraIntegration.prototype,
         delete modifier.$set.title
 
       # Issues must have an issuetype
-      if (jira_issue_id = doc.jira_issue_id)?
+      if doc?.jira_issue_id? or modifier?.$set?.jira_issue_id?
         # Client side $unset operations will be translated to $set: {[field]: null}
         # Hence there're two conditions
         if _.isNull modifier?.$set?.jira_issue_type
