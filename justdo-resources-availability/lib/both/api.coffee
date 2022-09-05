@@ -65,31 +65,27 @@ _.extend JustdoResourcesAvailability.prototype,
 
     # next - see if we have a resources object for the project
     custom_feature_id = JustdoResourcesAvailability.project_custom_feature_id
-    if (resourcesObj = JD.activeJustdo(
+    if (resource_conf = JD.activeJustdo(
       _id: 1,
       "#{custom_feature_id}": 1
-    )?["#{custom_feature_id}"]?[project_id])
-      # next - add the justdo level workdays (where available)
-      for holiday in resourcesObj.holidays
-        justdo_workdays.holidays.push holiday
-      for day, data of resourcesObj.working_days
-        #overrite only when we have explicit info
-        if data.holiday?
-          justdo_workdays.days[day].holiday = data.holiday
-        if data.from?
-          justdo_workdays.days[day].from = data.from
-        if data.to?
-          justdo_workdays.days[day].to = data.to
+    )?["#{custom_feature_id}"])?
+      if (resources_obj = resource_conf[project_id])?
+        # next - add the justdo level workdays (where available)
+        for holiday in resources_obj.holidays
+          justdo_workdays.holidays.push holiday
+        for day, data of resources_obj.working_days
+          #overrite only when we have explicit info
+          if data.holiday?
+            justdo_workdays.days[day].holiday = data.holiday
+          if data.from?
+            justdo_workdays.days[day].from = data.from
+          if data.to?
+            justdo_workdays.days[day].to = data.to      
       # next - add the user levbel workdays (where available)
-      if user_id?
-        custom_feature_id = JustdoResourcesAvailability.project_custom_feature_id
-        if (resourcesObj = JD.activeJustdo(
-          _id: 1
-          "#{custom_feature_id}": 1
-        )?["#{custom_feature_id}"]?["#{project_id}:#{user_id}"])
-          for holiday in resourcesObj.holidays
+      if user_id? and (resources_obj = resource_conf["#{project_id}:#{user_id}"])?
+          for holiday in resources_obj.holidays
             justdo_workdays.holidays.push holiday
-          for day, data of resourcesObj.working_days
+          for day, data of resources_obj.working_days
             #overrite only when we have explicit info
             if data.holiday?
               justdo_workdays.days[day].holiday = data.holiday
