@@ -28,6 +28,23 @@ _.extend JustdoJiraIntegration.prototype,
       query = _.extend {_id: parent_id}, jira_relevant_task_query
       return @tasks_collection.findOne(query, {fields: jira_relevant_task_fields})
 
+    APP.projects._grid_data_com.setGridMethodMiddleware "addChild", (path, new_item, perform_as) =>
+      query = _.extend {_id: GridData.helpers.getPathItemId path}, jira_relevant_task_query
+      if not (parent_task = @tasks_collection.findOne query, {fields: jira_relevant_task_fields})?
+        return true
+
+      # Adding task should be allowed only in roadmap
+      # XXX Do we want to allow creating a new sprint/fix-version by adding child?
+      if parent_task?.jira_mountpoint_type in ["root", "sprints", "fix_versions"]
+        return
+
+      # Block attempts to add child directly under individual sprint/fix-version.
+      # XXX Do we want to allow creating task under sprint/fix-version directly?
+      if parent_task?.jira_sprint_mountpoint_id? or parent_task?.jira_fix_version_mountpoint_id?
+        return
+
+      return true
+
     APP.projects._grid_data_com.setGridMethodMiddleware "addParent", (perform_as, etc) =>
       task = etc.item
       new_parent_task = etc.new_parent_item
