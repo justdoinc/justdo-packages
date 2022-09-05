@@ -55,15 +55,14 @@ _.extend JustdoJiraIntegration.prototype,
       if not self.isJiraIntegrationInstalledOnJustdo justdo_id
         return
 
-      jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id
-
-      # XXX Multi-parent situation is NOT handled yet!
       parent_task_id = doc.parents2[0].parent
       parent_task = self.tasks_collection.findOne(parent_task_id, {fields: {jira_issue_id: 1, jira_project_id: 1, jira_issue_type: 1, jira_sprint: 1}})
 
       # If jira_project_id doesn't exist, assume the task is created outside of mountpoint.
       if not (jira_project_id = parent_task?.jira_project_id)?
         return
+
+      jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id
 
       task_creater_email = Meteor.users.findOne(user_id, {fields: {emails: 1}})?.emails?[0]?.address
       jira_account = await self.getJiraUser justdo_id, {email: task_creater_email}
