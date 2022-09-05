@@ -33,9 +33,18 @@ _.extend JustdoJiraIntegration.prototype,
       if not (parent_task = @tasks_collection.findOne query, {fields: jira_relevant_task_fields})?
         return true
 
-      # Adding task should be allowed only in roadmap
-      # XXX Do we want to allow creating a new sprint/fix-version by adding child?
-      if parent_task?.jira_mountpoint_type in ["root", "sprints", "fix_versions"]
+      # Root mountpoint should only contain roadmap/sprint-mountpoint/fix-version-mountpoint
+      if parent_task?.jira_mountpoint_type is "root" and not new_item?.jira_mountpoint_type?
+        return
+
+      # Sprints mountpoint should only contain individual sprints
+      # XXX Do we want to allow creating a new sprint by adding child?
+      if parent_task?.jira_mountpoint_type is "sprints" and not new_item?.jira_sprint_mountpoint_id?
+        return
+
+      # Fix-version mountpoint should only contain individual fix-versions
+      # XXX Do we want to allow creating a fix-version by adding child?
+      if parent_task?.jira_mountpoint_type is "fix_versions" and not new_item?.jira_fix_version_mountpoint_id?
         return
 
       # Block attempts to add child directly under individual sprint/fix-version.
