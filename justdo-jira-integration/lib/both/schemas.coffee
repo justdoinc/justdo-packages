@@ -48,42 +48,6 @@ _.extend JustdoJiraIntegration.prototype,
         type: String
         optional: true
         allowedValues: ["Epic", "Story", "Task", "Bug", "Sub-task"]
-        grid_editable_column: true
-        grid_visible_column: true
-        grid_column_filter_settings:
-          type: "whitelist"
-        grid_column_formatter: "keyValueFormatter"
-        grid_column_editor: "SelectorEditor"
-        grid_values:
-          "Epic":
-            txt: "Epic"
-            order: 0
-            due_list_state: true
-            bg_color: "904ee2"
-
-          "Story":
-            txt: "Story"
-            order: 1
-            due_list_state: false
-            bg_color: "63ba3b"
-
-          "Task":
-            txt: "Task"
-            order: 2
-            due_list_state: false
-            bg_color: "4bade8"
-
-          "Bug":
-            txt: "Bug"
-            order: 3
-            due_list_state: false
-            bg_color: "e54939"
-
-          "Sub-task":
-            txt: "Sub-Task"
-            order: 4
-            due_list_state: false
-            bg_color: "B7E5FF"
 
       jira_issue_reporter:
         label: "Jira issue reporter"

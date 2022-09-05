@@ -38,6 +38,36 @@ _.extend JustdoJiraIntegration.prototype,
             default_width: 100
           self.registered_pseudo_custom_fields.push "jira_issue_key"
 
+          APP.modules.project_page.setupPseudoCustomField "jira_issue_type",
+            label: "Issue Type"
+            field_type: "select"
+            grid_visible_column: true
+            grid_editable_column: true
+            default_width: 200
+            field_options:
+              select_options: [
+                option_id: "Epic"
+                label: "Epic"
+                bg_color: "904ee2"
+              ,
+                option_id: "Story"
+                label: "Story"
+                bg_color: "63ba3b"
+              ,
+                option_id: "Task"
+                label: "Task"
+                bg_color: "4bade8"
+              ,
+                option_id: "Bug"
+                label: "Bug"
+                bg_color: "e54939"
+              ,
+                option_id: "Sub-task"
+                label: "Sub-Task"
+                bg_color: "B7E5FF"
+              ]
+          self.registered_pseudo_custom_fields.push "jira_issue_type"
+
           APP.modules.project_page.setupPseudoCustomField "jira_fix_version",
             label: "Fix Versions"
             field_type: "strings_array"
