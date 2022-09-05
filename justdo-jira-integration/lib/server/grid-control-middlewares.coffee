@@ -98,12 +98,12 @@ _.extend JustdoJiraIntegration.prototype,
       if parent_task.jira_mountpoint_type in ["root", "sprints", "fix_versions"]
         return
 
-      # In multi-parent scenario, block attempt to remove roadmap parent.
-      if parent_task.jira_mountpoint_type is "roadmap" and not etc.no_more_parents
-        return
-
       # Removing a task/issue that's either under roadmap or under another task/issue will delete the task/issue.
       if parent_task.jira_mountpoint_type is "roadmap" or parent_task.jira_issue_id?
+        # In multi-parent scenario, block attempt to remove roadmap/issue parent.
+        if not etc.no_more_parents
+          return
+
         # XXX In Jira if we:
         # XXX - Remove an Epic with childs > childs will become standalone Story/Task/Bug
         # XXX - Remove a Story/Task/Bug > Subtasks will be deleted as well
