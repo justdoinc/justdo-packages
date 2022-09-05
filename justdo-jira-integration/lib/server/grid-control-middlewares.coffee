@@ -85,6 +85,10 @@ _.extend JustdoJiraIntegration.prototype,
       if not (task = @tasks_collection.findOne {_id: task_id, jira_issue_id: {$ne: null}}, {fields: {jira_issue_id: 1, project_id: 1}})?
         return true
 
+      # Task is removed from Jira. Ignore.
+      if @deleted_issue_ids.delete parseInt(task.jira_issue_id)
+        return true
+
       # The parent isn't under Jira context, ignore.
       if not (parent_task = @tasks_collection.findOne(query, query_options))?
         return true
