@@ -77,6 +77,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/collections-indexes.coffee", server);
   api.addFiles("lib/server/methods.coffee", server);
   api.addFiles("lib/server/publications.coffee", server);
+  api.addFiles("lib/server/grid-control-middlewares.coffee", server);
 
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
