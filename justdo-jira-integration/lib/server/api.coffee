@@ -357,15 +357,61 @@ _.extend JustdoJiraIntegration.prototype,
         @tasks_collection.update task_id, ops
         return
     "jira:issue_deleted": (req_body) ->
-      # Actually we only need jira issue key/id for deletion, but for consistency we still take req_body as parameter
-      {[JustdoJiraIntegration.task_id_custom_field_id]:task_id, [JustdoJiraIntegration.project_id_custom_field_id]:justdo_id} = req_body.issue.fields
+      {[JustdoJiraIntegration.task_id_custom_field_id]:task_id, [JustdoJiraIntegration.project_id_custom_field_id]:justdo_id, issuetype} = req_body.issue.fields
+      jira_issue_id = parseInt(req_body.issue.id)
+
+      removeAllParents = (task_doc) =>
+        all_parent_task_ids = _.map task_doc.parents2, (parent_obj) -> parent_obj.parent
+        while (parent_task_id = all_parent_task_ids.pop())?
+          # removeParent middleware will consume jira_issue_id and ignore this operation
+          @deleted_issue_ids.add parseInt(task_doc.jira_issue_id)
+          try
+            APP.projects._grid_data_com.removeParent "/#{parent_task_id}/#{task_doc._id}/", @_getJustdoAdmin justdo_id
+          catch e
+            if e.error isnt "unknown-parent"
+              all_parent_task_ids.unshift parent_task_id
+              console.trace()
+              console.error e
+
       if not @isJiraIntegrationInstalledOnJustdo justdo_id
         return
 
       # Task deletion from Justdo. Ignore.
-      if @deleted_issue_ids.delete parseInt req_body.issue.id
+      if @deleted_issue_ids.delete jira_issue_id
         return
 
+      # Change parent of all child Task/Story/Bug
+      if issuetype.name is "Epic"
+        roadmap_task_id = @tasks_collection.findOne({jira_project_id: parseInt(req_body.issue.fields.project.id), jira_mountpoint_type: "roadmap"}, {fields: {_id: 1}})?._id
+        query =
+          "parents2.parent": task_id
+          jira_issue_id:
+            $ne: null
+          jira_issue_type:
+            $in: ["Story", "Task", "Bug"]
+        paths_to_move = @tasks_collection.find(query, {fields: {_id: 1}}).map (child_task) -> "/#{task_id}/#{child_task._id}/"
+
+        try
+          APP.projects._grid_data_com.movePath paths_to_move, {parent: roadmap_task_id}, @_getJustdoAdmin justdo_id
+        catch e
+          console.trace()
+          console.error e
+
+      # Remove all sub-tasks of the deleted story/task/bug
+      if issuetype.name in ["Story", "Task", "Bug"]
+        query =
+          "parents2.parent": task_id
+          jira_issue_id:
+            $ne: null
+          jira_issue_type:
+            $in: ["Sub-task", "Subtask"]
+        @tasks_collection.find(query, {fields: {jira_issue_id: 1, "parents2.parent": 1}}).forEach (child_task) => removeAllParents child_task
+
+      # At last, remove the issue that was removed in Jira.
+      task = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {jira_issue_id: 1, "parents2.parent": 1}})
+      removeAllParents task
+
+      # Just in case removeParent() fails.
       @tasks_collection.remove task_id
 
       return
