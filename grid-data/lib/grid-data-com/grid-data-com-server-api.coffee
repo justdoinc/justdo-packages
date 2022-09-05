@@ -1284,95 +1284,100 @@ _.extend GridDataCom.prototype,
 
       return
 
-  bulkUpdate: (items_ids, modifier, perform_as) ->
-    #
-    # Validate inputs
-    #
-    check(items_ids, [String])
+  # Commented out this code whose purpose was to allow reverting back to pure api that
+  # doesn't take into account the projects api, yet, keeping it uncommented caused confusion.
+  # bulkUpdate: (items_ids, modifier, perform_as) ->
+  #   #
+  #   # Validate inputs
+  #   #
+  #   check(items_ids, [String])
 
-    # To avoid security risk, we are whitelisting the allowed bulkUpdates
-    allowed_modifiers = [
-      {
-        $pull:
-          users:
-            $in: [String]
-      }
-      {
-        $push: # Kept for legacy code in mobiles. It is converted to addToSet later
-          users:
-            $each: [String]
-      }
-      {
-        $addToSet:
-          users:
-            $each: [String]
-      }
-      {
-        $set:
-          owner_id: String
-          pending_owner_id: null
-          is_removed_owner: null
-      }
-      {
-        $set:
-          pending_owner_id: null
-      }
-    ]
-    check(modifier, Match.OneOf.apply(Match, allowed_modifiers))
+  #   # To avoid security risk, we are whitelisting the allowed bulkUpdates
+  #   allowed_modifiers = [
+  #     {
+  #       $pull:
+  #         users:
+  #           $in: [String]
+  #     }
+  #     {
+  #       $push: # Kept for legacy code in mobiles. It is converted to addToSet later
+  #         users:
+  #           $each: [String]
+  #     }
+  #     {
+  #       $addToSet:
+  #         users:
+  #           $each: [String]
+  #     }
+  #     {
+  #       $set:
+  #         owner_id: String
+  #         pending_owner_id: null
+  #         is_removed_owner: null
+  #     }
+  #     {
+  #       $set:
+  #         pending_owner_id: null
+  #     }
+  #   ]
+  #   check(modifier, Match.OneOf.apply(Match, allowed_modifiers))
 
-    # IMPORTANT
-    # IMPORTANT A lot of the code here is repeated under justdo-internal-packages/justdo-projects/lib/server/api.coffee ~line 940
-    # IMPORTANT
-    if modifier.$push?.users?
-      # We transition from $push to $addToSet to avoid duplicates (e.g. if A->B are tasks B has users a, b
-      # but A only user a if b is added to A $push will add it another time to B)
-      if modifier.$addToSet?.users?
-        throw @_error "operation-blocked", "bulkUpdate doesn't support both $push.users and $addToSet.users in the same call"
+  #   # IMPORTANT
+  #   # IMPORTANT A lot of the code here is repeated under justdo-internal-packages/justdo-projects/lib/server/api.coffee ~line 940
+  #   # IMPORTANT
+  #   if modifier.$push?.users?
+  #     # We transition from $push to $addToSet to avoid duplicates (e.g. if A->B are tasks B has users a, b
+  #     # but A only user a if b is added to A $push will add it another time to B)
+  #     if modifier.$addToSet?.users?
+  #       throw @_error "operation-blocked", "bulkUpdate doesn't support both $push.users and $addToSet.users in the same call"
 
-      Meteor._ensure(modifier, "$addToSet")
+  #     Meteor._ensure(modifier, "$addToSet")
 
-      modifier.$addToSet.users = modifier.$push.users
+  #     modifier.$addToSet.users = modifier.$push.users
 
-      delete modifier.$push
+  #     delete modifier.$push
 
-    @_isPerformAsProvided(perform_as)
+  #   @_isPerformAsProvided(perform_as)
 
-    #
-    # Exec
-    #
+  #   #
+  #   # Exec
+  #   #
 
-    # Returns the count of changed items
-    selector = 
-      _id:
-        $in: items_ids
-      users: perform_as
+  #   # Returns the count of changed items
+  #   selector = 
+  #     _id:
+  #       $in: items_ids
+  #     users: perform_as
 
-    @_runGridMethodMiddlewares "bulkUpdate", selector, modifier, perform_as
+  #   # Don't bring this one back, at the time of obsoleting it as part of the
+  #   # batched-collection-updates effort, it wasn't used by anyone, hence making
+  #   # the decision straight forward.
+  #   # @_runGridMethodMiddlewares "bulkUpdate", selector, modifier, perform_as
 
-    # We make sure that the middleware don't change this condition, too risky.
-    selector.users = perform_as
+  #   # We make sure that the middleware don't change this condition, too risky.
+  #   selector.users = perform_as
 
-    # XXX in terms of security we rely on the fact that the user belongs to
-    # the requested items (see selector query) to let him/her do basically
-    # whatever action they like (worst case... he destory his own data.
-    # perhaps in the future we'd like to apply some more checks here.
+  #   # XXX in terms of security we rely on the fact that the user belongs to
+  #   # the requested items (see selector query) to let him/her do basically
+  #   # whatever action they like (worst case... he destory his own data.
+  #   # perhaps in the future we'd like to apply some more checks here.
 
-    added_users = []
-    removed_users = []
+  #   added_users = []
+  #   removed_users = []
 
-    if (pushed_users = modifier.$addToSet?.users?.$each)?
-      added_users = added_users.concat(pushed_users)
+  #   if (pushed_users = modifier.$addToSet?.users?.$each)?
+  #     added_users = added_users.concat(pushed_users)
 
-    if (pulled_users = modifier.$pull?.users?.$in)?
-      removed_users = removed_users.concat(pulled_users)
+  #   if (pulled_users = modifier.$pull?.users?.$in)?
+  #     removed_users = removed_users.concat(pulled_users)
 
-    if not _.isEmpty added_users
-      @_setPrivateDataDocsFreezeState(added_users, items_ids, false)
+  #   if not _.isEmpty added_users
+  #     @_setPrivateDataDocsFreezeState(added_users, items_ids, false)
 
-    if not _.isEmpty removed_users
-      @_setPrivateDataDocsFreezeState(removed_users, items_ids, true)
+  #   if not _.isEmpty removed_users
+  #     @_setPrivateDataDocsFreezeState(removed_users, items_ids, true)
 
-    return @_bulkUpdateFromSecureSource(selector, modifier)
+  #   return @_bulkUpdateFromSecureSource(selector, modifier)
 
   getContexts: (task_id, options, perform_as) ->
     options = {} # Force to empty object for now, options will be defined in the future
