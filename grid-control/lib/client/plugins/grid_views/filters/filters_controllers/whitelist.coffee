@@ -50,7 +50,7 @@ WhiteListFilterControllerConstructor = (context) ->
 
   @controller = $("""<div></div>""")
 
-  @controller_search = $("""<input type="text" class="form-control form-control-sm" style="width: auto;margin: 0.5rem;" placeholder="Filter Options">""")
+  @controller_search = $("""<input type="text" class="form-control form-control-sm" style="margin-bottom: 8px;" placeholder="Filter Options">""")
 
   @controller_ul_wrapper = $("""<div class="filter-dropdown-list-wrapper">""")
 
