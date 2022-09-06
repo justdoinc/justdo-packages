@@ -419,7 +419,7 @@ _.extend JustdoTasksContextMenu.prototype,
           icon_type: "feather"
           icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
             if task_id? and APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
-              return "folder-minus"
+              return "jd-folder-unset"
             return "folder"
         listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.p:dp:is_project", task_id)
