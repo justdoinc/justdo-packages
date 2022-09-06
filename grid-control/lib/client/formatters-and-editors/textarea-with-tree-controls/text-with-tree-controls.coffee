@@ -299,6 +299,14 @@ GridControl.installFormatter "textWithTreeControls",
           </svg>
         """
 
+      if doc[JustdoPlanningUtilities?.is_buffer_task_field_id]
+        tree_control +=  """
+          <svg class="jd-icon ongrid-jd-icon text-secondary slick-prevent-edit" style="margin-right:2px; fill:black;">
+            <title>Buffer Task</title>
+            <use xlink:href="/layout/icons-feather-sprite.svg#jd-buffer-set" class="slick-prevent-edit"></use>
+          </svg>
+        """
+
     if @getCurrentColumnData("resource_planner_plugin_enabled") and not doc._type?
       user_has_planned_hours_for_the_task =
         doc["p:rp:b:work-hours_p:b:user:#{Meteor.userId()}"]? and
