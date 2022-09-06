@@ -4,6 +4,8 @@ _.extend PACK.builtin_trackers,
 
     if not (tracked_fields = options.tracked_fields)?
       tracked_fields = []
+    
+    self._simple_tasks_fields_changes_tracker_tracked_fields = tracked_fields
 
     last_queried_fields_definitions = null
     last_queried_fields_definitions_project_id = null

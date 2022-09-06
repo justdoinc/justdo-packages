@@ -110,3 +110,7 @@ _.extend TasksChangelogManager.prototype,
         change_type: changelog_obj.change_type
 
     return
+  
+  addSimpleTasksFieldsChangesTrackerTrackedField: (field) ->
+    @_simple_tasks_fields_changes_tracker_tracked_fields.push(field)
+    return
