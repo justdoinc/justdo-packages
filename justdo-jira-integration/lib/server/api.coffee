@@ -43,12 +43,16 @@ _.extend JustdoJiraIntegration.prototype,
     # Refresh Api token every set interval
     @_registerDbMigrationScriptForRefreshingAccessToken()
 
+    # Check alive for Jira Api client and webhook and attempt to repair.
+    @_registerDbMigrationScriptForConnectionHealthCheck()
+
     @_setupInvertedFieldMap()
 
     @_registerAllowedConfs()
 
     @deleted_issue_ids = new Set()
     @removed_sprint_parent_issue_pairs = new Set()
+    @pending_connection_test = {}
 
     # XXX if oauth1 in use
     @oauth_token_to_justdo_id = {}
@@ -296,7 +300,12 @@ _.extend JustdoJiraIntegration.prototype,
       return
     "jira:issue_updated": (req_body) ->
       # Updates from Justdo. Ignore.
-      if _.find req_body.changelog.items, (item) -> item.field is "jd_last_updated"
+      if (last_updated_changelog_item = _.find req_body.changelog.items, (item) -> item.field is "jd_last_updated")?
+        # Delete record in pending_connection_test if we receive the update we send.
+        received_update_date = new Date last_updated_changelog_item.toString
+        if (last_update_date = @pending_connection_test[parseInt req_body.issue.id])? and (received_update_date - last_update_date is 0)
+          console.log "[jira-connection-healthcheck] Issue update received via webhook."
+          delete @pending_connection_test[parseInt req_body.issue.id]
         return
 
       {fields} = req_body.issue
@@ -660,6 +669,74 @@ _.extend JustdoJiraIntegration.prototype,
         return num_processed
 
     APP.justdo_db_migrations.registerMigrationScript "refresh-jira-api-token", JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
+    return
+
+  # XXX Currently this script only support a single Jira instance.
+  _registerDbMigrationScriptForConnectionHealthCheck: ->
+    self = @
+
+    # Initialize last_connection_check field
+    self.jira_collection.update {}, {$set: {last_connection_check: new Date()}}, {multi: true}
+
+    common_batched_migration_options =
+      delay_before_checking_for_new_batches: JustdoJiraIntegration.connection_check_rate_ms
+      delay_between_batches: 5000 # 5 secs
+      mark_as_completed_upon_batches_exhaustion: false
+      batch_size: 1
+      collection: APP.collections.Jira
+      static_query: false
+      queryGenerator: ->
+        query =
+          last_connection_check:
+            $lte: JustdoHelpers.getDateMsOffset(-1 * JustdoJiraIntegration.connection_check_rate_ms)
+        query_options =
+          fields:
+            server_info: 1
+        return {query, query_options}
+      batchProcessor: (jira_collection_cursor) ->
+        num_processed = 0
+
+        if not _.isEmpty self.pending_connection_test
+          @logProgress "The last issue update was not received on webhook. Attempting to refresh API token and ensuring all mounted tasks are up to date."
+          self._setupJiraClientForAllJustdosWithRefreshToken()
+          self.once "afterJiraApiTokenRefresh", self.ensureAllIssuesAreUpToDate
+          self.pending_connection_test = {}
+        else
+          jira_collection_cursor.forEach (jira_doc) =>
+            jira_server_id = jira_doc.server_info?.id
+            if not (client = self.clients[jira_server_id]?.v2)?
+              @logProgress "Client not exist for Jira instance #{jira_server_id}."
+              return
+
+            if not (jira_issue_id = self.tasks_collection.findOne({jira_issue_id: {$ne: null}}, {fields: {jira_issue_id: 1, refresh_token: 1}})?.jira_issue_id)?
+              @logProgress "No mounted issue found for Jira instance #{jira_server_id}."
+              return
+
+            date_for_connection_test = new Date()
+            self.pending_connection_test[jira_issue_id] = date_for_connection_test
+
+            req =
+              issueIdOrKey: jira_issue_id
+              notifyUsers: false
+              fields:
+                [JustdoJiraIntegration.last_updated_custom_field_id]: date_for_connection_test
+
+            client.issues.editIssue req
+              .then => @logProgress "Issue update sent successfully."
+              .catch (err) =>
+                @logProgress "Edit issue failed. Attempting to refresh API token."
+                self.refreshJiraAccessToken jira_doc
+                self.once "afterJiraApiTokenRefresh", self.ensureAllIssuesAreUpToDate
+                return
+
+            self.jira_collection.update jira_doc._id, {$set: {last_connection_check: new Date()}}
+
+          num_processed += 1
+
+        return num_processed
+
+    APP.justdo_db_migrations.registerMigrationScript "jira-connection-healthcheck", JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
+    return
 
   _setupJiraClientForAllJustdosWithRefreshToken: ->
     @jira_collection.find({refresh_token: {$exists: true}}, {fields: {server_info: 1, refresh_token: 1}}).forEach (jira_doc) =>
