@@ -1367,4 +1367,52 @@ _.extend JustdoJiraIntegration.prototype,
     client.issues.editIssue req
       .catch (err) -> console.error "[justdo-jira-integration] Assign issue to fix version failed" , err.response.data
     return
+
+  _searchIssueUsingJql: (client, issue_search_body, cb) ->
+    # XXX Checks for issue_search_body maybe needed
+    if not client?
+      throw @_error "client-not-found"
+
+    if client?.v2?
+      client = client.v2
+
+    return client.issueSearch.searchForIssuesUsingJqlPost issue_search_body
+      .then cb
+      .catch (err) ->
+        console.error "[justdo-jira-integration] Error in issue search" , err
+
+  ensureAllIssuesAreUpToDate: ->
+    console.log "Ensuring all issues are up to date..."
+    justdo_id_to_jira_issue_ids_map = {}
+
+    @tasks_collection.find({jira_issue_id: {$ne: null}}, {fields: {jira_issue_id: 1, project_id: 1}}).forEach (task_doc) ->
+      if not justdo_id_to_jira_issue_ids_map[task_doc.project_id]?
+        justdo_id_to_jira_issue_ids_map[task_doc.project_id] = []
+      justdo_id_to_jira_issue_ids_map[task_doc.project_id].push task_doc.jira_issue_id
+      return
+
+    for justdo_id, jira_issue_ids of justdo_id_to_jira_issue_ids_map
+      client = @getJiraClientForJustdo(justdo_id).v2
+
+      issue_search_body =
+        jql: "issue in (#{jira_issue_ids.join ","})"
+        # maxResults: 100
+        maxResults: 10
+        fields: @getAllRelevantJiraFieldIds()
+
+      issue_search_cb = (res) =>
+        # Recursive call issueSearch API if there are more issues than the limit.
+        if res.total > (new_limit = res.startAt + res.maxResults)
+          @_searchIssueUsingJql client, _.extend({startAt: new_limit}, issue_search_body), issue_search_cb
+
+        for issue in res.issues
+          justdo_id = issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
+          fields = await @_mapJiraFieldsToJustdoFields justdo_id, {issue}
+          if not _.isEmpty fields
+            # XXX updated_by is hardcoded to be justdo admin!
+            @tasks_collection.update({jira_issue_id: parseInt(issue.id)}, {$set: _.extend {jira_last_updated: new Date(), updated_by: @_getJustdoAdmin justdo_id}, fields})
+        return
+
+      @_searchIssueUsingJql client, issue_search_body, issue_search_cb
+
     return
