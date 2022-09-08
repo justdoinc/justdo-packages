@@ -35,7 +35,9 @@ _.extend JustdoJiraIntegration.prototype,
 
     @clients = {}
 
+    # Refresh Api token immidiately upon server startup
     @_setupJiraClientForAllJustdosWithRefreshToken()
+    # Refresh Api token every set interval
     @_registerDbMigrationScriptForRefreshingAccessToken()
 
     @_setupInvertedFieldMap()
@@ -216,7 +218,7 @@ _.extend JustdoJiraIntegration.prototype,
     try
       created_task_id = gc.addChild parent_path, task_fields, task_owner_id
     catch e
-      console.log jira_issue_key, parent_path, "failed"
+      console.error jira_issue_key, parent_path, "failed"
 
     if task_fields.jira_issue_reporter?
       APP.tasks_changelog_manager.logChange
@@ -232,11 +234,12 @@ _.extend JustdoJiraIntegration.prototype,
     if task_fields.jira_issue_type isnt "Sub-task"
       parent_task = @tasks_collection.findOne GridDataCom.helpers.getPathItemId parent_path, {fields: {jira_sprint: 1, jira_fix_version: 1}}
       if (issue_sprint = task_fields.jira_sprint)? and (issue_sprint isnt parent_task.jira_sprint)
-        console.log "-----Adding to sprint-----"
-        console.log "Task id:", created_task_id
-        console.log "Sprint:", issue_sprint
-        if options?.sprints_mountpoints?
-          console.log "Sprint mountpoints:", options.sprints_mountpoints
+        # XXX Uncomment for debug info
+        # console.log "-----Adding to sprint-----"
+        # console.log "Task id:", created_task_id
+        # console.log "Sprint:", issue_sprint
+        # if options?.sprints_mountpoints?
+        #   console.log "Sprint mountpoints:", options.sprints_mountpoints
         if not (sprint_parent_task_id = options?.sprints_mountpoints?[issue_sprint])?
           sprint_id = jira_issue_body.fields[JustdoJiraIntegration.sprint_custom_field_id][0].id
           sprint_parent_task_id = @tasks_collection.findOne({jira_sprint_mountpoint_id: sprint_id}, {fields: {_id: 1}})._id
@@ -245,11 +248,12 @@ _.extend JustdoJiraIntegration.prototype,
       if not _.isEmpty(fix_versions = jira_issue_body.fields.fixVersions)
         for fix_version in fix_versions
           if not _.contains parent_task.jira_fix_version, fix_version.name
-            console.log "-----Adding to fix version-----"
-            console.log "Task id:", created_task_id
-            console.log "Fix version:", fix_version.name
-            if options?.fix_versions_mountpoints?
-              console.log "Fix version mountpoints:", options.fix_versions_mountpoints
+            # XXX Uncomment for debug info
+            # console.log "-----Adding to fix version-----"
+            # console.log "Task id:", created_task_id
+            # console.log "Fix version:", fix_version.name
+            # if options?.fix_versions_mountpoints?
+            #   console.log "Fix version mountpoints:", options.fix_versions_mountpoints
             if not (fix_version_parent_task_id = options?.fix_versions_mountpoints?[fix_version.name])?
               fix_version_parent_task_id = @tasks_collection.findOne({jira_fix_version_mountpoint_id: fix_version.id}, {fields: {_id: 1}})._id
             gc.addParent created_task_id, {parent: fix_version_parent_task_id}, task_owner_id
@@ -1332,7 +1336,7 @@ _.extend JustdoJiraIntegration.prototype,
       sprintId: jira_sprint_id
       issues: [jira_issue_id]
     client.sprint.moveIssuesToSprintAndRank req
-      .catch (err) -> console.error "[justdo-jira-integration] Assign issue to sprint failed" ,err.response.data
+      .catch (err) -> console.error "[justdo-jira-integration] Assign issue to sprint failed" , err.response.data
     return
 
   updateIssueFixVersion: (jira_issue_id, ops, justdo_id) ->
@@ -1357,5 +1361,6 @@ _.extend JustdoJiraIntegration.prototype,
               id: "#{fix_version_id}"
 
     client.issues.editIssue req
-      .catch (err) -> console.error "[justdo-jira-integration] Assign issue to fix version failed" ,err.response.data
+      .catch (err) -> console.error "[justdo-jira-integration] Assign issue to fix version failed" , err.response.data
+    return
     return

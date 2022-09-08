@@ -28,27 +28,31 @@ _.extend JustdoJiraIntegration,
   # XXX Maybe implement a two-way map inside JustdoHelpers?
 
   # justdo_field_to_jira_field_map #
-  # key: Field id in Justdo
-  # id: Field id in Jira. Must exist if name isn't provided. Takes precedence before name if both are set.
-  # name: Field name in Jira. Must exist if id isn't provided. id will be used if both are set
-  # type: Determines whether to use .toString or .to in jira changelog.
-  #       if a field has a mapper(), the value returned from mapper() will be used
-  #       regardless of the type.
-  #       For fields that aren't showing in issue.fields as string, use raw
-  #   string/raw: value will be saved as-is
-  #   array: the "name" property inside each object inside the incoming array
-  #          will be extracted and saved as a string array
-  #          XXX what if the value is numeric/date/non-string/doesn't have name property?
-  # mapper: Used by fields that require some kind of mapping. Called under the context of APP.justdo_jira_integration
-  #         ***Note that it should handle both cases of issue_created and issue_updated when mapping fields from Jira
-  #   - justdo_id: Justdo id that the event is related to.
-  #   - field_val: The value to be mapped. Required.
-  #   - destination: Accepts either "jira" or "justdo". Determines where the returned value is used. Required.
-  #   - req_body:
-  #       - When destination is "justdo":
-  #         - The entire request body from webhook. Used to provide additional information about the Jira issue. Optional.
-  #       - When destination is "jira":
-  #         - The entire task doc related to the issue.
+  # {
+  #  [key]: Field id in Justdo
+  #   {
+  #    id: Field id in Jira. Must exist if name isn't provided. Takes precedence before name if both are set.
+  #    name: Field name in Jira. Must exist if id isn't provided. id will be used if both are set
+  #    type: Determines whether to use .toString or .to in jira changelog.
+  #          if a field has a mapper(), the value returned from mapper() will be used
+  #          regardless of the type.
+  #          For fields that aren't showing in issue.fields as string, use raw
+  #      string/raw: value will be saved as-is
+  #      array: the "name" property inside each object inside the incoming array
+  #             will be extracted and saved as a string array
+  #             XXX what if the value is numeric/date/non-string/doesn't have name property?
+  #    mapper: Used by fields that require some kind of mapping. Called under the context of APP.justdo_jira_integration
+  #            ***Note that it should handle both cases of issue_created and issue_updated when mapping fields from Jira
+  #      - justdo_id: Justdo id that the event is related to.
+  #      - field_val: The value to be mapped. Required.
+  #      - destination: Accepts either "jira" or "justdo". Determines where the returned value is used. Required.
+  #      - req_body:
+  #          - When destination is "justdo":
+  #            - The entire request body from webhook. Used to provide additional information about the Jira issue. Optional.
+  #          - When destination is "jira":
+  #            - The entire task doc related to the issue.
+  #   }
+  # }
 
   justdo_field_to_jira_field_map:
     title:
