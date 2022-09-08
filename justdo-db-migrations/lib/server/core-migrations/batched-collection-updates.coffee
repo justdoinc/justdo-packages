@@ -110,6 +110,9 @@ APP.executeAfterAppLibCode ->
         type_def = APP.justdo_db_migrations.batched_collection_updates_types[job.type]
 
         if type_def.use_raw_collection == true
+          APP.justdo_analytics.logMongoRawConnectionOp(@collection._name, "update", query, modifier, {multi: true})
+          if type_def.collection._name == "tasks"
+            @_addRawFieldsUpdatesToUpdateModifier(modifier)
           type_def.collection.rawCollection().update {
             _id:
               $in: ids_to_update

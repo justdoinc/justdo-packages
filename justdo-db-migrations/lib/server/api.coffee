@@ -212,13 +212,15 @@ _.extend JustdoDbMigrations.prototype,
     use_raw_collection:
       type: Boolean
       optional: true
-    meta_data_schema:
+    data_schema: # The schema of the job's data.
       type: SimpleSchema
+    dataValidator: # Called with the job's data after it been validated using the data_schema
+                   # Should throw an exception if the data provided can't be executed.
+      type: Function
       optional: true
-    forced_query_fields:
-      type: Object
-      blackbox: true
-      optional: true
+    queryGenerator: # a function of the form `(data, perform_as) ->` it gets the data and performing user and should generate the query that we'll run on the documents of the job.
+      type: Function
+      optional: false
   registerBatchedCollectionUpdatesType: (type_id, options) ->
     check type_id, String
 
@@ -234,27 +236,25 @@ _.extend JustdoDbMigrations.prototype,
 
     return
 
-  registerBatchedCollectionUpdatesJob: (type, meta_data, ids_to_update, modifier, user_id) ->
+  registerBatchedCollectionUpdatesJob: (type, meta_data, ids_to_update, user_id) ->
     # collection._name
     check type, String
     check meta_data, Object
     check ids_to_update, [String]
-    check modifier, Object
     check user_id, Match.Maybe(String)
 
     if not (update_type_def = @batched_collection_updates_types[type])?
-      throw @_error "batch-collection-update-type-not-supported"
+      throw @_error "batch-collection-update-type-not-supported", "Unknown batch collection update type: #{type}"
 
       return
 
-    update_type_def.meta_data_schema?.validate(meta_data)
+    update_type_def.data_schema?.validate(meta_data)
 
     job_id = APP.collections.DBMigrationBatchedCollectionUpdates.insert
       created_by: user_id
       type: type
       meta_data: meta_data
       ids_to_update: ids_to_update
-      modifier: JSON.stringify(modifier)  # modifier cannot be saved to mongodb directly
       process_status: "pending"
       process_status_details:
         processed: 0

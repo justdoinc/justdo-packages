@@ -8,15 +8,12 @@ _.extend JustdoDbMigrations.prototype,
       type: # One of the registered types
         type: String
 
-      meta_data:
+      data:
         type: Object
         blackbox: true
 
       ids_to_update:
         type: [String]
-
-      modifier:
-        type: String
 
       process_status:
         type: String
