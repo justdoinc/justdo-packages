@@ -80,6 +80,7 @@ _.extend JustdoResourcesAvailability.prototype,
         title: "Workdays for #{JD.activeJustdo({_id: 1, title: 1}).title}: #{user.profile.first_name} #{user.profile.last_name}"
         weekdays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?["#{project_id}:#{user_id}"]?.working_days
         holidays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?["#{project_id}:#{user_id}"]?.holidays
+        holidays_label: "Personal Leave"
 
     #load project specific info
     else
@@ -90,6 +91,7 @@ _.extend JustdoResourcesAvailability.prototype,
         title: "Workdays for #{JD.activeJustdo({_id: 1, title: 1}).title}"
         weekdays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?[project_id]?.working_days or @default_workdays.working_days
         holidays: proj_obj["#{JustdoResourcesAvailability.project_custom_feature_id}"]?[project_id]?.holidays or @default_workdays.holidays
+        holidays_label: "Holidays"
 
     config_data.config_user_id = user_id
 

@@ -6,9 +6,9 @@
         {{>justdo_resources_availability_config_dialog_workday}}
       </div>
     {{/each}}
-    <div class="h6 font-weight-bold text-primary text-uppercase mt-4">Holidays</div>
+    <div class="h6 font-weight-bold text-primary text-uppercase mt-4">{{holidays_label}}</div>
     <textarea {{readonly}} class="form-control availability_config_dialog_holidays {{holidaysFormatError}} mb-1" rows="3" placeholder="YYYY-MM-DD, YYYY-MM-DD,...">{{holidaysList}}</textarea>
-    <small class="text-muted">* Enter comma separated dates in the format of YYYY-MM-DD.</small>
+    <small class="text-muted">* Enter comma separated dates in the format of: YYYY-MM-DD, or, for a range of dates: YYYY-MM-DD--YYYY-MM-DD.</small>
   </div>
 </template>
 
