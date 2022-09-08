@@ -35,6 +35,9 @@ _.extend JustdoJiraIntegration.prototype,
 
     @clients = {}
 
+    # Once Jira Api client is initialized, ensure all existing mounted issues are up to date.
+    @once "afterJiraApiTokenRefresh", @ensureAllIssuesAreUpToDate
+
     # Refresh Api token immidiately upon server startup
     @_setupJiraClientForAllJustdosWithRefreshToken()
     # Refresh Api token every set interval
