@@ -122,6 +122,7 @@ _.extend JustdoJiraIntegration.prototype,
 
           summary_update_req =
             issueIdOrKey: res.id
+            notifyUsers: false
             fields:
               summary: task_title
               [JustdoJiraIntegration.last_updated_custom_field_id]: new Date()
@@ -217,6 +218,7 @@ _.extend JustdoJiraIntegration.prototype,
 
           req =
             issueIdOrKey: jira_issue_id
+            notifyUsers: false
             fields: fields
 
           client.v2.issues.editIssue req

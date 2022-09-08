@@ -1341,6 +1341,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     req =
       issueIdOrKey: jira_issue_id
+      notifyUsers: false
       update:
         fixVersions: []
 
