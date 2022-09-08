@@ -6,7 +6,9 @@
     {{/with}}
 
     <div class="task-pane-header-title">
-      {{#if seq_id}}#{{seq_id}}: {{/if}}
+      {{#if seq_id}}
+        <div class="seqid-copy-to-clipboard" title="Copy to clipboard">#{{seq_id}}:</div>
+      {{/if}}
       {{#if title}}
         {{title}}
         <div class="btn btn-default btn-xs copy-to-clipboard" title="Copy to clipboard"><i class="fa fa-clipboard"></i></div>
