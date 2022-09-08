@@ -698,6 +698,8 @@ _.extend JustdoJiraIntegration.prototype,
         agile: new AgileClient jira_clients_config
       client = @clients[credentials.server_info.id]
 
+      @emit "afterJiraApiTokenRefresh"
+
       # Fetch all fix versions and sprints, then store in db
       mounted_jira_projects = @jira_collection.findOne("server_info.id": credentials.server_info.id, {fields: {jira_projects: 1}})?.jira_projects
       for jira_project_id of mounted_jira_projects
@@ -820,6 +822,8 @@ _.extend JustdoJiraIntegration.prototype,
     self = @
     if _.isString jira_doc
       jira_doc = @jira_collection.findOne jira_doc, {fields: {refresh_token: 1}}
+
+    @emit "beforeJiraApiTokenRefresh"
 
     req =
       headers:
