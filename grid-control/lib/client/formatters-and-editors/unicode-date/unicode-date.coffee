@@ -142,22 +142,23 @@ GridControl.installFormatter "unicodeDateFormatter",
       """
 
     formatter_buttons = ""
-    for action_button_def in formatter_obj.getAllActionsButtons()
-      if not content_empty or action_button_def.show_if_empty
-        # add the button only if the content isn't empty, or if it is
-        # allowed to show it for non empty fields
-        formatter_buttons += """
-          <div class="udf-action-btn udf-id-#{action_button_def.action_name} slick-prevent-edit" title="#{action_button_def.action_title}">
-        """
-
-        if (icon_id = action_button_def.font_awesome_id)?
+    if formatter_options.show_formatter_buttons isnt false
+      for action_button_def in formatter_obj.getAllActionsButtons()
+        if not content_empty or action_button_def.show_if_empty
+          # add the button only if the content isn't empty, or if it is
+          # allowed to show it for non empty fields
           formatter_buttons += """
-            <i class="fa fa-fw fa-#{icon_id} slick-prevent-edit" aria-hidden="true"></i>
+            <div class="udf-action-btn udf-id-#{action_button_def.action_name} slick-prevent-edit" title="#{action_button_def.action_title}">
           """
 
-        formatter_buttons += """
-          </div>
-        """
+          if (icon_id = action_button_def.font_awesome_id)?
+            formatter_buttons += """
+              <i class="fa fa-fw fa-#{icon_id} slick-prevent-edit" aria-hidden="true"></i>
+            """
+
+          formatter_buttons += """
+            </div>
+          """
 
     custom_classes = ""
     if (customClasses = friendly_args.formatter_options?.customClasses)
