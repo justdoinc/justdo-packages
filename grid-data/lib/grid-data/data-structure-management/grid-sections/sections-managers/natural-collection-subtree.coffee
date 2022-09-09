@@ -353,7 +353,6 @@ _.extend NaturalCollectionSubtreeSection.prototype,
     else
       top_level_items_objs = _.map(top_level_items, ((_ignore, id) -> @grid_data.items_by_id[id] or fallback_items_dictionary[id]), @)
 
-
     if @top_level_items_filter?
       top_level_items_objs =
         @top_level_items_filter.allItems.call(@, top_level_items_objs)
@@ -362,6 +361,11 @@ _.extend NaturalCollectionSubtreeSection.prototype,
       top_level_items_objs = _.sortBy(top_level_items_objs, @root_items_sort_by, @)
 
     for top_level_items_obj in top_level_items_objs
+      if not top_level_items_obj?
+        # top_level_items_obj will be undefined for items in top_level_items which their
+        # ids are no longer in minimongo (e.g removed).
+        continue
+      
       top_level_item_id = top_level_items_obj._id
 
       if @grid_data.items_by_id[top_level_item_id]? or fallback_items_dictionary[top_level_item_id]?
