@@ -12,7 +12,7 @@ APP.executeAfterAppLibCode ->
 
       window_dim = main_module.window_dim.get().width
 
-      return Math.max(min_project_container_width, window_dim) - 1
+      return Math.max(min_project_container_width, window_dim)
 
     projects: -> APP.collections.Projects.find({}, {fields: {_id: 1, title: 1}, sort: {createdAt: 1}}).fetch()
 
