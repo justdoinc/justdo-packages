@@ -209,6 +209,22 @@ _.extend JustdoChat,
         clearTimeout conf._timeout
         conf._timeout = null
 
+      waitPollingIntervalBeforeCallingProcWrapper = =>
+        if conf._is_running
+          conf._timeout = Meteor.setTimeout procWrapper, conf.polling_interval_ms
+        
+        return
+
+      procWrapper = =>
+        try
+          proc()
+        catch e
+          justdo_chat.logger.info "Error encountered", e
+
+        waitPollingIntervalBeforeCallingProcWrapper()
+
+        return
+
       proc = =>
         if not conf._is_running
           # If the job stopped, don't begin.
@@ -451,7 +467,10 @@ _.extend JustdoChat,
                   channel_subscribers_loop_storage: channel_subscribers_loop_storage
                   job_storage: job_storage
 
-                conf.sendNotificationCb notification_obj
+                try
+                  conf.sendNotificationCb notification_obj
+                catch e
+                  console.error "justdo-chat: failed to send notification, skipping specific notification and continuing the batch.", e
 
           #
           # Mark the job as completed - write the Indicator Field on the processed members
@@ -519,12 +538,9 @@ _.extend JustdoChat,
         if processed_channels > 0
           justdo_chat.logger.info "Unread channels notifications - #{conf.notification_type} - processed_channels: #{processed_channels}; notifications_sent: #{notifications_sent} ; channel_access_rejected: #{channel_access_rejected} - DONE"
 
-        if conf._is_running
-          conf._timeout = Meteor.setTimeout proc, conf.polling_interval_ms
-        
         return
 
-      proc()
+      procWrapper()
 
       return
 
