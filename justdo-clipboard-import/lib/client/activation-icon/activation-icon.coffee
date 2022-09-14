@@ -15,6 +15,7 @@ base_supported_fields_ids = [
   "priority"
   "state"
   "description"
+  JustdoPlanningUtilities.is_milestone_pseudo_field_id
 ].sort (a, b) -> return a.localeCompare b # localeCompare is used instead simply sort() to ignore case differences
 
 noneditable_importable_fields = [
@@ -585,8 +586,8 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
     return
 
-  clearupTempImportId = ->
-    Meteor.call "clearupTempImportId", temp_import_ids
+  clearupTempImportId = (cb) ->
+    Meteor.call "clearupTempImportId", temp_import_ids, cb
 
     return true
 
@@ -653,7 +654,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
       return false
     finally
-      clearupTempImportId()
+      clearupTempImportId ->
+        APP.justdo_planning_utilities.initTaskIdToInfo()
+        return
 
     bootbox.hideAll()
     JustdoSnackbar.show
