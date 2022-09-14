@@ -451,8 +451,6 @@ _.extend GridControl.prototype,
 
     select_all_filter_state = getSelectAllFilterState(context)
 
-    console.log select_all_filter_state
-
     @setColumnFilter(column_id, select_all_filter_state)
 
     return
