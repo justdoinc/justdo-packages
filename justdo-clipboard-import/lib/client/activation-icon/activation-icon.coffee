@@ -15,7 +15,6 @@ base_supported_fields_ids = [
   "priority"
   "state"
   "description"
-  JustdoPlanningUtilities.is_milestone_pseudo_field_id
 ].sort (a, b) -> return a.localeCompare b # localeCompare is used instead simply sort() to ignore case differences
 
 noneditable_importable_fields = [
