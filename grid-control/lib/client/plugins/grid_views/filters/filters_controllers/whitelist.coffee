@@ -186,7 +186,7 @@ columnFilterStateToQuery = (column_filter_state, context) ->
   return query
 
 getSelectAllFilterState = (context) ->
-  return _.keys(context.column_schema_definition.grid_values)
+  return _.map(getAvailableValuesFromContextArray(context), (option) -> option.filter_key)
 
 GridControl.installFilterType "whitelist",
   controller_constructor: WhiteListFilterControllerConstructor
