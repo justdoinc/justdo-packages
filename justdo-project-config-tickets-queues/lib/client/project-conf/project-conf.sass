@@ -1,25 +1,25 @@
 [section-id="tickets-queues"]
   .tq-task-item
-    border-bottom: 1px dashed rgba(0, 0, 0, 0.12)
-    &:first-child
-      border-top: 1px dashed rgba(0, 0, 0, 0.12)
+    display: flex
+    align-items: center
+    background-color: #f0f4f9
+    border-radius: 4px
+    margin-top: 8px
+    padding: 8px 8px 8px 12px
+    height: 44px
+
+    .jd-icon
+      margin-left: auto
+      color: #C5CBD3
+      stroke-width: 3
+      padding: 4px
+      cursor: pointer
+      &:hover
+        color: #76869a
+        background-color: #e8edf3
+
   .tq-task
     font-size: 15px
     white-space: nowrap
     text-overflow: ellipsis
     overflow: hidden
-  .jd-icon-tq-task
-    cursor: pointer
-    stroke: currentColor
-    stroke-width: 2
-    stroke-linecap: round
-    stroke-linejoin: round
-    fill: none
-    width: 16px
-    height: 16px
-    transition: all 0.2s linear
-    opacity: 0.9
-    &:hover
-      opacity: 1
-  .add-new-tq
-    font-size: 12px

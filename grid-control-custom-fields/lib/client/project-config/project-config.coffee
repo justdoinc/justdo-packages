@@ -31,7 +31,7 @@ APP.executeAfterAppLibCode ->
 
     @$(".custom-fields-conf").sortable
       containment: "parent"
-      handle: ".sort-handle"
+      handle: ".custom-field-handle"
       items: ".custom-field-row"
       axis: "y"
       start: (event, ui) ->

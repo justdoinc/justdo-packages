@@ -4,40 +4,50 @@
       {{#if showCustomFieldsSortOption}}
         <div class="sort-custom-fields text-primary" sort-criteria="label">Sort by Name</div>
       {{/if}}
+
+      <div class="dropdown">
+        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          New custom field
+        </button>
+        <div class="dropdown-menu">
+          <div class="add-new-field font-weight-bold text-body text-uppercase mt-4 mb-2">Add New Custom Field</div>
+          <div class="d-flex align-items-center">
+            <input class="new-field-label form-control form-control-sm" placeholder="label" maxlength="30">
+            <select class="new-field-type form-control form-control-sm mx-2">
+              {{#each getFieldTypes}}
+                <option value="{{custom_field_type_id}}">{{label}}</option>
+              {{/each}}
+            </select>
+            <button class="add btn btn-primary btn-sm">ADD</button>
+          </div>
+        </div>
+      </div>
     </div>
     {{#with customFields}}
       {{#each this}}
         {{> custom_field_conf}}
       {{/each}}
     {{/with}}
-    <div class="add-new-field font-weight-bold text-body text-uppercase mt-4 mb-2">Add New Custom Field</div>
-
-    <div class="d-flex align-items-center">
-      <input class="new-field-label form-control form-control-sm" placeholder="label" maxlength="30">
-      <select class="new-field-type form-control form-control-sm mx-2">
-        {{#each getFieldTypes}}
-          <option value="{{custom_field_type_id}}">{{label}}</option>
-        {{/each}}
-      </select>
-      <button class="add btn btn-primary btn-sm">ADD</button>
-    </div>
   </div>
 </template>
 
 
 <template name="custom_field_conf">
-  <div class="custom-field-item d-flex align-items-center custom-field-row py-1" field-id="{{field_id}}">
-    <svg class="jd-icon-custom-field text-muted sort-handle mr-2"><use xlink:href="/layout/icons-feather-sprite.svg#menu"/></svg>
-    <div class="custom-field-label flex-grow-1">
-      <input class="field-label form-control form-control-sm border-0 bg-transparent pl-2 text-body" placeholder="label" value="{{label}}" maxlength="30">
+  <div class="custom-field-item custom-field-row" field-id="{{field_id}}">
+    <div class="custom-field-handle">
+      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical-double"/></svg>
     </div>
-    <div class="custom-field-type d-flex align-items-center bg-primary rounded-pill ml-2">
-      <span class="custom-field-type-label text-uppercase text-white font-weight-bold">{{fieldTypeToFieldLabel}}</span>
-      <div class="custom-field-type-divider border-left border-white mx-2"></div>
+    <div class="custom-field-label flex-grow-1">
+      <input class="field-label" placeholder="label" value="{{label}}" maxlength="30">
+    </div>
+    <div class="custom-field-type">
       {{#if settingsButtonTemplate}}
         {{> UI.dynamic template=settingsButtonTemplate}}
+        <div class="custom-field-type-divider"></div>
       {{/if}}
-      <svg class="jd-icon-custom-field text-white remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+      <span class="custom-field-type-label">{{fieldTypeToFieldLabel}}</span>
+      <div class="custom-field-type-divider"></div>
+      <svg class="jd-icon remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
     </div>
   </div>
 </template>

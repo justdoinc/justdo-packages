@@ -1,46 +1,69 @@
 .custom-field-item
-  transition: all 0.2s linear
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.12)
-  &:first-child
-    border-top: 1px dashed rgba(0, 0, 0, 0.12)
+  display: flex
+  background-color: #f0f4f9
+  border-radius: 4px
+  margin-top: 8px
+  padding: 8px 8px 8px 0px
+  align-items: center
+  transition: box-shadow 0.35s
   &:hover
-    .field-label
-      background-color: rgba(0, 0, 0, 0.02) !important
-    color: black
-  .sort-handle
-    width: 14px
-    height: 14px
-    opacity: 0.6
-    cursor: move
-    &:hover
-      stroke: black
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+
+  .custom-field-handle
+    cursor: grab
+    display: flex
+    align-items: center
+    opacity: 0.75
+    .jd-icon
+      padding: 2px
+      color: #B0B8C2
+      width: 20px
+      margin-left: 4px
+
 .custom-field-label
   .field-label
     font-size: 15px
-    transition: all 0.2s linear
+    color: #3D495B
+    transition: background-color 0.35s
+    width: 100%
+    border-radius: 4px
+    padding-left: 4px
+    padding-right: 4px
+    background-color: rgba(255, 255, 255, 0)
+    border-color: rgba(255, 255, 255, 0)
+    cursor: pointer
+    &:hover
+      background-color: rgba(255, 255, 255, 0.75) !important
     &:focus
-      background-color: rgba(0, 0, 0, 0.02) !important
+      background-color: rgba(255, 255, 255, 1) !important
+
 .custom-field-type
-  padding: 4px 10px
-.custom-field-type-label
-  font-size: 12px
-.custom-field-type-divider
-  height: 14px
-  opacity: 0.25
-.jd-icon-custom-field
-  cursor: pointer
-  stroke: currentColor
-  stroke-width: 2
-  stroke-linecap: round
-  stroke-linejoin: round
-  fill: none
-  width: 16px
-  height: 16px
-  transition: all 0.2s linear
-  opacity: 0.8
-  &:hover
-    opacity: 1
-    transform: scale(1.05)
+  display: flex
+  align-items: center
+
+  .custom-field-type-label
+    font-size: 11px
+    text-transform: uppercase
+    font-weight: bold
+    color: rgba(49, 69, 99, 0.6)
+    margin: 0 6px
+
+  .custom-field-type-divider
+    height: 14px
+    width: 1px
+    background-color: #C5CBD3
+    margin: 0 4px
+    opacity: 0.85
+
+  .jd-icon
+    color: #C5CBD3
+    stroke-width: 3
+    padding: 4px
+    cursor: pointer
+    &:hover
+      color: #76869a
+      background-color: #e8edf3
+
 .add-new-field
   font-size: 12px
 

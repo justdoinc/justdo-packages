@@ -1,23 +1,29 @@
 <template name="justdo_project_config_tickets_queues_project_config">
   <div class="project-conf-justdo-project-config-tickets-queues-config">
+    <div class="dropdown">
+      <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        New ticket queue
+      </button>
+      <div class="dropdown-menu">
+        <div class="d-flex align-items-center">
+          <input class="new-tq-seqId form-control form-control-sm" placeholder="Enter task number" maxlength="30">
+          <button class="add btn btn-primary btn-sm ml-2">ADD</button>
+        </div>
+      </div>
+    </div>
     {{#with ticketsQueues}}
       {{#each this}}
         {{> ticket_queue_conf}}
       {{/each}}
     {{/with}}
-    <div class="add-new-tq font-weight-bold text-body text-uppercase mt-4 mb-1">Add New Ticket Queue</div>
-    <div class="d-flex align-items-center">
-      <input class="new-tq-seqId form-control form-control-sm" placeholder="Enter task number" maxlength="30">
-      <button class="add btn btn-primary btn-sm ml-2">ADD</button>
-    </div>
   </div>
 </template>
 
 <template name="ticket_queue_conf">
-  <div class="tq-task-item d-flex align-items-center py-2" task-id="{{_id}}">
+  <div class="tq-task-item" task-id="{{_id}}">
     <div class="tq-task w-75"><b>#{{seqId}}:</b> {{title}}</div>
     {{#if isRemovable}}
-      <svg class="jd-icon-tq-task remove removable text-primary ml-auto"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+      <svg class="jd-icon remove removable"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
     {{else}}
       You can't remove this Ticket Queue, since you aren't member of its Task
     {{/if}}
