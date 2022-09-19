@@ -24,22 +24,31 @@
     overflow: hidden
     color: #3D495B
 
-  .new-ticket-queue-toggle
-    font-size: 11px
-    text-transform: uppercase
-    font-weight: bold
-    border: none
-    padding: 0
-    margin: 0
-    display: flex
-    align-items: center
-    background-color: white
-    cursor: pointer
-    &:hover
-      text-decoration: underline
-    .jd-icon
-      stroke-width: 3
-      width: 18px
-      height: 18px
-      opacity: 0.5
-      margin-right: 2px
+  .new-ticket-queue-dropdown
+
+    .new-ticket-queue-toggle
+      font-size: 11px
+      text-transform: uppercase
+      font-weight: bold
+      border: none
+      padding: 0
+      margin: 0
+      display: flex
+      align-items: center
+      background-color: white
+      cursor: pointer
+      &:hover
+        text-decoration: underline
+      .jd-icon
+        stroke-width: 3
+        width: 18px
+        height: 18px
+        opacity: 0.5
+        margin-right: 2px
+
+    .dropdown-menu
+      right: 0 !important
+      left: auto !important
+
+    .new-tq-seqId
+      width: 160px

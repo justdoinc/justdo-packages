@@ -14,13 +14,13 @@ APP.executeAfterAppLibCode ->
     priority: 1000
 
   Template.custom_fields_conf.onCreated ->
-    @show_add_button = new ReactiveVar(false)
+    @add_button_disabled = new ReactiveVar(true)
 
     @updateAddButtonState = =>
       if $(".new-field-label").val() == ""
-        @show_add_button.set(false)
+        @add_button_disabled.set(true)
       else
-        @show_add_button.set(true)
+        @add_button_disabled.set(false)
 
       return
 
@@ -72,15 +72,20 @@ APP.executeAfterAppLibCode ->
 
         return
 
+    $(".add-new-field-dropdown").on "shown.bs.dropdown", ->
+      $(".new-field-label").focus()
+
+      return
+
     return
 
   getProjectCustomFields = -> module.curProj()?.getProjectCustomFields()
   Template.custom_fields_conf.helpers
     getFieldTypes: -> GridControlCustomFields.getAvailableCustomFieldsTypes()
-    showAddButton: ->
+    addButtonDisabled: ->
       tpl = Template.instance()
 
-      return tpl.show_add_button.get()
+      return tpl.add_button_disabled.get()
     customFields: ->
       return getProjectCustomFields()
     showCustomFieldsSortOption: ->
@@ -155,6 +160,8 @@ APP.executeAfterAppLibCode ->
       if e.which == 13
         addCustomField()
 
+        $(".add-new-field-dropdown").dropdown "hide"
+
         return
 
       return
@@ -222,6 +229,11 @@ APP.executeAfterAppLibCode ->
     "click .sort-custom-fields": (e, tpl) ->
       sort_type = $(e.target.closest(".sort-custom-fields")).attr "sort-criteria"
       APP.projects.sortCustomFields sort_type
+      return
+
+    "click .new-field-type": (e, tpl) ->
+      e.stopPropagation()
+
       return
 
   customFieldObjectToCustomFieldTypeDef = (custom_field_def) ->

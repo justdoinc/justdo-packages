@@ -7,13 +7,12 @@
         <div class="sort-custom-fields text-primary" sort-criteria="label">Sort by Name</div>
         {{/if}}
       </div>
-      <div class="dropdown">
-        <div class="add-new-field-toggle text-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <div class="dropdown add-new-field-dropdown">
+        <div class="add-new-field-toggle text-primary" data-toggle="dropdown" aria-expanded="false">
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
           New custom field
         </div>
-        <div class="dropdown-menu">
-          <div class="add-new-field font-weight-bold text-body text-uppercase mt-4 mb-2">Add New Custom Field</div>
+        <div class="dropdown-menu jd-p-075 animate slideIn shadow-lg border-0">
           <div class="d-flex align-items-center">
             <input class="new-field-label form-control form-control-sm" placeholder="label" maxlength="30">
             <select class="new-field-type form-control form-control-sm mx-2">
@@ -21,7 +20,7 @@
                 <option value="{{custom_field_type_id}}">{{label}}</option>
               {{/each}}
             </select>
-            <button class="add btn btn-primary btn-sm">ADD</button>
+            <button class="add btn btn-primary btn-sm" disabled="{{addButtonDisabled}}">ADD</button>
           </div>
         </div>
       </div>

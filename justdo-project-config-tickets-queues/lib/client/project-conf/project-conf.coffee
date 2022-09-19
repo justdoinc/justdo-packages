@@ -47,6 +47,14 @@ Template.justdo_project_config_tickets_queues_project_config.onCreated ->
 
   return
 
+Template.justdo_project_config_tickets_queues_project_config.onRendered ->
+  $(".new-ticket-queue-dropdown").on "shown.bs.dropdown", ->
+    $(".new-tq-seqId").val("").focus()
+
+    return
+
+  return
+
 Template.justdo_project_config_tickets_queues_project_config.helpers
   showAddButton: ->
     tpl = Template.instance()
