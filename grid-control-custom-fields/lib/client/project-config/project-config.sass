@@ -64,16 +64,31 @@
       color: #76869a
       background-color: #e8edf3
 
-.add-new-field
-  font-size: 12px
+.sort-custom-fields
+  cursor: pointer
+  user-select: none
+  display: flex
+  align-items: center
+  margin-left: 8px
+  &:hover
+    text-decoration: underline
 
-.custom-fields-header
-  .sort-custom-fields
-    float: right
-    margin-top: -28px
-
-    font-weight: bold
-    font-size: 14px
-    cursor: pointer
-    &:hover
-      text-decoration: underline
+.add-new-field-toggle
+  font-size: 11px
+  text-transform: uppercase
+  font-weight: bold
+  border: none
+  padding: 0
+  margin: 0
+  display: flex
+  align-items: center
+  background-color: white
+  cursor: pointer
+  &:hover
+    text-decoration: underline
+  .jd-icon
+    stroke-width: 3
+    width: 18px
+    height: 18px
+    opacity: 0.5
+    margin-right: 2px

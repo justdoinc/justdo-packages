@@ -1,9 +1,9 @@
 <template name="project_custom_states">
   <div class="project-custom-states-container">
     <div class="custom-states-sections">
-      <div class="custom-states-section">
-        <div class="config-section-title">
-          Active states
+      <div class="config-section-container">
+        <div class="config-section-header">
+          <div class="config-section-title">Active states</div>
         </div>
         <div class="custom-states-section-container active-states">
           {{#if activeStates}}
@@ -17,9 +17,9 @@
           {{/if}}
         </div>
       </div>
-      <div class="custom-states-section">
-        <div class="config-section-title">
-          Hidden states
+      <div class="config-section-container">
+        <div class="config-section-header">
+          <div class="config-section-title">Hidden states</div>
         </div>
         <div class="custom-states-section-container hidden-states">
           {{#if hiddenStates}}

@@ -1,14 +1,17 @@
 <template name="custom_fields_conf">
   <div class="custom-fields-conf">
-    <div class="custom-fields-header">
-      {{#if showCustomFieldsSortOption}}
+    <div class="config-section-header">
+      <div class="config-section-title">
+        Custom Fields
+        {{#if showCustomFieldsSortOption}}
         <div class="sort-custom-fields text-primary" sort-criteria="label">Sort by Name</div>
-      {{/if}}
-
+        {{/if}}
+      </div>
       <div class="dropdown">
-        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="add-new-field-toggle text-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
           New custom field
-        </button>
+        </div>
         <div class="dropdown-menu">
           <div class="add-new-field font-weight-bold text-body text-uppercase mt-4 mb-2">Add New Custom Field</div>
           <div class="d-flex align-items-center">
