@@ -370,6 +370,7 @@ _.extend JustdoChat,
 
         processed_channels = 0
         notifications_sent = 0
+        notifications_failed = 0
         channel_access_rejected = 0
         channels_with_subscribers_need_processing_cursor.forEach (channel_doc) ->
           if not conf._is_running
@@ -468,9 +469,22 @@ _.extend JustdoChat,
                   job_storage: job_storage
 
                 try
+                  notifications_sent += 1
                   conf.sendNotificationCb notification_obj
                 catch e
-                  console.error "justdo-chat: failed to send notification, skipping specific notification and continuing the batch.", e
+                  try
+                    console.warn "justdo-chat: failed to send notification, retry 2/3", e, {user_id: user._id, channel_id: channel_obj.getChannelDocNonReactive()._id}
+
+                    conf.sendNotificationCb notification_obj
+                  catch e
+                    try
+                      console.warn "justdo-chat: failed to send notification, retry 3/3", e, {user_id: user._id, channel_id: channel_obj.getChannelDocNonReactive()._id}
+
+                      conf.sendNotificationCb notification_obj
+                    catch e
+                      notifications_sent -= 1
+                      notifications_failed += 1
+                      console.error "justdo-chat: failed to send notification, skipping specific notification and continuing the batch.", e
 
           #
           # Mark the job as completed - write the Indicator Field on the processed members
@@ -536,7 +550,7 @@ _.extend JustdoChat,
           return
 
         if processed_channels > 0
-          justdo_chat.logger.info "Unread channels notifications - #{conf.notification_type} - processed_channels: #{processed_channels}; notifications_sent: #{notifications_sent} ; channel_access_rejected: #{channel_access_rejected} - DONE"
+          justdo_chat.logger.info "Unread channels notifications - #{conf.notification_type} - processed_channels: #{processed_channels}; notifications_sent: #{notifications_sent} ;  notifications_failed: #{notifications_failed} ; channel_access_rejected: #{channel_access_rejected} - DONE"
 
         return
 
