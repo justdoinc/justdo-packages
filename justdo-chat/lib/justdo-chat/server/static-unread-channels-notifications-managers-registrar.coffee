@@ -373,6 +373,7 @@ _.extend JustdoChat,
         notifications_failed = 0
         channel_access_rejected = 0
         channels_with_subscribers_need_processing_cursor.forEach (channel_doc) ->
+          failed_for_subscribers = {}
           if not conf._is_running
             # If the job already stopped for this node, don't continue the process. Leave it to the
             # next appointed job processor (this is actually critical to prevent two servers working
@@ -484,6 +485,7 @@ _.extend JustdoChat,
                     catch e
                       notifications_sent -= 1
                       notifications_failed += 1
+                      failed_for_subscribers[user._id] = true
                       console.error "justdo-chat: failed to send notification, skipping specific notification and continuing the batch.", e
 
           #
@@ -533,6 +535,11 @@ _.extend JustdoChat,
             if not isSubscriberCandidateForProcessing(subscriber_to_update)
               continue
 
+            if subscriber_to_update.user_id of failed_for_subscribers
+              console.info "justdo-chat: avoid marking subscriber #{subscriber_to_update.user_id} of channel #{channel_doc._id} as processed, due to failure in notification submission (i.e. we'll try again in the next notification cycle)"
+
+              continue
+
             channel_subscribers_update_needed = true
 
             subscriber_to_update[conf.processed_notifications_indicator_field_name] = proc_date
@@ -547,7 +554,7 @@ _.extend JustdoChat,
                 console.error(err)
               return
 
-          return
+          return # end of channels_with_subscribers_need_processing_cursor.forEach
 
         if processed_channels > 0
           justdo_chat.logger.info "Unread channels notifications - #{conf.notification_type} - processed_channels: #{processed_channels}; notifications_sent: #{notifications_sent} ;  notifications_failed: #{notifications_failed} ; channel_access_rejected: #{channel_access_rejected} - DONE"
