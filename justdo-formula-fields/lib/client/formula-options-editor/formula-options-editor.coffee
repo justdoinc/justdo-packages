@@ -108,7 +108,7 @@ APP.executeAfterAppLibCode ->
     $option_dom = $("""
       <div class="custom-field-option d-flex align-items-center" option-id="#{id}">
         <div class="d-flex align-items-center">
-          <svg class="jd-icon-custom-field text-muted option-handle"><use xlink:href="/layout/icons-feather-sprite.svg#menu"/></svg>
+          <svg class="jd-icon-custom-field text-muted option-handle"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical-double"/></svg>
         </div>
 
         <div class="option-label">
