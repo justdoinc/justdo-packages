@@ -27,27 +27,11 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.custom_fields_conf.onRendered ->
-    firstSort = true # firstSort need to avoid Jquery-UI issue when the sortable element jumps ( on the first sort )
-
-    @$(".custom-fields-conf").sortable
-      containment: "parent"
+    $(".custom-fields-list").sortable
       handle: ".custom-field-handle"
-      items: ".custom-field-row"
-      axis: "y"
-      start: (event, ui) ->
-        ui.helper.hide()
-        ui.placeholder.html(ui.item.html()).css("visibility", "visible").find()
-
-        $("input", ui.placeholder).val($("input", ui.item).val())
-
-        if firstSort
-          $(".custom-fields-conf").sortable 'refreshPositions'
-          firstSort = false
-        return
-
+      items: ".custom-field-item"
       stop: (event, ui) ->
         project = module.curProj()
-
         custom_fields = project.getProjectCustomFields()
 
         new_fields_order = $(".custom-field-row").map (x) ->
@@ -60,13 +44,11 @@ APP.executeAfterAppLibCode ->
         # We cancel to avoid Blaze issues, we need the DOM to be updated only by Blaze
         # otherwise, after the update will come back from the server, Blaze will mess the
         # view
-        $(".custom-fields-conf").sortable("cancel")
+        $(".custom-fields-list").sortable("cancel")
 
         project.setProjectCustomFields new_custom_fields, (err) ->
           if err?
             alert(err)
-
-            return
 
           return
 
@@ -159,8 +141,6 @@ APP.executeAfterAppLibCode ->
 
       if e.which == 13
         addCustomField()
-
-        $(".add-new-field-dropdown").dropdown "hide"
 
         return
 

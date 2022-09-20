@@ -25,11 +25,13 @@
         </div>
       </div>
     </div>
-    {{#with customFields}}
-      {{#each this}}
-        {{> custom_field_conf}}
-      {{/each}}
-    {{/with}}
+    <div class="custom-fields-list">
+      {{#with customFields}}
+        {{#each this}}
+          {{> custom_field_conf}}
+        {{/each}}
+      {{/with}}
+    </div>
   </div>
 </template>
 
