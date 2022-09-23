@@ -40,7 +40,13 @@ APP.executeAfterAppLibCode ->
 
   if Meteor.isClient
     APP.getEnv (env) ->
-      setupUserLoginResumeTokenTtl(env)
+      try
+        setupUserLoginResumeTokenTtl(env)
+      catch e
+        console.error "Failed to process USER_LOGIN_RESUME_TOKEN_TTL_MS", e
+
+      window._user_login_resume_token_ttl_processed = true # Very hacky, but the only bullet-proof way to ensure processing of this env var for sure completed.
+
       return
 
   return
