@@ -201,6 +201,11 @@ _.extend Projects.prototype,
 
               processResults = (err, results) ->
                 if err?
+                  if err.responseText is "user-id-mismatch"
+                    JustdoHelpers.showSessionTimedoutMessageAndLogout()
+
+                    return
+
                   failed = true
                   init_payload_sync_id = undefined # Critical, for case the load of the last page failed and the first pages weren't!
 
