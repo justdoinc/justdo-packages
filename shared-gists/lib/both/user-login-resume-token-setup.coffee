@@ -26,8 +26,9 @@ setupUserLoginResumeTokenTtl = (env) ->
       # e.g 10mins, the clearout might add significant amount of minutes to session life.
       # therefore, we also actively ensures in an interval that the session is still alive
       Meteor.setInterval ->
-        if JustdoHelpers.datesMsDiff(new Date(Accounts._storedLoginTokenExpires())) < 0
-          JustdoHelpers.showSessionTimedoutMessageAndLogout()
+        if (stored_expiry = Accounts._storedLoginTokenExpires())?
+          if JustdoHelpers.datesMsDiff(new Date(stored_expiry)) < 0
+            JustdoHelpers.showSessionTimedoutMessageAndLogout()
         return
       , 5000
 
