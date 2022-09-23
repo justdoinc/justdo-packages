@@ -1,23 +1,5 @@
 APP.executeAfterAppLibCode ->
-  user_login_resume_token_ttl_ms = process.env.USER_LOGIN_RESUME_TOKEN_TTL_MS
-
-  if user_login_resume_token_ttl_ms?
-    if not _.isString(user_login_resume_token_ttl_ms)
-      throw new Error("Invalid value to env var USER_LOGIN_RESUME_TOKEN_TTL_MS")
-
-    user_login_resume_token_ttl_ms = user_login_resume_token_ttl_ms.trim()
-
-    if user_login_resume_token_ttl_ms == "0" or _.isEmpty(user_login_resume_token_ttl_ms)
-      user_login_resume_token_ttl_ms = undefined
-    else
-      user_login_resume_token_ttl_ms = parseInt(user_login_resume_token_ttl_ms, 10)
-
-      if _.isNaN(user_login_resume_token_ttl_ms) or not _.isNumber(user_login_resume_token_ttl_ms)
-        throw new Error("Invalid value provided to env var: USER_LOGIN_RESUME_TOKEN_TTL_MS: #{process.env.USER_LOGIN_RESUME_TOKEN_TTL_MS}")
-
-  if user_login_resume_token_ttl_ms?
-    console.log "USER_LOGIN_RESUME_TOKEN_TTL_MS=#{user_login_resume_token_ttl_ms} (#{user_login_resume_token_ttl_ms / (1000 * 60 * 60 * 24)} days) Found, setting up expiration procedure"
-    Accounts.config({loginExpirationInDays: user_login_resume_token_ttl_ms / (1000 * 60 * 60 * 24)})
+  # See /lib/020-both/035-user-login-resume-token-setup.coffee
 
   #   migration_name = "user-login-resume-expiry"
   #   APP.justdo_db_migrations.registerMigrationScript migration_name, JustdoDbMigrations.docExpiryMigration
