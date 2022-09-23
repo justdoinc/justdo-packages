@@ -511,6 +511,22 @@ export class AccountsClient extends AccountsCommon {
   };
 
   _unstoreLoginTokenIfExpiresSoon() {
+    // Since in JustDo we rely on the USER_LOGIN_RESUME_TOKEN_TTL_MS env var
+    // to set Accounts.config({loginExpirationInDays}) we have to wait for env
+    // to be ready. We don't use here APP since it is too low-level package to use
+    // APP. We simply look for the _user_login_resume_token_ttl_processed global var
+    // that should eventually appear in the client side.
+    //
+    // See: 035-user-login-resume-token-setup.coffee
+
+    var self = this;
+
+    if (typeof _user_login_resume_token_ttl_processed === "undefined") {
+      // Wait 1 seconds before looking for _user_login_resume_token_ttl_processed again
+      setTimeout(function () {self._unstoreLoginTokenIfExpiresSoon()}, 1000);
+      return;
+    }
+    
     const tokenExpires = this._storedLoginTokenExpires();
     if (tokenExpires && this._tokenExpiresSoon(new Date(tokenExpires))) {
       this._unstoreLoginToken();
