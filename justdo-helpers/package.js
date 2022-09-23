@@ -87,6 +87,7 @@ Package.onUse(function (api) {
   api.add_files("lib/client/blaze.coffee", client);
   api.add_files("lib/client/bound-element.sass", client);
   api.add_files("lib/client/bound-element.coffee", client);
+  api.add_files("lib/client/common-messages.coffee", client);
   api.add_files("lib/client/contrast.coffee", client);
   api.add_files("lib/client/css-block.coffee", client);
   api.add_files("lib/client/date-time.coffee", client);
