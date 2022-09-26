@@ -41,6 +41,9 @@ options_schema =
       type: String
       optional: true
       bind_to_instance: true
+    server_type:
+      type: String
+      bind_to_instance: true
 
 # options_schema
 # ==============

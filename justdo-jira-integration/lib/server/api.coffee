@@ -606,13 +606,19 @@ _.extend JustdoJiraIntegration.prototype,
     if not APP.projects.isProjectAdmin justdo_id, user_id
       throw @_error "permission-denied"
 
-    base_url = new URL "https://auth.atlassian.com/authorize"
+    if @getAuthTypeIfJiraInstanceIsOnPerm() is "oauth2"
+      base_url = new URL "/rest/oauth2/latest/authorize", @jira_server_host
+      oauth2_scopes = "SYSTEM_ADMIN"
+
+    if @isJiraInstanceCloud()
+      base_url = new URL "https://auth.atlassian.com/authorize"
+      oauth2_scopes = "offline_access write:board-scope:jira-software read:board-scope.admin:jira-software read:project:jira write:sprint:jira-software read:board-scope:jira-software read:issue-details:jira read:sprint:jira-software read:jira-work manage:jira-project manage:jira-configuration read:jira-user write:jira-work manage:jira-webhook manage:jira-data-provider"
 
     params = new URLSearchParams
       audience: "api.atlassian.com"
       client_id: @client_id
-      redirect_uri: "#{process.env.ROOT_URL}/jira/oAuthCallback"
-      scope: "offline_access write:board-scope:jira-software read:board-scope.admin:jira-software read:project:jira write:sprint:jira-software read:board-scope:jira-software read:issue-details:jira read:sprint:jira-software read:jira-work manage:jira-project manage:jira-configuration read:jira-user write:jira-work manage:jira-webhook manage:jira-data-provider"
+      redirect_uri: new URL "/jira/oAuthCallback/", @getRootUrlForCallbacksAndRedirects()
+      scope: oauth2_scopes
       state: justdo_id
       response_type: "code"
       prompt: "consent"
@@ -748,21 +754,29 @@ _.extend JustdoJiraIntegration.prototype,
     if res.statusCode is 200
       {access_token, refresh_token} = res.data
 
-      get_accessible_resources_options =
-        headers:
-          Authorization: "Bearer #{access_token}"
-          Accept: "application/json "
-      res = await HTTP.get "https://api.atlassian.com/oauth/token/accessible-resources", get_accessible_resources_options
+      if @isJiraInstanceCloud()
+        get_accessible_resources_options =
+          headers:
+            Authorization: "Bearer #{access_token}"
+            Accept: "application/json "
+        res = await HTTP.get "https://api.atlassian.com/oauth/token/accessible-resources", get_accessible_resources_options
+        server_info = res.data?[0]
+        jira_client_host = new URL(server_info.id, "https://api.atlassian.com/ex/jira/").toString()
+      else
+        server_info =
+          id: "private-server"
+          url: @jira_server_host
+          name: "Private Jira Server"
+          scopes: ["SYSTEM_ADMIN"]
+        jira_client_host = @jira_server_host
 
-      credentials = {access_token, refresh_token}
-      credentials.server_info = res.data?[0]
       query =
-        "server_info.id": credentials.server_info.id
+        "server_info.id": server_info.id
       ops =
         $set:
-          access_token: credentials.access_token
-          refresh_token: credentials.refresh_token
-          server_info: credentials.server_info
+          access_token: access_token
+          refresh_token: refresh_token
+          server_info: server_info
           access_token_updated: new Date()
           refresh_token_updated: new Date()
 
@@ -773,10 +787,10 @@ _.extend JustdoJiraIntegration.prototype,
         authentication:
           oauth2:
             accessToken: access_token
-      @clients[credentials.server_info.id] =
+      @clients[server_info.id] =
         v2: new Version2Client jira_clients_config
         agile: new AgileClient jira_clients_config
-      client = @clients[credentials.server_info.id]
+      client = @clients[server_info.id]
 
       @emit "afterJiraApiTokenRefresh"
 
@@ -1495,4 +1509,13 @@ _.extend JustdoJiraIntegration.prototype,
 
       @_searchIssueUsingJql client, issue_search_body, issue_search_cb
 
+  getAuthTypeIfJiraInstanceIsOnPerm: ->
+    if @server_type.includes "server"
+      return @server_type.replace "server-", ""
     return
+
+  isJiraInstanceCloud: ->
+    return @server_type.includes "cloud"
+
+  getRootUrlForCallbacksAndRedirects: ->
+    return process.env.JIRA_ROOT_URL_CUSTOM_DOMAIN or process.env.ROOT_URL
