@@ -4,6 +4,7 @@ start_date_custom_field_id = "customfield_10015"
 end_date_custom_field_id = "customfield_10036"
 sprint_custom_field_id = "customfield_10020"
 story_point_estimate_custom_field_id = "customfield_10016"
+epic_link_custom_field_id = "customfield_10109"
 
 _.extend JustdoJiraIntegration,
   access_token_update_rate_ms: 1000 * 60 * 50  # 50 mins
@@ -24,6 +25,16 @@ _.extend JustdoJiraIntegration,
   last_updated_custom_field_id: "customfield_10030"
   start_date_custom_field_id = "customfield_10008"
   end_date_custom_field_id = "customfield_10009"
+  sprint_custom_field_id = "customfield_10020"
+
+  # XXX On-perm
+  # epic_link_custom_field_id: epic_link_custom_field_id
+  # task_id_custom_field_id: "customfield_10113"
+  # project_id_custom_field_id: "customfield_10112"
+  # last_updated_custom_field_id: "customfield_10114"
+  # start_date_custom_field_id = "customfield_10115"
+  # end_date_custom_field_id = "customfield_10116"
+  # sprint_custom_field_id = "customfield_10110"
 
   start_date_custom_field_id: start_date_custom_field_id
   end_date_custom_field_id: end_date_custom_field_id
