@@ -1369,30 +1369,39 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_server_id = @getJiraServerIdFromApiClient client
 
-    users_info = await client.userSearch.findAssignableUsers {project: jira_project_id}
+    find_assignable_users_req =
+      project: jira_project_id
+    # Jira server API supports project key only for findAssignableUsers()
+    if @getAuthTypeIfJiraInstanceIsOnPerm()?
+      find_assignable_users_req.project = @getJiraProjectKeyById jira_project_id
+
+    try
+      users_info = await client.userSearch.findAssignableUsers find_assignable_users_req
+    catch e
+      console.error "[justdo-jira-integration] Failed to fetch users from project #{jira_project_id}", e
+
     jira_accounts = []
     proxy_users_to_be_created = []
 
     for user_info in users_info
-      if user_info.accountType is "atlassian"
-        # If the email isn't recognized, create a proxy user.
-        # XXX Temp fix for email API permission issue. Remove the first if statment when resolved/Jira server is in use
-        if _.isEmpty user_info.emailAddress
-          user_info.emailAddress = @_getHarcodedEmailByAccountId user_info.accountId
+      # If the email isn't recognized, create a proxy user.
+      # XXX Temp fix for email API permission issue. Remove the first if statment when resolved/Jira server is in use
+      if _.isEmpty user_info.emailAddress
+        user_info.emailAddress = @_getHarcodedEmailByAccountId user_info.accountId
 
-        if not Accounts.findUserByEmail(user_info.emailAddress)?
-          [first_name, last_name] = user_info.displayName.split " "
-          profile = {first_name, last_name}
-          proxy_users_to_be_created.push {email: user_info.emailAddress, profile: profile}
+      if not Accounts.findUserByEmail(user_info.emailAddress)?
+        [first_name, last_name] = user_info.displayName.split " "
+        profile = {first_name, last_name}
+        proxy_users_to_be_created.push {email: user_info.emailAddress, profile: profile}
 
-        jira_accounts.push
-          jira_account_id: user_info.accountId
-          email: user_info.emailAddress
-          display_name: user_info.displayName
-          active: user_info.active
-          timezone: user_info.timezone
-          locale: user_info.locale
-          avatar_url: user_info.avatarUrl
+      jira_accounts.push
+        jira_account_id: user_info.accountId
+        email: user_info.emailAddress
+        display_name: user_info.displayName
+        active: user_info.active
+        timezone: user_info.timezone
+        locale: user_info.locale
+        avatar_url: user_info.avatarUrl
 
     APP.accounts.createProxyUsers(proxy_users_to_be_created)
 
@@ -1410,10 +1419,18 @@ _.extend JustdoJiraIntegration.prototype,
     check options.email, Match.Maybe String
     client = @getJiraClientForJustdo(justdo_id)
     if options?.email?
-      query = {query: options.email}
-    if options?.account_id?
+      # Jira cloud and server uses different query key. Here we include both.
+      query =
+        query: options.email
+        username: options.email
+    # AccountId is only available for Jira cloud instances.
+    if @isJiraInstanceCloud() and options?.account_id?
       query = {accountId: options.account_id}
-    return await client.v2.userSearch.findUsers query
+    try
+      users = await client.v2.userSearch.findUsers query
+    catch e
+      console.error e
+    return users
 
   getJiraServerIdFromApiClient: (client) ->
     if @getAuthTypeIfJiraInstanceIsOnPerm() is "oauth2"
@@ -1468,17 +1485,21 @@ _.extend JustdoJiraIntegration.prototype,
           throw e
     return
 
-  getJustdoUserIdByJiraAccountId: (jira_project_id, jira_account_id) ->
-    if _.isString jira_project_id
-      jira_project_id = parseInt jira_project_id
+  getJustdoUserIdByJiraAccountIdOrEmail: (jira_project_id, jira_account_id_or_email) ->
+    if JustdoHelpers.common_regexps.email.test jira_account_id_or_email
+      user_email = jira_account_id_or_email
+    else
+      if _.isString jira_project_id
+        jira_project_id = parseInt jira_project_id
 
-    query =
-      "jira_projects.#{jira_project_id}.jira_accounts.jira_account_id": jira_account_id
-    query_options =
-      fields:
-        "jira_projects.#{jira_project_id}.jira_accounts.$": 1
+      query =
+        "jira_projects.#{jira_project_id}.jira_accounts.jira_account_id": jira_account_id_or_email
+      query_options =
+        fields:
+          "jira_projects.#{jira_project_id}.jira_accounts.$": 1
 
-    user_email = @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.jira_accounts?[0]?.email
+      user_email = @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.jira_accounts?[0]?.email
+
     return Accounts.findUserByEmail(user_email)._id
 
   getAllStoredSprintsAndFixVersionsByJiraProjectId: (jira_project_id) ->
