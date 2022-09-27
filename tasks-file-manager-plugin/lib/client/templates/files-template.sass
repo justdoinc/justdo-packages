@@ -6,7 +6,11 @@
       padding-bottom: 1rem !important
 
   .file-inner-wrapper
-    border-radius: 0.5rem
+    padding: 16px
+    position: relative
+    border: 2px solid rgba(255, 255, 255, 0)
+    border-radius: 8px
+    transition: border-color 0.35s
 
   .actions
     opacity: 0
@@ -113,6 +117,57 @@
     bottom: 10px
     overflow-y: auto
 
+
+.tasks-file-manager-files.edit-mode
+  .bulk-edit-control-wrapper
+    position: fixed
+    display: flex
+    z-index: 3
+    bottom: 35px
+    padding-left: 16px
+    .bulk-edit-control
+      background: #474747
+      padding: 16px 20px
+      color: white
+
+  .file-check-input
+    position: relative
+    width: 18px
+    height: 18px
+    margin-right: 12px
+    .jd-icon
+      position: absolute
+      width: 18px
+      height: 18px
+      padding: 0px
+      stroke-width: 2.5
+      background-color: white
+      border-radius: 100%
+      z-index: 3
+      &.icon-mark-circle
+        color: #848fa1
+        opacity: 0.75
+      &.icon-mark-check
+        color: #08c116
+        opacity: 0
+
+  .file-check-input:hover
+    .icon-mark-circle
+      opacity: 1
+
+  .file.selected
+    .file-inner-wrapper
+      border-color: #08c116
+    .icon-mark-circle
+      opacity: 0
+    .icon-mark-check
+      opacity: 1
+
+  .file
+    cursor: pointer
+    .content,
+    .image-preview
+      pointer-events: none
 
 @keyframes sk-bounce
   0%, 100%

@@ -1,6 +1,10 @@
 Template.tasks_file_manager_files.onCreated ->
+  tpl = @
+
   @renaming = new ReactiveVar false
   @deletion = new ReactiveVar false
+  @bulk_edit_mode_rv = new ReactiveVar false
+  @bulk_selected_rv = new ReactiveVar []
 
   @getTypeCssClass = (file_type) ->
     [p1, p2] = file_type.split('/')
@@ -11,6 +15,16 @@ Template.tasks_file_manager_files.onCreated ->
 
     return
 
+  @bulkEditModeEnable = ->
+    tpl.bulk_edit_mode_rv.set true
+
+    return
+
+  @bulkEditModeDisable = ->
+    tpl.bulk_edit_mode_rv.set false
+    tpl.bulk_selected_rv.set []
+
+    return
 
   @print_files = ->
     $("body").append """<div class="print-files-mode-overlay"></div>"""
@@ -104,6 +118,25 @@ Template.tasks_file_manager_files.helpers
   typeClass: ->
     return Template.instance().getTypeCssClass(@file.type)
 
+  bulkEditMode: ->
+    return Template.instance().bulk_edit_mode_rv.get()
+
+  bulkSelectedExist: ->
+    selected_count = Template.instance().bulk_selected_rv.get().length
+    return selected_count > 0
+
+  bulkSelectedFile: ->
+    selected_files = Template.instance().bulk_selected_rv.get()
+
+    return selected_files.includes @file.id
+
+  bulkSelectedCount: ->
+    return Template.instance().bulk_selected_rv.get().length
+
+  bulkSelectedCountGreaterThanOne: ->
+    selected_count = Template.instance().bulk_selected_rv.get().length
+    return selected_count > 1
+
 Template.tasks_file_manager_files.events
   "click .file-download-link": (e, tmpl) ->
     e.preventDefault()
@@ -169,4 +202,38 @@ Template.tasks_file_manager_files.events
 
   "click .tasks-file-manager-print": (e, tmpl) ->
     tmpl.print_files()
+    return
+
+  "click .bulk-edit-start": (e, tpl) ->
+    tpl.bulkEditModeEnable()
+
+    return
+
+  "click .bulk-edit-done": (e, tpl) ->
+    tpl.bulkEditModeDisable()
+
+    return
+
+  "click .edit-mode .file": (e, tpl) ->
+    selected_files = tpl.bulk_selected_rv.get()
+
+    if selected_files.includes @file.id
+      selected_files.splice selected_files.indexOf(@file.id), 1
+    else
+      selected_files.push @file.id
+
+    tpl.bulk_selected_rv.set selected_files
+
+    return
+
+  "click .bulk-edit-remove": (e, tpl) ->
+    selected_files = tpl.bulk_selected_rv.get()
+
+    tpl.bulkEditModeDisable()
+
+    for file_id in selected_files
+      APP.tasks_file_manager_plugin.tasks_file_manager.removeFile JD.activeItemId(), file_id, (err, result) ->
+        if err
+          console.log err
+
     return
