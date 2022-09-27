@@ -30,7 +30,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     APP.projects._grid_data_com.setGridMethodMiddleware "addChild", (path, new_item, perform_as) =>
       query = _.extend {_id: GridData.helpers.getPathItemId path}, jira_relevant_task_query
-      if not (parent_task = @tasks_collection.findOne query, {fields: jira_relevant_task_fields})?
+      if not (parent_task = @tasks_collection.findOne query, {fields: _.extend({jira_issue_type: 1}, jira_relevant_task_fields)})?
         return true
 
       # Root mountpoint should only contain roadmap/sprint-mountpoint/fix-version-mountpoint
@@ -50,6 +50,10 @@ _.extend JustdoJiraIntegration.prototype,
       # Block attempts to add child directly under individual sprint/fix-version.
       # XXX Do we want to allow creating task under sprint/fix-version directly?
       if parent_task?.jira_sprint_mountpoint_id? or parent_task?.jira_fix_version_mountpoint_id?
+        return
+
+      # Subtasks cannot be parents
+      if parent_task?.jira_issue_type?.toLowerCase() in ["sub-task", "subtask"]
         return
 
       return true
@@ -180,7 +184,10 @@ _.extend JustdoJiraIntegration.prototype,
           if task.jira_issue_type in ["Story", "Task", "Bug"] and new_parent_task?.jira_issue_type isnt "Epic"
             return
         # Subtasks has some additional constraints and ops
-        if task.jira_issue_type in ["Sub-task", "Subtask"]
+        if task.jira_issue_type?.toLowerCase() in ["sub-task", "subtask"]
+          # Jira on-perm doesn't support change parent of subtask.
+          if @getAuthTypeIfJiraInstanceIsOnPerm()?
+            return
           # Subtasks can only be under Task/Story/Bug
           if new_parent_task?.jira_issue_type not in ["Story", "Task", "Bug"]
             return
