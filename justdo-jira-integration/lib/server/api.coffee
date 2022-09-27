@@ -115,6 +115,10 @@ _.extend JustdoJiraIntegration.prototype,
 
       for changed_item in changelog.items
         jira_field_name = changed_item.fieldId or changed_item.field
+        # Temp workaround for on-perm Jira installations that has field name/id discrepencies with Jira cloud
+        if (alt_jira_field_name = JustdoJiraIntegration.alt_field_name_map[jira_field_name])?
+          jira_field_name = alt_jira_field_name
+
         if not (justdo_field_name = JustdoJiraIntegration.jira_field_to_justdo_field_map[jira_field_name])?
           continue
         jira_field_def = JustdoJiraIntegration.justdo_field_to_jira_field_map[justdo_field_name]

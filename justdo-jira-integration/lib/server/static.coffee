@@ -59,6 +59,13 @@ _.extend JustdoJiraIntegration,
   #   }
   # }
 
+  # Temp workaround for on-perm Jira installations that has field name/id discrepencies with Jira cloud
+  alt_field_name_map:
+    "Fix Version": "fixVersions"
+    "Actual Start": "jd_start_date"
+    "Actual End": "jd_end_date"
+    "Epic Link": epic_link_custom_field_id
+
   justdo_field_to_jira_field_map:
     title:
       name: "summary"
