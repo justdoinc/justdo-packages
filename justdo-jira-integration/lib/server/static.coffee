@@ -132,10 +132,26 @@ _.extend JustdoJiraIntegration,
     jira_issue_type:
       name: "issuetype"
       mapper: (justdo_id, field, destination, req_body) ->
+        _moveAllChildTasksToRoadmap = (task_id) =>
+          child_task_ids = @tasks_collection.find({"parents2.parent": task_id, jira_issue_type: {$in: ["Task", "Bug", "Story"]}}, {fields: {_id: 1}}).map (task_doc) -> "/#{task_id}/#{task_doc._id}/"
+          mountpoint_task_id = @tasks_collection.findOne({jira_mountpoint_type: "roadmap", jira_project_id: req_body.jira_project_id, project_id: justdo_id}, {fields: {_id: 1}})?._id
+          APP.projects._grid_data_com.movePath child_task_ids, {parent: mountpoint_task_id}, @_getJustdoAdmin justdo_id
+          return
+
         if destination is "jira"
+          # If an Epic became other issue type, move all existing child to root
+          if (req_body.jira_issue_type is "Epic") and (field isnt "Epic")
+            task_id = req_body._id
+            _moveAllChildTasksToRoadmap task_id
           return {name: field}
+
         if destination is "justdo"
           field_val = field.name or field.toString
+          # If an Epic became other issue type, move all existing child to root
+          if field?.fromString is "Epic" and field_val isnt "Epic"
+            if not (task_id = req_body.issue.fields[JustdoJiraIntegration.task_id_custom_field_id])?
+              task_id = @tasks_collection.findOne({jira_issue_id: parseInt req_body.issue.id}, {fields: {_id: 1}})
+            _moveAllChildTasksToRoadmap task_id
           return field_val
     # We don't current support editing fix version in Justdo.
     jira_fix_version:

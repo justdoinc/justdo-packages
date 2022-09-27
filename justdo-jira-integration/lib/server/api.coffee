@@ -333,15 +333,10 @@ _.extend JustdoJiraIntegration.prototype,
       jira_project_mountpoint = @getJustdosIdsAndTasksIdsfromMountedJiraProjectId(fields.project.id).task_id
 
       if (_.find req_body.changelog.items, (item) -> item.field is "issuetype" and item.toString is "Epic")?
-        # Move all child tasks to root level of mounted project
-        @tasks_collection.find({"parents2.parent": task_id}, {fields: {_id: 1}}).forEach (child_task) =>
-          grid_data.movePath "/#{task_id}/#{child_task._id}/", {parent: jira_project_mountpoint}, @_getJustdoAdmin justdo_id
-
-        # Move the target task that was changed to epic
-        parent_task_id = @tasks_collection.findOne(task_id, {fields: {parents2: 1}}).parents2[0].parent
-        old_path = "/#{parent_task_id}/#{task_id}/"
-
-        grid_data.movePath old_path, {parent: jira_project_mountpoint}, @_getJustdoAdmin justdo_id
+        # Move the target task that was changed to epic back to roadmap
+        if (parent_task_id = @tasks_collection.findOne({_id: task_id, jira_issue_id: {$ne: null}}, {fields: {parents2: 1}})?.parents2?[0]?.parent)?
+          old_path = "/#{parent_task_id}/#{task_id}/"
+          grid_data.movePath old_path, {parent: jira_project_mountpoint}, @_getJustdoAdmin justdo_id
 
       if (changed_issue_parent = _.find req_body.changelog.items, (item) -> item.field in ["IssueParentAssociation", "Parent Issue"])?
         current_parent_task_id = @tasks_collection.findOne(task_id, {fields: {parents2: 1}}).parents2[0].parent
