@@ -100,13 +100,14 @@ _.extend JustdoJiraIntegration,
 
           # Move from old sprint parent to new sprint parent if the sprint is created as a task
           jira_issue_id = parseInt req_body.issue.id
+          jira_project_id = parseInt req_body.issue.fields.project.id
           grid_data = APP.projects._grid_data_com
-          justdo_admin_id = @_getJustdoAdmin req_body.issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
+          justdo_admin_id = @_getJustdoAdmin justdo_id
           # XXX Chance for optimization
           task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {parents2: 1}})
 
           # Remove sprint
-          if (old_sprint_mountpoint = @tasks_collection.findOne({jira_sprint_mountpoint_id: parseInt field.from}, {fields: {_id: 1}}))?
+          if (old_sprint_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_sprint_mountpoint_id: parseInt field.from}, {fields: {_id: 1}}))?
             try
               grid_data.removeParent "/#{old_sprint_mountpoint._id}/#{task_doc._id}/", justdo_admin_id
             catch e
@@ -115,9 +116,9 @@ _.extend JustdoJiraIntegration,
                 console.error e
 
           # Add sprint
-          if (new_sprint_mountpoint = @tasks_collection.findOne({jira_sprint_mountpoint_id: parseInt field.to}, {fields: {_id: 1}}))?
+          if (new_sprint_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_sprint_mountpoint_id: parseInt field.to}, {fields: {_id: 1}}))?
             try
-              grid_data.addParent task_doc._id, {parent: new_sprint_mountpoint._id}, justdo_admin_id
+              grid_data.addParent task_doc._id, {parent: new_sprint_mountpoint._id, order: 0}, justdo_admin_id
             catch e
               if e.error isnt "parent-already-exists"
                 console.trace()
@@ -145,17 +146,18 @@ _.extend JustdoJiraIntegration,
             return _.map field, (fix_version) -> fix_version.name
           else
             jira_issue_id = parseInt req_body.issue.id
+            jira_project_id = parseInt req_body.issue.fields.project.id
             grid_data = APP.projects._grid_data_com
-            justdo_admin_id = @_getJustdoAdmin req_body.issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
+            justdo_admin_id = @_getJustdoAdmin justdo_id
             ops = {}
 
             if _.isString field.from
-              old_fix_version_mountpoint = @tasks_collection.findOne({jira_fix_version_mountpoint_id: parseInt field.from}, {fields: {_id: 1}})
+              old_fix_version_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: parseInt field.from}, {fields: {_id: 1}})
               ops.$pull =
                 jira_fix_version: field.fromString
             task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {parents2: 1}})
             if _.isString field.to
-              new_fix_version_mountpoint = @tasks_collection.findOne({jira_fix_version_mountpoint_id: parseInt field.to}, {fields: {_id: 1}})
+              new_fix_version_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: parseInt field.to}, {fields: {_id: 1}})
               ops.$addToSet =
                 jira_fix_version: field.toString
 
