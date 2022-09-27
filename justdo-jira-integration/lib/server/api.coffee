@@ -1259,6 +1259,14 @@ _.extend JustdoJiraIntegration.prototype,
         return
     return
 
+  getJiraProjectKeyById: (jira_project_id) ->
+    query =
+      "jira_projects.#{jira_project_id}":
+        $ne: null
+    query_options =
+      "jira_projects.#{jira_project_id}.key": 1
+    return @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.key
+
   setJustdoIdandTaskIdToJiraIssue: (justdo_id, task_id, issue_id_or_key) ->
     # XXX Need to think of how to store and fetch Jira customfields ids for task_id and justdo_id
     client = @getJiraClientForJustdo(justdo_id).v2
