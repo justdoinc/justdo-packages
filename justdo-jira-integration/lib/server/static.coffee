@@ -197,7 +197,7 @@ _.extend JustdoJiraIntegration,
                   console.error e
             if new_fix_version_mountpoint?
               try
-                grid_data.addParent task_doc._id, {parent: new_fix_version_mountpoint._id}, justdo_admin_id
+                grid_data.addParent task_doc._id, {parent: new_fix_version_mountpoint._id, order: 0}, justdo_admin_id
               catch e
                 if e.error isnt "parent-already-exists"
                   console.trace()
@@ -274,8 +274,8 @@ _.extend JustdoJiraIntegration,
       mapper: (justdo_id, field, destination, req_body) ->
         if destination is "justdo"
           jira_project_id = parseInt req_body.issue.fields.project.id
-          jira_account_id = field.accountId or field.to
-          user_id = @getJustdoUserIdByJiraAccountId jira_project_id, jira_account_id
+          jira_account_id_or_email = field.accountId or field.emailAddress or field.to
+          user_id = @getJustdoUserIdByJiraAccountIdOrEmail jira_project_id, jira_account_id_or_email
           # If field.to exists, an issue update is performed and task_id is already in place.
           # Therefore we update activity log in place.
           # If field.accountId exists instead, a new task is being created
@@ -292,7 +292,7 @@ _.extend JustdoJiraIntegration,
           return user_id
     start_date:
       id: start_date_custom_field_id
-      name: "Actual start"
+      name: "jd_start_date"
       mapper: (justdo_id, field, destination, req_body) ->
         if destination is "jira"
           return field
@@ -304,7 +304,7 @@ _.extend JustdoJiraIntegration,
           return moment.utc(start_date).format("YYYY-MM-DD")
     end_date:
       id: end_date_custom_field_id
-      name: "Actual end"
+      name: "jd_end_date"
       mapper: (justdo_id, field, destination, req_body) ->
         if destination is "jira"
           return field
