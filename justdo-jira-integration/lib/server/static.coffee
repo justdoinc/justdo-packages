@@ -224,13 +224,14 @@ _.extend JustdoJiraIntegration,
           # Remove any pending ownership transfer
           if (task_id = req_body?.issue?.fields?[JustdoJiraIntegration.task_id_custom_field_id])?
             @tasks_collection.update task_id, {$unset: {pending_owner_id: 1}}
+
           # Assignee removed. Use justdo admin as task owner.
-          if not (jira_account_id = field?.to or field?.accountId)?
+          if not (jira_account_id_or_email = field?.to or field?.accountId or field?.emailAddress)?
             return @_getJustdoAdmin justdo_id
 
           jira_project_id = parseInt req_body.issue.fields.project.id
           # This if statement shouldn't happen as we already fetched all users.
-          if not (justdo_user_id = @getJustdoUserIdByJiraAccountId jira_project_id, jira_account_id)?
+          if not (justdo_user_id = @getJustdoUserIdByJiraAccountIdOrEmail jira_project_id, jira_account_id_or_email)?
             return @_getJustdoAdmin justdo_id
 
           return justdo_user_id

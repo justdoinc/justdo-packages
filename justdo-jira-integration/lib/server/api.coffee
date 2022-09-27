@@ -350,7 +350,7 @@ _.extend JustdoJiraIntegration.prototype,
         # Change/Add parent
         if (new_parent_issue_id = changed_issue_parent.to)?
           if (parent_issue = fields.parent)?
-            new_parent_issue_id = parent_issue.id
+            new_parent_issue_id = parseInt parent_issue.id
             new_parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_id: new_parent_issue_id}, {fields: {_id: 1}})._id
           else
             client = @getJiraClientForJustdo(justdo_id)
@@ -859,13 +859,14 @@ _.extend JustdoJiraIntegration.prototype,
         @emit "afterJiraApiTokenRefresh"
 
       # Fetch all fix versions and sprints, then store in db
-      mounted_jira_projects = @jira_collection.findOne("server_info.id": credentials.server_info.id, {fields: {jira_projects: 1}})?.jira_projects
+      mounted_jira_projects = @jira_collection.findOne("server_info.id": server_info.id, {fields: {jira_projects: 1}})?.jira_projects
       for jira_project_id of mounted_jira_projects
         @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {client: client.agile}
         @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {client: client.v2}
         @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {client: client.v2}
 
-      return credentials.server_info.id
+      return server_info.id
+
   convertOAuth2RequestAndEndpointForJiraServer: (end_point, request) ->
     request.headers["Content-Type"] = "application/x-www-form-urlencoded"
     end_point = new URL end_point
@@ -1278,7 +1279,7 @@ _.extend JustdoJiraIntegration.prototype,
         [JustdoJiraIntegration.project_id_custom_field_id]: justdo_id
         [JustdoJiraIntegration.last_updated_custom_field_id]: new Date()
     client.issues.editIssue req
-    .catch (err) -> console.error err.data
+    .catch (err) -> console.error "[justdo-jira-integration] Failed to set Justdo task and project id to Jira issue", err.data
     return
 
   getJustdosIdsAndTasksIdsfromMountedJiraProjectId: (jira_project_id) ->
