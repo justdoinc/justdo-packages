@@ -99,6 +99,9 @@ _.extend JustdoTasksContextMenu.prototype,
           if gc.isMultiSelectMode()
             return "Remove Tasks"
 
+          if Object.keys(JD.activeItem({parents: 1}).parents).length > 1
+            return "Remove From Parent"
+
           return "Remove Task"
 
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
@@ -114,6 +117,43 @@ _.extend JustdoTasksContextMenu.prototype,
         delete unfulfilled_op_req.ops_locked # We ignore that lock to avoid flickering when locking ops are performed from the contextmenu
 
         return _.isEmpty(unfulfilled_op_req)
+    
+    @registerSectionItem "main", "remove-subtree",
+      position: 400
+      data:
+        label: "Remove sub-tree"
+
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          # APP.modules.project_page.performOp("removeTask")
+          task = APP.collections.Tasks.findOne(task_id, {fields: {seqId: 1, title: 1}})
+          bootbox.confirm "Are you sure to remove the entire sub-tree of #{JustdoHelpers.taskCommonName(task)}?", (result) ->
+            if result
+              if (gd = APP.modules.project_page.gridData())?
+                paths = gd._grid_data_core.getSubtreePaths(task_id)
+                paths.push(task_path)
+                gd.removeParent paths, (err) ->
+                  if err?
+                    JustdoSnackbar.show
+                      text: "Cannot remove sub-tree because it contains tasks that you are not a member of."
+                      duration: 5000
+            return
+          return
+        icon_type: "feather"
+        icon_val: "trash"
+
+      listingCondition: ->
+        sub_task_ids = APP.modules.project_page.mainGridData()._grid_data_core.getAllItemsKnownDescendantsIdsObj([JD.activeItemId()], {}, 50)
+
+        num_sub_tasks = Object.keys(sub_task_ids).length
+        if num_sub_tasks >= 50 or num_sub_tasks == 0
+          return false
+        
+        for sub_task_id of sub_task_ids
+          sub_task = APP.collections.Tasks.getDocNonReactive(sub_task_id)
+          if Object.keys(sub_task.parents).length > 1
+            return false
+          
+        return true
 
     getSubtreeItemsWithDifferentVals = (task_path, field_val, field_info) ->
       gc = APP.modules.project_page.gridControl()
