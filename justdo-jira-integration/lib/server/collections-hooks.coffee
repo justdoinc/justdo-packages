@@ -56,7 +56,7 @@ _.extend JustdoJiraIntegration.prototype,
         return
 
       parent_task_id = doc.parents2[0].parent
-      parent_task = self.tasks_collection.findOne(parent_task_id, {fields: {jira_issue_id: 1, jira_project_id: 1, jira_issue_type: 1, jira_sprint: 1}})
+      parent_task = self.tasks_collection.findOne(parent_task_id, {fields: {jira_issue_id: 1, jira_issue_key: 1, jira_project_id: 1, jira_issue_type: 1, jira_sprint: 1}})
 
       # If jira_project_id doesn't exist, assume the task is created outside of mountpoint.
       if not (jira_project_id = parent_task?.jira_project_id)?
@@ -104,7 +104,7 @@ _.extend JustdoJiraIntegration.prototype,
                 id: "#{parent_issue_id}"
             # Jira Server
             else
-              req.fields[JustdoJiraIntegration.epic_link_custom_field_id] = "#{parent_issue_id}"
+              req.fields[JustdoJiraIntegration.epic_link_custom_field_id] = "#{parent_task.jira_issue_key}"
 
       self.clients[jira_server_id].v2.issues.createIssue req
         .then (res) ->
