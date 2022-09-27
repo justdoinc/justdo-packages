@@ -204,7 +204,8 @@ _.extend JustdoJiraIntegration,
             "done": 31
           return justdo_to_jira_states_map[field]
         if destination is "justdo"
-          field_val = field.to or field.id
+          field_val = field.name or field.toString
+          field_val = field_val?.toLowerCase()
           # XXX For IT
           # jira_to_justdo_states_map =
           #   "10000": "pending"
@@ -212,9 +213,9 @@ _.extend JustdoJiraIntegration,
           #   "10002": "done"
           # XXX For ID / company managed projects
           jira_to_justdo_states_map =
-            "10003": "pending"
-            "3": "in-progress"
-            "10004": "done"
+            "to do": "pending"
+            "in progress": "in-progress"
+            "done": "done"
           return jira_to_justdo_states_map[field_val]
         return
     owner_id:
