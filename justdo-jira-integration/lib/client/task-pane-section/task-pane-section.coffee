@@ -13,7 +13,7 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.helpers
     base_url = APP.collections.Jira.findOne({}, {fields: {server_info: 1}})?.server_info?.url
     issue_key = APP.collections.Tasks.findOne(JD.activeItemId(), {fields: {jira_issue_key: 1}})?.jira_issue_key
     if base_url? and issue_key?
-      return "#{base_url}/browse/#{issue_key}"
+      return new URL "/browse/#{issue_key}", base_url
     return
 
   mountedJiraProject: ->
@@ -32,7 +32,8 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.helpers
   taskIsMountable: ->
     active_task = JD.activeItem({jira_project_key: 1, jira_issue_key: 1, jira_mountpoint_type: 1, jira_sprint_mountpoint_id: 1, jira_fix_version_mountpoint_id: 1})
     delete active_task._id
-    return _.every active_task, (field_val) -> _.isEmpty field_val
+    res = _.every active_task, (field_val) -> _.isEmpty field_val
+    return res
 
   availableProjects: -> Template.instance().available_jira_projects_rv.get()
 

@@ -8,12 +8,11 @@
     <br> -->
     {{#with serverInfo}}
       <div>
-        Logged in to Jira domain <a href="{{url}}" target="_blank">{{name}}</a>
+        Logged in to <a href="{{url}}">{{name}}</a>
       </div>
     {{/with}}
     {{#if OAuth2LoginLink}}
-      <a href="{{OAuth2LoginLink}}" target="_blank">
-      {{#if serverInfo}}Relogin{{else}}Login{{/if}} to JIRA Cloud</a>
+      <a href="{{OAuth2LoginLink}}" target="_blank">Log In to JIRA</a>
     {{else}}
       <span>Loading...</span>
     {{/if}}
