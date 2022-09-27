@@ -127,8 +127,12 @@ _.extend JustdoJiraIntegration.prototype,
         type: Object
         blackbox: true
         optional: true
-      last_connection_check:
+      last_webhook_connection_check:
         label: "Time of last API client and webhook connection check"
+        type: Date
+        optional: true
+      last_data_integrity_check:
+        label: "Time of last issue data consistency check"
         type: Date
         optional: true
     @jira_collection.attachSchema jira_collection_schema

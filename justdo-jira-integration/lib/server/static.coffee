@@ -1,3 +1,5 @@
+data_integrity_check_rate_ms = 1000 * 60 * 5 # 5 mins
+
 start_date_custom_field_id = "customfield_10015"
 end_date_custom_field_id = "customfield_10036"
 sprint_custom_field_id = "customfield_10020"
@@ -5,7 +7,9 @@ story_point_estimate_custom_field_id = "customfield_10016"
 
 _.extend JustdoJiraIntegration,
   access_token_update_rate_ms: 1000 * 60 * 50  # 50 mins
-  connection_check_rate_ms: 1000 * 60 # 1 min
+  webhook_connection_check_rate_ms: 1000 * 60 # 1 min
+  data_integrity_check_rate_ms: data_integrity_check_rate_ms
+  data_integrity_margin_of_safety: data_integrity_check_rate_ms / 5
 
   # XXX Try to search for custom field ids using Jira API and store it in DB
 
