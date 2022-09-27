@@ -204,8 +204,11 @@ Template.tasks_file_manager_files.events
     tmpl.print_files()
     return
 
-  "click .bulk-edit-start": (e, tpl) ->
-    tpl.bulkEditModeEnable()
+  "click .bulk-edit": (e, tpl) ->
+    if tpl.bulk_edit_mode_rv.get()
+      tpl.bulkEditModeDisable()
+    else
+      tpl.bulkEditModeEnable()
 
     return
 

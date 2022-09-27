@@ -1,15 +1,13 @@
 <template name="tasks_file_manager_files">
   {{#if files}}
-    <div class="bulk-edit">
-      {{#if bulkEditMode}}
-        <div class="bulk-edit-done">
+    <div class="bulk-edit-wrapper">
+      <div class="bulk-edit text-primary">
+        {{#if bulkEditMode}}
           Done
-        </div>
-      {{else}}
-        <div class="bulk-edit-start">
-          Edit
-        </div>
-      {{/if}}
+        {{else}}
+          Edit files
+        {{/if}}
+      </div>
     </div>
   {{/if}}
 
@@ -83,11 +81,9 @@
       <div class="bulk-edit-control-wrapper">
         <div class="bulk-edit-control">
           {{#if bulkSelectedExist}}
-            {{bulkSelectedCount}} File{{#if bulkSelectedCountGreaterThanOne}}s{{/if}} Selected
+            <button class="btn btn-sm btn-primary shadow-sm mr-1 bulk-edit-remove">Remove {{bulkSelectedCount}} File{{#if bulkSelectedCountGreaterThanOne}}s{{/if}}</button>
           {{/if}}
-          <div class="bulk-edit-remove">
-            Remove
-          </div>
+          <button class="btn btn-sm btn-primary shadow-sm bulk-edit-done">Done</button>
         </div>
       </div>
     {{/if}}

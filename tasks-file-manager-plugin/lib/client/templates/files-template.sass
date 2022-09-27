@@ -117,6 +117,19 @@
     bottom: 10px
     overflow-y: auto
 
+.task-pane-section-tasks-file-manager
+  .bulk-edit-wrapper
+    display: flex
+    justify-content: end
+  .bulk-edit
+    font-size: 11px
+    text-transform: uppercase
+    font-weight: bold
+    margin-bottom: 8px
+    margin-right: 2px
+    cursor: pointer
+    &:hover
+      text-decoration: underline
 
 .tasks-file-manager-files.edit-mode
   .bulk-edit-control-wrapper
@@ -124,11 +137,13 @@
     display: flex
     z-index: 3
     bottom: 35px
-    padding-left: 16px
+    padding-left: 18px
     .bulk-edit-control
-      background: #474747
-      padding: 16px 20px
-      color: white
+      display: flex
+    .bulk-edit-done,
+    .bulk-edit-remove
+      font-weight: bold
+      text-transform: uppercase
 
   .file-check-input
     position: relative
