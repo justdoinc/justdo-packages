@@ -35,9 +35,6 @@ _.extend JustdoJiraIntegration.prototype,
 
     @clients = {}
 
-    # Once Jira Api client is initialized, ensure all existing mounted issues are up to date.
-    @once "afterJiraApiTokenRefresh", @ensureAllIssuesAreUpToDate
-
     # Refresh Api token immidiately upon server startup
     @_setupJiraClientForAllJustdosWithRefreshToken()
     # Refresh Api token every set interval
@@ -684,6 +681,12 @@ _.extend JustdoJiraIntegration.prototype,
     # Initialize last_connection_check field
     self.jira_collection.update {}, {$set: {last_connection_check: new Date()}}, {multi: true}
 
+    # Whenever we refresh Jira API token, ensure all existing mounted issues are up to date.
+    self.on "afterJiraApiTokenRefresh", ->
+      self.pending_connection_test = {}
+      self.ensureAllIssuesAreUpToDate()
+      return
+
     common_batched_migration_options =
       delay_before_checking_for_new_batches: JustdoJiraIntegration.connection_check_rate_ms
       delay_between_batches: 5000 # 5 secs
@@ -704,9 +707,7 @@ _.extend JustdoJiraIntegration.prototype,
 
         if not _.isEmpty self.pending_connection_test
           @logProgress "The last issue update was not received on webhook. Attempting to refresh API token and ensuring all mounted tasks are up to date."
-          self._setupJiraClientForAllJustdosWithRefreshToken()
-          self.once "afterJiraApiTokenRefresh", self.ensureAllIssuesAreUpToDate
-          self.pending_connection_test = {}
+          _.each self.pending_connection_test, (test_obj) -> self.refreshJiraAccessToken test_obj.jira_doc_id, {emit_event: true}
         else
           jira_collection_cursor.forEach (jira_doc) =>
             jira_server_id = jira_doc.server_info?.id
@@ -731,8 +732,7 @@ _.extend JustdoJiraIntegration.prototype,
               .then => @logProgress "Issue update sent successfully."
               .catch (err) =>
                 @logProgress "Edit issue failed. Attempting to refresh API token."
-                self.refreshJiraAccessToken jira_doc
-                self.once "afterJiraApiTokenRefresh", self.ensureAllIssuesAreUpToDate
+                self.refreshJiraAccessToken jira_doc, {emit_event: true}
                 return
 
             self.jira_collection.update jira_doc._id, {$set: {last_connection_check: new Date()}}
@@ -745,12 +745,17 @@ _.extend JustdoJiraIntegration.prototype,
     return
 
   _setupJiraClientForAllJustdosWithRefreshToken: ->
+    first_call = true
     @jira_collection.find({refresh_token: {$exists: true}}, {fields: {server_info: 1, refresh_token: 1}}).forEach (jira_doc) =>
       console.log "Refreshing Jira OAuth2 access token for Jira server #{jira_doc.server_info?.name}"
-      @refreshJiraAccessToken jira_doc
+      if first_call
+        @refreshJiraAccessToken jira_doc, {emit_event: true}
+        first_call = false
+      else
+        @refreshJiraAccessToken jira_doc
       return
 
-  _parseAndStoreJiraCredentials: (res) ->
+  _parseAndStoreJiraCredentials: (res, options) ->
     if res.statusCode is 200
       {access_token, refresh_token} = res.data
 
@@ -792,7 +797,8 @@ _.extend JustdoJiraIntegration.prototype,
         agile: new AgileClient jira_clients_config
       client = @clients[server_info.id]
 
-      @emit "afterJiraApiTokenRefresh"
+      if options?.emit_event
+        @emit "afterJiraApiTokenRefresh"
 
       # Fetch all fix versions and sprints, then store in db
       mounted_jira_projects = @jira_collection.findOne("server_info.id": credentials.server_info.id, {fields: {jira_projects: 1}})?.jira_projects
@@ -912,12 +918,13 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
-  refreshJiraAccessToken: (jira_doc) ->
+  refreshJiraAccessToken: (jira_doc, options) ->
     self = @
     if _.isString jira_doc
       jira_doc = @jira_collection.findOne jira_doc, {fields: {refresh_token: 1}}
 
-    @emit "beforeJiraApiTokenRefresh"
+    if options?.emit_event
+      @emit "beforeJiraApiTokenRefresh"
 
     req =
       headers:
@@ -931,7 +938,7 @@ _.extend JustdoJiraIntegration.prototype,
       if err?
         console.error "[justdo-jira-integration] Failed to refresh access token", err.response
         return
-      @_parseAndStoreJiraCredentials res
+      @_parseAndStoreJiraCredentials res, options
       return
 
     return
