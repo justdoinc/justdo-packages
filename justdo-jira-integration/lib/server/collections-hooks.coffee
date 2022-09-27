@@ -205,13 +205,16 @@ _.extend JustdoJiraIntegration.prototype,
             if parent_issue_id? or _.isNull(parent_issue_id)
               if _.isNumber parent_issue_id
                 parent_issue_id = "#{parent_issue_id}"
-              # Jira Cloud
-              if client.v2.config.host.includes "api.atlassian.com"
+
+              if self.getAuthTypeIfJiraInstanceIsOnPerm()?
+                # Jira Server accepts issue key only when assigning parent, and does not support changing parent of a subtask.
+                if (_.isNull parent_issue_id) or (parent_task?.jira_issue_type?.toLowerCase() is "epic")
+                  fields[JustdoJiraIntegration.epic_link_custom_field_id] = parent_task?.jira_issue_key or null
+                fields.parent =
+                  key: parent_task?.jira_issue_key or null
+              else
                 fields.parent =
                   id: parent_issue_id
-              # Jira server
-              else
-                fields[JustdoJiraIntegration.epic_link_custom_field_id] = parent_issue_id
 
         if not _.isEmpty fields
           fields[JustdoJiraIntegration.last_updated_custom_field_id] = new Date()

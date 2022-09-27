@@ -857,9 +857,18 @@ _.extend JustdoJiraIntegration.prototype,
         @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {client: client.v2}
 
       return credentials.server_info.id
+  convertOAuth2RequestAndEndpointForJiraServer: (end_point, request) ->
+    request.headers["Content-Type"] = "application/x-www-form-urlencoded"
+    end_point = new URL end_point
+    for key, value of request.data
+      end_point.searchParams.set key, value
+    end_point = end_point.toString()
+    delete request.data
+    return end_point
 
   setupJiraRoutes: ->
     self = @
+
     GET_OAUTH_TOKEN_REQUEST_TEMPLATE =
       headers:
         "Content-Type": "application/json"
@@ -868,8 +877,7 @@ _.extend JustdoJiraIntegration.prototype,
         client_id: @client_id
         client_secret: @client_secret
         code: ""
-        redirect_uri: "#{process.env.ROOT_URL}/jira/oAuthCallback/"
-
+        redirect_uri: new URL "/jira/oAuthCallback/", @getRootUrlForCallbacksAndRedirects()
     # Route for oAuth callback
     Router.route "/jira/oAuthCallback", {where: "server"}
       .get ->
@@ -945,9 +953,15 @@ _.extend JustdoJiraIntegration.prototype,
           # JustdoJiraIntegration.sprint_custom_field_id = "customfield_10020"
           # JustdoJiraIntegration.justdo_field_to_jira_field_map.jira_sprint.id = "customfield_10020"
 
+          get_oauth_token_endpoint = self.get_oauth_token_endpoint
           get_oauth_token_req = _.extend {}, GET_OAUTH_TOKEN_REQUEST_TEMPLATE
           get_oauth_token_req.data.code = code
-          HTTP.post self.get_oauth_token_endpoint, get_oauth_token_req, (err, res) ->
+
+          if self.getAuthTypeIfJiraInstanceIsOnPerm() is "oauth2"
+            # Jira server oauth2 expects the data to be encoded into the url, instead of the post body.
+            get_oauth_token_endpoint = self.convertOAuth2RequestAndEndpointForJiraServer get_oauth_token_endpoint, get_oauth_token_req
+
+          HTTP.post get_oauth_token_endpoint, get_oauth_token_req, (err, res) ->
             if err?
               console.error "[justdo-jira-integration] Failed to get access token", err.response
               return
@@ -983,8 +997,15 @@ _.extend JustdoJiraIntegration.prototype,
         refresh_token: jira_doc.refresh_token
         client_id: @client_id
         client_secret: @client_secret
-    HTTP.post self.get_oauth_token_endpoint, req, (err, res) =>
+
+    get_oauth_token_endpoint = self.get_oauth_token_endpoint
+
+    if @getAuthTypeIfJiraInstanceIsOnPerm() is "oauth2"
+      get_oauth_token_endpoint = @convertOAuth2RequestAndEndpointForJiraServer get_oauth_token_endpoint, req
+
+    HTTP.post get_oauth_token_endpoint, req, (err, res) =>
       if err?
+        console.error err
         console.error "[justdo-jira-integration] Failed to refresh access token", err.response
         return
       @_parseAndStoreJiraCredentials res, options
@@ -1391,6 +1412,8 @@ _.extend JustdoJiraIntegration.prototype,
     return await client.v2.userSearch.findUsers query
 
   getJiraServerIdFromApiClient: (client) ->
+    if @getAuthTypeIfJiraInstanceIsOnPerm() is "oauth2"
+      return "private-server"
     return client?.config?.host?.replace "https://api.atlassian.com/ex/jira/", ""
 
   getJiraClientForJustdo: (justdo_id) ->
