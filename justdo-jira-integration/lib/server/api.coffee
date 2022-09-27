@@ -41,7 +41,8 @@ _.extend JustdoJiraIntegration.prototype,
     @_registerDbMigrationScriptForRefreshingAccessToken()
 
     # Check alive for Jira Api client and webhook and attempt to repair.
-    @_registerDbMigrationScriptForConnectionHealthCheck()
+    @_registerDbMigrationScriptForWebhookHealthCheck()
+
 
     @_setupInvertedFieldMap()
 
@@ -299,10 +300,12 @@ _.extend JustdoJiraIntegration.prototype,
       # Updates from Justdo. Ignore.
       if (last_updated_changelog_item = _.find req_body.changelog.items, (item) -> item.field is "jd_last_updated")?
         # Delete record in pending_connection_test if we receive the update we send.
-        received_update_date = new Date last_updated_changelog_item.toString
-        if (last_update_date = @pending_connection_test[parseInt req_body.issue.id])? and (received_update_date - last_update_date is 0)
-          console.log "[jira-connection-healthcheck] Issue update received via webhook."
-          delete @pending_connection_test[parseInt req_body.issue.id]
+        jira_issue_id = parseInt req_body.issue.id
+        received_updated_date = new Date last_updated_changelog_item.toString
+        if (last_update_date = @pending_connection_test?[jira_issue_id]?.date)? and (received_updated_date - last_update_date is 0)
+          console.log "[justdo-db-migrations] [jira-webhook-healthcheck] Issue update received via webhook."
+          @jira_collection.update @pending_connection_test[jira_issue_id].jira_doc_id, {$set: {last_webhook_connection_check: new Date(req_body.timestamp)}}
+          delete @pending_connection_test[jira_issue_id]
         return
 
       {fields} = req_body.issue
@@ -675,11 +678,11 @@ _.extend JustdoJiraIntegration.prototype,
     return
 
   # XXX Currently this script only support a single Jira instance.
-  _registerDbMigrationScriptForConnectionHealthCheck: ->
+  _registerDbMigrationScriptForWebhookHealthCheck: ->
     self = @
 
-    # Initialize last_connection_check field
-    self.jira_collection.update {}, {$set: {last_connection_check: new Date()}}, {multi: true}
+    # Initialize last_webhook_connection_check field
+    self.jira_collection.update {}, {$set: {last_webhook_connection_check: new Date()}}, {multi: true}
 
     # Whenever we refresh Jira API token, ensure all existing mounted issues are up to date.
     self.on "afterJiraApiTokenRefresh", ->
@@ -688,19 +691,20 @@ _.extend JustdoJiraIntegration.prototype,
       return
 
     common_batched_migration_options =
-      delay_before_checking_for_new_batches: JustdoJiraIntegration.connection_check_rate_ms
-      delay_between_batches: 5000 # 5 secs
+      delay_before_checking_for_new_batches: JustdoJiraIntegration.webhook_connection_check_rate_ms
+      delay_between_batches: 10000 # 10 secs
       mark_as_completed_upon_batches_exhaustion: false
       batch_size: 1
       collection: APP.collections.Jira
       static_query: false
       queryGenerator: ->
         query =
-          last_connection_check:
-            $lte: JustdoHelpers.getDateMsOffset(-1 * JustdoJiraIntegration.connection_check_rate_ms)
+          last_webhook_connection_check:
+            $lte: JustdoHelpers.getDateMsOffset(-1 * JustdoJiraIntegration.webhook_connection_check_rate_ms)
         query_options =
           fields:
             server_info: 1
+            refresh_token: 1
         return {query, query_options}
       batchProcessor: (jira_collection_cursor) ->
         num_processed = 0
@@ -715,12 +719,12 @@ _.extend JustdoJiraIntegration.prototype,
               @logProgress "Client not exist for Jira instance #{jira_server_id}."
               return
 
-            if not (jira_issue_id = self.tasks_collection.findOne({jira_issue_id: {$ne: null}}, {fields: {jira_issue_id: 1, refresh_token: 1}})?.jira_issue_id)?
+            if not (jira_issue_id = self.tasks_collection.findOne({jira_issue_id: {$ne: null}}, {sort: {jira_last_updated: -1}, fields: {jira_issue_id: 1, refresh_token: 1}})?.jira_issue_id)?
               @logProgress "No mounted issue found for Jira instance #{jira_server_id}."
               return
 
             date_for_connection_test = new Date()
-            self.pending_connection_test[jira_issue_id] = date_for_connection_test
+            self.pending_connection_test[jira_issue_id] = {date: date_for_connection_test, jira_doc_id: jira_doc._id}
 
             req =
               issueIdOrKey: jira_issue_id
@@ -735,7 +739,10 @@ _.extend JustdoJiraIntegration.prototype,
                 self.refreshJiraAccessToken jira_doc, {emit_event: true}
                 return
 
-            self.jira_collection.update jira_doc._id, {$set: {last_connection_check: new Date()}}
+          num_processed += 1
+
+        return num_processed
+
 
           num_processed += 1
 
