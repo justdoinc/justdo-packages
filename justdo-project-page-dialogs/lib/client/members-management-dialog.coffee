@@ -101,11 +101,19 @@ APP.executeAfterAppLibCode ->
     if not augmented_task_doc?
       return
 
+    task_doc = APP.collections.Tasks.findOne task_id,
+      fields:
+        owner_id: 1
+    
     users = _.uniq(augmented_task_doc.users or [])
 
     if not (item_users = users)?
       throw module._error("unknown-data-context", "can't determine current task users")
-    _users_to_keep = _.without item_users, Meteor.userId()
+    
+    if task_doc.owner_id == Meteor.userId()
+      _users_to_keep = _.without item_users, Meteor.userId()
+    else
+      _users_to_keep = item_users
 
     if not (project_members = (project = module.curProj())?.getMembersIds({if_justdo_guest_include_ancestors_members_of_items: task_id}))?
       throw module._error("unknown-data-context", "can't determine project members")
@@ -225,6 +233,9 @@ APP.executeAfterAppLibCode ->
       if current_owner_id in members_to_remove
         _notes.removing_current_task_owner = true
 
+      if Meteor.userId() in members_to_remove
+        _notes.removing_self = true
+
       if cascade_val
         tree_traversing_options =
           expand_only: false
@@ -295,6 +306,8 @@ APP.executeAfterAppLibCode ->
       if (removing_current_task_owner = _notes?.removing_current_task_owner)?
         notes_messages.push "#{displayName(@owner_id)} is task ##{@seqId} owner. Following the membership cancellation, you will become the task owner."
 
+      if _notes?.removing_self
+        notes_messages.push "You're removing yourself from task ##{@seqId}. You won't be able to undo this action."
       if (subtasks_owners_ids_pending_removal = _notes?.subtasks_owners_ids_pending_removal)?
         subtasks_owners_ids_pending_removal = _.keys subtasks_owners_ids_pending_removal
 
@@ -420,6 +433,12 @@ APP.executeAfterAppLibCode ->
         message = Template.parentData(1).proceed_message
 
       return "#{message} #{display_name}"
+
+    showYouIfIsOwner: ->
+      if Template.instance().user_doc._id == Meteor.userId()
+        return "(You)"
+
+      return ""
 
   Template.task_pane_item_details_members_editor_user_btn.events
     "click .user-btn": (e, tpl) ->

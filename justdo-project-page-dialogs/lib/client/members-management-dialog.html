@@ -65,7 +65,11 @@
 <template name="task_pane_item_details_members_editor_user_btn">
   <div class="user-btn d-flex align-items-center justify-content-between mb-1 {{#if proceed.get}}proceed{{else}}dont-proceed{{/if}}" user-id="{{_id}}" title="{{btn_title}}">
     <div class="d-flex align-items-center">
-      {{> gtpl_user_profile_pic}} <div class="display-name d-flex align-items-center">{{> display_name_with_graphic_unverified_warning}}</div>
+      {{> gtpl_user_profile_pic}}
+      <div class="display-name d-flex align-items-center">
+        {{> display_name_with_graphic_unverified_warning}}
+        {{showYouIfIsOwner}}
+      </div>
     </div>
     {{#if proceed.get}}
       <svg class="jd-icon text-secondary user-check"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
