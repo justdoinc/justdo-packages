@@ -91,8 +91,12 @@ _.extend JustdoJiraIntegration,
       # We don't current support editing sprint in Justdo.
       mapper: (justdo_id, field, destination, req_body) ->
         if destination is "justdo"
+          # For initial mounting of projects from Jira Cloud
           if _.isString field[0]?.name
             return field[0].name
+          # For initial mounting of projects from Jira Server
+          if (token = field[0]?.match(/name=[A-Za-z\s0-9]+/)?[0])?
+            return token.replace "name=", ""
 
           # Move from old sprint parent to new sprint parent if the sprint is created as a task
           jira_issue_id = parseInt req_body.issue.id
