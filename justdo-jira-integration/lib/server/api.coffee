@@ -43,6 +43,8 @@ _.extend JustdoJiraIntegration.prototype,
     # Check alive for Jira Api client and webhook and attempt to repair.
     @_registerDbMigrationScriptForWebhookHealthCheck()
 
+    # Maintain issue data integrity
+    @_registerDbMigrationScriptForDataIntegrityCheck()
 
     @_setupInvertedFieldMap()
 
@@ -743,12 +745,52 @@ _.extend JustdoJiraIntegration.prototype,
 
         return num_processed
 
+    APP.justdo_db_migrations.registerMigrationScript "jira-webhook-healthcheck", JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
+    return
 
+  # XXX This script assumes there is only one connected Jira instance
+  _registerDbMigrationScriptForDataIntegrityCheck: ->
+    self = @
+
+    common_batched_migration_options =
+      delay_before_checking_for_new_batches: JustdoJiraIntegration.data_integrity_check_rate_ms
+      delay_between_batches: JustdoJiraIntegration.data_integrity_check_rate_ms
+      mark_as_completed_upon_batches_exhaustion: false
+      batch_size: 100000 # XXX Should be unlimited
+      collection: APP.collections.Tasks
+      static_query: false
+      queryGenerator: ->
+        jira_relevant_task_fields = {jira_issue_id: 1, project_id: 1}
+        _.each JustdoJiraIntegration.justdo_field_to_jira_field_map, (field_def, field_name) => jira_relevant_task_fields[field_name] = 1
+
+        last_checkpoint = APP.collections.Jira.findOne({}, {fields: {last_data_integrity_check: 1}})?.last_data_integrity_check
+
+        query =
+          jira_issue_id:
+            $ne: null
+          jira_last_updated:
+            $gte: new Date last_checkpoint
+        query_options =
+          sort:
+            jira_last_updated: -1
+          fields: jira_relevant_task_fields
+        return {query, query_options}
+      batchProcessor: (tasks_collection_cursor) ->
+        num_processed = 0
+        client = null
+
+        jira_issue_ids = tasks_collection_cursor.map (task_doc) ->
+          if not client?
+            client = self.getJiraClientForJustdo(task_doc.project_id).v2
           num_processed += 1
+          return task_doc.jira_issue_id
+
+        self.performIssueDataIntegrityCheck jira_issue_ids, client
 
         return num_processed
 
-    APP.justdo_db_migrations.registerMigrationScript "jira-connection-healthcheck", JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
+    APP.justdo_db_migrations.registerMigrationScript "jira-data-integrity-check", JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
+
     return
 
   _setupJiraClientForAllJustdosWithRefreshToken: ->
@@ -1490,7 +1532,7 @@ _.extend JustdoJiraIntegration.prototype,
         console.error "[justdo-jira-integration] Error in issue search" , err
 
   ensureAllIssuesAreUpToDate: ->
-    console.log "Ensuring all issues are up to date..."
+    console.log "[justdo-jira-integration] Ensuring all issues are up to date..."
     justdo_id_to_jira_issue_ids_map = {}
 
     @tasks_collection.find({jira_issue_id: {$ne: null}}, {fields: {jira_issue_id: 1, project_id: 1}}).forEach (task_doc) ->
@@ -1501,27 +1543,59 @@ _.extend JustdoJiraIntegration.prototype,
 
     for justdo_id, jira_issue_ids of justdo_id_to_jira_issue_ids_map
       client = @getJiraClientForJustdo(justdo_id).v2
+      jira_server_id = @getJiraServerIdFromApiClient client
+
+      server_info = await client.serverInfo.getServerInfo()
+
+      last_checkpoint = @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {last_data_integrity_check: 1}})?.last_data_integrity_check
+      last_checkpoint = JustdoHelpers.getDateMsOffset(-JustdoJiraIntegration.data_integrity_margin_of_safety, last_checkpoint)
 
       issue_search_body =
-        jql: "issue in (#{jira_issue_ids.join ","})"
-        # maxResults: 100
-        maxResults: 10
+        jql: """issue in (#{jira_issue_ids.join ","}) and updated >= "#{moment(last_checkpoint).format("YYYY/MM/DD hh:mm")}" """
+        maxResults: 100
         fields: @getAllRelevantJiraFieldIds()
 
-      issue_search_cb = (res) =>
-        # Recursive call issueSearch API if there are more issues than the limit.
-        if res.total > (new_limit = res.startAt + res.maxResults)
-          @_searchIssueUsingJql client, _.extend({startAt: new_limit}, issue_search_body), issue_search_cb
-
+      issueSearchCb = (res) =>
         for issue in res.issues
           justdo_id = issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
           fields = await @_mapJiraFieldsToJustdoFields justdo_id, {issue}
           if not _.isEmpty fields
-            # XXX updated_by is hardcoded to be justdo admin!
+            # XXX updated_by is hardcoded to be justdo admin at the moment
             @tasks_collection.update({jira_issue_id: parseInt(issue.id)}, {$set: _.extend {jira_last_updated: new Date(), updated_by: @_getJustdoAdmin justdo_id}, fields})
+
+        # Recursive call issueSearch API if there are more issues than the limit.
+        if res.total > (new_limit = res.startAt + res.maxResults)
+          @_searchIssueUsingJql client, _.extend({startAt: new_limit}, issue_search_body), issueSearchCb
+        else
+          @jira_collection.update {"server_info.id": jira_server_id}, {$set: {last_data_integrity_check: server_info.serverTime}}
         return
 
-      @_searchIssueUsingJql client, issue_search_body, issue_search_cb
+      @_searchIssueUsingJql client, issue_search_body, issueSearchCb
+
+    return
+
+  performIssueDataIntegrityCheck: (jira_issue_ids, client) ->
+    req_body =
+      jql: "issue in (#{jira_issue_ids})"
+      fields: @getAllRelevantJiraFieldIds()
+    try
+      res = await client.issueSearch.searchForIssuesUsingJqlPost req_body
+    catch err
+      if err?
+        console.trace()
+        console.error "Failed to fetch issues for data integrity check", err.response.data
+        return
+
+    for issue in res.issues
+      justdo_id = issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
+      mapped_task_fields = await @_mapJiraFieldsToJustdoFields justdo_id, {issue}
+      if not (@tasks_collection.findOne(_.extend({jira_issue_id: parseInt issue.id}, mapped_task_fields), {fields: {_id: 1}}))?
+        console.warn "Data inconsistency found in issue #{issue.key}. Performing resync..."
+        @ensureAllIssuesAreUpToDate()
+        break
+
+    console.log "[justdo-jira-integration] Data integrity check finished!"
+    return
 
   getAuthTypeIfJiraInstanceIsOnPerm: ->
     if @server_type.includes "server"
