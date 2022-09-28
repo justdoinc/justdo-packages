@@ -95,22 +95,46 @@ APP.executeAfterAppLibCode ->
   _getMembersIdsInReactiveVarByProceedState = (reactive_var, proceed_state=true) ->
     return _.map(_.filter(reactive_var.get(), (item) -> item.proceed.get() == proceed_state), (item) -> item._id)
 
+  _isOwnerOfAnySubTask = (task_id) ->
+    task_doc = APP.collections.Tasks.findOne task_id,
+      fields:
+        owner_id: 1
+    
+    user_id = Meteor.userId()
+
+    if task_doc.owner_id == user_id
+      return true
+
+    gd = APP.modules.project_page.gridData()
+    task_path = gd?._grid_data_core.getAllCollectionPaths('BJCsFQMR6NyYmx3hP')?[0]
+    result = false
+    if task_path?
+      gd.each(task_path, {}, (section, item_type, item_obj, path, expand_state) ->
+        task_doc = APP.collections.Tasks.findOne item_obj._id,
+          fields:
+            owner_id: 1
+
+        if task_doc.owner_id == user_id
+          result = true
+          return -2
+        
+        return
+      )
+
+    return result
+
   setUsersLists = (task_id) ->
     augmented_task_doc = APP.collections.TasksAugmentedFields.findOne(task_id, {fields: {users: 1}})
 
     if not augmented_task_doc?
       return
-
-    task_doc = APP.collections.Tasks.findOne task_id,
-      fields:
-        owner_id: 1
     
     users = _.uniq(augmented_task_doc.users or [])
 
     if not (item_users = users)?
       throw module._error("unknown-data-context", "can't determine current task users")
     
-    if task_doc.owner_id == Meteor.userId()
+    if _isOwnerOfAnySubTask(task_id)
       _users_to_keep = _.without item_users, Meteor.userId()
     else
       _users_to_keep = item_users
