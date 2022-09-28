@@ -142,18 +142,21 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_val: "trash"
 
       listingCondition: ->
-        sub_task_ids = APP.modules.project_page.mainGridData()._grid_data_core.getAllItemsKnownDescendantsIdsObj([JD.activeItemId()], {}, 50)
-
-        num_sub_tasks = Object.keys(sub_task_ids).length
-        if num_sub_tasks >= 50 or num_sub_tasks == 0
-          return false
-        
-        for sub_task_id of sub_task_ids
-          sub_task = APP.collections.Tasks.getDocNonReactive(sub_task_id)
+        counter = 0;
+        condition_is_satisfied = true;
+        APP.modules.project_page.gridData().each(JD.activePath(), {}, (section, item_type, item_obj, path, expand_state) ->
+          counter += 1;
+          sub_task = APP.collections.Tasks.getDocNonReactive(item_obj._id)
           if Object.keys(sub_task.parents).length > 1
-            return false
+            condition_is_satisfied = false;
+            return -2;
+
+          if counter == 50 
+            condition_is_satisfied = false;
+            return -2;
+        )
           
-        return true
+        return condition_is_satisfied
 
     getSubtreeItemsWithDifferentVals = (task_path, field_val, field_info) ->
       gc = APP.modules.project_page.gridControl()
