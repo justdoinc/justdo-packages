@@ -188,7 +188,13 @@ APP.executeAfterAppLibCode ->
 
     "click .grid-view-share": (e, tpl) ->
       active_view = tpl.active_grid_view_rv.get()
-      APP.justdo_grid_views.upsert active_view._id, {shared: not active_view.shared}
+      if active_view.shared and active_view.user_id != Meteor.userId()
+        bootbox.confirm "Are you sure you want to unshare view: \"#{active_view.title}\"?", (result) ->
+          if result
+            APP.justdo_grid_views.upsert active_view._id, {shared: not active_view.shared}
+          return
+      else
+        APP.justdo_grid_views.upsert active_view._id, {shared: not active_view.shared}
 
       return
 
