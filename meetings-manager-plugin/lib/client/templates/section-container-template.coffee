@@ -81,7 +81,11 @@ Template.meeting_container.helpers
     task_obj = JD.collections.Tasks.findOne @task_id,
       fields:
         title: 1
-    return task_obj?.title or "(Task not found)"
+    
+    if task_obj?
+      return task_obj.title
+    
+    return "(Task not found)"
 
   lookupUser: (user_id) -> Meteor.users.findOne user_id
 
