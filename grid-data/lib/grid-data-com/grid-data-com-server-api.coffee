@@ -741,6 +741,7 @@ _.extend GridDataCom.prototype,
 
     item_ids = new Set()
     paths_to_item_ids_map = {}
+    paths = _.sortBy(paths, (path) -> -1 * path.split('/').length)
     for path in paths
       if not (parent_id = helpers.getPathParentId(path))?
         throw @_error "invalid-argument", "Unknown parent for path: #{path}"
