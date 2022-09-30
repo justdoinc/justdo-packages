@@ -1,3 +1,5 @@
+MAX_ALLOWED_SUBTREE_REMOVAL_TASKS = 50 # Excluding the sub-tree root
+
 _.extend JustdoTasksContextMenu.prototype,
   context_class: "grid-tree-control-context-menu"
 
@@ -124,36 +126,48 @@ _.extend JustdoTasksContextMenu.prototype,
         label: "Remove sub-tree"
 
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-          # APP.modules.project_page.performOp("removeTask")
           task = APP.collections.Tasks.findOne(task_id, {fields: {seqId: 1, title: 1}})
           bootbox.confirm "Are you sure to remove the entire sub-tree of #{JustdoHelpers.taskCommonName(task)}?", (result) ->
             if result
               if (gd = APP.modules.project_page.gridData())?
-                paths = gd._grid_data_core.getSubtreePaths(task_id)
-                paths.push(task_path)
+                paths = [task_path]
+
+                gd.each(JD.activePath(), {}, (section, item_type, item_obj, path, expand_state) ->
+                  paths.push path
+                  return
+                )
+
                 gd.removeParent paths, (err) ->
                   if err?
                     JustdoSnackbar.show
-                      text: "Cannot remove sub-tree because it contains tasks that you are not a member of."
+                      text: "Cannot remove sub-tree because some tasks have multi-parents."
                       duration: 5000
+
+                  return
             return
           return
         icon_type: "feather"
         icon_val: "trash"
 
       listingCondition: ->
-        counter = 0;
-        condition_is_satisfied = true;
+        counter = 0
+        condition_is_satisfied = true
         APP.modules.project_page.gridData().each(JD.activePath(), {}, (section, item_type, item_obj, path, expand_state) ->
-          counter += 1;
-          sub_task = APP.collections.Tasks.getDocNonReactive(item_obj._id)
-          if Object.keys(sub_task.parents).length > 1
-            condition_is_satisfied = false;
-            return -2;
+          if Object.keys(item_obj.parents).length > 1
+            condition_is_satisfied = false
+            console.info "Remove subtree prevented: a task with more than one parent found #{item_obj._id}"
 
-          if counter == 50 
-            condition_is_satisfied = false;
-            return -2;
+            return -2
+
+          if counter == MAX_ALLOWED_SUBTREE_REMOVAL_TASKS
+            condition_is_satisfied = false
+            console.info "Remove subtree prevented: more than #{MAX_ALLOWED_SUBTREE_REMOVAL_TASKS} tasks in sub-tree"
+
+            return -2
+
+          counter += 1
+
+          return
         )
           
         return condition_is_satisfied
