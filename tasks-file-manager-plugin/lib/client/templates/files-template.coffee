@@ -17,12 +17,25 @@ Template.tasks_file_manager_files.onCreated ->
 
   @bulkEditModeEnable = ->
     tpl.bulk_edit_mode_rv.set true
+    tpl.renaming.set false
 
     return
 
   @bulkEditModeDisable = ->
     tpl.bulk_edit_mode_rv.set false
     tpl.bulk_selected_rv.set []
+
+    return
+
+  @bulkEditSelect = (file_id) ->
+    selected_files = tpl.bulk_selected_rv.get()
+
+    if selected_files.includes file_id
+      selected_files.splice selected_files.indexOf(file_id), 1
+    else
+      selected_files.push file_id
+
+    tpl.bulk_selected_rv.set selected_files
 
     return
 
@@ -152,13 +165,21 @@ Template.tasks_file_manager_files.events
     tmpl.renaming.set @file.id
     Meteor.defer ->
       tmpl.$("[name='title']").focus()
+
+    return
+
   "keypress [name='title']": (e, tmpl) ->
     if e.which == 13 # enter key
       tmpl.$('.file-rename-done').click()
+
+    return
+
   "click .file-direct-download-link": (e, tmpl) ->
     APP.tasks_file_manager_plugin.tasks_file_manager.downloadFile @task.task_id, @file.id, (err, url) ->
       if err then console.log(err)
+
     return
+
   "click .file-rename-done": (e, tmpl) ->
     e.preventDefault()
     task = @task
@@ -171,12 +192,21 @@ Template.tasks_file_manager_files.events
       else
         tmpl.renaming.set false
       return
+
+    return
+
   "click .file-rename-cancel": (e, tmpl) ->
     e.preventDefault()
     tmpl.renaming.set false
+
+    return
+
   "click .file-remove-link": (e, tmpl) ->
     e.preventDefault()
     tmpl.deletion.set @file.id
+
+    return
+
   "click .msg-ok": (e, tmpl) ->
     e.preventDefault()
     task = @task
@@ -185,30 +215,23 @@ Template.tasks_file_manager_files.events
     APP.tasks_file_manager_plugin.tasks_file_manager.removeFile task.task_id, file.id, (err, result) ->
       if err
         console.log err
+
+    return
+
   "click .msg-cancel": (e, tmpl) ->
     e.preventDefault()
     tmpl.deletion.set false
-  "mouseenter .file": (e, tmpl) ->
-    e.preventDefault()
-    $(e.currentTarget).addClass "active"
 
-  "mouseleave .file": (e, tmpl) ->
-    e.preventDefault()
-    $(".file").removeClass "active"
+    return
 
   "keydown .file input": (e, tmpl) ->
     if e.which == 27
       tmpl.renaming.set false
 
-  "click .tasks-file-manager-print": (e, tmpl) ->
-    tmpl.print_files()
     return
 
-  "click .bulk-edit": (e, tpl) ->
-    if tpl.bulk_edit_mode_rv.get()
-      tpl.bulkEditModeDisable()
-    else
-      tpl.bulkEditModeEnable()
+  "click .tasks-file-manager-print": (e, tmpl) ->
+    tmpl.print_files()
 
     return
 
@@ -217,15 +240,14 @@ Template.tasks_file_manager_files.events
 
     return
 
+  "click .file-edit-dropdown-select": (e, tpl) ->
+    tpl.bulkEditModeEnable()
+    tpl.bulkEditSelect(@file.id)
+
+    return
+
   "click .edit-mode .file": (e, tpl) ->
-    selected_files = tpl.bulk_selected_rv.get()
-
-    if selected_files.includes @file.id
-      selected_files.splice selected_files.indexOf(@file.id), 1
-    else
-      selected_files.push @file.id
-
-    tpl.bulk_selected_rv.set selected_files
+    tpl.bulkEditSelect(@file.id)
 
     return
 

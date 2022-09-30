@@ -13,11 +13,41 @@
     transition: border-color 0.35s
 
   .actions
-    opacity: 0
-    transition: opacity 0.2s linear
+    .jd-icon
+      margin-left: 2px
+      background-color: rgba(0, 0, 0, 0)
+      &:hover
+        background-color: rgba(0, 0, 0, 0.04)
 
-    .file-direct-download-link
-      margin-right: 4px
+    .file-direct-download-link,
+    .file-rename-link,
+    .file-remove-link
+      opacity: 0
+      &:hover
+        opacity: 1
+
+    .file-edit-link
+      padding: 0
+      width: 16px
+      opacity: 0.75
+
+  .file-edit-dropdown
+    right: 0 !important
+    left: auto !important
+    margin-top: 12px
+    .dropdown-item
+      display: flex
+      align-items: center
+      cursor: pointer
+
+  .jd-icon
+    margin: 0px
+    cursor: pointer
+    display: block
+    padding: 4px
+    stroke-width: 2
+    transition: all 0.2s linear
+    background-color: rgba(0, 0, 0, 0.04)
 
   .content
     overflow: hidden
@@ -27,14 +57,6 @@
     overflow: hidden
     text-overflow: ellipsis
     padding-bottom: 2px
-
-  .jd-icon
-    margin: 0px
-    cursor: pointer
-    display: block
-    padding: 4px
-    stroke-width: 2
-    background-color: rgba(0, 0, 0, 0.04)
 
   .loader
     width: 25px
@@ -62,8 +84,11 @@
       animation-delay: -1.0s
 
   .file
-    &.active .actions
-      opacity: 1
+    &:hover
+      .file-direct-download-link,
+      .file-rename-link,
+      .file-remove-link
+        opacity: 0.75
 
     .type-logo
       width: 24px
@@ -117,20 +142,6 @@
     bottom: 10px
     overflow-y: auto
 
-.task-pane-section-tasks-file-manager
-  .bulk-edit-wrapper
-    display: flex
-    justify-content: end
-  .bulk-edit
-    font-size: 11px
-    text-transform: uppercase
-    font-weight: bold
-    margin-bottom: 8px
-    margin-right: 2px
-    cursor: pointer
-    &:hover
-      text-decoration: underline
-
 .tasks-file-manager-files.edit-mode
   .bulk-edit-control-wrapper
     position: fixed
@@ -157,9 +168,8 @@
       padding: 0px
       stroke-width: 2.5
       background-color: white
-      border-radius: 100%
       z-index: 3
-      &.icon-mark-circle
+      &.icon-mark-square
         color: #848fa1
         opacity: 0.75
       &.icon-mark-check
@@ -173,7 +183,7 @@
   .file.selected
     .file-inner-wrapper
       border-color: #08c116
-    .icon-mark-circle
+    .icon-mark-square
       opacity: 0
     .icon-mark-check
       opacity: 1
