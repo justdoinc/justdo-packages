@@ -593,36 +593,12 @@ APP.executeAfterAppLibCode ->
                   if item_obj.pending_owner_id in members_to_remove
                     items_to_cancel_ownership_transfer_of.push item_obj._id
 
-              if not _.isEmpty members_to_remove
-                members_remove_modifier =
-                  $pull:
-                    users:
-                      $in: members_to_remove
-
-                project.bulkUpdate items_to_edit, members_remove_modifier
-
-              if not _.isEmpty members_to_add
-                members_add_modifier =
-                  $push:
-                    users:
-                      $each: members_to_add
-
-                project.bulkUpdate items_to_edit, members_add_modifier
-
-              if not _.isEmpty items_to_assume_ownership_of
-                ownership_update_modifier =
-                  $set:
-                    owner_id: Meteor.userId()
-                    pending_owner_id: null
-
-                project.bulkUpdate items_to_assume_ownership_of, ownership_update_modifier
-
-              if not _.isEmpty items_to_cancel_ownership_transfer_of
-                ownership_transfer_cancel_modifier =
-                  $set:
-                    pending_owner_id: null
-
-                project.bulkUpdate items_to_cancel_ownership_transfer_of, ownership_transfer_cancel_modifier
+              project.bulkUpdateTasksUsers
+                tasks: items_to_edit
+                members_to_add: members_to_add
+                members_to_remove: members_to_remove
+                items_to_assume_ownership_of: items_to_assume_ownership_of
+                items_to_cancel_ownership_transfer_of: items_to_cancel_ownership_transfer_of
 
               return true
             

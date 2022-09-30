@@ -126,6 +126,12 @@ _.extend Projects.prototype,
 
         return
 
+      bulkUpdateTasksUsers: (options, cb) -> 
+        Meteor.call "bulkUpdateTasksUsers", @id, options, (err) ->
+          return JustdoHelpers.callCb cb, err
+
+        return
+
       compoundBulkUpdate: (ops, cb) -> 
         Meteor.call "compoundBulkUpdate", @id, ops, (err) ->
           return JustdoHelpers.callCb cb, err

@@ -86,6 +86,14 @@ _.extend Projects.prototype,
 
         return
 
+      bulkUpdateTasksUsers: (project_id, options) ->
+        check project_id, String
+        # options is thoroughly verified by projects_object.bulkUpdateTasksUsers
+
+        projects_object.bulkUpdateTasksUsers project_id, options, @userId
+
+        return
+
       compoundBulkUpdate: (project_id, ops) ->
         check project_id, String
         # ops is thoroughly verified by projects_object.compoundBulkUpdate

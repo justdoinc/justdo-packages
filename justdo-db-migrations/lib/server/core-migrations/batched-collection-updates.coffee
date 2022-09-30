@@ -2,7 +2,7 @@ MAX_DOCS_UPDATES_PER_SECOND = 60 # Across all running jobs
 
 MIN_IN_PROGRESS_JOBS_TO_HANDLE_PER_MINUTE = 3
 
-IMMEDIATE_PROCESS_THRESHOLD_DOCS = 1 * 1000 * 1000 # 100
+IMMEDIATE_PROCESS_THRESHOLD_DOCS = 1 * 1000 * 1000
 
 TIMES_PER_SECOND_TO_CHECK_FOR_JOBS_FOR_IMMEDIATE_PROCESS = 5
 
@@ -31,17 +31,21 @@ SECOND_MS = 1000
 #    MAX_DOCS_UPDATES_PER_SECOND in all the in-progres jobs we just run all of them.
 #
 #    Otherwise we pick up to the MIN_IN_PROGRESS_JOBS_TO_HANDLE_PER_MINUTE, in the order of last
-#    processed ASC. This will create a round-robin for capacity giving for the in-progress jobs
-#    queue, so non of them can starve.
+#    processed ASC. This will create a round-robin for the capacity-giving for the in-progress jobs
+#    queue, so none of them can starve. <- The motivation here, is to give each of the jobs picked
+#    a significant enough capacity (we don't want for example to get to a point where each job gets
+#    1 document to process, this will give the appearence of overly congested, stuck jobs).
 #    
-#    Let X be the amount of in-progress we got in practice (0 <= x <= MIN_IN_PROGRESS_JOBS_TO_HANDLE_PER_MINUTE)
+#    Let X be the amount of in-progress jobs we got in practice (0 <= X <= MIN_IN_PROGRESS_JOBS_TO_HANDLE_PER_MINUTE)
 #    If X = 0 do nothing.
 #    Otherwise we give X / MAX_DOCS_UPDATES_PER_SECOND capacity to each in-progress task we handle in this
 #    round.
 #
 #    Unused capacity from one will be used for the next one. E.g. if X is 3
-#    and 20 docs per job is the capacity calculated, but a job has only 1 task, the next task
-#    will get 20 + 19 capacity.
+#    and 20 docs per job is the capacity calculated, but a job has only 1 task left to process,
+#    the next task will get 20 + 19 capacity.
+#
+#    The following scenario needs more thought:
 #
 #    If we remain with capcity after that - we'll keep taking jobs from the queue
 #    giving each up to MAX_DOCS_UPDATES_PER_SECOND / MIN_IN_PROGRESS_JOBS_TO_HANDLE_PER_MINUTE
@@ -87,7 +91,6 @@ APP.executeAfterAppLibCode ->
       num_processed = 0
       
       cursor.forEach (job) ->
-        # XXX check if user has access ?
         new_processed = job.process_status_details.processed + job_batch_size
         
         if new_processed > job.ids_to_update.length
@@ -95,10 +98,9 @@ APP.executeAfterAppLibCode ->
         ids_to_update = job.ids_to_update.slice(job.process_status_details.processed, new_processed)
         modifier = JSON.parse(job.modifier)
         
-        job_update = {
+        job_update =
           $set:
             "process_status_details.processed": new_processed
-        }
 
         if job.process_status_details.processed + job_batch_size >= job.ids_to_update.length
           job_update.$set.process_status = "done"
