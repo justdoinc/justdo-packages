@@ -106,15 +106,12 @@ APP.executeAfterAppLibCode ->
       return true
 
     gd = APP.modules.project_page.gridData()
-    task_path = gd?._grid_data_core.getAllCollectionPaths('BJCsFQMR6NyYmx3hP')?[0]
+    task_path = gd?._grid_data_core.getAllCollectionPaths(task_id)?[0]
+
     result = false
     if task_path?
       gd.each(task_path, {}, (section, item_type, item_obj, path, expand_state) ->
-        task_doc = APP.collections.Tasks.findOne item_obj._id,
-          fields:
-            owner_id: 1
-
-        if task_doc.owner_id == user_id
+        if item_obj.owner_id == user_id
           result = true
           return -2
         
