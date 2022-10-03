@@ -63,7 +63,8 @@
 </template>
 
 <template name="task_pane_item_details_members_editor_user_btn">
-  <div class="user-btn d-flex align-items-center justify-content-between mb-1 {{#if proceed.get}}proceed{{else}}dont-proceed{{/if}}" user-id="{{_id}}" title="{{btn_title}}">
+  <div class="user-btn d-flex align-items-center justify-content-between mb-1 {{#if proceed.get}}proceed{{else}}dont-proceed{{/if}} {{#if disabled_reason}}disabled{{/if}}" 
+      user-id="{{_id}}" data-toggle="tooltip" data-placement="top" title="{{disabled_reason}}">
     <div class="d-flex align-items-center">
       {{> gtpl_user_profile_pic}}
       <div class="display-name d-flex align-items-center">

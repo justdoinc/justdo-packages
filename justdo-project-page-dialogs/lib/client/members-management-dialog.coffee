@@ -120,6 +120,13 @@ APP.executeAfterAppLibCode ->
 
     return result
 
+  addDisabledReasonIfNeccessary = (users, task_id) ->
+    for user in users
+      if user._id == Meteor.userId() and _isOwnerOfAnySubTask(task_id)
+        user.disabled_reason = "You own some tasks in the sub-tree hence you cannot remove yourself"
+    
+    return users
+
   setUsersLists = (task_id) ->
     augmented_task_doc = APP.collections.TasksAugmentedFields.findOne(task_id, {fields: {users: 1}})
 
@@ -131,10 +138,7 @@ APP.executeAfterAppLibCode ->
     if not (item_users = users)?
       throw module._error("unknown-data-context", "can't determine current task users")
     
-    if _isOwnerOfAnySubTask(task_id)
-      _users_to_keep = _.without item_users, Meteor.userId()
-    else
-      _users_to_keep = item_users
+    _users_to_keep = item_users
 
     if not (project_members = (project = module.curProj())?.getMembersIds({if_justdo_guest_include_ancestors_members_of_items: task_id}))?
       throw module._error("unknown-data-context", "can't determine project members")
@@ -143,7 +147,7 @@ APP.executeAfterAppLibCode ->
     users_lists_already_exist = Tracker.nonreactive -> users_to_keep.get()?
 
     if not users_lists_already_exist
-      users_to_keep.set JustdoHelpers.sortUsersDocsArrayByDisplayName(_getUsersDocsByIdsWithProceedFlag(_users_to_keep, true))
+      users_to_keep.set addDisabledReasonIfNeccessary(JustdoHelpers.sortUsersDocsArrayByDisplayName(_getUsersDocsByIdsWithProceedFlag(_users_to_keep, true)), task_id)
       users_to_add.set JustdoHelpers.sortUsersDocsArrayByDisplayName(_getUsersDocsByIdsWithProceedFlag(_users_to_add, false))
     else
       current_users_to_keep_val = Tracker.nonreactive -> users_to_keep.get()
@@ -165,8 +169,8 @@ APP.executeAfterAppLibCode ->
         if new_current_users_to_keep_val_ids.length > 0
           new_users_to_keep_val = new_users_to_keep_val.concat(_getUsersDocsByIdsWithProceedFlag(new_current_users_to_keep_val_ids, true))
           new_users_to_keep_val = JustdoHelpers.sortUsersDocsArrayByDisplayName(new_users_to_keep_val)
-
-        users_to_keep.set(new_users_to_keep_val)
+        
+        users_to_keep.set(addDisabledReasonIfNeccessary(new_users_to_keep_val))
 
       current_users_to_add_val = Tracker.nonreactive -> users_to_add.get()
       current_users_to_add_val_ids = _.map current_users_to_add_val, (users) -> users._id
@@ -463,6 +467,9 @@ APP.executeAfterAppLibCode ->
 
   Template.task_pane_item_details_members_editor_user_btn.events
     "click .user-btn": (e, tpl) ->
+      if @disabled_reason
+        return
+        
       clicked_user_id = @_id
       action_id = Template.parentData(1).action_id
       task_obj = Template.parentData(2)
