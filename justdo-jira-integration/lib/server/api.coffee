@@ -1674,7 +1674,7 @@ _.extend JustdoJiraIntegration.prototype,
       throw @_error "missing-argument", "Jira doc with server id and last_data_integrity_check is required."
 
     if not (client = @clients[jira_server_id]?.v2)?
-      throw @_error "missing-client"
+      throw @_error "client-not-found"
 
     if not (last_checkpoint = jira_doc.last_data_integrity_check)? or not (last_checkpoint = @getLastDataIntegrityCheckpointWithMarginOfSafety())?
       return
