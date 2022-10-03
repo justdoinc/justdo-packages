@@ -778,9 +778,7 @@ _.extend JustdoJiraIntegration.prototype,
 
         jira_collection_cursor.forEach (jira_doc) ->
           num_processed += 1
-          last_checkpoint = JustdoHelpers.getDateMsOffset -1 * JustdoJiraIntegration.data_integrity_margin_of_safety, new Date(jira_doc.last_data_integrity_check)
-          jira_issue_ids = self.tasks_collection.find({jira_issue_id: {$ne: null}, jira_last_updated: {$gte: last_checkpoint}}, {fields: {jira_issue_id: 1}}).map (task_doc) -> task_doc.jira_issue_id
-          self.ensureIssueDataIntegrityAndMarkCheckpoint jira_doc, {jira_issue_ids: jira_issue_ids}
+          self.ensureIssueDataIntegrityAndMarkCheckpoint jira_doc
 
           return
 
@@ -1669,40 +1667,38 @@ _.extend JustdoJiraIntegration.prototype,
       last_data_integrity_check: 1
     return @jira_collection.findOne(query, query_options)?.last_data_integrity_check
 
-  ensureIssueDataIntegrityAndMarkCheckpoint: (jira_doc, options) ->
+  ensureIssueDataIntegrityAndMarkCheckpoint: (jira_doc) ->
+    if _.isString jira_doc
+      jira_doc = @jira_collection.findOne jira_doc, {fields: {"server_info.id": 1, last_data_integrity_check: 1}}
+
     if not (jira_server_id = jira_doc?.server_info?.id)?
       throw @_error "missing-argument", "Jira doc with server id and last_data_integrity_check is required."
-
-    if not (last_checkpoint = jira_doc.last_data_integrity_check)? or not (last_checkpoint = @getLastDataIntegrityCheckpointWithMarginOfSafety())?
-      return
 
     if not (client = @clients[jira_server_id]?.v2)?
       throw @_error "missing-client"
 
-    issues_with_discrepancies = []
+    if not (last_checkpoint = jira_doc.last_data_integrity_check)? or not (last_checkpoint = @getLastDataIntegrityCheckpointWithMarginOfSafety())?
+      return
+
+    # Add margin of safety to last_checkpoint
+    last_checkpoint = JustdoHelpers.getDateMsOffset -1 * JustdoJiraIntegration.data_integrity_margin_of_safety, new Date(last_checkpoint)
 
     issue_search_body =
       jql: """updated >= "#{moment(last_checkpoint).format("YYYY/MM/DD hh:mm")}" """
       maxResults: JustdoJiraIntegration.jql_issue_search_results_limit
       fields: @getAllRelevantJiraFieldIds()
 
-    if (jira_issue_ids = options?.jira_issue_ids)?
-      if _.isString jira_issue_ids
-        jira_issue_ids = [jira_issue_ids]
+    if not _.isEmpty(jira_issue_ids = @tasks_collection.find({jira_issue_id: {$ne: null}, jira_last_updated: {$gte: last_checkpoint}}, {fields: {jira_issue_id: 1}}).map (task_doc) -> task_doc.jira_issue_id)
       issue_search_body.jql += " or issue in (#{jira_issue_ids.join(",")})"
-
-    if (jira_project_id_or_key = options?.jira_project_id_or_key)?
-      issue_search_body.jql += " and project=#{jira_project_id_or_key}"
 
     console.log "[justdo-jira-integration] Ensuring issues updated since #{last_checkpoint} are up to date..."
 
+    issues_with_discrepancies = []
+
+    # Get Jira server time
+    server_info = await client.serverInfo.getServerInfo()
+
     _searchIssueUsingJqlUntilMaxResults = (responseProcessor, onLastBatch) =>
-      if not client?
-        throw @_error "client-not-found"
-
-      if client?.v2?
-        client = client.v2
-
       try
         res = await client.issueSearch.searchForIssuesUsingJqlPost issue_search_body
       catch err
@@ -1729,8 +1725,8 @@ _.extend JustdoJiraIntegration.prototype,
           issues_with_discrepancies.push issue.id
       return
 
-    # Get Jira server time
-    server_info = await client.serverInfo.getServerInfo()
+    markDataIntegrityCheckpoint = =>
+      @jira_collection.update {"server_info.id": jira_server_id}, {$set: {last_data_integrity_check: server_info.serverTime}}
 
     _searchIssueUsingJqlUntilMaxResults checkIssuesIntegrity
 
@@ -1748,8 +1744,10 @@ _.extend JustdoJiraIntegration.prototype,
             @tasks_collection.update({jira_issue_id: parseInt(issue.id)}, {$set: _.extend {jira_last_updated: new Date(), updated_by: @_getJustdoAdmin justdo_id}, fields})
         return
 
-      _searchIssueUsingJqlUntilMaxResults resyncIssues, ->
-        @jira_collection.update {"server_info.id": jira_server_id}, {$set: {last_data_integrity_check: server_info.serverTime}}
-        console.log "[justdo-jira-integration] Resync completed!"
+      _searchIssueUsingJqlUntilMaxResults resyncIssues, markDataIntegrityCheckpoint
+      console.log "[justdo-jira-integration] Issues with discrepencies resynced."
+    else
+      markDataIntegrityCheckpoint()
+      console.log "[justdo-jira-integration] Data integrity check completed. No discrepencies found."
 
     return
