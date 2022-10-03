@@ -1606,7 +1606,7 @@ _.extend JustdoJiraIntegration.prototype,
         $or: [
           _id: jira_doc
         ,
-          "server_info._id": jira_doc
+          "server_info.id": jira_doc
         ]
       jira_doc_query_options =
         fields:
