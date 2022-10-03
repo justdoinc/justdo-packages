@@ -1715,13 +1715,13 @@ _.extend JustdoJiraIntegration.prototype,
         console.error "[justdo-jira-integration] Issue search failed."
         return
 
-      responseProcessor res
+      await responseProcessor res
 
       if res.total > (new_start_at = res.startAt + res.maxResults)
         issue_search_body.startAt = new_start_at
-        _searchIssueUsingJqlUntilMaxResults responseProcessor, onLastBatch
+        await _searchIssueUsingJqlUntilMaxResults responseProcessor, onLastBatch
       else if _.isFunction onLastBatch
-        onLastBatch res
+        await onLastBatch res
 
       return
 
@@ -1730,17 +1730,19 @@ _.extend JustdoJiraIntegration.prototype,
         justdo_id = issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
         mapped_task_fields = await @_mapJiraFieldsToJustdoFields justdo_id, {issue}
         if not (@tasks_collection.findOne(_.extend({jira_issue_id: parseInt issue.id}, mapped_task_fields), {fields: {_id: 1}}))?
-          console.warn "Data inconsistency found in issue #{issue.key}."
           issues_with_discrepancies.push issue.id
       return
 
     markDataIntegrityCheckpoint = =>
       @jira_collection.update {"server_info.id": jira_server_id}, {$set: {last_data_integrity_check: server_info.serverTime}}
 
-    _searchIssueUsingJqlUntilMaxResults checkIssuesIntegrity
+    resyncIssuesIfDiscrepenciesAreFound = =>
+      if _.isEmpty issues_with_discrepancies
+        markDataIntegrityCheckpoint()
+        console.log "[justdo-jira-integration] Data integrity check completed. No discrepencies found."
+        return
 
-    if not _.isEmpty issues_with_discrepancies
-      console.log "[justdo-jira-integration] Data inconsistency found in issues #{issues_with_discrepancies}. Performing resync..."
+      console.warn "[justdo-jira-integration] Data inconsistency found in issues #{issues_with_discrepancies}. Performing resync..."
       issue_search_body.jql = "issue in (#{issues_with_discrepancies.join ","})"
       delete issue_search_body.startAt
 
@@ -1755,9 +1757,10 @@ _.extend JustdoJiraIntegration.prototype,
 
       _searchIssueUsingJqlUntilMaxResults resyncIssues, markDataIntegrityCheckpoint
       console.log "[justdo-jira-integration] Issues with discrepencies resynced."
-    else
-      markDataIntegrityCheckpoint()
-      console.log "[justdo-jira-integration] Data integrity check completed. No discrepencies found."
+
+    _searchIssueUsingJqlUntilMaxResults checkIssuesIntegrity, resyncIssuesIfDiscrepenciesAreFound
+
+    return
 
   setupWebhookAndDateIntegrityCheckpoints: ->
     @jira_collection.update {last_data_integrity_check: null}, {$set: {last_data_integrity_check: new Date()}}, {multi: true}
