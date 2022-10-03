@@ -11,6 +11,7 @@ _.extend JustdoJiraIntegration,
   webhook_connection_check_rate_ms: 1000 * 60 # 1 min
   data_integrity_check_rate_ms: data_integrity_check_rate_ms
   data_integrity_margin_of_safety: data_integrity_check_rate_ms / 5
+  jql_issue_search_results_limit: 800
 
   # XXX Try to search for custom field ids using Jira API and store it in DB
 
