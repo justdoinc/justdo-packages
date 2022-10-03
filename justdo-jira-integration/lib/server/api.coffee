@@ -761,35 +761,28 @@ _.extend JustdoJiraIntegration.prototype,
       delay_between_batches: JustdoJiraIntegration.data_integrity_check_rate_ms
       mark_as_completed_upon_batches_exhaustion: false
       batch_size: 100000 # XXX Should be unlimited
-      collection: APP.collections.Tasks
+      collection: APP.collections.Jira
       static_query: false
       queryGenerator: ->
-        jira_relevant_task_fields = {jira_issue_id: 1, project_id: 1}
-        _.each JustdoJiraIntegration.justdo_field_to_jira_field_map, (field_def, field_name) => jira_relevant_task_fields[field_name] = 1
-
-        last_checkpoint = APP.collections.Jira.findOne({}, {fields: {last_data_integrity_check: 1}})?.last_data_integrity_check
-
         query =
-          jira_issue_id:
-            $ne: null
-          jira_last_updated:
-            $gte: new Date last_checkpoint
+          last_data_integrity_check:
+            $lte: JustdoHelpers.getDateMsOffset -1 * (JustdoJiraIntegration.data_integrity_check_rate_ms + JustdoJiraIntegration.data_integrity_margin_of_safety)
         query_options =
-          sort:
-            jira_last_updated: -1
-          fields: jira_relevant_task_fields
+          fields:
+            "server_info.id": 1
+            last_data_integrity_check: 1
+
         return {query, query_options}
-      batchProcessor: (tasks_collection_cursor) ->
+      batchProcessor: (jira_collection_cursor) ->
         num_processed = 0
-        client = null
 
-        jira_issue_ids = tasks_collection_cursor.map (task_doc) ->
-          if not client?
-            client = self.getJiraClientForJustdo(task_doc.project_id).v2
+        jira_collection_cursor.forEach (jira_doc) ->
           num_processed += 1
-          return task_doc.jira_issue_id
+          last_checkpoint = JustdoHelpers.getDateMsOffset -1 * JustdoJiraIntegration.data_integrity_margin_of_safety, new Date(jira_doc.last_data_integrity_check)
+          jira_issue_ids = self.tasks_collection.find({jira_issue_id: {$ne: null}, jira_last_updated: {$gte: last_checkpoint}}, {fields: {jira_issue_id: 1}}).map (task_doc) -> task_doc.jira_issue_id
+          self.ensureIssueDataIntegrityAndMarkCheckpoint jira_doc, {jira_issue_ids: jira_issue_ids}
 
-        self.performIssueDataIntegrityCheck jira_issue_ids, client
+          return
 
         return num_processed
 
@@ -1667,3 +1660,96 @@ _.extend JustdoJiraIntegration.prototype,
 
   getRootUrlForCallbacksAndRedirects: ->
     return process.env.JIRA_ROOT_URL_CUSTOM_DOMAIN or process.env.ROOT_URL
+
+  getLastDataIntegrityCheckpointWithMarginOfSafety: (jira_server_id) ->
+    query =
+      last_data_integrity_check:
+        $lte: JustdoHelpers.getDateMsOffset -1 * (JustdoJiraIntegration.data_integrity_check_rate_ms + JustdoJiraIntegration.data_integrity_margin_of_safety)
+    query_options =
+      last_data_integrity_check: 1
+    return @jira_collection.findOne(query, query_options)?.last_data_integrity_check
+
+  ensureIssueDataIntegrityAndMarkCheckpoint: (jira_doc, options) ->
+    if not (jira_server_id = jira_doc?.server_info?.id)?
+      throw @_error "missing-argument", "Jira doc with server id and last_data_integrity_check is required."
+
+    if not (last_checkpoint = jira_doc.last_data_integrity_check)? or not (last_checkpoint = @getLastDataIntegrityCheckpointWithMarginOfSafety())?
+      return
+
+    if not (client = @clients[jira_server_id]?.v2)?
+      throw @_error "missing-client"
+
+    issues_with_discrepancies = []
+
+    issue_search_body =
+      jql: """updated >= "#{moment(last_checkpoint).format("YYYY/MM/DD hh:mm")}" """
+      maxResults: JustdoJiraIntegration.jql_issue_search_results_limit
+      fields: @getAllRelevantJiraFieldIds()
+
+    if (jira_issue_ids = options?.jira_issue_ids)?
+      if _.isString jira_issue_ids
+        jira_issue_ids = [jira_issue_ids]
+      issue_search_body.jql += " or issue in (#{jira_issue_ids.join(",")})"
+
+    if (jira_project_id_or_key = options?.jira_project_id_or_key)?
+      issue_search_body.jql += " and project=#{jira_project_id_or_key}"
+
+    console.log "[justdo-jira-integration] Ensuring issues updated since #{last_checkpoint} are up to date..."
+
+    _searchIssueUsingJqlUntilMaxResults = (responseProcessor, onLastBatch) =>
+      if not client?
+        throw @_error "client-not-found"
+
+      if client?.v2?
+        client = client.v2
+
+      try
+        res = await client.issueSearch.searchForIssuesUsingJqlPost issue_search_body
+      catch err
+        console.trace()
+        console.error "[justdo-jira-integration] Issue search failed."
+        return
+
+      responseProcessor res
+
+      if res.total > (new_start_at = res.startAt + res.maxResults)
+        issue_search_body.startAt = new_start_at
+        _searchIssueUsingJqlUntilMaxResults responseProcessor, onLastBatch
+      else if _.isFunction onLastBatch
+        onLastBatch res
+
+      return
+
+    checkIssuesIntegrity = (res) =>
+      for issue in res.issues
+        justdo_id = issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
+        mapped_task_fields = await @_mapJiraFieldsToJustdoFields justdo_id, {issue}
+        if not (@tasks_collection.findOne(_.extend({jira_issue_id: parseInt issue.id}, mapped_task_fields), {fields: {_id: 1}}))?
+          console.warn "Data inconsistency found in issue #{issue.key}."
+          issues_with_discrepancies.push issue.id
+      return
+
+    # Get Jira server time
+    server_info = await client.serverInfo.getServerInfo()
+
+    _searchIssueUsingJqlUntilMaxResults checkIssuesIntegrity
+
+    if not _.isEmpty issues_with_discrepancies
+      console.log "[justdo-jira-integration] Data inconsistency found in issues #{issues_with_discrepancies}. Performing resync..."
+      issue_search_body.jql = "issue in (#{issues_with_discrepancies.join ","})"
+      delete issue_search_body.startAt
+
+      resyncIssues = (res) =>
+        for issue in res.issues
+          justdo_id = issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
+          fields = await @_mapJiraFieldsToJustdoFields justdo_id, {issue}
+          if not _.isEmpty fields
+            # XXX updated_by is hardcoded to be justdo admin at the moment
+            @tasks_collection.update({jira_issue_id: parseInt(issue.id)}, {$set: _.extend {jira_last_updated: new Date(), updated_by: @_getJustdoAdmin justdo_id}, fields})
+        return
+
+      _searchIssueUsingJqlUntilMaxResults resyncIssues, ->
+        @jira_collection.update {"server_info.id": jira_server_id}, {$set: {last_data_integrity_check: server_info.serverTime}}
+        console.log "[justdo-jira-integration] Resync completed!"
+
+    return
