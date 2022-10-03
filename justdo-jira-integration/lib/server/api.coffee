@@ -34,6 +34,21 @@ _.extend JustdoJiraIntegration.prototype,
     @setupJiraRoutes()
 
     @clients = {}
+    @deleted_issue_ids = new Set()
+    @removed_sprint_parent_issue_pairs = new Set()
+    @pending_connection_test = {}
+
+    # XXX if oauth1 in use
+    @oauth_token_to_justdo_id = {}
+
+    # Whenever we refresh Jira API token, ensure all existing mounted issues are up to date.
+    @on "afterJiraApiTokenRefresh", (jira_server_id) =>
+      @pending_connection_test = {}
+      @ensureIssueDataIntegrityAndMarkCheckpoint jira_server_id
+      return
+
+    # Initialize last_webhook_connection_check and last_data_integrity_check fields in case some Jira docs doesn't have one
+    @setupWebhookAndDateIntegrityCheckpoints()
 
     # Refresh Api token immidiately upon server startup
     @_setupJiraClientForAllJustdosWithRefreshToken()
@@ -49,13 +64,6 @@ _.extend JustdoJiraIntegration.prototype,
     @_setupInvertedFieldMap()
 
     @_registerAllowedConfs()
-
-    @deleted_issue_ids = new Set()
-    @removed_sprint_parent_issue_pairs = new Set()
-    @pending_connection_test = {}
-
-    # XXX if oauth1 in use
-    @oauth_token_to_justdo_id = {}
 
     return
 
@@ -687,15 +695,6 @@ _.extend JustdoJiraIntegration.prototype,
   _registerDbMigrationScriptForWebhookHealthCheck: ->
     self = @
 
-    # Initialize last_webhook_connection_check field
-    self.jira_collection.update {}, {$set: {last_webhook_connection_check: new Date()}}, {multi: true}
-
-    # Whenever we refresh Jira API token, ensure all existing mounted issues are up to date.
-    self.on "afterJiraApiTokenRefresh", ->
-      self.pending_connection_test = {}
-      self.ensureAllIssuesAreUpToDate()
-      return
-
     common_batched_migration_options =
       delay_before_checking_for_new_batches: JustdoJiraIntegration.webhook_connection_check_rate_ms
       delay_between_batches: 10000 # 10 secs
@@ -842,7 +841,7 @@ _.extend JustdoJiraIntegration.prototype,
       client = @clients[server_info.id]
 
       if options?.emit_event
-        @emit "afterJiraApiTokenRefresh"
+        @emit "afterJiraApiTokenRefresh", server_info.id
 
       # Fetch all fix versions and sprints, then store in db
       mounted_jira_projects = @jira_collection.findOne("server_info.id": server_info.id, {fields: {jira_projects: 1}})?.jira_projects
@@ -1750,4 +1749,7 @@ _.extend JustdoJiraIntegration.prototype,
       markDataIntegrityCheckpoint()
       console.log "[justdo-jira-integration] Data integrity check completed. No discrepencies found."
 
+  setupWebhookAndDateIntegrityCheckpoints: ->
+    @jira_collection.update {last_data_integrity_check: null}, {$set: {last_data_integrity_check: new Date()}}, {multi: true}
+    @jira_collection.update {last_webhook_connection_check: null}, {$set: {last_webhook_connection_check: new Date()}}, {multi: true}
     return
