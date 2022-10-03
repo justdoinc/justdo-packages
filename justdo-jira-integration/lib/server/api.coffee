@@ -1668,7 +1668,17 @@ _.extend JustdoJiraIntegration.prototype,
 
   ensureIssueDataIntegrityAndMarkCheckpoint: (jira_doc) ->
     if _.isString jira_doc
-      jira_doc = @jira_collection.findOne jira_doc, {fields: {"server_info.id": 1, last_data_integrity_check: 1}}
+      jira_doc_query =
+        $or: [
+          _id: jira_doc
+        ,
+          "server_info._id": jira_doc
+        ]
+      jira_doc_query_options =
+        fields:
+          "server_info.id": 1
+          last_data_integrity_check: 1
+      jira_doc = @jira_collection.findOne jira_doc_query, jira_doc_query_options
 
     if not (jira_server_id = jira_doc?.server_info?.id)?
       throw @_error "missing-argument", "Jira doc with server id and last_data_integrity_check is required."
