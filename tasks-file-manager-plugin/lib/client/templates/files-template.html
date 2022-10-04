@@ -77,9 +77,9 @@
     {{/each}}
     {{#if bulkEditMode}}
       <div class="bulk-edit-control-wrapper">
-        <div class="bulk-edit-control">
+        <div class="bulk-edit-control shadow-lg">
           {{#if bulkSelectedExist}}
-            <button class="btn btn-sm btn-primary shadow-sm mr-1 bulk-edit-remove">Remove {{bulkSelectedCount}} File{{#if bulkSelectedCountGreaterThanOne}}s{{/if}}</button>
+            <button class="btn btn-sm btn-primary shadow-sm mr-2 bulk-edit-remove">Remove {{bulkSelectedCount}} File{{#if bulkSelectedCountGreaterThanOne}}s{{/if}}</button>
           {{/if}}
           <button class="btn btn-sm btn-primary shadow-sm bulk-edit-done">Cancel</button>
         </div>
