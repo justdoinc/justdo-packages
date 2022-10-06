@@ -206,7 +206,7 @@ _.extend JustdoDbMigrations.prototype,
 
     return
 
-  _registerBatchedCollectionUpdatesTypeSchema: new SimpleSchema
+  _registerBatchedCollectionUpdatesTypeOptionsSchema: new SimpleSchema
     collection:
       type: Mongo.Collection
     use_raw_collection:
@@ -214,19 +214,22 @@ _.extend JustdoDbMigrations.prototype,
       optional: true
     data_schema: # The schema of the job's data.
       type: SimpleSchema
-    dataValidator: # Called with the job's data after it been validated using the data_schema
-                   # Should throw an exception if the data provided can't be executed.
-      type: Function
-      optional: true
     queryGenerator: # a function of the form `(data, perform_as) ->` it gets the data and performing user and should generate the query that we'll run on the documents of the job.
       type: Function
       optional: false
+    jobsGatekeeper: # an optional function of the form `(options) ->`, if provided will further validate that the job is permitted in terms
+                    # of data provided and security. Note: schema validation for data provided is done regardless and isn't necessary here.
+                    # options is of the form of @_registerBatchedCollectionUpdatesJobOptionsSchema, i.e the validated options provided
+                    # to @registerBatchedCollectionUpdatesJob()
+                    # Returned value is ignored - throw an error to reject the job.
+      type: Function
+      optional: true
   registerBatchedCollectionUpdatesType: (type_id, options) ->
     check type_id, String
 
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_registerBatchedCollectionUpdatesTypeSchema,
+        @_registerBatchedCollectionUpdatesTypeOptionsSchema,
         options,
         {self: @, throw_on_error: true}
       )
@@ -236,25 +239,49 @@ _.extend JustdoDbMigrations.prototype,
 
     return
 
-  registerBatchedCollectionUpdatesJob: (type, meta_data, ids_to_update, user_id) ->
-    # collection._name
+  _registerBatchedCollectionUpdatesJobOptionsSchema: new SimpleSchema
+    data:
+      type: Object
+      blackbox: true
+    ids_to_update:
+      type: [String]
+    user_id: # If not provided or is null/undefined - regarded as a system initiated job
+      type: String
+      optional: true
+  registerBatchedCollectionUpdatesJob: (type, options) ->
     check type, String
-    check meta_data, Object
-    check ids_to_update, [String]
-    check user_id, Match.Maybe(String)
+
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_registerBatchedCollectionUpdatesJobOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
 
     if not (update_type_def = @batched_collection_updates_types[type])?
       throw @_error "batch-collection-update-type-not-supported", "Unknown batch collection update type: #{type}"
 
       return
 
-    update_type_def.data_schema?.validate(meta_data)
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        update_type_def.data_schema,
+        options.data,
+        {self: @, throw_on_error: true}
+      )
+    clean_and_validated_data = cleaned_val
+
+    clean_and_validated_options = _.extend {}, options, {data: clean_and_validated_data}
+
+    if _.isFunction(update_type_def.jobsGatekeeper)
+      update_type_def.jobsGatekeeper(clean_and_validated_options)
 
     job_id = APP.collections.DBMigrationBatchedCollectionUpdates.insert
-      created_by: user_id
+      created_by: options.user_id
       type: type
-      meta_data: meta_data
-      ids_to_update: ids_to_update
+      data: clean_and_validated_data
+      ids_to_update: options.ids_to_update
       process_status: "pending"
       process_status_details:
         processed: 0

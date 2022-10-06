@@ -1192,6 +1192,40 @@ _.extend Projects.prototype,
       return
 
     return
+  
+  _bulkUpdateTasksUsersOptionsSchema: new SimpleSchema
+    tasks:
+      type: [String]
+    members_to_add:
+      type: [String]
+      optional: true
+    members_to_remove:
+      type: [String]
+      optional: true
+    items_to_assume_ownership_of:
+      type: [String]
+      optional: true
+    items_to_cancel_ownership_transfer_of:
+      type: [String]
+      optional: true
+  bulkUpdateTasksUsers: (project_id, options, user_id) ->
+    # Requiring that user_id is a member of project_id is done as part of the
+    # job's gatekeeper routine.
+    
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_bulkUpdateTasksUsersOptionsSchema,
+        options,
+        {self: @, throw_on_error: true}
+      )
+    options = cleaned_val
+
+    APP.justdo_db_migrations.registerBatchedCollectionUpdatesJob "add-remove-members-to-tasks",
+      data: _.extend(_.omit(options, "tasks"), {project_id: project_id})
+      ids_to_update: options.tasks
+      user_id: user_id
+
+    return
 
   #
   # Project tasks data structure management

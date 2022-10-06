@@ -2,7 +2,7 @@ MAX_DOCS_UPDATES_PER_SECOND = 60 # Across all running jobs
 
 MIN_IN_PROGRESS_JOBS_TO_HANDLE_PER_MINUTE = 3
 
-IMMEDIATE_PROCESS_THRESHOLD_DOCS = 1 * 1000 * 1000
+IMMEDIATE_PROCESS_THRESHOLD_DOCS = 1 * 1000
 
 TIMES_PER_SECOND_TO_CHECK_FOR_JOBS_FOR_IMMEDIATE_PROCESS = 5
 
@@ -88,60 +88,78 @@ APP.executeAfterAppLibCode ->
 
     batchProcessor: (cursor) ->
       self = @
-      num_processed = 0
+
+      pending_jobs_partially_processed = 0
+      pending_jobs_fully_processed = 0
+
+
+      jobs_partially_or_fully_processed = 0
+      total_processed = 0
       
+      # I  think not necessary:
+      # pending_phase = true # Important note, we are ordering by process_status DESC, i.e p > i hence all the pending jobs
+      #                      # will be first in the cursor's list.
+      #                      # Once we encounter the first in-progress task, we set pending_phase to false
       cursor.forEach (job) ->
-        new_processed = job.process_status_details.processed + job_batch_size
-        
+        # XXX STOPPED HERE
+        if job.process_status is "pending"
+          max_items_to_process = IMMEDIATE_PROCESS_THRESHOLD_DOCS
+        else
+          # Think what to do for the in-progress
+          1 + 1
+
+        new_processed = job.process_status_details.processed + max_items_to_process
         if new_processed > job.ids_to_update.length
           new_processed = job.ids_to_update.length
         ids_to_update = job.ids_to_update.slice(job.process_status_details.processed, new_processed)
-        modifier = JSON.parse(job.modifier)
+
+
+
         
-        job_update =
-          $set:
-            "process_status_details.processed": new_processed
+        # job_update =
+        #   $set:
+        #     "process_status_details.processed": new_processed
 
-        if job.process_status_details.processed + job_batch_size >= job.ids_to_update.length
-          job_update.$set.process_status = "done"
-          job_update.$set["process_status_details.closed_at"] = new Date()
-        else if job.process_status == "pending"
-          job_update.$set.process_status = "in-progress"
-          job_update.$set["process_status_details.started_at"] = new Date()
+        # if job.process_status_details.processed + job_batch_size >= job.ids_to_update.length
+        #   job_update.$set.process_status = "done"
+        #   job_update.$set["process_status_details.closed_at"] = new Date()
+        # else if job.process_status == "pending"
+        #   job_update.$set.process_status = "in-progress"
+        #   job_update.$set["process_status_details.started_at"] = new Date()
         
-        type_def = APP.justdo_db_migrations.batched_collection_updates_types[job.type]
+        # type_def = APP.justdo_db_migrations.batched_collection_updates_types[job.type]
 
-        if type_def.use_raw_collection == true
-          APP.justdo_analytics.logMongoRawConnectionOp(@collection._name, "update", query, modifier, {multi: true})
-          if type_def.collection._name == "tasks"
-            @_addRawFieldsUpdatesToUpdateModifier(modifier)
-          type_def.collection.rawCollection().update {
-            _id:
-              $in: ids_to_update
-          }, modifier, {multi: true}, (err) ->
-            delete job_update.$set["process_status_details.processed"]
-            job_update.$set.process_status = "error"
-            job_update.$set["process_status_details.closed_at"] = new Date()
-            job_update.$set["process_status_details.error_data"] = JSON.stringify(err)
+        # if type_def.use_raw_collection == true
+        #   APP.justdo_analytics.logMongoRawConnectionOp(@collection._name, "update", query, modifier, {multi: true})
+        #   if type_def.collection._name == "tasks"
+        #     @_addRawFieldsUpdatesToUpdateModifier(modifier)
+        #   type_def.collection.rawCollection().update {
+        #     _id:
+        #       $in: ids_to_update
+        #   }, modifier, {multi: true}, (err) ->
+        #     delete job_update.$set["process_status_details.processed"]
+        #     job_update.$set.process_status = "error"
+        #     job_update.$set["process_status_details.closed_at"] = new Date()
+        #     job_update.$set["process_status_details.error_data"] = JSON.stringify(err)
 
-        else 
-          try
-            type_def.collection.update
-              _id:
-                $in: ids_to_update
-            , modifier, {multi: true}
-          catch e
-            delete job_update.$set["process_status_details.processed"]
-            job_update.$set.process_status = "error"
-            job_update.$set["process_status_details.closed_at"] = new Date()
-            job_update.$set["process_status_details.error_data"] = JSON.stringify(err)
+        # else 
+        #   try
+        #     type_def.collection.update
+        #       _id:
+        #         $in: ids_to_update
+        #     , modifier, {multi: true}
+        #   catch e
+        #     delete job_update.$set["process_status_details.processed"]
+        #     job_update.$set.process_status = "error"
+        #     job_update.$set["process_status_details.closed_at"] = new Date()
+        #     job_update.$set["process_status_details.error_data"] = JSON.stringify(err)
             
-        num_processed += ids_to_update.length
-        APP.collections.DBMigrationBatchedCollectionUpdates.update job._id, job_update
+        # jobs_partially_or_fully_processed += ids_to_update.length
+        # APP.collections.DBMigrationBatchedCollectionUpdates.update job._id, job_update
 
         return
 
-      return num_processed
+      return jobs_partially_or_fully_processed
 
   APP.justdo_db_migrations.registerMigrationScript "batched-collection-updates", JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
 
