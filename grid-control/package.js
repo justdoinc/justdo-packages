@@ -79,6 +79,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/plugins/grid_views/filters/filters.sass', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters_dom.coffee', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters_dom.sass', client);
+  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/custom-where-clause-filter.coffee', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/whitelist.coffee', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/whitelist.sass', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/numeric.coffee', client);
