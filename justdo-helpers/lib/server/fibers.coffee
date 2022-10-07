@@ -43,3 +43,16 @@ _.extend JustdoHelpers,
     # A shortcut, with which users of JustdoHelpers can avoid requiring fibers
 
     return Fiber.yield()
+
+  pseudoBlockingRawCollectionUpdateInsideFiber: (collection, selector, modifier, options) ->
+    fiber = @getCurrentFiber()
+
+    if not (fiber = Fiber.current)?
+      throw throw new Error("no-fiber")
+
+    collection.rawCollection().update selector, modifier, options, (err, result) ->
+      fiber.run({err, result})
+
+      return
+    
+    return Fiber.yield()
