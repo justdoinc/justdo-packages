@@ -468,6 +468,8 @@ APP.executeAfterAppLibCode ->
   Template.task_pane_item_details_members_editor_user_btn.events
     "click .user-btn": (e, tpl) ->
       if @disabled_reason
+        JustdoSnackbar.show
+          text: @disabled_reason
         return
         
       clicked_user_id = @_id
