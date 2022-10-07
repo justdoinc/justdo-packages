@@ -31,8 +31,8 @@ _.extend JustdoDbMigrations.prototype,
             throw self._error "invalid-job-data", "For jobs of type #{job_type} at least one of the fields members_to_add/members_to_remove should be provided in the job's data object (and be non-empty)"
 
           return
-        queryGenerator: (data, perform_as) ->
-          console.log {data, perform_as}
+        queryGenerator: (ids_to_update, data, perform_as) ->
+          console.log "WE ARE HERE", {ids_to_update, data, perform_as}
           return
 
       return
