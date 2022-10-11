@@ -50,6 +50,7 @@ _.extend JustdoHelpers,
     if not (fiber = Fiber.current)?
       throw throw new Error("no-fiber")
 
+    APP.justdo_analytics.logMongoRawConnectionOp(collection._name, "update", selector, modifier, options)
     collection.rawCollection().update selector, modifier, options, (err, result) ->
       fiber.run({err, result})
 
