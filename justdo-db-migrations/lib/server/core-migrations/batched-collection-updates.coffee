@@ -139,9 +139,7 @@ APP.executeAfterAppLibCode ->
         in_progress_max_docs_to_process_per_job = Math.ceil(MAX_DOCS_UPDATES_PER_SECOND / in_progress_jobs_count)
 
       APP.collections.DBMigrationBatchedCollectionUpdates.find({_id: {$in: jobs_to_process_ids}}).forEach (job) ->
-        docs_to_process = getNewProcessed(job, if job.process_status is "pending" then pending_jobs_max_docs_to_process_per_job else in_progress_max_docs_to_process_per_job)
-
-        new_processed = job.process_status_details.processed + docs_to_process
+        new_processed = getNewProcessed(job, if job.process_status is "pending" then pending_jobs_max_docs_to_process_per_job else in_progress_max_docs_to_process_per_job)
 
         ids_to_update = job.ids_to_update.slice(job.process_status_details.processed, new_processed)
 
