@@ -114,10 +114,21 @@ APP.executeAfterAppLibCode ->
     batchProcessor: (cursor) ->
       self = @
 
-      pending_jobs_partially_processed = 0
-      pending_jobs_fully_processed = 0
-      in_progress_jobs_partially_processed = 0
-      in_progress_jobs_fully_processed = 0
+      stats =
+        pending:
+          failed: 0
+          modifiers_processed: 0
+          partially_processed: 0
+          fully_processed: 0
+          docs_processed: 0
+          docs_processed_actual: 0
+        "in-progress":
+          failed: 0
+          modifiers_processed: 0
+          partially_processed: 0
+          fully_processed: 0
+          docs_processed: 0
+          docs_processed_actual: 0
 
       {jobs_to_process, in_progress_jobs_count} = determineJobsToProcess(cursor)
       jobs_to_process_ids = _.map(jobs_to_process, "_id")
@@ -141,16 +152,20 @@ APP.executeAfterAppLibCode ->
             "process_status_details.processed": new_processed
             "process_status_details.last_processed": now
 
-        if job.process_status == "pending"          
+        if job.process_status == "pending"
           job_update.$set.started_at = now
 
+        about_to_complete = false
         if new_processed >= job.ids_to_update.length
           job_update.$set.process_status = "done"
           job_update.$set["process_status_details.closed_at"] = now
+          about_to_complete = true
         else if job.process_status == "pending"
           job_update.$set.process_status = "in-progress"
 
+        failed = false
         setError = (code) ->
+          failed = true
           job_update.$set.process_status = "error"
           job_update.$set["process_status_details.closed_at"] = now
           job_update.$set["process_status_details.error_data"] = {code}
@@ -159,82 +174,57 @@ APP.executeAfterAppLibCode ->
 
           return
 
+        modifiers_processed = 0
+        actual_docs_processed = 0
         if not (type_def = APP.justdo_db_migrations.batched_collection_updates_types[job.type])?
           setError("unknown-job-type")
         else
-          # XXX
-          # XXX continue here
-          # XXX
           try
-            console.log type_def.queryGenerator(ids_to_update, job.data, job.created_by)
+            selector = 
+              _id:
+                $in: ids_to_update
 
-            # type_def.collection.update
-            #   _id:
-            #     $in: ids_to_update
-            # , modifier, {multi: true}
+            mongo_update_options = 
+              multi: true
+
+            for modifier in type_def.modifiersGenerator(job.data, job.created_by)
+              if type_def.use_raw_collection
+                if type_def.collection is APP.collections.Tasks
+                  # We take care of adding the raw fields for the users of this API.
+                  APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(modifier)
+
+                {err, result} = JustdoHelpers.pseudoBlockingRawCollectionUpdateInsideFiber(type_def.collection, selector, modifier, mongo_update_options)
+
+                if err?
+                  throw new Error err
+
+                modifiers_processed += 1
+                actual_docs_processed += result.result.n
+              else
+                modifiers_processed += 1
+                actual_docs_processed += type_def.collection.update selector, modifier, mongo_update_options
           catch e
+            console.error "query-processing-failed", e
             setError("query-processing-failed")
 
-          # Attempt processing
+        if failed
+          stats[job.process_status].failed += 1
+        else
+          stats[job.process_status].modifiers_processed += modifiers_processed
+          stats[job.process_status].docs_processed += ids_to_update.length
+          stats[job.process_status].docs_processed_actual += actual_docs_processed
+          if about_to_complete == true
+            stats[job.process_status].fully_processed += 1
+          else
+            stats[job.process_status].partially_processed += 1
 
-        # console.log "WRITE", {job, job_update}
+        APP.collections.DBMigrationBatchedCollectionUpdates.update(job._id, job_update)
 
         return
 
-      return
+      console.info "[batched-collection-updates]", JSON.stringify(stats)
 
-      # cursor.forEach (job) ->
-      #   # XXX STOPPED HERE
-      #   if job.process_status is "pending"
-      #     max_items_to_process = IMMEDIATE_PROCESS_THRESHOLD_DOCS
-      #   else
-      #     # Think what to do for the in-progress
-      #     1 + 1
-      #  
-      #   # job_update =
-      #   #   $set:
-      #   #     "process_status_details.processed": new_processed
-
-      #   # if job.process_status_details.processed + job_batch_size >= job.ids_to_update.length
-      #   #   job_update.$set.process_status = "done"
-      #   #   job_update.$set["process_status_details.closed_at"] = new Date()
-      #   # else if job.process_status == "pending"
-      #   #   job_update.$set.process_status = "in-progress"
-      #   #   job_update.$set["process_status_details.started_at"] = new Date()
-        
-        
-
-      #   # if type_def.use_raw_collection == true
-      #   #   APP.justdo_analytics.logMongoRawConnectionOp(@collection._name, "update", query, modifier, {multi: true})
-      #   #   if type_def.collection._name == "tasks"
-      #   #     @_addRawFieldsUpdatesToUpdateModifier(modifier)
-      #   #   type_def.collection.rawCollection().update {
-      #   #     _id:
-      #   #       $in: ids_to_update
-      #   #   }, modifier, {multi: true}, (err) ->
-      #   #     delete job_update.$set["process_status_details.processed"]
-      #   #     job_update.$set.process_status = "error"
-      #   #     job_update.$set["process_status_details.closed_at"] = new Date()
-      #   #     job_update.$set["process_status_details.error_data"] = JSON.stringify(err)
-
-      #   # else 
-      #   #   try
-      #   #     type_def.collection.update
-      #   #       _id:
-      #   #         $in: ids_to_update
-      #   #     , modifier, {multi: true}
-      #   #   catch e
-      #   #     delete job_update.$set["process_status_details.processed"]
-      #   #     job_update.$set.process_status = "error"
-      #   #     job_update.$set["process_status_details.closed_at"] = new Date()
-      #   #     job_update.$set["process_status_details.error_data"] = JSON.stringify(err)
-            
-      #   # jobs_partially_or_fully_processed += ids_to_update.length
-      #   # APP.collections.DBMigrationBatchedCollectionUpdates.update job._id, job_update
-
-      #   return
-
-      # return jobs_partially_or_fully_processed
+      return stats["pending"].docs_processed_actual + stats["in-progress"].docs_processed_actual
 
   APP.justdo_db_migrations.registerMigrationScript "batched-collection-updates", JustdoDbMigrations.commonBatchedMigration(common_batched_migration_options)
 

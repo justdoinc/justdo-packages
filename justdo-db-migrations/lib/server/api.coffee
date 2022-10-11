@@ -214,7 +214,15 @@ _.extend JustdoDbMigrations.prototype,
       optional: true
     data_schema: # The schema of the job's data.
       type: SimpleSchema
-    queryGenerator: # a function of the form `(ids_to_update, data, perform_as) ->` it gets the ids_to_update of the docs ids that needs to be updated, the job data and performing user and should generate the query that we'll run on the documents of the job.
+    modifiersGenerator: # a function of the form `(data, perform_as) ->` it gets the job data and performing user.
+                        # Should return *an array* of modifiers that we'll run on the documents of the job.
+                        # Each modifier will run in a sparate call to the db
+                        #
+                        # IMPORTANT:
+                        #
+                        # For modifiers that are applied on the Tasks collection,
+                        # the api will add the raw fields for you, in case that use_raw_collection
+                        # is set to true - you don't need to worry about them.
       type: Function
       optional: false
     jobsGatekeeper: # an optional function of the form `(options) ->`, if provided will further validate that the job is permitted in terms

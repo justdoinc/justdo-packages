@@ -1221,7 +1221,7 @@ _.extend Projects.prototype,
     options = cleaned_val
 
     APP.justdo_db_migrations.registerBatchedCollectionUpdatesJob "add-remove-members-to-tasks",
-      data: _.extend(_.omit(options, "tasks"), {project_id: project_id})
+      data: _.extend(_.pick(options, "members_to_add", "members_to_remove"), {project_id: project_id})
       ids_to_update: options.tasks
       user_id: user_id
 
