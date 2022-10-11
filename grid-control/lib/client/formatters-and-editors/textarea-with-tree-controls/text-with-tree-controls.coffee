@@ -536,6 +536,17 @@ GridControl.installFormatter "textWithTreeControls",
                style="width: #{toggle_indentation}px;"></div>
     """
 
+    if state is "expand"
+      tree_control += """
+        <div class="hl hl-f" style="left: #{level_indent * (level + 1) + 4}px"></div>
+      """
+
+    if level > 0
+      for i in [1..level]
+        tree_control += """
+          <div class="hl" style="left: #{level_indent * i + 4}px"></div>
+        """
+
     return tree_control
 
   print: (doc, field, path) ->

@@ -234,3 +234,19 @@
   width: 19px
   stroke: currentColor
   fill: none
+
+.slick-row
+  .hl // hierarchy-line
+    position: absolute
+    background-color: #c8cfd2
+    width: 1px
+
+    top: 0
+    bottom: 0
+
+    &.hl-f // hierarchy-line-first
+      top: 22px
+
+  &.f-leaf
+    .hl.hl-f
+      display: none
