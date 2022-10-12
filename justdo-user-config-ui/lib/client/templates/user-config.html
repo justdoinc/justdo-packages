@@ -3,10 +3,10 @@
 
     {{#each sections}}
       <section section-id="{{id}}" class="mb-0">
-        <!-- {{#if title}}<div class="h6 font-weight-bold text-primary text-uppercase">{{title}}</div>{{/if}} -->
+        {{!-- {{#if title}}<div class="h6 font-weight-bold text-primary text-uppercase">{{title}}</div>{{/if}} --}}
 
         {{#each templates}}
-          <div class="config-section-container" controller-template-id="{{id}}">
+          <div class="controller-template" controller-template-id="{{id}}">
             {{> UI.dynamic template=template}}
           </div>
         {{/each}}
