@@ -50,7 +50,6 @@ Package.onUse(function (api) {
   api.use("justdoinc:justdo-helpers@1.0.0", both);
 
   api.use("justdoinc:grid-control-dates-filter-plugin@1.0.0", both);
-  api.use("justdoinc:grid-control-unicode-dates-filter-plugin@1.0.0", both);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 

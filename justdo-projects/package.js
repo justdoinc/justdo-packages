@@ -53,11 +53,6 @@ Package.onUse(function (api) {
 
   api.use('justdoinc:justdo-projects-shared-components@1.0.0', both);
 
-  // unordered since it depends on this package (stem-capital:projects).
-  // Important: note that it might require to install justdoinc:grid-control-dates-filter-plugin
-  // in the project level
-  api.use('justdoinc:grid-control-unicode-dates-filter-plugin@1.0.0', client, {unordered: true});
-
   api.use("meteorspark:app@0.3.0", both);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
 
