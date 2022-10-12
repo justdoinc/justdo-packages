@@ -19,14 +19,22 @@
     display: flex
     align-items: center
     &:hover
-      .create-same-justdo-tooltip
+      .project-config-tooltip
         display: block
+
+    .project-config-tooltip
+      width: 250px
+      bottom: 28px
+      right: 0
 
     .jd-icon
       color: #C5CBD3
       stroke-width: 2.5
       padding: 4px
       cursor: help
+      &:hover
+        color: #76869a
+        background-color: #e8edf3
 
     .divider
       height: 14px
@@ -34,18 +42,3 @@
       background-color: #C5CBD3
       margin: 0 4px
       opacity: 0.85
-
-    .create-same-justdo-tooltip
-      box-shadow: 0px 8px 60px rgba(0, 0, 0, 0.12)
-      border-radius: 4px
-      font-size: 13px
-      color: #3D495B
-      position: absolute
-      white-space: nowrap
-      background-color: white
-      padding: 4px 8px
-      white-space: initial
-      width: 250px
-      bottom: 28px
-      right: 0
-      display: none

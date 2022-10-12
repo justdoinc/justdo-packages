@@ -29,7 +29,12 @@
     {{#if isRemovable}}
       <svg class="jd-icon remove removable"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
     {{else}}
-      You can't remove this Ticket Queue, since you aren't member of its Task
+      <div class="tq-task-item-info">
+        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"></use></svg>
+        <div class="project-config-tooltip">
+          You can't remove this Ticket Queue, since you aren't member of its Task
+        </div>
+      </div>
     {{/if}}
   </div>
 </template>
