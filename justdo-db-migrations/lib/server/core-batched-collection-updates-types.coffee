@@ -22,6 +22,7 @@ _.extend JustdoDbMigrations.prototype,
           members_to_remove:
             type: [String]
             optional: true
+
         jobsGatekeeper: (options) ->
           {data, ids_to_update, user_id} = options
 
@@ -33,6 +34,7 @@ _.extend JustdoDbMigrations.prototype,
             throw self._error "invalid-job-data", "For jobs of type #{job_type} at least one of the fields members_to_add/members_to_remove should be provided in the job's data object (and be non-empty)"
           
           return
+
         modifiersGenerator: (data, perform_as) ->
           modifiers = []
 
@@ -51,6 +53,23 @@ _.extend JustdoDbMigrations.prototype,
                   $in: data.members_to_remove
 
           return modifiers
+
+        afterModifiersExecutionOps: (items_ids, data, perform_as) ->
+          {members_to_add_provided, members_to_remove_provided} = membersProvided(data)
+
+          if members_to_add_provided
+            APP.projects._grid_data_com._setPrivateDataDocsFreezeState(data.members_to_add, items_ids, false)
+            # Important, if you change the logic here, note that in the process of inviteMember
+            # we also call @_setPrivateDataDocsFreezeState()
+
+            APP.projects._grid_data_com._removeIsRemovedOwnerForTasksBelongingTo(items_ids, data.members_to_add)
+
+          if members_to_remove_provided
+            APP.projects._grid_data_com._setPrivateDataDocsFreezeState(data.members_to_remove, items_ids, true)
+            # Important, if you change the logic here, note that in the process of removeMember
+            # we do something similar using a slight different API: _freezeAllProjectPrivateDataDocsForUsersIds
+
+          return
 
       return # end of do =>
 

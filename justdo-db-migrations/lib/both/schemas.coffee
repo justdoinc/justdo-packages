@@ -43,7 +43,7 @@ _.extend JustdoDbMigrations.prototype,
             optional: true
 
           error_data: # Will appear only if process_status is "error", will have both error trace to help figure cause, and details to help come up with a user readable message
-            type: String
+            type: Object
             blackbox: true
             optional: true
 

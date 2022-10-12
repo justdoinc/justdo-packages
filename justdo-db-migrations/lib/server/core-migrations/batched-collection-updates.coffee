@@ -202,8 +202,15 @@ APP.executeAfterAppLibCode ->
                 modifiers_processed += 1
                 actual_docs_processed += type_def.collection.update selector, modifier, mongo_update_options
           catch e
-            console.error "query-processing-failed", e
-            setError("query-processing-failed")
+            console.error "modifier-processing-failed", {modifier}, e
+            setError("modifier-processing-failed")
+
+        if _.isFunction type_def.afterModifiersExecutionOps
+          try
+            type_def.afterModifiersExecutionOps(ids_to_update, job.data, job.created_by)
+          catch e
+            console.error "after-modifiers-execution-ops-failed", e
+            setError("after-modifiers-execution-ops-failed")
 
         if failed
           stats[job.process_status].failed += 1

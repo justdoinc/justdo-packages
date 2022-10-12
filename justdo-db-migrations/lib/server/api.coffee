@@ -225,6 +225,11 @@ _.extend JustdoDbMigrations.prototype,
                         # is set to true - you don't need to worry about them.
       type: Function
       optional: false
+    afterModifiersExecutionOps: # a function of the form `(ids_to_update, data, perform_as) ->`
+                                # if provided, will be called after a successful execution of the queries
+                                # provided by modifiersGenerator
+      type: Function
+      optional: true
     jobsGatekeeper: # an optional function of the form `(options) ->`, if provided will further validate that the job is permitted in terms
                     # of data provided and security. Note: schema validation for data provided is done regardless and isn't necessary here.
                     # options is of the form of @_registerBatchedCollectionUpdatesJobOptionsSchema, i.e the validated options provided
