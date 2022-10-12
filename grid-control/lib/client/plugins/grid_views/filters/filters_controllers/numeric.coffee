@@ -59,13 +59,20 @@ NumericFilterControllerConstructor = (context) ->
       continue
     
     option_item = """
-      <li value='range-#{range.id}'>
-        <i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i>
+      <li value="range-#{range.id}">
+        <i class="fa-li fa fa-square-o"></i><i class="fa-li fa fa-check-square-o"></i>
         #{JustdoHelpers.xssGuard(range.label, {allow_html_parsing: true, enclosing_char: ''})}
       </li>
     """
 
     filter_options_html += option_item
+
+  filter_options_html += """
+      <li value="custom-range">
+        <i class="fa-li fa fa-square-o"></i><i class="fa-li fa fa-check-square-o"></i>
+        <input type="number" id="custom-range-start" class="custom-range-input" placeholder="Min"> - <input type="number" id="custom-range-end" class="custom-range-input" placeholder="Max">
+      </li>
+    """
 
   # note, the reason why we seperate the ul for the dropdown-header is that
   # the vertical scroll of the members ul, when there are many members, go
@@ -115,6 +122,56 @@ NumericFilterControllerConstructor = (context) ->
 
     return
 
+  $(@controller).on "click", "li[value=custom-range] .fa-li", (e) =>
+    $el = $(e.target).closest("li")
+
+    # Shallow copy filter_state if is object
+    filter_state = @column_filter_state_ops.getColumnFilter()
+    if filter_state?
+      filter_state = _.extend {}, filter_state
+    else
+      filter_state = {}
+    
+    if $el.hasClass("selected")
+      delete filter_state.custom_range
+    else
+      custom_range_start = $el.find("#custom-range-start").val()
+      custom_range_end = $el.find("#custom-range-end").val()
+      filter_state.custom_range = {
+        start: custom_range_start
+        end: custom_range_end
+      }
+
+    if _.isEmpty(filter_state)
+      @column_filter_state_ops.clearColumnFilter()
+    else
+      @column_filter_state_ops.setColumnFilter(filter_state)
+
+    return
+
+  $(@controller).on "change", ".custom-range-input", (e) =>
+    $el = $(e.target).closest("li")
+
+    # Shallow copy filter_state if is object
+    filter_state = @column_filter_state_ops.getColumnFilter()
+    if filter_state?
+      filter_state = _.extend {}, filter_state
+    else
+      filter_state = {}
+    
+    if $el.hasClass("selected")
+      custom_range_start = $el.find("#custom-range-start").val()
+      custom_range_end = $el.find("#custom-range-end").val()
+      filter_state.custom_range = {
+        start: custom_range_start
+        end: custom_range_end
+      }
+
+    if _.isEmpty(filter_state)
+      @column_filter_state_ops.clearColumnFilter()
+    else
+      @column_filter_state_ops.setColumnFilter(filter_state)
+
   @refresh_state()
 
   return @
@@ -136,6 +193,11 @@ _.extend NumericFilterControllerConstructor.prototype,
     if (ranges = filter_state.ranges)?
       for range in ranges
         $("[value=range-#{range}]", @controller).addClass("selected")
+    
+    if (custom_range = filter_state.custom_range)?
+      $("[value=custom-range]", @controller).addClass("selected")
+      $("#custom-range-start", @controller).val(filter_state.custom_range.start)
+      $("#custom-range-end", @controller).val(filter_state.custom_range.end)
 
     return
 
@@ -148,10 +210,7 @@ _.extend NumericFilterControllerConstructor.prototype,
 columnFilterStateToQuery = (column_filter_state, context) ->
   ranges_queries = []
 
-  if not (grid_ranges = context.column_schema_definition?.grid_ranges)?
-    console.error "Couldn't find grid_ranges"
-
-    return {}
+  grid_ranges = context.column_schema_definition?.grid_ranges or []
 
   # Shallow copy
   column_filter_state = _.extend {}, column_filter_state
@@ -200,6 +259,18 @@ columnFilterStateToQuery = (column_filter_state, context) ->
       else
         context.column_filter_state_ops.setColumnFilter(column_filter_state)
 
+  if (custom_range = column_filter_state.custom_range)?
+    {start, end} = custom_range
+    start = parseInt(start)
+    end = parseInt(end)
+    range_query = {}
+    if not isNaN(start) 
+      range_query.$gte = start
+    if not isNaN(end)
+      range_query.$lte = end
+    if not _.isEmpty(range_query)
+      ranges_queries.push range_query
+  
   if _.isEmpty ranges_queries
     return {}
 
@@ -216,9 +287,20 @@ columnFilterStateToQuery = (column_filter_state, context) ->
   return query
 
 getSelectAllFilterState = (context) ->
-  return {ranges: _.map(context.column_schema_definition.grid_ranges, (range) -> range.id)}
+  $el = context.grid_control.$filter_dropdown
+  return {
+    ranges: _.map(context.column_schema_definition.grid_ranges, (range) -> range.id)
+    custom_range: {
+      start: ""
+      end: ""
+    }
+  }
 
 GridControl.installFilterType "numeric-filter",
   controller_constructor: NumericFilterControllerConstructor
   column_filter_state_to_query: columnFilterStateToQuery
   getSelectAllFilterState: getSelectAllFilterState
+
+GridControl.NumericFilterControllerConstructor = NumericFilterControllerConstructor
+GridControl.NumericFilterControllerGetSelectAllFilterState = getSelectAllFilterState
+GridControl.NumericFilterControllerColumnFilterStateToQuery = columnFilterStateToQuery

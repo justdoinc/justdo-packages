@@ -84,6 +84,10 @@ Package.onUse(function (api) {
   api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/whitelist.sass', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/numeric.coffee', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/numeric.sass', client);
+  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/unicode-dates-filter.coffee', client);
+  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/unicode-dates-custom-where-clause-filter.coffee', client);
+  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/numeric-custom-where-clause-filter.coffee', client);
+
   api.add_files('lib/client/plugins/grid_views/columns_reordering.coffee', client);
   api.add_files('lib/client/plugins/grid_views/columns_context_menu.coffee', client);
   api.add_files('lib/client/plugins/cell_editing_timeout/cell_editing_timeout.coffee', client);
