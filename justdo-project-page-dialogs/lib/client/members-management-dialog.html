@@ -30,7 +30,7 @@
 
 <template name="task_pane_item_details_members_editor_recent_batched_ops">
   <div class="notes">
-  <span>Recent requests</span>
+  <span>Recent members updates</span>
   <ul>
     {{#each recentBatchedOps}}
       <li>{{type}} {{process_status}} {{#if pendingOrInProgress}} {{processedPercent}}% <span class="terminate">TERMINATE</span>{{/if}}</li>
