@@ -44,6 +44,28 @@ _.extend JustdoHelpers,
 
     return Fiber.yield()
 
+  pseudoBlockingRawCollectionInsertInsideFiber: (collection, doc) ->
+    fiber = @getCurrentFiber()
+
+    if not (fiber = Fiber.current)?
+      throw throw new Error("no-fiber")
+
+    if not doc._id?
+      # The _id assigned automatically by mongo follows a different structure then
+      # what Meteor's Collection.insert() would have put (Mongo's default uses an ObjectId type
+      # instead of string). That interferes later on with the DDP.
+      # hence, we set here an _id that follows Meteor's standards
+      doc = _.extend({}, doc) # Shallow copy.
+      doc._id = Random.id()
+
+    APP.justdo_analytics.logMongoRawConnectionOp(collection._name, "insert", doc)
+    collection.rawCollection().insert doc, (err, result) ->
+      fiber.run({err, result})
+
+      return
+    
+    return Fiber.yield()
+
   pseudoBlockingRawCollectionUpdateInsideFiber: (collection, selector, modifier, options) ->
     fiber = @getCurrentFiber()
 
