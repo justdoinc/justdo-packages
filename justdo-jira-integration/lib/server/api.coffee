@@ -1562,18 +1562,9 @@ _.extend JustdoJiraIntegration.prototype,
       .catch (err) -> console.error "[justdo-jira-integration] Assign issue to fix version failed" , err.response.data
     return
 
-  _searchIssueUsingJql: (client, issue_search_body, cb) ->
-    # XXX Checks for issue_search_body maybe needed
-    if not client?
       throw @_error "client-not-found"
 
-    if client?.v2?
-      client = client.v2
 
-    return client.issueSearch.searchForIssuesUsingJqlPost issue_search_body
-      .then cb
-      .catch (err) ->
-        console.error "[justdo-jira-integration] Error in issue search" , err
 
   getAuthTypeIfJiraInstanceIsOnPerm: ->
     if @server_type.includes "server"
@@ -1635,66 +1626,28 @@ _.extend JustdoJiraIntegration.prototype,
     # Get Jira server time
     server_info = await client.serverInfo.getServerInfo()
 
-    _searchIssueUsingJqlUntilMaxResults = (responseProcessor, onLastBatch) =>
-      try
-        res = await client.issueSearch.searchForIssuesUsingJqlPost issue_search_body
-      catch err
-        console.trace()
-        console.error "[justdo-jira-integration] Issue search failed."
         return
 
-      await responseProcessor res
 
-      if res.total > (new_start_at = res.startAt + res.maxResults)
-        issue_search_body.startAt = new_start_at
-        await _searchIssueUsingJqlUntilMaxResults responseProcessor, onLastBatch
-      else if _.isFunction onLastBatch
-        await onLastBatch res
 
       return
 
-    checkIssuesIntegrity = (res) =>
       for issue in res.issues
-        justdo_id = issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
-        mapped_task_fields = await @_mapJiraFieldsToJustdoFields justdo_id, {issue}
-        if not (@tasks_collection.findOne(_.extend({jira_issue_id: parseInt issue.id}, mapped_task_fields), {fields: {_id: 1}}))?
-          issues_with_discrepancies.push issue.id
       return
 
-    markDataIntegrityCheckpoint = =>
-      @jira_collection.update {"server_info.id": jira_server_id}, {$set: {last_data_integrity_check: server_info.serverTime}}
 
-    resyncIssuesIfDiscrepenciesAreFound = =>
-      if _.isEmpty issues_with_discrepancies
-        markDataIntegrityCheckpoint()
-        console.log "[justdo-jira-integration] Data integrity check completed. No discrepencies found."
-        return
   markDataIntegrityCheckpoint: (jira_server_id, jira_server_time) ->
     @ongoing_checkpoint = null
     @jira_collection.update {"server_info.id": jira_server_id}, {$set: {last_data_integrity_check: jira_server_time}}
     return
 
-      console.warn "[justdo-jira-integration] Data inconsistency found in issues #{issues_with_discrepancies}. Performing resync..."
-      issue_search_body.jql = "issue in (#{issues_with_discrepancies.join ","})"
-      delete issue_search_body.startAt
   getJustdoIdForIssue: (jira_issue_body) ->
     jira_project_id = parseInt jira_issue_body.fields.project.id
     justdo_id = @tasks_collection.findOne({jira_project_id: jira_project_id}, {fields: {project_id: 1}})?.project_id
     return justdo_id
 
-      resyncIssues = (res) =>
-        for issue in res.issues
-          justdo_id = issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
-          fields = await @_mapJiraFieldsToJustdoFields justdo_id, {issue}
-          if not _.isEmpty fields
-            # XXX updated_by is hardcoded to be justdo admin at the moment
-            @tasks_collection.update({jira_issue_id: parseInt(issue.id)}, {$set: _.extend {jira_last_updated: new Date(), updated_by: @_getJustdoAdmin justdo_id}, fields})
-        return
 
-      _searchIssueUsingJqlUntilMaxResults resyncIssues, markDataIntegrityCheckpoint
-      console.log "[justdo-jira-integration] Issues with discrepencies resynced."
 
-    _searchIssueUsingJqlUntilMaxResults checkIssuesIntegrity, resyncIssuesIfDiscrepenciesAreFound
 
     return
 
