@@ -1718,3 +1718,23 @@ _.extend JustdoJiraIntegration.prototype,
   isCheckpointAllowedToStart: (check_point) ->
     return not @ongoing_checkpoint? or (check_point - @ongoing_checkpoint) > JustdoJiraIntegration.data_integrity_check_timeout
 
+  pseudoBlockingJiraApiCallInsideFiber: (api_group_and_resource, req_body, client) ->
+    fiber = JustdoHelpers.requireCurrentFiber()
+
+    if not client?
+      throw @_error "client-not-found"
+
+    previous_path = null
+    current_path = client
+
+    for path in api_group_and_resource.split /\.|\//
+      previous_path = current_path
+      current_path = current_path[path]
+
+    cb = (err, res) ->
+      fiber.run {err, res}
+      return
+
+    current_path.call previous_path, req_body, cb
+
+    return JustdoHelpers.fiberYield()
