@@ -1060,8 +1060,6 @@ _.extend JustdoJiraIntegration.prototype,
         # Create the three special task that groups all the sprints and fix versions, and all the tasks
         # roadmap_mountpoint currently holds all the issues
         roadmap_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Roadmap", project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "roadmap", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
-        # XXX Might need some special treatment for these two tasks and their child
-        # XXX Like bolding the title, prevent removal, etc etc
         sprints_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Sprints", project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
         fix_versions_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Fix Versions", project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
         # Since the row style data cannot be inserted along addChild, we perform the update here.
@@ -1120,7 +1118,6 @@ _.extend JustdoJiraIntegration.prototype,
               path_to_add = "/#{task_id}/#{roadmap_mountpoint_task_id}/"
 
               # Jira cloud uses fields.parent, while Jira server uses epic_link (which the logic is removed due to migrating to project_id instead of project_key).
-              # XXX Seems Jira cloud also has an epic link field. Consider using that instead of the parent structure.
               if (parent = issue_fields.parent)?
                 parent_id = parseInt parent.id
                 # XXX Hardcoded users length in query. Better approach is needed to determine whether the parent task is added completely along with its users.
@@ -1310,7 +1307,6 @@ _.extend JustdoJiraIntegration.prototype,
     return client.board.getProjects {boardId: board_id}
 
   fetchAndStoreAllFixVersionsUnderJiraProject: (jira_project_id, options) ->
-    # XXX As this method is called upon server restart, maybe move the checkings to methods.coffee?
     {client} = options
     if not client?
       throw @_error "client-not-found"
@@ -1333,7 +1329,6 @@ _.extend JustdoJiraIntegration.prototype,
     return
 
   fetchAndStoreAllSprintsUnderJiraProject: (jira_project_id, options) ->
-    # XXX As this method is called upon server restart, maybe move the checkings to methods.coffee?
     {client} = options
     if not client?
       throw @_error "client-not-found"
