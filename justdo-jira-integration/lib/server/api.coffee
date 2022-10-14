@@ -165,7 +165,9 @@ _.extend JustdoJiraIntegration.prototype,
       for justdo_field_name, jira_field_def of JustdoJiraIntegration.justdo_field_to_jira_field_map
         field_key = jira_field_def.id or jira_field_def.name
         jira_field = fields[field_key]
-        if (_.isEmpty jira_field) and not (_.isNumber jira_field) and not (_.isBoolean jira_field)
+        if not (fields.hasOwnProperty field_key) and (_.isEmpty jira_field) and not (_.isNumber jira_field) and not (_.isBoolean jira_field)
+          if options?.include_null_values is true
+            fields_map[justdo_field_name] = null
           continue
 
         if jira_field_def.mapper?
