@@ -1753,8 +1753,68 @@ _.extend JustdoJiraIntegration.prototype,
     justdo_id = @tasks_collection.findOne({jira_project_id: jira_project_id}, {fields: {project_id: 1}})?.project_id
     return justdo_id
 
+  syncIssueFixVersionFromIssueBody: (jira_issue_body) ->
+    # This method is meant to resolve the discrepencies between the jira_fix_version field in tasks, and the fix version parents.
+    jira_issue_id = parseInt jira_issue_body.id
+    jira_project_id = parseInt jira_issue_body.fields.project.id
+    justdo_id = jira_issue_body.fields[JustdoJiraIntegration.project_id_custom_field_id]
 
+    justdo_admin_id = @_getJustdoAdmin justdo_id
+    grid_data = APP.projects._grid_data_com
+    task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {jira_fix_version: 1, "parents2.parent": 1}})
 
+    existing_fix_versions = new Map()
+
+    # First we fetch all the existing parents that are fix version mountpoints
+    query =
+      _id:
+        $in: _.map task_doc.parents2, (parent_obj) -> parent_obj.parent
+      jira_fix_version_mountpoint_id:
+        $ne: null
+    query_options =
+      fields:
+        jira_fix_version_mountpoint_id: 1
+    @tasks_collection.find(query, query_options).forEach (task_doc) -> existing_fix_versions.set parseInt(task_doc.jira_fix_version_mountpoint_id), task_doc._id
+
+    # Then we cross check with the jira_fix_version field.
+    # If a fix version id exists both in existing_fix_versions and jira_fix_version, do nothing. (nothing actually changed.)
+    # If it only exists in jira_fix_version, perform add parent. (newly added fix version)
+    if _.isArray(task_doc.jira_fix_version) and not _.isEmpty(task_doc.jira_fix_version)
+      jira_query =
+        "jira_projects.#{jira_project_id}.fix_versions.name":
+          $in: task_doc.jira_fix_version
+      jira_query_options =
+        fields:
+          "jira_projects.#{jira_project_id}.fix_versions": 1
+      jira_doc = @jira_collection.findOne jira_query, jira_query_options
+
+      for fix_version in jira_doc?.jira_projects?[jira_project_id]?.fix_versions
+        if task_doc.jira_fix_version.includes fix_version.name
+          fix_version_id = parseInt fix_version.id
+          if not existing_fix_versions.delete fix_version_id
+            query =
+              jira_fix_version_mountpoint_id: fix_version_id
+              jira_project_id: jira_project_id
+            query_options:
+              fields:
+                _id: 1
+            fix_version_mountpoint = @tasks_collection.findOne(query, query_options)
+            try
+              grid_data.addParent task_doc._id, {parent: fix_version_mountpoint?._id, order: 0}, justdo_admin_id
+            catch e
+              if e.error isnt "parent-already-exists"
+                console.trace()
+                console.error e
+
+    # Finally we remove the old fix version parents
+    existing_fix_versions.forEach (fix_version_mountpoint_task_id) ->
+      try
+        grid_data.removeParent "/#{fix_version_mountpoint_task_id}/#{task_doc._id}/", justdo_admin_id
+      catch e
+        if e.error isnt "unknown-parent"
+          console.trace()
+          console.error e
+      return
 
     return
 
