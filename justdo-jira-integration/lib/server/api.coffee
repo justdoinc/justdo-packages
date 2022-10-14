@@ -47,9 +47,6 @@ _.extend JustdoJiraIntegration.prototype,
       @ensureIssueDataIntegrityAndMarkCheckpoint jira_server_id
       return
 
-    # Initialize last_webhook_connection_check and last_data_integrity_check fields in case some Jira docs doesn't have one
-    @setupWebhookAndDateIntegrityCheckpoints()
-
     # Refresh Api token immidiately upon server startup
     @_setupJiraClientForAllJustdosWithRefreshToken()
     # Refresh Api token every set interval
@@ -1696,7 +1693,4 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
-  setupWebhookAndDateIntegrityCheckpoints: ->
-    @jira_collection.update {last_data_integrity_check: null}, {$set: {last_data_integrity_check: new Date()}}, {multi: true}
-    @jira_collection.update {last_webhook_connection_check: null}, {$set: {last_webhook_connection_check: new Date()}}, {multi: true}
     return
