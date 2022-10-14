@@ -157,17 +157,47 @@ _.extend GridDataCom.prototype,
 
       removed_users = removed_users.concat(pulled_users)
 
-    if (users = modifier.$set?.users)?
+    if (set_users = modifier.$set?.users)?
       if (existing_users = existing_doc?.users)?
-        added_users = added_users.concat(_.difference users, existing_users)
-        removed_users = removed_users.concat(_.difference existing_users, users)
+        added_users = added_users.concat(_.difference set_users, existing_users)
+        removed_users = removed_users.concat(_.difference existing_users, set_users)
 
         if not _.isEmpty(added_users) and not _.isEmpty(removed_users)
           throw @_error "operation-blocked", "$set.users update that involves both removal and addition of new users, isn't allowed" # since we can't $pull and $addToSet items from/to _raw_added_users_dates with a single query
 
       else
         # If no existing_doc, assume insert of new document
-        _.extend current_date_updates, @_getCurrentDateUpdateObjectForUsers("_raw_added_users_dates", users)
+        _.extend current_date_updates, @_getCurrentDateUpdateObjectForUsers("_raw_added_users_dates", set_users)
+
+    # When users updates are involved, allow up to a single path of updates.
+    # In other words - allow only users to be updated!
+    # This is critical, to correctly add the _raw_updated_date_only_users/_raw_updated_date_sans_users fields:
+    #
+    # For {$set: users} we don't enforce it, but for updates that involve it - we regard
+    # the update as affecting both users and non_users
+    if removed_users.length > 0 or added_users.length > 0
+      reject = =>
+        console.trace()
+        throw @_error "operation-blocked", "Updates modifiers to the users fields, can't involve updates to other fields, received:", modifier
+
+      if not set_users?
+        # For the case where {$set: users} (users can be empty array) is involved we allow additional fields to be updated
+        # - but regard the update as affecting both users and non users (We don't try to comprehend the query).
+
+        if JustdoHelpers.objectHasMoreThanXOwnProperty(modifier, 1)
+          reject()
+
+        if add_to_set_users?.length > 0
+          if JustdoHelpers.objectHasMoreThanXOwnProperty(modifier.$addToSet, 1)
+            reject()
+
+        if pushed_users?.length > 0
+          if JustdoHelpers.objectHasMoreThanXOwnProperty(modifier.$each, 1)
+            reject()
+
+        if pulled_users?.length > 0
+          if JustdoHelpers.objectHasMoreThanXOwnProperty(modifier.$pull, 1)
+            reject()
 
     #
     # If users changed, update relevant raw fields
@@ -189,6 +219,29 @@ _.extend GridDataCom.prototype,
 
       add_to_set_updates._raw_removed_users =
         $each: removed_users
+
+    if (not _.isEmpty(removed_users) or not _.isEmpty(added_users))
+      _.extend current_date_updates,
+        _raw_updated_date_only_users: true
+
+      if set_users?
+        # For the case where set_users are involved, there might be non-users updates as well,
+        # we don't try to check, and just regard all of those cases as affecting non-users
+        # as well.
+        #
+        # Among other cases, this will happen when removing a task (remember removing is logical,
+        # and doesn't involve Mongo's actual removing the task document).
+        _.extend current_date_updates,
+          _raw_updated_date_sans_users: true
+    else
+      _.extend current_date_updates,
+        _raw_updated_date_sans_users: true
+
+      if set_users?
+        # This will happen in the case of first insert where, both added_users and removed_users will be empty
+        # yet, we need to set _raw_updated_date_only_users
+        _.extend current_date_updates,
+          _raw_updated_date_only_users: true
 
     #
     # Update changed modifiers
@@ -289,7 +342,7 @@ _.extend GridDataCom.prototype,
         return false
 
       for field_name of doc
-        if field_name not in ["_id", "users", "seqId", "project_id", "_raw_added_users_dates", "_raw_updated_date", "_raw_removed_date", "_raw_removed_users", "_raw_removed_users_dates"]
+        if field_name not in ["_id", "users", "seqId", "project_id", "_raw_added_users_dates", "_raw_updated_date", "_raw_updated_date_only_users", "_raw_updated_date_sans_users", "_raw_removed_date", "_raw_removed_users", "_raw_removed_users_dates"]
           update.$unset[field_name] = ""
 
       @_addRawFieldsUpdatesToUpdateModifier(update, doc)
@@ -499,7 +552,8 @@ _.extend GridDataCom.prototype,
 
       return
 
-    @_removeIsRemovedOwnerForTasks(remove_is_owner_flag_from_tasks_ids)
+    if not _.isEmpty(remove_is_owner_flag_from_tasks_ids)
+      @_removeIsRemovedOwnerForTasks(remove_is_owner_flag_from_tasks_ids)
 
     return
 
