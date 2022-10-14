@@ -345,12 +345,12 @@ _.extend JustdoJiraIntegration.prototype,
           old_path = "/#{parent_task_id}/#{task_id}/"
           grid_data.movePath old_path, {parent: jira_project_mountpoint}, @_getJustdoAdmin justdo_id
 
-      if (changed_issue_parent = _.find req_body.changelog.items, (item) -> item.field in ["IssueParentAssociation", "Parent Issue"])?
+      if (changed_issue_parent = _.find req_body.changelog.items, (item) -> item.field in ["IssueParentAssociation", "Parent Issue", "Epic Link"])?
         current_parent_task_id = @tasks_collection.findOne(task_id, {fields: {parents2: 1}}).parents2[0].parent
         old_path = "/#{current_parent_task_id}/#{task_id}/"
 
         # Change/Add parent
-        if (new_parent_issue_id = changed_issue_parent.to)?
+        if (new_parent_issue_id = changed_issue_parent?.to)?
           if (parent_issue = fields.parent)?
             new_parent_issue_id = parseInt parent_issue.id
             new_parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_id: new_parent_issue_id}, {fields: {_id: 1}})._id
