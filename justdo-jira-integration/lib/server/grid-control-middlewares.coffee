@@ -120,9 +120,13 @@ _.extend JustdoJiraIntegration.prototype,
         # XXX - Remove a Story/Task/Bug > Subtasks will be deleted as well
         # XXX In JustDo we don't allow a task to be removed if it has child tasks, so this code does not handle such situations.
         @deleted_issue_ids.add task.jira_issue_id
-        @getJiraClientForJustdo(task.project_id).v2.issues.deleteIssue {issueIdOrKey: task.jira_issue_id}
-          .then => @tasks_collection.remove task_id
-          .catch (err) -> console.error "[justdo-jira-integration] Failed to remove task/issue #{task_id}", err.response.data
+
+        {err, res} = @pseudoBlockingJiraApiCallInsideFiber "issues.deleteIssue", {issueIdOrKey: task.jira_issue_id}, @getJiraClientForJustdo(task.project_id).v2
+        if err?
+          err = err?.response?.data or err
+          console.error "[justdo-jira-integration] Failed to remove task/issue #{task_id}", err
+          return false
+        @tasks_collection.remove task_id
         return true
 
       if parent_task?.jira_sprint_mountpoint_id?
