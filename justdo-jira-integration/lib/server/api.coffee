@@ -769,6 +769,7 @@ _.extend JustdoJiraIntegration.prototype,
           fields:
             "server_info.id": 1
             last_data_integrity_check: 1
+            jira_projects: 1
 
         return {query, query_options}
       batchProcessor: (jira_collection_cursor) ->
@@ -1562,9 +1563,32 @@ _.extend JustdoJiraIntegration.prototype,
       .catch (err) -> console.error "[justdo-jira-integration] Assign issue to fix version failed" , err.response.data
     return
 
+
+  _searchIssueUsingJqlUntilMaxResults: (jira_server_id, issue_search_body, jira_server_time, options, responseProcessor) ->
+    if _.isFunction options
+      responseProcessor = options
+
+    if not (client = @clients[jira_server_id]?.v2)?
       throw @_error "client-not-found"
 
+    try
+      res = await client.issueSearch.searchForIssuesUsingJqlPost issue_search_body
+    catch err
+      console.trace()
+      err = err?.response?.data or err
+      console.error "[justdo-jira-integration] Issue search failed.", err
+      return
 
+    await responseProcessor.call @, res, jira_server_time
+
+    if @_ensureCheckpointProcessInControl jira_server_time
+      if res.total > (new_start_at = res.startAt + res.maxResults)
+        issue_search_body.startAt = new_start_at
+        await @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, jira_server_time, options, responseProcessor
+      else if options?.perform_resync_if_discrepencies_found is true
+        await @resyncIssuesIfDiscrepenciesAreFound jira_server_id, jira_server_time
+
+    return
 
   getAuthTypeIfJiraInstanceIsOnPerm: ->
     if @server_type.includes "server"
@@ -1597,22 +1621,28 @@ _.extend JustdoJiraIntegration.prototype,
         fields:
           "server_info.id": 1
           last_data_integrity_check: 1
+          jira_projects: 1
       jira_doc = @jira_collection.findOne jira_doc_query, jira_doc_query_options
 
     if not (jira_server_id = jira_doc?.server_info?.id)?
-      throw @_error "missing-argument", "Jira doc with server id and last_data_integrity_check is required."
+      throw @_error "missing-argument", "Jira doc with server id, last_data_integrity_check and projects is required."
 
     if not (client = @clients[jira_server_id]?.v2)?
       throw @_error "client-not-found"
 
-    if not (last_checkpoint = jira_doc.last_data_integrity_check)? or not (last_checkpoint = @getLastDataIntegrityCheckpointWithMarginOfSafety())?
+    if not (last_checkpoint = jira_doc.last_data_integrity_check)?
+      last_checkpoint = @getLastDataIntegrityCheckpointWithMarginOfSafety()
+    if not last_checkpoint?
+      throw @_error "fatal", "The queried Jira doc #{jira_doc._id} has no data integrity checkpoint - This shouldn't happen!"
       return
+
+    mounted_jira_project_ids = _.keys jira_doc.jira_projects
 
     # Add margin of safety to last_checkpoint
     last_checkpoint = JustdoHelpers.getDateMsOffset -1 * JustdoJiraIntegration.data_integrity_margin_of_safety, new Date(last_checkpoint)
 
     issue_search_body =
-      jql: """updated >= "#{moment(last_checkpoint).format("YYYY/MM/DD hh:mm")}" """
+      jql: """(project in (#{mounted_jira_project_ids.join ","}) and updated >= "#{moment(last_checkpoint).format("YYYY/MM/DD hh:mm")}" )"""
       maxResults: JustdoJiraIntegration.jql_issue_search_results_limit
       fields: @getAllRelevantJiraFieldIds()
 
@@ -1621,20 +1651,80 @@ _.extend JustdoJiraIntegration.prototype,
 
     console.log "[justdo-jira-integration] Ensuring issues updated since #{last_checkpoint} are up to date..."
 
-    issues_with_discrepancies = []
+    @issues_with_discrepancies = []
 
     # Get Jira server time
     server_info = await client.serverInfo.getServerInfo()
 
+    if @isCheckpointAllowedToStart server_info.serverTime
+      @_stopOngoingCheckpoint()
+      @ongoing_checkpoint = server_info.serverTime
+
+      checkIssuesIntegrity = (res, current_checkpoint) =>
+        for issue in res.issues
+          if not @_ensureCheckpointProcessInControl current_checkpoint
+            return
+
+          justdo_id = @getJustdoIdForIssue(issue) or issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
+          mapped_task_fields = await @_mapJiraFieldsToJustdoFields justdo_id, {issue}, {include_null_values: true}
+          if mapped_task_fields.owner_id is null
+            mapped_task_fields.owner_id = @_getJustdoAdmin justdo_id
+          if not (@tasks_collection.findOne(_.extend({jira_issue_id: parseInt issue.id}, mapped_task_fields), {fields: {_id: 1}}))?
+            @issues_with_discrepancies.push issue.id
         return
 
+      @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, server_info.serverTime, {perform_resync_if_discrepencies_found: true}, checkIssuesIntegrity
 
+      # Resync sprints and fix versions for each project under the Jira instanxce
+      if _.isObject jira_doc?.jira_projects
+        agile_client = @clients[jira_server_id].agile
+        for jira_project_id of jira_doc.jira_projects
+          @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {client: agile_client}
+          @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {client: client}
+          @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {client: client}
+    else
+      console.info "[justdo-jira-integration] Another checkpoint process is in progress (checkpoint: #{@ongoing_checkpoint})"
 
+    return
+
+  resyncIssuesIfDiscrepenciesAreFound: (jira_server_id, jira_server_time) ->
+    if _.isEmpty @issues_with_discrepancies
+      @markDataIntegrityCheckpoint jira_server_id, jira_server_time
+      console.log "[justdo-jira-integration] Data integrity check completed. No discrepencies found."
       return
 
+    console.warn "[justdo-jira-integration] Data inconsistency found in issues #{@issues_with_discrepancies}. Performing resync..."
+
+    issue_search_body =
+      jql: "issue in (#{@issues_with_discrepancies.join ","})"
+      maxResults: JustdoJiraIntegration.jql_issue_search_results_limit
+      fields: @getAllRelevantJiraFieldIds()
+
+    resyncIssues = (res, current_checkpoint) =>
       for issue in res.issues
+        if not @_ensureCheckpointProcessInControl current_checkpoint
+          return
+
+        justdo_id = @getJustdoIdForIssue issue
+        fields = await @_mapJiraFieldsToJustdoFields justdo_id, {issue}, {include_null_values: true, performing_resync: true}
+        if not _.isEmpty fields
+          # XXX updated_by is hardcoded to be justdo admin at the moment
+          if @tasks_collection.update({jira_issue_id: parseInt(issue.id)}, {$set: _.extend {jira_last_updated: new Date(), updated_by: @_getJustdoAdmin justdo_id}, fields})
+            @syncIssueFixVersionFromIssueBody issue
+          else
+            # If nothing is updated, that means the task isn't created at all. Then we create the task.
+            if (parent = issue.fields.parent?.key)? or (parent = issue.fields[JustdoJiraIntegration.epic_link_custom_field_id])?
+              parent_task_id = @tasks_collection.findOne({jira_issue_key: parent}, {fields: {_id: 1}})?._id
+            else
+              jira_project_id = parseInt issue.fields.project.id
+              parent_task_id = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_mountpoint_type: "roadmap"}, {fields: {_id: 1}})?._id
+            @_createTaskFromJiraIssue justdo_id, "/#{parent_task_id}/", issue
       return
 
+    @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, jira_server_time, resyncIssues
+    console.log "[justdo-jira-integration] Issues with discrepencies resynced."
+    @issues_with_discrepancies = []
+    return
 
   markDataIntegrityCheckpoint: (jira_server_id, jira_server_time) ->
     @ongoing_checkpoint = null
@@ -1668,6 +1758,21 @@ _.extend JustdoJiraIntegration.prototype,
     else
       @ongoing_checkpoint = null
     return
+
+  resyncAllJiraRelevantData: (jira_doc) ->
+    if @ongoing_checkpoint
+      @_stopOngoingCheckpoint()
+
+    if not jira_doc?
+      throw @_error "missing-parameter"
+    # The idea is to use epoch when searching in JQL to fetch everything.
+    # Since we subtract data_integrity_margin_of_safety in ensureIssueDataIntegrityAndMarkCheckpoint, it is being added to the epoch.
+    jira_doc.last_data_integrity_check = JustdoHelpers.getDateMsOffset JustdoJiraIntegration.data_integrity_margin_of_safety, new Date 0
+
+    @ensureIssueDataIntegrityAndMarkCheckpoint jira_doc
+
+    return
+
   isCheckpointAllowedToStart: (check_point) ->
     return not @ongoing_checkpoint? or (check_point - @ongoing_checkpoint) > JustdoJiraIntegration.data_integrity_check_timeout
 
