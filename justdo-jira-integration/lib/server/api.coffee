@@ -1551,9 +1551,15 @@ _.extend JustdoJiraIntegration.prototype,
     req =
       sprintId: jira_sprint_id
       issues: [jira_issue_id]
-    client.sprint.moveIssuesToSprintAndRank req
-      .catch (err) -> console.error "[justdo-jira-integration] Assign issue to sprint failed" , err.response.data
-    return
+
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "sprint.moveIssuesToSprintAndRank", req, client
+
+    if err?
+      err = err?.response?.data or err
+      console.error "[justdo-jira-integration] Assign issue to sprint failed" , err
+      return false
+
+    return true
 
   updateIssueFixVersion: (jira_issue_id, ops, justdo_id) ->
     ops = _.pick ops, "add", "remove"
@@ -1576,10 +1582,14 @@ _.extend JustdoJiraIntegration.prototype,
             [op_type]:
               id: "#{fix_version_id}"
 
-    client.issues.editIssue req
-      .catch (err) -> console.error "[justdo-jira-integration] Assign issue to fix version failed" , err.response.data
-    return
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "issues.editIssue", req, client
 
+    if err?
+      err = err?.response?.data or err
+      console.error "[justdo-jira-integration] Assign issue to fix version failed" , err
+      return false
+
+    return true
 
   _searchIssueUsingJqlUntilMaxResults: (jira_server_id, issue_search_body, jira_server_time, options, responseProcessor) ->
     if _.isFunction options

@@ -72,13 +72,11 @@ _.extend JustdoJiraIntegration.prototype,
           existing_task_parents = _.keys task.parents
           if (existing_sprint_parent = @tasks_collection.findOne({_id: {$in: existing_task_parents}, jira_sprint_mountpoint_id: {$ne: null}}, {fields: {jira_sprint_mountpoint_id: 1}}))?
             @removed_sprint_parent_issue_pairs.add "#{task._id}:#{existing_sprint_parent.jira_sprint_mountpoint_id}"
-          @assignIssueToSprint jira_issue_id, sprint_id, task.project_id
-          return true
+          return @assignIssueToSprint jira_issue_id, sprint_id, task.project_id
 
         # Assign issue to fix version
         if (fix_version_id = new_parent_task?.jira_fix_version_mountpoint_id)?
-          @updateIssueFixVersion jira_issue_id, {add: fix_version_id}, task.project_id
-          return true
+          return @updateIssueFixVersion jira_issue_id, {add: fix_version_id}, task.project_id
       else
         # Block attempts for non-Jira tasks to be added inside a Jira tree
         # XXX Do we want to allow adding roadmap as parent of an existing tree and convert the entire tree into Jira issues?
