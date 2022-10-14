@@ -89,47 +89,73 @@ _.extend JustdoJiraIntegration,
       id: sprint_custom_field_id
       name: "Sprint"
       type: "string"
-      # We don't current support editing sprint in Justdo.
       mapper: (justdo_id, field, destination, req_body) ->
         if destination is "justdo"
           # For initial mounting of projects from Jira Cloud
-          if _.isString field[0]?.name
-            return field[0].name
+          if _.isString field?[0]?.name
+            new_sprint_id = field?[0].id
+            new_sprint_name = field?[0].name
           # For initial mounting of projects from Jira Server
-          if (token = field[0]?.match(/name=[A-Za-z\s0-9]+/)?[0])?
-            return token.replace "name=", ""
+          if (tokens = field?[0]?.match?(/(name=[A-Za-z\s0-9]+)|(id=\d)/g))?
+            new_sprint_id = tokens[0].replace "id=", ""
+            new_sprint_name = tokens[1].replace "name=", ""
+          if not new_sprint_name?
+            new_sprint_id = field?.to
+            new_sprint_name = field?.toString
 
-          # Move from old sprint parent to new sprint parent if the sprint is created as a task
-          jira_issue_id = parseInt req_body.issue.id
-          jira_project_id = parseInt req_body.issue.fields.project.id
-          grid_data = APP.projects._grid_data_com
-          justdo_admin_id = @_getJustdoAdmin justdo_id
-          # XXX Chance for optimization
-          task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {parents2: 1}})
+          new_sprint_id = parseInt new_sprint_id
+          old_sprint_id = parseInt field?.from
 
-          # Remove sprint
-          if (old_sprint_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_sprint_mountpoint_id: parseInt field.from}, {fields: {_id: 1}}))?
-            try
-              grid_data.removeParent "/#{old_sprint_mountpoint._id}/#{task_doc._id}/", justdo_admin_id
-            catch e
-              if e.error isnt "unknown-parent"
-                console.trace()
-                console.error e
+          if new_sprint_id isnt old_sprint_id
+            # Move from old sprint parent to new sprint parent if the sprint is created as a task
+            jira_issue_id = parseInt req_body.issue.id
+            jira_project_id = parseInt req_body.issue.fields.project.id
 
-          # Add sprint
-          if (new_sprint_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_sprint_mountpoint_id: parseInt field.to}, {fields: {_id: 1}}))?
-            try
-              grid_data.addParent task_doc._id, {parent: new_sprint_mountpoint._id, order: 0}, justdo_admin_id
-            catch e
-              if e.error isnt "parent-already-exists"
-                console.trace()
-                console.error e
+            if (task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {_id: 1, jira_sprint: 1}}))?
+              grid_data = APP.projects._grid_data_com
+              justdo_admin_id = @_getJustdoAdmin justdo_id
 
-          # Update sprint field for subtasks
-          if req_body.issue.fields.issuetype.name isnt "Epic"
-            @tasks_collection.update({"parents2.parent": task_doc._id}, {$set: {jira_sprint: field.toString}}, {multi: true})
+              # In case a discrepency happens, fetch the old sprint id from our db.
+              if task_doc.jira_sprint? and (task_doc.jira_sprint isnt new_sprint_name)
+                jira_query =
+                  "jira_projects.#{jira_project_id}.sprints.name": task_doc.jira_sprint
+                jira_query_options =
+                  fields:
+                    "jira_projects.#{jira_project_id}.sprints.$": 1
+                old_sprint_id = parseInt @jira_collection.findOne(jira_query, jira_query_options)?.jira_projects?[jira_project_id]?.sprints?[0]?.id
 
-          return field.toString
+              old_sprint_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_sprint_mountpoint_id: old_sprint_id}, {fields: {_id: 1}})?._id
+              new_sprint_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_sprint_mountpoint_id: new_sprint_id}, {fields: {_id: 1}})?._id
+
+              if old_sprint_mountpoint? and new_sprint_mountpoint?
+                # Relocate issue
+                try
+                  grid_data.movePath "/#{old_sprint_mountpoint}/#{task_doc._id}/", {parent: new_sprint_mountpoint, order: 0}, justdo_admin_id
+                catch e
+                  console.trace()
+                  console.error "[justdo-jira-integration] Relocate issue sprint parent failed.", e
+              # Remove sprint parent
+              else if old_sprint_mountpoint?
+                try
+                  grid_data.removeParent "/#{old_sprint_mountpoint}/#{task_doc._id}/", justdo_admin_id
+                catch e
+                  if e.error isnt "unknown-parent"
+                    console.trace()
+                    console.error "[justdo-jira-integration] Remove issue sprint parnet failed.", e
+              # Add sprint parent
+              else if new_sprint_mountpoint?
+                try
+                  grid_data.addParent task_doc._id, {parent: new_sprint_mountpoint, order: 0}, justdo_admin_id
+                catch e
+                  if e.error isnt "parent-already-exists"
+                    console.trace()
+                    console.error "[justdo-jira-integration] Add issue sprint parnet failed.", e
+
+              # Update sprint field for subtasks
+              if req_body.issue.fields.issuetype.name isnt "Epic"
+                @tasks_collection.update({"parents2.parent": task_doc._id}, {$set: {jira_sprint: new_sprint_name}}, {multi: true})
+
+          return new_sprint_name or null
     jira_issue_type:
       name: "issuetype"
       mapper: (justdo_id, field, destination, req_body) ->
