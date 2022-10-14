@@ -99,77 +99,61 @@ _.extend JustdoJiraIntegration.prototype,
               id: "#{parent_issue_id}"
           else
             # Jira Cloud
-            if self.clients[jira_server_id].v2.config.host.includes "api.atlassian.com"
+            if self.isJiraInstanceCloud()
               req.fields.parent =
                 id: "#{parent_issue_id}"
             # Jira Server
             else
               req.fields[JustdoJiraIntegration.epic_link_custom_field_id] = "#{parent_task.jira_issue_key}"
 
-      self.clients[jira_server_id].v2.issues.createIssue req
-        .then (res) ->
-          # Log reporter change only if the user created this task is also a Jira user (detected by email).
-          if jira_account_id?
-            APP.tasks_changelog_manager.logChange
-              field: "jira_issue_reporter"
-              label: "Issue Reporter"
-              change_type: "custom"
-              task_id: task_id
-              by: user_id
-              new_value: "became reporter"
+      client = self.clients[jira_server_id].v2
+      {err, res} = self.pseudoBlockingJiraApiCallInsideFiber "issues.createIssue", req, client
+      if err?
+        err = err?.response?.data or err
+        console.error err
+        return false
 
-          task_title = "Task ##{res.key.split("-")[1]}"
+      # Log reporter change only if the user created this task is also a Jira user (detected by email).
+      if jira_account_id?
+        APP.tasks_changelog_manager.logChange
+          field: "jira_issue_reporter"
+          label: "Issue Reporter"
+          change_type: "custom"
+          task_id: task_id
+          by: user_id
+          new_value: "became reporter"
 
-          summary_update_req =
-            issueIdOrKey: res.id
-            notifyUsers: false
-            fields:
-              summary: task_title
-              [JustdoJiraIntegration.last_updated_custom_field_id]: new Date()
+      task_title = "Task ##{res.key.split("-")[1]}"
 
-          self.clients[jira_server_id].v2.issues.editIssue summary_update_req
-            .catch (err) -> console.error err.response.data
+      summary_update_req =
+        issueIdOrKey: res.id
+        notifyUsers: false
+        fields:
+          summary: task_title
+          [JustdoJiraIntegration.last_updated_custom_field_id]: new Date()
 
-          ops =
-            $set:
-              title: task_title
-              jira_issue_key: res.key
-              jira_issue_id: res.id
-              jira_project_id: req.fields.project.id
-              jira_issue_type: req.fields.issuetype.name
-              jira_issue_reporter: user_id
-              jira_last_updated: new Date()
+      {err} = self.pseudoBlockingJiraApiCallInsideFiber "issues.editIssue", summary_update_req, client
+      if err?
+        err = err?.response?.data or err
+        console.error err
+        return false
 
-          # A subtask will always have the same sprint as its parent.
-          # addParent() is not necessary as the parent task should already be under the correct sprint parent.
-          if req.fields.issuetype.name is "Subtask" and not _.isEmpty parent_task.jira_sprint
-            ops.$set.jira_sprint = parent_task.jira_sprint
+      task_fields =
+        title: task_title
+        jira_issue_key: res.key
+        jira_issue_id: res.id
+        jira_project_id: req.fields.project.id
+        jira_issue_type: req.fields.issuetype.name
+        jira_issue_reporter: user_id
+        jira_last_updated: new Date()
 
-          self.tasks_collection.update task_id, ops
-          return
-        .catch (e) ->
-          console.error e.response.data
-      return
+      # A subtask will always have the same sprint as its parent.
+      # addParent() is not necessary as the parent task should already be under the correct sprint parent.
+      if req.fields.issuetype.name is "Subtask" and not _.isEmpty parent_task.jira_sprint
+        task_fields.jira_sprint = parent_task.jira_sprint
 
-    # NOTE: This hook is solely for changing the modifier.
-    self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
-      # Hardcoded mountpoint tasks has fixed title and cannot be changed (except for the root mountpoint).
-      if doc.jira_mountpoint_type? and doc.jira_mountpoint_type isnt "root" and modifier?.$set?.title?
-        delete modifier.$set.title
+      _.extend modifier.$set, task_fields
 
-      # Issues must have an issuetype
-      if doc?.jira_issue_id? or modifier?.$set?.jira_issue_id?
-        # Client side $unset operations will be translated to $set: {[field]: null}
-        # Hence there're two conditions
-        if _.isNull modifier?.$set?.jira_issue_type
-          delete modifier.$set.jira_issue_type
-        if modifier?.$unset?.jira_issue_type?
-          delete modifier.$unset.jira_issue_type
-      else
-        # Only issues can have issuetype
-        # * All other Jira fields are not handled as they are not editable on the grid.
-        if modifier?.$set?.jira_issue_type?
-          delete modifier.$set.jira_issue_type
       return
 
     # NOTE: As this hook contains async function calls, this hook is async and changing the modifier will NOT have any effect.
@@ -186,9 +170,21 @@ _.extend JustdoJiraIntegration.prototype,
       jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id
       client = self.clients[jira_server_id]
 
+      # Hardcoded mountpoint tasks has fixed title and cannot be changed (except for the root mountpoint).
+      if doc.jira_mountpoint_type? and doc.jira_mountpoint_type isnt "root" and modifier?.$set?.title?
+        delete modifier.$set.title
+        return
+
       # Updates toward an issue
       # XXX Try ignore sending back changes from Justdo in Jira's webhook config (likely will involve JQL)
       if (jira_issue_id = doc.jira_issue_id)?
+        # Client side $unset operations will be translated to $set: {[field]: null}
+        # Hence there're two conditions
+        if _.isNull modifier?.$set?.jira_issue_type
+          delete modifier.$set.jira_issue_type
+        if modifier?.$unset?.jira_issue_type?
+          delete modifier.$unset.jira_issue_type
+
         {fields, transition} = self._mapJustdoFieldsToJiraFields justdo_id, doc, modifier
 
         # XXX The statement below handles parent change. Consider putting them into field map.
