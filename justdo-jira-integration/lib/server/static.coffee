@@ -247,7 +247,7 @@ _.extend JustdoJiraIntegration,
           if not (justdo_account_email = Meteor.users.findOne(field, {fields: {emails: 1}})?.emails?[0]?.address)?
             throw @_error "user-not-found"
 
-          jira_account = await @getJiraUser justdo_id, {email: justdo_account_email}
+          jira_account = @getJiraUser justdo_id, {email: justdo_account_email}
           jira_account_id = jira_account?[0]?.accountId
           # if not (jira_account_id = jira_account?[0]?.accountId)?
           #   throw @_error "jira-account-not-found"

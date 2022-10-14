@@ -132,7 +132,7 @@ _.extend JustdoJiraIntegration.prototype,
         jira_field_type = jira_field_def.type
 
         if jira_field_def.mapper?
-          field_val = await jira_field_def.mapper.call @, justdo_id, changed_item, "justdo", req_body
+          field_val = jira_field_def.mapper.call @, justdo_id, changed_item, "justdo", req_body
         else if jira_field_type is "string"
           field_val = changed_item.toString
         else if jira_field_type is "array"
@@ -169,7 +169,7 @@ _.extend JustdoJiraIntegration.prototype,
           continue
 
         if jira_field_def.mapper?
-          field_val = await jira_field_def.mapper.call @, justdo_id, jira_field, "justdo", req_body
+          field_val = jira_field_def.mapper.call @, justdo_id, jira_field, "justdo", req_body
         else if _.isString jira_field
           field_val = jira_field
         else if _.isArray jira_field
@@ -199,7 +199,7 @@ _.extend JustdoJiraIntegration.prototype,
       if jira_field_def.mapper?
         # Some updates require using different APIs.
         # If the mapper doesn't return a value, assume the update are performed inside the mapper.
-        if (mapped_field_val = await jira_field_def.mapper.call @, justdo_id, field_val, "jira", task_doc)?
+        if (mapped_field_val = jira_field_def.mapper.call @, justdo_id, field_val, "jira", task_doc)?
           if field_name is "state"
             fields_to_update.transition =
               id: mapped_field_val
@@ -1437,11 +1437,14 @@ _.extend JustdoJiraIntegration.prototype,
     # AccountId is only available for Jira cloud instances.
     if @isJiraInstanceCloud() and options?.account_id?
       query = {accountId: options.account_id}
-    try
-      users = await client.v2.userSearch.findUsers query
-    catch e
-      console.error e
-    return users
+
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "userSearch.findUsers", query, client.v2
+    if err?
+      err = err?.response?.data or err
+      console.error err
+      return
+    else
+      return res
 
   getJiraServerIdFromApiClient: (client) ->
     if @getAuthTypeIfJiraInstanceIsOnPerm() is "oauth2"

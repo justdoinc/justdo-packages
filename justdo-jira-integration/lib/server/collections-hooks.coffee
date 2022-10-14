@@ -65,7 +65,7 @@ _.extend JustdoJiraIntegration.prototype,
       jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id
 
       task_creater_email = Meteor.users.findOne(user_id, {fields: {emails: 1}})?.emails?[0]?.address
-      jira_account = await self.getJiraUser justdo_id, {email: task_creater_email}
+      jira_account = self.getJiraUser justdo_id, {email: task_creater_email}
       jira_account_id = jira_account?[0]?.accountId
 
       req =
@@ -189,7 +189,7 @@ _.extend JustdoJiraIntegration.prototype,
       # Updates toward an issue
       # XXX Try ignore sending back changes from Justdo in Jira's webhook config (likely will involve JQL)
       if (jira_issue_id = doc.jira_issue_id)?
-        {fields, transition} = await self._mapJustdoFieldsToJiraFields justdo_id, doc, modifier
+        {fields, transition} = self._mapJustdoFieldsToJiraFields justdo_id, doc, modifier
 
         # XXX The statement below handles parent change. Consider putting them into field map.
         if (added_parent_id = modifier.$addToSet?.parents2?.parent)?
