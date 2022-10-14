@@ -81,6 +81,8 @@ Meteor.methods
 
         $currentDate:
           _raw_updated_date: true
+          _raw_updated_date_sans_users: true
+          _raw_updated_date_only_users: true
 
       # task.root_order conveys two meanings:
       # 1. This task is in the root of the source_justdo, and

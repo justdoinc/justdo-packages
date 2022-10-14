@@ -417,6 +417,8 @@ _.extend Projects.prototype,
 
         _removeRawFields = (data) ->
           delete data._raw_updated_date
+          delete data._raw_updated_date_only_users
+          delete data._raw_updated_date_sans_users
           delete data._raw_added_users_dates
           delete data._raw_removed_users_dates
           delete data._raw_removed_users
@@ -676,6 +678,9 @@ _.extend Projects.prototype,
             # for the task doc, sending the "added" message, will cause removal of the fields
             # published by the private_data_tracker (this is only one case in which the use
             # of "added" will cause us trouble).
+
+            console.log "CONTINUE HERE"
+            console.log "added", data
 
             if label?
               # If we got a label for this subscription, add the _label

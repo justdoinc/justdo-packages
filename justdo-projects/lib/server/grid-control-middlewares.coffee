@@ -265,6 +265,7 @@ _.extend Projects.prototype,
           "parents.#{parent_id}.order": inc_count
         $currentDate:
           _raw_updated_date: true
+          _raw_updated_date_sans_users: true
 
       performIncrementChildsOrderGte = (cb) =>
         APP.justdo_analytics.logMongoRawConnectionOp(@_name, "update", query, update_op, {multi: true})

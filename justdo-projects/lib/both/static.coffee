@@ -12,7 +12,8 @@ _.extend Projects,
 
   # Forbidden fields should never pass through the wire to the client
   tasks_forbidden_fields: [
-    "_raw_updated_date", "_raw_added_users_dates", "_raw_removed_users_dates", "_raw_removed_users", "_raw_removed_date", "_secret"]
+    "_raw_updated_date", "_raw_updated_date_sans_users", "_raw_updated_date_only_users", "_raw_added_users_dates", "_raw_removed_users_dates", "_raw_removed_users", "_raw_removed_date", "_secret"]
+
 
   tasks_private_fields_docs_initial_payload_redundant_fields: ["_id", "project_id", "user_id", "_raw_updated_date"]
 

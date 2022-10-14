@@ -909,7 +909,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
             return # Keep this return to return undefined (as required by autoValue)
 
-    for field_name in ["_raw_updated_date", "_raw_removed_date"]
+    for field_name in ["_raw_updated_date", "_raw_updated_date_only_users", "_raw_updated_date_sans_users", "_raw_removed_date"]
       do (field_name) =>
         Schema[field_name] =
           type: "skip-type-check"
