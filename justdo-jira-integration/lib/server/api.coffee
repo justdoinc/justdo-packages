@@ -1104,6 +1104,9 @@ _.extend JustdoJiraIntegration.prototype,
               task_fields.due_date = moment(fix_version.releaseDate).format("YYYY-MM-DD")
             fix_versions_to_mountpoint_task_id[fix_version.name] = gc.addChild "/#{fix_versions_mountpoint_task_id}/", task_fields, justdo_admin_id
 
+        # Get Jira server time
+        server_info = await client.v2.serverInfo.getServerInfo()
+
         # Search for all issues under the Jira project and create tasks in Justdo
         # issueSearch has searchForIssuesUsingJql() and searchForIssuesUsingJqlPost()
         # Both works the same way except the latter one uses POST to support a larger query
@@ -1133,6 +1136,17 @@ _.extend JustdoJiraIntegration.prototype,
                 sprints_mountpoints: sprints_to_mountpoint_task_id
                 fix_versions_mountpoints: fix_versions_to_mountpoint_task_id
               @_createTaskFromJiraIssue justdo_id, path_to_add, issue, create_task_from_jira_issue_options
+
+              # Mark webhook and data integrity checkpoint
+              query =
+                "server_info.id": @getJiraServerIdFromApiClient client.v2
+              ops =
+                $set:
+                  last_data_integrity_check: server_info.serverTime
+                  last_webhook_connection_check: server_info.serverTime
+              @jira_collection.update query, ops
+            return
+
           .catch (err) -> console.error err
       .catch (err) -> console.error err
 
