@@ -220,9 +220,12 @@ _.extend JustdoJiraIntegration.prototype,
             notifyUsers: false
             fields: fields
 
-          client.v2.issues.editIssue req
-            .then (res) -> console.log res
-            .catch (err) -> console.error err.response.data
+          {err} = self.pseudoBlockingJiraApiCallInsideFiber "issues.editIssue", req, client.v2
+          if err?
+            err = err?.response?.data or err
+            console.error err
+            return false
+
         # Changing state of issue cannot be done with editIssue(); it must be done using doTransition()
         # XXX doTransition() cannot take JustdoJiraIntegration.last_updated_custom_field_id unless manually added to the screen
         # XXX which triggers another update by webhook.
@@ -232,11 +235,18 @@ _.extend JustdoJiraIntegration.prototype,
             issueIdOrKey: jira_issue_id
             transition: transition
 
-          self.clients[jira_server_id].v2.issues.doTransition req
-            .then (res) -> console.log res
-            .catch (err) -> console.error err.response.data
+          {err} = self.pseudoBlockingJiraApiCallInsideFiber "issues.doTransition", req, client.v2
+          if err?
+            err = err?.response?.data or err
+            console.error err
+            return false
 
         return
+      else
+        # Only issues can have issuetype
+        # * All other Jira fields are not handled as they are not editable on the grid.
+        if modifier?.$set?.jira_issue_type?
+          delete modifier.$set.jira_issue_type
 
       # Updates toward a specific sprint
       if (jira_sprint_id = doc.jira_sprint_mountpoint_id)? and not _.isEmpty(supported_fields = _.pick modifier.$set, ["start_date", "end_date", "title"])
@@ -250,9 +260,12 @@ _.extend JustdoJiraIntegration.prototype,
         if title?
           req.name = title
 
-        client.agile.sprint.partiallyUpdateSprint req
-          .then (res) -> console.log res
-          .catch (err) -> console.error err.response.data
+        {err} = self.pseudoBlockingJiraApiCallInsideFiber "sprint.partiallyUpdateSprint", req, client.agile
+        if err?
+          err = err?.response?.data or err
+          console.error err
+          return false
+
         return
 
       # Updates toward a specific fix version
@@ -269,9 +282,12 @@ _.extend JustdoJiraIntegration.prototype,
         if description?
           req.description = description
 
-        client.v2.projectVersions.updateVersion req
-          .then (res) -> console.log res
-          .catch (err) -> console.error err.response.data
+        {err} = self.pseudoBlockingJiraApiCallInsideFiber "projectVersions.updateVersion", req, client.v2
+        if err?
+          err = err?.response?.data or err
+          console.error err
+          return false
+
         return
 
       return
