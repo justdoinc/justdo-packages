@@ -37,6 +37,8 @@ _.extend JustdoJiraIntegration.prototype,
     @deleted_issue_ids = new Set()
     @removed_sprint_parent_issue_pairs = new Set()
     @pending_connection_test = {}
+    @issues_with_discrepancies = []
+    @ongoing_checkpoint = null
 
     # XXX if oauth1 in use
     @oauth_token_to_justdo_id = {}
@@ -1667,10 +1669,18 @@ _.extend JustdoJiraIntegration.prototype,
         markDataIntegrityCheckpoint()
         console.log "[justdo-jira-integration] Data integrity check completed. No discrepencies found."
         return
+  markDataIntegrityCheckpoint: (jira_server_id, jira_server_time) ->
+    @ongoing_checkpoint = null
+    @jira_collection.update {"server_info.id": jira_server_id}, {$set: {last_data_integrity_check: jira_server_time}}
+    return
 
       console.warn "[justdo-jira-integration] Data inconsistency found in issues #{issues_with_discrepancies}. Performing resync..."
       issue_search_body.jql = "issue in (#{issues_with_discrepancies.join ","})"
       delete issue_search_body.startAt
+  getJustdoIdForIssue: (jira_issue_body) ->
+    jira_project_id = parseInt jira_issue_body.fields.project.id
+    justdo_id = @tasks_collection.findOne({jira_project_id: jira_project_id}, {fields: {project_id: 1}})?.project_id
+    return justdo_id
 
       resyncIssues = (res) =>
         for issue in res.issues
@@ -1688,4 +1698,23 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
+  _isCheckpointProcessInControl: (check_point) ->
+    if not check_point?
+      throw @_error "missing-parameter", "Please provide checkpoint to check against."
+    return check_point is @ongoing_checkpoint
+
+  _ensureCheckpointProcessInControl: (check_point) ->
+    if not (in_control = @_isCheckpointProcessInControl check_point)
+      console.info "[justdo-jira-integration] Control for checkpoint #{check_point} lost."
+    return in_control
+
+  _stopOngoingCheckpoint: (show_alert) ->
+    if not @ongoing_checkpoint?
+      if show_alert
+        console.info "[justdo-jira-integration] There is no ongoing checkpoint process"
+    else
+      @ongoing_checkpoint = null
     return
+  isCheckpointAllowedToStart: (check_point) ->
+    return not @ongoing_checkpoint? or (check_point - @ongoing_checkpoint) > JustdoJiraIntegration.data_integrity_check_timeout
+
