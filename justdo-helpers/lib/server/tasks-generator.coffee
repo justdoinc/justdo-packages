@@ -145,6 +145,8 @@ Meteor.methods
         _raw_added_users_dates: {}  # Will be set properly later
         
         _raw_updated_date: now
+        _raw_updated_date_sans_users: now
+        _raw_updated_date_only_users: now
 
         createdAt: now
 
