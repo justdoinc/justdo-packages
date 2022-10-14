@@ -36,3 +36,12 @@ _.extend JustdoHelpers,
     
     return true
     
+  objectHasMoreThanXOwnProperty: (object, x) ->
+    i = 0
+    for key of object
+      i += 1
+
+      if i > x
+        return true
+
+    return false
