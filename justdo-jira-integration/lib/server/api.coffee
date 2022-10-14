@@ -180,7 +180,7 @@ _.extend JustdoJiraIntegration.prototype,
             fields_map[justdo_field_name].push sub_field.name
           continue
         else
-          field_val = jira_field.name
+          field_val = jira_field?.name
 
         fields_map[justdo_field_name] = field_val
 
@@ -278,7 +278,7 @@ _.extend JustdoJiraIntegration.prototype,
             # if options?.fix_versions_mountpoints?
             #   console.log "Fix version mountpoints:", options.fix_versions_mountpoints
             if not (fix_version_parent_task_id = options?.fix_versions_mountpoints?[fix_version.name])?
-              fix_version_parent_task_id = @tasks_collection.findOne({jira_fix_version_mountpoint_id: fix_version.id}, {fields: {_id: 1}})._id
+              fix_version_parent_task_id = @tasks_collection.findOne({jira_fix_version_mountpoint_id: fix_version.id}, {fields: {_id: 1}})?._id
             # XXX This if condition catches cases where a fix version is closed and we do not create a task out of it.
             if fix_version_parent_task_id?
               gc.addParent created_task_id, {parent: fix_version_parent_task_id}, task_owner_id
@@ -304,7 +304,7 @@ _.extend JustdoJiraIntegration.prototype,
 
         path_to_add = "/#{task_id}/"
         if fields.parent?
-          parent_id = @tasks_collection.findOne({jira_issue_id: fields.parent.id}, {fields: {_id: 1}})._id
+          parent_id = @tasks_collection.findOne({jira_issue_id: parseInt fields.parent.id}, {fields: {_id: 1}})._id
           path_to_add = "/#{parent_id}/"
 
         user_ids_to_be_added_to_task = new Set()
@@ -833,7 +833,7 @@ _.extend JustdoJiraIntegration.prototype,
       @jira_collection.upsert query, ops
 
       jira_clients_config =
-        host: "https://api.atlassian.com/ex/jira/#{res.data[0].id}"
+        host: jira_client_host
         authentication:
           oauth2:
             accessToken: access_token
