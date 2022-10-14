@@ -136,7 +136,8 @@ _.extend JustdoJiraIntegration,
         _moveAllChildTasksToRoadmap = (task_id) =>
           child_task_ids = @tasks_collection.find({"parents2.parent": task_id, jira_issue_type: {$in: ["Task", "Bug", "Story"]}}, {fields: {_id: 1}}).map (task_doc) -> "/#{task_id}/#{task_doc._id}/"
           mountpoint_task_id = @tasks_collection.findOne({jira_mountpoint_type: "roadmap", jira_project_id: req_body.jira_project_id, project_id: justdo_id}, {fields: {_id: 1}})?._id
-          APP.projects._grid_data_com.movePath child_task_ids, {parent: mountpoint_task_id}, @_getJustdoAdmin justdo_id
+          if not _.isEmpty child_task_ids
+            APP.projects._grid_data_com.movePath child_task_ids, {parent: mountpoint_task_id}, @_getJustdoAdmin justdo_id
           return
 
         if destination is "jira"
@@ -154,7 +155,6 @@ _.extend JustdoJiraIntegration,
               task_id = @tasks_collection.findOne({jira_issue_id: parseInt req_body.issue.id}, {fields: {_id: 1}})
             _moveAllChildTasksToRoadmap task_id
           return field_val
-    # We don't current support editing fix version in Justdo.
     jira_fix_version:
       name: "fixVersions"
       mapper: (justdo_id, field, destination, req_body) ->
@@ -252,8 +252,11 @@ _.extend JustdoJiraIntegration,
           # if not (jira_account_id = jira_account?[0]?.accountId)?
           #   throw @_error "jira-account-not-found"
 
-          client.issues.assignIssue({issueIdOrKey: req_body.jira_issue_id, accountId: jira_account_id})
-            .catch (err) -> console.error err
+          {err} = self.pseudoBlockingJiraApiCallInsideFiber "issues.assignIssue", {issueIdOrKey: req_body.jira_issue_id, accountId: jira_account_id}, client
+          if err?
+            err = err?.response?.data or err
+            console.error err
+          return
 
         if destination is "justdo"
           # Remove any pending ownership transfer
@@ -263,6 +266,10 @@ _.extend JustdoJiraIntegration,
           # Assignee removed. Use justdo admin as task owner.
           if not (jira_account_id_or_email = field?.to or field?.accountId or field?.emailAddress)?
             return @_getJustdoAdmin justdo_id
+
+          # Issue changelog from Jira server will not provide email address. In this case we get the user email from issue body.
+          if @getAuthTypeIfJiraInstanceIsOnPerm()?
+            jira_account_id_or_email = req_body.issue.fields.assignee.emailAddress
 
           jira_project_id = parseInt req_body.issue.fields.project.id
           # This if statement shouldn't happen as we already fetched all users.
@@ -300,9 +307,12 @@ _.extend JustdoJiraIntegration,
         if destination is "justdo"
           if _.isString field
             start_date = field
-          if _.isString field.to
+          if _.isString field?.to
             start_date = field.to
-          return moment.utc(start_date).format("YYYY-MM-DD")
+
+          if start_date?
+            return moment.utc(start_date).format("YYYY-MM-DD")
+          return null
     end_date:
       id: end_date_custom_field_id
       name: "jd_end_date"
@@ -312,15 +322,21 @@ _.extend JustdoJiraIntegration,
         if destination is "justdo"
           if _.isString field
             end_date = field
-          if _.isString field.to
+          if _.isString field?.to
             end_date = field.to
-          return moment.utc(end_date).format("YYYY-MM-DD")
+          if end_date?
+            return moment.utc(end_date).format("YYYY-MM-DD")
+          return null
     jira_story_point:
       id: story_point_estimate_custom_field_id
       name: story_point_estimate_custom_field_id
       mapper: (justdo_id, field, destination, req_body) ->
-        if _.isString field.toString
-          return parseFloat field.toString
+        if not field?
+          return null
+        if _.isNumber field
+          return field
+        if _.isString field?.toString
+          field = field.toString
         return parseFloat field
       # XXX Currently story point estimate is used as the duration which is not ideal.
       # XXX The followings are meant for mapping the field value to the actual time estimate field.
