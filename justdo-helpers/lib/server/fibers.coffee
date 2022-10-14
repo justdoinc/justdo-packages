@@ -79,3 +79,22 @@ _.extend JustdoHelpers,
       return
     
     return Fiber.yield()
+
+  pseudoBlockingRawCollectionCountInsideFiber: (collection, query, count_options) ->
+    fiber = @getCurrentFiber()
+
+    if not (fiber = Fiber.current)?
+      throw throw new Error("no-fiber")
+
+    count_promise = collection.rawCollection().count(query, count_options)
+      .then((count) =>
+        fiber.run({count: count})
+      
+        return
+      )
+      .catch((err) =>
+        fiber.run({err})
+      
+        return
+      )
+    return Fiber.yield()
