@@ -22,3 +22,12 @@ Template.justdo_jira_integration_project_setting.helpers
 
   serverInfo: ->
     return APP.justdo_jira_integration.getJiraServerInfoFromJustdoId JD.activeJustdoId()
+
+Template.justdo_jira_integration_project_setting.events
+  "click .jira-login-link": (e, tpl) ->
+    e.preventDefault()
+    e.stopPropagation()
+
+    target_link = $(e.target).closest(".jira-login-link").attr "href"
+    window.open target_link, "_blank"
+    return

@@ -878,7 +878,7 @@ _.extend JustdoJiraIntegration.prototype,
     # Route for oAuth callback
     Router.route "/jira/oAuthCallback", {where: "server"}
       .get ->
-        @response.end()
+        @response.end("<script>window.close();</script>")
         # code is used to obtain access_token
         # state is the custom state key we pass. Currently is the justdo_id where we perform the authorization
         {code, state:justdo_id, oauth_token} = @request.query # equiv. justdo_id = state
