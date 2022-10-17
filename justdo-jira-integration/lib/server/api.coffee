@@ -1770,7 +1770,7 @@ _.extend JustdoJiraIntegration.prototype,
     # This method is meant to resolve the discrepencies between the jira_fix_version field in tasks, and the fix version parents.
     jira_issue_id = parseInt jira_issue_body.id
     jira_project_id = parseInt jira_issue_body.fields.project.id
-    justdo_id = jira_issue_body.fields[JustdoJiraIntegration.project_id_custom_field_id]
+    justdo_id = @getJustdoIdForIssue jira_issue_body or jira_issue_body.fields[JustdoJiraIntegration.project_id_custom_field_id]
 
     justdo_admin_id = @_getJustdoAdmin justdo_id
     grid_data = APP.projects._grid_data_com
