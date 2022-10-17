@@ -1833,7 +1833,7 @@ _.extend JustdoJiraIntegration.prototype,
 
   _isCheckpointProcessInControl: (check_point) ->
     if not check_point?
-      throw @_error "missing-parameter", "Please provide checkpoint to check against."
+      throw @_error "missing-argument", "Please provide checkpoint to check against."
     return check_point is @ongoing_checkpoint
 
   _ensureCheckpointProcessInControl: (check_point) ->
@@ -1854,7 +1854,7 @@ _.extend JustdoJiraIntegration.prototype,
       @_stopOngoingCheckpoint()
 
     if not jira_doc?
-      throw @_error "missing-parameter"
+      throw @_error "missing-argument"
     # The idea is to use epoch when searching in JQL to fetch everything.
     # Since we subtract data_integrity_margin_of_safety in ensureIssueDataIntegrityAndMarkCheckpoint, it is being added to the epoch.
     jira_doc.last_data_integrity_check = JustdoHelpers.getDateMsOffset JustdoJiraIntegration.data_integrity_margin_of_safety, new Date 0
