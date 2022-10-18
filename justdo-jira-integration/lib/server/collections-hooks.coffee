@@ -86,25 +86,20 @@ _.extend JustdoJiraIntegration.prototype,
 
       # If task is added under a Jira issue, add parent before creating task in Jira
       if (parent_issue_id = parent_task?.jira_issue_id)?
-        if parent_task.jira_issue_type is "Subtask"
-          # XXX Todo: Block the operation. Subtasks can't have child tasks.
-          # XXX Or move the newly created task back to jira_project_mountpoint
-          console.log "The issue is created under a subtask and is forbidden."
+        # The behaviour for adding subtask is similar for Jira cloud and Jira server
+        # XXX Custom issue type is not handled
+        if parent_task.jira_issue_type in ["Story", "Task", "Bug"]
+          req.fields.issuetype.name = "Sub-task"
+          req.fields.parent =
+            id: "#{parent_issue_id}"
         else
-          # The behaviour for adding subtask is similar for Jira cloud and Jira server
-          # XXX Custom issue type is not handled
-          if parent_task.jira_issue_type in ["Story", "Task", "Bug"]
-            req.fields.issuetype.name = "Sub-task"
+          # Jira Cloud
+          if self.isJiraInstanceCloud()
             req.fields.parent =
               id: "#{parent_issue_id}"
+          # Jira Server
           else
-            # Jira Cloud
-            if self.isJiraInstanceCloud()
-              req.fields.parent =
-                id: "#{parent_issue_id}"
-            # Jira Server
-            else
-              req.fields[JustdoJiraIntegration.epic_link_custom_field_id] = "#{parent_task.jira_issue_key}"
+            req.fields[JustdoJiraIntegration.epic_link_custom_field_id] = "#{parent_task.jira_issue_key}"
 
       client = self.clients[jira_server_id].v2
       {err, res} = self.pseudoBlockingJiraApiCallInsideFiber "issues.createIssue", req, client
@@ -156,8 +151,6 @@ _.extend JustdoJiraIntegration.prototype,
 
       return
 
-    # NOTE: As this hook contains async function calls, this hook is async and changing the modifier will NOT have any effect.
-    # If you wish to change the modifier, use the hook above.
     self.tasks_collection.before.update (user_id, doc, field_names, modifier, options) ->
       justdo_id = doc.project_id
 
