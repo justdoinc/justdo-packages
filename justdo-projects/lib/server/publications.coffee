@@ -653,6 +653,70 @@ _.extend Projects.prototype,
               changes_journal: initial_payload_private_data_items
               sync_id: sync
 
+        isUpdateMeaningfulForUser = (data) ->
+          if not sync?
+            # We simply don't develop what should happen in that case, because in normal cases
+            # we shouldn't get to it, hence we just consider all of the changes in that case
+            # as meaningful (not since they necessarily are, but simply because no thought was
+            # given about what should be done here).
+            return true
+
+          {_raw_updated_date, _raw_updated_date_only_users, _raw_updated_date_sans_users, _raw_added_users_dates} = data
+
+          if not _raw_updated_date_only_users? and not _raw_updated_date_sans_users?
+            # An update been made by an operation that didn't update _raw_updated_date_only_users/_raw_updated_date_sans_users
+            # likely an old running server, to an old document that didn't have both _raw_updated_date_only_users/_raw_updated_date_sans_users
+
+            # We can't tell whether the update is relevant or not in this case, so have to assume it is.
+            return true
+
+          ms_since_last_only_users_update = undefined
+          ms_since_last_sans_users_update = undefined
+          if _raw_updated_date_only_users?
+            ms_since_last_only_users_update = JustdoHelpers.datesMsDiff(_raw_updated_date, _raw_updated_date_only_users)
+          if _raw_updated_date_sans_users?
+            ms_since_last_sans_users_update = JustdoHelpers.datesMsDiff(_raw_updated_date, _raw_updated_date_sans_users)
+
+          if ms_since_last_only_users_update isnt 0 and ms_since_last_sans_users_update isnt 0
+            # An update didn't trigger an update to either of _raw_updated_date_only_users/_raw_updated_date_sans_users
+            # likely an old running server.
+
+            # We can't tell whether the update is relevant or not in this case, so have to assume it is.
+            return true
+
+          if ms_since_last_sans_users_update is 0 # just FYI, note that ms_since_last_only_users_update might also be 0 at the same time.
+            # The simplest case, obviously it is meaningful to us, a non-users update just happened
+            return true
+
+          # By now we know for sure that ms_since_last_only_users_update is 0 and that ms_since_last_sans_users_update is undefined or a non-zero number
+
+          # Check if we are one of the users that been added
+          time_user_added = _raw_added_users_dates[req_user_id]
+          if JustdoHelpers.datesMsDiff(sync, time_user_added) < 0
+            # req_user_id been added after sync time, of course update is relevant.
+            return true
+
+          # We aren't the user that been added as the very last update to this doc, but, perhaps an update been made to this doc since
+          # our last sync time
+          if _raw_updated_date_sans_users? and JustdoHelpers.datesMsDiff(sync, _raw_updated_date_sans_users) < 0
+            # A change to this doc been made after sync time, it is relevant
+            return true
+
+          # _raw_updated_date_sans_users either has pre-sync value or undefined - in which case we regard it as a document
+          # that previously been updated before the introduction of _raw_updated_date_sans_users
+          # and hence we assume that it was before our current sync.
+          #
+          # As an important note: this will fail if old servers that don't update _raw_updated_date_sans_users
+          # are still running, and an update that didn't involve users happened right before a users update in
+          # a server that does maintain _raw_updated_date_only_users/_raw_updated_date_sans_users
+          # If the current hook is called for the two updates - we will fail to recognize the need to update the user.
+          # In such a case - the user won't get the update (I believe it is too rare to bother about it Daniel C.)
+
+          # console.log "CONSIDERED IRRELEVANT, SKIP"
+          # console.log {sync, _raw_updated_date, _raw_updated_date_only_users, _raw_updated_date_sans_users, time_user_added}
+
+          return false
+
         #
         # Initiate trackers
         #
@@ -679,8 +743,8 @@ _.extend Projects.prototype,
             # published by the private_data_tracker (this is only one case in which the use
             # of "added" will cause us trouble).
 
-            console.log "CONTINUE HERE"
-            console.log "added", data
+            if not isUpdateMeaningfulForUser(data)
+              return
 
             if label?
               # If we got a label for this subscription, add the _label
