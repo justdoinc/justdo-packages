@@ -90,59 +90,15 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
                 if item_obj.pending_owner_id in members_ids_to_remove
                   items_to_cancel_ownership_transfer_of.push item_obj._id
 
-              bulk_updates = []
-              if not _.isEmpty members_ids_to_remove
-                bulk_updates.push (cb) ->
-                  members_remove_modifier =
-                    $pull:
-                      users:
-                        $in: members_ids_to_remove
+              project.bulkUpdateTasksUsers
+                tasks: items_to_edit
+                members_to_add: members_ids_to_add
+                members_to_remove: members_ids_to_remove
+                items_to_assume_ownership_of: items_to_assume_ownership_of
+                items_to_cancel_ownership_transfer_of: items_to_cancel_ownership_transfer_of
 
-                  project.bulkUpdate items_to_edit, members_remove_modifier, cb
-
-              if not _.isEmpty members_ids_to_add
-                bulk_updates.push (cb) ->
-                  members_add_modifier =
-                    $push:
-                      users:
-                        $each: members_ids_to_add
-
-                  project.bulkUpdate items_to_edit, members_add_modifier, cb
-
-              if not _.isEmpty items_to_assume_ownership_of
-                bulk_updates.push (cb) ->
-                  ownership_update_modifier =
-                    $set:
-                      owner_id: Meteor.userId()
-                      pending_owner_id: null
-                      is_removed_owner: null
-
-                  project.bulkUpdate items_to_assume_ownership_of, ownership_update_modifier, cb
-
-              if not _.isEmpty items_to_cancel_ownership_transfer_of
-                bulk_updates.push (cb) ->
-                  ownership_transfer_cancel_modifier =
-                    $set:
-                      pending_owner_id: null
-
-                  project.bulkUpdate items_to_cancel_ownership_transfer_of, ownership_transfer_cancel_modifier, cb
-
-              async.each bulk_updates,
-                (bulk_update, cb) ->
-                  bulk_update(cb)
-                ,
-                (err) ->
-                  module = getProjectPageModule()
-
-                  if err?
-                    module.logger.error "Failed to update members"
-                    console.log err
-
-                    return confirm() # We confirm anyway, since we don't have a way to handle partial success and its consequences
-                  else
-                    return confirm()
-
-              return
+              return confirm()
+              
       return # ensureUsersPublicBasicUsersInfoLoaded
 
 # Note: we assume only one confirmation dialog at a time
