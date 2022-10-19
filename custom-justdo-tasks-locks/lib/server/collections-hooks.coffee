@@ -97,69 +97,69 @@ _.extend CustomJustdoTasksLocks.prototype,
 
       return false
 
-    @justdo_projects.register "BeforeBulkUpdateExecution", (project_id, items_ids, modifier, user_id) =>
-      # Find whether any user got removed in this bulk update, only if a user is removed, we care about
-      # ensuring whether locks are respected.
-      removed_users = []
-      if (pulled_users = modifier.$pull?.users?.$in)?
-        removed_users = removed_users.concat(pulled_users)
+    # @justdo_projects.register "BeforeBulkUpdateExecution", (project_id, items_ids, modifier, user_id) =>
+    #   # Find whether any user got removed in this bulk update, only if a user is removed, we care about
+    #   # ensuring whether locks are respected.
+    #   removed_users = []
+    #   if (pulled_users = modifier.$pull?.users?.$in)?
+    #     removed_users = removed_users.concat(pulled_users)
 
-      if _.isEmpty removed_users
-        # No user is removed, no chance we need to intervene.
-        #
-        # return true means we are not intervening at all with the bulk update. 
-        return true
+    #   if _.isEmpty removed_users
+    #     # No user is removed, no chance we need to intervene.
+    #     #
+    #     # return true means we are not intervening at all with the bulk update. 
+    #     return true
 
-      if not (project_doc = @getProjectDocIfPluginInstalled(project_id))?
-        # Plugin isn't installed on the project, we don't need to intervene
-        return true
+    #   if not (project_doc = @getProjectDocIfPluginInstalled(project_id))?
+    #     # Plugin isn't installed on the project, we don't need to intervene
+    #     return true
 
-      # By here we know that we are removing users in this operation, and that
-      # the plugin is installed for the project.
+    #   # By here we know that we are removing users in this operation, and that
+    #   # the plugin is installed for the project.
 
-      # Start by executing all the bulk update ops that doesn't involve $pull
-      pull_op = modifier.$pull
-      delete modifier.$pull
-      if not _.isEmpty(modifier)
-        @justdo_projects._bulkUpdate(project_id, items_ids, modifier, user_id)
+    #   # Start by executing all the bulk update ops that doesn't involve $pull
+    #   pull_op = modifier.$pull
+    #   delete modifier.$pull
+    #   if not _.isEmpty(modifier)
+    #     @justdo_projects._bulkUpdate(project_id, items_ids, modifier, user_id)
 
-      removed_users_that_lock_nothing = []
-      for removed_user_id in removed_users
-        locked_tasks_query =
-          _id:
-            $in: items_ids
-          "#{CustomJustdoTasksLocks.locking_users_task_field}": removed_user_id
+    #   removed_users_that_lock_nothing = []
+    #   for removed_user_id in removed_users
+    #     locked_tasks_query =
+    #       _id:
+    #         $in: items_ids
+    #       "#{CustomJustdoTasksLocks.locking_users_task_field}": removed_user_id
 
-        locked_tasks_ids = _.map @tasks_collection.find(locked_tasks_query, {fields: {_id: 1}}).fetch(), (x) -> x._id
+    #     locked_tasks_ids = _.map @tasks_collection.find(locked_tasks_query, {fields: {_id: 1}}).fetch(), (x) -> x._id
 
-        if locked_tasks_ids.length == 0
-          # The removed_user_id isn't locking any task, can perform his removal in bulk with
-          # others that aren't removing.
-          removed_users_that_lock_nothing.push removed_user_id
+    #     if locked_tasks_ids.length == 0
+    #       # The removed_user_id isn't locking any task, can perform his removal in bulk with
+    #       # others that aren't removing.
+    #       removed_users_that_lock_nothing.push removed_user_id
 
-          continue
+    #       continue
 
-        allowed_to_remove_from_tasks_ids = _.difference items_ids, locked_tasks_ids
+    #     allowed_to_remove_from_tasks_ids = _.difference items_ids, locked_tasks_ids
 
-        modifier =
-          $pull:
-            users:
-              $in: [removed_user_id]
-        @justdo_projects._bulkUpdate(project_id, allowed_to_remove_from_tasks_ids, modifier, user_id)
+    #     modifier =
+    #       $pull:
+    #         users:
+    #           $in: [removed_user_id]
+    #     @justdo_projects._bulkUpdate(project_id, allowed_to_remove_from_tasks_ids, modifier, user_id)
 
-      # Take care of removed users that lock no tasks in items_ids
-      modifier =
-        $pull:
-          users:
-            $in: removed_users_that_lock_nothing
-      @justdo_projects._bulkUpdate(project_id, items_ids, modifier, user_id)
+    #   # Take care of removed users that lock no tasks in items_ids
+    #   modifier =
+    #     $pull:
+    #       users:
+    #         $in: removed_users_that_lock_nothing
+    #   @justdo_projects._bulkUpdate(project_id, items_ids, modifier, user_id)
 
-      # We took control of the original bulkUpdate request, don't let the original bulkUpdate
-      # request to continue! return false.
-      return false
+    #   # We took control of the original bulkUpdate request, don't let the original bulkUpdate
+    #   # request to continue! return false.
+    #   return false
 
   setupUserRemovedFromProjectHook: ->
-    @justdo_projects.register "AfterRemoveMember", (project_id, member_id, user_id) =>
+    @justdo_projects.register "BeforeRemoveMember", (project_id, member_id, user_id) =>
       query =
         "#{CustomJustdoTasksLocks.locking_users_task_field}": member_id
         project_id: project_id
@@ -171,6 +171,6 @@ _.extend CustomJustdoTasksLocks.prototype,
       @justdo_projects._grid_data_com._bulkUpdateFromSecureSource query, update, (err) =>
         return
 
-      return
+      return true
 
     return
