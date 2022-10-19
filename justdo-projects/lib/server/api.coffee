@@ -1198,8 +1198,6 @@ _.extend Projects.prototype,
 
       @_grid_data_com._freezeAllProjectPrivateDataDocsForUsersIds(project_id, [member_id])
 
-      @processHandlers("AfterRemoveMember", project_id, member_id, user_id)
-
       return
 
     return
