@@ -1066,11 +1066,22 @@ _.extend Projects.prototype,
     if (pulled_users = modifier.$pull?.users?.$in)?
       removed_users = removed_users.concat(pulled_users)
 
+    if JustdoHelpers.getFiberVar("skip-allowed_bulk_update_modifiers-check") isnt true
+      # For cases where skip-allowed_bulk_update_modifiers-check weren't asked, we know
+      # exactly what kind of operation might have been requested.
+      
+      # We don't allow adding/removing users using the bulk update api any more.
+      if not _.isEmpty(added_users) or not _.isEmpty(removed_users)
+        throw @_error "forbidden", "Adding/removing users should use the project.bulkUpdateTasksUsers API"
+
+      # We do allow ownership related updates to keep using the bulkUpdate API.
+
+    # If added_users/removed_users aren't empty, since we prevent it earlier in the code, it means
+    # we are in skip-allowed_bulk_update_modifiers-check mode
     if not _.isEmpty added_users
       @_grid_data_com._setPrivateDataDocsFreezeState(added_users, items_ids, false)
       # Important, if you change the logic here, note that in the process of inviteMember
       # we also call @_setPrivateDataDocsFreezeState()
-
     if not _.isEmpty removed_users
       @_grid_data_com._setPrivateDataDocsFreezeState(removed_users, items_ids, true)
       # Important, if you change the logic here, note that in the process of removeMember
