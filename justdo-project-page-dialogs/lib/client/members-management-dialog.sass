@@ -1,85 +1,56 @@
-// Members editor dialog
-
-$empty-box-message-text: #86a8d1
-
 .members-editor-search
-  border-bottom: 1px solid #EEEEEE
   label
     margin: 0
     color: #6a96d2
   input
-    border: none
-    padding: 8px
-    font-family: "lato", sans-serif
-    font-weight: 600
-    font-size: 16px
-    color: #3D495B
+    padding: 8px 27px
+    width: 100%
+    height: unset
+    border-top: 0
+    border-left: 0
+    border-right: 0
+    border-bottom: 1px solid #ecf1f8
     width: 100%
     &:focus
       outline: none
-    &::-webkit-input-placeholder
-      color: #5a83ba
-    &::-moz-placeholder
-      color: #5a83ba
-    &:-ms-input-placeholder
-      color: #5a83ba
-    &:-moz-placeholder
-      color: #5a83ba
 
-    &::-ms-clear
-      display: none
-
-$members-section-height: 350px
-$invite-members-section-height: 67px
-$section-caption-height: 33px
-$add-users-section-margin-bottom-when-invite-members-displayed: 2px
 .members-section
-  height: $members-section-height
-  font-family: "lato",sans-serif
-
+  height: 400px
+  display: flex
   .members-list-container
     width: 50%
-    height: 100%
-    float: left
-    overflow-y: auto
+    display: flex
+    flex-direction: column
+
+  .members-list-add-users-container
+    border-right: 1px solid #ecf1f8
+    padding: 20px 0px 0px 27px
+    .section-caption,
+    .members-list
+      padding-right: 14px
+
+  .members-list-keep-users-container
+    padding: 20px 0px 0px 14px
+    .section-caption,
+    .members-list
+      padding-right: 14px
 
   .members-list
     overflow: auto
-    height: $members-section-height - $section-caption-height
-    position: relative
-    padding-top: 2px
+    flex-grow: 1
 
-    &.members-list-no-members
-      height: $members-section-height
-
-  .no-members
-    font-weight: bold
-    text-align: center
-    color: $empty-box-message-text
-    font-size: 16px
-    margin-top: 130px
-    margin-left: -12px
-    user-select: none
-    cursor: default
-
-  .members-editor-dialog-add-users-section
-    .no-members
-      margin-top: 135px
-
+  .no-members,
   .no-results
-    font-weight: bold
-    text-align: center
-    color: $empty-box-message-text
-    font-size: 16px
-    margin-top: 83px
     user-select: none
     cursor: default
+    height: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    font-size: 14px
+    color: rgba(49, 69, 99, 0.25)
 
-  // Sections customizations
   .members-editor-dialog-keep-users-section
-    background-color: #F4F8FD
-    padding-left: 10px
-
     .dont-proceed
       background-color: #E4EDF9
       .user-plus
@@ -95,15 +66,10 @@ $add-users-section-margin-bottom-when-invite-members-displayed: 2px
         .toggle
           display: inline
 
-  .members-list-keep-users-container
-    .section-caption
-      background-color: #f4f8fd
-      padding-left: 9px
-
   .members-editor-dialog-add-users-section
     .user-x
       display: none
-      
+
     .proceed
       background-color: #E4EDF9
       .display-name
@@ -116,20 +82,10 @@ $add-users-section-margin-bottom-when-invite-members-displayed: 2px
         .toggle
           display: inline
 
-  // Show invite members section customizations
-  .show-invite-members-section
-    .members-list
-      height: $members-section-height - $section-caption-height - $invite-members-section-height - $add-users-section-margin-bottom-when-invite-members-displayed
-
-    .members-editor-dialog-add-users-section
-      margin-bottom: $add-users-section-margin-bottom-when-invite-members-displayed
-      padding-left: 2px
-
-    .members-list-no-members
-      height: $members-section-height - $invite-members-section-height - $add-users-section-margin-bottom-when-invite-members-displayed
-
   .invite-members-section
-    height: $invite-members-section-height
+    background: #F5F5F5
+    border-radius: 2px
+    padding: 5px 9px
     position: relative
     margin-right: 8px
     font-size: 14px
@@ -152,64 +108,83 @@ $add-users-section-margin-bottom-when-invite-members-displayed: 2px
 
 .members-editor-dialog
   .modal-dialog
-    min-width: 600px
+    min-width: 800px
   .modal-body
     overflow: visible
-    padding-top: 0px
-
+    padding: 0px
+  .modal-header
+    padding: 20px 27px
+    border-bottom: 1px solid #EDF1F8
   .modal-title
     font-size: 18px
+  .modal-footer
+    padding: 20px 27px
 
   .checkbox
     position: absolute
-    bottom: -52px
+    bottom: -56px
+    left: 27px
     label
-      font-weight: 600
-      font-size: 14px
-      color: #3D495B
+      font-size: 15px
       user-select: none
+      display: flex
+      align-items: center
 
   .section-caption
-    font-size: 14px
-    font-weight: 600
+    font-size: 11px
     color: #3D495B
-    user-select: none
-    cursor: default
-    height: 31px
-    padding: 7px 2px
+    text-transform: uppercase
+    font-weight: bold
+    display: flex
+    align-items: center
+    justify-content: space-between
+    margin-bottom: 12px
 
   .user-btn
     cursor: pointer
-    border-radius: 1rem 0 0 1rem
-    &:hover
-
+    display: flex
+    margin-bottom: 8px
+    align-items: center
+    justify-content: space-between
     .jd-icon
+      color: #C5CBD3
+      stroke-width: 3
       padding: 4px
-      stroke-width: 2
-      margin-right: 7px
+      cursor: pointer
+      &:hover
+        color: #76869a
+        background-color: #e8edf3
     img
       width: 26px
       height: 26px
       margin-right: 4px
       position: relative // prevent text from shiftin on click on IE
     .display-name
-      display: inline-block
-      position: relative // prevent text from shiftin on click on IE
+      display: flex
       text-overflow: ellipsis
-      max-width: 185px
       overflow: hidden
       white-space: nowrap
     &.disabled
       opacity: .5
 
-  .bulk-select-label, .select-all, .select-none, .add-new-member
-    display: inline-block
-    font-size: 13px
-    color: #2B71CF
-
   .select-all, .select-none, .add-new-member
     cursor: pointer
-    text-decoration: underline
+    &:hover
+      text-decoration: underline
+
+  .select-all
+    margin-left: 8px
+    margin-right: 4px
+
+  .invite-new-member-dropdown
+    display: flex
+    align-items: center
+    .jd-icon
+      stroke-width: 3
+      width: 18px
+      height: 18px
+      opacity: 0.5
+      margin-right: 2px
 
   .notes
     padding: 15px 0px
