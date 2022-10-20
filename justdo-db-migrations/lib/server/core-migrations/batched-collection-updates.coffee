@@ -192,7 +192,7 @@ APP.executeAfterAppLibCode ->
                   APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(modifier)
 
                 {err, result} = JustdoHelpers.pseudoBlockingRawCollectionUpdateInsideFiber(type_def.collection, selector, modifier, mongo_update_options)
-
+                
                 if err?
                   throw new Error err
 
@@ -211,6 +211,13 @@ APP.executeAfterAppLibCode ->
           catch e
             console.error "after-modifiers-execution-ops-failed", e
             setError("after-modifiers-execution-ops-failed")
+
+        if about_to_complete and (not failed) and _.isFunction(type_def.beforeJobMarkedAsDone)
+          try
+            type_def.beforeJobMarkedAsDone(job.data, job.created_by)
+          catch e
+            console.error "before-job-marked-as-done-procedures-failed", e
+            setError("before-job-marked-as-done-procedures-failed")
 
         if failed
           stats[job.process_status].failed += 1

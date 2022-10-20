@@ -1097,6 +1097,39 @@ _.extend Projects.prototype,
 
     return
 
+  _ensureMemberRemovedFromAllTasksOfProject: (project_id, member_id) ->
+    # IMPORTANT! This is a very strong method, that doesn't take
+    # security regarding, who is the requester into account.
+    #
+    # Its result will be absolute removal of the user from all the tasks
+    # in the JustDo.
+    #
+    # Handle with care.
+
+    tasks_ids_belonging_to_member = APP.collections.Tasks.find({project_id: project_id, users: member_id}, {fields: {_id: 1}}).map (doc) -> doc._id
+
+    if tasks_ids_belonging_to_member.length is 0
+      # Nothing to do - this will ensure the breaking of the recursive call to 
+      # _ensureMemberRemovedFromAllTasksOfProject resulting from calling "add-remove-members-to-tasks"
+
+      return
+
+    tasks_ids_pending_transfer_to_member = APP.collections.Tasks.find({project_id: project_id, users: member_id, pending_owner_id: member_id}, {fields: {_id: 1}}).map (doc) -> doc._id
+    set_is_removed_owner_flag = APP.collections.Tasks.find({project_id: project_id, users: member_id, owner_id: member_id}, {fields: {_id: 1}}).map (doc) -> doc._id
+
+    APP.justdo_db_migrations.registerBatchedCollectionUpdatesJob "add-remove-members-to-tasks",
+      data:
+        project_id: project_id
+        members_to_remove: [member_id]
+        items_to_cancel_ownership_transfer_of: tasks_ids_pending_transfer_to_member
+        items_to_set_as_is_removed_owner: set_is_removed_owner_flag
+        ensure_users_fully_removed_from_project_tasks_once_done: [member_id]
+
+      ids_to_update: tasks_ids_belonging_to_member
+      user_id: null # We regard the action as system-triggered, so user_id is null
+
+    return
+
   removeMember: (project_id, member_id, user_id) ->
     if user_id != member_id # user can remove himself from project even if not admin
       @requireProjectAdmin(project_id, user_id)
@@ -1119,6 +1152,8 @@ _.extend Projects.prototype,
     if not @processHandlers("BeforeRemoveMember", project_id, member_id, user_id)
       throw @_error "forbidden", "Member removal denied"
 
+    @_ensureMemberRemovedFromAllTasksOfProject(project_id, member_id)
+
     # The following is a bit confusing:
     # user_id is the inviting user. member_id is the member we are adding
     update =
@@ -1131,74 +1166,6 @@ _.extend Projects.prototype,
           removed_by: user_id
 
     @projects_collection.update project_id, update
-
-    bulk_updates_on_tasks_collections = [
-      {
-        #
-        # Take care of removing pending transfer requests to the user in the project tasks
-        #
-        update_description: "remove pending ownership transfer query" # Used just when reporting errors
-
-        query:
-          users: member_id
-          project_id: project_id
-          pending_owner_id: member_id
-
-        mutator:
-          $set:
-            pending_owner_id: null
-      }
-
-      {
-        # Remove member from all the project's tasks that has it
-
-        #
-        # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-        # and to drop obsolete indexes (see FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_INDEX there)
-        #
-        update_description: "remove member from all the project's tasks that has it" # Used just when reporting errors
-
-        query:
-          users: member_id
-          project_id: project_id
-
-        mutator:
-          $pull:
-            users: member_id
-      }
-
-      {
-        # Set the is_removed_owner field to true on all the tasks that the removed user owned
-
-        update_description: "set the is_removed_owner flag on owned tasks" # Used just when reporting errors
-
-        query:
-          project_id: project_id
-          owner_id: member_id
-
-        mutator:
-          $set:
-            is_removed_owner: true
-      }
-    ]
-
-    bulk_updates_on_tasks_collections_async_series_tasks = _.map bulk_updates_on_tasks_collections, (task_def) =>
-      return (cb) => @_grid_data_com._bulkUpdateFromSecureSource task_def.query, task_def.mutator, (err) =>
-        if err?
-          console.error("removeMember failed during op: #{task_def.update_description}", err)
-
-        cb(err)
-
-        return
-
-    async.series bulk_updates_on_tasks_collections_async_series_tasks, (err) =>
-      if err?
-        # If failed do nothing, errors already printed
-        return
-
-      @_grid_data_com._freezeAllProjectPrivateDataDocsForUsersIds(project_id, [member_id])
-
-      return
 
     return
   

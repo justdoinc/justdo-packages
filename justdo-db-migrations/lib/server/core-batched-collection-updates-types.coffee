@@ -10,7 +10,9 @@ _.extend JustdoDbMigrations.prototype,
         items_to_assume_ownership_of_provided = data?.items_to_assume_ownership_of? and not _.isEmpty(data.items_to_assume_ownership_of)
         items_to_cancel_ownership_transfer_of_provided = data?.items_to_cancel_ownership_transfer_of? and not _.isEmpty(data.items_to_cancel_ownership_transfer_of)
 
-        return {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided, items_to_cancel_ownership_transfer_of_provided}
+        items_to_set_as_is_removed_owner_provided = data?.items_to_set_as_is_removed_owner? and not _.isEmpty(data.items_to_set_as_is_removed_owner)
+
+        return {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided, items_to_cancel_ownership_transfer_of_provided, items_to_set_as_is_removed_owner_provided}
 
       job_type = "add-remove-members-to-tasks"
       @registerBatchedCollectionUpdatesType job_type,
@@ -33,18 +35,30 @@ _.extend JustdoDbMigrations.prototype,
           items_to_cancel_ownership_transfer_of: # IMPORANT: Same comment as the one left for items_to_assume_ownership_of
             type: [String]
             optional: true
-
+          items_to_set_as_is_removed_owner: # IMPORANT: Same comment as the one left for items_to_assume_ownership_of
+            type: [String]
+            optional: true
+          ensure_users_fully_removed_from_project_tasks_once_done:
+            type: [String] # A list of users that we'll ensure that has no tasks belonging to them.
+                           # it is necessary, since the remove operation can take long enough time for new
+                           # tasks to be assigned to those users while we are processing it.
+            optional: true
         jobsGatekeeper: (options) ->
           {data, ids_to_update, user_id} = options
 
-          APP.projects.requireUserIsMemberOfProject data.project_id, user_id
+          if user_id? # if user_id is null/undefined, we consider it a system-triggered job, for which
+                      # we don't need to test whether the user is belonging to the project
+            APP.projects.requireUserIsMemberOfProject data.project_id, user_id
 
-          {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided, items_to_cancel_ownership_transfer_of_provided} = membersProvided(data)
+          {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided, items_to_cancel_ownership_transfer_of_provided, items_to_set_as_is_removed_owner_provided} = membersProvided(data)
+
+          if not user_id? and items_to_assume_ownership_of_provided
+            throw self._error "invalid-job-data", "For jobs of type #{job_type} triggered by the system (i.e. perform_as is null/undefined) the items_to_assume_ownership_of option can't be provided (there's is no performing user that can assume the ownership...)"
 
           if not members_to_add_provided and not members_to_remove_provided
             throw self._error "invalid-job-data", "For jobs of type #{job_type} at least one of the fields members_to_add/members_to_remove should be provided in the job's data object (and be non-empty)"
 
-          if not members_to_remove_provided and (items_to_assume_ownership_of_provided or items_to_cancel_ownership_transfer_of_provided)
+          if not members_to_remove_provided and (items_to_assume_ownership_of_provided or items_to_cancel_ownership_transfer_of_provided or items_to_set_as_is_removed_owner_provided)
             throw self._error "invalid-job-data", "For jobs of type #{job_type} items_to_assume_ownership_of and items_to_cancel_ownership_transfer_of are allowed only if members_to_remove is provided."
 
           return
@@ -69,7 +83,7 @@ _.extend JustdoDbMigrations.prototype,
           return modifiers
 
         afterModifiersExecutionOps: (items_ids, data, perform_as) ->
-          {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided, items_to_cancel_ownership_transfer_of_provided} = membersProvided(data)
+          {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided, items_to_cancel_ownership_transfer_of_provided, items_to_set_as_is_removed_owner_provided} = membersProvided(data)
 
           if members_to_add_provided
             APP.projects._grid_data_com._setPrivateDataDocsFreezeState(data.members_to_add, items_ids, false)
@@ -113,6 +127,57 @@ _.extend JustdoDbMigrations.prototype,
 
               if err?
                 throw new Error err
+
+          if items_to_assume_ownership_of_provided
+            items_to_assume_ownership_of_set = new Set(data.items_to_assume_ownership_of)
+            items_to_assume_ownership_of_actual = _.filter(items_ids, (item_id) -> items_to_assume_ownership_of_set.has(item_id))
+
+            if items_to_assume_ownership_of_actual.length > 0
+              items_to_assume_ownership_of_modifier =
+                $set:
+                  owner_id: perform_as
+                  pending_owner_id: null
+
+              APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(items_to_assume_ownership_of_modifier)
+              {err, result} = JustdoHelpers.pseudoBlockingRawCollectionUpdateInsideFiber(APP.collections.Tasks, {_id: {$in: items_to_assume_ownership_of_actual}}, items_to_assume_ownership_of_modifier, {multi: true})
+
+              if err?
+                throw new Error err
+
+          if items_to_set_as_is_removed_owner_provided
+            items_to_set_as_is_removed_owner_set = new Set(data.items_to_set_as_is_removed_owner)
+            items_to_set_as_is_removed_owner_actual = _.filter(items_ids, (item_id) -> items_to_set_as_is_removed_owner_set.has(item_id))
+
+            if items_to_set_as_is_removed_owner_actual.length > 0
+              items_to_set_as_is_removed_owner_modifier =
+                $set:
+                  is_removed_owner: true
+
+              APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(items_to_set_as_is_removed_owner_modifier)
+              {err, result} = JustdoHelpers.pseudoBlockingRawCollectionUpdateInsideFiber(APP.collections.Tasks, {_id: {$in: items_to_set_as_is_removed_owner_actual}}, items_to_set_as_is_removed_owner_modifier, {multi: true})
+
+              if err?
+                throw new Error err
+
+          return
+
+        beforeJobMarkedAsDone: (data, perform_as) ->
+          # The following introduced only for the case of removing a user from a certain JustDo.
+          #
+          # Since removing users from tasks can take long, we introduced the following mechanism
+          # to keep ensuring that the users are actually removed from all the tasks.
+          #
+          # This is needed, since while we were removing the users from the tasks we found at the time of
+          # the job creation other tasks might have been passed to the user as a result of:
+          # 1. Other running jobs that are adding the user to tasks.
+          # 2. Creation of new tasks that inherited the users list of their parents that might
+          #    have included the user.
+          # _ensureMemberRemovedFromAllTasksOfProject will create a new job if more tasks belonging
+          # to the user will be found. If no tasks will be found - will end the process and do nothing.
+          if _.isArray(data.ensure_users_fully_removed_from_project_tasks_once_done)
+            for user_id in data.ensure_users_fully_removed_from_project_tasks_once_done
+              if _.isString(user_id)
+                APP.projects._ensureMemberRemovedFromAllTasksOfProject(data.project_id, user_id)
 
           return
 

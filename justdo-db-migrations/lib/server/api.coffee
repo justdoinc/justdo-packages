@@ -237,6 +237,10 @@ _.extend JustdoDbMigrations.prototype,
                     # Returned value is ignored - throw an error to reject the job.
       type: Function
       optional: true
+    beforeJobMarkedAsDone: # a function of the form `(data, perform_as) ->`
+                           # if provided, will be called before we mark the job as done
+      type: Function
+      optional: true
   registerBatchedCollectionUpdatesType: (type_id, options) ->
     check type_id, String
 
@@ -266,7 +270,7 @@ _.extend JustdoDbMigrations.prototype,
   _registerBatchedCollectionUpdatesJobCheckStructure:
     data: Object
     ids_to_update: [String]
-    user_id: Match.Maybe(String)
+    user_id: Match.OneOf(undefined, null, String)
   registerBatchedCollectionUpdatesJob: (type, options) ->
     check type, String
     check options, @_registerBatchedCollectionUpdatesJobCheckStructure
