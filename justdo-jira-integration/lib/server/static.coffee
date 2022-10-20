@@ -130,29 +130,30 @@ _.extend JustdoJiraIntegration,
               old_sprint_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_sprint_mountpoint_id: old_sprint_id}, {fields: {_id: 1}})?._id
               new_sprint_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_sprint_mountpoint_id: new_sprint_id}, {fields: {_id: 1}})?._id
 
-              if old_sprint_mountpoint? and new_sprint_mountpoint?
-                # Relocate issue
-                try
-                  grid_data.movePath "/#{old_sprint_mountpoint}/#{task_doc._id}/", {parent: new_sprint_mountpoint, order: 0}, justdo_admin_id
-                catch e
-                  console.trace()
-                  console.error "[justdo-jira-integration] Relocate issue sprint parent failed.", e
-              # Remove sprint parent
-              else if old_sprint_mountpoint?
-                try
-                  grid_data.removeParent "/#{old_sprint_mountpoint}/#{task_doc._id}/", justdo_admin_id
-                catch e
-                  if e.error isnt "unknown-parent"
+              if req_body.issue.fields.issuetype.name not in ["Sub-task", "Sub-Task", "Subtask"]
+                if old_sprint_mountpoint? and new_sprint_mountpoint?
+                  # Relocate issue
+                  try
+                    grid_data.movePath "/#{old_sprint_mountpoint}/#{task_doc._id}/", {parent: new_sprint_mountpoint, order: 0}, justdo_admin_id
+                  catch e
                     console.trace()
-                    console.error "[justdo-jira-integration] Remove issue sprint parnet failed.", e
-              # Add sprint parent
-              else if new_sprint_mountpoint?
-                try
-                  grid_data.addParent task_doc._id, {parent: new_sprint_mountpoint, order: 0}, justdo_admin_id
-                catch e
-                  if e.error isnt "parent-already-exists"
-                    console.trace()
-                    console.error "[justdo-jira-integration] Add issue sprint parnet failed.", e
+                    console.error "[justdo-jira-integration] Relocate issue sprint parent failed.", e
+                # Remove sprint parent
+                else if old_sprint_mountpoint?
+                  try
+                    grid_data.removeParent "/#{old_sprint_mountpoint}/#{task_doc._id}/", justdo_admin_id
+                  catch e
+                    if e.error isnt "unknown-parent"
+                      console.trace()
+                      console.error "[justdo-jira-integration] Remove issue sprint parnet failed.", e
+                # Add sprint parent
+                else if new_sprint_mountpoint?
+                  try
+                    grid_data.addParent task_doc._id, {parent: new_sprint_mountpoint, order: 0}, justdo_admin_id
+                  catch e
+                    if e.error isnt "parent-already-exists"
+                      console.trace()
+                      console.error "[justdo-jira-integration] Add issue sprint parnet failed.", e
 
               # Update sprint field for subtasks
               if req_body.issue.fields.issuetype.name isnt "Epic"
