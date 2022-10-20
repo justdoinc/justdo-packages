@@ -10,11 +10,10 @@ _.extend JustdoJiraIntegration.prototype,
       if not (active_justdo = APP.modules.project_page.curProj())?
         return
 
-      jira_doc_id = active_justdo.getProjectConfigurationSetting(JustdoJiraIntegration.projects_collection_jira_doc_id)
-
       # Refresh subscription upon switching Justdo
       @jira_collection_subscription?.stop?()
-      @jira_collection_subscription = Meteor.subscribe "jiraCollection", jira_doc_id
+      if (jira_doc_id = active_justdo.getProjectConfigurationSetting(JustdoJiraIntegration.projects_collection_jira_doc_id))?
+        @jira_collection_subscription = Meteor.subscribe "jiraCollection", jira_doc_id
 
     @registered_pseudo_custom_fields = []
     @registerConfigTemplate()
