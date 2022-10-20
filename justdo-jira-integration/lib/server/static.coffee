@@ -31,13 +31,14 @@ _.extend JustdoJiraIntegration,
   epic_link_custom_field_id = "customfield_10014"
 
   # XXX On-perm
-  # epic_link_custom_field_id: epic_link_custom_field_id
-  # task_id_custom_field_id: "customfield_10113"
-  # project_id_custom_field_id: "customfield_10112"
-  # last_updated_custom_field_id: "customfield_10114"
-  # start_date_custom_field_id = "customfield_10115"
-  # end_date_custom_field_id = "customfield_10116"
-  # sprint_custom_field_id = "customfield_10110"
+  # epic_link_custom_field_id = "customfield_10102"
+  # task_id_custom_field_id: "customfield_10201"
+  # project_id_custom_field_id: "customfield_10202"
+  # last_updated_custom_field_id: "customfield_10200"
+  # start_date_custom_field_id = "customfield_10203"
+  # end_date_custom_field_id = "customfield_10204"
+  # sprint_custom_field_id = "customfield_10106"
+  # story_point_estimate_custom_field_id = "customfield_10107"
 
   start_date_custom_field_id: start_date_custom_field_id
   end_date_custom_field_id: end_date_custom_field_id
