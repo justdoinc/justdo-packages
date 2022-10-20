@@ -1272,15 +1272,19 @@ _.extend JustdoJiraIntegration.prototype,
 
   fetchJiraProjectKeyById: (justdo_id, jira_project_id) ->
     client = @getJiraClientForJustdo(justdo_id).v2
-    client.projects.getProject {projectIdOrKey: jira_project_id}
-      .then (res) =>
-        query =
-          "server_info.id": @getJiraServerIdFromApiClient client
-        ops =
-          $set:
-            "jira_projects.#{jira_project_id}.key": res.key
-        @jira_collection.update query, ops
-        return
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "projects.getProject", {projectIdOrKey: jira_project_id}, client
+    if err?
+      err = err?.response?.data or err
+      console.error "[justdo_jira_integration] Failed to fetch project key", err
+      return
+
+    query =
+      "server_info.id": @getJiraServerIdFromApiClient client
+    ops =
+      $set:
+        "jira_projects.#{jira_project_id}.key": res.key
+    @jira_collection.update query, ops
+
     return
 
   getJiraProjectKeyById: (jira_project_id) ->
