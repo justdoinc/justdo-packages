@@ -1,10 +1,14 @@
 Template.justdo_jira_integration_project_setting.onCreated ->
-  @OAuth1_login_link_rv = new ReactiveVar ""
-  APP.justdo_jira_integration.getOAuth1LoginLink JD.activeJustdoId(), (err, link) =>
+  @oAuth_login_link_rv = new ReactiveVar ""
+  if APP.justdo_jira_integration.getAuthTypeIfJiraInstanceIsOnPerm() is "oauth1"
+    link_getter = "getOAuth1LoginLink"
+  else
+    link_getter = "getOAuth2LoginLink"
+  APP.justdo_jira_integration[link_getter] JD.activeJustdoId(), (err, link) =>
     if err?
       console.error err.response
       return
-    @OAuth1_login_link_rv.set link
+    @oAuth_login_link_rv.set link
     return
 
   # @OAuth2_login_link_rv = new ReactiveVar ""
@@ -16,9 +20,7 @@ Template.justdo_jira_integration_project_setting.onCreated ->
   #   return
   #
 Template.justdo_jira_integration_project_setting.helpers
-  OAuth1LoginLink: ->Template.instance().OAuth1_login_link_rv.get()
-
-  # OAuth2LoginLink: -> Template.instance().OAuth2_login_link_rv.get()
+  oAuthLoginLink: -> Template.instance().oAuth_login_link_rv.get()
 
   serverInfo: ->
     return APP.justdo_jira_integration.getJiraServerInfoFromJustdoId JD.activeJustdoId()
