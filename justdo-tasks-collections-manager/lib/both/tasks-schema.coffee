@@ -308,6 +308,9 @@ _.extend JustdoTasksCollectionsManager.prototype,
                 label: "Next 30 days",
                 relative_range: [1, 30]
               }
+              {
+                type: "custom-range"
+              }
             ]
           }
 
@@ -438,6 +441,9 @@ _.extend JustdoTasksCollectionsManager.prototype,
                 id: "due-in-30-days",
                 label: "Due within 30 days",
                 relative_range: [1, 30]
+              }
+              {
+                type: "custom-range"
               }
             ]
           }

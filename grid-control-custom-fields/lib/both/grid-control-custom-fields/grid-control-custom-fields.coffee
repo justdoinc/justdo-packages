@@ -518,6 +518,9 @@ _.extend GridControlCustomFields,
                   label: "All past",
                   relative_range: [null, -1]
                 }
+                {
+                  type: "custom-range"
+                }
               ]
 
           # END IF field_type "date"
