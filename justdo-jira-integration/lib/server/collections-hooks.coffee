@@ -66,7 +66,7 @@ _.extend JustdoJiraIntegration.prototype,
 
       task_creater_email = Meteor.users.findOne(user_id, {fields: {emails: 1}})?.emails?[0]?.address
       jira_account = self.getJiraUser justdo_id, {email: task_creater_email}
-      jira_account_id = jira_account?[0]?.accountId
+      jira_account_id_or_name = jira_account?[0]?.accountId or jira_account?[0]?.name
 
       req =
         fields:
@@ -78,11 +78,17 @@ _.extend JustdoJiraIntegration.prototype,
           [JustdoJiraIntegration.project_id_custom_field_id]: justdo_id
           [JustdoJiraIntegration.task_id_custom_field_id]: task_id
           [JustdoJiraIntegration.last_updated_custom_field_id]: new Date()
-      if jira_account_id?
-        req.fields.assignee =
-          accountId: jira_account_id
-        req.fields.reporter =
-          accountId: jira_account_id
+      if jira_account_id_or_name?
+        if self.isJiraInstanceCloud()
+          req.fields.assignee =
+            accountId: jira_account_id_or_name
+          req.fields.reporter =
+            accountId: jira_account_id_or_name
+        else
+          req.fields.assignee =
+            name: jira_account_id_or_name
+          req.fields.reporter =
+            name: jira_account_id_or_name
 
       # If task is added under a Jira issue, add parent before creating task in Jira
       if (parent_issue_id = parent_task?.jira_issue_id)?

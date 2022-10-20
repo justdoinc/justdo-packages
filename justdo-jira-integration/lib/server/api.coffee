@@ -1451,10 +1451,7 @@ _.extend JustdoJiraIntegration.prototype,
     client = @getJiraClientForJustdo(justdo_id)
     if options?.email?
       query =
-        query: options.email
-      # Jira cloud and server uses different query key. Here we include both for Jira server.
-      if @getAuthTypeIfJiraInstanceIsOnPerm()?
-        query.username = options.email
+        username: options.email
     # AccountId is only available for Jira cloud instances.
     if @isJiraInstanceCloud() and options?.account_id?
       query = {accountId: options.account_id}
