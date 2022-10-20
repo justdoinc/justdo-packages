@@ -1,6 +1,6 @@
 {URL, URLSearchParams} = JustdoHelpers.url
 root = exports ? @
-root.URL = -> URL
+root.URL = URL
 {Version2Client, AgileClient} = Npm.require "jira.js"
 crypto = Npm.require "crypto"
 OAuth = Npm.require "oauth-1.0a"
