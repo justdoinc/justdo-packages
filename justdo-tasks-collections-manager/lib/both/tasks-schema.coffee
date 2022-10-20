@@ -702,6 +702,9 @@ _.extend JustdoTasksCollectionsManager.prototype,
                 label: "Last 30 days",
                 relative_range: [-30, null]
               }
+              {
+                type: "custom-range"
+              }
             ]
           }
 
@@ -793,6 +796,9 @@ _.extend JustdoTasksCollectionsManager.prototype,
                 id: "last-30-days",
                 label: "Last 30 days",
                 relative_range: [-30, null]
+              }
+              {
+                type: "custom-range"
               }
             ]
           }

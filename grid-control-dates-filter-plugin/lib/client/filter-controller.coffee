@@ -99,6 +99,15 @@ DatesFilterControllerConstructor = (context) ->
       """
 
       filter_options_html += option_item
+    
+    if filter_option.type == "custom-range"
+      option_item = """
+        <li value='custom-range'>
+          <i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i>
+          <input id="custom-range-start" class="custom-range-input" type="date"> - <input id="custom-range-end" class="custom-range-input" type="date">
+        </li>
+      """
+      filter_options_html += option_item
 
   # note, the reason why we seperate the ul for the dropdown-header is that
   # the vertical scroll of the members ul, when there are many members, go
@@ -148,6 +157,58 @@ DatesFilterControllerConstructor = (context) ->
 
     return
 
+  $(@controller).on "click", "li[value=custom-range] .fa-li", (e) =>
+    $el = $(e.target).closest("li")
+
+    # Shallow copy filter_state if is object
+    filter_state = @column_filter_state_ops.getColumnFilter()
+    if filter_state?
+      filter_state = _.extend {}, filter_state
+    else
+      filter_state = {}
+    
+    if $el.hasClass("selected")
+      delete filter_state.custom_range
+    else
+      custom_range_start = $el.find("#custom-range-start").val()
+      custom_range_end = $el.find("#custom-range-end").val()
+      filter_state.custom_range = {
+        start: custom_range_start
+        end: custom_range_end
+      }
+
+    if _.isEmpty(filter_state)
+      @column_filter_state_ops.clearColumnFilter()
+    else
+      @column_filter_state_ops.setColumnFilter(filter_state)
+    
+    return
+  
+  $(@controller).on "change", ".custom-range-input", (e) =>
+    $el = $(e.target).closest("li")
+
+    # Shallow copy filter_state if is object
+    filter_state = @column_filter_state_ops.getColumnFilter()
+    if filter_state?
+      filter_state = _.extend {}, filter_state
+    else
+      filter_state = {}
+    
+    if $el.hasClass("selected")
+      custom_range_start = $el.find("#custom-range-start").val()
+      custom_range_end = $el.find("#custom-range-end").val()
+      filter_state.custom_range = {
+        start: custom_range_start
+        end: custom_range_end
+      }
+
+    if _.isEmpty(filter_state)
+      @column_filter_state_ops.clearColumnFilter()
+    else
+      @column_filter_state_ops.setColumnFilter(filter_state)
+  
+    return
+
   @refresh_state()
 
   return @
@@ -169,6 +230,11 @@ _.extend DatesFilterControllerConstructor.prototype,
     if (relative_ranges = filter_state.relative_ranges)?
       for relative_range in relative_ranges
         $("[value=relative-range-#{relative_range}]", @controller).addClass("selected")
+
+    if filter_state.custom_range?
+      $("[value=custom-range]", @controller).addClass("selected")
+      $("#custom-range-start", @controller).val(filter_state.custom_range.start)
+      $("#custom-range-end", @controller).val(filter_state.custom_range.end)
 
     return
 
@@ -236,6 +302,18 @@ columnFilterStateToQuery = (column_filter_state, context) ->
       else
         context.column_filter_state_ops.setColumnFilter(column_filter_state)
 
+  if (custom_range = column_filter_state.custom_range)?
+    {start, end} = custom_range
+    start = moment(start)
+    end = moment(end)
+    range_query = {}
+    if start.isValid()
+      range_query.$gte = start.toDate()
+    if end.isValid()
+      range_query.$lte = end.toDate()
+    if not _.isEmpty(range_query)
+      ranges_queries.push(range_query)
+
   if _.isEmpty ranges_queries
     return {}
 
@@ -256,12 +334,17 @@ getSelectAllFilterState = (context) ->
 
   filter_options = context.column_schema_definition.grid_column_filter_settings.options.filter_options
   for filter_option in filter_options
-    if filter_option.type != "relative-range"
-      console.error "Unknown filter_option type: filter_option.type"
+    if filter_option.type == "relative-range"
+      result.relative_ranges.push filter_option.id
 
-      return
-
-    result.relative_ranges.push filter_option.id
+    if filter_option.type == "custom-range"
+      $el = context.grid_control.$filter_dropdown
+      custom_range_start = $el.find("#custom-range-start").val()
+      custom_range_end = $el.find("#custom-range-end").val()
+      result.custom_range = {
+        start: custom_range_start
+        end: custom_range_end
+      }
 
   return result
 
