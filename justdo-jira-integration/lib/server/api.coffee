@@ -1641,9 +1641,11 @@ _.extend JustdoJiraIntegration.prototype,
       if res.total > (new_start_at = res.startAt + res.maxResults)
         issue_search_body.startAt = new_start_at
         await @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, jira_server_time, options, responseProcessor
-      else if options?.perform_resync_if_discrepencies_found is true
-        await @resyncIssuesIfDiscrepenciesAreFound jira_server_id, jira_server_time
-
+      else if _.isEmpty @issues_with_discrepancies
+        @markDataIntegrityCheckpoint jira_server_id, jira_server_time
+        console.log "[justdo-jira-integration] Data integrity check completed. No discrepencies found."
+      else if options?.perform_resync_if_discrepencies_found
+        @resyncIssuesIfDiscrepenciesAreFound jira_server_id, jira_server_time
     return
 
   getAuthTypeIfJiraInstanceIsOnPerm: ->
@@ -1744,11 +1746,6 @@ _.extend JustdoJiraIntegration.prototype,
     return
 
   resyncIssuesIfDiscrepenciesAreFound: (jira_server_id, jira_server_time) ->
-    if _.isEmpty @issues_with_discrepancies
-      @markDataIntegrityCheckpoint jira_server_id, jira_server_time
-      console.log "[justdo-jira-integration] Data integrity check completed. No discrepencies found."
-      return
-
     console.warn "[justdo-jira-integration] Data inconsistency found in issues #{@issues_with_discrepancies}. Performing resync..."
 
     issue_search_body =
@@ -1783,7 +1780,7 @@ _.extend JustdoJiraIntegration.prototype,
     return
 
   markDataIntegrityCheckpoint: (jira_server_id, jira_server_time) ->
-    @ongoing_checkpoint = null
+    @_stopOngoingCheckpoint()
     @jira_collection.update {"server_info.id": jira_server_id}, {$set: {last_data_integrity_check: jira_server_time}}
     return
 
