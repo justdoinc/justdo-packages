@@ -122,6 +122,10 @@ _.extend JustdoJiraIntegration.prototype,
         label: "Time of last refresh token update"
         type: Date
         optional: true
+      token_secret:
+        label: "Token secret for OAuth 1"
+        type: String
+        optional: true
       jira_projects:
         label: "Mounted Jira projects and their metadata"
         type: Object

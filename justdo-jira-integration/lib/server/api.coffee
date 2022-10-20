@@ -48,8 +48,12 @@ _.extend JustdoJiraIntegration.prototype,
 
     # Refresh Api token immidiately upon server startup
     @_setupJiraClientForAllJustdosWithRefreshToken()
-    # Refresh Api token every set interval
-    @_registerDbMigrationScriptForRefreshingAccessToken()
+
+    # OAuth1 access token has 5 years of life according to doc
+    # https://developer.atlassian.com/cloud/jira/platform/jira-rest-api-oauth-authentication/ (Step 4)
+    if @getAuthTypeIfJiraInstanceIsOnPerm() isnt "oauth1"
+      # Refresh Api token every set interval
+      @_registerDbMigrationScriptForRefreshingAccessToken()
 
     # Check alive for Jira Api client and webhook and attempt to repair.
     @_registerDbMigrationScriptForWebhookHealthCheck()
@@ -601,18 +605,18 @@ _.extend JustdoJiraIntegration.prototype,
         result = sign.sign @private_key, "base64"
         return result
     req =
-      url: "#{@jira_server_host}/plugins/servlet/oauth/request-token"
+      url: new URL("/plugins/servlet/oauth/request-token", @jira_server_host).toString()
       method: "POST"
     req.headers = oauth.toHeader oauth.authorize req
 
-    res = Meteor.wrapAsync(HTTP.post)("#{@jira_server_host}/plugins/servlet/oauth/request-token", req)
+    res = Meteor.wrapAsync(HTTP.post)(req.url, req)
     if res?.statusCode isnt 200
       # Error occured
       return res
     res_params = new URLSearchParams res.content
     oauth_token = res_params.get "oauth_token"
     @oauth_token_to_justdo_id[oauth_token] = justdo_id
-    return "#{@jira_server_host}/plugins/servlet/oauth/authorize?oauth_token=#{oauth_token}"
+    return new URL("/plugins/servlet/oauth/authorize?oauth_token=#{oauth_token}", @jira_server_host).toString()
 
   getOAuth2LoginLink: (justdo_id, user_id) ->
     if not APP.projects.isProjectAdmin justdo_id, user_id
@@ -788,7 +792,7 @@ _.extend JustdoJiraIntegration.prototype,
 
   _setupJiraClientForAllJustdosWithRefreshToken: ->
     first_call = true
-    @jira_collection.find({refresh_token: {$exists: true}}, {fields: {server_info: 1, refresh_token: 1}}).forEach (jira_doc) =>
+    @jira_collection.find({access_token: {$exists: true}}, {fields: {server_info: 1, refresh_token: 1, access_token: 1, token_secret: 1}}).forEach (jira_doc) =>
       console.log "Refreshing Jira OAuth2 access token for Jira server #{jira_doc.server_info?.name}"
       if first_call
         @refreshJiraAccessToken jira_doc, {emit_event: true}
@@ -799,7 +803,23 @@ _.extend JustdoJiraIntegration.prototype,
 
   _parseAndStoreJiraCredentials: (res, options) ->
     if res.statusCode is 200
-      {access_token, refresh_token} = res.data
+      if @getAuthTypeIfJiraInstanceIsOnPerm() is "oauth1"
+        res_params = new URLSearchParams res.content
+        access_token = res_params.get "oauth_token"
+        token_secret = res_params.get "oauth_token_secret"
+        jira_clients_config =
+          authentication:
+            oauth:
+              consumerKey: @consumer_key
+              consumerSecret: @private_key
+              accessToken: access_token
+              tokenSecret: token_secret
+      else
+        {access_token, refresh_token} = res.data
+        jira_clients_config =
+          authentication:
+            oauth2:
+              accessToken: access_token
 
       if @isJiraInstanceCloud()
         get_accessible_resources_options =
@@ -822,18 +842,17 @@ _.extend JustdoJiraIntegration.prototype,
       ops =
         $set:
           access_token: access_token
-          refresh_token: refresh_token
           server_info: server_info
           access_token_updated: new Date()
-          refresh_token_updated: new Date()
+      if refresh_token?
+        ops.$set.refresh_token = refresh_token
+        ops.$set.refresh_token_updated = new Date()
+      if token_secret?
+        ops.$set.token_secret = token_secret
 
       @jira_collection.upsert query, ops
 
-      jira_clients_config =
-        host: jira_client_host
-        authentication:
-          oauth2:
-            accessToken: access_token
+      jira_clients_config.host = jira_client_host
       @clients[server_info.id] =
         v2: new Version2Client jira_clients_config
         agile: new AgileClient jira_clients_config
@@ -911,7 +930,7 @@ _.extend JustdoJiraIntegration.prototype,
               return result
 
           get_oauth_token_req =
-            url: "http://52.11.164.210:8080/plugins/servlet/oauth/access-token"
+            url: new URL("/plugins/servlet/oauth/access-token", self.jira_server_host).toString()
             method: "POST"
 
           get_oauth_token_req.headers = oauth.toHeader oauth.authorize get_oauth_token_req, {key: oauth_token}
@@ -920,21 +939,10 @@ _.extend JustdoJiraIntegration.prototype,
             if err?
               console.error err.response
               return
-            res_params = new URLSearchParams res.content
-
-            self.jira_collection.update {justdo_id}, {$set: {"server_info.url": "http://52.11.164.210:8080"}}
-
-            jira_clients_config =
-              host: self.jira_server_host
-              authentication:
-                oauth:
-                  consumerKey: self.consumer_key
-                  consumerSecret: self.private_key
-                  accessToken: res_params.get "oauth_token"
-                  tokenSecret: res_params.get "oauth_token_secret"
-            self.clients[justdo_id] =
-              v2: new Version2Client jira_clients_config
-              agile: new AgileClient jira_clients_config
+            jira_server_id = await self._parseAndStoreJiraCredentials res
+            jira_doc_id = self.jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {_id: 1}})._id
+            APP.projects.configureProject justdo_id, {[JustdoJiraIntegration.projects_collection_jira_doc_id]: jira_doc_id}, self._getJustdoAdmin justdo_id
+            return
 
         # If code exists, assume OAuth2 toward Jira cloud is in use.
         if code?
@@ -978,32 +986,45 @@ _.extend JustdoJiraIntegration.prototype,
   refreshJiraAccessToken: (jira_doc, options) ->
     self = @
     if _.isString jira_doc
-      jira_doc = @jira_collection.findOne jira_doc, {fields: {refresh_token: 1}}
+      jira_doc = @jira_collection.findOne jira_doc, {fields: {refresh_token: 1, access_token: 1, token_secret: 1, "server_info.id": 1}}
 
     if options?.emit_event
       @emit "beforeJiraApiTokenRefresh"
 
-    req =
-      headers:
-        "Content-Type": "application/json"
-      data:
-        grant_type: "refresh_token"
-        refresh_token: jira_doc.refresh_token
-        client_id: @client_id
-        client_secret: @client_secret
+    if @getAuthTypeIfJiraInstanceIsOnPerm() is "oauth1"
+      jira_clients_config =
+        host: @jira_server_host
+        authentication:
+          oauth:
+            consumerKey: @consumer_key
+            consumerSecret: @private_key
+            accessToken: jira_doc.access_token
+            tokenSecret: jira_doc.token_secret
+      @clients[jira_doc.server_info?.id] =
+        v2: new Version2Client jira_clients_config
+        agile: new AgileClient jira_clients_config
+    else
+      req =
+        headers:
+          "Content-Type": "application/json"
+        data:
+          grant_type: "refresh_token"
+          refresh_token: jira_doc.refresh_token
+          client_id: @client_id
+          client_secret: @client_secret
 
-    get_oauth_token_endpoint = self.get_oauth_token_endpoint
+      get_oauth_token_endpoint = self.get_oauth_token_endpoint
 
-    if @getAuthTypeIfJiraInstanceIsOnPerm() is "oauth2"
-      get_oauth_token_endpoint = @convertOAuth2RequestAndEndpointForJiraServer get_oauth_token_endpoint, req
+      if @getAuthTypeIfJiraInstanceIsOnPerm() is "oauth2"
+        get_oauth_token_endpoint = @convertOAuth2RequestAndEndpointForJiraServer get_oauth_token_endpoint, req
 
-    HTTP.post get_oauth_token_endpoint, req, (err, res) =>
-      if err?
-        console.error err
-        console.error "[justdo-jira-integration] Failed to refresh access token", err.response
+      HTTP.post get_oauth_token_endpoint, req, (err, res) =>
+        if err?
+          console.error err
+          console.error "[justdo-jira-integration] Failed to refresh access token", err.response
+          return
+        @_parseAndStoreJiraCredentials res, options
         return
-      @_parseAndStoreJiraCredentials res, options
-      return
 
     return
 
@@ -1447,7 +1468,7 @@ _.extend JustdoJiraIntegration.prototype,
       return res
 
   getJiraServerIdFromApiClient: (client) ->
-    if @getAuthTypeIfJiraInstanceIsOnPerm() is "oauth2"
+    if @getAuthTypeIfJiraInstanceIsOnPerm()?
       return "private-server"
     return client?.config?.host?.replace "https://api.atlassian.com/ex/jira/", ""
 
