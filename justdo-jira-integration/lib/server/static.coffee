@@ -80,6 +80,7 @@ _.extend JustdoJiraIntegration,
     "Actual Start": "jd_start_date"
     "Actual End": "jd_end_date"
     "Epic Link": epic_link_custom_field_id
+    [story_point_estimate_custom_field_id]: "Story Points"
 
   justdo_field_to_jira_field_map:
     title:
@@ -359,7 +360,7 @@ _.extend JustdoJiraIntegration,
           return null
     jira_story_point:
       id: story_point_estimate_custom_field_id
-      name: story_point_estimate_custom_field_id
+      name: "Story Points"
       mapper: (justdo_id, field, destination, req_body) ->
         if not field?
           return null
