@@ -50,6 +50,14 @@ _.extend JustdoDbMigrations.prototype,
                       # we don't need to test whether the user is belonging to the project
             APP.projects.requireUserIsMemberOfProject data.project_id, user_id
 
+            # CHECK PERMISSIONS:
+            # Use the legacy BeforeBulkUpdateExecution handler to which the permissions plugin is binding
+            # to set the hooks that ensures the process is allowed permissions wise.
+            modifiers = @modifiersGenerator(data, user_id)
+            for modifier in modifiers
+              if not APP.projects.processHandlers("BeforeBulkUpdateExecution", data.project_id, ids_to_update, modifier, user_id)
+                throw self._error "invalid-job-data", "For jobs of type #{job_type} the BeforeBulkUpdateExecution handler failed"
+
           {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided, items_to_cancel_ownership_transfer_of_provided, items_to_set_as_is_removed_owner_provided} = membersProvided(data)
 
           if not user_id? and items_to_assume_ownership_of_provided
