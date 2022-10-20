@@ -868,13 +868,6 @@ _.extend JustdoJiraIntegration.prototype,
       if options?.emit_event
         @emit "afterJiraApiTokenRefresh", server_info.id
 
-      # Fetch all fix versions and sprints, then store in db
-      mounted_jira_projects = @jira_collection.findOne("server_info.id": server_info.id, {fields: {jira_projects: 1}})?.jira_projects
-      for jira_project_id of mounted_jira_projects
-        @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {client: client.agile}
-        @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {client: client.v2}
-        @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {client: client.v2}
-
       return server_info.id
 
   convertOAuth2RequestAndEndpointForJiraServer: (end_point, request) ->
