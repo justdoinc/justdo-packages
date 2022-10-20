@@ -436,7 +436,7 @@ _.extend JustdoJiraIntegration.prototype,
           jira_issue_id:
             $ne: null
           jira_issue_type:
-            $in: ["Sub-task", "Subtask"]
+            $in: ["Sub-task", "Sub-Task", "Subtask"]
         @tasks_collection.find(query, {fields: {jira_issue_id: 1, "parents2.parent": 1}}).forEach (child_task) => removeAllParents child_task
 
       # At last, remove the issue that was removed in Jira.
@@ -1494,7 +1494,7 @@ _.extend JustdoJiraIntegration.prototype,
     query_options =
       fields:
         _id: 1
-    return @jira_collection.findOne(query, query_options)._id
+    return @jira_collection.findOne(query, query_options)?._id
 
   # XXX for demo only
   _getHarcodedEmailByAccountId: (jira_account_id) ->
