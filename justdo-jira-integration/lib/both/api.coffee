@@ -30,3 +30,11 @@ _.extend JustdoJiraIntegration.prototype,
     check justdo_id, String
     jira_doc_id = @projects_collection.findOne(justdo_id, {fields: {"conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": 1}})?.conf?[JustdoJiraIntegration.projects_collection_jira_doc_id]
     return @jira_collection.findOne(jira_doc_id, {fields: {server_info: 1}})?.server_info
+
+  getAuthTypeIfJiraInstanceIsOnPerm: ->
+    if @server_type.includes "server"
+      return @server_type.replace "server-", ""
+    return
+
+  isJiraInstanceCloud: ->
+    return @server_type.includes "cloud"

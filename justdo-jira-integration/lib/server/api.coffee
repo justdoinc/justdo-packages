@@ -1641,14 +1641,6 @@ _.extend JustdoJiraIntegration.prototype,
         @resyncIssuesIfDiscrepenciesAreFound jira_server_id, jira_server_time
     return
 
-  getAuthTypeIfJiraInstanceIsOnPerm: ->
-    if @server_type.includes "server"
-      return @server_type.replace "server-", ""
-    return
-
-  isJiraInstanceCloud: ->
-    return @server_type.includes "cloud"
-
   getRootUrlForCallbacksAndRedirects: ->
     return process.env.JIRA_ROOT_URL_CUSTOM_DOMAIN or process.env.ROOT_URL
 

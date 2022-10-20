@@ -16,6 +16,10 @@ options_schema =
       type: "skip-type-check"
       optional: false
       bind_to_instance: true
+
+    server_type:
+      type: String
+      bind_to_instance: true
   server:
     jira_server_host:
       type: String
@@ -40,9 +44,6 @@ options_schema =
     get_oauth_token_endpoint: 
       type: String
       optional: true
-      bind_to_instance: true
-    server_type:
-      type: String
       bind_to_instance: true
 
 # options_schema
