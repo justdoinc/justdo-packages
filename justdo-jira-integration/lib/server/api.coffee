@@ -1148,10 +1148,11 @@ _.extend JustdoJiraIntegration.prototype,
                 parent_id = parseInt parent.id
                 # XXX Hardcoded users length in query. Better approach is needed to determine whether the parent task is added completely along with its users.
                 # if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_id: parent_id}, {fields: {_id: 1}})?._id)?
-                if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_id: parent_id, "users.1": {$exists: true}}, {fields: {_id: 1}})?._id)?
+                if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: parseInt(jira_project_id), jira_issue_id: parent_id, "users.1": {$exists: true}}, {fields: {_id: 1}})?._id)?
                   issues.push issue
                   continue
-                path_to_add = "/#{parent_task_id}/"
+                path_to_add += "#{parent_task_id}/"
+
               create_task_from_jira_issue_options =
                 sprints_mountpoints: sprints_to_mountpoint_task_id
                 fix_versions_mountpoints: fix_versions_to_mountpoint_task_id
