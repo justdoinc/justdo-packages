@@ -232,6 +232,9 @@ _.extend Projects.prototype,
                     className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
                     closeButton: false
 
+                  # We add this one for case the failure is due to a corrupted cache, to ensure the next load will go fine.
+                  APP.projects.forceBrowserCacheInitPayloadRefreshIdTokenRefresh(project_id)
+
                 else
                   init_payload_sync_id = JustdoHelpers.datesMin(init_payload_sync_id, ...results) # No issue calling datesMin with init_payload_sync_id=undefined it will simply be ignored.
 
