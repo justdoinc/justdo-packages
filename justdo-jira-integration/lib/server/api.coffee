@@ -1454,12 +1454,18 @@ _.extend JustdoJiraIntegration.prototype,
     check options.account_id, Match.Maybe String
     check options.email, Match.Maybe String
     client = @getJiraClientForJustdo(justdo_id)
-    if options?.email?
-      query =
-        username: options.email
-    # AccountId is only available for Jira cloud instances.
-    if @isJiraInstanceCloud() and options?.account_id?
-      query = {accountId: options.account_id}
+
+    query = {}
+
+    if @getAuthTypeIfJiraInstanceIsOnPerm()? and options?.email?
+      query.username = options.email
+
+    if @isJiraInstanceCloud()
+      # AccountId is only available for Jira cloud instances.
+      if options?.account_id?
+        query.accountId = options.account_id
+      if options?.email?
+        query.query = options.email
 
     {err, res} = @pseudoBlockingJiraApiCallInsideFiber "userSearch.findUsers", query, client.v2
     if err?
