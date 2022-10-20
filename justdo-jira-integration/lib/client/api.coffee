@@ -15,11 +15,12 @@ _.extend JustdoJiraIntegration.prototype,
 
   setupCustomFeatureMaintainer: ->
     self = @
+    refresh_subscription_computation = null
 
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoJiraIntegration.project_custom_feature_id,
         installer: =>
-          self.refresh_subscription_computation = Tracker.autorun ->
+          refresh_subscription_computation = Tracker.autorun ->
             if not (active_justdo = APP.modules.project_page.curProj())?
               return
 
@@ -142,13 +143,12 @@ _.extend JustdoJiraIntegration.prototype,
 
         destroyer: =>
           APP.modules.project_page.removePseudoCustomFields self.registered_pseudo_custom_fields
+          refresh_subscription_computation?.stop?()
 
           return
 
     @onDestroy =>
       custom_feature_maintainer.stop()
-      self.refresh_subscription_computation?.stop?()
-
       return
 
     return
