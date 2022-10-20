@@ -269,17 +269,17 @@ _.extend JustdoJiraIntegration.prototype,
 
       # Updates toward a specific fix version
       if (jira_fix_version_id = doc.jira_fix_version_mountpoint_id)? and not _.isEmpty(supported_fields = _.pick modifier.$set, ["start_date", "due_date", "title", "description"])
-        {start_date, due_date, title, description} = supported_fields
         req =
           id: jira_fix_version_id
-        if start_date?
-          req.startDate = start_date
-        if due_date?
-          req.releaseDate = due_date
-        if title?
-          req.name = title
-        if description?
-          req.description = description
+
+        if _.has supported_fields, "start_date"
+          req.startDate = supported_fields.start_date
+        if _.has supported_fields, "due_date"
+          req.releaseDate = supported_fields.due_date
+        if _.has supported_fields, "title"
+          req.name = supported_fields.title
+        if _.has supported_fields, "description"
+          req.description = supported_fields.description
 
         {err} = self.pseudoBlockingJiraApiCallInsideFiber "projectVersions.updateVersion", req, client.v2
         if err?

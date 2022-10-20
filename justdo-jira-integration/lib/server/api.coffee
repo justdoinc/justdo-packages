@@ -483,6 +483,13 @@ _.extend JustdoJiraIntegration.prototype,
       if not (jira_doc_id = @isJiraProjectMounted jira_project_id)?
         return
 
+      fix_version_start_date = fix_version.startDate or fix_version.userStartDate or null
+      fix_version_due_date = fix_version.releaseDate or fix_version.userReleaseDate or null
+      if fix_version_start_date?
+        fix_version_start_date = moment(fix_version_start_date).format "YYYY-MM-DD"
+      if fix_version_due_date?
+        fix_version_due_date = moment(fix_version_due_date).format "YYYY-MM-DD"
+
       tasks_query =
         jira_fix_version_mountpoint_id: fix_version.id
       # XXX This query is to fetch project_id for getting the Justdo admin user id for updated_by in tasks.update()
@@ -490,8 +497,8 @@ _.extend JustdoJiraIntegration.prototype,
       tasks_ops =
         $set:
           title: fix_version.name
-          start_date: fix_version.startDate or null
-          due_date: fix_version.releaseDate or null
+          start_date: fix_version_start_date
+          due_date: fix_version_due_date
           jira_last_updated: new Date()
           updated_by: @_getJustdoAdmin justdo_id
       @tasks_collection.update tasks_query, tasks_ops
