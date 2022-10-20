@@ -48,7 +48,7 @@ APP.getEnv (env) ->
         # Jira Server (oauth1) relavent credentials
         jira_server_host: env.JIRA_INTEGRATION_SERVER_HOST
         consumer_key: "OAuthKey"
-        private_key: env.JIRA_INTEGRATION_OAUTH_SECRET
+        private_key: env.JIRA_INTEGRATION_OAUTH_SECRET.replace /\\n/g, "\n"
 
     if server_type is "server-oauth2"
       _.extend options,
