@@ -6,15 +6,6 @@ _.extend JustdoJiraIntegration.prototype,
     if @destroyed
       return
 
-    refresh_subscription_computation = Tracker.autorun =>
-      if not (active_justdo = APP.modules.project_page.curProj())?
-        return
-
-      # Refresh subscription upon switching Justdo
-      @jira_collection_subscription?.stop?()
-      if (jira_doc_id = active_justdo.getProjectConfigurationSetting(JustdoJiraIntegration.projects_collection_jira_doc_id))?
-        @jira_collection_subscription = Meteor.subscribe "jiraCollection", jira_doc_id
-
     @registered_pseudo_custom_fields = []
     @registerConfigTemplate()
     @registerTaskPaneSection()
@@ -28,6 +19,15 @@ _.extend JustdoJiraIntegration.prototype,
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoJiraIntegration.project_custom_feature_id,
         installer: =>
+          self.refresh_subscription_computation = Tracker.autorun ->
+            if not (active_justdo = APP.modules.project_page.curProj())?
+              return
+
+            # Refresh subscription upon switching Justdo
+            self.jira_collection_subscription?.stop?()
+            if (jira_doc_id = active_justdo.getProjectConfigurationSetting(JustdoJiraIntegration.projects_collection_jira_doc_id))?
+              self.jira_collection_subscription = Meteor.subscribe "jiraCollection", jira_doc_id
+            return
 
           APP.modules.project_page.setupPseudoCustomField "jira_issue_key",
             label: "Issue Key"
