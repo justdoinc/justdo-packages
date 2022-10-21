@@ -900,22 +900,6 @@ _.extend JustdoJiraIntegration.prototype,
         {code, state:justdo_id, oauth_token} = @request.query # equiv. justdo_id = state
         # If oauth_token exists, assume OAuth1 toward Jira server is in use
         if oauth_token?
-          # XXX Remove when custom field are fetched using API
-          JustdoJiraIntegration.task_id_custom_field_id = "customfield_10200"
-          JustdoJiraIntegration.project_id_custom_field_id = "customfield_10201"
-          JustdoJiraIntegration.last_updated_custom_field_id = "customfield_10202"
-
-          JustdoJiraIntegration.start_date_custom_field_id = "customfield_10101"
-          JustdoJiraIntegration.justdo_field_to_jira_field_map.start_date.id = "customfield_10101"
-          JustdoJiraIntegration.justdo_field_to_jira_field_map.start_date.name = "Target start"
-
-          JustdoJiraIntegration.end_date_custom_field_id = "customfield_10102"
-          JustdoJiraIntegration.justdo_field_to_jira_field_map.end_date.id = "customfield_10102"
-          JustdoJiraIntegration.justdo_field_to_jira_field_map.end_date.name = "Target end"
-
-          JustdoJiraIntegration.sprint_custom_field_id = "customfield_10108"
-          JustdoJiraIntegration.justdo_field_to_jira_field_map.jira_sprint.id = "customfield_10108"
-
           justdo_id = self.oauth_token_to_justdo_id[oauth_token]
 
           oauth = new OAuth
