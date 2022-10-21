@@ -412,8 +412,11 @@ APP.executeAfterAppLibCode ->
 
       editor_tpl = Template.closestInstance "task_pane_item_details_members_editor"
       members_filter = editor_tpl.members_filter.get()
-
-      return JustdoHelpers.filterUsersDocsArray(action_users, members_filter, {sort: true})
+      filtered_users = JustdoHelpers.filterUsersDocsArray(action_users, members_filter, {sort: true})
+      self_user = _.find filtered_users, (user) -> user._id == Meteor.userId()
+      if self_user?
+        filtered_users = [self_user].concat(_.without(filtered_users, self_user))
+      return filtered_users
 
     action_users_empty: ->
       return @action_users_reactive_var.get()?.length == 0
