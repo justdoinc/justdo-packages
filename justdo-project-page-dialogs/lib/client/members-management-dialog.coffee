@@ -103,7 +103,7 @@ APP.executeAfterAppLibCode ->
     user_id = Meteor.userId()
 
     if task_doc.owner_id == user_id
-      return true
+      return 1
 
     gd = APP.modules.project_page.gridData()
     task_path = gd?._grid_data_core.getAllCollectionPaths(task_id)?[0]
@@ -118,12 +118,19 @@ APP.executeAfterAppLibCode ->
         return
       )
 
-    return result
+    if result
+      return 2
+
+    return -1
 
   addDisabledReasonIfNeccessary = (users, task_id) ->
     for user in users
-      if user._id == Meteor.userId() and _isOwnerOfAnySubTask(task_id)
-        user.disabled_reason = "You own some tasks in the sub-tree hence you cannot remove yourself"
+      if user._id == Meteor.userId()
+        is_owner_result = _isOwnerOfAnySubTask(task_id)
+        if is_owner_result == 1
+          user.disabled_reason = "You are the owner of this task hence you cannot remove yourself from it"
+        else if is_owner_result == 2
+          user.disabled_reason = "You own some tasks in the sub-tree hence you cannot remove yourself"
     
     return users
 
