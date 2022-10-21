@@ -87,6 +87,10 @@ APP.executeAfterAppLibCode ->
 
     members = JustdoHelpers.filterUsersDocsArray(members, members_filter, {sort: true})
 
+    self_user = _.find members, (user) -> user._id == Meteor.userId()
+    if self_user?
+      members = _.without members, self_user
+      
     for member in members
       member.proceed.set state
 
