@@ -169,6 +169,9 @@ _.extend JustdoTasksContextMenu.prototype,
 
           return
         )
+        
+        if counter == 0
+          return false
           
         return condition_is_satisfied
 
