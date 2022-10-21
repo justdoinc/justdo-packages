@@ -116,7 +116,7 @@ _.extend JustdoJiraIntegration,
             jira_issue_id = parseInt req_body.issue.id
             jira_project_id = parseInt req_body.issue.fields.project.id
 
-            if (task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {_id: 1, jira_sprint: 1}}))?
+            if (task_doc = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_issue_id: jira_issue_id}, {fields: {_id: 1, jira_sprint: 1}}))?
               grid_data = APP.projects._grid_data_com
               justdo_admin_id = @_getJustdoAdmin justdo_id
 
@@ -204,7 +204,7 @@ _.extend JustdoJiraIntegration,
               old_fix_version_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: parseInt field.from}, {fields: {_id: 1}})
               ops.$pull =
                 jira_fix_version: field.fromString
-            task_doc = @tasks_collection.findOne({jira_issue_id: jira_issue_id}, {fields: {parents2: 1}})
+            task_doc = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_issue_id: jira_issue_id}, {fields: {parents2: 1}})
             if _.isString field.to
               new_fix_version_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: parseInt field.to}, {fields: {_id: 1}})
               ops.$addToSet =
