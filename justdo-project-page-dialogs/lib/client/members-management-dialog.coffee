@@ -76,8 +76,36 @@ APP.executeAfterAppLibCode ->
 
     for member in members
       member.proceed = new ReactiveVar default_proceed_val
+      member.disabled_reasons = new Set()
+      member.disabled_reasons_dep = new Tracker.Dependency()
 
     return members
+
+  restrictRemoveSelfAndOthers = ->
+    proceed_type = null
+    keep_users = users_to_keep.get()
+
+    for user in keep_users
+      if user.proceed.get() == false
+        if user._id == Meteor.userId()
+          proceed_type = "remove_self"
+        else
+          proceed_type = "remove_others"
+        break
+    
+    if proceed_type == "remove_self"
+      for user in keep_users
+        if user._id != Meteor.userId()
+          addDisabledReason(user, "You can't remove yourself and other users at the same time.")
+    else if proceed_type == "remove_others"
+      for user in keep_users
+        if user._id == Meteor.userId()
+          addDisabledReason(user, "You can't remove yourself and other users at the same time.")
+    else
+      for user in keep_users
+        deleteDisabledReason(user, "You can't remove yourself and other users at the same time.")
+    
+    return
 
   _setProceedStateForAllUsersInReactiveVarExcludingFiltered = (reactive_var, state) ->
     members = reactive_var.get()
@@ -93,6 +121,8 @@ APP.executeAfterAppLibCode ->
       
     for member in members
       member.proceed.set state
+
+    restrictRemoveSelfAndOthers()
 
     return
 
@@ -127,14 +157,24 @@ APP.executeAfterAppLibCode ->
 
     return -1
 
+  addDisabledReason = (user, reason) ->
+    user.disabled_reasons.add(reason)
+    user.disabled_reasons_dep.changed()
+    return
+  
+  deleteDisabledReason = (user, reason) ->
+    user.disabled_reasons.delete(reason)
+    user.disabled_reasons_dep.changed()
+    return
+
   addDisabledReasonIfNeccessary = (users, task_id) ->
     for user in users
       if user._id == Meteor.userId()
         is_owner_result = _isOwnerOfAnySubTask(task_id)
         if is_owner_result == 1
-          user.disabled_reason = "You are the owner of this task hence you cannot remove yourself from it"
+          addDisabledReason(user, "You are the owner of this task hence you cannot remove yourself from it")
         else if is_owner_result == 2
-          user.disabled_reason = "You own some tasks in the sub-tree hence you cannot remove yourself"
+          deleteDisabledReason(user, "You own some tasks in the sub-tree hence you cannot remove yourself")
     
     return users
 
@@ -420,6 +460,7 @@ APP.executeAfterAppLibCode ->
       self_user = _.find filtered_users, (user) -> user._id == Meteor.userId()
       if self_user?
         filtered_users = [self_user].concat(_.without(filtered_users, self_user))
+      
       return filtered_users
 
     action_users_empty: ->
@@ -478,12 +519,17 @@ APP.executeAfterAppLibCode ->
         return "(You)"
 
       return ""
+    
+    disabledReason: ->
+      @disabled_reasons_dep.depend()
+      return @disabled_reasons.values().next().value
+
 
   Template.task_pane_item_details_members_editor_user_btn.events
     "click .user-btn": (e, tpl) ->
-      if @disabled_reason
+      if (disabled_reason = @disabled_reasons.values().next().value)
         JustdoSnackbar.show
-          text: @disabled_reason
+          text: disabled_reason
         return
         
       clicked_user_id = @_id
@@ -497,6 +543,8 @@ APP.executeAfterAppLibCode ->
       new_state = not current_state
 
       @proceed.set(new_state)
+
+      restrictRemoveSelfAndOthers()
 
       return
 
