@@ -58,20 +58,31 @@
 
 <template name="task_pane_item_details_members_editor_section">
   <div class="members-list-container members-list-{{action_id}}-container">
-    {{#if $not action_users_empty}}{{!-- If there are members for this action --}}
-      <div class="section-caption">
-        <div class="d-flex">
-          {{caption}}
-          <div class="select-all text-primary">All</div>
-          <div class="select-none text-primary">None</div>
-        </div>
-        {{#if showInviteMembersSection}}
-          <div class="invite-new-member-dropdown text-primary">
+    <div class="section-caption">
+      <div class="d-flex">
+        {{caption}}
+        <div class="select-all text-primary">All</div>
+        <div class="select-none text-primary">None</div>
+      </div>
+      {{#if showInviteMembersSection}}
+        <div class="invite-new-member-dropdown dropdown">
+          <div class="invite-new-member-toggle text-primary" data-toggle="dropdown" aria-expanded="true">
             <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
             New member
           </div>
-        {{/if}}
-      </div>
+          <div class="dropdown-menu jd-p-075 animate slideIn shadow-lg border-0">
+            <div class="invite-members-section">
+              <div class="d-flex align-items-center">
+                <input class="form-control form-control-sm mr-2" type="text" placeholder="{{#if isAddAsGuest}}Guest's{{else}}Member's{{/if}} Email">
+                <button class="btn btn-primary btn-sm" type="button" name="button">Invite</button>
+              </div>
+              {{> add_as_guest_toggle controller=add_as_guest_toggle_controller}}
+            </div>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+    {{#if $not action_users_empty}}{{!-- If there are members for this action --}}
       <div class="members-editor-dialog-{{action_id}}-section members-list">
         <div class="action-users">
           {{#each action_users_filtered}}
@@ -86,13 +97,6 @@
         <div class="no-members">
           {{no_members_msg}}<br>
         </div>
-      </div>
-    {{/if}}
-
-    {{#if showInviteMembersSection}}
-      <div class="invite-members-section bg-light">
-        <div class="invite-members-section-caption">Invite new members</div>
-        <button class="show-add-members-dialog btn btn-primary btn-sm" type="button">Invite</button>
       </div>
     {{/if}}
   </div>

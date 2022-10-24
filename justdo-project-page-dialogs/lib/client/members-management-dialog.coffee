@@ -434,6 +434,14 @@ APP.executeAfterAppLibCode ->
   # Editor dialog sections
   #
 
+  Template.task_pane_item_details_members_editor_section.onRendered ->
+    $(".invite-new-member-dropdown").on "shown.bs.dropdown", ->
+      $(".invite-members-section input").val("").focus()
+
+      return
+
+    return
+
   Template.task_pane_item_details_members_editor_section.helpers
     perform_action: ->
       return @proceed_action_reactive_var.get()
@@ -469,6 +477,11 @@ APP.executeAfterAppLibCode ->
 
     "click .show-add-members-dialog": (e, tpl) ->
       ProjectPageDialogs.showMemberDialog()
+
+    "click .add-as-guest-toggle": (e, tpl) ->
+      e.stopPropagation()
+
+      return
 
   #
   # Editor dialog section user button
@@ -651,15 +664,15 @@ APP.executeAfterAppLibCode ->
 
       if ops.process_status == "in-progress"
         if ops.data.members_to_add.length > 0
-          message = "Add members to the task... "
+          message = "Adding members to the task... "
         if ops.data.members_to_remove.length > 0
-          message = "Remove members from the task... "
+          message = "Removing members from the task... "
 
       if ops.process_status == "pending"
         if ops.data.members_to_add.length > 0
-          message = "Add members to the task... pending"
+          message = "Adding members to the task... pending"
         if ops.data.members_to_remove.length > 0
-          message = "Remove members from the task... pending"
+          message = "Removing members from the task... pending"
 
       if ops.process_status == "terminated"
         if ops.data.members_to_add.length > 0
@@ -696,7 +709,7 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .recent-batched-view-toggle": ->
+    "click .recent-batched-view-toggle": (e, tpl) ->
       $(".recent-batched-info").toggleClass "show-less"
 
       return
