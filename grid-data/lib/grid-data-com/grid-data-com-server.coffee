@@ -735,6 +735,10 @@ _.extend GridDataCom.prototype,
         ret = {}
         items_found = 0
         addItemToRet = (doc) ->
+          if not doc?
+            # Will happen if addItemToRet was called for the output of findOne and nothing was found.
+            return
+
           items_found += 1
 
           ret[doc._id] = doc
@@ -768,7 +772,7 @@ _.extend GridDataCom.prototype,
           if perform_as?
             query.users = perform_as
 
-          query.$or = _.map last_level_items, (item_id) -> {"parents.#{item_id}": {$exists: true}}
+          query["parents2.parent"] = {$in: last_level_items}
 
           last_level_items = []
           @find(query, {fields: fields}).forEach (doc) ->
