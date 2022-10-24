@@ -7,6 +7,9 @@
   </div>
   <div class="subscribers-search-wrapper">
     <input class="subscribers-search form-control form-control-sm" type="text" placeholder="Members">
+    {{#if showSearchClearButton}}
+      <svg class="jd-icon subscribers-search-x"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+    {{/if}}
   </div>
   <div class="users-board">
     {{#each taskMembers}}

@@ -1,6 +1,7 @@
 Template.task_pane_chat_section_subscribers_management.onCreated ->
   @members_search_val_rv = new ReactiveVar null
   @selected_subscribed_users_ids_rv = new ReactiveVar null
+  @show_search_clear_button_rv = new ReactiveVar false
 
   @getMainTemplate = =>
     return Template.closestInstance("task_pane_chat_section")
@@ -74,6 +75,9 @@ Template.task_pane_chat_section_subscribers_management.helpers
 
     return false
 
+  showSearchClearButton: ->
+    return Template.instance().show_search_clear_button_rv.get()
+
 Template.task_pane_chat_section_subscribers_management.events
   "click .sm-cancel": (e, tpl) ->
     main_tpl = tpl.getMainTemplate()
@@ -128,7 +132,16 @@ Template.task_pane_chat_section_subscribers_management.events
 
     if _.isEmpty value
       tpl.members_search_val_rv.set null
+      tpl.show_search_clear_button_rv.set false
+    else
+      tpl.members_search_val_rv.set value
+      tpl.show_search_clear_button_rv.set true
 
-    tpl.members_search_val_rv.set value
+    return
+
+  "click .subscribers-search-x": (e, tpl) ->
+    $(".subscribers-search").val ""
+    tpl.members_search_val_rv.set null
+    tpl.show_search_clear_button_rv.set false
 
     return
