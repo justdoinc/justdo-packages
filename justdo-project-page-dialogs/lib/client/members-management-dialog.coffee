@@ -195,7 +195,7 @@ APP.executeAfterAppLibCode ->
         if is_owner_result == 1
           addDisabledReason(user, "You are the owner of this task hence you cannot remove yourself from it")
         else if is_owner_result == 2
-          deleteDisabledReason(user, "You own some tasks in the sub-tree hence you cannot remove yourself")
+          addDisabledReason(user, "You own some tasks in the sub-tree hence you cannot remove yourself")
     
     return users
 
