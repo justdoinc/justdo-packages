@@ -61,6 +61,7 @@ APP.executeAfterAppLibCode ->
   users_to_add = new ReactiveVar null
   cascade = new ReactiveVar true
   notes = new ReactiveVar {}, JustdoHelpers.jsonComp
+  proceed_type = null
 
   _getUsersDocsByIdsWithProceedFlag = (members_array, default_proceed_val=true) ->
     # Returns APP.helpers.getUsersDocsByIds(members_array) output with
@@ -84,6 +85,7 @@ APP.executeAfterAppLibCode ->
   restrictRemoveSelfAndOthers = ->
     proceed_type = null
     keep_users = users_to_keep.get()
+    add_users = users_to_add.get()
 
     for user in keep_users
       if user.proceed.get() == false
@@ -93,21 +95,40 @@ APP.executeAfterAppLibCode ->
           proceed_type = "remove_others"
         break
     
+    for user in add_users
+      if user.proceed.get() == true
+        if user._id == Meteor.userId()
+          proceed_type = "remove_self"
+        else
+          proceed_type = "remove_others"
+        break
+
     if proceed_type == "remove_self"
       for user in keep_users
+        if user._id != Meteor.userId()
+          addDisabledReason(user, "You can't remove yourself and other users at the same time.")
+      for user in add_users
         if user._id != Meteor.userId()
           addDisabledReason(user, "You can't remove yourself and other users at the same time.")
     else if proceed_type == "remove_others"
       for user in keep_users
         if user._id == Meteor.userId()
           addDisabledReason(user, "You can't remove yourself and other users at the same time.")
+      for user in add_users
+        if user._id == Meteor.userId()
+          addDisabledReason(user, "You can't remove yourself and other users at the same time.")
     else
       for user in keep_users
+        deleteDisabledReason(user, "You can't remove yourself and other users at the same time.")
+      for user in add_users
         deleteDisabledReason(user, "You can't remove yourself and other users at the same time.")
     
     return
 
   _setProceedStateForAllUsersInReactiveVarExcludingFiltered = (reactive_var, state) ->
+    if proceed_type == "remove_self"
+      return
+
     members = reactive_var.get()
 
     editor_tpl = Template.closestInstance "task_pane_item_details_members_editor"
