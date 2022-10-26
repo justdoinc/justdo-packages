@@ -167,10 +167,10 @@ Template.invite_new_user_dialog.events
     return
 
   "paste .users-email-input": (e, tpl) ->
-    setTimeout ->
+    Meteor.defer ->
       tpl.recognizeEmails()
-    , 50
-
+      return
+      
     return
 
   "click .users-email-add": (e, tpl) ->
@@ -301,6 +301,7 @@ Template.invite_new_user_dialog.events
   "click .invite": (e, tpl) ->
     active_justdo = APP.modules.project_page.helpers.curProj()
     selected_tasks = tpl.selected_tasks_rv.get()
+    selected_tasks_set = new Set(selected_tasks)
     users = tpl.users.get()
     proxy_users = _.map _.filter(users, (user) -> user.role is "proxy"), (user) ->
       obj_for_creating_proxy_user =
@@ -313,18 +314,12 @@ Template.invite_new_user_dialog.events
 
     # Prepare the array of task ids for assigning membership to new users/members
     if not _.isEmpty selected_tasks
-      grid_data = APP.modules.project_page.gridControl()._grid_data
-      # Get ids of sub-tree tasks of selected_tasks
-      subtree_tasks_ids = []
-      tree_traversing_options =
-        expand_only: false
-        filtered_tree: false
-      for task_id in selected_tasks
-        grid_data.each "/#{task_id}/", tree_traversing_options, (section, item_type, item_obj) ->
-          if item_obj?
-            subtree_tasks_ids.push item_obj._id
-          return
-      selected_tasks = selected_tasks.concat subtree_tasks_ids
+      gdc = APP.modules.project_page.gridControl()._grid_data._grid_data_core
+      subtree = gdc.getAllItemsKnownDescendantsIdsObj(selected_tasks)
+      for task_id of subtree
+        selected_tasks_set.add task_id
+
+    invite_member_promises = []
 
     _.each users, (user) ->
       invite_member_option =
@@ -335,17 +330,20 @@ Template.invite_new_user_dialog.events
           first_name: user.first_name
           last_name: user.last_name
 
-      active_justdo.inviteMember invite_member_option, (err, user_id) ->
-        if err?
-          # XXX add error handler
+      promise = new Promise (resolve, reject) ->
+        active_justdo.inviteMember invite_member_option, (err, user_id) ->
+          if err?
+            console.error err
+            reject()
+            return
+
+          resolve(user_id)
           return
-
-        # Assign membership to selected_tasks as well as their sub-tree tasks
-        # This is done for each user instead of batched since we obtain user_id inside this callback
-        # The use of $each is to comply with the set of allowed operators
-        active_justdo.bulkUpdate selected_tasks, {$addToSet: {users: {$each: [user_id]}}}
-
-        return
+      invite_member_promises.push promise
+    
+    Promise.all(invite_member_promises).then (invited_members) ->
+      active_justdo.bulkUpdate Array.from(selected_tasks_set), {$addToSet: {users: {$each: invited_members}}}
+      return
 
     return
 
