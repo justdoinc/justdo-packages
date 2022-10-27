@@ -370,15 +370,15 @@ APP.executeAfterAppLibCode ->
       displayName = JustdoHelpers.displayName # shortcut
 
       if (removing_current_task_owner = _notes?.removing_current_task_owner)?
-        notes_messages.push "#{displayName(@owner_id)} is task ##{@seqId} owner. Following the membership cancellation, you will become the task owner."
+        notes_messages.push "<strong>#{displayName(@owner_id)}</strong> is <strong>task ##{@seqId}</strong> owner. Following the membership cancellation, you will become the task owner."
 
       if _notes?.removing_self
-        notes_messages.push "You're removing yourself from task ##{@seqId}. You won't be able to undo this action."
+        notes_messages.push "You're removing yourself from <strong>task ##{@seqId}</strong>. You won't be able to undo this action."
       if (subtasks_owners_ids_pending_removal = _notes?.subtasks_owners_ids_pending_removal)?
         subtasks_owners_ids_pending_removal = _.keys subtasks_owners_ids_pending_removal
 
         if subtasks_owners_ids_pending_removal.length == 1
-          notes_messages.push "#{displayName(subtasks_owners_ids_pending_removal[0])} is an owner of some sub-tasks. Following the membership cancellation you will become the owner of these tasks."
+          notes_messages.push "<strong>#{displayName(subtasks_owners_ids_pending_removal[0])}</strong> is an owner of some sub-tasks. Following the membership cancellation you will become the owner of these tasks."
         else
           message = ""
 
