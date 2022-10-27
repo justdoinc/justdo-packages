@@ -123,11 +123,11 @@ _.extend JustdoTasksContextMenu.prototype,
     @registerSectionItem "main", "remove-subtree",
       position: 400
       data:
-        label: "Remove sub-tree"
+        label: "Remove with sub-tree"
 
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           task = APP.collections.Tasks.findOne(task_id, {fields: {seqId: 1, title: 1}})
-          bootbox.confirm "Are you sure to remove the entire sub-tree of #{JustdoHelpers.taskCommonName(task)}?", (result) ->
+          bootbox.confirm "Are you sure to remove the task and its entire sub-tree of #{JustdoHelpers.taskCommonName(task)}?", (result) ->
             if result
               if (gd = APP.modules.project_page.gridData())?
                 paths = [task_path]
