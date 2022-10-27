@@ -51,11 +51,12 @@ Template.invite_new_user_dialog.onCreated ->
           registered: false
 
         # Registered user
-        if (user_name = registered_users_details[email])?
+        if (user_info = registered_users_details[email])?
           _.extend user,
-            first_name: user_name.first_name
-            last_name: user_name.last_name
+            first_name: user_info.first_name
+            last_name: user_info.last_name
             registered: true
+            is_proxy: user_info.is_proxy
 
         users.push user
         return

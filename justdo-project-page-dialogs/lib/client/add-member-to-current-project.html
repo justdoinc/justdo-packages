@@ -127,9 +127,15 @@
 <template name="batch_add_user_row">
   <td>
     <select class="user-type-select form-select form-select-sm">
-      <option value="member" {{isUserTypeSelected "member"}}>Member</option>
-      <option value="guest" {{isUserTypeSelected "guest"}}>Guest</option>
-      <option value="proxy" {{isUserTypeSelected "proxy"}}>Proxy</option>
+      {{#if is_proxy}}
+        <option value="proxy" selected>Proxy</option>
+      {{else}}
+        <option value="member" {{isUserTypeSelected "member"}}>Member</option>
+        <option value="guest" {{isUserTypeSelected "guest"}}>Guest</option>
+        {{#unless registered}}
+          <option value="proxy" {{isUserTypeSelected "proxy"}}>Proxy</option>
+        {{/unless}}
+      {{/if}}
     </select>
   </td>
   <td>
