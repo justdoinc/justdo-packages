@@ -56,7 +56,9 @@ Template.invite_new_user_dialog.onCreated ->
             first_name: user_info.first_name
             last_name: user_info.last_name
             registered: true
-            is_proxy: user_info.is_proxy
+            if user_info.is_proxy
+              is_proxy: true
+              role: "proxy"
 
         users.push user
         return
@@ -306,7 +308,7 @@ Template.invite_new_user_dialog.events
     selected_tasks = tpl.selected_tasks_rv.get()
     selected_tasks_set = new Set(selected_tasks)
     users = tpl.users.get()
-    proxy_users = _.map _.filter(users, (user) -> user.role is "proxy"), (user) ->
+    proxy_users = _.map _.filter(users, (user) -> user.role is "proxy" and not user.registered), (user) ->
       obj_for_creating_proxy_user =
         email: user.email
         profile: _.pick user, "first_name", "last_name"
