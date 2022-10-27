@@ -63,8 +63,10 @@ Template.invite_new_user_dialog.onCreated ->
 
       tpl.users.set users
 
+      return
+
     $el.val ""
-    $(".users-table-wrapper").animate({ scrollTop: $(".users-table-wrapper").prop("scrollHeight")}, 300)
+    $(".users-table-wrapper").animate({scrollTop: $(".users-table-wrapper").prop("scrollHeight")}, 300)
 
     return
 
@@ -341,7 +343,8 @@ Template.invite_new_user_dialog.events
           resolve(user_id)
           return
       invite_member_promises.push promise
-    
+      return
+
     Promise.all(invite_member_promises).then (invited_members) ->
       active_justdo.bulkUpdate Array.from(selected_tasks_set), {$addToSet: {users: {$each: invited_members}}}
       return
