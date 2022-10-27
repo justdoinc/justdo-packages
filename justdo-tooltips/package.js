@@ -93,5 +93,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/core-tooltips/gantt-info/gantt-info.sass", client);
   api.addFiles("lib/client/core-tooltips/gantt-info/gantt-info.coffee", client);
 
+  api.addFiles("lib/client/core-tooltips/add-new-member-dialog-info/add-new-member-dialog-info.html", client);
+  api.addFiles("lib/client/core-tooltips/add-new-member-dialog-info/add-new-member-dialog-info.sass", client);
+  api.addFiles("lib/client/core-tooltips/add-new-member-dialog-info/add-new-member-dialog-info.coffee", client);
+  
   api.export("JustdoTooltips", client);
 });
