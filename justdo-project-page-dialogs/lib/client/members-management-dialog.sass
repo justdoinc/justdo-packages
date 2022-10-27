@@ -109,26 +109,12 @@
 
 .members-section-info
   position: absolute
-  right: 12px
-  left: 12px
-  bottom: 12px
-  font-size: 15px
-  .notes
-    margin-bottom: 4px
-    ul
-      margin: 0px
-      padding: 0px
-      list-style-type: none
-      opacity: 0.75
-    li
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08)
-      padding: 8px 32px 8px 0px
-      &:last-child
-        border-bottom: none
-  .recent-batched-info,
-  .notes
+  right: 120px
+  left: 120px
+  bottom: -20px
+  .recent-batched-info
     position: relative
-    padding: 10px 16px 10px 16px
+    padding: 4px 12px
     display: flex
     flex-direction: column
     border-radius: 4px
@@ -177,8 +163,7 @@
         cursor: pointer
         text-decoration: underline
 
-    .show-less,
-    .notes-close
+    .show-less
       stroke-width: 3
       padding: 4px
       cursor: pointer
@@ -189,6 +174,31 @@
       right: 12px
       &:hover
         background-color: rgba(255, 255, 255, 0.12)
+
+.notes
+  margin-bottom: 4px
+  ul
+    margin: 0px
+    padding: 0px
+    list-style-type: none
+    opacity: 0.75
+  li
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08)
+    padding: 8px 32px 8px 0px
+    &:last-child
+      border-bottom: none
+  .notes-close
+    stroke-width: 3
+    padding: 4px
+    cursor: pointer
+    color: white
+    background-color: rgba(255, 255, 255, 0.08)
+    position: absolute
+    top: 12px
+    right: 12px
+    &:hover
+      background-color: rgba(255, 255, 255, 0.12)
+
 
 .members-editor-dialog
   .modal-dialog
