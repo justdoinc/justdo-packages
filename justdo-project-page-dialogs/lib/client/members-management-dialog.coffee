@@ -14,7 +14,7 @@ APP.executeAfterAppLibCode ->
   users_to_add = new ReactiveVar null
   cascade = new ReactiveVar true
   notes = new ReactiveVar {}, JustdoHelpers.jsonComp
-  proceed_type = null
+  proceed_type_rv = new ReactiveVar null
 
   _getUsersDocsByIdsWithProceedFlag = (members_array, default_proceed_val=true) ->
     # Returns APP.helpers.getUsersDocsByIds(members_array) output with
@@ -76,10 +76,11 @@ APP.executeAfterAppLibCode ->
       for user in add_users
         deleteDisabledReason(user, "You can't remove yourself and other users at the same time.")
     
+    proceed_type_rv.set(proceed_type)
     return
 
   _setProceedStateForAllUsersInReactiveVarExcludingFiltered = (reactive_var, state) ->
-    if proceed_type == "remove_self"
+    if proceed_type_rv.get() == "remove_self"
       return
 
     members = reactive_var.get()
@@ -380,6 +381,7 @@ APP.executeAfterAppLibCode ->
           notes_messages.push message
 
       return notes_messages
+    isRemovingSelf: -> proceed_type_rv.get() == "remove_self"
 
   Template.task_pane_item_details_members_editor.events
     "change .cascade-action-checkbox": (e) ->

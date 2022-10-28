@@ -3,7 +3,7 @@
     <label class="search-icon"><i class="fa fa-search"></i></label>
     <input type="text" class="members-search-input" value="" placeholder="Find member">
   </div>
-  <div class="members-section">
+  <div class="members-section {{#if isRemovingSelf}}remove-self{{/if}}">
     {{#each sections}}
       {{> task_pane_item_details_members_editor_section}}
     {{/each}}
