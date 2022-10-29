@@ -42,6 +42,15 @@ Template.invite_new_user_dialog.onCreated ->
         console.log error
         return
 
+      existing_members_set = new Map()
+      for justdo_member in JD.activeJustdo({members: 1})?.members
+        role = "member"
+        if justdo_member.is_admin
+          role = "admin"
+        if justdo_member.is_guest
+          role = "guest"
+        existing_members_set.set justdo_member.user_id, {role: role}
+
       _.each emails_array, (email) ->
         user =
           first_name: ""
@@ -53,12 +62,16 @@ Template.invite_new_user_dialog.onCreated ->
         # Registered user
         if (user_info = registered_users_details[email])?
           _.extend user,
+            _id: user_info._id
             first_name: user_info.first_name
             last_name: user_info.last_name
             registered: true
             if user_info.is_proxy
               is_proxy: true
               role: "proxy"
+            if (justdo_member = existing_members_set.get user_info._id)
+              is_justdo_member: true
+              role: justdo_member.role
 
         users.push user
         return
