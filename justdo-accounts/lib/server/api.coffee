@@ -97,6 +97,7 @@ _.extend JustdoAccounts.prototype,
       for email_def in user_doc.emails
         if emails.indexOf(email_def.address) > -1
           result[email_def.address] =
+            _id: user_doc._id
             first_name: user_doc.profile.first_name
             last_name: user_doc.profile.last_name
             is_proxy: user_doc.is_proxy
