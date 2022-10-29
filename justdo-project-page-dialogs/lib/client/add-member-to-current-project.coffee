@@ -271,30 +271,37 @@ Template.invite_new_user_dialog.events
         selected_tasks_set.add task_id
 
     invite_member_promises = []
+    existing_members_ids = []
 
     _.each users, (user) ->
-      invite_member_option =
-        email: user.email
-        add_as_guest: user.role is "guest"
-      if not user.registered and user.role isnt "proxy" # Proxy users are handled above despite the registered flag isn't updated.
-        invite_member_option.profile =
-          first_name: user.first_name
-          last_name: user.last_name
+      if user.is_justdo_member
+        existing_members_ids.push user._id
+      else
+        invite_member_option =
+          email: user.email
+          add_as_guest: user.role is "guest"
+        if not user.registered and user.role isnt "proxy" # Proxy users are handled above despite the registered flag isn't updated.
+          invite_member_option.profile =
+            first_name: user.first_name
+            last_name: user.last_name
 
-      promise = new Promise (resolve, reject) ->
-        active_justdo.inviteMember invite_member_option, (err, user_id) ->
-          if err?
-            console.error err
-            reject()
+        promise = new Promise (resolve, reject) ->
+          active_justdo.inviteMember invite_member_option, (err, user_id) ->
+            if err?
+              console.error err
+              reject()
+              return
+
+            resolve(user_id)
             return
-
-          resolve(user_id)
-          return
-      invite_member_promises.push promise
+        invite_member_promises.push promise
       return
 
     Promise.all(invite_member_promises).then (invited_members) ->
-      active_justdo.bulkUpdate Array.from(selected_tasks_set), {$addToSet: {users: {$each: invited_members}}}
+      active_justdo.bulkUpdate Array.from(selected_tasks_set), {$addToSet: {users: {$each: invited_members.concat existing_members_ids}}}
+      return
+
+    return
 
 Template.batch_add_user_group.onCreated ->
   @users = @data.users
