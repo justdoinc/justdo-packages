@@ -93,31 +93,29 @@ Template.invite_new_user_dialog.onRendered ->
   return
 
 Template.invite_new_user_dialog.helpers
-  usersExist: -> Template.instance().users.get().length
+  groupedUsers: ->
+    tpl = Template.instance()
+    all_users_rv = tpl.users
 
-  newUsers: ->
     new_users = []
-
-    for user in Template.instance().users.get()
-      if not user.registered
+    registered_users = []
+    existing_justdo_members = []
+    for user in all_users_rv.get()
+      if user.is_justdo_member
+        existing_justdo_members.push user
+      else if user.registered
+        registered_users.push user
+      else
         new_users.push user
 
-    return new_users
+    return {new_users, registered_users, existing_justdo_members}
 
-  registeredUsers: ->
-    registered_users = []
-
-    for user in Template.instance().users.get()
-      if user.registered
-        registered_users.push user
-
-    return registered_users
-
-  getUserRowData: ->
-    # Returns an obj of the user inside the {{#each}} loop along with tpl.users and tpl.users_validation_active_rv
-    # No need to create a new obj as "@" comes from newUsers/registeredUsers
+  getUserGroupData: (base_data) ->
+    base_data = base_data.hash
     tpl = Template.instance()
-    return _.extend @, {users: tpl.users, users_validation_active_rv: tpl.users_validation_active_rv}
+    return _.extend base_data, {users: tpl.users, users_validation_active_rv: tpl.users_validation_active_rv}
+
+  usersExist: -> Template.instance().users.get().length
 
   showInviteButton: -> Template.instance().show_invite_button_rv.get()
 
@@ -193,71 +191,6 @@ Template.invite_new_user_dialog.events
 
   "click .users-email-add": (e, tpl) ->
     tpl.recognizeEmails()
-
-    return
-
-  "click .members-all": (e, tpl) ->
-    el = $(e.target).closest(".members-all")
-    $user_section = el.parents(".users-section")
-    users = tpl.users.get()
-    registered = null
-
-    if $user_section.hasClass "new-users"
-      registered = false
-
-    if $user_section.hasClass "registered-users"
-      registered = true
-
-    _.each users, (user) ->
-      if user.registered == registered
-        user.role = "member"
-
-      return
-
-    tpl.users.set users
-
-    $user_section.find(".user-type-select").val "member"
-
-    return
-
-  "click .guests-all": (e, tpl) ->
-    el = $(e.target).closest(".guests-all")
-    $user_section = el.parents(".users-section")
-    users = tpl.users.get()
-    registered = null
-
-    if $user_section.hasClass "new-users"
-      registered = false
-
-    if $user_section.hasClass "registered-users"
-      registered = true
-
-    _.each users, (user) ->
-      if user.registered == registered
-        user.role = "guest"
-
-      return
-
-    tpl.users.set users
-
-    $user_section.find(".user-type-select").val "guest"
-
-    return
-
-  "click .proxy-all": (e, tpl) ->
-    el = $(e.target).closest(".proxy-all")
-    $user_section = el.parents(".users-section")
-    users = tpl.users.get()
-
-    _.each users, (user) ->
-      if not user.registered
-        user.role = "proxy"
-
-      return
-
-    tpl.users.set users
-
-    $user_section.find(".user-type-select").val "proxy"
 
     return
 
@@ -362,7 +295,84 @@ Template.invite_new_user_dialog.events
 
     Promise.all(invite_member_promises).then (invited_members) ->
       active_justdo.bulkUpdate Array.from(selected_tasks_set), {$addToSet: {users: {$each: invited_members}}}
+
+Template.batch_add_user_group.onCreated ->
+  @users = @data.users
+  @users_validation_active_rv = @data.users_validation_active_rv
+  @group_type = @data.group_type
+  @group_type_to_class_name_and_title =
+    new_users:
+      wrapper_class: "new-users"
+      title: "New Users"
+    registered_users:
+      wrapper_class: "registered-users"
+      title: "Existing Users"
+    existing_members:
+      wrapper_class: "existing-members"
+      title: "Existing JustDo Members"
+  return
+
+Template.batch_add_user_group.helpers
+  getGroupWrapperClassName: ->
+    tpl = Template.instance()
+    return tpl.group_type_to_class_name_and_title[tpl.group_type].wrapper_class
+
+  getGroupTitle: ->
+    tpl = Template.instance()
+    return tpl.group_type_to_class_name_and_title[tpl.group_type].title
+
+  getUserGroupType: ->
+    return Template.instance().group_type
+
+  getUserRowData: ->
+    # Returns an obj of the user inside the {{#each}} loop along with tpl.users and tpl.users_validation_active_rv
+    # No need to create a new obj as "@" comes from newUsers/registeredUsers
+    tpl = Template.instance()
+    return _.extend @, {users: tpl.users, users_validation_active_rv: tpl.users_validation_active_rv}
+
+Template.batch_add_user_group.events
+  "click .members-all": (e, tpl) ->
+    users = tpl.users.get()
+    registered = true
+
+    if tpl.group_type is "new_users"
+      registered = false
+
+    _.each users, (user) ->
+      if user.registered == registered and not user.is_proxy and not user.is_justdo_member
+        user.role = "member"
+
       return
+
+    tpl.users.set users
+
+    return
+
+  "click .guests-all": (e, tpl) ->
+    users = tpl.users.get()
+    registered = true
+
+    if tpl.group_type is "new_users"
+      registered = false
+
+    _.each users, (user) ->
+      if user.registered == registered and not user.is_proxy and not user.is_justdo_member
+        user.role = "guest"
+      return
+
+    tpl.users.set users
+
+    return
+
+  "click .proxy-all": (e, tpl) ->
+    users = tpl.users.get()
+
+    _.each users, (user) ->
+      if not user.registered
+        user.role = "proxy"
+      return
+
+    tpl.users.set users
 
     return
 
@@ -380,6 +390,11 @@ Template.batch_add_user_row.helpers
   showBorderIfEmpty: (name_type) ->
     if Template.instance().users_validation_active_rv.get() and _.isEmpty @[name_type]
       return "border-danger"
+    return
+
+  isDisabled: ->
+    if @is_proxy or @is_justdo_member
+      return "disabled"
     return
 
 Template.batch_add_user_row.events

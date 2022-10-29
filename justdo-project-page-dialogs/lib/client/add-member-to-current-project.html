@@ -6,73 +6,19 @@
           <input class="users-email-input form-control" placeholder="Type Enter or paste email/s i.e: name@example.com, name2@example.com">
           <button class="users-email-add btn btn-sm btn-primary {{#if showInviteButton}}show{{/if}}" type="button">invite</button>
         </div>
-          {{#if usersExist}}
-            {{#if newUsers}}
-              <div class="users-section new-users">
-                <div class="users-table-header">
-                  <div class="users-table-header-title">New Users</div>
-                  <div class="users-table-header-roles">
-                    Set all as:
-                    <div class="toolbar-role-item text-primary members-all">Member</div>
-                    <div class="toolbar-role-item text-primary guests-all">Guest</div>
-                    <div class="toolbar-role-item text-primary proxy-all">Proxy</div>
-                    <div class="toolbar-role-item text-primary role-info" jd-tt="add-new-member-dialog-info">?</div>
-                  </div>
-                </div>
-                <div class="users-table-wrapper">
-                  <table class="users-table table">
-                    <thead>
-                      <tr>
-                        <th class="type">type</th>
-                        <th class="full-name">full name</th>
-                        <th class="email">email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {{#each newUsers}}
-                        <tr class="users-table-item">
-                        {{> batch_add_user_row getUserRowData}}
-                        </tr>
-                      {{/each}}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+          {{#with groupedUsers}}
+            {{#if new_users}}
+              {{> batch_add_user_group getUserGroupData grouped_users=new_users group_type="new_users"}}
             {{/if}}
-            {{#if registeredUsers}}
-              <div class="users-section registered-users">
-                <div class="users-table-header">
-                  <div class="users-table-header-title">New members</div>
-                  <div class="users-table-header-roles">
-                    Set all as:
-                    <div class="toolbar-role-item text-primary members-all">Member</div>
-                    <div class="toolbar-role-item text-primary guests-all">Guest</div>
-                    <div class="toolbar-role-item text-primary role-info" jd-tt="add-new-member-dialog-info">?</div>
-                  </div>
-                </div>
-                <div class="users-table-wrapper">
-                  <table class="users-table table">
-                    <thead>
-                      <tr>
-                        <th class="type">type</th>
-                        <th class="full-name">full name</th>
-                        <th class="email">email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {{#each registeredUsers}}
-                        <tr class="users-table-item">
-                          {{> batch_add_user_row getUserRowData}}
-                        </tr>
-                      {{/each}}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+            {{#if registered_users}}
+              {{> batch_add_user_group getUserGroupData grouped_users=registered_users group_type="registered_users"}}
+            {{/if}}
+            {{#if existing_justdo_members}}
+              {{> batch_add_user_group getUserGroupData grouped_users=existing_justdo_members group_type="existing_members"}}
             {{/if}}
           {{else}}
             <div class="users-wrapper-empty">No members</div>
-          {{/if}}
+          {{/with}}
       </div>
     </div>
     <div class="step-two">
@@ -124,11 +70,49 @@
   </div>
 </template>
 
+<template name="batch_add_user_group">
+  <div class="users-section {{getGroupWrapperClassName}}">
+    <div class="users-table-header">
+      <div class="users-table-header-title">{{getGroupTitle}}</div>
+      {{#unless $eq getUserGroupType "existing_members"}}
+        <div class="users-table-header-roles">
+          Set all as:
+          <div class="toolbar-role-item text-primary members-all">Member</div>
+          <div class="toolbar-role-item text-primary guests-all">Guest</div>
+          {{#if $eq getUserGroupType "new_users"}}
+            <div class="toolbar-role-item text-primary proxy-all">Proxy</div>
+          {{/if}}
+          <div class="toolbar-role-item text-primary role-info" jd-tt="add-new-member-dialog-info">?</div>
+        </div>
+      {{/unless}}
+    </div>
+    <div class="users-table-wrapper">
+      <table class="users-table table">
+        <thead>
+          <tr>
+            <th class="type">type</th>
+            <th class="full-name">full name</th>
+            <th class="email">email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each grouped_users}}
+            <tr class="users-table-item">
+            {{> batch_add_user_row getUserRowData}}
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</template>
+
 <template name="batch_add_user_row">
   <td>
-    <select class="user-type-select form-select form-select-sm">
-      {{#if is_proxy}}
-        <option value="proxy" selected>Proxy</option>
+    <select class="user-type-select form-select form-select-sm {{isDisabled}}">
+      {{#if $eq isDisabled "disabled"}}
+        <option value={{role}} selected>{{role}}</option>
       {{else}}
         <option value="member" {{isUserTypeSelected "member"}}>Member</option>
         <option value="guest" {{isUserTypeSelected "guest"}}>Guest</option>
