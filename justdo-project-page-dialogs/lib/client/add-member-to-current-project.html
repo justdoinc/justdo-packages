@@ -110,17 +110,21 @@
 
 <template name="batch_add_user_row">
   <td>
-    <select class="user-type-select form-select form-select-sm {{isDisabled}}">
-      {{#if $eq isDisabled "disabled"}}
-        <option value={{role}} selected>{{role}}</option>
-      {{else}}
-        <option value="member" {{isUserTypeSelected "member"}}>Member</option>
-        <option value="guest" {{isUserTypeSelected "guest"}}>Guest</option>
-        {{#unless registered}}
-          <option value="proxy" {{isUserTypeSelected "proxy"}}>Proxy</option>
-        {{/unless}}
-      {{/if}}
-    </select>
+    {{#if isDisabled}}
+      <div class="disabled-selection-text">{{role}}</div>
+    {{else}}
+      <select class="user-type-select form-select form-select-sm {{isDisabled}}">
+        {{#if $eq isDisabled "disabled"}}
+          <option value={{role}} selected>{{role}}</option>
+        {{else}}
+          <option value="member" {{isUserTypeSelected "member"}}>Member</option>
+          <option value="guest" {{isUserTypeSelected "guest"}}>Guest</option>
+          {{#unless registered}}
+            <option value="proxy" {{isUserTypeSelected "proxy"}}>Proxy</option>
+          {{/unless}}
+        {{/if}}
+      </select>
+    {{/if}}
   </td>
   <td>
     <div class="d-flex">
