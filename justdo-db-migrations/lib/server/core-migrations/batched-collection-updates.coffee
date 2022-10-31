@@ -8,8 +8,6 @@ TIMES_PER_SECOND_TO_CHECK_FOR_JOBS_FOR_IMMEDIATE_PROCESS = 5
 
 SECOND_MS = 1000
 
-console.log "HERE", {MAX_DOCS_UPDATES_PER_SECOND, TOTAL_IN_PROGRESS_JOBS_TO_HANDLE_PER_CYCLE, IMMEDIATE_PROCESS_THRESHOLD_DOCS}
-
 getNewProcessed = (job, max_items_to_process) ->
   new_processed = job.process_status_details.processed + max_items_to_process
   if new_processed > job.ids_to_update.length
