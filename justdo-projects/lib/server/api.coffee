@@ -1188,6 +1188,7 @@ _.extend Projects.prototype,
   #     optional: true
   _bulkUpdateTasksUsersOptionsCheckStructure:
     tasks: [String]
+    user_perspective_root_items: Match.Maybe([String])
     members_to_add: Match.Maybe([String])
     members_to_remove: Match.Maybe([String])
     items_to_assume_ownership_of: Match.Maybe([String])
@@ -1202,6 +1203,7 @@ _.extend Projects.prototype,
 
     data = _.extend(
             _.pick(options,
+              "user_perspective_root_items",
               "members_to_add",
               "members_to_remove",
               "items_to_assume_ownership_of",

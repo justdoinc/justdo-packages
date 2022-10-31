@@ -92,6 +92,7 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
 
               project.bulkUpdateTasksUsers
                 tasks: items_to_edit
+                user_perspective_root_items: [items_to_edit[0]]
                 members_to_add: members_ids_to_add
                 members_to_remove: members_ids_to_remove
                 items_to_assume_ownership_of: items_to_assume_ownership_of

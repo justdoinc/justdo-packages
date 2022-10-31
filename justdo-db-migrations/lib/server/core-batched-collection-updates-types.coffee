@@ -21,6 +21,13 @@ _.extend JustdoDbMigrations.prototype,
         data_schema: new SimpleSchema
           project_id:
             type: String
+          user_perspective_root_items: # The purpose of user_perspective_root_items is to be able to provide the user with
+                                       # meaningful message about the tasks that are/were involved in the job.
+                                       # Once a job is initiated, it is up to the job initiator to state which these
+                                       # items are, we are not verifying, beyond ensuring that they are indeed in the
+                                       # ids_to_update array.
+            type: [String]
+            optional: true
           members_to_add:
             type: [String]
             optional: true
@@ -68,6 +75,15 @@ _.extend JustdoDbMigrations.prototype,
 
           if not members_to_remove_provided and (items_to_assume_ownership_of_provided or items_to_cancel_ownership_transfer_of_provided or items_to_set_as_is_removed_owner_provided)
             throw self._error "invalid-job-data", "For jobs of type #{job_type} items_to_assume_ownership_of and items_to_cancel_ownership_transfer_of are allowed only if members_to_remove is provided."
+
+          user_perspective_root_items_provided = data?.user_perspective_root_items? and not _.isEmpty(data.user_perspective_root_items)
+
+          if user_perspective_root_items_provided
+            user_perspective_root_items = data.user_perspective_root_items
+
+            for user_perspective_root_item in user_perspective_root_items
+              if user_perspective_root_item not in ids_to_update
+                throw self._error "invalid-job-data", "An item in #{user_perspective_root_item} is not part of the job's ids_to_update."
 
           return
 
