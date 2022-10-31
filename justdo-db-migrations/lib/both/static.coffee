@@ -1,1 +1,5 @@
-_.extend JustdoDbMigrations, {}
+_.extend JustdoDbMigrations,
+  batched_collection_updates_max_docs_updates_per_second: 60
+  batched_collection_updates_total_in_progress_jobs_to_handle_per_cycle: 3
+  batched_collection_updates_immediate_process_threshold_docs: 1 * 1000
+
