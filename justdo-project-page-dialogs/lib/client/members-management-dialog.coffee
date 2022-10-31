@@ -342,7 +342,7 @@ APP.executeAfterAppLibCode ->
       [
         {
           action_id: "add-users"
-          caption: "Add Members"
+          caption: "Add Members:"
           action_users_reactive_var: users_to_add
           proceed_message: "Add"
           dont_proceed_message: "Don't add"
@@ -352,7 +352,7 @@ APP.executeAfterAppLibCode ->
         },
         {
           action_id: "keep-users"
-          caption: "Task Members"
+          caption: "Keep Members:"
           action_users_reactive_var: users_to_keep
           proceed_message: "Keep"
           dont_proceed_message: "Remove"
