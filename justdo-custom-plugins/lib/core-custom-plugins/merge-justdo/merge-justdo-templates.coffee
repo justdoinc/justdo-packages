@@ -23,10 +23,12 @@ Template.merge_justdo_cog_button.events
 
         merge:
           label: """
-            <svg class="jd-icon-dropdown text-secondary">
-              <use xlink:href="/layout/icons-feather-sprite.svg#download"/>
-            </svg>
-            Merge
+            <div class="btn-merge">
+              <svg class="jd-icon">
+                <use xlink:href="/layout/icons-feather-sprite.svg#download"/>
+              </svg>
+              Merge
+            </div>
           """
 
           className: "btn-primary"
