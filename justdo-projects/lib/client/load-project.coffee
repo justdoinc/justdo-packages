@@ -158,6 +158,14 @@ _.extend Projects.prototype,
 
         return
 
+      getRootTasksAndProjects: (options, cb) ->
+        self.getRootTasksAndProjects @id, options, (err, res) ->
+          cb(err, res)
+
+          return
+
+        return
+
       getProjectCustomFields: ->
         return @getProjectDoc({fields: {custom_fields: 1}})?.custom_fields or []
 

@@ -1504,3 +1504,20 @@ _.extend Projects.prototype,
     APP.projects._grid_data_com._upsertItemPrivateData task_doc.project_id, task_doc._id, private_fields_mutator, user_id
 
     return
+
+  getRootTasksAndProjects: (project_id, options, user_id) ->
+    @requireUserIsMemberOfProject project_id, user_id
+
+    default_options = {fields: {_id: 1, seqId: 1, title: 1, parents: 1, "p:dp:is_project": 1}}
+
+    if not options?
+      options = {}
+
+    options = _.extend default_options, options
+
+    check options, {
+      fields: Match.Maybe(Object)
+    }
+
+    return APP.collections.Tasks.find({project_id, users: user_id, $or: [{"parents2.parent": "0"}, {"p:dp:is_project": true, "p:dp:is_archived_project": {$ne: true}}]}, {fields: options.fields}).fetch()
+  

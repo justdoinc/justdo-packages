@@ -150,3 +150,9 @@ _.extend Projects.prototype,
         projects_object.updateTaskDescriptionReadDate task_id, @userId
 
         return
+
+      getRootTasksAndProjects: (project_id, options) -> # projects as tasks that are marked as project, not to be confused with this task's Project terminology that changed to JustDo
+        check project_id, String
+        check options, Object
+
+        return projects_object.getRootTasksAndProjects project_id, options, @userId

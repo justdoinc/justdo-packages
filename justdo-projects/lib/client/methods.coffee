@@ -57,3 +57,8 @@ _.extend Projects.prototype,
     Meteor.call "updateTaskDescriptionReadDate", task_id, cb
 
     return
+
+  getRootTasksAndProjects: (project_id, options, cb) ->
+    Meteor.call "getRootTasksAndProjects", project_id, options, cb
+
+    return
