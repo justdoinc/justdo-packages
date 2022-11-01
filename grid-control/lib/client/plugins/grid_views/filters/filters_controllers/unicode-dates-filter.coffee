@@ -88,7 +88,7 @@ UnicodeDatesFilterControllerConstructor = (context) ->
     if filter_option.type == "relative-range"
       if not filter_option.id?
         console.warn "relative-range filter option has no id, skipping"
-        
+
         continue
 
       option_item = """
@@ -103,7 +103,17 @@ UnicodeDatesFilterControllerConstructor = (context) ->
       option_item = """
         <li value="custom-range">
           <i class="fa-li fa fa-square-o"></i><i class="fa-li fa fa-check-square-o"></i>
-          <input id="custom-range-start" class="custom-range-input" type="date"> - <input id="custom-range-end" class="custom-range-input" type="date">
+          <div class="custom-range-wrapper">
+            <div class="custom-range-input-wrapper">
+              <div class="custom-range-label custom-range-label-start">From</div>
+              <input id="custom-range-start" class="custom-range-input" type="text" readonly="readonly">
+            </div>
+            <span>-</span>
+            <div class="custom-range-input-wrapper">
+              <div class="custom-range-label custom-range-label-end">To</div>
+              <input id="custom-range-end" class="custom-range-input" type="text" readonly="readonly">
+            </div>
+          </div>
         </li>
       """
       filter_options_html += option_item
@@ -111,7 +121,7 @@ UnicodeDatesFilterControllerConstructor = (context) ->
   # note, the reason why we seperate the ul for the dropdown-header is that
   # the vertical scroll of the members ul, when there are many members, go
   # over the x button that close the filter controller.
-  # (we might avoid this title at all, if we didn't have this issue) 
+  # (we might avoid this title at all, if we didn't have this issue)
   @controller.append("""
     <ul class="fa-ul whitelist-alike-filter-dropdown-ul">
       #{filter_options_html}
@@ -148,7 +158,7 @@ UnicodeDatesFilterControllerConstructor = (context) ->
         delete filter_state.relative_ranges
       else
         filter_state.relative_ranges = relative_ranges_state
-   
+
     if _.isEmpty(filter_state)
       @column_filter_state_ops.clearColumnFilter()
     else
@@ -157,52 +167,30 @@ UnicodeDatesFilterControllerConstructor = (context) ->
     return
 
   $(@controller).on "click", "li[value=custom-range] .fa-li", (e) =>
-    $el = $(e.target).closest("li")
+    @setCustomRange("click")
 
-    # Shallow copy filter_state if is object
-    filter_state = @column_filter_state_ops.getColumnFilter()
-    if filter_state?
-      filter_state = _.extend {}, filter_state
-    else
-      filter_state = {}
-    
-    if $el.hasClass("selected")
-      delete filter_state.custom_range
-    else
-      custom_range_start = $el.find("#custom-range-start").val()
-      custom_range_end = $el.find("#custom-range-end").val()
-      filter_state.custom_range = {
-        start: custom_range_start
-        end: custom_range_end
-      }
+    return
 
-    if _.isEmpty(filter_state)
-      @column_filter_state_ops.clearColumnFilter()
-    else
-      @column_filter_state_ops.setColumnFilter(filter_state)
-  
   $(@controller).on "change", ".custom-range-input", (e) =>
-    $el = $(e.target).closest("li")
+    @setCustomRange("change")
 
-    # Shallow copy filter_state if is object
-    filter_state = @column_filter_state_ops.getColumnFilter()
-    if filter_state?
-      filter_state = _.extend {}, filter_state
-    else
-      filter_state = {}
-    
-    if $el.hasClass("selected")
-      custom_range_start = $el.find("#custom-range-start").val()
-      custom_range_end = $el.find("#custom-range-end").val()
-      filter_state.custom_range = {
-        start: custom_range_start
-        end: custom_range_end
-      }
+    return
 
-    if _.isEmpty(filter_state)
-      @column_filter_state_ops.clearColumnFilter()
-    else
-      @column_filter_state_ops.setColumnFilter(filter_state)
+  # Custom range Datepicker
+  @controller.find(".custom-range-input").datepicker
+    beforeShow: (el, obj) ->
+      obj.dpDiv.on "mousedown contextmenu", (e) ->
+        e.stopImmediatePropagation()
+
+        return
+
+  $(".column-filter-dropdown-container").on "mousedown", (e) ->
+    $input = $(".custom-range-input")
+    if $input.datepicker("widget").is(":visible")
+      $input.datepicker("hide")
+      $input.blur()
+
+    return
 
   @refresh_state()
 
@@ -226,15 +214,56 @@ _.extend UnicodeDatesFilterControllerConstructor.prototype,
       for relative_range in relative_ranges
         $("[value=relative-range-#{relative_range}]", @controller).addClass("selected")
 
+
+
     if filter_state.custom_range?
       $("[value=custom-range]", @controller).addClass("selected")
       $("#custom-range-start", @controller).val(filter_state.custom_range.start)
       $("#custom-range-end", @controller).val(filter_state.custom_range.end)
 
+      label_start = "From"
+      label_end = "To"
+
+      date_format = Meteor.user().profile.date_format
+
+      if filter_state.custom_range.start != ""
+        label_start = moment(filter_state.custom_range.start).format(date_format)
+
+      if filter_state.custom_range.end != ""
+        label_end = moment(filter_state.custom_range.end).format(date_format)
+
+      @controller.find(".custom-range-label-start").text label_start
+      @controller.find(".custom-range-label-end").text label_end
+
     return
 
   destroy: ->
     @grid_control.removeListener "filter-change", @filter_change_listener
+
+  setCustomRange: (event_type) ->
+    # Shallow copy filter_state if is object
+    filter_state = @column_filter_state_ops.getColumnFilter()
+    if filter_state?
+      filter_state = _.extend {}, filter_state
+    else
+      filter_state = {}
+
+    custom_range_start = @controller.find("#custom-range-start").val()
+    custom_range_end = @controller.find("#custom-range-end").val()
+    filter_state.custom_range = {
+      start: custom_range_start
+      end: custom_range_end
+    }
+
+    if event_type == "click"
+      $select_el = $("li[value=custom-range]")
+
+      if $select_el.hasClass("selected")
+        delete filter_state.custom_range
+
+    @column_filter_state_ops.setColumnFilter(filter_state)
+
+    return
 
 #
 # stateToQuery
@@ -308,7 +337,7 @@ columnFilterStateToQuery = (column_filter_state, context) ->
       range_query.$lte = end.format("YYYY-MM-DD")
     if not _.isEmpty(range_query)
       ranges_queries.push(range_query)
-    
+
   if _.isEmpty ranges_queries
     return {}
 

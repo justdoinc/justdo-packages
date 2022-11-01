@@ -85,6 +85,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/numeric.coffee', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/numeric.sass', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/unicode-dates-filter.coffee', client);
+  api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/unicode-dates-filter.sass', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/unicode-dates-custom-where-clause-filter.coffee', client);
   api.add_files('lib/client/plugins/grid_views/filters/filters_controllers/numeric-custom-where-clause-filter.coffee', client);
 
