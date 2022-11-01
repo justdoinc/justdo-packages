@@ -190,6 +190,9 @@ _.extend TasksChangelogManager.prototype,
           new_value_txt_label = "Unknown"
       return "#{performer_name} set #{getLabelFromFieldDefinition(field_definition)} to: #{new_value_txt_label}."
 
+    if field_definition.grid_column_formatter is "MultiSelectFormatter"
+      return "#{performer_name} set #{getLabelFromFieldDefinition(field_definition)} to: #{@_getMultiSelectTxt(activity_obj.new_value, field_definition)}."
+
     # and the generic case:
     if not activity_obj.new_value? or activity_obj.new_value.length == 0
       return "#{performer_name} cleared #{getLabelFromFieldDefinition(field_definition)}."
@@ -226,4 +229,19 @@ _.extend TasksChangelogManager.prototype,
           old_value_txt_label = "Unknown"
       return old_value_txt_label
 
+    if field_definition.grid_column_formatter is "MultiSelectFormatter"
+      return @_getMultiSelectTxt(activity_obj.old_value, field_definition)
+
     return old_value
+  
+  _getMultiSelectTxt: (value, field_definition) ->
+    output = []
+    if _.isArray(value)
+      for val in value
+        if (txt = field_definition.grid_values[val]?.txt)?
+          output.push txt
+    
+    if output.length == 0
+      return "Empty"
+      
+    return output.join ","

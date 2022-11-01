@@ -34,12 +34,20 @@ _.extend TasksChangelogManager.prototype,
 
       new_value:
         label: "New Value"
-        type: String
+        type: "skip-type-check"
+        optional: true
+      
+      "new_value.$":
+        type: "skip-type-check"
         optional: true
 
       old_value:
         label: "Old Value"
-        type: String
+        type: "skip-type-check"
+        optional: true
+      
+      "old_value.$":
+        type: "skip-type-check"
         optional: true
 
       undone:

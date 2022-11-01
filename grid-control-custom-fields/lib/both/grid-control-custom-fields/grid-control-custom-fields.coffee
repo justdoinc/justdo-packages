@@ -30,7 +30,7 @@ _.extend GridControlCustomFields,
       type: String
 
       # Update getJsTypeForFieldType() if you change the list of allowed values
-      allowedValues: ["string", "strings_array", "number", "numbers_array", "date", "boolean", "select", "calc", "objects_array"]
+      allowedValues: ["string", "strings_array", "number", "numbers_array", "date", "boolean", "select", "multi_select", "calc", "objects_array"]
 
     field_options:
       type: Object
@@ -236,6 +236,8 @@ _.extend GridControlCustomFields,
       return Boolean
     else if field_type == "select"
       return String
+    else if field_type == "multi_select"
+      return [String]
     else if field_type == "objects_array"
       return [Object]
     else
@@ -377,6 +379,8 @@ _.extend GridControlCustomFields,
           if not (formatter_type = custom_field_definition.formatter)?
             if custom_field_definition.field_type == "select"
               formatter_type = "keyValueFormatter"
+            else if custom_field_definition.field_type == "multi_select"
+              formatter_type = "MultiSelectFormatter"
             else if custom_field_definition.field_type == "date"
               formatter_type = "unicodeDateFormatter"
             else if custom_field_definition.field_type == "strings_array"
@@ -399,6 +403,8 @@ _.extend GridControlCustomFields,
           if not (editor_type = custom_field_definition.editor)?
             if custom_field_definition.field_type == "select"
               editor_type = "SelectorEditor"
+            else if custom_field_definition.field_type == "multi_select"
+              editor_type = "MultiSelectEditor"
             else if custom_field_definition.field_type == "date"
               editor_type = "UnicodeDateEditor"
             else if custom_field_definition.field_type == "strings_array"
@@ -448,6 +454,27 @@ _.extend GridControlCustomFields,
           custom_field_schema.grid_column_filter_settings = {type: "whitelist"}
 
           # END IF field_type "select"
+        else if custom_field_definition.field_type == "multi_select"
+          grid_values = {}
+
+          order = -1
+          if (select_options = custom_field_definition.field_options?.select_options)?
+            for option in select_options
+              grid_values[option.option_id] =
+                txt: option.label
+                order: order += 1
+                bg_color: option.bg_color
+
+          custom_field_schema.grid_values = grid_values
+
+          grid_removed_values = {}
+          if (removed_select_options = custom_field_definition.field_options?.removed_select_options)?
+            for option in removed_select_options
+              grid_removed_values[option.option_id] =
+                txt: option.label
+          custom_field_schema.grid_removed_values = grid_removed_values
+
+          custom_field_schema.grid_column_filter_settings = {type: "whitelist"}
 
         else if custom_field_definition.field_type == "date"
           custom_field_schema.grid_column_filter_settings =
@@ -633,6 +660,12 @@ _.extend GridControlCustomFields,
       label: "Options"
       settings_button_template: "custom_field_conf_select_options_editor_opener"
     }
+    {
+      custom_field_type_id: "multi-select"
+      type_id: "multi_select"
+      label: "Multi Select"
+      settings_button_template: "custom_field_conf_select_options_editor_opener"
+    }
   ]
 
   _available_field_types_dep: new Tracker.Dependency()
@@ -674,3 +707,10 @@ _.extend GridControlCustomFields,
 GridControlCustomFields.registerCustomFieldsTypes "basic-calc", 
   type_id: "calc"
   label: "Smart Numbers" # Derive from the descendants
+
+Schema =
+  "custom-field-multi-select::<>":
+    type: [String]
+    optional: true
+
+APP.collections.Tasks.attachSchema Schema
