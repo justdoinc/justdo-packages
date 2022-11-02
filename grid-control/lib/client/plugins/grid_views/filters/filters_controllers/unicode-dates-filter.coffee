@@ -224,7 +224,7 @@ _.extend UnicodeDatesFilterControllerConstructor.prototype,
       label_start = "From"
       label_end = "To"
 
-      date_format = Meteor.user().profile.date_format
+      date_format = JustdoHelpers.getUserPreferredDateFormat()
 
       if filter_state.custom_range.start != ""
         label_start = moment(filter_state.custom_range.start).format(date_format)
