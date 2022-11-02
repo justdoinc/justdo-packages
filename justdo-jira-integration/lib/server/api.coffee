@@ -294,8 +294,8 @@ _.extend JustdoJiraIntegration.prototype,
       # Created from Justdo. Ignore.
       if fields[JustdoJiraIntegration.project_id_custom_field_id] or fields[JustdoJiraIntegration.task_id_custom_field_id]
         return
-      jira_issue_id = req_body.issue.id
-      jira_project_id = req_body.issue.fields.project.id
+      jira_issue_id = parseInt req_body.issue.id
+      jira_project_id = parseInt req_body.issue.fields.project.id
 
       if not _.isEmpty (mounted_justdo_and_task = @getJustdosIdsAndTasksIdsfromMountedJiraProjectId jira_project_id)
         {justdo_id, task_id} = mounted_justdo_and_task
@@ -318,10 +318,12 @@ _.extend JustdoJiraIntegration.prototype,
 
       return
     "jira:issue_updated": (req_body) ->
-      # Updates from Justdo. Ignore.
+      jira_issue_id = parseInt req_body.issue.id
+      jira_project_id = parseInt req_body.issue.fields.project.id
+
+      # Updates from Justdo. Either check for a match in pending_connection_test or ignore..
       if (last_updated_changelog_item = _.find req_body.changelog.items, (item) -> item.field is "jd_last_updated")?
         # Delete record in pending_connection_test if we receive the update we send.
-        jira_issue_id = parseInt req_body.issue.id
         received_updated_date = new Date last_updated_changelog_item.toString
         if (last_update_date = @pending_connection_test?[jira_issue_id]?.date)? and (received_updated_date - last_update_date is 0)
           console.log "[justdo-db-migrations] [jira-webhook-healthcheck] Issue update received via webhook."
