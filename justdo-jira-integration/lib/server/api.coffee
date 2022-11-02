@@ -518,6 +518,32 @@ _.extend JustdoJiraIntegration.prototype,
       @jira_collection.update jira_query, jira_ops
 
       return
+    "jira:version_deleted": (req_body) ->
+      fix_version_id = parseInt req_body.version.id
+      jira_project_id = parseInt req_body.version.projectId
+
+      if not (fix_version_task_doc = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: fix_version_id}, {fields: {project_id: 1}}))?
+        console.error "[justdo-jira-integration] Fix version mountpoint not found. Remove failed."
+      child_tasks_paths = @tasks_collection.find({"parents2.parent": fix_version_task_doc._id}, {fields: {_id: 1}}).map (task_doc) -> "/#{fix_version_task_doc._id}/#{task_doc._id}/"
+      fix_version_mountpoint_id = @tasks_collection.findOne({project_id: fix_version_task_doc.project_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions"}, {fields: {_id: 1}})?._id
+      child_tasks_paths.push "/#{fix_version_mountpoint_id}/#{fix_version_task_doc._id}/" # Remove the fix version task at last
+
+      justdo_admin_id = @_getJustdoAdmin fix_version_task_doc.project_id
+      grid_data = APP.projects._grid_data_com
+
+      # Remove all child tasks first. These tasks are expected to remain under roadmap.
+      grid_data.bulkRemoveParents child_tasks_paths, justdo_admin_id
+
+      # Remove the fix version metadata in Jira collection
+      jira_query =
+        "jira_projects.#{jira_project_id}.fix_versions.id": fix_version_id
+      jira_ops =
+        $pull:
+          "jira_projects.#{jira_project_id}.fix_versions":
+            id: fix_version_id
+      @jira_collection.update jira_query, jira_ops
+      return
+    # NOTE: IN CASE JIRA ON-PERM IS USED: THE FOLLOWING SPRINT RELATED HANDLERS ONLY SUPPORT SINGLE JIRA INSTANCE
     "sprint_created": (req_body) ->
       sprint = req_body.sprint
       board_id = sprint.originBoardId
@@ -613,6 +639,43 @@ _.extend JustdoJiraIntegration.prototype,
           @jira_collection.update jira_query, jira_ops
           return
         .catch (err) -> console.error err
+      return
+    "sprint_deleted": (req_body) ->
+      sprint_id = parseInt req_body.sprint.id
+      board_id = parseInt req_body.sprint.originBoardId
+      grid_data = APP.projects._grid_data_com
+
+      if not (client = _.values(@clients)?[0])?
+        throw @_error "client-not-found"
+
+      jira_query =
+        $or: []
+      jira_ops =
+        $pull: {}
+
+      @tasks_collection.find({jira_sprint_mountpoint_id: sprint_id}, {fields: {project_id: 1, jira_project_id: 1}}).forEach (sprint_task_doc) =>
+        justdo_id = sprint_task_doc.project_id
+        jira_project_id = sprint_task_doc.jira_project_id
+        justdo_admin_id = @_getJustdoAdmin sprint_task_doc.project_id
+
+        sprint_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints"}, {fields: {_id: 1}})?._id
+
+        child_tasks_paths = @tasks_collection.find({"parents2.parent": sprint_task_doc._id}, {fields: {_id: 1}}).map (task_doc) -> "/#{sprint_task_doc._id}/#{task_doc._id}/"
+        sprint_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints"}, {fields: {_id: 1}})?._id
+        child_tasks_paths.push "/#{sprint_mountpoint_id}/#{sprint_task_doc._id}/" # Remove the fix version task at last
+
+        # Remove all child tasks first. These tasks are expected to remain under roadmap.
+        grid_data.bulkRemoveParents child_tasks_paths, justdo_admin_id
+
+        # Remove the sprint metadata in Jira collection
+        jira_query.$or.push
+          "jira_projects.#{jira_project_id}.sprints.id": sprint_id
+        jira_ops.$pull["jira_projects.#{jira_project_id}.sprints"] =
+          id: sprint_id
+        return
+
+      @jira_collection.update jira_query, jira_ops
+
       return
 
   getOAuth1LoginLink: (justdo_id, user_id) ->
