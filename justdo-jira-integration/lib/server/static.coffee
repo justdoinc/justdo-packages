@@ -284,7 +284,7 @@ _.extend JustdoJiraIntegration,
           # if not (jira_account_id = jira_account?[0]?.accountId)?
           #   throw @_error "jira-account-not-found"
 
-          {err} = @pseudoBlockingJiraApiCallInsideFiber "issues.assignIssue", {issueIdOrKey: req_body.jira_issue_id, accountId: jira_account_id}, client
+          {err} = self.pseudoBlockingJiraApiCallInsideFiber "issues.assignIssue", {issueIdOrKey: req_body.jira_issue_id, accountId: jira_account_id}, client
           if err?
             err = err?.response?.data or err
             console.error err
