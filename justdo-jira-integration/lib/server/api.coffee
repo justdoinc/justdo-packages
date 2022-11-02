@@ -334,7 +334,7 @@ _.extend JustdoJiraIntegration.prototype,
       {fields} = req_body.issue
       {[JustdoJiraIntegration.task_id_custom_field_id]:task_id, [JustdoJiraIntegration.project_id_custom_field_id]:justdo_id} = fields
       if not task_id?
-        task = @tasks_collection.findOne({jira_issue_id: req_body.issue.id}, {fields: {project_id: 1}})
+        task = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_issue_id: jira_issue_id}, {fields: {project_id: 1}})
         {_id:task_id, project_id:justdo_id} = task
 
       if not @isJiraIntegrationInstalledOnJustdo justdo_id
