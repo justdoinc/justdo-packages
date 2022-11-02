@@ -92,9 +92,13 @@ _.extend JustdoJiraIntegration.prototype,
       query = _.extend {_id: parent_id}, jira_relevant_task_query
       query_options = {fields: jira_relevant_task_fields}
 
-      # Task is not a Jira issue. Ignore.
-      if not (task = @tasks_collection.findOne {_id: task_id, jira_issue_id: {$ne: null}}, {fields: {jira_issue_id: 1, project_id: 1}})?
+      # Task is not related to Jira. Ignore.
+      if not (task = @tasks_collection.findOne {_id: task_id, jira_project_id: {$ne: null}}, {fields: {jira_project_id: 1, jira_issue_id: 1, project_id: 1}})?
         return true
+
+      # Task is under a Jira mount tree but not a Jira issue. Block.
+      if task.jira_project_id and not task.jira_issue_id?
+        return
 
       # Task is removed from Jira. Ignore.
       if @deleted_issue_ids.delete parseInt(task.jira_issue_id)
@@ -111,8 +115,10 @@ _.extend JustdoJiraIntegration.prototype,
 
       # Removing a task/issue that's either under roadmap or under another task/issue will delete the task/issue.
       if parent_task.jira_mountpoint_type is "roadmap" or parent_task.jira_issue_id?
-        # In multi-parent scenario, block attempt to remove roadmap/issue parent.
-        if not etc.no_more_parents
+        # In multi-parent scenario, block attempt to remove roadmap/issue parent unless all parents are under the Jira mount tree
+        all_parent_task_ids = _.map etc.item.parents2, (parent_obj) -> parent_obj.parent
+        all_parent_are_under_jira_tree = etc.item.parents2.length is @tasks_collection.find({_id: {$in: all_parent_task_ids}, jira_project_id: {$ne: null}}).count()
+        if not (etc.no_more_parents or all_parent_are_under_jira_tree)
           return
 
         # XXX In Jira if we:
@@ -125,7 +131,7 @@ _.extend JustdoJiraIntegration.prototype,
         if err?
           err = err?.response?.data or err
           console.error "[justdo-jira-integration] Failed to remove task/issue #{task_id}", err
-          return false
+          return
         @tasks_collection.remove task_id
         return true
 
