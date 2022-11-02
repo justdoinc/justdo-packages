@@ -1,5 +1,6 @@
 Template.task_pane_justdo_jira_integration_task_pane_section_section.onCreated ->
-  # @mounted_jira_project_dep = new Tracker.Dependency()
+  @show_unmount_warning_message = new ReactiveVar false
+
   @available_jira_projects_rv = new ReactiveVar []
   @autorun =>
     # Just to get the reactivity upon choosing a new task or performing new Jira login, in case the previous load failed.
@@ -36,6 +37,8 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.helpers
 
   availableProjects: -> Template.instance().available_jira_projects_rv.get()
 
+  showUnmountWarningMessage: -> Template.instance().show_unmount_warning_message.get()
+
 Template.task_pane_justdo_jira_integration_task_pane_section_section.events
   "click .jira-project": (e, tpl) ->
     e.preventDefault()
@@ -51,7 +54,20 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.events
   "click .unmount-jira-project": (e, tpl) ->
     e.preventDefault()
     e.stopPropagation()
+    tpl.show_unmount_warning_message.set true
+    return
 
-    jira_project_id = $(e.currentTarget).closest(".unmount-jira-project").data "project-id"
+  "click .confirm-unmount-jira-project": (e, tpl) ->
+    e.preventDefault()
+    e.stopPropagation()
+
+    jira_project_id = $(e.currentTarget).closest(".confirm-unmount-jira-project").data "project-id"
 
     APP.justdo_jira_integration.unmountTaskWithJiraProject JD.activeJustdoId(), jira_project_id
+    return
+
+  "click .cancel-unmount-jira-project": (e, tpl) ->
+    e.preventDefault()
+    e.stopPropagation()
+    tpl.show_unmount_warning_message.set false
+    return
