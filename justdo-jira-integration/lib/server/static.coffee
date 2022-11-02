@@ -129,8 +129,8 @@ _.extend JustdoJiraIntegration,
                     "jira_projects.#{jira_project_id}.sprints.$": 1
                 old_sprint_id = parseInt @jira_collection.findOne(jira_query, jira_query_options)?.jira_projects?[jira_project_id]?.sprints?[0]?.id
 
-              old_sprint_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_sprint_mountpoint_id: old_sprint_id}, {fields: {_id: 1}})?._id
-              new_sprint_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_sprint_mountpoint_id: new_sprint_id}, {fields: {_id: 1}})?._id
+              old_sprint_mountpoint = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_sprint_mountpoint_id: old_sprint_id}, {fields: {_id: 1}})?._id
+              new_sprint_mountpoint = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_sprint_mountpoint_id: new_sprint_id}, {fields: {_id: 1}})?._id
 
               if req_body.issue.fields.issuetype.name not in ["Sub-task", "Sub-Task", "Subtask"]
                 if old_sprint_mountpoint? and new_sprint_mountpoint?
@@ -166,8 +166,8 @@ _.extend JustdoJiraIntegration,
       name: "issuetype"
       mapper: (justdo_id, field, destination, req_body) ->
         _moveAllChildTasksToRoadmap = (task_id) =>
-          child_task_ids = @tasks_collection.find({"parents2.parent": task_id, jira_issue_type: {$in: ["Task", "Bug", "Story"]}}, {fields: {_id: 1}}).map (task_doc) -> "/#{task_id}/#{task_doc._id}/"
-          mountpoint_task_id = @tasks_collection.findOne({jira_mountpoint_type: "roadmap", jira_project_id: req_body.jira_project_id, project_id: justdo_id}, {fields: {_id: 1}})?._id
+          child_task_ids = @tasks_collection.find({project_id: justdo_id, "parents2.parent": task_id, jira_issue_type: {$in: ["Task", "Bug", "Story"]}}, {fields: {_id: 1}}).map (task_doc) -> "/#{task_id}/#{task_doc._id}/"
+          mountpoint_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_mountpoint_type: "roadmap", jira_project_id: parseInt(req_body.jira_project_id), project_id: justdo_id}, {fields: {_id: 1}})?._id
           if not _.isEmpty child_task_ids
             APP.projects._grid_data_com.movePath child_task_ids, {parent: mountpoint_task_id}, @_getJustdoAdmin justdo_id
           return
@@ -201,12 +201,12 @@ _.extend JustdoJiraIntegration,
             ops = {}
 
             if _.isString field.from
-              old_fix_version_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: parseInt field.from}, {fields: {_id: 1}})
+              old_fix_version_mountpoint = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: parseInt field.from}, {fields: {_id: 1}})
               ops.$pull =
                 jira_fix_version: field.fromString
             task_doc = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_issue_id: jira_issue_id}, {fields: {parents2: 1}})
             if _.isString field.to
-              new_fix_version_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: parseInt field.to}, {fields: {_id: 1}})
+              new_fix_version_mountpoint = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: parseInt field.to}, {fields: {_id: 1}})
               ops.$addToSet =
                 jira_fix_version: field.toString
 
