@@ -1,10 +1,28 @@
 .custom-range-wrapper
   display: flex
-  .custom-range-input-wrapper
+  .custom-range-label-wrapper
+    display: flex
     position: relative
     border-bottom: 1px dashed rgba(0, 0, 0, 0.32)
     &:hover
       border-bottom: 1px dashed rgba(0, 0, 0, 1)
+  .clear-date
+    width: 16px
+    height: 16px
+    stroke-width: 3
+    margin-left: 4px
+    color: #76869a
+    background-color: #e8edf3
+    cursor: pointer
+    display: flex
+    &:hover
+      color: #212529
+  .custom-range-input-wrapper
+    display: flex
+    align-items: center
+    &.empty
+      .clear-date
+        display: none
   .custom-range-input
     position: absolute
     background-color: red

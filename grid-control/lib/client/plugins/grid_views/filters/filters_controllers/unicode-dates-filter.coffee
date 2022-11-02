@@ -104,14 +104,20 @@ UnicodeDatesFilterControllerConstructor = (context) ->
         <li value="custom-range">
           <i class="fa-li fa fa-square-o"></i><i class="fa-li fa fa-check-square-o"></i>
           <div class="custom-range-wrapper">
-            <div class="custom-range-input-wrapper">
-              <div class="custom-range-label custom-range-label-start">From</div>
-              <input id="custom-range-start" class="custom-range-input" type="text" readonly="readonly">
+            <div class="custom-range-input-wrapper empty">
+              <div class="custom-range-label-wrapper">
+                <div class="custom-range-label custom-range-label-start">From</div>
+                <input id="custom-range-start" class="custom-range-input" type="text" readonly="readonly">
+              </div>
+              <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
             </div>
             <span>-</span>
-            <div class="custom-range-input-wrapper">
-              <div class="custom-range-label custom-range-label-end">To</div>
-              <input id="custom-range-end" class="custom-range-input" type="text" readonly="readonly">
+            <div class="custom-range-input-wrapper empty">
+              <div class="custom-range-label-wrapper">
+                <div class="custom-range-label custom-range-label-end">To</div>
+                <input id="custom-range-end" class="custom-range-input" type="text" readonly="readonly">
+              </div>
+              <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
             </div>
           </div>
         </li>
@@ -178,6 +184,8 @@ UnicodeDatesFilterControllerConstructor = (context) ->
 
   # Custom range Datepicker
   @controller.find(".custom-range-input").datepicker
+    changeYear: true
+    changeMonth: true
     beforeShow: (el, obj) ->
       obj.dpDiv.on "mousedown contextmenu", (e) ->
         e.stopImmediatePropagation()
@@ -190,6 +198,11 @@ UnicodeDatesFilterControllerConstructor = (context) ->
       $input.datepicker("hide")
       $input.blur()
 
+    return
+
+  @controller.on "click", ".clear-date", (e) ->
+    $input = $(e.currentTarget).parent(".custom-range-input-wrapper").find(".custom-range-input")
+    $input.val("").trigger "change"
     return
 
   @refresh_state()
@@ -234,6 +247,19 @@ _.extend UnicodeDatesFilterControllerConstructor.prototype,
 
       @controller.find(".custom-range-label-start").text label_start
       @controller.find(".custom-range-label-end").text label_end
+
+      $start_input_wrapper = @controller.find("#custom-range-start").parents(".custom-range-input-wrapper")
+      $end_input_wrapper = @controller.find("#custom-range-end").parents(".custom-range-input-wrapper")
+
+      if moment(label_start, date_format, true).isValid()
+        $start_input_wrapper.removeClass "empty"
+      else
+        $start_input_wrapper.addClass "empty"
+
+      if moment(label_end, date_format, true).isValid()
+        $end_input_wrapper.removeClass "empty"
+      else
+        $end_input_wrapper.addClass "empty"
 
     return
 
