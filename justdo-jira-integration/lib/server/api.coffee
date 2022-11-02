@@ -1185,47 +1185,57 @@ _.extend JustdoJiraIntegration.prototype,
         # Get Jira server time
         server_info = await client.v2.serverInfo.getServerInfo()
 
+        relevant_jira_field_ids = @getAllRelevantJiraFieldIds()
+        issue_search_limit = 50
+
         # Search for all issues under the Jira project and create tasks in Justdo
         # issueSearch has searchForIssuesUsingJql() and searchForIssuesUsingJqlPost()
         # Both works the same way except the latter one uses POST to support a larger query
         # For consistency with future development, only searchForIssuesUsingJqlPost() is used.
         issue_search_body =
-          jql: "project=#{jira_project_id} order by issuetype asc"
-          maxResults: 300
-          fields: @getAllRelevantJiraFieldIds()
+          jql: """project=#{jira_project_id} and "Parent Link" is empty and status!=done"""
+          maxResults: issue_search_limit
+          fields: relevant_jira_field_ids
+        issue_search_cb = (res) =>
+          {issues} = res
+          # done_issues = new Set()
+          while (issue = issues.shift())?
+          # for issue in issues
+            issue_fields = issue.fields
+
+            parent_id = null
+            path_to_add = "/#{task_id}/#{roadmap_mountpoint_task_id}/"
+
+            if (parent_key = issue_fields.parent?.key or issue_fields[JustdoJiraIntegration.epic_link_custom_field_id])?
+              # XXX Hardcoded users length in query. Better approach is needed to determine whether the parent task is added completely along with its users.
+              if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: parseInt(jira_project_id), jira_issue_key: parent_key, "users.1": {$exists: true}}, {fields: {_id: 1}})?._id)?
+                issues.push issue
+                continue
+
+              path_to_add += "#{parent_task_id}/"
+
+            create_task_from_jira_issue_options =
+              sprints_mountpoints: sprints_to_mountpoint_task_id
+              fix_versions_mountpoints: fix_versions_to_mountpoint_task_id
+            @_createTaskFromJiraIssue justdo_id, path_to_add, issue, create_task_from_jira_issue_options
+
+            # Mark webhook and data integrity checkpoint
+            query =
+              "server_info.id": @getJiraServerIdFromApiClient client.v2
+            ops =
+              $set:
+                last_data_integrity_check: server_info.serverTime
+                last_webhook_connection_check: server_info.serverTime
+            @jira_collection.update query, ops
+
+            if issue_fields.issuetype?.name not in ["Sub-task", "Sub-Task", "Subtask"]
+              client.v2.issueSearch.searchForIssuesUsingJqlPost {jql: """project=#{jira_project_id} and "Parent Link"=#{issue.key} and status!=done """, maxResults: issue_search_limit, fields: relevant_jira_field_ids}
+                .then issue_search_cb
+                .catch (err) -> console.error err
+          return
+
         client.v2.issueSearch.searchForIssuesUsingJqlPost issue_search_body
-          .then (res) =>
-            {issues} = res
-            while (issue = issues.shift())?
-              issue_fields = issue.fields
-              parent_id = null
-              path_to_add = "/#{task_id}/#{roadmap_mountpoint_task_id}/"
-
-              # Jira cloud uses fields.parent, while Jira server uses epic_link (which the logic is removed due to migrating to project_id instead of project_key).
-              if (parent = issue_fields.parent)?
-                parent_id = parseInt parent.id
-                # XXX Hardcoded users length in query. Better approach is needed to determine whether the parent task is added completely along with its users.
-                # if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_id: parent_id}, {fields: {_id: 1}})?._id)?
-                if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: parseInt(jira_project_id), jira_issue_id: parent_id, "users.1": {$exists: true}}, {fields: {_id: 1}})?._id)?
-                  issues.push issue
-                  continue
-                path_to_add += "#{parent_task_id}/"
-
-              create_task_from_jira_issue_options =
-                sprints_mountpoints: sprints_to_mountpoint_task_id
-                fix_versions_mountpoints: fix_versions_to_mountpoint_task_id
-              @_createTaskFromJiraIssue justdo_id, path_to_add, issue, create_task_from_jira_issue_options
-
-              # Mark webhook and data integrity checkpoint
-              query =
-                "server_info.id": @getJiraServerIdFromApiClient client.v2
-              ops =
-                $set:
-                  last_data_integrity_check: server_info.serverTime
-                  last_webhook_connection_check: server_info.serverTime
-              @jira_collection.update query, ops
-            return
-
+          .then issue_search_cb
           .catch (err) -> console.error err
       .catch (err) -> console.error err
 
