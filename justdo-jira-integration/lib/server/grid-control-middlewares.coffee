@@ -96,10 +96,6 @@ _.extend JustdoJiraIntegration.prototype,
       if not (task = @tasks_collection.findOne {_id: task_id, jira_project_id: {$ne: null}}, {fields: {jira_project_id: 1, jira_issue_id: 1, project_id: 1}})?
         return true
 
-      # Task is under a Jira mount tree but not a Jira issue. Block.
-      if task.jira_project_id and not task.jira_issue_id?
-        return
-
       # Task is removed from Jira. Ignore.
       if @deleted_issue_ids.delete parseInt(task.jira_issue_id)
         return true
@@ -107,6 +103,10 @@ _.extend JustdoJiraIntegration.prototype,
       # The parent isn't under Jira context, ignore.
       if not (parent_task = @tasks_collection.findOne(query, query_options))?
         return true
+
+      # Task is under a Jira mount tree but not a Jira issue. Block.
+      if task.jira_project_id and not task.jira_issue_id?
+        return
 
       # Tasks under these three mountpoint types are hard-coded tasks and thus the parent cannot be removed.
       # XXX Do we want to support removing a sprint/fix-version by deleting the task?
