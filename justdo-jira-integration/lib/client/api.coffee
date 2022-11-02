@@ -132,7 +132,7 @@ _.extend JustdoJiraIntegration.prototype,
           self.registered_pseudo_custom_fields.push "jira_sprint"
 
           APP.modules.project_page.setupPseudoCustomField "jira_story_point",
-            label: "Story Point"
+            label: "Story Points"
             field_type: "number"
             grid_visible_column: true
             grid_editable_column: true
