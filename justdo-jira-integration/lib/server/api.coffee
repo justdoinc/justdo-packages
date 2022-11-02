@@ -930,15 +930,6 @@ _.extend JustdoJiraIntegration.prototype,
 
         # If code exists, assume OAuth2 toward Jira cloud is in use.
         if code?
-          # XXX Remove when custom field are fetched using API
-
-          # XXX For IT only
-          # JustdoJiraIntegration.task_id_custom_field_id = "customfield_10035"
-          # JustdoJiraIntegration.project_id_custom_field_id = "customfield_10034"
-          # JustdoJiraIntegration.last_updated_custom_field_id = "customfield_10033"
-          # JustdoJiraIntegration.sprint_custom_field_id = "customfield_10020"
-          # JustdoJiraIntegration.justdo_field_to_jira_field_map.jira_sprint.id = "customfield_10020"
-
           get_oauth_token_endpoint = self.get_oauth_token_endpoint
           get_oauth_token_req = _.extend {}, GET_OAUTH_TOKEN_REQUEST_TEMPLATE
           get_oauth_token_req.data.code = code
