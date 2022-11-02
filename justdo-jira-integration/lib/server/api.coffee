@@ -1045,7 +1045,7 @@ _.extend JustdoJiraIntegration.prototype,
       jira_doc = @jira_collection.findOne jira_doc, {fields: {refresh_token: 1, access_token: 1, token_secret: 1, "server_info.id": 1}}
 
     if options?.emit_event
-      @emit "beforeJiraApiTokenRefresh"
+      @emit "beforeJiraApiTokenRefresh", jira_doc.server_info.id
 
     if @getAuthTypeIfJiraInstanceIsOnPerm() is "oauth1"
       jira_clients_config =
@@ -1059,6 +1059,8 @@ _.extend JustdoJiraIntegration.prototype,
       @clients[jira_doc.server_info?.id] =
         v2: new Version2Client jira_clients_config
         agile: new AgileClient jira_clients_config
+      if options?.emit_event
+        @emit "afterJiraApiTokenRefresh", jira_doc.server_info.id
     else
       req =
         headers:
