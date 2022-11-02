@@ -464,11 +464,15 @@ _.extend JustdoJiraIntegration.prototype,
         project_id: 1
       if (fix_versions_mountpiont_task_doc = @tasks_collection.findOne(tasks_query, tasks_options))?
         task_fields =
+          state: "nil"
           project_id: fix_versions_mountpiont_task_doc.project_id
           title: fix_version.name
-          jira_fix_version_mountpoint_id: fix_version.id
-          start_date: fix_version.startDate
-          due_date: fix_version.releaseDate
+          jira_fix_version_mountpoint_id: parseInt fix_version.id
+          jira_project_id: jira_project_id
+        if fix_version.startDate?
+          task_fields.start_date = moment(fix_version.startDate or fix_version.userStartDate).format("YYYY-MM-DD")
+        if fix_version.endDate?
+          task_fields.due_date = moment(fix_version.releaseDate or fix_version.userReleaseDate).format("YYYY-MM-DD")
         APP.projects._grid_data_com.addChild "/#{fix_versions_mountpiont_task_doc._id}/", task_fields, @_getJustdoAdmin fix_versions_mountpiont_task_doc.project_id
 
       jira_ops =
@@ -516,43 +520,55 @@ _.extend JustdoJiraIntegration.prototype,
       return
     "sprint_created": (req_body) ->
       sprint = req_body.sprint
-      jira_host = new URL(sprint.self).origin
-      client = @getClientByHost(jira_host).agile
-
       board_id = sprint.originBoardId
-      @getAllAssociatedJiraProjectsByBoardId(board_id, {client})
-        .then (res) =>
-          query =
-            $or: []
-          ops =
-            $addToSet: {}
 
-          _.each res.values, (jira_project) =>
-            jira_project_id = jira_project.id
+      if @isJiraInstanceCloud()
+        jira_host = new URL(sprint.self).origin
+        client = @getClientByHost(jira_host).agile
+      else
+        client = _.values(@clients)?[0]?.agile
 
-            tasks_query =
-              jira_project_id: jira_project_id
-              jira_mountpoint_type: "sprints"
-            tasks_options =
-              project_id: 1
-            if (sprint_mountpiont_task_doc = @tasks_collection.findOne(tasks_query, tasks_options))?
-              task_fields =
-                project_id: sprint_mountpiont_task_doc.project_id
-                title: sprint.name
-                jira_sprint_mountpoint_id: sprint.id
-                start_date: moment.utc(sprint.startDate).format "YYYY-MM-DD"
-                end_date: moment.utc(sprint.startDate).format "YYYY-MM-DD"
-              APP.projects._grid_data_com.addChild "/#{sprint_mountpiont_task_doc._id}/", task_fields, @_getJustdoAdmin sprint_mountpiont_task_doc.project_id
+      if not client?
+        throw @_error "client-not-found"
 
-            query.$or.push
-              "jira_projects.#{jira_project_id}":
-                $ne: null
-            ops.$addToSet["jira_projects.#{jira_project_id}.sprints"] = sprint
+      {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getProjects", {boardId: board_id}, client
+      if (err = err?.response?.data or err)?
+        console.error "[justdo-jira-integration] Fetching project board failed", err
 
-          @jira_collection.update query, ops
+      query =
+        $or: []
+      ops =
+        $addToSet: {}
 
-          return
-        .catch (err) -> console.error err
+      _.each res.values, (jira_project) =>
+        jira_project_id = parseInt jira_project.id
+
+        tasks_query =
+          jira_project_id: jira_project_id
+          jira_mountpoint_type: "sprints"
+        tasks_options =
+          project_id: 1
+        if (sprint_mountpiont_task_doc = @tasks_collection.findOne(tasks_query, tasks_options))?
+          task_fields =
+            state: "nil"
+            project_id: sprint_mountpiont_task_doc.project_id
+            title: sprint.name
+            jira_project_id: jira_project_id
+            jira_sprint_mountpoint_id: parseInt sprint.id
+
+          if sprint.startDate?
+            task_fields.start_date = moment.utc(sprint.startDate).format "YYYY-MM-DD"
+          if sprint.endDate?
+            task_fields.end_date = moment.utc(sprint.endDate).format "YYYY-MM-DD"
+          APP.projects._grid_data_com.addChild "/#{sprint_mountpiont_task_doc._id}/", task_fields, @_getJustdoAdmin sprint_mountpiont_task_doc.project_id
+
+        query.$or.push
+          "jira_projects.#{jira_project_id}":
+            $ne: null
+        ops.$addToSet["jira_projects.#{jira_project_id}.sprints"] = sprint
+
+      @jira_collection.update query, ops
+
       return
     "sprint_updated": (req_body) ->
       {id, name, startDate, endDate, originBoardId} = req_body.sprint
