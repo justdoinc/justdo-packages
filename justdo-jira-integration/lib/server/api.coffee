@@ -1625,7 +1625,7 @@ _.extend JustdoJiraIntegration.prototype,
 
   getAllRelevantJiraFieldIds: ->
     relevant_field_ids = _.map JustdoJiraIntegration.justdo_field_to_jira_field_map, (field) -> field.id or field.name
-    return relevant_field_ids.concat ["project", "parent", "assignee", JustdoJiraIntegration.task_id_custom_field_id, JustdoJiraIntegration.project_id_custom_field_id, JustdoJiraIntegration.last_updated_custom_field_id]
+    return relevant_field_ids.concat ["project", "parent", "assignee", JustdoJiraIntegration.epic_link_custom_field_id, JustdoJiraIntegration.task_id_custom_field_id, JustdoJiraIntegration.project_id_custom_field_id, JustdoJiraIntegration.last_updated_custom_field_id]
 
   isJustdoMountedWithJiraProject: (justdo_id) ->
     query =
