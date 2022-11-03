@@ -1,0 +1,72 @@
+.multi-select-editor
+  button
+    font-size: 15px
+    padding: 0 7px
+    width: 100%
+    margin-right: 0
+
+  .dropdown-menu
+    margin-top: 3px
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)
+
+  .dropdown-menu.open
+    .inner
+      display: block
+
+  .dropdown-menu.inner
+    li:hover
+      background-color: #f3f3f3
+    a
+      font-size: 14px
+      text-decoration: none
+      display: inherit
+
+  // Modify selectpicker's style
+  .btn:first-child
+    padding-left: 5px
+
+  .dropdown-menu > li > a
+    padding: 3px 6px
+
+.multi-select-editor-container-cell
+  position: static !important
+
+.multi-select-editor
+  .null-state
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    border-top: 1px solid #AAA
+    margin: 13px 18px
+
+  .dropdown-toggle
+    .null-state
+      right: 20px
+      top: 4px
+
+.slick-cell
+  .multi-select-editor
+    .dropdown-toggle
+      .null-state
+        right: 0px
+        top: 0
+        width: auto
+        margin: 14px 30px 14px 10px
+
+.active .multi-select-editor
+  button
+    box-shadow: 0 0 0 0.2rem rgba(38,143,255,.5)
+
+.slick-cell
+  .state-done-animation
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    pointer-events: none
+    &.salute
+      overflow: hidden
+    &.check
+      overflow: visible

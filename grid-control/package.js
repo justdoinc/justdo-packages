@@ -111,6 +111,9 @@ Package.onUse(function (api) {
 
   api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.coffee', client);
   api.add_files('lib/client/formatters-and-editors/selector-editor/selector-editor.sass', client);
+  api.add_files('lib/client/formatters-and-editors/multi-select/multi-select-editor.coffee', client);
+  api.add_files('lib/client/formatters-and-editors/multi-select/multi-select-editor.sass', client);
+  api.add_files('lib/client/formatters-and-editors/multi-select/multi-select-formatter.coffee', client);
 
   api.add_files('lib/client/formatters-and-editors/textarea-editor/textarea-editor.coffee', client);
   api.add_files('lib/client/formatters-and-editors/textarea-editor/textarea-editor.sass', client);
