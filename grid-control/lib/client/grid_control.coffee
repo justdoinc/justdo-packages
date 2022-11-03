@@ -353,6 +353,8 @@ _.extend GridControl.prototype,
 
     @_grid_data.on "edit-failed", (err) =>
       console.error @_error "edit-failed", err
+      @emit "edit-failed", err
+      return
 
     @_grid_data.on "section-state-var-set", (section_id, var_name, new_val, regard_as_default_value) =>
       @emit "section-state-var-set", section_id, var_name, new_val, regard_as_default_value

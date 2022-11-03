@@ -395,6 +395,10 @@ _.extend GridControlMux.prototype,
       @emit "row-activated", tab, row, cell, scroll_into_view, resulted_from_smart_guess
       return
 
+    grid_control.on "edit-failed", (err) =>
+      @emit "edit-failed", tab, err
+      return
+
     grid_control.once "ready", =>
 
       if (Tracker.nonreactive => @isItemsSubscriptionReady())
