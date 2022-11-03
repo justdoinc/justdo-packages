@@ -89,14 +89,9 @@ APP.executeAfterAppLibCode ->
     custom_field_type_def =
       GridControlCustomFields.findCustomFieldTypeDefinitionByCustomFieldTypeId($(".new-field-type").val())
 
-    if custom_field_type_def.custom_field_type_id == "multi-select"
-      field_id = "custom-field-multi-select::#{Random.id()}"
-      # APP.tasks_changelog_manager.undoOldValueTransformers[field_id] = (activity_obj) ->
-      #   activity_obj.old_value.split(',')
-      #   return self.parseDependenciesStr(activity_obj.old_value, activity_obj.project_id)
-
-    else
-      field_id = Random.id()
+    field_id = Random.id()
+    if (field_id_prefix = custom_field_type_def.field_id_prefix)?
+      field_id = "#{field_id_prefix}::#{field_id}"
 
     custom_field_definition =
       field_id: field_id

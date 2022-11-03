@@ -663,8 +663,12 @@ _.extend GridControlCustomFields,
     {
       custom_field_type_id: "multi-select"
       type_id: "multi_select"
-      label: "Multi Select"
+      label: "Multi Options"
       settings_button_template: "custom_field_conf_select_options_editor_opener"
+      field_id_prefix: "custom-field-multi-select"
+      field_id_prefix_schema:
+        type: [String]
+        optional: true
     }
   ]
 
@@ -708,9 +712,12 @@ GridControlCustomFields.registerCustomFieldsTypes "basic-calc",
   type_id: "calc"
   label: "Smart Numbers" # Derive from the descendants
 
-Schema =
-  "custom-field-multi-select::<>":
-    type: [String]
-    optional: true
+for field_type in GridControlCustomFields._available_field_types
+  if (field_id_prefix_schema = field_type.field_id_prefix_schema)?
+    if not (field_id_prefix = field_type.field_id_prefix)?
+      throw new Meteor.Error("bad-custom-field-type-definition", "Field type #{field_type.custom_field_type_id} defines field_id_prefix_schema but doesn't have field_id_prefix defined")
 
-APP.collections.Tasks.attachSchema Schema
+    Schema =
+      "#{field_id_prefix}::<>": field_id_prefix_schema
+
+    APP.collections.Tasks.attachSchema Schema
