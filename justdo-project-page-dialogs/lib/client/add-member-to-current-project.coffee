@@ -11,7 +11,7 @@ ProjectPageDialogs.showMemberDialog = ->
     APP.helpers.renderTemplateInNewNode(Template.invite_new_user_dialog)
 
   bootbox.dialog
-    title: "Add New Members"
+    title: "Invite New Members"
     message: message_template.node
     animate: false
     className: "bootbox-new-design invite-new-user-dialog"
@@ -316,7 +316,7 @@ Template.batch_add_user_group.onCreated ->
       title: "Existing Users"
     existing_members:
       wrapper_class: "existing-members"
-      title: "Existing JustDo Members"
+      title: "Existing Members of this JustDo"
   return
 
 Template.batch_add_user_group.helpers
