@@ -177,6 +177,7 @@ Template.justdo_files_gallery.events
     tmpl.$(".msg .msg-content").hide()
     tmpl.$(".loader").show()
     APP.justdo_files.removeFile file._id
+    tmpl.$(".loader").hide()
 
   "click .msg-cancel": (e, tmpl) ->
     e.preventDefault()
