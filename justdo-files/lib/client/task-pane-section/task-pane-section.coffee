@@ -11,8 +11,36 @@ Template.task_pane_justdo_files_task_pane_section_section.onCreated ->
   return
 
 Template.justdo_files_gallery.onCreated ->
+  tpl = @
+
   @renaming = new ReactiveVar false
   @deletion = new ReactiveVar false
+  @bulk_edit_mode_rv = new ReactiveVar false
+  @bulk_selected_rv = new ReactiveVar []
+
+  @bulkEditModeEnable = ->
+    tpl.bulk_edit_mode_rv.set true
+    tpl.renaming.set false
+
+    return
+
+  @bulkEditModeDisable = ->
+    tpl.bulk_edit_mode_rv.set false
+    tpl.bulk_selected_rv.set []
+
+    return
+
+  @bulkEditSelect = (file_id) ->
+    selected_files = tpl.bulk_selected_rv.get()
+
+    if selected_files.includes file_id
+      selected_files.splice selected_files.indexOf(file_id), 1
+    else
+      selected_files.push file_id
+
+    tpl.bulk_selected_rv.set selected_files
+
+    return
 
   @getTypeCssClass = (file_type) ->
     [p1, p2] = file_type.split('/')
@@ -27,7 +55,7 @@ Template.justdo_files_gallery.helpers
   files: -> APP.justdo_files.tasks_files.find({"meta.task_id": APP.modules.project_page.activeItemId()}, {sort: {"meta.upload_date": -1}})
 
   typeClass: -> Template.instance().getTypeCssClass(@file.type)
-  
+
   renaming: -> Template.instance().renaming.get() == @file._id
 
   deletion: -> Template.instance().deletion.get() == @file._id
@@ -39,7 +67,7 @@ Template.justdo_files_gallery.helpers
       return true
 
     return false
-  
+
   tempPlaceHolder: ->
     task = @task
     file = @file
@@ -62,7 +90,7 @@ Template.justdo_files_gallery.helpers
       return
 
     return placeholder
-  
+
   noFiles: ->
     return APP.justdo_files.tasks_files.find({"meta.task_id": APP.modules.project_page.activeItemId()}).count() == 0
 
@@ -77,6 +105,25 @@ Template.justdo_files_gallery.helpers
       return true
 
     return APP.justdo_permissions.checkTaskPermissions("justdo-files.remove-file-by-non-uploader", JD.activeItemId())
+
+  bulkEditMode: ->
+    return Template.instance().bulk_edit_mode_rv.get()
+
+  bulkSelectedExist: ->
+    selected_count = Template.instance().bulk_selected_rv.get().length
+    return selected_count > 0
+
+  bulkSelectedFile: ->
+    selected_files = Template.instance().bulk_selected_rv.get()
+
+    return selected_files.includes @file._id
+
+  bulkSelectedCount: ->
+    return Template.instance().bulk_selected_rv.get().length
+
+  bulkSelectedCountGreaterThanOne: ->
+    selected_count = Template.instance().bulk_selected_rv.get().length
+    return selected_count > 1
 
 
 Template.justdo_files_gallery.events
@@ -139,19 +186,37 @@ Template.justdo_files_gallery.events
     if e.which == 27
       tmpl.renaming.set false
 
-  "mouseenter .file": (e, tmpl) ->
-    e.preventDefault()
-    $(e.currentTarget).addClass "active"
-
-  "mouseleave .file": (e, tmpl) ->
-    e.preventDefault()
-    $(".file").removeClass "active"
-
   "click .dl-all-files" : (e, tpl) ->
     window.location.href = "/justdo-files/files-archive/#{APP.modules.project_page.activeItemId()}"
 
     return
-    
+
+  "click .bulk-edit-done": (e, tpl) ->
+    tpl.bulkEditModeDisable()
+
+    return
+
+  "click .file-edit-dropdown-select": (e, tpl) ->
+    tpl.bulkEditModeEnable()
+    tpl.bulkEditSelect(@file._id)
+
+    return
+
+  "click .edit-mode .file": (e, tpl) ->
+    tpl.bulkEditSelect(@file._id)
+
+    return
+
+  "click .bulk-edit-remove": (e, tpl) ->
+    selected_files = tpl.bulk_selected_rv.get()
+
+    tpl.bulkEditModeDisable()
+
+    for file_id in selected_files
+      APP.justdo_files.removeFile file_id
+
+    return
+
 justdo_files_uploaders_state = {}
 
 Template.justdo_files_uploader.onCreated ->
@@ -168,7 +233,7 @@ Template.justdo_files_uploader.onCreated ->
         else
           # reset file upload process state of previous task
           justdo_files_uploaders_state[@prev_task_id] = null
-          
+
       # load file upload process if there is one
       saved_state = justdo_files_uploaders_state[@task_id]
       if saved_state?
@@ -180,7 +245,7 @@ Template.justdo_files_uploader.onCreated ->
 
         @_upload_processes_dep = new Tracker.Dependency()
         @_upload_processes = []
-    
+
     return
 
   @resetDropPane = ->
@@ -197,9 +262,9 @@ Template.justdo_files_uploader.onCreated ->
       @_upload_processes = []
       @_upload_processes_dep.changed()
 
-    return 
+    return
 
-  @addUploadProcess = (upload_process) =>    
+  @addUploadProcess = (upload_process) =>
     @_upload_processes.push(upload_process)
 
     @_upload_processes_dep.changed()
@@ -219,7 +284,7 @@ Template.justdo_files_uploader.onCreated ->
       tpl.state.set "uploading"
 
     for file in files
-      try 
+      try
         upload = APP.justdo_files.tasks_files.insert
           file: file
           meta:
@@ -229,7 +294,7 @@ Template.justdo_files_uploader.onCreated ->
           transport: "ddp" # Need to find out why http doesn't work
         , false
       catch e
-        # create a fake upload object to faciliate the message display 
+        # create a fake upload object to faciliate the message display
         tpl.addUploadProcess
           file: file
           progress: new ReactiveVar 0
@@ -248,7 +313,7 @@ Template.justdo_files_uploader.onCreated ->
         return
 
       upload.start()
-    
+
     return
 
   return
@@ -256,7 +321,7 @@ Template.justdo_files_uploader.onCreated ->
 Template.justdo_files_uploader.helpers
   getState: -> Template.instance().state.get()
 
-  isHovering: ->     
+  isHovering: ->
     if Template.instance().is_hovering.get() == true
       return "hovering"
     return ""
@@ -286,7 +351,7 @@ Template.justdo_files_uploader.helpers
 
   hasPreviousUploadResult: ->
     return Template.instance().getUploadProcesses().length > 0
-  
+
   numSuccessfulUploads: ->
     _.reduce Template.instance().getUploadProcesses(), (memo, cur) ->
       if cur.state.get() == "completed"
@@ -329,13 +394,13 @@ Template.justdo_files_uploader.events
     e.stopPropagation()
     e.preventDefault()
     return false
-  
+
   "dragover .drop-pane": (e, tpl) ->
     e.originalEvent.dataTransfer.dropEffect = 'copy'
     e.stopPropagation()
     e.preventDefault()
     return false
-  
+
   "drop .drop-pane": (e, tpl) ->
     tpl.dragenter_count = 0
     tpl.is_hovering.set false

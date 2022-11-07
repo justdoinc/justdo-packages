@@ -49,6 +49,7 @@
         padding: 4px
         stroke-width: 2
         background-color: rgba(0, 0, 0, 0.04)
+
       .metadata
         .dot
           padding-right: 2px
@@ -56,16 +57,24 @@
           font-size: 12px
           &::after
             content: "·"
+
       .actions
-        opacity: 0
-        transition: opacity 0.2s linear
+        .jd-icon
+          margin-left: 2px
+          background-color: rgba(0, 0, 0, 0)
+          &:hover
+            background-color: rgba(0, 0, 0, 0.04)
 
-        .file-direct-download-link
-          margin-right: 4px
+        .file-direct-download-link,
+        .file-rename-link,
+        .file-remove-link
+          opacity: 0
 
-      &.active
-        .actions
-          opacity: 1
+        .file-edit-link
+          padding: 0
+          width: 16px
+          opacity: 0.75
+
       .type-logo
         min-width: 24px
         height: 32px
@@ -118,6 +127,20 @@
         right: 0
         z-index: 150
 
+    .file-inner-wrapper
+      padding: 16px
+      position: relative
+      border: 2px solid rgba(255, 255, 255, 0)
+      border-radius: 8px
+      transition: border-color 0.35s
+
+    .file
+      &:hover
+        .file-direct-download-link,
+        .file-rename-link,
+        .file-remove-link
+          opacity: 0.75
+
   .bottom-toolbar
     .justdo-files-gallery
       position: absolute
@@ -126,6 +149,70 @@
       top: 10px
       bottom: 10px
       overflow-y: auto
+
+  .file-edit-dropdown
+    right: 0 !important
+    left: auto !important
+    margin-top: 12px
+    .dropdown-item
+      display: flex
+      align-items: center
+      cursor: pointer
+
+  .justdo-files-gallery.edit-mode
+    .bulk-edit-control-wrapper
+      position: fixed
+      display: flex
+      z-index: 3
+      bottom: 35px
+      padding-left: 18px
+      .bulk-edit-control
+        display: flex
+        padding: 12px
+        background-color: white
+      .bulk-edit-done,
+      .bulk-edit-remove
+        font-weight: bold
+        text-transform: uppercase
+
+    .file-check-input
+      position: relative
+      width: 18px
+      height: 18px
+      margin-right: 12px
+      .jd-icon
+        position: absolute
+        width: 18px
+        height: 18px
+        padding: 0px
+        stroke-width: 2.5
+        background-color: white
+        z-index: 3
+        &.icon-mark-square
+          color: #848fa1
+          opacity: 0.75
+        &.icon-mark-check
+          color: #08c116
+          opacity: 0
+
+    .file-check-input:hover
+      .icon-mark-circle
+        opacity: 1
+
+    .file.selected
+      .file-inner-wrapper
+        border-color: #08c116
+      .icon-mark-square
+        opacity: 0
+      .icon-mark-check
+        opacity: 1
+
+    .file
+      cursor: pointer
+      .content,
+      .image-preview
+        pointer-events: none
+
 
   @-webkit-keyframes sk-bounce
     0%, 100%
@@ -144,7 +231,7 @@
 
   .drop-pane
     margin-bottom: 8px
-    
+
     position: relative
     .drop-pane-logo
       width: 32px

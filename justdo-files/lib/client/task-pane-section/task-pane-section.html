@@ -1,20 +1,26 @@
 <template name="task_pane_justdo_files_task_pane_section_section">
   {{> justdo_files_uploader}}
-  
+
   {{>justdo_files_gallery}}
 </template>
 
 <template name="justdo_files_gallery">
-  <div class="justdo-files-gallery">
+  <div class="justdo-files-gallery {{#if bulkEditMode}}edit-mode{{/if}}">
     {{#if $not noFiles}}
       <button class="btn btn-secondary btn-sm w-100 mb-2 dl-all-files">Download all files as .zip</button>
     {{/if}}
 
     {{#each files}}
       {{#with task=.. file=.}}
-        <div class="file pb-2">
+        <div class="file pb-2 {{#if bulkSelectedFile}}selected{{/if}}">
           <div class="file-inner-wrapper p-3 bg-light position-relative">
             <div class="d-flex">
+              {{#if bulkEditMode}}
+                <div class="file-check-input">
+                  <svg class="jd-icon icon-mark-check"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+                  <svg class="jd-icon icon-mark-square"><use xlink:href="/layout/icons-feather-sprite.svg#square"></use></svg>
+                </div>
+              {{/if}}
               <div class="type-logo shadow-sm {{typeClass}}"></div>
               <div class="content flex-grow-1 mx-2">
                 <div class="title">
@@ -30,24 +36,35 @@
                   <span class="mimetype">{{file.type}}</span>
                 </small>
               </div>
-              {{#if renaming}}
-                <div class="actions-rename d-flex">
-                  <svg class="file-rename-done jd-icon text-secondary mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
-                  <svg class="file-rename-cancel jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
-                </div>
-              {{else}}
-                <div class="actions d-flex">
-                  <svg class="file-direct-download-link jd-icon text-secondary mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#download"/></svg>
+              {{#unless bulkEditMode}}
+                {{#if renaming}}
+                  <div class="actions-rename d-flex">
+                    <svg class="file-rename-done jd-icon text-secondary mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#check"/></svg>
+                    <svg class="file-rename-cancel jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+                  </div>
+                {{else}}
+                  <div class="actions d-flex">
+                    <svg class="file-direct-download-link jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#download"/></svg>
 
-                  {{#if isAllowedToRenameFile}}
-                    <svg class="file-rename-link jd-icon text-secondary mr-1"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>
-                  {{/if}}
+                    {{#if isAllowedToRenameFile}}
+                      <svg class="file-rename-link jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>
+                    {{/if}}
 
-                  {{#if isAllowedToRemoveFile}}
-                    <svg class="file-remove-link jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"/></svg>
-                  {{/if}}
-                </div>
-              {{/if}}
+                    {{#if isAllowedToRemoveFile}}
+                      <svg class="file-remove-link jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"/></svg>
+                    {{/if}}
+                    <div class="dropdown">
+                      <svg class="file-edit-link jd-icon text-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
+                      <div class="dropdown-menu file-edit-dropdown p-2 animate slideIn shadow-lg border-0">
+                        <li class="file-edit-dropdown-select dropdown-item px-1">
+                          <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+                          Select
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                {{/if}}
+              {{/unless}}
             </div>
             {{#if isImage}}
               <div class="image-preview bg-light mt-2 file-download-link d-flex justify-content-center align-items-center loading {{tempPlaceHolder}}">
@@ -70,6 +87,16 @@
         </div>
       {{/with}}
     {{/each}}
+    {{#if bulkEditMode}}
+      <div class="bulk-edit-control-wrapper">
+        <div class="bulk-edit-control shadow-lg">
+          {{#if bulkSelectedExist}}
+            <button class="btn btn-sm btn-primary shadow-sm mr-2 bulk-edit-remove">Remove {{bulkSelectedCount}} File{{#if bulkSelectedCountGreaterThanOne}}s{{/if}}</button>
+          {{/if}}
+          <button class="btn btn-sm btn-primary shadow-sm bulk-edit-done">Cancel</button>
+        </div>
+      </div>
+    {{/if}}
   </div>
 </template>
 
