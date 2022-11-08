@@ -2,8 +2,13 @@ isUserIdEnrolled = (user_id) ->
   return JustdoHelpers.getUserDocById(user_id, {get_docs_by_reference: true})?.enrolled_member
 
 _.extend Projects.prototype,
-  loadProject: (project_id) ->
+  loadProject: (project_id, options) ->
     self = @
+
+    default_options =
+      load_autoruns_and_subscriptions: true
+
+    options = _.extend default_options, options
 
     # Fetch only the id field to trigger reactivity in related computations only
     # if the project document removed.
@@ -14,9 +19,9 @@ _.extend Projects.prototype,
       # Note @ sign refers to project_obj here, use self for the Projects obj
       id: project_id
       projects_obj: self
-      tasks_subscription: self.requireProjectTasksSubscription(project_id)
-      tickets_queue_subscription: self.modules.tickets_queues.subscribe(project_id)
-      active_task_augmented_users_field_auto_subscription: self.activeTaskAugmentedUsersFieldAutoSubscription()
+      tasks_subscription: if options.load_autoruns_and_subscriptions then self.requireProjectTasksSubscription(project_id) else undefined
+      tickets_queue_subscription: if options.load_autoruns_and_subscriptions then self.modules.tickets_queues.subscribe(project_id) else undefined
+      active_task_augmented_users_field_auto_subscription: if options.load_autoruns_and_subscriptions then self.activeTaskAugmentedUsersFieldAutoSubscription() else undefined
 
       is_admin_rv: new ReactiveVar false # See below is_admin_computation
 
@@ -351,10 +356,10 @@ _.extend Projects.prototype,
         if not @stopped
           @stopped = true
 
-          @tasks_subscription.stop()
-          @tickets_queue_subscription.stop()
-          @active_task_augmented_users_field_auto_subscription.stop()
-          @is_admin_computation.stop()
+          @tasks_subscription?.stop()
+          @tickets_queue_subscription?.stop()
+          @active_task_augmented_users_field_auto_subscription?.stop()
+          @is_admin_computation?.stop()
 
           self.logger.debug "Project #{project_id} subscription stopped"
 
@@ -364,25 +369,26 @@ _.extend Projects.prototype,
         projectHasTicketsQueues: (prereq) =>
           self.modules.tickets_queues.opreqProjectHasTicketsQueues(prereq)
 
-    project_obj.is_admin_computation = Tracker.autorun ->
-      # Add fields, to avoid invalidation on project doc changes
-      res = self.projects_collection.findOne(
-        {
-          _id: project_id
-          members: 
-            $elemMatch:
-              user_id: Meteor.userId()
-              is_admin: true
-        },
-        {fields: {_id: 1}}
-      )
+    if options.load_autoruns_and_subscriptions
+      project_obj.is_admin_computation = Tracker.autorun ->
+        # Add fields, to avoid invalidation on project doc changes
+        res = self.projects_collection.findOne(
+          {
+            _id: project_id
+            members: 
+              $elemMatch:
+                user_id: Meteor.userId()
+                is_admin: true
+          },
+          {fields: {_id: 1}}
+        )
 
-      if res?
-        project_obj.is_admin_rv.set true
-      else
-        project_obj.is_admin_rv.set false
+        if res?
+          project_obj.is_admin_rv.set true
+        else
+          project_obj.is_admin_rv.set false
 
-      return
+        return
 
     return project_obj
 
