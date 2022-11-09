@@ -99,9 +99,6 @@ WhiteListFilterControllerConstructor = (context) ->
     value = getValueFromHtmlValue(html_value)
 
     stored_values_to_filter = [value]
-    if value is ""
-      # We regard null/undefined value as equivalent to empty string.
-      stored_values_to_filter.push null
 
     if $el.hasClass("selected")
       args = [filter_state].concat(stored_values_to_filter)
@@ -158,6 +155,10 @@ columnFilterStateToQuery = (column_filter_state, context) ->
   custom_queries = []
 
   for state in column_filter_state
+    if state is ""
+      # We regard null/undefined value as equivalent to empty string.
+      simple_states.push null
+
     if not (state_def = column_state_definitions[state])?
       simple_states.push state
 
