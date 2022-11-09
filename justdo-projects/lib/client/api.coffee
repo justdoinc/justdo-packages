@@ -168,3 +168,43 @@ _.extend Projects.prototype,
         Router.go "project", {_id: project_id})
     )
     return
+
+  activateTaskInProject: (project_id, task_id, onActivated) ->
+    activateTask = =>
+      gcm = APP.modules.project_page.getCurrentGcm()
+
+      gcm.setPath(["main", task_id], {collection_item_id_mode: true})
+
+      JustdoHelpers.callCb(onActivated)
+
+      return
+
+    if JustdoHelpers.currentPageName() == "project" and Router.current().project_id == project_id
+      activateTask()
+    else
+      Router.go "project", {_id: project_id}
+
+      Tracker.flush()
+
+      tracker = Tracker.autorun (c) ->
+        module = APP.modules.project_page
+
+        project = module.curProj()
+
+        gcm = APP.modules.project_page.getCurrentGcm()
+
+        if gcm?.getAllTabs()?.main?.state == "ready"
+          # Wait for main tab to become ready and activate the task
+          activateTask()
+
+          c.stop()
+
+          return
+
+        return
+
+      setTimeout ->
+        tracker.stop() # after 10 seconds stop the tracker regardless, to avoid lingering trackers in case didn't work well
+      , 10000
+
+    return
