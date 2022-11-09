@@ -68,7 +68,7 @@ default_filter_options =
 #
 UnicodeDatesFilterControllerConstructor = (context) ->
   GridControl.FilterController.call this
-  tpl = @
+  constructor = @
   @grid_control = context.grid_control
   @column_settings = context.column_settings
   @column_filter_state_ops = context.column_filter_state_ops
@@ -183,13 +183,13 @@ UnicodeDatesFilterControllerConstructor = (context) ->
   @controller.find(".custom-datepicker").datepicker
     onSelect: (date, obj) ->
       if obj.input.hasClass "custom-datepicker-start"
-        tpl.custom_range_start = date
+        constructor.custom_range_start = date
 
       if obj.input.hasClass "custom-datepicker-end"
-        tpl.custom_range_end = date
+        constructor.custom_range_end = date
 
       obj.input.hide()
-      tpl.setCustomRange("update")
+      constructor.setCustomRange("update")
 
       return
 
@@ -228,24 +228,24 @@ UnicodeDatesFilterControllerConstructor = (context) ->
     if $label.hasClass "custom-range-label-start"
       if moment(date, date_format, true).isValid() or date == ""
         if date
-          tpl.custom_range_start = moment($label.text(), date_format).format("MM/DD/YYYY")
+          constructor.custom_range_start = moment($label.text(), date_format).format("MM/DD/YYYY")
         else
-          tpl.custom_range_start = ""
+          constructor.custom_range_start = ""
 
-        tpl.setCustomRange("update")
+        constructor.setCustomRange("update")
       else
-        $label.text moment(tpl.custom_range_start).format(date_format)
+        $label.text moment(constructor.custom_range_start).format(date_format)
 
     if $label.hasClass "custom-range-label-end"
       if moment(date, date_format, true).isValid() or date == ""
         if date
-          tpl.custom_range_end = moment($label.text(), date_format).format("MM/DD/YYYY")
+          constructor.custom_range_end = moment($label.text(), date_format).format("MM/DD/YYYY")
         else
-          tpl.custom_range_end = ""
+          constructor.custom_range_end = ""
 
-        tpl.setCustomRange("update")
+        constructor.setCustomRange("update")
       else
-        $label.text moment(tpl.custom_range_end).format(date_format)
+        $label.text moment(constructor.custom_range_end).format(date_format)
 
     return
 
@@ -254,12 +254,12 @@ UnicodeDatesFilterControllerConstructor = (context) ->
     $label.text("")
 
     if $label.hasClass "custom-range-label-start"
-      tpl.custom_range_start = ""
+      constructor.custom_range_start = ""
 
     if $label.hasClass "custom-range-label-end"
-      tpl.custom_range_end = ""
+      constructor.custom_range_end = ""
 
-    tpl.setCustomRange("update")
+    constructor.setCustomRange("update")
 
     return
 
