@@ -68,9 +68,7 @@ default_filter_options =
 #
 UnicodeDatesFilterControllerConstructor = (context) ->
   GridControl.FilterController.call this
-
   tpl = @
-
   @grid_control = context.grid_control
   @column_settings = context.column_settings
   @column_filter_state_ops = context.column_filter_state_ops
@@ -112,7 +110,6 @@ UnicodeDatesFilterControllerConstructor = (context) ->
             <div class="custom-range-input-wrapper empty">
               <div class="custom-range-label-wrapper">
                 <div class="custom-range-label custom-range-label-start" placeholder="From" contenteditable="true"></div>
-                <div class="custom-range-time-label custom-range-time-label-start">Time</div>
               </div>
               <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
               <div class="custom-datepicker custom-datepicker-start shadow-lg"></div>
@@ -121,7 +118,6 @@ UnicodeDatesFilterControllerConstructor = (context) ->
             <div class="custom-range-input-wrapper empty">
               <div class="custom-range-label-wrapper">
                 <div class="custom-range-label custom-range-label-end" placeholder="To" contenteditable="true"></div>
-                <div class="custom-range-time-label custom-range-time-label-end">Time</div>
               </div>
               <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
               <div class="custom-datepicker custom-datepicker-end shadow-lg"></div>
@@ -345,8 +341,6 @@ _.extend UnicodeDatesFilterControllerConstructor.prototype,
     @column_filter_state_ops.setColumnFilter(filter_state)
 
     return
-
-
 
 #
 # stateToQuery
