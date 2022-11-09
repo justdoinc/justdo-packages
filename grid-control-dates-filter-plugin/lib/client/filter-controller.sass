@@ -1,0 +1,79 @@
+.custom-range-wrapper
+  display: flex
+
+  .custom-range-label-wrapper
+    display: flex
+    position: relative
+
+  .custom-range-label
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.32)
+    cursor: pointer
+    padding: 0px 2px
+    &:hover
+      border-color: black
+
+    &[placeholder]:empty:before
+      content: attr(placeholder)
+      color: #212529
+
+  .custom-range-label-start
+    min-width: 36px
+
+  .custom-range-label-end
+    min-width: 20px
+
+  .custom-datepicker
+    position: absolute
+    background-color: white
+    padding: 8px
+    z-index: 1
+    top: 30px
+    display: none
+    .ui-datepicker
+      border: none
+      padding: 0
+      font-size: 12px
+      th
+        padding: 0.7em 0
+
+    .custom-datepicker-time-wrapper
+      padding-bottom: 8px
+      border-bottom: 1px dashed #eaeaea
+      margin-bottom: 8px
+
+  .clear-date
+    width: 16px
+    height: 16px
+    stroke-width: 3
+    margin-left: 4px
+    color: #76869a
+    background-color: #e8edf3
+    cursor: pointer
+    display: flex
+    margin-top: 2px
+    &:hover
+      color: #212529
+
+  .custom-range-input-wrapper
+    display: flex
+    align-items: center
+    &.empty
+      .custom-range-time-label,
+      .clear-date
+        display: none
+
+  span
+    padding: 0 6px
+
+  .custom-range-time-label
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.32)
+    margin-left: 6px
+    margin-right: 4px
+    color: #76859a
+    cursor: pointer
+    &:hover
+      border-color: black
+
+#ui-datepicker-div
+  .ui-datepicker-month
+    margin-right: 4px

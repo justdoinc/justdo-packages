@@ -68,7 +68,7 @@ default_filter_options =
 #
 DatesFilterControllerConstructor = (context) ->
   GridControl.FilterController.call this
-
+  tpl = @
   @grid_control = context.grid_control
   @column_settings = context.column_settings
   @column_filter_state_ops = context.column_filter_state_ops
@@ -83,14 +83,17 @@ DatesFilterControllerConstructor = (context) ->
 
   @controller = $("""<div class="dates-filter-controller" />""")
 
+  @custom_range_start = ""
+  @custom_range_end = ""
+
   filter_options_html = ""
   for filter_option in @filter_settings_options.filter_options
     if filter_option.type == "relative-range"
       if not filter_option.id?
         console.warn "relative-range filter option has no id, skipping"
-        
+
         continue
-      
+
       option_item = """
         <li value='relative-range-#{filter_option.id}'>
           <i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i>
@@ -99,12 +102,38 @@ DatesFilterControllerConstructor = (context) ->
       """
 
       filter_options_html += option_item
-    
+
     if filter_option.type == "custom-range"
       option_item = """
-        <li value='custom-range'>
-          <i class='fa-li fa fa-square-o'></i><i class='fa-li fa fa-check-square-o'></i>
-          <input id="custom-range-start" class="custom-range-input" type="date"> - <input id="custom-range-end" class="custom-range-input" type="date">
+        <li value="custom-range">
+          <i class="fa-li fa fa-square-o"></i><i class="fa-li fa fa-check-square-o"></i>
+          <div class="custom-range-wrapper">
+            <div class="custom-range-input-wrapper empty">
+              <div class="custom-range-label-wrapper">
+                <div class="custom-range-label custom-range-label-start" placeholder="From" contenteditable="true"></div>
+                <div class="custom-range-time-label custom-range-time-label-start">Time</div>
+              </div>
+              <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+              <div class="custom-datepicker custom-datepicker-start shadow-lg">
+                <div class="custom-datepicker-time-wrapper">
+                  <input class="custom-datepicker-time custom-datepicker-time-start form-control form-control-sm" type="text" placeholder="Set time">
+                </div>
+              </div>
+            </div>
+            <span>-</span>
+            <div class="custom-range-input-wrapper empty">
+              <div class="custom-range-label-wrapper">
+                <div class="custom-range-label custom-range-label-end" placeholder="To" contenteditable="true"></div>
+                <div class="custom-range-time-label custom-range-time-label-end">Time</div>
+              </div>
+              <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+              <div class="custom-datepicker custom-datepicker-end shadow-lg">
+                <div class="custom-datepicker-time-wrapper">
+                  <input class="custom-datepicker-time custom-datepicker-time-end form-control form-control-sm" type="text" placeholder="Set time">
+                </div>
+              </div>
+            </div>
+          </div>
         </li>
       """
       filter_options_html += option_item
@@ -112,7 +141,7 @@ DatesFilterControllerConstructor = (context) ->
   # note, the reason why we seperate the ul for the dropdown-header is that
   # the vertical scroll of the members ul, when there are many members, go
   # over the x button that close the filter controller.
-  # (we might avoid this title at all, if we didn't have this issue) 
+  # (we might avoid this title at all, if we didn't have this issue)
   @controller.append("""
     <ul class="fa-ul whitelist-alike-filter-dropdown-ul">
       #{filter_options_html}
@@ -158,55 +187,91 @@ DatesFilterControllerConstructor = (context) ->
     return
 
   $(@controller).on "click", "li[value=custom-range] .fa-li", (e) =>
-    $el = $(e.target).closest("li")
+    @setCustomRange("remove")
 
-    # Shallow copy filter_state if is object
-    filter_state = @column_filter_state_ops.getColumnFilter()
-    if filter_state?
-      filter_state = _.extend {}, filter_state
-    else
-      filter_state = {}
-    
-    if $el.hasClass("selected")
-      delete filter_state.custom_range
-    else
-      custom_range_start = $el.find("#custom-range-start").val()
-      custom_range_end = $el.find("#custom-range-end").val()
-      filter_state.custom_range = {
-        start: custom_range_start
-        end: custom_range_end
-      }
-
-    if _.isEmpty(filter_state)
-      @column_filter_state_ops.clearColumnFilter()
-    else
-      @column_filter_state_ops.setColumnFilter(filter_state)
-    
     return
-  
-  $(@controller).on "change", ".custom-range-input", (e) =>
-    $el = $(e.target).closest("li")
 
-    # Shallow copy filter_state if is object
-    filter_state = @column_filter_state_ops.getColumnFilter()
-    if filter_state?
-      filter_state = _.extend {}, filter_state
-    else
-      filter_state = {}
-    
-    if $el.hasClass("selected")
-      custom_range_start = $el.find("#custom-range-start").val()
-      custom_range_end = $el.find("#custom-range-end").val()
-      filter_state.custom_range = {
-        start: custom_range_start
-        end: custom_range_end
-      }
+  @controller.find(".custom-datepicker").datepicker
+    onSelect: (date, obj) ->
+      if obj.input.hasClass "custom-datepicker-start"
+        tpl.custom_range_start = date
 
-    if _.isEmpty(filter_state)
-      @column_filter_state_ops.clearColumnFilter()
-    else
-      @column_filter_state_ops.setColumnFilter(filter_state)
-  
+      if obj.input.hasClass "custom-datepicker-end"
+        tpl.custom_range_end = date
+
+      obj.input.hide()
+      tpl.setCustomRange("update")
+
+      return
+
+  @controller.find(".custom-datepicker").on "mousedown contextmenu", (e) ->
+    e.stopImmediatePropagation()
+
+    return
+
+  @controller.find(".custom-range-label-wrapper").on "click", (e) ->
+    $el = $(e.currentTarget)
+    $(".custom-datepicker").hide()
+    $el.parent().find(".custom-datepicker").fadeToggle()
+
+    return
+
+  $(".column-filter-dropdown-container").on "mousedown", (e) ->
+    $(".custom-datepicker").fadeOut()
+
+    return
+
+  @controller.find(".custom-range-label").on "keypress", (e) ->
+    if e.keyCode == 32
+      e.preventDefault()
+
+    if e.keyCode == 13
+      e.preventDefault()
+      $(e.target).closest(".custom-range-label").blur()
+
+    return
+
+  @controller.find(".custom-range-label").on "blur", (e) ->
+    $label = $(e.target).closest(".custom-range-label")
+    date_format = JustdoHelpers.getUserPreferredDateFormat()
+    date = $label.text()
+
+    if $label.hasClass "custom-range-label-start"
+      if moment(date, date_format, true).isValid() or date == ""
+        if date
+          tpl.custom_range_start = moment($label.text(), date_format).format("MM/DD/YYYY")
+        else
+          tpl.custom_range_start = ""
+
+        tpl.setCustomRange("update")
+      else
+        $label.text moment(tpl.custom_range_start).format(date_format)
+
+    if $label.hasClass "custom-range-label-end"
+      if moment(date, date_format, true).isValid() or date == ""
+        if date
+          tpl.custom_range_end = moment($label.text(), date_format).format("MM/DD/YYYY")
+        else
+          tpl.custom_range_end = ""
+
+        tpl.setCustomRange("update")
+      else
+        $label.text moment(tpl.custom_range_end).format(date_format)
+
+    return
+
+  @controller.on "click", ".clear-date", (e) ->
+    $label = $(e.currentTarget).parent(".custom-range-input-wrapper").find(".custom-range-label")
+    $label.text("")
+
+    if $label.hasClass "custom-range-label-start"
+      tpl.custom_range_start = ""
+
+    if $label.hasClass "custom-range-label-end"
+      tpl.custom_range_end = ""
+
+    tpl.setCustomRange("update")
+
     return
 
   @refresh_state()
@@ -233,13 +298,60 @@ _.extend DatesFilterControllerConstructor.prototype,
 
     if filter_state.custom_range?
       $("[value=custom-range]", @controller).addClass("selected")
-      $("#custom-range-start", @controller).val(filter_state.custom_range.start)
-      $("#custom-range-end", @controller).val(filter_state.custom_range.end)
+
+      label_start = ""
+      label_end = ""
+
+      date_format = JustdoHelpers.getUserPreferredDateFormat()
+
+      if filter_state.custom_range.start != ""
+        label_start = moment(filter_state.custom_range.start).format(date_format)
+
+      if filter_state.custom_range.end != ""
+        label_end = moment(filter_state.custom_range.end).format(date_format)
+
+      @custom_range_start = filter_state.custom_range.start
+      @custom_range_end = filter_state.custom_range.end
+
+      @controller.find(".custom-range-label-start").text label_start
+      @controller.find(".custom-range-label-end").text label_end
+
+      $start_input_wrapper = @controller.find(".custom-range-label-start").parents(".custom-range-input-wrapper")
+      $end_input_wrapper = @controller.find(".custom-range-label-end").parents(".custom-range-input-wrapper")
+
+      if moment(label_start, date_format, true).isValid()
+        $start_input_wrapper.removeClass "empty"
+      else
+        $start_input_wrapper.addClass "empty"
+
+      if moment(label_end, date_format, true).isValid()
+        $end_input_wrapper.removeClass "empty"
+      else
+        $end_input_wrapper.addClass "empty"
 
     return
 
   destroy: ->
     @grid_control.removeListener "filter-change", @filter_change_listener
+
+  setCustomRange: (action) ->
+    filter_state = @column_filter_state_ops.getColumnFilter()
+    if filter_state?
+      filter_state = _.extend {}, filter_state
+    else
+      filter_state = {}
+
+    filter_state.custom_range = { "start": @custom_range_start, "end": @custom_range_end }
+
+    if action == "remove"
+      $select_el = $("li[value=custom-range]")
+
+      if $select_el.hasClass("selected")
+        delete filter_state.custom_range
+
+    @column_filter_state_ops.setColumnFilter(filter_state)
+
+    return
 
 #
 # stateToQuery
