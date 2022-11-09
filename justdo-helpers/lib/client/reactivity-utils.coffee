@@ -45,7 +45,7 @@ _.extend JustdoHelpers,
     # 2. options.cb can be called either in the current tick or in a future tick!
 
     Tracker.nonreactive =>
-      Tracker.autorun (c) =>
+      comp = Tracker.autorun (c) =>
         returned_val = options.reactiveResource()
         if Tracker.nonreactive -> options.evaluator(returned_val) is true
           Tracker.nonreactive -> JustdoHelpers.callCb(options.cb)
@@ -56,6 +56,9 @@ _.extend JustdoHelpers,
 
         return
 
-      return
+      if options.timeout
+        Meteor.setTimeout ->
+          comp.stop()
+        , options.timeout
 
     return
