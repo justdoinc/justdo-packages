@@ -169,7 +169,7 @@ _.extend Projects.prototype,
     )
     return
 
-  activateTaskInProject: (project_id, task_id, onActivated) ->
+  activateTaskInProject: (project_id, task_id, onActivated, timeout) ->
     activateTask = =>
       gcm = APP.modules.project_page.getCurrentGcm()
 
@@ -178,7 +178,7 @@ _.extend Projects.prototype,
       JustdoHelpers.callCb(onActivated)
 
       return
-
+    
     if JustdoHelpers.currentPageName() == "project" and Router.current().project_id == project_id
       activateTask()
     else
@@ -186,25 +186,19 @@ _.extend Projects.prototype,
 
       Tracker.flush()
 
-      tracker = Tracker.autorun (c) ->
-        module = APP.modules.project_page
-
-        project = module.curProj()
-
-        gcm = APP.modules.project_page.getCurrentGcm()
-
-        if gcm?.getAllTabs()?.main?.state == "ready"
-          # Wait for main tab to become ready and activate the task
+      JustdoHelpers.awaitValueFromReactiveResource({
+        reactiveResource: ->
+          return {
+            main_tab_state: APP.modules.project_page.getCurrentGcm()?.getAllTabs()?.main?.state
+            task: APP.collections.Tasks.findOne(task_id, fields: {_id: 1})
+          }
+        evaluator: (reactive_res) ->
+          {main_tab_state, task} = reactive_res
+          return main_tab_state == "ready" and task?
+        cb: ->
           activateTask()
-
-          c.stop()
-
           return
-
-        return
-
-      setTimeout ->
-        tracker.stop() # after 10 seconds stop the tracker regardless, to avoid lingering trackers in case didn't work well
-      , 10000
+        timeout: timeout
+      })
 
     return
