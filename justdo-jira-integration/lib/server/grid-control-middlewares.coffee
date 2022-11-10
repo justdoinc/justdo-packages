@@ -100,6 +100,10 @@ _.extend JustdoJiraIntegration.prototype,
       if @deleted_issue_ids.delete parseInt(task.jira_issue_id)
         return true
 
+      # Sprint is removed from Jira. Ignore.
+      if @deleted_sprint_ids.delete parseInt(task.jira_sprint_mountpoint_id)
+        return true
+
       # The parent isn't under Jira context, ignore.
       if not (parent_task = @tasks_collection.findOne(query, query_options))?
         return true

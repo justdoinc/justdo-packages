@@ -32,6 +32,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     @clients = {}
     @deleted_issue_ids = new Set()
+    @deleted_sprint_ids = new Set()
     @removed_sprint_parent_issue_pairs = new Set()
     @pending_connection_test = {}
     @issues_with_discrepancies = []
@@ -343,6 +344,140 @@ _.extend JustdoJiraIntegration.prototype,
       return sprint.state isnt "closed"
     return active_sprint
 
+  _createSprintTask: (sprint, parent, justdo_id, jira_project_id) ->
+    # Don't create tasks from closed sprints as it is non-editable in Jira
+    if sprint.state is "closed"
+      return
+
+    task_fields = _.extend @_convertSprintToTaskFields(sprint),
+      project_id: justdo_id
+      jira_project_id: jira_project_id
+      jira_last_updated: new Date()
+
+    return APP.projects._grid_data_com.addChild "/#{parent}/", task_fields, @_getJustdoAdmin justdo_id
+
+  _updateSprintTask: (req_body) ->
+    {id, name, startDate, endDate, originBoardId, state} = req_body.sprint
+
+    tasks_query =
+      jira_sprint_mountpoint_id: parseInt id
+
+    if not (justdo_id = @tasks_collection.findOne(tasks_query, {fields: {project_id: 1}})?.project_id)?
+      # If sprint task is not found, the sprint may be closed and then re-opened.
+      # Creation of sprint task will be handled below after getting all involved Jira projects.
+      if state isnt "closed"
+        # XXX Hack to get client without justdo_id. (Assuming there's only one Jira instance)
+        client = _.values(@clients)[0].agile
+      else
+        return
+    else
+      client = @getJiraClientForJustdo(justdo_id).agile
+
+      fields_to_update = _.extend @_convertSprintToTaskFields(req_body.sprint),
+        jira_last_updated: new Date()
+        updated_by: @_getJustdoAdmin justdo_id
+
+      @tasks_collection.update tasks_query, {$set: fields_to_update}, {multi: true}
+
+    jira_query =
+      $or: []
+    jira_ops =
+      $set: {}
+
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getProjects", {boardId: originBoardId}, client
+    if err?
+      console.error err
+      return
+
+    # Updates Jira collection
+    _.each res.values, (project_info) =>
+      # If justdo_id isn't a string, that means the sprint wasn't there. We need to create a new sprint task
+      jira_project_id = parseInt project_info.id
+
+      if not _.isString justdo_id
+        tasks_query =
+          jira_project_id: jira_project_id
+          jira_mountpoint_type: "sprints"
+        tasks_options =
+          project_id: 1
+
+        if (sprint_mountpoint_task_doc = @tasks_collection.findOne(tasks_query, tasks_options))?
+          justdo_id = sprint_mountpoint_task_doc.project_id
+          sprint_task_id = @_createSprintTask req_body.sprint, sprint_mountpoint_task_doc._id, justdo_id, jira_project_id
+          # In cases where a sprint is re-opened, we need to move the child issues back as well.
+          {err, res} = @pseudoBlockingJiraApiCallInsideFiber "sprint.getIssuesForSprint", {sprintId: parseInt(id), fields: ["sprint", "project", "issuetype"], jql: "project=#{jira_project_id}"}, client
+          if err?
+            console.error err
+          issue_ids = []
+          for issue in res.issues
+            # Each issue body in res will only contain the sprint field, and we use _mapJiraFieldsToJustdoFields to put the issues back to the original sprint.
+            issue.fields[JustdoJiraIntegration.sprint_custom_field_id] = [issue.fields.sprint] # Just so _mapJiraFieldsToJustdoFields can detect the sprint field correctly.
+            @_mapJiraFieldsToJustdoFields justdo_id, {issue}
+            issue_ids.push parseInt issue.id
+          @tasks_collection.update {jira_issue_id: {$in: issue_ids}}, {$set: {jira_sprint: name}}, {multi: true}
+
+      jira_query.$or.push
+        "jira_projects.#{jira_project_id}.sprints.id": id
+      _.extend jira_ops.$set,
+        "jira_projects.#{jira_project_id}.sprints.$.name": name
+        "jira_projects.#{jira_project_id}.sprints.$.startDate": startDate or null
+        "jira_projects.#{jira_project_id}.sprints.$.endDate": endDate or null
+        "jira_projects.#{jira_project_id}.sprints.$.originBoardId": originBoardId
+        "jira_projects.#{jira_project_id}.sprints.$.state": state
+
+    @jira_collection.update jira_query, jira_ops
+    return
+
+  _deleteSprintTask: (req_body) ->
+    sprint_id = parseInt req_body.sprint.id
+    board_id = parseInt req_body.sprint.originBoardId
+    grid_data = APP.projects._grid_data_com
+
+    if not (client = _.values(@clients)?[0])?
+      throw @_error "client-not-found"
+
+    @deleted_sprint_ids.add sprint_id
+
+    jira_query =
+      $or: []
+    jira_ops =
+      $pull: {}
+
+    @tasks_collection.find({jira_sprint_mountpoint_id: sprint_id}, {fields: {project_id: 1, jira_project_id: 1}}).forEach (sprint_task_doc) =>
+      justdo_id = sprint_task_doc.project_id
+      jira_project_id = sprint_task_doc.jira_project_id
+      justdo_admin_id = @_getJustdoAdmin sprint_task_doc.project_id
+
+      sprint_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints"}, {fields: {_id: 1}})?._id
+
+      subtree_task_ids = @_getIssueSubtreeTaskIdsUpToLevelsOfHierarchy sprint_task_doc._id, {jira_sprint: req_body.sprint.name}
+
+      # We only need the path of immidiate child for removal
+      child_tasks_paths = _.map subtree_task_ids?[0], (task_id) =>
+        @removed_sprint_parent_issue_pairs.add "#{task_id}:#{sprint_id}"
+        return "/#{sprint_task_doc._id}/#{task_id}/"
+
+      sprint_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints"}, {fields: {_id: 1}})?._id
+      child_tasks_paths.push "/#{sprint_mountpoint_id}/#{sprint_task_doc._id}/" # Remove the sprint task at last
+
+      if not _.isEmpty subtree_task_ids
+        # Remove the sprint field in all child tasks
+        @tasks_collection.update {_id: {$in: _.flatten subtree_task_ids}}, {$unset: {jira_sprint: 1}}, {multi: true}
+
+      # Remove all parents of child tasks and the sprint task. These tasks are expected to remain under roadmap.
+      grid_data.bulkRemoveParents child_tasks_paths, justdo_admin_id
+
+      # Remove the sprint metadata in Jira collection
+      jira_query.$or.push
+        "jira_projects.#{jira_project_id}.sprints.id": sprint_id
+      jira_ops.$pull["jira_projects.#{jira_project_id}.sprints"] =
+        id: sprint_id
+      return
+
+    @jira_collection.update jira_query, jira_ops
+
+    return
+
   jiraWebhookEventHandlers:
     "jira:issue_created": (req_body) ->
       {fields} = req_body.issue
@@ -640,87 +775,10 @@ _.extend JustdoJiraIntegration.prototype,
       @jira_collection.update query, ops
 
       return
-    "sprint_updated": (req_body) ->
-      {id, name, startDate, endDate, originBoardId} = req_body.sprint
-
-      tasks_query =
-        jira_sprint_mountpoint_id: id
-
-      justdo_id = @tasks_collection.findOne(tasks_query, {fields: {project_id: 1}}).project_id
-      client = @getJiraClientForJustdo(justdo_id).agile
-
-      jira_query =
-        $or: []
-      jira_ops =
-        $set: {}
-
-      @getJiraProjectsByBoardId originBoardId, {client}
-        .then (res) =>
-          # Updates task
-          tasks_ops =
-            $set:
-              jira_last_updated: new Date()
-              title: name
-              start_date: null
-              end_date: null
-              updated_by: @_getJustdoAdmin justdo_id
-          if startDate?
-            tasks_ops.$set.start_date = moment.utc(startDate).format "YYYY-MM-DD"
-          if endDate?
-            tasks_ops.$set.end_date = moment.utc(endDate).format "YYYY-MM-DD"
-          @tasks_collection.update tasks_query, tasks_ops, {multi: true}
-
-          # Updates Jira collection
-          _.each res.values, (project_info) =>
-            jira_query.$or.push
-              "jira_projects.#{project_info.id}.sprints.id": id
-            _.extend jira_ops.$set,
-              "jira_projects.#{project_info.id}.sprints.$.name": name
-              "jira_projects.#{project_info.id}.sprints.$.startDate": startDate or null
-              "jira_projects.#{project_info.id}.sprints.$.endDate": endDate or null
-              "jira_projects.#{project_info.id}.sprints.$.originBoardId": originBoardId
-
-          @jira_collection.update jira_query, jira_ops
-          return
-        .catch (err) -> console.error err
-      return
-    "sprint_deleted": (req_body) ->
-      sprint_id = parseInt req_body.sprint.id
-      board_id = parseInt req_body.sprint.originBoardId
-      grid_data = APP.projects._grid_data_com
-
-      if not (client = _.values(@clients)?[0])?
-        throw @_error "client-not-found"
-
-      jira_query =
-        $or: []
-      jira_ops =
-        $pull: {}
-
-      @tasks_collection.find({jira_sprint_mountpoint_id: sprint_id}, {fields: {project_id: 1, jira_project_id: 1}}).forEach (sprint_task_doc) =>
-        justdo_id = sprint_task_doc.project_id
-        jira_project_id = sprint_task_doc.jira_project_id
-        justdo_admin_id = @_getJustdoAdmin sprint_task_doc.project_id
-
-        sprint_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints"}, {fields: {_id: 1}})?._id
-
-        child_tasks_paths = @tasks_collection.find({"parents2.parent": sprint_task_doc._id}, {fields: {_id: 1}}).map (task_doc) -> "/#{sprint_task_doc._id}/#{task_doc._id}/"
-        sprint_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints"}, {fields: {_id: 1}})?._id
-        child_tasks_paths.push "/#{sprint_mountpoint_id}/#{sprint_task_doc._id}/" # Remove the fix version task at last
-
-        # Remove all child tasks first. These tasks are expected to remain under roadmap.
-        grid_data.bulkRemoveParents child_tasks_paths, justdo_admin_id
-
-        # Remove the sprint metadata in Jira collection
-        jira_query.$or.push
-          "jira_projects.#{jira_project_id}.sprints.id": sprint_id
-        jira_ops.$pull["jira_projects.#{jira_project_id}.sprints"] =
-          id: sprint_id
-        return
-
-      @jira_collection.update jira_query, jira_ops
-
-      return
+    "sprint_updated": (req_body) -> @_updateSprintTask req_body
+    "sprint_started": (req_body) -> @_updateSprintTask req_body
+    "sprint_closed": (req_body) -> @_deleteSprintTask req_body
+    "sprint_deleted": (req_body) -> @_deleteSprintTask req_body
 
   getOAuth1LoginLink: (justdo_id, user_id) ->
     if not APP.projects.isProjectAdmin justdo_id, user_id
@@ -1212,6 +1270,7 @@ _.extend JustdoJiraIntegration.prototype,
             if sprint.endDate?
               task_fields.end_date = moment(sprint.endDate).format("YYYY-MM-DD")
             sprints_to_mountpoint_task_id[sprint.name] = gc.addChild "/#{sprints_mountpoint_task_id}/", task_fields, justdo_admin_id
+            sprints_to_mountpoint_task_id[sprint.name] = @_createSprintTask sprint, sprints_mountpoint_task_id, justdo_id, jira_project_id
 
         fix_versions_to_mountpoint_task_id = {}
         if jira_project_sprints_and_fix_versions.fix_versions
