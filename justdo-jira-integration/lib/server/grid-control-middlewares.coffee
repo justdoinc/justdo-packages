@@ -35,26 +35,26 @@ _.extend JustdoJiraIntegration.prototype,
 
       # Root mountpoint should only contain roadmap/sprint-mountpoint/fix-version-mountpoint
       if parent_task?.jira_mountpoint_type is "root" and not new_item?.jira_mountpoint_type?
-        return
+        throw @_error "jira-update-failed", "You can only create new issues under roadmap."
 
       # Sprints mountpoint should only contain individual sprints
       # XXX Do we want to allow creating a new sprint by adding child?
       if parent_task?.jira_mountpoint_type is "sprints" and not new_item?.jira_sprint_mountpoint_id?
-        return
+        throw @_error "jira-update-failed", "Creating another sprint is not yet supported."
 
       # Fix-version mountpoint should only contain individual fix-versions
       # XXX Do we want to allow creating a fix-version by adding child?
       if parent_task?.jira_mountpoint_type is "fix_versions" and not new_item?.jira_fix_version_mountpoint_id?
-        return
+        throw @_error "jira-update-failed", "Creating another fix version is not yet supported."
 
       # Block attempts to add child directly under individual sprint/fix-version.
       # XXX Do we want to allow creating task under sprint/fix-version directly?
       if parent_task?.jira_sprint_mountpoint_id? or parent_task?.jira_fix_version_mountpoint_id?
-        return
+        throw @_error "jira-update-failed", "Cannot create task directly under a sprint/fix-version.<br>To assign a task to a sprint/fix-version, add the target sprint/fix-version as the task's parent."
 
       # Subtasks cannot be parents
       if parent_task?.jira_issue_type?.toLowerCase() in ["sub-task", "subtask"]
-        return
+        throw @_error "jira-update-failed", "Subtasks cannot have subtasks."
 
       return true
 
@@ -104,14 +104,9 @@ _.extend JustdoJiraIntegration.prototype,
       if not (parent_task = @tasks_collection.findOne(query, query_options))?
         return true
 
-      # Task is under a Jira mount tree but not a Jira issue. Block.
+      # Task is under a Jira mount tree but not a Jira issue (e.g. mountpoints). Block.
       if task.jira_project_id and not task.jira_issue_id?
-        return
-
-      # Tasks under these three mountpoint types are hard-coded tasks and thus the parent cannot be removed.
-      # XXX Do we want to support removing a sprint/fix-version by deleting the task?
-      if parent_task.jira_mountpoint_type in ["root", "sprints", "fix_versions"]
-        return
+        throw @_error "jira-update-failed", "This task is part of the Jira context and cannot be removed."
 
       # Removing a task/issue that's either under roadmap or under another task/issue will delete the task/issue.
       if parent_task.jira_mountpoint_type is "roadmap" or parent_task.jira_issue_id?
@@ -119,7 +114,7 @@ _.extend JustdoJiraIntegration.prototype,
         all_parent_task_ids = _.map etc.item.parents2, (parent_obj) -> parent_obj.parent
         all_parent_are_under_jira_tree = etc.item.parents2.length is @tasks_collection.find({_id: {$in: all_parent_task_ids}, jira_project_id: {$ne: null}}).count()
         if not (etc.no_more_parents or all_parent_are_under_jira_tree)
-          return
+          throw @_error "jira-update-failed", "Remove all other parents of this task first. Deleting the task here will remove the corresponding issue in Jira."
 
         # XXX In Jira if we:
         # XXX - Remove an Epic with childs > childs will become standalone Story/Task/Bug
@@ -129,9 +124,8 @@ _.extend JustdoJiraIntegration.prototype,
 
         {err, res} = @pseudoBlockingJiraApiCallInsideFiber "issues.deleteIssue", {issueIdOrKey: task.jira_issue_id}, @getJiraClientForJustdo(task.project_id).v2
         if err?
-          err = err?.response?.data or err
-          console.error "[justdo-jira-integration] Failed to remove task/issue #{task_id}", err
-          return
+          throw @_error "jira-update-failed", "Failed to remove task #{task.title}", err
+
         @tasks_collection.remove task_id
         return true
 
@@ -163,7 +157,7 @@ _.extend JustdoJiraIntegration.prototype,
       # and individual sprints/fix-versions (addParent() should be used to assign an issue to sprint/fix-version).
       # XXX Do we wish to allow moving path under sprints/fix-versions to create a new sprint/fix-version in Jira?
       if new_parent_task?.jira_mountpoint_type in ["root", "sprints", "fix_versions"]
-        return
+        throw @_error "jira-update-failed", "You can't put it here."
 
       query = _.extend {_id: task_id}, jira_relevant_task_query
       query_options = {fields: _.extend {jira_issue_type: 1, project_id: 1}, jira_relevant_task_fields}
@@ -175,7 +169,7 @@ _.extend JustdoJiraIntegration.prototype,
 
       # Block attempts to move hardcoded tasks such as mountpoints/sprints/fix-versions
       if (task.jira_mountpoint_type? and task.jira_mountpoint_type isnt "root") or task.jira_sprint_mountpoint_id? or task.jira_fix_version_mountpoint_id?
-        return
+        throw @_error "jira-update-failed", "You can't move this around."
 
       # This block specifically handles tasks that are linked to a Jira issue under a mounted tree
       # XXX Move parent-change API-calls from collection hooks to here
@@ -185,18 +179,22 @@ _.extend JustdoJiraIntegration.prototype,
         if new_parent_task?.jira_issue_id?
           # Epics cannot be under another issue
           if task.jira_issue_type is "Epic"
-            return
+            throw @_error "jira-update-failed", "Epics cannot have parent tasks."
+
           # Task/Story/Bug can only be under Epic
           if task.jira_issue_type in ["Story", "Task", "Bug"] and new_parent_task?.jira_issue_type isnt "Epic"
-            return
+            throw @_error "jira-update-failed", "Story/Task/Bug's parent can only be an Epic."
+
         # Subtasks has some additional constraints and ops
-        if task.jira_issue_type?.toLowerCase() in ["sub-task", "subtask"]
+        if task.jira_issue_type?.toLowerCase() in ["sub-task", "subtask", "Subtask"]
           # Jira on-perm doesn't support change parent of subtask.
           if @getAuthTypeIfJiraInstanceIsOnPerm()?
-            return
+            throw @_error "jira-update-failed", "Subtasks are bound to their parent task."
+
           # Subtasks can only be under Task/Story/Bug
           if new_parent_task?.jira_issue_type not in ["Story", "Task", "Bug"]
-            return
+            throw @_error "jira-update-failed", "Subtask's parent can only be Story/Task/Bug."
+            
           # Update sprint of subtask to be the same as its new parent
           parent_jira_sprint_name = new_parent_task?.jira_sprint
           @tasks_collection.update task._id, {$set: {jira_sprint: parent_jira_sprint_name or null}}
@@ -204,7 +202,7 @@ _.extend JustdoJiraIntegration.prototype,
         if (old_parent_task = getParentDocIfPathIsUnderJiraTree path)?
           # Block attempts to move mounted task/issue outside of the tree
           if not new_parent_task?.jira_project_id?
-            return
+            throw @_error "jira-update-failed", "You can't move this away. Maybe you're looking to add a parent task?"
 
           # Change sprint for issue
           if old_parent_task.jira_sprint_mountpoint_id? and (new_sprint_id = new_parent_task?.jira_sprint_mountpoint_id)?
@@ -219,6 +217,6 @@ _.extend JustdoJiraIntegration.prototype,
       # Move path to individual sprint/fix-version is not supported. Use addParent() instead.
       # Sprint/fix-version swap cases has already been handled.
       if new_parent_task?.jira_sprint_mountpoint_id? or new_parent_task?.jira_fix_version_mountpoint_id?
-        return
+        throw @_error "jira-update-failed", "You can't move this away. To assign this task to a sprint/fix-version, add the sprint/fix-version as parent of this task."
 
       return true

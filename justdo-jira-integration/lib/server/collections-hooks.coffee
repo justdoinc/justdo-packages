@@ -110,9 +110,7 @@ _.extend JustdoJiraIntegration.prototype,
       client = self.clients[jira_server_id].v2
       {err, res} = self.pseudoBlockingJiraApiCallInsideFiber "issues.createIssue", req, client
       if err?
-        err = err?.response?.data or err
-        console.error err
-        return false
+        throw self._error "jira-update-failed", "Failed to create issue.", err
 
       # Log reporter change only if the user created this task is also a Jira user (detected by email).
       if jira_account_id?
@@ -135,9 +133,7 @@ _.extend JustdoJiraIntegration.prototype,
 
       {err} = self.pseudoBlockingJiraApiCallInsideFiber "issues.editIssue", summary_update_req, client
       if err?
-        err = err?.response?.data or err
-        console.error err
-        return false
+        throw self._error "jira-update-failed", "Failed to create issue.", err
 
       task_fields =
         title: task_title
@@ -221,9 +217,7 @@ _.extend JustdoJiraIntegration.prototype,
 
           {err} = self.pseudoBlockingJiraApiCallInsideFiber "issues.editIssue", req, client.v2
           if err?
-            err = err?.response?.data or err
-            console.error err
-            return false
+            throw self._error "jira-update-failed", "Failed to edit #{doc.jira_issue_key}.", err
 
         # Changing state of issue cannot be done with editIssue(); it must be done using doTransition()
         # XXX doTransition() cannot take JustdoJiraIntegration.last_updated_custom_field_id unless manually added to the screen
@@ -236,9 +230,7 @@ _.extend JustdoJiraIntegration.prototype,
 
           {err} = self.pseudoBlockingJiraApiCallInsideFiber "issues.doTransition", req, client.v2
           if err?
-            err = err?.response?.data or err
-            console.error err
-            return false
+            throw self._error "jira-update-failed", "Failed to transition #{doc.jira_issue_key}.", err
 
         return
       else
@@ -261,9 +253,7 @@ _.extend JustdoJiraIntegration.prototype,
 
         {err} = self.pseudoBlockingJiraApiCallInsideFiber "sprint.partiallyUpdateSprint", req, client.agile
         if err?
-          err = err?.response?.data or err
-          console.error err
-          return false
+          throw self._error "jira-update-failed", "Failed to update #{doc.title}.", err
 
         return
 
@@ -283,9 +273,7 @@ _.extend JustdoJiraIntegration.prototype,
 
         {err} = self.pseudoBlockingJiraApiCallInsideFiber "projectVersions.updateVersion", req, client.v2
         if err?
-          err = err?.response?.data or err
-          console.error err
-          return false
+          throw self._error "jira-update-failed", "Failed to update #{doc.title}.", err
 
         return
 
