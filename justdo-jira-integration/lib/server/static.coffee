@@ -13,6 +13,7 @@ _.extend JustdoJiraIntegration,
   data_integrity_margin_of_safety: data_integrity_check_rate_ms / 5
   data_integrity_check_timeout: data_integrity_check_rate_ms / 2
   jql_issue_search_results_limit: 800
+  jira_issue_hierarchy_levels: 3 # Default: Epic-Story/Task/Bug-Subtask
 
   # XXX Try to search for custom field ids using Jira API and store it in DB
 
