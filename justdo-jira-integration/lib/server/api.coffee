@@ -34,6 +34,8 @@ _.extend JustdoJiraIntegration.prototype,
     @deleted_issue_ids = new Set()
     @deleted_sprint_ids = new Set()
     @removed_sprint_parent_issue_pairs = new Set()
+    @deleted_fix_version_ids = new Set()
+    @removed_fix_version_parent_issue_pairs = new Set()
     @pending_connection_test = {}
     @issues_with_discrepancies = []
     @ongoing_checkpoint = null
@@ -330,6 +332,137 @@ _.extend JustdoJiraIntegration.prototype,
       task_fields.due_date = moment(fix_version_release_date).format("YYYY-MM-DD")
 
     return task_fields
+
+  _createFixVersionTask: (req_body, reopen=false) ->
+    fix_version = req_body.version
+    jira_project_id = fix_version.projectId
+
+    # If the Jira project isn't mounted, ignore.
+    if not (jira_doc_id = @isJiraProjectMounted jira_project_id)?
+      return
+
+    tasks_query =
+      jira_project_id: jira_project_id
+      jira_mountpoint_type: "fix_versions"
+    tasks_options =
+      project_id: 1
+    if (fix_versions_mountpiont_task_doc = @tasks_collection.findOne(tasks_query, tasks_options))?
+      justdo_id = fix_versions_mountpiont_task_doc.project_id
+      justdo_admin_id = @_getJustdoAdmin justdo_id
+
+      task_fields = _.extend @_convertFixVersionToTaskFields(fix_version),
+        jira_project_id: jira_project_id
+        project_id: justdo_id
+
+      # Create the fix version task
+      fix_version_task_id = APP.projects._grid_data_com.addChild "/#{fix_versions_mountpiont_task_doc._id}/", task_fields, justdo_admin_id
+
+      # In case of a version reopen/unarchive, move all child tasks back to the fix version task.
+      if reopen
+        {err, res} = @pseudoBlockingJiraApiCallInsideFiber "issueSearch.searchForIssuesUsingJqlPost", {jql: "project=#{jira_project_id} and fixversion=#{fix_version.id} and status !=done", fields: ["project"]}, @getJiraClientForJustdo(justdo_id).v2
+        if err?
+          console.error "[justdo-jira-integration] Issue search failed", err
+        grid_data = APP.projects._grid_data_com
+
+        issue_ids = _.map res.issues, (issue) -> parseInt issue.id
+        # XXX bulkAddParent can be used here, but it's not available yet.
+        @tasks_collection.find({jira_issue_id: {$in: issue_ids}}, {fields: {_id: 1}}).forEach (task) ->
+          grid_data.addParent task._id, {parent: fix_version_task_id}, justdo_admin_id
+          return
+
+    if not reopen
+      jira_ops =
+        $addToSet:
+          "jira_projects.#{jira_project_id}.fix_versions": fix_version
+      @jira_collection.update jira_doc_id, jira_ops
+    return
+
+  _updateFixVersionTask: (req_body) ->
+    fix_version = req_body.version
+    fix_version_id = parseInt fix_version.id
+    jira_project_id = fix_version.projectId
+
+    # If the Jira project isn't mounted, ignore.
+    if not (jira_doc_id = @isJiraProjectMounted jira_project_id)?
+      return
+
+    jira_query =
+      _id: jira_doc_id
+      "jira_projects.#{jira_project_id}.fix_versions.id": fix_version_id
+
+    tasks_query =
+      jira_fix_version_mountpoint_id: fix_version_id
+    fix_version_task = @tasks_collection.findOne(tasks_query, {fields: {project_id: 1}})
+
+    if fix_version.released or fix_version.archived
+      if fix_version_task?
+        @_deleteFixVersionTask req_body
+    else
+      if fix_version_task?
+        # Update the fix version task itself
+        fields_to_update = _.extend @_convertFixVersionToTaskFields(fix_version),
+          jira_last_updated: new Date()
+          updated_by: @_getJustdoAdmin fix_version_task.project_id
+        @tasks_collection.update tasks_query, {$set: fields_to_update}
+
+        # Update the fix version field of issues
+        old_fix_version_name = @jira_collection.findOne(jira_query, {fields: {"jira_projects.#{jira_project_id}.fix_versions.$": 1}})?.jira_projects?[jira_project_id]?.fix_versions?[0]?.name
+        if old_fix_version_name isnt fix_version.name
+          task_query =
+            jira_project_id: jira_project_id
+            jira_issue_id:
+              $ne: null
+            jira_fix_version: old_fix_version_name
+          @tasks_collection.update task_query, {$set: {"jira_fix_version.$": fix_version.name}}, {multi: true}
+      else
+        @_createFixVersionTask req_body, true
+
+    jira_ops =
+      $set:
+        "jira_projects.#{jira_project_id}.fix_versions.$": fix_version
+    @jira_collection.update jira_query, jira_ops
+
+    return
+
+  _deleteFixVersionTask: (req_body, version_deleted_in_remote=false) ->
+    fix_version_id = parseInt req_body.version.id
+    jira_project_id = parseInt req_body.version.projectId
+
+    if not (fix_version_task_doc = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: fix_version_id}, {fields: {project_id: 1}}))?
+      console.error "[justdo-jira-integration] Fix version mountpoint not found. Remove failed."
+      return
+
+    child_task_ids = @_getIssueSubtreeTaskIdsUpToLevelsOfHierarchy fix_version_task_doc._id, {jira_fix_version: req_body.version.name}
+
+    child_tasks_paths = _.map child_task_ids?[0], (task_id) =>
+      if not version_deleted_in_remote
+        @removed_fix_version_parent_issue_pairs.add "#{task_id}:#{fix_version_id}"
+      return "/#{fix_version_task_doc._id}/#{task_id}/"
+
+    fix_version_mountpoint_id = @tasks_collection.findOne({project_id: fix_version_task_doc.project_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions"}, {fields: {_id: 1}})?._id
+    child_tasks_paths.push "/#{fix_version_mountpoint_id}/#{fix_version_task_doc._id}/" # Remove the fix version task at last
+
+    justdo_admin_id = @_getJustdoAdmin fix_version_task_doc.project_id
+
+    grid_data = APP.projects._grid_data_com
+    # Remove all child tasks. These tasks are expected to remain under roadmap.
+    @deleted_fix_version_ids.add fix_version_id
+    grid_data.bulkRemoveParents child_tasks_paths, justdo_admin_id
+
+    if version_deleted_in_remote
+      # Pull the fix version from issue
+      if not _.isEmpty child_task_ids
+        @tasks_collection.update {_id: {$in: _.flatten child_task_ids}, jira_fix_version: req_body.version.name}, {$pull: {jira_fix_version: req_body.version.name}}, {multi: true}
+
+      # Remove the fix version metadata in Jira collection
+      jira_query =
+        "jira_projects.#{jira_project_id}.fix_versions.id": fix_version_id
+      jira_ops =
+        $pull:
+          "jira_projects.#{jira_project_id}.fix_versions":
+            id: fix_version_id
+      @jira_collection.update jira_query, jira_ops
+    return
 
   _getActiveSprintOfIssue: (sprints_array) ->
     if not sprints_array?
@@ -639,100 +772,11 @@ _.extend JustdoJiraIntegration.prototype,
       @tasks_collection.remove task_id
 
       return
-    "jira:version_created": (req_body) ->
-      fix_version = req_body.version
-      jira_project_id = fix_version.projectId
-
-      # If the Jira project isn't mounted, ignore.
-      if not (jira_doc_id = @isJiraProjectMounted jira_project_id)?
-        return
-
-      tasks_query =
-        jira_project_id: jira_project_id
-        jira_mountpoint_type: "fix_versions"
-      tasks_options =
-        project_id: 1
-      if (fix_versions_mountpiont_task_doc = @tasks_collection.findOne(tasks_query, tasks_options))?
-        task_fields =
-          state: "nil"
-          project_id: fix_versions_mountpiont_task_doc.project_id
-          title: fix_version.name
-          jira_fix_version_mountpoint_id: parseInt fix_version.id
-          jira_project_id: jira_project_id
-        if fix_version.startDate?
-          task_fields.start_date = moment(fix_version.startDate or fix_version.userStartDate).format("YYYY-MM-DD")
-        if fix_version.endDate?
-          task_fields.due_date = moment(fix_version.releaseDate or fix_version.userReleaseDate).format("YYYY-MM-DD")
-        APP.projects._grid_data_com.addChild "/#{fix_versions_mountpiont_task_doc._id}/", task_fields, @_getJustdoAdmin fix_versions_mountpiont_task_doc.project_id
-
-      jira_ops =
-        $addToSet:
-          "jira_projects.#{jira_project_id}.fix_versions": fix_version
-      @jira_collection.update jira_doc_id, jira_ops
-      return
-    "jira:version_updated": (req_body) ->
-      fix_version = req_body.version
-      fix_version.id = parseInt fix_version.id
-      jira_project_id = fix_version.projectId
-
-      # If the Jira project isn't mounted, ignore.
-      if not (jira_doc_id = @isJiraProjectMounted jira_project_id)?
-        return
-
-      fix_version_start_date = fix_version.startDate or fix_version.userStartDate or null
-      fix_version_due_date = fix_version.releaseDate or fix_version.userReleaseDate or null
-      if fix_version_start_date?
-        fix_version_start_date = moment(fix_version_start_date).format "YYYY-MM-DD"
-      if fix_version_due_date?
-        fix_version_due_date = moment(fix_version_due_date).format "YYYY-MM-DD"
-
-      tasks_query =
-        jira_fix_version_mountpoint_id: fix_version.id
-      # XXX This query is to fetch project_id for getting the Justdo admin user id for updated_by in tasks.update()
-      justdo_id = @tasks_collection.findOne(tasks_query, {fields: {project_id: 1}}).project_id
-      tasks_ops =
-        $set:
-          title: fix_version.name
-          start_date: fix_version_start_date
-          due_date: fix_version_due_date
-          jira_last_updated: new Date()
-          updated_by: @_getJustdoAdmin justdo_id
-      @tasks_collection.update tasks_query, tasks_ops
-
-      jira_query =
-        _id: jira_doc_id
-        "jira_projects.#{jira_project_id}.fix_versions.id": parseInt fix_version.id
-      jira_ops =
-        $set:
-          "jira_projects.#{jira_project_id}.fix_versions.$": fix_version
-      @jira_collection.update jira_query, jira_ops
-
-      return
-    "jira:version_deleted": (req_body) ->
-      fix_version_id = parseInt req_body.version.id
-      jira_project_id = parseInt req_body.version.projectId
-
-      if not (fix_version_task_doc = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: fix_version_id}, {fields: {project_id: 1}}))?
-        console.error "[justdo-jira-integration] Fix version mountpoint not found. Remove failed."
-      child_tasks_paths = @tasks_collection.find({"parents2.parent": fix_version_task_doc._id}, {fields: {_id: 1}}).map (task_doc) -> "/#{fix_version_task_doc._id}/#{task_doc._id}/"
-      fix_version_mountpoint_id = @tasks_collection.findOne({project_id: fix_version_task_doc.project_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions"}, {fields: {_id: 1}})?._id
-      child_tasks_paths.push "/#{fix_version_mountpoint_id}/#{fix_version_task_doc._id}/" # Remove the fix version task at last
-
-      justdo_admin_id = @_getJustdoAdmin fix_version_task_doc.project_id
-      grid_data = APP.projects._grid_data_com
-
-      # Remove all child tasks first. These tasks are expected to remain under roadmap.
-      grid_data.bulkRemoveParents child_tasks_paths, justdo_admin_id
-
-      # Remove the fix version metadata in Jira collection
-      jira_query =
-        "jira_projects.#{jira_project_id}.fix_versions.id": fix_version_id
-      jira_ops =
-        $pull:
-          "jira_projects.#{jira_project_id}.fix_versions":
-            id: fix_version_id
-      @jira_collection.update jira_query, jira_ops
-      return
+    "jira:version_created": (req_body) -> @_createFixVersionTask req_body
+    "jira:version_updated": (req_body) -> @_updateFixVersionTask req_body
+    "jira:version_released": (req_body) -> @_updateFixVersionTask req_body
+    "jira:version_unreleased": (req_body) -> @_updateFixVersionTask req_body
+    "jira:version_deleted": (req_body) -> @_deleteFixVersionTask req_body, true
     # NOTE: IN CASE JIRA ON-PERM IS USED: THE FOLLOWING SPRINT RELATED HANDLERS ONLY SUPPORT SINGLE JIRA INSTANCE
     "sprint_created": (req_body) ->
       sprint = req_body.sprint
@@ -750,6 +794,7 @@ _.extend JustdoJiraIntegration.prototype,
       {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getProjects", {boardId: board_id}, client
       if (err = err?.response?.data or err)?
         console.error "[justdo-jira-integration] Fetching project board failed", err
+        return
 
       query =
         $or: []
@@ -1255,26 +1300,14 @@ _.extend JustdoJiraIntegration.prototype,
         sprints_to_mountpoint_task_id = {}
         if jira_project_sprints_and_fix_versions.sprints?
           for sprint in jira_project_sprints_and_fix_versions.sprints
-            # Don't create tasks from closed sprints as it is non-editable in Jira
-            if sprint.state is "closed"
-              continue
-            task_fields =
-              project_id: justdo_id
-              jira_project_id: jira_project_id
-              title: sprint.name
-              jira_sprint_mountpoint_id: sprint.id
-              state: "nil"
-              jira_last_updated: new Date()
-            if sprint.startDate?
-              task_fields.start_date = moment(sprint.startDate).format("YYYY-MM-DD")
-            if sprint.endDate?
-              task_fields.end_date = moment(sprint.endDate).format("YYYY-MM-DD")
-            sprints_to_mountpoint_task_id[sprint.name] = gc.addChild "/#{sprints_mountpoint_task_id}/", task_fields, justdo_admin_id
             sprints_to_mountpoint_task_id[sprint.name] = @_createSprintTask sprint, sprints_mountpoint_task_id, justdo_id, jira_project_id
 
         fix_versions_to_mountpoint_task_id = {}
         if jira_project_sprints_and_fix_versions.fix_versions
           for fix_version in jira_project_sprints_and_fix_versions.fix_versions
+            # Ignore released and archived versions
+            if fix_version.archived or fix_version.released
+              continue
             task_fields =
               project_id: justdo_id
               jira_project_id: jira_project_id

@@ -104,6 +104,10 @@ _.extend JustdoJiraIntegration.prototype,
       if @deleted_sprint_ids.delete parseInt(task.jira_sprint_mountpoint_id)
         return true
 
+      # Fix version is removed from Jira. Ignore.
+      if @deleted_fix_version_ids.delete parseInt(task.jira_fix_version_mountpoint_id)
+        return true
+
       # The parent isn't under Jira context, ignore.
       if not (parent_task = @tasks_collection.findOne(query, query_options))?
         return true
@@ -144,7 +148,8 @@ _.extend JustdoJiraIntegration.prototype,
         return true
 
       if (fix_version_id = parent_task?.jira_fix_version_mountpoint_id)?
-        @updateIssueFixVersion task.jira_issue_id, {remove: fix_version_id}, task.project_id
+        if not @removed_fix_version_parent_issue_pairs.delete "#{task_id}:#{fix_version_id}"
+          @updateIssueFixVersion task.jira_issue_id, {remove: fix_version_id}, task.project_id
         return true
 
       return true
