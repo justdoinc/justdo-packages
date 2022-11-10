@@ -262,8 +262,8 @@ _.extend JustdoJiraIntegration.prototype,
         # if options?.sprints_mountpoints?
         #   console.log "Sprint mountpoints:", options.sprints_mountpoints
         if not (sprint_parent_task_id = options?.sprints_mountpoints?[issue_sprint])?
-          issue_sprint_field = jira_issue_body.fields[JustdoJiraIntegration.sprint_custom_field_id][0]
-          if (sprint_id = issue_sprint_field.id or issue_sprint_field.match(/id=\d+/)?[0]?.replace("id=", ""))?
+          active_sprint = @_getActiveSprintOfIssue jira_issue_body.fields[JustdoJiraIntegration.sprint_custom_field_id]
+          if (sprint_id = active_sprint.id or active_sprint.match(/id=\d+/)?[0]?.replace("id=", ""))?
             sprint_parent_task_id = @tasks_collection.findOne({jira_sprint_mountpoint_id: sprint_id}, {fields: {_id: 1}})?._id
         # XXX This if condition catches cases where a sprint is closed and we do not create a task out of it.
         if sprint_parent_task_id?
@@ -287,6 +287,19 @@ _.extend JustdoJiraIntegration.prototype,
     console.log jira_issue_key, "created_task_id", created_task_id
     @setJustdoIdandTaskIdToJiraIssue justdo_id, created_task_id, jira_issue_id
     return created_task_id
+
+  _getActiveSprintOfIssue: (sprints_array) ->
+    if not sprints_array?
+      return null
+
+    if not _.isArray sprints_array
+      throw @_error "invalid-argument"
+
+    active_sprint = _.find sprints_array, (sprint) ->
+      if _.isString sprint
+        return sprint.match(/state=(?!CLOSED)/)?
+      return sprint.state isnt "closed"
+    return active_sprint
 
   jiraWebhookEventHandlers:
     "jira:issue_created": (req_body) ->
