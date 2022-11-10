@@ -863,7 +863,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     if @isJiraInstanceCloud()
       base_url = new URL "https://auth.atlassian.com/authorize"
-      oauth2_scopes = "offline_access write:board-scope:jira-software read:board-scope.admin:jira-software read:project:jira write:sprint:jira-software read:board-scope:jira-software read:issue-details:jira read:sprint:jira-software read:jira-work manage:jira-project manage:jira-configuration read:jira-user write:jira-work manage:jira-webhook manage:jira-data-provider"
+      oauth2_scopes = "offline_access read:jql:jira write:board-scope:jira-software read:board-scope.admin:jira-software read:project:jira write:sprint:jira-software read:board-scope:jira-software read:issue-details:jira read:sprint:jira-software read:jira-work manage:jira-project manage:jira-configuration read:jira-user write:jira-work manage:jira-webhook manage:jira-data-provider"
 
     params = new URLSearchParams
       audience: "api.atlassian.com"
@@ -1507,7 +1507,8 @@ _.extend JustdoJiraIntegration.prototype,
         [JustdoJiraIntegration.project_id_custom_field_id]: justdo_id
         [JustdoJiraIntegration.last_updated_custom_field_id]: new Date()
     client.issues.editIssue req
-    .catch (err) -> console.error "[justdo-jira-integration] Failed to set Justdo task and project id to Jira issue", err.data
+    .catch (err) ->
+      console.error "[justdo-jira-integration] Failed to set Justdo task and project id to Jira issue", err.data
     return
 
   getJustdosIdsAndTasksIdsfromMountedJiraProjectId: (jira_project_id) ->
