@@ -5,8 +5,6 @@ _.extend JustdoJiraIntegration.prototype,
     # Add here code that should run, in the Server and Client, during the JS
     # tick in which we create the object instance.
 
-    @setupRouter()
-
     return
 
   _bothDeferredInit: ->
