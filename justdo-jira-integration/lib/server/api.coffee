@@ -896,6 +896,7 @@ _.extend JustdoJiraIntegration.prototype,
         access_token = res_params.get "oauth_token"
         token_secret = res_params.get "oauth_token_secret"
         jira_clients_config =
+          newErrorHandling: true
           authentication:
             oauth:
               consumerKey: @consumer_key
@@ -905,6 +906,7 @@ _.extend JustdoJiraIntegration.prototype,
       else
         {access_token, refresh_token} = res.data
         jira_clients_config =
+          newErrorHandling: true
           authentication:
             oauth2:
               accessToken: access_token
@@ -1049,6 +1051,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     if @getAuthTypeIfJiraInstanceIsOnPerm() is "oauth1"
       jira_clients_config =
+        newErrorHandling: true
         host: @jira_server_host
         authentication:
           oauth:
