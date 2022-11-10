@@ -358,6 +358,9 @@ Template.batch_add_user_group.helpers
   showProxyAll: ->
     return Template.instance().group_type == "new_users" and APP.justdo_site_admins.isUserSiteAdmin(Meteor.user())
 
+  isSiteAdmin: ->
+    return APP.justdo_site_admins.isUserSiteAdmin(Meteor.user())
+    
   getUserRowData: ->
     # Returns an obj of the user inside the {{#each}} loop along with tpl.users and tpl.users_validation_active_rv
     # No need to create a new obj as "@" comes from newUsers/registeredUsers
