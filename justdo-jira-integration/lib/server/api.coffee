@@ -288,6 +288,31 @@ _.extend JustdoJiraIntegration.prototype,
     @setJustdoIdandTaskIdToJiraIssue justdo_id, created_task_id, jira_issue_id
     return created_task_id
 
+
+  _convertSprintToTaskFields: (sprint) ->
+    task_fields =
+      title: sprint.name
+      jira_sprint_mountpoint_id: parseInt sprint.id
+      state: "nil"
+    if sprint.startDate?
+      task_fields.start_date = moment(sprint.startDate).format("YYYY-MM-DD")
+    if sprint.endDate?
+      task_fields.end_date = moment(sprint.endDate).format("YYYY-MM-DD")
+
+    return task_fields
+
+  _convertFixVersionToTaskFields: (fix_version) ->
+    task_fields =
+      state: "nil"
+      title: fix_version.name
+      jira_fix_version_mountpoint_id: parseInt fix_version.id
+    if (fix_version_start_date = fix_version.startDate or fix_version.userStartDate)?
+      task_fields.start_date = moment(fix_version_start_date).format("YYYY-MM-DD")
+    if (fix_version_release_date = fix_version.releaseDate or fix_version.userReleaseDate)?
+      task_fields.due_date = moment(fix_version_release_date).format("YYYY-MM-DD")
+
+    return task_fields
+
   _getActiveSprintOfIssue: (sprints_array) ->
     if not sprints_array?
       return null
@@ -588,18 +613,7 @@ _.extend JustdoJiraIntegration.prototype,
         tasks_options =
           project_id: 1
         if (sprint_mountpiont_task_doc = @tasks_collection.findOne(tasks_query, tasks_options))?
-          task_fields =
-            state: "nil"
-            project_id: sprint_mountpiont_task_doc.project_id
-            title: sprint.name
-            jira_project_id: jira_project_id
-            jira_sprint_mountpoint_id: parseInt sprint.id
-
-          if sprint.startDate?
-            task_fields.start_date = moment.utc(sprint.startDate).format "YYYY-MM-DD"
-          if sprint.endDate?
-            task_fields.end_date = moment.utc(sprint.endDate).format "YYYY-MM-DD"
-          APP.projects._grid_data_com.addChild "/#{sprint_mountpiont_task_doc._id}/", task_fields, @_getJustdoAdmin sprint_mountpiont_task_doc.project_id
+          @_createSprintTask sprint, sprint_mountpiont_task_doc._id, sprint_mountpiont_task_doc.project_id, jira_project_id
 
         query.$or.push
           "jira_projects.#{jira_project_id}":
