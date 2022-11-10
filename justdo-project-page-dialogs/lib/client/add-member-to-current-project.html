@@ -80,7 +80,7 @@
           Set all as:
           <div class="toolbar-role-item text-primary members-all">Member</div>
           <div class="toolbar-role-item text-primary guests-all">Guest</div>
-          {{#if $eq getUserGroupType "new_users"}}
+          {{#if showProxyAll}}
             <div class="toolbar-role-item text-primary proxy-all">Proxy</div>
           {{/if}}
           <div class="toolbar-role-item text-primary role-info" jd-tt="add-new-member-dialog-info">?</div>
@@ -120,9 +120,9 @@
         {{else}}
           <option value="member" {{isUserTypeSelected "member"}}>Member</option>
           <option value="guest" {{isUserTypeSelected "guest"}}>Guest</option>
-          {{#unless registered}}
+          {{#if showProxy}}
             <option value="proxy" {{isUserTypeSelected "proxy"}}>Proxy</option>
-          {{/unless}}
+          {{/if}}
         {{/if}}
       </select>
     {{/if}}

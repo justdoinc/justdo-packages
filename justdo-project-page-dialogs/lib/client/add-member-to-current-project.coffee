@@ -185,6 +185,9 @@ Template.invite_new_user_dialog.helpers
       return true
     else
       return false
+  
+  showProxy:->
+    return not @registered and APP.justdo_site_admins.isUserSiteAdmin(Meteor.user())
 
 Template.invite_new_user_dialog.events
   "keydown .users-email-input": (e, tpl) ->
@@ -351,6 +354,9 @@ Template.batch_add_user_group.helpers
 
   getUserGroupType: ->
     return Template.instance().group_type
+
+  showProxyAll: ->
+    return Template.instance().group_type == "new_users" and APP.justdo_site_admins.isUserSiteAdmin(Meteor.user())
 
   getUserRowData: ->
     # Returns an obj of the user inside the {{#each}} loop along with tpl.users and tpl.users_validation_active_rv
