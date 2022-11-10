@@ -184,7 +184,7 @@ _.extend JustdoJiraIntegration,
           # If an Epic became other issue type, move all existing child to root
           if field?.fromString is "Epic" and field_val isnt "Epic"
             if not (task_id = req_body.issue.fields[JustdoJiraIntegration.task_id_custom_field_id])?
-              task_id = @tasks_collection.findOne({jira_issue_id: parseInt req_body.issue.id}, {fields: {_id: 1}})
+              task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_id: parseInt req_body.issue.id}, {fields: {_id: 1}})
             _moveAllChildTasksToRoadmap task_id
           return field_val
     jira_fix_version:
