@@ -4,7 +4,7 @@
 
 # JustdoHelpers.common_regexps.email only matches a single email address,
 # Here we modify the regex to match multiple email addresses from a string.
-email_regex = new RegExp JustdoHelpers.common_regexps.email.toString().replace(/\/\^|\$\//g, ""), "g"
+email_regex = new RegExp JustdoHelpers.common_regexps.email
 
 ProjectPageDialogs.showMemberDialog = ->
   message_template =
@@ -32,12 +32,37 @@ Template.invite_new_user_dialog.onCreated ->
 
   tpl.recognizeEmails = ->
     $el = $(".invite-new-wrapper .users-email-input")
-    emails_array = $el.val().match email_regex
-    users = tpl.users.get()
-    users_emails = _.map users, (user) -> user.email
-    emails_array = _.difference emails_array, users_emails
+    
+    new_users = {}
+    users = tpl.users.get().slice()
+    inputs = $el.val().split(",")
+    for input in inputs
+      input_segments = input.split(" ")
+      names = []
+      email = null
+      for input_segment in input_segments
+        if email_regex.test(input_segment)
+          email = input_segment
+          break
+        else
+          names.push(input_segment)
+      
+      if email?
+        if names.length == 0
+          first_name = last_name = ""
+        else if names.length == 1
+          first_name = names[0]
+          last_name = ""
+        else
+          first_name = names.slice(0, -1).join(" ")
+          last_name = names[names.length - 1] 
+        
+        if not _.find(users, (user) -> user.email == email)
+          new_users[email] = {first_name, last_name}
 
-    APP.accounts.getFirstLastNameByEmails emails_array, {}, (error, registered_users_details) ->
+    new_emails = _.keys(new_users)
+
+    APP.accounts.getFirstLastNameByEmails new_emails, {}, (error, registered_users_details) ->
       if error?
         console.log error
         return
@@ -51,10 +76,10 @@ Template.invite_new_user_dialog.onCreated ->
           role = "guest"
         existing_members_set.set justdo_member.user_id, {role: role}
 
-      _.each emails_array, (email) ->
+      for email, name of new_users
         user =
-          first_name: ""
-          last_name: ""
+          first_name: name.first_name
+          last_name: name.last_name
           email: email
           role: "member"
           registered: false
@@ -74,7 +99,6 @@ Template.invite_new_user_dialog.onCreated ->
               role: justdo_member.role
 
         users.push user
-        return
 
       tpl.users.set users
 
@@ -164,16 +188,13 @@ Template.invite_new_user_dialog.helpers
 
 Template.invite_new_user_dialog.events
   "keydown .users-email-input": (e, tpl) ->
-    if e.keyCode == 13 or e.keyCode == 32
+    if e.keyCode == 13
       tpl.recognizeEmails()
 
     return
 
   "keyup .users-email-input": (e, tpl) ->
     $input = $(e.target).closest(".users-email-input")
-
-    if e.keyCode == 32
-      $input.val ""
 
     if $input.val().trim()
       tpl.show_invite_button_rv.set true
