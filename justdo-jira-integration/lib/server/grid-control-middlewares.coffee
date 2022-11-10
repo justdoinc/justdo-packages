@@ -22,6 +22,8 @@ _.extend JustdoJiraIntegration.prototype,
       jira_fix_version_mountpoint_id: 1
       jira_project_id: 1
       jira_issue_id: 1
+      project_id: 1
+      title: 1
 
     getParentDocIfPathIsUnderJiraTree = (path) =>
       parent_id = GridData.helpers.getPathParentId path
@@ -62,26 +64,30 @@ _.extend JustdoJiraIntegration.prototype,
       task = etc.item
       new_parent_task = etc.new_parent_item
 
-      if (jira_issue_id = task.jira_issue_id)?
-        # Block attempts to multi-parent a Jira task under another Jira task or hardcoded mountpoints.
-        if new_parent_task?.jira_mountpoint_type?
-          return
-
-        # Assign issue to sprint
-        if (sprint_id = new_parent_task?.jira_sprint_mountpoint_id)?
-          existing_task_parents = _.keys task.parents
-          if (existing_sprint_parent = @tasks_collection.findOne({_id: {$in: existing_task_parents}, jira_sprint_mountpoint_id: {$ne: null}}, {fields: {jira_sprint_mountpoint_id: 1}}))?
-            @removed_sprint_parent_issue_pairs.add "#{task._id}:#{existing_sprint_parent.jira_sprint_mountpoint_id}"
-          return @assignIssueToSprint jira_issue_id, sprint_id, task.project_id
-
-        # Assign issue to fix version
-        if (fix_version_id = new_parent_task?.jira_fix_version_mountpoint_id)?
-          return @updateIssueFixVersion jira_issue_id, {add: fix_version_id}, task.project_id
-      else
+      if not (jira_issue_id = task.jira_issue_id)?
         # Block attempts for non-Jira tasks to be added inside a Jira tree
         # XXX Do we want to allow adding roadmap as parent of an existing tree and convert the entire tree into Jira issues?
         if new_parent_task?.jira_project_id?
-          return
+          throw @_error "jira-update-failed", "You can't put it here."
+        return true
+
+      # Block attempts to multi-parent a Jira task under another Jira task or hardcoded mountpoints.
+      if new_parent_task?.jira_mountpoint_type?
+        throw @_error "jira-update-failed", "You can't put it here."
+
+      if new_parent_task?.jira_issue_type?
+        throw @_error "jira-update-failed", "You cannot multi-parent an issue under another issue. To add issue parent, drag the task under the new parent instead."
+
+      # Assign issue to sprint
+      if (sprint_id = new_parent_task?.jira_sprint_mountpoint_id)?
+        existing_task_parents = _.keys task.parents
+        if (existing_sprint_parent = @tasks_collection.findOne({_id: {$in: existing_task_parents}, jira_sprint_mountpoint_id: {$ne: null}}, {fields: {jira_sprint_mountpoint_id: 1}}))?
+          @removed_sprint_parent_issue_pairs.add "#{task._id}:#{existing_sprint_parent.jira_sprint_mountpoint_id}"
+        return @assignIssueToSprint jira_issue_id, sprint_id, task.project_id
+
+      # Assign issue to fix version
+      if (fix_version_id = new_parent_task?.jira_fix_version_mountpoint_id)?
+        return @updateIssueFixVersion jira_issue_id, {add: fix_version_id}, task.project_id
 
       return true
 
@@ -93,7 +99,7 @@ _.extend JustdoJiraIntegration.prototype,
       query_options = {fields: jira_relevant_task_fields}
 
       # Task is not related to Jira. Ignore.
-      if not (task = @tasks_collection.findOne {_id: task_id, jira_project_id: {$ne: null}}, {fields: {jira_project_id: 1, jira_issue_id: 1, project_id: 1}})?
+      if not (task = @tasks_collection.findOne {_id: task_id, jira_project_id: {$ne: null}}, {fields: jira_relevant_task_fields})?
         return true
 
       # Task is removed from Jira. Ignore.
@@ -139,12 +145,14 @@ _.extend JustdoJiraIntegration.prototype,
 
       if parent_task?.jira_sprint_mountpoint_id?
         # If "task_id:sprint_id" is found in removed_sprint_parent_issue_pairs,
-        # it means this action is originated from our side using addParent() to change an issue's sprint.
+        # it means this action is meant to be omitted (likely using addParent() or reopening a sprint).
         # In this case we don't have to call moveIssuesToBacklog(), or it will remove the sprint of the issue completely.
         if not @removed_sprint_parent_issue_pairs.delete("#{task_id}:#{parent_task.jira_sprint_mountpoint_id}")
           client = @getJiraClientForJustdo(task.project_id).agile
-          client.backlog.moveIssuesToBacklog {issues: ["#{task.jira_issue_id}"]}
-            .catch (err) -> console.error "[justdo-jira-integration] Remove issue sprint failed", err.response.data
+          {err} = @pseudoBlockingJiraApiCallInsideFiber "backlog.moveIssuesToBacklog", {issues: ["#{task.jira_issue_id}"]}, client
+          if err?
+            throw @_error "jira-update-failed", "Failed to remove #{task.title} from #{parent_task.title}", err
+
         return true
 
       if (fix_version_id = parent_task?.jira_fix_version_mountpoint_id)?
