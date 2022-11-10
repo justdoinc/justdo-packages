@@ -97,70 +97,83 @@ _.extend JustdoJiraIntegration,
       type: "string"
       mapper: (justdo_id, field, destination, req_body) ->
         if destination is "justdo"
-          # For initial mounting of projects from Jira Cloud
-          if _.isString field?[0]?.name
-            new_sprint_id = field?[0].id
-            new_sprint_name = field?[0].name
-          # For initial mounting of projects from Jira Server
-          if (tokens = field?[0]?.match?(/(name=[A-Za-z\s0-9]+)|(id=\d)/g))?
-            new_sprint_id = tokens[0].replace "id=", ""
-            new_sprint_name = tokens[1].replace "name=", ""
-          if not new_sprint_name?
-            new_sprint_id = field?.to
-            new_sprint_name = field?.toString
+          updateSprintFieldOfChildTasks = (task_id, sprint_name) =>
+            # Update sprint field for subtasks
+            if req_body.issue.fields.issuetype.name isnt "Epic"
+              @tasks_collection.update({"parents2.parent": task_doc._id}, {$set: {jira_sprint: new_sprint_name}}, {multi: true})
 
-          new_sprint_id = parseInt new_sprint_id
-          old_sprint_id = parseInt field?.from
+          # Issue sprint field can hold multiple sprints, but one of them isn't closed at most.
+          sprint_field = req_body.issue.fields[JustdoJiraIntegration.sprint_custom_field_id]
+          if (active_sprint = @_getActiveSprintOfIssue sprint_field)?
+            # For Jira Cloud
+            if _.isString active_sprint.name
+              new_sprint_id = active_sprint.id
+              new_sprint_name = active_sprint.name
 
-          if new_sprint_id isnt old_sprint_id
-            # Move from old sprint parent to new sprint parent if the sprint is created as a task
-            jira_issue_id = parseInt req_body.issue.id
-            jira_project_id = parseInt req_body.issue.fields.project.id
+            # For Jira Server
+            if (tokens = active_sprint.match?(/(name=[A-Za-z\s0-9]+)|(id=\d)/g))?
+              new_sprint_id = tokens[0].replace "id=", ""
+              new_sprint_name = tokens[1].replace "name=", ""
 
-            if (task_doc = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_issue_id: jira_issue_id}, {fields: {_id: 1, jira_sprint: 1}}))?
-              grid_data = APP.projects._grid_data_com
-              justdo_admin_id = @_getJustdoAdmin justdo_id
+            if _.isString new_sprint_id
+              new_sprint_id = parseInt new_sprint_id
+            new_sprint_mountpoint = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_sprint_mountpoint_id: new_sprint_id}, {fields: {_id: 1}})?._id
 
-              # In case a discrepency happens, fetch the old sprint id from our db.
-              if task_doc.jira_sprint? and (task_doc.jira_sprint isnt new_sprint_name)
-                jira_query =
-                  "jira_projects.#{jira_project_id}.sprints.name": task_doc.jira_sprint
-                jira_query_options =
-                  fields:
-                    "jira_projects.#{jira_project_id}.sprints.$": 1
-                old_sprint_id = parseInt @jira_collection.findOne(jira_query, jira_query_options)?.jira_projects?[jira_project_id]?.sprints?[0]?.id
+          # Move from old sprint parent to new sprint parent if the sprint is created as a task
+          jira_issue_id = parseInt req_body.issue.id
+          jira_project_id = parseInt req_body.issue.fields.project.id
 
-              old_sprint_mountpoint = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_sprint_mountpoint_id: old_sprint_id}, {fields: {_id: 1}})?._id
-              new_sprint_mountpoint = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_sprint_mountpoint_id: new_sprint_id}, {fields: {_id: 1}})?._id
+          if (task_doc = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_issue_id: jira_issue_id}, {fields: {_id: 1, jira_sprint: 1, parents2: 1}}))?
+            grid_data = APP.projects._grid_data_com
+            justdo_admin_id = @_getJustdoAdmin justdo_id
 
-              if req_body.issue.fields.issuetype.name not in ["Sub-task", "Sub-Task", "Subtask"]
-                if old_sprint_mountpoint? and new_sprint_mountpoint?
-                  # Relocate issue
-                  try
-                    grid_data.movePath "/#{old_sprint_mountpoint}/#{task_doc._id}/", {parent: new_sprint_mountpoint, order: 0}, justdo_admin_id
-                  catch e
+            # In case a discrepency happens, fetch the old sprint id from our db.
+            if task_doc.jira_sprint? and (task_doc.jira_sprint isnt new_sprint_name)
+              query =
+                _id:
+                  $in: _.map task_doc.parents2, (parent_obj) -> parent_obj.parent
+                project_id: justdo_id
+                jira_project_id: jira_project_id
+                jira_sprint_mountpoint_id:
+                  $ne: null
+              query_options =
+                fields:
+                  jira_sprint_mountpoint_id: 1
+              old_sprint_mountpoint = @tasks_collection.findOne(query, query_options)?._id
+
+            # If the issue has an active sprint but it's not in our tasks collection, the sprint task is likely being reopened.
+            # In this case we do nothing, as after the sprint task being created, this mapper will be called again and put the issue to the right sprint parent.
+            if new_sprint_id? and not new_sprint_mountpoint?
+              return task_doc.jira_sprint
+
+            if req_body.issue.fields.issuetype.name not in ["Sub-task", "Sub-Task", "Subtask"]
+              if old_sprint_mountpoint? and new_sprint_mountpoint?
+                # Relocate issue
+                try
+                  grid_data.movePath "/#{old_sprint_mountpoint}/#{task_doc._id}/", {parent: new_sprint_mountpoint, order: 0}, justdo_admin_id
+                catch e
+                  if e.error not in ["parent-already-exists", "unknown-parent"]
                     console.trace()
                     console.error "[justdo-jira-integration] Relocate issue sprint parent failed.", e
-                # Remove sprint parent
-                else if old_sprint_mountpoint?
-                  try
-                    grid_data.removeParent "/#{old_sprint_mountpoint}/#{task_doc._id}/", justdo_admin_id
-                  catch e
-                    if e.error isnt "unknown-parent"
-                      console.trace()
-                      console.error "[justdo-jira-integration] Remove issue sprint parnet failed.", e
-                # Add sprint parent
-                else if new_sprint_mountpoint?
-                  try
-                    grid_data.addParent task_doc._id, {parent: new_sprint_mountpoint, order: 0}, justdo_admin_id
-                  catch e
-                    if e.error isnt "parent-already-exists"
-                      console.trace()
-                      console.error "[justdo-jira-integration] Add issue sprint parnet failed.", e
+              # Remove sprint parent
+              else if old_sprint_mountpoint?
+                try
+                  grid_data.removeParent "/#{old_sprint_mountpoint}/#{task_doc._id}/", justdo_admin_id
+                catch e
+                  if e.error isnt "unknown-parent"
+                    console.trace()
+                    console.error "[justdo-jira-integration] Remove issue sprint parnet failed.", e
+              # Add sprint parent
+              else if new_sprint_mountpoint?
+                try
+                  grid_data.addParent task_doc._id, {parent: new_sprint_mountpoint, order: 0}, justdo_admin_id
+                catch e
+                  if e.error isnt "parent-already-exists"
+                    console.trace()
+                    console.error "[justdo-jira-integration] Add issue sprint parnet failed.", e
 
-              # Update sprint field for subtasks
-              if req_body.issue.fields.issuetype.name isnt "Epic"
-                @tasks_collection.update({"parents2.parent": task_doc._id}, {$set: {jira_sprint: new_sprint_name}}, {multi: true})
+            # Update sprint field for subtasks
+            updateSprintFieldOfChildTasks task_doc._id, new_sprint_name
 
           return new_sprint_name or null
     jira_issue_type:
