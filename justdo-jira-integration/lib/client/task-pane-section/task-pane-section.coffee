@@ -31,7 +31,8 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.helpers
     return
 
   taskIsMountable: ->
-    active_task = JD.activeItem({jira_project_id: 1, jira_issue_key: 1, jira_mountpoint_type: 1, jira_sprint_mountpoint_id: 1, jira_fix_version_mountpoint_id: 1})
+    if not (active_task = JD.activeItem({jira_project_id: 1, jira_issue_key: 1, jira_mountpoint_type: 1, jira_sprint_mountpoint_id: 1, jira_fix_version_mountpoint_id: 1}))?
+      return false
     delete active_task._id
     return _.every active_task, (field_val) -> _.isNull field_val
 
