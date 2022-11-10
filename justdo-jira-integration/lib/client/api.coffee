@@ -16,18 +16,42 @@ _.extend JustdoJiraIntegration.prototype,
   setupCustomFeatureMaintainer: ->
     self = @
     refresh_subscription_computation = null
+    gcm = null
 
     custom_feature_maintainer =
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage JustdoJiraIntegration.project_custom_feature_id,
         installer: =>
           refresh_subscription_computation = Tracker.autorun ->
+            # Refresh subscription upon switching Justdo
+            self.jira_collection_subscription?.stop?()
+            gcm?.off? "edit-failed"
+
             if not (active_justdo = APP.modules.project_page.curProj())?
               return
 
-            # Refresh subscription upon switching Justdo
-            self.jira_collection_subscription?.stop?()
             if (jira_doc_id = active_justdo.getProjectConfigurationSetting(JustdoJiraIntegration.projects_collection_jira_doc_id))?
               self.jira_collection_subscription = Meteor.subscribe "jiraCollection", jira_doc_id
+
+              gcm = APP.modules.project_page.grid_control_mux.get()
+              gcm?.on? "edit-failed", (tab, err) ->
+                if err.error isnt "jira-update-failed"
+                  return
+
+                err_msg = err.reason
+
+                if (err_details = err.details)?
+                  if not _.isEmpty err_details.errorMessages
+                    extra_err_msg = err_details.errorMessages.join "<br>"
+                  else
+                    extra_err_msg = _.values(err_details.errors)?.join "<br>"
+
+                if extra_err_msg?
+                  err_msg = "#{err_msg}<br>#{extra_err_msg}"
+
+                console.log err
+                JustdoSnackbar.show
+                  text: err_msg
+                return
             return
 
           APP.modules.project_page.setupPseudoCustomField "jira_issue_key",
@@ -144,6 +168,8 @@ _.extend JustdoJiraIntegration.prototype,
         destroyer: =>
           APP.modules.project_page.removePseudoCustomFields self.registered_pseudo_custom_fields
           refresh_subscription_computation?.stop?()
+          self.jira_collection_subscription?.stop?()
+          gcm?.off? "edit-failed"
 
           return
 
