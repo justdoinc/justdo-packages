@@ -51,14 +51,19 @@ _.extend JustdoHelpers,
           Tracker.nonreactive -> JustdoHelpers.callCb(options.cb)
 
           c.stop()
+          comp = null
 
           return
 
         return
 
-      if options.timeout
+      if options.timeout? and _.isNumber(options.timeout)
         Meteor.setTimeout ->
-          comp.stop()
+          if comp?
+            comp.stop()
+
+            console.warn "awaitValueFromReactiveResource timedout", {options}
+          return
         , options.timeout
 
     return
