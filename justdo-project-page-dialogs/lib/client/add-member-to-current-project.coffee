@@ -185,9 +185,6 @@ Template.invite_new_user_dialog.helpers
       return true
     else
       return false
-  
-  showProxy:->
-    return not @registered and APP.justdo_site_admins.isUserSiteAdmin(Meteor.user())
 
 Template.invite_new_user_dialog.events
   "keydown .users-email-input": (e, tpl) ->
@@ -356,11 +353,11 @@ Template.batch_add_user_group.helpers
     return Template.instance().group_type
 
   showProxyAll: ->
-    return Template.instance().group_type == "new_users" and APP.justdo_site_admins.isUserSiteAdmin(Meteor.user())
+    return Template.instance().group_type == "new_users" and APP.justdo_site_admins.siteAdminFeatureEnabled("proxy-users")
 
-  isSiteAdmin: ->
-    return APP.justdo_site_admins.isUserSiteAdmin(Meteor.user())
-    
+  isProxyUserEnabled: ->
+    return APP.justdo_site_admins.siteAdminFeatureEnabled("proxy-users")
+
   getUserRowData: ->
     # Returns an obj of the user inside the {{#each}} loop along with tpl.users and tpl.users_validation_active_rv
     # No need to create a new obj as "@" comes from newUsers/registeredUsers
@@ -433,6 +430,9 @@ Template.batch_add_user_row.helpers
     if @is_proxy or @is_justdo_member
       return "disabled"
     return
+  
+  showProxy:->
+    return not @registered and APP.justdo_site_admins.siteAdminFeatureEnabled("proxy-users")
 
 Template.batch_add_user_row.events
   "click .user-delete": (e, tpl) ->
