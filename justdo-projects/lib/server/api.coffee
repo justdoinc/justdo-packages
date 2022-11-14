@@ -1218,7 +1218,7 @@ _.extend Projects.prototype,
 
       # For fields of type select, update the field_options.removed_options field, if necessary
       for field in custom_fields
-        if field.field_type == "select"
+        if field.field_type == "select" or field.field_type == "multi_select"
           if (existing_field_definition = _.find(existing_custom_fields, (custom_field_def) -> custom_field_def.field_id == field.field_id))?
             new_field_definition = field
 
