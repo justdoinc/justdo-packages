@@ -61,13 +61,13 @@
     </div>
   </div>
   <div class="modal-footer">
+    <button type="button" class="cancel btn btn-primary">Cancel</button>
     {{#if showSelectProjects}}
-      <button type="button" class="prev btn btn-light">Back</button>
+      <button type="button" class="prev btn btn-primary">Back</button>
       <button type="button" class="invite btn btn-primary">Invite</button>
     {{else}}
       <button type="button" class="next btn btn-primary {{#if usersExist}}active{{/if}}">Next</button>
     {{/if}}
-    <button type="button" class="cancel btn btn-primary">Cancel</button>
   </div>
 </template>
 
