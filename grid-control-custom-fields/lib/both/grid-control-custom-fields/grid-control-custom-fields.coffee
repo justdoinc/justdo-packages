@@ -439,6 +439,7 @@ _.extend GridControlCustomFields,
             for option in removed_select_options
               grid_removed_values[option.option_id] =
                 txt: option.label
+                bg_color: option.bg_color
           custom_field_schema.grid_removed_values = grid_removed_values
 
           custom_field_schema.grid_column_filter_settings = {type: "whitelist"}
