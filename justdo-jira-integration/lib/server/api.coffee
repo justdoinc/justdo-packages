@@ -1029,7 +1029,11 @@ _.extend JustdoJiraIntegration.prototype,
     if not client?
       client = @getJiraClientForJustdo(justdo_id).agile
 
-    return client.board.getAllBoards({projectKeyOrId: jira_project_key_or_id})
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getAllBoards", {projectKeyOrId: jira_project_key_or_id}, client
+    if err?
+      console.error err
+
+    return res
 
   # Since sprints are associated with boards instead of Jira project,
   # we will have to fetch all associated Jira projects via API call.
@@ -1047,19 +1051,21 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_server_id = @getJiraServerIdFromApiClient client
 
-    client.projectVersions.getProjectVersions({projectIdOrKey: jira_project_id})
-      .then (fix_versions) =>
-        for fix_version in fix_versions
-          fix_version.id = parseInt fix_version.id
-        query =
-          "server_info.id": jira_server_id
-        ops =
-          $set:
-            "jira_projects.#{jira_project_id}.fix_versions": fix_versions
-        @jira_collection.update query, ops
-        return
-      .catch (err) -> console.error err
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "projectVersions.getProjectVersions", {projectIdOrKey: jira_project_id}, client
+    if err?
+      console.error err
 
+    fix_versions = res
+
+    for fix_version in fix_versions
+      fix_version.id = parseInt fix_version.id
+
+    query =
+      "server_info.id": jira_server_id
+    ops =
+      $set:
+        "jira_projects.#{jira_project_id}.fix_versions": fix_versions
+    @jira_collection.update query, ops
     return
 
   fetchAndStoreAllSprintsUnderJiraProject: (jira_project_id, options) ->
@@ -1069,25 +1075,65 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_server_id = @getJiraServerIdFromApiClient client
 
-    boards = await @getAllBoardsAssociatedToJiraProject jira_project_id, {client}
-
-    promises = []
+    boards = @getAllBoardsAssociatedToJiraProject jira_project_id, {client}
 
     for board in boards.values
       board_id = board.id
-      promise = client.board.getAllSprints({boardId: board_id})
-        .then (sprints) =>
-          query =
-            "server_info.id": jira_server_id
-          ops =
-            $set:
-              "jira_projects.#{jira_project_id}.sprints": sprints.values
-          @jira_collection.update query, ops
-          return
-        .catch (err) -> console.error err
-      promises.push promise
+      {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getAllSprints", {boardId: board_id}, client
+      if err?
+        console.error err
 
-    return Promise.all promises
+      sprints = res
+
+      query =
+        "server_info.id": jira_server_id
+      ops =
+        $set:
+          "jira_projects.#{jira_project_id}.sprints": sprints.values
+      @jira_collection.update query, ops
+
+    return
+
+  _createProxyUserIfEmailNotRecognized: (jira_users) ->
+    if not _.isArray jira_users
+      jira_users = [jira_users]
+
+    jira_user_objects = []
+    proxy_users_to_be_created = []
+    created_user_ids = []
+
+    for user_info in jira_users
+      # If the email isn't recognized, create a proxy user.
+      # XXX Temp fix for email API permission issue. Remove the first if statment when resolved/Jira server is in use
+      if _.isEmpty user_info.emailAddress
+        user_info.emailAddress = @_getHarcodedEmailByAccountId(user_info.accountId or user_info.key)
+
+      if not APP.accounts.userExists user_info.emailAddress
+        [first_name, last_name] = user_info.displayName.split " "
+        profile = {first_name, last_name}
+        proxy_users_to_be_created.push {email: user_info.emailAddress, profile: profile}
+
+      jira_user_obj =
+        jira_account_id: user_info.accountId or user_info.key
+        email: user_info.emailAddress
+        display_name: user_info.displayName
+        active: user_info.active
+        timezone: user_info.timezone
+        locale: user_info.locale
+        avatar_url: user_info.avatarUrls
+        account_type: user_info.accountType
+      # Jira on-perm doesn't have account type; It has a user name.
+      if @isJiraInstanceCloud()
+        jira_user_obj.account_type = user_info.accountType
+      else
+        jira_user_obj.username = user_info.name
+
+      jira_user_objects.push jira_user_obj
+
+    if not _.isEmpty proxy_users_to_be_created
+      created_user_ids = APP.accounts.createProxyUsers(proxy_users_to_be_created)
+
+    return {jira_user_objects, created_user_ids}
 
   # Also creates proxy users for emails that aren't registered in Justdo
   fetchAndStoreAllUsersUnderJiraProject: (jira_project_id, options) ->
@@ -1103,41 +1149,20 @@ _.extend JustdoJiraIntegration.prototype,
     if @getAuthTypeIfJiraInstanceIsOnPerm()?
       find_assignable_users_req.project = @getJiraProjectKeyById jira_project_id
 
-    try
-      users_info = await client.userSearch.findAssignableUsers find_assignable_users_req
-    catch e
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "userSearch.findAssignableUsers", find_assignable_users_req, client
+    if err?
       console.error "[justdo-jira-integration] Failed to fetch users from project #{jira_project_id}", e
+      return
 
-    jira_accounts = []
-    proxy_users_to_be_created = []
+    users_info = res
 
-    for user_info in users_info
-      # If the email isn't recognized, create a proxy user.
-      # XXX Temp fix for email API permission issue. Remove the first if statment when resolved/Jira server is in use
-      if _.isEmpty user_info.emailAddress
-        user_info.emailAddress = @_getHarcodedEmailByAccountId user_info.accountId
-
-      if not Accounts.findUserByEmail(user_info.emailAddress)?
-        [first_name, last_name] = user_info.displayName.split " "
-        profile = {first_name, last_name}
-        proxy_users_to_be_created.push {email: user_info.emailAddress, profile: profile}
-
-      jira_accounts.push
-        jira_account_id: user_info.accountId
-        email: user_info.emailAddress
-        display_name: user_info.displayName
-        active: user_info.active
-        timezone: user_info.timezone
-        locale: user_info.locale
-        avatar_url: user_info.avatarUrl
-
-    APP.accounts.createProxyUsers(proxy_users_to_be_created)
+    {jira_user_objects} = @_createProxyUserIfEmailNotRecognized users_info
 
     query =
       "server_info.id": jira_server_id
     ops =
       $set:
-        "jira_projects.#{jira_project_id}.jira_accounts": jira_accounts
+        jira_users: jira_user_objects
     @jira_collection.update query, ops
 
     return
