@@ -76,6 +76,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/methods.coffee", server);
   api.addFiles("lib/server/publications.coffee", server);
   api.addFiles("lib/server/grid-control-middlewares.coffee", server);
+  api.addFiles("lib/server/webhook-event-handlers.coffee", server);
 
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
@@ -102,6 +103,8 @@ Package.onUse(function (api) {
   api.use("meteorspark:app@0.3.0", both);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
   api.addFiles("lib/both/app-integration.coffee", both);
+
+  api.addAssets("lib/server/jira_privatekey.pem", server);
 
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
