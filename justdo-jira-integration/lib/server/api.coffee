@@ -1024,6 +1024,28 @@ _.extend JustdoJiraIntegration.prototype,
 
     return client.board.getProjects {boardId: board_id}
 
+  fetchAndStoreIssueTypesUnderJiraProject: (jira_project_id, options) ->
+    {client} = options
+    if not client?
+      throw @_error "client-not-found"
+
+    jira_server_id = @getJiraServerIdFromApiClient client
+
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "projects.getProject", {projectIdOrKey: jira_project_id}, client
+    if err?
+      console.error err
+
+    project = res
+
+    query =
+      "server_info.id": jira_server_id
+    ops =
+      $set:
+        "jira_projects.#{jira_project_id}.issue_types": project.issueTypes
+    @jira_collection.update query, ops
+
+    return
+
   getAllBoardsAssociatedToJiraProject: (jira_project_key_or_id, options) ->
     {client, justdo_id} = options
     if not client?
@@ -1449,6 +1471,7 @@ _.extend JustdoJiraIntegration.prototype,
           @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {client: agile_client}
           @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {client: client}
           @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {client: client}
+          @fetchAndStoreIssueTypesUnderJiraProject jira_project_id, {client: client}
     else
       console.info "[justdo-jira-integration] Another checkpoint process is in progress (checkpoint: #{@ongoing_checkpoint})"
 
@@ -1620,3 +1643,60 @@ _.extend JustdoJiraIntegration.prototype,
     current_path.call previous_path, req_body, cb
 
     return JustdoHelpers.fiberYield()
+
+  getIssueTypeRank: (issue_type, jira_project_id) ->
+    # Default issue type rank:
+    #   1: Epic
+    #   0: Other non-subtask types
+    #   -1: Subtask types
+
+    if not issue_type? or not jira_project_id?
+      return
+
+    if issue_type is "Epic"
+      return 1
+
+    query =
+      "jira_projects.#{jira_project_id}.issue_types.name": issue_type
+    query_options =
+      fields:
+        "jira_projects.#{jira_project_id}.issue_types.$": 1
+    if not (issue_type_def = @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.issue_types?[0])?
+      throw @_error "fatal", "Issue type not found"
+
+    if issue_type_def.subtask
+      return -1
+
+    return 0
+
+  getRankedIssueTypesInJiraProject: (jira_project_id) ->
+    # Default issue type rank:
+    #   1: Epic
+    #   0: Other non-subtask types
+    #   -1: Subtask types
+
+    query =
+      "jira_projects.#{jira_project_id}":
+        $ne: null
+    query_options =
+      fields:
+        "jira_projects.#{jira_project_id}.issue_types": 1
+
+    ranked_issue_types =
+      "1": []
+      "0": []
+      "-1": []
+
+    @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.issue_types?.forEach (issue_type_def) ->
+      rank = 0
+
+      if issue_type_def.subtask
+        rank = -1
+
+      if issue_type_def.name is "Epic"
+        rank = 1
+
+      ranked_issue_types[rank].push issue_type_def
+      return
+
+    return ranked_issue_types
