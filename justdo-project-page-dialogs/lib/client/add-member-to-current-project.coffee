@@ -7,7 +7,7 @@
 email_regex = new RegExp JustdoHelpers.common_regexps.email
 email_regex_str = JustdoHelpers.common_regexps.email.toString()
 email_regex_str = email_regex_str.substring(2, email_regex_str.length-2)
-email_regex2 = new RegExp "^<#{email_regex_str}>$"
+email_regex2 = new RegExp "^<\s*#{email_regex_str}\s*>$"
 
 ProjectPageDialogs.showMemberDialog = ->
   message_template =
@@ -41,30 +41,37 @@ Template.invite_new_user_dialog.onCreated ->
     inputs = $el.val().replace(/,/g, ";").split(";")
 
     for input in inputs
-      input_segments = input.split(" ")
+      input_segments = input.split(/\s+/g)
       names = []
       email = null
       for input_segment in input_segments
+        input_segment = input_segment.trim()
+        if input_segment.length == 0
+          continue
+
         if email_regex.test(input_segment)
           email = input_segment
-          break
+          break # Once we found an email, we stop looking forward
         else if email_regex2.test(input_segment)
           email = input_segment.substring(1, input_segment.length-1).trim()
+          break # Once we found an email, we stop looking forward
         else
           names.push(input_segment)
       
-      if email?
-        if names.length == 0
-          first_name = last_name = ""
-        else if names.length == 1
-          first_name = names[0]
-          last_name = ""
-        else
-          first_name = names.slice(0, -1).join(" ")
-          last_name = names[names.length - 1] 
-        
-        if not _.find(users, (user) -> user.email == email)
-          new_users[email] = {first_name, last_name}
+      if not email?
+        continue
+
+      if names.length == 0
+        first_name = last_name = ""
+      else if names.length == 1
+        first_name = names[0]
+        last_name = ""
+      else
+        first_name = names.slice(0, -1).join(" ")
+        last_name = names[names.length - 1]
+      
+      if not _.find(users, (user) -> user.email == email)
+        new_users[email] = {first_name, last_name}
 
     new_emails = _.keys(new_users)
 
