@@ -18,6 +18,7 @@ getKeyBgColor = (grid_values, value) ->
 
 GridControl.installEditor "MultiSelectEditor",
   init: ->
+    current_values = new Set(@context.item[@context.column.field])
     if not (selector_options = @context.column.values)?
       selector_options = {}
     else
@@ -50,6 +51,20 @@ GridControl.installEditor "MultiSelectEditor",
         bg_color: JustdoHelpers.normalizeBgColor(value_def.bg_color)
       }
 
+    for value, value_def of removed_selector_options
+      if current_values.has(value)
+        if (html_format = value_def.html)?
+          label = html_format
+        else
+          label = value_def.txt
+
+        options.push {
+          label: label
+          value: value
+          order: value_def.order
+          bg_color: JustdoHelpers.normalizeBgColor(value_def.bg_color)
+        }
+
     options = _.sortBy options, "order"
 
     selector_options_html = ""
@@ -65,7 +80,10 @@ GridControl.installEditor "MultiSelectEditor",
         custom_style = ''
 
       selector_options_html +=
-        """<option value='#{JustdoHelpers.xssGuard(option.value, {allow_html_parsing: true, enclosing_char: "'"})}' data-content="#{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: '"'})}" #{custom_style}>#{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ""})}</option>"""
+        """<option 
+            value='#{JustdoHelpers.xssGuard(option.value, {allow_html_parsing: true, enclosing_char: "'"})}' 
+            data-content="#{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: '"'})}" #{custom_style}>#{JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ""})}
+          </option>"""
 
     @$select = $("""<select class="multi-select-editor dropdown-menu-lite" multiple>#{selector_options_html}</select>""")
     @$select.appendTo @context.container
@@ -116,13 +134,15 @@ GridControl.installEditor "MultiSelectEditor",
     @$select.selectpicker("refresh")
     @$select.selectpicker("render")
 
-    bg_color = JustdoHelpers.normalizeBgColor(getKeyBgColor(@context.column.values, val))
-    fg_color = JustdoHelpers.getFgColor(bg_color)
+    # The following is very likely redundant, it was kept during dev for case it isn't
 
-    if bg_color?    
-      $(".dropdown-toggle", @$select_picker)
-        .css("background-color", bg_color)
-        .css("color", fg_color)
+    # bg_color = JustdoHelpers.normalizeBgColor(getKeyBgColor(@context.column.values, val))
+    # fg_color = JustdoHelpers.getFgColor(bg_color)
+
+    # if bg_color?    
+    #   $(".dropdown-toggle", @$select_picker)
+    #     .css("background-color", bg_color)
+    #     .css("color", fg_color)
 
     return
 

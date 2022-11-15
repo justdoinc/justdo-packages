@@ -4,15 +4,23 @@ GridControl.installFormatter "MultiSelectFormatter",
   slick_grid: ->
     {schema, doc, path, value} = @getFriendlyArgs()
 
+    {grid_values, grid_removed_values} = schema
+
+    if not grid_values?
+      grid_values = {}
+
+    if not grid_removed_values?
+      grid_removed_values = {}
+
     output = []
 
     values = value
 
     if _.isArray(values) and values.length > 0
       for value in values
-        if (grid_values = schema.grid_values)?
-          text = grid_values[value]?.txt
-          bg_color = grid_values[value]?.bg_color
+        schema_value = grid_values[value] or grid_removed_values[value]
+        text = schema_value?.txt
+        bg_color = schema_value?.bg_color
 
         if not text?
           continue
@@ -37,13 +45,22 @@ GridControl.installFormatter "MultiSelectFormatter",
   print: ->
     {schema, doc, path, value} = @getFriendlyArgs()
 
+    {grid_values, grid_removed_values} = schema
+
+    if not grid_values?
+      grid_values = {}
+
+    if not grid_removed_values?
+      grid_removed_values = {}
+
     output = []
 
     values = value
 
     if _.isArray(values) and values.length > 0
       for value in values
-        if (text = schema.grid_values?[value]?.txt)?
+        schema_value = grid_values[value] or grid_removed_values[value]
+        if (text = schema_value?.txt)?
           output.push text
 
     return output.join ", "
