@@ -38,7 +38,7 @@ Template.invite_new_user_dialog.onCreated ->
     
     new_users = {}
     users = tpl.users.get().slice()
-    inputs = $el.val().replace(",", ";").split(";")
+    inputs = $el.val().replace(/,/g, ";").split(";")
 
     for input in inputs
       input_segments = input.split(" ")
