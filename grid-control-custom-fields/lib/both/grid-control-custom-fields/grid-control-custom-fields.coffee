@@ -276,13 +276,16 @@ _.extend GridControlCustomFields,
 
     clean_custom_fields_definition = {}
     for custom_field_id, custom_field_definition of custom_fields_definitions
-      {cleaned_val} =
-        JustdoHelpers.simpleSchemaCleanAndValidate(
-          GridControlCustomFields.custom_field_definition_schema,
-          custom_field_definition,
-          {self: @, throw_on_error: true}
-        )
-      clean_custom_fields_definition[custom_field_id] = cleaned_val
+      try
+        {cleaned_val} =
+          JustdoHelpers.simpleSchemaCleanAndValidate(
+            GridControlCustomFields.custom_field_definition_schema,
+            custom_field_definition,
+            {self: @, throw_on_error: true}
+          )
+        clean_custom_fields_definition[custom_field_id] = cleaned_val
+      catch e
+        console.warn "[grid-custom-fields] field: #{custom_field_id} has an unsupported schema structure, skipping", e
 
     custom_fields_definitions = clean_custom_fields_definition
 
