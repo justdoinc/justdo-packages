@@ -294,15 +294,18 @@ _.extend JustdoJiraIntegration,
         if destination is "jira"
           client = @getJiraClientForJustdo(justdo_id).v2
 
-          if not (justdo_account_email = Meteor.users.findOne(field, {fields: {emails: 1}})?.emails?[0]?.address)?
+          if not (justdo_account_email = APP.accounts.getUserById(field).emails?[0]?.address)?
             throw @_error "user-not-found"
 
           jira_account = @getJiraUser justdo_id, {email: justdo_account_email}
-          jira_account_id = jira_account?[0]?.accountId
-          # if not (jira_account_id = jira_account?[0]?.accountId)?
-          #   throw @_error "jira-account-not-found"
+          jira_account_id = jira_account?[0]?.jira_account_id or jira_account?[0]?.accountId
 
-          {err} = self.pseudoBlockingJiraApiCallInsideFiber "issues.assignIssue", {issueIdOrKey: req_body.jira_issue_id, accountId: jira_account_id}, client
+          req = {issueIdOrKey: req_body.jira_issue_id}
+          if @isJiraInstanceCloud()
+            req.accountId = jira_account?[0]?.accountId
+          else
+            req.name = jira_account?[0]?.username
+          {err} = @pseudoBlockingJiraApiCallInsideFiber "issues.assignIssue", req, client
           if err?
             err = err?.response?.data or err
             console.error err

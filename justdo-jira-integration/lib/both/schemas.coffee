@@ -138,5 +138,14 @@ _.extend JustdoJiraIntegration.prototype,
         label: "Time of last issue data consistency check"
         type: Date
         optional: true
+      jira_users:
+        label: "Jira users"
+        type: Array
+        optional: true
+      "jira_users.$":
+        label: "Jira user"
+        type: Object
+        optional: true
+        blackbox: true
     @jira_collection.attachSchema jira_collection_schema
     return

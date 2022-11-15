@@ -667,6 +667,14 @@ _.extend JustdoJiraIntegration.prototype,
       .post ->
         @response.end()
         event_type = @request.body.webhookEvent
+        # If a user got deleted, Jira cloud will send something like this over webhook
+        # {
+        #     "accountId": "62bc0c35ec4c0d377f9fcf00",
+        #     "username": "ug:6506c242-6910-4955-914a-1284790049a2"
+        # }
+        if self.isJiraInstanceCloud() and not event_type? and @request.body.accountId?
+          event_type = "user_deleted"
+
         self.jiraWebhookEventHandlers[event_type]?.call(self, @request.body)
         return
 
@@ -1190,6 +1198,23 @@ _.extend JustdoJiraIntegration.prototype,
   getJiraUser: (justdo_id, options) ->
     check options.account_id, Match.Maybe String
     check options.email, Match.Maybe String
+
+    jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
+
+    query =
+      _id: jira_doc_id
+    if _.isString options?.account_id
+      query["jira_users.jira_account_id"] = options.account_id
+    if _.isString options?.email
+      query["jira_users.email"] = options.email
+    query_options =
+      fields:
+        "jira_users.$": 1
+
+    # First try to locate the user from our db. Use API to search for user only if it's not in our db.
+    if (jira_user = @jira_collection.findOne(query, query_options)?.jira_users?[0])?
+      return [jira_user]
+
     client = @getJiraClientForJustdo(justdo_id)
 
     query = {}
@@ -1245,21 +1270,21 @@ _.extend JustdoJiraIntegration.prototype,
 
     return users[jira_account_id] or "#{jira_account_id}@justdo.com"
 
-  getAllJiraProjectMembers: (jira_project_id) ->
-    jira_query =
-      "jira_projects.#{jira_project_id}":
-        $ne: null
+  getAllUsersInJiraInstance: (jira_doc_id) ->
     jira_options =
       fields:
-        "jira_projects.#{jira_project_id}.jira_accounts.email": 1
-        "jira_projects.#{jira_project_id}.jira_accounts.display_name": 1
-        "jira_projects.#{jira_project_id}.jira_accounts.locale": 1
-    return @jira_collection.findOne(jira_query, jira_options)?.jira_projects?[jira_project_id]?.jira_accounts
+        "jira_users.email": 1
+        "jira_users.display_name": 1
+        "jira_users.locale": 1
+    return @jira_collection.findOne(jira_doc_id, jira_options)?.jira_users
 
   addJiraProjectMembersToJustdo: (justdo_id, emails) ->
+    if _.isString emails
+      emails = [emails]
+
     for email in emails
       try
-        APP.projects.inviteMember justdo_id, {email: email}, @_getJustdoAdmin justdo_id
+        APP.projects.inviteMember justdo_id, {email: email}
       catch e
         if e.error isnt "member-already-exists"
           throw e
@@ -1273,12 +1298,12 @@ _.extend JustdoJiraIntegration.prototype,
         jira_project_id = parseInt jira_project_id
 
       query =
-        "jira_projects.#{jira_project_id}.jira_accounts.jira_account_id": jira_account_id_or_email
+        "jira_users.jira_account_id": jira_account_id_or_email
       query_options =
         fields:
-          "jira_projects.#{jira_project_id}.jira_accounts.$": 1
+          "jira_users.$": 1
 
-      user_email = @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.jira_accounts?[0]?.email
+      user_email = @jira_collection.findOne(query, query_options)?.jira_users?[0]?.email
 
     return Accounts.findUserByEmail(user_email)._id
 
