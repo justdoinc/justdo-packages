@@ -255,7 +255,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     # The following handles adding parent of created task to their sprint/fix version.
     # Note that add parent is called only when the created task has a different sprint/fix version that the parent task.
-    if task_fields.jira_issue_type isnt "Sub-task"
+    if @getIssueTypeRank(task_fields.jira_issue_type, jira_project_id) > -1
       parent_task = @tasks_collection.findOne GridDataCom.helpers.getPathItemId parent_path, {fields: {jira_sprint: 1, jira_fix_version: 1}}
       if (issue_sprint = task_fields.jira_sprint)? and (issue_sprint isnt parent_task.jira_sprint)
         # XXX Uncomment for debug info

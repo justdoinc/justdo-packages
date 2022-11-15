@@ -55,7 +55,7 @@ _.extend JustdoJiraIntegration.prototype,
         throw @_error "jira-update-failed", "Cannot create task directly under a sprint/fix-version.<br>To assign a task to a sprint/fix-version, add the target sprint/fix-version as the task's parent."
 
       # Subtasks cannot be parents
-      if parent_task?.jira_issue_type?.toLowerCase() in ["sub-task", "subtask"]
+      if @getIssueTypeRank(parent_task?.jira_issue_type, parent_task?.jira_project_id) is -1
         throw @_error "jira-update-failed", "Subtasks cannot have subtasks."
 
       return true
@@ -193,25 +193,29 @@ _.extend JustdoJiraIntegration.prototype,
       # This block handles the hierachy within Jira issues
       if (jira_issue_id = task.jira_issue_id)?
         # Maintain the Epic-[Task/Story/Bug]-Subtask hierarchy.
+        # Refer to comments in @getIssueTypeRank() for issue type rank reference.
         if new_parent_task?.jira_issue_id?
+          task_issue_type_rank = @getIssueTypeRank task.jira_issue_type, task.jira_project_id
+          new_parent_task_issue_type_rank = @getIssueTypeRank new_parent_task.jira_issue_type, task.jira_project_id
+
           # Epics cannot be under another issue
-          if task.jira_issue_type is "Epic"
+          if task_issue_type_rank is 1
             throw @_error "jira-update-failed", "Epics cannot have parent tasks."
 
           # Task/Story/Bug can only be under Epic
-          if task.jira_issue_type in ["Story", "Task", "Bug"] and new_parent_task?.jira_issue_type isnt "Epic"
+          if task_issue_type_rank is 0 and new_parent_task_issue_type_rank isnt 1
             throw @_error "jira-update-failed", "Story/Task/Bug's parent can only be an Epic."
 
         # Subtasks has some additional constraints and ops
-        if task.jira_issue_type?.toLowerCase() in ["sub-task", "subtask", "Subtask"]
+        if task_issue_type_rank is -1
           # Jira on-perm doesn't support change parent of subtask.
           if @getAuthTypeIfJiraInstanceIsOnPerm()?
             throw @_error "jira-update-failed", "Subtasks are bound to their parent task."
 
           # Subtasks can only be under Task/Story/Bug
-          if new_parent_task?.jira_issue_type not in ["Story", "Task", "Bug"]
+          if new_parent_task_issue_type_rank isnt 0
             throw @_error "jira-update-failed", "Subtask's parent can only be Story/Task/Bug."
-            
+
           # Update sprint of subtask to be the same as its new parent
           parent_jira_sprint_name = new_parent_task?.jira_sprint
           @tasks_collection.update task._id, {$set: {jira_sprint: parent_jira_sprint_name or null}}

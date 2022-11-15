@@ -146,7 +146,7 @@ _.extend JustdoJiraIntegration,
             if new_sprint_id? and not new_sprint_mountpoint?
               return task_doc.jira_sprint
 
-            if req_body.issue.fields.issuetype.name not in ["Sub-task", "Sub-Task", "Subtask"]
+            if @getIssueTypeRank(req_body.issue.fields.issuetype.name, jira_project_id) > -1
               if old_sprint_mountpoint? and new_sprint_mountpoint?
                 # Relocate issue
                 try
@@ -180,8 +180,12 @@ _.extend JustdoJiraIntegration,
       name: "issuetype"
       mapper: (justdo_id, field, destination, req_body) ->
         _moveAllChildTasksToRoadmap = (task_id) =>
-          child_task_ids = @tasks_collection.find({project_id: justdo_id, "parents2.parent": task_id, jira_issue_type: {$in: ["Task", "Bug", "Story"]}}, {fields: {_id: 1}}).map (task_doc) -> "/#{task_id}/#{task_doc._id}/"
-          mountpoint_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_mountpoint_type: "roadmap", jira_project_id: parseInt(req_body.jira_project_id), project_id: justdo_id}, {fields: {_id: 1}})?._id
+          jira_project_id = parseInt(req_body.jira_project_id or req_body.fields.project.id)
+
+          non_epic_non_subtask_issue_types = _.map @getRankedIssueTypesInJiraProject(jira_project_id)[0], (issue_type_def) -> issue_type_def.name
+
+          child_task_ids = @tasks_collection.find({project_id: justdo_id, "parents2.parent": task_id, jira_issue_type: {$in: non_epic_non_subtask_issue_types}}, {fields: {_id: 1}}).map (task_doc) -> "/#{task_id}/#{task_doc._id}/"
+          mountpoint_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_mountpoint_type: "roadmap", jira_project_id: jira_project_id, project_id: justdo_id}, {fields: {_id: 1}})?._id
           if not _.isEmpty child_task_ids
             APP.projects._grid_data_com.movePath child_task_ids, {parent: mountpoint_task_id}, @_getJustdoAdmin justdo_id
           return

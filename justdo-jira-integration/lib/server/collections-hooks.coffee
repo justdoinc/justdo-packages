@@ -93,8 +93,7 @@ _.extend JustdoJiraIntegration.prototype,
       # If task is added under a Jira issue, add parent before creating task in Jira
       if (parent_issue_id = parent_task?.jira_issue_id)?
         # The behaviour for adding subtask is similar for Jira cloud and Jira server
-        # XXX Custom issue type is not handled
-        if parent_task.jira_issue_type in ["Story", "Task", "Bug"]
+        if self.getIssueTypeRank(parent_task?.jira_issue_type, parent_task?.jira_project_id) is 0
           req.fields.issuetype.name = "Sub-task"
           req.fields.parent =
             id: "#{parent_issue_id}"
@@ -199,7 +198,7 @@ _.extend JustdoJiraIntegration.prototype,
 
               if self.getAuthTypeIfJiraInstanceIsOnPerm()?
                 # Jira Server accepts issue key only when assigning parent, and does not support changing parent of a subtask.
-                if (_.isNull parent_issue_id) or (parent_task?.jira_issue_type?.toLowerCase() is "epic")
+                if (_.isNull parent_issue_id) or (@getIssueTypeRank(parent_task?.jira_issue_type, parent_task?.jira_project_id) is 1)
                   fields[JustdoJiraIntegration.epic_link_custom_field_id] = parent_task?.jira_issue_key or null
                 fields.parent =
                   key: parent_task?.jira_issue_key or null
