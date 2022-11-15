@@ -9,8 +9,10 @@
         <p>The content of this Jira project, including issues, sprints or fix-version data, will no longer be synchronized between Justdo and Jira.</p>
         <p>All existing tasks will remain. You can re-mount the Jira project on another task.</p>
         <p>Are you sure?</p>
-        <a href="#" class="cancel-unmount-jira-project">Cancel</a>
-        <a href="#" class="confirm-unmount-jira-project" data-project-id="{{jira_project_id}}">Unmount</a>
+        <div class="unmount-buttons-group">
+          <a href="#" class="cancel-unmount-jira-project">Cancel</a>
+          <a href="#" class="confirm-unmount-jira-project" data-project-id="{{jira_project_id}}">Unmount</a>
+        </div>
       {{else}}
         <a href="#" class="unmount-jira-project">(unmount)</a>
       {{/if}}
