@@ -184,7 +184,7 @@ _.extend JustdoJiraIntegration.prototype,
         # XXX The statement below handles parent change. Consider putting them into field map.
         if (added_parent_id = modifier.$addToSet?.parents2?.parent)?
           # If parent_issue_id is found, assume Jira parent add/change/remove
-          parent_task = self.tasks_collection.findOne(added_parent_id, {fields: {jira_issue_id: 1, jira_issue_key: 1, jira_issue_type: 1, jira_mountpoint_type: 1}})
+          parent_task = self.tasks_collection.findOne(added_parent_id, {fields: {jira_issue_id: 1, jira_issue_key: 1, jira_issue_type: 1, jira_project_id: 1, jira_mountpoint_type: 1}})
 
           if (parent_issue_id = parent_task?.jira_issue_id)? or (parent_task.jira_mountpoint_type is "roadmap")
             # If parent_issue_id isnt found and the destination task_id is the mountpoint of current Jira project, assume Jira parent removal

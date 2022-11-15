@@ -102,6 +102,10 @@ _.extend JustdoJiraIntegration,
             if req_body.issue.fields.issuetype.name isnt "Epic"
               @tasks_collection.update({"parents2.parent": task_doc._id}, {$set: {jira_sprint: new_sprint_name}}, {multi: true})
 
+          # Move from old sprint parent to new sprint parent if the sprint is created as a task
+          jira_issue_id = parseInt req_body.issue.id
+          jira_project_id = parseInt req_body.issue.fields.project.id
+
           # Issue sprint field can hold multiple sprints, but one of them isn't closed at most.
           sprint_field = req_body.issue.fields[JustdoJiraIntegration.sprint_custom_field_id]
           if (active_sprint = @_getActiveSprintOfIssue sprint_field)?
@@ -111,17 +115,13 @@ _.extend JustdoJiraIntegration,
               new_sprint_name = active_sprint.name
 
             # For Jira Server
-            if (tokens = active_sprint.match?(/(name=[A-Za-z\s0-9]+)|(id=\d)/g))?
+            if (tokens = active_sprint.match?(/(name=[A-Za-z\s0-9]+)|(id=\d+)/g))?
               new_sprint_id = tokens[0].replace "id=", ""
               new_sprint_name = tokens[1].replace "name=", ""
 
             if _.isString new_sprint_id
               new_sprint_id = parseInt new_sprint_id
             new_sprint_mountpoint = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_sprint_mountpoint_id: new_sprint_id}, {fields: {_id: 1}})?._id
-
-          # Move from old sprint parent to new sprint parent if the sprint is created as a task
-          jira_issue_id = parseInt req_body.issue.id
-          jira_project_id = parseInt req_body.issue.fields.project.id
 
           if (task_doc = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_issue_id: jira_issue_id}, {fields: {_id: 1, jira_sprint: 1, parents2: 1}}))?
             grid_data = APP.projects._grid_data_com
