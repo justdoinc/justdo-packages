@@ -24,9 +24,14 @@ _.extend JustdoJiraIntegration.prototype,
   getProjectDocIfPluginInstalled: (project_id) ->
     return @projects_collection.findOne({_id: project_id, "conf.custom_features": JustdoJiraIntegration.project_custom_feature_id})
 
-  getJiraServerInfoFromJustdoId: (justdo_id) ->
+  getJiraDocIdFromJustdoId: (justdo_id) ->
     check justdo_id, String
-    jira_doc_id = @projects_collection.findOne(justdo_id, {fields: {"conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": 1}})?.conf?[JustdoJiraIntegration.projects_collection_jira_doc_id]
+    if not (jira_doc_id = @projects_collection.findOne(justdo_id, {fields: {"conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": 1}})?.conf?[JustdoJiraIntegration.projects_collection_jira_doc_id])?
+      throw @_error "not-supported", "Justdo #{justdo_id} does not have a linked Jira doc"
+    return jira_doc_id
+
+  getJiraServerInfoFromJustdoId: (justdo_id) ->
+    jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
     return @jira_collection.findOne(jira_doc_id, {fields: {server_info: 1}})?.server_info
 
   getAuthTypeIfJiraInstanceIsOnPerm: ->
