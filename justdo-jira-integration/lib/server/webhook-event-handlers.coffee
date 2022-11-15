@@ -132,22 +132,19 @@ _.extend JustdoJiraIntegration.prototype,
       console.error "[justdo-jira-integration] Fix version mountpoint not found. Remove failed."
       return
 
-    child_task_ids = @_getIssueSubtreeTaskIdsUpToLevelsOfHierarchy fix_version_task_doc._id, {jira_fix_version: req_body.version.name}
-
-    child_tasks_paths = _.map child_task_ids?[0], (task_id) =>
-      if not version_deleted_in_remote
-        @removed_fix_version_parent_issue_pairs.add "#{task_id}:#{fix_version_id}"
-      return "/#{fix_version_task_doc._id}/#{task_id}/"
-
-    fix_version_mountpoint_id = @tasks_collection.findOne({project_id: fix_version_task_doc.project_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions"}, {fields: {_id: 1}})?._id
-    child_tasks_paths.push "/#{fix_version_mountpoint_id}/#{fix_version_task_doc._id}/" # Remove the fix version task at last
-
+    grid_data = APP.projects._grid_data_com
     justdo_admin_id = @_getJustdoAdmin fix_version_task_doc.project_id
 
-    grid_data = APP.projects._grid_data_com
-    # Remove all child tasks. These tasks are expected to remain under roadmap.
+    child_task_ids = @_getIssueSubtreeTaskIdsUpToLevelsOfHierarchy fix_version_task_doc._id, {jira_fix_version: req_body.version.name}
+
+    for task_id in child_task_ids?[0]
+      if not version_deleted_in_remote
+        @removed_fix_version_parent_issue_pairs.add "#{task_id}:#{fix_version_id}"
+      grid_data.removeParent "/#{fix_version_task_doc._id}/#{task_id}/", justdo_admin_id
+
+    fix_version_mountpoint_id = @tasks_collection.findOne({project_id: fix_version_task_doc.project_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions"}, {fields: {_id: 1}})?._id
     @deleted_fix_version_ids.add fix_version_id
-    grid_data.bulkRemoveParents child_tasks_paths, justdo_admin_id
+    grid_data.removeParent "/#{fix_version_mountpoint_id}/#{fix_version_task_doc._id}/", justdo_admin_id # Remove the fix version task at last
 
     if version_deleted_in_remote
       # Pull the fix version from issue
