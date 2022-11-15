@@ -47,7 +47,6 @@ _.extend JustdoJiraIntegration.prototype,
         label: "Issue Type"
         type: String
         optional: true
-        allowedValues: ["Epic", "Story", "Task", "Bug", "Sub-task"]
 
       jira_issue_reporter:
         label: "Jira issue reporter"

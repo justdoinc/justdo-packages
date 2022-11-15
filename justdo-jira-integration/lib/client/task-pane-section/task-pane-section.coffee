@@ -48,7 +48,10 @@ Template.task_pane_justdo_jira_integration_task_pane_section_section.events
     jira_project_key = $(e.currentTarget).closest(".jira-project").data "project-key"
     jira_project_id = $(e.currentTarget).closest(".jira-project").data "project-id"
     $(e.target.closest(".jira-projects")).html "Mounting project #{jira_project_key}..."
-    APP.justdo_jira_integration.mountTaskWithJiraProject JD.activeItemId(), jira_project_id
+    APP.justdo_jira_integration.mountTaskWithJiraProject JD.activeItemId(), jira_project_id, ->
+      jira_doc_id = APP.justdo_jira_integration.getJiraDocIdFromJustdoId JD.activeJustdoId()
+      APP.justdo_jira_integration.setupIssueTypeCustomField jira_doc_id
+      return
 
     return
 
