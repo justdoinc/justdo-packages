@@ -731,135 +731,133 @@ _.extend JustdoJiraIntegration.prototype,
     @fetchJiraProjectKeyById justdo_id, jira_project_id
     client = @getJiraClientForJustdo justdo_id
 
-    Promise
-      .all [
-        # Ensure all project members is either normal or proxy users, and add them as member to the target Justdo.
-        @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2}
-        # Fetch all sprints and fixed versions under the current Jira project
-        @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.agile}
-        @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2}
-      ]
-      .then =>
-        # Remove previous mountpoint record of the same Jira project, and clear all issue keys in relevant to that mountpoint.
-        @unmountAllTasksRelevantToJiraProject jira_project_id, user_id
+    # Ensure all project members is either normal or proxy users, and add them as member to the target Justdo.
+    @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2}
+    # Fetch all sprints and fixed versions under the current Jira project
+    @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.agile}
+    @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2}
+    @fetchAndStoreIssueTypesUnderJiraProject jira_project_id, {justdo_id: justdo_id, client: client.v2}
 
-        justdo_admin_id = @_getJustdoAdmin justdo_id
-        # XXX If the Justdo admin is guarenteed to also be a member of the moutned Jira project,
-        # XXX change the following to an array and remove default value.
-        # Get an array of user_ids of Jira project members to be inserted in tasks created from Jira issue
-        user_ids_to_be_added_to_child_tasks = new Set()
-        user_ids_to_be_added_to_child_tasks.add justdo_admin_id
-        jira_user_emails = @getAllJiraProjectMembers(jira_project_id).map (user) ->
-          user_ids_to_be_added_to_child_tasks.add Accounts.findUserByEmail(user.email)?._id
-          return user.email
-        user_ids_to_be_added_to_child_tasks = Array.from user_ids_to_be_added_to_child_tasks
+    # Remove previous mountpoint record of the same Jira project, and clear all issue keys in relevant to that mountpoint.
+    @unmountAllTasksRelevantToJiraProject jira_project_id, user_id
 
-        # Ensures all Jira project members has access to current Justdo and
-        @addJiraProjectMembersToJustdo justdo_id, jira_user_emails
+    justdo_admin_id = @_getJustdoAdmin justdo_id
+    # XXX If the Justdo admin is guarenteed to also be a member of the moutned Jira project,
+    # XXX change the following to an array and remove default value.
+    # Get an array of user_ids of Jira project members to be inserted in tasks created from Jira issue
+    user_ids_to_be_added_to_child_tasks = new Set()
+    user_ids_to_be_added_to_child_tasks.add justdo_admin_id
+    jira_user_emails = @getAllUsersInJiraInstance(@getJiraDocIdFromJustdoId justdo_id).map (user) ->
+      user_ids_to_be_added_to_child_tasks.add Accounts.findUserByEmail(user.email)?._id
+      return user.email
+    user_ids_to_be_added_to_child_tasks = Array.from user_ids_to_be_added_to_child_tasks
 
-        # Add task members to the mounted task
-        @tasks_collection.update task_id, {$set: {jira_project_id: jira_project_id, jira_mountpoint_type: "root"}, $addToSet: {users: {$each: user_ids_to_be_added_to_child_tasks}}}
+    # Ensures all Jira project members has access to current Justdo
+    @addJiraProjectMembersToJustdo justdo_id, jira_user_emails
 
-        # Setup mountpoints for sprints and fix versions
-        gc = APP.projects._grid_data_com
+    # Add task members to the mounted task
+    @tasks_collection.update task_id, {$set: {jira_project_id: jira_project_id, jira_mountpoint_type: "root"}, $addToSet: {users: {$each: user_ids_to_be_added_to_child_tasks}}}
 
-        jira_query =
-          "jira_projects.#{jira_project_id}":
-            $ne: null
-        jira_query_options =
-          fields:
-            "jira_projects.#{jira_project_id}": 1
-        jira_project_sprints_and_fix_versions = @jira_collection.findOne(jira_query, jira_query_options)
-        jira_project_sprints_and_fix_versions = jira_project_sprints_and_fix_versions?.jira_projects?[jira_project_id]
+    # Setup mountpoints for sprints and fix versions
+    gc = APP.projects._grid_data_com
 
-        # Create the three special task that groups all the sprints and fix versions, and all the tasks
-        # roadmap_mountpoint currently holds all the issues
-        roadmap_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Roadmap", project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "roadmap", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
-        sprints_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Sprints", project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
-        fix_versions_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Fix Versions", project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
-        # Since the row style data cannot be inserted along addChild, we perform the update here.
-        @tasks_collection.update {_id: {$in: [roadmap_mountpoint_task_id, sprints_mountpoint_task_id, fix_versions_mountpoint_task_id]}}, {$set: {"jrs:style": {bold: true}}}, {multi: true}
+    jira_query =
+      "jira_projects.#{jira_project_id}":
+        $ne: null
+    jira_query_options =
+      fields:
+        "jira_projects.#{jira_project_id}": 1
+    jira_project_sprints_and_fix_versions = @jira_collection.findOne(jira_query, jira_query_options)
+    jira_project_sprints_and_fix_versions = jira_project_sprints_and_fix_versions?.jira_projects?[jira_project_id]
 
-        # Create all the sprints and fix versions as task that groups all the issues under the same attribute
-        sprints_to_mountpoint_task_id = {}
-        if jira_project_sprints_and_fix_versions.sprints?
-          for sprint in jira_project_sprints_and_fix_versions.sprints
-            sprints_to_mountpoint_task_id[sprint.name] = @_createSprintTask sprint, sprints_mountpoint_task_id, justdo_id, jira_project_id
+    # Create the three special task that groups all the sprints and fix versions, and all the tasks
+    # roadmap_mountpoint currently holds all the issues
+    roadmap_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Roadmap", project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "roadmap", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
+    # XXX Might need some special treatment for these two tasks and their child
+    # XXX Like bolding the title, prevent removal, etc etc
+    sprints_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Sprints", project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
+    fix_versions_mountpoint_task_id = gc.addChild "/#{task_id}/", {title: "Fix Versions", project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions", state: "nil", jira_last_updated: new Date()}, justdo_admin_id
+    # Since the row style data cannot be inserted along addChild, we perform the update here.
+    @tasks_collection.update {_id: {$in: [roadmap_mountpoint_task_id, sprints_mountpoint_task_id, fix_versions_mountpoint_task_id]}}, {$set: {"jrs:style": {bold: true}}}, {multi: true}
 
-        fix_versions_to_mountpoint_task_id = {}
-        if jira_project_sprints_and_fix_versions.fix_versions
-          for fix_version in jira_project_sprints_and_fix_versions.fix_versions
-            # Ignore released and archived versions
-            if fix_version.archived or fix_version.released
-              continue
-            task_fields =
-              project_id: justdo_id
-              jira_project_id: jira_project_id
-              title: fix_version.name
-              jira_fix_version_mountpoint_id: fix_version.id
-              state: "nil"
-              jira_last_updated: new Date()
-            if fix_version.startDate?
-              task_fields.start_date = moment(fix_version.startDate).format("YYYY-MM-DD")
-            if fix_version.releaseDate?
-              task_fields.due_date = moment(fix_version.releaseDate).format("YYYY-MM-DD")
-            fix_versions_to_mountpoint_task_id[fix_version.name] = gc.addChild "/#{fix_versions_mountpoint_task_id}/", task_fields, justdo_admin_id
+    # Create all the sprints and fix versions as task that groups all the issues under the same attribute
+    sprints_to_mountpoint_task_id = {}
+    if jira_project_sprints_and_fix_versions.sprints?
+      for sprint in jira_project_sprints_and_fix_versions.sprints
+        sprints_to_mountpoint_task_id[sprint.name] = @_createSprintTask sprint, sprints_mountpoint_task_id, justdo_id, jira_project_id
 
-        # Get Jira server time
-        server_info = await client.v2.serverInfo.getServerInfo()
+    fix_versions_to_mountpoint_task_id = {}
+    if jira_project_sprints_and_fix_versions.fix_versions
+      for fix_version in jira_project_sprints_and_fix_versions.fix_versions
+        # Ignore released and archived versions
+        if fix_version.archived or fix_version.released
+          continue
+        task_fields =
+          project_id: justdo_id
+          jira_project_id: jira_project_id
+          title: fix_version.name
+          jira_fix_version_mountpoint_id: fix_version.id
+          state: "nil"
+          jira_last_updated: new Date()
+        if fix_version.startDate?
+          task_fields.start_date = moment(fix_version.startDate).format("YYYY-MM-DD")
+        if fix_version.releaseDate?
+          task_fields.due_date = moment(fix_version.releaseDate).format("YYYY-MM-DD")
+        fix_versions_to_mountpoint_task_id[fix_version.name] = gc.addChild "/#{fix_versions_mountpoint_task_id}/", task_fields, justdo_admin_id
 
-        relevant_jira_field_ids = @getAllRelevantJiraFieldIds()
-        issue_search_limit = 50
+    # Get Jira server time
+    server_info = await client.v2.serverInfo.getServerInfo()
 
-        # Search for all issues under the Jira project and create tasks in Justdo
-        # issueSearch has searchForIssuesUsingJql() and searchForIssuesUsingJqlPost()
-        # Both works the same way except the latter one uses POST to support a larger query
-        # For consistency with future development, only searchForIssuesUsingJqlPost() is used.
-        issue_search_body =
-          jql: """project=#{jira_project_id} and "Parent Link" is empty and status!=done"""
-          maxResults: issue_search_limit
-          fields: relevant_jira_field_ids
-        issue_search_cb = (res) =>
-          {issues} = res
-          # done_issues = new Set()
-          while (issue = issues.shift())?
-          # for issue in issues
-            issue_fields = issue.fields
+    relevant_jira_field_ids = @getAllRelevantJiraFieldIds()
 
-            parent_id = null
-            path_to_add = "/#{task_id}/#{roadmap_mountpoint_task_id}/"
+    # Search for all issues under the Jira project and create tasks in Justdo
+    # issueSearch has searchForIssuesUsingJql() and searchForIssuesUsingJqlPost()
+    # Both works the same way except the latter one uses POST to support a larger query
+    # For consistency with future development, only searchForIssuesUsingJqlPost() is used.
+    issue_search_body =
+      jql: """project=#{jira_project_id} and "Parent Link" is empty and status!=done"""
+      maxResults: JustdoJiraIntegration.jql_issue_search_results_limit
+      fields: relevant_jira_field_ids
+    issue_search_cb = (res) =>
+      {issues} = res
+      # done_issues = new Set()
+      while (issue = issues.shift())?
+      # for issue in issues
+        issue_fields = issue.fields
 
-            if (parent_key = issue_fields.parent?.key or issue_fields[JustdoJiraIntegration.epic_link_custom_field_id])?
-              # XXX Hardcoded users length in query. Better approach is needed to determine whether the parent task is added completely along with its users.
-              if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: parseInt(jira_project_id), jira_issue_key: parent_key, "users.1": {$exists: true}}, {fields: {_id: 1}})?._id)?
-                issues.push issue
-                continue
+        parent_id = null
+        path_to_add = "/#{task_id}/#{roadmap_mountpoint_task_id}/"
 
-              path_to_add += "#{parent_task_id}/"
+        if (parent_key = issue_fields.parent?.key or issue_fields[JustdoJiraIntegration.epic_link_custom_field_id])?
+          # XXX Hardcoded users length in query. Better approach is needed to determine whether the parent task is added completely along with its users.
+          if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: parseInt(jira_project_id), jira_issue_key: parent_key, "users.1": {$exists: true}}, {fields: {_id: 1}})?._id)?
+            issues.push issue
+            continue
 
-            create_task_from_jira_issue_options =
-              sprints_mountpoints: sprints_to_mountpoint_task_id
-              fix_versions_mountpoints: fix_versions_to_mountpoint_task_id
-            @_createTaskFromJiraIssue justdo_id, path_to_add, issue, create_task_from_jira_issue_options
+          path_to_add += "#{parent_task_id}/"
 
-            # Mark webhook and data integrity checkpoint
-            query =
-              "server_info.id": @getJiraServerIdFromApiClient client.v2
-            ops =
-              $set:
-                last_data_integrity_check: server_info.serverTime
-                last_webhook_connection_check: server_info.serverTime
-            @jira_collection.update query, ops
+        create_task_from_jira_issue_options =
+          sprints_mountpoints: sprints_to_mountpoint_task_id
+          fix_versions_mountpoints: fix_versions_to_mountpoint_task_id
+        @_createTaskFromJiraIssue justdo_id, path_to_add, issue, create_task_from_jira_issue_options
 
-            if issue_fields.issuetype?.name not in ["Sub-task", "Sub-Task", "Subtask"]
-              client.v2.issueSearch.searchForIssuesUsingJqlPost {jql: """project=#{jira_project_id} and "Parent Link"=#{issue.key} and status!=done """, maxResults: issue_search_limit, fields: relevant_jira_field_ids}
-                .then issue_search_cb
-                .catch (err) -> console.error err
-          return
+        # Mark webhook and data integrity checkpoint
+        query =
+          "server_info.id": @getJiraServerIdFromApiClient client.v2
+        ops =
+          $set:
+            last_data_integrity_check: server_info.serverTime
+            last_webhook_connection_check: server_info.serverTime
+        @jira_collection.update query, ops
 
-        client.v2.issueSearch.searchForIssuesUsingJqlPost issue_search_body
-          .then issue_search_cb
-          .catch (err) -> console.error err
+        if @getIssueTypeRank(issue_fields?.issuetype?.name, jira_project_id) > -1
+          client.v2.issueSearch.searchForIssuesUsingJqlPost {jql: """project=#{jira_project_id} and "Parent Link"=#{issue.key} and status!=done """, maxResults: JustdoJiraIntegration.jql_issue_search_results_limit, fields: relevant_jira_field_ids}
+            .then issue_search_cb
+            .catch (err) -> console.error err
+      return
+
+    client.v2.issueSearch.searchForIssuesUsingJqlPost issue_search_body
+      .then issue_search_cb
       .catch (err) -> console.error err
 
     return
