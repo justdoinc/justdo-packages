@@ -319,6 +319,8 @@ _.extend JustdoJiraIntegration.prototype,
   _upsertJiraUser: (req_body, create_new_user=false) ->
     jira_user_id = req_body.user.key or req_body.user.accountId
     jira_user_email = req_body.user.emailAddress
+    if not jira_user_email?
+      jira_user_email = @_getHarcodedEmailByAccountId jira_user_id
 
     if not (client = _.values(@clients)?[0])?
       throw @_error "client-not-found"
@@ -334,54 +336,48 @@ _.extend JustdoJiraIntegration.prototype,
       console.error "[justdo-jira-integration] Failed to fetch user", err
       return
 
-    # User created
-    if create_new_user
-      jira_doc_id = null # To be fetched
-      {jira_user_objects, created_user_ids} = @_createProxyUserIfEmailNotRecognized res
-      if _.isEmpty created_user_ids
-        created_user_id = APP.accounts.getUserByEmail(jira_user_email)._id
-      else
-        created_user_id = created_user_ids[0]
-
-      query =
-        "conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}":
-          $ne: null
-      query_options =
-        fields:
-          _id: 1
-          "conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": 1
-      # Add user to JustDos that are associated with Jira instance
-      @projects_collection.find(query, query_options).forEach (project_doc) =>
-        if not _.isString jira_doc_id
-          jira_doc_id = project_doc.conf[JustdoJiraIntegration.projects_collection_jira_doc_id]
-
-        justdo_id = project_doc._id
-
-        tasks_query =
-          project_id: justdo_id
-          jira_project_id:
-            $ne: null
-        root_tasks_to_add_members = @tasks_collection.find(tasks_query, {_id: 1}).map (task_doc) -> task_doc._id
-
-        if not _.isEmpty root_tasks_to_add_members
-          @addJiraProjectMembersToJustdo justdo_id, jira_user_email
-
-          task_users_modifier =
-            $addToSet:
-              users:
-                $each: [created_user_id]
-          APP.projects.bulkUpdate justdo_id, root_tasks_to_add_members, task_users_modifier, @_getJustdoAdmin justdo_id
-        return
-
-      jira_ops =
-        $addToSet:
-          jira_users:
-            $each: jira_user_objects
-      @jira_collection.update jira_doc_id, jira_ops
-    # User updated
+    jira_doc_id = null # To be fetched
+    {jira_user_objects, created_user_ids} = @_createProxyUserIfEmailNotRecognized res
+    if _.isEmpty created_user_ids
+      created_user_id = APP.accounts.getUserByEmail(jira_user_email)._id
     else
-      # XXX update user name and/or email?
+      created_user_id = created_user_ids[0]
+
+    query =
+      "conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}":
+        $ne: null
+    query_options =
+      fields:
+        _id: 1
+        "conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": 1
+    # Add user to JustDos that are associated with Jira instance
+    @projects_collection.find(query, query_options).forEach (project_doc) =>
+      if not _.isString jira_doc_id
+        jira_doc_id = project_doc.conf[JustdoJiraIntegration.projects_collection_jira_doc_id]
+
+      justdo_id = project_doc._id
+
+      tasks_query =
+        project_id: justdo_id
+        jira_project_id:
+          $ne: null
+      root_tasks_to_add_members = @tasks_collection.find(tasks_query, {_id: 1}).map (task_doc) -> task_doc._id
+
+      if not _.isEmpty root_tasks_to_add_members
+        @addJiraProjectMembersToJustdo justdo_id, jira_user_email
+
+        task_users_modifier =
+          $addToSet:
+            users:
+              $each: [created_user_id]
+        APP.projects.bulkUpdate justdo_id, root_tasks_to_add_members, task_users_modifier, @_getJustdoAdmin justdo_id
       return
+
+    jira_ops =
+      $addToSet:
+        jira_users:
+          $each: jira_user_objects
+    @jira_collection.update jira_doc_id, jira_ops
 
     return
 
