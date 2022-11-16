@@ -78,6 +78,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/add-member-to-current-project.coffee", client);
   api.addFiles("lib/client/add-member-to-current-project.sass", client);
 
+  api.addFiles("lib/client/edit-invited-member/edit-invited-member.html", client);
+  api.addFiles("lib/client/edit-invited-member/edit-invited-member.coffee", client);
+  api.addFiles("lib/client/edit-invited-member/edit-invited-member.sass", client);
+
   api.addFiles("lib/client/change-email-dialog.html", client);
   api.addFiles("lib/client/change-email-dialog.sass", client);
   api.addFiles("lib/client/change-email-dialog.coffee", client);

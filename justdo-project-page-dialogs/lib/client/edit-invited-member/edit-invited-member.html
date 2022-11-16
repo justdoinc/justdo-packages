@@ -1,0 +1,45 @@
+<template name="edit_invited_member_dialog">
+  <div class="form-group">
+    <div class="form-group {{#if isInvalidEmail}}has-error{{/if}}">
+      <label for="new-user-email" class="control-label">Email</label>
+      <div>
+        <input id="new-user-email" class="form-control" value="{{email}}" disabled="{{#if view_only}}disabled{{/if}}">
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col {{#if isInvalidFirstName}}has-error{{/if}}">
+      <label for="new-user-first-name" class="control-label">First Name</label>
+      <div>
+        <input id="new-user-first-name" class="form-control" value="{{first_name}}" disabled="{{#if view_only}}disabled{{/if}}">
+      </div>
+    </div>
+    <div class="form-group col {{#if isInvalidLastName}}has-error{{/if}}">
+      <label for="new-user-last-name" class="control-label">Last Name</label>
+      <div>
+        <input id="new-user-last-name" class="form-control" value="{{last_name}}" disabled="{{#if view_only}}disabled{{/if}}">
+      </div>
+    </div>
+  </div>
+  {{#if $and isProxyUserEnabled ($not edit_state)}}
+    <div class="invite-proxy">
+      <div class="invite-proxy-check">
+        <input id="is-proxy-user" type="checkbox" class="check-input" value="{{is_proxy}}" disabled="{{#if view_only}}disabled{{/if}}">
+        <label for="is-proxy-user" class="check-label mb-0">Set as a proxy user</label>
+      </div>
+      <div class="invite-proxy-info">
+        <span class="text-primary">?</span>
+        <div class="invite-proxy-info-tooltip">
+          <div>
+            <div>Proxy users represent real users that will not register to JustDo. As such, they do not receive emails from JustDo, specifically ownership transfer email. Hence, ownership transfers are immediate and do not require acceptance. Proxy users can turn into standard members by a site admin or if they register to the platform.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+  {{#if $not isProxyUserOptionChecked}}
+    <div class="invite-new-user-info bg-light">
+      If no invitation email will be received by the new {{inviteeTerm}}, please ensure correct email entered, and ask the new {{inviteeTerm}} to check the spam folder.
+    </div>
+  {{/if}}
+</template>
