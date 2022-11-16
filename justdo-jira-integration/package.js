@@ -104,8 +104,6 @@ Package.onUse(function (api) {
   api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
   api.addFiles("lib/both/app-integration.coffee", both);
 
-  api.addAssets("lib/server/jira_privatekey.pem", server);
-
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
   // file.
