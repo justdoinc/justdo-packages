@@ -34,6 +34,7 @@ _.extend PACK.GridOperations,
           @_grid_data._release()
           if err?
             @logger.error "moveActivePath failed: #{err}"
+            @_grid_data.emit "edit-failed", err
 
             callCb cb, err
 
@@ -99,6 +100,7 @@ _.extend PACK.GridOperations,
           @_grid_data._release()
           if err?
             @logger.error "moveActivePath failed: #{err}"
+            @_grid_data.emit "edit-failed", err
 
             callCb cb, err
 
@@ -162,6 +164,7 @@ _.extend PACK.GridOperations,
           @_grid_data._release()
           if err?
             @logger.error "moveActivePath failed: #{err}"
+            @_grid_data.emit "edit-failed", err
 
             callCb cb, err
 
@@ -239,6 +242,7 @@ _.extend PACK.GridOperations,
           @_grid_data._release()
           if err?
             @logger.error "moveActivePath failed: #{err}"
+            @_grid_data.emit "edit-failed", err
 
             callCb cb, err
 

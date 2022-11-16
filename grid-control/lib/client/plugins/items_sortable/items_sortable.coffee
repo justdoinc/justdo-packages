@@ -793,6 +793,8 @@ _.extend PACK.Plugins,
                   invalidateRowCells(dragged_row_index)
 
                   @logger.debug "Items-sortable: Move operation failed - grid state reverted"
+                  @_grid_data.emit "edit-failed", err
+
                 else
                   # If succeed and dropped into a new level - expand parent
                   if isNewLevelMode()

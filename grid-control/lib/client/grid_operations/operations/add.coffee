@@ -19,6 +19,7 @@ _.extend PACK.GridOperations,
         @_grid_data[op] relative_path, fields, (err, new_item_id, new_item_relative_path) =>
           if err?
             @logger.error "addChild failed: #{err}"
+            @_grid_data.emit "edit-failed", err
 
             callCb cb, err
 

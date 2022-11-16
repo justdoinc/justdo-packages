@@ -38,6 +38,7 @@ _.extend PACK.GridOperations,
         @_grid_data.removeParent paths_to_remove, (err) =>
           if err?
             @logger.error "removeActivePath failed: #{err}"
+            @_grid_data.emit "edit-failed", err
 
             callCb cb, err
 
