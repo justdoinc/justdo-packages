@@ -515,6 +515,7 @@ _.extend JustdoJiraIntegration.prototype,
       if issuetype.name is "Epic"
         roadmap_task_id = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_mountpoint_type: "roadmap"}, {fields: {_id: 1}})?._id
         query =
+          project_id: justdo_id
           "parents2.parent": task_id
           jira_issue_id:
             $ne: null
@@ -531,6 +532,7 @@ _.extend JustdoJiraIntegration.prototype,
       # Remove all sub-tasks of the deleted story/task/bug
       if @getIssueTypeRank(issuetype.name, jira_project_id) is 0
         query =
+          project_id: justdo_id
           "parents2.parent": task_id
           jira_issue_id:
             $ne: null

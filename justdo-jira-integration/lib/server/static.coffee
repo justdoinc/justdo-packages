@@ -231,6 +231,7 @@ _.extend JustdoJiraIntegration,
               query = task_doc._id
             else
               query =
+                project_id: justdo_id
                 $or: [
                   _id: task_doc._id
                 ,
