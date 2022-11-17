@@ -45,8 +45,8 @@ _.extend JustdoJiraIntegration.prototype,
             issue_bg_color_tag = "subtask"
 
           issue_type_name = issue_type.name
-          
-          if issue_type_name is "Epic"
+
+          if @getIssueTypeRank(issue_type_name, jira_project_id) is 1
             continue
           if _.find default_issue_types[issue_type_group], (option_def) -> option_def.label is issue_type_name
             continue

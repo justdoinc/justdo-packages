@@ -99,8 +99,8 @@ _.extend JustdoJiraIntegration,
         if destination is "justdo"
           updateSprintFieldOfChildTasks = (task_id, sprint_name) =>
             # Update sprint field for subtasks
-            if req_body.issue.fields.issuetype.name isnt "Epic"
-              @tasks_collection.update({"parents2.parent": task_doc._id}, {$set: {jira_sprint: new_sprint_name}}, {multi: true})
+            if @getIssueTypeRank(req_body.issue.fields.issuetype.name, jira_project_id) < 1
+              @tasks_collection.update({project_id: justdo_id, "parents2.parent": task_doc._id}, {$set: {jira_sprint: new_sprint_name}}, {multi: true})
 
           # Move from old sprint parent to new sprint parent if the sprint is created as a task
           jira_issue_id = parseInt req_body.issue.id
@@ -192,7 +192,7 @@ _.extend JustdoJiraIntegration,
 
         if destination is "jira"
           # If an Epic became other issue type, move all existing child to root
-          if (req_body.jira_issue_type is "Epic") and (field isnt "Epic")
+          if (@getIssueTypeRank(req_body.jira_issue_type, jira_project_id) is 1) and (@getIssueTypeRank(field, jira_project_id) isnt 1)
             task_id = req_body._id
             _moveAllChildTasksToRoadmap task_id
           return {name: field}
@@ -200,7 +200,7 @@ _.extend JustdoJiraIntegration,
         if destination is "justdo"
           field_val = field.name or field.toString
           # If an Epic became other issue type, move all existing child to root
-          if field?.fromString is "Epic" and field_val isnt "Epic"
+          if (@getIssueTypeRank(field?.fromString, jira_project_id) is 1) and (@getIssueTypeRank(field_val, jira_project_id) isnt 1)
             if not (task_id = req_body.issue.fields[JustdoJiraIntegration.task_id_custom_field_id])?
               task_id = @tasks_collection.findOne({project_id: justdo_id, jira_issue_id: parseInt req_body.issue.id}, {fields: {_id: 1}})
             _moveAllChildTasksToRoadmap task_id
@@ -227,8 +227,7 @@ _.extend JustdoJiraIntegration,
               new_fix_version_mountpoint = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: parseInt field.to}, {fields: {_id: 1}})
               ops.$addToSet =
                 jira_fix_version: field.toString
-
-            if req_body.issue.fields.issuetype.name is "Epic"
+            if @getIssueTypeRank(req_body.issue.fields.issuetype.name, jira_project_id) is 1
               query = task_doc._id
             else
               query =
