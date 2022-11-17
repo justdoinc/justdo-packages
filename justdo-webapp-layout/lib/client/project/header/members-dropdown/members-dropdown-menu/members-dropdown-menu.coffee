@@ -189,4 +189,7 @@ APP.executeAfterAppLibCode ->
     "click .edit-enrolled": (e, tpl) ->
       ProjectPageDialogs.editEnrolledMember @user_id, {add_as_guest: tpl.data.is_guest}
 
+      $(".dropdown-menu.show").removeClass("show") # Hide the dropdown, since after editing, the user will have to-reopen the dropdown for the user new details to show (it'll look like a bug if we won't do it).
+
+
       return
