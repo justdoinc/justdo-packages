@@ -86,36 +86,47 @@ _.extend JustdoJiraIntegration.prototype,
     if not (jira_doc_id = @isJiraProjectMounted jira_project_id)?
       return
 
-    jira_query =
-      _id: jira_doc_id
-      "jira_projects.#{jira_project_id}.fix_versions.id": fix_version_id
-
     tasks_query =
       jira_fix_version_mountpoint_id: fix_version_id
-    fix_version_task = @tasks_collection.findOne(tasks_query, {fields: {project_id: 1}})
+      jira_project_id: jira_project_id
+    fix_version_task = @tasks_collection.findOne(tasks_query, {fields: {project_id: 1, users: 1}})
 
-    if fix_version.released or fix_version.archived
-      if fix_version_task?
-        @_deleteFixVersionTask req_body
+    if fix_version_task?
+      justdo_admin_id = @_getJustdoAdmin fix_version_task.project_id
+
+      # Update the fix version task itself
+      fields_to_update = _.extend @_convertFixVersionToTaskFields(fix_version),
+        jira_last_updated: new Date()
+        updated_by: justdo_admin_id
+      @tasks_collection.update tasks_query, {$set: fields_to_update}
+
+      if _.isEmpty fix_version_task.users
+        # jira_user_emails = _.map @getAllUsersInJiraInstance(jira_doc), (jira_user) -> jira_user.email
+        # user_ids_to_add  = _.map APP.accounts.getFirstLastNameByEmails(jira_user_emails, {}), (user_doc) -> user_doc._id
+        users_modifier =
+          $push:
+            users:
+              $each: fix_version_mountpoint.users
+        APP.projects.bulkUpdate justdo_id, [fix_version_task._id], users_modifier, justdo_admin_id
+
+      jira_query =
+        _id: jira_doc_id
+        "jira_projects.#{jira_project_id}.fix_versions.id": fix_version_id
+      jira_query_options =
+        fields:
+          "jira_projects.#{jira_project_id}.fix_versions.$": 1
+
+      # Update the fix version field of issues
+      old_fix_version_name = @jira_collection.findOne(jira_query, {fields: {"jira_projects.#{jira_project_id}.fix_versions.$": 1}})?.jira_projects?[jira_project_id]?.fix_versions?[0]?.name
+      if old_fix_version_name isnt fix_version.name
+        task_query =
+          jira_project_id: jira_project_id
+          jira_issue_id:
+            $ne: null
+          jira_fix_version: old_fix_version_name
+        @tasks_collection.update task_query, {$set: {"jira_fix_version.$": fix_version.name}}, {multi: true}
     else
-      if fix_version_task?
-        # Update the fix version task itself
-        fields_to_update = _.extend @_convertFixVersionToTaskFields(fix_version),
-          jira_last_updated: new Date()
-          updated_by: @_getJustdoAdmin fix_version_task.project_id
-        @tasks_collection.update tasks_query, {$set: fields_to_update}
-
-        # Update the fix version field of issues
-        old_fix_version_name = @jira_collection.findOne(jira_query, {fields: {"jira_projects.#{jira_project_id}.fix_versions.$": 1}})?.jira_projects?[jira_project_id]?.fix_versions?[0]?.name
-        if old_fix_version_name isnt fix_version.name
-          task_query =
-            jira_project_id: jira_project_id
-            jira_issue_id:
-              $ne: null
-            jira_fix_version: old_fix_version_name
-          @tasks_collection.update task_query, {$set: {"jira_fix_version.$": fix_version.name}}, {multi: true}
-      else
-        @_createFixVersionTask req_body, true
+      @_createFixVersionTask req_body, true
 
     jira_ops =
       $set:
@@ -598,7 +609,7 @@ _.extend JustdoJiraIntegration.prototype,
       return
     "sprint_updated": (req_body) -> @_updateSprintTask req_body
     "sprint_started": (req_body) -> @_updateSprintTask req_body
-    "sprint_closed": (req_body) -> @_deleteSprintTask req_body
+    "sprint_closed": (req_body) -> @_updateSprintTask req_body
     "sprint_deleted": (req_body) -> @_deleteSprintTask req_body
     # NOTE: THE FOLLOWING USERS RELATED HANDLERS ONLY SUPPORT SINGLE JIRA INSTANCE, REGARDLESS OF WHETHER CLOUD OR ON-PERM IS USED
     "user_created": (req_body) -> @_upsertJiraUser req_body, true
