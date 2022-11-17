@@ -150,6 +150,21 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_val: "trash"
 
       listingCondition: ->
+        if not (gc = APP.modules.project_page?.gridControl())?
+          return false
+
+        if gc.isMultiSelectMode()
+          return false
+
+        # Ensure that we have a green-light to remove the active task before checking whether
+        # we allow to remove its sub-tree
+        unfulfilled_op_req = gc.removeActivePath.prereq()
+        delete unfulfilled_op_req.ops_locked # We ignore that lock to avoid flickering when locking ops are performed from the contextmenu
+        delete unfulfilled_op_req.active_path_is_not_leaf # This cause is issue only for the regurlar remove operation and not for the remove-subtree
+
+        if not _.isEmpty(unfulfilled_op_req)
+          return false
+
         counter = 0
         condition_is_satisfied = true
         APP.modules.project_page.gridData().each(JD.activePath(), {}, (section, item_type, item_obj, path, expand_state) ->
