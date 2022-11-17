@@ -581,8 +581,6 @@ _.extend JustdoJiraIntegration.prototype,
       return
     "jira:version_created": (req_body) -> @_createFixVersionTask req_body
     "jira:version_updated": (req_body) -> @_updateFixVersionTask req_body
-    "jira:version_released": (req_body) -> @_updateFixVersionTask req_body
-    "jira:version_unreleased": (req_body) -> @_updateFixVersionTask req_body
     "jira:version_deleted": (req_body) -> @_deleteFixVersionTask req_body, true
     # NOTE: IN CASE JIRA ON-PERM IS USED: THE FOLLOWING SPRINT RELATED HANDLERS ONLY SUPPORT SINGLE JIRA INSTANCE
     "sprint_created": (req_body) ->
