@@ -440,7 +440,7 @@ _.extend JustdoJiraIntegration.prototype,
 
       jira_project_mountpoint = @getJustdosIdsAndTasksIdsfromMountedJiraProjectId(fields.project.id).task_id
 
-      if (_.find req_body.changelog.items, (item) -> item.field is "issuetype" and item.toString is "Epic")?
+      if (_.find req_body.changelog.items, (item) => item.field is "issuetype" and @getIssueTypeRank(item.toString, jira_project_id) is 1)?
         # Move the target task that was changed to epic back to roadmap
         if (parent_task_id = @tasks_collection.findOne({_id: task_id, jira_issue_id: {$ne: null}}, {fields: {parents2: 1}})?.parents2?[0]?.parent)?
           old_path = "/#{parent_task_id}/#{task_id}/"
@@ -512,7 +512,7 @@ _.extend JustdoJiraIntegration.prototype,
         return
 
       # Change parent of all child Task/Story/Bug
-      if issuetype.name is "Epic"
+      if @getIssueTypeRank(issuetype.name, jira_project_id) is 1
         roadmap_task_id = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_mountpoint_type: "roadmap"}, {fields: {_id: 1}})?._id
         query =
           project_id: justdo_id
