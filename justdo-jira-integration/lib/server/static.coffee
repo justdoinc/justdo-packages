@@ -179,9 +179,9 @@ _.extend JustdoJiraIntegration,
     jira_issue_type:
       name: "issuetype"
       mapper: (justdo_id, field, destination, req_body) ->
-        _moveAllChildTasksToRoadmap = (task_id) =>
-          jira_project_id = parseInt(req_body.jira_project_id or req_body.fields.project.id)
+        jira_project_id = parseInt(req_body.jira_project_id or req_body.issue.fields.project.id)
 
+        _moveAllChildTasksToRoadmap = (task_id) =>
           non_epic_non_subtask_issue_types = _.map @getRankedIssueTypesInJiraProject(jira_project_id)[0], (issue_type_def) -> issue_type_def.name
 
           child_task_ids = @tasks_collection.find({project_id: justdo_id, "parents2.parent": task_id, jira_issue_type: {$in: non_epic_non_subtask_issue_types}}, {fields: {_id: 1}}).map (task_doc) -> "/#{task_id}/#{task_doc._id}/"

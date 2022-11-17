@@ -70,9 +70,11 @@ _.extend JustdoJiraIntegration.prototype,
 
   _updateFixVersionTask: (req_body) ->
     fix_version = req_body.version
-    fix_version_id = parseInt fix_version.id
+    fix_version.id = parseInt fix_version.id # So that when we insert the fix version in Jira collection, id will be int instead of string
+    fix_version_id = fix_version.id
     jira_project_id = fix_version.projectId
-    justdo_id = @tasks_collection.findOne({jira_project_id: jira_project_id}, {fields: {project_id: 1}})?.project_id
+    fix_version_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions"}, {fields: {project_id: 1, users: 1}})
+    justdo_id = fix_version_mountpoint?.project_id
 
     # Temp workaround to fix a bug on Jira webhook: archived flag is not representing the truth over webhook.
     # Remove the API call after the bug is resolved.
@@ -143,8 +145,10 @@ _.extend JustdoJiraIntegration.prototype,
       console.error "[justdo-jira-integration] Fix version mountpoint not found. Remove failed."
       return
 
+    justdo_id = fix_version_task_doc.project_id
+
     grid_data = APP.projects._grid_data_com
-    justdo_admin_id = @_getJustdoAdmin fix_version_task_doc.project_id
+    justdo_admin_id = @_getJustdoAdmin justdo_id
 
     subtree_tasks = grid_data.collection.findSubTree fix_version_task_doc._id, {base_query: "jira_fix_version: #{req_body.version.name}", max_level: JustdoJiraIntegration.jira_issue_hierarchy_levels}
     immidiate_child_task_ids = subtree_tasks?[fix_version_task_doc._id]?._children
@@ -246,11 +250,10 @@ _.extend JustdoJiraIntegration.prototype,
       console.error err
       return
 
-    # Updates Jira collection
     _.each res.values, (project_info) =>
-      # If justdo_id isn't a string, that means the sprint wasn't there. We need to create a new sprint task
       jira_project_id = parseInt project_info.id
 
+      # If justdo_id isn't a string, that means the sprint wasn't there. We need to create a new sprint task
       if not _.isString justdo_id
         tasks_query =
           jira_project_id: jira_project_id
@@ -282,6 +285,7 @@ _.extend JustdoJiraIntegration.prototype,
         "jira_projects.#{jira_project_id}.sprints.$.originBoardId": originBoardId
         "jira_projects.#{jira_project_id}.sprints.$.state": state
 
+    # Updates Jira collection
     @jira_collection.update jira_query, jira_ops
     return
 
@@ -329,7 +333,7 @@ _.extend JustdoJiraIntegration.prototype,
       catch e
         if e.error not in ["parent-already-exists", "unknown-parent"]
           console.trace()
-          console.error "[justdo-jira-integration] Relocate issue sprint parent failed.", e
+          console.error "[justdo-jira-integration] Delete sprint task failed.", e
 
       if not _.isEmpty child_task_ids
         # Remove the sprint field in all child tasks
