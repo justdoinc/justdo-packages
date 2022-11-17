@@ -1520,15 +1520,13 @@ _.extend JustdoJiraIntegration.prototype,
           if @tasks_collection.update({jira_issue_id: parseInt(issue.id)}, {$set: _.extend {jira_last_updated: new Date(), updated_by: @_getJustdoAdmin justdo_id}, fields})
             @syncIssueFixVersionFromIssueBody issue
           else
-            console.log "[justdo-jira-integration] Issue #{issue.id} was not synced before. Ignored."
-          # else
-          #   # If nothing is updated, that means the task isn't created at all. Then we create the task.
-          #   if (parent = issue.fields.parent?.key)? or (parent = issue.fields[JustdoJiraIntegration.epic_link_custom_field_id])?
-          #     parent_task_id = @tasks_collection.findOne({jira_issue_key: parent}, {fields: {_id: 1}})?._id
-          #   else
-          #     jira_project_id = parseInt issue.fields.project.id
-          #     parent_task_id = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_mountpoint_type: "roadmap"}, {fields: {_id: 1}})?._id
-          #   @_createTaskFromJiraIssue justdo_id, "/#{parent_task_id}/", issue
+            # If nothing is updated, that means the task isn't created at all. Then we create the task.
+            if (parent = issue.fields.parent?.key)? or (parent = issue.fields[JustdoJiraIntegration.epic_link_custom_field_id])?
+              parent_task_id = @tasks_collection.findOne({jira_issue_key: parent}, {fields: {_id: 1}})?._id
+            else
+              jira_project_id = parseInt issue.fields.project.id
+              parent_task_id = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_mountpoint_type: "roadmap"}, {fields: {_id: 1}})?._id
+            @_createTaskFromJiraIssue justdo_id, "/#{parent_task_id}/", issue
       return
 
     @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, jira_server_time, resyncIssues
