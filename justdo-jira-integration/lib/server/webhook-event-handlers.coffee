@@ -146,21 +146,37 @@ _.extend JustdoJiraIntegration.prototype,
     grid_data = APP.projects._grid_data_com
     justdo_admin_id = @_getJustdoAdmin fix_version_task_doc.project_id
 
-    child_task_ids = @_getIssueSubtreeTaskIdsUpToLevelsOfHierarchy fix_version_task_doc._id, {jira_fix_version: req_body.version.name}
+    subtree_tasks = grid_data.collection.findSubTree fix_version_task_doc._id, {base_query: "jira_fix_version: #{req_body.version.name}", max_level: JustdoJiraIntegration.jira_issue_hierarchy_levels}
+    immidiate_child_task_ids = subtree_tasks?[fix_version_task_doc._id]?._children
+    child_task_ids = _.keys subtree_tasks
 
-    for task_id in child_task_ids?[0]
+    paths_to_remove = _.map immidiate_child_task_ids, (task_id) =>
       if not version_deleted_in_remote
         @removed_fix_version_parent_issue_pairs.add "#{task_id}:#{fix_version_id}"
-      grid_data.removeParent "/#{fix_version_task_doc._id}/#{task_id}/", justdo_admin_id
+      return "/#{fix_version_task_doc._id}/#{task_id}/"
 
-    fix_version_mountpoint_id = @tasks_collection.findOne({project_id: fix_version_task_doc.project_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions"}, {fields: {_id: 1}})?._id
+    try
+      grid_data.bulkRemoveParents paths_to_remove, justdo_admin_id
+    catch e
+      if e.error not in ["parent-already-exists", "unknown-parent"]
+        console.trace()
+        console.error "[justdo-jira-integration] Relocate issue fix verison parent failed.", e
+
+
+
+    fix_version_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions"}, {fields: {_id: 1}})?._id
     @deleted_fix_version_ids.add fix_version_id
-    grid_data.removeParent "/#{fix_version_mountpoint_id}/#{fix_version_task_doc._id}/", justdo_admin_id # Remove the fix version task at last
+    try
+      grid_data.removeParent "/#{fix_version_mountpoint_id}/#{fix_version_task_doc._id}/", justdo_admin_id # Remove the fix version task at last
+    catch e
+      if e.error not in ["parent-already-exists", "unknown-parent"]
+        console.trace()
+        console.error "[justdo-jira-integration] Delete fix version task failed.", e
 
     if version_deleted_in_remote
       # Pull the fix version from issue
       if not _.isEmpty child_task_ids
-        @tasks_collection.update {_id: {$in: _.flatten child_task_ids}, jira_fix_version: req_body.version.name}, {$pull: {jira_fix_version: req_body.version.name}}, {multi: true}
+        @tasks_collection.update {_id: {$in: child_task_ids}, jira_fix_version: req_body.version.name}, {$pull: {jira_fix_version: req_body.version.name}}, {multi: true}
 
       # Remove the fix version metadata in Jira collection
       jira_query =
@@ -291,17 +307,21 @@ _.extend JustdoJiraIntegration.prototype,
 
       sprint_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints"}, {fields: {_id: 1}})?._id
 
-      subtree_task_ids = @_getIssueSubtreeTaskIdsUpToLevelsOfHierarchy sprint_task_doc._id, {jira_sprint: req_body.sprint.name}
+      subtree_tasks = grid_data.collection.findSubTree sprint_task_doc._id, {base_query: "jira_sprint: #{req_body.sprint.name}", max_level: JustdoJiraIntegration.jira_issue_hierarchy_levels}
+      immidiate_child_task_ids = subtree_tasks?[fix_version_task_doc._id]?._children
+      child_task_ids = _.keys subtree_tasks
 
       # We only need the path of immidiate child for removal
-      for task_id in subtree_task_ids?[0]
+      paths_to_remove = _.map immidiate_child_task_ids, (task_id) =>
         @removed_sprint_parent_issue_pairs.add "#{task_id}:#{sprint_id}"
-        try
-          grid_data.removeParent "/#{sprint_task_doc._id}/#{task_id}/", justdo_admin_id
-        catch e
-          if e.error not in ["parent-already-exists", "unknown-parent"]
-            console.trace()
-            console.error "[justdo-jira-integration] Relocate issue sprint parent failed.", e
+        return "/#{sprint_task_doc._id}/#{task_id}/"
+
+      try
+        grid_data.bulkRemoveParents paths_to_remove, justdo_admin_id
+      catch e
+        if e.error not in ["parent-already-exists", "unknown-parent"]
+          console.trace()
+          console.error "[justdo-jira-integration] Relocate issue sprint parent failed.", e
 
       sprint_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints"}, {fields: {_id: 1}})?._id
       try
@@ -311,9 +331,9 @@ _.extend JustdoJiraIntegration.prototype,
           console.trace()
           console.error "[justdo-jira-integration] Relocate issue sprint parent failed.", e
 
-      if not _.isEmpty subtree_task_ids
+      if not _.isEmpty child_task_ids
         # Remove the sprint field in all child tasks
-        @tasks_collection.update {_id: {$in: _.flatten subtree_task_ids}}, {$unset: {jira_sprint: 1}}, {multi: true}
+        @tasks_collection.update {_id: {$in: child_task_ids}}, {$unset: {jira_sprint: 1}}, {multi: true}
 
       # Remove the sprint metadata in Jira collection
       jira_query.$or.push

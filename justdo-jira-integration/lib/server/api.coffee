@@ -291,24 +291,6 @@ _.extend JustdoJiraIntegration.prototype,
     @setJustdoIdandTaskIdToJiraIssue justdo_id, created_task_id, jira_issue_id
     return created_task_id
 
-  # This method returns an array with arrays. The index indicates the level of the task ids.
-  _getIssueSubtreeTaskIdsUpToLevelsOfHierarchy: (parent_task_id, query={}) ->
-    task_ids = []
-
-    _.extend query,
-      "parents2.parent": parent_task_id
-      jira_issue_id:
-        $ne: null
-
-    i = 0
-    while (i < JustdoJiraIntegration.jira_issue_hierarchy_levels)
-      current_level_task_ids = @tasks_collection.find(query, {fields: {_id: 1}}).map (task) -> task._id
-      query["parents2.parent"] =
-        $in: current_level_task_ids
-      task_ids.push current_level_task_ids
-      i++
-    return task_ids
-
   getOAuth1LoginLink: (justdo_id, user_id) ->
     if not APP.projects.isProjectAdmin justdo_id, user_id
       throw @_error "permission-denied"
