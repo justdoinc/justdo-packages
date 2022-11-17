@@ -90,6 +90,7 @@ _.extend JustdoJiraIntegration.prototype,
 
               # Register gcm error handler (show snackbar on error)
               gcm = APP.modules.project_page.grid_control_mux.get()
+              # gcm here will be the grid control mux from the previous loaded JustDo.
               gcm?.on? "edit-failed", (tab, err) ->
                 if err.error isnt "jira-update-failed"
                   return
