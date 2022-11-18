@@ -166,8 +166,6 @@ _.extend JustdoJiraIntegration.prototype,
         console.trace()
         console.error "[justdo-jira-integration] Relocate issue fix verison parent failed.", e
 
-
-
     fix_version_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions"}, {fields: {_id: 1}})?._id
     @deleted_fix_version_ids.add fix_version_id
     try
@@ -312,7 +310,7 @@ _.extend JustdoJiraIntegration.prototype,
       sprint_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints"}, {fields: {_id: 1}})?._id
 
       subtree_tasks = grid_data.collection.findSubTree sprint_task_doc._id, {base_query: "jira_sprint: #{req_body.sprint.name}", max_level: JustdoJiraIntegration.jira_issue_hierarchy_levels}
-      immidiate_child_task_ids = subtree_tasks?[fix_version_task_doc._id]?._children
+      immidiate_child_task_ids = subtree_tasks?[sprint_task_doc._id]?._children
       child_task_ids = _.keys subtree_tasks
 
       # We only need the path of immidiate child for removal
