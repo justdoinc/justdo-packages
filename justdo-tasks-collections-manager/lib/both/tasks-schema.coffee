@@ -46,6 +46,16 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
         grid_default_frozen_column: true
 
+      archived:
+        label: "Archived task"
+
+        grid_editable_column: false
+        user_editable_column: true
+        grid_visible_column: false
+
+        type: Date
+        optional: true
+
       description:
         label: "Description"
 
