@@ -134,16 +134,6 @@ GridControl.installEditor "MultiSelectEditor",
     @$select.selectpicker("refresh")
     @$select.selectpicker("render")
 
-    # The following is very likely redundant, it was kept during dev for case it isn't
-
-    # bg_color = JustdoHelpers.normalizeBgColor(getKeyBgColor(@context.column.values, val))
-    # fg_color = JustdoHelpers.getFgColor(bg_color)
-
-    # if bg_color?    
-    #   $(".dropdown-toggle", @$select_picker)
-    #     .css("background-color", bg_color)
-    #     .css("color", fg_color)
-
     return
 
   serializeValue: ->
