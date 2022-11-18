@@ -243,6 +243,8 @@ _.extend GridData.prototype,
     default_options =
       expand_only: false
       filtered_tree: false # keep in mind @each is reused in section-manager-proto that don't have this option
+      # ignore_archived: default for this option isn't set at the moment
+      # exclude_archived: default for this option isn't set at the moment
 
     options = _.extend default_options, options
 
@@ -970,3 +972,20 @@ _.extend GridData.prototype,
       natural_collection_info: natural_collection_info
 
     return ext
+
+  isArchived: (item_id, options) ->
+    # options:
+    #
+    # * ignore_archived: (default: false): If true we'll ignore the archived field.
+    #
+    # * exclude_archived (default: undefined): {}
+    #     * If null/undefined non will be excluded.
+    #     * If an object: keys represent items ids that we'll ignore the archived field for.
+
+    if item_id is "0" or item_id is 0
+      return false
+
+    if options.ignore_archived isnt false and @items_by_id[item_id].archived? and (not options.exclude_archived? or item_id not of options.exclude_archived)
+      return true
+
+    return false

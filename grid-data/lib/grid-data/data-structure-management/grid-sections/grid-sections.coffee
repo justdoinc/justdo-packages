@@ -408,6 +408,10 @@ _.extend GridData.prototype,
     #
     # options:
     #
+    # * ignore_archived: See grid_data.isArchived comment for exact definition
+    #
+    # * exclude_archived: See grid_data.isArchived comment for exact definition
+    #
     # * expand_only (default: false): if true the method will regard non-expanded paths as
     # leaves.
     # * filtered_tree (default: false): if true,
@@ -762,10 +766,20 @@ _.extend GridData.prototype,
 
       @sections.push section_obj
 
+      exclude_archived = undefined
+      if section_manager.rootItems? and _.isFunction(section_manager.rootItems)
+        root_items = section_manager.rootItems()
+
+        if _.isArray(root_items)
+          exclude_archived = {}
+          for root_item in root_items
+            if root_item.ignore_archive is true
+              exclude_archived[root_item._id] = true
+
       if section_obj.expand_state == 1
         # If section expanded, generate section's items
 
-        section_manager._each "/", {expand_only: true}, (section, item_type, item_obj, absolute_path, expand_state) =>
+        section_manager._each "/", {expand_only: true, exclude_archived: exclude_archived}, (section, item_type, item_obj, absolute_path, expand_state) =>
           if not item_type?
             @_addCollectionItem(
               item_obj,

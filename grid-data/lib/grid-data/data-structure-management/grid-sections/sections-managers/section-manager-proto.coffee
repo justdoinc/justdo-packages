@@ -248,6 +248,10 @@ _.extend GridDataSectionManager.prototype,
     #
     # options:
     #
+    # * ignore_archived: See grid_data.isArchived comment for exact definition
+    #
+    # * exclude_archived: See grid_data.isArchived comment for exact definition
+    #
     # * expand_only (default: true): if true the method will regard non-expanded items as
     # leaves.
     #
@@ -277,6 +281,10 @@ _.extend GridDataSectionManager.prototype,
         expandable = @_collectionItemHasChildren(item_id)
         expand_state = if expandable then @_inExpandedPaths(item_path) else -1
 
+        if expand_state isnt -1
+          if @grid_data.isArchived(item_id, options)
+            expand_state = -1
+
         iteratee_ret = iteratee item_id, item_path, expand_state
       else
         expand_state = 1 # Mark it as 1 just so it won't affect recursion
@@ -287,6 +295,9 @@ _.extend GridDataSectionManager.prototype,
       step_in = false
     else if iteratee_ret is -2
       return false
+
+    if @grid_data.isArchived(item_id, options)
+      step_in = false
 
     if step_in isnt false # only false means do not step in
       if (not options.expand_only or expand_state == 1) and (item_node = @grid_data.tree_structure[item_id])? # if has children
