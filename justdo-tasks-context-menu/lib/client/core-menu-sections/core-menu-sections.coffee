@@ -190,6 +190,44 @@ _.extend JustdoTasksContextMenu.prototype,
           
         return condition_is_satisfied
 
+    @registerSectionItem "main", "archive-unarchive-task",
+      position: 500
+      data:
+        label: ->
+          task_archived = JD.activeItem({archived: 1}).archived
+
+          if _.isDate task_archived
+            return "Unarchive Task"
+
+          return "Archive Task"
+
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          op =
+            $set:
+              archived: new Date()
+          changelog_msg = "archived the task"
+
+          task_archived = APP.collections.Tasks.findOne(task_id, {fields: {archived: 1}}).archived
+
+          if _.isDate task_archived
+            op.$set.archived = null
+            changelog_msg = "unarchived the task"
+
+          APP.collections.Tasks.update task_id, op
+          return
+
+        icon_type: "feather"
+        icon_val: "archive"
+
+      listingCondition: ->
+        if not (gc = APP.modules.project_page?.gridControl())?
+          return false
+
+        if gc.isMultiSelectMode()
+          return false
+
+        return true
+
     getSubtreeItemsWithDifferentVals = (task_path, field_val, field_info) ->
       gc = APP.modules.project_page.gridControl()
 
