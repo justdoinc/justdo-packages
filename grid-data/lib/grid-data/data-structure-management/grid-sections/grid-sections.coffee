@@ -408,9 +408,9 @@ _.extend GridData.prototype,
     #
     # options:
     #
-    # * ignore_archived: See grid_data.isArchived comment for exact definition
+    # * ignore_archived: See grid_data._isArchived comment for exact definition
     #
-    # * exclude_archived: See grid_data.isArchived comment for exact definition
+    # * exclude_archived: See grid_data._isArchived comment for exact definition
     #
     # * expand_only (default: false): if true the method will regard non-expanded paths as
     # leaves.
@@ -766,15 +766,10 @@ _.extend GridData.prototype,
 
       @sections.push section_obj
 
-      exclude_archived = undefined
-      if section_manager.rootItems? and _.isFunction(section_manager.rootItems)
-        root_items = section_manager.rootItems()
-
-        if _.isArray(root_items)
-          exclude_archived = {}
-          for root_item in root_items
-            if root_item.ignore_archive is true
-              exclude_archived[root_item._id] = true
+      # For now, we regard excluded archived root items as excluded down their tree as well
+      # and not excluded only in the root.
+      # If you want to change this behaviour, update the comment also under core-api.coffee
+      exclude_archived = section_manager.getRootItemsExcludedFromArchivedState()
 
       if section_obj.expand_state == 1
         # If section expanded, generate section's items

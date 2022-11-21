@@ -973,7 +973,11 @@ _.extend GridData.prototype,
 
     return ext
 
-  isArchived: (item_id, options) ->
+  _isArchived: (item_id, options) ->
+    # Avoid using this one directly, as it needs a preperation of ignore_archived/exclude_archived preperation
+    # from the section level
+    # Use: isPathArchived
+    #
     # options:
     #
     # * ignore_archived: (default: false): If true we'll ignore the archived field.
@@ -993,3 +997,29 @@ _.extend GridData.prototype,
       return true
 
     return false
+
+  isPathArchived: (path) ->
+    item_id = helpers.getPathItemId(path)
+
+    if not (path_collection_item = @items_by_id?[item_id])?
+      # We don't even know that item/or the path isn't poining to a collection item e.g the /s/ shared with me path on the main tab
+      return false
+
+    if not path_collection_item.archived?
+      # Nothing to do, it is for sure not archived.
+      return false
+
+    if not (section = @getPathSection(path))?
+      # We don't know the section of the provided path
+      return false
+
+    # For now, we regard excluded archived root items as excluded down their tree as well
+    # and not excluded only in the root.
+    # If you want to change this behaviour, update the comment also under grid-sections.coffee
+    exclude_archived = section.section_manager.getRootItemsExcludedFromArchivedState()
+
+    if not exclude_archived?
+      # The item is archived, and no item is excluded in this section return true
+      return true
+
+    return @_isArchived(item_id, {exclude_archived})

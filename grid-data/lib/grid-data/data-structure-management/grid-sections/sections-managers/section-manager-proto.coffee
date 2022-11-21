@@ -248,9 +248,9 @@ _.extend GridDataSectionManager.prototype,
     #
     # options:
     #
-    # * ignore_archived: See grid_data.isArchived comment for exact definition
+    # * ignore_archived: See grid_data._isArchived comment for exact definition
     #
-    # * exclude_archived: See grid_data.isArchived comment for exact definition
+    # * exclude_archived: See grid_data._isArchived comment for exact definition
     #
     # * expand_only (default: true): if true the method will regard non-expanded items as
     # leaves.
@@ -282,7 +282,7 @@ _.extend GridDataSectionManager.prototype,
         expand_state = if expandable then @_inExpandedPaths(item_path) else -1
 
         if expand_state isnt -1
-          if @grid_data.isArchived(item_id, options)
+          if @grid_data._isArchived(item_id, options)
             expand_state = -1
 
         iteratee_ret = iteratee item_id, item_path, expand_state
@@ -296,7 +296,7 @@ _.extend GridDataSectionManager.prototype,
     else if iteratee_ret is -2
       return false
 
-    if @grid_data.isArchived(item_id, options)
+    if @grid_data._isArchived(item_id, options)
       step_in = false
 
     if step_in isnt false # only false means do not step in
@@ -361,5 +361,22 @@ _.extend GridDataSectionManager.prototype,
 
   getStateVar: (var_name, default_val) ->
     return @grid_data.getStateVar(@section_obj.id, var_name, default_val)
+
+  getRootItemsExcludedFromArchivedState: ->
+    # Returns undefined or {} if no item is excluded
+    # Otherwise returns an array of the form {item_id: true, item_id: true, ...} for
+    # root items that we ignore their archived state.
+    # The format is following grid_data._isArchived expected format for the exclude_archived option
+    exclude_archived = undefined
+    if @rootItems? and _.isFunction(@rootItems)
+      root_items = @rootItems()
+
+      if _.isArray(root_items)
+        exclude_archived = {}
+        for root_item in root_items
+          if root_item.ignore_archive is true
+            exclude_archived[root_item._id] = true
+
+    return exclude_archived
 
 GridData.installSectionManager("GridDataSectionManager", GridDataSectionManager)
