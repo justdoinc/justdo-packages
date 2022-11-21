@@ -150,7 +150,7 @@ _.extend JustdoJiraIntegration.prototype,
     grid_data = APP.projects._grid_data_com
     justdo_admin_id = @_getJustdoAdmin justdo_id
 
-    subtree_tasks = grid_data.collection.findSubTree fix_version_task_doc._id, {base_query: "jira_fix_version: #{req_body.version.name}", max_level: JustdoJiraIntegration.jira_issue_hierarchy_levels}
+    subtree_tasks = grid_data.collection.findSubTree fix_version_task_doc._id, {base_query: {project_id: justdo_id}, max_level: JustdoJiraIntegration.jira_issue_hierarchy_levels}
     immidiate_child_task_ids = subtree_tasks?[fix_version_task_doc._id]?._children
     child_task_ids = _.keys subtree_tasks
 
@@ -309,7 +309,7 @@ _.extend JustdoJiraIntegration.prototype,
 
       sprint_mountpoint_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: jira_project_id, jira_mountpoint_type: "sprints"}, {fields: {_id: 1}})?._id
 
-      subtree_tasks = grid_data.collection.findSubTree sprint_task_doc._id, {base_query: "jira_sprint: #{req_body.sprint.name}", max_level: JustdoJiraIntegration.jira_issue_hierarchy_levels}
+      subtree_tasks = grid_data.collection.findSubTree sprint_task_doc._id, {base_query: {project_id: justdo_id}, max_level: JustdoJiraIntegration.jira_issue_hierarchy_levels}
       immidiate_child_task_ids = subtree_tasks?[sprint_task_doc._id]?._children
       child_task_ids = _.keys subtree_tasks
 
