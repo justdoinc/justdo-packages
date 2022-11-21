@@ -296,7 +296,7 @@ Template.meetings_meeting_dialog.onCreated ->
       return
     msg = "Are you sure you want to delete this meeting?"
     if total_added_tasks > 0
-      msg += " (#{total_added_tasks} #{if total_added_tasks == 1 then "task" else "tasks"} that was created in this meeting won't be deleted)"
+      msg += " (#{total_added_tasks} #{if total_added_tasks == 1 then "task that was" else "tasks that were"} created in this meeting won't be deleted)"
 
     bootbox.confirm msg, (result) =>
       if result
