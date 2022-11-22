@@ -56,6 +56,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         label: "Deliver planner :: is project archived"
 
         grid_editable_column: false
+        user_editable_column: true
         grid_visible_column: false
 
         type: Boolean
