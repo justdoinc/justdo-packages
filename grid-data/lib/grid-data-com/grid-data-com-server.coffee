@@ -755,7 +755,7 @@ _.extend GridDataCom.prototype,
         else
           root_query = {}
 
-        if not _.isString root_query.project_id?
+        if not _.isString root_query.project_id
           self.logger.warn "project_id isn't provided in base query of findSubTree(). Providing project_id will allow the queries to use index and improve performance."
 
         root_query._id = item_id

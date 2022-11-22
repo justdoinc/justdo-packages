@@ -385,6 +385,11 @@ GridControl.installFormatter "textWithTreeControls",
     if @getCurrentColumnData("checklist_plugin_enabled") and not doc._type?
       tree_control += APP.justdo_checklist.getOnGridCheckMarkHtml(doc, path)
 
+    if doc.archived?
+      tree_control += """
+          <i class="fa fa-fw fa-archive slick-prevent-edit" title="Task is archived" aria-hidden="true"></i>
+      """
+
     tree_control += """
       <svg class="jd-icon jd-icon-context-menu ongrid-jd-icon jd-c-pointer text-secondary slick-prevent-edit">
         <use xlink:href="/layout/icons-feather-sprite.svg#more-vertical" class="slick-prevent-edit"></use>

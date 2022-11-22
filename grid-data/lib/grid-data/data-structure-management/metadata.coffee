@@ -39,6 +39,9 @@ _.extend GridData.prototype,
       # With this workaround we add support for the first cell to occupy the entire-row
       cssClasses.push ["full-row-colspan"]
 
+    if @grid_tree?[index]?[0]?.archived?
+      cssClasses.push ["archived"]
+
     cssClasses = _.without cssClasses, undefined
     if not _.isEmpty cssClasses
       metadata.cssClasses = _.union.apply(_, cssClasses)

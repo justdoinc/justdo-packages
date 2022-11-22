@@ -81,6 +81,8 @@ GridData = (collection, options) ->
 
   @_initItemsTypes() # defined in items-types.coffee
 
+  @_initArchivedTasksReactivity()
+
   Meteor.defer =>
     # give a chance for event binding and other procedures by caller
     # (such as setting filters, etc.) before actual init procedures
@@ -109,6 +111,24 @@ _.extend GridData.prototype,
     @_initialized = true
 
     @emit "init"
+
+  _initArchivedTasksReactivity: ->
+    cb = (id, fields) =>
+      if "archived" in fields
+        # When the archived state of an item is changed, we require a rebuild since it is affects
+        # the grid structure.
+        @_set_need_rebuild()
+
+      return
+
+    @_grid_data_core.on "content-changed", cb
+
+    @onDestroy =>
+      @_grid_data_core.off "content-changed", cb
+
+      return
+
+    return
 
   onDestroy: (proc) ->
     # not to be confused with @destroy, onDestroy registers procedures to be called by @destroy()
