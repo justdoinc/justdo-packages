@@ -68,7 +68,7 @@ default_filter_options =
 #
 DatesFilterControllerConstructor = (context) ->
   GridControl.FilterController.call this
-  tpl = @
+  constructor = @
   @grid_control = context.grid_control
   @column_settings = context.column_settings
   @column_filter_state_ops = context.column_filter_state_ops
@@ -85,6 +85,10 @@ DatesFilterControllerConstructor = (context) ->
 
   @custom_range_start = ""
   @custom_range_end = ""
+  @custom_range_start_time_hours = "00"
+  @custom_range_start_time_minutes = "00"
+  @custom_range_end_time_hours = "23"
+  @custom_range_end_time_minutes = "59"
 
   filter_options_html = ""
   for filter_option in @filter_settings_options.filter_options
@@ -116,7 +120,12 @@ DatesFilterControllerConstructor = (context) ->
               <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
               <div class="custom-datepicker custom-datepicker-start shadow-lg">
                 <div class="custom-datepicker-time-wrapper">
-                  <input class="custom-datepicker-time custom-datepicker-time-start form-control form-control-sm" type="text" placeholder="Set time">
+                  <div class="custom-datepicker-time">
+                    <input class="hours custom-datepicker-time-input" placeholder="00" type="text" maxlength="2">
+                    :
+                    <input class="minutes custom-datepicker-time-input" placeholder="00" type="text" maxlength="2">
+                  </div>
+                  <div class="am-pm">AM</div>
                 </div>
               </div>
             </div>
@@ -129,7 +138,12 @@ DatesFilterControllerConstructor = (context) ->
               <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
               <div class="custom-datepicker custom-datepicker-end shadow-lg">
                 <div class="custom-datepicker-time-wrapper">
-                  <input class="custom-datepicker-time custom-datepicker-time-end form-control form-control-sm" type="text" placeholder="Set time">
+                  <div class="custom-datepicker-time">
+                    <input class="hours custom-datepicker-time-input" placeholder="00" type="text" maxlength="2">
+                    :
+                    <input class="minutes custom-datepicker-time-input" placeholder="00" type="text" maxlength="2">
+                  </div>
+                  <div class="am-pm">AM</div>
                 </div>
               </div>
             </div>
@@ -194,13 +208,13 @@ DatesFilterControllerConstructor = (context) ->
   @controller.find(".custom-datepicker").datepicker
     onSelect: (date, obj) ->
       if obj.input.hasClass "custom-datepicker-start"
-        tpl.custom_range_start = date
+        constructor.custom_range_start = date
 
       if obj.input.hasClass "custom-datepicker-end"
-        tpl.custom_range_end = date
+        constructor.custom_range_end = date
 
       obj.input.hide()
-      tpl.setCustomRange("update")
+      constructor.setCustomRange("update")
 
       return
 
@@ -235,28 +249,23 @@ DatesFilterControllerConstructor = (context) ->
     $label = $(e.target).closest(".custom-range-label")
     date_format = JustdoHelpers.getUserPreferredDateFormat()
     date = $label.text()
+    date_type = ""
 
     if $label.hasClass "custom-range-label-start"
-      if moment(date, date_format, true).isValid() or date == ""
-        if date
-          tpl.custom_range_start = moment($label.text(), date_format).format("MM/DD/YYYY")
-        else
-          tpl.custom_range_start = ""
-
-        tpl.setCustomRange("update")
-      else
-        $label.text moment(tpl.custom_range_start).format(date_format)
+      date_type = "start"
 
     if $label.hasClass "custom-range-label-end"
-      if moment(date, date_format, true).isValid() or date == ""
-        if date
-          tpl.custom_range_end = moment($label.text(), date_format).format("MM/DD/YYYY")
-        else
-          tpl.custom_range_end = ""
+      date_type = "end"
 
-        tpl.setCustomRange("update")
+    if moment(date, date_format, true).isValid() or date == ""
+      if date
+        constructor["custom_range_#{date_type}"] = moment($label.text(), date_format).format("MM/DD/YYYY")
       else
-        $label.text moment(tpl.custom_range_end).format(date_format)
+        constructor["custom_range_#{date_type}"] = ""
+
+      constructor.setCustomRange("update")
+    else
+      $label.text moment(constructor["custom_range_#{date_type}"]).format(date_format)
 
     return
 
@@ -265,12 +274,34 @@ DatesFilterControllerConstructor = (context) ->
     $label.text("")
 
     if $label.hasClass "custom-range-label-start"
-      tpl.custom_range_start = ""
+      constructor.custom_range_start = ""
+      constructor.custom_range_start_time_hours = "00"
+      constructor.custom_range_start_time_minutes = "00"
 
     if $label.hasClass "custom-range-label-end"
-      tpl.custom_range_end = ""
+      constructor.custom_range_end = ""
+      constructor.custom_range_end_time_hours = "23"
+      constructor.custom_range_end_time_minutes = "59"
 
-    tpl.setCustomRange("update")
+    constructor.setCustomRange("update")
+
+    return
+
+  @controller.on "change", ".custom-datepicker-time-input", (e) ->
+    constructor.updateTime(e.target)
+
+    return
+
+  @controller.on "click", ".am-pm", (e) ->
+    $el = $(e.target).closest(".am-pm")
+    text = $el.text()
+
+    if text == "AM"
+      $el.text "PM"
+    else
+      $el.text "AM"
+
+    constructor.updateTime(e.target)
 
     return
 
@@ -306,16 +337,48 @@ _.extend DatesFilterControllerConstructor.prototype,
 
       if filter_state.custom_range.start != ""
         label_start = moment(filter_state.custom_range.start).format(date_format)
+        @custom_range_start = label_start
+        @custom_range_start_time_hours = moment(filter_state.custom_range.start).format("HH")
+        @custom_range_start_time_minutes = moment(filter_state.custom_range.start).format("mm")
 
       if filter_state.custom_range.end != ""
         label_end = moment(filter_state.custom_range.end).format(date_format)
+        @custom_range_end = label_end
+        @custom_range_end_time_hours = moment(filter_state.custom_range.end).format("HH")
+        @custom_range_end_time_minutes = moment(filter_state.custom_range.end).format("mm")
 
-      @custom_range_start = filter_state.custom_range.start
-      @custom_range_end = filter_state.custom_range.end
-
+      # Set date
       @controller.find(".custom-range-label-start").text label_start
       @controller.find(".custom-range-label-end").text label_end
 
+      # Set time
+      label_start_time = @custom_range_start_time_hours + ":" + @custom_range_start_time_minutes
+      label_end_time = @custom_range_end_time_hours + ":" + @custom_range_end_time_minutes
+
+      time_format = "HH:mm"
+      use_am_pm = JustdoHelpers.getUserPreferredUseAmPm()
+
+      if use_am_pm
+        time_format = "hh:mm A"
+        @controller.find(".custom-datepicker-time-wrapper").addClass "use-am-pm"
+        @controller.find(".custom-datepicker-start .am-pm").text moment(label_start_time, "HH:mm").format("A")
+        @controller.find(".custom-datepicker-end .am-pm").text moment(label_end_time, "HH:mm").format("A")
+
+      @controller.find(".custom-range-time-label-start").text moment(label_start_time, "HH:mm").format(time_format)
+      @controller.find(".custom-range-time-label-end").text moment(label_end_time, "HH:mm").format(time_format)
+
+      hour_format = "HH"
+
+      if use_am_pm
+        hour_format = "hh"
+
+      @controller.find(".custom-datepicker-start .hours").val moment(@custom_range_start_time_hours, "HH").format(hour_format)
+      @controller.find(".custom-datepicker-end .hours").val moment(@custom_range_end_time_hours, "HH").format(hour_format)
+
+      @controller.find(".custom-datepicker-start .minutes").val @custom_range_start_time_minutes
+      @controller.find(".custom-datepicker-end .minutes").val @custom_range_end_time_minutes
+
+      # Add 'empty' class if no date is set
       $start_input_wrapper = @controller.find(".custom-range-label-start").parents(".custom-range-input-wrapper")
       $end_input_wrapper = @controller.find(".custom-range-label-end").parents(".custom-range-input-wrapper")
 
@@ -341,7 +404,16 @@ _.extend DatesFilterControllerConstructor.prototype,
     else
       filter_state = {}
 
-    filter_state.custom_range = { "start": @custom_range_start, "end": @custom_range_end }
+    start_date_time = ""
+    end_date_time = ""
+
+    if @custom_range_start != ""
+      start_date_time = "#{@custom_range_start} #{@custom_range_start_time_hours}:#{@custom_range_start_time_minutes}"
+
+    if @custom_range_end != ""
+      end_date_time = "#{@custom_range_end} #{@custom_range_end_time_hours}:#{@custom_range_end_time_minutes}"
+
+    filter_state.custom_range = { "start": start_date_time, "end": end_date_time }
 
     if action == "remove"
       $select_el = $("li[value=custom-range]")
@@ -350,6 +422,41 @@ _.extend DatesFilterControllerConstructor.prototype,
         delete filter_state.custom_range
 
     @column_filter_state_ops.setColumnFilter(filter_state)
+
+    return
+
+  updateTime: (el) ->
+    time_type = ""
+    use_am_pm = JustdoHelpers.getUserPreferredUseAmPm()
+    time_format = "HH:mm"
+    hour_format = "HH"
+
+    if use_am_pm
+      time_format = "hh:mm A"
+      hour_format = "hh"
+
+    if $(el).parents(".custom-datepicker").hasClass "custom-datepicker-start"
+      time_type = "start"
+
+    if $(el).parents(".custom-datepicker").hasClass "custom-datepicker-end"
+      time_type = "end"
+
+    hours = $(".custom-datepicker-#{time_type} .hours").val()
+    minutes = $(".custom-datepicker-#{time_type} .minutes").val()
+    time = hours + ":" + minutes
+
+    if use_am_pm
+      am_pm = $(".custom-datepicker-#{time_type} .am-pm").text()
+      time += " #{am_pm}"
+
+    if moment(time, time_format, true).isValid()
+      @["custom_range_#{time_type}_time_hours"] = moment(time, time_format).format("HH")
+      @["custom_range_#{time_type}_time_minutes"] = moment(time, time_format).format("mm")
+
+      @setCustomRange("update")
+    else
+      $(".custom-datepicker-#{time_type} .hours").val moment(@["custom_range_#{time_type}_time_hours"], "HH").format(hour_format)
+      $(".custom-datepicker-#{time_type} .minutes").val @["custom_range_#{time_type}_time_minutes"]
 
     return
 

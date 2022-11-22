@@ -40,6 +40,46 @@
       padding-bottom: 8px
       border-bottom: 1px dashed #eaeaea
       margin-bottom: 8px
+      display: flex
+      justify-content: center
+      .custom-datepicker-time
+        border: 1px solid #ced4da
+        border-radius: 3px
+        display: flex
+      .hours
+        padding-right: 3px
+        padding-left: 6px
+      .minutes
+        padding-right: 6px
+        padding-left: 3px
+      .custom-datepicker-time-input
+        display: flex
+        align-items: center
+        justify-content: center
+        font-weight: bold
+        width: 25px
+        border: none
+        border-radius: 3px
+      .am-pm
+        margin-left: 4px
+        border: 1px solid #ffffff
+        border-radius: 4px
+        font-weight: bold
+        padding: 2px 6px
+        background-color: #ECEFF1
+        font-size: 13px
+        cursor: pointer
+        transition: all .3s ease
+        text-align: center
+        width: 36px
+        display: none
+        &:hover
+          color: white
+          background-color: #2c70cf
+
+    .custom-datepicker-time-wrapper.use-am-pm
+      .am-pm
+        display: block
 
   .clear-date
     width: 16px
