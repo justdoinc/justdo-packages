@@ -6,22 +6,9 @@ _.extend JustdoDeliveryPlanner.prototype,
       if not _.has modifier.$set, "archived"
         return
 
-      archived = modifier.$set?.archived
-
-      changelog_msg = "unarchived the task."
-
-      if _.isDate archived
-        changelog_msg = "archived the task."
-        if doc["p:dp:is_project"]
-          modifier.$set["p:dp:is_archived_project"] = true
-
-      APP.tasks_changelog_manager.logChange
-        field: "archived"
-        label: "Archived"
-        change_type: "custom"
-        task_id: doc._id
-        by: user_id
-        new_value: changelog_msg
+      if _.isDate modifier.$set?.archived
+        if doc[JustdoDeliveryPlanner.task_is_project_field_name]
+          APP.justdo_delivery_planner.toggleTaskArchivedProjectState doc._id
 
       return
 

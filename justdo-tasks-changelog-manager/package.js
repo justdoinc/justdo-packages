@@ -59,6 +59,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/builtin-trackers/simple-tasks-fields-changes.coffee", server);
   api.addFiles("lib/server/builtin-trackers/task-users-changes.coffee", server);
   api.addFiles("lib/server/builtin-trackers/pending-ownership-transfer.coffee", server);
+  api.addFiles("lib/server/builtin-trackers/task-archive-state.coffee", server);
 
   api.addFiles("lib/client/init.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
@@ -75,7 +76,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/app-integration.coffee", both);
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
-  // file. 
+  // file.
 
   api.export("TasksChangelogManager", both);
 });
