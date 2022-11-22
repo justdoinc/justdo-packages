@@ -321,6 +321,8 @@ APP.executeAfterAppLibCode ->
       # are allowed
       return item_in_loop.$last and operationsOnParentAllowed(item_in_loop.path)
 
+    isItemArchived: -> @archived?
+
     allParents: ->
       current_path = @valueOf()
 
@@ -339,7 +341,7 @@ APP.executeAfterAppLibCode ->
 
         item =
           APP.collections.Tasks.findOne(
-            item_id, {fields: {_id: 1, title: 1, status: 1, seqId: 1}})
+            item_id, {fields: {_id: 1, title: 1, status: 1, seqId: 1, archived: 1}})
 
         ret = {path, index, margin_left: index * 10}
 

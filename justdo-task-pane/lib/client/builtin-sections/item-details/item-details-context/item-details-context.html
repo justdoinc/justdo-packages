@@ -48,6 +48,8 @@ Status: {{status}}{{/if}}">
         </span>
       {{/if}}
 
+      {{#if isItemArchived}}<i class="fa fa-fw fa-archive slick-prevent-edit" title="Task is archived" aria-hidden="true"></i>{{/if}}
+
       {{title}}
     </div>
   {{/each}}

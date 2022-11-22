@@ -53,6 +53,8 @@ _.extend JustdoTasksCollectionsManager.prototype,
         user_editable_column: true
         grid_visible_column: false
 
+        grid_effects_metadata_rendering: true
+
         type: Date
         optional: true
 
