@@ -231,11 +231,15 @@ APP.executeAfterAppLibCode ->
     
     return false
   
-  getDescendantsCount = (task_id) ->
-    if not (grid_data_core = APP.modules.project_page.gridData()?._grid_data_core)
+  getDescendantsCount = (task_path) ->
+    if not (grid_data = APP.modules.project_page.gridData())?
       return 0
 
-    return _.keys(grid_data_core.getAllItemsKnownDescendantsIdsObj([task_id])).length
+    i = 0
+    grid_data.each task_path, {}, ->
+      i += 1
+
+    return i
   
   Template.task_pane_item_details_members_editor.onCreated ->
     data = @data
@@ -619,8 +623,9 @@ APP.executeAfterAppLibCode ->
               return true
             
             task_id = JD.activeItemId()
+            task_path = JD.activePath()
             if cascade.get() == true and hasSubSubTasks(task_id) and 
-                (tasks_count = getDescendantsCount(task_id)+1) > ProjectPageDialogs.EDIT_MEMBER_CONFIRM_TASK_COUNT
+                (tasks_count = getDescendantsCount(task_path)+1) > ProjectPageDialogs.EDIT_MEMBER_CONFIRM_TASK_COUNT
               bootbox.confirm
                 className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
                 title: "Confirm edit members"
