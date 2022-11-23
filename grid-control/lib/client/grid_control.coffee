@@ -1979,7 +1979,7 @@ _.extend GridControl.prototype,
         gridPosition: @_grid.absBox(@container.get(0), true) # true, will use the light-weight version of absBox
         position: {top: 0, left: 0, right: 0, bottom: 0}
         container: $container
-        column: {id: field_id, field: field_id, values: field_def.grid_values}
+        column: {id: field_id, field: field_id, values: field_def.grid_values, removed_values: field_def.grid_removed_values}
         commitChanges: -> return
         cancelChanges: -> return
     }
