@@ -574,8 +574,18 @@ _.extend GridData.prototype,
         ap_grid_tree_index = section.begin
         ap_tree_level = -1
         ap_expand_state = 1 # always expanded
-      else if (ap_grid_tree_index = @getPathGridTreeIndex(absolute_path))?
+      else if (
+                (ap_grid_tree_index = @getPathGridTreeIndex(absolute_path))? and (# Item is in the visible tree
+                  not this.grid_tree[ap_grid_tree_index][0].archived? or ( # Item isn't archived or
+                    options.ignore_archived isnt true and (
+                      not options.exclude_archived? or (this.grid_tree[ap_grid_tree_index][0]._id not of options.exclude_archived)
+                    ) # We exclude the archived state
+                  )
+                )
+              )
         # absolute_path is visible in the tree, get its details from @grid_tree
+        # we do it only if the task isn't archived, or if the options aren't asking us to ignore its archived state, since otherwise, this
+        # optimization will cause wrong results
         # _ap_item and _ap_path are redundant prefixed with _
         [_ap_item, ap_tree_level, _ap_path, ap_expand_state] = @grid_tree[ap_grid_tree_index]
 
