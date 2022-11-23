@@ -42,11 +42,10 @@ options_schema =
           "redundantLogsTracker",
           "pendingOwnershipTransferTracker",
           ["simpleTasksFieldsChangesTracker", {
-            tracked_fields: ["title", "status", "owner_id", "follow_up", "due_date", "state", "start_date", "end_date"]
+            tracked_fields: ["title", "status", "owner_id", "follow_up", "due_date", "state", "start_date", "end_date", "archived"]
             track_custom_fields: true
             track_pseudo_fields: true
-          }],
-          "taskArchiveStateTracker"
+          }]
         ]
 
 TasksChangelogManager = (options) ->

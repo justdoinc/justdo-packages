@@ -133,6 +133,11 @@ _.extend TasksChangelogManager.prototype,
 
       return ret_val + "."
 
+    if activity_obj.field == "archived"
+      if activity_obj.new_value?
+        return "#{performer_name} archived the task."
+      return "#{performer_name} unarchived the task"
+
     if activity_obj.change_type == "unset"
       return "#{performer_name} cleared the task's #{JustdoHelpers.ucFirst(activity_obj.label)}."
 
@@ -195,6 +200,11 @@ _.extend TasksChangelogManager.prototype,
 
   getHumanReadableOldValue: (activity_obj) ->
     old_value = activity_obj.old_value
+
+    if activity_obj.field == "archived"
+      if not old_value? or (old_value is null)
+        return "unarchived"
+      return "archived"
 
     if not old_value? or (old_value is null)
       return "empty"

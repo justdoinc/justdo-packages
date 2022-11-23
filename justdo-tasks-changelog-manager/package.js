@@ -59,7 +59,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/builtin-trackers/simple-tasks-fields-changes.coffee", server);
   api.addFiles("lib/server/builtin-trackers/task-users-changes.coffee", server);
   api.addFiles("lib/server/builtin-trackers/pending-ownership-transfer.coffee", server);
-  api.addFiles("lib/server/builtin-trackers/task-archive-state.coffee", server);
 
   api.addFiles("lib/client/init.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
