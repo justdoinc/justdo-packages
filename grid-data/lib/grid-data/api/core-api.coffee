@@ -993,7 +993,10 @@ _.extend GridData.prototype,
     if not @items_by_id[item_id]?
       return false
 
-    if options.ignore_archived isnt false and @items_by_id[item_id].archived? and (not options.exclude_archived? or item_id not of options.exclude_archived)
+    if options.ignore_archived is true # If we ignore_archived, all the items are considered not archived...
+      return false
+
+    if @items_by_id[item_id].archived? and (not options.exclude_archived? or item_id not of options.exclude_archived)
       return true
 
     return false
