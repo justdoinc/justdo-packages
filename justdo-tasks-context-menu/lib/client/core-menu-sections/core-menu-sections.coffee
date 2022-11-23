@@ -219,7 +219,7 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "archive"
 
-      listingCondition: ->
+      listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
         return false # Remove when archive become generally available to users
         if not (gc = APP.modules.project_page?.gridControl())?
           return false
@@ -227,7 +227,7 @@ _.extend JustdoTasksContextMenu.prototype,
         if gc.isMultiSelectMode()
           return false
 
-        return true
+        return APP.justdo_permissions.checkTaskPermissions("task-field-edit.archived", task_id)
 
     getSubtreeItemsWithDifferentVals = (task_path, field_val, field_info) ->
       gc = APP.modules.project_page.gridControl()
