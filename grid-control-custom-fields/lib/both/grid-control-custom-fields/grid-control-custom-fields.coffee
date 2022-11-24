@@ -547,7 +547,7 @@ _.extend GridControlCustomFields,
 
     custom_fields_definitions_object = {}
     for custom_field in custom_fields_array
-      custom_fields_definitions_object[custom_field.field_id] = custom_field
+      custom_fields_definitions_object[custom_field?.field_id] = custom_field
 
     return custom_fields_definitions_object
 
