@@ -62,7 +62,8 @@ _.extend JustdoJiraIntegration.prototype,
       if not (jira_project_id = parent_task?.jira_project_id)?
         return
 
-      jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id
+      if not (jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id)?
+        return
 
       task_creater_email = Meteor.users.findOne(user_id, {fields: {emails: 1}})?.emails?[0]?.address
       jira_account = self.getJiraUser justdo_id, {email: task_creater_email}
@@ -161,7 +162,9 @@ _.extend JustdoJiraIntegration.prototype,
       if not self.isJiraIntegrationInstalledOnJustdo justdo_id
         return
 
-      jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id
+      if not (jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id)?
+        return
+
       client = self.clients[jira_server_id]
 
       # Hardcoded mountpoint tasks has fixed title and cannot be changed (except for the root mountpoint).
