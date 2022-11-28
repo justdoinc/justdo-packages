@@ -13,7 +13,14 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
-  setupIssueTypeCustomField: (jira_doc_id) ->
+  getActiveJustdoJiraDocId: ->
+    if not (active_justdo = APP.modules.project_page.curProj())?
+      return
+    return active_justdo.getProjectConfigurationSetting(JustdoJiraIntegration.projects_collection_jira_doc_id)
+
+  _setupIssueTypeCustomField: ->
+    jira_doc_id = @getActiveJustdoJiraDocId()
+
     default_issue_types =
       epics: [
         option_id: "Epic"
@@ -37,7 +44,10 @@ _.extend JustdoJiraIntegration.prototype,
 
     if (jira_projects = @jira_collection.findOne(jira_doc_id, {fields: {jira_projects: 1}})?.jira_projects)?
       for jira_project_id, jira_project of jira_projects
-        for issue_type in jira_project.issue_types
+        if not (issue_types = jira_project.issue_types)?
+          continue
+
+        for issue_type in issue_types
           issue_type_group = "standard_issue_types"
           issue_bg_color_tag = "task"
           if issue_type.subtask
@@ -56,15 +66,21 @@ _.extend JustdoJiraIntegration.prototype,
             label: issue_type_name
             bg_color: JustdoJiraIntegration.default_issue_type_colors[issue_bg_color_tag]
 
-    issue_types = [].concat(default_issue_types.epics).concat(default_issue_types.standard_issue_types).concat(default_issue_types.subtasks)
+      if _.isEmpty default_issue_types.subtasks
+        default_issue_types.subtasks.push
+          option_id: "Sub-task"
+          label: "Sub-Task"
+          bg_color: "B7E5FF"
 
-    APP.modules.project_page.setupPseudoCustomField "jira_issue_type",
-      label: "Issue Type"
-      field_type: "select"
-      grid_visible_column: true
-      grid_editable_column: true
-      field_options:
-        select_options: issue_types
+      issue_types = [].concat(default_issue_types.epics).concat(default_issue_types.standard_issue_types).concat(default_issue_types.subtasks)
+
+      APP.modules.project_page.setupPseudoCustomField "jira_issue_type",
+        label: "Issue Type"
+        field_type: "select"
+        grid_visible_column: true
+        grid_editable_column: true
+        field_options:
+          select_options: issue_types
 
     return
 
@@ -80,12 +96,8 @@ _.extend JustdoJiraIntegration.prototype,
             # Refresh subscription upon switching Justdo
             self.jira_collection_subscription?.stop?()
             gcm?.off? "edit-failed"
-            APP.modules.project_page.removePseudoCustomFields "jira_issue_type"
 
-            if not (active_justdo = APP.modules.project_page.curProj())?
-              return
-
-            if (jira_doc_id = active_justdo.getProjectConfigurationSetting(JustdoJiraIntegration.projects_collection_jira_doc_id))?
+            if (jira_doc_id = self.getActiveJustdoJiraDocId())?
               self.jira_collection_subscription = Meteor.subscribe "jiraCollection", jira_doc_id
 
               # Register gcm error handler (show snackbar on error)
@@ -111,8 +123,9 @@ _.extend JustdoJiraIntegration.prototype,
                   text: err_msg
                 return
 
-              Tracker.nonreactive -> self.setupIssueTypeCustomField jira_doc_id
             return
+
+          refresh_issue_type_custom_field_computation = Tracker.autorun -> self._setupIssueTypeCustomField()
 
           APP.modules.project_page.setupPseudoCustomField "jira_issue_key",
             label: "Issue Key"
@@ -229,6 +242,7 @@ _.extend JustdoJiraIntegration.prototype,
           self.registered_pseudo_custom_fields.push "jira_issue_type"
           APP.modules.project_page.removePseudoCustomFields self.registered_pseudo_custom_fields
           refresh_subscription_computation?.stop?()
+          refresh_issue_type_custom_field_computation?.stop?()
           self.jira_collection_subscription?.stop?()
           gcm?.off? "edit-failed"
 
