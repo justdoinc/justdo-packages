@@ -185,6 +185,9 @@ select.selectpicker {
 .bootstrap-select.bs-container .dropdown-menu {
   z-index: 1060;
 }
+.bootstrap-select .dropdown-menu {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.18);
+}
 .bootstrap-select .dropdown-toggle .filter-option {
   position: static;
   top: 0;
