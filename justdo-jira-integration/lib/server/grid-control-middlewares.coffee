@@ -194,8 +194,9 @@ _.extend JustdoJiraIntegration.prototype,
       if (jira_issue_id = task.jira_issue_id)?
         # Maintain the Epic-[Task/Story/Bug]-Subtask hierarchy.
         # Refer to comments in @getIssueTypeRank() for issue type rank reference.
+        task_issue_type_rank = @getIssueTypeRank task.jira_issue_type, task.jira_project_id
+
         if new_parent_task?.jira_issue_id?
-          task_issue_type_rank = @getIssueTypeRank task.jira_issue_type, task.jira_project_id
           new_parent_task_issue_type_rank = @getIssueTypeRank new_parent_task.jira_issue_type, task.jira_project_id
 
           # Epics cannot be under another issue
