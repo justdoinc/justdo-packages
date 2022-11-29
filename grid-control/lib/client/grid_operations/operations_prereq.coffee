@@ -259,6 +259,11 @@ _.extend GridControl.prototype,
 
           break
 
+        if path_has_children == 3
+          prereq.selected_path_is_not_leaf_is_archived = "Can't perform operation. The following task is archived and has children under it: #{JustdoHelpers.taskCommonName(item, 50)}"
+
+          break
+
       return prereq
 
     # If there's no active path - just return the active prereq message
@@ -273,6 +278,9 @@ _.extend GridControl.prototype,
     if path_has_children == 2
       prereq.active_path_is_not_leaf_all_child_filtered = "Can't perform operation on an item with child tasks (has filtered children)"
 
+    if path_has_children == 3
+      prereq.active_path_is_not_leaf_is_archived = "Can't perform operation on an item with child tasks (archived task with children)"
+
     return prereq
 
   _opreqActivePathIsLeafOrHaveMultipleParents: (prereq) ->
@@ -286,7 +294,7 @@ _.extend GridControl.prototype,
       for path in @getFilterPassingMultiSelectedPathsArray()
         item_id = GridData.helpers.getPathItemId(path)
 
-        if @_grid_data.getAllCollectionItemIdPaths(item_id)?.length > 1
+        if @_grid_data.getAllCollectionItemIdPaths(item_id, false, true)?.length > 1 # true is to allow consideration of unreachable tasks when deciding if has multi-parents
           continue
 
         path_has_children = @_grid_data.filterAwareGetPathHasChildren(path)
@@ -306,6 +314,11 @@ _.extend GridControl.prototype,
 
           break
 
+        if path_has_children == 3
+          prereq.selected_path_is_not_leaf_is_archived = "Can't perform operation. The following task is archived and has children under it: #{JustdoHelpers.taskCommonName(item, 50)}"
+
+          break
+
       return prereq
 
     # If there's no active path - just return the active prereq message
@@ -315,7 +328,7 @@ _.extend GridControl.prototype,
 
     # If the current path is under only one parent and it is leaf, block the opreation
     current_item_id = GridData.helpers.getPathItemId(@getCurrentPath())
-    if @_grid_data.getAllCollectionItemIdPaths(current_item_id)?.length == 1 and 
+    if @_grid_data.getAllCollectionItemIdPaths(current_item_id, false, true)?.length == 1 and # true is to allow consideration of unreachable tasks when deciding if has multi-parents
         not _.isEmpty(active_path_prereq = @_opreqActivePathIsLeaf())
       _.extend(prereq, active_path_prereq)
       return prereq
