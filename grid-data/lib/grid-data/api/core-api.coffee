@@ -756,6 +756,7 @@ _.extend GridData.prototype,
     # Returns 0 if path is a leaf, hidden, hidden by filter or doesn't exist
     #         1 if path has children
     #         2 if path has children - but all are hidden by active filter
+    #         3 if path has children - but it is archived so it doesn't have the expand/collapse button next to it
 
     # IMPORTANT: this function always return 1 for the root path, use other methods
     #            to check root situation
@@ -767,6 +768,9 @@ _.extend GridData.prototype,
 
     @invalidateOnRebuild()
     active_filter = @isActiveFilter()
+
+    if @isPathArchived(path) and not _.isEmpty(@_grid_data_core.tree_structure[GridData.helpers.getPathItemId(path)])
+      return 3
 
     expand_state = @filterAwareGetPathExpandState(path)
 
