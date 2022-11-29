@@ -30,7 +30,7 @@ APP.executeAfterAppLibCode ->
 
       return false
 
-    return gd.getAllCollectionItemIdPaths(module.activeItemId())
+    return gd.getAllCollectionItemIdPaths(module.activeItemId(), false, true)
 
   activeItemPathsCount = ->
     return getAllActiveItemPaths()?.length or 0
@@ -50,7 +50,7 @@ APP.executeAfterAppLibCode ->
       return []
 
     active_item_path = module.activeItemPath()
-    paths = gd.getAllCollectionItemIdPaths(id)
+    paths = gd.getAllCollectionItemIdPaths(id, false, true)
     if not paths?
       # paths might not always be ready, in such case
       # just return empty array, reactivity will fix
@@ -307,7 +307,7 @@ APP.executeAfterAppLibCode ->
 
       current_path_array = GridData.helpers.getPathArray(current_path)
       current_item_id = current_path_array[current_path_array.length - 1]
-      can_remove = (paths_count = gd.getAllCollectionItemIdPaths(current_item_id)?.length)? and
+      can_remove = (paths_count = gd.getAllCollectionItemIdPaths(current_item_id, false, true)?.length)? and
                     paths_count > 1 and
                     operationsOnParentAllowed(current_path)
 

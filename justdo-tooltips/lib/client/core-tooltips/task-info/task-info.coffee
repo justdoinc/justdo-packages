@@ -35,10 +35,20 @@ Template.task_info_tooltip.onCreated ->
 
     tasks_ids = new Set()
 
-    for path in gd.getAllCollectionItemIdPaths(current_task_id)
-      for task_id in path.split("/")
-        if task_id != "" and task_id != current_task_id
-          tasks_ids.add(task_id)
+    item_paths = gd.getAllCollectionItemIdPaths(current_task_id, false, false) # We send false to the allow_unreachable_paths argument. That means that fully unreachable *non-closed*
+                                                                               # projects *won't* be in the list!
+                                                                               #
+                                                                               # At first, I thought to pass true to it, but it turned out that to activate the task under the fully-unreachable project
+                                                                               # might in some cases be quite challenging, when the user clicks on it.
+                                                                               # Imagine the case 'task a* -> project_task -> task b* -> target_task' where '*' denotes archived task. Because task_b is archived
+                                                                               # as well, it is techincally impossible, as of writing, to activate target_task under project_task using activateCollectionItemUnderSpecificAncestorOrFallbackToMainTab
+                                                                               # to avoid dealing with this case, I just decided to avoid getting to it by not showing fully unreachable projects in the list ~Daniel C.
+
+    if item_paths?
+      for path in item_paths
+        for task_id in path.split("/")
+          if task_id != "" and task_id != current_task_id
+            tasks_ids.add(task_id)
 
     known_ancestors_by_reference = JustdoHelpers.nonReactiveFullDocFindById(APP.collections.Tasks, Array.from(tasks_ids), {get_docs_by_reference: true})[0]
 
