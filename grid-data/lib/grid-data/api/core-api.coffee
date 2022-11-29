@@ -1026,3 +1026,27 @@ _.extend GridData.prototype,
       return true
 
     return @_isArchived(item_id, {exclude_archived})
+  
+  getNonIgnoredArchivedSubPathsInPath: (path, limit=0) ->
+    # Return undefined if no sub_path in path is archived
+    # Will return an array that contains the archived sub-paths, from the deepest one, up to limit (so if limit is 1 we'll return 1)
+    #
+    # If limit is 0 we'll return all the sub-paths.
+
+    ret = []
+    for sub_path in GridData.helpers.getAllSubPaths(path).reverse()
+      if @isPathArchived(sub_path)
+        ret.push(sub_path)
+
+        limit -= 1
+
+        if limit == 0
+          return ret
+
+    if ret.length is 0
+      return undefined
+
+    return ret
+
+  isPathReachable: (path) ->
+    return not @getNonIgnoredArchivedSubPathsInPath(GridData.helpers.getParentPath(path), 1)?
