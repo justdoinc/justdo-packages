@@ -714,19 +714,27 @@ _.extend GridControlMux.prototype,
     found_path_tab = null
     found_path_ancestor_distance = null
     for gc in grids_to_scan
-      for item_path in gc._grid_data.getAllCollectionItemIdPaths(item_id)
-        item_path_array = item_path.substr(1, item_path.length - 2).split("/")
-        if (ancestor_level = item_path_array.indexOf(ancestor_id)) != -1
-          ancestor_distance_from_item = -1 * (ancestor_level - (item_path_array.length - 1))
+      found_paths = gc._grid_data.getAllCollectionItemIdPaths(item_id) # Note we don't look for unreachable paths
+      if found_paths?
+        for item_path in found_paths
+          item_path_array = item_path.substr(1, item_path.length - 2).split("/")
+          if (ancestor_level = item_path_array.indexOf(ancestor_id)) != -1
+            ancestor_distance_from_item = -1 * (ancestor_level - (item_path_array.length - 1))
 
-          if ancestor_distance_from_item == 0
-            # We won't find better than this, just return.
-            return {tab_id: gc.grid_control_mux_tab_id, path: item_path}
-          else
-            if not found_path_ancestor_distance? or (found_path_ancestor_distance > ancestor_distance_from_item)
-              found_path = item_path
-              found_path_tab = gc.grid_control_mux_tab_id
-              found_path_ancestor_distance = ancestor_distance_from_item
+            if ancestor_distance_from_item == 0
+              # We won't find better than this, just return.
+              return {tab_id: gc.grid_control_mux_tab_id, path: item_path}
+            else
+              if not found_path_ancestor_distance? or (found_path_ancestor_distance > ancestor_distance_from_item)
+                found_path = item_path
+                found_path_tab = gc.grid_control_mux_tab_id
+                found_path_ancestor_distance = ancestor_distance_from_item
+
+
+    if not found_path?
+      # There's no reachable path to the item_id under that ancesotr_id either in the current grid control
+      # or the main grid_control
+      console.warn "getCollectionItemPathUnderSpecificAncestorOrFallbackToMainTab: Unreachable path requested ancestor_id:#{ancestor_id} item_id:#{item_id}"
 
     return {tab_id: found_path_tab, path: found_path}
 

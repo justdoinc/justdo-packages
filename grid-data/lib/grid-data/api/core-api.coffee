@@ -459,6 +459,8 @@ _.extend GridData.prototype,
     #
     # options.each_options Object, the options we'll pass the @_each that looks
     # for item_id. By default we pass: {expand_only: false, filtered_tree: false}
+    #
+    # options.allow_unreachable_paths is set we'll call getAllCollectionItemIdPaths according to its value
 
     each_options = {expand_only: false, filtered_tree: false}
     if (custom_each_options = options?.each_options)?
@@ -474,7 +476,7 @@ _.extend GridData.prototype,
       # The two options that aren't supported at the moment, should be quite easy to
       # implement, once we have a bit more time. -Daniel
 
-      optimized_item_path = @getAllCollectionItemIdPaths(item_id, true)?[0] or null
+      optimized_item_path = @getAllCollectionItemIdPaths(item_id, true, if options?.allow_unreachable_paths? then options?.allow_unreachable_paths else undefined)?[0] or null
 
       return optimized_item_path
 
@@ -491,7 +493,8 @@ _.extend GridData.prototype,
 
     return item_path
 
-  getAllCollectionItemIdPaths: (item_id, return_first=false) ->
+  getAllCollectionItemIdPaths: (item_id, return_first=false, allow_unreachable_paths=false) ->
+    self = @
     # Returns an array with all the paths in @grid_tree that leads to the
     # requested item_id of @collection, in their order in the tree.
     #
@@ -499,11 +502,15 @@ _.extend GridData.prototype,
 
     # This function is reactive to changes in the underlying tree data structures
 
+    # allow_unreachable_paths: If set to true we will include in the returned paths also paths that
+    #                          are unreachable due to their ancestors being non-ignored archived tasks
+    #                          in this view.
+
     @invalidateOnGridDataCoreStructureChange()
 
-    same_tick_cache_key_id = "grid-data::getAllCollectionItemIdPaths::#{@_grid_data_obj_uid}::#{item_id}"
+    same_tick_cache_key_id = "grid-data::getAllCollectionItemIdPaths::#{@_grid_data_obj_uid}::#{item_id}::#{return_first}::#{allow_unreachable_paths}"
     if JustdoHelpers.sameTickCacheExists(same_tick_cache_key_id)
-      return JustdoHelpers.sameTickCacheGet(same_tick_cache_key_id)
+      return JustdoHelpers.sameTickCacheGet(same_tick_cache_key_id)?.slice()
 
     if item_id == "0"
       return "/"
@@ -523,10 +530,15 @@ _.extend GridData.prototype,
       if item_obj._id of sub_paths
         for sub_part_path in sub_paths[item_obj._id]
           # console.log {sub_paths, sub_part_path, item_obj}
-          optimized_new_paths.push "#{path}#{if sub_part_path == "" then "" else "#{sub_part_path}/"}"
-
-          if return_first
-            return -2
+          new_path = "#{path}#{if sub_part_path == "" then "" else "#{sub_part_path}/"}"
+          optimized_new_paths.push new_path
+          
+          if return_first is true 
+            if allow_unreachable_paths is true
+              return -2
+            else if self.isPathReachable(new_path)
+              optimized_new_paths = [new_path]
+              return -2
 
       # Step into, *ONLY* if this is a section item, we scan only the root items of each section item.
       # Note that @_each is more optimized then section_def.section_manager._each, hence we use it instead
@@ -562,6 +574,12 @@ _.extend GridData.prototype,
       return -1
 
     optimized_new_paths = _.uniq(optimized_new_paths)
+
+    if not allow_unreachable_paths
+      optimized_new_paths = _.filter(optimized_new_paths, (path) -> self.isPathReachable(path))
+
+    if return_first is true and optimized_new_paths.length > 1
+      optimized_new_paths = [optimized_new_paths[0]]
 
     if _.isEmpty optimized_new_paths
       optimized_new_paths = undefined
