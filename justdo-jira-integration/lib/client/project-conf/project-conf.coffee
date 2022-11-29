@@ -42,7 +42,7 @@ Template.justdo_jira_integration_project_config.events
     message_template = JustdoHelpers.renderTemplateInNewNode(Template.justdo_jira_integration_project_setting)
 
     dialog = bootbox.dialog
-      title: "Connect with Jira"
+      title: "Configure Jira Integration"
       message: message_template.node
       animate: true
       className: "bootbox-new-design"
