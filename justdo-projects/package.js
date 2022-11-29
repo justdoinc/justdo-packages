@@ -48,7 +48,7 @@ Package.onUse(function (api) {
   api.use('justdoinc:justdo-emails@1.0.0', both); // client is needed for media files
 
   api.use('justdoinc:justdo-tasks-collections-manager@1.0.0', both);
-
+  api.use("stem-capital:grid-control@0.1.0", client);
   api.use('justdoinc:grid-control-custom-fields@1.0.0', both);
 
   api.use('justdoinc:justdo-projects-shared-components@1.0.0', both);
@@ -72,6 +72,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/grid-sections/my-direct-tasks.coffee', client);
   api.add_files('lib/client/grid-sections/members-direct-tasks.coffee', client);
   api.add_files('lib/client/grid-sections/project-toolbar-detached-data-subtrees.coffee', client);
+  api.add_files("lib/client/owner-fullname-formatter.coffee", client);
 
   api.add_files('lib/client/init.coffee', client);
   api.add_files('lib/client/api.coffee', client);
