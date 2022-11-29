@@ -741,15 +741,16 @@ _.extend GridControlMux.prototype,
   activateCollectionItemUnderSpecificAncestorOrFallbackToMainTab: (ancestor_id, item_id) ->
     {tab_id, path} = @getCollectionItemPathUnderSpecificAncestorOrFallbackToMainTab(ancestor_id, item_id)
 
-    current_gc = @getActiveTabNonReactive()?.grid_control
+    if path?
+      current_gc = @getActiveTabNonReactive()?.grid_control
 
-    if current_gc.grid_control_mux_tab_id != tab_id
-      @activateTab(tab_id)
+      if current_gc.grid_control_mux_tab_id != tab_id
+        @activateTab(tab_id)
 
-      # To activate the tab
-      Tracker.flush()
+        # To activate the tab
+        Tracker.flush()
 
-    @getActiveTabNonReactive()?.grid_control?.activatePath(path, 0)
+      @getActiveTabNonReactive()?.grid_control?.activatePath(path, 0)
 
     return
 
