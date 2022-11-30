@@ -233,7 +233,7 @@ _.extend JustdoJiraIntegration.prototype,
       jira_project_id: jira_project_id
       jira_last_updated: new Date()
 
-    _.extend task_fields, await @_mapJiraFieldsToJustdoFields justdo_id, {issue: jira_issue_body}
+    _.extend task_fields, @_mapJiraFieldsToJustdoFields justdo_id, {issue: jira_issue_body}
 
     task_owner_id = task_fields.owner_id or justdo_admin_id
 
@@ -810,9 +810,7 @@ _.extend JustdoJiraIntegration.prototype,
       fields: relevant_jira_field_ids
     issue_search_cb = (res) =>
       {issues} = res
-      # done_issues = new Set()
       while (issue = issues.shift())?
-      # for issue in issues
         issue_fields = issue.fields
 
         parent_id = null
@@ -1460,7 +1458,7 @@ _.extend JustdoJiraIntegration.prototype,
             return
 
           justdo_id = @getJustdoIdForIssue(issue) or issue.fields[JustdoJiraIntegration.project_id_custom_field_id]
-          mapped_task_fields = await @_mapJiraFieldsToJustdoFields justdo_id, {issue}, {include_null_values: true}
+          mapped_task_fields = @_mapJiraFieldsToJustdoFields justdo_id, {issue}, {include_null_values: true}
           if mapped_task_fields.owner_id is null
             mapped_task_fields.owner_id = @_getJustdoAdmin justdo_id
           if not (@tasks_collection.findOne(_.extend({jira_issue_id: parseInt issue.id}, mapped_task_fields), {fields: {_id: 1}}))?
@@ -1496,7 +1494,7 @@ _.extend JustdoJiraIntegration.prototype,
           return
 
         justdo_id = @getJustdoIdForIssue issue
-        fields = await @_mapJiraFieldsToJustdoFields justdo_id, {issue}, {include_null_values: true, performing_resync: true}
+        fields = @_mapJiraFieldsToJustdoFields justdo_id, {issue}, {include_null_values: true, performing_resync: true}
         if not _.isEmpty fields
           # XXX updated_by is hardcoded to be justdo admin at the moment
           if @tasks_collection.update({jira_issue_id: parseInt(issue.id)}, {$set: _.extend {jira_last_updated: new Date(), updated_by: @_getJustdoAdmin justdo_id}, fields})
