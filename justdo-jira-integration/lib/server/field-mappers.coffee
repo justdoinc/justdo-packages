@@ -107,11 +107,10 @@ _.extend JustdoJiraIntegration,
       type: "string"
     description:
       name: "description"
-      type: "string" # XXX Should be markdown doc instead
+      type: "string"
     jira_sprint:
       id: sprint_custom_field_id
       name: "Sprint"
-      type: "string"
       mapper: (justdo_id, field, destination, req_body) ->
         if destination is "justdo"
           updateSprintFieldOfChildTasks = (task_id, sprint_name) =>
