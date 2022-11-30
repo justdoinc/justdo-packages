@@ -26,3 +26,12 @@ _.extend JustdoJiraIntegration.prototype,
   isJustdoMountedWithJiraProject: (justdo_id, cb) ->
     Meteor.call "isJustdoMountedWithJiraProject", justdo_id, cb
     return
+
+  getJiraFieldDef: (jira_doc_id, cb) ->
+    return Meteor.call "getJiraFieldDef", jira_doc_id, cb
+
+  getHardcodedJustdoFieldToJiraFieldMap: (cb) ->
+    return Meteor.call "getHardcodedJustdoFieldToJiraFieldMap", cb
+
+  mapJustdoAndJiraFields: (jira_project_id, field_map, cb) ->
+    return Meteor.call "mapJustdoAndJiraFields", jira_project_id, field_map, cb

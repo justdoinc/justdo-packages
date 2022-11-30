@@ -1585,3 +1585,35 @@ _.extend JustdoJiraIntegration.prototype,
       current_path.call previous_path, req_body, cb
 
     return JustdoHelpers.fiberYield()
+
+  getJiraFieldDef: (jira_doc_id) ->
+    if @isJiraInstanceCloud()
+      jira_server_id = @jira_collection.findOne(jira_doc_id, {fields: {"server_info.id": 1}})?.server_info?.id
+    else
+      jira_server_id = "private-server"
+
+    client = @clients[jira_server_id].v2
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "issueFields.getFields", null, client
+    if err?
+      throw err
+
+    return res
+
+  getHardcodedJustdoFieldToJiraFieldMap: ->
+    return _.map JustdoJiraIntegration.justdo_field_to_jira_field_map, (field_def, justdo_field_name) => {justdo_field: justdo_field_name, jira_field: field_def.id or field_def.name}
+
+  # XXX how to check if both fields has the same type?
+  # XXX field_map is expected to be an array of objects in the format of {justdo_field_id, jira_field_id, type}
+  mapJustdoAndJiraFields: (jira_project_id, field_map, user_id) ->
+    # XXX check user_id is justdo admin?
+
+    query =
+      "jira_projects.#{jira_project_id}":
+        $ne: null
+    ops =
+      $addToSet:
+        "jira_projects.#{jira_project_id}.custom_field_map":
+          $each: field_map
+    @jira_collection.update query, ops
+
+    return

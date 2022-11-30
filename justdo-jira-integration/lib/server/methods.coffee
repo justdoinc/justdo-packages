@@ -33,3 +33,16 @@ _.extend JustdoJiraIntegration.prototype,
       isJustdoMountedWithJiraProject: (justdo_id) ->
         check justdo_id, String
         return self.isJustdoMountedWithJiraProject justdo_id
+
+      getJiraFieldDef: (jira_doc_id) ->
+        check jira_doc_id, String
+        return self.getJiraFieldDef jira_doc_id
+
+      getHardcodedJustdoFieldToJiraFieldMap: ->
+        return self.getHardcodedJustdoFieldToJiraFieldMap()
+
+      mapJustdoAndJiraFields: (jira_project_id, field_map) ->
+        check jira_project_id, String
+        # XXX Implement checking for field map
+        self.mapJustdoAndJiraFields jira_project_id, field_map, @userId
+        return
