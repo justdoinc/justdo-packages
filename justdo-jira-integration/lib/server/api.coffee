@@ -1643,6 +1643,9 @@ _.extend JustdoJiraIntegration.prototype,
       fiber.run {err, res}
       return
 
-    current_path.call previous_path, req_body, cb
+    if _.isNull req_body
+      current_path.call previous_path, cb
+    else
+      current_path.call previous_path, req_body, cb
 
     return JustdoHelpers.fiberYield()
