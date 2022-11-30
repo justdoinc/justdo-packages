@@ -272,9 +272,6 @@ _.extend JustdoJiraIntegration,
                   console.error e
 
             return
-    due_date:
-      name: "duedate"
-      type: "raw"
     state:
       name: "status"
       mapper: (justdo_id, field, destination, req_body) ->
@@ -368,46 +365,10 @@ _.extend JustdoJiraIntegration,
               by: user_id
               new_value: "became reporter"
           return user_id
-    start_date:
-      id: start_date_custom_field_id
-      name: "jd_start_date"
-      mapper: (justdo_id, field, destination, req_body) ->
-        if destination is "jira"
-          return field
-        if destination is "justdo"
-          if _.isString field
-            start_date = field
-          if _.isString field?.to
-            start_date = field.to
-
-          if start_date?
-            return moment.utc(start_date).format("YYYY-MM-DD")
-          return null
-    end_date:
-      id: end_date_custom_field_id
-      name: "jd_end_date"
-      mapper: (justdo_id, field, destination, req_body) ->
-        if destination is "jira"
-          return field
-        if destination is "justdo"
-          if _.isString field
-            end_date = field
-          if _.isString field?.to
-            end_date = field.to
-          if end_date?
-            return moment.utc(end_date).format("YYYY-MM-DD")
-          return null
     jira_story_point:
       id: story_point_estimate_custom_field_id
       name: "Story Points"
-      mapper: (justdo_id, field, destination, req_body) ->
-        if not field?
-          return null
-        if _.isNumber field
-          return field
-        if _.isString field?.toString
-          field = field.toString
-        return parseFloat field
+      mapper: JustdoJiraIntegration.primitive_field_mappers.number
       # XXX Currently story point estimate is used as the duration which is not ideal.
       # XXX The followings are meant for mapping the field value to the actual time estimate field.
       # We store duration as days, Jira store duration as seconds
