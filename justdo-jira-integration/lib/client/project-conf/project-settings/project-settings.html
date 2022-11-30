@@ -1,14 +1,66 @@
 <template name="justdo_jira_integration_project_setting">
-  <div class="jira-login-button">
-    {{#with serverInfo}}
-      <div>
-        Connected to Jira instance <a href="{{url}}" target="_blank">{{name}}</a>
-      </div>
-    {{/with}}
+  <div class="jira-oauth-wrapper">
+    <h5>Connection</h5>
     {{#if oAuthLoginLink}}
       <a class="jira-login-link" href="{{oAuthLoginLink}}" target="_blank">Connect with JIRA</a>
     {{else}}
       <span>Loading...</span>
     {{/if}}
+
+    {{#with serverInfo}}
+      <div>
+        Connected to Jira instance <a href="{{url}}" target="_blank">{{name}}</a>
+      </div>
+    {{/with}}
   </div>
+
+  {{#with serverInfo}}
+    <div class="jira-field-map-wrapper">
+      <h5>Fields Mapping</h5>
+
+      <span>We have setup the following fields for you. They will apply to all mounted Jira projects and cannot be changed.</span><br>
+
+      <div class="jira-field-pair">
+        <span class="jira-field"><b>JustDo Field</b></span><span class="jira-field"></span><span class="jira-field"><b>Jira Field</b></span>
+      </div>
+      {{#each hardcodedFieldsMap}}
+        <div class="jira-field-pair">
+          <span class="jira-field">{{justdo_field}}</span><span class="jira-field">→</span><span class="jira-field">{{jira_field}}</span>
+        </div>
+      {{/each}}
+
+      <br>Configure extra field mapping<br>
+
+      {{#each customFieldsMap}}
+        {{> justdo_jira_integration_field_map_option_pair templateDataForChildTemplate}}
+      {{/each}}
+
+    </div>
+  {{/with}}
+</template>
+
+<template name="justdo_jira_integration_field_map_option_pair">
+  {{#with fieldsAvaibleForUserMapping}}
+    <div class="jira-field-pair">
+      <select>
+        {{#each justdo_fields}}
+          {{#if selected}}
+            <option value="{{field_id}}" selected>{{field_name}}</option>
+          {{else}}
+            <option value="{{field_id}}">{{field_name}}</option>
+          {{/if}}
+        {{/each}}
+      </select>
+      <span class="jira-field">→</span>
+      <select>
+        {{#each jira_fields}}
+          {{#if selected}}
+            <option value="{{field_id}}" selected>{{field_name}}</option>
+          {{else}}
+            <option value="{{field_id}}">{{field_name}}</option>
+          {{/if}}
+        {{/each}}
+      </select>
+    </div>
+  {{/with}}
 </template>
