@@ -745,8 +745,10 @@ _.extend JustdoJiraIntegration.prototype,
     # Ensures all Jira project members has access to current Justdo
     @addJiraProjectMembersToJustdo justdo_id, jira_user_emails
 
+    @tasks_collection.update task_id, {$set: {jira_project_id: jira_project_id, jira_mountpoint_type: "root"}}
+
     # Add task members to the mounted task
-    @tasks_collection.update task_id, {$set: {jira_project_id: jira_project_id, jira_mountpoint_type: "root"}, $addToSet: {users: {$each: user_ids_to_be_added_to_child_tasks}}}
+    APP.projects.bulkUpdate justdo_id, [task_id], {$addToSet: {users: {$each: user_ids_to_be_added_to_child_tasks}}}, justdo_admin_id
 
     # Setup mountpoints for sprints and fix versions
     gc = APP.projects._grid_data_com
