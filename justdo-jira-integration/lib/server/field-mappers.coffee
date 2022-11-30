@@ -5,6 +5,28 @@ story_point_estimate_custom_field_id = "customfield_10016"
 epic_link_custom_field_id = "customfield_10109"
 
 _.extend JustdoJiraIntegration,
+  primitive_field_mappers:
+    number: (justdo_id, field, destination, req_body) ->
+      if not field?
+        return null
+      if _.isNumber field
+        return field
+      if _.isString field?.toString
+        field = field.toString
+      return parseFloat field
+    date: (justdo_id, field, destination, req_body) ->
+      if destination is "jira"
+        return field
+      if destination is "justdo"
+        if _.isString field
+          date = field
+        if _.isString field?.to
+          date = field.to
+        if date?
+          return moment.utc(date).format("YYYY-MM-DD")
+        return null
+
+_.extend JustdoJiraIntegration,
   # XXX Try to search for custom field ids using Jira API and store it in DB
 
   # XXX Cloud
