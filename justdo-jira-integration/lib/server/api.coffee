@@ -116,6 +116,9 @@ _.extend JustdoJiraIntegration.prototype,
     if not justdo_id?
       throw @_error "justdo-id-not-found"
 
+    jira_project_id = parseInt req_body.issue.fields.project.id
+    custom_field_map = _.indexBy @getCustomFieldMapByJiraProjectId(jira_project_id), "jira_field_id"
+
     # issue_updated
     if options?.use_changelog
       {changelog} = req_body
@@ -125,68 +128,81 @@ _.extend JustdoJiraIntegration.prototype,
         $pull: {}
 
       for changed_item in changelog.items
-        jira_field_name = changed_item.fieldId or changed_item.field
+        jira_field_id = changed_item.fieldId or changed_item.field
         # Temp workaround for on-perm Jira installations that has field name/id discrepencies with Jira cloud
-        if (alt_jira_field_name = JustdoJiraIntegration.alt_field_name_map[jira_field_name])?
-          jira_field_name = alt_jira_field_name
+        if (alt_jira_field_id = JustdoJiraIntegration.alt_field_name_map[jira_field_id])?
+          jira_field_id = alt_jira_field_id
 
-        if not (justdo_field_name = JustdoJiraIntegration.jira_field_to_justdo_field_map[jira_field_name])?
+        if not (justdo_field_id = JustdoJiraIntegration.jira_field_to_justdo_field_map[jira_field_id])? and not (custom_jira_field_map = custom_field_map[jira_field_id])?
           continue
-        jira_field_def = JustdoJiraIntegration.justdo_field_to_jira_field_map[justdo_field_name]
-        jira_field_type = jira_field_def.type
 
-        if jira_field_def.mapper?
-          field_val = jira_field_def.mapper.call @, justdo_id, changed_item, "justdo", req_body
-        else if jira_field_type is "string"
+        if _.isString justdo_field_id
+          default_jira_field_map = JustdoJiraIntegration.justdo_field_to_jira_field_map[justdo_field_id]
+          field_type = default_jira_field_map.type
+        else
+          justdo_field_id = custom_jira_field_map.justdo_field_id
+          field_type = custom_jira_field_map.type
+
+        if default_jira_field_map?.mapper?
+          field_val = default_jira_field_map.mapper.call @, justdo_id, changed_item, "justdo", req_body
+        else if field_type is "string"
           field_val = changed_item.toString
-        else if jira_field_type is "array"
+        else if field_type in ["date", "number"]
+          field_val = JustdoJiraIntegration.primitive_field_mappers[field_type].call @, justdo_id, changed_item, "justdo", req_body
+        else if field_type is "array"
           {fromString, toString} = changed_item
 
           # From null to something, assume add/set
           if _.isNull(fromString) and _.isString(toString)
-            if not fields_map.$addToSet[justdo_field_name]?
-              fields_map.$addToSet[justdo_field_name] =
+            if not fields_map.$addToSet[justdo_field_id]?
+              fields_map.$addToSet[justdo_field_id] =
                 $each: []
-            fields_map.$addToSet[justdo_field_name].$each.push toString
+            fields_map.$addToSet[justdo_field_id].$each.push toString
 
           # From something to null, assume remove/unset
           if _.isString(fromString) and _.isNull(toString)
-            if not fields_map.$pull[justdo_field_name]?
-              fields_map.$pull[justdo_field_name] =
+            if not fields_map.$pull[justdo_field_id]?
+              fields_map.$pull[justdo_field_id] =
                 $in: []
-            fields_map.$pull[justdo_field_name].$in.push fromString
+            fields_map.$pull[justdo_field_id].$in.push fromString
 
           continue
         else
           field_val = changed_item.to
 
-        fields_map.$set[justdo_field_name] = field_val
+        fields_map.$set[justdo_field_id] = field_val
     # issue_created
     else
       {fields} = req_body.issue
       fields_map = {}
+      field_ids_to_sync = _.union _.keys(custom_field_map), _.keys(JustdoJiraIntegration.jira_field_to_justdo_field_map)
 
-      for justdo_field_name, jira_field_def of JustdoJiraIntegration.justdo_field_to_jira_field_map
-        field_key = jira_field_def.id or jira_field_def.name
-        jira_field = fields[field_key]
-        if not (_.has fields, field_key) and (_.isEmpty jira_field) and not (_.isNumber jira_field) and not (_.isBoolean jira_field)
+      for jira_field_id in field_ids_to_sync
+        jira_field = fields[jira_field_id]
+        justdo_field_id = JustdoJiraIntegration.jira_field_to_justdo_field_map[jira_field_id] or custom_field_map[jira_field_id]?.justdo_field_id
+        default_jira_field_def = JustdoJiraIntegration.justdo_field_to_jira_field_map[justdo_field_id]
+        field_type = default_jira_field_def?.type or custom_field_map[jira_field_id]?.type
+
+        if not (_.has fields, jira_field_id) and (_.isEmpty jira_field) and not (_.isNumber jira_field) and not (_.isBoolean jira_field)
           if options?.include_null_values is true
-            fields_map[justdo_field_name] = null
+            fields_map[justdo_field_id] = null
           continue
 
-        if jira_field_def.mapper?
-          field_val = jira_field_def.mapper.call @, justdo_id, jira_field, "justdo", req_body
-        else if _.isString jira_field
+        if default_jira_field_def?.mapper?
+          field_val = default_jira_field_def.mapper.call @, justdo_id, jira_field, "justdo", req_body
+        else if field_type is "string"
           field_val = jira_field
+        else if field_type in ["date", "number"]
+          field_val = JustdoJiraIntegration.primitive_field_mappers[field_type].call @, justdo_id, jira_field, "justdo", req_body
         else if _.isArray jira_field
-          fields_map[justdo_field_name] = []
+          fields_map[justdo_field_id] = []
           for sub_field in jira_field
-            fields_map[justdo_field_name].push sub_field.name
+            fields_map[justdo_field_id].push sub_field.name
           continue
         else
           field_val = jira_field?.name
 
-        fields_map[justdo_field_name] = field_val
+        fields_map[justdo_field_id] = field_val
 
     return fields_map
 
@@ -195,26 +211,28 @@ _.extend JustdoJiraIntegration.prototype,
       fields: {}
       transition: {}
 
-    for field_name, field_val of modifier.$set
+    jira_project_id = task_doc.jira_project_id
+    custom_field_map = _.indexBy @getCustomFieldMapByJiraProjectId(jira_project_id), "justdo_field_id"
 
-      if not (jira_field_def = JustdoJiraIntegration.justdo_field_to_jira_field_map[field_name])?
+    for field_id, field_val of modifier.$set
+      if not (jira_field_map = JustdoJiraIntegration.justdo_field_to_jira_field_map[field_id])? and not (jira_field_map = custom_field_map[field_id])?
         continue
 
-      jira_field_name = jira_field_def.id or jira_field_def.name
+      jira_field_id = jira_field_map.id or jira_field_map.name or jira_field_map.jira_field_id
 
-      if jira_field_def.mapper?
+      if jira_field_map.mapper?
         # Some updates require using different APIs.
         # If the mapper doesn't return a value, assume the update are performed inside the mapper.
-        if (mapped_field_val = jira_field_def.mapper.call @, justdo_id, field_val, "jira", task_doc)?
+        if (mapped_field_val = jira_field_map.mapper.call @, justdo_id, field_val, "jira", task_doc)?
           if field_name is "state"
             fields_to_update.transition =
               id: mapped_field_val
           else
-            fields_to_update.fields[jira_field_name] = mapped_field_val
-      else if jira_field_def.map?[field_val]?
-        fields_to_update.fields[jira_field_name] = jira_field_def.map[field_val]
+            fields_to_update.fields[jira_field_id] = mapped_field_val
+      else if (type = jira_field_map.type) in ["date", "number"]
+        fields_to_update.fields[jira_field_id] = JustdoJiraIntegration.primitive_field_mappers[type].call @, justdo_id, field_val, "jira", task_doc
       else
-        fields_to_update.fields[jira_field_name] = field_val
+        fields_to_update.fields[jira_field_id] = field_val
 
     return fields_to_update
 
@@ -1241,9 +1259,17 @@ _.extend JustdoJiraIntegration.prototype,
         return client
       throw @_error "client-not-found"
 
+  # XXX This method supports only single Jira instance
   getAllRelevantJiraFieldIds: ->
-    relevant_field_ids = _.map JustdoJiraIntegration.justdo_field_to_jira_field_map, (field) -> field.id or field.name
-    return relevant_field_ids.concat ["project", "parent", "assignee", JustdoJiraIntegration.epic_link_custom_field_id, JustdoJiraIntegration.task_id_custom_field_id, JustdoJiraIntegration.project_id_custom_field_id, JustdoJiraIntegration.last_updated_custom_field_id]
+    default_mapped_field_ids = _.map JustdoJiraIntegration.justdo_field_to_jira_field_map, (field) -> field.id or field.name
+    custom_mapped_field_ids = []
+
+    jira_doc = @jira_collection.findOne({}, {fields: {jira_projects: 1}})
+    for jira_project_id, jira_project of jira_doc.jira_projects
+      for field_map in jira_project.custom_field_map
+        custom_mapped_field_ids.push field_map.jira_field_id
+
+    return _.union default_mapped_field_ids, custom_mapped_field_ids, ["project", "parent", "assignee", JustdoJiraIntegration.epic_link_custom_field_id, JustdoJiraIntegration.task_id_custom_field_id, JustdoJiraIntegration.project_id_custom_field_id, JustdoJiraIntegration.last_updated_custom_field_id]
 
   isJustdoMountedWithJiraProject: (justdo_id) ->
     query =
