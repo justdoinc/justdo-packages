@@ -118,7 +118,7 @@ DatesFilterControllerConstructor = (context) ->
                 <div class="custom-range-time-label custom-range-time-label-start">Time</div>
               </div>
               <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
-              <div class="custom-datepicker custom-datepicker-start shadow-lg">
+              <div class="custom-datepicker custom-datepicker-start shadow-lg" tabindex="0">
                 <div class="custom-datepicker-time-wrapper">
                   <div class="custom-datepicker-time">
                     <input class="hours custom-datepicker-time-input" placeholder="00" type="text" maxlength="2">
@@ -136,7 +136,7 @@ DatesFilterControllerConstructor = (context) ->
                 <div class="custom-range-time-label custom-range-time-label-end">Time</div>
               </div>
               <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
-              <div class="custom-datepicker custom-datepicker-end shadow-lg">
+              <div class="custom-datepicker custom-datepicker-end shadow-lg" tabindex="0">
                 <div class="custom-datepicker-time-wrapper">
                   <div class="custom-datepicker-time">
                     <input class="hours custom-datepicker-time-input" placeholder="00" type="text" maxlength="2">
@@ -245,8 +245,8 @@ DatesFilterControllerConstructor = (context) ->
 
     return
 
-  @controller.find(".custom-range-label").on "mouseleave", (e) ->
-    $(e.target).closest(".custom-range-label").blur()
+  @controller.find(".custom-datepicker .ui-datepicker").on "mouseenter", (e) ->
+    $(e.target).closest(".custom-datepicker").focus()
 
     return
 
