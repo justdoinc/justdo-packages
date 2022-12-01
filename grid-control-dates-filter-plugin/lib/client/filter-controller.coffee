@@ -307,6 +307,9 @@ DatesFilterControllerConstructor = (context) ->
     return
 
   @controller.on "change", ".custom-datepicker-time-input", (e) ->
+    $input = $(e.target).closest(".custom-datepicker-time-input")
+    $input.val $input.val().padStart(2, 0)
+
     constructor.updateTime(e.target)
 
     return
