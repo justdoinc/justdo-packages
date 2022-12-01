@@ -262,17 +262,27 @@ DatesFilterControllerConstructor = (context) ->
     if $label.hasClass "custom-range-label-end"
       date_type = "end"
 
+    if date
+      date_divider_regex = "[./-]"
+      divider_character = date_format.match(date_divider_regex)[0]
+      date_split_array = []
+
+      for date_item in date.split(divider_character)
+        date_split_array.push date_item.padStart(2, 0)
+
+      date = date_split_array.join(divider_character)
+
     if moment(date, date_format, true).isValid() or date == ""
       if date
         formated_date = moment(date, date_format).format("MM/DD/YYYY")
         constructor["custom_range_#{date_type}"] = formated_date
+        $label.text date
       else
         constructor["custom_range_#{date_type}"] = ""
 
       constructor.setCustomRange("update")
 
       $(".custom-datepicker-#{date_type}").datepicker( "setDate", formated_date )
-
     else
       $label.text moment(constructor["custom_range_#{date_type}"]).format(date_format)
 
