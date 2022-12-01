@@ -435,7 +435,7 @@ _.extend DatesFilterControllerConstructor.prototype,
       start_date_time = "#{@custom_range_start} #{@custom_range_start_time_hours}:#{@custom_range_start_time_minutes}"
 
     if @custom_range_end != ""
-      end_date_time = "#{@custom_range_end} #{@custom_range_end_time_hours}:#{@custom_range_end_time_minutes}"
+      end_date_time = "#{@custom_range_end} #{@custom_range_end_time_hours}:#{@custom_range_end_time_minutes}:59"
 
     filter_state.custom_range = { "start": start_date_time, "end": end_date_time }
 
