@@ -172,10 +172,7 @@ _.extend Projects.prototype,
   activateTaskInProject: (project_id, task_id, onActivated, timeout) ->
     activateTask = =>
       gcm = APP.modules.project_page.getCurrentGcm()
-
-      gcm.setPath(["main", task_id], {collection_item_id_mode: true})
-
-      JustdoHelpers.callCb(onActivated)
+      gcm.activateCollectionItemIdInCurrentPathOrFallbackToMainTab(task_id, onActivated)
 
       return
     
