@@ -245,6 +245,11 @@ DatesFilterControllerConstructor = (context) ->
 
     return
 
+  @controller.find(".custom-range-label").on "mouseleave", (e) ->
+    $(e.target).closest(".custom-range-label").blur()
+
+    return
+
   @controller.find(".custom-range-label").on "blur", (e) ->
     $label = $(e.target).closest(".custom-range-label")
     date_format = JustdoHelpers.getUserPreferredDateFormat()
@@ -259,11 +264,15 @@ DatesFilterControllerConstructor = (context) ->
 
     if moment(date, date_format, true).isValid() or date == ""
       if date
-        constructor["custom_range_#{date_type}"] = moment($label.text(), date_format).format("MM/DD/YYYY")
+        formated_date = moment(date, date_format).format("MM/DD/YYYY")
+        constructor["custom_range_#{date_type}"] = formated_date
       else
         constructor["custom_range_#{date_type}"] = ""
 
       constructor.setCustomRange("update")
+
+      $(".custom-datepicker-#{date_type}").datepicker( "setDate", formated_date )
+
     else
       $label.text moment(constructor["custom_range_#{date_type}"]).format(date_format)
 
@@ -340,12 +349,14 @@ _.extend DatesFilterControllerConstructor.prototype,
         @custom_range_start = moment(filter_state.custom_range.start, "MM/DD/YYYY HH:mm").format("MM/DD/YYYY")
         @custom_range_start_time_hours = moment(filter_state.custom_range.start).format("HH")
         @custom_range_start_time_minutes = moment(filter_state.custom_range.start).format("mm")
+        @controller.find(".custom-datepicker-start").datepicker( "setDate", @custom_range_start )
 
       if filter_state.custom_range.end != ""
         label_end = moment(filter_state.custom_range.end).format(date_format)
         @custom_range_end = moment(filter_state.custom_range.end, "MM/DD/YYYY HH:mm").format("MM/DD/YYYY")
         @custom_range_end_time_hours = moment(filter_state.custom_range.end).format("HH")
         @custom_range_end_time_minutes = moment(filter_state.custom_range.end).format("mm")
+        @controller.find(".custom-datepicker-end").datepicker( "setDate", @custom_range_end )
 
       # Set date
       @controller.find(".custom-range-label-start").text label_start
