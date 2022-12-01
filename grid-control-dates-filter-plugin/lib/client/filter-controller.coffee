@@ -119,7 +119,7 @@ DatesFilterControllerConstructor = (context) ->
               </div>
               <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
               <div class="custom-datepicker custom-datepicker-start shadow-lg" tabindex="0">
-                <div class="custom-datepicker-time-wrapper">
+                <div class="custom-datepicker-time-wrapper hide">
                   <div class="custom-datepicker-time">
                     <input class="hours custom-datepicker-time-input" placeholder="00" type="text" maxlength="2">
                     :
@@ -137,7 +137,7 @@ DatesFilterControllerConstructor = (context) ->
               </div>
               <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
               <div class="custom-datepicker custom-datepicker-end shadow-lg" tabindex="0">
-                <div class="custom-datepicker-time-wrapper">
+                <div class="custom-datepicker-time-wrapper hide">
                   <div class="custom-datepicker-time">
                     <input class="hours custom-datepicker-time-input" placeholder="00" type="text" maxlength="2">
                     :
@@ -365,6 +365,9 @@ _.extend DatesFilterControllerConstructor.prototype,
         @custom_range_start_time_hours = moment(filter_state.custom_range.start).format("HH")
         @custom_range_start_time_minutes = moment(filter_state.custom_range.start).format("mm")
         @controller.find(".custom-datepicker-start").datepicker( "setDate", @custom_range_start )
+        @controller.find(".custom-datepicker-start .custom-datepicker-time-wrapper").removeClass "hide"
+      else
+        @controller.find(".custom-datepicker-start .custom-datepicker-time-wrapper").addClass "hide"
 
       if filter_state.custom_range.end? and filter_state.custom_range.end != ""
         label_end = moment(filter_state.custom_range.end).format(date_format)
@@ -372,6 +375,9 @@ _.extend DatesFilterControllerConstructor.prototype,
         @custom_range_end_time_hours = moment(filter_state.custom_range.end).format("HH")
         @custom_range_end_time_minutes = moment(filter_state.custom_range.end).format("mm")
         @controller.find(".custom-datepicker-end").datepicker( "setDate", @custom_range_end )
+        @controller.find(".custom-datepicker-end .custom-datepicker-time-wrapper").removeClass "hide"
+      else
+        @controller.find(".custom-datepicker-end .custom-datepicker-time-wrapper").addClass "hide"
 
       # Set date
       @controller.find(".custom-range-label-start").text label_start
