@@ -226,12 +226,13 @@ DatesFilterControllerConstructor = (context) ->
   @controller.find(".custom-range-label-wrapper").on "click", (e) ->
     $el = $(e.currentTarget)
     $(".custom-datepicker").hide()
-    $el.parent().find(".custom-datepicker").fadeToggle()
+    $el.parent().find(".custom-datepicker").show()
 
     return
 
   $(".column-filter-dropdown-container").on "mousedown", (e) ->
-    $(".custom-datepicker").fadeOut()
+    if not $(e.target).parent().hasClass "custom-range-label-wrapper"
+      $(".custom-datepicker").hide()
 
     return
 
@@ -277,10 +278,11 @@ DatesFilterControllerConstructor = (context) ->
         formated_date = moment(date, date_format).format("MM/DD/YYYY")
         constructor["custom_range_#{date_type}"] = formated_date
         $label.text date
+        constructor.setCustomRange("update")
       else
-        constructor["custom_range_#{date_type}"] = ""
-
-      constructor.setCustomRange("update")
+        if constructor["custom_range_#{date_type}"]
+          constructor["custom_range_#{date_type}"] = ""
+          constructor.setCustomRange("update")
 
       $(".custom-datepicker-#{date_type}").datepicker( "setDate", formated_date )
     else
@@ -357,14 +359,14 @@ _.extend DatesFilterControllerConstructor.prototype,
 
       date_format = JustdoHelpers.getUserPreferredDateFormat()
 
-      if filter_state.custom_range.start != ""
+      if filter_state.custom_range.start? and filter_state.custom_range.start != ""
         label_start = moment(filter_state.custom_range.start).format(date_format)
         @custom_range_start = moment(filter_state.custom_range.start, "MM/DD/YYYY HH:mm").format("MM/DD/YYYY")
         @custom_range_start_time_hours = moment(filter_state.custom_range.start).format("HH")
         @custom_range_start_time_minutes = moment(filter_state.custom_range.start).format("mm")
         @controller.find(".custom-datepicker-start").datepicker( "setDate", @custom_range_start )
 
-      if filter_state.custom_range.end != ""
+      if filter_state.custom_range.end? and filter_state.custom_range.end != ""
         label_end = moment(filter_state.custom_range.end).format(date_format)
         @custom_range_end = moment(filter_state.custom_range.end, "MM/DD/YYYY HH:mm").format("MM/DD/YYYY")
         @custom_range_end_time_hours = moment(filter_state.custom_range.end).format("HH")
