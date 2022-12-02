@@ -500,7 +500,7 @@ _.extend JustdoJiraIntegration.prototype,
 
         grid_data.movePath old_path, new_parent, @_getJustdoAdmin justdo_id
 
-      if not _.isEmpty ({$set, $addToSet, $pull} = await @_mapJiraFieldsToJustdoFields justdo_id, req_body, {use_changelog: true})
+      if not _.isEmpty ({$set, $addToSet, $pull} = @_mapJiraFieldsToJustdoFields justdo_id, req_body, {use_changelog: true})
         ops =
           $set:
             updated_by: @_getJustdoAdmin justdo_id
