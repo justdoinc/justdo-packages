@@ -1659,9 +1659,8 @@ _.extend JustdoJiraIntegration.prototype,
       "jira_projects.#{jira_project_id}":
         $ne: null
     ops =
-      $addToSet:
-        "jira_projects.#{jira_project_id}.custom_field_map":
-          $each: field_map
+      $set:
+        "jira_projects.#{jira_project_id}.custom_field_map": field_map
     @jira_collection.update query, ops
 
     return
