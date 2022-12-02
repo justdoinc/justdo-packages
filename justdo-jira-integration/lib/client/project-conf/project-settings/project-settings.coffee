@@ -11,46 +11,38 @@ Template.justdo_jira_integration_project_setting.onCreated ->
     @oAuth_login_link_rv.set link
     return
 
-  @justdo_field_ids_to_exclude = new Set()
-  @jira_field_ids_to_exclude = new Set()
+  @hardcoded_justdo_field_ids = new Set()
+  @hardcoded_jira_field_ids = new Set()
   @hardcoded_field_map_rv = new ReactiveVar []
-  @jira_field_def_obj = new ReactiveVar {}
-  if (active_jira_doc_id = APP.collections.Projects.findOne(JD.activeJustdoId(), {fields: {"conf.justdo_jira:id": 1}})?.conf?["justdo_jira:id"])?
-    # Assuming we have grid control ready if we get activeJustdoId()
-    grid_control = APP.modules.project_page.gridControl()
+  APP.justdo_jira_integration.getHardcodedJustdoFieldToJiraFieldMap (err, field_map) =>
+    if err?
+      console.error err
+      return
 
-    # First get Jira field def, so we could translate field id to readable name
-    APP.justdo_jira_integration.getJiraFieldDef active_jira_doc_id, (err, field_def) =>
+    for field_pair in field_map.id
+      @hardcoded_justdo_field_ids.add field_pair.justdo_field
+      @hardcoded_jira_field_ids.add field_pair.jira_field
+
+    @hardcoded_field_map_rv.set field_map.name
+    return
+
+  @selected_jira_project_id_rv = new ReactiveVar ""
+
+  @jira_field_def_obj_rv = new ReactiveVar {}
+  @autorun =>
+    if not _.isNumber(selected_jira_project_id = @selected_jira_project_id_rv.get())
+      return
+    APP.justdo_jira_integration.getJiraFieldDefByJiraProjectId selected_jira_project_id, (err, field_def) =>
       if err?
         console.error err
         return
 
       jira_field_def_obj = {}
-      for field in field_def
-        jira_field_def_obj[field.id] = field
+      for field_id, field of field_def
+        jira_field_def_obj[field_id] = field
 
-      APP.justdo_jira_integration.getHardcodedJustdoFieldToJiraFieldMap (err, field_map) =>
-        if err?
-          console.error err
-          return
-
-        # Translate field id to readable name
-        for field_pair in field_map
-          {justdo_field, jira_field} = field_pair
-
-          @justdo_field_ids_to_exclude.add justdo_field
-          @jira_field_ids_to_exclude.add jira_field
-
-          field_pair.justdo_field = grid_control.getFieldDef(justdo_field).label
-          field_pair.jira_field = jira_field_def_obj[jira_field].name
-
-        @hardcoded_field_map_rv.set field_map
-        # jira_field_def_obj is set inside this scope so that justdo_field_ids_to_exclude and jira_field_ids_to_exclude is up to date
-        # by the time fieldsAvaibleForUserMapping() is re-ran.
-        @jira_field_def_obj.set jira_field_def_obj
-        return
-
-      return
+      @jira_field_def_obj_rv.set jira_field_def_obj
+    return
 
 Template.justdo_jira_integration_project_setting.helpers
   oAuthLoginLink: -> Template.instance().oAuth_login_link_rv.get()
@@ -61,12 +53,26 @@ Template.justdo_jira_integration_project_setting.helpers
   hardcodedFieldsMap: ->
     return Template.instance().hardcoded_field_map_rv.get()
 
+  selectedJiraProjectId: -> Template.instance().selected_jira_project_id_rv.get()
+
+  mountedJiraProjectsUnderActiveJustdo: ->
+    query =
+      project_id: JD.activeJustdoId()
+      jira_mountpoint_type: "root"
+      jira_project_id:
+        $ne: null
+
+    return APP.collections.Tasks.find(query, {fields: {jira_project_id: 1}}).map (task_doc) ->
+      jira_project_id = task_doc.jira_project_id
+      jira_project_key = APP.justdo_jira_integration.getJiraProjectKeyById jira_project_id
+      return {jira_project_id, jira_project_key}
+
   customFieldsMap: ->
-    return APP.justdo_jira_integration.getCustomFieldMapByJiraProjectId 10001
+    return APP.justdo_jira_integration.getCustomFieldMapByJiraProjectId Template.instance().selected_jira_project_id_rv.get()
 
   templateDataForChildTemplate: ->
-    {justdo_field_ids_to_exclude, jira_field_ids_to_exclude, hardcoded_field_map_rv, jira_field_def_obj} = Template.instance()
-    return {justdo_field_ids_to_exclude, jira_field_ids_to_exclude, hardcoded_field_map_rv, jira_field_def_obj, selected_justdo_field: @justdo_field_id, selected_jira_field: @jira_field_id}
+    {hardcoded_justdo_field_ids, hardcoded_jira_field_ids, hardcoded_field_map_rv, jira_field_def_obj_rv} = Template.instance()
+    return {hardcoded_justdo_field_ids, hardcoded_jira_field_ids, hardcoded_field_map_rv, jira_field_def_obj_rv, selected_justdo_field: @justdo_field_id, selected_jira_field: @jira_field_id}
 
 Template.justdo_jira_integration_project_setting.events
   "click .jira-login-link": (e, tpl) ->
@@ -77,8 +83,44 @@ Template.justdo_jira_integration_project_setting.events
     window.open target_link, "_blank"
     return
 
+  "click .configure-jira-project-field-mapping": (e, tpl) ->
+    e.preventDefault()
+    e.stopPropagation()
+
+    jira_project_id = $(e.target).closest(".configure-jira-project-field-mapping").data "id"
+    tpl.selected_jira_project_id_rv.set jira_project_id
+    return
+
+  "click .set-custom-field-pair": (e, tpl) ->
+    e.preventDefault()
+    e.stopPropagation()
+
+    field_pairs = []
+
+    # Transform the array into [[justdo_field_id, jira_field_id], [justdo_field_id, jira_field_id], ....]
+    field_pairs_array = _.chunk _.map($(".custom-jira-field-pair select"), (select) -> $(select).val()), 2
+
+    for field_pair, i in field_pairs_array
+      # If either one isn't selected, ignore the pair.
+      if not _.isString(field_pair[0]) or not _.isString(field_pair[1])
+        continue
+
+      [justdo_field_id, justdo_field_type] = field_pair[0].split "::"
+      [jira_field_id, jira_field_type] = field_pair[1].split "::"
+
+      if justdo_field_type isnt jira_field_type
+        JustdoSnackbar.show
+          text: "Field type mismatch at row #{i+1}"
+        return
+
+      field_pairs.push {justdo_field_id, jira_field_id, type: justdo_field_type}
+
+    APP.justdo_jira_integration.mapJustdoAndJiraFields tpl.selected_jira_project_id_rv.get(), field_pairs
+    return
+
 Template.justdo_jira_integration_field_map_option_pair.onCreated ->
   _.extend @, @data
+
   @selected_field_type = new ReactiveVar ""
   return
 
@@ -94,7 +136,7 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
     for field_id, field_def of grid_control.getSchemaExtendedWithCustomFields()
       field_type = field_def.type
 
-      if (field_def.client_only) or (field_def.grid_column_substitue_field?) or (not field_def.grid_visible_column) or (not field_def.grid_editable_column) or (field_type in [Object, Date]) or (tpl.justdo_field_ids_to_exclude.has field_id)
+      if (field_def.client_only) or (field_def.grid_column_substitue_field?) or (not field_def.grid_visible_column) or (not field_def.grid_editable_column) or (field_type in [Object, Date]) or (tpl.hardcoded_justdo_field_ids.has field_id)
         continue
 
       selected = false
@@ -108,16 +150,13 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
       if field_type is Number
         field_type = "number"
 
-      # if not (_.isEmpty(selected_field_type = tpl.selected_field_type.get())) and (field_type isnt selected_field_type)
-      #   continue
-
       ret.justdo_fields.push {field_id: field_id, field_name: field_def.label, field_type: field_type, selected: selected}
 
     # Append Jira fields
-    for field_id, field_def of Template.instance().jira_field_def_obj.get()
+    for field_id, field_def of Template.instance().jira_field_def_obj_rv.get()
       field_type = field_def.schema?.type
 
-      if (field_def.name.includes "jd_") or (field_type not in ["number", "string", "date", "datetime"]) or (tpl.jira_field_ids_to_exclude.has field_id)
+      if (field_def.name.includes "jd_") or (field_type not in ["number", "string", "date", "datetime"]) or (tpl.hardcoded_jira_field_ids.has field_id)
         continue
 
       if field_type is "datetime"
@@ -129,4 +168,9 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
 
       ret.jira_fields.push {field_id: field_id, field_name: field_def.name, field_type: field_type, selected: selected}
 
+    ret.justdo_fields = JustdoHelpers.localeAwareSortCaseInsensitive ret.justdo_fields, (field) -> field.field_name
+    ret.jira_fields = JustdoHelpers.localeAwareSortCaseInsensitive ret.jira_fields, (field) -> field.field_name
+
     return ret
+
+  ucFirst: (string) -> JustdoHelpers.ucFirst string

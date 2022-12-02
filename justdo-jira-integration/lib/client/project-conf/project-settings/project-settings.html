@@ -31,9 +31,19 @@
 
       <br>Configure extra field mapping<br>
 
-      {{#each customFieldsMap}}
+      {{#if selectedJiraProjectId}}
+        {{#each customFieldsMap}}
+          {{> justdo_jira_integration_field_map_option_pair templateDataForChildTemplate}}
+        {{/each}}
+
         {{> justdo_jira_integration_field_map_option_pair templateDataForChildTemplate}}
-      {{/each}}
+
+        <a href="#" class="set-custom-field-pair">Apply</a>
+      {{else}}
+        {{#each mountedJiraProjectsUnderActiveJustdo}}
+          <a href="#" class="configure-jira-project-field-mapping" data-id="{{jira_project_id}}">{{jira_project_key}}</a><br>
+        {{/each}}
+      {{/if}}
 
     </div>
   {{/with}}
@@ -41,23 +51,25 @@
 
 <template name="justdo_jira_integration_field_map_option_pair">
   {{#with fieldsAvaibleForUserMapping}}
-    <div class="jira-field-pair">
+    <div class="custom-jira-field-pair">
       <select>
+        <option disabled selected>---JustDo Field---</option>
         {{#each justdo_fields}}
           {{#if selected}}
-            <option value="{{field_id}}" selected>{{field_name}}</option>
+            <option value="{{field_id}}::{{field_type}}" selected>{{field_name}}({{ucFirst field_type}})</option>
           {{else}}
-            <option value="{{field_id}}">{{field_name}}</option>
+            <option value="{{field_id}}::{{field_type}}">{{field_name}}({{ucFirst field_type}})</option>
           {{/if}}
         {{/each}}
       </select>
       <span class="jira-field">→</span>
       <select>
+        <option disabled selected>---Jira Field---</option>
         {{#each jira_fields}}
           {{#if selected}}
-            <option value="{{field_id}}" selected>{{field_name}}</option>
+            <option value="{{field_id}}::{{field_type}}" selected>{{field_name}}({{ucFirst field_type}})</option>
           {{else}}
-            <option value="{{field_id}}">{{field_name}}</option>
+            <option value="{{field_id}}::{{field_type}}">{{field_name}}({{ucFirst field_type}})</option>
           {{/if}}
         {{/each}}
       </select>
