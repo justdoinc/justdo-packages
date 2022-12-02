@@ -489,3 +489,19 @@ _.extend GridControl.prototype,
       prereq.prev_item_not_deeper = "Can't perform this operation when previous item isn't in a deeper level"
 
     return prereq
+  
+  _opreqActivePathIsntArchived: (prereq) -> # We respect ignored archived for the current view. We regard them as non-archived.
+    prereq = prepareOpreqArgs(prereq)
+
+    current_path = @getCurrentPath()
+
+    if current_path?
+      # The following is required to become reactive to changes in the archived field
+      @getCurrentPathObj({archived: 1})
+
+      if @_grid_data.isPathArchived(current_path)
+        _.extend(prereq,
+          sub_task_reachable: "Can't perform this operation on an archived task"
+        )
+
+    return prereq
