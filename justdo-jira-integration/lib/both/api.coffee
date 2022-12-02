@@ -139,3 +139,11 @@ _.extend JustdoJiraIntegration.prototype,
       "jira_projects.#{jira_project_id}.custom_field_map": 1
 
     return @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.custom_field_map
+
+  getJiraProjectKeyById: (jira_project_id) ->
+    query =
+      "jira_projects.#{jira_project_id}":
+        $ne: null
+    query_options =
+      "jira_projects.#{jira_project_id}.key": 1
+    return @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.key
