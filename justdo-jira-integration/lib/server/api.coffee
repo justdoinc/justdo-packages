@@ -1628,6 +1628,25 @@ _.extend JustdoJiraIntegration.prototype,
 
     return res
 
+  getJiraFieldDefByJiraProjectId: (jira_project_id) ->
+    if @isJiraInstanceCloud()
+      # jira_server_id = @jira_collection.findOne({"jira_projects.#{jira_project_id}": {$ne: null}}, {fields: {"server_info.id": 1}})?.server_info?.id
+      jira_server_id = @jira_collection.findOne({"jira_projects.#{jira_project_id}": {$ne: null}}, {fields: {"server_info.id": 1}})?.server_info?.id
+    else
+      jira_server_id = "private-server"
+
+    client = @clients[jira_server_id].v2
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "issues.getCreateIssueMeta", {projectIds: jira_project_id, expand: "projects.issuetypes.fields"}, client
+    if err?
+      throw err
+
+    field_def = {}
+    for issue_type in res.projects[0].issuetypes
+      _.extend field_def, issue_type.fields
+
+    return field_def
+
+  # XXX This method supports only one Jira instance
   getHardcodedJustdoFieldToJiraFieldMap: ->
     return _.map JustdoJiraIntegration.justdo_field_to_jira_field_map, (field_def, justdo_field_name) => {justdo_field: justdo_field_name, jira_field: field_def.id or field_def.name}
 

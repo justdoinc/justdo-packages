@@ -30,6 +30,9 @@ _.extend JustdoJiraIntegration.prototype,
   getJiraFieldDef: (jira_doc_id, cb) ->
     return Meteor.call "getJiraFieldDef", jira_doc_id, cb
 
+  getJiraFieldDefByJiraProjectId: (jira_project_id, cb) ->
+    return Meteor.call "getJiraFieldDefByJiraProjectId", jira_project_id, cb
+
   getHardcodedJustdoFieldToJiraFieldMap: (cb) ->
     return Meteor.call "getHardcodedJustdoFieldToJiraFieldMap", cb
 
