@@ -57,13 +57,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     new_state = not task_obj_is_archived_project
 
-    update = {"#{JustdoDeliveryPlanner.task_is_archived_project_field_name}": new_state}
-    if (new_state == true and not item_obj.archived?)
-      update.archived = new Date()
-    else if (new_state == false and item_obj.archived?)
-      update.archived = null
-
-    @tasks_collection.update(item_id, {$set: update})
+    @tasks_collection.update(item_id, {$set: {"#{JustdoDeliveryPlanner.task_is_archived_project_field_name}": new_state}})
 
     return new_state
 
