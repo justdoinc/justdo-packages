@@ -698,7 +698,7 @@ _.extend GridControlMux.prototype,
             Tracker.flush()
 
             activateCollectionItemIdInCurrentTab cb
-      else if (path = main_gc._grid_data.getCollectionItemIdPath(item_id, {allow_unreachable_paths: true}))? # task is fully reachable
+      else if (path = main_gc._grid_data.getCollectionItemIdPath(item_id, {allow_unreachable_paths: true}))? # task is fully unreachable case
         deepest_archvied_path = main_gc._grid_data.getNonIgnoredArchivedSubPathsInPath(path, 1)[0]
         tab_id = "sub-tree"
         subtree_root = GridData.helpers.getPathItemId(deepest_archvied_path)
