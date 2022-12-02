@@ -45,8 +45,8 @@ _.extend JustdoJiraIntegration.prototype,
       getHardcodedJustdoFieldToJiraFieldMap: ->
         return self.getHardcodedJustdoFieldToJiraFieldMap()
 
-      mapJustdoAndJiraFields: (jira_project_id, field_map) ->
+      mapJustdoAndJiraFields: (jira_project_id, field_map, user_id) ->
         check jira_project_id, String
         # XXX Implement checking for field map
-        self.mapJustdoAndJiraFields jira_project_id, field_map, @userId
-        return
+        check user_id, String
+        return self.mapJustdoAndJiraFields jira_project_id, field_map, user_id
