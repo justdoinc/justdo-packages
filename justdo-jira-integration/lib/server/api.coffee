@@ -1266,6 +1266,9 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_doc = @jira_collection.findOne({}, {fields: {jira_projects: 1}})
     for jira_project_id, jira_project of jira_doc.jira_projects
+      if not jira_project.custom_field_map?
+        continue
+
       for field_map in jira_project.custom_field_map
         custom_mapped_field_ids.push field_map.jira_field_id
 
