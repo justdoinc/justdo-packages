@@ -1277,16 +1277,9 @@ _.extend JustdoJiraIntegration.prototype,
   isJustdoMountedWithJiraProject: (justdo_id) ->
     query =
       project_id: justdo_id
-      $or: [
-        jira_issue_id:
-          $ne: null
-      ,
-        jira_project_id:
-          $ne: null
-      ,
-        jira_mountpoint_type:
-          $ne: null
-      ]
+      jira_mountpoint_type: "root"
+      jira_project_id:
+        $ne: null
 
     return @tasks_collection.find(query).count() > 0
 
