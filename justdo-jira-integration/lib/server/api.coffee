@@ -1648,7 +1648,23 @@ _.extend JustdoJiraIntegration.prototype,
 
   # XXX This method supports only one Jira instance
   getHardcodedJustdoFieldToJiraFieldMap: ->
-    return _.map JustdoJiraIntegration.justdo_field_to_jira_field_map, (field_def, justdo_field_name) => {justdo_field: justdo_field_name, jira_field: field_def.id or field_def.name}
+    jira_doc_id = @jira_collection.findOne({}, {fields: {_id: 1}})?._id
+    jira_field_def = @getJiraFieldDef jira_doc_id
+    justdo_field_def = @tasks_collection.simpleSchema()._schema
+
+    ret =
+      id: []
+      name: []
+
+    _.each JustdoJiraIntegration.justdo_field_to_jira_field_map, (field_def, justdo_field_id) =>
+      jira_field_id = field_def.id or field_def.name
+      jira_field_name = _.find(jira_field_def, (field_def) -> (field_def.id is jira_field_id) or (field_def.key is jira_field_id))?.name
+      justdo_field_name = justdo_field_def[justdo_field_id].label
+
+      ret.id.push {justdo_field: justdo_field_id, jira_field: jira_field_id}
+      ret.name.push {justdo_field: justdo_field_name, jira_field: jira_field_name}
+
+    return ret
 
   # XXX how to check if both fields has the same type?
   # XXX field_map is expected to be an array of objects in the format of {justdo_field_id, jira_field_id, type}
