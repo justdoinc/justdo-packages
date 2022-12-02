@@ -683,20 +683,29 @@ _.extend GridControlMux.prototype,
         return
 
       # Attempt to look for the path in the current tab failed, attempt in the main tab
-
-      @activateTab("main")
-      if not Tracker.inFlush()
-        # To complete the tab activation
-        Tracker.flush()
-
-        activateCollectionItemIdInCurrentTab cb
-      else
-        # To complete the tab activation
-
-        Meteor.defer =>
+      main_gc = @getMainGridControl()
+      if main_gc._grid_data.getCollectionItemIdPath(item_id, {allow_unreachable_paths: false})?
+        @activateTab("main")
+        if not Tracker.inFlush()
+          # To complete the tab activation
           Tracker.flush()
 
           activateCollectionItemIdInCurrentTab cb
+        else
+          # To complete the tab activation
+
+          Meteor.defer =>
+            Tracker.flush()
+
+            activateCollectionItemIdInCurrentTab cb
+      else if (path = main_gc._grid_data.getCollectionItemIdPath(item_id, {allow_unreachable_paths: true}))? # task is fully reachable
+        deepest_archvied_path = main_gc._grid_data.getNonIgnoredArchivedSubPathsInPath(path, 1)[0]
+        tab_id = "sub-tree"
+        subtree_root = GridData.helpers.getPathItemId(deepest_archvied_path)
+        new_path = "/#{subtree_root}/#{path.replace(deepest_archvied_path, "")}"
+        @activateTabWithSectionsState(tab_id, {global: {"root-item": subtree_root}})
+        @setPath([tab_id, new_path])
+        JustdoHelpers.callCb(cb, true)
 
       return
 
