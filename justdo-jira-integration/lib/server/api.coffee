@@ -344,27 +344,6 @@ _.extend JustdoJiraIntegration.prototype,
 
     return base_url
 
-  _getRelevantCustomFieldIdsInJira: (justdo_id, user_id) ->
-    client = @getJiraClientForJustdo(justdo_id).v2
-
-    custom_field_query =
-      type: "custom"
-      query: "jd_"
-
-    # Jira cloud
-    if client.config.host.includes "api.atlassian.com"
-      jira_custom_fields = await client.issueFields.getFieldsPaginated custom_field_query
-    # Jira server
-    else
-      custom_field_query = new URLSearchParams(custom_field_query).toString()
-      HTTP.get "#{client.host}/rest/api/2/customFields?#{custom_field_query}", (err, res) ->
-        if err?
-          console.error err.response
-          return
-        console.log res
-
-    return
-
   _registerDbMigrationScriptForRefreshingAccessToken: ->
     self = @
 
