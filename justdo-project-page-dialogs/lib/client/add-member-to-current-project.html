@@ -34,7 +34,8 @@
           {{#if root_tasks}}
             {{#each root_tasks}}
               <div class="task-item {{#if task_is_selected}}selected{{/if}}">
-                <strong>#{{seqId}}:</strong> {{title}}
+                <div class="task-item-id">#{{seqId}}:</div>
+                <div class="task-item-title">{{title}}</div>
               </div>
             {{/each}}
           {{else}}
