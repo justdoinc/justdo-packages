@@ -7,25 +7,19 @@ _.extend JustdoDeliveryPlanner.prototype,
       if not modifier.$set?
         return
 
-      if not _.has modifier.$set, "archived"
+      if (not _.has(modifier.$set, "archived") and not _.has(modifier.$set, JustdoDeliveryPlanner.task_is_archived_project_field_name)) or
+          (_.has(modifier.$set, "archived") and _.has(modifier.$set, JustdoDeliveryPlanner.task_is_archived_project_field_name))
         return
-      new_archived_val = modifier.$set.archived
-      being_archived = if _.isDate(new_archived_val) then true else false
-
-      # By now we now the task is potentially changing its archived state
-
-      if _.has modifier.$set, JustdoDeliveryPlanner.task_is_archived_project_field_name
-        # If the update also involves update to the project closed/open state, we do nothing, to avoid interfering
-        return
-
-      if doc[JustdoDeliveryPlanner.task_is_project_field_name] isnt true
-        # Task isn't even a project, nothing to do.
-        return
-
-      if being_archived and doc[JustdoDeliveryPlanner.task_is_archived_project_field_name] isnt true
-        APP.justdo_delivery_planner.toggleTaskArchivedProjectState doc._id
-      else if not being_archived and doc[JustdoDeliveryPlanner.task_is_archived_project_field_name] is true
-        APP.justdo_delivery_planner.toggleTaskArchivedProjectState doc._id
+      
+      if  _.has(modifier.$set, "archived")
+        if (modifier.$set.archived? and doc[JustdoDeliveryPlanner.task_is_archived_project_field_name] != true) or
+            (modifier.$set.archived == null and doc[JustdoDeliveryPlanner.task_is_archived_project_field_name] == true)
+          modifier.$set[JustdoDeliveryPlanner.task_is_archived_project_field_name] = not doc[JustdoDeliveryPlanner.task_is_archived_project_field_name]
+      else if _.has(modifier.$set, JustdoDeliveryPlanner.task_is_archived_project_field_name)
+        if modifier.$set[JustdoDeliveryPlanner.task_is_archived_project_field_name] == true and not doc.archived?
+          modifier.$set.archived = new Date()
+        else if modifier.$set[JustdoDeliveryPlanner.task_is_archived_project_field_name] == false and doc.archived?
+          modifier.$set.archived = null
 
       return
 
