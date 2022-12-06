@@ -1193,35 +1193,47 @@ _.extend Projects.prototype,
 
     return
   
-  _bulkUpdateTasksUsersOptionsSchema: new SimpleSchema
-    tasks:
-      type: [String]
-    members_to_add:
-      type: [String]
-      optional: true
-    members_to_remove:
-      type: [String]
-      optional: true
-    items_to_assume_ownership_of:
-      type: [String]
-      optional: true
-    items_to_cancel_ownership_transfer_of:
-      type: [String]
-      optional: true
+  # We don't use simple schema (!) - since it is too expensive for massive tasks workload (it takes so long that seems to never finish! for 20k+ tasks)
+  # _bulkUpdateTasksUsersOptionsSchema: new SimpleSchema
+  #   tasks:
+  #     type: Object
+  #     blackbox: true
+  #   members_to_add:
+  #     type: [String]
+  #     optional: true
+  #   members_to_remove:
+  #     type: [String]
+  #     optional: true
+  #   items_to_assume_ownership_of:
+  #     type: [String]
+  #     optional: true
+  #   items_to_cancel_ownership_transfer_of:
+  #     type: [String]
+  #     optional: true
+  _bulkUpdateTasksUsersOptionsCheckStructure:
+    tasks: [String]
+    members_to_add: Match.Maybe([String])
+    members_to_remove: Match.Maybe([String])
+    items_to_assume_ownership_of: Match.Maybe([String])
+    items_to_cancel_ownership_transfer_of: Match.Maybe([String])
   bulkUpdateTasksUsers: (project_id, options, user_id) ->
     # Requiring that user_id is a member of project_id is done as part of the
     # job's gatekeeper routine.
-    
-    {cleaned_val} =
-      JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_bulkUpdateTasksUsersOptionsSchema,
-        options,
-        {self: @, throw_on_error: true}
-      )
-    options = cleaned_val
+
+    check project_id, String
+    check options, @_bulkUpdateTasksUsersOptionsCheckStructure
+    check user_id, String
+
+    data = _.extend(
+            _.pick(options,
+              "members_to_add",
+              "members_to_remove",
+              "items_to_assume_ownership_of",
+              "items_to_cancel_ownership_transfer_of"
+            ), {project_id: project_id})
 
     APP.justdo_db_migrations.registerBatchedCollectionUpdatesJob "add-remove-members-to-tasks",
-      data: _.extend(_.pick(options, "members_to_add", "members_to_remove", "items_to_assume_ownership_of", "items_to_cancel_ownership_transfer_of"), {project_id: project_id})
+      data: data
       ids_to_update: options.tasks
       user_id: user_id
 

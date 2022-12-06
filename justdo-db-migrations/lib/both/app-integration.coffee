@@ -19,8 +19,8 @@
 # this package, or even if you use them inside the constructor, you need to wait for
 # them to be ready, and it is better done here.
 
-if Meteor.isServer
-  APP.collections.DBMigrationBatchedCollectionUpdates = new Mongo.Collection("batched_collection_updates")
+APP.collections.DBMigrationBatchedCollectionUpdates = new Mongo.Collection("batched_collection_updates")
 
+if Meteor.isServer
   APP.justdo_db_migrations = new JustdoDbMigrations
     batched_collection_updates_collection: APP.collections.DBMigrationBatchedCollectionUpdates

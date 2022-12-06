@@ -23,8 +23,21 @@
       </ul>
     </div>
   {{/if}}
+  {{#if displayRecentBatchedOps}}
+    {{> task_pane_item_details_members_editor_recent_batched_ops}}
+  {{/if}}
 </template>
 
+<template name="task_pane_item_details_members_editor_recent_batched_ops">
+  <div class="notes">
+  <span>Recent requests</span>
+  <ul>
+    {{#each recentBatchedOps}}
+      <li>{{type}} {{process_status}} {{#if pendingOrInProgress}} {{processedPercent}}% <span class="terminate">TERMINATE</span>{{/if}}</li>
+    {{/each}}
+  </ul>
+</div>
+</template>
 <template name="task_pane_item_details_members_editor_section">
   <div class="members-list-container members-list-{{action_id}}-container {{#if showInviteMembersSection}}show-invite-members-section{{/if}}">
     {{#if $not action_users_empty}}{{!-- If there are members for this action --}}

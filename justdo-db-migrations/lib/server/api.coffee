@@ -252,25 +252,24 @@ _.extend JustdoDbMigrations.prototype,
 
     return
 
-  _registerBatchedCollectionUpdatesJobOptionsSchema: new SimpleSchema
-    data:
-      type: Object
-      blackbox: true
-    ids_to_update:
-      type: [String]
-    user_id: # If not provided or is null/undefined - regarded as a system initiated job
-      type: String
-      optional: true
+
+  # Simple schema turned out to be too expensive for too big workload e.g 20k+ ids to update
+  # _registerBatchedCollectionUpdatesJobOptionsSchema: new SimpleSchema
+  #   data:
+  #     type: Object
+  #     blackbox: true
+  #   ids_to_update:
+  #     type: [String]
+  #   user_id: # If not provided or is null/undefined - regarded as a system initiated job
+  #     type: String
+  #     optional: true
+  _registerBatchedCollectionUpdatesJobCheckStructure:
+    data: Object
+    ids_to_update: [String]
+    user_id: Match.Maybe(String)
   registerBatchedCollectionUpdatesJob: (type, options) ->
     check type, String
-
-    {cleaned_val} =
-      JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_registerBatchedCollectionUpdatesJobOptionsSchema,
-        options,
-        {self: @, throw_on_error: true}
-      )
-    options = cleaned_val
+    check options, @_registerBatchedCollectionUpdatesJobCheckStructure
 
     if not (update_type_def = @batched_collection_updates_types[type])?
       throw @_error "batch-collection-update-type-not-supported", "Unknown batch collection update type: #{type}"
@@ -290,20 +289,24 @@ _.extend JustdoDbMigrations.prototype,
     if _.isFunction(update_type_def.jobsGatekeeper)
       update_type_def.jobsGatekeeper(clean_and_validated_options)
 
-    job_id = APP.collections.DBMigrationBatchedCollectionUpdates.insert
+    # Use rawCollection to avoid any collectino2, simple schema, hooks, etc. that might be turn out to be too expensive.
+    job_id = JustdoHelpers.pseudoBlockingRawCollectionInsertInsideFiber APP.collections.DBMigrationBatchedCollectionUpdates, 
       created_by: options.user_id
       type: type
       data: clean_and_validated_data
       ids_to_update: options.ids_to_update
       process_status: "pending"
       process_status_details:
+        total: options.ids_to_update.length
         processed: 0
         created_at: new Date()
 
     return job_id
 
   terminateBatchedCollectionUpdatesJob: (job_id, user_id) ->
-    APP.collection.DBMigrationBatchedCollectionUpdates.update job_id,
+    check job_id, String
+    check user_id, String
+    APP.collections.DBMigrationBatchedCollectionUpdates.update {_id: job_id, created_by: user_id},
       $set:
         process_status: "terminated"
         "process_status_details.closed_at": new Date()
@@ -311,3 +314,16 @@ _.extend JustdoDbMigrations.prototype,
 
     return
 
+  getUsersRecentBatchedOpsCursor: (user_id) ->
+    closed_time_ttl = 1000 * 60 * 5
+    cursor = APP.collections.DBMigrationBatchedCollectionUpdates.find(
+      {
+        created_by: user_id,
+        $or: [
+          {process_status: {$in: ["pending", "in-progress"]}},
+          {"process_status_details.closed_at": {$gte: JustdoHelpers.getDateMsOffset(-1 * closed_time_ttl)}}
+        ]
+      }
+    , {sort: {"process_status_details.created_at": 1}, fields: {_id: 1, data: 1, type: 1, process_status: 1, process_status_details: 1}})
+
+    return cursor

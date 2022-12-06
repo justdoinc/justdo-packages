@@ -1,5 +1,8 @@
 _.extend JustdoDbMigrations.prototype,
   _attachCollectionsSchemas: -> 
+    # Important! we don't use simple schema on insert, since it turned out to be too expensive for
+    # massive workloads insertion (specifically for massive ids_to_update arrays, it'd take long minutes
+    # to finish for jobs of 20k+ ids_to_update).
     @batched_collection_updates_collection.attachSchema new SimpleSchema
       created_by: # null/undefined means created by a server process.
         type: String
@@ -23,6 +26,9 @@ _.extend JustdoDbMigrations.prototype,
 
       process_status_details:
         type: new SimpleSchema
+          total:
+            type: Number # Will be initiated to ids_to_update.length
+
           processed: # Successfully processed ids. For example: if set to 3 the: ids_to_update[0], ids_to_update[1] and ids_to_update[2] can be assumed as *properly* processed.
             type: Number
             defaultValue: 0

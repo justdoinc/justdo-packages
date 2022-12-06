@@ -2,6 +2,9 @@ ProjectPageDialogs.members_management_dialog = {}
 
 JustdoHelpers.setupHandlersRegistry(ProjectPageDialogs.members_management_dialog)
 
+getBatchedCollectionUpdatesQuery = ->
+  return {type: "add-remove-members-to-tasks", "data.project_id": APP.modules.project_page.curProj().id}
+
 APP.executeAfterAppLibCode ->
   module = APP.modules.project_page
 
@@ -47,7 +50,7 @@ APP.executeAfterAppLibCode ->
         else
           proceed_type = "remove_others"
         break
-    
+
     for user in add_users
       if user.proceed.get() == true
         if user._id == Meteor.userId()
@@ -77,6 +80,7 @@ APP.executeAfterAppLibCode ->
         deleteDisabledReason(user, "You can't remove yourself and other users at the same time.")
     
     proceed_type_rv.set(proceed_type)
+    
     return
 
   _setProceedStateForAllUsersInReactiveVarExcludingFiltered = (reactive_var, state) ->
@@ -93,7 +97,7 @@ APP.executeAfterAppLibCode ->
     self_user = _.find members, (user) -> user._id == Meteor.userId()
     if self_user?
       members = _.without members, self_user
-      
+
     for member in members
       member.proceed.set state
 
@@ -108,7 +112,7 @@ APP.executeAfterAppLibCode ->
     task_doc = APP.collections.Tasks.findOne task_id,
       fields:
         owner_id: 1
-    
+
     user_id = Meteor.userId()
 
     if task_doc.owner_id == user_id
@@ -123,7 +127,7 @@ APP.executeAfterAppLibCode ->
         if item_obj.owner_id == user_id
           result = true
           return -2
-        
+
         return
       )
 
@@ -136,7 +140,7 @@ APP.executeAfterAppLibCode ->
     user.disabled_reasons.add(reason)
     user.disabled_reasons_dep.changed()
     return
-  
+
   deleteDisabledReason = (user, reason) ->
     user.disabled_reasons.delete(reason)
     user.disabled_reasons_dep.changed()
@@ -150,7 +154,7 @@ APP.executeAfterAppLibCode ->
           addDisabledReason(user, "You are the owner of this task hence you cannot remove yourself from it")
         else if is_owner_result == 2
           addDisabledReason(user, "You own some tasks in the sub-tree hence you cannot remove yourself")
-    
+
     return users
 
   setUsersLists = (task_id) ->
@@ -158,12 +162,12 @@ APP.executeAfterAppLibCode ->
 
     if not augmented_task_doc?
       return
-    
+
     users = _.uniq(augmented_task_doc.users or [])
 
     if not (item_users = users)?
       throw module._error("unknown-data-context", "can't determine current task users")
-    
+
     _users_to_keep = item_users
 
     if not (project_members = (project = module.curProj())?.getMembersIds({if_justdo_guest_include_ancestors_members_of_items: task_id}))?
@@ -182,7 +186,7 @@ APP.executeAfterAppLibCode ->
       new_current_users_to_keep_val_ids = _.difference _users_to_keep, current_users_to_keep_ids
       removed_current_users_to_keep_val_ids = _.difference current_users_to_keep_ids, _users_to_keep
 
-      if new_current_users_to_keep_val_ids.length > 0 or removed_current_users_to_keep_val_ids.length > 0 
+      if new_current_users_to_keep_val_ids.length > 0 or removed_current_users_to_keep_val_ids.length > 0
         new_users_to_keep_val = current_users_to_keep_val.slice() # shallow copy
 
         if removed_current_users_to_keep_val_ids.length > 0
@@ -195,7 +199,7 @@ APP.executeAfterAppLibCode ->
         if new_current_users_to_keep_val_ids.length > 0
           new_users_to_keep_val = new_users_to_keep_val.concat(_getUsersDocsByIdsWithProceedFlag(new_current_users_to_keep_val_ids, true))
           new_users_to_keep_val = JustdoHelpers.sortUsersDocsArrayByDisplayName(new_users_to_keep_val)
-        
+
         users_to_keep.set(addDisabledReasonIfNeccessary(new_users_to_keep_val))
 
       current_users_to_add_val = Tracker.nonreactive -> users_to_add.get()
@@ -204,7 +208,7 @@ APP.executeAfterAppLibCode ->
       new_current_users_to_add_val_ids = _.difference _users_to_add, current_users_to_add_val_ids
       removed_current_users_to_add_val_ids = _.difference current_users_to_add_val_ids, _users_to_add
 
-      if new_current_users_to_add_val_ids.length > 0 or removed_current_users_to_add_val_ids.length > 0 
+      if new_current_users_to_add_val_ids.length > 0 or removed_current_users_to_add_val_ids.length > 0
         new_users_to_add_val = current_users_to_add_val.slice() # shallow copy
 
         if removed_current_users_to_add_val_ids.length > 0
@@ -228,9 +232,9 @@ APP.executeAfterAppLibCode ->
     for i, subtask_id of grid_data_core.tree_structure[task_id]
       if grid_data_core.tree_structure[subtask_id]?
         return true
-    
+
     return false
-  
+
   getDescendantsCount = (task_path) ->
     if not (grid_data = APP.modules.project_page.gridData())?
       return 0
@@ -267,6 +271,8 @@ APP.executeAfterAppLibCode ->
     # @descendants_users_subscription = APP.projects.subscribeTasksAugmentedFields(descendants_ids_arr, ["users"])
 
     @self_users_subscription = APP.projects.subscribeTasksAugmentedFields([data._id], ["users"])
+
+    @recent_batched_ops_subscription = Meteor.subscribe("getUsersRecentBatchedOps")
 
     @autorun ->
       setUsersLists(data._id)
@@ -357,6 +363,7 @@ APP.executeAfterAppLibCode ->
       ]
     cascade: -> cascade.get()
     display_notes_section: -> not _.isEmpty notes.get()
+    displayRecentBatchedOps: -> APP.collections.DBMigrationBatchedCollectionUpdates.findOne(getBatchedCollectionUpdatesQuery())?
     notes: ->
       _notes = notes.get()
       notes_messages = []
@@ -420,6 +427,8 @@ APP.executeAfterAppLibCode ->
     # @descendants_users_subscription?.stop()
     @self_users_subscription?.stop()
 
+    @recent_batched_ops_subscription.stop()
+
     return
   #
   # Editor dialog sections
@@ -438,7 +447,7 @@ APP.executeAfterAppLibCode ->
       self_user = _.find filtered_users, (user) -> user._id == Meteor.userId()
       if self_user?
         filtered_users = [self_user].concat(_.without(filtered_users, self_user))
-      
+
       return filtered_users
 
     action_users_empty: ->
@@ -490,7 +499,7 @@ APP.executeAfterAppLibCode ->
         return "(You)"
 
       return ""
-    
+
     disabledReason: ->
       @disabled_reasons_dep.depend()
       return @disabled_reasons.values().next().value
@@ -502,7 +511,7 @@ APP.executeAfterAppLibCode ->
         JustdoSnackbar.show
           text: disabled_reason
         return
-        
+
       clicked_user_id = @_id
       action_id = Template.parentData(1).action_id
       task_obj = Template.parentData(2)
@@ -601,7 +610,7 @@ APP.executeAfterAppLibCode ->
                 items_to_cancel_ownership_transfer_of: items_to_cancel_ownership_transfer_of
 
               return true
-            
+
             task_id = JD.activeItemId()
             task_path = JD.activePath()
             if cascade.get() == true and hasSubSubTasks(task_id) and 
@@ -622,9 +631,32 @@ APP.executeAfterAppLibCode ->
               return false
             else
               execMembersEdit()
-            
-            return true      
+
+            return true
 
     $(".members-editor-dialog .members-search-input").focus()
 
     return
+
+  #
+  # task_pane_item_details_members_editor_recent_batched_ops
+  #
+  Template.task_pane_item_details_members_editor_recent_batched_ops.helpers
+    recentBatchedOps: -> APP.collections.DBMigrationBatchedCollectionUpdates.find(getBatchedCollectionUpdatesQuery())
+    pendingOrInProgress: -> @process_status is "pending" or @process_status is "in-progress"
+    processedPercent: -> Math.floor((@process_status_details.processed / @process_status_details.total) * 100)
+
+  Template.task_pane_item_details_members_editor_recent_batched_ops.events
+    "click .terminate": ->
+      job_id = @_id
+
+      bootbox.confirm
+        className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+        title: "Are you sure you want to terminate this operation?"
+        message: "<p>We <b>do not</b> rever the updates already made by this operation.</p><p>You'll have to manually revert the tasks already affected by this update to undo the changes already made.</p><p>It is highly recommended to let the operation finish first, and then undo it by requesting another update.</p>"
+        callback: (result) ->
+          if result
+            Meteor.call("terminateBatchedCollectionUpdatesJob", job_id)
+          return true
+
+      return
