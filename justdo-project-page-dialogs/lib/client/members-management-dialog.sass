@@ -110,72 +110,87 @@
       pointer-events: none
       opacity: 0.5
 
-.recent-batched-info
+.members-section-info
   position: absolute
   right: 12px
   left: 12px
   bottom: 12px
-  padding: 10px 10px 10px 16px
-  display: flex
-  flex-direction: column
-  border-radius: 4px
   font-size: 15px
-  color: white
-  background-color: rgb(50, 50, 50)
-  &.show-less
-    flex-direction: row
-    justify-content: space-between
+  .notes
+    margin-bottom: 4px
+    ul
+      margin: 0px
+      padding: 0px
+      list-style-type: none
+    li
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08)
+      padding: 8px 32px 8px 0px
+      &:last-child
+        border-bottom: none
+  .recent-batched-info,
+  .notes
+    position: relative
+    padding: 10px 16px 10px 16px
+    display: flex
+    flex-direction: column
+    border-radius: 4px
+    color: white
+    background-color: rgb(50, 50, 50)
+    &.show-less
+      flex-direction: row
+      justify-content: space-between
+      .show-all
+        display: flex
+        align-items: center
+      .recent-batched-item:not(:first-child),
+      .show-less
+        display: none
+
     .show-all
+      font-size: 11px
+      text-transform: uppercase
+      font-weight: bold
+      display: none
+      cursor: pointer
+      .toggle-title
+        text-decoration: underline
+      .toggle-count
+        background-color: rgba(255, 255, 255, 0.08)
+        padding: 2px 6px
+        margin-left: 8px
+
+    .recent-batched-item
       display: flex
       align-items: center
-    .recent-batched-item:not(:first-child),
-    .show-less
-      display: none
+      justify-content: space-between
+      padding: 4px 0
 
-  .show-all
-    font-size: 11px
-    text-transform: uppercase
-    font-weight: bold
-    display: none
-    cursor: pointer
-    .toggle-title
-      text-decoration: underline
-    .toggle-count
-      background-color: rgba(255, 255, 255, 0.08)
-      padding: 2px 6px
-      margin-left: 8px
+    .recent-batched-msg-wrapper
+      font-size: 15px
+      display: flex
+      align-items: center
+      .recent-batched-msg
+        opacity: 0.75
+      .terminate
+        font-size: 11px
+        font-weight: bold
+        text-transform: uppercase
+        margin-left: 8px
+        cursor: pointer
+        text-decoration: underline
 
-  .recent-batched-item
-    display: flex
-    align-items: center
-    justify-content: space-between
-    padding: 4px 0
-
-  .recent-batched-msg-wrapper
-    font-size: 15px
-    display: flex
-    align-items: center
-    .recent-batched-msg
-      opacity: 0.75
-    .terminate
-      font-size: 11px
-      font-weight: bold
-      text-transform: uppercase
-      margin-left: 8px
+    .show-less,
+    .notes-close
+      stroke-width: 3
+      padding: 4px
       cursor: pointer
-      text-decoration: underline
-
-  .show-less
-    stroke-width: 3
-    padding: 4px
-    cursor: pointer
-    color: white
-    background-color: rgba(255, 255, 255, 0.08)
-    position: absolute
-    top: 12px
-    right: 12px
-    &:hover
-      background-color: rgba(255, 255, 255, 0.12)
+      color: white
+      background-color: rgba(255, 255, 255, 0.08)
+      position: absolute
+      top: 12px
+      right: 12px
+      &:hover
+        background-color: rgba(255, 255, 255, 0.12)
 
 .members-editor-dialog
   .modal-dialog
@@ -269,20 +284,6 @@
       height: 18px
       opacity: 0.5
       margin-right: 2px
-
-  .notes
-    font-size: 15px
-    span
-      font-weight: bold
-    ul
-      margin: 0px
-      padding: 0px
-      list-style-type: none
-    li
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08)
-      padding: 8px 0px
-      &:last-child
-        border-bottom: none
 
 .bootbox.opened-by-members-managment-dialog
   margin-top: 45px

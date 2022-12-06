@@ -417,6 +417,11 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    "click .notes-close": (e, tpl) ->
+      notes.set {}
+
+      return
+
   Template.task_pane_item_details_members_editor.onDestroyed ->
     users_to_keep.set null
     users_to_add.set null

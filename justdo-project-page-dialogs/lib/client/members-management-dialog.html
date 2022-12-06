@@ -12,24 +12,23 @@
       <input class="cascade-action-checkbox mr-2" type="checkbox" checked="{{isChecked cascade true}}"> Apply changes to all child-tasks.
     </label>
   </div>
-
-  <!-- {{#if display_notes_section}}
-    <div class="notes">
-      <span>Notes</span>
-      <ul>
-        {{#each notes}}
-          <li>{{this}}</li>
-        {{/each}}
-      </ul>
-    </div>
-  {{/if}} -->
-
-  {{#if displayRecentBatchedOps}}
-    <div class="recent-batched-info show-less">
-      {{> task_pane_item_details_members_editor_recent_batched_ops}}
-    </div>
-  {{/if}}
-
+  <div class="members-section-info">
+    {{#if display_notes_section}}
+      <div class="notes">
+        <ul>
+          {{#each notes}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ul>
+        <svg class="jd-icon notes-close"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+      </div>
+    {{/if}}
+    {{#if displayRecentBatchedOps}}
+      <div class="recent-batched-info show-less">
+        {{> task_pane_item_details_members_editor_recent_batched_ops}}
+      </div>
+    {{/if}}
+  </div>
 </template>
 
 <template name="task_pane_item_details_members_editor_recent_batched_ops">
