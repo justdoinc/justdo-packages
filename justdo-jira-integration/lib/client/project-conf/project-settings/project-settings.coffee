@@ -83,6 +83,7 @@ Template.justdo_jira_integration_project_setting.events
     e.preventDefault()
     e.stopPropagation()
 
+    jira_doc_id = APP.justdo_jira_integration.getActiveJustdoJiraDocId()
     field_pairs = []
 
     # Transform the array into [[justdo_field_id, jira_field_id], [justdo_field_id, jira_field_id], ....]
@@ -101,9 +102,9 @@ Template.justdo_jira_integration_project_setting.events
           text: "Field type mismatch at row #{i+1}"
         return
 
-      field_pairs.push {justdo_field_id, jira_field_id, type: justdo_field_type}
+      field_pairs.push {justdo_field_id, jira_field_id, id: Random.id()}
 
-    APP.justdo_jira_integration.mapJustdoAndJiraFields tpl.selected_jira_project_id_rv.get(), field_pairs
+    APP.justdo_jira_integration.mapJustdoAndJiraFields jira_doc_id, tpl.selected_jira_project_id_rv.get(), field_pairs
     return
 
 Template.justdo_jira_integration_field_map_option_pair.onCreated ->

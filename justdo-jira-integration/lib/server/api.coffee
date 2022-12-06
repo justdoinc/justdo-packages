@@ -1649,16 +1649,13 @@ _.extend JustdoJiraIntegration.prototype,
     return field_def
 
   # XXX how to check if both fields has the same type?
-  # XXX field_map is expected to be an array of objects in the format of {justdo_field_id, jira_field_id, type}
-  mapJustdoAndJiraFields: (jira_project_id, field_map, user_id) ->
+  # XXX field_map is expected to be in the format of [{justdo_field_id, jira_field_id, id}, {justdo_field_id, jira_field_id, id}, ...]
+  mapJustdoAndJiraFields: (jira_doc_id, jira_project_id, field_map, user_id) ->
     # XXX check user_id is justdo admin?
 
-    query =
-      "jira_projects.#{jira_project_id}":
-        $ne: null
     ops =
       $set:
         "jira_projects.#{jira_project_id}.custom_field_map": field_map
-    @jira_collection.update query, ops
+    @jira_collection.update jira_doc_id, ops
 
     return

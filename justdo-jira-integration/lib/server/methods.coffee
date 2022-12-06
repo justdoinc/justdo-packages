@@ -42,8 +42,8 @@ _.extend JustdoJiraIntegration.prototype,
         check jira_project_id, Number
         return self.getJiraFieldDefByJiraProjectId jira_project_id
 
-      mapJustdoAndJiraFields: (jira_project_id, field_map, user_id) ->
-        check jira_project_id, String
-        # XXX Implement checking for field map
-        check user_id, String
-        return self.mapJustdoAndJiraFields jira_project_id, field_map, user_id
+      mapJustdoAndJiraFields: (jira_doc_id, jira_project_id, field_map) ->
+        check jira_doc_id, String
+        check jira_project_id, Number
+        check @userId, String
+        return self.mapJustdoAndJiraFields jira_doc_id, jira_project_id, field_map, @userId
