@@ -97,7 +97,8 @@ Template.justdo_jira_integration_project_setting.events
       [justdo_field_id, justdo_field_type] = field_pair[0].split "::"
       [jira_field_id, jira_field_type] = field_pair[1].split "::"
 
-      if justdo_field_type isnt jira_field_type
+      # String field can hold numbers and date as well. Might just allow it.
+      if (justdo_field_type isnt "string") and (jira_field_type isnt "string") and  (justdo_field_type isnt jira_field_type)
         JustdoSnackbar.show
           text: "Field type mismatch at row #{i+1}"
         return
