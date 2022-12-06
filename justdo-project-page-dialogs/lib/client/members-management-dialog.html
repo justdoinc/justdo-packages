@@ -64,20 +64,9 @@
         <div class="select-none text-primary">None</div>
       </div>
       {{#if showInviteMembersSection}}
-        <div class="invite-new-member-dropdown dropdown">
-          <div class="invite-new-member-toggle text-primary" data-toggle="dropdown" aria-expanded="true">
-            <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
-            New member
-          </div>
-          <div class="dropdown-menu jd-p-075 animate slideIn shadow-lg border-0">
-            <div class="invite-members-section">
-              <div class="d-flex align-items-center">
-                <input class="form-control form-control-sm mr-2" type="text" placeholder="{{#if isAddAsGuest}}Guest's{{else}}Member's{{/if}} Email">
-                <button class="btn btn-primary btn-sm" type="button" name="button">Invite</button>
-              </div>
-              {{> add_as_guest_toggle controller=add_as_guest_toggle_controller}}
-            </div>
-          </div>
+        <div class="invite-new-member text-primary">
+          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
+          New members
         </div>
       {{/if}}
     </div>

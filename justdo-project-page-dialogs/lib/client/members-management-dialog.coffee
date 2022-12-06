@@ -480,11 +480,8 @@ APP.executeAfterAppLibCode ->
     "click .select-none": ->
       _setProceedStateForAllUsersInReactiveVarExcludingFiltered @action_users_reactive_var, false
 
-    "click .show-add-members-dialog": (e, tpl) ->
+    "click .invite-new-member": (e, tpl) ->
       ProjectPageDialogs.showMemberDialog()
-
-    "click .add-as-guest-toggle": (e, tpl) ->
-      e.stopPropagation()
 
       return
 
