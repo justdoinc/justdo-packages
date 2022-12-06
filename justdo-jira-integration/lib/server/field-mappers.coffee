@@ -101,6 +101,8 @@ _.extend JustdoJiraIntegration,
     "Epic Link": epic_link_custom_field_id
     [story_point_estimate_custom_field_id]: "Story Points"
 
+  # NOTE: If you add or remove any items inside justdo_field_to_jira_field_map,
+  # remember to update hardcoded_field_map in both/static.coffee!
   justdo_field_to_jira_field_map:
     title:
       name: "summary"

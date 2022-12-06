@@ -118,6 +118,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_project_id = parseInt req_body.issue.fields.project.id
     custom_field_map = _.indexBy @getCustomFieldMapByJiraProjectId(jira_project_id), "jira_field_id"
+    fields_schema = @tasks_collection.simpleSchema()._schema
 
     # issue_updated
     if options?.use_changelog
@@ -141,7 +142,7 @@ _.extend JustdoJiraIntegration.prototype,
           field_type = default_jira_field_map.type
         else
           justdo_field_id = custom_jira_field_map.justdo_field_id
-          field_type = custom_jira_field_map.type
+          field_type = @translateJustdoFieldTypeToMappedFieldType fields_schema[justdo_field_id]
 
         if default_jira_field_map?.mapper?
           field_val = default_jira_field_map.mapper.call @, justdo_id, changed_item, "justdo", req_body
@@ -181,7 +182,7 @@ _.extend JustdoJiraIntegration.prototype,
         jira_field = fields[jira_field_id]
         justdo_field_id = JustdoJiraIntegration.jira_field_to_justdo_field_map[jira_field_id] or custom_field_map[jira_field_id]?.justdo_field_id
         default_jira_field_def = JustdoJiraIntegration.justdo_field_to_jira_field_map[justdo_field_id]
-        field_type = default_jira_field_def?.type or custom_field_map[jira_field_id]?.type
+        field_type = default_jira_field_def?.type or @translateJustdoFieldTypeToMappedFieldType fields_schema[justdo_field_id]
 
         if not (_.has fields, jira_field_id) and (_.isEmpty jira_field) and not (_.isNumber jira_field) and not (_.isBoolean jira_field)
           if options?.include_null_values is true
@@ -213,6 +214,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_project_id = task_doc.jira_project_id
     custom_field_map = _.indexBy @getCustomFieldMapByJiraProjectId(jira_project_id), "justdo_field_id"
+    fields_schema = @tasks_collection.simpleSchema()._schema
 
     for field_id, field_val of modifier.$set
       if not (jira_field_map = JustdoJiraIntegration.justdo_field_to_jira_field_map[field_id])? and not (jira_field_map = custom_field_map[field_id])?
@@ -229,7 +231,7 @@ _.extend JustdoJiraIntegration.prototype,
               id: mapped_field_val
           else
             fields_to_update.fields[jira_field_id] = mapped_field_val
-      else if (type = jira_field_map.type) in ["date", "number"]
+      else if (type = @translateJustdoFieldTypeToMappedFieldType fields_schema[field_id]) in ["date", "number"]
         fields_to_update.fields[jira_field_id] = JustdoJiraIntegration.primitive_field_mappers[type].call @, justdo_id, field_val, "jira", task_doc
       else
         fields_to_update.fields[jira_field_id] = field_val
@@ -1645,26 +1647,6 @@ _.extend JustdoJiraIntegration.prototype,
       _.extend field_def, issue_type.fields
 
     return field_def
-
-  # XXX This method supports only one Jira instance
-  getHardcodedJustdoFieldToJiraFieldMap: ->
-    jira_doc_id = @jira_collection.findOne({}, {fields: {_id: 1}})?._id
-    jira_field_def = @getJiraFieldDef jira_doc_id
-    justdo_field_def = @tasks_collection.simpleSchema()._schema
-
-    ret =
-      id: []
-      name: []
-
-    _.each JustdoJiraIntegration.justdo_field_to_jira_field_map, (field_def, justdo_field_id) =>
-      jira_field_id = field_def.id or field_def.name
-      jira_field_name = _.find(jira_field_def, (field_def) -> (field_def.id is jira_field_id) or (field_def.key is jira_field_id))?.name
-      justdo_field_name = justdo_field_def[justdo_field_id].label
-
-      ret.id.push {justdo_field: justdo_field_id, jira_field: jira_field_id}
-      ret.name.push {justdo_field: justdo_field_name, jira_field: jira_field_name}
-
-    return ret
 
   # XXX how to check if both fields has the same type?
   # XXX field_map is expected to be an array of objects in the format of {justdo_field_id, jira_field_id, type}

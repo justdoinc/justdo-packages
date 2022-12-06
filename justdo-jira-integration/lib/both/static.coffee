@@ -1,3 +1,6 @@
+# XXX Hardcoded for now
+sprint_custom_field_id = "customfield_10020"
+
 _.extend JustdoJiraIntegration,
   project_custom_feature_id: "justdo_jira_integration" # Use underscores
 
@@ -15,3 +18,40 @@ _.extend JustdoJiraIntegration,
     task: "4bade8"
     bug: "e54939"
     subtask: "B7E5FF"
+
+  hardcoded_field_map: [
+    justdo_field_id: "title"
+    justdo_field_name: "Title"
+    jira_field_id: "summary"
+    jira_field_name: "Summary"
+  ,
+    justdo_field_id: "description"
+    justdo_field_name: "Description"
+    jira_field_id: "description"
+    jira_field_name: "Description"
+  ,
+    justdo_field_id: "state"
+    justdo_field_name: "State"
+    jira_field_id: "status"
+    jira_field_name: "Status"
+  ,
+    justdo_field_id: "jira_issue_type"
+    justdo_field_name: "Issue Type"
+    jira_field_id: "issuetype"
+    jira_field_name: "Issue Type"
+  ,
+    justdo_field_id: "owner_id"
+    justdo_field_name: "Owner"
+    jira_field_id: "assignee"
+    jira_field_name: "Assignee"
+  ,
+    justdo_field_id: "jira_sprint"
+    justdo_field_name: "Jira Sprint"
+    jira_field_id: sprint_custom_field_id
+    jira_field_name: "Sprint"
+  ,
+    justdo_field_id: "jira_fix_version"
+    justdo_field_name: "Fix Versions"
+    jira_field_id: "fixVersions"
+    jira_field_name: "Fix Versions"
+  ]

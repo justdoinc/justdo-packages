@@ -11,23 +11,11 @@ Template.justdo_jira_integration_project_setting.onCreated ->
     @oAuth_login_link_rv.set link
     return
 
-  @hardcoded_justdo_field_ids = new Set()
-  @hardcoded_jira_field_ids = new Set()
-  @hardcoded_field_map_rv = new ReactiveVar []
-  APP.justdo_jira_integration.getHardcodedJustdoFieldToJiraFieldMap (err, field_map) =>
-    if err?
-      console.error err
-      return
-
-    for field_pair in field_map.id
-      @hardcoded_justdo_field_ids.add field_pair.justdo_field
-      @hardcoded_jira_field_ids.add field_pair.jira_field
-
-    @hardcoded_field_map_rv.set field_map.name
-    return
+  @hardcoded_field_map = JustdoJiraIntegration.hardcoded_field_map
+  @hardcoded_justdo_field_ids = new Set _.map @hardcoded_fields, (field_obj) -> field_obj.justdo_field_id
+  @hardcoded_jira_field_ids = new Set _.map @hardcoded_fields, (field_obj) -> field_obj.jira_field_id
 
   @selected_jira_project_id_rv = new ReactiveVar ""
-
   @jira_field_def_obj_rv = new ReactiveVar {}
   @autorun =>
     if not _.isNumber(selected_jira_project_id = @selected_jira_project_id_rv.get())
@@ -51,7 +39,7 @@ Template.justdo_jira_integration_project_setting.helpers
     return APP.justdo_jira_integration.getJiraServerInfoFromJustdoId JD.activeJustdoId()
 
   hardcodedFieldsMap: ->
-    return Template.instance().hardcoded_field_map_rv.get()
+    return Template.instance().hardcoded_field_map
 
   selectedJiraProjectId: -> Template.instance().selected_jira_project_id_rv.get()
 
@@ -134,9 +122,9 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
 
     # Append JustDo fields
     for field_id, field_def of grid_control.getSchemaExtendedWithCustomFields()
-      field_type = field_def.type
+      field_type = APP.justdo_jira_integration.translateJustdoFieldTypeToMappedFieldType field_def
 
-      if (field_def.client_only) or (field_def.grid_column_substitue_field?) or (not field_def.grid_visible_column) or (not field_def.grid_editable_column) or (field_type in [Object, Date]) or (tpl.hardcoded_justdo_field_ids.has field_id)
+      if not field_type? or (field_def.client_only) or (field_def.grid_column_substitue_field?) or (not field_def.grid_visible_column) or (not field_def.grid_editable_column) or (tpl.hardcoded_justdo_field_ids.has field_id)
         continue
 
       selected = false

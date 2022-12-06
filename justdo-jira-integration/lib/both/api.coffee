@@ -147,3 +147,12 @@ _.extend JustdoJiraIntegration.prototype,
     query_options =
       "jira_projects.#{jira_project_id}.key": 1
     return @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.key
+
+  translateJustdoFieldTypeToMappedFieldType: (field_schema) ->
+    if field_schema.type is String and field_schema.grid_column_editor is "UnicodeDateEditor"
+      return "date"
+    if field_schema.type is String
+      return "string"
+    if field_schema.type is Number
+      return "number"
+    return null

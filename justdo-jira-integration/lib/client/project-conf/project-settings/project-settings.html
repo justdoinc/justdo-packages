@@ -25,7 +25,7 @@
       </div>
       {{#each hardcodedFieldsMap}}
         <div class="jira-field-pair">
-          <span class="jira-field">{{justdo_field}}</span><span class="jira-field">→</span><span class="jira-field">{{jira_field}}</span>
+          <span class="jira-field">{{justdo_field_name}}</span><span class="jira-field">↔</span><span class="jira-field">{{jira_field_name}}</span>
         </div>
       {{/each}}
 
@@ -62,7 +62,7 @@
           {{/if}}
         {{/each}}
       </select>
-      <span class="jira-field">→</span>
+      <span class="jira-field">↔</span>
       <select>
         <option disabled selected>---Jira Field---</option>
         {{#each jira_fields}}
