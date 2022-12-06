@@ -78,9 +78,9 @@ APP.executeAfterAppLibCode ->
         deleteDisabledReason(user, "You can't remove yourself and other users at the same time.")
       for user in add_users
         deleteDisabledReason(user, "You can't remove yourself and other users at the same time.")
-    
+
     proceed_type_rv.set(proceed_type)
-    
+
     return
 
   _setProceedStateForAllUsersInReactiveVarExcludingFiltered = (reactive_var, state) ->
@@ -396,6 +396,8 @@ APP.executeAfterAppLibCode ->
           notes_messages.push message
 
       return notes_messages
+    isRemovingSelf: -> proceed_type_rv.get() == "remove_self"
+
     isRemovingSelf: -> proceed_type_rv.get() == "remove_self"
 
   Template.task_pane_item_details_members_editor.events
