@@ -115,8 +115,8 @@ APP.executeAfterAppLibCode ->
 
     user_id = Meteor.userId()
 
-    if task_doc.owner_id == user_id
-      return 1
+    if task_doc?.owner_id == user_id
+      return true
 
     gd = APP.modules.project_page.gridData()
     task_path = gd?._grid_data_core.getAllCollectionPaths(task_id)?[0]
@@ -634,9 +634,52 @@ APP.executeAfterAppLibCode ->
   # task_pane_item_details_members_editor_recent_batched_ops
   #
   Template.task_pane_item_details_members_editor_recent_batched_ops.helpers
-    recentBatchedOps: -> APP.collections.DBMigrationBatchedCollectionUpdates.find(getBatchedCollectionUpdatesQuery())
+    recentBatchedOps: -> APP.collections.DBMigrationBatchedCollectionUpdates.find(getBatchedCollectionUpdatesQuery(), {"sort": {"process_status_details.created_at": -1}})
+    recentBatchedOpsCount: -> APP.collections.DBMigrationBatchedCollectionUpdates.find(getBatchedCollectionUpdatesQuery()).fetch().length
     pendingOrInProgress: -> @process_status is "pending" or @process_status is "in-progress"
     processedPercent: -> Math.floor((@process_status_details.processed / @process_status_details.total) * 100)
+
+    opsMessage: ->
+      ops = @
+      message = ""
+
+      if ops.process_status == "done"
+        if ops.data.members_to_add.length > 0
+          message = "#{@data.members_to_add.length } members added to the task"
+        if ops.data.members_to_remove.length > 0
+          message = "#{@data.members_to_remove.length } members removed from the task"
+
+      if ops.process_status == "in-progress"
+        if ops.data.members_to_add.length > 0
+          message = "Add members to the task... "
+        if ops.data.members_to_remove.length > 0
+          message = "Remove members from the task... "
+
+      if ops.process_status == "pending"
+        if ops.data.members_to_add.length > 0
+          message = "Add members to the task... pending"
+        if ops.data.members_to_remove.length > 0
+          message = "Remove members from the task... pending"
+
+      if ops.process_status == "terminated"
+        if ops.data.members_to_add.length > 0
+          message = "Adding members terminated"
+        if ops.data.members_to_remove.length > 0
+          message = "Removing members terminated"
+
+      if ops.process_status == "error"
+        if ops.data.members_to_add.length > 0
+          message = "Adding members... error"
+        if ops.data.members_to_remove.length > 0
+          message = "Removing members... error"
+
+      return message
+
+    showViewToggle: ->
+      ops_count = APP.collections.DBMigrationBatchedCollectionUpdates.find(getBatchedCollectionUpdatesQuery()).fetch().length
+
+      if ops_count > 1
+        return true
 
   Template.task_pane_item_details_members_editor_recent_batched_ops.events
     "click .terminate": ->
@@ -650,5 +693,10 @@ APP.executeAfterAppLibCode ->
           if result
             Meteor.call("terminateBatchedCollectionUpdatesJob", job_id)
           return true
+
+      return
+
+    "click .recent-batched-view-toggle": ->
+      $(".recent-batched-info").toggleClass "show-less"
 
       return

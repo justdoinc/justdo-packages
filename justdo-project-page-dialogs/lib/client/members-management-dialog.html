@@ -1,6 +1,6 @@
 <template name="task_pane_item_details_members_editor">
   <div class="members-editor-search d-flex align-items-center">
-    <input type="text" class="members-search-input form-control form-control-sm" value="" placeholder="Find member">
+    <input type="text" class="members-search-input" value="" placeholder="Find member">
   </div>
   <div class="members-section {{#if isRemovingSelf}}remove-self{{/if}}">
     {{#each sections}}
@@ -12,7 +12,8 @@
       <input class="cascade-action-checkbox mr-2" type="checkbox" checked="{{isChecked cascade true}}"> Apply changes to all child-tasks.
     </label>
   </div>
-  {{#if display_notes_section}}
+
+  <!-- {{#if display_notes_section}}
     <div class="notes">
       <span>Notes</span>
       <ul>
@@ -21,22 +22,38 @@
         {{/each}}
       </ul>
     </div>
+  {{/if}} -->
+
+  {{#if displayRecentBatchedOps}}
+    <div class="recent-batched-info show-less">
+      {{> task_pane_item_details_members_editor_recent_batched_ops}}
+    </div>
   {{/if}}
 
-  <!-- {{#if displayRecentBatchedOps}}
-    {{> task_pane_item_details_members_editor_recent_batched_ops}}
-  {{/if}} -->
 </template>
 
 <template name="task_pane_item_details_members_editor_recent_batched_ops">
-  <div class="notes">
-  <span>Recent members updates</span>
-  <ul>
-    {{#each recentBatchedOps}}
-      <li>{{type}} {{process_status}} {{#if pendingOrInProgress}} {{processedPercent}}% <span class="terminate">TERMINATE</span>{{/if}}</li>
-    {{/each}}
-  </ul>
-</div>
+  {{#each recentBatchedOps}}
+    <div class="recent-batched-item">
+      <div class="recent-batched-msg-wrapper">
+        <div class="recent-batched-msg">
+          {{opsMessage}}
+          {{#if pendingOrInProgress}}
+            {{processedPercent}}%
+          {{/if}}
+        </div>
+        {{#if pendingOrInProgress}}
+          <span class="terminate">terminate</span>
+        {{/if}}
+      </div>
+    </div>
+  {{/each}}
+  {{#if showViewToggle}}
+    <div class="recent-batched-view-toggle show-all">
+      <div class="toggle-title">show all updates</div><div class="toggle-count">{{recentBatchedOpsCount}}</div>
+    </div>
+    <svg class="jd-icon recent-batched-view-toggle show-less"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+  {{/if}}
 </template>
 
 <template name="task_pane_item_details_members_editor_section">
@@ -51,7 +68,7 @@
         {{#if showInviteMembersSection}}
           <div class="invite-new-member-dropdown text-primary">
             <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
-            Invite new member
+            New member
           </div>
         {{/if}}
       </div>

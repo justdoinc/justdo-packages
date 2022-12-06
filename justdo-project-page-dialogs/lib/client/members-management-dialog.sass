@@ -3,16 +3,16 @@
     margin: 0
     color: #6a96d2
   input
-    padding: 8px 27px
+    padding: 12px 27px
     width: 100%
-    height: unset
     border-top: 0
     border-left: 0
     border-right: 0
     border-bottom: 1px solid #ecf1f8
-    width: 100%
+    font-size: 15px
     &:focus
       outline: none
+
 
 .members-section
   height: 400px
@@ -33,11 +33,12 @@
     padding: 20px 0px 0px 14px
     .section-caption,
     .members-list
-      padding-right: 14px
+      padding-right: 20px
 
   .members-list
     overflow: auto
     flex-grow: 1
+    padding-bottom: 80px
 
   .no-members,
   .no-results
@@ -52,11 +53,14 @@
 
   .members-editor-dialog-keep-users-section
     .dont-proceed
-      background-color: #E4EDF9
+      padding: 2px
+      background-color: #f0f4f9
+      border-radius: 17px 4px 4px 16px
+      .jd-icon
+        color: #7d8b9f
       .user-plus
         display: none
       .display-name
-        opacity: .8
         text-decoration: line-through
 
       .toggle
@@ -71,10 +75,13 @@
       display: none
 
     .proceed
-      background-color: #E4EDF9
+      padding: 2px
+      background-color: #f0f4f9
+      border-radius: 17px 4px 4px 16px
       .display-name
-        font-weight: bold
-
+        color: black
+      .jd-icon
+        color: #7d8b9f
       .toggle
         display: none
 
@@ -100,15 +107,84 @@
     .show-add-members-dialog
       width: 100%
 
-.members-section.remove-self
-  .select-all,
-  .select-none
-    pointer-events: none
-    opacity: 0.5
+  &.remove-self
+    .select-all,
+    .select-none
+      pointer-events: none
+      opacity: 0.5
+
+.recent-batched-info
+  position: absolute
+  right: 12px
+  left: 12px
+  bottom: 12px
+  padding: 10px 10px 10px 16px
+  display: flex
+  flex-direction: column
+  border-radius: 4px
+  font-size: 15px
+  color: white
+  background-color: rgb(50, 50, 50)
+  &.show-less
+    flex-direction: row
+    justify-content: space-between
+    .show-all
+      display: flex
+      align-items: center
+    .recent-batched-item:not(:first-child),
+    .show-less
+      display: none
+
+  .show-all
+    font-size: 11px
+    text-transform: uppercase
+    font-weight: bold
+    display: none
+    cursor: pointer
+    .toggle-title
+      text-decoration: underline
+    .toggle-count
+      background-color: rgba(255, 255, 255, 0.08)
+      padding: 2px 6px
+      margin-left: 8px
+
+  .recent-batched-item
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 4px 0
+
+  .recent-batched-msg-wrapper
+    font-size: 15px
+    display: flex
+    align-items: center
+    .recent-batched-msg
+      opacity: 0.75
+    .terminate
+      font-size: 11px
+      font-weight: bold
+      text-transform: uppercase
+      margin-left: 8px
+      cursor: pointer
+      text-decoration: underline
+
+  .show-less
+    stroke-width: 3
+    padding: 4px
+    cursor: pointer
+    color: white
+    background-color: rgba(255, 255, 255, 0.08)
+    position: absolute
+    top: 12px
+    right: 12px
+    &:hover
+      background-color: rgba(255, 255, 255, 0.12)
 
 .members-editor-dialog
   .modal-dialog
-    min-width: 800px
+    min-width: 700px
+  .modal-content
+    border: none
   .modal-body
     overflow: visible
     padding: 0px
@@ -129,6 +205,7 @@
       user-select: none
       display: flex
       align-items: center
+      color: #3D495B
 
   .section-caption
     font-size: 11px
@@ -143,9 +220,11 @@
   .user-btn
     cursor: pointer
     display: flex
-    margin-bottom: 8px
+    padding: 2px 0
+    margin-bottom: 4px
     align-items: center
     justify-content: space-between
+    transition: padding 0.35s
     .jd-icon
       color: #C5CBD3
       stroke-width: 3
@@ -164,6 +243,11 @@
       text-overflow: ellipsis
       overflow: hidden
       white-space: nowrap
+      font-size: 15px
+      margin-left: 2px
+      color: #3D495B
+      .unverified-email-warn
+        margin-right: 4px
     &.disabled
       opacity: .5
 
@@ -187,21 +271,16 @@
       margin-right: 2px
 
   .notes
-    padding: 15px 0px
-    border-top: 1px solid #eeeeee
-    font-family: "lato", sans-serif
+    font-size: 15px
     span
-      font-size: 18px
       font-weight: bold
-      color: #3D495B
     ul
       margin: 0px
       padding: 0px
       list-style-type: none
-      font-size: 15px
     li
-      border-bottom: 1px dotted #cecece
-      padding: 10px 0px
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08)
+      padding: 8px 0px
       &:last-child
         border-bottom: none
 
