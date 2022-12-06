@@ -38,6 +38,8 @@ _.extend Projects.prototype,
     # the duration of the subscription, hence, the existence of @tasks_subscription_last_sync_time[project_id]
     # is not an indicator for whether we loaded project_id before !!!
 
+    @setLastLoadedInitPayloadSyncId(project_id, sync_id)
+
     if not (previous_state = Tracker.nonreactive => @projects_with_processed_init_payload.get(project_id))? or previous_state is false
       @projects_with_processed_init_payload.set(project_id, true)
       @emit "project-init-payload-processed", project_id # Note you can also use @awaitProjectInitPayloadProcessed(project_id, cb)
@@ -165,11 +167,16 @@ _.extend Projects.prototype,
 
               return
 
+          max_age = Projects.grid_init_payload_cache_max_age_seconds
           ongoing_http_request_rv.set(true)
-          self._grid_data_com.countItems {project_id: project_id}, (err, pagination_recommendation) =>
+          self._grid_data_com.countItems {project_id: project_id, max_age_in_use_seconds: max_age, last_loaded_sync_id: APP.projects.getLastLoadedInitPayloadSyncId(project_id)}, (err, pagination_recommendation) =>
             if err?
               console.error "Failed to load pagination recommendation from countItems, avoiding pagination"
               pagination_recommendation = {use: false}
+
+            if pagination_recommendation.force_cahce_refresh is true
+              console.info "[Projects] Refreshing init payload cache"
+              APP.projects.forceBrowserCacheInitPayloadRefreshIdTokenRefresh(project_id)
 
             if env.SUPPORT_JUSTDO_LOAD_PAGINATION isnt "true"
               # At first, I (Daniel) hoped to provide pagination to all envs, it truned out to be too
@@ -186,7 +193,7 @@ _.extend Projects.prototype,
             else
               total_pages = pagination_recommendation.total_pages
 
-            http_options = {max_age: Projects.grid_init_payload_cache_max_age_seconds}
+            http_options = {max_age: max_age, custom_http_get_param_string: "cache_token=#{APP.projects.getBrowserCacheInitPayloadRefreshIdToken(project_id)}"}
             requestIteratee = (current_page, next) ->
               if total_pages == 1
                 # If only 1 page, don't add the paginated option at all

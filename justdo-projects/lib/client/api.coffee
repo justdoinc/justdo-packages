@@ -199,3 +199,45 @@ _.extend Projects.prototype,
       })
 
     return
+
+  getBrowserCacheInitPayloadRefreshIdTokenLocalStorageKey: (project_id) ->
+    return "browser_cache_init_payload_token::#{project_id}"
+
+  getBrowserCacheInitPayloadLastSyncIdLocalStorageKey: (project_id) ->
+    return "browser_cache_init_payload_last_sync_id::#{project_id}"
+
+  forceBrowserCacheInitPayloadRefreshIdTokenRefresh: (project_id) ->
+    # To understand purpose, read getBrowserCacheInitPayloadRefreshIdToken comment below
+
+    key = @getBrowserCacheInitPayloadRefreshIdTokenLocalStorageKey(project_id)
+
+    val = Random.id()
+    amplify.store(key, val)
+
+    return val
+
+  getBrowserCacheInitPayloadRefreshIdToken: (project_id) ->
+    # Whether the browser caches or not, is not in our control.
+    # But we can ensure that if something is cached then it'll be ignored
+    # by appending a get param to the payload's http request:
+    # prid=#{} (prid stands for payload refresh id)
+
+    key = @getBrowserCacheInitPayloadRefreshIdTokenLocalStorageKey(project_id)
+
+    if not amplify.store(key)?
+      # Set the token for the first time
+      @forceBrowserCacheInitPayloadRefreshIdTokenRefresh(project_id)
+
+    return amplify.store(key)
+
+  setLastLoadedInitPayloadSyncId: (project_id, sync_id) ->
+    key = @getBrowserCacheInitPayloadLastSyncIdLocalStorageKey(project_id)
+    
+    amplify.store(key, JustdoHelpers.getDateTimestamp(sync_id))
+
+    return 
+
+  getLastLoadedInitPayloadSyncId: (project_id) ->
+    key = @getBrowserCacheInitPayloadLastSyncIdLocalStorageKey(project_id)
+    
+    return amplify.store(key)

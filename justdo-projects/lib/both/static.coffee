@@ -23,3 +23,5 @@ _.extend Projects,
   page_count_rounding_factor: 1000 # Explained in justdo-projects/lib/server/grid-control-middlewares.coffee
 
   max_page_size: 10000
+
+  max_items_updates_to_force_cahce_refresh: 500

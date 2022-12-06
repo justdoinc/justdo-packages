@@ -18,6 +18,8 @@ Package.onUse(function (api) {
   api.use('reactive-dict', both);
   api.use("tracker", client);
 
+  api.use("amplify", client);
+
   api.use('peerlibrary:async@1.5.2_1', server);
 
   api.use('stevezhu:lodash@4.16.4', both);

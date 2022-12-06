@@ -143,6 +143,37 @@ _.extend Projects.prototype,
       total_pages = Math.ceil(rounded_assumed_items_count / max_page_size)
       return {use: true, total_pages: total_pages, max_items_per_page: max_page_size}
 
+    requestForceCacheRefreshRecommendation = (perform_as, project_id, max_age_in_use_seconds, last_loaded_sync_id) ->
+      if JustdoHelpers.getDateTimestamp() - (max_age_in_use_seconds * 1000) > last_loaded_sync_id
+        # Cahced init payload is too old anyways, can recommend to force_refresh, but it
+        # is basically meaningless, since the browser should have done that anyways.
+        return {force_cahce_refresh: true}
+
+      # The cache (that might exist and might also not) is not too old
+      # We'll count how many items changed for the user since, if more than
+      # Projects.max_items_updates_to_force_cahce_refresh updated we'll recommend
+      # forcing refresh.
+
+      query = 
+        project_id: project_id,
+        _raw_updated_date: {$gte: new Date(last_loaded_sync_id)}
+        $or: [
+          {users: perform_as}
+          {_raw_removed_users: perform_as}
+        ]
+      {err, count} = JustdoHelpers.pseudoBlockingRawCollectionCountInsideFiber(APP.collections.Tasks, query, {limit: Projects.max_items_updates_to_force_cahce_refresh})
+
+      if err?
+        console.trace()
+        console.error err
+
+        return # return nothing, recommend nothing
+
+      if count == Projects.max_items_updates_to_force_cahce_refresh
+        return {force_cahce_refresh: true}
+
+      return
+
     @_grid_data_com.setGridMethodMiddleware "beforeCountItems", (perform_as, etc) =>
       if not (project_id = etc.method_options.project_id)? or not _.isString(project_id)
         throw @_error "invalid-options", "countItems: options.project_id must be a String"
@@ -166,6 +197,10 @@ _.extend Projects.prototype,
 
     @_grid_data_com.setGridMethodMiddleware "afterCountItems", (perform_as, etc) =>
       _.extend etc.result, assumedPagesToPaginationRecommendation(etc.result.max_seq_id, etc.result.count_limit, etc.result.count)
+
+      if (project_id = etc.method_options?.project_id)? and (max_age_in_use_seconds = etc.method_options?.max_age_in_use_seconds)? and (last_loaded_sync_id = etc.method_options?.last_loaded_sync_id)?
+        if _.isNumber(max_age_in_use_seconds) and  _.isNumber(last_loaded_sync_id)
+          _.extend etc.result, requestForceCacheRefreshRecommendation(perform_as, project_id, max_age_in_use_seconds, last_loaded_sync_id)
 
       return true
 
