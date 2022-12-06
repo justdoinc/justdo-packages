@@ -59,8 +59,8 @@ Template.justdo_jira_integration_project_setting.helpers
     return APP.justdo_jira_integration.getCustomFieldMapByJiraProjectId Template.instance().selected_jira_project_id_rv.get()
 
   templateDataForChildTemplate: ->
-    {hardcoded_justdo_field_ids, hardcoded_jira_field_ids, hardcoded_field_map_rv, jira_field_def_obj_rv} = Template.instance()
-    return {hardcoded_justdo_field_ids, hardcoded_jira_field_ids, hardcoded_field_map_rv, jira_field_def_obj_rv, selected_justdo_field: @justdo_field_id, selected_jira_field: @jira_field_id}
+    {hardcoded_justdo_field_ids, hardcoded_jira_field_ids, jira_field_def_obj_rv} = Template.instance()
+    return {hardcoded_justdo_field_ids, hardcoded_jira_field_ids, jira_field_def_obj_rv, selected_justdo_field: @justdo_field_id, selected_jira_field: @jira_field_id}
 
 Template.justdo_jira_integration_project_setting.events
   "click .jira-login-link": (e, tpl) ->
