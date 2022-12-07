@@ -20,7 +20,9 @@ Template.justdo_jira_integration_project_setting.onCreated ->
   @autorun =>
     if not _.isNumber(selected_jira_project_id = @selected_jira_project_id_rv.get())
       return
-    APP.justdo_jira_integration.getJiraFieldDefByJiraProjectId selected_jira_project_id, (err, field_def) =>
+    jira_doc_id = APP.justdo_jira_integration.getJiraDocIdFromJustdoId JD.activeJustdoId()
+
+    APP.justdo_jira_integration.getJiraFieldDefByJiraProjectId jira_doc_id, selected_jira_project_id, (err, field_def) =>
       if err?
         console.error err
         return
@@ -44,6 +46,8 @@ Template.justdo_jira_integration_project_setting.helpers
   selectedJiraProjectId: -> Template.instance().selected_jira_project_id_rv.get()
 
   mountedJiraProjectsUnderActiveJustdo: ->
+    jira_doc_id = APP.justdo_jira_integration.getJiraDocIdFromJustdoId JD.activeJustdoId()
+
     query =
       project_id: JD.activeJustdoId()
       jira_mountpoint_type: "root"
@@ -52,11 +56,12 @@ Template.justdo_jira_integration_project_setting.helpers
 
     return APP.collections.Tasks.find(query, {fields: {jira_project_id: 1}}).map (task_doc) ->
       jira_project_id = task_doc.jira_project_id
-      jira_project_key = APP.justdo_jira_integration.getJiraProjectKeyById jira_project_id
+      jira_project_key = APP.justdo_jira_integration.getJiraProjectKeyById jira_doc_id, jira_project_id
       return {jira_project_id, jira_project_key}
 
   customFieldsMap: ->
-    return APP.justdo_jira_integration.getCustomFieldMapByJiraProjectId Template.instance().selected_jira_project_id_rv.get()
+    jira_doc_id = APP.justdo_jira_integration.getJiraDocIdFromJustdoId JD.activeJustdoId()
+    return APP.justdo_jira_integration.getCustomFieldMapByJiraProjectId jira_doc_id, Template.instance().selected_jira_project_id_rv.get()
 
   templateDataForChildTemplate: ->
     {hardcoded_justdo_field_ids, hardcoded_jira_field_ids, jira_field_def_obj_rv} = Template.instance()

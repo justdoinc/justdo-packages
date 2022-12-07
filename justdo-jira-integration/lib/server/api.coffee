@@ -117,7 +117,8 @@ _.extend JustdoJiraIntegration.prototype,
       throw @_error "justdo-id-not-found"
 
     jira_project_id = parseInt req_body.issue.fields.project.id
-    custom_field_map = _.indexBy @getCustomFieldMapByJiraProjectId(jira_project_id), "jira_field_id"
+    jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
+    custom_field_map = _.indexBy @getCustomFieldMapByJiraProjectId(jira_doc_id, jira_project_id), "jira_field_id"
     fields_schema = @tasks_collection.simpleSchema()._schema
 
     # issue_updated
@@ -213,7 +214,8 @@ _.extend JustdoJiraIntegration.prototype,
       transition: {}
 
     jira_project_id = task_doc.jira_project_id
-    custom_field_map = _.indexBy @getCustomFieldMapByJiraProjectId(jira_project_id), "justdo_field_id"
+    jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
+    custom_field_map = _.indexBy @getCustomFieldMapByJiraProjectId(jira_doc_id, jira_project_id), "justdo_field_id"
     fields_schema = @tasks_collection.simpleSchema()._schema
 
     for field_id, field_val of modifier.$set
@@ -1630,10 +1632,9 @@ _.extend JustdoJiraIntegration.prototype,
 
     return res
 
-  getJiraFieldDefByJiraProjectId: (jira_project_id) ->
+  getJiraFieldDefByJiraProjectId: (jira_doc_id, jira_project_id) ->
     if @isJiraInstanceCloud()
-      # jira_server_id = @jira_collection.findOne({"jira_projects.#{jira_project_id}": {$ne: null}}, {fields: {"server_info.id": 1}})?.server_info?.id
-      jira_server_id = @jira_collection.findOne({"jira_projects.#{jira_project_id}": {$ne: null}}, {fields: {"server_info.id": 1}})?.server_info?.id
+      jira_server_id = @jira_collection.findOne(jira_doc_id, {fields: {"server_info.id": 1}})?.server_info?.id
     else
       jira_server_id = "private-server"
 

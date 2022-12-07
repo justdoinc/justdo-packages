@@ -38,9 +38,10 @@ _.extend JustdoJiraIntegration.prototype,
         check jira_doc_id, String
         return self.getJiraFieldDef jira_doc_id
 
-      getJiraFieldDefByJiraProjectId: (jira_project_id) ->
+      getJiraFieldDefByJiraProjectId: (jira_doc_id, jira_project_id) ->
+        check jira_doc_id, String
         check jira_project_id, Number
-        return self.getJiraFieldDefByJiraProjectId jira_project_id
+        return self.getJiraFieldDefByJiraProjectId jira_doc_id, jira_project_id
 
       mapJustdoAndJiraFields: (jira_doc_id, jira_project_id, field_map) ->
         check jira_doc_id, String
