@@ -691,6 +691,8 @@ _.extend JustdoJiraIntegration.prototype,
 
   mountTaskWithJiraProject: (task_id, jira_project_id, user_id) ->
     justdo_id = APP.collections.Tasks.findOne(task_id, {fields: {project_id: 1}})?.project_id
+    jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
+
     if not @isJiraIntegrationInstalledOnJustdo justdo_id
       throw @_error "not-supported", "Jira integration is not installed on this project: #{justdo_id}"
 
@@ -732,13 +734,10 @@ _.extend JustdoJiraIntegration.prototype,
     # Setup mountpoints for sprints and fix versions
     gc = APP.projects._grid_data_com
 
-    jira_query =
-      "jira_projects.#{jira_project_id}":
-        $ne: null
     jira_query_options =
       fields:
         "jira_projects.#{jira_project_id}": 1
-    jira_project_sprints_and_fix_versions = @jira_collection.findOne(jira_query, jira_query_options)
+    jira_project_sprints_and_fix_versions = @jira_collection.findOne(jira_doc_id, jira_query_options)
     jira_project_sprints_and_fix_versions = jira_project_sprints_and_fix_versions?.jira_projects?[jira_project_id]
 
     # Create the three special task that groups all the sprints and fix versions, and all the tasks
@@ -834,16 +833,13 @@ _.extend JustdoJiraIntegration.prototype,
   # Unmounts a single task/Jira project pair
   unmountTaskWithJiraProject: (justdo_id, jira_project_id, user_id) ->
     jira_project_id = parseInt jira_project_id
+    jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
 
     if not @isJiraIntegrationInstalledOnJustdo justdo_id
       throw @_error "not-supported", "Jira integration is not installed on this project: #{justdo_id}"
 
     if not APP.projects.isProjectAdmin justdo_id, user_id
       throw @_error "permission-denied"
-
-    all_sprints_and_fix_versions_under_jira_project = @getAllStoredSprintsAndFixVersionsByJiraProjectId jira_project_id
-    all_sprint_ids_under_jira_project = _.map all_sprints_and_fix_versions_under_jira_project.sprints, (sprint) -> sprint.id
-    all_fix_version_ids_under_jira_project = _.map all_sprints_and_fix_versions_under_jira_project.fix_versions, (fix_version) -> fix_version.id
 
     # Remove issue keys under this Jira Project under this Justdo
     tasks_query =
@@ -869,22 +865,16 @@ _.extend JustdoJiraIntegration.prototype,
         jira_fix_version_mountpoint_id: null
     @tasks_collection.update tasks_query, tasks_ops, {multi: true}
 
-    jira_query =
-      "server_info.id": @getJiraServerInfoFromJustdoId(justdo_id).id
     jira_ops =
       $unset:
         "jira_projects.#{jira_project_id}": 1
-    @jira_collection.update jira_query, jira_ops
+    @jira_collection.update jira_doc_id, jira_ops
 
     return
 
   # Unmounts all task/Jira project pair under jira_project_id
   unmountAllTasksRelevantToJiraProject: (jira_project_id, user_id) ->
     jira_project_id = parseInt jira_project_id
-
-    all_sprints_and_fix_versions_under_jira_project = @getAllStoredSprintsAndFixVersionsByJiraProjectId jira_project_id
-    all_sprint_ids_under_jira_project = _.map all_sprints_and_fix_versions_under_jira_project.sprints, (sprint) -> sprint.id
-    all_fix_version_ids_under_jira_project = _.map all_sprints_and_fix_versions_under_jira_project.fix_versions, (fix_version) -> fix_version.id
 
     # Remove issue ids under this Jira Project under this Justdo
     tasks_query =
@@ -1128,7 +1118,7 @@ _.extend JustdoJiraIntegration.prototype,
       project: jira_project_id
     # Jira server API supports project key only for findAssignableUsers()
     if @getAuthTypeIfJiraInstanceIsOnPerm()?
-      find_assignable_users_req.project = @getJiraProjectKeyById jira_project_id
+      find_assignable_users_req.project = @getJiraProjectKeyById jira_server_id, jira_project_id
 
     {err, res} = @pseudoBlockingJiraApiCallInsideFiber "userSearch.findAssignableUsers", find_assignable_users_req, client
     if err?
@@ -1202,15 +1192,6 @@ _.extend JustdoJiraIntegration.prototype,
       throw @_error "client-not-found"
     return client
 
-  isJiraProjectMounted: (jira_project_id) ->
-    query =
-      "jira_projects.#{jira_project_id}":
-        $ne: null
-    query_options =
-      fields:
-        _id: 1
-    return @jira_collection.findOne(query, query_options)?._id
-
   # XXX for demo only
   _getHarcodedEmailByAccountId: (jira_account_id) ->
     users =
@@ -1259,9 +1240,6 @@ _.extend JustdoJiraIntegration.prototype,
       user_email = @jira_collection.findOne(query, query_options)?.jira_users?[0]?.email
 
     return Accounts.findUserByEmail(user_email)._id
-
-  getAllStoredSprintsAndFixVersionsByJiraProjectId: (jira_project_id) ->
-    return @jira_collection.findOne({"jira_projects.#{jira_project_id}": {$ne: null}}, {fields: {"jira_projects.#{jira_project_id}": 1}})?.jira_projects?[jira_project_id]
 
   getClientByHost: (host) ->
     jira_doc = @jira_collection.findOne({"server_info.url": host}, {fields: {"server_info": 1}})

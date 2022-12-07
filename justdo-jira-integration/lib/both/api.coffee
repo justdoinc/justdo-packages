@@ -81,15 +81,12 @@ _.extend JustdoJiraIntegration.prototype,
 
     return 0
 
-  getRankedIssueTypesInJiraProject: (jira_project_id) ->
+  getRankedIssueTypesInJiraProject: (jira_doc_id, jira_project_id) ->
     # Default issue type rank:
     #   1: Epic
     #   0: Other non-subtask types
     #   -1: Subtask types
 
-    query =
-      "jira_projects.#{jira_project_id}":
-        $ne: null
     query_options =
       fields:
         "jira_projects.#{jira_project_id}.issue_types": 1
@@ -99,7 +96,7 @@ _.extend JustdoJiraIntegration.prototype,
       "0": []
       "-1": []
 
-    @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.issue_types?.forEach (issue_type_def) ->
+    @jira_collection.findOne(jira_doc_id, query_options)?.jira_projects?[jira_project_id]?.issue_types?.forEach (issue_type_def) ->
       rank = 0
 
       if issue_type_def.subtask
@@ -113,10 +110,21 @@ _.extend JustdoJiraIntegration.prototype,
 
     return ranked_issue_types
 
-  getJiraProjectKeyById: (jira_project_id) ->
+  getCustomFieldMapByJiraProjectId: (jira_doc_id, jira_project_id) ->
+    jira_project_id = parseInt jira_project_id
+
+    query_options =
+      "jira_projects.#{jira_project_id}.custom_field_map": 1
+
+    return @jira_collection.findOne(jira_doc_id, query_options)?.jira_projects?[jira_project_id]?.custom_field_map
+
+  getJiraProjectKeyById: (jira_doc_or_server_id, jira_project_id) ->
     query =
-      "jira_projects.#{jira_project_id}":
-        $ne: null
+      $or: [
+        _id: jira_doc_or_server_id
+      ,
+        "server_info.id": jira_doc_or_server_id
+      ]
     query_options =
       "jira_projects.#{jira_project_id}.key": 1
     return @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.key

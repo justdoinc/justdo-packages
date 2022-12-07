@@ -28,38 +28,39 @@ _.extend JustdoJiraIntegration.prototype,
     fix_version = req_body.version
     jira_project_id = fix_version.projectId
 
-    # If the Jira project isn't mounted, ignore.
-    if not (jira_doc_id = @isJiraProjectMounted jira_project_id)?
-      return
-
     tasks_query =
       jira_project_id: jira_project_id
       jira_mountpoint_type: "fix_versions"
     tasks_options =
       project_id: 1
-    if (fix_versions_mountpiont_task_doc = @tasks_collection.findOne(tasks_query, tasks_options))?
-      justdo_id = fix_versions_mountpiont_task_doc.project_id
-      justdo_admin_id = @_getJustdoAdmin justdo_id
 
-      task_fields = _.extend @_convertFixVersionToTaskFields(fix_version),
-        jira_project_id: jira_project_id
-        project_id: justdo_id
+    # If the Jira project isn't mounted, ignore.
+    if not (fix_versions_mountpiont_task_doc = @tasks_collection.findOne(tasks_query, tasks_options))?
+      return
 
-      # Create the fix version task
-      fix_version_task_id = APP.projects._grid_data_com.addChild "/#{fix_versions_mountpiont_task_doc._id}/", task_fields, justdo_admin_id
+    justdo_id = fix_versions_mountpiont_task_doc.project_id
+    jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
+    justdo_admin_id = @_getJustdoAdmin justdo_id
 
-      # In case of a version reopen/unarchive, move all child tasks back to the fix version task.
-      if reopen
-        {err, res} = @pseudoBlockingJiraApiCallInsideFiber "issueSearch.searchForIssuesUsingJqlPost", {jql: "project=#{jira_project_id} and fixversion=#{fix_version.id} and status !=done", fields: ["project"]}, @getJiraClientForJustdo(justdo_id).v2
-        if err?
-          console.error "[justdo-jira-integration] Issue search failed", err
-        grid_data = APP.projects._grid_data_com
+    task_fields = _.extend @_convertFixVersionToTaskFields(fix_version),
+      jira_project_id: jira_project_id
+      project_id: justdo_id
 
-        issue_ids = _.map res.issues, (issue) -> parseInt issue.id
-        # XXX bulkAddParent can be used here, but it's not available yet.
-        @tasks_collection.find({jira_issue_id: {$in: issue_ids}}, {fields: {_id: 1}}).forEach (task) ->
-          grid_data.addParent task._id, {parent: fix_version_task_id}, justdo_admin_id
-          return
+    # Create the fix version task
+    fix_version_task_id = APP.projects._grid_data_com.addChild "/#{fix_versions_mountpiont_task_doc._id}/", task_fields, justdo_admin_id
+
+    # In case of a version reopen/unarchive, move all child tasks back to the fix version task.
+    if reopen
+      {err, res} = @pseudoBlockingJiraApiCallInsideFiber "issueSearch.searchForIssuesUsingJqlPost", {jql: "project=#{jira_project_id} and fixversion=#{fix_version.id} and status !=done", fields: ["project"]}, @getJiraClientForJustdo(justdo_id).v2
+      if err?
+        console.error "[justdo-jira-integration] Issue search failed", err
+      grid_data = APP.projects._grid_data_com
+
+      issue_ids = _.map res.issues, (issue) -> parseInt issue.id
+      # XXX bulkAddParent can be used here, but it's not available yet.
+      @tasks_collection.find({jira_issue_id: {$in: issue_ids}}, {fields: {_id: 1}}).forEach (task) ->
+        grid_data.addParent task._id, {parent: fix_version_task_id}, justdo_admin_id
+        return
 
     if not reopen
       jira_ops =
@@ -73,8 +74,13 @@ _.extend JustdoJiraIntegration.prototype,
     fix_version.id = parseInt fix_version.id # So that when we insert the fix version in Jira collection, id will be int instead of string
     fix_version_id = fix_version.id
     jira_project_id = fix_version.projectId
-    fix_version_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions"}, {fields: {project_id: 1, users: 1}})
+
+    # If the Jira project isn't mounted, ignore.
+    if not (fix_version_mountpoint = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_mountpoint_type: "fix_versions"}, {fields: {project_id: 1, users: 1}}))?
+      return
+
     justdo_id = fix_version_mountpoint?.project_id
+    jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
 
     # Temp workaround to fix a bug on Jira webhook: archived flag is not representing the truth over webhook.
     # Remove the API call after the bug is resolved.
@@ -84,14 +90,14 @@ _.extend JustdoJiraIntegration.prototype,
       return
     fix_version = res
 
-    # If the Jira project isn't mounted, ignore.
-    if not (jira_doc_id = @isJiraProjectMounted jira_project_id)?
-      return
-
     tasks_query =
       jira_fix_version_mountpoint_id: fix_version_id
       jira_project_id: jira_project_id
     fix_version_task = @tasks_collection.findOne(tasks_query, {fields: {project_id: 1, users: 1}})
+
+    jira_query =
+      _id: jira_doc_id
+      "jira_projects.#{jira_project_id}.fix_versions.id": fix_version_id
 
     if fix_version_task?
       justdo_admin_id = @_getJustdoAdmin fix_version_task.project_id
@@ -111,9 +117,6 @@ _.extend JustdoJiraIntegration.prototype,
               $each: fix_version_mountpoint.users
         APP.projects.bulkUpdate justdo_id, [fix_version_task._id], users_modifier, justdo_admin_id
 
-      jira_query =
-        _id: jira_doc_id
-        "jira_projects.#{jira_project_id}.fix_versions.id": fix_version_id
       jira_query_options =
         fields:
           "jira_projects.#{jira_project_id}.fix_versions.$": 1
@@ -523,6 +526,7 @@ _.extend JustdoJiraIntegration.prototype,
       {[JustdoJiraIntegration.task_id_custom_field_id]:task_id, [JustdoJiraIntegration.project_id_custom_field_id]:justdo_id, issuetype} = req_body.issue.fields
       jira_issue_id = parseInt(req_body.issue.id)
       jira_project_id = parseInt(req_body.issue.fields.project.id)
+      jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
 
       removeAllParents = (task_doc) =>
         all_parent_task_ids = _.map task_doc.parents2, (parent_obj) -> parent_obj.parent
@@ -570,7 +574,7 @@ _.extend JustdoJiraIntegration.prototype,
           jira_issue_id:
             $ne: null
           jira_issue_type:
-            $in: _.map @getRankedIssueTypesInJiraProject(jira_project_id)[-1], (issue_type_def) -> issue_type_def.name
+            $in: _.map @getRankedIssueTypesInJiraProject(jira_doc_id, jira_project_id)[-1], (issue_type_def) -> issue_type_def.name
         @tasks_collection.find(query, {fields: {jira_issue_id: 1, "parents2.parent": 1}}).forEach (child_task) => removeAllParents child_task
 
       # At last, remove the issue that was removed in Jira.
@@ -598,13 +602,15 @@ _.extend JustdoJiraIntegration.prototype,
       if not client?
         throw @_error "client-not-found"
 
+      jira_server_id = @getJiraServerIdFromApiClient client
+
       {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getProjects", {boardId: board_id}, client
       if (err = err?.response?.data or err)?
         console.error "[justdo-jira-integration] Fetching project board failed", err
         return
 
       query =
-        $or: []
+        "server_info.id": jira_server_id
       ops =
         $addToSet: {}
 
@@ -619,9 +625,6 @@ _.extend JustdoJiraIntegration.prototype,
         if (sprint_mountpiont_task_doc = @tasks_collection.findOne(tasks_query, tasks_options))?
           @_createSprintTask sprint, sprint_mountpiont_task_doc._id, sprint_mountpiont_task_doc.project_id, jira_project_id
 
-        query.$or.push
-          "jira_projects.#{jira_project_id}":
-            $ne: null
         ops.$addToSet["jira_projects.#{jira_project_id}.sprints"] = sprint
 
       @jira_collection.update query, ops
