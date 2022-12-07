@@ -129,25 +129,6 @@ _.extend JustdoJiraIntegration.prototype,
       "jira_projects.#{jira_project_id}.key": 1
     return @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.key
 
-  getCustomFieldMapByJiraProjectId: (jira_project_id) ->
-    jira_project_id = parseInt jira_project_id
-
-    query =
-      "jira_projects.#{jira_project_id}.custom_field_map":
-        $ne: null
-    query_options =
-      "jira_projects.#{jira_project_id}.custom_field_map": 1
-
-    return @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.custom_field_map
-
-  getJiraProjectKeyById: (jira_project_id) ->
-    query =
-      "jira_projects.#{jira_project_id}":
-        $ne: null
-    query_options =
-      "jira_projects.#{jira_project_id}.key": 1
-    return @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.key
-
   translateJustdoFieldTypeToMappedFieldType: (field_schema) ->
     if field_schema.type is String and field_schema.grid_column_editor is "UnicodeDateEditor"
       return "date"
