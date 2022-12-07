@@ -259,6 +259,10 @@ APP.executeAfterAppLibCode ->
       ancestors_ids_arr = _.keys APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownAncestorsIdsObj([data._id])
       @ancestors_users_subscription = APP.projects.subscribeTasksAugmentedFields(ancestors_ids_arr, ["users"])
 
+    # The following is highly intensive operation on the server side for tasks
+    # with big sub-tree.
+    # If it'll turn out it is necessary (like in the case of guests?), need to consider strategy to
+    # limit the amount of data we are asking -Daniel C.
     # descendants_ids_arr = _.keys APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownDescendantsIdsObj([data._id])
     # @descendants_users_subscription = APP.projects.subscribeTasksAugmentedFields(descendants_ids_arr, ["users"])
 
