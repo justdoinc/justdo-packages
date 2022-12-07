@@ -844,25 +844,16 @@ _.extend JustdoJiraIntegration.prototype,
     # Remove issue keys under this Jira Project under this Justdo
     tasks_query =
       project_id: justdo_id
-      $or: [
-        jira_project_id: jira_project_id
-      ,
-        jira_sprint_mountpoint_id:
-          $in: all_sprint_ids_under_jira_project
-      ,
-        jira_fix_version_mountpoint_id:
-          $in: all_fix_version_ids_under_jira_project
-      ]
+      jira_project_id: jira_project_id
+
     tasks_ops =
       $set:
         updated_by: user_id
-        jira_project_key: null
-        jira_project_id: null
-        jira_issue_key: null
-        jira_issue_id: null
-        jira_mountpoint_type: null
-        jira_sprint_mountpoint_id: null
-        jira_fix_version_mountpoint_id: null
+
+    # Unset all core Jira fields
+    for field_id of @tasks_collection_schema
+      tasks_ops.$set[field_id] = null
+
     @tasks_collection.update tasks_query, tasks_ops, {multi: true}
 
     jira_ops =
@@ -878,24 +869,15 @@ _.extend JustdoJiraIntegration.prototype,
 
     # Remove issue ids under this Jira Project under this Justdo
     tasks_query =
-      $or: [
-        jira_project_id: jira_project_id
-      ,
-        jira_sprint_mountpoint_id:
-          $in: all_sprint_ids_under_jira_project
-      ,
-        jira_fix_version_mountpoint_id:
-          $in: all_fix_version_ids_under_jira_project
-      ]
+      jira_project_id: jira_project_id
+
     tasks_ops =
       $set:
         updated_by: user_id
-        jira_project_id: null
-        jira_issue_key: null
-        jira_issue_id: null
-        jira_sprint_mountpoint_id: null
-        jira_fix_version_mountpoint_id: null
-        jira_mountpoint_type: null
+
+    # Unset all core Jira fields
+    for field_id of @tasks_collection_schema
+      tasks_ops.$set[field_id] = null
 
     @tasks_collection.update tasks_query, tasks_ops, {multi: true}
 

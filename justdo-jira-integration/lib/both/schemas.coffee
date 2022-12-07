@@ -21,82 +21,88 @@ jira_collection_server_info_schema = new SimpleSchema
     optional: true
 
 _.extend JustdoJiraIntegration.prototype,
+  tasks_collection_schema:
+    jira_issue_key:
+      label: "Jira Issue key"
+      type: String
+      optional: true
+
+    jira_issue_id:
+      label: "Jira Issue ID"
+      type: Number
+      optional: true
+
+    jira_project_id:
+      label: "Jira Project ID"
+      type: Number
+      optional: true
+
+    jira_last_updated:
+      label: "Last Updated to Jira"
+      type: Date
+      optional: true
+
+    jira_issue_type:
+      label: "Issue Type"
+      type: String
+      optional: true
+
+    jira_issue_reporter:
+      label: "Jira Issue Reporter"
+      type: String
+      optional: true
+
+      grid_visible_column: false
+      user_editable_column: false
+
+    # jira_sprint and jira_fix_version stores the sprint and fix version information of an issue
+    jira_sprint:
+      label: "Jira Sprint"
+      type: String
+      optional: true
+
+    jira_fix_version:
+      label: "Fix Versions"
+      type: [String]
+      optional: true
+
+    # NOTE: Not to be confused with jira_sprint and jira_fix_version,
+    # the following four fields are not required by any tasks that are created from Jira issues.
+    # They are for the sprint/fix version mountpoints
+    jira_sprint_mountpoint_id:
+      label: "ID of Jira Sprint"
+      type: Number
+      optional: true
+    jira_fix_version_mountpoint_id:
+      label: "ID of Jira Fix Version"
+      type: Number
+      optional: true
+
+    jira_story_point:
+      label: "Story Point"
+      type: Number
+      optional: true
+
+    # These two is required in the task document level to support sprints updates only
+    jira_project_key:
+      label: "Jira Project Key"
+      type: String
+      optional: true
+    jira_mountpoint_type:
+      label: "Jira Mountpoint Type"
+      type: String
+      allowedValues: ["root", "sprints", "fix_versions", "roadmap"]
+      optional: true
+
+    "jrs:style":
+      label: "Row Style"
+      type: Object
+      blackbox: true
+      optional: true
+
+ _.extend JustdoJiraIntegration.prototype,
   _attachCollectionsSchemas: ->
-    tasks_collection_schema =
-      jira_issue_key:
-        label: "Jira issue key"
-        type: String
-        optional: true
-
-      jira_issue_id:
-        label: "Jira issue ID"
-        type: Number
-        optional: true
-
-      jira_project_id:
-        label: "Jira project ID"
-        type: Number
-        optional: true
-
-      jira_last_updated:
-        label: "Last updated to Jira"
-        type: Date
-        optional: true
-
-      jira_issue_type:
-        label: "Issue Type"
-        type: String
-        optional: true
-
-      jira_issue_reporter:
-        label: "Jira issue reporter"
-        type: String
-        optional: true
-
-      # jira_sprint and jira_fix_version stores the sprint and fix version information of an issue
-      jira_sprint:
-        label: "Jira sprint"
-        type: String
-        optional: true
-      jira_fix_version:
-        label: "Jira fixed version"
-        type: [String]
-        optional: true
-
-      # NOTE: Not to be confused with jira_sprint and jira_fix_version,
-      # the following four fields are not required by any tasks that are created from Jira issues.
-      # They are for the sprint/fix version mountpoints
-      jira_sprint_mountpoint_id:
-        label: "ID of Jira Sprint"
-        type: Number
-        optional: true
-      jira_fix_version_mountpoint_id:
-        label: "ID of Jira Fix Version"
-        type: Number
-        optional: true
-
-      jira_story_point:
-        label: "Story point"
-        type: Number
-        optional: true
-
-      # These two is required in the task document level to support sprints updates only
-      jira_project_key:
-        label: "Jira project key"
-        type: String
-        optional: true
-      jira_mountpoint_type:
-        label: "Jira mountpoint type"
-        type: String
-        allowedValues: ["root", "sprints", "fix_versions", "roadmap"]
-        optional: true
-
-      "jrs:style":
-        label: "Row style"
-        type: Object
-        blackbox: true
-        optional: true
-    @tasks_collection.attachSchema tasks_collection_schema
+    @tasks_collection.attachSchema _.extend {}, @tasks_collection_schema
 
     # The reason we have another collection and not using system-records is to be
     # future ready for multiple Jira connections per installation.
