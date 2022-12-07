@@ -18,4 +18,7 @@ _.extend JustdoJiraIntegration.prototype,
     # PROJECTS_COLLECTION_JIRA_DOC_ID_INDEX
     @projects_collection.rawCollection().createIndex({"conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": 1})
 
+    # JIRA_COLLECTION_SERVER_INFO_ID_INDEX
+    @jira_collection.rawCollection().createIndex({"server_info.id": 1})
+
     return
