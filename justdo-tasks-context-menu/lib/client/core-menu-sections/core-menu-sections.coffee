@@ -572,12 +572,21 @@ _.extend JustdoTasksContextMenu.prototype,
             project_id: current_justdo_id
             "#{JustdoDeliveryPlanner.task_is_project_field_name}": true
 
+          cache_key = "justdo-has-projects::#{current_justdo_id}"
+
+          if JustdoHelpers.sameTickCacheExists(cache_key)
+            return JustdoHelpers.sameTickCacheGet(cache_key)
+
           options =
             fields:
               _id: 1
               "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1
 
-          return APP.collections.Tasks.findOne(query, options)?
+          justdo_has_projects = APP.collections.Tasks.findOne(query, options)?
+
+          JustdoHelpers.sameTickCacheSet(cache_key, justdo_has_projects)
+
+          return justdo_has_projects
 
       getAllJustdoActiveProjectsSortedByProjectName = (filter_state) ->
         options = 
@@ -637,6 +646,11 @@ _.extend JustdoTasksContextMenu.prototype,
           limit_rendered_items: true
 
           itemsGenerator: ->
+            cache_key = "manage-active-projects"
+
+            if JustdoHelpers.sameTickCacheExists(cache_key)
+              return JustdoHelpers.sameTickCacheGet(cache_key)
+
             res = []
 
             active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(self.getSectionFilterState("manage-active-projects"))
@@ -713,4 +727,5 @@ _.extend JustdoTasksContextMenu.prototype,
 
                     close_on_click: false
 
+            JustdoHelpers.sameTickCacheSet(cache_key, res)
             return res
