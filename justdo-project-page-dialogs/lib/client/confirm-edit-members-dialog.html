@@ -1,27 +1,29 @@
 <template name="confirm_edit_members_dialog">
   <div class="confirm-edit-members-dialog">
-    {{#if members_to_remove}}
-      <p style="font-size: 15px">
-        <svg class="jd-icon text-primary confirm-edit-icon">
-          <use xlink:href="/layout/icons-feather-sprite.svg#user-x"></use>
-        </svg>
-        You are about to remove <i>{{usersText members_to_remove}}</i> from <b><i class="text-danger">{{tasks_count}}</i></b> tasks
-        <br>
-        <b> As a result, you'll become the owner of all the {{tasks_count}} tasks owned by these users .</b>
-      </p>
-    {{/if}}
+    {{#if crossed_immediate_execution_threshold}}
+      <div class="section crossed-threshold bg-light">
+        <div class="secton-message font-weight-bold">This operation will take between {{minSecondsToProcess}} to {{maxSecondsToProcess}} seconds...</div>
+        <div class="secton-message mt-1">Operation affects more than <b>{{batchedImmediateProcessThreshold}}</b> records and therefore will take a while. You can track its progress in the members edit window.</div>
+      </div>
+    {{/if }}
 
-    {{#if members_to_add}}
-      <p style="font-size: 15px; margin-top: 24px;">
-        <svg class="jd-icon text-primary confirm-edit-icon">
-          <use xlink:href="/layout/icons-feather-sprite.svg#user-plus"></use>
-        </svg>
-        You are about to grant access to <b><i class="text-danger">{{tasks_count}}</i></b> tasks to: <i>{{usersText members_to_add}}</i>
-      </p>
-    {{/if}}
+    {{#if has_sub_sub_tasks_and_more_then_confirm_task_count}}
+      {{#if members_to_remove}}
+        <div class="section remove">
+          <div class="section-message">
+            You are about to remove <b>{{usersText members_to_remove}}</b> from <b>{{tasks_count}}</b> tasks<br>
+            As a result, you'll become the owner of all the <b>{{tasks_count}}</b> tasks owned by these users.
+          </div>
+        </div>
+      {{/if}}
 
-    <p style="font-size: 15px; margin-top: 48px;">
-      Please Confirm.
-    </p>
+      {{#if members_to_add}}
+        <div class="section add">
+          <div class="section-message">
+            You are about to grant access to <b>{{tasks_count}}</b> tasks to: <b>{{usersText members_to_add}}</b>
+          </div>
+        </div>
+      {{/if}}
+    {{/if}}
   </div>
 </template>

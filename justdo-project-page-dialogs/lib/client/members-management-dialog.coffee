@@ -244,7 +244,7 @@ APP.executeAfterAppLibCode ->
       i += 1
 
     return i
-  
+
   Template.task_pane_item_details_members_editor.onCreated ->
     data = @data
 
@@ -623,15 +623,24 @@ APP.executeAfterAppLibCode ->
 
             task_id = JD.activeItemId()
             task_path = JD.activePath()
-            if cascade.get() == true and hasSubSubTasks(task_id) and 
-                (tasks_count = getDescendantsCount(task_path)+1) > ProjectPageDialogs.EDIT_MEMBER_CONFIRM_TASK_COUNT
+            tasks_count = getDescendantsCount(task_path) + 1
+
+            has_sub_sub_tasks_and_more_then_confirm_task_count = cascade.get() == true and hasSubSubTasks(task_id) and tasks_count > ProjectPageDialogs.EDIT_MEMBER_CONFIRM_TASK_COUNT
+            crossed_immediate_execution_threshold = tasks_count > JustdoDbMigrations.batched_collection_updates_immediate_process_threshold_docs
+
+            if has_sub_sub_tasks_and_more_then_confirm_task_count or crossed_immediate_execution_threshold
               bootbox.confirm
-                className: "bootbox-new-design bootbox-new-design-simple-dialogs-default"
+                className: "bootbox-new-design bootbox-new-design-simple-dialogs-default confirm-edit-members"
                 title: "Confirm edit members"
+                buttons:
+                  confirm:
+                    label: "Confirm"
                 message: JustdoHelpers.renderTemplateInNewNode(Template.confirm_edit_members_dialog, {
                   members_to_remove: if members_to_remove.length > 0 then members_to_remove else null
                   members_to_add: if members_to_add.length > 0 then members_to_add else null
                   tasks_count: tasks_count
+                  has_sub_sub_tasks_and_more_then_confirm_task_count: has_sub_sub_tasks_and_more_then_confirm_task_count
+                  crossed_immediate_execution_threshold: crossed_immediate_execution_threshold
                 }).node
                 callback: (result) ->
                   if result
