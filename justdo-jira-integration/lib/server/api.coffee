@@ -228,7 +228,7 @@ _.extend JustdoJiraIntegration.prototype,
         # Some updates require using different APIs.
         # If the mapper doesn't return a value, assume the update are performed inside the mapper.
         if (mapped_field_val = jira_field_map.mapper.call @, justdo_id, field_val, "jira", task_doc)?
-          if field_name is "state"
+          if field_id is "state"
             fields_to_update.transition =
               id: mapped_field_val
           else
