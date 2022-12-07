@@ -3,19 +3,7 @@ _.extend JustdoJiraIntegration.prototype,
     jira_relevant_task_query =
       jira_project_id:
         $ne: null
-      $or: [
-        jira_issue_id:
-          $ne: null
-      ,
-        jira_mountpoint_type:
-          $ne: null
-      ,
-        jira_sprint_mountpoint_id:
-          $ne: null
-      ,
-        jira_fix_version_mountpoint_id:
-          $ne: null
-      ]
+
     jira_relevant_task_fields =
       jira_mountpoint_type: 1
       jira_sprint_mountpoint_id: 1
