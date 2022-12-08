@@ -27,6 +27,17 @@ Template.tasks_file_manager_files.onCreated ->
 
     return
 
+  previous_item_id = null
+  @autorun =>
+    active_item_id = APP.modules.project_page.activeItemId()
+    
+    if previous_item_id != active_item_id
+      @bulkEditModeDisable()
+
+    previous_item_id = active_item_id
+
+    return
+
   @removeFiles = (files) ->
     tpl.bulkEditModeDisable()
 
@@ -265,7 +276,7 @@ Template.tasks_file_manager_files.events
     selected_files = tpl.bulk_selected_rv.get()
     selected_files_count = selected_files.length
 
-    if selected_files_count > 1
+    if selected_files_count >= 1
       bootbox.confirm "Are you sure you want to remove <b>#{selected_files.length}</b> files?", (result) ->
         if result
           tpl.removeFiles(selected_files)
