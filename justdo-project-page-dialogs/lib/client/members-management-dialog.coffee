@@ -564,6 +564,14 @@ APP.executeAfterAppLibCode ->
         return true
 
       buttons:
+        cancel:
+          label: "Cancel"
+
+          className: "btn-light"
+
+          callback: ->
+            return true
+
         submit:
           label: "Save"
           callback: =>
