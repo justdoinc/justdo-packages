@@ -396,6 +396,7 @@ APP.executeAfterAppLibCode ->
           notes_messages.push message
 
       return notes_messages
+
     isRemovingSelf: -> proceed_type_rv.get() == "remove_self"
 
     isRemovingSelf: -> proceed_type_rv.get() == "remove_self"
@@ -419,8 +420,11 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .notes-close": (e, tpl) ->
-      notes.set {}
+    "click .note-close": (e, tpl) ->
+      $el = $(e.target).parents("li").remove()
+
+      if $(".notes li").length == 0
+        notes.set {}
 
       return
 

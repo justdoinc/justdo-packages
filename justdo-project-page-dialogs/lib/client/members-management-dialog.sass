@@ -162,29 +162,36 @@
         background-color: rgba(255, 255, 255, 0.12)
 
 .notes
-  color: #856404
-  background-color: #fff3cd
-  border-color: #ffeeba
-  border-top: 1px solid #FFEEB5
   position: relative
-  padding: 32px
+  padding: 16px
   ul
     margin: 0px
     padding: 0px
     list-style-type: none
-    font-size: 14px
+  li
+    background-color: #FEFAED
+    border: 1px dashed #F7DF93
+    padding: 8px 8px 8px 12px
+    border-radius: 4px
+    color: #3D495B
+    display: flex
+    align-items: center
+    .note-item
+      font-size: 14px
+      flex-grow: 1
+      padding-right: 16px
   li + li
-    margin-top: 4px
-  .notes-close
+    margin-top: 8px
+  .note-close
     stroke-width: 3
     padding: 4px
     cursor: pointer
     color: #856404
-    position: absolute
-    top: 8px
-    right: 8px
     background-color: rgba(133, 100, 4, 0)
+    opacity: 0.5
+    flex-shrink: 0
     &:hover
+      opacity: 1
       background-color: rgba(133, 100, 4, 0.12)
 
 
@@ -203,6 +210,7 @@
     font-size: 18px
   .modal-footer
     padding: 20px 27px
+    border-top: 1px solid #EDF1F8
 
   .checkbox
     position: absolute

@@ -16,10 +16,13 @@
     <div class="notes">
       <ul>
         {{#each notes}}
-          <li>{{{this}}}</li>
+          <li>
+            <div class="note-item">{{{this}}}</div>
+            <svg class="jd-icon note-close"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+          </li>
         {{/each}}
       </ul>
-      <svg class="jd-icon notes-close"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+
     </div>
   {{/if}}
   <div class="members-section-info">
