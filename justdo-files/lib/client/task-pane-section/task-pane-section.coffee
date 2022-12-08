@@ -51,6 +51,14 @@ Template.justdo_files_gallery.onCreated ->
 
     return
 
+  @removeFiles = (files) ->
+    tpl.bulkEditModeDisable()
+    
+    for file_id in files
+      APP.justdo_files.removeFile file_id
+
+    return
+
 Template.justdo_files_gallery.helpers
   files: -> APP.justdo_files.tasks_files.find({"meta.task_id": APP.modules.project_page.activeItemId()}, {sort: {"meta.upload_date": -1}})
 
@@ -210,11 +218,14 @@ Template.justdo_files_gallery.events
 
   "click .bulk-edit-remove": (e, tpl) ->
     selected_files = tpl.bulk_selected_rv.get()
+    selected_files_count = selected_files.length
 
-    tpl.bulkEditModeDisable()
-
-    for file_id in selected_files
-      APP.justdo_files.removeFile file_id
+    if selected_files_count > 1
+      bootbox.confirm "Are you sure you want to remove <b>#{selected_files.length}</b> files?", (result) ->
+        if result
+          tpl.removeFiles(selected_files)
+    else
+      tpl.removeFiles(selected_files)
 
     return
 
