@@ -220,7 +220,6 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_val: "archive"
 
       listingCondition: (item_definition, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-        return false # Remove when archive become generally available to users
         if not (gc = APP.modules.project_page?.gridControl())?
           return false
 
