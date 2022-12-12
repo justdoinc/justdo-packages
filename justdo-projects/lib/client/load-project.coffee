@@ -338,6 +338,12 @@ _.extend Projects.prototype,
 
         return custom_states
 
+      getRemovedCustomStates: ->
+        if not (removed_custom_states = @getProjectConfigurationSetting("removed_custom_states"))?
+          return []
+
+        return removed_custom_states
+
       getHiddenCustomStates: ->
         current_custom_states_ids = _.map @getCustomStates(), (state_def) -> state_def.state_id
 
@@ -355,6 +361,44 @@ _.extend Projects.prototype,
       setCustomStates: (states_array) ->
         @configureProject
           custom_states: states_array
+
+        return
+
+      addCustomState: ({core_state, txt="", bg_color="00000000"}) ->
+        if not (APP.collections.Tasks.simpleSchema()._schema.state.grid_values[core_state]?.core_state == true)
+          throw new Error('Invalid core state')
+
+        state_id = "#{core_state}::#{Random.id()}"
+        custom_states = @getCustomStates()
+        core_state_idx = _.findIndex(custom_states, (state) -> state.state_id == core_state)
+        if core_state_idx == -1
+          throw new Error('Core state hidden')
+
+        custom_states.splice(core_state_idx+1, 0, {
+          state_id,
+          txt,
+          bg_color
+        });
+        @configureProject
+          custom_states: custom_states
+
+        return
+      
+      removeCustomState: (state_id) ->
+        custom_states = @getCustomStates()
+        removed_state = null
+        custom_states = _.filter custom_states, (state) -> 
+          if state.state_id == state_id
+            removed_state = state
+            return false
+          return true
+        
+        if removed_state?
+          removed_custom_states = @getRemovedCustomStates()
+          removed_custom_states.push(removed_state)
+          @configureProject
+            custom_states: custom_states
+            removed_custom_states: removed_custom_states
 
         return
 

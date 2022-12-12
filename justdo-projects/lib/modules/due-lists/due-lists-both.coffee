@@ -75,9 +75,7 @@ _.extend PACK.modules,
 
       {projects, owners, requesting_user_id} = conf
 
-      query =
-        state:
-          $in: @_getDueListsStates()
+      query = {}
 
       if owners[0] != "*"
         if owners.length > 1
@@ -118,6 +116,19 @@ _.extend PACK.modules,
         if (project_id = APP.modules?.project_page?.curProj()?.id)?
           query.project_id = project_id
 
+      query = {
+        $and: [
+          query,
+          {
+            $or: _.map(@_getDueListsStates(), (state) =>
+              return {
+                state:
+                  $regex: "^#{state}"
+              }
+            )
+          }
+        ]
+      }
       return query
 
     _validateCleanAndStandardizeCommonDateConf: (conf, requesting_user_id=null) ->
@@ -351,7 +362,8 @@ _.extend PACK.modules,
 
       query = @_getCommonQuery(conf)
 
-      query.state = "in-progress"
+      query.state = 
+        $regex: /^in-progress/
 
       query_options =
         sort: {priority: -1}

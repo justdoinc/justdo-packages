@@ -73,12 +73,18 @@ APP.executeAfterAppLibCode ->
           return
 
       project_custom_states_definitions_rv = new ReactiveVar {}
+      project_removed_custom_states_definitions_rv = new ReactiveVar {}
+
       project_custom_states_definitions_rv_update_comp = null
       Tracker.nonreactive ->
         project_custom_states_definitions_rv_update_comp = Tracker.autorun ->
-          custom_states = APP.collections.Projects.findOne(_project_id, {fields: {"conf.custom_states": 1}})?.conf?.custom_states
-
+          debugger
+          project_id = module.curProj().id
+          conf = APP.collections.Projects.findOne(project_id, {fields: {"conf.custom_states": 1, "conf.removed_custom_states": 1}})?.conf
+          custom_states = conf?.custom_states or {}
+          removed_custom_state = conf?.removed_custom_states or {}
           project_custom_states_definitions_rv.set(custom_states)
+          project_removed_custom_states_definitions_rv.set(removed_custom_state)
 
           return
 
@@ -120,6 +126,7 @@ APP.executeAfterAppLibCode ->
         shared_grid_control_custom_fields_manager_options:
           custom_fields_definitions: project_custom_fields_definitions_rv
           custom_states_definitions: project_custom_states_definitions_rv
+          removed_custom_states_definitions: project_removed_custom_states_definitions_rv
         use_shared_grid_control_removed_custom_fields_manager: true
         shared_grid_control_removed_custom_fields_manager_options:
           custom_fields_definitions: project_removed_custom_fields_definitions_rv

@@ -44,3 +44,8 @@ Projects.registerAllowedConfs
     value_matcher: [CustomStateDefinitionSchema]
     allow_change: true
     allow_unset: false
+  removed_custom_states:
+    require_admin_permission: true
+    value_matcher: [CustomStateDefinitionSchema]
+    allow_change: true
+    allow_unset: false

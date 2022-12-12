@@ -63,6 +63,10 @@ options_schema =
       type: "skip-type-check"
       
       optional: true
+    removed_custom_states_definitions:
+      type: "skip-type-check"
+      
+      optional: true
 
 # options_schema
 # ==============
