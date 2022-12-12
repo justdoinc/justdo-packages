@@ -15,7 +15,7 @@ _.extend PACK.modules,
             "profile.first_name": 1
             "profile.last_name": 1
             "profile.profile_pic": 1
-          grid_column_formatter: "owner_fullname_formatter"
+          grid_column_formatter: "display_name_formatter"
           grid_visible_column: true
           grid_editable_column: false
 
@@ -33,7 +33,10 @@ _.extend PACK.modules,
             "profile.first_name": 1
             "profile.last_name": 1
             "profile.profile_pic": 1
-
+          grid_column_formatter: "display_name_formatter"
+          grid_visible_column: true
+          grid_editable_column: false
+        
         pending_owner_updated_at:
           label: "Pending Owner Updated At"
           optional: true

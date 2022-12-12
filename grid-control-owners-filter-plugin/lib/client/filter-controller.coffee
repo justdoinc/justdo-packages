@@ -176,12 +176,10 @@ columnFilterStateToQuery = (column_filter_state, context) ->
   if _.isEmpty(existing_members_ids)
     query = {}
   else
-    query = {
-      $or: [
-        {owner_id: {$in: existing_members_ids}},
-        {pending_owner_id: {$in: existing_members_ids}},
-      ]
-    }
+    if (customQueryGenerator = context.column_schema_definition.grid_column_filter_settings.options?.customQueryGenerator)?
+      query = customQueryGenerator(existing_members_ids)
+    else
+      query = {"#{context.column_id}": {$in: existing_members_ids}}
 
   return query
 

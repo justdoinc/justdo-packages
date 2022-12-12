@@ -72,7 +72,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/grid-sections/my-direct-tasks.coffee', client);
   api.add_files('lib/client/grid-sections/members-direct-tasks.coffee', client);
   api.add_files('lib/client/grid-sections/project-toolbar-detached-data-subtrees.coffee', client);
-  api.add_files("lib/client/owner-fullname-formatter.coffee", client);
+  api.add_files("lib/client/display-name-formatter.coffee", client);
 
   api.add_files('lib/client/init.coffee', client);
   api.add_files('lib/client/api.coffee', client);
