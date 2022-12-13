@@ -193,7 +193,7 @@ APP.executeAfterAppLibCode ->
       tab_sections_state:
         global:
           "tracked-field": "state_updated_at"
-          "custom-query": """{"state":"done"}"""
+          "custom-query": """#{JSON.stringify(JustdoHelpers.getCoreStateMongoQuery("done"))}"""
   module.tab_switcher_manager.registerSectionItem "recently", "updated",
     position: 100
     data:

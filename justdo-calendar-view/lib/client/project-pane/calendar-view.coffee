@@ -1329,7 +1329,7 @@ Template.justdo_calendar_project_pane_user_view.helpers
     return "Due: #{@task.due_date}"
 
   highlightPastDueDate: ->
-    if @task.due_date < moment().format("YYYY-MM-DD") and (@task.state in ["pending", "in-progress", "on-hold", "duplicate"])
+    if @task.due_date < moment().format("YYYY-MM-DD") and (JustdoHelpers.getCoreState(@task.state) in ["pending", "in-progress", "on-hold", "duplicate"])
       return "highlighted_due_date"
     return ""
 
