@@ -18,3 +18,31 @@ _.extend JustdoHelpers,
     base_task_link = "#{base_link}&p=/#{task_id}/"
 
     return base_task_link
+
+  getCoreState: (state) ->
+    if not state?
+      return null
+
+    prefix_idx = state.indexOf("::")
+    if prefix_idx == -1
+      return state
+    return state.substring(0, prefix_idx)
+  
+  isCoreStateMongoQuery: (core_state) ->
+    return {
+      $regex: "^#{core_state}"
+    }
+
+  getCoreStateMongoQuery: (core_state, options) ->
+    options = _.extend {
+      $ne: false
+    }, options
+    query = @isCoreStateMongoQuery(core_state)
+    if options.$ne
+      query = {$not: query}
+    return {
+      state: query
+    }
+  
+  getCoreStateMongoQueries: (core_states, options) ->
+    return core_states.map((core_state) => @getCoreStateMongoQuery(core_state, options))
