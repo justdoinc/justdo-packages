@@ -102,7 +102,10 @@ _.extend JustdoJiraIntegration.prototype,
 
  _.extend JustdoJiraIntegration.prototype,
   _attachCollectionsSchemas: ->
-    @tasks_collection.attachSchema _.extend {}, @tasks_collection_schema
+    # attachSchema() will modifty tasks_collection_schema, hence the _.extend()
+    # We keep the integrity of tasks_collection_schema since its keys will be used in the unmounting process,
+    # to unset all the fields specified in the schema.
+    @tasks_collection.attachSchema(_.extend {}, @tasks_collection_schema)
 
     # The reason we have another collection and not using system-records is to be
     # future ready for multiple Jira connections per installation.
