@@ -130,6 +130,9 @@ _.extend JustdoJiraIntegration.prototype,
     return @jira_collection.findOne(query, query_options)?.jira_projects?[jira_project_id]?.key
 
   translateJustdoFieldTypeToMappedFieldType: (field_schema) ->
+    # field_type exists for custom fields and it's ready to use.
+    if _.isString field_schema.field_type
+      return field_schema.field_type
     if field_schema.type is String and field_schema.grid_column_editor is "UnicodeDateEditor"
       return "date"
     if field_schema.type is String
