@@ -13,6 +13,8 @@ both = [client, server]
 Package.onUse(function (api) {
   api.versionsFrom("1.4.1.1");
 
+  api.use("webapp", both);
+
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("mongo", both);
@@ -37,7 +39,7 @@ Package.onUse(function (api) {
   api.addFiles("bootstrap4/bootstrap.js", client);
 
   api.addFiles("themes-manager/themes-manager.coffee", client);
-  api.addFiles("themes-manager/injected-theme.html", client);
+  api.addFiles("themes-manager/injected-theme.coffee", server);
 
   // Themes selector
   api.addFiles("themes-selector/themes-selector.sass", client);

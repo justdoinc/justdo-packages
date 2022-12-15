@@ -164,7 +164,9 @@ _.extend BootstrapThemesManager.prototype,
 
     $("#bootstrap-theme").remove()
 
-    $(document.head).append("""<link id="bootstrap-theme" rel="stylesheet" href="/packages/justdoinc_bootstrap-themes/#{theme_name}/bootstrap.css">""");
+    theme_url = JustdoHelpers.getCDNUrl("/packages/justdoinc_bootstrap-themes/#{theme_name}/bootstrap.css")
+
+    $(document.head).append("""<link id="bootstrap-theme" rel="stylesheet" href="#{theme_url}">""");
 
     return
 
