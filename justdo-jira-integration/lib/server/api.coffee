@@ -119,7 +119,7 @@ _.extend JustdoJiraIntegration.prototype,
     jira_project_id = parseInt req_body.issue.fields.project.id
     jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
     custom_field_map = _.indexBy @getCustomFieldMapByJiraProjectId(jira_doc_id, jira_project_id), "jira_field_id"
-    fields_schema = @tasks_collection.simpleSchema()._schema
+    fields_schema = _.extend {}, @tasks_collection.simpleSchema()._schema, GridControlCustomFields.getProjectCustomFieldsDefinitions(APP.projects, justdo_id)
 
     # issue_updated
     if options?.use_changelog
@@ -216,7 +216,7 @@ _.extend JustdoJiraIntegration.prototype,
     jira_project_id = task_doc.jira_project_id
     jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
     custom_field_map = _.indexBy @getCustomFieldMapByJiraProjectId(jira_doc_id, jira_project_id), "justdo_field_id"
-    fields_schema = @tasks_collection.simpleSchema()._schema
+    fields_schema = _.extend {}, @tasks_collection.simpleSchema()._schema, GridControlCustomFields.getProjectCustomFieldsDefinitions(APP.projects, justdo_id)
 
     for field_id, field_val of modifier.$set
       if not (jira_field_map = JustdoJiraIntegration.justdo_field_to_jira_field_map[field_id])? and not (jira_field_map = custom_field_map[field_id])?
