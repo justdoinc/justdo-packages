@@ -1425,8 +1425,9 @@ _.extend JustdoJiraIntegration.prototype,
           # XXX updated_by is hardcoded to be justdo admin at the moment
           if @tasks_collection.update({jira_issue_id: parseInt(issue.id)}, {$set: _.extend {jira_last_updated: new Date(), updated_by: @_getJustdoAdmin justdo_id}, fields})
             @syncIssueFixVersionFromIssueBody issue
-          else
-            # If nothing is updated, that means the task isn't created at all. Then we create the task.
+
+          # If nothing is updated, that means the task isn't created at all. Then we create the task if it's not done.
+          else if fields.state isnt "done"
             if (parent = issue.fields.parent?.key)? or (parent = issue.fields[JustdoJiraIntegration.epic_link_custom_field_id])?
               parent_task_id = @tasks_collection.findOne({jira_issue_key: parent}, {fields: {_id: 1}})?._id
             else
