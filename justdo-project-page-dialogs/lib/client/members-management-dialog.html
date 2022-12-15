@@ -1,6 +1,20 @@
 <template name="task_pane_item_details_members_editor">
-  <div class="members-editor-search d-flex align-items-center">
+  <div class="members-editor-search">
     <input type="text" class="members-search-input" value="" placeholder="Find member">
+    {{#if displayRecentBatchedOps}}
+      <div class="recent-batched-ops-dropdown dropdown ">
+        <div class="recent-batched-ops" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <svg class="jd-icon jd-c-pointer">
+            <title>Updates</title>
+            <use xlink:href="/layout/icons-feather-sprite.svg#bell"></use>
+          </svg>
+          <div class="count">{{recentBatchedOpsCount}}</div>
+        </div>
+        <div class="dropdown-menu animate slideIn shadow-lg border-0">
+          {{> task_pane_item_details_members_editor_recent_batched_ops}}
+        </div>
+      </div>
+    {{/if}}
   </div>
   <div class="members-section {{#if isRemovingSelf}}remove-self{{/if}}">
     {{#each sections}}
@@ -25,13 +39,6 @@
 
     </div>
   {{/if}}
-  <div class="members-section-info">
-    {{#if displayRecentBatchedOps}}
-      <div class="recent-batched-info show-less">
-        {{> task_pane_item_details_members_editor_recent_batched_ops}}
-      </div>
-    {{/if}}
-  </div>
 </template>
 
 <template name="task_pane_item_details_members_editor_recent_batched_ops">
@@ -39,7 +46,7 @@
     <div class="recent-batched-item">
       <div class="recent-batched-msg-wrapper">
         <div class="recent-batched-msg">
-          {{opsMessage}}
+          {{{opsMessage}}}
           {{#if pendingOrInProgress}}
             {{processedPercent}}%
           {{/if}}
@@ -50,12 +57,6 @@
       </div>
     </div>
   {{/each}}
-  {{#if showViewToggle}}
-    <div class="recent-batched-view-toggle show-all">
-      <div class="toggle-title">show all updates</div><div class="toggle-count">{{recentBatchedOpsCount}}</div>
-    </div>
-    <svg class="jd-icon recent-batched-view-toggle show-less"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
-  {{/if}}
 </template>
 
 <template name="task_pane_item_details_members_editor_section">

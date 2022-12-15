@@ -363,7 +363,15 @@ APP.executeAfterAppLibCode ->
       ]
     cascade: -> cascade.get()
     display_notes_section: -> not _.isEmpty notes.get()
-    displayRecentBatchedOps: -> APP.collections.DBMigrationBatchedCollectionUpdates.findOne(getBatchedCollectionUpdatesQuery())?
+
+    displayRecentBatchedOps: ->
+      return APP.collections.DBMigrationBatchedCollectionUpdates.findOne(getBatchedCollectionUpdatesQuery())?
+
+    recentBatchedOpsCount: ->
+      recent_batched_ops = APP.collections.DBMigrationBatchedCollectionUpdates.find(getBatchedCollectionUpdatesQuery()).fetch()
+
+      return recent_batched_ops.length
+
     notes: ->
       _notes = notes.get()
       notes_messages = []
@@ -682,43 +690,38 @@ APP.executeAfterAppLibCode ->
       ops = @
       message = ""
 
-      if ops.process_status == "done"
-        if ops.data.members_to_add.length > 0
-          message = "#{@data.members_to_add.length } members added to the task"
-        if ops.data.members_to_remove.length > 0
-          message = "#{@data.members_to_remove.length } members removed from the task"
+      task = APP.collections.Tasks.findOne ops.data.user_perspective_root_items[0]
+
+      if ops.data.members_to_add.length > 0
+        message = "Adding #{@data.members_to_add.length } members to "
+      if ops.data.members_to_remove.length > 0
+        message = "Removing #{@data.members_to_remove.length } members from "
+      if ops.data.members_to_add.length > 0 and ops.data.members_to_remove.length > 0
+        message = "Adding/Removing members from"
+
+      if task?
+        message += "<span class='task'>##{task.seqId}: #{task.title}</span>"
+
+        if (sub_tasks = APP.modules?.project_page?.mainGridData()?._grid_data_core.tree_structure?[task._id])?
+          sub_tasks_count = Object.keys(sub_tasks).length
+
+          if sub_tasks_count > 0
+            message += " and #{sub_tasks_count} tasks under it"
 
       if ops.process_status == "in-progress"
-        if ops.data.members_to_add.length > 0
-          message = "Adding members to the task... "
-        if ops.data.members_to_remove.length > 0
-          message = "Removing members from the task... "
+        message += " ..."
 
       if ops.process_status == "pending"
-        if ops.data.members_to_add.length > 0
-          message = "Adding members to the task... pending"
-        if ops.data.members_to_remove.length > 0
-          message = "Removing members from the task... pending"
+        message += " ... pending"
+
 
       if ops.process_status == "terminated"
-        if ops.data.members_to_add.length > 0
-          message = "Adding members terminated"
-        if ops.data.members_to_remove.length > 0
-          message = "Removing members terminated"
+        message += " ... terminated"
 
       if ops.process_status == "error"
-        if ops.data.members_to_add.length > 0
-          message = "Adding members... error"
-        if ops.data.members_to_remove.length > 0
-          message = "Removing members... error"
+        message += " ... error"
 
       return message
-
-    showViewToggle: ->
-      ops_count = APP.collections.DBMigrationBatchedCollectionUpdates.find(getBatchedCollectionUpdatesQuery()).fetch().length
-
-      if ops_count > 1
-        return true
 
   Template.task_pane_item_details_members_editor_recent_batched_ops.events
     "click .terminate": ->
