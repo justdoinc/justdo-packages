@@ -734,6 +734,10 @@ _.extend JustdoJiraIntegration.prototype,
     # Remove previous mountpoint record of the same Jira project, and clear all issue keys in relevant to that mountpoint.
     @unmountAllTasksRelevantToJiraProject jira_project_id, user_id
 
+    # If the Jira project is mounted in another JustDo, clear custom field mappings that involves JustDo custom field.
+    if @getJustdosIdsAndTasksIdsfromMountedJiraProjectId(jira_project_id)?.justdo_id isnt justdo_id
+      @deleteAllCustomFieldMappingContainsJustdoCustomField justdo_id, jira_project_id
+
     justdo_admin_id = @_getJustdoAdmin justdo_id
     # XXX If the Justdo admin is guarenteed to also be a member of the moutned Jira project,
     # XXX change the following to an array and remove default value.
@@ -1683,5 +1687,30 @@ _.extend JustdoJiraIntegration.prototype,
 
     @jira_collection.update jira_doc_id, ops
     return
+
+  deleteAllCustomFieldMappingContainsJustdoCustomField: (justdo_id, jira_project_id) ->
+    jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
+
+    query =
+      _id: jira_doc_id
+      "jira_projects.#{jira_project_id}.custom_field_map":
+        $ne: null
+    query_options =
+      fields:
+        "jira_projects.#{jira_project_id}.custom_field_map": 1
+
+    if not (jira_doc = @jira_collection.findOne jira_doc_id, query_options)
+      return
+
+    tasks_collection_schema = @tasks_collection.simpleSchema()._schema
+    field_pair_ids_to_remove = []
+
+    # If justdo_field_id isn't in tasks_collection_schema, the field is a custom field in Justdo.
+    for field_map in jira_doc.jira_projects[jira_project_id].custom_field_map
+      if not _.has tasks_collection_schema, field_map.justdo_field_id
+        field_pair_ids_to_remove.push field_map.id
+
+    if not _.isEmpty field_pair_ids_to_remove
+      @deleteCustomFieldPair justdo_id, jira_project_id, field_pair_ids_to_remove
 
     return
