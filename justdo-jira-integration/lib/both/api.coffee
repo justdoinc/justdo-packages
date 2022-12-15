@@ -147,3 +147,51 @@ _.extend JustdoJiraIntegration.prototype,
     if field_type is "datetime"
       return "date"
     return field_type
+
+  _fieldMapSchema = new SimpleSchema
+    justdo_field_id:
+      type: String
+    jira_field_id:
+      type: String
+    id:
+      type: String
+  _checkCustomFieldPairMappingSchema = new SimpleSchema
+    field_map:
+      type: [Object]
+    "field_map.$":
+      type: _fieldMapSchema
+  checkCustomFieldPairMapping: (jira_doc_id, jira_project_id, field_map) ->
+    {cleaned_val} = JustdoHelpers.simpleSchemaCleanAndValidate(
+      _checkCustomFieldPairMappingSchema,
+      {field_map},
+      {self: @, throw_on_error: true}
+    )
+
+    {field_map} = cleaned_val
+
+    justdo_field_ids = new Set()
+    jira_field_ids = new Set()
+
+    for field_pair in field_map
+      {justdo_field_id, jira_field_id} = field_pair
+
+      if justdo_field_ids.has(justdo_field_id) or jira_field_ids.has(jira_field_id)
+        throw @_error "invalid-argument", "A field is being mapped to two fields. Please remove the duplicate ones."
+
+      justdo_field_ids.add justdo_field_id
+      jira_field_ids.add jira_field_id
+
+    query =
+      _id: jira_doc_id
+      $or: [
+        "jira_projects.#{jira_project_id}.custom_field_map.justdo_field_id":
+          $in: Array.from justdo_field_ids
+      ,
+        "jira_projects.#{jira_project_id}.custom_field_map.jira_field_ids":
+          $in: Array.from jira_field_ids
+      ]
+
+    if @jira_collection.findOne(query, {fields: {_id: 1}})?
+      throw @_error "invalid-argument", "A field is being mapped to two fields. Please remove the duplicate ones."
+
+    return
