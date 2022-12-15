@@ -140,3 +140,10 @@ _.extend JustdoJiraIntegration.prototype,
     if field_schema.type is Number
       return "number"
     return null
+
+  translateJiraFieldTypeToMappedFieldType: (field_type) ->
+    if field_type not in ["number", "string", "date", "datetime"]
+      return
+    if field_type is "datetime"
+      return "date"
+    return field_type
