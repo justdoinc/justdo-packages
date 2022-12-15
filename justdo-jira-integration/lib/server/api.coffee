@@ -1649,14 +1649,38 @@ _.extend JustdoJiraIntegration.prototype,
 
     return field_def
 
-  # XXX how to check if both fields has the same type?
-  # XXX field_map is expected to be in the format of [{justdo_field_id, jira_field_id, id}, {justdo_field_id, jira_field_id, id}, ...]
-  mapJustdoAndJiraFields: (jira_doc_id, jira_project_id, field_map, user_id) ->
-    # XXX check user_id is justdo admin?
+  # field_map is expected to be in the format of [{justdo_field_id, jira_field_id, id}, {justdo_field_id, jira_field_id, id}, ...]
+  addCustomFieldPairs: (jira_doc_id, jira_project_id, field_map, user_id) ->
+    # field_map is checked by schema inside checkCustomFieldPairMapping()
+    @checkCustomFieldPairMapping jira_doc_id, jira_project_id, field_map
 
     ops =
-      $set:
-        "jira_projects.#{jira_project_id}.custom_field_map": field_map
+      $addToSet:
+        "jira_projects.#{jira_project_id}.custom_field_map":
+          $each: field_map
     @jira_collection.update jira_doc_id, ops
+
+    jira_fields = _.map field_map, (field_pair) -> field_pair.jira_field_id
+    jira_fields.push "project" # Resync process require Jira project id from issue body
+
+    return
+
+  deleteCustomFieldPair: (justdo_id, jira_project_id, custom_field_pair_ids, user_id) ->
+    if _.isString user_id
+      APP.projects.requireProjectAdmin justdo_id, user_id
+
+    if _.isString custom_field_pair_ids
+      custom_field_pair_ids = [custom_field_pair_ids]
+
+    jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
+
+    ops =
+      $pull:
+        "jira_projects.#{jira_project_id}.custom_field_map":
+          id:
+            $in: custom_field_pair_ids
+
+    @jira_collection.update jira_doc_id, ops
+    return
 
     return
