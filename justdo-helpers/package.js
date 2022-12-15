@@ -42,6 +42,7 @@ Package.onUse(function (api) {
   api.use("justdoinc:justdo-date-fns@1.0.0", both);
 
   api.add_files("lib/init.coffee", both);
+  api.add_files("lib/both/cdn.coffee", both);
   api.add_files("lib/both/client-only-fields.coffee", both);
   api.add_files("lib/both/lorem-ipsum.coffee", both);
   api.add_files("lib/both/json.coffee", both);

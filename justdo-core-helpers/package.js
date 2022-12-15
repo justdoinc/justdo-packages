@@ -24,6 +24,7 @@ Package.onUse(function (api) {
 
   api.add_files("lib/init.coffee", both);
 
+  api.add_files("lib/both/cdn.coffee", both);
   api.add_files("lib/both/same-tick-cache.coffee", both);
   api.add_files("lib/both/same-tick-stats.coffee", both);
   api.add_files("lib/both/constructors_tools.coffee", both);
