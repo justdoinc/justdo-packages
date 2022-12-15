@@ -1371,7 +1371,7 @@ _.extend JustdoJiraIntegration.prototype,
       last_data_integrity_check: 1
     return @jira_collection.findOne(query, query_options)?.last_data_integrity_check
 
-  ensureIssueDataIntegrityAndMarkCheckpoint: (jira_doc) ->
+  ensureIssueDataIntegrityAndMarkCheckpoint: (jira_doc, options) ->
     if _.isString jira_doc
       jira_doc_query =
         $or: [
@@ -1398,7 +1398,7 @@ _.extend JustdoJiraIntegration.prototype,
       throw @_error "fatal", "The queried Jira doc #{jira_doc._id} has no data integrity checkpoint - This shouldn't happen!"
       return
 
-    mounted_jira_project_ids = _.keys jira_doc.jira_projects
+    mounted_jira_project_ids = options?.jira_project_ids or _.keys jira_doc.jira_projects
 
     # Add margin of safety to last_checkpoint
     last_checkpoint = JustdoHelpers.getDateMsOffset -1 * JustdoJiraIntegration.data_integrity_margin_of_safety, new Date(last_checkpoint)
@@ -1406,7 +1406,7 @@ _.extend JustdoJiraIntegration.prototype,
     issue_search_body =
       jql: """(project in (#{mounted_jira_project_ids.join ","}) and updated >= "#{moment(last_checkpoint).format("YYYY/MM/DD hh:mm")}" )"""
       maxResults: JustdoJiraIntegration.jql_issue_search_results_limit
-      fields: @getAllRelevantJiraFieldIds()
+      fields: options?.fields or @getAllRelevantJiraFieldIds()
 
     if not _.isEmpty(jira_issue_ids = @tasks_collection.find({jira_issue_id: {$ne: null}, jira_last_updated: {$gte: last_checkpoint}}, {fields: {jira_issue_id: 1}}).map (task_doc) -> task_doc.jira_issue_id)
       issue_search_body.jql += " or issue in (#{jira_issue_ids.join(",")})"
@@ -1438,7 +1438,7 @@ _.extend JustdoJiraIntegration.prototype,
       @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, server_info.serverTime, {perform_resync_if_discrepencies_found: true}, checkIssuesIntegrity
 
       # Resync sprints and fix versions for each project under the Jira instanxce
-      if _.isObject jira_doc?.jira_projects
+      if _.isObject(jira_doc?.jira_projects) and not options?.sync_issues_only
         agile_client = @clients[jira_server_id].agile
         for jira_project_id of jira_doc.jira_projects
           @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {client: agile_client}
@@ -1578,7 +1578,7 @@ _.extend JustdoJiraIntegration.prototype,
       @ongoing_checkpoint = null
     return
 
-  resyncAllJiraRelevantData: (jira_doc) ->
+  resyncAllJiraRelevantData: (jira_doc, options) ->
     if @ongoing_checkpoint
       @_stopOngoingCheckpoint()
 
@@ -1588,7 +1588,7 @@ _.extend JustdoJiraIntegration.prototype,
     # Since we subtract data_integrity_margin_of_safety in ensureIssueDataIntegrityAndMarkCheckpoint, it is being added to the epoch.
     jira_doc.last_data_integrity_check = JustdoHelpers.getDateMsOffset JustdoJiraIntegration.data_integrity_margin_of_safety, new Date 0
 
-    @ensureIssueDataIntegrityAndMarkCheckpoint jira_doc
+    @ensureIssueDataIntegrityAndMarkCheckpoint jira_doc, options
 
     return
 
@@ -1662,6 +1662,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_fields = _.map field_map, (field_pair) -> field_pair.jira_field_id
     jira_fields.push "project" # Resync process require Jira project id from issue body
+    @resyncAllJiraRelevantData jira_doc_id, {fields: jira_fields, jira_project_id: [jira_project_id], sync_issues_only: true}
 
     return
 
