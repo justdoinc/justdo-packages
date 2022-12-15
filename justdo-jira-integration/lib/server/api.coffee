@@ -219,15 +219,15 @@ _.extend JustdoJiraIntegration.prototype,
     fields_schema = _.extend {}, @tasks_collection.simpleSchema()._schema, GridControlCustomFields.getProjectCustomFieldsDefinitions(APP.projects, justdo_id)
 
     for field_id, field_val of modifier.$set
-      if not (jira_field_map = JustdoJiraIntegration.justdo_field_to_jira_field_map[field_id])? and not (jira_field_map = custom_field_map[field_id])?
+      if not (core_jira_field_map = JustdoJiraIntegration.justdo_field_to_jira_field_map[field_id])? and not (custom_jira_field_map = custom_field_map[field_id])?
         continue
 
-      jira_field_id = jira_field_map.id or jira_field_map.name or jira_field_map.jira_field_id
+      jira_field_id = core_jira_field_map?.id or core_jira_field_map?.name or custom_jira_field_map?.jira_field_id
 
-      if jira_field_map.mapper?
+      if core_jira_field_map?.mapper?
         # Some updates require using different APIs.
         # If the mapper doesn't return a value, assume the update are performed inside the mapper.
-        if (mapped_field_val = jira_field_map.mapper.call @, justdo_id, field_val, "jira", task_doc)?
+        if (mapped_field_val = core_jira_field_map.mapper.call @, justdo_id, field_val, "jira", task_doc)?
           if field_id is "state"
             fields_to_update.transition =
               id: mapped_field_val
