@@ -736,7 +736,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     # If the Jira project is mounted in another JustDo, clear custom field mappings that involves JustDo custom field.
     if @getJustdosIdsAndTasksIdsfromMountedJiraProjectId(jira_project_id)?.justdo_id isnt justdo_id
-      @deleteAllCustomFieldMappingContainsJustdoCustomField justdo_id, jira_project_id
+      @removeJustdoCustomFieldMapping justdo_id, jira_project_id
 
     justdo_admin_id = @_getJustdoAdmin justdo_id
     # XXX If the Justdo admin is guarenteed to also be a member of the moutned Jira project,
@@ -1688,7 +1688,7 @@ _.extend JustdoJiraIntegration.prototype,
     @jira_collection.update jira_doc_id, ops
     return
 
-  deleteAllCustomFieldMappingContainsJustdoCustomField: (justdo_id, jira_project_id) ->
+  removeJustdoCustomFieldMapping: (justdo_id, jira_project_id) ->
     jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
 
     query =
