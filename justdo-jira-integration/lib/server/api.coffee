@@ -1138,6 +1138,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     # First try to locate the user from our db. Use API to search for user only if it's not in our db.
     if (jira_user = @jira_collection.findOne(query, query_options)?.jira_users?[0])?
+      jira_user.accountId = jira_user.jira_account_id
       return [jira_user]
 
     client = @getJiraClientForJustdo(justdo_id)

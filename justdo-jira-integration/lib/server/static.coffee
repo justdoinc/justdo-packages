@@ -302,7 +302,7 @@ _.extend JustdoJiraIntegration,
 
           req = {issueIdOrKey: req_body.jira_issue_id}
           if @isJiraInstanceCloud()
-            req.accountId = jira_account?[0]?.accountId
+            req.accountId = jira_account_id
           else
             req.name = jira_account?[0]?.username
           {err} = @pseudoBlockingJiraApiCallInsideFiber "issues.assignIssue", req, client
