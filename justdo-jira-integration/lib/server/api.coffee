@@ -1358,10 +1358,11 @@ _.extend JustdoJiraIntegration.prototype,
         issue_search_body.startAt = new_start_at
         await @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, jira_server_time, options, responseProcessor
       else if _.isEmpty @issues_with_discrepancies
-        @markDataIntegrityCheckpoint jira_server_id, jira_server_time
         console.log "[justdo-jira-integration] Data integrity check completed. No discrepencies found."
+        if not options?.do_not_mark_checkpoint
+          @markDataIntegrityCheckpoint jira_server_id, jira_server_time
       else if options?.perform_resync_if_discrepencies_found
-        @resyncIssuesIfDiscrepenciesAreFound jira_server_id, jira_server_time
+        @resyncIssuesIfDiscrepenciesAreFound jira_server_id, jira_server_time, {do_not_mark_checkpoint: options?.do_not_mark_checkpoint}
     return
 
   getRootUrlForCallbacksAndRedirects: ->
@@ -1439,7 +1440,12 @@ _.extend JustdoJiraIntegration.prototype,
             @issues_with_discrepancies.push issue.id
         return
 
-      @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, server_info.serverTime, {perform_resync_if_discrepencies_found: true}, checkIssuesIntegrity
+      search_issue_using_jql_until_max_results_options =
+        perform_resync_if_discrepencies_found: true
+        do_not_mark_checkpoint: options?.do_not_mark_checkpoint
+        fields: options?.fields
+
+      @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, server_info.serverTime, search_issue_using_jql_until_max_results_options, checkIssuesIntegrity
 
       # Resync sprints and fix versions for each project under the Jira instanxce
       if _.isObject(jira_doc?.jira_projects) and not options?.sync_issues_only
@@ -1454,7 +1460,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
-  resyncIssuesIfDiscrepenciesAreFound: (jira_server_id, jira_server_time) ->
+  resyncIssuesIfDiscrepenciesAreFound: (jira_server_id, jira_server_time, options) ->
     console.warn "[justdo-jira-integration] Data inconsistency found in issues #{@issues_with_discrepancies}. Performing resync..."
 
     issue_search_body =
@@ -1484,7 +1490,7 @@ _.extend JustdoJiraIntegration.prototype,
             @_createTaskFromJiraIssue justdo_id, "/#{parent_task_id}/", issue
       return
 
-    @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, jira_server_time, resyncIssues
+    await @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, jira_server_time, options, resyncIssues
     console.log "[justdo-jira-integration] Issues with discrepencies resynced."
     @issues_with_discrepancies = []
     return
@@ -1666,7 +1672,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_fields = _.map field_map, (field_pair) -> field_pair.jira_field_id
     jira_fields.push "project" # Resync process require Jira project id from issue body
-    @resyncAllJiraRelevantData jira_doc_id, {fields: jira_fields, jira_project_id: [jira_project_id], sync_issues_only: true}
+    @resyncAllJiraRelevantData jira_doc_id, {fields: jira_fields, jira_project_id: [jira_project_id], sync_issues_only: true, do_not_mark_checkpoint: true}
 
     return
 
