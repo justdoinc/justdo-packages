@@ -645,14 +645,16 @@ _.extend JustdoTasksContextMenu.prototype,
           limit_rendered_items: true
 
           itemsGenerator: ->
-            cache_key = "manage-active-projects"
+            current_section_filter_state = self.getSectionFilterState("manage-active-projects")
+
+            cache_key = "manage-active-projects::#{current_section_filter_state}"
 
             if JustdoHelpers.sameTickCacheExists(cache_key)
               return JustdoHelpers.sameTickCacheGet(cache_key)
 
             res = []
 
-            active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(self.getSectionFilterState("manage-active-projects"))
+            active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(current_section_filter_state)
 
             active_item_id = JD.activeItemId()
 
