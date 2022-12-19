@@ -693,9 +693,24 @@ APP.executeAfterAppLibCode ->
       task = APP.collections.Tasks.findOne ops.data.user_perspective_root_items[0]
 
       if ops.data.members_to_add.length > 0
-        message = "Adding #{@data.members_to_add.length } members to "
+        message = "Adding #{@data.members_to_add.length } "
+
+        if @data.members_to_add.length > 1
+          message += "members to "
+        else
+          message += "member to "
+
       if ops.data.members_to_remove.length > 0
-        message = "Removing #{@data.members_to_remove.length } members from "
+        if ops.data.members_to_remove.includes Meteor.userId()
+          message = "Removing You from a task "
+        else
+          message = "Removing #{@data.members_to_remove.length } "
+
+          if @data.members_to_remove.length > 1
+            message += "members to "
+          else
+            message += "member to "
+
       if ops.data.members_to_add.length > 0 and ops.data.members_to_remove.length > 0
         message = "Adding/Removing members from"
 
