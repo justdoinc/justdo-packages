@@ -117,7 +117,7 @@ DatesFilterControllerConstructor = (context) ->
                 <div class="custom-range-label custom-range-label-start" placeholder="From" contenteditable="true"></div>
                 <div class="custom-range-time-label custom-range-time-label-start">Time</div>
               </div>
-              <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+              <svg class="jd-icon clear-date"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#x"}}"></use></svg>
               <div class="custom-datepicker custom-datepicker-start shadow-lg" tabindex="0">
                 <div class="custom-datepicker-time-wrapper hide">
                   <div class="custom-datepicker-time">
@@ -135,7 +135,7 @@ DatesFilterControllerConstructor = (context) ->
                 <div class="custom-range-label custom-range-label-end" placeholder="To" contenteditable="true"></div>
                 <div class="custom-range-time-label custom-range-time-label-end">Time</div>
               </div>
-              <svg class="jd-icon clear-date"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+              <svg class="jd-icon clear-date"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#x"}}"></use></svg>
               <div class="custom-datepicker custom-datepicker-end shadow-lg" tabindex="0">
                 <div class="custom-datepicker-time-wrapper hide">
                   <div class="custom-datepicker-time">

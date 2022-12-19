@@ -33,15 +33,15 @@
       <div class="calendar_view_date_selector">
 
         <div class="btn-group ml-3" role="group">
-          <button type="button" class="btn btn-light btn-sm border calendar-view-prev-week"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg></button>
-          <button type="button" class="btn btn-light btn-sm border calendar-view-prev-day"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"/></svg></button>
+          <button type="button" class="btn btn-light btn-sm border calendar-view-prev-week"><svg class="calendar_view_date_icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#chevrons-left"}}"/></svg></button>
+          <button type="button" class="btn btn-light btn-sm border calendar-view-prev-day"><svg class="calendar_view_date_icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#chevron-left"}}"/></svg></button>
           <button type="button" class="btn btn-light btn-sm border calendar-view-back-to-today">This Week</button>
-          <button type="button" class="btn btn-light btn-sm border calendar-view-next-day"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"/></svg></button>
-          <button type="button" class="btn btn-light btn-sm border calendar-view-next-week"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg></button>
+          <button type="button" class="btn btn-light btn-sm border calendar-view-next-day"><svg class="calendar_view_date_icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#chevron-right"}}"/></svg></button>
+          <button type="button" class="btn btn-light btn-sm border calendar-view-next-week"><svg class="calendar_view_date_icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#chevrons-right"}}"/></svg></button>
         </div>
         <div class="btn-group ml-2" role="group">
-          <button type="button" class="btn btn-light btn-sm border calendar_view_zoom_in"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#zoom-in"/></svg></button>
-          <button type="button" class="btn btn-light btn-sm border calendar_view_zoom_out"><svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#zoom-out"/></svg></button>
+          <button type="button" class="btn btn-light btn-sm border calendar_view_zoom_in"><svg class="calendar_view_date_icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#zoom-in"}}"/></svg></button>
+          <button type="button" class="btn btn-light btn-sm border calendar_view_zoom_out"><svg class="calendar_view_date_icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#zoom-out"}}"/></svg></button>
         </div>
       </div>
     </div>
@@ -53,11 +53,11 @@
             <th class="calendar_view_user">
               <div class="calendar_expand_collapse">
                 <div title="Expand all">
-                  <svg class="jd-icon expand_all"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+                  <svg class="jd-icon expand_all"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#plus"}}"/></svg>
                 </div>
                 <div class="expand_collapse_divider border-left"></div>
                 <div title="Collapse all">
-                  <svg class="jd-icon collapse_all"><use xlink:href="/layout/icons-feather-sprite.svg#minus"/></svg>
+                  <svg class="jd-icon collapse_all"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#minus"}}"/></svg>
                 </div>
               </div>
             </th>
@@ -82,11 +82,11 @@
             <th class="calendar_view_user">
               <div class="calendar_expand_collapse">
                 <div title="Expand all">
-                  <svg class="jd-icon expand_all"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+                  <svg class="jd-icon expand_all"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#plus"}}"/></svg>
                 </div>
                 <div class="expand_collapse_divider border-left"></div>
                 <div title="Collapse all">
-                  <svg class="jd-icon collapse_all"><use xlink:href="/layout/icons-feather-sprite.svg#minus"/></svg>
+                  <svg class="jd-icon collapse_all"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#minus"}}"/></svg>
                 </div>
               </div>
             </th>
@@ -121,13 +121,13 @@
         {{#with userObj}}
           <div class="bg-primary border-primary expand_user">{{userName userId}}</div>
           <div class="calendar_view_clock" title="Set workdays">
-            <svg class="jd-icon clock shadow-sm"><use xlink:href="/layout/icons-feather-sprite.svg#clock"/></svg>
+            <svg class="jd-icon clock shadow-sm"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#clock"}}"/></svg>
           </div>
         {{/with}}
       </td>
       {{#if showNavigation}}
         <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell" rowspan="{{navRowspan}}">
-          <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg>
+          <svg class="calendar_view_date_icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#chevrons-left"}}"/></svg>
         </td>
       {{/if}}
       {{#each colNumbers}}
@@ -138,7 +138,7 @@
       {{/each}}
       {{#if showNavigation}}
         <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell" rowspan="{{navRowspan}}">
-          <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg>
+          <svg class="calendar_view_date_icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#chevrons-right"}}"/></svg>
         </td>
       {{/if}}
     </tr>
@@ -150,16 +150,16 @@
             {{#with userObj}}
               <div class="calendar-user-name bg-primary border-primary {{#if userIsProxy}}is-proxy{{/if}}">{{userName}}</div>
               <!-- <div class="calendar_view_expand_collapse" title="Collapse user">
-                <svg class="jd-icon collapse_user border border-primary shadow-sm"><use xlink:href="/layout/icons-feather-sprite.svg#minus"/></svg>
+                <svg class="jd-icon collapse_user border border-primary shadow-sm"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#minus"}}"/></svg>
               </div> -->
               <div class="calendar_view_clock" title="Set workdays">
-                <svg class="jd-icon clock shadow-sm"><use xlink:href="/layout/icons-feather-sprite.svg#clock"/></svg>
+                <svg class="jd-icon clock shadow-sm"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#clock"}}"/></svg>
               </div>
             {{/with}}
           </td>
           {{#if showNavigation}}
             <td class="calendar_view_scroll_left_cell calendar_view_scroll_cell" rowspan="{{navRowspan}}">
-              <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-left"/></svg>
+              <svg class="calendar_view_date_icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#chevrons-left"}}"/></svg>
             </td>
           {{/if}}
         {{/if}}
@@ -198,7 +198,7 @@
                       {{/unless}} -->
                       {{#if startsBeforeView}}
                         <div class="calendar_task_startsBeforeView {{fontSizeClass}}">
-                          <svg class="calendar_view_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"/></svg>
+                          <svg class="calendar_view_icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#chevron-left"}}"/></svg>
                         </div>
                       {{/if}}
                       <div class="calendar_task_id {{fontSizeClass}}">#{{task.sequence_id}}</div>
@@ -207,7 +207,7 @@
                       {{#if endsAfterView}}
                         <div class="calendar_task_endsAfterView {{fontSizeClass}}">
                           <svg class="calendar_view_icon">
-                            <use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"/></svg>
+                            <use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#chevron-right"}}"/></svg>
                         </div>
                       {{/if}}
                     </div>
@@ -220,7 +220,7 @@
                       <div class="calendar_task_cell calendar_meeting">
                         <div class="calendar_meeting_title {{fontSizeClass}}" title="{{this.meeting.title}}">
                           <svg class="jd-icon calendar-meeting-icon-size">
-                            <use xlink:href="/layout/icons-feather-sprite.svg#jd-meetings">
+                            <use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#jd-meetings"}}">
                           </use>
                           </svg>{{this.meeting.title}}</div>
                       </div>
@@ -235,7 +235,7 @@
         {{#if firstRow}}
           {{#if showNavigation}}
             <td class="calendar_view_scroll_right_cell calendar_view_scroll_cell" rowspan="{{navRowspan}}">
-              <svg class="calendar_view_date_icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevrons-right"/></svg>
+              <svg class="calendar_view_date_icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#chevrons-right"}}"/></svg>
             </td>
           {{/if}}
         {{/if}}

@@ -9,7 +9,7 @@
       </div>
       <div class="dropdown add-new-field-dropdown">
         <div class="add-new-field-toggle text-primary" data-toggle="dropdown" aria-expanded="false">
-          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+          <svg class="jd-icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#plus"}}"/></svg>
           New custom field
         </div>
         <div class="dropdown-menu jd-p-075 animate slideIn shadow-lg border-0">
@@ -39,7 +39,7 @@
 <template name="custom_field_conf">
   <div class="custom-field-item custom-field-row" field-id="{{field_id}}">
     <div class="custom-field-handle">
-      <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical-double"/></svg>
+      <svg class="jd-icon"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#more-vertical-double"}}"/></svg>
     </div>
     <div class="custom-field-label flex-grow-1">
       <input class="field-label" placeholder="label" value="{{label}}" maxlength="30">
@@ -51,7 +51,7 @@
       {{/if}}
       <span class="custom-field-type-label">{{fieldTypeToFieldLabel}}</span>
       <div class="custom-field-type-divider"></div>
-      <svg class="jd-icon remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+      <svg class="jd-icon remove"><use xlink:href="{{getCDNUrl "/layout/icons-feather-sprite.svg#x"}}"/></svg>
     </div>
   </div>
 </template>

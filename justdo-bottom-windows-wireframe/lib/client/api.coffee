@@ -442,8 +442,8 @@ _.extend BottomWindowsWireframe.prototype,
     if not @chat_windows_hide_btn?
       @chat_windows_hide_btn = $("""
         <svg class="bottom-windows-hide bg-primary jd-c-pointer">
-          <use class="bottom-windows-hide-down" xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use>
-          <use class="bottom-windows-hide-up" xlink:href="/layout/icons-feather-sprite.svg#chevron-up"></use>
+          <use class="bottom-windows-hide-down" xlink:href="#{getCDNUrl "/layout/icons-feather-sprite.svg#chevron-down"}"></use>
+          <use class="bottom-windows-hide-up" xlink:href="#{getCDNUrl "/layout/icons-feather-sprite.svg#chevron-up"}"></use>
         </svg>
       """)
       @$container.append @chat_windows_hide_btn
