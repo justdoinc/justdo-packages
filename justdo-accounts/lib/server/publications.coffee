@@ -9,6 +9,11 @@ _.extend JustdoAccounts.prototype,
 
       check users_ids, [String]
 
+      if _.isEmpty users_ids
+        @ready()
+        @stop()
+        return
+
       self.basicUserInfoPublicationHandler(@, {users_ids: users_ids})
 
       return
