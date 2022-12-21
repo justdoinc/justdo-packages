@@ -142,7 +142,7 @@ _.extend JustdoJiraIntegration.prototype,
     return null
 
   translateJiraFieldTypeToMappedFieldType: (field_type) ->
-    if field_type not in ["number", "string", "date", "datetime"]
+    if field_type not in ["number", "string", "date", "datetime", "option"]
       return
     if field_type is "datetime"
       return "date"
@@ -175,7 +175,7 @@ _.extend JustdoJiraIntegration.prototype,
     for field_pair in field_map
       {justdo_field_id, jira_field_id} = field_pair
 
-      if justdo_field_ids.has(justdo_field_id) or jira_field_ids.has(jira_field_id)
+      if (justdo_field_id isnt "new_custom_select" and justdo_field_ids.has justdo_field_id) or jira_field_ids.has(jira_field_id)
         throw @_error "invalid-argument", "A field is being mapped to two fields. Please remove the duplicate ones."
 
       justdo_field_ids.add justdo_field_id
