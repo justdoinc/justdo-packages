@@ -36,9 +36,9 @@
         <div class="jira-field-map-rows-wrapper">
           {{#each customFieldsMap}}
             {{> justdo_jira_integration_field_map_option_pair templateDataForChildTemplate}}
+          {{else}}
+            {{> justdo_jira_integration_field_map_option_pair templateDataForChildTemplate}}
           {{/each}}
-
-          {{> justdo_jira_integration_field_map_option_pair templateDataForChildTemplate}}
         </div>
 
         <div class="jira-field-map-add-row">+</div>
@@ -58,16 +58,20 @@
   {{#with fieldsAvaibleForUserMapping}}
     <div class="custom-jira-field-pair" data-field_pair_id="{{fieldPairId}}">
 
-      <select {{isSelectDisabled}}>
+      <select class="justdo-field-select" {{isSelectDisabled}} {{isSelectOptionChosen}}>
         <option value="empty" disabled selected>---JustDo Field---</option>
-        {{#each justdo_fields}}
-          <option value="{{field_id}}" data-field_type="{{field_type}}" {{isFieldSelected}}>{{field_name}}({{ucFirst field_type}})</option>
-        {{/each}}
+        {{#if isSelectOptionChosen}}
+          <option value="new_custom_select" data-field_type="option" selected>(New custom field)</option>
+        {{else}}
+          {{#each justdo_fields}}
+            <option value="{{field_id}}" data-field_type="{{field_type}}" {{isFieldSelected}}>{{field_name}}({{ucFirst field_type}})</option>
+          {{/each}}
+        {{/if}}
       </select>
 
       <span class="arrow">↔</span>
 
-      <select {{isSelectDisabled}}>
+      <select class="jira-field-select" {{isSelectDisabled}}>
         <option value="empty" disabled selected>---Jira Field---</option>
         {{#each jira_fields}}
           <option value="{{field_id}}" data-field_type="{{field_type}}" {{isFieldSelected}}>{{field_name}}({{ucFirst field_type}})</option>

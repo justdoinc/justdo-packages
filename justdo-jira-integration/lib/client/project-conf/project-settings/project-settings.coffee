@@ -105,14 +105,12 @@ Template.justdo_jira_integration_project_setting.events
 
     field_pairs_array = []
 
-    for field_pair in $(".custom-jira-field-pair")
-      [justdo_select, jira_select] = $(field_pair).children("select:not([disabled])")
-      if _.isEmpty(justdo_select) or _.isEmpty(jira_select)
+    for field_pair in $(".custom-jira-field-pair").not("[data-field_pair_id]")
+      [$justdo_field, $jira_field] = $(field_pair).find("select option:selected")
+      if _.isEmpty($justdo_field) or _.isEmpty($jira_field)
         continue
 
-      $justdo_field = $(justdo_select).children("option:selected")
       $justdo_field = $($justdo_field)
-      $jira_field = $(jira_select).children("option:selected")
       $jira_field = $($jira_field)
 
       if $justdo_field.val() is "empty" or $jira_field.val() is "empty"
@@ -129,7 +127,10 @@ Template.justdo_jira_integration_project_setting.events
       {justdo_field_id, justdo_field_type, jira_field_id, jira_field_type} = field_pair
 
       # String field can hold numbers and date as well. Might just allow it.
-      if (justdo_field_type isnt "string") and (jira_field_type isnt "string") and  (justdo_field_type isnt jira_field_type)
+      # Checking for option fields aren't implemented here,
+      # as the client doesn't allow choosing other fields when Jira option field is selected.
+      # Also the server-side logic will handle the option field differently than other fields.
+      if (justdo_field_type isnt "string") and (jira_field_type isnt "string") and (justdo_field_type isnt jira_field_type)
         JustdoSnackbar.show
           text: "Field type mismatch at row #{i+1}"
         return
@@ -142,7 +143,9 @@ Template.justdo_jira_integration_project_setting.events
       JustdoSnackbar.show
         text: e.reason
 
-    APP.justdo_jira_integration.addCustomFieldPairs jira_doc_id, tpl.selected_jira_project_id_rv.get(), field_pairs
+    console.log field_pairs
+
+    APP.justdo_jira_integration.addCustomFieldPairs JD.activeJustdoId(), tpl.selected_jira_project_id_rv.get(), field_pairs
     return
 
   "click .jira-field-map-add-row": (e, tpl) ->
@@ -153,11 +156,19 @@ Template.justdo_jira_integration_project_setting.events
 Template.justdo_jira_integration_field_map_option_pair.onCreated ->
   _.extend @, @data
   @selected_field_type = new ReactiveVar ""
+  @is_select_option_chosen_rv = new ReactiveVar false
   return
 
 Template.justdo_jira_integration_field_map_option_pair.helpers
   isSelectDisabled: ->
-    if Template.instance().field_pair_id?
+    tpl = Template.instance()
+
+    if tpl.field_pair_id?
+      return "disabled"
+    return
+
+  isSelectOptionChosen: ->
+    if Template.instance().is_select_option_chosen_rv.get()
       return "disabled"
     return
 
@@ -229,6 +240,14 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
   ucFirst: (string) -> JustdoHelpers.ucFirst string
 
 Template.justdo_jira_integration_field_map_option_pair.events
+  "change .jira-field-select": (e, tpl) ->
+    if $(e.target).closest(".jira-field-select").children("option:selected").data("field_type") is "option"
+      tpl.is_select_option_chosen_rv.set true
+      return
+
+    tpl.is_select_option_chosen_rv.set false
+    return
+
   "click .remove-custom-field-pair": (e, tpl) ->
     e.preventDefault()
     e.stopPropagation()
