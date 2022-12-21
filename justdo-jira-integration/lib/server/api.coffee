@@ -1675,6 +1675,39 @@ _.extend JustdoJiraIntegration.prototype,
     # field_map is checked by schema inside checkCustomFieldPairMapping()
     @checkCustomFieldPairMapping jira_doc_id, jira_project_id, field_map
 
+    # The following block specifically handles option typed field pairs.
+    custom_fields_to_create = []
+    for field_pair in field_map
+      if field_pair.justdo_field_id isnt "new_custom_select"
+        continue
+
+      jira_field_def = @getJiraFieldDefByJiraProjectId jira_doc_id, jira_project_id
+
+      if not (field_def = jira_field_def[field_pair.jira_field_id])?
+        continue
+
+      if not (field_options = field_def.allowedValues)?
+        continue
+
+      custom_field_id = Random.id()
+      field_pair.justdo_field_id = custom_field_id
+
+      custom_field_def =
+        custom_field_type_id: "basic-select"
+        default_width: 120
+        field_id: custom_field_id
+        field_type: "select"
+        grid_editable_column: true
+        grid_visible_column: true
+        label: field_def.name
+        field_options:
+          select_options: _.map field_options, (field_option) -> {option_id: Random.id(), jira_option_id: field_option.id, label: field_option.name or field_option.value, bg_color: "00000000"}
+      custom_fields_to_create.push custom_field_def
+
+    console.log custom_fields_to_create
+    if not _.isEmpty custom_fields_to_create
+      APP.projects.setProjectCustomFields justdo_id, custom_fields_to_create, user_id
+
     ops =
       $addToSet:
         "jira_projects.#{jira_project_id}.custom_field_map":
