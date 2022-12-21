@@ -1664,6 +1664,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     field_def = {}
     for issue_type in res.projects[0].issuetypes
+      # XXX For fields with options: What if some issue type has more options in a field than the other?
       _.extend field_def, issue_type.fields
 
     return field_def
