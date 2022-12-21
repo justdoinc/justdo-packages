@@ -107,10 +107,10 @@ APP.executeAfterAppLibCode ->
   appendOptionToEditor = ($options_list, option_id, option_label, option_background_color) ->
     $option_dom = $("""
       <div class="custom-field-option d-flex align-items-center" option-id="#{JustdoHelpers.xssGuard option_id}">
-        <svg class="jd-icon-custom-field text-muted option-handle"><use xlink:href="#{getCDNUrl "/layout/icons-feather-sprite.svg#more-vertical-double"}"/></svg>
+        <svg class="jd-icon-custom-field text-muted option-handle"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical-double"/></svg>
         <input class="option-label form-control form-control-sm border-0 bg-transparent text-body my-1 ml-1" type="text" placeholder="Label name" value="#{JustdoHelpers.xssGuard option_label}">
         <div class="bg-color-selector">#{JustdoHelpers.xssGuard option_background_color}</div>
-        <svg class="jd-icon-custom-field text-primary remove-option"><use xlink:href="#{getCDNUrl "/layout/icons-feather-sprite.svg#x"}"/></svg>
+        <svg class="jd-icon-custom-field text-primary remove-option"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
       </div>
     """)
 
