@@ -1712,9 +1712,10 @@ _.extend JustdoJiraIntegration.prototype,
     field_pair_ids_to_remove = []
 
     # If justdo_field_id isn't in tasks_collection_schema, the field is a custom field in Justdo.
-    for field_map in jira_doc.jira_projects[jira_project_id].custom_field_map
-      if not _.has tasks_collection_schema, field_map.justdo_field_id
-        field_pair_ids_to_remove.push field_map.id
+    if _.isArray(custom_field_map = jira_doc.jira_projects?[jira_project_id]?.custom_field_map)
+      for field_map in jira_doc.jira_projects[jira_project_id].custom_field_map
+        if not _.has tasks_collection_schema, field_map.justdo_field_id
+          field_pair_ids_to_remove.push field_map.id
 
     if not _.isEmpty field_pair_ids_to_remove
       @deleteCustomFieldPair justdo_id, jira_project_id, field_pair_ids_to_remove
