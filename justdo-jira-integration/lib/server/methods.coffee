@@ -43,12 +43,12 @@ _.extend JustdoJiraIntegration.prototype,
         check jira_project_id, Number
         return self.getJiraFieldDefByJiraProjectId jira_doc_id, jira_project_id
 
-      addCustomFieldPairs: (jira_doc_id, jira_project_id, field_map) ->
-        check jira_doc_id, String
+      addCustomFieldPairs: (justdo_id, jira_project_id, field_map) ->
+        check justdo_id, String
         check jira_project_id, Number
         # field_map is checked inside addCustomFieldPairs()
         check @userId, String
-        return self.addCustomFieldPairs jira_doc_id, jira_project_id, field_map, @userId
+        return self.addCustomFieldPairs justdo_id, jira_project_id, field_map, @userId
 
       deleteCustomFieldPair: (justdo_id, jira_project_id, custom_field_pair_id) ->
         check justdo_id, String

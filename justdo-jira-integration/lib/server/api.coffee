@@ -1660,7 +1660,9 @@ _.extend JustdoJiraIntegration.prototype,
     return field_def
 
   # field_map is expected to be in the format of [{justdo_field_id, jira_field_id, id}, {justdo_field_id, jira_field_id, id}, ...]
-  addCustomFieldPairs: (jira_doc_id, jira_project_id, field_map, user_id) ->
+  addCustomFieldPairs: (justdo_id, jira_project_id, field_map, user_id) ->
+    jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
+
     # field_map is checked by schema inside checkCustomFieldPairMapping()
     @checkCustomFieldPairMapping jira_doc_id, jira_project_id, field_map
 
