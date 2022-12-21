@@ -25,6 +25,45 @@ _.extend JustdoJiraIntegration,
         if date?
           return moment.utc(date).format("YYYY-MM-DD")
         return null
+    # NOTE: field param of option is in the format of {justdo_field_id, jira_field_id, field_val},
+    # unlike other mapper functions that receives only field_val.
+    # If destination is "jira", field_val is Justdo field value. Vice versa.
+    select: (justdo_id, field, destination, req_body) ->
+      getJustdoCustomFieldDef = (justdo_id, justdo_custom_field_id) =>
+        # Get the jira_option_id from projects_collection.custom_fields.
+        query =
+          _id: justdo_id
+          "custom_fields.field_id": justdo_custom_field_id
+        query_options =
+          fields:
+            "custom_fields.$": 1
+        return @projects_collection.findOne(query, query_options)?.custom_fields?[0]
+
+      {justdo_field_id, field_val} = field
+
+      if destination is "jira"
+        # Unset
+        if not field_val?
+          return null
+
+        justdo_custom_field_def = getJustdoCustomFieldDef justdo_id, justdo_field_id
+        field_option_def = _.find justdo_custom_field_def.field_options.select_options, (field_option) -> field_option.option_id is field_val
+
+        return {id: field_option_def.jira_option_id}
+
+      if destination is "justdo"
+        if _.has field_val, "to"
+          field_val = field_val.to
+        if _.has field_val, "id"
+          field_val = field_val.id
+
+        justdo_field_val = null
+        if _.isString field_val
+          justdo_custom_field_def = getJustdoCustomFieldDef justdo_id, justdo_field_id
+          field_option_def = _.find justdo_custom_field_def.field_options.select_options, (field_option) -> field_option.jira_option_id is field_val
+          justdo_field_val = field_option_def.option_id
+
+        return justdo_field_val
 
 _.extend JustdoJiraIntegration,
   # XXX Try to search for custom field ids using Jira API and store it in DB
