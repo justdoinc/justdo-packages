@@ -98,6 +98,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/core-migrations/user-login-resume-expiry.coffee", server);
   api.addFiles("lib/server/core-migrations/clean-users-from-removed-tasks.coffee", server);
   api.addFiles("lib/server/core-migrations/remove-residual-temp-import-id.coffee", server);
+  api.addFiles("lib/server/core-migrations/users-max-resume-tokens-trimmer.coffee", server);
+  
 
   api.export("JustdoDbMigrations", both);
 });
