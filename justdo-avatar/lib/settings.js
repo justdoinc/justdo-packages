@@ -5,5 +5,5 @@ Settings = {
   font_family: "HelveticaNeue-Light,Helvetica Neue Light,Helvetica Neue,Helvetica, Arial,Lucida Grande, sans-serif",
   svg_width: 30,
   svg_height: 30,
-  fallback_url: "/packages/justdoinc_justdo-avatar/lib/img/anonymous-profile-image.png"
+  fallback_url: JustdoHelpers.getCDNUrl("/packages/justdoinc_justdo-avatar/lib/img/anonymous-profile-image.png")
 };
