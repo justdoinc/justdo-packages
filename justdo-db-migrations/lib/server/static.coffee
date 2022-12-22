@@ -371,7 +371,11 @@ JustdoDbMigrations.perpetualMaintainer = (options) ->
 
       cursor.forEach (doc) =>
         num_processed += 1
-        checkpoint_val = doc[options.updated_at_field]
+
+        if options.customCheckpointValGenerator?
+          checkpoint_val = options.customCheckpointValGenerator(doc)
+        else
+          checkpoint_val = doc[options.updated_at_field]
 
         options.batchProcessorForEach(doc)
 
