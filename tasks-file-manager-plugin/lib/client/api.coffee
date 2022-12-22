@@ -48,6 +48,8 @@ _.extend TasksFileManagerPlugin.prototype,
 
       return
 
+    @custom_feature_maintainer.stop()
+
     @destroyed = true
 
     @logger.debug "Destroyed"

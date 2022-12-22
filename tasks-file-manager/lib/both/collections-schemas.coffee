@@ -8,6 +8,8 @@ _.extend TasksFileManager.prototype,
     # Add the project_id field
     Schema =
       files:
+        exclude_from_tasks_grid_pub: true
+        
         label: "Task files"
 
         optional: true

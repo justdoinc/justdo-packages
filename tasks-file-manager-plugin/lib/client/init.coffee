@@ -32,4 +32,22 @@ _.extend TasksFileManagerPlugin.prototype,
   _deferredInit: ->
     @registerTaskPaneSection()
 
+    @active_task_autorun = undefined
+
+    @custom_feature_maintainer =
+      APP.modules.project_page.setupProjectCustomFeatureOnProjectPage "INTEGRAL",
+        installer: =>
+          @active_task_autorun = Tracker.autorun ->
+            JD.subscribeItemsAugmentedFields [JD.activeItemId()], ["files"]
+            return
+
+          return #installer
+
+        destroyer: =>
+          @active_task_autorun?.stop()
+          @active_task_autorun = null
+
+          return #destroyer
+
+
     return
