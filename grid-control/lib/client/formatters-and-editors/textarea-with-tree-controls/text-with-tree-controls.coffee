@@ -57,9 +57,7 @@ getIsChecklistPluginEnabled = ->
   return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled(JustdoChecklist?.project_custom_feature_id)
 
 getIsMeetingsPluginEnabled = ->
-  custom_features = APP?.modules?.project_page?.curProj()?.getProjectConfiguration()?.custom_features
-
-  return custom_features.indexOf("meetings_module") > -1
+  return APP?.modules?.project_page?.curProj()?.isCustomFeatureEnabled("meetings_module")
 
 getMinimalSeqIdSpace = ->
   # Returns the maximum between 3 and the the digits count of the item
