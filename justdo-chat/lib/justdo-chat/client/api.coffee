@@ -95,7 +95,7 @@ _.extend JustdoChat.prototype,
 
       return
 
-    ping_audio = new Audio("/packages/justdoinc_justdo-chat/media/notification.ogg")
+    ping_audio = new Audio(JustdoHelpers.getCDNUrl("/packages/justdoinc_justdo-chat/media/notification.ogg"))
     ping = ->
       # console.log "XXX PING!"
       ping_audio.play()
