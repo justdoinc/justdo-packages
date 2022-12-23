@@ -38,7 +38,8 @@ _.extend TasksFileManagerPlugin.prototype,
       APP.modules.project_page.setupProjectCustomFeatureOnProjectPage "INTEGRAL",
         installer: =>
           @active_task_autorun = Tracker.autorun ->
-            JD.subscribeItemsAugmentedFields [JD.activeItemId()], ["files"]
+            if (active_item_id = JD.activeItemId())?
+              JD.subscribeItemsAugmentedFields [active_item_id], ["files"]
             return
 
           return #installer

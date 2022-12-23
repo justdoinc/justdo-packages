@@ -1,10 +1,10 @@
 <template name="task_pane_tasks_file_manager_section">
 
-    {{#with active_item_obj "_id,files.id"}}
+    {{#with activeItemObj "_id,files.id"}}
       {{> tasks_file_manager_file_upload files=files task_id=_id project_id=current_project_id}}
     {{/with}}
 
-    {{#with active_item_obj "_id,files.id,files.title,files.size,files.type,files.user_uploaded,files.date_uploaded"}}
+    {{#with activeItemObj "_id,files.id,files.title,files.size,files.type,files.user_uploaded,files.date_uploaded"}}
       {{> tasks_file_manager_files files=files task_id=_id project_id=current_project_id}}
     {{/with}}
 
@@ -13,10 +13,10 @@
     Example for accessing helpers from the module.template_helpers (which might want to avoid redeveloping):
 
     <ul>
-      Note: {{active_item_obj}} gets as its first parameter the fields
+      Note: {{activeItemObj}} gets as its first parameter the fields
       you are interested in, to limit reactivity only to these fields
 
-    {{#with active_item_obj "title,priority"}}
+    {{#with activeItemObj "title,priority"}}
       <li>Title: {{title}}</li>
       <li>Priority: {{priority}}</li>
     {{/with}}
@@ -29,7 +29,7 @@
       <li>current_project_id: {{current_project_id}}</li>
       <li>active_item_path: {{active_item_path}}</li>
       <li>Item object:
-        {{#with active_item_obj}}
+        {{#with activeItemObj}}
           <ul>
             <li>title: {{title}}</li>
             <li>priority: {{priority}}</li>
