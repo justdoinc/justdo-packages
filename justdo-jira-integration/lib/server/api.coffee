@@ -1679,7 +1679,7 @@ _.extend JustdoJiraIntegration.prototype,
     # The following block specifically handles option typed field pairs.
     custom_fields_to_create = []
     for field_pair in field_map
-      if field_pair.justdo_field_id isnt "new_custom_select"
+      if not (field_type = field_pair.justdo_field_id.replace "new_custom_", "")
         continue
 
       jira_field_def = @getJiraFieldDefByJiraProjectId jira_doc_id, jira_project_id
@@ -1691,13 +1691,17 @@ _.extend JustdoJiraIntegration.prototype,
         continue
 
       custom_field_id = Random.id()
+      field_type_id = "basic-select"
+      if field_type is "multi_select"
+        field_type_id = "multi-select"
+        custom_field_id = "custom-field-multi-select::#{custom_field_id}"
       field_pair.justdo_field_id = custom_field_id
 
       custom_field_def =
-        custom_field_type_id: "basic-select"
+        custom_field_type_id: field_type_id
         default_width: 120
         field_id: custom_field_id
-        field_type: "select"
+        field_type: field_type
         grid_editable_column: true
         grid_visible_column: true
         label: field_def.name
