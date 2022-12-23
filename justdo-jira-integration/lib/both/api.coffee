@@ -187,7 +187,7 @@ _.extend JustdoJiraIntegration.prototype,
         "jira_projects.#{jira_project_id}.custom_field_map.justdo_field_id":
           $in: Array.from justdo_field_ids
       ,
-        "jira_projects.#{jira_project_id}.custom_field_map.jira_field_ids":
+        "jira_projects.#{jira_project_id}.custom_field_map.jira_field_id":
           $in: Array.from jira_field_ids
       ]
 
