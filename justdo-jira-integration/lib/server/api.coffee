@@ -1770,3 +1770,13 @@ _.extend JustdoJiraIntegration.prototype,
       @deleteCustomFieldPair justdo_id, jira_project_id, field_pair_ids_to_remove
 
     return
+
+  _getJustdoCustomFieldDef: (justdo_id, justdo_custom_field_id) ->
+    # Get the jira_option_id from projects_collection.custom_fields.
+    query =
+      _id: justdo_id
+      "custom_fields.field_id": justdo_custom_field_id
+    query_options =
+      fields:
+        "custom_fields.$": 1
+    return @projects_collection.findOne(query, query_options)?.custom_fields?[0]
