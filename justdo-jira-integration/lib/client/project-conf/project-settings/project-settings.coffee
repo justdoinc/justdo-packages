@@ -156,7 +156,7 @@ Template.justdo_jira_integration_project_setting.events
 Template.justdo_jira_integration_field_map_option_pair.onCreated ->
   _.extend @, @data
   @selected_field_type = new ReactiveVar ""
-  @is_select_option_chosen_rv = new ReactiveVar false
+  @chosen_special_field_type = new ReactiveVar ""
   return
 
 Template.justdo_jira_integration_field_map_option_pair.helpers
@@ -168,9 +168,12 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
     return
 
   isSelectOptionChosen: ->
-    if Template.instance().is_select_option_chosen_rv.get()
+    if not _.isEmpty Template.instance().chosen_special_field_type.get()
       return "disabled"
     return
+
+  getChosenSpecialFieldType: ->
+    return Template.instance().chosen_special_field_type.get()
 
   isFieldSelected: ->
     if @selected
@@ -237,15 +240,24 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
 
     return ret
 
-  ucFirst: (string) -> JustdoHelpers.ucFirst string
+  getHumanReadableFieldType: (field_type) ->
+    if (tokens = field_type.split "_").length is 1
+      return field_type
+
+    field_type = JustdoHelpers.ucFirst tokens.shift()
+    while (token = tokens.shift())
+      field_type = "#{field_type} #{JustdoHelpers.ucFirst token}"
+
+    return field_type
 
 Template.justdo_jira_integration_field_map_option_pair.events
   "change .jira-field-select": (e, tpl) ->
-    if $(e.target).closest(".jira-field-select").children("option:selected").data("field_type") is "option"
-      tpl.is_select_option_chosen_rv.set true
+    selected_field_type = $(e.target).closest(".jira-field-select").children("option:selected").data("field_type")
+    if selected_field_type is "select" or selected_field_type is "multi_select"
+      tpl.chosen_special_field_type.set selected_field_type
       return
 
-    tpl.is_select_option_chosen_rv.set false
+    tpl.chosen_special_field_type.set ""
     return
 
   "click .remove-custom-field-pair": (e, tpl) ->
