@@ -149,7 +149,7 @@ _.extend JustdoJiraIntegration.prototype,
           field_val = default_jira_field_map.mapper.call @, justdo_id, changed_item, "justdo", req_body
         else if field_type is "string"
           field_val = changed_item.toString
-        else if field_type is "select"
+        else if field_type in ["select", "multi_select"]
           field_obj = {justdo_field_id, jira_field_id, field_val: changed_item}
           field_val = JustdoJiraIntegration.primitive_field_mappers[field_type].call @, justdo_id, field_obj, "justdo", req_body
         else if field_type in ["date", "number"]
@@ -197,7 +197,7 @@ _.extend JustdoJiraIntegration.prototype,
           field_val = default_jira_field_def.mapper.call @, justdo_id, jira_field, "justdo", req_body
         else if field_type is "string"
           field_val = jira_field
-        else if field_type is "select"
+        else if field_type in ["select", "multi_select"]
           field_obj = {justdo_field_id, jira_field_id, field_val: jira_field}
           field_val = JustdoJiraIntegration.primitive_field_mappers[field_type].call @, justdo_id, field_obj, "justdo", req_body
         else if field_type in ["date", "number"]
@@ -241,7 +241,7 @@ _.extend JustdoJiraIntegration.prototype,
             fields_to_update.fields[jira_field_id] = mapped_field_val
       else if (field_type = @translateJustdoFieldTypeToMappedFieldType fields_schema[field_id]) in ["date", "number"]
         fields_to_update.fields[jira_field_id] = JustdoJiraIntegration.primitive_field_mappers[field_type].call @, justdo_id, field_val, "jira", task_doc
-      else if field_type is "select"
+      else if field_type in ["select", "multi_select"]
         field_obj = {jira_field_id, field_val, justdo_field_id: field_id}
         fields_to_update.fields[jira_field_id] = JustdoJiraIntegration.primitive_field_mappers[field_type].call @, justdo_id, field_obj, "jira", task_doc
       else
