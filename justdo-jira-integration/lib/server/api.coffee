@@ -1709,9 +1709,9 @@ _.extend JustdoJiraIntegration.prototype,
           select_options: _.map field_options, (field_option) -> {option_id: Random.id(), jira_option_id: field_option.id, label: field_option.name or field_option.value, bg_color: "00000000"}
       custom_fields_to_create.push custom_field_def
 
-    console.log custom_fields_to_create
     if not _.isEmpty custom_fields_to_create
-      APP.projects.setProjectCustomFields justdo_id, custom_fields_to_create, user_id
+      existing_custom_fields = @projects_collection.findOne(justdo_id, {fields: custom_fields: 1})?.custom_fields or []
+      APP.projects.setProjectCustomFields justdo_id, custom_fields_to_create.concat(existing_custom_fields), user_id
 
     ops =
       $addToSet:
