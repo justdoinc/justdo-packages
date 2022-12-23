@@ -133,19 +133,33 @@ _.extend JustdoJiraIntegration.prototype,
     # field_type exists for custom fields and it's ready to use.
     if _.isString field_schema.field_type
       return field_schema.field_type
-    if field_schema.type is String and field_schema.grid_column_editor is "UnicodeDateEditor"
+
+    if field_schema.grid_column_editor is "SelectorEditor"
+      return "select"
+
+    if field_schema.grid_column_editor is "UnicodeDateEditor"
       return "date"
+
+    if field_schema.grid_column_editor is "MultiSelectEditor"
+      return "multi_select"
+
     if field_schema.type is String
       return "string"
+
     if field_schema.type is Number
       return "number"
+      
     return null
 
   translateJiraFieldTypeToMappedFieldType: (field_type) ->
-    if field_type not in ["number", "string", "date", "datetime", "option"]
+    if field_type not in ["number", "string", "date", "datetime", "option", "array"]
       return
     if field_type is "datetime"
       return "date"
+    if field_type is "option"
+      return "select"
+    if field_type is "array"
+      return "multi_select"
     return field_type
 
   _fieldMapSchema = new SimpleSchema
@@ -175,7 +189,7 @@ _.extend JustdoJiraIntegration.prototype,
     for field_pair in field_map
       {justdo_field_id, jira_field_id} = field_pair
 
-      if (justdo_field_id isnt "new_custom_select" and justdo_field_ids.has justdo_field_id) or jira_field_ids.has(jira_field_id)
+      if (not justdo_field_id.includes("new_custom_") and justdo_field_ids.has justdo_field_id) or jira_field_ids.has(jira_field_id)
         throw @_error "invalid-argument", "A field is being mapped to two fields. Please remove the duplicate ones."
 
       justdo_field_ids.add justdo_field_id
