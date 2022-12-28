@@ -341,16 +341,13 @@ _.extend JustdoJiraIntegration,
             "pending": 11
             "in-progress": 21
             "done": 31
-          return justdo_to_jira_states_map[field]
+          if not (state_id = justdo_to_jira_states_map[field])
+            throw @_error "jira-update-failed", "This state is not supported in Jira"
+          return state_id
         if destination is "justdo"
           field_val = field.name or field.toString
           field_val = field_val?.toLowerCase()
-          # XXX For IT
-          # jira_to_justdo_states_map =
-          #   "10000": "pending"
-          #   "10001": "in-progress"
-          #   "10002": "done"
-          # XXX For ID / company managed projects
+
           jira_to_justdo_states_map =
             "to do": "pending"
             "in progress": "in-progress"
