@@ -88,14 +88,6 @@ Template.justdo_jira_integration_project_setting.events
     window.open target_link, "_blank"
     return
 
-  "click .configure-jira-project-field-mapping": (e, tpl) ->
-    e.preventDefault()
-    e.stopPropagation()
-
-    jira_project_id = $(e.target).closest(".configure-jira-project-field-mapping").data "id"
-    tpl.selected_jira_project_id_rv.set jira_project_id
-    return
-
   "click .set-custom-field-pair": (e, tpl) ->
     e.preventDefault()
     e.stopPropagation()
@@ -143,14 +135,17 @@ Template.justdo_jira_integration_project_setting.events
       JustdoSnackbar.show
         text: e.reason
 
-    console.log field_pairs
-
     APP.justdo_jira_integration.addCustomFieldPairs JD.activeJustdoId(), tpl.selected_jira_project_id_rv.get(), field_pairs
     return
 
   "click .jira-field-map-add-row": (e, tpl) ->
-    parent_node = $(e.target).siblings(".jira-field-map-rows-wrapper")[0]
-    Blaze.renderWithData Template.justdo_jira_integration_field_map_option_pair, tpl.templateDataForChildTemplate(), parent_node
+    node_to_render = $(".jira-field-map-rows-wrapper")[0]
+    Blaze.renderWithData Template.justdo_jira_integration_field_map_option_pair, tpl.templateDataForChildTemplate(), node_to_render
+    return
+
+  "change .jira-field-map-project-select": (e, tpl) ->
+    selected_jira_project_id = $(e.target).closest(".jira-field-map-project-select").val()
+    tpl.selected_jira_project_id_rv.set parseInt selected_jira_project_id
     return
 
 Template.justdo_jira_integration_field_map_option_pair.onCreated ->
@@ -160,12 +155,22 @@ Template.justdo_jira_integration_field_map_option_pair.onCreated ->
   return
 
 Template.justdo_jira_integration_field_map_option_pair.helpers
-  isSelectDisabled: ->
+  isFieldPairIdExist: ->
     tpl = Template.instance()
 
     if tpl.field_pair_id?
       return "disabled"
     return
+
+  getSelectedJustdoFieldName: ->
+    tpl = Template.instance()
+    grid_control = APP.modules.project_page.gridControl()
+
+    return grid_control.getFieldDef(tpl.selected_justdo_field)?.label or "[Removed Field]"
+
+  getSelectedJiraFieldName: ->
+    tpl = Template.instance()
+    return Template.instance().jira_field_def_obj_rv.get()?[tpl.selected_jira_field]?.name or "Loading..."
 
   isSelectOptionChosen: ->
     if not _.isEmpty Template.instance().chosen_special_field_type.get()
@@ -174,11 +179,6 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
 
   getChosenSpecialFieldType: ->
     return Template.instance().chosen_special_field_type.get()
-
-  isFieldSelected: ->
-    if @selected
-      return "selected"
-    return
 
   fieldPairId: ->
     return Template.instance().field_pair_id
@@ -192,30 +192,6 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
 
     justdo_field_def = grid_control.getSchemaExtendedWithCustomFields()
     jira_field_def = Template.instance().jira_field_def_obj_rv.get()
-
-    if tpl.field_pair_id?
-      # If we cannot find field def, it's likely that the field is a removed custom field.
-      # In this case we simply remove the field pair mapping.
-      if not (selected_justdo_field_def = justdo_field_def[tpl.selected_justdo_field])?
-        jira_project_id = Tracker.nonreactive -> tpl.selected_jira_project_id_rv.get()
-        APP.justdo_jira_integration.deleteCustomFieldPair JD.activeJustdoId(), jira_project_id, tpl.field_pair_id
-
-      ret.justdo_fields.push
-        field_id: tpl.selected_justdo_field
-        field_name: selected_justdo_field_def.label
-        field_type: APP.justdo_jira_integration.translateJustdoFieldTypeToMappedFieldType selected_justdo_field_def
-        selected: true
-
-      # At the first run, jira_field_def_obj_rv will be empty and "(undefined)" will show. We show the field name only when we get the field def.
-      # XXX What if the field is removed on Jira's side?
-      if (selected_jira_field_def = jira_field_def?[tpl.selected_jira_field])?
-        ret.jira_fields.push
-          field_id: tpl.selected_jira_field
-          field_name: selected_jira_field_def?.name
-          field_type: APP.justdo_jira_integration.translateJiraFieldTypeToMappedFieldType selected_jira_field_def?.schema?.type
-          selected: true
-
-      return ret
 
     # Append JustDo fields
     for field_id, field_def of justdo_field_def
