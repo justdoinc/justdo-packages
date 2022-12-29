@@ -18,11 +18,24 @@
         {{/if}}
       </div>
     </div>
-    {{#if hideableState}}
-      <div class="custom-state-action">
-        <svg class="jd-icon custom-state-hide"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
-        <svg class="jd-icon custom-state-show"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
+    <div class="dropdown">
+      <div class="custom-state-action" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
       </div>
-    {{/if}}
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {{#if isHiddenState}}
+          <a class="dropdown-item restore-extended-state" href="#">Restore state</a>
+        {{else}}
+          {{#if isCoreState}}
+            <a class="dropdown-item create-extended-state" href="#">Create extended state</a>
+            {{#if hideableState}}
+            <a class="dropdown-item remove-extended-state" href="#">Hide state</a>
+          {{/if}}
+          {{else}}
+            <a class="dropdown-item remove-extended-state" href="#">Remove extended state</a>
+          {{/if}}
+        {{/if}}
+      </div>
+    </div>
   </div>
 </template>

@@ -78,7 +78,6 @@ APP.executeAfterAppLibCode ->
       project_custom_states_definitions_rv_update_comp = null
       Tracker.nonreactive ->
         project_custom_states_definitions_rv_update_comp = Tracker.autorun ->
-          debugger
           project_id = module.curProj().id
           conf = APP.collections.Projects.findOne(project_id, {fields: {"conf.custom_states": 1, "conf.removed_custom_states": 1}})?.conf
           custom_states = conf?.custom_states or {}

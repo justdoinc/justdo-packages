@@ -349,7 +349,7 @@ _.extend Projects.prototype,
 
         hidden_states_defs = []
         for state_id, schema_state_def of APP.collections.Tasks.simpleSchema()._schema.state.grid_values
-          if state_id in current_custom_states_ids or state_id == "nil"
+          if not schema_state_def.core_state or state_id in current_custom_states_ids or state_id == "nil"
             continue
 
           hidden_states_defs.push @_schemaStateDefToStateDef(state_id, schema_state_def)
@@ -396,6 +396,24 @@ _.extend Projects.prototype,
         if removed_state?
           removed_custom_states = @getRemovedCustomStates()
           removed_custom_states.push(removed_state)
+          @configureProject
+            custom_states: custom_states
+            removed_custom_states: removed_custom_states
+
+        return
+      
+      restoreRemovedState: (state_id) ->
+        removed_custom_states = @getRemovedCustomStates()
+        restore_state = null
+        removed_custom_states = _.filter removed_custom_states, (state) -> 
+          if state.state_id == state_id
+            restore_state = state
+            return false
+          return true
+        
+        if restore_state?
+          custom_states = @getCustomStates()
+          custom_states.push(restore_state)
           @configureProject
             custom_states: custom_states
             removed_custom_states: removed_custom_states

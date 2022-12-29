@@ -34,17 +34,22 @@ Template.project_custom_state_item.onCreated ->
 Template.project_custom_state_item.onRendered ->
   tpl = @
 
-  tpl.new_option_color_picker_dropdown_controller = generatePickerDropdown(tpl.data.bg_color)
-  custom_state_style_node = tpl.find ".custom-state-style"
+  @autorun ->
+    Template.currentData()
+    tpl.new_option_color_picker_dropdown_controller = generatePickerDropdown(tpl.data.bg_color)
+    custom_state_style_node = tpl.find ".custom-state-style"
 
-  $(custom_state_style_node).data("color_picker_controller", tpl.new_option_color_picker_dropdown_controller)
+    $(custom_state_style_node).data("color_picker_controller", tpl.new_option_color_picker_dropdown_controller)
 
-  color_picker_dropdown_node =
-    APP.helpers.renderTemplateInNewNode("justdo_color_picker_dropdown", {color_picker_controller: tpl.new_option_color_picker_dropdown_controller})
+    color_picker_dropdown_node =
+      APP.helpers.renderTemplateInNewNode("justdo_color_picker_dropdown", {color_picker_controller: tpl.new_option_color_picker_dropdown_controller})
 
-  $(custom_state_style_node).html color_picker_dropdown_node.node
+    $(custom_state_style_node).html color_picker_dropdown_node.node 
+
+    return
 
   @autorun =>
+    Template.currentData()
     selected_color = tpl.new_option_color_picker_dropdown_controller._selected_color_rv.get()
 
     if tpl.data.bg_color != selected_color
@@ -92,8 +97,15 @@ Template.project_custom_state_item.helpers
 
   defaultLabel: -> getDefaultTextLabelForState(@state_id) or ""
 
+  isCoreState: ->
+    return APP.collections.Tasks.simpleSchema()._schema.state.grid_values[@state_id]?.core_state == true
+
   hideableState: ->
     return _.indexOf(Projects.not_hideable_states, @state_id) < 0
+
+  isHiddenState: ->
+    return APP.collections.Tasks.simpleSchema()._schema.state.grid_values[@state_id]?.core_state == true and 
+      _.find(APP.modules.project_page.curProj().getRemovedCustomStates(), (s) => s.state_id == @state_id)?
 
   # to ensure no flicker after text update we need to isolate div.custom-state-label-text-active
   textActive: ->
@@ -151,4 +163,22 @@ Template.project_custom_state_item.events
 
     cur_proj.setCustomStates custom_states
 
+    return
+  
+  "click .create-extended-state": (e, tpl) ->
+    state = tpl.data
+    APP.modules.project_page.curProj().addCustomState({
+      core_state: state.state_id
+      txt: "#{state.txt} - extended"
+    })
+    return
+
+  "click .remove-extended-state": (e, tpl) ->
+    state = tpl.data
+    APP.modules.project_page.curProj().removeCustomState(state.state_id)
+    return
+  
+  "click .restore-extended-state": (e, tpl) ->
+    state = tpl.data
+    APP.modules.project_page.curProj().restoreRemovedState(state.state_id)
     return
