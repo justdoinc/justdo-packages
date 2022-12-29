@@ -74,6 +74,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_search_when_out_of_view: true
 
       description_lock:
+        user_editable_column: true
         grid_editable_column: false
         grid_visible_column: false
 

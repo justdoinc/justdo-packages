@@ -18,6 +18,7 @@ _.extend PACK.modules,
           grid_column_formatter: "display_name_formatter"
           grid_visible_column: true
           grid_editable_column: false
+          user_editable_column: true
 
         is_removed_owner:
           label: "Is removed owner"
@@ -36,6 +37,7 @@ _.extend PACK.modules,
           grid_column_formatter: "display_name_formatter"
           grid_visible_column: true
           grid_editable_column: false
+          user_editable_column: true
         
         pending_owner_updated_at:
           label: "Pending Owner Updated At"
@@ -58,6 +60,7 @@ _.extend PACK.modules,
           label: "Reject Ownership Message"
           optional: true
           type: String
+          user_editable_column: true
           autoValue: ->
             # Allow setting the reject_ownership_message message only by users other
             # than those involved in the reject message process:
@@ -142,6 +145,7 @@ _.extend PACK.modules,
           label: "Reject Ownership Message - Transfering User"
           optional: true
           type: String
+          user_editable_column: true
           autoValue: ->
             # Automatically set reject_ownership_message_to to the current
             # owner_id at the time reject_ownership_message was set.
