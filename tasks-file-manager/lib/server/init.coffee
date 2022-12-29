@@ -2,6 +2,9 @@ _.extend TasksFileManager.prototype,
   _immediateInit: ->
     @filestack_secret = @options.secret or throw @_error "api-secret-required"
     @filestack_api_key = @options.api_key or throw @_error "api-key-required"
+    @_setupDbMigrations()
+    
+    return
 
   _deferredInit: ->
     # Defined in methods.coffee

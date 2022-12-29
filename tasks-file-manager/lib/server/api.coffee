@@ -88,6 +88,8 @@ _.extend TasksFileManager.prototype,
     ,
       $set:
         updated_by: user_id
+      $inc:
+        [TasksFileManager.files_count_field_id]: files_to_upload.length
       $push:
         files:
           $each: files_to_upload

@@ -77,6 +77,11 @@ _.extend TasksFileManager.prototype,
         # however since this is a sub-document, we can't tell if the file
         # is being added or updated
 
+      [TasksFileManager.files_count_field_id]:
+        label: "Files Count"
+        type: Number
+        optional: true
+        
     for field_id, field_def of Schema
       do (field_id) =>
         Schema[field_id].autoValue = ->

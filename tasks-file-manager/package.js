@@ -58,6 +58,7 @@ Package.onUse(function (api) {
   api.add_files("lib/server/collections-indexes.coffee", server);
   api.add_files("lib/server/methods.coffee", server);
   api.add_files("lib/server/publications.coffee", server);
+  api.add_files("lib/server/db-migrations.coffee", server);
 
   api.add_files("lib/client/init.coffee", client);
   api.add_files("lib/client/api.coffee", client);
