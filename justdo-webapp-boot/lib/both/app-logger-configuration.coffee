@@ -1,19 +1,19 @@
-APP.getEnv (env) ->
-  if Meteor.isServer
-    # On the server we want as much information as possible to be logged
-    log_level = Logger.DEBUG
-  else
-    if env.ENV in ["dev", "development"]
-      log_level = Logger.DEBUG
-    else if env.ENV in ["stg", "staging"]
-      log_level = Logger.INFO
-    else if env.ENV in ["prod", "production"]
-      log_level = Logger.WARN
-    else
-      # Will happen when we run $ meteor; command directly without setting env vars
-      log_level = Logger.DEBUG
+supported_log_levels = ["DEBUG", "INFO", "WARN", "ERROR", "OFF"]
 
-  Logger.useDefaults(log_level)
+default_log_level = "WARN"
+
+APP.getEnv (env) ->
+  if not env.LOG_LEVEL?
+    log_level = default_log_level
+  else if env.LOG_LEVEL not in supported_log_levels
+    console.warn "[app-logger] unknown log level was set in env var: LOG_LEVEL: '#{env.LOG_LEVEL}', falling back to #{default_log_level} level"
+    log_level = default_log_level
+  else
+    log_level = env.LOG_LEVEL
+
+  console.info "[app-logger] log level: #{log_level}"
+
+  Logger.useDefaults(Logger[log_level])
 
   APP._logger_ready = true
 
