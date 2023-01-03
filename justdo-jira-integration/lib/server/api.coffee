@@ -790,6 +790,8 @@ _.extend JustdoJiraIntegration.prototype,
       fields: relevant_jira_field_ids
     issue_search_cb = (res) =>
       {issues} = res
+      issue_keys_to_fetch_children = []
+
       while (issue = issues.shift())?
         issue_fields = issue.fields
 
@@ -797,9 +799,10 @@ _.extend JustdoJiraIntegration.prototype,
         path_to_add = "/#{task_id}/#{roadmap_mountpoint_task_id}/"
 
         if (parent_key = issue_fields.parent?.key or issue_fields[JustdoJiraIntegration.epic_link_custom_field_id])?
-          # XXX Hardcoded users length in query. Better approach is needed to determine whether the parent task is added completely along with its users.
-          if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: parseInt(jira_project_id), jira_issue_key: parent_key, "users.1": {$exists: true}}, {fields: {_id: 1}})?._id)?
+          if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: parseInt(jira_project_id), jira_issue_key: parent_key}, {fields: {_id: 1}})?._id)?
             issues.push issue
+            # XXX Remove console.log when missing child issue is resolved.
+            console.log "Parent not found. Issue: #{issue.key}, parent: ", issue_fields.parent
             continue
 
           path_to_add += "#{parent_task_id}/"
@@ -807,7 +810,8 @@ _.extend JustdoJiraIntegration.prototype,
         create_task_from_jira_issue_options =
           sprints_mountpoints: sprints_to_mountpoint_task_id
           fix_versions_mountpoints: fix_versions_to_mountpoint_task_id
-        @_createTaskFromJiraIssue justdo_id, path_to_add, issue, create_task_from_jira_issue_options
+
+        created_task_id = @_createTaskFromJiraIssue justdo_id, path_to_add, issue, create_task_from_jira_issue_options
 
         # Mark webhook and data integrity checkpoint
         query =
@@ -819,9 +823,14 @@ _.extend JustdoJiraIntegration.prototype,
         @jira_collection.update query, ops
 
         if @getIssueTypeRank(issue_fields?.issuetype?.name, jira_project_id) > -1
-          client.v2.issueSearch.searchForIssuesUsingJqlPost {jql: """project=#{jira_project_id} and "Parent Link"=#{issue.key} and status!=done """, maxResults: JustdoJiraIntegration.jql_issue_search_results_limit, fields: relevant_jira_field_ids}
-            .then issue_search_cb
-            .catch (err) -> console.error err
+          issue_keys_to_fetch_children.push issue.key
+
+      if not _.isEmpty issue_keys_to_fetch_children
+        jql = """project=#{jira_project_id} and "Parent Link" in (#{issue_keys_to_fetch_children}) and status!=done """
+        client.v2.issueSearch.searchForIssuesUsingJqlPost {jql, maxResults: JustdoJiraIntegration.jql_issue_search_results_limit, fields: relevant_jira_field_ids}
+          .then issue_search_cb
+          .catch (err) -> console.error err
+
       return
 
     client.v2.issueSearch.searchForIssuesUsingJqlPost issue_search_body
