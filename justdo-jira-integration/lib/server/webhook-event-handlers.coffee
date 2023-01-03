@@ -38,6 +38,10 @@ _.extend JustdoJiraIntegration.prototype,
     if not (fix_versions_mountpiont_task_doc = @tasks_collection.findOne(tasks_query, tasks_options))?
       return
 
+    # If the fix version task is already, likely it is created in Justdo first. ignore.
+    if (fix_version_task = @tasks_collection.findOne({jira_project_id: jira_project_id, jira_fix_version_mountpoint_id: parseInt fix_version.id}, {fields: {_id: 1}}))?
+      return
+
     justdo_id = fix_versions_mountpiont_task_doc.project_id
     jira_doc_id = @getJiraDocIdFromJustdoId justdo_id
     justdo_admin_id = @_getJustdoAdmin justdo_id
@@ -209,6 +213,17 @@ _.extend JustdoJiraIntegration.prototype,
   _createSprintTask: (sprint, parent, justdo_id, jira_project_id) ->
     # Don't create tasks from closed sprints as it is non-editable in Jira
     if sprint.state is "closed"
+      return
+
+    query =
+      jira_sprint_mountpoint_id: parseInt sprint.id
+      jira_project_id: jira_project_id
+      project_id: justdo_id
+    query_options =
+      fields:
+        _id: 1
+    # Avoid re-creating sprints that already exist.
+    if @tasks_collection.findOne(query, query_options)?
       return
 
     task_fields = _.extend @_convertSprintToTaskFields(sprint),
@@ -594,8 +609,14 @@ _.extend JustdoJiraIntegration.prototype,
       board_id = sprint.originBoardId
 
       if @isJiraInstanceCloud()
-        jira_host = new URL(sprint.self).origin
-        client = @getClientByHost(jira_host).agile
+        # If the host is api.atlassian.com instead of the Jira instance host, it is created via API call instead of Jira website.
+        # In that case we extract the client id to obtain the corresponding API client to use.
+        if (client_id = sprint.self.match(JustdoJiraIntegration.jira_cloud_client_id_regex)?[0])?
+          client = @clients[client_id].agile
+        else if (jira_host = new URL(sprint.self).origin)
+          client = @getClientByHost(jira_host).agile
+        else
+          throw @_error "client-not-found", "Unable to determine where the newly created sprint should land"
       else
         client = _.values(@clients)?[0]?.agile
 

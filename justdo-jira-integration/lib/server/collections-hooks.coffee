@@ -56,7 +56,7 @@ _.extend JustdoJiraIntegration.prototype,
         return
 
       parent_task_id = doc.parents2[0].parent
-      parent_task = self.tasks_collection.findOne(parent_task_id, {fields: {jira_issue_id: 1, jira_issue_key: 1, jira_project_id: 1, jira_issue_type: 1, jira_sprint: 1}})
+      parent_task = self.tasks_collection.findOne(parent_task_id, {fields: {jira_issue_id: 1, jira_issue_key: 1, jira_project_id: 1, jira_issue_type: 1, jira_sprint: 1, jira_mountpoint_type: 1}})
 
       # If jira_project_id doesn't exist, assume the task is created outside of mountpoint.
       if not (jira_project_id = parent_task?.jira_project_id)?
@@ -65,6 +65,46 @@ _.extend JustdoJiraIntegration.prototype,
       if not (jira_server_id = self.getJiraServerInfoFromJustdoId(justdo_id)?.id)?
         return
 
+      client = self.clients[jira_server_id]
+
+      # Create a new fix version
+      if parent_task?.jira_mountpoint_type is "fix_versions"
+        {err, res} = self.pseudoBlockingJiraApiCallInsideFiber "projectVersions.createVersion", {projectId: parent_task.jira_project_id, name: "New Version"}, client.v2
+        if err?
+          throw self._error "jira-update-failed", "Failed to create new fix version", err
+
+        task_fields =
+          title: res.name
+          jira_project_id: parseInt res.projectId
+          jira_fix_version_mountpoint_id: parseInt res.id
+          jira_last_updated: new Date()
+
+        _.extend modifier.$set, task_fields
+
+        return
+
+      # Create a new sprint
+      if parent_task?.jira_mountpoint_type is "sprints"
+        # XXX We currently don't support specifying board when creating sprint. The first board we got from this API is used.
+        res = self.getAllBoardsAssociatedToJiraProject jira_project_id, {client: client.agile}
+        if not (board_id = res?.values?[0]?.id)?
+          throw self._error "jira-update-failed", "Failed to obtain board id when creating new sprint"
+
+        {err, res} = self.pseudoBlockingJiraApiCallInsideFiber "sprint.createSprint", {originBoardId: board_id, name: "New Sprint"}, client.agile
+        if err?
+          throw self._error "jira-update-failed", "Failed to create new sprint", err
+
+        task_fields =
+          title: res.name
+          jira_project_id: jira_project_id
+          jira_sprint_mountpoint_id: parseInt res.id
+          jira_last_updated: new Date()
+
+        _.extend modifier.$set, task_fields
+
+        return
+
+      # Create a new issue
       task_creater_email = Meteor.users.findOne(user_id, {fields: {emails: 1}})?.emails?[0]?.address
       jira_account = self.getJiraUser justdo_id, {email: task_creater_email}
       jira_account_id_or_name = jira_account?[0]?.accountId or jira_account?[0]?.name
@@ -107,8 +147,7 @@ _.extend JustdoJiraIntegration.prototype,
           else
             req.fields[JustdoJiraIntegration.epic_link_custom_field_id] = "#{parent_task.jira_issue_key}"
 
-      client = self.clients[jira_server_id].v2
-      {err, res} = self.pseudoBlockingJiraApiCallInsideFiber "issues.createIssue", req, client
+      {err, res} = self.pseudoBlockingJiraApiCallInsideFiber "issues.createIssue", req, client.v2
       if err?
         throw self._error "jira-update-failed", "Failed to create issue.", err
 
@@ -131,7 +170,7 @@ _.extend JustdoJiraIntegration.prototype,
           summary: task_title
           [JustdoJiraIntegration.last_updated_custom_field_id]: new Date()
 
-      {err} = self.pseudoBlockingJiraApiCallInsideFiber "issues.editIssue", summary_update_req, client
+      {err} = self.pseudoBlockingJiraApiCallInsideFiber "issues.editIssue", summary_update_req, client.v2
       if err?
         throw self._error "jira-update-failed", "Failed to create issue.", err
 

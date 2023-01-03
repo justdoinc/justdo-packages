@@ -27,16 +27,6 @@ _.extend JustdoJiraIntegration.prototype,
       if parent_task?.jira_mountpoint_type is "root" and not new_item?.jira_mountpoint_type?
         throw @_error "jira-update-failed", "You can only create new issues under roadmap."
 
-      # Sprints mountpoint should only contain individual sprints
-      # XXX Do we want to allow creating a new sprint by adding child?
-      if parent_task?.jira_mountpoint_type is "sprints" and not new_item?.jira_sprint_mountpoint_id?
-        throw @_error "jira-update-failed", "Creating another sprint is not yet supported."
-
-      # Fix-version mountpoint should only contain individual fix-versions
-      # XXX Do we want to allow creating a fix-version by adding child?
-      if parent_task?.jira_mountpoint_type is "fix_versions" and not new_item?.jira_fix_version_mountpoint_id?
-        throw @_error "jira-update-failed", "Creating another fix version is not yet supported."
-
       # Block attempts to add child directly under individual sprint/fix-version.
       # XXX Do we want to allow creating task under sprint/fix-version directly?
       if parent_task?.jira_sprint_mountpoint_id? or parent_task?.jira_fix_version_mountpoint_id?
