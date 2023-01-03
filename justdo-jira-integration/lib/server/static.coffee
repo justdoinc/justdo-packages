@@ -90,7 +90,17 @@ _.extend JustdoJiraIntegration,
       type: "string"
     description:
       name: "description"
-      type: "string" # XXX Should be markdown doc instead
+      mapper: (justdo_id, field, destination, req_body) ->
+        if destination is "justdo"
+          if _.isString field
+            client = @getJiraClientForJustdo justdo_id
+            {err, res} = @pseudoBlockingJiraApiCallInsideFiber "issues.getIssue", {issueIdOrKey: req_body.issue.key, fields: "description", expand: "renderedFields"}, client.v2
+            console.log res
+            return res.renderedFields.description
+          return field
+
+        if destination is "jira"
+          return field
     jira_sprint:
       id: sprint_custom_field_id
       name: "Sprint"
