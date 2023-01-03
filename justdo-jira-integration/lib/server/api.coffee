@@ -930,9 +930,10 @@ _.extend JustdoJiraIntegration.prototype,
         [JustdoJiraIntegration.task_id_custom_field_id]: task_id
         [JustdoJiraIntegration.project_id_custom_field_id]: justdo_id
         [JustdoJiraIntegration.last_updated_custom_field_id]: new Date()
-    client.issues.editIssue req
-    .catch (err) ->
-      console.error "[justdo-jira-integration] Failed to set Justdo task and project id to Jira issue", err.data
+
+    {err, res} = @pseudoBlockingJiraApiCallInsideFiber "issues.editIssue", req, client
+    if err?
+      console.error "[justdo-jira-integration] Failed to set Justdo task and project id to Jira issue", err
     return
 
   getJustdosIdsAndTasksIdsfromMountedJiraProjectId: (jira_project_id) ->
