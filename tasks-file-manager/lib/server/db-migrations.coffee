@@ -34,10 +34,12 @@
         cursor.forEach (task) =>
           num_processed += 1
           
-          @collection.update(task._id, {
+          @collection.rawCollection().update({_id: task._id}, {
             $set:
               [TasksFileManager.files_count_field_id]: task.files.length
           })
+
+          return
 
         return num_processed
 
