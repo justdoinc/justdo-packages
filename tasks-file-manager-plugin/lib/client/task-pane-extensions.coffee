@@ -43,13 +43,13 @@ _.extend TasksFileManagerPlugin.prototype,
       options:
         title: "Files"
         titleInfo: ->
-          if not (active_item_obj = module.activeItemObj({"tasks-file-manager::files_count": 1}))?
+          if not (active_item_obj = module.activeItemObj({[window.TasksFileManager.files_count_field_id]: 1}))?
             return ""
 
-          if not (active_item_obj["tasks-file-manager::files_count"] > 0)
+          if not (file_count = active_item_obj[window.TasksFileManager.files_count_field_id])? or file_count <= 0
             return ""
 
-          return """<div class="task-pane-tab-title-info bg-primary text-white">#{active_item_obj["tasks-file-manager::files_count"]}</div>"""
+          return """<div class="task-pane-tab-title-info bg-primary text-white">#{active_item_obj[window.TasksFileManager.files_count_field_id]}</div>"""
       section_options: {}
 
     tasks_file_manager_section_position =
