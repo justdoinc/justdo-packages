@@ -358,10 +358,11 @@ GridControl.installFormatter "textWithTreeControls",
           <i class="fa fa-fw chat-messages #{chat_classes} slick-prevent-edit" title="Chat messages" aria-hidden="true"></i>
       """
 
-    if (files = doc.files)?
-      if files.length > 0
+    if (tasks_file_manager_count = doc[TasksFileManager.files_count_field_id])?
+      tasks_file_manager_count = parseInt(tasks_file_manager_count, 10) # Don't open an XSS chance.
+      if tasks_file_manager_count > 0
         tree_control += """
-            <i class="fa fa-fw fa-paperclip task-files slick-prevent-edit" title="#{files.length} files" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-paperclip task-files slick-prevent-edit" title="#{tasks_file_manager_count} files" aria-hidden="true"></i>
         """
 
     if (justdo_files_count = doc[JustdoFiles.files_count_task_doc_field_id])?
