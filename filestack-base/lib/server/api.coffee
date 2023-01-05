@@ -123,6 +123,8 @@ _.extend FilestackBase.prototype,
         $pull:
           "files":
             id: file.id
+        $inc:
+          [TasksFileManager.files_count_field_id]: -1
 
       #
       # Cleanup all the file's previews and associated data
