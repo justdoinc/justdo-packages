@@ -1,6 +1,4 @@
-# data_integrity_check_rate_ms = 1000 * 60 * 5 # 5 mins
-data_integrity_check_rate_ms = 1000 * 60
-
+data_integrity_check_rate_ms = 1000 * 60 * 5 # 5 mins
 
 _.extend JustdoJiraIntegration,
   access_token_update_rate_ms: 1000 * 60 * 50  # 50 mins
