@@ -56,13 +56,19 @@
 
       queryGenerator: ->
         query =
-          _id:
-            $nin: APP.justdo_system_records.getRecord("restored-updatedAt-tasks")?.processed_task_ids or []
           [TasksFileManager.files_count_field_id]:
             $ne: null
 
+        # To avoid re-cheking the same batch of documents again and again, the cursor is sorted by the task id.
+        # We store the last checked task id in system-records and use it as the starting point of the next batch of documents
+        if (previous_checkpoint = APP.justdo_system_records.getRecord("restored-updatedAt-tasks")?.previous_checkpoint)?
+          query._id =
+            $gt: previous_checkpoint
+
         query_options =
           fields:
+            _id: 1
+          sort:
             _id: 1
 
         return {query, query_options}
@@ -78,8 +84,9 @@
 
       batchProcessor: (cursor) ->
         num_processed = 0
+        checkpoint = null
 
-        processed_task_ids = cursor.map (task) =>
+        cursor.forEach (task) =>
           query =
             task_id: task._id
           query_options =
@@ -87,7 +94,12 @@
               when: 1
             sort:
               when: -1
-          most_recent_changelog_time = APP.collections.TasksChangelog.findOne(query, query_options).when
+          # Normally when a new task is created, a changelog doc is also created alongside.
+          # If we face a task that doesn't have any changelogs, it's likely created with taskGenerator.
+          # In this case we simply ignore it.
+          if not (most_recent_changelog_time = APP.collections.TasksChangelog.findOne(query, query_options)?.when)?
+            console.log "#{task._id} has no changelog. Ignored."
+            return
 
           @collection.rawCollection().update({_id: task._id}, {
             $set:
@@ -95,13 +107,13 @@
           })
 
           num_processed += 1
+          checkpoint = task._id
 
-          return task._id
+          return
 
         APP.collections.SystemRecords.upsert "restored-updatedAt-tasks",
-          $addToSet:
-            processed_task_ids:
-              $each: processed_task_ids
+          $set:
+            previous_checkpoint: checkpoint
 
         return num_processed
 
