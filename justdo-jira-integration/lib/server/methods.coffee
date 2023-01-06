@@ -20,13 +20,13 @@ _.extend JustdoJiraIntegration.prototype,
 
       mountTaskWithJiraProject: (task_id, jira_project_id) ->
         check task_id, String
-        check jira_project_id, Match.OneOf String, Number
+        check jira_project_id, Number
         check @userId, String
         return self.mountTaskWithJiraProject task_id, jira_project_id, @userId
 
       unmountTaskWithJiraProject: (justdo_id, jira_project_id) ->
         check justdo_id, String
-        check jira_project_id, Match.OneOf String, Number
+        check jira_project_id, Number
         check @userId, String
         return self.unmountTaskWithJiraProject justdo_id, jira_project_id, @userId
 

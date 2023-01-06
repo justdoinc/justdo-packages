@@ -12,10 +12,14 @@ _.extend JustdoJiraIntegration.prototype,
     return
 
   mountTaskWithJiraProject: (task_id, jira_project_id, cb) ->
+    if _.isString jira_project_id
+      jira_project_id = parseInt jira_project_id, 10
     Meteor.call "mountTaskWithJiraProject", task_id, jira_project_id, cb
     return
 
   unmountTaskWithJiraProject: (justdo_id, jira_project_id, cb) ->
+    if _.isString jira_project_id
+      jira_project_id = parseInt jira_project_id, 10
     Meteor.call "unmountTaskWithJiraProject", justdo_id, jira_project_id, cb
     return
 
