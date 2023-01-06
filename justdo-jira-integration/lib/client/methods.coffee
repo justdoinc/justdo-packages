@@ -31,10 +31,16 @@ _.extend JustdoJiraIntegration.prototype,
     return Meteor.call "getJiraFieldDef", jira_doc_id, cb
 
   getJiraFieldDefByJiraProjectId: (jira_doc_id, jira_project_id, cb) ->
+    if _.isString jira_project_id
+      jira_project_id = parseInt jira_project_id, 10
     return Meteor.call "getJiraFieldDefByJiraProjectId", jira_doc_id, jira_project_id, cb
 
   addCustomFieldPairs: (justdo_id, jira_project_id, field_map, cb) ->
+    if _.isString jira_project_id
+      jira_project_id = parseInt jira_project_id, 10
     return Meteor.call "addCustomFieldPairs", justdo_id, jira_project_id, field_map, cb
 
   deleteCustomFieldPair: (justdo_id, jira_project_id, custom_field_pair_id, cb) ->
+    if _.isString jira_project_id
+      jira_project_id = parseInt jira_project_id, 10
     return Meteor.call "deleteCustomFieldPair", justdo_id, jira_project_id, custom_field_pair_id, cb
