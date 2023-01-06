@@ -156,7 +156,6 @@ _.extend JustdoJiraIntegration,
     "Actual Start": "jd_start_date"
     "Actual End": "jd_end_date"
     "Epic Link": epic_link_custom_field_id
-    [story_point_estimate_custom_field_id]: "Story Points"
 
   # NOTE: If you add or remove any items inside justdo_field_to_jira_field_map,
   # remember to update hardcoded_field_map in both/static.coffee!
@@ -432,21 +431,3 @@ _.extend JustdoJiraIntegration,
               by: user_id
               new_value: "became reporter"
           return user_id
-    jira_story_point:
-      id: story_point_estimate_custom_field_id
-      name: "Story Points"
-      mapper: JustdoJiraIntegration.primitive_field_mappers.number
-      # XXX Currently story point estimate is used as the duration which is not ideal.
-      # XXX The followings are meant for mapping the field value to the actual time estimate field.
-      # We store duration as days, Jira store duration as seconds
-      # A day in Jira is 8 hrs by default
-      # XXX Might need to consider how many hours a day is in both systems.
-      # mapper: (justdo_id, field, destination, req_body) ->
-        # if destination is "jira"
-        #   return "#{field}d"
-        #
-        # if destination is "justdo"
-        #   # Since 1 work day in Jira is 8 hrs, we multiply the time by 3 to get the correct parsing
-        #   # And -1 second since moment will parse 86400 seconds (1 day) into 2 days.
-        #   return moment.utc((field - 1) * 3 * 1000).format "D"
-        # return
