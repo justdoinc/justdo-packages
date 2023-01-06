@@ -12,5 +12,4 @@ _.extend JustdoPushNotifications.prototype,
   # as the base for all the packages based on
   # justdo-package-skeleton >= 0.0.4
   _errors_types:
-    _.extend {}, JustdoHelpers.common_errors_types,
-      "device-id-already-registered-for-user": "Device ID already registered for user"
+    _.extend {}, JustdoHelpers.common_errors_types, {}

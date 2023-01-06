@@ -66,10 +66,12 @@ _.extend JustdoPushNotifications.prototype,
     update = {}
     if action == "register"
       if not (user_doc = Meteor.users.findOne({_id: user_id}, {fields: {"jd_pn_tokens": 1}}))?
-        throw @_error "unknown-user"
+        @logger.info "manageToken called with an unknown user id"
+        return
 
       if _.find(user_doc.jd_pn_tokens, (existing_token) -> existing_token.device_id == token_obj.device_id)?
-        throw @_error "device-id-already-registered-for-user"
+        @logger.debug "Device id already registered for user"
+        return
       
       update.$push =
         jd_pn_tokens: token_obj
