@@ -53,7 +53,9 @@ _.extend JustdoCoreHelpers,
         # We'll fail to stringify if details is a complex object, in such a case we just avoid adding it to the log_message.
         undefined
 
-    @logger.error(log_message)
+    # We used to send a log message here, but it resulted in too much
+    # information
+    # @logger.error(log_message)
 
     return new Meteor.Error(type, message, details)
 
