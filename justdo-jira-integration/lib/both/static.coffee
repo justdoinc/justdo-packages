@@ -1,5 +1,6 @@
 # XXX Hardcoded for now
 sprint_custom_field_id = "customfield_10020"
+jira_cloud_client_id_regex_token = "(\\d|[a-z]|[A-Z])"
 
 _.extend JustdoJiraIntegration,
   project_custom_feature_id: "justdo_jira_integration" # Use underscores
@@ -11,6 +12,9 @@ _.extend JustdoJiraIntegration,
   custom_page_label: "Jira Integration"
 
   projects_collection_jira_doc_id: "justdo_jira:id"
+
+  # Client id of a Jira cloud instance looks like this: 11223344-a1b2-3b33-c444-def123456789
+  jira_cloud_client_id_regex: new RegExp "#{jira_cloud_client_id_regex_token}{8}-(#{jira_cloud_client_id_regex_token}{4}-){3}#{jira_cloud_client_id_regex_token}{12}"
 
   default_issue_type_colors:
     epic: "904ee2"
