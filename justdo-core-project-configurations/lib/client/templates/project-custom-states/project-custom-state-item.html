@@ -18,6 +18,9 @@
         {{/if}}
       </div>
     </div>
+    {{#if $not isCoreState}}
+      <small class="text-uppercase text-secondary">{{getCoreState}}</small>
+    {{/if}}
     <div class="dropdown">
       <div class="custom-state-action" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>

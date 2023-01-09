@@ -110,6 +110,9 @@ Template.project_custom_state_item.helpers
     return APP.collections.Tasks.simpleSchema()._schema.state.grid_values[@state_id]?.core_state == true and 
       _.find(APP.modules.project_page.curProj().getRemovedCustomStates(), (s) => s.state_id == @state_id)?
 
+  getCoreState: ->
+    return JustdoHelpers.getCoreState(@state_id)
+    
   # to ensure no flicker after text update we need to isolate div.custom-state-label-text-active
   textActive: ->
     return """<div class="custom-state-label-text-active">#{@txt}</div>"""
