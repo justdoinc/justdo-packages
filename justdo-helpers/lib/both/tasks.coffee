@@ -28,21 +28,17 @@ _.extend JustdoHelpers,
       return state
     return state.substring(0, prefix_idx)
   
-  isCoreStateMongoQuery: (core_state) ->
-    return {
-      $regex: "^#{core_state}"
-    }
+  isStateOneOfCoreStatesRegex: (core_states) ->
+    if _.isEmpty(core_states)
+      throw new Error("No core states provided")
 
-  getCoreStateMongoQuery: (core_state, options) ->
-    options = _.extend {
-      $ne: false
-    }, options
-    query = @isCoreStateMongoQuery(core_state)
-    if options.$ne
-      query = {$not: query}
-    return {
-      state: query
-    }
+    if _.isString(core_states) and not _.isArray(core_states)
+      return "^#{core_state}"
+
+    check core_states, [String]
+
+    return "^(#{core_states.join("|")})"
   
-  getCoreStateMongoQueries: (core_states, options) ->
-    return core_states.map((core_state) => @getCoreStateMongoQuery(core_state, options))
+  getCoreStateOneOfCoreStatesQuery: (core_states) -> {$regex: isStateOneOfCoreStateRegex(core_states)}
+
+  getCoreStateNotOneOfCoreStatesQuery: (core_states) -> {$regex: {$not: isStateOneOfCoreStateRegex(core_states)}}
