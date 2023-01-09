@@ -45,7 +45,7 @@ Template.justdo_jira_integration_project_config.events
       title: "Configure Jira Integration"
       message: message_template.node
       animate: true
-      className: "bootbox-new-design"
+      className: "bootbox-new-design bootbox-jira-config"
       scrollable: true
 
       onEscape: ->

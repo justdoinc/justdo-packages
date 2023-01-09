@@ -42,6 +42,32 @@ Template.justdo_jira_integration_project_setting.onCreated ->
       selected_jira_project_id_rv: @selected_jira_project_id_rv
     return ret
 
+
+Template.justdo_jira_integration_project_setting.onRendered ->
+  tpl = @
+
+  $(".jira-field-map-project-select")
+    .selectpicker
+      dropupAuto: true,
+      liveSearch: true,
+      size: 6,
+      width: "100%"
+    .on "changed.bs.select", (e) ->
+      selected_jira_project_id = $(e.target).closest(".jira-field-map-project-select").val()
+      tpl.selected_jira_project_id_rv.set parseInt selected_jira_project_id
+
+    .on "show.bs.select", (e) ->
+      setTimeout ->
+        $(e.target).focus()
+      , 0
+
+  $(".jira-field-map-project-select .filter-option-inner-inner")
+    .removeClass("text-body")
+    .addClass("text-primary")
+
+  return
+
+
 Template.justdo_jira_integration_project_setting.helpers
   oAuthLoginLink: -> Template.instance().oAuth_login_link_rv.get()
 
@@ -78,6 +104,9 @@ Template.justdo_jira_integration_project_setting.helpers
       field_pair_id: @id
 
     return ret
+
+  projectSelected: ->
+    return Template.instance().selected_jira_project_id_rv.get()
 
 Template.justdo_jira_integration_project_setting.events
   "click .jira-login-link": (e, tpl) ->
@@ -143,15 +172,29 @@ Template.justdo_jira_integration_project_setting.events
     Blaze.renderWithData Template.justdo_jira_integration_field_map_option_pair, tpl.templateDataForChildTemplate(), node_to_render
     return
 
-  "change .jira-field-map-project-select": (e, tpl) ->
-    selected_jira_project_id = $(e.target).closest(".jira-field-map-project-select").val()
-    tpl.selected_jira_project_id_rv.set parseInt selected_jira_project_id
-    return
-
 Template.justdo_jira_integration_field_map_option_pair.onCreated ->
   _.extend @, @data
   @selected_field_type = new ReactiveVar ""
   @chosen_special_field_type = new ReactiveVar ""
+  return
+
+Template.justdo_jira_integration_field_map_option_pair.onRendered ->
+  $(".pair-field-select")
+    .selectpicker
+      container: ".jira-field-map-container"
+      dropupAuto: true,
+      liveSearch: true,
+      size: 6,
+      width: "100%"
+    .on "changed.bs.select", (e) ->
+      # Autosave changes
+
+    .on "show.bs.select", (e) ->
+      setTimeout ->
+        $(e.target).focus()
+      , 0
+
+
   return
 
 Template.justdo_jira_integration_field_map_option_pair.helpers

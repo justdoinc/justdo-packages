@@ -1,66 +1,260 @@
-.jira-oauth-container
-  border-bottom: 1px solid #EDF1F8
-  padding-bottom: 10px
+.bootbox-jira-config
+  .modal-content
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.18)
+    border: none
+  .modal-dialog
+    padding-top: 24px
+  .modal-body
+    padding: 24px
+  .modal-header,
+  .modal-footer
+    border-color: #EDF1F8
 
-.jira-field-pair
+.jira-field-map-header
+  margin-bottom: 8px
+  margin-top: 20px
   display: flex
-  justify-content: space-around
-  select
-    width: 100%
+  justify-content: space-between
+  align-items: center
 
-.field-name
-  text-align: center
-  width: 100%
+.jira-field-map-header-title,
+.jira-field-map-add-row
+  text-transform: uppercase
+  font-size: 11px
+  font-weight: bold
 
-.arrow
-  text-align: center
-  width: 50%
+.jira-field-map-header-select
+  display: flex
+  align-items: center
+
+.jira-field-map-container
+  .dropdown-menu a
+    padding-left: 4px
+
+.jira-field-map-project-select
+  margin-left: 12px !important
+  width: 180px !important
+  .filter-option-inner-inner
+    font-size: 11px
+    text-transform: uppercase
+    font-weight: bold
+    text-overflow: ellipsis
+  .dropdown-toggle
+    padding: 4px 8px
+    border-color: #dee2e6
+    border-radius: 4px !important
+    &:hover
+      text-decoration: underline
+    &::after
+      display: none
 
 .jira-field-map-add-row
-  // width: 100%
-  // font-size: 25px
-  // text-align: center
   cursor: pointer
-  float: right
+  &:hover
+    text-decoration: underline
 
 .jira-connection-status
   display: flex
   justify-content: space-between
+  position: relative
+  border: 1px dashed
+  border-radius: 4px
+  padding: 8px 12px
+  font-size: 15px
+  color: #3D495B
+
+  .jira-login-link
+    font-size: 11px
+    text-transform: uppercase
+    font-weight: bold
+
+  .jira-connection-status-bg
+    position: absolute
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
+    opacity: 0.1
+    pointer-events: none
+
+.jira-default-fields
+  font-size: 15px
+  margin-top: 24px
+
+  .jira-default-fields-msg
+    text-align: center
+    padding: 8px 60px
+    color: rgba(61, 73, 91, 0.55)
+
+  .jira-default-fields-show
+    cursor: pointer
+    position: relative
+    &:hover
+      text-decoration: underline
+      .jira-default-fields-list
+        display: flex
+
+  .jira-default-fields-list
+    display: none
+    flex-direction: column
+    position: absolute
+    background-color: white
+    border-radius: 4px
+    right: 0
+    bottom: 20px
+    padding: 8px
+    color: #3D495B
+    z-index: 10
+
+    .jira-field-pair
+      display: flex
+      position: relative
+      align-items: center
+      justify-content: center
+      font-size: 14px
+      .field-name
+        white-space: nowrap
+        padding: 4px 8px
+        width: 120px
+        position: relative
+        &.jd
+          margin-right: 4px
+          color: white
+        &.jira
+          .field-name-bg
+            opacity: 0.2
+        .field-name-text
+          position: relative
+          z-index: 2
+        .field-name-bg
+          position: absolute
+          width: 100%
+          height: 100%
+          top: 0
+          left: 0
+          pointer-events: none
+          z-index: 1
+          border-radius: 4px
+
+    .jira-field-pair + .jira-field-pair
+      margin-top: 4px
 
 .jira-field-map-rows-wrapper
-  background-color: #f8f9fa
-  padding: 10px
-
-  div
-    border: 1px solid transparent
-    border-radius: 0.25rem
+  border-radius: 4px
+  height: 240px
+  display: flex
+  flex-direction: column
+  padding: 8px
+  overflow: auto
 
   .jira-field-map-empty-msg
-    text-align: center
+    height: 100%
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 14px
+    color: rgba(49, 69, 99, 0.32)
 
   .custom-jira-field-pair
-    padding: 4px 2px
+    padding: 4px
     width: fit-content
+    border-radius: 4px
     display: flex
     background-color: white
-    .jira-field-map-justdo-field, .jira-field-map-jira-field
-      padding: 0px 5px
-      margin-left: 2.5px
-      margin-right: 2.5px
-      margin-bottom: 0px
+    margin-bottom: 6px
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.08)
+    transition: box-shadow 0.35s
+    position: relative
 
-    .jira-field-map-field-tag, .remove-custom-field-pair
-      top: -14px
-      text-transform: uppercase
-      font-size: 11px
-      background: white
-      font-weight: bold
+    .jira-field-map-justdo-field, .jira-field-map-jira-field
+      position: relative
+
+    .jira-field-map-justdo-field
+      margin-right: 4px
 
     .jira-field-map-field-tag
-      position: absolute
+      top: -10px
       left: 0
+      text-transform: uppercase
+      font-size: 10px
+      background-color: white
+      font-weight: bold
+      padding: 0px 4px
+      z-index: 3
+      display: none
+      position: absolute
+      box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.32)
+      border-radius: 3px
+      color: #3D495B
+
+    .pair-field-select
+      position: relative
+      z-index: 2
+      .dropdown-menu
+        z-index: 10
+        a
+          padding-left: 4px
+      .dropdown-toggle
+        font-size: 14px
+        background: none
+        border: none
+        padding: 4px 12px
+        &::after
+          display: none
+
+    .justdo-field-select
+      .filter-option-inner-inner
+        color: white !important
+
+    .filter-option-inner-inner
+      text-overflow: ellipsis
+      white-space: nowrap
+      max-width: 220px
+
+    .jira-field-map-bg
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      border-radius: 4px
+      z-index: 1
+      &.jira
+        opacity: 0.2
 
     .remove-custom-field-pair
-      position: relative
+      position: absolute
       right: 0
+      top: -6px
       cursor: pointer
+      box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.32)
+      border-radius: 3px
+      background-color: white
+      width: 16px
+      height: 16px
+      stroke-width: 3px
+      z-index: 1
+      right: -12px
+      display: none
+      color: #3D495B
+      transition: transform 0.35s
+      &:hover
+        transform: scale(1.1)
+
+    &:hover
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+
+      .jira-field-map-field-tag, .remove-custom-field-pair
+        display: block
+
+// .set-custom-field-btn-wrapper
+//   display: flex
+//   justify-content: end
+//
+//   .set-custom-field-btn-container
+//     padding: 4px
+//     position: relative
+//     top: -12px
+//     right: 8px
+//     border-radius: 4px
+//     box-shadow: 0 0 8px rgba(0, 0, 0, 0.12)

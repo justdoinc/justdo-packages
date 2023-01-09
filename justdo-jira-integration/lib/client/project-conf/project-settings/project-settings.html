@@ -1,9 +1,9 @@
 <template name="justdo_jira_integration_project_setting">
   <div class="jira-oauth-container">
-    <div class="jira-connection-status alert alert-primary">
+    <div class="jira-connection-status border-primary">
       {{#with serverInfo}}
-          <span>Connected to Jira instance <a href="{{url}}">{{name}}</a></span>
-          <span><a class="jira-login-link" href="{{oAuthLoginLink}}">Reconnect</a></span>
+        <span>Connected to Jira instance <a href="{{url}}">{{name}}</a></span>
+        <span><a class="jira-login-link" href="{{oAuthLoginLink}}">Reconnect</a></span>
       {{else}}
         {{#if oAuthLoginLink}}
           <a class="jira-login-link" href="{{oAuthLoginLink}}">Connect with JIRA</a>
@@ -11,35 +11,28 @@
           <span>Loading...</span>
         {{/if}}
       {{/with}}
+      <div class="jira-connection-status-bg bg-primary"></div>
     </div>
   </div>
 
   {{#with serverInfo}}
     <div class="jira-field-map-container">
-      <span>We have setup the following fields for you. They will apply to all mounted Jira projects and cannot be changed.</span><br>
-
-      <div class="jira-field-pair">
-        <span class="field-name"><b>JustDo Field</b></span><span class="arrow"></span><span class="field-name"><b>Jira Field</b></span>
-      </div>
-
-      {{#each hardcodedFieldsMap}}
-        <div class="jira-field-pair">
-          <span class="field-name">{{justdo_field_name}}</span><span class="arrow">↔</span><span class="field-name">{{jira_field_name}}</span>
-        </div>
-      {{/each}}
-
       <div class="jira-field-map-header">
-        <span>Configure extra field mapping</span>
-        <select class="jira-field-map-project-select">
-          <option value="" disabled selected>Select A Project</option>
-          {{#each mountedJiraProjectsUnderActiveJustdo}}
-            <option value="{{jira_project_id}}">{{jira_project_key}}</option>
-          {{/each}}
-        </select>
-        <span class="jira-field-map-add-row text-uppercase text-primary">+ Field Mapping</span>
+        <div class="jira-field-map-header-select">
+          <span class="jira-field-map-header-title">Field mapping</span>
+          <select class="jira-field-map-project-select">
+            <option value="" disabled selected>Select A Project</option>
+            {{#each mountedJiraProjectsUnderActiveJustdo}}
+              <option value="{{jira_project_id}}">{{jira_project_key}}</option>
+            {{/each}}
+          </select>
+        </div>
+        {{#if projectSelected}}
+          <span class="jira-field-map-add-row text-primary">+ Field Mapping</span>
+        {{/if}}
       </div>
 
-      <div class="jira-field-map-rows-wrapper">
+      <div class="jira-field-map-rows-wrapper bg-light">
         {{#if selectedJiraProjectId}}
           {{#each customFieldsMap}}
             {{> justdo_jira_integration_field_map_option_pair templateDataForChildTemplate}}
@@ -51,8 +44,34 @@
         {{/if}}
       </div>
 
-      <a href="#" class="set-custom-field-pair">Apply</a>
+      <!-- <div class="set-custom-field-btn-wrapper">
+        <div class="set-custom-field-btn-container">
+          <button class="set-custom-field-pair btn btn-primary btn-sm">Apply</button>
+        </div>
+      </div> -->
+    </div>
 
+    <div class="jira-default-fields">
+      <div class="jira-default-fields-msg">
+        We have setup default fields for you. They will apply to all mounted Jira projects and cannot be changed.
+        <span class="jira-default-fields-show">
+          <span class="text-primary">See default fields</span>
+          <div class="jira-default-fields-list shadow-lg">
+            {{#each hardcodedFieldsMap}}
+              <div class="jira-field-pair">
+                <div class="field-name jd">
+                  <div class="field-name-text">{{justdo_field_name}}</div>
+                  <div class="field-name-bg bg-primary"></div>
+                </div>
+                <div class="field-name jira">
+                  <div class="field-name-text">{{jira_field_name}}</div>
+                  <div class="field-name-bg bg-primary"></div>
+                </div>
+              </div>
+            {{/each}}
+          </div>
+        </span>
+      </div>
     </div>
   {{/with}}
 </template>
@@ -60,22 +79,22 @@
 <template name="justdo_jira_integration_field_map_option_pair">
   <div class="custom-jira-field-pair" data-field_pair_id="{{fieldPairId}}">
     {{#if isFieldPairIdExist}}
-      <div class="jira-field-map-justdo-field alert alert-primary">
+      <div class="jira-field-map-justdo-field">
         <div class="jira-field-map-field-tag">Justdo</div>
         {{getSelectedJustdoFieldName}}
+        <div class="jira-field-map-bg jd bg-primary"></div>
       </div>
-
-      <div class="jira-field-map-jira-field alert alert-info">
+      <div class="jira-field-map-jira-field">
         <div class="jira-field-map-field-tag">Jira</div>
         {{getSelectedJiraFieldName}}
+        <div class="jira-field-map-bg jira bg-primary"></div>
       </div>
-
-      <div class="remove-custom-field-pair">X</div>
+      <svg class="jd-icon remove-custom-field-pair"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
     {{else}}
       {{#with fieldsAvaibleForUserMapping}}
-        <div class="jira-field-map-justdo-field alert alert-primary">
+        <div class="jira-field-map-justdo-field">
           <div class="jira-field-map-field-tag">Justdo</div>
-          <select class="justdo-field-select" {{isSelectOptionChosen}}>
+          <select class="justdo-field-select pair-field-select" {{isSelectOptionChosen}}>
             {{#if isSelectOptionChosen}}
               <option value="new_custom_{{getChosenSpecialFieldType}}" data-field_type="{{getChosenSpecialFieldType}}" selected>(New custom field)</option>
             {{else}}
@@ -84,20 +103,20 @@
               {{/each}}
             {{/if}}
           </select>
+          <div class="jira-field-map-bg jd bg-primary"></div>
         </div>
-
-        <div class="jira-field-map-jira-field alert alert-info">
+        <div class="jira-field-map-jira-field">
           <div class="jira-field-map-field-tag">Jira</div>
-          <select class="jira-field-select">
+          <select class="jira-field-select pair-field-select">
             {{#each jira_fields}}
               <option value="{{field_id}}" data-field_type="{{field_type}}">{{field_name}}({{getHumanReadableFieldType field_type}})</option>
             {{else}}
               <option disabled selected>Loading...</option>
             {{/each}}
           </select>
+          <div class="jira-field-map-bg jira bg-primary"></div>
         </div>
       {{/with}}
     {{/if}}
-
   </div>
 </template>
