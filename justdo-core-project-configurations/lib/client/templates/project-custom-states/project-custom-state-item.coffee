@@ -34,9 +34,27 @@ Template.project_custom_state_item.onCreated ->
 Template.project_custom_state_item.onRendered ->
   tpl = @
 
-  @autorun ->
-    Template.currentData()
-    tpl.new_option_color_picker_dropdown_controller = generatePickerDropdown(tpl.data.bg_color)
+  @autorun =>
+    tpl_data = Template.currentData()
+    tpl.new_option_color_picker_dropdown_controller = generatePickerDropdown(tpl_data.bg_color)
+    if tpl.color_picker_change_autorun?
+      tpl.color_picker_change_autorun.stop()
+    Tracker.nonreactive =>
+      tpl.color_picker_change_autorun = Tracker.autorun =>
+        selected_color = tpl.new_option_color_picker_dropdown_controller._selected_color_rv.get()
+        if tpl_data.bg_color != selected_color
+          cur_proj = APP.modules.project_page.curProj()
+          state_id = tpl_data.state_id
+          custom_states = cur_proj.getCustomStates()
+
+          for state in custom_states
+            if state.state_id == state_id
+              state.bg_color = selected_color
+
+          cur_proj.setCustomStates custom_states
+        return
+      return
+
     custom_state_style_node = tpl.find ".custom-state-style"
 
     $(custom_state_style_node).data("color_picker_controller", tpl.new_option_color_picker_dropdown_controller)
@@ -47,21 +65,6 @@ Template.project_custom_state_item.onRendered ->
     $(custom_state_style_node).html color_picker_dropdown_node.node 
 
     return
-
-  @autorun =>
-    Template.currentData()
-    selected_color = tpl.new_option_color_picker_dropdown_controller._selected_color_rv.get()
-
-    if tpl.data.bg_color != selected_color
-      cur_proj = APP.modules.project_page.curProj()
-      state_id = tpl.data.state_id
-      custom_states = cur_proj.getCustomStates()
-
-      for state in custom_states
-        if state.state_id == state_id
-          state.bg_color = selected_color
-
-      cur_proj.setCustomStates custom_states
 
   $(".active-states").sortable
     items: ".project-custom-state-item"
