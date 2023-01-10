@@ -205,15 +205,33 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
       return "disabled"
     return
 
-  getSelectedJustdoFieldName: ->
+  getSelectedJustdoFieldDef: ->
     tpl = Template.instance()
     grid_control = APP.modules.project_page.gridControl()
 
-    return grid_control.getFieldDef(tpl.selected_justdo_field)?.label or "[Removed Field]"
+    ret =
+      field_id: tpl.selected_justdo_field_id
 
-  getSelectedJiraFieldName: ->
+    if (field_def = grid_control.getFieldDef(tpl.selected_justdo_field_id))?
+      ret.field_name = field_def.label
+      return ret
+
+    ret.field_name = "[Removed Field]"
+    return ret
+
+  getSelectedJiraFieldDef: ->
     tpl = Template.instance()
-    return Template.instance().jira_field_def_obj_rv.get()?[tpl.selected_jira_field]?.name or "Loading..."
+
+    ret =
+      field_id: tpl.selected_jira_field_id
+
+    if (field_def = Template.instance().jira_field_def_obj_rv.get()?[tpl.selected_jira_field_id])?
+      ret.field_name = field_def.name
+      tpl.refreshSelectPicker()
+      return ret
+
+    ret.field_name = "Loading..."
+    return ret
 
   isSelectOptionChosen: ->
     if not _.isEmpty Template.instance().chosen_special_field_type.get()

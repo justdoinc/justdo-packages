@@ -79,16 +79,25 @@
 <template name="justdo_jira_integration_field_map_option_pair">
   <div class="custom-jira-field-pair" data-field_pair_id="{{fieldPairId}}">
     {{#if isFieldPairIdExist}}
-      <div class="jira-field-map-justdo-field">
-        <div class="jira-field-map-field-tag">Justdo</div>
-        {{getSelectedJustdoFieldName}}
-        <div class="jira-field-map-bg jd bg-primary"></div>
-      </div>
-      <div class="jira-field-map-jira-field">
-        <div class="jira-field-map-field-tag">Jira</div>
-        {{getSelectedJiraFieldName}}
-        <div class="jira-field-map-bg jira bg-primary"></div>
-      </div>
+      {{#with getSelectedJustdoFieldDef}}
+        <div class="jira-field-map-justdo-field">
+          <div class="jira-field-map-field-tag">Justdo</div>
+            <select class="justdo-field-select pair-field-select" disabled>
+              <option value="{{field_id}}">{{field_name}}</option>
+            </select>
+          <div class="jira-field-map-bg jd bg-primary"></div>
+        </div>
+      {{/with}}
+
+      {{#with getSelectedJiraFieldDef}}
+        <div class="jira-field-map-jira-field">
+          <div class="jira-field-map-field-tag">Jira</div>
+            <select class="jira-field-select pair-field-select" disabled>
+              <option value="{{field_id}}">{{field_name}}</option>
+            </select>
+          <div class="jira-field-map-bg jira bg-primary"></div>
+        </div>
+      {{/with}}
       <svg class="jd-icon remove-custom-field-pair"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
     {{else}}
       {{#with fieldsAvaibleForUserMapping}}
