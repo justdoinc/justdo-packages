@@ -176,25 +176,34 @@ Template.justdo_jira_integration_field_map_option_pair.onCreated ->
   _.extend @, @data
   @selected_field_type = new ReactiveVar ""
   @chosen_special_field_type = new ReactiveVar ""
+  @is_select_picker_initialized = false
+
+  @initSelectPicker = ->
+    $(".pair-field-select")
+      .selectpicker
+        container: ".jira-field-map-container"
+        dropupAuto: true,
+        liveSearch: true,
+        size: 6,
+        width: "100%"
+      .on "changed.bs.select", (e) ->
+        # Autosave changes
+
+      .on "show.bs.select", (e) ->
+        setTimeout ->
+          $(e.target).focus()
+        , 0
+    @is_select_picker_initialized = true
+    return
+  @refreshSelectPicker = ->
+    if @is_select_picker_initialized
+      Meteor.defer => $(".pair-field-select").selectpicker "refresh"
+    return
+
   return
 
 Template.justdo_jira_integration_field_map_option_pair.onRendered ->
-  $(".pair-field-select")
-    .selectpicker
-      container: ".jira-field-map-container"
-      dropupAuto: true,
-      liveSearch: true,
-      size: 6,
-      width: "100%"
-    .on "changed.bs.select", (e) ->
-      # Autosave changes
-
-    .on "show.bs.select", (e) ->
-      setTimeout ->
-        $(e.target).focus()
-      , 0
-
-
+  @initSelectPicker()
   return
 
 Template.justdo_jira_integration_field_map_option_pair.helpers
@@ -274,6 +283,8 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
 
     ret.justdo_fields = JustdoHelpers.localeAwareSortCaseInsensitive ret.justdo_fields, (field) -> field.field_name
     ret.jira_fields = JustdoHelpers.localeAwareSortCaseInsensitive ret.jira_fields, (field) -> field.field_name
+
+    tpl.refreshSelectPicker()
 
     return ret
 
