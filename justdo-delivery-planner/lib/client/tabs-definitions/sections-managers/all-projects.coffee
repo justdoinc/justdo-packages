@@ -176,7 +176,7 @@ _.extend AllProjectsSection.prototype,
         { owner_id: @member_id }
       ]
     query[term_field_id] = { $ne: null }
-    query.$and = JustdoHelpers.getCoreStateMongoQueries(["done", "will-not-do"], {$ne: true})
+    query.state = JustdoHelpers.getCoreStateNotOneOfCoreStatesQuery(["done", "will-not-do"])
     if (project_id = APP.modules?.project_page?.curProj()?.id)?
       query.project_id = project_id
 
