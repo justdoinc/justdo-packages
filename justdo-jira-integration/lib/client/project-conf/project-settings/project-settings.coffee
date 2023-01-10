@@ -171,7 +171,13 @@ Template.justdo_jira_integration_project_setting.events
       JustdoSnackbar.show
         text: e.reason
 
-    APP.justdo_jira_integration.addCustomFieldPairs JD.activeJustdoId(), tpl.selected_jira_project_id_rv.get(), field_pairs
+    APP.justdo_jira_integration.addCustomFieldPairs JD.activeJustdoId(), tpl.selected_jira_project_id_rv.get(), field_pairs, (err) =>
+      if err?
+        @logger.error err
+        return
+      JustdoSnackbar.show
+        text: "Custom field mapping applied. Field values will be brought into JustDo shortly."
+
     return
 
   "click .jira-field-map-add-row": (e, tpl) ->
