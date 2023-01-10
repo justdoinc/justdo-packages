@@ -29,6 +29,7 @@ Template.justdo_jira_integration_project_setting.onCreated ->
   @autorun =>
     if not _.isNumber(selected_jira_project_id = @selected_jira_project_id_rv.get())
       return
+    @jira_field_def_obj_rv.set {}
     jira_doc_id = APP.justdo_jira_integration.getJiraDocIdFromJustdoId JD.activeJustdoId()
 
     APP.justdo_jira_integration.getJiraFieldDefByJiraProjectId jira_doc_id, selected_jira_project_id, (err, field_def) =>
