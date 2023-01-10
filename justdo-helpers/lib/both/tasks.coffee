@@ -20,6 +20,7 @@ _.extend JustdoHelpers,
     return base_task_link
 
   getCoreState: (state) ->
+    # Core states in JustDo can be extended. An extended state will be of the form <core-state>::<arbitrary-value>. Core states are those under the tasks schema for possible options for the state field
     if not state?
       return null
 
@@ -33,12 +34,12 @@ _.extend JustdoHelpers,
       throw new Error("No core states provided")
 
     if _.isString(core_states) and not _.isArray(core_states)
-      return "^#{core_state}"
+      return "^#{core_states}"
 
     check core_states, [String]
 
     return "^(#{core_states.join("|")})"
   
-  getCoreStateOneOfCoreStatesQuery: (core_states) -> {$regex: isStateOneOfCoreStateRegex(core_states)}
+  getCoreStateOneOfCoreStatesQuery: (core_states) -> {$regex: JustdoHelpers.isStateOneOfCoreStatesRegex(core_states)}
 
-  getCoreStateNotOneOfCoreStatesQuery: (core_states) -> {$regex: {$not: isStateOneOfCoreStateRegex(core_states)}}
+  getCoreStateNotOneOfCoreStatesQuery: (core_states) -> {$regex: {$not: JustdoHelpers.isStateOneOfCoreStatesRegex(core_states)}}
