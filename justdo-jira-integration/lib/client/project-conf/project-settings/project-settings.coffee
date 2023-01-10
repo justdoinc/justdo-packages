@@ -106,8 +106,8 @@ Template.justdo_jira_integration_project_setting.helpers
 
   templateDataForChildTemplate: ->
     ret = _.extend Template.instance().templateDataForChildTemplate(),
-      selected_justdo_field: @justdo_field_id
-      selected_jira_field: @jira_field_id
+      selected_justdo_field_id: @justdo_field_id
+      selected_jira_field_id: @jira_field_id
       field_pair_id: @id
 
     return ret
@@ -190,6 +190,35 @@ Template.justdo_jira_integration_field_map_option_pair.onCreated ->
   @selected_field_type = new ReactiveVar ""
   @chosen_special_field_type = new ReactiveVar ""
   @is_select_picker_initialized = false
+  @isFieldMappable = (field_id, field_type, field_def, field_origin) ->
+    if field_origin is "justdo"
+      is_field_already_mapped = @hardcoded_justdo_field_ids.has(field_id) or _.find(@active_custom_field_map_rv.get(), (field_pair) -> field_pair.justdo_field_id is field_id)?
+
+      # Disallow if
+      #   the field is a private field, or
+      #   the field_type isn't supported, or
+      #   the field has already been mapped
+      if not field_type? or is_field_already_mapped or field_id.includes("priv:")
+        return false
+
+      # Allow if the field is editable
+      if field_def.grid_editable_column or field_def.user_editable_column
+        return true
+
+      return false
+
+    if field_origin is "jira"
+      is_field_already_mapped = @hardcoded_jira_field_ids.has(field_id) or _.find(@active_custom_field_map_rv.get(), (field_pair) -> field_pair.jira_field_id is field_id)?
+
+      # Disallow if
+      #   the field_type isn't supported, or
+      #   the field has already been mapped, or
+      #   it's a non-editable field we create (e.g. jd_task_id)
+      if not field_type? or (field_def.name.includes "jd_") or is_field_already_mapped
+        return false
+
+      return true
+    return
 
   @initSelectPicker = ->
     $(".pair-field-select")
@@ -273,14 +302,27 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
       justdo_fields: []
       jira_fields: []
 
-    justdo_field_def = grid_control.getSchemaExtendedWithCustomFields()
+    # Allow only fields that are shown on grid, to prevent user mapping to fields that comes from a disabled plugin.
+    # Change if in future we want to map more than fields on grid (e.g. task pane)
+    field_ids_showable_on_grid = _.union(grid_control.fieldsMissingFromView(), _.map grid_control.getView(), (view) -> view.field)
+
+    schema_extended_with_custom_fields = grid_control.getSchemaExtendedWithCustomFields()
+    justdo_field_def = _.pick schema_extended_with_custom_fields, field_ids_showable_on_grid
     jira_field_def = Template.instance().jira_field_def_obj_rv.get()
 
     # Append JustDo fields
     for field_id, field_def of justdo_field_def
+      # For fields like start_date and end_date,
+      # the columns on grid is actually the formatter instead of the field itself
+      # (e.g. jpu:basket_start_date_formatter and jpu:basket_end_date_formatter).
+      # We want to map value to the underlying field instead of the formatter field.
+      if (underlying_field_id = field_def.grid_column_formatter_options?.underlying_field_id)?
+        field_id = underlying_field_id
+        field_def = schema_extended_with_custom_fields[underlying_field_id]
+
       field_type = APP.justdo_jira_integration.translateJustdoFieldTypeToMappedFieldType field_def
 
-      if not field_type? or (field_def.client_only) or (field_def.grid_column_substitue_field?) or (not field_def.grid_visible_column) or (not field_def.grid_editable_column) or (tpl.hardcoded_justdo_field_ids.has field_id)
+      if not tpl.isFieldMappable field_id, field_type, field_def, "justdo"
         continue
 
       ret.justdo_fields.push {field_id: field_id, field_name: field_def.label, field_type: field_type}
@@ -289,7 +331,7 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
     for field_id, field_def of jira_field_def
       field_type = APP.justdo_jira_integration.translateJiraFieldTypeToMappedFieldType field_def.schema?.type
 
-      if not field_type? or (field_def.name.includes "jd_") or (tpl.hardcoded_jira_field_ids.has field_id)
+      if not tpl.isFieldMappable field_id, field_type, field_def, "jira"
         continue
 
       ret.jira_fields.push {field_id: field_id, field_name: field_def.name, field_type: field_type}
