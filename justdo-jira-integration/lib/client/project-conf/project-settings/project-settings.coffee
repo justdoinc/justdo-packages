@@ -12,8 +12,8 @@ Template.justdo_jira_integration_project_setting.onCreated ->
     return
 
   @hardcoded_field_map = JustdoJiraIntegration.hardcoded_field_map
-  @hardcoded_justdo_field_ids = new Set _.map @hardcoded_fields, (field_obj) -> field_obj.justdo_field_id
-  @hardcoded_jira_field_ids = new Set _.map @hardcoded_fields, (field_obj) -> field_obj.jira_field_id
+  @hardcoded_justdo_field_ids = new Set _.map @hardcoded_field_map, (field_obj) -> field_obj.justdo_field_id
+  @hardcoded_jira_field_ids = new Set _.map @hardcoded_field_map, (field_obj) -> field_obj.jira_field_id
 
   @selected_jira_project_id_rv = new ReactiveVar ""
   @jira_field_def_obj_rv = new ReactiveVar {}
