@@ -16,6 +16,15 @@ Template.justdo_jira_integration_project_setting.onCreated ->
   @hardcoded_jira_field_ids = new Set _.map @hardcoded_field_map, (field_obj) -> field_obj.jira_field_id
 
   @selected_jira_project_id_rv = new ReactiveVar ""
+  @active_custom_field_map_rv = new ReactiveVar []
+  @autorun =>
+    if not _.isNumber (selected_jira_project_id = @selected_jira_project_id_rv.get())
+      @active_custom_field_map_rv.set []
+
+    jira_doc_id = APP.justdo_jira_integration.getJiraDocIdFromJustdoId JD.activeJustdoId()
+    @active_custom_field_map_rv.set APP.justdo_jira_integration.getCustomFieldMapByJiraProjectId jira_doc_id, Template.instance().selected_jira_project_id_rv.get()
+    return
+
   @jira_field_def_obj_rv = new ReactiveVar {}
   @autorun =>
     if not _.isNumber(selected_jira_project_id = @selected_jira_project_id_rv.get())
@@ -40,8 +49,8 @@ Template.justdo_jira_integration_project_setting.onCreated ->
       hardcoded_jira_field_ids: @hardcoded_jira_field_ids
       jira_field_def_obj_rv: @jira_field_def_obj_rv
       selected_jira_project_id_rv: @selected_jira_project_id_rv
+      active_custom_field_map_rv: @active_custom_field_map_rv
     return ret
-
 
 Template.justdo_jira_integration_project_setting.onRendered ->
   tpl = @
@@ -66,7 +75,6 @@ Template.justdo_jira_integration_project_setting.onRendered ->
     .addClass("text-primary")
 
   return
-
 
 Template.justdo_jira_integration_project_setting.helpers
   oAuthLoginLink: -> Template.instance().oAuth_login_link_rv.get()
@@ -93,9 +101,7 @@ Template.justdo_jira_integration_project_setting.helpers
       jira_project_key = APP.justdo_jira_integration.getJiraProjectKeyById jira_doc_id, jira_project_id
       return {jira_project_id, jira_project_key}
 
-  customFieldsMap: ->
-    jira_doc_id = APP.justdo_jira_integration.getJiraDocIdFromJustdoId JD.activeJustdoId()
-    return APP.justdo_jira_integration.getCustomFieldMapByJiraProjectId jira_doc_id, Template.instance().selected_jira_project_id_rv.get()
+  customFieldsMap: -> Template.instance().active_custom_field_map_rv.get()
 
   templateDataForChildTemplate: ->
     ret = _.extend Template.instance().templateDataForChildTemplate(),
