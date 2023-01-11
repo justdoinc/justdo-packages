@@ -376,7 +376,9 @@ Template.justdo_jira_integration_field_map_option_pair.events
     e.preventDefault()
     e.stopPropagation()
 
-    custom_field_pair_id = $(e.target).closest(".custom-jira-field-pair").data "field_pair_id"
+    parent_element = $(e.target).parents ".custom-jira-field-pair"
+    custom_field_pair_id = parent_element.data "field_pair_id"
+
     jira_project_id = tpl.selected_jira_project_id_rv.get()
 
     APP.justdo_jira_integration.deleteCustomFieldPair JD.activeJustdoId(), jira_project_id, custom_field_pair_id
