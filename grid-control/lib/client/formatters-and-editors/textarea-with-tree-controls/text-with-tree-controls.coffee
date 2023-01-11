@@ -357,6 +357,10 @@ GridControl.installFormatter "textWithTreeControls",
       tree_control += """
           <i class="fa fa-fw chat-messages #{chat_classes} slick-prevent-edit" title="Chat messages" aria-hidden="true"></i>
       """
+    if (doc.iem_emails_count > 0)
+       tree_control += """
+            <i class="fa fa-fw fa-envelope slick-prevent-edit" title="#{doc.iem_emails_count} emails" aria-hidden="true"></i>
+        """
 
     if (tasks_file_manager_count = doc[TasksFileManager.files_count_field_id])?
       tasks_file_manager_count = parseInt(tasks_file_manager_count, 10) # Don't open an XSS chance.
