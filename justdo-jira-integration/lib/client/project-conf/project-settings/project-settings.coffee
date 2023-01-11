@@ -22,7 +22,16 @@ Template.justdo_jira_integration_project_setting.onCreated ->
       @active_custom_field_map_rv.set []
 
     jira_doc_id = APP.justdo_jira_integration.getJiraDocIdFromJustdoId JD.activeJustdoId()
-    @active_custom_field_map_rv.set APP.justdo_jira_integration.getCustomFieldMapByJiraProjectId jira_doc_id, Template.instance().selected_jira_project_id_rv.get()
+    custom_field_map = APP.justdo_jira_integration.getCustomFieldMapByJiraProjectId jira_doc_id, Template.instance().selected_jira_project_id_rv.get()
+    # For some reason, re-rendering of justdo_jira_integration_field_map_option_pair template inside {{#each}}
+    # will result in incorrect field pair being removed from the UI, while the server record remains correct.
+    # It's assumed that the {{#each}} handler cannot identify which element of array is being removed.
+    # Adding _id for each array element will help the handler to determine and correctly display the result
+    # See https://www.blazejs.org/api/spacebars.html#Reactivity-Model-for-Each
+    custom_field_map = _.map custom_field_map, (field_pair) ->
+      field_pair._id = field_pair.id
+      return field_pair
+    @active_custom_field_map_rv.set custom_field_map
     return
 
   @jira_field_def_obj_rv = new ReactiveVar {}
