@@ -275,50 +275,51 @@ _.extend JustdoJiraIntegration.prototype,
     catch e
       @logger.error jira_issue_key, parent_path, "failed", e
 
-    if task_fields.jira_issue_reporter?
-      APP.tasks_changelog_manager.logChange
-        field: "jira_issue_reporter"
-        label: "Issue Reporter"
-        change_type: "custom"
-        task_id: created_task_id
-        by: task_fields.jira_issue_reporter
-        new_value: "became reporter"
+    Meteor.defer =>
+      if task_fields.jira_issue_reporter?
+        APP.tasks_changelog_manager.logChange
+          field: "jira_issue_reporter"
+          label: "Issue Reporter"
+          change_type: "custom"
+          task_id: created_task_id
+          by: task_fields.jira_issue_reporter
+          new_value: "became reporter"
 
-    # The following handles adding parent of created task to their sprint/fix version.
-    # Note that add parent is called only when the created task has a different sprint/fix version that the parent task.
-    if @getIssueTypeRank(task_fields.jira_issue_type, jira_project_id) > -1
-      parent_task = @tasks_collection.findOne GridDataCom.helpers.getPathItemId parent_path, {fields: {jira_sprint: 1, jira_fix_version: 1}}
-      if (issue_sprint = task_fields.jira_sprint)? and (issue_sprint isnt parent_task.jira_sprint)
-        # XXX Uncomment for debug info
-        # console.log "-----Adding to sprint-----"
-        # console.log "Task id:", created_task_id
-        # console.log "Sprint:", issue_sprint
-        # if options?.sprints_mountpoints?
-        #   console.log "Sprint mountpoints:", options.sprints_mountpoints
-        if not (sprint_parent_task_id = options?.sprints_mountpoints?[issue_sprint])?
-          active_sprint = @_getActiveSprintOfIssue jira_issue_body.fields[JustdoJiraIntegration.sprint_custom_field_id]
-          if (sprint_id = active_sprint.id or active_sprint.match(/id=\d+/)?[0]?.replace("id=", ""))?
-            sprint_parent_task_id = @tasks_collection.findOne({jira_sprint_mountpoint_id: parseInt sprint_id}, {fields: {_id: 1}})?._id
-        # XXX This if condition catches cases where a sprint is closed and we do not create a task out of it.
-        if sprint_parent_task_id?
-          gc.addParent created_task_id, {parent: sprint_parent_task_id}, perform_as
+      # The following handles adding parent of created task to their sprint/fix version.
+      # Note that add parent is called only when the created task has a different sprint/fix version that the parent task.
+      if @getIssueTypeRank(task_fields.jira_issue_type, jira_project_id) > -1
+        parent_task = @tasks_collection.findOne GridDataCom.helpers.getPathItemId parent_path, {fields: {jira_sprint: 1, jira_fix_version: 1}}
+        if (issue_sprint = task_fields.jira_sprint)? and (issue_sprint isnt parent_task.jira_sprint)
+          # XXX Uncomment for debug info
+          # console.log "-----Adding to sprint-----"
+          # console.log "Task id:", created_task_id
+          # console.log "Sprint:", issue_sprint
+          # if options?.sprints_mountpoints?
+          #   console.log "Sprint mountpoints:", options.sprints_mountpoints
+          if not (sprint_parent_task_id = options?.sprints_mountpoints?[issue_sprint])?
+            active_sprint = @_getActiveSprintOfIssue jira_issue_body.fields[JustdoJiraIntegration.sprint_custom_field_id]
+            if (sprint_id = active_sprint.id or active_sprint.match(/id=\d+/)?[0]?.replace("id=", ""))?
+              sprint_parent_task_id = @tasks_collection.findOne({jira_sprint_mountpoint_id: parseInt sprint_id}, {fields: {_id: 1}})?._id
+          # XXX This if condition catches cases where a sprint is closed and we do not create a task out of it.
+          if sprint_parent_task_id?
+            gc.addParent created_task_id, {parent: sprint_parent_task_id}, perform_as
 
-      if not _.isEmpty(fix_versions = jira_issue_body.fields.fixVersions)
-        for fix_version in fix_versions
-          if not _.contains parent_task.jira_fix_version, fix_version.name
-            # XXX Uncomment for debug info
-            # console.log "-----Adding to fix version-----"
-            # console.log "Task id:", created_task_id
-            # console.log "Fix version:", fix_version.name
-            # if options?.fix_versions_mountpoints?
-            #   console.log "Fix version mountpoints:", options.fix_versions_mountpoints
-            if not (fix_version_parent_task_id = options?.fix_versions_mountpoints?[fix_version.name])?
-              fix_version_parent_task_id = @tasks_collection.findOne({jira_fix_version_mountpoint_id: parseInt fix_version.id}, {fields: {_id: 1}})?._id
-            # XXX This if condition catches cases where a fix version is closed and we do not create a task out of it.
-            if fix_version_parent_task_id?
-              gc.addParent created_task_id, {parent: fix_version_parent_task_id}, perform_as
+        if not _.isEmpty(fix_versions = jira_issue_body.fields.fixVersions)
+          for fix_version in fix_versions
+            if not _.contains parent_task.jira_fix_version, fix_version.name
+              # XXX Uncomment for debug info
+              # console.log "-----Adding to fix version-----"
+              # console.log "Task id:", created_task_id
+              # console.log "Fix version:", fix_version.name
+              # if options?.fix_versions_mountpoints?
+              #   console.log "Fix version mountpoints:", options.fix_versions_mountpoints
+              if not (fix_version_parent_task_id = options?.fix_versions_mountpoints?[fix_version.name])?
+                fix_version_parent_task_id = @tasks_collection.findOne({jira_fix_version_mountpoint_id: parseInt fix_version.id}, {fields: {_id: 1}})?._id
+              # XXX This if condition catches cases where a fix version is closed and we do not create a task out of it.
+              if fix_version_parent_task_id?
+                gc.addParent created_task_id, {parent: fix_version_parent_task_id}, perform_as
 
-    @setJustdoIdandTaskIdToJiraIssue justdo_id, created_task_id, jira_issue_id
+      @setJustdoIdandTaskIdToJiraIssue justdo_id, created_task_id, jira_issue_id
 
     @logger.debug jira_issue_key, "created_task_id", created_task_id
 
