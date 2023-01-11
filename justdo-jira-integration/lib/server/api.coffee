@@ -825,7 +825,6 @@ _.extend JustdoJiraIntegration.prototype,
       fields: relevant_jira_field_ids
     issue_search_cb = (res) =>
       {issues} = res
-      issue_keys_to_fetch_children = []
 
       while (issue = issues.shift())?
         issue_fields = issue.fields
@@ -858,13 +857,10 @@ _.extend JustdoJiraIntegration.prototype,
         @jira_collection.update query, ops
 
         if @getIssueTypeRank(issue_fields?.issuetype?.name, jira_project_id) > -1
-          issue_keys_to_fetch_children.push issue.key
-
-      if not _.isEmpty issue_keys_to_fetch_children
-        jql = """project=#{jira_project_id} and "Parent Link" in (#{issue_keys_to_fetch_children}) and status!=done """
-        client.v2.issueSearch.searchForIssuesUsingJqlPost {jql, maxResults: JustdoJiraIntegration.jql_issue_search_results_limit, fields: relevant_jira_field_ids}
-          .then issue_search_cb
-          .catch (err) -> console.error err
+          jql = """project=#{jira_project_id} and "Parent Link"=#{issue.key} and status!=done """
+          client.v2.issueSearch.searchForIssuesUsingJqlPost {jql, maxResults: JustdoJiraIntegration.jql_issue_search_results_limit, fields: relevant_jira_field_ids}
+            .then issue_search_cb
+            .catch (err) -> console.error err
 
       return
 
