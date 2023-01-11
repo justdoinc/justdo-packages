@@ -266,12 +266,12 @@ _.extend JustdoJiraIntegration.prototype,
 
     _.extend task_fields, @_mapJiraFieldsToJustdoFields justdo_id, {issue: jira_issue_body}
 
-    task_owner_id = task_fields.owner_id or justdo_admin_id
+    perform_as = justdo_admin_id
 
     gc = APP.projects._grid_data_com
     created_task_id = ""
     try
-      created_task_id = gc.addChild parent_path, task_fields, task_owner_id
+      created_task_id = gc.addChild parent_path, task_fields, perform_as
     catch e
       console.error jira_issue_key, parent_path, "failed"
 
@@ -301,7 +301,7 @@ _.extend JustdoJiraIntegration.prototype,
             sprint_parent_task_id = @tasks_collection.findOne({jira_sprint_mountpoint_id: parseInt sprint_id}, {fields: {_id: 1}})?._id
         # XXX This if condition catches cases where a sprint is closed and we do not create a task out of it.
         if sprint_parent_task_id?
-          gc.addParent created_task_id, {parent: sprint_parent_task_id}, task_owner_id
+          gc.addParent created_task_id, {parent: sprint_parent_task_id}, perform_as
 
       if not _.isEmpty(fix_versions = jira_issue_body.fields.fixVersions)
         for fix_version in fix_versions
@@ -316,7 +316,7 @@ _.extend JustdoJiraIntegration.prototype,
               fix_version_parent_task_id = @tasks_collection.findOne({jira_fix_version_mountpoint_id: parseInt fix_version.id}, {fields: {_id: 1}})?._id
             # XXX This if condition catches cases where a fix version is closed and we do not create a task out of it.
             if fix_version_parent_task_id?
-              gc.addParent created_task_id, {parent: fix_version_parent_task_id}, task_owner_id
+              gc.addParent created_task_id, {parent: fix_version_parent_task_id}, perform_as
 
     console.log jira_issue_key, "created_task_id", created_task_id
     @setJustdoIdandTaskIdToJiraIssue justdo_id, created_task_id, jira_issue_id
