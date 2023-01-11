@@ -44,6 +44,11 @@ _.extend JustdoJiraIntegration,
     jira_field_id: "issuetype"
     jira_field_name: "Issue Type"
   ,
+    justdo_field_id: "jira_issue_key"
+    justdo_field_name: "Issue Key"
+    jira_field_id: "issuekey"
+    jira_field_name: "Issue Key"
+  ,
     justdo_field_id: "owner_id"
     justdo_field_name: "Owner"
     jira_field_id: "assignee"
