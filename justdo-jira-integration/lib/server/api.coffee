@@ -273,7 +273,7 @@ _.extend JustdoJiraIntegration.prototype,
     try
       created_task_id = gc.addChild parent_path, task_fields, perform_as
     catch e
-      console.error jira_issue_key, parent_path, "failed"
+      @logger.error jira_issue_key, parent_path, "failed", e
 
     if task_fields.jira_issue_reporter?
       APP.tasks_changelog_manager.logChange
@@ -318,8 +318,10 @@ _.extend JustdoJiraIntegration.prototype,
             if fix_version_parent_task_id?
               gc.addParent created_task_id, {parent: fix_version_parent_task_id}, perform_as
 
-    console.log jira_issue_key, "created_task_id", created_task_id
     @setJustdoIdandTaskIdToJiraIssue justdo_id, created_task_id, jira_issue_id
+
+    @logger.debug jira_issue_key, "created_task_id", created_task_id
+
     return created_task_id
 
   getOAuth1LoginLink: (justdo_id, user_id) ->
