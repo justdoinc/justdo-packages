@@ -6,7 +6,8 @@ _.extend PACK.modules.owners,
 
   _setupOwnersGridControlMiddlewares: ->
     new_item_middleware = (path, new_item_fields, perform_as) ->
-      new_item_fields.owner_id = perform_as
+      if not new_item_fields?.owner_id?
+        new_item_fields.owner_id = perform_as
 
       return true
 
