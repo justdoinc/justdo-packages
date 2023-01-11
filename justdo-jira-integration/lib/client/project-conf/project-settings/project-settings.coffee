@@ -162,8 +162,10 @@ Template.justdo_jira_integration_project_setting.events
       # as the client doesn't allow choosing other fields when Jira option field is selected.
       # Also the server-side logic will handle the option field differently than other fields.
       if (justdo_field_type isnt "string") and (jira_field_type isnt "string") and (justdo_field_type isnt jira_field_type)
+        active_custom_field_map_length = tpl.active_custom_field_map_rv.get()
         JustdoSnackbar.show
-          text: "Field type mismatch at row #{i+1}"
+          # Add the count of existing field map to display the actual row number to user
+          text: "Field type mismatch at row #{active_custom_field_map_length+i+1}"
         return
 
       field_pairs.push {justdo_field_id, jira_field_id, id: Random.id()}
