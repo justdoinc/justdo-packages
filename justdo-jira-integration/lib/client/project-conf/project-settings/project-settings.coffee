@@ -44,6 +44,9 @@ Template.justdo_jira_integration_project_setting.onCreated ->
       @jira_field_def_obj_rv.set jira_field_def_obj
     return
 
+  # Stores field pair row views for deletion after user clicking apply.
+  @manually_added_field_pair_views = []
+
   @templateDataForChildTemplate = ->
     ret =
       hardcoded_justdo_field_ids: @hardcoded_justdo_field_ids
@@ -175,14 +178,20 @@ Template.justdo_jira_integration_project_setting.events
       if err?
         @logger.error err
         return
+
+      for rendered_view in tpl.manually_added_field_pair_views
+        Blaze.remove rendered_view
+
       JustdoSnackbar.show
         text: "Custom field mapping applied. Field values will be brought into JustDo shortly."
+      return
 
     return
 
   "click .jira-field-map-add-row": (e, tpl) ->
     node_to_render = $(".jira-field-map-rows-wrapper")[0]
-    Blaze.renderWithData Template.justdo_jira_integration_field_map_option_pair, tpl.templateDataForChildTemplate(), node_to_render
+    rendered_view = Blaze.renderWithData Template.justdo_jira_integration_field_map_option_pair, tpl.templateDataForChildTemplate(), node_to_render
+    tpl.manually_added_field_pair_views.push rendered_view
     return
 
 Template.justdo_jira_integration_field_map_option_pair.onCreated ->
