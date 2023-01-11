@@ -299,7 +299,9 @@ Template.justdo_jira_integration_field_map_option_pair.helpers
     return
 
   getChosenSpecialFieldType: ->
-    return Template.instance().chosen_special_field_type.get()
+    tpl = Template.instance()
+    tpl.refreshSelectPicker()
+    return tpl.chosen_special_field_type.get()
 
   fieldPairId: ->
     return Template.instance().field_pair_id
