@@ -100,6 +100,10 @@ _.extend JustdoJiraIntegration.prototype,
         allow_unset: false
     return
 
+  _getAllJustdoAdmins: (justdo_id) ->
+    admins = @projects_collection.findOne({_id: justdo_id, "members.is_admin": true}, {fields: {"members.$.user_id": 1}}).members
+    return _.map admins, (admin) -> admin.user_id
+
   _getJustdoAdmin: (justdo_id) ->
     return @projects_collection.findOne({_id: justdo_id, "members.is_admin": true}, {fields: {"members.$.user_id": 1}}).members[0].user_id
 
@@ -754,8 +758,7 @@ _.extend JustdoJiraIntegration.prototype,
     # XXX If the Justdo admin is guarenteed to also be a member of the moutned Jira project,
     # XXX change the following to an array and remove default value.
     # Get an array of user_ids of Jira project members to be inserted in tasks created from Jira issue
-    user_ids_to_be_added_to_child_tasks = new Set()
-    user_ids_to_be_added_to_child_tasks.add justdo_admin_id
+    user_ids_to_be_added_to_child_tasks = new Set @_getAllJustdoAdmins(justdo_id)
     jira_user_emails = @getAllUsersInJiraInstance(@getJiraDocIdFromJustdoId justdo_id).map (user) ->
       user_ids_to_be_added_to_child_tasks.add Accounts.findUserByEmail(user.email)?._id
       return user.email
