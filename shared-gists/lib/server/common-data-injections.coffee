@@ -71,6 +71,7 @@ env_vars_to_expose = [
   "USER_LOGIN_RESUME_TOKEN_TTL_MS"
   "UI_CUSTOMIZATIONS"
   "ALLOW_UPDATES_MODAL"
+  "ORGANIZATIONS"
 ]
 
 if JustdoHelpers.permitAppVersionExposeToClient()
