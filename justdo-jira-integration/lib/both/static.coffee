@@ -29,11 +29,11 @@ _.extend JustdoJiraIntegration,
     jira_field_id: "summary"
     jira_field_name: "Summary"
   ,
-    justdo_field_id: "description"
-    justdo_field_name: "Description"
-    jira_field_id: "description"
-    jira_field_name: "Description"
-  ,
+  #   justdo_field_id: "description"
+  #   justdo_field_name: "Description"
+  #   jira_field_id: "description"
+  #   jira_field_name: "Description"
+  # ,
     justdo_field_id: "state"
     justdo_field_name: "State"
     jira_field_id: "status"

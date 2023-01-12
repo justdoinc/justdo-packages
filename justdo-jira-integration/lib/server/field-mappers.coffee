@@ -1,5 +1,4 @@
-TurnDown = Npm.require "turndown"
-
+# TurnDown = Npm.require "turndown"
 start_date_custom_field_id = "customfield_10015"
 end_date_custom_field_id = "customfield_10036"
 sprint_custom_field_id = "customfield_10020"
@@ -163,20 +162,19 @@ _.extend JustdoJiraIntegration,
     title:
       name: "summary"
       type: "string"
-    description:
-      name: "description"
-      mapper: (justdo_id, field, destination, req_body) ->
-        if destination is "justdo"
-          if _.isString field
-            client = @getJiraClientForJustdo justdo_id
-            {err, res} = @pseudoBlockingJiraApiCallInsideFiber "issues.getIssue", {issueIdOrKey: req_body.issue.key, fields: "description", expand: "renderedFields"}, client.v2
-            return res.renderedFields.description
-          return field
-
-        if destination is "jira"
-          turndown = new TurnDown()
-          return turndown.turndown field
-
+    # description:
+    #   name: "description"
+    #   mapper: (justdo_id, field, destination, req_body) ->
+    #     if destination is "justdo"
+    #       if _.isString field
+    #         client = @getJiraClientForJustdo justdo_id
+    #         {err, res} = @pseudoBlockingJiraApiCallInsideFiber "issues.getIssue", {issueIdOrKey: req_body.issue.key, fields: "description", expand: "renderedFields"}, client.v2
+    #         return res.renderedFields.description
+    #       return field
+    #
+    #     if destination is "jira"
+    #       turndown = new TurnDown()
+    #       return turndown.turndown field
     jira_sprint:
       id: sprint_custom_field_id
       name: "Sprint"
