@@ -366,6 +366,9 @@ _.extend JustdoTasksCollectionsManager.prototype,
                 label: "Starting within 30 days",
                 relative_range: [1, 30]
               }
+              {
+                type: "custom-range"
+              }
             ]
           }
 
@@ -411,6 +414,9 @@ _.extend JustdoTasksCollectionsManager.prototype,
                 id: "ended",
                 label: "Ended",
                 relative_range: [null, -1]
+              }
+              {
+                type: "custom-range"
               }
             ]
           }
