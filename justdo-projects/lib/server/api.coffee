@@ -300,7 +300,9 @@ _.extend Projects.prototype,
     @requireProjectAdmin(project_id, user_id)
 
     archiveProject = (cb) =>
-      @removed_projects_archive_collection.insert @projects_collection.findOne project_id
+      project_doc = @projects_collection.findOne project_id
+      project_doc.removedAt = new Date()
+      @removed_projects_archive_collection.insert project_doc 
 
       raw_projects_collection = @projects_collection.rawCollection()
 
