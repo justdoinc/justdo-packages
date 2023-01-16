@@ -357,6 +357,7 @@ GridControl.installFormatter "textWithTreeControls",
       tree_control += """
           <i class="fa fa-fw chat-messages #{chat_classes} slick-prevent-edit" title="Chat messages" aria-hidden="true"></i>
       """
+    
     if (doc.iem_emails_count > 0)
        tree_control += """
             <i class="fa fa-fw fa-envelope slick-prevent-edit" title="#{doc.iem_emails_count} emails" aria-hidden="true"></i>
