@@ -115,6 +115,16 @@ _.extend PACK.Formatters.textWithTreeControls,
           @logger.debug "tree-control-user-image-clicked event didn't emit due to failure to close active editor"
     }
     {
+      args: ['click', '.justdo-inbound-emails']
+      handler: (e) ->
+        openTaskPaneAndSetTab("justdo-inbound-emails")
+
+        # Update task pane
+        Tracker.flush()
+
+        $(".task-pane-content").scrollTop(0)
+    }
+    {
       args: ['click', '.task-files']
       handler: (e) ->
         openTaskPaneAndSetTab("tasks-file-manager")

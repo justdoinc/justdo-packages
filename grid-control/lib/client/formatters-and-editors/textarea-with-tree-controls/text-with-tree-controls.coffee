@@ -360,7 +360,7 @@ GridControl.installFormatter "textWithTreeControls",
     
     if (doc.iem_emails_count > 0)
        tree_control += """
-            <i class="fa fa-fw fa-envelope-o slick-prevent-edit" title="#{doc.iem_emails_count} emails" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-envelope-o justdo-inbound-emails slick-prevent-edit" title="#{doc.iem_emails_count} emails" aria-hidden="true"></i>
         """
 
     if (tasks_file_manager_count = doc[TasksFileManager.files_count_field_id])?
