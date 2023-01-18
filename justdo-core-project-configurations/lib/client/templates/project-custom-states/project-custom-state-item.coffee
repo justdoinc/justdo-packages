@@ -86,9 +86,10 @@ Template.project_custom_state_item.onRendered ->
   return
 
 Template.project_custom_state_item.onDestroyed ->
+  tpl = @
   if tpl.color_picker_change_autorun?
     tpl.color_picker_change_autorun.stop()
-    
+
 getDefaultTextLabelForState = (state_id) ->
   return APP.collections.Tasks.simpleSchema()._schema.state.grid_values[state_id]?.txt
 
