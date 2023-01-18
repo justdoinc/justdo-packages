@@ -3,7 +3,7 @@ _.extend JustdoBackendCalculatedFields.prototype,
     return
 
   _deferredInit: ->
-    @registerConfigTemplate() # Defined under project-configuration.coffee
+    # @registerConfigTemplate() # Defined under project-configuration.coffee
 
     if @destroyed
       return

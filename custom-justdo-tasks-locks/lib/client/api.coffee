@@ -6,7 +6,7 @@ _.extend CustomJustdoTasksLocks.prototype,
     if @destroyed
       return
 
-    @registerConfigTemplate()
+    # @registerConfigTemplate()
     @setupCustomFeatureMaintainer()
 
     return

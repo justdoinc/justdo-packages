@@ -8,7 +8,7 @@ _.extend CustomJustdoSaveDefaultView.prototype,
     if @destroyed
       return
 
-    @registerConfigTemplate()
+    # @registerConfigTemplate()
     @setupCustomFeatureMaintainer()
 
     return

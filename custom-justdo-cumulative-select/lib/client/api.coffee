@@ -6,7 +6,7 @@ _.extend CustomJustdoCumulativeSelect.prototype,
     if @destroyed
       return
 
-    @registerConfigTemplate()
+    # @registerConfigTemplate()
     @setupCustomFeatureMaintainer()
 
     return

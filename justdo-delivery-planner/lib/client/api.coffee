@@ -8,7 +8,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     @registerTabSwitcherSection() # Moved out of setupCustomFeatureMaintainer once Projects became a builtin feature
 
-    @registerConfigTemplate()
+    # @registerConfigTemplate()
     @registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
 
