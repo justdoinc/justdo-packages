@@ -31,13 +31,13 @@ APP.executeAfterAppLibCode ->
     domain: "project-right-navbar"
     position: 100
 
-  JD.registerPlaceholderItem "plugins-store-button",
-    data:
-      template: "plugins_store_button"
-      template_data: {}
-
-    domain: "project-right-navbar"
-    position: 200
+  # JD.registerPlaceholderItem "plugins-store-button",
+  #   data:
+  #     template: "plugins_store_button"
+  #     template_data: {}
+  #
+  #   domain: "project-right-navbar"
+  #   position: 200
 
   JD.registerPlaceholderItem "project-settings",
     data:
