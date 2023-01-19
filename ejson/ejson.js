@@ -12,13 +12,15 @@ import {
 
 import _cloneDeep from 'lodash/cloneDeep';
 
+const cloneDeep_runtime_warn_limit_threshold_ms = 100;
 const cloneDeep = function() {
   const start = new Date();
   const result = _cloneDeep.call(this, ...arguments);
   const end = new Date();
-  if (end - start > 10) {
-    console.warn("cloneDeep took > 10 ms, object being cloned:");
-    console.warn(arguments[0]);
+  const total = end - start;
+  if (total > cloneDeep_runtime_warn_limit_threshold_ms) {
+    console.warn(`cloneDeep took ${total} ms to clone:`, arguments[0]);
+    console.trace();
   }
   return result;
 }
