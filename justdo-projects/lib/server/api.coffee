@@ -388,6 +388,7 @@ _.extend Projects.prototype,
     # @requireProjectAdmin(project_id, user_id)
 
     project_doc = @removed_projects_archive_collection.findOne project_id
+    delete project_doc.removedAt
 
     if not project_doc?
       throw @_error "unknown-project"
