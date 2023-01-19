@@ -10,8 +10,19 @@ import {
   handleError,
 } from './utils';
 
-import cloneDeep from 'lodash/cloneDeep';
+import _cloneDeep from 'lodash/cloneDeep';
 
+const cloneDeep = function() {
+  const start = new Date();
+  const result = _cloneDeep.call(this, ...arguments);
+  const end = new Date();
+  if (end - start > 10) {
+    console.warn("cloneDeep took > 10 ms, object being cloned:");
+    console.warn(arguments[0]);
+  }
+  return result;
+}
+  
 // Note, exactly the same code is present in:
 // justdo-internal-packages/minimongo/common.js
 let sameTickStatsGetVal = function () {return};
