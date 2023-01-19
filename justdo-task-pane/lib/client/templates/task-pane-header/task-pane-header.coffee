@@ -59,12 +59,15 @@ APP.executeAfterAppLibCode ->
         "text/plain": text
         "text/html": "<a href='#{window.location.href}'>#{text}</a>"
 
+      return
+
     "click .seqid-copy-to-clipboard": (e) ->
       if (seq_id = module.activeItemObj()?.seqId)?
         clipboard.copy
-          "text/plain": seq_id
-          "text/html": "<a href='#{window.location.href}'>#seq_id</a>"
+          "text/plain": "#" + seq_id
+          "text/html": "<a href='#{window.location.href}'>##{seq_id}</a>"
 
+      return
 
   #
   # task_pane_tab
