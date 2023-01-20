@@ -94,26 +94,6 @@ _.extend JustdoJiraIntegration,
   sprint_custom_field_id = "customfield_10020"
   epic_link_custom_field_id = "customfield_10014"
 
-  # XXX On-perm oauth1
-  # epic_link_custom_field_id = "customfield_10102"
-  # task_id_custom_field_id: "customfield_10201"
-  # project_id_custom_field_id: "customfield_10202"
-  # last_updated_custom_field_id: "customfield_10200"
-  # start_date_custom_field_id = "customfield_10203"
-  # end_date_custom_field_id = "customfield_10204"
-  # sprint_custom_field_id = "customfield_10106"
-  # story_point_estimate_custom_field_id = "customfield_10107"
-  #
-  # XXX On-perm oauth2
-  # epic_link_custom_field_id = "customfield_10109"
-  # task_id_custom_field_id: "customfield_10201"
-  # project_id_custom_field_id: "customfield_10202"
-  # last_updated_custom_field_id: "customfield_10200"
-  # start_date_custom_field_id = "customfield_10205"
-  # end_date_custom_field_id = "customfield_10206"
-  # sprint_custom_field_id = "customfield_10108"
-  # story_point_estimate_custom_field_id = "customfield_10111"
-
   start_date_custom_field_id: start_date_custom_field_id
   end_date_custom_field_id: end_date_custom_field_id
   story_point_estimate_custom_field_id: story_point_estimate_custom_field_id
