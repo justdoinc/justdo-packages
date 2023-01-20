@@ -359,8 +359,8 @@ GridControl.installFormatter "textWithTreeControls",
       """
     
     if (doc.iem_emails_count > 0)
-      last_email_time = doc["emails:last_email_time"]
-      last_read = doc["priv:emails:last_read_time"]
+      last_email_time = doc["iem_last_email_time"]
+      last_read = doc["priv:iem_last_read_time"]
       has_unread_emails = last_email_time? and (not last_read? or last_email_time > last_read)
 
       tree_control += """
