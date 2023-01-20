@@ -10,8 +10,8 @@ both = [client, server]
 
 Npm.depends({
   'jira.js': '2.15.3',
-  'oauth-1.0a': '2.2.6',
-  'turndown': '7.1.1'
+  'oauth-1.0a': '2.2.6'//,
+  // 'turndown': '7.1.1'
 });
 
 Package.onUse(function (api) {
