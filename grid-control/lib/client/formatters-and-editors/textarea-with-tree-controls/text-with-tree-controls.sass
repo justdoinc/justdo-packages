@@ -164,10 +164,15 @@
 
 .grid-tree-control-item-icons
   float: right
+  display: flex
+  align-items: center
+  font-size: 14px
 
   .fa
     cursor: pointer
-
+    height: 20px
+    display: flex
+    align-items: center
     &.fa-archive
       cursor: default
 
@@ -176,8 +181,6 @@
   width: 14px
   height: 20px
   border-radius: 2px
-  margin-right: -1px
-  margin-top: -5px
   transition: opacity 0.2s linear
 
   &.jd-icon-context-menu
@@ -204,18 +207,12 @@
   .text-tree-control:hover &
     visibility: visible
 
-.jdt-grid-icon
-  height: 22px
-  line-height: 22px
-  width: 19px
-
 .jdt-stop
   color: red
 
 .chat-messages
   display: inline-block
   position: relative
-  top: -1px
 
 .chat-messages-new,.description-new-updates
   color: #0170d5
