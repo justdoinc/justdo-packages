@@ -212,6 +212,7 @@ APP.executeAfterAppLibCode ->
       $(selector)
         .selectpicker
           container: "body"
+          liveSearch: true,
           size: 6
           width: "100%"
           sanitize: false
@@ -245,6 +246,8 @@ APP.executeAfterAppLibCode ->
 
         # Select the first option, which is the ticket owner, by default
         $("#ticket-assigned-user-id")[0].selectedIndex = 0
+        $("#ticket-assigned-user-id").selectpicker
+          liveSearch: true
         $("#ticket-assigned-user-id").selectpicker("refresh")
         return
 
