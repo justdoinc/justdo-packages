@@ -217,5 +217,12 @@ Package.onUse(function (api) {
   api.addAssets("lib/core-system-updates/v3-132/media/image1.png", client);
   api.addAssets("lib/core-system-updates/v3-132/media/image2.jpg", client);
 
+  // v3_134
+  api.addFiles("lib/core-system-updates/v3-134/v3-134.sass", client);
+  api.addFiles("lib/core-system-updates/v3-134/v3-134.html", client);
+  api.addFiles("lib/core-system-updates/v3-134/v3-134.coffee", both);
+  api.addAssets("lib/core-system-updates/v3-134/media/image1.gif", client);
+  api.addAssets("lib/core-system-updates/v3-134/media/image2.png", client);
+
   api.export("JustdoSystemUpdates", both);
 });
