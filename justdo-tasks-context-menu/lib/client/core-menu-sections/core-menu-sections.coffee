@@ -587,7 +587,9 @@ _.extend JustdoTasksContextMenu.prototype,
 
           return justdo_has_projects
 
-      getAllJustdoActiveProjectsSortedByProjectName = (filter_state) ->
+      getAllJustdoActiveProjectsSortedByProjectName = (filter_state, active_item_id) ->
+        active_item = APP.collections.Tasks.getDocNonReactive(active_item_id)
+
         options = 
           active_only: true
           sort_by: {seqId: -1}
@@ -599,7 +601,19 @@ _.extend JustdoTasksContextMenu.prototype,
 
         project_tasks = APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdo({_id: 1})?._id, options, Meteor.userId())
 
-        return APP.justdo_delivery_planner.excludeProjectsCauseCircularChain project_tasks, JD.activeItemId()
+        project_tasks = APP.justdo_delivery_planner.excludeProjectsCauseCircularChain project_tasks, JD.activeItemId()
+
+        project_tasks = project_tasks.sort((project_task_a, project_task_b) =>
+          is_in_project_a = project_task_a._id of active_item.parents
+          is_in_project_b = project_task_b._id of active_item.parents
+          if is_in_project_a and not is_in_project_b
+            return -1
+          else if not is_in_project_b and is_in_project_b
+            return 1
+          return 0
+        )
+        
+        return project_tasks
         
       addNewParentToTaskId = (task_id, new_parent_id, cb) ->
         module = APP.modules.project_page
@@ -654,9 +668,9 @@ _.extend JustdoTasksContextMenu.prototype,
 
             res = []
 
-            active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(current_section_filter_state)
-
             active_item_id = JD.activeItemId()
+            
+            active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(current_section_filter_state, active_item_id)
 
             if _.isEmpty(_.filter(active_projects_docs, (active_project_doc) -> active_project_doc._id != active_item_id)) # Show only if there are no other projects (filter myself out, in case I am a project)
               res.push
