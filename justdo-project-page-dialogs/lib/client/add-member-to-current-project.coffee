@@ -322,8 +322,10 @@ Template.invite_new_user_dialog.events
         promise = new Promise (resolve, reject) ->
           active_justdo.inviteMember invite_member_option, (err, user_id) ->
             if err?
-              console.error err
-              reject()
+              resolve({
+                error: err
+                email: user.email
+              })
               return
 
             resolve(user_id)
@@ -331,8 +333,36 @@ Template.invite_new_user_dialog.events
         invite_member_promises.push promise
       return
 
-    Promise.all(invite_member_promises).then (invited_members) ->
-      active_justdo.bulkUpdate Array.from(selected_tasks_set), {$addToSet: {users: {$each: invited_members.concat existing_members_ids}}}
+    Promise.all(invite_member_promises).then (results) ->
+      invited_members = []
+      email_not_added_due_to_strict_registration = []
+      email_not_added_due_to_other_reason = []
+      for result in results
+        if (result.error)
+          if (result.error.error == "user-creation-prevented-due-to-strict-registration")
+            email_not_added_due_to_strict_registration.push(result.email)
+          else
+            email_not_added_due_to_other_reason.push(result.email)
+        else
+          invited_members.push result
+      
+      error_msg = ""
+      if email_not_added_due_to_strict_registration.length > 0
+        error_msg += email_not_added_due_to_strict_registration.join(",") + " not added due to restriction by site admin."
+      
+      if email_not_added_due_to_other_reason.length > 0
+        error_msg += email_not_added_due_to_other_reason.join(",") + " not added."
+      
+      if not _.isEmpty(error_msg)
+        JustdoSnackbar.show
+          text: error_msg
+          duration: 5000
+      
+      all_members = invited_members.concat existing_members_ids
+
+      if not _.isEmpty(all_members) and selected_tasks_set.size > 0
+        active_justdo.bulkUpdate Array.from(selected_tasks_set), {$addToSet: {users: {$each: all_members}}}
+
       return
 
     return
