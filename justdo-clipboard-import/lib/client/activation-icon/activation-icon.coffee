@@ -123,7 +123,7 @@ getAvailableFieldTypes = ->
 
     return false
 
-  custom_fields_supported_formatters = ["defaultFormatter", "unicodeDateFormatter", "keyValueFormatter", "calculatedFieldFormatter", JustdoPlanningUtilities.dependencies_formatter_id]
+  custom_fields_supported_formatters = ["defaultFormatter", "unicodeDateFormatter", "keyValueFormatter", "calculatedFieldFormatter", JustdoPlanningUtilities.dependencies_formatter_id, "MultiSelectFormatter"]
 
   for field_id, field of all_fields
     if field_id not in supported_fields_ids and field_id not in excluded_field_ids
@@ -305,7 +305,29 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             else
               task[field_id] = cell_val
 
-          if field_def.type is Number
+          else if field_def.grid_column_formatter == "MultiSelectFormatter"
+            values = cell_val.split(',')
+            option_values = []
+            for value in values
+              value = value.trim().replace(/(\r\n|\n|\r)/gm, "").replace(/\s\s+/g, " ").toLowerCase()
+              val = null
+              for key, defs of field_def.grid_values
+                # we had cases when copy from Excel (even though it was not in the data) added \r\n  and double space... so clearing these out.
+                if defs?.txt?.trim()?.replace(/(\r\n|\n|\r)/gm, "").replace(/\s\s+/g, " ").toLowerCase() == value
+                  val = key
+                  break
+              if val == null
+                showErrorInSnackbarAndRevertState
+                  dialog_state: modal_data.dialog_state
+                  snackbar_message: "Invalid #{field_def.label} value #{value} in line #{line_number} - not a valid option. Import aborted."
+                  snackbar_duration: 15000
+                  problematic_row: line_number
+
+                return false
+              option_values.push val
+            task[field_id] = option_values
+
+          else if field_def.type is Number
             # TODO: Look for: '_available_field_types' under justdo-internal-packages/grid-control-custom-fields/lib/both/grid-control-custom-fields/grid-control-custom-fields.coffee
             # in the future, the information on whether we need to use parseFloat or parseInt() should be taken from the relevant definition.
             original_cell_val = cell_val # For displaying error message
@@ -343,7 +365,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             task[field_id] = cell_val
 
           # If we have a date field, check that the date is formatted properly, and transform to internal format
-          if isDateFieldDef(field_def)
+          else if isDateFieldDef(field_def)
             date_fields_date_format = modal_data.date_fields_date_format.get()
             if date_fields_date_format == "Others" # By not passing date format we let moment.js guess the date format (it's usually correct)
               moment_date = moment.utc cell_val
