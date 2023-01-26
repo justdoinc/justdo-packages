@@ -110,7 +110,8 @@ Template.justdo_clipboard_import_input_selector.events
           $data_cell = $(data_cell)
 
           if (email_address = $data_cell.text().toLowerCase()) and (JustdoHelpers.common_regexps.email.test email_address)
-            if (user_doc = Meteor.users.findOne {"emails.address": email_address}, {fields: JustdoHelpers.avatar_required_fields})
+            email_addr_regex = new RegExp("^#{email_address.replace(/\+/g, "\\+").replace(/\./g, "\\.")}$", "i")
+            if (user_doc = Meteor.users.findOne {"emails.address": email_addr_regex}, {fields: JustdoHelpers.avatar_required_fields})
               clipboard_data[row_index][col_index] =
                 old_value: $data_cell.text()
                 import_value: user_doc._id

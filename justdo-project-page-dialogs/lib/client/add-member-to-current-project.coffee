@@ -45,7 +45,7 @@ Template.invite_new_user_dialog.onCreated ->
       names = []
       email = null
       for input_segment in input_segments
-        input_segment = input_segment.trim()
+        input_segment = input_segment.trim().toLowerCase()
         if input_segment.length == 0
           continue
 
