@@ -25,17 +25,17 @@
       <div class="custom-state-action" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"/></svg>
       </div>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <div class="dropdown-menu jd-p-075 animate slideIn shadow-lg border-0" aria-labelledby="dropdownMenuButton">
         {{#if isHiddenState}}
-          <a class="dropdown-item restore-extended-state" href="#">Restore state</a>
+          <div class="dropdown-item restore-extended-state"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#eye"></use></svg>Restore state</div>
         {{else}}
           {{#if isCoreState}}
-            <a class="dropdown-item create-extended-state" href="#">Create extended state</a>
+            <div class="dropdown-item create-extended-state"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#copy"></use></svg>Create extended state</div>
             {{#if hideableState}}
-            <a class="dropdown-item remove-extended-state" href="#">Hide state</a>
+            <div class="dropdown-item remove-extended-state"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#eye-off"></use></svg>Hide state</div>
           {{/if}}
           {{else}}
-            <a class="dropdown-item remove-extended-state" href="#">Remove extended state</a>
+            <div class="dropdown-item remove-extended-state"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>Remove extended state</div>
           {{/if}}
         {{/if}}
       </div>
