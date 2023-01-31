@@ -7,6 +7,7 @@ _.extend JustdoFiles.prototype,
       return
 
     @registerTaskPaneSection()
+    @setupAvatarSubscription()
 
     return
 
@@ -53,3 +54,7 @@ _.extend JustdoFiles.prototype,
   downloadFile: (file_id) ->
     check file_id, String
     window.location.href = @tasks_files.findOne(file_id).link()
+
+  setupAvatarSubscription: ->
+    Meteor.subscribe "jdfUserAvatars"
+    return
