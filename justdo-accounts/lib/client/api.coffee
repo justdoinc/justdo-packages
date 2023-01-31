@@ -16,7 +16,6 @@ _.extend JustdoAccounts.prototype,
   setFilestackAvatar: (filepicker_blob, policy, cb) ->
     Meteor.call 'accounts_avatars_setFilestackAvatar', filepicker_blob, policy, cb
 
-  uploadNewAvatar: (cb) ->
   # Code taken from image-file-resize NPM package
   # https://github.com/ibnYusrat/image-file-resize/
   resizeAvatarImage: (file, width, height, type) ->
@@ -76,97 +75,149 @@ _.extend JustdoAccounts.prototype,
         reject error
       return
 
+  uploadNewAvatar: (img_file, cb) ->
+    if _.isFunction img_file
+      cb = img_file
+
     if not cb?
       cb = -> return
 
-    if not APP.filestack_base?
-      message = "Filestack not enabled (APP.filestack_base is null)."
+    # Use Filestack for avatar upload if it's enabled
+    if APP.filestack_base?
+      @getAvatarUploadPolicy (error, policy) =>
+        if error?
+          @logger.error error
 
-      @logger.error message
+          return cb(error)
 
-      return cb(message)
-
-    @getAvatarUploadPolicy (error, policy) =>
-      if error?
-        @logger.error error
-
-        return cb(error)
-
-      pick_options = 
-        policy: policy.policy
-        signature: policy.signature
-        storeLocation: 'S3'
-        storePath: @_getAvatarUploadPath Meteor.userId()
-        storeAccess: 'public'
-        maxFiles: 1
-        maxSize: 5 * 1024 * 1024 # 5 mega byte
-        multiple: false
-        mimetype: 'image/*'
-        services: [
-          'COMPUTER',
-          'WEBCAM',
-          'FACEBOOK',
-          'GMAIL',
-          'FLICKR',
-          'GOOGLE_DRIVE',
-          'PICASA',
-          'WEBCAM',
-          'INSTAGRAM',
-          'CONVERT'
-        ]
-        cropForce: true
-        cropRatio: 1
-        cropMin: [40, 40]
-        conversions: ['crop', 'rotate']
-
-      pickFailureCB = (FPError) =>
-        message = FPError.toString()
-
-        @logger.error message
-
-        return cb(message)
-
-      pickSuccessCB = (pickedBlob) =>
-        @logger.debug "Conversion in progress..."
-
-        convert_options = 
-          width: 250,
-          height: 250,
-          fit: 'crop',
-          align: 'faces'
-          format: 'png'
-          compress: true
+        pick_options =
           policy: policy.policy
           signature: policy.signature
+          storeLocation: 'S3'
+          storePath: @_getAvatarUploadPath Meteor.userId()
+          storeAccess: 'public'
+          maxFiles: 1
+          maxSize: 5 * 1024 * 1024 # 5 mega byte
+          multiple: false
+          mimetype: 'image/*'
+          services: [
+            'COMPUTER',
+            'WEBCAM',
+            'FACEBOOK',
+            'GMAIL',
+            'FLICKR',
+            'GOOGLE_DRIVE',
+            'PICASA',
+            'WEBCAM',
+            'INSTAGRAM',
+            'CONVERT'
+          ]
+          cropForce: true
+          cropRatio: 1
+          cropMin: [40, 40]
+          conversions: ['crop', 'rotate']
 
-        store_options =
-          location: "S3"
-          path: @_getAvatarUploadPath Meteor.userId()
-          access: "public"
-
-        convertFailureCB = (FPError) =>
+        pickFailureCB = (FPError) =>
           message = FPError.toString()
+
           @logger.error message
 
           return cb(message)
 
-        convertSuccessCB = (convertedBlob) =>
-          @setFilestackAvatar convertedBlob, policy, (error) =>
-            if error?
-              @logger.error error
+        pickSuccessCB = (pickedBlob) =>
+          @logger.debug "Conversion in progress..."
 
-              cb(error)
+          convert_options =
+            width: 250,
+            height: 250,
+            fit: 'crop',
+            align: 'faces'
+            format: 'png'
+            compress: true
+            policy: policy.policy
+            signature: policy.signature
 
-              # don't return, so we'll still remove the picked blob.
+          store_options =
+            location: "S3"
+            path: @_getAvatarUploadPath Meteor.userId()
+            access: "public"
 
-          filepicker.remove pickedBlob, policy, =>
-            @logger.debug "Removed Original File"
+          convertFailureCB = (FPError) =>
+            message = FPError.toString()
+            @logger.error message
 
-            cb(undefined)
+            return cb(message)
 
-        filepicker.convert pickedBlob, convert_options, store_options, convertSuccessCB, convertFailureCB
+          convertSuccessCB = (convertedBlob) =>
+            @setFilestackAvatar convertedBlob, policy, (error) =>
+              if error?
+                @logger.error error
 
-      APP.filestack_base.filepicker.pick pick_options, pickSuccessCB, pickFailureCB
+                cb(error)
+
+                # don't return, so we'll still remove the picked blob.
+
+            filepicker.remove pickedBlob, policy, =>
+              @logger.debug "Removed Original File"
+
+              cb(undefined)
+
+          filepicker.convert pickedBlob, convert_options, store_options, convertSuccessCB, convertFailureCB
+
+        APP.filestack_base.filepicker.pick pick_options, pickSuccessCB, pickFailureCB
+      return
+
+    if APP.justdo_files?
+      @resizeAvatarImage img_file, 250, 250
+        .then (resized_img) =>
+          try
+            upload = APP.justdo_files.avatars_collection.insert
+              file: resized_img
+              meta:
+                is_avatar: true
+              streams: "dynamic"
+              chunkSize: "dynamic"
+              transport: "ddp"
+            , false
+          catch err
+            @logger.error err
+            cb(err)
+
+          upload.on "end", (err, file_obj) =>
+            if err?
+              @logger.error err
+              cb(err)
+              return
+
+            APP.justdo_files.removeOldAvatars {exclude: file_obj._id}, (err) =>
+              if err?
+                @logger.error err
+                cb(err)
+                return
+
+              user_id = Meteor.userId()
+
+              avatar_link = APP.justdo_files.avatars_collection.findOne({userId: user_id}).link()
+              Meteor.users.update(user_id, {$set: {"profile.profile_pic": avatar_link}})
+              cb(undefined)
+              return
+
+            return
+
+          upload.start()
+
+          return
+        .catch (err) =>
+          @logger.error err
+          return
+
+      return
+
+    message = "Filestack and Justdo Files are not enabled."
+
+    @logger.error message
+
+    return cb(message)
 
   isInitialsAvatarsUpdateNecessary: (old_profile, modified_profile) ->
     if not old_profile? or not modified_profile?
