@@ -17,6 +17,65 @@ _.extend JustdoAccounts.prototype,
     Meteor.call 'accounts_avatars_setFilestackAvatar', filepicker_blob, policy, cb
 
   uploadNewAvatar: (cb) ->
+  # Code taken from image-file-resize NPM package
+  # https://github.com/ibnYusrat/image-file-resize/
+  resizeAvatarImage: (file, width, height, type) ->
+    return new Promise (resolve, reject) ->
+      allowed_formats = [
+        "jpg"
+        "gif"
+        "bmp"
+        "png"
+        "jpeg"
+        "svg"
+      ]
+      try
+        if file.name and file.name.split(".").reverse()[0] and allowed_formats.includes(file.name.split(".").reverse()[0].toLowerCase()) and file.size and file.type
+          img_type = type or "png"
+          img_width = width or "auto"
+          img_height = height or "auto"
+
+          if img_width is "auto" and img_height is "auto"
+            throw new Error("Please define width or height")
+
+          file_name = file.name
+          reader = new FileReader
+          reader.readAsDataURL file
+          reader.onload = (e) ->
+            img = new Image()
+            img.src = e.target.result
+
+            img.onload = ->
+              canvas = document.createElement "canvas"
+
+              if img_width isnt "auto" and img_height isnt "auto"
+                canvas.width = img_width
+                canvas.height = img_height
+              else if img_width isnt "auto"
+                canvas.width = img_width
+                canvas.height = img.height * img_width / img.width
+              else if img_height isnt "auto"
+                canvas.height = img_height
+                canvas.width = img.width * img_height / img.height
+
+              ctx = canvas.getContext("2d")
+              ctx.drawImage img, 0, 0, canvas.width, canvas.height
+
+              ctx.canvas.toBlob (blob) =>
+                resized_img = new File [blob], file_name,
+                  type: "image/#{img_type.toLowerCase()}"
+                  lastModified: Date.now()
+
+                resolve resized_img
+              , "image/png"
+          reader.onerror = (err) -> reject err
+        else
+          reject "File not supported!"
+      catch error
+        console.log "Error while image resize: ", error
+        reject error
+      return
+
     if not cb?
       cb = -> return
 
