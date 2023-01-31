@@ -1,6 +1,9 @@
 Template._loginDropdownAvatarArea.helpers
-  avatarUploadAllowed: ->
-    return APP.accounts.isAvatarUploadEnabled()
+  avatarUploadUsingFilestackAllowed: ->
+    return APP.accounts.getAvatarUploadType() is "filestack"
+
+  avatarUploadUsingJustdoFilesAllowed: ->
+    return APP.accounts.getAvatarUploadType() is "justdo_files"
 
   userHasProfilePic: ->
     return JustdoHelpers.userHasProfilePic(Meteor.user({fields: {"profile.profile_pic": 1}}))

@@ -2,7 +2,7 @@
   {{#with currentUserAvatarFields}}
     <div class="dropdown-avatar d-flex justify-content-center align-items-center">
       <div class="dropdown-user-avatar {{#if $not avatarUploadAllowed}}disable-avatar-upload{{/if}}" style="background-image: url('{{getProfilePic}}')">
-        {{#if avatarUploadAllowed}}
+        {{#if avatarUploadUsingFilestackAllowed}}
           <span class="avatar-edit upload-new-profile-pic">
             {{#if userHasProfilePic}}
               Change
