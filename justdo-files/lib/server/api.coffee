@@ -51,6 +51,10 @@ _.extend JustdoFiles.prototype,
 
       return
 
+    #
+    # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+    # and to drop obsolete indexes (see TASKS_FILES_COLLECTION_TASK_ID_INDEX)
+    #
     return @tasks_files.find({"meta.task_id": task_id}).cursor
 
   _setupOstrioFiles: ->
