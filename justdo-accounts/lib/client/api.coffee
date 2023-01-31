@@ -1,6 +1,14 @@
 _.extend JustdoAccounts.prototype,
-  isAvatarUploadEnabled: ->
-    return not _.isEmpty(APP.env_rv.get()?.FILESTACK_KEY)
+  getAvatarUploadType: ->
+    env_vars = APP.env_rv.get()
+
+    if not _.isEmpty env_vars?.FILESTACK_KEY
+      return "filestack"
+
+    if env_vars?.JUSTDO_FILES_ENABLED is "true"
+      return "justdo_files"
+
+    return
 
   getAvatarUploadPolicy: (cb) ->
     Meteor.call 'accounts_avatars_getAvatarUploadPolicy', cb
