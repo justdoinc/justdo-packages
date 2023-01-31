@@ -92,5 +92,38 @@ _.extend JustdoFiles.prototype,
 
         return
 
+    @avatars_collection = new FilesCollection
+      debug: false
+
+      collectionName: "user_avatars"
+
+      allowClientCode: false
+
+      downloadRoute: "/user-avatars/download"
+
+      protected: (file) ->
+        # A user can download a file only if he is a member of the task to which it is
+        # associated.
+
+        user_id = @user()?._id
+
+        if not user_id?
+          return 403
+
+        return true
+
+      onBeforeUpload: (file) ->
+        if file.size <= self.options.max_file_size
+          return true
+
+        return "Maximum file size is #{self._getMaxFileSizeInMb()}MB"
+
+      onAfterRemove: (files_obj) ->
+        for file_obj in files_obj
+          gfs_id = file_obj.meta.gridfs_id
+
+          self.removeGridFsId(gfs_id)
+
+        return
 
     return

@@ -61,9 +61,7 @@ _.extend JustdoFiles.prototype,
     justdo_files_this = @
     gfs = @gfs
 
-    @tasks_files.onAfterUpload = (file) ->
-      tasks_files_this = @
-
+    files_collection_onAfterUpload = (file) ->
       writestream = gfs.createWriteStream
         filename: file.name
         content_type: file.mime
@@ -76,9 +74,9 @@ _.extend JustdoFiles.prototype,
         try
           gfs_id = gridfs_file._id.toString()
 
-          if (file_obj = tasks_files_this.collection.findOne file._id)?
+          if (file_obj = @collection.findOne file._id)?
             # Link gridfs_id
-            tasks_files_this.collection.update file._id,
+            @collection.update file._id,
               $set:
                 "meta.gridfs_id": gfs_id
                 "meta.upload_date": new Date()
@@ -87,11 +85,11 @@ _.extend JustdoFiles.prototype,
             removed_before_linking = true
             justdo_files_this.removeGridFsId(gfs_id)
         catch e
-          tasks_files_this.collection.remove file._id
+          @collection.remove file._id
         finally
           if not removed_before_linking
             # Remove the temporary file, now that we stored it in mongodb
-            tasks_files_this.unlink tasks_files_this.collection.findOne file._id
+            @unlink @collection.findOne file._id
 
             if (task_id = file?.meta?.task_id)?
               APP.justdo_permissions.runCbInIgnoredPermissionsScope =>
@@ -105,7 +103,7 @@ _.extend JustdoFiles.prototype,
 
       return
 
-    @tasks_files.interceptDownload = (http, file, versionName) =>
+    files_collection_interceptDownload = (http, file, versionName) =>
       gridfs_id = file.meta.gridfs_id
 
       if gridfs_id?
@@ -129,6 +127,16 @@ _.extend JustdoFiles.prototype,
       # Returning true means that we took control (intercepted the behavior), if we
       # got gridfs_id, we started streaming it already, so, we took contorl...
       return gridfs_id?
+
+    @tasks_files.onAfterUpload = files_collection_onAfterUpload
+
+    @tasks_files.interceptDownload = files_collection_interceptDownload
+
+    @avatars_collection.onAfterUpload = files_collection_onAfterUpload
+
+    @avatars_collection.interceptDownload = files_collection_interceptDownload
+
+    return
 
   removeFile: (file_id, user_id) ->
     if not (file_obj = @tasks_files.findOne(file_id))?
