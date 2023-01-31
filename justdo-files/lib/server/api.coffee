@@ -61,10 +61,6 @@ _.extend JustdoFiles.prototype,
 
       return
 
-    #
-    # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-    # and to drop obsolete indexes (see AVATARS_COLLECTION_USERID_INDEX)
-    #
     return @avatars_collection.find({userId: user_id}).cursor
 
   _setupOstrioFiles: ->
@@ -307,10 +303,6 @@ _.extend JustdoFiles.prototype,
     if _.isString exclude
       exclude = [exclude]
 
-    #
-    # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-    # and to drop obsolete indexes (see AVATARS_COLLECTION_USERID_INDEX)
-    #
     @avatars_collection.remove({_id: {$nin: exclude}, userId: user_id})
 
     return
