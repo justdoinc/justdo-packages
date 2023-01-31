@@ -15,4 +15,13 @@ _.extend JustdoFiles.prototype,
         
         self.renameFile file_id, new_filename, @userId
 
+        return
+
+      "jdfRemoveOldAvatars": (options) ->
+        check @userId, String
+
+        self.removeOldAvatars options, @userId
+
+        return
+
     return

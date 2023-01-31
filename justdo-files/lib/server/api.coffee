@@ -304,3 +304,17 @@ _.extend JustdoFiles.prototype,
       storage_type: "justdo-files"
 
     return return_obj
+  removeOldAvatars: (options, user_id) ->
+    if not (exclude = options?.exclude)?
+      exclude = []
+
+    if _.isString exclude
+      exclude = [exclude]
+
+    #
+    # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
+    # and to drop obsolete indexes (see AVATARS_COLLECTION_USERID_INDEX)
+    #
+    @avatars_collection.remove({_id: {$nin: exclude}, userId: user_id})
+
+    return
