@@ -10,6 +10,17 @@
               Upload
             {{/if}}
           </span>
+        {{else if avatarUploadUsingJustdoFilesAllowed}}
+          <label for="upload-new-profile-pic">
+            <span class="avatar-edit">
+              {{#if userHasProfilePic}}
+                Change
+              {{else}}
+                Upload
+              {{/if}}
+            </span>
+          </label>
+          <input id="upload-new-profile-pic" class="upload-new-profile-pic" type="file" />
         {{/if}}
         <div class="dropdown-user-avatar-loading-indicator">
           Uploading

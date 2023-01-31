@@ -17,8 +17,8 @@ activeUploadProcess = ->
   return $(".dropdown-avatar").hasClass("loading")
 
 Template._loginDropdownAvatarArea.events
-  "click .upload-new-profile-pic": ->
-    if not APP.accounts.isAvatarUploadEnabled()
+  "click/change .upload-new-profile-pic": (e) ->
+    if not _.isString(avatar_upload_type = APP.accounts.getAvatarUploadType())
       return
 
     if activeUploadProcess()
@@ -28,7 +28,13 @@ Template._loginDropdownAvatarArea.events
 
     $dropdown_avatar = $(".dropdown-avatar")
     $dropdown_avatar.addClass("loading")
-    APP.accounts.uploadNewAvatar (err) ->
+
+    if avatar_upload_type is "justdo_files"
+      if not (file = e.currentTarget?.files?[0])?
+        $dropdown_avatar.removeClass("loading")
+        return
+
+    APP.accounts.uploadNewAvatar file, (err) ->
       if err?
         APP.logger.error "Upload failed", err
 
