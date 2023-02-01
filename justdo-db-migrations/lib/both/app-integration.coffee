@@ -20,4 +20,7 @@
 # them to be ready, and it is better done here.
 
 if Meteor.isServer
-  APP.justdo_db_migrations = new JustdoDbMigrations()
+  APP.collections.DBMigrationBatchedCollectionUpdates = new Mongo.Collection("batched_collection_updates")
+
+  APP.justdo_db_migrations = new JustdoDbMigrations
+    batched_collection_updates_collection: APP.collections.DBMigrationBatchedCollectionUpdates

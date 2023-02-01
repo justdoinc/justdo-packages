@@ -201,3 +201,24 @@ _.extend JustdoDbMigrations.prototype,
         @logger.error "Failed to halt haltScript of migration script #{migration_script_id}", e
 
     return
+
+  registerBatchedCollectionUpdatesType: (type_id, options) ->
+    # @...types.type_id: {
+    #   collection: 
+    #   meta_data_schema: options.meta_data_schema
+    #   forced_query_fields: (meta_data, collection, docs_ids, modifier, user_id) ->
+    #     return {users: user_id}
+    # }
+
+    return
+
+  registerBatchedCollectionUpdatesJob: (type, meta_data, docs_ids, modifier, user_id) ->
+    # collection._name
+
+
+    return # Will return job_id
+
+  deregisterBatchedCollectionUpdatesJob: (job_id, user_id) ->
+    # Will remove the job but will do NOTHING with items already processed.
+    return
+

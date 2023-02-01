@@ -2,6 +2,12 @@ default_options = {}
 
 options_schema =
   both: {}
+
+  server:
+    batched_collection_updates_collection:
+      type: "skip-type-check"
+      optional: false
+      bind_to_instance: true
   
 # options_schema
 # ==============
