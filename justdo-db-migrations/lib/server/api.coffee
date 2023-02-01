@@ -4,6 +4,8 @@ _.extend JustdoDbMigrations.prototype,
 
     @running_scripts_ids = {}
 
+    @batched_collection_updates_types = {}
+
     return
 
   _deferredInit: ->
@@ -24,6 +26,12 @@ _.extend JustdoDbMigrations.prototype,
 
     # Defined in jobs.coffee
     @_setupJobs()
+
+    # XXX this shouldn't be here
+    APP.justdo_db_migrations.registerBatchedCollectionUpdatesType "grid-bulk-update-from-secure-source", {
+      collection: APP.collections.Tasks
+      use_raw_collection: true
+    }
 
     return
 
@@ -202,7 +210,31 @@ _.extend JustdoDbMigrations.prototype,
 
     return
 
+  batch_collection_updates_type_def_schema: new SimpleSchema
+    collection:
+      type: Mongo.Collection
+    use_raw_collection:
+      type: Boolean
+      optional: true
+    meta_data_schema:
+      type: SimpleSchema
+      optional: true
+    forced_query_fields:
+      type: Object
+      blackbox: true
+      optional: true
+
   registerBatchedCollectionUpdatesType: (type_id, options) ->
+    check type_id, String
+    @batch_collection_updates_type_def_schema.validate(options)
+
+    @batched_collection_updates_types[type_id] = {
+      collection: options.collection
+      use_raw_collection: options.use_raw_collection
+      meta_data_schema: options.meta_data_schema
+      forced_query_fields: options.forced_query_fields
+    }
+
     # @...types.type_id: {
     #   collection: 
     #   meta_data_schema: options.meta_data_schema
@@ -212,13 +244,36 @@ _.extend JustdoDbMigrations.prototype,
 
     return
 
-  registerBatchedCollectionUpdatesJob: (type, meta_data, docs_ids, modifier, user_id) ->
+  registerBatchedCollectionUpdatesJob: (type, meta_data, ids_to_update, modifier, user_id) ->
     # collection._name
+    check type, String
+    check meta_data, Object
+    check ids_to_update, [String]
+    check modifier, Object
+    check user_id, Match.Maybe(String)
 
+    if not (update_type_def = @batched_collection_updates_types[type])?
+      throw @_error "batch-collection-update-type-not-supported"
 
-    return # Will return job_id
+      return
+
+    update_type_def.meta_data_schema?.validate(meta_data)
+
+    job_id = APP.collections.DBMigrationBatchedCollectionUpdates.insert
+      created_by: user_id
+      type: type
+      meta_data: meta_data
+      ids_to_update: ids_to_update
+      modifier: JSON.stringify(modifier)  # modifier cannot be saved to mongodb directly
+      process_status: "pending"
+      process_status_details:
+        processed: 0
+
+    return job_id
 
   deregisterBatchedCollectionUpdatesJob: (job_id, user_id) ->
     # Will remove the job but will do NOTHING with items already processed.
+    APP.collection.DBMigrationBatchedCollectionUpdates.remove job_id
+
     return
 
