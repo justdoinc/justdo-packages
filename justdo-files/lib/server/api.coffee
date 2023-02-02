@@ -236,7 +236,6 @@ _.extend JustdoFiles.prototype,
       name: "justdo-task-#{task.seqId}-files-archive.zip"
       stream: zip.generateNodeStream()
     } 
-      
 
   _setupFilesArchiveRoute: ->
     self = @
@@ -296,6 +295,7 @@ _.extend JustdoFiles.prototype,
       storage_type: "justdo-files"
 
     return return_obj
+
   removeOldAvatars: (options, user_id) ->
     if not (exclude = options?.exclude)?
       exclude = []
