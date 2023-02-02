@@ -210,6 +210,7 @@ _.extend JustdoAccounts.prototype,
           return
         .catch (err) =>
           @logger.error err
+          cb(err)
           return
 
       return
