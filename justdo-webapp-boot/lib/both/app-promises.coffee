@@ -30,6 +30,9 @@ if Meteor.isClient
 
     return
 
+#
+# JustDo Labs
+#
 justdo_labs_features_enabled_async = new Promise (resolve, reject) ->
   APP.getEnv (env) ->
     if env.JUSTDO_LABS_FEATURES_ENABLED is "true"
@@ -64,6 +67,46 @@ APP.isJustdoLabsFeaturesEnabled ->
 
   return
 
+#
+# JustDo Enterprise
+#
+justdo_enterprise_features_enabled_async = new Promise (resolve, reject) ->
+  APP.getEnv (env) ->
+    if env.JUSTDO_ENTERPRISE_FEATURES is "true"
+      resolve(true)
+    else
+      resolve(false)
+
+    return
+
+APP.isJustdoEnterpriseFeaturesEnabled = (cb) ->
+  justdo_enterprise_features_enabled_async.then Meteor.bindEnvironment (enabled) ->
+    if enabled
+      cb()
+
+    # Quietly do nothing
+
+    return
+
+  return
+
+# On client we also provide a reactive var to get JustDo Enterprise state
+if Meteor.isClient
+  APP.justdo_enterprise_features_enabled_rv = new ReactiveVar false
+
+  APP.isJustdoEnterpriseFeaturesEnabled ->
+    APP.justdo_enterprise_features_enabled_rv.set true
+
+    return
+
+APP.isJustdoEnterpriseFeaturesEnabled ->
+  APP.logger.debug("JustDo Enterprise features are enabled - begin their init")
+
+  return
+
+#
+# Development Mode
+#
 development_mode_enabled_async = new Promise (resolve, reject) ->
   APP.getEnv (env) ->
     if env.DEVELOPMENT_MODE is "true"
@@ -84,7 +127,7 @@ APP.isDevelopmentModeEnabled = (cb) ->
 
   return
 
-# On client we also provide a reactive var to get justdo labs state
+# On client we also provide a reactive var to get justdo development mode state
 if Meteor.isClient
   APP.development_mode_enabled_rv = new ReactiveVar false
 
