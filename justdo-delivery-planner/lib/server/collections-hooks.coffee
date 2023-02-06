@@ -16,9 +16,7 @@ _.extend JustdoDeliveryPlanner.prototype,
             (modifier.$set.archived == null and doc[JustdoDeliveryPlanner.task_is_archived_project_field_name] == true)
           modifier.$set[JustdoDeliveryPlanner.task_is_archived_project_field_name] = not doc[JustdoDeliveryPlanner.task_is_archived_project_field_name]
       else if _.has(modifier.$set, JustdoDeliveryPlanner.task_is_archived_project_field_name)
-        if modifier.$set[JustdoDeliveryPlanner.task_is_archived_project_field_name] == true and not doc.archived?
-          modifier.$set.archived = new Date()
-        else if modifier.$set[JustdoDeliveryPlanner.task_is_archived_project_field_name] == false and doc.archived?
+        if modifier.$set[JustdoDeliveryPlanner.task_is_archived_project_field_name] == false and doc.archived?
           modifier.$set.archived = null
 
       return
