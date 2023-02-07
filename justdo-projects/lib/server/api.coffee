@@ -225,7 +225,7 @@ _.extend Projects.prototype,
       conf: Match.Maybe(Object)
       custom_fields: Match.Maybe([Object])
       derive_custom_fields_and_grid_views_from_project_id: Match.Maybe(String)
-      org_id: Match.maybe(String)
+      org_id: Match.Maybe(String)
 
     if options.custom_fields? and options.derive_custom_fields_and_grid_views_from_project_id?
       throw @_error "invalid-parameters", "Options custom_fields and derive_custom_fields_and_grid_views_from_project_id cannot exist at the same time"
