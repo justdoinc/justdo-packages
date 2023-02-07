@@ -269,6 +269,14 @@ _.extend Projects.prototype,
           user_id: 1
       .fetch()
 
+    org_id = options.org_id
+    if APP.justdo_orgs?
+      # Throws error if the project_doc doesn't pass the validations inside performNewProjectCheck()
+      APP.justdo_orgs.requireUserAllowedToCreateJustDo options.org_id, user_id
+      project.org_id = org_id
+    else if org_id?
+      throw @_error "orgs-not-enabled", "Organization not enabled but org_id is provided"
+
     project_id = @projects_collection.insert project
     
     if grid_views?
