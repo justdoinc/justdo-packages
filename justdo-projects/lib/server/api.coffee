@@ -572,6 +572,7 @@ _.extend Projects.prototype,
     # Find project and inviting user
     #
     project_doc = @projects_collection.findOne project_id
+    justdo_orgs_enabled = APP.justdo_orgs? and (org_id = project_doc.org_id)?
 
     if not project_doc?
       throw @_error "unknown-project"
@@ -579,6 +580,9 @@ _.extend Projects.prototype,
     if inviting_user_id?
       if not @isAdminOfProjectDoc(project_doc, inviting_user_id)
         throw @_error "admin-permission-required"
+
+      if justdo_orgs_enabled
+        APP.justdo_orgs.requireUserIsOrgAdmin org_id, inviting_user_id
 
       # We assume that if we didn't get reject from @isAdminOfProjectDoc
       # inviting_user_id exists, no need to check existence
@@ -624,6 +628,9 @@ _.extend Projects.prototype,
       # Check whether already a project member
       if invited_user_id in @getMembersIdsFromProjectDoc(project_doc)
         throw @_error "member-already-exists"
+
+    if justdo_orgs_enabled
+      APP.justdo_orgs.inviteMembers org_id, invited_user_id, inviting_user_id
 
     #
     # Find whether user enrollment process completed already
