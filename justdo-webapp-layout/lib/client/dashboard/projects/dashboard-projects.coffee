@@ -11,10 +11,16 @@ APP.executeAfterAppLibCode ->
 
   Template.dashboard_projects.helpers
     projects: ->
+      if (org_url_name = Router.current().org_url_name)?
+        org_id = APP.collections.Orgs.findOne({url_name: org_url_name}, {fields: {_id: 1}})?._id
+
       projects_search_input_rv = Template.instance().projects_search_input_rv.get()
       default_title = JustdoHelpers.getCollectionSchemaForField(APP.collections.Projects, "title")?.defaultValue
 
-      projects = APP.collections.Projects.find({}, {sort: {createdAt: 1}, fields: {_id: 1, title: 1, members: 1}}).fetch()
+      query = {}
+      if _.isString org_id
+        query.org_id = org_id
+      projects = APP.collections.Projects.find(query, {sort: {createdAt: 1}, fields: {_id: 1, title: 1, members: 1}}).fetch()
 
       modified_projects = _.map projects, (project) ->
         if not project.title? or project.title == ""
@@ -39,7 +45,11 @@ APP.executeAfterAppLibCode ->
 
   Template.dashboard_projects.events
     "click .create-project-js": ->
-      APP.projects.createNewProject({}, (err, project_id) ->
+      options = {}
+      if (org_url_name = Router.current().org_url_name)?
+        options.org_id = APP.collections.Orgs.findOne({url_name: org_url_name}, {fields: {_id: 1}})?._id
+
+      APP.projects.createNewProject(options, (err, project_id) ->
         if err?
           JustdoSnackbar.show
             text: err.reason
