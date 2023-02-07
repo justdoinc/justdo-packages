@@ -185,30 +185,30 @@ Package.onUse(function (api) {
   // api.addAssets("lib/core-system-updates/v3-122-0/media/image1.gif", client);
   // api.addAssets("lib/core-system-updates/v3-122-0/media/image2.gif", client);
 
-  // v3_126_x
-  api.addFiles("lib/core-system-updates/v3-126-x/v3-126-x.sass", client);
-  api.addFiles("lib/core-system-updates/v3-126-x/v3-126-x.html", client);
-  api.addFiles("lib/core-system-updates/v3-126-x/v3-126-x.coffee", both);
-  api.addAssets("lib/core-system-updates/v3-126-x/media/image1.gif", client);
+  // // v3_126_x
+  // api.addFiles("lib/core-system-updates/v3-126-x/v3-126-x.sass", client);
+  // api.addFiles("lib/core-system-updates/v3-126-x/v3-126-x.html", client);
+  // api.addFiles("lib/core-system-updates/v3-126-x/v3-126-x.coffee", both);
+  // api.addAssets("lib/core-system-updates/v3-126-x/media/image1.gif", client);
 
-  // v3_126_13
-  api.addFiles("lib/core-system-updates/v3-126-13/v3-126-13.html", client);
-  api.addFiles("lib/core-system-updates/v3-126-13/v3-126-13.coffee", both);
-  api.addAssets("lib/core-system-updates/v3-126-13/media/image1.gif", client);
-  api.addAssets("lib/core-system-updates/v3-126-13/media/image2.png", client);
+  // // v3_126_13
+  // api.addFiles("lib/core-system-updates/v3-126-13/v3-126-13.html", client);
+  // api.addFiles("lib/core-system-updates/v3-126-13/v3-126-13.coffee", both);
+  // api.addAssets("lib/core-system-updates/v3-126-13/media/image1.gif", client);
+  // api.addAssets("lib/core-system-updates/v3-126-13/media/image2.png", client);
 
-  // v3_128_0
-  api.addFiles("lib/core-system-updates/v3-128-0/v3-128-0.sass", client);
-  api.addFiles("lib/core-system-updates/v3-128-0/v3-128-0.html", client);
-  api.addFiles("lib/core-system-updates/v3-128-0/v3-128-0.coffee", both);
-  api.addAssets("lib/core-system-updates/v3-128-0/media/image1.gif", client);
+  // // v3_128_0
+  // api.addFiles("lib/core-system-updates/v3-128-0/v3-128-0.sass", client);
+  // api.addFiles("lib/core-system-updates/v3-128-0/v3-128-0.html", client);
+  // api.addFiles("lib/core-system-updates/v3-128-0/v3-128-0.coffee", both);
+  // api.addAssets("lib/core-system-updates/v3-128-0/media/image1.gif", client);
 
-  // v3_130_x
-  api.addFiles("lib/core-system-updates/v3-130-x/v3-130-x.sass", client);
-  api.addFiles("lib/core-system-updates/v3-130-x/v3-130-x.html", client);
-  api.addFiles("lib/core-system-updates/v3-130-x/v3-130-x.coffee", both);
-  api.addAssets("lib/core-system-updates/v3-130-x/media/image1.jpg", client);
-  api.addAssets("lib/core-system-updates/v3-130-x/media/image2.gif", client);
+  // // v3_130_x
+  // api.addFiles("lib/core-system-updates/v3-130-x/v3-130-x.sass", client);
+  // api.addFiles("lib/core-system-updates/v3-130-x/v3-130-x.html", client);
+  // api.addFiles("lib/core-system-updates/v3-130-x/v3-130-x.coffee", both);
+  // api.addAssets("lib/core-system-updates/v3-130-x/media/image1.jpg", client);
+  // api.addAssets("lib/core-system-updates/v3-130-x/media/image2.gif", client);
 
   // v3_132
   api.addFiles("lib/core-system-updates/v3-132/v3-132.sass", client);
