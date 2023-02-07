@@ -34,6 +34,10 @@ _.extend Projects.prototype,
 
       "removed_members.user_id": 1
 
+    # XXX Should use "APP.justdo_org?" once dependency issue is resolved.
+    if process.env.ORGANIZATIONS is "true"
+      non_guests_published_fields.org_id = 1
+
     Meteor.publish "userProjects", (guest_projects=false) -> # Note the use of -> not =>, we need @userId
       if not @userId?
         this.ready() # no projects for anonymous
