@@ -260,3 +260,13 @@ _.extend JustdoHelpers,
       return true
 
     return user_doc.all_emails_verified or false
+  
+  getUserByEmail: (email, options) ->
+    if (Meteor.isServer)
+      return Accounts.findUserByEmail(email, options)
+    else
+      email_addr_regex = new RegExp("^#{JustdoHelpers.escapeRegExp(email)}$", "i")
+      return Meteor.users.findOne({
+        "emails.address": email_addr_regex
+      }, options)
+      
