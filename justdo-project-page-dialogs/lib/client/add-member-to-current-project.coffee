@@ -335,29 +335,45 @@ Template.invite_new_user_dialog.events
 
     Promise.all(invite_member_promises).then (results) ->
       invited_members = []
-      email_not_added_due_to_strict_registration = []
-      email_not_added_due_to_other_reason = []
+      emails_not_added_due_to_strict_registration = []
+      emails_not_added_due_to_other_reason = []
       for result in results
         if (result.error)
           if (result.error.error == "user-creation-prevented-due-to-strict-registration")
-            email_not_added_due_to_strict_registration.push(result.email)
+            emails_not_added_due_to_strict_registration.push(result.email)
           else
-            email_not_added_due_to_other_reason.push(result.email)
+            emails_not_added_due_to_other_reason.push({
+              error: result.error.error 
+              email: result.email
+            })
         else
           invited_members.push result
       
-      error_msg = ""
-      if email_not_added_due_to_strict_registration.length > 0
-        error_msg += email_not_added_due_to_strict_registration.join(",") + " not added due to restriction by site admin."
-      
-      if email_not_added_due_to_other_reason.length > 0
-        error_msg += email_not_added_due_to_other_reason.join(",") + " not added."
-      
-      if not _.isEmpty(error_msg)
-        JustdoSnackbar.show
-          text: error_msg
-          duration: 5000
-      
+      if emails_not_added_due_to_strict_registration.length > 0 or emails_not_added_due_to_other_reason.length > 0
+        invite_members_failed_tpl =
+          JustdoHelpers.renderTemplateInNewNode Template.invite_members_failed, {
+            emails_not_added_due_to_strict_registration: if emails_not_added_due_to_strict_registration.length > 0 then emails_not_added_due_to_strict_registration else null,
+            emails_not_added_due_to_other_reason: if emails_not_added_due_to_other_reason.length > 0 then emails_not_added_due_to_other_reason else null
+          }
+
+        bootbox.dialog
+          title: "Some of the members are not invited"
+          message: invite_members_failed_tpl.node
+          animate: false
+          className: "bootbox-new-design"
+
+          onEscape: ->
+            return true
+
+          buttons:
+            close:
+              label: "Close"
+
+              className: "btn-primary"
+
+              callback: ->
+                return true
+
       all_members = invited_members.concat existing_members_ids
 
       if not _.isEmpty(all_members) and selected_tasks_set.size > 0
