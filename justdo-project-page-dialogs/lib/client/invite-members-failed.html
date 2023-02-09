@@ -1,0 +1,22 @@
+<template name="invite_members_failed">
+  {{#if emails_not_added_due_to_strict_registration}}
+    <div>
+      <h6>The current Registrable Users configuration in the Site Admin prevented the following users addition:</h6>
+      <ul>
+        {{#each emails_not_added_due_to_strict_registration}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+  {{#if emails_not_added_due_to_other_reason}}
+    {{#each emails_not_added_due_to_other_reason}}
+      <div>
+        <h6>The following user couldn't be added. Error: {{this.error}}</h6>
+        <ul>
+          <li>{{this.email}}</li>
+        </ul>
+      </div>
+    {{/each}}
+  {{/if}}
+</template>
