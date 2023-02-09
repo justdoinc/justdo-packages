@@ -150,6 +150,13 @@ _.extend Projects.prototype,
         # Validate options
         if not project_id?
           throw self._error "missing-argument", "You must specify the list of project_ids you want to subscribe to"
+
+        try
+          self.emit "pre-setup-grid-publication", project_id
+        catch err
+          publish_this.error err
+          return
+
         check project_id, String
         check get_parents_as_string, Match.Maybe(Boolean)
         check sync, Match.Maybe(Date)
