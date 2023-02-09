@@ -93,6 +93,15 @@ _.extend Projects.prototype,
   requireProjectTasksSubscription: (project_id, force_init_payload_over_ddp) ->
     self = @
 
+    try
+      @emit "pre-subscribe-project-tasks", project_id
+    catch err
+      console.error err
+      JustdoSnackbar.show
+        text: err.reason
+        duration: 0
+      return
+
     # Returns .ready() which is a proxy to the subscription .ready()
     # and .stop() which release the need for the subscription, once all the resources
     # that called requireProjectTasksSubscription() calls stop() or, if reactive resources,
