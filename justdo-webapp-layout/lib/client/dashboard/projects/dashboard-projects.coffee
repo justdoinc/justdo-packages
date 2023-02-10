@@ -45,11 +45,7 @@ APP.executeAfterAppLibCode ->
 
   Template.dashboard_projects.events
     "click .create-project-js": ->
-      options = {}
-      if (org_url_name = Router.current().org_url_name)?
-        options.org_id = APP.collections.Orgs.findOne({url_name: org_url_name}, {fields: {_id: 1}})?._id
-
-      APP.projects.createNewProject(options, (err, project_id) ->
+      APP.projects.createNewProject({}, (err, project_id) ->
         if err?
           JustdoSnackbar.show
             text: err.reason

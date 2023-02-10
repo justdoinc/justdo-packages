@@ -4,6 +4,8 @@ _.extend Projects.prototype,
     if not options?
       options = {}
 
+    @emit "pre-create-new-project", options
+
     if Meteor.userId()?
       Meteor.call "createNewProject", options, (err, project_id) ->
         cb(err, project_id)
