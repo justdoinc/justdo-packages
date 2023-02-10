@@ -2,6 +2,9 @@ APP.executeAfterAppLibCode ->
   Template.dashboard_projects.onCreated ->
     @projects_search_input_rv = new ReactiveVar null
 
+    @custom_projects_dashboard_header_rv = @data.custom_projects_dashboard_header_rv
+    @custom_projects_query_rv = @data.custom_projects_query_rv
+
     return
 
   Template.dashboard_projects.onRendered ->
@@ -10,16 +13,20 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.dashboard_projects.helpers
-    projects: ->
-      if (org_url_name = Router.current().org_url_name)?
-        org_id = APP.collections.Orgs.findOne({url_name: org_url_name}, {fields: {_id: 1}})?._id
+    getHeader: ->
+      default_header = "JustDos"
+      if (custom_header = Template.instance().custom_projects_dashboard_header_rv.get())?
+        return custom_header
+      return default_header
 
-      projects_search_input_rv = Template.instance().projects_search_input_rv.get()
+    projects: ->
+      tpl = Template.instance()
+
+      projects_search_input_rv = tpl.projects_search_input_rv.get()
       default_title = JustdoHelpers.getCollectionSchemaForField(APP.collections.Projects, "title")?.defaultValue
 
-      query = {}
-      if _.isString org_id
-        query.org_id = org_id
+      query = _.extend {}, tpl.custom_projects_query_rv.get()
+
       projects = APP.collections.Projects.find(query, {sort: {createdAt: 1}, fields: {_id: 1, title: 1, members: 1}}).fetch()
 
       modified_projects = _.map projects, (project) ->
