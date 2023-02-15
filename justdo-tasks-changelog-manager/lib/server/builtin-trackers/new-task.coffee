@@ -9,7 +9,7 @@ _.extend PACK.builtin_trackers,
         created_doc = _.extend {}, doc
         keys_to_remove = ["_id", "users", "users_updated_at"]
         for key, val of created_doc
-          if /^priv:/.test(key) or /^_raw/.test(key)
+          if /^priv:/.test(key) or /^_raw/.test(key) or key in Projects.tasks_forbidden_fields
             keys_to_remove.push key
         for key in keys_to_remove
           delete created_doc[key]
