@@ -4,12 +4,6 @@ APP.executeAfterAppLibCode ->
   main_module = APP.modules.main
   project_page_module = APP.modules.project_page
 
-  Template.header.onCreated ->
-    if orgsEnabled()
-      @show_projects_without_org = new ReactiveVar false
-
-    return
-
   Template.header.helpers
     globalRightNavbarItems: ->
       return JD.getPlaceholderItems("global-right-navbar").reverse() # We reverse to have consistent order with the float right behaviour of the project-right-navbar
@@ -24,22 +18,12 @@ APP.executeAfterAppLibCode ->
 
     orgsEnabled: -> orgsEnabled()
 
-    isOrgSelected: (org_id) ->
-      if org_id is APP.justdo_orgs.getActiveOrgId()
-        return "selected"
-      return
-
-    orgs: -> APP.collections.Orgs.find({locked: null}, {fields: {_id: 1, name: 1}}).fetch()
-
     projects: ->
       tpl = Template.instance()
 
       query = {}
       if orgsEnabled()
-        if tpl.show_projects_without_org.get()
-          query.org_id = null
-        else
-          query.org_id = APP.justdo_orgs.getActiveOrgId()
+        query.org_id = APP.justdo_orgs.getActiveOrgId()
 
       return APP.collections.Projects.find(query, {fields: {_id: 1, title: 1}, sort: {createdAt: 1}}).fetch()
 
@@ -87,18 +71,3 @@ APP.executeAfterAppLibCode ->
 
     "click .project-item, click .drawer .drawer-footer a, click .pages-section a, click .drawer-backdrop":(e, tmpl) ->
       $(".global-wrapper").removeClass "drawer-open"
-
-    "change .orgs-select": (e, tpl) ->
-      selected_org_id = $(".orgs-select option:selected").val()
-
-      if selected_org_id is "create-org"
-        APP.justdo_orgs.createOrg()
-        return
-
-      if _.isEmpty selected_org_id
-        tpl.show_projects_without_org.set true
-        return
-
-      tpl.show_projects_without_org.set false
-      APP.justdo_orgs?.setActiveOrgId selected_org_id
-      return

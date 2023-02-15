@@ -36,13 +36,7 @@
     <div class="projects-header text-primary font-weight-bold d-flex justify-content-between align-items-center">
       JustDos
       {{#if orgsEnabled}}
-        <select class="orgs-select" name="">
-          {{#each orgs}}
-            <option value="{{_id}}" {{isOrgSelected _id}}>{{name}}</option>
-          {{/each}}
-            <option value="">*without orgs*</option>
-            <option value="create-org">(Create an Org)</option>
-        </select>
+        {{> orgs_select_dropdown show_create_org_option=true}}
       {{/if}}
       <svg class="create-new-project text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-create"/></svg>
     </div>
