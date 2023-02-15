@@ -76,7 +76,7 @@ Template.task_pane_task_changelog_record.helpers
   oldValue: -> APP.tasks_changelog_manager.getHumanReadableOldValue @
 
   filtered: ->
-    if (@change_type == "assume_milestone")
+    if (@change_type == "assumed_milestone")
       return true
 
     # if the filter is off, nothing is filtered
