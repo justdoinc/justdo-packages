@@ -32,3 +32,8 @@ _.extend TasksChangelogManager.prototype,
       return
 
     return
+  
+  addChangelogTypeFilteredFromUI: (type) ->
+    @changelog_types_filtered_from_ui.add(type)
+
+    return
