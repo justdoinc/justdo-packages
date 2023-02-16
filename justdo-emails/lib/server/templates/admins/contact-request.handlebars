@@ -5,23 +5,24 @@
         <ul style="color:#68757B;font-size:16px">
             <li>Name: {{name}}</li>
             <li>Email: {{email}}</li>
-            <li>Company: {{company}}</li>
-            <li>Subject: {{subject}}</li>
             <li>Message: {{message}}</li>
+            <li>Version: {{version}}</li>
+            <li>Root URL: {{root_url}}</li>
             <li>Timezone: {{tz}}</li>
-            <li>Request ID: {{request_id}}</li>
+            <li>Request ID: {{_id}}</li>
         </ul>
         Last 5 requests received:
         <ul>
             {{#each previous_requests}}
             <li>{{name}} @ {{createdAt}}
                 <ul style="color:#68757B;font-size:16px">
-                    <li>{{email}}</li>
-                    <li>{{company}}</li>
-                    <li>{{subject}}</li>
-                    <li>{{message}}</li>
-                    <li>{{tz}}</li>
-                    <li>{{_id}}</li>
+                    <li>Name: {{name}}</li>
+                    <li>Email: {{email}}</li>
+                    <li>Message: {{message}}</li>
+                    <li>Version: {{version}}</li>
+                    <li>Root URL: {{root_url}}</li>
+                    <li>Timezone: {{tz}}</li>
+                    <li>Request ID: {{_id}}</li>
                 </ul>
             </li>
             {{/each}}
