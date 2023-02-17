@@ -3,7 +3,17 @@ APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
 
   Template.header.onCreated ->
-    @projects_query_rv = new ReactiveVar {}
+    @registerProjectsItems = ->
+      JD.registerPlaceholderItem "projects-list",
+        data:
+          template: "drawer_projects"
+          template_data:
+            projects_cursor: APP.collections.Projects.find({}, {fields: {_id: 1, title: 1}, sort: {createdAt: 1}})
+        domain: "drawer-projects"
+        position: 1
+
+      return
+    @registerProjectsItems()
     return
 
   Template.header.helpers
@@ -24,12 +34,8 @@ APP.executeAfterAppLibCode ->
     drawerTopItems: ->
       return JD.getPlaceholderItems("drawer-top-items")
 
-    projects: ->
-      tpl = Template.instance()
-
-      query = tpl.projects_query_rv.get()
-
-      return APP.collections.Projects.find(query, {fields: {_id: 1, title: 1}, sort: {createdAt: 1}}).fetch()
+    drawerProjectsItems: ->
+      return JD.getPlaceholderItems("drawer-projects")
 
     middleHeaderTemplate: -> main_module.getCustomHeaderTemplate("middle")
 
@@ -79,5 +85,17 @@ APP.executeAfterAppLibCode ->
 
       $(".global-wrapper").removeClass "drawer-open"
 
-    "click .project-item, click .drawer .drawer-footer a, click .pages-section a, click .drawer-backdrop":(e, tmpl) ->
+    "click .drawer .drawer-footer a, click .pages-section a, click .drawer-backdrop":(e, tmpl) ->
+      $(".global-wrapper").removeClass "drawer-open"
+
+  Template.drawer_projects.onCreated ->
+    @projects_cursor = @data.projects_cursor
+    return
+
+  Template.drawer_projects.helpers
+    projects: ->
+      return Template.instance().projects_cursor.fetch()
+
+  Template.drawer_projects.events
+    "click .project-item": (e, tmpl) ->
       $(".global-wrapper").removeClass "drawer-open"

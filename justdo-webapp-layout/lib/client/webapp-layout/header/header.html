@@ -59,11 +59,13 @@
     {{/with}}
 
     <div class="projects-wrapper h-100">
-      <ul class="list-group list-group-flush">
-        {{#each projects}}
-          <a href="/p/{{_id}}" class="list-group-item list-group-item-action project-item p-2">{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}</a>
-        {{/each}}
-      </ul>
+      {{#each drawerProjectsItems}}
+        {{#if template}}
+          {{> Template.dynamic template=template data=template_data}}
+        {{else if html}}
+          {{{html}}}
+        {{/if}}
+      {{/each}}
     </div>
 
     {{#with drawerPagesMenuItems}}
@@ -101,4 +103,12 @@
     {{> status}}
     {{> timesync_status}}
   </div>
+</template>
+
+<template name="drawer_projects">
+  <ul class="list-group list-group-flush">
+    {{#each projects}}
+      <a href="/p/{{_id}}" class="list-group-item list-group-item-action project-item p-2">{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}</a>
+    {{/each}}
+  </ul>
 </template>
