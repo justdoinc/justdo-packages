@@ -35,7 +35,13 @@
   <div class="drawer d-flex flex-column bg-white">
     <div class="projects-header text-primary font-weight-bold d-flex justify-content-between align-items-center">
       JustDos
-      <svg class="create-new-project text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-create"/></svg>
+      {{#each drawerHeaderItems}}
+        {{#if template}}
+          {{> Template.dynamic template=template data=template_data}}
+        {{else if html}}
+          {{{html}}}
+        {{/if}}
+      {{/each}}
     </div>
 
     {{#with drawerTopItems}}

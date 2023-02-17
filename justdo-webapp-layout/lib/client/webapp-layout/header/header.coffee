@@ -18,6 +18,9 @@ APP.executeAfterAppLibCode ->
 
       return Math.max(min_project_container_width, window_dim)
 
+    drawerHeaderItems: ->
+      return JD.getPlaceholderItems("drawer-header")
+
     drawerTopItems: ->
       return JD.getPlaceholderItems("drawer-top-items")
 
@@ -39,6 +42,12 @@ APP.executeAfterAppLibCode ->
 
     justDoVersion: ->
       return APP.env_rv.get()?.APP_VERSION
+
+  JD.registerPlaceholderItem "create-new-project-icon",
+    data:
+      html: """<svg class="create-new-project text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-create"/></svg>"""
+    domain: "drawer-header"
+    position: 1
 
   JD.registerPlaceholderItem "justdo-chat-recent-activity",
     data:
