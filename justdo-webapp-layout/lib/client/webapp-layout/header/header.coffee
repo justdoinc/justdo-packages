@@ -19,12 +19,7 @@ APP.executeAfterAppLibCode ->
       return Math.max(min_project_container_width, window_dim)
 
     drawerTopItems: ->
-      tpl = Template.instance()
-      return _.map JD.getPlaceholderItems("drawer-top-items"), (item) ->
-        if not item.template_data?
-          item.template_data = {}
-        item.template_data.parent_template_name = "header"
-        return item
+      return JD.getPlaceholderItems("drawer-top-items")
 
     projects: ->
       tpl = Template.instance()
