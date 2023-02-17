@@ -1,8 +1,10 @@
 APP.executeAfterAppLibCode ->
-  orgsEnabled = -> APP.justdo_orgs?
-
   main_module = APP.modules.main
   project_page_module = APP.modules.project_page
+
+  Template.header.onCreated ->
+    @projects_query_rv = new ReactiveVar {}
+    return
 
   Template.header.helpers
     globalRightNavbarItems: ->
@@ -16,14 +18,18 @@ APP.executeAfterAppLibCode ->
 
       return Math.max(min_project_container_width, window_dim)
 
-    orgsEnabled: -> orgsEnabled()
+    drawerTopItems: ->
+      tpl = Template.instance()
+      return _.map JD.getPlaceholderItems("drawer-top-items"), (item) ->
+        if not item.template_data?
+          item.template_data = {}
+        item.template_data.parent_template_name = "header"
+        return item
 
     projects: ->
       tpl = Template.instance()
 
-      query = {}
-      if orgsEnabled()
-        query.org_id = APP.justdo_orgs.getActiveOrgId()
+      query = tpl.projects_query_rv.get()
 
       return APP.collections.Projects.find(query, {fields: {_id: 1, title: 1}, sort: {createdAt: 1}}).fetch()
 
