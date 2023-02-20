@@ -80,6 +80,7 @@ Package.onUse(function (api) {
   api.add_files('lib/client/load-project.coffee', client);
   api.add_files('lib/client/methods.coffee', client);
   api.add_files('lib/client/hash-requests.coffee', client);
+  api.add_files('lib/client/drawer-menu-items.coffee', client);
 
   api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.sass", client);
   api.addFiles("lib/client/add-as-guest-toggle/add-as-guest-toggle.html", client);

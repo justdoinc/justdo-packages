@@ -13,7 +13,7 @@ _.extend Projects.prototype,
     @initEncounteredUsersIdsTracker()
     @initEncounteredUsersIdsPublicBasicUsersInfoFetcher()
 
-    # Defined in api.coffee
+    # Defined in drawer-menu-items.coffee
     @_registerDrawerPlaceholders()
 
     return
