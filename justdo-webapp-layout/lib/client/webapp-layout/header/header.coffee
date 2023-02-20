@@ -67,15 +67,3 @@ APP.executeAfterAppLibCode ->
 
     "click .drawer .drawer-footer a, click .pages-section a, click .drawer-backdrop":(e, tmpl) ->
       $(".global-wrapper").removeClass "drawer-open"
-
-  Template.drawer_projects.onCreated ->
-    @projects_cursor = @data.projects_cursor
-    return
-
-  Template.drawer_projects.helpers
-    projects: ->
-      return Template.instance().projects_cursor.fetch()
-
-  Template.drawer_projects.events
-    "click .project-item": (e, tmpl) ->
-      $(".global-wrapper").removeClass "drawer-open"

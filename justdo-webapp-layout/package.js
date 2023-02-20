@@ -141,6 +141,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/webapp-layout/header/tutorials-submenu.coffee", "client");
   api.addFiles("lib/client/webapp-layout/header/tutorials-submenu.html", "client");
   api.addFiles("lib/client/webapp-layout/header/tutorials-submenu.sass", "client");
+  api.addFiles("lib/client/webapp-layout/header/drawer-projects/drawer-projects.sass", "client");
+  api.addFiles("lib/client/webapp-layout/header/drawer-projects/drawer-projects.html", "client");
+  api.addFiles("lib/client/webapp-layout/header/drawer-projects/drawer-projects.coffee", "client");
 
   api.addAssets("lib/client/assets/layout-sprite.png", "client");
 
