@@ -17,11 +17,11 @@ APP.executeAfterAppLibCode ->
     drawerHeaderItems: ->
       return JD.getPlaceholderItems("drawer-header")
 
-    drawerTopItems: ->
-      return JD.getPlaceholderItems("drawer-top-items")
+    drawerBeforeBodyItems: ->
+      return JD.getPlaceholderItems("drawer-before-body")
 
-    drawerProjectsItems: ->
-      return JD.getPlaceholderItems("drawer-projects")
+    drawerBodyItems: ->
+      return JD.getPlaceholderItems("drawer-body")
 
     middleHeaderTemplate: -> main_module.getCustomHeaderTemplate("middle")
 

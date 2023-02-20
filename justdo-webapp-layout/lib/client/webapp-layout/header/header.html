@@ -44,7 +44,7 @@
       {{/each}}
     </div>
 
-    {{#with drawerTopItems}}
+    {{#with drawerBeforeBodyItems}}
       <div class="top-drawer-items">
         {{#each this}}
           <div class="menu-item pb-2">
@@ -59,7 +59,7 @@
     {{/with}}
 
     <div class="projects-wrapper h-100">
-      {{#each drawerProjectsItems}}
+      {{#each drawerBodyItems}}
         {{#if template}}
           {{> Template.dynamic template=template data=template_data}}
         {{else if html}}
