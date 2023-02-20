@@ -2,20 +2,6 @@ APP.executeAfterAppLibCode ->
   main_module = APP.modules.main
   project_page_module = APP.modules.project_page
 
-  Template.header.onCreated ->
-    @registerProjectsItems = ->
-      JD.registerPlaceholderItem "projects-list",
-        data:
-          template: "drawer_projects"
-          template_data:
-            projects_cursor: APP.collections.Projects.find({}, {fields: {_id: 1, title: 1}, sort: {createdAt: 1}})
-        domain: "drawer-projects"
-        position: 1
-
-      return
-    @registerProjectsItems()
-    return
-
   Template.header.helpers
     globalRightNavbarItems: ->
       return JD.getPlaceholderItems("global-right-navbar").reverse() # We reverse to have consistent order with the float right behaviour of the project-right-navbar
@@ -48,12 +34,6 @@ APP.executeAfterAppLibCode ->
 
     justDoVersion: ->
       return APP.env_rv.get()?.APP_VERSION
-
-  JD.registerPlaceholderItem "create-new-project-icon",
-    data:
-      html: """<svg class="create-new-project text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-create"/></svg>"""
-    domain: "drawer-header"
-    position: 1
 
   JD.registerPlaceholderItem "justdo-chat-recent-activity",
     data:

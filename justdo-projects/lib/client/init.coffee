@@ -13,4 +13,7 @@ _.extend Projects.prototype,
     @initEncounteredUsersIdsTracker()
     @initEncounteredUsersIdsPublicBasicUsersInfoFetcher()
 
+    # Defined in api.coffee
+    @_registerDrawerPlaceholders()
+
     return

@@ -199,3 +199,21 @@ _.extend Projects.prototype,
       })
 
     return
+
+  _registerDrawerPlaceholders: ->
+    APP.executeAfterAppLibCode =>
+      JD.registerPlaceholderItem "create-new-project-icon",
+        data:
+          html: """<svg class="create-new-project text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-create"/></svg>"""
+        domain: "drawer-header"
+        position: 1
+
+      JD.registerPlaceholderItem "projects-list",
+        data:
+          template: "drawer_projects"
+          template_data:
+            projects_cursor: @projects_collection.find({}, {fields: {_id: 1, title: 1}, sort: {createdAt: 1}})
+        domain: "drawer-body"
+        position: 1
+
+    return
