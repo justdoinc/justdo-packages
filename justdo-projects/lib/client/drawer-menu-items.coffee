@@ -1,9 +1,6 @@
 _.extend Projects.prototype,
   _registerDrawerPlaceholders: ->
     APP.executeAfterAppLibCode =>
-      if not @drawer_menu_projects_query_rv?
-        @drawer_menu_projects_query_rv = new ReactiveVar {}
-        
       DrawerProjectsControllerOptionsSchema = new SimpleSchema
         projects_query:
           type: Object
@@ -52,13 +49,12 @@ _.extend Projects.prototype,
         domain: "drawer-header"
         position: 1
 
-      projects_list_controller = new Projects.DrawerProjectsController
-        projects_query_rv: @drawer_menu_projects_query_rv
+      @drawer_projects_list_controller = new Projects.DrawerProjectsController()
       JD.registerPlaceholderItem "projects-list",
         data:
           template: "drawer_projects"
           template_data:
-            controller: projects_list_controller
+            controller: @drawer_projects_list_controller
         domain: "drawer-body"
         position: 1
 
