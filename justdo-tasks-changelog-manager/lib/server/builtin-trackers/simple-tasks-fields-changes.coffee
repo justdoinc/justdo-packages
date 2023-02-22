@@ -75,7 +75,7 @@ _.extend PACK.builtin_trackers,
 
       return
 
-    self.tasks_collection.before.update (userId, doc, fieldNames, modifier, options) ->
+    self.tasks_collection.after.update (userId, doc, fieldNames, modifier, options) ->
       task_id = doc._id
       project_id = doc.project_id
 
