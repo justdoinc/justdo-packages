@@ -5,11 +5,12 @@ _.extend Projects.prototype,
         @drawer_menu_projects_query_rv = new ReactiveVar {}
         
       DrawerProjectsControllerOptionsSchema = new SimpleSchema
-        projects_query_rv:
-          type: ReactiveVar
+        projects_query:
+          type: Object
+          blackbox: true
           optional: true
           # Note: The default value returns a function that calls and returns the value of getActiveOrgId
-          defaultValue: -> new ReactiveVar {}
+          defaultValue: {}
 
       Projects.DrawerProjectsController = (options) ->
         EventEmitter.call this
@@ -23,13 +24,18 @@ _.extend Projects.prototype,
             options,
             {self: @, throw_on_error: true}
           )
-        @options = cleaned_val
+
+        @projects_query_rv = new ReactiveVar cleaned_val.projects_query
 
         return @
 
       Util.inherits Projects.DrawerProjectsController, EventEmitter
 
       _.extend Projects.DrawerProjectsController.prototype,
+        getProjectsQuery: -> @projects_query_rv.get()
+
+        setProjectsQuery: (query) -> @projects_query_rv.set query
+
         projects: ->
           query_options =
             fields:
@@ -38,7 +44,7 @@ _.extend Projects.prototype,
             sort:
               createdAt: 1
 
-          return APP.collections.Projects.find(@options.projects_query_rv.get(), {fields: {_id: 1, title: 1}, sort: {createdAt: 1}}).fetch()
+          return APP.collections.Projects.find(@projects_query_rv.get(), {fields: {_id: 1, title: 1}, sort: {createdAt: 1}}).fetch()
 
       JD.registerPlaceholderItem "create-new-project-icon",
         data:
