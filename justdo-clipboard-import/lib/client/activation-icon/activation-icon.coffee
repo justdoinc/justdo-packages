@@ -305,7 +305,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
             else
               task[field_id] = cell_val
 
-          else if field_def.grid_column_formatter == "MultiSelectFormatter"
+          if field_def.grid_column_formatter == "MultiSelectFormatter"
             values = cell_val.split(',')
             option_values = []
             for value in values
