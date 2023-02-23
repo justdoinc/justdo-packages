@@ -60,13 +60,12 @@ Template.task_pane_task_changelog_record.helpers
 
     if @change_type in TasksChangelogManager.ops_involve_another_task 
       seqId_regex = new RegExp "#\\d+", "g"
-      seqIds_to_replace = formatted_msg.match seqId_regex
+      if (seqIds_to_replace = formatted_msg.match seqId_regex)?
+        if @old_value? and @old_value isnt "0"
+          formatted_msg = formatted_msg.replace seqIds_to_replace.shift(), """<span jd-tt="task-info?id=#{@old_value}&show-title=true">$&</span>"""
 
-      if @old_value? and @old_value isnt "0"
-        formatted_msg = formatted_msg.replace seqIds_to_replace.shift(), """<span jd-tt="task-info?id=#{@old_value}&show-title=true">$&</span>"""
-
-      if @new_value isnt "0"
-        formatted_msg = formatted_msg.replace seqIds_to_replace.shift(), """<span jd-tt="task-info?id=#{@new_value}&show-title=true">$&</span>"""
+        if @new_value isnt "0"
+          formatted_msg = formatted_msg.replace seqIds_to_replace.shift(), """<span jd-tt="task-info?id=#{@new_value}&show-title=true">$&</span>"""
 
     return formatted_msg
 
