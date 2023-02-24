@@ -31,7 +31,7 @@
       <ul>
         {{#each notes}}
           <li>
-            <div class="note-item">{{{this}}}</div>
+            <div class="note-item">{{{xssGuard this}}}</div>
             <svg class="jd-icon note-close"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
           </li>
         {{/each}}
@@ -46,7 +46,7 @@
     <div class="recent-batched-item">
       <div class="recent-batched-msg-wrapper">
         <div class="recent-batched-msg">
-          {{{opsMessage}}}
+          {{{xssGuard opsMessage}}}
           {{#if pendingOrInProgress}}
             {{processedPercent}}%
           {{/if}}

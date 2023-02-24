@@ -687,56 +687,79 @@ APP.executeAfterAppLibCode ->
     processedPercent: -> Math.floor((@process_status_details.processed / @process_status_details.total) * 100)
 
     opsMessage: ->
-      ops = @
-      message = ""
+      op_object = @
 
-      task = APP.collections.Tasks.findOne ops.data.user_perspective_root_items[0]
+      debugger
+      message_arr = []
+      getMessage = -> message_arr.join(" ")
 
-      if ops.data.members_to_add.length > 0
-        message = "Adding #{@data.members_to_add.length } "
+      total_tasks_in_job = op_object.process_status_details.total
 
-        if @data.members_to_add.length > 1
-          message += "members to "
+      # user_perspective_root_items are the root items of the sub-trees involved
+      # in the operation. This array might be empty. It is set during the time of
+      # job creation by the job requester and it is completely arbitrary.
+      #
+      # The purpose of user_perspective_root_items is plainly to help the user
+      # figure out what this job is about.
+      user_perspective_root_items = op_object.data.user_perspective_root_items
+
+      max_tasks_to_show_by_their_name = 3
+      tasks_to_list_by_their_name = user_perspective_root_items.slice(0, max_tasks_to_show_by_their_name)
+      tasks_werent_included_in_the_list_count = if user_perspective_root_items.length > max_tasks_to_show_by_their_name then user_perspective_root_items.length - max_tasks_to_show_by_their_name else 0
+
+      members_to_add = @data.members_to_add or []
+      members_to_remove = @data.members_to_remove or []
+
+      if Meteor.userId() in members_to_remove
+        # When the user himself is removed, he'll always be the only one involved in the operation
+        message_arr.push "Removing You from #{total_tasks_in_job} tasks"
+
+        return getMessage()
+
+      if members_to_add.length > 0 and members_to_remove.length > 0
+        message_arr.push "Adding #{members_to_add.length} and removing #{members_to_remove.length} members from"
+      else
+        if members_to_add.length > 0
+          message_arr.push "Adding #{members_to_add.length}"
+        if members_to_remove.length > 0
+          message_arr.push "Removing #{members_to_remove.length}"
+
+        if (members_to_add.length + members_to_remove.length) > 1
+          message_arr.push "members"
         else
-          message += "member to "
+          message_arr.push "member"
 
-      if ops.data.members_to_remove.length > 0
-        if ops.data.members_to_remove.includes Meteor.userId()
-          message = "Removing You from a task "
+        if members_to_add.length > 0
+          message_arr.push "to"
+        if members_to_remove.length > 0
+          message_arr.push "from"
+
+      message_arr.push "#{parseInt(total_tasks_in_job, 10).toLocaleString()} tasks"
+
+      if tasks_to_list_by_their_name.length > 0
+        if tasks_to_list_by_their_name.length == 1
+          message_arr.push "under task"
         else
-          message = "Removing #{@data.members_to_remove.length } "
+          message_arr.push "under tasks"
 
-          if @data.members_to_remove.length > 1
-            message += "members to "
+        message_arr.push _.map(tasks_to_list_by_their_name, (task_id) -> "<span class='task'>#{JustdoHelpers.taskCommonName(APP.collections.Tasks.findOne(task_id), 50)}</span>").join(", ")
+
+        if tasks_werent_included_in_the_list_count > 0
+          if tasks_werent_included_in_the_list_count == 1
+            message_arr.push "and one other task"
           else
-            message += "member to "
+            message_arr.push "and #{tasks_werent_included_in_the_list_count} other tasks"
 
-      if ops.data.members_to_add.length > 0 and ops.data.members_to_remove.length > 0
-        message = "Adding/Removing members from"
+      if op_object.process_status == "pending"
+        message_arr.push "[About to begin]"
 
-      if task?
-        message += "<span class='task'>##{task.seqId}: #{task.title}</span>"
+      if op_object.process_status == "terminated"
+        message_arr.push "[Terminated]"
 
-        if (sub_tasks = APP.modules?.project_page?.mainGridData()?._grid_data_core.tree_structure?[task._id])?
-          sub_tasks_count = Object.keys(sub_tasks).length
+      if op_object.process_status == "error"
+        message_arr.push "[Failed]"
 
-          if sub_tasks_count > 0
-            message += " and #{sub_tasks_count} tasks under it"
-
-      if ops.process_status == "in-progress"
-        message += " ..."
-
-      if ops.process_status == "pending"
-        message += " ... pending"
-
-
-      if ops.process_status == "terminated"
-        message += " ... terminated"
-
-      if ops.process_status == "error"
-        message += " ... error"
-
-      return message
+      return getMessage()
 
   Template.task_pane_item_details_members_editor_recent_batched_ops.events
     "click .terminate": ->

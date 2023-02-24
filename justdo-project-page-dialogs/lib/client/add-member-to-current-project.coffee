@@ -285,6 +285,7 @@ Template.invite_new_user_dialog.events
 
   "click .invite": (e, tpl) ->
     active_justdo = APP.modules.project_page.helpers.curProj()
+    sub_trees_roots_selected = tpl.selected_tasks_rv.get()
     selected_tasks = tpl.selected_tasks_rv.get()
     selected_tasks_set = new Set(selected_tasks)
     users = tpl.users.get()
@@ -374,10 +375,13 @@ Template.invite_new_user_dialog.events
               callback: ->
                 return true
 
-      all_members = invited_members.concat existing_members_ids
+      all_members = invited_members.concat(existing_members_ids)
 
       if not _.isEmpty(all_members) and selected_tasks_set.size > 0
-        active_justdo.bulkUpdate Array.from(selected_tasks_set), {$addToSet: {users: {$each: all_members}}}
+        APP.modules.project_page.curProj().bulkUpdateTasksUsers
+          tasks: Array.from(selected_tasks_set)
+          user_perspective_root_items: sub_trees_roots_selected
+          members_to_add: all_members
 
       return
 
