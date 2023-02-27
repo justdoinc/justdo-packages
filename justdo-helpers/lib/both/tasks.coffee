@@ -42,4 +42,4 @@ _.extend JustdoHelpers,
   
   getCoreStateOneOfCoreStatesQuery: (core_states) -> {$regex: JustdoHelpers.isStateOneOfCoreStatesRegex(core_states)}
 
-  getCoreStateNotOneOfCoreStatesQuery: (core_states) -> {$regex: {$not: JustdoHelpers.isStateOneOfCoreStatesRegex(core_states)}}
+  getCoreStateNotOneOfCoreStatesQuery: (core_states) -> {$not: {$regex: JustdoHelpers.isStateOneOfCoreStatesRegex(core_states)}}
