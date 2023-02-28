@@ -587,8 +587,8 @@ _.extend JustdoTasksContextMenu.prototype,
 
           return justdo_has_projects
 
-      getAllJustdoActiveProjectsSortedByProjectName = (filter_state, active_item_id) ->
-        active_item = APP.collections.Tasks.getDocNonReactive(active_item_id)
+      getAllJustdoActiveProjectsSortedByProjectName = (filter_state) ->
+        active_item = APP.collections.Tasks.getDocNonReactive(JD.activeItemId())
 
         options = 
           active_only: true
@@ -600,7 +600,6 @@ _.extend JustdoTasksContextMenu.prototype,
               $regex: new RegExp(JustdoHelpers.escapeRegExp(filter_state), "i")
 
         project_tasks = APP.justdo_delivery_planner.getKnownProjects(JD.activeJustdo({_id: 1})?._id, options, Meteor.userId())
-
         project_tasks = APP.justdo_delivery_planner.excludeProjectsCauseCircularChain project_tasks, JD.activeItemId()
 
         project_tasks = project_tasks.sort((project_task_a, project_task_b) =>
@@ -610,7 +609,14 @@ _.extend JustdoTasksContextMenu.prototype,
             return -1
           else if not is_in_project_b and is_in_project_b
             return 1
-          return 0
+
+          # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sort_stability
+          # https://archive.is/wip/Scyn6
+          # JS Sort is stable, but for Edge, only since 2020, decided to ensure the {seqId: -1} sorting here. Daniel C.
+          if project_task_a.seqId < project_task_b.seqId
+            return 1
+          else # 0 is not an option, since it is impossible to have equal seqIds
+            return -1
         )
         
         return project_tasks
@@ -670,7 +676,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
             active_item_id = JD.activeItemId()
             
-            active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(current_section_filter_state, active_item_id)
+            active_projects_docs = getAllJustdoActiveProjectsSortedByProjectName(current_section_filter_state)
 
             if _.isEmpty(_.filter(active_projects_docs, (active_project_doc) -> active_project_doc._id != active_item_id)) # Show only if there are no other projects (filter myself out, in case I am a project)
               res.push
