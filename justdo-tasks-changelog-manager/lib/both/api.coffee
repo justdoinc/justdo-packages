@@ -69,7 +69,7 @@ _.extend TasksChangelogManager.prototype,
             return ret_val
 
         # Otherwise we only show seqId of the new parent, and add its title
-        ret_val = "#{performer_name} #{op_name} #{if op is "remove" then "from" else "to"} ##{task.seqId}"
+        ret_val = "#{performer_name} #{op_name} #{if op is "remove" then "from" else "to"} parent ##{task.seqId}"
         if task.title?
           ret_val = "#{ret_val} #{task.title}"
         if ret_val.slice(-1) != "."
@@ -79,12 +79,12 @@ _.extend TasksChangelogManager.prototype,
       # else - task is unknown to the user
       op_name = ""
       if op == "add"
-        op_name = "Added"
+        op_name = "added"
       else if op == "remove"
-        op_name = "Removed"
+        op_name = "removed"
       else if op == "move"
-        op_name = "Transfer"
-      return "#{op_name} a parent (not shared with you)"
+        op_name = "transfer"
+      return "#{performer_name} #{op_name} #{if op is "remove" then "from" else "to"} a parent that got removed/isn't shared with you."
 
     if activity_obj.change_type == "moved_to_task"
       return parentChangeMsg(activity_obj, "move")
