@@ -30,6 +30,9 @@ _.extend JustdoFiles.prototype,
     # Defined in collections-indexes.coffee
     @_ensureIndexesExists()
 
+    # Defined in db-migration.coffee
+    @_setupDbMigrations()
+
     return
 
   tasksFilesPublicationHandler: (publish_this, task_id, user_id) ->
