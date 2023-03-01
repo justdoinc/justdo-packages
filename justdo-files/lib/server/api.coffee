@@ -269,12 +269,15 @@ _.extend JustdoFiles.prototype,
     , {where: "server"}
 
   uploadAndRegisterFile: (task_id, file_blob, filename, mimetype, metadata, user_id) ->
+    project_id = @tasks_collection.findOne(task_id, {fields: {project_id: 1}})?.project_id
+
     file_opts =
       fileName: filename
       type: mimetype
       meta:
         source: "maildo"
         task_id: task_id
+        project_id: project_id
       userId: user_id
 
     fiber = Fiber.current
