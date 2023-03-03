@@ -770,7 +770,10 @@ _.extend JustdoJiraIntegration.prototype,
     @tasks_collection.update task_id, {$set: {jira_project_id: jira_project_id, jira_mountpoint_type: "root"}}
 
     # Add task members to the mounted task
-    APP.projects.bulkUpdate justdo_id, [task_id], {$addToSet: {users: {$each: user_ids_to_be_added_to_child_tasks}}}, justdo_admin_id
+    APP.projects.bulkUpdateTasksUsers justdo_id,
+      tasks: [task_id]
+      members_to_add: user_ids_to_be_added_to_child_tasks
+    , justdo_admin_id
 
     # Setup mountpoints for sprints and fix versions
     gc = APP.projects._grid_data_com
