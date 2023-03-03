@@ -1103,9 +1103,7 @@ _.extend JustdoJiraIntegration.prototype,
       jira_users = [jira_users]
 
     justdo_id = @tasks_collection.findOne({jira_project_id}, {fields: {project_id: 1}})?.project_id
-    console.time "Time taken to generate {accountId:email} map"
     account_id_to_email_map = @jiraAccountIdToJustdoMemberEmails justdo_id, client
-    console.timeEnd "Time taken to generate {accountId:email} map"
 
     jira_user_objects = []
     proxy_users_to_be_created = []
