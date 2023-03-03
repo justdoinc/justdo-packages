@@ -46,7 +46,8 @@ _.extend JustdoChecklist.prototype,
 
       tasks = {}
       query =
-        "parents.#{parent_id}": {$exists: true}
+        "project_id": task_doc.project_id
+        "parents2.parent": parent_id
       options =
         fields:
           "p:checklist:is_checked": 1
