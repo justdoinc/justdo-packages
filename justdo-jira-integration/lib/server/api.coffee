@@ -1098,9 +1098,14 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
-  _createProxyUserIfEmailNotRecognized: (jira_users) ->
+  _createProxyUserIfEmailNotRecognized: (jira_project_id, jira_users, client) ->
     if not _.isArray jira_users
       jira_users = [jira_users]
+
+    justdo_id = @tasks_collection.findOne({jira_project_id}, {fields: {project_id: 1}})?.project_id
+    console.time "Time taken to generate {accountId:email} map"
+    account_id_to_email_map = @jiraAccountIdToJustdoMemberEmails justdo_id, client
+    console.timeEnd "Time taken to generate {accountId:email} map"
 
     jira_user_objects = []
     proxy_users_to_be_created = []
@@ -1110,7 +1115,8 @@ _.extend JustdoJiraIntegration.prototype,
       # If the email isn't recognized, create a proxy user.
       # XXX Temp fix for email API permission issue. Remove the first if statment when resolved/Jira server is in use
       if _.isEmpty user_info.emailAddress
-        user_info.emailAddress = @_getHarcodedEmailByAccountId(user_info.accountId or user_info.key)
+        account_id_or_key = user_info.accountId or user_info.key
+        user_info.emailAddress = account_id_to_email_map[account_id_or_key] or @_getHardcodedEmailByAccountId account_id_or_key
 
       if not APP.accounts.userExists user_info.emailAddress
         [first_name, last_name] = user_info.displayName.split " "
@@ -1139,6 +1145,25 @@ _.extend JustdoJiraIntegration.prototype,
 
     return {jira_user_objects, created_user_ids}
 
+  jiraAccountIdToJustdoMemberEmails: (justdo_id, client) ->
+    if not client?
+      throw @_error "client-not-found"
+
+    justdo_member_emails = _.map @projects_collection.findOne(justdo_id, {fields: {members: 1}})?.members, (member) ->
+      return APP.accounts.getUserById(member.user_id).emails[0].address
+
+    ret = {}
+
+    for email in justdo_member_emails
+      {err, res} = @pseudoBlockingJiraApiCallInsideFiber "userSearch.findUsers", {query: email}, client
+      if err?
+        @logger.error err
+        continue
+      if not _.isEmpty res
+        ret[res[0].accountId] = email
+
+    return ret
+
   # Also creates proxy users for emails that aren't registered in Justdo
   fetchAndStoreAllUsersUnderJiraProject: (jira_project_id, options) ->
     {client} = options
@@ -1160,7 +1185,8 @@ _.extend JustdoJiraIntegration.prototype,
 
     users_info = res
 
-    {jira_user_objects} = @_createProxyUserIfEmailNotRecognized users_info
+
+    {jira_user_objects} = @_createProxyUserIfEmailNotRecognized jira_project_id, users_info, client
 
     query =
       "server_info.id": jira_server_id
@@ -1227,16 +1253,8 @@ _.extend JustdoJiraIntegration.prototype,
     return client
 
   # XXX for demo only
-  _getHarcodedEmailByAccountId: (jira_account_id) ->
-    users =
-      "62987073e5408700696717a3":"daniel@justdo.com"
-      "62986f1cd9eae9006f35f026": "galit@justdo.com"
-      "629870dbd9eae9006f35f10b": "brian@justdo.com"
-      "62a6f9d3192edb006f9dc233": "brian+1@justdo.com"
-      "62bc0c35118b20bee2bbdf52": "brian+2@justdo.com"
-      "62bc0c35ec4c0d377f9fcf00": "brian+3@justdo.com"
-
-    return users[jira_account_id] or "#{jira_account_id}@justdo.com"
+  _getHardcodedEmailByAccountId: (jira_account_id) ->
+    return "#{jira_account_id}@justdo.com"
 
   getAllUsersInJiraInstance: (jira_doc_id) ->
     jira_options =
