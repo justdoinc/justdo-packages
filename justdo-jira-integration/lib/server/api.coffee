@@ -1104,7 +1104,7 @@ _.extend JustdoJiraIntegration.prototype,
     if not _.isArray jira_users
       jira_users = [jira_users]
 
-    if options.justdo_id?
+    if options?.justdo_id?
       account_id_to_email_map = @jiraAccountIdToJustdoMemberEmails options
 
     jira_user_objects = []
