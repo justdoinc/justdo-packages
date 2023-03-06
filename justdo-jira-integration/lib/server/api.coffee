@@ -1251,8 +1251,8 @@ _.extend JustdoJiraIntegration.prototype,
     return client
 
   # XXX for demo only
-  _getHardcodedEmailByAccountId: (jira_account_id) ->
-    return "#{jira_account_id}@justdo.com"
+  _getHardcodedEmailByAccountId:  ->
+    return "#{Random.id()}#{Random.id()}@justdo.com"
 
   getAllUsersInJiraInstance: (jira_doc_id) ->
     jira_options =
