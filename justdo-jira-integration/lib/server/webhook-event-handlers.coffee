@@ -417,11 +417,11 @@ _.extend JustdoJiraIntegration.prototype,
       if not _.isEmpty root_tasks_to_add_members
         @addJiraProjectMembersToJustdo justdo_id, jira_user_email
 
-        task_users_modifier =
-          $addToSet:
-            users:
-              $each: [created_user_id]
-        APP.projects.bulkUpdate justdo_id, root_tasks_to_add_members, task_users_modifier, @_getJustdoAdmin justdo_id
+        APP.projects.bulkUpdateTasksUsers justdo_id,
+          tasks: [root_tasks_to_add_members]
+          members_to_add: [created_user_id]
+        , @_getJustdoAdmin justdo_id
+        
       return
 
     jira_ops =
