@@ -320,4 +320,58 @@ _.extend JustdoJiraIntegration.prototype,
 
       return
 
+    self.projects_collection.after.update (user_id, doc, field_names, modifier, options) ->
+      if not (jira_doc_id = doc.conf?["justdo_jira:id"])?
+        return
+
+      # When new member is added, replace proxy Jira user with the actual member and update jira_doc's jira_users email record.
+      # The reason we do this in project collection instead of users collection is that it's costly to go over all existing users
+      if (members_modifier = modifier?.$push?.members)?
+        jira_server_id = self.jira_collection.findOne(jira_doc_id, {fields: {"server_info.id": 1}}).server_info?.id
+        if not (client = self.clients[jira_server_id])?
+          return
+
+        if members_modifier.$each?
+          added_member_ids = _.map members_modifier.$each, (added_member) -> added_member.user_id
+        else
+          added_member_ids = [members_modifier.user_id]
+
+        added_members_emails = Meteor.users.find({_id: {$in: added_member_ids}}, {fields: {"emails.address": 1}}).map (user) -> user.emails?[0]?.address
+
+        for email in added_members_emails
+          client.v2.userSearch.findUsers {query: email}
+            .then (res) ->
+              if _.isEmpty res
+                return
+              jira_account_id = res[0].accountId
+
+              query =
+                _id: jira_doc_id
+                jira_users:
+                  $elemMatch:
+                    jira_account_id: jira_account_id
+                    is_proxy: true
+              query_options =
+                fields:
+                  "jira_users.$": 1
+              if (user_to_update = self.jira_collection.findOne(query, query_options)?.jira_users?[0])?
+                proxy_user_id = APP.accounts.getUserByEmail(user_to_update.email)._id
+                actual_user_id = APP.accounts.getUserByEmail(email)._id
+                self.projects_collection.find({"members.user_id": proxy_user_id, "conf.justdo_jira:id": jira_doc_id}).forEach (proj_doc) ->
+                  APP.projects.removeMember proj_doc._id, proxy_user_id, proxy_user_id
+                  if not _.find(proj_doc.members, (member) -> member.user_id is actual_user_id)?
+                    APP.projects.inviteMember proj_doc._id, {email}
+
+                ops =
+                  $set:
+                    "jira_users.$.email": email
+                  $unset:
+                    "jira_users.$.is_proxy": 1
+
+                self.jira_collection.update query, ops
+
+              return
+            .catch (err) -> console.error err
+      return
+
     return
