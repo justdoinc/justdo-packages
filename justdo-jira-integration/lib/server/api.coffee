@@ -1115,12 +1115,7 @@ _.extend JustdoJiraIntegration.prototype,
       # XXX Temp fix for email API permission issue. Remove the first if statment when resolved/Jira server is in use
       if _.isEmpty user_info.emailAddress
         account_id_or_key = user_info.accountId or user_info.key
-        user_info.emailAddress = account_id_to_email_map[account_id_or_key] or @_getHardcodedEmailByAccountId account_id_or_key
-
-      if not APP.accounts.userExists user_info.emailAddress
-        [first_name, last_name] = user_info.displayName.split " "
-        profile = {first_name, last_name}
-        proxy_users_to_be_created.push {email: user_info.emailAddress, profile: profile}
+        user_info.emailAddress = account_id_to_email_map?[account_id_or_key] or @_getHardcodedEmailByAccountId account_id_or_key
 
       jira_user_obj =
         jira_account_id: user_info.accountId or user_info.key
@@ -1136,6 +1131,12 @@ _.extend JustdoJiraIntegration.prototype,
         jira_user_obj.account_type = user_info.accountType
       else
         jira_user_obj.username = user_info.name
+
+      if not APP.accounts.userExists user_info.emailAddress
+        [first_name, last_name] = user_info.displayName.split " "
+        profile = {first_name, last_name}
+        proxy_users_to_be_created.push {email: user_info.emailAddress, profile: profile}
+        jira_user_obj.is_proxy = true
 
       jira_user_objects.push jira_user_obj
 
