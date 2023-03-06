@@ -371,7 +371,7 @@ _.extend JustdoJiraIntegration.prototype,
     jira_user_id = req_body.user.key or req_body.user.accountId
     jira_user_email = req_body.user.emailAddress
     if not jira_user_email?
-      jira_user_email = @_getHarcodedEmailByAccountId jira_user_id
+      jira_user_email = @_getHardcodedEmailByAccountId jira_user_id
 
     if not (client = _.values(@clients)?[0])?
       throw @_error "client-not-found"
