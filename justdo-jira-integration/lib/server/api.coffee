@@ -1100,7 +1100,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
-  _createProxyUserIfEmailNotRecognized: (jira_project_id, jira_users, options) ->
+  _createProxyUserIfEmailNotRecognized: (jira_users, options) ->
     if not _.isArray jira_users
       jira_users = [jira_users]
 
@@ -1198,7 +1198,7 @@ _.extend JustdoJiraIntegration.prototype,
       return linked_jira_user_ids_set.add user_info.jira_account_id
     unlinked_users = _.filter users_info, (user_info) -> not linked_jira_user_ids_set.has user_info.accountId
 
-    {jira_user_objects} = @_createProxyUserIfEmailNotRecognized jira_project_id, unlinked_users, options
+    {jira_user_objects} = @_createProxyUserIfEmailNotRecognized unlinked_users, options
 
     query =
       "server_info.id": jira_server_id
