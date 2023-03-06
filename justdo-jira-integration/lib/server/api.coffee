@@ -279,6 +279,7 @@ _.extend JustdoJiraIntegration.prototype,
     catch e
       @logger.error jira_issue_key, parent_path, "failed", e
 
+    # Wrapped inside Meteor.defer so the rest of the code will become non-blocking
     Meteor.defer =>
       if task_fields.jira_issue_reporter?
         APP.tasks_changelog_manager.logChange
@@ -1099,12 +1100,12 @@ _.extend JustdoJiraIntegration.prototype,
 
     return
 
-  _createProxyUserIfEmailNotRecognized: (jira_project_id, jira_users, client) ->
+  _createProxyUserIfEmailNotRecognized: (jira_project_id, jira_users, options) ->
     if not _.isArray jira_users
       jira_users = [jira_users]
 
-    justdo_id = @tasks_collection.findOne({jira_project_id}, {fields: {project_id: 1}})?.project_id
-    account_id_to_email_map = @jiraAccountIdToJustdoMemberEmails justdo_id, client
+    if options.justdo_id?
+      account_id_to_email_map = @jiraAccountIdToJustdoMemberEmails options
 
     jira_user_objects = []
     proxy_users_to_be_created = []
@@ -1145,13 +1146,13 @@ _.extend JustdoJiraIntegration.prototype,
 
     return {jira_user_objects, created_user_ids}
 
-  jiraAccountIdToJustdoMemberEmails: (justdo_id, client) ->
-    if not client?
+  jiraAccountIdToJustdoMemberEmails: (options) ->
+    if not (client = options.client)?
       throw @_error "client-not-found"
 
     jira_server_id = @getJiraServerIdFromApiClient client
 
-    justdo_member_emails = _.map @projects_collection.findOne(justdo_id, {fields: {members: 1}})?.members, (member) ->
+    justdo_member_emails = _.map @projects_collection.findOne(options.justdo_id, {fields: {members: 1}})?.members, (member) ->
       return APP.accounts.getUserById(member.user_id).emails[0].address
     emails_linked_to_jira_account = _.map @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {jira_users: 1}})?.jira_users, (user_info) ->
       return user_info.email
@@ -1197,7 +1198,7 @@ _.extend JustdoJiraIntegration.prototype,
       return linked_jira_user_ids_set.add user_info.jira_account_id
     unlinked_users = _.filter users_info, (user_info) -> not linked_jira_user_ids_set.has user_info.accountId
 
-    {jira_user_objects} = @_createProxyUserIfEmailNotRecognized jira_project_id, unlinked_users, client
+    {jira_user_objects} = @_createProxyUserIfEmailNotRecognized jira_project_id, unlinked_users, options
 
     query =
       "server_info.id": jira_server_id
