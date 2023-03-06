@@ -1147,12 +1147,19 @@ _.extend JustdoJiraIntegration.prototype,
     if not client?
       throw @_error "client-not-found"
 
+    jira_server_id = @getJiraServerIdFromApiClient client
+
     justdo_member_emails = _.map @projects_collection.findOne(justdo_id, {fields: {members: 1}})?.members, (member) ->
       return APP.accounts.getUserById(member.user_id).emails[0].address
+    emails_linked_to_jira_account = _.map @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {jira_users: 1}})?.jira_users, (user_info) ->
+      return user_info.email
+    emails_not_linked_to_jira_account = _.without justdo_member_emails, ...emails_linked_to_jira_account
 
     ret = {}
 
-    for email in justdo_member_emails
+    console.log emails_not_linked_to_jira_account
+
+    for email in emails_not_linked_to_jira_account
       {err, res} = @pseudoBlockingJiraApiCallInsideFiber "userSearch.findUsers", {query: email}, client
       if err?
         @logger.error err
@@ -1183,14 +1190,19 @@ _.extend JustdoJiraIntegration.prototype,
 
     users_info = res
 
+    linked_jira_user_ids_set = new Set()
+    _.each @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {jira_users: 1}})?.jira_users, (user_info) ->
+      return linked_jira_user_ids_set.add user_info.jira_account_id
+    unlinked_users = _.filter users_info, (user_info) -> not linked_jira_user_ids_set.has user_info.accountId
 
-    {jira_user_objects} = @_createProxyUserIfEmailNotRecognized jira_project_id, users_info, client
+    {jira_user_objects} = @_createProxyUserIfEmailNotRecognized jira_project_id, unlinked_users, client
 
     query =
       "server_info.id": jira_server_id
     ops =
-      $set:
-        jira_users: jira_user_objects
+      $addToSet:
+        jira_users:
+          $each: jira_user_objects
     @jira_collection.update query, ops
 
     return
