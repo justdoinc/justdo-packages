@@ -1160,8 +1160,6 @@ _.extend JustdoJiraIntegration.prototype,
 
     ret = {}
 
-    console.log emails_not_linked_to_jira_account
-
     for email in emails_not_linked_to_jira_account
       {err, res} = @pseudoBlockingJiraApiCallInsideFiber "userSearch.findUsers", {query: email}, client
       if err?
