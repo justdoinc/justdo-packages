@@ -369,9 +369,6 @@ _.extend JustdoJiraIntegration.prototype,
   # XXX This method strictly support only one Jira instance
   _upsertJiraUser: (req_body, create_new_user=false) ->
     jira_user_id = req_body.user.key or req_body.user.accountId
-    jira_user_email = req_body.user.emailAddress
-    if not jira_user_email?
-      jira_user_email = @_getHardcodedEmailByAccountId jira_user_id
 
     if not (client = _.values(@clients)?[0])?
       throw @_error "client-not-found"
@@ -389,6 +386,8 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_doc_id = null # To be fetched
     {jira_user_objects, created_user_ids} = @_createProxyUserIfEmailNotRecognized res
+    jira_user_email = jira_user_objects[0].email
+    
     if _.isEmpty created_user_ids
       created_user_id = APP.accounts.getUserByEmail(jira_user_email)._id
     else
@@ -412,16 +411,16 @@ _.extend JustdoJiraIntegration.prototype,
         project_id: justdo_id
         jira_project_id:
           $ne: null
-      root_tasks_to_add_members = @tasks_collection.find(tasks_query, {_id: 1}).map (task_doc) -> task_doc._id
+      tasks_to_add_members = @tasks_collection.find(tasks_query, {_id: 1}).map (task_doc) -> task_doc._id
 
-      if not _.isEmpty root_tasks_to_add_members
+      if not _.isEmpty tasks_to_add_members
         @addJiraProjectMembersToJustdo justdo_id, jira_user_email
 
         APP.projects.bulkUpdateTasksUsers justdo_id,
-          tasks: [root_tasks_to_add_members]
+          tasks: tasks_to_add_members
           members_to_add: [created_user_id]
         , @_getJustdoAdmin justdo_id
-        
+
       return
 
     jira_ops =
