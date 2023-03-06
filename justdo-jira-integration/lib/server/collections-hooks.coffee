@@ -336,7 +336,19 @@ _.extend JustdoJiraIntegration.prototype,
         else
           added_member_ids = [members_modifier.user_id]
 
+        # For all added_members_emails, exclude the proxy emails, and the emails that're already linked
         added_members_emails = Meteor.users.find({_id: {$in: added_member_ids}}, {fields: {"emails.address": 1}}).map (user) -> user.emails?[0]?.address
+        added_members_emails = new Set added_members_emails
+        if (jira_users = self.jira_collection.findOne(jira_doc_id, {fields: {"jira_users.email": 1, "jira_users.is_proxy": 1}})?.jira_users)?
+          emails_to_exclude = []
+          for jira_user in jira_users
+            if jira_user.is_proxy or added_members_emails.has jira_user.email
+              emails_to_exclude.push jira_user.email
+          added_members_emails = _.without Array.from(added_members_emails), ...emails_to_exclude
+
+        # Do nothing if added_members_emails is empty after sanitizing.
+        if _.isEmpty added_members_emails
+          return
 
         for email in added_members_emails
           client.v2.userSearch.findUsers {query: email}
@@ -357,18 +369,34 @@ _.extend JustdoJiraIntegration.prototype,
               if (user_to_update = self.jira_collection.findOne(query, query_options)?.jira_users?[0])?
                 proxy_user_id = APP.accounts.getUserByEmail(user_to_update.email)._id
                 actual_user_id = APP.accounts.getUserByEmail(email)._id
-                self.projects_collection.find({"members.user_id": proxy_user_id, "conf.justdo_jira:id": jira_doc_id}).forEach (proj_doc) ->
-                  APP.projects.removeMember proj_doc._id, proxy_user_id, proxy_user_id
-                  if not _.find(proj_doc.members, (member) -> member.user_id is actual_user_id)?
-                    APP.projects.inviteMember proj_doc._id, {email}
 
+                # Update jira_users array of jira_doc
                 ops =
                   $set:
                     "jira_users.$.email": email
                   $unset:
                     "jira_users.$.is_proxy": 1
-
                 self.jira_collection.update query, ops
+
+                # Replace project proxy user with actual user
+                self.projects_collection.find({"members.user_id": proxy_user_id, "conf.justdo_jira:id": jira_doc_id}).forEach (proj_doc) ->
+                  justdo_id = proj_doc._id
+
+                  APP.projects.removeMember justdo_id, proxy_user_id, proxy_user_id
+                  if not _.find(proj_doc.members, (member) -> member.user_id is actual_user_id)?
+                    APP.projects.inviteMember justdo_id, {email}
+
+                  # Replace task member
+                  tasks_to_add_members = self.tasks_collection.find({project_id: justdo_id, jira_project_id: {$ne: null}, users: proxy_user_id}, {fields: {_id: 1}}).map (task_doc) -> task_doc._id
+                  APP.projects.bulkUpdateTasksUsers justdo_id,
+                    tasks: tasks_to_add_members
+                    members_to_add: [actual_user_id]
+                  , self._getJustdoAdmin justdo_id
+
+                  # Replace task proxy user owner with actual user
+                  self.tasks_collection.update({project_id: justdo_id, jira_project_id: {$ne: null}, owner_id: proxy_user_id}, {$set: {owner_id: actual_user_id}, $unset: {is_removed_owner: 1}})
+
+                  return
 
               return
             .catch (err) -> console.error err
