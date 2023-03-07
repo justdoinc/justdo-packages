@@ -189,20 +189,7 @@ _.extend JustdoAccounts.prototype,
               @logger.error err
               cb(err)
               return
-
-            APP.justdo_files.removeOldAvatars {exclude: file_obj._id}, (err) =>
-              if err?
-                @logger.error err
-                cb(err)
-                return
-
-              user_id = Meteor.userId()
-
-              avatar_link = APP.justdo_files.avatars_collection.findOne({userId: user_id}).link()
-              Meteor.users.update(user_id, {$set: {"profile.profile_pic": avatar_link}})
-              cb(undefined)
-              return
-
+            cb(undefined)
             return
 
           upload.start()

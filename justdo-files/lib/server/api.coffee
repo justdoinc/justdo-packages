@@ -105,11 +105,21 @@ _.extend JustdoFiles.prototype,
             # Remove the temporary file, now that we stored it in mongodb
             @unlink @collection.findOne file._id
 
+            # Used by task files collection only.
             if (task_id = file?.meta?.task_id)?
               APP.justdo_permissions.runCbInIgnoredPermissionsScope =>
                 justdo_files_this.tasks_collection.update(task_id, {$inc: {"#{JustdoFiles.files_count_task_doc_field_id}": 1}})
 
                 return
+
+            # Used by avatar collection only.
+            if file?.meta?.is_avatar
+              avatar_user_id = file.userId
+              APP.justdo_files.removeOldAvatars {exclude: file._id}, avatar_user_id
+
+              avatar_link = justdo_files_this.avatars_collection.findOne(file._id).link()
+              Meteor.users.update(avatar_user_id, {$set: {"profile.profile_pic": avatar_link}})
+              return
 
           return
 
