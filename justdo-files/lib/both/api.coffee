@@ -101,16 +101,7 @@ _.extend JustdoFiles.prototype,
 
       downloadRoute: "/user-avatars/download"
 
-      protected: (file) ->
-        # A user can download a file only if he is a member of the task to which it is
-        # associated.
-
-        user_id = @user()?._id
-
-        if not user_id?
-          return 403
-
-        return true
+      protected: false
 
       onBeforeUpload: (file) ->
         if file.size <= self.options.max_file_size
