@@ -57,20 +57,6 @@ _.extend JustdoFiles.prototype,
     #
     return @tasks_files.find({"meta.task_id": task_id}).cursor
 
-  userAvatarsPublicationHandler: (publish_this, user_id) ->
-    check user_id, String
-
-    if _.isEmpty(user_id)
-      publish_this.stop()
-
-      return
-
-    #
-    # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-    # and to drop obsolete indexes (see AVATARS_COLLECTION_USERID_INDEX)
-    #
-    return @avatars_collection.find({userId: user_id}).cursor
-
   _setupOstrioFiles: ->
     justdo_files_this = @
     gfs = @gfs
