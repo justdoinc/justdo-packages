@@ -36,6 +36,8 @@ Template._loginDropdownAvatarArea.events
 
     APP.accounts.uploadNewAvatar file, (err) ->
       if err?
+        JustdoSnackbar.show
+          text: err
         APP.logger.error "Upload failed", err
 
       $dropdown_avatar.removeClass("loading")
