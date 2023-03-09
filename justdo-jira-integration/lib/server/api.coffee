@@ -1643,8 +1643,23 @@ _.extend JustdoJiraIntegration.prototype,
     if @ongoing_checkpoint
       @_stopOngoingCheckpoint()
 
+    if _.isString jira_doc
+      jira_doc_query =
+        $or: [
+          _id: jira_doc
+        ,
+          "server_info.id": jira_doc
+        ]
+      jira_doc_query_options =
+        fields:
+          "server_info.id": 1
+          last_data_integrity_check: 1
+          jira_projects: 1
+      jira_doc = @jira_collection.findOne jira_doc_query, jira_doc_query_options
+
     if not jira_doc?
       throw @_error "missing-argument"
+
     # The idea is to use epoch when searching in JQL to fetch everything.
     # Since we subtract data_integrity_margin_of_safety in ensureIssueDataIntegrityAndMarkCheckpoint, it is being added to the epoch.
     jira_doc.last_data_integrity_check = JustdoHelpers.getDateMsOffset JustdoJiraIntegration.data_integrity_margin_of_safety, new Date 0
