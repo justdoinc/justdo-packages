@@ -152,6 +152,33 @@ _.extend JustdoJiraIntegration.prototype,
           else
             req.fields[JustdoJiraIntegration.epic_link_custom_field_id] = "#{parent_task.jira_issue_key}"
 
+      # Get create issue metadata from Jira to add all required fields by using a default value
+      create_issue_meta_req =
+        issuetypeIds: default_issue_type.id
+        projectIds: jira_project_id
+        expand: "projects.issuetypes.fields"
+      {err, res} = self.pseudoBlockingJiraApiCallInsideFiber("issues.getCreateIssueMeta", create_issue_meta_req, client.v2)
+      if (create_issue_meta_fields = res.projects?[0]?.issuetypes?[0]?.fields)?
+        for field_id, field_def of create_issue_meta_fields
+          # Only add those that are required, doesn't have default value, and not already inside req.
+          if field_def.required and (not field_def.hasDefaultValue) and not _.has req.fields, field_id
+            field_type = field_def.schema?.type
+            default_field_val = null
+
+            if _.isEmpty field_def.allowedValues
+              if field_type in ["date", "datetime"]
+                default_field_val = new Date()
+              else if field_type is "number"
+                default_field_val = 0
+              else
+                default_field_val = "Default #{field_def.name} Value"
+            else
+              default_field_val = {id: field_def.allowedValues[0].id}
+              if field_type is "array"
+                default_field_val = [default_field_val]
+
+            req.fields[field_id] = default_field_val
+
       {err, res} = self.pseudoBlockingJiraApiCallInsideFiber "issues.createIssue", req, client.v2
       if err?
         throw self._error "jira-update-failed", "Failed to create issue.", err
