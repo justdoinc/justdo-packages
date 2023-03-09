@@ -108,6 +108,9 @@ _.extend JustdoJiraIntegration.prototype,
       task_creater_email = Meteor.users.findOne(user_id, {fields: {emails: 1}})?.emails?[0]?.address
       jira_account = self.getJiraUser justdo_id, {email: task_creater_email}
       jira_account_id_or_name = jira_account?[0]?.accountId or jira_account?[0]?.name
+      jira_doc_id = self.jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {_id: 1}})?._id
+
+      default_issue_type = self.getRankedIssueTypesInJiraProject(jira_doc_id, jira_project_id)[0][0]
 
       req =
         fields:
@@ -115,7 +118,9 @@ _.extend JustdoJiraIntegration.prototype,
             id: jira_project_id
           summary: doc.title or "#{justdo_id}:#{task_id}"
           issuetype:
-            name: "Task"
+            # the first [0] is the issue type rank, in our case it's the same level as Task/Bug/Story.
+            # the second [0] is to get the first issue type under rank 0
+            name: default_issue_type.name
           [JustdoJiraIntegration.project_id_custom_field_id]: justdo_id
           [JustdoJiraIntegration.task_id_custom_field_id]: task_id
           [JustdoJiraIntegration.last_updated_custom_field_id]: new Date()
