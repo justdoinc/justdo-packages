@@ -768,11 +768,16 @@ _.extend JustdoJiraIntegration.prototype,
     # Ensures all Jira project members has access to current Justdo
     @addJiraProjectMembersToJustdo justdo_id, jira_user_emails
 
-    # Add task members to the mounted task and associate task with Jira
+    # Associate task with Jira
     @tasks_collection.update task_id,
       $set:
         jira_project_id: jira_project_id
         jira_mountpoint_type: "root"
+
+    # Add task members to the mounted task
+    # When users is involved in task_collection.update, it should contain no other fields
+    # as required by grid data
+    @tasks_collection.update task_id,
       $addToSet:
         users:
           $each: user_ids_to_be_added_to_child_tasks
