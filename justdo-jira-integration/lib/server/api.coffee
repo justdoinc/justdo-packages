@@ -1088,6 +1088,8 @@ _.extend JustdoJiraIntegration.prototype,
       {err, res} = @pseudoBlockingJiraApiCallInsideFiber "board.getAllSprints", {boardId: board_id}, client
       if err?
         console.error err
+        # We can get err simply because the board doesn't have sprints enabled. Just ignore it.
+        continue
 
       sprints = res
 
