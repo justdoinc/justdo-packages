@@ -1309,7 +1309,10 @@ _.extend JustdoJiraIntegration.prototype,
 
       user_email = @jira_collection.findOne(query, query_options)?.jira_users?[0]?.email
 
-    return Accounts.findUserByEmail(user_email)._id
+    try
+      return Accounts.findUserByEmail(user_email)._id
+    catch e
+      return null
 
   getClientByHost: (host) ->
     jira_doc = @jira_collection.findOne({"server_info.url": host}, {fields: {"server_info": 1}})
