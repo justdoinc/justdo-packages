@@ -1654,7 +1654,7 @@ _.extend JustdoJiraIntegration.prototype,
     return
 
   isCheckpointAllowedToStart: (check_point) ->
-    return not @ongoing_checkpoint? or (check_point - @ongoing_checkpoint) > JustdoJiraIntegration.data_integrity_check_timeout
+    return not @ongoing_checkpoint? or (new Date(check_point) - new Date(@ongoing_checkpoint)) > JustdoJiraIntegration.data_integrity_check_timeout
 
   pseudoBlockingJiraApiCallInsideFiber: (api_group_and_resource, req_body, client) ->
     fiber = JustdoHelpers.requireCurrentFiber()
