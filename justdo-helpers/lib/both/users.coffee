@@ -223,11 +223,11 @@ _.extend JustdoHelpers,
       return _.sortBy users_docs, (user_doc) -> JustdoHelpers.displayName(user_doc).toLowerCase()
 
   userHasProfilePic: (user_doc) ->
+    # This function will return false for users that has the initials avatar
+
     # If profile pic beings with this string, we assume the user has a profile pic
     #   "http": Regular url
     #   "/": The path to profile pic uploaded to justdo-files
-    # For users with default profile pic with initials (i.e. no profile pic),
-    # they either doesn't have profile_pic field, or it starts with data:image/...
     identifying_prefixes = ["http", "/"]
 
     if not (profile_pic = user_doc.profile?.profile_pic)?
