@@ -20,6 +20,10 @@ _.extend JustdoAvatar,
   # check if an avatar exists, if not generate initials avatar, fallback to anonymous for non English inputs
   showAvatarOrFallback: (avatar_url, email, first_name, last_name, options) ->
     if avatar_url?
+      # If avatar_url is defined but userHasProfilePic returns false, assume avatar_url to be base64 image string.
+      if not JustdoHelpers.userHasProfilePic {profile: {profile_pic: avatar_url}}
+        return avatar_url
+
       if (client_type = JustdoHelpers.getClientType(env)) is "web-app"
         return JustdoHelpers.getCDNUrl avatar_url
 
@@ -27,14 +31,13 @@ _.extend JustdoAvatar,
       # Therefore in cases where avatar_url is a path (i.e. the avatar is uploaded to justdo-files),
       # we need to append the WEB_APP_ROOT_URL as the domain, since files inside justdo-files are served on web app only.
       if JustdoHelpers.getClientType(env) is "landing-app"
-        try
-          # If passing avatar_url to new URL() didn't throw an error, assume it's a full URL and return.
-          new URL avatar_url
-          return avatar_url
-        catch e
-          # If we get to this "catch", it means avatar_url is likely a path.
-          # We then construct a link using avatar_url and the domain of web app.
+        # If avatar_url begins with "/", assume it's a path.
+        # Construct a full URL with WEB_APP_ROOT_URL and return.
+        if avatar_url.substr(0, 1) is "/"
           return new URL(avatar_url, env.WEB_APP_ROOT_URL).toString()
+
+        # Else assume avatar_url is already a full url. Simply return.
+        return avatar_url
 
     if first_name? and last_name?
       return @getInitialsSvg email, first_name, last_name, options
