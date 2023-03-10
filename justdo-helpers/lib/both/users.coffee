@@ -223,12 +223,21 @@ _.extend JustdoHelpers,
       return _.sortBy users_docs, (user_doc) -> JustdoHelpers.displayName(user_doc).toLowerCase()
 
   userHasProfilePic: (user_doc) ->
-    identifying_prefix = "http" # If profile pic beings with this string, we assume the user has a profile pic
+    # If profile pic beings with this string, we assume the user has a profile pic
+    #   "http": Regular url
+    #   "/": The path to profile pic uploaded to justdo-files
+    # For users with default profile pic with initials (i.e. no profile pic),
+    # they either doesn't have profile_pic field, or it starts with data:image/...
+    identifying_prefixes = ["http", "/"]
 
     if not (profile_pic = user_doc.profile?.profile_pic)?
       return false
 
-    return profile_pic.substr(0, identifying_prefix.length) == identifying_prefix
+    for identifying_prefix in identifying_prefixes
+      if profile_pic.substr(0, identifying_prefix.length) == identifying_prefix
+        return true
+
+    return false
 
   isUserEmailsVerified: (user) ->
     # user:
