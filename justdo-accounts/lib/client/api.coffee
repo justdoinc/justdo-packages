@@ -45,22 +45,34 @@ _.extend JustdoAccounts.prototype,
             img.src = e.target.result
 
             img.onload = ->
-              canvas = document.createElement "canvas"
+              # We first crop the source image into a square, maintaining its resolution
+              canvas_for_cropping = document.createElement "canvas"
+
+              canvas_size = Math.min img.width, img.height
+              canvas_for_cropping.width = canvas_size
+              canvas_for_cropping.height = canvas_size
+
+              ctx_for_cropping = canvas_for_cropping.getContext("2d")
+              ctx_for_cropping.drawImage img, 0, 0
+
+              # Then we reduce the resolution of the cropped image to the width and height specified in parmeters
+              canvas_for_resizing = document.createElement "canvas"
 
               if width isnt "auto" and height isnt "auto"
-                canvas.width = width
-                canvas.height = height
+                canvas_for_resizing.width = width
+                canvas_for_resizing.height = height
               else if width isnt "auto"
-                canvas.width = width
-                canvas.height = img.height * width / img.width
+                canvas_for_resizing.width = width
+                canvas_for_resizing.height = img.height * width / img.width
               else if height isnt "auto"
-                canvas.height = height
-                canvas.width = img.width * height / img.height
+                canvas_for_resizing.height = height
+                canvas_for_resizing.width = img.width * height / img.height
 
-              ctx = canvas.getContext("2d")
-              ctx.drawImage img, 0, 0, canvas.width, canvas.height
+              ctx_for_resizing = canvas_for_resizing.getContext("2d")
+              ctx_for_resizing.drawImage canvas_for_cropping, 0, 0, canvas_for_resizing.width, canvas_for_resizing.height
 
-              canvas.toBlob (blob) =>
+              # Finally, convert the cropped and resized image back to an image file
+              canvas_for_resizing.toBlob (blob) =>
                 resized_img = new File [blob], file_name,
                   type: "image/#{type.toLowerCase()}"
                   lastModified: Date.now()
