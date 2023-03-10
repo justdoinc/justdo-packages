@@ -17,7 +17,7 @@ activeUploadProcess = ->
   return $(".dropdown-avatar").hasClass("loading")
 
 Template._loginDropdownAvatarArea.events
-  "click/change .upload-new-profile-pic": (e) ->
+  "click .upload-new-profile-pic, change .upload-new-profile-pic-with-justdo-files": (e) ->
     if not _.isString(avatar_upload_type = APP.accounts.getAvatarUploadType())
       return
 
