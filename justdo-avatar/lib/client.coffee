@@ -20,7 +20,21 @@ _.extend JustdoAvatar,
   # check if an avatar exists, if not generate initials avatar, fallback to anonymous for non English inputs
   showAvatarOrFallback: (avatar_url, email, first_name, last_name, options) ->
     if avatar_url?
-      return avatar_url
+      if (client_type = JustdoHelpers.getClientType(env)) is "web-app"
+        return JustdoHelpers.getCDNUrl avatar_url
+
+      # As of the time of writing, landing app isn't aware of the CDN domain of web app.
+      # Therefore in cases where avatar_url is a path (i.e. the avatar is uploaded to justdo-files),
+      # we need to append the WEB_APP_ROOT_URL as the domain, since files inside justdo-files are served on web app only.
+      if JustdoHelpers.getClientType(env) is "landing-app"
+        try
+          # If passing avatar_url to new URL() didn't throw an error, assume it's a full URL and return.
+          new URL avatar_url
+          return avatar_url
+        catch e
+          # If we get to this "catch", it means avatar_url is likely a path.
+          # We then construct a link using avatar_url and the domain of web app.
+          return new URL(avatar_url, env.WEB_APP_ROOT_URL).toString()
 
     if first_name? and last_name?
       return @getInitialsSvg email, first_name, last_name, options
