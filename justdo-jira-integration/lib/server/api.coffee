@@ -836,11 +836,22 @@ _.extend JustdoJiraIntegration.prototype,
     # Both works the same way except the latter one uses POST to support a larger query
     # For consistency with future development, only searchForIssuesUsingJqlPost() is used.
     issue_search_body =
-      jql: """project=#{jira_project_id} and "Parent Link" is empty and status!=done"""
+      jql: """project=#{jira_project_id} and "Parent Link" is empty and status!=done order by id desc"""
       maxResults: JustdoJiraIntegration.jql_issue_search_results_limit
       fields: relevant_jira_field_ids
     issue_search_cb = (res) =>
       {issues} = res
+      # Each call of issue_search_cb will return issues under the same parent (or issues with no parents), so the parent_key is the same.
+      parent_key = issues[0]?.fields.parent?.key or issues[0]?.fields[JustdoJiraIntegration.epic_link_custom_field_id]
+
+      # In case there is more than jql_issue_search_results_limit results, fetch the remaining issues.
+      if res.total > (new_start_at = res.startAt + res.maxResults)
+        same_level_issue_search_body = _.extend {}, issue_search_body, {startAt: new_start_at}
+        if parent_key?
+          same_level_issue_search_body.jql = """project=#{jira_project_id} and "Parent Link"=#{parent_key} and status!=done order by id desc"""
+        client.v2.issueSearch.searchForIssuesUsingJqlPost same_level_issue_search_body
+          .then issue_search_cb
+          .catch (err) -> console.error err
 
       while (issue = issues.shift())?
         issue_fields = issue.fields
@@ -848,7 +859,7 @@ _.extend JustdoJiraIntegration.prototype,
         parent_id = null
         path_to_add = "/#{task_id}/#{roadmap_mountpoint_task_id}/"
 
-        if (parent_key = issue_fields.parent?.key or issue_fields[JustdoJiraIntegration.epic_link_custom_field_id])?
+        if parent_key?
           if not (parent_task_id = @tasks_collection.findOne({project_id: justdo_id, jira_project_id: parseInt(jira_project_id), jira_issue_key: parent_key}, {fields: {_id: 1}})?._id)?
             issues.push issue
             # XXX Remove console.log when missing child issue is resolved.
@@ -872,9 +883,10 @@ _.extend JustdoJiraIntegration.prototype,
             last_webhook_connection_check: server_info.serverTime
         @jira_collection.update query, ops
 
+        # Fetch child issues
         if @getIssueTypeRank(issue_fields?.issuetype?.name, jira_project_id) > -1
-          jql = """project=#{jira_project_id} and "Parent Link"=#{issue.key} and status!=done """
-          client.v2.issueSearch.searchForIssuesUsingJqlPost {jql, maxResults: JustdoJiraIntegration.jql_issue_search_results_limit, fields: relevant_jira_field_ids}
+          child_issue_search_body = _.extend {}, issue_search_body, {jql: """project=#{jira_project_id} and "Parent Link"=#{issue.key} and status!=done order by id desc"""}
+          client.v2.issueSearch.searchForIssuesUsingJqlPost child_issue_search_body
             .then issue_search_cb
             .catch (err) -> console.error err
 
