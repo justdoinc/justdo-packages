@@ -1023,6 +1023,8 @@ _.extend GridControl.prototype,
     return
 
   getSchemaExtendedWithCustomFields: (include_removed_fields = false) ->
+    custom_fields_schema = @custom_fields_manager.getCustomFieldsSchema()
+
     same_tick_cache_id = @getSchemaExtendedWithCustomFieldsSameTickCacheId(include_removed_fields)
 
     if (sametick_cached_schema = JustdoHelpers.sameTickCacheGet(same_tick_cache_id))?
@@ -1032,9 +1034,6 @@ _.extend GridControl.prototype,
 
     if not @custom_fields_manager?
       return schema
-
-    custom_fields_schema =
-      @custom_fields_manager.getCustomFieldsSchema()
 
     _.extend schema, custom_fields_schema
 
