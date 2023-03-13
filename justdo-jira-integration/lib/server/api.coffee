@@ -1457,7 +1457,12 @@ _.extend JustdoJiraIntegration.prototype,
       throw @_error "fatal", "The queried Jira doc #{jira_doc._id} has no data integrity checkpoint - This shouldn't happen!"
       return
 
-    mounted_jira_project_ids = options?.jira_project_ids or _.keys jira_doc.jira_projects
+    if not (mounted_jira_project_ids = options?.jira_project_ids)?
+      mounted_jira_project_ids = []
+      for jira_project_id of jira_doc.jira_projects
+        jira_project_id = parseInt jira_project_id
+        if @tasks_collection.findOne({jira_project_id: jira_project_id}, {fields: {_id: 1}})?
+          mounted_jira_project_ids.push jira_project_id
 
     # Add margin of safety to last_checkpoint
     last_checkpoint = JustdoHelpers.getDateMsOffset -1 * JustdoJiraIntegration.data_integrity_margin_of_safety, new Date(last_checkpoint)
@@ -1502,9 +1507,9 @@ _.extend JustdoJiraIntegration.prototype,
       @_searchIssueUsingJqlUntilMaxResults jira_server_id, issue_search_body, server_info.serverTime, search_issue_using_jql_until_max_results_options, checkIssuesIntegrity
 
       # Resync sprints and fix versions for each project under the Jira instanxce
-      if _.isObject(jira_doc?.jira_projects) and not options?.sync_issues_only
+      if not _.isEmpty(mounted_jira_project_ids) and not options?.sync_issues_only
         agile_client = @clients[jira_server_id].agile
-        for jira_project_id of jira_doc.jira_projects
+        for jira_project_id in mounted_jira_project_ids
           @fetchAndStoreAllSprintsUnderJiraProject jira_project_id, {client: agile_client}
           @fetchAndStoreAllFixVersionsUnderJiraProject jira_project_id, {client: client}
           @fetchAndStoreAllUsersUnderJiraProject jira_project_id, {client: client}
