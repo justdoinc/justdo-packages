@@ -152,22 +152,6 @@ _.extend JustdoDbMigrations.prototype,
               if err?
                 throw new Error err
 
-          if items_to_assume_ownership_of_provided
-            items_to_assume_ownership_of_set = new Set(data.items_to_assume_ownership_of)
-            items_to_assume_ownership_of_actual = _.filter(items_ids, (item_id) -> items_to_assume_ownership_of_set.has(item_id))
-
-            if items_to_assume_ownership_of_actual.length > 0
-              items_to_assume_ownership_of_modifier =
-                $set:
-                  owner_id: perform_as
-                  pending_owner_id: null
-
-              APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(items_to_assume_ownership_of_modifier)
-              {err, result} = JustdoHelpers.pseudoBlockingRawCollectionUpdateInsideFiber(APP.collections.Tasks, {_id: {$in: items_to_assume_ownership_of_actual}}, items_to_assume_ownership_of_modifier, {multi: true})
-
-              if err?
-                throw new Error err
-
           if items_to_set_as_is_removed_owner_provided
             items_to_set_as_is_removed_owner_set = new Set(data.items_to_set_as_is_removed_owner)
             items_to_set_as_is_removed_owner_actual = _.filter(items_ids, (item_id) -> items_to_set_as_is_removed_owner_set.has(item_id))
