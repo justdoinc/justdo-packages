@@ -110,7 +110,7 @@ _.extend JustdoJiraIntegration.prototype,
       jira_account_id_or_name = jira_account?[0]?.accountId or jira_account?[0]?.name
       jira_doc_id = self.jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {_id: 1}})?._id
 
-      default_issue_type = self.getRankedIssueTypesInJiraProject(jira_doc_id, jira_project_id)[0][0]
+      default_issue_type_name = self.getRankedIssueTypesInJiraProject(jira_doc_id, jira_project_id)?[0]?[0]?.name or "Story"
 
       req =
         fields:
@@ -120,7 +120,7 @@ _.extend JustdoJiraIntegration.prototype,
           issuetype:
             # the first [0] is the issue type rank, in our case it's the same level as Task/Bug/Story.
             # the second [0] is to get the first issue type under rank 0
-            name: default_issue_type.name
+            name: default_issue_type_name
           [JustdoJiraIntegration.project_id_custom_field_id]: justdo_id
           [JustdoJiraIntegration.task_id_custom_field_id]: task_id
           [JustdoJiraIntegration.last_updated_custom_field_id]: new Date()
@@ -154,7 +154,7 @@ _.extend JustdoJiraIntegration.prototype,
 
       # Get create issue metadata from Jira to add all required fields by using a default value
       create_issue_meta_req =
-        issuetypeIds: default_issue_type.id
+        issuetypeNames: default_issue_type_name
         projectIds: jira_project_id
         expand: "projects.issuetypes.fields"
       {err, res} = self.pseudoBlockingJiraApiCallInsideFiber("issues.getCreateIssueMeta", create_issue_meta_req, client.v2)
