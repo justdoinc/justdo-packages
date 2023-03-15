@@ -1192,7 +1192,6 @@ _.extend Projects.prototype,
     members_to_add: Match.Maybe([String])
     members_to_remove: Match.Maybe([String])
     items_to_assume_ownership_of: Match.Maybe([String])
-    items_to_cancel_ownership_transfer_of: Match.Maybe([String])
   bulkUpdateTasksUsers: (project_id, options, user_id) ->
     # Requiring that user_id is a member of project_id is done as part of the
     # job's gatekeeper routine.
@@ -1207,7 +1206,6 @@ _.extend Projects.prototype,
               "members_to_add",
               "members_to_remove",
               "items_to_assume_ownership_of",
-              "items_to_cancel_ownership_transfer_of"
             ), {project_id: project_id})
 
     APP.justdo_db_migrations.registerBatchedCollectionUpdatesJob "add-remove-members-to-tasks",

@@ -69,13 +69,9 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
 
               items_to_edit = [item_id]
               items_to_assume_ownership_of = []
-              items_to_cancel_ownership_transfer_of = []
 
               if item_obj.owner_id in members_ids_to_remove
                 items_to_assume_ownership_of.push item_obj._id
-
-              if item_obj.pending_owner_id in members_ids_to_remove
-                items_to_cancel_ownership_transfer_of.push item_obj._id
 
               tree_traversing_options =
                 expand_only: false
@@ -87,16 +83,12 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
                 if item_obj.owner_id in members_ids_to_remove
                   items_to_assume_ownership_of.push item_obj._id
 
-                if item_obj.pending_owner_id in members_ids_to_remove
-                  items_to_cancel_ownership_transfer_of.push item_obj._id
-
               project.bulkUpdateTasksUsers
                 tasks: items_to_edit
                 user_perspective_root_items: [items_to_edit[0]]
                 members_to_add: members_ids_to_add
                 members_to_remove: members_ids_to_remove
                 items_to_assume_ownership_of: items_to_assume_ownership_of
-                items_to_cancel_ownership_transfer_of: items_to_cancel_ownership_transfer_of
 
               return confirm()
               
