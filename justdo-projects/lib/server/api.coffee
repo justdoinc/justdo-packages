@@ -1178,9 +1178,6 @@ _.extend Projects.prototype,
   #   items_to_assume_ownership_of:
   #     type: [String]
   #     optional: true
-  #   items_to_cancel_ownership_transfer_of:
-  #     type: [String]
-  #     optional: true
   _bulkUpdateTasksUsersOptionsCheckStructure:
     tasks: [String]
     user_perspective_root_items: Match.Maybe([String])
