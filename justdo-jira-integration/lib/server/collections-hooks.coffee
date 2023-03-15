@@ -411,20 +411,37 @@ _.extend JustdoJiraIntegration.prototype,
                 self.jira_collection.update query, ops
 
                 # Replace project proxy user with actual user
-                self.projects_collection.find({"members.user_id": proxy_user_id, "conf.justdo_jira:id": jira_doc_id}).forEach (proj_doc) ->
-                  justdo_id = proj_doc._id
+                justdo_id = doc._id
 
-                  APP.projects.removeMember justdo_id, proxy_user_id, proxy_user_id
-                  if not _.find(proj_doc.members, (member) -> member.user_id is actual_user_id)?
-                    APP.projects.inviteMember justdo_id, {email}
+                if not _.find(doc.members, (member) -> member.user_id is actual_user_id)?
+                  APP.projects.inviteMember justdo_id, {email}
 
-                  # Replace task member
-                  tasks_to_add_members = self.tasks_collection.find({project_id: justdo_id, jira_project_id: {$ne: null}, users: proxy_user_id}, {fields: {_id: 1}}).map (task_doc) -> task_doc._id
+                # Remove proxy user from justdo
+                APP.projects.removeMember justdo_id, proxy_user_id, proxy_user_id
+
+                # Replace task member
+                root_items = self.tasks_collection.find({project_id: justdo_id, jira_project_id: {$ne: null}, users: proxy_user_id, jira_mountpoint_type: "root"}, {fields: {_id: 1}}).map (task_doc) -> task_doc._id
+                tasks_to_add_members = []
+                tasks_to_transfer_ownership = []
+                self.tasks_collection.find({project_id: justdo_id, jira_project_id: {$ne: null}, users: proxy_user_id}, {fields: {_id: 1, owner_id: 1}})
+                  .forEach (task_doc) ->
+                    task_id = task_doc._id
+                    tasks_to_add_members.push task_id
+                    if task_doc.owner_id is proxy_user_id
+                      tasks_to_transfer_ownership.push task_id
+                    return
+
+                # Updates task users
+                if not _.isEmpty tasks_to_add_members
                   APP.projects.bulkUpdateTasksUsers justdo_id,
                     tasks: tasks_to_add_members
                     members_to_add: [actual_user_id]
-                  , self._getJustdoAdmin justdo_id
+                    members_to_remove: [proxy_user_id]
+                    user_perspective_root_items: root_items
+                    items_to_assume_ownership_of: tasks_to_transfer_ownership
+                  , actual_user_id
 
+                return
 
               return
             .catch (err) -> console.error err
