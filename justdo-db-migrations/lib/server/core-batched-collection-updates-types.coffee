@@ -130,6 +130,7 @@ _.extend JustdoDbMigrations.prototype,
                 $set:
                   owner_id: perform_as
                   pending_owner_id: null
+                  is_removed_owner: null
 
               APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(items_to_assume_ownership_of_modifier)
               {err, result} = JustdoHelpers.pseudoBlockingRawCollectionUpdateInsideFiber(APP.collections.Tasks, {_id: {$in: items_to_assume_ownership_of_actual}}, items_to_assume_ownership_of_modifier, {multi: true})
