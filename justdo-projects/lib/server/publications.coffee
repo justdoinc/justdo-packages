@@ -389,8 +389,7 @@ _.extend Projects.prototype,
 
         #
         # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
-        # and to drop obsolete indexes (see
-        # FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_INDEX/FETCH_PROJECT_TASKS_OF_SPECIFIC_USERS_WITH_RAW_UPDATED_DATE_INDEX there)
+        # and to drop obsolete indexes (see FETCH_PROJECT_TASKS_BY_SEQID_ASC there)
         #
         cursor = collection.find query, query_options
 
