@@ -425,11 +425,6 @@ _.extend JustdoJiraIntegration.prototype,
                     members_to_add: [actual_user_id]
                   , self._getJustdoAdmin justdo_id
 
-                  # Replace task proxy user owner with actual user
-                  Meteor.defer ->
-                    self.tasks_collection.update({_id: {$in: tasks_to_add_members}, owner_id: proxy_user_id}, {$set: {owner_id: actual_user_id}, $unset: {is_removed_owner: 1}}, {multi: true})
-
-                  return
 
               return
             .catch (err) -> console.error err
