@@ -116,11 +116,6 @@ _.extend JustdoDbMigrations.prototype,
 
             APP.projects._grid_data_com._removeIsRemovedOwnerForTasksBelongingTo(items_ids, data.members_to_add)
 
-          if members_to_remove_provided
-            APP.projects._grid_data_com._setPrivateDataDocsFreezeState(data.members_to_remove, items_ids, true)
-            # Important, if you change the logic here, note that in the process of removeMember
-            # we do something similar using a slight different API: _freezeAllProjectPrivateDataDocsForUsersIds
-
           if items_to_assume_ownership_of_provided
             items_to_assume_ownership_of_set = new Set(data.items_to_assume_ownership_of)
             items_to_assume_ownership_of_actual = _.filter(items_ids, (item_id) -> items_to_assume_ownership_of_set.has(item_id))
@@ -138,7 +133,41 @@ _.extend JustdoDbMigrations.prototype,
               if err?
                 throw new Error err
 
+          if members_to_remove_provided
+            APP.projects._grid_data_com._setPrivateDataDocsFreezeState(data.members_to_remove, items_ids, true)
+            # Important, if you change the logic here, note that in the process of removeMember
+            # we do something similar using a slight different API: _freezeAllProjectPrivateDataDocsForUsersIds
 
+            # Remove pending owner that're removed users
+            items_to_cancel_ownership_transfer_of_query =
+              _id:
+                $in: items_ids
+              project_id: data.project_id
+              pending_owner_id:
+                $in: data.members_to_remove
+            items_to_cancel_ownership_transfer_of_modifier =
+              $set:
+                pending_owner_id: null
+            APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(items_to_cancel_ownership_transfer_of_modifier)
+            {err, result} = JustdoHelpers.pseudoBlockingRawCollectionUpdateInsideFiber(APP.collections.Tasks, items_to_cancel_ownership_transfer_of_query, items_to_cancel_ownership_transfer_of_modifier, {multi: true})
+            if err?
+              throw new Error err
+
+            # Set is_removed_owner=true for tasks owned by removed users
+            items_to_set_as_is_removed_owner_query =
+              _id:
+                $in: items_ids
+              project_id: data.project_id
+              owner_id:
+                $in: data.members_to_remove
+            items_to_set_as_is_removed_owner_modifier =
+              $set:
+                is_removed_owner: true
+            APP.projects._grid_data_com._addRawFieldsUpdatesToUpdateModifier(items_to_set_as_is_removed_owner_modifier)
+            {err, result} = JustdoHelpers.pseudoBlockingRawCollectionUpdateInsideFiber(APP.collections.Tasks, items_to_set_as_is_removed_owner_query, items_to_set_as_is_removed_owner_modifier, {multi: true})
+
+            if err?
+              throw new Error err
 
           return
 
