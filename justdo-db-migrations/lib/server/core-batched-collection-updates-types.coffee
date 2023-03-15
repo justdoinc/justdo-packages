@@ -8,11 +8,8 @@ _.extend JustdoDbMigrations.prototype,
         members_to_remove_provided = data?.members_to_remove? and not _.isEmpty(data.members_to_remove)
 
         items_to_assume_ownership_of_provided = data?.items_to_assume_ownership_of? and not _.isEmpty(data.items_to_assume_ownership_of)
-        items_to_cancel_ownership_transfer_of_provided = data?.items_to_cancel_ownership_transfer_of? and not _.isEmpty(data.items_to_cancel_ownership_transfer_of)
 
-        items_to_set_as_is_removed_owner_provided = data?.items_to_set_as_is_removed_owner? and not _.isEmpty(data.items_to_set_as_is_removed_owner)
-
-        return {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided, items_to_cancel_ownership_transfer_of_provided, items_to_set_as_is_removed_owner_provided}
+        return {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided}
 
       job_type = "add-remove-members-to-tasks"
       @registerBatchedCollectionUpdatesType job_type,
@@ -36,13 +33,7 @@ _.extend JustdoDbMigrations.prototype,
             optional: true
           items_to_assume_ownership_of: # IMPORTANT:
                                         # 1. Allowed only if members_to_remove provided.
-                                        # 2. We will ignore items that aren't in members_to_remove without a warning.
-            type: [String]
-            optional: true
-          items_to_cancel_ownership_transfer_of: # IMPORANT: Same comment as the one left for items_to_assume_ownership_of
-            type: [String]
-            optional: true
-          items_to_set_as_is_removed_owner: # IMPORANT: Same comment as the one left for items_to_assume_ownership_of
+                                        # 2. We will ignore items that aren't in ids_to_update without a warning.
             type: [String]
             optional: true
           ensure_users_fully_removed_from_project_tasks_once_done:
@@ -65,7 +56,7 @@ _.extend JustdoDbMigrations.prototype,
               if not APP.projects.processHandlers("BeforeBulkUpdateExecution", data.project_id, ids_to_update, modifier, user_id)
                 throw self._error "invalid-job-data", "For jobs of type #{job_type} the BeforeBulkUpdateExecution handler failed"
 
-          {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided, items_to_cancel_ownership_transfer_of_provided, items_to_set_as_is_removed_owner_provided} = membersProvided(data)
+          {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided} = membersProvided(data)
 
           if not user_id? and items_to_assume_ownership_of_provided
             throw self._error "invalid-job-data", "For jobs of type #{job_type} triggered by the system (i.e. perform_as is null/undefined) the items_to_assume_ownership_of option can't be provided (there's is no performing user that can assume the ownership...)"
@@ -73,8 +64,8 @@ _.extend JustdoDbMigrations.prototype,
           if not members_to_add_provided and not members_to_remove_provided
             throw self._error "invalid-job-data", "For jobs of type #{job_type} at least one of the fields members_to_add/members_to_remove should be provided in the job's data object (and be non-empty)"
 
-          if not members_to_remove_provided and (items_to_assume_ownership_of_provided or items_to_cancel_ownership_transfer_of_provided or items_to_set_as_is_removed_owner_provided)
-            throw self._error "invalid-job-data", "For jobs of type #{job_type} items_to_assume_ownership_of and items_to_cancel_ownership_transfer_of are allowed only if members_to_remove is provided."
+          if not members_to_remove_provided and items_to_assume_ownership_of_provided
+            throw self._error "invalid-job-data", "For jobs of type #{job_type} items_to_assume_ownership_of are allowed only if members_to_remove is provided."
 
           user_perspective_root_items_provided = data?.user_perspective_root_items? and not _.isEmpty(data.user_perspective_root_items)
 
@@ -107,7 +98,7 @@ _.extend JustdoDbMigrations.prototype,
           return modifiers
 
         afterModifiersExecutionOps: (items_ids, data, perform_as) ->
-          {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided, items_to_cancel_ownership_transfer_of_provided, items_to_set_as_is_removed_owner_provided} = membersProvided(data)
+          {members_to_add_provided, members_to_remove_provided, items_to_assume_ownership_of_provided} = membersProvided(data)
 
           if members_to_add_provided
             APP.projects._grid_data_com._setPrivateDataDocsFreezeState(data.members_to_add, items_ids, false)
