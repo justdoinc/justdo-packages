@@ -8,9 +8,10 @@ _.extend JustdoFiles.prototype,
     Meteor.call "jdfRenameFile", file_id, new_filename, cb
     return
 
-  removeOldAvatars: (options, cb) ->
+  removeUserAvatar: (options, cb) ->
     if _.isFunction options
       cb = options
-      
-    Meteor.call "jdfRemoveOldAvatars", options, cb
+      options = {}
+
+    Meteor.call "jdfRemoveUserAvatar", options, cb
     return

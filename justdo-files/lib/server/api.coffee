@@ -101,7 +101,7 @@ _.extend JustdoFiles.prototype,
             # Used by avatar collection only.
             if file?.meta?.is_avatar
               avatar_user_id = file.userId
-              APP.justdo_files.removeOldAvatars {exclude: file._id}, avatar_user_id
+              APP.justdo_files.removeUserAvatar {exclude: file._id}, avatar_user_id
 
               # We store only the absolute path of the link to avatar in users collection
               # so that the avatar file can be cached by CDN if such is enabled.
@@ -303,7 +303,9 @@ _.extend JustdoFiles.prototype,
 
     return return_obj
 
-  removeOldAvatars: (options, user_id) ->
+  removeUserAvatar: (options, user_id) ->
+    check user_id, String
+
     if not (exclude = options?.exclude)?
       exclude = []
 
@@ -314,6 +316,6 @@ _.extend JustdoFiles.prototype,
     # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
     # and to drop obsolete indexes (see AVATARS_COLLECTION_USERID_INDEX)
     #
-    @avatars_collection.remove({_id: {$nin: exclude}, userId: user_id})
+    @avatars_collection.remove({_id: {$nin: exclude}, userId: user_id}, {multi: true})
 
     return

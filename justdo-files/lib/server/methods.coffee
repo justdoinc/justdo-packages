@@ -17,10 +17,10 @@ _.extend JustdoFiles.prototype,
 
         return
 
-      "jdfRemoveOldAvatars": (options) ->
+      "jdfRemoveUserAvatar": (options) ->
         check @userId, String
 
-        self.removeOldAvatars options, @userId
+        self.removeUserAvatar options, @userId
 
         return
 
