@@ -2,7 +2,7 @@ _.extend JustdoAccounts.prototype,
   getAvatarUploadType: ->
     env_vars = APP.env_rv.get()
 
-    if not _.isEmpty env_vars?.FILESTACK_KEY
+    if not _.isEmpty env_vars?.TASKS_FILES_UPLOAD_ENABLED is "true"
       return "filestack"
 
     if env_vars?.JUSTDO_FILES_ENABLED is "true"

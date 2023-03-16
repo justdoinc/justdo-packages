@@ -20,7 +20,7 @@
 # them to be ready, and it is better done here.
 
 APP.getEnv (env) ->
-  if not _.isEmpty(env.FILESTACK_KEY)
+  if env.TASKS_FILES_UPLOAD_ENABLED is "true"
     APP.filestack_base = new FilestackBase
       api_key: env.FILESTACK_KEY
       secret: if Meteor.isServer then env.FILESTACK_SECRET else null
