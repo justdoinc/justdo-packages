@@ -285,6 +285,13 @@ _.extend JustdoAccounts.prototype,
 
     return
 
+  removeUserAvatar: ->
+    Meteor.users.update(Meteor.userId(), {$unset: {"profile.profile_pic": 1}})
+    # Next, remove the avatar file in avatars collection.
+    # If the avatar was uploaded to Filestack, the method call below wouldn't do anything.
+    APP.justdo_files.removeUserAvatar()
+    return
+
   destroy: ->
     if @destroyed
       @logger.debug "Destroyed already"
