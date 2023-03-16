@@ -147,6 +147,10 @@ APP.executeAfterAppLibCode ->
     return
 
   addDisabledReasonIfNeccessary = (users, task_id) ->
+    if users.length is 1
+      addDisabledReason(users[0], "You are the last member of this task hence you cannot remove yourself from it")
+      return users
+
     for user in users
       if user._id == Meteor.userId()
         is_owner_result = _isOwnerOfAnySubTask(task_id)
