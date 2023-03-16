@@ -61,7 +61,7 @@ Template._loginDropdownAvatarArea.events
         confirm: label: "Confirm"
       callback: (result) ->
         if result
-          Meteor.users.update(Meteor.userId(), {$unset: {"profile.profile_pic": ""}})
+          APP.accounts.removeUserAvatar()
 
         return
 
