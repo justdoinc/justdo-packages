@@ -303,8 +303,11 @@ _.extend JustdoFiles.prototype,
 
     return return_obj
 
-  removeUserAvatar: (options, user_id) ->
-    check user_id, String
+  removeUserAvatar: (options, user_ids) ->
+    check user_ids, Match.OneOf String, [String]
+
+    if _.isString user_ids
+      user_ids = [user_ids]
 
     if not (exclude = options?.exclude)?
       exclude = []
@@ -316,6 +319,6 @@ _.extend JustdoFiles.prototype,
     # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
     # and to drop obsolete indexes (see AVATARS_COLLECTION_USERID_INDEX)
     #
-    @avatars_collection.remove({_id: {$nin: exclude}, userId: user_id}, {multi: true})
+    @avatars_collection.remove({_id: {$nin: exclude}, userId: {$in: user_ids}})
 
     return
