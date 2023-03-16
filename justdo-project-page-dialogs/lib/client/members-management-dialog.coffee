@@ -116,7 +116,7 @@ APP.executeAfterAppLibCode ->
     user_id = Meteor.userId()
 
     if task_doc?.owner_id == user_id
-      return true
+      return 1
 
     gd = APP.modules.project_page.gridData()
     task_path = gd?._grid_data_core.getAllCollectionPaths(task_id)?[0]
