@@ -72,6 +72,8 @@ APP.executeAfterAppLibCode -> # Could have been avoided if we could add the foll
       APP.collections.SystemRecords.upsert "maintain-parents2-tasks",
         $set:
           previous_checkpoint: current_checkpoint
+      ,
+        jd_analytics_skip_logging: true
 
       return num_processed
 
