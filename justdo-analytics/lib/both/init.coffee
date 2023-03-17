@@ -52,6 +52,11 @@ options_schema =
       optional: true
       bind_to_instance: false
 
+    ignore_skip_logging:
+      type: Boolean
+      optioal: true
+      bind_to_instance: false
+
 # options_schema
 # ==============
 #
