@@ -54,7 +54,7 @@ options_schema =
 
     ignore_skip_logging:
       type: Boolean
-      optioal: true
+      optional: true
       bind_to_instance: false
 
 # options_schema
