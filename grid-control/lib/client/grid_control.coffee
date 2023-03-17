@@ -1023,7 +1023,12 @@ _.extend GridControl.prototype,
     return
 
   getSchemaExtendedWithCustomFields: (include_removed_fields = false) ->
-    custom_fields_schema = @custom_fields_manager.getCustomFieldsSchema()
+    custom_fields_schema = @custom_fields_manager.getCustomFieldsSchema() # O(1) so no issue to do pre-caching + *required* to maintain expected reactivity.
+
+    if include_removed_fields
+      # We don't keep the returned value since in this stage we call getCustomFieldsSchema()
+      # only to ensure reactivity in case the cached version will be returned.
+      @removed_custom_fields_manager?.getCustomFieldsSchema() # O(1) so no issue to do pre-caching + *required* to maintain expected reactivity.
 
     same_tick_cache_id = @getSchemaExtendedWithCustomFieldsSameTickCacheId(include_removed_fields)
 
