@@ -34,8 +34,8 @@ _.extend JustdoSystemRecords.prototype,
 
   getRecord: (id) ->
     check id, String
-    
-    return @system_records_collection.findOne(id)
+
+    return @system_records_collection.findOne(id, {jd_analytics_skip_logging: true})
 
   _maintainBuiltinSystemRecords: ->
     # Maintain installed-versions
