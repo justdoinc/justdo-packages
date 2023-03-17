@@ -125,7 +125,7 @@ _.extend JustdoDbMigrations.prototype,
     query =
       _id: "completed-migrations"
       "completed_migrations.migration_id": migration_script_id
-    return APP.collections.SystemRecords.findOne(query, {fields: {_id: 1}})?
+    return APP.collections.SystemRecords.findOne(query, {fields: {_id: 1}, jd_analytics_skip_logging: true})?
 
   runMigrationScriptRunScript: (migration_script_id) ->
     if not migration_script_id of @registered_migration_scripts
