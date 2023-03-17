@@ -388,6 +388,8 @@ JustdoDbMigrations.perpetualMaintainer = (options) ->
       if checkpoint_val?
         APP.justdo_system_records.setRecord options.checkpoint_record_name,
           value: checkpoint_val
+        ,
+          jd_analytics_skip_logging: true
 
       return num_processed
 
@@ -402,6 +404,8 @@ JustdoDbMigrations.perpetualMaintainer = (options) ->
 
         APP.justdo_system_records.setRecord options.checkpoint_record_name,
           value: default_checkpoint
+        ,
+          jd_analytics_skip_logging: true
 
       return
 
