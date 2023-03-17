@@ -400,6 +400,7 @@ _.extend JustdoJiraIntegration.prototype,
         query_options =
           fields:
             refresh_token: 1
+          jd_analytics_skip_logging: true
         return {query, query_options}
       batchProcessor: (jira_collection_cursor) ->
         num_processed = 0
@@ -431,6 +432,7 @@ _.extend JustdoJiraIntegration.prototype,
           fields:
             server_info: 1
             refresh_token: 1
+          jd_analytics_skip_logging: true
         return {query, query_options}
       batchProcessor: (jira_collection_cursor) ->
         num_processed = 0
@@ -445,7 +447,7 @@ _.extend JustdoJiraIntegration.prototype,
               @logProgress "Client not exist for Jira instance #{jira_server_id}."
               return
 
-            if not (jira_issue_id = self.tasks_collection.findOne({jira_issue_id: {$ne: null}}, {sort: {jira_last_updated: -1}, fields: {jira_issue_id: 1, refresh_token: 1}})?.jira_issue_id)?
+            if not (jira_issue_id = self.tasks_collection.findOne({jira_issue_id: {$ne: null}}, {sort: {jira_last_updated: -1}, fields: {jira_issue_id: 1, refresh_token: 1}, jd_analytics_skip_logging: true})?.jira_issue_id)?
               @logProgress "No mounted issue found for Jira instance #{jira_server_id}."
               return
 
@@ -571,7 +573,7 @@ _.extend JustdoJiraIntegration.prototype,
       if token_secret?
         ops.$set.token_secret = token_secret
 
-      @jira_collection.upsert query, ops
+      @jira_collection.upsert query, ops, {jd_analytics_skip_logging: true}
 
       jira_clients_config.host = jira_client_host
       @clients[server_info.id] =
@@ -1043,7 +1045,7 @@ _.extend JustdoJiraIntegration.prototype,
     ops =
       $set:
         "jira_projects.#{jira_project_id}.issue_types": project.issueTypes
-    @jira_collection.update query, ops
+    @jira_collection.update query, ops, {jd_analytics_skip_logging: true}
 
     return
 
@@ -1088,7 +1090,7 @@ _.extend JustdoJiraIntegration.prototype,
     ops =
       $set:
         "jira_projects.#{jira_project_id}.fix_versions": fix_versions
-    @jira_collection.update query, ops
+    @jira_collection.update query, ops, {jd_analytics_skip_logging: true}
     return
 
   fetchAndStoreAllSprintsUnderJiraProject: (jira_project_id, options) ->
@@ -1115,7 +1117,7 @@ _.extend JustdoJiraIntegration.prototype,
       ops =
         $set:
           "jira_projects.#{jira_project_id}.sprints": sprints.values
-      @jira_collection.update query, ops
+      @jira_collection.update query, ops, {jd_analytics_skip_logging: true}
 
     return
 
@@ -1220,10 +1222,9 @@ _.extend JustdoJiraIntegration.prototype,
     query =
       "server_info.id": jira_server_id
     ops =
-      $addToSet:
-        jira_users:
-          $each: jira_user_objects
-    @jira_collection.update query, ops
+      $set:
+        jira_users: jira_user_objects
+    @jira_collection.update query, ops, {jd_analytics_skip_logging: true}
 
     return
 

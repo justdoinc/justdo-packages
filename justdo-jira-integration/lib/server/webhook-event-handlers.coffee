@@ -473,7 +473,7 @@ _.extend JustdoJiraIntegration.prototype,
         received_updated_date = new Date last_updated_changelog_item.toString
         if (last_update_date = @pending_connection_test?[jira_issue_id]?.date)? and (received_updated_date - last_update_date is 0)
           console.log "[justdo-db-migrations] [jira-webhook-healthcheck] Issue update received via webhook."
-          @jira_collection.update @pending_connection_test[jira_issue_id].jira_doc_id, {$set: {last_webhook_connection_check: new Date(req_body.timestamp)}}
+          @jira_collection.update @pending_connection_test[jira_issue_id].jira_doc_id, {$set: {last_webhook_connection_check: new Date(req_body.timestamp)}}, {jd_analytics_skip_logging: true}
           delete @pending_connection_test[jira_issue_id]
         return
 
