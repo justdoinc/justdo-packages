@@ -266,6 +266,9 @@ _.extend JustdoAnalytics.prototype,
 
       # Daniel C.
 
+      log_level = APP.logger.context.filterLevel.name
+      ignore_skip_logging = log_level is "DEBUG"
+
       for op in ["insert", "update", "upsert", "remove"]
         do (op) ->
           originalOp = self._collection[op]
@@ -276,7 +279,7 @@ _.extend JustdoAnalytics.prototype,
             skip_logging =
               (op in ["update", "upsert"] and args[2]?.jd_analytics_skip_logging)
 
-            if not skip_logging
+            if not skip_logging or ignore_skip_logging
               logMeteorMessage self._name, op, _.toArray(args)
 
             return originalOp.apply(self._collection, args)
@@ -291,7 +294,7 @@ _.extend JustdoAnalytics.prototype,
           skip_logging =
             (op in ["find", "findOne"] and args[1]?.jd_analytics_skip_logging)
 
-          if not skip_logging
+          if not skip_logging or ignore_skip_logging
             logMeteorMessage @_name, op, _.toArray(args)
 
           return originalOp.apply(@, args)
