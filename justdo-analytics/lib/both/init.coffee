@@ -56,6 +56,7 @@ options_schema =
       type: Boolean
       optional: true
       bind_to_instance: false
+      defaultValue: false
 
 # options_schema
 # ==============
