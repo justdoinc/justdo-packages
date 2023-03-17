@@ -25,6 +25,7 @@ APP.getEnv (env) ->
       options.log_server_status = env.JUSTDO_ANALYTICS_LOG_SERVER_STATUS is "true"
       options.log_server_status_interval = if not _.isEmpty(env.JUSTDO_ANALYTICS_LOG_SERVER_STATUS_INTERVAL_MS) then parseInt(env.JUSTDO_ANALYTICS_LOG_SERVER_STATUS_INTERVAL_MS) else null
       options.skip_encryption = env.JUSTDO_ANALYTICS_SKIP_ENCRYPTION is "true"
+      options.ignore_skip_logging = APP.logger.context.filterLevel.name is "DEBUG"
 
     # If an env variable affect this package load, check its value here
     # remember env vars are Strings
