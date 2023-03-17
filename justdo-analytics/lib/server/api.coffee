@@ -54,6 +54,9 @@ _.extend JustdoAnalytics.prototype,
     return true
 
   requireDevopsPublicKey: ->
+    if @options.skip_encryption
+      return
+
     if not @hasDevopsPublicKey()
       throw @_error "missing-devops-public-key"
 
