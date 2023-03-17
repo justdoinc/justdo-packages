@@ -22,13 +22,15 @@ _.extend JustdoSystemRecords.prototype,
 
     return
 
-  setRecord: (id, doc) ->
+  setRecord: (id, doc, options) ->
     check id, String
+    if options?
+      check options.jd_analytics_skip_logging, Boolean
 
     if not doc?
       doc = {}
 
-    @system_records_collection.upsert id, doc
+    @system_records_collection.upsert id, doc, {jd_analytics_skip_logging: options?.jd_analytics_skip_logging}
 
     return
 
