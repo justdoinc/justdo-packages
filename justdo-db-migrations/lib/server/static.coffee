@@ -133,6 +133,10 @@ JustdoDbMigrations.commonBatchedMigration = (options) ->
 
       getCursor = ->
         {query, query_options} = options.queryGenerator()
+
+        if query_options?.jd_analytics_skip_logging isnt false
+          query_options.jd_analytics_skip_logging = true
+
         query_options.limit = options.batch_size
         return options.collection.find(query, query_options)
 
