@@ -22,8 +22,6 @@ Package.onUse(function (api) {
   api.add_files("lib/settings.js", both);
   api.add_files("lib/both.coffee", both);
 
-  api.add_files("lib/server.coffee", server);
-
   api.add_files("lib/templates.html", client);
   api.add_files("lib/client.coffee", client);
   api.add_files("lib/styles.sass", client);
