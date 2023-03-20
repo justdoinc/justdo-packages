@@ -1207,7 +1207,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     {err, res} = @pseudoBlockingJiraApiCallInsideFiber "userSearch.findAssignableUsers", find_assignable_users_req, client
     if err?
-      console.error "[justdo-jira-integration] Failed to fetch users from project #{jira_project_id}", e
+      console.error "[justdo-jira-integration] Failed to fetch users from project #{jira_project_id}", err
       return
 
     users_info = res
