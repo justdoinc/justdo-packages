@@ -177,7 +177,12 @@ _.extend JustdoAccounts.prototype,
     for user_options in users_options
       if inviting_user_id?
         user_options.invited_by = inviting_user_id
+        
       user_options.is_proxy = true
+
+      if not user_options.profile.profile_pic?
+        user_options.profile.profile_pic = JustdoAvatar.showUserAvatarOrFallback user_options
+
       APP.emit("before-create-user", user_options)
       created_user_id = Accounts.createUser user_options
       created_user_ids.push created_user_id
