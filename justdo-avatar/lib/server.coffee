@@ -34,7 +34,7 @@ _.extend JustdoAvatar,
           style="stroke: white; stroke-width: 1.5px;" />
       """
     else
-      svg += """<svg><circle cx="#{svg_cx}" cy="#{svg_cy}" r="#{svg_r}" fill="#{avatar_bg}" />"""
+      svg += """<circle cx="#{svg_cx}" cy="#{svg_cy}" r="#{svg_r}" fill="#{avatar_bg}" />"""
 
     svg += """
         <text x="50%" y="50%" dy="0.4em" font-family="#{Settings.font_family}" fill="#{avatar_fg}" pointer-events="auto" text-anchor="middle" style="font-weight:400; font-size:#{Settings.font_size}px;">
