@@ -359,7 +359,9 @@ _.extend JustdoJiraIntegration.prototype,
       # When new member is added, replace proxy Jira user with the actual member and update jira_doc's jira_users email record.
       # The reason we do this in project collection instead of users collection is that it's costly to go over all existing users
       if (members_modifier = modifier?.$push?.members)?
-        jira_server_id = self.jira_collection.findOne(jira_doc_id, {fields: {"server_info.id": 1}}).server_info?.id
+        if not (jira_server_id = self.jira_collection.findOne(jira_doc_id, {fields: {"server_info.id": 1}})?.server_info?.id)?
+          return
+
         if not (client = self.clients[jira_server_id])?
           return
 
