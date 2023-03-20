@@ -1198,7 +1198,11 @@ _.extend JustdoJiraIntegration.prototype,
     if not client?
       throw @_error "client-not-found"
 
+    jira_project_id = parseInt jira_project_id
+
     jira_server_id = @getJiraServerIdFromApiClient client
+
+    justdo_id = @tasks_collection.findOne({jira_project_id}, {fields: {project_id: 1}})?.project_id
 
     find_assignable_users_req =
       project: jira_project_id
@@ -1213,12 +1217,16 @@ _.extend JustdoJiraIntegration.prototype,
 
     users_info = res
 
-    linked_jira_user_ids_set = new Set()
-    _.each @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {jira_users: 1}})?.jira_users, (user_info) ->
-      return linked_jira_user_ids_set.add user_info.jira_account_id
-    unlinked_users = _.filter users_info, (user_info) -> not linked_jira_user_ids_set.has user_info.accountId
+    jira_user_ids_set = new Set _.map users_info, (user_info) -> user_info.accountId
+    deleted_jira_users_justdo_user_email_set = new Set()
 
-    {jira_user_objects} = @_createProxyUserIfEmailNotRecognized unlinked_users, options
+    _.each @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {jira_users: 1}})?.jira_users, (user_info) ->
+      if not jira_user_ids_set.has(jira_account_id = user_info.jira_account_id)
+        deleted_jira_users_justdo_user_email_set.add user_info.email
+      return
+
+    options.justdo_id = justdo_id
+    {jira_user_objects} = @_createProxyUserIfEmailNotRecognized users_info, options
 
     query =
       "server_info.id": jira_server_id
@@ -1226,6 +1234,11 @@ _.extend JustdoJiraIntegration.prototype,
       $set:
         jira_users: jira_user_objects
     @jira_collection.update query, ops, {jd_analytics_skip_logging: true}
+
+    deleted_jira_users_justdo_user_email_set.forEach (email) ->
+      if (user_id = APP.accounts.getUserByEmail(email)?._id)?
+        APP.projects.removeMember justdo_id, user_id, user_id
+      return
 
     return
 
