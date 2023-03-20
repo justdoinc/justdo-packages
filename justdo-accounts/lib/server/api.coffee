@@ -214,6 +214,9 @@ _.extend JustdoAccounts.prototype,
     if not options.email? or not JustdoHelpers.common_regexps.email.test(options.email)
       throw @_error("invalid-email")
 
+    if not profile.profile_pic?
+      profile.profile_pic = JustdoAvatar.showUserAvatarOrFallback options
+
     if (signed_legal_docs = options.signed_legal_docs)?
       @requireLegalDocsExist(signed_legal_docs)
 
