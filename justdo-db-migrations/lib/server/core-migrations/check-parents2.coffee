@@ -56,14 +56,16 @@ APP.executeAfterAppLibCode ->
 
         return
 
-      APP.collections.SystemRecords.upsert "checked-parents2-tasks",
-        $set:
-          previous_checkpoint: current_checkpoint
+      APP.justdo_system_records.setRecord "checked-parents2-tasks",
+        previous_checkpoint: current_checkpoint
+      ,
+        jd_analytics_skip_logging: true
 
       if last_raw_updated_date?
-        APP.collections.SystemRecords.upsert "maintain-parents2-tasks",
-          $set:
-            previous_checkpoint: last_raw_updated_date
+        APP.justdo_system_records.setRecord "maintain-parents2-tasks",
+          previous_checkpoint: last_raw_updated_date
+        ,
+          jd_analytics_skip_logging: true
 
       return num_processed
 
