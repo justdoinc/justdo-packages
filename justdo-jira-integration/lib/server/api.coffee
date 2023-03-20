@@ -1173,13 +1173,14 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_server_id = @getJiraServerIdFromApiClient client
 
+    ret = {}
+
     justdo_member_emails = _.map @projects_collection.findOne(options.justdo_id, {fields: {members: 1}})?.members, (member) ->
       return APP.accounts.getUserById(member.user_id).emails[0].address
     emails_linked_to_jira_account = _.map @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {jira_users: 1}})?.jira_users, (user_info) ->
+      ret[user_info.jira_account_id] = user_info.email
       return user_info.email
     emails_not_linked_to_jira_account = _.without justdo_member_emails, ...emails_linked_to_jira_account
-
-    ret = {}
 
     for email in emails_not_linked_to_jira_account
       {err, res} = @pseudoBlockingJiraApiCallInsideFiber "userSearch.findUsers", {query: email}, client
