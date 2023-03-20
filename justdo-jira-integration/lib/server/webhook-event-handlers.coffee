@@ -384,27 +384,25 @@ _.extend JustdoJiraIntegration.prototype,
       console.error "[justdo-jira-integration] Failed to fetch user", err
       return
 
-    jira_doc_id = null # To be fetched
+    jira_server_id = @getJiraServerIdFromApiClient client
+    jira_doc_id = @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {_id: 1}})?._id
+
     {jira_user_objects, created_user_ids} = @_createProxyUserIfEmailNotRecognized res
     jira_user_email = jira_user_objects[0].email
-    
+
     if _.isEmpty created_user_ids
       created_user_id = APP.accounts.getUserByEmail(jira_user_email)._id
     else
       created_user_id = created_user_ids[0]
 
     query =
-      "conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}":
-        $ne: null
+      "conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": jira_doc_id
     query_options =
       fields:
         _id: 1
         "conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": 1
     # Add user to JustDos that are associated with Jira instance
     @projects_collection.find(query, query_options).forEach (project_doc) =>
-      if not _.isString jira_doc_id
-        jira_doc_id = project_doc.conf[JustdoJiraIntegration.projects_collection_jira_doc_id]
-
       justdo_id = project_doc._id
 
       tasks_query =
