@@ -655,4 +655,6 @@ _.extend JustdoJiraIntegration.prototype,
     # NOTE: THE FOLLOWING USERS RELATED HANDLERS ONLY SUPPORT SINGLE JIRA INSTANCE, REGARDLESS OF WHETHER CLOUD OR ON-PERM IS USED
     "user_created": (req_body) -> @_upsertJiraUser req_body, true
     "user_updated": (req_body) -> @_upsertJiraUser req_body
+    # user_deleted event will NOT be fired in Jira cloud: https://jira.atlassian.com/browse/JSDCLOUD-8611
+    # (The link is about Jira Service Management, but the issue is exactly the same.)
     "user_deleted": (req_body) -> return
