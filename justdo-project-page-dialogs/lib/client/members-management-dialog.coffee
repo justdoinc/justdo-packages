@@ -697,7 +697,7 @@ APP.executeAfterAppLibCode ->
       #
       # The purpose of user_perspective_root_items is plainly to help the user
       # figure out what this job is about.
-      user_perspective_root_items = op_object.data.user_perspective_root_items
+      user_perspective_root_items = op_object.data.user_perspective_root_items or []
 
       max_tasks_to_show_by_their_name = 3
       tasks_to_list_by_their_name = user_perspective_root_items.slice(0, max_tasks_to_show_by_their_name)
