@@ -13,25 +13,29 @@ Template._loginDropdownAvatarArea.helpers
 
   currentUserAvatarFields: -> Meteor.user({fields: JustdoAvatar.avatar_required_fields})
 
-activeUploadProcess = ->
-  return $(".dropdown-avatar").hasClass("loading")
+setUploadInProcess = -> $(".dropdown-avatar").addClass("loading")
+
+unsetUploadInProcess = ->
+  $(".dropdown-avatar").removeClass("loading")
+  $(".upload-new-profile-pic-with-justdo-files")?.val null
+  return
+
+isUploadinProcess = -> $(".dropdown-avatar").hasClass("loading")
 
 Template._loginDropdownAvatarArea.events
   "click .upload-new-profile-pic, change .upload-new-profile-pic-with-justdo-files": (e) ->
     if not _.isString(avatar_upload_type = APP.accounts.getAvatarUploadType())
       return
 
-    if activeUploadProcess()
+    if isUploadinProcess()
       console.log "Upload process already taking place"
-
       return
 
-    $dropdown_avatar = $(".dropdown-avatar")
-    $dropdown_avatar.addClass("loading")
+    setUploadInProcess()
 
     if avatar_upload_type is "justdo_files"
       if not (file = e.currentTarget?.files?[0])?
-        $dropdown_avatar.removeClass("loading")
+        unsetUploadInProcess()
         return
 
     APP.accounts.uploadNewAvatar file, (err) ->
@@ -40,14 +44,14 @@ Template._loginDropdownAvatarArea.events
           text: err
         APP.logger.error "Upload failed", err
 
-      $dropdown_avatar.removeClass("loading")
+      unsetUploadInProcess()
 
       return
 
     return
 
   "click .remove-profile-pic": ->
-    if activeUploadProcess()
+    if isUploadinProcess()
       APP.logger.debug "Can't remove avatar during upload process"
 
       return
