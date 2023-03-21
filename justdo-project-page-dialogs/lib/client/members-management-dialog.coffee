@@ -746,13 +746,16 @@ APP.executeAfterAppLibCode ->
           else
             message_arr.push "and #{tasks_werent_included_in_the_list_count} other tasks"
 
-      if op_object.process_status == "pending"
+      if (process_status = op_object.process_status) == "pending"
         message_arr.push "[About to begin]"
 
-      if op_object.process_status == "terminated"
+      if process_status == "done"
+        message_arr.push "[Done]"
+
+      if process_status == "terminated"
         message_arr.push "[Terminated]"
 
-      if op_object.process_status == "error"
+      if process_status == "error"
         message_arr.push "[Failed]"
 
       return getMessage()
