@@ -325,7 +325,11 @@ _.extend JustdoDbMigrations.prototype,
         created_by: user_id,
         $or: [
           {process_status: {$in: ["pending", "in-progress"]}},
-          {"process_status_details.closed_at": {$gte: JustdoHelpers.getDateMsOffset(-1 * closed_time_ttl)}}
+          $and: [
+            {"process_status_details.closed_at": {$gte: JustdoHelpers.getDateMsOffset(-1 * closed_time_ttl)}},
+            # This query is to exclude docs where the size of ids_to_update is smaller than batched_collection_updates_immediate_process_threshold_docs
+            {"ids_to_update.#{JustdoDbMigrations.batched_collection_updates_immediate_process_threshold_docs}": {$exists: true}}
+          ]
         ]
       }
     , {sort: {"process_status_details.created_at": 1}, fields: {_id: 1, data: 1, type: 1, process_status: 1, process_status_details: 1}})
