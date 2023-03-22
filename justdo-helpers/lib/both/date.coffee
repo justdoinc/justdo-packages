@@ -45,7 +45,7 @@ _.extend JustdoHelpers,
 
     return new Date(Math.min(...dates))
 
-  secondsToHumanReadable = (seconds) ->
+  secondsToHumanReadable: (seconds) ->
     minutes_in_second = 60
     hours_in_second = 60 * minutes_in_second
     days_in_second = 24 * hours_in_second
