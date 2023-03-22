@@ -322,14 +322,12 @@ _.extend JustdoDbMigrations.prototype,
     closed_time_ttl = 1000 * 60 * 5
     cursor = APP.collections.DBMigrationBatchedCollectionUpdates.find(
       {
-        created_by: user_id,
+        created_by: user_id
+        "process_status_details.total":
+          $gt: JustdoDbMigrations.batched_collection_updates_immediate_process_threshold_docs
         $or: [
           {process_status: {$in: ["pending", "in-progress"]}},
-          $and: [
-            {"process_status_details.closed_at": {$gte: JustdoHelpers.getDateMsOffset(-1 * closed_time_ttl)}},
-            # This query is to exclude docs where the size of ids_to_update is smaller than batched_collection_updates_immediate_process_threshold_docs
-            {"ids_to_update.#{JustdoDbMigrations.batched_collection_updates_immediate_process_threshold_docs}": {$exists: true}}
-          ]
+          {"process_status_details.closed_at": {$gte: JustdoHelpers.getDateMsOffset(-1 * closed_time_ttl)}},
         ]
       }
     , {sort: {"process_status_details.created_at": 1}, fields: {_id: 1, data: 1, type: 1, process_status: 1, process_status_details: 1}})
