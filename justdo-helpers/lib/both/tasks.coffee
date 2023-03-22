@@ -11,7 +11,11 @@ _.extend JustdoHelpers,
     if not _.isObject task
       task = @
 
-    return JustdoHelpers.ellipsis("##{task.seqId}: #{task.title or ""}", ellipsis)
+    common_name = "##{task.seqId}"
+    if task.title?
+      common_name += ": #{task.title}"
+
+    return JustdoHelpers.ellipsis(common_name, ellipsis)
 
   getTaskUrl: (project_id, task_id) ->
     base_link = "#{env.WEB_APP_ROOT_URL}/p/#{project_id}#&t=main"
