@@ -270,12 +270,7 @@ _.extend Projects.prototype,
           user_id: 1
       .fetch()
 
-    if APP.justdo_orgs?
-      org_id = options.org_id
-
-      APP.justdo_orgs.requireOrgNotLocked org_id
-      APP.justdo_orgs.requireUserAllowedToCreateJustDo org_id, user_id
-      project.org_id = org_id
+    @emit "pre-create-new-justdo", user_id, options, project
 
     project_id = @projects_collection.insert project
     
@@ -581,9 +576,6 @@ _.extend Projects.prototype,
       if not @isAdminOfProjectDoc(project_doc, inviting_user_id)
         throw @_error "admin-permission-required"
 
-      if justdo_orgs_enabled
-        APP.justdo_orgs.requireUserIsOrgAdmin org_id, inviting_user_id
-
       # We assume that if we didn't get reject from @isAdminOfProjectDoc
       # inviting_user_id exists, no need to check existence
       inviting_user_doc = Meteor.users.findOne(inviting_user_id)
@@ -629,8 +621,8 @@ _.extend Projects.prototype,
       if invited_user_id in @getMembersIdsFromProjectDoc(project_doc)
         throw @_error "member-already-exists"
 
-    if justdo_orgs_enabled
-      APP.justdo_orgs.inviteMembers org_id, invited_user_id, inviting_user_id
+
+    @emit "pre-invite-member-to-justdo", invited_user_id, inviting_user_id, project_doc
 
     #
     # Find whether user enrollment process completed already
