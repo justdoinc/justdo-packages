@@ -1280,14 +1280,16 @@ _.extend Projects.prototype,
     if not initiation_required
       throw @_error "initiation-performed-already"
 
-    Meteor.users.update user_id, {$set: {"justdo_projects.post_reg_init": true}}
-
     initiation_report = {
       first_project_created: false
     }
 
     if not @projects_collection.findOne({"members.user_id": user_id})?
-      initiation_report.first_project_created = @createNewProject({}, user_id)
+      options = {}
+      @emit "pre-create-first-project-for-new-user", user, options
+      initiation_report.first_project_created = @createNewProject(options, user_id)
+
+    Meteor.users.update user_id, {$set: {"justdo_projects.post_reg_init": true}}
 
     return initiation_report
 
