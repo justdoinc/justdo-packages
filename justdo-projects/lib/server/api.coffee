@@ -215,7 +215,6 @@ _.extend Projects.prototype,
   #
   createNewProject: (options, user_id) ->
     @requireLogin(user_id)
-    @emit "pre-create-new-justdo", user_id
 
     if not options?
       options = {}
