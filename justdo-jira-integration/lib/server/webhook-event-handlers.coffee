@@ -383,17 +383,17 @@ _.extend JustdoJiraIntegration.prototype,
     if err?
       console.error "[justdo-jira-integration] Failed to fetch user", err
       return
+    if not (jira_user = res)?
+      return
 
     jira_server_id = @getJiraServerIdFromApiClient client
     jira_doc_id = @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {_id: 1}})?._id
 
-    {jira_user_objects, created_user_ids} = @_createProxyUserIfEmailNotRecognized res
-    jira_user_email = jira_user_objects[0].email
+    if not (jira_user_email = @jira_collection.findOne({_id: jira_doc_id, "jira_users.jira_account_id": jira_user_id}, {fields: {"jira_users.$.email": 1}})?.jira_users?[0]?.email)?
+      {jira_user_objects, created_user_ids} = @_createProxyUserIfEmailNotRecognized res
+      jira_user_email = jira_user_objects[0].email
 
-    if _.isEmpty created_user_ids
-      created_user_id = APP.accounts.getUserByEmail(jira_user_email)._id
-    else
-      created_user_id = created_user_ids[0]
+    created_user_id = created_user_ids?[0] or APP.accounts.getUserByEmail(jira_user_email)._id
 
     query =
       "conf.#{JustdoJiraIntegration.projects_collection_jira_doc_id}": jira_doc_id
@@ -421,11 +421,19 @@ _.extend JustdoJiraIntegration.prototype,
 
       return
 
-    jira_ops =
-      $addToSet:
-        jira_users:
-          $each: jira_user_objects
-    @jira_collection.update jira_doc_id, jira_ops
+    jira_query =
+      _id: jira_doc_id
+    if not _.isEmpty jira_user_objects
+      jira_ops =
+        $addToSet:
+          jira_users:
+            $each: jira_user_objects
+    else
+      jira_query["jira_users.email"] = jira_user_email
+      jira_ops =
+        $set:
+          "jira_users.$.deleted": null
+    @jira_collection.update jira_query, jira_ops
 
     return
 
