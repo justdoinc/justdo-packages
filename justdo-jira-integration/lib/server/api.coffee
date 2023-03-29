@@ -1202,8 +1202,6 @@ _.extend JustdoJiraIntegration.prototype,
 
     jira_server_id = @getJiraServerIdFromApiClient client
 
-    justdo_id = @tasks_collection.findOne({jira_project_id}, {fields: {project_id: 1}})?.project_id
-
     find_assignable_users_req =
       project: jira_project_id
     # Jira server API supports project key only for findAssignableUsers()
@@ -1218,12 +1216,23 @@ _.extend JustdoJiraIntegration.prototype,
     users_info = res
 
     jira_user_ids_set = new Set _.map users_info, (user_info) -> user_info.accountId
-    deleted_jira_users_justdo_user_email_set = new Set()
+    deleted_jira_users_emails = new Set()
+    deleted_jira_users_doc = []
 
     _.each @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {jira_users: 1}})?.jira_users, (user_info) ->
       if not jira_user_ids_set.has(jira_account_id = user_info.jira_account_id)
-        deleted_jira_users_justdo_user_email_set.add user_info.email
+        deleted_jira_users_emails.add user_info.email
+        user_info.deleted = true
+        deleted_jira_users_doc.push user_info
       return
+
+    deleted_jira_users_emails = Array.from deleted_jira_users_emails
+
+    if _.isEmpty deleted_jira_users_emails
+      justdo_id = @tasks_collection.findOne({jira_project_id}, {fields: {project_id: 1}})?.project_id
+    else
+      tasks_to_remove_member = @tasks_collection.find({jira_project_id}, {fields: {project_id: 1}}).fetch()
+      justdo_id = tasks_to_remove_member[0]?.project_id
 
     options.justdo_id = justdo_id
     {jira_user_objects} = @_createProxyUserIfEmailNotRecognized users_info, options
@@ -1232,13 +1241,19 @@ _.extend JustdoJiraIntegration.prototype,
       "server_info.id": jira_server_id
     ops =
       $set:
-        jira_users: jira_user_objects
+        jira_users: jira_user_objects.concat deleted_jira_users_doc
     @jira_collection.update query, ops, {jd_analytics_skip_logging: true}
 
-    deleted_jira_users_justdo_user_email_set.forEach (email) ->
+    deleted_user_ids = []
+    for email in deleted_jira_users_emails
       if (user_id = APP.accounts.getUserByEmail(email)?._id)?
-        APP.projects.removeMember justdo_id, user_id, user_id
-      return
+        deleted_user_ids.push user_id
+
+    if not _.isEmpty deleted_user_ids
+      APP.projects.bulkUpdateTasksUsers justdo_id,
+        tasks: _.map tasks_to_remove_member, (doc) -> doc._id
+        members_to_remove: deleted_user_ids
+      , @_getJustdoAdmin justdo_id
 
     return
 
