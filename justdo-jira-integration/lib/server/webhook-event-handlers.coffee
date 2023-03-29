@@ -367,7 +367,7 @@ _.extend JustdoJiraIntegration.prototype,
     return
 
   # XXX This method strictly support only one Jira instance
-  _upsertJiraUser: (req_body, create_new_user=false) ->
+  _upsertJiraUser: (req_body) ->
     jira_user_id = req_body.user.key or req_body.user.accountId
 
     if not (client = _.values(@clients)?[0])?
@@ -653,7 +653,7 @@ _.extend JustdoJiraIntegration.prototype,
     "sprint_closed": (req_body) -> @_updateSprintTask req_body
     "sprint_deleted": (req_body) -> @_deleteSprintTask req_body
     # NOTE: THE FOLLOWING USERS RELATED HANDLERS ONLY SUPPORT SINGLE JIRA INSTANCE, REGARDLESS OF WHETHER CLOUD OR ON-PERM IS USED
-    "user_created": (req_body) -> @_upsertJiraUser req_body, true
+    "user_created": (req_body) -> @_upsertJiraUser req_body
     "user_updated": (req_body) -> @_upsertJiraUser req_body
     # user_deleted event will NOT be fired in Jira cloud: https://jira.atlassian.com/browse/JSDCLOUD-8611
     # (The link is about Jira Service Management, but the issue is exactly the same.)
