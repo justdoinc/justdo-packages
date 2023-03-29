@@ -425,7 +425,7 @@ _.extend JustdoJiraIntegration.prototype,
                 root_items = self.tasks_collection.find({project_id: justdo_id, jira_project_id: {$ne: null}, users: proxy_user_id, jira_mountpoint_type: "root"}, {fields: {_id: 1}}).map (task_doc) -> task_doc._id
                 tasks_to_add_members = []
                 tasks_to_transfer_ownership = []
-                self.tasks_collection.find({project_id: justdo_id, jira_project_id: {$ne: null}, users: proxy_user_id}, {fields: {_id: 1, owner_id: 1}})
+                self.tasks_collection.find({project_id: justdo_id, users: proxy_user_id}, {fields: {_id: 1, owner_id: 1}})
                   .forEach (task_doc) ->
                     task_id = task_doc._id
                     tasks_to_add_members.push task_id
