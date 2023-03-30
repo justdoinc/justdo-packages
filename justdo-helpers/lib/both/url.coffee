@@ -21,3 +21,9 @@ _.extend JustdoHelpers,
     url = @normaliseUrl url
 
     return url.pathname + url.search
+
+  getRootUrl: ->
+    if not (root_url = document?.location?.origin)? and not (root_url = process.env.ROOT_URL)?
+      return undefined
+
+    return root_url
