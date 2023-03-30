@@ -30,7 +30,7 @@ first_call = true
 _.extend JustdoHelpers,
   isPocPermittedDomains: (root_url) ->
     if not root_url?
-      if not (root_url = getCurrentUrl())?
+      if not (root_url = @getRootUrl())?
         return false
     
     if root_url in poc_permitted_domains
@@ -49,7 +49,7 @@ _.extend JustdoHelpers,
 
   isPocPermittedDomainsOrBeta: (root_url) ->
     if not root_url?
-      if not (root_url = getCurrentUrl())?
+      if not (root_url = @getRootUrl())?
         return false
 
     if root_url in beta_domains
