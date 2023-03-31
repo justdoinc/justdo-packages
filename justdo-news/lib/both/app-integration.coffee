@@ -19,11 +19,8 @@
 # this package, or even if you use them inside the constructor, you need to wait for
 # them to be ready, and it is better done here.
 
-APP.getEnv (env) ->
+# APP.getEnv (env) ->
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
 
-  options = {}
-  APP.justdo_news = new JustdoNews(options)
-
-  return
+APP.justdo_news = new JustdoNews()
