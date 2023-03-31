@@ -1,0 +1,16 @@
+<template name="v3_133_news">
+  <div class="date">{{date}}</div>
+  <div class="news-content">
+    {{#each news}}
+      {{> news_card}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="v3_133_features">
+  <div class="updates-content">
+    {{#each updates}}
+      {{> updates_card}}
+    {{/each}}
+  </div>
+</template>

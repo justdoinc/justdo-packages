@@ -72,6 +72,20 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
+  api.addAssets([
+    "lib/client/news/v3-133/assets/2023_03_10_6.jpg"
+  ], client)
+  api.addFiles("lib/client/news/v3-133/v3-133.coffee", client);
+  api.addFiles("lib/client/news/v3-133/v3-133.html", client);
+  api.addAssets([
+    "lib/client/news/v3-134/assets/2023_03_10_1.jpg",
+    "lib/client/news/v3-134/assets/2023_03_10_3.jpg",
+    "lib/client/news/v3-134/assets/2023_03_10_5.jpg",
+    "lib/client/news/v3-134/assets/2023_03_10_6.jpg",
+  ], client)
+  api.addFiles("lib/client/news/v3-134/v3-134.coffee", client);
+  api.addFiles("lib/client/news/v3-134/v3-134.html", client);
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);
