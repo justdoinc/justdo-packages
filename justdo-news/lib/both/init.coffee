@@ -104,8 +104,6 @@ JustdoNews = (options) ->
 
   @_on_destroy_procedures = []
 
-  @_attachCollectionsSchemas()
-
   if Meteor.isClient
     # React to invalidations
     if Tracker.currentComputation?
