@@ -19,9 +19,3 @@ _.extend JustdoNews.prototype,
       return
 
     return
-
-  isPluginInstalledOnProjectDoc: (project_doc) ->
-    return APP.projects.isPluginInstalledOnProjectDoc(JustdoNews.project_custom_feature_id, project_doc)
-
-  getProjectDocIfPluginInstalled: (project_id) ->
-    return @projects_collection.findOne({_id: project_id, "conf.custom_features": JustdoNews.project_custom_feature_id})
