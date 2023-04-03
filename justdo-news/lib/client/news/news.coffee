@@ -39,7 +39,14 @@ Template.news.onRendered ->
 Template.news.helpers
   getActiveNewsTitle: -> Template.instance().active_news_doc.get()?.title
 
+  otherNews: ->
+    tpl = Template.instance()
+    return APP.justdo_news.getAllNewsByCategory(tpl.active_category_rv.get())
 
+  isNewsActive: ->
+    if @_id is Template.instance().active_news_id_rv.get()
+      return "text-secondary"
+    return
 
   activeNewsTemlates: ->
     tpl = Template.instance()
@@ -72,8 +79,7 @@ Template.news.events
 
   "click .dropdown-item": (e, tpl) ->
     active_category = tpl.active_category_rv.get()
-    news_id = $(e.target).closest(".dropdown-item").text()
-    news_id = news_id.replace ".", "-"
+    news_id = $(e.target).closest(".dropdown-item").data("news_id")
     Router.go "#{active_category.replaceAll "-", "_"}_page_with_news_id",
       news_category: active_category
       news_id: news_id

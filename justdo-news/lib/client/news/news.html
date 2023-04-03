@@ -7,8 +7,8 @@
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
         </div>
         <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
-          {{#each versions}}
-            <li><a class="dropdown-item">{{this}}</a></li>
+          {{#each otherNews}}
+            <li><a class="dropdown-item {{isNewsActive}}" data-news_id="{{_id}}">{{title}}</a></li>
           {{/each}}
         </ul>
       </div>
