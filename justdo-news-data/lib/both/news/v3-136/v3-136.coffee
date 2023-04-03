@@ -60,4 +60,8 @@ APP.executeAfterAppLibCode ->
     news: -> news
     date: -> moment(DATE, "YYYY-MM-DD").format "DD MMMM YYYY"
   Template.v3_136_features.helpers
-    updates: -> _.map updates, (update) -> update.date = moment(DATE, "YYYY-MM-DD").format("DD MMMM YYYY")
+    updates: ->
+      updates =  _.map updates, (update) ->
+        update.date = moment(DATE, "YYYY-MM-DD").format "DD MMMM YYYY"
+        return update
+      return updates
