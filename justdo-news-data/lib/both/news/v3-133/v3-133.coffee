@@ -5,7 +5,7 @@ news = [
   {
     "title": "Add filter to the quick add bootbox destination selector and owner selector"
     "subtitle": "Load more button long emails improvements"
-    "media_url": "/packages/justdoinc_justdo-news/lib/client/news/v3-133/assets/2023_03_10_6.jpg"
+    "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-133/assets/2023_03_10_6.jpg"
   }
 ]
 
@@ -34,6 +34,9 @@ APP.executeAfterAppLibCode ->
       template_name: "#{VERSION.replace "-", "_"}_features"
       name: "Other Updates"
     ]
+
+  if Meteor.isServer
+    return
 
   Template.v3_133_news.helpers
     news: -> news

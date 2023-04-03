@@ -5,22 +5,22 @@ news = [
   {
     "title": "New landing page"
     "subtitle": "Introducing Our Refreshed Landing Page 🎉"
-    "media_url": "/packages/justdoinc_justdo-news/lib/client/news/v3-136/assets/2023_03_10_1.jpg"
+    "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-136/assets/2023_03_10_1.jpg"
   },
   {
     "title": "Custom states"
     "subtitle": "Boost your workflow efficiency with our latest addition - Custom States. Tailor task states to suit your unique project needs and track progress with greater precision."
-    "media_url": "/packages/justdoinc_justdo-news/lib/client/news/v3-136/assets/2023_03_10_3.jpg"
+    "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-136/assets/2023_03_10_3.jpg"
   },
   {
     "title": "Stay Informed with On-Grid Unread Emails Indicator"
     "subtitle": "Never miss important updates again! Our new On-Grid Unread Emails Indicator keeps you informed about unread emails within tasks, ensuring efficient communication and prompt action."
-    "media_url": "/packages/justdoinc_justdo-news/lib/client/news/v3-136/assets/2023_03_10_5.jpg"
+    "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-136/assets/2023_03_10_5.jpg"
   },
   {
     "title": "Enhanced Filters for Quick Add Dialog"
     "subtitle": "Boost your productivity with our newly added filters for the Quick Add Bootbox Destination and Owner Selector. Streamline task creation by finding the right destination and owner with ease."
-    "media_url": "/packages/justdoinc_justdo-news/lib/client/news/v3-136/assets/2023_03_10_6.jpg"
+    "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-136/assets/2023_03_10_6.jpg"
   }
 ]
 
@@ -39,7 +39,7 @@ updates = [
 ]
 
 APP.executeAfterAppLibCode ->
-  APP.justdo_news.registerNews "news", 
+  APP.justdo_news.registerNews "news",
     _id: VERSION
     title: VERSION.replace "-", "."
     aliases: ["#{VERSION}-x"]
@@ -53,6 +53,9 @@ APP.executeAfterAppLibCode ->
       template_name: "#{VERSION.replace "-", "_"}_features"
       name: "Other Updates"
     ]
+
+  if Meteor.isServer
+    return
 
   Template.v3_136_news.helpers
     news: -> news
