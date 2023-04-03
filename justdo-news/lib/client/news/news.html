@@ -1,0 +1,48 @@
+<template name="news">
+  <div class="news">
+    <div class="news-navigation container">
+      <div class="versions-dropdown dropdown">
+        <div class="versions-dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{getActiveVersion}}
+          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
+        </div>
+        <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
+          {{#each versions}}
+            <li><a class="dropdown-item">{{this}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+
+      {{#with activeVersionTemlates}}
+        {{#each templates}}
+          <div class="news-navigation-item {{isTabActive _id}}" data-tab_id="{{_id}}">{{name}}</div>
+        {{/each}}
+      {{/with}}
+    </div>
+
+    {{> Template.dynamic template=getActiveTemplateForVersion}}
+
+  </div>
+</template>
+
+<template name="news_card">
+  <div class="news-item">
+    <div class="news-title"><div class="text">{{title}}</div></div>
+    <div class="news-subtitle">{{subtitle}}</div>
+    <img class="news-media" src="{{media_url}}" alt="image">
+  </div>
+</template>
+
+<template name="updates_card">
+  <div class="updates">
+    <div class="update-title-wrapper">
+      <div class="update-title">{{{xssGuard title}}}</div>
+      <div class="update-date">{{{xssGuard date}}}</div>
+    </div>
+    <div class="updates-list">
+      {{#each update_items}}
+        <div class="update-item">{{{xssGuard this}}}</div>
+      {{/each}}
+    </div>
+  </div>
+</template>

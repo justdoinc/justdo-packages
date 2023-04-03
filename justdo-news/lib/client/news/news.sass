@@ -1,0 +1,156 @@
+.news
+  display: flex
+  flex-direction: column
+  flex-grow: 1
+
+.news.fixed-nav
+  .news-navigation
+    position: fixed
+    right: 20px
+    left: 20px
+    top: 0
+    backdrop-filter: blur(5px)
+    &.container
+      padding-left: 15px
+      padding-right: 15px
+
+.news-navigation
+  display: flex
+  align-items: center
+  padding: 20px 0
+  background-color: rgba(255, 255, 255, 0.85)
+  top: -100px
+  transition: top 0.25s ease-in-out
+  &.container
+    flex-direction: row
+    padding-left: 0
+    padding-right: 0
+    flex-grow: 0
+
+  .versions-dropdown
+    border-right: 1px solid #E0E2E6
+    padding-right: 24px
+    margin-right: 24px
+
+  .versions-dropdown-btn
+    background: linear-gradient(90deg, #027bff 0%, #07A6FF 100%)
+    padding: 8px 12px 8px 16px
+    border-radius: 4px
+    display: flex
+    align-items: center
+    cursor: pointer
+    transition: background-color 0.35s
+    color: white
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)
+    &:hover
+      background-color: rgba(2, 123, 255, 0.2)
+    .jd-icon
+      width: 16px
+      height: 16px
+      margin-left: 6px
+
+  .news-navigation-item
+    color: rgba(49, 69, 99, 0.75)
+    margin-right: 24px
+    cursor: pointer
+    transition: color 0.35s
+    font-size: 16px
+    &:hover
+      color: rgba(49, 69, 99, 1)
+    &.active
+      font-weight: bold
+      color: black
+      border-bottom: 2px solid black
+
+.date
+  font-size: 14px
+  font-style: italic
+  color: #3e4850
+  
+.news-content
+  padding-top: 20px
+  .news-item
+    max-width: 1000px
+    border-left: 4px solid rgba(106, 125, 143, 0.2)
+    margin-bottom: 80px
+    padding-left: 35px
+    .news-title
+      .text
+        font-weight: bold
+        font-size: 24px
+        line-height: 34px
+    .news-subtitle
+      font-size: 16px
+      line-height: 27px
+      color: #6A7D8F
+      margin-top: 8px
+    .news-media
+      width: 100%
+      max-width: 800px
+      height: auto
+      background: rgba(1, 179, 255, 0.21)
+      border-radius: 22px
+      margin-top: 25px
+
+.updates-content
+  padding-top: 20px
+  flex-grow: 1
+  .updates
+    display: flex
+  .update-title-wrapper
+    width: 200px
+    flex-shrink: 0
+    text-align: right
+  .update-title
+    font-size: 26px
+    font-weight: bold
+  .update-date
+    font-weight: bold
+    font-size: 15px
+    color: rgba(106, 125, 143, 0.75)
+  .updates-list
+    max-width: 800px
+    border-left: 4px solid rgba(106, 125, 143, 0.2)
+    margin-bottom: 60px
+    padding-left: 32px
+    margin-left: 32px
+  .update-item
+    color: #6A7D8F
+  .update-item + .update-item
+    margin-top: 12px
+
+@media (max-width: 992px)
+  .news-content
+    .news-item
+      border: none
+      padding-left: 0px
+    .news-media
+      border-radius: 16px
+  .updates-content
+    .updates
+      flex-direction: column !important
+    .update-title-wrapper
+      width: auto !important
+      text-align: left !important
+    .updates-list
+      max-width: none !important
+      border-left: none !important
+      margin-bottom: 60px !important
+      padding-left: 0 !important
+      margin-left: 0 !important
+      padding-top: 16px !important
+      margin-top: 16px !important
+      border-top: 4px solid rgba(106, 125, 143, 0.2) !important
+
+@media print
+  .news.fixed-nav
+    margin-top: 0px !important
+    .news-navigation
+      position: initial
+    .news-navigation.container
+      padding-left: 0px
+      padding-right: 0px
+  .news-item
+    break-inside: avoid
+  footer
+    display: none !important
