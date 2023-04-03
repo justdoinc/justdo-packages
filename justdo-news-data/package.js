@@ -68,7 +68,6 @@ Package.onUse(function (api) {
     "lib/both/news/v3-136/assets/2023_03_10_6.jpg",
   ], client)
   api.addFiles("lib/both/news/v3-136/v3-136.coffee", both);
-  api.addFiles("lib/both/news/v3-136/v3-136.html", client);
 
   api.export("JustdoNewsData", both);
 });
