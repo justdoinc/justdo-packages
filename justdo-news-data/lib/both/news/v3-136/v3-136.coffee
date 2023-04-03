@@ -27,7 +27,6 @@ news = [
 updates = [
   {
     "title": "Improvements"
-    "date": "31 March 2023"
     "update_items": [
       "1. Performance improvement for operations that involves updates to more than 1k tasks, in particular, changing tasks members of a sub-tree bigger than 1k users.",
       "2. Activity tab: Fix activity log not showing correctly if it is a parent-add and the parent is removed <a href='https://drive.google.com/file/d/1StWLN86xWT2hlafgyG8pdwB2aBPJipD6/view?usp=share_link' target='blank'>video</a>.",
@@ -61,4 +60,4 @@ APP.executeAfterAppLibCode ->
     news: -> news
     date: -> moment(DATE, "YYYY-MM-DD").format "DD MMMM YYYY"
   Template.v3_136_features.helpers
-    updates: -> updates
+    updates: -> _.map updates, (update) -> update.date = moment(DATE, "YYYY-MM-DD").format("DD MMMM YYYY")

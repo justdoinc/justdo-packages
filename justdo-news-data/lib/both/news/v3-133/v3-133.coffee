@@ -12,7 +12,6 @@ news = [
 updates = [
   {
     "title": "Improvements"
-    "date": "25 Dec 2022"
     "update_items": [
       "1. MailDo: When an email is received, the task owner is now automatically unmuted in the chat."
     ]
@@ -42,4 +41,8 @@ APP.executeAfterAppLibCode ->
     news: -> news
     date: -> moment(DATE, "YYYY-MM-DD").format "DD MMMM YYYY"
   Template.v3_133_features.helpers
-    updates: -> updates
+    updates: ->
+      updates =  _.map updates, (update) ->
+        update.date = moment(DATE, "YYYY-MM-DD").format "DD MMMM YYYY"
+        return update
+      return updates
