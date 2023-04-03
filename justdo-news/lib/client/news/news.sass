@@ -29,7 +29,7 @@
     flex-direction: row !important
     padding-left: 0
     padding-right: 0
-    flex-grow: 0
+    flex-grow: 0 !important
 
   .versions-dropdown
     border-right: 1px solid #E0E2E6
@@ -38,6 +38,8 @@
     .dropdown-menu
       li
         cursor: pointer
+        .dropdown-item:active
+          background-color: #f8f9fa
 
   .versions-dropdown-btn
     background: linear-gradient(90deg, #027bff 0%, #07A6FF 100%)
