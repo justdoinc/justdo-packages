@@ -63,9 +63,9 @@ Template.news.helpers
     news_doc = tpl.active_news_doc.get()
     active_tab = tpl.active_news_tab_rv.get()
 
-    # Note that in the returned news_doc, news_doc.template is added to store the target template obj
-    news_doc.template = _.find news_doc.templates, (template_obj) -> template_obj._id is active_tab
-    return news_doc
+    template = _.find news_doc.templates, (template_obj) -> template_obj._id is active_tab
+    template.template_data.date = news_doc.date
+    return template
 
 
 Template.news.events
