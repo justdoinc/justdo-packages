@@ -58,12 +58,15 @@ Template.news.helpers
       return "active"
     return
 
-  getActiveTemplateForNews: ->
+  getActiveNewsTemplate: ->
     tpl = Template.instance()
-    active_category = tpl.active_category_rv.get()
-    active_news_id = tpl.active_news_id_rv.get()
+    news_doc = tpl.active_news_doc.get()
     active_tab = tpl.active_news_tab_rv.get()
-    return APP.justdo_news.getTemplateForNewsIfExists(active_category, active_news_id, active_tab)?.template_name
+
+    # Note that in the returned news_doc, news_doc.template is added to store the target template obj
+    news_doc.template = _.find news_doc.templates, (template_obj) -> template_obj._id is active_tab
+    return news_doc
+
 
 Template.news.events
   "click .news-navigation-item": (e, tpl) ->

@@ -20,7 +20,9 @@
       {{/with}}
     </div>
 
-    {{> Template.dynamic template=getActiveTemplateForNews}}
+    {{#with getActiveNewsTemplate}}
+      {{> Template.dynamic template=this.template.template_name data=this}}
+    {{/with}}
 
   </div>
 </template>
