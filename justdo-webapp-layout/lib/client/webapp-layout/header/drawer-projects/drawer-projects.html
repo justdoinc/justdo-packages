@@ -1,7 +1,13 @@
 <template name="drawer_projects">
   <ul class="list-group list-group-flush">
-    {{#each projects}}
-      <a href="/p/{{_id}}" class="list-group-item list-group-item-action project-item p-2">{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}</a>
-    {{/each}}
+    {{#if projects}}
+      {{#each projects}}
+        <a href="/p/{{_id}}" class="list-group-item list-group-item-action project-item p-2">{{#if title}}{{title}}{{else}}Untitled JustDo{{/if}}</a>
+      {{/each}}
+    {{else}}
+      <div class="drawer-no-justdos bg-light">
+        No JustDos
+      </div>
+    {{/if}}
   </ul>
 </template>
