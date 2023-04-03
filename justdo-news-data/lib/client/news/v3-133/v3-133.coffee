@@ -20,7 +20,7 @@ updates = [
 ]
 
 APP.executeAfterAppLibCode ->
-  APP.justdo_news.registerNews
+  APP.justdo_news.registerNews "news",
     _id: VERSION
     title: VERSION.replace "-", "."
     aliases: ["#{VERSION}-x"]

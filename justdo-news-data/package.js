@@ -53,9 +53,21 @@ Package.onUse(function (api) {
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", client);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", client);
-  // Note: app-integration need to load last, so immediateInit procedures in
-  // the server will have the access to the apis loaded after the init.coffee
-  // file.
+
+  // api.addAssets([
+  //   "lib/client/news/v3-133/assets/2023_03_10_6.jpg"
+  // ], client)
+  // api.addFiles("lib/client/news/v3-133/v3-133.coffee", client);
+  // api.addFiles("lib/client/news/v3-133/v3-133.html", client);
+
+  api.addAssets([
+    "lib/client/news/v3-136/assets/2023_03_10_1.jpg",
+    "lib/client/news/v3-136/assets/2023_03_10_3.jpg",
+    "lib/client/news/v3-136/assets/2023_03_10_5.jpg",
+    "lib/client/news/v3-136/assets/2023_03_10_6.jpg",
+  ], client)
+  api.addFiles("lib/client/news/v3-136/v3-136.coffee", client);
+  api.addFiles("lib/client/news/v3-136/v3-136.html", client);
 
   api.export("JustdoNewsData", client);
 });
