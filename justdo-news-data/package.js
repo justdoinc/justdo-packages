@@ -60,6 +60,10 @@ Package.onUse(function (api) {
   // ], client)
   // api.addFiles("lib/both/news/v3-133/v3-133.coffee", both);
   // api.addFiles("lib/both/news/v3-133/v3-133.html", client);
+  api.addFiles("lib/client/news-common.sass", client)
+  api.addFiles("lib/client/templates/version-release/version-release.html", client)
+  api.addFiles("lib/client/templates/version-release/version-release.coffee", client)
+
 
   api.addAssets([
     "lib/both/news/v3-136/assets/2023_03_10_1.jpg",
