@@ -48,11 +48,9 @@ Template.news.helpers
       return "text-secondary"
     return
 
-  activeNewsTemlates: ->
+  activeNews: ->
     tpl = Template.instance()
-    active_category = tpl.active_category_rv.get()
-    active_news_id = tpl.active_news_id_rv.get()
-    return APP.justdo_news.getNewsByIdOrAlias active_category, active_news_id
+    return tpl.active_news_doc.get()
 
   isTabActive: (tab_id) ->
     active_tab_id = Template.instance().active_news_tab_rv.get()
