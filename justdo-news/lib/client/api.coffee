@@ -1,6 +1,5 @@
 _.extend JustdoNews.prototype,
   _immediateInit: ->
-    @news = []
     return
 
   _deferredInit: ->
@@ -9,10 +8,6 @@ _.extend JustdoNews.prototype,
 
     return
 
-  registerNews: (news_obj) ->
-    @news.push news_obj
-    @news = _.sortBy(@news, "date").reverse() # Ensures the first element is the newest
-    return
   getActiveCategetoryByRootPath: ->
     return Router?.current()?.route?._path?.match(JustdoNews.root_path_regex)?[0]?.replace "/", ""
 

@@ -1,13 +1,20 @@
 _.extend JustdoNews.prototype,
   _bothImmediateInit: ->
+    # On server, @news only stores category, but not the news_obj.
+    @news = {}
 
+    if Meteor.isClient
+      @news_dep = new Tracker.Dependency()
+      @category_dep = new Tracker.Dependency()
 
     return
 
   _bothDeferredInit: ->
-
-
     if @destroyed
+      return
+
+    return
+
   registerNewsCategory: (category) ->
     if _.has @news, category
       return
@@ -60,6 +67,13 @@ _.extend JustdoNews.prototype,
 
     return routes
 
+  registerNews: (category, news_obj) ->
+    @registerNewsCategory category
+
+    if Meteor.isServer
       return
 
+    @news[category].push news_obj
+    @news[category] = _.sortBy(@news[category], "date").reverse() # Ensures the first element is the newest
+    @news_dep.changed()
     return
