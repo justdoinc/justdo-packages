@@ -16,8 +16,8 @@ _.extend JustdoNews.prototype,
 
   getAllNews: -> JSON.parse(JSON.stringify(@news))
 
-    return _.find @news, (news) -> (news._id is version) or (news.title is version) or (version in news.aliases)
   getNewsByIdOrAlias: (news_id_or_alias) ->
+    return _.find @news, (news) -> (news._id is news_id_or_alias) or (news_id_or_alias in news.aliases)
 
   getMostRecentNews: -> @news[0]?._id
 
