@@ -1,0 +1,38 @@
+<template name="version_release_news">
+  <div class="date">{{date}}</div>
+  <div class="news-content">
+    {{#each template.template_data}}
+      {{> news_card}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="version_release_features">
+  <div class="updates-content">
+    {{#each template.template_data}}
+      {{> updates_card}}
+    {{/each}}
+  </div>
+</template>
+
+<template name="news_card">
+  <div class="news-item">
+    <div class="news-title"><div class="text">{{title}}</div></div>
+    <div class="news-subtitle">{{subtitle}}</div>
+    <img class="news-media" src="{{media_url}}" alt="image">
+  </div>
+</template>
+
+<template name="updates_card">
+  <div class="updates">
+    <div class="update-title-wrapper">
+      <div class="update-title">{{{xssGuard title}}}</div>
+      <div class="update-date">{{{xssGuard date}}}</div>
+    </div>
+    <div class="updates-list">
+      {{#each update_items}}
+        <div class="update-item">{{{xssGuard this}}}</div>
+      {{/each}}
+    </div>
+  </div>
+</template>
