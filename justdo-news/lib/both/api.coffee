@@ -77,6 +77,11 @@ _.extend JustdoNews.prototype,
     name:
       label: "Template Title"
       type: String
+    template_data:
+      label: "Template Data Array"
+      type: [Object]
+      blackbox: true
+      optional: true
   _registerNewsSchema: new SimpleSchema
     _id:
       label: "News ID"
