@@ -12,4 +12,5 @@ _.extend JustdoNews.prototype,
   # as the base for all the packages based on
   # justdo-package-skeleton >= 0.0.4
   _errors_types:
-    _.extend {}, JustdoHelpers.common_errors_types, {}
+    _.extend {}, JustdoHelpers.common_errors_types,
+      "no-main-template": "News must contain a main template"
