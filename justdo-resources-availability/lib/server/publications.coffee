@@ -10,7 +10,7 @@ _.extend JustdoResourcesAvailability.prototype,
       project = APP.collections.Projects.findOne {_id: project_id }
       if not project?
         throw self._error "not-project-member"
-      if not _.findWhere(project.members, {user_id: user_id })?
+      if not _.find(project.members, (member) -> member.user_id is user_id)?
         throw self._error "not-project-member"
       return APP.collections.Projects.find {"_id": project_id}, {fields: {"#{JustdoResourcesAvailability.project_custom_feature_id}":1}}
     return
