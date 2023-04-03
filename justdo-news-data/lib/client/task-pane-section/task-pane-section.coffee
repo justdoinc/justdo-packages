@@ -1,1 +1,0 @@
-Template.task_pane_justdo_news_data_task_pane_section_section.helpers {}
