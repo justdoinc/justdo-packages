@@ -55,11 +55,11 @@ Package.onUse(function (api) {
   api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
   api.use("justdoinc:justdo-news@1.0.0", both);
 
-  api.addAssets([
-    "lib/both/news/v3-133/assets/2023_03_10_6.jpg"
-  ], client)
-  api.addFiles("lib/both/news/v3-133/v3-133.coffee", both);
-  api.addFiles("lib/both/news/v3-133/v3-133.html", client);
+  // api.addAssets([
+  //   "lib/both/news/v3-133/assets/2023_03_10_6.jpg"
+  // ], client)
+  // api.addFiles("lib/both/news/v3-133/v3-133.coffee", both);
+  // api.addFiles("lib/both/news/v3-133/v3-133.html", client);
 
   api.addAssets([
     "lib/both/news/v3-136/assets/2023_03_10_1.jpg",
