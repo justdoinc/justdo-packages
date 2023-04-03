@@ -1,7 +1,7 @@
 <template name="version_release_news">
   <div class="date">{{date}}</div>
   <div class="news-content">
-    {{#each template.template_data}}
+    {{#each news_array}}
       {{> news_card}}
     {{/each}}
   </div>
@@ -9,9 +9,7 @@
 
 <template name="version_release_features">
   <div class="updates-content">
-    {{#each template.template_data}}
-      {{> updates_card}}
-    {{/each}}
+    {{> updates_card}}
   </div>
 </template>
 
