@@ -67,7 +67,47 @@ _.extend JustdoNews.prototype,
 
     return routes
 
+  _newsTemplateSchema = new SimpleSchema
+    _id:
+      label: "Template ID"
+      type: String
+    template_name:
+      label: "Template Name"
+      type: String
+    name:
+      label: "Template Title"
+      type: String
+  _registerNewsSchema: new SimpleSchema
+    _id:
+      label: "News ID"
+      type: String
+    title:
+      label: "News Title"
+      type: String
+    aliases:
+      label: "News Aliases"
+      type: [String]
+      optional: true
+    date:
+      label: "News Date"
+      type: String
+    templates:
+      label: "News Template Array"
+      type: [Object]
+    "templates.$":
+      label: "News Template Object"
+      type: _newsTemplateSchema
   registerNews: (category, news_obj) ->
+    {cleaned_val} =
+      JustdoHelpers.simpleSchemaCleanAndValidate(
+        @_registerNewsSchema,
+        news_obj or {},
+        {self: @, throw_on_error: true}
+      )
+    news_obj = cleaned_val
+    if not (_.find news_obj?.templates, (template_obj) -> template_obj._id is "main")?
+      throw @_error "no-main-template"
+
     @registerNewsCategory category
 
     if Meteor.isServer
