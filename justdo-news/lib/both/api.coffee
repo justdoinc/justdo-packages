@@ -58,7 +58,7 @@ _.extend JustdoNews.prototype,
           if news_template is "main"
             @redirect "/#{category}/#{news_id}"
 
-          if not APP.justdo_news.getTemplateForNewsIfExists(category, news_id, news_template)?
+          if not APP.justdo_news.getNewsTemplateIfExists(category, news_id, news_template)?
             APP.justdo_news.redirectToMostRecentNewsPageByCategoryOrFallback category
 
           @render "news"

@@ -32,7 +32,7 @@ _.extend JustdoNews.prototype,
     news_doc = @getNewsByIdOrAlias category, news_id_or_alias
     return news_doc?._id
 
-  getTemplateForNewsIfExists: (category, news_id_or_alias, template_name) ->
+  getNewsTemplateIfExists: (category, news_id_or_alias, template_name) ->
     if not (news = @getNewsByIdOrAlias category, news_id_or_alias)
       return
     return _.find news.templates, (template_obj) -> template_obj._id is template_name
