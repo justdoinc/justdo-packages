@@ -1,10 +1,17 @@
 Template.news.onCreated ->
-  @active_version_rv = new ReactiveVar ""
+  @active_category_rv = new ReactiveVar ""
+  @active_news_id_rv = new ReactiveVar ""
   @active_news_tab_rv = new ReactiveVar ""
+  @active_news_doc = new ReactiveVar {}
   @autorun =>
+    active_category = APP.justdo_news.getActiveCategetoryByRootPath()
+    @active_category_rv.set active_category
+
     params = Router.current()?.params
-    @active_version_rv.set params?.news_version
+    @active_news_id_rv.set params?.news_id
     @active_news_tab_rv.set params?.news_template or "main"
+
+    @active_news_doc.set APP.justdo_news.getNewsByIdOrAlias active_category, params?.news_id
     return
 
   return
@@ -30,15 +37,15 @@ Template.news.onRendered ->
   return
 
 Template.news.helpers
-  getActiveVersion: -> Template.instance().active_version_rv.get().replaceAll "-", "."
-
-  versions: -> _.map APP.justdo_news.getAllNews(), (news) -> news.title
-
-  activeVersionTemlates: ->
-    active_version = Template.instance().active_version_rv.get()
-    return APP.justdo_news.getNewsForVersion active_version
+  getActiveNewsTitle: -> Template.instance().active_news_doc.get()?.title
 
 
+
+  activeNewsTemlates: ->
+    tpl = Template.instance()
+    active_category = tpl.active_category_rv.get()
+    active_news_id = tpl.active_news_id_rv.get()
+    return APP.justdo_news.getNewsByIdOrAlias active_category, active_news_id
 
   isTabActive: (tab_id) ->
     active_tab_id = Template.instance().active_news_tab_rv.get()
@@ -46,20 +53,28 @@ Template.news.helpers
       return "active"
     return
 
-  getActiveTemplateForVersion: ->
+  getActiveTemplateForNews: ->
     tpl = Template.instance()
-    active_version = tpl.active_version_rv.get()
+    active_category = tpl.active_category_rv.get()
+    active_news_id = tpl.active_news_id_rv.get()
     active_tab = tpl.active_news_tab_rv.get()
-    return APP.justdo_news.getTemplateForVersionIfExists(active_version, active_tab)?.template_name
+    return APP.justdo_news.getTemplateForNewsIfExists(active_category, active_news_id, active_tab)?.template_name
 
 Template.news.events
   "click .news-navigation-item": (e, tpl) ->
+    active_category = tpl.active_category_rv.get()
     tab_id = $(e.target).closest(".news-navigation-item").data "tab_id"
-    Router.go "news_with_version_and_template", {news_version: tpl.active_version_rv.get(), news_template: tab_id}
+    Router.go "#{active_category.replaceAll "-", "_"}_page_with_news_id_and_template",
+      news_category: active_category
+      news_id: tpl.active_news_id_rv.get()
+      news_template: tab_id
     return
 
   "click .dropdown-item": (e, tpl) ->
-    version = $(e.target).closest(".dropdown-item").text()
-    version = version.replace ".", "-"
-    Router.go "news_with_version_and_template", {news_version: version, news_template: tpl.active_news_tab_rv.get()}
+    active_category = tpl.active_category_rv.get()
+    news_id = $(e.target).closest(".dropdown-item").text()
+    news_id = news_id.replace ".", "-"
+    Router.go "#{active_category.replaceAll "-", "_"}_page_with_news_id",
+      news_category: active_category
+      news_id: news_id
     return

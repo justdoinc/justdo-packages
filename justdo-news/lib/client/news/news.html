@@ -3,7 +3,7 @@
     <div class="news-navigation container">
       <div class="versions-dropdown dropdown">
         <div class="versions-dropdown-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{getActiveVersion}}
+          {{getActiveNewsTitle}}
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
         </div>
         <ul class="dropdown-menu jd-p-075 shadow-lg border-0">
@@ -13,14 +13,14 @@
         </ul>
       </div>
 
-      {{#with activeVersionTemlates}}
+      {{#with activeNewsTemlates}}
         {{#each templates}}
           <div class="news-navigation-item {{isTabActive _id}}" data-tab_id="{{_id}}">{{name}}</div>
         {{/each}}
       {{/with}}
     </div>
 
-    {{> Template.dynamic template=getActiveTemplateForVersion}}
+    {{> Template.dynamic template=getActiveTemplateForNews}}
 
   </div>
 </template>
