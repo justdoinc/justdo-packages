@@ -1,15 +1,15 @@
 _.extend JustdoNews.prototype,
   setupRouter: ->
     Router.route "/news", ->
-      APP.justdo_news.redirectToMostRecentVersionNewsPage()
+      APP.justdo_news.redirectToMostRecentNewsPage()
       return
     ,
      name: "news"
 
     Router.route "/news/:news_version", ->
       version = @params.news_version.toLowerCase()
-      if not APP.justdo_news.getVersionUrlNameIfExists(version)?
-        APP.justdo_news.redirectToMostRecentVersionNewsPage()
+      if not APP.justdo_news.getNewsIdIfExists(version)?
+        APP.justdo_news.redirectToMostRecentNewsPage()
 
       @render "news"
       @layout "single_frame_layout"
@@ -23,8 +23,8 @@ _.extend JustdoNews.prototype,
       if news_template is "main"
         @redirect "/news/#{version}"
 
-      if not APP.justdo_news.getTemplateForVersionIfExists(version, news_template)?
-        APP.justdo_news.redirectToMostRecentVersionNewsPage()
+      if not APP.justdo_news.getTemplateForNewsIfExists(version, news_template)?
+        APP.justdo_news.redirectToMostRecentNewsPage()
 
       @render "news"
       @layout "single_frame_layout"
