@@ -61,6 +61,10 @@ _.extend JustdoLoginState.prototype,
 
       login_state_dependency.changed()
 
+      self.emit("after-set-user-state", new_state)
+
+      return
+
     # inital state, no need to call login_state_dependency.changed()
     login_state = ["loading"]
 
