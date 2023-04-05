@@ -6,7 +6,7 @@
           {{#if $eq min_time_to_process max_time_to_process}}
             <div class="secton-message font-weight-bold">This operation will take around {{min_time_to_process}}...</div>
           {{else}}
-            <div class="secton-message font-weight-bold">This operation will take between {{min_time_to_process}} to {{max_time_to_process}}...</div>
+            <div class="secton-message font-weight-bold">This operation will take up to {{max_time_to_process}}...</div>
           {{/if}}
         {{/with}}
         <div class="secton-message mt-1">Operation affects more than <b>{{batchedImmediateProcessThreshold}}</b> records and therefore will take a while. You can track its progress in the members edit window.</div>
