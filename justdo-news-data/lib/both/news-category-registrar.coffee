@@ -1,0 +1,1 @@
+APP.justdo_news.registerNewsCategory JustdoNews.default_news_category
