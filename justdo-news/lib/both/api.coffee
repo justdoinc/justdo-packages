@@ -17,7 +17,7 @@ _.extend JustdoNews.prototype,
 
   registerNewsCategory: (category) ->
     if _.has @news, category
-      return
+      throw @_error "news-category-already-exists"
 
     @news[category] = []
 
@@ -113,7 +113,8 @@ _.extend JustdoNews.prototype,
     if not (_.find news_obj?.templates, (template_obj) -> template_obj._id is "main")?
       throw @_error "no-main-template"
 
-    @registerNewsCategory category
+    if not _.has @news, category
+      throw @_error "news-category-not-found"
 
     if Meteor.isServer
       return
