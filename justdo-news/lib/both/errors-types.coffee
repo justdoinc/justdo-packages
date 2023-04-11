@@ -14,3 +14,5 @@ _.extend JustdoNews.prototype,
   _errors_types:
     _.extend {}, JustdoHelpers.common_errors_types,
       "no-main-template": "News must contain a main template"
+      "news-category-already-exists": "News category already exists"
+      "news-category-not-found": "News category not found"
