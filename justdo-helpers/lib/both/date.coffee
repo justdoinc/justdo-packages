@@ -45,7 +45,11 @@ _.extend JustdoHelpers,
 
     return new Date(Math.min(...dates))
 
-  secondsToHumanReadable: (seconds) ->
+  secondsToHumanReadable: (seconds, options) ->
+    default_options =
+      include_seconds_if_gte_minute: true
+    options = _.extend default_options, options
+
     minutes_in_second = 60
     hours_in_second = 60 * minutes_in_second
     days_in_second = 24 * hours_in_second
@@ -62,7 +66,11 @@ _.extend JustdoHelpers,
     second_str = if remaining_seconds > 0 then remaining_seconds + " second" + (if remaining_seconds > 1 then "s" else "") else ""
 
     # Combine the formatted strings with commas and "and"
-    time_array = [day_str, hour_str, minute_str, second_str].filter (str) -> str.length > 0
+    time_array = [day_str, hour_str, minute_str].filter (str) -> str.length > 0
+    # Exclude the "seconds" if the time is gte 59s and include_seconds_if_gte_minute is false
+    if second_str.length > 0 and (time_array.length is 0 or options.include_seconds_if_gte_minute)
+      time_array.push second_str
+
     if time_array.length is 0
       return "0 seconds"
     else if time_array.length is 1
