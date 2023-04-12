@@ -15,8 +15,12 @@ Package.onUse(function (api) {
   api.use("templating", both);
   api.use("coffeescript", both);
   api.use("underscore", both);
+  
+  api.use('fourseven:scss@3.2.0', client);
 
   api.use("justdoinc:justdo-legal-docs-versions", both);
+
+  api.add_files("common-legal-style.sass", client);
 
   api.add_files("docs/copyright.html", client);
   api.add_files("docs/privacy-policy.html", client);
