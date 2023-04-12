@@ -34,6 +34,10 @@ Template.recent_activity_dropdown.onDestroyed ->
   return
 
 Template.recent_activity_dropdown.helpers
+  isLoading: ->
+    subscription_state = APP.justdo_chat.getSubscribedChannelsRecentActivityState()
+    return subscription_state == "no-sub" or subscription_state == "initial-not-ready"
+
   recentActivityItems: ->
     return APP.collections.JDChatRecentActivityChannels.find({}, {sort: {last_message_date: -1}}).fetch()
 

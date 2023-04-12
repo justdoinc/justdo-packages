@@ -1,33 +1,40 @@
 <template name="recent_activity_dropdown">
-  {{#with recentActivityItems}}
-    <div class="recent-activity-items-container">
-      <div class="recent-activity-items-viewport">
-        <div class="recent-activity-items">
-          {{#each this}}
-            {{> recent_activity_item}}
-          {{/each}}
-
-          {{#if $eq getSubscribedChannelsRecentActivityState "all"}}
-            <div class="more-items-container">
-              <span class="no-more-items text-muted">No more messages</span>
-            </div>
-          {{else}}
-            <div class="more-items-container">
-              <a href="#" class="load-more-items">Loading more messages...</a>
-            </div>
-          {{/if}}
-        </div>
-      </div>
-      <div class="recent-activity-items-footer">
-        <div class="mark-all-activity-read text-primary">Mark All as Read</div>
-      </div>
+  {{#if isLoading}}
+    <div class="loading-recent-activity-items-container">
+      <i class="fa fa-comments" aria-hidden="true"></i>
+      <p>Loading...</p>
     </div>
   {{else}}
-    <div class="no-recent-activity-items-container">
-      <i class="fa fa-comments" aria-hidden="true"></i>
-      <p>You have no messages, yet</p>
-    </div>
-  {{/with}}
+    {{#with recentActivityItems}}
+      <div class="recent-activity-items-container">
+        <div class="recent-activity-items-viewport">
+          <div class="recent-activity-items">
+            {{#each this}}
+              {{> recent_activity_item}}
+            {{/each}}
+
+            {{#if $eq getSubscribedChannelsRecentActivityState "all"}}
+              <div class="more-items-container">
+                <span class="no-more-items text-muted">No more messages</span>
+              </div>
+            {{else}}
+              <div class="more-items-container">
+                <a href="#" class="load-more-items">Loading more messages...</a>
+              </div>
+            {{/if}}
+          </div>
+        </div>
+        <div class="recent-activity-items-footer">
+          <div class="mark-all-activity-read text-primary">Mark All as Read</div>
+        </div>
+      </div>
+    {{else}}
+      <div class="no-recent-activity-items-container">
+        <i class="fa fa-comments" aria-hidden="true"></i>
+        <p>You have no messages, yet</p>
+      </div>
+    {{/with}}
+  {{/if}}
 </template>
 
 <template name="recent_activity_item">
