@@ -31,13 +31,14 @@ _.extend JustdoSystemUpdates.prototype,
 
     read_system_updates_ids = _.map read_system_updates, (read_message_doc) -> read_message_doc.update_id
 
-    for system_update_def in APP.justdo_news.news[JustdoNews.default_news_category]
+    for system_update_def in APP.justdo_news.getAllNewsByCategory JustdoNews.default_news_category
       system_update_id = system_update_def._id
       if system_update_id in read_system_updates_ids
         # Already read
         continue
 
-      if (show_to_users_registered_before = system_update_def.show_to_users_registered_before)?
+      if (show_to_users_registered_before = system_update_def.date)?
+        show_to_users_registered_before = moment(show_to_users_registered_before, "YYYY-MM-DD").toDate()
         if cur_user.createdAt >= show_to_users_registered_before
           # User registered after the time the message is relevant.
           continue
