@@ -2,6 +2,7 @@ _.extend JustdoNews.prototype,
   _bothImmediateInit: ->
     # On server, @news only stores category, but not the news_obj.
     @news = {}
+    @register_news_routes = false
 
     if Meteor.isClient
       @news_dep = new Tracker.Dependency()
@@ -21,8 +22,11 @@ _.extend JustdoNews.prototype,
 
     @news[category] = []
 
-    for route_path, {route_name, routingFunction} of @_generateRouteFunctionForNewsCategory category
-      Router.route route_path, routingFunction, {name: route_name}
+    APP.getEnv (env) =>
+      if JustdoHelpers.getClientType(env) is "landing-app"
+        @register_news_routes = true
+        for route_path, {route_name, routingFunction} of @_generateRouteFunctionForNewsCategory category
+          Router.route route_path, routingFunction, {name: route_name}
 
     if Meteor.isClient
       @category_dep.changed()
