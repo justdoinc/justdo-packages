@@ -31,20 +31,20 @@ _.extend JustdoSystemUpdates.prototype,
 
     read_system_updates_ids = _.map read_system_updates, (read_message_doc) -> read_message_doc.update_id
 
-    for system_update_id, system_update_def of JustdoSystemUpdates.system_updates
+    for system_update_def in APP.justdo_news.news[JustdoNews.default_news_category]
+      system_update_id = system_update_def._id
       if system_update_id in read_system_updates_ids
         # Already read
-
         continue
 
       if (show_to_users_registered_before = system_update_def.show_to_users_registered_before)?
         if cur_user.createdAt >= show_to_users_registered_before
           # User registered after the time the message is relevant.
-      
           continue
 
-      # XXX For now we assume up to 1 message will be relevant at a time
       @_displayUpdate(system_update_id)
+      # Ensure the update popup is shown once
+      break
 
     @messages_presented = true
 
@@ -53,10 +53,8 @@ _.extend JustdoSystemUpdates.prototype,
   _displayUpdate: (system_update_id) ->
     data = {}
 
-    system_update_def = JustdoSystemUpdates.system_updates[system_update_id]
-
     system_update_template =
-      JustdoHelpers.renderTemplateInNewNode(Template[system_update_def.template], data)
+      JustdoHelpers.renderTemplateInNewNode("news", {router_navigation: false})
 
     showLater = ->
       return
@@ -67,7 +65,7 @@ _.extend JustdoSystemUpdates.prototype,
       return
 
     bootbox.dialog
-      title: system_update_def.title
+      title: "We Have Great New Things for You"
       message: system_update_template.node
       className: "members-update-dialog bootbox-new-design"
       focused_element: ""

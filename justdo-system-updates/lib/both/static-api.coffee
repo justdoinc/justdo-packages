@@ -19,20 +19,5 @@ system_update_options_schema = new SimpleSchema
     defaultValue: null
 
 _.extend JustdoSystemUpdates,
-  system_updates: {}
-
-  registerSystemUpdate: (options) ->
-    {cleaned_val} =
-      JustdoHelpers.simpleSchemaCleanAndValidate(
-        system_update_options_schema,
-        options,
-        {self: @, throw_on_error: true}
-      )
-
-    options = cleaned_val
-
-    JustdoSystemUpdates.system_updates[options.update_id] = options
-
-    return
-
-  systemUpdateExists: (update_id) -> JustdoSystemUpdates.system_updates[update_id]?
+  systemUpdateExists: (update_id) ->
+    return APP.justdo_news.getNewsByIdOrAlias(JustdoNews.default_news_category, update_id)?
