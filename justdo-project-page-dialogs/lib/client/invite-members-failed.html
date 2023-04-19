@@ -12,7 +12,7 @@
   {{#if emails_not_added_due_to_other_reason}}
     {{#each emails_not_added_due_to_other_reason}}
       <div>
-        <h6>The following user couldn't be added. Error: {{this.error}}</h6>
+        <h6>The following user couldn't be added. {{this.error}}:</h6>
         <ul>
           <li>{{this.email}}</li>
         </ul>
