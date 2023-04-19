@@ -344,7 +344,7 @@ Template.invite_new_user_dialog.events
             emails_not_added_due_to_strict_registration.push(result.email)
           else
             emails_not_added_due_to_other_reason.push({
-              error: result.error.error 
+              error: result.error.reason or result.error.error
               email: result.email
             })
         else
