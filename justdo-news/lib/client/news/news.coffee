@@ -1,16 +1,20 @@
 Template.news.onCreated ->
-  @active_category_rv = new ReactiveVar "news"
-  @active_news_id_rv = new ReactiveVar APP.justdo_news.getMostRecentNewsUnderCategory @active_category_rv.get()
-  @active_news_tab_rv = new ReactiveVar "main"
+  @active_category_rv = new ReactiveVar(@data.category or JustdoNews.default_news_category)
+  @active_news_id_rv = new ReactiveVar(@data.news_id or APP.justdo_news.getMostRecentNewsUnderCategory @active_category_rv.get())
+  @active_news_tab_rv = new ReactiveVar(@data.tab_id or "main")
 
-  # If router_navigation is true, the content of template will react to the active route,
+  @show_dropdown = @data.show_dropdown
+  if not @show_dropdown?
+    @show_dropdown = true
+
+  # If router_navigation and register_news_routes is true, the content of template will react to the active route,
   # and will redirect user to the corresponding route upon clicking.
-  if @data?.router_navigation?
-    @router_navigation = @data.router_navigation
-  else
-    @router_navigation = APP.justdo_news.register_news_routes
+  @register_news_routes = APP.justdo_news.register_news_routes
+  @router_navigation = @data.router_navigation
+  if not @router_navigation?
+    @router_navigation = @register_news_routes
 
-  if @router_navigation
+  if @router_navigation and @register_news_routes
     @autorun =>
       active_category = APP.justdo_news.getActiveCategetoryByRootPath()
       @active_category_rv.set active_category
@@ -41,12 +45,21 @@ Template.news.onRendered ->
 
     return
 
+  if not @show_dropdown
+    @$(".versions-dropdown-btn").css "cursor", "default"
+
   return
 
 Template.news.helpers
   getActiveNewsTitle: ->
     tpl = Template.instance()
     return APP.justdo_news.getNewsByIdOrAlias(tpl.active_category_rv.get(), tpl.active_news_id_rv.get())?.title
+
+  showDropdown: ->
+    tpl = Template.instance()
+    if tpl.show_dropdown
+      return "dropdown"
+    return
 
   otherNews: ->
     tpl = Template.instance()
@@ -81,7 +94,7 @@ Template.news.events
     active_category = tpl.active_category_rv.get()
     tab_id = $(e.target).closest(".news-navigation-item").data "tab_id"
 
-    if tpl.router_navigation
+    if tpl.router_navigation and tpl.register_news_routes
       Router.go "#{active_category.replaceAll "-", "_"}_page_with_news_id_and_template",
         news_category: active_category
         news_id: tpl.active_news_id_rv.get()
@@ -95,7 +108,7 @@ Template.news.events
     active_category = tpl.active_category_rv.get()
     news_id = $(e.target).closest(".dropdown-item").data("news_id")
 
-    if tpl.router_navigation
+    if tpl.router_navigation and tpl.register_news_routes
       Router.go "#{active_category.replaceAll "-", "_"}_page_with_news_id",
         news_category: active_category
         news_id: news_id
