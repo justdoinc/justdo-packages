@@ -18,11 +18,6 @@ _.extend JustdoNews.prototype,
       return JSON.parse(JSON.stringify(@news[category]))
     return []
 
-  getNewsByIdOrAlias: (category, news_id_or_alias) ->
-    @category_dep.depend()
-    @news_dep.depend()
-    return _.find @news[category], (news) -> (news._id is news_id_or_alias) or (news_id_or_alias in news.aliases)
-
   getMostRecentNewsUnderCategory: (category) ->
     @category_dep.depend()
     @news_dep.depend()

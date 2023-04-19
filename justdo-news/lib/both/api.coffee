@@ -1,6 +1,5 @@
 _.extend JustdoNews.prototype,
   _bothImmediateInit: ->
-    # On server, @news only stores category, but not the news_obj.
     @news = {}
     @register_news_routes = false
 
@@ -120,10 +119,14 @@ _.extend JustdoNews.prototype,
     if not _.has @news, category
       throw @_error "news-category-not-found"
 
-    if Meteor.isServer
-      return
-
     @news[category].push news_obj
     @news[category] = _.sortBy(@news[category], "date").reverse() # Ensures the first element is the newest
-    @news_dep.changed()
+    if Meteor.isClient
+      @news_dep.changed()
     return
+
+  getNewsByIdOrAlias: (category, news_id_or_alias) ->
+    if Meteor.isClient
+      @category_dep.depend()
+      @news_dep.depend()
+    return _.find @news[category], (news) -> (news._id is news_id_or_alias) or (news_id_or_alias in news.aliases)
