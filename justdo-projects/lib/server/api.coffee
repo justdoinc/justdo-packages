@@ -566,7 +566,6 @@ _.extend Projects.prototype,
     # Find project and inviting user
     #
     project_doc = @projects_collection.findOne project_id
-    justdo_orgs_enabled = APP.justdo_orgs? and (org_id = project_doc.org_id)?
 
     if not project_doc?
       throw @_error "unknown-project"
@@ -586,7 +585,7 @@ _.extend Projects.prototype,
     #
     # Note: we know in this point that either user exists or landing_app_root_url exists
     if not invited_user_doc?
-      @emit "pre-invite-new-user-member-to-justdo", invited_user, inviting_user_id
+      @emit "pre-invite-new-user-member-to-justdo", invited_user, inviting_user_id, project_doc
       # New user
       create_user_options = {
         email: invited_user_email
