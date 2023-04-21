@@ -1,0 +1,25 @@
+.settings-page-menu-item
+  font-size: 15px
+  margin: 0px 27px
+  padding: 12px 0
+  line-height: 100%
+  border-top: 1px solid #eceff1
+  color: #3D495B
+  opacity: 0.8
+  cursor: pointer
+  position: relative
+  &:hover
+    opacity: 1
+  &.active
+    opacity: 1
+    .settings-page-menu-item-active
+      display: block
+
+.settings-page-menu-item-active
+  position: absolute
+  width: 4px
+  top: 0
+  height: 100%
+  left: -27px
+  display: none
+  border-radius: 0px 1px 1px 0px

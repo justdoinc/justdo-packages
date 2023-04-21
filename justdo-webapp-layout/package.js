@@ -144,6 +144,12 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/webapp-layout/header/drawer-projects/drawer-projects.sass", "client");
   api.addFiles("lib/client/webapp-layout/header/drawer-projects/drawer-projects.html", "client");
   api.addFiles("lib/client/webapp-layout/header/drawer-projects/drawer-projects.coffee", "client");
+  api.addFiles("lib/client/dual-frame-settings-page-layout/dual-frame-settings-page-layout.sass", "client");
+  api.addFiles("lib/client/dual-frame-settings-page-layout/dual-frame-settings-page-layout.html", "client");
+  api.addFiles("lib/client/dual-frame-settings-page-layout/dual-frame-settings-page-layout.coffee", "client");
+  api.addFiles("lib/client/dual-frame-settings-page-layout/menu-item/menu-item.sass", "client");
+  api.addFiles("lib/client/dual-frame-settings-page-layout/menu-item/menu-item.html", "client");
+  api.addFiles("lib/client/dual-frame-settings-page-layout/menu-item/menu-item.coffee", "client");
 
   api.addAssets("lib/client/assets/layout-sprite.png", "client");
 

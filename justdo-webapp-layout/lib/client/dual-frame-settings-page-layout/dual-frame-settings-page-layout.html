@@ -1,0 +1,30 @@
+<template name="dual_frame_settings_page_layout">
+  <div class="settings-page-menu-container bg-light">
+    <div class="settings-page-menu-title">{{menuTitle}}</div>
+    <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+      {{#each leftDrawerItems}}
+        {{#if template}}
+          {{> Template.dynamic template=template data=template_data}}
+        {{else if html}}
+          {{{html}}}
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="settings-page-main-container shadow-sm">
+    <div class="tab-content">
+      <div class="tab-pane fade show active" role="tabpanel">
+        <div class="tab-pane-container">
+          <div class="settings-page-main-section-title">
+            {{pageTitle}}
+          </div>
+          <div class="settings-page-main-section-container">
+            {{> Template.dynamic template=pageTemplate}}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>
