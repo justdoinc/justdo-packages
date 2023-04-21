@@ -21,11 +21,9 @@ _.extend JustdoNews.prototype,
 
     @news[category] = []
 
-    APP.getEnv (env) =>
-      if JustdoHelpers.getClientType(env) is "landing-app"
-        @register_news_routes = true
-        for route_path, {route_name, routingFunction} of @_generateRouteFunctionForNewsCategory category
-          Router.route route_path, routingFunction, {name: route_name}
+    if @register_news_routes
+      for route_path, {route_name, routingFunction} of @_generateRouteFunctionForNewsCategory category
+        Router.route route_path, routingFunction, {name: route_name}
 
     if Meteor.isClient
       @category_dep.changed()

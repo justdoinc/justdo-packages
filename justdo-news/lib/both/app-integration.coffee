@@ -23,4 +23,13 @@
   # If an env variable affect this package load, check its value here
   # remember env vars are Strings
 
-APP.justdo_news = new JustdoNews()
+options = {register_news_routes: false}
+
+if Meteor.isServer
+  env = process.env
+
+if env.ROOT_URL is env.LANDING_APP_ROOT_URL
+  # Set register_news_routes to true if we're in landing app
+  options.register_news_routes = true
+
+APP.justdo_news = new JustdoNews(options)

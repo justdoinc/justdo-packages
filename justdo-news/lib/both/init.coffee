@@ -1,6 +1,13 @@
-default_options = {}
+default_options =
+  register_news_routes: false
 
-options_schema = {}
+options_schema =
+  both:
+    register_news_routes:
+      type: Boolean
+      optional: false
+      bind_to_instance: true
+      
 # options_schema
 # ==============
 #
