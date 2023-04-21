@@ -28,6 +28,7 @@ options = {register_news_routes: false}
 if Meteor.isServer
   env = process.env
 
+# Logic taken from JustdoHelpers.getClientType
 if env.ROOT_URL is env.LANDING_APP_ROOT_URL
   # Set register_news_routes to true if we're in landing app
   options.register_news_routes = true
