@@ -81,6 +81,15 @@ if JustdoHelpers.permitAppVersionExposeToClient()
 getExposedClientEnvVars = ->
   return _.pick process.env, env_vars_to_expose
 
+# push current "env" to the client
+app_routes.middleware (req, res, next) ->
+  # Expose environment variables that should be available in the client
+  InjectData.pushData req, "env", getExposedClientEnvVars()
+
+  next()
+
+  return
+
 getBase64EncodedEnvJSON = _.once ->
   return Base64.encode(JSON.stringify(getExposedClientEnvVars()))
 WebApp.connectHandlers.use (req, res, next) =>
