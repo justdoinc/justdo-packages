@@ -27,6 +27,8 @@ options = {register_news_routes: false}
 
 if Meteor.isServer
   env = process.env
+else
+  env = window.env
 
 # Logic taken from JustdoHelpers.getClientType
 if env.ROOT_URL is env.LANDING_APP_ROOT_URL
