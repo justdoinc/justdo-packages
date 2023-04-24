@@ -1,6 +1,6 @@
 Template.news.onCreated ->
   @active_category_rv = new ReactiveVar(@data.category or JustdoNews.default_news_category)
-  @active_news_id_rv = new ReactiveVar(@data.news_id or APP.justdo_news.getMostRecentNewsUnderCategory @active_category_rv.get())
+  @active_news_id_rv = new ReactiveVar(@data.news_id or APP.justdo_news.getMostRecentNewsIdUnderCategory @active_category_rv.get())
   @active_news_tab_rv = new ReactiveVar(@data.tab_id or "main")
 
   @show_dropdown = @data.show_dropdown
