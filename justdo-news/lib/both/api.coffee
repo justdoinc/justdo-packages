@@ -1,7 +1,6 @@
 _.extend JustdoNews.prototype,
   _bothImmediateInit: ->
     @news = {}
-    @register_news_routes = false
 
     if Meteor.isClient
       @news_dep = new Tracker.Dependency()
