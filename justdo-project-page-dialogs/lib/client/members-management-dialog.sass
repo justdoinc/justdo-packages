@@ -70,11 +70,18 @@
   .recent-batched-item + .recent-batched-item
     border-top: 1px dashed #f1f1f1
 
+  .recent-batched-msg-wrapper
+    width: 100%
+
   .recent-batched-msg
     display: flex
     align-items: center
     white-space: nowrap
     flex-wrap: wrap
+    justify-content: space-between
+    .recent-batched-msg-text
+      display: flex
+      align-items: center
     .task
       font-weight: bold
       overflow: hidden
@@ -83,6 +90,18 @@
       max-width: 280px
       display: inline-block
       margin: 0 6px
+    .jd-icon
+      padding: 4px
+      stroke-width: 2px
+      &.done
+        color: #34c340
+      &.about-to-begine
+        color: #607D8B
+      &.terminated
+        color: #FF9800
+      &.error
+        color: red
+
 
 .members-section
   height: 400px

@@ -685,7 +685,6 @@ APP.executeAfterAppLibCode ->
     opsMessage: ->
       op_object = @
 
-      debugger
       message_arr = []
       getMessage = -> message_arr.join(" ")
 
@@ -711,6 +710,8 @@ APP.executeAfterAppLibCode ->
         message_arr.push "Removing You from #{total_tasks_in_job} tasks"
 
         return getMessage()
+
+      message_arr.push "<div class='recent-batched-msg-text'>"
 
       if members_to_add.length > 0 and members_to_remove.length > 0
         message_arr.push "Adding #{members_to_add.length} and removing #{members_to_remove.length} members from"
@@ -746,17 +747,19 @@ APP.executeAfterAppLibCode ->
           else
             message_arr.push "and #{tasks_werent_included_in_the_list_count} other tasks"
 
+      message_arr.push "</div>"
+
       if (process_status = op_object.process_status) == "pending"
-        message_arr.push "[About to begin]"
+        message_arr.push '<svg class="jd-icon about-to-begine"><use xlink:href="/layout/icons-feather-sprite.svg#clock"></use></svg>'
 
       if process_status == "done"
-        message_arr.push "[Done]"
+        message_arr.push '<svg class="jd-icon done"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>'
 
       if process_status == "terminated"
-        message_arr.push "[Terminated]"
+        message_arr.push '<svg class="jd-icon terminated"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"></use></svg>'
 
       if process_status == "error"
-        message_arr.push "[Failed]"
+        message_arr.push '<svg class="jd-icon error"><use xlink:href="/layout/icons-feather-sprite.svg#slash"></use></svg>'
 
       return getMessage()
 
