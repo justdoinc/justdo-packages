@@ -1,0 +1,33 @@
+<template name="new_project_template_selector">
+  <div class="new-project-template-selector">
+    <div class="header">
+      <!-- <div class="title">
+        Welcome!
+      </div> -->
+      <div class="subtitle">
+        Start by choosing a template that suit your needs
+      </div>
+    </div>
+
+    <div class="templates-list-container">
+      {{#each getTemplatesList}}
+        <div class="task-pane-tab template-item {{isTemplateActive}}" data-id="{{id}}">
+          {{name}}
+        </div>
+      {{/each}}
+    </div>
+
+    {{#with activeTemplate}}
+      <div class="template-demo-container">
+        {{> Template.dynamic template=template data=template_data}}
+      </div>
+    {{/with}}
+  </div>
+
+</template>
+
+<template name="new_project_template_demo">
+  <div class="img-container">
+    <img src="{{img_src}}" alt="">
+  </div>
+</template>
