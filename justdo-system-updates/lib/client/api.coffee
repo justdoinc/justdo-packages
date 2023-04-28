@@ -91,13 +91,13 @@ _.extend JustdoSystemUpdates.prototype,
         className: "btn-light prev-news disabled"
         callback: =>
           page_number -= 1
+          $(".modal-footer>.next-news").removeClass "disabled"
 
           if page_number <= 0
             page_number = 0
             $(".modal-footer>.prev-news").addClass "disabled"
-
-          $(".modal-footer>.next-news").removeClass "disabled"
-          controller.setActiveNewsId system_update_ids[page_number]
+          else
+            controller.setActiveNewsId system_update_ids[page_number]
           return false
 
       next:
@@ -105,13 +105,13 @@ _.extend JustdoSystemUpdates.prototype,
         className: "btn-light next-news"
         callback: =>
           page_number += 1
+          $(".modal-footer>.prev-news").removeClass "disabled"
 
           if page_number >= (unread_updates_length = system_update_ids.length - 1)
             page_number = unread_updates_length
             $(".modal-footer>.next-news").addClass "disabled"
-
-          $(".modal-footer>.prev-news").removeClass "disabled"
-          controller.setActiveNewsId system_update_ids[page_number]
+          else
+            controller.setActiveNewsId system_update_ids[page_number]
           return false
 
       ok:
