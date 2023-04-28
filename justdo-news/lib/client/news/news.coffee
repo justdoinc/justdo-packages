@@ -3,23 +3,23 @@ Template.news.onCreated ->
     @controller = controller
     @controller.setTemplateInstance @
 
-  @active_category_rv = new ReactiveVar(@data.category)
+  @active_category_rv = new ReactiveVar(@data?.category or APP.justdo_news.getActiveCategetoryByRootPath())
   if not (most_recent_news_id = APP.justdo_news.getMostRecentNewsIdUnderCategory @active_category_rv.get())
     throw APP.justdo_news._error "news-category-not-found"
-    
-  @active_news_id_rv = new ReactiveVar(@data.news_id or most_recent_news_id)
+
+  @active_news_id_rv = new ReactiveVar(@data?.news_id or most_recent_news_id)
   @controller.active_news_id_rv = @active_news_id_rv
 
-  @active_news_tab_rv = new ReactiveVar(@data.tab_id or "main")
+  @active_news_tab_rv = new ReactiveVar(@data?.tab_id or "main")
 
-  @show_dropdown = @data.show_dropdown
+  @show_dropdown = @data?.show_dropdown
   if not @show_dropdown?
     @show_dropdown = true
 
   # If router_navigation and register_news_routes is true, the content of template will react to the active route,
   # and will redirect user to the corresponding route upon clicking.
   @register_news_routes = APP.justdo_news.register_news_routes
-  @router_navigation = @data.router_navigation
+  @router_navigation = @data?.router_navigation
   if not @router_navigation?
     @router_navigation = @register_news_routes
 
