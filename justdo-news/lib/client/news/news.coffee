@@ -8,7 +8,6 @@ Template.news.onCreated ->
     throw APP.justdo_news._error "news-category-not-found"
 
   @active_news_id_rv = new ReactiveVar(@data?.news_id or most_recent_news_id)
-  @controller.active_news_id_rv = @active_news_id_rv
 
   @active_news_tab_rv = new ReactiveVar(@data?.tab_id or "main")
 
