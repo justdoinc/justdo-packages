@@ -30,22 +30,26 @@ _.extend JustdoSystemUpdates.prototype,
       read_system_updates = []
 
     read_system_updates_ids = _.map read_system_updates, (read_message_doc) -> read_message_doc.update_id
+    all_system_updates_sorted_time_desc = _.sortBy(APP.justdo_news.getAllNewsByCategory(JustdoNews.version_updates_news_category_id), "date").reverse()
+    unread_system_update_ids = []
 
-    for system_update_def in APP.justdo_news.getAllNewsByCategory JustdoNews.default_news_category
+    # Go through the list of sorted updates. Break when we encountered the first read news, or the first news that is registered before the user.
+    for system_update_def in all_system_updates_sorted_time_desc
       system_update_id = system_update_def._id
+
       if system_update_id in read_system_updates_ids
-        # Already read
-        continue
+        break
 
       if (show_to_users_registered_before = system_update_def.date)?
         show_to_users_registered_before = moment(show_to_users_registered_before, "YYYY-MM-DD").toDate()
         if cur_user.createdAt >= show_to_users_registered_before
           # User registered after the time the message is relevant.
-          continue
+          break
 
-      @_displayUpdate(system_update_id)
-      # Ensure the update popup is shown once
-      break
+      unread_system_update_ids.push system_update_id
+
+    if not _.isEmpty unread_system_update_ids
+      @_displayUpdate unread_system_update_ids
 
     @messages_presented = true
 
