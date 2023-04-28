@@ -127,3 +127,5 @@ _.extend JustdoNews.prototype,
       @category_dep.depend()
       @news_dep.depend()
     return _.find @news[category], (news) -> (news._id is news_id_or_alias) or (news_id_or_alias in news.aliases)
+
+  getAllRegisteredCategories: -> _.keys @news
