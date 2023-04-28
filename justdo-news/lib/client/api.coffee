@@ -33,6 +33,7 @@ _.extend JustdoNews.prototype,
     return _.find news.templates, (template_obj) -> template_obj._id is template_name
 
   redirectToMostRecentNewsPageByCategoryOrFallback: (category) ->
-    if not _.isString category
-      category = JustdoNews.default_news_category
-    Router.current().redirect "/#{category}/#{@getMostRecentNewsIdUnderCategory category}"
+    if not (most_recent_news_id_under_cat = @getMostRecentNewsIdUnderCategory category)?
+      throw @_error "news-category-not-found"
+    Router.current().redirect "/#{category}/#{most_recent_news_id_under_cat}"
+    return
