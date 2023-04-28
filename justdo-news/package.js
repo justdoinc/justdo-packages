@@ -72,6 +72,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
+  api.addFiles("lib/client/news/news-controller.coffee", client)
   api.addFiles("lib/client/news/news.sass", client)
   api.addFiles("lib/client/news/news.html", client)
   api.addFiles("lib/client/news/news.coffee", client)
