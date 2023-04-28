@@ -679,8 +679,9 @@ APP.executeAfterAppLibCode ->
   Template.task_pane_item_details_members_editor_recent_batched_ops.helpers
     recentBatchedOps: -> APP.collections.DBMigrationBatchedCollectionUpdates.find(getBatchedCollectionUpdatesQuery(), {"sort": {"process_status_details.created_at": -1}})
     recentBatchedOpsCount: -> APP.collections.DBMigrationBatchedCollectionUpdates.find(getBatchedCollectionUpdatesQuery()).fetch().length
-    pendingOrInProgress: -> @process_status is "pending" or @process_status is "in-progress"
+    isInProgress: -> @process_status is "in-progress"
     processedPercent: -> Math.floor((@process_status_details.processed / @process_status_details.total) * 100)
+    detailedProcessed: -> """Processed #{parseInt(@process_status_details.processed, 10).toLocaleString()} tasks out of #{parseInt(@process_status_details.total, 10).toLocaleString()}"""
 
     opsMessage: ->
       op_object = @
@@ -707,7 +708,7 @@ APP.executeAfterAppLibCode ->
 
       if Meteor.userId() in members_to_remove
         # When the user himself is removed, he'll always be the only one involved in the operation
-        message_arr.push "Removing You from #{total_tasks_in_job} tasks"
+        message_arr.push "Removing You from #{parseInt(total_tasks_in_job, 10).toLocaleString()} tasks"
 
         return getMessage()
 
@@ -750,16 +751,16 @@ APP.executeAfterAppLibCode ->
       message_arr.push "</div>"
 
       if (process_status = op_object.process_status) == "pending"
-        message_arr.push '<svg class="jd-icon about-to-begine"><use xlink:href="/layout/icons-feather-sprite.svg#clock"></use></svg>'
+        message_arr.push """<div title="About to begin"><svg class="jd-icon about-to-begin"><use xlink:href="/layout/icons-feather-sprite.svg#clock"></use></svg></div>"""
 
       if process_status == "done"
-        message_arr.push '<svg class="jd-icon done"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>'
+        message_arr.push """<div title="Done"><svg class="jd-icon done"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg></div>"""
 
       if process_status == "terminated"
-        message_arr.push '<svg class="jd-icon terminated"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"></use></svg>'
+        message_arr.push """<div title="Terminated"><svg class="jd-icon terminated"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"></use></svg></div>"""
 
       if process_status == "error"
-        message_arr.push '<svg class="jd-icon error"><use xlink:href="/layout/icons-feather-sprite.svg#slash"></use></svg>'
+        message_arr.push """<div title="Failed to process. Error code: #{op_object.process_status_details?.error_data?.code}"><svg class="jd-icon error"><use xlink:href="/layout/icons-feather-sprite.svg#slash"></use></svg></div>"""
 
       return getMessage()
 

@@ -4,9 +4,9 @@
       <div class="section crossed-threshold bg-light">
         {{#with timeToProcess}}
           {{#if $eq min_time_to_process max_time_to_process}}
-            <div class="secton-message font-weight-bold">This operation will take around {{min_time_to_process}}...</div>
+            <div class="secton-message font-weight-bold">This operation will take around <u>{{min_time_to_process}}</u></div>
           {{else}}
-            <div class="secton-message font-weight-bold">This operation will take up to {{max_time_to_process}}...</div>
+            <div class="secton-message font-weight-bold">This operation will take up to <u>{{max_time_to_process}}</u></div>
           {{/if}}
         {{/with}}
         <div class="secton-message mt-1">Operation affects more than <b>{{batchedImmediateProcessThreshold}}</b> records and therefore will take a while. You can track its progress in the members edit window.</div>
@@ -18,7 +18,7 @@
         <div class="section remove">
           <div class="section-message">
             You are about to remove <b>{{usersText members_to_remove}}</b> from <b>{{tasks_count}}</b> tasks<br>
-            As a result, you'll become the owner of all the <b>{{tasks_count}}</b> tasks owned by these users.
+            As a result, you'll become the owner of all the tasks owned by these users.
           </div>
         </div>
       {{/if}}

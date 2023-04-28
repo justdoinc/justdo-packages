@@ -47,13 +47,10 @@
       <div class="recent-batched-msg-wrapper">
         <div class="recent-batched-msg">
           {{{xssGuard opsMessage}}}
-          {{#if pendingOrInProgress}}
-            {{processedPercent}}%
+          {{#if isInProgress}}
+            <div title="{{detailedProcessed}}">{{processedPercent}}%</div>
           {{/if}}
         </div>
-        {{!-- {{#if pendingOrInProgress}}
-          <span class="terminate">terminate</span>
-        {{/if}} --}}
       </div>
     </div>
   {{/each}}
