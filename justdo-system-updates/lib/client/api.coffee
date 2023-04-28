@@ -90,28 +90,36 @@ _.extend JustdoSystemUpdates.prototype,
         label: "Prev"
         className: "btn-light prev-news disabled"
         callback: =>
+          $self = $(".modal-footer>.prev-news")
+          if $self.hasClass "disabled"
+            return false
+
           page_number -= 1
           $(".modal-footer>.next-news").removeClass "disabled"
 
           if page_number <= 0
             page_number = 0
-            $(".modal-footer>.prev-news").addClass "disabled"
-          else
-            controller.setActiveNewsId system_update_ids[page_number]
+            $self.addClass "disabled"
+
+          controller.setActiveNewsId system_update_ids[page_number]
           return false
 
       next:
         label: "Next"
         className: "btn-light next-news"
         callback: =>
+          $self = $(".modal-footer>.next-news")
+          if $self.hasClass "disabled"
+            return false
+
           page_number += 1
           $(".modal-footer>.prev-news").removeClass "disabled"
 
           if page_number >= (unread_updates_length = system_update_ids.length - 1)
             page_number = unread_updates_length
-            $(".modal-footer>.next-news").addClass "disabled"
-          else
-            controller.setActiveNewsId system_update_ids[page_number]
+            $self.addClass "disabled"
+
+          controller.setActiveNewsId system_update_ids[page_number]
           return false
 
       ok:
@@ -201,5 +209,5 @@ _.extend JustdoSystemUpdates.prototype,
       show_system_updates = true
 
     Meteor.users.update(Meteor.userId(), {$set: {"profile.show_system_updates": not show_system_updates}})
-    
+
     return
