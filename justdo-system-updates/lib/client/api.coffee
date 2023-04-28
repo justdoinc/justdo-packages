@@ -55,19 +55,82 @@ _.extend JustdoSystemUpdates.prototype,
 
     return
 
-  _displayUpdate: (system_update_id) ->
-    data = {}
+  _displayUpdate: (system_update_ids, options) ->
+    if _.isString system_update_ids
+      system_update_ids = [system_update_ids]
+    if not _.isArray system_update_ids
+      options = system_update_ids
+      system_update_ids = [APP.justdo_news.getMostRecentNewsIdUnderCategory JustdoNews.version_updates_news_category_id]
 
+    page_number = 0 # Default is the most recent system update
+    most_recent_system_update_id = system_update_ids[page_number]
+
+    controller = new JustdoNews.NewsController()
     system_update_template =
-      JustdoHelpers.renderTemplateInNewNode("news", {router_navigation: false})
+      JustdoHelpers.renderTemplateInNewNode("news", {controller, router_navigation: false, category: JustdoNews.version_updates_news_category_id, news_id: most_recent_system_update_id})
 
     showLater = ->
       return
 
     markAsRead = ->
-      Meteor.users.update(Meteor.userId(), {$push: {"profile.read_system_updates": {update_id: system_update_id, read_at: new Date(TimeSync.getServerTime())}}})
+      if not options?.ignore_mark_as_read
+        Meteor.users.update(Meteor.userId(), {$push: {"profile.read_system_updates": {update_id: most_recent_system_update_id, read_at: new Date(TimeSync.getServerTime())}}})
 
       return
+
+    all_dialog_buttons =
+      read_later:
+        label: "Read Later"
+        className: "btn-light"
+        callback: =>
+          showLater()
+          return true
+
+      prev:
+        label: "Prev"
+        className: "btn-light prev-news disabled"
+        callback: =>
+          page_number -= 1
+
+          if page_number <= 0
+            page_number = 0
+            $(".modal-footer>.prev-news").addClass "disabled"
+
+          $(".modal-footer>.next-news").removeClass "disabled"
+          controller.setActiveNewsId system_update_ids[page_number]
+          return false
+
+      next:
+        label: "Next"
+        className: "btn-light next-news"
+        callback: =>
+          page_number += 1
+
+          if page_number >= (unread_updates_length = system_update_ids.length - 1)
+            page_number = unread_updates_length
+            $(".modal-footer>.next-news").addClass "disabled"
+
+          $(".modal-footer>.prev-news").removeClass "disabled"
+          controller.setActiveNewsId system_update_ids[page_number]
+          return false
+
+      ok:
+        label: "OK"
+        className: "btn-primary"
+        callback: ->
+          markAsRead()
+          return true
+
+    dialog_buttons = {}
+    if options?.ignore_mark_as_read
+      dialog_buttons.ok = all_dialog_buttons.ok
+
+    else
+      dialog_buttons.read_later = all_dialog_buttons.read_later
+      if system_update_ids.length > 1
+        dialog_buttons.prev = all_dialog_buttons.prev
+        dialog_buttons.next = all_dialog_buttons.next
+      dialog_buttons.ok = all_dialog_buttons.ok
 
     bootbox.dialog
       title: "We Have Great New Things for You"
@@ -80,24 +143,8 @@ _.extend JustdoSystemUpdates.prototype,
 
         return true
 
-      buttons:
-        read_later:
-          label: "Read Later"
+      buttons: dialog_buttons
 
-          className: "btn-light"
-
-          callback: =>
-            showLater()
-
-            return true
-
-        ok:
-          label: "OK"
-
-          callback: ->
-            markAsRead()
-
-            return true
 
     return
 
