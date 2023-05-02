@@ -8,7 +8,7 @@ _.extend JustdoNewProjectTemplates.prototype,
 
     return
 
-  test: ->
+  showTemplatesPicker: ->
     message_template = JustdoHelpers.renderTemplateInNewNode Template.new_project_template_selector
 
     dialog = bootbox.dialog
