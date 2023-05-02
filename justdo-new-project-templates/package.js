@@ -76,6 +76,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/new-project-template-selector/new-project-template-selector.coffee", client);
   api.addAssets("lib/client/assets/sales.png", client)
   api.addAssets("lib/client/assets/empty.jpg", client)
+  api.addAssets("lib/client/assets/dev.png", client)
 
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
