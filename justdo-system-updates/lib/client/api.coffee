@@ -30,7 +30,7 @@ _.extend JustdoSystemUpdates.prototype,
       read_system_updates = []
 
     read_system_updates_ids = _.map read_system_updates, (read_message_doc) -> read_message_doc.update_id
-    all_system_updates_sorted_time_desc = _.sortBy(APP.justdo_news.getAllNewsByCategory(JustdoNews.version_updates_news_category_id), "date").reverse()
+    all_system_updates_sorted_time_desc = _.sortBy(APP.justdo_news.getAllNewsByCategory("news"), "date").reverse()
     unread_system_update_ids = []
 
     # Go through the list of sorted updates. Break when we encountered the first read news, or the first news that is registered before the user.
@@ -60,14 +60,14 @@ _.extend JustdoSystemUpdates.prototype,
       system_update_ids = [system_update_ids]
     if not _.isArray system_update_ids
       options = system_update_ids
-      system_update_ids = [APP.justdo_news.getMostRecentNewsIdUnderCategory JustdoNews.version_updates_news_category_id]
+      system_update_ids = [APP.justdo_news.getMostRecentNewsIdUnderCategory "news"]
 
     page_number = 0 # Default is the most recent system update
     most_recent_system_update_id = system_update_ids[page_number]
 
     controller = new JustdoNews.NewsController()
     system_update_template =
-      JustdoHelpers.renderTemplateInNewNode("news", {controller, router_navigation: false, category: JustdoNews.version_updates_news_category_id, news_id: most_recent_system_update_id})
+      JustdoHelpers.renderTemplateInNewNode("news", {controller, router_navigation: false, category: "news", news_id: most_recent_system_update_id})
 
     showLater = ->
       return

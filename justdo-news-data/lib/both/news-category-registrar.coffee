@@ -1,1 +1,1 @@
-APP.justdo_news.registerNewsCategory JustdoNews.version_updates_news_category_id
+APP.justdo_news.registerNewsCategory "news"
