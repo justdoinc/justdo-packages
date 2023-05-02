@@ -33,7 +33,7 @@ _.extend JustdoSystemUpdates.prototype,
     all_system_updates_sorted_time_desc = _.sortBy(APP.justdo_news.getAllNewsByCategory("news"), "date").reverse()
     unread_system_update_ids = []
 
-    # Go through the list of sorted updates. Break when we encountered the first read news, or the first news that is registered before the user.
+    # Go through the list of sorted updates DESC. Break when we encountered the first read news, or the first news that is registered before the user.
     for system_update_def in all_system_updates_sorted_time_desc
       system_update_id = system_update_def._id
 
@@ -102,6 +102,7 @@ _.extend JustdoSystemUpdates.prototype,
             $self.addClass "disabled"
 
           controller.setActiveNewsId system_update_ids[page_number]
+          controller.setActiveTabId "main"
           return false
 
       next:
@@ -120,6 +121,7 @@ _.extend JustdoSystemUpdates.prototype,
             $self.addClass "disabled"
 
           controller.setActiveNewsId system_update_ids[page_number]
+          controller.setActiveTabId "main"
           return false
 
       ok:
@@ -143,7 +145,7 @@ _.extend JustdoSystemUpdates.prototype,
     bootbox.dialog
       title: "We Have Great New Things for You"
       message: system_update_template.node
-      className: "members-update-dialog bootbox-new-design"
+      className: "system-update-dialog bootbox-new-design"
       focused_element: ""
 
       onEscape: ->

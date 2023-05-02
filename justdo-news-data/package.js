@@ -61,10 +61,13 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/templates/version-release/version-release.html", client);
   api.addFiles("lib/client/templates/version-release/version-release.coffee", client);
 
+  // v3.133.x (Fake for package testing purpose, do not commit uncommentted!)
   // api.addAssets([
   //   "lib/both/news/v3-133/assets/2023_03_10_6.jpg"
   // ], client)
   // api.addFiles("lib/both/news/v3-133/v3-133.coffee", both);
+
+  // v3.136.x
   api.addAssets([
     "lib/both/news/v3-136/assets/2023_03_10_1.jpg",
     "lib/both/news/v3-136/assets/2023_03_10_3.jpg",
