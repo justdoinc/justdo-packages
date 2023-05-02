@@ -196,9 +196,8 @@ _.extend TemplateParser.prototype,
 EventsAPI =
   addUsers: (task_id, users, perform_as) ->
     update =
-      $addToSet:
-        users:
-          $each: _.map users, (user) => @user user
+      $set:
+        users: _.map users, (user) => @user user
     APP.projects._grid_data_com.updateItem task_id, update, perform_as
 
   setOwner: (task_id, user, perform_as) ->
