@@ -248,3 +248,6 @@ EventsAPI =
   removeParents: (task_id, parents, perform_as) ->
     for parent in parents
       APP.projects._grid_data_com.removeParent "/#{@task parent}/#{task_id}/", perform_as
+
+  update: (task_id, update, perform_as) ->
+    APP.projects._grid_data_com.updateItem task_id, update, perform_as
