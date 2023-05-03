@@ -56,15 +56,16 @@ _.extend JustdoSystemUpdates.prototype,
     return
 
   displayUpdatePopup: (options) ->
-    # system_update_ids: (optional) List of update ids that are unread by the user
-    #   This array only faciliates the prev/next button.
-    # skip_mark_as_read: (optional) Skip behaviour of markAsRead and only show "OK" button in popup.
-    {system_update_ids, skip_mark_as_read} = options
+    # Supported options:
+    #  system_update_ids: (optional) List of update ids that are unread by the user
+    #    This array only faciliates the prev/next button.
+    #  skip_mark_as_read: (optional) Skip behaviour of markAsRead and only show "OK" button in popup.
+    default_system_update_ids = [APP.justdo_news.getMostRecentNewsIdUnderCategory JustdoSystemUpdates.news_category]
 
-    if _.isString system_update_ids
-      system_update_ids = [system_update_ids]
-    if not system_update_ids?
-      system_update_ids = [APP.justdo_news.getMostRecentNewsIdUnderCategory JustdoSystemUpdates.news_category]
+    if _.isString options.system_update_ids
+      system_update_ids = [options.system_update_ids]
+    if not options.system_update_ids?
+      system_update_ids = default_system_update_ids
 
     page_number = 0 # Default is the most recent system update
     most_recent_system_update_id = system_update_ids[page_number]
@@ -78,7 +79,7 @@ _.extend JustdoSystemUpdates.prototype,
       return
 
     markAsRead = ->
-      if not skip_mark_as_read
+      if not options.skip_mark_as_read
         Meteor.users.update(Meteor.userId(), {$push: {"profile.read_system_updates": {update_id: most_recent_system_update_id, read_at: new Date(TimeSync.getServerTime())}}})
 
       return
@@ -137,7 +138,7 @@ _.extend JustdoSystemUpdates.prototype,
           return true
 
     dialog_buttons = {}
-    if skip_mark_as_read
+    if options.skip_mark_as_read
       dialog_buttons.ok = all_dialog_buttons.ok
 
     else
