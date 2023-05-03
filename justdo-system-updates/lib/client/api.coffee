@@ -63,7 +63,7 @@ _.extend JustdoSystemUpdates.prototype,
 
     if _.isString system_update_ids
       system_update_ids = [system_update_ids]
-    if not system_update_ids
+    if not system_update_ids?
       system_update_ids = [APP.justdo_news.getMostRecentNewsIdUnderCategory JustdoSystemUpdates.news_category]
 
     page_number = 0 # Default is the most recent system update
