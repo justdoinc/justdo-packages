@@ -21,7 +21,7 @@ APP.executeAfterAppLibCode ->
       zE.activate({hideOnClose: true})
       return
 
-    "click .show-recent-updates": -> APP.justdo_system_updates._displayUpdate {ignore_mark_as_read: true}
+    "click .show-recent-updates": -> APP.justdo_system_updates.displayUpdatePopup {ignore_mark_as_read: true}
 
   Template.tutorials_submenu_dropdown_item.events
     "click .tutorial-item": (e) ->

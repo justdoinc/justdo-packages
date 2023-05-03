@@ -49,13 +49,13 @@ _.extend JustdoSystemUpdates.prototype,
       unread_system_update_ids.push system_update_id
 
     if not _.isEmpty unread_system_update_ids
-      @_displayUpdate unread_system_update_ids
+      @displayUpdatePopup unread_system_update_ids
 
     @messages_presented = true
 
     return
 
-  _displayUpdate: (system_update_ids, options) ->
+  displayUpdatePopup: (system_update_ids, options) ->
     if _.isString system_update_ids
       system_update_ids = [system_update_ids]
     if not _.isArray system_update_ids
