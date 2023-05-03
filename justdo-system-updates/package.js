@@ -60,6 +60,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/analytics.coffee", both);
 
   api.addFiles("lib/both/init.coffee", both);
+  api.addFiles("lib/both/static.coffee", both);
   api.addFiles("lib/both/static-api.coffee", both);
   api.addFiles("lib/both/errors-types.coffee", both);
   api.addFiles("lib/both/api.coffee", both);
