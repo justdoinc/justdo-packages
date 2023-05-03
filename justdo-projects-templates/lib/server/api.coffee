@@ -249,5 +249,20 @@ EventsAPI =
     for parent in parents
       APP.projects._grid_data_com.removeParent "/#{@task parent}/#{task_id}/", perform_as
 
+  setArchived: (task_id, args, perform_as) ->
+    update =
+      $set:
+        archived: new Date()
+    APP.projects._grid_data_com.updateItem task_id, update, perform_as
+
+  unsetArchived: (task_id, args, perform_as) ->
+    update =
+      $set:
+        archived: null
+    APP.projects._grid_data_com.updateItem task_id, update, perform_as
+
+  toggleIsProject: (task_id, args, perform_as) ->
+    APP.justdo_delivery_planner.toggleTaskIsProject task_id, perform_as
+
   update: (task_id, update, perform_as) ->
     APP.projects._grid_data_com.updateItem task_id, update, perform_as
