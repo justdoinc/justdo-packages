@@ -60,12 +60,17 @@ _.extend JustdoSystemUpdates.prototype,
     #  system_update_ids: (optional) List of update ids that are unread by the user
     #    This array only faciliates the prev/next button.
     #  skip_mark_as_read: (optional) Skip behaviour of markAsRead and only show "OK" button in popup.
-    default_system_update_ids = [APP.justdo_news.getMostRecentNewsIdUnderCategory JustdoSystemUpdates.news_category]
 
-    if _.isString options.system_update_ids
+    default_options =
+      system_update_ids: [APP.justdo_news.getMostRecentNewsIdUnderCategory JustdoSystemUpdates.news_category]
+      skip_mark_as_read: false
+
+    options = _.extend default_options, options
+
+    system_update_ids = options.system_update_ids
+
+    if _.isString system_update_ids
       system_update_ids = [options.system_update_ids]
-    if not options.system_update_ids?
-      system_update_ids = default_system_update_ids
 
     page_number = 0 # Default is the most recent system update
     most_recent_system_update_id = system_update_ids[page_number]
