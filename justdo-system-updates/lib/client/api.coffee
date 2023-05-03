@@ -30,7 +30,7 @@ _.extend JustdoSystemUpdates.prototype,
       read_system_updates = []
 
     read_system_updates_ids = _.map read_system_updates, (read_message_doc) -> read_message_doc.update_id
-    all_system_updates_sorted_time_desc = _.sortBy(APP.justdo_news.getAllNewsByCategory("news"), "date").reverse()
+    all_system_updates_sorted_time_desc = _.sortBy(APP.justdo_news.getAllNewsByCategory(JustdoSystemUpdates.news_category), "date").reverse()
     unread_system_update_ids = []
 
     # Go through the list of sorted updates DESC. Break when we encountered the first read news, or the first news that is registered before the user.
@@ -64,13 +64,13 @@ _.extend JustdoSystemUpdates.prototype,
     if _.isString system_update_ids
       system_update_ids = [system_update_ids]
     if not system_update_ids
-      system_update_ids = [APP.justdo_news.getMostRecentNewsIdUnderCategory "news"]
+      system_update_ids = [APP.justdo_news.getMostRecentNewsIdUnderCategory JustdoSystemUpdates.news_category]
 
     page_number = 0 # Default is the most recent system update
     most_recent_system_update_id = system_update_ids[page_number]
 
     system_update_template =
-      JustdoHelpers.renderTemplateInNewNode("news", {router_navigation: false, category: "news", news_id: most_recent_system_update_id})
+      JustdoHelpers.renderTemplateInNewNode("news", {router_navigation: false, category: JustdoSystemUpdates.news_category, news_id: most_recent_system_update_id})
 
     template_instance = system_update_template.template_instance
 
