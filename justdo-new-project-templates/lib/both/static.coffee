@@ -12,69 +12,273 @@ _.extend JustdoNewProjectTemplates,
           users: ["manager"]
           perform_as: "manager"
         ]
-    dev:
+    "IT Firm":
       order: 101
       demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/client/assets/dev.png"
       template:
         users: ["manager"]
         tasks: [
-          title: "Sprints"
+          title: "R&D"
           users: ["manager"]
           perform_as: "manager"
           tasks: [
-            title: "Archived sprints"
+            title: "Mobile App Development"
             user: ["manager"]
             owner: ["manager"]
-          ,
-            title: "v3.132.x - LTS (Long Term Support)"
+            events: [
+              action: "setState"
+              args: "nil"
+              perform_as: "manager"
+            ]
+            tasks: [
+              title: "Sprints"
+              user: ["manager"]
+              owner: ["manager"]
+              tasks: [
+                title: "v0.0.1 (POC)"
+                user: ["manager"]
+                owner: ["manager"]
+                events: [
+                  action: "setArchived"
+                  args: ""
+                  perform_as: "manager"
+                ]
+                tasks: [
+                  title: "Task a"
+                  user: ["manager"]
+                  owner: ["manager"]
+                ,
+                  title: "Task b"
+                  user: ["manager"]
+                  owner: ["manager"]
+                ]
+              ,
+                title: "v1.0.0"
+                user: ["manager"]
+                owner: ["manager"]
+                events: [
+                  action: "toggleIsProject"
+                  args: ""
+                  perform_as: "manager"
+                ]
+                tasks: [
+                  title: "Implement new feature 1"
+                  user: ["manager"]
+                  owner: ["manager"]
+                  tasks: [
+                    title: "Design & UX/UI"
+                    user: ["manager"]
+                    owner: ["manager"]
+                    events: [
+                      action: "setState"
+                      args: "nil"
+                      perform_as: "manager"
+                    ]
+                    tasks: [
+                      title: "Requirements Gathering"
+                      user: ["manager"]
+                      owner: ["manager"]
+                    ,
+                      title: "Wireframes"
+                      user: ["manager"]
+                      owner: ["manager"]
+                      events: [
+                        action: "setState"
+                        args: "nil"
+                        perform_as: "manager"
+                      ]
+                    ,
+                      title: "User Interface Design"
+                      user: ["manager"]
+                      owner: ["manager"]
+                      events: [
+                        action: "setState"
+                        args: "nil"
+                        perform_as: "manager"
+                      ]
+                    ,
+                      title: "User Experience Design"
+                      user: ["manager"]
+                      owner: ["manager"]
+                      events: [
+                        action: "setState"
+                        args: "nil"
+                        perform_as: "manager"
+                      ]
+                    ]
+                  ,
+                    title: "Backend Development"
+                    user: ["manager"]
+                    owner: ["manager"]
+                    events: [
+                      action: "setState"
+                      args: "nil"
+                      perform_as: "manager"
+                    ]
+                    tasks: [
+                      title: "Feature B"
+                      user: ["manager"]
+                      owner: ["manager"]
+                    ]
+                  ,
+                    title: "Frontend Development"
+                    user: ["manager"]
+                    owner: ["manager"]
+                    events: [
+                      action: "setState"
+                      args: "nil"
+                      perform_as: "manager"
+                    ]
+                    tasks: [
+                      title: "Feature A"
+                      user: ["manager"]
+                      owner: ["manager"]
+                    ]
+                  ,
+                    title: "QA"
+                    user: ["manager"]
+                    owner: ["manager"]
+                    tasks: [
+                      title: "Write auto-test 1"
+                      user: ["manager"]
+                      owner: ["manager"]
+                    ,
+                      title: "Write auto-test 2"
+                      user: ["manager"]
+                      owner: ["manager"]
+                    ]
+                  ]
+                ]
+              ,
+                title: "v2.0.0"
+                user: ["manager"]
+                owner: ["manager"]
+                events: [
+                  action: "toggleIsProject"
+                  args: ""
+                  perform_as: "manager"
+                ]
+                tasks: [
+                  title: "Implement new feature 2"
+                  user: ["manager"]
+                  owner: ["manager"]
+                ]
+              ]
+            ,
+              title: "Roadmap"
+              user: ["manager"]
+              owner: ["manager"]
+              tasks: [
+                title: "Roadmap feature 1"
+                user: ["manager"]
+                owner: ["manager"]
+              ,
+                title: "Roadmap feature 2"
+                user: ["manager"]
+                owner: ["manager"]
+                events: [
+                  action: "setStatus"
+                  args: "Requested by client XYZ"
+                  perform_as: "manager"
+                ]
+              ,
+                title: "Roadmap feature 3"
+                user: ["manager"]
+                owner: ["manager"]
+                events: [
+                  action: "setStatus"
+                  args: "Requested by clients ABC, PMQ"
+                  perform_as: "manager"
+                ]
+              ]
+            ,
+              title: "Mobile App QA"
+              user: ["manager"]
+              owner: ["manager"]
+              events: [
+                action: "setState"
+                args: "nil"
+                perform_as: "manager"
+              ]
+              tasks: [
+                title: "Bug tracking"
+                user: ["manager"]
+                owner: ["manager"]
+              ]
+            ]
+          ]
+        ,
+          title: "Finance"
+          user: ["manager"]
+          owner: ["manager"]
+          tasks: [
+            title: "Prepare FY report"
             user: ["manager"]
             owner: ["manager"]
             tasks: [
-              title: "Demo task 1"
+              title: "Contact auditor"
               user: ["manager"]
               owner: ["manager"]
             ,
-              title: "Demo task 2"
-              user: ["manager"]
-              owner: ["manager"]
-            ,
-              title: "Demo task 3"
+              title: "Prepare employer return"
               user: ["manager"]
               owner: ["manager"]
             ]
-          ,
-            title: "v3.136.x - stable"
+          ]
+        ,
+          title: "Customer service"
+          user: ["manager"]
+          owner: ["manager"]
+          tasks: [
+            title: "Client A"
             user: ["manager"]
             owner: ["manager"]
             tasks: [
-              title: "Demo task 1"
+              title: "Deployment v3.0.0 on Client A server"
               user: ["manager"]
               owner: ["manager"]
-            ,
-              title: "Demo task 2"
-              user: ["manager"]
-              owner: ["manager"]
-            ,
-              title: "Demo task 3"
+              events: [
+                action: "setState"
+                args: "nil"
+                perform_as: "manager"
+              ]
+            ]
+          ,
+            title: "Client B"
+            user: ["manager"]
+            owner: ["manager"]
+            tasks: [
+              title: "Contact to reproduce reported issue"
               user: ["manager"]
               owner: ["manager"]
             ]
-          ,
-            title: "v3.137.x - experimental"
+          ]
+        ,
+          title: "HR"
+          user: ["manager"]
+          owner: ["manager"]
+          tasks: [
+            title: "Recruit position for frontend"
             user: ["manager"]
             owner: ["manager"]
             tasks: [
-              title: "Demo task 1"
+              title: "Candidate A"
               user: ["manager"]
               owner: ["manager"]
+              events: [
+                action: "setStatus"
+                args: "Coordinate zoom meeting"
+                perform_as: "manager"
+              ]
             ,
-              title: "Demo task 2"
+              title: "Candidate B"
               user: ["manager"]
               owner: ["manager"]
-            ,
-              title: "Demo task 3"
-              user: ["manager"]
-              owner: ["manager"]
+              events: [
+                action: "setStatus"
+                args: "CV is missing, contact by email"
+                perform_as: "manager"
+              ]
             ]
           ]
         ]
