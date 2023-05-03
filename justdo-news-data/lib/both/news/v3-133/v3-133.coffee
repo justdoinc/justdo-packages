@@ -30,5 +30,3 @@ APP.justdo_news.registerNews "news",
       name: "Other Updates"
     }
   ]
-
-return
