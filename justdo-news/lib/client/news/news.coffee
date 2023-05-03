@@ -1,8 +1,4 @@
 Template.news.onCreated ->
-  if (controller = @data?.controller)?
-    @controller = controller
-    @controller.setTemplateInstance @
-
   @active_category_rv = new ReactiveVar(@data?.category or APP.justdo_news.getActiveCategetoryByRootPath())
   if not (most_recent_news_id = APP.justdo_news.getMostRecentNewsIdUnderCategory @active_category_rv.get())
     throw APP.justdo_news._error "news-category-not-found"

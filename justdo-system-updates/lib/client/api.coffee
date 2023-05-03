@@ -65,9 +65,10 @@ _.extend JustdoSystemUpdates.prototype,
     page_number = 0 # Default is the most recent system update
     most_recent_system_update_id = system_update_ids[page_number]
 
-    controller = new JustdoNews.NewsController()
     system_update_template =
-      JustdoHelpers.renderTemplateInNewNode("news", {controller, router_navigation: false, category: "news", news_id: most_recent_system_update_id})
+      JustdoHelpers.renderTemplateInNewNode("news", {router_navigation: false, category: "news", news_id: most_recent_system_update_id})
+
+    template_instance = system_update_template.template_instance
 
     showLater = ->
       return
@@ -101,8 +102,8 @@ _.extend JustdoSystemUpdates.prototype,
             page_number = 0
             $self.addClass "disabled"
 
-          controller.setActiveNewsId system_update_ids[page_number]
-          controller.setActiveTabId "main"
+          template_instance.active_news_id_rv.set system_update_ids[page_number]
+          template_instance.active_news_tab_rv.set "main"
           return false
 
       next:
@@ -120,8 +121,8 @@ _.extend JustdoSystemUpdates.prototype,
             page_number = unread_updates_length
             $self.addClass "disabled"
 
-          controller.setActiveNewsId system_update_ids[page_number]
-          controller.setActiveTabId "main"
+          template_instance.active_news_id_rv.set system_update_ids[page_number]
+          template_instance.active_news_tab_rv.set "main"
           return false
 
       ok:
