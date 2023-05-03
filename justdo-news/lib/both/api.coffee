@@ -15,6 +15,9 @@ _.extend JustdoNews.prototype,
     return
 
   registerNewsCategory: (category) ->
+    if _.isEmpty category or not _.isString category
+      throw @_error "invalid-argument"
+
     if _.has @news, category
       throw @_error "news-category-already-exists"
 
