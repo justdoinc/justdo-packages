@@ -8,7 +8,8 @@ _.extend JustDoProjectsTemplates.prototype,
     if @destroyed
       return
 
-    @registerBuiltInTemplates()
+    APP.executeAfterAppLibCode =>
+      @registerBuiltInTemplates()
 
     return
 
