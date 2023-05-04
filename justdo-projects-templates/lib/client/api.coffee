@@ -46,7 +46,7 @@ _.extend JustDoProjectsTemplates.prototype,
 
             create_button_disabled = true
 
-            $create_btn = (".modal-footer>.create-btn")
+            $create_btn = $(".modal-footer>.create-btn")
             $create_btn.addClass "disabled"
             $create_btn.html spinning_icon
 
