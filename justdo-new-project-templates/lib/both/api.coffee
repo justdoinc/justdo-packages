@@ -1,8 +1,5 @@
 _.extend JustdoNewProjectTemplates.prototype,
   _bothImmediateInit: ->
-    if Meteor.isServer
-      @project_templates = {}
-
     @setupRouter()
 
     return

@@ -1,1 +1,5 @@
-_.extend JustDoProjectsTemplates.prototype, {}
+_.extend JustDoProjectsTemplates.prototype,
+  _bothImmediateInit: ->
+    @project_templates = {}
+
+    return
