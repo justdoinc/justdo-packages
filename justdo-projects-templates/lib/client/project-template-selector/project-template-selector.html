@@ -1,9 +1,6 @@
 <template name="project_template_selector">
   <div class="project-template-selector">
     <div class="header">
-      <!-- <div class="title">
-        Welcome!
-      </div> -->
       <div class="subtitle">
         {{subtitle}}
       </div>
@@ -28,6 +25,6 @@
 
 <template name="project_template_demo">
   <div class="img-container">
-    <img src="{{img_src}}" alt="">
+    <img src="{{getCDNUrl img_src}}" alt="Template Demo Image">
   </div>
 </template>
