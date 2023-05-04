@@ -7,3 +7,13 @@ _.extend JustdoNewProjectTemplates.prototype,
       return
 
     return
+
+  showFirstJustDoTemplatePicker: ->
+    options =
+      popup_title: "Welcome"
+      popup_subtitle: "Start by choosing a template that suit your needs"
+      categories: ["getting-started", "blank"]
+      allow_closing: false
+      target_task: "/"
+    APP.justdo_projects_templates.showTemplatesPicker options
+    return
