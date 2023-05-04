@@ -3,7 +3,7 @@ _.extend JustDoProjectsTemplates.prototype,
     self = @
 
     Meteor.methods
-      createSubtreeFromTemplate: (category_id, template_id, project_id) ->
+      createSubtreeFromTemplate: (target_task, category_id, template_id, project_id) ->
         check category_id, String
         check template_id, String
         check project_id, String
@@ -15,6 +15,7 @@ _.extend JustDoProjectsTemplates.prototype,
         APP.justdo_projects_templates.createSubtreeFromTemplateUnsafe
           template: template
           project_id: project_id
+          root_task_id: target_task
           users:
             performing_user: @userId
           perform_as: "performing_user"
