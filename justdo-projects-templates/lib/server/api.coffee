@@ -121,9 +121,9 @@ _.extend TemplateParser.prototype,
   "lookup:project_id": getFromOptionsOrParents
 
   "lookup:path": (key) ->
-    if @parent?.task_id?
+    if @parent?.task_id? and @parent?.task_id isnt "/"
       return "/#{@parent.task_id}/"
-    if (root_task_id = @lookup "root_task_id")?
+    if (root_task_id = @lookup "root_task_id")? and root_task_id isnt "/"
       return  "/#{root_task_id}/"
     return "/"
 
