@@ -65,19 +65,15 @@ _.extend JustDoProjectsTemplates.prototype,
     return
 
   registerBuiltInTemplates: ->
-    for name, template_def of JustDoProjectsTemplates.default_project_templates
+    for template_id, template_def of JustDoProjectsTemplates.default_project_templates
       try
         @registerCategory template_def.category
       catch e
         if e.error isnt "template-category-already-exist"
           throw @_error e
 
-      @registerTemplate
-        category: template_def.category
-        id: name.replace(/\s|_/g, "-").toLowerCase()
-        name: name
-        demo_img_src: template_def.demo_img_src
-        template: template_def.template
-        order: template_def.order
+      options = _.extend {id: template_id}, template_def
 
+      @registerTemplate options
+      
     return

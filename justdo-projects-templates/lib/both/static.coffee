@@ -1,7 +1,7 @@
 _.extend JustDoProjectsTemplates,
   default_project_templates:
-    default:
-      name: "Default"
+    empty:
+      name: "Empty"
       category: "blank"
       order: 999
       demo_img_src: "/packages/justdoinc_justdo-projects-templates/lib/client/assets/blank.jpg"
