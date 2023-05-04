@@ -1,4 +1,26 @@
 _.extend JustDoProjectsTemplates.prototype,
+  _immediateInit: ->
+    return
+
+  _deferredInit: ->
+    if @destroyed
+      return
+
+    # Defined in methods.coffee
+    @_setupMethods()
+
+    # Defined in publications.coffee
+    @_setupPublications()
+
+    # Defined in collections-hooks.coffee
+    @_setupCollectionsHooks()
+
+    # Defined in collections-indexes.coffee
+    @_ensureIndexesExists()
+
+    return
+
+
   createSubtreeFromTemplate: (options, perform_as) ->
     check(perform_as, String)
     check(perform_as.length > 0, true)
