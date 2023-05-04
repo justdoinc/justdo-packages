@@ -4,6 +4,23 @@ _.extend JustDoProjectsTemplates.prototype,
 
     return
 
+  _bothDeferredInit: ->
+    if @destroyed
+      return
+
+    @registerBuiltInTemplates()
+
+    return
+
+  registerCategory: (category_id) ->
+    check category_id, String
+    if _.has @project_templates, category_id
+      throw @_error "template-category-already-exist"
+
+    @project_templates[category_id] = {}
+
+    return
+
   _registerTemplateOptionsSchema: new SimpleSchema
     category:
       type: String
@@ -44,5 +61,23 @@ _.extend JustDoProjectsTemplates.prototype,
           template: "project_template_demo"
           template_data:
             img_src: options.demo_img_src
+
+    return
+
+  registerBuiltInTemplates: ->
+    for name, template_def of JustDoProjectsTemplates.default_project_templates
+      try
+        @registerCategory template_def.category
+      catch e
+        if e.error isnt "template-category-already-exist"
+          throw @_error e
+
+      @registerTemplate
+        category: template_def.category
+        id: name.replace(/\s|_/g, "-").toLowerCase()
+        name: name
+        demo_img_src: template_def.demo_img_src
+        template: template_def.template
+        order: template_def.order
 
     return
