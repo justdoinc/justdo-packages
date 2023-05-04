@@ -45,8 +45,10 @@ _.extend JustDoProjectsTemplates.prototype,
               return
 
             create_button_disabled = true
-            $(".modal-footer>.create-btn").addClass "disabled"
-            $(".modal-footer>.create-btn").html spinning_icon
+
+            $create_btn = (".modal-footer>.create-btn")
+            $create_btn.addClass "disabled"
+            $create_btn.html spinning_icon
 
             template_instance = message_template.template_instance
             selected_template_category_id = template_instance.active_category_id_rv.get()
@@ -55,6 +57,8 @@ _.extend JustDoProjectsTemplates.prototype,
             @createSubtreeFromTemplate options.target_task, selected_template_category_id, selected_template_id, project_id, (err) ->
               if err?
                 create_button_disabled = false
+                $create_btn.removeClass "disabled"
+                $create_btn.html "Create"
                 JustdoSnackbar.show
                   text: err.reason or err
                 return
