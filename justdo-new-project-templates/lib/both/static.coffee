@@ -6,7 +6,7 @@ _.extend JustdoNewProjectTemplates,
       name: "IT Firm"
       category: "getting-started"
       order: 101
-      demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/client/assets/dev.png"
+      demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/client/assets/it-firm.png"
       template:
         users: ["performing_user"]
         tasks: [
@@ -278,7 +278,7 @@ _.extend JustdoNewProjectTemplates,
       name: "Home Builders Inc"
       category: "getting-started"
       order: 102
-      demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/client/assets/sales.png"
+      demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/client/assets/home-builders-inc.png"
       template:
         users: ["performing_user"]
         tasks: [
@@ -822,7 +822,7 @@ _.extend JustdoNewProjectTemplates,
       name: "Movies Production"
       category: "getting-started"
       order: 103
-      demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/client/assets/empty.jpg"
+      demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/client/assets/movies-production.png"
       template:
         users: ["performing_user"]
         tasks: [

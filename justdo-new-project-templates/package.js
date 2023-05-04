@@ -72,8 +72,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/methods.coffee", server);
   api.addFiles("lib/server/publications.coffee", server);
 
-  api.addAssets("lib/client/assets/sales.png", client)
-  api.addAssets("lib/client/assets/dev.png", client)
+  api.addAssets("lib/client/assets/home-builders-inc.png", client);
+  api.addAssets("lib/client/assets/it-firm.png", client);
+  api.addAssets("lib/client/assets/movies-production.png", client);
+
 
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
