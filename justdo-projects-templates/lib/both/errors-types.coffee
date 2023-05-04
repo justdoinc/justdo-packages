@@ -14,3 +14,5 @@ _.extend JustDoProjectsTemplates.prototype,
   _errors_types:
     _.extend {}, JustdoHelpers.common_errors_types,
       "template-not-found": "Template not found"
+      "template-category-not-found": "Template category not found"
+      "template-category-already-exist": "Template category has already been registered"
