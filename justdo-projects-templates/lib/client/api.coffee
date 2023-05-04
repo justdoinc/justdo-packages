@@ -1,3 +1,5 @@
+spinning_icon = """<span class="fa fa-spinner fa-spin"></span>"""
+
 _.extend JustDoProjectsTemplates.prototype,
   destroy: ->
     if @destroyed
@@ -44,6 +46,7 @@ _.extend JustDoProjectsTemplates.prototype,
 
             create_button_disabled = true
             $(".modal-footer>.create-btn").addClass "disabled"
+            $(".modal-footer>.create-btn").html spinning_icon
 
             template_instance = message_template.template_instance
             selected_template_category_id = template_instance.active_category_id_rv.get()
