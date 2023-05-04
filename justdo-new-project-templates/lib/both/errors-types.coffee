@@ -12,5 +12,4 @@ _.extend JustdoNewProjectTemplates.prototype,
   # as the base for all the packages based on
   # justdo-package-skeleton >= 0.0.4
   _errors_types:
-    _.extend {}, JustdoHelpers.common_errors_types,
-      "template-not-found": "Template not found"
+    _.extend {}, JustdoHelpers.common_errors_types, {}
