@@ -1,18 +1,8 @@
 _.extend JustdoNewProjectTemplates,
   plugin_human_readable_name: "justdo-new-project-templates"
 
-  default_project_templates:
-    default:
-      order: 100
-      demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/client/assets/empty.jpg"
-      template:
-        users: ["manager"]
-        tasks: [
-          title: "Untitled Task"
-          users: ["manager"]
-          perform_as: "manager"
-        ]
     "IT Firm":
+  new_project_templates:
       order: 101
       demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/client/assets/dev.png"
       template:
