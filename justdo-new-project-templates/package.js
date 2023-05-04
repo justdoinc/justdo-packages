@@ -48,6 +48,7 @@ Package.onUse(function (api) {
   api.use("meteorspark:logger@0.3.0", both);
   api.use("justdoinc:justdo-helpers@1.0.0", both);
   api.use("iron:router@1.1.2", both);
+  api.use("justdoinc:justdo-projects-templates@1.0.0", both);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 
@@ -71,11 +72,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/methods.coffee", server);
   api.addFiles("lib/server/publications.coffee", server);
 
-  api.addFiles("lib/client/new-project-template-selector/new-project-template-selector.sass", client);
-  api.addFiles("lib/client/new-project-template-selector/new-project-template-selector.html", client);
-  api.addFiles("lib/client/new-project-template-selector/new-project-template-selector.coffee", client);
   api.addAssets("lib/client/assets/sales.png", client)
-  api.addAssets("lib/client/assets/empty.jpg", client)
   api.addAssets("lib/client/assets/dev.png", client)
 
   api.addFiles("lib/client/api.coffee", client);
