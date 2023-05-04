@@ -3,13 +3,12 @@ _.extend JustDoProjectsTemplates.prototype,
     self = @
 
     Meteor.methods
-      createSubtreeFromTemplate: (target_task, category_id, template_id, project_id) ->
-        check category_id, String
+      createSubtreeFromTemplate: (target_task, template_id, project_id) ->
         check template_id, String
         check project_id, String
         check @userId, String
 
-        if not (template = self.project_templates?[category_id]?[template_id])?
+        if not (template = self.project_templates?[template_id])?
           throw self._error "template-not-found"
 
         APP.justdo_projects_templates.createSubtreeFromTemplateUnsafe

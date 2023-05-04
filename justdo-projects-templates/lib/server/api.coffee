@@ -20,7 +20,6 @@ _.extend JustDoProjectsTemplates.prototype,
 
     return
 
-
   createSubtreeFromTemplate: (options, perform_as) ->
     check(perform_as, String)
     check(perform_as.length > 0, true)
@@ -29,15 +28,13 @@ _.extend JustDoProjectsTemplates.prototype,
     @createSubtreeFromTemplateUnsafe(options)
 
   createSubtreeFromTemplateUnsafe: (options) ->
-    { project_id, template, root_task_id, users, perform_as } = options
-
-    parser = new TemplateParser(template, options, null);
+    parser = new TemplateParser(options.template, options, null)
     parser.logger = @logger
 
-    parser.createTasks(template.tasks)
+    parser.createTasks(options.template.tasks)
     parser.runEvents()
 
-    return parser.task;
+    return parser.task
 
   destroy: ->
     if @destroyed
@@ -51,6 +48,15 @@ _.extend JustDoProjectsTemplates.prototype,
 
     return
 
+getFromTemplateOnly = (key) ->
+  return @template[key]
+
+getFromTemplateOrParents = (key) ->
+  return @template[key] ? @parent?.lookup(key)
+
+getFromOptionsOrParents = (key) ->
+  return @options[key] ? @parent?.lookup(key)
+
 TemplateParser = (template, options, parent) ->
   @logger = parent?.logger ? console
   @users = parent?.users ? options.users ? {}
@@ -62,15 +68,6 @@ TemplateParser = (template, options, parent) ->
   @parent = parent
 
   return
-
-getFromTemplateOnly = (key) ->
-  return @template[key]
-
-getFromTemplateOrParents = (key) ->
-  return @template[key] ? @parent?.lookup(key)
-
-getFromOptionsOrParents = (key) ->
-  return @options[key] ? @parent?.lookup(key)
 
 _.extend TemplateParser.prototype,
   lookup: (key, arg) ->
@@ -138,7 +135,9 @@ _.extend TemplateParser.prototype,
       parser = new TemplateParser(task, null, @)
       task = parser.createTask()
 
-  createTask: () ->
+    return
+
+  createTask: ->
     path = @lookup "path"
     user = @user @lookup "perform_as"
 

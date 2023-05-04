@@ -61,8 +61,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
-  api.addAssets("lib/client/assets/blank.jpg", client)
-
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);
@@ -71,6 +69,14 @@ Package.onUse(function (api) {
   // // Note: app-integration need to load last, so immediateInit procedures in
   // // the server will have the access to the apis loaded after the init.coffee
   // // file.
+
+  //
+  // Core templates
+  //
+
+  // Blank
+  api.addFiles("lib/core-templates-categories/blank/blank.coffee", client)
+  api.addAssets("lib/core-templates-categories/blank/blank.jpg", client)
 
   api.export("JustDoProjectsTemplates", both);
 });

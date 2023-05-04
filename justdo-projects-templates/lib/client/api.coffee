@@ -13,14 +13,14 @@ _.extend JustDoProjectsTemplates.prototype,
 
     return
 
-  showTemplatesPicker: (options) ->
+  showTemplatesFromCategoriesPicker: (options) ->
     if not (project_id = JD.activeJustdoId())?
       return
 
     default_options =
       popup_title: "Choose template"
       popup_subtitle: ""
-      categories: ["blank", "getting-started"]
+      categories: ["blank"]
       target_task: "/"
       allow_closing: true
     options = _.extend default_options, options
