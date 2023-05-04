@@ -1,5 +1,5 @@
-<template name="new_project_template_selector">
-  <div class="new-project-template-selector">
+<template name="project_template_selector">
+  <div class="project-template-selector">
     <div class="header">
       <!-- <div class="title">
         Welcome!
@@ -11,7 +11,7 @@
 
     <div class="templates-list-container">
       {{#each getTemplatesList}}
-        <div class="task-pane-tab template-item {{isTemplateActive}}" data-id="{{id}}">
+        <div class="task-pane-tab template-item {{isTemplateActive}}" data-category="{{category}}" data-id="{{id}}">
           {{name}}
         </div>
       {{/each}}
@@ -26,7 +26,7 @@
 
 </template>
 
-<template name="new_project_template_demo">
+<template name="project_template_demo">
   <div class="img-container">
     <img src="{{img_src}}" alt="">
   </div>
