@@ -1,7 +1,7 @@
 _.extend JustDoProjectsTemplates.prototype,
   _bothImmediateInit: ->
     @categories = {}
-    @project_templates = {}
+    @templates = {}
 
     return
 
