@@ -6,8 +6,8 @@ APP.justdo_projects_templates?.registerCategory
 APP.justdo_projects_templates?.registerTemplate
   id: "blank"
   label: "Empty"
-  order: 0
-  demo_img_src: "/packages/justdoinc_justdo-projects-templates/lib/client/assets/blank.jpg"
+  order: 999
+  demo_img_src: "/packages/justdoinc_justdo-projects-templates/lib/core-templates-categories/blank/blank.jpg"
   categories: ["blank"]
   template:
     users: ["performing_user"]
