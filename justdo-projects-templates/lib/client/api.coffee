@@ -51,7 +51,6 @@ _.extend JustDoProjectsTemplates.prototype,
             $create_btn.html spinning_icon
 
             template_instance = message_template.template_instance
-            selected_template_category_id = template_instance.active_category_id_rv.get()
             selected_template_id = template_instance.active_template_id_rv.get()
 
             @createSubtreeFromTemplate options.target_task, selected_template_id, project_id, (err) ->

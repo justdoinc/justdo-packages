@@ -7,7 +7,6 @@ Template.project_template_from_category_selector.onCreated ->
 
   @subtitle = @data?.subtitle or ""
 
-  @active_category_id_rv = new ReactiveVar ""
   @active_template_id_rv = new ReactiveVar ""
   return
 
@@ -20,7 +19,6 @@ Template.project_template_from_category_selector.helpers
     templates = APP.justdo_projects_templates.getTemplatesByCategories tpl.categories_to_show
 
     if (first_template = templates?[0])?
-      tpl.active_category_id_rv.set first_template.category
       tpl.active_template_id_rv.set first_template.id
     return templates
 
@@ -34,6 +32,5 @@ Template.project_template_from_category_selector.helpers
 
 Template.project_template_from_category_selector.events
   "click .template-item": (e, tpl) ->
-    tpl.active_category_id_rv.set $(e.target).closest(".template-item").data "category"
     tpl.active_template_id_rv.set $(e.target).closest(".template-item").data "id"
     return
