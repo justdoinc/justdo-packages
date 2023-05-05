@@ -15,5 +15,5 @@ _.extend JustdoNewProjectTemplates.prototype,
       categories: ["getting-started", "blank"]
       allow_closing: false
       target_task: "/"
-    APP.justdo_projects_templates.showTemplatesPicker options
+    APP.justdo_projects_templates.showTemplatesFromCategoriesPicker options
     return
