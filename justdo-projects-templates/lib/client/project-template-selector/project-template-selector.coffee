@@ -17,9 +17,7 @@ Template.project_template_selector.helpers
   getTemplatesList: ->
     tpl = Template.instance()
 
-    templates = JD.getPlaceholderItems "project-templates"
-    if _.isArray tpl.categories_to_show
-      templates = _.filter templates, (template) -> template.category in tpl.categories_to_show
+    templates = APP.justdo_projects_templates.getTemplatesByCategories tpl.categories_to_show
 
     if (first_template = templates?[0])?
       tpl.active_category_id_rv.set first_template.category
@@ -31,7 +29,8 @@ Template.project_template_selector.helpers
       return "active"
     return
 
-  activeTemplate: -> _.find JD.getPlaceholderItems("project-templates"), (item) -> item.id is Template.instance().active_template_id_rv.get()
+  activeTemplate: ->
+    return APP.justdo_projects_templates.getTemplateById Template.instance().active_template_id_rv.get()
 
 Template.project_template_selector.events
   "click .template-item": (e, tpl) ->
