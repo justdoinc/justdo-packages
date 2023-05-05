@@ -74,10 +74,7 @@ _.extend JustDoProjectsTemplates.prototype,
       )
     options = cleaned_val
 
-    for category in options.categories
-      if not _.has @categories, category
-        throw @_error "template-category-not-found", "Template category #{category} not found"
+    @requireCategoriesExists options.categories
 
-    @project_templates[options.id] = options.template
+    @templates[options.id] = options
 
-    return
