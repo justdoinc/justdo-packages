@@ -95,6 +95,6 @@ _.extend JustDoProjectsTemplates.prototype,
           return true
       return false
 
-    templates = _.sortBy(_.sortBy(templates, (template) -> template.order), (template) -> _.intersection(categories, template.categories)[0])
+    templates = _.sortBy(_.sortBy(templates, (template) -> template.order), (template) -> _.indexOf(categories, template.categories[0]))
 
     return templates
