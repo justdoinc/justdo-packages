@@ -8,8 +8,7 @@ _.extend JustDoProjectsTemplates.prototype,
         check project_id, String
         check @userId, String
 
-        if not (template = self.project_templates?[template_id])?
-          throw self._error "template-not-found"
+        template = self.getTemplateById(template_id).template
 
         APP.justdo_projects_templates.createSubtreeFromTemplateUnsafe
           template: template
