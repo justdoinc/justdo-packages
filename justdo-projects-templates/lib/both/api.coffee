@@ -78,3 +78,24 @@ _.extend JustDoProjectsTemplates.prototype,
 
     @templates[options.id] = options
 
+    return
+
+  getAllRegisteredTemplates: ->
+    return _.sortBy @templates, (template) -> template.order
+
+  getTemplatesByCategories: (categories) ->
+    @requireCategoriesExists categories
+
+    templates = _.filter @templates, (template_def) ->
+      for template_category in template_def.categories
+        if template_category in categories
+          return true
+      return false
+    templates = _.sortBy templates, (template) -> template.order
+
+    return templates
+
+  getTemplateById: (template_id) ->
+    @requireTemplateExists template_id
+
+    return @templates[template_id]
