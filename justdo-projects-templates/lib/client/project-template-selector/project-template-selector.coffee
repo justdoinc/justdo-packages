@@ -1,5 +1,5 @@
 Template.project_template_selector.onCreated ->
-  @categories_to_show = null
+  @categories_to_show = ["blank"]
   if _.isString(categories = @data?.categories)
     categories = [categories]
   if _.isArray categories
