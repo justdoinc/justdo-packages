@@ -85,6 +85,8 @@ _.extend TemplateParser.prototype,
 
   "lookup:title": getFromTemplateOnly
 
+  "lookup:state": getFromTemplateOnly
+
   "lookup:due_date": getFromTemplateOnly
 
   "lookup:follow_up": getFromTemplateOnly
@@ -143,6 +145,7 @@ _.extend TemplateParser.prototype,
       title: @lookup "title"
       due_date: @lookup "due_date"
       follow_up: @lookup "follow_up"
+      state: @lookup "state"
 
     @task_id = APP.projects._grid_data_com.addChild path, task_props, user
 
