@@ -54,7 +54,7 @@ _.extend JustDoProjectsTemplates.prototype,
             selected_template_category_id = template_instance.active_category_id_rv.get()
             selected_template_id = template_instance.active_template_id_rv.get()
 
-            @createSubtreeFromTemplate options.target_task, selected_template_category_id, selected_template_id, project_id, (err) ->
+            @createSubtreeFromTemplate options.target_task, selected_template_id, project_id, (err) ->
               if err?
                 create_button_disabled = false
                 $create_btn.removeClass "disabled"
