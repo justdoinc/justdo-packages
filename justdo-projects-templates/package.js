@@ -74,7 +74,7 @@ Package.onUse(function (api) {
   //
 
   // Blank
-  api.addFiles("lib/core-templates-categories/blank/blank.coffee", client)
+  api.addFiles("lib/core-templates-categories/blank/blank.coffee", both)
   api.addAssets("lib/core-templates-categories/blank/blank.jpg", client)
 
   api.export("JustDoProjectsTemplates", both);
