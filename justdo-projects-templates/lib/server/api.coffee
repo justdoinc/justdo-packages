@@ -20,14 +20,11 @@ _.extend JustDoProjectsTemplates.prototype,
 
     return
 
-  createSubtreeFromTemplate: (options, perform_as) ->
-    check(perform_as, String)
-    check(perform_as.length > 0, true)
-
-    options.perform_as = perform_as
-    @createSubtreeFromTemplateUnsafe(options)
-
   createSubtreeFromTemplateUnsafe: (options) ->
+    for role, user_id of options.users
+      if not APP.accounts.getUserById(user_id)?
+        throw @_error "unknown-user", "User #{role} does not exist"
+
     parser = new TemplateParser(options.template, options, null)
     parser.logger = @logger
 
