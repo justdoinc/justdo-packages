@@ -9,7 +9,6 @@ APP.getEnv (env) ->
     order: 130
     demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/template-categories/getting-started/movies-production.png"
     template:
-      users: ["performing_user"]
       tasks: [
         title: "Movies"
         tasks: [

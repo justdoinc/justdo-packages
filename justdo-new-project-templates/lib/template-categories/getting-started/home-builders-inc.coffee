@@ -9,7 +9,6 @@ APP.getEnv (env) ->
     demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/template-categories/getting-started/home-builders-inc.png"
     categories: ["getting-started"]
     template:
-      users: ["performing_user"]
       tasks: [
         title: "Sites"
         tasks: [

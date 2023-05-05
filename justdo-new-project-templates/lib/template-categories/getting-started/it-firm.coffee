@@ -8,7 +8,6 @@ APP.getEnv (env) ->
     order: 110
     demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/template-categories/getting-started/it-firm.png"
     template:
-      users: ["performing_user"]
       tasks: [
         title: "R&D"
         tasks: [
