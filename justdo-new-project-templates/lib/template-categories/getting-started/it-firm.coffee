@@ -12,7 +12,6 @@ APP.getEnv (env) ->
         title: "R&D"
         tasks: [
           title: "Mobile App Development"
-          state: "nil"
           tasks: [
             title: "Sprints"
             tasks: [
@@ -34,30 +33,22 @@ APP.getEnv (env) ->
                 title: "Implement new feature 1"
                 tasks: [
                   title: "Design & UX/UI"
-                  state: "nil"
                   tasks: [
                     title: "Requirements Gathering"
                   ,
                     title: "Wireframes"
-
-                    state: "nil"
                   ,
                     title: "User Interface Design"
-
-                    state: "nil"
                   ,
                     title: "User Experience Design"
-                    state: "nil"
                   ]
                 ,
                   title: "Backend Development"
-                  state: "nil"
                   tasks: [
                     title: "Feature B"
                   ]
                 ,
                   title: "Frontend Development"
-                  state: "nil"
                   tasks: [
                     title: "Feature A"
                   ]
@@ -98,7 +89,6 @@ APP.getEnv (env) ->
             ]
           ,
             title: "Mobile App QA"
-            state: "nil"
             tasks: [
               title: "Bug tracking"
             ]
@@ -120,7 +110,6 @@ APP.getEnv (env) ->
           title: "Client A"
           tasks: [
             title: "Deployment v3.0.0 on Client A server"
-            state: "nil"
           ]
         ,
           title: "Client B"
