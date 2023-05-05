@@ -66,16 +66,19 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/api.coffee", both);
   api.addFiles("lib/both/schemas.coffee", both);
 
+  api.addFiles("lib/template-categories/getting-started/category-registrar.coffee", both);
+  api.addFiles("lib/template-categories/getting-started/home-builders-inc.coffee", both);
+  api.addAssets("lib/template-categories/getting-started/home-builders-inc.png", client);
+  api.addFiles("lib/template-categories/getting-started/it-firm.coffee", both);
+  api.addAssets("lib/template-categories/getting-started/it-firm.png", client);
+  api.addFiles("lib/template-categories/getting-started/movies-production.coffee", both);
+  api.addAssets("lib/template-categories/getting-started/movies-production.png", client);
+
   api.addFiles("lib/server/api.coffee", server);
   api.addFiles("lib/server/collections-hooks.coffee", server);
   api.addFiles("lib/server/collections-indexes.coffee", server);
   api.addFiles("lib/server/methods.coffee", server);
   api.addFiles("lib/server/publications.coffee", server);
-
-  api.addAssets("lib/client/assets/home-builders-inc.png", client);
-  api.addAssets("lib/client/assets/it-firm.png", client);
-  api.addAssets("lib/client/assets/movies-production.png", client);
-
 
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
