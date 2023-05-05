@@ -14,11 +14,7 @@ APP.justdo_projects_templates?.registerTemplate
         title: "Mobile App Development"
         user: ["performing_user"]
         owner: ["performing_user"]
-        events: [
-          action: "setState"
-          args: "nil"
-          perform_as: "performing_user"
-        ]
+        state: "nil"
         tasks: [
           title: "Sprints"
           user: ["performing_user"]
@@ -58,11 +54,7 @@ APP.justdo_projects_templates?.registerTemplate
                 title: "Design & UX/UI"
                 user: ["performing_user"]
                 owner: ["performing_user"]
-                events: [
-                  action: "setState"
-                  args: "nil"
-                  perform_as: "performing_user"
-                ]
+                state: "nil"
                 tasks: [
                   title: "Requirements Gathering"
                   user: ["performing_user"]
@@ -71,39 +63,23 @@ APP.justdo_projects_templates?.registerTemplate
                   title: "Wireframes"
                   user: ["performing_user"]
                   owner: ["performing_user"]
-                  events: [
-                    action: "setState"
-                    args: "nil"
-                    perform_as: "performing_user"
-                  ]
+                  state: "nil"
                 ,
                   title: "User Interface Design"
                   user: ["performing_user"]
                   owner: ["performing_user"]
-                  events: [
-                    action: "setState"
-                    args: "nil"
-                    perform_as: "performing_user"
-                  ]
+                  state: "nil"
                 ,
                   title: "User Experience Design"
                   user: ["performing_user"]
                   owner: ["performing_user"]
-                  events: [
-                    action: "setState"
-                    args: "nil"
-                    perform_as: "performing_user"
-                  ]
+                  state: "nil"
                 ]
               ,
                 title: "Backend Development"
                 user: ["performing_user"]
                 owner: ["performing_user"]
-                events: [
-                  action: "setState"
-                  args: "nil"
-                  perform_as: "performing_user"
-                ]
+                state: "nil"
                 tasks: [
                   title: "Feature B"
                   user: ["performing_user"]
@@ -113,11 +89,7 @@ APP.justdo_projects_templates?.registerTemplate
                 title: "Frontend Development"
                 user: ["performing_user"]
                 owner: ["performing_user"]
-                events: [
-                  action: "setState"
-                  args: "nil"
-                  perform_as: "performing_user"
-                ]
+                state: "nil"
                 tasks: [
                   title: "Feature A"
                   user: ["performing_user"]
@@ -184,11 +156,7 @@ APP.justdo_projects_templates?.registerTemplate
           title: "Mobile App QA"
           user: ["performing_user"]
           owner: ["performing_user"]
-          events: [
-            action: "setState"
-            args: "nil"
-            perform_as: "performing_user"
-          ]
+          state: "nil"
           tasks: [
             title: "Bug tracking"
             user: ["performing_user"]
@@ -226,11 +194,7 @@ APP.justdo_projects_templates?.registerTemplate
           title: "Deployment v3.0.0 on Client A server"
           user: ["performing_user"]
           owner: ["performing_user"]
-          events: [
-            action: "setState"
-            args: "nil"
-            perform_as: "performing_user"
-          ]
+          state: "nil"
         ]
       ,
         title: "Client B"
