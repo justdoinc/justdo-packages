@@ -30,7 +30,7 @@ Template.project_template_from_category_selector.helpers
     return
 
   activeTemplate: ->
-    return APP.justdo_projects_templates.getTemplateById Template.instance().active_template_id_rv.get()
+    return APP.justdo_projects_templates.requireTemplateById Template.instance().active_template_id_rv.get()
 
 Template.project_template_from_category_selector.events
   "click .template-item": (e, tpl) ->

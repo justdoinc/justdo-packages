@@ -21,10 +21,10 @@ _.extend JustDoProjectsTemplates.prototype,
 
     return true
 
-  requireTemplateExists: (template_id) ->
+  requireTemplateById: (template_id) ->
     if not _.has @templates, template_id
       throw @_error "template-not-found", "Template #{template_id} not found"
-    return true
+    return @templates[template_id]
 
   _registerCategoryDefSchema: new SimpleSchema
     id:
@@ -94,12 +94,7 @@ _.extend JustDoProjectsTemplates.prototype,
         if template_category in categories
           return true
       return false
-    
+
     templates = _.sortBy(_.sortBy(templates, (template) -> template.order), (template) -> _.intersection(categories, template.categories)[0])
 
     return templates
-
-  getTemplateById: (template_id) ->
-    @requireTemplateExists template_id
-
-    return @templates[template_id]

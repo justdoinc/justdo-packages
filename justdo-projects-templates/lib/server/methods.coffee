@@ -8,7 +8,7 @@ _.extend JustDoProjectsTemplates.prototype,
         check project_id, String
         check @userId, String
 
-        template = self.getTemplateById(template_id).template
+        template = self.requireTemplateById(template_id).template
 
         APP.justdo_projects_templates.createSubtreeFromTemplateUnsafe
           template: template
