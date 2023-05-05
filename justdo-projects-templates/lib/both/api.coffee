@@ -76,6 +76,10 @@ _.extend JustDoProjectsTemplates.prototype,
 
     @requireCategoriesExists options.categories
 
+    # Omit the tree structure on the client side as it's not used.
+    if Meteor.isClient
+      options = _.omit options, "template"
+
     @templates[options.id] = options
 
     return
