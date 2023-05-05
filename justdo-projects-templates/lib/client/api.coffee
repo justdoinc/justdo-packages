@@ -25,7 +25,7 @@ _.extend JustDoProjectsTemplates.prototype,
       allow_closing: true
     options = _.extend default_options, options
 
-    message_template = JustdoHelpers.renderTemplateInNewNode Template.project_template_selector, {categories: options.categories, subtitle: options.popup_subtitle}
+    message_template = JustdoHelpers.renderTemplateInNewNode Template.project_template_from_category_selector, {categories: options.categories, subtitle: options.popup_subtitle}
     create_button_disabled = false
 
     dialog = bootbox.dialog

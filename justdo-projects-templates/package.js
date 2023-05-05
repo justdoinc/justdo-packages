@@ -54,9 +54,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/publications.coffee", server);
 
   api.addFiles("lib/client/init.coffee", client);
-  api.addFiles("lib/client/project-template-selector/project-template-selector.sass", client);
-  api.addFiles("lib/client/project-template-selector/project-template-selector.html", client);
-  api.addFiles("lib/client/project-template-selector/project-template-selector.coffee", client);
+  api.addFiles("lib/client/project-template-from-category-selector/project-template-from-category-selector.sass", client);
+  api.addFiles("lib/client/project-template-from-category-selector/project-template-from-category-selector.html", client);
+  api.addFiles("lib/client/project-template-from-category-selector/project-template-from-category-selector.coffee", client);
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
