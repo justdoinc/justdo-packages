@@ -25,7 +25,7 @@ _.extend JustdoNewProjectTemplates.prototype,
     # When the justdo-new-project-template is turned on, we don't want the usual
     # first task to be created, as it will occupy a redundant seqId. Further,
     # we'll need to remove it.
-    APP.projects.on "pre-create-new-justdo", (user_id, options, project) ->
+    APP.projects.on "pre-create-first-project-for-new-user", (user_id, options, project) ->
       options.init_first_task = false
       return
 
