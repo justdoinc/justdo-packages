@@ -66,14 +66,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/api.coffee", both);
   api.addFiles("lib/both/schemas.coffee", both);
 
-  api.addFiles("lib/template-categories/getting-started/category-registrar.coffee", both);
-  api.addFiles("lib/template-categories/getting-started/home-builders-inc.coffee", both);
-  api.addAssets("lib/template-categories/getting-started/home-builders-inc.png", client);
-  api.addFiles("lib/template-categories/getting-started/it-firm.coffee", both);
-  api.addAssets("lib/template-categories/getting-started/it-firm.png", client);
-  api.addFiles("lib/template-categories/getting-started/movies-production.coffee", both);
-  api.addAssets("lib/template-categories/getting-started/movies-production.png", client);
-
   api.addFiles("lib/server/api.coffee", server);
   api.addFiles("lib/server/collections-hooks.coffee", server);
   api.addFiles("lib/server/collections-indexes.coffee", server);
@@ -91,6 +83,14 @@ Package.onUse(function (api) {
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
   // file.
+
+  api.addFiles("lib/template-categories/getting-started/category-registrar.coffee", both);
+  api.addFiles("lib/template-categories/getting-started/home-builders-inc.coffee", both);
+  api.addAssets("lib/template-categories/getting-started/home-builders-inc.png", client);
+  api.addFiles("lib/template-categories/getting-started/it-firm.coffee", both);
+  api.addAssets("lib/template-categories/getting-started/it-firm.png", client);
+  api.addFiles("lib/template-categories/getting-started/movies-production.coffee", both);
+  api.addAssets("lib/template-categories/getting-started/movies-production.png", client);
 
   api.export("JustdoNewProjectTemplates", both);
 });

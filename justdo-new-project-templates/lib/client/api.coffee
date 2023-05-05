@@ -20,7 +20,7 @@ _.extend JustdoNewProjectTemplates.prototype,
     return
 
   setupShowFirstJustDoTemplatePickerForNewUserHook: ->
-    APP.projects.on "post-reg-init-completed", (init_report) =>
+    APP.projects.once "post-reg-init-completed", (init_report) =>
       if init_report.first_project_created isnt false
         Tracker.autorun (computation) =>
           if not (gc = APP.modules.project_page.gridControl(true))?

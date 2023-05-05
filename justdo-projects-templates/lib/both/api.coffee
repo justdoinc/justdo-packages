@@ -84,10 +84,9 @@ _.extend JustDoProjectsTemplates.prototype,
 
     return
 
-  getAllRegisteredTemplates: ->
-    return _.sortBy @templates, (template) -> template.order
-
   getTemplatesByCategories: (categories) ->
+    # Order of templates is: templates that lists categories[0] before any other category in
+    # the provided categories array, ordered by order - and so on.
     @requireCategoriesExists categories
 
     templates = _.filter @templates, (template_def) ->
@@ -95,7 +94,8 @@ _.extend JustDoProjectsTemplates.prototype,
         if template_category in categories
           return true
       return false
-    templates = _.sortBy templates, (template) -> template.order
+    
+    templates = _.sortBy(_.sortBy(templates, (template) -> template.order), (template) -> _.intersection(categories, template.categories)[0])
 
     return templates
 
