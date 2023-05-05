@@ -11,6 +11,21 @@ _.extend JustDoProjectsTemplates.prototype,
 
     return
 
+  requireCategoriesExists: (category_ids) ->
+    if _.isString category_ids
+      category_ids = [category_ids]
+
+    for category_id in category_ids
+      if not _.has @categories, category_id
+        throw @_error "template-category-not-found", "Template category #{category_id} not found"
+
+    return true
+
+  requireTemplateExists: (template_id) ->
+    if not _.has @templates, template_id
+      throw @_error "template-not-found", "Template #{template_id} not found"
+    return true
+
   _registerCategoryDefSchema: new SimpleSchema
     id:
       type: String
