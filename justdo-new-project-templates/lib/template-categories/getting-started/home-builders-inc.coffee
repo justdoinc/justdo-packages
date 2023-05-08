@@ -18,6 +18,7 @@ APP.getEnv (env) ->
           ]
           tasks: [
             title: "Project Planning"
+            expand: true
             tasks: [
               title: "Scope Definition"
             ,
@@ -256,6 +257,7 @@ APP.getEnv (env) ->
         title: "Finance"
         tasks: [
           title: "Secure financing for Meadowview Estates"
+          expand: true
           tasks: [
             title: "Determine Loan Requirements"
           ,
@@ -284,6 +286,7 @@ APP.getEnv (env) ->
         ]
       ,
         title: "HR"
+        expand: true
         tasks: [
           title: "Recruit an on-site engineer"
           tasks: [

@@ -33,6 +33,7 @@ APP.getEnv (env) ->
                 title: "Implement new feature 1"
                 tasks: [
                   title: "Design & UX/UI"
+                  expand: true
                   tasks: [
                     title: "Requirements Gathering"
                   ,
@@ -44,16 +45,19 @@ APP.getEnv (env) ->
                   ]
                 ,
                   title: "Backend Development"
+                  expand: true
                   tasks: [
                     title: "Feature B"
                   ]
                 ,
                   title: "Frontend Development"
+                  expand: true
                   tasks: [
                     title: "Feature A"
                   ]
                 ,
                   title: "QA"
+                  expand: true
                   tasks: [
                     title: "Write auto-test 1"
                   ,

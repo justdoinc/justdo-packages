@@ -18,12 +18,14 @@ APP.getEnv (env) ->
           ]
           tasks: [
             title: "Development"
+            expand: true
             tasks: [
               title: "Evaluating and acquiring scripts or story ideas"
             ,
               title: "Developing story concepts into full-fledged screenplays"
             ,
               title: "Attaching key talent"
+              expand: true
               tasks: [
                 title: "Potential actors"
               ,
@@ -102,6 +104,7 @@ APP.getEnv (env) ->
         title: "Finance"
         tasks: [
           title: "Funding identification and procurement"
+          expand: true
           tasks: [
             title: "Secure funds for Sleeping Beauty from GateFlix"
             tasks: [
