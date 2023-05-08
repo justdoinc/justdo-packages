@@ -31,7 +31,7 @@ _.extend JustDoProjectsTemplates.prototype,
     parser.createTasks(options.template.tasks)
     parser.runEvents()
 
-    return parser.task
+    return {paths_to_expand: parser.paths_to_expand}
 
   destroy: ->
     if @destroyed
@@ -63,6 +63,8 @@ TemplateParser = (template, options, parent) ->
   @options = options ? {}
   @template = template
   @parent = parent
+  if not parent?
+    @paths_to_expand = []
 
   return
 
@@ -90,6 +92,8 @@ _.extend TemplateParser.prototype,
   "lookup:due_date": getFromTemplateOnly
 
   "lookup:follow_up": getFromTemplateOnly
+
+  "lookup:expand": getFromTemplateOnly
 
   "lookup:sub_tasks": (key) ->
     return @template.sub_tasks ? @template.tasks
@@ -170,6 +174,9 @@ _.extend TemplateParser.prototype,
     if (events = @lookup "events")
       @addEvents(events)
 
+    if (expand = @lookup "expand")
+      @setExpand()
+
   addUsers: (users) ->
     perform_as = @user @lookup "perform_as"
     EventsAPI.addUsers.call(@, @task_id, users, perform_as)
@@ -199,7 +206,7 @@ _.extend TemplateParser.prototype,
         perform_as: perform_as
         args: event.args
 
-  runEvents: () ->
+  runEvents: ->
     _.each @postponed_internal_actions, (event) =>
       perform_as = @user event.perform_as
       # Warn the user that the action doesn't exist if it doesn't exist,
@@ -212,6 +219,18 @@ _.extend TemplateParser.prototype,
       # skip the event
       EventsAPI[event.action].call(@, event.task_id, event.args, perform_as)
 
+    return
+
+  setExpand: ->
+    task_ids = [@task_id]
+    parent = @parent
+
+    while parent?.task_id?
+      task_ids.push parent.task_id
+      parent = parent.parent
+
+    path_to_expand = GridData.helpers.joinPathArray task_ids.reverse()
+    parent.paths_to_expand.push path_to_expand
     return
 
 EventsAPI =
