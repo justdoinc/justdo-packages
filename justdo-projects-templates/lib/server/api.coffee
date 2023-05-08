@@ -225,11 +225,13 @@ _.extend TemplateParser.prototype,
     task_ids = [@task_id]
     parent = @parent
 
+    # Traverse up the tree of TemplateParser objects, until we get to the root
     while parent?.task_id?
       task_ids.push parent.task_id
       parent = parent.parent
 
     path_to_expand = GridData.helpers.joinPathArray task_ids.reverse()
+    # Add expanded paths to the root TemplateParser
     parent.paths_to_expand.push path_to_expand
     return
 
