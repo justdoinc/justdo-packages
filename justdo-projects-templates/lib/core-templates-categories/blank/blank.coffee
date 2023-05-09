@@ -7,7 +7,7 @@ APP.justdo_projects_templates?.registerTemplate
   id: "blank"
   label: "Blank"
   order: 0
-  demo_img_src: "/packages/justdoinc_justdo-projects-templates/lib/core-templates-categories/blank/blank.jpg"
+  demo_img_src: "/packages/justdoinc_justdo-projects-templates/lib/core-templates-categories/blank/blank.png"
   categories: ["blank"]
   template:
     users: ["performing_user"]

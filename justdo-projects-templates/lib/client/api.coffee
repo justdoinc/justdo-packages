@@ -26,6 +26,8 @@ _.extend JustDoProjectsTemplates.prototype,
     options = _.extend default_options, options
 
     message_template = JustdoHelpers.renderTemplateInNewNode Template.project_template_from_category_selector, {categories: options.categories, subtitle: options.popup_subtitle}
+    message_template.node.classList.add "project-template-selector-wrapper"
+
     create_button_disabled = false
 
     dialog = bootbox.dialog
