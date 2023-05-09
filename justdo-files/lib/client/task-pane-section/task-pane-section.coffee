@@ -342,6 +342,11 @@ Template.justdo_files_uploader.onCreated ->
 
     return
 
+  @autorun =>
+    if APP.justdo_files.tasks_files.find().count() is 0
+      @clearUploadProcesses()
+    return
+
   return
 
 Template.justdo_files_uploader.helpers
