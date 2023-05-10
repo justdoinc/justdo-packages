@@ -71,7 +71,7 @@ Template.news.helpers
 
   isNewsActive: ->
     if @_id is Template.instance().active_news_id_rv.get()
-      return "text-secondary"
+      return "active"
     return
 
   activeNews: ->
