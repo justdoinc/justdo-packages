@@ -80,7 +80,7 @@ Package.onUse(function (api) {
   api.addAssets([
     "lib/both/news/v3-134/assets/2023_04_10_1.png",
     "lib/both/news/v3-134/assets/2023_04_10_2.png",
-    "lib/both/news/v3-134/assets/blank.png",
+    "lib/both/news/v3-134/assets/2023_04_10_3.png",
   ], client);
   api.addFiles("lib/both/news/v3-134/v3-134.coffee", both);
 
