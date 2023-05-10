@@ -76,5 +76,13 @@ Package.onUse(function (api) {
   ], client);
   api.addFiles("lib/both/news/v3-136/v3-136.coffee", both);
 
+  // v3.134
+  api.addAssets([
+    "lib/both/news/v3-134/assets/2023_04_10_1.png",
+    "lib/both/news/v3-134/assets/2023_04_10_2.png",
+    "lib/both/news/v3-134/assets/blank.png",
+  ], client);
+  api.addFiles("lib/both/news/v3-134/v3-134.coffee", both);
+
   api.export("JustdoNewsData", both);
 });
