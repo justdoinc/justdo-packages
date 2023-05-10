@@ -5,7 +5,7 @@ _.extend JustdoHelpers,
 
     default_options =
       project_id: APP.modules.project_page?.curProj()?.id
-      
-    options = _.extend {}, default_options
+
+    options = _.extend default_options, options
 
     return Meteor.call "JDHelperUsersGenerator", options, cb
