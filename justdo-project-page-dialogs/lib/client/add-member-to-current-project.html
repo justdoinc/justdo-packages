@@ -30,6 +30,11 @@
         <div class="tasks-list">
           <div class="tasks-list-subtitle pt-2">
             Root tasks
+            {{#if root_tasks}}
+              <div class="select-all root-tasks text-primary">
+                Select All
+              </div>
+            {{/if}}
           </div>
           {{#if root_tasks}}
             {{#each root_tasks}}
@@ -45,6 +50,11 @@
           {{/if}}
           <div class="tasks-list-subtitle pt-3">
             Projects
+            {{#if projects}}
+              <div class="select-all projects text-primary">
+                Select All
+              </div>
+            {{/if}}
           </div>
           {{#if projects}}
             {{#each projects}}

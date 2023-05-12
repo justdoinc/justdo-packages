@@ -32,6 +32,8 @@ Template.invite_new_user_dialog.onCreated ->
   tpl.selected_tasks_rv = new ReactiveVar []
   tpl.search_tasks_val_rv = new ReactiveVar ""
   tpl.show_invite_button_rv = new ReactiveVar false
+  tpl.root_tasks = []
+  tpl.projects = []
 
   tpl.recognizeEmails = ->
     $el = $(".invite-new-wrapper .users-email-input")
@@ -174,6 +176,8 @@ Template.invite_new_user_dialog.helpers
       filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_val)}", "i")
       filtered_projects = _.filter projects, (doc) ->  filter_regexp.test(doc.title)
 
+      Template.instance().projects = filtered_projects
+
       return filtered_projects
 
   root_tasks: ->
@@ -188,6 +192,8 @@ Template.invite_new_user_dialog.helpers
 
     filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_val)}", "i")
     filtered_root_tasks = _.filter root_tasks, (doc) ->  filter_regexp.test(doc.title)
+
+    Template.instance().root_tasks = filtered_root_tasks
 
     return filtered_root_tasks
 
@@ -384,6 +390,28 @@ Template.invite_new_user_dialog.events
           members_to_add: all_members
 
       return
+
+    return
+
+  "click .select-all.root-tasks": (e, tpl) ->
+    selected_tasks = tpl.selected_tasks_rv.get()
+
+    for item in tpl.root_tasks
+      if not selected_tasks.includes item._id
+        selected_tasks.push item._id
+
+    tpl.selected_tasks_rv.set selected_tasks
+
+    return
+
+  "click .select-all.projects": (e, tpl) ->
+    selected_tasks = tpl.selected_tasks_rv.get()
+
+    for item in tpl.projects
+      if not selected_tasks.includes item._id
+        selected_tasks.push item._id
+
+    tpl.selected_tasks_rv.set selected_tasks
 
     return
 
