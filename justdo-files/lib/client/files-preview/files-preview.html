@@ -1,25 +1,25 @@
 <template name="justdo_files_files_preview">
   {{#if preview_link}}
-  <div class="justdo-files-preview-wrapper">
-    <div class="prev-file jd-c-pointer {{isPrevButtonVisible}}">
-      <svg class="jd-icon text-dark" style="">
-        <use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"></use>
-      </svg>
-    </div>
+    <div class="justdo-files-preview-wrapper">
+      <div class="prev-file jd-c-pointer {{isPrevButtonVisible}}">
+        <svg class="jd-icon text-dark" style="">
+          <use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"></use>
+        </svg>
+      </div>
 
-    <div class="preview-container">
-      {{#if isPdf}}
-        <embed src="{{preview_link}}&r={{randomString}}" type="{{file.type}}" width="970" height="550" alt="{{file.name}}" style="border: 0 none;">
-      {{else if isImage}}
-        <img src="{{preview_link}}" alt="{{file.name}}" title="{{file.name}}" style="max-width: 100%;" />
-      {{/if}}
-    </div>
+      <div class="preview-container">
+        {{#if isPdf}}
+          <embed src="{{preview_link}}&r={{randomString}}" type="{{file.type}}" width="970" height="550" alt="{{file.name}}" style="border: 0 none;">
+        {{else if isImage}}
+          <img src="{{preview_link}}" alt="{{file.name}}" title="{{file.name}}" style="max-width: 100%;" />
+        {{/if}}
+      </div>
 
-    <div class="next-file jd-c-pointer {{isNextButtonVisible}}">
-      <svg class="jd-icon text-dark" style="">
-        <use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"></use>
-      </svg>
+      <div class="next-file jd-c-pointer {{isNextButtonVisible}}">
+        <svg class="jd-icon text-dark" style="">
+          <use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"></use>
+        </svg>
+      </div>
     </div>
-  </div>
   {{/if}}
 </template>
