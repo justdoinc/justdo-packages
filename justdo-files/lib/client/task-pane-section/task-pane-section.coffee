@@ -90,10 +90,10 @@ Template.justdo_files_gallery.helpers
     return false
 
   tempPlaceHolder: ->
-    task = @task
+    task_id = JD.activeItemId({})
     file = @file
 
-    placeholder = "tfm_img_placeholder_#{task._id}_#{file._id}"
+    placeholder = "tfm_img_placeholder_#{task_id}_#{file._id}"
 
     tpl = Template.instance()
 
@@ -150,10 +150,10 @@ Template.justdo_files_gallery.helpers
 Template.justdo_files_gallery.events
   "click .file-download-link": (e, tmpl) ->
     e.preventDefault()
-    task = @task
+    task_id = JD.activeItemId()
     file = @file
 
-    APP.justdo_files.showPreviewOrStartDownload(task.task_id, file)
+    APP.justdo_files.showPreviewOrStartDownload(task_id, file)
 
     return
 
@@ -173,7 +173,6 @@ Template.justdo_files_gallery.events
 
   "click .file-rename-done": (e, tmpl) ->
     e.preventDefault()
-    task = @task
     file = @file
     newTitle = tmpl.$("[name='title']").val()
     APP.justdo_files.renameFile file._id, newTitle, (err, result) ->
@@ -193,7 +192,6 @@ Template.justdo_files_gallery.events
 
   "click .msg-ok": (e, tmpl) ->
     e.preventDefault()
-    task = @task
     file = @file
     tmpl.$(".msg .msg-content").hide()
     tmpl.$(".loader").show()
