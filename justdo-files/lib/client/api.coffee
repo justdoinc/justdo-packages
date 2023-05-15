@@ -34,7 +34,7 @@ _.extend JustdoFiles.prototype,
 
             callback: =>
               # Start download
-              @downloadFile file._id
+              @downloadFile message_template.template_instance.active_file.get()._id
 
           close:
             label: "Close"
