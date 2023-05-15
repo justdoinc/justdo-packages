@@ -83,8 +83,8 @@ Template.justdo_files_gallery.helpers
 
   size: -> JustdoHelpers.bytesToHumanReadable(@file.size)
 
-  isImage: ->
-    if (@file.type.slice(0,6) == "image/")
+  isPreviewable: ->
+    if (@file.type in JustdoFiles.preview_supported_formats)
       return true
 
     return false
