@@ -11,9 +11,7 @@ _.extend JustdoFiles.prototype,
     return
 
   showPreviewOrStartDownload: (task_id, file) ->
-    preview_supported_formats = ["application/pdf", "image/png", "image/gif", "image/jpeg", "image/bmp"]
-
-    if file.type in preview_supported_formats
+    if file.type in JustdoFiles.preview_supported_formats
       # Show preview in bootbox
 
       message_template =
