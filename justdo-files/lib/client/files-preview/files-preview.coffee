@@ -51,6 +51,7 @@ Template.justdo_files_files_preview.onRendered ->
     if e.key in ["ArrowRight", "ArrowDown"]
       @showNextFile()
     return
+  return
 
 Template.justdo_files_files_preview.helpers
   isPrevButtonVisible: ->
