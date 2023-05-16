@@ -108,7 +108,7 @@ Template.tasks_file_manager_files.helpers
 
   files: ->
     if (files_arr = Template.instance().data.files)?
-      return files_arr.sort (f1, f2) -> f2.date_uploaded - f1.date_uploaded
+      return _.sortBy(files_arr, "date_uploaded").reverse()
     return
 
   displayedFileType: (mine_type) ->
