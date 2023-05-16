@@ -1,3 +1,15 @@
+Template.dual_frame_settings_page_layout.onCreated ->
+  @data.onCreated?.call @, @
+  return
+
+Template.dual_frame_settings_page_layout.onRendered ->
+  @data.onRendered?.call @, @
+  return
+
+Template.dual_frame_settings_page_layout.onDestroyed ->
+  @data.onDestroyed?.call @, @
+  return
+
 Template.dual_frame_settings_page_layout.helpers
   leftDrawerItems: ->
     tpl = Template.instance()
