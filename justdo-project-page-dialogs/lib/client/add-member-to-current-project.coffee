@@ -180,7 +180,7 @@ Template.invite_new_user_dialog.helpers
 
       return filtered_projects
 
-  root_tasks: ->
+  rootTasks: ->
     root_tasks = []
     grid_tree = APP.modules.project_page.gridControl()._grid_data.grid_tree
 
@@ -197,13 +197,13 @@ Template.invite_new_user_dialog.helpers
 
     return filtered_root_tasks
 
-  task_is_selected: ->
+  taskIsSelected: ->
     selected_tasks = Template.instance().selected_tasks_rv.get()
 
     if _.contains(selected_tasks, @._id)
-      return true
-    else
-      return false
+      return "selected"
+
+    return
 
 Template.invite_new_user_dialog.events
   "keydown .users-email-input": (e, tpl) ->
