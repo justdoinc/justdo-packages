@@ -36,18 +36,16 @@
               </div>
             {{/if}}
           </div>
-          {{#if rootTasks}}
-            {{#each rootTasks}}
-              <div class="task-item {{taskIsSelected}}">
-                <div class="task-item-id">#{{seqId}}:</div>
-                <div class="task-item-title">{{title}}</div>
-              </div>
-            {{/each}}
+          {{#each rootTasks}}
+            <div class="task-item {{taskIsSelected}}">
+              <div class="task-item-id">#{{seqId}}:</div>
+              <div class="task-item-title">{{title}}</div>
+            </div>
           {{else}}
             <div class="no-tasks">
               No root tasks found
             </div>
-          {{/if}}
+          {{/each}}
           <div class="tasks-list-subtitle pt-3">
             Projects
             {{#if projects}}
@@ -56,17 +54,15 @@
               </div>
             {{/if}}
           </div>
-          {{#if projects}}
-            {{#each projects}}
-              <div class="task-item {{taskIsSelected}}">
-                <div class="task-item-id">#{{seqId}}:</div> {{title}}
-              </div>
-            {{/each}}
+          {{#each projects}}
+            <div class="task-item {{taskIsSelected}}">
+              <div class="task-item-id">#{{seqId}}:</div> {{title}}
+            </div>
           {{else}}
             <div class="no-tasks">
               No projects found
             </div>
-          {{/if}}
+          {{/each}}
         </div>
       </div>
     </div>
