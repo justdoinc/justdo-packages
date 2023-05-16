@@ -32,8 +32,16 @@ Template.invite_new_user_dialog.onCreated ->
   tpl.selected_tasks_rv = new ReactiveVar []
   tpl.search_tasks_val_rv = new ReactiveVar ""
   tpl.show_invite_button_rv = new ReactiveVar false
-  tpl.root_tasks = []
-  tpl.projects = []
+  tpl.root_tasks_rv = new ReactiveVar []
+  tpl.projects_rv = new ReactiveVar []
+  tpl.autorun ->
+    tpl.root_tasks_rv.set APP.collections.Tasks.find({"parents.0": {$ne: null}}, {sort: {seqId: 1}}).fetch()
+    projects_query =
+      "p:dp:is_project": true
+      "p:dp:is_archived_project":
+        $ne: true
+    tpl.projects_rv.set APP.collections.Tasks.find(projects_query, {sort: {seqId: 1}}).fetch()
+    return
 
   tpl.recognizeEmails = ->
     $el = $(".invite-new-wrapper .users-email-input")
@@ -161,39 +169,20 @@ Template.invite_new_user_dialog.helpers
   showSelectProjects: -> Template.instance().show_select_projects_rv.get()
 
   projects: ->
-    project = APP.modules.project_page.project.get()
+    search_val = Template.instance().search_tasks_val_rv.get()
+    filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_val)}", "i")
 
-    if project?
-      projects = APP.collections.Tasks.find({
-        "p:dp:is_project": true
-        "p:dp:is_archived_project":
-          $ne: true
-        project_id: project.id
-      }, {sort: {"title": 1}}).fetch()
+    projects = Template.instance().projects_rv.get()
+    filtered_projects = _.filter projects, (doc) ->  filter_regexp.test(doc.title)
 
-      search_val = Template.instance().search_tasks_val_rv.get()
-
-      filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_val)}", "i")
-      filtered_projects = _.filter projects, (doc) ->  filter_regexp.test(doc.title)
-
-      Template.instance().projects = filtered_projects
-
-      return filtered_projects
+    return filtered_projects
 
   rootTasks: ->
-    root_tasks = []
-    grid_tree = APP.modules.project_page.gridControl()._grid_data.grid_tree
-
-    for item in grid_tree
-      if item[0]._id? and item[1] == 0
-        root_tasks.push item[0]
-
     search_val = Template.instance().search_tasks_val_rv.get()
-
     filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_val)}", "i")
-    filtered_root_tasks = _.filter root_tasks, (doc) ->  filter_regexp.test(doc.title)
 
-    Template.instance().root_tasks = filtered_root_tasks
+    root_tasks = Template.instance().root_tasks_rv.get()
+    filtered_root_tasks = _.filter root_tasks, (doc) ->  filter_regexp.test(doc.title)
 
     return filtered_root_tasks
 
@@ -396,7 +385,7 @@ Template.invite_new_user_dialog.events
   "click .select-all.root-tasks": (e, tpl) ->
     selected_tasks = tpl.selected_tasks_rv.get()
 
-    for item in tpl.root_tasks
+    for item in tpl.root_tasks_rv.get()
       if not selected_tasks.includes item._id
         selected_tasks.push item._id
 
@@ -407,7 +396,7 @@ Template.invite_new_user_dialog.events
   "click .select-all.projects": (e, tpl) ->
     selected_tasks = tpl.selected_tasks_rv.get()
 
-    for item in tpl.projects
+    for item in tpl.projects_rv.get()
       if not selected_tasks.includes item._id
         selected_tasks.push item._id
 
