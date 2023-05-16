@@ -25,7 +25,8 @@ _.extend TasksFileManagerPlugin.prototype,
 
             callback: =>
               # Start download
-              APP.tasks_file_manager_plugin.tasks_file_manager.downloadFile task_id, file.id, (err, url) ->
+              active_file_id = message_template.template_instance.active_file_rv.get().id
+              APP.tasks_file_manager_plugin.tasks_file_manager.downloadFile task_id, active_file_id, (err, url) ->
                 if err then console.log(err)
 
               return false # so the bootbox won't close
