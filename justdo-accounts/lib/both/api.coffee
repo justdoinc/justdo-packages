@@ -13,27 +13,27 @@ _.extend JustdoAccounts.prototype,
 
       @_password_requirements = [
         code: "too-short"
-        reason: "Password must consist of at least #{minimum_length} characters"
+        reason: "consist of at least #{minimum_length} characters"
         validate: (password) -> password.length >= minimum_length
       ,
         code: "missing-number"
-        reason: "Password must have at least one number"
+        reason: "have at least one number"
         validate: (password) -> /([\d])/i.test(password)
       ,
         code: "missing-special-sign"
-        reason: "Password must have at least one special character (*@!#$%&-_+=[]\\|;:'\")"
+        reason: "have at least one special character"
         validate: (password) -> /[*@!#$%&\-\_\+\=\[\]\\\|;:'"/?,<.>()^~{}]+/.test(password)
       ,
         code: "atleast-one-lowercase"
-        reason: "Password must have at least one lower case English letter"
+        reason: "have at least one lower case English letter"
         validate: (password) -> /[a-z]/.test(password)
       ,
         code: "atleast-one-uppercase"
-        reason: "Password must have at least one capital English letter"
+        reason: "have at least one capital English letter"
         validate: (password) -> /[A-Z]/.test(password)
       ,
         code: "too-similar"
-        reason: "Password must not include your name, or parts of your email"
+        reason: "not include your name, or parts of your email"
         validate: (password, user_inputs) ->
           if password.trim().length == 0
             return false
