@@ -76,6 +76,7 @@ _.extend JustdoFiles.prototype,
         return true
 
       onBeforeUpload: (file) ->
+        self.emit "tasks-files-before-upload", file
         if not self.tasks_collection.findOne(file.meta.task_id, {fields: {_id: 1}})
           return "You don't have permission to upload files to this task"
 
