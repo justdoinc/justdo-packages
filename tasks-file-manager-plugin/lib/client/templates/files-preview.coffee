@@ -25,6 +25,7 @@ Template.tasks_file_manager_files_preview.onCreated ->
     previewable_files_under_task = @sorted_previewable_files_under_task_rv.get()
 
     preview_options = null
+    @preview_link_rv.set null
     if isImagePreview active_file.type
       preview_options =
         output: "jpg"
