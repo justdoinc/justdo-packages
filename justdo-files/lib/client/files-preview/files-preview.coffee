@@ -1,7 +1,7 @@
 Template.justdo_files_files_preview.onCreated ->
   @active_file_rv = new ReactiveVar @data.file
   @sorted_previewable_files_under_task_rv = new ReactiveVar []
-  @preview_link_rv = new ReactiveVar ""
+  @preview_link_rv = new ReactiveVar null
   @active_file_index_rv = new ReactiveVar 0
 
   @autorun =>
@@ -18,6 +18,9 @@ Template.justdo_files_files_preview.onCreated ->
     return
 
   @showPrevFile = ->
+    @preview_link_rv.set null
+    Tracker.flush()
+
     previewable_files_under_task = @sorted_previewable_files_under_task_rv.get()
     new_index = @active_file_index_rv.get() - 1
 
@@ -30,6 +33,9 @@ Template.justdo_files_files_preview.onCreated ->
     return
 
   @showNextFile = ->
+    @preview_link_rv.set null
+    Tracker.flush()
+    
     previewable_files_under_task = @sorted_previewable_files_under_task_rv.get()
     previewable_files_count = previewable_files_under_task.length - 1
     new_index = @active_file_index_rv.get() + 1
@@ -54,6 +60,8 @@ Template.justdo_files_files_preview.onRendered ->
   return
 
 Template.justdo_files_files_preview.helpers
+  activeFile: -> Template.instance().active_file_rv.get()
+
   isPrevButtonVisible: ->
     file_index = Template.instance().active_file_index_rv.get()
     if file_index <= 0
@@ -68,9 +76,9 @@ Template.justdo_files_files_preview.helpers
       return "invisible"
     return
 
-  isPdf: -> @file.type == "application/pdf"
+  isPdf: -> @type == "application/pdf"
 
-  isImage: -> @file.type.indexOf("image") == 0
+  isImage: -> @type.indexOf("image") == 0
 
   randomString: ->
     # We found out that in some machines caching might cause an issue with pdf previews,
@@ -78,7 +86,7 @@ Template.justdo_files_files_preview.helpers
 
     return Math.ceil(Math.random() * 100000000)
 
-  preview_link: ->
+  previewLink: ->
     tpl = Template.instance()
 
     return tpl.preview_link_rv.get()
