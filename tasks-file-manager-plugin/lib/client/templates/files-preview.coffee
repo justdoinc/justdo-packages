@@ -101,6 +101,8 @@ Template.tasks_file_manager_files_preview.helpers
 
   isPdfPreview: -> isPdfPreview Template.instance().active_file_rv.get().type
 
+  fileTitle: -> Template.instance().active_file_rv.get().title
+
   randomString: ->
     # We found out that in some machines caching might cause an issue with pdf previews,
     # to avoid that, we use a random string in a custom GET param to prevent caching.

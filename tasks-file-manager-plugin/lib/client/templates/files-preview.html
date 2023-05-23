@@ -9,9 +9,9 @@
     <div class="preview-container">
       {{#with preview_link}}
         {{#if isImagePreview}}
-          <img src="{{this}}" alt="{{file.title}}" title="{{file.title}}" style="max-width: 100%;" />
+          <img src="{{this}}" alt="{{fileTitle}}" title="{{fileTitle}}" style="max-width: 100%;" />
         {{else if isPdfPreview}}
-          <iframe src="{{this}}" width="970" height="550" alt="{{file.title}}" style="border: 0 none;"></iframe>
+          <iframe src="{{this}}" width="970" height="550" alt="{{fileTitle}}" style="border: 0 none;"></iframe>
         {{/if}}
       {{else}}
         <div class="loader">
