@@ -1,8 +1,10 @@
 <template name="recent_activity_dropdown">
   {{#if isLoading}}
     <div class="loading-recent-activity-items-container">
-      <i class="fa fa-comments" aria-hidden="true"></i>
-      <p>Loading...</p>
+      <div class="loader">
+        <div class="double-bounce1 bg-primary"></div>
+        <div class="double-bounce2 bg-primary"></div>
+      </div>
     </div>
   {{else}}
     {{#with recentActivityItems}}
