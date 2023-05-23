@@ -35,8 +35,15 @@ Template.invite_new_user_dialog.onCreated ->
   tpl.root_tasks_rv = new ReactiveVar []
   tpl.projects_rv = new ReactiveVar []
   tpl.autorun ->
-    tpl.root_tasks_rv.set APP.collections.Tasks.find({"parents.0": {$ne: null}}, {sort: {seqId: 1}}).fetch()
+    grid_tree = APP.modules.project_page.gridControl()._grid_data.grid_tree
+    root_tasks = []
+    for item in grid_tree
+      if item[0]._id? and item[1] == 0
+        root_tasks.push item[0]
+    tpl.root_tasks_rv.set root_tasks
+
     projects_query =
+      project_id: JD.activeJustdoId()
       "p:dp:is_project": true
       "p:dp:is_archived_project":
         $ne: true
