@@ -50,4 +50,5 @@ _.extend JustdoFiles.prototype,
 
   downloadFile: (file_id) ->
     check file_id, String
-    window.location.href = @tasks_files.findOne(file_id).link()
+    window.open @tasks_files.findOne(file_id).link(), "_blank"
+    return
