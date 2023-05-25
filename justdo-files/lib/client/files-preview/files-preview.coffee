@@ -18,9 +18,6 @@ Template.justdo_files_files_preview.onCreated ->
     return
 
   @showPrevFile = ->
-    @preview_link_rv.set null
-    Tracker.flush()
-
     previewable_files_under_task = @sorted_previewable_files_under_task_rv.get()
     new_index = @active_file_index_rv.get() - 1
 
@@ -29,13 +26,11 @@ Template.justdo_files_files_preview.onCreated ->
 
     updated_active_file = previewable_files_under_task[new_index]
     @active_file_rv.set updated_active_file
+    Tracker.flush()
     $(".modal-title").text updated_active_file.name
     return
 
-  @showNextFile = ->
-    @preview_link_rv.set null
-    Tracker.flush()
-    
+  @showNextFile = ->    
     previewable_files_under_task = @sorted_previewable_files_under_task_rv.get()
     previewable_files_count = previewable_files_under_task.length - 1
     new_index = @active_file_index_rv.get() + 1
@@ -45,6 +40,7 @@ Template.justdo_files_files_preview.onCreated ->
 
     updated_active_file = previewable_files_under_task[new_index]
     @active_file_rv.set updated_active_file
+    Tracker.flush()
     $(".modal-title").text updated_active_file.name
     return
 
