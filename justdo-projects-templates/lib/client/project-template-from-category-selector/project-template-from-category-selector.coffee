@@ -1,4 +1,6 @@
 Template.project_template_from_category_selector.onCreated ->
+  @rerenderForcer = JustdoHelpers.generateRerenderForcer()
+
   @categories_to_show = ["blank"]
   if _.isString(categories = @data?.categories)
     categories = [categories]
@@ -11,6 +13,11 @@ Template.project_template_from_category_selector.onCreated ->
   return
 
 Template.project_template_from_category_selector.helpers
+  rerenderTrigger: ->
+    tpl = Template.instance()
+
+    return tpl.rerenderForcer()
+
   subtitle: -> Template.instance().subtitle
 
   getTemplatesList: ->
@@ -33,4 +40,5 @@ Template.project_template_from_category_selector.helpers
 Template.project_template_from_category_selector.events
   "click .template-item": (e, tpl) ->
     tpl.active_template_id_rv.set $(e.target).closest(".template-item").data "id"
+    Tracker.flush()
     return

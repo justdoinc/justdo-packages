@@ -16,7 +16,11 @@
 
     {{#with activeTemplate}}
       <div class="template-demo-container">
-        {{> project_template_demo img_src=demo_img_src}}
+        {{#if rerenderTrigger}}
+          {{> project_template_demo img_src=demo_img_src}}
+        {{else}}
+          {{> project_template_demo img_src=demo_img_src}}
+        {{/if}}
       </div>
     {{/with}}
   </div>
