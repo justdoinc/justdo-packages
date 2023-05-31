@@ -19,4 +19,15 @@
       </div>
     {{/each}}
   {{/if}}
+
+  <div>
+    {{#each bottomSectionItems}}
+      {{#if template}}
+        {{> Template.dynamic template=template data=template_data}}
+      {{else if html}}
+        {{{html}}}
+      {{/if}}
+    {{/each}}
+  </div>
+
 </template>

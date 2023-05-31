@@ -111,6 +111,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/members-multi-selector-widget.coffee", client);
 
   api.addFiles("lib/client/invite-members-failed.html", client);
+  api.addFiles("lib/client/invite-members-failed.coffee", client);
 
   api.export("ProjectPageDialogs", client);
 });
