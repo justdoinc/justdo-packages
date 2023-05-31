@@ -1677,6 +1677,7 @@ textarea.form-control {
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
+  box-shadow: 0 2px 6px rgba(50,50,93,.2), 0 1px 3px rgba(0,0,0,.08);
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
   @media (prefers-reduced-motion: reduce) {
     .btn {
@@ -7076,22 +7077,6 @@ a.text-dark:hover, a.text-dark:focus {
   text-transform: none;
   font-weight: 400;
   font-size: 14px;
-}
-
-.btn,
-.form-control,
-.search-input,
-.jd-priority-slider-handle,
-.grid-tree-control-task-id,
-.dropdown-menu,
-.recent-activity-dropdown,
-.task-pane-section-item-details section,
-.chat-window,
-.chat-window .chat-header,
-.tasks-file-manager-file-upload .drop-pane,
-.task-pane-section-justdo-files .custom-file-input,
-.inbound-emails-manager-task-email-address {
-  border-radius: 0px !important;
 }
 
 .task-pane-section-item-details section {
