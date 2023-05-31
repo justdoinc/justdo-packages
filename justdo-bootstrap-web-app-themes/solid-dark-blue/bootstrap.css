@@ -1677,7 +1677,6 @@ textarea.form-control {
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
-  box-shadow: 0 2px 6px rgba(50,50,93,.2), 0 1px 3px rgba(0,0,0,.08);
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
   @media (prefers-reduced-motion: reduce) {
     .btn {
@@ -1698,7 +1697,9 @@ fieldset:disabled a.btn {
 .btn-primary {
   color: #fff;
   background-color: rgba(var(--color-primary), 0.85);
-  border-color: rgba(var(--color-primary), 0.85); }
+  border-color: rgba(var(--color-primary), 0.85);
+  box-shadow: 0 2px 6px rgba(50,50,93,.2), 0 1px 3px rgba(0,0,0,.08);
+  }
   .btn-primary:hover {
     color: #fff;
     background-color: rgba(var(--color-primary), 1);
