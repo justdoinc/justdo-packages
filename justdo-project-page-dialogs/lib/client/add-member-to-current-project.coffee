@@ -359,13 +359,22 @@ Template.invite_new_user_dialog.events
             emails_not_added_due_to_other_reason: if emails_not_added_due_to_other_reason.length > 0 then emails_not_added_due_to_other_reason else null
           }
 
-        bootbox.dialog
+        cur_project_id = JD.activeJustdoId()
+        dialog = null
+        auto_close_modal_computation = Tracker.autorun (computation) ->
+          if JD.activeJustdoId() isnt cur_project_id
+            dialog?.modal? "hide"
+            computation.stop()
+          return
+
+        dialog = bootbox.dialog
           title: "Some of the members are not invited"
           message: invite_members_failed_tpl.node
           animate: false
           className: "bootbox-new-design"
 
           onEscape: ->
+            auto_close_modal_computation?.stop?()
             return true
 
           buttons:
@@ -375,6 +384,7 @@ Template.invite_new_user_dialog.events
               className: "btn-primary"
 
               callback: ->
+                auto_close_modal_computation?.stop?()
                 return true
 
       all_members = invited_members.concat(existing_members_ids)
