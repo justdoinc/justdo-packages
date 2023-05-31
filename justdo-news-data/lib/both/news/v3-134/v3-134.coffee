@@ -21,7 +21,7 @@ APP.justdo_news.registerNews "news",
           },
           {
             "title": "Task's Owner and Pending Owner fields + filter"
-            "subtitle": "Never miss important updates again! Our new On-Grid Unread Emails Indicator keeps you informed about unread emails within tasks, ensuring efficient communication and prompt action."
+            "subtitle": "You now have the ability to incorporate additional fields that display both the Task Owner and Pending Owner of tasks. This update empowers you to efficiently filter your task tree based on these criteria, providing a more streamlined and personalized task management experience."
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-134/assets/2023_04_10_3.png"
           }
         ]
