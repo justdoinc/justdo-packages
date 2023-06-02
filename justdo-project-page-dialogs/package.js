@@ -62,7 +62,7 @@ Package.onUse(function (api) {
   api.use("justdoinc:justdo-webapp-boot@1.0.0", client);
   // // Note: app-integration need to load last, so immediateInit procedures in
   // // the server will have the access to the apis loaded after the init.coffee
-  // // file. 
+  // // file.
 
   api.addFiles("lib/client/init.coffee", client);
 
@@ -112,6 +112,7 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/client/invite-members-failed.html", client);
   api.addFiles("lib/client/invite-members-failed.coffee", client);
+  api.addFiles("lib/client/invite-members-failed.sass", client);
 
   api.export("ProjectPageDialogs", client);
 });

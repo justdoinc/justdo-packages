@@ -10,16 +10,18 @@
     </div>
   {{/if}}
   {{#if emails_not_added_due_to_other_reason}}
+    <div class="invite-members-failed-msg">The following users couldn't be added:</div>
     {{#each emails_not_added_due_to_other_reason}}
-      <div>
-        <h6>The following user couldn't be added. {{this.error}}</h6>
-        <ul>
-          <li>{{this.email}}</li>
-        </ul>
+      <div class="message attention invite-members-failed-item">
+        <div class="email">
+          {{this.email}}
+        </div>
+        <div class="error">
+          {{this.error}}
+        </div>
       </div>
     {{/each}}
   {{/if}}
-
   <div>
     {{#each bottomSectionItems}}
       {{#if template}}
@@ -29,5 +31,4 @@
       {{/if}}
     {{/each}}
   </div>
-
 </template>
