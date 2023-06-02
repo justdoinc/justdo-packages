@@ -44,6 +44,8 @@ _.extend JustdoAccounts.prototype,
     # Replace password with the hashed password.
     options.password = Accounts._hashPassword(options.password)
 
+    @emit "user-signup", options
+
     Meteor.call "justdoAccountsCreateUser", options, cb
 
   signLegalDocs: (legal_docs, cb) ->
