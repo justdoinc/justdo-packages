@@ -23,9 +23,9 @@ noneditable_importable_fields = [
 
 base_supported_fields_ids = non_sorted_field_ids.concat base_supported_fields_ids
 
-excluded_field_ids = [
-  JustdoPlanningUtilities.task_duration_pseudo_field_id # XXX Duration is expected to be re-enabled in the future
-]
+excluded_field_ids = []
+if JustdoPlanningUtilities?
+  excluded_field_ids.push JustdoPlanningUtilities?.task_duration_pseudo_field_id # XXX Duration is expected to be re-enabled in the future
 
 custom_allowed_dates_formats = ["MMM DD YYYY", "DD MMMM YYYY", "Others"]
 
@@ -123,7 +123,9 @@ getAvailableFieldTypes = ->
 
     return false
 
-  custom_fields_supported_formatters = ["defaultFormatter", "unicodeDateFormatter", "keyValueFormatter", "calculatedFieldFormatter", JustdoPlanningUtilities.dependencies_formatter_id, "MultiSelectFormatter"]
+  custom_fields_supported_formatters = ["defaultFormatter", "unicodeDateFormatter", "keyValueFormatter", "calculatedFieldFormatter", "MultiSelectFormatter"]
+  if JustdoPlanningUtilities?
+    custom_fields_supported_formatters.push JustdoPlanningUtilities.dependencies_formatter_id
 
   for field_id, field of all_fields
     if field_id not in supported_fields_ids and field_id not in excluded_field_ids
@@ -263,21 +265,21 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
           if base_indent < 0
             base_indent = indent_level
             last_indent = indent_level
-        else if field_id == JustdoPlanningUtilities.dependencies_mf_field_id
-          if cell_val != ""
-            dependencies_strs[task["jci:temp_import_id"]] = cell_val # XXX temp_import_id can be null
-        else if field_id == JustdoPlanningUtilities.task_duration_pseudo_field_id
-          duration_days_regex = /^(\d+)\s*(d|day|days)?$/ # Matches: 3/3d/3days/3day, int only for numeric part.
-          if (match_reuslt = cell_val.match duration_days_regex)?
-            task[field_id] = match_reuslt[1] # Sample match result: ['3 days', '3', 'days', index: 0, input: '3 days', groups: undefined]
-          else
-            showErrorInSnackbarAndRevertState
-              dialog_state: modal_data.dialog_state
-              snackbar_message: "#{JustdoPlanningUtilities.task_duration_pseudo_field_label} should be an integer. Import aborted."
-              snackbar_duration: 15000
-              problematic_row: line_number
-            return false
-
+        else if JustdoPlanningUtilities?
+          if field_id == JustdoPlanningUtilities.dependencies_mf_field_id
+            if cell_val != ""
+              dependencies_strs[task["jci:temp_import_id"]] = cell_val # XXX temp_import_id can be null
+          else if field_id == JustdoPlanningUtilities.task_duration_pseudo_field_id
+            duration_days_regex = /^(\d+)\s*(d|day|days)?$/ # Matches: 3/3d/3days/3day, int only for numeric part.
+            if (match_reuslt = cell_val.match duration_days_regex)?
+              task[field_id] = match_reuslt[1] # Sample match result: ['3 days', '3', 'days', index: 0, input: '3 days', groups: undefined]
+            else
+              showErrorInSnackbarAndRevertState
+                dialog_state: modal_data.dialog_state
+                snackbar_message: "#{JustdoPlanningUtilities.task_duration_pseudo_field_label} should be an integer. Import aborted."
+                snackbar_duration: 15000
+                problematic_row: line_number
+              return false
         else if cell_val.length > 0 and field_id != "clipboard-import-no-import" and field_id != "task-indent-level"
           if field_def.type is String
 
@@ -401,7 +403,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         task: task
         indent_level: indent_level
 
-    if task[JustdoPlanningUtilities.is_milestone_pseudo_field_id] == "true"
+    if JustdoPlanningUtilities and task[JustdoPlanningUtilities?.is_milestone_pseudo_field_id] == "true"
       if task.start_date? and task.end_date? and task.start_date != task.end_date
         showErrorInSnackbarAndRevertState
           dialog_state: modal_data.dialog_state
@@ -578,7 +580,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
     if _.isEmpty schema_columns_with_auto_field_obj
       return
 
-    imported_tasks_with_auto_value_fields_query = 
+    imported_tasks_with_auto_value_fields_query =
       "jci:temp_import_id":
         $in: temp_import_ids
     auto_value_fields_and_dependencies = {}
