@@ -403,7 +403,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         task: task
         indent_level: indent_level
 
-    if JustdoPlanningUtilities and task[JustdoPlanningUtilities?.is_milestone_pseudo_field_id] == "true"
+    if JustdoPlanningUtilities? and task[JustdoPlanningUtilities?.is_milestone_pseudo_field_id] == "true"
       if task.start_date? and task.end_date? and task.start_date != task.end_date
         showErrorInSnackbarAndRevertState
           dialog_state: modal_data.dialog_state
