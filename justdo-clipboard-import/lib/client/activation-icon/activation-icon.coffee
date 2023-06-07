@@ -524,6 +524,9 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       return task_ids
 
   importDependencies = ->
+    if not APP.justdo_planning_utilities?
+      return
+
     modal_data.import_helper_message.set "Importing dependencies..."
     custom_bulk_update_payload = {}
     for temp_import_id, deps_str of dependencies_strs
@@ -676,7 +679,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
       return false
     finally
       clearupTempImportId ->
-        APP.justdo_planning_utilities.initTaskIdToInfo()
+        APP.justdo_planning_utilities?.initTaskIdToInfo()
         return
 
     bootbox.hideAll()
