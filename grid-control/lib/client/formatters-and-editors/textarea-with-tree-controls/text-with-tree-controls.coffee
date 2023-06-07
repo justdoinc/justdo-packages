@@ -128,7 +128,7 @@ GridControl.installFormatter "textWithTreeControls",
         return
 
       is_justdo_planning_utilities_plugin_enabled_computation = Tracker.autorun =>
-        current_val = APP.justdo_planning_utilities.isPluginInstalledOnJustdo JD.activeJustdoId() # Reactive
+        current_val = APP.justdo_planning_utilities?.isPluginInstalledOnJustdo JD.activeJustdoId() or false # Reactive
         cached_val = @getCurrentColumnData("justdo_planning_utilities_plugin_enabled") # non reactive
         if current_val != cached_val
           @setCurrentColumnData("justdo_planning_utilities_plugin_enabled", current_val)
