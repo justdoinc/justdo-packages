@@ -49,7 +49,7 @@ _.extend JustdoPermissions.prototype,
     return
 
   checkJustdoPermissions: ->
-    return
+    return true
 
   requireJustdoPermissions: ->
     return
