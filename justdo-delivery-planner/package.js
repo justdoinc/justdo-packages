@@ -71,7 +71,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/schemas.coffee", both);
 
   api.addFiles("lib/server/api.coffee", server);
-  api.addFiles("lib/server/allow-deny.coffee", server);
   api.addFiles("lib/server/collections-hooks.coffee", server);
   api.addFiles("lib/server/collections-indexes.coffee", server);
   api.addFiles("lib/server/methods.coffee", server);
@@ -79,28 +78,6 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
-
-  api.addFiles("lib/client/project-conf/project-conf.sass", client);
-  api.addFiles("lib/client/project-conf/project-conf.html", client);
-  api.addFiles("lib/client/project-conf/project-conf.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/task-pane-section-registrar.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/task-pane-section.sass", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.html", client);
-  api.addFiles("lib/client/task-pane-section/task-pane-section.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/project-base-workdays-dropdown/project-base-workdays-dropdown.sass", client);
-  api.addFiles("lib/client/task-pane-section/project-base-workdays-dropdown/project-base-workdays-dropdown.html", client);
-  api.addFiles("lib/client/task-pane-section/project-base-workdays-dropdown/project-base-workdays-dropdown.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/add-daysoff-dropdown/add-daysoff-dropdown.sass", client);
-  api.addFiles("lib/client/task-pane-section/add-daysoff-dropdown/add-daysoff-dropdown.html", client);
-  api.addFiles("lib/client/task-pane-section/add-daysoff-dropdown/add-daysoff-dropdown.coffee", client);
-
-  api.addFiles("lib/client/task-pane-section/extended-workdays-dropdown/extended-workdays-dropdown.sass", client);
-  api.addFiles("lib/client/task-pane-section/extended-workdays-dropdown/extended-workdays-dropdown.html", client);
-  api.addFiles("lib/client/task-pane-section/extended-workdays-dropdown/extended-workdays-dropdown.coffee", client);
 
   api.addFiles("lib/client/tabs-definitions/tab-styling.sass", client);
   api.addFiles("lib/client/tabs-definitions/sections-managers/all-projects.coffee", client);
@@ -113,7 +90,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/app-integration.coffee", both);
   // Note: app-integration need to load last, so immediateInit procedures in
   // the server will have the access to the apis loaded after the init.coffee
-  // file. 
+  // file.
 
   api.export("JustdoDeliveryPlanner", both);
 });
