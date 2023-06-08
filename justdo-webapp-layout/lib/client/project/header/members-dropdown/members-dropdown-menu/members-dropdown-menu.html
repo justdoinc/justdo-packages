@@ -1,4 +1,5 @@
 <template name="members_dropdown_menu">
+  <div class="members-dropdown-wrapper {{#if selectMode}}selected-mode{{/if}}">
     <div class="members-search-wrapper d-flex align-items-center">
       <input type="text" class="members-search-input form-control form-control-sm" placeholder="Members">
     </div>
@@ -10,149 +11,201 @@
         <li class="no-results text-center my-3 text-muted">No results found</li>
       {{else}}
         {{#with project_enrolled_admins_sorted_by_first_name getCurrentMembersFilter}}
-          <li class="dropdown-header text-muted text-uppercase mt-1 px-0 pb-2">Admins</li>
+          <li class="members-dropdown-header">Admins</li>
 
           {{#each this}}
-            {{> admin_member_item}}
+            <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
+              {{> admin_member_item}}
+            </div>
           {{/each}}
         {{/with}}
 
         {{#with project_enrolled_regular_members_sorted_by_first_name getCurrentMembersFilter}}
-          <li class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2">Members</li>
+          <li class="members-dropdown-header">Members</li>
 
           {{#each this}}
-            {{> regular_member_item}}
+            <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
+              {{> regular_member_item}}
+            </div>
           {{/each}}
         {{/with}}
 
         {{#with project_enrolled_guests_sorted_by_first_name getCurrentMembersFilter}}
-          <li class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2">Guests</li>
+          <li class="members-dropdown-header">Guests</li>
 
           {{#each this}}
-            {{> guest_member_item}}
+            <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
+              {{> guest_member_item}}
+            </div>
           {{/each}}
         {{/with}}
 
         {{#with project_non_enrolled_members_sorted_by_first_name getCurrentMembersFilter}}
-          <li class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2">Members Awaiting Registration</li>
+          <li class="members-dropdown-header">Members Awaiting Registration</li>
 
           {{#each this}}
-            {{> enrollment_pending_member}}
+            <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
+              {{> enrollment_pending_member}}
+            </div>
           {{/each}}
         {{/with}}
 
         {{#with project_non_enrolled_guests_sorted_by_first_name getCurrentMembersFilter}}
-          <li class="dropdown-header text-muted text-uppercase mt-3 px-0 pb-2">Guests Awaiting Registration</li>
+          <li class="dropdown-header">Guests Awaiting Registration</li>
 
           {{#each this}}
-            {{> enrollment_pending_member}}
+            <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
+              {{> enrollment_pending_member}}
+            </div>
           {{/each}}
         {{/with}}
       {{/if}}
     </ul>
     {{#if is_project_admin}}
       <div class="add-project-members">
-        <div class="dropdown-header text-muted text-uppercase px-0 pb-2">
-          Invite New Members
-        </div>
-        <button class="show-add-members-dialog btn btn-primary btn-sm" type="button">Invite</button>
+        {{#if selectMode}}
+          <button class="btn btn-default btn-sm cancel-select-mode" type="button">Cancel</button>
+          <button class="btn btn-primary btn-sm remove-selected {{#if allowRemoveSelected}}active{{/if}}" type="button">Remove {{#if allowRemoveSelected}}({{selectedMembersCount}}){{/if}}</button>
+        {{else}}
+          <button class="btn btn-primary btn-sm show-add-members-dialog" type="button">Invite</button>
+        {{/if}}
       </div>
     {{/if}}
+  </div>
 </template>
 
 <template name="admin_member_item">
-  <li class="member-item admin-item d-flex align-items-center justify-content-between mb-2" user-id="{{_id}}">
+  <li class="member-item admin-item" user-id="{{_id}}">
     <div class="d-flex align-items-center">
-      {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
+      <div class="select-icon"></div>
+      {{> gtpl_user_profile_pic}}
+      <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
-    <div class="d-flex align-items-center">
-      {{#if is_project_admin}}
-        <span title="Revoke {{displayName}}'s admin rights">
-          <svg class="jd-icon text-secondary op-button downgrade-admin"><use xlink:href="/layout/icons-feather-sprite.svg#star"/><desc>[long description]</desc></svg>
-        </span>
-      {{/if}}
-
-      {{#if allow_member_remove user_id}}
-        <span title="Remove {{displayName}} from this JustDo">
-          <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
-        </span>
-      {{/if}}
+    <div class="member-settings-dropdown">
+      <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
+      <div class="member-settings-dropdown-menu animate slideIn">
+        {{#if is_project_admin}}
+          <div class="dropdown-item downgrade-admin">
+            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
+            <div class="dropdown-item-label">Revoke Admin Rights</div>
+          </div>
+        {{/if}}
+        {{#if allow_member_remove user_id}}
+          <div class="dropdown-item remove">
+            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
+            <div class="dropdown-item-label">Remove</div>
+          </div>
+        {{/if}}
+        <div class="dropdown-item select">
+          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+          <div class="dropdown-item-label">Select</div>
+        </div>
+      </div>
     </div>
   </li>
 </template>
 
 <template name="regular_member_item">
-  <li class="member-item regular-member-item d-flex align-items-center justify-content-between mb-2" user-id="{{_id}}">
+  <li class="member-item regular-member-item" user-id="{{_id}}">
     <div class="d-flex align-items-center">
-      {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
+      <div class="select-icon"></div>
+      {{> gtpl_user_profile_pic}}
+      <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
-    <div class="d-flex align-items-center">
-      {{#if is_project_admin}}
-        <span title="Make {{displayName}} an admin">
-          <svg class="jd-icon text-secondary op-button upgrade-admin"><use xlink:href="/layout/icons-feather-sprite.svg#star"/></svg>
-        </span>
-
-        <span title="Make {{displayName}} a guest">
-          <svg class="jd-icon text-secondary op-button make-guest"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"/></svg>
-        </span>
-      {{/if}}
-
-      {{#if allow_member_remove user_id}}
-        <span title="Remove {{displayName}} from this JustDo">
-          <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
-        </span>
-      {{/if}}
+    <div class="member-settings-dropdown">
+      <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
+      <div class="member-settings-dropdown-menu animate slideIn">
+        {{#if is_project_admin}}
+          <div class="dropdown-item upgrade-admin">
+            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
+            <div class="dropdown-item-label">Make an Admin</div>
+          </div>
+          <div class="dropdown-item make-guest">
+            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
+            <div class="dropdown-item-label">Make a Guest</div>
+          </div>
+        {{/if}}
+        {{#if allow_member_remove user_id}}
+          <div class="dropdown-item remove">
+            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
+            <div class="dropdown-item-label">Remove</div>
+          </div>
+        {{/if}}
+        <div class="dropdown-item select">
+          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+          <div class="dropdown-item-label">Select</div>
+        </div>
+      </div>
     </div>
   </li>
 </template>
 
 <template name="guest_member_item">
-  <li class="member-item regular-member-item d-flex align-items-center justify-content-between mb-2" user-id="{{_id}}">
+  <li class="member-item regular-member-item" user-id="{{_id}}">
     <div class="d-flex align-items-center">
-      {{> gtpl_user_profile_pic}} <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
+      <div class="select-icon"></div>
+      {{> gtpl_user_profile_pic}}
+      <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
-    <div class="d-flex align-items-center">
-      {{#if is_project_admin}}
-        <span title="Make {{displayName}} a member">
-          <svg class="jd-icon text-secondary op-button upgrade-guest"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"/></svg>
-        </span>
-      {{/if}}
-
-      {{#if allow_member_remove user_id}}
-        <span title="Remove {{displayName}} from this JustDo">
-          <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
-        </span>
-      {{/if}}
+    <div class="member-settings-dropdown">
+      <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
+      <div class="member-settings-dropdown-menu animate slideIn">
+        {{#if is_project_admin}}
+          <div class="dropdown-item upgrade-guest">
+            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"></use></svg>
+            <div class="dropdown-item-label">Make a Member</div>
+          </div>
+        {{/if}}
+        {{#if allow_member_remove user_id}}
+          <div class="dropdown-item remove">
+            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
+            <div class="dropdown-item-label">Remove</div>
+          </div>
+        {{/if}}
+        <div class="dropdown-item select">
+          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+          <div class="dropdown-item-label">Select</div>
+        </div>
+      </div>
     </div>
   </li>
 </template>
 
 <template name="enrollment_pending_member">
-  <li class="member-item enrollment-pending-member-item d-flex align-items-center justify-content-between mb-2" user-id="{{_id}}">
+  <li class="member-item enrollment-pending-member-item" user-id="{{_id}}">
     <div class="d-flex align-items-center">
-      {{> gtpl_user_profile_pic}} <div class="display-name mx-2" title="{{userEmail this}}">{{displayName}}</div>
+      <div class="select-icon"></div>
+      {{> gtpl_user_profile_pic}}
+      <div class="display-name mx-2" title="{{userEmail this}}">{{displayName}}</div>
     </div>
-
-    <div class="d-flex align-items-center">
-      {{#if allow_member_edit_enrollment_pending_member user_id}}
-        <span title="Edit {{displayName}}">
-          <svg class="jd-icon text-secondary op-button edit-enrolled"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"/></svg>
-        </span>
-      {{/if}}
-
-      {{#unless is_guest}}
-        {{#if is_project_admin}}
-          <span title="{{#if is_admin}}Revoke {{displayName}}'s admin rights{{else}}Make {{displayName}} a JustDo admin upon registration{{/if}}">
-            <svg class="jd-icon text-secondary op-button {{#if is_admin}}downgrade-admin{{else}}upgrade-admin{{/if}}"><use xlink:href="/layout/icons-feather-sprite.svg#star"/></svg>
-          </span>
+    <div class="member-settings-dropdown">
+      <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
+      <div class="member-settings-dropdown-menu animate slideIn">
+        {{#if allow_member_edit_enrollment_pending_member user_id}}
+          <div class="dropdown-item edit-enrolled">
+            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>
+            <div class="dropdown-item-label">Edit</div>
+          </div>
         {{/if}}
-      {{/unless}}
-
-      {{#if allow_member_remove user_id}}
-        <span title="Remove {{displayName}} from this JustDo">
-          <svg class="jd-icon text-secondary op-button remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
-        </span>
-      {{/if}}
+        {{#unless is_guest}}
+          {{#if is_project_admin}}
+            <div class="dropdown-item {{#if is_admin}}downgrade-admin{{else}}upgrade-admin{{/if}}">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
+              <div class="dropdown-item-label">{{#if is_admin}}Revoke Admin Rights{{else}}Make an Admin upon registration{{/if}}</div>
+            </div>
+          {{/if}}
+        {{/unless}}
+        {{#if allow_member_remove user_id}}
+          <div class="dropdown-item remove">
+            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
+            <div class="dropdown-item-label">Remove</div>
+          </div>
+        {{/if}}
+        <div class="dropdown-item select">
+          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+          <div class="dropdown-item-label">Select</div>
+        </div>
+      </div>
     </div>
   </li>
 </template>

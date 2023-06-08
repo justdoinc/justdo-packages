@@ -25,18 +25,20 @@ APP.executeAfterAppLibCode ->
 
       return
 
-  addMembersDropDownError = (error_message) ->
-    # Currently, we show up to one error at a time
+  addMembersDropDownError = (errors_array) ->
     clearMembersDropDownErrors()
 
-    error_elem = """
-      <div class="alert alert-danger mt-3 mb-0 px-3 py-2" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-        <span class="sr-only">Error:</span>
-        #{error_message}
-      </div>
-    """
+    error_elem = ""
+
+    for error_message in errors_array
+      error_elem += """
+        <div class="alert alert-danger px-3 py-2" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Error:</span>
+          #{error_message}
+        </div>
+      """
 
     $(error_elem)
       .prependTo(".members-dropdown-menu .alerts-container")
@@ -49,6 +51,8 @@ APP.executeAfterAppLibCode ->
 
   Template.members_dropdown_menu.onCreated ->
     @members_filter = new ReactiveVar null
+    @select_mode = new ReactiveVar false
+    @selected_members = new ReactiveVar []
 
     return
 
@@ -74,6 +78,20 @@ APP.executeAfterAppLibCode ->
 
       return empty
 
+    selectMode: ->
+      return Template.instance().select_mode.get()
+
+    memberSelected: ->
+      selected_members = Template.instance().selected_members.get()
+
+      return selected_members.includes @_id
+
+    selectedMembersCount: ->
+      return Template.instance().selected_members.get().length
+
+    allowRemoveSelected: ->
+      return Template.instance().selected_members.get().length > 0
+
   Template.members_dropdown_menu.events
     "click .show-add-members-dialog": (e, tpl) ->
       ProjectPageDialogs.showMemberDialog()
@@ -95,7 +113,7 @@ APP.executeAfterAppLibCode ->
             curProj().removeMember @user_id, (err) ->
               clearMembersDropDownErrors()
               if err?
-                addMembersDropDownError err.reason
+                addMembersDropDownError [err.reason]
 
           return
 
@@ -111,7 +129,7 @@ APP.executeAfterAppLibCode ->
             curProj().upgradeAdmin @user_id, (err) ->
               clearMembersDropDownErrors()
               if err?
-                addMembersDropDownError err.reason
+                addMembersDropDownError [err.reason]
 
           return
 
@@ -127,7 +145,7 @@ APP.executeAfterAppLibCode ->
             curProj().makeGuest @user_id, (err) ->
               clearMembersDropDownErrors()
               if err?
-                addMembersDropDownError err.reason
+                addMembersDropDownError [err.reason]
 
           return
 
@@ -143,9 +161,10 @@ APP.executeAfterAppLibCode ->
             curProj().upgradeGuest @user_id, (err) ->
               clearMembersDropDownErrors()
               if err?
-                addMembersDropDownError err.reason
+                addMembersDropDownError [err.reason]
 
           return
+
     "click .downgrade-admin": (e) ->
       if @user_id == Meteor.userId()
         confirm_message = "Are you sure you want to stop manage this JustDo?"
@@ -161,9 +180,68 @@ APP.executeAfterAppLibCode ->
             curProj().downgradeAdmin @user_id, (err) ->
               clearMembersDropDownErrors()
               if err?
-                addMembersDropDownError err.reason
+                addMembersDropDownError [err.reason]
 
           return
+
+    "click .select": (e, tpl) ->
+      tpl.selected_members.set [@_id]
+      tpl.select_mode.set true
+      clearMembersDropDownErrors()
+
+      return
+
+    "click .selected-mode .member-item": (e, tpl) ->
+      selected_members = tpl.selected_members.get()
+      member_id = @_id
+
+      if selected_members.includes member_id
+        selected_members = _.without(selected_members, member_id)
+      else
+        selected_members.push member_id
+
+      tpl.selected_members.set selected_members
+
+      return
+
+    "click .cancel-select-mode": (e, tpl) ->
+      tpl.select_mode.set false
+      tpl.selected_members.set []
+
+      return
+
+    "click .remove-selected": (e, tpl) ->
+      selected_members = tpl.selected_members.get()
+      errors = []
+      confirm_message = "Are you sure you want to remove #{selected_members.length} members"
+      selected_members_count = selected_members.length
+
+      if selected_members_count == 1
+        if selected_members[0] == Meteor.userId()
+          confirm_message = "Are you sure you want to leave this JustDo?"
+        else
+          confirm_message = "Are you sure you want to remove this member?"
+
+      bootbox.confirm
+        message: confirm_message
+        className: "bootbox-new-design members-management-alerts"
+        closeButton: false
+        callback: (res) =>
+          if res
+            clearMembersDropDownErrors()
+
+            for member_id in selected_members
+              curProj().removeMember member_id, (err) ->
+                if err?
+                  errors.push err.reason
+
+            tpl.selected_members.set []
+            tpl.select_mode.set false
+
+            if errors.length > 0
+              addMembersDropDownError errors
+
+      return
 
     "keyup .members-search-input": (e, template) ->
       value = $(e.target).val().trim()
@@ -180,6 +258,27 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    "click .member-settings-dropdown-btn": (e, tpl) ->
+      $(".member-settings-dropdown-menu").removeClass "open"
+      $dropdown = $(e.target).parents(".member-settings-dropdown")
+      $dropdown_menu = $dropdown.find(".member-settings-dropdown-menu")
+      $dropdown_menu.addClass "open"
+
+      return
+
+    "click .members-dropdown-wrapper": (e, tpl) ->
+      $dropdown = $(e.target).parents(".member-settings-dropdown")
+
+      if not $dropdown[0]
+        $(".member-settings-dropdown-menu").removeClass "open"
+
+      return
+
+    "click .member-settings-dropdown-menu .dropdown-item": (e, tpl) ->
+      $(e.target).parents(".member-settings-dropdown-menu").removeClass "open"
+
+      return
+
   Template.admin_member_item.helpers module.template_helpers
   Template.regular_member_item.helpers module.template_helpers
   Template.guest_member_item.helpers module.template_helpers
@@ -190,6 +289,5 @@ APP.executeAfterAppLibCode ->
       ProjectPageDialogs.editEnrolledMember @user_id, {add_as_guest: tpl.data.is_guest}
 
       $(".dropdown-menu.show").removeClass("show") # Hide the dropdown, since after editing, the user will have to-reopen the dropdown for the user new details to show (it'll look like a bug if we won't do it).
-
 
       return

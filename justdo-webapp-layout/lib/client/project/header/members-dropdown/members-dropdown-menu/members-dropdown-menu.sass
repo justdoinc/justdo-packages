@@ -3,13 +3,49 @@
   z-index: 150
   background-color: #ffffff
   border-radius: 4px
-  padding: 1rem
 
-  .dropdown-header
-    font-size: 11px
+  .members-search-wrapper
+    padding: 16px 16px 0px 16px
 
   .show-add-members-dialog
     width: 100%
+
+  .alerts-container
+    margin: 0 16px
+    .alert-danger
+      margin-bottom: 0px
+      &:first-child
+        margin-top: 16px
+      &:last-child
+        margin-bottom: 16px
+
+    .alert-danger + .alert-danger
+      margin-top: 4px
+
+  .members-dropdown-header
+    font-size: 12px
+    color: #3D495B
+    text-transform: uppercase
+    font-weight: bold
+    margin: 16px 16px 8px 16px
+
+  .add-project-members
+    border-top: 1px solid #EDF1F8
+    margin: 0 16px
+    padding: 16px 0
+    text-align: right
+    button
+      text-transform: uppercase
+      font-weight: bold
+    .show-add-members-dialog
+      width: 100%
+
+  .remove-selected
+    pointer-events: none
+    opacity: 0.5
+    &.active
+      opacity: 1
+      pointer-events: all
 
 .project-members-container
   list-style-type: none
@@ -17,12 +53,88 @@
   overflow-y: auto
   overflow-x: hidden
   padding: 0
-  margin: 8px 0 0 0
+  margin: 0
+
+  .member-item-wrapper
+    &:last-child
+      margin-bottom: 16px
 
   .member-item
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 4px 16px
+    cursor: pointer
+    &:hover
+      background-color: #f8f9fa
+      .member-settings-dropdown-btn
+        opacity: 1
     img
-      width: 25px
-      height: 25px
+      width: 26px
+      height: 26px
+
+    .select-icon
+      cursor: pointer
+      width: 18px
+      height: 18px
+      border-radius: 4px
+      border: 2px solid rgba(49, 69, 99, 0.5)
+      margin-right: 8px
+      display: none
+      align-items: center
+      justify-content: center
+      opacity: 0.65
+      &::before
+        content: ""
+        width: 65%
+        height: 65%
+        background: rgba(49, 69, 99, 0.75)
+        border-radius: 2px
+        display: none
+      &:hover
+        opacity: 1
+
+  .member-settings-dropdown
+    position: relative
+    display: flex
+
+  .member-settings-dropdown-btn
+    color: #B0B8C2
+    width: 14px
+    flex-shrink: 0
+    padding: 0
+    cursor: pointer
+    opacity: 0.75
+    &:hover
+      opacity: 1
+      color: #6c757d
+      background-color: rgba(206, 212, 217, 0.5)
+
+  .member-settings-dropdown-menu
+    position: absolute
+    padding: 8px
+    background-color: white
+    right: 0
+    bottom: -24px
+    z-index: 151
+    display: none
+    border-radius: 4px
+    box-shadow: 0 1px 16px rgba(0, 0, 0, 0.12)
+    &.open
+      display: flex
+      flex-direction: column
+    .dropdown-item
+      font-size: 15px
+      cursor: pointer
+      display: flex
+      align-items: center
+      padding: 4px 6px 4px 4px
+      &:hover
+        color: #16181b
+        background-color: #f8f9fa
+      .jd-icon-dropdown
+        margin-right: 6px
+        padding: 2px
 
   .display-name
     white-space: nowrap
@@ -30,13 +142,20 @@
     text-overflow: ellipsis
     width: 174px
 
-  .jd-icon
-    padding: 3px
-    margin: 0px 2px 0px 0px
-    stroke-width: 2
-    cursor: pointer
   .downgrade-admin
     fill: currentColor
 
   .no-results
     font-size: 14px
+
+.members-dropdown-wrapper.selected-mode
+  .select-icon
+    display: flex
+  .member-settings-dropdown
+    display: none
+  .member-item-wrapper.selected
+    background-color: #f8f9fa
+    .select-icon
+      opacity: 1
+      &::before
+        display: flex
