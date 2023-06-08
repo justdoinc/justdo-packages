@@ -24,6 +24,8 @@ Template.project_operations_toolbar.onRendered ->
 
 
 Template.project_operations_toolbar.helpers
+  itemDuplicateControlExist: -> Template.item_duplicate_control?
+
   displayPrioritySlider: ->
     if not (item_id = JD.activeItemId())?
       # If no item is selected - display

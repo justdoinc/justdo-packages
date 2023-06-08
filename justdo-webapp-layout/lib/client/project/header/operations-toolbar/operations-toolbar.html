@@ -17,7 +17,9 @@
       <div class="btn-group" role="group">
         {{> project_operations_print_grid}}
       </div>
-      {{> item_duplicate_control}} {{!-- Defined in the justdo-item-duplicate-control package --}}
+      {{#if itemDuplicateControlExist}}
+        {{> item_duplicate_control}} {{!-- Defined in the justdo-item-duplicate-control package --}}
+      {{/if}}
       {{> rows_styling_control}} {{!-- Defined in the justdo-rows-styling package --}}
       <div class="project-header-toolbar-divider ml-1 mr-3"></div>
       {{> search_comp}}
