@@ -12,9 +12,6 @@ _.extend JustdoDeliveryPlanner.prototype,
     # Defined in publications.coffee
     @_setupPublications()
 
-    # Defined in allow-deny.coffee
-    @_setupAllowDenyRules()
-
     # Defined in collections-hooks.coffee
     @_setupCollectionsHooks()
 
@@ -33,7 +30,7 @@ _.extend JustdoDeliveryPlanner.prototype,
   getDateStringInTimezone: (timezone, date) ->
     if not date?
       date = new Date()
-    
+
     return moment.tz(date, timezone).format("YYYY-MM-DD")
 
   _getNewMemberObjStructure: (member_id) ->
@@ -56,7 +53,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         @getProjectBurndownData(task._id, user_id, {involved_members_only: true, skip_ensure_membership: true}).involved_members
 
     if not (existing_members_availability_array = task["#{JustdoDeliveryPlanner.task_project_members_availability_field_name}"])?
-      existing_members_availability_array = []    
+      existing_members_availability_array = []
 
     existing_involved_members = _.map existing_members_availability_array, (member) -> member.user_id
 
@@ -65,9 +62,9 @@ _.extend JustdoDeliveryPlanner.prototype,
     new_members_docs = _.map new_members_ids, (member_id) => @_getNewMemberObjStructure(member_id)
 
     if not _.isEmpty new_members_docs
-      modifier = 
+      modifier =
         $push:
-          "#{JustdoDeliveryPlanner.task_project_members_availability_field_name}": 
+          "#{JustdoDeliveryPlanner.task_project_members_availability_field_name}":
             $each: new_members_docs
 
       @tasks_collection.update(task._id, modifier)
@@ -86,7 +83,7 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     new_state = not task_obj_is_project
 
-    update = 
+    update =
       "#{JustdoDeliveryPlanner.task_is_project_field_name}": new_state
 
     if new_state is true
@@ -102,37 +99,7 @@ _.extend JustdoDeliveryPlanner.prototype,
     @_ensureMembersDocsExistsForAllInvolvedMembers(task_doc, null, user_id)
 
     return new_state
-
-  commitProjectPlan: (project_task_id, user_id) ->
-    check project_task_id, String
-    check user_id, String
-
-    # Note, we check user belongs to task in the query
-    if not (task_doc = @tasks_collection.findOne({_id: project_task_id, users: user_id}))?
-      throw @_error("unknown-task")
-
-    if not task_doc.start_date?
-      throw @_error("no-start-date") # note, error message is on errors-types.coffee
-
-    @tasks_collection.update(project_task_id, {$set: {"#{JustdoDeliveryPlanner.task_is_committed_field_name}": new Date()}})
-
-    return
-
-  removeProjectPlanCommit: (project_task_id, user_id) ->
-    check project_task_id, String
-    check user_id, String
-
-    # Note, we check user belongs to task in the query
-    if not (task_doc = @tasks_collection.findOne({_id: project_task_id, users: user_id}))?
-      throw @_error("unknown-task")
-
-    if not task_doc[JustdoDeliveryPlanner.task_is_committed_field_name]?
-      throw @_error("project-isnt-committed") # note, error message is on errors-types.coffee
-
-    @tasks_collection.update(project_task_id, {$set: {"#{JustdoDeliveryPlanner.task_is_committed_field_name}": null}})
-
-    return
-
+    
   getProjectBurndownData: (task_id, user_id, options) ->
     check task_id, String
     check user_id, String
@@ -184,46 +151,3 @@ _.extend JustdoDeliveryPlanner.prototype,
       @_ensureMembersDocsExistsForAllInvolvedMembers(task_doc, involved_members, user_id)
 
     return {burndown: burndown, involved_members: involved_members}
-
-  _saveBaselineProjectionDataSchema: new SimpleSchema
-    series:
-      type: [[String, Number]] # [[String, Number]] is not fully supported, both are converted to strings...
-      decimal: true
-  saveBaselineProjection: (task_id, data, user_id) ->
-    check task_id, String
-    check data, Object
-    check user_id, String
-
-    # Note, we check user belongs to task in the query
-    if not (task_doc = @tasks_collection.findOne({_id: task_id, users: user_id}))?
-      throw @_error("unknown-task")
-
-    {cleaned_val} =
-      JustdoHelpers.simpleSchemaCleanAndValidate(
-        @_saveBaselineProjectionDataSchema,
-        data,
-        {self: @, throw_on_error: true}
-      )
-    data = cleaned_val
-
-    data.series = _.map data.series, (data_point) -> [data_point[0], parseFloat(data_point[1])] # [[String, Number]] is not fully supported, both are converted to strings...
-
-    data.saved_by = user_id
-    data.as_of = new Date()
-
-    @tasks_collection.update(task_id, {$set: {"#{JustdoDeliveryPlanner.task_baseline_projection_data_field_name}": data}})
-
-    return
-
-  removeBaselineProjection: (task_id, user_id) ->
-    check user_id, String
-    check task_id, String
-
-    # Note, we check user belongs to task in the query
-    if not (task_doc = @tasks_collection.findOne({_id: task_id, users: user_id}))?
-      throw @_error("unknown-task")
-
-    @tasks_collection.update(task_id, {$set: {"#{JustdoDeliveryPlanner.task_baseline_projection_data_field_name}": null}})
-
-    return
-

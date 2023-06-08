@@ -35,17 +35,11 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return fields
 
-  getTimeMinutesDataTypeDef: ->
-    return _.find(APP.resource_planner.getDataTypes(), (type_def) -> type_def._id == "b:time_minutes")
-
   isTaskObjProject: (item_obj) ->
     return item_obj?[JustdoDeliveryPlanner.task_is_project_field_name]? and item_obj[JustdoDeliveryPlanner.task_is_project_field_name]
 
   isTaskObjArchivedProject: (item_obj) ->
     return item_obj[JustdoDeliveryPlanner.task_is_archived_project_field_name]? and item_obj[JustdoDeliveryPlanner.task_is_archived_project_field_name]
-
-  isTaskObjCommittedProject: (item_obj) ->
-    return item_obj[JustdoDeliveryPlanner.task_is_committed_field_name]?
 
   toggleTaskArchivedProjectState: (item_id) ->
     if not (item_obj = @tasks_collection.findOne(item_id))?
@@ -60,9 +54,6 @@ _.extend JustdoDeliveryPlanner.prototype,
     @tasks_collection.update(item_id, {$set: {"#{JustdoDeliveryPlanner.task_is_archived_project_field_name}": new_state}})
 
     return new_state
-
-  taskObjHasMembersAvailabilityRecords: (item_obj) ->
-    return not _.isEmpty item_obj[JustdoDeliveryPlanner.task_project_members_availability_field_name]
 
   getKnownProjects: (project_id, options, user_id) ->
     # Get all the active projects known to
