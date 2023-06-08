@@ -41,36 +41,6 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     return new_member_doc
 
-  _ensureMembersDocsExistsForAllInvolvedMembers: (task, involved_members, user_id) ->
-    # Task can be either a task document, or a task_id, if a document is provided,
-    # no request will be made to fetch it.
-
-    if _.isString task
-      task = @getProjectTaskWithRelevantFields(task, user_id)
-
-    if not involved_members?
-      involved_members =
-        @getProjectBurndownData(task._id, user_id, {involved_members_only: true, skip_ensure_membership: true}).involved_members
-
-    if not (existing_members_availability_array = task["#{JustdoDeliveryPlanner.task_project_members_availability_field_name}"])?
-      existing_members_availability_array = []
-
-    existing_involved_members = _.map existing_members_availability_array, (member) -> member.user_id
-
-    new_members_ids = _.difference involved_members, existing_involved_members
-
-    new_members_docs = _.map new_members_ids, (member_id) => @_getNewMemberObjStructure(member_id)
-
-    if not _.isEmpty new_members_docs
-      modifier =
-        $push:
-          "#{JustdoDeliveryPlanner.task_project_members_availability_field_name}":
-            $each: new_members_docs
-
-      @tasks_collection.update(task._id, modifier)
-
-    return
-
   toggleTaskIsProject: (task_id, user_id) ->
     check user_id, String
     check user_id, String
@@ -96,58 +66,5 @@ _.extend JustdoDeliveryPlanner.prototype,
 
     @tasks_collection.update(task_id, {$set: update})
 
-    @_ensureMembersDocsExistsForAllInvolvedMembers(task_doc, null, user_id)
-
     return new_state
     
-  getProjectBurndownData: (task_id, user_id, options) ->
-    check task_id, String
-    check user_id, String
-
-    default_options =
-      involved_members_only: false
-      skip_ensure_membership: false
-
-    options = _.extend default_options, options
-
-    # For findSubTree below, we don't require the user to belong to all the tasks of the subtree
-    # in order to get its data, but, at the minimum we require here the user to belong to its root.
-    if not (task_doc = @getProjectTaskWithRelevantFields(task_id, user_id))?
-      throw @_error "unknown-task"
-
-    user_tz = @getUserTimeZone(user_id)
-
-    tree_map = @tasks_collection.findSubTree task_id, {base_query: {project_id: task_doc.project_id}, fields: {}}
-
-    involved_members = {}
-    burndown = {}
-    resources = @tasks_resources_collection.find({task_id: {$in: _.keys(tree_map)}}).forEach (resource) =>
-      if resource.resource_type.substr(0, 6) == "b:user"
-        user_id = resource.resource_type.substr(7)
-
-        involved_members[user_id] = true
-
-        if not options.involved_members_only
-          date_str = @getDateStringInTimezone(user_tz, resource.updatedAt)
-
-          if not burndown[date_str]?
-            burndown[date_str] =
-              total: 0
-              users: {}
-
-          if not burndown[date_str].users[user_id]
-            burndown[date_str].users[user_id] = 0
-
-          if resource.stage == "p"
-            burndown[date_str].total += resource.delta
-            burndown[date_str].users[user_id] += resource.delta
-          else if resource.stage == "e"
-            burndown[date_str].total -= resource.delta
-            burndown[date_str].users[user_id] -= resource.delta
-
-    involved_members = _.keys(involved_members)
-
-    if not options.skip_ensure_membership
-      @_ensureMembersDocsExistsForAllInvolvedMembers(task_doc, involved_members, user_id)
-
-    return {burndown: burndown, involved_members: involved_members}
