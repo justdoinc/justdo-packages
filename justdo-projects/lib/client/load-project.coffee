@@ -256,6 +256,9 @@ _.extend Projects.prototype,
         return 
 
       isCustomFeatureEnabled: (feature) ->
+        if not feature?
+          return false
+
         if feature is "INTEGRAL"
           return true
 
