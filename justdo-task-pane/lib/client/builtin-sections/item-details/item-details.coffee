@@ -4,6 +4,8 @@ APP.executeAfterAppLibCode ->
   Template.task_pane_item_details_section.helpers module.template_helpers
   
   Template.task_pane_item_details_section.helpers
+    inboundEmailEnabled: -> APP.justdo_inbound_emails?
+
     hasPermissionToEditMemebers: ->
       if (item_id = JD.activeItemId())?
         return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.users", item_id)

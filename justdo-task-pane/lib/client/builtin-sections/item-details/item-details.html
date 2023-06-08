@@ -14,7 +14,9 @@
     {{> task_pane_chat_section}}
 
     {{!-- Inbound emails --}}
-    {{> task_pane_justdo_inbound_emails_details_tab_section_section}}
+    {{# if inboundEmailEnabled}}
+      {{> task_pane_justdo_inbound_emails_details_tab_section_section}}
+    {{/ if}}
 
     {{!-- Context --}}
     {{#with active_item_obj "_id"}}
