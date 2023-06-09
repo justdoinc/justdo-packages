@@ -234,12 +234,10 @@ APP.executeAfterAppLibCode ->
               curProj().removeMember member_id, (err) ->
                 if err?
                   errors.push err.reason
+                  addMembersDropDownError errors
 
             tpl.selected_members.set []
             tpl.select_mode.set false
-
-            if errors.length > 0
-              addMembersDropDownError errors
 
       return
 

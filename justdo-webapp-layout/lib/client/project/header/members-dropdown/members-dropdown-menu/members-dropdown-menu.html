@@ -81,27 +81,31 @@
       {{> gtpl_user_profile_pic}}
       <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
-    <div class="member-settings-dropdown">
-      <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
-      <div class="member-settings-dropdown-menu animate slideIn">
-        {{#if is_project_admin}}
-          <div class="dropdown-item downgrade-admin">
-            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
-            <div class="dropdown-item-label">Revoke Admin Rights</div>
-          </div>
-        {{/if}}
-        {{#if allow_member_remove user_id}}
-          <div class="dropdown-item remove">
-            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
-            <div class="dropdown-item-label">Remove</div>
-          </div>
-        {{/if}}
-        <div class="dropdown-item select">
-          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
-          <div class="dropdown-item-label">Select</div>
+    {{#if allow_show_member_dropdown_settings user_id}}
+      <div class="member-settings-dropdown">
+        <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
+        <div class="member-settings-dropdown-menu animate slideIn">
+          {{#if is_project_admin}}
+            <div class="dropdown-item downgrade-admin">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
+              <div class="dropdown-item-label">Revoke Admin Rights</div>
+            </div>
+          {{/if}}
+          {{#if allow_member_remove user_id}}
+            <div class="dropdown-item remove">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
+              <div class="dropdown-item-label">Remove</div>
+            </div>
+          {{/if}}
+          {{#if is_project_admin}}
+            <div class="dropdown-item select">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+              <div class="dropdown-item-label">Select</div>
+            </div>
+          {{/if}}
         </div>
       </div>
-    </div>
+    {{/if}}
   </li>
 </template>
 
@@ -112,31 +116,35 @@
       {{> gtpl_user_profile_pic}}
       <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
-    <div class="member-settings-dropdown">
-      <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
-      <div class="member-settings-dropdown-menu animate slideIn">
-        {{#if is_project_admin}}
-          <div class="dropdown-item upgrade-admin">
-            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
-            <div class="dropdown-item-label">Make an Admin</div>
-          </div>
-          <div class="dropdown-item make-guest">
-            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
-            <div class="dropdown-item-label">Make a Guest</div>
-          </div>
-        {{/if}}
-        {{#if allow_member_remove user_id}}
-          <div class="dropdown-item remove">
-            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
-            <div class="dropdown-item-label">Remove</div>
-          </div>
-        {{/if}}
-        <div class="dropdown-item select">
-          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
-          <div class="dropdown-item-label">Select</div>
+    {{#if allow_show_member_dropdown_settings user_id}}
+      <div class="member-settings-dropdown">
+        <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
+        <div class="member-settings-dropdown-menu animate slideIn">
+          {{#if is_project_admin}}
+            <div class="dropdown-item upgrade-admin">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
+              <div class="dropdown-item-label">Make an Admin</div>
+            </div>
+            <div class="dropdown-item make-guest">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
+              <div class="dropdown-item-label">Make a Guest</div>
+            </div>
+          {{/if}}
+          {{#if allow_member_remove user_id}}
+            <div class="dropdown-item remove">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
+              <div class="dropdown-item-label">Remove</div>
+            </div>
+          {{/if}}
+          {{#if is_project_admin}}
+            <div class="dropdown-item select">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+              <div class="dropdown-item-label">Select</div>
+            </div>
+          {{/if}}
         </div>
       </div>
-    </div>
+    {{/if}}
   </li>
 </template>
 
@@ -147,27 +155,31 @@
       {{> gtpl_user_profile_pic}}
       <div class="display-name mx-2">{{> display_name_with_graphic_unverified_warning}}</div>
     </div>
-    <div class="member-settings-dropdown">
-      <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
-      <div class="member-settings-dropdown-menu animate slideIn">
-        {{#if is_project_admin}}
-          <div class="dropdown-item upgrade-guest">
-            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"></use></svg>
-            <div class="dropdown-item-label">Make a Member</div>
-          </div>
-        {{/if}}
-        {{#if allow_member_remove user_id}}
-          <div class="dropdown-item remove">
-            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
-            <div class="dropdown-item-label">Remove</div>
-          </div>
-        {{/if}}
-        <div class="dropdown-item select">
-          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
-          <div class="dropdown-item-label">Select</div>
+    {{#if allow_show_member_dropdown_settings user_id}}
+      <div class="member-settings-dropdown">
+        <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
+        <div class="member-settings-dropdown-menu animate slideIn">
+          {{#if is_project_admin}}
+            <div class="dropdown-item upgrade-guest">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"></use></svg>
+              <div class="dropdown-item-label">Make a Member</div>
+            </div>
+          {{/if}}
+          {{#if allow_member_remove user_id}}
+            <div class="dropdown-item remove">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
+              <div class="dropdown-item-label">Remove</div>
+            </div>
+          {{/if}}
+          {{#if is_project_admin}}
+            <div class="dropdown-item select">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+              <div class="dropdown-item-label">Select</div>
+            </div>
+          {{/if}}
         </div>
       </div>
-    </div>
+    {{/if}}
   </li>
 </template>
 
@@ -183,8 +195,13 @@
       <div class="member-settings-dropdown-menu animate slideIn">
         {{#if allow_member_edit_enrollment_pending_member user_id}}
           <div class="dropdown-item edit-enrolled">
-            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>
-            <div class="dropdown-item-label">Edit</div>
+            {{#if is_project_admin}}
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>
+              <div class="dropdown-item-label">Edit</div>
+            {{else}}
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#info"></use></svg>
+              <div class="dropdown-item-label">Info</div>
+            {{/if}}
           </div>
         {{/if}}
         {{#unless is_guest}}
@@ -201,10 +218,14 @@
             <div class="dropdown-item-label">Remove</div>
           </div>
         {{/if}}
-        <div class="dropdown-item select">
-          <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
-          <div class="dropdown-item-label">Select</div>
-        </div>
+        {{#unless is_guest}}
+          {{#if is_project_admin}}
+            <div class="dropdown-item select">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+              <div class="dropdown-item-label">Select</div>
+            </div>
+          {{/if}}
+        {{/unless}}
       </div>
     </div>
   </li>

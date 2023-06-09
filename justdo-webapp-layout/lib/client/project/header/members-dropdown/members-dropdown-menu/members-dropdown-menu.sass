@@ -54,17 +54,17 @@
   overflow-x: hidden
   padding: 0
   margin: 0
+  min-height: 160px
 
   .member-item-wrapper
     &:last-child
-      margin-bottom: 16px
+      margin-bottom: 40px
 
   .member-item
     display: flex
     align-items: center
     justify-content: space-between
     padding: 4px 16px
-    cursor: pointer
     &:hover
       background-color: #f8f9fa
       .member-settings-dropdown-btn
@@ -149,6 +149,8 @@
     font-size: 14px
 
 .members-dropdown-wrapper.selected-mode
+  .member-item
+    cursor: pointer
   .select-icon
     display: flex
   .member-settings-dropdown
