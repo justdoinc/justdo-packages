@@ -98,24 +98,29 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .remove": (e) ->
-      if @user_id == Meteor.userId()
-        confirm_message = "Are you sure you want to leave this JustDo?"
+    "click .remove": (e, tpl) ->
+      if curProj()?.isAdmin()
+        tpl.selected_members.set [@_id]
+        tpl.select_mode.set true
+        clearMembersDropDownErrors()
       else
-        confirm_message = "Are you sure you want to remove this member?"
+        if @user_id == Meteor.userId()
+          confirm_message = "Are you sure you want to leave this JustDo?"
+        else
+          confirm_message = "Are you sure you want to remove this member?"
 
-      bootbox.confirm
-        message: confirm_message
-        className: "bootbox-new-design members-management-alerts"
-        closeButton: false
-        callback: (res) =>
-          if res
-            curProj().removeMember @user_id, (err) ->
-              clearMembersDropDownErrors()
-              if err?
-                addMembersDropDownError [err.reason]
+        bootbox.confirm
+          message: confirm_message
+          className: "bootbox-new-design members-management-alerts"
+          closeButton: false
+          callback: (res) =>
+            if res
+              curProj().removeMember @user_id, (err) ->
+                clearMembersDropDownErrors()
+                if err?
+                  addMembersDropDownError [err.reason]
 
-          return
+            return
 
     "click .upgrade-admin": (e) ->
       confirm_message = "Are you sure you want to make this member admin of this JustDo?"
@@ -183,13 +188,6 @@ APP.executeAfterAppLibCode ->
                 addMembersDropDownError [err.reason]
 
           return
-
-    "click .select": (e, tpl) ->
-      tpl.selected_members.set [@_id]
-      tpl.select_mode.set true
-      clearMembersDropDownErrors()
-
-      return
 
     "click .selected-mode .member-item": (e, tpl) ->
       selected_members = tpl.selected_members.get()

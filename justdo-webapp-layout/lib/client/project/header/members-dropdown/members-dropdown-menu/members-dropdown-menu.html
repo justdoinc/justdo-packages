@@ -97,12 +97,6 @@
               <div class="dropdown-item-label">Remove</div>
             </div>
           {{/if}}
-          {{#if is_project_admin}}
-            <div class="dropdown-item select">
-              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
-              <div class="dropdown-item-label">Select</div>
-            </div>
-          {{/if}}
         </div>
       </div>
     {{/if}}
@@ -136,12 +130,6 @@
               <div class="dropdown-item-label">Remove</div>
             </div>
           {{/if}}
-          {{#if is_project_admin}}
-            <div class="dropdown-item select">
-              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
-              <div class="dropdown-item-label">Select</div>
-            </div>
-          {{/if}}
         </div>
       </div>
     {{/if}}
@@ -169,12 +157,6 @@
             <div class="dropdown-item remove">
               <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
               <div class="dropdown-item-label">Remove</div>
-            </div>
-          {{/if}}
-          {{#if is_project_admin}}
-            <div class="dropdown-item select">
-              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
-              <div class="dropdown-item-label">Select</div>
             </div>
           {{/if}}
         </div>
@@ -218,14 +200,6 @@
             <div class="dropdown-item-label">Remove</div>
           </div>
         {{/if}}
-        {{#unless is_guest}}
-          {{#if is_project_admin}}
-            <div class="dropdown-item select">
-              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
-              <div class="dropdown-item-label">Select</div>
-            </div>
-          {{/if}}
-        {{/unless}}
       </div>
     </div>
   </li>
