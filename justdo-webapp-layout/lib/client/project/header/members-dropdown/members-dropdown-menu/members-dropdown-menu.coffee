@@ -49,6 +49,27 @@ APP.executeAfterAppLibCode ->
   clearMembersDropDownErrors = ->
     $(".members-dropdown-menu .alert").remove()
 
+  removeMember = (user_id) ->
+    if user_id == Meteor.userId()
+      confirm_message = "Are you sure you want to leave this JustDo?"
+    else
+      confirm_message = "Are you sure you want to remove this member?"
+
+    bootbox.confirm
+      message: confirm_message
+      className: "bootbox-new-design members-management-alerts"
+      closeButton: false
+      callback: (res) =>
+        if res
+          curProj().removeMember user_id, (err) ->
+            clearMembersDropDownErrors()
+            if err?
+              addMembersDropDownError [err.reason]
+
+        return
+
+    return
+
   Template.members_dropdown_menu.onCreated ->
     @members_filter = new ReactiveVar null
     @select_mode = new ReactiveVar false
@@ -104,23 +125,13 @@ APP.executeAfterAppLibCode ->
         tpl.select_mode.set true
         clearMembersDropDownErrors()
       else
-        if @user_id == Meteor.userId()
-          confirm_message = "Are you sure you want to leave this JustDo?"
-        else
-          confirm_message = "Are you sure you want to remove this member?"
+        removeMember(@_id)
+      return
 
-        bootbox.confirm
-          message: confirm_message
-          className: "bootbox-new-design members-management-alerts"
-          closeButton: false
-          callback: (res) =>
-            if res
-              curProj().removeMember @user_id, (err) ->
-                clearMembersDropDownErrors()
-                if err?
-                  addMembersDropDownError [err.reason]
+    "click .leave": (e) ->
+      removeMember(@_id)
 
-            return
+      return
 
     "click .upgrade-admin": (e) ->
       confirm_message = "Are you sure you want to make this member admin of this JustDo?"

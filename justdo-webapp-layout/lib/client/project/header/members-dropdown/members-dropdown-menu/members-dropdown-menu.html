@@ -75,7 +75,7 @@
 </template>
 
 <template name="admin_member_item">
-  <li class="member-item admin-item" user-id="{{_id}}">
+  <li class="member-item admin-item {{#if is_current_user user_id}}current-user{{/if}}" user-id="{{_id}}">
     <div class="d-flex align-items-center">
       <div class="select-icon"></div>
       {{> gtpl_user_profile_pic}}
@@ -92,10 +92,17 @@
             </div>
           {{/if}}
           {{#if allow_member_remove user_id}}
-            <div class="dropdown-item remove">
-              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
-              <div class="dropdown-item-label">Remove</div>
-            </div>
+            {{#if is_current_user user_id}}
+              <div class="dropdown-item leave">
+                <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#log-out"></use></svg>
+                <div class="dropdown-item-label">Leave</div>
+              </div>
+            {{else}}
+              <div class="dropdown-item remove">
+                <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
+                <div class="dropdown-item-label">Remove</div>
+              </div>
+            {{/if}}
           {{/if}}
         </div>
       </div>
@@ -125,10 +132,17 @@
             </div>
           {{/if}}
           {{#if allow_member_remove user_id}}
-            <div class="dropdown-item remove">
-              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
-              <div class="dropdown-item-label">Remove</div>
-            </div>
+            {{#if is_current_user user_id}}
+              <div class="dropdown-item leave">
+                <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#log-out"></use></svg>
+                <div class="dropdown-item-label">Leave</div>
+              </div>
+            {{else}}
+              <div class="dropdown-item remove">
+                <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
+                <div class="dropdown-item-label">Remove</div>
+              </div>
+            {{/if}}
           {{/if}}
         </div>
       </div>
@@ -154,10 +168,17 @@
             </div>
           {{/if}}
           {{#if allow_member_remove user_id}}
-            <div class="dropdown-item remove">
-              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
-              <div class="dropdown-item-label">Remove</div>
-            </div>
+            {{#if is_current_user user_id}}
+              <div class="dropdown-item leave">
+                <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#log-out"></use></svg>
+                <div class="dropdown-item-label">Leave</div>
+              </div>
+            {{else}}
+              <div class="dropdown-item remove">
+                <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
+                <div class="dropdown-item-label">Remove</div>
+              </div>
+            {{/if}}
           {{/if}}
         </div>
       </div>
@@ -195,10 +216,17 @@
           {{/if}}
         {{/unless}}
         {{#if allow_member_remove user_id}}
-          <div class="dropdown-item remove">
-            <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
-            <div class="dropdown-item-label">Remove</div>
-          </div>
+          {{#if is_current_user user_id}}
+            <div class="dropdown-item leave">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#log-out"></use></svg>
+              <div class="dropdown-item-label">Leave</div>
+            </div>
+          {{else}}
+            <div class="dropdown-item remove">
+              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
+              <div class="dropdown-item-label">Remove</div>
+            </div>
+          {{/if}}
         {{/if}}
       </div>
     </div>
