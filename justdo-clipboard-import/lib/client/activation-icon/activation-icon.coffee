@@ -265,21 +265,20 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
           if base_indent < 0
             base_indent = indent_level
             last_indent = indent_level
-        else if JustdoPlanningUtilities?
-          if field_id == JustdoPlanningUtilities.dependencies_mf_field_id
-            if cell_val != ""
-              dependencies_strs[task["jci:temp_import_id"]] = cell_val # XXX temp_import_id can be null
-          else if field_id == JustdoPlanningUtilities.task_duration_pseudo_field_id
-            duration_days_regex = /^(\d+)\s*(d|day|days)?$/ # Matches: 3/3d/3days/3day, int only for numeric part.
-            if (match_reuslt = cell_val.match duration_days_regex)?
-              task[field_id] = match_reuslt[1] # Sample match result: ['3 days', '3', 'days', index: 0, input: '3 days', groups: undefined]
-            else
-              showErrorInSnackbarAndRevertState
-                dialog_state: modal_data.dialog_state
-                snackbar_message: "#{JustdoPlanningUtilities.task_duration_pseudo_field_label} should be an integer. Import aborted."
-                snackbar_duration: 15000
-                problematic_row: line_number
-              return false
+        else if JustdoPlanningUtilities? and field_id == JustdoPlanningUtilities?.dependencies_mf_field_id
+          if cell_val != ""
+            dependencies_strs[task["jci:temp_import_id"]] = cell_val # XXX temp_import_id can be null
+        else if JustdoPlanningUtilities? and field_id == JustdoPlanningUtilities?.task_duration_pseudo_field_id
+          duration_days_regex = /^(\d+)\s*(d|day|days)?$/ # Matches: 3/3d/3days/3day, int only for numeric part.
+          if (match_reuslt = cell_val.match duration_days_regex)?
+            task[field_id] = match_reuslt[1] # Sample match result: ['3 days', '3', 'days', index: 0, input: '3 days', groups: undefined]
+          else
+            showErrorInSnackbarAndRevertState
+              dialog_state: modal_data.dialog_state
+              snackbar_message: "#{JustdoPlanningUtilities.task_duration_pseudo_field_label} should be an integer. Import aborted."
+              snackbar_duration: 15000
+              problematic_row: line_number
+            return false
         else if cell_val.length > 0 and field_id != "clipboard-import-no-import" and field_id != "task-indent-level"
           if field_def.type is String
 
@@ -570,7 +569,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
 
   cleanUpDuplicatedManualValue = ->
     imported_columns_ids = _.map selected_columns_definitions, (col_def) -> col_def._id
-    
+
     # First pick: get cols with grid dependency fields
     # Second pick: get cols that were imported
     schema_columns_with_auto_field_obj = _.pick gc.getSchemaExtendedWithCustomFields(), (col_schema) -> col_schema.grid_column_manual_and_auto_values_getter?
@@ -627,7 +626,7 @@ testDataAndImport = (modal_data, selected_columns_definitions) ->
         continue
 
       paths_to_remove.add path_added
-      
+
       # By TY -  The next 2 lines of code looks redundant to me and causes #11141, not sure if it is here for another reason, thus, commenting it out now
       # APP.modules.project_page.mainGridControl()._grid_data.each path_added, (section, item_type, item_obj, path) ->
       #   paths_to_remove.add path
