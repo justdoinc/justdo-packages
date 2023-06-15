@@ -51,10 +51,22 @@ _.extend JustdoSystemRecords.prototype,
       return
 
     if not @system_records_collection.findOne({_id: "installed-versions", full: app_version}, {fields: {_id: 1}})?
-      @system_records_collection.upsert "installed-versions",
+      collection = @system_records_collection
+
+      query = {_id: "installed-versions"}
+      update =
         $addToSet:
           semver: app_version.match(JustdoSystemRecords.semver_regex)[0]
           full: app_version
+      options =
+        upsert: true
+
+      APP.justdo_analytics.logMongoRawConnectionOp(collection._name, "update", query, update, options)
+      collection.rawCollection().update query, update, options, Meteor.bindEnvironment (err) ->
+        if err?
+          console.error "@_maintainBuiltinSystemRecords failed"
+
+        return
 
     return
 
