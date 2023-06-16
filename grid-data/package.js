@@ -19,7 +19,7 @@ Package.onUse(function (api) {
 
   api.use("meteorspark:app@0.3.0", both);
 
-  api.use("justdoinc:justdo-ddp-extensions@1.0.0", both);
+  api.use("justdoinc:justdo-ddp-extensions@1.0.0", both, {weak: true});
 
   api.use('raix:eventemitter@0.1.1', both);
   api.use('matb33:collection-hooks@0.7.13', both);
