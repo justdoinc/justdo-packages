@@ -41,7 +41,10 @@ _.extend GridDataCom.prototype,
       subscription_callbacks
     ]
 
-    return APP.justdo_ddp_extensions.unclearedUnmergedSubscribe.apply APP.justdo_ddp_extensions, args
+    if APP.justdo_ddp_extensions?
+      return APP.justdo_ddp_extensions.unclearedUnmergedSubscribe.apply APP.justdo_ddp_extensions, args
+
+    return Meteor.subscribe.apply(Meteor, args)
 
   subscribeTasksAugmentedFields: (args...) ->
     args.unshift "tasks_augmented_fields"
