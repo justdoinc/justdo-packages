@@ -95,6 +95,10 @@ _.extend Projects.prototype,
   requireProjectTasksSubscription: (project_id, force_init_payload_over_ddp) ->
     self = @
 
+    # Force init payload over ddp if justdo_ddp_extensions is not available
+    if not APP.justdo_ddp_extensions?
+      return self._grid_data_com.subscribeDefaultGridSubscription({project_id: project_id})
+
     try
       @emit "pre-subscribe-project-tasks", project_id
     catch err

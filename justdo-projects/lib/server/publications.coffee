@@ -70,9 +70,11 @@ _.extend Projects.prototype,
 
     @_grid_data_com.setupTasksAugmentedFieldsPublication()
 
+    unmerged_pub_support = if APP.justdo_ddp_extensions? then true else false
+
     @_grid_data_com.setupGridPublication
       name: GridDataCom.helpers.getCollectionUnmergedPubSubName(self.items_collection)
-      unmerged_pub: true
+      unmerged_pub: unmerged_pub_support
       unmergedPublication_options:
         getCollectionItemsIdentifyingCriteria: (subscription_options) ->
           tasks: {project_id: subscription_options.project_id}
@@ -186,7 +188,8 @@ _.extend Projects.prototype,
 
         query.project_id = project_id
         private_data_query.project_id = project_id
-        if not sync?
+
+        if unmerged_pub_support and not sync?
           sync = getCurrentSyncTimeWithSafetyDelta()
 
           initial_payload_query = _.extend {}, query
@@ -384,9 +387,9 @@ _.extend Projects.prototype,
             initial_payload_cursor = collection.find initial_payload_query, query_options
             private_data_initial_payload_cursor = private_data_collection.find private_data_initial_payload_query, private_data_query_options
 
-        query._raw_updated_date = {$gt: sync}
-        private_data_query._raw_updated_date = {$gt: sync}
-
+          query._raw_updated_date = {$gt: sync}
+          private_data_query._raw_updated_date = {$gt: sync}
+ 
         #
         # IMPORTANT, if you change the following, don't forget to update the collections-indexes.coffee
         # and to drop obsolete indexes (see FETCH_PROJECT_TASKS_BY_SEQID_ASC there)
@@ -721,7 +724,7 @@ _.extend Projects.prototype,
         #
         tracker = cursor.observeChanges
           added: (id, data) ->
-            operation = "changed"
+            operation = if unmerged_pub_support then "changed" else "added"
             # # Comment regarding operation used to pulish document for the first time
             #
             # In the past we used something like this instead:
