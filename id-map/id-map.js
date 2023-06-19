@@ -3,6 +3,7 @@ const hasOwn = Object.prototype.hasOwnProperty;
 export class IdMap extends EventEmitter {
   constructor(idStringify, idParse) {
     super();
+    this._allowClearToReplaceMap = true;
     this.clear();
     this._idStringify = idStringify || JSON.stringify;
     this._idParse = idParse || JSON.parse;
@@ -127,7 +128,19 @@ export class IdMap extends EventEmitter {
   }
 
   clear() {
-    this._map = Object.create(null);
+    var key;
+
+    if (this._allowClearToReplaceMap) {
+      this._map = Object.create(null);
+    } else {
+      for (key in this._map) {
+        this.remove(key);
+      }
+    }
+  }
+
+  disableAllowClearToReplaceMap() {
+    this._allowClearToReplaceMap = false;
   }
 
   // Iterates over the items in the map. Return `false` to break the loop.
