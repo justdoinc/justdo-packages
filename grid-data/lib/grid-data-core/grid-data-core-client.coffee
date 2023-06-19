@@ -386,7 +386,12 @@ _.extend GridDataCore.prototype,
     return
 
   _initDataStructure: ->
-    @items_by_id = Object.create(JustdoHelpers.getCollectionIdMap(APP.collections.Tasks)._map)
+    tasks_id_map = JustdoHelpers.getCollectionIdMap(APP.collections.Tasks)
+    @items_by_id = Object.create(tasks_id_map._map)
+    if not APP.justdo_ddp_extensions?
+      # if not APP.justdo_ddp_extensions? then we don't want the regular id-map to replace
+      # the underlying object, which will cause the grid to be out of sync.
+      tasks_id_map.disableAllowClearToReplaceMap()
     @tree_structure = {}
     @detaching_items_ids = {}
 
