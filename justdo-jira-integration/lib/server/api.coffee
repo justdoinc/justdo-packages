@@ -1329,7 +1329,7 @@ _.extend JustdoJiraIntegration.prototype,
 
     for email in emails
       try
-        APP.projects.inviteMember justdo_id, {email: email}
+        APP.projects.inviteMember justdo_id, {email: email}, @_getJustdoAdmin justdo_id
       catch e
         if e.error isnt "member-already-exists"
           throw e
