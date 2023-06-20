@@ -766,6 +766,9 @@ _.extend JustdoJiraIntegration.prototype,
       user_ids_to_be_added_to_child_tasks.add Accounts.findUserByEmail(user.email)?._id
       return user.email
     user_ids_to_be_added_to_child_tasks = Array.from user_ids_to_be_added_to_child_tasks
+    existing_task_members = @tasks_collection.findOne(task_id, {fields: {users: 1}})?.users or []
+    existing_task_members.concat user_ids_to_be_added_to_child_tasks
+    user_ids_to_be_added_to_child_tasks = _.uniq existing_task_members
 
     # Ensures all Jira project members has access to current Justdo
     @addJiraProjectMembersToJustdo justdo_id, jira_user_emails
