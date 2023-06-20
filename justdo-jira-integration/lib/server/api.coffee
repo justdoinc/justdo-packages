@@ -780,9 +780,8 @@ _.extend JustdoJiraIntegration.prototype,
     # When users is involved in task_collection.update, it should contain no other fields
     # as required by grid data
     @tasks_collection.update task_id,
-      $addToSet:
-        users:
-          $each: user_ids_to_be_added_to_child_tasks
+      $set:
+        users: user_ids_to_be_added_to_child_tasks
 
     # Setup mountpoints for sprints and fix versions
     gc = APP.projects._grid_data_com
