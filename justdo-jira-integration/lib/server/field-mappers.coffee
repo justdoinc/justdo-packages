@@ -1,9 +1,4 @@
-# TurnDown = Npm.require "turndown"
-start_date_custom_field_id = "customfield_10015"
-end_date_custom_field_id = "customfield_10036"
-sprint_custom_field_id = "customfield_10020"
-story_point_estimate_custom_field_id = "customfield_10016"
-epic_link_custom_field_id = "customfield_10109"
+# XXX Try to search for custom field ids using Jira API and store it in DB
 
 _.extend JustdoJiraIntegration,
   primitive_field_mappers:
@@ -83,23 +78,6 @@ _.extend JustdoJiraIntegration,
         return justdo_field_val
 
 _.extend JustdoJiraIntegration,
-  # XXX Try to search for custom field ids using Jira API and store it in DB
-
-  # XXX Cloud
-  task_id_custom_field_id: "customfield_10028"
-  project_id_custom_field_id: "customfield_10029"
-  last_updated_custom_field_id: "customfield_10030"
-  start_date_custom_field_id = "customfield_10008"
-  end_date_custom_field_id = "customfield_10009"
-  sprint_custom_field_id = "customfield_10020"
-  epic_link_custom_field_id = "customfield_10014"
-
-  start_date_custom_field_id: start_date_custom_field_id
-  end_date_custom_field_id: end_date_custom_field_id
-  story_point_estimate_custom_field_id: story_point_estimate_custom_field_id
-  sprint_custom_field_id: sprint_custom_field_id
-  epic_link_custom_field_id: epic_link_custom_field_id
-
   # XXX Maybe implement a two-way map inside JustdoHelpers?
 
   # justdo_field_to_jira_field_map #
@@ -134,7 +112,7 @@ _.extend JustdoJiraIntegration,
     "Fix Version": "fixVersions"
     "Actual Start": "jd_start_date"
     "Actual End": "jd_end_date"
-    "Epic Link": epic_link_custom_field_id
+    "Epic Link": JustdoJiraIntegration.epic_link_custom_field_id
 
   # NOTE: If you add or remove any items inside justdo_field_to_jira_field_map,
   # remember to update hardcoded_field_map in both/static.coffee!
@@ -156,7 +134,7 @@ _.extend JustdoJiraIntegration,
     #       turndown = new TurnDown()
     #       return turndown.turndown field
     jira_sprint:
-      id: sprint_custom_field_id
+      id: JustdoJiraIntegration.sprint_custom_field_id
       name: "Sprint"
       mapper: (justdo_id, field, destination, req_body) ->
         if destination is "justdo"

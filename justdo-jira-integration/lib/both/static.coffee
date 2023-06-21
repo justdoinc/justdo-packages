@@ -1,6 +1,9 @@
 # XXX Hardcoded for now
-sprint_custom_field_id = "customfield_10020"
 jira_cloud_client_id_regex_token = "(\\d|[a-z]|[A-Z])"
+
+if Meteor.isServer
+  for field_name, field_id of APP.justdo_system_records.getRecord("jira-core-field-ids")?.fields
+    JustdoJiraIntegration["#{field_name}_custom_field_id"] = field_id
 
 _.extend JustdoJiraIntegration,
   project_custom_feature_id: "justdo_jira_integration" # Use underscores
@@ -56,7 +59,7 @@ _.extend JustdoJiraIntegration,
   ,
     justdo_field_id: "jira_sprint"
     justdo_field_name: "Jira Sprint"
-    jira_field_id: sprint_custom_field_id
+    jira_field_id: JustdoJiraIntegration.sprint_custom_field_id or ""
     jira_field_name: "Sprint"
   ,
     justdo_field_id: "jira_fix_version"
