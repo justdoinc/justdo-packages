@@ -389,7 +389,7 @@ _.extend JustdoJiraIntegration.prototype,
     jira_server_id = @getJiraServerIdFromApiClient client
     jira_doc_id = @jira_collection.findOne({"server_info.id": jira_server_id}, {fields: {_id: 1}})?._id
 
-    if not (jira_user_email = @jira_collection.findOne({_id: jira_doc_id, "jira_users.jira_account_id": jira_user_id}, {fields: {"jira_users.$.email": 1}})?.jira_users?[0]?.email)?
+    if not (jira_user_email = @jira_collection.findOne({_id: jira_doc_id, "jira_users.jira_account_id": jira_user_id}, {fields: {"jira_users.$": 1}})?.jira_users?[0]?.email)?
       {jira_user_objects, created_user_ids} = @_createProxyUserIfEmailNotRecognized res
       jira_user_email = jira_user_objects[0].email
 

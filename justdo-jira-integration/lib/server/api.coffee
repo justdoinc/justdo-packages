@@ -101,11 +101,11 @@ _.extend JustdoJiraIntegration.prototype,
     return
 
   _getAllJustdoAdmins: (justdo_id) ->
-    admins = @projects_collection.findOne({_id: justdo_id, "members.is_admin": true}, {fields: {"members.$.user_id": 1}}).members
+    admins = @projects_collection.findOne({_id: justdo_id, "members.is_admin": true}, {fields: {"members.$": 1}}).members
     return _.map admins, (admin) -> admin.user_id
 
   _getJustdoAdmin: (justdo_id) ->
-    return @projects_collection.findOne({_id: justdo_id, "members.is_admin": true}, {fields: {"members.$.user_id": 1}}).members[0].user_id
+    return @projects_collection.findOne({_id: justdo_id, "members.is_admin": true}, {fields: {"members.$": 1}}).members[0].user_id
 
   _setupInvertedFieldMap: ->
     JustdoJiraIntegration.jira_field_to_justdo_field_map = {}
