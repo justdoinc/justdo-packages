@@ -45,11 +45,9 @@
 
   --}}
 
-  <input type="text" id="project-name"
-         class="{{#if project_is_untitled}}untitled{{/if}} form-control text-dark {{#unless is_project_admin}}project-name-disabled{{/unless}}"
-         placeholder="Untitled JustDo"
-         value="{{project_title}}"
-  >
+  <div class="project-name-wrapper">
+    {{{projectName}}}
+  </div>
 </template>
 
 <template name="project_settings">

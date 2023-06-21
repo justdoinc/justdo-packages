@@ -61,13 +61,53 @@ APP.executeAfterAppLibCode ->
   #
   # project_name template
   #
+  Template.project_name.onCreated ->
+    @updateJustDoName = ->
+      new_title = $("#project-name").text()
+
+      if new_title == ""
+        new_title = "Untitled JustDo"
+
+      curProj().updateProjectDoc({$set: {title: new_title}})
+
+      return
+
+    return
+
+
   Template.project_name.helpers project_template_helpers
 
-  Template.project_name.events
-    "change #project-name": (e) ->
-      curProj().updateProjectDoc({$set: {title: e.currentTarget.value}})
+  Template.project_name.helpers
+    projectName: ->
+      if project = curProj()
+        project_name = project.getProjectDoc({fields: {title: 1}})?.title
+        is_admin = project.isAdmin()
+        is_untitled = project.isUntitled()
 
-      $(e.currentTarget).blur()
+        if is_untitled
+          project_name = "Untitled JustDo"
+
+        project_name_el = """<div id="project-name" spellcheck="false" """
+
+        if is_admin
+          project_name_el += """contenteditable"""
+
+        project_name_el += """>#{project_name}</div>"""
+
+        return project_name_el
+
+  Template.project_name.events
+    "keypress .project-name-wrapper #project-name": (e,tpl) ->
+      if e.keyCode == 13
+        e.preventDefault()
+        tpl.updateJustDoName()
+
+        $("#project-name").blur()
+
+      return
+
+    "blur .project-name-wrapper #project-name": (e, tpl) ->
+      tpl.updateJustDoName()
 
       return
 

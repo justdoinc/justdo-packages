@@ -14,23 +14,25 @@ $project-logo-max-width: 0 // With the introduction of the new design, we decide
     color: #212529
 
 #project-name
-  border-color: transparent
   background-color: transparent
   font-size: 16px
   width: 222px
+  max-width: 400px
   text-align: center
   white-space: nowrap
   overflow: hidden
   text-overflow: ellipsis
   transition: background-color 0.2s linear
-  padding-top: 0.3rem
-  padding-bottom: 0.3rem
-  height: auto
+  padding: 0px 4px
+  border-radius: 2px
+  cursor: pointer
   &:hover
-    background-color: rgba(0, 0, 0, 0.04)
-
-.project-name-disabled
-  pointer-events: none
+    background-color: rgba(255, 255, 255, 0.04)
+  &:focus
+    max-width: unset
+    outline: none
+    background-color: rgba(255, 255, 255, 0.1)
+    cursor: default
 
 .project-logo
   width: 135px // Configurable with project conf "project_logo_width"
