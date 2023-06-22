@@ -32,6 +32,11 @@ Template.themes_selector.helpers
     }
 
     {
+      id: "solid-purple"
+      label: "Solid Purple"
+    }
+
+    {
       id: "solid"
       label: "Solid Green"
     }

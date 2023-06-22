@@ -25,4 +25,5 @@ Package.onUse(function (api) {
   api.addAssets("solid-dark/bootstrap.css", client);
   api.addAssets("solid-dark-green/bootstrap.css", client);
   api.addAssets("solid-dark-blue/bootstrap.css", client);
+  api.addAssets("solid-purple/bootstrap.css", client);
 });
