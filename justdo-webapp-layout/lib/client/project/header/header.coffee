@@ -83,6 +83,8 @@ APP.executeAfterAppLibCode ->
         project_name = project.getProjectDoc({fields: {title: 1}})?.title
         is_admin = project.isAdmin()
         is_untitled = project.isUntitled()
+        contenteditable = false
+        active_class = ""
 
         if is_untitled
           project_name = "Untitled JustDo"
@@ -90,9 +92,10 @@ APP.executeAfterAppLibCode ->
         project_name_el = """<div id="project-name" spellcheck="false" """
 
         if is_admin
-          project_name_el += """contenteditable"""
+          contenteditable = true
+          active_class = "active"
 
-        project_name_el += """>#{project_name}</div>"""
+        project_name_el += """class="#{active_class}" contenteditable=#{contenteditable}>#{project_name}</div>"""
 
         return project_name_el
 
