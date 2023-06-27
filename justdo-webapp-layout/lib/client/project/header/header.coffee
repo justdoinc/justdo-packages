@@ -61,20 +61,6 @@ APP.executeAfterAppLibCode ->
   #
   # project_name template
   #
-  Template.project_name.onCreated ->
-    @updateJustDoName = ->
-      new_title = $("#project-name").text()
-
-      if new_title == ""
-        new_title = "Untitled JustDo"
-
-      curProj().updateProjectDoc({$set: {title: new_title}})
-
-      return
-
-    return
-
-
   Template.project_name.helpers project_template_helpers
 
   Template.project_name.helpers
@@ -103,14 +89,16 @@ APP.executeAfterAppLibCode ->
     "keypress .project-name-wrapper #project-name": (e,tpl) ->
       if e.keyCode == 13
         e.preventDefault()
-        tpl.updateJustDoName()
+        new_title = $(e.target).closest("#project-name").text()
+        curProj().updateProjectName new_title
 
         $("#project-name").blur()
 
       return
 
     "blur .project-name-wrapper #project-name": (e, tpl) ->
-      tpl.updateJustDoName()
+      new_title = $(e.target).closest("#project-name").text()
+      curProj().updateProjectName new_title
 
       return
 
