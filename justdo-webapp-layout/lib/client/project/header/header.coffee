@@ -66,24 +66,15 @@ APP.executeAfterAppLibCode ->
   Template.project_name.helpers
     projectName: ->
       if project = curProj()
-        project_name = project.getProjectDoc({fields: {title: 1}})?.title
-        is_admin = project.isAdmin()
-        is_untitled = project.isUntitled()
-        contenteditable = false
-        active_class = ""
+        project_name = project.getProjectDoc({fields: {title: 1}})?.title or "Untitled JustDo"
+        return project_name
 
-        if is_untitled
-          project_name = "Untitled JustDo"
+      return
 
-        project_name_el = """<div id="project-name" spellcheck="false" """
-
-        if is_admin
-          contenteditable = true
-          active_class = "active"
-
-        project_name_el += """class="#{active_class}" contenteditable=#{contenteditable}>#{project_name}</div>"""
-
-        return project_name_el
+    isUserProjectAdmin: ->
+      if curProj()?.isAdmin?()
+        return true
+      return false
 
   Template.project_name.events
     "keypress .project-name-wrapper #project-name": (e,tpl) ->
