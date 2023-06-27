@@ -46,6 +46,17 @@ _.extend Projects.prototype,
         # is a mandatory key
         self.projects_collection.update(project_id, update_op, {removeEmptyStrings: false})
 
+      updateProjectName: (new_title) ->
+        if not new_title?
+          return
+
+        if _.isEmpty(new_title.trim())
+          new_title = "Untitled JustDo"
+
+        curProj().updateProjectDoc({$set: {title: new_title}})
+
+        return
+
       isAdmin: -> @is_admin_rv.get()
 
       isGuest: -> not JD.activeJustdo({members: 1})?.members?
