@@ -53,7 +53,7 @@ _.extend Projects.prototype,
         if _.isEmpty(new_title.trim())
           new_title = "Untitled JustDo"
 
-        curProj().updateProjectDoc({$set: {title: new_title}})
+        @updateProjectDoc({$set: {title: new_title}})
 
         return
 
