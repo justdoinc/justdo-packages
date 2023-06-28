@@ -7,6 +7,14 @@ Template.news.onCreated ->
 
   @active_news_tab_rv = new ReactiveVar(@data?.tab_id or "main")
 
+  @show_navigation_bar = @data?.show_navigation_bar
+  if not @show_navigation_bar?
+    @show_navigation_bar = true
+
+  @show_dropdown_button = @data?.show_dropdown_button
+  if not @show_dropdown_button?
+    @show_dropdown_button = true
+
   @show_dropdown = @data?.show_dropdown
   if not @show_dropdown?
     @show_dropdown = true
@@ -58,6 +66,14 @@ Template.news.helpers
   getActiveNewsTitle: ->
     tpl = Template.instance()
     return APP.justdo_news.getNewsByIdOrAlias(tpl.active_category_rv.get(), tpl.active_news_id_rv.get())?.title
+
+  showNavigationBar: ->
+    tpl = Template.instance()
+    return tpl.show_navigation_bar
+
+  showDropdownButton: ->
+    tpl = Template.instance()
+    return tpl.show_dropdown_button
 
   showDropdown: ->
     tpl = Template.instance()
