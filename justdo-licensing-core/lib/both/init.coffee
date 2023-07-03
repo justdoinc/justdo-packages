@@ -109,7 +109,6 @@ JustdoLicensing = (options) ->
   @loadEventsFromOptions() # loads @options.events, if exists
 
   @_on_destroy_procedures = []
-  console.log this
 
   @_attachCollectionsSchemas()
 
