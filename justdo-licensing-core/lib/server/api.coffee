@@ -63,10 +63,10 @@ _.extend JustdoLicensing.prototype,
     obj = cleaned_val
 
     if moment(obj.valid_until, "YYYY-MM-DD") < moment()
-      throw new Meteor.Error "site-license-expired"
+      throw @_error "site-license-expired"
 
     if obj.permitted_domain isnt (new JustdoHelpers.url.URL process.env.LANDING_APP_ROOT_URL).hostname
-      throw new Meteor.Error "invalid-license"
+      throw @_error "invalid-license"
 
     return
 
