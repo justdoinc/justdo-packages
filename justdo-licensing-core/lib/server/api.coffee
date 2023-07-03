@@ -65,6 +65,18 @@ _.extend JustdoLicensing.prototype,
     if moment(obj.valid_until, "YYYY-MM-DD") < moment()
       throw @_error "site-license-expired"
 
+    if obj.max_version?
+      # If APP_VERSION is v3.137.3-3-g599c2a30, matched_current_version will be ["3", "137", "3"]
+      matched_license_version = obj.max_version.match(JustdoLicensing.max_version_regex).slice(1, 4)
+      matched_current_version = process.env.APP_VERSION.match(JustdoLicensing.max_version_regex).slice(1, 4)
+      for current_version, i in matched_current_version
+        current_version = parseInt current_version, 10
+        license_version = parseInt matched_license_version[i], 10
+        if current_version > license_version
+          throw @_error "not-supported", "Max licensed version is #{obj.max_version}, but #{process.env.APP_VERSION} is installed."
+        else
+          break
+
     if obj.permitted_domain isnt (new JustdoHelpers.url.URL process.env.LANDING_APP_ROOT_URL).hostname
       throw @_error "invalid-license"
 

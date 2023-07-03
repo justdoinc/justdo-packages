@@ -22,6 +22,11 @@ _.extend JustdoLicensing.prototype,
     permitted_domain:
       type: String
 
+    max_version:
+      type: String
+
+      optional: true
+
     grace_period_ends:
       type: String
 
@@ -34,6 +39,11 @@ _.extend JustdoLicensing.prototype,
   unlimited_license_schema: new SimpleSchema
     permitted_domain:
       type: String
+
+    max_version:
+      type: String
+
+      optional: true
 
     unlimited:
       type: Boolean
