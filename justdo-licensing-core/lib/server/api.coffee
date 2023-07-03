@@ -72,10 +72,11 @@ _.extend JustdoLicensing.prototype,
       for current_version, i in matched_current_version
         current_version = parseInt current_version, 10
         license_version = parseInt matched_license_version[i], 10
+        if license_version > current_version
+          break
         if current_version > license_version
           throw @_error "not-supported", "Max licensed version is #{obj.max_version}, but #{process.env.APP_VERSION} is installed."
-        else
-          break
+        # Otherwise license_version is current_version and we move on to the next number
 
     if obj.permitted_domain isnt (new JustdoHelpers.url.URL process.env.LANDING_APP_ROOT_URL).hostname
       throw @_error "invalid-license"
