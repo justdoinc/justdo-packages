@@ -148,7 +148,6 @@ JustdoLicensing = (options) ->
 
 Util.inherits JustdoLicensing, EventEmitter
 
-share.JustdoLicensing = JustdoLicensing
 
 _.extend JustdoLicensing.prototype,
   _error: JustdoHelpers.constructor_error
