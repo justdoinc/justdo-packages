@@ -1,1 +1,5 @@
-_.extend JustdoLicensingCore.prototype, {}
+_.extend JustdoLicensing.prototype,
+  getLicenseFromServer: (cb) ->
+    Meteor.call "getLicense", cb
+
+    return

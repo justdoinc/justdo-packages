@@ -1,2 +1,4 @@
-_.extend JustdoLicensingCore,
-  plugin_human_readable_name: "justdo-licensing-core"
+_.extend JustdoLicensing,
+  new_users_grace_period: 90
+
+  excluded_domains: ["justdo.com", "mailinator.com"]

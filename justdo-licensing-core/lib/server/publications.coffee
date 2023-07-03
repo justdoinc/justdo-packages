@@ -1,2 +1,2 @@
-_.extend JustdoLicensingCore.prototype,
+_.extend JustdoLicensing.prototype,
   _setupPublications: -> return

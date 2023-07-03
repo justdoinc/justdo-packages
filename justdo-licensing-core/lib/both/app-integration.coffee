@@ -13,20 +13,22 @@
 
 # **Method A:** If you aren't depending on any env variable just comment the following
 
-# APP.justdo_licensing_core = new JustdoLicensingCore()
+# APP.justdo_licensing = new JustdoLicensing()
 
 # **Method B:** If you are depending on env variables to decide whether or not to load
 # this package, or even if you use them inside the constructor, you need to wait for
 # them to be ready, and it is better done here.
 
-APP.getEnv (env) ->
-  # If an env variable affect this package load, check its value here
-  # remember env vars are Strings
+options = {}
 
-  options =
-    projects_collection: APP.collections.Projects
-    tasks_collection: APP.collections.Tasks
+if Meteor.isServer
+  if process.env.ROOT_URL != "http://localhost:9100/" # That root url is the minifier in our build process, removing this line will break the build
+    # The following is a backdoor for case things will go wrong, once confidence will
+    # accumlate with justdo-licensing can be removed.
 
-  APP.justdo_licensing_core = new JustdoLicensingCore(options)
+    if process.env.JUSTDO_ENTERPRISE_FEATURES is "true"
+      options.jsoned_license = process.env.JUSTDO_LICENSING_LICENSE
 
-  return
+      APP.justdo_licensing = new JustdoLicensing(options)
+else
+  APP.justdo_licensing = new JustdoLicensing(options)

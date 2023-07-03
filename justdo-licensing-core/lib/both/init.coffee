@@ -1,16 +1,11 @@
 default_options = {}
 
 options_schema =
-  both:
-    projects_collection:
-      type: "skip-type-check"
-      optional: false
-      bind_to_instance: true
+  both: {}
 
-    tasks_collection:
-      type: "skip-type-check"
-      optional: false
-      bind_to_instance: true
+  server:
+    jsoned_license:
+      type: String
 
 # options_schema
 # ==============
@@ -72,7 +67,7 @@ options_schema =
 #         optional: true
 #         defaultValue: 30
 
-JustdoLicensingCore = (options) ->
+JustdoLicensing = (options) ->
   # skeleton-version: v3.0.1
 
   # Developer, avoid changing this constuctor, to do stuff on init
@@ -82,8 +77,8 @@ JustdoLicensingCore = (options) ->
 
   @destroyed = false
 
-  @logger = Logger.get("justdo-licensing-core")
-  @JA = JustdoAnalytics.setupConstructorJA(@, "justdo-licensing-core")
+  @logger = Logger.get("justdo-licensing")
+  @JA = JustdoAnalytics.setupConstructorJA(@, "justdo-licensing")
 
   @logger.debug "Init begin"
 
@@ -114,6 +109,7 @@ JustdoLicensingCore = (options) ->
   @loadEventsFromOptions() # loads @options.events, if exists
 
   @_on_destroy_procedures = []
+  console.log this
 
   @_attachCollectionsSchemas()
 
@@ -151,9 +147,11 @@ JustdoLicensingCore = (options) ->
 
   return @
 
-Util.inherits JustdoLicensingCore, EventEmitter
+Util.inherits JustdoLicensing, EventEmitter
 
-_.extend JustdoLicensingCore.prototype,
+share.JustdoLicensing = JustdoLicensing
+
+_.extend JustdoLicensing.prototype,
   _error: JustdoHelpers.constructor_error
 
   onDestroy: (proc) ->

@@ -1,3 +1,3 @@
-_.extend JustdoLicensingCore.prototype,
+_.extend JustdoLicensing.prototype,
   setupRouter: ->
     return

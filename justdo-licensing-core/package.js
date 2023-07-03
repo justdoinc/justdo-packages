@@ -15,6 +15,7 @@ Package.onUse(function (api) {
   api.use("coffeescript", both);
   api.use("underscore", both);
   api.use("mongo", both);
+  api.use("momentjs:moment",both);
 
   // Uncomment if you want to use NPM peer dependencies using
   // checkNpmVersions.
@@ -41,6 +42,7 @@ Package.onUse(function (api) {
   api.use("templating", client);
   api.use('fourseven:scss@3.2.0', client);
 
+  api.use("ejson", both);
   api.use("aldeed:simple-schema@1.5.3", both);
   api.use('aldeed:collection2@2.3.2', both);
   api.use("raix:eventemitter@0.1.1", both);
@@ -83,5 +85,5 @@ Package.onUse(function (api) {
   // the server will have the access to the apis loaded after the init.coffee
   // file.
 
-  api.export("JustdoLicensingCore", both);
+  api.export("JustdoLicensing", both);
 });

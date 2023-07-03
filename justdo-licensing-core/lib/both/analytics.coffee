@@ -1,6 +1,6 @@
 # Uncomment if you want to log events to JustdoAnalytics in your package
 #
-# JustdoAnalytics.registerLogs "justdo-licensing-core", [
+# JustdoAnalytics.registerLogs "justdo-licensing", [
 #   {
 #     action_id: "action-id"
 #     description: "Action description. This is the place to document action meaning, scope, edge-cases, meaning of value etc."
