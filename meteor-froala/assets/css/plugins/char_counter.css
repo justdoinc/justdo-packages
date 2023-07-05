@@ -27,8 +27,6 @@
   right: 0px;
   color: #cccccc;
   content: attr(data-chars);
-  font-size: 15px;
-  font-family: "Times New Roman", Georgia, Serif;
   z-index: 1;
   background: #ffffff;
   border-top: solid 1px #ebebeb;

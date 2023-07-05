@@ -575,7 +575,6 @@ iframe.fr-iframe {
 .fr-command.fr-btn + .fr-dropdown-menu .fr-dropdown-wrapper .fr-dropdown-content ul.fr-dropdown-list li {
   padding: 0;
   margin: 0;
-  font-size: 15px;
 }
 .fr-command.fr-btn + .fr-dropdown-menu .fr-dropdown-wrapper .fr-dropdown-content ul.fr-dropdown-list li a {
   padding: 0 24px;
@@ -1356,8 +1355,6 @@ span.fr-sr-only {
   right: 0px;
   color: #cccccc;
   content: attr(data-chars);
-  font-size: 15px;
-  font-family: "Times New Roman", Georgia, Serif;
   z-index: 1;
   background: #ffffff;
   border-top: solid 1px #ebebeb;
@@ -2323,7 +2320,6 @@ div.fr-modal-body div.fr-image-list div.fr-image-container.fr-image-deleting::be
   margin: auto;
   position: absolute;
   z-index: 3;
-  font-size: 15px;
   height: 20px;
 }
 div.fr-modal-body div.fr-image-list div.fr-image-container.fr-empty {

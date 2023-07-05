@@ -152,7 +152,6 @@ div.fr-modal-body div.fr-image-list div.fr-image-container.fr-image-deleting::be
   margin: auto;
   position: absolute;
   z-index: 3;
-  font-size: 15px;
   height: 20px;
 }
 div.fr-modal-body div.fr-image-list div.fr-image-container.fr-empty {

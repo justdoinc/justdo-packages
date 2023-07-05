@@ -1,11 +1,11 @@
 <template name="members_dropdown_button">
   {{#unless is_project_guest}}
     <div id="project-members-dropdown">
-      <button class="btn btn-light btn-sm shadow-sm font-weight-bold border-primary text-primary">
+      <button class="btn btn-primary btn-sm">
         {{#if is_project_admin}}
-          SHARE
+          Share
         {{else}}
-          MEMBERS
+          Members
         {{/if}}
       </button>
     </div>

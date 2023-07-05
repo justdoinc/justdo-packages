@@ -575,7 +575,6 @@ iframe.fr-iframe {
 .fr-command.fr-btn + .fr-dropdown-menu .fr-dropdown-wrapper .fr-dropdown-content ul.fr-dropdown-list li {
   padding: 0;
   margin: 0;
-  font-size: 15px;
 }
 .fr-command.fr-btn + .fr-dropdown-menu .fr-dropdown-wrapper .fr-dropdown-content ul.fr-dropdown-list li a {
   padding: 0 24px;
