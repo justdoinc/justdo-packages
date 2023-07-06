@@ -1835,7 +1835,7 @@ fieldset:disabled a.btn {
 .btn-light {
   color: #212529;
   background-color: #f8f9fa;
-  border-color: #f8f9fa; }
+  border-color: #e4e7e9; }
   .btn-light:hover {
     color: #212529;
     background-color: #e2e6ea;
@@ -7058,7 +7058,6 @@ a.text-dark:hover, a.text-dark:focus {
 
 .task-pane-tab.active {
   border-bottom: 2px solid rgba(var(--color-primary), 1);
-  font-weight: bold;
 }
 
 .slick-header.ui-state-default,
