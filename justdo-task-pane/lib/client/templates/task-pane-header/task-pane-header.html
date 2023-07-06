@@ -16,7 +16,7 @@
         &nbsp;
       {{/if}}
     </div>
-  
+
     {{#if $gt toolbar_sections_count 1}}
       {{!-- Only if there's more than 1 section, we show tabs --}}
       {{#each toolbar_sections}}
@@ -31,7 +31,7 @@
 </template>
 
 <template name="task_pane_tab">
-  <div class="task-pane-tab {{#if $eq toolbar_selected_section_id id}}active{{/if}}">
+  <div class="task-pane-tab {{#if $eq toolbar_selected_section_id id}}active text-primary{{/if}}">
     {{options.title}} {{{xssGuard options.titleInfo}}}
   </div>
 </template>
