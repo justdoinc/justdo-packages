@@ -65,7 +65,7 @@ _.extend JustdoLicensing.prototype,
     if moment(obj.valid_until, "YYYY-MM-DD") < moment()
       throw @_error "site-license-expired"
 
-    if obj.max_version?
+    if (JustdoHelpers.getClientType(process.env) is "web-app") and obj.max_version?
       # If APP_VERSION is v3.137.3-3-g599c2a30, matched_current_version will be ["3", "137", "3"]
       matched_license_version = obj.max_version.match(JustdoLicensing.max_version_regex).slice(1, 4)
       matched_current_version = process.env.APP_VERSION.match(JustdoLicensing.max_version_regex).slice(1, 4)
