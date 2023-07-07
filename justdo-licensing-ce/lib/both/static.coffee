@@ -1,1 +1,1 @@
-_.extend JustdoLicensingCe, {}
+_.extend JustdoLicensing, {}

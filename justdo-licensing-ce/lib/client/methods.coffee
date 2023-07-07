@@ -1,1 +1,1 @@
-_.extend JustdoLicensingCe.prototype, {}
+_.extend JustdoLicensing.prototype, {}
