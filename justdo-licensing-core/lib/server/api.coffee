@@ -43,7 +43,7 @@ _.extend JustdoLicensing.prototype,
 
   requireValidLicense: (obj) ->
     if not obj?
-      obj = @license
+      obj = @getLicense()
 
     if obj.unlimited is true
       {cleaned_val} =
