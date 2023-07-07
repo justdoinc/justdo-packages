@@ -57,6 +57,7 @@ Package.onUse(function (api) {
   api.use("tracker", client);
 
   api.addFiles("lib/both/analytics.coffee", both);
+  api.use("justdoinc:justdo-licensing-core@1.0.0", both);
 
   api.addFiles("lib/both/static.coffee", both);
   api.addFiles("lib/both/router.coffee", both);
