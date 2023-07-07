@@ -1,2 +1,1 @@
-_.extend JustdoLicensingCe.prototype,
-  _ensureIndexesExists: -> return
+_.extend JustdoLicensingCe.prototype, {}

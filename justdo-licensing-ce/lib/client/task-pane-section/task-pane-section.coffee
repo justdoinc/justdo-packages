@@ -1,1 +1,0 @@
-Template.task_pane_justdo_licensing_ce_task_pane_section_section.helpers {}

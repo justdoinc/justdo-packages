@@ -1,2 +1,1 @@
-_.extend JustdoLicensingCe.prototype,
-  _attachCollectionsSchemas: -> return
+_.extend JustdoLicensingCe.prototype, {}

@@ -1,2 +1,1 @@
-_.extend JustdoLicensingCe.prototype,
-  _setupPublications: -> return
+_.extend JustdoLicensingCe.prototype, {}

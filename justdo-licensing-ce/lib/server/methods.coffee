@@ -1,7 +1,1 @@
-_.extend JustdoLicensingCe.prototype,
-  _setupMethods: ->
-    self = @
-
-    Meteor.methods {}
-
-    return
+_.extend JustdoLicensingCe.prototype, {}
