@@ -80,10 +80,6 @@ Package.onUse(function (api) {
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", both);
-  api.addFiles("lib/both/app-integration.coffee", both);
-  // Note: app-integration need to load last, so immediateInit procedures in
-  // the server will have the access to the apis loaded after the init.coffee
-  // file.
 
   api.export("JustdoLicensing", both);
 });
