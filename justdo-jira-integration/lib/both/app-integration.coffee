@@ -36,7 +36,7 @@ APP.getEnv (env) ->
     server_type: server_type
 
   # Load core field ids from env vars
-  jira_core_field_ids = JustdoHelpers.parseSingleQuotedJson(env.JIRA_INTEGRATION_SETTINGS).core_field_ids
+  jira_core_field_ids = EJSON.parse(env.JIRA_INTEGRATION_SETTINGS).core_field_ids
   for field_name, field_id of jira_core_field_ids
     JustdoJiraIntegration["#{field_name}_custom_field_id"] = field_id
 
