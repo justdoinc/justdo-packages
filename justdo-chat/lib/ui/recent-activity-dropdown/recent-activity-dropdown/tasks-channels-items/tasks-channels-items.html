@@ -20,7 +20,7 @@
 
       <div class="item-body d-flex">
         <div class="main-block pr-3">
-          <span class="last-author font-weight-bold text-body">{{#with last_message_author}}{{displayName}}{{/with}}: </span><span class="last-message">{{#with channel_last_message}}{{body}}{{/with}}</span>
+          <span class="last-author">{{#with last_message_author}}{{displayName}}{{/with}}: </span><span class="last-message">{{#with channel_last_message}}{{body}}{{/with}}</span>
         </div>
         <div class="read-indicator-block tooltip-container ml-auto mr-0 mt-2 position-relative">
           <div class="read-indicator {{#if unread}}bg-primary{{/if}}"></div>
