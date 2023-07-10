@@ -1,10 +1,6 @@
 # XXX Hardcoded for now
 jira_cloud_client_id_regex_token = "(\\d|[a-z]|[A-Z])"
 
-if Meteor.isServer
-  for field_name, field_id of APP.justdo_system_records.getRecord("jira-core-field-ids")?.fields
-    JustdoJiraIntegration["#{field_name}_custom_field_id"] = field_id
-
 _.extend JustdoJiraIntegration,
   project_custom_feature_id: "justdo_jira_integration" # Use underscores
 

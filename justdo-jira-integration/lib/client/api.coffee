@@ -10,7 +10,6 @@ _.extend JustdoJiraIntegration.prototype,
     @registerConfigTemplate()
     @registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
-    @_subscribeToSystemRecords()
 
     return
 
@@ -84,16 +83,6 @@ _.extend JustdoJiraIntegration.prototype,
           select_options: issue_types
 
     return
-
-  _subscribeToSystemRecords: ->
-    return Meteor.subscribe "jiraCoreFieldIds", ->
-      if not _.isEmpty(field_map_without_jira_field_id = _.filter JustdoJiraIntegration.hardcoded_field_map, (field_map) -> _.isEmpty field_map.jira_field_id)
-        published_field_ids = APP.collections.SystemRecords.findOne("jira-core-field-ids", {fields: {fields: 1}})
-        for field_map in field_map_without_jira_field_id
-          field_name = field_map.justdo_field_id.replace "jira_", ""
-          field_map.jira_field_id = published_field_ids.fields[field_name]
-
-      return
 
   setupCustomFeatureMaintainer: ->
     self = @
