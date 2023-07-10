@@ -35,6 +35,18 @@ APP.getEnv (env) ->
     jira_collection: APP.collections.Jira
     server_type: server_type
 
+  # Load core field ids from env vars
+  jira_core_field_ids = JustdoHelpers.parseSingleQuotedJson(env.JIRA_INTEGRATION_SETTINGS).core_field_ids
+  for field_name, field_id of jira_core_field_ids
+    JustdoJiraIntegration["#{field_name}_custom_field_id"] = field_id
+
+  # Ensure essential field ids are loaded
+  for field_name in JustdoJiraIntegration.reqiured_jira_field_ids
+    if not _.has JustdoJiraIntegration, "#{field_name}_custom_field_id"
+      throw new Meteor.Error "fatal", "Core Jira field (#{field_name}) id not found"
+
+  APP.emit "jira-core-fields-ready"
+
   if Meteor.isServer
     if server_type is "cloud"
       _.extend options,
