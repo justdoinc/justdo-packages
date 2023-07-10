@@ -14,14 +14,4 @@ Package.onUse(function (api) {
   // Switch themes with: APP.bootstrap_themes_manager.setTheme("sketchy")
 
   api.addAssets("default/bootstrap.css", client);
-  api.addAssets("cerulean/bootstrap.css", client);
-  api.addAssets("minty/bootstrap.css", client);
-  api.addAssets("sandstone/bootstrap.css", client);
-  api.addAssets("sketchy/bootstrap.css", client);
-  api.addAssets("superhero/bootstrap.css", client);
-  api.addAssets("cyborg/bootstrap.css", client);
-  api.addAssets("journal/bootstrap.css", client);
-  api.addAssets("simplex/bootstrap.css", client);
-  api.addAssets("slate/bootstrap.css", client);
-  api.addAssets("solar/bootstrap.css", client);
 });
