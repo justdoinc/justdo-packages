@@ -15,11 +15,17 @@
         </div>
       </div>
     </div>
-    {{#with ticketsQueues}}
-      {{#each this}}
-        {{> ticket_queue_conf}}
-      {{/each}}
-    {{/with}}
+    {{#if ticketsQueues}}
+      {{#with ticketsQueues}}
+        {{#each this}}
+          {{> ticket_queue_conf}}
+        {{/each}}
+      {{/with}}
+    {{else}}
+      <div class="ticket-queues-list-empty bg-light">
+        No ticket queues
+      </div>
+    {{/if}}
   </div>
 </template>
 

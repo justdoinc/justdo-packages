@@ -44,14 +44,9 @@
     opacity: 0.5
 
 .project-card-wrapper
-  padding-left: 12px
-  margin-left: -12px
-  transition: background-color 0.35s
-  border-radius: 8px
-  transition: box-shadow 0.35s
   &:hover
-    background-color: #F7F8F9
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
+    .project-title
+      text-decoration: underline
     .project-card
       border-color: rgba(0, 0, 0, 0)
 
@@ -67,7 +62,6 @@
   min-width: 3px
   height: 26px
   border-radius: 4px
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2)
   position: relative
 
 .project-title
@@ -78,6 +72,7 @@
   overflow: hidden
   margin: 0 12px
   text-decoration: none
+  font-size: 15px
 
 .project-members
   padding-right: 12px
