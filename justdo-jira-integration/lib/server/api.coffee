@@ -1236,7 +1236,9 @@ _.extend JustdoJiraIntegration.prototype,
       tasks_to_remove_member = @tasks_collection.find({jira_project_id}, {fields: {project_id: 1}}).fetch()
       justdo_id = tasks_to_remove_member[0]?.project_id
 
-    options.justdo_id = justdo_id
+    if not options?.justdo_id?
+      options.justdo_id = justdo_id
+
     {jira_user_objects} = @_createProxyUserIfEmailNotRecognized users_info, options
 
     query =
