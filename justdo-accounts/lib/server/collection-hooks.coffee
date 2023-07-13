@@ -2,13 +2,15 @@ mock_collection = new Mongo.Collection(null)
 
 _.extend JustdoAccounts.prototype,
   _setupCollectionsHooks: ->
+    self = @
+
     Meteor.users.before.remove (user_id, doc) =>
       url = doc.profile?.profile_pic
       if url?
         if doc._profile_pic_metadata?
           APP.filestack_base?.cleanupRemovedFile doc._profile_pic_metadata
 
-    Meteor.users.before.update (user_id, doc, fields, modifier, options) =>
+    Meteor.users.before.update (user_id, doc, fields, modifier, options) ->
       try
         # A bulletproof way to check the doc + modifier result:
         # We use a null-backed collection to simulate the effect of this action
@@ -19,9 +21,11 @@ _.extend JustdoAccounts.prototype,
         #         note that we also have: JustdoHelpers.getCollection2Simulator() but it
         #         isn't necessary here.
 
+        original_query = @args[0]
+
         mock_collection.remove {}
         mock_collection.insert doc
-        mock_collection.update doc._id, modifier
+        mock_collection.update original_query, modifier
         new_doc = mock_collection.findOne()
         mock_collection.remove {}
 
@@ -36,6 +40,6 @@ _.extend JustdoAccounts.prototype,
               modifier.$unset._profile_pic_metadata = true
 
       catch error
-        @logger.error "before-update-remove-files-failed", error.stack
+        self.logger.error "before-update-remove-files-failed", error.stack
 
     return
