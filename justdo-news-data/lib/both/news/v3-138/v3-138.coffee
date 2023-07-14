@@ -10,18 +10,18 @@ APP.justdo_news.registerNews "news",
       template_data: {
         news_array: [
           {
-            "title": "Invitation window improvement"
-            "subtitle": "Add a button to select all tasks to which to add the new users"
+            "title": "Revamped JustDo Members Invitation Window"
+            "subtitle": "Expanding on our existing invitation functionality, we have added a new feature that allows you to select all tasks with just a click when adding new users. For a more efficient setup process for large projects."
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-138/assets/1.jpg"
           },
           {
-            "title": "Files preview improvement"
-            "subtitle": "Implement keyboard navigation in files preview"
+            "title": "Improved File Preview Navigation"
+            "subtitle": "We believe in the importance of seamless navigation. That's why we've implemented keyboard navigation in file previews. Now you can easily move through your files using just your keyboard, making reviewing and editing an even smoother process."
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-138/assets/2.jpg"
           },
           {
-            "title": "Switch to curvy design for buttons and inputs"
-            "subtitle": "JustDo become more friendlier and softer"
+            "title": "Sleek Design Upgrade"
+            "subtitle": "To enhance the visual experience, we've switched to a modern curvy design for our buttons and inputs"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-138/assets/3.jpg"
           }
         ]
@@ -34,7 +34,7 @@ APP.justdo_news.registerNews "news",
       template_data: {
         title: "Improvements"
         update_items: [
-          "1. Chat recent activity dropdown: show a loader"
+          "1. Loading Indicators for Chat Recent Activity"
         ]
       }
       name: "Other Updates"
