@@ -890,12 +890,13 @@ _.extend GridDataCom.prototype,
       item = items_map[item_id]
       if _.size(simulated_item_parents[item_id]) == 0 # We found out in the simulation that an actual remove is necessary
         if not removed_item_ids.has(item_id)
-          @_runGridMethodMiddlewares "beforeRemoveParent", org_path, perform_as,
-            # the etc obj
-            item: item 
+          middleware_etc_obj =
+            item: item
             parent_id: parent_id,
             no_more_parents: true
             update_op: undefined
+          @_runGridMethodMiddlewares "beforeRemoveParent", org_path, perform_as, middleware_etc_obj
+          @_runGridMethodMiddlewares "beforeRemoveLastParent", org_path, perform_as, middleware_etc_obj
 
           removed_item_ids.add(item_id)
       else # We found out in the simulation that this is only a removal of one of the parents
