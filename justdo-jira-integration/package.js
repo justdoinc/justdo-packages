@@ -58,6 +58,7 @@ Package.onUse(function (api) {
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
   api.use("justdoinc:justdo-system-records@1.0.0", both);
+  api.use("justdoinc:justdo-db-migrations@1.0.0", both);
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
