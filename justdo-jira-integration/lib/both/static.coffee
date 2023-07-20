@@ -24,6 +24,8 @@ _.extend JustdoJiraIntegration,
     bug: "e54939"
     subtask: "B7E5FF"
 
+  show_reconnect_snackbar_notification_time_range: 1000 * 60 * 2 # 2 min
+
 APP.on "jira-core-fields-ready", ->
   _.extend JustdoJiraIntegration,
     hardcoded_field_map: [
