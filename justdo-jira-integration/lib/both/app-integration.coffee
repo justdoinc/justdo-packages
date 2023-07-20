@@ -35,12 +35,14 @@ APP.getEnv (env) ->
     jira_collection: APP.collections.Jira
     server_type: server_type
 
-  # Load core field ids from env vars
-  try
-    jira_core_field_ids = EJSON.parse(env.JIRA_INTEGRATION_SETTINGS.replace(/'/g, '"')).core_field_ids
-  catch e
-    jira_core_field_ids = {}
+  # Load jira_integration_settings
+  if _.isEmpty(jira_integration_settings_json = env.JIRA_INTEGRATION_SETTINGS)
+    jira_integration_settings_json = "{}"
+  jira_integration_settings = EJSON.parse(env.JIRA_INTEGRATION_SETTINGS.replace(/'/g, '"'))
 
+  # Load jira_core_field_ids
+  if not (jira_core_field_ids = jira_integration_settings.core_field_ids)?
+    jira_core_field_ids = {}
   for field_name, field_id of jira_core_field_ids
     JustdoJiraIntegration["#{field_name}_custom_field_id"] = field_id
 
