@@ -135,6 +135,7 @@ Template.justdo_jira_integration_project_setting.events
 
     target_link = $(e.target).closest(".jira-login-link").attr "href"
     window.open target_link, "_blank"
+    APP.justdo_jira_integration.refresh_token_updated = new Date()
     return
 
   "click .set-custom-field-pair": (e, tpl) ->

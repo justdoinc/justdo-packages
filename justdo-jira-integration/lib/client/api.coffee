@@ -10,8 +10,23 @@ _.extend JustdoJiraIntegration.prototype,
     @registerConfigTemplate()
     @registerTaskPaneSection()
     @setupCustomFeatureMaintainer()
+    @setupReconnectSnackbarNotificationTracker()
 
     return
+
+  setupReconnectSnackbarNotificationTracker: ->
+    @reconnect_snackbar_notification_tracker = Tracker.autorun =>
+      jira_doc = @jira_collection.findOne({}, {fields: {refresh_token_updated: 1, "server_info.name": 1}})
+
+      if (refresh_token_updated = jira_doc?.refresh_token_updated)?
+        if @refresh_token_updated?
+          if refresh_token_updated - @refresh_token_updated <= JustdoJiraIntegration.show_reconnect_snackbar_notification_time_range
+            JustdoSnackbar.show
+              text: "Connected to #{jira_doc.server_info.name}"
+
+        @refresh_token_updated = null
+
+      return
 
   getActiveJustdoJiraDocId: ->
     if not (active_justdo = APP.modules.project_page.curProj())?
