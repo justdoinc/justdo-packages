@@ -1891,3 +1891,12 @@ _.extend JustdoJiraIntegration.prototype,
       fields:
         "custom_fields.$": 1
     return @projects_collection.findOne(query, query_options)?.custom_fields?[0]
+
+  getUserEmailInJustdoAndJiraAccountObjOrFail: (justdo_id, user_id) ->
+    if not (justdo_account_email = APP.accounts.getUserById(user_id).emails?[0]?.address)?
+      throw @_error "user-not-found"
+
+    if _.isEmpty(jira_account = @getJiraUser justdo_id, {email: justdo_account_email})
+      throw @_error "user-not-found", "Cannot assign Jira task to non Jira users"
+
+    return {justdo_account_email, jira_account}

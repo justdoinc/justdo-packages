@@ -331,10 +331,7 @@ APP.on "jira-core-fields-ready", ->
           if destination is "jira"
             client = @getJiraClientForJustdo(justdo_id).v2
 
-            if not (justdo_account_email = APP.accounts.getUserById(field).emails?[0]?.address)?
-              throw @_error "user-not-found"
-
-            jira_account = @getJiraUser justdo_id, {email: justdo_account_email}
+            {justdo_account_email, jira_account} = @getUserEmailInJustdoAndJiraAccountObjOrFail justdo_id, field
             jira_account_id = jira_account?[0]?.accountId
 
             req = {issueIdOrKey: req_body.jira_issue_id}
