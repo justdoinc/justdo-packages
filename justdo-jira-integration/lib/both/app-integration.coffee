@@ -52,10 +52,10 @@ APP.getEnv (env) ->
       _.each JustdoJiraIntegration.reqiured_jira_field_ids, (field_id) -> sample_jira_integration_settings[field_id] = ""
       sample_jira_integration_settings = {core_field_ids: sample_jira_integration_settings}
       sample_jira_integration_settings = EJSON.stringify(sample_jira_integration_settings).replace(/"/g, "'")
-      APP.logger.warn "(Docker installation: Edit config.bash)"
-      APP.logger.warn "export WEB_APP_JIRA_INTEGRATION_SETTINGS=\"#{sample_jira_integration_settings}\""
-      APP.logger.warn "(Non-docker installation: Edit .dev-env-conf)"
-      APP.logger.warn "export JIRA_INTEGRATION_SETTINGS=\"#{sample_jira_integration_settings}\""
+      APP.logger.warn "For DOCKER installation: Edit config.bash:"
+      APP.logger.warn "  export WEB_APP_JIRA_INTEGRATION_SETTINGS=\"#{sample_jira_integration_settings}\""
+      APP.logger.warn "For NON-DOCKER installation: Edit .dev-env-conf:"
+      APP.logger.warn "  export JIRA_INTEGRATION_SETTINGS=\"#{sample_jira_integration_settings}\""
       APP.logger.warn "To stop seeing this message, you can set JIRA_INTEGRATION_TYPE to an empty string (\"\")"
       return
 
