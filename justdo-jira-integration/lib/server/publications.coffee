@@ -14,6 +14,7 @@ _.extend JustdoJiraIntegration.prototype,
           "server_info.name": 1
           "server_info.avatarUrl": 1
           "jira_projects": 1
+          "refresh_token_updated": 1
       return self.jira_collection.find jira_doc_id, jira_collection_query_options
 
     return
