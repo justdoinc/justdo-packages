@@ -15,3 +15,4 @@ _.extend JustdoJiraIntegration.prototype,
     _.extend {}, JustdoHelpers.common_errors_types,
     "client-not-found": "Please log in to your Jira account via the JustDo Settings"
     "jira-update-failed": "Update toward Jira failed"
+    "user-not-found": "User not found"
