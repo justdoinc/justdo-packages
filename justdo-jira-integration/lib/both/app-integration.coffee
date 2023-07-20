@@ -38,7 +38,7 @@ APP.getEnv (env) ->
   # Load jira_integration_settings
   if _.isEmpty(jira_integration_settings_json = env.JIRA_INTEGRATION_SETTINGS)
     jira_integration_settings_json = "{}"
-  jira_integration_settings = EJSON.parse(env.JIRA_INTEGRATION_SETTINGS.replace(/'/g, '"'))
+  jira_integration_settings = EJSON.parse(jira_integration_settings_json.replace(/'/g, '"'))
 
   # Load jira_core_field_ids
   if not (jira_core_field_ids = jira_integration_settings.core_field_ids)?
