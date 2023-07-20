@@ -253,6 +253,10 @@ _.extend JustdoJiraIntegration.prototype,
         if modifier?.$unset?.jira_issue_type?
           delete modifier.$unset.jira_issue_type
 
+        if (pending_owner_id = modifier?.$set?.pending_owner_id)?
+          # Block ownership transfer request if email of pending_owner_id isn't registered in Jira
+          self.getUserEmailInJustdoAndJiraAccountObjOrFail justdo_id, pending_owner_id
+
         {fields, transition} = self._mapJustdoFieldsToJiraFields justdo_id, doc, modifier
 
         # XXX The statement below handles parent change. Consider putting them into field map.
