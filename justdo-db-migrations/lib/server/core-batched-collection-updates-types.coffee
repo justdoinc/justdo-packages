@@ -48,6 +48,18 @@ _.extend JustdoDbMigrations.prototype,
                       # we don't need to test whether the user is belonging to the project
             APP.projects.requireUserIsMemberOfProject data.project_id, user_id
 
+            is_performing_user_non_tasks_member_query =
+              _id:
+                $in: ids_to_update
+              users:
+                $ne:
+                  user_id
+            is_performing_user_non_tasks_member_query_options =
+              fields:
+                _id: 1
+            if APP.collections.Tasks.findOne(is_performing_user_non_tasks_member_query, is_performing_user_non_tasks_member_query_options)?
+              throw self._error "invalid-job-data", "Performing user is not a member in all the affected tasks."
+
             # CHECK PERMISSIONS:
             # Use the legacy BeforeBulkUpdateExecution handler to which the permissions plugin is binding
             # to set the hooks that ensures the process is allowed permissions wise.
