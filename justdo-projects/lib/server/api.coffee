@@ -235,7 +235,7 @@ _.extend Projects.prototype,
     options = _.extend default_options, options
 
     conf = options.conf or {
-      custom_features: ["justdo_private_follow_up", "justdo_planning_utilities", "justdo_projects_health", "justdo_inbound_emails", "justdo_calendar_view", "justdo_clipboard_import", "justdo-item-duplicate-control", "meetings_module"]
+      custom_features: ["justdo_private_follow_up", "justdo_planning_utilities", "justdo_projects_health", "justdo_inbound_emails", "justdo_calendar_view", "justdo_clipboard_import", "justdo-item-duplicate-control", "meetings_module", "disable-quick-add"]
     }
 
     project = 
