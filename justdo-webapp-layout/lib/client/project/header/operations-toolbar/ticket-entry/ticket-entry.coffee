@@ -1,14 +1,58 @@
 max_printed_task_title = 60
+share.disable_quick_add_custom_plugin_id = "disable-quick-add"
+share.disable_quick_add_custom_plugin_name = "Quick Add"
 
 gridControlMux = -> APP.modules.project_page.grid_control_mux?.get()
 
 APP.executeAfterAppLibCode ->
   project_page_module = APP.modules.project_page
+  curProj = -> APP.modules.project_page.curProj()
+
+  Template.disable_quick_add_project_config.helpers
+    isModuleEnabled: ->
+      return curProj().isCustomFeatureEnabled(share.disable_quick_add_custom_plugin_id)
+
+    pluginName: ->
+      return share.disable_quick_add_custom_plugin_name
+
+  Template.disable_quick_add_project_config.events
+    "click .jd-icon-extension": ->
+      proj = curProj()
+
+      if proj.isCustomFeatureEnabled(share.disable_quick_add_custom_plugin_id)
+        curProj().disableCustomFeatures(share.disable_quick_add_custom_plugin_id)
+      else
+        curProj().enableCustomFeatures(share.disable_quick_add_custom_plugin_id)
+
+      return
+
+  APP.modules.project_page.project_config_ui.registerConfigTemplate share.disable_quick_add_custom_plugin_id,
+    section: "extensions"
+    template: "disable_quick_add_project_config"
+    priority: 10001
+
+  APP.justdo_custom_plugins.installCustomPlugin
+    # SETTINGS BEGIN
+    #
+    # The following properties should be defined by all custom plugins
+    custom_plugin_id: share.disable_quick_add_custom_plugin_id
+
+    custom_plugin_readable_name: share.disable_quick_add_custom_plugin_name
+
+    # Registration of extensions list is performed below, since this plugin is displayed as enabled when disabled on project doc level.
+    show_in_extensions_list: false
+    # / SETTINGS END
+
+    installer: ->
+      return
+
+    destroyer: ->
+      return
 
   target_select_pickers = ["#ticket-queue-id", "#ticket-assigned-user-id"]
 
   project_page_module.setNullaryOperation "ticketEntry",
-    human_description: "Quick Add"
+    human_description: share.disable_quick_add_custom_plugin_name
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#file"/></svg>"""
     op: ->
@@ -23,7 +67,7 @@ APP.executeAfterAppLibCode ->
           $(selector).selectpicker "destroy"
 
       bootbox.dialog
-        title: "Quick Add"
+        title: share.disable_quick_add_custom_plugin_name
         message: message_template.node
         className: "ticket-entry-dialog bootbox-new-design"
         onEscape: ->
@@ -71,7 +115,7 @@ APP.executeAfterAppLibCode ->
                     else null
 
               activateItemId = (item_id, options) ->
-                item_doc = APP.collections.Tasks.findOne({_id: item_id, project_id: project_page_module.helpers.curProj().id})
+                item_doc = APP.collections.Tasks.findOne({_id: item_id, project_id: curProj().id})
 
                 title = "Task <b>##{item_doc.seqId}: #{JustdoHelpers.ellipsis(item_doc.title, 50)}</b> added"
                 if (destination_title = options.destination_title)?
@@ -99,7 +143,7 @@ APP.executeAfterAppLibCode ->
                 if destination_type == "ticket-queue"
                   Meteor.call "newTQTicket",
                     {
-                      project_id: project_page_module.helpers.curProj().id,
+                      project_id: curProj().id,
                       tq: selected_destination_id.get()
                     },
                     task_fields,

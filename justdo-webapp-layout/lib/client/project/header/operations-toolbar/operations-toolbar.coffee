@@ -32,3 +32,6 @@ Template.project_operations_toolbar.helpers
       return true
 
     return APP.justdo_permissions?.checkTaskPermissions("task-field-edit.priority", item_id)
+
+  isQuickAddDisabled: ->
+    return APP.modules.project_page.curProj()?.isCustomFeatureEnabled share.disable_quick_add_custom_plugin_id

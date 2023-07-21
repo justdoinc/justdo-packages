@@ -1,3 +1,17 @@
+<template name="disable_quick_add_project_config">
+  <div class="project-conf-disable-quick-add-config controller-template-extension-item">
+    <div class="controller-template-extension-indicator {{#unless isModuleEnabled}}bg-primary{{/unless}}"></div>
+    {{pluginName}}
+    <div class="project-conf-disable-quick-add-actions">
+      {{#unless isModuleEnabled}}
+        <svg class="jd-icon-extension text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
+      {{else}}
+        <svg class="jd-icon-extension"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
+      {{/unless}}
+    </div>
+  </div>
+</template>
+
 <template name="ticket_entry">
   <div class="row">
     <div class="col-sm-7 task-destination-container">
