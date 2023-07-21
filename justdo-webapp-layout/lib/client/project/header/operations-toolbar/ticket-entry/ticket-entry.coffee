@@ -16,7 +16,7 @@ APP.executeAfterAppLibCode ->
       return share.disable_quick_add_custom_plugin_name
 
   Template.disable_quick_add_project_config.events
-    "click .jd-icon-extension": ->
+    "click .project-conf-disable-quick-add-config": ->
       proj = curProj()
 
       if proj.isCustomFeatureEnabled(share.disable_quick_add_custom_plugin_id)
