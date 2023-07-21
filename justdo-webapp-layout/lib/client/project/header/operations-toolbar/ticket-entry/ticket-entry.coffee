@@ -1,6 +1,6 @@
 max_printed_task_title = 60
 share.disable_quick_add_custom_plugin_id = "disable-quick-add"
-share.disable_quick_add_custom_plugin_name = "Quick Add"
+share.disable_quick_add_custom_plugin_name = "Quick Add Button"
 
 gridControlMux = -> APP.modules.project_page.grid_control_mux?.get()
 
