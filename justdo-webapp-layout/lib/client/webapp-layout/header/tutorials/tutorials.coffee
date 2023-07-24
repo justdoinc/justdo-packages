@@ -4,22 +4,24 @@ APP.executeAfterAppLibCode ->
       {
         "title": "Set name for JustDo",
         "subtitle": "Effortlessly manage meetings, tracking tasks created",
-        "media": ""
-        "status": "active" # pending, active, done
+        "media": "/packages/justdoinc_justdo-webapp-layout/lib/client/webapp-layout/header/tutorials/media/set_name.mp4"
+        "status": "" # pending, done
       },
       {
         "title": "Create the first Task",
         "subtitle": "Send emails directly to tasks, maintaining a comprehensive.",
-        "media": ""
-        "status": "pending"
-      },
-      {
-        "title": "Invite Corowkers",
-        "subtitle": "Send emails directly to tasks, maintaining a comprehensive.",
-        "media": ""
+        "media": "/packages/justdoinc_justdo-webapp-layout/lib/client/webapp-layout/header/tutorials/media/create_task.mp4"
         "status": "pending"
       }
     ]
+
+    return
+
+  Template.tutorials.onRendered ->
+    $(".nav-tutorials.dropdown").on "hidden.bs.dropdown", ->
+      $(".tutorial-item").removeClass "active"
+
+      return
 
     return
 
@@ -52,10 +54,26 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    "mouseenter .tutorial-item": (e, tpl) ->
+      $(".tutorial-item").removeClass "active"
+      $(e.target).closest(".tutorial-item").addClass "active"
+      media = $(e.target).find(".tutorial-media")[0]
+
+      if media
+        media.play()
+        media.playbackRate = 2
+
+      return
+
     "click .tutorial-instruction-btn .btn": (e, tpl) ->
       tutorials = tpl.tutorials.get()
       tutorials[@index - 1].status = "done"
-      tutorials[@index]?.status = "active"
+
+      if tutorials.length == @index
+        $(".promo").addClass "active"
+      else
+        tutorials[@index]?.status = "active"
+
       tpl.tutorials.set tutorials
 
       return
