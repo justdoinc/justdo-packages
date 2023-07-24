@@ -251,18 +251,17 @@ _.extend JustdoHelpers,
     # assume that user docs stores the 'all_emails_verified' property
 
     if Meteor.isServer
-      console.error "This method isn't supported in the server environment yet."
-
-      # If you want to add support, base the user fetch on APP.accounts.findOnePublicBasicUserInfo
-
-      return false
-
-    if _.isString user
-      user_doc = Meteor.users.findOne(user, {fields: {all_emails_verified: 1, is_proxy: 1}})
-    else if _.isObject user
-      user_doc = user
+      if _.isString user
+        user_doc = APP.accounts.findOnePublicBasicUserInfo user
+      else
+        user_doc = APP.accounts._publicBasicUserInfoCursorDataOutputTransformer user
     else
-      user_doc = @
+      if _.isString user
+        user_doc = Meteor.users.findOne(user, {fields: {all_emails_verified: 1, is_proxy: 1}})
+      else if _.isObject user
+        user_doc = user
+      else
+        user_doc = @
 
     # Don't show email unverified warning for proxy users
     if user_doc.is_proxy
