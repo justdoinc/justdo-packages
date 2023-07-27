@@ -105,6 +105,14 @@ _.extend JustdoNews.prototype,
     "templates.$":
       label: "News Template Object"
       type: _newsTemplateSchema
+    bootbox_title:
+      label: "Custom bootbox title"
+      type: String
+      optional: true
+    bootbox_classes:
+      label: "Custom bootbox classes"
+      type: String
+      optional: true
   registerNews: (category, news_obj) ->
     {cleaned_val} =
       JustdoHelpers.simpleSchemaCleanAndValidate(
