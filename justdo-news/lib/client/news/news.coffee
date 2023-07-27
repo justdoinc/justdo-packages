@@ -106,6 +106,9 @@ Template.news.helpers
     active_tab = tpl.active_news_tab_rv.get()
 
     template = _.find news_doc.templates, (template_obj) -> template_obj._id is active_tab
+    
+    if not template.template_data?
+      template.template_data = {}
     template.template_data.date = news_doc.date
     return template
 
