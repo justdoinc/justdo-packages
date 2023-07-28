@@ -6,10 +6,16 @@
             <li>Name: {{name}}</li>
             <li>Email: {{email}}</li>
             {{#if tel}}
-               <li>Email: {{tel}}</li>
+               <li>Phone Number: {{tel}}</li>
             {{/if}}
             {{#if message}}
                 <li>Message: {{message}}</li>
+            {{/if}}
+            {{#if campaign}}
+                <li>Campaign: {{campaign}}</li>
+            {{/if}}
+            {{#if source_template}}
+                <li>Source Template: {{source_template}}</li>
             {{/if}}
             {{#if version}}
                 <li>Version: {{version}}</li>
@@ -30,10 +36,16 @@
                     <li>Name: {{name}}</li>
                     <li>Email: {{email}}</li>
                     {{#if tel}}
-                    <li>Email: {{tel}}</li>
+                        <li>Tel: {{tel}}</li>
                     {{/if}}
                     {{#if message}}
                         <li>Message: {{message}}</li>
+                    {{/if}}
+                    {{#if campaign}}
+                        <li>Campaign: {{campaign}}</li>
+                    {{/if}}
+                    {{#if source_template}}
+                        <li>Source Template: {{source_template}}</li>
                     {{/if}}
                     {{#if version}}
                         <li>Version: {{version}}</li>
