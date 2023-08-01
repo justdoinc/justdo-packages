@@ -1,7 +1,5 @@
 _.extend JustdoI18n.prototype,
   _immediateInit: ->
-    @setupRouter()
-    
     @lang_rv = new ReactiveVar()
 
     return
@@ -17,4 +15,4 @@ _.extend JustdoI18n.prototype,
     return
   
   getLang: ->
-    return @lang_rv.get() or JustdoI18n.default_lang
+    return @getUserLang() or JustdoI18n.default_lang
