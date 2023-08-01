@@ -19,3 +19,35 @@ _.extend JustdoI18n.prototype,
       return
 
     return
+
+  getUserLang: (user) ->
+    if Meteor.isClient
+      if not user?
+        user = Meteor.user()
+
+      if not user?
+        if (campaign_doc = APP.justdo_promoters_campaigns?.getCampaignDoc())?
+          return campaign_doc.lang
+        
+    else
+      if _.isString user
+        user = Meteor.users.findOne(user, {fields: {"profile.lang": 1}})
+    
+    return user?.profile?.lang
+  
+  setUserLang: (lang, user_id) ->
+    check lang, Match.Maybe String
+
+    if Meteor.isClient
+      user_id = Metoer.userId()
+    else
+      if not user_id?
+        throw @_error "missing-argument"
+    
+    update = 
+      $set:
+        "profile.lang": lang
+
+    Meteor.users.update user_id, update
+
+    return
