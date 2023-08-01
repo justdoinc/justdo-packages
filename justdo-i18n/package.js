@@ -66,7 +66,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/both/schemas.coffee", both);
 
   api.addFiles("lib/server/api.coffee", server);
-  api.addFiles("lib/server/allow-deny.coffee", server);
   api.addFiles("lib/server/collections-hooks.coffee", server);
   api.addFiles("lib/server/collections-indexes.coffee", server);
   api.addFiles("lib/server/methods.coffee", server);
