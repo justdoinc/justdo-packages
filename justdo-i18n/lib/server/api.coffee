@@ -22,18 +22,3 @@ _.extend JustdoI18n.prototype,
     @_ensureIndexesExists()
 
     return
-
-  performInstallProcedures: (project_doc, user_id) ->
-    # Called when plugin installed for project project_doc._id
-    console.log "Plugin #{JustdoI18n.project_custom_feature_id} installed on project #{project_doc._id}"
-
-    return
-
-  performUninstallProcedures: (project_doc, user_id) ->
-    # Called when plugin uninstalled from project project_doc._id
-
-    # Note, isn't called on project removal
-
-    console.log "Plugin #{JustdoI18n.project_custom_feature_id} removed from project #{project_doc._id}"
-
-    return
