@@ -1,0 +1,1 @@
+_.extend JustdoI18n.prototype, {}
