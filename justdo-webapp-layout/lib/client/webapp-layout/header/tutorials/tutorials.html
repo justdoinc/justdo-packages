@@ -35,15 +35,24 @@
       <div class="tutorial-body">
         <div class="tutorial-title">Get free support</div>
         <div class="tutorial-subtitle">1-on-1 support session with JustDo team</div>
+        {{#if promoUnlocked}}
+          {{#if requestSent}}
+            <div class="request-received-message">
+              Received, we'll get back to you shortly by email
+            </div>
+          {{else}}
+            <button class="btn btn-sm btn-success request" type="button" name="button">Request</button>
+          {{/if}}
+        {{/if}}
       </div>
-      <div class="tutorial-instruction shadow-lg">
+      {{!-- <div class="tutorial-instruction shadow-lg">
         <div class="tutorial-form">
           Set meeting form
         </div>
         <div class="tutorial-instruction-btn">
           <button class="send btn btn-primary btn-sm">Send</button>
         </div>
-      </div>
+      </div> --}}
     </div>
   </div>
 

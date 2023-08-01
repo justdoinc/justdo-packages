@@ -1,5 +1,7 @@
 APP.executeAfterAppLibCode ->
   Template.tutorials.onCreated ->
+    @request_sent = new ReactiveVar false
+
     @tutorials = new ReactiveVar [
       {
         "title": "Set name for JustDo",
@@ -46,6 +48,9 @@ APP.executeAfterAppLibCode ->
 
       return true
 
+    requestSent: ->
+      return Template.instance().request_sent.get()
+
 
 
   Template.tutorials.events
@@ -75,5 +80,10 @@ APP.executeAfterAppLibCode ->
         tutorials[@index]?.status = "active"
 
       tpl.tutorials.set tutorials
+
+      return
+
+    "click .promo .request": (e, tpl) ->
+      tpl.request_sent.set true
 
       return
