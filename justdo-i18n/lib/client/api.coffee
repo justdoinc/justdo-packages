@@ -1,6 +1,6 @@
 _.extend JustdoI18n.prototype,
   _immediateInit: ->
-    @lang_rv = new ReactiveVar()
+    @lang_rv = new ReactiveVar amplify.store JustdoI18n.amplify_lang_key
 
     @tap_i18n_set_lang_tracker = Tracker.autorun =>
       TAPi18n.setLanguage @getLang()
@@ -19,7 +19,7 @@ _.extend JustdoI18n.prototype,
       return
 
     return
-
+  
   _setupBeforeUserSignUpHook: ->
     APP.accounts.on "user-signup", (options) =>
       if (lang = @getLang())?
@@ -28,11 +28,15 @@ _.extend JustdoI18n.prototype,
       
     return
 
-  setLang: (lang) ->
+  setLang: (lang, options) ->
+    # options:
+    #   save_to_local_storage: Boolean (optional) - Saves lang to local storage.
     if Meteor.user()?
       @setUserLang lang
     else
       @lang_rv.set lang
+      if options?.save_to_local_storage
+        amplify.store JustdoI18n.amplify_lang_key, lang
     return
   
   getLang: ->
