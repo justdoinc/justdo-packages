@@ -6,6 +6,8 @@ _.extend JustdoI18n.prototype,
       TAPi18n.setLanguage @getLang()
       return
 
+    @_setupBeforeUserSignUpHook()
+
     @onDestroy =>
       @tap_i18n_set_lang_tracker?.stop?()
       return
@@ -16,6 +18,14 @@ _.extend JustdoI18n.prototype,
     if @destroyed
       return
 
+    return
+
+  _setupBeforeUserSignUpHook: ->
+    APP.accounts.on "user-signup", (options) =>
+      if (lang = @getLang())?
+        options.profile.lang = lang
+      return
+      
     return
 
   setLang: (lang) ->
