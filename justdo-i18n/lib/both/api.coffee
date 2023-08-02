@@ -24,11 +24,6 @@ _.extend JustdoI18n.prototype,
     if Meteor.isClient
       if not user?
         user = Meteor.user()
-
-      if not user?
-        if (campaign_doc = APP.justdo_promoters_campaigns?.getCampaignDoc())?
-          return campaign_doc.lang
-        
     else
       if _.isString user
         user = Meteor.users.findOne(user, {fields: {"profile.lang": 1}})

@@ -1,6 +1,5 @@
 _.extend JustdoI18n.prototype,
   _immediateInit: ->
-    # lang_rv is not used at the moment, but reserved for future uses like language menu.
     @lang_rv = new ReactiveVar()
 
     @tap_i18n_set_lang_tracker = Tracker.autorun =>
@@ -20,8 +19,21 @@ _.extend JustdoI18n.prototype,
     return
 
   setLang: (lang) ->
-    @lang_rv.set lang
+    if Meteor.user()?
+      @setUserLang lang
+    else
+      @lang_rv.set lang
     return
   
   getLang: ->
-    return @getUserLang() or JustdoI18n.default_lang
+    if Meteor.user()?
+      return @getUserLang() or JustdoI18n.default_lang
+
+    if (lang = @lang_rv.get())?
+      return lang
+
+    if (campaign_lang = APP.justdo_promoters_campaigns?.getCampaignDoc()?.lang)?
+      return campaign_lang
+        
+    return JustdoI18n.default_lang
+    
