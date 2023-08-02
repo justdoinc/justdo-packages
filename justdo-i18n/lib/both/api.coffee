@@ -34,7 +34,7 @@ _.extend JustdoI18n.prototype,
     check lang, Match.Maybe String
 
     if Meteor.isClient
-      user_id = Metoer.userId()
+      user_id = Meteor.userId()
     else
       if not user_id?
         throw @_error "missing-argument"
