@@ -151,6 +151,12 @@ _.extend JustdoAccounts,
       type: String
 
       regEx: /^#[0-9a-f]{6}$/i
+    
+    lang:
+      optional: true
+
+      label: "Preferred Language"
+      type: String
 
   get_user_public_info_options_schema: new SimpleSchema
     email:
