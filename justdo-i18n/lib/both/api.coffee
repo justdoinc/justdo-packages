@@ -46,3 +46,6 @@ _.extend JustdoI18n.prototype,
     Meteor.users.update user_id, update
 
     return
+
+  getSupportedLanguages: ->
+    return TAPi18n.getLanguages()
