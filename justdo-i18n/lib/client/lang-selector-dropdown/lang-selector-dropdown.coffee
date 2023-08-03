@@ -10,5 +10,6 @@ Template.lang_selector_dropdown.helpers
 Template.lang_selector_dropdown.events
   "click .dropdown-item": (e, tpl) ->
     lang_tag =  $(e.target).closest(".dropdown-item").data("lang-tag")
-    APP.justdo_i18n.setLang lang_tag
+    APP.justdo_i18n.setLang lang_tag, {save_to_local_storage: true}
+    APP.justdo_google_analytics?.sendEvent "set-lang-dropdown-#{lang_tag}"
     return
