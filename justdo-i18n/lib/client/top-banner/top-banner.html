@@ -1,0 +1,14 @@
+<template name="top_banner">
+  {{#if showTopBanner}}
+    <div class="top-banner">
+      <div class="top-banner-content">
+        <div class="language-suggestion">
+          {{#with defaultLang}}
+            See this page in<span class="set-default-lang" data-lang-tag="{{_id}}">{{name}}</span>?
+          {{/with}}
+        </div>
+      </div>
+      <svg class="jd-icon text-white top-banner-close"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+    </div>
+  {{/if}}
+</template>
