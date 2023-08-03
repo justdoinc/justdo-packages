@@ -1,5 +1,17 @@
+Template.top_banner.onCreated ->
+  @hide_top_banner_rv = new ReactiveVar false
+  return
+
 Template.top_banner.helpers
-  showTopBanner: -> (env.LANDING_PAGE_TYPE is "marketing") and (APP.justdo_i18n.getLang() isnt JustdoI18n.default_lang)
+  showTopBanner: -> 
+    tpl = Template.instance()
+
+    is_landing_page_type_marketing = env.LANDING_PAGE_TYPE is "marketing"
+    is_campaign_shows_top_banner = APP.justdo_promoters_campaigns.getCampaignDoc().show_top_banner
+    is_default_lang_selected = APP.justdo_i18n.getLang() is JustdoI18n.default_lang
+    is_top_banner_hidden = tpl.hide_top_banner_rv.get() or amplify.store JustdoI18n.amplify_hide_top_banner_key
+
+    return is_landing_page_type_marketing and is_campaign_shows_top_banner and not is_default_lang_selected and not is_top_banner_hidden
 
   defaultLang: ->
     lang_name = APP.justdo_i18n.getSupportedLanguages()[JustdoI18n.default_lang].name
@@ -9,5 +21,11 @@ Template.top_banner.events
   "click .language-suggestion": (e, tpl) ->
     lang_tag = $(e.target).closest(".set-default-lang").data "lang-tag"
     APP.justdo_i18n.setLang lang_tag, {save_to_local_storage: true}
-    APP.justdo_google_analytics?.sendEvent "set-lang-banner-#{lang_tag}"
+    APP.justdo_google_analytics?.sendEvent "set-lang-top-banner-#{lang_tag}"
+    return
+  
+  "click .top-banner-close": (e, tpl) ->
+    tpl.hide_top_banner_rv.set true
+    amplify.store JustdoI18n.amplify_hide_top_banner_key, true
+    APP.justdo_google_analytics?.sendEvent "top-banner-close"
     return
