@@ -21,6 +21,8 @@ _.extend JustdoI18n.prototype,
     return
 
   getUserLang: (user) ->
+    # For non logged-in users, we'll return undefined.
+    # In most cases, you should use getLang() on client side.
     if Meteor.isClient
       if not user?
         user = Meteor.user()
@@ -31,6 +33,8 @@ _.extend JustdoI18n.prototype,
     return user?.profile?.lang
   
   setUserLang: (lang, user_id) ->
+    # This api only updates lang in user_doc without updating local storage
+    # In most cases, you should use setLang() on client side.
     check lang, Match.Maybe String
 
     if Meteor.isClient
@@ -39,6 +43,10 @@ _.extend JustdoI18n.prototype,
       if not user_id?
         throw @_error "missing-argument"
     
+    if @getUserLang(user_id) is lang
+      @logger.info "setUserLang: #{lang} is already the user's lang"
+      return
+
     update = 
       $set:
         "profile.lang": lang
