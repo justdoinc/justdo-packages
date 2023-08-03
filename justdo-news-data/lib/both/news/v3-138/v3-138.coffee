@@ -35,6 +35,7 @@ APP.justdo_news.registerNews "news",
         title: "Improvements"
         update_items: [
           "1. Loading Indicators for Chat Recent Activity"
+          "2. Site admins with unverified email will lose access to the Site Admin Page"
         ]
       }
       name: "Other Updates"
