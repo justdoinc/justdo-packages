@@ -73,6 +73,10 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/methods.coffee", server);
   api.addFiles("lib/server/publications.coffee", server);
 
+  api.addFiles("lib/client/lang-selector-dropdown/lang-selector-dropdown.sass", client);
+  api.addFiles("lib/client/lang-selector-dropdown/lang-selector-dropdown.html", client);
+  api.addFiles("lib/client/lang-selector-dropdown/lang-selector-dropdown.coffee", client);
+
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
