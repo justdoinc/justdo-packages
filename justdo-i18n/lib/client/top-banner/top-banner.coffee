@@ -6,6 +6,7 @@ Template.top_banner.helpers
   showTopBanner: -> 
     tpl = Template.instance()
 
+    # We will allow the lang dropdown in non-marketing pages once we'll have enough languages
     is_landing_page_type_marketing = env.LANDING_PAGE_TYPE is "marketing"
     is_campaign_shows_top_banner = APP.justdo_promoters_campaigns.getCampaignDoc().show_lang_selector_header
     is_default_lang_selected = APP.justdo_i18n.getLang() is JustdoI18n.default_lang
