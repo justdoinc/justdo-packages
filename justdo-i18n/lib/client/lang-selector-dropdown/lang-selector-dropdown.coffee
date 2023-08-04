@@ -1,4 +1,8 @@
 Template.lang_selector_dropdown.helpers
+  showLangDropdown: -> 
+    # We will allow the lang dropdown in non-marketing pages once we'll have enough languages
+    return env.LANDING_PAGE_TYPE is "marketing"
+
   activeLanguage: ->
     active_lang = APP.justdo_i18n.getLang()
     return APP.justdo_i18n.getSupportedLanguages()[active_lang]?.name

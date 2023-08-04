@@ -1,14 +1,16 @@
 <template name="lang_selector_dropdown">
-  <div class="footer-language-selector btn-group dropup">
-    <button type="button" class="footer-language-selector-btn" data-toggle="dropdown" aria-expanded="false">
-      <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#globe"></use></svg>
-      {{activeLanguage}}
-    </button>
+  {{#if showLangDropdown}}
+    <div class="footer-language-selector btn-group dropup">
+      <button type="button" class="footer-language-selector-btn" data-toggle="dropdown" aria-expanded="false">
+        <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#globe"></use></svg>
+        {{activeLanguage}}
+      </button>
 
-    <div class="dropdown-menu shadow-lg border-0">
-      {{#each supportedLangs}}
-        <div class="dropdown-item" data-lang-tag="{{_id}}">{{name}}</div>
-      {{/each}}
+      <div class="dropdown-menu shadow-lg border-0">
+        {{#each supportedLangs}}
+          <div class="dropdown-item" data-lang-tag="{{_id}}">{{name}}</div>
+        {{/each}}
+      </div>
     </div>
-  </div>
+  {{/if}}
 </template>
