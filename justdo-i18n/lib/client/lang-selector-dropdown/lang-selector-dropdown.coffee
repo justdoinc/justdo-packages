@@ -1,7 +1,12 @@
 Template.lang_selector_dropdown.helpers
   showLangDropdown: -> 
+    # For logged in user, show dropdown only if user's lang isn't default lang
+    if (user = Meteor.user({"profile.lang": 1}))?
+      return user.profile?.lang? isnt JustdoI18n.default_lang
+
     # We will allow the lang dropdown in non-marketing pages once we'll have enough languages
-    return env.LANDING_PAGE_TYPE is "marketing"
+    
+    return (JustdoHelpers.getClientType(env) is "landing-app") and (env.LANDING_PAGE_TYPE is "marketing")
 
   activeLanguage: ->
     active_lang = APP.justdo_i18n.getLang()
