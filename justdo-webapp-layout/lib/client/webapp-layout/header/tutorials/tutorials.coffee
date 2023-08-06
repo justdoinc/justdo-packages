@@ -14,6 +14,18 @@ APP.executeAfterAppLibCode ->
         "subtitle": "Send emails directly to tasks, maintaining a comprehensive.",
         "media": "/packages/justdoinc_justdo-webapp-layout/lib/client/webapp-layout/header/tutorials/media/create_task.mp4"
         "status": "pending"
+      },
+      {
+        "title": "Import Tasks",
+        "subtitle": "Send emails directly to tasks, maintaining a comprehensive.",
+        "media": "/packages/justdoinc_justdo-webapp-layout/lib/client/webapp-layout/header/tutorials/media/import_tasks.mp4"
+        "status": "pending"
+      },
+      {
+        "title": "Customize your View",
+        "subtitle": "Send emails directly to tasks, maintaining a comprehensive.",
+        "media": "/packages/justdoinc_justdo-webapp-layout/lib/client/webapp-layout/header/tutorials/media/customize_view.mp4"
+        "status": "pending"
       }
     ]
 
@@ -66,7 +78,7 @@ APP.executeAfterAppLibCode ->
 
       if media
         media.play()
-        media.playbackRate = 2
+        media.playbackRate = 1.5
 
       return
 
