@@ -43,14 +43,6 @@ APP.executeAfterAppLibCode ->
     domain: "global-right-navbar"
     position: 100
 
-  JD.registerPlaceholderItem "tutorials-submenu",
-    data:
-      template: "tutorials_submenu"
-      template_data: {}
-
-    domain: "global-right-navbar"
-    position: 200
-
   Template.header.events
     "click .drawer-icon": ->
       $(".global-wrapper").addClass "drawer-open"

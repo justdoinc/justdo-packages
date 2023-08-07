@@ -138,12 +138,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/webapp-layout/header/header.coffee", "client");
   api.addFiles("lib/client/webapp-layout/header/header.html", "client");
   api.addFiles("lib/client/webapp-layout/header/header.sass", "client");
-  api.addFiles("lib/client/webapp-layout/header/tutorials-submenu.coffee", "client");
-  api.addFiles("lib/client/webapp-layout/header/tutorials-submenu.html", "client");
-  api.addFiles("lib/client/webapp-layout/header/tutorials-submenu.sass", "client");
-  api.addFiles("lib/client/webapp-layout/header/tutorials/tutorials.coffee", "client");
-  api.addFiles("lib/client/webapp-layout/header/tutorials/tutorials.html", "client");
-  api.addFiles("lib/client/webapp-layout/header/tutorials/tutorials.sass", "client");
   api.addFiles("lib/client/webapp-layout/header/drawer-projects/drawer-projects.sass", "client");
   api.addFiles("lib/client/webapp-layout/header/drawer-projects/drawer-projects.html", "client");
   api.addFiles("lib/client/webapp-layout/header/drawer-projects/drawer-projects.coffee", "client");
@@ -155,10 +149,6 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/dual-frame-settings-page-layout/menu-item/menu-item.coffee", "client");
 
   api.addAssets("lib/client/assets/layout-sprite.png", "client");
-  api.addAssets("lib/client/webapp-layout/header/tutorials/media/set_name.mp4", "client");
-  api.addAssets("lib/client/webapp-layout/header/tutorials/media/create_task.mp4", "client");
-  api.addAssets("lib/client/webapp-layout/header/tutorials/media/import_tasks.mp4", "client");
-  api.addAssets("lib/client/webapp-layout/header/tutorials/media/customize_view.mp4", "client");
 
   api.use("meteorspark:app@0.3.0", client);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", client);
