@@ -67,6 +67,19 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/api.coffee", server);
   api.addFiles("lib/server/methods.coffee", server);
 
+  api.addAssets("lib/client/project-header-tutorial/tutorials/media/create_task.mp4", client);
+  api.addAssets("lib/client/project-header-tutorial/tutorials/media/customize_view.mp4", client);
+  api.addAssets("lib/client/project-header-tutorial/tutorials/media/import_tasks.mp4", client);
+  api.addAssets("lib/client/project-header-tutorial/tutorials/media/set_name.mp4", client);
+
+  api.addFiles("lib/client/project-header-tutorial/tutorials/tutorials.sass", client);
+  api.addFiles("lib/client/project-header-tutorial/tutorials/tutorials.html", client);
+  api.addFiles("lib/client/project-header-tutorial/tutorials/tutorials.coffee", client);
+
+  api.addFiles("lib/client/project-header-tutorial/tutorials-submenu.sass", client);
+  api.addFiles("lib/client/project-header-tutorial/tutorials-submenu.html", client);
+  api.addFiles("lib/client/project-header-tutorial/tutorials-submenu.coffee", client);
+
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
   

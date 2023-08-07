@@ -1,0 +1,59 @@
+<template name="tutorials">
+  <div class="tutorials-wrapper">
+    {{#each tutorials}}
+      <div class="tutorial-item {{status}}">
+        <div class="tutorial-icon">
+          {{#if tutorialIsDone}}
+            <svg class="jd-icon done"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
+          {{else}}
+            <div class="tutorial-index">{{index}}</div>
+          {{/if}}
+        </div>
+        <div class="tutorial-body">
+          <div class="tutorial-title">{{title}}</div>
+          <div class="tutorial-subtitle">{{subtitle}}</div>
+        </div>
+        <div class="tutorial-instruction shadow-lg">
+          <video class="tutorial-media" loop muted>
+            <source src="{{media}}" type="video/mp4">
+          </video>
+          <div class="tutorial-instruction-btn">
+            <button class="skip btn btn-light btn-sm">Skip</button>
+            <button class="done btn btn-primary btn-sm">Done</button>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+    <div class="tutorial-item promo {{#if promoUnlocked}}unlocked{{else}}pending{{/if}}">
+      <div class="tutorial-icon">
+        {{#if promoUnlocked}}
+          <svg class="jd-icon done"><use xlink:href="/layout/icons-feather-sprite.svg#unlock"></use></svg>
+        {{else}}
+          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#lock"></use></svg>
+        {{/if}}
+      </div>
+      <div class="tutorial-body">
+        <div class="tutorial-title">Get free support</div>
+        <div class="tutorial-subtitle">1-on-1 support session with JustDo team</div>
+        {{#if promoUnlocked}}
+          {{#if requestSent}}
+            <div class="request-received-message">
+              Received, we'll get back to you shortly by email
+            </div>
+          {{else}}
+            <button class="btn btn-sm btn-success request" type="button" name="button">Request</button>
+          {{/if}}
+        {{/if}}
+      </div>
+      {{!-- <div class="tutorial-instruction shadow-lg">
+        <div class="tutorial-form">
+          Set meeting form
+        </div>
+        <div class="tutorial-instruction-btn">
+          <button class="send btn btn-primary btn-sm">Send</button>
+        </div>
+      </div> --}}
+    </div>
+  </div>
+
+</template>
