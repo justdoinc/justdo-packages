@@ -1,6 +1,8 @@
 _.extend Projects.prototype,
   # Put here methods that aren't project specific 
   createNewProject: (options, cb) ->
+    self = @
+
     if not options?
       options = {}
 
@@ -8,6 +10,8 @@ _.extend Projects.prototype,
 
     if Meteor.userId()?
       Meteor.call "createNewProject", options, (err, project_id) ->
+        if not err?
+          self.emit "post-create-new-project", project_id
         cb(err, project_id)
     else
       @logger.error("Login required in order to create a new project")
