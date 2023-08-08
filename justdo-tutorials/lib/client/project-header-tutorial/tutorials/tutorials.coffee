@@ -4,26 +4,26 @@ APP.executeAfterAppLibCode ->
 
     @tutorials = new ReactiveVar [
       {
-        "title": "Set name for JustDo",
-        "subtitle": "Effortlessly manage meetings, tracking tasks created",
+        "title": TAPi18n.__("set_justdo_name_title"),
+        "subtitle": TAPi18n.__("set_justdo_name_subtitle"),
         "media": "/packages/justdoinc_justdo-tutorials/lib/client/project-header-tutorial/tutorials/media/set_name.mp4"
         "status": "" # pending, done
       },
       {
-        "title": "Create the first Task",
-        "subtitle": "Send emails directly to tasks, maintaining a comprehensive.",
+        "title": TAPi18n.__("create_first_task_title"),
+        "subtitle": TAPi18n.__("create_first_task_subtitle"),
         "media": "/packages/justdoinc_justdo-tutorials/lib/client/project-header-tutorial/tutorials/media/create_task.mp4"
         "status": "pending"
       },
       {
-        "title": "Import Tasks",
-        "subtitle": "Send emails directly to tasks, maintaining a comprehensive.",
+        "title": TAPi18n.__("import_tasks_title"),
+        "subtitle": TAPi18n.__("import_tasks_subtitle"),
         "media": "/packages/justdoinc_justdo-tutorials/lib/client/project-header-tutorial/tutorials/media/import_tasks.mp4"
         "status": "pending"
       },
       {
-        "title": "Customize your View",
-        "subtitle": "Send emails directly to tasks, maintaining a comprehensive.",
+        "title": TAPi18n.__("customize_columns_title"),
+        "subtitle": TAPi18n.__("customize_columns_subtitle"),
         "media": "/packages/justdoinc_justdo-tutorials/lib/client/project-header-tutorial/tutorials/media/customize_view.mp4"
         "status": "pending"
       }

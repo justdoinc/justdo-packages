@@ -1,0 +1,14 @@
+{
+  "set_justdo_name_title": "Set name for JustDo",
+  "set_justdo_name_subtitle": "Simply click on the title to enter edit mode",
+  "create_first_task_title": "Create the first Task",
+  "create_first_task_subtitle": "To create tasks, you can either use the buttons on toolbar, or use keyboard shortcut ALT+ENTER / ALT+SHIFT+ENTER",
+  "import_tasks_title": "Import Tasks",
+  "import_tasks_subtitle": "You can transfer existing tasks and data to JustDo and continue seamlessly with our spreadsheet import function",
+  "customize_columns_title": "Customize your View",
+  "customize_columns_subtitle": "Control what you see on the grid by adding/removing columns, filtering tasks by their status, and more!",
+  "get_free_support_title": "Get free support",
+  "get_free_support_subtitle": "1-on-1 support session with JustDo team",
+  "request": "Request",
+  "free_support_request_received": "Received, we'll get back to you shortly by email"
+}
