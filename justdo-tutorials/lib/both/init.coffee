@@ -1,17 +1,8 @@
 default_options = {}
 
 options_schema =
-  both:
-    projects_collection:
-      type: "skip-type-check"
-      optional: false
-      bind_to_instance: true
-
-    tasks_collection:
-      type: "skip-type-check"
-      optional: false
-      bind_to_instance: true
-
+  both: {}
+  
 # options_schema
 # ==============
 #
