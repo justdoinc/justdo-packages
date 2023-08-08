@@ -1,6 +1,7 @@
 _.extend JustdoTutorials.prototype,
   _immediateInit: ->
     @_registerPlaceholderItems()
+    @_registerEventHooks()
     return
 
   _deferredInit: ->
@@ -19,3 +20,8 @@ _.extend JustdoTutorials.prototype,
       position: 200
 
     return
+  
+  _registerEventHooks: ->
+    APP.projects.on "post-create-new-project", (project_id) ->
+      $(".nav-tutorials").dropdown("toggle")
+      return
