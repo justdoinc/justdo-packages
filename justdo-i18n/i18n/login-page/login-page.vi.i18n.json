@@ -1,0 +1,24 @@
+{
+  "sign_in_message": "Đăng nhập Justdo",
+  "sign_up_message": "Bắt đầu miễn phí",
+  "sign_in_with_google": "Đăng nhập bằng Google",
+  "sign_up_with_google": "Đăng ký bằng Google",
+  "sign_in_with_azure_ad": "Đăng nhập bằng Azure AD",
+  "sign_up_with_azure_ad": "Đăng ký bằng Azure AD",  
+  "login_enter_your_email": "Nhập email",
+  "login_no_account": "Chưa có tài khoản?",
+  "login_already_have_an_account": "Bạn đã có tài khoản?",
+  "login_sign_up_now": "Đăng kí ngay",
+  "login_please_complete_the_following_to_get_going": "Vui lòng hoàn thành các bước sau để bắt đầu",
+  "login_pick_a_password": "Chọn mật khẩu",
+  "login_retype_password": "Gõ lại mật khẩu",
+  "login_i_agree_to_tc_and_pp_html": "Tôi đồng ý với <a href=\"\" class=\"terms-conditions-modal\">Điều khoản và Điều kiện</a> và <a href=\"\" class=\"privacy-policy-modal\">Chính sách Quyền riêng</a> tư của JustDo",
+  "login_forgot_password": "Quên mật khẩu?",
+  "login_click_to_redirect": "Bấm vào đây để chuyển hướng trang",
+
+  "password_recovery": "Khôi phục mật khẩu",
+  "password_recovery_title": "Đặt mật khẩu mới cho tài khoản",
+  "password_recovery_email_will_be_sent_to": "Email khôi phục mật khẩu sẽ được gửi đến",
+  "password_recovery_email_sent": "Đã gửi email khôi phục mật khẩu. Vui lòng kiểm tra email của bạn.",
+  "password_recovery_reset_password": "Đặt lại mật khẩu"
+}

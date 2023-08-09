@@ -1,3 +1,18 @@
 {
-  "show_this_page_in": "Xem trang này bằng"
+  "error": "Lỗi",
+  "close": "Đóng",
+  "next": "Tiếp theo",
+  "cancel": "Huỷ",
+  "continue": "Tiếp tục",
+  "sign_in": "Đăng nhập",
+  "sign_out": "Đăng xuất",
+  "sign_up": "Đăng ký",
+  "processing": "Đang gửi",
+  "welcome_to_justdo": "Chào mừng đến với JustDo",
+  "thank_you": "Cảm ơn",
+  "we_will_get_back_to_you_soon": "Chúng tôi sẽ phản hồi bạn sớm nhất!",
+  "first_name": "Tên",
+  "last_name": "Họ",
+  "all_rights_reserved": "Bảo lưu mọi quyền.",
+  "page_title": "JustDo - Giáp pháp cho danh mục dự án doanh nghiệp. Tất cả dự án - Tất cả đối tác - Trong cùng 1 không gian làm việc chung"
 }
