@@ -23,5 +23,5 @@ _.extend JustdoTutorials.prototype,
   
   _registerEventHooks: ->
     APP.projects.on "post-create-new-project", (project_id) ->
-      $(".nav-tutorials").dropdown("toggle")
+      $(".nav-tutorials > .dropdown-toggle").dropdown("toggle")
       return
