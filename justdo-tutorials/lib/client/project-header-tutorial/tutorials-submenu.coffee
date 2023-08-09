@@ -1,4 +1,14 @@
 APP.executeAfterAppLibCode ->
+  Template.tutorials_submenu.onRendered ->
+    # For unknown reason the below hook has trouble with Template.tutorials_submenu.events
+    # so it has to be setup like this
+    if APP.justdo_google_analytics?
+      $(".nav-tutorials > .dropdown-toggle").on "click", (e) ->
+        console.log "xxx"
+        APP.justdo_google_analytics.sendEvent "tutorial-dropdown-clicked"
+        return
+    return
+
   Template.tutorials_submenu.helpers
     showHelpDropdown: ->
       if (ui_customizations = APP.env_rv.get()?.UI_CUSTOMIZATIONS)?
