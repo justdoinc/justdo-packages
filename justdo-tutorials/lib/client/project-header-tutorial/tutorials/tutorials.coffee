@@ -4,26 +4,26 @@ APP.executeAfterAppLibCode ->
 
     @tutorials = new ReactiveVar [
       {
-        "title": TAPi18n.__("set_justdo_name_title"),
-        "subtitle": TAPi18n.__("set_justdo_name_subtitle"),
+        "title": "set_justdo_name_title",
+        "subtitle": "set_justdo_name_subtitle",
         "media": "/packages/justdoinc_justdo-tutorials/lib/client/project-header-tutorial/tutorials/media/set_name.mp4"
         "status": "" # pending, done
       },
       {
-        "title": TAPi18n.__("create_first_task_title"),
-        "subtitle": TAPi18n.__("create_first_task_subtitle"),
+        "title": "create_first_task_title",
+        "subtitle": "create_first_task_subtitle",
         "media": "/packages/justdoinc_justdo-tutorials/lib/client/project-header-tutorial/tutorials/media/create_task.mp4"
         "status": "pending"
       },
       {
-        "title": TAPi18n.__("import_tasks_title"),
-        "subtitle": TAPi18n.__("import_tasks_subtitle"),
+        "title": "import_tasks_title",
+        "subtitle": "import_tasks_subtitle",
         "media": "/packages/justdoinc_justdo-tutorials/lib/client/project-header-tutorial/tutorials/media/import_tasks.mp4"
         "status": "pending"
       },
       {
-        "title": TAPi18n.__("customize_columns_title"),
-        "subtitle": TAPi18n.__("customize_columns_subtitle"),
+        "title": "customize_columns_title",
+        "subtitle": "customize_columns_subtitle",
         "media": "/packages/justdoinc_justdo-tutorials/lib/client/project-header-tutorial/tutorials/media/customize_view.mp4"
         "status": "pending"
       }
@@ -62,8 +62,6 @@ APP.executeAfterAppLibCode ->
 
     requestSent: ->
       return Template.instance().request_sent.get()
-
-
 
   Template.tutorials.events
     "click .tutorials-wrapper .tutorial-item": (e, tpl) ->
