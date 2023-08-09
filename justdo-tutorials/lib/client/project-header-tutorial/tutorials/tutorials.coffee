@@ -78,6 +78,16 @@ APP.executeAfterAppLibCode ->
         media.play()
         media.playbackRate = 1.5
 
+      if APP.justdo_google_analytics?
+        target = "text"
+        if media
+          target = "media"
+        payload = 
+          lang: APP.justdo_i18n?.getLang()
+          tutorial_title: @title
+        
+        APP.justdo_google_analytics.sendEvent "tutorial-dropdown-mouseenter-tutorial-#{target}", payload
+
       return
 
     "click .tutorial-instruction-btn .btn": (e, tpl) ->
@@ -88,6 +98,12 @@ APP.executeAfterAppLibCode ->
         $(".promo").addClass "active"
       else
         tutorials[@index]?.status = "active"
+      
+      if APP.justdo_google_analytics?
+        payload = 
+          lang: APP.justdo_i18n?.getLang()
+          tutorial_title: @title
+        APP.justdo_google_analytics.sendEvent "tutorial-dropdown-btn-clicked", payload
 
       tpl.tutorials.set tutorials
 
@@ -95,5 +111,6 @@ APP.executeAfterAppLibCode ->
 
     "click .promo .request": (e, tpl) ->
       tpl.request_sent.set true
+      APP.justdo_google_analytics?.sendEvent "tutorial-dropdown-support-requested", {lang: APP.justdo_i18n?.getLang()}
 
       return
