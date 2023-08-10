@@ -112,5 +112,21 @@ APP.executeAfterAppLibCode ->
     "click .promo .request": (e, tpl) ->
       tpl.request_sent.set true
       APP.justdo_google_analytics?.sendEvent "tutorial-dropdown-support-requested", {lang: APP.justdo_i18n?.getLang()}
+      request_data =
+        name: JustdoHelpers.displayName Meteor.user()
+        email: JustdoHelpers.currentUserMainEmail()
+        campaign: APP.justdo_promoters_campaigns?.getCampaignDoc()?._id
+        source_template: "tutorial"
+
+      tz = moment.tz.guess()
+      if _.isString tz
+        request_data.tz = tz
+
+      Meteor.call "contactRequest", request_data, (err) ->
+        if err?
+          tpl.request_sent.set false
+          JustdoSnackbar.show 
+            text: err.reason or err
+          return
 
       return
