@@ -4,7 +4,6 @@ APP.executeAfterAppLibCode ->
     # so it has to be setup like this
     if APP.justdo_google_analytics?
       $(".nav-tutorials > .dropdown-toggle").on "click", (e) ->
-        console.log "xxx"
         APP.justdo_google_analytics.sendEvent "tutorial-dropdown-clicked"
         return
     return
