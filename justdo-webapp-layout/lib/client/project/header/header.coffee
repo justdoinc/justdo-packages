@@ -94,9 +94,35 @@ APP.executeAfterAppLibCode ->
         return true
       return false
 
+  # Code to insert sanitized text without affecting caret position.
+  # Taken from https://stackoverflow.com/questions/21205785/how-to-make-html5-contenteditable-div-allowing-only-text-in-firefox
+  insertTextAtSelection = (div, txt) ->
+    # get selection area so we can position insert
+    sel = window.getSelection()
+    text = div.textContent
+    before = Math.min(sel.focusOffset, sel.anchorOffset)
+    after = Math.max(sel.focusOffset, sel.anchorOffset)
+    # ensure string ends with \n so it displays properly
+    afterStr = text.substring(after)
+    if afterStr == ""
+      afterStr = "\n"
+    # insert content
+    div.textContent = text.substring(0, before) + txt + afterStr
+    # restore cursor at correct position
+    sel.removeAllRanges()
+    range = document.createRange()
+    # childNodes[0] should be all the text
+    range.setStart div.childNodes[0], before + txt.length
+    range.setEnd div.childNodes[0], before + txt.length
+    sel.addRange range
+    return
+
   Template.project_name.events
-    "input .project-name-wrapper #project-name": (e,tpl) -> 
-      $("#project-name").html $("#project-name").text()
+    "paste .project-name-wrapper #project-name": (e,tpl) -> 
+      e.preventDefault()
+      e = e.originalEvent or e
+      new_title = e.clipboardData.getData "text/plain"
+      insertTextAtSelection $("#project-name").get(0), new_title
       return
 
     "keypress .project-name-wrapper #project-name": (e,tpl) ->
