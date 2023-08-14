@@ -65,11 +65,29 @@ APP.executeAfterAppLibCode ->
 
   Template.project_name.helpers
     projectName: ->
+      # IMPORTANT!!!
+      # This helper returns and renders pure html which make xss attack possible
+      # Currently the only user input is project_name and it's been pass through xssGuard to prevent such attacks
+      # In case additional user-specified data is returned in this method, MAKE SURE IT PASSES THROUGH XSS GUARD BEFORE RETURNING
       if project = curProj()
-        project_name = project.getProjectDoc({fields: {title: 1}})?.title or "Untitled JustDo"
-        return project_name
+        project_name = JustdoHelpers.xssGuard project.getProjectDoc({fields: {title: 1}})?.title
+        is_admin = project.isAdmin()
+        is_untitled = project.isUntitled()
+        contenteditable = false
+        active_class = ""
 
-      return
+        if is_untitled
+          project_name = "Untitled JustDo"
+
+        project_name_el = """<div id="project-name" spellcheck="false" """
+
+        if is_admin
+          contenteditable = true
+          active_class = "active"
+
+        project_name_el += """class="#{active_class}" contenteditable=#{contenteditable}>#{project_name}</div>"""
+
+        return project_name_el
 
     isUserProjectAdmin: ->
       if curProj()?.isAdmin?()
@@ -77,22 +95,26 @@ APP.executeAfterAppLibCode ->
       return false
 
   Template.project_name.events
+    "input .project-name-wrapper #project-name": (e,tpl) -> 
+      $("#project-name").html $("#project-name").text()
+      return
+
     "keypress .project-name-wrapper #project-name": (e,tpl) ->
       if e.keyCode == 13
         e.preventDefault()
-        new_title = $(e.target).closest("#project-name").text()
+        new_title = $("#project-name").text()
         curProj().updateProjectName new_title
-
+        
         $("#project-name").blur()
 
       return
 
     "blur .project-name-wrapper #project-name": (e, tpl) ->
-      new_title = $(e.target).closest("#project-name").text()
+      new_title = $("#project-name").text()
       curProj().updateProjectName new_title
 
       return
-
+    
   #
   # project_settings template
   #
