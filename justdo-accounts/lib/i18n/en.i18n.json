@@ -1,0 +1,8 @@
+{
+  "too-short": "Consist of at least __minimum_length__ characters",
+  "missing-number": "Have at least one number",
+  "missing-special-sign": "Have at least one special character",
+  "atleast-one-lowercase": "Have at least one lower case English letter",
+  "atleast-one-uppercase": "Have at least one capital English letter",
+  "too-similar": "Not include your name, or parts of your email"
+}

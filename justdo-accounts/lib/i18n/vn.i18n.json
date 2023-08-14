@@ -1,0 +1,8 @@
+{
+  "too-short": "Bao gồm ít nhất __minimum_length__ ký tự",
+  "missing-number": "Phải có ít nhất 1 chữ số",
+  "missing-special-sign": "Phải có ít nhất 1 ký tự đặc biệt",
+  "atleast-one-lowercase": "Phải có ít nhất 1 chữ cái tiếng Anh viết thường",
+  "atleast-one-uppercase": "Phải có ít nhất 1 chữ cái tiếng Anh viết hoa",
+  "too-similar": "Không bao gồm tên, hoặc trùng với địa chỉ email của bạn"
+}
