@@ -19,9 +19,12 @@ Template.justdo_files_files_preview.onCreated ->
 
   @showPrevFile = ->
     previewable_files_under_task = @sorted_previewable_files_under_task_rv.get()
-    new_index = @active_file_index_rv.get() - 1
+    cur_index = @active_file_index_rv.get()
+    
+    if cur_index is 0
+      return
 
-    if new_index < 0
+    if (new_index = cur_index - 1) < 0
       new_index = 0
 
     updated_active_file = previewable_files_under_task[new_index]
@@ -33,9 +36,12 @@ Template.justdo_files_files_preview.onCreated ->
   @showNextFile = ->    
     previewable_files_under_task = @sorted_previewable_files_under_task_rv.get()
     previewable_files_count = previewable_files_under_task.length - 1
-    new_index = @active_file_index_rv.get() + 1
+    cur_index = @active_file_index_rv.get()
 
-    if new_index > previewable_files_count
+    if cur_index is previewable_files_count
+      return
+
+    if (new_index = cur_index + 1) > previewable_files_count
       new_index = previewable_files_count
 
     updated_active_file = previewable_files_under_task[new_index]
