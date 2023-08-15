@@ -1,4 +1,5 @@
 {
+  "password-must": "Password must:",
   "too-short": "Consist of at least %d characters",
   "missing-number": "Have at least one number",
   "missing-special-sign": "Have at least one special character",
