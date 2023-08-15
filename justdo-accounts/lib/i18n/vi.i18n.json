@@ -1,5 +1,5 @@
 {
-  "pasword-must": "Mật khẩu phải:",
+  "password-must": "Mật khẩu phải:",
   "too-short": "Bao gồm ít nhất %d ký tự",
   "missing-number": "Phải có ít nhất 1 chữ số",
   "missing-special-sign": "Phải có ít nhất 1 ký tự đặc biệt",
