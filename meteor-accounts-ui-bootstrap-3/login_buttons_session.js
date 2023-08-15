@@ -67,6 +67,9 @@
     },
 
     errorMessage: function(message) {
+      if (_.isFunction(message)) {
+        message = message();
+      }
       this._set("errorMessage", message);
       this._set("infoMessage", null);
       this.ensureMessageVisible();

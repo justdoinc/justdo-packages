@@ -51,6 +51,7 @@ Package.on_use(function (api) {
 
     // translations
     'i18n/en.i18n.js',
+    'i18n/vi.i18n.js',
     'i18n.js',
 
     'login_buttons.html',
