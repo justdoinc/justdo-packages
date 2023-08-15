@@ -13,27 +13,27 @@ _.extend JustdoAccounts.prototype,
 
       @_password_requirements = [
         code: "too-short"
-        reason: TAPi18n.__ "too-short", {minimum_length}
+        reason: ["too-short", minimum_length]
         validate: (password) -> password.length >= minimum_length
       ,
         code: "missing-number"
-        reason: TAPi18n.__ "missing-number"
+        reason: ["missing-number"]
         validate: (password) -> /([\d])/i.test(password)
       ,
         code: "missing-special-sign"
-        reason: TAPi18n.__ "missing-special-sign"
+        reason: ["missing-special-sign"]
         validate: (password) -> /[*@!#$%&\-\_\+\=\[\]\\\|;:'"/?,<.>()^~{}]+/.test(password)
       ,
         code: "atleast-one-lowercase"
-        reason: TAPi18n.__ "atleast-one-lowercase"
+        reason: ["atleast-one-lowercase"]
         validate: (password) -> /[a-z]/.test(password)
       ,
         code: "atleast-one-uppercase"
-        reason: TAPi18n.__ "atleast-one-uppercase"
+        reason: ["atleast-one-uppercase"]
         validate: (password) -> /[A-Z]/.test(password)
       ,
         code: "too-similar"
-        reason: TAPi18n.__ "too-similar"
+        reason: ["too-similar"]
         validate: (password, user_inputs) ->
           if password.trim().length == 0
             return false

@@ -1,5 +1,5 @@
 {
-  "too-short": "Bao gồm ít nhất __minimum_length__ ký tự",
+  "too-short": "Bao gồm ít nhất %d ký tự",
   "missing-number": "Phải có ít nhất 1 chữ số",
   "missing-special-sign": "Phải có ít nhất 1 ký tự đặc biệt",
   "atleast-one-lowercase": "Phải có ít nhất 1 chữ cái tiếng Anh viết thường",
