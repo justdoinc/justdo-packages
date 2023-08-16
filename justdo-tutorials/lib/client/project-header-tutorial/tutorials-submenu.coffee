@@ -5,6 +5,7 @@ APP.executeAfterAppLibCode ->
     if APP.justdo_google_analytics?
       $(".nav-tutorials > .dropdown-toggle").on "click", (e) ->
         APP.justdo_google_analytics.sendEvent "tutorial-dropdown-clicked"
+        APP.justdo_tutorials.force_tutorial_dropdown_open_hook?.off?()
         return
     return
 
@@ -14,6 +15,11 @@ APP.executeAfterAppLibCode ->
         return ui_customizations.indexOf("no-help") == -1
 
       return true
+  
+  Template.tutorials_submenu.events
+    "click .dropdown-menu": -> 
+      APP.justdo_tutorials.force_tutorial_dropdown_open_hook?.off?()
+      return
 
   Template.tutorials_submenu_dropdown.helpers
     tutorials: -> [] # JustdoTutorials.getRelevantTutorialsToState()
