@@ -137,6 +137,10 @@ _.extend JustdoNews.prototype,
     if Meteor.isClient
       @category_dep.depend()
       @news_dep.depend()
+      
+    if not category? or not news_id_or_alias?
+      return
+
     return _.find @news[category], (news) -> (news._id is news_id_or_alias) or (news_id_or_alias in news.aliases)
 
   getAllRegisteredCategories: -> _.keys @news
