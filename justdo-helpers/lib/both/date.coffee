@@ -57,7 +57,7 @@ _.extend JustdoHelpers,
     days = Math.floor(seconds / days_in_second)
     hours = Math.floor((seconds % days_in_second) / hours_in_second)
     minutes = Math.floor((seconds % hours_in_second) / minutes_in_second)
-    remaining_seconds = seconds % minutes_in_second
+    remaining_seconds = Math.floor(seconds % minutes_in_second)
 
     # Create strings to hold the formatted time
     day_str = if days > 0 then days + " day" + (if days > 1 then "s" else "") else ""
