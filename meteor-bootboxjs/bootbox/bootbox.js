@@ -584,7 +584,7 @@
     var innerDialog = dialog.find(".modal-dialog");
     var body = dialog.find(".modal-body");
     var buttons = options.buttons;
-    var buttonStr = "";
+    var buttonArr = [];
     var callbacks = {
       onEscape: options.onEscape
     };
@@ -597,12 +597,12 @@
       );
     }
 
+    var curButton = null;
     each(buttons, function(key, button) {
+      curButton = $("<button data-bb-handler='" + key + "' type='button' class='btn " + button.className + "'></button>");
+      curButton.append(button.label);
+      buttonArr.push(curButton);
 
-      // @TODO I don't like this string appending to itself; bit dirty. Needs reworking
-      // can we just build up button elements instead? slower but neater. Then button
-      // can just become a template too
-      buttonStr += "<button data-bb-handler='" + key + "' type='button' class='btn " + button.className + "'>" + button.label + "</button>";
       callbacks[key] = button.callback;
     });
 
@@ -640,9 +640,9 @@
       dialog.find(".modal-title").html(options.title);
     }
 
-    if (buttonStr.length) {
+    if (buttonArr.length) {
       body.after(templates.footer);
-      dialog.find(".modal-footer").html(buttonStr);
+      dialog.find(".modal-footer").append(buttonArr);
     }
 
 
