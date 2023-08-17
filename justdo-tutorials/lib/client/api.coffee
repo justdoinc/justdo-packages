@@ -27,7 +27,7 @@ _.extend JustdoTutorials.prototype,
     return
   
   _registerEventHooks: ->
-    if APP.justdo_promoters_campaigns.getCampaignDoc().open_tutorial_dropdown_upon_project_creation is true
+    if APP.justdo_promoters_campaigns?.getCampaignDoc().open_tutorial_dropdown_upon_project_creation is true
       showTutorialDropdownAndPrevrentClose = =>
         $(".nav-tutorials > .dropdown-toggle").dropdown("toggle")
         @force_tutorial_dropdown_open_hook?.off?()
