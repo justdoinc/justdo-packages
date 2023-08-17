@@ -117,6 +117,7 @@ APP.executeAfterAppLibCode ->
         email: JustdoHelpers.currentUserMainEmail()
         campaign: APP.justdo_promoters_campaigns?.getCampaignDoc()?._id
         source_template: "tutorial"
+        message: "#{JustdoHelpers.displayName Meteor.user()} requested a 1:1 tutorial"
 
       tz = moment.tz.guess()
       if _.isString tz
