@@ -3,7 +3,9 @@ _.extend JustdoI18n.prototype,
     @lang_rv = new ReactiveVar amplify.store JustdoI18n.amplify_lang_key
 
     @tap_i18n_set_lang_tracker = Tracker.autorun =>
-      TAPi18n.setLanguage @getLang()
+      lang = @getLang()
+      TAPi18n.setLanguage lang
+      i18n.setLanguage lang
       return
 
     @_setupBeforeUserSignUpHook()
