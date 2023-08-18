@@ -75,6 +75,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/server/methods.coffee", server);
   api.addFiles("lib/server/publications.coffee", server);
 
+  api.addFiles("lib/client/modal-button-label/modal-button-label.html", client);
+
   api.addFiles("lib/client/lang-selector-dropdown/lang-selector-dropdown.sass", client);
   api.addFiles("lib/client/lang-selector-dropdown/lang-selector-dropdown.html", client);
   api.addFiles("lib/client/lang-selector-dropdown/lang-selector-dropdown.coffee", client);
