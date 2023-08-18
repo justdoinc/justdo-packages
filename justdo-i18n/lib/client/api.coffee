@@ -5,7 +5,7 @@ _.extend JustdoI18n.prototype,
     @tap_i18n_set_lang_tracker = Tracker.autorun =>
       lang = @getLang()
       TAPi18n.setLanguage lang
-      i18n.setLanguage lang
+      i18n?.setLanguage lang
       return
 
     @_setupBeforeUserSignUpHook()
