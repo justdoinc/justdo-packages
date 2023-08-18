@@ -3,10 +3,6 @@ _.extend JustdoI18n.prototype,
     @lang_rv = new ReactiveVar amplify.store JustdoI18n.amplify_lang_key
 
     @tap_i18n_set_lang_tracker = Tracker.autorun =>
-      # To trigger reacticity from justdo_promoters_campaigns's setupUrlCampaignDetector
-      # As getLang from campaign doc will return the default one upon first load
-      # Since it consumes the campaign id in url, rewrites the url and only then stores the campaign id in local storage
-      Router.current() 
       TAPi18n.setLanguage @getLang()
       return
 
