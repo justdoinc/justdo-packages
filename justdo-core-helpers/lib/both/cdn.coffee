@@ -24,6 +24,11 @@ _.extend JustdoCoreHelpers,
   getCDNDomain: -> cdn_domain
 
   getCDNUrl: (path) ->
+    if Meteor.isServer
+      app_version = process.env.APP_VERSION
+    if Meteor.isClient
+      app_version = env.APP_VERSION
+
     if not cdn?
       return path
 
@@ -32,6 +37,6 @@ _.extend JustdoCoreHelpers,
 
       return path
 
-    return "#{cdn}#{path}"
+    return "#{cdn}#{path}?v=#{app_version}"
 
 
