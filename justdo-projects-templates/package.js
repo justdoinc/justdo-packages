@@ -60,6 +60,31 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
+  api.addFiles("lib/client/templates/templates.sass", client);
+  api.addFiles("lib/client/templates/templates.html", client);
+  api.addFiles("lib/client/templates/templates.coffee", client);
+  api.addAssets("lib/client/templates/assets/user1.jpg", client);
+  api.addAssets("lib/client/templates/assets/user2.jpg", client);
+  api.addAssets("lib/client/templates/assets/user3.jpg", client);
+  api.addAssets("lib/client/templates/assets/user4.jpg", client);
+  api.addAssets("lib/client/templates/assets/user5.jpg", client);
+  api.addAssets("lib/client/templates/assets/user6.jpg", client);
+  api.addAssets("lib/client/templates/assets/user7.jpg", client);
+  api.addAssets("lib/client/templates/assets/user8.jpg", client);
+  api.addAssets("lib/client/templates/assets/user9.jpg", client);
+  api.addAssets("lib/client/templates/assets/user10.jpg", client);
+  api.addAssets("lib/client/templates/assets/user11.jpg", client);
+  api.addAssets("lib/client/templates/assets/user12.jpg", client);
+  api.addAssets("lib/client/templates/assets/user13.jpg", client);
+  api.addAssets("lib/client/templates/assets/user14.jpg", client);
+  api.addAssets("lib/client/templates/assets/user15.jpg", client);
+  api.addAssets("lib/client/templates/assets/user16.jpg", client);
+  api.addAssets("lib/client/templates/assets/user17.jpg", client);
+  api.addAssets("lib/client/templates/assets/user18.jpg", client);
+  api.addAssets("lib/client/templates/assets/user19.jpg", client);
+  api.addAssets("lib/client/templates/assets/user20.jpg", client);
+  api.addAssets("lib/client/templates/assets/user21.jpg", client);
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);

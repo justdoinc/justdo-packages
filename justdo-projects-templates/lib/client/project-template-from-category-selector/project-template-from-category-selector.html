@@ -14,7 +14,7 @@
       {{/each}}
     </div>
 
-    {{#with activeTemplate}}
+    <!-- {{#with activeTemplate}}
       <div class="template-demo-container">
         {{#if rerenderTrigger}}
           {{> project_template_demo img_src=demo_img_src}}
@@ -22,9 +22,22 @@
           {{> project_template_demo img_src=demo_img_src}}
         {{/if}}
       </div>
-    {{/with}}
-  </div>
+    {{/with}} -->
 
+
+    {{!--
+        template_name (see -> /client/templates/templates.coffee):
+          - "home_builders_inc"
+          - "it_firm"
+          - "movie_production"
+          - "blank"
+     --}}
+    <div class="template-demo-container">
+      {{> template_html template_name="movie_production"}}
+    </div>
+
+
+  </div>
 </template>
 
 <template name="project_template_demo">

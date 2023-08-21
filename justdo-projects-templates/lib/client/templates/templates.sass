@@ -1,0 +1,126 @@
+.template-html-wrapper
+  padding: 20px
+  overflow: auto
+
+.template-html-table
+  width: 100%
+  border-collapse: collapse
+  background-color: white
+  table-layout: fixed
+  td
+    border: 1px dashed rgba(201, 199, 199, 1)
+    padding: 2px 4px
+    &:first-child
+      border-left: none
+    &:last-child
+      border-right: none
+  .tr-header
+    background-color: #f3f2f1
+    td
+      border-bottom-style: solid
+      padding-left: 6px
+  .td-subject
+    padding: 0 4px
+  .td-state
+    width: 121px
+  .subject
+    display: flex
+    align-items: center
+    justify-content: space-between
+    .subject-left,
+    .subject-right
+      display: flex
+      align-items: center
+    .hierarchy-wrapper
+      height: 32px
+      display: flex
+      &.right-padding
+        padding-right: 16px
+        &.extra-padding
+          padding-right: 22px
+    .hierarchy-line
+      height: 100%
+      width: 1px
+      background-color: #c8cfd2
+      margin: 0 8px
+    .priority
+      width: 6px
+      height: 24px
+      background-color: rgb(237,237,237)
+    .spacer
+      width: 16px
+    .expand-icon
+      position: relative
+      display: flex
+      height: 32px
+      align-items: center
+      .hierarchy-line
+        position: absolute
+        bottom: 0
+        top: 22px
+        height: auto
+    .expand
+      stroke-width: 3
+      fill: none
+      width: 12px
+      height: 12px
+      padding: 0
+      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 0px 6px rgba(0, 0, 0, 0.1)
+      background-color: white
+      border-radius: 2px
+      border: 1px solid #546e7a
+      color: #546e7a
+      margin: 0 5px
+    .more
+      padding: 0
+      width: 14px
+      height: 20px
+      opacity: 0.4
+    .task-id
+      font-size: 12px
+      font-weight: normal
+      padding: 0px 4px
+      width: 35px
+      background-color: #eeeff2
+      color: #525F7F
+      border: 1px solid rgba(82, 95, 127, 0.2)
+      border-radius: 3px
+      text-align: center
+      box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08)
+      margin-right: 6px
+    .avatar
+      width: 28px
+      height: 28px
+      background-color: blue
+      border-radius: 100%
+      margin: 2px 0
+      border: 2px solid white
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.16)
+    .title
+      margin-left: 4px
+
+  .state
+    border-radius: 3px
+    padding: 4px
+    height: 22px
+    display: flex
+    align-items: center
+    white-space: nowrap
+    &.null-state
+      background-color: white
+    &.pending,
+    &.duplicate
+      background-color: white
+      color: black
+    &.in-progress
+      background-color: #0288d1
+      color: #ffffff
+    &.done
+      background-color: #38B000
+      color: #ffffff
+    &.cancelled
+      background-color: #90a4ae
+      color: #ffffff
+    &.on-hold
+      background-color: #d32f2f
+      color: #ffffff
