@@ -4,20 +4,20 @@
       {{> header}}
 
         {{#if $not initialUserStateReady}}
-          {{> global_loader message="Getting Ready..."}}
+          {{> global_loader message="loader_getting_ready"}}
         {{else}}
           {{#if loginStateIs "loading"}}
-            {{> global_loader message="Getting Ready..."}}
+            {{> global_loader message="loader_getting_ready"}}
           {{else}}
             {{#if loginStateIs "logged-out"}}
               {{#if isInitialLoginState}}
-                {{> global_loader message="Getting Ready..."}}
+                {{> global_loader message="loader_getting_ready"}}
               {{else}}
-                {{> global_loader message="Logging out..."}}
+                {{> global_loader message="loader_logging_out"}}
               {{/if}}
             {{else}}
               {{#if userRequirePostRegistrationInit}}
-                {{> global_loader message="Initiating..."}}
+                {{> global_loader message="loader_initiating"}}
               {{else}}
                 <div class="page-container page-{{currentPageName}}">
                   {{> yield}}
