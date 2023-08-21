@@ -141,6 +141,8 @@ _.extend JustdoNews.prototype,
     if not category? or not news_id_or_alias?
       return
 
-    return _.find @news[category], (news) -> (news._id is news_id_or_alias) or (news_id_or_alias in news.aliases)
+    return _.find @news[category], (news) -> 
+      news_aliases = news.aliases or []
+      return (news._id is news_id_or_alias) or (news_id_or_alias in news_aliases)
 
   getAllRegisteredCategories: -> _.keys @news
