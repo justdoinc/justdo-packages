@@ -6,7 +6,6 @@ APP.getEnv (env) ->
     label: "IT Firm"
     categories: ["getting-started"]
     order: 110
-    demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/template-categories/getting-started/it-firm.png"
     template:
       tasks: [
         title: "R&D"
@@ -140,5 +139,30 @@ APP.getEnv (env) ->
           ]
         ]
       ]
-
+    demo_html_template: [
+      { "level": 0, "expand_state": "minus", "task_id": "1", "title": "R&D", "state_class": "pending", "state_title": "Pending" },
+      { "level": 1, "expand_state": "minus", "task_id": "25", "title": "Mobile App Development", "state_class": "pending", "state_title": "Pending" },
+      { "level": 2, "expand_state": "minus", "task_id": "45", "title": "Sprints", "state_class": "pending", "state_title": "Pending" },
+      { "level": 3, "task_id": "47", "title": "v0.0.1 (POC)", "state_class": "done", "state_title": "Done", "extra_padding": "extra-padding" },
+      { "level": 3, "expand_state": "minus", "task_id": "63", "title": "v1.0.0", "state_class": "in-progress", "state_title": "In progress" },
+      { "level": 4, "expand_state": "minus", "task_id": "53", "title": "Implement new feature 1", "state_class": "in-progress", "state_title": "In progress" },
+      { "level": 5, "expand_state": "minus", "task_id": "8", "title": "Design & UX/UI", "state_class": "in-progress", "state_title": "In progress" },
+      { "level": 6, "task_id": "54", "title": "Requirements Gathering", "state_class": "in-progress", "state_title": "In progress", "extra_padding": "extra-padding" },
+      { "level": 6, "task_id": "9", "title": "Wireframes", "state_class": "done", "state_title": "Done", "extra_padding": "extra-padding" },
+      { "level": 6, "task_id": "10", "title": "User Interface Design", "state_class": "done", "state_title": "Done", "extra_padding": "extra-padding" },
+      { "level": 6, "task_id": "11", "title": "User Experience Design", "state_class": "cancelled", "state_title": "Cancelled", "extra_padding": "extra-padding" },
+      { "level": 5, "expand_state": "minus", "task_id": "14", "title": "Backend Development", "state_class": "in-progress", "state_title": "In progress" },
+      { "level": 6, "task_id": "35", "title": "Feature B", "state_class": "pending", "state_title": "Pending", "extra_padding": "extra-padding" },
+      { "level": 5, "expand_state": "minus", "task_id": "13", "title": "Frontend Development", "state_class": "in-progress", "state_title": "In progress" },
+      { "level": 6, "task_id": "34", "title": "Feature A", "state_class": "on-hold", "state_title": "On hold", "extra_padding": "extra-padding" },
+      { "level": 5, "expand_state": "minus", "task_id": "60", "title": "QA", "state_class": "pending", "state_title": "Pending" },
+      { "level": 6, "task_id": "61", "title": "Write auto-test 1", "state_class": "in-progress", "state_title": "In progress", "extra_padding": "extra-padding" },
+      { "level": 6, "task_id": "62", "title": "Write auto-test 2", "state_class": "in-progress", "state_title": "In progress", "extra_padding": "extra-padding" },
+      { "level": 2, "expand_state": "plus", "task_id": "71", "title": "v200", "state_class": "done", "state_title": "Done" },
+      { "level": 1, "expand_state": "plus", "task_id": "46", "title": "Roadmap", "state_class": "pending", "state_title": "Pending" },
+      { "level": 1, "expand_state": "plus", "task_id": "16", "title": "Mobile App QA", "state_class": "pending", "state_title": "Pending" },
+      { "level": 0, "expand_state": "plus", "task_id": "43", "title": "Finance", "state_class": "pending", "state_title": "Pending" },
+      { "level": 0, "expand_state": "plus", "task_id": "55", "title": "Customer service", "state_class": "pending", "state_title": "Pending" },
+      { "level": 0, "expand_state": "plus", "task_id": "41", "title": "HR", "state_class": "pending", "state_title": "Pending" },
+    ]
   return

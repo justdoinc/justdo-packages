@@ -7,7 +7,6 @@ APP.getEnv (env) ->
     label: "Movies Production"
     categories: ["getting-started"]
     order: 130
-    demo_img_src: "/packages/justdoinc_justdo-new-project-templates/lib/template-categories/getting-started/movies-production.png"
     template:
       tasks: [
         title: "Movies"
@@ -141,5 +140,25 @@ APP.getEnv (env) ->
           ]
         ]
       ]
-
+    demo_html_template: [
+      { "level": 0, "expand_state": "minus", "task_id": "42", "title": "Movies", "state_class": "pending", "state_title": "Pending" },
+      { "level": 1, "expand_state": "minus", "task_id": "43", "title": "Sleeping beauty", "state_class": "in-progress", "state_title": "in-progress" },
+      { "level": 2, "expand_state": "minus", "task_id": "47", "title": "Development", "state_class": "in-progress", "state_title": "in-progress" },
+      { "level": 3, "task_id": "52", "title": "Evaluating and acquiring scripts or story ideas", "state_class": "pending", "state_title": "Pending", "extra_padding": "extra-padding" },
+      { "level": 3, "task_id": "53", "title": "Developing story concepts", "state_class": "in-progress", "state_title": "in-progress", "extra_padding": "extra-padding" },
+      { "level": 3, "expand_state": "minus", "task_id": "54", "title": "Attaching key talent", "state_class": "pending", "state_title": "Pending" },
+      { "level": 4, "task_id": "55", "title": "Potential actors", "state_class": "cancelled", "state_title": "Cancelled", "extra_padding": "extra-padding" },
+      { "level": 4, "task_id": "56", "title": "Directors", "state_class": "done", "state_title": "Done", "extra_padding": "extra-padding" },
+      { "level": 2, "expand_state": "plus", "task_id": "48", "title": "Pre-Production", "state_class": "pending", "state_title": "Pending" },
+      { "level": 2, "expand_state": "plus", "task_id": "49", "title": "Post-Production", "state_class": "on-hold", "state_title": "On hold" },
+      { "level": 2, "expand_state": "plus", "task_id": "51", "title": "Marketing and Distribution", "state_class": "cancelled", "state_title": "Cancelled" },
+      { "level": 1, "expand_state": "plus", "task_id": "79", "title": "Snow white", "state_class": "in-progress", "state_title": "In progress" },
+      { "level": 1, "task_id": "84", "title": "Robin hood - completed", "state_class": "done", "state_title": "Done", "extra_padding": "extra-padding" },
+      { "level": 1, "expand_state": "minus", "task_id": "3", "title": "Finance", "state_class": "in-progress", "state_title": "In progress" },
+      { "level": 2, "expand_state": "minus", "task_id": "76", "title": "Funding identification and procurement", "state_class": "pending", "state_title": "Pending" },
+      { "level": 3, "expand_state": "plus", "task_id": "72", "title": "Secure funds for Sleeping Beauty from GateFlix", "state_class": "pending", "state_title": "Pending" },
+      { "level": 2, "task_id": "77", "title": "Cash flow management", "state_class": "in-progress", "state_title": "In progress", "extra_padding": "extra-padding" },
+      { "level": 2, "task_id": "78", "title": "Contract negotiation and management", "state_class": "pending", "state_title": "Pending", "extra_padding": "extra-padding" },
+      { "level": 0, "expand_state": "plus", "task_id": "72", "title": "HR", "state_class": "pending", "state_title": "Pending" }
+    ]
   return

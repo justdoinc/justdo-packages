@@ -16,3 +16,6 @@ APP.justdo_projects_templates?.registerTemplate
       users: ["performing_user"]
       perform_as: "performing_user"
     ]
+  demo_html_template: [
+    { "level": 0, "task_id": "1", "title": "My First Task", "state_class": "pending", "state_title": "Pending" }
+  ]

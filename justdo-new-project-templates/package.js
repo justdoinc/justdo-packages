@@ -86,11 +86,8 @@ Package.onUse(function (api) {
 
   api.addFiles("lib/template-categories/getting-started/category-registrar.coffee", both);
   api.addFiles("lib/template-categories/getting-started/home-builders-inc.coffee", both);
-  api.addAssets("lib/template-categories/getting-started/home-builders-inc.png", client);
   api.addFiles("lib/template-categories/getting-started/it-firm.coffee", both);
-  api.addAssets("lib/template-categories/getting-started/it-firm.png", client);
   api.addFiles("lib/template-categories/getting-started/movies-production.coffee", both);
-  api.addAssets("lib/template-categories/getting-started/movies-production.png", client);
 
   api.export("JustdoNewProjectTemplates", both);
 });
