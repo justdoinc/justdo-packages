@@ -60,30 +60,30 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
-  api.addFiles("lib/client/templates/templates.sass", client);
-  api.addFiles("lib/client/templates/templates.html", client);
-  api.addFiles("lib/client/templates/templates.coffee", client);
-  api.addAssets("lib/client/templates/assets/user1.jpg", client);
-  api.addAssets("lib/client/templates/assets/user2.jpg", client);
-  api.addAssets("lib/client/templates/assets/user3.jpg", client);
-  api.addAssets("lib/client/templates/assets/user4.jpg", client);
-  api.addAssets("lib/client/templates/assets/user5.jpg", client);
-  api.addAssets("lib/client/templates/assets/user6.jpg", client);
-  api.addAssets("lib/client/templates/assets/user7.jpg", client);
-  api.addAssets("lib/client/templates/assets/user8.jpg", client);
-  api.addAssets("lib/client/templates/assets/user9.jpg", client);
-  api.addAssets("lib/client/templates/assets/user10.jpg", client);
-  api.addAssets("lib/client/templates/assets/user11.jpg", client);
-  api.addAssets("lib/client/templates/assets/user12.jpg", client);
-  api.addAssets("lib/client/templates/assets/user13.jpg", client);
-  api.addAssets("lib/client/templates/assets/user14.jpg", client);
-  api.addAssets("lib/client/templates/assets/user15.jpg", client);
-  api.addAssets("lib/client/templates/assets/user16.jpg", client);
-  api.addAssets("lib/client/templates/assets/user17.jpg", client);
-  api.addAssets("lib/client/templates/assets/user18.jpg", client);
-  api.addAssets("lib/client/templates/assets/user19.jpg", client);
-  api.addAssets("lib/client/templates/assets/user20.jpg", client);
-  api.addAssets("lib/client/templates/assets/user21.jpg", client);
+  api.addFiles("lib/client/project-template-from-category-selector/demo-html-template/demo-html-template.sass", client);
+  api.addFiles("lib/client/project-template-from-category-selector/demo-html-template/demo-html-template.html", client);
+  api.addFiles("lib/client/project-template-from-category-selector/demo-html-template/demo-html-template.coffee", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user1.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user2.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user3.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user4.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user5.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user6.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user7.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user8.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user9.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user10.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user11.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user12.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user13.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user14.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user15.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user16.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user17.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user18.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user19.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user20.jpg", client);
+  api.addAssets("lib/client/project-template-from-category-selector/demo-html-template/assets/user21.jpg", client);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
