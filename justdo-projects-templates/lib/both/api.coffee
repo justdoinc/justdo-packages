@@ -59,6 +59,11 @@ _.extend JustDoProjectsTemplates.prototype,
       type: String
     demo_img_src:
       type: String
+      optional: true
+    demo_html_template:
+      type: [Object]
+      blackbox: true
+      optional: true
     template:
       type: Object
       blackbox: true
