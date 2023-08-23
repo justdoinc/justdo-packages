@@ -36,7 +36,14 @@ _.extend JustdoCoreHelpers,
       console.warn("getCDNUrl: At the moment supporting only paths beginning with /")
 
       return path
+    
+    query_param_prefix = "?"
+    if path.includes(query_param_prefix)
+      if path[path.length - 1] is "&"
+        query_param_prefix = ""
+      else
+        query_param_prefix = "&"
 
-    return "#{cdn}#{path}?v=#{app_version}"
+    return "#{cdn}#{path}#{query_param_prefix}_cv=#{app_version}"
 
 
