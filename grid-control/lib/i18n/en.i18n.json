@@ -1,0 +1,26 @@
+{
+  "schema_label":  {
+    "title": "Subject",
+    "status": "Notes",
+    "state": "State",
+    "follow_up": "Follow Up",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "due_date": "Due Date",
+    "priority": "Priority",
+    "createdAt": "Created",
+    "updatedAt": "Updated",
+    "archived": "Archived task",
+    "description": "Description",
+    "status_by": "Notes By",
+    "status_updated_at": "Notes Updated At",
+    "state_updated_at": "State changed at",
+    "project_id": "JustDo ID",
+    "parents": "Parents",
+    "users": "Users",
+    "seqId": "Task Sequence ID",
+    "created_by_user_id": "Created by user ID",
+    "updated_by": "Updated by user ID",
+    "users_updated_at": "Users Updated"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema_label":  {
+    "title": "標題",
+    "status": "筆記",
+    "state": "狀態",
+    "follow_up": "跟進日",
+    "start_date": "開始日",
+    "end_date": "結束日",
+    "due_date": "到期日",
+    "priority": "優先度",
+    "createdAt": "創建於",
+    "updatedAt": "更新於",
+    "archived": "已歸檔",
+    "description": "描述",
+
+
+
+    "project_id": "專案ID",
+    "parents": "母項目",
+    "users": "用戶",
+    "seqId": "項目流水號"
+
+
+
+  }
+}
