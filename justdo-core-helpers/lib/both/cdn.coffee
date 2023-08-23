@@ -42,7 +42,7 @@ _.extend JustdoCoreHelpers,
     if not _.isEmpty app_version
       query_param_prefix = "?"
       if path.includes(query_param_prefix)
-        if path[path.length - 1] is "&"
+        if path[path.length - 1] in ["&", "?"]
           query_param_prefix = ""
         else
           query_param_prefix = "&"
