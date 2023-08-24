@@ -12,7 +12,7 @@ APP.justdo_projects_templates?.registerTemplate
   template:
     users: ["performing_user"]
     tasks: [
-      title: "Untitled Task"
+      title: "My First Task"
       users: ["performing_user"]
       perform_as: "performing_user"
     ]
