@@ -54,4 +54,4 @@ _.extend JustdoI18n.prototype,
     return JustdoI18n.default_lang
     
   generateI18nModalButtonLabel: (label) ->
-    return JustdoHelpers.renderTemplateInNewNode("modal_button_label", {label})
+    return JustdoHelpers.renderTemplateInNewNode("modal_button_label", {label}).node
