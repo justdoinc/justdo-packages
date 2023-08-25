@@ -1212,7 +1212,7 @@ _.extend GridControl.prototype,
       field = column_def.field
       field_def = extended_schema[field]
 
-      label = JustdoHelpers.getI18nTranslatedSchemaLabelOrFallback(field, extended_schema)
+      label = APP.justdo_i18n.getI18nTranslatedSchemaLabelOrFallback(field, extended_schema, "schema_label.")
       if first
         first = false
         label = "<div class='slick-loading-indicator'></div>#{label}"
