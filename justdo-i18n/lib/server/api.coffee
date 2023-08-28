@@ -55,7 +55,7 @@ _.extend JustdoI18n.prototype,
       console.warn "JustdoI18n.__ called invoked outside of a method call or a publication, falling back to no-user."
       user = undefined
 
-    lang_tag = getUserLang(user) or JustdoI18n.default_lang
+    lang_tag = @getUserLang(user) or JustdoI18n.default_lang
 
     return TAPi18n.__(key, options, lang_tag)
 
