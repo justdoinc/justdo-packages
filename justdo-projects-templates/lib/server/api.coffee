@@ -79,13 +79,19 @@ _.extend TemplateParser.prototype,
 
   "lookup:key": getFromTemplateOnly
 
-  "lookup:title": getFromTemplateOnly
+  "lookup:title": ->
+    if (i18n_title = @template.title_i18n)?
+      if _.isFunction i18n_title
+        return i18n_title @users.performing_user
+      if _.isObject i18n_title
+        return APP.justdo_i18n.tr i18n_title.key, i18n_title.options, @users.performing_user
+      return APP.justdo_i18n.tr i18n_title, {}, @users.performing_user
+
+    return @template.title
 
   "lookup:events": getFromTemplateOnly
 
   "lookup:parents": getFromTemplateOnly
-
-  "lookup:title": getFromTemplateOnly
 
   "lookup:state": getFromTemplateOnly
 
@@ -268,7 +274,11 @@ EventsAPI =
         due_date: due_date
     APP.projects._grid_data_com.updateItem task_id, update, perform_as
 
-  setStatus: (task_id, status, perform_as) ->
+  setStatus: (task_id, status_i18n, perform_as) ->
+    if _.isObject status_i18n
+      status = APP.justdo_i18n.tr status_i18n.key, status_i18n.options, perform_as
+    else
+      status = APP.justdo_i18n.tr status_i18n, {}, perform_as
     update =
       $set:
         status: status
