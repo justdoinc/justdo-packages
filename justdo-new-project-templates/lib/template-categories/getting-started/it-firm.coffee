@@ -3,166 +3,393 @@ APP.getEnv (env) ->
     return
   APP.justdo_projects_templates?.registerTemplate
     id: "it-firm"
-    label: "IT Firm"
+    label_i18n: "project_templates_it_firm_label"
     categories: ["getting-started"]
     order: 110
     template:
       tasks: [
-        title: "R&D"
+        title_i18n: "project_templates_task_title_research_and_development"
         tasks: [
-          title: "Mobile App Development"
+          title_i18n: "project_templates_task_title_mobile_app_development"
           tasks: [
-            title: "Sprints"
+            title_i18n: "project_templates_task_title_sprints"
             tasks: [
-              title: "v0.0.1 (POC)"
+              title_i18n: "v0.0.1 (POC)"
               events: [
                 action: "setArchived"
               ]
               tasks: [
-                title: "Task a"
+                title_i18n: 
+                  key: "project_templates_task_title_task_with_custom_name",
+                  options: "A"
               ,
-                title: "Task b"
+                title_i18n: 
+                  key: "project_templates_task_title_task_with_custom_name",
+                  options: "B"
               ]
             ,
-              title: "v1.0.0"
+              title_i18n: "v1.0.0"
               events: [
                 action: "toggleIsProject"
               ]
               tasks: [
-                title: "Implement new feature 1"
+                title_i18n: 
+                  key: "project_templates_task_title_implement_new_feature_with_custom_name",
+                  options: 
+                    feature_name: "1"
                 tasks: [
-                  title: "Design & UX/UI"
+                  title_i18n: "project_templates_task_title_design_and_ui_ux"
                   expand: true
                   tasks: [
-                    title: "Requirements Gathering"
+                    title_i18n: "project_templates_task_title_requirements_gathering"
                   ,
-                    title: "Wireframes"
+                    title_i18n: "project_templates_task_title_wireframes"
                   ,
-                    title: "User Interface Design"
+                    title_i18n: "project_templates_task_title_user_interface_design"
                   ,
-                    title: "User Experience Design"
+                    title_i18n: "project_templates_task_title_user_experience_design"
                   ]
                 ,
-                  title: "Backend Development"
+                  title_i18n: "project_templates_task_title_backend_development"
                   expand: true
                   tasks: [
-                    title: "Feature B"
+                    title_i18n: 
+                      key: "project_templates_task_title_feature_with_custom_name",
+                      options: 
+                        feature_name: "B"
                   ]
                 ,
-                  title: "Frontend Development"
+                  title_i18n: "project_templates_task_title_frontend_development"
                   expand: true
                   tasks: [
-                    title: "Feature A"
+                    title_i18n: 
+                      key: "project_templates_task_title_feature_with_custom_name",
+                      options: 
+                        feature_name: "A"
                   ]
                 ,
-                  title: "QA"
+                  title_i18n: "project_templates_task_title_quality_assurance"
                   expand: true
                   tasks: [
-                    title: "Write auto-test 1"
+                    title_i18n: 
+                      key: "project_templates_task_title_write_auto_test_with_custom_name",
+                      options: 
+                        test_name: "1"
                   ,
-                    title: "Write auto-test 2"
+                    title_i18n: 
+                      key: "project_templates_task_title_write_auto_test_with_custom_name",
+                      options: 
+                        test_name: "2"
                   ]
                 ]
               ]
             ,
-              title: "v2.0.0"
+              title_i18n: "v2.0.0"
               events: [
                 action: "toggleIsProject"
               ]
               tasks: [
-                title: "Implement new feature 2"
+                title_i18n: 
+                  key: "project_templates_task_title_implement_new_feature_with_custom_name",
+                  options: 
+                    feature_name: "2"
               ]
             ]
           ,
-            title: "Roadmap"
+            title_i18n: "project_templates_task_title_roadmap"
             tasks: [
-              title: "Roadmap feature 1"
+              title_i18n: 
+                key: "project_templates_task_title_roadmap_feature_with_custom_name",
+                options: "1"
             ,
-              title: "Roadmap feature 2"
+              title_i18n: 
+                key: "project_templates_task_title_roadmap_feature_with_custom_name",
+                options: "2"
               events: [
                 action: "setStatus"
-                args: "Requested by client XYZ"
+                args: 
+                  key: "project_templates_task_title_requested_by_client_with_custom_name"
+                  options: "XYZ"
               ]
             ,
-              title: "Roadmap feature 3"
+              title_i18n: 
+                key: "project_templates_task_title_roadmap_feature_with_custom_name",
+                options: "3"
               events: [
                 action: "setStatus"
-                args: "Requested by clients ABC, PMQ"
+                args: 
+                  key: "project_templates_task_title_requested_by_client_with_custom_name"
+                  options: "ABC"
               ]
             ]
           ,
-            title: "Mobile App QA"
+            title_i18n: "project_templates_task_title_mobile_app_qa"
             tasks: [
-              title: "Bug tracking"
+              title_i18n: "project_templates_task_title_bug_tracking"
             ]
           ]
         ]
       ,
-        title: "Finance"
+        title_i18n: "project_templates_task_title_finance"
         tasks: [
-          title: "Prepare FY report"
+          title_i18n: "project_templates_task_title_prepare_fy_report"
           tasks: [
-            title: "Contact auditor"
+            title_i18n: "project_templates_task_title_contact_auditor"
           ,
-            title: "Prepare employer return"
+            title_i18n: "project_templates_task_title_prepare_employer_return"
           ]
         ]
       ,
-        title: "Customer service"
+        title_i18n: "project_templates_task_title_customer_service"
         tasks: [
-          title: "Client A"
+          title_i18n: 
+            key: "project_templates_task_title_client_with_custom_name",
+            options: "A"
           tasks: [
-            title: "Deployment v3.0.0 on Client A server"
+            title_i18n: 
+              key: "project_templates_task_title_deployment_version_on_client_server"
+              options:
+                version: "v3.0.0"
+                client: "A"
           ]
         ,
-          title: "Client B"
+          title_i18n: 
+            key: "project_templates_task_title_client_with_custom_name",
+            options: "B"
           tasks: [
-            title: "Contact to reproduce reported issue"
+            title_i18n: "project_templates_task_title_contact_to_reproduce_reported_issue"
           ]
         ]
       ,
-        title: "HR"
+        title_i18n: "project_templates_task_title_human_resources"
         tasks: [
-          title: "Recruit position for frontend"
+          title_i18n: "project_templates_task_title_recruit_position_for_frontend"
           tasks: [
-            title: "Candidate A"
+            title_i18n:
+              key: "project_templates_task_title_candidate_with_custom_name"
+              options: "A"
             events: [
               action: "setStatus"
-              args: "Coordinate zoom meeting"
+              args: "project_templates_task_title_coordinate_zoom_meeting"
             ]
           ,
-            title: "Candidate B"
+            title_i18n:
+              key: "project_templates_task_title_candidate_with_custom_name"
+              options: "B"
             events: [
               action: "setStatus"
-              args: "CV is missing, contact by email"
+              args: "project_templates_task_title_cv_is_missing_contact_by_email"
             ]
           ]
         ]
       ]
     demo_html_template: [
-      { "level": 0, "expand_state": "minus", "task_id": "1", "title": "R&D", "state_class": "pending", "state_title": "Pending" },
-      { "level": 1, "expand_state": "minus", "task_id": "25", "title": "Mobile App Development", "state_class": "pending", "state_title": "Pending" },
-      { "level": 2, "expand_state": "minus", "task_id": "45", "title": "Sprints", "state_class": "pending", "state_title": "Pending" },
-      { "level": 3, "task_id": "47", "title": "v0.0.1 (POC)", "state_class": "done", "state_title": "Done", "extra_padding": "extra-padding" },
-      { "level": 3, "expand_state": "minus", "task_id": "63", "title": "v1.0.0", "state_class": "in-progress", "state_title": "In progress" },
-      { "level": 4, "expand_state": "minus", "task_id": "53", "title": "Implement new feature 1", "state_class": "in-progress", "state_title": "In progress" },
-      { "level": 5, "expand_state": "minus", "task_id": "8", "title": "Design & UX/UI", "state_class": "in-progress", "state_title": "In progress" },
-      { "level": 6, "task_id": "54", "title": "Requirements Gathering", "state_class": "in-progress", "state_title": "In progress", "extra_padding": "extra-padding" },
-      { "level": 6, "task_id": "9", "title": "Wireframes", "state_class": "done", "state_title": "Done", "extra_padding": "extra-padding" },
-      { "level": 6, "task_id": "10", "title": "User Interface Design", "state_class": "done", "state_title": "Done", "extra_padding": "extra-padding" },
-      { "level": 6, "task_id": "11", "title": "User Experience Design", "state_class": "cancelled", "state_title": "Cancelled", "extra_padding": "extra-padding" },
-      { "level": 5, "expand_state": "minus", "task_id": "14", "title": "Backend Development", "state_class": "in-progress", "state_title": "In progress" },
-      { "level": 6, "task_id": "35", "title": "Feature B", "state_class": "pending", "state_title": "Pending", "extra_padding": "extra-padding" },
-      { "level": 5, "expand_state": "minus", "task_id": "13", "title": "Frontend Development", "state_class": "in-progress", "state_title": "In progress" },
-      { "level": 6, "task_id": "34", "title": "Feature A", "state_class": "on-hold", "state_title": "On hold", "extra_padding": "extra-padding" },
-      { "level": 5, "expand_state": "minus", "task_id": "60", "title": "QA", "state_class": "pending", "state_title": "Pending" },
-      { "level": 6, "task_id": "61", "title": "Write auto-test 1", "state_class": "in-progress", "state_title": "In progress", "extra_padding": "extra-padding" },
-      { "level": 6, "task_id": "62", "title": "Write auto-test 2", "state_class": "in-progress", "state_title": "In progress", "extra_padding": "extra-padding" },
-      { "level": 2, "expand_state": "plus", "task_id": "71", "title": "v200", "state_class": "done", "state_title": "Done" },
-      { "level": 1, "expand_state": "plus", "task_id": "46", "title": "Roadmap", "state_class": "pending", "state_title": "Pending" },
-      { "level": 1, "expand_state": "plus", "task_id": "16", "title": "Mobile App QA", "state_class": "pending", "state_title": "Pending" },
-      { "level": 0, "expand_state": "plus", "task_id": "43", "title": "Finance", "state_class": "pending", "state_title": "Pending" },
-      { "level": 0, "expand_state": "plus", "task_id": "55", "title": "Customer service", "state_class": "pending", "state_title": "Pending" },
-      { "level": 0, "expand_state": "plus", "task_id": "41", "title": "HR", "state_class": "pending", "state_title": "Pending" },
+      {
+        level: 0
+        expand_state: "minus"
+        task_id: "1"
+        title_i18n: "project_templates_task_title_research_and_development"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 1
+        expand_state: "minus"
+        task_id: "25"
+        title_i18n: "project_templates_task_title_mobile_app_development"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 2
+        expand_state: "minus"
+        task_id: "45"
+        title_i18n: "project_templates_task_title_sprints"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 3
+        task_id: "47"
+        title: "v0.0.1 (POC)"
+        state_class: "done"
+        state_title_i18n: "state_done"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 3
+        expand_state: "minus"
+        task_id: "63"
+        title: "v1.0.0"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+      }
+      {
+        level: 4
+        expand_state: "minus"
+        task_id: "53"
+        title_i18n: ->
+          options = 
+            feature_name: "1"
+          return TAPi18n.__ "project_templates_task_title_implement_new_feature_with_custom_name", options
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+      }
+      {
+        level: 5
+        expand_state: "minus"
+        task_id: "8"
+        title_i18n: "project_templates_task_title_design_and_ui_ux"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+      }
+      {
+        level: 6
+        task_id: "54"
+        title_i18n: "project_templates_task_title_requirements_gathering"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 6
+        task_id: "9"
+        title_i18n: "project_templates_task_title_wireframes"
+        state_class: "done"
+        state_title_i18n: "state_done"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 6
+        task_id: "10"
+        title_i18n: "project_templates_task_title_user_interface_design"
+        state_class: "done"
+        state_title_i18n: "state_done"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 6
+        task_id: "11"
+        title_i18n: "project_templates_task_title_user_experience_design"
+        state_class: "cancelled"
+        state_title_i18n: "state_cancelled"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 5
+        expand_state: "minus"
+        task_id: "14"
+        title_i18n: "project_templates_task_title_backend_development"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+      }
+      {
+        level: 6
+        task_id: "35"
+        title_i18n: ->
+          options = 
+            feature_name: "B"
+          return TAPi18n.__ "project_templates_task_title_feature_with_custom_name", options
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 5
+        expand_state: "minus"
+        task_id: "13"
+        title_i18n: "project_templates_task_title_frontend_development"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+      }
+      {
+        level: 6
+        task_id: "34"
+        title_i18n: ->
+          options = 
+            feature_name: "A"
+          return TAPi18n.__ "project_templates_task_title_feature_with_custom_name", options
+        state_class: "on-hold"
+        state_title_i18n: "state_on_hold"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 5
+        expand_state: "minus"
+        task_id: "60"
+        title_i18n: "project_templates_task_title_quality_assurance"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 6
+        task_id: "61"
+        title_i18n: ->
+          options = 
+            test_name: "1"
+          return TAPi18n.__ "project_templates_task_title_write_auto_test_with_custom_name", options
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 6
+        task_id: "62"
+        title_i18n: ->
+          options = 
+            test_name: "2"
+          return TAPi18n.__ "project_templates_task_title_write_auto_test_with_custom_name", options
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 2
+        expand_state: "plus"
+        task_id: "71"
+        title: "v2.0.0"
+        state_class: "done"
+        state_title_i18n: "state_done"
+      }
+      {
+        level: 1
+        expand_state: "plus"
+        task_id: "46"
+        title_i18n: "project_templates_task_title_roadmap"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 1
+        expand_state: "plus"
+        task_id: "16"
+        title_i18n: "project_templates_task_title_mobile_app_qa"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 0
+        expand_state: "plus"
+        task_id: "43"
+        title_i18n: "project_templates_task_title_finance"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 0
+        expand_state: "plus"
+        task_id: "55"
+        title_i18n: "project_templates_task_title_customer_service"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 0
+        expand_state: "plus"
+        task_id: "41"
+        title_i18n: "project_templates_task_title_human_resources"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
     ]
   return

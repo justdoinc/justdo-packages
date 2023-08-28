@@ -4,7 +4,7 @@ APP.getEnv (env) ->
   
   APP.justdo_projects_templates?.registerCategory
     id: "getting-started"
-    label: "Getting Started"
+    label_i18n: "project_templates_getting_started_label"
     order: 0
 
   return

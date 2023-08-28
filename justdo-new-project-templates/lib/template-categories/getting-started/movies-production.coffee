@@ -4,161 +4,306 @@ APP.getEnv (env) ->
 
   APP.justdo_projects_templates?.registerTemplate
     id: "movies-production"
-    label: "Movies Production"
+    label_i18n: "project_templates_movies_production_label"
     categories: ["getting-started"]
     order: 130
     template:
       tasks: [
-        title: "Movies"
+        title_i18n: "movies"
         tasks: [
-          title: "Sleeping beauty"
+          title_i18n: "demo_movie_name_1"
           events: [
             action: "toggleIsProject"
           ]
           tasks: [
-            title: "Development"
+            title_i18n: "development"
             expand: true
             tasks: [
-              title: "Evaluating and acquiring scripts or story ideas"
+              title_i18n:"evaluate_and_acquire_idea"
             ,
-              title: "Developing story concepts into full-fledged screenplays"
+              title_i18n: "develop_story_conecpt_into_screenplay"
             ,
-              title: "Attaching key talent"
+              title_i18n: "attaching_key_talent"
               expand: true
               tasks: [
-                title: "Potential actors"
+                title_i18n: "potential_actors"
               ,
-                title: "Directors"
+                title_i18n: "directors"
               ]
             ]
           ,
-            title: "Pre-Production"
+            title_i18n: "pre_production"
             tasks: [
-              title: "Finalizing script revisions"
+              title_i18n: "finalizing_script_revisions"
             ,
-              title: "Casting actors and hiring crew members"
+              title_i18n: "casting_actors_and_hiring_crew_members"
             ,
-              title: "Scouting and securing locations"
+              title_i18n: "scouting_and_securing_locations"
             ,
-              title: "Developing budgets and shooting schedules"
+              title_i18n: "developing_budgets_and_shoooting_schedules"
             ,
-              title: "Planning costume, set, and prop designs"
+              title_i18n: "planning_costume_set_and_prop_designs"
             ]
           ,
-            title: "Post-Production"
+            title_i18n: "post_production"
             tasks: [
-              title: "Editing  the film's picture and sound"
+              title_i18n: "editing_the_flims_picture_and_sound"
             ,
-              title: "Overseeing visual effects and CGI work"
+              title_i18n: "overseeing_visual_effects_and_cgi_work"
             ,
-              title: "Collaborating with the composer on the film's score"
+              title_i18n: "collaborating_with_the_composer_on_the_flims_score"
             ,
-              title: "Managing the color grading process"
+              title_i18n: "managing_the_color_grading_process"
             ,
-              title: "Finalizing the film's sound mix and mastering"
+              title_i18n: "finalizing_the_flims_sound_mix_and_mastering"
             ]
           ,
-            title: "Marketing and Distribution"
+            title_i18n: "marketing_and_distribution"
             tasks: [
-              title: "Developing marketing materials, including posters, trailers, and promotional campaigns"
+              title_i18n: "developing_marketing_materials"
             ,
-              title: "Coordinating film festival submissions and screenings"
+              title_i18n: "coordinating_film_festival_submission_and_screening"
             ,
-              title: "Securing distribution deals and arranging theatrical releases"
+              title_i18n: "securing_distribution_deals_and_arranging_theatrical_releases"
             ,
-              title: "Managing public relations and media coverage"
+              title_i18n: "managing_public_relations_and_media_coverage"
             ]
           ]
         ,
-          title: "Snow White"
+          title_i18n: "demo_movie_name_2"
           events: [
             action: "toggleIsProject"
           ]
           tasks: [
-            title: "Development"
+            title_i18n: "development"
           ,
-            title: "Pre-Production"
+            title_i18n: "pre_production"
           ,
-            title: "Post-Production"
+            title_i18n: "post_production"
           ,
-            title: "Marketing and Distribution"
+            title_i18n: "marketing_and_distribution"
           ]
         ,
-          title: "Robin hood - completed"
+          title_i18n: "Robin hood - completed"
           events: [
             action: "setArchived"
             args: "nil"
           ]
           tasks: [
-            title: "Development"
+            title_i18n: "development"
           ,
-            title: "Pre-Production"
+            title_i18n: "pre_production"
           ,
-            title: "Post-Production"
+            title_i18n: "post_production"
           ,
-            title: "Marketing and Distribution"
+            title_i18n: "marketing_and_distribution"
           ]
         ]
       ,
-        title: "Finance"
+        title_i18n: "project_templates_task_title_finance"
         tasks: [
-          title: "Funding identification and procurement"
+          title_i18n: "funding_identification_and_procurement"
           expand: true
           tasks: [
-            title: "Secure funds for Sleeping Beauty from GateFlix"
+            title_i18n: 
+              key: "secure_funds_for_movie_from_investor"
+              options:
+                investor: "GateFlix"
+                movie_name: TAPi18n.__ "demo_movie_name_1"
             tasks: [
-              title: "Negotiate terms and conditions"
+              title_i18n: "negotiate_terms_and_conditions"
             ,
-              title: "Draft a legal agreement"
+              title_i18n: "draft_legal_agreement"
               events: [
                 action: "setStatus"
-                args: "(Remember to exclude exclusive right to finance)"
+                args: "remember_to_exclude_exclusive_right_to_finance"
               ]
             ]
           ]
         ,
-          title: "Cash flow management"
+          title_i18n: "cash_flow_management"
         ,
-          title: "Contract negotiation and management"
+          title_i18n: "contract_negotiation_and_management"
         ]
       ,
-        title: "HR"
+        title_i18n: "project_templates_task_title_human_resources"
         tasks: [
-          title: "Recruit position for Storyboard Artist"
+          title_i18n: "recruit_position_for_storyboard_artist"
           tasks: [
-            title: "Candidate A"
+            title_i18n: 
+              key: "project_templates_task_title_candidate_with_custom_name"
+              options: "A"
             events: [
               action: "setStatus"
-              args: "Coordinate zoom meeting"
+              args: "project_templates_task_title_coordinate_zoom_meeting"
             ]
           ,
-            title: "Candidate B"
+            title_i18n: 
+              key: "project_templates_task_title_candidate_with_custom_name"
+              options: "B"
             events: [
               action: "setStatus"
-              args: "CV is missing, contact by email"
+              args: "project_templates_task_title_cv_is_missing_contact_by_email"
             ]
           ]
         ]
       ]
     demo_html_template: [
-      { "level": 0, "expand_state": "minus", "task_id": "42", "title": "Movies", "state_class": "pending", "state_title": "Pending" },
-      { "level": 1, "expand_state": "minus", "task_id": "43", "title": "Sleeping beauty", "state_class": "in-progress", "state_title": "in-progress" },
-      { "level": 2, "expand_state": "minus", "task_id": "47", "title": "Development", "state_class": "in-progress", "state_title": "in-progress" },
-      { "level": 3, "task_id": "52", "title": "Evaluating and acquiring scripts or story ideas", "state_class": "pending", "state_title": "Pending", "extra_padding": "extra-padding" },
-      { "level": 3, "task_id": "53", "title": "Developing story concepts", "state_class": "in-progress", "state_title": "in-progress", "extra_padding": "extra-padding" },
-      { "level": 3, "expand_state": "minus", "task_id": "54", "title": "Attaching key talent", "state_class": "pending", "state_title": "Pending" },
-      { "level": 4, "task_id": "55", "title": "Potential actors", "state_class": "cancelled", "state_title": "Cancelled", "extra_padding": "extra-padding" },
-      { "level": 4, "task_id": "56", "title": "Directors", "state_class": "done", "state_title": "Done", "extra_padding": "extra-padding" },
-      { "level": 2, "expand_state": "plus", "task_id": "48", "title": "Pre-Production", "state_class": "pending", "state_title": "Pending" },
-      { "level": 2, "expand_state": "plus", "task_id": "49", "title": "Post-Production", "state_class": "on-hold", "state_title": "On hold" },
-      { "level": 2, "expand_state": "plus", "task_id": "51", "title": "Marketing and Distribution", "state_class": "cancelled", "state_title": "Cancelled" },
-      { "level": 1, "expand_state": "plus", "task_id": "79", "title": "Snow white", "state_class": "in-progress", "state_title": "In progress" },
-      { "level": 1, "task_id": "84", "title": "Robin hood - completed", "state_class": "done", "state_title": "Done", "extra_padding": "extra-padding" },
-      { "level": 1, "expand_state": "minus", "task_id": "3", "title": "Finance", "state_class": "in-progress", "state_title": "In progress" },
-      { "level": 2, "expand_state": "minus", "task_id": "76", "title": "Funding identification and procurement", "state_class": "pending", "state_title": "Pending" },
-      { "level": 3, "expand_state": "plus", "task_id": "72", "title": "Secure funds for Sleeping Beauty from GateFlix", "state_class": "pending", "state_title": "Pending" },
-      { "level": 2, "task_id": "77", "title": "Cash flow management", "state_class": "in-progress", "state_title": "In progress", "extra_padding": "extra-padding" },
-      { "level": 2, "task_id": "78", "title": "Contract negotiation and management", "state_class": "pending", "state_title": "Pending", "extra_padding": "extra-padding" },
-      { "level": 0, "expand_state": "plus", "task_id": "72", "title": "HR", "state_class": "pending", "state_title": "Pending" }
+      {
+        level: 0
+        expand_state: "minus"
+        task_id: "42"
+        title_i18n: "movies"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 1
+        expand_state: "minus"
+        task_id: "43"
+        title_i18n: "demo_movie_name_1"
+        state_class: "in-progress"
+        state_title_i18n: "in-progress"
+      }
+      {
+        level: 2
+        expand_state: "minus"
+        task_id: "47"
+        title_i18n: "development"
+        state_class: "in-progress"
+        state_title_i18n: "in-progress"
+      }
+      {
+        level: 3
+        task_id: "52"
+        title_i18n: "evaluate_and_acquire_idea"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 3
+        task_id: "53"
+        title_i18n: "Developing story concepts"
+        state_class: "in-progress"
+        state_title_i18n: "in-progress"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 3
+        expand_state: "minus"
+        task_id: "54"
+        title_i18n: "attaching_key_talent"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 4
+        task_id: "55"
+        title_i18n: "potential_actors"
+        state_class: "cancelled"
+        state_title_i18n: "state_cancelled"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 4
+        task_id: "56"
+        title_i18n: "directors"
+        state_class: "done"
+        state_title_i18n: "state_done"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 2
+        expand_state: "plus"
+        task_id: "48"
+        title_i18n: "pre_production"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 2
+        expand_state: "plus"
+        task_id: "49"
+        title_i18n: "post_production"
+        state_class: "on-hold"
+        state_title_i18n: "state_on_hold"
+      }
+      {
+        level: 2
+        expand_state: "plus"
+        task_id: "51"
+        title_i18n: "marketing_and_distribution"
+        state_class: "cancelled"
+        state_title_i18n: "state_cancelled"
+      }
+      {
+        level: 1
+        expand_state: "plus"
+        task_id: "79"
+        title_i18n: "demo_movie_name_2"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+      }
+      {
+        level: 1
+        task_id: "84"
+        title_i18n: "Robin hood - completed"
+        state_class: "done"
+        state_title_i18n: "state_done"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 1
+        expand_state: "minus"
+        task_id: "3"
+        title_i18n: "project_templates_task_title_finance"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+      }
+      {
+        level: 2
+        expand_state: "minus"
+        task_id: "76"
+        title_i18n: "funding_identification_and_procurement"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 3
+        expand_state: "plus"
+        task_id: "72"
+        title_i18n: ->
+          options = 
+            investor: "GateFlix"
+            movie_name: TAPi18n.__ "demo_movie_name_1"
+          return TAPi18n.__ "secure_funds_for_movie_from_investor", options
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 2
+        task_id: "77"
+        title_i18n: "cash_flow_management"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 2
+        task_id: "78"
+        title_i18n: "contract_negotiation_and_management"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 0
+        expand_state: "plus"
+        task_id: "72"
+        title_i18n: "project_templates_task_title_human_resources"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
     ]
   return

@@ -4,327 +4,492 @@ APP.getEnv (env) ->
 
   APP.justdo_projects_templates?.registerTemplate
     id: "home-builders-inc"
-    label: "Home Builders Inc"
+    label_i18n: "project_templates_home_builders_inc_label"
     order: 120
     categories: ["getting-started"]
     template:
       tasks: [
-        title: "Sites"
+        title_i18n: "project_templates_task_title_sites"
         tasks: [
-          title: "Meadowview Estates"
+          title_i18n: "project_templates_task_title_demo_site_name_1"
           events: [
             action: "toggleIsProject"
           ]
           tasks: [
-            title: "Project Planning"
+            title_i18n: "project_templates_task_title_project_planning"
             expand: true
             tasks: [
-              title: "Scope Definition"
+              title_i18n: "project_templates_task_title_scope_definition"
             ,
-              title: "Timeline & Budgeting"
+              title_i18n: "project_templates_task_title_timeline_and_budgeting"
             ,
-              title: "Permitting & Compliance"
+              title_i18n: "project_templates_task_title_permitting_and_compliance"
             ]
           ,
-            title: "Design & Engineering"
+            title_i18n: "project_templates_task_title_design_and_engineering"
             tasks: [
-              title: "Architectural Design"
+              title_i18n: "project_templates_task_title_architectural_design"
             ,
-              title: "Structural Engineering"
+              title_i18n: "project_templates_task_title_structural_engineering"
             ,
-              title: "Mechanical, Electrical & Plumbing (MEP)"
+              title_i18n: "project_templates_task_title_mechanical_electrical_and_plumbing"
             ]
           ,
-            title: "Site Preparation"
+            title_i18n: "project_templates_task_title_site_preparation"
             tasks: [
-              title: "Land Surveying"
+              title_i18n: "project_templates_task_title_land_surveying"
             ,
-              title: "Site Clearing"
+              title_i18n: "project_templates_task_title_site_clearing"
             ,
-              title: "Excavation & Grading"
+              title_i18n: "project_templates_task_title_excavation_and_grading"
             ]
           ,
-            title: "Construction"
+            title_i18n: "project_templates_task_title_construction"
             tasks: [
-              title: "Framing & Structural Work"
+              title_i18n: "project_templates_task_title_framing_and_structural_work"
             ,
-              title: "Interior & Exterior Finishing"
+              title_i18n: "project_templates_task_title_interior_and_exterior_finishing"
             ,
-              title: "Landscaping"
+              title_i18n: "project_templates_task_title_landscaping"
             ]
           ,
-            title: "Inspection & Quality Control"
+            title_i18n: "project_templates_task_title_inspection_and_quality_control"
             tasks: [
-              title: "Code Compliance"
+              title_i18n: "project_templates_task_title_code_compliance"
             ,
-              title: "Safety Inspections"
+              title_i18n: "project_templates_task_title_safety_inspections"
             ,
-              title: "Punch List"
+              title_i18n: "project_templates_task_title_punch_list"
             ]
           ,
-            title: "Project Closeout"
+            title_i18n: "project_templates_task_title_project_closeout"
             tasks: [
-              title: "Final Documentation"
+              title_i18n: "project_templates_task_title_final_documentation"
             ,
-              title: "Warranty & Maintenance"
+              title_i18n: "project_templates_task_title_warranty_and_maintenance"
             ,
-              title: "Client Handover"
+              title_i18n: "project_templates_task_title_client_handover"
             ]
           ]
         ,
-          title: "Willow Creek Village"
+          title_i18n: "project_templates_task_title_demo_site_name_2"
           events: [
             action: "toggleIsProject"
           ]
           tasks: [
-            title: "Project Planning"
+            title_i18n: "project_templates_task_title_project_planning"
             tasks: [
-              title: "Scope Definition"
+              title_i18n: "project_templates_task_title_scope_definition"
             ,
-              title: "Timeline & Budgeting"
+              title_i18n: "project_templates_task_title_timeline_and_budgeting"
             ,
-              title: "Permitting & Compliance"
+              title_i18n: "project_templates_task_title_permitting_and_compliance"
             ]
           ,
-            title: "Design & Engineering"
+            title_i18n: "project_templates_task_title_design_and_engineering"
             tasks: [
-              title: "Architectural Design"
+              title_i18n: "project_templates_task_title_architectural_design"
             ,
-              title: "Structural Engineering"
+              title_i18n: "project_templates_task_title_structural_engineering"
             ,
-              title: "Mechanical, Electrical & Plumbing (MEP)"
+              title_i18n: "project_templates_task_title_mechanical_electrical_and_plumbing"
             ]
           ,
-            title: "Site Preparation"
+            title_i18n: "project_templates_task_title_site_preparation"
             tasks: [
-              title: "Land Surveying"
+              title_i18n: "project_templates_task_title_land_surveying"
             ,
-              title: "Site Clearing"
+              title_i18n: "project_templates_task_title_site_clearing"
             ,
-              title: "Excavation & Grading"
+              title_i18n: "project_templates_task_title_excavation_and_grading"
             ]
           ,
-            title: "Construction"
+            title_i18n: "project_templates_task_title_construction"
             tasks: [
-              title: "Framing & Structural Work"
+              title_i18n: "project_templates_task_title_framing_and_structural_work"
             ,
-              title: "Interior & Exterior Finishing"
+              title_i18n: "project_templates_task_title_interior_and_exterior_finishing"
             ,
-              title: "Landscaping"
+              title_i18n: "project_templates_task_title_landscaping"
             ]
           ,
-            title: "Inspection & Quality Control"
+            title_i18n: "project_templates_task_title_inspection_and_quality_control"
             tasks: [
-              title: "Code Compliance"
+              title_i18n: "project_templates_task_title_code_compliance"
             ,
-              title: "Safety Inspections"
+              title_i18n: "project_templates_task_title_safety_inspections"
             ,
-              title: "Punch List"
+              title_i18n: "project_templates_task_title_punch_list"
             ]
           ,
-            title: "Project Closeout"
+            title_i18n: "project_templates_task_title_project_closeout"
             tasks: [
-              title: "Final Documentation"
+              title_i18n: "project_templates_task_title_final_documentation"
             ,
-              title: "Warranty & Maintenance"
+              title_i18n: "project_templates_task_title_warranty_and_maintenance"
             ,
-              title: "Client Handover"
+              title_i18n: "project_templates_task_title_client_handover"
             ]
           ]
         ,
-          title: "Oak Ridge Heights - completed"
+          title_i18n: -> TAPi18n.__ "project_templates_task_title_completed_suffix", TAPi18n.__ "project_templates_task_title_demo_site_name_3"
           events: [
             action: "setArchived"
           ]
           tasks: [
-            title: "Project Planning"
+            title_i18n: "project_templates_task_title_project_planning"
             tasks: [
-              title: "Scope Definition"
+              title_i18n: "project_templates_task_title_scope_definition"
             ,
-              title: "Timeline & Budgeting"
+              title_i18n: "project_templates_task_title_timeline_and_budgeting"
             ,
-              title: "Permitting & Compliance"
+              title_i18n: "project_templates_task_title_permitting_and_compliance"
             ]
           ,
-            title: "Design & Engineering"
+            title_i18n: "project_templates_task_title_design_and_engineering"
             tasks: [
-              title: "Architectural Design"
+              title_i18n: "project_templates_task_title_architectural_design"
             ,
-              title: "Structural Engineering"
+              title_i18n: "project_templates_task_title_structural_engineering"
             ,
-              title: "Mechanical, Electrical & Plumbing (MEP)"
+              title_i18n: "project_templates_task_title_mechanical_electrical_and_plumbing"
             ]
           ,
-            title: "Site Preparation"
+            title_i18n: "project_templates_task_title_site_preparation"
             tasks: [
-              title: "Land Surveying"
+              title_i18n: "project_templates_task_title_land_surveying"
             ,
-              title: "Site Clearing"
+              title_i18n: "project_templates_task_title_site_clearing"
             ,
-              title: "Excavation & Grading"
+              title_i18n: "project_templates_task_title_excavation_and_grading"
             ]
           ,
-            title: "Construction"
+            title_i18n: "project_templates_task_title_construction"
             tasks: [
-              title: "Framing & Structural Work"
+              title_i18n: "project_templates_task_title_framing_and_structural_work"
             ,
-              title: "Interior & Exterior Finishing"
+              title_i18n: "project_templates_task_title_interior_and_exterior_finishing"
             ,
-              title: "Landscaping"
+              title_i18n: "project_templates_task_title_landscaping"
             ]
           ,
-            title: "Inspection & Quality Control"
+            title_i18n: "project_templates_task_title_inspection_and_quality_control"
             tasks: [
-              title: "Code Compliance"
+              title_i18n: "project_templates_task_title_code_compliance"
             ,
-              title: "Safety Inspections"
+              title_i18n: "project_templates_task_title_safety_inspections"
             ,
-              title: "Punch List"
+              title_i18n: "project_templates_task_title_punch_list"
             ]
           ,
-            title: "Project Closeout"
+            title_i18n: "project_templates_task_title_project_closeout"
             tasks: [
-              title: "Final Documentation"
+              title_i18n: "project_templates_task_title_final_documentation"
             ,
-              title: "Warranty & Maintenance"
+              title_i18n: "project_templates_task_title_warranty_and_maintenance"
             ,
-              title: "Client Handover"
+              title_i18n: "project_templates_task_title_client_handover"
             ]
           ]
         ,
-          title: "Pinecrest Meadows - Completed"
+          title_i18n: -> TAPi18n.__ "project_templates_task_title_completed_suffix", TAPi18n.__ "project_templates_task_title_demo_site_name_4"
           events: [
             action: "setArchived"
           ]
           tasks: [
-            title: "Project Planning"
+            title_i18n: "project_templates_task_title_project_planning"
             tasks: [
-              title: "Scope Definition"
+              title_i18n: "project_templates_task_title_scope_definition"
             ,
-              title: "Timeline & Budgeting"
+              title_i18n: "project_templates_task_title_timeline_and_budgeting"
             ,
-              title: "Permitting & Compliance"
+              title_i18n: "project_templates_task_title_permitting_and_compliance"
             ]
           ,
-            title: "Design & Engineering"
+            title_i18n: "project_templates_task_title_design_and_engineering"
             tasks: [
-              title: "Architectural Design"
+              title_i18n: "project_templates_task_title_architectural_design"
             ,
-              title: "Structural Engineering"
+              title_i18n: "project_templates_task_title_structural_engineering"
             ,
-              title: "Mechanical, Electrical & Plumbing (MEP)"
+              title_i18n: "project_templates_task_title_mechanical_electrical_and_plumbing"
             ]
           ,
-            title: "Site Preparation"
+            title_i18n: "project_templates_task_title_site_preparation"
             tasks: [
-              title: "Land Surveying"
+              title_i18n: "project_templates_task_title_land_surveying"
             ,
-              title: "Site Clearing"
+              title_i18n: "project_templates_task_title_site_clearing"
             ,
-              title: "Excavation & Grading"
+              title_i18n: "project_templates_task_title_excavation_and_grading"
             ]
           ,
-            title: "Construction"
+            title_i18n: "project_templates_task_title_construction"
             tasks: [
-              title: "Framing & Structural Work"
+              title_i18n: "project_templates_task_title_framing_and_structural_work"
             ,
-              title: "Interior & Exterior Finishing"
+              title_i18n: "project_templates_task_title_interior_and_exterior_finishing"
             ,
-              title: "Landscaping"
+              title_i18n: "project_templates_task_title_landscaping"
             ]
           ,
-            title: "Inspection & Quality Control"
+            title_i18n: "project_templates_task_title_inspection_and_quality_control"
             tasks: [
-              title: "Code Compliance"
+              title_i18n: "project_templates_task_title_code_compliance"
             ,
-              title: "Safety Inspections"
+              title_i18n: "project_templates_task_title_safety_inspections"
             ,
-              title: "Punch List"
+              title_i18n: "project_templates_task_title_punch_list"
             ]
           ,
-            title: "Project Closeout"
+            title_i18n: "project_templates_task_title_project_closeout"
             tasks: [
-              title: "Final Documentation"
+              title_i18n: "project_templates_task_title_final_documentation"
             ,
-              title: "Warranty & Maintenance"
+              title_i18n: "project_templates_task_title_warranty_and_maintenance"
             ,
-              title: "Client Handover"
+              title_i18n: "project_templates_task_title_client_handover"
             ]
           ]
         ]
       ,
-        title: "Finance"
+        title_i18n: "project_templates_task_title_finance"
         tasks: [
-          title: "Secure financing for Meadowview Estates"
+          title_i18n: (user) ->
+            options = 
+              site_name: APP.justdo_i18n.tr "project_templates_task_title_demo_site_name_1", {}, user
+            return APP.justdo_i18n.tr "project_templates_task_title_secure_financing_for_custom_name", options, user
           expand: true
           tasks: [
-            title: "Determine Loan Requirements"
+            title_i18n: "project_templates_task_title_determine_load_requirements"
           ,
-            title: "Create a Financial Model"
+            title_i18n: "project_templates_task_title_create_a_financial_model"
           ,
-            title: "Identify Potential Lenders"
+            title_i18n: "project_templates_task_title_identify_potential_lenders"
             tasks: [
-              title: "Bank A"
+              title_i18n: 
+                key: "project_templates_task_title_bank_with_custom_name"
+                options: "A"
               tasks: [
-                title: "Obtain Preliminary Approvals"
+                title_i18n: "project_templates_task_title_obtain_preliminary_approvals"
               ]
             ,
-              title: "Bank B"
+              title_i18n: 
+                key: "project_templates_task_title_bank_with_custom_name"
+                options: "B"
               tasks: [
-                title: "Prepare Business Plan"
+                title_i18n: "project_templates_task_title_prepare_business_plan"
               ]
             ]
           ]
         ,
-          title: "Prepare FY report"
+          title_i18n: "project_templates_task_title_prepare_fy_report"
           tasks: [
-            title: "Contact auditor"
+            title_i18n: "project_templates_task_title_contact_auditor"
           ,
-            title: "Prepare employer return"
+            title_i18n: "project_templates_task_title_prepare_employer_return"
           ]
         ]
       ,
-        title: "HR"
+        title_i18n: "project_templates_task_title_human_resources"
         expand: true
         tasks: [
-          title: "Recruit an on-site engineer"
+          title_i18n: "project_templates_task_title_recruit_on_site_engineer"
           tasks: [
-            title: "Candidate A"
+            title_i18n: 
+              key: "project_templates_task_title_candidate_with_custom_name"
+              options: "A"
             events: [
               action: "setStatus"
-              args: "Coordinate zoom meeting"
+              args: "project_templates_task_title_coordinate_zoom_meeting"
             ]
           ,
-            title: "Candidate B"
+            title_i18n: 
+              key: "project_templates_task_title_candidate_with_custom_name"
+              options: "B"
             events: [
               action: "setStatus"
-              args: "CV is missing, contact by email"
+              args: "project_templates_task_title_cv_is_missing_contact_by_email"
             ]
           ]
         ]
       ]
     demo_html_template: [
-      { "level": 0, "expand_state": "minus", "task_id": "1", "title": "Sites", "state_class": "in-progress", "state_title": "In progress" },
-      { "level": 1, "expand_state": "minus", "task_id": "83", "title": "Meadowview Estates", "state_class": "in-progress", "state_title": "In progress" },
-      { "level": 2, "expand_state": "minus", "task_id": "89", "title": "Project Planning", "state_class": "in-progress", "state_title": "In progress" },
-      { "level": 3, "task_id": "90", "title": "Scope Definition", "state_class": "done", "state_title": "Done" },
-      { "level": 3, "task_id": "91", "title": "Timeline & Budgeting", "state_class": "pending", "state_title": "Pending" },
-      { "level": 3, "task_id": "92", "title": "Permitting & Compliance", "state_class": "cancelled", "state_title": "Cancelled" },
-      { "level": 2, "expand_state": "plus", "task_id": "93", "title": "Design & Engineering", "state_class": "in-progress", "state_title": "In progress" },
-      { "level": 2, "expand_state": "plus", "task_id": "97", "title": "Site Preparation", "state_class": "pending", "state_title": "Pending" },
-      { "level": 2, "expand_state": "plus", "task_id": "101", "title": "Construction", "state_class": "done", "state_title": "Done" },
-      { "level": 2, "expand_state": "plus", "task_id": "105", "title": "Inspection & Quality Control", "state_class": "done", "state_title": "Done" },
-      { "level": 2, "expand_state": "plus", "task_id": "109", "title": "Project Closeout", "state_class": "in-progress", "state_title": "In progress" },
-      { "level": 1, "expand_state": "plus", "task_id": "113", "title": "Willow Creek Village", "state_class": "cancelled", "state_title": "Cancelled" },
-      { "level": 1, "task_id": "138", "title": "Oak Ridge Heights", "state_class": "done", "state_title": "Done", "extra_padding": "extra-padding" },
-      { "level": 1, "task_id": "145", "title": "Pinecrest Meadows", "state_class": "done", "state_title": "Done", "extra_padding": "extra-padding" },
-      { "level": 0, "expand_state": "minus", "task_id": "43", "title": "Pinecrest Meadows", "state_class": "pending", "state_title": "Pending" },
-      { "level": 1, "expand_state": "minus", "task_id": "152", "title": "Secure financing for Meadowview Estates", "state_class": "pending", "state_title": "Pending" },
-      { "level": 2, "task_id": "154", "title": "Determine Loan Requirements", "state_class": "cancelled", "state_title": "Cancelled", "extra_padding": "extra-padding" },
-      { "level": 2, "task_id": "155", "title": "Create a Financial Model", "state_class": "in-progress", "state_title": "In progress", "extra_padding": "extra-padding" },
-      { "level": 2, "expand_state": "plus", "task_id": "156", "title": "Identify Potential Lenders", "state_class": "pending", "state_title": "Pending" },
-      { "level": 1, "expand_state": "plus", "task_id": "49", "title": "Prepare FY report", "state_class": "on-hold", "state_title": "On hold" },
-      { "level": 0, "expand_state": "minus", "task_id": "45", "title": "HR", "state_class": "pending", "state_title": "Pending" },
-      { "level": 1, "expand_state": "plus", "task_id": "50", "title": "Recruit an on-site engineer", "state_class": "pending", "state_title": "Pending" }
+      {
+        level: 0
+        expand_state: "minus"
+        task_id: "1"
+        title_i18n: "project_templates_task_title_sites"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+      }
+      {
+        level: 1
+        expand_state: "minus"
+        task_id: "83"
+        title_i18n: "project_templates_task_title_demo_site_name_1"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+      }
+      {
+        level: 2
+        expand_state: "minus"
+        task_id: "89"
+        title_i18n: "project_templates_task_title_project_planning"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+      }
+      {
+        level: 3
+        task_id: "90"
+        title_i18n: "project_templates_task_title_scope_definition"
+        state_class: "done"
+        state_title_i18n: "state_done"
+      }
+      {
+        level: 3
+        task_id: "91"
+        title_i18n: "project_templates_task_title_timeline_and_budgeting"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 3
+        task_id: "92"
+        title_i18n: "project_templates_task_title_permitting_and_compliance"
+        state_class: "cancelled"
+        state_title_i18n: "state_cancelled"
+      }
+      {
+        level: 2
+        expand_state: "plus"
+        task_id: "93"
+        title_i18n: "project_templates_task_title_design_and_engineering"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+      }
+      {
+        level: 2
+        expand_state: "plus"
+        task_id: "97"
+        title_i18n: "project_templates_task_title_site_preparation"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 2
+        expand_state: "plus"
+        task_id: "101"
+        title_i18n: "project_templates_task_title_construction"
+        state_class: "done"
+        state_title_i18n: "state_done"
+      }
+      {
+        level: 2
+        expand_state: "plus"
+        task_id: "105"
+        title_i18n: "project_templates_task_title_inspection_and_quality_control"
+        state_class: "done"
+        state_title_i18n: "state_done"
+      }
+      {
+        level: 2
+        expand_state: "plus"
+        task_id: "109"
+        title_i18n: "project_templates_task_title_project_closeout"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+      }
+      {
+        level: 1
+        expand_state: "plus"
+        task_id: "113"
+        title_i18n: "project_templates_task_title_demo_site_name_2"
+        state_class: "cancelled"
+        state_title_i18n: "state_cancelled"
+      }
+      {
+        level: 1
+        task_id: "138"
+        title_i18n: "project_templates_task_title_demo_site_name_3"
+        state_class: "done"
+        state_title_i18n: "state_done"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 1
+        task_id: "145"
+        title_i18n: "project_templates_task_title_demo_site_name_4"
+        state_class: "done"
+        state_title_i18n: "state_done"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 0
+        expand_state: "minus"
+        task_id: "43"
+        title_i18n: "project_templates_task_title_demo_site_name_4"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 1
+        expand_state: "minus"
+        task_id: "152"
+        title_i18n: ->
+          options = 
+            site_name: TAPi18n.__ "project_templates_task_title_demo_site_name_1"
+          return TAPi18n.__ "project_templates_task_title_secure_financing_for_custom_name", options
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 2
+        task_id: "154"
+        title_i18n: "project_templates_task_title_determine_load_requirements"
+        state_class: "cancelled"
+        state_title_i18n: "state_cancelled"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 2
+        task_id: "155"
+        title_i18n: "project_templates_task_title_create_a_financial_model"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
+        extra_padding: "extra-padding"
+      }
+      {
+        level: 2
+        expand_state: "plus"
+        task_id: "156"
+        title_i18n: "project_templates_task_title_identify_potential_lenders"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 1
+        expand_state: "plus"
+        task_id: "49"
+        title_i18n: "project_templates_task_title_prepare_fy_report"
+        state_class: "on-hold"
+        state_title_i18n: "state_on_hold"
+      }
+      {
+        level: 0
+        expand_state: "minus"
+        task_id: "45"
+        title_i18n: "project_templates_task_title_human_resources"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
+      {
+        level: 1
+        expand_state: "plus"
+        task_id: "50"
+        title_i18n: "project_templates_task_title_recruit_on_site_engineer"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
+      }
     ]
   return
