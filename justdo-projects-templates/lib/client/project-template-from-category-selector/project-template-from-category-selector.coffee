@@ -7,7 +7,7 @@ Template.project_template_from_category_selector.onCreated ->
   if _.isArray categories
     @categories_to_show = categories
 
-  @subtitle = @data?.subtitle or ""
+  @subtitle_i18n = @data?.subtitle_i18n or ""
 
   @active_template_id_rv = new ReactiveVar ""
   return
@@ -18,7 +18,7 @@ Template.project_template_from_category_selector.helpers
 
     return tpl.rerenderForcer()
 
-  subtitle: -> Template.instance().subtitle
+  subtitleI18n: -> TAPi18n.__ Template.instance().subtitle_i18n
 
   getTemplatesList: ->
     tpl = Template.instance()

@@ -18,21 +18,21 @@ _.extend JustDoProjectsTemplates.prototype,
       return
 
     default_options =
-      popup_title: "Choose template"
-      popup_subtitle: ""
+      popup_title_i18n: "Choose template"
+      popup_subtitle_i18n: ""
       categories: ["blank"]
       target_task: "/"
       allow_closing: true
     options = _.extend default_options, options
 
-    message_template = JustdoHelpers.renderTemplateInNewNode Template.project_template_from_category_selector, {categories: options.categories, subtitle: options.popup_subtitle}
+    message_template = JustdoHelpers.renderTemplateInNewNode Template.project_template_from_category_selector, {categories: options.categories, subtitle_i18n: options.popup_subtitle_i18n}
     message_template.node.classList.add "project-template-selector-wrapper"
 
     create_button_disabled = false
 
     dialog = bootbox.dialog
       message: message_template.node
-      title: options.popup_title
+      title: TAPi18n.__ options.popup_title_i18n
       animate: true
       scrollable: true
       closeButton: options.allow_closing

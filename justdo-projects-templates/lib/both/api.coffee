@@ -29,7 +29,7 @@ _.extend JustDoProjectsTemplates.prototype,
   _registerCategoryDefSchema: new SimpleSchema
     id:
       type: String
-    label:
+    label_i18n:
       type: String
     order:
       type: Number
@@ -55,7 +55,7 @@ _.extend JustDoProjectsTemplates.prototype,
       type: String
     categories:
       type: [String]
-    label:
+    label_i18n:
       type: String
     demo_img_src:
       type: String

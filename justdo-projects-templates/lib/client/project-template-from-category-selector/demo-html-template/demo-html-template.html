@@ -2,11 +2,11 @@
   <div class="template-html-wrapper">
     <table class="template-html-table">
       <tr class="tr-header">
-        <td width="500">Subject</td>
-        <td width="120">Notes</td>
-        <td width="120">State</td>
-        <td width="120">Start Date</td>
-        <td width="120">End Date</td>
+        <td width="500">{{_ "subject"}}</td>
+        <td width="120">{{_ "notes"}}</td>
+        <td width="120">{{_ "state_label"}}</td>
+        <td width="120">{{_ "start_date"}}</td>
+        <td width="120">{{_ "end_date"}}</td>
       </tr>
       {{#each tasks}}
         <tr>
@@ -35,7 +35,13 @@
                 {{/if}}
                 <div class="task-id">{{task_id}}</div>
                 <img class="avatar" src="/packages/justdoinc_justdo-projects-templates/lib/client/project-template-from-category-selector/demo-html-template/assets/user{{randomAvatarIndex}}.jpg" alt="">
-                <div class="title">{{title}}</div>
+                <div class="title">
+                  {{#if title_i18n}}
+                    {{i18nTitle}}
+                  {{else}}
+                    {{title}}
+                  {{/if}}
+                </div>
               </div>
 
               <div class="subject-right">
@@ -44,7 +50,7 @@
             </div>
           </td>
           <td><div class="note">{{note}}</div></td>
-          <td class="td-state"><div class="state {{state_class}}">{{state_title}}</div></td>
+          <td class="td-state"><div class="state {{state_class}}">{{_ state_title_i18n}}</div></td>
           <td><div class="start_date">{{start_date}}</div></td>
           <td><div class="end_date">{{end_date}}</div></td>
         </tr>

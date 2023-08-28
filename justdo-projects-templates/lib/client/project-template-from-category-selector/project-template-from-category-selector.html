@@ -2,14 +2,14 @@
   <div class="project-template-selector">
     <div class="header">
       <div class="subtitle">
-        {{subtitle}}
+        {{subtitleI18n}}
       </div>
     </div>
 
     <div class="templates-list-container">
       {{#each getTemplatesList}}
         <div class="task-pane-tab template-item {{isTemplateActive}}" data-category="{{category}}" data-id="{{id}}">
-          {{label}}
+          {{_ label_i18n}}
         </div>
       {{/each}}
     </div>
@@ -30,17 +30,6 @@
         {{/if}}
       </div>
     {{/with}}
-
-
-    {{!--
-        template_name (see -> /client/templates/templates.coffee):
-          - "home_builders_inc"
-          - "it_firm"
-          - "movie_production"
-          - "blank"
-    --}}
-
-
 
   </div>
 </template>
