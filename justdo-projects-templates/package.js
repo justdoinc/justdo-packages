@@ -32,6 +32,8 @@ Package.onUse(function (api) {
   api.use("justdoinc:justdo-helpers@1.0.0", both);
   api.use("iron:router@1.1.2", both);
   api.use("justdoinc:jd-api@1.0.0", both);
+  api.use("tap:i18n@1.8.2", both);
+  api.use("justdoinc:justdo-i18n@1.0.0", both);
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
 
@@ -100,7 +102,6 @@ Package.onUse(function (api) {
 
   // Blank
   api.addFiles("lib/core-templates-categories/blank/blank.coffee", both)
-  api.addAssets("lib/core-templates-categories/blank/blank.png", client)
 
   api.export("JustDoProjectsTemplates", both);
 });
