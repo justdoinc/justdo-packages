@@ -830,7 +830,7 @@ _.extend GridControl.prototype,
       throw @_error "grid-control-schema-error", message
 
     set_default_formatter = (field_def, grid_control_field_formatter, other_visible_fields_formatter) =>
-      if not field_def.grid_visible_column
+      if (not field_def.grid_visible_column) and (not field_def.grid_printable_column)
         field_def.grid_column_formatter = null
 
         return
@@ -885,9 +885,10 @@ _.extend GridControl.prototype,
         if not def.grid_visible_column
           # When grid isn't visible, init relevant options values accordingly
           def.grid_editable_column = false
-          def.grid_column_formatter = null
           def.grid_column_editor = null
           def.grid_default_grid_view = false
+          if not def.grid_printable_column
+            def.grid_column_formatter = null
         else
           # Set default formatter/editor according to field type
           # Defined in grid_control-static-methods.coffee
