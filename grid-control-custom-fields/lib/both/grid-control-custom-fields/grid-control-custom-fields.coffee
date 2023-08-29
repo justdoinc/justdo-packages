@@ -372,7 +372,7 @@ _.extend GridControlCustomFields,
 
         default_formatter_and_editor = GridControl.getDefaultFormatterAndEditorForType(custom_field_definition.field_type)
 
-        if not custom_field_schema.grid_visible_column
+        if (not custom_field_schema.grid_visible_column) and (not custom_field_schema.grid_printable_column)
           custom_field_schema.grid_column_formatter = null
           formatter_type = null
         else
