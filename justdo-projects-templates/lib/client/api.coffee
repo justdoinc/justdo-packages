@@ -39,7 +39,7 @@ _.extend JustDoProjectsTemplates.prototype,
       className: "bootbox-new-design project-templates-modal"
       buttons:
         Create:
-          label: "Create"
+          label: APP.justdo_i18n.generateI18nModalButtonLabel "create_btn_label"
           className: "btn-primary create-btn"
           callback: =>
             # Ensure rapid clicking will not trigger multiple calls

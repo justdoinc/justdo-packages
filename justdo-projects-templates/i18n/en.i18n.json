@@ -1,4 +1,6 @@
 {
+  "create_btn_label": "Create",
+
   "project_templates_blank_label": "Blank",
 
   "project_templates_task_title_untitled_task": "Untitled Task",
