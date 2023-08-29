@@ -132,7 +132,10 @@ APP.getEnv (env) ->
             ]
           ]
         ,
-          title_i18n: -> TAPi18n.__ "project_templates_task_title_completed_suffix", TAPi18n.__ "project_templates_task_title_demo_site_name_3"
+          title_i18n: (user) -> 
+            options = 
+              task_name: APP.justdo_i18n.tr "project_templates_task_title_demo_site_name_3", {}, user
+            APP.justdo_i18n.tr "project_templates_task_title_completed_suffix", options, user
           events: [
             action: "setArchived"
           ]
@@ -192,7 +195,10 @@ APP.getEnv (env) ->
             ]
           ]
         ,
-          title_i18n: -> TAPi18n.__ "project_templates_task_title_completed_suffix", TAPi18n.__ "project_templates_task_title_demo_site_name_4"
+          title_i18n: (user) -> 
+            options = 
+              task_name: APP.justdo_i18n.tr "project_templates_task_title_demo_site_name_4", {}, user
+            APP.justdo_i18n.tr "project_templates_task_title_completed_suffix", options, user
           events: [
             action: "setArchived"
           ]
@@ -269,14 +275,16 @@ APP.getEnv (env) ->
             tasks: [
               title_i18n: 
                 key: "project_templates_task_title_bank_with_custom_name"
-                options: "A"
+                options: 
+                  bank_name: "A"
               tasks: [
                 title_i18n: "project_templates_task_title_obtain_preliminary_approvals"
               ]
             ,
               title_i18n: 
                 key: "project_templates_task_title_bank_with_custom_name"
-                options: "B"
+                options: 
+                  bank_name: "B"
               tasks: [
                 title_i18n: "project_templates_task_title_prepare_business_plan"
               ]
@@ -298,7 +306,8 @@ APP.getEnv (env) ->
           tasks: [
             title_i18n: 
               key: "project_templates_task_title_candidate_with_custom_name"
-              options: "A"
+              options: 
+                candidate_name: "A"
             events: [
               action: "setStatus"
               args: "project_templates_task_title_coordinate_zoom_meeting"
@@ -306,7 +315,8 @@ APP.getEnv (env) ->
           ,
             title_i18n: 
               key: "project_templates_task_title_candidate_with_custom_name"
-              options: "B"
+              options: 
+                candidate_name: "B"
             events: [
               action: "setStatus"
               args: "project_templates_task_title_cv_is_missing_contact_by_email"
@@ -428,7 +438,7 @@ APP.getEnv (env) ->
         level: 0
         expand_state: "minus"
         task_id: "43"
-        title_i18n: "project_templates_task_title_demo_site_name_4"
+        title_i18n: "project_templates_task_title_finance"
         state_class: "pending"
         state_title_i18n: "state_pending"
       }

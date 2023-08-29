@@ -84,7 +84,10 @@ APP.getEnv (env) ->
             title_i18n: "marketing_and_distribution"
           ]
         ,
-          title_i18n: "Robin hood - completed"
+          title_i18n: (user) ->
+            options = 
+              task_name: APP.justdo_i18n.tr "demo_movie_name_3", {}, user
+            return APP.justdo_i18n.tr "project_templates_task_title_completed_suffix", options, user
           events: [
             action: "setArchived"
             args: "nil"
@@ -105,11 +108,11 @@ APP.getEnv (env) ->
           title_i18n: "funding_identification_and_procurement"
           expand: true
           tasks: [
-            title_i18n: 
-              key: "secure_funds_for_movie_from_investor"
-              options:
+            title_i18n: (user) ->
+              options =
                 investor: "GateFlix"
-                movie_name: TAPi18n.__ "demo_movie_name_1"
+                movie_name: APP.justdo_i18n.tr "demo_movie_name_1", {}, user
+              return APP.justdo_i18n.tr "secure_funds_for_movie_from_investor", options, user
             tasks: [
               title_i18n: "negotiate_terms_and_conditions"
             ,
@@ -132,7 +135,8 @@ APP.getEnv (env) ->
           tasks: [
             title_i18n: 
               key: "project_templates_task_title_candidate_with_custom_name"
-              options: "A"
+              options: 
+                candidate_name: "A"
             events: [
               action: "setStatus"
               args: "project_templates_task_title_coordinate_zoom_meeting"
@@ -140,7 +144,8 @@ APP.getEnv (env) ->
           ,
             title_i18n: 
               key: "project_templates_task_title_candidate_with_custom_name"
-              options: "B"
+              options: 
+                candidate_name: "B"
             events: [
               action: "setStatus"
               args: "project_templates_task_title_cv_is_missing_contact_by_email"
@@ -184,9 +189,9 @@ APP.getEnv (env) ->
       {
         level: 3
         task_id: "53"
-        title_i18n: "Developing story concepts"
+        title_i18n: "develop_story_conecpt_into_screenplay"
         state_class: "in-progress"
-        state_title_i18n: "in-progress"
+        state_title_i18n: "state_in_progress"
         extra_padding: "extra-padding"
       }
       {
@@ -248,7 +253,10 @@ APP.getEnv (env) ->
       {
         level: 1
         task_id: "84"
-        title_i18n: "Robin hood - completed"
+        title_i18n: ->
+          options = 
+            task_name: TAPi18n.__ "demo_movie_name_3"
+          return TAPi18n.__ "project_templates_task_title_completed_suffix", options
         state_class: "done"
         state_title_i18n: "state_done"
         extra_padding: "extra-padding"

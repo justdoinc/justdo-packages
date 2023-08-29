@@ -21,11 +21,13 @@ APP.getEnv (env) ->
               tasks: [
                 title_i18n: 
                   key: "project_templates_task_title_task_with_custom_name",
-                  options: "A"
+                  options: 
+                    task_name: "A"
               ,
                 title_i18n: 
                   key: "project_templates_task_title_task_with_custom_name",
-                  options: "B"
+                  options: 
+                    task_name: "B"
               ]
             ,
               title_i18n: "v1.0.0"
@@ -100,26 +102,31 @@ APP.getEnv (env) ->
             tasks: [
               title_i18n: 
                 key: "project_templates_task_title_roadmap_feature_with_custom_name",
-                options: "1"
+                options: 
+                  feature_name: "1"
             ,
               title_i18n: 
                 key: "project_templates_task_title_roadmap_feature_with_custom_name",
-                options: "2"
+                options: 
+                  feature_name: "2"
               events: [
                 action: "setStatus"
                 args: 
                   key: "project_templates_task_title_requested_by_client_with_custom_name"
-                  options: "XYZ"
+                  options: 
+                    client_name: "XYZ"
               ]
             ,
               title_i18n: 
                 key: "project_templates_task_title_roadmap_feature_with_custom_name",
-                options: "3"
+                options: 
+                  feature_name: "3"
               events: [
                 action: "setStatus"
                 args: 
                   key: "project_templates_task_title_requested_by_client_with_custom_name"
-                  options: "ABC"
+                  options: 
+                    client_name: "ABC"
               ]
             ]
           ,
@@ -144,7 +151,8 @@ APP.getEnv (env) ->
         tasks: [
           title_i18n: 
             key: "project_templates_task_title_client_with_custom_name",
-            options: "A"
+            options: 
+              client_name: "A"
           tasks: [
             title_i18n: 
               key: "project_templates_task_title_deployment_version_on_client_server"
@@ -155,7 +163,8 @@ APP.getEnv (env) ->
         ,
           title_i18n: 
             key: "project_templates_task_title_client_with_custom_name",
-            options: "B"
+            options: 
+              client_name: "B"
           tasks: [
             title_i18n: "project_templates_task_title_contact_to_reproduce_reported_issue"
           ]
@@ -167,7 +176,8 @@ APP.getEnv (env) ->
           tasks: [
             title_i18n:
               key: "project_templates_task_title_candidate_with_custom_name"
-              options: "A"
+              options: 
+                candidate_name: "A"
             events: [
               action: "setStatus"
               args: "project_templates_task_title_coordinate_zoom_meeting"
@@ -175,7 +185,8 @@ APP.getEnv (env) ->
           ,
             title_i18n:
               key: "project_templates_task_title_candidate_with_custom_name"
-              options: "B"
+              options: 
+                candidate_name: "B"
             events: [
               action: "setStatus"
               args: "project_templates_task_title_cv_is_missing_contact_by_email"
