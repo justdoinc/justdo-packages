@@ -81,11 +81,12 @@ _.extend TemplateParser.prototype,
 
   "lookup:title": ->
     if (i18n_title = @template.title_i18n)?
+      user_id = @users.performing_user
       if _.isFunction i18n_title
-        return i18n_title @users.performing_user
+        return i18n_title user_id
       if _.isObject i18n_title
-        return APP.justdo_i18n.tr i18n_title.key, i18n_title.options, @users.performing_user
-      return APP.justdo_i18n.tr i18n_title, {}, @users.performing_user
+        return APP.justdo_i18n.tr i18n_title.key, i18n_title.options, user_id
+      return APP.justdo_i18n.tr i18n_title, {}, user_id
 
     return @template.title
 
