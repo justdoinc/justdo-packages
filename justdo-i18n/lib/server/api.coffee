@@ -24,8 +24,12 @@ _.extend JustdoI18n.prototype,
 
 
   _setupAfterImprintCampaignIdHook: ->
-    APP.justdo_promoters_campaigns?.on "after-imprint-campaign-id", ({campaign_doc, user_id}) ->
+    APP.justdo_promoters_campaigns?.on "after-imprint-campaign-id", ({campaign_doc, user_id}) =>
       if not (lang = campaign_doc?.lang)?
+        return
+      
+      # Don't set campaign lang if user already has lang defined
+      if @getUserLang(user_id)?
         return
 
       modifier = 
