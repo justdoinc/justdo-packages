@@ -27,9 +27,18 @@
   padding: 16px 0
   color: rgba(49, 69, 99, 0.8)
   font-size: 15px
-  .org-name
-    color: black
+  display: flex
+  justify-content: space-between
+  .create-project
     font-weight: 600
+    cursor: pointer
+    display: flex
+    &:hover
+      text-decoration: underline
+    svg
+      padding: 3px
+      stroke-width: 2
+      opacity: 0.5
 
 .project-card-wrapper
   &:hover
