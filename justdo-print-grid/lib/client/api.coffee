@@ -219,6 +219,8 @@ _.extend JustdoPrintGrid.prototype,
     enterPrintMode = (options) ->
       {item_path, expand_only, filtered_tree} = options
 
+      APP.justdo_print_grid.emit "enter-print-mode", options
+
       # Append div.print-content to body
       $("body").append """<div class="print-grid-mode-overlay"><div class="print-content"></div></div>"""
 
