@@ -112,7 +112,7 @@
       return user.username || (user.emails && user.emails[0] && user.emails[0].address);
     },
     isAffiliate: function () {
-      return APP.justdo_promoters_campaigns.isCurrentUserPromoter();
+      return APP.justdo_promoters_campaigns?.isCurrentUserPromoter();
     },
     additionalLoggedInDropdownActions: function() {
       return Template._loginButtonsAdditionalLoggedInDropdownActions !== undefined;
