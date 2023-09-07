@@ -387,6 +387,7 @@ _.extend Projects.prototype,
             initial_payload_cursor = collection.find initial_payload_query, query_options
             private_data_initial_payload_cursor = private_data_collection.find private_data_initial_payload_query, private_data_query_options
 
+        if unmerged_pub_support
           query._raw_updated_date = {$gt: sync}
           private_data_query._raw_updated_date = {$gt: sync}
  
