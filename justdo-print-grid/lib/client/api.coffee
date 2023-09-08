@@ -219,8 +219,6 @@ _.extend JustdoPrintGrid.prototype,
     enterPrintMode = (options) ->
       {item_path, expand_only, filtered_tree} = options
 
-      APP.justdo_print_grid.emit "enter-print-mode", options
-
       # Append div.print-content to body
       $("body").append """<div class="print-grid-mode-overlay"><div class="print-content"></div></div>"""
 
@@ -426,6 +424,11 @@ _.extend JustdoPrintGrid.prototype,
 
         return
 
+      APP.justdo_print_grid.on "refresh-print-html", ->
+        createPrintHtml(cols, rows)
+        resizePrintContent()
+        return
+
       # Apply print settings
       $(".print-settings-apply").on "click", ->
         getColumnsConfiguration()
@@ -462,6 +465,8 @@ _.extend JustdoPrintGrid.prototype,
       $(".export-tasks").on "click", ->
         exportCSV()
         return
+
+      APP.justdo_print_grid.emit "print-modal-ready", options
 
       return
 
@@ -574,6 +579,8 @@ _.extend JustdoPrintGrid.prototype,
       $(".print-grid-mode-overlay").remove()
       $("body").removeClass("print-grid-mode")
       $("html").css "overflow", last_overflow
+      APP.justdo_print_grid.off "refresh-print-html"
+      APP.justdo_print_grid.emit "exit-print-mode"
 
       return
 
@@ -820,6 +827,8 @@ _.extend JustdoPrintGrid.prototype,
       return
 
     return
+
+  refreshPrintHtml: -> @emit "refresh-print-html"
 
   destroy: ->
     if @destroyed
