@@ -80,8 +80,6 @@ _.extend GridControlCustomFields,
     grid_printable_column:
       type: Boolean
 
-      defaultValue: true
-
       optional: true
 
     grid_editable_column:
