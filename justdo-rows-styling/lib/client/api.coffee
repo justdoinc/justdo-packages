@@ -70,7 +70,7 @@ _.extend JustdoRowsStyling.prototype,
     styles = {}
     if (sb = item["jrs:style"])?
       if sb.bold?
-        styles["font-weight"] = "bold"
+        styles["font-weight"] = "600"
       if sb.underline?
         styles["text-decoration"] = "underline"
       if sb.italic?
