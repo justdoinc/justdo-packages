@@ -432,6 +432,7 @@ _.extend JustdoPrintGrid.prototype,
       # Apply print settings
       $(".print-settings-apply").on "click", ->
         getColumnsConfiguration()
+        APP.justdo_print_grid.emit "print-settings-applied", cols
         createPrintHtml(cols, rows)
         resizePrintContent()
         closePrintSettngs()
@@ -465,8 +466,6 @@ _.extend JustdoPrintGrid.prototype,
       $(".export-tasks").on "click", ->
         exportCSV()
         return
-
-      APP.justdo_print_grid.emit "print-modal-ready", options
 
       return
 
