@@ -15,12 +15,12 @@
       </div>
     </div>
     <div class="members-dropdown-invite-content bg-light">
-      {{#if inviteListEmails}}
+      {{#if users}}
         <div class="invite-list-wrapper">
-          {{#each inviteListEmails}}
+          {{#each users}}
             <div class="invite-list-item">
               <div class="invite-list-item-email">
-                {{this}}
+                {{email}}
               </div>
               <svg class="jd-icon remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
             </div>
@@ -32,10 +32,16 @@
     </div>
     <div class="members-dropdown-invite-footer">
       <div class="invite-menu-wrapper members-access-menu">
-        <div class="invite-menu-btn text-primary">Member access</div>
+        <div class="invite-menu-btn text-primary">{{activeAccessRole.title}}</div>
         <div class="invite-menu animate slideIn">
-          <div class="dropdown-item">Member access</div>
-          <div class="dropdown-item">Guest access</div>
+          {{#each accessRoles}}
+            <div class="dropdown-item">
+              {{title}}
+              {{#if subtitle}}
+                <div class="dropdown-item-subtitle">{{subtitle}}</div>
+              {{/if}}
+            </div>
+          {{/each}}
         </div>
       </div>
       <button class="btn btn-primary btn-sm invite-members-btn" type="button">Invite</button>

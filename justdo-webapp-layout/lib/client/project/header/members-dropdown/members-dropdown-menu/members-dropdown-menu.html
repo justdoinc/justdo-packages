@@ -202,7 +202,7 @@
       <div class="display-name mx-2" title="{{userEmail this}}">{{displayName}}</div>
     </div>
     <div class="member-settings-dropdown">
-      <div class="member-role-label text-primary">Invited</div>
+      <div class="member-role-label text-primary">{{#if is_admin}}Admin{{else}}{{#if is_guest}}Guest{{else}}Member{{/if}}{{/if}}</div>
       <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
       <div class="member-settings-dropdown-menu animate slideIn">
         {{#if allow_member_edit_enrollment_pending_member user_id}}

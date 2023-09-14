@@ -8,11 +8,27 @@ APP.executeAfterAppLibCode ->
 
   Template.members_dropdown_invite.onCreated ->
     tpl = @
-    tpl.invite_list = new ReactiveVar []
+    tpl.users = new ReactiveVar []
+    tpl.access_roles = [
+      {
+        "role": "member",
+        "title": "Members access"
+      },
+      {
+        "role": "guest",
+        "title": "Guest access",
+        "subtitle": "Is a member that can't see the list of all members of the JustDo"
+      },
+    ]
+
+    tpl.active_access_role = new ReactiveVar tpl.access_roles[0]
 
     tpl.recognizeEmails = ->
       $el = $(".invite-members-input")
       inputs = $el.val().replace(/,/g, ";").split(";")
+      users = tpl.users.get()
+      existing_emails = _.map users, (user) -> user.email
+      new_emails = []
 
       for input in inputs
         input_segments = input.split(/\s+/g)
@@ -31,10 +47,9 @@ APP.executeAfterAppLibCode ->
             break # Once we found an email, we stop looking forward
 
         if email?
-          invite_list = tpl.invite_list.get()
-          if not _.contains(invite_list, email)
-            invite_list.push email
-            tpl.invite_list.set invite_list
+          if not _.contains(existing_emails, email)
+            users.push {"email": email}
+            tpl.users.set users
 
       $el.val ""
 
@@ -43,23 +58,14 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.members_dropdown_invite.helpers
-    inviteListEmails: ->
-      return Template.instance().invite_list.get()
+    users: ->
+      return Template.instance().users.get()
 
-    inviteListEmailsHTML: ->
-      invite_list = Template.instance().invite_list.get()
-      html = ""
+    activeAccessRole: ->
+      return Template.instance().active_access_role.get()
 
-      for email in invite_list
-        html += """
-          <div class="invite-list-item">
-            <div class="invite-list-item-email">
-              #{email}
-            </div>
-            <svg class="jd-icon remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
-          </div>
-        """
-      return html
+    accessRoles: ->
+      return Template.instance().access_roles
 
   Template.members_dropdown_invite.events
     "click .invite-menu-btn": (e, tpl) ->
@@ -96,9 +102,23 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    "click .members-access-menu .dropdown-item": (e, tpl) ->
+      tpl.active_access_role.set @
+
+      return
+
     "click .invite-list-item .remove": (e, tpl) ->
-      invite_list = tpl.invite_list.get()
-      invite_list.splice(invite_list.indexOf(@.substring()), 1);
-      tpl.invite_list.set invite_list
+      users = tpl.users.get()
+      users.splice(users.indexOf(@.substring()), 1);
+      tpl.users.set users
+
+      return
+
+    "click .invite-members-btn": (e, tpl) ->
+      active_justdo = APP.modules.project_page.helpers.curProj()
+      users = tpl.users.get()
+      users = _.map users, (user) -> {"email": user.email, "role": tpl.active_access_role.get().role}
+
+      console.log users
 
       return

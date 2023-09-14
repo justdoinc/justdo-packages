@@ -52,7 +52,7 @@ Template.invite_new_user_dialog.onCreated ->
 
   tpl.recognizeEmails = ->
     $el = $(".invite-new-wrapper .users-email-input")
-    
+
     new_users = {}
     users = tpl.users.get().slice()
     inputs = $el.val().replace(/,/g, ";").split(";")
@@ -74,7 +74,7 @@ Template.invite_new_user_dialog.onCreated ->
           break # Once we found an email, we stop looking forward
         else
           names.push(input_segment)
-      
+
       if not email?
         continue
 
@@ -86,7 +86,7 @@ Template.invite_new_user_dialog.onCreated ->
       else
         first_name = names.slice(0, -1).join(" ")
         last_name = names[names.length - 1]
-      
+
       if not _.find(users, (user) -> user.email == email)
         new_users[email] = {first_name, last_name}
 
@@ -222,7 +222,7 @@ Template.invite_new_user_dialog.events
     Meteor.defer ->
       tpl.recognizeEmails()
       return
-      
+
     return
 
   "click .users-email-add": (e, tpl) ->
@@ -291,6 +291,9 @@ Template.invite_new_user_dialog.events
     selected_tasks = tpl.selected_tasks_rv.get()
     selected_tasks_set = new Set(selected_tasks)
     users = tpl.users.get()
+
+    console.log users
+
     proxy_users = _.map _.filter(users, (user) -> user.role is "proxy" and not user.registered), (user) ->
       obj_for_creating_proxy_user =
         email: user.email
@@ -351,7 +354,7 @@ Template.invite_new_user_dialog.events
             })
         else
           invited_members.push result
-      
+
       if emails_not_added_due_to_strict_registration.length > 0 or emails_not_added_due_to_other_reason.length > 0
         invite_members_failed_tpl =
           JustdoHelpers.renderTemplateInNewNode Template.invite_members_failed, {
@@ -527,7 +530,7 @@ Template.batch_add_user_row.helpers
     if @is_proxy or @is_justdo_member
       return "disabled"
     return
-  
+
   showProxy:->
     return not @registered and APP.justdo_site_admins.siteAdminFeatureEnabled("proxy-users")
 
