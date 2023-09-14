@@ -105,6 +105,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/project/header/members-dropdown/members-dropdown-menu/members-dropdown-menu.coffee", "client");
   api.addFiles("lib/client/project/header/members-dropdown/members-dropdown-menu/members-dropdown-menu.html", "client");
   api.addFiles("lib/client/project/header/members-dropdown/members-dropdown-menu/members-dropdown-menu.sass", "client");
+  api.addFiles("lib/client/project/header/members-dropdown/members-dropdown-menu/members-dropdown-invite/members-dropdown-invite.coffee", "client");
+  api.addFiles("lib/client/project/header/members-dropdown/members-dropdown-menu/members-dropdown-invite/members-dropdown-invite.html", "client");
+  api.addFiles("lib/client/project/header/members-dropdown/members-dropdown-menu/members-dropdown-invite/members-dropdown-invite.sass", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/nullary-operations.coffee", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/operations-toolbar.html", "client");
   api.addFiles("lib/client/project/header/operations-toolbar/operations-toolbar.sass", "client");

@@ -1,11 +1,73 @@
+$member-dropdown-width: 340px
+
 .members-dropdown-menu
-  width: 340px
+  width: $member-dropdown-width
   z-index: 150
   background-color: #ffffff
   border-radius: 4px
 
+  .members-dropdown-wrapper,
+  .members-dropdown-list,
+  .members-dropdown-invite
+    width: $member-dropdown-width
+    flex-basis: $member-dropdown-width
+    flex-shrink: 0
+    position: relative
+    left: 0
+    transition: left 0.32s
+    height: 450px
+
+  .members-dropdown-wrapper
+    overflow: hidden
+    display: flex
+    position: relative
+    &.invite-mode
+      .members-dropdown-list,
+      .members-dropdown-invite
+        left: -$member-dropdown-width
+
   .members-search-wrapper
     padding: 16px 16px 0px 16px
+    position: relative
+
+  .member-invite-dropdown
+    position: absolute
+    background: white
+    left: 16px
+    right: 16px
+    width: auto
+    top: 80%
+    border-radius: 4px
+    font-size: 13px
+    user-select: none
+    padding: 4px
+    z-index: 1
+    box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.1)
+    opacity: 0
+    cursor: pointer
+    pointer-events: none
+    &.slideIn
+      opacity: 1
+      pointer-events: auto
+    .member-invite-btn
+      padding: 6px 8px
+      background-color: white
+      transition: background-color 0.32s
+      display: flex
+      align-items: center
+      border-radius: 4px
+    svg
+      color: #909EBA
+      width: 20px
+      height: 20px
+      stroke-width: 2
+      margin-right: 4px
+    span
+      font-weight: 600
+      margin-left: 4px
+    &:hover
+      .member-invite-btn
+        background-color: #f8f9fa
 
   .show-add-members-dialog
     width: 100%
@@ -23,20 +85,16 @@
       margin-top: 4px
 
   .members-dropdown-header
-    font-size: 12px
-    color: #3D495B
-    text-transform: uppercase
-    font-weight: bold
-    margin: 16px 16px 8px 16px
+    padding: 4px 16px
+    &::after
+      content: ""
+      position: relative
 
   .add-project-members
     border-top: 1px solid #EDF1F8
     margin: 0 16px
     padding: 16px 0
     text-align: right
-    button
-      text-transform: uppercase
-      font-weight: bold
     .show-add-members-dialog
       width: 100%
 
@@ -49,12 +107,11 @@
 
 .project-members-container
   list-style-type: none
-  max-height: 340px
+  height: 340px
   overflow-y: auto
   overflow-x: hidden
-  padding: 0
+  padding: 16px 0
   margin: 0
-  min-height: 160px
 
   .member-item-wrapper
     &:last-child
@@ -69,6 +126,7 @@
       background-color: #f8f9fa
       .member-settings-dropdown-btn
         opacity: 1
+        width: 14px
     img
       width: 26px
       height: 26px
@@ -97,14 +155,20 @@
   .member-settings-dropdown
     position: relative
     display: flex
+    align-items: center
+
+  .member-role-label
+    font-size: 12px
 
   .member-settings-dropdown-btn
     color: #B0B8C2
-    width: 14px
     flex-shrink: 0
     padding: 0
     cursor: pointer
     opacity: 0.75
+    margin-left: 4px
+    width: 0px
+    transition: width 0.32
     &:hover
       opacity: 1
       color: #6c757d
@@ -146,9 +210,14 @@
     fill: currentColor
 
   .no-results
-    font-size: 14px
+    color: rgba(49, 69, 99, 0.25)
+    height: 200px
+    padding-top: 20px
+    display: flex
+    align-items: center
+    justify-content: center
 
-.members-dropdown-wrapper.selected-mode
+.members-dropdown-list.selected-mode
   .member-item
     cursor: pointer
   .member-item.current-user

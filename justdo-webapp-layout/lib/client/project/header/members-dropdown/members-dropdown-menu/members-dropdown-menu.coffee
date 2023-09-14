@@ -74,6 +74,7 @@ APP.executeAfterAppLibCode ->
     @members_filter = new ReactiveVar null
     @select_mode = new ReactiveVar false
     @selected_members = new ReactiveVar []
+    @invite_mode = new ReactiveVar false
 
     return
 
@@ -113,11 +114,14 @@ APP.executeAfterAppLibCode ->
     allowRemoveSelected: ->
       return Template.instance().selected_members.get().length > 0
 
-  Template.members_dropdown_menu.events
-    "click .show-add-members-dialog": (e, tpl) ->
-      ProjectPageDialogs.showMemberDialog()
+    inviteMode: ->
+      return Template.instance().invite_mode.get()
 
-      return
+  Template.members_dropdown_menu.events
+    # "click .show-add-members-dialog": (e, tpl) ->
+    #   ProjectPageDialogs.showMemberDialog()
+    #
+    #   return
 
     "click .remove": (e, tpl) ->
       if curProj()?.isAdmin()
@@ -273,7 +277,7 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .members-dropdown-wrapper": (e, tpl) ->
+    "click .members-dropdown-list": (e, tpl) ->
       $dropdown = $(e.target).parents(".member-settings-dropdown")
 
       if not $dropdown[0]
@@ -283,6 +287,21 @@ APP.executeAfterAppLibCode ->
 
     "click .member-settings-dropdown-menu .dropdown-item": (e, tpl) ->
       $(e.target).parents(".member-settings-dropdown-menu").removeClass "open"
+
+      return
+
+    "click .member-invite-btn-js": (e, tpl) ->
+      tpl.invite_mode.set true
+      setTimeout ->
+        $(".invite-members-input").focus()
+      , 500
+
+      return
+
+    "click .members-dropdown-invite .go-back": (e, tpl) ->
+      tpl.invite_mode.set false
+      tpl.members_filter.set ""
+      $(".members-search-input").val("").focus()
 
       return
 

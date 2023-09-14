@@ -1,0 +1,115 @@
+.members-dropdown-invite
+  display: flex
+  flex-direction: column
+
+  .members-dropdown-invite-header
+    display: flex
+    padding: 16px 16px 8px 10px
+    align-items: center
+    .go-back
+      cursor: pointer
+      stroke-width: 2
+      flex-shrink: 0
+      transition: transform 0.32s
+      &:hover
+        transform: scale(1.1)
+    .invite-members-input
+      flex-grow: 1
+      border: none
+      &:focus
+        outline: none
+
+  .members-dropdown-invite-content
+    display: flex
+    flex-grow: 1
+    margin: 0 16px
+    border-radius: 4px
+    flex-direction: column
+    padding: 4px
+    .invite-list-wrapper
+      display: flex
+      flex-flow: row wrap
+    .invite-list-item
+      background-color: #2C8CE5
+      color: white
+      font-size: 13px
+      padding: 3px 5px 3px 8px
+      margin: 2px
+      border-radius: 3px
+      display: flex
+      align-items: center
+      .invite-list-item-email
+        max-width: 250px
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
+      .jd-icon
+        width: 16px
+        height: 16px
+        stroke-width: 3
+        color: white
+        opacity: 0.75
+        margin-left: 4px
+        cursor: pointer
+        &:hover
+          background-color: rgba(255, 255, 255, 0.32)
+      &:hover
+        .jd-icon
+          opacity: 1
+    .empty-list
+      width: 100%
+      display: flex
+      align-items: center
+      justify-content: center
+      color: rgba(49, 69, 99, 0.35)
+      flex-grow: 1
+
+  .members-dropdown-invite-footer
+    padding: 8px 16px 16px 16px
+    .invite-members-btn
+      margin-top: 8px
+
+  .member-dropdown-invite-access
+    display: flex
+
+  .invite-members-btn
+    width: 100%
+
+  .invite-menu-wrapper
+    position: relative
+    display: flex
+    align-items: center
+    justify-content: center
+
+  .invite-settings
+    display: flex
+
+  .invite-menu
+    position: absolute
+    padding: 8px
+    background-color: white
+    right: 0
+    top: 50%
+    z-index: 1
+    display: none
+    border-radius: 4px
+    box-shadow: 0 1px 16px rgba(0, 0, 0, 0.12)
+    .dropdown-item
+      padding-left: 8px
+      cursor: pointer
+    &.open
+      display: flex
+      flex-direction: column
+
+  .invite-menu-btn
+    display: flex
+    align-items: center
+    flex-shrink: 0
+    cursor: pointer
+    &:hover
+      text-decoration: underline
+
+  .members-access-menu
+    .invite-menu
+      right: auto
+      top: -95px

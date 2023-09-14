@@ -1,0 +1,44 @@
+<template name="members_dropdown_invite">
+  <div class="members-dropdown-invite">
+    <div class="members-dropdown-invite-header">
+      <svg class="jd-icon go-back"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"></use></svg>
+      <input class="invite-members-input" type="text" placeholder="Type email">
+      <div class="invite-settings">
+        <div class="invite-menu-wrapper">
+          <div class="invite-menu-btn text-primary">Share all</div>
+          <div class="invite-menu animate slideIn">
+            <div class="dropdown-item">Share all</div>
+            <div class="dropdown-item">Share specific projects</div>
+            <div class="dropdown-item">Share nothing</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="members-dropdown-invite-content bg-light">
+      {{#if inviteListEmails}}
+        <div class="invite-list-wrapper">
+          {{#each inviteListEmails}}
+            <div class="invite-list-item">
+              <div class="invite-list-item-email">
+                {{this}}
+              </div>
+              <svg class="jd-icon remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+            </div>
+          {{/each}}
+        </div>
+      {{else}}
+        <div class="empty-list">Invite list</div>
+      {{/if}}
+    </div>
+    <div class="members-dropdown-invite-footer">
+      <div class="invite-menu-wrapper members-access-menu">
+        <div class="invite-menu-btn text-primary">Member access</div>
+        <div class="invite-menu animate slideIn">
+          <div class="dropdown-item">Member access</div>
+          <div class="dropdown-item">Guest access</div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm invite-members-btn" type="button">Invite</button>
+    </div>
+  </div>
+</template>

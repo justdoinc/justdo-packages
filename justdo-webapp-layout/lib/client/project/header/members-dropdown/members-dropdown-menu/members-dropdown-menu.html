@@ -1,77 +1,82 @@
 <template name="members_dropdown_menu">
-  <div class="members-dropdown-wrapper {{#if selectMode}}selected-mode{{/if}}">
-    <div class="members-search-wrapper d-flex align-items-center">
-      <input type="text" class="members-search-input form-control form-control-sm" placeholder="Members">
-    </div>
-
-    <div class="alerts-container"></div>
-
-    <ul class="project-members-container">
-      {{#if isEmptyResults getCurrentMembersFilter}}
-        <li class="no-results text-center my-3 text-muted">No results found</li>
-      {{else}}
-        {{#with project_enrolled_admins_sorted_by_first_name getCurrentMembersFilter}}
-          <li class="members-dropdown-header">Admins</li>
-
-          {{#each this}}
-            <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
-              {{> admin_member_item}}
+  <div class="members-dropdown-wrapper {{#if inviteMode}}invite-mode{{/if}}">
+    <div class="members-dropdown-list {{#if selectMode}}selected-mode{{/if}}">
+      <div class="members-search-wrapper d-flex align-items-center">
+        <input type="text" class="members-search-input form-control form-control-sm" placeholder="Members">
+        {{#if is_project_admin}}
+          <div class="member-invite-dropdown animate {{#if isEmptyResults getCurrentMembersFilter}}slideIn{{/if}}">
+            <div class="member-invite-btn member-invite-btn-js">
+              <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#user-plus"></use></svg>
+              Invite <span>{{getCurrentMembersFilter}}</span>
             </div>
-          {{/each}}
-        {{/with}}
-
-        {{#with project_enrolled_regular_members_sorted_by_first_name getCurrentMembersFilter}}
-          <li class="members-dropdown-header">Members</li>
-
-          {{#each this}}
-            <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
-              {{> regular_member_item}}
-            </div>
-          {{/each}}
-        {{/with}}
-
-        {{#with project_enrolled_guests_sorted_by_first_name getCurrentMembersFilter}}
-          <li class="members-dropdown-header">Guests</li>
-
-          {{#each this}}
-            <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
-              {{> guest_member_item}}
-            </div>
-          {{/each}}
-        {{/with}}
-
-        {{#with project_non_enrolled_members_sorted_by_first_name getCurrentMembersFilter}}
-          <li class="members-dropdown-header">Members Awaiting Registration</li>
-
-          {{#each this}}
-            <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
-              {{> enrollment_pending_member}}
-            </div>
-          {{/each}}
-        {{/with}}
-
-        {{#with project_non_enrolled_guests_sorted_by_first_name getCurrentMembersFilter}}
-          <li class="dropdown-header">Guests Awaiting Registration</li>
-
-          {{#each this}}
-            <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
-              {{> enrollment_pending_member}}
-            </div>
-          {{/each}}
-        {{/with}}
-      {{/if}}
-    </ul>
-    {{#if is_project_admin}}
-      <div class="add-project-members">
-        {{#if selectMode}}
-          <button class="btn btn-default btn-sm cancel-select-mode" type="button">Cancel</button>
-          <button class="btn btn-primary btn-sm remove-selected {{#if allowRemoveSelected}}active{{/if}}" type="button">Remove {{#if allowRemoveSelected}}({{selectedMembersCount}}){{/if}}</button>
-        {{else}}
-          <button class="btn btn-primary btn-sm show-add-members-dialog" type="button">Invite</button>
+          </div>
         {{/if}}
       </div>
+
+      <div class="alerts-container"></div>
+
+      <ul class="project-members-container">
+        {{#if isEmptyResults getCurrentMembersFilter}}
+          <li class="no-results">No results found</li>
+        {{else}}
+          {{#with project_enrolled_admins_sorted_by_first_name getCurrentMembersFilter}}
+            {{#each this}}
+              <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
+                {{> admin_member_item}}
+              </div>
+            {{/each}}
+          {{/with}}
+
+          {{#with project_enrolled_regular_members_sorted_by_first_name getCurrentMembersFilter}}
+            {{#each this}}
+              <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
+                {{> regular_member_item}}
+              </div>
+            {{/each}}
+          {{/with}}
+
+          {{#with project_enrolled_guests_sorted_by_first_name getCurrentMembersFilter}}
+            {{#each this}}
+              <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
+                {{> guest_member_item}}
+              </div>
+            {{/each}}
+          {{/with}}
+
+          {{#with project_non_enrolled_members_sorted_by_first_name getCurrentMembersFilter}}
+            <li class="members-dropdown-header">Invited members</li>
+            {{#each this}}
+              <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
+                {{> enrollment_pending_member}}
+              </div>
+            {{/each}}
+          {{/with}}
+
+          {{#with project_non_enrolled_guests_sorted_by_first_name getCurrentMembersFilter}}
+            {{#each this}}
+              <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
+                {{> enrollment_pending_member}}
+              </div>
+            {{/each}}
+          {{/with}}
+        {{/if}}
+      </ul>
+      {{#if is_project_admin}}
+        <div class="add-project-members">
+          {{#if selectMode}}
+            <button class="btn btn-default btn-sm cancel-select-mode" type="button">Cancel</button>
+            <button class="btn btn-primary btn-sm remove-selected {{#if allowRemoveSelected}}active{{/if}}" type="button">Remove {{#if allowRemoveSelected}}({{selectedMembersCount}}){{/if}}</button>
+          {{else}}
+            <button class="btn btn-primary btn-sm show-add-members-dialog member-invite-btn-js" type="button">Invite</button>
+          {{/if}}
+        </div>
+      {{/if}}
+    </div>
+    {{#if is_project_admin}}
+      {{> members_dropdown_invite}}
     {{/if}}
   </div>
+
 </template>
 
 <template name="admin_member_item">
@@ -83,6 +88,7 @@
     </div>
     {{#if allow_show_member_dropdown_settings user_id}}
       <div class="member-settings-dropdown">
+        <div class="member-role-label text-primary">Admin</div>
         <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
         <div class="member-settings-dropdown-menu animate slideIn">
           {{#if is_project_admin}}
@@ -119,6 +125,7 @@
     </div>
     {{#if allow_show_member_dropdown_settings user_id}}
       <div class="member-settings-dropdown">
+        <div class="member-role-label text-primary">Member</div>
         <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
         <div class="member-settings-dropdown-menu animate slideIn">
           {{#if is_project_admin}}
@@ -159,6 +166,7 @@
     </div>
     {{#if allow_show_member_dropdown_settings user_id}}
       <div class="member-settings-dropdown">
+        <div class="member-role-label text-primary">Guest</div>
         <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
         <div class="member-settings-dropdown-menu animate slideIn">
           {{#if is_project_admin}}
@@ -194,6 +202,7 @@
       <div class="display-name mx-2" title="{{userEmail this}}">{{displayName}}</div>
     </div>
     <div class="member-settings-dropdown">
+      <div class="member-role-label text-primary">Invited</div>
       <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
       <div class="member-settings-dropdown-menu animate slideIn">
         {{#if allow_member_edit_enrollment_pending_member user_id}}
