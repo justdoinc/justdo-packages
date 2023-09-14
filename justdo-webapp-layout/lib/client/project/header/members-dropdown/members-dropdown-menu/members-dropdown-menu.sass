@@ -85,10 +85,23 @@ $member-dropdown-width: 340px
       margin-top: 4px
 
   .members-dropdown-header
-    padding: 4px 16px
+    padding: 0 16px
+    margin: 16px 0 8px 0
+    display: flex
+    position: relative
+    .label
+      background-color: white
+      position: relative
+      z-index: 1
+      padding-right: 6px
+      font-size: 13px
     &::after
       content: ""
-      position: relative
+      position: absolute
+      left: 16px
+      right: 20px
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.1)
+      top: 50%
 
   .add-project-members
     border-top: 1px solid #EDF1F8

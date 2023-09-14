@@ -44,7 +44,9 @@
           {{/with}}
 
           {{#with project_non_enrolled_members_sorted_by_first_name getCurrentMembersFilter}}
-            <li class="members-dropdown-header">Invited members</li>
+            <div class="members-dropdown-header">
+              <div class="label">Invited members</div>
+            </div>
             {{#each this}}
               <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
                 {{> enrollment_pending_member}}
