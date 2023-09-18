@@ -30,6 +30,12 @@ justdo_avatar_helpers =
   user_id: ->
     return @_id
 
+  notVerified: ->
+    if not @all_emails_verified
+      return "not-verified"
+
+    return
+
 Template.justdo_avatar.helpers justdo_avatar_helpers
 
 Template.justdo_avatar_no_tooltip.helpers justdo_avatar_helpers

@@ -4,12 +4,12 @@
       <svg class="jd-icon go-back"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"></use></svg>
       <input class="invite-members-input" type="text" placeholder="Type email">
       <div class="invite-settings">
-        <div class="invite-menu-wrapper">
-          <div class="invite-menu-btn text-primary">Share all</div>
+        <div class="invite-menu-wrapper share-tasks-menu">
+          <div class="invite-menu-btn text-primary">{{activeShareOption}}</div>
           <div class="invite-menu animate slideIn">
-            <div class="dropdown-item">Share all</div>
-            <div class="dropdown-item">Share specific projects</div>
-            <div class="dropdown-item">Share nothing</div>
+            {{#each shareOptions}}
+              <div class="dropdown-item {{class}}">{{title}}</div>
+            {{/each}}
           </div>
         </div>
       </div>

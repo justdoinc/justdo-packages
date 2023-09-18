@@ -5,20 +5,23 @@
         <input type="text" class="members-search-input form-control form-control-sm" placeholder="Members">
         {{#if is_project_admin}}
           <div class="member-invite-dropdown animate {{#if isEmptyResults getCurrentMembersFilter}}slideIn{{/if}}">
-            <div class="member-invite-btn member-invite-btn-js">
+            <div class="invite-dropdown-btn member-invite-btn-js" tabindex="0">
               <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#user-plus"></use></svg>
               Invite <span>{{getCurrentMembersFilter}}</span>
             </div>
           </div>
         {{/if}}
       </div>
-
       <div class="alerts-container"></div>
-
       <ul class="project-members-container">
         {{#if isEmptyResults getCurrentMembersFilter}}
           <li class="no-results">No results found</li>
         {{else}}
+          {{#if invitedMembersNotification}}
+            <div class="invited-memebers-notification bg-light">
+              {{{invitedMembersNotification}}}
+            </div>
+          {{/if}}
           {{#with project_enrolled_admins_sorted_by_first_name getCurrentMembersFilter}}
             {{#each this}}
               <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
@@ -44,8 +47,8 @@
           {{/with}}
 
           {{#with project_non_enrolled_members_sorted_by_first_name getCurrentMembersFilter}}
-            <div class="members-dropdown-header">
-              <div class="label">Invited members</div>
+            <div class="members-dropdown-header invited-memebers-header">
+              <div class="label">Members awaiting registration</div>
             </div>
             {{#each this}}
               <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
@@ -55,6 +58,9 @@
           {{/with}}
 
           {{#with project_non_enrolled_guests_sorted_by_first_name getCurrentMembersFilter}}
+            <div class="members-dropdown-header invited-memebers-header">
+              <div class="label">Guests awaiting registration</div>
+            </div>
             {{#each this}}
               <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
                 {{> enrollment_pending_member}}
@@ -66,7 +72,7 @@
       {{#if is_project_admin}}
         <div class="add-project-members">
           {{#if selectMode}}
-            <button class="btn btn-default btn-sm cancel-select-mode" type="button">Cancel</button>
+            <button class="btn btn-light btn-sm cancel-select-mode" type="button">Cancel</button>
             <button class="btn btn-primary btn-sm remove-selected {{#if allowRemoveSelected}}active{{/if}}" type="button">Remove {{#if allowRemoveSelected}}({{selectedMembersCount}}){{/if}}</button>
           {{else}}
             <button class="btn btn-primary btn-sm show-add-members-dialog member-invite-btn-js" type="button">Invite</button>
@@ -75,7 +81,7 @@
       {{/if}}
     </div>
     {{#if is_project_admin}}
-      {{> members_dropdown_invite}}
+      {{> members_dropdown_invite inviteMode=inviteModeRV invitedMembersCount = invitedMembersCountRV}}
     {{/if}}
   </div>
 

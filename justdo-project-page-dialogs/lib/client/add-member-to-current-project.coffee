@@ -292,8 +292,6 @@ Template.invite_new_user_dialog.events
     selected_tasks_set = new Set(selected_tasks)
     users = tpl.users.get()
 
-    console.log users
-
     proxy_users = _.map _.filter(users, (user) -> user.role is "proxy" and not user.registered), (user) ->
       obj_for_creating_proxy_user =
         email: user.email

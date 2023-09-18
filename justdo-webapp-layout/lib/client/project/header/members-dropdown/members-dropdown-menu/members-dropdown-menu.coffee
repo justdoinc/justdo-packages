@@ -71,10 +71,38 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.members_dropdown_menu.onCreated ->
+    tpl = @
     @members_filter = new ReactiveVar null
     @select_mode = new ReactiveVar false
     @selected_members = new ReactiveVar []
     @invite_mode = new ReactiveVar false
+    @invited_members_count = new ReactiveVar 0
+
+    tpl.switch_to_invite_mode = ->
+      tpl.invite_mode.set true
+      @invited_members_count.set 0
+      input = $(".invite-members-input")
+      input.val tpl.members_filter.get()
+
+      setTimeout ->
+        input.focus()
+
+        setTimeout -> # Move caret at the end of the text inside the input
+          input[0].setSelectionRange(input[0].value.length, input[0].value.length)
+        , 0
+      , 500
+
+      return
+
+    tpl.autorun ->
+      invite_mode = tpl.invite_mode.get()
+      if not invite_mode
+        tpl.members_filter.set ""
+        $(".invite-members-input").val ""
+        $(".members-search-input").val("").focus()
+        $(".project-members-container").scrollTop(0)
+
+      return
 
     return
 
@@ -116,6 +144,28 @@ APP.executeAfterAppLibCode ->
 
     inviteMode: ->
       return Template.instance().invite_mode.get()
+
+    inviteModeRV: ->
+      return Template.instance().invite_mode
+
+    invitedMembersCountRV: ->
+      return Template.instance().invited_members_count
+
+    invitedMembersNotification: ->
+      notification = ""
+      invited_members_count = Template.instance().invited_members_count.get()
+
+      if invited_members_count > 0
+        notification += "#{invited_members_count}"
+
+        if invited_members_count == 1
+          notification += """ <span>member</span> was invited"""
+        else
+          notification += """ <span>members</span> were invited"""
+      else
+        notification = ""
+
+      return notification
 
   Template.members_dropdown_menu.events
     # "click .show-add-members-dialog": (e, tpl) ->
@@ -264,6 +314,31 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    "keydown .members-search-input": (e, tpl) ->
+      if $(".member-invite-dropdown").hasClass "slideIn" # Button is visible
+        if e.keyCode == 40 # Down
+            $(".invite-dropdown-btn").focus()
+
+        if e.keyCode == 13
+          tpl.switch_to_invite_mode()
+
+      return
+
+    "keydown .invite-dropdown-btn": (e, tpl) ->
+      if e.keyCode == 38 # Up
+        input = $(".members-search-input")[0]
+        input.focus()
+
+        setTimeout -> # Move caret at the end of the text inside the input
+          input.setSelectionRange(input.value.length, input.value.length)
+        , 0
+
+
+      if e.keyCode == 13
+        tpl.switch_to_invite_mode()
+
+      return
+
     "click .members-dropdown-menu": (e, tpl) ->
       e.stopPropagation() # need to avoit close dropdown on click
 
@@ -291,17 +366,12 @@ APP.executeAfterAppLibCode ->
       return
 
     "click .member-invite-btn-js": (e, tpl) ->
-      tpl.invite_mode.set true
-      setTimeout ->
-        $(".invite-members-input").focus()
-      , 500
+      tpl.switch_to_invite_mode()
 
       return
 
     "click .members-dropdown-invite .go-back": (e, tpl) ->
       tpl.invite_mode.set false
-      tpl.members_filter.set ""
-      $(".members-search-input").val("").focus()
 
       return
 
