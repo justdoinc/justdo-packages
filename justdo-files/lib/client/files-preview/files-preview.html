@@ -5,17 +5,20 @@
         <use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"></use>
       </svg>
     </div>
-
-    {{#with activeFile}}
-      <div class="preview-container">
+    <div class="preview-container">
+      {{#with activeFile}}
         {{#if isPdf}}
           <embed src="{{previewLink}}&r={{randomString}}" type="{{type}}" width="970" height="550" alt="{{name}}" style="border: 0 none;">
         {{else if isImage}}
           <img src="{{previewLink}}" alt="{{name}}" title="{{name}}" style="max-width: 100%;" />
         {{/if}}
-      </div>
-    {{/with}}
-
+      {{else}}
+        <div class="loader">
+          <div class="double-bounce1 bg-primary"></div>
+          <div class="double-bounce2 bg-primary"></div>
+        </div>
+      {{/with}}
+    </div>
     <div class="next-file jd-c-pointer {{isNextButtonVisible}}">
       <svg class="jd-icon text-dark" style="">
         <use xlink:href="/layout/icons-feather-sprite.svg#chevron-right"></use>
