@@ -178,13 +178,13 @@ _.extend JustdoSystemUpdates.prototype,
 
   _setupUserConfigUi: ->
     APP.executeAfterAppLibCode ->
-      module = APP.modules.main
+      main_module = APP.modules.main
 
-      module.user_config_ui.registerConfigSection "show-system-updates",
+      main_module.user_config_ui.registerConfigSection "show-system-updates",
         title: "Display system updates"
         priority: 1000
 
-      module.user_config_ui.registerConfigTemplate "show-system-updates-setter",
+      main_module.user_config_ui.registerConfigTemplate "show-system-updates-setter",
         section: "show-system-updates"
         template: "justdo_system_updates_config"
         priority: 100

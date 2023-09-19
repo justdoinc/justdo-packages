@@ -1,7 +1,7 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
-  Template.task_pane_item_details_section.helpers module.template_helpers
+  Template.task_pane_item_details_section.helpers project_page_module.template_helpers
   
   Template.task_pane_item_details_section.helpers
     inboundEmailEnabled: -> APP.justdo_inbound_emails?
@@ -22,7 +22,7 @@ APP.executeAfterAppLibCode ->
   
   Template.task_pane_item_details_section.events
     "click .edit-members": (e, tpl) ->
-      ProjectPageDialogs.members_management_dialog.open(module.activeItemObj({_id: 1})._id)
+      ProjectPageDialogs.members_management_dialog.open(project_page_module.activeItemObj({_id: 1})._id)
 
       return
     
@@ -34,10 +34,10 @@ APP.executeAfterAppLibCode ->
       return
 
   ItemDetails = (options) ->
-    module.TaskPaneSection.call @, options
+    project_page_module.TaskPaneSection.call @, options
 
     return @
 
-  module.registerTaskPaneSection "ItemDetails", ItemDetails
+  project_page_module.registerTaskPaneSection "ItemDetails", ItemDetails
 
-  Util.inherits ItemDetails, module.TaskPaneSection
+  Util.inherits ItemDetails, project_page_module.TaskPaneSection

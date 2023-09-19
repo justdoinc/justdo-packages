@@ -1,7 +1,7 @@
 _.extend JustdoGridVisualization.prototype,
   registerConfigTemplate: ->
-    module = APP.modules.project_page
-    module.project_config_ui.registerConfigTemplate "grid_visualization_config",
+    project_page_module = APP.modules.project_page
+    project_page_module.project_config_ui.registerConfigTemplate "grid_visualization_config",
       section: "extensions"
       template: "grid_visualization_config"
       priority: 1000

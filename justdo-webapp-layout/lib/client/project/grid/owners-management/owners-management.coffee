@@ -1,5 +1,5 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   OwnerSetterManager = (grid_control) ->
     EventEmitter.call this
@@ -159,7 +159,7 @@ APP.executeAfterAppLibCode ->
 
       @grid = null # just to reduce risk of GC missing this one
 
-  module.OwnerSetterManager = OwnerSetterManager
+  project_page_module.OwnerSetterManager = OwnerSetterManager
 
   getEventDropdownData = (e, data_label) ->
     $(e.target).closest(".dropdown").data(data_label)
@@ -168,7 +168,7 @@ APP.executeAfterAppLibCode ->
     tpl = Template.instance()
 
     if not (users = JD.activeItemUsers())?
-      module.logger.warn "Can't find the active task users"
+      project_page_module.logger.warn "Can't find the active task users"
 
       return null
 

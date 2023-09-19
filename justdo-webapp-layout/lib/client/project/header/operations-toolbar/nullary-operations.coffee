@@ -1,10 +1,10 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
-  curProj = module.helpers.curProj
+  project_page_module = APP.modules.project_page
+  curProj = project_page_module.helpers.curProj
 
-  gridControl = -> module.gridControl(false) # false means we'll get the gridControl even if it isn't init
+  gridControl = -> project_page_module.gridControl(false) # false means we'll get the gridControl even if it isn't init
 
-  module.setNullaryOperation "addSubTask",
+  project_page_module.setNullaryOperation "addSubTask",
     human_description: "New Child Task"
     human_description_i18n: "new_child_task_label"
     keyboard_shortcut: "alt+shift+enter"
@@ -26,7 +26,7 @@ APP.executeAfterAppLibCode ->
     # * There is an active item
     # * Active item is a section header
 
-    gcm = module.grid_control_mux.get()
+    gcm = project_page_module.grid_control_mux.get()
     if not gcm?
       APP.logger.debug "GCM is not ready yet"
 
@@ -51,7 +51,7 @@ APP.executeAfterAppLibCode ->
 
     return false
 
-  module.setNullaryOperation "addSiblingTask",
+  project_page_module.setNullaryOperation "addSiblingTask",
     human_description: "New Sibling Task"
     human_description_i18n: "new_sibling_task_label"
     keyboard_shortcut: "alt+enter"
@@ -81,7 +81,7 @@ APP.executeAfterAppLibCode ->
 
       return gridControl().addSiblingItem.prereq()
 
-  module.setNullaryOperation "removeTask",
+  project_page_module.setNullaryOperation "removeTask",
     human_description: "Remove Task"
     human_description_i18n: "remove_task_label"
     keyboard_shortcut: "alt+-"
@@ -117,7 +117,7 @@ APP.executeAfterAppLibCode ->
 
     prereq: -> gridControl().removeActivePath.prereq()
 
-  module.setNullaryOperation "moveDown",
+  project_page_module.setNullaryOperation "moveDown",
     human_description: "Move Down"
     human_description_i18n: "move_down_label"
     keyboard_shortcut: "alt+down"
@@ -126,7 +126,7 @@ APP.executeAfterAppLibCode ->
     op: -> gridControl().moveActivePathDown()
     prereq: -> gridControl().moveActivePathDown.prereq()
 
-  module.setNullaryOperation "moveUp",
+  project_page_module.setNullaryOperation "moveUp",
     human_description: "Move Up"
     human_description_i18n: "move_up_label"
     keyboard_shortcut: "alt+up"
@@ -135,7 +135,7 @@ APP.executeAfterAppLibCode ->
     op: -> gridControl().moveActivePathUp()
     prereq: -> gridControl().moveActivePathUp.prereq()
 
-  module.setNullaryOperation "moveLeft",
+  project_page_module.setNullaryOperation "moveLeft",
     human_description: "Outdent"
     human_description_i18n: "move_left_label"
     keyboard_shortcut: "alt+left"
@@ -144,7 +144,7 @@ APP.executeAfterAppLibCode ->
     op: -> gridControl().moveActivePathLeft()
     prereq: -> gridControl().moveActivePathLeft.prereq()
 
-  module.setNullaryOperation "moveRight",
+  project_page_module.setNullaryOperation "moveRight",
     human_description: "Indent"
     human_description_i18n: "move_right_label"
     keyboard_shortcut: "alt+right"
@@ -153,7 +153,7 @@ APP.executeAfterAppLibCode ->
     op: -> gridControl().moveActivePathRight()
     prereq: -> gridControl().moveActivePathRight.prereq()
 
-  module.setNullaryOperation "sortByPriority",
+  project_page_module.setNullaryOperation "sortByPriority",
     human_description: "Sort by priority"
     human_description_i18n: "sort_by_priority_label"
     template:
@@ -161,14 +161,14 @@ APP.executeAfterAppLibCode ->
     op: -> gridControl().sortActivePathByPriorityDesc()
     prereq: -> gridControl().sortActivePathByPriorityDesc.prereq()
 
-  module.setNullaryOperation "zoomIn",
+  project_page_module.setNullaryOperation "zoomIn",
     human_description: "Zoom in"
     human_description_i18n: "zoom_in_label"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#zoom-in"/></svg>"""
     op: ->
-      gcm = module.getCurrentGcm()
-      active_item_id = module.activeItemId()
+      gcm = project_page_module.getCurrentGcm()
+      active_item_id = project_page_module.activeItemId()
 
       tab_id = "sub-tree"
 
@@ -180,11 +180,11 @@ APP.executeAfterAppLibCode ->
 
       return gc._opreqActivePathIsCollectionItem(gc._opreqGridReady())
 
-  module.setNullaryOperation "addToFavorites",
+  project_page_module.setNullaryOperation "addToFavorites",
     human_description: "Add to Favorites"
     human_description_i18n: "add_to_favorites_label"
     op: ->
-      active_item_id = module.activeItemId()
+      active_item_id = project_page_module.activeItemId()
 
       JD.collections.Tasks.update(active_item_id, {$set: {"priv:favorite": new Date(TimeSync.getServerTime())}})
 
@@ -194,11 +194,11 @@ APP.executeAfterAppLibCode ->
 
       return gc._opreqActivePathIsCollectionItem(gc._opreqGridReady())
 
-  module.setNullaryOperation "removeFromFavorites",
+  project_page_module.setNullaryOperation "removeFromFavorites",
     human_description: "Remove from Favorites"
     human_description_i18n: "remove_from_favorites_label"
     op: ->
-      active_item_id = module.activeItemId()
+      active_item_id = project_page_module.activeItemId()
 
       JD.collections.Tasks.update(active_item_id, {$set: {"priv:favorite": null}})
 

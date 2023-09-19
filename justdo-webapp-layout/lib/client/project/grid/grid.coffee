@@ -8,17 +8,17 @@ time_threshold_to_allow_regarding_as_reactive_resource_response_to_back_button =
 history_stack = new JustdoHelpers.PointedLimitedStack({size: 50})
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   #
   # project_grid container
   #
   Template.project_grid_container.helpers
     tasksSubscriptionReady: ->
-      project = module.curProj()
+      project = project_page_module.curProj()
 
       if not project?.tasks_subscription.ready()
-        module.logger.debug "Waiting for tasks subscription to become ready"
+        project_page_module.logger.debug "Waiting for tasks subscription to become ready"
 
         return false
 
@@ -32,7 +32,7 @@ APP.executeAfterAppLibCode ->
   active_grid_control_change_tracker = null
   Template.project_grid.rendered = ->
     @autorun ->
-      project = module.curProj()
+      project = project_page_module.curProj()
 
       if not project?
         APP.logger.debug "No project loaded"
@@ -42,7 +42,7 @@ APP.executeAfterAppLibCode ->
       container = $("#grid-control-mux")
 
       if not project.tasks_subscription.ready()
-        module.logger.debug "Waiting for tasks subscription to become ready"
+        project_page_module.logger.debug "Waiting for tasks subscription to become ready"
 
         # The following shouldn't really show, in practice 
         # the tasksSubscriptionReady helper takes care of
@@ -66,7 +66,7 @@ APP.executeAfterAppLibCode ->
           custom_fields =
             GridControlCustomFields.getProjectCustomFieldsDefinitions(APP.projects, _project_id)
 
-          _.extend custom_fields, module.getPseudoCustomFields()
+          _.extend custom_fields, project_page_module.getPseudoCustomFields()
 
           project_custom_fields_definitions_rv.set(custom_fields)
 
@@ -78,7 +78,7 @@ APP.executeAfterAppLibCode ->
       project_custom_states_definitions_rv_update_comp = null
       Tracker.nonreactive ->
         project_custom_states_definitions_rv_update_comp = Tracker.autorun ->
-          project_id = module.curProj().id
+          project_id = project_page_module.curProj().id
           conf = APP.collections.Projects.findOne(project_id, {fields: {"conf.custom_states": 1, "conf.removed_custom_states": 1}})?.conf
           custom_states = conf?.custom_states or {}
           removed_custom_state = conf?.removed_custom_states or {}
@@ -129,14 +129,14 @@ APP.executeAfterAppLibCode ->
         use_shared_grid_control_removed_custom_fields_manager: true
         shared_grid_control_removed_custom_fields_manager_options:
           custom_fields_definitions: project_removed_custom_fields_definitions_rv
-      module.grid_control_mux.set grid_control_mux
+      project_page_module.grid_control_mux.set grid_control_mux
 
       if not first_grid_loaded
         grid_control_mux.once "tab-ready", (tab) ->
           first_grid_loaded = true
           tab.grid_control._grid_data._grid_data_core.once "data-changes-queue-processed", ->
             time_to_load_first_grid_tab_since_js_parsing_started = (new Date() - window.js_started)
-            console.info "[Project Page Module] Time to load first grid tab since js parsing started: #{time_to_load_first_grid_tab_since_js_parsing_started}ms"
+            console.info "[Project Page project_page_Module] Time to load first grid tab since js parsing started: #{time_to_load_first_grid_tab_since_js_parsing_started}ms"
 
           return
 
@@ -144,7 +144,7 @@ APP.executeAfterAppLibCode ->
 
       grid_control_mux.on "grid-control-created", (tab) ->
         if not (project_id = APP.modules.project_page?.project?.get()?.id)
-          module.logger.debug "Couldn't find project id"
+          project_page_module.logger.debug "Couldn't find project id"
 
           return
 
@@ -159,31 +159,31 @@ APP.executeAfterAppLibCode ->
         # later in this code, and since the .on() is sync, it is technically
         # happen as part of this computation!
         preferences = Tracker.nonreactive ->
-          module.preferences.get()
+          project_page_module.preferences.get()
 
         if (saved_view = preferences.saved_grid_views?[project_id]?[tab_id])?
-          module.logger.debug "Stored view found for project: #{project_id}, tab_id: #{tab_id}", saved_view
+          project_page_module.logger.debug "Stored view found for project: #{project_id}, tab_id: #{tab_id}", saved_view
 
           gc.once "init", ->
             gc.setView(saved_view)
 
         do (gc, project_id, tab_id) ->
           gc.on "grid-view-change", (new_view) ->
-            existing_preferences = module.preferences.get()
+            existing_preferences = project_page_module.preferences.get()
 
             Meteor._ensure existing_preferences, "saved_grid_views", project_id, tab_id
             existing_preferences.saved_grid_views[project_id][tab_id] = new_view
             existing_preferences = _.pick existing_preferences, "saved_grid_views" # Update only 'saved_grid_views' preference
-            module.updatePreferences(existing_preferences)
+            project_page_module.updatePreferences(existing_preferences)
 
-            module.logger.debug "Update stored view for project: #{project_id}, tab_id: #{tab_id}"
+            project_page_module.logger.debug "Update stored view for project: #{project_id}, tab_id: #{tab_id}"
 
             return
 
         return
 
       grid_control_mux.on "tab-ready", (tab) ->
-        tab.owner_setter_manager = new module.OwnerSetterManager(tab.grid_control)
+        tab.owner_setter_manager = new project_page_module.OwnerSetterManager(tab.grid_control)
 
         APP.logger.debug "OwnersSetterManager initiated for tab: #{tab.tab_id}"
 
@@ -216,10 +216,10 @@ APP.executeAfterAppLibCode ->
           # console.log "HERE RA-2", {tab, row, cell, scroll_into_view, resulted_from_smart_guess}
         return
 
-      for tab in module.default_tabs_definitions
+      for tab in project_page_module.default_tabs_definitions
         grid_control_mux.addTab tab.id, tab.options
 
-      module.search_comp =
+      project_page_module.search_comp =
         new GridControlSearch "#project-search-comp-container"
 
       # Update search_comp grid on tab change
@@ -241,9 +241,9 @@ APP.executeAfterAppLibCode ->
             return
 
           if active_grid_control?
-            module.search_comp.setGridControl(active_grid_control)
+            project_page_module.search_comp.setGridControl(active_grid_control)
           else
-            module.search_comp.unsetGridControl()
+            project_page_module.search_comp.unsetGridControl()
 
       last_hashchange_cb_call = new Date()
       last_hash_change_triggered_by_us_value = null
@@ -268,7 +268,7 @@ APP.executeAfterAppLibCode ->
         last_hash_change_triggered_by_us_value = null
         # console.log "HERE HC2 - PROCESS", {current_hash, last_hash_change_triggered_by_us_value}
 
-        if (request_path = module.getPathFromQueryString(current_hash))?
+        if (request_path = project_page_module.getPathFromQueryString(current_hash))?
           if not request_path[0]?
             # If tab id didn't provided, use "main" - backward compatibility
             request_path[0] = "main"
@@ -280,7 +280,7 @@ APP.executeAfterAppLibCode ->
 
           grid_control_mux.setPath(request_path)
 
-        if (sections_state = module.getSectionsStateFromQueryString(current_hash))?
+        if (sections_state = project_page_module.getSectionsStateFromQueryString(current_hash))?
           grid_control_mux.setActiveGridControlSectionsState(sections_state) 
 
         return
@@ -418,7 +418,7 @@ APP.executeAfterAppLibCode ->
 
           return
 
-      module.logger.debug "project_grid template rendered"
+      project_page_module.logger.debug "project_grid template rendered"
 
   Template.project_grid.destroyed = ->
     if hashchange_cb?
@@ -433,6 +433,6 @@ APP.executeAfterAppLibCode ->
       active_grid_control_change_tracker.stop()
       active_grid_control_change_tracker = null
 
-    module.search_comp.destroy()
+    project_page_module.search_comp.destroy()
 
-    module.logger.debug "grid control destroyed"
+    project_page_module.logger.debug "grid control destroyed"

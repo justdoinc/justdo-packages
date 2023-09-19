@@ -2,14 +2,14 @@
 # JustDo should look like, refer to README.md to read more
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   #
   # task_pane_header
   #
 
   getItemTitle = ->
-    if (active_item_obj = module.activeItemObj({title: 1}))?
+    if (active_item_obj = project_page_module.activeItemObj({title: 1}))?
       if active_item_obj.title?
         return active_item_obj.title
 
@@ -17,7 +17,7 @@ APP.executeAfterAppLibCode ->
 
     return ""
 
-  Template.task_pane_header.helpers module.template_helpers
+  Template.task_pane_header.helpers project_page_module.template_helpers
   Template.task_pane_header.helpers
     title: ->
       if APP.modules.project_page.getActiveGridItemType() == "multi-select"
@@ -29,19 +29,19 @@ APP.executeAfterAppLibCode ->
       if APP.modules.project_page.getActiveGridItemType() == "multi-select"
         return undefined
 
-      return module.activeItemObj({seqId: 1})?.seqId
+      return project_page_module.activeItemObj({seqId: 1})?.seqId
 
     getPriorityColor: ->
       if APP.modules.project_page.getActiveGridItemType() == "multi-select"
         return null
 
-      if not (priority = module.activeItemObj({priority: 1})?.priority)?
+      if not (priority = project_page_module.activeItemObj({priority: 1})?.priority)?
         return null
 
       return JustdoColorGradient.getColorRgbString(priority)
     
     getMaxTaskPaneHeaderWidth: ->
-      module.invalidateOnWireframeStructureUpdates()
+      project_page_module.invalidateOnWireframeStructureUpdates()
 
       if (calculatedTaskPaneWidth = $("#task-pane")?.attr("style")?.replace(/.*width: (\d+)px;.*/g, "$1"))?
         return calculatedTaskPaneWidth + "px"
@@ -52,7 +52,7 @@ APP.executeAfterAppLibCode ->
     "click .copy-to-clipboard": (e) ->
       text = getItemTitle()
 
-      if (seq_id = module.activeItemObj()?.seqId)?
+      if (seq_id = project_page_module.activeItemObj()?.seqId)?
         text = "Task ##{seq_id}: #{text}"
 
       clipboard.copy
@@ -62,7 +62,7 @@ APP.executeAfterAppLibCode ->
       return
 
     "click .seqid-copy-to-clipboard": (e) ->
-      if (seq_id = module.activeItemObj()?.seqId)?
+      if (seq_id = project_page_module.activeItemObj()?.seqId)?
         clipboard.copy
           "text/plain": "#" + seq_id
           "text/html": "<a href='#{window.location.href}'>##{seq_id}</a>"
@@ -72,7 +72,7 @@ APP.executeAfterAppLibCode ->
   #
   # task_pane_tab
   #
-  Template.task_pane_tab.helpers module.template_helpers
+  Template.task_pane_tab.helpers project_page_module.template_helpers
 
   Template.task_pane_tab.events
-    "click .task-pane-tab": -> module.setCurrentTaskPaneSectionId(@id)
+    "click .task-pane-tab": -> project_page_module.setCurrentTaskPaneSectionId(@id)

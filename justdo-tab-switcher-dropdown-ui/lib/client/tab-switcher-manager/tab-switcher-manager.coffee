@@ -132,12 +132,12 @@ _.extend TabSwitcherManager.prototype,
     return
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
-  module.tab_switcher_manager = new TabSwitcherManager()
-  module.tab_switcher_manager.registerSection "main",
+  project_page_module.tab_switcher_manager = new TabSwitcherManager()
+  project_page_module.tab_switcher_manager.registerSection "main",
     position: 100
-  module.tab_switcher_manager.registerSectionItem "main", "main-view",
+  project_page_module.tab_switcher_manager.registerSectionItem "main", "main-view",
     position: 100
     data:
       label: "Main View"
@@ -147,7 +147,7 @@ APP.executeAfterAppLibCode ->
       icon_type: "feather"
       icon_val: "grid"
 
-  module.tab_switcher_manager.registerSectionItem "main", "my-favorites",
+  project_page_module.tab_switcher_manager.registerSectionItem "main", "my-favorites",
     position: 150
     data:
       label: "My Favorites"
@@ -164,7 +164,7 @@ APP.executeAfterAppLibCode ->
 
     c.stop() # Need to run only once, when the user logged-in
 
-    module.tab_switcher_manager.registerSectionItem "main", "due-list",
+    project_page_module.tab_switcher_manager.registerSectionItem "main", "due-list",
       position: 200
       data:
         label: "My Due List"
@@ -180,12 +180,12 @@ APP.executeAfterAppLibCode ->
 
     return
 
-  module.tab_switcher_manager.registerSection "recently",
+  project_page_module.tab_switcher_manager.registerSection "recently",
     position: 200
     data:
       label: "Recently"
       label_i18n: "tab_switcher_recently_label"
-  module.tab_switcher_manager.registerSectionItem "recently", "completed",
+  project_page_module.tab_switcher_manager.registerSectionItem "recently", "completed",
     position: 100
     data:
       label: "Completed"
@@ -199,7 +199,7 @@ APP.executeAfterAppLibCode ->
         global:
           "tracked-field": "state_updated_at"
           "custom-query": """#{JSON.stringify({state: JustdoHelpers.getCoreStateOneOfCoreStatesQuery(["done"])})}"""
-  module.tab_switcher_manager.registerSectionItem "recently", "updated",
+  project_page_module.tab_switcher_manager.registerSectionItem "recently", "updated",
     position: 100
     data:
       label: "Updated"
@@ -212,7 +212,7 @@ APP.executeAfterAppLibCode ->
       tab_sections_state:
         global:
           "tracked-field": "updatedAt"
-  module.tab_switcher_manager.registerSectionItem "recently", "created",
+  project_page_module.tab_switcher_manager.registerSectionItem "recently", "created",
     position: 100
     data:
       label: "Created"
@@ -226,13 +226,13 @@ APP.executeAfterAppLibCode ->
         global:
           "tracked-field": "createdAt"
 
-  module.tab_switcher_manager.registerSection "misc",
+  project_page_module.tab_switcher_manager.registerSection "misc",
     position: 300
     data:
       label: "Miscellaneous"
       label_i18n: "tab_switcher_miscellaneous_label"
 
-  module.tab_switcher_manager.registerSectionItem "misc", "task-ownership-transfers",
+  project_page_module.tab_switcher_manager.registerSectionItem "misc", "task-ownership-transfers",
     position: 100
     data:
       label: "Tasks Ownership Transfers"
@@ -242,7 +242,7 @@ APP.executeAfterAppLibCode ->
       icon_type: "feather"
       icon_val: "repeat"
 
-  module.tab_switcher_manager.registerSectionItem "misc", "tickets-queues",
+  project_page_module.tab_switcher_manager.registerSectionItem "misc", "tickets-queues",
     position: 200
     data:
       label: "Ticket Queues"
@@ -254,7 +254,7 @@ APP.executeAfterAppLibCode ->
 
     listingCondition: -> APP.collections.TicketsQueues.find().count() > 0
 
-  module.tab_switcher_manager.registerSection "members-due-lists",
+  project_page_module.tab_switcher_manager.registerSection "members-due-lists",
     position: 400
     data:
       label: "Members Due Lists"

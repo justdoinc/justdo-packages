@@ -2,15 +2,15 @@
 # JustDo should look like, refer to README.md to read more
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
-  Template.task_pane_item_change_log_section.helpers module.template_helpers
+  Template.task_pane_item_change_log_section.helpers project_page_module.template_helpers
 
   ItemChangeLog = (options) ->
-    module.TaskPaneSection.call @, options
+    project_page_module.TaskPaneSection.call @, options
 
     return @
 
-  module.registerTaskPaneSection "ItemChangeLog", ItemChangeLog
+  project_page_module.registerTaskPaneSection "ItemChangeLog", ItemChangeLog
 
-  Util.inherits ItemChangeLog, module.TaskPaneSection
+  Util.inherits ItemChangeLog, project_page_module.TaskPaneSection

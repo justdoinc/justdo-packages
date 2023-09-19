@@ -1,5 +1,5 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   share.TabSwitcherDropdown = JustdoHelpers.generateNewTemplateDropdown "tab-switcher-dropdown", "project_operations_tab_switcher_dropdown",
     custom_bound_element_options:
@@ -24,10 +24,10 @@ APP.executeAfterAppLibCode ->
 
       return
 
-  Template.project_operations_tab_switcher_dropdown.helpers module.template_helpers
+  Template.project_operations_tab_switcher_dropdown.helpers project_page_module.template_helpers
 
   Template.project_operations_tab_switcher_dropdown.helpers
-    tab_switcher_manager: -> module.tab_switcher_manager
+    tab_switcher_manager: -> project_page_module.tab_switcher_manager
     tabAttributes: ->
       tab_attributes = {}
 
@@ -38,7 +38,7 @@ APP.executeAfterAppLibCode ->
       return tab_attributes
 
     itemsSource: ->
-      return @itemsSource(module.tab_switcher_manager)
+      return @itemsSource(project_page_module.tab_switcher_manager)
 
   sections_vars_attributes_prefix = "data-sv-"
   Template.project_operations_tab_switcher_dropdown.events
@@ -68,7 +68,7 @@ APP.executeAfterAppLibCode ->
 
         sections_state[section_id][var_name] = $tab_switcher.attr(attr)
 
-      gcm = module.getCurrentGcm()
+      gcm = project_page_module.getCurrentGcm()
 
       gcm.activateTabWithSectionsState(tab_id, sections_state)
 
@@ -78,7 +78,7 @@ APP.executeAfterAppLibCode ->
       return
 
     "change .views-search-input, keyup .views-search-input": (e) ->
-      module.tab_switcher_manager.setSectionsItemsLabelFilter($(e.target).val())
+      project_page_module.tab_switcher_manager.setSectionsItemsLabelFilter($(e.target).val())
 
       return
 

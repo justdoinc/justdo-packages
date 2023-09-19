@@ -1,8 +1,8 @@
 _.extend JustdoGlobalActivityLog.prototype,
   registerConfigTemplate: ->
     APP.executeAfterAppClientCode ->
-      module = APP.modules.project_page
-      module.project_config_ui.registerConfigTemplate "justdo_global_activity_log_project_config",
+      project_page_module = APP.modules.project_page
+      project_page_module.project_config_ui.registerConfigTemplate "justdo_global_activity_log_project_config",
         section: "extensions"
         template: "justdo_global_activity_log_project_config"
         priority: 1000

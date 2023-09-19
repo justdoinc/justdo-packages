@@ -25,4 +25,4 @@ APP.justdo_split_view = new JustdoSplitView()
 #   APP.justdo_split_view = new JustdoSplitView()
 
 # APP.executeAfterAppLibCode ->
-#   module = APP.modules.main
+#   main_module = APP.modules.main

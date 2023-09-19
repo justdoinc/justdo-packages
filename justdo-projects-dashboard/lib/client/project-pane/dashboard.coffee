@@ -482,7 +482,7 @@ Template.justdo_projects_dashboard.helpers
 
   readyToDisplayCharts: ->
     return true # XXX this one had a purpose before, now no more, code remains commented out to help clean properly
-    # # this one blocks until there are projects loaded and highcharts is ready and the projects module is installed
+    # # this one blocks until there are projects loaded and highcharts is ready and the projects_module is installed
     # if Template.instance().activeProjectsList().length > 0
     #   if APP.justdo_highcharts._highchart_loaded_rv.get()
     #     if (curProj = APP.modules.project_page.curProj())?

@@ -682,8 +682,8 @@ _.extend JustdoTasksContextMenu.prototype,
         return project_tasks
         
       addNewParentToTaskId = (task_id, new_parent_id, cb) ->
-        module = APP.modules.project_page
-        gc = module.gridControl()
+        project_page_module = APP.modules.project_page
+        gc = project_page_module.gridControl()
         
         gc.saveAndExitActiveEditor() # Exit edit mode, if any, to make sure result will appear on tree (otherwise, will show only when exit edit mode)
 
@@ -700,8 +700,8 @@ _.extend JustdoTasksContextMenu.prototype,
         return
 
       removeParent = (item_path, cb) ->
-        module = APP.modules.project_page
-        gc = module.gridControl()
+        project_page_module = APP.modules.project_page
+        gc = project_page_module.gridControl()
         
         gc._performLockingOperation (releaseOpsLock, timedout) =>
           gc._grid_data?.removeParent item_path, (err) =>

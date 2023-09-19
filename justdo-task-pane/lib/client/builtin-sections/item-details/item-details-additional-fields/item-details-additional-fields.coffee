@@ -1,5 +1,5 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   formatWithPrintFormatter = (gc, item_id, field, val, dependencies_values, path) ->
     schema = gc.getSchemaExtendedWithCustomFields()
@@ -7,7 +7,7 @@ APP.executeAfterAppLibCode ->
       return
 
     if not (formatter_id = schema[field]?.grid_column_formatter)?
-      module.logger.error "Failed to find print formatter to field #{field}"
+      project_page_module.logger.error "Failed to find print formatter to field #{field}"
 
       # Return val as is
       return val
@@ -31,13 +31,13 @@ APP.executeAfterAppLibCode ->
 
   Template.task_pane_item_details_additional_fields.helpers
     additionalFields: ->
-      current_item_id = module.activeItemId()
-      current_item_path = module.activeItemPath()
+      current_item_id = project_page_module.activeItemId()
+      current_item_path = project_page_module.activeItemPath()
 
       if not current_item_id?
         return
 
-      gc = module.gridControl()
+      gc = project_page_module.gridControl()
 
       # Call JustdoHelpers.getUserPreferredDateFormat() so additional fields values
       # will be reactive to the uesr's preferred date format
@@ -80,8 +80,8 @@ APP.executeAfterAppLibCode ->
         for dep_field_id in grid_dependencies_fields
           fields_to_fetch[dep_field_id] = 1
 
-      current_item_obj = module.activeItemObj(fields_to_fetch)
-      current_item_path = module.activeItemPath()
+      current_item_obj = project_page_module.activeItemObj(fields_to_fetch)
+      current_item_path = project_page_module.activeItemPath()
 
       if not current_item_obj? or not current_item_path?
         return false
@@ -92,10 +92,10 @@ APP.executeAfterAppLibCode ->
       {field_info, field_and_dependencies_values} = options.hash
       gc = APP.modules.project_page.gridControl()
       
-      if not (current_item_id = module.activeItemId())?
+      if not (current_item_id = project_page_module.activeItemId())?
         return
 
-      if not (current_item_path = module.activeItemPath())?
+      if not (current_item_path = project_page_module.activeItemPath())?
         return
 
       return formatWithPrintFormatter(gc, current_item_id, field_info.field_id, field_and_dependencies_values[field_info.field_id], field_and_dependencies_values, current_item_path)
@@ -106,7 +106,7 @@ APP.executeAfterAppLibCode ->
       # affect the field value and require calculation (e.g. dependencies changes, cases where
       # sub items affects the value, and, potentially more).
 
-      if not (current_item_id = module.activeItemId())?
+      if not (current_item_id = project_page_module.activeItemId())?
         return {}
 
       gc = APP.modules.project_page.gridControl()
@@ -127,7 +127,7 @@ APP.executeAfterAppLibCode ->
 
   Template.task_pane_item_details_additional_field.events
     "click .add-to-grid": (e) ->
-      gc = module.gridControl()
+      gc = project_page_module.gridControl()
 
       gc.addFieldToView @field_id
 
@@ -157,7 +157,7 @@ APP.executeAfterAppLibCode ->
   Template.task_pane_item_details_additional_field_editor.onRendered ->
     field_id = @data.field_info.field_id
 
-    current_item_id = module.activeItemId()
+    current_item_id = project_page_module.activeItemId()
 
     gc = APP.modules.project_page.gridControl()
 

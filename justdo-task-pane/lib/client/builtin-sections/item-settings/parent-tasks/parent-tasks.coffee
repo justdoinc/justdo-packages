@@ -2,7 +2,7 @@
 # JustDo should look like, refer to README.md to read more
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   Template.task_pane_item_parent_tasks.onCreated ->
     _.extend @,
@@ -32,7 +32,7 @@ APP.executeAfterAppLibCode ->
         #
         # Otherwise returns undefined
 
-        current_path = module.activeItemPath()
+        current_path = project_page_module.activeItemPath()
 
         if not current_path?
           return undefined      
@@ -44,7 +44,7 @@ APP.executeAfterAppLibCode ->
           return parent_path
 
         parent_obj =
-          module.gridControl()?.getPathObjNonReactive(parent_path) 
+          project_page_module.gridControl()?.getPathObjNonReactive(parent_path) 
 
         if parent_obj._type?
           return undefined
@@ -86,7 +86,7 @@ APP.executeAfterAppLibCode ->
           return output
 
         query = 
-          project_id: module.curProj().id
+          project_id: project_page_module.curProj().id
           seqId: seq_id
 
         if not (task_doc = APP.collections.Tasks.findOne(query))?
@@ -115,7 +115,7 @@ APP.executeAfterAppLibCode ->
         return "project root"
 
       parent_obj =
-        module.gridControl()?.getPathObjNonReactive(parent_path) 
+        project_page_module.gridControl()?.getPathObjNonReactive(parent_path) 
 
       return "task ##{parent_obj.seqId}"
 
@@ -143,7 +143,7 @@ APP.executeAfterAppLibCode ->
 
           return
 
-        module.gridControl()?._grid_data?.addParent module.activeItemId(), {parent: new_parent_id}, tpl.getServerResponseHandler(input_selector)
+        project_page_module.gridControl()?._grid_data?.addParent project_page_module.activeItemId(), {parent: new_parent_id}, tpl.getServerResponseHandler(input_selector)
 
         return
 
@@ -170,7 +170,7 @@ APP.executeAfterAppLibCode ->
 
           return
 
-        module.gridControl()?._grid_data?.movePath module.activeItemPath(), {parent: target_parent_id}, tpl.getServerResponseHandler(input_selector)
+        project_page_module.gridControl()?._grid_data?.movePath project_page_module.activeItemPath(), {parent: target_parent_id}, tpl.getServerResponseHandler(input_selector)
 
         return
 
@@ -197,15 +197,15 @@ APP.executeAfterAppLibCode ->
 
           return
 
-        path_to_remove = "/#{module.activeItemId()}/"
+        path_to_remove = "/#{project_page_module.activeItemId()}/"
         if parent_id != "0"
           path_to_remove = "/#{parent_id}" + path_to_remove
 
-        module.gridControl()?._grid_data?.removeParent path_to_remove, tpl.getServerResponseHandler(input_selector)
+        project_page_module.gridControl()?._grid_data?.removeParent path_to_remove, tpl.getServerResponseHandler(input_selector)
 
         return
 
     "click .ptm-remove-current-parent-task": (e, tpl) ->
       if (tpl.getParentTaskPathIfNotTypedItem())?
         # Remove parent only if possible (parent path isn't typed item)
-        module.gridControl()?._grid_data?.removeParent module.activeItemPath(), tpl.getServerResponseHandler()
+        project_page_module.gridControl()?._grid_data?.removeParent project_page_module.activeItemPath(), tpl.getServerResponseHandler()

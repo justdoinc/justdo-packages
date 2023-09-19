@@ -1,8 +1,8 @@
 _.extend JustdoRoles.prototype,
   registerConfigTemplate: ->
     APP.executeAfterAppClientCode ->
-      module = APP.modules.project_page
-      module.project_config_ui.registerConfigTemplate "justdo_roles_project_config",
+      project_page_module = APP.modules.project_page
+      project_page_module.project_config_ui.registerConfigTemplate "justdo_roles_project_config",
         section: "extensions"
         template: "justdo_roles_project_config"
         priority: 1000
@@ -10,14 +10,14 @@ _.extend JustdoRoles.prototype,
     return
 
   registerConfigSectionTemplate: ->
-    module = APP.modules.project_page
+    project_page_module = APP.modules.project_page
 
     APP.executeAfterAppClientCode ->
-      module.project_config_ui.registerConfigSection "roles-and-groups",
+      project_page_module.project_config_ui.registerConfigSection "roles-and-groups",
         title: "Roles & Groups" # null means no title
         priority: 10
 
-      module.project_config_ui.registerConfigTemplate "roles-and-groups",
+      project_page_module.project_config_ui.registerConfigTemplate "roles-and-groups",
         section: "roles-and-groups"
         template: "justdo_roles_project_config_section"
         priority: 1000
@@ -25,10 +25,10 @@ _.extend JustdoRoles.prototype,
     return
 
   unregisterConfigSectionTemplate: ->
-    module = APP.modules.project_page
+    project_page_module = APP.modules.project_page
 
     APP.executeAfterAppClientCode ->
-      module.project_config_ui.unregisterConfigSection "roles-and-groups"
+      project_page_module.project_config_ui.unregisterConfigSection "roles-and-groups"
 
     return
 

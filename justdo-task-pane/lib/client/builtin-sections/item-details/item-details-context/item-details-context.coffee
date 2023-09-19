@@ -2,7 +2,7 @@
 # JustDo should look like, refer to README.md to read more
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   current_dragula = null
 
@@ -11,7 +11,7 @@ APP.executeAfterAppLibCode ->
   isDroppableHandle = (el) ->
     $el = $(el)
 
-    gc = module.gridControl()
+    gc = project_page_module.gridControl()
 
     if not $el.hasClass("slick-row")
       return
@@ -22,7 +22,7 @@ APP.executeAfterAppLibCode ->
       return true
 
   getAllActiveItemPaths = ->
-    gcm = module.getCurrentGcm()
+    gcm = project_page_module.getCurrentGcm()
 
     gc = gcm?.getAllTabs()?.main?.grid_control
     if not (gd = gc?._grid_data)?
@@ -30,7 +30,7 @@ APP.executeAfterAppLibCode ->
 
       return false
 
-    return gd.getAllCollectionItemIdPaths(module.activeItemId(), false, true)
+    return gd.getAllCollectionItemIdPaths(project_page_module.activeItemId(), false, true)
 
   activeItemPathsCount = ->
     return getAllActiveItemPaths()?.length or 0
@@ -41,15 +41,15 @@ APP.executeAfterAppLibCode ->
     return tpl.show_collapsed_rv.get() and paths_count > 1
 
   getSelectedObjectPaths = ->
-    if not (id = module.activeItemObj({_id: 1})?._id)?
+    if not (id = project_page_module.activeItemObj({_id: 1})?._id)?
       return []
 
-    gcm = module.getCurrentGcm()
+    gcm = project_page_module.getCurrentGcm()
     gc = gcm?.getAllTabs()?.main?.grid_control
     if not (gd = gc?._grid_data)?
       return []
 
-    active_item_path = module.activeItemPath()
+    active_item_path = project_page_module.activeItemPath()
     paths = gd.getAllCollectionItemIdPaths(id, false, true)
     if not paths?
       # paths might not always be ready, in such case
@@ -77,7 +77,7 @@ APP.executeAfterAppLibCode ->
     # @autorun =>
     #   @show_collapsed_rv.set true
 
-    #   module.activeItemId() # on changes to the active item, reset the show_collapsed_rv
+    #   project_page_module.activeItemId() # on changes to the active item, reset the show_collapsed_rv
 
     #   return
 
@@ -114,7 +114,7 @@ APP.executeAfterAppLibCode ->
   Template.task_pane_item_details_context.onRendered ->
     gc = grid_data = null
     @autorun ->
-      gc = module.gridControl()
+      gc = project_page_module.gridControl()
       grid_data = gc?._grid_data
 
       return
@@ -123,7 +123,7 @@ APP.executeAfterAppLibCode ->
       if grid_data?
         gc?.saveAndExitActiveEditor() # Exit edit mode, if any, to make sure result will appear on tree (otherwise, will show only when exit edit mode)
 
-        current_item_id = module.activeItemId()
+        current_item_id = project_page_module.activeItemId()
 
         gc._performLockingOperation (releaseOpsLock, timedout) =>
           gc.addParent current_item_id, {parent: new_parent_id, order: 0}, (err) ->
@@ -149,7 +149,7 @@ APP.executeAfterAppLibCode ->
           gc.movePath current_path ,{parent: new_parent_id, order: 0}, (err) ->
             releaseOpsLock()
 
-            if module.activeItemPath() == current_path
+            if project_page_module.activeItemPath() == current_path
               # If moving current item, activate new path
               grid_data._flushAndRebuild()
 
@@ -200,7 +200,7 @@ APP.executeAfterAppLibCode ->
     sectionHeight: ->
       tpl = Template.instance()
 
-      gcm = module.getCurrentGcm()
+      gcm = project_page_module.getCurrentGcm()
 
       if showCollapsed(tpl)
         # get the first path, that's the path we want to show in-full without the need to collapse
@@ -244,7 +244,7 @@ APP.executeAfterAppLibCode ->
     "click .idc-task-context-delete": ->
       item_path = @valueOf() # valueOf returns the String primitive value attached to this
 
-      if not (gc = module.mainGridControl())?
+      if not (gc = project_page_module.mainGridControl())?
         APP.logger.warn "Couldn't find the main grid control"
 
       bootbox.confirm
@@ -291,7 +291,7 @@ APP.executeAfterAppLibCode ->
     canDeletePath: ->
       current_path = @valueOf()
 
-      gcm = module.getCurrentGcm()
+      gcm = project_page_module.getCurrentGcm()
       gc = gcm?.getAllTabs()?.main?.grid_control
       if not (gd = gc?._grid_data)?
         APP.logger.debug "Context: waiting for grid control to become ready"
@@ -326,7 +326,7 @@ APP.executeAfterAppLibCode ->
     allParents: ->
       current_path = @valueOf()
 
-      gcm = module.getCurrentGcm()
+      gcm = project_page_module.getCurrentGcm()
       gc = gcm?.getAllTabs()?.main?.grid_control
 
       if not gc?
@@ -360,7 +360,7 @@ APP.executeAfterAppLibCode ->
   Template.task_pane_item_details_context_per_path.events
     "click .idc-context-item" : (e) ->
       if not APP.modules?.project_page?.gridControl()?.activatePath(@path)
-        gcm = module.getCurrentGcm()
+        gcm = project_page_module.getCurrentGcm()
         gcm.activateTab("main")
         gc = gcm?.getAllTabs()?.main?.grid_control
         gc.activatePath(@path)

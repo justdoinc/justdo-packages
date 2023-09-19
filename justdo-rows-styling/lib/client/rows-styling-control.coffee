@@ -1,11 +1,11 @@
 clicked_since_mouse_enter = false
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
-  gridControl = -> module.gridControl(false) # false means we'll get the gridControl even if it isn't init
+  gridControl = -> project_page_module.gridControl(false) # false means we'll get the gridControl even if it isn't init
 
-  module.setNullaryOperation "changeRowStyle",
+  project_page_module.setNullaryOperation "changeRowStyle",
     human_description: "Change Font Style"
 
     template:
@@ -49,7 +49,7 @@ APP.executeAfterAppLibCode ->
 
   Template.rows_styling_control.helpers
     showSection: ->
-      cur_project = module.curProj()
+      cur_project = project_page_module.curProj()
 
       if not cur_project?
         return false

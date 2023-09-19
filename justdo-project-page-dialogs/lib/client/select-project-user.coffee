@@ -39,7 +39,7 @@ ProjectPageDialogs.selectProjectUser = (options, cb) ->
   return
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   Template.select_project_member_dialog_selector.onCreated ->
     @selected_user = @data.selected_user
@@ -47,7 +47,7 @@ APP.executeAfterAppLibCode ->
     return
 
   # Add our common template helpers to your template
-  Template.select_project_member_dialog_selector.helpers module.template_helpers
+  Template.select_project_member_dialog_selector.helpers project_page_module.template_helpers
 
   Template.select_project_member_dialog_selector.helpers
     isSelectedUser: ->
@@ -64,7 +64,7 @@ APP.executeAfterAppLibCode ->
         size: 8
 
     @autorun =>
-      module.template_helpers.project_all_members_sorted_by_first_name()
+      project_page_module.template_helpers.project_all_members_sorted_by_first_name()
 
       Meteor.defer =>
         # Refresh the selectpicker when members list or members values changes (need to defer to let blaze update the dom first)

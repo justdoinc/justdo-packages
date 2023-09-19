@@ -2086,8 +2086,7 @@ const invalidCharMsg = {
 //
 // If you found a reason to change deepStructureObjectKeysTraverse below, change also
 // the justdo-helpers version, and vice versa. Daniel C.
-var deepStructureObjectKeysTraverse,
-  hasProp = {}.hasOwnProperty;
+var hasProp = {}.hasOwnProperty;
 
 function deepStructureObjectKeysTraverse(structure, cb) {
   var i, item, key, len, value;

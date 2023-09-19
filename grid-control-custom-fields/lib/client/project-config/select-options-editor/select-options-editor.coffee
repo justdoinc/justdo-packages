@@ -7,9 +7,9 @@ generatePickerDropdown = (selected_color) ->
     default_color: selected_color
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
-  module.CustomFieldSelectOptionsEditor = JustdoHelpers.generateNewTemplateDropdown "custom-field-select-options-editor", "custom_field_conf_select_options_editor",
+  project_page_module.CustomFieldSelectOptionsEditor = JustdoHelpers.generateNewTemplateDropdown "custom-field-select-options-editor", "custom_field_conf_select_options_editor",
     custom_dropdown_class: "dropdown-menu shadow-lg border-0 py-3"
     custom_bound_element_options:
       close_button_html: null
@@ -90,7 +90,7 @@ APP.executeAfterAppLibCode ->
     $(@firstNode).click =>
       current_rendering_field_id = @data.field_id
 
-    @options_editor = new module.CustomFieldSelectOptionsEditor(@firstNode)
+    @options_editor = new project_page_module.CustomFieldSelectOptionsEditor(@firstNode)
 
     return
 
@@ -148,7 +148,7 @@ APP.executeAfterAppLibCode ->
   Template.custom_field_conf_select_options_editor.onRendered ->
     @field_id = current_rendering_field_id
 
-    project_custom_fields = module.curProj()?.getProjectCustomFields()
+    project_custom_fields = project_page_module.curProj()?.getProjectCustomFields()
     field_def = _.find project_custom_fields, (x) => x.field_id == @field_id
 
     field_options = field_def.field_options
@@ -265,12 +265,12 @@ APP.executeAfterAppLibCode ->
 
         return
 
-      custom_fields = module.curProj()?.getProjectCustomFields()
+      custom_fields = project_page_module.curProj()?.getProjectCustomFields()
       current_field_def = _.find custom_fields, (custom_field) -> custom_field.field_id == Template.instance().field_id
 
       Meteor._ensure current_field_def, "field_options"
       current_field_def.field_options.select_options = select_options
-      module.curProj()?.setProjectCustomFields(custom_fields, -> return)
+      project_page_module.curProj()?.setProjectCustomFields(custom_fields, -> return)
 
       $options_editor = $(e.target).closest(".custom-field-select-options-editor")
       $options_editor.data("allowDropdownClose")()

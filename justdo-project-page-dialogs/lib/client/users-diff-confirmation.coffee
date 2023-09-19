@@ -44,11 +44,11 @@ ProjectPageDialogs.JustdoTaskMembersDiffDialog =
             label: "Save"
 
             callback: =>
-              module = getProjectPageModule()
-              project = module.curProj()
+              project_page_module = getProjectPageModule()
+              project = project_page_module.curProj()
 
-              grid_control = module.gridControl()
-              grid_data = module.gridData()
+              grid_control = project_page_module.gridControl()
+              grid_data = project_page_module.gridData()
 
               # Note we set {each_options: {expand_only: true}} since
               # grid_control.getPathObjNonReactive works on visible items only
@@ -134,7 +134,7 @@ _setProceedStateForAllMembersInReactiveVarFilterAware = (reactive_var, state) ->
 
 Template.users_diff_confirmation.onCreated ->
   # Init reactive vars
-  module = getProjectPageModule()
+  project_page_module = getProjectPageModule()
 
   perform_additions.set true
   perform_removals.set true
@@ -144,7 +144,7 @@ Template.users_diff_confirmation.onCreated ->
   @members_filter = new ReactiveVar null
 
   @autorun =>
-    grid_control = module.gridControl()
+    grid_control = project_page_module.gridControl()
     grid_data = grid_control._grid_data
     grid_data.invalidateOnRebuild()
 

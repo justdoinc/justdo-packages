@@ -15,13 +15,13 @@ _.extend JustdoAppHighContrast.prototype,
 
   setupUserConfigUi: ->
     APP.executeAfterAppLibCode ->
-      module = APP.modules.main
+      main_module = APP.modules.main
 
-      module.user_config_ui.registerConfigSection "high-contrast-mode",
+      main_module.user_config_ui.registerConfigSection "high-contrast-mode",
         title: "High Contrast Mode"
         priority: 800
 
-      module.user_config_ui.registerConfigTemplate "high-contrast-mode-setter",
+      main_module.user_config_ui.registerConfigTemplate "high-contrast-mode-setter",
         section: "high-contrast-mode"
         template: "justdo_user_config_high_contrast_config"
         priority: 100

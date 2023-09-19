@@ -1,7 +1,7 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
-  curProj = -> module.curProj()
+  curProj = -> project_page_module.curProj()
 
   Template.justdo_roles_and_groups_manager.helpers
     getCurrentTab: ->

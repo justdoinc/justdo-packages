@@ -25,9 +25,9 @@
 #   APP.justdo_user_config_ui = new JustdoUserConfigUi()
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.main
+  main_module = APP.modules.main
 
-  module.user_config_ui = new JustdoUserConfigUi()
+  main_module.user_config_ui = new JustdoUserConfigUi()
 
 # Core user config ui sections and templates are in the
 # justdoinc:justdo-core-user-conf package

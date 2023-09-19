@@ -3,14 +3,14 @@ getProjectPageModule = ->
 
 Template.task_pane_tasks_file_manager_section.helpers
   exampleOfAccessingItemDetailsFromCustomHelper: ->
-    module = getProjectPageModule()
+    project_page_module = getProjectPageModule()
 
     custom_details = {
-      current_project_id: module.curProj()?.id
-      active_item_path: module.activeItemPath()
-      # Note: module.activeItemObjFromCollection gets as its first parameter the fields
+      current_project_id: project_page_module.curProj()?.id
+      active_item_path: project_page_module.activeItemPath()
+      # Note: project_page_module.activeItemObjFromCollection gets as its first parameter the fields
       # you are interested in, to limit reactivity only to these fields
-      active_item_obj: module.activeItemObjFromCollection({title: 1, priority: 1})
+      active_item_obj: project_page_module.activeItemObjFromCollection({title: 1, priority: 1})
     }
 
     return custom_details

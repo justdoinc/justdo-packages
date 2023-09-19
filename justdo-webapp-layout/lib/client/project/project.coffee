@@ -1,10 +1,10 @@
 APP.executeAfterAppLibCode ->
   # The reasone we run this code under the 
   # APP.executeAfterAppLibCode
-  # is that we want module.template_helpers to have the template
+  # is that we want project_page_module.template_helpers to have the template
   # helpers defined in the justdoinc:justdo-task-pane package
 
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   main_module = APP.modules.main
 
@@ -14,11 +14,11 @@ APP.executeAfterAppLibCode ->
     main_module.setCustomHeaderTemplate("right", "project_header_global_layout_header_right")
 
     this.autorun ->
-      # Set/update module.project when it changes
+      # Set/update project_page_module.project when it changes
       Router.current() # Just so changing to another project will invalidate the computation
 
       cur_project = Tracker.nonreactive ->
-        module.project.get()
+        project_page_module.project.get()
 
       if not cur_project?
         APP.logger.debug "Template.project.created: Init project template"
@@ -36,10 +36,10 @@ APP.executeAfterAppLibCode ->
 
         return
 
-      module.project.set(new_proj)
+      project_page_module.project.set(new_proj)
 
       Tracker.nonreactive ->
-        module.emit("project-change", module.curProj())
+        project_page_module.emit("project-change", project_page_module.curProj())
 
     # on change in project title:
     this.autorun ->
@@ -48,13 +48,13 @@ APP.executeAfterAppLibCode ->
 
     # on change in active task or active task title:
     this.autorun ->
-      if (active_task = module.activeItemId())?
+      if (active_task = project_page_module.activeItemId())?
         APP.page_title_manager.setSectionName APP.collections.Tasks.findOne(active_task, {fields: {title: 1}})?.title
       else
         APP.page_title_manager.setSectionName ""
 
     this.autorun ->
-      if not (current_project = module.curProj())?
+      if not (current_project = project_page_module.curProj())?
         # nothing to do
         return
 
@@ -63,23 +63,23 @@ APP.executeAfterAppLibCode ->
       APP.helpers.subscribeProjectMembersInfo(project_id)
 
   Template.project.rendered = ->
-    module.initWireframeManager()
-    module.loadKeyboardShortcuts()
+    project_page_module.initWireframeManager()
+    project_page_module.loadKeyboardShortcuts()
 
   Template.project.destroyed = ->
     main_module.unsetCustomHeaderTemplate("middle")
     main_module.unsetCustomHeaderTemplate("right")
 
-    if module.project?
-      module.helpers.curProj()?.stop()
-      module.project.set(null)
+    if project_page_module.project?
+      project_page_module.helpers.curProj()?.stop()
+      project_page_module.project.set(null)
 
-    module.stopWireframeManager()
-    module.unloadKeyboardShortcuts()
+    project_page_module.stopWireframeManager()
+    project_page_module.unloadKeyboardShortcuts()
 
     APP.logger.debug "project template destroyed"
 
-  Template.project.helpers module.template_helpers
+  Template.project.helpers project_page_module.template_helpers
 
   Template.project.helpers
     belowProjectHeaderItems: ->

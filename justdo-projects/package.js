@@ -62,8 +62,8 @@ Package.onUse(function (api) {
   api.add_files('lib/globals.js', both);
 
   // both
-  api.add_files('lib/both/main.coffee', server);
-  api.add_files('lib/both/main.coffee', client, {bare: true});
+  api.add_files('lib/both/init.coffee', server);
+  api.add_files('lib/both/init.coffee', client, {bare: true});
   api.add_files('lib/both/static.coffee', both);
   api.add_files('lib/both/errors-types.coffee', both);
   api.add_files('lib/both/defaults.coffee', both);

@@ -2,6 +2,6 @@
 # JustDo should look like, refer to README.md to read more
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
-  Template.task_pane_section_content.helpers module.template_helpers
+  Template.task_pane_section_content.helpers project_page_module.template_helpers

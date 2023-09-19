@@ -2,7 +2,7 @@
 # JustDo should look like, refer to README.md to read more
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   #
   # Setup the dropdown
@@ -41,9 +41,9 @@ APP.executeAfterAppLibCode ->
   #
   available_positions = ["right", "left"]
   Template.task_pane_settings_dock_to.helpers
-    available_positions: -> _.without available_positions, module.preferences.get().toolbar_position
+    available_positions: -> _.without available_positions, project_page_module.preferences.get().toolbar_position
 
   Template.task_pane_settings_dock_to.events
     "click .dock-to-setting-option": (e) ->
-      module.updatePreferences({toolbar_position: $(e.target).attr("target-position")})
+      project_page_module.updatePreferences({toolbar_position: $(e.target).attr("target-position")})
       task_pane_settings_dropdown.$dropdown.data("close")()

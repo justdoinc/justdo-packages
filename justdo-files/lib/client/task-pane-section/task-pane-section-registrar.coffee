@@ -1,6 +1,6 @@
 _.extend JustdoFiles.prototype,
   registerTaskPaneSection: ->
-    module = APP.modules.project_page
+    project_page_module = APP.modules.project_page
 
     # Register the new section manager
     JustdoFilesTaskPaneSection = (options) ->
@@ -10,25 +10,25 @@ _.extend JustdoFiles.prototype,
       # XXX
       # Before we destroy the instance we will call @_destroy() - you can implement
       # such a method if you need one.
-      module.TaskPaneSection.call @, options
+      project_page_module.TaskPaneSection.call @, options
 
       return @
 
     # Note that we register this section under the "JustdoFilesTaskPaneSection" id
     # which we use later
-    module.registerTaskPaneSection "JustdoFilesTaskPaneSection", JustdoFilesTaskPaneSection
+    project_page_module.registerTaskPaneSection "JustdoFilesTaskPaneSection", JustdoFilesTaskPaneSection
 
     # Inherit prototype common to all task pane sections
     # (at the moment it only include a @_destroy() method that does
     # nothing, so we can safely call @_destroy() even if you don't
     # need to implement one).
-    Util.inherits JustdoFilesTaskPaneSection, module.TaskPaneSection
+    Util.inherits JustdoFilesTaskPaneSection, project_page_module.TaskPaneSection
 
     # Each item in the grid can have different item type (examples: default, section
     # header, ticket queue header) here we add the section to the **default** item type
     # task pane tabs list.
     task_pane_sections =
-      module.items_types_settings.default.task_pane_sections
+      project_page_module.items_types_settings.default.task_pane_sections
 
     # Note that we change the array in-place, don't create a new array
     # use splice to put between two items
@@ -39,7 +39,7 @@ _.extend JustdoFiles.prototype,
         title: "Files"
         title_i18n: "files_task_pane_label"
         titleInfo: ->
-          if not (active_item_obj = module.activeItemObj({"#{JustdoFiles.files_count_task_doc_field_id}": 1}))?
+          if not (active_item_obj = project_page_module.activeItemObj({"#{JustdoFiles.files_count_task_doc_field_id}": 1}))?
             return ""
 
           if not (files_count = active_item_obj[JustdoFiles.files_count_task_doc_field_id]) or files_count <= 0

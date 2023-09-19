@@ -2,9 +2,9 @@
 # JustDo should look like, refer to README.md to read more
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
-  _.extend module.items_types_settings,
+  _.extend project_page_module.items_types_settings,
       "default": # default is the null type
         task_pane_sections:
           [

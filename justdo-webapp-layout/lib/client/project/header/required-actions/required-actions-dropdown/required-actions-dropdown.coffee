@@ -1,6 +1,6 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
-  curProj = module.helpers.curProj
+  project_page_module = APP.modules.project_page
+  curProj = project_page_module.helpers.curProj
   projects = APP.projects
 
   Template.required_actions_dropdown.helpers
@@ -23,8 +23,8 @@ APP.executeAfterAppLibCode ->
       data = _.extend {}, @,
         projects_obj: APP.projects
         project_obj: -> curProj()
-        gridControl: -> module.gridControl(false)
-        getGridControlMux: -> module.getGridControlMux()
+        gridControl: -> project_page_module.gridControl(false)
+        getGridControlMux: -> project_page_module.getGridControlMux()
 
       return data
 

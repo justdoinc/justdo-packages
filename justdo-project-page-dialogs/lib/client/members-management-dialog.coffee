@@ -6,7 +6,7 @@ getBatchedCollectionUpdatesQuery = ->
   return {type: "add-remove-members-to-tasks", "data.project_id": APP.modules.project_page.curProj().id}
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   #
   # Editor dialog
@@ -170,12 +170,12 @@ APP.executeAfterAppLibCode ->
     users = _.uniq(augmented_task_doc.users or [])
 
     if not (item_users = users)?
-      throw module._error("unknown-data-context", "can't determine current task users")
+      throw project_page_module._error("unknown-data-context", "can't determine current task users")
 
     _users_to_keep = item_users
 
-    if not (project_members = (project = module.curProj())?.getMembersIds({if_justdo_guest_include_ancestors_members_of_items: task_id}))?
-      throw module._error("unknown-data-context", "can't determine project members")
+    if not (project_members = (project = project_page_module.curProj())?.getMembersIds({if_justdo_guest_include_ancestors_members_of_items: task_id}))?
+      throw project_page_module._error("unknown-data-context", "can't determine project members")
     _users_to_add = _.difference project_members, item_users
 
     users_lists_already_exist = Tracker.nonreactive -> users_to_keep.get()?
@@ -263,7 +263,7 @@ APP.executeAfterAppLibCode ->
     # For guests, we want derive the users showing in the dialog from members of the
     # task's ancestors.
     @ancestors_users_subscription = null
-    if module.curProj()?.isGuest() is true
+    if project_page_module.curProj()?.isGuest() is true
       ancestors_ids_arr = _.keys APP.modules.project_page.mainGridControl()._grid_data._grid_data_core.getAllItemsKnownAncestorsIdsObj([data._id])
       @ancestors_users_subscription = APP.projects.subscribeTasksAugmentedFields(ancestors_ids_arr, ["users"])
 
@@ -291,7 +291,7 @@ APP.executeAfterAppLibCode ->
       current_owner_id = APP.collections.Tasks.findOne(data._id, {fields: {owner_id: 1}})?.owner_id
       members_to_remove = _getMembersIdsInReactiveVarByProceedState(users_to_keep, false)
 
-      grid_control = module.gridControl()
+      grid_control = project_page_module.gridControl()
       grid_data = grid_control._grid_data
       grid_data.invalidateOnRebuild()
 
@@ -311,7 +311,7 @@ APP.executeAfterAppLibCode ->
           filtered_tree: false
 
         _subtasks_owners_ids_pending_removal = {}
-        grid_data.each module.activeItemPath(), tree_traversing_options, (section, item_type, item_obj, path, expand_state) ->
+        grid_data.each project_page_module.activeItemPath(), tree_traversing_options, (section, item_type, item_obj, path, expand_state) ->
           if (owner_id = item_obj.owner_id) in members_to_remove
             _subtasks_owners_ids_pending_removal[owner_id] = true
 
@@ -485,7 +485,7 @@ APP.executeAfterAppLibCode ->
       return @action_users_reactive_var.get()?.length == 0
 
     showInviteMembersSection: ->
-      if @action_id == "add-users" and (project = module.curProj()).isAdmin()
+      if @action_id == "add-users" and (project = project_page_module.curProj()).isAdmin()
         return true
 
       return false
@@ -591,7 +591,7 @@ APP.executeAfterAppLibCode ->
         submit:
           label: "Save"
           callback: =>
-            project = module.curProj()
+            project = project_page_module.curProj()
 
             if ($(".opened-by-members-managment-dialog").length > 0)
               # (It's a hack) Invite members dialog is open, can't save in that state
@@ -605,10 +605,10 @@ APP.executeAfterAppLibCode ->
               return true
 
             execMembersEdit = ->
-              grid_control = module.gridControl()
+              grid_control = project_page_module.gridControl()
               grid_data = grid_control._grid_data
 
-              active_item_obj = module.activeItemObjFromCollection({owner_id: 1, pending_owner_id: 1})
+              active_item_obj = project_page_module.activeItemObjFromCollection({owner_id: 1, pending_owner_id: 1})
 
               items_to_edit = [task_doc._id]
               items_to_assume_ownership_of = []
@@ -622,7 +622,7 @@ APP.executeAfterAppLibCode ->
                   expand_only: false
                   filtered_tree: false
 
-                grid_data.each module.activeItemPath(), tree_traversing_options, (section, item_type, item_obj, path, expand_state) ->
+                grid_data.each project_page_module.activeItemPath(), tree_traversing_options, (section, item_type, item_obj, path, expand_state) ->
                   items_to_edit.push item_obj._id
 
                   if item_obj.owner_id in members_to_remove

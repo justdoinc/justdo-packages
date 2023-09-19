@@ -1,14 +1,14 @@
 _.extend JustdoProjectConfigTicketsQueues.prototype,
   registerConfigTemplate: ->
-    module = APP.modules.project_page
+    project_page_module = APP.modules.project_page
 
     APP.executeAfterAppClientCode ->
-      module.project_config_ui.registerConfigSection "tickets-queues",
+      project_page_module.project_config_ui.registerConfigSection "tickets-queues",
         title: "Ticket Queues" # null means no title
         title_i18n: "project_config_ticket_queues_title"
         priority: 10
 
-      module.project_config_ui.registerConfigTemplate "tickets-queues",
+      project_page_module.project_config_ui.registerConfigTemplate "tickets-queues",
         section: "tickets-queues"
         template: "justdo_project_config_tickets_queues_project_config"
         priority: 1000

@@ -75,7 +75,7 @@ _.extend Projects.prototype,
     @modules = {}
 
     for module_name, module_def of PACK.modules
-      # We want each module `this` keyword to be a prototypical
+      # We want each module_obj `this` keyword to be a prototypical
       # inheritence of the main projects obj with minor modifications
       module_obj = Object.create(@)
       module_obj.logger = Logger.get "#{@main_logger_name}::#{module_name}"

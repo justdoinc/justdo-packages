@@ -6,9 +6,9 @@ removeActivePluginStore = ->
   return
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
-  Template.plugins_store_button.helpers module.template_helpers
+  Template.plugins_store_button.helpers project_page_module.template_helpers
 
   Template.plugins_store_button.helpers
     showStore: ->

@@ -1,10 +1,10 @@
 _.extend MeetingsManagerPlugin.prototype,
   registerTaskPaneSection: ->
     self = @
-    module = APP.modules.project_page
+    project_page_module = APP.modules.project_page
 
     # Add our common template helpers to your template
-    Template.task_pane_meetings_manager_section.helpers module.template_helpers
+    Template.task_pane_meetings_manager_section.helpers project_page_module.template_helpers
 
     # Register the new section manager
     MeetingsManager = (options) ->
@@ -14,25 +14,25 @@ _.extend MeetingsManagerPlugin.prototype,
       # XXX
       # Before we destroy the instance we will call @_destroy() - you can implement
       # such a method if you need one.
-      module.TaskPaneSection.call @, options
+      project_page_module.TaskPaneSection.call @, options
 
       return @
 
     # Note that we register this section under the "MeetingsManager" id
     # which we use later
-    module.registerTaskPaneSection "MeetingsManager", MeetingsManager
+    project_page_module.registerTaskPaneSection "MeetingsManager", MeetingsManager
 
     # Inherit prototype common to all task pane sections
     # (at the moment it only include a @_destroy() method that does
     # nothing, so we can safely call @_destroy() even if you don't
     # need to implement one).
-    Util.inherits MeetingsManager, module.TaskPaneSection
+    Util.inherits MeetingsManager, project_page_module.TaskPaneSection
 
     # Each item in the grid can have different item type (examples: default, section
     # header, ticket queue header) here we add the section to the **default** item type
     # task pane tabs list.
     task_pane_sections =
-      module.items_types_settings.default.task_pane_sections
+      project_page_module.items_types_settings.default.task_pane_sections
 
     # Note that we change the array in-place, don't create a new array
     # use splice to put between two items

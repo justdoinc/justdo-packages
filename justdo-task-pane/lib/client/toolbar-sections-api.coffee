@@ -6,21 +6,21 @@
 # current active available sections together with other meta-data (such as title)
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   #
   # tabs status
   #
 
   # active_tabs holds the current tabs available for the active grid item type
-  active_tabs = module.current_task_pane_tabs = new ReactiveVar null, (a, b) -> a == b
+  active_tabs = project_page_module.current_task_pane_tabs = new ReactiveVar null, (a, b) -> a == b
   # Holds the id of the selected section
-  selected_tab_id = module.current_task_pane_selected_tab_id = new ReactiveVar null
+  selected_tab_id = project_page_module.current_task_pane_selected_tab_id = new ReactiveVar null
 
   #
   # Sections api
   #
-  _.extend module,
+  _.extend project_page_module,
     items_types_settings: {} # Stores the settings for items types check
                              # builtin-sections-to-item-types.coffee to learn more
 
@@ -42,7 +42,7 @@ APP.executeAfterAppLibCode ->
       # "fallback" will be returned if item type is not a registered type / no tabs were assigned to it
 
       # get current grid_control (reactive)
-      if not (grid_control = module.gridControl())?
+      if not (grid_control = project_page_module.gridControl())?
         # If there's no grid unset sections
 
         return
@@ -75,7 +75,7 @@ APP.executeAfterAppLibCode ->
           return "fallback"
 
         current_item_type = "default"
-      if not (current_item_type of module.items_types_settings)
+      if not (current_item_type of project_page_module.items_types_settings)
         if current_item_type is "ticket-queue-caption"
           if JD.activeItemId()?
             # A ticket queue whose task item shared with the current user -> show normal task pane
@@ -94,8 +94,8 @@ APP.executeAfterAppLibCode ->
     #
     setTaskPaneItemType: (item_type) ->
       # Get item type settings
-      item_type_settings = module.items_types_settings[item_type]
-      module.items_types_settings_dep.depend() # on changes to the module.item_types_settings, we want to load the correct tabs set
+      item_type_settings = project_page_module.items_types_settings[item_type]
+      project_page_module.items_types_settings_dep.depend() # on changes to the project_page_module.item_types_settings, we want to load the correct tabs set
 
       task_pane_sections = item_type_settings.task_pane_sections
 
@@ -110,7 +110,7 @@ APP.executeAfterAppLibCode ->
             options: section_settings.options
             type: section_settings.type
             section_manager:
-              new module.task_pane_sections_types[section_settings.type](section_settings.section_options)
+              new project_page_module.task_pane_sections_types[section_settings.type](section_settings.section_options)
 
       active_tabs.set _tabs
 
@@ -168,10 +168,10 @@ APP.executeAfterAppLibCode ->
   #
   # task_pane_sections_types registrar
   #
-  module.task_pane_sections_types = {}
+  project_page_module.task_pane_sections_types = {}
 
-  module.registerTaskPaneSection = (section_id, constructor) ->
-    module.task_pane_sections_types[section_id] = constructor
+  project_page_module.registerTaskPaneSection = (section_id, constructor) ->
+    project_page_module.task_pane_sections_types[section_id] = constructor
 
   #
   # TaskPaneSection proto
@@ -179,7 +179,7 @@ APP.executeAfterAppLibCode ->
   TaskPaneSection = (options) ->
     return @
 
-  module.TaskPaneSection = TaskPaneSection
+  project_page_module.TaskPaneSection = TaskPaneSection
 
   _.extend TaskPaneSection.prototype,
     #

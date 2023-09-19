@@ -104,14 +104,14 @@ _getMembersIdsInReactiveVarByProceedState = (reactive_var, proceed_state=true) -
 Template.meetings_meeting_members_editor.onCreated ->
   data = @data
 
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   if not (item_users = data.users)?
-    throw module._error("unknown-data-context", "can't determine current task user")
+    throw project_page_module._error("unknown-data-context", "can't determine current task user")
   _users_to_keep = _.without item_users, Meteor.userId(), data.organizer_id
 
-  if not (project_members = (project = module.curProj())?.getMembersIds())?
-    throw module._error("unknown-data-context", "can't determine project members")
+  if not (project_members = (project = project_page_module.curProj())?.getMembersIds())?
+    throw project_page_module._error("unknown-data-context", "can't determine project members")
   _users_to_add = _.difference project_members, item_users
 
   # _getUsersDocsByIdsWithProceedFlag calls getUsersDocsByIds, which establishes a subscription on members collection

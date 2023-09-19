@@ -42,9 +42,9 @@ _.extend MeetingsManagerPlugin.prototype,
     # adding meeting to the project configuration:
 
     APP.executeAfterAppLibCode ->
-      module = APP.modules.project_page
+      project_page_module = APP.modules.project_page
 
-      module.project_config_ui.registerConfigTemplate "meetings_config",
+      project_page_module.project_config_ui.registerConfigTemplate "meetings_config",
         section: "extensions"
         template: "meetings_config"
         priority: 1000

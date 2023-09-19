@@ -1,7 +1,7 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
   main_module = APP.modules.main
-  curProj = module.helpers.curProj
+  curProj = project_page_module.helpers.curProj
 
   project_template_helpers = APP.modules.project_page.template_helpers
 
@@ -164,7 +164,7 @@ APP.executeAfterAppLibCode ->
 
   Template.project_settings.events
     "click #project-config": (e) ->
-      module.project_config_ui.show()
+      project_page_module.project_config_ui.show()
 
       return
 
@@ -204,13 +204,13 @@ APP.executeAfterAppLibCode ->
 
     isBottomPaneOpen: -> APP.justdo_project_pane.isExpanded()
 
-    isTaskPaneOpen: -> module.preferences.get()?.toolbar_open
+    isTaskPaneOpen: -> project_page_module.preferences.get()?.toolbar_open
 
   Template.panes_controls.events
     "click .task-pane-control": ->
-      toolbar_open = module.preferences.get()?.toolbar_open
+      toolbar_open = project_page_module.preferences.get()?.toolbar_open
 
-      module.updatePreferences({toolbar_open: not toolbar_open})
+      project_page_module.updatePreferences({toolbar_open: not toolbar_open})
 
       return
 

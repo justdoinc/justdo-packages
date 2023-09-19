@@ -1,14 +1,14 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
-  module.project_config_ui.registerConfigSection "custom-fields",
+  project_page_module.project_config_ui.registerConfigSection "custom-fields",
     # Add to this section the configs that you want to show first,
     # without any specific title (usually very basic configurations)
 
     title: "Custom Fields" # null means no title
     priority: 10
 
-  module.project_config_ui.registerConfigTemplate "custom-fields",
+  project_page_module.project_config_ui.registerConfigTemplate "custom-fields",
     section: "custom-fields"
     template: "custom_fields_conf"
     priority: 1000
@@ -31,7 +31,7 @@ APP.executeAfterAppLibCode ->
       handle: ".custom-field-handle"
       items: ".custom-field-item"
       stop: (event, ui) ->
-        project = module.curProj()
+        project = project_page_module.curProj()
         custom_fields = project.getProjectCustomFields()
 
         new_fields_order = $(".custom-field-row").map (x) ->
@@ -61,7 +61,7 @@ APP.executeAfterAppLibCode ->
 
     return
 
-  getProjectCustomFields = -> module.curProj()?.getProjectCustomFields()
+  getProjectCustomFields = -> project_page_module.curProj()?.getProjectCustomFields()
   Template.custom_fields_conf.helpers
     getFieldTypes: -> GridControlCustomFields.getAvailableCustomFieldsTypes()
     addButtonDisabled: ->
@@ -74,7 +74,7 @@ APP.executeAfterAppLibCode ->
       return getProjectCustomFields().length >= 5
 
   addCustomField = ->
-    project = module.curProj()
+    project = project_page_module.curProj()
 
     custom_fields = project.getProjectCustomFields()
 
@@ -156,7 +156,7 @@ APP.executeAfterAppLibCode ->
       return
 
     "click .remove": (e) ->
-      project = module.curProj()
+      project = project_page_module.curProj()
 
       $field_item = $(e.target).closest(".custom-field-item")
       field_id = $field_item.attr("field-id")
@@ -179,7 +179,7 @@ APP.executeAfterAppLibCode ->
       return
 
     "change .field-label": (e) ->
-      project = module.curProj()
+      project = project_page_module.curProj()
 
       $field_item = $(e.target).closest(".custom-field-item")
       field_id = $field_item.attr("field-id")

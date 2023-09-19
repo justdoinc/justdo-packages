@@ -1,6 +1,6 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
-  curProj = module.helpers.curProj
+  project_page_module = APP.modules.project_page
+  curProj = project_page_module.helpers.curProj
 
   Template.project_settings_dropdown_remove_project.events
     "click #remove-project": (e) ->

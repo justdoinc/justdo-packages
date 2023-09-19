@@ -1,6 +1,6 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
-  curProj = module.helpers.curProj
+  project_page_module = APP.modules.project_page
+  curProj = project_page_module.helpers.curProj
 
   share.MembersDropdown = JustdoHelpers.generateNewTemplateDropdown "members-dropdown-menu", "members_dropdown_menu",
     custom_bound_element_options:
@@ -113,7 +113,7 @@ APP.executeAfterAppLibCode ->
 
     return
 
-  Template.members_dropdown_menu.helpers module.template_helpers
+  Template.members_dropdown_menu.helpers project_page_module.template_helpers
 
   Template.members_dropdown_menu.helpers
     getCurrentMembersFilter: ->
@@ -122,11 +122,11 @@ APP.executeAfterAppLibCode ->
       return tpl.members_filter.get()
 
     isEmptyResults: (filter) ->
-      empty = _.isEmpty(module.template_helpers.project_enrolled_admins_sorted_by_first_name(filter)) and
-        _.isEmpty(module.template_helpers.project_enrolled_regular_members_sorted_by_first_name(filter)) and
-        _.isEmpty(module.template_helpers.project_enrolled_guests_sorted_by_first_name(filter)) and
-        _.isEmpty(module.template_helpers.project_non_enrolled_guests_sorted_by_first_name(filter)) and
-        _.isEmpty(module.template_helpers.project_non_enrolled_members_sorted_by_first_name(filter))
+      empty = _.isEmpty(project_page_module.template_helpers.project_enrolled_admins_sorted_by_first_name(filter)) and
+        _.isEmpty(project_page_module.template_helpers.project_enrolled_regular_members_sorted_by_first_name(filter)) and
+        _.isEmpty(project_page_module.template_helpers.project_enrolled_guests_sorted_by_first_name(filter)) and
+        _.isEmpty(project_page_module.template_helpers.project_non_enrolled_guests_sorted_by_first_name(filter)) and
+        _.isEmpty(project_page_module.template_helpers.project_non_enrolled_members_sorted_by_first_name(filter))
 
       return empty
 
@@ -377,10 +377,10 @@ APP.executeAfterAppLibCode ->
 
       return
 
-  Template.admin_member_item.helpers module.template_helpers
-  Template.regular_member_item.helpers module.template_helpers
-  Template.guest_member_item.helpers module.template_helpers
-  Template.enrollment_pending_member.helpers module.template_helpers
+  Template.admin_member_item.helpers project_page_module.template_helpers
+  Template.regular_member_item.helpers project_page_module.template_helpers
+  Template.guest_member_item.helpers project_page_module.template_helpers
+  Template.enrollment_pending_member.helpers project_page_module.template_helpers
 
   Template.enrollment_pending_member.events
     "click .edit-enrolled": (e, tpl) ->

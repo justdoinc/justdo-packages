@@ -7,9 +7,9 @@ generatePickerDropdown = (selected_color) ->
     default_color: selected_color
 
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
-  module.CustomFieldFormulaFieldEditor = JustdoHelpers.generateNewTemplateDropdown "custom-field-formula-field-editor", "custom_field_conf_formula_field_editor",
+  project_page_module.CustomFieldFormulaFieldEditor = JustdoHelpers.generateNewTemplateDropdown "custom-field-formula-field-editor", "custom_field_conf_formula_field_editor",
     custom_dropdown_class: "dropdown-menu shadow-lg border-0 p-3"
     custom_bound_element_options:
       close_button_html: null
@@ -81,7 +81,7 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.custom_field_conf_formula_field_editor_opener.onRendered ->
-    @options_editor = new module.CustomFieldFormulaFieldEditor(@firstNode, {field_id: @data.field_id})
+    @options_editor = new project_page_module.CustomFieldFormulaFieldEditor(@firstNode, {field_id: @data.field_id})
 
     return
 
@@ -163,7 +163,7 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.custom_field_conf_formula_field_editor.onRendered ->
-    project_custom_fields = module.curProj()?.getProjectCustomFields()
+    project_custom_fields = project_page_module.curProj()?.getProjectCustomFields()
     field_def = _.find project_custom_fields, (x) => x.field_id == @field_id
 
     grid_ranges = field_def.grid_ranges
@@ -397,7 +397,7 @@ APP.executeAfterAppLibCode ->
         if validation_failed
           return
 
-        custom_fields = module.curProj()?.getProjectCustomFields()
+        custom_fields = project_page_module.curProj()?.getProjectCustomFields()
         current_field_def = _.find custom_fields, (custom_field) -> custom_field.field_id == current_field_id
 
         if not _.isEmpty(grid_ranges)
@@ -407,7 +407,7 @@ APP.executeAfterAppLibCode ->
           delete current_field_def.grid_ranges
           delete current_field_def.filter_type
 
-        module.curProj()?.setProjectCustomFields custom_fields, (err) ->
+        project_page_module.curProj()?.setProjectCustomFields custom_fields, (err) ->
           if err?
             alert(err.reason)
 
@@ -420,7 +420,7 @@ APP.executeAfterAppLibCode ->
         return
 
       saveFormulaAndClose = (formula) ->
-        APP.justdo_formula_fields.setCustomFieldFormula module.curProj().id, current_field_id, formula, (err) ->
+        APP.justdo_formula_fields.setCustomFieldFormula project_page_module.curProj().id, current_field_id, formula, (err) ->
           if err?
             alert(err.reason)
 

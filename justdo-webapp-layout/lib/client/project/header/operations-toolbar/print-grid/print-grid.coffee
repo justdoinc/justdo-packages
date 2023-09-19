@@ -1,8 +1,8 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   getActiveGridControl = ->
-    gcm = module.getCurrentGcm()
+    gcm = project_page_module.getCurrentGcm()
 
     return gcm?.getActiveGridControl(true) # `true` means require_ready
 
@@ -17,10 +17,10 @@ APP.executeAfterAppLibCode ->
       if (addPrintMode = APP.justdo_print_grid.addPrintMode)?
         addPrintMode()
       else
-        module.logger.error "Can't find addPrintMode() reload the page and try again"
+        project_page_module.logger.error "Can't find addPrintMode() reload the page and try again"
 
     @autorun ->
-      gcm = module.getCurrentGcm()
+      gcm = project_page_module.getCurrentGcm()
       if gcm?.getActiveGridControl(true)?
         onceAddPrintMode()
 

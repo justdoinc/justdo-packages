@@ -3,7 +3,7 @@ _.extend JustdoPrintGrid.prototype,
     #
     # Shortcuts
     #
-    module = APP.modules.project_page
+    project_page_module = APP.modules.project_page
 
     gc = null   # Will be set to the current Grid Control object
     gcm = null  # upon entering to print mode.
@@ -18,7 +18,7 @@ _.extend JustdoPrintGrid.prototype,
     # Functions
     #
     getCurrentTaskPath = ->
-      path = module.gridControl().getCurrentPath()
+      path = project_page_module.gridControl().getCurrentPath()
       return path
 
     getColumnsConfiguration = ->
@@ -226,14 +226,14 @@ _.extend JustdoPrintGrid.prototype,
       last_overflow = $("html").css("overflow")
       $("html").css "overflow", "auto"
 
-      # Getting grid control module
-      if not (gc = module.gridControl())?
-        module.logger.error "Can't find grid control"
+      # Getting grid control project_page_module
+      if not (gc = project_page_module.gridControl())?
+        project_page_module.logger.error "Can't find grid control"
         return
 
       # Getting current displayed GridControl
-      if not (gcm = module.getCurrentGcm())?
-        module.logger.error "Can't find current grid control"
+      if not (gcm = project_page_module.getCurrentGcm())?
+        project_page_module.logger.error "Can't find current grid control"
         return
 
       # Getting cols from getView
@@ -593,13 +593,13 @@ _.extend JustdoPrintGrid.prototype,
 
     formatWithPrintFormatter = (item_id, field, val, item_doc, path, format_for_csv=false) ->
       if not (field_schema_def = gc.getSchemaExtendedWithCustomFields()[field])?
-        module.logger.error "Failed to find print formatter to field #{field}"
+        project_page_module.logger.error "Failed to find print formatter to field #{field}"
 
         return val
 
 
       if not (formatter_id = field_schema_def.grid_column_formatter)?
-        module.logger.error "Failed to find print formatter to field #{field}"
+        project_page_module.logger.error "Failed to find print formatter to field #{field}"
 
         return val
 
