@@ -9,9 +9,12 @@ APP.executeAfterAppLibCode ->
     tpl.curProj = APP.modules.project_page.helpers.curProj()
     tpl.users = new ReactiveVar []
     tpl.selected_tasks_rv = new ReactiveVar []
+    tpl.selected_projects_rv = new ReactiveVar []
     tpl.root_tasks_rv = new ReactiveVar []
+    tpl.projects_rv = new ReactiveVar []
     tpl.active_access_role = new ReactiveVar null
     tpl.active_share_option = new ReactiveVar null
+    tpl.search_projects_val_rv = new ReactiveVar ""
 
     tpl.autorun ->
       grid_tree = APP.modules.project_page.gridControl()._grid_data.grid_tree
@@ -22,6 +25,13 @@ APP.executeAfterAppLibCode ->
 
       tpl.root_tasks_rv.set root_tasks
       tpl.selected_tasks_rv.set root_tasks
+
+      projects_query =
+        project_id: JD.activeJustdoId()
+        "p:dp:is_project": true
+        "p:dp:is_archived_project":
+          $ne: true
+      tpl.projects_rv.set APP.collections.Tasks.find(projects_query, {sort: {seqId: 1}}).fetch()
 
       return
 
@@ -165,6 +175,23 @@ APP.executeAfterAppLibCode ->
     activeShareOption: ->
       return Template.instance().active_share_option.get().title
 
+    projects: ->
+      search_val = Template.instance().search_projects_val_rv.get()
+      filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_val)}", "i")
+
+      projects = Template.instance().projects_rv.get()
+      filtered_projects = _.filter projects, (doc) ->  filter_regexp.test(doc.title)
+
+      return filtered_projects
+
+    projectIsSelected: ->
+      selected_projects = Template.instance().selected_projects_rv.get()
+
+      if _.contains(selected_projects, @._id)
+        return "selected"
+
+      return
+
   Template.members_dropdown_invite.events
     "click .invite-menu-btn": (e, tpl) ->
       $(".invite-menu").removeClass "open"
@@ -207,19 +234,61 @@ APP.executeAfterAppLibCode ->
 
     "click .invite-list-item .remove": (e, tpl) ->
       users = tpl.users.get()
-      users.splice(users.indexOf(@.substring()), 1);
+      email_to_remove = @.email
+      users = users.filter (user) -> user.email != email_to_remove
       tpl.users.set users
 
       return
 
     "click .share-tasks-menu .dropdown-item": (e, tpl) ->
-      tpl.active_share_option.set @
+      if @.class == "share-specific"
+        $("#members-invite-projects-selector").modal "show"
+      else
+        tpl.active_share_option.set @
+        tpl.selected_projects_rv.set []
 
-      if @.class == "share-all"
-        tpl.selected_tasks_rv.set tpl.root_tasks_rv.get()
+        if @.class == "share-all"
+          tpl.selected_tasks_rv.set tpl.root_tasks_rv.get()
 
-      if @.class == "share-none"
-        tpl.selected_tasks_rv.set []
+        if @.class == "share-none"
+          tpl.selected_tasks_rv.set []
+
+      return
+
+    "keyup .search-projects-input": (e, tpl) ->
+      value = $(e.target).val().trim()
+
+      if _.isEmpty value
+        tpl.search_projects_val_rv.set null
+
+      tpl.search_projects_val_rv.set value
+
+      return
+
+    "click .project-item": (e, tpl) ->
+      selected_projects = tpl.selected_projects_rv.get()
+      task_id = @._id
+
+      if _.contains(selected_projects, task_id)
+        selected_projects = selected_projects.filter (id) -> id isnt task_id
+      else
+        selected_projects.push task_id
+
+      tpl.selected_projects_rv.set selected_projects
+
+      return
+
+    "click .save-selected-tasks": (e, tpl) ->
+      selected_projects = tpl.selected_projects_rv.get()
+      tpl.selected_tasks_rv.set selected_projects
+      active_share_option = tpl.share_options[1]
+      active_share_option.title = """Share <span>#{selected_projects.length}</span> project"""
+
+      if selected_projects.length > 1
+        active_share_option.title += "s"
+
+      tpl.active_share_option.set active_share_option
+      $("#members-invite-projects-selector").modal "hide"
 
       return
 

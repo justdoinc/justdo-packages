@@ -3,16 +3,6 @@
     <div class="members-dropdown-invite-header">
       <svg class="jd-icon go-back"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"></use></svg>
       <input class="invite-members-input" type="text" placeholder="Type email">
-      <div class="invite-settings">
-        <div class="invite-menu-wrapper share-tasks-menu">
-          <div class="invite-menu-btn text-primary">{{activeShareOption}}</div>
-          <div class="invite-menu animate slideIn">
-            {{#each shareOptions}}
-              <div class="dropdown-item {{class}}">{{title}}</div>
-            {{/each}}
-          </div>
-        </div>
-      </div>
     </div>
     <div class="members-dropdown-invite-content bg-light">
       {{#if users}}
@@ -31,20 +21,56 @@
       {{/if}}
     </div>
     <div class="members-dropdown-invite-footer">
-      <div class="invite-menu-wrapper members-access-menu">
-        <div class="invite-menu-btn text-primary">{{activeAccessRole.title}}</div>
-        <div class="invite-menu animate slideIn">
-          {{#each accessRoles}}
-            <div class="dropdown-item">
-              {{title}}
-              {{#if subtitle}}
-                <div class="dropdown-item-subtitle">{{subtitle}}</div>
-              {{/if}}
-            </div>
-          {{/each}}
+      <div class="invite-settings-wrapper">
+        <div class="invite-menu-wrapper share-tasks-menu">
+          <div class="invite-menu-btn text-primary">{{{activeShareOption}}}</div>
+          <div class="invite-menu animate slideIn">
+            {{#each shareOptions}}
+              <div class="dropdown-item {{class}}">{{title}}</div>
+            {{/each}}
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="invite-menu-wrapper members-access-menu">
+          <div class="invite-menu-btn text-primary">{{activeAccessRole.title}}</div>
+          <div class="invite-menu animate slideIn">
+            {{#each accessRoles}}
+              <div class="dropdown-item">
+                {{title}}
+                {{#if subtitle}}
+                  <div class="dropdown-item-subtitle">{{subtitle}}</div>
+                {{/if}}
+              </div>
+            {{/each}}
+          </div>
         </div>
       </div>
       <button class="btn btn-primary btn-sm invite-members-btn" type="button">Invite</button>
+    </div>
+  </div>
+
+  <!-- Project Selector Modal -->
+  <div class="modal fade" id="members-invite-projects-selector" data-backdrop="false" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <input class="search-projects-input form-control form-control-sm" type="text" placeholder="Find project">
+          <div class="projects-list">
+            {{#each projects}}
+              <div class="project-item {{projectIsSelected}}">
+                <div class="select-icon"></div>
+                <div class="title">
+                  <span>#{{seqId}}</span>: {{title}}
+                </div>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-sm btn-primary save-selected-tasks">Select</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
