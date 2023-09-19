@@ -126,9 +126,9 @@ Template.chat_bottom_windows_task_open.events
       Tracker.flush()
 
       tracker = Tracker.autorun (c) ->
-        module = APP.modules.project_page
+        project_page_module = APP.modules.project_page
 
-        project = module.curProj()
+        project = project_page_module.curProj()
 
         gcm = APP.modules.project_page.getCurrentGcm()
 

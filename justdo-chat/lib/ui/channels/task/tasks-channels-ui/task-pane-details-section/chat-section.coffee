@@ -1,5 +1,5 @@
 APP.executeAfterAppLibCode ->
-  module = APP.modules.project_page
+  project_page_module = APP.modules.project_page
 
   Template.task_pane_chat_section.onCreated ->
     task_channel_object = null
@@ -12,11 +12,11 @@ APP.executeAfterAppLibCode ->
     @mode = new ReactiveVar "chat"
 
     @autorun =>
-      if not (grid_control = module.gridControl())?
+      if not (grid_control = project_page_module.gridControl())?
         # Grid control isn't ready can't init chat
         return
 
-      if (task_id = module.activeItemId())?
+      if (task_id = project_page_module.activeItemId())?
         task_channel_object =
           APP.justdo_chat.generateClientChannelObject "task",
             tasks_collection: grid_control.collection
@@ -24,7 +24,7 @@ APP.executeAfterAppLibCode ->
       else
         task_channel_object = null
 
-      module.curProj() # XXX To trigger invalidation on project change, not sure if this is
+      project_page_module.curProj() # XXX To trigger invalidation on project change, not sure if this is
                        # necessary, it used to be part of the options provided to
                        # generateClientChannelObject(), didn't have time to test effect of
                        # removing it, Daniel C.

@@ -16,8 +16,8 @@
 #       curProj().enableCustomFeatures(module_id)
 
 # APP.executeAfterAppClientCode ->
-#   module = APP.modules.project_page
-#   module.project_config_ui.registerConfigTemplate "justdo_chat_project_config",
+#   project_page_module = APP.modules.project_page
+#   project_page_module.project_config_ui.registerConfigTemplate "justdo_chat_project_config",
 #     section: "extensions"
 #     template: "justdo_chat_project_config"
 #     priority: 50
