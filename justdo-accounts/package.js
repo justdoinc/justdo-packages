@@ -60,6 +60,10 @@ Package.onUse(function (api) {
   api.add_files("lib/client/collection-hooks.coffee", client);
   api.add_files("lib/client/methods.coffee", client);
 
+  // Always after templates
+  api.add_files("i18n/en.i18n.json", both);
+  api.add_files("i18n/vi.i18n.json", both);
+
   api.use("meteorspark:app@0.3.0", both);
 
   api.export("JustdoAccounts", both);

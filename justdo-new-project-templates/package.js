@@ -92,5 +92,9 @@ Package.onUse(function (api) {
   api.addFiles("lib/template-categories/getting-started/it-firm.coffee", both);
   api.addFiles("lib/template-categories/getting-started/movies-production.coffee", both);
 
+  // Always after templates
+  api.add_files("i18n/en.i18n.json", both);
+  api.add_files("i18n/vi.i18n.json", both);
+
   api.export("JustdoNewProjectTemplates", both);
 });

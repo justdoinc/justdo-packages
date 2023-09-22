@@ -88,6 +88,24 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/api.coffee", client);
   api.addFiles("lib/client/methods.coffee", client);
 
+  // Always after templates
+  api.add_files("i18n/en.i18n.json", both);
+  api.add_files("i18n/vi.i18n.json", both);
+  api.add_files("i18n/justdo-i18n.en.i18n.json", both);
+  api.add_files("i18n/justdo-i18n.vi.i18n.json", both);
+  api.add_files("i18n/errors/errors.en.i18n.json", both);
+  api.add_files("i18n/errors/errors.vi.i18n.json", both);
+  api.add_files("i18n/header/header.en.i18n.json", both);
+  api.add_files("i18n/header/header.vi.i18n.json", both);
+  api.add_files("i18n/loader/loader.en.i18n.json", both);
+  api.add_files("i18n/loader/loader.vi.i18n.json", both);
+  api.add_files("i18n/login-page/login-page.en.i18n.json", both);
+  api.add_files("i18n/login-page/login-page.vi.i18n.json", both);
+  api.add_files("i18n/menu/menu.en.i18n.json", both);
+  api.add_files("i18n/menu/menu.vi.i18n.json", both);
+  api.add_files("i18n/title/title.en.i18n.json", both);
+  api.add_files("i18n/title/title.vi.i18n.json", both);
+
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);
