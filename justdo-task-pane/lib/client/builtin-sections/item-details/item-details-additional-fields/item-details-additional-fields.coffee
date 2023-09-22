@@ -3,6 +3,8 @@ APP.executeAfterAppLibCode ->
 
   formatWithPrintFormatter = (gc, item_id, field, val, dependencies_values, path) ->
     schema = gc.getSchemaExtendedWithCustomFields()
+    if not (grid_visible_column = schema[field]?.grid_visible_column)? or grid_visible_column is false
+      return
 
     if not (formatter_id = schema[field]?.grid_column_formatter)?
       module.logger.error "Failed to find print formatter to field #{field}"
