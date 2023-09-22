@@ -13,6 +13,9 @@
   "login_pick_a_password": "Pick a password",
   "login_retype_password": "Retype password",
   "login_i_agree_to_tc_and_pp_html": "I agree to JustDo <a href=\"\" class=\"terms-conditions-modal\">Terms and Conditions</a> and <a href=\"\" class=\"privacy-policy-modal\">Privacy Policy</a>",
+  "privacy-policy": "Privacy Policy",
+  "terms-and-conditions": "Terms and Conditions",
+  "login_i_agree_to_custom_tc_html": "I read and agree to <a href=\"__doc_landing_page_address__\">JustDo's __doc_readable_name__</a>.",
   "login_forgot_password": "Forgot password?",
   "login_click_to_redirect": "If the page doesn't redirect, click here",
 

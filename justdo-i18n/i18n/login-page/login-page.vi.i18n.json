@@ -13,6 +13,9 @@
   "login_pick_a_password": "Chọn mật khẩu",
   "login_retype_password": "Gõ lại mật khẩu",
   "login_i_agree_to_tc_and_pp_html": "Tôi đồng ý với <a href=\"\" class=\"terms-conditions-modal\">Điều khoản và Điều kiện</a> và <a href=\"\" class=\"privacy-policy-modal\">Chính sách Quyền riêng</a> tư của JustDo",
+  "privacy-policy": "Chính sách Quyền riêng",
+  "terms-and-conditions": "Điều khoản và Điều kiện",
+  "login_i_agree_to_custom_tc_html": "Tôi đồng ý với <a href=\"__doc_landing_page_address__\">__doc_readable_name__ tư của JustDo</a>.",
   "login_forgot_password": "Quên mật khẩu?",
   "login_click_to_redirect": "Bấm vào đây để chuyển hướng trang",
 
