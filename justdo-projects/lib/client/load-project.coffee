@@ -129,6 +129,7 @@ _.extend Projects.prototype,
 
       inviteMember: (invited_user, cb) ->
         Meteor.call "inviteMember", @id, invited_user, (err, user_id) ->
+          self.emit "post-invite-member", user_id
           cb(err, user_id)
 
       bulkUpdate: (items_ids, modifier, cb) -> 
