@@ -13,22 +13,46 @@ APP.getEnv (env) ->
         tasks: [
           title_i18n: "demo_movie_name_1"
           events: [
+            action: "setState"
+            args: "in-progress"
+          ]
+          events: [
             action: "toggleIsProject"
           ]
           tasks: [
             title_i18n: "development"
             expand: true
+            events: [
+              action: "setState"
+              args: "in-progress"
+            ]            
             tasks: [
               title_i18n:"evaluate_and_acquire_idea"
+              events: [
+                action: "setState"
+                args: "done"
+              ]              
             ,
               title_i18n: "develop_story_conecpt_into_screenplay"
+              events: [
+                action: "setState"
+                args: "in-progress"
+              ]              
             ,
               title_i18n: "attaching_key_talent"
               expand: true
               tasks: [
                 title_i18n: "potential_actors"
+                events: [
+                  action: "setState"
+                  args: "in-progress"
+                ]
               ,
                 title_i18n: "directors"
+                events: [
+                  action: "setState"
+                  args: "done"
+                ]
               ]
             ]
           ,
@@ -46,6 +70,10 @@ APP.getEnv (env) ->
             ]
           ,
             title_i18n: "post_production"
+            events: [
+              action: "setState"
+              args: "on-hold"
+            ]
             tasks: [
               title_i18n: "editing_the_flims_picture_and_sound"
             ,
@@ -73,15 +101,34 @@ APP.getEnv (env) ->
           title_i18n: "demo_movie_name_2"
           events: [
             action: "toggleIsProject"
+          ,
+            action: "setState"
+            args: "in-progress"
           ]
           tasks: [
             title_i18n: "development"
+            events: [
+              action: "setState"
+              args: "done"
+            ]
           ,
             title_i18n: "pre_production"
+            events: [
+              action: "setState"
+              args: "done"
+            ]          
           ,
             title_i18n: "post_production"
+            events: [
+              action: "setState"
+              args: "done"
+            ]          
           ,
             title_i18n: "marketing_and_distribution"
+            events: [
+              action: "setState"
+              args: "in-progress"
+            ]          
           ]
         ,
           title_i18n: (user) ->
@@ -91,6 +138,9 @@ APP.getEnv (env) ->
           events: [
             action: "setArchived"
             args: "nil"
+          ,
+            action: "setState"
+            args: "done"
           ]
           tasks: [
             title_i18n: "development"
@@ -104,9 +154,17 @@ APP.getEnv (env) ->
         ]
       ,
         title_i18n: "project_templates_task_title_finance"
+        events: [
+          action: "setState"
+          args: "in-progress"
+        ]        
         tasks: [
           title_i18n: "funding_identification_and_procurement"
           expand: true
+          events: [
+            action: "setState"
+            args: "in-progress"
+          ]          
           tasks: [
             title_i18n: (user) ->
               options =
@@ -125,6 +183,10 @@ APP.getEnv (env) ->
           ]
         ,
           title_i18n: "cash_flow_management"
+          events: [
+            action: "setState"
+            args: "in-progress"
+            ]          
         ,
           title_i18n: "contract_negotiation_and_management"
         ]
@@ -182,8 +244,8 @@ APP.getEnv (env) ->
         level: 3
         task_id: "52"
         title_i18n: "evaluate_and_acquire_idea"
-        state_class: "pending"
-        state_title_i18n: "state_pending"
+        state_class: "done"
+        state_title_i18n: "state_done"
         extra_padding: "extra-padding"
       }
       {
@@ -206,8 +268,8 @@ APP.getEnv (env) ->
         level: 4
         task_id: "55"
         title_i18n: "potential_actors"
-        state_class: "cancelled"
-        state_title_i18n: "state_cancelled"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
         extra_padding: "extra-padding"
       }
       {

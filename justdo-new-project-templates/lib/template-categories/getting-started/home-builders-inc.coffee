@@ -14,19 +14,42 @@ APP.getEnv (env) ->
           title_i18n: "project_templates_task_title_demo_site_name_1"
           events: [
             action: "toggleIsProject"
+          ,
+            action: "setState"
+            args: "in-progress"
           ]
           tasks: [
             title_i18n: "project_templates_task_title_project_planning"
             expand: true
+            events: [
+              action: "setState"
+              args: "in-progress"
+            ]
             tasks: [
               title_i18n: "project_templates_task_title_scope_definition"
+              events: [
+                action: "setState"
+                args: "done"
+              ]
             ,
               title_i18n: "project_templates_task_title_timeline_and_budgeting"
+              events: [
+                action: "setState"
+                args: "pending"
+              ]
             ,
               title_i18n: "project_templates_task_title_permitting_and_compliance"
+              events: [
+                action: "setState"
+                args: "will-not-do"
+              ]
             ]
           ,
             title_i18n: "project_templates_task_title_design_and_engineering"
+            events: [
+              action: "setState"
+              args: "in-progress"
+            ]
             tasks: [
               title_i18n: "project_templates_task_title_architectural_design"
             ,
@@ -36,6 +59,10 @@ APP.getEnv (env) ->
             ]
           ,
             title_i18n: "project_templates_task_title_site_preparation"
+            events: [
+              action: "setState"
+              args: "pending"
+            ]            
             tasks: [
               title_i18n: "project_templates_task_title_land_surveying"
             ,
@@ -45,24 +72,60 @@ APP.getEnv (env) ->
             ]
           ,
             title_i18n: "project_templates_task_title_construction"
+            events: [
+              action: "setState"
+              args: "done"
+            ]
             tasks: [
               title_i18n: "project_templates_task_title_framing_and_structural_work"
+              events: [
+                action: "setState"
+                args: "done"
+              ]
             ,
               title_i18n: "project_templates_task_title_interior_and_exterior_finishing"
+              events: [
+                action: "setState"
+                args: "done"
+              ]            
             ,
               title_i18n: "project_templates_task_title_landscaping"
+              events: [
+                action: "setState"
+                args: "done"
+              ]            
             ]
           ,
             title_i18n: "project_templates_task_title_inspection_and_quality_control"
+            events: [
+              action: "setState"
+              args: "done"
+            ]
             tasks: [
               title_i18n: "project_templates_task_title_code_compliance"
+              events: [
+                action: "setState"
+                args: "done"
+              ]              
             ,
               title_i18n: "project_templates_task_title_safety_inspections"
+              events: [
+                action: "setState"
+                args: "done"
+              ]            
             ,
               title_i18n: "project_templates_task_title_punch_list"
+              events: [
+                action: "setState"
+                args: "done"
+              ]            
             ]
           ,
             title_i18n: "project_templates_task_title_project_closeout"
+            events: [
+              action: "setState"
+              args: "in-progress"
+            ]            
             tasks: [
               title_i18n: "project_templates_task_title_final_documentation"
             ,
@@ -73,6 +136,10 @@ APP.getEnv (env) ->
           ]
         ,
           title_i18n: "project_templates_task_title_demo_site_name_2"
+          events: [
+            action: "setState"
+            args: "will-not-do"
+          ]          
           events: [
             action: "toggleIsProject"
           ]
@@ -138,15 +205,34 @@ APP.getEnv (env) ->
             APP.justdo_i18n.tr "project_templates_task_title_completed_suffix", options, user
           events: [
             action: "setArchived"
+          ,
+            action: "setState"
+            args: "done"
           ]
           tasks: [
             title_i18n: "project_templates_task_title_project_planning"
+            events: [
+              action: "setState"
+              args: "done"
+            ]            
             tasks: [
               title_i18n: "project_templates_task_title_scope_definition"
+              events: [
+                action: "setState"
+                args: "done"
+              ]              
             ,
               title_i18n: "project_templates_task_title_timeline_and_budgeting"
+              events: [
+                action: "setState"
+                args: "done"
+              ]            
             ,
               title_i18n: "project_templates_task_title_permitting_and_compliance"
+              events: [
+                action: "setState"
+                args: "done"
+              ]            
             ]
           ,
             title_i18n: "project_templates_task_title_design_and_engineering"
@@ -201,15 +287,34 @@ APP.getEnv (env) ->
             APP.justdo_i18n.tr "project_templates_task_title_completed_suffix", options, user
           events: [
             action: "setArchived"
+          ,
+            action: "setState"
+            args: "done"
           ]
           tasks: [
             title_i18n: "project_templates_task_title_project_planning"
+            events: [
+              action: "setState"
+              args: "done"
+            ]
             tasks: [
               title_i18n: "project_templates_task_title_scope_definition"
+              events: [
+                action: "setState"
+                args: "done"
+              ]              
             ,
               title_i18n: "project_templates_task_title_timeline_and_budgeting"
+              events: [
+                action: "setState"
+                args: "done"
+              ]            
             ,
               title_i18n: "project_templates_task_title_permitting_and_compliance"
+              events: [
+                action: "setState"
+                args: "done"
+              ]            
             ]
           ,
             title_i18n: "project_templates_task_title_design_and_engineering"
@@ -260,18 +365,38 @@ APP.getEnv (env) ->
         ]
       ,
         title_i18n: "project_templates_task_title_finance"
+        events: [
+          action: "setState"
+          args: "nil"
+        ]
         tasks: [
           title_i18n: (user) ->
             options = 
               site_name: APP.justdo_i18n.tr "project_templates_task_title_demo_site_name_1", {}, user
             return APP.justdo_i18n.tr "project_templates_task_title_secure_financing_for_custom_name", options, user
           expand: true
+          events: [
+            action: "setState"
+            args: "pending"
+          ]
           tasks: [
             title_i18n: "project_templates_task_title_determine_load_requirements"
+            events: [
+              action: "setState"
+              args: "will-not-do"
+            ]                 
           ,
             title_i18n: "project_templates_task_title_create_a_financial_model"
+            events: [
+              action: "setState"
+              args: "in-progress"
+            ]     
           ,
             title_i18n: "project_templates_task_title_identify_potential_lenders"
+            events: [
+              action: "setState"
+              args: "pending"
+            ]                 
             tasks: [
               title_i18n: 
                 key: "project_templates_task_title_bank_with_custom_name"
@@ -292,6 +417,10 @@ APP.getEnv (env) ->
           ]
         ,
           title_i18n: "project_templates_task_title_prepare_fy_report"
+          events: [
+            action: "setState"
+            args: "on-hold"
+          ]
           tasks: [
             title_i18n: "project_templates_task_title_contact_auditor"
           ,
@@ -300,9 +429,17 @@ APP.getEnv (env) ->
         ]
       ,
         title_i18n: "project_templates_task_title_human_resources"
+        events: [
+          action: "setState"
+          args: "nil"
+        ]        
         expand: true
         tasks: [
           title_i18n: "project_templates_task_title_recruit_on_site_engineer"
+          events: [
+            action: "setState"
+            args: "in-progress"
+          ]          
           tasks: [
             title_i18n: 
               key: "project_templates_task_title_candidate_with_custom_name"
@@ -311,6 +448,9 @@ APP.getEnv (env) ->
             events: [
               action: "setStatus"
               args: "project_templates_task_title_coordinate_zoom_meeting"
+            ,
+              action: "setState"
+              args: "done"
             ]
           ,
             title_i18n: 
@@ -367,7 +507,7 @@ APP.getEnv (env) ->
         level: 3
         task_id: "92"
         title_i18n: "project_templates_task_title_permitting_and_compliance"
-        state_class: "cancelled"
+        state_class: "will-not-do"
         state_title_i18n: "state_cancelled"
       }
       {
@@ -415,7 +555,7 @@ APP.getEnv (env) ->
         expand_state: "plus"
         task_id: "113"
         title_i18n: "project_templates_task_title_demo_site_name_2"
-        state_class: "cancelled"
+        state_class: "will-not-do"
         state_title_i18n: "state_cancelled"
       }
       {
@@ -457,7 +597,7 @@ APP.getEnv (env) ->
         level: 2
         task_id: "154"
         title_i18n: "project_templates_task_title_determine_load_requirements"
-        state_class: "cancelled"
+        state_class: "will-not-do"
         state_title_i18n: "state_cancelled"
         extra_padding: "extra-padding"
       }

@@ -9,79 +9,157 @@ APP.getEnv (env) ->
     template:
       tasks: [
         title_i18n: "project_templates_task_title_research_and_development"
+        events: [
+          action: "setState"
+          args: "nil"
+        ]
         tasks: [
           title_i18n: "project_templates_task_title_mobile_app_development"
+          events: [
+            action: "setState"
+            args: "nil"
+          ]
           tasks: [
             title_i18n: "project_templates_task_title_sprints"
+            events: [
+              action: "setState"
+              args: "nil"
+            ]
             tasks: [
               title_i18n: "v0.0.1 (POC)"
               events: [
                 action: "setArchived"
+              ,
+                action: "setState"
+                args: "done"
               ]
               tasks: [
                 title_i18n: 
                   key: "project_templates_task_title_task_with_custom_name",
                   options: 
                     task_name: "A"
+                events: [
+                  action: "setState"
+                  args: "done"
+                ]
               ,
                 title_i18n: 
                   key: "project_templates_task_title_task_with_custom_name",
                   options: 
                     task_name: "B"
+                events: [
+                  action: "setState"
+                  args: "done"
+                ]              
               ]
             ,
               title_i18n: "v1.0.0"
               events: [
                 action: "toggleIsProject"
+              ,
+                action: "setState"
+                args: "in-progress"
               ]
               tasks: [
                 title_i18n: 
                   key: "project_templates_task_title_implement_new_feature_with_custom_name",
                   options: 
                     feature_name: "1"
+                events: [
+                  action: "setState"
+                  args: "in-progress"
+                ]
                 tasks: [
                   title_i18n: "project_templates_task_title_design_and_ui_ux"
                   expand: true
+                  events: [
+                    action: "setState"
+                    args: "in-progress"
+                  ]                  
                   tasks: [
                     title_i18n: "project_templates_task_title_requirements_gathering"
+                    events: [
+                      action: "setState"
+                      args: "done"
+                    ]
                   ,
                     title_i18n: "project_templates_task_title_wireframes"
+                    events: [
+                      action: "setState"
+                      args: "done"
+                    ]
                   ,
                     title_i18n: "project_templates_task_title_user_interface_design"
+                    events: [
+                      action: "setState"
+                      args: "in-progress"
+                    ]                    
                   ,
                     title_i18n: "project_templates_task_title_user_experience_design"
+                    events: [
+                      action: "setState"
+                      args: "will-not-do"
+                    ]                    
                   ]
                 ,
                   title_i18n: "project_templates_task_title_backend_development"
                   expand: true
+                  events: [
+                    action: "setState"
+                    args: "in-progress"
+                  ]                  
                   tasks: [
                     title_i18n: 
                       key: "project_templates_task_title_feature_with_custom_name",
                       options: 
                         feature_name: "B"
+                    events: [
+                      action: "setState"
+                      args: "pending"
+                    ]                    
                   ]
                 ,
                   title_i18n: "project_templates_task_title_frontend_development"
                   expand: true
+                  events: [
+                    action: "setState"
+                    args: "on-hold"
+                  ]                  
                   tasks: [
                     title_i18n: 
                       key: "project_templates_task_title_feature_with_custom_name",
                       options: 
                         feature_name: "A"
+                    events: [
+                      action: "setState"
+                      args: "on-hold"
+                    ]                        
                   ]
                 ,
                   title_i18n: "project_templates_task_title_quality_assurance"
                   expand: true
+                  events: [
+                    action: "setState"
+                    args: "nil"
+                  ]                  
                   tasks: [
                     title_i18n: 
                       key: "project_templates_task_title_write_auto_test_with_custom_name",
                       options: 
                         test_name: "1"
+                    events: [
+                      action: "setState"
+                      args: "in-progress"
+                    ]                        
                   ,
                     title_i18n: 
                       key: "project_templates_task_title_write_auto_test_with_custom_name",
                       options: 
                         test_name: "2"
+                    events: [
+                      action: "setState"
+                      args: "in-progress"
+                    ]                        
                   ]
                 ]
               ]
@@ -140,10 +218,22 @@ APP.getEnv (env) ->
         title_i18n: "project_templates_task_title_finance"
         tasks: [
           title_i18n: "project_templates_task_title_prepare_fy_report"
+          events: [
+            action: "setState"
+            args: "in-progress"
+          ]
           tasks: [
             title_i18n: "project_templates_task_title_contact_auditor"
+            events: [
+              action: "setState"
+              args: "done"
+            ]
           ,
             title_i18n: "project_templates_task_title_prepare_employer_return"
+            events: [
+              action: "setState"
+              args: "in-progress"
+            ]                    
           ]
         ]
       ,
@@ -153,12 +243,20 @@ APP.getEnv (env) ->
             key: "project_templates_task_title_client_with_custom_name",
             options: 
               client_name: "A"
+          events: [
+            action: "setState"
+            args: "done"
+          ]                    
           tasks: [
             title_i18n: 
               key: "project_templates_task_title_deployment_version_on_client_server"
               options:
                 version: "v3.0.0"
                 client: "A"
+              events: [
+                action: "setState"
+                args: "done"
+              ]                    
           ]
         ,
           title_i18n: 
@@ -173,6 +271,10 @@ APP.getEnv (env) ->
         title_i18n: "project_templates_task_title_human_resources"
         tasks: [
           title_i18n: "project_templates_task_title_recruit_position_for_frontend"
+          events: [
+            action: "setState"
+            args: "in-progress"
+          ]
           tasks: [
             title_i18n:
               key: "project_templates_task_title_candidate_with_custom_name"
@@ -181,6 +283,9 @@ APP.getEnv (env) ->
             events: [
               action: "setStatus"
               args: "project_templates_task_title_coordinate_zoom_meeting"
+            ,
+              action: "setState"
+              args: "done"
             ]
           ,
             title_i18n:
@@ -258,8 +363,8 @@ APP.getEnv (env) ->
         level: 6
         task_id: "54"
         title_i18n: "project_templates_task_title_requirements_gathering"
-        state_class: "in-progress"
-        state_title_i18n: "state_in_progress"
+        state_class: "done"
+        state_title_i18n: "state_done"
         extra_padding: "extra-padding"
       }
       {
@@ -274,8 +379,8 @@ APP.getEnv (env) ->
         level: 6
         task_id: "10"
         title_i18n: "project_templates_task_title_user_interface_design"
-        state_class: "done"
-        state_title_i18n: "state_done"
+        state_class: "in-progress"
+        state_title_i18n: "state_in_progress"
         extra_padding: "extra-padding"
       }
       {
@@ -310,8 +415,8 @@ APP.getEnv (env) ->
         expand_state: "minus"
         task_id: "13"
         title_i18n: "project_templates_task_title_frontend_development"
-        state_class: "in-progress"
-        state_title_i18n: "state_in_progress"
+        state_class: "on-hold"
+        state_title_i18n: "state_on_hold"
       }
       {
         level: 6
@@ -359,8 +464,8 @@ APP.getEnv (env) ->
         expand_state: "plus"
         task_id: "71"
         title: "v2.0.0"
-        state_class: "done"
-        state_title_i18n: "state_done"
+        state_class: "pending"
+        state_title_i18n: "state_pending"
       }
       {
         level: 1
