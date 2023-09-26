@@ -93,6 +93,7 @@ Package.onUse(function (api) {
   // Always after templates
   api.add_files("i18n/en.i18n.json", both);
   api.add_files("i18n/vi.i18n.json", both);
+  api.add_files("i18n/zh-TW.i18n.json", both);
   api.add_files("i18n/justdo-i18n.en.i18n.json", both);
   api.add_files("i18n/justdo-i18n.vi.i18n.json", both);
   api.add_files("i18n/errors/errors.en.i18n.json", both);
@@ -107,10 +108,12 @@ Package.onUse(function (api) {
   api.add_files("i18n/menu/menu.vi.i18n.json", both);
   api.add_files("i18n/title/title.en.i18n.json", both);
   api.add_files("i18n/title/title.vi.i18n.json", both);
-  api.add_files("i18n/justdo-task-pane/en.i18n.json", both);
-  api.add_files("i18n/justdo-task-pane/zh-TW.i18n.json", both);
+  api.add_files("i18n/justdo-task-pane/item-details/en.i18n.json", both);
+  api.add_files("i18n/justdo-task-pane/item-details/zh-TW.i18n.json", both);
   api.add_files("i18n/tasks-collection-manager/en.i18n.json", both);
   api.add_files("i18n/tasks-collection-manager/zh-TW.i18n.json", both);
+  api.add_files("i18n/justdo-chat/en.i18n.json", both);
+  api.add_files("i18n/justdo-chat/zh-TW.i18n.json", both);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
