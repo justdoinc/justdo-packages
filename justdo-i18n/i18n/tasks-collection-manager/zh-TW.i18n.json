@@ -1,0 +1,24 @@
+{
+  "title_schema_label": "標題",
+  "status_schema_label": "筆記",
+  "state_schema_label": "狀態",
+  "follow_up_schema_label": "跟進日",
+  "start_date_schema_label": "開始日",
+  "end_date_schema_label": "結束日",
+  "due_date_schema_label": "到期日",
+  "priority_schema_label": "優先度",
+  "createdAt_schema_label": "創建於",
+  "updatedAt_schema_label": "更新於",
+  "archived_schema_label": "已歸檔",
+  "description_schema_label": "描述",
+
+
+
+  "project_id_schema_label": "專案ID",
+  "parents_schema_label": "母項目",
+  "users_schema_label": "用戶",
+  "seqId_schema_label": "項目流水號"
+
+
+
+}
