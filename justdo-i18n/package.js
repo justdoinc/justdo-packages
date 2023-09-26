@@ -107,6 +107,8 @@ Package.onUse(function (api) {
   api.add_files("i18n/menu/menu.vi.i18n.json", both);
   api.add_files("i18n/title/title.en.i18n.json", both);
   api.add_files("i18n/title/title.vi.i18n.json", both);
+  api.add_files("i18n/justdo-task-pane/en.i18n.json", both);
+  api.add_files("i18n/justdo-task-pane/zh-TW.i18n.json", both);
   api.add_files("i18n/tasks-collection-manager/en.i18n.json", both);
   api.add_files("i18n/tasks-collection-manager/zh-TW.i18n.json", both);
 
