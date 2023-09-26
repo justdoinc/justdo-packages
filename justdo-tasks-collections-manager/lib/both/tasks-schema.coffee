@@ -760,7 +760,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       updatedAt:
         label: "Updated"
-        label: "updatedAt_schema_label"
+        label_i18n: "updatedAt_schema_label"
 
         grid_editable_column: false
         user_editable_column: false
