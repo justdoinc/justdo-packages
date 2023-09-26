@@ -34,6 +34,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
     Schema =
       title:
         label: "Subject"
+        label_i18n: "title_schema_label"
 
         grid_editable_column: true
         grid_visible_column: true
@@ -51,6 +52,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       archived:
         label: "Archived task"
+        label_i18n: "archived_schema_label"
 
         grid_editable_column: false
         user_editable_column: true
@@ -63,6 +65,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       description:
         label: "Description"
+        label_i18n: "description_schema_label"
 
         exclude_from_tasks_grid_pub: true
 
@@ -86,6 +89,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       status:
         label: "Notes"
+        label_i18n: "status_schema_label"
 
         grid_editable_column: true
         grid_visible_column: true
@@ -103,6 +107,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       status_by:
         label: "Notes By"
+        label_i18n: "status_by_schema_label"
 
         grid_editable_column: false
         grid_visible_column: false
@@ -124,6 +129,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       status_updated_at:
         label: "Notes Updated At"
+        label_i18n: "status_updated_at_schema_label"
 
         grid_editable_column: false
         grid_visible_column: false
@@ -140,6 +146,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       state:
         label: "State"
+        label_i18n: "state_schema_label"
 
         grid_editable_column: true
         grid_visible_column: true
@@ -267,6 +274,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       state_updated_at:
         label: "State changed at"
+        label_i18n: "state_updated_at_schema_label"
 
         grid_editable_column: false
         grid_visible_column: false
@@ -289,6 +297,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       follow_up:
         label: "Follow Up"
+        label_i18n: "follow_up_schema_label"
 
         grid_editable_column: true
         grid_visible_column: true
@@ -337,6 +346,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       start_date:
         label: "Start Date"
+        label_i18n: "start_date_schema_label"
 
         grid_editable_column: true
         grid_visible_column: true
@@ -380,6 +390,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       end_date:
         label: "End Date"
+        label_i18n: "end_date_schema_label"
 
         grid_editable_column: true
         grid_visible_column: true
@@ -429,6 +440,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       due_date:
         label: "Due Date"
+        label_i18n: "due_date_schema_label"
 
         grid_editable_column: true
         grid_visible_column: true
@@ -477,6 +489,8 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       priority:
         label: "Priority"
+        label_i18n: "priority_schema_label"
+
         grid_editable_column: true
         grid_visible_column: true
         grid_default_grid_view: false
@@ -541,6 +555,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       project_id:
         label: "JustDo ID"
+        label_i18n: "project_id_schema_label"
 
         type: String
 
@@ -556,6 +571,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       parents:
         label: "Parents"
+        label_i18n: "parents_schema_label"
 
         grid_editable_column: false
         grid_visible_column: false
@@ -578,6 +594,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       users:
         label: "Users"
+        label_i18n: "users_schema_label"
 
         exclude_from_tasks_grid_pub: true
 
@@ -588,6 +605,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       seqId:
         label: "Task Sequence ID"
+        label_i18n: "seqId_schema_label"
 
         grid_search_when_out_of_view: true
 
@@ -606,6 +624,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       created_by_user_id:
         label: "Created by user ID"
+        label_i18n: "created_by_user_id_schema_label"
         
         exclude_from_tasks_grid_pub: true
 
@@ -632,6 +651,8 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       updated_by:
         label: "Updated by user ID"
+        label_i18n: "updated_by_schema_label"
+
         grid_editable_column: false
         grid_visible_column: false
         optional: true
@@ -662,6 +683,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       users_updated_at:
         label: "Users Updated"
+        label_i18n: "users_updated_at_schema_label"
 
         grid_editable_column: false
         grid_visible_column: false
@@ -690,6 +712,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       createdAt:
         label: "Created"
+        label_i18n: "createdAt_schema_label"
 
         grid_editable_column: false
         grid_visible_column: true
@@ -737,6 +760,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
       updatedAt:
         label: "Updated"
+        label: "updatedAt_schema_label"
 
         grid_editable_column: false
         user_editable_column: false
