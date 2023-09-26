@@ -20,6 +20,7 @@ Package.onUse(function (api) {
   api.use("ecmascript", both);
 
   api.use("froala:editor@2.9.5", both);
+  api.use("tap:i18n@1.8.2", both);
 
   // api.use("stevezhu:lodash@4.17.2", client);
   api.use("templating", client);

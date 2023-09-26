@@ -13,6 +13,7 @@ APP.executeAfterAppLibCode ->
               type: "ItemDetails"
               options:
                 title: "Details"
+                title_i18n: "item_details_title"
               section_options: {}
             }
             {
@@ -20,6 +21,7 @@ APP.executeAfterAppLibCode ->
               type: "ItemChangeLog"
               options:
                 title: "Activity"
+                title_i18n: "item_activity_title"
               section_options: {}
             }
             # {

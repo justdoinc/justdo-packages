@@ -1,7 +1,7 @@
 <template name="task_pane_item_details_additional_fields">
   {{#with additionalFields}}
     <section class="additional-fields-section">
-      <h2>More Info</h2>
+      <h2>{{_ "item_details_more_info_label"}}</h2>
       <div class="additional-field-items-list">
         <table class="table">
           {{#each this}}
@@ -15,7 +15,7 @@
 
 <template name="task_pane_item_details_additional_field">
   <tr class="additional-field-item">
-    <td class="field-label">{{label}}</td>
+    <td class="field-label">{{getI18nTitleOrFallback}}</td>
 
     <td class="field-value {{#if $not isEditableField}}read-only{{/if}}">
       {{#if isEditableField}}

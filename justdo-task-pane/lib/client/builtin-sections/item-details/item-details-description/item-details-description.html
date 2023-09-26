@@ -1,7 +1,7 @@
 <template name="task_pane_item_details_description">
   <div id="task-description-container">
     <div class="task-description-header">
-      <h2>Description</h2>
+      <h2>{{_ "item_details_description_label"}}</h2>
       <div class="maximize-description text-primary">
         <svg class="jd-icon minimize-description-icon"><use xlink:href="/layout/icons-feather-sprite.svg#minimize-2"/></svg>
         <svg class="jd-icon maximize-description-icon"><use xlink:href="/layout/icons-feather-sprite.svg#maximize-2"/></svg>
@@ -12,7 +12,7 @@
     {{else}}
       {{#if $not edit_mode}}
         {{#if checkCurrentTaskPermissions "task-field-edit.description"}}
-          <span id="add-description" class="textual-controller description-caption"><i class="fa fa-align-left"></i> Add Task Description</span> {{> task_pane_item_details_description_lock_message}}
+          <span id="add-description" class="textual-controller description-caption"><i class="fa fa-align-left"></i> {{_ "item_details_add_task_description"}}</span> {{> task_pane_item_details_description_lock_message}}
         {{/if}}
       {{/if}}
     {{/if}}

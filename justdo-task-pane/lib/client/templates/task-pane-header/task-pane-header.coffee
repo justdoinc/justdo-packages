@@ -73,6 +73,12 @@ APP.executeAfterAppLibCode ->
   # task_pane_tab
   #
   Template.task_pane_tab.helpers module.template_helpers
+  Template.task_pane_tab.helpers
+    getI18nTitleOrFallback: ->
+      if (title_i18n = @options.title_i18n)? and (translated_title = TAPi18n.__ title_i18n) isnt title_i18n
+        return TAPi18n.__ title_i18n
+
+      return @options.title
 
   Template.task_pane_tab.events
     "click .task-pane-tab": -> module.setCurrentTaskPaneSectionId(@id)
