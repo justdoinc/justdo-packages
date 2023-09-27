@@ -17,6 +17,10 @@ _.extend GridControlCustomFields,
 
       min: 1
       max: 30
+    
+    label_i18n:
+      type: String
+      optional: true
 
     field_id:
       type: String
