@@ -94,8 +94,8 @@ Package.onUse(function (api) {
   api.add_files("i18n/en.i18n.json", both);
   api.add_files("i18n/vi.i18n.json", both);
   api.add_files("i18n/zh-TW.i18n.json", both);
-  api.add_files("i18n/justdo-i18n.en.i18n.json", both);
-  api.add_files("i18n/justdo-i18n.vi.i18n.json", both);
+  api.add_files("i18n/justdo-i18n/justdo-i18n.en.i18n.json", both);
+  api.add_files("i18n/justdo-i18n/justdo-i18n.vi.i18n.json", both);
   api.add_files("i18n/errors/errors.en.i18n.json", both);
   api.add_files("i18n/errors/errors.vi.i18n.json", both);
   api.add_files("i18n/header/header.en.i18n.json", both);
