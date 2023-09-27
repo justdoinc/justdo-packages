@@ -3,5 +3,7 @@
   "item_details_members_label": "成員",
   "item_details_description_label": "描述",
   "item_details_add_task_description": "添加項目描述",
-  "item_details_more_info_label": "更多資訊"
+  "item_details_more_info_label": "更多資訊",
+  "item_details_context_title": "大綱",
+  "item_details_context_drag_to_add_parent_label": "拖曳以添加至母項目"
 }

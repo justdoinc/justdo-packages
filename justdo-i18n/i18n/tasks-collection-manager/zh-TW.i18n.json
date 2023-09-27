@@ -1,6 +1,6 @@
 {
   "title_schema_label": "標題",
-  "status_schema_label": "筆記",
+  "status_schema_label": "擇要",
   "state_schema_label": "狀態",
   "follow_up_schema_label": "跟進日",
   "start_date_schema_label": "開始日",
@@ -17,8 +17,10 @@
   "project_id_schema_label": "專案ID",
   "parents_schema_label": "母項目",
   "users_schema_label": "用戶",
-  "seqId_schema_label": "項目流水號"
+  "seqId_schema_label": "項目流水號",
 
 
 
+  "owner_id_schema_label": "負責人",
+  "pending_owner_id_schema_label": "負責人轉移對象"
 }

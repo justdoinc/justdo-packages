@@ -20,5 +20,7 @@
   "seqId_schema_label": "Task Sequence ID",
   "created_by_user_id_schema_label": "Created by user ID",
   "updated_by_schema_label": "Updated by user ID",
-  "users_updated_at_schema_label": "Users Updated"
+  "users_updated_at_schema_label": "Users Updated",
+  "owner_id_schema_label": "Owner",
+  "pending_owner_id_schema_label": "Pending Owner"
 }
