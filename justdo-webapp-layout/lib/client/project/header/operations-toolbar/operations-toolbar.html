@@ -1,7 +1,15 @@
 <template name="project_operations_toolbar">
   <div id="project-grid-operations" class="mr-2 flex-grow-1">
     <div class="btn-toolbar d-flex align-items-center" role="toolbar">
-      {{> project_operations_tab_switcher}}{{!-- XXX when removing this one, don't forget to remove the tab-switcher folder--}}
+      <div class="tab-switcher-wrapper {{#if showTabExit}}show-tab-exit btn btn-primary btn-sm{{/if}}">
+        {{> project_operations_tab_switcher}}{{!-- XXX when removing this one, don't forget to remove the tab-switcher folder--}}
+
+        {{#if showTabExit}}
+          <div class="tab-switcher-exit-btn">
+            <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+          </div>
+        {{/if}}
+      </div>
       {{#unless isQuickAddDisabled}}
         {{> project_operations_ticket_entry}}
       {{/unless}}

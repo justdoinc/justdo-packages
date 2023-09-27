@@ -28,3 +28,26 @@
         background-color: unset
         transform: unset
         stroke: currentColor
+
+  .tab-switcher-wrapper
+    display: flex
+    align-items: center
+    padding: 1px 3px 1px 4px
+    &.show-tab-exit
+      margin-right: 2px
+      .tab-switcher-divider
+        display: none
+      .jd-icon-dropdown
+        color: white !important
+        stroke-width: 2
+      .tab-switcher-exit-btn
+        .jd-icon
+          stroke: white
+          opacity: 0.5
+          width: 22px
+          height: 22px
+          cursor: pointer
+          stroke-width: 2.5
+          &:hover
+            opacity: 0.75
+            stroke: white
