@@ -9,6 +9,7 @@ _.extend PACK.modules,
       Schema =
         owner_id:
           label: "Owner"
+          label_i18n: "owner_id_schema_label"
           type: String
           grid_foreign_key_collection: -> Meteor.users
           grid_foreign_key_collection_relevant_fields:
@@ -27,6 +28,7 @@ _.extend PACK.modules,
 
         pending_owner_id:
           label: "Pending Owner"
+          label_i18n: "pending_owner_id_schema_label"
           optional: true
           type: String
           grid_foreign_key_collection: -> Meteor.users
