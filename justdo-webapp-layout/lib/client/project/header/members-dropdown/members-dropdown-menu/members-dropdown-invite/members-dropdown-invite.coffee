@@ -15,6 +15,7 @@ APP.executeAfterAppLibCode ->
     tpl.active_access_role = new ReactiveVar null
     tpl.active_share_option = new ReactiveVar null
     tpl.search_projects_val_rv = new ReactiveVar ""
+    tpl.show_add_button_rv = new ReactiveVar false
 
     tpl.autorun ->
       grid_tree = APP.modules.project_page.gridControl()._grid_data.grid_tree
@@ -35,6 +36,21 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    # When switching to the invite mode,
+    # if the input contains a valid email - it's immediately added to the invite list
+    tpl.autorun ->
+      invited_mode = tpl.data.inviteMode.get()
+
+      if invited_mode
+        invite_input_val = $(".invite-members-input").val()
+
+        if email_regex.test(invite_input_val)
+          tpl.recognizeEmails()
+        else if email_regex2.test(invite_input_val)
+          tpl.recognizeEmails()
+
+      return
+
     tpl.access_roles = [
       {
         "role": "member",
@@ -45,16 +61,16 @@ APP.executeAfterAppLibCode ->
         "title": "Guest access",
         "subtitle": "Is a member that can't see the list of all members of the JustDo"
       }
-      #,
-      # {
-      #   "role": "proxy",
-      #   "title": "Proxy access",
-      #   "subtitle": "Explanation of who proxy users are"
-      # },
     ]
 
+    share_all_title = "Share all"
+    all_tasks_count = APP.collections.Tasks.find({"project_id": JD.activeJustdoId()}).count()
+
+    if all_tasks_count > 1
+      share_all_title += " <span>#{all_tasks_count}</span> tasks"
+
     tpl.share_options = [
-      { "class": "share-all", "title": "Share all" },
+      { "class": "share-all", "title": share_all_title },
       { "class": "share-specific", "title": "Share specific projects" },
       { "class": "share-none", "title": "Share none" },
     ]
@@ -110,6 +126,16 @@ APP.executeAfterAppLibCode ->
 
           if not _.find(users, (user) -> user.email == email)
             new_users[email] = {first_name, last_name}
+          else
+            JustdoSnackbar.show
+              text: "<strong>#{input}</strong> has already been added"
+              duration: 2000
+              showAction: false
+        else
+          JustdoSnackbar.show
+            text: "<strong>#{input}</strong> is already a member of the JustDo"
+            duration: 2000
+            showAction: false
 
       new_emails = _.keys(new_users)
 
@@ -192,6 +218,9 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    showAddButton: ->
+      return Template.instance().show_add_button_rv.get()
+
   Template.members_dropdown_invite.events
     "click .invite-menu-btn": (e, tpl) ->
       $(".invite-menu").removeClass "open"
@@ -214,6 +243,16 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    "keyup .invite-members-input": (e, tpl) ->
+      input_val = $(".invite-members-input").val().trim()
+
+      if _.isEmpty input_val
+        tpl.show_add_button_rv.set false
+      else
+        tpl.show_add_button_rv.set true
+
+      return
+
     "keydown .invite-members-input": (e, tpl) ->
       if e.keyCode == 13
         tpl.recognizeEmails()
@@ -224,6 +263,12 @@ APP.executeAfterAppLibCode ->
       Meteor.defer ->
         tpl.recognizeEmails()
         return
+
+      return
+
+    "click .invite-members-input-add": (e, tpl) ->
+      tpl.recognizeEmails()
+      $(".invite-members-input").focus()
 
       return
 
@@ -244,8 +289,8 @@ APP.executeAfterAppLibCode ->
       if @.class == "share-specific"
         $("#members-invite-projects-selector").modal "show"
       else
-        tpl.active_share_option.set @
         tpl.selected_projects_rv.set []
+        tpl.active_share_option.set @
 
         if @.class == "share-all"
           tpl.selected_tasks_rv.set tpl.root_tasks_rv.get()
@@ -292,6 +337,11 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    "click .invite-settings-advanced": (e, tpl) ->
+      ProjectPageDialogs.showMemberDialog()
+
+      return
+
 
     "click .invite-members-btn": (e, tpl) ->
       users = tpl.users.get()
@@ -305,7 +355,7 @@ APP.executeAfterAppLibCode ->
 
         for user in users
           if not user.registered or not user.first_name?
-            user.first_name = user.email
+            user.first_name = ""
             user.last_name = ""
 
           user.role = tpl.active_access_role.get().role

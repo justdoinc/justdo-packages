@@ -4,32 +4,36 @@
 
   .members-dropdown-invite-header
     display: flex
-    padding: 16px 16px 8px 10px
+    padding: 16px 16px 8px 16px
     align-items: center
-    .go-back
-      cursor: pointer
-      stroke-width: 2
-      flex-shrink: 0
-      transition: transform 0.32s
-      &:hover
-        transform: scale(1.1)
+
     .invite-members-input
-      flex-grow: 1
-      border: none
-      &:focus
-        outline: none
+      padding-right: 50px
+
+    .invite-members-input-add
+      position: absolute
+      right: 25px
+      font-weight: 500
+      opacity: 0
+      pointer-events: none
+      cursor: pointer
+      transition: opacity 0.25s
+      &.show
+        pointer-events: auto
+        opacity: 1
+
 
   .members-dropdown-invite-content
     display: flex
     flex-grow: 1
     margin: 0 16px
-    border-radius: 4px
     flex-direction: column
-    padding: 4px
     overflow: auto
+    border-radius: 4px
     .invite-list-wrapper
       display: flex
       flex-flow: row wrap
+      padding: 8px
     .invite-list-item
       background-color: #2C8CE5
       color: white
@@ -39,6 +43,7 @@
       border-radius: 3px
       display: flex
       align-items: center
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2)
       .invite-list-item-email
         max-width: 250px
         overflow: hidden
@@ -66,34 +71,36 @@
       flex-grow: 1
 
   .members-dropdown-invite-footer
-    padding: 8px 16px 16px 16px
-    .invite-members-btn
-      margin-top: 8px
+    padding: 16px 0
+    margin: 0 16px
+    display: flex
+    justify-content: space-between
 
   .member-dropdown-invite-access
     display: flex
 
-  .invite-members-btn
-    width: 100%
-
   .invite-settings-wrapper
-    padding: 4px 0
     display: flex
-    justify-content: center
+    margin: 8px 16px 0 16px
+    border-radius: 4px
+    flex-direction: column
     font-size: 13px
-    align-items: center
+    padding: 8px
     .divider
-      width: 2px
-      height: 2px
-      background-color: #c4cbe1
-      border-radius: 2px
-      margin: 0 6px
+      border-top: 1px dashed rgba(0, 0, 0, 0.1)
+      margin: 4px 8px
+
+  .invite-settings-item
+    padding: 4px 8px
+    cursor: pointer
+    border-radius: 4px
+    &:hover
+      background-color: #eef2f5
 
   .invite-menu-wrapper
-    position: relative
     display: flex
     align-items: center
-    justify-content: center
+    position: relative
 
   .invite-menu
     position: absolute
@@ -104,7 +111,7 @@
     border-radius: 4px
     box-shadow: 0 1px 16px rgba(0, 0, 0, 0.12)
     right: auto
-    bottom: 200%
+    bottom: 150%
     top: unset
     .dropdown-item
       padding-left: 8px
@@ -121,13 +128,20 @@
   .invite-menu-btn
     display: flex
     align-items: center
-    flex-shrink: 0
-    cursor: pointer
+    justify-content: space-between
+    width: 100%
     span
       font-weight: 600
-      padding: 0 3px
-    &:hover
-      text-decoration: underline
+    .jd-icon
+      width: 20px
+      height: 20px
+      stroke-width: 2
+
+  .members-access-menu
+    margin-left: 5px
+
+  .invite-settings-advanced
+
 
 #members-invite-projects-selector
   padding: 12px 12px 32px 12px

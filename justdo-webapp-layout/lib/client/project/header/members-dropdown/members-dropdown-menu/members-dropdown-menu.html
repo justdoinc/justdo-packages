@@ -133,18 +133,20 @@
     </div>
     {{#if allow_show_member_dropdown_settings user_id}}
       <div class="member-settings-dropdown">
-        <div class="member-role-label text-primary">Member</div>
+        <div class="member-role-label text-primary">{{#if is_proxy}}Proxy{{else}}Member{{/if}}</div>
         <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
         <div class="member-settings-dropdown-menu animate slideIn">
           {{#if is_project_admin}}
-            <div class="dropdown-item upgrade-admin">
-              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
-              <div class="dropdown-item-label">Make an Admin</div>
-            </div>
-            <div class="dropdown-item make-guest">
-              <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
-              <div class="dropdown-item-label">Make a Guest</div>
-            </div>
+            {{#unless is_proxy}}
+              <div class="dropdown-item upgrade-admin">
+                <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
+                <div class="dropdown-item-label">Make an Admin</div>
+              </div>
+              <div class="dropdown-item make-guest">
+                <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
+                <div class="dropdown-item-label">Make a Guest</div>
+              </div>
+            {{/unless}}
           {{/if}}
           {{#if allow_member_remove user_id}}
             {{#if is_current_user user_id}}

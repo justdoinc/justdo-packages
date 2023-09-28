@@ -79,7 +79,6 @@ APP.executeAfterAppLibCode ->
     @invited_members_count = new ReactiveVar 0
 
     tpl.switch_to_invite_mode = ->
-      tpl.invite_mode.set true
       @invited_members_count.set 0
       input = $(".invite-members-input")
       input.val tpl.members_filter.get()
@@ -91,6 +90,8 @@ APP.executeAfterAppLibCode ->
           input[0].setSelectionRange(input[0].value.length, input[0].value.length)
         , 0
       , 500
+
+      tpl.invite_mode.set true
 
       return
 

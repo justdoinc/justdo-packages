@@ -1,8 +1,8 @@
 <template name="members_dropdown_invite">
   <div class="members-dropdown-invite">
     <div class="members-dropdown-invite-header">
-      <svg class="jd-icon go-back"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-left"></use></svg>
-      <input class="invite-members-input" type="text" placeholder="Type email">
+      <input class="invite-members-input form-control form-control-sm" type="text" placeholder="Type email">
+      <div class="invite-members-input-add text-primary {{#if showAddButton}}show{{/if}}">Add</div>
     </div>
     <div class="members-dropdown-invite-content bg-light">
       {{#if users}}
@@ -20,31 +20,39 @@
         <div class="empty-list">Invite list</div>
       {{/if}}
     </div>
-    <div class="members-dropdown-invite-footer">
-      <div class="invite-settings-wrapper">
-        <div class="invite-menu-wrapper share-tasks-menu">
-          <div class="invite-menu-btn text-primary">{{{activeShareOption}}}</div>
-          <div class="invite-menu animate slideIn">
-            {{#each shareOptions}}
-              <div class="dropdown-item {{class}}">{{title}}</div>
-            {{/each}}
-          </div>
+    <div class="invite-settings-wrapper bg-light">
+      <div class="invite-settings-item invite-menu-wrapper share-tasks-menu">
+        <div class="invite-menu-btn">
+          <div>{{{activeShareOption}}}</div>
+          <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
         </div>
-        <div class="divider"></div>
-        <div class="invite-menu-wrapper members-access-menu">
-          <div class="invite-menu-btn text-primary">{{activeAccessRole.title}}</div>
-          <div class="invite-menu animate slideIn">
-            {{#each accessRoles}}
-              <div class="dropdown-item">
-                {{title}}
-                {{#if subtitle}}
-                  <div class="dropdown-item-subtitle">{{subtitle}}</div>
-                {{/if}}
-              </div>
-            {{/each}}
-          </div>
+        <div class="invite-menu animate slideIn">
+          {{#each shareOptions}}
+            <div class="dropdown-item {{class}}">{{{title}}}</div>
+          {{/each}}
         </div>
       </div>
+      <div class="divider"></div>
+      <div class="invite-settings-item invite-settings-advanced">
+        Advanced settings
+      </div>
+
+      <!-- <div class="invite-menu-wrapper members-access-menu">
+        <button class="btn btn-primary btn-sm invite-menu-btn" type="button">{{activeAccessRole.title}}</button>
+        <div class="invite-menu animate slideIn">
+          {{#each accessRoles}}
+            <div class="dropdown-item">
+              {{title}}
+              {{#if subtitle}}
+                <div class="dropdown-item-subtitle">{{subtitle}}</div>
+              {{/if}}
+            </div>
+          {{/each}}
+        </div>
+      </div> -->
+    </div>
+    <div class="members-dropdown-invite-footer">
+      <button class="btn btn-light btn-sm go-back" type="button">Back</button>
       <button class="btn btn-primary btn-sm invite-members-btn" type="button">Invite</button>
     </div>
   </div>
