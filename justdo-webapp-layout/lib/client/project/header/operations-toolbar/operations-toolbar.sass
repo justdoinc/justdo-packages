@@ -32,20 +32,27 @@
   .tab-switcher-wrapper
     display: flex
     align-items: center
-    padding: 1px 3px 1px 4px
+    padding: 1px 3px 1px 8px
     &.show-tab-exit
       margin-right: 2px
+      padding-left: 2px
       .tab-switcher-divider
         display: none
       .jd-icon-dropdown
         color: white !important
         stroke-width: 2
+        width: 18px
+        height: 18px        
       .tab-switcher-exit-btn
+        display: flex
+        align-items: center
+        margin-left: 1px
         .jd-icon
           stroke: white
           opacity: 0.5
-          width: 22px
-          height: 22px
+          width: 16px
+          height: 16px
+          padding: 2px
           cursor: pointer
           stroke-width: 2.5
           &:hover
