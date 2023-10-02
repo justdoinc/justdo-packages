@@ -338,7 +338,9 @@ APP.executeAfterAppLibCode ->
       return
 
     "click .invite-settings-advanced": (e, tpl) ->
-      ProjectPageDialogs.showMemberDialog()
+      initial_users = tpl.users.get()
+
+      ProjectPageDialogs.showMemberDialog(initial_users)
 
       return
 
