@@ -51,6 +51,10 @@ _.extend JustdoHelpers,
 
     name = name.trim()
 
+    if _.isEmpty name
+      if user.emails?
+        name = user.emails[0].address
+
     return name
 
   currentUserMainEmail: ->
@@ -147,7 +151,7 @@ _.extend JustdoHelpers,
     formatter_fn_same_tick_cache_key = "getDateTimeStringInUserPreferenceFormat:#{show_seconds}"
     if not (dateFormatterFn = JustdoHelpers.sameTickCacheGet(formatter_fn_same_tick_cache_key))?
       dateFormatterFn = JustdoHelpers.sameTickCacheSet(formatter_fn_same_tick_cache_key, JustdoDateFns.getFormatFn(format))
-    
+
     return dateFormatterFn(date)
 
   filterUsersDocsArray: (users_docs, niddle, options) ->
@@ -160,9 +164,9 @@ _.extend JustdoHelpers,
         key = if _.isString(doc) then doc else doc._id
         if exist_users[key]
           return false
-        
+
         exist_users[key] = true
-        
+
         display_name = JustdoHelpers.displayName(doc)
 
         email = JustdoHelpers.getUserMainEmail(doc)
@@ -171,16 +175,16 @@ _.extend JustdoHelpers,
           return true
 
         return false
-    
+
     if options.sort
       users_docs = @sortUsersDocsArray users_docs
-  
+
     return users_docs
-  
+
   sortUsersDocsArray: (users_docs, comp) ->
     if not comp?
       comp = (user_doc) -> JustdoHelpers.displayName(user_doc).toLowerCase()
-    
+
     return _.sortBy users_docs, comp
 
   friendlyDateFormat: (date) ->
@@ -201,7 +205,7 @@ _.extend JustdoHelpers,
     else
       # Show date with year + hour
       return moment_date.format("MMMM Do YYYY, #{time_string_in_user_preference_format}")
-    
+
     return
 
   sortUsersDocsArrayByDisplayName: (users_docs, options) ->
@@ -268,7 +272,7 @@ _.extend JustdoHelpers,
       return true
 
     return user_doc.all_emails_verified or false
-  
+
   getUserByEmail: (email, options) ->
     if (Meteor.isServer)
       return Accounts.findUserByEmail(email, options)
@@ -277,4 +281,3 @@ _.extend JustdoHelpers,
       return Meteor.users.findOne({
         "emails.address": email_addr_regex
       }, options)
-      
