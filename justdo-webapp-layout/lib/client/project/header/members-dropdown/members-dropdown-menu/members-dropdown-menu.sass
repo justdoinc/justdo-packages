@@ -75,15 +75,11 @@ $member-dropdown-width: 320px
     width: 100%
 
   .alerts-container
-    margin: 0 16px
-    .alert-danger
-      margin-bottom: 0px
-      &:first-child
-        margin-top: 16px
-      &:last-child
-        margin-bottom: 16px
-
-    .alert-danger + .alert-danger
+    margin: 0 16px 16px 16px
+    font-size: 13px
+    .alert
+      margin: 0px
+    .alert + .alert
       margin-top: 4px
 
   .members-dropdown-header
@@ -171,6 +167,7 @@ $member-dropdown-width: 320px
 
   .member-role-label
     font-size: 12px
+    cursor: default
 
   .member-settings-dropdown-btn
     color: #B0B8C2

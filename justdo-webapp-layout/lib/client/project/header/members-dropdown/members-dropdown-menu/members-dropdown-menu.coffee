@@ -32,7 +32,7 @@ APP.executeAfterAppLibCode ->
 
     for error_message in errors_array
       error_elem += """
-        <div class="alert alert-danger px-3 py-2" role="alert">
+        <div class="alert alert-danger" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
           <span class="sr-only">Error:</span>

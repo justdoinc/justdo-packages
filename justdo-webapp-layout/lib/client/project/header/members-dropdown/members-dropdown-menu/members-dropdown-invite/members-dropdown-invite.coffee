@@ -12,7 +12,6 @@ APP.executeAfterAppLibCode ->
     tpl.selected_projects_rv = new ReactiveVar []
     tpl.root_tasks_rv = new ReactiveVar []
     tpl.projects_rv = new ReactiveVar []
-    tpl.active_access_role = new ReactiveVar null
     tpl.active_share_option = new ReactiveVar null
     tpl.search_projects_val_rv = new ReactiveVar ""
     tpl.show_add_button_rv = new ReactiveVar false
@@ -48,20 +47,11 @@ APP.executeAfterAppLibCode ->
           tpl.recognizeEmails()
         else if email_regex2.test(invite_input_val)
           tpl.recognizeEmails()
+      else
+        tpl.users.set []
+        $(".invite-members-input").val ""
 
       return
-
-    tpl.access_roles = [
-      {
-        "role": "member",
-        "title": "Members access"
-      },
-      {
-        "role": "guest",
-        "title": "Guest access",
-        "subtitle": "Is a member that can't see the list of all members of the JustDo"
-      }
-    ]
 
     share_all_title = "Share all"
     all_tasks_count = APP.collections.Tasks.find({"project_id": JD.activeJustdoId()}).count()
@@ -77,14 +67,13 @@ APP.executeAfterAppLibCode ->
 
     tpl.setDefaulSettings = ->
       tpl.users.set []
-      tpl.active_access_role.set tpl.access_roles[0]
       tpl.active_share_option.set tpl.share_options[0]
 
       return
 
     tpl.setDefaulSettings()
 
-    tpl.recognizeEmails = ->
+    tpl.recognizeEmails = (show_advanced_dialog = false) ->
       $el = $(".invite-members-input")
       new_users = {}
       users = tpl.users.get().slice()
@@ -177,7 +166,10 @@ APP.executeAfterAppLibCode ->
 
           users.push user
 
-        tpl.users.set users
+        if show_advanced_dialog
+          ProjectPageDialogs.showMemberDialog(users)
+        else
+          tpl.users.set users
 
       $el.val ""
 
@@ -188,12 +180,6 @@ APP.executeAfterAppLibCode ->
   Template.members_dropdown_invite.helpers
     users: ->
       return Template.instance().users.get()
-
-    activeAccessRole: ->
-      return Template.instance().active_access_role.get()
-
-    accessRoles: ->
-      return Template.instance().access_roles
 
     shareOptions: ->
       return Template.instance().share_options
@@ -222,16 +208,16 @@ APP.executeAfterAppLibCode ->
       return Template.instance().show_add_button_rv.get()
 
   Template.members_dropdown_invite.events
-    "click .invite-menu-btn": (e, tpl) ->
+    "click .invite-settings-share .invite-setings-btn": (e, tpl) ->
       $(".invite-menu").removeClass "open"
-      $dropdown = $(e.target).parents(".invite-menu-wrapper")
+      $dropdown = $(e.target).parents(".invite-settings-share")
       $dropdown_menu = $dropdown.find(".invite-menu")
       $dropdown_menu.toggleClass "open"
 
       return
 
     "click .members-dropdown-invite": (e, tpl) ->
-      $dropdown = $(e.target).parents(".invite-menu-wrapper")
+      $dropdown = $(e.target).parents(".invite-settings-share")
 
       if not $dropdown[0]
         $(".invite-menu").removeClass "open"
@@ -272,12 +258,7 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .members-access-menu .dropdown-item": (e, tpl) ->
-      tpl.active_access_role.set @
-
-      return
-
-    "click .invite-list-item .remove": (e, tpl) ->
+    "click .remove-invite-email": (e, tpl) ->
       users = tpl.users.get()
       email_to_remove = @.email
       users = users.filter (user) -> user.email != email_to_remove
@@ -285,7 +266,7 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .share-tasks-menu .dropdown-item": (e, tpl) ->
+    "click .invite-settings-share .dropdown-item": (e, tpl) ->
       if @.class == "share-specific"
         $("#members-invite-projects-selector").modal "show"
       else
@@ -337,140 +318,143 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "click .invite-settings-advanced": (e, tpl) ->
-      initial_users = tpl.users.get()
-
-      ProjectPageDialogs.showMemberDialog(initial_users)
+    "click .invite-settings-advanced .invite-setings-btn": (e, tpl) ->
+      show_advanced_dialog = true
+      tpl.recognizeEmails(show_advanced_dialog)
 
       return
 
 
     "click .invite-members-btn": (e, tpl) ->
-      users = tpl.users.get()
+      invite_input_val = $(".invite-members-input").val()
 
-      if users.length > 0
-        active_justdo = APP.modules.project_page.helpers.curProj()
-        sub_trees_roots_selected = tpl.selected_tasks_rv.get()
-        selected_tasks = tpl.selected_tasks_rv.get()
-        selected_tasks_set = new Set(selected_tasks)
+      if not _.isEmpty invite_input_val
+        tpl.recognizeEmails()
+      else
+        users = tpl.users.get()
+
+        if users.length > 0
+          active_justdo = APP.modules.project_page.helpers.curProj()
+          sub_trees_roots_selected = tpl.selected_tasks_rv.get()
+          selected_tasks = tpl.selected_tasks_rv.get()
+          selected_tasks_set = new Set(selected_tasks)
 
 
-        for user in users
-          if not user.registered or not user.first_name?
-            user.first_name = ""
-            user.last_name = ""
+          for user in users
+            if not user.registered or not user.first_name?
+              user.first_name = ""
+              user.last_name = ""
+            user.role = "member"
 
-          user.role = tpl.active_access_role.get().role
-
-        proxy_users = _.map _.filter(users, (user) -> user.role is "proxy" and not user.registered), (user) ->
-          obj_for_creating_proxy_user =
-            email: user.email
-            profile: _.pick user, "first_name", "last_name"
-          return obj_for_creating_proxy_user
-
-        if not _.isEmpty proxy_users
-          APP.accounts.createProxyUsers proxy_users
-
-        # Prepare the array of task ids for assigning membership to new users/members
-        if not _.isEmpty selected_tasks
-          gdc = APP.modules.project_page.gridControl()._grid_data._grid_data_core
-          subtree = gdc.getAllItemsKnownDescendantsIdsObj(selected_tasks)
-          for task_id of subtree
-            selected_tasks_set.add task_id
-
-        invite_member_promises = []
-        existing_members_ids = []
-
-        _.each users, (user) ->
-          if user.is_justdo_member
-            existing_members_ids.push user._id
-          else
-            invite_member_option =
+          proxy_users = _.map _.filter(users, (user) -> user.role is "proxy" and not user.registered), (user) ->
+            obj_for_creating_proxy_user =
               email: user.email
-              add_as_guest: user.role is "guest"
-            if not user.registered and user.role isnt "proxy" # Proxy users are handled above despite the registered flag isn't updated.
-              invite_member_option.profile =
-                first_name: user.first_name
-                last_name: user.last_name
+              profile: _.pick user, "first_name", "last_name"
+            return obj_for_creating_proxy_user
 
-            promise = new Promise (resolve, reject) ->
-              active_justdo.inviteMember invite_member_option, (err, user_id) ->
-                if err?
-                  resolve({
-                    error: err
-                    email: user.email
-                  })
-                  return
+          if not _.isEmpty proxy_users
+            APP.accounts.createProxyUsers proxy_users
 
-                resolve(user_id)
-                return
-            invite_member_promises.push promise
-          return
+          # Prepare the array of task ids for assigning membership to new users/members
+          if not _.isEmpty selected_tasks
+            gdc = APP.modules.project_page.gridControl()._grid_data._grid_data_core
+            subtree = gdc.getAllItemsKnownDescendantsIdsObj(selected_tasks)
+            for task_id of subtree
+              selected_tasks_set.add task_id
 
-        Promise.all(invite_member_promises).then (results) ->
-          invited_members = []
-          emails_not_added_due_to_strict_registration = []
-          emails_not_added_due_to_other_reason = []
-          for result in results
-            if (result.error)
-              if (result.error.error == "user-creation-prevented-due-to-strict-registration")
-                emails_not_added_due_to_strict_registration.push(result.email)
-              else
-                emails_not_added_due_to_other_reason.push({
-                  error: result.error.reason or result.error.error
-                  email: result.email
-                })
+          invite_member_promises = []
+          existing_members_ids = []
+
+          _.each users, (user) ->
+            if user.is_justdo_member
+              existing_members_ids.push user._id
             else
-              invited_members.push result
+              invite_member_option =
+                email: user.email
+                add_as_guest: user.role is "guest"
+              if not user.registered and user.role isnt "proxy" # Proxy users are handled above despite the registered flag isn't updated.
+                invite_member_option.profile =
+                  first_name: user.first_name
+                  last_name: user.last_name
 
-          if emails_not_added_due_to_strict_registration.length > 0 or emails_not_added_due_to_other_reason.length > 0
-            invite_members_failed_tpl =
-              JustdoHelpers.renderTemplateInNewNode Template.invite_members_failed, {
-                emails_not_added_due_to_strict_registration: if emails_not_added_due_to_strict_registration.length > 0 then emails_not_added_due_to_strict_registration else null,
-                emails_not_added_due_to_other_reason: if emails_not_added_due_to_other_reason.length > 0 then emails_not_added_due_to_other_reason else null
-              }
+              promise = new Promise (resolve, reject) ->
+                active_justdo.inviteMember invite_member_option, (err, user_id) ->
+                  if err?
+                    resolve({
+                      error: err
+                      email: user.email
+                    })
+                    return
 
-            cur_project_id = JD.activeJustdoId()
-            dialog = null
-            auto_close_modal_computation = Tracker.autorun (computation) ->
-              if JD.activeJustdoId() isnt cur_project_id
-                dialog?.modal? "hide"
-                computation.stop()
-              return
+                  resolve(user_id)
+                  return
+              invite_member_promises.push promise
+            return
 
-            dialog = bootbox.dialog
-              title: "Some of the members are not invited"
-              message: invite_members_failed_tpl.node
-              animate: false
-              className: "bootbox-new-design"
+          Promise.all(invite_member_promises).then (results) ->
+            invited_members = []
+            emails_not_added_due_to_strict_registration = []
+            emails_not_added_due_to_other_reason = []
+            for result in results
+              if (result.error)
+                if (result.error.error == "user-creation-prevented-due-to-strict-registration")
+                  emails_not_added_due_to_strict_registration.push(result.email)
+                else
+                  emails_not_added_due_to_other_reason.push({
+                    error: result.error.reason or result.error.error
+                    email: result.email
+                  })
+              else
+                invited_members.push result
 
-              onEscape: ->
-                auto_close_modal_computation?.stop?()
-                return true
+            if emails_not_added_due_to_strict_registration.length > 0 or emails_not_added_due_to_other_reason.length > 0
+              invite_members_failed_tpl =
+                JustdoHelpers.renderTemplateInNewNode Template.invite_members_failed, {
+                  emails_not_added_due_to_strict_registration: if emails_not_added_due_to_strict_registration.length > 0 then emails_not_added_due_to_strict_registration else null,
+                  emails_not_added_due_to_other_reason: if emails_not_added_due_to_other_reason.length > 0 then emails_not_added_due_to_other_reason else null
+                }
 
-              buttons:
-                close:
-                  label: "Close"
+              cur_project_id = JD.activeJustdoId()
+              dialog = null
+              auto_close_modal_computation = Tracker.autorun (computation) ->
+                if JD.activeJustdoId() isnt cur_project_id
+                  dialog?.modal? "hide"
+                  computation.stop()
+                return
 
-                  className: "btn-primary"
+              dialog = bootbox.dialog
+                title: "Some of the members are not invited"
+                message: invite_members_failed_tpl.node
+                animate: false
+                className: "bootbox-new-design"
 
-                  callback: ->
-                    auto_close_modal_computation?.stop?()
-                    return true
+                onEscape: ->
+                  auto_close_modal_computation?.stop?()
+                  return true
 
-          all_members = invited_members.concat(existing_members_ids)
+                buttons:
+                  close:
+                    label: "Close"
 
-          if not _.isEmpty(all_members) and selected_tasks_set.size > 0
-            APP.modules.project_page.curProj().bulkUpdateTasksUsers
-              tasks: Array.from(selected_tasks_set)
-              user_perspective_root_items: sub_trees_roots_selected
-              members_to_add: all_members
+                    className: "btn-primary"
 
-          tpl.data.invitedMembersCount.set invited_members.length
+                    callback: ->
+                      auto_close_modal_computation?.stop?()
+                      return true
 
-          return
+            all_members = invited_members.concat(existing_members_ids)
 
-        tpl.setDefaulSettings()
-        tpl.data.inviteMode.set false
+            if not _.isEmpty(all_members) and selected_tasks_set.size > 0
+              APP.modules.project_page.curProj().bulkUpdateTasksUsers
+                tasks: Array.from(selected_tasks_set)
+                user_perspective_root_items: sub_trees_roots_selected
+                members_to_add: all_members
+
+            tpl.data.invitedMembersCount.set invited_members.length
+
+            return
+
+          tpl.setDefaulSettings()
+          tpl.data.inviteMode.set false
 
       return

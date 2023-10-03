@@ -12,7 +12,7 @@
               <div class="invite-list-item-email">
                 {{email}}
               </div>
-              <svg class="jd-icon remove"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+              <svg class="jd-icon remove-invite-email"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
             </div>
           {{/each}}
         </div>
@@ -21,8 +21,8 @@
       {{/if}}
     </div>
     <div class="invite-settings-wrapper bg-light">
-      <div class="invite-settings-item invite-menu-wrapper share-tasks-menu">
-        <div class="invite-menu-btn">
+      <div class="invite-settings-item invite-settings-share">
+        <div class="invite-setings-btn">
           <div>{{{activeShareOption}}}</div>
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
         </div>
@@ -34,29 +34,16 @@
       </div>
       <div class="divider"></div>
       <div class="invite-settings-item invite-settings-advanced">
-        Advanced settings
-      </div>
-
-      <!-- <div class="invite-menu-wrapper members-access-menu">
-        <button class="btn btn-primary btn-sm invite-menu-btn" type="button">{{activeAccessRole.title}}</button>
-        <div class="invite-menu animate slideIn">
-          {{#each accessRoles}}
-            <div class="dropdown-item">
-              {{title}}
-              {{#if subtitle}}
-                <div class="dropdown-item-subtitle">{{subtitle}}</div>
-              {{/if}}
-            </div>
-          {{/each}}
+        <div class="invite-setings-btn">
+          Advanced invite
         </div>
-      </div> -->
+      </div>
     </div>
     <div class="members-dropdown-invite-footer">
       <button class="btn btn-light btn-sm go-back" type="button">Back</button>
       <button class="btn btn-primary btn-sm invite-members-btn" type="button">Invite</button>
     </div>
   </div>
-
   <!-- Project Selector Modal -->
   <div class="modal fade" id="members-invite-projects-selector" data-backdrop="false" aria-hidden="true">
     <div class="modal-dialog">
