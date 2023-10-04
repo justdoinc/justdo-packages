@@ -321,6 +321,7 @@ APP.executeAfterAppLibCode ->
     "click .invite-settings-advanced .invite-setings-btn": (e, tpl) ->
       show_advanced_dialog = true
       tpl.recognizeEmails(show_advanced_dialog)
+      share.members_dropdown.closeDropdown()  # defined in ./members-dropdown/members-dropdown-button.coffee
 
       return
 
