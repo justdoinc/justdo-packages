@@ -27,18 +27,19 @@ GridControlSearch = (container) ->
 Util.inherits GridControlSearch, EventEmitter
 
 _.extend GridControlSearch.prototype,
-  search_ui_component:
-    '<div class="grid-control-search position-relative">
-      <input type="text" class="form-control form-control-sm search-input" placeholder="Search" />
-      <div class="grid-control-search-btn d-flex align-items-center position-absolute">
-        <div class="search-info-container bg-primary text-white font-weight-bold p-1 rounded-sm"><span class="search-info"></span></div>
-        <svg class="jd-icon jd-c-pointer text-dark clear-button p-1"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
-        <button type="button" class="btn btn-default search-prev disabled"><i class="fa fa-chevron-up"></i></button>
-        <button type="button" class="btn btn-default search-next disabled"><i class="fa fa-chevron-down"></i></button>
-      </div>
-    </div>'
+  search_ui_component: ""
 
   _init: ->
+    @search_ui_component =
+      """<div class="grid-control-search position-relative">
+        <input type="text" class="form-control form-control-sm search-input" placeholder="#{TAPi18n.__ "search"}" />
+        <div class="grid-control-search-btn d-flex align-items-center position-absolute">
+          <div class="search-info-container bg-primary text-white font-weight-bold p-1 rounded-sm"><span class="search-info"></span></div>
+          <svg class="jd-icon jd-c-pointer text-dark clear-button p-1"><use xlink:href="/layout/icons-feather-sprite.svg#x"/></svg>
+          <button type="button" class="btn btn-default search-prev disabled"><i class="fa fa-chevron-up"></i></button>
+          <button type="button" class="btn btn-default search-next disabled"><i class="fa fa-chevron-down"></i></button>
+        </div>
+      </div>"""
     @container.html(@search_ui_component)
 
     @input =

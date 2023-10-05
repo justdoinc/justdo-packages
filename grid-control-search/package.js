@@ -24,6 +24,8 @@ Package.onUse(function (api) {
   api.use('stem-capital:grid-control', client);
   api.use('mizzao:jquery-ui@1.11.4', client);
   api.use('fortawesome:fontawesome@4.4.0', client);
+  api.use("tap:i18n@1.8.2", both);
+  api.use('justdoinc:justdo-i18n@1.0.0', both);
 
   api.add_files('lib/globals.js', both);
 
