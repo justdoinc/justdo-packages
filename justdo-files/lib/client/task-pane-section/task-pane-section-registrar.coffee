@@ -37,6 +37,7 @@ _.extend JustdoFiles.prototype,
       type: "JustdoFilesTaskPaneSection" # the name of the template derives from the type
       options:
         title: "Files"
+        title_i18n: "files_task_pane_label"
         titleInfo: ->
           if not (active_item_obj = module.activeItemObj({"#{JustdoFiles.files_count_task_doc_field_id}": 1}))?
             return ""

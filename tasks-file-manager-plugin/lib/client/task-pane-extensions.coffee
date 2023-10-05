@@ -42,6 +42,7 @@ _.extend TasksFileManagerPlugin.prototype,
       type: "TasksFileManager" # the name of the template derives from the type
       options:
         title: "Files"
+        title_i18n: "files_task_pane_label"
         titleInfo: ->
           if not (active_item_obj = module.activeItemObj({[window.TasksFileManager.files_count_field_id]: 1}))?
             return ""
