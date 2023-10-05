@@ -297,6 +297,7 @@ _.extend GridControlCustomFields,
     for custom_field_id, custom_field_definition of custom_fields_definitions
       custom_field_schema =
         label: custom_field_definition.label
+        label_i18n: custom_field_definition.label_i18n
         grid_visible_column: custom_field_definition.grid_visible_column
         grid_editable_column: custom_field_definition.grid_editable_column
         user_editable_column: custom_field_definition.user_editable_column
