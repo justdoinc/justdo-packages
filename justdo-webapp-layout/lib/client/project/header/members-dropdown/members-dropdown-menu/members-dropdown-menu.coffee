@@ -277,7 +277,7 @@ APP.executeAfterAppLibCode ->
     "click .remove-selected": (e, tpl) ->
       selected_members = tpl.selected_members.get()
       errors = []
-      confirm_message = "Are you sure you want to remove #{selected_members.length} members"
+      confirm_message = "Are you sure you want to remove #{selected_members.length} members?"
       selected_members_count = selected_members.length
 
       if selected_members_count == 1
