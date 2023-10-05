@@ -94,7 +94,7 @@ Template.invite_new_user_dialog.onCreated ->
 
     APP.accounts.getFirstLastNameByEmails new_emails, {}, (error, registered_users_details) ->
       if error?
-        console.log error
+        console.error error
         return
 
       existing_members_set = new Map()
