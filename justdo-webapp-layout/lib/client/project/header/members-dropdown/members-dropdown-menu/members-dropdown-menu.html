@@ -19,7 +19,7 @@
         {{else}}
           {{#if invitedMembersNotification}}
             <div class="invited-memebers-notification bg-light">
-              {{{invitedMembersNotification}}}
+              {{{xssGuard invitedMembersNotification}}}
             </div>
           {{/if}}
           {{#with project_enrolled_admins_sorted_by_first_name getCurrentMembersFilter}}

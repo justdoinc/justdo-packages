@@ -23,12 +23,12 @@
     <div class="invite-settings-wrapper bg-light">
       <div class="invite-settings-item invite-settings-share">
         <div class="invite-setings-btn">
-          <div>{{{activeShareOption}}}</div>
+          <div>{{{xssGuard activeShareOption}}}</div>
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
         </div>
         <div class="invite-menu animate slideIn">
           {{#each shareOptions}}
-            <div class="dropdown-item {{class}}">{{{title}}}</div>
+            <div class="dropdown-item {{class}}">{{{xssGuard title}}}</div>
           {{/each}}
         </div>
       </div>
