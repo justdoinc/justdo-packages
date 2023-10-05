@@ -9,5 +9,6 @@ _.extend JustdoTaskType,
     {
       category_id: "default"
       label: "Types"
+      label_i18n: "default_type_label"
     }
   ]

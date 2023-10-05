@@ -54,7 +54,10 @@ _.extend JustdoTaskType.prototype,
 
   _category_field_options_schema: new SimpleSchema
     label:
-      type: "String"
+      type: String
+    label_i18n:
+      type: String
+      optional: true
   _setupCategoryColumnPseudoField: (category, options) ->
     Tracker.nonreactive =>
       required_fields_ids = _.keys(@getRequiredFields(category)) # <- This is a reactive resource
@@ -69,6 +72,7 @@ _.extend JustdoTaskType.prototype,
 
       APP.modules.project_page.setupPseudoCustomField @getCategoryFieldId(category),
         label: options.label
+        label_i18n: options.label_i18n
         field_type: "objects_array"
         grid_visible_column: true
         formatter: "tagsFormatter"
@@ -108,6 +112,7 @@ _.extend JustdoTaskType.prototype,
           for category_def in JustdoTaskType.core_categories
             @installCategoryField category_def.category_id,
               label: category_def.label
+              label_i18n: category_def.label_i18n
 
           if @categories_fields_columns_maintainer_tracker?
             # This shouldn't happen, I put it here, just for case it does
@@ -137,8 +142,7 @@ _.extend JustdoTaskType.prototype,
           @categories_fields_columns_maintainer_tracker.stop()
           @categories_fields_columns_maintainer_tracker = null
           for category_def in JustdoTaskType.core_categories
-            @uninstallCategoryField category_def.category_id,
-              label: category_def.label
+            @uninstallCategoryField category_def.category_id
 
           return
 
