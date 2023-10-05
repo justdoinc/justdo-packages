@@ -9,11 +9,9 @@ email_regex_str = JustdoHelpers.common_regexps.email.toString()
 email_regex_str = email_regex_str.substring(2, email_regex_str.length-2)
 email_regex2 = new RegExp "^<\s*#{email_regex_str}\s*>$"
 
-ProjectPageDialogs.showMemberDialog = (initial_users) ->
+ProjectPageDialogs.showMemberDialog = (tpl_data) ->
   message_template =
-    APP.helpers.renderTemplateInNewNode(Template.invite_new_user_dialog)
-
-  message_template.template_instance.initial_users = initial_users
+    APP.helpers.renderTemplateInNewNode(Template.invite_new_user_dialog, tpl_data)
 
   bootbox.dialog
     title: "Invite New Members"
@@ -28,7 +26,7 @@ ProjectPageDialogs.showMemberDialog = (initial_users) ->
 
 Template.invite_new_user_dialog.onCreated ->
   tpl = @
-  tpl.users = new ReactiveVar []
+  tpl.users = new ReactiveVar tpl.data?.initial_users or []
   tpl.users_validation_active_rv = new ReactiveVar false
   tpl.show_select_projects_rv = new ReactiveVar false
   tpl.selected_tasks_rv = new ReactiveVar []
@@ -144,12 +142,7 @@ Template.invite_new_user_dialog.onCreated ->
   return
 
 Template.invite_new_user_dialog.onRendered ->
-  tpl = @
-
   $(".users-email-input").focus()
-
-  if tpl.initial_users?.length > 0
-    tpl.users.set tpl.initial_users
   
   return
 

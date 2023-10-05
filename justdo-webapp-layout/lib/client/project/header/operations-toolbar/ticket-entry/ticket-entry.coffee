@@ -314,7 +314,7 @@ APP.executeAfterAppLibCode ->
       .on "froalaEditor.image.loaded", (e, editor, images, b, c) ->
         return false
       .on "froalaEditor.image.error", (e, editor, error, resp) ->
-        console.log error
+        console.error error
         return
 
     priority_slider = Template.justdo_priority_slider.getInstance "ticket-entry-priority-slider"

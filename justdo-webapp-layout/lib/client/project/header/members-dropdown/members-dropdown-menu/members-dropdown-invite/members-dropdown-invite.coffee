@@ -167,7 +167,7 @@ APP.executeAfterAppLibCode ->
           users.push user
 
         if show_advanced_dialog
-          ProjectPageDialogs.showMemberDialog(users)
+          ProjectPageDialogs.showMemberDialog({initial_users: users})
         else
           tpl.users.set users
 
