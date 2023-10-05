@@ -120,6 +120,8 @@ Package.onUse(function (api) {
   api.add_files("i18n/justdo-tasks-changelog-manager/zh-TW.i18n.json", both);
   api.add_files("i18n/justdo-task-types/en.i18n.json", both);
   api.add_files("i18n/justdo-task-types/zh-TW.i18n.json", both);
+  api.add_files("i18n/justdo-private-follow-up/en.i18n.json", both);
+  api.add_files("i18n/justdo-private-follow-up/zh-TW.i18n.json", both);
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);

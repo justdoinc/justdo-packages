@@ -20,6 +20,7 @@ _.extend JustdoPrivateFollowUp.prototype,
         installer: =>
           APP.modules.project_page.setupPseudoCustomField JustdoPrivateFollowUp.private_follow_up_field_id,
             label: JustdoPrivateFollowUp.private_follow_up_field_label
+            label_i18n: JustdoPrivateFollowUp.private_follow_up_field_i18n_label
             field_type: "date"
             grid_visible_column: true
             formatter: "unicodeDatePrivateFollowUpDateFormatter"
