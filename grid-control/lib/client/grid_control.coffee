@@ -1213,8 +1213,8 @@ _.extend GridControl.prototype,
       field_def = extended_schema[field]
 
       label = field_def.label
-      if (label_i18n = field_def.label_i18n)?
-        label = TAPi18n.__ label_i18n
+      if (label_i18n = field_def.label_i18n)? and (i18n_label = TAPi18n.__ label_i18n) isnt label_i18n
+        label = i18n_label
 
       if first
         first = false
