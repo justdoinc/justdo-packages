@@ -17,7 +17,7 @@ _.extend Projects.prototype,
       "user-not-exists": "Couldn't find a user with the provided details"
       "member-already-exists": "Member already exists in this JustDo"
       "unknown-members": "Members don't belong to JustDo"
-      "cant-remove-last-project-admin": "Project cannot be left without registered admins"
+      "cant-remove-last-project-admin": "JustDo cannot be left without registered admins"
       "unknown-mode": "Unknown Mode"
       "env-var-missing": "Required environment variable isn't set"
       "initiation-performed-already": "Initiation performed already"
