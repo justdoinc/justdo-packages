@@ -1,7 +1,7 @@
 APP.executeAfterAppLibCode ->
   email_regex = new RegExp JustdoHelpers.common_regexps.email
   email_regex_str = JustdoHelpers.common_regexps.email.toString()
-  email_regex_str = email_regex_str.substring(2, email_regex_str.length-2)
+  email_regex_str = email_regex_str.substring(2, email_regex_str.length - 2)
   email_regex2 = new RegExp "^<\s*#{email_regex_str}\s*>$"
 
   Template.members_dropdown_invite.onCreated ->
@@ -230,13 +230,15 @@ APP.executeAfterAppLibCode ->
       return
 
     "keyup .invite-members-input": (e, tpl) ->
-      input_val = $(".invite-members-input").val().trim()
+      input_val = $(".invite-members-input").val()
 
-      if _.isEmpty input_val
-        tpl.show_add_button_rv.set false
-      else
-        tpl.show_add_button_rv.set true
-
+      for potential_email in input_val.split ","
+        potential_email = potential_email.trim()
+        if email_regex.test potential_email
+          tpl.show_add_button_rv.set true
+          return
+      
+      tpl.show_add_button_rv.set false
       return
 
     "keydown .invite-members-input": (e, tpl) ->
