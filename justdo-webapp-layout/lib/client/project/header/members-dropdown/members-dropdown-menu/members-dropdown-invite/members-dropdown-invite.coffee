@@ -271,6 +271,7 @@ APP.executeAfterAppLibCode ->
     "click .invite-settings-share .dropdown-item": (e, tpl) ->
       if @.class == "share-specific"
         $("#members-invite-projects-selector").modal "show"
+        $(".search-projects-input").focus()
       else
         tpl.selected_projects_rv.set []
         tpl.active_share_option.set @
