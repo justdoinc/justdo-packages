@@ -78,7 +78,7 @@ APP.executeAfterAppLibCode ->
       $el = $(".invite-members-input")
       new_users = {}
       users = tpl.users.get().slice()
-      inputs = $el.val().replace(/,/g, ";").split(";")
+      inputs = $el.val().split(",")
       existing_members = tpl.curProj.getMembersDocs()
       existing_emails = _.map(existing_members, (member) -> member.emails[0].address)
 
