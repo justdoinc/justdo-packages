@@ -47,6 +47,26 @@ _.extend JustdoAccounts.prototype,
         optional: true
 
         type: Boolean
+      
+      proxy_created_at:
+        optional: true
+
+        type: Date
+
+        autoValue: ->
+          # Auto-set upon insert
+          if @field("is_proxy").value is true
+            if @isInsert
+              return new Date()
+            else if @isUpsert
+              return {$setOnInsert: new Date()}
+
+          # Unset along is_proxy
+          if (@field("is_proxy")?.operator is "$unset") and (@field("proxy_created_at")?.operator is "$unset")
+            return
+
+          # Prevent other modifications
+          return @unset()
 
       "signed_legal_docs.terms_conditions":
         optional: true
