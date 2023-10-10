@@ -15,6 +15,7 @@ APP.executeAfterAppLibCode ->
     tpl.active_share_option = new ReactiveVar null
     tpl.search_projects_val_rv = new ReactiveVar ""
     tpl.show_add_button_rv = new ReactiveVar false
+    tpl.show_projects_picker_dep = new Tracker.Dependency()
 
     tpl.autorun ->
       grid_tree = APP.modules.project_page.gridControl()._grid_data.grid_tree
@@ -188,11 +189,17 @@ APP.executeAfterAppLibCode ->
       return Template.instance().active_share_option.get().title
 
     projects: ->
-      search_val = Template.instance().search_projects_val_rv.get()
+      tpl = Template.instance()
+      tpl.show_projects_picker_dep.depend() # Re-opening projects picker should trigger refresh of project list
+
+      search_val = tpl.search_projects_val_rv.get()
       filter_regexp = new RegExp("\\b#{JustdoHelpers.escapeRegExp(search_val)}", "i")
 
-      projects = Template.instance().projects_rv.get()
-      filtered_projects = _.filter projects, (doc) ->  filter_regexp.test(doc.title)
+      projects = tpl.projects_rv.get()
+      selected_projects_task_id = Tracker.nonreactive -> tpl.selected_projects_rv.get()
+      filtered_projects = _.filter projects, (doc) -> doc._id in selected_projects_task_id
+      filtered_projects = filtered_projects.concat _.filter projects, (doc) -> doc._id not in selected_projects_task_id
+      filtered_projects = _.filter filtered_projects, (doc) ->  filter_regexp.test(doc.title)
 
       return filtered_projects
 
@@ -270,6 +277,7 @@ APP.executeAfterAppLibCode ->
 
     "click .invite-settings-share .dropdown-item": (e, tpl) ->
       if @.class == "share-specific"
+        tpl.show_projects_picker_dep.changed()
         $("#members-invite-projects-selector").modal "show"
         $(".search-projects-input").focus()
       else
