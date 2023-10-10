@@ -107,7 +107,7 @@ APP.executeAfterAppLibCode ->
           invalid_inputs.push input
           continue
 
-        if not _.contains(existing_emails, email)
+        if not (existing_user = _.find existing_members, (user) -> JustdoHelpers.getUserMainEmail(user) is email)?
           if names.length == 0
             first_name = last_name = ""
           else if names.length == 1
@@ -117,16 +117,16 @@ APP.executeAfterAppLibCode ->
             first_name = names.slice(0, -1).join(" ")
             last_name = names[names.length - 1]
 
-          if not _.find(users, (user) -> user.email == email)
+          if not (existing_user = _.find(users, (user) -> user.email == email))
             new_users[email] = {first_name, last_name}
           else
             JustdoSnackbar.show
-              text: "<strong>#{input}</strong> has already been added"
+              text: "<strong>#{JustdoHelpers.displayName(existing_user)}(#{email})</strong> has already been added"
               duration: 2000
               showAction: false
         else
           JustdoSnackbar.show
-            text: "<strong>#{input}</strong> is already a member of the JustDo"
+            text: "<strong>#{JustdoHelpers.displayName(existing_user)}(#{email})</strong> is already a member of the JustDo"
             duration: 2000
             showAction: false
 
@@ -148,11 +148,11 @@ APP.executeAfterAppLibCode ->
 
         for email, name of new_users
           user =
-          first_name: name.first_name
-          last_name: name.last_name
-          email: email
-          role: "member"
-          registered: false
+            first_name: JustdoHelpers.ucFirst name.first_name
+            last_name: JustdoHelpers.ucFirst name.last_name
+            email: email
+            role: "member"
+            registered: false
 
           # Registered user
           if (user_info = registered_users_details[email])?
@@ -215,7 +215,7 @@ APP.executeAfterAppLibCode ->
         return "selected"
 
       return
-
+    
     isAllProjectsSelected: ->
       tpl = Template.instance()
       selected_projects = tpl.selected_projects_rv.get()
@@ -233,7 +233,7 @@ APP.executeAfterAppLibCode ->
         return "disabled"
       
       return
-    
+
     showAddButton: ->
       return Template.instance().show_add_button_rv.get()
 
@@ -341,7 +341,7 @@ APP.executeAfterAppLibCode ->
       tpl.search_projects_val_rv.set value
 
       return
-
+    
     "click .clear-projects-search": (e, tpl) ->
       tpl.search_projects_val_rv.set ""
       $(".search-projects-input").val("")
@@ -369,7 +369,7 @@ APP.executeAfterAppLibCode ->
         tpl.selected_projects_rv.set []
       else
         tpl.selected_projects_rv.set _.map all_projects, (doc) -> doc._id
-
+      
       return
 
     "click .save-selected-tasks": (e, tpl) ->
