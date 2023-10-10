@@ -22,6 +22,18 @@
         pointer-events: auto
         opacity: 1
 
+  .alerts-container
+    margin: 0 16px
+    font-size: 13px
+    .alert
+      margin: 0px
+      display: flex
+      align-items: center
+      justify-content: space-between
+      &:last-child
+        margin-bottom: 8px
+    .alert + .alert
+      margin-top: 4px
 
   .members-dropdown-invite-content
     display: flex

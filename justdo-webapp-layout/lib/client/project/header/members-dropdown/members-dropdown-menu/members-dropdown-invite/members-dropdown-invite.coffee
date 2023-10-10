@@ -16,6 +16,7 @@ APP.executeAfterAppLibCode ->
     tpl.search_projects_val_rv = new ReactiveVar ""
     tpl.show_add_button_rv = new ReactiveVar false
     tpl.show_projects_picker_dep = new Tracker.Dependency()
+    tpl.invalid_email_input_rv = new ReactiveVar []
 
     tpl.autorun ->
       grid_tree = APP.modules.project_page.gridControl()._grid_data.grid_tree
@@ -79,6 +80,7 @@ APP.executeAfterAppLibCode ->
       new_users = {}
       users = tpl.users.get().slice()
       inputs = $el.val().split(",")
+      invalid_inputs = []
       existing_members = tpl.curProj.getMembersDocs()
       existing_emails = _.map(existing_members, (member) -> member.emails[0].address)
 
@@ -102,6 +104,7 @@ APP.executeAfterAppLibCode ->
             names.push(input_segment)
 
         if not email?
+          invalid_inputs.push input
           continue
 
         if not _.contains(existing_emails, email)
@@ -172,6 +175,8 @@ APP.executeAfterAppLibCode ->
         else
           tpl.users.set users
 
+      tpl.invalid_email_input_rv.set invalid_inputs
+
       $el.val ""
 
       return
@@ -232,6 +237,19 @@ APP.executeAfterAppLibCode ->
     showAddButton: ->
       return Template.instance().show_add_button_rv.get()
 
+    # Currnetly this helper only shows error related to invalid email input
+    # But it's designed to show errs from multiple sources
+    alertMsg: ->
+      tpl = Template.instance()
+      err_msg = []
+
+      if _.isEmpty(invalid_email_input = tpl.invalid_email_input_rv.get())
+        return
+      
+      err_msg.push "#{invalid_email_input} is not a valid email address"
+    
+      return err_msg
+
   Template.members_dropdown_invite.events
     "click .invite-settings-share .invite-setings-btn": (e, tpl) ->
       $(".invite-menu").removeClass "open"
@@ -254,21 +272,19 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    "keyup .invite-members-input": (e, tpl) ->
-      input_val = $(".invite-members-input").val()
-
-      for potential_email in input_val.split ","
-        potential_email = potential_email.trim()
-        if email_regex.test potential_email
-          tpl.show_add_button_rv.set true
-          return
-      
-      tpl.show_add_button_rv.set false
+    "keydown .invite-members-input": (e, tpl) ->
+      tpl.invalid_email_input_rv.set []
       return
 
-    "keydown .invite-members-input": (e, tpl) ->
+    "keyup .invite-members-input": (e, tpl) ->
       if e.keyCode == 13
         tpl.recognizeEmails()
+        return
+
+      if _.isEmpty(input_val = $(".invite-members-input").val().trim())  
+        tpl.show_add_button_rv.set false
+      else
+        tpl.show_add_button_rv.set true
 
       return
 
@@ -283,6 +299,10 @@ APP.executeAfterAppLibCode ->
       tpl.recognizeEmails()
       $(".invite-members-input").focus()
 
+      return
+    
+    "click .close": (e, tpl) ->
+      tpl.invalid_email_input_rv.set []
       return
 
     "click .remove-invite-email": (e, tpl) ->
