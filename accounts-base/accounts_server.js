@@ -285,7 +285,7 @@ export class AccountsServer extends AccountsCommon {
 
     // If a proxy user logs in, unset is_proxy flag and consider the user as normal user.
     if (user_flags.is_proxy) {
-      Meteor.users.update(userId, {$unset: {is_proxy: 1}});
+      Meteor.users.update(userId, {$unset: {is_proxy: 1, proxy_created_at: 1}, $set: {createdAt: new Date()}});
     }
 
     if (! stampedLoginToken) {
