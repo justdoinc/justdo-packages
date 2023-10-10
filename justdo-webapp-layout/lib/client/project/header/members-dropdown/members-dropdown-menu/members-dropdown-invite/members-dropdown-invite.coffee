@@ -304,7 +304,7 @@ APP.executeAfterAppLibCode ->
       value = $(e.target).val().trim()
 
       if _.isEmpty value
-        tpl.search_projects_val_rv.set null
+        tpl.search_projects_val_rv.set ""
 
       tpl.search_projects_val_rv.set value
 
