@@ -71,7 +71,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-sm btn-primary save-selected-tasks">Select</button>
+          <button type="button" class="btn btn-sm btn-primary save-selected-tasks" {{isProjectSelectBtnDisabled}}>Select {{#with selectedProjectsCount}}({{this}}){{/with}}</button>
         </div>
       </div>
     </div>

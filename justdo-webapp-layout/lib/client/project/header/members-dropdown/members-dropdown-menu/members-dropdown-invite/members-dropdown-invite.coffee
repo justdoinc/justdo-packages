@@ -217,6 +217,18 @@ APP.executeAfterAppLibCode ->
       all_projects = tpl.projects_rv.get()
       return _.size(selected_projects) is _.size(all_projects)
     
+    selectedProjectsCount: ->
+      tpl = Template.instance()
+      return _.size tpl.selected_projects_rv.get()
+
+    isProjectSelectBtnDisabled: ->
+      tpl = Template.instance()
+
+      if _.size(tpl.selected_projects_rv.get()) is 0
+        return "disabled"
+      
+      return
+    
     showAddButton: ->
       return Template.instance().show_add_button_rv.get()
 
