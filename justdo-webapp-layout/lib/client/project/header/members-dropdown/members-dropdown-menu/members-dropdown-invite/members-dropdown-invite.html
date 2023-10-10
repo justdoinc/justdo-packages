@@ -63,6 +63,10 @@
               <div class="no-results">There're no projects in this JustDo, yet.<br>
               Right click on a task to set it as a project.</div>
             {{/each}}
+
+            {{#if projects}}
+              <a href="#" class="select-all-projects">{{#if isAllProjectsSelected}}Deselect{{else}}Select{{/if}} all</a>
+            {{/if}}
           </div>
         </div>
         <div class="modal-footer">

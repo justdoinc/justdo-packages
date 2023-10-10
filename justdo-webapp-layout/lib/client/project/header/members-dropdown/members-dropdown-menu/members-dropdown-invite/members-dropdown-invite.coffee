@@ -211,6 +211,12 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    isAllProjectsSelected: ->
+      tpl = Template.instance()
+      selected_projects = tpl.selected_projects_rv.get()
+      all_projects = tpl.projects_rv.get()
+      return _.size(selected_projects) is _.size(all_projects)
+    
     showAddButton: ->
       return Template.instance().show_add_button_rv.get()
 
@@ -319,6 +325,18 @@ APP.executeAfterAppLibCode ->
         selected_projects.push task_id
 
       tpl.selected_projects_rv.set selected_projects
+
+      return
+    
+    "click .select-all-projects": (e, tpl)->
+      e.preventDefault()
+
+      selected_projects = tpl.selected_projects_rv.get()
+      all_projects = tpl.projects_rv.get()
+      if _.size(selected_projects) is _.size(all_projects)
+        tpl.selected_projects_rv.set []
+      else
+        tpl.selected_projects_rv.set _.map all_projects, (doc) -> doc._id
 
       return
 
