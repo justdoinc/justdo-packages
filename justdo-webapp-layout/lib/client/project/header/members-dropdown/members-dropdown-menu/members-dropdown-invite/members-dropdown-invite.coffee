@@ -278,6 +278,8 @@ APP.executeAfterAppLibCode ->
     "click .invite-settings-share .dropdown-item": (e, tpl) ->
       if @.class == "share-specific"
         tpl.show_projects_picker_dep.changed()
+        tpl.search_projects_val_rv.set ""
+        $(".search-projects-input").val("")
         $("#members-invite-projects-selector").modal "show"
         $(".search-projects-input").focus()
       else
@@ -300,6 +302,11 @@ APP.executeAfterAppLibCode ->
 
       tpl.search_projects_val_rv.set value
 
+      return
+
+    "click .clear-projects-search": (e, tpl) ->
+      tpl.search_projects_val_rv.set ""
+      $(".search-projects-input").val("")
       return
 
     "click .project-item": (e, tpl) ->
