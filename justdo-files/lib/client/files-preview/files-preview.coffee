@@ -78,9 +78,11 @@ Template.justdo_files_files_preview.helpers
       return "invisible"
     return
 
-  isPdf: -> @type == "application/pdf"
+  isPdf: -> @type is "application/pdf"
 
-  isImage: -> @type.indexOf("image") == 0
+  isImage: -> @type.indexOf("image") is 0
+
+  isVideo: -> @type.indexOf("video") is 0
 
   randomString: ->
     # We found out that in some machines caching might cause an issue with pdf previews,

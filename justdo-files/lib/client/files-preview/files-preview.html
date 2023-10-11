@@ -9,8 +9,14 @@
       {{#with activeFile}}
         {{#if isPdf}}
           <embed src="{{previewLink}}&r={{randomString}}" type="{{type}}" width="970" height="550" alt="{{name}}" style="border: 0 none;">
-        {{else if isImage}}
+        {{/if}}
+        {{#if isImage}}
           <img src="{{previewLink}}" alt="{{name}}" title="{{name}}" style="max-width: 100%;" />
+        {{/if}}
+        {{#if isVideo}}
+          <video width="970" height="550" controls>
+            <source src="{{previewLink}}" type="{{type}}">
+          </video>
         {{/if}}
       {{else}}
         <div class="loader">
