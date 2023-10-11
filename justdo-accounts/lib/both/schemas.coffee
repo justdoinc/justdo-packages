@@ -61,10 +61,6 @@ _.extend JustdoAccounts.prototype,
             else if @isUpsert
               return {$setOnInsert: new Date()}
 
-          # Unset along is_proxy
-          if (@field("is_proxy")?.operator is "$unset") and (@field("proxy_created_at")?.operator is "$unset")
-            return
-
           # Prevent other modifications
           return @unset()
 
