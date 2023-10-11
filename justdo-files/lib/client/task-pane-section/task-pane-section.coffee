@@ -84,10 +84,7 @@ Template.justdo_files_gallery.helpers
   size: -> JustdoHelpers.bytesToHumanReadable(@file.size)
 
   isPreviewable: ->
-    if (@file.type in JustdoFiles.preview_supported_formats)
-      return true
-
-    return false
+    return @file.type.includes "image/"
 
   tempPlaceHolder: ->
     task_id = JD.activeItemId({})
@@ -98,6 +95,7 @@ Template.justdo_files_gallery.helpers
     tpl = Template.instance()
 
     link = APP.justdo_files.tasks_files.findOne(file._id).link()
+
     # Load the image
     load_element = $("<img/>").attr("src", link).on "load", =>
       # On load, set as the element's background
@@ -105,9 +103,7 @@ Template.justdo_files_gallery.helpers
         .css("background-image", "url(#{link})")
         .removeClass("loading")
         .addClass("image-preview")
-
       load_element.remove()
-
       return
 
     return placeholder
