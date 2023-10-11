@@ -5,4 +5,4 @@ _.extend JustdoFiles,
 
   files_count_task_doc_field_id: "p:justdo-files:files_count"
 
-  preview_supported_formats: ["application/pdf", "image/png", "image/gif", "image/jpeg", "image/bmp"]
+  preview_supported_formats_regex: /^((image|video)\/(\w|-)+)|(application\/pdf)$/

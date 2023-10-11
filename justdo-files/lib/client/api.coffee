@@ -11,7 +11,7 @@ _.extend JustdoFiles.prototype,
     return
 
   showPreviewOrStartDownload: (task_id, file) ->
-    if file.type in JustdoFiles.preview_supported_formats
+    if JustdoFiles.preview_supported_formats_regex.test file.type
       # Show preview in bootbox
 
       message_template =
