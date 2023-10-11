@@ -4,6 +4,9 @@ isPdfPreview = (file_type) ->
 isImagePreview = (file_type) ->
   file_type.indexOf("image/") == 0
 
+isVideoPreview = (file_type) ->
+  file_type.indexOf("video/") == 0
+
 Template.tasks_file_manager_files_preview.onCreated ->
   @active_file_rv = new ReactiveVar @data.file
   @sorted_previewable_files_under_task_rv = new ReactiveVar []
@@ -13,7 +16,7 @@ Template.tasks_file_manager_files_preview.onCreated ->
   @autorun =>
     files = APP.collections.TasksAugmentedFields.findOne(@data.task_id, {fields: {files: 1}})?.files
     previewable_files_under_task = _.chain files
-      .filter (file) -> APP.tasks_file_manager_plugin.tasks_file_manager.isConversionSupported(file.type, "jpg") or APP.tasks_file_manager_plugin.tasks_file_manager.isConversionSupported(file.type, "pdf")
+      .filter (file) -> APP.tasks_file_manager_plugin.tasks_file_manager.isConversionSupported(file.type, "jpg") or APP.tasks_file_manager_plugin.tasks_file_manager.isConversionSupported(file.type, "pdf") or (file.type.indexOf("video/") is 0)
       .sortBy "date_uploaded"
       .value()
       .reverse()
@@ -33,6 +36,9 @@ Template.tasks_file_manager_files_preview.onCreated ->
     else if isPdfPreview active_file.type
       preview_options =
         output: "pdf"
+    else if isVideoPreview active_file.type
+      preview_options =
+        output: "mp4"
     if preview_options?
       APP.tasks_file_manager_plugin.tasks_file_manager.getPreviewDownloadLink @data.task_id, active_file.id, 1, preview_options, (err, link) =>
         if err?
@@ -106,6 +112,8 @@ Template.tasks_file_manager_files_preview.helpers
   isImagePreview: -> isImagePreview Template.instance().active_file_rv.get().type
 
   isPdfPreview: -> isPdfPreview Template.instance().active_file_rv.get().type
+
+  isVideoPreview: -> isVideoPreview Template.instance().active_file_rv.get().type
 
   fileTitle: -> Template.instance().active_file_rv.get().title
 

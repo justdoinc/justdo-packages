@@ -12,6 +12,10 @@
           <img src="{{this}}" alt="{{fileTitle}}" title="{{fileTitle}}" style="max-width: 100%;" />
         {{else if isPdfPreview}}
           <iframe src="{{this}}" width="970" height="550" alt="{{fileTitle}}" style="border: 0 none;"></iframe>
+        {{else if isVideoPreview}}
+          <video width="970" height="550" alt="{{fileTitle}}" style="max-width: 100%;" controls>
+            <source src="{{this}}">
+          </video>
         {{/if}}
       {{else}}
         <div class="loader">

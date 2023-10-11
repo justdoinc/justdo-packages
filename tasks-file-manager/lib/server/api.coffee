@@ -261,7 +261,7 @@ _.extend TasksFileManager.prototype,
     output:
       type: String
       
-      allowedValues: ["pdf", "jpg"]
+      allowedValues: ["pdf", "jpg", "mp4"]
 
   _getProcessedFileLink: (task, file, process_str, processed_file_id, processed_file_ext) ->
     # IMPORTANT!!! IF YOU CHANGE THIS COMMENT UPDATE ALSO filestack-base/lib/server/api.coffee
@@ -379,6 +379,8 @@ _.extend TasksFileManager.prototype,
         # others to pdf
         # XXX supported file formats
         return @_getProcessedFileLink task, file, "/output=f:pdf", "v#{version}_pdf", "pdf"
+    else if options.output == "mp4"
+      return @_simpleDownloadLink file
     else if options.output == "jpg"       
       if file.type.indexOf("image/") == 0
       # image to jpg

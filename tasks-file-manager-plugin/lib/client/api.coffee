@@ -3,7 +3,7 @@ _.extend TasksFileManagerPlugin.prototype,
     conv_matrix = @tasks_file_manager.getConversionMartix()
     preview_supported_formats = _.union conv_matrix["pdf"], conv_matrix["jpg"]
 
-    if file.type in preview_supported_formats
+    if (file.type in preview_supported_formats) or (file.type.indexOf("video/") is 0)
       # Show preview in bootbox
 
       message_template =
