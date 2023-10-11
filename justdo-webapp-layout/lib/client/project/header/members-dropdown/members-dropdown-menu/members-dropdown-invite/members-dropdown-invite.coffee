@@ -17,6 +17,7 @@ APP.executeAfterAppLibCode ->
     tpl.show_add_button_rv = new ReactiveVar false
     tpl.show_projects_picker_dep = new Tracker.Dependency()
     tpl.invalid_email_input_rv = new ReactiveVar []
+    tpl.show_clear_projects_search_rv = new ReactiveVar false
 
     tpl.autorun ->
       grid_tree = APP.modules.project_page.gridControl()._grid_data.grid_tree
@@ -215,13 +216,13 @@ APP.executeAfterAppLibCode ->
         return "selected"
 
       return
-    
+
     isAllProjectsSelected: ->
       tpl = Template.instance()
       selected_projects = tpl.selected_projects_rv.get()
       all_projects = tpl.projects_rv.get()
       return _.size(selected_projects) is _.size(all_projects)
-    
+
     selectedProjectsCount: ->
       tpl = Template.instance()
       return _.size tpl.selected_projects_rv.get()
@@ -231,7 +232,7 @@ APP.executeAfterAppLibCode ->
 
       if _.size(tpl.selected_projects_rv.get()) is 0
         return "disabled"
-      
+
       return
 
     showAddButton: ->
@@ -245,10 +246,13 @@ APP.executeAfterAppLibCode ->
 
       if _.isEmpty(invalid_email_input = tpl.invalid_email_input_rv.get())
         return
-      
+
       err_msg.push "#{invalid_email_input} is not a valid email address"
-    
+
       return err_msg
+
+    showClearProjectsSearch: ->
+      return Template.instance().show_clear_projects_search_rv.get()
 
   Template.members_dropdown_invite.events
     "click .invite-settings-share .invite-setings-btn": (e, tpl) ->
@@ -281,7 +285,7 @@ APP.executeAfterAppLibCode ->
         tpl.recognizeEmails()
         return
 
-      if _.isEmpty(input_val = $(".invite-members-input").val().trim())  
+      if _.isEmpty(input_val = $(".invite-members-input").val().trim())
         tpl.show_add_button_rv.set false
       else
         tpl.show_add_button_rv.set true
@@ -300,7 +304,7 @@ APP.executeAfterAppLibCode ->
       $(".invite-members-input").focus()
 
       return
-    
+
     "click .close": (e, tpl) ->
       tpl.invalid_email_input_rv.set []
       return
@@ -337,14 +341,19 @@ APP.executeAfterAppLibCode ->
 
       if _.isEmpty value
         tpl.search_projects_val_rv.set ""
+        tpl.show_clear_projects_search_rv.set false
+      else
+        tpl.show_clear_projects_search_rv.set true
 
       tpl.search_projects_val_rv.set value
 
       return
-    
+
     "click .clear-projects-search": (e, tpl) ->
       tpl.search_projects_val_rv.set ""
-      $(".search-projects-input").val("")
+      tpl.show_clear_projects_search_rv.set false
+      $(".search-projects-input").val("").focus()
+
       return
 
     "click .project-item": (e, tpl) ->
@@ -359,7 +368,7 @@ APP.executeAfterAppLibCode ->
       tpl.selected_projects_rv.set selected_projects
 
       return
-    
+
     "click .select-all-projects": (e, tpl)->
       e.preventDefault()
 
@@ -369,7 +378,7 @@ APP.executeAfterAppLibCode ->
         tpl.selected_projects_rv.set []
       else
         tpl.selected_projects_rv.set _.map all_projects, (doc) -> doc._id
-      
+
       return
 
     "click .save-selected-tasks": (e, tpl) ->

@@ -81,8 +81,9 @@
       align-items: center
       justify-content: center
       text-align: center
-      color: rgba(49, 69, 99, 0.35)
+      color: rgba(49, 69, 99, 0.5)
       flex-grow: 1
+      padding: 0 20px
 
   .members-dropdown-invite-footer
     padding: 16px 0
@@ -172,27 +173,42 @@
     flex-direction: column
     padding: 0
     overflow: hidden
-    .clear-projects-search
-      position: absolute
-      right: 15px
-      top: 20px
-    .search-projects-input
+
+    .search-projects-input-wrapper
+      position: relative
       margin: 16px
-      width: auto
+      display: flex
+      align-items: center
+      .clear-projects-search
+        position: absolute
+        right: 6px
+        padding: 2px
+        stroke-width: 2
+        width: 20px
+        height: 20px
+        &:hover
+          stroke: black
+          background-color: rgba(0, 0, 0, 0.08)
+          transform: scale(1.05)
+      .search-projects-input
+        padding-right: 30px
+
   .projects-list
     overflow: auto
     padding-bottom: 16px
     .no-results
-      color: rgba(49, 69, 99, 0.25)
-      height: 200px
-      padding-top: 20px
+      color: rgba(49, 69, 99, 0.5)
+      height: 300px
+      padding: 20px
       display: flex
       align-items: center
       justify-content: center
+
+  .bulk-selecter-wrapper
+    padding: 8px 20px
+    display: flex
+    justify-content: flex-end
     .select-all-projects
-      position: absolute
-      right: 15px
-      bottom: 5px
 
   .project-item
     display: flex

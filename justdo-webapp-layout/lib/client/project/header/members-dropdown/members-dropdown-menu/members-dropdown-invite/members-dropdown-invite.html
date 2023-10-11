@@ -59,8 +59,12 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
-          <input class="search-projects-input form-control form-control-sm" type="text" placeholder="Find project">
-          <svg class="jd-icon jd-c-pointer clear-projects-search"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+          <div class="search-projects-input-wrapper">
+            <input class="search-projects-input form-control form-control-sm" type="text" placeholder="Find project">
+            {{#if showClearProjectsSearch}}
+              <svg class="jd-icon jd-c-pointer clear-projects-search"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
+            {{/if}}
+          </div>
           <div class="projects-list">
             {{#each projects}}
               <div class="project-item {{projectIsSelected}}">
@@ -73,12 +77,13 @@
               <div class="no-results">There're no projects in this JustDo, yet.<br>
               Right click on a task to set it as a project.</div>
             {{/each}}
-
-            {{#if projects}}
-              <a href="#" class="select-all-projects">{{#if isAllProjectsSelected}}Deselect{{else}}Select{{/if}} all</a>
-            {{/if}}
           </div>
         </div>
+        {{#if projects}}
+          <div class="bulk-selecter-wrapper">
+            <a href="#" class="select-all-projects">{{#if isAllProjectsSelected}}Deselect{{else}}Select{{/if}} all</a>
+          </div>
+        {{/if}}
         <div class="modal-footer">
           <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-sm btn-primary save-selected-tasks" {{isProjectSelectBtnDisabled}}>Select {{#with selectedProjectsCount}}({{this}}){{/with}}</button>
