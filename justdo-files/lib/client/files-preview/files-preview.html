@@ -14,7 +14,7 @@
           <img src="{{previewLink}}" alt="{{name}}" title="{{name}}" style="max-width: 100%;" />
         {{/if}}
         {{#if isVideo}}
-          <video width="970" height="550" controls>
+          <video alt="{{name}}" type="{{type}}" width="970" height="550" controls>
             <source src="{{previewLink}}" type="{{type}}">
           </video>
         {{/if}}
