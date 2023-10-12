@@ -1,6 +1,8 @@
 max_printed_task_title = 60
 share.disable_quick_add_custom_plugin_id = "disable-quick-add"
 share.disable_quick_add_custom_plugin_name = "Quick Add Button"
+share.disable_quick_add_custom_plugin_label = "Quick Add"
+share.disable_quick_add_custom_plugin_label_i18n = "quick_add_label"
 
 gridControlMux = -> APP.modules.project_page.grid_control_mux?.get()
 
@@ -52,7 +54,8 @@ APP.executeAfterAppLibCode ->
   target_select_pickers = ["#ticket-queue-id", "#ticket-assigned-user-id"]
 
   project_page_module.setNullaryOperation "ticketEntry",
-    human_description: share.disable_quick_add_custom_plugin_name
+    human_description: share.disable_quick_add_custom_plugin_label
+    human_description_i18n: share.disable_quick_add_custom_plugin_label_i18n
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#file"/></svg>"""
     op: ->
@@ -66,8 +69,9 @@ APP.executeAfterAppLibCode ->
         for selector in target_select_pickers
           $(selector).selectpicker "destroy"
 
+      bootbox_title = APP.justdo_i18n.getI18nTextOrFallback {fallback_text: share.disable_quick_add_custom_plugin_label, i18n_key: share.disable_quick_add_custom_plugin_label_i18n}
       bootbox.dialog
-        title: share.disable_quick_add_custom_plugin_name
+        title: bootbox_title
         message: message_template.node
         className: "ticket-entry-dialog bootbox-new-design"
         onEscape: ->

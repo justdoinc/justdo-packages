@@ -1,4 +1,16 @@
 {
   "members_dropdown_share_label": "Share",
-  "members_dropdown_members_label": "Members"
+  "members_dropdown_members_label": "Members",
+  "new_child_task_label": "New Child Task",
+  "new_sibling_task_label": "New Sibling Task",
+  "remove_task_label": "Remove Task",
+  "move_up_label": "Move Up",
+  "move_down_label": "Move Down",
+  "move_left_label": "Outdent",
+  "move_right_label": "Indent",
+  "sort_by_priority_label": "Sort by priority",
+  "zoom_in_label": "Zoom in",
+  "add_to_favorites_label": "Add to Favorites",
+  "remove_from_favorites_label": "Remove from Favorites",
+  "quick_add_label": "Quick Add"
 }

@@ -6,6 +6,7 @@ APP.executeAfterAppLibCode ->
 
   module.setNullaryOperation "addSubTask",
     human_description: "New Child Task"
+    human_description_i18n: "new_child_task_label"
     keyboard_shortcut: "alt+shift+enter"
     alternative_shortcuts: ["alt+\\"]
     template:
@@ -52,6 +53,7 @@ APP.executeAfterAppLibCode ->
 
   module.setNullaryOperation "addSiblingTask",
     human_description: "New Sibling Task"
+    human_description_i18n: "new_sibling_task_label"
     keyboard_shortcut: "alt+enter"
     alternative_shortcuts: ["alt+plus"]
     template:
@@ -81,6 +83,7 @@ APP.executeAfterAppLibCode ->
 
   module.setNullaryOperation "removeTask",
     human_description: "Remove Task"
+    human_description_i18n: "remove_task_label"
     keyboard_shortcut: "alt+-"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"/></svg>"""
@@ -116,6 +119,7 @@ APP.executeAfterAppLibCode ->
 
   module.setNullaryOperation "moveDown",
     human_description: "Move Down"
+    human_description_i18n: "move_down_label"
     keyboard_shortcut: "alt+down"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-down"/></svg>"""
@@ -124,6 +128,7 @@ APP.executeAfterAppLibCode ->
 
   module.setNullaryOperation "moveUp",
     human_description: "Move Up"
+    human_description_i18n: "move_up_label"
     keyboard_shortcut: "alt+up"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-up"/></svg>"""
@@ -132,6 +137,7 @@ APP.executeAfterAppLibCode ->
 
   module.setNullaryOperation "moveLeft",
     human_description: "Outdent"
+    human_description_i18n: "move_left_label"
     keyboard_shortcut: "alt+left"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-left"/></svg>"""
@@ -140,6 +146,7 @@ APP.executeAfterAppLibCode ->
 
   module.setNullaryOperation "moveRight",
     human_description: "Indent"
+    human_description_i18n: "move_right_label"
     keyboard_shortcut: "alt+right"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#arrow-right"/></svg>"""
@@ -148,6 +155,7 @@ APP.executeAfterAppLibCode ->
 
   module.setNullaryOperation "sortByPriority",
     human_description: "Sort by priority"
+    human_description_i18n: "sort_by_priority_label"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#jd-sort"/></svg>"""
     op: -> gridControl().sortActivePathByPriorityDesc()
@@ -155,6 +163,7 @@ APP.executeAfterAppLibCode ->
 
   module.setNullaryOperation "zoomIn",
     human_description: "Zoom in"
+    human_description_i18n: "zoom_in_label"
     template:
       custom_icon_html: """<svg class="jd-icon jd-c-pointer text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#zoom-in"/></svg>"""
     op: ->
@@ -173,6 +182,7 @@ APP.executeAfterAppLibCode ->
 
   module.setNullaryOperation "addToFavorites",
     human_description: "Add to Favorites"
+    human_description_i18n: "add_to_favorites_label"
     op: ->
       active_item_id = module.activeItemId()
 
@@ -186,6 +196,7 @@ APP.executeAfterAppLibCode ->
 
   module.setNullaryOperation "removeFromFavorites",
     human_description: "Remove from Favorites"
+    human_description_i18n: "remove_from_favorites_label"
     op: ->
       active_item_id = module.activeItemId()
 
