@@ -1212,9 +1212,7 @@ _.extend GridControl.prototype,
       field = column_def.field
       field_def = extended_schema[field]
 
-      label = field_def.label
-      if (label_i18n = field_def.label_i18n)? and (i18n_label = TAPi18n.__ label_i18n) isnt label_i18n
-        label = i18n_label
+      label = APP.justdo_i18n.getI18nTextOrFallback {fallback_text: field_def.label, i18n_key: field_def.label_i18n}
 
       if first
         first = false
