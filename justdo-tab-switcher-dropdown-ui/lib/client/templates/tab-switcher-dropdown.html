@@ -14,20 +14,11 @@
     </div>
 
     {{#each tab_switcher_manager.getSections}}
-      {{#if label_i18n}}
-        <div class="dropdown-header px-1 py-2">{{_ label_i18n}}</div>
-      {{else if label}}
-        <div class="dropdown-header px-1 py-2">{{label}}</div>
-      {{/if}}
-
+      <div class="dropdown-header px-1 py-2">{{getI18nTextOrFallback fallback_text=label i18n_key=label_i18n}}</div>
       {{#each itemsSource}}
         <a href="#" class="dropdown-item px-1 d-flex" data-tab-id="{{tab_id}}" {{tabAttributes}}>
           {{> project_operations_tab_switcher_dropdown_tab_icon}}
-          {{#if label_i18n}}
-            <div class="dropdown-item-label" dir="auto">{{_ label_i18n}}</div>
-          {{else}}
-            <div class="dropdown-item-label" dir="auto">{{label}}</div>
-          {{/if}}
+          <div class="dropdown-item-label" dir="auto">{{getI18nTextOrFallback fallback_text=label i18n_key=label_i18n}}</div>
         </a>
       {{/each}}
     {{/each}}
