@@ -32,6 +32,6 @@
 
 <template name="task_pane_tab">
   <div class="task-pane-tab {{#if $eq toolbar_selected_section_id id}}active text-primary{{/if}}">
-    {{getI18nTitleOrFallback}} {{{xssGuard options.titleInfo}}}
+    {{getI18nTextOrFallback fallback_text=options.title i18n_key=options.title_i18n}} {{{xssGuard options.titleInfo}}}
   </div>
 </template>

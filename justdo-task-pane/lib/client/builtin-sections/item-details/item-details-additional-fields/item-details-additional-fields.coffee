@@ -68,11 +68,6 @@ APP.executeAfterAppLibCode ->
       return additional_fields
 
   Template.task_pane_item_details_additional_field.helpers
-    getI18nTitleOrFallback: ->
-      if (@label_i18n?) and (translated_label = TAPi18n.__ @label_i18n) isnt @label_i18n
-        return translated_label
-      return @label
-
     isEditableField: ->
       gc = APP.modules.project_page.gridControl()
 
