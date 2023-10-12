@@ -79,6 +79,7 @@ APP.executeAfterAppLibCode ->
     @invited_members_count = new ReactiveVar 0
 
     tpl.switch_to_invite_mode = ->
+      clearMembersDropDownErrors()
       @invited_members_count.set 0
       input = $(".invite-members-input")
       input.val tpl.members_filter.get()
