@@ -9,19 +9,25 @@
 
   <div class="tab-switcher-dropdown-wrapper">
     <div class="views-search-wrapper d-flex align-items-center">
-      <input type="text" class="views-search-input form-control form-control-sm" placeholder="Views">
+      <input type="text" class="views-search-input form-control form-control-sm" placeholder="{{_ "tab_switcher_dropdown_search_placeholder"}}">
       <svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#search"/></svg>
     </div>
 
     {{#each tab_switcher_manager.getSections}}
-      {{#if label}}
+      {{#if label_i18n}}
+        <div class="dropdown-header px-1 py-2">{{_ label_i18n}}</div>
+      {{else if label}}
         <div class="dropdown-header px-1 py-2">{{label}}</div>
       {{/if}}
 
       {{#each itemsSource}}
         <a href="#" class="dropdown-item px-1 d-flex" data-tab-id="{{tab_id}}" {{tabAttributes}}>
           {{> project_operations_tab_switcher_dropdown_tab_icon}}
-          <div class="dropdown-item-label" dir="auto">{{label}}</div>
+          {{#if label_i18n}}
+            <div class="dropdown-item-label" dir="auto">{{_ label_i18n}}</div>
+          {{else}}
+            <div class="dropdown-item-label" dir="auto">{{label}}</div>
+          {{/if}}
         </a>
       {{/each}}
     {{/each}}

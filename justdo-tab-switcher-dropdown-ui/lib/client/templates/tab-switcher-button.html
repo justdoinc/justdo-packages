@@ -1,6 +1,6 @@
 <template name="project_operations_tab_switcher">
   <div id="tab-switcher" class="dropdown d-flex align-items-center">
-    <button type="button" class="btn btn-sm btn-default {{#unless ready}}disabled{{/unless}}"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Switch View">
+    <button type="button" class="btn btn-sm btn-default {{#unless ready}}disabled{{/unless}}"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="{{_ "tab_switcher_dropdown_title"}}">
       {{#with getCurrentSectionItem}}
         <div class="icon-container {{#if $eq tab_id "loading"}}loading{{/if}}">
           {{> project_operations_tab_switcher_dropdown_tab_icon}}

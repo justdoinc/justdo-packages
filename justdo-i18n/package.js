@@ -126,7 +126,8 @@ Package.onUse(function (api) {
   api.add_files("i18n/justdo-webapp-layout/zh-TW.i18n.json", both);
   api.add_files("i18n/justdo-files/en.i18n.json", both);
   api.add_files("i18n/justdo-files/zh-TW.i18n.json", both);
-
+  api.add_files("i18n/justdo-tab-switcher-dropdown-ui/en.i18n.json", both);
+  api.add_files("i18n/justdo-tab-switcher-dropdown-ui/zh-TW.i18n.json", both);
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
   api.use("meteorspark:app@0.3.0", both);

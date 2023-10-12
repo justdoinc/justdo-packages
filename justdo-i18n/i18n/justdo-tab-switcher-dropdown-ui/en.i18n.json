@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Switch View",
+  "tab_switcher_dropdown_search_placeholder": "Views",
+  "tab_switcher_main_view_label": "Main View",
+  "tab_switcher_my_favorites_label": "My Favorites",
+  "tab_switcher_my_due_list_label": "My Due List",
+  "tab_switcher_recently_label": "Recently",
+  "tab_switcher_recently_completed_label": "Completed",
+  "tab_switcher_recently_updated_label": "Updated",
+  "tab_switcher_recently_created_label": "Created",
+  "tab_switcher_miscellaneous_label": "Miscellaneous",
+  "tab_switcher_task_ownershipt_transfers_label": "Tasks Ownership Transfers",
+  "tab_switcher_ticket_queues_label": "Ticket Queues",
+  "tab_switcher_members_due_lists_label": "Members Due Lists",
+  "tab_switcher_all_members_due_list_label": "All Members Due List",
+  "tab_switcher_projects_section_label": "Projects",
+  "tab_switcher_projects_label": "Projects"
+}

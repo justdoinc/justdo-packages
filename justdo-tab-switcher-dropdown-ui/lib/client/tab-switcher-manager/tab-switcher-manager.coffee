@@ -141,6 +141,7 @@ APP.executeAfterAppLibCode ->
     position: 100
     data:
       label: "Main View"
+      label_i18n: "tab_switcher_main_view_label"
       tab_id: "main"
 
       icon_type: "feather"
@@ -150,6 +151,7 @@ APP.executeAfterAppLibCode ->
     position: 150
     data:
       label: "My Favorites"
+      label_i18n: "tab_switcher_my_favorites_label"
       tab_id: "favorites"
 
       icon_type: "feather"
@@ -166,6 +168,7 @@ APP.executeAfterAppLibCode ->
       position: 200
       data:
         label: "My Due List"
+        label_i18n: "tab_switcher_my_due_list_label"
         tab_id: "due-list"
 
         icon_type: "feather"
@@ -181,10 +184,12 @@ APP.executeAfterAppLibCode ->
     position: 200
     data:
       label: "Recently"
+      label_i18n: "tab_switcher_recently_label"
   module.tab_switcher_manager.registerSectionItem "recently", "completed",
     position: 100
     data:
       label: "Completed"
+      label_i18n: "tab_switcher_recently_completed_label"
       tab_id: "recent-updates"
 
       icon_type: "feather"
@@ -198,6 +203,7 @@ APP.executeAfterAppLibCode ->
     position: 100
     data:
       label: "Updated"
+      label_i18n: "tab_switcher_recently_updated_label"
       tab_id: "recent-updates"
 
       icon_type: "feather"
@@ -210,6 +216,7 @@ APP.executeAfterAppLibCode ->
     position: 100
     data:
       label: "Created"
+      label_i18n: "tab_switcher_recently_created_label"
       tab_id: "recent-updates"
 
       icon_type: "feather"
@@ -223,11 +230,13 @@ APP.executeAfterAppLibCode ->
     position: 300
     data:
       label: "Miscellaneous"
+      label_i18n: "tab_switcher_miscellaneous_label"
 
   module.tab_switcher_manager.registerSectionItem "misc", "task-ownership-transfers",
     position: 100
     data:
       label: "Tasks Ownership Transfers"
+      label_i18n: "tab_switcher_task_ownershipt_transfers_label"
       tab_id: "awaiting-transfer"
 
       icon_type: "feather"
@@ -237,6 +246,7 @@ APP.executeAfterAppLibCode ->
     position: 200
     data:
       label: "Ticket Queues"
+      label_i18n: "tab_switcher_ticket_queues_label"
       tab_id: "tickets-queues"
 
       icon_type: "feather"
@@ -248,11 +258,13 @@ APP.executeAfterAppLibCode ->
     position: 400
     data:
       label: "Members Due Lists"
+      label_i18n: "tab_switcher_members_due_lists_label"
 
       itemsGenerator: ->
         res = [
           {
             label: "All Members Due List"
+            label_i18n: "tab_switcher_all_members_due_list_label"
             tab_id: "due-list"
 
             icon_type: "feather"

@@ -48,6 +48,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       position: 300
       data:
         label: "Projects"
+        label_i18n: "tab_switcher_projects_label"
         tab_id: "jdp-all-projects"
 
         icon_type: "feather"
@@ -57,6 +58,7 @@ _.extend JustdoDeliveryPlanner.prototype,
       position: 350
       data:
         label: "Projects"
+        label_i18n: "tab_switcher_projects_section_label"
 
         itemsGenerator: ->
           res = []
