@@ -15,9 +15,9 @@
 
 
   "project_id_schema_label": "專案ID",
-  "parents_schema_label": "母項目",
+  "parents_schema_label": "母任務",
   "users_schema_label": "用戶",
-  "seqId_schema_label": "項目流水號",
+  "seqId_schema_label": "任務流水號",
 
 
 

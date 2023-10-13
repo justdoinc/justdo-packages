@@ -1,9 +1,9 @@
 {
   "members_dropdown_share_label": "邀請成員",
   "members_dropdown_members_label": "成員",
-  "new_child_task_label": "添加子項目",
-  "new_sibling_task_label": "添加項目",
-  "remove_task_label": "移除項目",
+  "new_child_task_label": "創建子任務",
+  "new_sibling_task_label": "創建任務",
+  "remove_task_label": "移除任務",
   "move_up_label": "移上",
   "move_down_label": "移下",
   "move_left_label": "移左",
