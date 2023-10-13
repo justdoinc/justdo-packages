@@ -16,7 +16,7 @@
       {{> item_owners_management_reject_transfer_request_input}}
 
       <div class="reject-ownership-buttons">
-        <button type="button" class="btn btn-sm btn-secondary cancel-reject-button mr-1">Cancel</button>
+        <button type="button" class="btn btn-sm btn-light cancel-reject-button mr-1">Cancel</button>
         <button type="button" class="btn btn-sm btn-primary cancel-transfer">Send</button>
       </div>
     {{else}}
@@ -84,22 +84,22 @@
   {{/if}}
 
   {{#if hasPermissionToEditMemebers}}
-    <div class="manage-members">
-      {{#if $neq taskHasOtherMembers "loading"}}
-        {{#if $neq getState "pre-reject"}}
+    {{#if $neq getState "pre-reject"}}
+      <div class="manage-members">
+        {{#if $neq taskHasOtherMembers "loading"}}
           {{!-- Only for the pre-reject state we don't show the membership management area--}}
           {{#if taskHasOtherMembers}}
             Edit Task Members
           {{else}}
             Share Task
           {{/if}}
+        {{else}}
+          <div class="manage-members-loading">
+            Loading...
+          </div>
         {{/if}}
-      {{else}}
-        <div class="manage-members-loading">
-          Loading...
-        </div>
-      {{/if}}
-    </div>
+      </div>
+    {{/if}}
   {{/if}}
 </template>
 
