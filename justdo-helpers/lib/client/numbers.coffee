@@ -1,5 +1,5 @@
 _.extend JustdoHelpers,
-  localeAwareNumberToDollarRepresentation: (number) ->
+  localeAwareNumberRepresentation: (number) ->
     if not number?
       return
     browser_locale = navigator.languages?[0] or navigator.language or navigator.userLanguage or navigator.browserLanguage
@@ -8,5 +8,5 @@ _.extend JustdoHelpers,
 if (templating = Package.templating)?
   {Template} = templating
   
-  Template.registerHelper "localeAwareNumberToDollarRepresentation", (number) ->
-    return JustdoHelpers.localeAwareNumberToDollarRepresentation number
+  Template.registerHelper "localeAwareNumberRepresentation", (number) ->
+    return JustdoHelpers.localeAwareNumberRepresentation number
