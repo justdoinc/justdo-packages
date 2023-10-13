@@ -2,8 +2,10 @@ _.extend JustdoHelpers,
   localeAwareNumberRepresentation: (number) ->
     if not number?
       return
-    browser_locale = navigator.languages?[0] or navigator.language or navigator.userLanguage or navigator.browserLanguage
-    return new Intl.NumberFormat(browser_locale).format number
+    if not _.isNumber number
+      throw new Error "invalid-argument"
+      
+    return number.toLocaleString()
 
 if (templating = Package.templating)?
   {Template} = templating
