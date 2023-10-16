@@ -2,8 +2,8 @@ _.extend JustdoHelpers,
   localeAwareNumberRepresentation: (number) ->
     if not number?
       return
-    if not _.isNumber number
-      throw new Error "invalid-argument"
+    if _.isString number
+      number = parseInt number, 10
       
     return number.toLocaleString()
 
