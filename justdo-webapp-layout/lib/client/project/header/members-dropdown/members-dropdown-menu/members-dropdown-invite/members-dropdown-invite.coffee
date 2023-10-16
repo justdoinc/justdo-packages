@@ -7,7 +7,7 @@ APP.executeAfterAppLibCode ->
   Template.members_dropdown_invite.onCreated ->
     tpl = @
     tpl.curProj = APP.modules.project_page.helpers.curProj()
-    tpl.users = new ReactiveVar []
+    tpl.users_rv = new ReactiveVar []
     tpl.selected_tasks_rv = new ReactiveVar []
     tpl.selected_projects_rv = new ReactiveVar []
     tpl.root_tasks_rv = new ReactiveVar []
@@ -53,7 +53,7 @@ APP.executeAfterAppLibCode ->
 
         tpl.checkAddButtonVisibility()
       else
-        tpl.users.set []
+        tpl.users_rv.set []
         $(".invite-members-input").val ""
 
       return
@@ -71,7 +71,7 @@ APP.executeAfterAppLibCode ->
     ]
 
     tpl.setDefaulSettings = ->
-      tpl.users.set []
+      tpl.users_rv.set []
       tpl.active_share_option.set tpl.share_options[0]
 
       return
@@ -89,7 +89,7 @@ APP.executeAfterAppLibCode ->
     tpl.recognizeEmails = (show_advanced_dialog = false) ->
       $el = $(".invite-members-input")
       new_users = {}
-      users = tpl.users.get().slice()
+      users = tpl.users_rv.get().slice()
       inputs = $el.val().split(",")
       invalid_inputs = []
       existing_members = tpl.curProj.getMembersDocs()
@@ -184,7 +184,7 @@ APP.executeAfterAppLibCode ->
         if show_advanced_dialog
           ProjectPageDialogs.showMemberDialog({initial_users: users})
         else
-          tpl.users.set users
+          tpl.users_rv.set users
 
       tpl.invalid_email_input_rv.set invalid_inputs
 
@@ -208,7 +208,7 @@ APP.executeAfterAppLibCode ->
 
   Template.members_dropdown_invite.helpers
     users: ->
-      return Template.instance().users.get()
+      return Template.instance().users_rv.get()
 
     shareOptions: ->
       return Template.instance().share_options
@@ -332,10 +332,10 @@ APP.executeAfterAppLibCode ->
       return
 
     "click .remove-invite-email": (e, tpl) ->
-      users = tpl.users.get()
+      users = tpl.users_rv.get()
       email_to_remove = @.email
       users = users.filter (user) -> user.email != email_to_remove
-      tpl.users.set users
+      tpl.users_rv.set users
 
       return
 
@@ -431,7 +431,7 @@ APP.executeAfterAppLibCode ->
       if not _.isEmpty invite_input_val
         tpl.recognizeEmails()
       else
-        users = tpl.users.get()
+        users = tpl.users_rv.get()
 
         if users.length > 0
           active_justdo = APP.modules.project_page.helpers.curProj()
