@@ -237,7 +237,7 @@ APP.executeAfterAppLibCode ->
     projectIsSelected: ->
       selected_projects = Template.instance().selected_projects_rv.get()
 
-      if _.contains(selected_projects, @._id)
+      if _.contains(selected_projects, @_id)
         return "selected"
 
       return
@@ -333,14 +333,14 @@ APP.executeAfterAppLibCode ->
 
     "click .remove-invite-email": (e, tpl) ->
       users = tpl.users_rv.get()
-      email_to_remove = @.email
+      email_to_remove = @email
       users = users.filter (user) -> user.email != email_to_remove
       tpl.users_rv.set users
 
       return
 
     "click .invite-settings-share .dropdown-item": (e, tpl) ->
-      if @.class == "share-specific"
+      if @class == "share-specific"
         tpl.show_projects_picker_dep.changed()
         tpl.search_projects_val_rv.set ""
         $(".search-projects-input").val("")
@@ -380,7 +380,7 @@ APP.executeAfterAppLibCode ->
 
     "click .project-item": (e, tpl) ->
       selected_projects = tpl.selected_projects_rv.get()
-      task_id = @._id
+      task_id = @_id
 
       if _.contains(selected_projects, task_id)
         selected_projects = selected_projects.filter (id) -> id isnt task_id
