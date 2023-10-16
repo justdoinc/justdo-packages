@@ -41,15 +41,17 @@ APP.executeAfterAppLibCode ->
     # When switching to the invite mode,
     # if the input contains a valid email - it's immediately added to the invite list
     tpl.autorun ->
-      invited_mode = tpl.data.inviteMode.get()
+      invite_mode = tpl.data.inviteMode.get()
 
-      if invited_mode
+      if invite_mode
         invite_input_val = $(".invite-members-input").val()
 
         if email_regex.test(invite_input_val)
           tpl.recognizeEmails()
         else if email_regex2.test(invite_input_val)
           tpl.recognizeEmails()
+
+        tpl.checkAddButtonVisibility()
       else
         tpl.users.set []
         $(".invite-members-input").val ""
@@ -75,6 +77,14 @@ APP.executeAfterAppLibCode ->
       return
 
     tpl.setDefaulSettings()
+
+    tpl.checkAddButtonVisibility = ->
+      if _.isEmpty($(".invite-members-input").val().trim())
+        tpl.show_add_button_rv.set false
+      else
+        tpl.show_add_button_rv.set true
+
+      return
 
     tpl.recognizeEmails = (show_advanced_dialog = false) ->
       $el = $(".invite-members-input")
@@ -283,12 +293,8 @@ APP.executeAfterAppLibCode ->
     "keyup .invite-members-input": (e, tpl) ->
       if e.keyCode == 13
         tpl.recognizeEmails()
-        return
 
-      if _.isEmpty(input_val = $(".invite-members-input").val().trim())
-        tpl.show_add_button_rv.set false
-      else
-        tpl.show_add_button_rv.set true
+      tpl.checkAddButtonVisibility()
 
       return
 
@@ -301,6 +307,7 @@ APP.executeAfterAppLibCode ->
 
     "click .invite-members-input-add": (e, tpl) ->
       tpl.recognizeEmails()
+      tpl.checkAddButtonVisibility()
       $(".invite-members-input").focus()
 
       return
