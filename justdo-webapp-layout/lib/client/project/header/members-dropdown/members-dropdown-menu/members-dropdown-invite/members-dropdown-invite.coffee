@@ -217,6 +217,9 @@ APP.executeAfterAppLibCode ->
       return Template.instance().active_share_option.get().title
 
     projects: ->
+      return Template.instance().projects_rv.get()
+
+    filteredProjects: ->
       tpl = Template.instance()
       tpl.show_projects_picker_dep.depend() # Re-opening projects picker should trigger refresh of project list
 

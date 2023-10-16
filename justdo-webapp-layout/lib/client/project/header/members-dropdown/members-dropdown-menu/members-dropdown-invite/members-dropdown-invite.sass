@@ -4,7 +4,7 @@
 
   .members-dropdown-invite-header
     display: flex
-    padding: 16px 16px 8px 16px
+    padding: 16px
     align-items: center
 
     .invite-members-input
@@ -24,7 +24,6 @@
 
   .alerts-container
     margin: 0 16px
-    font-size: 13px
     .alert
       margin: 0px
       &:last-child
@@ -178,11 +177,22 @@
     padding: 0
     overflow: hidden
 
-    .search-projects-input-wrapper
+    .search-projects-wrapper
       position: relative
       margin: 16px
       display: flex
       align-items: center
+      .search-projects-input-wrapper
+        display: flex
+        align-items: center
+        width: 100%
+        .search-icon
+          position: absolute
+          padding: 4px
+          left: 2px
+        .search-projects-input
+          padding: 0 30px 0 26px
+
       .clear-projects-search
         position: absolute
         right: 6px
@@ -194,8 +204,6 @@
           stroke: black
           background-color: rgba(0, 0, 0, 0.08)
           transform: scale(1.05)
-      .search-projects-input
-        padding-right: 30px
 
   .projects-list
     overflow: auto
@@ -203,6 +211,8 @@
     display: flex
     flex-grow: 1
     align-items: start
+    flex-direction: column
+    user-select: none
     .no-results
       color: rgba(49, 69, 99, 0.5)
       padding: 20px

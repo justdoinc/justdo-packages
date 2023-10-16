@@ -59,20 +59,27 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
-          <div class="search-projects-input-wrapper">
-            <input class="search-projects-input form-control form-control-sm" type="text" placeholder="Find project">
+          <div class="search-projects-wrapper">
+            <div class="search-projects-input-wrapper">
+              <input class="search-projects-input form-control form-control-sm" type="text" placeholder="Find project">
+              <svg class="jd-icon text-secondary search-icon"><use xlink:href="/layout/icons-feather-sprite.svg#search"></use></svg>
+            </div>
             {{#if showClearProjectsSearch}}
               <svg class="jd-icon jd-c-pointer clear-projects-search"><use xlink:href="/layout/icons-feather-sprite.svg#x"></use></svg>
             {{/if}}
           </div>
           <div class="projects-list">
-            {{#each projects}}
-              <div class="project-item {{projectIsSelected}}">
-                <div class="select-icon"></div>
-                <div class="title">
-                  <span>#{{seqId}}</span>: {{title}}
+            {{#if projects}}
+              {{#each filteredProjects}}
+                <div class="project-item {{projectIsSelected}}">
+                  <div class="select-icon"></div>
+                  <div class="title">
+                    <span>#{{seqId}}</span>: {{title}}
+                  </div>
                 </div>
-              </div>
+              {{else}}
+                <div class="no-results">No projects found</div>
+              {{/each}}
             {{else}}
               <div class="no-results">
                 There're no projects in this JustDo.<br>
@@ -81,10 +88,10 @@
                   <source src="/packages/justdoinc_justdo-webapp-layout/lib/client/project/header/members-dropdown/members-dropdown-menu/members-dropdown-invite/assets/set_task_as_project.mp4" type="video/mp4">
                 </video>
               </div>
-            {{/each}}
+            {{/if}}
           </div>
         </div>
-        {{#if projects}}
+        {{#if filteredProjects}}
           <div class="bulk-selecter-wrapper">
             <a href="#" class="select-all-projects">{{#if isAllProjectsSelected}}Deselect{{else}}Select{{/if}} all</a>
           </div>
