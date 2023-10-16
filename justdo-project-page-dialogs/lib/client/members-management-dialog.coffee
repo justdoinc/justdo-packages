@@ -681,7 +681,7 @@ APP.executeAfterAppLibCode ->
     recentBatchedOpsCount: -> APP.collections.DBMigrationBatchedCollectionUpdates.find(getBatchedCollectionUpdatesQuery()).fetch().length
     isInProgress: -> @process_status is "in-progress"
     processedPercent: -> Math.floor((@process_status_details.processed / @process_status_details.total) * 100)
-    detailedProcessed: -> """Processed #{parseInt(@process_status_details.processed, 10).toLocaleString()} tasks out of #{parseInt(@process_status_details.total, 10).toLocaleString()}"""
+    detailedProcessed: -> """Processed #{JustdoHelpers.localeAwareNumberRepresentation parseInt(@process_status_details.processed, 10)} tasks out of #{JustdoHelpers.localeAwareNumberRepresentation parseInt(@process_status_details.total, 10)}"""
 
     opsMessage: ->
       op_object = @
@@ -708,7 +708,7 @@ APP.executeAfterAppLibCode ->
 
       if Meteor.userId() in members_to_remove
         # When the user himself is removed, he'll always be the only one involved in the operation
-        message_arr.push "Removing You from #{parseInt(total_tasks_in_job, 10).toLocaleString()} tasks"
+        message_arr.push "Removing You from #{JustdoHelpers.localeAwareNumberRepresentation parseInt(total_tasks_in_job, 10)} tasks"
 
         return getMessage()
 
@@ -732,7 +732,7 @@ APP.executeAfterAppLibCode ->
         if members_to_remove.length > 0
           message_arr.push "from"
 
-      message_arr.push "#{parseInt(total_tasks_in_job, 10).toLocaleString()} tasks"
+      message_arr.push "#{JustdoHelpers.localeAwareNumberRepresentation parseInt(total_tasks_in_job, 10)} tasks"
 
       if tasks_to_list_by_their_name.length > 0
         if tasks_to_list_by_their_name.length == 1
