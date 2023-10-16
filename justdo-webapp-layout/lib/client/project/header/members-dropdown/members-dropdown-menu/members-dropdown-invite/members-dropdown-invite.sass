@@ -200,13 +200,26 @@
   .projects-list
     overflow: auto
     padding-bottom: 16px
+    display: flex
+    flex-grow: 1
+    align-items: start
     .no-results
       color: rgba(49, 69, 99, 0.5)
-      height: 300px
       padding: 20px
       display: flex
       align-items: center
       justify-content: center
+      width: 100%
+      height: 100%
+      flex-direction: column
+      text-align: center
+      .tutorial-media
+        width: 100%
+        height: auto
+        border: 1px solid #e4e4e4
+        margin-top: 12px
+        box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.04)
+
 
   .bulk-selecter-wrapper
     padding: 8px 20px

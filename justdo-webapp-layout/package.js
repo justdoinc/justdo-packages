@@ -153,6 +153,7 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/dual-frame-settings-page-layout/menu-item/menu-item.coffee", "client");
 
   api.addAssets("lib/client/assets/layout-sprite.png", "client");
+  api.addAssets("lib/client/project/header/members-dropdown/members-dropdown-menu/members-dropdown-invite/assets/set_task_as_project.mp4", "client");
 
   api.use("meteorspark:app@0.3.0", client);
   api.use("justdoinc:justdo-webapp-boot@1.0.0", client);

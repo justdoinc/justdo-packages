@@ -194,6 +194,18 @@ APP.executeAfterAppLibCode ->
 
     return
 
+  Template.members_dropdown_invite.onRendered ->
+    $("#members-invite-projects-selector").on "shown.bs.modal", ->
+      media = $(".no-results .tutorial-media")[0]
+
+      if media
+        media.play()
+        media.playbackRate = 1.5
+
+      return
+
+    return
+
   Template.members_dropdown_invite.helpers
     users: ->
       return Template.instance().users.get()
