@@ -16,6 +16,12 @@ APP.executeAfterAppLibCode ->
         "status": "pending"
       },
       {
+        "title": "invite_members_title",
+        "subtitle": "invite_members_subtitle",
+        "media": "/packages/justdoinc_justdo-tutorials/lib/client/project-header-tutorial/tutorials/media/invite_members.mp4"
+        "status": "pending"
+      },
+      {
         "title": "import_tasks_title",
         "subtitle": "import_tasks_subtitle",
         "media": "/packages/justdoinc_justdo-tutorials/lib/client/project-header-tutorial/tutorials/media/import_tasks.mp4"

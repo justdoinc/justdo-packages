@@ -74,6 +74,7 @@ Package.onUse(function (api) {
   api.addAssets("lib/client/project-header-tutorial/tutorials/media/customize_view.mp4", client);
   api.addAssets("lib/client/project-header-tutorial/tutorials/media/import_tasks.mp4", client);
   api.addAssets("lib/client/project-header-tutorial/tutorials/media/set_name.mp4", client);
+  api.addAssets("lib/client/project-header-tutorial/tutorials/media/invite_members.mp4", client);
 
   api.addFiles("lib/client/project-header-tutorial/tutorials/tutorials.sass", client);
   api.addFiles("lib/client/project-header-tutorial/tutorials/tutorials.html", client);
