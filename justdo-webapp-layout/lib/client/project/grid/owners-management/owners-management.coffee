@@ -405,8 +405,8 @@ APP.executeAfterAppLibCode ->
     return
 
   Template.item_owners_management_reject_transfer_request_input.events
-    "keypress .reject-message-input": (e) ->
-      if e.ctrlKey && e.keyCode == 13
+    "keydown .reject-message-input": (e) ->
+      if (e.metaKey || e.ctrlKey) && e.keyCode == 13
         $(".cancel-transfer").click()
 
       return
