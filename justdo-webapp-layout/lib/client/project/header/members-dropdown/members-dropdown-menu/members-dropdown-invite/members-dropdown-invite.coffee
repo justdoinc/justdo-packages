@@ -8,10 +8,12 @@ APP.executeAfterAppLibCode ->
     tpl = @
     tpl.curProj = APP.modules.project_page.helpers.curProj()
     tpl.users_rv = new ReactiveVar []
-    tpl.selected_tasks_rv = new ReactiveVar []
-    tpl.selected_projects_rv = new ReactiveVar []
     tpl.root_tasks_rv = new ReactiveVar []
     tpl.projects_rv = new ReactiveVar []
+
+    tpl.selected_tasks_rv = new ReactiveVar []
+    tpl.selected_projects_rv = new ReactiveVar []
+
     tpl.active_share_option = new ReactiveVar null
     tpl.search_projects_val_rv = new ReactiveVar ""
     tpl.show_add_button_rv = new ReactiveVar false
@@ -27,7 +29,6 @@ APP.executeAfterAppLibCode ->
           root_tasks.push item[0]._id
 
       tpl.root_tasks_rv.set root_tasks
-      tpl.selected_tasks_rv.set root_tasks
 
       projects_query =
         project_id: JD.activeJustdoId()
@@ -242,11 +243,10 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    isAllProjectsSelected: ->
+    isProjectsSelected: ->
       tpl = Template.instance()
       selected_projects = tpl.selected_projects_rv.get()
-      all_projects = tpl.projects_rv.get()
-      return _.size(selected_projects) is _.size(all_projects)
+      return not _.isEmpty selected_projects
 
     selectedProjectsCount: ->
       tpl = Template.instance()
@@ -343,18 +343,13 @@ APP.executeAfterAppLibCode ->
       if @class == "share-specific"
         tpl.show_projects_picker_dep.changed()
         tpl.search_projects_val_rv.set ""
+        tpl.selected_projects_rv.set _.map tpl.selected_tasks_rv.get(), (task) -> task
         $(".search-projects-input").val("")
         $("#members-invite-projects-selector").modal "show"
         $(".search-projects-input").focus()
       else
         tpl.selected_projects_rv.set []
         tpl.active_share_option.set @
-
-        if @.class == "share-all"
-          tpl.selected_tasks_rv.set tpl.root_tasks_rv.get()
-
-        if @.class == "share-none"
-          tpl.selected_tasks_rv.set []
 
       return
 
@@ -396,7 +391,7 @@ APP.executeAfterAppLibCode ->
 
       selected_projects = tpl.selected_projects_rv.get()
       all_projects = tpl.projects_rv.get()
-      if _.size(selected_projects) is _.size(all_projects)
+      if not _.isEmpty selected_projects
         tpl.selected_projects_rv.set []
       else
         tpl.selected_projects_rv.set _.map all_projects, (doc) -> doc._id
@@ -405,7 +400,7 @@ APP.executeAfterAppLibCode ->
 
     "click .save-selected-tasks": (e, tpl) ->
       selected_projects = tpl.selected_projects_rv.get()
-      tpl.selected_tasks_rv.set selected_projects
+      tpl.selected_tasks_rv.set _.map selected_projects, (project) -> project
       active_share_option = tpl.share_options[1]
       active_share_option.title = """Share <span>#{selected_projects.length}</span> project"""
 
@@ -424,7 +419,6 @@ APP.executeAfterAppLibCode ->
 
       return
 
-
     "click .invite-members-btn": (e, tpl) ->
       invite_input_val = $(".invite-members-input").val()
 
@@ -435,11 +429,15 @@ APP.executeAfterAppLibCode ->
 
         if users.length > 0
           active_justdo = APP.modules.project_page.helpers.curProj()
-          sub_trees_roots_selected = tpl.selected_tasks_rv.get()
-          selected_tasks = tpl.selected_tasks_rv.get()
-          selected_tasks_set = new Set(selected_tasks)
-
-
+          
+          selected_tasks = []
+          share_option = tpl.active_share_option.get()?.class
+          if share_option is "share-all"
+            selected_tasks = tpl.root_tasks_rv.get()
+          if share_option is "share-specific"
+            selected_tasks = tpl.selected_tasks_rv.get()
+          selected_tasks_and_children_set = new Set(selected_tasks)
+          
           for user in users
             if not user.registered or not user.first_name?
               user.first_name = ""
@@ -460,7 +458,7 @@ APP.executeAfterAppLibCode ->
             gdc = APP.modules.project_page.gridControl()._grid_data._grid_data_core
             subtree = gdc.getAllItemsKnownDescendantsIdsObj(selected_tasks)
             for task_id of subtree
-              selected_tasks_set.add task_id
+              selected_tasks_and_children_set.add task_id
 
           invite_member_promises = []
           existing_members_ids = []
@@ -544,10 +542,10 @@ APP.executeAfterAppLibCode ->
 
             all_members = invited_members.concat(existing_members_ids)
 
-            if not _.isEmpty(all_members) and selected_tasks_set.size > 0
+            if not _.isEmpty(all_members) and selected_tasks_and_children_set.size > 0
               APP.modules.project_page.curProj().bulkUpdateTasksUsers
-                tasks: Array.from(selected_tasks_set)
-                user_perspective_root_items: sub_trees_roots_selected
+                tasks: Array.from(selected_tasks_and_children_set)
+                user_perspective_root_items: selected_tasks
                 members_to_add: all_members
 
             tpl.data.invitedMembersCount.set invited_members.length
