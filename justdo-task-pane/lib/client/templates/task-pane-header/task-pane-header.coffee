@@ -13,7 +13,7 @@ APP.executeAfterAppLibCode ->
       if active_item_obj.title?
         return active_item_obj.title
 
-      return "Untitled Task"
+      return APP.justdo_i18n.getI18nTextOrFallback {fallback_text: "Untitled Task", i18n_key: "untitled_task_title"}
 
     return ""
 
