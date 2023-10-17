@@ -13,6 +13,7 @@ _.extend JustdoTasksContextMenu.prototype,
       position: 100
       data:
         label: "New Sibling Task"
+        label_i18n: "new_sibling_task_label"
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           APP.modules.project_page.performOp("addSiblingTask")
 
@@ -31,6 +32,7 @@ _.extend JustdoTasksContextMenu.prototype,
       position: 200
       data:
         label: "New Child Task"
+        label_i18n: "new_child_task_label"
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           APP.modules.project_page.performOp("addSubTask")
 
@@ -57,6 +59,16 @@ _.extend JustdoTasksContextMenu.prototype,
             return "Remove from favorites"
           else
             return "Add to favorites"
+        label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          if not (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "priv:favorite": 1}}))?
+            # This should never happen
+            return ""
+
+          if task_doc["priv:favorite"]?
+            return "remove_from_favorites_label"
+          else
+            return "add_to_favorites_label"
+
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           if not (task_doc = APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "priv:favorite": 1}}))?
             # This should never happen
@@ -106,6 +118,18 @@ _.extend JustdoTasksContextMenu.prototype,
 
           return "Remove Task"
 
+        label_i18n: ->
+          if not (gc = APP.modules.project_page?.gridControl())?
+            return false
+
+          if gc.isMultiSelectMode()
+            return "remove_tasks_label"
+
+          if Object.keys(JD.activeItem({parents: 1}).parents).length > 1
+            return "remove_from_parent_label"
+
+          return "remove_task_label"
+
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           APP.modules.project_page.performOp("removeTask")
 
@@ -124,6 +148,7 @@ _.extend JustdoTasksContextMenu.prototype,
       position: 400
       data:
         label: "Remove with Sub-Tree"
+        label_i18n: "remove_with_subtree_label"
 
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           task = APP.collections.Tasks.findOne(task_id, {fields: {seqId: 1, title: 1}})
@@ -200,6 +225,13 @@ _.extend JustdoTasksContextMenu.prototype,
             return "Unarchive Task"
 
           return "Archive Task"
+        label_i18n: ->
+          task_archived = JD.activeItem({archived: 1}).archived
+
+          if _.isDate task_archived
+            return "unarchive_task_label"
+
+          return "archive_task_label"
 
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           op =
@@ -250,6 +282,15 @@ _.extend JustdoTasksContextMenu.prototype,
           current_selected_value_label = field_info.column_field_schema?.grid_values?[field_val]?.txt or "value"
 
           return "Apply #{current_selected_value_label} to subtree"
+        label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          current_selected_value = field_info.column_field_schema?.grid_values?[field_val]
+          current_selected_value_label = current_selected_value?.txt
+          current_selected_value_i18n = current_selected_value?.txt_i18n
+
+          translated_value_label = APP.justdo_i18n.getI18nTextOrFallback {i18n_key: current_selected_value_i18n, fallback_text: current_selected_value_label}
+
+          return {label_i18n: "apply_value_to_subtree", options_i18n: {value: translated_value_label}}
+          
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           subtasks_with_different_val = getSubtreeItemsWithDifferentVals(task_path, field_val, field_info)
 
@@ -307,6 +348,7 @@ _.extend JustdoTasksContextMenu.prototype,
       position: 500
       data:
         label: "Reorder children by"
+        label_i18n: "reorder_children_by_label"
         is_nested_section: true
         icon_type: "feather"
         icon_val: "jd-sort"
@@ -372,6 +414,7 @@ _.extend JustdoTasksContextMenu.prototype,
           position: current_position
           data:
             label: -> if label then label else getLabelForFieldId(field_id)
+            label_i18n: "#{field_id}_schema_label"
             op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
               if not (gc = APP.modules.project_page?.gridControl())?
                 return false
@@ -398,6 +441,7 @@ _.extend JustdoTasksContextMenu.prototype,
       position: 100
       data:
         label: "Zoom in"
+        label_i18n: "zoom_in_label"
         op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           APP.modules.project_page.performOp("zoomIn")
 
@@ -512,6 +556,7 @@ _.extend JustdoTasksContextMenu.prototype,
         position: 400
         data:
           label: "Projects"
+          label_i18n: "projects_label"
         listingCondition: ->
           if not (gc = APP.modules.project_page?.gridControl())?
             return false
@@ -531,6 +576,10 @@ _.extend JustdoTasksContextMenu.prototype,
             if task_id? and APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
               return "Unset as a Project"
             return "Set as a Project"
+          label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            if task_id? and APP.justdo_delivery_planner.isTaskObjProject(APP.collections.Tasks.findOne(task_id, {fields: {_id: 1, "#{JustdoDeliveryPlanner.task_is_project_field_name}": 1}}))
+              return "unset_as_a_project_label"
+            return "set_as_a_project_label"          
           op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
             APP.justdo_delivery_planner.toggleTaskIsProject task_id
             return 
@@ -550,6 +599,11 @@ _.extend JustdoTasksContextMenu.prototype,
               return "Reopen Project"
             else
               return "Close Project"
+          label_i18n: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+            if dependencies_fields_vals?[JustdoDeliveryPlanner.task_is_archived_project_field_name]
+              return "repoen_project_label"
+            else
+              return "close_project_label"
           op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
             APP.justdo_delivery_planner.toggleTaskArchivedProjectState task_id
             return 
@@ -563,6 +617,7 @@ _.extend JustdoTasksContextMenu.prototype,
         position: 100
         data:
           label: "Add to project"
+          label_i18n: "add_to_project_label"
           is_nested_section: true
           icon_type: "feather"
           icon_val: "corner-right-down"

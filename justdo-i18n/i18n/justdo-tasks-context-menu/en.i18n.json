@@ -1,0 +1,16 @@
+{
+  "remove_tasks_label": "Remove Tasks",
+  "remove_from_parent_label": "Remove From Parent",
+  "remove_with_subtree_label": "Remove with Sub-Tree",
+  "archive_task_label": "Archive Task",
+  "unarchive_task_label": "Unarchive Task",
+  "reorder_children_by_label": "Reorder children by",
+  "zoom_in_label": "Zoom in",
+  "projects_label": "Projects",
+  "set_as_a_project_label": "Set as a Project",
+  "unset_as_a_project_label": "Unset as a Project",
+  "close_project_label": "Close Project",
+  "repoen_project_label": "Reopen Project",
+  "add_to_project_label": "Add to project",
+  "apply_value_to_subtree": "Apply __value__ to subtree"
+}
