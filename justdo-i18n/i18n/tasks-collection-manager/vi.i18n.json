@@ -1,0 +1,15 @@
+{
+  "title_schema_label": "Danh mục",
+  "status_schema_label": "Ghi chú",
+  "state_schema_label": "Tình trạng",
+  "state_pending": "Hoãn",
+  "state_in_progress": "Đang làm",
+  "state_done": "Xong",
+  "state_cancelled": "Hủy",
+  "state_on_hold": "Tạm dừng",
+  "state_duplicate": "Nhân bản",
+
+  "start_date_schema_label": "Ngày bắt đầu",
+  "end_date_schema_label": "Ngày hoàn thành"
+
+}

@@ -1,10 +1,5 @@
 {
-  "subject": "Subject",
-  "notes": "Notes",
-  "start_date": "Start Date",
-  "end_date": "End Date",
   "private_follow_up": "Private follow up",
-  "state_label": "State",
   "state_pending": "Pending",
   "state_in_progress": "In Progress",
   "state_done": "Done",

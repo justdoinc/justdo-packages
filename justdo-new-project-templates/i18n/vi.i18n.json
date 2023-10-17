@@ -1,21 +1,8 @@
 {
-  "subject": "Danh mục",
-  "notes": "Ghi chú",
-  "start_date": "Ngày bắt đầu",
-  "end_date": "Ngày hoàn thành",
   "private_follow_up": "Theo dõi riêng tư",
-  "state_label": "Tình trạng",
-  "state_pending": "Hoãn",
-  "state_in_progress": "Đang làm",
-  "state_done": "Xong",
-  "state_cancelled": "Hủy",
-  "state_on_hold": "Tạm dừng",
-  "state_duplicate": "Nhân bản",
 
   "new_project_template_popup_title": "Chào mừng!",
   "new_project_template_popup_subtitle": "Bắt đầu bằng việc chọn mẫu giao diện phù hợp nhất với bạn",
-
-
 
   "project_templates_home_builders_inc_label": "Danh sách nhà thầu",
   "project_templates_it_firm_label": "Công ty CNTT",
