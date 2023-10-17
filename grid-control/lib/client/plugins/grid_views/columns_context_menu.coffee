@@ -49,8 +49,9 @@ _.extend GridControl.prototype,
     extended_schema = @getSchemaExtendedWithCustomFields()
     for field in missing_fields
       do (field) =>
+        label = APP.justdo_i18n.getI18nTextOrFallback {fallback_text: extended_schema[field].label, i18n_key: extended_schema[field].label_i18n}
         append_fields_submenu.push
-          text: JustdoHelpers.xssGuard(extended_schema[field].label, {allow_html_parsing: true, enclosing_char: ''})
+          text: JustdoHelpers.xssGuard(label, {allow_html_parsing: true, enclosing_char: ''})
           action: (e) =>
             @addFieldToView(field, column_index_of_last_opened_cmenu + 1)
 
@@ -58,7 +59,7 @@ _.extend GridControl.prototype,
 
     append_fields_menu = [
       {
-        text: 'Add Column'
+        text: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: "Add Column", i18n_key: "add_column_label"}
         subMenu: append_fields_submenu
       }
     ]
@@ -67,7 +68,7 @@ _.extend GridControl.prototype,
     if @getView()[0].frozen is true
       freeze_unfreeze_column = [
         {
-          text: "Unfreeze Column"
+          text: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: "Unfreeze Column", i18n_key: "unfreeze_column_label"}
           action: (e) =>
             current_view = @getView()
 
@@ -81,7 +82,7 @@ _.extend GridControl.prototype,
     else
       freeze_unfreeze_column = [
         {
-          text: "Freeze Column"
+          text: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: "Freeze Column", i18n_key: "freeze_column_label"}
           action: (e) =>
             current_view = @getView()
 
@@ -119,7 +120,7 @@ _.extend GridControl.prototype,
       id: @_getColumnsManagerContextMenuId("common")
       data: menu.concat [
         {
-          text: 'Hide Column'
+          text: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: "Hide Column", i18n_key: "hide_column_label"}
           action: (e) =>
             @_hideFieldColumn(@getView()[column_index_of_last_opened_cmenu].field)
         }
