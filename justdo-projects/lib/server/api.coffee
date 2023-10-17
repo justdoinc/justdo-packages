@@ -238,8 +238,9 @@ _.extend Projects.prototype,
       custom_features: ["justdo_private_follow_up", "justdo_inbound_emails", "justdo_clipboard_import", "justdo-item-duplicate-control", "disable-quick-add"]
     }
 
+    user_lang = APP.justdo_i18n.getUserLang(user_id) or JustdoI18n.default_lang
     project = 
-      title: @_default_project_name
+      title: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: @_default_project_name, i18n_key: "untitled_project_title", lang: user_lang}
       members: [
         {
           user_id: user_id
@@ -285,7 +286,7 @@ _.extend Projects.prototype,
     if options.init_first_task
       @skipMemberVerification =>
         first_doc = {
-          title: "Untitled Task"
+          title: APP.justdo_i18n.getI18nTextOrFallback({fallback_text: "Untitled Task", i18n_key: "untitled_task_title", lang: user_lang})
           project_id: project_id
 
           # createNewProject might be called when no user is logged in

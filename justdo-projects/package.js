@@ -27,6 +27,8 @@ Package.onUse(function (api) {
   api.use('aldeed:collection2@2.3.2', both);
 
   api.use('fourseven:scss@3.2.0', client);
+  api.use("tap:i18n@1.8.2", both);
+  api.use("justdoinc:justdo-i18n@1.0.0", both);
 
   api.use("justdoinc:justdo-push-notifications@1.0.0", server);
 
