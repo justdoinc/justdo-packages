@@ -1,11 +1,5 @@
 {
   "private_follow_up": "Private follow up",
-  "state_pending": "Pending",
-  "state_in_progress": "In Progress",
-  "state_done": "Done",
-  "state_cancelled": "Cancelled",
-  "state_on_hold": "On Hold",
-  "state_duplicate": "Duplicate",
 
   "new_project_template_popup_title": "Welcome",
   "new_project_template_popup_subtitle": "Start by choosing a template that suit your needs",
