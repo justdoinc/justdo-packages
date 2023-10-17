@@ -106,6 +106,7 @@ Package.onUse(function (api) {
   // Always after templates
   api.add_files("i18n/en.i18n.json", both);
   api.add_files("i18n/vi.i18n.json", both);
+  api.add_files("i18n/zh-TW.i18n.json", both);
 
   api.export("JustDoProjectsTemplates", both);
 });
