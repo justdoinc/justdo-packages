@@ -230,7 +230,7 @@ APP.getEnv (env) ->
         task_id: "43"
         title_i18n: "demo_movie_name_1"
         state_class: "in-progress"
-        state_title_i18n: "in-progress"
+        state_title_i18n: "state_in_progress"
       }
       {
         level: 2
@@ -238,7 +238,7 @@ APP.getEnv (env) ->
         task_id: "47"
         title_i18n: "development"
         state_class: "in-progress"
-        state_title_i18n: "in-progress"
+        state_title_i18n: "state_in_progress"
       }
       {
         level: 3
