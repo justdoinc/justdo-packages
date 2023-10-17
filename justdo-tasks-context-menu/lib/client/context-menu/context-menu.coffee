@@ -195,10 +195,24 @@ Template.tasks_context_menu_label_content.helpers
 
     if _.isFunction @label
       call_args = [@].concat(tpl.closestInstance("tasks_context_menu").tasks_context_menu_controller._sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator())
-      return @label.apply(@, call_args)
+      label = @label.apply(@, call_args)
 
     if _.isString @label
-      return @label
+      label = @label
+    
+    if _.isFunction @label_i18n
+      call_args = [@].concat(tpl.closestInstance("tasks_context_menu").tasks_context_menu_controller._sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator())
+      i18n_args = @label_i18n.apply(@, call_args)
+      if _.isString i18n_args
+        label_i18n = i18n_args
+      else
+        {label_i18n, options_i18n} = i18n_args
+    
+    if _.isString @label_i18n
+      label_i18n = @label_i18n
+    
+    if label?
+      return APP.justdo_i18n.getI18nTextOrFallback {fallback_text: label, i18n_key: label_i18n, i18n_options: options_i18n}
 
     return undefined
 

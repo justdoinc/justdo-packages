@@ -269,6 +269,9 @@ _.extend JustdoTasksContextMenu.prototype,
         label:
           type: String
           optional: true
+        label_i18n:
+          type: String
+          optional: true
         display_item_filter_ui:
           type: Boolean
           optional: true
@@ -348,6 +351,9 @@ _.extend JustdoTasksContextMenu.prototype,
       type: new SimpleSchema
         label:
           type: "skip-type-check"
+        label_i18n:
+          type: "skip-type-check"
+          optional: true
         label_addendum_template:
           type: String
 
