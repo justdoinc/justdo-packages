@@ -68,7 +68,7 @@ _.extend JustdoI18n.prototype,
     return
   
   getLang: ->
-    if Meteor.user()?
+    if Meteor.user({fields: {"profile.lang": 1}})?
       return @getUserLang() or JustdoI18n.default_lang
 
     if (lang = @lang_rv.get())?

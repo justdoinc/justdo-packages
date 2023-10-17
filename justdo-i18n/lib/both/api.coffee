@@ -25,7 +25,7 @@ _.extend JustdoI18n.prototype,
     # In most cases, you should use getLang() on client side.
     if Meteor.isClient
       if not user?
-        user = Meteor.user()
+        user = Meteor.user({fields: {"profile.lang": 1}})
     else
       if _.isString user
         user = Meteor.users.findOne(user, {fields: {"profile.lang": 1}})
