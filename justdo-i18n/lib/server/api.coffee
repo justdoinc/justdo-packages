@@ -54,7 +54,7 @@ _.extend JustdoI18n.prototype,
 
     try
       if not user?
-        user = Meteor.user({"profile.lang": 1})
+        user = Meteor.user({fields: {"profile.lang": 1}})
     catch e
       console.warn "JustdoI18n.__ called invoked outside of a method call or a publication, falling back to no-user."
       user = undefined
