@@ -154,11 +154,12 @@ Template.meetings_meeting_dialog.onCreated ->
       attended_html += """<span class="mr-2">#{JustdoHelpers.xssGuard meeting.other_attendees}</span>"""
 
     #tasks:
+    fallback_task_title = APP.justdo_i18n.getI18nTextOrFallback({fallback_text: "Untitled Task", i18n_key: "untitled_task_title"})
     tasks_html = ""
     tasks = _.sortBy meeting.tasks, "task_order"
     for item in tasks
       owner_id = APP.collections.Tasks.findOne(item.task_id, {fields: {owner_id: 1}})?.owner_id
-      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><div class="font-weight-bold"><a href="#{JustdoHelpers.getTaskUrl(@project_id, item.task_id)}">##{item.seqId}: #{JustdoHelpers.xssGuard(item.title) or "Untitled Task"}</a><span> (#{JustdoHelpers.xssGuard(JustdoHelpers.displayName owner_id)})</span></div>"""
+      tasks_html += """<div class="print-meeting-mode-task my-3 p-3"><div class="font-weight-bold"><a href="#{JustdoHelpers.getTaskUrl(@project_id, item.task_id)}">##{item.seqId}: #{JustdoHelpers.xssGuard(item.title) or fallback_task_title}</a><span> (#{JustdoHelpers.xssGuard(JustdoHelpers.displayName owner_id)})</span></div>"""
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
@@ -173,7 +174,7 @@ Template.meetings_meeting_dialog.onCreated ->
               user_id = task_obj.pending_owner_id
             user = Meteor.users.findOne user_id
             user_name = """<span class="mr-2"> (#{JustdoHelpers.xssGuard user.profile.first_name} #{JustdoHelpers.xssGuard user.profile.last_name})</span>"""
-          tasks_html += """<li><span class="bg-light border px-2 rounded mr-1"><a href="#{JustdoHelpers.getTaskUrl(@project_id, task_added.task_id)}">##{task_added.seqId}: #{JustdoHelpers.xssGuard(task_added.title) or "Untitled Task"}</a></span>#{user_name}"""
+          tasks_html += """<li><span class="bg-light border px-2 rounded mr-1"><a href="#{JustdoHelpers.getTaskUrl(@project_id, task_added.task_id)}">##{task_added.seqId}: #{JustdoHelpers.xssGuard(task_added.title) or fallback_task_title}</a></span>#{user_name}"""
           if task_obj.due_date?
             tasks_html += "<br>Due date: #{moment(task_obj.due_date).format(JustdoHelpers.getUserPreferredDateFormat())}"
           if task_added.note?
@@ -344,9 +345,10 @@ Template.meetings_meeting_dialog.onCreated ->
     ret += "Agenda:\n"
     tasks = _.sortBy meeting.tasks, "task_order"
     for item in tasks
+      fallback_task_title = APP.justdo_i18n.getI18nTextOrFallback({fallback_text: "Untitled Task", i18n_key: "untitled_task_title"})
       owner_id = APP.collections.Tasks.findOne(item.task_id, {fields: {owner_id: 1}}).owner_id
 
-      ret += "\n##{item.seqId}: #{item.title or "Untitled Task"} (#{JustdoHelpers.displayName(owner_id)})\n"
+      ret += "\n##{item.seqId}: #{item.title or fallback_task_title} (#{JustdoHelpers.displayName(owner_id)})\n"
 
       meeting_task = APP.meetings_manager_plugin.meetings_manager.meetings_tasks.findOne
         _id: item.id
@@ -355,7 +357,7 @@ Template.meetings_meeting_dialog.onCreated ->
         ret += "\nChild Tasks Added for ##{item.seqId}:\n"
         for task_added in meeting_task.added_tasks
           task_obj = APP.collections.Tasks.findOne(task_added.task_id, {fields: {owner_id: 1, due_date: 1}})
-          ret += "  - ##{task_added.seqId}: #{task_added.title or "Untitled Task"} (#{JustdoHelpers.displayName(task_obj.owner_id)})\n"
+          ret += "  - ##{task_added.seqId}: #{task_added.title or fallback_task_title} (#{JustdoHelpers.displayName(task_obj.owner_id)})\n"
           if (child_task_due_date = task_obj.due_date)?
             ret += "    Due date: #{moment(child_task_due_date).format(JustdoHelpers.getUserPreferredDateFormat())}\n"
           if (task_added.note?)
