@@ -200,6 +200,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
         grid_values:
           "pending":
             txt: "Pending"
+            txt_i18n: "state_pending"
             order: 0
             due_list_state: true
             bg_color: "00000000"
@@ -207,6 +208,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
           "in-progress":
             txt: "In progress"
+            txt_i18n: "state_in_progress"
             order: 1
             due_list_state: true
             bg_color: "0288d1"
@@ -214,6 +216,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
           "done":
             txt: "Done"
+            txt_i18n: "state_done"
             order: 2
             due_list_state: false
             bg_color: "38B000"
@@ -221,6 +224,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
           "will-not-do":
             txt: "Cancelled"
+            txt_i18n: "state_cancelled"
             order: 3
             due_list_state: false
             bg_color: "90a4ae"
@@ -228,6 +232,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
           "on-hold":
             txt: "On hold"
+            txt_i18n: "state_on_hold"
             order: 4
             due_list_state: false
             bg_color: "d32f2f"
@@ -235,6 +240,7 @@ _.extend JustdoTasksCollectionsManager.prototype,
 
           "duplicate":
             txt: "Duplicate"
+            txt_i18n: "state_duplicate"
             order: 5
             due_list_state: false
             bg_color: "00000000"
