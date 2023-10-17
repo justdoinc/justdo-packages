@@ -46,18 +46,18 @@
   justify-content: center
 
 .tutorial-instruction-btn
-  margin-top: 8px
-  display: flex
-  justify-content: end
+  margin: 8px 0
+  display: none
   .skip
     margin-right: 8px
 
 .tutorial-item.active
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25)
-  background-color: #f7fbff
   .tutorial-instruction
     opacity: 1
     pointer-events: auto
+  .tutorial-instruction-btn
+    display: flex
 
 .tutorial-item.done
   color: #263F64

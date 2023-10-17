@@ -12,15 +12,15 @@
         <div class="tutorial-body">
           <div class="tutorial-title">{{_ title}}</div>
           <div class="tutorial-subtitle">{{_ subtitle}}</div>
+          <div class="tutorial-instruction-btn">
+            <button class="skip btn btn-light btn-sm">{{_ "skip"}}</button>
+            <button class="done btn btn-primary btn-sm">{{_ "done"}}</button>
+          </div>
         </div>
         <div class="tutorial-instruction shadow-lg">
           <video class="tutorial-media" loop muted>
             <source src="{{media}}" type="video/mp4">
           </video>
-          <div class="tutorial-instruction-btn">
-            <button class="skip btn btn-light btn-sm">{{_ "skip"}}</button>
-            <button class="done btn btn-primary btn-sm">{{_ "done"}}</button>
-          </div>
         </div>
       </div>
     {{/each}}
