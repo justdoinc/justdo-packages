@@ -134,6 +134,8 @@ Package.onUse(function (api) {
   api.add_files("i18n/justdo-projects/en.i18n.json", both);
   api.add_files("i18n/justdo-projects/zh-TW.i18n.json", both);
   api.add_files("i18n/justdo-projects/vi.i18n.json", both);
+  api.add_files("i18n/grid-control/zh-TW.i18n.json", both);
+  api.add_files("i18n/grid-control/en.i18n.json", both);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
