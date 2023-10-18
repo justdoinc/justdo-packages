@@ -1,0 +1,7 @@
+{
+  "default_org_name_with_user_name": "__user_name__'s organization",
+  "create_org_label": "Create Organization",
+  "without_orgs_label": "Without Organization",
+  "justdos_under_named_org": "JustDos under __org_name__",
+  "justdos_without_orgs": "JustDos without an organization"
+}

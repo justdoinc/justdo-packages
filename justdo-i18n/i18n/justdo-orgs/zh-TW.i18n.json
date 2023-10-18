@@ -1,0 +1,7 @@
+{
+  "default_org_name_with_user_name": "__user_name__的組織",
+  "create_org_label": "建立新組織",
+  "without_orgs_label": "不屬於任何組織的JustDo",
+  "justdos_under_named_org": "__org_name__下的JustDo",
+  "justdos_without_orgs": "不屬於任何組織的JustDo"
+}
