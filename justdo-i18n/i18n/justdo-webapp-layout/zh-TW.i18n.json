@@ -14,5 +14,9 @@
   "remove_from_favorites_label": "從我的最愛移除",
   "quick_add_label": "Quick Add",
   "create_new_justdo_label": "創建新的JustDo",
-  "search_justdos_label": "搜尋JustDo"
+  "search_justdos_label": "搜尋JustDo",
+  "show_justdo_pane_label": "顯示JustDo儀表",
+  "hide_justdo_pane_label": "隱藏JustDo儀表",
+  "show_task_pane_label": "顯示任務儀表",
+  "hide_task_pane_label": "隱藏任務儀表"
 }

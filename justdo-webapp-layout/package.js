@@ -55,6 +55,7 @@ Package.onUse(function (api) {
   api.use("tracker", client);
 
   api.use("justdoinc:justdo-avatar", client);
+  api.use("tap:i18n@1.8.2", both);
   api.use("justdoinc:justdo-i18n", client);
 
   api.use("ecmascript", both);
