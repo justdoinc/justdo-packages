@@ -1,7 +1,7 @@
 <template name="grid_views_dropdown_menu">
   <div class="grid-views-dropdown-menu-wrapper">
     <div class="grid-views-search-wrapper d-flex align-items-center">
-      <input type="text" class="grid-views-search-input form-control form-control-sm" placeholder="Search views">
+      <input type="text" class="grid-views-search-input form-control form-control-sm" placeholder="{{_ "grid_views_search_placeholder"}}">
       <svg class="jd-icon search-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#search"></use></svg>
     </div>
     <div class="dropdown-items-wrapper">
@@ -22,7 +22,7 @@
                 <span>{{title}}</span>
               </div>
               {{#if shared}}
-                <div class="dropdown-item-shared">shared</div>
+                <div class="dropdown-item-shared">{{_ "grid_views_shared_label"}}</div>
               {{/if}}
             {{/if}}
             {{#if allowedToEdit}}
@@ -36,33 +36,33 @@
         {{/each}}
       {{else}}
         <div class="grid-views-empty text-muted">
-          No views
+          {{_ "grid_views_no_view_label"}}
         </div>
       {{/if}}
     </div>
     <div class="dropdown-footer">
       <hr>
-      <button class="btn btn-primary btn-sm grid-views-add" type="button">Add current view</button>
+      <button class="btn btn-primary btn-sm grid-views-add" type="button">{{_ "grid_views_add_current_view_label"}}</button>
     </div>
     {{#with activeView}}
       <div class="grid-view-settings-dropdown shadow-lg animate slideIn shadow-lg">
         <div class="grid-view-rename dropdown-item px-1">
           <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>
-          <div class="dropdown-item-label">Rename</div>
+          <div class="dropdown-item-label">{{_ "grid_views_rename_label"}}</div>
         </div>
         {{#if isProjectAdmin}}
           <div class="grid-view-share dropdown-item px-1">
             <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#share"></use></svg>
-            <div class="dropdown-item-label">{{#if this.shared}}Unshare{{else}}Share{{/if}}</div>
+            <div class="dropdown-item-label">{{#if this.shared}}{{_ "grid_views_unshare_label"}}{{else}}{{_ "grid_views_share_label"}}{{/if}}</div>
           </div>
         {{/if}}
         <div class="grid-view-update dropdown-item px-1">
           <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#refresh-cw"></use></svg>
-          <div class="dropdown-item-label">Update</div>
+          <div class="dropdown-item-label">{{_ "grid_views_update_label"}}</div>
         </div>
         <div class="grid-view-delete dropdown-item px-1">
           <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
-          <div class="dropdown-item-label">Remove</div>
+          <div class="dropdown-item-label">{{_ "grid_views_remove_label"}}</div>
         </div>
       </div>
     {{/with}}

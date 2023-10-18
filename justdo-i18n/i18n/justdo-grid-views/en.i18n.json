@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Grid Views",
+  "grid_views_search_placeholder": "Search views",
+  "grid_views_no_view_label": "No views",
+  "grid_views_add_current_view_label": "Add current view",
+  "grid_views_rename_label": "Rename",
+  "grid_views_update_label": "Update",
+  "grid_views_remove_label": "Remove",
+  "grid_views_share_label": "Share",
+  "grid_views_unshare_label": "Unshare",
+  "grid_views_shared_label": "shared"
+}
