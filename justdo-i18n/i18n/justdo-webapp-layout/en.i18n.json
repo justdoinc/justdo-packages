@@ -12,5 +12,7 @@
   "zoom_in_label": "Zoom in",
   "add_to_favorites_label": "Add to Favorites",
   "remove_from_favorites_label": "Remove from Favorites",
-  "quick_add_label": "Quick Add"
+  "quick_add_label": "Quick Add",
+  "create_new_justdo_label": "Create a New JustDo",
+  "search_justdos_label": "Search JustDos"
 }

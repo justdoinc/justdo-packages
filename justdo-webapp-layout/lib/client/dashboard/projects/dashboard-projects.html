@@ -2,13 +2,13 @@
   <div class="dashboard-projects">
     <div class="container">
       <div class="dashboard-header">
-        <input class="dashboard-search-input form-control" placeholder="Search JustDos" type="text">
+        <input class="dashboard-search-input form-control" placeholder="{{_ "search_justdos_label"}}" type="text">
       </div>
 
       <div class="projects-list">
         <div class="projects-header">
           JustDos
-          <div class="create-project create-project-js text-primary"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>Create a New JustDo</div>
+          <div class="create-project create-project-js text-primary"><svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>{{_ "create_new_justdo_label"}}</div>
         </div>
         {{#if projects}}
           {{#each projects}}

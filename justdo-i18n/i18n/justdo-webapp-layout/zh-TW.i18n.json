@@ -12,5 +12,7 @@
   "zoom_in_label": "Zoom in",
   "add_to_favorites_label": "加到我的最愛",
   "remove_from_favorites_label": "從我的最愛移除",
-  "quick_add_label": "Quick Add"
+  "quick_add_label": "Quick Add",
+  "create_new_justdo_label": "創建新的JustDo",
+  "search_justdos_label": "搜尋JustDo"
 }
