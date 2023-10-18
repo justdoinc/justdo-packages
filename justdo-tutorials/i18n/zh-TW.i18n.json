@@ -1,0 +1,16 @@
+{
+  "set_justdo_name_title": "設置JustDo的名稱",
+  "set_justdo_name_subtitle": "點擊現有的名稱以作更改",
+  "create_first_task_title": "創建新任務",
+  "create_first_task_subtitle": "點擊工具列上的按鈕，或使用快捷鍵 ALT+ENTER / ALT+SHIFT+ENTER",
+  "invite_members_title": "邀請成員",
+  "invite_members_subtitle": "輸入電郵地址以邀請閣下的團隊使用JustDo協作",
+  "import_tasks_title": "匯入任務",
+  "import_tasks_subtitle": "把現有的任務匯出成試算表格式，並無縫銜接至JustDo",
+  "customize_columns_title": "自訂版面",
+  "customize_columns_subtitle": "覺得現有的欄目太少嗎？試試右鍵點擊欄目頂部並顯示/隱藏欄目，或點擊漏斗圖示以過濾任務。還有更多自定義功能待你發掘！",
+  "get_free_support_title": "取得免費支援",
+  "get_free_support_subtitle": "與我們進行單對單對話！",
+  "request": "預約",
+  "free_support_request_received": "收到！我們將儘快以電郵回覆閣下。"
+}
