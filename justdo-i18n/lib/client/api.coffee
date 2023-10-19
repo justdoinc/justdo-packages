@@ -6,6 +6,7 @@ _.extend JustdoI18n.prototype,
       lang = @getLang()
       TAPi18n.setLanguage lang
       i18n?.setLanguage lang
+      bootbox.setLocale lang.replaceAll("-", "_")
       return
 
     @_setupBeforeUserSignUpHook()
