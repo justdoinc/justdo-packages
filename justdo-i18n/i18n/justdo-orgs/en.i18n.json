@@ -3,5 +3,9 @@
   "create_org_label": "Create Organization",
   "without_orgs_label": "Without Organization",
   "justdos_under_named_org": "JustDos under __org_name__",
-  "justdos_without_orgs": "JustDos without an organization"
+  "justdos_without_orgs": "JustDos without an organization",
+  "orgs_project_config_title": "Organizations",
+  "assign_justdo_to_organization_label": "Assign JustDo to organization",
+  "another_organization": "another organization",
+  "pre_transfer_justdo_to_org_notice_html": "You are about to transfer this JustDo to <b>__dest_org_name__</b>. <br> All members in this JustDo will become members of <b>__dest_org_name__</b>."
 }
