@@ -71,14 +71,14 @@
       {{else}}
         <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
       {{/if}}
-      Email daily updates for this JustDo</li>
+      {{_ "email_daily_update_for_this_justdo_label"}}</li>
       <li class="dropdown-item email-notifications d-flex align-items-center px-1">
       {{#if isSubscribedToEmailNotifications}}
         <svg class="jd-icon-dropdown text-primary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-right"/></svg>
       {{else}}
         <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#toggle-left"/></svg>
       {{/if}}
-      Email ownership transfer notifications</li>
+      {{_ "email_ownership_transfer_notifications_label"}}</li>
       {{#if showRolesAndGroupsManager}}
         <li class="roles-and-groups-manager dropdown-item d-flex align-items-center px-1">
           <svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#users"></use></svg> Roles &amp; Groups Manager
@@ -108,7 +108,7 @@
 
       {{#if is_project_admin}}
         <hr class="my-2">
-        <li id="project-config" class="dropdown-item d-flex align-items-center px-1"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg> Configure this JustDo</li>
+        <li id="project-config" class="dropdown-item d-flex align-items-center px-1"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#settings"/></svg> {{_ "configure_this_justdo_label"}}</li>
         {{> project_settings_dropdown_remove_project}}
       {{/if}}
 

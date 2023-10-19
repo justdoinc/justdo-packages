@@ -18,5 +18,8 @@
   "show_justdo_pane_label": "顯示JustDo儀表",
   "hide_justdo_pane_label": "隱藏JustDo儀表",
   "show_task_pane_label": "顯示任務儀表",
-  "hide_task_pane_label": "隱藏任務儀表"
+  "hide_task_pane_label": "隱藏任務儀表",
+  "email_daily_update_for_this_justdo_label": "透過電郵收取每日更新擇要",
+  "email_ownership_transfer_notifications_label": "透過電郵收取負責人轉移通知",
+  "configure_this_justdo_label": "設定"
 }
