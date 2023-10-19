@@ -319,7 +319,8 @@ _.extend Projects.prototype,
       _schemaStateDefToStateDef: (state_id, schema_state_def) ->
         state_def =
           state_id: state_id
-          txt: schema_state_def.txt
+          txt: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: schema_state_def.txt, i18n_key: schema_state_def.txt_i18n}
+          txt_i18n: schema_state_def.txt_i18n
           bg_color: schema_state_def.bg_color
           order: schema_state_def.order
 
@@ -374,6 +375,17 @@ _.extend Projects.prototype,
         return hidden_states_defs
 
       setCustomStates: (states_array) ->
+        core_states_def = APP.collections.Tasks.simpleSchema()._schema.state.grid_values
+        # If the custom state's label(txt) equals to default in the current user's language,
+        # set the label back to the default label using lang=default_lang
+        # so that it supports i18n when switching language.
+        for custom_state in states_array
+          # state_id including "::" indicates the state is an extended state. In that case we don't touch the label.
+          if not custom_state.state_id.includes "::"
+            i18n_txt_with_current_user_lang = TAPi18n.__ custom_state.txt_i18n
+            if custom_state.txt is i18n_txt_with_current_user_lang
+              custom_state.txt = core_states_def[custom_state.state_id].txt
+            
         @configureProject
           custom_states: states_array
 
