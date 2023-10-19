@@ -1,0 +1,7 @@
+{
+  "project_config_ticket_queues_title": "Ticket Queues",
+  "project_config_ticket_queues_new_ticket_queue_label": "New ticket queue",
+  "project_config_ticket_queues_enter_task_number_label": "Enter task number",
+  "project_config_ticket_queues_no_ticket_queues_label": "No ticket queues",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "You can't remove this Ticket Queue, since you aren't member of its Task"
+}

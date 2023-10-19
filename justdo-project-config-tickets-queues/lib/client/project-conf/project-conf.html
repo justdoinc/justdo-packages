@@ -1,16 +1,16 @@
 <template name="justdo_project_config_tickets_queues_project_config">
   <div class="project-conf-justdo-project-config-tickets-queues-config">
     <div class="config-section-header">
-      <div class="config-section-title">Ticket Queues</div>
+      <div class="config-section-title">{{_ "project_config_ticket_queues_title"}}</div>
       <div class="new-ticket-queue-dropdown dropdown">
         <div class="new-ticket-queue-toggle text-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"></use></svg>
-          New ticket queue
+          {{_ "project_config_ticket_queues_new_ticket_queue_label"}}
         </div>
         <div class="dropdown-menu jd-p-075 animate slideIn shadow-lg border-0">
           <div class="d-flex align-items-center">
-            <input class="new-tq-seqId form-control form-control-sm" placeholder="Enter task number" maxlength="30">
-            <button class="add btn btn-primary btn-sm ml-2">ADD</button>
+            <input class="new-tq-seqId form-control form-control-sm" placeholder="{{_ "project_config_ticket_queues_enter_task_number_label"}}" maxlength="30">
+            <button class="add btn btn-primary btn-sm ml-2">{{_ "add_btn_label"}}</button>
           </div>
         </div>
       </div>
@@ -23,7 +23,7 @@
       {{/with}}
     {{else}}
       <div class="ticket-queues-list-empty bg-light">
-        No ticket queues
+        {{_ "project_config_ticket_queues_no_ticket_queues_label"}}
       </div>
     {{/if}}
   </div>
@@ -38,7 +38,7 @@
       <div class="tq-task-item-info">
         <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#alert-circle"></use></svg>
         <div class="project-config-tooltip">
-          You can't remove this Ticket Queue, since you aren't member of its Task
+          {{_ "project_config_ticket_queues_cannot_remove_ticket_queue_label"}}
         </div>
       </div>
     {{/if}}
