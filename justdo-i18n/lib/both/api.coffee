@@ -78,3 +78,19 @@ _.extend JustdoI18n.prototype,
       return translated_text
 
     return fallback_text
+
+  # For use in cases like the states field, where the label could be customised.
+  # If provided "text" isn't the same as translated text under default_lang, provided "text" will be returned.
+  # Else return translated version.
+  getDefaultI18nTextOrCustomInput: (options) ->
+    {text, i18n_key, i18n_options, lang} = options
+    check text, String
+    
+    i18n_options = {i18n_key, i18n_options, lang: JustdoI18n.default_lang, fallback_text: text}
+    i18n_text = @getI18nTextOrFallback i18n_options
+
+    if text isnt i18n_text
+      return text
+    
+    delete i18n_options.lang
+    return @getI18nTextOrFallback i18n_options
