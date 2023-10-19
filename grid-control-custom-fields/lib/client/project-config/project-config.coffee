@@ -241,6 +241,12 @@ APP.executeAfterAppLibCode ->
 
     fieldTypeToFieldLabel: ->
       if @disabled
-        return "Disabled field"
+        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: "grid_control_custom_fields_disabled_field_label", fallback_text: "Disabled field"}
 
-      return customFieldObjectToCustomFieldTypeDef(@)?.label or "Unknown type"
+      if not (custom_field_def = customFieldObjectToCustomFieldTypeDef(@))?
+        return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: "grid_control_custom_fields_unknown_type_label", fallback_text: "Unknown type"}
+
+      fallback_text = custom_field_def.label
+      i18n_key = custom_field_def.label_i18n
+
+      return APP.justdo_i18n.getI18nTextOrFallback {i18n_key, fallback_text}

@@ -2,25 +2,25 @@
   <div class="custom-fields-conf">
     <div class="config-section-header">
       <div class="config-section-title">
-        Custom Fields
+        {{_ "grid_control_custom_fields_section_title"}}
         {{#if showCustomFieldsSortOption}}
-        <div class="sort-custom-fields text-primary" sort-criteria="label">Sort by Name</div>
+        <div class="sort-custom-fields text-primary" sort-criteria="label">{{_ "grid_control_custom_fields_sort_by_name_label"}}</div>
         {{/if}}
       </div>
       <div class="dropdown add-new-field-dropdown">
         <div class="add-new-field-toggle text-primary" data-toggle="dropdown" aria-expanded="false">
           <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#plus"/></svg>
-          New custom field
+          {{_ "grid_control_custom_fields_new_custom_field_label"}}
         </div>
         <div class="dropdown-menu jd-p-075 animate slideIn shadow-lg border-0">
           <div class="d-flex align-items-center">
-            <input class="new-field-label form-control form-control-sm" placeholder="label" maxlength="30">
+            <input class="new-field-label form-control form-control-sm" placeholder="{{_ "grid_control_custom_fields_label_placeholder"}}" maxlength="30">
             <select class="new-field-type form-control form-control-sm mx-2">
               {{#each getFieldTypes}}
-                <option value="{{custom_field_type_id}}">{{label}}</option>
+                <option value="{{custom_field_type_id}}">{{getI18nTextOrFallback fallback_text=label i18n_key=label_i18n}}</option>
               {{/each}}
             </select>
-            <button class="add btn btn-primary btn-sm" disabled="{{addButtonDisabled}}">ADD</button>
+            <button class="add btn btn-primary btn-sm" disabled="{{addButtonDisabled}}">{{_ "add_btn_label"}}</button>
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@
         {{/with}}
       {{else}}
         <div class="custom-fields-list-empty bg-light">
-          No custom fields
+          {{_ "grid_control_custom_fields_no_custom_fields_label"}}
         </div>
       {{/if}}
     </div>

@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Custom Fields",
+  "grid_control_custom_fields_sort_by_name_label": "Sort by Name",
+  "grid_control_custom_fields_new_custom_field_label": "New custom field",
+  "grid_control_custom_fields_no_custom_fields_label": "No custom fields",
+  "grid_control_custom_fields_label_placeholder": "label",
+  "grid_control_custom_fields_text_label": "Text",
+  "grid_control_custom_fields_number_label": "Number",
+  "grid_control_custom_fields_date_label": "Date",
+  "grid_control_custom_fields_select_label": "Options",
+  "grid_control_custom_fields_multi_select_label": "Multi Options",
+  "grid_control_custom_fields_smart_numbers_label": "Smart Numbers",
+  "grid_control_custom_fields_unknown_type_label": "Unknown type",
+  "grid_control_custom_fields_disabled_field_label": "Disabled field"
+}

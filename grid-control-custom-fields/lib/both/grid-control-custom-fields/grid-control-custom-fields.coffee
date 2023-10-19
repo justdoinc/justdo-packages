@@ -647,11 +647,13 @@ _.extend GridControlCustomFields,
       custom_field_type_id: "basic-string"
       type_id: "string"
       label: "Text"
+      label_i18n: "grid_control_custom_fields_text_label"
     }
     {
       custom_field_type_id: "basic-number-decimal"
       type_id: "number"
       label: "Number"
+      label_i18n: "grid_control_custom_fields_number_label"
       custom_field_options:
         decimal: true
     }
@@ -659,17 +661,20 @@ _.extend GridControlCustomFields,
       custom_field_type_id: "basic-date"
       type_id: "date"
       label: "Date"
+      label_i18n: "grid_control_custom_fields_date_label"
     }
     {
       custom_field_type_id: "basic-select"
       type_id: "select"
       label: "Options"
+      label_i18n: "grid_control_custom_fields_select_label"
       settings_button_template: "custom_field_conf_select_options_editor_opener"
     }
     {
       custom_field_type_id: "multi-select"
       type_id: "multi_select"
       label: "Multi Options"
+      label_i18n: "grid_control_custom_fields_multi_select_label"
       settings_button_template: "custom_field_conf_select_options_editor_opener"
       field_id_prefix: "custom-field-multi-select"
       field_id_prefix_schema:
@@ -717,6 +722,7 @@ _.extend GridControlCustomFields,
 GridControlCustomFields.registerCustomFieldsTypes "basic-calc", 
   type_id: "calc"
   label: "Smart Numbers" # Derive from the descendants
+  label_i18n: "grid_control_custom_fields_smart_numbers_label"
 
 for field_type in GridControlCustomFields._available_field_types
   if (field_id_prefix_schema = field_type.field_id_prefix_schema)?

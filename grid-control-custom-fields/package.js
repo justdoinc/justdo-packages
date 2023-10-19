@@ -53,6 +53,8 @@ Package.onUse(function (api) {
   api.use("matb33:collection-hooks@0.8.4", client);
 
   api.use("stem-capital:grid-control", client);
+  api.use("tap:i18n@1.8.2", both);
+  api.use("justdoinc:justdo-i18n", both);
 
   api.use("reactive-var", client);
   api.use("tracker", both);
