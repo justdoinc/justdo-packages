@@ -23,7 +23,7 @@ getKeyValue = (schema, value, preferred_format="html") ->
   if (html_format = value_by_formats[preferred_format])?
     ret = html_format
   else if (txt_format = value_by_formats.txt)?
-    ret = APP.justdo_i18n.getI18nTextOrFallback {fallback_text: txt_format, i18n_key: value_by_formats.txt_i18n}
+    ret = APP.justdo_i18n.getDefaultI18nTextOrCustomInput {text: txt_format, i18n_key: value_by_formats.txt_i18n}
   else
     ret = value
 

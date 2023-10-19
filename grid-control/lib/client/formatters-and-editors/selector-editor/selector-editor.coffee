@@ -41,10 +41,7 @@ GridControl.installEditor "SelectorEditor",
       if (html_format = value_def.html)?
         label = html_format
       else
-        i18n_options =
-          i18n_key: value_def.txt_i18n
-          fallback_text: value_def.txt
-        label = APP.justdo_i18n.getI18nTextOrFallback i18n_options
+        label = APP.justdo_i18n.getDefaultI18nTextOrCustomInput {text: value_def.txt, i18n_key: value_def.txt_i18n}
 
       options.push {
         label: label
