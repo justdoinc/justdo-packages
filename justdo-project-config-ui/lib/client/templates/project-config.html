@@ -2,20 +2,20 @@
   <div class="row m-0">
     <div class="project-config-nav col-4 bg-light">
       <div class="project-config-title">
-        Configure this JustDo
+        {{_ "project_config_ui_dialog_title"}}
       </div>
       <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
         <a class="project-config-nav-link active" data-toggle="pill" href=".project-config-general" role="tab" aria-selected="true">
           <div class="project-config-nav-link-active bg-primary"></div>
-          General
+          {{_ "project_config_ui_dialog_general_label"}}
         </a>
         <a class="project-config-nav-link" data-toggle="pill" href=".project-config-states" role="tab" aria-selected="false">
           <div class="project-config-nav-link-active bg-primary"></div>
-          Custom states
+          {{_ "project_config_ui_dialog_custom_states_label"}}
         </a>
         <a class="project-config-nav-link" data-toggle="pill" href=".project-config-extensions" role="tab" aria-selected="false">
           <div class="project-config-nav-link-active bg-primary"></div>
-          Extensions
+          {{_ "project_config_ui_dialog_extensions_label"}}
         </a>
       </div>
     </div>
@@ -24,7 +24,7 @@
         <div class="tab-pane project-config-general fade show active" role="tabpanel">
           <div class="tab-pane-container">
             <div class="project-config-section-title">
-              General
+              {{_ "project_config_ui_dialog_general_label"}}
             </div>
             <div class="project-config-section-container">
               {{#each sections.general}}
@@ -42,7 +42,7 @@
         <div class="tab-pane project-config-states fade" role="tabpanel">
           <div class="tab-pane-container">
             <div class="project-config-section-title">
-              Custom states
+              {{_ "project_config_ui_dialog_custom_states_label"}}
             </div>
             {{> project_custom_states}}
           </div>
@@ -50,7 +50,7 @@
         <div class="tab-pane project-config-extensions fade" role="tabpanel">
           <div class="tab-pane-container">
             <div class="project-config-section-title">
-              Extensions
+              {{_ "project_config_ui_dialog_extensions_label"}}
             </div>
             <div class="project-config-section-container">
               {{#each sections.extensions}}
