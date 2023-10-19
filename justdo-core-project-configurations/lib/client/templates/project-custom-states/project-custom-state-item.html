@@ -5,13 +5,13 @@
     </div>
     <div class="custom-state-style"></div>
     <div class="custom-state-label {{#if isEditingLabel}}editing{{/if}}">
-      <input class="custom-state-label-input" type="text" name="" value="{{txt}}" maxlength="20" placeholder="Type state name">
+      <input class="custom-state-label-input" type="text" name="" value="{{stateTxt}}" maxlength="20" placeholder="{{_ "project_configurations_type_state_name_placeholder"}}">
       <div class="custom-state-label-text">
         {{{xssGuard textActive}}}
         {{#if showDefaultLabel}}
           <div class="custom-state-label-text-default">
             <div class="custom-state-label-text-tooltip">
-              Default title for this state
+              {{_ "project_configurations_default_title_for_this_state_label"}}
             </div>
             {{defaultLabel}}
           </div>
@@ -27,15 +27,15 @@
       </div>
       <div class="dropdown-menu jd-p-075 animate slideIn shadow-lg border-0" aria-labelledby="dropdownMenuButton">
         {{#if isHiddenState}}
-          <div class="dropdown-item restore-extended-state"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#eye"></use></svg>Restore state</div>
+          <div class="dropdown-item restore-extended-state"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#eye"></use></svg>{{_ "project_configurations_restore_state_label"}}</div>
         {{else}}
           {{#if isCoreState}}
-            <div class="dropdown-item create-extended-state"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#copy"></use></svg>Create extended state</div>
+            <div class="dropdown-item create-extended-state"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#copy"></use></svg>{{_ "project_configurations_create_extended_state_label"}}</div>
             {{#if hideableState}}
-            <div class="dropdown-item remove-extended-state"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#eye-off"></use></svg>Hide state</div>
+            <div class="dropdown-item remove-extended-state"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#eye-off"></use></svg>{{_ "project_configurations_hide_state"}}</div>
           {{/if}}
           {{else}}
-            <div class="dropdown-item remove-extended-state"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>Remove extended state</div>
+            <div class="dropdown-item remove-extended-state"><svg class="jd-icon text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>{{_ "project_configurations_remove_extended_state"}}</div>
           {{/if}}
         {{/if}}
       </div>

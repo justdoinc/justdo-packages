@@ -3,7 +3,7 @@
     <div class="custom-states-sections">
       <div class="config-section-container">
         <div class="config-section-header">
-          <div class="config-section-title">Active states</div>
+          <div class="config-section-title">{{_ "project_configurations_active_states_title"}}</div>
         </div>
         <div class="custom-states-section-container active-states">
           {{#if activeStates}}
@@ -12,14 +12,14 @@
             {{/each}}
           {{else}}
             <div class="custom-states-empty bg-light">
-              No active states
+              {{_ "project_configurations_no_active_states_label"}}
             </div>
           {{/if}}
         </div>
       </div>
       <div class="config-section-container">
         <div class="config-section-header">
-          <div class="config-section-title">Hidden states</div>
+          <div class="config-section-title">{{_ "project_configurations_hidden_states_label"}}</div>
         </div>
         <div class="custom-states-section-container hidden-states">
           {{#if hiddenStates}}
@@ -28,7 +28,7 @@
             {{/each}}
           {{else}}
             <div class="custom-states-empty bg-light">
-              No hidden states
+              {{_ "project_configurations_no_hidden_states_label"}}
             </div>
           {{/if}}
         </div>

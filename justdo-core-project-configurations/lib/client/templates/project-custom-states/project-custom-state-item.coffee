@@ -91,7 +91,13 @@ Template.project_custom_state_item.onDestroyed ->
     tpl.color_picker_change_autorun.stop()
 
 getDefaultTextLabelForState = (state_id) ->
-  return APP.collections.Tasks.simpleSchema()._schema.state.grid_values[state_id]?.txt
+  if not (state_def = APP.collections.Tasks.simpleSchema()._schema.state.grid_values[state_id])?
+    return
+
+  fallback_text = state_def.txt
+  i18n_key = state_def.txt_i18n
+  
+  return APP.justdo_i18n.getI18nTextOrFallback {i18n_key, fallback_text}
 
 # HELPERS
 Template.project_custom_state_item.helpers
@@ -101,7 +107,7 @@ Template.project_custom_state_item.helpers
   showDefaultLabel: ->
     default_state_txt_label = getDefaultTextLabelForState(@state_id)
 
-    return default_state_txt_label? and default_state_txt_label != @txt
+    return default_state_txt_label? and default_state_txt_label != APP.justdo_i18n.getDefaultI18nTextOrCustomInput {text: @txt, i18n_key: @txt_i18n}
 
   defaultLabel: -> getDefaultTextLabelForState(@state_id) or ""
 
@@ -116,11 +122,20 @@ Template.project_custom_state_item.helpers
       _.find(APP.modules.project_page.curProj().getRemovedCustomStates(), (s) => s.state_id == @state_id)?
 
   getCoreState: ->
-    return JustdoHelpers.getCoreState(@state_id)
+    core_state_id = JustdoHelpers.getCoreState(@state_id)
+    core_state_def = APP.collections.Tasks.simpleSchema()._schema.state.grid_values[core_state_id]
+    fallback_text = core_state_def.txt
+    i18n_key = core_state_def.txt_i18n
+
+    return APP.justdo_i18n.getI18nTextOrFallback {fallback_text, i18n_key}
+  
+  stateTxt: ->
+    return APP.justdo_i18n.getDefaultI18nTextOrCustomInput {text: @txt, i18n_key: @txt_i18n}
     
   # to ensure no flicker after text update we need to isolate div.custom-state-label-text-active
   textActive: ->
-    return """<div class="custom-state-label-text-active">#{JustdoHelpers.xssGuard @txt}</div>"""
+    text = APP.justdo_i18n.getDefaultI18nTextOrCustomInput {text: @txt, i18n_key: @txt_i18n}
+    return """<div class="custom-state-label-text-active">#{JustdoHelpers.xssGuard text}</div>"""
 
 # EVENTS
 Template.project_custom_state_item.events
@@ -178,9 +193,10 @@ Template.project_custom_state_item.events
   
   "click .create-extended-state": (e, tpl) ->
     state = tpl.data
+    state_label = APP.justdo_i18n.getI18nTextOrFallback {fallback_text: state.txt, i18n_key: state.txt_i18n}
     APP.modules.project_page.curProj().addCustomState({
       core_state: state.state_id
-      txt: "#{state.txt} - extended"
+      txt: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: "#{state_label} - extended", i18n_key: "new_custom_state_default_title", i18n_options: {state: state_label}}
     })
     return
 
