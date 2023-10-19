@@ -120,7 +120,7 @@ Template.project_custom_state_item.helpers
     
   # to ensure no flicker after text update we need to isolate div.custom-state-label-text-active
   textActive: ->
-    return """<div class="custom-state-label-text-active">#{@txt}</div>"""
+    return """<div class="custom-state-label-text-active">#{JustdoHelpers.xssGuard @txt}</div>"""
 
 # EVENTS
 Template.project_custom_state_item.events
