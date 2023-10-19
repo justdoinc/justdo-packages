@@ -30,6 +30,11 @@ CustomStateDefinitionSchema = new SimpleSchema
     label: "Text label"
 
     type: String
+  
+  txt_i18n:
+    label: "I18n label key"
+    optional: true
+    type: String
 
   bg_color:
     label: "Background color"
