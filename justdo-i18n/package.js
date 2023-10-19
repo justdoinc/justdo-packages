@@ -148,6 +148,8 @@ Package.onUse(function (api) {
   api.add_files("i18n/grid-control-custom-fields/en.i18n.json", both);
   api.add_files("i18n/justdo-project-config-ticket-queues/zh-TW.i18n.json", both);
   api.add_files("i18n/justdo-project-config-ticket-queues/en.i18n.json", both);
+  api.add_files("i18n/justdo-core-project-configurations/zh-TW.i18n.json", both);
+  api.add_files("i18n/justdo-core-project-configurations/en.i18n.json", both);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.

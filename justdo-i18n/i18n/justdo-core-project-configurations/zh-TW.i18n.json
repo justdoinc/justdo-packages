@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "可用狀態",
+  "project_configurations_no_active_states_label": "沒有可用狀態",
+  "project_configurations_hidden_states_label": "隱藏狀態",
+  "project_configurations_no_hidden_states_label": "沒有隱藏狀態",
+  "project_configurations_type_state_name_placeholder": "輸入狀態標籤",
+  "project_configurations_default_title_for_this_state_label": "這個狀態的預設標籤",
+  "project_configurations_restore_state_label": "還原狀態",
+  "project_configurations_create_extended_state_label": "建立拓展狀態",
+  "project_configurations_hide_state": "隱藏狀態",
+  "project_configurations_remove_extended_state": "移除拓展狀態",
+  "new_custom_state_default_title": "__state__（拓展）"
+}

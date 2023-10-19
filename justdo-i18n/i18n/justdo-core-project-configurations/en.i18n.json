@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Active states",
+  "project_configurations_no_active_states_label": "No active states",
+  "project_configurations_hidden_states_label": "Hidden states",
+  "project_configurations_no_hidden_states_label": "No hidden states",
+  "project_configurations_type_state_name_placeholder": "Type state name",
+  "project_configurations_default_title_for_this_state_label": "Default title for this state",
+  "project_configurations_restore_state_label": "Restore state",
+  "project_configurations_create_extended_state_label": "Create extended state",
+  "project_configurations_hide_state": "Hide state",
+  "project_configurations_remove_extended_state": "Remove extended state",
+  "new_custom_state_default_title": "__state__ - extended"
+}
