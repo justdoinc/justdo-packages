@@ -21,5 +21,6 @@
   "hide_task_pane_label": "隱藏任務儀表",
   "email_daily_update_for_this_justdo_label": "透過電郵收取每日更新擇要",
   "email_ownership_transfer_notifications_label": "透過電郵收取負責人轉移通知",
-  "configure_this_justdo_label": "設定"
+  "configure_this_justdo_label": "設定",
+  "delete_this_justdo_label": "刪除這個JustDo"
 }

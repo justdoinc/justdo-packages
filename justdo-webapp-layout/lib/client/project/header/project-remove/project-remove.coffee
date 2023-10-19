@@ -52,7 +52,7 @@ APP.executeAfterAppLibCode ->
 
         buttons:
           delete_project:
-            label: """Delete this JustDo"""
+            label: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: "Delete this JustDo", i18n_key: "delete_this_justdo_label"}
 
             className: "btn-danger delete-project-confirm"
 

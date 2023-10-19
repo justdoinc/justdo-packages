@@ -21,5 +21,6 @@
   "hide_task_pane_label": "Hide Task Pane",
   "email_daily_update_for_this_justdo_label": "Email daily updates for this JustDo",
   "email_ownership_transfer_notifications_label": "Email ownership transfer notifications",
-  "configure_this_justdo_label": "Configure this JustDo"
+  "configure_this_justdo_label": "Configure this JustDo",
+  "delete_this_justdo_label": "Delete this JustDo"
 }
