@@ -1,5 +1,6 @@
 _.extend JustdoTutorials.prototype,
   _immediateInit: ->
+    @is_tutorial_dropdown_allowed_to_close = true
     @_registerPlaceholderItems()
     return
 
@@ -30,8 +31,7 @@ _.extend JustdoTutorials.prototype,
     if APP.justdo_promoters_campaigns?.getCampaignDoc().open_tutorial_dropdown_upon_project_creation is true
       showTutorialDropdownAndPrevrentClose = =>
         $(".nav-tutorials > .dropdown-toggle").dropdown("toggle")
-        @force_tutorial_dropdown_open_hook?.off?()
-        @force_tutorial_dropdown_open_hook = $(".nav-tutorials").on "hide.bs.dropdown", -> false
+        @is_tutorial_dropdown_allowed_to_close = false
         return
 
       # This take care regular create justdo calls

@@ -5,8 +5,8 @@ APP.executeAfterAppLibCode ->
     if APP.justdo_google_analytics?
       $(".nav-tutorials > .dropdown-toggle").on "click", (e) ->
         APP.justdo_google_analytics.sendEvent "tutorial-dropdown-clicked"
-        APP.justdo_tutorials.force_tutorial_dropdown_open_hook?.off?()
         return
+    @$(".nav-tutorials").on "hide.bs.dropdown", -> APP.justdo_tutorials.is_tutorial_dropdown_allowed_to_close
     return
 
   Template.tutorials_submenu.helpers

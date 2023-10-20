@@ -70,9 +70,14 @@ APP.executeAfterAppLibCode ->
       return Template.instance().request_sent.get()
 
   Template.tutorials.events
-    "click .tutorials-wrapper .tutorial-item": (e, tpl) ->
+    "click .tutorials-wrapper": (e, tpl) ->
       e.stopPropagation()
+      e.preventDefault()
 
+      return
+    
+    "mouseenter .tutorials-wrapper": (e, tpl) ->
+      APP.justdo_tutorials.is_tutorial_dropdown_allowed_to_close = true
       return
 
     "mouseenter .tutorial-item": (e, tpl) ->
