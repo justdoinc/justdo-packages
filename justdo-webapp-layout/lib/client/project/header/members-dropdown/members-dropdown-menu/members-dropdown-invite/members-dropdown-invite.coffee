@@ -271,8 +271,8 @@ APP.executeAfterAppLibCode ->
 
       if _.isEmpty(invalid_email_input = tpl.invalid_email_input_rv.get())
         return
-
-      err_msg.push "#{invalid_email_input} is not a valid email address"
+      
+      err_msg.push "Unable to recognize email address from the following input: #{invalid_email_input}"
 
       return err_msg
 
