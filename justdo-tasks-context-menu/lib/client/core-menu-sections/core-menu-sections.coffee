@@ -356,6 +356,11 @@ _.extend JustdoTasksContextMenu.prototype,
         # label: "Due Date"
         order: 1 # -1 for DESC 1 for ASC
       }
+      {
+        field_id: "follow_up"
+        # label: "Follow Up"
+        order: 1 # -1 for DESC 1 for ASC
+      }
     ]
 
     current_position = 100
