@@ -20,5 +20,6 @@
   "page_title": "JustDo - Enterprise project portfolio. solved. All projects, all collaborators, one common space",
   "edit": "Edit",
   "search": "Search",
-  "add_btn_label": "ADD"
+  "add_btn_label": "ADD",
+  "updated_with_time": "Updated __time__"
 }
