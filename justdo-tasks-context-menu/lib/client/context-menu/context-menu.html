@@ -13,7 +13,7 @@
         <div>
           {{#if isMultiSelect}}
           {{else}}
-            <div>Updated {{moFromNow updatedAt}}</div>
+            <div>{{_ "updated_with_time" time=(moFromNow updatedAt)}}</div>
           {{/if}}
         </div>
       </li>
