@@ -32,7 +32,6 @@ Package.onUse(function (api) {
 
   api.use("justdoinc:justdo-push-notifications@1.0.0", server);
 
-  api.use('lbee:moment-helpers@1.2.1', client);
   api.use('justdoinc:hash-requests-handler@1.0.0', both);
   api.use('justdoinc:justdo-login-state@1.0.0', both);
 
