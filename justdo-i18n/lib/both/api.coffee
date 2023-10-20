@@ -6,6 +6,7 @@ _.extend JustdoI18n.prototype,
     # tick in which we create the object instance.
 
     @setupRouter()
+    @_setupMomentLocales()
 
     return
 
@@ -17,6 +18,19 @@ _.extend JustdoI18n.prototype,
 
     if @destroyed
       return
+
+    return
+  
+  _setupMomentLocales: ->
+    supported_languages = _.without _.keys(@getSupportedLanguages()), "en"
+
+    for lang in supported_languages
+      lang = lang.toLowerCase()
+      if not (locale_conf = JustdoI18n.moment_locale_confs[lang])?
+        console.warn "Can't find Moment.js locale conf for language #{lang}"
+        continue
+
+      moment.defineLocale lang, locale_conf
 
     return
 
