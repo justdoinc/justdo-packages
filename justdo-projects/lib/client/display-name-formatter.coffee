@@ -1,5 +1,5 @@
-getDisplayName = (user_id) ->
-  return JustdoHelpers.displayName(user_id)
+getDisplayName = (user) ->
+  return JustdoHelpers.displayName(user)
 
 GridControl.installFormatter "display_name_formatter",
   slickGridColumnStateMaintainer: ->
@@ -11,13 +11,31 @@ GridControl.installFormatter "display_name_formatter",
   slick_grid: ->
     {value} = @getFriendlyArgs()
 
-    display_name = getDisplayName(value) or ""
+    user_doc = Meteor.users.findOne(value, {fields: {profile: 1}})
+    display_name = getDisplayName(user_doc) or ""
 
-    formatter_html = """
-      <div class="grid-formatter display-name-formatter">
-        #{display_name}
-      </div>
-    """
+    icon_width = 28
+    margin = 4 + icon_width
+
+    formatter_html = """<div class="grid-formatter display-name-formatter">"""
+    
+    if user_doc?
+      formatter_html += """
+        <span class="slick-prevent-edit grid-tree-control-user-display-only"
+            style="
+                  width: #{icon_width}px;
+                  height: #{icon_width}px;">
+          <img src="#{JustdoAvatar.showUserAvatarOrFallback(user_doc)}"
+                class="grid-tree-control-user-img slick-prevent-edit"
+                alt="#{display_name}"
+                style="
+                      width: #{icon_width}px;
+                      height: #{icon_width}px;">
+        </span>
+        <span style="margin-left:#{margin}px;">#{display_name}</span>
+      """
+
+    formatter_html += "</div>"
 
     return formatter_html
   
