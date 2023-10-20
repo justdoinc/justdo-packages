@@ -64,8 +64,6 @@ Package.onUse(function (api) {
 
   api.use("matb33:collection-hooks@0.8.4", both);
 
-  api.use("lbee:moment-helpers", both);
-
   api.use("justdoinc:justdo-linkify", client);
 
   api.use("reactive-var", both);
