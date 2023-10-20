@@ -64,3 +64,25 @@ _.extend JustdoHelpers,
       return {text: "#{demo_date} (#{format})", value: format}
 
     return allowed_date_formats
+
+if (templating = Package.templating)?
+  {Template} = templating
+  # Taken from https://github.com/lb-/moment-helpers/blob/master/client.js
+  Template.registerHelper "moFromNow", (...args) ->
+    locale = APP.justdo_i18n.getLang() # For the reactivity
+
+    kw = args.pop()
+    date = args[0] or kw.hash.d
+    withoutSuffix = args[1] or kw.hash.withoutSuffix
+    # if the withoutSuffix is truthy convert it to true, or falsy = false
+    if withoutSuffix
+      withoutSuffix = true
+    else
+      withoutSuffix = false
+    # work with what is given to get a moment object
+    moDate = moment date
+    # if we did end up with a valid object above, send the result
+    if moDate
+      return moDate.fromNow withoutSuffix
+    # fail silently if the dates were not processed to a moment
+    null
