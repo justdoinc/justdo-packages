@@ -67,6 +67,17 @@ Package.onUse(function (api) {
   // ], client)
   // api.addFiles("lib/both/news/v3-133/v3-133.coffee", both);
 
+  // v3.140
+  api.addAssets([
+    "lib/both/news/v3-140/assets/1.jpg",
+    "lib/both/news/v3-140/assets/2.jpg",
+    "lib/both/news/v3-140/assets/3.jpg",
+    "lib/both/news/v3-140/assets/4.jpg",
+    "lib/both/news/v3-140/assets/5.jpg",
+    "lib/both/news/v3-140/assets/6.jpg"
+  ], client);
+  api.addFiles("lib/both/news/v3-140/v3-140.coffee", both);
+
   // v3.138.x
   api.addAssets([
     "lib/both/news/v3-138/assets/1.jpg",
