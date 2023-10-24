@@ -9,6 +9,7 @@ _.extend JustdoI18n.prototype,
       return
 
     @_setupBeforeUserSignUpHook()
+    @_setupPlaceholderItems()
 
     @onDestroy =>
       @tap_i18n_set_lang_tracker?.stop?()
@@ -28,6 +29,22 @@ _.extend JustdoI18n.prototype,
         options.profile.lang = lang
       return
       
+    return
+  
+  _setupPlaceholderItems: ->
+    APP.getEnv (env) ->
+      if (JustdoHelpers.getClientType(env) is "web-app") and (env.LANDING_PAGE_TYPE is "marketing")
+        APP.modules.main.user_config_ui.registerConfigSection "langs-selector",
+          title: "Languages"
+          priority: 50
+
+        APP.modules.main.user_config_ui.registerConfigTemplate "langs-selector-dropdown",
+          section: "langs-selector"
+          template: "user_preference_lang_dropdown"
+          priority: 100
+
+      return
+
     return
 
   setLang: (lang, options) ->

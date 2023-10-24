@@ -80,6 +80,8 @@ Package.onUse(function (api) {
   api.addFiles("lib/client/lang-selector-dropdown/lang-selector-dropdown.sass", client);
   api.addFiles("lib/client/lang-selector-dropdown/lang-selector-dropdown.html", client);
   api.addFiles("lib/client/lang-selector-dropdown/lang-selector-dropdown.coffee", client);
+  api.addFiles("lib/client/lang-selector-dropdown/user-preference-lang-selector.html", client);
+  api.addFiles("lib/client/lang-selector-dropdown/user-preference-lang-selector.coffee", client);
 
   api.addFiles("lib/client/top-banner/top-banner.sass", client);
   api.addFiles("lib/client/top-banner/top-banner.html", client);

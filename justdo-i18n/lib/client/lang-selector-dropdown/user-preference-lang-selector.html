@@ -1,0 +1,10 @@
+<template name="user_preference_lang_dropdown">
+  <div class="form-group mb-2">
+    <label for="user-preference-lang-dropdown">Languages</label>
+    <select type="text" name="user-preference-language-dropdown" id="user-preference-lang-dropdown" class="form-control form-control-sm user-preference-lang-dropdown">
+      {{#each supportedLangs}}
+        <option value="{{_id}}" {{isLangSelected}}>{{name}}</option>
+      {{/each}}
+    </select>
+  </div>
+</template>
