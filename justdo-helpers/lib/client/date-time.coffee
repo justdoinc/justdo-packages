@@ -64,11 +64,8 @@ _.extend JustdoHelpers,
       return {text: "#{demo_date} (#{format})", value: format}
 
     return allowed_date_formats
-
-if (templating = Package.templating)?
-  {Template} = templating
-  # Taken from https://github.com/lb-/moment-helpers/blob/master/client.js
-  Template.registerHelper "moFromNow", (...args) ->
+  
+  moFromNow: (...args) ->
     locale = APP.justdo_i18n.getLang() # For the reactivity
 
     kw = args.pop()
@@ -85,4 +82,9 @@ if (templating = Package.templating)?
     if moDate
       return moDate.fromNow withoutSuffix
     # fail silently if the dates were not processed to a moment
-    null
+    return
+
+if (templating = Package.templating)?
+  {Template} = templating
+  # Taken from https://github.com/lb-/moment-helpers/blob/master/client.js
+  Template.registerHelper "moFromNow", (...args) -> JustdoHelpers.moFromNow ...args
