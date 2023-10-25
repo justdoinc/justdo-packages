@@ -66,6 +66,8 @@ _.extend JustdoHelpers,
     return allowed_date_formats
   
   moFromNow: (...args) ->
+    # Taken from https://github.com/lb-/moment-helpers/blob/master/client.js
+    
     locale = APP.justdo_i18n.getLang() # For the reactivity
 
     kw = args.pop()
@@ -86,5 +88,4 @@ _.extend JustdoHelpers,
 
 if (templating = Package.templating)?
   {Template} = templating
-  # Taken from https://github.com/lb-/moment-helpers/blob/master/client.js
   Template.registerHelper "moFromNow", (...args) -> JustdoHelpers.moFromNow ...args
