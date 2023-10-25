@@ -11,7 +11,7 @@ APP.justdo_news.registerNews "news",
         news_array: [
           {
             "title": "Tab switcher design updated"
-            "subtitle": "New design help people to notice that they aren’t on the main view."
+            "subtitle": "Design now indicates better when a tab is active."
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-140/assets/1.jpg"
           },
           {
@@ -19,18 +19,17 @@ APP.justdo_news.registerNews "news",
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-140/assets/5.jpg"
           },
           {
-            "title": "New members dropdown"
-            "subtitle": "Simplify users invite."
+            "title": "Simplify users invite"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-140/assets/2.jpg"
           },
 
           {
-            "title": "Members dropdown"
-            "subtitle": "select to remove multiple users at the same time."
+            "title": "Improve JustDo members management"
+            "subtitle": "Select to remove multiple users at the same time."
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-140/assets/3.jpg"
           },
           {
-            "title": "Add support to video preview in JustDo files"
+            "title": "Support video preview in JustDo files"
             "media_url": "/packages/justdoinc_justdo-news-data/lib/both/news/v3-140/assets/4.jpg"
           },
           {
