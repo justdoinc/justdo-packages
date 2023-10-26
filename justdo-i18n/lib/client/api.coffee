@@ -33,7 +33,10 @@ _.extend JustdoI18n.prototype,
   
   _setupPlaceholderItems: ->
     APP.getEnv (env) ->
-      if (JustdoHelpers.getClientType(env) is "web-app") and (env.LANDING_PAGE_TYPE is "marketing")
+      if not (JustdoHelpers.getClientType(env) is "web-app")
+        return
+
+      if env.LANDING_PAGE_TYPE is "marketing"
         APP.modules.main.user_config_ui.registerConfigSection "langs-selector",
           title: "Languages"
           priority: 50
