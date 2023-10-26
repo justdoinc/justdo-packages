@@ -77,8 +77,8 @@ _.extend TabSwitcherManager.prototype,
       label: "Zoom In"
       tab_id: "unknown-tab"
 
-      icon_type: "font-awesome"
-      icon_val: "fa-window-restore"
+      icon_type: "feather"
+      icon_val: "zoom-in"
 
     loading_tab_icon =
       label: "Loading Tab"
