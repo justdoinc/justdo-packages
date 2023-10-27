@@ -1,11 +1,15 @@
 _.extend JustdoI18n.prototype,
   _immediateInit: ->
+    @_setupDatepickerLocales()
+
     @lang_rv = new ReactiveVar amplify.store JustdoI18n.amplify_lang_key
 
     @tap_i18n_set_lang_tracker = Tracker.autorun =>
       lang = @getLang()
+
       TAPi18n.setLanguage lang
       i18n?.setLanguage lang
+      jQuery.datepicker.setDefaults jQuery.datepicker.regional[lang]
       bootbox.setLocale lang.replaceAll("-", "_")
       moment.locale lang.toLowerCase()
       return
@@ -27,6 +31,18 @@ _.extend JustdoI18n.prototype,
 
     return
   
+  _setupDatepickerLocales: ->
+    supported_languages = _.without _.keys(@getSupportedLanguages()), "en"
+
+    for lang in supported_languages
+      if not (locale_conf = JustdoI18n.jquery_ui_datepicker_locale_confs[lang])?
+        console.warn "Can't find jQuery UI Datepicker locale conf for language #{lang}"
+        continue
+
+      jQuery.datepicker.regional[lang] = locale_conf
+    
+    return
+
   _setupBeforeUserSignUpHook: ->
     APP.accounts.on "user-signup", (options) =>
       if (lang = @getLang())?
