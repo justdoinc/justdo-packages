@@ -106,5 +106,5 @@ _.extend JustdoI18n.prototype,
     if text isnt i18n_text
       return text
     
-    delete i18n_options.lang
+    i18n_options.lang = lang
     return @getI18nTextOrFallback i18n_options
