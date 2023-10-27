@@ -113,9 +113,9 @@ Package.onUse(function (api) {
   api.add_files("i18n/justdo-task-pane/item-details/zh-TW.i18n.json", both);
   api.add_files("i18n/justdo-task-pane/activity/en.i18n.json", both);
   api.add_files("i18n/justdo-task-pane/activity/zh-TW.i18n.json", both);
-  api.add_files("i18n/tasks-collection-manager/en.i18n.json", both);
-  api.add_files("i18n/tasks-collection-manager/vi.i18n.json", both);
-  api.add_files("i18n/tasks-collection-manager/zh-TW.i18n.json", both);
+  api.add_files("i18n/justdo-tasks-collection-manager/en.i18n.json", both);
+  api.add_files("i18n/justdo-tasks-collection-manager/vi.i18n.json", both);
+  api.add_files("i18n/justdo-tasks-collection-manager/zh-TW.i18n.json", both);
   api.add_files("i18n/justdo-chat/en.i18n.json", both);
   api.add_files("i18n/justdo-chat/zh-TW.i18n.json", both);
   api.add_files("i18n/justdo-tasks-changelog-manager/en.i18n.json", both);
