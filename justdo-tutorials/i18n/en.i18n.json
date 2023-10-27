@@ -12,5 +12,9 @@
   "get_free_support_title": "Get free support",
   "get_free_support_subtitle": "1-on-1 support session with JustDo team",
   "request": "Request",
-  "free_support_request_received": "Received, we'll get back to you shortly by email"
+  "free_support_request_received": "Received, we'll get back to you shortly by email",
+  "tutorials_recent_product_updates": "Recent Product Updates",
+  "tutorials_justdo_quick_start": "JustDo Quick Start",
+  "tutorials_justdo_advanced_features": "JustDo Advanced Features",
+  "tutorials_justdo_support_center": "JustDo Support Center"
 }
