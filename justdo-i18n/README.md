@@ -1,6 +1,9 @@
 # JustDo i18n
 
 JustDo i18n is built on top of [TAP I18n](https://github.com/TAPevents/tap-i18n). Their documentation is useful if you plan to extend or modify the core functionalities of JustDo i18n.
+
+[A comprehensive getting-started video is available here.](https://drive.google.com/file/d/1BlXlkH50FaREHOb9ZG8VvvIGQu_Tz1Jv/view)
+
 ## Getting Started
 Adding i18n suppport is consisted of two steps:
  - Defining a key and the text for display in different languages (i18n files)
