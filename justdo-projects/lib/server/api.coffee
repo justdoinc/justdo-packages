@@ -286,7 +286,7 @@ _.extend Projects.prototype,
     if options.init_first_task
       @skipMemberVerification =>
         first_doc = {
-          title: APP.justdo_i18n.getI18nTextOrFallback({fallback_text: "Untitled Task", i18n_key: "untitled_task_title", lang: user_lang})
+          title: TAPi18n.__ "untitled_task_title", {}, user_lang
           project_id: project_id
 
           # createNewProject might be called when no user is logged in

@@ -98,7 +98,7 @@ Template.meetings_dialog_task_subtask.helpers
   taskSubjectBox: (subject) ->
     if !subject?
       subject = ""
-    placeholder = APP.justdo_i18n.getI18nTextOrFallback({fallback_text: "Untitled Task", i18n_key: "untitled_task_title"})
+    placeholder = TAPi18n.__ "untitled_task_title"
     return """<div class="task-subject-box flex-grow-1" contenteditable="true" placeholder="#{placeholder}..." data-task-id="#{Template.instance().task_obj._id}">""" + subject + """</div>"""
 
   onSaveMeetingNote: ->

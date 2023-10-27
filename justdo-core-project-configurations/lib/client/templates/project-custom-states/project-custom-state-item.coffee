@@ -196,7 +196,7 @@ Template.project_custom_state_item.events
     state_label = APP.justdo_i18n.getI18nTextOrFallback {fallback_text: state.txt, i18n_key: state.txt_i18n}
     APP.modules.project_page.curProj().addCustomState({
       core_state: state.state_id
-      txt: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: "#{state_label} - extended", i18n_key: "new_custom_state_default_title", i18n_options: {state: state_label}}
+      txt: TAPi18n.__ "new_custom_state_default_title", {state: state_label}
     })
     return
 

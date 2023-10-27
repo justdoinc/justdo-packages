@@ -154,7 +154,7 @@ Template.meetings_meeting_dialog.onCreated ->
       attended_html += """<span class="mr-2">#{JustdoHelpers.xssGuard meeting.other_attendees}</span>"""
 
     #tasks:
-    fallback_task_title = APP.justdo_i18n.getI18nTextOrFallback({fallback_text: "Untitled Task", i18n_key: "untitled_task_title"})
+    fallback_task_title = TAPi18n.__ "untitled_task_title"
     tasks_html = ""
     tasks = _.sortBy meeting.tasks, "task_order"
     for item in tasks
@@ -345,7 +345,7 @@ Template.meetings_meeting_dialog.onCreated ->
     ret += "Agenda:\n"
     tasks = _.sortBy meeting.tasks, "task_order"
     for item in tasks
-      fallback_task_title = APP.justdo_i18n.getI18nTextOrFallback({fallback_text: "Untitled Task", i18n_key: "untitled_task_title"})
+      fallback_task_title = TAPi18n.__ "untitled_task_title"
       owner_id = APP.collections.Tasks.findOne(item.task_id, {fields: {owner_id: 1}}).owner_id
 
       ret += "\n##{item.seqId}: #{item.title or fallback_task_title} (#{JustdoHelpers.displayName(owner_id)})\n"
