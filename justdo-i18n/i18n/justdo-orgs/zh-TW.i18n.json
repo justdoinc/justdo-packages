@@ -2,7 +2,7 @@
   "default_org_name_with_user_name": "__user_name__的組織",
   "create_org_label": "建立新組織",
   "without_orgs_label": "不屬於任何組織的JustDo",
-  "justdos_under_named_org": "__org_name__下的JustDo",
+  "justdos_under_named_org_html": "<span class=\"org-name\">__org_name__</span>下的JustDo",
   "justdos_without_orgs": "不屬於任何組織的JustDo",
   "orgs_project_config_title": "組織",
   "assign_justdo_to_organization_label": "將此JustDo分配至組織",

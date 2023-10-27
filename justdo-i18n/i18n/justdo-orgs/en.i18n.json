@@ -2,7 +2,7 @@
   "default_org_name_with_user_name": "__user_name__'s organization",
   "create_org_label": "Create Organization",
   "without_orgs_label": "Without Organization",
-  "justdos_under_named_org": "JustDos under __org_name__",
+  "justdos_under_named_org_html": "JustDos under <span class=\"org-name\">__org_name__</span>",
   "justdos_without_orgs": "JustDos without an organization",
   "orgs_project_config_title": "Organizations",
   "assign_justdo_to_organization_label": "Assign JustDo to organization",
