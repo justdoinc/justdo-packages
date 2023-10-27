@@ -7,5 +7,6 @@
   "orgs_project_config_title": "Organizations",
   "assign_justdo_to_organization_label": "Assign JustDo to organization",
   "another_organization": "another organization",
-  "pre_transfer_justdo_to_org_notice_html": "You are about to transfer this JustDo to <b>__dest_org_name__</b>. <br> All members in this JustDo will become members of <b>__dest_org_name__</b>."
+  "pre_transfer_justdo_to_org_notice_html": "You are about to transfer this JustDo to <b>__dest_org_name__</b>. <br> All members in this JustDo will become members of <b>__dest_org_name__</b>.",
+  "select_organization": "Select Organization"
 }
