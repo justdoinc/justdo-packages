@@ -58,23 +58,23 @@ _.extend JustdoI18n.prototype,
   getSupportedLanguages: ->
     return TAPi18n.getLanguages()
   
-  getI18nTranslatedSchemaLabelOrFallback: (field_id, schema, i18n_key_prefix="") ->
-    if not _.isObject schema
-      throw new Meteor.Error "invalid-argument", "Schema obj required"
+  getI18nTextOrFallback: (options) ->
+    # Object params passed from template helper will be encapsulated inside hash
+    if options.hash?
+      options = options.hash
 
-    schema = schema._schema or schema
-    if not (field_def = schema[field_id])?
-      throw new Meteor.Error "invalid-argument", "Provided schema doesn't contain definition of #{field_id}"
-    if not (fallback_label = field_def.label)?
-      console.warn "Provided schema doesn't contain label for #{field_id}. If no i18n text is found, the retuned text is likely to not be human friendly."
+    {fallback_text, i18n_key, i18n_options, lang} = options
 
-    field_id = field_id.replace /:/g, "_"
-    i18n_key = "#{i18n_key_prefix}#{field_id}"
-    i18n_label = TAPi18n.__ i18n_key
+    if not i18n_key?
+      return fallback_text
 
-    # If i18n_label includes prefix, it means the field label isn't i18n ready. In this case we return the fallback label if available.
-    i18n_label_not_found = i18n_label is i18n_key
-    if i18n_label_not_found and fallback_label?
-      return fallback_label
+    check fallback_text, String
+    check i18n_key, String
+    if Meteor.isServer
+      # lang is required in server only
+      check lang, String
+    
+    if (translated_text = TAPi18n.__ i18n_key, i18n_options, lang) isnt i18n_key
+      return translated_text
 
-    return i18n_label
+    return fallback_text

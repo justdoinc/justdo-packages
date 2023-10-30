@@ -9,7 +9,9 @@ _.extend JustdoI18n.prototype,
       return
 
     @_setupBeforeUserSignUpHook()
+
     @_setupPlaceholderItems()
+    @_registerGlobalTemplateHelpers()
 
     @onDestroy =>
       @tap_i18n_set_lang_tracker?.stop?()
@@ -30,7 +32,7 @@ _.extend JustdoI18n.prototype,
       return
       
     return
-  
+
   _setupPlaceholderItems: ->
     APP.getEnv (env) ->
       if not (JustdoHelpers.getClientType(env) is "web-app")
@@ -49,6 +51,10 @@ _.extend JustdoI18n.prototype,
       return
 
     return
+
+  _registerGlobalTemplateHelpers: ->
+    Template.registerHelper "getI18nTextOrFallback", (options) =>
+      return @getI18nTextOrFallback options
 
   setLang: (lang, options) ->
     # options:
