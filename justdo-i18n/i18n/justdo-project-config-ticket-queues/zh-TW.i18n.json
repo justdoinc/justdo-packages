@@ -1,7 +1,7 @@
 {
-  "project_config_ticket_queues_title": "工作請求佇列",
-  "project_config_ticket_queues_new_ticket_queue_label": "增加工作請求佇列",
+  "project_config_ticket_queues_title": "工單佇列",
+  "project_config_ticket_queues_new_ticket_queue_label": "增加工單佇列",
   "project_config_ticket_queues_enter_task_number_label": "輸入任務流水號",
-  "project_config_ticket_queues_no_ticket_queues_label": "沒有工作請求佇列",
-  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "無法移除佇列，因您不是佇列任務的成員"
+  "project_config_ticket_queues_no_ticket_queues_label": "沒有工單佇列",
+  "project_config_ticket_queues_cannot_remove_ticket_queue_label": "無法移除工單佇列，因您不是佇列任務的成員"
 }

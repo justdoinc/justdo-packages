@@ -1,0 +1,15 @@
+{
+  "err_first_name_empty": "請輸入您的名字",
+  "err_first_name_too_long": "姓氏長度不能超過30個字",
+  "err_last_name_too_long": "名字長度不能超過30個字",
+  "err_last_name_empty": "請輸入您的名字",
+  "err_email_invalid": "請輸入有效的電郵地址",
+  "err_email_empty": "請輸入電郵地址",
+  "err_password_empty": "請輸入密碼",
+  "err_incorrect_password": "密碼錯誤",
+  "err_password_too_similar": "密碼與您的姓名或電郵太相似",
+  "err_retype_password_empty": "請重新輸入密碼",
+  "err_retype_password_not_match": "兩次輸入的密碼不一致",
+  "err_agree_ts_and_pp_missing": "請閱讀並同意我們的服務條款及私隱政策",
+  "err_cant_login": "無法登入"
+}

@@ -99,6 +99,7 @@ Package.onUse(function (api) {
   api.add_files("i18n/justdo-i18n/justdo-i18n.vi.i18n.json", both);
   api.add_files("i18n/errors/errors.en.i18n.json", both);
   api.add_files("i18n/errors/errors.vi.i18n.json", both);
+  api.add_files("i18n/errors/errors.zh-TW.i18n.json", both);
   api.add_files("i18n/header/header.en.i18n.json", both);
   api.add_files("i18n/header/header.vi.i18n.json", both);
   api.add_files("i18n/loader/loader.en.i18n.json", both);
