@@ -14,7 +14,9 @@
     </div>
 
     {{#each tab_switcher_manager.getSections}}
-      <div class="dropdown-header px-1 py-2">{{getI18nTextOrFallback fallback_text=label i18n_key=label_i18n}}</div>
+      {{#if label}}
+        <div class="dropdown-header px-1 py-2">{{getI18nTextOrFallback fallback_text=label i18n_key=label_i18n}}</div>
+      {{/if}}
       {{#each itemsSource}}
         <a href="#" class="dropdown-item px-1 d-flex" data-tab-id="{{tab_id}}" {{tabAttributes}}>
           {{> project_operations_tab_switcher_dropdown_tab_icon}}
