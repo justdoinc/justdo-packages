@@ -59,7 +59,7 @@ _.extend GridControl.prototype,
 
     append_fields_menu = [
       {
-        text: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: "Add Column", i18n_key: "add_column_label"}
+        text: TAPi18n.__ "add_column_label"
         subMenu: append_fields_submenu
       }
     ]
@@ -68,7 +68,7 @@ _.extend GridControl.prototype,
     if @getView()[0].frozen is true
       freeze_unfreeze_column = [
         {
-          text: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: "Unfreeze Column", i18n_key: "unfreeze_column_label"}
+          text: TAPi18n.__ "unfreeze_column_label"
           action: (e) =>
             current_view = @getView()
 
@@ -82,7 +82,7 @@ _.extend GridControl.prototype,
     else
       freeze_unfreeze_column = [
         {
-          text: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: "Freeze Column", i18n_key: "freeze_column_label"}
+          text: TAPi18n.__ "freeze_column_label"
           action: (e) =>
             current_view = @getView()
 
@@ -120,7 +120,7 @@ _.extend GridControl.prototype,
       id: @_getColumnsManagerContextMenuId("common")
       data: menu.concat [
         {
-          text: APP.justdo_i18n.getI18nTextOrFallback {fallback_text: "Hide Column", i18n_key: "hide_column_label"}
+          text: TAPi18n.__ "freeze_column_label"
           action: (e) =>
             @_hideFieldColumn(@getView()[column_index_of_last_opened_cmenu].field)
         }
