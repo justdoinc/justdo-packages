@@ -9,7 +9,7 @@ _.extend JustdoI18n.prototype,
 
       TAPi18n.setLanguage lang
       i18n?.setLanguage lang
-      jQuery.datepicker.setDefaults jQuery.datepicker.regional[lang]
+      jQuery.datepicker?.setDefaults jQuery.datepicker.regional[lang]
       bootbox.setLocale lang.replaceAll("-", "_")
       moment.locale lang.toLowerCase()
       return
@@ -32,6 +32,11 @@ _.extend JustdoI18n.prototype,
     return
   
   _setupDatepickerLocales: ->
+    if not jQuery.datepicker?
+      @logger.info "_setupDatepickerLocales: jQuery.datepicker is undefined skipping"
+
+      return
+    
     supported_languages = _.without _.keys(@getSupportedLanguages()), "en"
 
     for lang in supported_languages
