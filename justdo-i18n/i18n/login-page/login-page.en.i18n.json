@@ -6,6 +6,7 @@
   "sign_in_with_azure_ad": "Sign in with Azure AD",
   "sign_up_with_azure_ad": "Sign up with Azure AD",  
   "login_enter_your_email": "Enter your email",
+  "login_enter_your_password": "Enter your password",
   "login_no_account": "No account?",
   "login_already_have_an_account": "Already have an account?",
   "login_sign_up_now": "Sign up now",

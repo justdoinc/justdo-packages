@@ -104,12 +104,15 @@ Package.onUse(function (api) {
   api.add_files("i18n/header/header.vi.i18n.json", both);
   api.add_files("i18n/loader/loader.en.i18n.json", both);
   api.add_files("i18n/loader/loader.vi.i18n.json", both);
+  api.add_files("i18n/loader/loader.zh-TW.i18n.json", both);
   api.add_files("i18n/login-page/login-page.en.i18n.json", both);
   api.add_files("i18n/login-page/login-page.vi.i18n.json", both);
+  api.add_files("i18n/login-page/login-page.zh-TW.i18n.json", both);
   api.add_files("i18n/menu/menu.en.i18n.json", both);
   api.add_files("i18n/menu/menu.vi.i18n.json", both);
   api.add_files("i18n/title/title.en.i18n.json", both);
   api.add_files("i18n/title/title.vi.i18n.json", both);
+  api.add_files("i18n/title/title.zh-TW.i18n.json", both);
   api.add_files("i18n/justdo-task-pane/item-details/en.i18n.json", both);
   api.add_files("i18n/justdo-task-pane/item-details/zh-TW.i18n.json", both);
   api.add_files("i18n/justdo-task-pane/activity/en.i18n.json", both);

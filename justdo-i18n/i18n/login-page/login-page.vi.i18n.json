@@ -6,6 +6,7 @@
   "sign_in_with_azure_ad": "Đăng nhập bằng Azure AD",
   "sign_up_with_azure_ad": "Đăng ký bằng Azure AD",  
   "login_enter_your_email": "Nhập email",
+  "login_enter_your_password": "Nhập mật khẩu",
   "login_no_account": "Chưa có tài khoản?",
   "login_already_have_an_account": "Bạn đã có tài khoản?",
   "login_sign_up_now": "Đăng kí ngay",
