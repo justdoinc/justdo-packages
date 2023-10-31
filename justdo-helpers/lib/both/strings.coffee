@@ -326,3 +326,9 @@ _.extend JustdoHelpers,
         return a.localeCompare(b) * -1 # put the upper before
 
     return array
+
+  htmlEntitiesEncode: (str) ->
+    # This code doesn't support emojis!
+    # https://stackoverflow.com/questions/18749591/encode-html-entities-in-javascript#comment94981399_23834738
+    return str.replace /[\u00A0-\u9999<>\&]/gim, (i) =>
+      return '&#' + i.charCodeAt(0) + ';'
