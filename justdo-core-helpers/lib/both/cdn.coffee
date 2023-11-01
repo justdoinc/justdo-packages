@@ -37,6 +37,11 @@ _.extend JustdoCoreHelpers,
 
       return path
 
+    if path.substr(0, 2) == "//"
+      console.info("getCDNUrl: // prefix isn't supported")
+
+      return path
+
     cdn_url = "#{cdn}#{path}"
 
     if not _.isEmpty app_version
