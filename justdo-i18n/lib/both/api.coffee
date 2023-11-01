@@ -4,7 +4,8 @@ _.extend JustdoI18n.prototype,
 
     # Add here code that should run, in the Server and Client, during the JS
     # tick in which we create the object instance.
-
+  
+    @_replaceDefaultLanguageNames()
     @setupRouter()
     @_setupMomentLocales()
 
@@ -19,6 +20,10 @@ _.extend JustdoI18n.prototype,
     if @destroyed
       return
 
+    return
+  
+  _replaceDefaultLanguageNames: ->
+    TAPi18n.languages_names["zh-TW"] = ["Chinese (Traditional)", "繁體中文"]
     return
   
   _setupMomentLocales: ->
