@@ -2,7 +2,11 @@
 @import "{justdoinc:justdo-chat}/lib/ui/common-components/vars.scss"
 
 .subscribers-management-header
-  padding-top: 2px
+  display: flex
+  justify-content: space-between
+  align-items: center
+  h2
+    margin: 0
 
 .subscribers-search-wrapper
   padding: 8px 0
@@ -19,13 +23,10 @@
       background-color: #e8edf3
 
 .sm-btn
-  text-transform: uppercase
-  float: right
   display: inline-block
   padding: 0 6px
   cursor: pointer
-  font-weight: bold
-  margin-top: -1px
+  font-weight: 600
   user-select: none
 
 .sm-save
