@@ -7219,7 +7219,7 @@ $active-row-and-search-result-editable-cell-background-color: #cfbde1
 
     &.active
       background-color: $active-row-background-color !important
-      
+
       &.editable
         background-color: $active-editable-background-color !important
 
@@ -7316,3 +7316,7 @@ $active-row-and-search-result-editable-cell-background-color: #cfbde1
 /* END A4BF4 */
 
 /* Custom Unicorn CSS - END */
+.org-global-header-middle-wrapper .org-name,
+.org-global-header-middle-wrapper .slash {
+  color: #90772c !important
+}
