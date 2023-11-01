@@ -1,0 +1,9 @@
+{
+  "password-must": "密碼需：",
+  "too-short": "包含最少%d個字",
+  "missing-number": "包含最少1個數字",
+  "missing-special-sign": "包含最少1個符號",
+  "atleast-one-lowercase": "包含最少1個小寫字母",
+  "atleast-one-uppercase": "包含最少1個大寫字母",
+  "too-similar": "不含您的姓名，及電郵的部分"
+}
