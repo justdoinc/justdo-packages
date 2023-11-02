@@ -120,7 +120,7 @@ _.extend GridControl.prototype,
       id: @_getColumnsManagerContextMenuId("common")
       data: menu.concat [
         {
-          text: TAPi18n.__ "freeze_column_label"
+          text: TAPi18n.__ "hide_column_label"
           action: (e) =>
             @_hideFieldColumn(@getView()[column_index_of_last_opened_cmenu].field)
         }
