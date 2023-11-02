@@ -8,8 +8,25 @@
   "state_cancelled": "Hủy",
   "state_on_hold": "Tạm dừng",
   "state_duplicate": "Nhân bản",
-
+  "follow_up_schema_label": "Tiếp nối",
   "start_date_schema_label": "Ngày bắt đầu",
-  "end_date_schema_label": "Ngày hoàn thành"
+  "end_date_schema_label": "Ngày hoàn thành",
+  "due_date_schema_label": "Ngày đến hạn",
+  "priority_schema_label": "Ưu tiên",
+  "createdAt_schema_label": "Đã tạo",
+  "updatedAt_schema_label": "Đã cập nhật",
+  "archived_schema_label": "Nhiệm vụ đã lưu trữ",
+  "description_schema_label": "Mô tả",
 
+
+
+  "project_id_schema_label": "Mã ID trang JustDo",
+  "parents_schema_label": "Công việc chính",
+  "users_schema_label": "Người dùng",
+  "seqId_schema_label": "Mã ID chuỗi tác vụ",
+
+
+
+  "owner_id_schema_label": "Chủ sở hữu",
+  "pending_owner_id_schema_label": "Quyền sở hữu đang treo"
 }

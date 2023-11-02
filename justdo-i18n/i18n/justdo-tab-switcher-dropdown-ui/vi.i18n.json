@@ -1,0 +1,18 @@
+{
+  "tab_switcher_dropdown_title": "Chuyển đổi cấu hình hiển thị",
+  "tab_switcher_dropdown_search_placeholder": "Các cấu hình hiển thị",
+  "tab_switcher_main_view_label": "Cấu hình hiển thị chính",
+  "tab_switcher_my_favorites_label": "Mục yêu thích của tôi",
+  "tab_switcher_my_due_list_label": "Danh sách đến hạn của tôi",
+  "tab_switcher_recently_label": "Gần đây",
+  "tab_switcher_recently_completed_label": "Đã hoàn thành",
+  "tab_switcher_recently_updated_label": "Đã cập nhật",
+  "tab_switcher_recently_created_label": "Đã tạo",
+  "tab_switcher_miscellaneous_label": "Đa dạng chuyển đổi tab",
+  "tab_switcher_task_ownershipt_transfers_label": "Chuyển chủ sở hữu tác vụ",
+  "tab_switcher_ticket_queues_label": "Tác vụ đang đợi xử lý",
+  "tab_switcher_members_due_lists_label": "Danh sách đến hạn của các thành viên",
+  "tab_switcher_all_members_due_list_label": "Danh sách đến hạn của tất cả thành viên",
+  "tab_switcher_projects_section_label": "Dự án",
+  "tab_switcher_projects_label": "Các dự án"
+}

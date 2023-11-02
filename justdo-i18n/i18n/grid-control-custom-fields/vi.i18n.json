@@ -1,0 +1,15 @@
+{
+  "grid_control_custom_fields_section_title": "Trường tùy chỉnh",
+  "grid_control_custom_fields_sort_by_name_label": "Sắp xếp theo tên",
+  "grid_control_custom_fields_new_custom_field_label": "Trường tùy chỉnh mới",
+  "grid_control_custom_fields_no_custom_fields_label": "Không có trường tùy chỉnh",
+  "grid_control_custom_fields_label_placeholder": "Nhãn",
+  "grid_control_custom_fields_text_label": "Văn bản",
+  "grid_control_custom_fields_number_label": "Số",
+  "grid_control_custom_fields_date_label": "Ngày",
+  "grid_control_custom_fields_select_label": "Các lựa chọn",
+  "grid_control_custom_fields_multi_select_label": "Đa lựa chọn",
+  "grid_control_custom_fields_smart_numbers_label": "Số thông minh",
+  "grid_control_custom_fields_unknown_type_label": "Trường tuỳ chỉnh chưa xác định",
+  "grid_control_custom_fields_disabled_field_label": "Trường tuỳ chỉnh bị vô hiệu hóa"
+}

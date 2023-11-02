@@ -1,0 +1,13 @@
+{
+  "project_configurations_active_states_title": "Trạng thái hoạt động",
+  "project_configurations_no_active_states_label": "Không có trạng thái hoạt động",
+  "project_configurations_hidden_states_label": "Trạng thái ẩn",
+  "project_configurations_no_hidden_states_label": "Không có trạng thái ẩn",
+  "project_configurations_type_state_name_placeholder": "Nhập tên trạng thái",
+  "project_configurations_default_title_for_this_state_label": "Tiêu đề mặc định cho trạng thái này",
+  "project_configurations_restore_state_label": "Khôi phục trạng thái",
+  "project_configurations_create_extended_state_label": "Tạo trạng thái mở rộng",
+  "project_configurations_hide_state": "Ẩn trạng thái",
+  "project_configurations_remove_extended_state": "Xóa trạng thái mở rộng",
+  "new_custom_state_default_title": "__state__ được mở rộng"
+}

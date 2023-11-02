@@ -1,0 +1,12 @@
+{
+  "grid_views_label": "Các cấu hình lưới",
+  "grid_views_search_placeholder": "Tìm kiếm cấu hình lưới ",
+  "grid_views_no_view_label": "Không có cấu hình lưới",
+  "grid_views_add_current_view_label": "Thêm cấu hình hiện tại",
+  "grid_views_rename_label": "Đặt lại tên",
+  "grid_views_update_label": "Cập nhật",
+  "grid_views_remove_label": "Loại bỏ",
+  "grid_views_share_label": "Chia sẻ",
+  "grid_views_unshare_label": "Ngừng chia sẻ",
+  "grid_views_shared_label": "Đã chia sẻ"
+}

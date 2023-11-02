@@ -1,0 +1,12 @@
+{
+  "default_org_name_with_user_name": "Tổ chức __user_name__",
+  "create_org_label": "Tạo tổ chức",
+  "without_orgs_label": "Không có tổ chức",
+  "justdos_under_named_org_html": "Các trang JustDos dưới <span class=\"org-name\">__org_name__</span>",
+  "justdos_without_orgs": "Các trang JustDos không có tổ chức",
+  "orgs_project_config_title": "Các tổ chức",
+  "assign_justdo_to_organization_label": "Gán JustDo cho tổ chức",
+  "another_organization": "Tổ chức khác",
+  "pre_transfer_justdo_to_org_notice_html": "Bạn chuyển JustDo sang <b>__dest_org_name__</b>. <br> Tất cả thành viên trong JustDo sẽ trở thành thành viên của <b>__dest_org_name__</b>."
+  
+}

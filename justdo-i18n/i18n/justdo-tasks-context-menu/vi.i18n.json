@@ -1,0 +1,16 @@
+{
+  "remove_tasks_label": "Xóa các tác vụ",
+  "remove_from_parent_label": "Xóa khỏi công việc cha",
+  "remove_with_subtree_label": "Xóa bằng tác vụ nhánh",
+  "archive_task_label": "Lưu trữ tác vụ",
+  "unarchive_task_label": "Hủy lưu trữ tác vụ",
+  "reorder_children_by_label": "Sắp xếp lại tác vụ con theo",
+  "zoom_in_label": "Phóng to",
+  "projects_label": "Các dự án",
+  "set_as_a_project_label": "Thiết lập như 1 dự án",
+  "unset_as_a_project_label": "Bỏ thiết lập như 1 dự án",
+  "close_project_label": "Đóng dự án",
+  "repoen_project_label": "Mở lại dự án",
+  "add_to_project_label": "Thêm dự án",
+  "apply_value_to_subtree": "Thêm __value__ vào tác vụ nhánh"
+}
