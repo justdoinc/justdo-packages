@@ -79,6 +79,8 @@ _.extend TemplateParser.prototype,
 
   "lookup:key": getFromTemplateOnly
 
+  "lookup:dep_id": getFromTemplateOnly
+
   "lookup:title": ->
     if (i18n_title = @template.title_i18n)?
       user_id = @users.performing_user
@@ -95,6 +97,10 @@ _.extend TemplateParser.prototype,
   "lookup:parents": getFromTemplateOnly
 
   "lookup:state": getFromTemplateOnly
+
+  "lookup:start_date": getFromTemplateOnly
+
+  "lookup:end_date": getFromTemplateOnly
 
   "lookup:due_date": getFromTemplateOnly
 
@@ -154,6 +160,8 @@ _.extend TemplateParser.prototype,
     task_props =
       project_id: @lookup "project_id"
       title: @lookup "title"
+      start_date: @lookup "start_date"
+      end_date: @lookup "end_date"
       due_date: @lookup "due_date"
       follow_up: @lookup "follow_up"
       state: @lookup "state"
@@ -318,4 +326,29 @@ EventsAPI =
     APP.justdo_delivery_planner.toggleTaskIsProject task_id, perform_as
 
   update: (task_id, update, perform_as) ->
+    APP.projects._grid_data_com.updateItem task_id, update, perform_as
+
+  # deps: (An arrey of dep_id OR object that has the same structure as items inside justdo_task_dependencies_mf)
+  #   dep_id: (String) key as defined in template obj
+  #   type: (String) Supported dependency type (default is F2S), optional
+  #   lag: (Number) Lag in days, optional
+  addGanttDependency: (task_id, deps, perform_as) ->
+    if _.isString deps
+      deps = [deps]
+    if _.isEmpty deps
+      return
+    
+    deps = _.map deps, (dep) => 
+      if _.isString dep
+        dep_id = dep
+      else
+        dep_id = dep.dep_id
+      dep_task_id = @tasks[dep_id]
+      dep_obj = {task_id: dep_task_id, type: deps.type or "F2S", lag: deps.lag or 0}
+      return dep_obj
+
+    update = 
+      $set:
+        "#{JustdoPlanningUtilities.dependencies_mf_field_id}": deps
+    
     APP.projects._grid_data_com.updateItem task_id, update, perform_as
