@@ -213,7 +213,7 @@ _.extend Projects.prototype,
         # requested.
         return @getProjectConfiguration()?[setting]
 
-      enableCustomFeatures: (features) ->
+      enableCustomFeatures: (features, cb) ->
         if not features?
           self.logger.error "enableCustomFeature: no features provided"
 
@@ -237,6 +237,7 @@ _.extend Projects.prototype,
 
         @configureProject
           custom_features: _.union(current_custom_features, features)
+        , cb
 
         return
 
