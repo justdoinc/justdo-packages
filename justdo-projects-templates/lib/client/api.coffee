@@ -55,7 +55,7 @@ _.extend JustDoProjectsTemplates.prototype,
             template_instance = message_template.template_instance
             selected_template_id = template_instance.active_template_id_rv.get()
 
-            @createSubtreeFromTemplate options.target_task, selected_template_id, project_id, (err, res) ->
+            @createSubtreeFromTemplate options.target_task, selected_template_id, project_id, (err, res) =>
               if err?
                 create_button_disabled = false
                 $create_btn.removeClass "disabled"
@@ -63,14 +63,18 @@ _.extend JustDoProjectsTemplates.prototype,
                 JustdoSnackbar.show
                   text: err.reason or err
                 return
-
-              dialog.modal "hide"
+              
+              template = @requireTemplateById selected_template_id
+              if _.isFunction template.postCreationCallback
+                template.postCreationCallback()
 
               Meteor.setTimeout ->
                 if (grid_data = APP.modules.project_page.gridData())? and _.isArray(paths_to_expand = res?.paths_to_expand)
                   for path in paths_to_expand
                     grid_data.expandPath path
               , 2000
+
+              dialog.modal "hide"
 
               return
 

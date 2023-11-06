@@ -55,6 +55,9 @@ _.extend JustDoProjectsTemplates.prototype,
       type: String
     categories:
       type: [String]
+    postCreationCallback:
+      type: Function
+      optional: true
     label_i18n:
       type: String
     demo_img_src:
