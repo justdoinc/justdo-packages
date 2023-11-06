@@ -13,14 +13,14 @@ APP.getEnv (env) ->
         tasks: [
           title_i18n: "demo_movie_name_1"
           events: [
+            action: "toggleIsProject"
+          ,
             action: "setState"
             args: "in-progress"
           ]
-          events: [
-            action: "toggleIsProject"
-          ]
           tasks: [
             title_i18n: "development"
+            key: "m1_development"
             expand: true
             events: [
               action: "setState"
@@ -28,73 +28,181 @@ APP.getEnv (env) ->
             ]            
             tasks: [
               title_i18n:"evaluate_and_acquire_idea"
+              key: "acquire_idea"
+              start_date: share.getDateOffsetByDays -30 * 9
+              end_date: share.getDateOffsetByDays -30 * 3
+              due_date: share.getDateOffsetByDays -30 * 3 + 10
               events: [
                 action: "setState"
                 args: "done"
               ]              
             ,
               title_i18n: "develop_story_conecpt_into_screenplay"
+              key: "story_to_screenplay"
+              start_date: share.getDateOffsetByDays -30 * 3 + 11
+              end_date: share.getDateOffsetByDays 30 + 25
+              due_date: share.getDateOffsetByDays 30 + 25
               events: [
                 action: "setState"
                 args: "in-progress"
-              ]              
+              ,
+                action: "addGanttDependency"
+                args: ["acquire_idea"]
+              ]   
             ,
               title_i18n: "attaching_key_talent"
               expand: true
+              events: [
+                action: "setState"
+                args: "in-progress"
+              ]
               tasks: [
                 title_i18n: "potential_actors"
+                start_date: share.getDateOffsetByDays -30 * 3 - 5
+                end_date: share.getDateOffsetByDays 30 * 2 - 5
+                due_date: share.getDateOffsetByDays 30 * 2 - 5
                 events: [
                   action: "setState"
                   args: "in-progress"
                 ]
               ,
                 title_i18n: "directors"
+                start_date: share.getDateOffsetByDays -30 * 4 + 9
+                end_date: share.getDateOffsetByDays -5
+                due_date: share.getDateOffsetByDays -5
                 events: [
                   action: "setState"
                   args: "done"
                 ]
-              ]
+              ]                         
             ]
           ,
             title_i18n: "pre_production"
+            key: "pre_production"
+            events: [
+              action: "setState"
+              args: "in-progress"
+            ,
+              action: "addGanttDependency"
+              args: ["m1_development"]
+            ]
             tasks: [
               title_i18n: "finalizing_script_revisions"
-            ,
-              title_i18n: "casting_actors_and_hiring_crew_members"
-            ,
-              title_i18n: "scouting_and_securing_locations"
+              key: "finalize_script"
+              start_date: share.getDateOffsetByDays 30 * 2 - 4
+              end_date: share.getDateOffsetByDays 30 * 3 - 4
+              due_date: share.getDateOffsetByDays 30 * 3 - 4
+              events: [
+                action: "addGanttDependency"
+                args: ["story_to_screenplay"]
+              ]
             ,
               title_i18n: "developing_budgets_and_shoooting_schedules"
+              start_date: share.getDateOffsetByDays 30 * 3 - 1
+              end_date: share.getDateOffsetByDays 30 * 5 + 10
+              due_date: share.getDateOffsetByDays 30 * 5 + 10
+              events: [
+                action: "addGanttDependency"
+                args: ["finalize_script"]
+              ]
+            ,
+              title_i18n: "scouting_and_securing_locations"
+              start_date: share.getDateOffsetByDays 30 * 3 - 1
+              end_date: share.getDateOffsetByDays 30 * 5 + 10
+              due_date: share.getDateOffsetByDays 30 * 5 + 10              
+              events: [
+                action: "addGanttDependency"
+                args: ["finalize_script"]
+              ]
             ,
               title_i18n: "planning_costume_set_and_prop_designs"
+              start_date: share.getDateOffsetByDays 30 * 5 + 11
+              end_date: share.getDateOffsetByDays 30 * 8 + 11
+              due_date: share.getDateOffsetByDays 30 * 8 + 11
+
             ]
           ,
             title_i18n: "post_production"
+            key: "post_production"
             events: [
               action: "setState"
               args: "on-hold"
             ]
             tasks: [
+              title_i18n: "collaborating_with_the_composer_on_the_flims_score"
+              key: "flim_score"
+              start_date: share.getDateOffsetByDays 30 * 4 - 5
+              end_date: share.getDateOffsetByDays 30 * 7 - 5
+              due_date: share.getDateOffsetByDays 30 * 7 - 5
+            ,
               title_i18n: "editing_the_flims_picture_and_sound"
+              key: "editing"
+              start_date: share.getDateOffsetByDays 30 * 7 - 3
+              end_date: share.getDateOffsetByDays 30 * 13 - 5
+              due_date: share.getDateOffsetByDays 30 * 13 - 5
+              events: [
+                action: "addGanttDependency"
+                args: ["flim_score"]
+              ]
             ,
               title_i18n: "overseeing_visual_effects_and_cgi_work"
-            ,
-              title_i18n: "collaborating_with_the_composer_on_the_flims_score"
+              start_date: share.getDateOffsetByDays 30 * 4 - 4
+              end_date: share.getDateOffsetByDays 30 * 13 - 5
+              due_date: share.getDateOffsetByDays 30 * 13 - 5
             ,
               title_i18n: "managing_the_color_grading_process"
+              start_date: share.getDateOffsetByDays 30 * 13 - 3
+              end_date: share.getDateOffsetByDays 30 * 16 - 3
+              due_date: share.getDateOffsetByDays 30 * 16 - 3
+              events: [
+                action: "addGanttDependency"
+                args: ["editing"]
+              ]
             ,
               title_i18n: "finalizing_the_flims_sound_mix_and_mastering"
+              start_date: share.getDateOffsetByDays 30 * 13 - 3
+              end_date: share.getDateOffsetByDays 30 * 16 - 3
+              due_date: share.getDateOffsetByDays 30 * 16 - 3
+              events: [
+                action: "addGanttDependency"
+                args: ["editing"]
+              ]
             ]
           ,
             title_i18n: "marketing_and_distribution"
+            events: [
+              action: "addGanttDependency"
+              args: ["post_production"]
+            ]
             tasks: [
               title_i18n: "developing_marketing_materials"
+              key: "mkt_materials"
+              start_date: share.getDateOffsetByDays 365 + 30 * 4 - 3
+              end_date: share.getDateOffsetByDays 365 + 30 * 7 - 3
+              due_date: share.getDateOffsetByDays 365 + 30 * 7 - 3
             ,
               title_i18n: "coordinating_film_festival_submission_and_screening"
+              start_date: share.getDateOffsetByDays 365 + 30 * 4 - 3
+              end_date: share.getDateOffsetByDays 365 + 30 * 6 - 3
+              due_date: share.getDateOffsetByDays 365 + 30 * 6 - 3
             ,
               title_i18n: "securing_distribution_deals_and_arranging_theatrical_releases"
+              start_date: share.getDateOffsetByDays 365 + 30 * 7
+              end_date: share.getDateOffsetByDays 365 + 30 * 8
+              due_date: share.getDateOffsetByDays 365 + 30 * 8
+              events: [
+                action: "addGanttDependency"
+                args: ["mkt_materials"]
+              ]
             ,
               title_i18n: "managing_public_relations_and_media_coverage"
+              start_date: share.getDateOffsetByDays 365 + 30 * 7
+              end_date: share.getDateOffsetByDays 365 + 30 * 10
+              due_date: share.getDateOffsetByDays 365 + 30 * 10
+              events: [
+                action: "addGanttDependency"
+                args: ["mkt_materials"]
+              ]              
             ]
           ]
         ,
@@ -107,27 +215,50 @@ APP.getEnv (env) ->
           ]
           tasks: [
             title_i18n: "development"
+            key: "m2_development"
+            start_date: share.getDateOffsetByDays(-(365 + 30 * 4))
+            end_date: share.getDateOffsetByDays(-30 * 11 + 5)
+            due_date: share.getDateOffsetByDays(-30 * 11)
             events: [
               action: "setState"
               args: "done"
             ]
           ,
             title_i18n: "pre_production"
+            key: "pre_production"
+            start_date: share.getDateOffsetByDays(-30 * 11 + 6)
+            end_date: share.getDateOffsetByDays(-30 * 7 + 12)
+            due_date: share.getDateOffsetByDays(-30 * 8)
             events: [
               action: "setState"
               args: "done"
+            ,
+              action: "addGanttDependency"
+              args: ["m2_development"]
             ]          
           ,
             title_i18n: "post_production"
+            start_date: share.getDateOffsetByDays(-30 * 7 + 13)
+            end_date: share.getDateOffsetByDays 30 + 14
+            due_date: share.getDateOffsetByDays 30 + 25
             events: [
               action: "setState"
               args: "done"
+            ,
+              action: "addGanttDependency"
+              args: ["pre_production"]
             ]          
           ,
             title_i18n: "marketing_and_distribution"
+            start_date: share.getDateOffsetByDays(-30 * 7 + 13)
+            end_date: share.getDateOffsetByDays 30 * 5 - 5
+            due_date: share.getDateOffsetByDays 30 * 5 - 5
             events: [
               action: "setState"
               args: "in-progress"
+            ,
+              action: "addGanttDependency"
+              args: ["pre_production"]
             ]          
           ]
         ,

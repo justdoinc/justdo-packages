@@ -1,6 +1,7 @@
 APP.getEnv (env) ->
   if not APP.justdo_new_project_templates?
     return
+    
   APP.justdo_projects_templates?.registerTemplate
     id: "it-firm"
     label_i18n: "project_templates_it_firm_label"
@@ -54,6 +55,8 @@ APP.getEnv (env) ->
               ]
             ,
               title_i18n: "v1.0.0"
+              start_date: share.getDateOffsetByDays -14
+              due_date: share.getDateOffsetByDays 60
               events: [
                 action: "toggleIsProject"
               ,
@@ -71,6 +74,7 @@ APP.getEnv (env) ->
                 ]
                 tasks: [
                   title_i18n: "project_templates_task_title_design_and_ui_ux"
+                  key: "design_ui_ux"
                   expand: true
                   events: [
                     action: "setState"
@@ -78,41 +82,72 @@ APP.getEnv (env) ->
                   ]                  
                   tasks: [
                     title_i18n: "project_templates_task_title_requirements_gathering"
+                    key: "requirements_gathering"
+                    start_date: share.getDateOffsetByDays -14
+                    due_date: share.getDateOffsetByDays 7
+                    end_date: share.getDateOffsetByDays 5
                     events: [
                       action: "setState"
                       args: "done"
                     ]
                   ,
                     title_i18n: "project_templates_task_title_wireframes"
+                    key: "build_wireframes"
+                    start_date: share.getDateOffsetByDays 8
+                    due_date: share.getDateOffsetByDays 15
+                    end_date: share.getDateOffsetByDays 14
                     events: [
                       action: "setState"
                       args: "done"
+                    ,
+                      action: "addGanttDependency"
+                      args: ["requirements_gathering"]
                     ]
                   ,
                     title_i18n: "project_templates_task_title_user_interface_design"
+                    key: "frontend_dev"
+                    start_date: share.getDateOffsetByDays 16
+                    due_date: share.getDateOffsetByDays 24
+                    end_date: share.getDateOffsetByDays 25
                     events: [
                       action: "setState"
                       args: "in-progress"
+                    ,
+                      action: "addGanttDependency"
+                      args: ["build_wireframes"]
                     ]                    
                   ,
                     title_i18n: "project_templates_task_title_user_experience_design"
+                    start_date: share.getDateOffsetByDays 16
+                    due_date: share.getDateOffsetByDays 24
+                    end_date: share.getDateOffsetByDays 24
                     events: [
                       action: "setState"
                       args: "will-not-do"
+                    ,
+                      action: "addGanttDependency"
+                      args: ["build_wireframes"]
                     ]                    
                   ]
                 ,
                   title_i18n: "project_templates_task_title_backend_development"
+                  key: "backend_dev"
                   expand: true
                   events: [
                     action: "setState"
                     args: "in-progress"
+                  ,
+                    action: "addGanttDependency"
+                    args: ["requirements_gathering"]
                   ]                  
                   tasks: [
                     title_i18n: 
                       key: "project_templates_task_title_feature_with_custom_name",
                       options: 
                         feature_name: "B"
+                    start_date: share.getDateOffsetByDays 6
+                    due_date: share.getDateOffsetByDays 20
+                    end_date: share.getDateOffsetByDays 25
                     events: [
                       action: "setState"
                       args: "pending"
@@ -124,6 +159,9 @@ APP.getEnv (env) ->
                   events: [
                     action: "setState"
                     args: "on-hold"
+                  ,
+                    action: "addGanttDependency"
+                    args: ["build_wireframes"]
                   ]                  
                   tasks: [
                     title_i18n: 
@@ -141,12 +179,18 @@ APP.getEnv (env) ->
                   events: [
                     action: "setState"
                     args: "nil"
+                  ,
+                    action: "addGanttDependency"
+                    args: ["design_ui_ux", "frontend_dev", "backend_dev"]
                   ]                  
                   tasks: [
                     title_i18n: 
                       key: "project_templates_task_title_write_auto_test_with_custom_name",
                       options: 
                         test_name: "1"
+                    start_date: share.getDateOffsetByDays 26
+                    due_date: share.getDateOffsetByDays 33
+                    end_date: share.getDateOffsetByDays 31
                     events: [
                       action: "setState"
                       args: "in-progress"
@@ -156,6 +200,9 @@ APP.getEnv (env) ->
                       key: "project_templates_task_title_write_auto_test_with_custom_name",
                       options: 
                         test_name: "2"
+                    start_date: share.getDateOffsetByDays 26
+                    due_date: share.getDateOffsetByDays 33
+                    end_date: share.getDateOffsetByDays 35
                     events: [
                       action: "setState"
                       args: "in-progress"
@@ -165,6 +212,8 @@ APP.getEnv (env) ->
               ]
             ,
               title_i18n: "v2.0.0"
+              start_date: share.getDateOffsetByDays 50
+              due_date: share.getDateOffsetByDays 110
               events: [
                 action: "toggleIsProject"
               ]
