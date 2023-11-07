@@ -7,6 +7,17 @@ APP.getEnv (env) ->
     label_i18n: "project_templates_home_builders_inc_label"
     order: 120
     categories: ["getting-started"]
+    postCreationCallback: ->
+      if Meteor.isClient
+        cur_proj = -> APP.modules.project_page.curProj()
+        grid_view = JustDoProjectsTemplates.template_grid_views.gantt
+
+        cur_proj().enableCustomFeatures JustdoPlanningUtilities.project_custom_feature_id, ->
+          Meteor.defer ->
+            APP.modules.project_page.gridControl().setView grid_view
+            return
+          return
+      return
     template:
       tasks: [
         title_i18n: "project_templates_task_title_sites"
@@ -20,6 +31,7 @@ APP.getEnv (env) ->
           ]
           tasks: [
             title_i18n: "project_templates_task_title_project_planning"
+            key: "s1_planning"
             expand: true
             events: [
               action: "setState"
@@ -27,97 +39,201 @@ APP.getEnv (env) ->
             ]
             tasks: [
               title_i18n: "project_templates_task_title_scope_definition"
+              key: "s1_scoping"
+              start_date: share.getDateOffsetByDays(-365 * 3)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 4)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 4)
               events: [
                 action: "setState"
                 args: "done"
               ]
             ,
               title_i18n: "project_templates_task_title_timeline_and_budgeting"
+              key: "s1_timeline"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 4 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 6)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 6)
               events: [
                 action: "setState"
                 args: "pending"
+              ,
+                action: "addGanttDependency"
+                args: ["s1_scoping"]
               ]
             ,
               title_i18n: "project_templates_task_title_permitting_and_compliance"
+              key: "s1_permitting"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 4 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 6)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 6)
               events: [
                 action: "setState"
                 args: "will-not-do"
+              ,
+                action: "addGanttDependency"
+                args: ["s1_scoping"]                
               ]
             ]
           ,
             title_i18n: "project_templates_task_title_design_and_engineering"
+            key: "s1_design"
             events: [
               action: "setState"
               args: "in-progress"
+            ,
+              action: "addGanttDependency"
+              args: ["s1_planning"]
             ]
             tasks: [
               title_i18n: "project_templates_task_title_architectural_design"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 6 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 12)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 12)
+              events: [
+                action: "addGanttDependency"
+                args: ["s1_timeline"]
+              ]
             ,
               title_i18n: "project_templates_task_title_structural_engineering"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 6 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 12)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 12)
+              events: [
+                action: "addGanttDependency"
+                args: ["s1_timeline", "s1_permitting"]
+              ]
             ,
               title_i18n: "project_templates_task_title_mechanical_electrical_and_plumbing"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 6 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 12)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 12)
+              events: [
+                action: "addGanttDependency"
+                args: ["s1_timeline", "s1_permitting"]
+              ]              
             ]
           ,
             title_i18n: "project_templates_task_title_site_preparation"
+            key: "s1_site_prep"
             events: [
               action: "setState"
               args: "pending"
+            ,
+              action: "addGanttDependency"
+              args: ["s1_design"]
             ]            
             tasks: [
               title_i18n: "project_templates_task_title_land_surveying"
+              key: "s1_surveying"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 12 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 14)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 14)
             ,
               title_i18n: "project_templates_task_title_site_clearing"
+              key: "s1_site_clearing"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 14 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 18)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 18)
+              events: [
+                action: "addGanttDependency"
+                args: ["s1_surveying"]
+              ]
             ,
               title_i18n: "project_templates_task_title_excavation_and_grading"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 18 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 24)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 24)
+              events: [
+                action: "addGanttDependency"
+                args: ["s1_site_clearing"]
+              ]              
             ]
           ,
             title_i18n: "project_templates_task_title_construction"
+            key: "s1_construction"
             events: [
               action: "setState"
               args: "done"
+            ,
+              action: "addGanttDependency"
+              args: ["s1_site_prep"]
             ]
             tasks: [
               title_i18n: "project_templates_task_title_framing_and_structural_work"
+              key: "s1_structural"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 24 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 30)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 30)
               events: [
                 action: "setState"
                 args: "done"
               ]
             ,
               title_i18n: "project_templates_task_title_interior_and_exterior_finishing"
+              key: "s1_finishing"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 30 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 36)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 36)
               events: [
                 action: "setState"
                 args: "done"
+              ,
+                action: "addGanttDependency"
+                args: ["s1_structural"]
               ]            
             ,
               title_i18n: "project_templates_task_title_landscaping"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 36 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 38)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 38)
               events: [
                 action: "setState"
                 args: "done"
-              ]            
+              ,
+                action: "addGanttDependency"
+                args: ["s1_finishing"]
+              ]
             ]
           ,
             title_i18n: "project_templates_task_title_inspection_and_quality_control"
             events: [
               action: "setState"
               args: "done"
+            ,
+                action: "addGanttDependency"
+                args: ["s1_construction"]
             ]
             tasks: [
               title_i18n: "project_templates_task_title_code_compliance"
+              key: "s1_compliance"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 38 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 41)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 41)
               events: [
                 action: "setState"
                 args: "done"
               ]              
             ,
               title_i18n: "project_templates_task_title_safety_inspections"
+              key: "s1_inspections"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 38 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 41)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 41)
               events: [
                 action: "setState"
                 args: "done"
               ]            
             ,
               title_i18n: "project_templates_task_title_punch_list"
+              start_date: share.getDateOffsetByDays(-365 * 3 + 30 * 41 + 1)
+              end_date: share.getDateOffsetByDays(-365 * 3 + 30 * 43)
+              due_date: share.getDateOffsetByDays(-365 * 3 + 30 * 43)
               events: [
                 action: "setState"
                 args: "done"
+              ,
+                action: "addGanttDependency"
+                args: ["s1_compliance", "s1_inspections"]
               ]            
             ]
           ,
