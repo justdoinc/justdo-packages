@@ -1,13 +1,13 @@
 Package.describe({
   summary: 'Style with attitude. Sass and SCSS support for Meteor.js.',
-  version: '4.15.0',
+  version: '3.10.0', // Version is fake original is 4.15.0 changed for dependencies conflicts
   git: 'https://github.com/fourseven/meteor-scss.git',
   name: 'fourseven:scss',
 });
 
 Package.registerBuildPlugin({
   name: 'compileScssBatch',
-  use: ['caching-compiler@1.2.2 || 2.0.0', 'ecmascript@0.15.1'],
+  use: ['caching-compiler@1.2.2 || 2.0.0', 'ecmascript@0.14.0'], // Original ecmascript version when cloning the package was 0.15.1 downgraded to 0.14.0 due to conflict when upgrading to Meteor v1.9
   sources: ['plugin/compile-scss.js'],
   npmDependencies: {
     'node-sass': '4.14.1',
