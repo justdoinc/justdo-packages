@@ -1,0 +1,24 @@
+{
+  "planning_utilities_gantt_label": "Gantt",
+  "planning_utilities_freeze_start_date_and_end_date": "Freeze start and end dates",
+  "planning_utilities_unfreeze_task": "Unfreeze task",
+  "planning_utilities_set_as_gantt_milestone": "Set as a Gantt milestone",
+  "planning_utilities_unset_as_gantt_milestone": "Unset as a Gantt milestone",
+  "planning_utilities_save_a_baseline": "Save a baseline",
+  "planning_utilities_display_a_baseline": "Display a baseline",
+  "planning_utilities_no_baselines_are_available": "No baselines are available",
+  "planning_utilities_create_serial_dependencies": "Create serial dependencies",
+  "planning_utilities_set_as_a_buffer_task": "Set as a buffer task",
+  "planning_utilities_unset_as_a_buffer_task": "Unset as a buffer task",
+
+  "grid_gantt_today_label": "today",
+  "grid_gantt_days_high_res_moment_formatter": "dd",
+  "grid_gantt_days_low_res_moment_formatter": "MMM DD, [week] ww, YYYY",
+  "grid_gantt_weeks_high_res_moment_formatter": "DD",
+  "grid_gantt_weeks_low_res_moment_formatter": "MMM, YYYY",
+  "grid_gantt_months_high_res_moment_formatter": "MMM",
+  "grid_gantt_months_low_res_moment_formatter": "Qo [Q], YYYY",
+  "grid_gantt_quarters_high_res_moment_formatter": "Qo [Q]",
+  "grid_gantt_quarters_low_res_moment_formatter": "YYYY",
+  "grid_gantt_years_high_res_moment_formatter": "YYYY"
+}

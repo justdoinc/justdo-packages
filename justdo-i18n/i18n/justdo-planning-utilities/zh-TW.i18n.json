@@ -1,0 +1,24 @@
+{
+  "planning_utilities_gantt_label": "甘特圖",
+  "planning_utilities_freeze_start_date_and_end_date": "凍結任務的開始日和結束日",
+  "planning_utilities_unfreeze_task": "解凍任務",
+  "planning_utilities_set_as_gantt_milestone": "設置任務為甘特圖里程碑",
+  "planning_utilities_unset_as_gantt_milestone": "解除里程碑設置",
+  "planning_utilities_save_a_baseline": "儲存甘特圖基線",
+  "planning_utilities_display_a_baseline": "展示甘特圖基線",
+  "planning_utilities_no_baselines_are_available": "沒有可供展示的基線",
+  "planning_utilities_create_serial_dependencies": "建立連環依賴",
+  "planning_utilities_set_as_a_buffer_task": "設置為緩衝任務",
+  "planning_utilities_unset_as_a_buffer_task": "解除緩衝任務設置",
+
+  "grid_gantt_today_label": "今天",
+  "grid_gantt_days_high_res_moment_formatter": "ddd",
+  "grid_gantt_days_low_res_moment_formatter": "LL[（第]ww[週）]",
+  "grid_gantt_weeks_high_res_moment_formatter": "DD[日]",
+  "grid_gantt_weeks_low_res_moment_formatter": "YYYY[年]MMM",
+  "grid_gantt_months_high_res_moment_formatter": "MMM",
+  "grid_gantt_months_low_res_moment_formatter": "YYYY[年][第]Q[季]",
+  "grid_gantt_quarters_high_res_moment_formatter": "[第]Q[季]",
+  "grid_gantt_quarters_low_res_moment_formatter": "YYYY[年]",
+  "grid_gantt_years_high_res_moment_formatter": "YYYY[年]"
+}
