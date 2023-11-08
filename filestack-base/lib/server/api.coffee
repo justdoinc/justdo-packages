@@ -15,7 +15,7 @@ _.extend FilestackBase.prototype,
 
     # The url-safe base64 format is specified by filestack which simply
     # replaces two chars which are url-unsafe with two chars which are url-safe
-    encodedPolicy = new Buffer(policy + '', 'utf8').toString('base64').replace(/\+/g, '-').replace(/\//g, '_')
+    encodedPolicy = Buffer.from(policy + '', 'utf8').toString('base64').replace(/\+/g, '-').replace(/\//g, '_')
     hmac = getHmac @options.secret, encodedPolicy
 
     return {
