@@ -50,7 +50,7 @@ Meteor.methods
             bcrypt: "$2a$10$EFtzeNp017erAtaCKKlK9OcADZc5FUj46KBdaPfsmGqg/hdcJC/2G"  # default password: P@$$w0rd
         emails:
           [
-            address: "#{id}@qq.com"
+            address: "#{id}@mailinator.com"
             verified: true
           ]
         profile:
