@@ -4,7 +4,7 @@ htmlToText = Npm.require "html-to-text"
 
 getTemplate = (templateName) -> Handlebars.templates[templateName]
 
-forbidden_email_domains = ["qq.com"]
+forbidden_email_domains = []
 
 build_and_send_options_schema = new SimpleSchema
   to:
