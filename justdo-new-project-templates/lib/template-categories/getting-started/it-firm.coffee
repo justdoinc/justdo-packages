@@ -11,11 +11,9 @@ APP.getEnv (env) ->
         cur_proj = -> APP.modules.project_page.curProj()
         grid_view = JustDoProjectsTemplates.template_grid_views.gantt
 
-        cur_proj().enableCustomFeatures JustdoPlanningUtilities.project_custom_feature_id, ->
-          Meteor.defer ->
-            APP.modules.project_page.gridControl().setView grid_view
-            return
-          return
+        if cur_proj().isCustomFeatureEnabled JustdoPlanningUtilities.project_custom_feature_id
+          APP.modules.project_page.gridControl().setView grid_view
+
       return
     order: 110
     template:
