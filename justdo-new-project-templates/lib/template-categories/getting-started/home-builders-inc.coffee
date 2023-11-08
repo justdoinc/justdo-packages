@@ -14,6 +14,7 @@ APP.getEnv (env) ->
 
         if cur_proj().isCustomFeatureEnabled JustdoPlanningUtilities.project_custom_feature_id
           APP.modules.project_page.gridControl().setView grid_view
+          APP.justdo_planning_utilities.setEpochRange [new Date().valueOf() - 95693317062.19897, new Date().valueOf() + 25957736797.801025]
 
       return
     template:

@@ -13,6 +13,7 @@ APP.getEnv (env) ->
 
         if cur_proj().isCustomFeatureEnabled JustdoPlanningUtilities.project_custom_feature_id
           APP.modules.project_page.gridControl().setView grid_view
+          APP.justdo_planning_utilities.setEpochRange [new Date().valueOf() - 1233002850.5703125, new Date().valueOf() + 2568569662.4296875]
 
       return
     order: 110
