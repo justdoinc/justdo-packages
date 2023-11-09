@@ -437,6 +437,7 @@ _.extend GridControlCustomFields,
             for option in select_options
               grid_values[option.option_id] =
                 txt: option.label
+                txt_i18n: option.label_i18n
                 order: order += 1
                 bg_color: option.bg_color
 
@@ -467,6 +468,7 @@ _.extend GridControlCustomFields,
             for option in select_options
               grid_values[option.option_id] =
                 txt: option.label
+                txt_i18n: option.label_i18n
                 order: order += 1
                 bg_color: option.bg_color
 
