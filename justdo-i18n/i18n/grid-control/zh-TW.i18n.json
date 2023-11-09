@@ -6,5 +6,14 @@
 
   "tree_control_tooltip_gantt_milestone": "里程碑",
   "tree_control_tooltip_buffer_task": "緩衝任務",
-  "tree_control_tooltip_Meetings": "會議記錄"
+  "tree_control_tooltip_Meetings": "會議記錄",
+  "tree_control_tooltip_start_time_tracking": "進行任務並開始記錄工作時間",
+  "tree_control_tooltip_stop_time_tracking": "您正在進行此任務，點擊以停止記錄工作時間",
+  "tree_control_tooltip_resources": "資源",
+  "tree_control_tooltip_description": "任務描述",
+  "tree_control_tooltip_chat_messages": "聊天室",
+  "tree_control_tooltip_files_count": "__files_count__個檔案",
+  "tree_control_tooltip_emails_count": "__emails_count__個電郵",
+  "tree_control_tooltip_task_is_a_project": "此任務為專案",
+  "tree_control_tooltip_task_is_archived": "此任務已歸檔"
 }

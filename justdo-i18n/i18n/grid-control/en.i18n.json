@@ -6,5 +6,14 @@
 
   "tree_control_tooltip_gantt_milestone": "Gantt Milestone",
   "tree_control_tooltip_buffer_task": "Buffer Task",
-  "tree_control_tooltip_Meetings": "Meetings"
+  "tree_control_tooltip_Meetings": "Meetings",
+  "tree_control_tooltip_start_time_tracking": "Start working on this task",
+  "tree_control_tooltip_stop_time_tracking": "You are working on this task now, press to stop and log the time worked",
+  "tree_control_tooltip_resources": "Resources",
+  "tree_control_tooltip_description": "Task description",
+  "tree_control_tooltip_chat_messages": "Chat messages",
+  "tree_control_tooltip_files_count": "__files_count__ files",
+  "tree_control_tooltip_emails_count": "__emails_count__ emails",
+  "tree_control_tooltip_task_is_a_project": "Task is a project",
+  "tree_control_tooltip_task_is_archived": "Task is archived"
 }
