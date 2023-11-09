@@ -1,12 +1,3 @@
-tags_properties =
-  "project":
-    text: "Project"
-
-    filter_list_order: 0
-
-    customFilterQuery: (filter_state_id, column_state_definitions, context) ->
-      return {"p:dp:is_project": true}
-
 _.extend JustdoTaskType.prototype,
   _immediateInit: ->
     @installed_category_fields = {}
