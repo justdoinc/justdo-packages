@@ -284,7 +284,7 @@ GridControl.installFormatter "textWithTreeControls",
         if meeting_ids.size > 0
           tree_control += """
             <svg class="task-meetings slick-prevent-edit jd-c-pointer text-dark">
-              <title>Meetings</title>
+              <title>#{TAPi18n.__ "tree_control_tooltip_Meetings"}</title>
               <use xlink:href="/layout/icons-feather-sprite.svg#jd-meetings" class="slick-prevent-edit"></use>
             </svg>"""
 
@@ -292,7 +292,7 @@ GridControl.installFormatter "textWithTreeControls",
       if doc[JustdoPlanningUtilities?.is_milestone_pseudo_field_id] == "true"
         tree_control +=  """
           <svg class="jd-icon ongrid-jd-icon text-secondary slick-prevent-edit">
-            <title>Gantt Milestone</title>
+            <title>#{TAPi18n.__ "tree_control_tooltip_gantt_milestone"}</title>
             <use xlink:href="/layout/icons-feather-sprite.svg#jd-rhombus" class="slick-prevent-edit"></use>
           </svg>
         """
@@ -300,7 +300,7 @@ GridControl.installFormatter "textWithTreeControls",
       if doc[JustdoPlanningUtilities?.is_buffer_task_field_id]
         tree_control +=  """
           <svg class="jd-icon ongrid-jd-icon text-secondary slick-prevent-edit" style="margin-right:2px; fill:black;">
-            <title>Buffer Task</title>
+            <title>#{TAPi18n.__ "tree_control_tooltip_buffer_task"}</title>
             <use xlink:href="/layout/icons-feather-sprite.svg#jd-buffer-set" class="slick-prevent-edit"></use>
           </svg>
         """
