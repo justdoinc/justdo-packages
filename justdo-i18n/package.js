@@ -178,6 +178,8 @@ Package.onUse(function (api) {
   api.add_files("i18n/justdo-planning-utilities/en.i18n.json", both);
   api.add_files("i18n/justdo-projects-health/zh-TW.i18n.json", both);
   api.add_files("i18n/justdo-projects-health/en.i18n.json", both);
+  api.add_files("i18n/justdo-resources-availability/zh-TW.i18n.json", both);
+  api.add_files("i18n/justdo-resources-availability/en.i18n.json", both);
 
   // Uncomment only in packages that integrate with the main applications
   // Pure logic packages should avoid any app specific integration.
