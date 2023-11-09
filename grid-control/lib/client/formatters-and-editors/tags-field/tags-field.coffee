@@ -22,10 +22,12 @@ GridControl.installFormatter "tagsFormatter",
         if (propertiesGenerator = formatter_options?.propertiesGenerator)?
           properties = propertiesGenerator(tag)
 
-          {text, bg_color, fg_color} = properties
+          {text, text_i18n, bg_color, fg_color} = properties
 
-        if not text?
+        if (not text?) and (not text_i18n?)
           text = value
+        else
+          text = APP.justdo_i18n.getI18nTextOrFallback {i18n_key: text_i18n, fallback_text: text}
 
         if not bg_color?
           # Note will also affect cases where propertiesGenerator(tag) returned [] / [undefined, "x"]
@@ -69,10 +71,12 @@ GridControl.installFormatter "tagsFormatter",
         if (propertiesGenerator = formatter_options?.propertiesGenerator)?
           properties = propertiesGenerator(tag)
 
-          {text} = properties
+          {text, text_i18n} = properties
 
-          if not text?
-            text = value
+        if (not text?) and (not text_i18n?)
+          text = value
+        else
+          text = APP.justdo_i18n.getI18nTextOrFallback {i18n_key: text_i18n, fallback_text: text}
 
           output.push text
 
