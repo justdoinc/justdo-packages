@@ -1,4 +1,6 @@
 {
+  "justdo_planning_utilities_human_readable_name": "甘特圖",
+
   "task_duration_pseudo_field_label": "為期",
   "progress_percentage_pseudo_field_label": "完成度%",
   "early_start_field_label": "最早開始日",

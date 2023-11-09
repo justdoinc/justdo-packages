@@ -1,4 +1,6 @@
 {
+  "justdo_planning_utilities_human_readable_name": "Gantt",
+
   "task_duration_pseudo_field_label": "Duration",
   "progress_percentage_pseudo_field_label_i18n": "% Complete",
   "early_start_field_label": "Early Start",
