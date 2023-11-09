@@ -1,3 +1,5 @@
 {
-  "default_type_label": "Types"
+  "default_type_label": "Types",
+  "core_type_project_label": "Project",
+  "core_type_archive_label": "Archived"
 }

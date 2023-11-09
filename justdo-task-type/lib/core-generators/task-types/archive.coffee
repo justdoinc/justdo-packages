@@ -2,6 +2,7 @@ APP.on "justdo-task-type-initiated", ->
   tags_properties =
     "archived":
       text: "Archived"
+      text_i18n: "core_type_archive_label"
 
       filter_list_order: 1
 
