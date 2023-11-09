@@ -21,4 +21,13 @@
   "grid_gantt_quarters_high_res_moment_formatter": "Qo [Q]",
   "grid_gantt_quarters_low_res_moment_formatter": "YYYY",
   "grid_gantt_years_high_res_moment_formatter": "YYYY"
+
+  "grid_gantt_error_start_gt_end": "Task's __start_date_label__ is later than __end_date_label__",
+  "grid_gantt_error_end_gt_due": "Task's __end_date_label__ is later than __due_date_label__",
+  "grid_gantt_error_dep_violated": "Dependency is violated",
+  "grid_gantt_error_start_lt_parent_start": "Task's __start_date_label__ is earlier than parent's",
+  "grid_gantt_error_end_gt_parent_end": "Task's __end_date_label__ is later than parent's",
+  "grid_gantt_error_basket_end_gt_due": "Latest child task __end_date_label__ is later than __due_date_label__",
+  "grid_gantt_error_start_gt_basket_start": "Earliest child __start_date_label__ is earlier than __start_date_label__",
+  "end_lt_basket_end": "Latest child __end_date_label__ is later than __end_date_label__"
 }

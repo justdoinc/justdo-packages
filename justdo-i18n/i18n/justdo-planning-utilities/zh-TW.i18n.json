@@ -21,4 +21,13 @@
   "grid_gantt_quarters_high_res_moment_formatter": "[第]Q[季]",
   "grid_gantt_quarters_low_res_moment_formatter": "YYYY[年]",
   "grid_gantt_years_high_res_moment_formatter": "YYYY[年]"
+
+  "grid_gantt_error_start_gt_end": "任務的__start_date_label__早於__end_date_label__",
+  "grid_gantt_error_end_gt_due": "任務的__end_date_label__遲於__due_date_label__",
+  "grid_gantt_error_dep_violated": "無效的任務依賴",
+  "grid_gantt_error_start_lt_parent_start": "__start_date_label__早於母任務的__start_date_label__",
+  "grid_gantt_error_end_gt_parent_end": "__end_date_label__遲於母任務的__end_date_label__",
+  "grid_gantt_error_basket_end_gt_due": "一個或多個子任務的__end_date_label__遲於此任務的__due_date_label__",
+  "grid_gantt_error_start_gt_basket_start": "一個或多個子任務的__start_date_label__早於此任務的__start_date_label__",
+  "end_lt_basket_end": "一個或多個子任務的__end_date_label__遲於此任務的__end_date_label__"
 }
