@@ -270,11 +270,11 @@ GridControl.installFormatter "textWithTreeControls",
     if @getCurrentColumnData("time_tracker_plugin_enabled") and not doc._type?
       if doc[JustdoTimeTracker?.running_task_private_field_id]?
         tree_control += """
-            <i class="fa fa-fw fa-stop-circle-o jdt-stop jdt-grid-icon slick-prevent-edit" title="You are working on this task now, press to stop and log the time worked" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-stop-circle-o jdt-stop jdt-grid-icon slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_stop_time_tracking"}" aria-hidden="true"></i>
         """
       else
         tree_control += """
-            <i class="fa fa-fw fa-play-circle-o jdt-play jdt-grid-icon slick-prevent-edit" title="Start working on this task" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-play-circle-o jdt-play jdt-grid-icon slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_start_time_tracking"}" aria-hidden="true"></i>
         """
 
     if @getCurrentColumnData("meetings_plugin_enabled") and not doc._type?
@@ -330,7 +330,7 @@ GridControl.installFormatter "textWithTreeControls",
           resource_planner_classes = ""
 
         tree_control += """
-            <i class="fa fa-fw resource_planner fa-tasks #{resource_planner_classes} slick-prevent-edit" title="Resources" aria-hidden="true"></i>
+            <i class="fa fa-fw resource_planner fa-tasks #{resource_planner_classes} slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_resources"}" aria-hidden="true"></i>
         """
 
     if (description_last_update = doc[Projects.tasks_description_last_update_field_id])?
@@ -342,7 +342,7 @@ GridControl.installFormatter "textWithTreeControls",
           description_classes = ""
 
       tree_control += """
-          <i class="fa fa-fw #{description_classes} fa-align-left task-description slick-prevent-edit" title="Task description" aria-hidden="true"></i>
+          <i class="fa fa-fw #{description_classes} fa-align-left task-description slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_description"}" aria-hidden="true"></i>
       """
 
     if (last_message_date = doc[JustdoChat.tasks_chat_channel_last_message_date_field_id])?
@@ -355,7 +355,7 @@ GridControl.installFormatter "textWithTreeControls",
         chat_classes = "fa-comments-o"
 
       tree_control += """
-          <i class="fa fa-fw chat-messages #{chat_classes} slick-prevent-edit" title="Chat messages" aria-hidden="true"></i>
+          <i class="fa fa-fw chat-messages #{chat_classes} slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_chat_messages"}" aria-hidden="true"></i>
       """
     
     if (doc.iem_emails_count > 0)
@@ -364,21 +364,21 @@ GridControl.installFormatter "textWithTreeControls",
       has_unread_emails = last_email_time? and (not last_read? or last_email_time > last_read)
 
       tree_control += """
-            <i class="fa fa-fw justdo-inbound-emails slick-prevent-edit #{if has_unread_emails then "has-unread-emails fa-envelope" else "fa-envelope-o"}" title="#{doc.iem_emails_count} emails" aria-hidden="true"></i>
+            <i class="fa fa-fw justdo-inbound-emails slick-prevent-edit #{if has_unread_emails then "has-unread-emails fa-envelope" else "fa-envelope-o"}" title="#{TAPi18n.__ "tree_control_tooltip_emails_count", {emails_count: doc.iem_emails_count}}" aria-hidden="true"></i>
         """
 
     if (tasks_file_manager_count = doc[TasksFileManager.files_count_field_id])?
       tasks_file_manager_count = parseInt(tasks_file_manager_count, 10) # Don't open an XSS chance.
       if tasks_file_manager_count > 0
         tree_control += """
-            <i class="fa fa-fw fa-paperclip task-files slick-prevent-edit" title="#{tasks_file_manager_count} files" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-paperclip task-files slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_files_count", {files_count: tasks_file_manager_count}}" aria-hidden="true"></i>
         """
 
     if (justdo_files_count = doc[JustdoFiles.files_count_task_doc_field_id])?
       justdo_files_count = parseInt(justdo_files_count, 10) # Don't open an XSS chance.
       if justdo_files_count > 0
         tree_control += """
-            <i class="fa fa-fw fa-paperclip justdo-files slick-prevent-edit" title="#{justdo_files_count} files" aria-hidden="true"></i>
+            <i class="fa fa-fw fa-paperclip justdo-files slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_files_count", {files_count: justdo_files_count}}" aria-hidden="true"></i>
         """
 
     if @getCurrentColumnData("delivery_planner_plugin_enabled")
@@ -387,7 +387,7 @@ GridControl.installFormatter "textWithTreeControls",
         
         if is_project
           tree_control += """
-              <i class="fa fa-fw fa-briefcase task-is-project #{if is_archived_project then "task-is-archived-project" else ""} slick-prevent-edit" title="Task is a project" aria-hidden="true"></i>
+              <i class="fa fa-fw fa-briefcase task-is-project #{if is_archived_project then "task-is-archived-project" else ""} slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_task_is_a_project"}" aria-hidden="true"></i>
           """
 
     if @getCurrentColumnData("checklist_plugin_enabled") and not doc._type?
@@ -395,7 +395,7 @@ GridControl.installFormatter "textWithTreeControls",
 
     if doc.archived?
       tree_control += """
-          <i class="fa fa-fw fa-archive slick-prevent-edit" title="Task is archived" aria-hidden="true"></i>
+          <i class="fa fa-fw fa-archive slick-prevent-edit" title="#{TAPi18n.__ "tree_control_tooltip_task_is_archived"}" aria-hidden="true"></i>
       """
 
     tree_control += """
