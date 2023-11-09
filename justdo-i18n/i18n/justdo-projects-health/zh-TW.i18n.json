@@ -1,0 +1,8 @@
+{
+  "task_type_delayed_label": "仍未開始",
+  "task_type_behind_label": "慢於預期",
+  "task_type_late_label": "延遲",
+  "task_type_overdue_label": "過期",
+  "task_type_key_task_label": "關鍵任務",
+  "task_type_no_owner_label": "沒有負責人"
+}
