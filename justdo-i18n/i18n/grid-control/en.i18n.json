@@ -2,5 +2,9 @@
   "add_column_label": "Add Column",
   "hide_column_label": "Hide Column",
   "freeze_column_label": "Freeze Column",
-  "unfreeze_column_label": "Unfreeze Column"
+  "unfreeze_column_label": "Unfreeze Column",
+
+  "tree_control_tooltip_gantt_milestone": "Gantt Milestone",
+  "tree_control_tooltip_buffer_task": "Buffer Task",
+  "tree_control_tooltip_Meetings": "Meetings"
 }
