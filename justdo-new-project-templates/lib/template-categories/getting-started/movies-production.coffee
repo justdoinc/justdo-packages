@@ -6,20 +6,33 @@ APP.getEnv (env) ->
     id: "movies-production"
     label_i18n: "project_templates_movies_production_label"
     categories: ["getting-started"]
-    postCreationCallback: ->
+    postCreationCallback: (res) ->
       if Meteor.isClient
         cur_proj = -> APP.modules.project_page.curProj()
-        grid_view = JustDoProjectsTemplates.template_grid_views.gantt
 
         if cur_proj().isCustomFeatureEnabled JustdoPlanningUtilities.project_custom_feature_id
-          APP.modules.project_page.gridControl().setView grid_view
-          APP.justdo_planning_utilities.setEpochRange [new Date().valueOf() - 43988105594.138916, new Date().valueOf() + 62528274819.71973]
+          first_root_task_id = res.first_root_task_id
+          grid_view = JustDoProjectsTemplates.template_grid_views.gantt
 
+          APP.justdo_planning_utilities.on "changes-queue-processed", ->
+            if not (task_info = APP.justdo_planning_utilities.task_id_to_info[first_root_task_id])?
+              return
+            {earliest_child_start_time, latest_child_end_time} = task_info
+            if (not earliest_child_start_time?) or (not latest_child_end_time?)
+              return
+            
+            APP.justdo_planning_utilities.setEpochRange [earliest_child_start_time, latest_child_end_time]
+            @off()
+            return
+            
+          APP.modules.project_page.gridControl().setView grid_view
+          
       return
     order: 130
     template:
       tasks: [
         title_i18n: "movies"
+        key: "first_root_task" # task with key: "first_root_task" will dictate the range of gantt chart shown by its basket start date and end date 
         tasks: [
           title_i18n: "demo_movie_name_1"
           events: [
