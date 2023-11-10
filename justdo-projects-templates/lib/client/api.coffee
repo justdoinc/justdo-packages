@@ -66,7 +66,7 @@ _.extend JustDoProjectsTemplates.prototype,
               
               template = @requireTemplateById selected_template_id
               if _.isFunction template.postCreationCallback
-                template.postCreationCallback()
+                template.postCreationCallback res
 
               Meteor.setTimeout ->
                 if (grid_control = APP.modules.project_page.gridControl())?

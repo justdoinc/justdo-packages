@@ -31,7 +31,7 @@ _.extend JustDoProjectsTemplates.prototype,
     parser.createTasks(options.template.tasks)
     parser.runEvents()
 
-    return
+    return {first_root_task_id: parser.tasks?.first_root_task}
 
   destroy: ->
     if @destroyed
