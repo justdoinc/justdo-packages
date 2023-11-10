@@ -51,9 +51,9 @@ APP.executeAfterAppLibCode ->
 
   removeMember = (user_id) ->
     if user_id == Meteor.userId()
-      confirm_message = "Are you sure you want to leave this JustDo?"
+      confirm_message = TAPi18n.__ "members_dropdown_leave_justdo_confirm_message"
     else
-      confirm_message = "Are you sure you want to remove this member?"
+      confirm_message = TAPi18n.__ "members_dropdown_remove_member_confirm_message"
 
     bootbox.confirm
       message: confirm_message
@@ -158,14 +158,7 @@ APP.executeAfterAppLibCode ->
       invited_members_count = Template.instance().invited_members_count.get()
 
       if invited_members_count > 0
-        notification += "#{invited_members_count}"
-
-        if invited_members_count == 1
-          notification += """ <span>member</span> was invited"""
-        else
-          notification += """ <span>members</span> were invited"""
-      else
-        notification = ""
+        notification = TAPi18n.__ "member_dropdown_invite_success_message_html", {count: invited_members_count}
 
       return notification
 
@@ -190,7 +183,7 @@ APP.executeAfterAppLibCode ->
       return
 
     "click .upgrade-admin": (e) ->
-      confirm_message = "Are you sure you want to make this member admin of this JustDo?"
+      confirm_message = TAPi18n.__ "members_dropdown_promote_admin_confirm_message"
 
       bootbox.confirm
         message: confirm_message
@@ -206,7 +199,7 @@ APP.executeAfterAppLibCode ->
           return
 
     "click .make-guest": (e) ->
-      confirm_message = "Are you sure you want to make this member a guest of this JustDo?"
+      confirm_message = TAPi18n.__ "members_dropdown_make_guest_confirm_message"
 
       bootbox.confirm
         message: confirm_message
@@ -222,7 +215,7 @@ APP.executeAfterAppLibCode ->
           return
 
     "click .upgrade-guest": (e) ->
-      confirm_message = "Are you sure you want to make this guest a member of this JustDo?<br />Once a member, all the other guests/members/admins of this JustDo will become visible to this guest."
+      confirm_message = TAPi18n.__ "members_dropdown_upgrade_guest_confirm_message_html"
 
       bootbox.confirm
         message: confirm_message
@@ -239,9 +232,9 @@ APP.executeAfterAppLibCode ->
 
     "click .downgrade-admin": (e) ->
       if @user_id == Meteor.userId()
-        confirm_message = "Are you sure you want to stop manage this JustDo?"
+        confirm_message = TAPi18n.__ "members_dropdown_downgrade_admin_self_confirm_message"
       else
-        confirm_message = "Are you sure you want to remove this admin?"
+        confirm_message = TAPi18n.__ "members_dropdown_downgrade_admin_others_confirm_message"
 
       bootbox.confirm
         message: confirm_message
@@ -277,15 +270,12 @@ APP.executeAfterAppLibCode ->
 
     "click .remove-selected": (e, tpl) ->
       selected_members = tpl.selected_members.get()
-      errors = []
-      confirm_message = "Are you sure you want to remove #{selected_members.length} members?"
       selected_members_count = selected_members.length
+      errors = []
+      confirm_message = TAPi18n.__ "members_dropdown_remove_member_confirm_message", {count: selected_members_count}
 
-      if selected_members_count == 1
-        if selected_members[0] == Meteor.userId()
-          confirm_message = "Are you sure you want to leave this JustDo?"
-        else
-          confirm_message = "Are you sure you want to remove this member?"
+      if (selected_members_count is 1) and (selected_members[0] is Meteor.userId())
+        confirm_message = TAPi18n.__ "members_dropdown_leave_justdo_confirm_message"
 
       bootbox.confirm
         message: confirm_message

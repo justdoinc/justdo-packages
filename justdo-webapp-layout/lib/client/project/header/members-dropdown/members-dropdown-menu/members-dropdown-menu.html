@@ -2,12 +2,12 @@
   <div class="members-dropdown-wrapper {{#if inviteMode}}invite-mode{{/if}}">
     <div class="members-dropdown-list {{#if selectMode}}selected-mode{{/if}}">
       <div class="members-search-wrapper d-flex align-items-center">
-        <input type="text" class="members-search-input form-control form-control-sm" placeholder="Members">
+        <input type="text" class="members-search-input form-control form-control-sm" placeholder="{{_ "members_dropdown_search_members_placeholder"}}">
         {{#if is_project_admin}}
           <div class="member-invite-dropdown animate {{#if isEmptyResults getCurrentMembersFilter}}slideIn{{/if}}">
             <div class="invite-dropdown-btn member-invite-btn-js" tabindex="0">
               <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#user-plus"></use></svg>
-              Invite <span>{{getCurrentMembersFilter}}</span>
+              {{_ "members_dropdown_invite_label"}} <span>{{getCurrentMembersFilter}}</span>
             </div>
           </div>
         {{/if}}
@@ -15,7 +15,7 @@
       <div class="alerts-container"></div>
       <ul class="project-members-container">
         {{#if isEmptyResults getCurrentMembersFilter}}
-          <li class="no-results">No results found</li>
+          <li class="no-results">{{_ "members_dropdown_no_results_found"}}</li>
         {{else}}
           {{#if invitedMembersNotification}}
             <div class="invited-memebers-notification bg-light">
@@ -48,7 +48,7 @@
 
           {{#with project_non_enrolled_members_sorted_by_first_name getCurrentMembersFilter}}
             <div class="members-dropdown-header invited-memebers-header">
-              <div class="label">Members awaiting registration</div>
+              <div class="label">{{_ "members_dropdown_members_awaiting_registration"}}</div>
             </div>
             {{#each this}}
               <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
@@ -59,7 +59,7 @@
 
           {{#with project_non_enrolled_guests_sorted_by_first_name getCurrentMembersFilter}}
             <div class="members-dropdown-header invited-memebers-header">
-              <div class="label">Guests awaiting registration</div>
+              <div class="label">{{_ "members_dropdown_guests_awaiting_registration"}}</div>
             </div>
             {{#each this}}
               <div class="member-item-wrapper {{#if memberSelected}}selected{{/if}}">
@@ -72,10 +72,10 @@
       {{#if is_project_admin}}
         <div class="add-project-members">
           {{#if selectMode}}
-            <button class="btn btn-light btn-sm cancel-select-mode" type="button">Cancel</button>
-            <button class="btn btn-primary btn-sm remove-selected {{#if allowRemoveSelected}}active{{/if}}" type="button">Remove {{#if allowRemoveSelected}}({{selectedMembersCount}}){{/if}}</button>
+            <button class="btn btn-light btn-sm cancel-select-mode" type="button">{{_ "cancel"}}</button>
+            <button class="btn btn-primary btn-sm remove-selected {{#if allowRemoveSelected}}active{{/if}}" type="button">{{_ "remove"}} {{#if allowRemoveSelected}}({{selectedMembersCount}}){{/if}}</button>
           {{else}}
-            <button class="btn btn-primary btn-sm show-add-members-dialog member-invite-btn-js" type="button">Invite</button>
+            <button class="btn btn-primary btn-sm show-add-members-dialog member-invite-btn-js" type="button">{{_ "members_dropdown_invite_label"}}</button>
           {{/if}}
         </div>
       {{/if}}
@@ -96,25 +96,25 @@
     </div>
     {{#if allow_show_member_dropdown_settings user_id}}
       <div class="member-settings-dropdown">
-        <div class="member-role-label text-primary">Admin</div>
+        <div class="member-role-label text-primary">{{_ "members_dropdown_admin"}}</div>
         <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
         <div class="member-settings-dropdown-menu animate slideIn">
           {{#if is_project_admin}}
             <div class="dropdown-item downgrade-admin">
               <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
-              <div class="dropdown-item-label">Revoke Admin Rights</div>
+              <div class="dropdown-item-label">{{_ "members_dropdown_revoke_admin_rights"}}</div>
             </div>
           {{/if}}
           {{#if allow_member_remove user_id}}
             {{#if is_current_user user_id}}
               <div class="dropdown-item leave">
                 <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#log-out"></use></svg>
-                <div class="dropdown-item-label">Leave</div>
+                <div class="dropdown-item-label">{{_ "leave"}}</div>
               </div>
             {{else}}
               <div class="dropdown-item remove">
                 <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
-                <div class="dropdown-item-label">Remove</div>
+                <div class="dropdown-item-label">{{_ "remove"}}</div>
               </div>
             {{/if}}
           {{/if}}
@@ -133,18 +133,18 @@
     </div>
     {{#if allow_show_member_dropdown_settings user_id}}
       <div class="member-settings-dropdown">
-        <div class="member-role-label text-primary">{{#if is_proxy}}Proxy{{else}}Member{{/if}}</div>
+        <div class="member-role-label text-primary">{{#if is_proxy}}{{_ "members_dropdown_proxy"}}{{else}}{{_ "members_dropdown_member"}}{{/if}}</div>
         <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
         <div class="member-settings-dropdown-menu animate slideIn">
           {{#if is_project_admin}}
             {{#unless is_proxy}}
               <div class="dropdown-item upgrade-admin">
                 <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
-                <div class="dropdown-item-label">Make an Admin</div>
+                <div class="dropdown-item-label">{{_ "members_dropdown_make_an_admin"}}</div>
               </div>
               <div class="dropdown-item make-guest">
                 <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-down"></use></svg>
-                <div class="dropdown-item-label">Make a Guest</div>
+                <div class="dropdown-item-label">{{_ "members_dropdown_make_a_guest"}}</div>
               </div>
             {{/unless}}
           {{/if}}
@@ -152,12 +152,12 @@
             {{#if is_current_user user_id}}
               <div class="dropdown-item leave">
                 <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#log-out"></use></svg>
-                <div class="dropdown-item-label">Leave</div>
+                <div class="dropdown-item-label">{{_ "leave"}}</div>
               </div>
             {{else}}
               <div class="dropdown-item remove">
                 <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
-                <div class="dropdown-item-label">Remove</div>
+                <div class="dropdown-item-label">{{_ "remove"}}</div>
               </div>
             {{/if}}
           {{/if}}
@@ -176,25 +176,25 @@
     </div>
     {{#if allow_show_member_dropdown_settings user_id}}
       <div class="member-settings-dropdown">
-        <div class="member-role-label text-primary">Guest</div>
+        <div class="member-role-label text-primary">{{_ "members_dropdown_guest"}}</div>
         <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
         <div class="member-settings-dropdown-menu animate slideIn">
           {{#if is_project_admin}}
             <div class="dropdown-item upgrade-guest">
               <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#chevron-up"></use></svg>
-              <div class="dropdown-item-label">Make a Member</div>
+              <div class="dropdown-item-label">{{_ "members_dropdown_make_a_member"}}</div>
             </div>
           {{/if}}
           {{#if allow_member_remove user_id}}
             {{#if is_current_user user_id}}
               <div class="dropdown-item leave">
                 <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#log-out"></use></svg>
-                <div class="dropdown-item-label">Leave</div>
+                <div class="dropdown-item-label">{{_ "leave"}}</div>
               </div>
             {{else}}
               <div class="dropdown-item remove">
                 <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
-                <div class="dropdown-item-label">Remove</div>
+                <div class="dropdown-item-label">{{_ "remove"}}</div>
               </div>
             {{/if}}
           {{/if}}
@@ -212,17 +212,17 @@
       <div class="display-name mx-2" title="{{userEmail this}}">{{displayName}}</div>
     </div>
     <div class="member-settings-dropdown">
-      <div class="member-role-label text-primary">{{#if is_admin}}Admin{{else}}{{#if is_guest}}Guest{{else}}Member{{/if}}{{/if}}</div>
+      <div class="member-role-label text-primary">{{#if is_admin}}{{_ "members_dropdown_admin"}}{{else}}{{#if is_guest}}{{_ "members_dropdown_guest"}}{{else}}{{_ "members_dropdown_member"}}{{/if}}{{/if}}</div>
       <svg class="jd-icon text-secondary member-settings-dropdown-btn"><use xlink:href="/layout/icons-feather-sprite.svg#more-vertical"></use></svg>
       <div class="member-settings-dropdown-menu animate slideIn">
         {{#if allow_member_edit_enrollment_pending_member user_id}}
           <div class="dropdown-item edit-enrolled">
             {{#if is_project_admin}}
               <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#edit-3"></use></svg>
-              <div class="dropdown-item-label">Edit</div>
+              <div class="dropdown-item-label">{{_ "edit"}}</div>
             {{else}}
               <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#info"></use></svg>
-              <div class="dropdown-item-label">Info</div>
+              <div class="dropdown-item-label">{{_ "info"}}</div>
             {{/if}}
           </div>
         {{/if}}
@@ -230,7 +230,7 @@
           {{#if is_project_admin}}
             <div class="dropdown-item {{#if is_admin}}downgrade-admin{{else}}upgrade-admin{{/if}}">
               <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#star"></use></svg>
-              <div class="dropdown-item-label">{{#if is_admin}}Revoke Admin Rights{{else}}Make an Admin upon registration{{/if}}</div>
+              <div class="dropdown-item-label">{{#if is_admin}}{{_ "members_dropdown_revoke_admin_rights"}}{{else}}{{_ "members_dropdown_make_an_admin_upon_registration"}}{{/if}}</div>
             </div>
           {{/if}}
         {{/unless}}
@@ -238,12 +238,12 @@
           {{#if is_current_user user_id}}
             <div class="dropdown-item leave">
               <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#log-out"></use></svg>
-              <div class="dropdown-item-label">Leave</div>
+              <div class="dropdown-item-label">{{_ "leave"}}</div>
             </div>
           {{else}}
             <div class="dropdown-item remove">
               <svg class="jd-icon-dropdown text-dark"><use xlink:href="/layout/icons-feather-sprite.svg#trash"></use></svg>
-              <div class="dropdown-item-label">Remove</div>
+              <div class="dropdown-item-label">{{_ "remove"}}</div>
             </div>
           {{/if}}
         {{/if}}
