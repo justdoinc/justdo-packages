@@ -5,6 +5,7 @@ _.extend JustdoI18n.prototype,
     # Add here code that should run, in the Server and Client, during the JS
     # tick in which we create the object instance.
   
+    @_setupI18nextPluralRule()
     @_replaceDefaultLanguageNames()
     @setupRouter()
     @_setupMomentLocales()
@@ -22,6 +23,12 @@ _.extend JustdoI18n.prototype,
 
     return
   
+  _setupI18nextPluralRule: ->
+    # For some reason Chinese doesn't have built-in plural form. Here we add it back using the same rules as English.
+    en_plural_form = TAPi18next.pluralExtensions.rules.en
+    TAPi18next.pluralExtensions.addRule("zh", {name: "Chinese", numbers: en_plural_form.numbers, plurals: en_plural_form.plurals})
+    return
+
   _replaceDefaultLanguageNames: ->
     TAPi18n.languages_names["zh-TW"] = ["Chinese (Traditional)", "繁體中文"]
     return
