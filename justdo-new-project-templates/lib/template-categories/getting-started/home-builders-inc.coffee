@@ -16,13 +16,17 @@ APP.getEnv (env) ->
           grid_view = JustDoProjectsTemplates.template_grid_views.gantt
 
           APP.justdo_planning_utilities.on "changes-queue-processed", ->
+            # Note that @off is releasing this event later on once all the conditions are met
             if not (task_info = APP.justdo_planning_utilities.task_id_to_info[first_root_task_id])?
               return
             {earliest_child_start_time, latest_child_end_time} = task_info
             if (not earliest_child_start_time?) or (not latest_child_end_time?)
               return
             
+            # Set the date range presented in the gantt
             APP.justdo_planning_utilities.setEpochRange [earliest_child_start_time, latest_child_end_time]
+
+            # Release the event
             @off()
             return
             
