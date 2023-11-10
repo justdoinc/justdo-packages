@@ -69,9 +69,10 @@ _.extend JustDoProjectsTemplates.prototype,
                 template.postCreationCallback res
 
               Meteor.setTimeout ->
-                if (grid_control = APP.modules.project_page.gridControl())?
-                  grid_control.expandDepth()
-              , 1000
+                if (grid_data = APP.modules.project_page.gridData())? and _.isArray(paths_to_expand = res?.paths_to_expand)
+                  for path in paths_to_expand
+                    grid_data.expandPath path
+              , 2000
 
               dialog.modal "hide"
 
