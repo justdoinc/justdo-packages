@@ -61,16 +61,11 @@ APP.executeAfterAppLibCode ->
 
       return
 
-    share_all_title = "Share all"
     all_tasks_count = APP.collections.Tasks.find({"project_id": JD.activeJustdoId()}).count()
-
-    if all_tasks_count > 1
-      share_all_title += " <span>#{all_tasks_count}</span> tasks"
-
     tpl.share_options = [
-      { "class": "share-all", "title": share_all_title },
-      { "class": "share-specific", "title": "Share specific projects" },
-      { "class": "share-none", "title": "Share none" },
+      { "class": "share-all", "title": TAPi18n.__ "member_dropdown_invite_share_all_with_number_html", {count: all_tasks_count} },
+      { "class": "share-specific", "title": TAPi18n.__ "member_dropdown_invite_share_specific" },
+      { "class": "share-none", "title": TAPi18n.__ "member_dropdown_invite_share_none" },
     ]
 
     tpl.setDefaulSettings = ->
@@ -274,7 +269,7 @@ APP.executeAfterAppLibCode ->
       if _.isEmpty(invalid_email_input = tpl.invalid_email_input_rv.get())
         return
       
-      err_msg.push "Unable to recognize email address from the following input: #{invalid_email_input}"
+      err_msg.push TAPi18n.__("member_dropdown_invite_cannot_recognize_email_with_input", {input: invalid_email_input.join ", "})
 
       return err_msg
 
@@ -404,10 +399,7 @@ APP.executeAfterAppLibCode ->
       selected_projects = tpl.selected_projects_rv.get()
       tpl.selected_tasks_rv.set _.map selected_projects, (project) -> project
       active_share_option = tpl.share_options[1]
-      active_share_option.title = """Share <span>#{selected_projects.length}</span> project"""
-
-      if selected_projects.length > 1
-        active_share_option.title += "s"
+      active_share_option.title = TAPi18n.__ "member_dropdown_invite_share_projects_with_number_html", {count: selected_projects.length}
 
       tpl.active_share_option.set active_share_option
       $("#members-invite-projects-selector").modal "hide"

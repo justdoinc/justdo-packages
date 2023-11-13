@@ -7,7 +7,7 @@
           <div class="member-invite-dropdown animate {{#if isEmptyResults getCurrentMembersFilter}}slideIn{{/if}}">
             <div class="invite-dropdown-btn member-invite-btn-js" tabindex="0">
               <svg class="jd-icon"><use xlink:href="/layout/icons-feather-sprite.svg#user-plus"></use></svg>
-              {{_ "members_dropdown_invite_label"}} <span>{{getCurrentMembersFilter}}</span>
+              <span class="text-nowrap">{{_ "members_dropdown_invite_label"}}</span> <span>{{getCurrentMembersFilter}}</span>
             </div>
           </div>
         {{/if}}

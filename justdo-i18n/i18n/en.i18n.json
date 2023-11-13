@@ -2,6 +2,7 @@
   "error": "Error",
   "close": "Close",
   "next": "Next",
+  "back": "Back",
   "skip": "Skip",
   "create": "Create",
   "show_later": "Show Later",

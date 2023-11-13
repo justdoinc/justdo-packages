@@ -1,8 +1,8 @@
 <template name="members_dropdown_invite">
   <div class="members-dropdown-invite">
     <div class="members-dropdown-invite-header">
-      <input class="invite-members-input form-control form-control-sm" type="text" placeholder="Type email">
-      <div class="invite-members-input-add text-primary {{#if showAddButton}}show{{/if}}">Add</div>
+      <input class="invite-members-input form-control form-control-sm" type="text" placeholder="{{_ "members_dropdown_invite_email_input_placeholder"}}">
+      <div class="invite-members-input-add text-primary {{#if showAddButton}}show{{/if}}">{{_ "members_dropdown_invite_add"}}</div>
     </div>
     <div class="alerts-container">
       {{#each alertMsg}}
@@ -29,7 +29,7 @@
           {{/each}}
         </div>
       {{else}}
-        <div class="empty-list">Enter or paste comma-seperated email addresses</div>
+        <div class="empty-list">{{_ "members_dropdown_invite_enter_or_paste_email"}}</div>
       {{/if}}
     </div>
     <div class="invite-settings-wrapper bg-light">
@@ -47,13 +47,13 @@
       <div class="divider"></div>
       <div class="invite-settings-item invite-settings-advanced">
         <div class="invite-setings-btn">
-          Advanced invite
+          {{_ "members_dropdown_invite_advanced_invite"}}
         </div>
       </div>
     </div>
     <div class="members-dropdown-invite-footer">
-      <button class="btn btn-light btn-sm go-back" type="button">Back</button>
-      <button class="btn btn-primary btn-sm invite-members-btn" type="button">Invite</button>
+      <button class="btn btn-light btn-sm go-back" type="button">{{_ "back"}}</button>
+      <button class="btn btn-primary btn-sm invite-members-btn" type="button">{{_ "members_dropdown_invite_label"}}</button>
     </div>
   </div>
   <!-- Project Selector Modal -->
@@ -80,12 +80,11 @@
                   </div>
                 </div>
               {{else}}
-                <div class="no-results">No projects found</div>
+                <div class="no-results">{{_ "members_dropdown_invite_no_projects_found"}}</div>
               {{/each}}
             {{else}}
               <div class="no-results">
-                There're no projects in this JustDo.<br>
-                Right click on a task to set it as a project.
+                {{{xssGuard (_ "members_dropdown_invite_no_projects_html")}}}
                 <video class="tutorial-media" loop="">
                   <source src="/packages/justdoinc_justdo-webapp-layout/lib/client/project/header/members-dropdown/members-dropdown-menu/members-dropdown-invite/assets/set_task_as_project.mp4" type="video/mp4">
                 </video>
@@ -95,12 +94,12 @@
         </div>
         {{#if filteredProjects}}
           <div class="bulk-selecter-wrapper">
-            <a href="#" class="select-all-projects">{{#if isProjectsSelected}}Clear{{else}}Select{{/if}} all</a>
+            <a href="#" class="select-all-projects">{{#if isProjectsSelected}}{{_ "member_dropdown_invite_clear_all"}}{{else}}{{_ "member_dropdown_invite_select_all"}}{{/if}}</a>
           </div>
         {{/if}}
         <div class="modal-footer">
-          <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-sm btn-primary save-selected-tasks" {{isProjectSelectBtnDisabled}}>Select {{#with selectedProjectsCount}}({{this}}){{/with}}</button>
+          <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">{{_ "close"}}</button>
+          <button type="button" class="btn btn-sm btn-primary save-selected-tasks" {{isProjectSelectBtnDisabled}}>{{_ "member_dropdown_invite_select_with_number" count=selectedProjectsCount}}</button>
         </div>
       </div>
     </div>
