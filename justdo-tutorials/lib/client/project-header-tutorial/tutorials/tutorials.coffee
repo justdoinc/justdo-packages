@@ -43,6 +43,12 @@ APP.executeAfterAppLibCode ->
 
       return
 
+    $(".nav-tutorials.dropdown").on "shown.bs.dropdown", ->
+      if $(".nav-tutorials.dropdown").hasClass "highlighted"
+        $(".nav-tutorials.dropdown").removeClass "highlighted"
+
+      return
+
     return
 
   Template.tutorials.helpers

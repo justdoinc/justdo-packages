@@ -31,7 +31,10 @@ _.extend JustdoTutorials.prototype,
     if APP.justdo_promoters_campaigns?.getCampaignDoc().open_tutorial_dropdown_upon_project_creation is true
       showTutorialDropdownAndPrevrentClose = =>
         $(".nav-tutorials > .dropdown-toggle").dropdown("toggle")
+        $(".nav-tutorials.dropdown").addClass "highlighted"
+        
         @is_tutorial_dropdown_allowed_to_close = false
+
         return
 
       # This take care regular create justdo calls
