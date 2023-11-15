@@ -287,7 +287,7 @@ _.extend JustdoTasksContextMenu.prototype,
           current_selected_value_label = current_selected_value?.txt
           current_selected_value_i18n = current_selected_value?.txt_i18n
 
-          translated_value_label = APP.justdo_i18n.getI18nTextOrFallback {i18n_key: current_selected_value_i18n, fallback_text: current_selected_value_label}
+          translated_value_label = APP.justdo_i18n.getDefaultI18nTextOrCustomInput {i18n_key: current_selected_value_i18n, text: current_selected_value_label}
 
           return {label_i18n: "apply_value_to_subtree", options_i18n: {value: translated_value_label}}
           
