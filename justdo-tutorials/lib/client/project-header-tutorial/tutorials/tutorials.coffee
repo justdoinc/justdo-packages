@@ -4,10 +4,21 @@ APP.executeAfterAppLibCode ->
 
     @tutorials = new ReactiveVar [
       {
+        "title": "Welcome",
+        "subtitle": "welcome video",
+        "html": """
+          <div class="tutorial-welcome-media">
+            <iframe id="vimeo-player" src="https://player.vimeo.com/video/813068460#t=7.5s" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+          </div>
+        """
+        "class": "welcome"
+        "status": "" # pending, done
+      },
+      {
         "title": "set_justdo_name_title",
         "subtitle": "set_justdo_name_subtitle",
         "media": "/packages/justdoinc_justdo-tutorials/lib/client/project-header-tutorial/tutorials/media/set_name.mp4"
-        "status": "" # pending, done
+        "status": "pending"
       },
       {
         "title": "create_first_task_title",
@@ -146,5 +157,17 @@ APP.executeAfterAppLibCode ->
           JustdoSnackbar.show 
             text: err.reason or err
           return
+
+      return
+
+    "mouseenter .welcome": (e, tpl) ->
+      player = new Vimeo.Player($("#vimeo-player"))
+      player.play()
+
+      return
+
+    "mouseleave .welcome": (e, tpl) ->
+      player = new Vimeo.Player($("#vimeo-player"))
+      player.pause()
 
       return

@@ -1,7 +1,7 @@
 <template name="tutorials">
   <div class="tutorials-wrapper">
     {{#each tutorials}}
-      <div class="tutorial-item {{status}}">
+      <div class="tutorial-item {{class}} {{status}}">
         <div class="tutorial-icon">
           {{#if tutorialIsDone}}
             <svg class="jd-icon done"><use xlink:href="/layout/icons-feather-sprite.svg#check"></use></svg>
@@ -18,9 +18,13 @@
           </div>
         </div>
         <div class="tutorial-instruction shadow-lg">
-          <video class="tutorial-media" loop muted>
-            <source src="{{media}}" type="video/mp4">
-          </video>
+          {{#if html}}
+            {{{html}}}
+          {{else}}
+            <video class="tutorial-media" loop muted>
+              <source src="{{media}}" type="video/mp4">
+            </video>
+          {{/if}}
         </div>
       </div>
     {{/each}}
@@ -56,4 +60,5 @@
     </div>
   </div>
 
+  <script src="https://player.vimeo.com/api/player.js"></script>
 </template>
