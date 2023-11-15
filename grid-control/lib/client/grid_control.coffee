@@ -1957,7 +1957,7 @@ _.extend GridControl.prototype,
   isEditableField: (field_id) ->
     return @getFieldDef(field_id, false)?.grid_editable_column
 
-  generateFieldEditor: (field_id, item_id) ->
+  generateFieldEditor: (field_id, item_id, custom_editor) ->
     # We allow fields editor to be generated without item_id
     #
     # The usecase for that is to allow cases where the editor might be useful
@@ -1977,7 +1977,10 @@ _.extend GridControl.prototype,
     if not @isEditableField(field_id)
       throw @_error "field-not-editable", "Field: #{field_id} is not editable"
 
-    field_editor_id = field_def.grid_column_editor
+    if _.isString custom_editor
+      field_editor_id = custom_editor
+    else
+      field_editor_id = field_def.grid_column_editor
 
     $container = $("<div>")
     editor_context = {
