@@ -4,6 +4,8 @@ APP.executeAfterAppLibCode ->
   Template.task_pane_item_details_section.helpers project_page_module.template_helpers
   
   Template.task_pane_item_details_section.helpers
+    afterMembersSections: -> JD.getPlaceholderItems "item-details-after-members"
+
     inboundEmailEnabled: -> APP.justdo_inbound_emails?
 
     hasPermissionToEditMemebers: ->

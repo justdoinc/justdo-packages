@@ -7,6 +7,14 @@
       </section>
     {{/with}}
 
+    {{#each afterMembersSections}}
+      {{#if template}}
+        {{> Template.dynamic template=template data=templateData}}
+      {{else if html}}
+        {{{html}}}
+      {{/if}}
+    {{/each}}
+
     {{!-- Tasks locks --}}
     {{> task_pane_tasks_locks_section_container}}
 
