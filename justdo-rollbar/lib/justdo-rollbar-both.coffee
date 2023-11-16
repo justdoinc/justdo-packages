@@ -8,17 +8,14 @@ load = (env) ->
 
     JustdoRollbar.enabled = true
     JustdoRollbar.host = env.ROLLBAR_CLIENT_ACCESS_TOKEN
+    JustdoRollbar.env = env.LANDING_APP_ROOT_URL
+    JustdoRollbar.ver = env.APP_VERSION
 
     JustdoRollbar.init() # we init only if enabled. Note, environment specific init
   else
     JustdoRollbar.enabled = false
 
-# Since we don't want the following to be deferred, we don't use
-# the APP.getEnv to get the env on the server
 if Meteor.isServer
   env = process.env
 
   load(env)
-else
-  APP.getEnv (env) ->
-    load(env)
