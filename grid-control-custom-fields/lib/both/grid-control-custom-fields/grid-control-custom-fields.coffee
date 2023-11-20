@@ -113,6 +113,11 @@ _.extend GridControlCustomFields,
       defaultValue: null
 
       optional: true
+    
+    exclude_from_context_menu_bulk_set:
+      type: Boolean
+
+      optional: true
 
     formatter:
       type: String
@@ -374,6 +379,9 @@ _.extend GridControlCustomFields,
       if Meteor.isClient
         # The following is relevant only when running on the client, on the server we won't
         # even have GridControl defined
+
+        if (exclude_from_context_menu_bulk_set = custom_field_definition.exclude_from_context_menu_bulk_set)?
+          custom_field_schema.exclude_from_context_menu_bulk_set = exclude_from_context_menu_bulk_set
 
         default_formatter_and_editor = GridControl.getDefaultFormatterAndEditorForType(custom_field_definition.field_type)
 
