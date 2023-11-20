@@ -480,6 +480,7 @@ _.extend JustdoTasksContextMenu.prototype,
                         
                         for option_id, option_def of field_options
                           option_items.push
+                            bg_color: option_def.bg_color
                             field_id: field_id
                             id: option_id
                             is_nested_section: false

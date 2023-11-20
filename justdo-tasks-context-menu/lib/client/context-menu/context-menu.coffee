@@ -89,6 +89,11 @@ Template.tasks_context_section.helpers
       section_items = section_items.slice 0, tpl.items_render_limit_rv.get()
 
     return section_items
+  
+  getBackgroundColor: ->
+    if @bg_color?
+      return "background-color: #{JustdoHelpers.normalizeBgColor @bg_color}; color: #{JustdoHelpers.getFgColor @bg_color};"
+    return
 
 repositionEventMenu = (e) ->
   $item = $(e.target).closest(".context-nested-section-item")
