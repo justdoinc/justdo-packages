@@ -487,7 +487,6 @@ _.extend JustdoTasksContextMenu.prototype,
                             label: option_def.txt
                             label_i18n: option_def.txt_i18n
                             op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-                              console.log {item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info}
                               selected_task_ids = _.map gc.getFilterPassingMultiSelectedPathsArray(), (path) -> GridData.helpers.getPathItemId path
                               for task_id in selected_task_ids
                                 APP.collections.Tasks.update task_id, {$set: {[item_data.field_id]: item_data.id}}
