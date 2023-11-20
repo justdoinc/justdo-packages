@@ -22,7 +22,7 @@ Template.tasks_context_menu.helpers
     return @controller.getContextItemObj({updatedAt: 1})?.updatedAt
 
   isSectionHasItems: (section) ->
-    return section.reactive_items_list.getList().length > 0
+    return section.itemsSource().length > 0
 
 Template.tasks_context_section.onCreated ->
   # moveTimer used in mouseleave and mousemove events (.dropdown-item) to detect when the mouse stop
@@ -78,7 +78,7 @@ Template.tasks_context_section.helpers
   hasNestedSections: -> @is_nested_section is true
 
   getNestedSections: (parent_section_id, nested_section_id) ->
-    return APP.justdo_tasks_context_menu.getNestedSections parent_section_id, nested_section_id
+    return @itemsGenerator?() or APP.justdo_tasks_context_menu.getNestedSections parent_section_id, nested_section_id
 
   getSectionItems: ->
     tpl = Template.instance()

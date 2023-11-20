@@ -12,5 +12,6 @@
   "close_project_label": "關閉專案",
   "repoen_project_label": "重開專案",
   "add_to_project_label": "添加至專案",
-  "apply_value_to_subtree": "把子任務設置為__value__"
+  "apply_value_to_subtree": "把子任務設置為__value__",
+  "bulk_set_options_label": "設置...為"
 }

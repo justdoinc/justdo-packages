@@ -12,5 +12,6 @@
   "close_project_label": "Close Project",
   "repoen_project_label": "Reopen Project",
   "add_to_project_label": "Add to project",
-  "apply_value_to_subtree": "Apply __value__ to subtree"
+  "apply_value_to_subtree": "Apply __value__ to subtree",
+  "bulk_set_options_label": "Set"
 }
