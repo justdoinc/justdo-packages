@@ -409,6 +409,14 @@ SimpleSchema.extendOptions
   # grid-data-com)
   exclude_from_tasks_grid_pub: Match.Optional(Boolean)
 
+  # exclude_from_context_menu_bulk_set
+  #
+  # Default to true.
+  #
+  # Fields that are set to false won't show in the context menu's Set sub section
+  # when multi tasks are selected.
+  exclude_from_context_menu_bulk_set: Match.Optional(Boolean)
+
   # client_only
   #
   # If a field is set to client_only, when it is set in insert/update operations
