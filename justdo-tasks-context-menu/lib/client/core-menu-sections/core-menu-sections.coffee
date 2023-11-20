@@ -465,13 +465,16 @@ _.extend JustdoTasksContextMenu.prototype,
             do (field_id, field_def) ->
               if (field_def.grid_column_editor in ["SelectorEditor", "MultiSelectEditor"]) and (field_def.exclude_from_context_menu_bulk_set isnt true) and field_def.grid_editable_column
                 bulk_set_options_fields.push field_id
+                close_on_click = field_def.grid_column_editor is "SelectorEditor"
                 ret.push
                   id: "bulk-set-options-#{field_id}"
+                  close_on_click: close_on_click
                   label: field_def.label
                   label_i18n: field_def.label_i18n
                   is_nested_section: true
                   itemsGenerator: ->
                     item = 
+                      close_on_click: close_on_click
                       itemsSource: ->
                         option_items = []
                         if not (gc = APP.modules.project_page?.gridControl())?
@@ -484,7 +487,7 @@ _.extend JustdoTasksContextMenu.prototype,
                             field_id: field_id
                             id: option_id
                             is_nested_section: false
-                            close_on_click: field_def.grid_column_editor is "SelectorEditor"
+                            close_on_click: close_on_click
                             label: option_def.txt
                             label_i18n: option_def.txt_i18n
                             op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
