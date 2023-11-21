@@ -1054,7 +1054,7 @@ LocalCollection._compileProjection = fields => {
     const result = details.including ? {} : EJSON.clone(doc);
 
     Object.keys(ruleTree).forEach(key => {
-      if (!hasOwn.call(doc, key)) {
+      if (doc == null || !hasOwn.call(doc, key)) {
         return;
       }
 
@@ -1073,7 +1073,7 @@ LocalCollection._compileProjection = fields => {
       }
     });
 
-    return result;
+    return doc != null ? result : doc;
   };
 
   return doc => {
