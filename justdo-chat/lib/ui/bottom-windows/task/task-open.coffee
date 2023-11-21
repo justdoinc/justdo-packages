@@ -107,8 +107,10 @@ Template.chat_bottom_windows_task_open.events
     e.preventDefault()
 
     activateTask = =>
-      gcm = APP.modules.project_page.getCurrentGcm()
-
+      if not (gcm = APP.modules.project_page.getCurrentGcm())?
+        console.info "[justdo-chat] Can't activate task, grid is not ready"
+        return
+      
       gcm.setPath(["main", @task_id], {collection_item_id_mode: true})
 
       APP.modules.project_page.setCurrentTaskPaneSectionId("details")
