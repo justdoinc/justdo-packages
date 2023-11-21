@@ -33,12 +33,12 @@ _.extend JustdoCoreHelpers,
       return path
 
     if path[0] != "/"
-      console.warn("getCDNUrl: At the moment supporting only paths beginning with /")
+      # console.warn("getCDNUrl: At the moment supporting only paths beginning with /")
 
       return path
 
     if path.substr(0, 2) == "//"
-      console.info("getCDNUrl: // prefix isn't supported")
+      # console.info("getCDNUrl: // prefix isn't supported")
 
       return path
 
