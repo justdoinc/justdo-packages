@@ -450,6 +450,66 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_val: "zoom-in"
 
     bulk_set_options_fields = []
+    behavior_by_editor_type = 
+      SelectorEditor:
+        close_on_click: true
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          gc = APP.modules.project_page?.gridControl()
+          field_id = item_data.field_id
+          field_val = item_data.id
+          selected_task_ids = _.map gc.getFilterPassingMultiSelectedPathsArray(), (path) -> GridData.helpers.getPathItemId path
+          for task_id in selected_task_ids
+            APP.collections.Tasks.update task_id, {$set: {[field_id]: field_val}}
+          return
+      MultiSelectEditor:
+        close_on_click: false
+        op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          gc = APP.modules.project_page?.gridControl()
+          field_id = item_data.field_id
+          field_val = item_data.id
+          selected_task_ids = _.map gc.getFilterPassingMultiSelectedPathsArray(), (path) -> GridData.helpers.getPathItemId path
+
+          is_all_tasks_has_this_value = true
+          APP.collections.Tasks.find({_id: {$in: selected_task_ids}}, {fields: {[field_id]: 1}}).forEach (task) ->
+            is_this_task_has_this_value = _.contains task[field_id], field_val
+            is_all_tasks_has_this_value = is_all_tasks_has_this_value and is_this_task_has_this_value
+            return
+          
+          if is_all_tasks_has_this_value
+            op = 
+              $pull:
+                [field_id]: field_val
+          else
+            op = 
+              $addToSet:
+                [field_id]: field_val
+
+          for task_id in selected_task_ids
+            APP.collections.Tasks.update task_id, op
+          
+          return
+        icon_type: "feather"
+        icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
+          gc = APP.modules.project_page?.gridControl()
+          field_id = item_data.field_id
+          field_val = item_data.id
+          selected_task_ids = _.map gc.getFilterPassingMultiSelectedPathsArray(), (path) -> GridData.helpers.getPathItemId path
+
+          is_all_tasks_has_this_value = true
+          is_some_tasks_has_this_value = false
+          APP.collections.Tasks.find({_id: {$in: selected_task_ids}}, {fields: {[field_id]: 1}}).forEach (task) ->
+            is_this_task_has_this_value = _.contains task[field_id], field_val
+            is_all_tasks_has_this_value = is_all_tasks_has_this_value and is_this_task_has_this_value
+            is_some_tasks_has_this_value = is_some_tasks_has_this_value or is_this_task_has_this_value
+            return
+
+          if is_all_tasks_has_this_value
+            return "check-square"
+          
+          if is_some_tasks_has_this_value
+            return "minus-square"
+
+          return "square"
     @registerMainSection "bulk-set-options",
       position: 150
       data:
@@ -465,16 +525,16 @@ _.extend JustdoTasksContextMenu.prototype,
             do (field_id, field_def) ->
               if (field_def.grid_column_editor in ["SelectorEditor", "MultiSelectEditor"]) and (field_def.exclude_from_context_menu_bulk_set isnt true) and field_def.grid_editable_column
                 bulk_set_options_fields.push field_id
-                close_on_click = field_def.grid_column_editor is "SelectorEditor"
+                editor_specific_behavior = behavior_by_editor_type[field_def.grid_column_editor]
                 ret.push
                   id: "bulk-set-options-#{field_id}"
-                  close_on_click: close_on_click
+                  close_on_click: editor_specific_behavior.close_on_click
                   label: field_def.label
                   label_i18n: field_def.label_i18n
                   is_nested_section: true
                   itemsGenerator: ->
                     item = 
-                      close_on_click: close_on_click
+                      close_on_click: editor_specific_behavior.close_on_click
                       itemsSource: ->
                         option_items = []
                         if not (gc = APP.modules.project_page?.gridControl())?
@@ -487,14 +547,12 @@ _.extend JustdoTasksContextMenu.prototype,
                             field_id: field_id
                             id: option_id
                             is_nested_section: false
-                            close_on_click: close_on_click
+                            close_on_click: editor_specific_behavior.close_on_click
                             label: option_def.txt
                             label_i18n: option_def.txt_i18n
-                            op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
-                              selected_task_ids = _.map gc.getFilterPassingMultiSelectedPathsArray(), (path) -> GridData.helpers.getPathItemId path
-                              for task_id in selected_task_ids
-                                APP.collections.Tasks.update task_id, {$set: {[item_data.field_id]: item_data.id}}
-                              return
+                            icon_type: editor_specific_behavior.icon_type
+                            icon_val: editor_specific_behavior.icon_val
+                            op: editor_specific_behavior.op
                         return option_items
                     return [item]
           return ret
