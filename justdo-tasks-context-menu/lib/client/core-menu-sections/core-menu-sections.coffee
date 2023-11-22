@@ -428,6 +428,7 @@ _.extend JustdoTasksContextMenu.prototype,
 
     @registerMainSection "zoom-in",
       position: 200
+      hide_border: true
       listingCondition: ->
         if not (gc = APP.modules.project_page?.gridControl())?
           return false

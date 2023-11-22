@@ -272,6 +272,9 @@ _.extend JustdoTasksContextMenu.prototype,
         label_i18n:
           type: String
           optional: true
+        hide_border:
+          type: Boolean
+          optional: true
         display_item_filter_ui:
           type: Boolean
           optional: true
