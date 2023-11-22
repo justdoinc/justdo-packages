@@ -359,7 +359,6 @@ _.extend JustdoTasksContextMenu.prototype,
           optional: true
         label_addendum_template:
           type: String
-
           optional: true
         op: 
           optional: true
@@ -367,6 +366,9 @@ _.extend JustdoTasksContextMenu.prototype,
         is_nested_section:
           optional: true
           type: Boolean
+        bg_color:
+          optional: true
+          type: String
         icon_type:
           optional: true
           type: String
@@ -375,6 +377,10 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_val:
           optional: true
           type: "skip-type-check"
+        icon_class:
+          optional: true
+          type: Match.OneOf String, [String]
+          defaultValue: "text-secondary"
         close_on_click:
           optional: true
           type: Boolean

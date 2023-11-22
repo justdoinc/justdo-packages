@@ -14,6 +14,7 @@ Package.onUse(function (api) {
 
   api.use("coffeescript", both);
   api.use("underscore", both);
+  api.use("check", both);
 
   // Uncomment if you want to use NPM peer dependencies using
   // checkNpmVersions.

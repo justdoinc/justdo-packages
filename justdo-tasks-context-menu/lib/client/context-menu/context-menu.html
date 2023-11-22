@@ -72,7 +72,7 @@
 
 <template name="tasks_context_menu_icon">
   {{#if $eq icon_type "feather"}}
-    <svg class="jd-icon jd-icon-context-action text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#{{getIconValValue}}"/></svg>
+    <svg class="jd-icon jd-icon-context-action {{getIconClass}}"><use xlink:href="/layout/icons-feather-sprite.svg#{{getIconValValue}}"/></svg>
   {{else if $eq icon_type "none"}}
     <div class="empty-icon"></div>
   {{/if}}

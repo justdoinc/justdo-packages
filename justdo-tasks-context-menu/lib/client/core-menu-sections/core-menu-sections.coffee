@@ -490,6 +490,7 @@ _.extend JustdoTasksContextMenu.prototype,
           
           return
         icon_type: "feather"
+        icon_class: ""
         icon_val: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) ->
           gc = APP.modules.project_page?.gridControl()
           field_id = item_data.field_id
@@ -516,6 +517,10 @@ _.extend JustdoTasksContextMenu.prototype,
       data:
         label: "Set"
         label_i18n: "bulk_set_options_label"
+        display_item_filter_ui: true
+        limit_rendered_items: true
+        limit_rendered_items_initial_items: 5
+        limit_rendered_items_load_more_items: 10
         itemsGenerator: ->
           bulk_set_options_fields = []
           ret = []
@@ -553,6 +558,7 @@ _.extend JustdoTasksContextMenu.prototype,
                             label_i18n: option_def.txt_i18n
                             icon_type: editor_specific_behavior.icon_type
                             icon_val: editor_specific_behavior.icon_val
+                            icon_class: editor_specific_behavior.icon_class
                             op: editor_specific_behavior.op
                         return option_items
                     return [item]

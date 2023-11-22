@@ -226,6 +226,16 @@ Template.tasks_context_menu_label_content.helpers
     return [@].concat(tpl.closestInstance("tasks_context_menu").tasks_context_menu_controller._sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator())
 
 Template.tasks_context_menu_icon.helpers
+  getIconClass: ->
+    icon_class = ["text-secondary"]
+
+    if _.isString @icon_class
+      icon_class = [@icon_class]
+    if _.isArray @icon_class
+      icon_class = @icon_class
+
+    return icon_class.join " "
+
   getIconValValue: ->
     tpl = Template.instance()
 
