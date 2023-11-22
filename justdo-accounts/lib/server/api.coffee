@@ -554,18 +554,28 @@ _.extend JustdoAccounts.prototype,
 
       emails: 1
 
-      "profile.first_name": 1
-      "profile.last_name": 1
-      "profile.profile_pic": 1
-      "profile.avatar_fg": 1
-      "profile.avatar_bg": 1
-
       "services.password.reset.reason": 1
       "invited_by": 1
       "is_proxy": 1
       "users_allowed_to_edit_pre_enrollment": 1
 
       "site_admin.is_site_admin": 1
+
+    # For the the logged-in user itself, we rely on accouns-base to publish
+    # profile in its entirety.
+    # If we will publish particular fields for the logged-in user, due to the nature
+    # of the merge-box and the fact that this code will run before accounts-base
+    # default pub that publishes the logged-in user details, the logged-in user will
+    # have only those fields - and not all of the profile subdocument.
+    #
+    # From meteor's documentation (as of 22.11.2023): Currently, when multiple subscriptions publish the same document only the top level fields are compared during the merge. This means that if the documents include different sub-fields of the same top level field, not all of them will be available on the client. We hope to lift this restriction in a future release.
+    if not (users_ids.length is 1 and users_ids[0] is Meteor.userId())
+      _.extend fields,
+        "profile.first_name": 1
+        "profile.last_name": 1
+        "profile.profile_pic": 1
+        "profile.avatar_fg": 1
+        "profile.avatar_bg": 1
 
     if options?.additional_fields?
       _.extend fields, options.additional_fields
