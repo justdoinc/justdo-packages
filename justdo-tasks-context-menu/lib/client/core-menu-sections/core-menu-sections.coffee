@@ -450,7 +450,6 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type: "feather"
         icon_val: "zoom-in"
 
-    bulk_set_options_fields = []
     behavior_by_editor_type = 
       SelectorEditor:
         close_on_click: true
@@ -522,7 +521,6 @@ _.extend JustdoTasksContextMenu.prototype,
         limit_rendered_items_initial_items: 5
         limit_rendered_items_load_more_items: 10
         itemsGenerator: ->
-          bulk_set_options_fields = []
           ret = []
           if not (gc = APP.modules.project_page?.gridControl())?
             return ret
@@ -530,7 +528,6 @@ _.extend JustdoTasksContextMenu.prototype,
           for field_id, field_def of gc.getSchemaExtendedWithCustomFields()
             do (field_id, field_def) ->
               if (field_def.grid_column_editor in ["SelectorEditor", "MultiSelectEditor"]) and (field_def.exclude_from_context_menu_bulk_set isnt true) and field_def.grid_editable_column
-                bulk_set_options_fields.push field_id
                 editor_specific_behavior = behavior_by_editor_type[field_def.grid_column_editor]
                 ret.push
                   id: "bulk-set-options-#{field_id}"
@@ -568,17 +565,6 @@ _.extend JustdoTasksContextMenu.prototype,
           return false
 
         return gc.isMultiSelectMode()
-
-    # for field_id in bulk_set_options_fields
-    #   @registerNestedSection "main", "bulk-set-options", "bulk-set-options-#{field_id}",
-    #     position: 100 + i
-    #     data:
-
-    # @registerSectionItem "bulk-set-options", "bulk-set",
-    #   position: 100
-    #   data:
-    #     label: "Bulk set"
-    #     op: (item_data, task_id, task_path, field_val, dependencies_fields_vals, field_info) -> return 
 
     # @registerMainSection "copy-paste",
     #   position: 300
