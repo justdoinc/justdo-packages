@@ -543,9 +543,30 @@ _.extend JustdoAccounts.prototype,
     # Allowed options:
     #
     #   additional_fields: {} # fields to pick in addition to the defaults Mongo format (only 'x: 1' is supported!)
-
+    #
+    #   include_profile_fields: true/false # default *true*; 
+    #
+    #     This cursor publishes some profile fields that are considered part of
+    #     the public basic user info. Yet, in certain contexts, such as the publication
+    #     of the logged-in user doc, this is problematic.
+    #
+    #     For the the logged-in user itself, we rely on accouns-base to publish the
+    #     profile sub-document in its entirety.
+    #
+    #     If we will publish particular fields for the logged-in user, due to the nature
+    #     of the merge-box and the fact that this code will run before accounts-base
+    #     default pub that publishes the logged-in user details, the logged-in user will
+    #     have only those fields - and not all of the profile subdocument.
+    #
+    #     From meteor's documentation (as of 22.11.2023): Currently, when multiple subscriptions publish the same document only the top level fields are compared during the merge. This means that if the documents include different sub-fields of the same top level field, not all of them will be available on the client. We hope to lift this restriction in a future release.
+    #
+    #     The purpose of include_profile_fields is to allow excluding profile from the fields
+    #     included in the cursor.
     if _.isString users_ids
       users_ids = [users_ids]
+
+    if not (include_profile_fields = options?.include_profile_fields)?
+      include_profile_fields = true
 
     check users_ids, [String]
 
@@ -561,15 +582,7 @@ _.extend JustdoAccounts.prototype,
 
       "site_admin.is_site_admin": 1
 
-    # For the the logged-in user itself, we rely on accouns-base to publish
-    # profile in its entirety.
-    # If we will publish particular fields for the logged-in user, due to the nature
-    # of the merge-box and the fact that this code will run before accounts-base
-    # default pub that publishes the logged-in user details, the logged-in user will
-    # have only those fields - and not all of the profile subdocument.
-    #
-    # From meteor's documentation (as of 22.11.2023): Currently, when multiple subscriptions publish the same document only the top level fields are compared during the merge. This means that if the documents include different sub-fields of the same top level field, not all of them will be available on the client. We hope to lift this restriction in a future release.
-    if not (users_ids.length is 1 and users_ids[0] is Meteor.userId())
+    if include_profile_fields
       _.extend fields,
         "profile.first_name": 1
         "profile.last_name": 1
@@ -577,14 +590,18 @@ _.extend JustdoAccounts.prototype,
         "profile.avatar_fg": 1
         "profile.avatar_bg": 1
 
+
     if options?.additional_fields?
       _.extend fields, options.additional_fields
-    
+
     return Meteor.users.find({_id: {$in: users_ids}}, {fields: fields})
 
   _basicUserInfoPublicationHandlerOptionsSchema: new SimpleSchema
     users_ids:
       type: [String]
+    "public_basic_user_info_cursor_options.include_profile_fields":
+      type: Boolean
+      defaultValue: true
     "public_basic_user_info_cursor_options.additional_fields":
       type: Object
 
