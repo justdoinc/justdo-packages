@@ -108,7 +108,8 @@ getAvailableFieldTypes = ->
   #  * Second item is an array of schema definitions + _id field with the
   #  field id. Ordered according to supported_fields_ids order.
 
-  gc = APP.modules.project_page.mainGridControl()
+  if not (gc = APP.modules.project_page?.mainGridControl())?
+    return
 
   supported_fields_ids = base_supported_fields_ids.slice()
   all_fields = gc.getSchemaExtendedWithCustomFields()
