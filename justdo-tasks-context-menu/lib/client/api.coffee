@@ -40,6 +40,8 @@ _.extend JustdoTasksContextMenu.prototype,
 
     @setupCoreMenuSections()
 
+    @_setupHandlers()
+
     return
 
   _deferredInit: ->
@@ -55,6 +57,12 @@ _.extend JustdoTasksContextMenu.prototype,
 
     @_setupHideConditions()
 
+    return
+  
+  _setupHandlers: ->
+    # Permission check for bulk update
+    @register "pre-bulk-update", (task_ids, field_id, field_val, modifier) ->
+      return APP.justdo_permissions.checkTaskPermissions "task-field-edit.#{field_id}", task_ids
     return
 
   sectionsItemsSource: (section_id, nested_section_item, ignore_listing_condition) ->
