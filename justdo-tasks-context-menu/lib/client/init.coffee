@@ -79,6 +79,7 @@ JustdoTasksContextMenu = (options) ->
   # for use below the: @_immediateInit()
 
   EventEmitter.call this
+  JustdoHelpers.setupHandlersRegistry(@)
 
   @destroyed = false
 
