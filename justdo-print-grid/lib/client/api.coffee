@@ -245,7 +245,7 @@ _.extend JustdoPrintGrid.prototype,
       cols = cols.filter (col_def) -> schema[col_def.field]?.grid_printable_column isnt false
 
       # Function to get English state name
-      states = gc.schema.state.grid_values
+      states = schema.state.grid_values
 
       getStateTxt = (val) ->
         if states[val]
