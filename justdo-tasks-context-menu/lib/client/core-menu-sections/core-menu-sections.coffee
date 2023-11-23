@@ -516,10 +516,6 @@ _.extend JustdoTasksContextMenu.prototype,
       data:
         label: "Set"
         label_i18n: "bulk_set_options_label"
-        display_item_filter_ui: true
-        limit_rendered_items: true
-        limit_rendered_items_initial_items: 5
-        limit_rendered_items_load_more_items: 10
         itemsGenerator: ->
           ret = []
           if not (gc = APP.modules.project_page?.gridControl())?
