@@ -78,7 +78,7 @@ Template.tasks_context_section.helpers
   hasNestedSections: -> @is_nested_section is true
 
   getNestedSections: (parent_section_id, nested_section_id) ->
-    return @itemsGenerator?() or APP.justdo_tasks_context_menu.getNestedSections parent_section_id, nested_section_id
+    return @itemsSource?() or APP.justdo_tasks_context_menu.getNestedSections parent_section_id, nested_section_id
 
   getSectionItems: ->
     tpl = Template.instance()

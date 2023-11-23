@@ -535,7 +535,7 @@ _.extend JustdoTasksContextMenu.prototype,
                   label: field_def.label
                   label_i18n: field_def.label_i18n
                   is_nested_section: true
-                  itemsGenerator: ->
+                  itemsSource: ->
                     item = 
                       close_on_click: editor_specific_behavior.close_on_click
                       itemsSource: ->
