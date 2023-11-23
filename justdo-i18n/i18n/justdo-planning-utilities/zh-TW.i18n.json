@@ -55,5 +55,9 @@
   "grid_gantt_error_end_gt_parent_end": "__end_date_label__遲於母任務的__end_date_label__",
   "grid_gantt_error_basket_end_gt_due": "一個或多個子任務的__end_date_label__遲於此任務的__due_date_label__",
   "grid_gantt_error_start_gt_basket_start": "一個或多個子任務的__start_date_label__早於此任務的__start_date_label__",
-  "end_lt_basket_end": "一個或多個子任務的__end_date_label__遲於此任務的__end_date_label__"
+  "end_lt_basket_end": "一個或多個子任務的__end_date_label__遲於此任務的__end_date_label__",
+
+  "update_the_task_dates_to_today": "要將這個任務的結束日，及未來的開始日設為今天嗎？",
+  "update_the_task_dates_to_today_plural": "要將這些任務的結束日，及未來的開始日設為今天嗎？",
+  "update_task_dates_snackbar_action_label": "設置"
 }

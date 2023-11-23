@@ -55,5 +55,9 @@
   "grid_gantt_error_end_gt_parent_end": "Task's __end_date_label__ is later than parent's",
   "grid_gantt_error_basket_end_gt_due": "Latest child task __end_date_label__ is later than __due_date_label__",
   "grid_gantt_error_start_gt_basket_start": "Earliest child __start_date_label__ is earlier than __start_date_label__",
-  "end_lt_basket_end": "Latest child __end_date_label__ is later than __end_date_label__"
+  "end_lt_basket_end": "Latest child __end_date_label__ is later than __end_date_label__",
+
+  "update_the_task_dates_to_today": "Update the task's End Date and future Start Date to today?",
+  "update_the_task_dates_to_today_plural": "Update the tasks' End Date and future Start Date to today?",
+  "update_task_dates_snackbar_action_label": "Update"
 }
