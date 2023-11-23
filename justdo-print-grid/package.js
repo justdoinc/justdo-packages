@@ -29,6 +29,8 @@ Package.onUse(function (api) {
 
   api.use("reactive-var", client);
   api.use("tracker", client);
+  api.use("tap:i18n@1.8.2", both);
+  api.use("justdoinc:justdo-i18n@1.0.0", both);
 
   api.addFiles("lib/client/init.coffee", client);
   api.addFiles("lib/client/errors-types.coffee", client);

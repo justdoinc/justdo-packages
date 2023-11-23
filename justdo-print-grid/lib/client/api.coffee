@@ -64,9 +64,11 @@ _.extend JustdoPrintGrid.prototype,
       # Create Table header
       table_header = []
       for i in [0...cols.length]
+        field_def = gc.getSchemaExtendedWithCustomFields()[cols[i].field]
+        field_label = APP.justdo_i18n.getI18nTextOrFallback {i18n_key: field_def.label_i18n, fallback_text: field_def.label}
         table_header.push
           "class": "table-header"
-          "value": JustdoHelpers.xssGuard(gc.getSchemaExtendedWithCustomFields()[cols[i].field].label, {allow_html_parsing: true, enclosing_char: ''})
+          "value": JustdoHelpers.xssGuard(field_label, {allow_html_parsing: true, enclosing_char: ''})
           "colspan": 1
 
       # Add class for first element in header
@@ -248,10 +250,10 @@ _.extend JustdoPrintGrid.prototype,
       states = schema.state.grid_values
 
       getStateTxt = (val) ->
-        if states[val]
-          states[val].txt
-        else
-          "Unknown state"
+        if (state_def = states[val])
+          return APP.justdo_i18n.getDefaultI18nTextOrCustomInput {text: state_def.txt, i18n_key: state_def.txt_i18n}
+
+        return"Unknown state"
 
       # Create array with visible tasks and section-items
       grid_tree_rows = []
@@ -372,7 +374,7 @@ _.extend JustdoPrintGrid.prototype,
             if schema[property]?.grid_printable_column is false
               continue
               
-            label = schema[property].label
+            label = APP.justdo_i18n.getI18nTextOrFallback {fallback_text: schema[property].label, i18n_key: schema[property].label_i18n}
             checked_attr = checkVisibility(property)
             li += """<li>
                       <span class="sortable-aria">
