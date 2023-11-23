@@ -67,7 +67,9 @@ Template.justdo_clipboard_import_input_selector.helpers
     return cur_proj.isAdmin()
 
   getClipboardImportLabel: ->
-    return @custom_clipboard_import_label or @label
+    if @custom_clipboard_import_label?
+      return @custom_clipboard_import_label
+    return APP.justdo_i18n.getI18nTextOrFallback {i18n_key: @label_i18n, fallback_text: @label}
 
 Template.justdo_clipboard_import_input_selector.events
   "click .justdo-clipboard-import-input-selector a[field-id]": (e, tpl) ->
