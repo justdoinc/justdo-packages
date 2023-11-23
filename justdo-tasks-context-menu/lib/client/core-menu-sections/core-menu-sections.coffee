@@ -536,10 +536,18 @@ _.extend JustdoTasksContextMenu.prototype,
                       close_on_click: editor_specific_behavior.close_on_click
                       itemsSource: ->
                         option_items = []
+
+                        # Shouldn't happen, but just in case.
                         if not (gc = APP.modules.project_page?.gridControl())?
                           return option_items
-                        field_options = field_def.grid_values 
                         
+                        # Return empty message if grid_values is empty, or only contains null state (only value available is an empty string "")
+                        if _.isEmpty(field_options = field_def.grid_values) or ((_.size(field_options) is 1) and _.has field_options, "")
+                          option_items.push
+                            label: "No options are available"
+                            op: -> return
+                          return option_items
+
                         for option_id, option_def of field_options
                           option_items.push
                             bg_color: option_def.bg_color
