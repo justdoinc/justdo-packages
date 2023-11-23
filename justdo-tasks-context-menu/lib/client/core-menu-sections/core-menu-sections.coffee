@@ -459,7 +459,10 @@ _.extend JustdoTasksContextMenu.prototype,
           field_val = item_data.id
           selected_task_ids = _.map gc.getFilterPassingMultiSelectedPathsArray(), (path) -> GridData.helpers.getPathItemId path
           op = {$set: {[field_id]: field_val}}
-          APP.justdo_tasks_context_menu.processHandlers "pre-bulk-update", selected_task_ids, field_id, field_val, op
+
+          if not APP.justdo_tasks_context_menu.processHandlers "pre-bulk-update", selected_task_ids, field_id, field_val, op
+            return
+            
           for task_id in selected_task_ids
             APP.collections.Tasks.update task_id, op, {is_part_of_bulk_update: true}
           APP.justdo_tasks_context_menu.processHandlers "post-bulk-update", selected_task_ids, field_id, field_val, op
@@ -487,7 +490,9 @@ _.extend JustdoTasksContextMenu.prototype,
               $addToSet:
                 [field_id]: field_val
 
-          APP.justdo_tasks_context_menu.processHandlers "pre-bulk-update", selected_task_ids, field_id, field_val, op
+          if not APP.justdo_tasks_context_menu.processHandlers "pre-bulk-update", selected_task_ids, field_id, field_val, op
+            return
+
           for task_id in selected_task_ids
             APP.collections.Tasks.update task_id, op, {is_part_of_bulk_update: true}
           APP.justdo_tasks_context_menu.processHandlers "post-bulk-update", selected_task_ids, field_id, field_val, op

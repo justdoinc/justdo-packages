@@ -62,7 +62,10 @@ _.extend JustdoTasksContextMenu.prototype,
   _setupHandlers: ->
     # Permission check for bulk update
     @register "pre-bulk-update", (task_ids, field_id, field_val, modifier) ->
-      return APP.justdo_permissions.checkTaskPermissions "task-field-edit.#{field_id}", task_ids
+      if not (res = APP.justdo_permissions.checkTaskPermissions "task-field-edit.#{field_id}", task_ids)
+        JustdoSnackbar.show
+          text: "You don't have the necessary permission to perform this action"
+      return res
     return
 
   sectionsItemsSource: (section_id, nested_section_item, ignore_listing_condition) ->
