@@ -61,6 +61,7 @@ _.extend JustdoI18n.prototype,
 
     lang_tag = @getUserLang(user) or JustdoI18n.default_lang
 
+    options = _.extend {}, options
     return TAPi18n.__(key, options, lang_tag)
 
   defaultTr: (key, options) ->
