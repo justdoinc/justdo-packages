@@ -1,0 +1,17 @@
+{
+  "print_dropdown_print_justdo": "列印JustDo",
+  "print_dropdown_entire_justdo": "整個JustDo",
+  "print_dropdown_visible_tasks": "可見的任務",
+  "print_dropdown_print_current_task": "列印已選的任務",
+  "print_dropdown_all_child_tasks": "全部子任務",
+  "print_dropdown_visible_child_tasks": "可見的子任務",
+  "print_dropdown_download": "下載",
+  "print_dropdown_download_as_png": "下載成圖像",
+
+  "print_grid_columns_settings_label": "欄目設定",
+  "print_grid_columns_options_label": "欄目選項",
+  "print_grid_print": "列印",
+  "print_grid_export_csv": "匯出成CSV",
+  "print_grid_select_all": "全選",
+  "print_grid_apply": "套用"
+}

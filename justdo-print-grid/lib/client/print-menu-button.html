@@ -2,18 +2,18 @@
   <div class="print-dropdown dropdown project-header-button">
     <svg class="jd-icon jd-c-pointer text-dark" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><use xlink:href="/layout/icons-feather-sprite.svg#printer"/></svg>
     <ul class="dropdown-menu dropdown-menu-right jd-p-075 animate slideIn shadow-lg border-0">
-      <li class="dropdown-header px-1 py-0"><small class="text-uppercase font-weight-bold">Print JustDo</small></li>
-      <li class="dropdown-item d-flex align-items-center px-1 all-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#align-justify"/></svg> Entire JustDo</li>
-      <li class="dropdown-item d-flex align-items-center px-1 visible-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-tasks-all"/></svg> Visible Tasks</li>
+      <li class="dropdown-header px-1 py-0"><small class="text-uppercase font-weight-bold">{{_ "print_dropdown_print_justdo"}}</small></li>
+      <li class="dropdown-item d-flex align-items-center px-1 all-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#align-justify"/></svg>{{_ "print_dropdown_entire_justdo"}}</li>
+      <li class="dropdown-item d-flex align-items-center px-1 visible-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-tasks-all"/></svg>{{_ "print_dropdown_visible_tasks"}}</li>
       
       {{#if taskIsSelectedNotInMultiSelectMode}}
-        <li class="dropdown-header px-1 pb-0"><small class="text-uppercase font-weight-bold">Print Current Task</small></li>
-        <li class="dropdown-item d-flex align-items-center px-1 all-sub-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-all-subtasks"/></svg> All Child Tasks</li>
-        <li class="dropdown-item d-flex align-items-center px-1 visible-sub-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-all-visible-subtasks"/></svg> Visible Child Tasks</li>
+        <li class="dropdown-header px-1 pb-0"><small class="text-uppercase font-weight-bold">{{_ "print_dropdown_print_current_task"}}</small></li>
+        <li class="dropdown-item d-flex align-items-center px-1 all-sub-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-all-subtasks"/></svg>{{_ "print_dropdown_all_child_tasks"}}</li>
+        <li class="dropdown-item d-flex align-items-center px-1 visible-sub-tasks"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#jd-all-visible-subtasks"/></svg>{{_ "print_dropdown_visible_child_tasks"}}</li>
       {{/if}}
 
-      <li class="dropdown-header px-1 py-0"><small class="text-uppercase font-weight-bold">Download</small></li>
-      <li class="dropdown-item d-flex align-items-center px-1 download-as-png"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#download"/></svg> Download as PNG</li>
+      <li class="dropdown-header px-1 py-0"><small class="text-uppercase font-weight-bold">{{_ "print_dropdown_download"}}</small></li>
+      <li class="dropdown-item d-flex align-items-center px-1 download-as-png"><svg class="jd-icon-dropdown text-secondary"><use xlink:href="/layout/icons-feather-sprite.svg#download"/></svg>{{_ "print_dropdown_download_as_png"}}</li>
 
       {{#each printDropdownBottomItems}}
         {{#if template}}

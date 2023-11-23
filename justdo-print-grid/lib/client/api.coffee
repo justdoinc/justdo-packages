@@ -311,21 +311,21 @@ _.extend JustdoPrintGrid.prototype,
           <div class="print-tasks">
             <svg class="jd-icon jd-c-pointer">
               <use xlink:href="/layout/icons-feather-sprite.svg#printer"></use>
-              <title>Print</title>
+              <title>#{TAPi18n.__ "print_grid_print"}</title>
             </svg>
           </div>
           <div class="separator"></div>
           <div class="export-tasks">
             <svg class="jd-icon jd-c-pointer">
               <use xlink:href="/layout/icons-feather-sprite.svg#download"></use>
-              <title>Export CSV</title>
+              <title>#{TAPi18n.__ "print_grid_export_csv"}</title>
             </svg>
           </div>
           <div class="separator"></div>
           <div class="print-mode-settings">
             <svg class="jd-icon jd-c-pointer">
               <use xlink:href="/layout/icons-feather-sprite.svg#settings"></use>
-              <title>Columns settings</title>
+              <title>#{TAPi18n.__ "print_grid_columns_settings_label"}</title>
             </svg>
           </div>
           <div class="separator"></div>
@@ -344,13 +344,13 @@ _.extend JustdoPrintGrid.prototype,
       print_settings = """
         <div class="print-settings jd-p-075 shadow-lg">
           <div class="modal-header d-flex align-items-center">
-            <div class="modal-title">Columns options</div>
+            <div class="modal-title">#{TAPi18n.__ "print_grid_columns_options_label"}</div>
             <button class="bootbox-close-button close">×</button>
           </div>
           <ul></ul>
           <div class="modal-footer">
-            <label class="print-settings-select-all"><input type="checkbox">Select all</label>
-            <button class="btn btn-primary print-settings-apply">Apply</button>
+            <label class="print-settings-select-all"><input type="checkbox">#{TAPi18n.__ "print_grid_select_all"}</label>
+            <button class="btn btn-primary print-settings-apply">#{TAPi18n.__ "print_grid_apply"}</button>
           </div>
         </div>
       """
