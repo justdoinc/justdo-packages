@@ -383,7 +383,7 @@ _.extend JustdoTasksContextMenu.prototype,
         icon_type:
           optional: true
           type: String
-          allowedValues: ["none", "feather"] # ["user-avatar", "font-awesome"] might support these two in the future as well.
+          allowedValues: ["none", "feather", "user-avatar"] # ["font-awesome"] might support these two in the future as well.
           defaultValue: "none"
         icon_val:
           optional: true

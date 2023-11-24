@@ -73,11 +73,15 @@
 <template name="tasks_context_menu_icon">
   {{#if $eq icon_type "feather"}}
     <svg class="jd-icon jd-icon-context-action {{getIconClass}}"><use xlink:href="/layout/icons-feather-sprite.svg#{{getIconValValue}}"/></svg>
+  {{else if $eq icon_type "user-avatar"}}
+    {{#with getUserDocForAvatar}}
+      {{> justdo_avatar}}
+    {{/with}}
   {{else if $eq icon_type "none"}}
     <div class="empty-icon"></div>
   {{/if}}
 </template>
 
 <template name="tasks_context_menu_label_content">
-  {{getLabelValue}} {{#if label_addendum_template}}{{> Template.dynamic template=label_addendum_template data=getLabelAddendumDataContext}}{{/if}}
+  {{{xssGuard getLabelValue}}} {{#if label_addendum_template}}{{> Template.dynamic template=label_addendum_template data=getLabelAddendumDataContext}}{{/if}}
 </template>

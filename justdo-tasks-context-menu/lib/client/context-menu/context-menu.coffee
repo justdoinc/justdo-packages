@@ -236,6 +236,23 @@ Template.tasks_context_menu_icon.helpers
 
     return icon_class.join " "
 
+  getUserDocForAvatar: ->
+    tpl = Template.instance()
+
+    if _.isFunction @icon_val
+      call_args = [@].concat(tpl.closestInstance("tasks_context_menu").tasks_context_menu_controller._sectionsAndItemsReactiveItemsListListingConditionCustomArgsGenerator())
+      user = @icon_val.apply(@, call_args)
+    else
+      user = @icon_val
+    
+    if _.isString user
+      user = JustdoHelpers.getUsersDocsByIds user
+    
+    if _.isObject user
+      return user
+    
+    return undefined
+
   getIconValValue: ->
     tpl = Template.instance()
 
