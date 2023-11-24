@@ -6,11 +6,10 @@ APP.executeAfterAppLibCode ->
       {
         "title": "welcome_to_justdo",
         "subtitle": "welcome video",
-        "html": """
-          <div class="tutorial-welcome-media">
-            <iframe id="vimeo-player" src="https://player.vimeo.com/video/813068460#t=7.5s&texttrack=#{}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
-          </div>
-        """
+        "media": "https://player.vimeo.com/video/813068460#t=7.5s"
+        "media_type": "iframe"
+        "media_id": "vimeo-player"
+        "media_style": "position:absolute;top:0;left:0;width:100%;height:100%;"
         "class": "welcome"
         "status": "" # pending, done
       },
