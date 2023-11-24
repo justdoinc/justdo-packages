@@ -461,6 +461,7 @@ _.extend JustdoTasksContextMenu.prototype,
           op = {$set: {[field_id]: field_val}}
 
           if not APP.justdo_tasks_context_menu.processHandlers "pre-bulk-update", selected_task_ids, field_id, field_val, op
+            console.warn "Bulk update blocked by a handler"
             return
             
           for task_id in selected_task_ids
@@ -491,6 +492,7 @@ _.extend JustdoTasksContextMenu.prototype,
                 [field_id]: field_val
 
           if not APP.justdo_tasks_context_menu.processHandlers "pre-bulk-update", selected_task_ids, field_id, field_val, op
+            console.warn "Bulk update blocked by a handler"
             return
 
           for task_id in selected_task_ids
