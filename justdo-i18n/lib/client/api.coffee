@@ -104,3 +104,12 @@ _.extend JustdoI18n.prototype,
     
   generateI18nModalButtonLabel: (label) ->
     return JustdoHelpers.renderTemplateInNewNode("modal_button_label", {label}).node
+  
+  getVimeoLangTag: (lang_tag) ->
+    if not lang_tag?
+      lang_tag = @getLang()
+
+    if (vimeo_lang_tag = JustdoI18n.vimeo_lang_tags[lang_tag])?
+      return vimeo_lang_tag
+      
+    return lang_tag

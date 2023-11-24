@@ -272,3 +272,6 @@ _.extend JustdoI18n,
       isRTL: false
       showMonthAfterYear: true
       yearSuffix: '年'
+  # Translates our format of lang tag to Vimeo's
+  vimeo_lang_tags:
+    "zh-TW": "zh-Hant"
