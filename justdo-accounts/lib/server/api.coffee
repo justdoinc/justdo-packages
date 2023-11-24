@@ -589,7 +589,8 @@ _.extend JustdoAccounts.prototype,
         "profile.profile_pic": 1
         "profile.avatar_fg": 1
         "profile.avatar_bg": 1
-
+        "profile.timezone": 1
+        "profile.lang": 1
 
     if options?.additional_fields?
       _.extend fields, options.additional_fields
