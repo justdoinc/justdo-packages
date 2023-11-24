@@ -9,7 +9,8 @@ Template.common_chat_messages_board.onCreated ->
   @scrollToBottom = =>
     $messages_board_viewport = @$(".messages-board-viewport")
 
-    $messages_board_viewport.scrollTop($messages_board_viewport.get(0).scrollHeight)
+    if (messages_board_viewport_el = $messages_board_viewport.get(0))?
+      $messages_board_viewport.scrollTop(messages_board_viewport_el.scrollHeight)
 
     return
 
