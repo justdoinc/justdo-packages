@@ -67,6 +67,13 @@ Package.onUse(function (api) {
   // ], client)
   // api.addFiles("lib/both/news/v3-133/v3-133.coffee", both);
 
+  // v3.142
+  api.addAssets([
+    "lib/both/news/v3-142/assets/1-min.jpg",
+    "lib/both/news/v3-142/assets/2-min.jpg"
+  ], client);
+  api.addFiles("lib/both/news/v3-142/v3-142.coffee", both);
+
   // v3.140
   api.addAssets([
     "lib/both/news/v3-140/assets/1.jpg",
