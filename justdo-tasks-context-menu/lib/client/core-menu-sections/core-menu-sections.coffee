@@ -579,7 +579,7 @@ _.extend JustdoTasksContextMenu.prototype,
         if not (gc = APP.modules.project_page?.gridControl())?
           return false
 
-        return gc.isMultiSelectMode()
+        return gc.isMultiSelectMode() and (_.size(gc.getFilterPassingMultiSelectedPathsArray()) <= 100)
 
     # @registerMainSection "copy-paste",
     #   position: 300
