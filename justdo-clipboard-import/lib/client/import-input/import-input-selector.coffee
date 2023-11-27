@@ -79,7 +79,8 @@ Template.justdo_clipboard_import_input_selector.events
 
     field_id = $(e.currentTarget)[0].getAttribute("field-id")
     available_field_types_crv = tpl.available_field_types_crv.get()[0]
-    field_label = available_field_types_crv[field_id].custom_clipboard_import_label or available_field_types_crv[field_id].label
+    field_def = available_field_types_crv[field_id]
+    field_label = available_field_types_crv[field_id].custom_clipboard_import_label or APP.justdo_i18n.getI18nTextOrFallback {fallback_text: field_def.label, i18n_key: field_def.label_i18n}
 
     $corresponding_selector_button = $(e.currentTarget).closest(".justdo-clipboard-import-input-selector").find("button")
 
