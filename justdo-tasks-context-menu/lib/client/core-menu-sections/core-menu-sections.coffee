@@ -522,64 +522,87 @@ _.extend JustdoTasksContextMenu.prototype,
             return "minus-square"
 
           return "square"
-    @registerMainSection "bulk-set-options",
-      position: 150
-      data:
-        label: "Set"
-        label_i18n: "bulk_set_options_label"
-        itemsGenerator: ->
-          ret = []
-          if not (gc = APP.modules.project_page?.gridControl())?
-            return ret
-          
-          for field_id, field_def of gc.getSchemaExtendedWithCustomFields()
-            do (field_id, field_def) ->
-              if (field_def.grid_column_editor in ["SelectorEditor", "MultiSelectEditor"]) and (field_def.exclude_from_context_menu_bulk_set isnt true) and field_def.grid_editable_column
-                editor_specific_behavior = behavior_by_editor_type[field_def.grid_column_editor]
-                ret.push
-                  id: "bulk-set-options-#{field_id}"
-                  close_on_click: editor_specific_behavior.close_on_click
-                  label: field_def.label
-                  label_i18n: field_def.label_i18n
-                  is_nested_section: true
-                  itemsSource: ->
-                    item = 
+    # This tracker is to ensure bulk set options will have the correct fields depending on the active project
+    @setup_bulk_set_options_by_project_tracker = Tracker.autorun =>
+      console.log "rerun"
+      if not JD.activeJustdoId()?
+        return
+      
+      if not (gc = APP.modules.project_page?.gridControl())?
+        return
+      
+      Tracker.nonreactive =>
+        @unregisterMainSection "bulk-set-options"
+
+        @registerMainSection "bulk-set-options",
+          position: 150
+          data:
+            label: "Set"
+            label_i18n: "bulk_set_options_label"
+          listingCondition: ->
+            if not (gc = APP.modules.project_page?.gridControl())?
+              return false
+
+            return gc.isMultiSelectMode() and (_.size(gc.getFilterPassingMultiSelectedPathsArray()) <= 100)
+
+        position = 100
+        for field_id, field_def of gc.getSchemaExtendedWithCustomFields()
+          do (field_id, field_def) =>
+            if (field_def.grid_column_editor not in ["SelectorEditor", "MultiSelectEditor"]) or (field_def.exclude_from_context_menu_bulk_set is true) or not field_def.grid_editable_column
+              return
+
+            editor_specific_behavior = behavior_by_editor_type[field_def.grid_column_editor]
+            field_options = field_def.grid_values
+            display_item_filter_ui = _.size(field_options) > 5
+
+            @registerSectionItem "bulk-set-options", "bulk-set-options-#{field_id}",
+              position: position
+              data:
+                label: field_def.label
+                label_i18n: field_def.label_i18n
+                close_on_click: editor_specific_behavior.close_on_click
+                is_nested_section: true
+            
+            @registerNestedSection "bulk-set-options", "bulk-set-options-#{field_id}", "#{field_id}-options",
+              position: position
+              data:
+                display_item_filter_ui: display_item_filter_ui
+                close_on_click: editor_specific_behavior.close_on_click
+                itemsGenerator: ->
+                  current_section_filter_state = self.getSectionFilterState("#{field_id}-options")
+                  filter_regex = new RegExp current_section_filter_state, "i"
+                  ret = []
+
+                  # Return empty message if grid_values is empty, or only contains null state (only value available is an empty string "")
+                  if _.isEmpty(field_options) or ((_.size(field_options) is 1) and _.has field_options, "")
+                    ret.push
+                      label: "No options are available"
+                      op: -> return
+                    return ret
+
+                  for option_id, option_def of field_options
+                    if (not filter_regex.test(option_def.txt)) and (not filter_regex.test(TAPi18n.__ option_def.txt_i18n))
+                      continue
+
+                    ret.push
+                      bg_color: option_def.bg_color
+                      field_id: field_id
+                      id: option_id
+                      is_nested_section: false
                       close_on_click: editor_specific_behavior.close_on_click
-                      itemsSource: ->
-                        option_items = []
+                      label: option_def.txt
+                      label_i18n: option_def.txt_i18n
+                      icon_type: editor_specific_behavior.icon_type
+                      icon_val: editor_specific_behavior.icon_val
+                      icon_class: editor_specific_behavior.icon_class
+                      op: editor_specific_behavior.op
+        
+                  return ret
 
-                        # Shouldn't happen, but just in case.
-                        if not (gc = APP.modules.project_page?.gridControl())?
-                          return option_items
-                        
-                        # Return empty message if grid_values is empty, or only contains null state (only value available is an empty string "")
-                        if _.isEmpty(field_options = field_def.grid_values) or ((_.size(field_options) is 1) and _.has field_options, "")
-                          option_items.push
-                            label: "No options are available"
-                            op: -> return
-                          return option_items
+            position += 100
 
-                        for option_id, option_def of field_options
-                          option_items.push
-                            bg_color: option_def.bg_color
-                            field_id: field_id
-                            id: option_id
-                            is_nested_section: false
-                            close_on_click: editor_specific_behavior.close_on_click
-                            label: option_def.txt
-                            label_i18n: option_def.txt_i18n
-                            icon_type: editor_specific_behavior.icon_type
-                            icon_val: editor_specific_behavior.icon_val
-                            icon_class: editor_specific_behavior.icon_class
-                            op: editor_specific_behavior.op
-                        return option_items
-                    return [item]
-          return ret
-      listingCondition: ->
-        if not (gc = APP.modules.project_page?.gridControl())?
-          return false
-
-        return gc.isMultiSelectMode() and (_.size(gc.getFilterPassingMultiSelectedPathsArray()) <= 100)
+        return
+      return
 
     # @registerMainSection "copy-paste",
     #   position: 300
