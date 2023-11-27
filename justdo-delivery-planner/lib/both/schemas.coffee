@@ -44,7 +44,7 @@ _.extend JustdoDeliveryPlanner.prototype,
   _attachCollectionsSchemas: ->
     Schema =
       "#{JustdoDeliveryPlanner.task_is_project_field_name}":
-        label: "Deliver planner :: is project"
+        label: "Is task a project"
 
         grid_editable_column: false
         grid_visible_column: false
@@ -53,7 +53,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         optional: true
 
       "#{JustdoDeliveryPlanner.task_is_archived_project_field_name}":
-        label: "Deliver planner :: is project archived"
+        label: "Is project archived"
 
         grid_editable_column: false
         user_editable_column: true
@@ -63,7 +63,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         optional: true
 
       "#{JustdoDeliveryPlanner.task_project_members_availability_field_name}":
-        label: "Deliver planner :: members availability"
+        label: "Members availability"
 
         grid_editable_column: false
         grid_visible_column: false
@@ -72,7 +72,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         optional: true
 
       "#{JustdoDeliveryPlanner.task_baseline_projection_data_field_name}":
-        label: "Deliver planner :: baseline projection data"
+        label: "Baseline projection data"
 
         grid_editable_column: false
         grid_visible_column: false
@@ -82,7 +82,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         optional: true
 
       "#{JustdoDeliveryPlanner.task_base_project_workdays_field_name}":
-        label: "Deliver planner :: base project workdays"
+        label: "Base project workdays"
 
         grid_editable_column: false
         grid_visible_column: false
@@ -91,7 +91,7 @@ _.extend JustdoDeliveryPlanner.prototype,
         optional: true
 
       "#{JustdoDeliveryPlanner.task_is_committed_field_name}":
-        label: "Deliver planner :: is project committed"
+        label: "Is project committed"
 
         grid_editable_column: false
         grid_visible_column: false
