@@ -31,6 +31,8 @@ _.extend JustDoProjectsTemplates.prototype,
     parser.createTasks(options.template.tasks)
     parser.runEvents()
 
+    @emit "post-create-subtree-from-template", options
+
     return {paths_to_expand: parser.paths_to_expand, first_root_task_id: parser.tasks?.first_root_task}
 
   destroy: ->

@@ -11,6 +11,7 @@ _.extend JustDoProjectsTemplates.prototype,
         template = self.requireTemplateById(template_id).template
 
         options =
+          template_id: template_id
           template: template
           project_id: project_id
           root_task_id: target_task
