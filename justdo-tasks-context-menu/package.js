@@ -54,7 +54,7 @@ Package.onUse(function (api) {
   api.use("reactive-var", client);
   api.use("tracker", client);
   api.use("aldeed:simple-schema@1.5.3", both);
-  api.use("tap:i18n@1.8.2", both);
+  api.use("tap:i18n", both);
   api.use("justdoinc:justdo-i18n", both);
 
   api.addFiles("lib/both/analytics.coffee", both);

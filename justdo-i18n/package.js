@@ -51,7 +51,7 @@ Package.onUse(function (api) {
 
   api.use("justdoinc:justdo-analytics@1.0.0", both);
   api.use("justdoinc:justdo-promoters-campaigns@1.0.0", both, {weak: true});
-  api.use("tap:i18n@1.8.2", both);
+  api.use("tap:i18n", both);
   api.use("momentjs:moment", both);
   // Although we prefer tap:i18n, anti:i18n is used by other packages like meteor-accounts-ui-bootstrap-3
   api.use("anti:i18n@0.4.3", client, {weak: true}); 

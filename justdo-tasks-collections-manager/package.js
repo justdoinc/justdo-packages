@@ -48,7 +48,7 @@ Package.onUse(function (api) {
   api.use("meteorspark:util@0.2.0", both);
   api.use("meteorspark:logger@0.3.0", both);
   api.use("justdoinc:justdo-helpers@1.0.0", both);
-  api.use("tap:i18n@1.8.2", both);
+  api.use("tap:i18n", both);
   api.use("justdoinc:justdo-i18n", both);
 
   api.use("justdoinc:grid-control-dates-filter-plugin@1.0.0", both);

@@ -24,6 +24,6 @@ For places where placeholder concept is applied (e.g. schema, context menu items
 
 Pleaese also remember to add the following dependencies into the target package's (say justdo-orgs) *package.js*:
 ```
-api.use("tap:i18n@1.8.2", both);
+api.use("tap:i18n", both);
 api.use("justdoinc:justdo-i18n", both);
 ```
