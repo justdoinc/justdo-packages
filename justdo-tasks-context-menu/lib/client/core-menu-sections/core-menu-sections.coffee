@@ -524,7 +524,6 @@ _.extend JustdoTasksContextMenu.prototype,
           return "square"
     # This tracker is to ensure bulk set options will have the correct fields depending on the active project
     @setup_bulk_set_options_by_project_tracker = Tracker.autorun =>
-      console.log "rerun"
       if not JD.activeJustdoId()?
         return
       
