@@ -21,10 +21,13 @@ _.extend JustDoProjectsTemplates.prototype,
 
     return true
 
-  requireTemplateById: (template_id) ->
-    if not _.has @templates, template_id
-      throw @_error "template-not-found", "Template #{template_id} not found"
+  getTemplateById: (template_id) ->
     return @templates[template_id]
+
+  requireTemplateById: (template_id) ->
+    if not (template = @getTemplateById template_id)?
+      throw @_error "template-not-found", "Template #{template_id} not found"
+    return template
 
   _registerCategoryDefSchema: new SimpleSchema
     id:
