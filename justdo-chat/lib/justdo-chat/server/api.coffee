@@ -10,6 +10,9 @@ _.extend JustdoChat.prototype,
     @_bots_definitions = {}
     @_bots_public_info = {} # The cached projection of @_bots_definitions that is published to clients
 
+    # Defined in collections-indexes.coffee
+    @_dropUniqueIndexes()
+    
     @_registerIntegralBots()
 
     for type, conf of share.channel_types_server_specific_conf
