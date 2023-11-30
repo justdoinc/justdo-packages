@@ -35,7 +35,8 @@ _.extend JustdoResourcesAvailability.prototype,
     @subscribers_to_project_data.add requesting_plugin_id
     if @subscribers_to_project_data.size == 1
       @subscription_tracker = Tracker.autorun =>
-        @resorce_availability_subscription = Meteor.subscribe "jd-resource-availability", JD.activeJustdo({_id: 1})._id
+        if (justdo_id = JD.activeJustdo({_id: 1})?._id)?
+          @resorce_availability_subscription = Meteor.subscribe "jd-resource-availability", justdo_id
         return
 
       JD.registerPlaceholderItem  "#{JustdoResourcesAvailability.project_custom_feature_id}:global-config", {

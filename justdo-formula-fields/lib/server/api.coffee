@@ -72,13 +72,22 @@ _.extend JustdoFormulaFields.prototype,
     return
 
   projectFormulasPublicationHandler: (publish_this, project_id, user_id) ->
-    check project_id, String
-    check user_id, String
+    if not user_id?
+      @logger.debug "projectFormulasPublicationHandler doesn't support null user_id for now"
 
-    if _.isEmpty(project_id)
       publish_this.stop()
 
       return
+
+    if _.isEmpty(project_id)
+      @logger.debug "projectFormulasPublicationHandler doesn't support null project_id for now"
+
+      publish_this.stop()
+
+      return
+    
+    check project_id, String
+    check user_id, String
 
     APP.projects.requireUserIsMemberOfProject project_id, user_id
 

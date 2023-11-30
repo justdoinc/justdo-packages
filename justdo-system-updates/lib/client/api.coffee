@@ -209,7 +209,12 @@ _.extend JustdoSystemUpdates.prototype,
 
   isEnabledForLoggedInUser: ->
     # Only disable showing system updates when show_system_updates is explicitly set to disabled
-    user_profile = Meteor.user({fields: {"profile.show_system_updates": 1}}).profile
+    user_doc = Meteor.user({fields: {"profile.show_system_updates": 1}})
+
+    if not user_doc?
+      return false
+    
+    user_profile = user_doc.profile
 
     if user_profile.show_system_updates? and not user_profile.show_system_updates
       return false

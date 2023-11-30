@@ -62,8 +62,11 @@ Template.meetings_meetings_menu.onDestroyed ->
 
 Template.meetings_meetings_menu.helpers
   meetings: (status) ->
+    if not (active_justdo_id = JD.activeJustdo({_id: 1})?._id)?
+      return {exist: 0, meetings: []}
+
     search_keyword = Template.instance().meeting_search_keyword.get()
-    meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find({"project_id": JD.activeJustdo({_id: 1})._id, "status":status}).fetch()
+    meetings = APP.meetings_manager_plugin.meetings_manager.meetings.find({"project_id": active_justdo_id, "status": status}).fetch()
 
     filtered_meetings = []
     for meeting in meetings
