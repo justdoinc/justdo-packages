@@ -692,6 +692,9 @@ _.extend GridControl.prototype,
     # and then updates them in all the ancestors of items_ids in the grid
     # (to reflect the change upwards in the tree)
 
+    if @isDestroyed()
+      return
+
     if _.isString items_ids
       items_ids = [items_ids]
 
@@ -2081,8 +2084,10 @@ _.extend GridControl.prototype,
 
     return
 
+  isDestroyed: -> @_destroyed
+
   destroy: ->
-    if @_destroyed
+    if @isDestroyed()
       return
     @_destroyed = true
 

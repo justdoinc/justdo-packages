@@ -21,6 +21,12 @@ _.extend JustdoChat.prototype,
       check channel_identifier, Object
       check options, Match.Maybe(Object)
 
+      if not @userId?
+        self.logger.debug "jdcChannelMessages doesn't support null userId for now"
+
+        @ready()
+        return
+
       channel_obj = self.generateServerChannelObject(channel_type, channel_identifier, @userId)
 
       return channel_obj.channelMessagesPublicationHandler(@, options)
