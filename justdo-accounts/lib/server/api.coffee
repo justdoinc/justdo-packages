@@ -719,7 +719,7 @@ _.extend JustdoAccounts.prototype,
 
       return
 
-    is_requesting_user_ssa = APP.justdo_site_admins.isUserSuperSiteAdmin requesting_user
+    is_requesting_user_ssa = APP.justdo_site_admins?.isUserSuperSiteAdmin requesting_user
 
     if not password?
       if data.all_emails_verified isnt true # If data.all_emails_verified is true, it is obvious the user completed enrollment (using the oauth flow), even if he doesn't have data.services?.password
